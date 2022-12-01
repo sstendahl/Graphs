@@ -1,0 +1,6 @@
+data/se.sjoerd.DatMan.desktop.in
+data/se.sjoerd.DatMan.appdata.xml.in
+data/se.sjoerd.DatMan.gschema.xml
+src/main.py
+src/window.py
+src/window.ui

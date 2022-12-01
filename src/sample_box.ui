@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <requires lib="gtk" version="4.0"/>
+  <template class="SampleBox" parent="GtkBox">
+    <child>
+      <object class="GtkBox" id="sample_box">
+        <child>
+          <object class="GtkLabel" id="sample_ID_label">
+            <property name="margin-start">5</property>
+            <property name="halign">start</property>
+            <property name="margin-end">5</property>
+            <property name="hexpand">true</property>
+          </object>
+        </child>
+            <child>
+              <object class="GtkButton" id="delete_button">
+                <property name="tooltip-text" translatable="yes">Remove</property>
+                <property name="hexpand">false</property>
+                <child>
+                  <object class="GtkImage">
+                  <property name="hexpand">false</property>
+                    <property name="halign">center</property>
+                    <property name="valign">center</property>
+                    <property name="icon-name">edit-delete-symbolic</property>
+              </object>
+            </child>
+          </object>
+        </child>"
+      </object>
+    </child>
+    <style>
+      <class name="SampleBox"/>
+    </style>
+  </template>
+</interface>
+
+
