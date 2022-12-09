@@ -1,0 +1,588 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <requires lib="gtk" version="4.0"/>
+  <requires lib="gtk" version="4.0"/>
+  <requires lib="libadwaita" version="1.0"/>
+  <template class="PreferencesWindow" parent="AdwPreferencesWindow">
+    <property name="can-navigate-back">True</property>
+    <child>
+      <object class="AdwPreferencesPage">
+        <property name="visible">True</property>
+        <property name="icon-name">applications-graphics-symbolic</property>
+        <property name="title">Plot</property>
+      <child>
+          <object class="AdwPreferencesGroup">
+            <property name="visible">True</property>
+            <property name="title" translatable="yes">Axes</property>
+            <property name="description" translatable="yes">Settings for the axes</property>
+            <child>
+              <object class="AdwActionRow">
+                <property name="visible">True</property>
+                <property name="can-focus">True</property>
+                <property name="title" translatable="yes">Plot title</property>
+                <property name="subtitle" translatable="yes">Title used for the plot (leave blank for no title)</property>
+                <property name="use-underline">True</property>
+                <child>
+                  <object class="GtkEntry" id="plot_title">
+                    <property name="text"></property>
+                    <property name="valign">center</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="AdwActionRow">
+                <property name="visible">True</property>
+                <property name="can-focus">True</property>
+                <property name="can-target">True</property>
+                <property name="title" translatable="yes">Y-Axis name</property>
+                <property name="subtitle" translatable="yes">Title used for the Y-axis</property>
+                <property name="use-underline">True</property>
+                <child>
+                  <object class="GtkEntry" id="plot_Y_label">
+                  <property name="focus-on-click">True</property>
+                <property name="can-focus">True</property>
+                <property name="can-target">True</property>
+                    <property name="text">Y value</property>
+                    <property name="valign">center</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="AdwActionRow">
+                <property name="visible">True</property>
+                <property name="can-focus">True</property>
+                <property name="title" translatable="yes">X-axis name</property>
+                <property name="subtitle" translatable="yes">Title used for the X-axis</property>
+                <property name="use-underline">True</property>
+                <child>
+                  <object class="GtkEntry" id="plot_X_label">
+                    <property name="text">X value</property>
+                    <property name="valign">center</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+             <child>
+              <object class="AdwActionRow">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="title" translatable="yes">Font</property>
+                <property name="subtitle" translatable="yes">Choose the font used in the graph</property>
+                <property name="use-underline">True</property>
+                <child>
+                  <object class="GtkFontButton" id="plot_font_chooser">
+                    <property name="valign">center</property>
+
+                  </object>
+                </child>
+              </object>
+            </child>
+
+             <child>
+              <object class="AdwActionRow">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="title" translatable="yes">Y-axis scale</property>
+                <property name="subtitle" translatable="yes">Default scaling on Y-axis</property>
+                <property name="use-underline">True</property>
+                <child>
+                  <object class="GtkDropDown" id="plot_Y_scale">
+                    <property name="valign">center</property>
+                    <property name="model">
+                      <object class="GtkStringList">
+                        <items>
+                          <item translatable="yes">log</item>
+                          <item translatable="yes">linear</item>
+                        </items>
+                      </object>
+                    </property>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="AdwActionRow">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="title" translatable="yes">X-axis scale</property>
+                <property name="subtitle" translatable="yes">Default scaling on X-axis</property>
+                <property name="use-underline">True</property>
+                <child>
+                  <object class="GtkDropDown" id="plot_X_scale">
+                    <property name="valign">center</property>
+                    <property name="model">
+                      <object class="GtkStringList">
+                        <items>
+                          <item translatable="yes">log</item>
+                          <item translatable="yes">linear</item>
+                        </items>
+                      </object>
+                    </property>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="AdwActionRow">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="title" translatable="yes">Tick directions</property>
+                <property name="subtitle" translatable="yes">Choose to have the ticks either in or out</property>
+                <property name="use-underline">True</property>
+                <child>
+                  <object class="GtkDropDown" id="plot_tick_direction">
+                    <property name="valign">center</property>
+                    <property name="model">
+                      <object class="GtkStringList">
+                        <items>
+                          <item translatable="yes">in</item>
+                          <item translatable="yes">out</item>
+                        </items>
+                      </object>
+                    </property>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="AdwActionRow">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="title" translatable="yes">Major tick width</property>
+                <property name="subtitle" translatable="yes">The thickness of the major ticks</property>
+                <property name="use-underline">True</property>
+                <child>
+                  <object class="GtkScale" id="plot_major_tick_width">
+                    <property name="draw-value">1</property>
+                    <property name="width-request">200</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="AdwActionRow">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="title" translatable="yes">Minor tick width</property>
+                <property name="subtitle" translatable="yes">The thickness of the minor ticks</property>
+                <property name="use-underline">True</property>
+                <child>
+                  <object class="GtkScale" id="plot_minor_tick_width">
+                    <property name="draw-value">1</property>
+                    <property name="width-request">200</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+              <child>
+              <object class="AdwActionRow">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="title" translatable="yes">Major tick length</property>
+                <property name="subtitle" translatable="yes">The length of the major ticks</property>
+                <property name="use-underline">True</property>
+                <child>
+                  <object class="GtkScale" id="plot_major_tick_length">
+                    <property name="draw-value">1</property>
+                    <property name="width-request">200</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+              <child>
+              <object class="AdwActionRow">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="title" translatable="yes">Minor tick length</property>
+                <property name="subtitle" translatable="yes">The length of the minor ticks</property>
+                <property name="use-underline">True</property>
+                <child>
+                  <object class="GtkScale" id="plot_minor_tick_length">
+                    <property name="draw-value">1</property>
+                    <property name="width-request">200</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+ <child>
+              <object class="AdwActionRow">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="title" translatable="yes">Ticks on left axis</property>
+                <property name="subtitle" translatable="yes">Show ticks on the left-hand axis</property>
+                <property name="use-underline">True</property>
+                <child>
+                  <object class="GtkCheckButton" id="plot_tick_left">
+                    <property name="halign">end</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+             <child>
+              <object class="AdwActionRow">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="title" translatable="yes">Ticks on bottom axis</property>
+                <property name="subtitle" translatable="yes">Show ticks on the bottom</property>
+                <property name="use-underline">True</property>
+                <child>
+                  <object class="GtkCheckButton" id="plot_tick_bottom">
+                    <property name="halign">end</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+               <child>
+              <object class="AdwActionRow">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="title" translatable="yes">Ticks on top axis</property>
+                <property name="subtitle" translatable="yes">Show ticks on the top</property>
+                <property name="use-underline">True</property>
+                <child>
+                  <object class="GtkCheckButton" id="plot_tick_top">
+                    <property name="halign">end</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+               <child>
+              <object class="AdwActionRow">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="title" translatable="yes">Ticks on right axis</property>
+                <property name="subtitle" translatable="yes">Show ticks on the right</property>
+                <property name="use-underline">True</property>
+                <child>
+                  <object class="GtkCheckButton" id="plot_tick_right">
+                    <property name="halign">end</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+            </object>
+        </child>
+        <child>
+          <object class="AdwPreferencesGroup">
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="title" translatable="yes">Figure elements</property>
+            <property name="description" translatable="yes">Settings for the lines used in the plots</property>
+            <child>
+              <object class="AdwActionRow">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="title" translatable="yes">Legend</property>
+                <property name="subtitle" translatable="yes">Use a legend for the lines</property>
+                <property name="use-underline">True</property>
+                <child>
+                  <object class="GtkCheckButton" id="plot_legend_check">
+                    <property name="halign">end</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="AdwActionRow">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="title" translatable="yes">Color cycle</property>
+                <property name="subtitle" translatable="yes">Choose the default color cycle</property>
+                <property name="use-underline">True</property>
+                <child>
+                  <object class="GtkDropDown" id="plot_color_cycle">
+                    <property name="valign">center</property>
+                    <property name="model">
+                      <object class="GtkStringList">
+                        <items>
+                        </items>
+                      </object>
+                    </property>
+                  </object>
+                </child>
+              </object>
+            </child>
+                        <child>
+              <object class="AdwActionRow">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="title" translatable="yes">Invert color cycle in dark mode</property>
+                <property name="subtitle" translatable="yes">Use inverted colors for the color cycle used in dark mode</property>
+                <property name="use-underline">True</property>
+                <child>
+                  <object class="GtkCheckButton" id="plot_invert_color_cycle_dark">
+                    <property name="halign">end</property>
+                  </object>
+                </child>
+              </object>
+            </child>"
+            <child>
+              <object class="AdwActionRow">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="title" translatable="yes">Selected linewidth</property>
+                <property name="subtitle" translatable="yes">The linewidth for selected lines</property>
+                <property name="use-underline">True</property>
+                <child>
+                  <object class="GtkScale" id="selected_line_thickness_slider">
+                    <property name="draw-value">1</property>
+                    <property name="width-request">200</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="AdwActionRow">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="title" translatable="yes">Unselected linewidth</property>
+                <property name="subtitle" translatable="yes">The linewidth for unselected lines</property>
+                <property name="use-underline">True</property>
+                <child>
+                  <object class="GtkScale" id="unselected_line_thickness_slider">
+                    <property name="draw-value">1</property>
+                    <property name="width-request">200</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="AdwActionRow">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="title" translatable="yes">Selected linestyle</property>
+                <property name="subtitle" translatable="yes">The linestyle for selected lines</property>
+                <property name="use-underline">True</property>
+                <child>
+                  <object class="GtkDropDown" id="plot_selected_linestyle_chooser">
+                    <property name="valign">center</property>
+                    <property name="model">
+                      <object class="GtkStringList">
+                        <items>
+                          <item translatable="yes">none</item>
+                          <item translatable="yes">solid</item>
+                          <item translatable="yes">dotted</item>
+                          <item translatable="yes">dashed</item>
+                          <item translatable="yes">dashdot</item>
+                        </items>
+                      </object>
+                    </property>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="AdwActionRow">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="title" translatable="yes">Unselected linestyle</property>
+                <property name="subtitle" translatable="yes">The linestyle for unselected lines</property>
+                <property name="use-underline">True</property>
+                <child>
+                  <object class="GtkDropDown" id="plot_unselected_linestyle_chooser">
+                    <property name="valign">center</property>
+                    <property name="model">
+                      <object class="GtkStringList">
+                        <items>
+                          <item translatable="yes">none</item>
+                          <item translatable="yes">solid</item>
+                          <item translatable="yes">dotted</item>
+                          <item translatable="yes">dashed</item>
+                          <item translatable="yes">dashdot</item>
+                        </items>
+                      </object>
+                    </property>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="AdwActionRow">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="title" translatable="yes">Selected marker size</property>
+                <property name="subtitle" translatable="yes">The size of the markers used in selected lines</property>
+                <property name="use-underline">True</property>
+                <child>
+                  <object class="GtkScale" id="plot_selected_marker_size">
+                    <property name="draw-value">1</property>
+                    <property name="width-request">200</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="AdwActionRow">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="title" translatable="yes">Unselected marker size</property>
+                <property name="subtitle" translatable="yes">The size of the markers used in unselected lines</property>
+                <property name="use-underline">True</property>
+                <child>
+                  <object class="GtkScale" id="plot_unselected_marker_size">
+                    <property name="draw-value">1</property>
+                    <property name="width-request">200</property>
+                  </object>
+                </child>
+              </object>
+            </child>"
+            <child>
+              <object class="AdwActionRow">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="title" translatable="yes">Selected markers</property>
+                <property name="subtitle" translatable="yes">The markers used for selected lines</property>
+                <property name="use-underline">True</property>
+                <child>
+                  <object class="GtkDropDown" id="plot_selected_markers_chooser">
+                    <property name="valign">center</property>
+                    <property name="model">
+                      <object class="GtkStringList">
+                        <items>
+                          <item translatable="yes">none</item>
+                        </items>
+                      </object>
+                    </property>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="AdwActionRow">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="title" translatable="yes">Unselected markers</property>
+                <property name="subtitle" translatable="yes">The markers used for unselected lines</property>
+                <property name="use-underline">True</property>
+                <child>
+                  <object class="GtkDropDown" id="plot_unselected_markers_chooser">
+                    <property name="valign">center</property>
+                    <property name="model">
+                      <object class="GtkStringList">
+                        <items>
+                          <item translatable="yes">none</item>
+                        </items>
+                      </object>
+                    </property>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+        </child>
+           <child>
+              <object class="AdwPreferencesGroup">
+            <property name="visible">True</property>
+            <property name="title" translatable="yes">Style</property>
+            <property name="description" translatable="yes">Settings for the graph style</property>
+            <child>
+              <object class="AdwActionRow">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="title" translatable="yes">Graph style light</property>
+                <property name="subtitle" translatable="yes">The style sheet used for the graph in light mode</property>
+                <property name="use-underline">True</property>
+                <child>
+                  <object class="GtkDropDown" id="plot_style_light">
+                    <property name="valign">center</property>
+                    <property name="model">
+                      <object class="GtkStringList">
+                        <items>
+                        </items>
+                      </object>
+                    </property>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="AdwActionRow">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="title" translatable="yes">Graph style dark</property>
+                <property name="subtitle" translatable="yes">The style used for the graph in dark mode</property>
+                <property name="use-underline">True</property>
+                <child>
+                  <object class="GtkDropDown" id="plot_style_dark">
+                    <property name="valign">center</property>
+                    <property name="model">
+                      <object class="GtkStringList">
+                        <items>
+                        </items>
+                      </object>
+                    </property>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>
+    <child>
+      <object class="AdwPreferencesPage">
+        <property name="visible">True</property>
+        <property name="can-focus">False</property>
+        <property name="icon-name">document-save-symbolic</property>
+        <property name="title">Saved plots</property>
+        <child>
+          <object class="AdwPreferencesGroup">
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="title" translatable="yes">General</property>
+            <property name="description" translatable="yes">General settings for the saved graphs</property>
+            <child>
+              <object class="AdwActionRow">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="title" translatable="yes">Default filetype</property>
+                <property name="subtitle" translatable="yes">Choose the default filetype of saved graphs</property>
+                <property name="use-underline">True</property>
+                <child>
+                  <object class="GtkDropDown" id="savefig_filetype_chooser">
+                    <property name="valign">center</property>
+                    <property name="model">
+                      <object class="GtkStringList" id="savefig_filetype_list">
+                        <items>
+                          <item translatable="yes">png</item>
+                          <item translatable="yes">ps</item>
+                          <item translatable="yes">pdf</item>
+                          <item translatable="yes">svg</item>
+                        </items>
+                      </object>
+                    </property>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+          </child>
+          <child>
+          <object class="AdwPreferencesGroup">
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="title" translatable="yes">Background</property>
+            <property name="description" translatable="yes">Background properties of the saved plot</property>
+            <child>
+              <object class="AdwActionRow">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="title" translatable="yes">Transparent background</property>
+                <property name="subtitle" translatable="yes">Use a transparent background for the saved plots</property>
+                <property name="use-underline">True</property>
+                <child>
+                  <object class="GtkCheckButton" id="savefig_transparent_check_button">
+                    <property name="halign">end</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>"
+  </template>
+</interface>
+

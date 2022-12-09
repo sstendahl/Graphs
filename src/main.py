@@ -19,6 +19,8 @@
 
 import sys
 import gi
+import shutil
+import os
 
 gi.require_version('Gtk', '4.0')
 gi.require_version('Adw', '1')
@@ -26,27 +28,27 @@ gi.require_version('Adw', '1')
 from gi.repository import Gtk, Gio, Adw
 from .window import DatManWindow
 import matplotlib.pyplot as plt
-from . import datman
-from . import plotting_tools
-from . import item_operations
+from . import datman, plotting_tools, item_operations, transform_data, preferences
 
 class DatManApplication(Adw.Application):
     """The main application singleton class."""
 
     def __init__(self):
+        super().__init__(application_id='se.sjoerd.DatMan',
+                         flags=Gio.ApplicationFlags.FLAGS_NONE)
         self.filename = ""
         self.datadict = {}
         self.item_rows = {}
         self.highlight = None
-        self.color_cycle = plt.rcParams['axes.prop_cycle'].by_key()['color']
-        super().__init__(application_id='se.sjoerd.DatMan',
-                         flags=Gio.ApplicationFlags.FLAGS_NONE)
+        plotting_tools.load_fonts(self)
+        self.preferences = preferences.Preferences()
         self.connect_actions()
+        print("Connected actions")
 
     def connect_actions(self):
         self.create_action('quit', self.on_quit_action, ['<primary>q'])
         self.create_action('about', self.on_about_action)
-        self.create_action('preferences', self.on_preferences_action)
+        self.create_action('preferences', preferences.open_preferences_window, None, self)
         self.create_action('add_data', datman.open_file_dialog, None, self)
         self.create_action('normalize_data', item_operations.normalize_data, None, self)
         self.create_action('translate_x', item_operations.translate_x, None, self)
@@ -62,9 +64,9 @@ class DatManApplication(Adw.Application):
         self.create_action('undo', item_operations.undo, None, self)
         self.create_action('redo', item_operations.redo, None, self)
         self.create_action('select_none', datman.select_none, None, self)
+        self.create_action('transform_data', transform_data.open_transform_window, None, self)
         self.create_action('select_data_toggle', plotting_tools.toggle_highlight, None, self)
         Adw.StyleManager.get_default().connect("notify", datman.toggle_darkmode, None, self)
-
 
     def do_activate(self):
         """Called when the application is activated.
@@ -89,15 +91,11 @@ class DatManApplication(Adw.Application):
                                 website='http://www.sjoerd.se',
                                 developer_name='Sjoerd Broekhuijsen',
                                 issue_url="https://github.com/SjoerdB93/DatMan/issues",
-                                version='0.9.0',
+                                version='1.0.0',
                                 developers=['Sjoerd Broekhuijsen <contact@sjoerd.se>'],
                                 copyright='© 2022 Sjoerd Broekhuijsen',
                                 license_type="GTK_LICENSE_GPL_3_0")
         about.present()
-
-    def on_preferences_action(self, _widget, _):
-        """Callback for the app.preferences action."""
-        print('app.preferences action activated')
 
     def on_quit_action(self, _widget, _):
         self.quit()
@@ -112,9 +110,9 @@ class DatManApplication(Adw.Application):
             shortcuts: an optional list of accelerators
             *args: Optional extra arguments
         """
+
         action = Gio.SimpleAction.new(name, None)
         action.connect("activate", callback, *args)
-
         self.add_action(action)
         if shortcuts:
             self.set_accels_for_action(f"app.{name}", shortcuts)
@@ -125,6 +123,7 @@ def main(version):
     app = DatManApplication()
 
     return app.run(sys.argv)
+
 
 
 

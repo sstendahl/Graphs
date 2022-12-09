@@ -9,9 +9,9 @@ class ColorPicker(Gtk.ColorButton):
         super().__init__()
         self.set_tooltip_text(_("Pick a color"))
         self.provider = Gtk.CssProvider()
-        self.color = color
         rgba = datman.create_rgba(*colors.to_rgba(color))
         self.set_rgba(rgba)
+        self.color = color
         self.update_color()
 
     def on_color_set(self, widget, datman):
@@ -28,7 +28,7 @@ class ColorPicker(Gtk.ColorButton):
         return color_hex
 
     def update_color(self):
-        color = self.color
+        color = self.get_color()
         self.set_css_classes([f"button_{color[1:]}", "flat"])
         css = f'''
                  .button_{color[1:]} {{

@@ -28,23 +28,4 @@
   <url type="bugtracker">https://github.com/SjoerdB93/DatMan/issues</url>
   <url type="help">https://github.com/SjoerdB93/DatMan/</url>
   <url type="homepage">https://www.sjoerd.se</url>
-  
-  <releases>
-    
-    <release version="1.0.0" date="2022-09-10">
-      <description>
-        <ul>
-          <li>Initial release</li>
-        </ul>
-      </description>
-    </release>
-  </releases>
-  
-  <recommends>
-  <control>keyboard</control>
-  <control>pointing</control>
-</recommends>
 
-  <content_rating type="oars-1.1" />
-
-</component>

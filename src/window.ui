@@ -227,6 +227,7 @@
         </child>
         <child>
          <object class="GtkEntry" id="translate_x_entry">
+          <property name="placeholder-text">0</property>"
           <property name="margin-top">5</property>
           <property name="margin-end">5</property>
           <property name="max-width-chars">6</property>
@@ -253,6 +254,7 @@
         <child>
          <object class="GtkEntry" id="translate_y_entry">
           <property name="margin-top">5</property>
+          <property name="placeholder-text">0</property>"
           <property name="max-width-chars">6</property>
           <property name="margin-end">5</property>
           <layout>
@@ -278,6 +280,7 @@
         <child>
          <object class="GtkEntry" id="multiply_x_entry">
           <property name="margin-top">5</property>
+          <property name="placeholder-text">1</property>"
           <property name="max-width-chars">6</property>
           <layout>
            <property name="column">3</property>
@@ -302,6 +305,7 @@
         <child>
          <object class="GtkEntry" id="multiply_y_entry">
           <property name="margin-top">5</property>
+          <property name="placeholder-text">1</property>"
           <property name="max-width-chars">6</property>
           <layout>
            <property name="column">3</property>
@@ -311,14 +315,27 @@
          </object>
         </child>
         <child>
+         <object class="GtkButton" id="transform_data_button">
+          <property name="label">Transform data</property>
+          <property name="action-name">app.transform_data</property>
+          <property name="margin-end">5</property>
+          <property name="margin-top">5</property>
+          <layout>
+           <property name="column">0</property>
+           <property name="row">10</property>
+           <property name="column-span">2</property>
+          </layout>
+         </object>
+        </child>
+        <child>
          <object class="GtkButton" id="save_data_button">
           <property name="label">Save data</property>
           <property name="action-name">app.save_data</property>
           <property name="margin-top">5</property>
           <layout>
-           <property name="column">0</property>
+           <property name="column">2</property>
            <property name="row">10</property>
-           <property name="column-span">4</property>
+           <property name="column-span">2</property>
           </layout>
          </object>
         </child>
@@ -334,7 +351,7 @@
        <object class="GtkBox" id="drawing_layout">
         <property name="hexpand-set">True</property>
         <property name="hexpand">True</property>
-        <property name="width-request">600</property>
+        <property name="width-request">500</property>
         <property name="orientation">vertical</property>
         <child/>
        </object>

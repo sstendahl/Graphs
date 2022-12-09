@@ -23,7 +23,6 @@ class SampleBox(Gtk.Box):
         return (rgba.red, rgba.green, rgba.blue, rgba.alpha)
 
     def clicked(self,gesture,_ ,xpos, ypos, datman):
-        print("Aa")
         self.css = self.get_css()
         if not self.selected:
             self.selected = True

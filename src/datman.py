@@ -15,16 +15,40 @@ from matplotlib.backends.backend_gtk4 import (
 gi.require_version('Adw', '1')
 gi.require_version('Gtk', '4.0')
 
+def get_theme_color(self):
+    win = self.props.active_window
+    styles = win.get_style_context()
+    rgba = styles.lookup_color('theme_bg_color')[1]
+    rgba_tuple = (round(rgba.red*255), round(rgba.green*255), round(rgba.blue*255), round(rgba.alpha*255))
+    color_hex = '#{:02x}{:02x}{:02x}'.format(*rgba_tuple)
+    return color_hex
+
+def get_dict_by_value(dictionary, value):
+    new_dict = dict((v, k) for k, v in dictionary.items())
+    if value == "none":
+        return "none"
+    return new_dict[value]
+
+
 def open_selection(self, files, from_dictionary = False):
+    if self.highlight is not None:
+        plotting_tools.hide_highlight(self)
     if from_dictionary:
         for key, item in self.datadict.items():
             if item is not None:
                 if self.item_rows[key].selected == True:
-                    linewidth = 3
+                    linewidth = self.preferences.config["selected_linewidth"]
+                    linestyle = self.preferences.config["plot_selected_linestyle"]
+                    marker = self.preferences.config["plot_selected_markers"]
+                    marker_size = self.preferences.config["plot_selected_marker_size"]
                 else:
-                    linewidth = 1.5
+                    linewidth = self.preferences.config["unselected_linewidth"]
+                    linestyle = self.preferences.config["plot_unselected_linestyle"]
+                    marker = self.preferences.config["plot_unselected_markers"]
+                    marker_size = self.preferences.config["plot_unselected_marker_size"]
                 color = self.item_rows[key].color_picker.color
-                plotting_tools.plot_figure(self, self.canvas, item.xdata,item.ydata, item.filename, linewidth = linewidth, color = color)
+
+                plotting_tools.plot_figure(self, self.canvas, item.xdata,item.ydata, item.filename, linewidth = linewidth, linestyle=linestyle, color = color, marker = marker, marker_size = marker_size)
     else:
         for path in files:
             if path != "":
@@ -54,10 +78,12 @@ def turn_off_clipboard_buttons(self):
 
 def toggle_darkmode(shortcut, theme, widget, self):
     win = self.props.active_window
-    key = list(self.datadict.keys())[0]
-    item = self.item_rows[key]
-    item.set_css(item.get_css())
+    if len(self.datadict) > 0:
+        key = list(self.datadict.keys())[0]
+        item = self.item_rows[key]
+        item.set_css(item.get_css())
     plotting_tools.reload_plot(self)
+
 
 def select_top_row(self):
     win = self.props.active_window
@@ -142,10 +168,12 @@ def add_sample_to_menu(self, filename, color):
     row.sample_box.append(row.delete_button)
     row.delete_button.connect("clicked", delete, self, filename)
     row.color_picker.connect("color-set", row.color_picker.on_color_set, self)
-    max_length = int(45)
+    max_length = int(35)
     if len(filename) > max_length:
-        filename = f"{filename[:max_length]}..."
-    row.sample_ID_label.set_text(filename)
+        label = f"{filename[:max_length]}..."
+    else:
+        label = filename
+    row.sample_ID_label.set_text(label)
     self.item_rows[filename] = row
     self.sample_box.append(row)
 
@@ -231,7 +259,9 @@ def on_open_response(dialog, response, self):
 def load_empty(self):
     win = self.props.active_window
     layout = win.drawing_layout
-    self.canvas = PlotWidget(xlabel="X value", ylabel="Y Value")
+    xlabel = self.preferences.config["plot_X_label"]
+    ylabel = self.preferences.config["plot_Y_label"]
+    self.canvas = PlotWidget(parent = self, xlabel=xlabel, ylabel=ylabel)
     clear_layout(self)
     create_layout(self, self.canvas, layout)
 
@@ -250,5 +280,8 @@ def create_layout(self, canvas, layout):
     self.toolbar = toolbar.GraphToolbar(canvas, self)
     layout.append(canvas)
     layout.append(self.toolbar)
+
+
+
 
 

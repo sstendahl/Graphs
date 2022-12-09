@@ -24,6 +24,7 @@ def get_selected_keys(self):
     return selected_keys
 
 def add_to_clipboard(self):
+    print(self)
     undo_button = self.props.active_window.undo_button
     undo_button.set_sensitive(True)
     for key, item in self.datadict.items():
@@ -41,18 +42,12 @@ def undo(widget, shortcut, self):
     redo_button = self.props.active_window.redo_button
     for key, item in self.datadict.items():
         if abs(item.clipboard_pos) < len(item.xdata_clipboard):
+            redo_button.set_sensitive(True)
             item.clipboard_pos -= 1
             item.xdata = item.xdata_clipboard[item.clipboard_pos]
             item.ydata = item.ydata_clipboard[item.clipboard_pos]
     if abs(item.clipboard_pos) >= len(item.xdata_clipboard):
         undo_button.set_sensitive(False)
-        redo_button.set_sensitive(True)
-
-
-    print("-----------------")
-    print(item.clipboard_pos)
-    print(len(item.xdata_clipboard))
-    print("-----------------")
     plotting_tools.refresh_plot(self)
 
 def redo(widget, shortcut, self):
@@ -60,16 +55,12 @@ def redo(widget, shortcut, self):
     redo_button = self.props.active_window.redo_button
     for key, item in self.datadict.items():
         if item.clipboard_pos < 0:
+            undo_button.set_sensitive(True)
             item.clipboard_pos += 1
             item.xdata = item.xdata_clipboard[item.clipboard_pos]
             item.ydata = item.ydata_clipboard[item.clipboard_pos]
     if item.clipboard_pos >= -1:
         redo_button.set_sensitive(False)
-        undo_button.set_sensitive(True)
-    print("-----------------")
-    print(item.clipboard_pos)
-    print(len(item.xdata_clipboard))
-    print("-----------------")
     plotting_tools.refresh_plot(self)
 
 
@@ -276,4 +267,5 @@ def center_data_calculation(xdata, ydata):
     middle_value = xdata[middle_index]
     xdata = [coordinate - middle_value for coordinate in xdata]
     return xdata
+
 
