@@ -32,5 +32,6 @@
 "plot_tick_left": true,
 "plot_tick_right": false,
 "plot_tick_bottom": true,
-"plot_tick_top": false
+"plot_tick_top": false,
+"center_data": "Center at middle coordinate"
 }

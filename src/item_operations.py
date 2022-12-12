@@ -24,7 +24,6 @@ def get_selected_keys(self):
     return selected_keys
 
 def add_to_clipboard(self):
-    print(self)
     undo_button = self.props.active_window.undo_button
     undo_button.set_sensitive(True)
     for key, item in self.datadict.items():
@@ -254,17 +253,23 @@ def normalize(ydata):
 def center_data(shortcut, _, self):
     selected_keys = get_selected_keys(self)
     for key in selected_keys:
-        self.datadict[key].xdata = center_data_calculation(self.datadict[key].xdata, self.datadict[key].ydata)
-        self.startx = 0
-        self.stopx = 0
+        if self.preferences.config["center_data"] == "Center at maximum Y value":
+            self.datadict[key].xdata = center_data_max_Y(self.datadict[key].xdata, self.datadict[key].ydata)
+        elif self.preferences.config["center_data"] == "Center at middle coordinate":
+            self.datadict[key].xdata = center_data_middle(self.datadict[key].xdata, self.datadict[key].ydata)
     add_to_clipboard(self)
     plotting_tools.refresh_plot(self)
 
 
-def center_data_calculation(xdata, ydata):
+def center_data_max_Y(xdata, ydata):
     max_value = max(ydata)
     middle_index = ydata.index(max_value)
     middle_value = xdata[middle_index]
+    xdata = [coordinate - middle_value for coordinate in xdata]
+    return xdata
+
+def center_data_middle(xdata, ydata):
+    middle_value = (min(xdata) + max(xdata)) / 2
     xdata = [coordinate - middle_value for coordinate in xdata]
     return xdata
 

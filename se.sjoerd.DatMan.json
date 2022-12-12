@@ -33,7 +33,7 @@
             "sources" : [
                 {
                     "type" : "git",
-                    "url" : "file:///var/home/sjoerd/Projects"
+                    "url" : "file:///var/home/sjoerd/Projects/datman/src"
                 }
             ]
         }

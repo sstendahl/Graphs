@@ -87,6 +87,7 @@ class PreferencesWindow(Adw.PreferencesWindow):
     plot_selected_marker_size = Gtk.Template.Child()
     plot_unselected_marker_size = Gtk.Template.Child()
     plot_font_chooser = Gtk.Template.Child()
+    center_data_chooser = Gtk.Template.Child()
 
     def __init__(self, parent):
         super().__init__()
@@ -142,6 +143,7 @@ class PreferencesWindow(Adw.PreferencesWindow):
         self.plot_X_label.set_text(config["plot_X_label"])
         self.plot_title.set_text(config["plot_title"])
         self.set_chooser(self.savefig_filetype_chooser, config["savefig_filetype"])
+        self.set_chooser(self.center_data_chooser, config["center_data"])
         self.set_chooser(self.plot_X_scale, config["plot_X_scale"])
         self.set_chooser(self.plot_Y_scale, config["plot_Y_scale"])
      #   self.set_chooser(self.plot_font_chooser, config["plot_font_family"])
@@ -194,7 +196,6 @@ class PreferencesWindow(Adw.PreferencesWindow):
         font_list = []
         for font in available_fonts:
             font_list.append(font)
-        print(matplotlib.font_manager.findSystemFonts(fontpaths=None, fontext='ttf'), sep="")
         return sorted(font_list)
 
     def set_config(self, parent):
@@ -225,12 +226,12 @@ class PreferencesWindow(Adw.PreferencesWindow):
         config["plot_font_style"] = font_style
         config["plot_font_weight"] = font_weight
         config["plot_font_family"] = self.plot_font_chooser.get_font_desc().get_family()
-     #   config["plot_font_family"] = self.plot_font_chooser.get_selected_item().get_string()
         config["plot_title"] = self.plot_title.get_text()
         config["savefig_filetype"] = self.savefig_filetype_chooser.get_selected_item().get_string()
         config["plot_color_cycle"] = self.plot_color_cycle.get_selected_item().get_string()
         config["plot_X_scale"] = self.plot_X_scale.get_selected_item().get_string()
         config["plot_Y_scale"] = self.plot_Y_scale.get_selected_item().get_string()
+        config["center_data"] = self.center_data_chooser.get_selected_item().get_string()
         config["plot_selected_linestyle"] = self.plot_selected_linestyle_chooser.get_selected_item().get_string()
         config["plot_tick_direction"] = self.plot_tick_direction.get_selected_item().get_string()
         config["plot_unselected_linestyle"] = self.plot_unselected_linestyle_chooser.get_selected_item().get_string()

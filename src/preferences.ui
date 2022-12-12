@@ -525,13 +525,13 @@
       <object class="AdwPreferencesPage">
         <property name="visible">True</property>
         <property name="can-focus">False</property>
-        <property name="icon-name">document-save-symbolic</property>
-        <property name="title">Saved plots</property>
+        <property name="icon-name">applications-system-symbolic</property>
+        <property name="title">General</property>
         <child>
           <object class="AdwPreferencesGroup">
             <property name="visible">True</property>
             <property name="can-focus">False</property>
-            <property name="title" translatable="yes">General</property>
+            <property name="title" translatable="yes">Saved plots</property>
             <property name="description" translatable="yes">General settings for the saved graphs</property>
             <child>
               <object class="AdwActionRow">
@@ -557,14 +557,6 @@
                 </child>
               </object>
             </child>
-          </object>
-          </child>
-          <child>
-          <object class="AdwPreferencesGroup">
-            <property name="visible">True</property>
-            <property name="can-focus">False</property>
-            <property name="title" translatable="yes">Background</property>
-            <property name="description" translatable="yes">Background properties of the saved plot</property>
             <child>
               <object class="AdwActionRow">
                 <property name="visible">True</property>
@@ -575,6 +567,36 @@
                 <child>
                   <object class="GtkCheckButton" id="savefig_transparent_check_button">
                     <property name="halign">end</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+          </child>
+          <child>
+          <object class="AdwPreferencesGroup">
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="title" translatable="yes">Action behaviour</property>
+            <property name="description" translatable="yes">Preset behaviour of specific actions</property>
+            <child>
+              <object class="AdwActionRow">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="title" translatable="yes">Center data</property>
+                <property name="subtitle" translatable="yes">Choose the default behaviour of the center data button</property>
+                <property name="use-underline">True</property>
+                <child>
+                  <object class="GtkDropDown" id="center_data_chooser">
+                    <property name="valign">center</property>
+                    <property name="model">
+                      <object class="GtkStringList">
+                        <items>
+                          <item translatable="yes">Center at maximum Y value</item>
+                          <item translatable="yes">Center at middle coordinate</item>
+                        </items>
+                      </object>
+                    </property>
                   </object>
                 </child>
               </object>
