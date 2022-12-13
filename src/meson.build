@@ -22,6 +22,7 @@ configure_file(
   output: 'datman',
   configuration: conf,
   install: true,
+  install_mode: 'rwxrwxrwx',
   install_dir: get_option('bindir')
 )
 
@@ -56,6 +57,7 @@ datman_sources = [
   'change-yscale-symbolic.svg',
   'change-xscale-dark-symbolic.svg',
   'change-yscale-dark-symbolic.svg',
+  'datman.in',
 ]
 
-install_data(datman_sources, install_dir: moduledir)
+install_data(datman_sources, install_dir: moduledir, install_mode: 'rwxrwxrwx')
