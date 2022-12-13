@@ -22,7 +22,7 @@ configure_file(
   output: 'datman',
   configuration: conf,
   install: true,
-  install_mode: 'rwxrwxrwx',
+  install_mode: 'rwxr--r--',
   install_dir: get_option('bindir')
 )
 
