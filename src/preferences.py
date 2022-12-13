@@ -91,6 +91,7 @@ class PreferencesWindow(Adw.PreferencesWindow):
 
     def __init__(self, parent):
         super().__init__()
+        print(self.center_data_chooser)
         self.props.modal = True
         color_cycles =  [
             'Pastel1', 'Pastel2', 'Paired', 'Accent',
@@ -249,5 +250,6 @@ class PreferencesWindow(Adw.PreferencesWindow):
         parent.preferences.config = self.set_config(parent)
         parent.preferences.save_config()
         plotting_tools.reload_plot(parent)
+
 
 

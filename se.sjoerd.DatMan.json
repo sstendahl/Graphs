@@ -28,12 +28,12 @@
     	"python3-matplotlib.json",
         {
             "name" : "datman",
-            "builddir" : true,
             "buildsystem" : "meson",
             "sources" : [
                 {
                     "type" : "git",
-                    "url" : "file:///var/home/sjoerd/Projects/datman/src"
+                    "url" : "https://github.com/SjoerdB93/DatMan.git",
+                    "branch": "main"
                 }
             ]
         }

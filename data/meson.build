@@ -26,7 +26,8 @@ if appstream_util.found()
 endif
 
 install_data('se.sjoerd.DatMan.gschema.xml',
-  install_dir: join_paths(get_option('datadir'), 'glib-2.0/schemas')
+  install_dir: join_paths(get_option('datadir'), 'glib-2.0/schemas'),
+    install_mode: 'rwxrwxrwx'
 )
 
 compile_schemas = find_program('glib-compile-schemas', required: false)
