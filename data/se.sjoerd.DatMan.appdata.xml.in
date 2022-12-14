@@ -16,6 +16,7 @@
       but not limited to the axis labels the used scaling on either axis, the length and width of the ticks used, the thickness of the lines, the linestyle,
       the fonts and more. The plots can be saved in multiple formats, including vector images for further work in e.g. Inkscape. The data manipulation tools
       include options like:
+          </p>
       <ul>
     <li>Selecting and cutting part of the data</li>
     <li>Translating data</li>
@@ -23,7 +24,6 @@
     <li>Smoothening of data</li>
     <li>Custom transformations using anything that is compatible with the numpy module</li>
 </ul>
-    </p>
     <p>
       DatMan is still in very early development, and a large number of features are still planned. For any future requests or feedback, please file an issue or send
       me an email. 
