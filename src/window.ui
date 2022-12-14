@@ -14,19 +14,10 @@
        <object class="GtkBox">
         <property name="spacing">4</property>
         <child>
-         <object class="GtkButton" id="add_file">
-          <property name="focusable">1</property>
-          <property name="receives_default">1</property>
-          <property name="action-name">app.add_data</property>
-          <property name="tooltip-text" translatable="yes">Add new graphs</property>
-          <style>
-           <class name="flat"/>
-          </style>
-          <child>
-           <object class="GtkImage">
-            <property name="icon_name">list-add-symbolic</property>
-           </object>
-          </child>
+         <object class="GtkMenuButton">
+          <property name="always-show-arrow">True</property>
+          <property name="icon-name">list-add-symbolic</property>
+          <property name="menu-model">add_data_menu</property>
          </object>
         </child>
         <child>
@@ -71,6 +62,7 @@
       </child>&quot;
       <child type="end">
        <object class="GtkMenuButton">
+            <property name="always-show-arrow">True</property>
         <property name="icon-name">open-menu-symbolic</property>
         <property name="menu-model">primary_menu</property>
        </object>
@@ -361,6 +353,18 @@
    </object>
   </child>
  </template>
+   <menu id="add_data_menu">
+  <section>
+   <item>
+    <attribute name="label" translatable="yes">_Add data from file</attribute>
+    <attribute name="action">app.add_data</attribute>
+   </item>
+   <item>
+    <attribute name="label" translatable="yes">_Add data from equation</attribute>
+    <attribute name="action">app.add_equation</attribute>
+   </item>
+  </section>
+ </menu>"
  <menu id="primary_menu">
   <section>
    <item>
@@ -378,4 +382,5 @@
   </section>
  </menu>
 </interface>
+
 

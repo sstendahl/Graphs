@@ -71,7 +71,6 @@ def set_canvas_limits(self, canvas, limits = {"xmin":None, "xmax":None, "ymin":N
         graph_limits["xmin"] -= 0.015*span
         graph_limits["xmax"] += 0.015*span
     if self.canvas.ax.get_yscale() == "linear":
-        graph_limits["ymin"] *=  0.000
         graph_limits["ymax"] *=  1.05
     else:
         graph_limits["ymin"] *= 0.5

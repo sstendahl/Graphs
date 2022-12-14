@@ -28,7 +28,7 @@ gi.require_version('Adw', '1')
 from gi.repository import Gtk, Gio, Adw
 from .window import DatManWindow
 import matplotlib.pyplot as plt
-from . import datman, plotting_tools, item_operations, transform_data, preferences
+from . import datman, plotting_tools, item_operations, transform_data, preferences, add_equation
 
 class DatManApplication(Adw.Application):
     """The main application singleton class."""
@@ -65,6 +65,7 @@ class DatManApplication(Adw.Application):
         self.create_action('redo', item_operations.redo, ['<primary><shift>Z'], self)
         self.create_action('select_none', datman.select_none, None, self)
         self.create_action('transform_data', transform_data.open_transform_window, None, self)
+        self.create_action('add_equation', add_equation.open_add_equation_window, ['<primary>E'], self)
         self.create_action('select_data_toggle', plotting_tools.toggle_highlight, None, self)
         Adw.StyleManager.get_default().connect("notify", datman.toggle_darkmode, None, self)
 

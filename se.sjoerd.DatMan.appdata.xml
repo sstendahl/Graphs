@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <component type="desktop-application">
   <id>se.sjoerd.DatMan</id>
   <metadata_license>CC0-1.0</metadata_license>
@@ -27,24 +27,19 @@
       me an email. 
     </p>
   </description>
-
   <launchable type="desktop-id">se.sjoerd.DatMan.desktop</launchable>
-  
   <url type="bugtracker">https://github.com/SjoerdB93/DatMan/issues</url>
   <url type="help">https://github.com/SjoerdB93/DatMan/</url>
   <url type="homepage">https://www.sjoerd.se</url>
-  
-    <screenshot type="default">
-      <caption>GIScan settings</caption>
-      <image>http://www.sjoerd.se/datman_main.png</image>
-    </screenshot>
-    
-     <screenshot type="default">
-      <caption>GIScan settings</caption>
-      <image>http://www.sjoerd.se/datman_light_dark.png</image>
-    </screenshot>
-
-    <releases>
+  <screenshot type="default">
+    <caption>GIScan settings</caption>
+    <image>http://www.sjoerd.se/datman_main.png</image>
+  </screenshot>
+  <screenshot type="default">
+    <caption>GIScan settings</caption>
+    <image>http://www.sjoerd.se/datman_light_dark.png</image>
+  </screenshot>
+  <releases>
     <release version="1.0.0" date="2022-12-20">
       <description>
         <ul>
@@ -53,12 +48,9 @@
       </description>
     </release>
   </releases>
-
   <recommends>
-  <control>keyboard</control>
-  <control>pointing</control>
-</recommends>
-
+    <control>keyboard</control>
+    <control>pointing</control>
+  </recommends>
   <content_rating type="oars-1.1" />
-
 </component>
