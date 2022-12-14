@@ -30,6 +30,10 @@
 
   <launchable type="desktop-id">se.sjoerd.DatMan.desktop</launchable>
   
+  <url type="bugtracker">https://github.com/SjoerdB93/DatMan/issues</url>
+  <url type="help">https://github.com/SjoerdB93/DatMan/</url>
+  <url type="homepage">https://www.sjoerd.se</url>
+  
     <screenshot type="default">
       <caption>GIScan settings</caption>
       <image>http://www.sjoerd.se/datman_main.png</image>
@@ -49,7 +53,12 @@
       </description>
     </release>
   </releases>
-  <url type="bugtracker">https://github.com/SjoerdB93/DatMan/issues</url>
-  <url type="help">https://github.com/SjoerdB93/DatMan/</url>
-  <url type="homepage">https://www.sjoerd.se</url>
 
+  <recommends>
+  <control>keyboard</control>
+  <control>pointing</control>
+</recommends>
+
+  <content_rating type="oars-1.1" />
+
+</component>
