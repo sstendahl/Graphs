@@ -45,13 +45,15 @@
       <caption>GIScan settings</caption>
       <image>http://www.sjoerd.se/datman_equations.png</image>
     </screenshot>
-  </screenshots>
-    
-     <screenshot type="default">
+   
+         <screenshot type="default">
       <caption>GIScan settings</caption>
       <image>http://www.sjoerd.se/datman_light_dark.png</image>
     </screenshot>
   </screenshots>
+    
+  </screenshots>
+    
 
     <releases>
     <release version="1.0.0" date="2022-12-14">
