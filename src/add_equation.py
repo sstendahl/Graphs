@@ -39,7 +39,7 @@ def create_data(self, x_start, x_stop, equation, step_size, name):
     if name == "":
         name = f"Y = {str(equation)}"
     datapoints = int(abs(x_start - x_stop)/step_size)
-    new_file.xdata = linspace(x_start,x_stop,datapoints)
+    new_file.xdata =  ndarray.tolist(linspace(x_start,x_stop,datapoints))    
     equation = equation.replace("X", "new_file.xdata")
     equation = equation.replace("^", "**")
     new_file.ydata = eval(equation)
