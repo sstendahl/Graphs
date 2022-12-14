@@ -33,7 +33,7 @@
   <url type="bugtracker">https://github.com/SjoerdB93/DatMan/issues</url>
   <url type="help">https://github.com/SjoerdB93/DatMan/</url>
   <url type="homepage">https://www.sjoerd.se</url>
-  
+  <screenshots>
     <screenshot type="default">
       <caption>GIScan settings</caption>
       <image>http://www.sjoerd.se/datman_main.png</image>
@@ -43,6 +43,7 @@
       <caption>GIScan settings</caption>
       <image>http://www.sjoerd.se/datman_light_dark.png</image>
     </screenshot>
+  </screenshots>
 
     <releases>
     <release version="1.0.0" date="2022-12-20">
