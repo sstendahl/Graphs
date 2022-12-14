@@ -4,34 +4,48 @@
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPL-3.0-or-later</project_license>
   <name>DatMan</name>
-  <summary>Plot and manipulate data in a breeze!</summary>
+  <summary>Plot and manipulate data in a breeze</summary>
   <developer_name>Sjoerd Broekhuijsen</developer_name>
   <description>
     <p>
-      GIScan is a simple tool to open and analyze data stored in cbf (Crystallographic Binary Format) files. While
-      GIScan is primarily developed with the analyis of GISAXS data in mind, as obtained by the P03 beamline of PETRA
-      III at the DESY Synchrotron in Hamburg, Germany, it should be compatible with any arbitrary cbf data.
-      </p>
+      DatMan is a simple but powerful data manipulation tool developed with the Gnome environment in mind. It opens and plots two column data files
+      which then easily can be manipulated and transformed. The transformed data can be saved as .txt file for further use.
+    </p>
     <p>
-      GIScan handles raw data directly and doesn't need any a-priori data reduction. It supports features such as
-      background subtraction, line scans along the Qy and Qz axis, detection of the full-width at half-maximum (FWHM)
-      of diffraction peaks and coordinate conversion from pixels to reciprocal or angular space. </p>
+      DatMan can both be used as plotting tool, or as a data manipulation tool. There's an extensive number of options to change the plot layouts including,
+      but not limited to the axis labels the used scaling on either axis, the length and width of the ticks used, the thickness of the lines, the linestyle,
+      the fonts and more. The plots can be saved in multiple formats, including vector images for further work in e.g. Inkscape. The data manipulation tools
+      include options like:
+      - Selecting and cutting part of the data
+      - Translating data
+      - Center data
+      - Smoothening of data
+      - Custom transformations using anything that is compatible with the numpy module
+    </p>
     <p>
-      GIScan is mostly developed with the analysis of multilayers in mind but can be used for any arbitrary data stored
-      in cbf format. If a beamline or datatype (be it GISAXS or GISANS) is not supported and you would like to use this
-      tool, please submit an issue on the Github page so this can be arranged.
+      DatMan is still in very early development, and a large number of features are still planned. For any future requests or feedback, please file an issue or send
+      me an email. 
     </p>
   </description>
 
   <launchable type="desktop-id">se.sjoerd.DatMan.desktop</launchable>
-
+  
   <url type="bugtracker">https://github.com/SjoerdB93/DatMan/issues</url>
   <url type="help">https://github.com/SjoerdB93/DatMan/</url>
   <url type="homepage">https://www.sjoerd.se</url>
   
-  <releases>
+    <screenshot type="default">
+      <caption>GIScan settings</caption>
+      <image>http://www.sjoerd.se/datman_main.png</image>
+    </screenshot>
     
-    <release version="1.0.0" date="2022-09-10">
+     <screenshot type="default">
+      <caption>GIScan settings</caption>
+      <image>http://www.sjoerd.se/datman_light_dark.png</image>
+    </screenshot>
+
+    <releases>
+    <release version="1.0.0" date="2022-12-20">
       <description>
         <ul>
           <li>Initial release</li>
@@ -39,7 +53,7 @@
       </description>
     </release>
   </releases>
-  
+
   <recommends>
   <control>keyboard</control>
   <control>pointing</control>
