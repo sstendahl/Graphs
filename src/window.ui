@@ -375,7 +375,7 @@
     <attribute name="action">win.show-help-overlay</attribute>
    </item>
    <item>
-    <attribute name="label" translatable="yes">_About Graphene</attribute>
+    <attribute name="label" translatable="yes">_About Graphs</attribute>
     <attribute name="action">app.about</attribute>
    </item>
   </section>
