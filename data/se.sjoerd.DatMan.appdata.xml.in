@@ -8,7 +8,7 @@
   <developer_name>Sjoerd Broekhuijsen</developer_name>
   <description>
     <p>
-      Graphs is a simple but powerful data manipulation tool developed with the Gnome environment in mind. It opens and plots two-column data files
+      Graphs is a simple but powerful data manipulation tool developed with the GNOME environment in mind. It opens and plots two-column data files
       which then easily can be manipulated and transformed. Alternatively, data can be generated and plotted from an equation. The transformed data can be saved as .txt file for further use.
     </p>
     <p>
@@ -55,7 +55,7 @@
       <release version="1.0.2" date="2022-12-15">
       <description>
         <ul>
-          <li>Changed the name of the application to be more in line with the Gnome HIG</li>
+          <li>Changed the name of the application to be more in line with the GNOME HIG</li>
           <li>Transformation window can be closed with escape</li>
           <li>Fixed a bug where graph would not plot if any of the values where infinite (e.g. if equation Y = 1/X was plotted)</li>
           <li>Step-size, X-start and X-stop in add-equation window now also handle numpy notation</li>
