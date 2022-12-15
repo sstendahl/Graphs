@@ -92,7 +92,7 @@ class DatManApplication(Adw.Application):
                                 website='http://www.sjoerd.se',
                                 developer_name='Sjoerd Broekhuijsen',
                                 issue_url="https://github.com/SjoerdB93/DatMan/issues",
-                                version='1.0.0',
+                                version='1.0.1',
                                 developers=['Sjoerd Broekhuijsen <contact@sjoerd.se>'],
                                 copyright='© 2022 Sjoerd Broekhuijsen',
                                 license_type="GTK_LICENSE_GPL_3_0")
