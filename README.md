@@ -1,9 +1,9 @@
-# Data Manipulator
+# Graphs
 
-Data Manipulator is a simple but powerful data manipulation tool developed with the Gnome environment in mind. It opens and plots two column data files
+Graphs is a simple but powerful data manipulation tool developed with the Gnome environment in mind. It opens and plots two column data files
 which then easily can be manipulated and transformed. The transformed data can be saved as .txt file for further use.
 
-Data Manipulator can both be used as plotting tool, or as a data manipulation tool. There's an extensive number of options to change the plot layouts including,
+Graphs can both be used as plotting tool, or as a data manipulation tool. There's an extensive number of options to change the plot layouts including,
 but not limited to the axis labels the used scaling on either axis, the length and width of the ticks used, the thickness of the lines, the linestyle,
 the fonts and more. The plots can be saved in multiple formats, including vector images for further work in e.g. Inkscape. The data manipulation tools
 include options like:
@@ -13,5 +13,5 @@ include options like:
   - Smoothening of data
   - Custom transformations using anything that is compatible with the numpy module
 
-Data Manipulator is still in very early development, and a large number of features are still planned. For any future requests or feedback, please file an issue or send
+Graphs is still in very early development, and a large number of features are still planned. For any future requests or feedback, please file an issue or send
 me an email. 

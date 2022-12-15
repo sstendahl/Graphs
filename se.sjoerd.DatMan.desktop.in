@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Graphs
+Exec=datman
+Icon=se.sjoerd.DatMan
+Terminal=false
+Type=Application
+Categories=GTK;
+StartupNotify=true
