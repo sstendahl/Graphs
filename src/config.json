@@ -2,7 +2,7 @@
 "unselected_linewidth": 1,
 "savefig_transparent": true,
 "savefig_filetype": "svg",
-"plot_Y_scale": "log",
+"plot_Y_scale": "linear",
 "plot_X_scale": "linear",
 "plot_X_label": "X Value",
 "plot_Y_label": "Y Value",
