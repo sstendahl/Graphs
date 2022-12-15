@@ -91,7 +91,7 @@ class DatManApplication(Adw.Application):
                                 application_icon='se.sjoerd.DatMan',
                                 website='http://www.sjoerd.se',
                                 developer_name='Sjoerd Broekhuijsen',
-                                issue_url="https://github.com/SjoerdB93/DatMan/issues",
+                                issue_url="https://github.com/SjoerdB93/Graphs/issues",
                                 version='1.0.2',
                                 developers=['Sjoerd Broekhuijsen <contact@sjoerd.se>'],
                                 copyright='© 2022 Sjoerd Broekhuijsen',
