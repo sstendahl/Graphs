@@ -32,8 +32,8 @@
 
   <launchable type="desktop-id">se.sjoerd.DatMan.desktop</launchable>
   
-  <url type="bugtracker">https://github.com/SjoerdB93/DatMan/issues</url>
-  <url type="help">https://github.com/SjoerdB93/DatMan/</url>
+  <url type="bugtracker">https://github.com/SjoerdB93/Graphs/issues</url>
+  <url type="help">https://github.com/SjoerdB93/Graphs/</url>
   <url type="homepage">https://www.sjoerd.se</url>
   <screenshots>
     <screenshot type="default">
