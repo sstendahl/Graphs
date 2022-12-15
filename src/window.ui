@@ -62,7 +62,6 @@
       </child>&quot;
       <child type="end">
        <object class="GtkMenuButton">
-            <property name="always-show-arrow">True</property>
         <property name="icon-name">open-menu-symbolic</property>
         <property name="menu-model">primary_menu</property>
        </object>

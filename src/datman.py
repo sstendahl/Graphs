@@ -178,22 +178,23 @@ def add_sample_to_menu(self, filename, color):
     self.sample_box.append(row)
 
 def save_file_dialog(self, documenttype="Text file (*.txt)"):
-    if len(self.datadict) == 1:
-        self._native = Gtk.FileChooserNative(
+    def save_file_chooser(action):
+        dialog = Gtk.FileChooserNative.new(
             title="Save files",
-            action=Gtk.FileChooserAction.SAVE,
+            parent=self.props.active_window,
+            action=action,
             accept_label="_Save",
-            cancel_label="_Cancel",
         )
+        return dialog
+
+    if len(self.datadict) == 1:
+        save_file_chooser(Gtk.FileChooserAction.SAVE)
     elif len(self.datadict) > 1:
-        self._native = Gtk.FileChooserNative(
-        title="Save files",
-        action=Gtk.FileChooserAction.OPEN,
-        accept_label="_Save",
-        cancel_label="_Cancel",
-    )
-    self._native.connect("response", on_save_response, self)
-    self._native.show()
+        save_file_chooser(Gtk.FileChooserAction.OPEN)
+
+    save_file_chooser.set_modal(True)
+    save_file_chooser.connect("response", on_save_response, self)
+    save_file_chooser.show()
 
 def on_save_response(dialog, response, self):
     files = []
@@ -225,18 +226,18 @@ def save_file(self, path):
             filename = f"{path}/{filename}_edited.txt"
             array = np.stack([xdata, ydata], axis=1)
             np.savetxt(filename, array, delimiter="\t")
-    self._native = None
 
 def open_file_dialog(widget, _, self):
-     self._native = Gtk.FileChooserNative(
+     open_file_chooser = Gtk.FileChooserNative.new(
         title="Open new files",
+        parent=self.props.active_window,
         action=Gtk.FileChooserAction.OPEN,
         accept_label="_Open",
-        cancel_label="_Cancel",
     )
-     self._native.set_select_multiple(True)
-     self._native.connect("response", on_open_response, self)
-     self._native.show()
+     open_file_chooser.set_modal(True)
+     open_file_chooser.set_select_multiple(True)
+     open_file_chooser.connect("response", on_open_response, self)
+     open_file_chooser.show()
 
 def on_open_response(dialog, response, self):
     files = []
@@ -245,15 +246,14 @@ def on_open_response(dialog, response, self):
             file_path = file.peek_path()
             filename = file_path.split("/")[-1]
             files.append(file_path)
-    open_selection(self, files)
-    self.define_highlight = None
-    plotting_tools.define_highlight(self)
-    win = self.props.active_window
-    button = win.select_data_button
-    if not button.get_active():
-        self.highlight.set_visible(False)
-        self.highlight.set_active(False)
-    self._native = None
+        open_selection(self, files)
+        self.define_highlight = None
+        plotting_tools.define_highlight(self)
+        win = self.props.active_window
+        button = win.select_data_button
+        if not button.get_active():
+            self.highlight.set_visible(False)
+            self.highlight.set_active(False)
 
 
 def load_empty(self):
