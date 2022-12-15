@@ -57,6 +57,9 @@
         <ul>
           <li>Changed the name of the application to be more in line with the Gnome HIG</li>
           <li>Transformation window can be closed with escape</li>
+          <li>Fixed a bug where graph would not plot if any of the values where infinite (e.g. if equation Y = 1/X was plotted)</li>
+          <li>Step-size, X-start and X-stop in add-equation window now also handle numpy notation</li>
+
         </ul>
       </description>
     </release>
