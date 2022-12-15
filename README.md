@@ -2,7 +2,7 @@
 
 # Graphs
 
-Graphs is a simple but powerful data manipulation tool developed with the Gnome environment in mind. It opens and plots two column data files
+Graphs is a simple but powerful data manipulation tool developed with the GNOME environment in mind. It opens and plots two column data files
 which then easily can be manipulated and transformed. The transformed data can be saved as .txt file for further use.
 
 Graphs can both be used as plotting tool, or as a data manipulation tool. There's an extensive number of options to change the plot layouts including,
