@@ -7,6 +7,16 @@
    <property name="default-width">256</property>
   <property name="default-height">125</property>
   <child>
+   <object class="GtkShortcutController">
+    <child>
+     <object class="GtkShortcut">
+      <property name="trigger">Escape</property>
+      <property name="action">action(window.close)</property>
+     </object>
+    </child>
+   </object>
+  </child>
+  <child>
    <object class="GtkBox">
     <property name="orientation">vertical</property>
     <child>
@@ -31,6 +41,7 @@
         </child>
         <child>
          <object class="GtkEntry" id="name_entry">
+          <property name="placeholder-text">Leave blank to use equation as name</property>
           <property name="margin-top">5</property>
           <property name="margin-end">10</property>
           <property name="text"></property>

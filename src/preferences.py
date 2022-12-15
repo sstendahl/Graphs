@@ -10,6 +10,7 @@ import matplotlib.font_manager
 def open_preferences_window(widget, _, self):
     win = PreferencesWindow(self)
     self.preferences.load_config()
+    win.set_transient_for(self.props.active_window)
     win.present()
 
 
