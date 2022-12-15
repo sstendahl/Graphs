@@ -87,7 +87,7 @@ class DatManApplication(Adw.Application):
     def on_about_action(self, _widget, _):
         """Callback for the app.about action."""
         about = Adw.AboutWindow(transient_for=self.props.active_window,
-                                application_name='DatMan',
+                                application_name='Data Manipulator',
                                 application_icon='se.sjoerd.DatMan',
                                 website='http://www.sjoerd.se',
                                 developer_name='Sjoerd Broekhuijsen',
