@@ -4,7 +4,7 @@
  <template class="DatManWindow" parent="AdwApplicationWindow">
   <property name="default-width">1024</property>
   <property name="default-height">768</property>
-    <property name="title">Graphs</property>
+  <property name="title">Graphs</property>
   <child>
    <object class="GtkBox">
     <property name="orientation">vertical</property>
