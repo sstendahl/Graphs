@@ -52,7 +52,6 @@ def open_selection(self, files, from_dictionary = False):
     else:
         for path in files:
             if path != "":
-
                 item = get_data(path)
                 filename = path.split("/")[-1]
                 item.xdata_clipboard = [item.xdata]
@@ -188,21 +187,22 @@ def save_file_dialog(self, documenttype="Text file (*.txt)"):
         return dialog
 
     if len(self.datadict) == 1:
-        save_file_chooser(Gtk.FileChooserAction.SAVE)
+        chooser = save_file_chooser(Gtk.FileChooserAction.SAVE)
     elif len(self.datadict) > 1:
-        save_file_chooser(Gtk.FileChooserAction.OPEN)
-
-    save_file_chooser.set_modal(True)
-    save_file_chooser.connect("response", on_save_response, self)
-    save_file_chooser.show()
+        chooser = save_file_chooser(Gtk.FileChooserAction.SELECT_FOLDER)
+        
+    if len(self.datadict) == 1:
+        print("YOOO")
+        filename = list(self.datadict.values())[0].filename
+        chooser.set_current_name(f"{filename}.txt")
+    chooser.set_modal(True)
+    chooser.connect("response", on_save_response, self)
+    chooser.show()
 
 def on_save_response(dialog, response, self):
     files = []
     if response == Gtk.ResponseType.ACCEPT:
         path = dialog.get_file().peek_path()
-        if len(self.datadict) > 1:
-            file_name = path.split("/")[-1]
-            path = path[0:-len(file_name)]
         save_file(self, path)
 
 
@@ -212,20 +212,15 @@ def save_file(self, path):
             xdata = item.xdata
             ydata = item.ydata
         filename = path
-        if filename[-4:] != ".txt":
-            filename = filename + ".txt"
         array = np.stack([xdata, ydata], axis=1)
         np.savetxt(filename, array, delimiter="\t")
     elif len(self.datadict) > 1:
-
         for key, item in self.datadict.items():
             xdata = item.xdata
             ydata = item.ydata
             filename = key
-            filename = filename.split(".")[0]
-            filename = f"{path}/{filename}_edited.txt"
             array = np.stack([xdata, ydata], axis=1)
-            np.savetxt(filename, array, delimiter="\t")
+            np.savetxt(path + "/" + filename, array, delimiter="\t")
 
 def open_file_dialog(widget, _, self):
      open_file_chooser = Gtk.FileChooserNative.new(
@@ -280,8 +275,3 @@ def create_layout(self, canvas, layout):
     self.toolbar = toolbar.GraphToolbar(canvas, self)
     layout.append(canvas)
     layout.append(self.toolbar)
-
-
-
-
-
