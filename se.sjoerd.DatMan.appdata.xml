@@ -40,7 +40,21 @@
     <image>http://www.sjoerd.se/datman_light_dark.png</image>
   </screenshot>
   <releases>
-    <release version="1.0.0" date="2022-12-20">
+    <release version="1.0.1" date="2022-12-16">
+      <description>
+        <ul>
+          <li>Add equation window can be closed with Esc</li>
+          <li>File chooser dialog and preference dialogs are modal (stick to parent window</li>
+          <li>Remove arrow from hamburger menu</li>
+          <li>Add a placeholder hint to Add equation window name</li>
+          <li>Changed saving behaviour to allow saving files without file system access for flatpak</li>
+          <li>Fixed a bug in the add equation window where powers were not working</li>
+          <li>Fixed a bug in add equation window where duplicate filenames were not detected properly</li>
+        </ul>
+      </description>
+    </release>
+
+    <release version="1.0.0" date="2022-12-15">
       <description>
         <ul>
           <li>Initial release</li>
