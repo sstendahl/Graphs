@@ -51,9 +51,15 @@
       <image>http://www.sjoerd.se/datman_light_dark.png</image>
     </screenshot>    
   </screenshots>
-    
-
-    <releases>
+     <releases>
+      <release version="1.0.2" date="2022-12-15">
+      <description>
+        <ul>
+          <li>Changed the name of the application to be more in line with the Gnome HIG</li>
+          <li>Transformation window can be closed with escape</li>
+        </ul>
+      </description>
+    </release>
      <release version="1.0.1" date="2022-12-15">
       <description>
         <ul>
