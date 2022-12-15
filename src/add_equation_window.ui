@@ -41,6 +41,7 @@
         </child>
         <child>
          <object class="GtkEntry" id="name_entry">
+          <property name="placeholder-text">Leave blank to use equation as name</property>
           <property name="margin-top">5</property>
           <property name="margin-end">10</property>
           <property name="text"></property>
