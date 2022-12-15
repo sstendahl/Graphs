@@ -75,9 +75,12 @@ def set_canvas_limits(self, canvas, limits = {"xmin":None, "xmax":None, "ymin":N
     else:
         graph_limits["ymin"] *= 0.5
         graph_limits["ymax"] *= 2
-    canvas.ax.set_xlim(graph_limits["xmin"], graph_limits["xmax"])
-    canvas.ax.set_ylim(graph_limits["ymin"], graph_limits["ymax"])
-
+    try:
+        canvas.ax.set_xlim(graph_limits["xmin"], graph_limits["xmax"])
+        canvas.ax.set_ylim(graph_limits["ymin"], graph_limits["ymax"])
+    except ValueError:
+        print("Could not set limits, one of the values was probably infinite")
+        
 def find_limits(self):
     xmin_all = None
     xmax_all = None

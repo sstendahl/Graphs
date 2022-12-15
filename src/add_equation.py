@@ -12,9 +12,9 @@ def open_add_equation_window(widget, _, self):
     win.present()
 
 def on_accept(widget, self, window):
-    x_start = float(window.X_start_entry.get_text())
-    x_stop = float(window.X_stop_entry.get_text())
-    step_size = float(window.step_size_entry.get_text())
+    x_start = window.X_start_entry.get_text()
+    x_stop = window.X_stop_entry.get_text()
+    step_size = window.step_size_entry.get_text()
     equation = str(window.equation_entry.get_text())
     new_file = create_data(self, x_start, x_stop, equation, step_size, str(window.name_entry.get_text()))
     name = new_file.filename
@@ -39,8 +39,8 @@ def create_data(self, x_start, x_stop, equation, step_size, name):
     new_file = Data()
     if name == "":
         name = f"Y = {str(equation)}"
-    datapoints = int(abs(x_start - x_stop)/step_size)
-    new_file.xdata =  linspace(x_start,x_stop,datapoints)
+    datapoints = int(abs(eval(x_start) - eval(x_stop))/eval(step_size))
+    new_file.xdata =  linspace(eval(x_start),eval(x_stop),datapoints)
     equation = equation.replace("X", "new_file.xdata")
     equation = str(equation.replace("^", "**"))
     new_file.ydata = eval(equation)

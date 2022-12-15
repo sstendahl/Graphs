@@ -3,29 +3,29 @@
   <id>se.sjoerd.DatMan</id>
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPL-3.0-or-later</project_license>
-  <name>DatMan</name>
+  <name>Graphs</name>
   <summary>Plot and manipulate data in a breeze</summary>
   <developer_name>Sjoerd Broekhuijsen</developer_name>
   <description>
     <p>
-      DatMan is a simple but powerful data manipulation tool developed using the modern libadwaita. It opens and plots two column data files
+      Graphs is a simple but powerful data manipulation tool developed with the Gnome environment in mind. It opens and plots two-column data files
       which then easily can be manipulated and transformed. Alternatively, data can be generated and plotted from an equation. The transformed data can be saved as .txt file for further use.
     </p>
     <p>
-      DatMan can both be used as plotting tool, or as a data manipulation tool. There's an extensive number of options to change the plot layouts including,
-      but not limited to the axis labels the used scaling on either axis, the length and width of the ticks used, the thickness of the lines, the linestyle,
-      the fonts and more. The plots can be saved in multiple formats, including vector images for further work in e.g. Inkscape. The data manipulation tools
+      Graphs can both be used as plotting tool, or as a data manipulation tool. There's an extensive number of options to change the plot layouts including,
+      but not limited to the axis labels, the prefered scaling on either axis, the length and width of the ticks used, the thickness of the lines, the linestyle,
+      the fonts and more. The plots can be saved in multiple formats, including vector images for further editing in e.g. Inkscape. The data manipulation tools
       include options like:
           </p>
       <ul>
     <li>Selecting and cutting part of the data</li>
-    <li>Translating data</li>
+    <li>Translation and multiplification of data</li>
     <li>Centering data</li>
-    <li>Smoothening of data</li>
+    <li>Smoothening data</li>
     <li>Custom transformations using anything that is compatible with the numpy module</li>
 </ul>
     <p>
-      DatMan is still in very early development, and a large number of features are still planned. For any future requests or feedback, please file an issue or send
+      Graphs is still in very early development, and a large number of features are still planned. For any future requests or feedback, please file an issue on Github or send
       me an email. 
     </p>
   </description>
@@ -51,9 +51,18 @@
       <image>http://www.sjoerd.se/datman_light_dark.png</image>
     </screenshot>    
   </screenshots>
-    
+     <releases>
+      <release version="1.0.2" date="2022-12-15">
+      <description>
+        <ul>
+          <li>Changed the name of the application to be more in line with the Gnome HIG</li>
+          <li>Transformation window can be closed with escape</li>
+          <li>Fixed a bug where graph would not plot if any of the values where infinite (e.g. if equation Y = 1/X was plotted)</li>
+          <li>Step-size, X-start and X-stop in add-equation window now also handle numpy notation</li>
 
-    <releases>
+        </ul>
+      </description>
+    </release>
      <release version="1.0.1" date="2022-12-15">
       <description>
         <ul>

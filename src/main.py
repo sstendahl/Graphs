@@ -87,12 +87,12 @@ class DatManApplication(Adw.Application):
     def on_about_action(self, _widget, _):
         """Callback for the app.about action."""
         about = Adw.AboutWindow(transient_for=self.props.active_window,
-                                application_name='Data Manipulator',
+                                application_name='Graphs',
                                 application_icon='se.sjoerd.DatMan',
                                 website='http://www.sjoerd.se',
                                 developer_name='Sjoerd Broekhuijsen',
                                 issue_url="https://github.com/SjoerdB93/DatMan/issues",
-                                version='1.0.1',
+                                version='1.0.2',
                                 developers=['Sjoerd Broekhuijsen <contact@sjoerd.se>'],
                                 copyright='© 2022 Sjoerd Broekhuijsen',
                                 license_type="GTK_LICENSE_GPL_3_0")
