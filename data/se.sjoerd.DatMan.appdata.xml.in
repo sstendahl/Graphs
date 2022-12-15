@@ -54,7 +54,7 @@
     
 
     <releases>
-     <release version="1.0.1" date="2022-12-16">
+     <release version="1.0.1" date="2022-12-15">
       <description>
         <ul>
           <li>Add equation window can be closed with Esc</li>
