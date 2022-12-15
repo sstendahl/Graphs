@@ -1,3 +1,5 @@
+<a href='https://flathub.org/apps/details/se.sjoerd.DatMan'><img width='180' alt='Download on Flathub' src='https://flathub.org/assets/badges/flathub-badge-en.svg'/></a>
+
 # Graphs
 
 Graphs is a simple but powerful data manipulation tool developed with the Gnome environment in mind. It opens and plots two column data files
