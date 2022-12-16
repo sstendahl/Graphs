@@ -43,7 +43,6 @@ class DatManApplication(Adw.Application):
         plotting_tools.load_fonts(self)
         self.preferences = preferences.Preferences()
         self.connect_actions()
-        print("Connected actions")
 
     def connect_actions(self):
         self.create_action('quit', self.on_quit_action, ['<primary>q'])
