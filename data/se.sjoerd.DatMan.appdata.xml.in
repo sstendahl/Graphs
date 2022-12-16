@@ -52,9 +52,9 @@
     </screenshot>    
   </screenshots>
      <releases>
-    <release version="1.0.3" date="2021-01-16">
+    <release version="1.0.3" date="2022-12-16">
       <description>
-        <p>Minor update with some bug fixes, next update will focus on adding more options for file imports (e.g. skip rows, seperator options and choosing the column for each axis)</p>
+        <p>Minor update with some bug fixes, next update will focus on adding more options for file imports:</p>
         <ul>
           <li>Fixed a bug where files with a special character in the name didn't save</li>
           <li>Fixed a bug where minor ticks would show anyway when ticks were turned off</li>
