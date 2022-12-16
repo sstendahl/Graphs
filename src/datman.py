@@ -206,7 +206,6 @@ def save_file_dialog(self, documenttype="Text file (*.txt)"):
         chooser = save_file_chooser(Gtk.FileChooserAction.SELECT_FOLDER)
         
     if len(self.datadict) == 1:
-        print("YOOO")
         filename = list(self.datadict.values())[0].filename
         chooser.set_current_name(f"{filename}.txt")
     chooser.set_modal(True)
