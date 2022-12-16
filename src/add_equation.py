@@ -21,7 +21,9 @@ def on_accept(widget, self, window):
     if name in self.datadict:
         if self.preferences.config["allow_duplicate_filenames"]:
             name = datman.get_duplicate_filename(self, name)
+
     if name not in self.datadict:
+        new_file.filename = name
         color = plotting_tools.get_next_color(self)
         self.datadict[new_file.filename] = new_file
         datman.add_sample_to_menu(self, new_file.filename, color)
@@ -59,7 +61,7 @@ class AddEquationWindow(Adw.Window):
         self.set_transient_for=(parent.props.active_window)
         self.props.modal = True
         buffer = Gtk.TextBuffer()
-        text1 = "Here you can add add data from an equation\n"
+        text1 = "Here you can add add a data by equation\n"
         text2 = "The equation field uses Numpy notation \n"
         text3 = "Make sure to use a capital letter for the X coordinate"
         buffer.set_text(text1 + text2 + text3)
