@@ -20,7 +20,7 @@ def on_accept(widget, self, window):
     name = new_file.filename
     if name in self.datadict:
         if self.preferences.config["allow_duplicate_filenames"]:
-            datman.add_duplicate_filename()
+            datman.get_duplicate_filename()
     if name not in self.datadict:
         color = plotting_tools.get_next_color(self)
         self.datadict[new_file.filename] = new_file
