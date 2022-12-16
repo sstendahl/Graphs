@@ -57,16 +57,30 @@ def open_selection(self, files, from_dictionary = False):
                 item.xdata_clipboard = [item.xdata]
                 item.ydata_clipboard = [item.ydata]
                 item.clipboard_pos = -1
-                if filename not in self.datadict:
-                    self.datadict[filename] = item
-                    item.filename = filename
-                    color = plotting_tools.get_next_color(self)
-                    plotting_tools.plot_figure(self, self.canvas, item.xdata,item.ydata, item.filename, color)
-                    add_sample_to_menu(self, filename, color)
+                if filename in self.datadict:
+                    if self.preferences.config["allow_duplicate_filenames"]:
+                        filename = get_duplicate_filename(self, filename)
+                    else:
+                        continue
+                self.datadict[filename] = item
+                item.filename = filename
+                color = plotting_tools.get_next_color(self)
+                plotting_tools.plot_figure(self, self.canvas, item.xdata,item.ydata, item.filename, color)
+                add_sample_to_menu(self, filename, color)
         self.canvas.draw()
         plotting_tools.set_canvas_limits(self, self.canvas)
         select_top_row(self)
         turn_off_clipboard_buttons(self)
+
+def get_duplicate_filename(self, name):
+    loop = True
+    i = 0
+    while loop:
+        i += 1
+        new_name = f"{name} ({i})"
+        if new_name not in self.datadict:
+            loop = False
+            return new_name
 
 def turn_off_clipboard_buttons(self):
         win = self.props.active_window
@@ -213,14 +227,14 @@ def save_file(self, path):
             ydata = item.ydata
         filename = path
         array = np.stack([xdata, ydata], axis=1)
-        np.savetxt(filename, array, delimiter="\t")
+        np.savetxt(str(filename), array, delimiter="\t")
     elif len(self.datadict) > 1:
         for key, item in self.datadict.items():
             xdata = item.xdata
             ydata = item.ydata
             filename = key
             array = np.stack([xdata, ydata], axis=1)
-            np.savetxt(path + "/" + filename, array, delimiter="\t")
+            np.savetxt(str(path + "/" + filename), array, delimiter="\t")
 
 def open_file_dialog(widget, _, self):
      open_file_chooser = Gtk.FileChooserNative.new(

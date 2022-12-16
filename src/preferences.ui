@@ -603,8 +603,31 @@
             </child>
           </object>
         </child>
+        <child>
+          <object class="AdwPreferencesGroup">
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="title" translatable="yes">Other</property>
+            <property name="description" translatable="yes">Other general settings</property>
+            <child>
+              <object class="AdwActionRow">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="title" translatable="yes">Allow duplicate filenames</property>
+                <property name="subtitle" translatable="yes">Allow duplicate filenames to be loaded</property>
+                <property name="use-underline">True</property>
+                <child>
+                  <object class="GtkCheckButton" id="allow_duplicates_button">
+                    <property name="halign">end</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+        </child>
       </object>
     </child>"
   </template>
 </interface>
+
 

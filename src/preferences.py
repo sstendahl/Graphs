@@ -18,26 +18,44 @@ class Preferences():
     def __init__(self):
         self.create_new_config_file()
         self.config = self.load_config()
+        self.check_config(self.config)
+
+    def check_config(self, config):
+        template_path = os.path.join(os.getenv("XDG_DATA_DIRS"))
+        template_path = template_path.split(":")[0] + "/datman/datman"
+        os.chdir(template_path)
+        with open("config.json", 'r') as f:
+            template = json.load(f)
+        if set(config.keys()) != set(template.keys()):
+            self.reset_config()
+            return template
+        else:
+            return config
 
     def create_new_config_file(self):
         config_path = self.get_config_path()
-        old_path = os.path.join(os.getenv("XDG_DATA_DIRS"))
-        old_path = old_path.split(":")[0] + "/datman/datman"
         if not os.path.isfile(f"{config_path}/config.json"):
-            if not os.path.isdir(config_path):
-                os.mkdir(config_path)
-            path = config_path + "/config.json"
-            shutil.copy(f"{old_path}/config.json", path)
+            self.reset_config()
             print(f"No configuration file found, new file is created at {config_path}")
         else:
             print("Loading configuration file")
 
+    def reset_config(self):
+        config_path = self.get_config_path()
+        old_path = os.path.join(os.getenv("XDG_DATA_DIRS"))
+        old_path = old_path.split(":")[0] + "/datman/datman"
+        if not os.path.isdir(config_path):
+            os.mkdir(config_path)
+        path = config_path + "/config.json"
+        shutil.copy(f"{old_path}/config.json", path)
+        print("Loaded new config")
 
     def load_config(self):
         config_path = self.get_config_path()
         os.chdir(config_path)
         with open("config.json", 'r') as f:
             config = json.load(f)
+        config = self.check_config(config)
         return config
 
     def save_config(self):
@@ -89,10 +107,10 @@ class PreferencesWindow(Adw.PreferencesWindow):
     plot_unselected_marker_size = Gtk.Template.Child()
     plot_font_chooser = Gtk.Template.Child()
     center_data_chooser = Gtk.Template.Child()
+    allow_duplicates_button = Gtk.Template.Child()
 
     def __init__(self, parent):
         super().__init__()
-        print(self.center_data_chooser)
         self.props.modal = True
         color_cycles =  [
             'Pastel1', 'Pastel2', 'Paired', 'Accent',
@@ -160,6 +178,8 @@ class PreferencesWindow(Adw.PreferencesWindow):
         selected_marker_value = marker_dict[config["plot_selected_markers"]]
         self.set_chooser(self.plot_selected_markers_chooser, selected_marker_value)
         self.set_chooser(self.plot_unselected_markers_chooser, unselected_marker_value)
+        if config["allow_duplicate_filenames"]:
+            self.allow_duplicates_button.set_active(True)
         if config["plot_tick_left"]:
             self.plot_tick_left.set_active(True)
         if config["plot_tick_right"]:
@@ -215,6 +235,7 @@ class PreferencesWindow(Adw.PreferencesWindow):
         config["plot_minor_tick_width"] = self.plot_minor_tick_width.get_value()
         config["plot_major_tick_length"] = self.plot_major_tick_length.get_value()
         config["plot_minor_tick_length"] = self.plot_minor_tick_length.get_value()
+        config["allow_duplicate_filenames"] = self.allow_duplicates_button.get_active()
         config["savefig_transparent"] = self.savefig_transparent_check_button.get_active()
         config["plot_tick_left"] = self.plot_tick_left.get_active()
         config["plot_tick_right"] = self.plot_tick_right.get_active()

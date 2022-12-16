@@ -27,11 +27,11 @@
 "plot_font_size": 12,
 "plot_font_weight": "normal",
 "plot_font_style": "normal",
-"plot_font_name": "normal",
 "plot_font_string": "Cantarell 12",
 "plot_tick_left": true,
 "plot_tick_right": false,
 "plot_tick_bottom": true,
 "plot_tick_top": false,
-"center_data": "Center at middle coordinate"
+"center_data": "Center at middle coordinate",
+"allow_duplicate_filenames": true
 }
