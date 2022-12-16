@@ -1,0 +1,6 @@
+[options]
+prefix = /app
+backend = ninja
+
+[properties]
+

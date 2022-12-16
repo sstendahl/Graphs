@@ -1,0 +1,140 @@
+[
+  {
+    "directory": "/var/home/sjoerd/Projects/Graphs/_build",
+    "command": "/usr/bin/meson --internal msgfmthelper --msgfmt=/usr/bin/msgfmt ../data/se.sjoerd.DatMan.desktop.in data/se.sjoerd.DatMan.desktop desktop ../data/../po",
+    "file": "../data/se.sjoerd.DatMan.desktop.in",
+    "output": "data/se.sjoerd.DatMan.desktop"
+  },
+  {
+    "directory": "/var/home/sjoerd/Projects/Graphs/_build",
+    "command": "/usr/bin/meson --internal msgfmthelper --msgfmt=/usr/bin/msgfmt ../data/se.sjoerd.DatMan.appdata.xml.in data/se.sjoerd.DatMan.appdata.xml xml ../data/../po",
+    "file": "../data/se.sjoerd.DatMan.appdata.xml.in",
+    "output": "data/se.sjoerd.DatMan.appdata.xml"
+  },
+  {
+    "directory": "/var/home/sjoerd/Projects/Graphs/_build",
+    "command": "/usr/bin/glib-compile-resources ../src/datman.gresource.xml --sourcedir ../src --internal --generate --target src/datman.gresource --dependency-file src/datman.gresource.d",
+    "file": "../src/datman.gresource.xml",
+    "output": "src/datman.gresource"
+  },
+  {
+    "directory": "/var/home/sjoerd/Projects/Graphs/_build",
+    "command": "",
+    "file": "meson-internal__datman-pot",
+    "output": "datman-pot"
+  },
+  {
+    "directory": "/var/home/sjoerd/Projects/Graphs/_build",
+    "command": "",
+    "file": "meson-internal__datman-update-po",
+    "output": "datman-update-po"
+  },
+  {
+    "directory": "/var/home/sjoerd/Projects/Graphs/_build",
+    "command": "",
+    "file": "meson-internal__test",
+    "output": "test"
+  },
+  {
+    "directory": "/var/home/sjoerd/Projects/Graphs/_build",
+    "command": "/usr/bin/meson test --no-rebuild --print-errorlogs",
+    "file": "all",
+    "output": "meson-internal__test"
+  },
+  {
+    "directory": "/var/home/sjoerd/Projects/Graphs/_build",
+    "command": "",
+    "file": "meson-internal__benchmark",
+    "output": "benchmark"
+  },
+  {
+    "directory": "/var/home/sjoerd/Projects/Graphs/_build",
+    "command": "/usr/bin/meson test --benchmark --logbase benchmarklog --num-processes=1 --no-rebuild",
+    "file": "all",
+    "output": "meson-internal__benchmark"
+  },
+  {
+    "directory": "/var/home/sjoerd/Projects/Graphs/_build",
+    "command": "",
+    "file": "meson-internal__install",
+    "output": "install"
+  },
+  {
+    "directory": "/var/home/sjoerd/Projects/Graphs/_build",
+    "command": "/usr/bin/meson install --no-rebuild",
+    "file": "PHONY",
+    "output": "meson-internal__install"
+  },
+  {
+    "directory": "/var/home/sjoerd/Projects/Graphs/_build",
+    "command": "",
+    "file": "meson-internal__dist",
+    "output": "dist"
+  },
+  {
+    "directory": "/var/home/sjoerd/Projects/Graphs/_build",
+    "command": "/usr/bin/meson dist",
+    "file": "PHONY",
+    "output": "meson-internal__dist"
+  },
+  {
+    "directory": "/var/home/sjoerd/Projects/Graphs/_build",
+    "command": "",
+    "file": "meson-internal__uninstall",
+    "output": "uninstall"
+  },
+  {
+    "directory": "/var/home/sjoerd/Projects/Graphs/_build",
+    "command": "/usr/bin/meson --internal uninstall",
+    "file": "PHONY",
+    "output": "meson-internal__uninstall"
+  },
+  {
+    "directory": "/var/home/sjoerd/Projects/Graphs/_build",
+    "command": "",
+    "file": "meson-test-prereq",
+    "output": "all"
+  },
+  {
+    "directory": "/var/home/sjoerd/Projects/Graphs/_build",
+    "command": "",
+    "file": "data/se.sjoerd.DatMan.desktop",
+    "output": "meson-test-prereq"
+  },
+  {
+    "directory": "/var/home/sjoerd/Projects/Graphs/_build",
+    "command": "",
+    "file": "meson-internal__clean",
+    "output": "clean"
+  },
+  {
+    "directory": "/var/home/sjoerd/Projects/Graphs/_build",
+    "command": "",
+    "file": "meson-internal__clean-ctlist",
+    "output": "clean-ctlist"
+  },
+  {
+    "directory": "/var/home/sjoerd/Projects/Graphs/_build",
+    "command": "/usr/bin/meson --internal cleantrees /var/home/sjoerd/Projects/Graphs/_build/meson-private/cleantrees.dat",
+    "file": "PHONY",
+    "output": "meson-internal__clean-ctlist"
+  },
+  {
+    "directory": "/var/home/sjoerd/Projects/Graphs/_build",
+    "command": "/usr/bin/ninja -t clean",
+    "file": "PHONY",
+    "output": "meson-internal__clean"
+  },
+  {
+    "directory": "/var/home/sjoerd/Projects/Graphs/_build",
+    "command": "/usr/bin/meson --internal regenerate /var/home/sjoerd/Projects/Graphs /var/home/sjoerd/Projects/Graphs/_build --backend ninja",
+    "file": "../meson.build",
+    "output": "build.ninja"
+  },
+  {
+    "directory": "/var/home/sjoerd/Projects/Graphs/_build",
+    "command": "/usr/bin/meson --internal regenerate /var/home/sjoerd/Projects/Graphs /var/home/sjoerd/Projects/Graphs/_build --backend ninja",
+    "file": "PHONY",
+    "output": "reconfigure"
+  }
+]

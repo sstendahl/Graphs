@@ -359,6 +359,10 @@
     <attribute name="action">app.add_data</attribute>
    </item>
    <item>
+    <attribute name="label" translatable="yes">_Add data from file (advanced)</attribute>
+    <attribute name="action">app.add_data_advanced</attribute>
+   </item>
+   <item>
     <attribute name="label" translatable="yes">_Add data from equation</attribute>
     <attribute name="action">app.add_equation</attribute>
    </item>

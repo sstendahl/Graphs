@@ -61,7 +61,7 @@ class AddEquationWindow(Adw.Window):
         self.set_transient_for=(parent.props.active_window)
         self.props.modal = True
         buffer = Gtk.TextBuffer()
-        text1 = "Here you can add add a data by equation\n"
+        text1 = "Here you can add data using an equation\n"
         text2 = "The equation field uses Numpy notation \n"
         text3 = "Make sure to use a capital letter for the X coordinate"
         buffer.set_text(text1 + text2 + text3)

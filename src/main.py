@@ -28,7 +28,7 @@ gi.require_version('Adw', '1')
 from gi.repository import Gtk, Gio, Adw
 from .window import DatManWindow
 import matplotlib.pyplot as plt
-from . import datman, plotting_tools, item_operations, transform_data, preferences, add_equation
+from . import datman, plotting_tools, item_operations, transform_data, preferences, add_equation, add_data_advanced
 
 class DatManApplication(Adw.Application):
     """The main application singleton class."""
@@ -49,6 +49,7 @@ class DatManApplication(Adw.Application):
         self.create_action('about', self.on_about_action)
         self.create_action('preferences', preferences.open_preferences_window, ['<primary>p'], self)
         self.create_action('add_data', datman.open_file_dialog, ['<primary>N'], self)
+        self.create_action('add_data_advanced', add_data_advanced.open_add_data_advanced_window, ['<primary><shift>N'], self)
         self.create_action('normalize_data', item_operations.normalize_data, None, self)
         self.create_action('translate_x', item_operations.translate_x, None, self)
         self.create_action('translate_y', item_operations.translate_y, None, self)

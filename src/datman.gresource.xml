@@ -5,6 +5,7 @@
     <file preprocess="xml-stripblanks">sample_box.ui</file>
     <file preprocess="xml-stripblanks">preferences.ui</file>
     <file preprocess="xml-stripblanks">add_equation_window.ui</file>
+    <file preprocess="xml-stripblanks">add_data_advanced.ui</file>
     <file preprocess="xml-stripblanks">transform_window.ui</file>
     <file preprocess="xml-stripblanks">gtk/help-overlay.ui</file>
   </gresource>

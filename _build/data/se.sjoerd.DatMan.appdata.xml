@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>se.sjoerd.DatMan</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>GPL-3.0-or-later</project_license>
+  <name>Graphs</name>
+  <summary>Plot and manipulate data in a breeze</summary>
+  <developer_name>Sjoerd Broekhuijsen</developer_name>
+  <description>
+    <p>
+      Graphs is a simple but powerful data manipulation tool developed with the GNOME environment in mind. It opens and plots two-column data files
+      which then easily can be manipulated and transformed. Alternatively, data can be generated and plotted from an equation. The transformed data can be saved as .txt file for further use.
+    </p>
+    <p>
+      Graphs can both be used as plotting tool, or as a data manipulation tool. There's an extensive number of options to change the plot layouts including,
+      but not limited to the axis labels, the prefered scaling on either axis, the length and width of the ticks used, the thickness of the lines, the linestyle,
+      the fonts and more. The plots can be saved in multiple formats, including vector images for further editing in e.g. Inkscape. The data manipulation tools
+      include options like:
+          </p>
+    <ul>
+      <li>Selecting and cutting part of the data</li>
+      <li>Translation and multiplification of data</li>
+      <li>Centering data</li>
+      <li>Smoothening data</li>
+      <li>Custom transformations using anything that is compatible with the numpy module</li>
+    </ul>
+    <p>
+      Graphs is still in very early development, and a large number of features are still planned. For any future requests or feedback, please file an issue on Github or send
+      me an email. 
+    </p>
+  </description>
+  <launchable type="desktop-id">se.sjoerd.DatMan.desktop</launchable>
+  <url type="bugtracker">https://github.com/SjoerdB93/Graphs/issues</url>
+  <url type="help">https://github.com/SjoerdB93/Graphs/</url>
+  <url type="homepage">https://www.sjoerd.se</url>
+  <screenshots>
+    <screenshot type="default">
+      <caption>GIScan settings</caption>
+      <image>http://www.sjoerd.se/datman_main.png</image>
+    </screenshot>
+    <screenshot type="default">
+      <caption>GIScan settings</caption>
+      <image>http://www.sjoerd.se/datman_equations.png</image>
+    </screenshot>
+    <screenshot type="default">
+      <caption>GIScan settings</caption>
+      <image>http://www.sjoerd.se/datman_light_dark.png</image>
+    </screenshot>
+  </screenshots>
+  <releases>
+    <release version="1.0.3" date="2022-12-16">
+      <description>
+        <p>Minor update with some bug fixes, next update will focus on adding more options for file imports:</p>
+        <ul>
+          <li>Fixed a bug where files with a special character in the name didn't save</li>
+          <li>Fixed a bug where minor ticks would show anyway when ticks were turned off</li>
+          <li>Configuration now resets when new options are detected (instead of crashing the application)</li>
+          <li>Added an option to allow for duplicate filenames when importing</li>
+        </ul>
+      </description>
+    </release>
+    <release version="1.0.2" date="2022-12-15">
+      <description>
+        <ul>
+          <li>Changed the name of the application to be more in line with the GNOME HIG</li>
+          <li>Transformation window can be closed with escape</li>
+          <li>Fixed a bug where graph would not plot if any of the values where infinite (e.g. if equation Y = 1/X was plotted)</li>
+          <li>Step-size, X-start and X-stop in add-equation window now also handle numpy notation</li>
+        </ul>
+      </description>
+    </release>
+    <release version="1.0.1" date="2022-12-15">
+      <description>
+        <ul>
+          <li>Add equation window can be closed with Esc</li>
+          <li>File chooser dialog and preference dialogs are modal (stick to parent window</li>
+          <li>Remove arrow from hamburger menu</li>
+          <li>Add a placeholder hint to Add equation window name</li>
+          <li>Changed saving behaviour to allow saving files without file system access for flatpak</li>
+          <li>Fixed a bug in the add equation window where powers were not working</li>
+          <li>Fixed a bug in add equation window where duplicate filenames were not detected properly</li>
+        </ul>
+      </description>
+    </release>
+    <release version="1.0.0" date="2022-12-14">
+      <description>
+        <ul>
+          <li>Initial release</li>
+        </ul>
+      </description>
+    </release>
+  </releases>
+  <recommends>
+    <control>keyboard</control>
+    <control>pointing</control>
+  </recommends>
+  <content_rating type="oars-1.1"/>
+</component>

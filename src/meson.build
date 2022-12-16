@@ -29,6 +29,7 @@ configure_file(
 datman_sources = [
   '__init__.py',
   'add_equation.py',
+  'add_data_advanced.py',
   'samplerow.py',
   'datman.py',
   'plotting_tools.py',
