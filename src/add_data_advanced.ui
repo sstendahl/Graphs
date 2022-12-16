@@ -1,141 +1,141 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <interface>
-  <requires lib="gtk" version="4.0"/>
-  <requires lib="libadwaita" version="1.0"/>
+  <requires lib="gtk" version="4.0" />
+  <requires lib="libadwaita" version="1.0" />
   <template class="AddAdvancedWindow" parent="AdwWindow">
-    <property name="title">Add Equation</property>
-   <property name="default-width">600</property>
-  <property name="default-height">125</property>
-  <child>
-   <object class="GtkShortcutController">
+    <property name="title">Open data from file (advanced)</property>
+    <property name="default-width">600</property>
+    <property name="default-height">125</property>
     <child>
-     <object class="GtkShortcut">
-      <property name="trigger">Escape</property>
-      <property name="action">action(window.close)</property>
-     </object>
-    </child>
-   </object>
-  </child>
-  <child>
-   <object class="GtkBox">
-    <property name="orientation">vertical</property>
-    <child>
-     <object class="GtkHeaderBar" id="header_bar">
-     </object>
-      </child>
-          <child>
-              <object class="AdwActionRow">
-                <property name="visible">True</property>
-                <property name="can-focus">True</property>
-                <property name="title" translatable="yes">Delimiter</property>
-                <property name="subtitle" translatable="yes">Choose the delimiter that separates the columns (\t for tab)</property>
-                <property name="use-underline">True</property>
-                <child>
-                  <object class="GtkEntry" id="delimiter">
-                    <property name="text">\t</property>
-                    <property name="valign">center</property>
-                  </object>
-                </child>
-              </object>
-            </child>
-            <child>
-              <object class="AdwActionRow">
-                <property name="visible">True</property>
-                <property name="can-focus">True</property>
-                <property name="title" translatable="yes">Decimal separator</property>
-                <property name="subtitle" translatable="yes">Choose which character to use as a decimal separator</property>
-                <property name="use-underline">True</property>
-                <child>
-                  <object class="GtkEntry" id="decimal seperator">
-                    <property name="text">.</property>
-                    <property name="valign">center</property>
-                  </object>
-                </child>
-              </object>
-            </child>
-            <child>
-              <object class="AdwActionRow">
-                <property name="visible">True</property>
-                <property name="can-focus">True</property>
-                <property name="title" translatable="yes">Column X</property>
-                <property name="subtitle" translatable="yes">Choose which column to load for the X-data</property>
-                <property name="use-underline">True</property>
-                <child>
-                  <object class="GtkSpinButton" id ="column_x">
-            <property name="vexpand">False</property>
-            <property name="vexpand-set">False</property>
-            <property name="adjustment">spin_button_column_x</property>
-            <property name="numeric">True</property>
-            <property name="value">0</property>
-            <property name="wrap">True</property>
-                  </object>
-                </child>
-              </object>
-            </child>
-            <child>
-              <object class="AdwActionRow">
-                <property name="visible">True</property>
-                <property name="can-focus">False</property>
-            <property name="vexpand">False</property>
-                <property name="title" translatable="yes">Column Y</property>
-                <property name="subtitle" translatable="yes">Choose which column to load for the Y-data</property>
-                <property name="use-underline">True</property>
-                <child>
-                  <object class="GtkSpinButton" id ="column_y">
-            <property name="vexpand">False</property>
-            <property name="adjustment">spin_button_column_y</property>
-            <property name="numeric">True</property>
-            <property name="value">1</property>
-            <property name="wrap">True</property>
-                  </object>
-                </child>
-              </object>
-            </child>
-            <child>
-              <object class="AdwActionRow">
-                <property name="visible">True</property>
-                <property name="can-focus">False</property>
-            <property name="vexpand">False</property>
-                <property name="title" translatable="yes">Skip rows</property>
-                <property name="subtitle" translatable="yes">Choose how many rows to skip while loading data</property>
-                <property name="use-underline">True</property>
-                <child>
-                  <object class="GtkSpinButton" id ="skip_rows">
-            <property name="vexpand">False</property>
-            <property name="adjustment">spin_button_skip_rows</property>
-            <property name="numeric">True</property>
-            <property name="value">1</property>
-            <property name="wrap">True</property>
-                  </object>
-                </child>
-              </object>
-            </child>
-             <child>
-         <object class="GtkButton" id="add_equation_confirm_button">
-          <property name="label">Open file</property>
-          <property name="margin-end">10</property>
-          <property name="margin-top">5</property>
-          <property name="margin-bottom">10</property>
-          <layout>
-           <property name="column">1</property>
-           <property name="row">7</property>
-           <property name="column-span">2</property>
-          </layout>
-         </object>
+      <object class="GtkShortcutController">
+        <child>
+          <object class="GtkShortcut">
+            <property name="trigger">Escape</property>
+            <property name="action">action(window.close)</property>
+          </object>
         </child>
-     </object>
+      </object>
     </child>
-  <object class="GtkAdjustment" id = "spin_button_column_x">
-        <property name="step_increment">1</property>
-        <property name="upper">100</property>
+    <child>
+      <object class="GtkBox">
+        <property name="orientation">vertical</property>
+        <child>
+          <object class="GtkHeaderBar" id="header_bar">
+          </object>
+        </child>
+        <child>
+          <object class="AdwActionRow">
+            <property name="visible">True</property>
+            <property name="can-focus">True</property>
+            <property name="title" translatable="yes">Delimiter</property>
+            <property name="subtitle" translatable="yes">Choose the delimiter that separates the columns (\t for tab)</property>
+            <property name="use-underline">True</property>
+            <child>
+              <object class="GtkEntry" id="delimiter">
+                <property name="text">\t</property>
+                <property name="valign">center</property>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="AdwActionRow">
+            <property name="visible">True</property>
+            <property name="can-focus">True</property>
+            <property name="title" translatable="yes">Decimal separator</property>
+            <property name="subtitle" translatable="yes">Choose which character to use as a decimal separator</property>
+            <property name="use-underline">True</property>
+            <child>
+              <object class="GtkEntry" id="decimal seperator">
+                <property name="text">.</property>
+                <property name="valign">center</property>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="AdwActionRow">
+            <property name="visible">True</property>
+            <property name="can-focus">True</property>
+            <property name="title" translatable="yes">Column X</property>
+            <property name="subtitle" translatable="yes">Choose which column to load for the X-data</property>
+            <property name="use-underline">True</property>
+            <child>
+              <object class="GtkSpinButton" id="column_x">
+                <property name="vexpand">False</property>
+                <property name="vexpand-set">False</property>
+                <property name="adjustment">spin_button_column_x</property>
+                <property name="numeric">True</property>
+                <property name="value">0</property>
+                <property name="wrap">True</property>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="AdwActionRow">
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="vexpand">False</property>
+            <property name="title" translatable="yes">Column Y</property>
+            <property name="subtitle" translatable="yes">Choose which column to load for the Y-data</property>
+            <property name="use-underline">True</property>
+            <child>
+              <object class="GtkSpinButton" id="column_y">
+                <property name="vexpand">False</property>
+                <property name="adjustment">spin_button_column_y</property>
+                <property name="numeric">True</property>
+                <property name="value">1</property>
+                <property name="wrap">True</property>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="AdwActionRow">
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="vexpand">False</property>
+            <property name="title" translatable="yes">Skip rows</property>
+            <property name="subtitle" translatable="yes">Choose how many rows to skip while loading data</property>
+            <property name="use-underline">True</property>
+            <child>
+              <object class="GtkSpinButton" id="skip_rows">
+                <property name="vexpand">False</property>
+                <property name="adjustment">spin_button_skip_rows</property>
+                <property name="numeric">True</property>
+                <property name="value">1</property>
+                <property name="wrap">True</property>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkButton" id="add_equation_confirm_button">
+            <property name="label">Open file</property>
+            <property name="margin-end">10</property>
+            <property name="margin-top">5</property>
+            <property name="margin-bottom">10</property>
+            <layout>
+              <property name="column">1</property>
+              <property name="row">7</property>
+              <property name="column-span">2</property>
+            </layout>
+          </object>
+        </child>
+      </object>
+    </child>
+    <object class="GtkAdjustment" id="spin_button_column_x">
+      <property name="step_increment">1</property>
+      <property name="upper">100</property>
     </object>
-  <object class="GtkAdjustment" id = "spin_button_column_y">
-        <property name="step_increment">1</property>
-        <property name="upper">100</property>
+    <object class="GtkAdjustment" id="spin_button_column_y">
+      <property name="step_increment">1</property>
+      <property name="upper">100</property>
     </object>
-      <object class="GtkAdjustment" id = "spin_button_skip_rows">
-        <property name="step_increment">1</property>
-        <property name="upper">999</property>
+    <object class="GtkAdjustment" id="spin_button_skip_rows">
+      <property name="step_increment">1</property>
+      <property name="upper">999</property>
     </object>
   </template>
 </interface>

@@ -4,200 +4,132 @@
   <requires lib="libadwaita" version="1.0"/>
   <template class="AddEquationWindow" parent="AdwWindow">
     <property name="title">Add Equation</property>
-   <property name="default-width">256</property>
-  <property name="default-height">125</property>
-  <child>
-   <object class="GtkShortcutController">
+    <property name="default-width">525</property>
+    <property name="default-height">125</property>
     <child>
-     <object class="GtkShortcut">
-      <property name="trigger">Escape</property>
-      <property name="action">action(window.close)</property>
-     </object>
+      <object class="GtkShortcutController">
+        <child>
+          <object class="GtkShortcut">
+            <property name="trigger">Escape</property>
+            <property name="action">action(window.close)</property>
+          </object>
+        </child>
+      </object>
     </child>
-   </object>
-  </child>
-  <child>
-   <object class="GtkBox">
-    <property name="orientation">vertical</property>
     <child>
-     <object class="GtkHeaderBar" id="header_bar">
-     </object>
-      </child>
-           <child>
-       <object class="GtkGrid" id="my_grid">
+      <object class="GtkBox">
+        <property name="orientation">vertical</property>
+        <child>
+          <object class="GtkHeaderBar" id="header_bar">
+          </object>
+        </child>
+        <child>
+          <object class="GtkScrolledWindow">
+            <property name="height-request">75</property>
+            <property name="vexpand">true</property>
+            <property name="margin-top">6</property>
+            <property name="margin-bottom">6</property>
+            <property name="margin-start">6</property>
             <child>
-         <object class="GtkLabel" id="name_label">
-          <property name="halign">end</property>
-          <property name="label">Name: </property>
-          <property name="margin-top">5</property>
-          <property name="margin-end">1</property>
-          <property name="margin-start">10</property>
-          <layout>
-           <property name="column">0</property>
-           <property name="row">1</property>
-           <property name="column-span">1</property>
-          </layout>
-         </object>
+              <object class="GtkTextView" id="equation_info">
+                <property name="editable">false</property>
+              </object>
+            </child>
+          </object>
         </child>
         <child>
-         <object class="GtkEntry" id="name_entry">
-          <property name="placeholder-text">Leave blank to use equation as name</property>
-          <property name="margin-top">5</property>
-          <property name="margin-end">10</property>
-          <property name="text"></property>
-           <property name ="hexpand">true</property>
-          <layout>
-           <property name="column">1</property>
-           <property name="row">1</property>
-           <property name="column-span">1</property>
-          </layout>
-         </object>
+          <object class="AdwActionRow">
+            <property name="visible">True</property>
+            <property name="can-focus">True</property>
+            <property name="title" translatable="yes">Name</property>
+            <property name="subtitle" translatable="yes">The name that is to be used for the data set</property>
+            <property name="use-underline">True</property>
+            <child>
+              <object class="GtkEntry" id="name_entry">
+                <property name="placeholder-text">Leave blank to use equation</property>
+                <property name="margin-top">5</property>
+                <property name="max-width-chars">25</property>
+                <property name="width-request">15</property>
+              </object>
+            </child>
+          </object>
         </child>
         <child>
-         <object class="GtkLabel" id="equation_label">
-          <property name="halign">end</property>
-          <property name="label">Y = </property>
-          <property name="margin-top">10</property>
-          <property name="margin-end">1</property>
-          <property name="margin-start">10</property>
-          <layout>
-           <property name="column">0</property>
-           <property name="row">2</property>
-           <property name="column-span">1</property>
-          </layout>
-         </object>
+          <object class="AdwActionRow">
+            <property name="visible">True</property>
+            <property name="can-focus">True</property>
+            <property name="title" translatable="yes">Equation</property>
+            <property name="subtitle" translatable="yes">The equation that is used to generate data</property>
+            <property name="use-underline">True</property>
+            <child>
+              <object class="GtkEntry" id="equation_entry">
+                <property name="text">X</property>
+                <property name="margin-top">5</property>
+                <property name="max-width-chars">25</property>
+                <property name="width-request">15</property>
+              </object>
+            </child>
+          </object>
         </child>
         <child>
-         <object class="GtkEntry" id="equation_entry">
-          <property name="margin-top">10</property>
-          <property name="text">X</property>
-          <property name="margin-end">10</property>
-          <layout>
-           <property name="column">1</property>
-           <property name="row">2</property>
-           <property name="column-span">1</property>
-          </layout>
-         </object>
+          <object class="AdwActionRow">
+            <property name="visible">True</property>
+            <property name="can-focus">True</property>
+            <property name="title" translatable="yes">X start</property>
+            <property name="subtitle" translatable="yes">The starting coordinate for the X axis</property>
+            <property name="use-underline">True</property>
+            <child>
+              <object class="GtkEntry" id="X_start_entry">
+                <property name="text">0</property>
+                <property name="margin-top">5</property>
+                <property name="max-width-chars">25</property>
+                <property name="width-request">15</property>
+              </object>
+            </child>
+          </object>
         </child>
         <child>
-         <object class="GtkLabel" id="x_start_label">
-          <property name="halign">end</property>
-          <property name="label">X start: </property>
-          <property name="margin-top">10</property>
-          <property name="margin-end">1</property>
-          <property name="margin-start">10</property>
-          <layout>
-           <property name="column">0</property>
-           <property name="row">3</property>
-           <property name="column-span">1</property>
-          </layout>
-         </object>
-        </child>
-        <child>
-         <object class="GtkEntry" id="X_start_entry">
-          <property name="margin-top">10</property>
-          <property name="text">0</property>
-          <property name="margin-end">10</property>
-          <layout>
-           <property name="column">1</property>
-           <property name="row">3</property>
-           <property name="column-span">1</property>
-          </layout>
-         </object>
-        </child>
-          <child>
-         <object class="GtkLabel" id="X_stop_label">
-          <property name="halign">end</property>
-          <property name="label">X stop: </property>
-          <property name="margin-top">5</property>
-          <property name="margin-end">1</property>
-          <property name="margin-start">10</property>
-          <layout>
-           <property name="column">0</property>
-           <property name="row">4</property>
-           <property name="column-span">1</property>
-          </layout>
-         </object>
-        </child>
-        <child>
-         <object class="GtkEntry" id="X_stop_entry">
-          <property name="margin-top">5</property>
-          <property name="margin-end">10</property>
-          <property name="text">10</property>
-           <property name ="hexpand">true</property>
-          <layout>
-           <property name="column">1</property>
-           <property name="row">4</property>
-           <property name="column-span">1</property>
-          </layout>
-         </object>
-        </child>
-          <child>
-         <object class="GtkLabel" id="step_size_label">
-          <property name="halign">end</property>
-          <property name="label">Step size: </property>
-          <property name="margin-top">5</property>
-          <property name="margin-end">1</property>
-          <property name="margin-start">10</property>
-          <layout>
-           <property name="column">0</property>
-           <property name="row">5</property>
-           <property name="column-span">1</property>
-          </layout>
-         </object>
-        </child>
-        <child>
-         <object class="GtkEntry" id="step_size_entry">
-          <property name="margin-top">5</property>
-          <property name="margin-end">10</property>
-          <property name="text">0.01</property>
-           <property name ="hexpand">true</property>
-          <layout>
-           <property name="column">1</property>
-           <property name="row">5</property>
-           <property name="column-span">1</property>
-          </layout>
-         </object>
-        </child>
-                   <child>
-        <object class="GtkScrolledWindow">
-          <property name="height-request">75</property>
-          <property name="width-request">350</property>"
-          <property name="hexpand">true</property>
-          <property name="vexpand">true</property>
-          <property name="margin-top">6</property>
-          <property name="margin-bottom">6</property>
-          <property name="margin-start">6</property>
-          <property name="margin-end">6</property>
-          <child>
-            <object class="GtkTextView" id="equation_info">
-            <property name="editable">false</property>
+          <object class="AdwActionRow">
+            <property name="visible">True</property>
+            <property name="can-focus">True</property>
+            <property name="title" translatable="yes">X stop</property>
+            <property name="subtitle" translatable="yes">The ending coordinate for the X axis</property>
+            <property name="use-underline">True</property>
+            <child>
+            <object class="GtkEntry" id="X_stop_entry">
+              <property name="text">10</property>
+                <property name="margin-top">5</property>
+                <property name="max-width-chars">25</property>
+                <property name="width-request">15</property>
             </object>
             </child>
-          <layout>
-           <property name="column">0</property>
-           <property name="row">0</property>
-           <property name="column-span">2</property>
-          </layout>
-
-         </object>
+          </object>
         </child>
         <child>
-         <object class="GtkButton" id="add_equation_confirm_button">
-          <property name="label">Confirm</property>
-          <property name="margin-end">10</property>
-          <property name="margin-top">5</property>
-          <property name="margin-bottom">10</property>
-          <layout>
-           <property name="column">1</property>
-           <property name="row">7</property>
-           <property name="column-span">2</property>
-          </layout>
-         </object>
+          <object class="AdwActionRow">
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="title" translatable="yes">Step size</property>
+            <property name="subtitle" translatable="yes">The step size to be used</property>
+            <property name="use-underline">True</property>
+            <child>
+              <object class="GtkEntry" id="step_size_entry">
+                <property name="text">0.01</property>
+                <property name="margin-top">5</property>
+                <property name="max-width-chars">25</property>
+                <property name="width-request">15</property>
+              </object>
+            </child>
+          </object>
         </child>
-       </object>
-      </child>
-     </object>
+        <child>
+          <object class="GtkButton" id="add_equation_confirm_button">
+            <property name="label">Confirm</property>
+            <property name="margin-top">5</property>
+            <property name="margin-bottom">10</property>
+          </object>
+        </child>
+      </object>
     </child>
   </template>
 </interface>

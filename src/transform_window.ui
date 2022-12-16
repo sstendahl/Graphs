@@ -1,121 +1,120 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <interface>
-  <requires lib="gtk" version="4.0"/>
-  <requires lib="libadwaita" version="1.0"/>
+  <requires lib="gtk" version="4.0" />
+  <requires lib="libadwaita" version="1.0" />
   <template class="TransformWindow" parent="AdwWindow">
     <property name="title">Transform Data</property>
-   <property name="default-width">256</property>
-  <property name="default-height">125</property>
-  <child>
-   <object class="GtkShortcutController">
+    <property name="default-width">256</property>
+    <property name="default-height">125</property>
     <child>
-     <object class="GtkShortcut">
-      <property name="trigger">Escape</property>
-      <property name="action">action(window.close)</property>
-     </object>
+      <object class="GtkShortcutController">
+        <child>
+          <object class="GtkShortcut">
+            <property name="trigger">Escape</property>
+            <property name="action">action(window.close)</property>
+          </object>
+        </child>
+      </object>
     </child>
-   </object>
-  </child>
-  <child>
-   <object class="GtkBox">
-    <property name="orientation">vertical</property>
     <child>
-     <object class="GtkHeaderBar" id="header_bar">
+      <object class="GtkBox">
+        <property name="orientation">vertical</property>
+        <child>
+          <object class="GtkHeaderBar" id="header_bar">
      </object>
-      </child>
-           <child>
-       <object class="GtkGrid" id="my_grid">
-        <child>
-         <object class="GtkLabel" id="transform_x_label">
-          <property name="label">X = </property>
-          <property name="margin-top">10</property>
-          <property name="margin-end">1</property>
-          <property name="margin-start">10</property>
-          <layout>
-           <property name="column">0</property>
-           <property name="row">1</property>
-           <property name="column-span">1</property>
-          </layout>
-         </object>
         </child>
         <child>
-         <object class="GtkEntry" id="transform_x_entry">
-          <property name="margin-top">10</property>
-          <property name="text">X</property>
-          <property name="margin-end">10</property>
-          <layout>
-           <property name="column">1</property>
-           <property name="row">1</property>
-           <property name="column-span">1</property>
-          </layout>
-         </object>
-        </child>
-          <child>
-         <object class="GtkLabel" id="transform_y_label">
-          <property name="label">Y = </property>
-          <property name="margin-top">5</property>
-          <property name="margin-end">1</property>
-          <property name="margin-start">10</property>
-          <layout>
-           <property name="column">0</property>
-           <property name="row">2</property>
-           <property name="column-span">1</property>
-          </layout>
-         </object>
-        </child>
-        <child>
-         <object class="GtkEntry" id="transform_y_entry">
-          <property name="margin-top">5</property>
-          <property name="margin-end">10</property>
-          <property name="text">Y</property>
-           <property name ="hexpand">true</property>
-          <layout>
-           <property name="column">1</property>
-           <property name="row">2</property>
-           <property name="column-span">1</property>
-          </layout>
-         </object>
-        </child>
-                   <child>
-        <object class="GtkScrolledWindow">
-          <property name="height-request">150</property>
-          <property name="width-request">375</property>"
-          <property name="hexpand">true</property>
-          <property name="vexpand">true</property>
-          <property name="margin-top">6</property>
-          <property name="margin-bottom">6</property>
-          <property name="margin-start">6</property>
-          <property name="margin-end">6</property>
-          <child>
-            <object class="GtkTextView" id="transform_info">
-            <property name="editable">false</property>
-            </object>
+          <object class="GtkGrid" id="my_grid">
+            <child>
+              <object class="GtkLabel" id="transform_x_label">
+                <property name="label">X = </property>
+                <property name="margin-top">10</property>
+                <property name="margin-end">1</property>
+                <property name="margin-start">10</property>
+                <layout>
+                  <property name="column">0</property>
+                  <property name="row">1</property>
+                  <property name="column-span">1</property>
+                </layout>
+              </object>
             </child>
-          <layout>
-           <property name="column">0</property>
-           <property name="row">0</property>
-           <property name="column-span">2</property>
-          </layout>
-
-         </object>
+            <child>
+              <object class="GtkEntry" id="transform_x_entry">
+                <property name="margin-top">10</property>
+                <property name="text">X</property>
+                <property name="margin-end">10</property>
+                <layout>
+                  <property name="column">1</property>
+                  <property name="row">1</property>
+                  <property name="column-span">1</property>
+                </layout>
+              </object>
+            </child>
+            <child>
+              <object class="GtkLabel" id="transform_y_label">
+                <property name="label">Y = </property>
+                <property name="margin-top">5</property>
+                <property name="margin-end">1</property>
+                <property name="margin-start">10</property>
+                <layout>
+                  <property name="column">0</property>
+                  <property name="row">2</property>
+                  <property name="column-span">1</property>
+                </layout>
+              </object>
+            </child>
+            <child>
+              <object class="GtkEntry" id="transform_y_entry">
+                <property name="margin-top">5</property>
+                <property name="margin-end">10</property>
+                <property name="text">Y</property>
+                <property name="hexpand">true</property>
+                <layout>
+                  <property name="column">1</property>
+                  <property name="row">2</property>
+                  <property name="column-span">1</property>
+                </layout>
+              </object>
+            </child>
+            <child>
+              <object class="GtkScrolledWindow">
+                <property name="height-request">150</property>
+                <property name="width-request">375</property>"
+          <property name="hexpand">true</property>
+                <property name="vexpand">true</property>
+                <property name="margin-top">6</property>
+                <property name="margin-bottom">6</property>
+                <property name="margin-start">6</property>
+                <property name="margin-end">6</property>
+                <child>
+                  <object class="GtkTextView" id="transform_info">
+                    <property name="editable">false</property>
+                  </object>
+                </child>
+                <layout>
+                  <property name="column">0</property>
+                  <property name="row">0</property>
+                  <property name="column-span">2</property>
+                </layout>
+              </object>
+            </child>
+            <child>
+              <object class="GtkButton" id="transform_confirm_button">
+                <property name="label">Confirm</property>
+                <property name="action-name">app.translate_y</property>
+                <property name="margin-end">10</property>
+                <property name="margin-top">5</property>
+                <property name="margin-bottom">10</property>
+                <layout>
+                  <property name="column">1</property>
+                  <property name="row">3</property>
+                  <property name="column-span">2</property>
+                </layout>
+              </object>
+            </child>
+          </object>
         </child>
-        <child>
-         <object class="GtkButton" id="transform_confirm_button">
-          <property name="label">Confirm</property>
-          <property name="action-name">app.translate_y</property>
-          <property name="margin-end">10</property>
-          <property name="margin-top">5</property>
-          <property name="margin-bottom">10</property>
-          <layout>
-           <property name="column">1</property>
-           <property name="row">3</property>
-           <property name="column-span">2</property>
-          </layout>
-         </object>
-        </child>
-       </object>
-      </child>
-     </object>
+      </object>
     </child>
   </template>
 </interface>
