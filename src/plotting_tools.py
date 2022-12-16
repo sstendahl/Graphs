@@ -154,8 +154,6 @@ def load_fonts(self):
             matplotlib.font_manager.fontManager.addfont(font)
         except:
             print(f"Could not load {font}")
-    print("Done loading fonts")
-
 
 class PlotWidget(FigureCanvas):
     def __init__(self, parent=None, xlabel="", ylabel="", yscale = "log", title="", scale="linear", style = "seaborn-whitegrid"):
