@@ -189,7 +189,7 @@ class PlotWidget(FigureCanvas):
         self.ax.tick_params(axis='x',which='minor',bottom=True, top=True)
         self.ax.tick_params(axis='y',which='minor',left=True, right=True)
         self.ax.minorticks_on()
-        self.ax.tick_params(bottom=parent.preferences.config["plot_tick_bottom"], top=parent.preferences.config["plot_tick_top"],
+        self.ax.tick_params(which = "both", bottom=parent.preferences.config["plot_tick_bottom"], top=parent.preferences.config["plot_tick_top"],
                                 left=parent.preferences.config["plot_tick_left"], right=parent.preferences.config["plot_tick_right"])
 
 

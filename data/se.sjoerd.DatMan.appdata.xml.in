@@ -52,6 +52,17 @@
     </screenshot>    
   </screenshots>
      <releases>
+    <release version="1.0.3" date="2021-01-16">
+      <description>
+        <p>Minor update with some bug fixes, next update will focus on adding more options for file imports (e.g. skip rows, seperator options and choosing the column for each axis)</p>
+        <ul>
+          <li>Fixed a bug where files with a special character in the name didn't save</li>
+          <li>Fixed a bug where minor ticks would show anyway when ticks were turned off</li>
+          <li>Configuration now resets when new options are detected (instead of crashing the application)</li>
+          <li>Added an option to allow for duplicate filenames when importing</li>
+        </ul>
+      </description>
+    </release>
       <release version="1.0.2" date="2022-12-15">
       <description>
         <ul>

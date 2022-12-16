@@ -19,20 +19,24 @@ def on_accept(widget, self, window):
     new_file = create_data(self, x_start, x_stop, equation, step_size, str(window.name_entry.get_text()))
     name = new_file.filename
     if name in self.datadict:
-        loop = True
-        i = 0
-        while loop:
-            i += 1
-            new_name = f"{name} ({i})"
-            if new_name not in self.datadict:
-                loop = False
-                new_file.filename = f"{name} ({i})"
-    color = plotting_tools.get_next_color(self)
-    self.datadict[new_file.filename] = new_file
-    datman.add_sample_to_menu(self, new_file.filename, color)
-    datman.select_top_row(self)
+        if self.preferences.config["allow_duplicate_filenames"]:
+            loop = True
+            i = 0
+            while loop:
+                i += 1
+                new_name = f"{name} ({i})"
+                if new_name not in self.datadict:
+                    loop = False
+                    name = f"{name} ({i})"
+                    new_file.filename = name
 
-    plotting_tools.refresh_plot(self)
+    if name not in self.datadict:
+        color = plotting_tools.get_next_color(self)
+        self.datadict[new_file.filename] = new_file
+        datman.add_sample_to_menu(self, new_file.filename, color)
+        datman.select_top_row(self)
+
+        plotting_tools.refresh_plot(self)
     window.destroy()
 
 def create_data(self, x_start, x_stop, equation, step_size, name):
