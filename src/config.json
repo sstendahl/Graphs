@@ -33,5 +33,10 @@
 "plot_tick_bottom": true,
 "plot_tick_top": false,
 "center_data": "Center at middle coordinate",
-"allow_duplicate_filenames": true
+"allow_duplicate_filenames": true,
+"import_column_x": 0,
+"import_column_y": 1,
+"import_skip_rows": 0,
+"import_separator": ".",
+"import_delimiter": "\\t"
 }

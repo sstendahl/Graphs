@@ -4,7 +4,7 @@
   <requires lib="libadwaita" version="1.0"/>
   <template class="AddEquationWindow" parent="AdwWindow">
     <property name="title">Add Equation</property>
-    <property name="default-width">525</property>
+    <property name="default-width">575</property>
     <property name="default-height">125</property>
     <child>
       <object class="GtkShortcutController">
@@ -23,20 +23,16 @@
           <object class="GtkHeaderBar" id="header_bar">
           </object>
         </child>
-        <child>
-          <object class="GtkScrolledWindow">
-            <property name="height-request">75</property>
-            <property name="vexpand">true</property>
-            <property name="margin-top">6</property>
-            <property name="margin-bottom">6</property>
-            <property name="margin-start">6</property>
-            <child>
-              <object class="GtkTextView" id="equation_info">
-                <property name="editable">false</property>
-              </object>
-            </child>
-          </object>
-        </child>
+                <child>
+          <object class="AdwPreferencesGroup">
+            <property name="visible">True</property>
+            <property name="can-focus">True</property>
+                        <property name="title" translatable="yes">Add equation</property>
+            <property name="description" translatable="yes"> Here you can add data using an equation using Numpy notation. Make sure to use a capital letter for the X coordinate.</property>
+                                    <property name="margin-start">30</property>"
+                        <property name="margin-end">30</property>
+            <property name="margin-top">30</property>
+            <property name="margin-bottom">30</property>""
         <child>
           <object class="AdwActionRow">
             <property name="visible">True</property>
@@ -47,7 +43,7 @@
             <child>
               <object class="GtkEntry" id="name_entry">
                 <property name="placeholder-text">Leave blank to use equation</property>
-                <property name="margin-top">5</property>
+                <property name="valign">center</property>
                 <property name="max-width-chars">25</property>
                 <property name="width-request">15</property>
               </object>
@@ -58,13 +54,13 @@
           <object class="AdwActionRow">
             <property name="visible">True</property>
             <property name="can-focus">True</property>
-            <property name="title" translatable="yes">Equation</property>
+            <property name="title" translatable="yes">Y =</property>
             <property name="subtitle" translatable="yes">The equation that is used to generate data</property>
             <property name="use-underline">True</property>
             <child>
               <object class="GtkEntry" id="equation_entry">
                 <property name="text">X</property>
-                <property name="margin-top">5</property>
+                <property name="valign">center</property>
                 <property name="max-width-chars">25</property>
                 <property name="width-request">15</property>
               </object>
@@ -81,7 +77,7 @@
             <child>
               <object class="GtkEntry" id="X_start_entry">
                 <property name="text">0</property>
-                <property name="margin-top">5</property>
+                <property name="valign">center</property>
                 <property name="max-width-chars">25</property>
                 <property name="width-request">15</property>
               </object>
@@ -98,7 +94,7 @@
             <child>
             <object class="GtkEntry" id="X_stop_entry">
               <property name="text">10</property>
-                <property name="margin-top">5</property>
+                <property name="valign">center</property>
                 <property name="max-width-chars">25</property>
                 <property name="width-request">15</property>
             </object>
@@ -115,7 +111,7 @@
             <child>
               <object class="GtkEntry" id="step_size_entry">
                 <property name="text">0.01</property>
-                <property name="margin-top">5</property>
+                <property name="valign">center</property>
                 <property name="max-width-chars">25</property>
                 <property name="width-request">15</property>
               </object>
@@ -129,6 +125,8 @@
             <property name="margin-bottom">10</property>
           </object>
         </child>
+      </object>
+                          </child>
       </object>
     </child>
   </template>

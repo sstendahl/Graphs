@@ -52,16 +52,16 @@ class TransformWindow(Adw.Window):
     transform_x_entry = Gtk.Template.Child()
     transform_y_entry = Gtk.Template.Child()
     transform_confirm_button = Gtk.Template.Child()
-    transform_info = Gtk.Template.Child()
 
     def __init__(self, parent):
         super().__init__()
-        buffer = Gtk.TextBuffer()
-        text1 = "Info: \nThe transformation tool use Numpy notation \nMake sure to use a capital X and Y for coordinates. \n\nTransformations are done piece-wise, if you want access \nto the entire range use X_range or Y_range. For example: \nY = Y/max(Y_range) divides each Y value by the \nmaximum value of the Y array \n"
-        text2 = "\nThe X and Y range can be used together \nY=Y/X divides each Y value by the corresponding X value\n\nSines use radians. To use degrees, use degrees(value)\nFor example: \nX = sin(degrees(X)) gives the sine of X in degrees \nat each X position"
+       # buffer = Gtk.TextBuffer()
+       # text1 = "Info: \nThe transformation tool use Numpy notation \nMake sure to use a capital X and Y for coordinates. \n\nTransformations are done piece-wise, if you want access \nto the entire range use X_range or Y_range. For example: \nY = Y/max(Y_range) divides each Y value by the \nmaximum value of the Y array \n"
+       # text2 = "\nThe X and Y range can be used together \nY=Y/X divides each Y value by the corresponding X value\n\nSines use radians. To use degrees, use degrees(value)\nFor example: \nX = sin(degrees(X)) gives the sine of X in degrees \nat each X position"
 
-        buffer.set_text(text1 + text2)
-        self.transform_info.set_buffer(buffer)
+        #buffer.set_text(text1 + text2)
+        #self.transform_info.set_buffer(buffer)
+
 
 
 

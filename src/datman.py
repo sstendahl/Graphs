@@ -30,7 +30,7 @@ def get_dict_by_value(dictionary, value):
     return new_dict[value]
 
 
-def open_selection(self, files, from_dictionary = False):
+def open_selection(self, files, from_dictionary = False, import_settings = None):
     if self.highlight is not None:
         plotting_tools.hide_highlight(self)
     if from_dictionary:
@@ -52,7 +52,7 @@ def open_selection(self, files, from_dictionary = False):
     else:
         for path in files:
             if path != "":
-                item = get_data(path)
+                item = get_data(path, import_settings)
                 filename = path.split("/")[-1]
                 item.xdata_clipboard = [item.xdata]
                 item.ydata_clipboard = [item.ydata]
@@ -107,19 +107,23 @@ def select_top_row(self):
     item.set_css(item.get_css())
     plotting_tools.refresh_plot(self)
 
-def get_data(path):
+def get_data(path, import_settings):
     data = Data()
-    seperator = "\t "
     data_array = [[], []]
+    i = 0
     with (open(path, 'r')) as file:
         for line in file:
-            line = line.strip()
-            line = re.split('\s+', line)
-            try:
-                data_array[0].append(float(line[0]))
-                data_array[1].append(float(line[1]))
-            except ValueError:
-                pass
+            i += 1
+            if i > import_settings["skip_rows"]:
+                line = line.strip()
+                if import_settings["separator"] == ",":
+                    line.replace(",", ".")
+                line = re.split(str(import_settings["delimiter"]), line)
+                try:
+                    data_array[import_settings["column_x"]].append(float(line[0]))
+                    data_array[import_settings["column_y"]].append(float(line[1]))
+                except ValueError:
+                    pass
     data.xdata = data_array[0]
     data.ydata = data_array[1]
     return data
@@ -235,26 +239,38 @@ def save_file(self, path):
             array = np.stack([xdata, ydata], axis=1)
             np.savetxt(str(path + "/" + filename), array, delimiter="\t")
 
-def open_file_dialog(widget, _, self):
-     open_file_chooser = Gtk.FileChooserNative.new(
+def open_file_dialog(widget, _, self, advanced = False, import_settings = None):
+    open_file_chooser = Gtk.FileChooserNative.new(
         title="Open new files",
         parent=self.props.active_window,
         action=Gtk.FileChooserAction.OPEN,
         accept_label="_Open",
     )
-     open_file_chooser.set_modal(True)
-     open_file_chooser.set_select_multiple(True)
-     open_file_chooser.connect("response", on_open_response, self)
-     open_file_chooser.show()
 
-def on_open_response(dialog, response, self):
+    import_settings = get_import_settings(self)
+
+    open_file_chooser.set_modal(True)
+    open_file_chooser.set_select_multiple(True)
+    open_file_chooser.connect("response", on_open_response, self, import_settings)
+    open_file_chooser.show()
+
+def get_import_settings(self):
+    import_settings = dict()
+    import_settings["delimiter"] = self.preferences.config["import_delimiter"]
+    import_settings["separator"] = self.preferences.config["import_separator"]
+    import_settings["skip_rows"] = int(self.preferences.config["import_skip_rows"])
+    import_settings["column_x"] = int(self.preferences.config["import_column_x"])
+    import_settings["column_y"] = int(self.preferences.config["import_column_y"])
+    return import_settings
+
+def on_open_response(dialog, response, self, import_settings):
     files = []
     if response == Gtk.ResponseType.ACCEPT:
         for file in dialog.get_files():
             file_path = file.peek_path()
             filename = file_path.split("/")[-1]
             files.append(file_path)
-        open_selection(self, files)
+        open_selection(self, files, import_settings = import_settings)
         self.define_highlight = None
         plotting_tools.define_highlight(self)
         win = self.props.active_window

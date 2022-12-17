@@ -1,8 +1,8 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <interface>
-  <requires lib="gtk" version="4.0"/>
-  <requires lib="gtk" version="4.0"/>
-  <requires lib="libadwaita" version="1.0"/>
+  <requires lib="gtk" version="4.0" />
+  <requires lib="gtk" version="4.0" />
+  <requires lib="libadwaita" version="1.0" />
   <template class="PreferencesWindow" parent="AdwPreferencesWindow">
     <property name="can-navigate-back">True</property>
     <child>
@@ -22,11 +22,11 @@
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
                 <property name="title" translatable="yes">Delimiter</property>
-                <property name="subtitle" translatable="yes">Choose the delimiter that separates the columns (\t for tab)</property>
+                <property name="subtitle" translatable="yes">The delimiter that separates the columns (\s+ for whitespace)</property>
                 <property name="use-underline">True</property>
                 <child>
-                  <object class="GtkEntry" id="delimiter">
-                    <property name="text">\t</property>
+                  <object class="GtkEntry" id="import_delimiter">
+                    <property name="max-width-chars">10</property>"
                     <property name="valign">center</property>
                   </object>
                 </child>
@@ -37,12 +37,19 @@
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
                 <property name="title" translatable="yes">Decimal separator</property>
-                <property name="subtitle" translatable="yes">Choose which character to use as a decimal separator</property>
+                <property name="subtitle" translatable="yes">The character that is used as decimal separator</property>
                 <property name="use-underline">True</property>
                 <child>
-                  <object class="GtkEntry" id="decimal seperator">
-                    <property name="text">.</property>
+                  <object class="GtkDropDown" id="import_separator">
                     <property name="valign">center</property>
+                    <property name="model">
+                      <object class="GtkStringList">
+                        <items>
+                          <item translatable="yes">.</item>
+                          <item translatable="yes">,</item>
+                        </items>
+                      </object>
+                    </property>
                   </object>
                 </child>
               </object>
@@ -52,16 +59,15 @@
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
                 <property name="title" translatable="yes">Column X</property>
-                <property name="subtitle" translatable="yes">Choose which column to load for the X-data</property>
+                <property name="subtitle" translatable="yes">Which column to load for the X-data</property>
                 <property name="use-underline">True</property>
                 <child>
-                  <object class="GtkSpinButton" id ="column_x">
-            <property name="vexpand">False</property>
-            <property name="vexpand-set">False</property>
-            <property name="adjustment">spin_button_column_x</property>
-            <property name="numeric">True</property>
-            <property name="value">0</property>
-            <property name="wrap">True</property>
+                  <object class="GtkSpinButton" id="column_x">
+                    <property name="valign">center</property>
+                    <property name="adjustment">spin_button_column_x</property>
+                    <property name="numeric">True</property>
+                    <property name="value">0</property>
+                    <property name="wrap">True</property>
                   </object>
                 </child>
               </object>
@@ -69,18 +75,18 @@
             <child>
               <object class="AdwActionRow">
                 <property name="visible">True</property>
-                <property name="can-focus">False</property>
-            <property name="vexpand">False</property>
+                <property name="can-focus">True</property>
+                <property name="vexpand">False</property>
                 <property name="title" translatable="yes">Column Y</property>
-                <property name="subtitle" translatable="yes">Choose which column to load for the Y-data</property>
+                <property name="subtitle" translatable="yes">Which column to load for the Y-data</property>
                 <property name="use-underline">True</property>
                 <child>
-                  <object class="GtkSpinButton" id ="column_y">
-            <property name="vexpand">False</property>
-            <property name="adjustment">spin_button_column_y</property>
-            <property name="numeric">True</property>
-            <property name="value">1</property>
-            <property name="wrap">True</property>
+                  <object class="GtkSpinButton" id="column_y">
+                    <property name="valign">center</property>
+                    <property name="adjustment">spin_button_column_y</property>
+                    <property name="numeric">True</property>
+                    <property name="value">1</property>
+                    <property name="wrap">True</property>
                   </object>
                 </child>
               </object>
@@ -88,24 +94,24 @@
             <child>
               <object class="AdwActionRow">
                 <property name="visible">True</property>
-                <property name="can-focus">False</property>
-            <property name="vexpand">False</property>
+                <property name="can-focus">True</property>
+                <property name="vexpand">False</property>
                 <property name="title" translatable="yes">Skip rows</property>
-                <property name="subtitle" translatable="yes">Choose how many rows to skip while loading data</property>
+                <property name="subtitle" translatable="yes">How many rows to skip while loading data</property>
                 <property name="use-underline">True</property>
                 <child>
-                  <object class="GtkSpinButton" id ="skip_rows">
-            <property name="vexpand">False</property>
-            <property name="adjustment">spin_button_skip_rows</property>
-            <property name="numeric">True</property>
-            <property name="value">1</property>
-            <property name="wrap">True</property>
+                  <object class="GtkSpinButton" id="import_skip_rows">
+                    <property name="valign">center</property>
+                    <property name="adjustment">spin_button_skip_rows</property>
+                    <property name="numeric">True</property>
+                    <property name="value">1</property>
+                    <property name="wrap">True</property>
                   </object>
                 </child>
               </object>
             </child>
           </object>
-          </child>
+        </child>
         <child>
           <object class="AdwPreferencesGroup">
             <property name="visible">True</property>
@@ -117,7 +123,7 @@
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
                 <property name="title" translatable="yes">Default filetype</property>
-                <property name="subtitle" translatable="yes">Choose the default filetype of saved graphs</property>
+                <property name="subtitle" translatable="yes">The default filetype of saved graphs</property>
                 <property name="use-underline">True</property>
                 <child>
                   <object class="GtkDropDown" id="savefig_filetype_chooser">
@@ -151,8 +157,8 @@
               </object>
             </child>
           </object>
-          </child>
-          <child>
+        </child>
+        <child>
           <object class="AdwPreferencesGroup">
             <property name="visible">True</property>
             <property name="can-focus">False</property>
@@ -211,7 +217,7 @@
         <property name="visible">True</property>
         <property name="icon-name">applications-graphics-symbolic</property>
         <property name="title">Plot</property>
-      <child>
+        <child>
           <object class="AdwPreferencesGroup">
             <property name="visible">True</property>
             <property name="title" translatable="yes">Axes</property>
@@ -225,7 +231,7 @@
                 <property name="use-underline">True</property>
                 <child>
                   <object class="GtkEntry" id="plot_title">
-                    <property name="text"></property>
+                    <property name="text" />
                     <property name="valign">center</property>
                   </object>
                 </child>
@@ -241,9 +247,9 @@
                 <property name="use-underline">True</property>
                 <child>
                   <object class="GtkEntry" id="plot_Y_label">
-                  <property name="focus-on-click">True</property>
-                <property name="can-focus">True</property>
-                <property name="can-target">True</property>
+                    <property name="focus-on-click">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="can-target">True</property>
                     <property name="text">Y value</property>
                     <property name="valign">center</property>
                   </object>
@@ -265,7 +271,7 @@
                 </child>
               </object>
             </child>
-             <child>
+            <child>
               <object class="AdwActionRow">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
@@ -275,13 +281,11 @@
                 <child>
                   <object class="GtkFontButton" id="plot_font_chooser">
                     <property name="valign">center</property>
-
                   </object>
                 </child>
               </object>
             </child>
-
-             <child>
+            <child>
               <object class="AdwActionRow">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
@@ -377,7 +381,7 @@
                 </child>
               </object>
             </child>
-              <child>
+            <child>
               <object class="AdwActionRow">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
@@ -392,7 +396,7 @@
                 </child>
               </object>
             </child>
-              <child>
+            <child>
               <object class="AdwActionRow">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
@@ -407,7 +411,7 @@
                 </child>
               </object>
             </child>
- <child>
+            <child>
               <object class="AdwActionRow">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
@@ -421,7 +425,7 @@
                 </child>
               </object>
             </child>
-             <child>
+            <child>
               <object class="AdwActionRow">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
@@ -435,7 +439,7 @@
                 </child>
               </object>
             </child>
-               <child>
+            <child>
               <object class="AdwActionRow">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
@@ -449,7 +453,7 @@
                 </child>
               </object>
             </child>
-               <child>
+            <child>
               <object class="AdwActionRow">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
@@ -463,7 +467,7 @@
                 </child>
               </object>
             </child>
-            </object>
+          </object>
         </child>
         <child>
           <object class="AdwPreferencesGroup">
@@ -505,7 +509,7 @@
                 </child>
               </object>
             </child>
-                        <child>
+            <child>
               <object class="AdwActionRow">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
@@ -673,8 +677,8 @@
             </child>
           </object>
         </child>
-           <child>
-              <object class="AdwPreferencesGroup">
+        <child>
+          <object class="AdwPreferencesGroup">
             <property name="visible">True</property>
             <property name="title" translatable="yes">Style</property>
             <property name="description" translatable="yes">Settings for the graph style</property>
@@ -722,19 +726,17 @@
         </child>
       </object>
     </child>
-  <object class="GtkAdjustment" id = "spin_button_column_x">
-        <property name="step_increment">1</property>
-        <property name="upper">100</property>
+    <object class="GtkAdjustment" id="spin_button_column_x">
+      <property name="step_increment">1</property>
+      <property name="upper">100</property>
     </object>
-  <object class="GtkAdjustment" id = "spin_button_column_y">
-        <property name="step_increment">1</property>
-        <property name="upper">100</property>
+    <object class="GtkAdjustment" id="spin_button_column_y">
+      <property name="step_increment">1</property>
+      <property name="upper">100</property>
     </object>
-      <object class="GtkAdjustment" id = "spin_button_skip_rows">
-        <property name="step_increment">1</property>
-        <property name="upper">999</property>
+    <object class="GtkAdjustment" id="spin_button_skip_rows">
+      <property name="step_increment">1</property>
+      <property name="upper">999</property>
     </object>
   </template>
 </interface>
-
-
