@@ -38,5 +38,5 @@
 "import_column_y": 1,
 "import_skip_rows": 0,
 "import_separator": ".",
-"import_delimiter": "\\t"
+"import_delimiter": "\\s+"
 }
