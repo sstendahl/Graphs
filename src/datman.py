@@ -53,10 +53,14 @@ def open_selection(self, files, from_dictionary = False, import_settings = None)
         for path in files:
             if path != "":
                 item = get_data(path, import_settings)
-                filename = path.split("/")[-1]
                 item.xdata_clipboard = [item.xdata]
                 item.ydata_clipboard = [item.ydata]
                 item.clipboard_pos = -1
+                if import_settings["name"] != "" and len(files) == 1:
+                    filename = import_settings["name"]
+                else:
+                    filename = path.split("/")[-1]
+
                 if filename in self.datadict:
                     if self.preferences.config["allow_duplicate_filenames"]:
                         filename = get_duplicate_filename(self, filename)
@@ -270,6 +274,7 @@ def get_import_settings(self):
     import_settings["skip_rows"] = int(self.preferences.config["import_skip_rows"])
     import_settings["column_x"] = int(self.preferences.config["import_column_x"])
     import_settings["column_y"] = int(self.preferences.config["import_column_y"])
+    import_settings["name"] = ""
     return import_settings
 
 def on_open_response(dialog, response, self, import_settings):

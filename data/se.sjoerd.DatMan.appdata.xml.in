@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <component type="desktop-application">
   <id>se.sjoerd.DatMan</id>
   <metadata_license>CC0-1.0</metadata_license>
@@ -13,53 +13,54 @@
     </p>
     <p>
       Graphs can both be used as plotting tool, or as a data manipulation tool. There's an extensive number of options to change the plot layouts including,
-      but not limited to the axis labels, the prefered scaling on either axis, the length and width of the ticks used, the thickness of the lines, the linestyle,
+      but not limited to the axis labels, the preferred scaling on either axis, the length and width of the ticks used, the thickness of the lines, the linestyle,
       the fonts and more. The plots can be saved in multiple formats, including vector images for further editing in e.g. Inkscape. The data manipulation tools
       include options like:
           </p>
-      <ul>
-    <li>Selecting and cutting part of the data</li>
-    <li>Translation and multiplification of data</li>
-    <li>Centering data</li>
-    <li>Smoothening data</li>
-    <li>Custom transformations using anything that is compatible with the numpy module</li>
-</ul>
+    <ul>
+      <li>Selecting and cutting part of the data</li>
+      <li>Translation and multiplication of data</li>
+      <li>Centering data</li>
+      <li>Smoothening data</li>
+      <li>Custom transformations using anything that is compatible with the numpy module</li>
+    </ul>
     <p>
-      Graphs is still in very early development, and a large number of features are still planned. For any future requests or feedback, please file an issue on Github or send
-      me an email. 
+      Graphs is still in early development, and a large number of features are still planned. For any future requests or feedback, please file an issue on the Github page.
     </p>
   </description>
-
   <launchable type="desktop-id">se.sjoerd.DatMan.desktop</launchable>
-  
   <url type="bugtracker">https://github.com/SjoerdB93/Graphs/issues</url>
   <url type="help">https://github.com/SjoerdB93/Graphs/</url>
   <url type="homepage">https://www.sjoerd.se</url>
   <screenshots>
     <screenshot type="default">
       <caption>GIScan settings</caption>
-      <image>http://www.sjoerd.se/datman_main.png</image>
+      <image>http://www.sjoerd.se/graphs_main.png</image>
     </screenshot>
-   
-         <screenshot type="default">
+    <screenshot type="default">
       <caption>GIScan settings</caption>
-      <image>http://www.sjoerd.se/datman_equations.png</image>
+      <image>http://www.sjoerd.se/graphs_equation.png</image>
     </screenshot>
-   
-         <screenshot type="default">
+    <screenshot type="default">
       <caption>GIScan settings</caption>
-      <image>http://www.sjoerd.se/datman_light_dark.png</image>
-    </screenshot>    
+      <image>http://www.sjoerd.se/graphs_open_data.png</image>
+    </screenshot>
+    <screenshot type="default">
+      <caption>GIScan settings</caption>
+      <image>http://www.sjoerd.se/graphs_light_dark.png</image>
+    </screenshot>
   </screenshots>
-     <releases>
+  <releases>
     <release version="1.1.0" date="2022-12-17">
       <description>
         <ul>
           <li>Improved the UI for the "Add equation" and "Transform data" windows</li>
-          <li>Minor linguistic chances</li>
           <li>Added import settings</li>
           <li>Added an advanced import setting</li>
           <li>Changed the "general" tab in settings to be the default view</li>
+          <li>Changed screenshots for Flathub</li>
+          <li>Changed capitalization to be more in line with the GNOME HIG</li>
+          <li>Other minor linguistic changes</li>
         </ul>
       </description>
     </release>
@@ -74,18 +75,17 @@
         </ul>
       </description>
     </release>
-      <release version="1.0.2" date="2022-12-15">
+    <release version="1.0.2" date="2022-12-15">
       <description>
         <ul>
           <li>Changed the name of the application to be more in line with the GNOME HIG</li>
           <li>Transformation window can be closed with the escape button</li>
           <li>Fixed a bug where graph would not plot if any of the values where infinite (e.g. if equation Y = 1/X was plotted)</li>
           <li>Step-size, X-start and X-stop in add-equation window now also handle numpy notation</li>
-
         </ul>
       </description>
     </release>
-     <release version="1.0.1" date="2022-12-15">
+    <release version="1.0.1" date="2022-12-15">
       <description>
         <ul>
           <li>Add equation window can now be closed with the escape button</li>
@@ -106,13 +106,9 @@
       </description>
     </release>
   </releases>
-
   <recommends>
-  <control>keyboard</control>
-  <control>pointing</control>
-</recommends>
-
+    <control>keyboard</control>
+    <control>pointing</control>
+  </recommends>
   <content_rating type="oars-1.1" />
-
 </component>
-

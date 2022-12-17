@@ -3,8 +3,8 @@
   <requires lib="gtk" version="4.0" />
   <requires lib="libadwaita" version="1.0" />
   <template class="AddAdvancedWindow" parent="AdwWindow">
-    <property name="title">Open data from file (advanced)</property>
-    <property name="default-width">600</property>
+    <property name="title">Open Data From File (Advanced)</property>
+    <property name="default-width">650</property>
     <property name="default-height">125</property>
     <child>
       <object class="GtkShortcutController">
@@ -25,14 +25,30 @@
         </child>
         <child>
           <object class="AdwPreferencesGroup">
-            <property name="title" translatable="yes">Open data</property>
+            <property name="title" translatable="yes">Open Data</property>
             <property name="description" translatable="yes">Advanced settings for importing data</property>
             <property name="visible">True</property>
-            <property name="margin-start">30</property>"
+            <property name="can-focus">True</property>
+            <property name="margin-start">30</property>
             <property name="margin-end">30</property>
             <property name="margin-top">30</property>
-            <property name="margin-bottom">30</property>"
-        <child>
+            <property name="margin-bottom">30</property>
+            <child>
+              <object class="AdwActionRow">
+                <property name="visible">True</property>
+                <property name="can-focus">True</property>
+                <property name="title" translatable="yes">Name</property>
+                <property name="subtitle" translatable="yes">The name that is to be used for the data set (single file only)</property>
+                <child>
+                  <object class="GtkEntry" id="name">
+                    <property name="placeholder-text">Leave blank to use filename</property>
+                    <property name="max-width-chars">10</property>"
+                    <property name="valign">center</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
               <object class="AdwActionRow">
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
@@ -51,7 +67,7 @@
               <object class="AdwActionRow">
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
-                <property name="title" translatable="yes">Decimal separator</property>
+                <property name="title" translatable="yes">Decimal Separator</property>
                 <property name="subtitle" translatable="yes">The character that is used as decimal separator</property>
                 <property name="use-underline">True</property>
                 <child>
@@ -111,7 +127,7 @@
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
                 <property name="vexpand">False</property>
-                <property name="title" translatable="yes">Skip rows</property>
+                <property name="title" translatable="yes">Skip Rows</property>
                 <property name="subtitle" translatable="yes">Choose how many rows to skip while loading data</property>
                 <property name="use-underline">True</property>
                 <child>
@@ -127,15 +143,11 @@
             </child>
             <child>
               <object class="GtkButton" id="open_advanced_confirm_button">
-                <property name="label">Open file</property>
+                <property name="hexpand">true</property>
+                <property name="label">Open files</property>
                 <property name="margin-end">10</property>
                 <property name="margin-top">20</property>
                 <property name="margin-bottom">10</property>
-                <layout>
-                  <property name="column">1</property>
-                  <property name="row">7</property>
-                  <property name="column-span">2</property>
-                </layout>
               </object>
             </child>
           </object>

@@ -130,7 +130,7 @@
         </child>
         <child>
          <object class="GtkToggleButton" id="select_data_button">
-          <property name="label">Select span</property>
+          <property name="label">Select Span</property>
           <property name="action-name">app.select_data_toggle</property>
           <property name="margin-end">5</property>
           <property name="margin-top">5</property>
@@ -143,7 +143,7 @@
         </child>
         <child>
          <object class="GtkToggleButton" id="cut_data_button">
-          <property name="label">Cut span</property>
+          <property name="label">Cut Span</property>
           <property name="action-name">app.cut_data</property>
           <property name="margin-top">5</property>
           <layout>
@@ -169,7 +169,7 @@
         <child>
          <object class="GtkButton" id="shift_vertically_button">
           <property name="action-name">app.shift_vertically</property>
-          <property name="label">Shift vertically</property>
+          <property name="label">Shift Vertically</property>
           <property name="margin-top">5</property>
           <property name="margin-end">5</property>
           <layout>
@@ -194,7 +194,7 @@
         <child>
          <object class="GtkButton" id="center_data_button">
           <property name="action-name">app.center_data</property>
-          <property name="label">Center data</property>
+          <property name="label">Center Data</property>
           <property name="margin-top">5</property>
           <layout>
            <property name="column">2</property>
@@ -307,7 +307,7 @@
         </child>
         <child>
          <object class="GtkButton" id="transform_data_button">
-          <property name="label">Transform data</property>
+          <property name="label">Transform Data</property>
           <property name="action-name">app.transform_data</property>
           <property name="margin-end">5</property>
           <property name="margin-top">5</property>
@@ -320,7 +320,7 @@
         </child>
         <child>
          <object class="GtkButton" id="save_data_button">
-          <property name="label">Save data</property>
+          <property name="label">Save Data</property>
           <property name="action-name">app.save_data</property>
           <property name="margin-top">5</property>
           <layout>
@@ -355,15 +355,15 @@
    <menu id="add_data_menu">
   <section>
    <item>
-    <attribute name="label" translatable="yes">_Add data from file</attribute>
+    <attribute name="label" translatable="yes">_Add Data from File</attribute>
     <attribute name="action">app.add_data</attribute>
    </item>
    <item>
-    <attribute name="label" translatable="yes">_Add data from file (advanced)</attribute>
+    <attribute name="label" translatable="yes">_Add Data from File (Advanced)</attribute>
     <attribute name="action">app.add_data_advanced</attribute>
    </item>
    <item>
-    <attribute name="label" translatable="yes">_Add data from equation</attribute>
+    <attribute name="label" translatable="yes">_Add Data from Equation</attribute>
     <attribute name="action">app.add_equation</attribute>
    </item>
   </section>

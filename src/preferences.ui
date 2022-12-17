@@ -15,7 +15,7 @@
           <object class="AdwPreferencesGroup">
             <property name="visible">True</property>
             <property name="can-focus">True</property>
-            <property name="title" translatable="yes">Import settings</property>
+            <property name="title" translatable="yes">Import Settings</property>
             <property name="description" translatable="yes">Settings for importing graphs</property>
             <child>
               <object class="AdwActionRow">
@@ -36,7 +36,7 @@
               <object class="AdwActionRow">
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
-                <property name="title" translatable="yes">Decimal separator</property>
+                <property name="title" translatable="yes">Decimal Separator</property>
                 <property name="subtitle" translatable="yes">The character that is used as decimal separator</property>
                 <property name="use-underline">True</property>
                 <child>
@@ -96,7 +96,7 @@
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
                 <property name="vexpand">False</property>
-                <property name="title" translatable="yes">Skip rows</property>
+                <property name="title" translatable="yes">Skip Rows</property>
                 <property name="subtitle" translatable="yes">How many rows to skip while loading data</property>
                 <property name="use-underline">True</property>
                 <child>
@@ -116,13 +116,13 @@
           <object class="AdwPreferencesGroup">
             <property name="visible">True</property>
             <property name="can-focus">False</property>
-            <property name="title" translatable="yes">Saved plots</property>
+            <property name="title" translatable="yes">Saved Plots</property>
             <property name="description" translatable="yes">General settings for the saved graphs</property>
             <child>
               <object class="AdwActionRow">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
-                <property name="title" translatable="yes">Default filetype</property>
+                <property name="title" translatable="yes">Default Filetype</property>
                 <property name="subtitle" translatable="yes">The default filetype of saved graphs</property>
                 <property name="use-underline">True</property>
                 <child>
@@ -146,7 +146,7 @@
               <object class="AdwActionRow">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
-                <property name="title" translatable="yes">Transparent background</property>
+                <property name="title" translatable="yes">Transparent Background</property>
                 <property name="subtitle" translatable="yes">Use a transparent background for the saved plots</property>
                 <property name="use-underline">True</property>
                 <child>
@@ -162,13 +162,13 @@
           <object class="AdwPreferencesGroup">
             <property name="visible">True</property>
             <property name="can-focus">False</property>
-            <property name="title" translatable="yes">Action behaviour</property>
+            <property name="title" translatable="yes">Action Behaviour</property>
             <property name="description" translatable="yes">Preset behaviour of specific actions</property>
             <child>
               <object class="AdwActionRow">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
-                <property name="title" translatable="yes">Center data</property>
+                <property name="title" translatable="yes">Center Data</property>
                 <property name="subtitle" translatable="yes">Choose the default behaviour of the center data button</property>
                 <property name="use-underline">True</property>
                 <child>
@@ -198,7 +198,7 @@
               <object class="AdwActionRow">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
-                <property name="title" translatable="yes">Allow duplicate filenames</property>
+                <property name="title" translatable="yes">Allow Duplicate Filenames</property>
                 <property name="subtitle" translatable="yes">Allow duplicate filenames to be loaded</property>
                 <property name="use-underline">True</property>
                 <child>
@@ -226,7 +226,7 @@
               <object class="AdwActionRow">
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
-                <property name="title" translatable="yes">Plot title</property>
+                <property name="title" translatable="yes">Plot Title</property>
                 <property name="subtitle" translatable="yes">Title used for the plot (leave blank for no title)</property>
                 <property name="use-underline">True</property>
                 <child>
@@ -242,7 +242,7 @@
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
                 <property name="can-target">True</property>
-                <property name="title" translatable="yes">Y-Axis name</property>
+                <property name="title" translatable="yes">Y-Axis Name</property>
                 <property name="subtitle" translatable="yes">Title used for the Y-axis</property>
                 <property name="use-underline">True</property>
                 <child>
@@ -260,7 +260,7 @@
               <object class="AdwActionRow">
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
-                <property name="title" translatable="yes">X-axis name</property>
+                <property name="title" translatable="yes">X-axis Name</property>
                 <property name="subtitle" translatable="yes">Title used for the X-axis</property>
                 <property name="use-underline">True</property>
                 <child>
@@ -289,7 +289,7 @@
               <object class="AdwActionRow">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
-                <property name="title" translatable="yes">Y-axis scale</property>
+                <property name="title" translatable="yes">Y-axis Scale</property>
                 <property name="subtitle" translatable="yes">Default scaling on Y-axis</property>
                 <property name="use-underline">True</property>
                 <child>
@@ -311,7 +311,7 @@
               <object class="AdwActionRow">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
-                <property name="title" translatable="yes">X-axis scale</property>
+                <property name="title" translatable="yes">X-Axis Scale</property>
                 <property name="subtitle" translatable="yes">Default scaling on X-axis</property>
                 <property name="use-underline">True</property>
                 <child>
@@ -333,7 +333,7 @@
               <object class="AdwActionRow">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
-                <property name="title" translatable="yes">Tick directions</property>
+                <property name="title" translatable="yes">Tick Directions</property>
                 <property name="subtitle" translatable="yes">Choose to have the ticks either in or out</property>
                 <property name="use-underline">True</property>
                 <child>
@@ -355,7 +355,7 @@
               <object class="AdwActionRow">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
-                <property name="title" translatable="yes">Major tick width</property>
+                <property name="title" translatable="yes">Major Tick Width</property>
                 <property name="subtitle" translatable="yes">The thickness of the major ticks</property>
                 <property name="use-underline">True</property>
                 <child>
@@ -370,7 +370,7 @@
               <object class="AdwActionRow">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
-                <property name="title" translatable="yes">Minor tick width</property>
+                <property name="title" translatable="yes">Minor Tick Width</property>
                 <property name="subtitle" translatable="yes">The thickness of the minor ticks</property>
                 <property name="use-underline">True</property>
                 <child>
@@ -385,7 +385,7 @@
               <object class="AdwActionRow">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
-                <property name="title" translatable="yes">Major tick length</property>
+                <property name="title" translatable="yes">Major Tick Length</property>
                 <property name="subtitle" translatable="yes">The length of the major ticks</property>
                 <property name="use-underline">True</property>
                 <child>
@@ -400,7 +400,7 @@
               <object class="AdwActionRow">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
-                <property name="title" translatable="yes">Minor tick length</property>
+                <property name="title" translatable="yes">Minor Tick Length</property>
                 <property name="subtitle" translatable="yes">The length of the minor ticks</property>
                 <property name="use-underline">True</property>
                 <child>
@@ -415,7 +415,7 @@
               <object class="AdwActionRow">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
-                <property name="title" translatable="yes">Ticks on left axis</property>
+                <property name="title" translatable="yes">Ticks on Left Axis</property>
                 <property name="subtitle" translatable="yes">Show ticks on the left-hand axis</property>
                 <property name="use-underline">True</property>
                 <child>
@@ -429,7 +429,7 @@
               <object class="AdwActionRow">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
-                <property name="title" translatable="yes">Ticks on bottom axis</property>
+                <property name="title" translatable="yes">Ticks on Bottom Axis</property>
                 <property name="subtitle" translatable="yes">Show ticks on the bottom</property>
                 <property name="use-underline">True</property>
                 <child>
@@ -443,7 +443,7 @@
               <object class="AdwActionRow">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
-                <property name="title" translatable="yes">Ticks on top axis</property>
+                <property name="title" translatable="yes">Ticks on Top Axis</property>
                 <property name="subtitle" translatable="yes">Show ticks on the top</property>
                 <property name="use-underline">True</property>
                 <child>
@@ -457,7 +457,7 @@
               <object class="AdwActionRow">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
-                <property name="title" translatable="yes">Ticks on right axis</property>
+                <property name="title" translatable="yes">Ticks on Right Axis</property>
                 <property name="subtitle" translatable="yes">Show ticks on the right</property>
                 <property name="use-underline">True</property>
                 <child>
@@ -473,7 +473,7 @@
           <object class="AdwPreferencesGroup">
             <property name="visible">True</property>
             <property name="can-focus">False</property>
-            <property name="title" translatable="yes">Figure elements</property>
+            <property name="title" translatable="yes">Figure Elements</property>
             <property name="description" translatable="yes">Settings for the lines used in the plots</property>
             <child>
               <object class="AdwActionRow">
@@ -493,7 +493,7 @@
               <object class="AdwActionRow">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
-                <property name="title" translatable="yes">Color cycle</property>
+                <property name="title" translatable="yes">Color Cycle</property>
                 <property name="subtitle" translatable="yes">Choose the default color cycle</property>
                 <property name="use-underline">True</property>
                 <child>
@@ -513,7 +513,7 @@
               <object class="AdwActionRow">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
-                <property name="title" translatable="yes">Invert color cycle in dark mode</property>
+                <property name="title" translatable="yes">Invert Color Cycle in Dark Mode</property>
                 <property name="subtitle" translatable="yes">Use inverted colors for the color cycle used in dark mode</property>
                 <property name="use-underline">True</property>
                 <child>
@@ -527,7 +527,7 @@
               <object class="AdwActionRow">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
-                <property name="title" translatable="yes">Selected linewidth</property>
+                <property name="title" translatable="yes">Selected Linewidth</property>
                 <property name="subtitle" translatable="yes">The linewidth for selected lines</property>
                 <property name="use-underline">True</property>
                 <child>
@@ -542,7 +542,7 @@
               <object class="AdwActionRow">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
-                <property name="title" translatable="yes">Unselected linewidth</property>
+                <property name="title" translatable="yes">Unselected Linewidth</property>
                 <property name="subtitle" translatable="yes">The linewidth for unselected lines</property>
                 <property name="use-underline">True</property>
                 <child>
@@ -557,7 +557,7 @@
               <object class="AdwActionRow">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
-                <property name="title" translatable="yes">Selected linestyle</property>
+                <property name="title" translatable="yes">Selected Linestyle</property>
                 <property name="subtitle" translatable="yes">The linestyle for selected lines</property>
                 <property name="use-underline">True</property>
                 <child>
@@ -582,7 +582,7 @@
               <object class="AdwActionRow">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
-                <property name="title" translatable="yes">Unselected linestyle</property>
+                <property name="title" translatable="yes">Unselected Linestyle</property>
                 <property name="subtitle" translatable="yes">The linestyle for unselected lines</property>
                 <property name="use-underline">True</property>
                 <child>
@@ -607,7 +607,7 @@
               <object class="AdwActionRow">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
-                <property name="title" translatable="yes">Selected marker size</property>
+                <property name="title" translatable="yes">Selected Marker Size</property>
                 <property name="subtitle" translatable="yes">The size of the markers used in selected lines</property>
                 <property name="use-underline">True</property>
                 <child>
@@ -622,7 +622,7 @@
               <object class="AdwActionRow">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
-                <property name="title" translatable="yes">Unselected marker size</property>
+                <property name="title" translatable="yes">Unselected Marker Size</property>
                 <property name="subtitle" translatable="yes">The size of the markers used in unselected lines</property>
                 <property name="use-underline">True</property>
                 <child>
@@ -637,7 +637,7 @@
               <object class="AdwActionRow">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
-                <property name="title" translatable="yes">Selected markers</property>
+                <property name="title" translatable="yes">Selected Markers</property>
                 <property name="subtitle" translatable="yes">The markers used for selected lines</property>
                 <property name="use-underline">True</property>
                 <child>
@@ -658,7 +658,7 @@
               <object class="AdwActionRow">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
-                <property name="title" translatable="yes">Unselected markers</property>
+                <property name="title" translatable="yes">Unselected Markers</property>
                 <property name="subtitle" translatable="yes">The markers used for unselected lines</property>
                 <property name="use-underline">True</property>
                 <child>
@@ -686,7 +686,7 @@
               <object class="AdwActionRow">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
-                <property name="title" translatable="yes">Graph style light</property>
+                <property name="title" translatable="yes">Graph Style Light</property>
                 <property name="subtitle" translatable="yes">The style sheet used for the graph in light mode</property>
                 <property name="use-underline">True</property>
                 <child>
@@ -706,7 +706,7 @@
               <object class="AdwActionRow">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
-                <property name="title" translatable="yes">Graph style dark</property>
+                <property name="title" translatable="yes">Graph Style Dark</property>
                 <property name="subtitle" translatable="yes">The style used for the graph in dark mode</property>
                 <property name="use-underline">True</property>
                 <child>

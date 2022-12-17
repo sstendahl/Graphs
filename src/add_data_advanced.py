@@ -16,6 +16,7 @@ def on_accept(widget, self, window):
     import_settings["skip_rows"] = int(window.skip_rows.get_value())
     import_settings["separator"] = window.separator.get_selected_item().get_string()
     import_settings["delimiter"] = window.delimiter.get_text()
+    import_settings["name"] = window.name.get_text()
     datman.open_file_dialog(widget, _, self, import_settings = import_settings)
     window.destroy()
 
@@ -25,6 +26,7 @@ class AddAdvancedWindow(Adw.Window):
     delimiter = Gtk.Template.Child()
     separator = Gtk.Template.Child()
     column_x = Gtk.Template.Child()
+    name = Gtk.Template.Child()
     column_y = Gtk.Template.Child()
     skip_rows = Gtk.Template.Child()
     open_advanced_confirm_button = Gtk.Template.Child()

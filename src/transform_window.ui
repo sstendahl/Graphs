@@ -3,7 +3,7 @@
   <requires lib="gtk" version="4.0" />
   <requires lib="libadwaita" version="1.0" />
   <template class="TransformWindow" parent="AdwWindow">
-    <property name="title">Add Equation</property>
+    <property name="title">Transform Data</property>
     <property name="default-width">425</property>
     <property name="default-height">125</property>
     <child>
@@ -27,7 +27,7 @@
           <object class="AdwPreferencesGroup">
             <property name="visible">True</property>
             <property name="can-focus">True</property>
-            <property name="title" translatable="yes">Transform data</property>
+            <property name="title" translatable="yes">Transform Data</property>
             <property name="description" translatable="yes"> The transformation tool uses Numpy notation, with capital letters for the coordinates.
 
 Transformations are done piece-wise, if you want access to the entire range use X_range or Y_range. e.g. Y = Y/max(X_range) divides each Y value by the largest value of X.

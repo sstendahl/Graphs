@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <interface>
-  <requires lib="gtk" version="4.0"/>
-  <requires lib="libadwaita" version="1.0"/>
+  <requires lib="gtk" version="4.0" />
+  <requires lib="libadwaita" version="1.0" />
   <template class="AddEquationWindow" parent="AdwWindow">
     <property name="title">Add Equation</property>
     <property name="default-width">575</property>
@@ -23,110 +23,110 @@
           <object class="GtkHeaderBar" id="header_bar">
           </object>
         </child>
-                <child>
+        <child>
           <object class="AdwPreferencesGroup">
             <property name="visible">True</property>
             <property name="can-focus">True</property>
-                        <property name="title" translatable="yes">Add equation</property>
+            <property name="title" translatable="yes">Add Equation</property>
             <property name="description" translatable="yes"> Here you can add data using an equation using Numpy notation. Make sure to use a capital letter for the X coordinate.</property>
-                                    <property name="margin-start">30</property>"
+            <property name="margin-start">30</property>"
                         <property name="margin-end">30</property>
             <property name="margin-top">30</property>
             <property name="margin-bottom">30</property>""
         <child>
-          <object class="AdwActionRow">
-            <property name="visible">True</property>
-            <property name="can-focus">True</property>
-            <property name="title" translatable="yes">Name</property>
-            <property name="subtitle" translatable="yes">The name that is to be used for the data set</property>
-            <property name="use-underline">True</property>
+              <object class="AdwActionRow">
+                <property name="visible">True</property>
+                <property name="can-focus">True</property>
+                <property name="title" translatable="yes">Name</property>
+                <property name="subtitle" translatable="yes">The name that is to be used for the data set</property>
+                <property name="use-underline">True</property>
+                <child>
+                  <object class="GtkEntry" id="name_entry">
+                    <property name="placeholder-text">Leave blank to use equation</property>
+                    <property name="valign">center</property>
+                    <property name="max-width-chars">25</property>
+                    <property name="width-request">15</property>
+                  </object>
+                </child>
+              </object>
+            </child>
             <child>
-              <object class="GtkEntry" id="name_entry">
-                <property name="placeholder-text">Leave blank to use equation</property>
-                <property name="valign">center</property>
-                <property name="max-width-chars">25</property>
-                <property name="width-request">15</property>
+              <object class="AdwActionRow">
+                <property name="visible">True</property>
+                <property name="can-focus">True</property>
+                <property name="title" translatable="yes">Y =</property>
+                <property name="subtitle" translatable="yes">The equation that is used to generate data</property>
+                <property name="use-underline">True</property>
+                <child>
+                  <object class="GtkEntry" id="equation_entry">
+                    <property name="text">X</property>
+                    <property name="valign">center</property>
+                    <property name="max-width-chars">25</property>
+                    <property name="width-request">15</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="AdwActionRow">
+                <property name="visible">True</property>
+                <property name="can-focus">True</property>
+                <property name="title" translatable="yes">X Start</property>
+                <property name="subtitle" translatable="yes">The starting coordinate for the X axis</property>
+                <property name="use-underline">True</property>
+                <child>
+                  <object class="GtkEntry" id="X_start_entry">
+                    <property name="text">0</property>
+                    <property name="valign">center</property>
+                    <property name="max-width-chars">25</property>
+                    <property name="width-request">15</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="AdwActionRow">
+                <property name="visible">True</property>
+                <property name="can-focus">True</property>
+                <property name="title" translatable="yes">X Stop</property>
+                <property name="subtitle" translatable="yes">The ending coordinate for the X axis</property>
+                <property name="use-underline">True</property>
+                <child>
+                  <object class="GtkEntry" id="X_stop_entry">
+                    <property name="text">10</property>
+                    <property name="valign">center</property>
+                    <property name="max-width-chars">25</property>
+                    <property name="width-request">15</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="AdwActionRow">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="title" translatable="yes">Step Size</property>
+                <property name="subtitle" translatable="yes">The step size to be used</property>
+                <property name="use-underline">True</property>
+                <child>
+                  <object class="GtkEntry" id="step_size_entry">
+                    <property name="text">0.01</property>
+                    <property name="valign">center</property>
+                    <property name="max-width-chars">25</property>
+                    <property name="width-request">15</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="GtkButton" id="add_equation_confirm_button">
+                <property name="label">Confirm</property>
+                <property name="margin-top">20</property>
+                <property name="margin-bottom">10</property>
               </object>
             </child>
           </object>
         </child>
-        <child>
-          <object class="AdwActionRow">
-            <property name="visible">True</property>
-            <property name="can-focus">True</property>
-            <property name="title" translatable="yes">Y =</property>
-            <property name="subtitle" translatable="yes">The equation that is used to generate data</property>
-            <property name="use-underline">True</property>
-            <child>
-              <object class="GtkEntry" id="equation_entry">
-                <property name="text">X</property>
-                <property name="valign">center</property>
-                <property name="max-width-chars">25</property>
-                <property name="width-request">15</property>
-              </object>
-            </child>
-          </object>
-        </child>
-        <child>
-          <object class="AdwActionRow">
-            <property name="visible">True</property>
-            <property name="can-focus">True</property>
-            <property name="title" translatable="yes">X start</property>
-            <property name="subtitle" translatable="yes">The starting coordinate for the X axis</property>
-            <property name="use-underline">True</property>
-            <child>
-              <object class="GtkEntry" id="X_start_entry">
-                <property name="text">0</property>
-                <property name="valign">center</property>
-                <property name="max-width-chars">25</property>
-                <property name="width-request">15</property>
-              </object>
-            </child>
-          </object>
-        </child>
-        <child>
-          <object class="AdwActionRow">
-            <property name="visible">True</property>
-            <property name="can-focus">True</property>
-            <property name="title" translatable="yes">X stop</property>
-            <property name="subtitle" translatable="yes">The ending coordinate for the X axis</property>
-            <property name="use-underline">True</property>
-            <child>
-            <object class="GtkEntry" id="X_stop_entry">
-              <property name="text">10</property>
-                <property name="valign">center</property>
-                <property name="max-width-chars">25</property>
-                <property name="width-request">15</property>
-            </object>
-            </child>
-          </object>
-        </child>
-        <child>
-          <object class="AdwActionRow">
-            <property name="visible">True</property>
-            <property name="can-focus">False</property>
-            <property name="title" translatable="yes">Step size</property>
-            <property name="subtitle" translatable="yes">The step size to be used</property>
-            <property name="use-underline">True</property>
-            <child>
-              <object class="GtkEntry" id="step_size_entry">
-                <property name="text">0.01</property>
-                <property name="valign">center</property>
-                <property name="max-width-chars">25</property>
-                <property name="width-request">15</property>
-              </object>
-            </child>
-          </object>
-        </child>
-        <child>
-          <object class="GtkButton" id="add_equation_confirm_button">
-            <property name="label">Confirm</property>
-            <property name="margin-top">20</property>
-            <property name="margin-bottom">10</property>
-          </object>
-        </child>
-      </object>
-                          </child>
       </object>
     </child>
   </template>
