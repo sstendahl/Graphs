@@ -7,7 +7,6 @@ def open_add_equation_window(widget, _, self):
     win = AddEquationWindow(self)
     name = "transform_confirm"
     button = win.add_equation_confirm_button
-    button.set_sensitive(True)
     button.connect("clicked", on_accept, self, win)
     win.present()
 
@@ -54,15 +53,8 @@ class AddEquationWindow(Adw.Window):
     X_start_entry = Gtk.Template.Child()
     equation_entry = Gtk.Template.Child()
     name_entry = Gtk.Template.Child()
-    equation_info = Gtk.Template.Child()
 
     def __init__(self, parent):
         super().__init__()
         self.set_transient_for=(parent.props.active_window)
         self.props.modal = True
-        buffer = Gtk.TextBuffer()
-        text1 = "Here you can add add a data by equation\n"
-        text2 = "The equation field uses Numpy notation \n"
-        text3 = "Make sure to use a capital letter for the X coordinate"
-        buffer.set_text(text1 + text2 + text3)
-        self.equation_info.set_buffer(buffer)

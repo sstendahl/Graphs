@@ -21,6 +21,12 @@
                 <property name="action-name">app.add_data</property>
               </object>
             </child>
+  <child>
+              <object class="GtkShortcutsShortcut">
+                <property name="title" translatable="yes" context="shortcut window">Open new file (advanced)</property>
+                <property name="action-name">app.add_data_advanced</property>
+              </object>
+            </child>
             <child>
               <object class="GtkShortcutsShortcut">
                 <property name="title" translatable="yes" context="shortcut window">Add data from equation</property>

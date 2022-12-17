@@ -52,6 +52,17 @@
     </screenshot>    
   </screenshots>
      <releases>
+    <release version="1.1.0" date="2022-12-17">
+      <description>
+        <ul>
+          <li>Improved the UI for the "Add equation" and "Transform data" windows</li>
+          <li>Minor linguistic chances</li>
+          <li>Added import settings</li>
+          <li>Added an advanced import setting</li>
+          <li>Changed the "general" tab in settings to be the default view</li>
+        </ul>
+      </description>
+    </release>
     <release version="1.0.3" date="2022-12-16">
       <description>
         <p>Minor update with some bug fixes, next update will focus on adding more options for file imports:</p>
@@ -67,7 +78,7 @@
       <description>
         <ul>
           <li>Changed the name of the application to be more in line with the GNOME HIG</li>
-          <li>Transformation window can be closed with escape</li>
+          <li>Transformation window can be closed with the escape button</li>
           <li>Fixed a bug where graph would not plot if any of the values where infinite (e.g. if equation Y = 1/X was plotted)</li>
           <li>Step-size, X-start and X-stop in add-equation window now also handle numpy notation</li>
 
@@ -77,8 +88,8 @@
      <release version="1.0.1" date="2022-12-15">
       <description>
         <ul>
-          <li>Add equation window can be closed with Esc</li>
-          <li>File chooser dialog and preference dialogs are modal (stick to parent window</li>
+          <li>Add equation window can now be closed with the escape button</li>
+          <li>File chooser dialog and preference dialogs are modal (stick to parent window)</li>
           <li>Remove arrow from hamburger menu</li>
           <li>Add a placeholder hint to Add equation window name</li>
           <li>Changed saving behaviour to allow saving files without file system access for flatpak</li>
