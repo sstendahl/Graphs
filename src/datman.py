@@ -116,9 +116,10 @@ def get_data(path, import_settings):
             i += 1
             if i > import_settings["skip_rows"]:
                 line = line.strip()
-                if import_settings["separator"] == ",":
-                    line.replace(",", ".")
                 line = re.split(str(import_settings["delimiter"]), line)
+                if import_settings["separator"] == ",":
+                    for index, value in enumerate(line):
+                        line[index] = swap(value)
                 try:
                     data_array[import_settings["column_x"]].append(float(line[0]))
                     data_array[import_settings["column_y"]].append(float(line[1]))
@@ -127,6 +128,14 @@ def get_data(path, import_settings):
     data.xdata = data_array[0]
     data.ydata = data_array[1]
     return data
+
+
+def swap(str1):
+    str1 = str1.replace(',', 'third')
+    str1 = str1.replace('.', ', ')
+    str1 = str1.replace('third', '.')
+    return str1
+
 
 def delete(widget, self, filename):
     layout = self.sample_box
@@ -239,15 +248,15 @@ def save_file(self, path):
             array = np.stack([xdata, ydata], axis=1)
             np.savetxt(str(path + "/" + filename), array, delimiter="\t")
 
-def open_file_dialog(widget, _, self, advanced = False, import_settings = None):
+def open_file_dialog(widget, _, self, import_settings = None):
     open_file_chooser = Gtk.FileChooserNative.new(
         title="Open new files",
         parent=self.props.active_window,
         action=Gtk.FileChooserAction.OPEN,
         accept_label="_Open",
     )
-
-    import_settings = get_import_settings(self)
+    if import_settings is None:
+        import_settings = get_import_settings(self)
 
     open_file_chooser.set_modal(True)
     open_file_chooser.set_select_multiple(True)

@@ -7,7 +7,6 @@ def open_add_equation_window(widget, _, self):
     win = AddEquationWindow(self)
     name = "transform_confirm"
     button = win.add_equation_confirm_button
-    button.set_sensitive(True)
     button.connect("clicked", on_accept, self, win)
     win.present()
 

@@ -121,7 +121,7 @@
         <child>
           <object class="GtkButton" id="add_equation_confirm_button">
             <property name="label">Confirm</property>
-            <property name="margin-top">5</property>
+            <property name="margin-top">20</property>
             <property name="margin-bottom">10</property>
           </object>
         </child>

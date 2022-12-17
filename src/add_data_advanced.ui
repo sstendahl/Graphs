@@ -28,7 +28,6 @@
             <property name="title" translatable="yes">Open data</property>
             <property name="description" translatable="yes">Advanced settings for importing data</property>
             <property name="visible">True</property>
-            <property name="can-focus">True</property>
             <property name="margin-start">30</property>"
             <property name="margin-end">30</property>
             <property name="margin-top">30</property>
@@ -38,11 +37,11 @@
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
                 <property name="title" translatable="yes">Delimiter</property>
-                <property name="subtitle" translatable="yes">Choose the delimiter that separates the columns (\t for tab)</property>
+                <property name="subtitle" translatable="yes">The delimiter that separates the columns (\s+ for whitespace)</property>
                 <property name="use-underline">True</property>
                 <child>
                   <object class="GtkEntry" id="delimiter">
-                    <property name="text">\t</property>
+                    <property name="max-width-chars">10</property>"
                     <property name="valign">center</property>
                   </object>
                 </child>
@@ -56,7 +55,7 @@
                 <property name="subtitle" translatable="yes">The character that is used as decimal separator</property>
                 <property name="use-underline">True</property>
                 <child>
-                  <object class="GtkDropDown" id="import_separator">
+                  <object class="GtkDropDown" id="separator">
                     <property name="valign">center</property>
                     <property name="model">
                       <object class="GtkStringList">
@@ -130,7 +129,7 @@
               <object class="GtkButton" id="open_advanced_confirm_button">
                 <property name="label">Open file</property>
                 <property name="margin-end">10</property>
-                <property name="margin-top">5</property>
+                <property name="margin-top">20</property>
                 <property name="margin-bottom">10</property>
                 <layout>
                   <property name="column">1</property>
