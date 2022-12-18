@@ -29,10 +29,10 @@
             <property name="can-focus">True</property>
             <property name="title" translatable="yes">Add Equation</property>
             <property name="description" translatable="yes"> Here you can add data using an equation using Numpy notation. Make sure to use a capital letter for the X coordinate.</property>
-            <property name="margin-start">30</property>"
-                        <property name="margin-end">30</property>
-            <property name="margin-top">30</property>
-            <property name="margin-bottom">30</property>""
+            <property name="margin-start">30</property>
+            <property name="margin-end">30</property>
+            <property name="margin-top">20</property>
+            <property name="margin-bottom">20</property>
         <child>
               <object class="AdwActionRow">
                 <property name="visible">True</property>
@@ -122,7 +122,6 @@
               <object class="GtkButton" id="add_equation_confirm_button">
                 <property name="label">Confirm</property>
                 <property name="margin-top">20</property>
-                <property name="margin-bottom">10</property>
               </object>
             </child>
           </object>
@@ -131,3 +130,4 @@
     </child>
   </template>
 </interface>
+

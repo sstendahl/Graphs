@@ -33,10 +33,10 @@
 Transformations are done piece-wise, if you want access to the entire range use X_range or Y_range. e.g. Y = Y/max(X_range) divides each Y value by the largest value of X.
 
 To convert a value radians to degrees use degrees(value).</property>
-            <property name="margin-start">30</property>"
-                        <property name="margin-end">30</property>
-            <property name="margin-top">30</property>
-            <property name="margin-bottom">30</property>""
+            <property name="margin-start">30</property>
+            <property name="margin-end">30</property>
+            <property name="margin-top">20</property>
+            <property name="margin-bottom">20</property>
         <child>
               <object class="AdwActionRow">
                 <property name="visible">True</property>
@@ -71,7 +71,6 @@ To convert a value radians to degrees use degrees(value).</property>
               <object class="GtkButton" id="transform_confirm_button">
                 <property name="label">Confirm</property>
                 <property name="margin-top">20</property>
-                <property name="margin-bottom">0</property>
               </object>
             </child>
           </object>
