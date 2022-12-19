@@ -39,9 +39,19 @@ def create_data(self, x_start, x_stop, equation, step_size, name):
     new_file.xdata =  linspace(eval(x_start),eval(x_stop),datapoints)
     equation = equation.replace("X", "new_file.xdata")
     equation = str(equation.replace("^", "**"))
+
     new_file.ydata = eval(equation)
     new_file.xdata = ndarray.tolist(new_file.xdata)
     new_file.filename = name
+    new_file.linestyle_selected = self.preferences.config["plot_selected_linestyle"]
+    new_file.linestyle_unselected = self.preferences.config["plot_unselected_linestyle"]
+    new_file.selected_line_thickness = self.preferences.config["selected_linewidth"]
+    new_file.unselected_line_thickness = self.preferences.config["unselected_linewidth"]
+    new_file.selected_markers = self.preferences.config["plot_selected_markers"]
+    new_file.unselected_markers = self.preferences.config["plot_unselected_markers"]
+    new_file.selected_marker_size = self.preferences.config["plot_selected_marker_size"]
+    new_file.unselected_marker_size = self.preferences.config["plot_unselected_marker_size"]
+
     return new_file
 
 @Gtk.Template(resource_path="/se/sjoerd/DatMan/add_equation_window.ui")
