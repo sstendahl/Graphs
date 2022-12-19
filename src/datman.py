@@ -107,8 +107,8 @@ def get_data(self, path, import_settings):
                     for index, value in enumerate(line):
                         line[index] = swap(value)
                 try:
-                    data_array[import_settings["column_x"]].append(float(line[0]))
-                    data_array[import_settings["column_y"]].append(float(line[1]))
+                    data_array[0].append(float(line[import_settings["column_x"]]))
+                    data_array[1].append(float(line[import_settings["column_y"]]))
                 except ValueError:
                     pass
     data.xdata = data_array[0]
