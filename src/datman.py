@@ -204,7 +204,7 @@ def add_sample_to_menu(self, filename, color):
     row.sample_box.append(row.delete_button)
     row.delete_button.connect("clicked", delete, self, filename)
     row.color_picker.connect("color-set", row.color_picker.on_color_set, self)
-    max_length = int(35)
+    max_length = int(32)
     if len(filename) > max_length:
         label = f"{filename[:max_length]}..."
     else:
