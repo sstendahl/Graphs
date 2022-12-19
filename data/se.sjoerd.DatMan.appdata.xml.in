@@ -53,7 +53,8 @@
           <li>Added a "Plot settings" option to control the individual line settings</li>
           <li>Added a pop-up button to show the graph in a separate window</li>
           <li>Gave certain buttons a blue "Suggested action" colour</li>
-          <li>Minor bug fixes</li>          
+          <li>Fixed a bug where the advanced column choice didn't work for column indices higher than 1'</li>
+          <li>Some minor bug fixes</li>
         </ul>
       </description>
     </release>
