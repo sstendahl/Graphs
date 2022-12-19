@@ -58,3 +58,5 @@ class AddEquationWindow(Adw.Window):
         super().__init__()
         self.set_transient_for=(parent.props.active_window)
         self.props.modal = True
+        style_context = self.add_equation_confirm_button.get_style_context()
+        style_context.add_class("suggested-action")

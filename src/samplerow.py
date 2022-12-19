@@ -11,7 +11,6 @@ class SampleBox(Gtk.Box):
 
     def __init__(self, app, filename = ""):
         super().__init__()
-
         self.filename = filename
         self.app = app
         self.css = self.get_css()

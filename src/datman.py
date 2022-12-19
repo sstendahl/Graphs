@@ -1,5 +1,6 @@
 from gi.repository import Gtk, Gdk, Gio, GObject, Adw
 import gi
+import os
 import re
 from .plotting_tools import PlotWidget
 from . import plotting_tools
@@ -23,53 +24,34 @@ def get_theme_color(self):
     color_hex = '#{:02x}{:02x}{:02x}'.format(*rgba_tuple)
     return color_hex
 
-def get_dict_by_value(dictionary, value):
-    new_dict = dict((v, k) for k, v in dictionary.items())
-    if value == "none":
-        return "none"
-    return new_dict[value]
-
-
-def open_selection(self, files, from_dictionary = False, import_settings = None):
+def open_selection(self, files, from_dictionary = False, import_settings = None, canvas = None):
+    if canvas == None:
+        canvas = self.canvas
     if self.highlight is not None:
         plotting_tools.hide_highlight(self)
     if from_dictionary:
         for key, item in self.datadict.items():
             if item is not None:
                 if self.item_rows[key].selected == True:
-                    linewidth = self.preferences.config["selected_linewidth"]
-                    linestyle = self.preferences.config["plot_selected_linestyle"]
-                    marker = self.preferences.config["plot_selected_markers"]
-                    marker_size = self.preferences.config["plot_selected_marker_size"]
+                    linewidth = item.selected_line_thickness
+                    linestyle = item.linestyle_selected
+                    marker = item.selected_markers
+                    marker_size = item.selected_marker_size
                 else:
-                    linewidth = self.preferences.config["unselected_linewidth"]
-                    linestyle = self.preferences.config["plot_unselected_linestyle"]
-                    marker = self.preferences.config["plot_unselected_markers"]
-                    marker_size = self.preferences.config["plot_unselected_marker_size"]
+                    linewidth = item.unselected_line_thickness
+                    linestyle = item.linestyle_unselected
+                    marker = item.unselected_markers
+                    marker_size = item.unselected_marker_size
                 color = self.item_rows[key].color_picker.color
 
-                plotting_tools.plot_figure(self, self.canvas, item.xdata,item.ydata, item.filename, linewidth = linewidth, linestyle=linestyle, color = color, marker = marker, marker_size = marker_size)
+                plotting_tools.plot_figure(self, canvas, item.xdata,item.ydata, item.filename, linewidth = linewidth, linestyle=linestyle, color = color, marker = marker, marker_size = marker_size)
     else:
         for path in files:
             if path != "":
-                item = get_data(path, import_settings)
-                item.xdata_clipboard = [item.xdata]
-                item.ydata_clipboard = [item.ydata]
-                item.clipboard_pos = -1
-                if import_settings["name"] != "" and len(files) == 1:
-                    filename = import_settings["name"]
-                else:
-                    filename = path.split("/")[-1]
-
-                if filename in self.datadict:
-                    if self.preferences.config["allow_duplicate_filenames"]:
-                        filename = get_duplicate_filename(self, filename)
-                    else:
-                        continue
-                self.datadict[filename] = item
-                item.filename = filename
+                item = get_data(self, path, import_settings)
+                filename = item.filename
                 color = plotting_tools.get_next_color(self)
-                plotting_tools.plot_figure(self, self.canvas, item.xdata,item.ydata, item.filename, color)
+                plotting_tools.plot_figure(self, canvas, item.xdata,item.ydata, item.filename, color)
                 add_sample_to_menu(self, filename, color)
         self.canvas.draw()
         plotting_tools.set_canvas_limits(self, self.canvas)
@@ -111,7 +93,7 @@ def select_top_row(self):
     item.set_css(item.get_css())
     plotting_tools.refresh_plot(self)
 
-def get_data(path, import_settings):
+def get_data(self, path, import_settings):
     data = Data()
     data_array = [[], []]
     i = 0
@@ -131,8 +113,32 @@ def get_data(path, import_settings):
                     pass
     data.xdata = data_array[0]
     data.ydata = data_array[1]
+    data.xdata_clipboard = [data.xdata]
+    data.ydata_clipboard = [data.ydata]
+    data.clipboard_pos = -1
+    data = set_data_properties(self, path, data, import_settings)
     return data
 
+def set_data_properties(self, path, data, import_settings):
+    data.linestyle_selected = self.preferences.config["plot_selected_linestyle"]
+    data.linestyle_unselected = self.preferences.config["plot_unselected_linestyle"]
+    data.selected_line_thickness = self.preferences.config["selected_linewidth"]
+    data.unselected_line_thickness = self.preferences.config["unselected_linewidth"]
+    data.selected_markers = self.preferences.config["plot_selected_markers"]
+    data.unselected_markers = self.preferences.config["plot_unselected_markers"]
+    data.selected_marker_size = self.preferences.config["plot_selected_marker_size"]
+    data.unselected_marker_size = self.preferences.config["plot_unselected_marker_size"]
+    if import_settings["name"] != "" and import_settings["mode"] == "single":
+        filename = import_settings["name"]
+    else:
+        filename = path.split("/")[-1]
+
+    if filename in self.datadict:
+        if self.preferences.config["allow_duplicate_filenames"]:
+            filename = get_duplicate_filename(self, filename)
+    self.datadict[filename] = data
+    data.filename = filename
+    return data
 
 def swap(str1):
     str1 = str1.replace(',', 'third')
@@ -259,8 +265,6 @@ def open_file_dialog(widget, _, self, import_settings = None):
         action=Gtk.FileChooserAction.OPEN,
         accept_label="_Open",
     )
-    if import_settings is None:
-        import_settings = get_import_settings(self)
 
     open_file_chooser.set_modal(True)
     open_file_chooser.set_select_multiple(True)
@@ -284,6 +288,14 @@ def on_open_response(dialog, response, self, import_settings):
             file_path = file.peek_path()
             filename = file_path.split("/")[-1]
             files.append(file_path)
+
+        if import_settings is None:
+            import_settings = get_import_settings(self)
+        if len(dialog.get_files()) > 1:
+            import_settings["mode"] = "multiple"
+        elif len(dialog.get_files()) == 1:
+            import_settings["mode"] = "single"
+
         open_selection(self, files, import_settings = import_settings)
         self.define_highlight = None
         plotting_tools.define_highlight(self)
@@ -314,7 +326,7 @@ def clear_layout(self):
         else:
             remove = False
 
-def create_layout(self, canvas, layout):
+def create_layout(self, canvas, layout, window_type = "regular"):
     self.toolbar = toolbar.GraphToolbar(canvas, self)
     layout.append(canvas)
     layout.append(self.toolbar)

@@ -1,7 +1,7 @@
 from gi.repository import Adw
 from matplotlib.backends.backend_gtk4 import (
     NavigationToolbar2GTK4 as NavigationToolbar)
-from . import plotting_tools
+from . import plotting_tools, plot_settings, pip_mode
 import os
 import shutil
 
@@ -22,6 +22,8 @@ class GraphToolbar(NavigationToolbar):
             move_button = f"{path}/move-dark"
             xscale_button = f"{path}/change-xscale-dark"
             yscale_button = f"{path}/change-yscale-dark"
+            plot_settings_button = f"{path}/plot-settings-dark"
+            PIP_button = f"{path}/pip-dark"
         else:
             backwards_button = f"{path}/backwards"
             forwards_button = f"{path}/forwards"
@@ -31,6 +33,8 @@ class GraphToolbar(NavigationToolbar):
             move_button = f"{path}/move"
             xscale_button = f"{path}/change-xscale"
             yscale_button = f"{path}/change-yscale"
+            plot_settings_button = f"{path}/plot-settings"
+            PIP_button = f"{path}/pip"
 
 
         self.toolitems = (
@@ -40,12 +44,20 @@ class GraphToolbar(NavigationToolbar):
             (None, None, None, None),
             ('Pan', 'Left button to pan, right button to zoom. Hold control to to keep aspect ratio fixed', move_button, 'pan'),
             ('Zoom', 'Zoom to rectangle', zoom_button, 'zoom'),
-            ("Customize", "Change Y-scale", yscale_button, "change_yscale"),
-            ("Customize", "Change Y-scale", xscale_button, "change_xscale"),
+            ("ChangeYScale", "Change Y-scale", yscale_button, "change_yscale"),
+            ("ChangeXScale", "Change X-scale", xscale_button, "change_xscale"),
+            ("Settings", "Plot Settings", plot_settings_button, "load_plot_settings"),
             (None, None, None, None),
+            ('PIP', 'Open in New Window', PIP_button, 'open_pip_mode'),
             ('Save', 'Save figure', save_button, 'save_figure'),
         )
         super().__init__(canvas, parent)
+
+    def load_plot_settings(self, button):
+        plot_settings.open_plot_settings(button, _, self.parent)
+
+    def open_pip_mode(self, button):
+        pip_mode.open_pip_mode(button, _, self.parent)
 
     def change_yscale(self, button):
         current_scale = self.canvas.ax.get_yscale()

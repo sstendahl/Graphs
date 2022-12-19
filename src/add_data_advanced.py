@@ -39,6 +39,8 @@ class AddAdvancedWindow(Adw.Window):
         self.column_x.set_value(int(config["import_column_x"]))
         self.delimiter.set_text(config["import_delimiter"])
         self.set_chooser(self.separator, config["import_separator"])
+        style_context = self.open_advanced_confirm_button.get_style_context()
+        style_context.add_class("suggested-action")
 
     def set_chooser(self, chooser, choice):
         model = chooser.get_model()

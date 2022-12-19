@@ -1,11 +1,12 @@
 from gi.repository import Gtk, Adw, GObject
 import os
 import shutil
-from . import plotting_tools, datman
+from . import plotting_tools, datman, utilities
 import json
 from matplotlib.lines import Line2D
 import matplotlib.pyplot as plt
 import matplotlib.font_manager
+
 
 def open_preferences_window(widget, _, self):
     win = PreferencesWindow(self)
@@ -122,7 +123,6 @@ class PreferencesWindow(Adw.PreferencesWindow):
             'Dark2', 'Set1', 'Set2', 'Set3',
             'tab10', 'tab20', 'tab20b', 'tab20c']
         self.populate_chooser(self.plot_color_cycle, color_cycles)
-       # self.populate_chooser(self.plot_font_chooser, self.get_available_fonts())
         self.populate_chooser(self.plot_style_dark, plt.style.available)
         self.populate_chooser(self.plot_style_light, plt.style.available)
         self.populate_chooser(self.plot_selected_markers_chooser, list(Line2D.markers.values()))
@@ -275,8 +275,8 @@ class PreferencesWindow(Adw.PreferencesWindow):
         config["import_separator"] = self.import_separator.get_selected_item().get_string()
         config["import_delimiter"] = self.import_delimiter.get_text()
         marker_dict = Line2D.markers
-        unselected_marker_value = datman.get_dict_by_value(marker_dict, self.plot_unselected_markers_chooser.get_selected_item().get_string())
-        selected_marker_value = datman.get_dict_by_value(marker_dict, self.plot_selected_markers_chooser.get_selected_item().get_string())
+        unselected_marker_value = utilities.get_dict_by_value(marker_dict, self.plot_unselected_markers_chooser.get_selected_item().get_string())
+        selected_marker_value = utilities.get_dict_by_value(marker_dict, self.plot_selected_markers_chooser.get_selected_item().get_string())
         config["plot_unselected_markers"] = unselected_marker_value
         config["plot_selected_markers"] = selected_marker_value
         return config

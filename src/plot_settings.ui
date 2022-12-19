@@ -1,0 +1,238 @@
+<?xml version='1.0' encoding='utf-8'?>
+<interface>
+  <requires lib="gtk" version="4.0" />
+  <requires lib="libadwaita" version="1.0" />
+  <template class="PlotSettingsWindow" parent="AdwPreferencesWindow">
+    <property name="can-navigate-back">True</property>
+    <property name="title">Plot Settings</property>
+    <child>
+      <object class="AdwPreferencesPage">
+        <property name="visible">True</property>
+        <property name="can-focus">True</property>
+        <property name="icon-name">applications-system-symbolic</property>
+        <property name="title">General</property>
+        <child>
+              <object class="AdwPreferencesGroup">
+                <property name="visible">True</property>
+                <property name="can-focus">True</property>
+                <property name="title" translatable="yes">Data set</property>
+                <property name="description" translatable="yes">Choose which data set to edit and change its name</property>
+                <child>
+                  <object class="AdwActionRow">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="title" translatable="yes">Data set ID</property>
+                    <property name="subtitle" translatable="yes">The data set to be edited</property>
+                    <property name="use-underline">True</property>
+                    <child>
+                      <object class="GtkDropDown" id="datalist_chooser">
+                        <property name="valign">center</property>
+                        <property name="model">
+                          <object class="GtkStringList">
+                            <items>
+                        </items>
+                          </object>
+                        </property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="AdwActionRow">
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="title" translatable="yes">New Name</property>
+                    <property name="subtitle" translatable="yes">The new name of this data set</property>
+                    <property name="use-underline">True</property>
+                    <child>
+                      <object class="GtkEntry" id="name_entry">
+                        <property name="placeholder-text">Leave blank to keep current name</property>
+                        <property name="valign">center</property>
+                        <property name="max-width-chars">25</property>
+                        <property name="width-request">15</property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                </object>
+          </child>
+                <child>
+              <object class="AdwPreferencesGroup">
+                <property name="visible">True</property>
+                <property name="can-focus">True</property>
+                <property name="title" translatable="yes">Line Style</property>
+                <property name="description" translatable="yes">Change properties of the line style and thickness</property>
+                <child>
+                  <object class="AdwActionRow">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="title" translatable="yes">Linestyle Selected</property>
+                    <property name="subtitle" translatable="yes">The linestyle when the data set is selected</property>
+                    <property name="use-underline">True</property>
+                    <child>
+                      <object class="GtkDropDown" id="linestyle_selected">
+                        <property name="valign">center</property>
+                        <property name="model">
+                          <object class="GtkStringList">
+                            <items>
+                              <item translatable="yes">none</item>
+                              <item translatable="yes">solid</item>
+                              <item translatable="yes">dotted</item>
+                              <item translatable="yes">dashed</item>
+                              <item translatable="yes">dashdot</item>
+                            </items>
+                          </object>
+                        </property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="AdwActionRow">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="title" translatable="yes">Linestyle Unselected</property>
+                    <property name="subtitle" translatable="yes">The linestyle when the data set is not selected</property>
+                    <property name="use-underline">True</property>
+                    <child>
+                      <object class="GtkDropDown" id="linestyle_unselected">
+                        <property name="valign">center</property>
+                        <property name="model">
+                          <object class="GtkStringList">
+                            <items>
+                              <item translatable="yes">none</item>
+                              <item translatable="yes">solid</item>
+                              <item translatable="yes">dotted</item>
+                              <item translatable="yes">dashed</item>
+                              <item translatable="yes">dashdot</item>
+                            </items>
+                          </object>
+                        </property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="AdwActionRow">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="title" translatable="yes">Selected Linewidth</property>
+                    <property name="subtitle" translatable="yes">The width of lines when the data set is selected</property>
+                    <property name="use-underline">True</property>
+                    <child>
+                      <object class="GtkScale" id="selected_line_thickness_slider">
+                        <property name="draw-value">1</property>
+                        <property name="width-request">200</property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="AdwActionRow">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="title" translatable="yes">Unselected Linewidth</property>
+                    <property name="subtitle" translatable="yes">The width of lines when the data set is not selected</property>
+                    <property name="use-underline">True</property>
+                    <child>
+                      <object class="GtkScale" id="unselected_line_thickness_slider">
+                        <property name="draw-value">1</property>
+                        <property name="width-request">200</property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                </object>
+                  </child>
+                        <child>
+              <object class="AdwPreferencesGroup">
+                <property name="visible">True</property>
+                <property name="can-focus">True</property>
+                <property name="title" translatable="yes">Markers</property>
+                <property name="description" translatable="yes">Change the type and size of the markers that are used</property>
+                <child>
+                  <object class="AdwActionRow">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="title" translatable="yes">Selected Markers</property>
+                    <property name="subtitle" translatable="yes">The markers that are used when the data set is selected</property>
+                    <property name="use-underline">True</property>
+                    <child>
+                      <object class="GtkDropDown" id="selected_markers_chooser">
+                        <property name="valign">center</property>
+                        <property name="model">
+                          <object class="GtkStringList">
+                            <items>
+                              <item translatable="yes">none</item>
+                            </items>
+                          </object>
+                        </property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="AdwActionRow">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="title" translatable="yes">Unselected Markers</property>
+                    <property name="subtitle" translatable="yes">The markers that are used when the data set is selected</property>
+                    <property name="use-underline">True</property>
+                    <child>
+                      <object class="GtkDropDown" id="unselected_markers_chooser">
+                        <property name="valign">center</property>
+                        <property name="model">
+                          <object class="GtkStringList">
+                            <items>
+                              <item translatable="yes">none</item>
+                            </items>
+                          </object>
+                        </property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="AdwActionRow">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="title" translatable="yes">Selected Marker Size</property>
+                    <property name="subtitle" translatable="yes">The size of the markers used in selected lines</property>
+                    <property name="use-underline">True</property>
+                    <child>
+                      <object class="GtkScale" id="selected_marker_size">
+                        <property name="draw-value">1</property>
+                        <property name="width-request">200</property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="AdwActionRow">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="title" translatable="yes">Unselected Marker Size</property>
+                    <property name="subtitle" translatable="yes">The size of the markers used in unselected lines</property>
+                    <property name="use-underline">True</property>
+                    <child>
+                      <object class="GtkScale" id="unselected_marker_size">
+                        <property name="draw-value">1</property>
+                        <property name="width-request">200</property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkButton" id="apply_button">
+                    <property name="label">Apply</property>
+                    <property name="margin-top">20</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+        </child>
+
+  </template>
+</interface>
+

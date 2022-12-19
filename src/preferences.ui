@@ -241,8 +241,8 @@
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
                 <property name="can-target">True</property>
-                <property name="title" translatable="yes">Y-Axis Label</property>
-                <property name="subtitle" translatable="yes">Label used for the Y-axis</property>
+                <property name="title" translatable="yes">Y-Axis Name</property>
+                <property name="subtitle" translatable="yes">Title used for the Y-axis</property>
                 <property name="use-underline">True</property>
                 <child>
                   <object class="GtkEntry" id="plot_Y_label">
@@ -259,8 +259,8 @@
               <object class="AdwActionRow">
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
-                <property name="title" translatable="yes">X-axis Label</property>
-                <property name="subtitle" translatable="yes">Label used for the X-axis</property>
+                <property name="title" translatable="yes">X-axis Name</property>
+                <property name="subtitle" translatable="yes">Title used for the X-axis</property>
                 <property name="use-underline">True</property>
                 <child>
                   <object class="GtkEntry" id="plot_X_label">
@@ -334,7 +334,7 @@
           <object class="AdwPreferencesGroup">
             <property name="visible">True</property>
             <property name="can-focus">False</property>
-            <property name="title" translatable="yes">Line Settings</property>
+            <property name="title" translatable="yes">Line Style</property>
             <property name="description" translatable="yes">Settings for the lines used in the plots</property>
             <child>
               <object class="AdwActionRow">

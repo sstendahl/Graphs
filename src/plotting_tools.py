@@ -124,12 +124,14 @@ def reload_plot(self, from_dictionary = True):
         set_canvas_limits(self, self.canvas)
 
 
-def refresh_plot(self, from_dictionary = True, set_limits = True):
-    for line in self.canvas.ax.lines:
+def refresh_plot(self, canvas = None, from_dictionary = True, set_limits = True):
+    if canvas == None:
+        canvas = self.canvas
+    for line in canvas.ax.lines:
         line.remove()
-    datman.open_selection(self, None, from_dictionary)
+    datman.open_selection(self, None, from_dictionary, canvas = canvas)
     if set_limits and len(self.datadict) > 0:
-        set_canvas_limits(self, self.canvas)
+        set_canvas_limits(self, canvas)
     self.canvas.draw()
 
 def get_next_color(self):

@@ -8,7 +8,7 @@
   <developer_name>Sjoerd Broekhuijsen</developer_name>
   <description>
     <p>
-      Graphs is a simple but powerful data manipulation tool developed with the GNOME environment in mind. It opens and plots two-column data files
+      Graphs is a simple but powerful data manipulation and graphing tool developed with the GNOME environment in mind. It opens and plots two-column data files
       which then easily can be manipulated and transformed. Alternatively, data can be generated and plotted from an equation. The transformed data can be saved as .txt file for further use.
     </p>
     <p>
@@ -47,6 +47,15 @@
     </screenshot>
   </screenshots>
   <releases>
+      <release version="1.1.2" date="2022-12-19">
+      <description>
+        <ul>
+          <li>Added a "Plot settings" option to control the individual line settings</li>
+          <li>Added a pop-up button to show the graph in a separate window</li>
+          <li>Gave certain buttons a blue "Suggested action" colour</li>
+        </ul>
+      </description>
+    </release>
     <release version="1.1.1" date="2022-12-19">
       <description>
         <p>Minor update, next update will add an option to control individual line settings (e.g. thickness and style):</p>
