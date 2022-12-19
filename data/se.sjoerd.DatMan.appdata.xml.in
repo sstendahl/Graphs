@@ -51,8 +51,9 @@
       <description>
         <p>Minor update, next update will add an option to control individual line settings (e.g. thickness and style):</p>
         <ul>
-          <li>Cleaned up preferences</li>
+          <li>Cleaned up preferences, making it easier to find the correct setting</li>
           <li>Linguistic chances</li>
+          <li>Minor UI tweaks in the pop up windows</li>
           <li>Groundwork for the individual line settings in the code</li>
         </ul>
       </description>
