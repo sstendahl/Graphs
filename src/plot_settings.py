@@ -43,7 +43,7 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
         utilities.populate_chooser(self.datalist_chooser, data_list)
         self.set_transient_for=(parent.props.active_window)
         self.item = self.load_config(parent)
-        self.datalist_chooser.connect("notify", self.on_notify, parent)
+        self.datalist_chooser.connect("notify::selected", self.on_notify, parent)
         self.connect("close-request", self.on_close, parent)
         style_context = self.apply_button.get_style_context()
         style_context.add_class("suggested-action")
