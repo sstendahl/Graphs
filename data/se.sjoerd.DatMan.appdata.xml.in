@@ -47,6 +47,16 @@
     </screenshot>
   </screenshots>
   <releases>
+    <release version="1.1.1" date="2022-12-19">
+      <description>
+        <p>Minor update, next update will add an option to control individual line settings (e.g. thickness and style):</p>
+        <ul>
+          <li>Cleaned up preferences</li>
+          <li>Linguistic chances</li>
+          <li>Groundwork for the individual line settings in the code</li>
+        </ul>
+      </description>
+    </release>
     <release version="1.1.0" date="2022-12-17">
       <description>
         <ul>

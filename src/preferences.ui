@@ -1,7 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <interface>
   <requires lib="gtk" version="4.0" />
-  <requires lib="gtk" version="4.0" />
   <requires lib="libadwaita" version="1.0" />
   <template class="PreferencesWindow" parent="AdwPreferencesWindow">
     <property name="can-navigate-back">True</property>
@@ -220,18 +219,18 @@
         <child>
           <object class="AdwPreferencesGroup">
             <property name="visible">True</property>
-            <property name="title" translatable="yes">Axes</property>
-            <property name="description" translatable="yes">Settings for the axes</property>
+            <property name="title" translatable="yes">Plot Labels</property>
+            <property name="description" translatable="yes">Settings for the plot title and labels</property>
             <child>
               <object class="AdwActionRow">
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
                 <property name="title" translatable="yes">Plot Title</property>
-                <property name="subtitle" translatable="yes">Title used for the plot (leave blank for no title)</property>
+                <property name="subtitle" translatable="yes">Title used for the plot</property>
                 <property name="use-underline">True</property>
                 <child>
                   <object class="GtkEntry" id="plot_title">
-                    <property name="text" />
+                   <property name="placeholder-text">Leave blank for no title</property>
                     <property name="valign">center</property>
                   </object>
                 </child>
@@ -242,8 +241,8 @@
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
                 <property name="can-target">True</property>
-                <property name="title" translatable="yes">Y-Axis Name</property>
-                <property name="subtitle" translatable="yes">Title used for the Y-axis</property>
+                <property name="title" translatable="yes">Y-Axis Label</property>
+                <property name="subtitle" translatable="yes">Label used for the Y-axis</property>
                 <property name="use-underline">True</property>
                 <child>
                   <object class="GtkEntry" id="plot_Y_label">
@@ -260,8 +259,8 @@
               <object class="AdwActionRow">
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
-                <property name="title" translatable="yes">X-axis Name</property>
-                <property name="subtitle" translatable="yes">Title used for the X-axis</property>
+                <property name="title" translatable="yes">X-axis Label</property>
+                <property name="subtitle" translatable="yes">Label used for the X-axis</property>
                 <property name="use-underline">True</property>
                 <child>
                   <object class="GtkEntry" id="plot_X_label">
@@ -329,6 +328,182 @@
                 </child>
               </object>
             </child>
+          </object>
+        </child>
+        <child>
+          <object class="AdwPreferencesGroup">
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="title" translatable="yes">Line Settings</property>
+            <property name="description" translatable="yes">Settings for the lines used in the plots</property>
+            <child>
+              <object class="AdwActionRow">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="title" translatable="yes">Selected Linestyle</property>
+                <property name="subtitle" translatable="yes">The width of the lines that are selected</property>
+                <property name="use-underline">True</property>
+                <child>
+                  <object class="GtkDropDown" id="plot_selected_linestyle_chooser">
+                    <property name="valign">center</property>
+                    <property name="model">
+                      <object class="GtkStringList">
+                        <items>
+                          <item translatable="yes">none</item>
+                          <item translatable="yes">solid</item>
+                          <item translatable="yes">dotted</item>
+                          <item translatable="yes">dashed</item>
+                          <item translatable="yes">dashdot</item>
+                        </items>
+                      </object>
+                    </property>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="AdwActionRow">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="title" translatable="yes">Unselected Linestyle</property>
+                <property name="subtitle" translatable="yes">The width of the lines that are not selected</property>
+                <property name="use-underline">True</property>
+                <child>
+                  <object class="GtkDropDown" id="plot_unselected_linestyle_chooser">
+                    <property name="valign">center</property>
+                    <property name="model">
+                      <object class="GtkStringList">
+                        <items>
+                          <item translatable="yes">none</item>
+                          <item translatable="yes">solid</item>
+                          <item translatable="yes">dotted</item>
+                          <item translatable="yes">dashed</item>
+                          <item translatable="yes">dashdot</item>
+                        </items>
+                      </object>
+                    </property>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="AdwActionRow">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="title" translatable="yes">Selected Linewidth</property>
+                <property name="subtitle" translatable="yes">The width of the lines that are selected</property>
+                <property name="use-underline">True</property>
+                <child>
+                  <object class="GtkScale" id="selected_line_thickness_slider">
+                    <property name="draw-value">1</property>
+                    <property name="width-request">200</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="AdwActionRow">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="title" translatable="yes">Unselected Linewidth</property>
+                <property name="subtitle" translatable="yes">The width of the lines that are not selected</property>
+                <property name="use-underline">True</property>
+                <child>
+                  <object class="GtkScale" id="unselected_line_thickness_slider">
+                    <property name="draw-value">1</property>
+                    <property name="width-request">200</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="AdwPreferencesGroup">
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="title" translatable="yes">Markers</property>
+            <property name="description" translatable="yes">Settings for the markers used in the plot</property>
+            <child>
+              <object class="AdwActionRow">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="title" translatable="yes">Selected Markers</property>
+                <property name="subtitle" translatable="yes">The markers used for lines that are selected</property>
+                <property name="use-underline">True</property>
+                <child>
+                  <object class="GtkDropDown" id="plot_selected_markers_chooser">
+                    <property name="valign">center</property>
+                    <property name="model">
+                      <object class="GtkStringList">
+                        <items>
+                          <item translatable="yes">none</item>
+                        </items>
+                      </object>
+                    </property>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="AdwActionRow">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="title" translatable="yes">Unselected Markers</property>
+                <property name="subtitle" translatable="yes">The markers used for lines that are not selected</property>
+                <property name="use-underline">True</property>
+                <child>
+                  <object class="GtkDropDown" id="plot_unselected_markers_chooser">
+                    <property name="valign">center</property>
+                    <property name="model">
+                      <object class="GtkStringList">
+                        <items>
+                          <item translatable="yes">none</item>
+                        </items>
+                      </object>
+                    </property>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="AdwActionRow">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="title" translatable="yes">Selected Marker Size</property>
+                <property name="subtitle" translatable="yes">The size of the markers used for lines that are selected</property>
+                <property name="use-underline">True</property>
+                <child>
+                  <object class="GtkScale" id="plot_selected_marker_size">
+                    <property name="draw-value">1</property>
+                    <property name="width-request">200</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="AdwActionRow">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="title" translatable="yes">Unselected Marker Size</property>
+                <property name="subtitle" translatable="yes">The size of the markers used for lines that are not selected</property>
+                <property name="use-underline">True</property>
+                <child>
+                  <object class="GtkScale" id="plot_unselected_marker_size">
+                    <property name="draw-value">1</property>
+                    <property name="width-request">200</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="AdwPreferencesGroup">
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="title" translatable="yes">Ticks</property>
+            <property name="description" translatable="yes">Settings for the ticks that are used in the plots</property>
             <child>
               <object class="AdwActionRow">
                 <property name="visible">True</property>
@@ -472,9 +647,8 @@
         <child>
           <object class="AdwPreferencesGroup">
             <property name="visible">True</property>
-            <property name="can-focus">False</property>
-            <property name="title" translatable="yes">Figure Elements</property>
-            <property name="description" translatable="yes">Settings for the lines used in the plots</property>
+            <property name="title" translatable="yes">Style</property>
+            <property name="description" translatable="yes">Settings for the graph style</property>
             <child>
               <object class="AdwActionRow">
                 <property name="visible">True</property>
@@ -522,166 +696,7 @@
                   </object>
                 </child>
               </object>
-            </child>"
-            <child>
-              <object class="AdwActionRow">
-                <property name="visible">True</property>
-                <property name="can-focus">False</property>
-                <property name="title" translatable="yes">Selected Linewidth</property>
-                <property name="subtitle" translatable="yes">The linewidth for selected lines</property>
-                <property name="use-underline">True</property>
-                <child>
-                  <object class="GtkScale" id="selected_line_thickness_slider">
-                    <property name="draw-value">1</property>
-                    <property name="width-request">200</property>
-                  </object>
-                </child>
-              </object>
             </child>
-            <child>
-              <object class="AdwActionRow">
-                <property name="visible">True</property>
-                <property name="can-focus">False</property>
-                <property name="title" translatable="yes">Unselected Linewidth</property>
-                <property name="subtitle" translatable="yes">The linewidth for unselected lines</property>
-                <property name="use-underline">True</property>
-                <child>
-                  <object class="GtkScale" id="unselected_line_thickness_slider">
-                    <property name="draw-value">1</property>
-                    <property name="width-request">200</property>
-                  </object>
-                </child>
-              </object>
-            </child>
-            <child>
-              <object class="AdwActionRow">
-                <property name="visible">True</property>
-                <property name="can-focus">False</property>
-                <property name="title" translatable="yes">Selected Linestyle</property>
-                <property name="subtitle" translatable="yes">The linestyle for selected lines</property>
-                <property name="use-underline">True</property>
-                <child>
-                  <object class="GtkDropDown" id="plot_selected_linestyle_chooser">
-                    <property name="valign">center</property>
-                    <property name="model">
-                      <object class="GtkStringList">
-                        <items>
-                          <item translatable="yes">none</item>
-                          <item translatable="yes">solid</item>
-                          <item translatable="yes">dotted</item>
-                          <item translatable="yes">dashed</item>
-                          <item translatable="yes">dashdot</item>
-                        </items>
-                      </object>
-                    </property>
-                  </object>
-                </child>
-              </object>
-            </child>
-            <child>
-              <object class="AdwActionRow">
-                <property name="visible">True</property>
-                <property name="can-focus">False</property>
-                <property name="title" translatable="yes">Unselected Linestyle</property>
-                <property name="subtitle" translatable="yes">The linestyle for unselected lines</property>
-                <property name="use-underline">True</property>
-                <child>
-                  <object class="GtkDropDown" id="plot_unselected_linestyle_chooser">
-                    <property name="valign">center</property>
-                    <property name="model">
-                      <object class="GtkStringList">
-                        <items>
-                          <item translatable="yes">none</item>
-                          <item translatable="yes">solid</item>
-                          <item translatable="yes">dotted</item>
-                          <item translatable="yes">dashed</item>
-                          <item translatable="yes">dashdot</item>
-                        </items>
-                      </object>
-                    </property>
-                  </object>
-                </child>
-              </object>
-            </child>
-            <child>
-              <object class="AdwActionRow">
-                <property name="visible">True</property>
-                <property name="can-focus">False</property>
-                <property name="title" translatable="yes">Selected Marker Size</property>
-                <property name="subtitle" translatable="yes">The size of the markers used in selected lines</property>
-                <property name="use-underline">True</property>
-                <child>
-                  <object class="GtkScale" id="plot_selected_marker_size">
-                    <property name="draw-value">1</property>
-                    <property name="width-request">200</property>
-                  </object>
-                </child>
-              </object>
-            </child>
-            <child>
-              <object class="AdwActionRow">
-                <property name="visible">True</property>
-                <property name="can-focus">False</property>
-                <property name="title" translatable="yes">Unselected Marker Size</property>
-                <property name="subtitle" translatable="yes">The size of the markers used in unselected lines</property>
-                <property name="use-underline">True</property>
-                <child>
-                  <object class="GtkScale" id="plot_unselected_marker_size">
-                    <property name="draw-value">1</property>
-                    <property name="width-request">200</property>
-                  </object>
-                </child>
-              </object>
-            </child>"
-            <child>
-              <object class="AdwActionRow">
-                <property name="visible">True</property>
-                <property name="can-focus">False</property>
-                <property name="title" translatable="yes">Selected Markers</property>
-                <property name="subtitle" translatable="yes">The markers used for selected lines</property>
-                <property name="use-underline">True</property>
-                <child>
-                  <object class="GtkDropDown" id="plot_selected_markers_chooser">
-                    <property name="valign">center</property>
-                    <property name="model">
-                      <object class="GtkStringList">
-                        <items>
-                          <item translatable="yes">none</item>
-                        </items>
-                      </object>
-                    </property>
-                  </object>
-                </child>
-              </object>
-            </child>
-            <child>
-              <object class="AdwActionRow">
-                <property name="visible">True</property>
-                <property name="can-focus">False</property>
-                <property name="title" translatable="yes">Unselected Markers</property>
-                <property name="subtitle" translatable="yes">The markers used for unselected lines</property>
-                <property name="use-underline">True</property>
-                <child>
-                  <object class="GtkDropDown" id="plot_unselected_markers_chooser">
-                    <property name="valign">center</property>
-                    <property name="model">
-                      <object class="GtkStringList">
-                        <items>
-                          <item translatable="yes">none</item>
-                        </items>
-                      </object>
-                    </property>
-                  </object>
-                </child>
-              </object>
-            </child>
-          </object>
-        </child>
-        <child>
-          <object class="AdwPreferencesGroup">
-            <property name="visible">True</property>
-            <property name="title" translatable="yes">Style</property>
-            <property name="description" translatable="yes">Settings for the graph style</property>
             <child>
               <object class="AdwActionRow">
                 <property name="visible">True</property>
