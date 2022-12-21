@@ -206,18 +206,14 @@ class PlotWidget(FigureCanvas):
         if parent.preferences.config["savefig_transparent"]:
             plt.rcParams["savefig.transparent"] = True
 
-    def set_ax_properties(self, parent, title = "", xlabel = "", ylabel = "", xscale="linear", yscale = "log"):
-        xscale = parent.plot_settings.xscale
-        yscale = parent.plot_settings.yscale
-        title = parent.plot_settings.title
-        self.ax.set_title(title)
-        self.ax.set_xlabel(xlabel, fontweight = parent.plot_settings.font_weight)
-        self.ax.set_ylabel(ylabel, fontweight = parent.plot_settings.font_weight)
-        self.ax.set_title(title)
+    def set_ax_properties(self, parent):
+        self.ax.set_title(parent.plot_settings.title)
+        self.ax.set_xlabel(parent.plot_settings.xlabel, fontweight = parent.plot_settings.font_weight)
+        self.ax.set_ylabel(parent.plot_settings.ylabel, fontweight = parent.plot_settings.font_weight)
         self.ax.tick_params(direction=parent.plot_settings.tick_direction, length=parent.plot_settings.major_tick_length, width=parent.plot_settings.major_tick_width, which="major")
         self.ax.tick_params(direction=parent.plot_settings.tick_direction, length=parent.plot_settings.minor_tick_length, width=parent.plot_settings.minor_tick_width, which="minor")
-        self.ax.set_yscale(yscale)
-        self.ax.set_xscale(xscale)
+        self.ax.set_yscale(parent.plot_settings.yscale)
+        self.ax.set_xscale(parent.plot_settings.xscale)
         self.ax.tick_params(axis='x',which='minor',bottom=True, top=True)
         self.ax.tick_params(axis='y',which='minor',left=True, right=True)
         self.ax.minorticks_on()
@@ -261,6 +257,3 @@ class PlotWidget(FigureCanvas):
             cmap += "_r"
         color_cycle = cycler(color=plt.get_cmap(cmap).colors)
         self.color_cycle = color_cycle.by_key()['color']
-
-
-
