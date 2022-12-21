@@ -5,7 +5,7 @@
   
 Graphs is an excellent fit both plotting and data manipulation. The plots created with Graphs can be saved in a variety of formats suitable for sharing and presenting to a wide audience, such as in a scientific publication or presentations. It is also possible to save the plots as vector images, which can be easily edited in programs like Inkscape for further customization and refinement. Graphs is written with the GNOME environment in mind, but should be suitable for any other desktop environment as well.
 
-Graphs is still in early development, and a large number of features is still planned. For any future requests or feedback, please file an issue [at the Github issue tracker](https://github.com/SjoerdB93/Graphs/issues).
+The software is still in early development, and a large number of features is still planned. For any future requests or feedback, please file an issue [at the Github issue tracker](https://github.com/SjoerdB93/Graphs/issues).
 
 ## How to install:
 Graphs is exclusively available [on Flathub](https://flathub.org/apps/details/se.sjoerd.DatMan), there are no immediate plans for other distribution methods. Feel free to run it directly from source. If you are interested in maintaining Graphs on another repository, please contact me at contact@sjoerd.se or file an issue on the Github page. 
