@@ -23,25 +23,26 @@ Graphs is an excellent fit both plotting and data manipulation. The plots create
   <url type="homepage">https://www.sjoerd.se/Graphs</url>
   <screenshots>
     <screenshot type="default">
-      <caption>Equations</caption>
+      <caption>1 - Plot and manipulate any data set inserted by equation or from file</caption>
       <image>http://www.sjoerd.se/graphs_equations.png</image>
     </screenshot>
     <screenshot type="default">
-      <caption>Add Data from Equation</caption>
+      <caption>2 - Add Data from an Equation</caption>
       <image>http://www.sjoerd.se/graphs_open_equation.png</image>
     </screenshot>
     <screenshot type="default">
-      <caption>Both light and dark mode is supported</caption>
+      <caption>3 - Both light and dark mode is supported</caption>
       <image>http://www.sjoerd.se/graphs_light_dark.png</image>
     </screenshot>
     <screenshot type="default">
-      <caption>Add data from a wide arrange of formatting</caption>
+      <caption>4 - Add data from a wide arrange of formatting</caption>
       <image>http://www.sjoerd.se/graphs_data.png</image>
     </screenshot>
   </screenshots>
   <releases>
       <release version="1.2.0" date="2022-12-21">
       <description>
+        <p>With the ability to edit axes properties without changing the default settings, all essential features are in and it's time to declare v1.2.0. Also added some QoL features. Still many ideas are yet to be implemented. See current changelog below:</p>        
         <ul>
           <li>The "Plot Settings" button now also contains a tab to edit the axes properties</li>
           <li>The pop-up graph now follows the same scaling as the regular graph</li>
