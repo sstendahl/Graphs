@@ -115,6 +115,7 @@ def find_limits(self):
 
 
 def reload_plot(self, from_dictionary = True):
+    win = self.props.active_window
     datman.clear_layout(self)
     datman.load_empty(self)
     define_highlight(self)
@@ -122,6 +123,7 @@ def reload_plot(self, from_dictionary = True):
     datman.open_selection(self, None, from_dictionary)
     if len(self.datadict) > 0:
         set_canvas_limits(self, self.canvas)
+    self.canvas.grab_focus()
 
 
 def refresh_plot(self, canvas = None, from_dictionary = True, set_limits = True):
@@ -194,10 +196,7 @@ class PlotWidget(FigureCanvas):
         self.canvas = FigureCanvas(self.figure)
         self.set_style(parent)
         self.ax = self.figure.add_subplot(111)
-        xscale = parent.plot_settings.xscale
-        yscale = parent.plot_settings.yscale
-        title = parent.plot_settings.title
-        self.set_ax_properties(parent, title, xlabel, ylabel, xscale, yscale)
+        self.set_ax_properties(parent)
         self.set_save_properties(parent)
         self.set_color_cycle(parent)
         super(PlotWidget, self).__init__(self.figure)
@@ -208,6 +207,9 @@ class PlotWidget(FigureCanvas):
             plt.rcParams["savefig.transparent"] = True
 
     def set_ax_properties(self, parent, title = "", xlabel = "", ylabel = "", xscale="linear", yscale = "log"):
+        xscale = parent.plot_settings.xscale
+        yscale = parent.plot_settings.yscale
+        title = parent.plot_settings.title
         self.ax.set_title(title)
         self.ax.set_xlabel(xlabel, fontweight = parent.plot_settings.font_weight)
         self.ax.set_ylabel(ylabel, fontweight = parent.plot_settings.font_weight)

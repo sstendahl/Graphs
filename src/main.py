@@ -28,7 +28,7 @@ gi.require_version('Adw', '1')
 from gi.repository import Gtk, Gio, Gdk, Adw
 from .window import DatManWindow
 import matplotlib.pyplot as plt
-from . import datman, plotting_tools, item_operations, transform_data, preferences, add_equation, add_data_advanced
+from . import datman, plotting_tools, item_operations, transform_data, preferences, add_equation, add_data_advanced, plot_settings
 
 class DatManApplication(Adw.Application):
     """The main application singleton class."""
@@ -69,6 +69,7 @@ class DatManApplication(Adw.Application):
         self.create_action('add_equation', add_equation.open_add_equation_window, ['<primary>E'], self)
         self.create_action('select_data_toggle', plotting_tools.toggle_highlight, None, self)
         self.create_action('delete_selected', datman.delete_selected, ['Delete'], self)
+        self.create_action('plot_settings', plot_settings.open_plot_settings, ["<primary><shift>P"], self)
         Adw.StyleManager.get_default().connect("notify", datman.toggle_darkmode, None, self)
 
     def do_activate(self):
@@ -78,6 +79,7 @@ class DatManApplication(Adw.Application):
         necessary.
         """
         win = self.props.active_window
+        self.main_window = win
         if not win:
             win = DatManWindow(application=self)
         datman.load_empty(self)
@@ -94,7 +96,7 @@ class DatManApplication(Adw.Application):
                                 website='https://www.sjoerd.se/Graphs',
                                 developer_name='Sjoerd Broekhuijsen',
                                 issue_url="https://github.com/SjoerdB93/Graphs/issues",
-                                version='1.2.0',
+                                version='1.2.1',
                                 developers=['Sjoerd Broekhuijsen <contact@sjoerd.se>'],
                                 copyright='© 2022 Sjoerd Broekhuijsen',
                                 license_type="GTK_LICENSE_GPL_3_0")

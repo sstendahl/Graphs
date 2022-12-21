@@ -6,6 +6,16 @@
     <property name="can-navigate-back">True</property>
     <property name="title">Plot Settings</property>
     <child>
+      <object class="GtkShortcutController">
+        <child>
+          <object class="GtkShortcut">
+            <property name="trigger">Escape</property>
+            <property name="action">action(window.close)</property>
+          </object>
+        </child>
+      </object>
+    </child>
+    <child>
       <object class="AdwPreferencesPage">
         <property name="visible">True</property>
         <property name="can-focus">True</property>

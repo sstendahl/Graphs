@@ -40,6 +40,18 @@ Graphs is an excellent fit both plotting and data manipulation. The plots create
     </screenshot>
   </screenshots>
   <releases>
+      <release version="1.2.1" date="2022-12-21">
+      <description>
+        <p>Hot-fix update, fixes some bugs with the new "plot settings" window</p>
+        <ul>
+          <li>Fixed a bug where the axes labels and title would go back to default when plot settings was opened twice</li>
+          <li>Fixed a bug where the new font wouldn't properly display in plot settings menu</li>
+          <li>Fixed a bug where shortcut would stop working after opening plot settings menu</li>
+          <li>Added a shortcut to open plot settings menu (ctrl+shift+p)</li>
+          <li>Reordered Flathub screenshots (hopefully)</li>
+        </ul>
+      </description>
+    </release>
       <release version="1.2.0" date="2022-12-21">
       <description>
         <p>With the ability to edit axes properties without changing the default settings, all essential features are in and it's time to declare v1.2.0. Also added some QoL features. Still many ideas are yet to be implemented. See current changelog below:</p>        
@@ -140,3 +152,4 @@ Graphs is an excellent fit both plotting and data manipulation. The plots create
   </recommends>
   <content_rating type="oars-1.1" />
 </component>
+
