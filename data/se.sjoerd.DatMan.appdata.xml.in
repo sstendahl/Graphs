@@ -31,22 +31,42 @@
   <launchable type="desktop-id">se.sjoerd.DatMan.desktop</launchable>
   <url type="bugtracker">https://github.com/SjoerdB93/Graphs/issues</url>
   <url type="help">https://github.com/SjoerdB93/Graphs/</url>
-  <url type="homepage">https://www.sjoerd.se</url>
+  <url type="homepage">https://www.sjoerd.se/Graphs</url>
   <screenshots>
     <screenshot type="default">
-      <caption>GIScan settings</caption>
-      <image>http://www.sjoerd.se/graphs_equation.png</image>
+      <caption>Equations</caption>
+      <image>http://www.sjoerd.se/graphs_equations.png</image>
     </screenshot>
     <screenshot type="default">
-      <caption>GIScan settings</caption>
-      <image>http://www.sjoerd.se/graphs_open_data.png</image>
+      <caption>Add Data from Equation</caption>
+      <image>http://www.sjoerd.se/graphs_open_equation.png</image>
     </screenshot>
     <screenshot type="default">
-      <caption>GIScan settings</caption>
+      <caption>Both light and dark mode is supported</caption>
       <image>http://www.sjoerd.se/graphs_light_dark.png</image>
+    </screenshot>
+    <screenshot type="default">
+      <caption>Add data from a wide arrange of formatting</caption>
+      <image>http://www.sjoerd.se/graphs_data.png</image>
     </screenshot>
   </screenshots>
   <releases>
+      <release version="1.2.0" date="2022-12-21">
+      <description>
+        <ul>
+          <li>The "Plot Settings" button now also contains a tab to edit the axes properties</li>
+          <li>The pop-up graph now follows the same scaling as the regular graph</li>
+          <li>Added a shortcut to select all data sets</li>
+          <li>Added a shortcut to deselect all data sets</li>
+          <li>Pressing delete now deletes all selected data sets</li>
+          <li>Changed the wording in "Transform Data" ui to be less confusing</li>
+          <li>Tweaked the save icon a bit</li>
+          <li>Slightly edited README file</li>
+          <li>Made new screenshots for Flathub</li>
+          <li>Changed the webpage to direct to the landing page of Graphs (under construction)</li>
+        </ul>
+      </description>
+    </release>
       <release version="1.1.2" date="2022-12-19">
       <description>
         <ul>

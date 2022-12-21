@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <interface>
   <object class="GtkShortcutsWindow" id="help_overlay">
     <property name="modal">True</property>
@@ -17,38 +17,8 @@
             </child>
             <child>
               <object class="GtkShortcutsShortcut">
-                <property name="title" translatable="yes" context="shortcut window">Open new file</property>
-                <property name="action-name">app.add_data</property>
-              </object>
-            </child>
-  <child>
-              <object class="GtkShortcutsShortcut">
-                <property name="title" translatable="yes" context="shortcut window">Open new file (advanced)</property>
-                <property name="action-name">app.add_data_advanced</property>
-              </object>
-            </child>
-            <child>
-              <object class="GtkShortcutsShortcut">
-                <property name="title" translatable="yes" context="shortcut window">Add data from equation</property>
-                <property name="action-name">app.add_equation</property>
-              </object>
-            </child>
-            <child>
-              <object class="GtkShortcutsShortcut">
-                <property name="title" translatable="yes" context="shortcut window">Open preferences</property>
+                <property name="title" translatable="yes" context="shortcut window">Open Preferences</property>
                 <property name="action-name">app.preferences</property>
-              </object>
-            </child>
-            <child>
-              <object class="GtkShortcutsShortcut">
-                <property name="title" translatable="yes" context="shortcut window">Undo action</property>
-                <property name="action-name">app.undo</property>
-              </object>
-            </child>
-            <child>
-              <object class="GtkShortcutsShortcut">
-                <property name="title" translatable="yes" context="shortcut window">Redo action</property>
-                <property name="action-name">app.redo</property>
               </object>
             </child>
             <child>
@@ -57,6 +27,65 @@
                 <property name="action-name">app.quit</property>
               </object>
             </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkShortcutsGroup">
+            <property name="title" translatable="yes" context="shortcut window">Importing Data</property>
+            <child>
+              <object class="GtkShortcutsShortcut">
+                <property name="title" translatable="yes" context="shortcut window">Open new File</property>
+                <property name="action-name">app.add_data</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkShortcutsShortcut">
+                <property name="title" translatable="yes" context="shortcut window">Open new File (Advanced)</property>
+                <property name="action-name">app.add_data_advanced</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkShortcutsShortcut">
+                <property name="title" translatable="yes" context="shortcut window">Add Data from Equation</property>
+                <property name="action-name">app.add_equation</property>
+              </object>
+            </child>
+            </object>
+          </child>
+        <child>
+          <object class="GtkShortcutsGroup">
+            <property name="title" translatable="yes" context="shortcut window">Actions</property>
+            <child>
+              <object class="GtkShortcutsShortcut">
+                <property name="title" translatable="yes" context="shortcut window">Select All</property>
+                <property name="action-name">app.select_all</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkShortcutsShortcut">
+                <property name="title" translatable="yes" context="shortcut window">Select None</property>
+                <property name="action-name">app.select_none</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkShortcutsShortcut">
+                <property name="title" translatable="yes" context="shortcut window">Delete Selected Data</property>
+                <property name="action-name">app.delete_selected</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkShortcutsShortcut">
+                <property name="title" translatable="yes" context="shortcut window">Undo Action</property>
+                <property name="action-name">app.undo</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkShortcutsShortcut">
+                <property name="title" translatable="yes" context="shortcut window">Redo Action</property>
+                <property name="action-name">app.redo</property>
+              </object>
+            </child>
+
           </object>
         </child>
       </object>

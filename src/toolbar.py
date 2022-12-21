@@ -63,8 +63,10 @@ class GraphToolbar(NavigationToolbar):
         current_scale = self.canvas.ax.get_yscale()
         if current_scale == "linear":
             self.canvas.ax.set_yscale('log')
+            self.parent.plot_settings.yscale = "log"
         elif current_scale == "log":
             self.canvas.ax.set_yscale('linear')
+            self.parent.plot_settings.yscale = "linear"
         plotting_tools.set_canvas_limits(self.parent, self.canvas)
         self.canvas.draw()
 

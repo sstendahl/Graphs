@@ -17,8 +17,6 @@ class PIPWindow(Adw.Window):
     def __init__(self, parent):
         super().__init__()
         self.parent = parent
-
-
         canvas = parent.canvas
         xlabel = parent.preferences.config["plot_X_label"]
         ylabel = parent.preferences.config["plot_Y_label"]

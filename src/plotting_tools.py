@@ -56,7 +56,7 @@ def plot_figure(self, canvas, X, Y, filename="", xlim=None, linewidth = 2, title
     fig = canvas.ax
     linewidth = linewidth
     line = fig.plot(X, Y, linewidth = linewidth ,label=filename, linestyle=linestyle, marker=marker, color = color, markersize=marker_size)
-    if self.preferences.config["plot_legend"]:
+    if self.plot_settings.legend:
         fig.legend()
     return line
 
@@ -156,7 +156,38 @@ def load_fonts(self):
             matplotlib.font_manager.fontManager.addfont(font)
         except:
             print(f"Could not load {font}")
+            
+class PlotSettings:
+    def __init__(self, parent):
+        self.font_string = parent.preferences.config["plot_font_string"]
+        self.xlabel = parent.preferences.config["plot_X_label"]
+        self.ylabel = parent.preferences.config["plot_Y_label"]
+        self.xscale = parent.preferences.config["plot_X_scale"]
+        self.yscale = parent.preferences.config["plot_Y_scale"]
+        self.title = parent.preferences.config["plot_title"]
+        self.fontweight = parent.preferences.config["plot_font_weight"]
+        self.font_weight = parent.preferences.config["plot_font_weight"]
+        self.font_family = parent.preferences.config["plot_font_family"]
+        self.font_size = parent.preferences.config["plot_font_size"]
+        self.font_style = parent.preferences.config["plot_font_style"]
+        self.tick_direction = parent.preferences.config["plot_tick_direction"]
+        self.major_tick_length = parent.preferences.config["plot_major_tick_length"]
+        self.minor_tick_length = parent.preferences.config["plot_minor_tick_length"]
+        self.major_tick_width = parent.preferences.config["plot_major_tick_width"]
+        self.minor_tick_width = parent.preferences.config["plot_minor_tick_width"]
+        self.tick_top = parent.preferences.config["plot_tick_top"]
+        self.tick_bottom = parent.preferences.config["plot_tick_bottom"]
+        self.tick_left = parent.preferences.config["plot_tick_left"]
+        self.tick_right = parent.preferences.config["plot_tick_right"]
+        self.legend = parent.preferences.config["plot_legend"]
+        if Adw.StyleManager.get_default().get_dark(): 
+            self.plot_style = parent.preferences.config["plot_style_dark"]
+        else:
+            self.plot_style = parent.preferences.config["plot_style_light"]
+        
 
+
+        
 class PlotWidget(FigureCanvas):
     def __init__(self, parent=None, xlabel="", ylabel="", yscale = "log", title="", scale="linear", style = "seaborn-whitegrid"):
         self.figure = Figure()
@@ -164,9 +195,9 @@ class PlotWidget(FigureCanvas):
         self.canvas = FigureCanvas(self.figure)
         self.set_style(parent)
         self.ax = self.figure.add_subplot(111)
-        xscale = parent.preferences.config["plot_X_scale"]
-        yscale = parent.preferences.config["plot_Y_scale"]
-        title = parent.preferences.config["plot_title"]
+        xscale = parent.plot_settings.xscale
+        yscale = parent.plot_settings.yscale
+        title = parent.plot_settings.title
         self.set_ax_properties(parent, title, xlabel, ylabel, xscale, yscale)
         self.set_save_properties(parent)
         self.set_color_cycle(parent)
@@ -179,20 +210,18 @@ class PlotWidget(FigureCanvas):
 
     def set_ax_properties(self, parent, title = "", xlabel = "", ylabel = "", xscale="linear", yscale = "log"):
         self.ax.set_title(title)
-        self.ax.set_xlabel(xlabel, fontweight = parent.preferences.config["plot_font_weight"])
-        self.ax.set_ylabel(ylabel, fontweight = parent.preferences.config["plot_font_weight"])
+        self.ax.set_xlabel(xlabel, fontweight = parent.plot_settings.font_weight)
+        self.ax.set_ylabel(ylabel, fontweight = parent.plot_settings.font_weight)
         self.ax.set_title(title)
-        self.ax.tick_params(direction=parent.preferences.config["plot_tick_direction"], length=parent.preferences.config["plot_major_tick_length"], width=parent.preferences.config["plot_major_tick_width"])
-        self.ax.tick_params(direction=parent.preferences.config["plot_tick_direction"], length=parent.preferences.config["plot_minor_tick_length"], width=parent.preferences.config["plot_minor_tick_width"], which="minor")
+        self.ax.tick_params(direction=parent.plot_settings.tick_direction, length=parent.plot_settings.major_tick_length, width=parent.plot_settings.major_tick_width, which="major")
+        self.ax.tick_params(direction=parent.plot_settings.tick_direction, length=parent.plot_settings.minor_tick_length, width=parent.plot_settings.minor_tick_width, which="minor")
         self.ax.set_yscale(yscale)
         self.ax.set_xscale(xscale)
         self.ax.tick_params(axis='x',which='minor',bottom=True, top=True)
         self.ax.tick_params(axis='y',which='minor',left=True, right=True)
         self.ax.minorticks_on()
-        self.ax.tick_params(which = "both", bottom=parent.preferences.config["plot_tick_bottom"], top=parent.preferences.config["plot_tick_top"],
-                                left=parent.preferences.config["plot_tick_left"], right=parent.preferences.config["plot_tick_right"])
-
-
+        self.ax.tick_params(which = "both", bottom=parent.plot_settings.tick_bottom, top=parent.plot_settings.tick_top,
+                                left=parent.plot_settings.tick_left, right=parent.plot_settings.tick_right)
 
     def set_style(self, parent):
         plt.rcParams.update(plt.rcParamsDefault)
@@ -202,27 +231,26 @@ class PlotWidget(FigureCanvas):
             "xtick.color" : "w",
             "axes.labelcolor" : "w",
             "font.family": "sans-serif",
-            "font.weight": parent.preferences.config["plot_font_weight"],
-            "font.sans-serif": parent.preferences.config["plot_font_family"],
-            "font.size": parent.preferences.config["plot_font_size"],
-            "font.style": parent.preferences.config["plot_font_style"],
+            "font.weight": parent.plot_settings.font_weight,
+            "font.sans-serif": parent.plot_settings.font_family,
+            "font.size": parent.plot_settings.font_size,
+            "font.style": parent.plot_settings.font_style,
             "mathtext.default": "regular"
             }
-            plt.style.use(parent.preferences.config["plot_style_dark"])
+            plt.style.use(parent.plot_settings.plot_style)
         else:
             self.figure.patch.set_facecolor("#fafafa")
             params = {"ytick.color" : "black",
             "xtick.color" : "black",
             "axes.labelcolor" : "black",
             "font.family": "sans-serif",
-            "font.weight": parent.preferences.config["plot_font_weight"],
-            "font.sans-serif": parent.preferences.config["plot_font_family"],
-            "font.size": parent.preferences.config["plot_font_size"],
-            "font.style": parent.preferences.config["plot_font_style"],
+            "font.weight": parent.plot_settings.font_weight,
+            "font.sans-serif": parent.plot_settings.font_family,
+            "font.size": parent.plot_settings.font_size,
+            "font.style": parent.plot_settings.font_style,
             "mathtext.default": "regular"
             }
-
-            plt.style.use(parent.preferences.config["plot_style_light"])
+            plt.style.use(parent.plot_settings.plot_style)
         plt.rcParams.update(params)
 
     def set_color_cycle(self, parent):

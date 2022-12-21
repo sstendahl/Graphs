@@ -174,12 +174,12 @@ class PreferencesWindow(Adw.PreferencesWindow):
         self.set_chooser(self.savefig_filetype_chooser, config["savefig_filetype"])
         self.set_chooser(self.center_data_chooser, config["center_data"])
         self.set_chooser(self.plot_X_scale, config["plot_X_scale"])
-        self.set_chooser(self.import_separator, config["import_separator"])
         self.set_chooser(self.plot_Y_scale, config["plot_Y_scale"])
+        self.set_chooser(self.plot_tick_direction, config["plot_tick_direction"])
+        self.set_chooser(self.import_separator, config["import_separator"])
         self.set_chooser(self.plot_color_cycle, config["plot_color_cycle"])
         self.set_chooser(self.plot_selected_linestyle_chooser, config["plot_selected_linestyle"])
         self.set_chooser(self.plot_unselected_linestyle_chooser, config["plot_unselected_linestyle"])
-        self.set_chooser(self.plot_tick_direction, config["plot_tick_direction"])
         self.set_chooser(self.plot_style_light, config["plot_style_light"])
         self.set_chooser(self.plot_style_dark, config["plot_style_dark"])
         marker_dict = Line2D.markers
@@ -229,7 +229,7 @@ class PreferencesWindow(Adw.PreferencesWindow):
             font_list.append(font)
         return sorted(font_list)
 
-    def set_config(self, parent):
+    def set_config(self):
         config = dict()
         font_name = self.plot_font_chooser.get_font_desc().to_string().lower().split(" ")
         font_size = font_name[-1]
@@ -244,12 +244,13 @@ class PreferencesWindow(Adw.PreferencesWindow):
         config["plot_minor_tick_width"] = self.plot_minor_tick_width.get_value()
         config["plot_major_tick_length"] = self.plot_major_tick_length.get_value()
         config["plot_minor_tick_length"] = self.plot_minor_tick_length.get_value()
-        config["allow_duplicate_filenames"] = self.allow_duplicates_button.get_active()
-        config["savefig_transparent"] = self.savefig_transparent_check_button.get_active()
         config["plot_tick_left"] = self.plot_tick_left.get_active()
         config["plot_tick_right"] = self.plot_tick_right.get_active()
         config["plot_tick_top"] = self.plot_tick_top.get_active()
         config["plot_tick_bottom"] = self.plot_tick_bottom.get_active()
+        config["plot_tick_direction"] = self.plot_tick_direction.get_selected_item().get_string()
+        config["allow_duplicate_filenames"] = self.allow_duplicates_button.get_active()
+        config["savefig_transparent"] = self.savefig_transparent_check_button.get_active()
         config["plot_legend"] = self.plot_legend_check.get_active()
         config["plot_invert_color_cycle_dark"] = self.plot_invert_color_cycle_dark.get_active()
         config["plot_Y_label"] = self.plot_Y_label.get_text()
@@ -265,7 +266,6 @@ class PreferencesWindow(Adw.PreferencesWindow):
         config["plot_Y_scale"] = self.plot_Y_scale.get_selected_item().get_string()
         config["center_data"] = self.center_data_chooser.get_selected_item().get_string()
         config["plot_selected_linestyle"] = self.plot_selected_linestyle_chooser.get_selected_item().get_string()
-        config["plot_tick_direction"] = self.plot_tick_direction.get_selected_item().get_string()
         config["plot_unselected_linestyle"] = self.plot_unselected_linestyle_chooser.get_selected_item().get_string()
         config["plot_style_dark"] = self.plot_style_dark.get_selected_item().get_string()
         config["plot_style_light"] = self.plot_style_light.get_selected_item().get_string()
@@ -282,7 +282,8 @@ class PreferencesWindow(Adw.PreferencesWindow):
         return config
 
     def on_close(self, _, parent):
-        parent.preferences.config = self.set_config(parent)
+        parent.preferences.config = self.set_config()
+        parent.plot_settings = plotting_tools.PlotSettings(parent)
         parent.preferences.save_config()
         plotting_tools.reload_plot(parent)
 
