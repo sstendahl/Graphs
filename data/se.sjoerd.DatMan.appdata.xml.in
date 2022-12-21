@@ -53,8 +53,8 @@
   <releases>
       <release version="1.2.0" date="2022-12-21">
       <description>
+        <p>Now with the ability to change Axes settings without changing the default values, most major components are in and it's time to declare v1.2.0. Also added some QoL features, see changelog below:</p>
         <ul>
-          <p>Now with the ability to change Axes settings without changing the default values, most major components are in and it's time to declare v1.2.0. Also added some QoL features, see changelog below:</p>
           <li>The "Plot Settings" button now also contains a tab to edit the axes properties</li>
           <li>The pop-up graph now follows the same scaling as the regular graph</li>
           <li>Added a shortcut to select all data sets</li>
