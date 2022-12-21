@@ -18,11 +18,11 @@ class PIPWindow(Adw.Window):
         super().__init__()
         self.parent = parent
         canvas = parent.canvas
-        xlabel = parent.preferences.config["plot_X_label"]
-        ylabel = parent.preferences.config["plot_Y_label"]
+        xlabel = parent.plot_settings.xlabel
+        ylabel = parent.plot_settings.ylabel
         canvas = plotting_tools.PlotWidget(parent = parent)
-        canvas.ax.set_title(parent.preferences.config["plot_title"])
-        canvas.ax.set_xlabel(xlabel, fontweight = parent.preferences.config["plot_font_weight"])
-        canvas.ax.set_ylabel(ylabel, fontweight = parent.preferences.config["plot_font_weight"])
-        datman.create_layout(parent, canvas, self.drawing_layout, window_type = "pip")
+        canvas.ax.set_title(parent.plot_settings.title)
+        canvas.ax.set_xlabel(xlabel, fontweight = parent.plot_settings.font_weight)
+        canvas.ax.set_ylabel(ylabel, fontweight = parent.plot_settings.font_weight)
+        datman.create_layout(parent, canvas, self.drawing_layout)
         plotting_tools.refresh_plot(parent, canvas=canvas)

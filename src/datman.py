@@ -151,7 +151,6 @@ def delete_selected(shortcut, _,  self):
     print(shortcut)
     selected_keys = utilities.get_selected_keys(self)
     for key in selected_keys:
-        print(f"Deleting {key}")
         delete(None, self, key)
 
 def delete(widget,  self, filename):
@@ -333,7 +332,7 @@ def clear_layout(self):
         else:
             remove = False
 
-def create_layout(self, canvas, layout, window_type = "regular"):
+def create_layout(self, canvas, layout):
     self.toolbar = toolbar.GraphToolbar(canvas, self)
     layout.append(canvas)
     layout.append(self.toolbar)

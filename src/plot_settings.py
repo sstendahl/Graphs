@@ -98,6 +98,7 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
         self.plot_minor_tick_width.set_range(0, 4)
         self.plot_major_tick_length.set_range(0, 20)
         self.plot_minor_tick_length.set_range(0, 20)
+        self.plot_title.set_text(parent.plot_settings.title)
         self.plot_Y_label.set_text(parent.plot_settings.ylabel)
         self.plot_X_label.set_text(parent.plot_settings.xlabel)
         self.plot_minor_tick_width.set_value(parent.plot_settings.minor_tick_width)

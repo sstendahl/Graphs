@@ -165,7 +165,6 @@ class PlotSettings:
         self.xscale = parent.preferences.config["plot_X_scale"]
         self.yscale = parent.preferences.config["plot_Y_scale"]
         self.title = parent.preferences.config["plot_title"]
-        self.fontweight = parent.preferences.config["plot_font_weight"]
         self.font_weight = parent.preferences.config["plot_font_weight"]
         self.font_family = parent.preferences.config["plot_font_family"]
         self.font_size = parent.preferences.config["plot_font_size"]
