@@ -87,6 +87,7 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
         item = parent.datadict[filename]
         font_string = parent.plot_settings.font_string
         font_desc = self.plot_font_chooser.get_font_desc().from_string(font_string)
+        print(font_string)
         self.plot_font_chooser.set_font_desc(font_desc)
         self.plot_font_chooser.set_use_font(True)
         self.selected_line_thickness_slider.set_range(0.1, 10)
@@ -141,6 +142,7 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
         parent.plot_settings.font_size = font_size
         parent.plot_settings.font_style = font_style
         parent.plot_settings.font_weight = font_weight
+        parent.plot_settings.font_string = self.plot_font_chooser.get_font_desc().to_string()
         parent.plot_settings.font_family = self.plot_font_chooser.get_font_desc().get_family()
         parent.plot_settings.legend = self.plot_legend_check.get_active()
         parent.plot_settings.title = self.plot_title.get_text()
