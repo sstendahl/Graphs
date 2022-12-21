@@ -7,5 +7,5 @@ Graphs is an excellent fit both plotting and data manipulation. The plots create
 
 Graphs is still in early development, and a large number of features is still planned. For any future requests or feedback, please file an issue [at the Github issue tracker](https://github.com/SjoerdB93/Graphs/issues).
 
-##How to install:
+#How to install:
 Graphs is exclusively available [on Flathub](https://flathub.org/apps/details/se.sjoerd.DatMan), there are no immediate plans for other distribution methods. Feel free to run it directly from source. If you are interested in maintaining Graphs on another repository, please contact me at contact@sjoerd.se or file an issue on the Github page. 
