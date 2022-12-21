@@ -28,3 +28,26 @@ def get_dict_by_value(dictionary, value):
     if value == "none":
         return "none"
     return new_dict[value]
+    
+def get_font_weight(font_name):
+    valid_weights = ['normal', 'bold', 'heavy', 'light', 'ultrabold', 'ultralight']
+    if font_name[-2] != "italic":
+        new_weight = font_name[-2]
+    else:
+        new_weight = font_name[-3]
+    if new_weight not in valid_weights:
+        new_weight = "normal"
+    return new_weight
+
+def get_font_style(font_name):
+    new_style = "normal"
+    if font_name[-2] == ("italic" or "oblique" or "normal"):
+        new_style = font_name[-2]
+    return new_style
+
+def get_selected_keys(self):
+    selected_keys = []
+    for key, item in self.item_rows.items():
+        if item.selected == True:
+            selected_keys.append(item.filename)
+    return selected_keys

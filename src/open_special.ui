@@ -28,7 +28,7 @@
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
                 <property name="title" translatable="yes">Delimiter</property>
-                <property name="subtitle" translatable="yes">Choose the delimiter that separates the columns (\t for tab)</property>
+                <property name="subtitle" translatable="yes">The delimiter that separates the columns (\t for tab)</property>
                 <property name="use-underline">True</property>
                 <child>
                   <object class="GtkEntry" id="delimiter">
@@ -43,7 +43,7 @@
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
                 <property name="title" translatable="yes">Decimal separator</property>
-                <property name="subtitle" translatable="yes">Choose which character to use as a decimal separator</property>
+                <property name="subtitle" translatable="yes">The character that is used as a decimal separator</property>
                 <property name="use-underline">True</property>
                 <child>
                   <object class="GtkEntry" id="decimal seperator">
@@ -58,7 +58,7 @@
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
                 <property name="title" translatable="yes">Column X</property>
-                <property name="subtitle" translatable="yes">Choose which column to load for the X-data</property>
+                <property name="subtitle" translatable="yes">Which column to load for the X-data</property>
                 <property name="use-underline">True</property>
                 <child>
                   <object class="GtkSpinButton" id ="column_x">
@@ -78,7 +78,7 @@
                 <property name="can-focus">False</property>
             <property name="vexpand">False</property>
                 <property name="title" translatable="yes">Column Y</property>
-                <property name="subtitle" translatable="yes">Choose which column to load for the Y-data</property>
+                <property name="subtitle" translatable="yes">Which column to load for the Y-data</property>
                 <property name="use-underline">True</property>
                 <child>
                   <object class="GtkSpinButton" id ="column_y">
@@ -97,7 +97,7 @@
                 <property name="can-focus">False</property>
             <property name="vexpand">False</property>
                 <property name="title" translatable="yes">Skip rows</property>
-                <property name="subtitle" translatable="yes">Choose how many rows to skip while loading data</property>
+                <property name="subtitle" translatable="yes">How many rows to skip while loading data</property>
                 <property name="use-underline">True</property>
                 <child>
                   <object class="GtkSpinButton" id ="skip_rows">

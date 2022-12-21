@@ -3,8 +3,7 @@ import gi
 import re
 import numpy as np
 from .plotting_tools import PlotWidget
-from . import datman
-from . import plotting_tools
+from . import plotting_tools, datman, utilities
 from .data import Data
 from matplotlib.backends.backend_gtk4 import (
     NavigationToolbar2GTK4 as NavigationToolbar)
@@ -115,7 +114,7 @@ def select_data(self):
     selected_dict = {}
     startx = min(self.highlight.extents)
     stopx = max(self.highlight.extents)
-    selected_keys = get_selected_keys(self)
+    selected_keys = utilities.get_selected_keys(self)
 
     for key in selected_keys:
         item = self.datadict[key]
@@ -157,7 +156,7 @@ def cut_data(widget, _, self):
 
 
 def smoothen_data(widget, shortcut, self):
-    selected_keys = get_selected_keys(self)
+    selected_keys = utilities.get_selected_keys(self)
     logscale = False
     for key in selected_keys:
         ydata = self.datadict[key].ydata
@@ -192,7 +191,7 @@ def translate_x(shortcut, _, self):
     except ValueError:
         print("Unable to do translation, make sure to enter a valid number")
         offset = 0
-    selected_keys = get_selected_keys(self)
+    selected_keys = utilities.get_selected_keys(self)
     for key in selected_keys:
         self.datadict[key].xdata = [value + offset for value in self.datadict[key].xdata]
     add_to_clipboard(self)
@@ -205,7 +204,7 @@ def translate_y(shortcut, _, self):
     except ValueError:
         print("Unable to do translation, make sure to enter a valid number")
         offset = 0
-    selected_keys = get_selected_keys(self)
+    selected_keys = utilities.get_selected_keys(self)
     for key in selected_keys:
         self.datadict[key].ydata = [value + offset for value in self.datadict[key].ydata]
     add_to_clipboard(self)
@@ -218,7 +217,7 @@ def multiply_x(shortcut, _, self):
     except ValueError:
         print("Unable to do multiplication, make sure to enter a valid number")
         multiplier = 1
-    selected_keys = get_selected_keys(self)
+    selected_keys = utilities.get_selected_keys(self)
     for key in selected_keys:
         self.datadict[key].xdata = [value * multiplier for value in self.datadict[key].xdata]
     add_to_clipboard(self)
@@ -231,7 +230,7 @@ def multiply_y(shortcut, _, self):
     except ValueError:
         print("Unable to do multiplication, make sure to enter a valid number")
         multiplier = 1
-    selected_keys = get_selected_keys(self)
+    selected_keys = utilities.get_selected_keys(self)
     for key in selected_keys:
         self.datadict[key].ydata = [value * multiplier for value in self.datadict[key].ydata]
     add_to_clipboard(self)
@@ -239,7 +238,7 @@ def multiply_y(shortcut, _, self):
 
 
 def normalize_data(shortcut, _, self):
-    selected_keys = get_selected_keys(self)
+    selected_keys = utilities.get_selected_keys(self)
     for key in selected_keys:
         self.datadict[key].ydata = normalize(self.datadict[key].ydata)
     add_to_clipboard(self)
@@ -251,7 +250,7 @@ def normalize(ydata):
     return new_y
 
 def center_data(shortcut, _, self):
-    selected_keys = get_selected_keys(self)
+    selected_keys = utilities.get_selected_keys(self)
     for key in selected_keys:
         if self.preferences.config["center_data"] == "Center at maximum Y value":
             self.datadict[key].xdata = center_data_max_Y(self.datadict[key].xdata, self.datadict[key].ydata)

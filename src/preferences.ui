@@ -168,7 +168,7 @@
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
                 <property name="title" translatable="yes">Center Data</property>
-                <property name="subtitle" translatable="yes">Choose the default behaviour of the center data button</property>
+                <property name="subtitle" translatable="yes">The default behaviour of the center data button</property>
                 <property name="use-underline">True</property>
                 <child>
                   <object class="GtkDropDown" id="center_data_chooser">
@@ -226,7 +226,7 @@
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
                 <property name="title" translatable="yes">Plot Title</property>
-                <property name="subtitle" translatable="yes">Title used for the plot</property>
+                <property name="subtitle" translatable="yes">The default title used for the plot</property>
                 <property name="use-underline">True</property>
                 <child>
                   <object class="GtkEntry" id="plot_title">
@@ -242,7 +242,7 @@
                 <property name="can-focus">True</property>
                 <property name="can-target">True</property>
                 <property name="title" translatable="yes">Y-Axis Name</property>
-                <property name="subtitle" translatable="yes">Title used for the Y-axis</property>
+                <property name="subtitle" translatable="yes">The default label used for the Y-axis</property>
                 <property name="use-underline">True</property>
                 <child>
                   <object class="GtkEntry" id="plot_Y_label">
@@ -259,8 +259,8 @@
               <object class="AdwActionRow">
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
-                <property name="title" translatable="yes">X-axis Name</property>
-                <property name="subtitle" translatable="yes">Title used for the X-axis</property>
+                <property name="title" translatable="yes">X-Axis Name</property>
+                <property name="subtitle" translatable="yes">The default label used for the X-axis</property>
                 <property name="use-underline">True</property>
                 <child>
                   <object class="GtkEntry" id="plot_X_label">
@@ -275,7 +275,7 @@
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
                 <property name="title" translatable="yes">Font</property>
-                <property name="subtitle" translatable="yes">Choose the font used in the graph</property>
+                <property name="subtitle" translatable="yes">The default font used in the graph</property>
                 <property name="use-underline">True</property>
                 <child>
                   <object class="GtkFontButton" id="plot_font_chooser">
@@ -288,8 +288,8 @@
               <object class="AdwActionRow">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
-                <property name="title" translatable="yes">Y-axis Scale</property>
-                <property name="subtitle" translatable="yes">Default scaling on Y-axis</property>
+                <property name="title" translatable="yes">Y-Axis Scale</property>
+                <property name="subtitle" translatable="yes">The default scaling on Y-axis</property>
                 <property name="use-underline">True</property>
                 <child>
                   <object class="GtkDropDown" id="plot_Y_scale">
@@ -311,7 +311,7 @@
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
                 <property name="title" translatable="yes">X-Axis Scale</property>
-                <property name="subtitle" translatable="yes">Default scaling on X-axis</property>
+                <property name="subtitle" translatable="yes">The default scaling on X-axis</property>
                 <property name="use-underline">True</property>
                 <child>
                   <object class="GtkDropDown" id="plot_X_scale">
@@ -668,7 +668,7 @@
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
                 <property name="title" translatable="yes">Color Cycle</property>
-                <property name="subtitle" translatable="yes">Choose the default color cycle</property>
+                <property name="subtitle" translatable="yes">The default color cycle set that is used while plotting new data</property>
                 <property name="use-underline">True</property>
                 <child>
                   <object class="GtkDropDown" id="plot_color_cycle">
@@ -755,3 +755,4 @@
     </object>
   </template>
 </interface>
+

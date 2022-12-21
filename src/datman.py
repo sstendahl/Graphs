@@ -3,13 +3,10 @@ import gi
 import os
 import re
 from .plotting_tools import PlotWidget
-from . import plotting_tools
+from . import plotting_tools, samplerow, colorpicker, toolbar, utilities
 import numpy as np
-from . import samplerow
 from .data import Data
 from matplotlib import colors
-from . import colorpicker
-from . import toolbar
 from matplotlib.backends.backend_gtk4 import (
     NavigationToolbar2GTK4 as NavigationToolbar)
 
@@ -81,6 +78,10 @@ def toggle_darkmode(shortcut, theme, widget, self):
         key = list(self.datadict.keys())[0]
         item = self.item_rows[key]
         item.set_css(item.get_css())
+    if Adw.StyleManager.get_default().get_dark():
+        self.plot_settings.plot_style = self.preferences.config["plot_style_dark"]
+    else:
+        self.plot_settings.plot_style = self.preferences.config["plot_style_light"]
     plotting_tools.reload_plot(self)
 
 
@@ -146,8 +147,14 @@ def swap(str1):
     str1 = str1.replace('third', '.')
     return str1
 
+def delete_selected(shortcut, _,  self):
+    print(shortcut)
+    selected_keys = utilities.get_selected_keys(self)
+    for key in selected_keys:
+        print(f"Deleting {key}")
+        delete(None, self, key)
 
-def delete(widget, self, filename):
+def delete(widget,  self, filename):
     layout = self.sample_box
     for key, item in self.item_rows.items():
         if key == filename:
@@ -309,8 +316,8 @@ def on_open_response(dialog, response, self, import_settings):
 def load_empty(self):
     win = self.props.active_window
     layout = win.drawing_layout
-    xlabel = self.preferences.config["plot_X_label"]
-    ylabel = self.preferences.config["plot_Y_label"]
+    xlabel = self.plot_settings.xlabel
+    ylabel = self.plot_settings.ylabel
     self.canvas = PlotWidget(parent = self, xlabel=xlabel, ylabel=ylabel)
     clear_layout(self)
     create_layout(self, self.canvas, layout)

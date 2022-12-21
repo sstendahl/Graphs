@@ -25,7 +25,7 @@ import os
 gi.require_version('Gtk', '4.0')
 gi.require_version('Adw', '1')
 
-from gi.repository import Gtk, Gio, Adw
+from gi.repository import Gtk, Gio, Gdk, Adw
 from .window import DatManWindow
 import matplotlib.pyplot as plt
 from . import datman, plotting_tools, item_operations, transform_data, preferences, add_equation, add_data_advanced
@@ -42,6 +42,7 @@ class DatManApplication(Adw.Application):
         self.highlight = None
         plotting_tools.load_fonts(self)
         self.preferences = preferences.Preferences()
+        self.plot_settings = plotting_tools.PlotSettings(self)
         self.connect_actions()
 
     def connect_actions(self):
@@ -60,13 +61,14 @@ class DatManApplication(Adw.Application):
         self.create_action('center_data', item_operations.center_data, None, self)
         self.create_action('shift_vertically', item_operations.shift_vertically, None, self)
         self.create_action('save_data', item_operations.save_data, None, self)
-        self.create_action('select_all', datman.select_all, None, self)
+        self.create_action('select_all', datman.select_all, ['<primary>A'], self)
         self.create_action('undo', item_operations.undo, ['<primary>Z'], self)
         self.create_action('redo', item_operations.redo, ['<primary><shift>Z'], self)
-        self.create_action('select_none', datman.select_none, None, self)
+        self.create_action('select_none', datman.select_none, ['<primary><shift>A'], self)
         self.create_action('transform_data', transform_data.open_transform_window, None, self)
         self.create_action('add_equation', add_equation.open_add_equation_window, ['<primary>E'], self)
         self.create_action('select_data_toggle', plotting_tools.toggle_highlight, None, self)
+        self.create_action('delete_selected', datman.delete_selected, ['Delete'], self)
         Adw.StyleManager.get_default().connect("notify", datman.toggle_darkmode, None, self)
 
     def do_activate(self):
@@ -89,10 +91,10 @@ class DatManApplication(Adw.Application):
         about = Adw.AboutWindow(transient_for=self.props.active_window,
                                 application_name='Graphs',
                                 application_icon='se.sjoerd.DatMan',
-                                website='http://www.sjoerd.se',
+                                website='https://www.sjoerd.se/Graphs',
                                 developer_name='Sjoerd Broekhuijsen',
                                 issue_url="https://github.com/SjoerdB93/Graphs/issues",
-                                version='1.1.2',
+                                version='1.2.0',
                                 developers=['Sjoerd Broekhuijsen <contact@sjoerd.se>'],
                                 copyright='© 2022 Sjoerd Broekhuijsen',
                                 license_type="GTK_LICENSE_GPL_3_0")
