@@ -219,8 +219,8 @@
         <child>
           <object class="AdwPreferencesGroup">
             <property name="visible">True</property>
-            <property name="title" translatable="yes">Plot Labels</property>
-            <property name="description" translatable="yes">Settings for the plot title and labels</property>
+            <property name="title" translatable="yes">Plot Axes</property>
+            <property name="description" translatable="yes">Settings for the plot axes</property>
             <child>
               <object class="AdwActionRow">
                 <property name="visible">True</property>
@@ -241,8 +241,8 @@
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
                 <property name="can-target">True</property>
-                <property name="title" translatable="yes">Y-Axis Name</property>
-                <property name="subtitle" translatable="yes">The default label used for the Y-axis</property>
+                <property name="title" translatable="yes">Left axis label</property>
+                <property name="subtitle" translatable="yes">The default label used for the left axis</property>
                 <property name="use-underline">True</property>
                 <child>
                   <object class="GtkEntry" id="plot_Y_label">
@@ -259,8 +259,27 @@
               <object class="AdwActionRow">
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
-                <property name="title" translatable="yes">X-Axis Name</property>
-                <property name="subtitle" translatable="yes">The default label used for the X-axis</property>
+                <property name="can-target">True</property>
+                <property name="title" translatable="yes">Right axis label</property>
+                <property name="subtitle" translatable="yes">The default label used for the right axis</property>
+                <property name="use-underline">True</property>
+                <child>
+                  <object class="GtkEntry" id="plot_right_label">
+                    <property name="focus-on-click">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="can-target">True</property>
+                    <property name="text">Y value</property>
+                    <property name="valign">center</property>
+                  </object>
+                </child>
+              </object>
+            </child>"
+            <child>
+              <object class="AdwActionRow">
+                <property name="visible">True</property>
+                <property name="can-focus">True</property>
+                <property name="title" translatable="yes">Bottom axis Name</property>
+                <property name="subtitle" translatable="yes">The default label used for the bottom</property>
                 <property name="use-underline">True</property>
                 <child>
                   <object class="GtkEntry" id="plot_X_label">
@@ -321,6 +340,28 @@
                         <items>
                           <item translatable="yes">log</item>
                           <item translatable="yes">linear</item>
+                        </items>
+                      </object>
+                    </property>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="AdwActionRow">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="title" translatable="yes">Y-Axis Position</property>
+                <property name="subtitle" translatable="yes">The default position of the Y-axis</property>
+                <property name="use-underline">True</property>
+                <child>
+                  <object class="GtkDropDown" id="plot_Y_position">
+                    <property name="valign">center</property>
+                    <property name="model">
+                      <object class="GtkStringList">
+                        <items>
+                          <item translatable="yes">left</item>
+                          <item translatable="yes">right</item>
                         </items>
                       </object>
                     </property>

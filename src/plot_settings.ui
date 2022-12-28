@@ -26,7 +26,7 @@
             <property name="visible">True</property>
             <property name="can-focus">True</property>
             <property name="title" translatable="yes">Data</property>
-            <property name="description" translatable="yes">Choose which data set to edit and change its name</property>
+            <property name="description" translatable="yes">Choose which data set to edit, the name of the data set and the axis positions</property>
             <child>
               <object class="AdwActionRow">
                 <property name="visible">True</property>
@@ -60,6 +60,28 @@
                     <property name="valign">center</property>
                     <property name="max-width-chars">25</property>
                     <property name="width-request">15</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="AdwActionRow">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="title" translatable="yes">Y-Axis Position</property>
+                <property name="subtitle" translatable="yes">The position of the Y-axis</property>
+                <property name="use-underline">True</property>
+                <child>
+                  <object class="GtkDropDown" id="plot_Y_position">
+                    <property name="valign">center</property>
+                    <property name="model">
+                      <object class="GtkStringList">
+                        <items>
+                          <item translatable="yes">left</item>
+                          <item translatable="yes">right</item>
+                        </items>
+                      </object>
+                    </property>
                   </object>
                 </child>
               </object>
@@ -273,8 +295,8 @@
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
                 <property name="can-target">True</property>
-                <property name="title" translatable="yes">Y-Axis Name</property>
-                <property name="subtitle" translatable="yes">Title used for the Y-axis</property>
+                <property name="title" translatable="yes">Left Axis Label</property>
+                <property name="subtitle" translatable="yes">Title used for the left-hand axis</property>
                 <property name="use-underline">True</property>
                 <child>
                   <object class="GtkEntry" id="plot_Y_label">
@@ -291,8 +313,23 @@
               <object class="AdwActionRow">
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
-                <property name="title" translatable="yes">X-axis Name</property>
-                <property name="subtitle" translatable="yes">Title used for the X-axis</property>
+                <property name="title" translatable="yes">Right Axis Label</property>
+                <property name="subtitle" translatable="yes">Label used for the right-hand axis</property>
+                <property name="use-underline">True</property>
+                <child>
+                  <object class="GtkEntry" id="plot_right_label">
+                    <property name="text">X value</property>
+                    <property name="valign">center</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="AdwActionRow">
+                <property name="visible">True</property>
+                <property name="can-focus">True</property>
+                <property name="title" translatable="yes">Bottom Axis Label</property>
+                <property name="subtitle" translatable="yes">Label used for the bottom axis</property>
                 <property name="use-underline">True</property>
                 <child>
                   <object class="GtkEntry" id="plot_X_label">

@@ -54,7 +54,11 @@ class GraphToolbar(NavigationToolbar):
         super().__init__(canvas, parent)
 
     def load_plot_settings(self, button):
-        plot_settings.open_plot_settings(button, _, self.parent)
+        try:
+            plot_settings.open_plot_settings(button, _, self.parent)
+        except AttributeError:
+            win = self.parent.props.active_window
+            win.toast_overlay.add_toast(Adw.Toast(title=f"Unable to open plot settings, make sure to load at least one dataset"))
 
     def open_pip_mode(self, button):
         pip_mode.open_pip_mode(button, _, self.parent)
@@ -67,7 +71,7 @@ class GraphToolbar(NavigationToolbar):
         elif current_scale == "log":
             self.canvas.ax.set_yscale('linear')
             self.parent.plot_settings.yscale = "linear"
-        plotting_tools.set_canvas_limits(self.parent, self.canvas)
+        plotting_tools.set_canvas_limits_axis(self.parent, self.canvas)
         self.canvas.draw()
 
     def change_xscale(self, button):
@@ -76,7 +80,7 @@ class GraphToolbar(NavigationToolbar):
             self.canvas.ax.set_xscale('log')
         elif current_scale == "log":
             self.canvas.ax.set_xscale('linear')
-        plotting_tools.set_canvas_limits(self.parent, self.parent.canvas)
+        plotting_tools.set_canvas_limits_axis(self.parent, self.parent.canvas)
         self.canvas.draw()
 
         

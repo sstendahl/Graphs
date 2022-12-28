@@ -52,42 +52,55 @@ def toggle_highlight(shortcut, _, self):
 
 
 def plot_figure(self, canvas, X, Y, filename="", xlim=None, linewidth = 2, title="", scale="log",marker=None, linestyle="solid",
-                     revert = False, color = None, marker_size = 10):
-    fig = canvas.ax
-    linewidth = linewidth
-    line = fig.plot(X, Y, linewidth = linewidth ,label=filename, linestyle=linestyle, marker=marker, color = color, markersize=marker_size)
-    if self.plot_settings.legend:
-        fig.legend()
-    return line
+                     revert = False, color = None, marker_size = 10, y_axis = "left"):
+    if y_axis == "left":
+        canvas.ax.plot(X, Y, linewidth = linewidth ,label=filename, linestyle=linestyle, marker=marker, color = color, markersize=marker_size)
+    if y_axis == "right":
+        canvas.right_axis.plot(X, Y, linewidth = linewidth ,label=filename, linestyle=linestyle, marker=marker, color = color, markersize=marker_size)
 
-def set_canvas_limits(self, canvas, limits = {"xmin":None, "xmax":None, "ymin":None, "ymax":None}):
-    graph_limits = find_limits(self)
+def set_canvas_limits_axis(self, canvas, limits = {"xmin":None, "xmax":None, "ymin":None, "ymax":None}):
+    left_datadict = dict()
+    right_datadict = dict()
+    for key, item in self.datadict.items():
+        if item.plot_Y_position == "left":
+            left_datadict[key] = item
+            graph_limits = find_limits(self, "left", left_datadict)
+            axis = canvas.ax
+            set_canvas_limits(self, graph_limits, axis)
+        elif item.plot_Y_position == "right":
+            right_datadict[key] = item
+            graph_limits = find_limits(self, "right", right_datadict)
+            axis = canvas.right_axis
+            set_canvas_limits(self, graph_limits, axis)
+            
+        
+
+def set_canvas_limits(self, graph_limits, axis = "left", limits = {"xmin":None, "xmax":None, "ymin":None, "ymax":None}):
     for key, item in limits.items():
         if item is not None:
             graph_limits[key] = item
-
     span = (graph_limits["xmax"] - graph_limits["xmin"])
-    if self.canvas.ax.get_xscale() == "linear":
+    if axis.get_xscale() == "linear":
         graph_limits["xmin"] -= 0.015*span
         graph_limits["xmax"] += 0.015*span
-    if self.canvas.ax.get_yscale() == "linear":
+    if axis.get_yscale() == "linear":
         graph_limits["ymax"] *=  1.05
     else:
         graph_limits["ymin"] *= 0.5
         graph_limits["ymax"] *= 2
     try:
-        canvas.ax.set_xlim(graph_limits["xmin"], graph_limits["xmax"])
-        canvas.ax.set_ylim(graph_limits["ymin"], graph_limits["ymax"])
+        axis.set_xlim(graph_limits["xmin"], graph_limits["xmax"])
+        axis.set_ylim(graph_limits["ymin"], graph_limits["ymax"])
     except ValueError:
         print("Could not set limits, one of the values was probably infinite")
         
-def find_limits(self):
+def find_limits(self, axis, datadict):
     xmin_all = None
     xmax_all = None
     ymin_all = None
     ymax_all = None
-    for key, item in self.datadict.items():
-        if item is not None and len(item.xdata) > 0:
+    for key, item in datadict.items():
+        if item is not None and len(item.xdata) > 0 and item.plot_Y_position == axis:
             nonzero_ydata = list(filter(lambda x: (x != 0), item.ydata))
             xmin_item = min(item.xdata)
             xmax_item = max(item.xdata)
@@ -120,9 +133,10 @@ def reload_plot(self, from_dictionary = True):
     datman.load_empty(self)
     define_highlight(self)
     hide_highlight(self)
+    hide_unused_axes(self)
     datman.open_selection(self, None, from_dictionary)
     if len(self.datadict) > 0:
-        set_canvas_limits(self, self.canvas)
+        set_canvas_limits_axis(self, self.canvas)
     self.canvas.grab_focus()
 
 
@@ -131,10 +145,27 @@ def refresh_plot(self, canvas = None, from_dictionary = True, set_limits = True)
         canvas = self.canvas
     for line in canvas.ax.lines:
         line.remove()
+    for line in canvas.right_axis.lines:
+        line.remove()
+    hide_unused_axes(self)
     datman.open_selection(self, None, from_dictionary, canvas = canvas)
     if set_limits and len(self.datadict) > 0:
-        set_canvas_limits(self, canvas)
+        set_canvas_limits_axis(self, canvas)
     self.canvas.draw()
+
+def hide_unused_axes(self):
+    left = False
+    right = False
+    for key, item in self.datadict.items():
+        if item.plot_Y_position == "left":
+            left = True
+        if item.plot_Y_position == "right":
+            right = True
+    if not left:
+        self.canvas.ax.get_yaxis().set_visible(False)
+    if not right:
+        self.canvas.right_axis.get_yaxis().set_visible(False)
+
 
 def get_next_color(self):
     color_list = self.canvas.color_cycle
@@ -163,6 +194,7 @@ class PlotSettings:
     def __init__(self, parent):
         self.font_string = parent.preferences.config["plot_font_string"]
         self.xlabel = parent.preferences.config["plot_X_label"]
+        self.right_label = parent.preferences.config["plot_right_label"]
         self.ylabel = parent.preferences.config["plot_Y_label"]
         self.xscale = parent.preferences.config["plot_X_scale"]
         self.yscale = parent.preferences.config["plot_Y_scale"]
@@ -196,6 +228,7 @@ class PlotWidget(FigureCanvas):
         self.canvas = FigureCanvas(self.figure)
         self.set_style(parent)
         self.ax = self.figure.add_subplot(111)
+        self.right_axis = self.ax.twinx()
         self.set_ax_properties(parent)
         self.set_save_properties(parent)
         self.set_color_cycle(parent)
@@ -209,6 +242,7 @@ class PlotWidget(FigureCanvas):
     def set_ax_properties(self, parent):
         self.ax.set_title(parent.plot_settings.title)
         self.ax.set_xlabel(parent.plot_settings.xlabel, fontweight = parent.plot_settings.font_weight)
+        self.right_axis.set_ylabel(parent.plot_settings.right_label, fontweight = parent.plot_settings.font_weight)
         self.ax.set_ylabel(parent.plot_settings.ylabel, fontweight = parent.plot_settings.font_weight)
         self.ax.tick_params(direction=parent.plot_settings.tick_direction, length=parent.plot_settings.major_tick_length, width=parent.plot_settings.major_tick_width, which="major")
         self.ax.tick_params(direction=parent.plot_settings.tick_direction, length=parent.plot_settings.minor_tick_length, width=parent.plot_settings.minor_tick_width, which="minor")
@@ -257,3 +291,6 @@ class PlotWidget(FigureCanvas):
             cmap += "_r"
         color_cycle = cycler(color=plt.get_cmap(cmap).colors)
         self.color_cycle = color_cycle.by_key()['color']
+
+
+

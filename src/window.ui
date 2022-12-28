@@ -338,6 +338,16 @@
         <property name="orientation">vertical</property>
        </object>
       </child>
+<child>
+  <object class="AdwToastOverlay" id="toast_overlay">
+    <property name="child">
+      <object class="GtkScrolledWindow">
+        <property name="hexpand">true</property>
+        <property name="vexpand">true</property>
+        <property name="margin-top">6</property>
+        <property name="margin-bottom">6</property>
+        <property name="margin-start">6</property>
+        <property name="margin-end">6</property>
       <child>
        <object class="GtkBox" id="drawing_layout">
         <property name="hexpand-set">True</property>
@@ -347,6 +357,10 @@
         <child/>
        </object>
       </child>
+      </object>
+    </property>
+  </object>
+</child>
      </object>
     </child>
    </object>
@@ -385,5 +399,7 @@
   </section>
  </menu>
 </interface>
+
+
 
 

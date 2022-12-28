@@ -19,4 +19,5 @@ class Data:
     unselected_markers: str = ""
     selected_marker_size: float = 0
     unselected_marker_size: float = 0
+    plot_Y_position: str = "left"
 

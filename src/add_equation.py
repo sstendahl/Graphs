@@ -15,7 +15,11 @@ def on_accept(widget, self, window):
     x_stop = window.X_stop_entry.get_text()
     step_size = window.step_size_entry.get_text()
     equation = str(window.equation_entry.get_text())
-    new_file = create_data(self, x_start, x_stop, equation, step_size, str(window.name_entry.get_text()))
+    try:
+        new_file = create_data(self, x_start, x_stop, equation, step_size, str(window.name_entry.get_text()))
+    except:
+        win = self.props.active_window
+        win.toast_overlay.add_toast(Adw.Toast(title=f"Unable to add data from equation, make sure the syntax is correct"))
     name = new_file.filename
     if name in self.datadict:
         if self.preferences.config["allow_duplicate_filenames"]:

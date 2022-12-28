@@ -189,6 +189,7 @@ def translate_x(shortcut, _, self):
     try:
         offset = float(win.translate_x_entry.get_text())
     except ValueError:
+        win.toast_overlay.add_toast(Adw.Toast(title=f"Unable to do translation, make sure to enter a valid number"))
         print("Unable to do translation, make sure to enter a valid number")
         offset = 0
     selected_keys = utilities.get_selected_keys(self)
@@ -204,6 +205,7 @@ def translate_y(shortcut, _, self):
     except ValueError:
         print("Unable to do translation, make sure to enter a valid number")
         offset = 0
+        win.toast_overlay.add_toast(Adw.Toast(title=f"Unable to do translation, make sure to enter a valid number"))
     selected_keys = utilities.get_selected_keys(self)
     for key in selected_keys:
         self.datadict[key].ydata = [value + offset for value in self.datadict[key].ydata]
@@ -215,6 +217,7 @@ def multiply_x(shortcut, _, self):
     try:
         multiplier = float(win.multiply_x_entry.get_text())
     except ValueError:
+        win.toast_overlay.add_toast(Adw.Toast(title=f"Unable to do multiplication, make sure to enter a valid number"))
         print("Unable to do multiplication, make sure to enter a valid number")
         multiplier = 1
     selected_keys = utilities.get_selected_keys(self)
@@ -228,6 +231,7 @@ def multiply_y(shortcut, _, self):
     try:
         multiplier = float(win.multiply_y_entry.get_text())
     except ValueError:
+        win.toast_overlay.add_toast(Adw.Toast(title=f"Unable to do multiplication, make sure to enter a valid number"))
         print("Unable to do multiplication, make sure to enter a valid number")
         multiplier = 1
     selected_keys = utilities.get_selected_keys(self)

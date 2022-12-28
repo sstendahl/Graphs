@@ -83,6 +83,8 @@ class PreferencesWindow(Adw.PreferencesWindow):
     savefig_filetype_list = Gtk.Template.Child()
     plot_Y_label = Gtk.Template.Child()
     plot_X_label = Gtk.Template.Child()
+    plot_right_label = Gtk.Template.Child()
+    plot_Y_position = Gtk.Template.Child()
     plot_X_scale = Gtk.Template.Child()
     plot_Y_scale = Gtk.Template.Child()
     plot_selected_linestyle_chooser = Gtk.Template.Child()
@@ -170,11 +172,13 @@ class PreferencesWindow(Adw.PreferencesWindow):
         self.plot_major_tick_length.set_value(config["plot_major_tick_length"])
         self.plot_Y_label.set_text(config["plot_Y_label"])
         self.plot_X_label.set_text(config["plot_X_label"])
+        self.plot_right_label.set_text(config["plot_right_label"])
         self.plot_title.set_text(config["plot_title"])
         self.set_chooser(self.savefig_filetype_chooser, config["savefig_filetype"])
         self.set_chooser(self.center_data_chooser, config["center_data"])
         self.set_chooser(self.plot_X_scale, config["plot_X_scale"])
         self.set_chooser(self.plot_Y_scale, config["plot_Y_scale"])
+        self.set_chooser(self.plot_Y_position, config["plot_Y_position"])
         self.set_chooser(self.plot_tick_direction, config["plot_tick_direction"])
         self.set_chooser(self.import_separator, config["import_separator"])
         self.set_chooser(self.plot_color_cycle, config["plot_color_cycle"])
@@ -255,6 +259,7 @@ class PreferencesWindow(Adw.PreferencesWindow):
         config["plot_invert_color_cycle_dark"] = self.plot_invert_color_cycle_dark.get_active()
         config["plot_Y_label"] = self.plot_Y_label.get_text()
         config["plot_X_label"] = self.plot_X_label.get_text()
+        config["plot_right_label"] = self.plot_right_label.get_text()
         config["plot_font_size"] = font_size
         config["plot_font_style"] = font_style
         config["plot_font_weight"] = font_weight
@@ -264,6 +269,7 @@ class PreferencesWindow(Adw.PreferencesWindow):
         config["plot_color_cycle"] = self.plot_color_cycle.get_selected_item().get_string()
         config["plot_X_scale"] = self.plot_X_scale.get_selected_item().get_string()
         config["plot_Y_scale"] = self.plot_Y_scale.get_selected_item().get_string()
+        config["plot_Y_position"] = self.plot_Y_position.get_selected_item().get_string()
         config["center_data"] = self.center_data_chooser.get_selected_item().get_string()
         config["plot_selected_linestyle"] = self.plot_selected_linestyle_chooser.get_selected_item().get_string()
         config["plot_unselected_linestyle"] = self.plot_unselected_linestyle_chooser.get_selected_item().get_string()
