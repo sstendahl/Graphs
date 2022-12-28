@@ -1,7 +1,7 @@
 from gi.repository import Adw
 from matplotlib.backends.backend_gtk4 import (
     NavigationToolbar2GTK4 as NavigationToolbar)
-from . import plotting_tools, plot_settings, pip_mode
+from . import plotting_tools, plot_settings, pip_mode, utilities
 import os
 import shutil
 
@@ -64,13 +64,27 @@ class GraphToolbar(NavigationToolbar):
         pip_mode.open_pip_mode(button, _, self.parent)
 
     def change_yscale(self, button):
-        current_scale = self.canvas.ax.get_yscale()
-        if current_scale == "linear":
-            self.canvas.ax.set_yscale('log')
-            self.parent.plot_settings.yscale = "log"
-        elif current_scale == "log":
-            self.canvas.ax.set_yscale('linear')
-            self.parent.plot_settings.yscale = "linear"
+        selected_keys = utilities.get_selected_keys(self.parent)
+        left = False
+        right = False
+        for key in selected_keys:
+            if self.parent.datadict[key].plot_Y_position == "left":
+                left = True
+            if self.parent.datadict[key].plot_Y_position == "right":
+                right = True
+        
+        if left:
+            current_scale = self.canvas.ax.get_yscale()
+            if current_scale == "linear":
+                self.canvas.ax.set_yscale('log')
+            elif current_scale == "log":
+                self.canvas.ax.set_yscale('linear')
+        if right:
+            current_scale = self.canvas.right_axis.get_yscale()
+            if current_scale == "linear":
+                self.canvas.right_axis.set_yscale('log')
+            elif current_scale == "log":
+                self.canvas.right_axis.set_yscale('linear')
         plotting_tools.set_canvas_limits_axis(self.parent, self.canvas)
         self.canvas.draw()
 
