@@ -8,7 +8,7 @@
   <developer_name>Sjoerd Broekhuijsen</developer_name>
   <description>
     <p>
-  Graphs is a simple yet powerful tool that allows users to plot and manipulate their data in a breeze. With Graphs, you can open and plot two-column data files, or generate new data from an equation. Imported data, and data generated from an equation are treated the same, and both can be manipulated and saved as text files for future use. The plots can be customized to your liking with a wide range of options including axis labels, scaling, tick marks, line thickness and style, and fonts. Graphs also has a range of data manipulation tools, such as the ability to select, cut, translate, multiply, center, and smooth data, as well as apply any custom transformations using numpy notation.
+  Graphs is a simple yet powerful tool that allows you to plot and manipulate your data in a breeze! With Graphs, you can open and plot two-column data files, or generate new data from an equation. Imported data, and data generated from an equation are treated the same, and both can be manipulated and saved as text files for future use. The plots can be customized to your liking with a wide range of options including axis labels, scaling, tick marks, line thickness and style, and fonts. Graphs also has a range of data manipulation tools, such as the ability to select, cut, translate, multiply, center, and smooth data, as well as apply any custom transformations using numpy notation.
     </p>
     <p>
 Graphs is an excellent fit both plotting and data manipulation. The plots created with Graphs can be saved in a variety of formats suitable for sharing and presenting to a wide audience, such as in a scientific publication or presentations. It is also possible to save the plots as vector images, which can be easily edited in programs like Inkscape for further customization and refinement. Graphs is written with the GNOME environment in mind, but should be suitable for any other desktop environment as well.
@@ -40,7 +40,7 @@ Graphs is an excellent fit both plotting and data manipulation. The plots create
     </screenshot>
   </screenshots>
   <releases>
-      <release version="1.3.0" date="2022-12-30">
+      <release version="1.3.0" date="2022-12-29">
       <description>
         <p>Probably last update of the year, most noteworthy is the ability to plot data on right and bottom axis independently. Next few updates will probably mainly focus on polish and code clean-up.</p>
         <ul>
