@@ -16,7 +16,8 @@ def open_preferences_window(widget, _, self):
 
 
 class Preferences():
-    def __init__(self):
+    def __init__(self, parent):
+        self.parent = parent
         self.create_new_config_file()
         self.config = self.load_config()
         self.check_config(self.config)
@@ -29,6 +30,7 @@ class Preferences():
             template = json.load(f)
         if set(config.keys()) != set(template.keys()):
             self.reset_config()
+            self.parent.props.active_window.toast_overlay.add_toast(Adw.Toast(title=f"New setting keys detected, resetting config"))
             return template
         else:
             return config
@@ -37,6 +39,7 @@ class Preferences():
         config_path = self.get_config_path()
         if not os.path.isfile(f"{config_path}/config.json"):
             self.reset_config()
+            self.parent.props.active_window.toast_overlay.add_toast(Adw.Toast(title=f"Config file not found, created new config file from template"))
             print(f"No configuration file found, new file is created at {config_path}")
         else:
             print("Loading configuration file")
@@ -84,9 +87,13 @@ class PreferencesWindow(Adw.PreferencesWindow):
     plot_Y_label = Gtk.Template.Child()
     plot_X_label = Gtk.Template.Child()
     plot_right_label = Gtk.Template.Child()
+    plot_top_label = Gtk.Template.Child()
     plot_Y_position = Gtk.Template.Child()
+    plot_X_position = Gtk.Template.Child()
     plot_X_scale = Gtk.Template.Child()
     plot_Y_scale = Gtk.Template.Child()
+    plot_top_scale = Gtk.Template.Child()
+    plot_right_scale = Gtk.Template.Child()
     plot_selected_linestyle_chooser = Gtk.Template.Child()
     plot_unselected_linestyle_chooser = Gtk.Template.Child()
     plot_selected_markers_chooser = Gtk.Template.Child()
@@ -173,11 +180,15 @@ class PreferencesWindow(Adw.PreferencesWindow):
         self.plot_Y_label.set_text(config["plot_Y_label"])
         self.plot_X_label.set_text(config["plot_X_label"])
         self.plot_right_label.set_text(config["plot_right_label"])
+        self.plot_top_label.set_text(config["plot_top_label"])
         self.plot_title.set_text(config["plot_title"])
         self.set_chooser(self.savefig_filetype_chooser, config["savefig_filetype"])
         self.set_chooser(self.center_data_chooser, config["center_data"])
         self.set_chooser(self.plot_X_scale, config["plot_X_scale"])
+        self.set_chooser(self.plot_top_scale, config["plot_top_scale"])
+        self.set_chooser(self.plot_right_scale, config["plot_right_scale"])
         self.set_chooser(self.plot_Y_scale, config["plot_Y_scale"])
+        self.set_chooser(self.plot_X_position, config["plot_X_position"])
         self.set_chooser(self.plot_Y_position, config["plot_Y_position"])
         self.set_chooser(self.plot_tick_direction, config["plot_tick_direction"])
         self.set_chooser(self.import_separator, config["import_separator"])
@@ -260,6 +271,7 @@ class PreferencesWindow(Adw.PreferencesWindow):
         config["plot_Y_label"] = self.plot_Y_label.get_text()
         config["plot_X_label"] = self.plot_X_label.get_text()
         config["plot_right_label"] = self.plot_right_label.get_text()
+        config["plot_top_label"] = self.plot_top_label.get_text()
         config["plot_font_size"] = font_size
         config["plot_font_style"] = font_style
         config["plot_font_weight"] = font_weight
@@ -269,6 +281,11 @@ class PreferencesWindow(Adw.PreferencesWindow):
         config["plot_color_cycle"] = self.plot_color_cycle.get_selected_item().get_string()
         config["plot_X_scale"] = self.plot_X_scale.get_selected_item().get_string()
         config["plot_Y_scale"] = self.plot_Y_scale.get_selected_item().get_string()
+        config["plot_top_scale"] = self.plot_top_scale.get_selected_item().get_string()
+        config["plot_right_scale"] = self.plot_right_scale.get_selected_item().get_string()
+        config["plot_right_scale"] = self.plot_right_scale.get_selected_item().get_string()
+        config["plot_top_scale"] = self.plot_top_scale.get_selected_item().get_string()
+        config["plot_X_position"] = self.plot_X_position.get_selected_item().get_string()
         config["plot_Y_position"] = self.plot_Y_position.get_selected_item().get_string()
         config["center_data"] = self.center_data_chooser.get_selected_item().get_string()
         config["plot_selected_linestyle"] = self.plot_selected_linestyle_chooser.get_selected_item().get_string()
@@ -291,7 +308,8 @@ class PreferencesWindow(Adw.PreferencesWindow):
         parent.preferences.config = self.set_config()
         parent.plot_settings = plotting_tools.PlotSettings(parent)
         parent.preferences.save_config()
-        plotting_tools.reload_plot(parent)
+        if len(parent.datadict) > 0:
+            plotting_tools.reload_plot(parent)
 
 
 

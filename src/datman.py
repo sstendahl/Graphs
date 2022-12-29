@@ -41,7 +41,8 @@ def open_selection(self, files, from_dictionary = False, import_settings = None,
                     marker_size = item.unselected_marker_size
                 color = self.item_rows[key].color_picker.color
                 y_axis = item.plot_Y_position
-                plotting_tools.plot_figure(self, canvas, item.xdata,item.ydata, item.filename, linewidth = linewidth, linestyle=linestyle, color = color, marker = marker, marker_size = marker_size, y_axis = y_axis)
+                x_axis = item.plot_X_position
+                plotting_tools.plot_figure(self, canvas, item.xdata,item.ydata, item.filename, linewidth = linewidth, linestyle=linestyle, color = color, marker = marker, marker_size = marker_size, y_axis = y_axis, x_axis = x_axis)
     else:
         for path in files:
             if path != "":
@@ -56,16 +57,13 @@ def open_selection(self, files, from_dictionary = False, import_settings = None,
                 filename = item.filename
                 color = plotting_tools.get_next_color(self)
                 y_axis = item.plot_Y_position
-                plotting_tools.plot_figure(self, canvas, item.xdata,item.ydata, item.filename, color, y_axis = y_axis)
+                x_axis = item.plot_X_position
+                plotting_tools.plot_figure(self, canvas, item.xdata,item.ydata, item.filename, color, y_axis = y_axis, x_axis = x_axis)
                 add_sample_to_menu(self, filename, color)
         self.canvas.draw()
         plotting_tools.set_canvas_limits_axis(self, self.canvas)
         select_top_row(self)
         turn_off_clipboard_buttons(self)
-    if self.plot_settings.legend:
-        lines, labels = self.canvas.ax.get_legend_handles_labels()
-        lines2, labels2 = self.canvas.right_axis.get_legend_handles_labels()
-        self.canvas.ax.legend(lines + lines2, labels + labels2, loc=0)
 
 def get_duplicate_filename(self, name):
     loop = True
@@ -109,6 +107,7 @@ def select_top_row(self):
 def get_data(self, path, import_settings):
     data = Data()
     data.plot_Y_position = self.preferences.config["plot_Y_position"]
+    data.plot_X_position = self.preferences.config["plot_X_position"]
     data_array = [[], []]
     i = 0
     with (open(path, 'r')) as file:
@@ -185,6 +184,7 @@ def delete(widget,  self, filename):
         item.clipboard_pos = -1
     turn_off_clipboard_buttons(self)
     plotting_tools.refresh_plot(self)
+
 
 def select_all(widget, _, self):
     for key, item in self.item_rows.items():

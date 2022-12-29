@@ -86,6 +86,28 @@
                 </child>
               </object>
             </child>
+            <child>
+              <object class="AdwActionRow">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="title" translatable="yes">X-Axis Position</property>
+                <property name="subtitle" translatable="yes">The position of the X-axis</property>
+                <property name="use-underline">True</property>
+                <child>
+                  <object class="GtkDropDown" id="plot_X_position">
+                    <property name="valign">center</property>
+                    <property name="model">
+                      <object class="GtkStringList">
+                        <items>
+                          <item translatable="yes">top</item>
+                          <item translatable="yes">bottom</item>
+                        </items>
+                      </object>
+                    </property>
+                  </object>
+                </child>
+              </object>
+            </child>
           </object>
         </child>
         <child>
@@ -296,7 +318,7 @@
                 <property name="can-focus">True</property>
                 <property name="can-target">True</property>
                 <property name="title" translatable="yes">Left Axis Label</property>
-                <property name="subtitle" translatable="yes">Title used for the left-hand axis</property>
+                <property name="subtitle" translatable="yes">Label used for the left-hand axis</property>
                 <property name="use-underline">True</property>
                 <child>
                   <object class="GtkEntry" id="plot_Y_label">
@@ -304,21 +326,6 @@
                     <property name="can-focus">True</property>
                     <property name="can-target">True</property>
                     <property name="text">Y value</property>
-                    <property name="valign">center</property>
-                  </object>
-                </child>
-              </object>
-            </child>
-            <child>
-              <object class="AdwActionRow">
-                <property name="visible">True</property>
-                <property name="can-focus">True</property>
-                <property name="title" translatable="yes">Right Axis Label</property>
-                <property name="subtitle" translatable="yes">Label used for the right-hand axis</property>
-                <property name="use-underline">True</property>
-                <child>
-                  <object class="GtkEntry" id="plot_right_label">
-                    <property name="text">X value</property>
                     <property name="valign">center</property>
                   </object>
                 </child>
@@ -342,6 +349,36 @@
             <child>
               <object class="AdwActionRow">
                 <property name="visible">True</property>
+                <property name="can-focus">True</property>
+                <property name="title" translatable="yes">Right Axis Label</property>
+                <property name="subtitle" translatable="yes">Label used for the right-hand axis</property>
+                <property name="use-underline">True</property>
+                <child>
+                  <object class="GtkEntry" id="plot_right_label">
+                    <property name="text"></property>
+                    <property name="valign">center</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="AdwActionRow">
+                <property name="visible">True</property>
+                <property name="can-focus">True</property>
+                <property name="title" translatable="yes">Top Axis Label</property>
+                <property name="subtitle" translatable="yes">Label used for the top axis</property>
+                <property name="use-underline">True</property>
+                <child>
+                  <object class="GtkEntry" id="plot_top_label">
+                    <property name="text"></property>
+                    <property name="valign">center</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="AdwActionRow">
+                <property name="visible">True</property>
                 <property name="can-focus">False</property>
                 <property name="title" translatable="yes">Font</property>
                 <property name="subtitle" translatable="yes">The font used in the graph</property>
@@ -353,15 +390,45 @@
                 </child>
               </object>
             </child>
+                          </object>
+            </child>
+        <child>
+          <object class="AdwPreferencesGroup">
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="title" translatable="yes">Scaling</property>
+            <property name="description" translatable="yes">The scaling used for each axis</property>
             <child>
               <object class="AdwActionRow">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
-                <property name="title" translatable="yes">Y-axis Scale</property>
-                <property name="subtitle" translatable="yes">Scaling on the Y-axis</property>
+                <property name="title" translatable="yes">Left Axis Scale</property>
+                <property name="subtitle" translatable="yes">Scaling used for the left-hand axis</property>
                 <property name="use-underline">True</property>
                 <child>
                   <object class="GtkDropDown" id="plot_Y_scale">
+                    <property name="valign">center</property>
+                    <property name="model">
+                      <object class="GtkStringList">
+                        <items>
+                          <item translatable="yes">log</item>
+                          <item translatable="yes">linear</item>
+                        </items>
+                      </object>
+                    </property>
+                  </object>
+                </child>
+              </object>
+            </child>
+                        <child>
+              <object class="AdwActionRow">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="title" translatable="yes">Bottom Axis Scale</property>
+                <property name="subtitle" translatable="yes">Scaling on the bottom axis</property>
+                <property name="use-underline">True</property>
+                <child>
+                  <object class="GtkDropDown" id="plot_X_scale">
                     <property name="valign">center</property>
                     <property name="model">
                       <object class="GtkStringList">
@@ -379,11 +446,33 @@
               <object class="AdwActionRow">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
-                <property name="title" translatable="yes">X-Axis Scale</property>
-                <property name="subtitle" translatable="yes">Scaling on the Y-axis</property>
+                <property name="title" translatable="yes">Right Axis Scale</property>
+                <property name="subtitle" translatable="yes">Scaling used for the right-hand axis</property>
                 <property name="use-underline">True</property>
                 <child>
-                  <object class="GtkDropDown" id="plot_X_scale">
+                  <object class="GtkDropDown" id="plot_right_scale">
+                    <property name="valign">center</property>
+                    <property name="model">
+                      <object class="GtkStringList">
+                        <items>
+                          <item translatable="yes">log</item>
+                          <item translatable="yes">linear</item>
+                        </items>
+                      </object>
+                    </property>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="AdwActionRow">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="title" translatable="yes">Top Axis Scale</property>
+                <property name="subtitle" translatable="yes">Scaling used for the top axis</property>
+                <property name="use-underline">True</property>
+                <child>
+                  <object class="GtkDropDown" id="plot_top_scale">
                     <property name="valign">center</property>
                     <property name="model">
                       <object class="GtkStringList">

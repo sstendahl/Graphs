@@ -21,6 +21,7 @@ class PIPWindow(Adw.Window):
         xlabel = parent.plot_settings.xlabel
         ylabel = parent.plot_settings.ylabel
         canvas = plotting_tools.PlotWidget(parent = parent)
+        canvas.set_ax_properties(parent)
         canvas.ax.set_title(parent.plot_settings.title)
         canvas.ax.set_xlabel(xlabel, fontweight = parent.plot_settings.font_weight)
         canvas.ax.set_ylabel(ylabel, fontweight = parent.plot_settings.font_weight)

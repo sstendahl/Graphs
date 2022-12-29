@@ -187,7 +187,7 @@
             </child>
           </object>
         </child>
-        <child>
+        <child>po
           <object class="AdwPreferencesGroup">
             <property name="visible">True</property>
             <property name="can-focus">False</property>
@@ -219,8 +219,8 @@
         <child>
           <object class="AdwPreferencesGroup">
             <property name="visible">True</property>
-            <property name="title" translatable="yes">Plot Axes</property>
-            <property name="description" translatable="yes">Settings for the plot axes</property>
+            <property name="title" translatable="yes">Plot Labels</property>
+            <property name="description" translatable="yes">Set the labels and titels for the axis</property>"
             <child>
               <object class="AdwActionRow">
                 <property name="visible">True</property>
@@ -241,8 +241,8 @@
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
                 <property name="can-target">True</property>
-                <property name="title" translatable="yes">Left axis label</property>
-                <property name="subtitle" translatable="yes">The default label used for the left axis</property>
+                <property name="title" translatable="yes">Left Axis label</property>
+                <property name="subtitle" translatable="yes">The default label used for the left-hand axis</property>
                 <property name="use-underline">True</property>
                 <child>
                   <object class="GtkEntry" id="plot_Y_label">
@@ -259,9 +259,24 @@
               <object class="AdwActionRow">
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
+                <property name="title" translatable="yes">Bottom Axis Label</property>
+                <property name="subtitle" translatable="yes">The default label used for the bottom axis</property>
+                <property name="use-underline">True</property>
+                <child>
+                  <object class="GtkEntry" id="plot_X_label">
+                    <property name="text">X value</property>
+                    <property name="valign">center</property>
+                  </object>
+                </child>
+              </object>
+            </child>>
+            <child>
+              <object class="AdwActionRow">
+                <property name="visible">True</property>
+                <property name="can-focus">True</property>
                 <property name="can-target">True</property>
-                <property name="title" translatable="yes">Right axis label</property>
-                <property name="subtitle" translatable="yes">The default label used for the right axis</property>
+                <property name="title" translatable="yes">Right Axis label</property>
+                <property name="subtitle" translatable="yes">The default label used for the right-hand axis</property>
                 <property name="use-underline">True</property>
                 <child>
                   <object class="GtkEntry" id="plot_right_label">
@@ -273,17 +288,17 @@
                   </object>
                 </child>
               </object>
-            </child>"
+            </child>
             <child>
               <object class="AdwActionRow">
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
-                <property name="title" translatable="yes">Bottom axis Name</property>
-                <property name="subtitle" translatable="yes">The default label used for the bottom</property>
+                <property name="title" translatable="yes">Top Axis Label</property>
+                <property name="subtitle" translatable="yes">The default label used for the top axis</property>
                 <property name="use-underline">True</property>
                 <child>
-                  <object class="GtkEntry" id="plot_X_label">
-                    <property name="text">X value</property>
+                  <object class="GtkEntry" id="plot_top_label">
+                    <property name="text"></property>
                     <property name="valign">center</property>
                   </object>
                 </child>
@@ -303,12 +318,20 @@
                 </child>
               </object>
             </child>
-            <child>
+          </object>
+        </child>
+        <child>
+          <object class="AdwPreferencesGroup">
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="title" translatable="yes">Aees settings</property>
+            <property name="description" translatable="yes">Set the axes scale and position</property>
+             <child>
               <object class="AdwActionRow">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
-                <property name="title" translatable="yes">Y-Axis Scale</property>
-                <property name="subtitle" translatable="yes">The default scaling on Y-axis</property>
+                <property name="title" translatable="yes">Left Axis Scale</property>
+                <property name="subtitle" translatable="yes">The default scaling on the left-hand axis</property>
                 <property name="use-underline">True</property>
                 <child>
                   <object class="GtkDropDown" id="plot_Y_scale">
@@ -329,11 +352,55 @@
               <object class="AdwActionRow">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
-                <property name="title" translatable="yes">X-Axis Scale</property>
-                <property name="subtitle" translatable="yes">The default scaling on X-axis</property>
+                <property name="title" translatable="yes">Bottom Axis Scale</property>
+                <property name="subtitle" translatable="yes">The default scaling on the bottom axis</property>
                 <property name="use-underline">True</property>
                 <child>
                   <object class="GtkDropDown" id="plot_X_scale">
+                    <property name="valign">center</property>
+                    <property name="model">
+                      <object class="GtkStringList">
+                        <items>
+                          <item translatable="yes">log</item>
+                          <item translatable="yes">linear</item>
+                        </items>
+                      </object>
+                    </property>
+                  </object>
+                </child>
+              </object>
+            </child>
+             <child>
+              <object class="AdwActionRow">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="title" translatable="yes">Right Axis Scale</property>
+                <property name="subtitle" translatable="yes">The default scaling on the right-hand axis</property>
+                <property name="use-underline">True</property>
+                <child>
+                  <object class="GtkDropDown" id="plot_right_scale">
+                    <property name="valign">center</property>
+                    <property name="model">
+                      <object class="GtkStringList">
+                        <items>
+                          <item translatable="yes">log</item>
+                          <item translatable="yes">linear</item>
+                        </items>
+                      </object>
+                    </property>
+                  </object>
+                </child>
+              </object>
+            </child>
+             <child>
+              <object class="AdwActionRow">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="title" translatable="yes">Top Axis Scale</property>
+                <property name="subtitle" translatable="yes">The default scaling on the top axis</property>
+                <property name="use-underline">True</property>
+                <child>
+                  <object class="GtkDropDown" id="plot_top_scale">
                     <property name="valign">center</property>
                     <property name="model">
                       <object class="GtkStringList">
@@ -369,8 +436,30 @@
                 </child>
               </object>
             </child>
+            <child>
+              <object class="AdwActionRow">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="title" translatable="yes">X-Axis Position</property>
+                <property name="subtitle" translatable="yes">The default position of the X-axis</property>
+                <property name="use-underline">True</property>
+                <child>
+                  <object class="GtkDropDown" id="plot_X_position">
+                    <property name="valign">center</property>
+                    <property name="model">
+                      <object class="GtkStringList">
+                        <items>
+                          <item translatable="yes">top</item>
+                          <item translatable="yes">bottom</item>
+                        </items>
+                      </object>
+                    </property>
+                  </object>
+                </child>
+              </object>
+            </child>
           </object>
-        </child>
+          </child> 
         <child>
           <object class="AdwPreferencesGroup">
             <property name="visible">True</property>
