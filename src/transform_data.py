@@ -14,7 +14,11 @@ def open_transform_window(widget, _, self):
 def on_accept(widget, self, window):
     input_x = str(window.transform_x_entry.get_text())
     input_y = str(window.transform_y_entry.get_text())
-    operation(self, input_x, input_y)
+    try:
+        operation(self, input_x, input_y)
+    except:
+        win = self.props.active_window
+        win.toast_overlay.add_toast(Adw.Toast(title=f"Unable to perform transformation, make sure the syntax is correct"))
     window.destroy()
 
 def operation(self, input_x, input_y):

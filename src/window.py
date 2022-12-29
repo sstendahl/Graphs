@@ -43,6 +43,7 @@ class DatManWindow(Adw.ApplicationWindow):
     save_data_button = Gtk.Template.Child()
     shift_vertically_button = Gtk.Template.Child()
     select_data_button = Gtk.Template.Child()
+    toast_overlay = Gtk.Template.Child()
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)

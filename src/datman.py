@@ -40,18 +40,28 @@ def open_selection(self, files, from_dictionary = False, import_settings = None,
                     marker = item.unselected_markers
                     marker_size = item.unselected_marker_size
                 color = self.item_rows[key].color_picker.color
-
-                plotting_tools.plot_figure(self, canvas, item.xdata,item.ydata, item.filename, linewidth = linewidth, linestyle=linestyle, color = color, marker = marker, marker_size = marker_size)
+                y_axis = item.plot_Y_position
+                x_axis = item.plot_X_position
+                plotting_tools.plot_figure(self, canvas, item.xdata,item.ydata, item.filename, linewidth = linewidth, linestyle=linestyle, color = color, marker = marker, marker_size = marker_size, y_axis = y_axis, x_axis = x_axis)
     else:
         for path in files:
             if path != "":
-                item = get_data(self, path, import_settings)
+                try:
+                    item = get_data(self, path, import_settings)
+                except IndexError:
+                    self.props.active_window.toast_overlay.add_toast(Adw.Toast(title=f"Could not open data, the column index was out of range"))
+                    break
+                except UnicodeDecodeError:
+                    self.props.active_window.toast_overlay.add_toast(Adw.Toast(title=f"Could not open data, wrong filetype"))
+                    break
                 filename = item.filename
                 color = plotting_tools.get_next_color(self)
-                plotting_tools.plot_figure(self, canvas, item.xdata,item.ydata, item.filename, color)
+                y_axis = item.plot_Y_position
+                x_axis = item.plot_X_position
+                plotting_tools.plot_figure(self, canvas, item.xdata,item.ydata, item.filename, color, y_axis = y_axis, x_axis = x_axis)
                 add_sample_to_menu(self, filename, color)
         self.canvas.draw()
-        plotting_tools.set_canvas_limits(self, self.canvas)
+        plotting_tools.set_canvas_limits_axis(self, self.canvas)
         select_top_row(self)
         turn_off_clipboard_buttons(self)
 
@@ -96,6 +106,8 @@ def select_top_row(self):
 
 def get_data(self, path, import_settings):
     data = Data()
+    data.plot_Y_position = self.preferences.config["plot_Y_position"]
+    data.plot_X_position = self.preferences.config["plot_X_position"]
     data_array = [[], []]
     i = 0
     with (open(path, 'r')) as file:
@@ -148,7 +160,6 @@ def swap(str1):
     return str1
 
 def delete_selected(shortcut, _,  self):
-    print(shortcut)
     selected_keys = utilities.get_selected_keys(self)
     for key in selected_keys:
         delete(None, self, key)
@@ -160,6 +171,7 @@ def delete(widget,  self, filename):
             self.sample_box.remove(item)
     del self.item_rows[filename]
     del self.datadict[filename]
+    self.props.active_window.toast_overlay.add_toast(Adw.Toast(title=f"Deleted {filename}"))
 
     if len(self.datadict) == 0:
         self.canvas.ax.get_legend().remove()
@@ -172,6 +184,7 @@ def delete(widget,  self, filename):
         item.clipboard_pos = -1
     turn_off_clipboard_buttons(self)
     plotting_tools.refresh_plot(self)
+
 
 def select_all(widget, _, self):
     for key, item in self.item_rows.items():
@@ -237,9 +250,13 @@ def save_file_dialog(self, documenttype="Text file (*.txt)"):
     if len(self.datadict) == 1:
         filename = list(self.datadict.values())[0].filename
         chooser.set_current_name(f"{filename}.txt")
-    chooser.set_modal(True)
-    chooser.connect("response", on_save_response, self)
-    chooser.show()
+    try:
+        chooser.set_modal(True)
+        chooser.connect("response", on_save_response, self)
+        chooser.show()
+    except UnboundLocalError:
+        self.props.active_window.toast_overlay.add_toast(Adw.Toast(title=f"Could not open save dialog, make sure you have data opened"))
+
 
 def on_save_response(dialog, response, self):
     files = []
