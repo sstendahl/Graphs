@@ -42,7 +42,7 @@ Graphs is an excellent fit both plotting and data manipulation. The plots create
   <releases>
       <release version="1.3.1" date="2023-12-31">
       <description>
-        <p>Minor hotfix update.</p>
+        <p>Brings some minor quality of life features.</p>
         <ul>
           <li>Ctrl+S now opens the Save Data dialog</li>
           <li>Fixed a bug where custom settings for tick positions no longer worked properly</li>
