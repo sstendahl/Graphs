@@ -332,14 +332,8 @@ class PlotWidget(FigureCanvas):
                 if parent.datadict[key].plot_Y_position == "right":
                     right = True
             if not (top and bottom):
-                print("Top")
-                print(top)
-                print(bottom)
                 axis.tick_params(which = "both", bottom=parent.plot_settings.tick_bottom, top=parent.plot_settings.tick_top)
             if not (left and right):
-                print("Left:")
-                print(left)
-                print(right)
                 axis.tick_params(which = "both", left=parent.plot_settings.tick_left, right=parent.plot_settings.tick_right)
 
     def set_style(self, parent):
