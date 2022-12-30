@@ -120,8 +120,8 @@ def select_data(self):
         if item.plot_X_position == "bottom":
             xrange_bottom = max(self.canvas.ax.get_xlim()) - min(self.canvas.ax.get_xlim())
             xrange_top = max(self.canvas.top_left_axis.get_xlim()) - min(self.canvas.top_left_axis.get_xlim())
-            startx = (xrange_bottom / xrange_top)*startx + min(self.canvas.ax.get_xlim())
-            stopx = (xrange_bottom / xrange_top)*stopx + min(self.canvas.ax.get_xlim())
+            startx = ((startx - min(self.canvas.top_left_axis.get_xlim())) / xrange_top) * xrange_bottom + min(self.canvas.ax.get_xlim())
+            stopx = ((stopx - min(self.canvas.top_left_axis.get_xlim())) / xrange_top) * xrange_bottom + min(self.canvas.ax.get_xlim())
         if not ((startx < min(item.xdata) and stopx < min(item.xdata)) or (startx > max(item.xdata))):
             selected_data = pick_data_selection(self, item, startx, stopx)
             selected_dict[f"{key}_selected"] = selected_data
