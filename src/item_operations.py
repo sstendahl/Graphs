@@ -70,10 +70,8 @@ def delete_selected_data(self):
     for key in key_list:
         del (self.datadict[key])
 
-def pick_data_selection(self, item):
+def pick_data_selection(self, item, startx, stopx):
     xdata = item.xdata
-    startx = min(self.highlight.extents)
-    stopx = max(self.highlight.extents)
     ydata = item.ydata
     xdata, ydata = sort_data(xdata, ydata)
     start_index = 0
@@ -112,14 +110,20 @@ def sort_bar(bar_list):
 def select_data(self):
     delete_selected_data(self)
     selected_dict = {}
-    startx = min(self.highlight.extents)
-    stopx = max(self.highlight.extents)
     selected_keys = utilities.get_selected_keys(self)
 
     for key in selected_keys:
         item = self.datadict[key]
+        highlight = self.highlight
+        startx = min(highlight.extents)
+        stopx = max(highlight.extents)
+        if item.plot_X_position == "bottom":
+            xrange_bottom = max(self.canvas.ax.get_xlim()) - min(self.canvas.ax.get_xlim())
+            xrange_top = max(self.canvas.top_left_axis.get_xlim()) - min(self.canvas.top_left_axis.get_xlim())
+            startx = ((startx - min(self.canvas.top_left_axis.get_xlim())) / xrange_top) * xrange_bottom + min(self.canvas.ax.get_xlim())
+            stopx = ((stopx - min(self.canvas.top_left_axis.get_xlim())) / xrange_top) * xrange_bottom + min(self.canvas.ax.get_xlim())
         if not ((startx < min(item.xdata) and stopx < min(item.xdata)) or (startx > max(item.xdata))):
-            selected_data = pick_data_selection(self, item)
+            selected_data = pick_data_selection(self, item, startx, stopx)
             selected_dict[f"{key}_selected"] = selected_data
         if (startx < min(item.xdata) and stopx < min(item.xdata)) or (startx > max(item.xdata)):
             delete_selected_data(self)
@@ -275,5 +279,6 @@ def center_data_middle(xdata, ydata):
     middle_value = (min(xdata) + max(xdata)) / 2
     xdata = [coordinate - middle_value for coordinate in xdata]
     return xdata
+
 
 

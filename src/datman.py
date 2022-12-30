@@ -60,6 +60,7 @@ def open_selection(self, files, from_dictionary = False, import_settings = None,
                 x_axis = item.plot_X_position
                 plotting_tools.plot_figure(self, canvas, item.xdata,item.ydata, item.filename, color, y_axis = y_axis, x_axis = x_axis)
                 add_sample_to_menu(self, filename, color)
+                plotting_tools.reload_plot(self)
         self.canvas.draw()
         plotting_tools.set_canvas_limits_axis(self, self.canvas)
         select_top_row(self)
@@ -274,11 +275,14 @@ def save_file(self, path):
         array = np.stack([xdata, ydata], axis=1)
         np.savetxt(str(filename), array, delimiter="\t")
     elif len(self.datadict) > 1:
+        print("Saving more")
         for key, item in self.datadict.items():
             xdata = item.xdata
             ydata = item.ydata
             filename = key
             array = np.stack([xdata, ydata], axis=1)
+            print(filename)
+            print(path)
             np.savetxt(str(path + "/" + filename), array, delimiter="\t")
 
 def open_file_dialog(widget, _, self, import_settings = None):
