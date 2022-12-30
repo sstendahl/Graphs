@@ -40,6 +40,7 @@ class DatManApplication(Adw.Application):
         self.datadict = {}
         self.item_rows = {}
         self.highlight = None
+        self.highlights = []
         self.connect_actions()
         
     def load_preferences(self):

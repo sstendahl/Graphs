@@ -14,7 +14,7 @@ import matplotlib.font_manager
 
 def define_highlight(self, span=None):
     self.highlight = SpanSelector(
-        self.canvas.figure.axes[0],
+        self.canvas.top_right_axis,
         on_select,
         "horizontal",
         useblit=True,
@@ -24,8 +24,8 @@ def define_highlight(self, span=None):
         drag_from_anywhere=True)
     if span is not None:
         self.highlight.extents = span
-    self.highlight.set_visible(True)
-    self.highlight.set_active(True)
+        self.highlight.set_visible(True)
+        self.highlight.set_active(True)
 
 def on_select(self, xmin):
     pass
@@ -40,8 +40,6 @@ def hide_highlight(self):
 def toggle_highlight(shortcut, _, self):
     win = self.props.active_window
     button = win.select_data_button
-    if self.highlight == None:
-        define_highlight(self)
     if button.get_active():
         hide_highlight(self)
     else:
@@ -186,6 +184,10 @@ def refresh_plot(self, canvas = None, from_dictionary = True, set_limits = True)
     self.canvas.draw()
 
 def hide_unused_axes(self, canvas):
+    #Double check the code here, seems to work but this is too messy
+    for axis in [canvas.ax, canvas.right_axis, canvas.top_left_axis, canvas.top_right_axis]:
+        axis.get_xaxis().set_visible(True)
+        axis.get_yaxis().set_visible(True)
     left = False
     right = False
     top = False
@@ -200,17 +202,24 @@ def hide_unused_axes(self, canvas):
         if item.plot_X_position == "bottom":
             bottom = True
     if not left:
+        canvas.top_left_axis.get_yaxis().set_visible(False)
         canvas.ax.get_yaxis().set_visible(False)
     if not right:
+        canvas.top_right_axis.get_yaxis().set_visible(False)
         canvas.right_axis.get_yaxis().set_visible(False)
     if not top:
+        canvas.top_right_axis.get_xaxis().set_visible(False)
         canvas.top_left_axis.get_xaxis().set_visible(False)
     if not bottom:
         canvas.ax.get_xaxis().set_visible(False)
         canvas.right_axis.get_xaxis().set_visible(False)
+
     canvas.top_right_axis.get_xaxis().set_visible(False)
+    canvas.right_axis.get_xaxis().set_visible(False)
+    canvas.top_right_axis.get_yaxis().set_visible(False)
+    canvas.top_left_axis.get_yaxis().set_visible(False)
 
-
+    
 def get_next_color(self):
     color_list = self.canvas.color_cycle
     used_colors = []
@@ -277,7 +286,7 @@ class PlotWidget(FigureCanvas):
         self.ax = self.figure.add_subplot(111)
         self.right_axis = self.ax.twinx()
         self.top_left_axis = self.ax.twiny()
-        self.top_right_axis = self.right_axis.twiny()
+        self.top_right_axis = self.top_left_axis.twinx()
         self.set_ax_properties(parent)
         self.set_save_properties(parent)
         self.set_color_cycle(parent)
@@ -323,9 +332,9 @@ class PlotWidget(FigureCanvas):
                     left = True
                 if parent.datadict[key].plot_Y_position == "right":
                     right = True
-            if not (top == True and bottom == True):
+            if 1+1 == 5:
                 axis.tick_params(which = "both", bottom=parent.plot_settings.tick_bottom, top=parent.plot_settings.tick_top)
-            if not (left == True and right == True):
+            if 1 + 1 == 5:
                 axis.tick_params(which = "both", left=parent.plot_settings.tick_left, right=parent.plot_settings.tick_right)
 
     def set_style(self, parent):

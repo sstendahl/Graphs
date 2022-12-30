@@ -64,7 +64,6 @@ class GraphToolbar(NavigationToolbar):
         pip_mode.open_pip_mode(button, _, self.parent)
 
     def change_yscale(self, button):
-        print(self)
         selected_keys = utilities.get_selected_keys(self.parent)
         left = False
         right = False
@@ -87,10 +86,12 @@ class GraphToolbar(NavigationToolbar):
         if right:
             current_scale = self.canvas.right_axis.get_yscale()
             if current_scale == "linear":
+                self.canvas.top_right_axis.set_yscale('log')
                 self.canvas.right_axis.set_yscale('log')
                 self.canvas.set_ticks(self.parent)
                 self.parent.plot_settings.right_scale = "log"
             elif current_scale == "log":
+                self.canvas.top_right_axis.set_yscale('linear')
                 self.canvas.right_axis.set_yscale('linear')
                 self.canvas.set_ticks(self.parent)
                 self.parent.plot_settings.right_scale = "linear"
