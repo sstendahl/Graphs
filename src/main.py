@@ -63,7 +63,7 @@ class DatManApplication(Adw.Application):
         self.create_action('smooth', item_operations.smoothen_data, None, self)
         self.create_action('center_data', item_operations.center_data, None, self)
         self.create_action('shift_vertically', item_operations.shift_vertically, None, self)
-        self.create_action('save_data', item_operations.save_data, None, self)
+        self.create_action('save_data', item_operations.save_data, ['<primary>S'], self)
         self.create_action('select_all', datman.select_all, ['<primary>A'], self)
         self.create_action('undo', item_operations.undo, ['<primary>Z'], self)
         self.create_action('redo', item_operations.redo, ['<primary><shift>Z'], self)
@@ -100,7 +100,7 @@ class DatManApplication(Adw.Application):
                                 website='https://www.sjoerd.se/Graphs',
                                 developer_name='Sjoerd Broekhuijsen',
                                 issue_url="https://github.com/SjoerdB93/Graphs/issues",
-                                version='1.3.0',
+                                version='1.3.1',
                                 developers=['Sjoerd Broekhuijsen <contact@sjoerd.se>'],
                                 copyright='© 2022 Sjoerd Broekhuijsen',
                                 license_type="GTK_LICENSE_GPL_3_0")

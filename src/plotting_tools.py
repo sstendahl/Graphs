@@ -318,7 +318,6 @@ class PlotWidget(FigureCanvas):
             axis.tick_params(axis='x',which='minor')
             axis.tick_params(axis='y',which='minor')
             axis.minorticks_on()
-            
             top = False
             bottom = False
             left = False
@@ -332,9 +331,9 @@ class PlotWidget(FigureCanvas):
                     left = True
                 if parent.datadict[key].plot_Y_position == "right":
                     right = True
-            if 1+1 == 5:
+            if not (top and bottom):
                 axis.tick_params(which = "both", bottom=parent.plot_settings.tick_bottom, top=parent.plot_settings.tick_top)
-            if 1 + 1 == 5:
+            if not (left and right):
                 axis.tick_params(which = "both", left=parent.plot_settings.tick_left, right=parent.plot_settings.tick_right)
 
     def set_style(self, parent):

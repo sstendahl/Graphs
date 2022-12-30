@@ -91,7 +91,12 @@
                 <property name="action-name">app.redo</property>
               </object>
             </child>
-
+            <child>
+              <object class="GtkShortcutsShortcut">
+                <property name="title" translatable="yes" context="shortcut window">Save data</property>
+                <property name="action-name">app.save_data</property>
+              </object>
+            </child>
           </object>
         </child>
       </object>
