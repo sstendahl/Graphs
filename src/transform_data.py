@@ -4,7 +4,8 @@ from . import item_operations, plotting_tools
 
 def open_transform_window(widget, _, self):
     win = TransformWindow(self)
-    name = "transform_confirm"
+    win.set_transient_for(self.props.active_window)
+    win.set_modal(True)
     button = win.transform_confirm_button
     button.set_sensitive(True)
     button.connect("clicked", on_accept, self, win)

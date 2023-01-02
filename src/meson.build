@@ -44,6 +44,7 @@ datman_sources = [
   'data.py',
   'preferences.py',
   'plot_settings.py',
+  'rename_label.py',
   'utilities.py',
   'pip_mode.py',
   'forwards-symbolic.svg',

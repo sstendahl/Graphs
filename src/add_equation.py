@@ -4,7 +4,10 @@ from . import item_operations, plotting_tools, datman
 from .data import Data
 
 def open_add_equation_window(widget, _, self):
+    print(self)
     win = AddEquationWindow(self)
+    win.set_transient_for(self.props.active_window)
+    win.set_modal(True)
     name = "transform_confirm"
     button = win.add_equation_confirm_button
     button.connect("clicked", on_accept, self, win)
@@ -70,7 +73,5 @@ class AddEquationWindow(Adw.Window):
 
     def __init__(self, parent):
         super().__init__()
-        self.set_transient_for=(parent.props.active_window)
-        self.props.modal = True
         style_context = self.add_equation_confirm_button.get_style_context()
         style_context.add_class("suggested-action")

@@ -10,8 +10,8 @@ import matplotlib.font_manager
 
 def open_preferences_window(widget, _, self):
     win = PreferencesWindow(self)
-    self.preferences.load_config()
     win.set_transient_for(self.props.active_window)
+    self.preferences.load_config()
     win.present()
 
 
@@ -306,10 +306,8 @@ class PreferencesWindow(Adw.PreferencesWindow):
 
     def on_close(self, _, parent):
         parent.preferences.config = self.set_config()
-        parent.plot_settings = plotting_tools.PlotSettings(parent)
         parent.preferences.save_config()
-        if len(parent.datadict) > 0:
-            plotting_tools.reload_plot(parent)
+
 
 
 

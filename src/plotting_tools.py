@@ -7,10 +7,11 @@ from matplotlib.backends.backend_gtk4agg import (
     FigureCanvasGTK4Agg as FigureCanvas)
 from matplotlib.backends.backend_gtk4 import (
     NavigationToolbar2GTK4 as NavigationToolbar)
-from . import datman, utilities
+from . import datman, utilities, rename_label
 from matplotlib.widgets import SpanSelector
 from cycler import cycler
 import matplotlib.font_manager
+import time 
 
 def define_highlight(self, span=None):
     self.highlight = SpanSelector(
@@ -156,11 +157,11 @@ def reload_plot(self, from_dictionary = True):
     win = self.props.active_window
     datman.clear_layout(self)
     datman.load_empty(self)
-    define_highlight(self)
-    hide_highlight(self)
-    hide_unused_axes(self, self.canvas)
-    datman.open_selection(self, None, from_dictionary)
     if len(self.datadict) > 0:
+        define_highlight(self)
+        hide_highlight(self)
+        hide_unused_axes(self, self.canvas)
+        datman.open_selection(self, None, from_dictionary)
         set_canvas_limits_axis(self, self.canvas)
     self.canvas.grab_focus()
 
@@ -274,7 +275,10 @@ class PlotSettings:
         else:
             self.plot_style = parent.preferences.config["plot_style_light"]
         
-
+def on_click(self, hmm, test, event):
+    print(hmm)
+    print(test)
+    print(event)
 
         
 class PlotWidget(FigureCanvas):
@@ -282,6 +286,10 @@ class PlotWidget(FigureCanvas):
         self.figure = Figure()
         self.figure.set_tight_layout(True)
         self.canvas = FigureCanvas(self.figure)
+        self.one_click_trigger = False
+        self.time_first_click  = 0
+        self.parent = parent
+        self.canvas.mpl_connect('button_release_event', self)
         self.set_style(parent)
         self.ax = self.figure.add_subplot(111)
         self.right_axis = self.ax.twinx()
@@ -298,12 +306,11 @@ class PlotWidget(FigureCanvas):
             plt.rcParams["savefig.transparent"] = True
 
     def set_ax_properties(self, parent):
-        self.ax.set_title(parent.plot_settings.title)
-        self.ax.set_xlabel(parent.plot_settings.xlabel, fontweight = parent.plot_settings.font_weight)
-        self.right_axis.set_ylabel(parent.plot_settings.right_label, fontweight = parent.plot_settings.font_weight)
-        self.top_right_axis.set_xlabel(parent.plot_settings.top_label, fontweight = parent.plot_settings.font_weight)
-        self.top_left_axis.set_xlabel(parent.plot_settings.top_label, fontweight = parent.plot_settings.font_weight)
-        self.ax.set_ylabel(parent.plot_settings.ylabel, fontweight = parent.plot_settings.font_weight)
+        self.title = self.ax.set_title(parent.plot_settings.title)
+        self.bottom_label = self.ax.set_xlabel(parent.plot_settings.xlabel, fontweight = parent.plot_settings.font_weight)
+        self.right_label = self.right_axis.set_ylabel(parent.plot_settings.right_label, fontweight = parent.plot_settings.font_weight)
+        self.top_label = self.top_left_axis.set_xlabel(parent.plot_settings.top_label, fontweight = parent.plot_settings.font_weight)
+        self.left_label = self.ax.set_ylabel(parent.plot_settings.ylabel, fontweight = parent.plot_settings.font_weight)
         self.ax.set_yscale(parent.plot_settings.yscale)
         self.right_axis.set_yscale(parent.plot_settings.right_scale)
         self.top_left_axis.set_xscale(parent.plot_settings.top_scale)
@@ -374,5 +381,30 @@ class PlotWidget(FigureCanvas):
         color_cycle = cycler(color=plt.get_cmap(cmap).colors)
         self.color_cycle = color_cycle.by_key()['color']
 
+    def __call__(self, event):
+        double_click = False
+        if self.one_click_trigger == False:
+            self.one_click_trigger = True
+            self.time_first_click = time.time()
+        else:
+            double_click_interval = time.time() - self.time_first_click
+            if double_click_interval > 0.5:
+                self.one_click_trigger = True
+                self.time_first_click = time.time()
+            else:
+                self.one_click_trigger = False
+                self.time_first_click = 0 
+                double_click = True
+                
+        if self.title.contains(event)[0] and double_click:
+            rename_label.open_rename_label_window(self.parent, self.title)
+        if self.top_label.contains(event)[0] and double_click:
+            rename_label.open_rename_label_window(self.parent, self.top_label)
+        if self.bottom_label.contains(event)[0] and double_click:
+            rename_label.open_rename_label_window(self.parent, self.bottom_label)
+        if self.left_label.contains(event)[0] and double_click:
+            rename_label.open_rename_label_window(self.parent, self.left_label)
+        if self.right_label.contains(event)[0] and double_click:
+            rename_label.open_rename_label_window(self.parent, self.right_label)
 
 

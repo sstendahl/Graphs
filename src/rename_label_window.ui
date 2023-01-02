@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='utf-8'?>
+<interface>
+  <requires lib="gtk" version="4.0" />
+  <requires lib="libadwaita" version="1.0" />
+  <template class="RenameLabelWindow" parent="AdwWindow">
+    <property name="title">Rename Label</property>
+    <property name="default-width">575</property>
+    <property name="default-height">125</property>
+    <child>
+      <object class="GtkShortcutController">
+        <child>
+          <object class="GtkShortcut">
+            <property name="trigger">Escape</property>
+            <property name="action">action(window.close)</property>
+          </object>
+        </child>
+      </object>
+    </child>
+    <child>
+      <object class="GtkBox">
+        <property name="orientation">vertical</property>
+        <child>
+          <object class="GtkHeaderBar" id="header_bar">
+          </object>
+        </child>
+        <child>
+          <object class="AdwPreferencesGroup" id = "preferencegroup">
+            <property name="visible">True</property>
+            <property name="can-focus">True</property>
+            <property name="title" translatable="yes">Change Label</property>
+            <property name="description" translatable="yes">Here you can change the label of the selected axis.</property>
+            <property name="margin-start">30</property>
+            <property name="margin-end">30</property>
+            <property name="margin-top">20</property>
+            <property name="margin-bottom">20</property>
+        <child>
+              <object class="AdwActionRow" id = "label_actionrow">
+                <property name="visible">True</property>
+                <property name="can-focus">True</property>
+                <property name="title" translatable="yes">Label</property>
+                <property name="subtitle" translatable="yes">The label of the selected axis</property>
+                <property name="use-underline">True</property>
+                <child>
+                  <object class="GtkEntry" id="label_entry">
+                    <property name="valign">center</property>
+                    <property name="max-width-chars">25</property>
+                    <property name="width-request">15</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="GtkButton" id="rename_label_confirm_button">
+                <property name="label">Confirm</property>
+                <property name="margin-top">20</property>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>
+  </template>
+</interface>
+

@@ -7,6 +7,8 @@ import matplotlib.pyplot as plt
 
 def open_plot_settings(widget, _, self):
     win = PlotSettingsWindow(self)
+    win.set_transient_for(self.props.active_window)
+    win.set_modal(True)
     name = "transform_confirm"
     button = win.apply_button
     button.connect("clicked", on_accept, self, win)
@@ -67,11 +69,9 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
 
     def __init__(self, parent):
         super().__init__()
-        self.props.modal = True
         self.select_item = False
         data_list = utilities.get_datalist(parent)
         utilities.populate_chooser(self.datalist_chooser, data_list)
-        self.set_transient_for=(parent.props.active_window)
         self.item = self.load_config(parent)
         self.datalist_chooser.connect("notify::selected", self.on_notify, parent)
         self.connect("close-request", self.on_close, parent)

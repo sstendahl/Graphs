@@ -100,7 +100,7 @@ class DatManApplication(Adw.Application):
                                 website='https://www.sjoerd.se/Graphs',
                                 developer_name='Sjoerd Broekhuijsen',
                                 issue_url="https://github.com/SjoerdB93/Graphs/issues",
-                                version='1.3.1',
+                                version='1.3.2',
                                 developers=['Sjoerd Broekhuijsen <contact@sjoerd.se>'],
                                 copyright='© 2022 Sjoerd Broekhuijsen',
                                 license_type="GTK_LICENSE_GPL_3_0")
@@ -132,9 +132,3 @@ def main(version):
     app = DatManApplication()
 
     return app.run(sys.argv)
-
-
-
-
-
-
