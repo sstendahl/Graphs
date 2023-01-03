@@ -29,7 +29,6 @@ class RenameLabelWindow(Adw.Window):
         style_context = self.rename_label_confirm_button.get_style_context()
         style_context.add_class("suggested-action")
         if axis == parent.canvas.title:
-            print("Title")
             self.set_title("Rename Title")
             self.preferencegroup.set_title("Change Title")
             self.preferencegroup.set_description("Here you can change the title of the plot")

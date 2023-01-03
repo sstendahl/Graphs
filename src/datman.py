@@ -146,6 +146,8 @@ def set_data_properties(self, path, data, import_settings):
         filename = import_settings["name"]
     else:
         filename = path.split("/")[-1]
+        filename = os.path.splitext(filename)[0]
+
 
     if filename in self.datadict:
         if self.preferences.config["allow_duplicate_filenames"]:
@@ -202,28 +204,18 @@ def select_none(widget, _, self):
         item.set_css(item.css)
     plotting_tools.refresh_plot(self)
 
-def create_rgba(r, g, b, a=1.0):
-    res = Gdk.RGBA()
-    res.red = r
-    res.green = g
-    res.blue = b
-    res.alpha = a
-    return res
-
-
 def add_sample_to_menu(self, filename, color):
     win = self.props.active_window
     self.sample_box = win.sample_box
     row = samplerow.SampleBox(self, filename)
     row.gesture.connect("pressed", row.clicked, self)
-    row.color_picker = colorpicker.ColorPicker(color)
+    row.color_picker = colorpicker.ColorPicker(color, row=row, parent=self)
     row.color_picker.set_hexpand(False)
     sample_box = row.sample_box
     sample_box.remove(sample_box.get_last_child())
     row.sample_box.append(row.color_picker)
     row.sample_box.append(row.delete_button)
     row.delete_button.connect("clicked", delete, self, filename)
-    row.color_picker.connect("color-set", row.color_picker.on_color_set, self)
     max_length = int(32)
     if len(filename) > max_length:
         label = f"{filename[:max_length]}..."
@@ -275,15 +267,16 @@ def save_file(self, path):
         array = np.stack([xdata, ydata], axis=1)
         np.savetxt(str(filename), array, delimiter="\t")
     elif len(self.datadict) > 1:
-        print("Saving more")
         for key, item in self.datadict.items():
             xdata = item.xdata
             ydata = item.ydata
             filename = key
             array = np.stack([xdata, ydata], axis=1)
-            print(filename)
-            print(path)
-            np.savetxt(str(path + "/" + filename), array, delimiter="\t")
+            if os.path.exists(f"{path}/{filename}.txt"):
+                np.savetxt(str(path + "/" + filename) + " (copy).txt", array, delimiter="\t")
+            else:
+                np.savetxt(str(path + "/" + filename) + ".txt", array, delimiter="\t")
+
 
 def open_file_dialog(widget, _, self, import_settings = None):
     open_file_chooser = Gtk.FileChooserNative.new(

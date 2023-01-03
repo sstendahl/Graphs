@@ -1,3 +1,5 @@
+from gi.repository import Gdk
+
 def set_chooser(chooser, choice):
     model = chooser.get_model()
     for index, option in enumerate(model):
@@ -51,3 +53,11 @@ def get_selected_keys(self):
         if item.selected == True:
             selected_keys.append(item.filename)
     return selected_keys
+    
+def create_rgba(r, g, b, a=1):
+    res = Gdk.RGBA()
+    res.red = r
+    res.green = g
+    res.blue = b
+    res.alpha = a
+    return res
