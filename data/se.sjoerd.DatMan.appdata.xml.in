@@ -58,7 +58,7 @@ Graphs is an excellent fit both plotting and data manipulation. The plots create
         </ul>
         </description>
       </release>
-      <release version="1.3.1" date="2023-12-31">
+      <release version="1.3.1" date="2022-12-31">
       <description>
         <p>Brings some minor quality of life features.</p>
         <ul>
@@ -88,7 +88,7 @@ Graphs is an excellent fit both plotting and data manipulation. The plots create
           <li>Fixed a bug where the new font wouldn't properly display in plot settings menu</li>
           <li>Fixed a bug where shortcut would stop working after opening plot settings menu</li>
           <li>Added a shortcut to open plot settings menu (ctrl+shift+p)</li>
-          <li>Reordered Flathub screenshots (hopefully)</li>
+          <li>Reordered Flathub screenshots</li>
         </ul>
       </description>
     </release>
