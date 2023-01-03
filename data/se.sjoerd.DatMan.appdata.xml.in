@@ -45,6 +45,7 @@ Graphs is an excellent fit both plotting and data manipulation. The plots create
         <ul>
           <li>Changed the color picker to a pop-over window</li>
           <li>Data set no longer deselects when changing the color</li>
+          <li>Removed the file extensions in the label used for each data set</li>          
           <li>When saving multiple files, files that already exists are saved with a (copy) suffix instead of overwriting the existing file</li>
           <li>Minor code cleanup</li>
         </ul>
