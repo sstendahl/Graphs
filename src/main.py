@@ -102,7 +102,7 @@ class DatManApplication(Adw.Application):
                                 issue_url="https://github.com/SjoerdB93/Graphs/issues",
                                 version='1.3.2',
                                 developers=['Sjoerd Broekhuijsen <contact@sjoerd.se>'],
-                                copyright='© 2022 Sjoerd Broekhuijsen',
+                                copyright='© 2022-2023 Sjoerd Broekhuijsen',
                                 license_type="GTK_LICENSE_GPL_3_0")
         about.present()
 
