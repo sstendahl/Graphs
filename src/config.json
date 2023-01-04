@@ -44,4 +44,9 @@
 "import_separator": ".",
 "import_delimiter": "\\s+", 
 "plot_unselected_markers": "none",
-"plot_selected_markers": "none"}
+"plot_selected_markers": "none",
+"addequation_equation": "X",
+"addequation_X_start": 0,
+"addequation_X_stop": 10,
+"addequation_step_size": 0.01
+}

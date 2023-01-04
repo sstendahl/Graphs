@@ -89,18 +89,17 @@ def set_canvas_limits(self, graph_limits, axis, limits = {"xmin":None, "xmax":No
     for key, item in limits.items():
         if item is not None:
             graph_limits[key] = item
-    span = (graph_limits["xmax"] - graph_limits["xmin"])
+    x_span = (graph_limits["xmax"] - graph_limits["xmin"])
     if axis.get_xscale() == "linear":
-        graph_limits["xmin"] -= 0.015*span
-        graph_limits["xmax"] += 0.015*span
+        graph_limits["xmin"] -= 0.015*x_span
+        graph_limits["xmax"] += 0.015*x_span
     if axis.get_yscale() == "linear":
         graph_limits["ymax"] *=  1.05
+        graph_limits["ymin"] *=  0.95
     else:
         graph_limits["ymin"] *= 0.5
         graph_limits["ymax"] *= 2
     try:
-        print(graph_limits["xmin"])
-        print(axis)
         axis.set_xlim(graph_limits["xmin"], graph_limits["xmax"])
         axis.set_ylim(graph_limits["ymin"], graph_limits["ymax"])
     except ValueError:
@@ -129,7 +128,10 @@ def find_limits(self, axis, canvas, datadict):
             nonzero_ydata = list(filter(lambda x: (x != 0), item.ydata))
             xmin_item = min(item.xdata)
             xmax_item = max(item.xdata)
-            ymin_item = min(nonzero_ydata)
+            if len(nonzero_ydata) > 0:
+                ymin_item = min(nonzero_ydata)
+            else:
+                ymin_item = min(item.ydata)
             ymax_item = max(item.ydata)
 
             if xmin_all == None:
@@ -149,9 +151,6 @@ def find_limits(self, axis, canvas, datadict):
                 ymin_all = ymin_item
             if ymax_item > ymax_all:
                 ymax_all = ymax_item
-            print("YEP")
-        else:
-            print("LOL NOPE")
     return {"xmin":xmin_all, "xmax":xmax_all, "ymin":ymin_all, "ymax":ymax_all}
 
 
