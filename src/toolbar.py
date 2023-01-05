@@ -38,7 +38,7 @@ class GraphToolbar(NavigationToolbar):
 
 
         self.toolitems = (
-            ('Home', 'Restore original view', home_button, 'home'),
+            ('Home', 'Restore original view', home_button, 'set_canvas_limits'),
             ('Back', 'Previous view', backwards_button, 'back'),
             ('Forward', 'Next view', forwards_button, 'forward'),
             (None, None, None, None),
@@ -52,6 +52,10 @@ class GraphToolbar(NavigationToolbar):
             ('Save', 'Save figure', save_button, 'save_figure'),
         )
         super().__init__(canvas, parent)
+        
+    def set_canvas_limits(self, button):
+        plotting_tools.set_canvas_limits_axis(self.parent, self.parent.canvas)
+        self.parent.canvas.draw()
 
     def load_plot_settings(self, button):
         try:
@@ -136,5 +140,3 @@ class GraphToolbar(NavigationToolbar):
 
         plotting_tools.set_canvas_limits_axis(self.parent, self.parent.canvas)
         self.canvas.draw()
-
-        
