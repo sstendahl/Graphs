@@ -41,6 +41,8 @@ def hide_highlight(self):
 def toggle_highlight(shortcut, _, self):
     win = self.props.active_window
     button = win.select_data_button
+    if self.highlight == None:
+        define_highlight(self)    
     if button.get_active():
         hide_highlight(self)
     else:
