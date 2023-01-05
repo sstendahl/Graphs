@@ -85,19 +85,25 @@ def set_canvas_limits_axis(self, canvas, limits = {"xmin":None, "xmax":None, "ym
             graph_limits = graph_limits_new
             set_canvas_limits(self, graph_limits, axis)
             
-def set_canvas_limits(self, graph_limits, axis = "left", limits = {"xmin":None, "xmax":None, "ymin":None, "ymax":None}):
+def set_canvas_limits(self, graph_limits, axis, limits = {"xmin":None, "xmax":None, "ymin":None, "ymax":None}):
     for key, item in limits.items():
         if item is not None:
             graph_limits[key] = item
-    span = (graph_limits["xmax"] - graph_limits["xmin"])
+    x_span = (graph_limits["xmax"] - graph_limits["xmin"])
+    y_span = (graph_limits["ymax"] - graph_limits["ymin"]) 
     if axis.get_xscale() == "linear":
-        graph_limits["xmin"] -= 0.015*span
-        graph_limits["xmax"] += 0.015*span
-    else:
-        graph_limits["xmin"] -= 0.015*span
-        graph_limits["xmax"] += 0.015*span
+        graph_limits["xmin"] -= 0.015*x_span
+        graph_limits["xmax"] += 0.015*x_span
     if axis.get_yscale() == "linear":
-        graph_limits["ymax"] *=  1.05
+        if y_span != 0:
+            if graph_limits["ymin"] > 0:
+                graph_limits["ymin"] *= 0.95
+            else:
+                graph_limits["ymin"] *= 1.05
+            graph_limits["ymax"] *= 1.05        
+        else:
+            graph_limits["ymax"] +=  abs(graph_limits["ymax"]*0.05)            
+            graph_limits["ymin"] -=  abs(graph_limits["ymin"]*0.05)
     else:
         graph_limits["ymin"] *= 0.5
         graph_limits["ymax"] *= 2
@@ -130,7 +136,10 @@ def find_limits(self, axis, canvas, datadict):
             nonzero_ydata = list(filter(lambda x: (x != 0), item.ydata))
             xmin_item = min(item.xdata)
             xmax_item = max(item.xdata)
-            ymin_item = min(nonzero_ydata)
+            if len(nonzero_ydata) > 0:
+                ymin_item = min(nonzero_ydata)
+            else:
+                ymin_item = min(item.ydata)
             ymax_item = max(item.ydata)
 
             if xmin_all == None:
@@ -406,5 +415,6 @@ class PlotWidget(FigureCanvas):
             rename_label.open_rename_label_window(self.parent, self.left_label)
         if self.right_label.contains(event)[0] and double_click:
             rename_label.open_rename_label_window(self.parent, self.right_label)
+
 
 

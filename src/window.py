@@ -47,6 +47,8 @@ class DatManWindow(Adw.ApplicationWindow):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+        style_context = self.save_data_button.get_style_context()
+        style_context.add_class("suggested-action")
 
 
 

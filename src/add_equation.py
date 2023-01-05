@@ -20,9 +20,10 @@ def on_accept(widget, self, window):
     equation = str(window.equation_entry.get_text())
     try:
         new_file = create_data(self, x_start, x_stop, equation, step_size, str(window.name_entry.get_text()))
-    except:
+    except Exception as e:
+        exception_type = e.__class__.__name__
         win = self.props.active_window
-        win.toast_overlay.add_toast(Adw.Toast(title=f"Unable to add data from equation, make sure the syntax is correct"))
+        win.toast_overlay.add_toast(Adw.Toast(title=f"{exception_type} - Unable to add data from equation, make sure the syntax is correct"))
     name = new_file.filename
     if name in self.datadict:
         if self.preferences.config["allow_duplicate_filenames"]:
@@ -30,6 +31,9 @@ def on_accept(widget, self, window):
 
     if name not in self.datadict:
         new_file.filename = name
+        new_file.xdata_clipboard = [new_file.xdata]
+        new_file.ydata_clipboard = [new_file.ydata]
+        new_file.clipboard_pos = -1
         color = plotting_tools.get_next_color(self)
         self.datadict[new_file.filename] = new_file
         datman.add_sample_to_menu(self, new_file.filename, color)
@@ -46,7 +50,8 @@ def create_data(self, x_start, x_stop, equation, step_size, name):
     new_file.xdata =  linspace(eval(x_start),eval(x_stop),datapoints)
     equation = equation.replace("X", "new_file.xdata")
     equation = str(equation.replace("^", "**"))
-
+    equation = str(equation.replace(",", "."))  
+    equation += " + new_file.xdata*0"
     new_file.ydata = eval(equation)
     new_file.xdata = ndarray.tolist(new_file.xdata)
     new_file.filename = name
@@ -73,5 +78,10 @@ class AddEquationWindow(Adw.Window):
 
     def __init__(self, parent):
         super().__init__()
+        self.step_size_entry.set_text(parent.preferences.config["addequation_step_size"])
+        self.X_start_entry.set_text(parent.preferences.config["addequation_X_start"])
+        self.X_stop_entry.set_text(parent.preferences.config["addequation_X_stop"])
+        self.equation_entry.set_text(parent.preferences.config["addequation_equation"])        
+
         style_context = self.add_equation_confirm_button.get_style_context()
         style_context.add_class("suggested-action")

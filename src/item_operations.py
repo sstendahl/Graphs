@@ -4,6 +4,7 @@ import re
 import numpy as np
 from .plotting_tools import PlotWidget
 from . import plotting_tools, datman, utilities
+from scipy import integrate
 from .data import Data
 from matplotlib.backends.backend_gtk4 import (
     NavigationToolbar2GTK4 as NavigationToolbar)
@@ -158,6 +159,42 @@ def cut_data(widget, _, self):
             add_to_clipboard(self)
             plotting_tools.refresh_plot(self, set_limits = False)
 
+def get_derivative(widget, shortcut, self):
+    selected_keys = utilities.get_selected_keys(self)
+    for key in selected_keys:
+        item = self.datadict[key]
+        x = np.array(item.xdata)
+        y = np.array(item.ydata)
+        dy_dx = np.gradient(y, x)
+        item.ydata =  dy_dx.tolist()
+    add_to_clipboard(self)
+    plotting_tools.refresh_plot(self)
+
+def get_integral(widget, shortcut, self):
+    selected_keys = utilities.get_selected_keys(self)
+    for key in selected_keys:
+        item = self.datadict[key]
+        x = np.array(item.xdata)
+        y = np.array(item.ydata)
+        F = integrate.cumtrapz(y, x, initial=0)
+        item.ydata =  F.tolist()
+    add_to_clipboard(self)
+    plotting_tools.refresh_plot(self)
+
+
+def get_fourier(widget, shortcut, self):
+    selected_keys = utilities.get_selected_keys(self)
+    for key in selected_keys:
+        item = self.datadict[key]
+        x = np.array(item.xdata)
+        y = np.array(item.ydata)
+        y_fourier = np.fft.fft(y)
+        x_fourier = np.fft.fftfreq(len(x), x[1] - x[0])
+        y_fourier = [value.real for value in y_fourier]
+        item.ydata =  y_fourier
+        item.xdata = x_fourier.tolist()
+    add_to_clipboard(self)
+    plotting_tools.refresh_plot(self)
 
 def smoothen_data(widget, shortcut, self):
     selected_keys = utilities.get_selected_keys(self)
@@ -260,9 +297,9 @@ def normalize(ydata):
 def center_data(shortcut, _, self):
     selected_keys = utilities.get_selected_keys(self)
     for key in selected_keys:
-        if self.preferences.config["center_data"] == "Center at maximum Y value":
+        if self.preferences.config["action_center_data"] == "Center at maximum Y value":
             self.datadict[key].xdata = center_data_max_Y(self.datadict[key].xdata, self.datadict[key].ydata)
-        elif self.preferences.config["center_data"] == "Center at middle coordinate":
+        elif self.preferences.config["action_center_data"] == "Center at middle coordinate":
             self.datadict[key].xdata = center_data_middle(self.datadict[key].xdata, self.datadict[key].ydata)
     add_to_clipboard(self)
     plotting_tools.refresh_plot(self)
@@ -279,6 +316,3 @@ def center_data_middle(xdata, ydata):
     middle_value = (min(xdata) + max(xdata)) / 2
     xdata = [coordinate - middle_value for coordinate in xdata]
     return xdata
-
-
-

@@ -21,6 +21,7 @@ import sys
 import gi
 import shutil
 import os
+import datetime
 
 gi.require_version('Gtk', '4.0')
 gi.require_version('Adw', '1')
@@ -71,6 +72,9 @@ class DatManApplication(Adw.Application):
         self.create_action('transform_data', transform_data.open_transform_window, None, self)
         self.create_action('add_equation', add_equation.open_add_equation_window, ['<primary>E'], self)
         self.create_action('select_data_toggle', plotting_tools.toggle_highlight, None, self)
+        self.create_action('get_derivative', item_operations.get_derivative, None, self)
+        self.create_action('get_integral', item_operations.get_integral, None, self)
+        self.create_action('get_fourier', item_operations.get_fourier, None, self)
         self.create_action('delete_selected', datman.delete_selected, ['Delete'], self)
         self.create_action('plot_settings', plot_settings.open_plot_settings, ["<primary><shift>P"], self)
         Adw.StyleManager.get_default().connect("notify", datman.toggle_darkmode, None, self)
@@ -100,9 +104,9 @@ class DatManApplication(Adw.Application):
                                 website='https://www.sjoerd.se/Graphs',
                                 developer_name='Sjoerd Broekhuijsen',
                                 issue_url="https://github.com/SjoerdB93/Graphs/issues",
-                                version='1.3.3',
+                                version='1.3.4',
                                 developers=['Sjoerd Broekhuijsen <contact@sjoerd.se>'],
-                                copyright='© 2022-2023 Sjoerd Broekhuijsen',
+                                copyright=f"© 2022-{datetime.date.today().year} Sjoerd Broekhuijsen",
                                 license_type="GTK_LICENSE_GPL_3_0")
         about.present()
 
