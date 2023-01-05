@@ -140,3 +140,5 @@ class GraphToolbar(NavigationToolbar):
 
         plotting_tools.set_canvas_limits_axis(self.parent, self.parent.canvas)
         self.canvas.draw()
+
+        

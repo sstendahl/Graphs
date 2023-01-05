@@ -9,7 +9,6 @@ def open_pip_mode(widget, _, self):
     win = PIPWindow(self)
     win.present()
 
-
 @Gtk.Template(resource_path="/se/sjoerd/DatMan/pip_mode.ui")
 class PIPWindow(Adw.Window):
     __gtype_name__ = "PIPWindow"

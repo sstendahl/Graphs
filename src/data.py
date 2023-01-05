@@ -1,6 +1,5 @@
 from dataclasses import dataclass, field
 
-
 @dataclass
 class Data:
     filename: str = ""

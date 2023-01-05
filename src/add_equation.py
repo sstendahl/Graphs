@@ -4,7 +4,6 @@ from . import item_operations, plotting_tools, datman
 from .data import Data
 
 def open_add_equation_window(widget, _, self):
-    print(self)
     win = AddEquationWindow(self)
     win.set_transient_for(self.props.active_window)
     win.set_modal(True)
@@ -63,7 +62,6 @@ def create_data(self, x_start, x_stop, equation, step_size, name):
     new_file.unselected_markers = self.preferences.config["plot_unselected_markers"]
     new_file.selected_marker_size = self.preferences.config["plot_selected_marker_size"]
     new_file.unselected_marker_size = self.preferences.config["plot_unselected_marker_size"]
-
     return new_file
 
 @Gtk.Template(resource_path="/se/sjoerd/DatMan/add_equation_window.ui")

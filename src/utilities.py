@@ -10,8 +10,6 @@ def empty_chooser(chooser):
     model = chooser.get_model()
     for item in model:
         model.remove(0)
-        print("Removing")
-    print("done removing")
 
 
 def populate_chooser(chooser, chooser_list):

@@ -81,8 +81,7 @@ class DatManApplication(Adw.Application):
         Adw.StyleManager.get_default().connect("notify", datman.toggle_darkmode, None, self)
 
     def do_activate(self):
-        """Called when the application is activated.
-
+        """Called when the application is activated
         We raise the application's main window, creating it if
         necessary.
         """
