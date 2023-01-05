@@ -31,6 +31,9 @@ def on_accept(widget, self, window):
 
     if name not in self.datadict:
         new_file.filename = name
+        new_file.xdata_clipboard = [new_file.xdata]
+        new_file.ydata_clipboard = [new_file.ydata]
+        new_file.clipboard_pos = -1
         color = plotting_tools.get_next_color(self)
         self.datadict[new_file.filename] = new_file
         datman.add_sample_to_menu(self, new_file.filename, color)

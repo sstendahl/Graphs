@@ -90,12 +90,20 @@ def set_canvas_limits(self, graph_limits, axis, limits = {"xmin":None, "xmax":No
         if item is not None:
             graph_limits[key] = item
     x_span = (graph_limits["xmax"] - graph_limits["xmin"])
+    y_span = (graph_limits["ymax"] - graph_limits["ymin"]) 
     if axis.get_xscale() == "linear":
         graph_limits["xmin"] -= 0.015*x_span
         graph_limits["xmax"] += 0.015*x_span
     if axis.get_yscale() == "linear":
-        graph_limits["ymax"] *=  1.05
-        graph_limits["ymin"] *=  0.95
+        if y_span != 0:
+            if graph_limits["ymin"] > 0:
+                graph_limits["ymin"] *= 0.95
+            else:
+                graph_limits["ymin"] *= 1.05
+            graph_limits["ymax"] *= 1.05        
+        else:
+            graph_limits["ymax"] +=  abs(graph_limits["ymax"]*0.05)            
+            graph_limits["ymin"] -=  abs(graph_limits["ymin"]*0.05)
     else:
         graph_limits["ymin"] *= 0.5
         graph_limits["ymax"] *= 2
@@ -407,5 +415,6 @@ class PlotWidget(FigureCanvas):
             rename_label.open_rename_label_window(self.parent, self.left_label)
         if self.right_label.contains(event)[0] and double_click:
             rename_label.open_rename_label_window(self.parent, self.right_label)
+
 
 

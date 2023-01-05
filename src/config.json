@@ -33,7 +33,7 @@
 "plot_right_scale": "linear",
 "plot_X_position": "bottom",
 "plot_Y_position": "left",
-"center_data": "Center at middle coordinate", 
+"action_center_data": "Center at middle coordinate", 
 "plot_selected_linestyle": "solid",
 "plot_unselected_linestyle": "solid", 
 "plot_style_dark": "dark_background",
