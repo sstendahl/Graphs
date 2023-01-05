@@ -181,6 +181,19 @@ def get_integral(widget, shortcut, self):
     add_to_clipboard(self)
     plotting_tools.refresh_plot(self)
 
+def get_inverse_fourier(widget, shortcut, self):
+    selected_keys = utilities.get_selected_keys(self)
+    for key in selected_keys:
+        item = self.datadict[key]
+        x = np.array(item.xdata)
+        y = np.array(item.ydata)
+        y_fourier = np.fft.ifft(y)
+        x_fourier = np.fft.fftfreq(len(x), x[1] - x[0])
+        y_fourier = [value.real for value in y_fourier]
+        item.ydata =  y_fourier
+        item.xdata = x_fourier.tolist()        
+    add_to_clipboard(self)
+    plotting_tools.refresh_plot(self)
 
 def get_fourier(widget, shortcut, self):
     selected_keys = utilities.get_selected_keys(self)

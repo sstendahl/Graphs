@@ -75,6 +75,7 @@ class DatManApplication(Adw.Application):
         self.create_action('get_derivative', item_operations.get_derivative, None, self)
         self.create_action('get_integral', item_operations.get_integral, None, self)
         self.create_action('get_fourier', item_operations.get_fourier, None, self)
+        self.create_action('get_inverse_fourier', item_operations.get_inverse_fourier, None, self)        
         self.create_action('delete_selected', datman.delete_selected, ['Delete'], self)
         self.create_action('plot_settings', plot_settings.open_plot_settings, ["<primary><shift>P"], self)
         Adw.StyleManager.get_default().connect("notify", datman.toggle_darkmode, None, self)

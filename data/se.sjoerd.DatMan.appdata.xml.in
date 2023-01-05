@@ -47,6 +47,7 @@ Graphs is an excellent fit both plotting and data manipulation. The plots create
           <li>Added the ability to get the derivative of the data</li>
           <li>Added the ability to get the indefinite integral of the data</li>
           <li>Added the ability to get the Fast Fourier Transform of the data</li>
+          <li>Added the ability to get the Inverse Fast Fourier Transform of the data</li>
           <li>Gave the "Save Data" option a blue "Suggested action" colour</li>
           <li>Added preference options for the default settings in the "Add equation" window</li>     
           <li>Added tooltips for all buttons on the main window</li>         

@@ -362,14 +362,28 @@
                   </object>
                 </child>
                 <child>
+                  <object class="GtkButton" id="inverse_fourier_button">
+                    <property name="tooltip-text" translatable="yes">Get the Inverse Fast Fourier Transform of the data</property>"
+          <property name="label">Get Inverse FFT</property>
+                    <property name="action-name">app.get_inverse_fourier</property>
+                    <property name="margin-top">5</property>
+                    <layout>
+                      <property name="column">2</property>
+                      <property name="row">11</property>
+                      <property name="column-span">2</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
                   <object class="GtkButton" id="transform_data_button">
                     <property name="tooltip-text" translatable="yes">Perform custom transformations on the data</property>
                     <property name="label">Transform Data</property>
                     <property name="action-name">app.transform_data</property>
                     <property name="margin-top">5</property>
+                                        <property name="margin-end">5</property>
                     <layout>
-                      <property name="column">2</property>
-                      <property name="row">11</property>
+                      <property name="column">0</property>
+                      <property name="row">12</property>
                       <property name="column-span">2</property>
                     </layout>
                   </object>
@@ -381,9 +395,9 @@
                     <property name="action-name">app.save_data</property>
                     <property name="margin-top">5</property>
                     <layout>
-                      <property name="column">0</property>
+                      <property name="column">2</property>
                       <property name="row">12</property>
-                      <property name="column-span">4</property>
+                      <property name="column-span">2</property>
                     </layout>
                   </object>
                 </child>
@@ -456,3 +470,4 @@
     </section>
   </menu>
 </interface>
+

@@ -35,6 +35,8 @@ class DatManWindow(Adw.ApplicationWindow):
     multiply_x_button = Gtk.Template.Child()
     multiply_y_button = Gtk.Template.Child()
     smooth_button = Gtk.Template.Child()
+    fourier_button = Gtk.Template.Child()
+    inverse_fourier_button = Gtk.Template.Child()
     cut_data_button = Gtk.Template.Child()
     select_all_button = Gtk.Template.Child()
     select_none_button = Gtk.Template.Child()
