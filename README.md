@@ -10,6 +10,8 @@ include options like:
   - Translating data
   - Center data
   - Smoothening of data
+  - Take the derivative or indefinite integral of your data
+  - Fourier Transformations
   - Custom transformations using anything that is compatible with the numpy module
 
 Graphs is still in early development, and a large number of features is still planned. For any future requests or feedback, please file an issue [at the Github issue tracker](https://github.com/SjoerdB93/Graphs/issues).
