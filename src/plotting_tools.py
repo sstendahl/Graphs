@@ -64,16 +64,16 @@ def plot_figure(self, canvas, X, Y, filename="", xlim=None, linewidth = 2, title
             canvas.right_axis.plot(X, Y, linewidth = linewidth ,label=filename, linestyle=linestyle, marker=marker, color = color, markersize=marker_size)
         elif x_axis == "top":
             canvas.top_right_axis.plot(X, Y, linewidth = linewidth ,label=filename, linestyle=linestyle, marker=marker, color = color, markersize=marker_size)
-    set_labels(self)
+    set_legend(self, canvas)
 
-def set_labels(self):
+def set_legend(self, canvas):
     if self.plot_settings.legend:
-        self.canvas.legends = []
-        lines, labels = self.canvas.ax.get_legend_handles_labels()
-        lines2, labels2 = self.canvas.right_axis.get_legend_handles_labels()
-        lines3, labels3 = self.canvas.top_left_axis.get_legend_handles_labels()
-        lines4, labels4 = self.canvas.top_right_axis.get_legend_handles_labels()
-        self.canvas.top_right_axis.legend(lines + lines2 + lines3 + lines4, labels + labels2 + labels3 + labels4, loc=0)
+        canvas.legends = []
+        lines, labels = canvas.ax.get_legend_handles_labels()
+        lines2, labels2 = canvas.right_axis.get_legend_handles_labels()
+        lines3, labels3 = canvas.top_left_axis.get_legend_handles_labels()
+        lines4, labels4 = canvas.top_right_axis.get_legend_handles_labels()
+        canvas.top_right_axis.legend(lines + lines2 + lines3 + lines4, labels + labels2 + labels3 + labels4, loc=0)
 
 def set_canvas_limits_axis(self, canvas, limits = {"xmin":None, "xmax":None, "ymin":None, "ymax":None}):
     left_datadict = dict()
