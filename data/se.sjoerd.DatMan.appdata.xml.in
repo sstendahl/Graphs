@@ -40,9 +40,23 @@ Graphs is an excellent fit both plotting and data manipulation. The plots create
     </screenshot>
   </screenshots>
   <releases>
+        <release version="1.3.5" date="2023-01-14">
+      <description>
+        <p>Minor update with some bugfixes, plus a new logo!</p>      
+        <p>New in Graphs:</p>               
+        <ul>
+          <li>Graphs has a new icon that is more in-line with the GNOME guidelines!</li>
+        </ul>
+        <p>Bugfixes:</p>                       
+        <ul>
+          <li>Fixed a bug where the graph lines was drawn on top of the legend in certain cases</li>
+          <li>Fixed a bug where the legend wasn't shown for the picture-in-picture graph</li>          
+        </ul>
+        </description>
+      </release>        
         <release version="1.3.4" date="2023-01-05">
       <description>
-        <p>Slightly bigger update than usual, with new features and some bug fixes. Next update will likely add the possibility to hide options from the main window.</p>      
+        <p>Slightly bigger update than usual, with new features and some bug fixes.</p>      
         <p>New in Graphs:</p>               
         <ul>
           <li>Added the ability to get the derivative of the data</li>
@@ -221,4 +235,5 @@ Graphs is an excellent fit both plotting and data manipulation. The plots create
   </recommends>
   <content_rating type="oars-1.1" />
 </component>
+
 
