@@ -37,7 +37,7 @@ To convert a value from degrees into radians use radians(value), e.g. Y = sin(ra
             <property name="margin-end">30</property>
             <property name="margin-top">20</property>
             <property name="margin-bottom">20</property>
-        <child>
+            <child>
               <object class="AdwActionRow">
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
