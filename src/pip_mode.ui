@@ -23,17 +23,15 @@
           <object class="GtkHeaderBar" id="header_bar">
           </object>
         </child>
-      <child>
-       <object class="GtkBox" id="drawing_layout">
-        <property name="hexpand-set">True</property>
-        <property name="hexpand">True</property>
-        <property name="orientation">vertical</property>
-        <child/>
-       </object>
-      </child>
-       </object>
+        <child>
+          <object class="GtkBox" id="drawing_layout">
+            <property name="hexpand-set">True</property>
+            <property name="hexpand">True</property>
+            <property name="orientation">vertical</property>
+          </object>
+        </child>
+      </object>
     </child>
-
   </template>
 </interface>
 
