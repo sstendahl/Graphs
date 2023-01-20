@@ -146,7 +146,7 @@
                             <property name="orientation">vertical</property>
                             <child>
                               <object class="AdwExpanderRow">
-                                <property name="subtitle">Select and Cut</property>
+                                <property name="title">Select and Cut</property>
                                 <child>
                                   <object class="AdwActionRow">
                                     <property name="subtitle">Select a span of data</property>
@@ -177,7 +177,7 @@
                             </child>
                             <child>
                               <object class="AdwExpanderRow">
-                                <property name="subtitle">Adjust Data</property>
+                                <property name="title">Adjust Data</property>
                                 <child>
                                   <object class="AdwActionRow">
                                     <property name="subtitle">Normalize data</property>
@@ -234,7 +234,7 @@
                             </child>
                             <child>
                               <object class="AdwExpanderRow">
-                                <property name="subtitle">Transform and Multiply</property>
+                                <property name="title">Translate and Multiply</property>
                                 <child>
                                   <object class="AdwEntryRow" id="translate_x_entry">
                                     <property name="title">Translate x-Axis</property>
@@ -295,7 +295,7 @@
                             </child>
                             <child>
                               <object class="AdwExpanderRow">
-                                <property name="subtitle">Manipulate Data</property>
+                                <property name="title">Manipulate Data</property>
                                 <child>
                                   <object class="AdwActionRow">
                                     <property name="subtitle">Get Derivative of the data</property>
@@ -437,4 +437,4 @@
     </section>
   </menu>
 </interface>
-  
+
