@@ -20,7 +20,7 @@
                     <property name="icon-name">list-add-symbolic</property>
                     <property name="menu-model">add_data_menu</property>
                     <property name="tooltip-text" translatable="yes">Add new data</property>"
-         </object>
+                  </object>
                 </child>
                 <child>
                   <object class="GtkBox">
@@ -29,7 +29,7 @@
                     <child>
                       <object class="GtkButton" id="undo_button">
                         <property name="action-name">app.undo</property>"
-            <property name="focusable">1</property>
+                        <property name="focusable">1</property>
                         <property name="receives_default">1</property>
                         <property name="tooltip-text" translatable="yes">Undo</property>
                         <style>
@@ -45,7 +45,7 @@
                     <child>
                       <object class="GtkButton" id="redo_button">
                         <property name="action-name">app.redo</property>""
-            <property name="focusable">1</property>
+                        <property name="focusable">1</property>
                         <property name="receives_default">1</property>
                         <property name="tooltip-text" translatable="yes">Redo</property>
                         <style>
@@ -62,7 +62,7 @@
                 </child>
               </object>
             </child>
-      <child type="end">
+            <child type="end">
               <object class="GtkMenuButton">
                 <property name="tooltip-text" translatable="yes">Open Application Menu</property>"
                 <property name="icon-name">open-menu-symbolic</property>
@@ -123,7 +123,7 @@
                 <child>
                   <object class="GtkButton" id="select_none_button">
                     <property name="tooltip-text" translatable="yes">Deselect all data</property>"
-          <property name="label">Select None</property>
+                    <property name="label">Select None</property>
                     <property name="action-name">app.select_none</property>
                     <property name="margin-bottom">4</property>
                     <layout>
@@ -136,7 +136,7 @@
                 <child>
                   <object class="GtkToggleButton" id="select_data_button">
                     <property name="tooltip-text" translatable="yes">Select a span of data</property>"
-          <property name="label">Select Span</property>
+                    <property name="label">Select Span</property>
                     <property name="action-name">app.select_data_toggle</property>
                     <property name="margin-end">5</property>
                     <property name="margin-top">5</property>
@@ -150,7 +150,7 @@
                 <child>
                   <object class="GtkToggleButton" id="cut_data_button">
                     <property name="tooltip-text" translatable="yes">Cut the selected span</property>"
-          <property name="label">Cut Span</property>
+                    <property name="label">Cut Span</property>
                     <property name="action-name">app.cut_data</property>
                     <property name="margin-top">5</property>
                     <layout>
@@ -191,7 +191,7 @@
                 <child>
                   <object class="GtkButton" id="smooth_button">
                     <property name="tooltip-text" translatable="yes">Smoothen the data</property>"
-          <property name="action-name">app.smooth</property>
+                    <property name="action-name">app.smooth</property>
                     <property name="label">Smoothen</property>
                     <property name="margin-top">5</property>
                     <layout>
@@ -200,11 +200,11 @@
                       <property name="column-span">2</property>
                     </layout>
                   </object>
-                </child>"
-        <child>
+                </child>
+                <child>
                   <object class="GtkButton" id="center_data_button">
                     <property name="tooltip-text" translatable="yes">Center the data</property>"
-          <property name="action-name">app.center_data</property>
+                    <property name="action-name">app.center_data</property>
                     <property name="label">Center Data</property>
                     <property name="margin-top">5</property>
                     <layout>
@@ -231,7 +231,7 @@
                 <child>
                   <object class="GtkEntry" id="translate_x_entry">
                     <property name="placeholder-text">0</property>"
-          <property name="margin-top">5</property>
+                    <property name="margin-top">5</property>
                     <property name="margin-end">5</property>
                     <property name="max-width-chars">6</property>
                     <layout>
@@ -259,7 +259,7 @@
                   <object class="GtkEntry" id="translate_y_entry">
                     <property name="margin-top">5</property>
                     <property name="placeholder-text">0</property>"
-          <property name="max-width-chars">6</property>
+                    <property name="max-width-chars">6</property>
                     <property name="margin-end">5</property>
                     <layout>
                       <property name="column">1</property>
@@ -271,7 +271,7 @@
                 <child>
                   <object class="GtkButton" id="multiply_x_button">
                     <property name="tooltip-text" translatable="yes">Perform a multiplication on the x-axis</property>"
-          <property name="label">Multiply X</property>
+                    <property name="label">Multiply X</property>
                     <property name="action-name">app.multiply_x</property>
                     <property name="margin-top">5</property>
                     <property name="margin-end">1</property>
@@ -286,7 +286,7 @@
                   <object class="GtkEntry" id="multiply_x_entry">
                     <property name="margin-top">5</property>
                     <property name="placeholder-text">1</property>"
-          <property name="max-width-chars">6</property>
+                    <property name="max-width-chars">6</property>
                     <layout>
                       <property name="column">3</property>
                       <property name="row">6</property>
@@ -312,7 +312,7 @@
                   <object class="GtkEntry" id="multiply_y_entry">
                     <property name="margin-top">5</property>
                     <property name="placeholder-text">1</property>"
-          <property name="max-width-chars">6</property>
+                    <property name="max-width-chars">6</property>
                     <layout>
                       <property name="column">3</property>
                       <property name="row">7</property>
@@ -323,7 +323,7 @@
                 <child>
                   <object class="GtkButton" id="derivative_button">
                     <property name="tooltip-text" translatable="yes">Get the derivative of the data</property>"
-          <property name="label">Get Derivative</property>
+                    <property name="label">Get Derivative</property>
                     <property name="action-name">app.get_derivative</property>
                     <property name="margin-top">5</property>
                     <property name="margin-end">5</property>
@@ -350,7 +350,7 @@
                 <child>
                   <object class="GtkButton" id="fourier_button">
                     <property name="tooltip-text" translatable="yes">Get the Fast Fourier Transform of the data</property>"
-          <property name="label">Get FFT</property>
+                    <property name="label">Get FFT</property>
                     <property name="action-name">app.get_fourier</property>
                     <property name="margin-top">5</property>
                     <property name="margin-end">5</property>
@@ -364,7 +364,7 @@
                 <child>
                   <object class="GtkButton" id="inverse_fourier_button">
                     <property name="tooltip-text" translatable="yes">Get the Inverse Fast Fourier Transform of the data</property>"
-          <property name="label">Get Inverse FFT</property>
+                    <property name="label">Get Inverse FFT</property>
                     <property name="action-name">app.get_inverse_fourier</property>
                     <property name="margin-top">5</property>
                     <layout>
@@ -380,7 +380,7 @@
                     <property name="label">Transform Data</property>
                     <property name="action-name">app.transform_data</property>
                     <property name="margin-top">5</property>
-                                        <property name="margin-end">5</property>
+                    <property name="margin-end">5</property>
                     <layout>
                       <property name="column">0</property>
                       <property name="row">12</property>
@@ -391,7 +391,7 @@
                 <child>
                   <object class="GtkButton" id="save_data_button">
                     <property name="tooltip-text" translatable="yes">Save the data to your device as text files</property>"
-          <property name="label">Save Data</property>
+                    <property name="label">Save Data</property>
                     <property name="action-name">app.save_data</property>
                     <property name="margin-top">5</property>
                     <layout>
@@ -401,7 +401,6 @@
                     </layout>
                   </object>
                 </child>
-                <child />
               </object>
             </child>
             <child>

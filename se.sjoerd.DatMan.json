@@ -24,14 +24,14 @@
     "modules" : [
     	"python3-numpy.json",
     	"python3-matplotlib.json",
+    	"python3-scypi.json",
         {
             "name" : "datman",
             "buildsystem" : "meson",
             "sources" : [
                 {
                     "type" : "git",
-                    "url" : "https://github.com/SjoerdB93/DatMan.git",
-                    "commit": "4283f25269a3dd6d62aaa02d0abbaa75cf54465d"
+                    "branch" : "main"
                 }
             ]
         }
