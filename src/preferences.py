@@ -38,8 +38,8 @@ class Preferences():
     def create_new_config_file(self):
         config_path = self.get_config_path()
         if not os.path.isfile(f"{config_path}/config.json"):
-            print("New configuration file created")
             self.reset_config()    
+            print("New configuration file created")
         else:
             print("Loading configuration file")
 
