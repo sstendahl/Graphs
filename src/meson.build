@@ -2,6 +2,8 @@ pkgdatadir = join_paths(get_option('prefix'), get_option('datadir'), meson.proje
 moduledir = join_paths(pkgdatadir, 'datman')
 gnome = import('gnome')
 
+subdir('icons')
+
 gnome.compile_resources('datman',
   'datman.gresource.xml',
   gresource_bundle: true,
@@ -47,26 +49,6 @@ datman_sources = [
   'rename_label.py',
   'utilities.py',
   'pip_mode.py',
-  'forwards-symbolic.svg',
-  'forwards-dark-symbolic.svg',
-  'backwards-symbolic.svg',
-  'backwards-dark-symbolic.svg',
-  'zoom-symbolic.svg',
-  'zoom-dark-symbolic.svg',
-  'save-symbolic.svg',
-  'save-dark-symbolic.svg',
-  'move-symbolic.svg',
-  'move-dark-symbolic.svg',
-  'home-symbolic.svg',
-  'home-dark-symbolic.svg',
-  'plot-settings-symbolic.svg',
-  'plot-settings-dark-symbolic.svg',
-  'pip-symbolic.svg',
-  'pip-dark-symbolic.svg',
-  'change-xscale-symbolic.svg',
-  'change-yscale-symbolic.svg',
-  'change-xscale-dark-symbolic.svg',
-  'change-yscale-dark-symbolic.svg',
   'datman.in',
 ]
 
