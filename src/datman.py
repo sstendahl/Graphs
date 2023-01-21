@@ -55,14 +55,15 @@ def open_selection(self, files, from_dictionary = False, import_settings = None,
                 except UnicodeDecodeError:
                     self.props.active_window.toast_overlay.add_toast(Adw.Toast(title=f"Could not open data, wrong filetype"))
                     break
-                filename = item.filename
-                color = plotting_tools.get_next_color(self)
-                y_axis = item.plot_Y_position
-                x_axis = item.plot_X_position
-                plotting_tools.plot_figure(self, canvas, item.xdata,item.ydata, item.filename, color, y_axis = y_axis, x_axis = x_axis)
-                if filename != "":
+                if item is not None:
+                    print(item.filename)
+                    filename = item.filename
+                    color = plotting_tools.get_next_color(self)
+                    y_axis = item.plot_Y_position
+                    x_axis = item.plot_X_position
+                    plotting_tools.plot_figure(self, canvas, item.xdata,item.ydata, item.filename, color, y_axis = y_axis, x_axis = x_axis)
                     add_sample_to_menu(self, filename, color)
-                plotting_tools.reload_plot(self)
+                    plotting_tools.reload_plot(self)
         self.canvas.draw()
         plotting_tools.set_canvas_limits_axis(self, self.canvas)
         select_top_row(self)
@@ -154,11 +155,11 @@ def set_data_properties(self, path, data, import_settings):
     if filename in self.datadict:
         if self.preferences.config["allow_duplicate_filenames"]:
             filename = get_duplicate_filename(self, filename)
+            print(filename)
         else:
-            self.datadict[filename] = data
-    else:  
-        self.datadict[filename] = data
-        data.filename = filename
+            return None  
+    self.datadict[filename] = data
+    data.filename = filename
     return data
 
 def swap(str1):
