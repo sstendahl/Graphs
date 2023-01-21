@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <interface>
   <requires lib="gtk" version="4.0" />
-  <requires lib="libadwaita" version="1.0" />
+  <requires lib="libadwaita" version="1.2" />
   <template class="AddAdvancedWindow" parent="AdwWindow">
     <property name="title">Open Data From File (Advanced)</property>
     <property name="default-width">650</property>

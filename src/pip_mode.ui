@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <interface>
   <requires lib="gtk" version="4.0" />
-  <requires lib="libadwaita" version="1.0" />
+  <requires lib="libadwaita" version="1.2" />
   <template class="PIPWindow" parent="AdwWindow">
     <property name="title">Graph</property>
     <property name="default-width">800</property>
