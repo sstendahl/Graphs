@@ -34,19 +34,12 @@
             <property name="margin-top">20</property>
             <property name="margin-bottom">20</property>
             <child>
-              <object class="AdwActionRow" id = "label_actionrow">
+              <object class="AdwEntryRow" id="label_entry">
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
                 <property name="title" translatable="yes">Label</property>
-                <property name="subtitle" translatable="yes">The label of the selected axis</property>
                 <property name="use-underline">True</property>
-                <child>
-                  <object class="GtkEntry" id="label_entry">
-                    <property name="valign">center</property>
-                    <property name="max-width-chars">25</property>
-                    <property name="width-request">15</property>
-                  </object>
-                </child>
+                <property name="max-width-chars">10</property>
               </object>
             </child>
             <child>
@@ -61,4 +54,3 @@
     </child>
   </template>
 </interface>
-
