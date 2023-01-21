@@ -150,6 +150,7 @@
                                 <child>
                                   <object class="AdwActionRow">
                                     <property name="subtitle">Select a span of data</property>
+                                    <property name="activatable-widget">select_data_button</property>
                                     <child>
                                       <object class="GtkToggleButton" id="select_data_button">
                                         <property name="label">Select</property>"
@@ -163,6 +164,7 @@
                                 <child>
                                   <object class="AdwActionRow">
                                     <property name="subtitle">Cut the selected span</property>
+                                    <property name="activatable-widget">cut_data_button</property>
                                     <child>
                                       <object class="GtkToggleButton" id="cut_data_button">
                                         <property name="label">Cut</property>
@@ -180,6 +182,7 @@
                                 <property name="title">Adjust Data</property>
                                 <child>
                                   <object class="AdwActionRow">
+                                    <property name="activatable-widget">normalize_button</property>
                                     <property name="subtitle">Normalize data</property>
                                     <child>
                                       <object class="GtkButton" id="normalize_button">
@@ -194,6 +197,7 @@
                                 <child>
                                   <object class="AdwActionRow">
                                     <property name="subtitle">Shift all data vertically with respect to each other</property>
+                                    <property name="activatable-widget">shift_vertically_button</property>
                                     <child>
                                       <object class="GtkButton" id="shift_vertically_button">
                                         <property name="label">Shift</property>
@@ -207,6 +211,7 @@
                                 <child>
                                   <object class="AdwActionRow">
                                     <property name="subtitle">Smoothen the data</property>
+                                    <property name="activatable-widget">smooth_button</property>
                                     <child>
                                       <object class="GtkButton" id="smooth_button">
                                         <property name="label">Smoothen</property>
@@ -220,6 +225,7 @@
                                 <child>
                                   <object class="AdwActionRow">
                                     <property name="subtitle">Center the data</property>
+                                    <property name="activatable-widget">center_data_button</property>
                                     <child>
                                       <object class="GtkButton" id="center_data_button">
                                         <property name="label">Center</property>
@@ -299,6 +305,7 @@
                                 <child>
                                   <object class="AdwActionRow">
                                     <property name="subtitle">Get Derivative of the data</property>
+                                    <property name="activatable-widget">derivative_button</property>
                                     <child>
                                       <object class="GtkButton" id="derivative_button">
                                         <property name="label">Get</property>
@@ -312,6 +319,7 @@
                                 <child>
                                   <object class="AdwActionRow">
                                     <property name="subtitle">Get the indefinite Integral of the data</property>
+                                    <property name="activatable-widget">integral_button</property>
                                     <child>
                                       <object class="GtkButton" id="integral_button">
                                         <property name="label">Get</property>
@@ -325,6 +333,7 @@
                                 <child>
                                   <object class="AdwActionRow">
                                     <property name="subtitle">Get the Fast Fourier Transform of the data</property>
+                                    <property name="activatable-widget">fourier_button</property>
                                     <child>
                                       <object class="GtkButton" id="fourier_button">
                                         <property name="label">Get</property>
@@ -338,6 +347,7 @@
                                 <child>
                                   <object class="AdwActionRow">
                                     <property name="subtitle">Get the Inverse Fast Fourier Transform of the data</property>
+                                    <property name="activatable-widget">inverse_fourier_button</property>
                                     <child>
                                       <object class="GtkButton" id="inverse_fourier_button">
                                         <property name="label">Get</property>
@@ -351,6 +361,7 @@
                                 <child>
                                   <object class="AdwActionRow">
                                     <property name="subtitle">Perform custom transformations on the data</property>
+                                    <property name="activatable-widget">transform_data_button</property>
                                     <child>
                                       <object class="GtkButton" id="transform_data_button">
                                         <property name="label">Transform</property>
