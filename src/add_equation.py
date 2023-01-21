@@ -19,27 +19,24 @@ def on_accept(widget, self, window):
     equation = str(window.equation_entry.get_text())
     try:
         new_file = create_data(self, x_start, x_stop, equation, step_size, str(window.name_entry.get_text()))
+        name = new_file.filename
+        if name in self.datadict:
+            if self.preferences.config["allow_duplicate_filenames"]:
+                name = datman.get_duplicate_filename(self, name)
+        else:
+            new_file.filename = name
+            new_file.xdata_clipboard = [new_file.xdata]
+            new_file.ydata_clipboard = [new_file.ydata]
+            new_file.clipboard_pos = -1
+            color = plotting_tools.get_next_color(self)
+            self.datadict[new_file.filename] = new_file
+            datman.add_sample_to_menu(self, new_file.filename, color)
+            datman.select_top_row(self)
+            plotting_tools.refresh_plot(self)
+            window.destroy()
     except Exception as e:
         exception_type = e.__class__.__name__
-        win = self.props.active_window
-        win.toast_overlay.add_toast(Adw.Toast(title=f"{exception_type} - Unable to add data from equation, make sure the syntax is correct"))
-    name = new_file.filename
-    if name in self.datadict:
-        if self.preferences.config["allow_duplicate_filenames"]:
-            name = datman.get_duplicate_filename(self, name)
-
-    if name not in self.datadict:
-        new_file.filename = name
-        new_file.xdata_clipboard = [new_file.xdata]
-        new_file.ydata_clipboard = [new_file.ydata]
-        new_file.clipboard_pos = -1
-        color = plotting_tools.get_next_color(self)
-        self.datadict[new_file.filename] = new_file
-        datman.add_sample_to_menu(self, new_file.filename, color)
-        datman.select_top_row(self)
-
-        plotting_tools.refresh_plot(self)
-    window.destroy()
+        window.toast_overlay.add_toast(Adw.Toast(title=f"{exception_type} - Unable to add data from equation"))
 
 def create_data(self, x_start, x_stop, equation, step_size, name):
     new_file = Data()
@@ -73,6 +70,7 @@ class AddEquationWindow(Adw.Window):
     X_start_entry = Gtk.Template.Child()
     equation_entry = Gtk.Template.Child()
     name_entry = Gtk.Template.Child()
+    toast_overlay = Gtk.Template.Child()
 
     def __init__(self, parent):
         super().__init__()

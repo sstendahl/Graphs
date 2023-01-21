@@ -38,39 +38,28 @@ To convert a value from degrees into radians use radians(value), e.g. Y = sin(ra
             <property name="margin-top">20</property>
             <property name="margin-bottom">20</property>
             <child>
-              <object class="AdwActionRow">
+              <object class="AdwEntryRow" id="transform_x_entry">
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
                 <property name="title" translatable="yes">X =</property>
-                <property name="subtitle" translatable="yes">The transformation on the X-axis</property>
+                <!--property name="subtitle" translatable="yes">The transformation on the X-axis</property!-->
                 <property name="use-underline">True</property>
-                <child>
-                  <object class="GtkEntry" id="transform_x_entry">
-                    <property name="text">X</property>
-                    <property name="valign">center</property>
-                  </object>
-                </child>
               </object>
             </child>
             <child>
-              <object class="AdwActionRow">
+              <object class="AdwEntryRow" id="transform_y_entry">
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
                 <property name="title" translatable="yes">Y =</property>
-                <property name="subtitle" translatable="yes">The transformation on the Y-axis</property>
+                <!--property name="subtitle" translatable="yes">The transformation on the Y-axis</property!-->
                 <property name="use-underline">True</property>
-                <child>
-                  <object class="GtkEntry" id="transform_y_entry">
-                    <property name="text">Y</property>
-                    <property name="valign">center</property>
-                  </object>
-                </child>
               </object>
             </child>
             <child>
               <object class="GtkButton" id="transform_confirm_button">
                 <property name="label">Confirm</property>
                 <property name="margin-top">20</property>
+                <property name="sensitive">True</property>
               </object>
             </child>
           </object>
