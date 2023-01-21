@@ -27,13 +27,6 @@
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <child>
-                      <object class="GtkButton" id="save_data_button">
-                        <property name="label">Save</property>
-                        <property name="action-name">app.save_data</property>
-                        <property name="tooltip-text" translatable="yes">Save the data to your device</property>
-                      </object>
-                    </child>
-                    <child>
                       <object class="GtkButton" id="undo_button">
                         <property name="action-name">app.undo</property>
                         <property name="focusable">1</property>
@@ -55,13 +48,20 @@
                 </child>
               </object>
             </child>
-            <child type="end">
+                        <child type="end">
               <object class="GtkMenuButton">
                 <property name="tooltip-text" translatable="yes">Open Application Menu</property>
                 <property name="icon-name">open-menu-symbolic</property>
                 <property name="menu-model">primary_menu</property>
               </object>
             </child>
+                                                    <child type="end">
+                      <object class="GtkButton" id="save_data_button">
+                        <property name="label">Save</property>
+                        <property name="action-name">app.save_data</property>
+                        <property name="tooltip-text" translatable="yes">Save the data to your device</property>
+                      </object>
+                    </child>>>
           </object>
         </child>
         <child>
@@ -448,4 +448,3 @@
     </section>
   </menu>
 </interface>
-
