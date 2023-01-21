@@ -7,8 +7,9 @@ def open_transform_window(widget, _, self):
     win.set_transient_for(self.props.active_window)
     win.set_modal(True)
     button = win.transform_confirm_button
-    button.set_sensitive(True)
     button.connect("clicked", on_accept, self, win)
+    win.transform_x_entry.set_text("X")
+    win.transform_y_entry.set_text("Y")
     win.present()
     pass
 
