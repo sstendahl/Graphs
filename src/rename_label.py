@@ -22,7 +22,6 @@ class RenameLabelWindow(Adw.Window):
     rename_label_confirm_button = Gtk.Template.Child()
     label_entry = Gtk.Template.Child()
     preferencegroup = Gtk.Template.Child()
-    label_actionrow = Gtk.Template.Child()
 
     def __init__(self, parent, axis):
         super().__init__()
@@ -32,8 +31,7 @@ class RenameLabelWindow(Adw.Window):
             self.set_title("Rename Title")
             self.preferencegroup.set_title("Change Title")
             self.preferencegroup.set_description("Here you can change the title of the plot")
-            self.label_actionrow.set_title("Title")
-            self.label_actionrow.set_subtitle("The title of the plot")
+            self.label_entry.set_title("Title")
         self.load_settings(parent, axis)
     
     def load_settings(self, parent, axis):
@@ -50,4 +48,3 @@ class RenameLabelWindow(Adw.Window):
             parent.plot_settings.right_label = self.label_entry.get_text()
         if axis == parent.canvas.title:
             parent.plot_settings.title = self.label_entry.get_text()
-
