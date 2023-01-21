@@ -392,8 +392,8 @@
                 <property name="model">
                   <object class="GtkStringList">
                     <items>
-                      <item translatable="yes">top</item>
-                      <item translatable="yes">bottom</item>
+                      <item translatable="yes">left</item>
+                      <item translatable="yes">right</item>
                     </items>
                   </object>
                 </property>
@@ -809,5 +809,3 @@
     </object>
   </template>
 </interface>
-
-
