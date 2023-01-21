@@ -23,17 +23,19 @@ def on_accept(widget, self, window):
         if name in self.datadict:
             if self.preferences.config["allow_duplicate_filenames"]:
                 name = datman.get_duplicate_filename(self, name)
-        else:
-            new_file.filename = name
-            new_file.xdata_clipboard = [new_file.xdata]
-            new_file.ydata_clipboard = [new_file.ydata]
-            new_file.clipboard_pos = -1
-            color = plotting_tools.get_next_color(self)
-            self.datadict[new_file.filename] = new_file
-            datman.add_sample_to_menu(self, new_file.filename, color)
-            datman.select_top_row(self)
-            plotting_tools.refresh_plot(self)
-            window.destroy()
+            else:
+                window.toast_overlay.add_toast(Adw.Toast(title="Item with this name already exists"))
+                return
+        new_file.filename = name
+        new_file.xdata_clipboard = [new_file.xdata]
+        new_file.ydata_clipboard = [new_file.ydata]
+        new_file.clipboard_pos = -1
+        color = plotting_tools.get_next_color(self)
+        self.datadict[new_file.filename] = new_file
+        datman.add_sample_to_menu(self, new_file.filename, color)
+        datman.select_top_row(self)
+        plotting_tools.refresh_plot(self)
+        window.destroy()
     except Exception as e:
         exception_type = e.__class__.__name__
         window.toast_overlay.add_toast(Adw.Toast(title=f"{exception_type} - Unable to add data from equation"))
