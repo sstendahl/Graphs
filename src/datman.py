@@ -27,6 +27,7 @@ def open_selection(self, files, from_dictionary = False, import_settings = None,
     if self.highlight is not None:
         plotting_tools.hide_highlight(self)
     if from_dictionary:
+        print("Opening from dict")
         for key, item in self.datadict.items():
             if item is not None:
                 if self.item_rows[key].selected == True:
@@ -59,7 +60,8 @@ def open_selection(self, files, from_dictionary = False, import_settings = None,
                 y_axis = item.plot_Y_position
                 x_axis = item.plot_X_position
                 plotting_tools.plot_figure(self, canvas, item.xdata,item.ydata, item.filename, color, y_axis = y_axis, x_axis = x_axis)
-                add_sample_to_menu(self, filename, color)
+                if filename != "":
+                    add_sample_to_menu(self, filename, color)
                 plotting_tools.reload_plot(self)
         self.canvas.draw()
         plotting_tools.set_canvas_limits_axis(self, self.canvas)
@@ -152,8 +154,11 @@ def set_data_properties(self, path, data, import_settings):
     if filename in self.datadict:
         if self.preferences.config["allow_duplicate_filenames"]:
             filename = get_duplicate_filename(self, filename)
-    self.datadict[filename] = data
-    data.filename = filename
+        else:
+            self.datadict[filename] = data
+    else:  
+        self.datadict[filename] = data
+        data.filename = filename
     return data
 
 def swap(str1):
