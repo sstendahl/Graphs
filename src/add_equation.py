@@ -21,16 +21,23 @@ def on_accept(widget, self, window):
     try:
         new_file = create_data(self, x_start, x_stop, equation, step_size, str(window.name_entry.get_text()))
         name = new_file.filename
-        for key, item in self.datadict.items():
-            if name == item.filename:
-                if self.preferences.config["allow_duplicate_filenames"]:
-                    new_file.filename = get_duplicate_filename(self, filename)
-        #if name in self.datadict:
-        #    if self.preferences.config["allow_duplicate_filenames"]:
-        #        name = datman.get_duplicate_filename(self, name)
-        #    else:
-        #        window.toast_overlay.add_toast(Adw.Toast(title="Item with this name already exists"))
-        #        return
+        handle_duplicates = self.preferences.config["handle_duplicates"]
+        if not handle_duplicates == "keep":
+            for key, item in self.datadict.items():
+                if name == item.filename:
+                    if handle_duplicates == "auto-rename":
+                        new_file.filename = datman.get_duplicate_filename(self, name)
+                    elif handle_duplicates == "ignore":
+                        window.toast_overlay.add_toast(Adw.Toast(title="Item with this name already exists"))
+                        return
+                    else:
+                        new_file.xdata_clipboard = [new_file.xdata]
+                        new_file.ydata_clipboard = [new_file.ydata]
+                        new_file.clipboard_pos = -1
+                        self.datadict[key] = new_file
+                        plotting_tools.refresh_plot(self)
+                        window.destroy()
+                        return
         new_file.xdata_clipboard = [new_file.xdata]
         new_file.ydata_clipboard = [new_file.ydata]
         new_file.clipboard_pos = -1

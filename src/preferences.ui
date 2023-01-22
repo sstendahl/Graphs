@@ -222,18 +222,22 @@
             <property name="title" translatable="yes">Other</property>
             <property name="description" translatable="yes">Other general settings</property>
             <child>
-              <object class="AdwActionRow">
+              <object class="AdwComboRow" id="handle_duplicates_chooser">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
-                <property name="title" translatable="yes">Allow Duplicate Filenames</property>
-                <property name="subtitle" translatable="yes">Allow duplicate filenames to be loaded</property>
+                <property name="title" translatable="yes">Handle duplicate entries</property>
+                <property name="subtitle" translatable="yes">Choose how to handle duplicate entries to be loaded</property>
                 <property name="use-underline">True</property>
-                <property name="activatable-widget">allow_duplicates_button</property>
-                <child>
-                  <object class="GtkSwitch" id="allow_duplicates_button">
-                    <property name="valign">center</property>
+                <property name="model">
+                  <object class="GtkStringList">
+                    <items>
+                      <item translatable="yes">override</item>
+                      <item translatable="yes">ignore</item>
+                      <item translatable="yes">keep</item>
+                      <item translatable="yes">auto-rename</item>
+                    </items>
                   </object>
-                </child>
+                </property>
               </object>
             </child>
           </object>

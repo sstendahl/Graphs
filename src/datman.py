@@ -8,8 +8,7 @@ from . import plotting_tools, samplerow, colorpicker, toolbar, utilities
 import numpy as np
 from .data import Data
 from matplotlib import colors
-from matplotlib.backends.backend_gtk4 import (
-    NavigationToolbar2GTK4 as NavigationToolbar)
+from matplotlib.backends.backend_gtk4 import NavigationToolbar2GTK4 as NavigationToolbar
 
 gi.require_version('Adw', '1')
 gi.require_version('Gtk', '4.0')
@@ -57,17 +56,30 @@ def open_selection(self, files, from_dictionary = False, import_settings = None,
                     self.props.active_window.toast_overlay.add_toast(Adw.Toast(title=f"Could not open data, wrong filetype"))
                     break
                 if item is not None:
-                    print(item.filename)
-                    filename = item.filename
-                    color = plotting_tools.get_next_color(self)
+                    handle_duplicates = self.preferences.config["handle_duplicates"]
+                    if not handle_duplicates == "keep":
+                        for key, item2 in self.datadict.items():
+                            if item.filename == item2.filename:
+                                if handle_duplicates == "auto-rename":
+                                    item.filename = get_duplicate_filename(self, item.filename)
+                                elif handle_duplicates == "ignore":
+                                    self.props.active_window.toast_overlay.add_toast(Adw.Toast(title=f"Item \"{item.filename}\" already exists"))
+                                    return
+                                elif handle_duplicates == "override":
+                                    y_axis = item.plot_Y_position
+                                    x_axis = item.plot_X_position
+                                    self.datadict[key] = item
+                                    plotting_tools.reload_plot(self)
+                                    return
                     y_axis = item.plot_Y_position
                     x_axis = item.plot_X_position
-                    plotting_tools.plot_figure(self, canvas, item.xdata,item.ydata, item.filename, color, y_axis = y_axis, x_axis = x_axis)
-                    add_sample_to_menu(self, filename, color, item.id)
+                    self.datadict[item.id] = item
+                    item.color = plotting_tools.get_next_color(self)
+                    plotting_tools.plot_figure(self, canvas, item.xdata,item.ydata, item.filename, item.color, y_axis = y_axis, x_axis = x_axis)
+                    add_sample_to_menu(self, item.filename, item.color, item.id)
                     plotting_tools.reload_plot(self)
         self.canvas.draw()
         plotting_tools.set_canvas_limits_axis(self, self.canvas)
-        select_top_row(self)
         turn_off_clipboard_buttons(self)
 
 def get_duplicate_filename(self, name):
@@ -76,9 +88,11 @@ def get_duplicate_filename(self, name):
     while loop:
         i += 1
         new_name = f"{name} ({i})"
-        if new_name not in self.datadict:
-            loop = False
-            return new_name
+        loop = False
+        for key, item in self.datadict.items():
+            if new_name == item.filename:
+                loop = True
+    return new_name
 
 def turn_off_clipboard_buttons(self):
         win = self.props.active_window
@@ -152,18 +166,7 @@ def set_data_properties(self, path, data, import_settings):
     else:
         filename = path.split("/")[-1]
         filename = os.path.splitext(filename)[0]
-    for key, item in self.datadict.items():
-        if filename == item.filename:
-            if self.preferences.config["allow_duplicate_filenames"]:
-                filename = get_duplicate_filename(self, filename)
-    #if filename in self.datadict:
-    #    if self.preferences.config["allow_duplicate_filenames"]:
-    #        filename = get_duplicate_filename(self, filename)
-    #        print(filename)
-    #    else:
-    #        return None
     data.filename = filename
-    self.datadict[data.id] = data
     return data
 
 def swap(str1):

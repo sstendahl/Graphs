@@ -120,7 +120,7 @@ class PreferencesWindow(Adw.PreferencesWindow):
     plot_unselected_marker_size = Gtk.Template.Child()
     plot_font_chooser = Gtk.Template.Child()
     center_data_chooser = Gtk.Template.Child()
-    allow_duplicates_button = Gtk.Template.Child()
+    handle_duplicates_chooser = Gtk.Template.Child()
     column_x = Gtk.Template.Child()
     column_y = Gtk.Template.Child()
     import_skip_rows = Gtk.Template.Child()
@@ -198,6 +198,7 @@ class PreferencesWindow(Adw.PreferencesWindow):
         self.set_chooser(self.plot_X_position, config["plot_X_position"])
         self.set_chooser(self.plot_Y_position, config["plot_Y_position"])
         self.set_chooser(self.plot_tick_direction, config["plot_tick_direction"])
+        self.set_chooser(self.handle_duplicates_chooser, config["handle_duplicates"])
         self.set_chooser(self.import_separator, config["import_separator"])
         self.set_chooser(self.plot_color_cycle, config["plot_color_cycle"])
         self.set_chooser(self.plot_selected_linestyle_chooser, config["plot_selected_linestyle"])
@@ -209,8 +210,6 @@ class PreferencesWindow(Adw.PreferencesWindow):
         selected_marker_value = marker_dict[config["plot_selected_markers"]]
         self.set_chooser(self.plot_selected_markers_chooser, selected_marker_value)
         self.set_chooser(self.plot_unselected_markers_chooser, unselected_marker_value)
-        if config["allow_duplicate_filenames"]:
-            self.allow_duplicates_button.set_active(True)
         if config["plot_tick_left"]:
             self.plot_tick_left.set_active(True)
         if config["plot_tick_right"]:
@@ -275,7 +274,7 @@ class PreferencesWindow(Adw.PreferencesWindow):
         config["plot_tick_top"] = self.plot_tick_top.get_active()
         config["plot_tick_bottom"] = self.plot_tick_bottom.get_active()
         config["plot_tick_direction"] = self.plot_tick_direction.get_selected_item().get_string()
-        config["allow_duplicate_filenames"] = self.allow_duplicates_button.get_active()
+        config["handle_duplicates"] = self.handle_duplicates_chooser.get_selected_item().get_string()
         config["savefig_transparent"] = self.savefig_transparent_check_button.get_active()
         config["plot_legend"] = self.plot_legend_check.get_active()
         config["plot_invert_color_cycle_dark"] = self.plot_invert_color_cycle_dark.get_active()
