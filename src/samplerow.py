@@ -9,9 +9,10 @@ class SampleBox(Gtk.Box):
     sample_box = Gtk.Template.Child()
     sample_ID_label = Gtk.Template.Child()
 
-    def __init__(self, app, filename = ""):
+    def __init__(self, app, filename = "", id = ""):
         super().__init__()
         self.filename = filename
+        self.id = id
         self.app = app
         self.css = self.get_css()
         self.selected = False
@@ -25,11 +26,11 @@ class SampleBox(Gtk.Box):
         self.css = self.get_css()
         if not self.selected:
             self.selected = True
-            datman.datadict[self.filename].selected = True
+            datman.datadict[self.id].selected = True
             self.set_css_classes(['label_selected'])
         else:
             self.selected = False
-            datman.datadict[self.filename].selected = False
+            datman.datadict[self.id].selected = False
             self.set_css_classes(['label_deselected'])
         plotting_tools.refresh_plot(datman, set_limits = False)
         self.set_css(self.css)

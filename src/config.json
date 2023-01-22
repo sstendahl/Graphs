@@ -12,7 +12,7 @@
 "plot_tick_top": false, 
 "plot_tick_bottom": true,
 "plot_tick_direction": "in",
-"allow_duplicate_filenames": true,
+"handle_duplicates": "Auto-rename duplicates",
 "savefig_transparent": true, 
 "plot_legend": true,
 "plot_invert_color_cycle_dark": false, 

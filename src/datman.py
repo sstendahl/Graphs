@@ -2,13 +2,13 @@ from gi.repository import Gtk, Gdk, Gio, GObject, Adw
 import gi
 import os
 import re
+import uuid
 from .plotting_tools import PlotWidget
 from . import plotting_tools, samplerow, colorpicker, toolbar, utilities
 import numpy as np
 from .data import Data
 from matplotlib import colors
-from matplotlib.backends.backend_gtk4 import (
-    NavigationToolbar2GTK4 as NavigationToolbar)
+from matplotlib.backends.backend_gtk4 import NavigationToolbar2GTK4 as NavigationToolbar
 
 gi.require_version('Adw', '1')
 gi.require_version('Gtk', '4.0')
@@ -56,17 +56,30 @@ def open_selection(self, files, from_dictionary = False, import_settings = None,
                     self.props.active_window.toast_overlay.add_toast(Adw.Toast(title=f"Could not open data, wrong filetype"))
                     break
                 if item is not None:
-                    print(item.filename)
-                    filename = item.filename
-                    color = plotting_tools.get_next_color(self)
+                    handle_duplicates = self.preferences.config["handle_duplicates"]
+                    if not handle_duplicates == "Add duplicates":
+                        for key, item2 in self.datadict.items():
+                            if item.filename == item2.filename:
+                                if handle_duplicates == "Auto-rename duplicates":
+                                    item.filename = get_duplicate_filename(self, item.filename)
+                                elif handle_duplicates == "Ignore duplicates":
+                                    self.props.active_window.toast_overlay.add_toast(Adw.Toast(title=f"Item \"{item.filename}\" already exists"))
+                                    return
+                                elif handle_duplicates == "Override existing items":
+                                    y_axis = item.plot_Y_position
+                                    x_axis = item.plot_X_position
+                                    self.datadict[key] = item
+                                    plotting_tools.reload_plot(self)
+                                    return
                     y_axis = item.plot_Y_position
                     x_axis = item.plot_X_position
-                    plotting_tools.plot_figure(self, canvas, item.xdata,item.ydata, item.filename, color, y_axis = y_axis, x_axis = x_axis)
-                    add_sample_to_menu(self, filename, color)
+                    self.datadict[item.id] = item
+                    item.color = plotting_tools.get_next_color(self)
+                    plotting_tools.plot_figure(self, canvas, item.xdata,item.ydata, item.filename, item.color, y_axis = y_axis, x_axis = x_axis)
+                    add_sample_to_menu(self, item.filename, item.color, item.id)
                     plotting_tools.reload_plot(self)
         self.canvas.draw()
         plotting_tools.set_canvas_limits_axis(self, self.canvas)
-        select_top_row(self)
         turn_off_clipboard_buttons(self)
 
 def get_duplicate_filename(self, name):
@@ -75,9 +88,11 @@ def get_duplicate_filename(self, name):
     while loop:
         i += 1
         new_name = f"{name} ({i})"
-        if new_name not in self.datadict:
-            loop = False
-            return new_name
+        loop = False
+        for key, item in self.datadict.items():
+            if new_name == item.filename:
+                loop = True
+    return new_name
 
 def turn_off_clipboard_buttons(self):
         win = self.props.active_window
@@ -110,6 +125,7 @@ def select_top_row(self):
 
 def get_data(self, path, import_settings):
     data = Data()
+    data.id = str(uuid.uuid4())
     data.plot_Y_position = self.preferences.config["plot_Y_position"]
     data.plot_X_position = self.preferences.config["plot_X_position"]
     data_array = [[], []]
@@ -150,15 +166,6 @@ def set_data_properties(self, path, data, import_settings):
     else:
         filename = path.split("/")[-1]
         filename = os.path.splitext(filename)[0]
-
-
-    if filename in self.datadict:
-        if self.preferences.config["allow_duplicate_filenames"]:
-            filename = get_duplicate_filename(self, filename)
-            print(filename)
-        else:
-            return None  
-    self.datadict[filename] = data
     data.filename = filename
     return data
 
@@ -172,20 +179,21 @@ def delete_selected(shortcut, _,  self):
     selected_keys = utilities.get_selected_keys(self)
     for key in selected_keys:
         delete(None, self, key)
-
-def delete(widget,  self, filename):
+        
+        
+def delete(widget,  self, id):
     layout = self.sample_box
     for key, item in self.item_rows.items():
-        if key == filename:
+        if key == id:
             self.sample_box.remove(item)
-    del self.item_rows[filename]
-    del self.datadict[filename]
+    filename = self.datadict[id].filename
+    del self.item_rows[id]
+    del self.datadict[id]
     self.props.active_window.toast_overlay.add_toast(Adw.Toast(title=f"Deleted {filename}"))
-
+    
     if len(self.datadict) == 0:
-        self.canvas.ax.get_legend().remove()
+        self.canvas.ax.legend().remove()
         self.canvas.ax.set_prop_cycle(None)
-
 
     for key, item in self.datadict.items():
         item.xdata_clipboard = [item.xdata]
@@ -210,10 +218,10 @@ def select_none(widget, _, self):
         item.set_css(item.css)
     plotting_tools.refresh_plot(self)
 
-def add_sample_to_menu(self, filename, color):
+def add_sample_to_menu(self, filename, color, id):
     win = self.props.active_window
     self.sample_box = win.sample_box
-    row = samplerow.SampleBox(self, filename)
+    row = samplerow.SampleBox(self, filename, id)
     row.gesture.connect("pressed", row.clicked, self)
     row.color_picker = colorpicker.ColorPicker(color, row=row, parent=self)
     row.color_picker.set_hexpand(False)
@@ -221,14 +229,14 @@ def add_sample_to_menu(self, filename, color):
     sample_box.remove(sample_box.get_last_child())
     row.sample_box.append(row.color_picker)
     row.sample_box.append(row.delete_button)
-    row.delete_button.connect("clicked", delete, self, filename)
+    row.delete_button.connect("clicked", delete, self, id)
     max_length = int(32)
     if len(filename) > max_length:
         label = f"{filename[:max_length]}..."
     else:
         label = filename
     row.sample_ID_label.set_text(label)
-    self.item_rows[filename] = row
+    self.item_rows[id] = row
     self.sample_box.append(row)
 
 def save_file_dialog(self, documenttype="Text file (*.txt)"):

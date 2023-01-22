@@ -16,13 +16,6 @@ def save_data(widget, _, self):
     delete_selected_data(self)
     datman.save_file_dialog(self)
 
-def get_selected_keys(self):
-    selected_keys = []
-    for key, item in self.item_rows.items():
-        if item.selected == True:
-            selected_keys.append(item.filename)
-    return selected_keys
-
 def add_to_clipboard(self):
     undo_button = self.props.active_window.undo_button
     undo_button.set_sensitive(True)
