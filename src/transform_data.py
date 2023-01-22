@@ -1,6 +1,6 @@
 from gi.repository import Gtk, Adw, GObject, Gio
 from numpy import *
-from . import item_operations, plotting_tools
+from . import item_operations, plotting_tools, utilities
 
 def open_transform_window(widget, _, self):
     win = TransformWindow(self)
@@ -24,8 +24,7 @@ def on_accept(widget, self, window):
     window.destroy()
 
 def operation(self, input_x, input_y):
-    x_data = self.datadict
-    selected_keys = item_operations.get_selected_keys(self)
+    selected_keys = utilities.get_selected_keys(self)
     for key in selected_keys:
         x_array = []
         y_array = []
