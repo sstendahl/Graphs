@@ -2,6 +2,7 @@ from gi.repository import Gtk, Gdk, Gio, GObject, Adw
 import gi
 import os
 import re
+import uuid
 from .plotting_tools import PlotWidget
 from . import plotting_tools, samplerow, colorpicker, toolbar, utilities
 import numpy as np
@@ -62,7 +63,7 @@ def open_selection(self, files, from_dictionary = False, import_settings = None,
                     y_axis = item.plot_Y_position
                     x_axis = item.plot_X_position
                     plotting_tools.plot_figure(self, canvas, item.xdata,item.ydata, item.filename, color, y_axis = y_axis, x_axis = x_axis)
-                    add_sample_to_menu(self, filename, color)
+                    add_sample_to_menu(self, filename, color, item.id)
                     plotting_tools.reload_plot(self)
         self.canvas.draw()
         plotting_tools.set_canvas_limits_axis(self, self.canvas)
@@ -110,6 +111,7 @@ def select_top_row(self):
 
 def get_data(self, path, import_settings):
     data = Data()
+    data.id = str(uuid.uuid4())
     data.plot_Y_position = self.preferences.config["plot_Y_position"]
     data.plot_X_position = self.preferences.config["plot_X_position"]
     data_array = [[], []]
@@ -150,16 +152,18 @@ def set_data_properties(self, path, data, import_settings):
     else:
         filename = path.split("/")[-1]
         filename = os.path.splitext(filename)[0]
-
-
-    if filename in self.datadict:
-        if self.preferences.config["allow_duplicate_filenames"]:
-            filename = get_duplicate_filename(self, filename)
-            print(filename)
-        else:
-            return None  
-    self.datadict[filename] = data
+    for key, item in self.datadict.items():
+        if filename == item.filename:
+            if self.preferences.config["allow_duplicate_filenames"]:
+                filename = get_duplicate_filename(self, filename)
+    #if filename in self.datadict:
+    #    if self.preferences.config["allow_duplicate_filenames"]:
+    #        filename = get_duplicate_filename(self, filename)
+    #        print(filename)
+    #    else:
+    #        return None
     data.filename = filename
+    self.datadict[data.id] = data
     return data
 
 def swap(str1):
@@ -173,13 +177,14 @@ def delete_selected(shortcut, _,  self):
     for key in selected_keys:
         delete(None, self, key)
 
-def delete(widget,  self, filename):
+def delete(widget,  self, filename, id):
+    print("deleting")
     layout = self.sample_box
     for key, item in self.item_rows.items():
-        if key == filename:
+        if key == id:
             self.sample_box.remove(item)
-    del self.item_rows[filename]
-    del self.datadict[filename]
+    del self.item_rows[id]
+    del self.datadict[id]
     self.props.active_window.toast_overlay.add_toast(Adw.Toast(title=f"Deleted {filename}"))
 
     if len(self.datadict) == 0:
@@ -210,10 +215,10 @@ def select_none(widget, _, self):
         item.set_css(item.css)
     plotting_tools.refresh_plot(self)
 
-def add_sample_to_menu(self, filename, color):
+def add_sample_to_menu(self, filename, color, id):
     win = self.props.active_window
     self.sample_box = win.sample_box
-    row = samplerow.SampleBox(self, filename)
+    row = samplerow.SampleBox(self, filename, id)
     row.gesture.connect("pressed", row.clicked, self)
     row.color_picker = colorpicker.ColorPicker(color, row=row, parent=self)
     row.color_picker.set_hexpand(False)
@@ -221,14 +226,14 @@ def add_sample_to_menu(self, filename, color):
     sample_box.remove(sample_box.get_last_child())
     row.sample_box.append(row.color_picker)
     row.sample_box.append(row.delete_button)
-    row.delete_button.connect("clicked", delete, self, filename)
+    row.delete_button.connect("clicked", delete, self, filename, id)
     max_length = int(32)
     if len(filename) > max_length:
         label = f"{filename[:max_length]}..."
     else:
         label = filename
     row.sample_ID_label.set_text(label)
-    self.item_rows[filename] = row
+    self.item_rows[id] = row
     self.sample_box.append(row)
 
 def save_file_dialog(self, documenttype="Text file (*.txt)"):

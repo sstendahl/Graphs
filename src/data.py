@@ -2,6 +2,7 @@ from dataclasses import dataclass, field
 
 @dataclass
 class Data:
+    id: str = ""
     filename: str = ""
     clipboard_pos: int = 0
     xdata: list = field(default_factory=list)
