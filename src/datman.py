@@ -189,7 +189,7 @@ def delete(widget,  self, filename, id):
 
     if len(self.datadict) == 0:
         self.canvas.ax.legend().remove()
-        #self.canvas.ax.set_prop_cycle(None)
+        self.canvas.ax.set_prop_cycle(None)
 
     for key, item in self.datadict.items():
         item.xdata_clipboard = [item.xdata]
