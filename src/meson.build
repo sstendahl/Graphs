@@ -29,7 +29,6 @@ configure_file(
 )
 
 datman_sources = [
-  '__init__.py',
   'add_data_advanced.py',
   'add_equation.py',
   'colorpicker.py',
