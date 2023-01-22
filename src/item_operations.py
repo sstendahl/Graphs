@@ -223,11 +223,32 @@ def smooth(y, box_points):
     return y_smooth
 
 def shift_vertically(shortcut, _, self):
+    """
+    Shifts data vertically with respect to each other
+    By default it scales linear data by 1.5 times the total span of the 
+    ydata, and log data by a factor of 10000.
+    """
     shifter = 1
-    shift_value = 10000
+    shift_value_log = 10000
+    shift_value_linear = 0
+    
     for key, item in self.datadict.items():
-        item.ydata = [value * shifter for value in item.ydata]
-        shifter *= shift_value
+        shift_value_linear += 1.5*(max(item.ydata) - min(item.ydata))
+        
+        #Check which axes the data is on, so it can choose the appropriate
+        #scaling (log/linear)
+        if item.plot_Y_position == "left":
+            if self.plot_settings.yscale == "log":
+                item.ydata = [value * shifter for value in item.ydata]
+            if self.plot_settings.yscale == "linear":
+                item.ydata = [value + shift_value_linear for value in item.ydata]
+        if item.plot_Y_position == "right":
+            if self.plot_settings.right_scale == "log":
+                item.ydata = [value * shifter for value in item.ydata]
+            if self.plot_settings.right_scale == "linear":
+                item.ydata = [value + shift_value_linear for value in item.ydata]
+                
+        shifter *= shift_value_log
     add_to_clipboard(self)
     plotting_tools.refresh_plot(self)
 

@@ -45,7 +45,7 @@ Graphs is an excellent fit both plotting and data manipulation. The plots create
         <p>Major update with a UI overhaul</p>      
         <p>New in Graphs:</p>               
         <ul>
-          <li>The action grid on the left has been replaced by expander Rows, sorting the actions by category</li>
+          <li>The action grid on the left has been replaced by Expander Rows, sorting the actions by category</li>
           <li>Checkboxes in settings have been replaced by switches</li>
           <li>Old entry rows have been replaced by AdwEntryRows</li>
           <li>The save data button has been moved to the header bar</li>
@@ -54,8 +54,10 @@ Graphs is an excellent fit both plotting and data manipulation. The plots create
         </ul>
         <p>Bugfixes:</p>                       
         <ul>
+          <li>"Shift vertically" option now works properly on linear scale as well</li>
           <li>Fixed a bug where the last graph to be deleted was still shown</li>
-          <li>Fixed a bug where the text in the dropdown menu of plot-settings didn't update when changing the name of a data set</li>          
+          <li>Fixed a bug where the text in the dropdown menu of plot-settings didn't update when changing the name of a data set</li>         
+          <li>Some code clean-up has been performed</li> 
         </ul>
         </description>
       </release>        
@@ -254,3 +256,5 @@ Graphs is an excellent fit both plotting and data manipulation. The plots create
   </recommends>
   <content_rating type="oars-1.1" />
 </component>
+
+

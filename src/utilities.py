@@ -11,7 +11,6 @@ def empty_chooser(chooser):
     for item in model:
         model.remove(0)
 
-
 def populate_chooser(chooser, chooser_list):
     model = chooser.get_model()
     for item in model:
