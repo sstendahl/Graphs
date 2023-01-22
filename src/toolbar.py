@@ -58,6 +58,7 @@ class GraphToolbar(NavigationToolbar):
         self.parent.canvas.draw()
 
     def load_plot_settings(self, button):
+        plot_settings.open_plot_settings(button, _, self.parent)
         try:
             plot_settings.open_plot_settings(button, _, self.parent)
         except AttributeError:

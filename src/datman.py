@@ -27,7 +27,6 @@ def open_selection(self, files, from_dictionary = False, import_settings = None,
     if self.highlight is not None:
         plotting_tools.hide_highlight(self)
     if from_dictionary:
-        print("Opening from dict")
         for key, item in self.datadict.items():
             if item is not None:
                 if self.item_rows[key].selected == True:
@@ -76,7 +75,8 @@ def open_selection(self, files, from_dictionary = False, import_settings = None,
                     self.datadict[item.id] = item
                     item.color = plotting_tools.get_next_color(self)
                     plotting_tools.plot_figure(self, canvas, item.xdata,item.ydata, item.filename, item.color, y_axis = y_axis, x_axis = x_axis)
-                    add_sample_to_menu(self, item.filename, item.color, item.id)
+                    add_sample_to_menu(self, item.filename, item.color, item.id, select_item = True)
+                    select_item(self, item.id)
                     plotting_tools.reload_plot(self)
         self.canvas.draw()
         plotting_tools.set_canvas_limits_axis(self, self.canvas)
@@ -114,9 +114,8 @@ def toggle_darkmode(shortcut, theme, widget, self):
     plotting_tools.reload_plot(self)
 
 
-def select_top_row(self):
+def select_item(self, key):
     win = self.props.active_window
-    key = list(self.datadict.keys())[0]
     item = self.item_rows[key]
     item.selected = True
     item.set_css_classes(['label_selected'])
@@ -181,7 +180,7 @@ def delete_selected(shortcut, _,  self):
         delete(None, self, key)
         
         
-def delete(widget,  self, id):
+def delete(widget,  self, id, give_toast = True):
     layout = self.sample_box
     for key, item in self.item_rows.items():
         if key == id:
@@ -189,7 +188,8 @@ def delete(widget,  self, id):
     filename = self.datadict[id].filename
     del self.item_rows[id]
     del self.datadict[id]
-    self.props.active_window.toast_overlay.add_toast(Adw.Toast(title=f"Deleted {filename}"))
+    if give_toast:
+        self.props.active_window.toast_overlay.add_toast(Adw.Toast(title=f"Deleted {filename}"))
     
     if len(self.datadict) == 0:
         self.canvas.ax.legend().remove()
@@ -218,7 +218,7 @@ def select_none(widget, _, self):
         item.set_css(item.css)
     plotting_tools.refresh_plot(self)
 
-def add_sample_to_menu(self, filename, color, id):
+def add_sample_to_menu(self, filename, color, id, select_item = False):
     win = self.props.active_window
     self.sample_box = win.sample_box
     row = samplerow.SampleBox(self, filename, id)
@@ -230,7 +230,7 @@ def add_sample_to_menu(self, filename, color, id):
     row.sample_box.append(row.color_picker)
     row.sample_box.append(row.delete_button)
     row.delete_button.connect("clicked", delete, self, id)
-    max_length = int(32)
+    max_length = int(28)
     if len(filename) > max_length:
         label = f"{filename[:max_length]}..."
     else:

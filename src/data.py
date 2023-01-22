@@ -21,4 +21,5 @@ class Data:
     unselected_marker_size: float = 0
     plot_Y_position: str = "left"
     plot_X_position: str = "bottom"
+    selected: bool = False
 

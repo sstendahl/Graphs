@@ -2,6 +2,7 @@ from gi.repository import Gtk, Adw, GObject, Gio
 from numpy import *
 from . import item_operations, plotting_tools, datman, utilities
 from .data import Data
+import uuid
 from matplotlib.lines import Line2D
 import matplotlib.pyplot as plt
 
@@ -13,20 +14,22 @@ def open_plot_settings(widget, _, self):
     button = win.apply_button
     button.connect("clicked", on_accept, self, win)
     button = win.apply_button_2
-    button.connect("clicked", on_accept, self, win, True)
+    button.connect("clicked", on_accept, self, win)
     win.present()
 
-def on_accept(widget, self, window, reload = False):
+def on_accept(widget, self, window):
     item = window.item
-    new_item, old_filename = window.set_config(item, self)
-    if old_filename != new_item.filename:
-        datman.add_sample_to_menu(self, new_item.filename, self.item_rows[old_filename].color_picker.color)
-        datman.delete("None", self, old_filename)
-    self.datadict[new_item.filename] = new_item
-    if reload:
-        plotting_tools.reload_plot(self)
-    else:
-        plotting_tools.refresh_plot(self)
+    new_item = window.set_config(item, self)
+    self.item_rows[new_item.id].sample_ID_label.set_text(new_item.filename)
+    if new_item.selected:
+        datman.select_item(self, new_item.id)
+    filenames = utilities.get_all_filenames(self)
+
+    index = window.datalist_chooser.get_selected()
+    utilities.populate_chooser(window.datalist_chooser, filenames)
+    window.datalist_chooser.set_selected(index)
+    plotting_tools.reload_plot(self)
+    
 
 @Gtk.Template(resource_path="/se/sjoerd/DatMan/plot_settings.ui")
 class PlotSettingsWindow(Adw.PreferencesWindow):
@@ -70,8 +73,8 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
     def __init__(self, parent):
         super().__init__()
         self.select_item = False
-        data_list = utilities.get_datalist(parent)
-        utilities.populate_chooser(self.datalist_chooser, data_list)
+        filenames = utilities.get_all_filenames(parent)
+        utilities.populate_chooser(self.datalist_chooser, filenames)
         self.item = self.load_config(parent)
         self.datalist_chooser.connect("notify::selected", self.on_notify, parent)
         self.connect("close-request", self.on_close, parent)
@@ -82,15 +85,13 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
 
 
     def on_notify(self, _, __, parent):
-        filename = self.datalist_chooser.get_selected_item().get_string()
-        self.load_config(parent, filename = filename)
+        self.load_config(parent)
 
-    def load_config(self, parent, filename = None):
+    def load_config(self, parent):
         data_list = utilities.get_datalist(parent)
-        if filename is None:
-            filename = self.datalist_chooser.get_selected_item().get_string()
-        utilities.set_chooser(self.datalist_chooser, filename)
-        item = parent.datadict[filename]
+        index = self.datalist_chooser.get_selected()
+        self.datalist_chooser.set_selected(index)
+        item = parent.datadict[data_list[index]]
         font_string = parent.plot_settings.font_string
         font_desc = self.plot_font_chooser.get_font_desc().from_string(font_string)
         self.plot_font_chooser.set_font_desc(font_desc)
@@ -176,7 +177,6 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
         parent.plot_settings.right_scale = self.plot_right_scale.get_selected_item().get_string()
         parent.plot_settings.top_scale = self.plot_top_scale.get_selected_item().get_string()
         parent.plot_settings.plot_style = self.plot_style.get_selected_item().get_string()      
-        old_filename = self.datalist_chooser.get_selected_item().get_string()
         if self.name_entry.get_text() != "":
             item.filename = self.name_entry.get_text()
         item.plot_Y_position = self.plot_Y_position.get_selected_item().get_string()
@@ -192,13 +192,12 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
         marker_dict = Line2D.markers
         item.selected_markers = utilities.get_dict_by_value(marker_dict, self.selected_markers_chooser.get_selected_item().get_string())
         item.unselected_markers = utilities.get_dict_by_value(marker_dict, self.unselected_markers_chooser.get_selected_item().get_string())
-        return item, old_filename
+        return item
 
     def on_close(self, _, parent):
         item = self.item
-        new_item, old_filename = self.set_config(item, parent)        
-        if old_filename != new_item.filename:
-            datman.add_sample_to_menu(parent, new_item.filename, parent.item_rows[old_filename].color_picker.color)
-            datman.delete("None", parent, old_filename)
-        parent.datadict[new_item.filename] = new_item
+        new_item = self.set_config(item, parent)
+        parent.item_rows[new_item.id].sample_ID_label.set_text(new_item.filename)
+        if new_item.selected:
+            datman.select_item(parent, new_item.id)
         plotting_tools.reload_plot(parent)

@@ -23,6 +23,12 @@ def populate_chooser(chooser, chooser_list):
 def get_datalist(parent):
     return list(parent.datadict.keys())
 
+def get_all_filenames(parent):
+    filenames = []
+    for item in parent.datadict.items():
+        filenames.append(item[1].filename)
+    return filenames
+
 def get_dict_by_value(dictionary, value):
     new_dict = dict((v, k) for k, v in dictionary.items())
     if value == "none":
@@ -59,3 +65,4 @@ def create_rgba(r, g, b, a=1):
     res.blue = b
     res.alpha = a
     return res
+
