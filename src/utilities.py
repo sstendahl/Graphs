@@ -49,7 +49,7 @@ def get_selected_keys(self):
     selected_keys = []
     for key, item in self.item_rows.items():
         if item.selected == True:
-            selected_keys.append(item.filename)
+            selected_keys.append(item.id)
     return selected_keys
     
 def create_rgba(r, g, b, a=1):
