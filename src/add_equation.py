@@ -22,15 +22,15 @@ def on_accept(widget, self, window):
         new_file = create_data(self, x_start, x_stop, equation, step_size, str(window.name_entry.get_text()))
         name = new_file.filename
         handle_duplicates = self.preferences.config["handle_duplicates"]
-        if not handle_duplicates == "keep":
+        if not handle_duplicates == "Add duplicates":
             for key, item in self.datadict.items():
                 if name == item.filename:
-                    if handle_duplicates == "auto-rename":
+                    if handle_duplicates == "Auto-rename duplicates":
                         new_file.filename = datman.get_duplicate_filename(self, name)
-                    elif handle_duplicates == "ignore":
+                    elif handle_duplicates == "Ignore duplicates":
                         window.toast_overlay.add_toast(Adw.Toast(title="Item with this name already exists"))
                         return
-                    else:
+                    elif handle_duplicates == "Override existing items":
                         new_file.xdata_clipboard = [new_file.xdata]
                         new_file.ydata_clipboard = [new_file.ydata]
                         new_file.clipboard_pos = -1

@@ -57,15 +57,15 @@ def open_selection(self, files, from_dictionary = False, import_settings = None,
                     break
                 if item is not None:
                     handle_duplicates = self.preferences.config["handle_duplicates"]
-                    if not handle_duplicates == "keep":
+                    if not handle_duplicates == "Add duplicates":
                         for key, item2 in self.datadict.items():
                             if item.filename == item2.filename:
-                                if handle_duplicates == "auto-rename":
+                                if handle_duplicates == "Auto-rename duplicates":
                                     item.filename = get_duplicate_filename(self, item.filename)
-                                elif handle_duplicates == "ignore":
+                                elif handle_duplicates == "Ignore duplicates":
                                     self.props.active_window.toast_overlay.add_toast(Adw.Toast(title=f"Item \"{item.filename}\" already exists"))
                                     return
-                                elif handle_duplicates == "override":
+                                elif handle_duplicates == "Override existing items":
                                     y_axis = item.plot_Y_position
                                     x_axis = item.plot_X_position
                                     self.datadict[key] = item

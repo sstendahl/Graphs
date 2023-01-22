@@ -231,10 +231,10 @@
                 <property name="model">
                   <object class="GtkStringList">
                     <items>
-                      <item translatable="yes">override</item>
-                      <item translatable="yes">ignore</item>
-                      <item translatable="yes">keep</item>
-                      <item translatable="yes">auto-rename</item>
+                      <item translatable="yes">Auto-rename duplicates</item>
+                      <item translatable="yes">Ignore duplicates</item>
+                      <item translatable="yes">Add duplicates</item>
+                      <item translatable="yes">Override existing items</item>
                     </items>
                   </object>
                 </property>
