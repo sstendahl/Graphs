@@ -188,9 +188,8 @@ def delete(widget,  self, filename, id):
     self.props.active_window.toast_overlay.add_toast(Adw.Toast(title=f"Deleted {filename}"))
 
     if len(self.datadict) == 0:
-        self.canvas.ax.get_legend().remove()
-        self.canvas.ax.set_prop_cycle(None)
-
+        self.canvas.ax.legend().remove()
+        #self.canvas.ax.set_prop_cycle(None)
 
     for key, item in self.datadict.items():
         item.xdata_clipboard = [item.xdata]
