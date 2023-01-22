@@ -176,17 +176,18 @@ def delete_selected(shortcut, _,  self):
     selected_keys = utilities.get_selected_keys(self)
     for key in selected_keys:
         delete(None, self, key)
-
-def delete(widget,  self, filename, id):
-    print("deleting")
+        
+        
+def delete(widget,  self, id):
     layout = self.sample_box
     for key, item in self.item_rows.items():
         if key == id:
             self.sample_box.remove(item)
+    filename = self.datadict[id].filename
     del self.item_rows[id]
     del self.datadict[id]
     self.props.active_window.toast_overlay.add_toast(Adw.Toast(title=f"Deleted {filename}"))
-
+    
     if len(self.datadict) == 0:
         self.canvas.ax.legend().remove()
         self.canvas.ax.set_prop_cycle(None)
