@@ -54,8 +54,9 @@ Graphs is an excellent fit both plotting and data manipulation. The plots create
         </ul>
         <p>Bugfixes and other changes:</p>                       
         <ul>
-          <li>"Shift vertically" option now works properly on linear scale as well</li>
-          <li>Fixed a bug where the last graph to be deleted was still shown</li>
+          <li>"Shift vertically" behaviour has been revamped, and now also works properly on linear scale as well</li>
+          <li>"Shift vertically" option now normalizes after shifting, ensuring the shift is similar for all datasets</li>     
+          <li>Fixed a bug where the graph was still shown after deletion, if it was the last graph that was open</li>
           <li>Fixed a bug where the text in the dropdown menu of plot-settings didn't update when changing the name of a data set</li>    
           <li>Fourier transforms are now sorted so that the x-data is continiously increasing</li>      
           <li>Some code clean-up has been performed</li> 
