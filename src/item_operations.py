@@ -13,23 +13,41 @@ gi.require_version('Adw', '1')
 gi.require_version('Gtk', '4.0')
 
 def save_data(widget, _, self):
+    """
+    Open the save file dialog.
+    """
     delete_selected_data(self)
     datman.save_file_dialog(self)
 
 def add_to_clipboard(self):
+    """
+    Add data to the clipboard, is performed whenever an action is performed.
+    Appends the latest state to the clipboard.
+    """
     undo_button = self.props.active_window.undo_button
     undo_button.set_sensitive(True)
+    
+    #If a couple of redo's were performed previously, it deletes the clipboard
+    #data that is located after the current clipboard position and disables the
+    #redo button
     for key, item in self.datadict.items():
         delete_lists = - item.clipboard_pos - 1
         for index in range(delete_lists):
             del item.xdata_clipboard[-1]
             del item.ydata_clipboard[-1]
+        if delete_lists != 0:
+            redo_button = self.props.active_window.redo_button
+            redo_button.set_sensitive(False)
 
         item.clipboard_pos = -1
         item.xdata_clipboard.append(item.xdata)
         item.ydata_clipboard.append(item.ydata)
 
 def undo(widget, shortcut, self):
+    """
+    Undo an action, moves the clipboard position backwards by one and changes
+    the dataset to the state before the previous action was performed
+    """
     undo_button = self.props.active_window.undo_button
     redo_button = self.props.active_window.redo_button
     for key, item in self.datadict.items():
@@ -43,6 +61,10 @@ def undo(widget, shortcut, self):
     plotting_tools.refresh_plot(self)
 
 def redo(widget, shortcut, self):
+    """
+    Redo an action, moves the clipboard position forwards by one and changes the 
+    dataset to the state before the previous action was undone
+    """
     undo_button = self.props.active_window.undo_button
     redo_button = self.props.active_window.redo_button
     for key, item in self.datadict.items():
@@ -57,6 +79,11 @@ def redo(widget, shortcut, self):
 
 
 def delete_selected_data(self):
+    """
+    Delete the data sets that have the _selected suffix on their ID.
+    This is the separate dataset that is created whenever part of the data set
+    falls within a span, not the parent dataset itself.
+    """
     key_list = []
     for key in self.datadict:
         if key.endswith("_selected"):
@@ -65,6 +92,10 @@ def delete_selected_data(self):
         del (self.datadict[key])
 
 def pick_data_selection(self, item, startx, stopx):
+    """
+    Checks for a given item if it is within the selected span. If it is, it 
+    returns the part of the data that is within the span.
+    """
     xdata = item.xdata
     ydata = item.ydata
     xdata, ydata = sort_data(xdata, ydata)
