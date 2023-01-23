@@ -86,11 +86,19 @@ def pick_data_selection(self, item, startx, stopx):
         return selected_data
 
 def sort_data(x, y):
+    """
+    Sort x and y-coordinates such that the x-data is continiously increasing
+    Takes in x, and y coordinates of that array, and returns the sorted variant
+    """
     bar_list = {"x": x, "y": y}
     sorted = sort_bar(bar_list)
     return sorted["x"], sorted["y"]
 
 def sort_bar(bar_list):
+    """
+    Sort x and y-coordinates such that the x-data is continiously increasing
+    Takes in one bar list, sorts it and returns the sorted version
+    """
     sorted_x = []
     sorted_x.extend(bar_list['x'])
     sorted_x.sort()
@@ -99,9 +107,46 @@ def sort_bar(bar_list):
         sorted_y.append(bar_list['y'][bar_list['x'].index(x)])
     return {"x": sorted_x, "y": sorted_y}
 
-
+def cut_data(widget, _, self):
+    """
+    Cut selected data over the span that is selected
+    """
+    win = self.props.active_window
+    button = win.select_data_button
+    if button.get_active():
+        if select_data(self): #If select_data ran succesfully
+            for key, item in self.datadict.items():
+                if item is None:
+                    continue
+                xdata = item.xdata
+                ydata = item.ydata
+                #Create empty arrays that will be equal to the new cut data 
+                new_x = []
+                new_y = []
+                
+                #If our item is among the selected samples, we will cut those
+                if f"{key}_selected" in self.datadict:
+                    selected_item = self.datadict[f"{key}_selected"]
+                    if selected_item == None:
+                        continue
+                    for index, (valuex, valuey) in enumerate(zip(xdata, ydata)):
+                        #Appends the values that are within the selected span
+                        if valuex < min(selected_item.xdata) or valuex > max(selected_item.xdata):
+                            new_x.append(valuex)
+                            new_y.append(valuey)
+                    item.xdata = new_x
+                    item.ydata = new_y
+            delete_selected_data(self)
+            add_to_clipboard(self)
+            plotting_tools.refresh_plot(self, set_limits = False)
+            
 
 def select_data(self):
+    """
+    Select data that is highlighted by the span
+    Basically just creates new data_sets with the key "_selected" appended
+    """
+    #First delete previously selected data
     delete_selected_data(self)
     selected_dict = {}
     selected_keys = utilities.get_selected_keys(self)
@@ -111,48 +156,32 @@ def select_data(self):
         highlight = self.highlight
         startx = min(highlight.extents)
         stopx = max(highlight.extents)
+        
+        #Selection is different for bottom and top axis. The span selector takes
+        #the top axis coordinates. So for the data that uses the bottom axis as
+        #x-axis coordinates, the coordinates first needs to be converted.
         if item.plot_X_position == "bottom":
             xrange_bottom = max(self.canvas.ax.get_xlim()) - min(self.canvas.ax.get_xlim())
             xrange_top = max(self.canvas.top_left_axis.get_xlim()) - min(self.canvas.top_left_axis.get_xlim())
             startx = ((startx - min(self.canvas.top_left_axis.get_xlim())) / xrange_top) * xrange_bottom + min(self.canvas.ax.get_xlim())
             stopx = ((stopx - min(self.canvas.top_left_axis.get_xlim())) / xrange_top) * xrange_bottom + min(self.canvas.ax.get_xlim())
+        
+        #Select data
         if not ((startx < min(item.xdata) and stopx < min(item.xdata)) or (startx > max(item.xdata))):
             selected_data = pick_data_selection(self, item, startx, stopx)
             selected_dict[f"{key}_selected"] = selected_data
         if (startx < min(item.xdata) and stopx < min(item.xdata)) or (startx > max(item.xdata)):
             delete_selected_data(self)
-
+        #Update the dataset to include the selected data, only if we actually
+        #managed to select data.
         if len(selected_dict) > 0:
             self.datadict.update(selected_dict)
     return True
 
-def cut_data(widget, _, self):
-    win = self.props.active_window
-    button = win.select_data_button
-    if button.get_active():
-        if select_data(self):
-            for key, item in self.datadict.items():
-                if item is None:
-                    continue
-                xdata = item.xdata
-                ydata = item.ydata
-                new_x = []
-                new_y = []
-                if f"{key}_selected" in self.datadict:
-                    selected_item = self.datadict[f"{key}_selected"]
-                    if selected_item == None:
-                        continue
-                    for index, (valuex, valuey) in enumerate(zip(xdata, ydata)):
-                        if valuex < min(selected_item.xdata) or valuex > max(selected_item.xdata):
-                            new_x.append(valuex)
-                            new_y.append(valuey)
-                    item.xdata = new_x
-                    item.ydata = new_y
-            delete_selected_data(self)
-            add_to_clipboard(self)
-            plotting_tools.refresh_plot(self, set_limits = False)
-
 def get_derivative(widget, shortcut, self):
+    """
+    Calculate derivative of all selected data
+    """
     selected_keys = utilities.get_selected_keys(self)
     for key in selected_keys:
         item = self.datadict[key]
@@ -164,6 +193,9 @@ def get_derivative(widget, shortcut, self):
     plotting_tools.refresh_plot(self)
 
 def get_integral(widget, shortcut, self):
+    """
+    Calculate indefinite integral of all selected data
+    """
     selected_keys = utilities.get_selected_keys(self)
     for key in selected_keys:
         item = self.datadict[key]
@@ -175,6 +207,9 @@ def get_integral(widget, shortcut, self):
     plotting_tools.refresh_plot(self)
 
 def get_inverse_fourier(widget, shortcut, self):
+    """
+    Perform Inverse Fourier transformation on all selected data
+    """
     selected_keys = utilities.get_selected_keys(self)
     for key in selected_keys:
         item = self.datadict[key]
@@ -183,12 +218,16 @@ def get_inverse_fourier(widget, shortcut, self):
         y_fourier = np.fft.ifft(y)
         x_fourier = np.fft.fftfreq(len(x), x[1] - x[0])
         y_fourier = [value.real for value in y_fourier]
+        x_fourier, y_fourier = sort_data(x_fourier.tolist(), y_fourier)
         item.ydata =  y_fourier
-        item.xdata = x_fourier.tolist()        
+        item.xdata = x_fourier
     add_to_clipboard(self)
     plotting_tools.refresh_plot(self)
 
 def get_fourier(widget, shortcut, self):
+    """
+    Perform Fourier transformation on all selected data
+    """
     selected_keys = utilities.get_selected_keys(self)
     for key in selected_keys:
         item = self.datadict[key]
@@ -197,12 +236,18 @@ def get_fourier(widget, shortcut, self):
         y_fourier = np.fft.fft(y)
         x_fourier = np.fft.fftfreq(len(x), x[1] - x[0])
         y_fourier = [value.real for value in y_fourier]
+        
+        x_fourier, y_fourier = sort_data(x_fourier.tolist(), y_fourier)
         item.ydata =  y_fourier
-        item.xdata = x_fourier.tolist()
+        item.xdata = x_fourier
     add_to_clipboard(self)
     plotting_tools.refresh_plot(self)
 
 def smoothen_data(widget, shortcut, self):
+    """
+    Smoothen y-data. If logscale is true, it smoothenes on the log scale
+    instead.
+    """
     selected_keys = utilities.get_selected_keys(self)
     logscale = False
     for key in selected_keys:
@@ -217,9 +262,13 @@ def smoothen_data(widget, shortcut, self):
     add_to_clipboard(self)
     plotting_tools.refresh_plot(self)
 
-def smooth(y, box_points):
+def smooth(y_data, box_points):
+    """
+    Smoothen data, takes the y_array and the box-points, which neighbouring
+    values are used for smoothening. Returns smoothened array
+    """
     box = np.ones(box_points) / box_points
-    y_smooth = np.convolve(y, box, mode="same")
+    y_smooth = np.convolve(y_data, box, mode="same")
     return y_smooth
 
 def shift_vertically(shortcut, _, self):
@@ -253,6 +302,12 @@ def shift_vertically(shortcut, _, self):
     plotting_tools.refresh_plot(self)
 
 def translate_x(shortcut, _, self):
+    """
+    Translate all selected data on the x-axis
+    Amount to be shifted is equal to the value in the translate_x entry widget
+    Will show a toast if a ValueError is raised, typically when a user entered
+    an invalid number (e.g. comma instead of point separators)
+    """
     win = self.props.active_window
     try:
         offset = float(win.translate_x_entry.get_text())
@@ -267,6 +322,12 @@ def translate_x(shortcut, _, self):
     plotting_tools.refresh_plot(self)
 
 def translate_y(shortcut, _, self):
+    """
+    Translate all selected data on the y-axis
+    Amount to be shifted is equal to the value in the translate_y entry widget
+    Will show a toast if a ValueError is raised, typically when a user entered
+    an invalid number (e.g. comma instead of point separators)
+    """
     win = self.props.active_window
     try:
         offset = float(win.translate_y_entry.get_text())
@@ -281,6 +342,12 @@ def translate_y(shortcut, _, self):
     plotting_tools.refresh_plot(self)
 
 def multiply_x(shortcut, _, self):
+    """
+    Multiply all selected data on the x-axis
+    Amount to be shifted is equal to the value in the multiply_y entry widget
+    Will show a toast if a ValueError is raised, typically when a user entered
+    an invalid number (e.g. comma instead of point separators)
+    """
     win = self.props.active_window
     try:
         multiplier = float(win.multiply_x_entry.get_text())
@@ -295,6 +362,12 @@ def multiply_x(shortcut, _, self):
     plotting_tools.refresh_plot(self)
 
 def multiply_y(shortcut, _, self):
+    """
+    Multiply all selected data on the y-axis
+    Amount to be shifted is equal to the value in the multiply_y entry widget
+    Will show a toast if a ValueError is raised, typically when a user entered
+    an invalid number (e.g. comma instead of point separators)
+    """
     win = self.props.active_window
     try:
         multiplier = float(win.multiply_y_entry.get_text())
@@ -310,6 +383,9 @@ def multiply_y(shortcut, _, self):
 
 
 def normalize_data(shortcut, _, self):
+    """
+    Normalize all selected data
+    """
     selected_keys = utilities.get_selected_keys(self)
     for key in selected_keys:
         self.datadict[key].ydata = normalize(self.datadict[key].ydata)
@@ -317,29 +393,47 @@ def normalize_data(shortcut, _, self):
     plotting_tools.refresh_plot(self)
 
 def normalize(ydata):
+    """
+    Normalize input.
+    Divides each value in an array by the maximum value in the array
+    """
     max_y = max(ydata)
     new_y = [value / max_y for value in ydata]
     return new_y
 
 def center_data(shortcut, _, self):
+    """
+    Center all selected data
+    Depending on the key, will center either on the middle coordinate, or on
+    the maximum value of the data
+    """
     selected_keys = utilities.get_selected_keys(self)
     for key in selected_keys:
         if self.preferences.config["action_center_data"] == "Center at maximum Y value":
             self.datadict[key].xdata = center_data_max_Y(self.datadict[key].xdata, self.datadict[key].ydata)
         elif self.preferences.config["action_center_data"] == "Center at middle coordinate":
-            self.datadict[key].xdata = center_data_middle(self.datadict[key].xdata, self.datadict[key].ydata)
+            self.datadict[key].xdata = center_data_middle(self.datadict[key].xdata)
     add_to_clipboard(self)
     plotting_tools.refresh_plot(self)
 
 
 def center_data_max_Y(xdata, ydata):
+    """
+    Center data on the maximum y value, takes in x array and y array.
+    Centers the x-data at index where the y-data has its maximum
+    """
     max_value = max(ydata)
     middle_index = ydata.index(max_value)
     middle_value = xdata[middle_index]
     xdata = [coordinate - middle_value for coordinate in xdata]
     return xdata
 
-def center_data_middle(xdata, ydata):
+def center_data_middle(xdata):
+    """
+    Center data on the middle value, takes in x array.
+    Translates the x-array by the middle point of the array, so that this
+    middle point lies in the center
+    """
     middle_value = (min(xdata) + max(xdata)) / 2
     xdata = [coordinate - middle_value for coordinate in xdata]
     return xdata

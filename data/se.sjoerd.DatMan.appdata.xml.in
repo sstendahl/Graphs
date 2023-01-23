@@ -52,11 +52,12 @@ Graphs is an excellent fit both plotting and data manipulation. The plots create
           <li>There's no longer an error shown when a new config file is loaded (such as on initial setup)</li>
           <li>There's now multiple options to choose from on how to handle data with the same name</li>
         </ul>
-        <p>Bugfixes:</p>                       
+        <p>Bugfixes and other changes:</p>                       
         <ul>
           <li>"Shift vertically" option now works properly on linear scale as well</li>
           <li>Fixed a bug where the last graph to be deleted was still shown</li>
-          <li>Fixed a bug where the text in the dropdown menu of plot-settings didn't update when changing the name of a data set</li>         
+          <li>Fixed a bug where the text in the dropdown menu of plot-settings didn't update when changing the name of a data set</li>    
+          <li>Fourier transforms are now sorted so that the x-data is continiously increasing</li>      
           <li>Some code clean-up has been performed</li> 
         </ul>
         </description>
