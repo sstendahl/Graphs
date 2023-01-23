@@ -170,7 +170,6 @@ def cut_data(widget, _, self):
             delete_selected_data(self)
             add_to_clipboard(self)
             plotting_tools.refresh_plot(self, set_limits = False)
-            
 
 def select_data(self):
     """
@@ -309,12 +308,15 @@ def shift_vertically(shortcut, _, self):
     ydata, and log data by a factor of 10000.
     """
     shifter = 1
-    shift_value_log = 10000
+    shift_value_log = 0
     shift_value_linear = 0
-    
-    for key, item in self.datadict.items():
-        shift_value_linear += 1.5*(max(item.ydata) - min(item.ydata))
         
+    for key, item in self.datadict.items():
+        item.ydata = normalize(item.ydata)
+        ymin = min(x for x in item.ydata if x != 0)
+        ymax = max(x for x in item.ydata if x != 0)
+        shift_value_linear += 1.5*(ymax - ymin)
+        shift_value_log += 5*10**(np.log10(ymax/ymin))
         #Check which axes the data is on, so it can choose the appropriate
         #scaling (log/linear)
         if item.plot_Y_position == "left":
