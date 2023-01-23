@@ -304,7 +304,7 @@
                                 <property name="title">Manipulate Data</property>
                                 <child>
                                   <object class="AdwActionRow">
-                                    <property name="subtitle">Get Derivative of the data</property>
+                                    <property name="subtitle">Get the derivative of the data</property>
                                     <property name="activatable-widget">derivative_button</property>
                                     <child>
                                       <object class="GtkButton" id="derivative_button">
@@ -318,7 +318,7 @@
                                 </child>
                                 <child>
                                   <object class="AdwActionRow">
-                                    <property name="subtitle">Get the indefinite Integral of the data</property>
+                                    <property name="subtitle">Get the indefinite integral of the data</property>
                                     <property name="activatable-widget">integral_button</property>
                                     <child>
                                       <object class="GtkButton" id="integral_button">
