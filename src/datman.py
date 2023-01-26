@@ -117,7 +117,6 @@ def toggle_darkmode(shortcut, theme, widget, self):
 def select_item(self, key):
     win = self.props.active_window
     list_box = win.list_box
-    print(f"Selecting key {key}")
     list_box.select_row(self.sample_menu[key])
     item = self.item_rows[key]
     item.selected = True
@@ -219,15 +218,19 @@ def add_sample_to_menu(self, filename, color, id, select_item = False):
     win = self.props.active_window
     self.list_box = win.list_box
     row = samplerow.SampleBox(self, filename, id)
-    row.gesture.connect("pressed", row.clicked, self)
+    #row.gesture.connect("pressed", row.clicked, self)
     row.color_picker = colorpicker.ColorPicker(color, row=row, parent=self)
     row.color_picker.set_hexpand(False)
-    delete_button = row.get_last_child()
-    row.remove(row.get_last_child())
+    row.delete_button_widget = row.get_last_child()
     row.append(row.sample_ID_label)
+    row.append(row.check_mark)
+    row.append(row.check_button)
     row.append(row.color_picker)
-    row.append(delete_button)
+    row.append(row.delete_button)
+    row.delete_button_widget.set_visible(False)
+    row.check_button.set_visible(False)
     row.delete_button.connect("clicked", delete, self, id)
+    row.check_button.connect("toggled", toggle_data, self, id)
     max_length = int(26)
     if len(filename) > max_length:
         label = f"{filename[:max_length]}..."
@@ -237,6 +240,13 @@ def add_sample_to_menu(self, filename, color, id, select_item = False):
     self.list_box.append(row)
     self.item_rows[id] = row
     self.sample_menu[id] = self.list_box.get_last_child()
+    
+def toggle_data(widget,  self, id):
+    if widget.get_active():
+        select_item(self, id)
+    else:
+        self.item_rows[id].selected = False
+    plotting_tools.refresh_plot(self)
     
 def save_file_dialog(self, documenttype="Text file (*.txt)"):
     def save_file_chooser(action):
@@ -313,6 +323,30 @@ def get_import_settings(self):
     import_settings["column_y"] = int(self.preferences.config["import_column_y"])
     import_settings["name"] = ""
     return import_settings
+    
+def toggle_selection_mode(shortcut, _,  self):
+    win = self.props.active_window
+    button = win.selection_button
+    if button.get_active():
+        button.set_active(False)
+        for key, item in self.item_rows.items():
+            item.delete_button_widget.set_visible(False)
+            if self.item_rows[key].selected:
+                item.check_mark.set_visible(True)
+            item.check_button.set_visible(False)            
+    else:
+        button.set_active(True)
+        for key, item in self.item_rows.items():
+            item.delete_button_widget.set_visible(True)
+            item.check_mark.set_visible(False)
+            if self.item_rows[key].selected:
+                item.check_button.set_active(True)
+            else:
+                item.check_button.set_active(False)                
+            item.check_button.set_visible(True)
+
+
+    print("Pressed selection button")
 
 def on_open_response(dialog, response, self, import_settings):
     files = []

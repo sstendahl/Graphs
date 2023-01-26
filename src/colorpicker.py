@@ -6,12 +6,14 @@ from matplotlib import colors
 class ColorPicker(Gtk.Button):
     def __init__(self, color, row, parent):
         super().__init__()
-        self.set_size_request(45, -1)
+        #self.set_size_request(45, -1)
         self.row = row
         self.parent = parent
         self.set_tooltip_text(_("Pick a color"))
         self.color = color
-        
+        style_context = self.get_style_context()
+        style_context.add_class("circular")
+
         press_gesture = Gtk.GestureClick()
         press_gesture.connect("pressed", self.change_color)
         
@@ -74,3 +76,4 @@ class ColorPicker(Gtk.Button):
         self.set_rgba(rgba)
         self.set_rgba(self.get_rgba())
         self.update_color()
+
