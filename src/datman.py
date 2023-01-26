@@ -116,10 +116,11 @@ def toggle_darkmode(shortcut, theme, widget, self):
 
 def select_item(self, key):
     win = self.props.active_window
+    list_box = win.list_box
+    print(f"Selecting key {key}")
+    list_box.select_row(self.sample_menu[key])
     item = self.item_rows[key]
     item.selected = True
-    item.set_css_classes(['label_selected'])
-    item.set_css(item.get_css())
     plotting_tools.refresh_plot(self)
 
 def get_data(self, path, import_settings):
@@ -181,10 +182,10 @@ def delete_selected(shortcut, _,  self):
         
         
 def delete(widget,  self, id, give_toast = True):
-    layout = self.sample_box
-    for key, item in self.item_rows.items():
+    layout = self.list_box
+    for key, item in self.sample_menu.items():
         if key == id:
-            self.sample_box.remove(item)
+            self.list_box.remove(item)
     filename = self.datadict[id].filename
     del self.item_rows[id]
     del self.datadict[id]
@@ -206,29 +207,26 @@ def delete(widget,  self, id, give_toast = True):
 def select_all(widget, _, self):
     for key, item in self.item_rows.items():
         item.selected = True
-        item.set_css_classes(['label_selected'])
-        item.set_css(item.css)
     plotting_tools.refresh_plot(self)
 
 
 def select_none(widget, _, self):
     for key, item in self.item_rows.items():
         item.selected = False
-        item.set_css_classes(['label_deselected'])
-        item.set_css(item.css)
     plotting_tools.refresh_plot(self)
 
 def add_sample_to_menu(self, filename, color, id, select_item = False):
     win = self.props.active_window
-    self.sample_box = win.sample_box
+    self.list_box = win.list_box
     row = samplerow.SampleBox(self, filename, id)
     row.gesture.connect("pressed", row.clicked, self)
     row.color_picker = colorpicker.ColorPicker(color, row=row, parent=self)
     row.color_picker.set_hexpand(False)
-    sample_box = row.sample_box
-    sample_box.remove(sample_box.get_last_child())
-    row.sample_box.append(row.color_picker)
-    row.sample_box.append(row.delete_button)
+    delete_button = row.get_last_child()
+    row.remove(row.get_last_child())
+    row.append(row.sample_ID_label)
+    row.append(row.color_picker)
+    row.append(delete_button)
     row.delete_button.connect("clicked", delete, self, id)
     max_length = int(26)
     if len(filename) > max_length:
@@ -236,9 +234,10 @@ def add_sample_to_menu(self, filename, color, id, select_item = False):
     else:
         label = filename
     row.sample_ID_label.set_text(label)
+    self.list_box.append(row)
     self.item_rows[id] = row
-    self.sample_box.append(row)
-
+    self.sample_menu[id] = self.list_box.get_last_child()
+    
 def save_file_dialog(self, documenttype="Text file (*.txt)"):
     def save_file_chooser(action):
         dialog = Gtk.FileChooserNative.new(

@@ -23,7 +23,6 @@ class DatManWindow(Adw.ApplicationWindow):
     __gtype_name__ = 'DatManWindow'
     drawing_layout = Gtk.Template.Child()
     selection_box = Gtk.Template.Child()
-    sample_box = Gtk.Template.Child()
     undo_button = Gtk.Template.Child()
     redo_button = Gtk.Template.Child()
     translate_x_entry = Gtk.Template.Child()
@@ -38,14 +37,13 @@ class DatManWindow(Adw.ApplicationWindow):
     fourier_button = Gtk.Template.Child()
     inverse_fourier_button = Gtk.Template.Child()
     cut_data_button = Gtk.Template.Child()
-    select_all_button = Gtk.Template.Child()
-    select_none_button = Gtk.Template.Child()
     normalize_button = Gtk.Template.Child()
     center_data_button = Gtk.Template.Child()
     save_data_button = Gtk.Template.Child()
     shift_vertically_button = Gtk.Template.Child()
     select_data_button = Gtk.Template.Child()
     toast_overlay = Gtk.Template.Child()
+    list_box = Gtk.Template.Child()
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
