@@ -25,16 +25,12 @@ class SampleBox(Gtk.Box):
 
     def clicked(self,gesture,_ ,xpos, ypos, datman):
         win = datman.props.active_window
-        list_box = win.list_box
-        if not self.selected:
-            self.selected = True
-            print(f"Selecting key {self.id}")
-            print(datman.sample_menu[self.id])
-            list_box.select_row(datman.sample_menu[self.id])
-            datman.datadict[self.id].selected = True
-        else:
-            self.selected = False
-            print(f"Unselecting key {self.id}")
-            datman.datadict[self.id].selected = False
-            list_box.unselect_row(datman.sample_menu[self.id])
+        button = win.selection_button
+        if button.get_active():
+            if not self.selected:
+                self.check_button.set_active(True) 
+                self.selected = True
+            else:
+                self.check_button.set_active(False) 
+                self.selected = False
         plotting_tools.refresh_plot(datman, set_limits = False)

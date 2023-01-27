@@ -197,7 +197,12 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
     def on_close(self, _, parent):
         item = self.item
         new_item = self.set_config(item, parent)
-        parent.item_rows[new_item.id].sample_ID_label.set_text(new_item.filename)
+        max_length = int(30)
+        if len(new_item.filename) > max_length:
+            label = f"{new_item.filename[:max_length]}..."
+        else:
+            label = new_item.filename
+        parent.item_rows[new_item.id].sample_ID_label.set_text(label)
         if new_item.selected:
             datman.select_item(parent, new_item.id)
         plotting_tools.reload_plot(parent)

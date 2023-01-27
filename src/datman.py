@@ -106,7 +106,6 @@ def toggle_darkmode(shortcut, theme, widget, self):
     if len(self.datadict) > 0:
         key = list(self.datadict.keys())[0]
         item = self.item_rows[key]
-        item.set_css(item.get_css())
     if Adw.StyleManager.get_default().get_dark():
         self.plot_settings.plot_style = self.preferences.config["plot_style_dark"]
     else:
@@ -175,9 +174,12 @@ def swap(str1):
     return str1
 
 def delete_selected(shortcut, _,  self):
-    selected_keys = utilities.get_selected_keys(self)
-    for key in selected_keys:
-        delete(None, self, key)
+    win = self.props.active_window
+    button = win.selection_button
+    if button.get_active():
+        selected_keys = utilities.get_selected_keys(self)
+        for key in selected_keys:
+            delete(None, self, key)
         
         
 def delete(widget,  self, id, give_toast = True):
@@ -204,34 +206,43 @@ def delete(widget,  self, id, give_toast = True):
 
 
 def select_all(widget, _, self):
-    for key, item in self.item_rows.items():
-        item.selected = True
+    win = self.props.active_window
+    button = win.selection_button
+    if button.get_active():
+        for key, item in self.item_rows.items():
+            item.selected = True
+            item.check_button.set_active(True) 
     plotting_tools.refresh_plot(self)
 
 
 def select_none(widget, _, self):
-    for key, item in self.item_rows.items():
-        item.selected = False
+    win = self.props.active_window
+    button = win.selection_button
+    if button.get_active():
+        for key, item in self.item_rows.items():
+            item.selected = False
+            item.check_button.set_active(False) 
     plotting_tools.refresh_plot(self)
 
 def add_sample_to_menu(self, filename, color, id, select_item = False):
     win = self.props.active_window
     self.list_box = win.list_box
     row = samplerow.SampleBox(self, filename, id)
-    #row.gesture.connect("pressed", row.clicked, self)
+    row.gesture.connect("pressed", row.clicked, self)
     row.color_picker = colorpicker.ColorPicker(color, row=row, parent=self)
     row.color_picker.set_hexpand(False)
     row.delete_button_widget = row.get_last_child()
+    row.remove(row.delete_button_widget)
     row.append(row.sample_ID_label)
     row.append(row.check_mark)
     row.append(row.check_button)
     row.append(row.color_picker)
-    row.append(row.delete_button)
+    row.append(row.delete_button_widget)
     row.delete_button_widget.set_visible(False)
     row.check_button.set_visible(False)
     row.delete_button.connect("clicked", delete, self, id)
     row.check_button.connect("toggled", toggle_data, self, id)
-    max_length = int(26)
+    max_length = int(30)
     if len(filename) > max_length:
         label = f"{filename[:max_length]}..."
     else:
@@ -333,7 +344,8 @@ def toggle_selection_mode(shortcut, _,  self):
             item.delete_button_widget.set_visible(False)
             if self.item_rows[key].selected:
                 item.check_mark.set_visible(True)
-            item.check_button.set_visible(False)            
+            item.check_button.set_visible(False)    
+            item.color_picker.set_visible(True)
     else:
         button.set_active(True)
         for key, item in self.item_rows.items():
@@ -342,11 +354,9 @@ def toggle_selection_mode(shortcut, _,  self):
             if self.item_rows[key].selected:
                 item.check_button.set_active(True)
             else:
-                item.check_button.set_active(False)                
+                item.check_button.set_active(False) 
+            item.color_picker.set_visible(False)
             item.check_button.set_visible(True)
-
-
-    print("Pressed selection button")
 
 def on_open_response(dialog, response, self, import_settings):
     files = []
