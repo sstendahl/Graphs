@@ -5,6 +5,7 @@
   <template class="SampleBox" parent="GtkBox">
     <child>
       <object class="GtkListBoxRow" id="sample_box">
+        <property name="can-focus">False</property>
         <child type="start">
           <object class="GtkLabel" id="sample_ID_label">
             <property name="margin-start">5</property>
@@ -17,6 +18,8 @@
           <object class="GtkCheckButton" id="check_button">
             <property name="halign">start</property>
             <property name="hexpand">false</property>
+            <property name="can-focus">False</property>
+            <property name="can-target">False</property>
             <style>
               <class name="selection-mode" />
             </style>

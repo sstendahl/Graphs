@@ -197,7 +197,7 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
     def on_close(self, _, parent):
         item = self.item
         new_item = self.set_config(item, parent)
-        max_length = int(30)
+        max_length = int(28)
         if len(new_item.filename) > max_length:
             label = f"{new_item.filename[:max_length]}..."
         else:
@@ -206,3 +206,4 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
         if new_item.selected:
             datman.select_item(parent, new_item.id)
         plotting_tools.reload_plot(parent)
+

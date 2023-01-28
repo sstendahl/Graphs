@@ -115,8 +115,6 @@ def toggle_darkmode(shortcut, theme, widget, self):
 
 def select_item(self, key):
     win = self.props.active_window
-    list_box = win.list_box
-    list_box.select_row(self.sample_menu[key])
     item = self.item_rows[key]
     item.selected = True
     plotting_tools.refresh_plot(self)
@@ -242,7 +240,7 @@ def add_sample_to_menu(self, filename, color, id, select_item = False):
     row.check_button.set_visible(False)
     row.delete_button.connect("clicked", delete, self, id)
     row.check_button.connect("toggled", toggle_data, self, id)
-    max_length = int(30)
+    max_length = int(28)
     if len(filename) > max_length:
         label = f"{filename[:max_length]}..."
     else:
@@ -254,7 +252,7 @@ def add_sample_to_menu(self, filename, color, id, select_item = False):
     
 def toggle_data(widget,  self, id):
     if widget.get_active():
-        select_item(self, id)
+        self.item_rows[id].selected = True
     else:
         self.item_rows[id].selected = False
     plotting_tools.refresh_plot(self)
@@ -381,6 +379,9 @@ def on_open_response(dialog, response, self, import_settings):
         if not button.get_active():
             self.highlight.set_visible(False)
             self.highlight.set_active(False)
+        if win.selection_button.get_active():
+            win.selection_button.set_active(False)
+            toggle_selection_mode(None, None, self)
 
 
 def load_empty(self):

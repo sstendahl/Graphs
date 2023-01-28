@@ -34,3 +34,4 @@ class SampleBox(Gtk.Box):
                 self.check_button.set_active(False) 
                 self.selected = False
         plotting_tools.refresh_plot(datman, set_limits = False)
+
