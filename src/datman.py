@@ -106,7 +106,6 @@ def toggle_darkmode(shortcut, theme, widget, self):
     if len(self.datadict) > 0:
         key = list(self.datadict.keys())[0]
         item = self.item_rows[key]
-        item.set_css(item.get_css())
     if Adw.StyleManager.get_default().get_dark():
         self.plot_settings.plot_style = self.preferences.config["plot_style_dark"]
     else:
@@ -118,8 +117,6 @@ def select_item(self, key):
     win = self.props.active_window
     item = self.item_rows[key]
     item.selected = True
-    item.set_css_classes(['label_selected'])
-    item.set_css(item.get_css())
     plotting_tools.refresh_plot(self)
 
 def get_data(self, path, import_settings):
@@ -175,16 +172,19 @@ def swap(str1):
     return str1
 
 def delete_selected(shortcut, _,  self):
-    selected_keys = utilities.get_selected_keys(self)
-    for key in selected_keys:
-        delete(None, self, key)
+    win = self.props.active_window
+    button = win.selection_button
+    if button.get_active():
+        selected_keys = utilities.get_selected_keys(self)
+        for key in selected_keys:
+            delete(None, self, key)
         
         
 def delete(widget,  self, id, give_toast = True):
-    layout = self.sample_box
-    for key, item in self.item_rows.items():
+    layout = self.list_box
+    for key, item in self.sample_menu.items():
         if key == id:
-            self.sample_box.remove(item)
+            self.list_box.remove(item)
     filename = self.datadict[id].filename
     del self.item_rows[id]
     del self.datadict[id]
@@ -204,41 +204,59 @@ def delete(widget,  self, id, give_toast = True):
 
 
 def select_all(widget, _, self):
-    for key, item in self.item_rows.items():
-        item.selected = True
-        item.set_css_classes(['label_selected'])
-        item.set_css(item.css)
+    win = self.props.active_window
+    button = win.selection_button
+    if button.get_active():
+        for key, item in self.item_rows.items():
+            item.selected = True
+            item.check_button.set_active(True) 
     plotting_tools.refresh_plot(self)
 
 
 def select_none(widget, _, self):
-    for key, item in self.item_rows.items():
-        item.selected = False
-        item.set_css_classes(['label_deselected'])
-        item.set_css(item.css)
+    win = self.props.active_window
+    button = win.selection_button
+    if button.get_active():
+        for key, item in self.item_rows.items():
+            item.selected = False
+            item.check_button.set_active(False) 
     plotting_tools.refresh_plot(self)
 
 def add_sample_to_menu(self, filename, color, id, select_item = False):
     win = self.props.active_window
-    self.sample_box = win.sample_box
+    self.list_box = win.list_box
     row = samplerow.SampleBox(self, filename, id)
     row.gesture.connect("pressed", row.clicked, self)
     row.color_picker = colorpicker.ColorPicker(color, row=row, parent=self)
     row.color_picker.set_hexpand(False)
-    sample_box = row.sample_box
-    sample_box.remove(sample_box.get_last_child())
-    row.sample_box.append(row.color_picker)
-    row.sample_box.append(row.delete_button)
+    row.delete_button_widget = row.get_last_child()
+    row.remove(row.delete_button_widget)
+    row.append(row.sample_ID_label)
+    row.append(row.check_mark)
+    row.append(row.check_button)
+    row.append(row.color_picker)
+    row.append(row.delete_button_widget)
+    row.delete_button_widget.set_visible(False)
+    row.check_button.set_visible(False)
     row.delete_button.connect("clicked", delete, self, id)
-    max_length = int(26)
+    row.check_button.connect("toggled", toggle_data, self, id)
+    max_length = int(28)
     if len(filename) > max_length:
         label = f"{filename[:max_length]}..."
     else:
         label = filename
     row.sample_ID_label.set_text(label)
+    self.list_box.append(row)
     self.item_rows[id] = row
-    self.sample_box.append(row)
-
+    self.sample_menu[id] = self.list_box.get_last_child()
+    
+def toggle_data(widget,  self, id):
+    if widget.get_active():
+        self.item_rows[id].selected = True
+    else:
+        self.item_rows[id].selected = False
+    plotting_tools.refresh_plot(self)
+    
 def save_file_dialog(self, documenttype="Text file (*.txt)"):
     def save_file_chooser(action):
         dialog = Gtk.FileChooserNative.new(
@@ -314,6 +332,29 @@ def get_import_settings(self):
     import_settings["column_y"] = int(self.preferences.config["import_column_y"])
     import_settings["name"] = ""
     return import_settings
+    
+def toggle_selection_mode(shortcut, _,  self):
+    win = self.props.active_window
+    button = win.selection_button
+    if button.get_active():
+        button.set_active(False)
+        for key, item in self.item_rows.items():
+            item.delete_button_widget.set_visible(False)
+            if self.item_rows[key].selected:
+                item.check_mark.set_visible(True)
+            item.check_button.set_visible(False)    
+            item.color_picker.set_visible(True)
+    else:
+        button.set_active(True)
+        for key, item in self.item_rows.items():
+            item.delete_button_widget.set_visible(True)
+            item.check_mark.set_visible(False)
+            if self.item_rows[key].selected:
+                item.check_button.set_active(True)
+            else:
+                item.check_button.set_active(False) 
+            item.color_picker.set_visible(False)
+            item.check_button.set_visible(True)
 
 def on_open_response(dialog, response, self, import_settings):
     files = []
@@ -338,6 +379,9 @@ def on_open_response(dialog, response, self, import_settings):
         if not button.get_active():
             self.highlight.set_visible(False)
             self.highlight.set_active(False)
+        if win.selection_button.get_active():
+            win.selection_button.set_active(False)
+            toggle_selection_mode(None, None, self)
 
 
 def load_empty(self):

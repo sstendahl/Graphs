@@ -1,11 +1,12 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <interface>
-  <requires lib="gtk" version="4.0"/>
+  <requires lib="gtk" version="4.0" />
   <requires lib="libadwaita" version="1.2" />
   <template class="SampleBox" parent="GtkBox">
     <child>
-      <object class="GtkBox" id="sample_box">
-        <child>
+      <object class="GtkListBoxRow" id="sample_box">
+        <property name="can-focus">False</property>
+        <child type="start">
           <object class="GtkLabel" id="sample_ID_label">
             <property name="margin-start">5</property>
             <property name="halign">start</property>
@@ -14,25 +15,39 @@
           </object>
         </child>
         <child>
+          <object class="GtkCheckButton" id="check_button">
+            <property name="halign">start</property>
+            <property name="hexpand">false</property>
+            <property name="can-focus">False</property>
+            <property name="can-target">False</property>
+            <style>
+              <class name="selection-mode" />
+            </style>
+          </object>
+        </child>
+        <child>
+          <object class="GtkImage" id="check_mark">
+            <property name="icon-name">emblem-ok-symbolic</property>
+          </object>
+        </child>
+        <child>
           <object class="GtkButton" id="delete_button">
             <property name="tooltip-text" translatable="yes">Remove</property>
-            <property name="hexpand">false</property>
+            <style>
+              <class name="flat" />
+            </style>
             <child>
               <object class="GtkImage">
                 <property name="hexpand">false</property>
-                <property name="halign">center</property>
-                <property name="valign">center</property>
                 <property name="icon-name">edit-delete-symbolic</property>
               </object>
             </child>
           </object>
-        </child>"
+        </child>
       </object>
     </child>
     <style>
-      <class name="SampleBox"/>
+      <class name="SampleBox" />
     </style>
   </template>
 </interface>
-
-

@@ -40,11 +40,12 @@ Graphs is an excellent fit both plotting and data manipulation. The plots create
     </screenshot>
   </screenshots>
   <releases>
-            <release version="1.4.0" date="2023-01-24">
+            <release version="1.4.0" date="2023-01-28">
       <description>
-        <p>Major update with a UI overhaul</p>      
+        <p>Major update with a significant UI overhaul.</p>      
         <p>New in Graphs:</p>               
         <ul>
+          <li>The data list has been completely redesigned, with a selection mode toggle to select/deselect data sets</li>
           <li>The action grid on the left has been replaced by Expander Rows, sorting the actions by category</li>
           <li>Checkboxes in settings have been replaced by switches</li>
           <li>Old entry rows have been replaced by AdwEntryRows</li>
@@ -59,6 +60,7 @@ Graphs is an excellent fit both plotting and data manipulation. The plots create
           <li>Fixed a bug where the last graph to be deleted was still shown</li>
           <li>Fixed a bug where the text in the dropdown menu of plot-settings didn't update when changing the name of a data set</li>    
           <li>Fourier transforms are now sorted so that the x-data is continiously increasing</li>      
+          <li>Added new screenshots for Flathub</li> 
           <li>Some code clean-up has been performed</li> 
         </ul>
         </description>

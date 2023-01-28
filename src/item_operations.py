@@ -344,7 +344,7 @@ def translate_x(shortcut, _, self):
     win = self.props.active_window
     try:
         offset = eval(win.translate_x_entry.get_text())
-    except ValueError:
+    except [ValueError, TypeError]:
         win.toast_overlay.add_toast(Adw.Toast(title=f"Unable to do translation, make sure to enter a valid number"))
         print("Unable to do translation, make sure to enter a valid number")
         offset = 0
@@ -364,7 +364,7 @@ def translate_y(shortcut, _, self):
     win = self.props.active_window
     try:
         offset = eval(win.translate_y_entry.get_text())
-    except ValueError:
+    except [ValueError, TypeError]:
         print("Unable to do translation, make sure to enter a valid number")
         offset = 0
         win.toast_overlay.add_toast(Adw.Toast(title=f"Unable to do translation, make sure to enter a valid number"))
@@ -384,7 +384,7 @@ def multiply_x(shortcut, _, self):
     win = self.props.active_window
     try:
         multiplier = eval(win.multiply_x_entry.get_text())
-    except ValueError:
+    except [ValueError, TypeError]:
         win.toast_overlay.add_toast(Adw.Toast(title=f"Unable to do multiplication, make sure to enter a valid number"))
         print("Unable to do multiplication, make sure to enter a valid number")
         multiplier = 1
@@ -404,7 +404,7 @@ def multiply_y(shortcut, _, self):
     win = self.props.active_window
     try:
         multiplier = eval(win.multiply_y_entry.get_text())
-    except ValueError:
+    except [ValueError, TypeError]:
         win.toast_overlay.add_toast(Adw.Toast(title=f"Unable to do multiplication, make sure to enter a valid number"))
         print("Unable to do multiplication, make sure to enter a valid number")
         multiplier = 1

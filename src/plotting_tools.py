@@ -285,11 +285,6 @@ class PlotSettings:
             self.plot_style = parent.preferences.config["plot_style_dark"]
         else:
             self.plot_style = parent.preferences.config["plot_style_light"]
-        
-def on_click(self, hmm, test, event):
-    print(hmm)
-    print(test)
-    print(event)
 
         
 class PlotWidget(FigureCanvas):

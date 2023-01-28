@@ -40,6 +40,7 @@ class DatManApplication(Adw.Application):
         self.filename = ""
         self.datadict = {}
         self.item_rows = {}
+        self.sample_menu = {}
         self.highlight = None
         self.highlights = []
         self.connect_actions()
@@ -68,6 +69,7 @@ class DatManApplication(Adw.Application):
         self.create_action('select_all', datman.select_all, ['<primary>A'], self)
         self.create_action('undo', item_operations.undo, ['<primary>Z'], self)
         self.create_action('redo', item_operations.redo, ['<primary><shift>Z'], self)
+        self.create_action('toggle_selection_mode', datman.toggle_selection_mode, ['<primary>L'], self)
         self.create_action('select_none', datman.select_none, ['<primary><shift>A'], self)
         self.create_action('transform_data', transform_data.open_transform_window, None, self)
         self.create_action('add_equation', add_equation.open_add_equation_window, ['<primary>E'], self)
@@ -105,8 +107,7 @@ class DatManApplication(Adw.Application):
                                 developer_name='Sjoerd Broekhuijsen',
                                 issue_url="https://github.com/SjoerdB93/Graphs/issues",
                                 version='1.4.0',
-                                developers=['Sjoerd Broekhuijsen <contact@sjoerd.se>',
-                                            'Pieter Post <ppost@postnord.se>'],
+                                developers=['Sjoerd Broekhuijsen <contact@sjoerd.se>'],
                                 copyright=f"© 2022-{datetime.date.today().year} Sjoerd Broekhuijsen",
                                 license_type="GTK_LICENSE_GPL_3_0")
         about.present()
