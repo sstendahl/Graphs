@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gresources>
+  <gresource prefix="/se/sjoerd/DatMan">
+    <file alias="gtk/help-overlay.ui" preprocess="xml-stripblanks">ui/help-overlay.ui</file>
+    <file preprocess="xml-stripblanks">ui/window.ui</file>
+    <file preprocess="xml-stripblanks">ui/sample_box.ui</file>
+    <file preprocess="xml-stripblanks">ui/preferences.ui</file>
+    <file preprocess="xml-stripblanks">ui/plot_settings.ui</file>
+    <file preprocess="xml-stripblanks">ui/add_equation_window.ui</file>
+    <file preprocess="xml-stripblanks">ui/add_data_advanced.ui</file>
+    <file preprocess="xml-stripblanks">ui/pip_mode.ui</file>
+    <file preprocess="xml-stripblanks">ui/rename_label_window.ui</file>
+    <file preprocess="xml-stripblanks">ui/transform_window.ui</file>
+  </gresource>
+</gresources>

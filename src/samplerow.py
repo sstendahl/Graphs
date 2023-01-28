@@ -2,7 +2,7 @@ import gi
 from gi.repository import Gtk, Gdk, Gio, GdkPixbuf, Adw, GObject
 from . import datman
 from . import plotting_tools
-@Gtk.Template(resource_path='/se/sjoerd/DatMan/sample_box.ui')
+@Gtk.Template(resource_path='/se/sjoerd/DatMan/ui/sample_box.ui')
 class SampleBox(Gtk.Box):
     __gtype_name__ = "SampleBox"
     sample_box = Gtk.Template.Child()

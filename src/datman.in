@@ -39,7 +39,7 @@ if __name__ == '__main__':
     import gi
 
     from gi.repository import Gio
-    resource = Gio.Resource.load(os.path.join(pkgdatadir, 'datman.gresource'))
+    resource = Gio.Resource.load(os.path.join(pkgdatadir, 'se.sjoerd.DatMan.gresource'))
     resource._register()
 
     from datman import main

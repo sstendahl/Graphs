@@ -1,6 +1,6 @@
 desktop_file = i18n.merge_file(
-        input: 'se.sjoerd.DatMan.desktop.in',
-       output: 'se.sjoerd.DatMan.desktop',
+        input: application_id + '.desktop.in',
+       output: application_id + '.desktop',
          type: 'desktop',
        po_dir: '../po',
       install: true,
@@ -13,8 +13,8 @@ if desktop_utils.found()
 endif
 
 appstream_file = i18n.merge_file(
-        input: 'se.sjoerd.DatMan.appdata.xml.in',
-       output: 'se.sjoerd.DatMan.appdata.xml',
+        input: application_id + '.appdata.xml.in',
+       output: application_id + '.appdata.xml',
        po_dir: '../po',
       install: true,
   install_dir: join_paths(get_option('datadir'), 'appdata')
@@ -25,7 +25,7 @@ if appstream_util.found()
   test('Validate appstream file', appstream_util, args: ['validate', appstream_file])
 endif
 
-install_data('se.sjoerd.DatMan.gschema.xml',
+install_data(application_id + '.gschema.xml',
   install_dir: join_paths(get_option('datadir'), 'glib-2.0/schemas'),
     install_mode: 'rwxrwxrwx'
 )
@@ -37,4 +37,23 @@ if compile_schemas.found()
        args: ['--strict', '--dry-run', meson.current_source_dir()])
 endif
 
-subdir('icons')
+resources = gnome.compile_resources(
+  application_id,
+  application_id + '.gresource.xml',
+  gresource_bundle: true,
+  source_dir: meson.current_build_dir(),
+  install: true,
+  install_dir: pkgdatadir,
+)
+
+scalable_dir = join_paths('icons', 'hicolor', 'scalable', 'apps')
+install_data(
+  join_paths(scalable_dir, ('@0@.svg').format(application_id)),
+  install_dir: join_paths(get_option('datadir'), 'icons', scalable_dir)
+)
+
+symbolic_dir = join_paths('icons', 'hicolor', 'symbolic', 'apps')
+install_data(
+  join_paths(symbolic_dir, ('@0@-symbolic.svg').format(application_id)),
+  install_dir: join_paths(get_option('datadir'), 'icons', symbolic_dir)
+)
