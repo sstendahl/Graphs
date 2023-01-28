@@ -57,3 +57,28 @@ install_data(
   join_paths(symbolic_dir, ('@0@-symbolic.svg').format(application_id)),
   install_dir: join_paths(get_option('datadir'), 'icons', symbolic_dir)
 )
+
+icon_sources = [
+  join_paths('icons', 'arrow1-left-symbolic.svg'),
+  join_paths('icons', 'arrow1-right-symbolic.svg'),
+  join_paths('icons', 'change-xscale-symbolic.svg'),
+  join_paths('icons', 'change-yscale-symbolic.svg'),
+  join_paths('icons', 'floppy-symbolic.svg'),
+  join_paths('icons', 'go-home-symbolic.svg'),
+  join_paths('icons', 'loupe-symbolic.svg'),
+  join_paths('icons', 'move-tool-symbolic.svg'),
+  join_paths('icons', 'pip-in-symbolic.svg'),
+  join_paths('icons', 'settings-symbolic.svg'),
+  join_paths('icons', 'arrow1-left-dark-symbolic.svg'),
+  join_paths('icons', 'arrow1-right-dark-symbolic.svg'),
+  join_paths('icons', 'change-xscale-dark-symbolic.svg'),
+  join_paths('icons', 'change-yscale-dark-symbolic.svg'),
+  join_paths('icons', 'floppy-dark-symbolic.svg'),
+  join_paths('icons', 'go-home-dark-symbolic.svg'),
+  join_paths('icons', 'loupe-dark-symbolic.svg'),
+  join_paths('icons', 'move-tool-dark-symbolic.svg'),
+  join_paths('icons', 'pip-in-dark-symbolic.svg'),
+  join_paths('icons', 'settings-dark-symbolic.svg'),
+]
+
+install_data(icon_sources, install_dir: join_paths(moduledir, 'icons'), install_mode: 'rwxrwxrwx')

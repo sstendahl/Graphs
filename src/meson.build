@@ -1,7 +1,3 @@
-moduledir = join_paths(pkgdatadir, 'datman')
-
-subdir('icons')
-
 python = import('python')
 
 conf = configuration_data()
