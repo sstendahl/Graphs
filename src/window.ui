@@ -13,7 +13,7 @@
           <object class="GtkHeaderBar" id="header_bar">
             <child>
               <object class="GtkBox">
-                <property name="spacing">4</property>
+                <property name="spacing">5</property>
                 <child>
                   <object class="GtkMenuButton">
                     <property name="always-show-arrow">True</property>
@@ -23,50 +23,49 @@
                   </object>
                 </child>
                 <child>
-                  <object class="GtkBox">
-                    <property name="visible">True</property>
-                    <property name="can_focus">False</property>
-                    <child>
-                      <object class="GtkButton" id="undo_button">
-                        <property name="action-name">app.undo</property>
-                        <property name="focusable">1</property>
-                        <property name="receives_default">1</property>
-                        <property name="tooltip-text" translatable="yes">Undo</property>
-                        <property name="icon-name">edit-undo-symbolic</property>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="GtkButton" id="redo_button">
-                        <property name="action-name">app.redo</property>
-                        <property name="focusable">1</property>
-                        <property name="receives_default">1</property>
-                        <property name="tooltip-text" translatable="yes">Redo</property>
-                        <property name="icon-name">edit-redo-symbolic</property>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="GtkToggleButton" id="selection_button">
-                        <property name="action-name">app.toggle_selection_mode</property>                        
-                        <property name="icon-name">selection-mode-symbolic</property>
-                        <property name="tooltip-text" translatable="yes">Select Items</property>
-                      </object>
-                    </child>
+                  <object class="GtkButton" id="undo_button">
+                    <property name="action-name">app.undo</property>
+                    <property name="focusable">1</property>
+                    <property name="receives_default">1</property>
+                    <property name="tooltip-text" translatable="yes">Undo</property>
+                    <property name="icon-name">edit-undo-symbolic</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkButton" id="redo_button">
+                    <property name="action-name">app.redo</property>
+                    <property name="focusable">1</property>
+                    <property name="receives_default">1</property>
+                    <property name="tooltip-text" translatable="yes">Redo</property>
+                    <property name="icon-name">edit-redo-symbolic</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkToggleButton" id="selection_button">
+                    <property name="action-name">app.toggle_selection_mode</property>
+                    <property name="icon-name">selection-mode-symbolic</property>
+                    <property name="tooltip-text" translatable="yes">Select Items</property>
                   </object>
                 </child>
               </object>
             </child>
             <child type="end">
-              <object class="GtkMenuButton">
-                <property name="tooltip-text" translatable="yes">Open Application Menu</property>
-                <property name="icon-name">open-menu-symbolic</property>
-                <property name="menu-model">primary_menu</property>
-              </object>
-            </child>
-            <child type="end">
-              <object class="GtkButton" id="save_data_button">
-                <property name="label">Save</property>
-                <property name="action-name">app.save_data</property>
-                <property name="tooltip-text" translatable="yes">Save the data to your device</property>
+              <object class="GtkBox">
+                <property name="spacing">5</property>
+                <child>
+                  <object class="GtkButton" id="save_data_button">
+                    <property name="label">Save</property>
+                    <property name="action-name">app.save_data</property>
+                    <property name="tooltip-text" translatable="yes">Save the data to your device</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkMenuButton">
+                    <property name="tooltip-text" translatable="yes">Open Application Menu</property>
+                    <property name="icon-name">open-menu-symbolic</property>
+                    <property name="menu-model">primary_menu</property>
+                  </object>
+                </child>
               </object>
             </child>
           </object>
@@ -77,40 +76,29 @@
             <child type="flap">
               <object class="GtkBox" id="selection_box">"
                 <property name="orientation">vertical</property>
-                <property name="width-request">335</property>
                 <child>
-                  <object class="GtkGrid" id="my_grid">
-                    <child>
-                      <object class="GtkScrolledWindow" id="equation_scroll">
-                        <property name="width-request">335</property>
-                        <property name="height-request">200</property>
-                        <layout>
-                          <property name="column">0</property>
-                          <property name="row">0</property>
-                          <property name="column-span">2</property>
-                          <property name="column-span">4</property>
-                        </layout>
-                        <property name="focusable">1</property>
-                        <property name="hscrollbar_policy">never</property>
+                  <object class="GtkScrolledWindow" id="equation_scroll">
+                    <property name="width-request">335</property>
+                    <property name="height-request">250</property>
+                    <property name="focusable">1</property>
+                    <property name="hscrollbar_policy">never</property>
+                    <property name="child">
+                      <object class="GtkViewport">
                         <property name="child">
-                          <object class="GtkViewport">
-                            <property name="child">
-                              <object class="GtkListBox" id="list_box">
-                                <property name="margin-bottom">5</property>
-                                <property name="margin-top">5</property>
-                                <property name="margin-start">5</property>
-                                <property name="margin-end">5</property>
-                                <property name="hexpand">False</property>
-                                <property name="selection-mode">none</property>
-                                <style>
-                                  <class name="boxed-list" />
-                                </style>
-                              </object>
-                            </property>
+                          <object class="GtkListBox" id="list_box">
+                            <property name="margin-bottom">5</property>
+                            <property name="margin-top">5</property>
+                            <property name="margin-start">5</property>
+                            <property name="margin-end">5</property>
+                            <property name="hexpand">False</property>
+                            <property name="selection-mode">none</property>
+                            <style>
+                              <class name="boxed-list" />
+                            </style>
                           </object>
                         </property>
                       </object>
-                    </child>
+                    </property>
                   </object>
                 </child>
                 <child>
