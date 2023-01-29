@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
 project('graphs',
           version: '1.4.1',
     meson_version: '>= 0.59.0',

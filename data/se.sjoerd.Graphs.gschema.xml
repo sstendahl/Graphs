@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--SPDX-License-Identifier: GPL-3.0-or-later-->
 <schemalist gettext-domain="graphs">
 	<schema id="se.sjoerd.Graphs" path="/se/sjoerd/Graphs/"/>
 </schemalist>

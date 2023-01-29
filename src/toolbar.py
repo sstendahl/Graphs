@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
 from gi.repository import Adw
 from matplotlib.backends.backend_gtk4 import (
     NavigationToolbar2GTK4 as NavigationToolbar)

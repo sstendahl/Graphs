@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
 import gi
 from . import plotting_tools, utilities
 from gi.repository import Gtk, GObject, Gdk

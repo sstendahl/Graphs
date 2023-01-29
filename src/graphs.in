@@ -1,8 +1,12 @@
 #!@PYTHON@
 
-# graphs.in
+# Graphs
+# Plot and manipulate data in a breeze
 #
-# Copyright 2022 Sjoerd Broekhuijsen
+# https://www.sjoerd.se/Graphs
+# https://github.com/SjoerdB93/Graphs
+#
+# Copyright 2022 - 2023 Sjoerd Broekhuijsen
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
 desktop_file = i18n.merge_file(
         input: application_id + '.desktop.in',
        output: application_id + '.desktop',

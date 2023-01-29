@@ -1,4 +1,5 @@
-{"plot_font_string": "Cantarell 12", 
+{
+"plot_font_string": "Cantarell 12",
 "plot_selected_marker_size": 8.0, 
 "plot_unselected_marker_size": 8.0,
 "selected_linewidth": 3.0, 

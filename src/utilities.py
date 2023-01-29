@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
 from gi.repository import Gdk
 
 def set_chooser(chooser, choice):

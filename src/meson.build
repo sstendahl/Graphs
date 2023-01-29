@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
 python = import('python')
 
 conf = configuration_data()
