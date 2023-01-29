@@ -1,7 +1,7 @@
 [Desktop Entry]
 Name=Graphs
 Exec=datman
-Icon=se.sjoerd.DatMan
+Icon=se.sjoerd.Graphs
 Terminal=false
 Type=Application
 Categories=Education;Science

@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<schemalist gettext-domain="datman">
-	<schema id="se.sjoerd.DatMan" path="/se/sjoerd/DatMan/">
-	</schema>
-</schemalist>

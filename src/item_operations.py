@@ -3,7 +3,7 @@ import gi
 import re
 import numpy as np
 from .plotting_tools import PlotWidget
-from . import plotting_tools, datman, utilities
+from . import plotting_tools, graphs, utilities
 from scipy import integrate
 from .data import Data
 from matplotlib.backends.backend_gtk4 import (
@@ -17,7 +17,7 @@ def save_data(widget, _, self):
     Open the save file dialog.
     """
     delete_selected_data(self)
-    datman.save_file_dialog(self)
+    graphs.save_file_dialog(self)
 
 def add_to_clipboard(self):
     """

@@ -1,7 +1,7 @@
 from gi.repository import Gtk, Adw, GObject
 import os
 import shutil
-from . import plotting_tools, datman, utilities
+from . import plotting_tools, graphs, utilities
 import json
 from matplotlib.lines import Line2D
 import matplotlib.pyplot as plt
@@ -24,7 +24,7 @@ class Preferences():
 
     def check_config(self, config):
         template_path = os.path.join(os.getenv("XDG_DATA_DIRS"))
-        template_path = template_path.split(":")[0] + "/datman/datman"
+        template_path = template_path.split(":")[0] + "/graphs/graphs"
         os.chdir(template_path)
         with open("config.json", 'r') as f:
             template = json.load(f)
@@ -46,7 +46,7 @@ class Preferences():
     def reset_config(self):
         config_path = self.get_config_path()
         old_path = os.path.join(os.getenv("XDG_DATA_DIRS"))
-        old_path = old_path.split(":")[0] + "/datman/datman"
+        old_path = old_path.split(":")[0] + "/graphs/graphs"
         if not os.path.isdir(config_path):
             os.mkdir(config_path)
         path = config_path + "/config.json"
@@ -70,12 +70,12 @@ class Preferences():
 
     def get_config_path(self) -> str:
         if os.getenv("XDG_CONFIG_HOME"):
-            return os.path.join(os.getenv("XDG_CONFIG_HOME"), "DatMan")
+            return os.path.join(os.getenv("XDG_CONFIG_HOME"), "Graphs")
         else:
-            return os.path.join(str(Path.home()), ".local", "share", "DatMan")
+            return os.path.join(str(Path.home()), ".local", "share", "Graphs")
 
 
-@Gtk.Template(resource_path="/se/sjoerd/DatMan/ui/preferences.ui")
+@Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/preferences.ui")
 class PreferencesWindow(Adw.PreferencesWindow):
     __gtype_name__ = "PreferencesWindow"
     selected_line_thickness_slider = Gtk.Template.Child()

@@ -1,8 +1,8 @@
 import gi
 from gi.repository import Gtk, Gdk, Gio, GdkPixbuf, Adw, GObject
-from . import datman
+from . import graphs
 from . import plotting_tools
-@Gtk.Template(resource_path='/se/sjoerd/DatMan/ui/sample_box.ui')
+@Gtk.Template(resource_path='/se/sjoerd/Graphs/ui/sample_box.ui')
 class SampleBox(Gtk.Box):
     __gtype_name__ = "SampleBox"
     sample_box = Gtk.Template.Child()
@@ -23,8 +23,8 @@ class SampleBox(Gtk.Box):
     def rgba_to_tuple(rgba):
         return (rgba.red, rgba.green, rgba.blue, rgba.alpha)
 
-    def clicked(self,gesture,_ ,xpos, ypos, datman):
-        win = datman.props.active_window
+    def clicked(self,gesture,_ ,xpos, ypos, graphs):
+        win = graphs.props.active_window
         button = win.selection_button
         if button.get_active():
             if not self.selected:
@@ -33,5 +33,5 @@ class SampleBox(Gtk.Box):
             else:
                 self.check_button.set_active(False) 
                 self.selected = False
-        plotting_tools.refresh_plot(datman, set_limits = False)
+        plotting_tools.refresh_plot(graphs, set_limits = False)
 

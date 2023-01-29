@@ -2,7 +2,7 @@
 <interface>
   <requires lib="gtk" version="4.0" />
   <requires lib="Adw" version="1.2" />
-  <template class="DatManWindow" parent="AdwApplicationWindow">
+  <template class="GraphsWindow" parent="AdwApplicationWindow">
     <property name="default-width">1024</property>
     <property name="default-height">768</property>
     <property name="title">Graphs</property>

@@ -30,10 +30,10 @@ class ColorPicker(Gtk.Button):
         self.connect("clicked", self.on_click)
         self.set_css()
 
-    def on_color_set(self, widget, datman):
+    def on_color_set(self, widget, graphs):
         self.color = self.get_color()
         self.update_color()
-        plotting_tools.refresh_plot(datman)
+        plotting_tools.refresh_plot(graphs)
 
     def set_rgba(self, color):
         self.color_chooser.set_rgba(color)

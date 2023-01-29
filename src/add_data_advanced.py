@@ -1,6 +1,6 @@
 from gi.repository import Gtk, Adw, GObject, Gio
 from numpy import *
-from . import item_operations, datman
+from . import item_operations, graphs
 from .data import Data
 
 def open_add_data_advanced_window(widget, _, self):
@@ -20,10 +20,10 @@ def on_accept(widget, self, window):
     import_settings["separator"] = window.separator.get_selected_item().get_string()
     import_settings["delimiter"] = window.delimiter.get_text()
     import_settings["name"] = window.name.get_text()
-    datman.open_file_dialog(widget, _, self, import_settings = import_settings)
+    graphs.open_file_dialog(widget, _, self, import_settings = import_settings)
     window.destroy()
 
-@Gtk.Template(resource_path="/se/sjoerd/DatMan/ui/add_data_advanced.ui")
+@Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/add_data_advanced.ui")
 class AddAdvancedWindow(Adw.Window):
     __gtype_name__ = "AddAdvancedWindow"
     delimiter = Gtk.Template.Child()

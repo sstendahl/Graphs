@@ -11,7 +11,7 @@ class GraphToolbar(NavigationToolbar):
     def __init__(self, canvas, parent):
         self.parent = parent
         path = os.path.join(os.getenv("XDG_DATA_DIRS"))
-        path = path.split(":")[0] + "/datman/datman/icons"
+        path = path.split(":")[0] + "/graphs/graphs/icons"
 
         if Adw.StyleManager.get_default().get_dark():
             dark = "-dark"
