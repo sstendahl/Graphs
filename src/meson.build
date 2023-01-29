@@ -19,7 +19,6 @@ datman_sources = [
   'add_data_advanced.py',
   'add_equation.py',
   'colorpicker.py',
-  'config.json',
   'data.py',
   'datman.py',
   'item_operations.py',

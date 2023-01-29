@@ -58,6 +58,8 @@ install_data(
   install_dir: join_paths(get_option('datadir'), 'icons', symbolic_dir)
 )
 
+install_data('config.json', install_dir: moduledir, install_mode: 'rwxrwxrwx')
+
 icon_sources = [
   join_paths('icons', 'arrow1-left-symbolic.svg'),
   join_paths('icons', 'arrow1-right-symbolic.svg'),
