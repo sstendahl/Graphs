@@ -21,7 +21,7 @@ class GraphToolbar(NavigationToolbar):
         forwards_button = f"{path}/arrow1-right{dark}"
         home_button = f"{path}/go-home{dark}"
         zoom_button = f"{path}/loupe{dark}"
-        save_button = f"{path}/floppy{dark}"
+        save_button = f"{path}/document-save{dark}"
         move_button = f"{path}/move-tool{dark}"
         xscale_button = f"{path}/change-xscale{dark}"
         yscale_button = f"{path}/change-yscale{dark}"
