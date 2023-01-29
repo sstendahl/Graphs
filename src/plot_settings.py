@@ -1,6 +1,6 @@
 from gi.repository import Gtk, Adw, GObject, Gio
 from numpy import *
-from . import item_operations, plotting_tools, datman, utilities
+from . import item_operations, plotting_tools, graphs, utilities
 from .data import Data
 import uuid
 from matplotlib.lines import Line2D
@@ -22,7 +22,7 @@ def on_accept(widget, self, window):
     new_item = window.set_config(item, self)
     self.item_rows[new_item.id].sample_ID_label.set_text(new_item.filename)
     if new_item.selected:
-        datman.select_item(self, new_item.id)
+        graphs.select_item(self, new_item.id)
     filenames = utilities.get_all_filenames(self)
 
     index = window.datalist_chooser.get_selected()
@@ -31,7 +31,7 @@ def on_accept(widget, self, window):
     plotting_tools.reload_plot(self)
     
 
-@Gtk.Template(resource_path="/se/sjoerd/DatMan/ui/plot_settings.ui")
+@Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/plot_settings.ui")
 class PlotSettingsWindow(Adw.PreferencesWindow):
     __gtype_name__ = "PlotSettingsWindow"
     datalist_chooser = Gtk.Template.Child()
@@ -204,6 +204,6 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
             label = new_item.filename
         parent.item_rows[new_item.id].sample_ID_label.set_text(label)
         if new_item.selected:
-            datman.select_item(parent, new_item.id)
+            graphs.select_item(parent, new_item.id)
         plotting_tools.reload_plot(parent)
 

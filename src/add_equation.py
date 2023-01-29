@@ -1,7 +1,7 @@
 from gi.repository import Gtk, Adw, GObject, Gio
 import uuid
 from numpy import *
-from . import item_operations, plotting_tools, datman
+from . import item_operations, plotting_tools, graphs
 from .data import Data
 
 def open_add_equation_window(widget, _, self):
@@ -29,7 +29,7 @@ def on_accept(widget, self, window):
         for key, item in self.datadict.items():
             if name == item.filename:
                 if handle_duplicates == "Auto-rename duplicates":
-                    new_file.filename = datman.get_duplicate_filename(self, name)
+                    new_file.filename = graphs.get_duplicate_filename(self, name)
                 elif handle_duplicates == "Ignore duplicates":
                     window.toast_overlay.add_toast(Adw.Toast(title="Item with this name already exists"))
                     return
@@ -46,8 +46,8 @@ def on_accept(widget, self, window):
         new_file.clipboard_pos = -1
         color = plotting_tools.get_next_color(self)
         self.datadict[new_file.id] = new_file
-        datman.add_sample_to_menu(self, new_file.filename, color, new_file.id)
-        datman.select_item(self, new_file.id)
+        graphs.add_sample_to_menu(self, new_file.filename, color, new_file.id)
+        graphs.select_item(self, new_file.id)
         plotting_tools.refresh_plot(self)
         window.destroy()
 
@@ -76,7 +76,7 @@ def create_data(self, x_start, x_stop, equation, step_size, name):
     new_file.unselected_marker_size = self.preferences.config["plot_unselected_marker_size"]
     return new_file
 
-@Gtk.Template(resource_path="/se/sjoerd/DatMan/ui/add_equation_window.ui")
+@Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/add_equation_window.ui")
 class AddEquationWindow(Adw.Window):
     __gtype_name__ = "AddEquationWindow"
     add_equation_confirm_button = Gtk.Template.Child()

@@ -7,20 +7,20 @@ conf.set('localedir', join_paths(get_option('prefix'), get_option('localedir')))
 conf.set('pkgdatadir', pkgdatadir)
 
 configure_file(
-  input: 'datman.in',
-  output: 'datman',
+  input: 'graphs.in',
+  output: 'graphs',
   configuration: conf,
   install: true,
   install_mode: 'rwxr-xr-x',
   install_dir: get_option('bindir')
 )
 
-datman_sources = [
+graphs_sources = [
   'add_data_advanced.py',
   'add_equation.py',
   'colorpicker.py',
   'data.py',
-  'datman.py',
+  'graphs.py',
   'item_operations.py',
   'main.py',
   'pip_mode.py',
@@ -35,4 +35,4 @@ datman_sources = [
   'window.py',
 ]
 
-install_data(datman_sources, install_dir: moduledir, install_mode: 'rwxrwxrwx')
+install_data(graphs_sources, install_dir: moduledir, install_mode: 'rwxrwxrwx')

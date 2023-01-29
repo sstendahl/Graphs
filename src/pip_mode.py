@@ -1,5 +1,5 @@
 from gi.repository import Gtk, Adw, GObject, Gio
-from . import item_operations, plotting_tools, datman, utilities
+from . import item_operations, plotting_tools, graphs, utilities
 from .data import Data
 import copy
 import os
@@ -9,7 +9,7 @@ def open_pip_mode(widget, _, self):
     win = PIPWindow(self)
     win.present()
 
-@Gtk.Template(resource_path="/se/sjoerd/DatMan/ui/pip_mode.ui")
+@Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/pip_mode.ui")
 class PIPWindow(Adw.Window):
     __gtype_name__ = "PIPWindow"
     drawing_layout = Gtk.Template.Child()
@@ -24,5 +24,5 @@ class PIPWindow(Adw.Window):
         canvas.ax.set_title(parent.plot_settings.title)
         canvas.ax.set_xlabel(xlabel, fontweight = parent.plot_settings.font_weight)
         canvas.ax.set_ylabel(ylabel, fontweight = parent.plot_settings.font_weight)
-        datman.create_layout(parent, canvas, self.drawing_layout)
+        graphs.create_layout(parent, canvas, self.drawing_layout)
         plotting_tools.refresh_plot(parent, canvas=canvas)

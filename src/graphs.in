@@ -1,6 +1,6 @@
 #!@PYTHON@
 
-# datman.in
+# graphs.in
 #
 # Copyright 2022 Sjoerd Broekhuijsen
 #
@@ -31,16 +31,16 @@ localedir = '@localedir@'
 
 sys.path.insert(1, pkgdatadir)
 signal.signal(signal.SIGINT, signal.SIG_DFL)
-locale.bindtextdomain('datman', localedir)
-locale.textdomain('datman')
-gettext.install('datman', localedir)
+locale.bindtextdomain('graphs', localedir)
+locale.textdomain('graphs')
+gettext.install('graphs', localedir)
 
 if __name__ == '__main__':
     import gi
 
     from gi.repository import Gio
-    resource = Gio.Resource.load(os.path.join(pkgdatadir, 'se.sjoerd.DatMan.gresource'))
+    resource = Gio.Resource.load(os.path.join(pkgdatadir, 'se.sjoerd.Graphs.gresource'))
     resource._register()
 
-    from datman import main
+    from graphs import main
     sys.exit(main.main(VERSION))

@@ -18,9 +18,9 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 from gi.repository import Adw, Gio, Gtk
 
-@Gtk.Template(resource_path='/se/sjoerd/DatMan/ui/window.ui')
-class DatManWindow(Adw.ApplicationWindow):
-    __gtype_name__ = 'DatManWindow'
+@Gtk.Template(resource_path='/se/sjoerd/Graphs/ui/window.ui')
+class GraphsWindow(Adw.ApplicationWindow):
+    __gtype_name__ = 'GraphsWindow'
     drawing_layout = Gtk.Template.Child()
     selection_box = Gtk.Template.Child()
     undo_button = Gtk.Template.Child()

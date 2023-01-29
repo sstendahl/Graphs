@@ -7,7 +7,7 @@ from matplotlib.backends.backend_gtk4agg import (
     FigureCanvasGTK4Agg as FigureCanvas)
 from matplotlib.backends.backend_gtk4 import (
     NavigationToolbar2GTK4 as NavigationToolbar)
-from . import datman, utilities, rename_label
+from . import graphs, utilities, rename_label
 from matplotlib.widgets import SpanSelector
 from cycler import cycler
 import matplotlib.font_manager
@@ -166,13 +166,13 @@ def find_limits(self, axis, canvas, datadict):
 
 def reload_plot(self, from_dictionary = True):
     win = self.props.active_window
-    datman.clear_layout(self)
-    datman.load_empty(self)
+    graphs.clear_layout(self)
+    graphs.load_empty(self)
     if len(self.datadict) > 0:
         define_highlight(self)
         hide_highlight(self)
         hide_unused_axes(self, self.canvas)
-        datman.open_selection(self, None, from_dictionary)
+        graphs.open_selection(self, None, from_dictionary)
         set_canvas_limits_axis(self, self.canvas)
     self.canvas.grab_focus()
 
@@ -190,7 +190,7 @@ def refresh_plot(self, canvas = None, from_dictionary = True, set_limits = True)
         line.remove()
     if len(self.datadict) > 0:
         hide_unused_axes(self, canvas)
-    datman.open_selection(self, None, from_dictionary, canvas = canvas)
+    graphs.open_selection(self, None, from_dictionary, canvas = canvas)
     if set_limits and len(self.datadict) > 0:
         set_canvas_limits_axis(self, canvas)
     self.canvas.draw()

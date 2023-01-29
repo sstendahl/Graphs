@@ -1,9 +1,9 @@
 {
-    "app-id" : "se.sjoerd.DatMan",
+    "app-id" : "se.sjoerd.Graphs",
     "runtime" : "org.gnome.Platform",
     "runtime-version" : "43",
     "sdk" : "org.gnome.Sdk",
-    "command" : "datman",
+    "command" : "graphs",
     "finish-args" : [
         "--share=ipc",
         "--socket=wayland",
@@ -26,7 +26,7 @@
     	"python3-matplotlib.json",
     	"python3-scypi.json",
         {
-            "name" : "datman",
+            "name" : "graphs",
             "buildsystem" : "meson",
             "sources" : [
                 {
