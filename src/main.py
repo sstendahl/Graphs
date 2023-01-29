@@ -89,7 +89,7 @@ class GraphsApplication(Adw.Application):
                                 website='https://www.sjoerd.se/Graphs',
                                 developer_name='Sjoerd Broekhuijsen',
                                 issue_url="https://github.com/SjoerdB93/Graphs/issues",
-                                version='1.4.0',
+                                version='1.4.1',
                                 developers=[
                                 'Sjoerd Broekhuijsen <contact@sjoerd.se>',
                                 'Christoph Kohnen <christoph.kohnen@disroot.org>'

@@ -41,6 +41,16 @@ Graphs is an excellent fit both plotting and data manipulation. The plots create
     </screenshot>
   </screenshots>
   <releases>
+          <release version="1.4.1" date="2022-12-30">
+      <description>
+        <p>Minor update with updated AppID.</p>
+        <ul>
+          <li>Graphs now uses symbolic GNOME icons in the toolbar wherever possible</li>
+          <li>Some code clean-up has been performed</li>          
+          <li>The new app-id for Graphs is now se.sjoerd.Graphs</li>
+        </ul>
+        </description>
+      </release>
             <release version="1.4.0" date="2023-01-28">
       <description>
         <p>Major update with a significant UI overhaul.</p>      
