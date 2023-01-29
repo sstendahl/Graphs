@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
 import gi
 from gi.repository import Gtk, Gdk, Gio, GdkPixbuf, Adw, GObject
 from . import graphs

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
 from gi.repository import Gtk, Gdk, Gio, GObject, Adw
 import gi
 import os

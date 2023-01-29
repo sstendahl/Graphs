@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
 from gi.repository import Gtk, Adw, GObject, Gio
 from . import item_operations, plotting_tools, graphs, utilities
 from .data import Data
