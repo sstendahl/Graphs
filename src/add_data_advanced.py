@@ -23,7 +23,7 @@ def on_accept(widget, self, window):
     datman.open_file_dialog(widget, _, self, import_settings = import_settings)
     window.destroy()
 
-@Gtk.Template(resource_path="/se/sjoerd/DatMan/add_data_advanced.ui")
+@Gtk.Template(resource_path="/se/sjoerd/DatMan/ui/add_data_advanced.ui")
 class AddAdvancedWindow(Adw.Window):
     __gtype_name__ = "AddAdvancedWindow"
     delimiter = Gtk.Template.Child()

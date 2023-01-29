@@ -75,7 +75,7 @@ class Preferences():
             return os.path.join(str(Path.home()), ".local", "share", "DatMan")
 
 
-@Gtk.Template(resource_path="/se/sjoerd/DatMan/preferences.ui")
+@Gtk.Template(resource_path="/se/sjoerd/DatMan/ui/preferences.ui")
 class PreferencesWindow(Adw.PreferencesWindow):
     __gtype_name__ = "PreferencesWindow"
     selected_line_thickness_slider = Gtk.Template.Child()

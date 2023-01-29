@@ -31,7 +31,7 @@ def on_accept(widget, self, window):
     plotting_tools.reload_plot(self)
     
 
-@Gtk.Template(resource_path="/se/sjoerd/DatMan/plot_settings.ui")
+@Gtk.Template(resource_path="/se/sjoerd/DatMan/ui/plot_settings.ui")
 class PlotSettingsWindow(Adw.PreferencesWindow):
     __gtype_name__ = "PlotSettingsWindow"
     datalist_chooser = Gtk.Template.Child()

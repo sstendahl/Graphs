@@ -16,7 +16,7 @@ def on_accept(widget, self, window, axis):
     plotting_tools.reload_plot(self)
     window.destroy()
 
-@Gtk.Template(resource_path="/se/sjoerd/DatMan/rename_label_window.ui")
+@Gtk.Template(resource_path="/se/sjoerd/DatMan/ui/rename_label_window.ui")
 class RenameLabelWindow(Adw.Window):
     __gtype_name__ = "RenameLabelWindow"
     rename_label_confirm_button = Gtk.Template.Child()

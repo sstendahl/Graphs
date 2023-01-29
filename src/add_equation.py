@@ -76,7 +76,7 @@ def create_data(self, x_start, x_stop, equation, step_size, name):
     new_file.unselected_marker_size = self.preferences.config["plot_unselected_marker_size"]
     return new_file
 
-@Gtk.Template(resource_path="/se/sjoerd/DatMan/add_equation_window.ui")
+@Gtk.Template(resource_path="/se/sjoerd/DatMan/ui/add_equation_window.ui")
 class AddEquationWindow(Adw.Window):
     __gtype_name__ = "AddEquationWindow"
     add_equation_confirm_button = Gtk.Template.Child()

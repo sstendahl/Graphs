@@ -51,7 +51,7 @@ def operation(self, input_x, input_y):
     item_operations.add_to_clipboard(self)
     plotting_tools.refresh_plot(self)
 
-@Gtk.Template(resource_path="/se/sjoerd/DatMan/transform_window.ui")
+@Gtk.Template(resource_path="/se/sjoerd/DatMan/ui/transform_window.ui")
 class TransformWindow(Adw.Window):
     __gtype_name__ = "TransformWindow"
     transform_x_entry = Gtk.Template.Child()
