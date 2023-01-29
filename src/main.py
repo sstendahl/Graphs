@@ -107,7 +107,10 @@ class DatManApplication(Adw.Application):
                                 developer_name='Sjoerd Broekhuijsen',
                                 issue_url="https://github.com/SjoerdB93/Graphs/issues",
                                 version='1.4.0',
-                                developers=['Sjoerd Broekhuijsen <contact@sjoerd.se>'],
+                                developers=[
+                                'Sjoerd Broekhuijsen <contact@sjoerd.se>',
+                                'Christoph Kohnen <christoph.kohnen@disroot.org>'
+                                ],
                                 copyright=f"© 2022-{datetime.date.today().year} Sjoerd Broekhuijsen",
                                 license_type="GTK_LICENSE_GPL_3_0")
         about.present()
