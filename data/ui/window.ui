@@ -437,6 +437,12 @@
     </section>
     <section>
       <item>
+        <attribute name="label" translatable="yes">_Plot Settings</attribute>
+        <attribute name="action">app.plot_settings</attribute>
+      </item>
+    </section>
+    <section>
+      <item>
         <attribute name="label" translatable="yes">_Preferences</attribute>
         <attribute name="action">app.preferences</attribute>
       </item>
