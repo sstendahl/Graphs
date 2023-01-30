@@ -12,6 +12,7 @@
 "plot_tick_right": false, 
 "plot_tick_top": false, 
 "plot_tick_bottom": true,
+"guess_headers": true,
 "plot_tick_direction": "in",
 "handle_duplicates": "Auto-rename duplicates",
 "savefig_transparent": true, 

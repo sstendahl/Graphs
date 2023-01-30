@@ -12,32 +12,12 @@ def open_plot_settings(widget, _, self):
     win.set_transient_for(self.props.active_window)
     win.set_modal(True)
     name = "transform_confirm"
-    button = win.apply_button
-    button.connect("clicked", on_accept, self, win)
-    button = win.apply_button_2
-    button.connect("clicked", on_accept, self, win)
-    win.present()
-
-def on_accept(widget, self, window):
-    item = window.item
-    new_item = window.set_config(item, self)
-    self.item_rows[new_item.id].sample_ID_label.set_text(new_item.filename)
-    if new_item.selected:
-        graphs.select_item(self, new_item.id)
-    filenames = utilities.get_all_filenames(self)
-
-    index = window.datalist_chooser.get_selected()
-    utilities.populate_chooser(window.datalist_chooser, filenames)
-    window.datalist_chooser.set_selected(index)
-    plotting_tools.reload_plot(self)
-    
+    win.present()  
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/plot_settings.ui")
 class PlotSettingsWindow(Adw.PreferencesWindow):
     __gtype_name__ = "PlotSettingsWindow"
     datalist_chooser = Gtk.Template.Child()
-    apply_button = Gtk.Template.Child()
-    apply_button_2 = Gtk.Template.Child()
     name_entry = Gtk.Template.Child()
     linestyle_selected = Gtk.Template.Child()
     linestyle_unselected = Gtk.Template.Child()
@@ -74,19 +54,30 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
     def __init__(self, parent):
         super().__init__()
         self.select_item = False
+        self.chooser_changed = True
         filenames = utilities.get_all_filenames(parent)
         utilities.populate_chooser(self.datalist_chooser, filenames)
         self.item = self.load_config(parent)
         self.datalist_chooser.connect("notify::selected", self.on_notify, parent)
         self.connect("close-request", self.on_close, parent)
-        style_context = self.apply_button.get_style_context()
-        style_context.add_class("suggested-action")
-        style_context = self.apply_button_2.get_style_context()
-        style_context.add_class("suggested-action")
-
-
+        
+    def get_chooser_list(self, chooser):
+        model = chooser.get_model()
+        chooser_list = []
+        for item in model:
+            chooser_list.append(item.get_string())
+        return chooser_list
+            
     def on_notify(self, _, __, parent):
+        self.save_settings(parent)
+        filenames = utilities.get_all_filenames(parent)
+        self.name_entry.set_text("")
+        index = self.datalist_chooser.get_selected()
+        if set(filenames) != set(self.get_chooser_list(self.datalist_chooser)):
+            utilities.populate_chooser(self.datalist_chooser, filenames)
+        self.datalist_chooser.set_selected(index)
         self.load_config(parent)
+        self.chooser_changed = False
 
     def load_config(self, parent):
         data_list = utilities.get_datalist(parent)
@@ -194,8 +185,8 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
         item.selected_markers = utilities.get_dict_by_value(marker_dict, self.selected_markers_chooser.get_selected_item().get_string())
         item.unselected_markers = utilities.get_dict_by_value(marker_dict, self.unselected_markers_chooser.get_selected_item().get_string())
         return item
-
-    def on_close(self, _, parent):
+        
+    def save_settings(self, parent):
         item = self.item
         new_item = self.set_config(item, parent)
         max_length = int(28)
@@ -206,5 +197,7 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
         parent.item_rows[new_item.id].sample_ID_label.set_text(label)
         if new_item.selected:
             graphs.select_item(parent, new_item.id)
-        plotting_tools.reload_plot(parent)
 
+    def on_close(self, _, parent):
+        self.save_settings(parent)
+        plotting_tools.reload_plot(parent)
