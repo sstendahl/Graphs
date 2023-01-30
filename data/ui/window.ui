@@ -14,13 +14,18 @@
           <object class="GtkHeaderBar" id="header_bar">
             <child>
               <object class="GtkBox">
-                <property name="spacing">5</property>
                 <child>
                   <object class="AdwSplitButton">
                     <property name="icon-name">list-add-symbolic</property>
                     <property name="menu-model">add_data_menu</property>
                     <property name="tooltip-text" translatable="yes">Add new data</property>
                     <property name="action-name">app.add_data</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkSeparator">
+                    <property name="width-request">10</property>
+                    <property name="css-classes">spacer</property>
                   </object>
                 </child>
                 <child>
@@ -39,6 +44,12 @@
                     <property name="receives_default">1</property>
                     <property name="tooltip-text" translatable="yes">Redo</property>
                     <property name="icon-name">edit-redo-symbolic</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkSeparator">
+                    <property name="width-request">10</property>
+                    <property name="css-classes">spacer</property>
                   </object>
                 </child>
                 <child>
@@ -67,6 +78,12 @@
                     <property name="icon-name">dock-bottom-symbolic</property>
                     <property name="active">true</property>
                     <property name="tooltip-text" translatable="yes">Toggle toolbar</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkSeparator">
+                    <property name="width-request">5</property>
+                    <property name="css-classes">spacer</property>
                   </object>
                 </child>
                 <child>
