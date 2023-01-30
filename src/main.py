@@ -89,7 +89,7 @@ class GraphsApplication(Adw.Application):
                                 website='https://www.sjoerd.se/Graphs',
                                 developer_name='Sjoerd Broekhuijsen',
                                 issue_url="https://github.com/SjoerdB93/Graphs/issues",
-                                version='1.4.1',
+                                version=self.version,
                                 developers=[
                                 'Sjoerd Broekhuijsen <contact@sjoerd.se>',
                                 'Christoph Kohnen <christoph.kohnen@disroot.org>'
@@ -122,6 +122,7 @@ class GraphsApplication(Adw.Application):
 def main(version):
     """The application's entry point."""
     app = GraphsApplication()
+    app.version = version
 
     return app.run(sys.argv)
 
