@@ -63,6 +63,7 @@ class GraphsApplication(Adw.Application):
         self.create_action('get_inverse_fourier', item_operations.get_inverse_fourier, None, self)        
         self.create_action('delete_selected', graphs.delete_selected, ['Delete'], self)
         self.create_action('plot_settings', plot_settings.open_plot_settings, ["<primary><shift>P"], self)
+        self.create_action('toggle_sidebar', self.toggle_sidebar, None)
         Adw.StyleManager.get_default().connect("notify", graphs.toggle_darkmode, None, self)
 
     def do_activate(self):
@@ -71,9 +72,9 @@ class GraphsApplication(Adw.Application):
         necessary.
         """
         win = self.props.active_window
-        self.main_window = win
         if not win:
             win = GraphsWindow(application=self)
+        self.main_window = win
         self.load_preferences()
         graphs.load_empty(self)
         # Should turn off in XML probably
@@ -100,6 +101,15 @@ class GraphsApplication(Adw.Application):
 
     def on_quit_action(self, _widget, _):
         self.quit()
+
+    def toggle_sidebar(self, _widget, _):
+        win = self.main_window
+        button = win.sidebar_button
+        flap = win.sidebar_flap
+        enabled = not button.get_active()
+        flap.set_reveal_flap(enabled)
+        win.selection_button.set_visible(enabled)
+        button.set_active(enabled)
 
     def create_action(self, name, callback, shortcuts=None, *args):
         """Add an application action.

@@ -13,4 +13,7 @@
     <file preprocess="xml-stripblanks">ui/rename_label_window.ui</file>
     <file preprocess="xml-stripblanks">ui/transform_window.ui</file>
   </gresource>
+  <gresource prefix="/se/sjoerd/Graphs/icons/scalable/actions/">
+    <file preprocess="xml-stripblanks" alias="dock-left-symbolic.svg">icons/dock-left-symbolic.svg</file>
+  </gresource>
 </gresources>

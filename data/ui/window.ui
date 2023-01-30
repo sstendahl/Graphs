@@ -42,6 +42,14 @@
                   </object>
                 </child>
                 <child>
+                  <object class="GtkToggleButton" id="sidebar_button">
+                    <property name="action-name">app.toggle_sidebar</property>
+                    <property name="icon-name">dock-left-symbolic</property>
+                    <property name="active">true</property>
+                    <property name="tooltip-text" translatable="yes">Toggle Sidebar</property>
+                  </object>
+                </child>
+                <child>
                   <object class="GtkToggleButton" id="selection_button">
                     <property name="action-name">app.toggle_selection_mode</property>
                     <property name="icon-name">selection-mode-symbolic</property>
@@ -49,7 +57,7 @@
                   </object>
                 </child>
               </object>
-            </child>
+            </child>"
             <child type="end">
               <object class="GtkBox">
                 <property name="spacing">5</property>
@@ -74,6 +82,8 @@
         <child>
           <object class="AdwFlap" id="sidebar_flap">"
             <property name="reveal-flap">True</property>
+            <property name="fold-duration">1</property>
+            <property name="fold-policy">ADW_FLAP_FOLD_POLICY_NEVER</property>
             <child type="flap">
               <object class="GtkBox" id="selection_box">"
                 <property name="orientation">vertical</property>
@@ -367,22 +377,16 @@
             <child type="content">
               <object class="AdwToastOverlay" id="toast_overlay">
                 <property name="child">
-                  <object class="GtkScrolledWindow">
+                  <object class="GtkBox" id="drawing_layout">
                     <property name="hexpand">true</property>
                     <property name="vexpand">true</property>
-                    <property name="margin-top">6</property>
-                    <property name="margin-bottom">6</property>
-                    <property name="margin-start">6</property>
-                    <property name="margin-end">6</property>
-                    <child>
-                      <object class="GtkBox" id="drawing_layout">
-                        <property name="hexpand-set">True</property>
-                        <property name="hexpand">True</property>
-                        <property name="width-request">575</property>
-                        <property name="orientation">vertical</property>
-                        <child />
-                      </object>
-                    </child>
+                    <property name="width-request">500</property>
+                    <property name="height-request">400</property>
+                    <property name="orientation">vertical</property>
+                    <property name="margin-top">5</property>
+                    <property name="margin-bottom">5</property>
+                    <property name="margin-start">5</property>
+                    <property name="margin-end">5</property>
                   </object>
                 </property>
               </object>

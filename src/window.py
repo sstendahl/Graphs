@@ -28,11 +28,11 @@ class GraphsWindow(Adw.ApplicationWindow):
     toast_overlay = Gtk.Template.Child()
     list_box = Gtk.Template.Child()
     selection_button = Gtk.Template.Child()
+    sidebar_button = Gtk.Template.Child()
+    sidebar_flap = Gtk.Template.Child()
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         style_context = self.save_data_button.get_style_context()
         style_context.add_class("suggested-action")
-
-
 
