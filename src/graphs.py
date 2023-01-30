@@ -132,15 +132,18 @@ def get_data(self, path, import_settings):
             i += 1
             if i > import_settings["skip_rows"]:
                 line = line.strip()
-                line = re.split(str(import_settings["delimiter"]), line)
+                data_line = re.split(str(import_settings["delimiter"]), line)
                 if import_settings["separator"] == ",":
-                    for index, value in enumerate(line):
-                        line[index] = swap(value)
+                    for index, value in enumerate(data_line):
+                        data_line[index] = swap(value)
                 try:
-                    data_array[0].append(float(line[import_settings["column_x"]]))
-                    data_array[1].append(float(line[import_settings["column_y"]]))
+                    data_array[0].append(float(data_line[import_settings["column_x"]]))
+                    data_array[1].append(float(data_line[import_settings["column_y"]]))
                 except ValueError:
-                    pass
+                    if import_settings["guess_headers"]:
+                        headers = re.split("\s{2,}", line)
+                        self.plot_settings.xlabel = headers[import_settings["column_x"]]
+                        self.plot_settings.ylabel = headers[import_settings["column_y"]]                  
     data.xdata = data_array[0]
     data.ydata = data_array[1]
     data.xdata_clipboard = [data.xdata]
@@ -327,6 +330,7 @@ def open_file_dialog(widget, _, self, import_settings = None):
 def get_import_settings(self):
     import_settings = dict()
     import_settings["delimiter"] = self.preferences.config["import_delimiter"]
+    import_settings["guess_headers"] = self.preferences.config["guess_headers"]
     import_settings["separator"] = self.preferences.config["import_separator"]
     import_settings["skip_rows"] = int(self.preferences.config["import_skip_rows"])
     import_settings["column_x"] = int(self.preferences.config["import_column_x"])
