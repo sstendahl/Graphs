@@ -26,5 +26,5 @@ class PIPWindow(Adw.Window):
         canvas.ax.set_xlabel(xlabel, fontweight = parent.plot_settings.font_weight)
         canvas.ax.set_ylabel(ylabel, fontweight = parent.plot_settings.font_weight)
         self.drawing_layout.append(canvas)
-        self.drawing_layout.append(toolbar.GraphToolbar(canvas, self))
+        self.drawing_layout.append(toolbar.GraphToolbar(canvas, parent))
         plotting_tools.refresh_plot(parent, canvas=canvas)
