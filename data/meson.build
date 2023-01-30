@@ -60,28 +60,3 @@ install_data(
 )
 
 install_data('config.json', install_dir: moduledir, install_mode: 'rwxrwxrwx')
-
-icon_sources = [
-  join_paths('icons', 'arrow1-left-symbolic.svg'),
-  join_paths('icons', 'arrow1-right-symbolic.svg'),
-  join_paths('icons', 'change-xscale-symbolic.svg'),
-  join_paths('icons', 'change-yscale-symbolic.svg'),
-  join_paths('icons', 'document-save-symbolic.svg'),
-  join_paths('icons', 'go-home-symbolic.svg'),
-  join_paths('icons', 'loupe-symbolic.svg'),
-  join_paths('icons', 'move-tool-symbolic.svg'),
-  join_paths('icons', 'pip-in-symbolic.svg'),
-  join_paths('icons', 'settings-symbolic.svg'),
-  join_paths('icons', 'arrow1-left-dark-symbolic.svg'),
-  join_paths('icons', 'arrow1-right-dark-symbolic.svg'),
-  join_paths('icons', 'change-xscale-dark-symbolic.svg'),
-  join_paths('icons', 'change-yscale-dark-symbolic.svg'),
-  join_paths('icons', 'document-save-dark-symbolic.svg'),
-  join_paths('icons', 'go-home-dark-symbolic.svg'),
-  join_paths('icons', 'loupe-dark-symbolic.svg'),
-  join_paths('icons', 'move-tool-dark-symbolic.svg'),
-  join_paths('icons', 'pip-in-dark-symbolic.svg'),
-  join_paths('icons', 'settings-dark-symbolic.svg'),
-]
-
-install_data(icon_sources, install_dir: join_paths(moduledir, 'icons'), install_mode: 'rwxrwxrwx')

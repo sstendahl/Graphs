@@ -1,0 +1,69 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!--SPDX-License-Identifier: GPL-3.0-or-later-->
+<interface>
+  <requires lib="gtk" version="4.0" />
+  <requires lib="libadwaita" version="1.2" />
+  <template class="GraphToolbar" parent="GtkBox">
+    <property name="orientation">horizontal</property>
+    <child>
+      <object class="GtkButton" id="home_button">
+        <property name="icon-name">go-home-symbolic</property>
+        <property name="tooltip-text" translatable="yes">Restore original view</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkButton" id="backwards_button">
+        <property name="icon-name">arrow1-left-symbolic</property>
+        <property name="tooltip-text" translatable="yes">Previous view</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkButton" id="forwards_button">
+        <property name="icon-name">arrow1-right-symbolic</property>
+        <property name="tooltip-text" translatable="yes">Next view</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkButton" id="pan_button">
+        <property name="icon-name">move-tool-symbolic</property>
+        <property name="tooltip-text" translatable="yes">Left button to pan, right button to zoom. Hold control to to keep aspect ratio fixed</property>
+      </object>
+    </child>"
+    <child>
+      <object class="GtkButton" id="zoom_button">
+        <property name="icon-name">loupe-symbolic</property>
+        <property name="tooltip-text" translatable="yes">Zoom to rectangle</property>
+      </object>
+    </child>"
+    <child>
+      <object class="GtkButton" id="yscale_button">
+        <property name="icon-name">change-yscale-symbolic</property>
+        <property name="tooltip-text" translatable="yes">Change Y-scale</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkButton" id="xscale_button">
+        <property name="icon-name">change-xscale-symbolic</property>
+        <property name="tooltip-text" translatable="yes">Change X-scale</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkButton" id="plot_settings_button">
+        <property name="icon-name">settings-symbolic</property>
+        <property name="tooltip-text" translatable="yes">Plot Settings</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkButton" id="pip_button">
+        <property name="icon-name">pip-in-symbolic</property>
+        <property name="tooltip-text" translatable="yes">Open in New Window</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkButton" id="save_button">
+        <property name="icon-name">document-save-symbolic</property>
+        <property name="tooltip-text" translatable="yes">Save figure</property>
+      </object>
+    </child>
+  </template>
+</interface>

@@ -12,9 +12,20 @@
     <file preprocess="xml-stripblanks">ui/pip_mode.ui</file>
     <file preprocess="xml-stripblanks">ui/rename_label_window.ui</file>
     <file preprocess="xml-stripblanks">ui/transform_window.ui</file>
+    <file preprocess="xml-stripblanks">ui/toolbar.ui</file>
   </gresource>
   <gresource prefix="/se/sjoerd/Graphs/icons/scalable/actions/">
+    <file preprocess="xml-stripblanks" alias="arrow1-left-symbolic.svg">icons/arrow1-left-symbolic.svg</file>
+    <file preprocess="xml-stripblanks" alias="arrow1-right-symbolic.svg">icons/arrow1-right-symbolic.svg</file>
+    <file preprocess="xml-stripblanks" alias="change-xscale-symbolic.svg">icons/change-xscale-symbolic.svg</file>
+    <file preprocess="xml-stripblanks" alias="change-yscale-symbolic.svg">icons/change-yscale-symbolic.svg</file>
     <file preprocess="xml-stripblanks" alias="dock-left-symbolic.svg">icons/dock-left-symbolic.svg</file>
     <file preprocess="xml-stripblanks" alias="dock-bottom-symbolic.svg">icons/dock-bottom-symbolic.svg</file>
+    <file preprocess="xml-stripblanks" alias="document-save-symbolic.svg">icons/document-save-symbolic.svg</file>
+    <file preprocess="xml-stripblanks" alias="go-home-symbolic.svg">icons/go-home-symbolic.svg</file>
+    <file preprocess="xml-stripblanks" alias="loupe-symbolic.svg">icons/loupe-symbolic.svg</file>
+    <file preprocess="xml-stripblanks" alias="move-tool-symbolic.svg">icons/move-tool-symbolic.svg</file>
+    <file preprocess="xml-stripblanks" alias="pip-in-symbolic.svg">icons/pip-in-symbolic.svg</file>
+    <file preprocess="xml-stripblanks" alias="settings-symbolic.svg">icons/settings-symbolic.svg</file>
   </gresource>
 </gresources>
