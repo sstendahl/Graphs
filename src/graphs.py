@@ -386,26 +386,11 @@ def on_open_response(dialog, response, self, import_settings):
 
 
 def load_empty(self):
-    win = self.props.active_window
-    layout = win.drawing_layout
+    win = self.main_window
     xlabel = self.plot_settings.xlabel
     ylabel = self.plot_settings.ylabel
     self.canvas = PlotWidget(parent = self, xlabel=xlabel, ylabel=ylabel)
-    clear_layout(self)
-    create_layout(self, self.canvas, layout)
-
-def clear_layout(self):
-    win = self.props.active_window
-    layout = win.drawing_layout
-    remove = True
-    while remove == True:
-        child = layout.get_first_child()
-        if child is not None:
-            layout.remove(child)
-        else:
-            remove = False
-
-def create_layout(self, canvas, layout):
-    self.toolbar = toolbar.GraphToolbar(canvas, self)
-    layout.append(canvas)
-    layout.append(self.toolbar)
+    flap = win.toolbar_flap
+    self.toolbar = toolbar.GraphToolbar(self.canvas, self)
+    flap.set_flap(self.toolbar)
+    win.toast_overlay.set_child(self.canvas)

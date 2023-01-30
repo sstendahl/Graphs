@@ -64,6 +64,7 @@ class GraphsApplication(Adw.Application):
         self.create_action('delete_selected', graphs.delete_selected, ['Delete'], self)
         self.create_action('plot_settings', plot_settings.open_plot_settings, ["<primary><shift>P"], self)
         self.create_action('toggle_sidebar', self.toggle_sidebar, None)
+        self.create_action('toggle_toolbar', self.toggle_toolbar, None)
         Adw.StyleManager.get_default().connect("notify", graphs.toggle_darkmode, None, self)
 
     def do_activate(self):
@@ -109,6 +110,14 @@ class GraphsApplication(Adw.Application):
         enabled = not button.get_active()
         flap.set_reveal_flap(enabled)
         win.selection_button.set_visible(enabled)
+        button.set_active(enabled)
+
+    def toggle_toolbar(self, _widget, _):
+        win = self.main_window
+        button = win.toolbar_button
+        flap = win.toolbar_flap
+        enabled = not button.get_active()
+        flap.set_reveal_flap(enabled)
         button.set_active(enabled)
 
     def create_action(self, name, callback, shortcuts=None, *args):

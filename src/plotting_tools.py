@@ -204,7 +204,6 @@ def reload_plot(self, from_dictionary = True):
     Completely reload the plot of the graph
     """
     win = self.props.active_window
-    graphs.clear_layout(self)
     graphs.load_empty(self)
     if len(self.datadict) > 0:
         define_highlight(self)

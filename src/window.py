@@ -4,7 +4,6 @@ from gi.repository import Adw, Gio, Gtk
 @Gtk.Template(resource_path='/se/sjoerd/Graphs/ui/window.ui')
 class GraphsWindow(Adw.ApplicationWindow):
     __gtype_name__ = 'GraphsWindow'
-    drawing_layout = Gtk.Template.Child()
     selection_box = Gtk.Template.Child()
     undo_button = Gtk.Template.Child()
     redo_button = Gtk.Template.Child()
@@ -30,6 +29,8 @@ class GraphsWindow(Adw.ApplicationWindow):
     selection_button = Gtk.Template.Child()
     sidebar_button = Gtk.Template.Child()
     sidebar_flap = Gtk.Template.Child()
+    toolbar_flap = Gtk.Template.Child()
+    toolbar_button = Gtk.Template.Child()
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)

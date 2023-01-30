@@ -15,5 +15,6 @@
   </gresource>
   <gresource prefix="/se/sjoerd/Graphs/icons/scalable/actions/">
     <file preprocess="xml-stripblanks" alias="dock-left-symbolic.svg">icons/dock-left-symbolic.svg</file>
+    <file preprocess="xml-stripblanks" alias="dock-bottom-symbolic.svg">icons/dock-bottom-symbolic.svg</file>
   </gresource>
 </gresources>

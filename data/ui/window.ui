@@ -46,7 +46,15 @@
                     <property name="action-name">app.toggle_sidebar</property>
                     <property name="icon-name">dock-left-symbolic</property>
                     <property name="active">true</property>
-                    <property name="tooltip-text" translatable="yes">Toggle Sidebar</property>
+                    <property name="tooltip-text" translatable="yes">Toggle sidebar</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkToggleButton" id="toolbar_button">
+                    <property name="action-name">app.toggle_toolbar</property>
+                    <property name="icon-name">dock-bottom-symbolic</property>
+                    <property name="active">true</property>
+                    <property name="tooltip-text" translatable="yes">Toggle toolbar</property>
                   </object>
                 </child>
                 <child>
@@ -375,18 +383,18 @@
               </object>
             </child>
             <child type="content">
-              <object class="AdwToastOverlay" id="toast_overlay">
-                <property name="child">
-                  <object class="GtkBox" id="drawing_layout">
-                    <property name="hexpand">true</property>
-                    <property name="vexpand">true</property>
-                    <property name="orientation">vertical</property>
+              <object class="AdwFlap" id="toolbar_flap">
+                <property name="fold-policy">ADW_FLAP_FOLD_POLICY_NEVER</property>
+                <property name="flap-position">GTK_PACK_END</property>
+                <property name="orientation">vertical</property>
+                <child type="content">
+                  <object class="AdwToastOverlay" id="toast_overlay">
                     <property name="margin-top">5</property>
                     <property name="margin-bottom">5</property>
                     <property name="margin-start">5</property>
                     <property name="margin-end">5</property>
                   </object>
-                </property>
+                </child>
               </object>
             </child>
           </object>
