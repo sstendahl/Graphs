@@ -21,7 +21,6 @@ class GraphsWindow(Adw.ApplicationWindow):
     cut_data_button = Gtk.Template.Child()
     normalize_button = Gtk.Template.Child()
     center_data_button = Gtk.Template.Child()
-    save_data_button = Gtk.Template.Child()
     shift_vertically_button = Gtk.Template.Child()
     select_data_button = Gtk.Template.Child()
     toast_overlay = Gtk.Template.Child()
@@ -34,6 +33,4 @@ class GraphsWindow(Adw.ApplicationWindow):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        style_context = self.save_data_button.get_style_context()
-        style_context.add_class("suggested-action")
 

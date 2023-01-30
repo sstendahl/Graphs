@@ -95,13 +95,6 @@ def get_duplicate_filename(self, name):
                 loop = True
     return new_name
 
-def turn_off_clipboard_buttons(self):
-        win = self.props.active_window
-        undo_button = win.undo_button
-        redo_button = win.redo_button
-        redo_button.set_sensitive(False)
-        undo_button.set_sensitive(False)
-
 def toggle_darkmode(shortcut, theme, widget, self):
     win = self.props.active_window
     if len(self.datadict) > 0:

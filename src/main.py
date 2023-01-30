@@ -76,10 +76,10 @@ class GraphsApplication(Adw.Application):
         if not win:
             win = GraphsWindow(application=self)
         self.main_window = win
+        win.undo_button.set_sensitive(False)
+        win.redo_button.set_sensitive(False)
         self.load_preferences()
         graphs.load_empty(self)
-        # Should turn off in XML probably
-        graphs.turn_off_clipboard_buttons(self)
         win.maximize()
         win.present()
 

@@ -16,11 +16,11 @@
               <object class="GtkBox">
                 <property name="spacing">5</property>
                 <child>
-                  <object class="GtkMenuButton">
-                    <property name="always-show-arrow">True</property>
+                  <object class="AdwSplitButton">
                     <property name="icon-name">list-add-symbolic</property>
                     <property name="menu-model">add_data_menu</property>
                     <property name="tooltip-text" translatable="yes">Add new data</property>
+                    <property name="action-name">app.add_data</property>
                   </object>
                 </child>
                 <child>
@@ -42,6 +42,18 @@
                   </object>
                 </child>
                 <child>
+                  <object class="GtkToggleButton" id="selection_button">
+                    <property name="action-name">app.toggle_selection_mode</property>
+                    <property name="icon-name">selection-mode-symbolic</property>
+                    <property name="tooltip-text" translatable="yes">Select Items</property>
+                  </object>
+                </child>
+              </object>
+            </child>"
+            <child type="end">
+              <object class="GtkBox">
+                <property name="spacing">5</property>
+                <child>
                   <object class="GtkToggleButton" id="sidebar_button">
                     <property name="action-name">app.toggle_sidebar</property>
                     <property name="icon-name">dock-left-symbolic</property>
@@ -55,25 +67,6 @@
                     <property name="icon-name">dock-bottom-symbolic</property>
                     <property name="active">true</property>
                     <property name="tooltip-text" translatable="yes">Toggle toolbar</property>
-                  </object>
-                </child>
-                <child>
-                  <object class="GtkToggleButton" id="selection_button">
-                    <property name="action-name">app.toggle_selection_mode</property>
-                    <property name="icon-name">selection-mode-symbolic</property>
-                    <property name="tooltip-text" translatable="yes">Select Items</property>
-                  </object>
-                </child>
-              </object>
-            </child>"
-            <child type="end">
-              <object class="GtkBox">
-                <property name="spacing">5</property>
-                <child>
-                  <object class="GtkButton" id="save_data_button">
-                    <property name="label">Save</property>
-                    <property name="action-name">app.save_data</property>
-                    <property name="tooltip-text" translatable="yes">Save the data to your device</property>
                   </object>
                 </child>
                 <child>
@@ -418,7 +411,13 @@
       </item>
     </section>
   </menu>"
- <menu id="primary_menu">
+  <menu id="primary_menu">
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">_Save as text</attribute>
+        <attribute name="action">app.save_data</attribute>
+      </item>
+    </section>
     <section>
       <item>
         <attribute name="label" translatable="yes">_Preferences</attribute>
