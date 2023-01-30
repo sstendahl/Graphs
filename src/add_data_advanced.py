@@ -20,6 +20,7 @@ def on_accept(widget, self, window):
     import_settings["skip_rows"] = int(window.skip_rows.get_value())
     import_settings["separator"] = window.separator.get_selected_item().get_string()
     import_settings["delimiter"] = window.delimiter.get_text()
+    import_settings["guess_headers"] = window.guess_headers.get_active()
     import_settings["name"] = window.name.get_text()
     graphs.open_file_dialog(widget, _, self, import_settings = import_settings)
     window.destroy()
@@ -31,6 +32,7 @@ class AddAdvancedWindow(Adw.Window):
     separator = Gtk.Template.Child()
     column_x = Gtk.Template.Child()
     name = Gtk.Template.Child()
+    guess_headers = Gtk.Template.Child()
     column_y = Gtk.Template.Child()
     skip_rows = Gtk.Template.Child()
     open_advanced_confirm_button = Gtk.Template.Child()
@@ -43,6 +45,7 @@ class AddAdvancedWindow(Adw.Window):
         self.column_x.set_value(int(config["import_column_x"]))
         self.delimiter.set_text(config["import_delimiter"])
         self.set_chooser(self.separator, config["import_separator"])
+        self.guess_headers.set_active(config["guess_headers"])
         style_context = self.open_advanced_confirm_button.get_style_context()
         style_context.add_class("suggested-action")
 

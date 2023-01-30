@@ -127,6 +127,7 @@ class PreferencesWindow(Adw.PreferencesWindow):
     import_skip_rows = Gtk.Template.Child()
     import_separator = Gtk.Template.Child()
     import_delimiter = Gtk.Template.Child()
+    guess_headers = Gtk.Template.Child()
 
     def __init__(self, parent):
         super().__init__()
@@ -219,6 +220,8 @@ class PreferencesWindow(Adw.PreferencesWindow):
             self.plot_tick_bottom.set_active(True)
         if config["plot_tick_top"]:
             self.plot_tick_top.set_active(True)
+        if config["guess_headers"]:
+            self.guess_headers.set_active(True)
         if config["savefig_transparent"]:
             self.savefig_transparent_check_button.set_active(True)
         if config["plot_legend"]:
@@ -275,6 +278,7 @@ class PreferencesWindow(Adw.PreferencesWindow):
         config["plot_tick_top"] = self.plot_tick_top.get_active()
         config["plot_tick_bottom"] = self.plot_tick_bottom.get_active()
         config["plot_tick_direction"] = self.plot_tick_direction.get_selected_item().get_string()
+        config["guess_headers"] = self.guess_headers.get_active()
         config["handle_duplicates"] = self.handle_duplicates_chooser.get_selected_item().get_string()
         config["savefig_transparent"] = self.savefig_transparent_check_button.get_active()
         config["plot_legend"] = self.plot_legend_check.get_active()
