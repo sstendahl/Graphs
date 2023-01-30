@@ -1,6 +1,6 @@
 [Desktop Entry]
 Name=Graphs
-Exec=datman
+Exec=graphs
 Icon=se.sjoerd.Graphs
 Terminal=false
 Type=Application
