@@ -92,7 +92,7 @@ def set_legend(self, canvas):
         lines2, labels2 = canvas.right_axis.get_legend_handles_labels()
         lines3, labels3 = canvas.top_left_axis.get_legend_handles_labels()
         lines4, labels4 = canvas.top_right_axis.get_legend_handles_labels()
-        canvas.top_right_axis.legend(lines + lines2 + lines3 + lines4, labels + labels2 + labels3 + labels4, loc=0)
+        canvas.top_right_axis.legend(lines + lines2 + lines3 + lines4, labels + labels2 + labels3 + labels4, loc=0, frameon=True)
 
 def set_canvas_limits_axis(self, canvas, limits = {"xmin":None, "xmax":None, "ymin":None, "ymax":None}):
     """
