@@ -234,12 +234,6 @@
                 </child>
               </object>
             </child>
-            <child>
-              <object class="GtkButton" id="apply_button">
-                <property name="label">Apply</property>
-                <property name="margin-top">20</property>
-              </object>
-            </child>
           </object>
         </child>
       </object>
@@ -569,12 +563,6 @@
                 </property>
               </object>
             </child>
-            <child>
-              <object class="GtkButton" id="apply_button_2">
-                <property name="label">Apply</property>
-                <property name="margin-top">20</property>
-              </object>
-            </child>"
           </object>
         </child>"
       </object>"
