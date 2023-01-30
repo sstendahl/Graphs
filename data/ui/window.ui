@@ -380,8 +380,6 @@
                   <object class="GtkBox" id="drawing_layout">
                     <property name="hexpand">true</property>
                     <property name="vexpand">true</property>
-                    <property name="width-request">500</property>
-                    <property name="height-request">400</property>
                     <property name="orientation">vertical</property>
                     <property name="margin-top">5</property>
                     <property name="margin-bottom">5</property>
