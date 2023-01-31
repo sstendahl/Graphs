@@ -81,7 +81,6 @@ def open_selection(self, files, from_dictionary = False, import_settings = None,
                     plotting_tools.reload_plot(self)
         self.canvas.draw()
         plotting_tools.set_canvas_limits_axis(self, self.canvas)
-        turn_off_clipboard_buttons(self)
 
 def get_duplicate_filename(self, name):
     loop = True
@@ -196,7 +195,6 @@ def delete(widget,  self, id, give_toast = True):
         item.xdata_clipboard = [item.xdata]
         item.ydata_clipboard = [item.ydata]
         item.clipboard_pos = -1
-    turn_off_clipboard_buttons(self)
     plotting_tools.refresh_plot(self)
 
 

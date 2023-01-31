@@ -95,9 +95,10 @@
             <child type="flap">
               <object class="GtkBox" id="selection_box">"
                 <property name="orientation">vertical</property>
+                <property name="width-request">335</property>
+                <property name="hexpand">false</property>
                 <child>
                   <object class="GtkScrolledWindow" id="equation_scroll">
-                    <property name="width-request">335</property>
                     <property name="height-request">250</property>
                     <property name="focusable">1</property>
                     <property name="hscrollbar_policy">never</property>
@@ -109,7 +110,6 @@
                             <property name="margin-top">5</property>
                             <property name="margin-start">5</property>
                             <property name="margin-end">5</property>
-                            <property name="hexpand">False</property>
                             <property name="selection-mode">none</property>
                             <style>
                               <class name="boxed-list" />
@@ -128,17 +128,19 @@
                     <property name="margin-start">10</property>
                     <property name="margin-end">10</property>
                     <child>
-                      <object class="GtkButton" id="pan_button">
+                      <object class="GtkToggleButton" id="pan_button">
                         <property name="icon-name">move-tool-symbolic</property>
                         <property name="tooltip-text" translatable="yes">Left button to pan, right button to zoom. Hold control to to keep aspect ratio fixed</property>
                         <property name="action-name">app.pan</property>
+                        <property name="hexpand">true</property>
                       </object>
                     </child>
                     <child>
-                      <object class="GtkButton" id="zoom_button">
+                      <object class="GtkToggleButton" id="zoom_button">
                         <property name="icon-name">loupe-symbolic</property>
                         <property name="tooltip-text" translatable="yes">Zoom to rectangle</property>
                         <property name="action-name">app.zoom</property>
+                        <property name="hexpand">true</property>
                       </object>
                     </child>
                     <child>
@@ -146,6 +148,7 @@
                         <property name="icon-name">edit-select-all-symbolic</property>
                         <property name="tooltip-text" translatable="yes">Select a span of data</property>
                         <property name="action-name">app.select_data_toggle</property>
+                        <property name="hexpand">true</property>
                       </object>
                     </child>
                     <child>
@@ -153,6 +156,7 @@
                         <property name="icon-name">edit-cut-symbolic</property>
                         <property name="tooltip-text" translatable="yes">Cut the selected span</property>
                         <property name="action-name">app.cut_data</property>
+                        <property name="hexpand">true</property>
                       </object>
                     </child>
                   </object>
@@ -165,7 +169,6 @@
                       <object class="GtkViewport">
                         <property name="child">
                           <object class="GtkBox">
-                            <property name="hexpand">False</property>
                             <property name="vexpand">True</property>
                             <property name="orientation">vertical</property>
                             <child>
@@ -439,27 +442,27 @@
         <attribute name="action">app.restore_view</attribute>
       </item>
       <item>
-        <attribute name="label" translatable="yes">_Go back</attribute>
+        <attribute name="label" translatable="yes">_Go Back</attribute>
         <attribute name="action">app.view_back</attribute>
       </item>
       <item>
-        <attribute name="label" translatable="yes">_Go forward</attribute>
+        <attribute name="label" translatable="yes">_Go Forward</attribute>
         <attribute name="action">app.view_forward</attribute>
       </item>
     </section>
     <section>
       <item>
-        <attribute name="label" translatable="yes">_Change xscale</attribute>
+        <attribute name="label" translatable="yes">_Logarithmic X Scale</attribute>
         <attribute name="action">app.change_xscale</attribute>
       </item>
       <item>
-        <attribute name="label" translatable="yes">_Change yscale</attribute>
+        <attribute name="label" translatable="yes">_Logarithmic Y Scale</attribute>
         <attribute name="action">app.change_yscale</attribute>
       </item>
     </section>
     <section>
       <item>
-        <attribute name="label" translatable="yes">_Enter PIP</attribute>
+        <attribute name="label" translatable="yes">_Picture in Picture</attribute>
         <attribute name="action">app.open_pip_mode</attribute>
       </item>
     </section>
