@@ -26,7 +26,7 @@ def open_selection(self, files, from_dictionary = False, import_settings = None,
     if canvas == None:
         canvas = self.canvas
     if self.highlight is not None:
-        plotting_tools.hide_highlight(self)
+        plotting_tools.define_highlight(self)
     if from_dictionary:
         for key, item in self.datadict.items():
             if item is not None:

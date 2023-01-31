@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 from matplotlib import colors
 from matplotlib.backends.backend_gtk4agg import (
     FigureCanvasGTK4Agg as FigureCanvas)
-from . import graphs, utilities, rename_label
+from . import graphs, utilities, rename_label, toolbar
 from matplotlib.widgets import SpanSelector
 from cycler import cycler
 import matplotlib.font_manager
@@ -34,36 +34,14 @@ def define_highlight(self, span=None):
         self.highlight.set_visible(True)
         self.highlight.set_active(True)
 
-def hide_highlight(self):
-    """
-    Hide the SpanSelector object from the graph, and disable the select data
-    button
-    """
-    win = self.props.active_window
-    select_button = win.select_data_button
-    cut_button = win.cut_data_button
-    self.highlight.set_visible(False)
-    self.highlight.set_active(False)
-    select_button.set_active(False)
-    cut_button.set_visible(False)
-
 def toggle_highlight(shortcut, _, self):
     """
     Toggle the SpanSelector. 
     """
-    win = self.props.active_window
-    select_button = win.select_data_button
-    cut_button = win.cut_data_button
-    if self.highlight == None:
-        define_highlight(self)    
-    if select_button.get_active():
-        hide_highlight(self)
+    if self.main_window.select_data_button.get_active():
+        set_mode(self, "")
     else:
-        select_button.set_active(True)
-        cut_button.set_visible(True)
-        self.highlight.set_visible(True)
-        self.highlight.set_active(True)
-    self.canvas.draw()
+        set_mode(self, "select/cut")
 
 
 def plot_figure(self, canvas, X, Y, filename="", xlim=None, linewidth = 2, title="", scale="log",marker=None, linestyle="solid",
@@ -210,7 +188,6 @@ def reload_plot(self, from_dictionary = True):
     graphs.load_empty(self)
     if len(self.datadict) > 0:
         define_highlight(self)
-        hide_highlight(self)
         hide_unused_axes(self, self.canvas)
         graphs.open_selection(self, None, from_dictionary)
         set_canvas_limits_axis(self, self.canvas)
@@ -384,6 +361,57 @@ def load_fonts(self):
         except:
             print(f"Could not load {font}")
             
+def set_mode(self, mode):
+    win = self.main_window
+    pan_button = win.pan_button
+    zoom_button = win.zoom_button
+    select_button = win.select_data_button
+    cut_button = win.cut_data_button
+    if self.highlight == None:
+        define_highlight(self)
+    highlight = self.highlight
+    print(mode)
+
+    if(mode == ""):
+        toolbar_mode = self.dummy_toolbar.mode
+        if(toolbar_mode == "pan/zoom"):
+            self.dummy_toolbar.pan()
+        elif(toolbar_mode == "zoom rect"):
+            self.dummy_toolbar.zoom()
+        pan_button.set_active(False)
+        zoom_button.set_active(False)
+        select_button.set_active(False)
+        cut_button.set_visible(False)
+        highlight.set_visible(False)
+        highlight.set_active(False)
+    elif(mode == "pan/zoom"):
+        pan_button.set_active(True)
+        zoom_button.set_active(False)
+        select_button.set_active(False)
+        cut_button.set_visible(False)
+        highlight.set_visible(False)
+        highlight.set_active(False)
+    elif(mode == "zoom rect"):
+        pan_button.set_active(False)
+        zoom_button.set_active(True)
+        select_button.set_active(False)
+        cut_button.set_visible(False)
+        highlight.set_visible(False)
+        highlight.set_active(False)
+    elif(mode == "select/cut"):
+        toolbar_mode = self.dummy_toolbar.mode
+        if(toolbar_mode == "pan/zoom"):
+            self.dummy_toolbar.pan()
+        elif(toolbar_mode == "zoom rect"):
+            self.dummy_toolbar.zoom()
+        pan_button.set_active(False)
+        zoom_button.set_active(False)
+        select_button.set_active(True)
+        cut_button.set_visible(True)
+        highlight.set_visible(True)
+        highlight.set_active(True)
+    self.canvas.draw()
+
 # https://github.com/matplotlib/matplotlib/blob/c23ccdde6f0f8c071b09a88770e24452f2859e99/lib/matplotlib/backends/backend_gtk4.py#L306
 def export_data(widget, shortcut, self):
     dialog = Gtk.FileChooserNative(
