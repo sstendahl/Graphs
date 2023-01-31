@@ -8,11 +8,14 @@ from matplotlib.lines import Line2D
 import matplotlib.pyplot as plt
 
 def open_plot_settings(widget, _, self):
-    win = PlotSettingsWindow(self)
-    win.set_transient_for(self.props.active_window)
-    win.set_modal(True)
-    name = "transform_confirm"
-    win.present()  
+    try:
+        win = PlotSettingsWindow(self)
+        win.set_transient_for(self.props.active_window)
+        win.set_modal(True)
+        name = "transform_confirm"
+        win.present()
+    except:
+        self.main_window.toast_overlay.add_toast(Adw.Toast(title=f"Unable to open plot settings, make sure to load at least one dataset"))
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/plot_settings.ui")
 class PlotSettingsWindow(Adw.PreferencesWindow):
