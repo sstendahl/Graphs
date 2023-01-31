@@ -95,7 +95,7 @@
             <child type="flap">
               <object class="GtkBox" id="selection_box">"
                 <property name="orientation">vertical</property>
-                <property name="width-request">335</property>
+                <property name="width-request">370</property>
                 <property name="hexpand">false</property>
                 <child>
                   <object class="GtkScrolledWindow" id="equation_scroll">
@@ -491,3 +491,4 @@
     </section>
   </menu>
 </interface>
+

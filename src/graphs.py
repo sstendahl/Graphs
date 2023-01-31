@@ -208,14 +208,10 @@ def add_sample_to_menu(self, filename, color, id, select_item = False):
     row.gesture.connect("pressed", row.clicked, self)
     row.color_picker = colorpicker.ColorPicker(color, row=row, parent=self)
     row.color_picker.set_hexpand(False)
-    row.delete_button_widget = row.get_last_child()
-    row.remove(row.delete_button_widget)
-    row.append(row.check_button)
-    row.append(row.sample_ID_label)
-    row.append(row.color_picker)
-    row.append(row.delete_button_widget)
-    row.delete_button.connect("clicked", delete, self, id)
+    label = row.sample_ID_label
+    row.sample_box.insert_child_after(row.color_picker, row.sample_ID_label)
     row.check_button.connect("toggled", toggle_data, self, id)
+    row.delete_button.connect("clicked", delete, self, id)
     max_length = int(26)
     if len(filename) > max_length:
         label = f"{filename[:max_length]}..."

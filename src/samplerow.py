@@ -9,8 +9,8 @@ class SampleBox(Gtk.Box):
     sample_box = Gtk.Template.Child()
     sample_ID_label = Gtk.Template.Child()
     check_button = Gtk.Template.Child()
-    check_mark = Gtk.Template.Child()
     delete_button = Gtk.Template.Child()
+    
     def __init__(self, app, filename = "", id = ""):
         super().__init__()
         self.filename = filename
