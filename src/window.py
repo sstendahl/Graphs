@@ -26,10 +26,8 @@ class GraphsWindow(Adw.ApplicationWindow):
     toast_overlay = Gtk.Template.Child()
     list_box = Gtk.Template.Child()
     selection_button = Gtk.Template.Child()
-    sidebar_button = Gtk.Template.Child()
     sidebar_flap = Gtk.Template.Child()
     toolbar_flap = Gtk.Template.Child()
-    toolbar_button = Gtk.Template.Child()
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)

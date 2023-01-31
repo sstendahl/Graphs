@@ -274,7 +274,84 @@ def hide_unused_axes(self, canvas):
     canvas.top_right_axis.get_yaxis().set_visible(False)
     canvas.top_left_axis.get_yaxis().set_visible(False)
 
-    
+def change_yscale(widget, shortcut, self):
+    selected_keys = utilities.get_selected_keys(self)
+    left = False
+    right = False
+    for key in selected_keys:
+        if self.datadict[key].plot_Y_position == "left":
+            left = True
+        if self.datadict[key].plot_Y_position == "right":
+            right = True
+
+    if left:
+        current_scale = self.canvas.ax.get_yscale()
+        if current_scale == "linear":
+            self.canvas.ax.set_yscale('log')
+            self.canvas.set_ticks(self)
+            self.plot_settings.yscale = "log"
+        elif current_scale == "log":
+            self.canvas.ax.set_yscale('linear')
+            self.canvas.set_ticks(self)
+            self.plot_settings.yscale = "linear"
+    if right:
+        current_scale = self.canvas.right_axis.get_yscale()
+        if current_scale == "linear":
+            self.canvas.top_right_axis.set_yscale('log')
+            self.canvas.right_axis.set_yscale('log')
+            self.canvas.set_ticks(self)
+            self.plot_settings.right_scale = "log"
+        elif current_scale == "log":
+            self.canvas.top_right_axis.set_yscale('linear')
+            self.canvas.right_axis.set_yscale('linear')
+            self.canvas.set_ticks(self)
+            self.plot_settings.right_scale = "linear"
+
+    set_canvas_limits_axis(self, self.canvas)
+    self.canvas.draw()
+
+def change_xscale(widget, shortcut, self):
+    selected_keys = utilities.get_selected_keys(self)
+    top = False
+    bottom = False
+    for key in selected_keys:
+        if self.datadict[key].plot_X_position == "top":
+            top = True
+        if self.datadict[key].plot_X_position == "bottom":
+            bottom = True
+
+    if top:
+        current_scale = self.canvas.top_left_axis.get_xscale()
+        if current_scale == "linear":
+            self.canvas.top_left_axis.set_xscale('log')
+            self.canvas.top_right_axis.set_xscale('log')
+            self.canvas.set_ticks(self)
+            self.plot_settings.top_scale = "log"
+        elif current_scale == "log":
+            self.canvas.top_left_axis.set_xscale('linear')
+            self.canvas.top_right_axis.set_xscale('linear')
+            self.plot_settings.top_scale = "linear"
+            self.canvas.set_ticks(self)
+    if bottom:
+        current_scale = self.canvas.ax.get_xscale()
+        if current_scale == "linear":
+            self.canvas.ax.set_xscale('log')
+            self.canvas.right_axis.set_xscale('log')
+            self.canvas.set_ticks(self)
+            self.plot_settings.xscale = "log"
+        elif current_scale == "log":
+            self.canvas.ax.set_xscale('linear')
+            self.canvas.right_axis.set_xscale('linear')
+            self.plot_settings.xscale = "linear"
+            self.canvas.set_ticks(self)
+
+    set_canvas_limits_axis(self, self.canvas)
+    self.canvas.draw()
+
+def restore_view(widget, shortcut, self):
+    set_canvas_limits_axis(self, self.canvas)
+    self.canvas.draw()
+
 def get_next_color(self):
     """
     Get the color that is to be used for the next data set

@@ -1,5 +1,4 @@
 <?xml version='1.0' encoding='utf-8'?>
-<!--SPDX-License-Identifier: GPL-3.0-or-later-->
 <interface>
   <requires lib="gtk" version="4.0" />
   <requires lib="Adw" version="1.2" />
@@ -65,19 +64,10 @@
               <object class="GtkBox">
                 <property name="spacing">5</property>
                 <child>
-                  <object class="GtkToggleButton" id="sidebar_button">
-                    <property name="action-name">app.toggle_sidebar</property>
-                    <property name="icon-name">dock-left-symbolic</property>
-                    <property name="active">true</property>
-                    <property name="tooltip-text" translatable="yes">Toggle sidebar</property>
-                  </object>
-                </child>
-                <child>
-                  <object class="GtkToggleButton" id="toolbar_button">
-                    <property name="action-name">app.toggle_toolbar</property>
-                    <property name="icon-name">dock-bottom-symbolic</property>
-                    <property name="active">true</property>
-                    <property name="tooltip-text" translatable="yes">Toggle toolbar</property>
+                  <object class="GtkMenuButton" id="view_menu_button">
+                    <property name="always-show-arrow">true</property>
+                    <property name="menu-model">view_menu</property>
+                    <property name="icon-name">view-reveal-symbolic</property>
                   </object>
                 </child>
                 <child>
@@ -98,7 +88,7 @@
           </object>
         </child>
         <child>
-          <object class="AdwFlap" id="sidebar_flap">"
+          <object class="AdwFlap" id="sidebar_flap">
             <property name="reveal-flap">True</property>
             <property name="fold-duration">1</property>
             <property name="fold-policy">ADW_FLAP_FOLD_POLICY_NEVER</property>
@@ -131,6 +121,43 @@
                   </object>
                 </child>
                 <child>
+                  <object class="GtkBox">
+                    <property name="spacing">10</property>
+                    <property name="margin-top">5</property>
+                    <property name="margin-bottom">5</property>
+                    <property name="margin-start">10</property>
+                    <property name="margin-end">10</property>
+                    <child>
+                      <object class="GtkButton" id="pan_button">
+                        <property name="icon-name">move-tool-symbolic</property>
+                        <property name="tooltip-text" translatable="yes">Left button to pan, right button to zoom. Hold control to to keep aspect ratio fixed</property>
+                        <property name="action-name">app.pan</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkButton" id="zoom_button">
+                        <property name="icon-name">loupe-symbolic</property>
+                        <property name="tooltip-text" translatable="yes">Zoom to rectangle</property>
+                        <property name="action-name">app.zoom</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkToggleButton" id="select_data_button">
+                        <property name="icon-name">edit-select-all-symbolic</property>
+                        <property name="tooltip-text" translatable="yes">Select a span of data</property>
+                        <property name="action-name">app.select_data_toggle</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkToggleButton" id="cut_data_button">
+                        <property name="icon-name">edit-cut-symbolic</property>
+                        <property name="tooltip-text" translatable="yes">Cut the selected span</property>
+                        <property name="action-name">app.cut_data</property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <child>
                   <object class="GtkScrolledWindow">
                     <property name="focusable">1</property>
                     <property name="hscrollbar_policy">never</property>
@@ -147,39 +174,6 @@
                                 <property name="margin-top">5</property>
                                 <property name="margin-start">5</property>
                                 <property name="margin-end">5</property>
-                                <child>
-                                  <object class="AdwExpanderRow">
-                                    <property name="title">Select and Cut</property>
-                                    <child>
-                                      <object class="AdwActionRow">
-                                        <property name="subtitle">Select a span of data</property>
-                                        <property name="activatable-widget">select_data_button</property>
-                                        <child>
-                                          <object class="GtkToggleButton" id="select_data_button">
-                                            <property name="label">Select</property>"
-                                        <property name="action-name">app.select_data_toggle</property>
-                                            <property name="margin-bottom">5</property>
-                                            <property name="margin-top">5</property>"
-                                      </object>
-                                        </child>
-                                      </object>
-                                    </child>
-                                    <child>
-                                      <object class="AdwActionRow">
-                                        <property name="subtitle">Cut the selected span</property>
-                                        <property name="activatable-widget">cut_data_button</property>
-                                        <child>
-                                          <object class="GtkToggleButton" id="cut_data_button">
-                                            <property name="label">Cut</property>
-                                            <property name="action-name">app.cut_data</property>
-                                            <property name="margin-bottom">5</property>
-                                            <property name="margin-top">5</property>
-                                          </object>
-                                        </child>
-                                      </object>
-                                    </child>
-                                  </object>
-                                </child>
                                 <child>
                                   <object class="AdwExpanderRow">
                                     <property name="title">Adjust Data</property>
@@ -427,12 +421,58 @@
         <attribute name="action">app.add_equation</attribute>
       </item>
     </section>
-  </menu>"
+  </menu>
+  <menu id="view_menu">
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">_Toggle Sidebar</attribute>
+        <attribute name="action">app.toggle_sidebar</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">_Toggle Toolbar</attribute>
+        <attribute name="action">app.toggle_toolbar</attribute>
+      </item>
+    </section>
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">_Restore View</attribute>
+        <attribute name="action">app.restore_view</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">_Go back</attribute>
+        <attribute name="action">app.view_back</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">_Go forward</attribute>
+        <attribute name="action">app.view_forward</attribute>
+      </item>
+    </section>
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">_Change xscale</attribute>
+        <attribute name="action">app.change_xscale</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">_Change yscale</attribute>
+        <attribute name="action">app.change_yscale</attribute>
+      </item>
+    </section>
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">_Enter PIP</attribute>
+        <attribute name="action">app.open_pip_mode</attribute>
+      </item>
+    </section>
+  </menu>
   <menu id="primary_menu">
     <section>
       <item>
         <attribute name="label" translatable="yes">_Save as text</attribute>
         <attribute name="action">app.save_data</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">_Export</attribute>
+        <attribute name="action">app.export_data</attribute>
       </item>
     </section>
     <section>

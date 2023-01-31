@@ -11,8 +11,9 @@ gi.require_version('Adw', '1')
 
 from gi.repository import Gtk, Gio, Gdk, Adw
 from .window import GraphsWindow
+from matplotlib.backends.backend_gtk4 import NavigationToolbar2GTK4
 import matplotlib.pyplot as plt
-from . import graphs, plotting_tools, item_operations, transform_data, preferences, add_equation, add_data_advanced, plot_settings
+from . import graphs, plotting_tools, item_operations, transform_data, preferences, add_equation, add_data_advanced, plot_settings, pip_mode, toolbar
 
 class GraphsApplication(Adw.Application):
     """The main application singleton class."""
@@ -65,6 +66,16 @@ class GraphsApplication(Adw.Application):
         self.create_action('plot_settings', plot_settings.open_plot_settings, ["<primary><shift>P"], self)
         self.create_action('toggle_sidebar', self.toggle_sidebar, None)
         self.create_action('toggle_toolbar', self.toggle_toolbar, None)
+        self.create_action('change_xscale', plotting_tools.change_xscale, None, self)
+        self.create_action('change_yscale', plotting_tools.change_yscale, None, self)
+        self.create_action('open_pip_mode', pip_mode.open_pip_mode, None, self)
+        self.create_action('export_data', toolbar.export_data, ["<primary><shift>E"], self)
+        self.create_action('restore_view', plotting_tools.restore_view, None, self)
+        self.create_action('pan', toolbar.pan, None, self)
+        self.create_action('zoom', toolbar.zoom, None, self)
+        self.create_action('view_forward', toolbar.view_forward, None, self)
+        self.create_action('view_back', toolbar.view_back, None, self)
+
         Adw.StyleManager.get_default().connect("notify", graphs.toggle_darkmode, None, self)
 
     def do_activate(self):
@@ -76,10 +87,9 @@ class GraphsApplication(Adw.Application):
         if not win:
             win = GraphsWindow(application=self)
         self.main_window = win
-        win.undo_button.set_sensitive(False)
-        win.redo_button.set_sensitive(False)
         self.load_preferences()
         graphs.load_empty(self)
+        self.dummy_toolbar = NavigationToolbar2GTK4(self.canvas)
         win.maximize()
         win.present()
 
@@ -105,20 +115,16 @@ class GraphsApplication(Adw.Application):
 
     def toggle_sidebar(self, _widget, _):
         win = self.main_window
-        button = win.sidebar_button
         flap = win.sidebar_flap
-        enabled = not button.get_active()
+        enabled = not flap.get_reveal_flap()
         flap.set_reveal_flap(enabled)
         win.selection_button.set_visible(enabled)
-        button.set_active(enabled)
 
     def toggle_toolbar(self, _widget, _):
         win = self.main_window
-        button = win.toolbar_button
         flap = win.toolbar_flap
-        enabled = not button.get_active()
+        enabled = not flap.get_reveal_flap()
         flap.set_reveal_flap(enabled)
-        button.set_active(enabled)
 
     def create_action(self, name, callback, shortcuts=None, *args):
         """Add an application action.
