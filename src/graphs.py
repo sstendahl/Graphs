@@ -331,6 +331,7 @@ def load_empty(self):
     xlabel = self.plot_settings.xlabel
     ylabel = self.plot_settings.ylabel
     self.canvas = PlotWidget(parent = self, xlabel=xlabel, ylabel=ylabel)
+    self.dummy_toolbar = NavigationToolbar(self.canvas)
     win.toast_overlay.set_child(self.canvas)
 
 def disable_clipboard_buttons(self):
