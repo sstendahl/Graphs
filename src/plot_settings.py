@@ -7,15 +7,13 @@ import uuid
 from matplotlib.lines import Line2D
 import matplotlib.pyplot as plt
 
-def open_plot_settings(widget, _, self):
-    try:
-        win = PlotSettingsWindow(self)
-        win.set_transient_for(self.props.active_window)
-        win.set_modal(True)
-        name = "transform_confirm"
-        win.present()
-    except:
-        self.main_window.toast_overlay.add_toast(Adw.Toast(title=f"Unable to open plot settings, make sure to load at least one dataset"))
+def open_plot_settings(widget, _, self, id = None):
+    win = PlotSettingsWindow(self, id)
+    win.set_transient_for(self.props.active_window)
+    win.set_modal(True)
+    name = "transform_confirm"
+    win.present()
+
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/plot_settings.ui")
 class PlotSettingsWindow(Adw.PreferencesWindow):
@@ -54,13 +52,13 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
     plot_legend_check = Gtk.Template.Child()
     plot_font_chooser = Gtk.Template.Child()
 
-    def __init__(self, parent):
+    def __init__(self, parent, id):
         super().__init__()
         self.select_item = False
         self.chooser_changed = True
         filenames = utilities.get_all_filenames(parent)
         utilities.populate_chooser(self.datalist_chooser, filenames)
-        self.item = self.load_config(parent)
+        self.item = self.load_config(parent, id)
         self.datalist_chooser.connect("notify::selected", self.on_notify, parent)
         self.connect("close-request", self.on_close, parent)
         
@@ -70,6 +68,7 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
         for item in model:
             chooser_list.append(item.get_string())
         return chooser_list
+        
             
     def on_notify(self, _, __, parent):
         self.save_settings(parent)
@@ -82,9 +81,11 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
         self.load_config(parent)
         self.chooser_changed = False
 
-    def load_config(self, parent):
+    def load_config(self, parent, id):
         data_list = utilities.get_datalist(parent)
         index = self.datalist_chooser.get_selected()
+        if id is not None:
+            index = data_list.index(id)
         self.datalist_chooser.set_selected(index)
         item = parent.datadict[data_list[index]]
         font_string = parent.plot_settings.font_string

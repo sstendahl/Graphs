@@ -365,3 +365,4 @@ def enable_data_dependent_buttons(self, enabled):
 
     for button in dependent_buttons:
         button.set_sensitive(enabled)
+

@@ -41,8 +41,8 @@ class ColorPicker(Gtk.Button):
         self.update_color()
 
     def on_click(self, button):
+        self.popover_active = True
         self.color_chooser.props.show_editor = False
-        self.row.clicked(None, None, None, None, self.parent)
         self.color_popover.popup()
 
     def set_color(self, chooser, color, _ = None):

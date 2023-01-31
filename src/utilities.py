@@ -19,6 +19,14 @@ def populate_chooser(chooser, chooser_list):
     for item in chooser_list:
         if item != "nothing":
             model.append(str(item))
+            
+def get_chooser_index(chooser, id):
+    model = chooser.get_model()
+    for index, item in enumerate(model):
+        print(item.get_string())
+        if item.get_string() == index:
+            return index
+    return None
 
 def get_datalist(parent):
     return list(parent.datadict.keys())
