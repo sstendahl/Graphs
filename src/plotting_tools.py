@@ -6,8 +6,6 @@ import matplotlib.pyplot as plt
 from matplotlib import colors
 from matplotlib.backends.backend_gtk4agg import (
     FigureCanvasGTK4Agg as FigureCanvas)
-from matplotlib.backends.backend_gtk4 import (
-    NavigationToolbar2GTK4 as NavigationToolbar)
 from . import graphs, utilities, rename_label
 from matplotlib.widgets import SpanSelector
 from cycler import cycler

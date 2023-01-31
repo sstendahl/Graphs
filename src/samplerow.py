@@ -25,14 +25,4 @@ class SampleBox(Gtk.Box):
         return (rgba.red, rgba.green, rgba.blue, rgba.alpha)
 
     def clicked(self,gesture,_ ,xpos, ypos, graphs):
-        win = graphs.props.active_window
-        button = win.selection_button
-        if button.get_active():
-            if not self.selected:
-                self.check_button.set_active(True) 
-                self.selected = True
-            else:
-                self.check_button.set_active(False) 
-                self.selected = False
-        plotting_tools.refresh_plot(graphs, set_limits = False)
-
+        pass

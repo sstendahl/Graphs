@@ -148,3 +148,4 @@ def main(version):
     app.version = version
 
     return app.run(sys.argv)
+

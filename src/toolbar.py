@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 import gi
 from gi.repository import Gtk, Gdk, Gio, GdkPixbuf, Adw, GObject
+from matplotlib.backends.backend_gtk4 import NavigationToolbar2GTK4
 from . import plotting_tools, plot_settings, utilities
 import os
 import shutil
@@ -38,3 +39,5 @@ def zoom(widget, shortcut, self):
     self.dummy_toolbar.zoom()
     button = self.main_window.zoom_button
     button.set_active(not button.get_active())
+
+
