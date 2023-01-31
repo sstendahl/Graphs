@@ -54,7 +54,7 @@ def get_font_style(font_name):
 def get_selected_keys(self):
     selected_keys = []
     for key, item in self.item_rows.items():
-        if item.selected == True:
+        if item.check_button.get_active():
             selected_keys.append(item.id)
     return selected_keys
     
