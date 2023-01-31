@@ -449,9 +449,6 @@ def export_data(widget, shortcut, self):
     dialog.add_choice('format', 'File format', formats, formats)
     dialog.set_choice('format', formats[default_format])
 
-    # TODO: save selected folder
-    # dialog.set_current_folder(Gio.File.new_for_path(
-    #    os.path.expanduser(mpl.rcParams['savefig.directory'])))
     dialog.set_current_name(self.canvas.get_default_filename())
     dialog.connect("response", on_save_response, self)
     dialog.show()
@@ -465,10 +462,6 @@ def on_save_response(dialog, response, self):
     self._save_dialog = None
     if response != Gtk.ResponseType.ACCEPT:
         return
-    # TODO: Save dir for next time, unless empty str (which means use cwd).
-    #if mpl.rcParams['savefig.directory']:
-    #    parent = file.get_parent()
-    #    mpl.rcParams['savefig.directory'] = parent.get_path()
     try:
         self.canvas.figure.savefig(file.get_path(), format=fmt)
     except Exception as e:
