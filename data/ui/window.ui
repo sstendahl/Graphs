@@ -477,11 +477,11 @@
         <attribute name="action">app.restore_view</attribute>
       </item>
       <item>
-        <attribute name="label" translatable="yes">_Go Back</attribute>
+        <attribute name="label" translatable="yes">_Previous View</attribute>
         <attribute name="action">app.view_back</attribute>
       </item>
       <item>
-        <attribute name="label" translatable="yes">_Go Forward</attribute>
+        <attribute name="label" translatable="yes">_Next View</attribute>
         <attribute name="action">app.view_forward</attribute>
       </item>
     </section>
