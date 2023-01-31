@@ -203,7 +203,7 @@ def select_none(widget, _, self):
     for key, item in self.item_rows.items():
         item.check_button.set_active(False) 
     plotting_tools.refresh_plot(self)
-    enable_data_dependant_buttons(False)
+    enable_data_dependant_buttons(self, False)
 
 def add_sample_to_menu(self, filename, color, id, select_item = False):
     win = self.props.active_window
