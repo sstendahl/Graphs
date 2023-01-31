@@ -248,7 +248,7 @@
     <child>
       <object class="AdwPreferencesPage">
         <property name="visible">True</property>
-        <property name="icon-name">applications-graphics-symbolic</property>
+        <property name="icon-name">axes-one-quadrant</property>
         <property name="title">Plot</property>
         <child>
           <object class="AdwPreferencesGroup">
