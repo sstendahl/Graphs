@@ -51,13 +51,6 @@
                     <property name="css-classes">spacer</property>
                   </object>
                 </child>
-                <child>
-                  <object class="GtkToggleButton" id="selection_button">
-                    <property name="action-name">app.toggle_selection_mode</property>
-                    <property name="icon-name">selection-mode-symbolic</property>
-                    <property name="tooltip-text" translatable="yes">Select Items</property>
-                  </object>
-                </child>
               </object>
             </child>"
             <child type="end">
@@ -458,12 +451,6 @@
       <item>
         <attribute name="label" translatable="yes">_Logarithmic Y Scale</attribute>
         <attribute name="action">app.change_yscale</attribute>
-      </item>
-    </section>
-    <section>
-      <item>
-        <attribute name="label" translatable="yes">_Picture in Picture</attribute>
-        <attribute name="action">app.open_pip_mode</attribute>
       </item>
     </section>
   </menu>
