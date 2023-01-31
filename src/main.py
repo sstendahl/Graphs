@@ -11,7 +11,6 @@ gi.require_version('Adw', '1')
 
 from gi.repository import Gtk, Gio, Gdk, Adw
 from .window import GraphsWindow
-from matplotlib.backends.backend_gtk4 import NavigationToolbar2GTK4
 import matplotlib.pyplot as plt
 from . import graphs, plotting_tools, item_operations, transform_data, preferences, add_equation, add_data_advanced, plot_settings, toolbar
 
@@ -86,7 +85,6 @@ class GraphsApplication(Adw.Application):
         self.main_window = win
         self.load_preferences()
         graphs.load_empty(self)
-        self.dummy_toolbar = NavigationToolbar2GTK4(self.canvas)
         graphs.disable_clipboard_buttons(self)
         win.maximize()
         win.present()
