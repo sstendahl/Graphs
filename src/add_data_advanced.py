@@ -5,7 +5,6 @@ from . import item_operations, graphs
 from .data import Data
 
 def open_add_data_advanced_window(widget, _, self):
-    print(self)
     win = AddAdvancedWindow(self)
     button = win.open_advanced_confirm_button
     win.set_transient_for(self.props.active_window)
