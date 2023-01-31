@@ -87,6 +87,7 @@ class GraphsApplication(Adw.Application):
         self.load_preferences()
         graphs.load_empty(self)
         self.dummy_toolbar = NavigationToolbar2GTK4(self.canvas)
+        graphs.disable_clipboard_buttons(self)
         win.maximize()
         win.present()
 
