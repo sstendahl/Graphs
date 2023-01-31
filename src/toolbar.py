@@ -17,7 +17,6 @@ class GraphToolbar(Gtk.Box):
     yscale_button = Gtk.Template.Child()
     xscale_button = Gtk.Template.Child()
     plot_settings_button = Gtk.Template.Child()
-    pip_button = Gtk.Template.Child()
 
     def __init__(self, canvas, parent):
         super().__init__()
@@ -40,4 +39,3 @@ def zoom(widget, shortcut, self):
     self.dummy_toolbar.zoom()
     button = self.main_window.zoom_button
     button.set_active(not button.get_active())
-
