@@ -39,23 +39,27 @@ def hide_highlight(self):
     button
     """
     win = self.props.active_window
-    button = win.select_data_button
+    select_button = win.select_data_button
+    cut_button = win.cut_data_button
     self.highlight.set_visible(False)
     self.highlight.set_active(False)
-    button.set_active(False)
+    select_button.set_active(False)
+    cut_button.set_visible(False)
 
 def toggle_highlight(shortcut, _, self):
     """
     Toggle the SpanSelector. 
     """
     win = self.props.active_window
-    button = win.select_data_button
+    select_button = win.select_data_button
+    cut_button = win.cut_data_button
     if self.highlight == None:
         define_highlight(self)    
-    if button.get_active():
+    if select_button.get_active():
         hide_highlight(self)
     else:
-        button.set_active(True)
+        select_button.set_active(True)
+        cut_button.set_visible(True)
         self.highlight.set_visible(True)
         self.highlight.set_active(True)
     self.canvas.draw()

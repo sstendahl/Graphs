@@ -137,19 +137,27 @@
                       </object>
                     </child>
                     <child>
-                      <object class="GtkToggleButton" id="select_data_button">
-                        <property name="icon-name">edit-select-all-symbolic</property>
-                        <property name="tooltip-text" translatable="yes">Select a span of data</property>
-                        <property name="action-name">app.select_data_toggle</property>
+                      <object class="GtkBox">
+                        <property name="css-classes">linked</property>
                         <property name="hexpand">true</property>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="GtkToggleButton" id="cut_data_button">
-                        <property name="icon-name">edit-cut-symbolic</property>
-                        <property name="tooltip-text" translatable="yes">Cut the selected span</property>
-                        <property name="action-name">app.cut_data</property>
-                        <property name="hexpand">true</property>
+                        <child>
+                          <object class="GtkToggleButton" id="select_data_button">
+                            <property name="icon-name">edit-select-all-symbolic</property>
+                            <property name="tooltip-text" translatable="yes">Select a span of data</property>
+                            <property name="action-name">app.select_data_toggle</property>
+                            <property name="hexpand">true</property>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkToggleButton" id="cut_data_button">
+                            <property name="icon-name">edit-cut-symbolic</property>
+                            <property name="tooltip-text" translatable="yes">Cut the selected span</property>
+                            <property name="action-name">app.cut_data</property>
+                            <property name="css-classes">destructive-action</property>
+                            <property name="hexpand">true</property>
+                            <property name="visible">false</property>
+                          </object>
+                        </child>
                       </object>
                     </child>
                   </object>
