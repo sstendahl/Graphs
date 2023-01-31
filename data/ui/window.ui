@@ -99,10 +99,10 @@
                       <object class="GtkViewport">
                         <property name="child">
                           <object class="GtkListBox" id="list_box">
-                            <property name="margin-bottom">5</property>
-                            <property name="margin-top">5</property>
-                            <property name="margin-start">5</property>
-                            <property name="margin-end">5</property>
+                            <property name="margin-bottom">12</property>
+                            <property name="margin-top">12</property>
+                            <property name="margin-start">12</property>
+                            <property name="margin-end">12</property>
                             <property name="selection-mode">none</property>
                             <style>
                               <class name="boxed-list" />
@@ -116,10 +116,10 @@
                 <child>
                   <object class="GtkBox">
                     <property name="spacing">10</property>
-                    <property name="margin-top">5</property>
-                    <property name="margin-bottom">5</property>
-                    <property name="margin-start">10</property>
-                    <property name="margin-end">10</property>
+                    <property name="margin-top">6</property>
+                    <property name="margin-bottom">6</property>
+                    <property name="margin-start">12</property>
+                    <property name="margin-end">12</property>
                     <child>
                       <object class="GtkToggleButton" id="pan_button">
                         <property name="icon-name">move-tool-symbolic</property>
@@ -174,10 +174,10 @@
                             <property name="orientation">vertical</property>
                             <child>
                               <object class="AdwPreferencesGroup">
-                                <property name="margin-bottom">5</property>
-                                <property name="margin-top">5</property>
-                                <property name="margin-start">5</property>
-                                <property name="margin-end">5</property>
+                                <property name="margin-bottom">12</property>
+                                <property name="margin-top">12</property>
+                                <property name="margin-start">12</property>
+                                <property name="margin-end">12</property>
                                 <child>
                                   <object class="AdwExpanderRow">
                                     <property name="title">Adjust Data</property>
