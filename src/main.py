@@ -64,7 +64,6 @@ class GraphsApplication(Adw.Application):
         self.create_action('delete_selected', graphs.delete_selected, ['Delete'], self)
         self.create_action('plot_settings', plot_settings.open_plot_settings, ["<primary><shift>P"], self)
         self.create_action('toggle_sidebar', self.toggle_sidebar, None)
-        self.create_action('toggle_toolbar', self.toggle_toolbar, None)
         self.create_action('change_xscale', plotting_tools.change_xscale, None, self)
         self.create_action('change_yscale', plotting_tools.change_yscale, None, self)
         self.create_action('export_data', toolbar.export_data, ["<primary><shift>E"], self)
@@ -117,12 +116,6 @@ class GraphsApplication(Adw.Application):
         enabled = not flap.get_reveal_flap()
         flap.set_reveal_flap(enabled)
         win.selection_button.set_visible(enabled)
-
-    def toggle_toolbar(self, _widget, _):
-        win = self.main_window
-        flap = win.toolbar_flap
-        enabled = not flap.get_reveal_flap()
-        flap.set_reveal_flap(enabled)
 
     def create_action(self, name, callback, shortcuts=None, *args):
         """Add an application action.

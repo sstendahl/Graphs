@@ -336,7 +336,4 @@ def load_empty(self):
     xlabel = self.plot_settings.xlabel
     ylabel = self.plot_settings.ylabel
     self.canvas = PlotWidget(parent = self, xlabel=xlabel, ylabel=ylabel)
-    flap = win.toolbar_flap
-    self.toolbar = toolbar.GraphToolbar(self.canvas, self)
-    flap.set_flap(self.toolbar)
     win.toast_overlay.set_child(self.canvas)

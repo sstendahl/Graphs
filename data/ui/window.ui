@@ -383,18 +383,11 @@
               </object>
             </child>
             <child type="content">
-              <object class="AdwFlap" id="toolbar_flap">
-                <property name="fold-policy">ADW_FLAP_FOLD_POLICY_NEVER</property>
-                <property name="flap-position">GTK_PACK_END</property>
-                <property name="orientation">vertical</property>
-                <child type="content">
-                  <object class="AdwToastOverlay" id="toast_overlay">
-                    <property name="margin-top">5</property>
-                    <property name="margin-bottom">5</property>
-                    <property name="margin-start">5</property>
-                    <property name="margin-end">5</property>
-                  </object>
-                </child>
+              <object class="AdwToastOverlay" id="toast_overlay">
+                <property name="margin-top">5</property>
+                <property name="margin-bottom">5</property>
+                <property name="margin-start">5</property>
+                <property name="margin-end">5</property>
               </object>
             </child>
           </object>
@@ -423,10 +416,6 @@
       <item>
         <attribute name="label" translatable="yes">_Toggle Sidebar</attribute>
         <attribute name="action">app.toggle_sidebar</attribute>
-      </item>
-      <item>
-        <attribute name="label" translatable="yes">_Toggle Toolbar</attribute>
-        <attribute name="action">app.toggle_toolbar</attribute>
       </item>
     </section>
     <section>

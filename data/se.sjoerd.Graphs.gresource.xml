@@ -12,7 +12,6 @@
     <file preprocess="xml-stripblanks">ui/pip_mode.ui</file>
     <file preprocess="xml-stripblanks">ui/rename_label_window.ui</file>
     <file preprocess="xml-stripblanks">ui/transform_window.ui</file>
-    <file preprocess="xml-stripblanks">ui/toolbar.ui</file>
   </gresource>
   <gresource prefix="/se/sjoerd/Graphs/icons/scalable/actions/">
     <file preprocess="xml-stripblanks" alias="arrow1-left-symbolic.svg">icons/arrow1-left-symbolic.svg</file>

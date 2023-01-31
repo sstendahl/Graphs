@@ -26,7 +26,6 @@ class GraphsWindow(Adw.ApplicationWindow):
     toast_overlay = Gtk.Template.Child()
     list_box = Gtk.Template.Child()
     sidebar_flap = Gtk.Template.Child()
-    toolbar_flap = Gtk.Template.Child()
     pan_button = Gtk.Template.Child()
     zoom_button = Gtk.Template.Child()
 
