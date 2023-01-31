@@ -23,13 +23,16 @@
                 </child>
                 <child>
                   <object class="GtkSeparator">
-                    <property name="width-request">10</property>
-                    <property name="css-classes">spacer</property>
+                    <style>
+                      <class name="spacer"/>
+                    </style>
                   </object>
                 </child>
                 <child>
                   <object class="GtkBox">
-                    <property name="css-classes">linked</property>
+                    <style>
+                      <class name="linked"/>
+                    </style>
                     <child>
                       <object class="GtkButton" id="undo_button">
                         <property name="action-name">app.undo</property>
@@ -52,12 +55,6 @@
                     </child>
                   </object>
                 </child>
-                <child>
-                  <object class="GtkSeparator">
-                    <property name="width-request">10</property>
-                    <property name="css-classes">spacer</property>
-                  </object>
-                </child>
               </object>
             </child>"
             <child type="end">
@@ -72,8 +69,9 @@
                 </child>
                 <child>
                   <object class="GtkSeparator">
-                    <property name="width-request">5</property>
-                    <property name="css-classes">spacer</property>
+                    <style>
+                      <class name="spacer"/>
+                    </style>
                   </object>
                 </child>
                 <child>
@@ -145,7 +143,9 @@
                     </child>
                     <child>
                       <object class="GtkBox">
-                        <property name="css-classes">linked</property>
+                        <style>
+                          <class name="linked"/>
+                        </style>
                         <property name="hexpand">true</property>
                         <child>
                           <object class="GtkToggleButton" id="select_data_button">
@@ -160,7 +160,9 @@
                             <property name="icon-name">edit-cut-symbolic</property>
                             <property name="tooltip-text" translatable="yes">Cut the selected span</property>
                             <property name="action-name">app.cut_data</property>
-                            <property name="css-classes">destructive-action</property>
+                            <style>
+                              <class name="destructive-action"/>
+                            </style>
                             <property name="hexpand">true</property>
                             <property name="visible">false</property>
                           </object>
