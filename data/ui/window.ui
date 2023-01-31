@@ -126,7 +126,7 @@
                     <property name="margin-start">12</property>
                     <property name="margin-end">12</property>
                     <child>
-                      <object class="GtkButton" id="home_button">
+                      <object class="GtkButton" id="restore_view_button">
                         <property name="icon-name">go-home-symbolic-symbolic</property>
                         <property name="tooltip-text" translatable="yes">Restore original view</property>
                         <property name="action-name">app.restore_view</property>
