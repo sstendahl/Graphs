@@ -13,7 +13,7 @@ from gi.repository import Gtk, Gio, Gdk, Adw
 from .window import GraphsWindow
 from matplotlib.backends.backend_gtk4 import NavigationToolbar2GTK4
 import matplotlib.pyplot as plt
-from . import graphs, plotting_tools, item_operations, transform_data, preferences, add_equation, add_data_advanced, plot_settings, pip_mode, toolbar
+from . import graphs, plotting_tools, item_operations, transform_data, preferences, add_equation, add_data_advanced, plot_settings, toolbar
 
 class GraphsApplication(Adw.Application):
     """The main application singleton class."""
@@ -53,7 +53,6 @@ class GraphsApplication(Adw.Application):
         self.create_action('select_all', graphs.select_all, ['<primary>A'], self)
         self.create_action('undo', item_operations.undo, ['<primary>Z'], self)
         self.create_action('redo', item_operations.redo, ['<primary><shift>Z'], self)
-        self.create_action('toggle_selection_mode', graphs.toggle_selection_mode, ['<primary>L'], self)
         self.create_action('select_none', graphs.select_none, ['<primary><shift>A'], self)
         self.create_action('transform_data', transform_data.open_transform_window, None, self)
         self.create_action('add_equation', add_equation.open_add_equation_window, ['<primary>E'], self)
@@ -68,7 +67,6 @@ class GraphsApplication(Adw.Application):
         self.create_action('toggle_toolbar', self.toggle_toolbar, None)
         self.create_action('change_xscale', plotting_tools.change_xscale, None, self)
         self.create_action('change_yscale', plotting_tools.change_yscale, None, self)
-        self.create_action('open_pip_mode', pip_mode.open_pip_mode, None, self)
         self.create_action('export_data', toolbar.export_data, ["<primary><shift>E"], self)
         self.create_action('restore_view', plotting_tools.restore_view, None, self)
         self.create_action('pan', toolbar.pan, None, self)
@@ -150,4 +148,3 @@ def main(version):
     app.version = version
 
     return app.run(sys.argv)
-
