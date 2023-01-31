@@ -24,14 +24,14 @@
                 <child>
                   <object class="GtkSeparator">
                     <style>
-                      <class name="spacer"/>
+                      <class name="spacer" />
                     </style>
                   </object>
                 </child>
                 <child>
                   <object class="GtkBox">
                     <style>
-                      <class name="linked"/>
+                      <class name="linked" />
                     </style>
                     <child>
                       <object class="GtkButton" id="undo_button">
@@ -70,7 +70,7 @@
                 <child>
                   <object class="GtkSeparator">
                     <style>
-                      <class name="spacer"/>
+                      <class name="spacer" />
                     </style>
                   </object>
                 </child>
@@ -152,7 +152,7 @@
                     <child>
                       <object class="GtkBox">
                         <style>
-                          <class name="linked"/>
+                          <class name="linked" />
                         </style>
                         <property name="hexpand">true</property>
                         <child>
@@ -169,7 +169,7 @@
                             <property name="tooltip-text" translatable="yes">Cut the selected span</property>
                             <property name="action-name">app.cut_data</property>
                             <style>
-                              <class name="destructive-action"/>
+                              <class name="destructive-action" />
                             </style>
                             <property name="hexpand">true</property>
                             <property name="visible">false</property>
@@ -369,14 +369,29 @@
                                         </child>
                                         <child>
                                           <object class="GtkButton" id="fourier_button">
-                                            <property name="label">FFT</property>
+                                            <child>
+                                              <object class="GtkBox">
+                                                <child>
+                                                  <object class="GtkLabel">
+                                                    <property name="halign">center</property>
+                                                    <property name="label">FFT</property>
+                                                    <property name="margin-end">6</property>
+                                                  </object>
+                                                </child>
+                                                <child>
+                                                  <object class="GtkImage">
+                                                    <property name="icon-name">function-third-order</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </child>
                                             <property name="tooltip-text">Get the Fast Fourier Transform of the data</property>
                                             <property name="action-name">app.get_fourier</property>
                                             <property name="margin-bottom">5</property>
                                             <property name="margin-top">5</property>
                                             <property name="margin-start">5</property>
                                             <property name="margin-end">5</property>
-                                            <property name="hexpand">True</property>
+
                                             <layout>
                                               <property name="column">0</property>
                                               <property name="row">1</property>
@@ -529,4 +544,3 @@
     </section>
   </menu>
 </interface>
-
