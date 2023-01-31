@@ -106,6 +106,7 @@ def select_item(self, key):
     item = self.item_rows[key]
     item.check_button.set_active(True)
     plotting_tools.refresh_plot(self)
+    enable_data_dependant_buttons(self, utilities.get_selected_keys(self))
 
 def get_data(self, path, import_settings):
     data = Data()
@@ -188,18 +189,21 @@ def delete(widget,  self, id, give_toast = True):
         item.ydata_clipboard = [item.ydata]
         item.clipboard_pos = -1
     plotting_tools.refresh_plot(self)
+    enable_data_dependant_buttons(self, utilities.get_selected_keys(self))
 
 
 def select_all(widget, _, self):
     for key, item in self.item_rows.items():
         item.check_button.set_active(True) 
     plotting_tools.refresh_plot(self)
+    enable_data_dependant_buttons(self, utilities.get_selected_keys(self))
 
 
 def select_none(widget, _, self):
     for key, item in self.item_rows.items():
         item.check_button.set_active(False) 
     plotting_tools.refresh_plot(self)
+    enable_data_dependant_buttons(False)
 
 def add_sample_to_menu(self, filename, color, id, select_item = False):
     win = self.props.active_window
@@ -224,6 +228,7 @@ def add_sample_to_menu(self, filename, color, id, select_item = False):
     
 def toggle_data(widget,  self, id):
     plotting_tools.refresh_plot(self)
+    enable_data_dependant_buttons(self, utilities.get_selected_keys(self))
     
 def save_file_dialog(self, documenttype="Text file (*.txt)"):
     def save_file_chooser(action):
@@ -338,3 +343,25 @@ def disable_clipboard_buttons(self):
     win = self.main_window
     win.redo_button.set_sensitive(False)
     win.undo_button.set_sensitive(False)
+
+def enable_data_dependant_buttons(self, enabled):
+    win = self.main_window
+
+    dependant_buttons = [
+    win.shift_vertically_button,
+    win.translate_x_button,
+    win.translate_y_button,
+    win.multiply_x_button,
+    win.multiply_y_button,
+    win.smooth_button,
+    win.fourier_button,
+    win.inverse_fourier_button,
+    win.normalize_button,
+    win.center_data_button,
+    win.derivative_button,
+    win.integral_button,
+    win.transform_data_button,
+    ]
+
+    for button in dependant_buttons:
+        button.set_sensitive(enabled)

@@ -28,6 +28,9 @@ class GraphsWindow(Adw.ApplicationWindow):
     sidebar_flap = Gtk.Template.Child()
     pan_button = Gtk.Template.Child()
     zoom_button = Gtk.Template.Child()
+    derivative_button = Gtk.Template.Child()
+    integral_button = Gtk.Template.Child()
+    transform_data_button = Gtk.Template.Child()
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)

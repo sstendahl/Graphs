@@ -86,6 +86,7 @@ class GraphsApplication(Adw.Application):
         self.load_preferences()
         graphs.load_empty(self)
         graphs.disable_clipboard_buttons(self)
+        graphs.enable_data_dependant_buttons(self, False)
         win.maximize()
         win.present()
 
