@@ -318,7 +318,6 @@ def on_open_response(dialog, response, self, import_settings):
             import_settings["mode"] = "single"
 
         open_selection(self, files, import_settings = import_settings)
-        self.define_highlight = None
         plotting_tools.define_highlight(self)
         win = self.props.active_window
         button = win.select_data_button

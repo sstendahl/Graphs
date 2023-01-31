@@ -18,7 +18,9 @@ def define_highlight(self, span=None):
     Create a span selector object, to highlight part of the graph.
     If a span already exists, make it visible instead
     """
-    
+    if (not self.highlight == None):
+        self.highlight.set_visible(False)
+        self.highlight.set_active(False)
     #This lamdba function is not pretty, but it doesn't accept a "Pass"
     self.highlight = SpanSelector(
         self.canvas.top_right_axis,
@@ -362,6 +364,9 @@ def load_fonts(self):
             print(f"Could not load {font}")
             
 def set_mode(self, mode):
+    """
+    Set the current UI interaction mode (pan, zoom or select/cut)
+    """
     win = self.main_window
     pan_button = win.pan_button
     zoom_button = win.zoom_button
@@ -370,8 +375,6 @@ def set_mode(self, mode):
     if self.highlight == None:
         define_highlight(self)
     highlight = self.highlight
-    print(mode)
-
     if(mode == ""):
         toolbar_mode = self.dummy_toolbar.mode
         if(toolbar_mode == "pan/zoom"):
