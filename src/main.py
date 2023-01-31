@@ -66,7 +66,7 @@ class GraphsApplication(Adw.Application):
         self.create_action('toggle_sidebar', self.toggle_sidebar, None)
         self.create_action('change_xscale', plotting_tools.change_xscale, None, self)
         self.create_action('change_yscale', plotting_tools.change_yscale, None, self)
-        self.create_action('export_data', toolbar.export_data, ["<primary><shift>E"], self)
+        self.create_action('export_data', plotting_tools.export_data, ["<primary><shift>E"], self)
         self.create_action('restore_view', plotting_tools.restore_view, None, self)
         self.create_action('pan', toolbar.pan, None, self)
         self.create_action('zoom', toolbar.zoom, None, self)

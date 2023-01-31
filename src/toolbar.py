@@ -1,11 +1,4 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
-import gi
-from gi.repository import Gtk, Gdk, Gio, GdkPixbuf, Adw, GObject
-import os
-import shutil
-
-def export_data(widget, shortcut, self):
-    self.dummy_toolbar.save_figure()
 
 def pan(widget, shortcut, self):
     self.dummy_toolbar.pan()
