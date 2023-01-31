@@ -12,7 +12,7 @@ gi.require_version('Adw', '1')
 from gi.repository import Gtk, Gio, Gdk, Adw
 from .window import GraphsWindow
 import matplotlib.pyplot as plt
-from . import graphs, plotting_tools, item_operations, transform_data, preferences, add_equation, add_data_advanced, plot_settings
+from . import graphs, plotting_tools, item_operations, transform_data, preferences, add_equation, add_data_advanced, plot_settings, toolbar
 
 class GraphsApplication(Adw.Application):
     """The main application singleton class."""
@@ -52,7 +52,6 @@ class GraphsApplication(Adw.Application):
         self.create_action('select_all', graphs.select_all, ['<primary>A'], self)
         self.create_action('undo', item_operations.undo, ['<primary>Z'], self)
         self.create_action('redo', item_operations.redo, ['<primary><shift>Z'], self)
-        self.create_action('toggle_selection_mode', graphs.toggle_selection_mode, ['<primary>L'], self)
         self.create_action('select_none', graphs.select_none, ['<primary><shift>A'], self)
         self.create_action('transform_data', transform_data.open_transform_window, None, self)
         self.create_action('add_equation', add_equation.open_add_equation_window, ['<primary>E'], self)
@@ -64,6 +63,15 @@ class GraphsApplication(Adw.Application):
         self.create_action('delete_selected', graphs.delete_selected, ['Delete'], self)
         self.create_action('plot_settings', plot_settings.open_plot_settings, ["<primary><shift>P"], self)
         self.create_action('toggle_sidebar', self.toggle_sidebar, None)
+        self.create_action('change_xscale', plotting_tools.change_xscale, None, self)
+        self.create_action('change_yscale', plotting_tools.change_yscale, None, self)
+        self.create_action('export_data', plotting_tools.export_data, ["<primary><shift>E"], self)
+        self.create_action('restore_view', plotting_tools.restore_view, None, self)
+        self.create_action('pan', toolbar.pan, None, self)
+        self.create_action('zoom', toolbar.zoom, None, self)
+        self.create_action('view_forward', toolbar.view_forward, None, self)
+        self.create_action('view_back', toolbar.view_back, None, self)
+
         Adw.StyleManager.get_default().connect("notify", graphs.toggle_darkmode, None, self)
 
     def do_activate(self):
@@ -77,8 +85,8 @@ class GraphsApplication(Adw.Application):
         self.main_window = win
         self.load_preferences()
         graphs.load_empty(self)
-        # Should turn off in XML probably
-        graphs.turn_off_clipboard_buttons(self)
+        graphs.disable_clipboard_buttons(self)
+        graphs.enable_data_dependent_buttons(self, False)
         win.maximize()
         win.present()
 
@@ -104,12 +112,10 @@ class GraphsApplication(Adw.Application):
 
     def toggle_sidebar(self, _widget, _):
         win = self.main_window
-        button = win.sidebar_button
         flap = win.sidebar_flap
-        enabled = not button.get_active()
+        enabled = not flap.get_reveal_flap()
         flap.set_reveal_flap(enabled)
         win.selection_button.set_visible(enabled)
-        button.set_active(enabled)
 
     def create_action(self, name, callback, shortcuts=None, *args):
         """Add an application action.

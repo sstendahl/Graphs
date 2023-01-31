@@ -26,11 +26,11 @@ def open_selection(self, files, from_dictionary = False, import_settings = None,
     if canvas == None:
         canvas = self.canvas
     if self.highlight is not None:
-        plotting_tools.hide_highlight(self)
+        plotting_tools.define_highlight(self)
     if from_dictionary:
         for key, item in self.datadict.items():
             if item is not None:
-                if self.item_rows[key].selected == True:
+                if self.item_rows[key].check_button.get_active():
                     linewidth = item.selected_line_thickness
                     linestyle = item.linestyle_selected
                     marker = item.selected_markers
@@ -81,7 +81,6 @@ def open_selection(self, files, from_dictionary = False, import_settings = None,
                     plotting_tools.reload_plot(self)
         self.canvas.draw()
         plotting_tools.set_canvas_limits_axis(self, self.canvas)
-        turn_off_clipboard_buttons(self)
 
 def get_duplicate_filename(self, name):
     loop = True
@@ -95,18 +94,7 @@ def get_duplicate_filename(self, name):
                 loop = True
     return new_name
 
-def turn_off_clipboard_buttons(self):
-        win = self.props.active_window
-        undo_button = win.undo_button
-        redo_button = win.redo_button
-        redo_button.set_sensitive(False)
-        undo_button.set_sensitive(False)
-
 def toggle_darkmode(shortcut, theme, widget, self):
-    win = self.props.active_window
-    if len(self.datadict) > 0:
-        key = list(self.datadict.keys())[0]
-        item = self.item_rows[key]
     if Adw.StyleManager.get_default().get_dark():
         self.plot_settings.plot_style = self.preferences.config["plot_style_dark"]
     else:
@@ -115,10 +103,10 @@ def toggle_darkmode(shortcut, theme, widget, self):
 
 
 def select_item(self, key):
-    win = self.props.active_window
     item = self.item_rows[key]
-    item.selected = True
+    item.check_button.set_active(True)
     plotting_tools.refresh_plot(self)
+    enable_data_dependent_buttons(self, utilities.get_selected_keys(self))
 
 def get_data(self, path, import_settings):
     data = Data()
@@ -176,12 +164,9 @@ def swap(str1):
     return str1
 
 def delete_selected(shortcut, _,  self):
-    win = self.props.active_window
-    button = win.selection_button
-    if button.get_active():
-        selected_keys = utilities.get_selected_keys(self)
-        for key in selected_keys:
-            delete(None, self, key)
+    selected_keys = utilities.get_selected_keys(self)
+    for key in selected_keys:
+        delete(None, self, key)
         
         
 def delete(widget,  self, id, give_toast = True):
@@ -203,28 +188,22 @@ def delete(widget,  self, id, give_toast = True):
         item.xdata_clipboard = [item.xdata]
         item.ydata_clipboard = [item.ydata]
         item.clipboard_pos = -1
-    turn_off_clipboard_buttons(self)
     plotting_tools.refresh_plot(self)
+    enable_data_dependent_buttons(self, utilities.get_selected_keys(self))
 
 
 def select_all(widget, _, self):
-    win = self.props.active_window
-    button = win.selection_button
-    if button.get_active():
-        for key, item in self.item_rows.items():
-            item.selected = True
-            item.check_button.set_active(True) 
+    for key, item in self.item_rows.items():
+        item.check_button.set_active(True) 
     plotting_tools.refresh_plot(self)
+    enable_data_dependent_buttons(self, utilities.get_selected_keys(self))
 
 
 def select_none(widget, _, self):
-    win = self.props.active_window
-    button = win.selection_button
-    if button.get_active():
-        for key, item in self.item_rows.items():
-            item.selected = False
-            item.check_button.set_active(False) 
+    for key, item in self.item_rows.items():
+        item.check_button.set_active(False) 
     plotting_tools.refresh_plot(self)
+    enable_data_dependent_buttons(self, False)
 
 def add_sample_to_menu(self, filename, color, id, select_item = False):
     win = self.props.active_window
@@ -233,18 +212,11 @@ def add_sample_to_menu(self, filename, color, id, select_item = False):
     row.gesture.connect("pressed", row.clicked, self)
     row.color_picker = colorpicker.ColorPicker(color, row=row, parent=self)
     row.color_picker.set_hexpand(False)
-    row.delete_button_widget = row.get_last_child()
-    row.remove(row.delete_button_widget)
-    row.append(row.sample_ID_label)
-    row.append(row.check_mark)
-    row.append(row.check_button)
-    row.append(row.color_picker)
-    row.append(row.delete_button_widget)
-    row.delete_button_widget.set_visible(False)
-    row.check_button.set_visible(False)
-    row.delete_button.connect("clicked", delete, self, id)
+    label = row.sample_ID_label
+    row.sample_box.insert_child_after(row.color_picker, row.sample_ID_label)
     row.check_button.connect("toggled", toggle_data, self, id)
-    max_length = int(28)
+    row.delete_button.connect("clicked", delete, self, id)
+    max_length = int(26)
     if len(filename) > max_length:
         label = f"{filename[:max_length]}..."
     else:
@@ -255,11 +227,8 @@ def add_sample_to_menu(self, filename, color, id, select_item = False):
     self.sample_menu[id] = self.list_box.get_last_child()
     
 def toggle_data(widget,  self, id):
-    if widget.get_active():
-        self.item_rows[id].selected = True
-    else:
-        self.item_rows[id].selected = False
     plotting_tools.refresh_plot(self)
+    enable_data_dependent_buttons(self, utilities.get_selected_keys(self))
     
 def save_file_dialog(self, documenttype="Text file (*.txt)"):
     def save_file_chooser(action):
@@ -337,29 +306,6 @@ def get_import_settings(self):
     import_settings["column_y"] = int(self.preferences.config["import_column_y"])
     import_settings["name"] = ""
     return import_settings
-    
-def toggle_selection_mode(shortcut, _,  self):
-    win = self.props.active_window
-    button = win.selection_button
-    if button.get_active():
-        button.set_active(False)
-        for key, item in self.item_rows.items():
-            item.delete_button_widget.set_visible(False)
-            if self.item_rows[key].selected:
-                item.check_mark.set_visible(True)
-            item.check_button.set_visible(False)    
-            item.color_picker.set_visible(True)
-    else:
-        button.set_active(True)
-        for key, item in self.item_rows.items():
-            item.delete_button_widget.set_visible(True)
-            item.check_mark.set_visible(False)
-            if self.item_rows[key].selected:
-                item.check_button.set_active(True)
-            else:
-                item.check_button.set_active(False) 
-            item.color_picker.set_visible(False)
-            item.check_button.set_visible(True)
 
 def on_open_response(dialog, response, self, import_settings):
     files = []
@@ -377,39 +323,46 @@ def on_open_response(dialog, response, self, import_settings):
             import_settings["mode"] = "single"
 
         open_selection(self, files, import_settings = import_settings)
-        self.define_highlight = None
         plotting_tools.define_highlight(self)
         win = self.props.active_window
         button = win.select_data_button
         if not button.get_active():
             self.highlight.set_visible(False)
             self.highlight.set_active(False)
-        if win.selection_button.get_active():
-            win.selection_button.set_active(False)
-            toggle_selection_mode(None, None, self)
 
 
 def load_empty(self):
-    win = self.props.active_window
-    layout = win.drawing_layout
+    win = self.main_window
     xlabel = self.plot_settings.xlabel
     ylabel = self.plot_settings.ylabel
     self.canvas = PlotWidget(parent = self, xlabel=xlabel, ylabel=ylabel)
-    clear_layout(self)
-    create_layout(self, self.canvas, layout)
+    self.dummy_toolbar = NavigationToolbar(self.canvas)
+    win.toast_overlay.set_child(self.canvas)
 
-def clear_layout(self):
-    win = self.props.active_window
-    layout = win.drawing_layout
-    remove = True
-    while remove == True:
-        child = layout.get_first_child()
-        if child is not None:
-            layout.remove(child)
-        else:
-            remove = False
+def disable_clipboard_buttons(self):
+    win = self.main_window
+    win.redo_button.set_sensitive(False)
+    win.undo_button.set_sensitive(False)
 
-def create_layout(self, canvas, layout):
-    self.toolbar = toolbar.GraphToolbar(canvas, self)
-    layout.append(canvas)
-    layout.append(self.toolbar)
+def enable_data_dependent_buttons(self, enabled):
+    win = self.main_window
+
+    dependent_buttons = [
+    win.shift_vertically_button,
+    win.translate_x_button,
+    win.translate_y_button,
+    win.multiply_x_button,
+    win.multiply_y_button,
+    win.smooth_button,
+    win.fourier_button,
+    win.inverse_fourier_button,
+    win.normalize_button,
+    win.center_data_button,
+    win.derivative_button,
+    win.integral_button,
+    win.transform_data_button,
+    ]
+
+    for button in dependent_buttons:
+        button.set_sensitive(enabled)
+
