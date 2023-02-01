@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 from matplotlib import colors
 from matplotlib.backends.backend_gtk4agg import (
     FigureCanvasGTK4Agg as FigureCanvas)
+from matplotlib.backend_bases import _Mode
 from . import graphs, utilities, rename_label, toolbar
 from matplotlib.widgets import SpanSelector
 from cycler import cycler
@@ -18,9 +19,6 @@ def define_highlight(self, span=None):
     Create a span selector object, to highlight part of the graph.
     If a span already exists, make it visible instead
     """
-    if (not self.highlight == None):
-        self.highlight.set_visible(False)
-        self.highlight.set_active(False)
     #This lamdba function is not pretty, but it doesn't accept a "Pass"
     self.highlight = SpanSelector(
         self.canvas.top_right_axis,
@@ -33,15 +31,13 @@ def define_highlight(self, span=None):
         drag_from_anywhere=True)
     if span is not None:
         self.highlight.extents = span
-        self.highlight.set_visible(True)
-        self.highlight.set_active(True)
 
-def toggle_highlight(shortcut, _, self):
+def select(shortcut, _, self):
     """
     Toggle the SpanSelector.
     """
     if self.main_window.select_data_button.get_active():
-        set_mode(self, "")
+        set_mode(self, "none")
     else:
         set_mode(self, "select/cut")
 
@@ -189,9 +185,13 @@ def reload_plot(self, from_dictionary = True):
     win = self.props.active_window
     graphs.load_empty(self)
     if len(self.datadict) > 0:
-        define_highlight(self)
         hide_unused_axes(self, self.canvas)
         graphs.open_selection(self, None, from_dictionary)
+        if (not self.highlight == None):
+            self.highlight.set_visible(False)
+            self.highlight.set_active(False)
+            self.highlight = None
+        set_mode(self, self._mode)
         set_canvas_limits_axis(self, self.canvas)
     self.canvas.grab_focus()
 
@@ -375,26 +375,24 @@ def set_mode(self, mode):
     if self.highlight == None:
         define_highlight(self)
     highlight = self.highlight
-    if(mode == ""):
-        toolbar_mode = self.dummy_toolbar.mode
-        if(toolbar_mode == "pan/zoom"):
-            self.dummy_toolbar.pan()
-        elif(toolbar_mode == "zoom rect"):
-            self.dummy_toolbar.zoom()
+    if(mode == "none"):
+        self.dummy_toolbar.mode = _Mode.NONE
         pan_button.set_active(False)
         zoom_button.set_active(False)
         select_button.set_active(False)
         cut_button.set_visible(False)
         highlight.set_visible(False)
         highlight.set_active(False)
-    elif(mode == "pan/zoom"):
+    elif(mode == "pan"):
+        self.dummy_toolbar.mode = _Mode.PAN
         pan_button.set_active(True)
         zoom_button.set_active(False)
         select_button.set_active(False)
         cut_button.set_visible(False)
         highlight.set_visible(False)
         highlight.set_active(False)
-    elif(mode == "zoom rect"):
+    elif(mode == "zoom"):
+        self.dummy_toolbar.mode = _Mode.ZOOM
         pan_button.set_active(False)
         zoom_button.set_active(True)
         select_button.set_active(False)
@@ -402,18 +400,16 @@ def set_mode(self, mode):
         highlight.set_visible(False)
         highlight.set_active(False)
     elif(mode == "select/cut"):
-        toolbar_mode = self.dummy_toolbar.mode
-        if(toolbar_mode == "pan/zoom"):
-            self.dummy_toolbar.pan()
-        elif(toolbar_mode == "zoom rect"):
-            self.dummy_toolbar.zoom()
+        self.dummy_toolbar.mode = _Mode.NONE
         pan_button.set_active(False)
         zoom_button.set_active(False)
         select_button.set_active(True)
         cut_button.set_visible(True)
         highlight.set_visible(True)
         highlight.set_active(True)
-        self.dummy_toolbar.mode = "select/cut"
+    for axis in self.canvas.figure.get_axes():
+            axis.set_navigate_mode(self.dummy_toolbar.mode._navigate_mode)
+    self._mode = mode
     self.canvas.draw()
 
 # https://github.com/matplotlib/matplotlib/blob/c23ccdde6f0f8c071b09a88770e24452f2859e99/lib/matplotlib/backends/backend_gtk4.py#L306

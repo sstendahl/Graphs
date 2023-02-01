@@ -349,7 +349,6 @@
                                                 </child>
                                                 <child>
                                                   <object class="GtkLabel">
-                                                    <property name="halign">Translate</property>
                                                     <property name="label">Transform</property>
                                                   </object>
                                                 </child>
@@ -728,3 +727,4 @@
     </section>
   </menu>
 </interface>
+
