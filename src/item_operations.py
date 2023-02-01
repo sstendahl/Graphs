@@ -115,7 +115,7 @@ def pick_data_selection(self, item, startx, stopx):
     selected_data.xdata = xdata[start_index:stop_index]
     selected_data.ydata = ydata[start_index:stop_index]
     if len(selected_data.xdata) > 0 and (found_start or found_stop) == True:
-        return selected_data
+        return selected_data, start_index, stop_index
 
 def sort_data(x, y):
     """
@@ -180,12 +180,15 @@ def select_data(self):
     delete_selected_data(self)
     selected_dict = {}
     selected_keys = utilities.get_selected_keys(self)
+    start_stop = {}
 
     for key in selected_keys:
         item = self.datadict[key]
         highlight = self.highlight
         startx = min(highlight.extents)
         stopx = max(highlight.extents)
+        start_index = 0
+        stop_index = 0
         
         #Selection is different for bottom and top axis. The span selector takes
         #the top axis coordinates. So for the data that uses the bottom axis as
@@ -198,7 +201,7 @@ def select_data(self):
         
         #Select data
         if not ((startx < min(item.xdata) and stopx < min(item.xdata)) or (startx > max(item.xdata))):
-            selected_data = pick_data_selection(self, item, startx, stopx)
+            selected_data, start_index, stop_index = pick_data_selection(self, item, startx, stopx)
             selected_dict[f"{key}_selected"] = selected_data
         if (startx < min(item.xdata) and stopx < min(item.xdata)) or (startx > max(item.xdata)):
             delete_selected_data(self)
@@ -206,89 +209,122 @@ def select_data(self):
         #managed to select data.
         if len(selected_dict) > 0:
             self.datadict.update(selected_dict)
-    return True
+        start_stop[key] = [start_index, stop_index]
+    return True, start_stop
 
 def get_derivative(widget, shortcut, self):
     """
     Calculate derivative of all selected data
     """
+    if self.dummy_toolbar.mode == "select/cut":
+        selection, start_stop = select_data(self)
     selected_keys = utilities.get_selected_keys(self)
     for key in selected_keys:
-        item = self.datadict[key]
+        if f"{key}_selected" in self.datadict:
+            item = self.datadict[f"{key}_selected"]
+        else:
+            item = self.datadict[key]
         x = np.array(item.xdata)
         y = np.array(item.ydata)
         dy_dx = np.gradient(y, x)
-        item.ydata =  dy_dx.tolist()
+        self.datadict[key].xdata = item.xdata
+        self.datadict[key].ydata = dy_dx.tolist()
     add_to_clipboard(self)
+    delete_selected_data(self)
     plotting_tools.refresh_plot(self)
 
 def get_integral(widget, shortcut, self):
     """
     Calculate indefinite integral of all selected data
     """
+    if self.dummy_toolbar.mode == "select/cut":
+        selection, start_stop = select_data(self)
     selected_keys = utilities.get_selected_keys(self)
     for key in selected_keys:
-        item = self.datadict[key]
+        if f"{key}_selected" in self.datadict:
+            item = self.datadict[f"{key}_selected"]
+        else:
+            item = self.datadict[key]
         x = np.array(item.xdata)
         y = np.array(item.ydata)
         F = integrate.cumtrapz(y, x, initial=0)
-        item.ydata =  F.tolist()
+        self.datadict[key].xdata = item.xdata
+        self.datadict[key].ydata = F.tolist()
+
     add_to_clipboard(self)
+    delete_selected_data(self)
     plotting_tools.refresh_plot(self)
 
 def get_inverse_fourier(widget, shortcut, self):
     """
     Perform Inverse Fourier transformation on all selected data
     """
+    if self.dummy_toolbar.mode == "select/cut":
+        selection, start_stop = select_data(self)
     selected_keys = utilities.get_selected_keys(self)
     for key in selected_keys:
-        item = self.datadict[key]
+        if f"{key}_selected" in self.datadict:
+            item = self.datadict[f"{key}_selected"]
+        else:
+            item = self.datadict[key]
         x = np.array(item.xdata)
         y = np.array(item.ydata)
         y_fourier = np.fft.ifft(y)
         x_fourier = np.fft.fftfreq(len(x), x[1] - x[0])
         y_fourier = [value.real for value in y_fourier]
         x_fourier, y_fourier = sort_data(x_fourier.tolist(), y_fourier)
-        item.ydata =  y_fourier
-        item.xdata = x_fourier
+        self.datadict[key].ydata =  y_fourier
+        self.datadict[key].xdata = x_fourier
     add_to_clipboard(self)
+    delete_selected_data(self)
     plotting_tools.refresh_plot(self)
 
 def get_fourier(widget, shortcut, self):
     """
     Perform Fourier transformation on all selected data
     """
+    if self.dummy_toolbar.mode == "select/cut":
+        selection, start_stop = select_data(self)
     selected_keys = utilities.get_selected_keys(self)
     for key in selected_keys:
-        item = self.datadict[key]
+        if f"{key}_selected" in self.datadict:
+            item = self.datadict[f"{key}_selected"]
+        else:
+            item = self.datadict[key]
         x = np.array(item.xdata)
         y = np.array(item.ydata)
         y_fourier = np.fft.fft(y)
         x_fourier = np.fft.fftfreq(len(x), x[1] - x[0])
         y_fourier = [value.real for value in y_fourier]
-        
         x_fourier, y_fourier = sort_data(x_fourier.tolist(), y_fourier)
-        item.ydata =  y_fourier
-        item.xdata = x_fourier
+        self.datadict[key].ydata =  y_fourier
+        self.datadict[key].xdata = x_fourier
+        print("OK dan")
+    delete_selected_data(self)
     add_to_clipboard(self)
     plotting_tools.refresh_plot(self)
 
 def smoothen_data(widget, shortcut, self):
     """
-    Smoothen y-data. If logscale is true, it smoothenes on the log scale
-    instead.
+    Smoothen y-data.
     """
     selected_keys = utilities.get_selected_keys(self)
-    logscale = False
+    if self.dummy_toolbar.mode == "select/cut":
+        selection, start_stop = select_data(self)
     for key in selected_keys:
-        ydata = self.datadict[key].ydata
-        if logscale:
-            ydata = [np.log(value) for value in ydata]
-            ydata = smooth(ydata, 4)
-            ydata = np.exp(ydata)
+        if f"{key}_selected" in self.datadict:
+            #Define the highlighted area
+            selected_item = self.datadict[f"{key}_selected"]
+            #Perform the operation on the highlighted area
+            selected_item.ydata = smooth(selected_item.ydata, 4)
+            start_index, stop_index = start_stop[key][0], start_stop[key][1]
+            #Replace the highlighted part in the original data set
+            self.datadict[key].ydata[start_index:stop_index] = selected_item.ydata
         else:
+            ydata = self.datadict[key].ydata
             ydata = smooth(ydata, 4)
-        self.datadict[key].ydata = ydata
+            self.datadict[key].ydata = ydata
+    delete_selected_data(self)
     add_to_clipboard(self)
     plotting_tools.refresh_plot(self)
 
@@ -349,10 +385,22 @@ def translate_x(shortcut, _, self):
         print(f"{e}: Unable to do translation, make sure to enter a valid number")
         win.toast_overlay.add_toast(Adw.Toast(title=f"{exception_type}: Unable to do translation, make sure to enter a valid number"))
         offset = 0
+    if self.dummy_toolbar.mode == "select/cut":
+        selection, start_stop = select_data(self)
     selected_keys = utilities.get_selected_keys(self)
     for key in selected_keys:
-        self.datadict[key].xdata = [value + offset for value in self.datadict[key].xdata]
+        if f"{key}_selected" in self.datadict:
+            #Define the highlighted area
+            selected_item = self.datadict[f"{key}_selected"]
+            #Perform the operation on the highlighted area
+            selected_item.xdata = [value + offset for value in selected_item.xdata]
+            start_index, stop_index = start_stop[key][0], start_stop[key][1]
+            #Replace the highlighted part in the original data set
+            self.datadict[key].xdata[start_index:stop_index] = selected_item.xdata
+        else:
+            self.datadict[key].xdata = [value + offset for value in self.datadict[key].xdata]
     add_to_clipboard(self)
+    delete_selected_data(self)
     plotting_tools.refresh_plot(self)
 
 def translate_y(shortcut, _, self):
@@ -373,28 +421,22 @@ def translate_y(shortcut, _, self):
     selected_keys = utilities.get_selected_keys(self)
 
     # If we are in selection mode, then select the highlighted data
-    select_data(self)
+    if self.dummy_toolbar.mode == "select/cut":
+        selection, start_stop = select_data(self)
     for key in selected_keys:
         #If the selected data exists, so this will get ignored when we're not in selection mode
         if f"{key}_selected" in self.datadict:
-            #Define the selected item
+            #Define the highlighted area
             selected_item = self.datadict[f"{key}_selected"]
-            #Perform the operation on the selected item
+            #Perform the operation on the highlighted area
             selected_item.ydata = [value + offset for value in selected_item.ydata]
-            #Since the first index of the selected/highlighted part is not the same as for
-            #the whole dataset, we need to take this offset into account.
-            #However, I fear this may lead to bugs in case someone has a data set where
-            #there's multiple points with the same x coordinate. So we may need to check for
-            #another way to do this.
-            index_start = self.datadict[key].xdata.index(selected_item.xdata[0])
+            start_index, stop_index = start_stop[key][0], start_stop[key][1]
             #Replace the highlighted part in the original data set
-            for index, value in enumerate(selected_item.ydata):
-                self.datadict[key].ydata[index + index_start] = selected_item.ydata[index]
-                self.datadict[key].xdata[index + index_start] = selected_item.xdata[index]
-            #Throw away the selected/highlighted datasets
+            self.datadict[key].ydata[start_index:stop_index] = selected_item.ydata
         else:
             self.datadict[key].ydata = [value + offset for value in self.datadict[key].ydata]
     add_to_clipboard(self)
+    #Throw away the selected/highlighted datasets
     delete_selected_data(self)
     plotting_tools.refresh_plot(self)
 
@@ -414,8 +456,21 @@ def multiply_x(shortcut, _, self):
         win.toast_overlay.add_toast(Adw.Toast(title=f"{exception_type}: Unable to do multiplication, make sure to enter a valid number"))
         multiplier = 1
     selected_keys = utilities.get_selected_keys(self)
+    if self.dummy_toolbar.mode == "select/cut":
+        selection, start_stop = select_data(self)
     for key in selected_keys:
-        self.datadict[key].xdata = [value * multiplier for value in self.datadict[key].xdata]
+        #If the selected data exists, so this will get ignored when we're not in selection mode
+        if f"{key}_selected" in self.datadict:
+            #Define the highlighted area
+            selected_item = self.datadict[f"{key}_selected"]
+            #Perform the operation on the highlighted area
+            selected_item.xdata = [value * multiplier for value in selected_item.xdata]
+            start_index, stop_index = start_stop[key][0], start_stop[key][1]
+            #Replace the highlighted part in the original data set
+            self.datadict[key].xdata[start_index:stop_index] = selected_item.xdata
+        else:
+            self.datadict[key].xdata = [value * multiplier for value in self.datadict[key].xdata]
+    delete_selected_data(self)
     add_to_clipboard(self)
     plotting_tools.refresh_plot(self)
 
@@ -435,8 +490,21 @@ def multiply_y(shortcut, _, self):
         win.toast_overlay.add_toast(Adw.Toast(title=f"{exception_type}: Unable to do multiplication, make sure to enter a valid number"))
         multiplier = 1
     selected_keys = utilities.get_selected_keys(self)
+    if self.dummy_toolbar.mode == "select/cut":
+        selection, start_stop = select_data(self)
     for key in selected_keys:
-        self.datadict[key].ydata = [value * multiplier for value in self.datadict[key].ydata]
+        #If the selected data exists, so this will get ignored when we're not in selection mode
+        if f"{key}_selected" in self.datadict:
+            #Define the highlighted area
+            selected_item = self.datadict[f"{key}_selected"]
+            #Perform the operation on the highlighted area
+            selected_item.ydata = [value * multiplier for value in selected_item.ydata]
+            start_index, stop_index = start_stop[key][0], start_stop[key][1]
+            #Replace the highlighted part in the original data set
+            self.datadict[key].ydata[start_index:stop_index] = selected_item.ydata
+        else:
+            self.datadict[key].ydata = [value * multiplier for value in self.datadict[key].ydata]
+    delete_selected_data(self)
     add_to_clipboard(self)
     plotting_tools.refresh_plot(self)
 
@@ -446,8 +514,22 @@ def normalize_data(shortcut, _, self):
     Normalize all selected data
     """
     selected_keys = utilities.get_selected_keys(self)
+    if self.dummy_toolbar.mode == "select/cut":
+        selection, start_stop = select_data(self)
     for key in selected_keys:
-        self.datadict[key].ydata = normalize(self.datadict[key].ydata)
+        #If the selected data exists, so this will get ignored when we're not in selection mode
+        if f"{key}_selected" in self.datadict:
+            #Define the highlighted area
+            selected_item = self.datadict[f"{key}_selected"]
+            #Perform the operation on the highlighted area
+            selected_item.ydata = normalize(selected_item.ydata)
+            start_index, stop_index = start_stop[key][0], start_stop[key][1]
+            #Replace the highlighted part in the original data set
+            self.datadict[key].ydata[start_index:stop_index] = selected_item.ydata
+            self.datadict[key].xdata[start_index:stop_index] = selected_item.xdata
+        else:
+            self.datadict[key].ydata = normalize(self.datadict[key].ydata)
+    delete_selected_data(self)
     add_to_clipboard(self)
     plotting_tools.refresh_plot(self)
 
@@ -467,11 +549,28 @@ def center_data(shortcut, _, self):
     the maximum value of the data
     """
     selected_keys = utilities.get_selected_keys(self)
+    if self.dummy_toolbar.mode == "select/cut":
+        selection, start_stop = select_data(self)
     for key in selected_keys:
-        if self.preferences.config["action_center_data"] == "Center at maximum Y value":
-            self.datadict[key].xdata = center_data_max_Y(self.datadict[key].xdata, self.datadict[key].ydata)
-        elif self.preferences.config["action_center_data"] == "Center at middle coordinate":
-            self.datadict[key].xdata = center_data_middle(self.datadict[key].xdata)
+        #If the selected data exists, so this will get ignored when we're not in selection mode
+        if f"{key}_selected" in self.datadict:
+            #Define the highlighted area
+            selected_item = self.datadict[f"{key}_selected"]
+            #Perform the operation on the highlighted area
+            if self.preferences.config["action_center_data"] == "Center at maximum Y value":
+                selected_item.xdata = center_data_max_Y(selected_item.xdata, selected_item.ydata)
+            elif self.preferences.config["action_center_data"] == "Center at middle coordinate":
+                selected_item.xdata = center_data_middle(selected_item.xdata)
+            start_index, stop_index = start_stop[key][0], start_stop[key][1]
+            #Replace the highlighted part in the original data set
+            self.datadict[key].ydata[start_index:stop_index] = selected_item.ydata
+            self.datadict[key].xdata[start_index:stop_index] = selected_item.xdata
+        else:
+            if self.preferences.config["action_center_data"] == "Center at maximum Y value":
+                self.datadict[key].xdata = center_data_max_Y(self.datadict[key].xdata, self.datadict[key].ydata)
+            elif self.preferences.config["action_center_data"] == "Center at middle coordinate":
+                self.datadict[key].xdata = center_data_middle(self.datadict[key].xdata)
+    delete_selected_data(self)
     add_to_clipboard(self)
     plotting_tools.refresh_plot(self)
 
