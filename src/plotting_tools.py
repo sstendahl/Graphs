@@ -1,25 +1,26 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
-from gi.repository import Gtk, Adw
+from gi.repository import Gtk, Adw, Gio, GLib, Gdk, GdkPixbuf
 import copy
 from matplotlib.figure import Figure
 import matplotlib.pyplot as plt
 from matplotlib import colors
 from matplotlib.backends.backend_gtk4agg import (
     FigureCanvasGTK4Agg as FigureCanvas)
-from matplotlib.backends.backend_gtk4 import (
-    NavigationToolbar2GTK4 as NavigationToolbar)
-from . import graphs, utilities, rename_label
+from . import graphs, utilities, rename_label, toolbar
 from matplotlib.widgets import SpanSelector
 from cycler import cycler
 import matplotlib.font_manager
 import time 
+import os
 
 def define_highlight(self, span=None):
     """
     Create a span selector object, to highlight part of the graph.
     If a span already exists, make it visible instead
     """
-    
+    if (not self.highlight == None):
+        self.highlight.set_visible(False)
+        self.highlight.set_active(False)
     #This lamdba function is not pretty, but it doesn't accept a "Pass"
     self.highlight = SpanSelector(
         self.canvas.top_right_axis,
@@ -35,32 +36,14 @@ def define_highlight(self, span=None):
         self.highlight.set_visible(True)
         self.highlight.set_active(True)
 
-def hide_highlight(self):
-    """
-    Hide the SpanSelector object from the graph, and disable the select data
-    button
-    """
-    win = self.props.active_window
-    button = win.select_data_button
-    self.highlight.set_visible(False)
-    self.highlight.set_active(False)
-    button.set_active(False)
-
 def toggle_highlight(shortcut, _, self):
     """
     Toggle the SpanSelector. 
     """
-    win = self.props.active_window
-    button = win.select_data_button
-    if self.highlight == None:
-        define_highlight(self)    
-    if button.get_active():
-        hide_highlight(self)
+    if self.main_window.select_data_button.get_active():
+        set_mode(self, "")
     else:
-        button.set_active(True)
-        self.highlight.set_visible(True)
-        self.highlight.set_active(True)
-    self.canvas.draw()
+        set_mode(self, "select/cut")
 
 
 def plot_figure(self, canvas, X, Y, filename="", xlim=None, linewidth = 2, title="", scale="log",marker=None, linestyle="solid",
@@ -204,11 +187,9 @@ def reload_plot(self, from_dictionary = True):
     Completely reload the plot of the graph
     """
     win = self.props.active_window
-    graphs.clear_layout(self)
     graphs.load_empty(self)
     if len(self.datadict) > 0:
         define_highlight(self)
-        hide_highlight(self)
         hide_unused_axes(self, self.canvas)
         graphs.open_selection(self, None, from_dictionary)
         set_canvas_limits_axis(self, self.canvas)
@@ -275,7 +256,84 @@ def hide_unused_axes(self, canvas):
     canvas.top_right_axis.get_yaxis().set_visible(False)
     canvas.top_left_axis.get_yaxis().set_visible(False)
 
-    
+def change_yscale(widget, shortcut, self):
+    selected_keys = utilities.get_selected_keys(self)
+    left = False
+    right = False
+    for key in selected_keys:
+        if self.datadict[key].plot_Y_position == "left":
+            left = True
+        if self.datadict[key].plot_Y_position == "right":
+            right = True
+
+    if left:
+        current_scale = self.canvas.ax.get_yscale()
+        if current_scale == "linear":
+            self.canvas.ax.set_yscale('log')
+            self.canvas.set_ticks(self)
+            self.plot_settings.yscale = "log"
+        elif current_scale == "log":
+            self.canvas.ax.set_yscale('linear')
+            self.canvas.set_ticks(self)
+            self.plot_settings.yscale = "linear"
+    if right:
+        current_scale = self.canvas.right_axis.get_yscale()
+        if current_scale == "linear":
+            self.canvas.top_right_axis.set_yscale('log')
+            self.canvas.right_axis.set_yscale('log')
+            self.canvas.set_ticks(self)
+            self.plot_settings.right_scale = "log"
+        elif current_scale == "log":
+            self.canvas.top_right_axis.set_yscale('linear')
+            self.canvas.right_axis.set_yscale('linear')
+            self.canvas.set_ticks(self)
+            self.plot_settings.right_scale = "linear"
+
+    set_canvas_limits_axis(self, self.canvas)
+    self.canvas.draw()
+
+def change_xscale(widget, shortcut, self):
+    selected_keys = utilities.get_selected_keys(self)
+    top = False
+    bottom = False
+    for key in selected_keys:
+        if self.datadict[key].plot_X_position == "top":
+            top = True
+        if self.datadict[key].plot_X_position == "bottom":
+            bottom = True
+
+    if top:
+        current_scale = self.canvas.top_left_axis.get_xscale()
+        if current_scale == "linear":
+            self.canvas.top_left_axis.set_xscale('log')
+            self.canvas.top_right_axis.set_xscale('log')
+            self.canvas.set_ticks(self)
+            self.plot_settings.top_scale = "log"
+        elif current_scale == "log":
+            self.canvas.top_left_axis.set_xscale('linear')
+            self.canvas.top_right_axis.set_xscale('linear')
+            self.plot_settings.top_scale = "linear"
+            self.canvas.set_ticks(self)
+    if bottom:
+        current_scale = self.canvas.ax.get_xscale()
+        if current_scale == "linear":
+            self.canvas.ax.set_xscale('log')
+            self.canvas.right_axis.set_xscale('log')
+            self.canvas.set_ticks(self)
+            self.plot_settings.xscale = "log"
+        elif current_scale == "log":
+            self.canvas.ax.set_xscale('linear')
+            self.canvas.right_axis.set_xscale('linear')
+            self.plot_settings.xscale = "linear"
+            self.canvas.set_ticks(self)
+
+    set_canvas_limits_axis(self, self.canvas)
+    self.canvas.draw()
+
+def restore_view(widget, shortcut, self):
+    set_canvas_limits_axis(self, self.canvas)
+    self.canvas.draw()
+
 def get_next_color(self):
     """
     Get the color that is to be used for the next data set
@@ -305,6 +363,110 @@ def load_fonts(self):
         except:
             print(f"Could not load {font}")
             
+def set_mode(self, mode):
+    """
+    Set the current UI interaction mode (pan, zoom or select/cut)
+    """
+    win = self.main_window
+    pan_button = win.pan_button
+    zoom_button = win.zoom_button
+    select_button = win.select_data_button
+    cut_button = win.cut_data_button
+    if self.highlight == None:
+        define_highlight(self)
+    highlight = self.highlight
+    if(mode == ""):
+        toolbar_mode = self.dummy_toolbar.mode
+        if(toolbar_mode == "pan/zoom"):
+            self.dummy_toolbar.pan()
+        elif(toolbar_mode == "zoom rect"):
+            self.dummy_toolbar.zoom()
+        pan_button.set_active(False)
+        zoom_button.set_active(False)
+        select_button.set_active(False)
+        cut_button.set_visible(False)
+        highlight.set_visible(False)
+        highlight.set_active(False)
+    elif(mode == "pan/zoom"):
+        pan_button.set_active(True)
+        zoom_button.set_active(False)
+        select_button.set_active(False)
+        cut_button.set_visible(False)
+        highlight.set_visible(False)
+        highlight.set_active(False)
+    elif(mode == "zoom rect"):
+        pan_button.set_active(False)
+        zoom_button.set_active(True)
+        select_button.set_active(False)
+        cut_button.set_visible(False)
+        highlight.set_visible(False)
+        highlight.set_active(False)
+    elif(mode == "select/cut"):
+        toolbar_mode = self.dummy_toolbar.mode
+        if(toolbar_mode == "pan/zoom"):
+            self.dummy_toolbar.pan()
+        elif(toolbar_mode == "zoom rect"):
+            self.dummy_toolbar.zoom()
+        pan_button.set_active(False)
+        zoom_button.set_active(False)
+        select_button.set_active(True)
+        cut_button.set_visible(True)
+        highlight.set_visible(True)
+        highlight.set_active(True)
+    self.canvas.draw()
+
+# https://github.com/matplotlib/matplotlib/blob/c23ccdde6f0f8c071b09a88770e24452f2859e99/lib/matplotlib/backends/backend_gtk4.py#L306
+def export_data(widget, shortcut, self):
+    dialog = Gtk.FileChooserNative(
+        title='Save the figure',
+        transient_for=self.main_window,
+        action=Gtk.FileChooserAction.SAVE,
+        modal=True)
+    self._save_dialog = dialog  # Must keep a reference.
+
+    ff = Gtk.FileFilter()
+    ff.set_name('All files')
+    ff.add_pattern('*')
+    dialog.add_filter(ff)
+    dialog.set_filter(ff)
+
+    formats = []
+    default_format = None
+    for i, (name, fmts) in enumerate(
+            self.canvas.get_supported_filetypes_grouped().items()):
+        ff = Gtk.FileFilter()
+        ff.set_name(name)
+        for fmt in fmts:
+            ff.add_pattern(f'*.{fmt}')
+        dialog.add_filter(ff)
+        formats.append(name)
+        if self.canvas.get_default_filetype() in fmts:
+            default_format = i
+    # Setting the choice doesn't always work, so make sure the default
+    # format is first.
+    formats = [formats[default_format], *formats[:default_format],
+               *formats[default_format+1:]]
+    dialog.add_choice('format', 'File format', formats, formats)
+    dialog.set_choice('format', formats[default_format])
+
+    dialog.set_current_name(self.canvas.get_default_filename())
+    dialog.connect("response", on_save_response, self)
+    dialog.show()
+
+# https://github.com/matplotlib/matplotlib/blob/c23ccdde6f0f8c071b09a88770e24452f2859e99/lib/matplotlib/backends/backend_gtk4.py#L344
+def on_save_response(dialog, response, self):
+    file = dialog.get_file()
+    fmt = dialog.get_choice('format')
+    fmt = self.canvas.get_supported_filetypes_grouped()[fmt][0]
+    dialog.destroy()
+    self._save_dialog = None
+    if response != Gtk.ResponseType.ACCEPT:
+        return
+    try:
+        self.canvas.figure.savefig(file.get_path(), format=fmt)
+    except Exception as e:
+        self.main_window.toast_overlay.add_toast(Adw.Toast(title=f"Unable to save image"))
+
 class PlotSettings:
     """
     The plot-related settings for the current session. The default values are 

@@ -20,7 +20,7 @@
       <object class="AdwPreferencesPage">
         <property name="visible">True</property>
         <property name="can-focus">True</property>
-        <property name="icon-name">applications-graphics-symbolic</property>
+        <property name="icon-name">function-third-order-symbolic</property>
         <property name="title">Lines</property>
         <child>
           <object class="AdwPreferencesGroup">
@@ -242,7 +242,7 @@
       <object class="AdwPreferencesPage">
         <property name="visible">True</property>
         <property name="can-focus">True</property>
-        <property name="icon-name">applications-system-symbolic</property>
+        <property name="icon-name">axes-one-quadrant-symbolic</property>
         <property name="title">Axes</property>
         <child>
           <object class="AdwPreferencesGroup">

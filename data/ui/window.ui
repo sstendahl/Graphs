@@ -2,391 +2,92 @@
 <!--SPDX-License-Identifier: GPL-3.0-or-later-->
 <interface>
   <requires lib="gtk" version="4.0" />
-  <requires lib="Adw" version="1.2" />
-  <template class="GraphsWindow" parent="AdwApplicationWindow">
-    <property name="default-width">1024</property>
-    <property name="default-height">768</property>
-    <property name="title">Graphs</property>
+  <requires lib="libadwaita" version="1.2" />
+  <template class="AddEquationWindow" parent="AdwWindow">
+    <property name="title">Add Equation</property>
+    <property name="default-width">575</property>
+    <property name="default-height">125</property>
+    <child>
+      <object class="GtkShortcutController">
+        <child>
+          <object class="GtkShortcut">
+            <property name="trigger">Escape</property>
+            <property name="action">action(window.close)</property>
+          </object>
+        </child>
+      </object>
+    </child>
     <child>
       <object class="GtkBox">
         <property name="orientation">vertical</property>
         <child>
           <object class="GtkHeaderBar" id="header_bar">
-            <child>
-              <object class="GtkBox">
-                <property name="spacing">5</property>
-                <child>
-                  <object class="GtkMenuButton">
-                    <property name="always-show-arrow">True</property>
-                    <property name="icon-name">list-add-symbolic</property>
-                    <property name="menu-model">add_data_menu</property>
-                    <property name="tooltip-text" translatable="yes">Add new data</property>
-                  </object>
-                </child>
-                <child>
-                  <object class="GtkButton" id="undo_button">
-                    <property name="action-name">app.undo</property>
-                    <property name="focusable">1</property>
-                    <property name="receives_default">1</property>
-                    <property name="tooltip-text" translatable="yes">Undo</property>
-                    <property name="icon-name">edit-undo-symbolic</property>
-                  </object>
-                </child>
-                <child>
-                  <object class="GtkButton" id="redo_button">
-                    <property name="action-name">app.redo</property>
-                    <property name="focusable">1</property>
-                    <property name="receives_default">1</property>
-                    <property name="tooltip-text" translatable="yes">Redo</property>
-                    <property name="icon-name">edit-redo-symbolic</property>
-                  </object>
-                </child>
-                <child>
-                  <object class="GtkToggleButton" id="sidebar_button">
-                    <property name="action-name">app.toggle_sidebar</property>
-                    <property name="icon-name">dock-left-symbolic</property>
-                    <property name="active">true</property>
-                    <property name="tooltip-text" translatable="yes">Toggle Sidebar</property>
-                  </object>
-                </child>
-                <child>
-                  <object class="GtkToggleButton" id="selection_button">
-                    <property name="action-name">app.toggle_selection_mode</property>
-                    <property name="icon-name">selection-mode-symbolic</property>
-                    <property name="tooltip-text" translatable="yes">Select Items</property>
-                  </object>
-                </child>
-              </object>
-            </child>"
-            <child type="end">
-              <object class="GtkBox">
-                <property name="spacing">5</property>
-                <child>
-                  <object class="GtkButton" id="save_data_button">
-                    <property name="label">Save</property>
-                    <property name="action-name">app.save_data</property>
-                    <property name="tooltip-text" translatable="yes">Save the data to your device</property>
-                  </object>
-                </child>
-                <child>
-                  <object class="GtkMenuButton">
-                    <property name="tooltip-text" translatable="yes">Open Application Menu</property>
-                    <property name="icon-name">open-menu-symbolic</property>
-                    <property name="menu-model">primary_menu</property>
-                  </object>
-                </child>
-              </object>
-            </child>
           </object>
         </child>
         <child>
-          <object class="AdwFlap" id="sidebar_flap">"
-            <property name="reveal-flap">True</property>
-            <property name="fold-duration">1</property>
-            <property name="fold-policy">ADW_FLAP_FOLD_POLICY_NEVER</property>
-            <child type="flap">
-              <object class="GtkBox" id="selection_box">"
-                <property name="orientation">vertical</property>
+          <object class="AdwToastOverlay" id="toast_overlay">
+            <child>
+              <object class="AdwPreferencesGroup">
+                <property name="visible">True</property>
+                <property name="can-focus">True</property>
+                <property name="title" translatable="yes">Add Equation</property>
+                <property name="description" translatable="yes"> Here you can add data using an equation using Numpy notation. Make sure to use a capital letter for the X coordinate.</property>
+                <property name="margin-start">30</property>
+                <property name="margin-end">30</property>
+                <property name="margin-top">20</property>
+                <property name="margin-bottom">20</property>
                 <child>
-                  <object class="GtkScrolledWindow" id="equation_scroll">
-                    <property name="width-request">335</property>
-                    <property name="height-request">250</property>
-                    <property name="focusable">1</property>
-                    <property name="hscrollbar_policy">never</property>
-                    <property name="child">
-                      <object class="GtkViewport">
-                        <property name="child">
-                          <object class="GtkListBox" id="list_box">
-                            <property name="margin-bottom">5</property>
-                            <property name="margin-top">5</property>
-                            <property name="margin-start">5</property>
-                            <property name="margin-end">5</property>
-                            <property name="hexpand">False</property>
-                            <property name="selection-mode">none</property>
-                            <style>
-                              <class name="boxed-list" />
-                            </style>
-                          </object>
-                        </property>
-                      </object>
-                    </property>
+                  <object class="AdwEntryRow" id="equation_entry">
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="title" translatable="yes">Y =</property>
+                    <property name="use-underline">True</property>
+                    <property name="max-width-chars">25</property>
                   </object>
                 </child>
                 <child>
-                  <object class="GtkScrolledWindow">
-                    <property name="focusable">1</property>
-                    <property name="hscrollbar_policy">never</property>
-                    <property name="child">
-                      <object class="GtkViewport">
-                        <property name="child">
-                          <object class="GtkBox">
-                            <property name="hexpand">False</property>
-                            <property name="vexpand">True</property>
-                            <property name="orientation">vertical</property>
-                            <child>
-                              <object class="AdwPreferencesGroup">
-                                <property name="margin-bottom">5</property>
-                                <property name="margin-top">5</property>
-                                <property name="margin-start">5</property>
-                                <property name="margin-end">5</property>
-                                <child>
-                                  <object class="AdwExpanderRow">
-                                    <property name="title">Select and Cut</property>
-                                    <child>
-                                      <object class="AdwActionRow">
-                                        <property name="subtitle">Select a span of data</property>
-                                        <property name="activatable-widget">select_data_button</property>
-                                        <child>
-                                          <object class="GtkToggleButton" id="select_data_button">
-                                            <property name="label">Select</property>"
-                                        <property name="action-name">app.select_data_toggle</property>
-                                            <property name="margin-bottom">5</property>
-                                            <property name="margin-top">5</property>"
-                                      </object>
-                                        </child>
-                                      </object>
-                                    </child>
-                                    <child>
-                                      <object class="AdwActionRow">
-                                        <property name="subtitle">Cut the selected span</property>
-                                        <property name="activatable-widget">cut_data_button</property>
-                                        <child>
-                                          <object class="GtkToggleButton" id="cut_data_button">
-                                            <property name="label">Cut</property>
-                                            <property name="action-name">app.cut_data</property>
-                                            <property name="margin-bottom">5</property>
-                                            <property name="margin-top">5</property>
-                                          </object>
-                                        </child>
-                                      </object>
-                                    </child>
-                                  </object>
-                                </child>
-                                <child>
-                                  <object class="AdwExpanderRow">
-                                    <property name="title">Adjust Data</property>
-                                    <child>
-                                      <object class="AdwActionRow">
-                                        <property name="activatable-widget">normalize_button</property>
-                                        <property name="subtitle">Normalize data</property>
-                                        <child>
-                                          <object class="GtkButton" id="normalize_button">
-                                            <property name="label">Normalize</property>
-                                            <property name="action-name">app.normalize_data</property>
-                                            <property name="margin-bottom">5</property>
-                                            <property name="margin-top">5</property>
-                                          </object>
-                                        </child>
-                                      </object>
-                                    </child>
-                                    <child>
-                                      <object class="AdwActionRow">
-                                        <property name="subtitle">Shift all data vertically with respect to each other</property>
-                                        <property name="activatable-widget">shift_vertically_button</property>
-                                        <child>
-                                          <object class="GtkButton" id="shift_vertically_button">
-                                            <property name="label">Shift</property>
-                                            <property name="action-name">app.shift_vertically</property>
-                                            <property name="margin-bottom">5</property>
-                                            <property name="margin-top">5</property>
-                                          </object>
-                                        </child>
-                                      </object>
-                                    </child>
-                                    <child>
-                                      <object class="AdwActionRow">
-                                        <property name="subtitle">Smoothen the data</property>
-                                        <property name="activatable-widget">smooth_button</property>
-                                        <child>
-                                          <object class="GtkButton" id="smooth_button">
-                                            <property name="label">Smoothen</property>
-                                            <property name="action-name">app.smooth</property>
-                                            <property name="margin-bottom">5</property>
-                                            <property name="margin-top">5</property>
-                                          </object>
-                                        </child>
-                                      </object>
-                                    </child>
-                                    <child>
-                                      <object class="AdwActionRow">
-                                        <property name="subtitle">Center the data</property>
-                                        <property name="activatable-widget">center_data_button</property>
-                                        <child>
-                                          <object class="GtkButton" id="center_data_button">
-                                            <property name="label">Center</property>
-                                            <property name="action-name">app.center_data</property>
-                                            <property name="margin-bottom">5</property>
-                                            <property name="margin-top">5</property>
-                                          </object>
-                                        </child>
-                                      </object>
-                                    </child>
-                                  </object>
-                                </child>
-                                <child>
-                                  <object class="AdwExpanderRow">
-                                    <property name="title">Translate and Multiply</property>
-                                    <child>
-                                      <object class="AdwEntryRow" id="translate_x_entry">
-                                        <property name="title">Translate x-Axis</property>
-                                        <property name="max-width-chars">6</property>
-                                        <child>
-                                          <object class="GtkButton" id="translate_x_button">
-                                            <property name="label">Translate</property>
-                                            <property name="action-name">app.translate_x</property>
-                                            <property name="margin-bottom">5</property>
-                                            <property name="margin-top">5</property>
-                                          </object>
-                                        </child>
-                                      </object>
-                                    </child>
-                                    <child>
-                                      <object class="AdwEntryRow" id="translate_y_entry">
-                                        <property name="title">Translate y-Axis</property>
-                                        <property name="max-width-chars">6</property>
-                                        <child>
-                                          <object class="GtkButton" id="translate_y_button">
-                                            <property name="label">Translate</property>
-                                            <property name="action-name">app.translate_y</property>
-                                            <property name="margin-bottom">5</property>
-                                            <property name="margin-top">5</property>
-                                          </object>
-                                        </child>
-                                      </object>
-                                    </child>
-                                    <child>
-                                      <object class="AdwEntryRow" id="multiply_x_entry">
-                                        <property name="title">Multiply X</property>
-                                        <property name="max-width-chars">6</property>
-                                        <child>
-                                          <object class="GtkButton" id="multiply_x_button">
-                                            <property name="label">Multiply</property>
-                                            <property name="action-name">app.multiply_x</property>
-                                            <property name="margin-bottom">5</property>
-                                            <property name="margin-top">5</property>
-                                          </object>
-                                        </child>
-                                      </object>
-                                    </child>
-                                    <child>
-                                      <object class="AdwEntryRow" id="multiply_y_entry">
-                                        <property name="title">Multiply Y</property>
-                                        <property name="max-width-chars">6</property>
-                                        <child>
-                                          <object class="GtkButton" id="multiply_y_button">
-                                            <property name="label">Multiply</property>
-                                            <property name="action-name">app.multiply_y</property>
-                                            <property name="margin-bottom">5</property>
-                                            <property name="margin-top">5</property>
-                                          </object>
-                                        </child>
-                                      </object>
-                                    </child>
-                                  </object>
-                                </child>
-                                <child>
-                                  <object class="AdwExpanderRow">
-                                    <property name="title">Manipulate Data</property>
-                                    <child>
-                                      <object class="AdwActionRow">
-                                        <property name="subtitle">Get the derivative of the data</property>
-                                        <property name="activatable-widget">derivative_button</property>
-                                        <child>
-                                          <object class="GtkButton" id="derivative_button">
-                                            <property name="label">Get</property>
-                                            <property name="action-name">app.get_derivative</property>
-                                            <property name="margin-bottom">5</property>
-                                            <property name="margin-top">5</property>
-                                          </object>
-                                        </child>
-                                      </object>
-                                    </child>
-                                    <child>
-                                      <object class="AdwActionRow">
-                                        <property name="subtitle">Get the indefinite integral of the data</property>
-                                        <property name="activatable-widget">integral_button</property>
-                                        <child>
-                                          <object class="GtkButton" id="integral_button">
-                                            <property name="label">Get</property>
-                                            <property name="action-name">app.get_integral</property>
-                                            <property name="margin-bottom">5</property>
-                                            <property name="margin-top">5</property>
-                                          </object>
-                                        </child>
-                                      </object>
-                                    </child>
-                                    <child>
-                                      <object class="AdwActionRow">
-                                        <property name="subtitle">Get the Fast Fourier Transform of the data</property>
-                                        <property name="activatable-widget">fourier_button</property>
-                                        <child>
-                                          <object class="GtkButton" id="fourier_button">
-                                            <property name="label">Get</property>
-                                            <property name="action-name">app.get_fourier</property>
-                                            <property name="margin-bottom">5</property>
-                                            <property name="margin-top">5</property>
-                                          </object>
-                                        </child>
-                                      </object>
-                                    </child>
-                                    <child>
-                                      <object class="AdwActionRow">
-                                        <property name="subtitle">Get the Inverse Fast Fourier Transform of the data</property>
-                                        <property name="activatable-widget">inverse_fourier_button</property>
-                                        <child>
-                                          <object class="GtkButton" id="inverse_fourier_button">
-                                            <property name="label">Get</property>
-                                            <property name="action-name">app.get_inverse_fourier</property>
-                                            <property name="margin-bottom">5</property>
-                                            <property name="margin-top">5</property>
-                                          </object>
-                                        </child>
-                                      </object>
-                                    </child>
-                                    <child>
-                                      <object class="AdwActionRow">
-                                        <property name="subtitle">Perform custom transformations on the data</property>
-                                        <property name="activatable-widget">transform_data_button</property>
-                                        <child>
-                                          <object class="GtkButton" id="transform_data_button">
-                                            <property name="label">Transform</property>
-                                            <property name="action-name">app.transform_data</property>
-                                            <property name="margin-bottom">5</property>
-                                            <property name="margin-top">5</property>
-                                          </object>
-                                        </child>
-                                      </object>
-                                    </child>
-                                  </object>
-                                </child>
-                              </object>
-                            </child>
-                          </object>
-                        </property>
-                      </object>
-                    </property>
+                  <object class="AdwEntryRow" id="name_entry">
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="title" translatable="yes">Name (blank to use equation)</property>
+                    <property name="use-underline">True</property>
+                    <property name="max-width-chars">25</property>
                   </object>
                 </child>
-              </object>
-            </child>
-            <child type="separator">
-              <object class="GtkSeparator">
-                <property name="orientation">vertical</property>
-              </object>
-            </child>
-            <child type="content">
-              <object class="AdwToastOverlay" id="toast_overlay">
-                <property name="child">
-                  <object class="GtkBox" id="drawing_layout">
-                    <property name="hexpand">true</property>
-                    <property name="vexpand">true</property>
-                    <property name="orientation">vertical</property>
-                    <property name="margin-top">5</property>
-                    <property name="margin-bottom">5</property>
-                    <property name="margin-start">5</property>
-                    <property name="margin-end">5</property>
+                <child>
+                  <object class="AdwEntryRow" id="X_start_entry">
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="title" translatable="yes">X Start</property>
+                    <property name="use-underline">True</property>
+                    <property name="max-width-chars">25</property>
                   </object>
-                </property>
+                </child>
+                <child>
+                  <object class="AdwEntryRow" id="X_stop_entry">
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="title" translatable="yes">X Stop</property>
+                    <property name="use-underline">True</property>
+                    <property name="max-width-chars">25</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="AdwEntryRow" id="step_size_entry">
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="title" translatable="yes">Step Size</property>
+                    <property name="use-underline">True</property>
+                    <property name="max-width-chars">25</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkButton" id="add_equation_confirm_button">
+                    <property name="label">Confirm</property>
+                    <property name="margin-top">20</property>
+                    <property name="margin-bottom">10</property>
+                  </object>
+                </child>
               </object>
             </child>
           </object>
@@ -394,36 +95,4 @@
       </object>
     </child>
   </template>
-  <menu id="add_data_menu">
-    <section>
-      <item>
-        <attribute name="label" translatable="yes">_Add Data from File</attribute>
-        <attribute name="action">app.add_data</attribute>
-      </item>
-      <item>
-        <attribute name="label" translatable="yes">_Add Data from File (Advanced)</attribute>
-        <attribute name="action">app.add_data_advanced</attribute>
-      </item>
-      <item>
-        <attribute name="label" translatable="yes">_Add Data from Equation</attribute>
-        <attribute name="action">app.add_equation</attribute>
-      </item>
-    </section>
-  </menu>"
- <menu id="primary_menu">
-    <section>
-      <item>
-        <attribute name="label" translatable="yes">_Preferences</attribute>
-        <attribute name="action">app.preferences</attribute>
-      </item>
-      <item>
-        <attribute name="label" translatable="yes">_Keyboard Shortcuts</attribute>
-        <attribute name="action">win.show-help-overlay</attribute>
-      </item>
-      <item>
-        <attribute name="label" translatable="yes">_About Graphs</attribute>
-        <attribute name="action">app.about</attribute>
-      </item>
-    </section>
-  </menu>
 </interface>

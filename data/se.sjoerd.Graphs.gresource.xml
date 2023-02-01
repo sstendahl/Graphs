@@ -2,7 +2,7 @@
 <!--SPDX-License-Identifier: GPL-3.0-or-later-->
 <gresources>
   <gresource prefix="/se/sjoerd/Graphs">
-    <file alias="gtk/help-overlay.ui" preprocess="xml-stripblanks">ui/help-overlay.ui</file>
+    <file alias="gtk/help-overlay.ui" preprocess="xml-stripblanks">ui/help_overlay.ui</file>
     <file preprocess="xml-stripblanks">ui/window.ui</file>
     <file preprocess="xml-stripblanks">ui/sample_box.ui</file>
     <file preprocess="xml-stripblanks">ui/preferences.ui</file>
@@ -14,6 +14,9 @@
     <file preprocess="xml-stripblanks">ui/transform_window.ui</file>
   </gresource>
   <gresource prefix="/se/sjoerd/Graphs/icons/scalable/actions/">
-    <file preprocess="xml-stripblanks" alias="dock-left-symbolic.svg">icons/dock-left-symbolic.svg</file>
+    <file preprocess="xml-stripblanks" alias="loupe-symbolic.svg">icons/loupe-symbolic.svg</file>
+    <file preprocess="xml-stripblanks" alias="move-tool-symbolic.svg">icons/move-tool-symbolic.svg</file>
+    <file preprocess="xml-stripblanks" alias="axes-one-quadrant-symbolic.svg">icons/axes-one-quadrant-symbolic.svg</file>
+    <file preprocess="xml-stripblanks" alias="function-third-order-symbolic.svg">icons/function-third-order-symbolic.svg</file>
   </gresource>
 </gresources>
