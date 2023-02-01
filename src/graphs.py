@@ -25,8 +25,6 @@ def get_theme_color(self):
 def open_selection(self, files, from_dictionary = False, import_settings = None, canvas = None):
     if canvas == None:
         canvas = self.canvas
-    if self.highlight is not None:
-        plotting_tools.define_highlight(self)
     if from_dictionary:
         for key, item in self.datadict.items():
             if item is not None:
@@ -323,7 +321,6 @@ def on_open_response(dialog, response, self, import_settings):
             import_settings["mode"] = "single"
 
         open_selection(self, files, import_settings = import_settings)
-        plotting_tools.define_highlight(self)
         win = self.props.active_window
         button = win.select_data_button
         if not button.get_active():

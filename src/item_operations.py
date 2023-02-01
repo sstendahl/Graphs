@@ -170,7 +170,6 @@ def cut_data(widget, _, self):
                     item.ydata = new_y
             delete_selected_data(self)
             add_to_clipboard(self)
-            plotting_tools.define_highlight(self)
             plotting_tools.refresh_plot(self, set_limits = False)
 
 def select_data(self):
