@@ -41,8 +41,8 @@ def add_to_clipboard(self):
             redo_button.set_sensitive(False)
 
         item.clipboard_pos = -1
-        item.xdata_clipboard.append(item.xdata)
-        item.ydata_clipboard.append(item.ydata)
+        item.xdata_clipboard.append(item.xdata.copy())
+        item.ydata_clipboard.append(item.ydata.copy())
 
 def undo(widget, shortcut, self):
     """
@@ -55,8 +55,8 @@ def undo(widget, shortcut, self):
         if abs(item.clipboard_pos) < len(item.xdata_clipboard):
             redo_button.set_sensitive(True)
             item.clipboard_pos -= 1
-            item.xdata = item.xdata_clipboard[item.clipboard_pos]
-            item.ydata = item.ydata_clipboard[item.clipboard_pos]
+            item.xdata = item.xdata_clipboard[item.clipboard_pos].copy()
+            item.ydata = item.ydata_clipboard[item.clipboard_pos].copy()
     if abs(item.clipboard_pos) >= len(item.xdata_clipboard):
         undo_button.set_sensitive(False)
     plotting_tools.refresh_plot(self)
@@ -72,8 +72,8 @@ def redo(widget, shortcut, self):
         if item.clipboard_pos < 0:
             undo_button.set_sensitive(True)
             item.clipboard_pos += 1
-            item.xdata = item.xdata_clipboard[item.clipboard_pos]
-            item.ydata = item.ydata_clipboard[item.clipboard_pos]
+            item.xdata = item.xdata_clipboard[item.clipboard_pos].copy()
+            item.ydata = item.ydata_clipboard[item.clipboard_pos].copy()
     if item.clipboard_pos >= -1:
         redo_button.set_sensitive(False)
     plotting_tools.refresh_plot(self)
@@ -148,8 +148,6 @@ def cut_data(widget, _, self):
     if button.get_active():
         if select_data(self): #If select_data ran succesfully
             for key, item in self.datadict.items():
-                if item is None:
-                    continue
                 xdata = item.xdata
                 ydata = item.ydata
                 #Create empty arrays that will be equal to the new cut data 
@@ -346,9 +344,10 @@ def translate_x(shortcut, _, self):
     win = self.props.active_window
     try:
         offset = eval(win.translate_x_entry.get_text())
-    except [ValueError, TypeError]:
-        win.toast_overlay.add_toast(Adw.Toast(title=f"Unable to do translation, make sure to enter a valid number"))
-        print("Unable to do translation, make sure to enter a valid number")
+    except Exception as e:
+        exception_type = e.__class__.__name__
+        print(f"{e}: Unable to do translation, make sure to enter a valid number")
+        win.toast_overlay.add_toast(Adw.Toast(title=f"{exception_type}: Unable to do translation, make sure to enter a valid number"))
         offset = 0
     selected_keys = utilities.get_selected_keys(self)
     for key in selected_keys:
@@ -366,14 +365,37 @@ def translate_y(shortcut, _, self):
     win = self.props.active_window
     try:
         offset = eval(win.translate_y_entry.get_text())
-    except [ValueError, TypeError]:
-        print("Unable to do translation, make sure to enter a valid number")
+    except Exception as e:
+        exception_type = e.__class__.__name__
+        print(f"{e}: Unable to do translation, make sure to enter a valid number")
+        win.toast_overlay.add_toast(Adw.Toast(title=f"{exception_type}: Unable to do translation, make sure to enter a valid number"))
         offset = 0
-        win.toast_overlay.add_toast(Adw.Toast(title=f"Unable to do translation, make sure to enter a valid number"))
     selected_keys = utilities.get_selected_keys(self)
+
+    # If we are in selection mode, then select the highlighted data
+    select_data(self)
     for key in selected_keys:
-        self.datadict[key].ydata = [value + offset for value in self.datadict[key].ydata]
+        #If the selected data exists, so this will get ignored when we're not in selection mode
+        if f"{key}_selected" in self.datadict:
+            #Define the selected item
+            selected_item = self.datadict[f"{key}_selected"]
+            #Perform the operation on the selected item
+            selected_item.ydata = [value + offset for value in selected_item.ydata]
+            #Since the first index of the selected/highlighted part is not the same as for
+            #the whole dataset, we need to take this offset into account.
+            #However, I fear this may lead to bugs in case someone has a data set where
+            #there's multiple points with the same x coordinate. So we may need to check for
+            #another way to do this.
+            index_start = self.datadict[key].xdata.index(selected_item.xdata[0])
+            #Replace the highlighted part in the original data set
+            for index, value in enumerate(selected_item.ydata):
+                self.datadict[key].ydata[index + index_start] = selected_item.ydata[index]
+                self.datadict[key].xdata[index + index_start] = selected_item.xdata[index]
+            #Throw away the selected/highlighted datasets
+        else:
+            self.datadict[key].ydata = [value + offset for value in self.datadict[key].ydata]
     add_to_clipboard(self)
+    delete_selected_data(self)
     plotting_tools.refresh_plot(self)
 
 def multiply_x(shortcut, _, self):
@@ -386,9 +408,10 @@ def multiply_x(shortcut, _, self):
     win = self.props.active_window
     try:
         multiplier = eval(win.multiply_x_entry.get_text())
-    except [ValueError, TypeError]:
-        win.toast_overlay.add_toast(Adw.Toast(title=f"Unable to do multiplication, make sure to enter a valid number"))
-        print("Unable to do multiplication, make sure to enter a valid number")
+    except Exception as e:
+        exception_type = e.__class__.__name__
+        print(f"{e}: Unable to do multiplication, make sure to enter a valid number")
+        win.toast_overlay.add_toast(Adw.Toast(title=f"{exception_type}: Unable to do multiplication, make sure to enter a valid number"))
         multiplier = 1
     selected_keys = utilities.get_selected_keys(self)
     for key in selected_keys:
@@ -406,9 +429,10 @@ def multiply_y(shortcut, _, self):
     win = self.props.active_window
     try:
         multiplier = eval(win.multiply_y_entry.get_text())
-    except [ValueError, TypeError]:
-        win.toast_overlay.add_toast(Adw.Toast(title=f"Unable to do multiplication, make sure to enter a valid number"))
-        print("Unable to do multiplication, make sure to enter a valid number")
+    except Exception as e:
+        exception_type = e.__class__.__name__
+        print(f"{e}: Unable to do multiplication, make sure to enter a valid number")
+        win.toast_overlay.add_toast(Adw.Toast(title=f"{exception_type}: Unable to do multiplication, make sure to enter a valid number"))
         multiplier = 1
     selected_keys = utilities.get_selected_keys(self)
     for key in selected_keys:

@@ -1,93 +1,645 @@
 <?xml version='1.0' encoding='utf-8'?>
-<!--SPDX-License-Identifier: GPL-3.0-or-later-->
 <interface>
   <requires lib="gtk" version="4.0" />
-  <requires lib="libadwaita" version="1.2" />
-  <template class="AddEquationWindow" parent="AdwWindow">
-    <property name="title">Add Equation</property>
-    <property name="default-width">575</property>
-    <property name="default-height">125</property>
-    <child>
-      <object class="GtkShortcutController">
-        <child>
-          <object class="GtkShortcut">
-            <property name="trigger">Escape</property>
-            <property name="action">action(window.close)</property>
-          </object>
-        </child>
-      </object>
-    </child>
+  <requires lib="Adw" version="1.2" />
+  <template class="GraphsWindow" parent="AdwApplicationWindow">
+    <property name="default-width">1024</property>
+    <property name="default-height">768</property>
+    <property name="title">Graphs</property>
     <child>
       <object class="GtkBox">
         <property name="orientation">vertical</property>
         <child>
           <object class="GtkHeaderBar" id="header_bar">
+            <child>
+              <object class="GtkBox">
+                <child>
+                  <object class="AdwSplitButton">
+                    <property name="icon-name">list-add-symbolic</property>
+                    <property name="menu-model">add_data_menu</property>
+                    <property name="tooltip-text" translatable="yes">Add new data</property>
+                    <property name="action-name">app.add_data</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkSeparator">
+                    <style>
+                      <class name="spacer" />
+                    </style>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkBox">
+                    <style>
+                      <class name="linked" />
+                    </style>
+                    <child>
+                      <object class="GtkButton" id="undo_button">
+                        <property name="action-name">app.undo</property>
+                        <property name="focusable">1</property>
+                        <property name="receives_default">1</property>
+                        <property name="tooltip-text" translatable="yes">Undo</property>
+                        <property name="icon-name">edit-undo-symbolic</property>
+                        <property name="css-classes">flat</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkButton" id="redo_button">
+                        <property name="action-name">app.redo</property>
+                        <property name="focusable">1</property>
+                        <property name="receives_default">1</property>
+                        <property name="tooltip-text" translatable="yes">Redo</property>
+                        <property name="icon-name">edit-redo-symbolic</property>
+                        <property name="css-classes">flat</property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </child>"
+            <child type="end">
+              <object class="GtkBox">
+                <property name="spacing">5</property>
+                <child>
+                  <object class="GtkMenuButton" id="view_menu_button">
+                    <property name="always-show-arrow">true</property>
+                    <property name="menu-model">view_menu</property>
+                    <property name="icon-name">view-reveal-symbolic</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkSeparator">
+                    <style>
+                      <class name="spacer" />
+                    </style>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkMenuButton">
+                    <property name="tooltip-text" translatable="yes">Open Application Menu</property>
+                    <property name="icon-name">open-menu-symbolic</property>
+                    <property name="menu-model">primary_menu</property>
+                  </object>
+                </child>
+              </object>
+            </child>
           </object>
         </child>
         <child>
-          <object class="AdwToastOverlay" id="toast_overlay">
-            <child>
-              <object class="AdwPreferencesGroup">
-                <property name="visible">True</property>
-                <property name="can-focus">True</property>
-                <property name="title" translatable="yes">Add Equation</property>
-                <property name="description" translatable="yes"> Here you can add data using an equation using Numpy notation. Make sure to use a capital letter for the X coordinate.</property>
-                <property name="margin-start">30</property>
-                <property name="margin-end">30</property>
-                <property name="margin-top">20</property>
-                <property name="margin-bottom">20</property>
+          <object class="AdwFlap" id="sidebar_flap">
+            <property name="reveal-flap">True</property>
+            <property name="fold-duration">1</property>
+            <property name="fold-policy">ADW_FLAP_FOLD_POLICY_NEVER</property>
+            <child type="flap">
+              <object class="GtkBox" id="selection_box">"
+                <property name="orientation">vertical</property>
+                <property name="width-request">370</property>
+                <property name="hexpand">false</property>
                 <child>
-                  <object class="AdwEntryRow" id="equation_entry">
-                    <property name="visible">True</property>
-                    <property name="can-focus">True</property>
-                    <property name="title" translatable="yes">Y =</property>
-                    <property name="use-underline">True</property>
-                    <property name="max-width-chars">25</property>
+                  <object class="GtkScrolledWindow" id="equation_scroll">
+                    <property name="height-request">250</property>
+                    <property name="focusable">1</property>
+                    <property name="hscrollbar_policy">never</property>
+                    <property name="child">
+                      <object class="GtkViewport">
+                        <property name="child">
+                          <object class="GtkListBox" id="list_box">
+                            <property name="margin-bottom">12</property>
+                            <property name="margin-top">12</property>
+                            <property name="margin-start">12</property>
+                            <property name="margin-end">12</property>
+                            <property name="selection-mode">none</property>
+                            <style>
+                              <class name="boxed-list" />
+                            </style>
+                          </object>
+                        </property>
+                      </object>
+                    </property>
                   </object>
                 </child>
                 <child>
-                  <object class="AdwEntryRow" id="name_entry">
-                    <property name="visible">True</property>
-                    <property name="can-focus">True</property>
-                    <property name="title" translatable="yes">Name (blank to use equation)</property>
-                    <property name="use-underline">True</property>
-                    <property name="max-width-chars">25</property>
+                  <object class="GtkBox">
+                    <property name="spacing">10</property>
+                    <property name="margin-top">6</property>
+                    <property name="margin-bottom">6</property>
+                    <property name="margin-start">12</property>
+                    <property name="margin-end">12</property>
+                    <child>
+                      <object class="GtkButton" id="restore_view_button">
+                        <property name="icon-name">go-home-symbolic-symbolic</property>
+                        <property name="tooltip-text" translatable="yes">Restore original view</property>
+                        <property name="action-name">app.restore_view</property>
+                        <property name="hexpand">true</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkToggleButton" id="pan_button">
+                        <property name="icon-name">move-tool-symbolic</property>
+                        <property name="tooltip-text" translatable="yes">Left button to pan, right button to zoom. Hold control to to keep aspect ratio fixed</property>
+                        <property name="action-name">app.pan</property>
+                        <property name="hexpand">true</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkToggleButton" id="zoom_button">
+                        <property name="icon-name">loupe-symbolic</property>
+                        <property name="tooltip-text" translatable="yes">Zoom to rectangle</property>
+                        <property name="action-name">app.zoom</property>
+                        <property name="hexpand">true</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkBox">
+                        <style>
+                          <class name="linked" />
+                        </style>
+                        <property name="hexpand">true</property>
+                        <child>
+                          <object class="GtkToggleButton" id="select_data_button">
+                            <property name="icon-name">edit-select-all-symbolic</property>
+                            <property name="tooltip-text" translatable="yes">Select a span of data</property>
+                            <property name="action-name">app.select_data_toggle</property>
+                            <property name="hexpand">true</property>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkToggleButton" id="cut_data_button">
+                            <property name="icon-name">edit-cut-symbolic</property>
+                            <property name="tooltip-text" translatable="yes">Cut the selected span</property>
+                            <property name="action-name">app.cut_data</property>
+                            <style>
+                              <class name="destructive-action" />
+                            </style>
+                            <property name="hexpand">true</property>
+                            <property name="visible">false</property>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
                   </object>
                 </child>
                 <child>
-                  <object class="AdwEntryRow" id="X_start_entry">
-                    <property name="visible">True</property>
-                    <property name="can-focus">True</property>
-                    <property name="title" translatable="yes">X Start</property>
-                    <property name="use-underline">True</property>
-                    <property name="max-width-chars">25</property>
+                  <object class="GtkScrolledWindow">
+                    <property name="focusable">1</property>
+                    <property name="hscrollbar_policy">never</property>
+                    <property name="child">
+                      <object class="GtkViewport">
+                        <property name="child">
+                          <object class="GtkBox">
+                            <property name="vexpand">True</property>
+                            <property name="hexpand">False</property>
+                            <property name="orientation">vertical</property>
+                            <child>
+                              <object class="AdwPreferencesGroup">
+                                <property name="margin-bottom">12</property>
+                                <property name="margin-top">12</property>
+                                <property name="margin-start">12</property>
+                                <property name="margin-end">12</property>
+                                <child>
+                                  <object class="AdwExpanderRow">
+                                    <property name="title">Adjust Data</property>
+                                    <child>
+                                      <object class="GtkGrid">
+                                        <child>
+                                          <object class="GtkButton" id="shift_vertically_button">
+                                            <child>
+                                              <object class="GtkBox">
+                                                <property name="halign">center</property>
+                                                <child>
+                                                  <object class="GtkImage">
+                                                    <property name="icon-name">function-third-order</property>
+                                                    <property name="margin-end">6</property>
+                                                  </object>
+                                                </child>
+                                                <child>
+                                                  <object class="GtkLabel">
+                                                    <property name="label">Shift</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </child>
+                                            <property name="tooltip-text" translatable="yes">Shift all data vertically with respect to each other</property>
+                                            <property name="action-name">app.shift_vertically</property>
+                                            <property name="margin-bottom">5</property>
+                                            <property name="margin-top">5</property>
+                                            <property name="margin-start">5</property>
+                                            <property name="margin-end">5</property>
+                                            <property name="hexpand">True</property>
+                                            <layout>
+                                              <property name="column">0</property>
+                                              <property name="row">0</property>
+                                            </layout>
+                                          </object>
+                                        </child>
+                                        <child>
+                                          <object class="GtkButton" id="normalize_button">
+                                            <child>
+                                              <object class="GtkBox">
+                                                <property name="halign">center</property>
+                                                <child>
+                                                  <object class="GtkImage">
+                                                    <property name="icon-name">function-third-order</property>
+                                                    <property name="margin-end">6</property>
+                                                  </object>
+                                                </child>
+                                                <child>
+                                                  <object class="GtkLabel">
+                                                    <property name="label">Normalize</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </child>
+                                            <property name="tooltip-text" translatable="yes">Normalize data</property>
+                                            <property name="action-name">app.normalize_data</property>
+                                            <property name="margin-bottom">5</property>
+                                            <property name="margin-top">5</property>
+                                            <property name="margin-start">5</property>
+                                            <property name="margin-end">5</property>
+                                            <property name="hexpand">True</property>
+                                            <layout>
+                                              <property name="column">1</property>
+                                              <property name="row">0</property>
+                                            </layout>
+                                          </object>
+                                        </child>
+                                        <child>
+                                          <object class="GtkButton" id="smooth_button">
+                                            <child>
+                                              <object class="GtkBox">
+                                                <property name="halign">center</property>
+                                                <child>
+                                                  <object class="GtkImage">
+                                                    <property name="icon-name">function-third-order</property>
+                                                    <property name="margin-end">6</property>
+                                                  </object>
+                                                </child>
+                                                <child>
+                                                  <object class="GtkLabel">
+                                                    <property name="label">Smoothen</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </child>
+                                            <property name="tooltip-text" translatable="yes">Smoothen the data</property>
+                                            <property name="action-name">app.smooth</property>
+                                            <property name="margin-bottom">5</property>
+                                            <property name="margin-top">5</property>
+                                            <property name="margin-start">5</property>
+                                            <property name="margin-end">5</property>
+                                            <property name="hexpand">True</property>
+                                            <layout>
+                                              <property name="column">0</property>
+                                              <property name="row">1</property>
+                                            </layout>
+                                          </object>
+                                        </child>
+                                        <child>
+                                          <object class="GtkButton" id="center_data_button">
+                                            <child>
+                                              <object class="GtkBox">
+                                                <property name="halign">center</property>
+                                                <child>
+                                                  <object class="GtkImage">
+                                                    <property name="icon-name">function-third-order</property>
+                                                    <property name="margin-end">6</property>
+                                                  </object>
+                                                </child>
+                                                <child>
+                                                  <object class="GtkLabel">
+                                                    <property name="label">Center</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </child>
+                                            <property name="tooltip-text" translatable="yes">Center the data</property>
+                                            <property name="action-name">app.center_data</property>
+                                            <property name="margin-bottom">5</property>
+                                            <property name="margin-top">5</property>
+                                            <property name="margin-start">5</property>
+                                            <property name="margin-end">5</property>
+                                            <property name="hexpand">True</property>
+                                            <layout>
+                                              <property name="column">1</property>
+                                              <property name="row">1</property>
+                                            </layout>
+                                          </object>
+                                        </child>
+                                      </object>
+                                    </child>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="AdwExpanderRow">
+                                    <property name="title">Translate and Multiply</property>
+                                    <child>
+                                      <object class="AdwEntryRow" id="translate_x_entry">
+                                        <property name="title">Translate x-Axis</property>
+                                        <property name="max-width-chars">6</property>
+                                        <child>
+                                          <object class="GtkButton" id="translate_x_button">
+                                            <child>
+                                              <object class="GtkBox">
+                                                <property name="halign">center</property>
+                                                <child>
+                                                  <object class="GtkImage">
+                                                    <property name="icon-name">function-third-order</property>
+                                                    <property name="margin-end">6</property>
+                                                  </object>
+                                                </child>
+                                                <child>
+                                                  <object class="GtkLabel">
+                                                    <property name="halign">Translate</property>
+                                                    <property name="label">Transform</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </child>
+                                            <property name="action-name">app.translate_x</property>
+                                            <property name="margin-bottom">5</property>
+                                            <property name="margin-top">5</property>
+                                          </object>
+                                        </child>
+                                      </object>
+                                    </child>
+                                    <child>
+                                      <object class="AdwEntryRow" id="translate_y_entry">
+                                        <property name="title">Translate y-Axis</property>
+                                        <property name="max-width-chars">6</property>
+                                        <child>
+                                          <object class="GtkButton" id="translate_y_button">
+                                            <child>
+                                              <object class="GtkBox">
+                                                <property name="halign">center</property>
+                                                <child>
+                                                  <object class="GtkImage">
+                                                    <property name="icon-name">function-third-order</property>
+                                                    <property name="margin-end">6</property>
+                                                  </object>
+                                                </child>
+                                                <child>
+                                                  <object class="GtkLabel">
+                                                    <property name="halign">center</property>
+                                                    <property name="label">Translate</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </child>
+                                            <property name="action-name">app.translate_y</property>
+                                            <property name="margin-bottom">5</property>
+                                            <property name="margin-top">5</property>
+                                          </object>
+                                        </child>
+                                      </object>
+                                    </child>
+                                    <child>
+                                      <object class="AdwEntryRow" id="multiply_x_entry">
+                                        <property name="title">Multiply X</property>
+                                        <property name="max-width-chars">6</property>
+                                        <child>
+                                          <object class="GtkButton" id="multiply_x_button">
+                                            <child>
+                                              <object class="GtkBox">
+                                                <property name="halign">center</property>
+                                                <child>
+                                                  <object class="GtkImage">
+                                                    <property name="icon-name">function-third-order</property>
+                                                    <property name="margin-end">6</property>
+                                                  </object>
+                                                </child>
+                                                <child>
+                                                  <object class="GtkLabel">
+                                                    <property name="halign">center</property>
+                                                    <property name="label">Multiply</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </child>
+                                            <property name="action-name">app.multiply_x</property>
+                                            <property name="margin-bottom">5</property>
+                                            <property name="margin-top">5</property>
+                                          </object>
+                                        </child>
+                                      </object>
+                                    </child>
+                                    <child>
+                                      <object class="AdwEntryRow" id="multiply_y_entry">
+                                        <property name="title">Multiply Y</property>
+                                        <property name="max-width-chars">6</property>
+                                        <child>
+                                          <object class="GtkButton" id="multiply_y_button">
+                                            <child>
+                                              <object class="GtkBox">
+                                                <property name="halign">center</property>
+                                                <child>
+                                                  <object class="GtkImage">
+                                                    <property name="icon-name">function-third-order</property>
+                                                    <property name="margin-end">6</property>
+                                                  </object>
+                                                </child>
+                                                <child>
+                                                  <object class="GtkLabel">
+                                                    <property name="halign">center</property>
+                                                    <property name="label">Multiply</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </child>
+                                            <property name="action-name">app.multiply_y</property>
+                                            <property name="margin-bottom">5</property>
+                                            <property name="margin-top">5</property>
+                                          </object>
+                                        </child>
+                                      </object>
+                                    </child>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="AdwExpanderRow">
+                                    <property name="title">Manipulate Data</property>
+                                    <child>
+                                      <object class="GtkGrid">
+                                        <child>
+                                          <object class="GtkButton" id="derivative_button">
+                                            <child>
+                                              <object class="GtkBox">
+                                                <property name="halign">center</property>
+                                                <child>
+                                                  <object class="GtkImage">
+                                                    <property name="icon-name">function-third-order</property>
+                                                    <property name="margin-end">6</property>
+                                                  </object>
+                                                </child>
+                                                <child>
+                                                  <object class="GtkLabel">
+                                                    <property name="label">Derivative</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </child>
+                                            <property name="tooltip-text">Get the derivative of the data</property>
+                                            <property name="action-name">app.get_derivative</property>
+                                            <property name="margin-bottom">5</property>
+                                            <property name="margin-top">5</property>
+                                            <property name="margin-start">5</property>
+                                            <property name="margin-end">5</property>
+                                            <property name="hexpand">True</property>
+                                            <layout>
+                                              <property name="column">0</property>
+                                              <property name="row">0</property>
+                                            </layout>
+                                          </object>
+                                        </child>
+                                        <child>
+                                          <object class="GtkButton" id="integral_button">
+                                            <child>
+                                              <object class="GtkBox">
+                                                <property name="halign">center</property>
+                                                <child>
+                                                  <object class="GtkImage">
+                                                    <property name="icon-name">function-third-order</property>
+                                                    <property name="margin-end">6</property>
+                                                  </object>
+                                                </child>
+                                                <child>
+                                                  <object class="GtkLabel">
+                                                    <property name="label">Integral</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </child>
+                                            <property name="tooltip-text">Get the indefinite integral of the data</property>
+                                            <property name="action-name">app.get_integral</property>
+                                            <property name="margin-bottom">5</property>
+                                            <property name="margin-top">5</property>
+                                            <property name="margin-start">5</property>
+                                            <property name="margin-end">5</property>
+                                            <property name="hexpand">True</property>
+                                            <layout>
+                                              <property name="column">1</property>
+                                              <property name="row">0</property>
+                                            </layout>
+                                          </object>
+                                        </child>
+                                        <child>
+                                          <object class="GtkButton" id="fourier_button">
+                                            <child>
+                                              <object class="GtkBox">
+                                                <property name="halign">center</property>
+                                                <child>
+                                                  <object class="GtkImage">
+                                                    <property name="icon-name">function-third-order</property>
+                                                    <property name="margin-end">6</property>
+                                                  </object>
+                                                </child>
+                                                <child>
+                                                  <object class="GtkLabel">
+                                                    <property name="label">FFT</property>
+                                                    <property name="margin-end">6</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </child>
+                                            <property name="tooltip-text">Get the Fast Fourier Transform of the data</property>
+                                            <property name="action-name">app.get_fourier</property>
+                                            <property name="margin-bottom">5</property>
+                                            <property name="margin-top">5</property>
+                                            <property name="margin-start">5</property>
+                                            <property name="margin-end">5</property>
+                                            <layout>
+                                              <property name="column">0</property>
+                                              <property name="row">1</property>
+                                            </layout>
+                                          </object>
+                                        </child>
+                                        <child>
+                                          <object class="GtkButton" id="inverse_fourier_button">
+                                            <child>
+                                              <object class="GtkBox">
+                                                <property name="halign">center</property>
+                                                <child>
+                                                  <object class="GtkImage">
+                                                    <property name="icon-name">function-third-order</property>
+                                                    <property name="margin-end">6</property>
+                                                  </object>
+                                                </child>
+                                                <child>
+                                                  <object class="GtkLabel">
+                                                    <property name="label">Inverse FFT</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </child>
+                                            <property name="tooltip-text">Get the Inverse Fast Fourier Transform of the data</property>
+                                            <property name="action-name">app.get_inverse_fourier</property>
+                                            <property name="margin-bottom">5</property>
+                                            <property name="margin-top">5</property>
+                                            <property name="margin-start">5</property>
+                                            <property name="margin-end">5</property>
+                                            <layout>
+                                              <property name="column">1</property>
+                                              <property name="row">1</property>
+                                            </layout>
+                                          </object>
+                                        </child>
+                                        <child>
+                                          <object class="GtkButton" id="transform_data_button">
+                                            <child>
+                                              <object class="GtkBox">
+                                                <property name="halign">center</property>
+                                                <child>
+                                                  <object class="GtkImage">
+                                                    <property name="icon-name">function-third-order</property>
+                                                    <property name="margin-end">6</property>
+                                                  </object>
+                                                </child>
+                                                <child>
+                                                  <object class="GtkLabel">
+                                                    <property name="halign">center</property>
+                                                    <property name="label">Transform</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </child>
+                                            <property name="tooltip-text">Perform custom transformations on the data</property>
+                                            <property name="action-name">app.transform_data</property>
+                                            <property name="margin-bottom">5</property>
+                                            <property name="margin-top">5</property>
+                                            <property name="margin-start">5</property>
+                                            <property name="margin-end">5</property>
+                                            <property name="hexpand">True</property>
+                                            <layout>
+                                              <property name="column">0</property>
+                                              <property name="row">2</property>
+                                              <property name="column-span">2</property>
+                                            </layout>
+                                          </object>
+                                        </child>
+                                      </object>
+                                    </child>
+                                  </object>
+                                </child>
+                              </object>
+                            </child>
+                          </object>
+                        </property>
+                      </object>
+                    </property>
                   </object>
                 </child>
-                <child>
-                  <object class="AdwEntryRow" id="X_stop_entry">
-                    <property name="visible">True</property>
-                    <property name="can-focus">True</property>
-                    <property name="title" translatable="yes">X Stop</property>
-                    <property name="use-underline">True</property>
-                    <property name="max-width-chars">25</property>
-                  </object>
-                </child>
-                <child>
-                  <object class="AdwEntryRow" id="step_size_entry">
-                    <property name="visible">True</property>
-                    <property name="can-focus">True</property>
-                    <property name="title" translatable="yes">Step Size</property>
-                    <property name="use-underline">True</property>
-                    <property name="max-width-chars">25</property>
-                  </object>
-                </child>
-                <child>
-                  <object class="GtkButton" id="add_equation_confirm_button">
-                    <property name="label">Confirm</property>
-                    <property name="margin-top">20</property>
-                    <property name="margin-bottom">10</property>
-                  </object>
-                </child>
+              </object>
+            </child>
+            <child type="separator">
+              <object class="GtkSeparator">
+                <property name="orientation">vertical</property>
+              </object>
+            </child>
+            <child type="content">
+              <object class="AdwToastOverlay" id="toast_overlay">
+                <property name="margin-top">5</property>
+                <property name="margin-bottom">5</property>
+                <property name="margin-start">5</property>
+                <property name="margin-end">5</property>
               </object>
             </child>
           </object>
@@ -95,4 +647,84 @@
       </object>
     </child>
   </template>
+  <menu id="add_data_menu">
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">_Add Data from File</attribute>
+        <attribute name="action">app.add_data</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">_Add Data from File (Advanced)</attribute>
+        <attribute name="action">app.add_data_advanced</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">_Add Data from Equation</attribute>
+        <attribute name="action">app.add_equation</attribute>
+      </item>
+    </section>
+  </menu>
+  <menu id="view_menu">
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">_Toggle Sidebar</attribute>
+        <attribute name="action">app.toggle_sidebar</attribute>
+      </item>
+    </section>
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">_Restore View</attribute>
+        <attribute name="action">app.restore_view</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">_Previous View</attribute>
+        <attribute name="action">app.view_back</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">_Next View</attribute>
+        <attribute name="action">app.view_forward</attribute>
+      </item>
+    </section>
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">_Logarithmic X Scale</attribute>
+        <attribute name="action">app.change_xscale</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">_Logarithmic Y Scale</attribute>
+        <attribute name="action">app.change_yscale</attribute>
+      </item>
+    </section>
+  </menu>
+  <menu id="primary_menu">
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">_Export Data</attribute>
+        <attribute name="action">app.save_data</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">_Export Figure</attribute>
+        <attribute name="action">app.export_data</attribute>
+      </item>
+    </section>
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">_Plot Settings</attribute>
+        <attribute name="action">app.plot_settings</attribute>
+      </item>
+    </section>
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">_Preferences</attribute>
+        <attribute name="action">app.preferences</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">_Keyboard Shortcuts</attribute>
+        <attribute name="action">win.show-help-overlay</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">_About Graphs</attribute>
+        <attribute name="action">app.about</attribute>
+      </item>
+    </section>
+  </menu>
 </interface>

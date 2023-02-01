@@ -38,7 +38,7 @@ def define_highlight(self, span=None):
 
 def toggle_highlight(shortcut, _, self):
     """
-    Toggle the SpanSelector. 
+    Toggle the SpanSelector.
     """
     if self.main_window.select_data_button.get_active():
         set_mode(self, "")
@@ -94,14 +94,14 @@ def set_canvas_limits_axis(self, canvas, limits = {"xmin":None, "xmax":None, "ym
             
 def set_canvas_limits(self, graph_limits, axis, limits = {"xmin":None, "xmax":None, "ymin":None, "ymax":None}):
     """
-    Set an calculate the canvas limits for a given axis. 
+    Set an calculate the canvas limits for a given axis.
     """
-    
+
     #Update graph limits with limits that were given as argument
     for key, item in limits.items():
         if item is not None:
             graph_limits[key] = item
-            
+
     x_span = (graph_limits["xmax"] - graph_limits["xmin"])
     y_span = (graph_limits["ymax"] - graph_limits["ymin"]) 
     if axis.get_xscale() == "linear":
@@ -134,7 +134,7 @@ def find_limits(self, axis, canvas, datadict):
     xmax_all = None
     ymin_all = None
     ymax_all = None
-    
+
     #Check which xaxis and yaxis are being used based on the axis given
     if axis == canvas.ax:
         xaxis = "bottom"
@@ -198,7 +198,7 @@ def reload_plot(self, from_dictionary = True):
 
 def refresh_plot(self, canvas = None, from_dictionary = True, set_limits = True):
     """
-    Refresh the graph without completely reloading it. 
+    Refresh the graph without completely reloading it.
     """
     if canvas == None:
         canvas = self.canvas
@@ -413,6 +413,7 @@ def set_mode(self, mode):
         cut_button.set_visible(True)
         highlight.set_visible(True)
         highlight.set_active(True)
+        self.dummy_toolbar.mode = "select/cut"
     self.canvas.draw()
 
 # https://github.com/matplotlib/matplotlib/blob/c23ccdde6f0f8c071b09a88770e24452f2859e99/lib/matplotlib/backends/backend_gtk4.py#L306
@@ -469,7 +470,7 @@ def on_save_response(dialog, response, self):
 
 class PlotSettings:
     """
-    The plot-related settings for the current session. The default values are 
+    The plot-related settings for the current session. The default values are
     retreived from the config file through preferences.
     """
     def __init__(self, parent):
@@ -505,7 +506,7 @@ class PlotSettings:
         
 class PlotWidget(FigureCanvas):
     """
-    Create the widget that contains the graph itself 
+    Create the widget that contains the graph itself
     """
     def __init__(self, parent=None, xlabel="", ylabel="", yscale = "log", title="", scale="linear", style = "seaborn-whitegrid"):
         self.figure = Figure()
@@ -520,9 +521,9 @@ class PlotWidget(FigureCanvas):
         self.right_axis = self.ax.twinx()
         self.top_left_axis = self.ax.twiny()
         self.top_right_axis = self.top_left_axis.twinx()
-        
+
         #Set the coordinates in the bottom-right corner as an empty string
-        #These only work for the top-right axis anyway, so is broken in 95% of 
+        #These only work for the top-right axis anyway, so is broken in 95% of
         #the cases, and makes the experience very bad for small window sizes.
         #This feature should be implemented differently perhaps.
         self.top_right_axis.format_coord = lambda x, y: ""
@@ -542,7 +543,7 @@ class PlotWidget(FigureCanvas):
 
     def set_ax_properties(self, parent):
         """
-        Set the properties that are related to the axes. 
+        Set the properties that are related to the axes.
         """
         self.title = self.ax.set_title(parent.plot_settings.title)
         self.bottom_label = self.ax.set_xlabel(parent.plot_settings.xlabel, fontweight = parent.plot_settings.font_weight)
@@ -558,7 +559,7 @@ class PlotWidget(FigureCanvas):
 
     def set_ticks(self, parent):
         """
-        Set the ticks that are to be used in the graph. 
+        Set the ticks that are to be used in the graph.
         """
         for axis in [self.top_right_axis, self.top_left_axis, self.ax, self.right_axis]:
             axis.tick_params(direction=parent.plot_settings.tick_direction, length=parent.plot_settings.major_tick_length, width=parent.plot_settings.major_tick_width, which="major")
@@ -586,7 +587,7 @@ class PlotWidget(FigureCanvas):
 
     def set_style(self, parent):
         """
-        Set the plot style. 
+        Set the plot style.
         """
         plt.rcParams.update(plt.rcParamsDefault)
         if Adw.StyleManager.get_default().get_dark():
@@ -619,7 +620,7 @@ class PlotWidget(FigureCanvas):
 
     def set_color_cycle(self, parent):
         """
-        Set the color cycle that will be used for the graphs. 
+        Set the color cycle that will be used for the graphs.
         """
         cmap = parent.preferences.config["plot_color_cycle"]
         reverse_dark = parent.preferences.config["plot_invert_color_cycle_dark"]
@@ -630,11 +631,11 @@ class PlotWidget(FigureCanvas):
 
     def __call__(self, event):
         """
-        The function is called when a user clicks on it. 
+        The function is called when a user clicks on it.
         If two clicks are performed close to each other, it registers as a double
         click, and if these were on a specific item (e.g. the title) it triggers
         a dialog to edit this item.
-        
+
         Unfortunately the GTK Doubleclick signal doesn't work with matplotlib
         hence this custom function.
         """
