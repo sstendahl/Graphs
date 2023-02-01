@@ -37,19 +37,19 @@
                 <property name="margin-top">20</property>
                 <property name="margin-bottom">20</property>
                 <child>
-                  <object class="AdwEntryRow" id="name_entry">
+                  <object class="AdwEntryRow" id="equation_entry">
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
-                    <property name="title" translatable="yes">Name (blank to use equation)</property>
+                    <property name="title" translatable="yes">Y =</property>
                     <property name="use-underline">True</property>
                     <property name="max-width-chars">25</property>
                   </object>
                 </child>
                 <child>
-                  <object class="AdwEntryRow" id="equation_entry">
+                  <object class="AdwEntryRow" id="name_entry">
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
-                    <property name="title" translatable="yes">Y =</property>
+                    <property name="title" translatable="yes">Name (blank to use equation)</property>
                     <property name="use-underline">True</property>
                     <property name="max-width-chars">25</property>
                   </object>
@@ -96,4 +96,5 @@
     </child>
   </template>
 </interface>
+
 
