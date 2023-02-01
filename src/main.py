@@ -55,7 +55,7 @@ class GraphsApplication(Adw.Application):
         self.create_action('select_none', graphs.select_none, ['<primary><shift>A'], self)
         self.create_action('transform_data', transform_data.open_transform_window, None, self)
         self.create_action('add_equation', add_equation.open_add_equation_window, ['<primary>E'], self)
-        self.create_action('select_data_toggle', plotting_tools.toggle_highlight, None, self)
+        self.create_action('select_data_toggle', plotting_tools.select, None, self)
         self.create_action('get_derivative', item_operations.get_derivative, None, self)
         self.create_action('get_integral', item_operations.get_integral, None, self)
         self.create_action('get_fourier', item_operations.get_fourier, None, self)
