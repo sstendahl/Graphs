@@ -20,12 +20,13 @@ class GraphsApplication(Adw.Application):
     def __init__(self):
         super().__init__(application_id='se.sjoerd.Graphs',
                          flags=Gio.ApplicationFlags.FLAGS_NONE)
+        self.datadict = {}        
         self.filename = ""
-        self.datadict = {}
+        self.highlight = None
+        self.highlights = []        
         self.item_rows = {}
         self.sample_menu = {}
-        self.highlight = None
-        self.highlights = []
+        self._mode = "none"
         self.connect_actions()
         
     def load_preferences(self):
@@ -141,4 +142,5 @@ def main(version):
     app.version = version
 
     return app.run(sys.argv)
+
 
