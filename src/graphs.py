@@ -129,11 +129,11 @@ def get_data(self, path, import_settings):
                     if import_settings["guess_headers"]:
                         headers = re.split("\s{2,}", line)
                         self.plot_settings.xlabel = headers[import_settings["column_x"]]
-                        self.plot_settings.ylabel = headers[import_settings["column_y"]]                  
+                        self.plot_settings.ylabel = headers[import_settings["column_y"]]
     data.xdata = data_array[0]
     data.ydata = data_array[1]
-    data.xdata_clipboard = [data.xdata]
-    data.ydata_clipboard = [data.ydata]
+    data.xdata_clipboard = [data.xdata.copy()]
+    data.ydata_clipboard = [data.ydata.copy()]
     data.clipboard_pos = -1
     data = set_data_properties(self, path, data, import_settings)
     return data
@@ -165,8 +165,8 @@ def delete_selected(shortcut, _,  self):
     selected_keys = utilities.get_selected_keys(self)
     for key in selected_keys:
         delete(None, self, key)
-        
-        
+
+
 def delete(widget,  self, id, give_toast = True):
     layout = self.list_box
     for key, item in self.sample_menu.items():
@@ -177,7 +177,7 @@ def delete(widget,  self, id, give_toast = True):
     del self.datadict[id]
     if give_toast:
         self.props.active_window.toast_overlay.add_toast(Adw.Toast(title=f"Deleted {filename}"))
-    
+
     if len(self.datadict) == 0:
         self.canvas.ax.legend().remove()
         self.canvas.ax.set_prop_cycle(None)
@@ -192,14 +192,14 @@ def delete(widget,  self, id, give_toast = True):
 
 def select_all(widget, _, self):
     for key, item in self.item_rows.items():
-        item.check_button.set_active(True) 
+        item.check_button.set_active(True)
     plotting_tools.refresh_plot(self)
     enable_data_dependent_buttons(self, utilities.get_selected_keys(self))
 
 
 def select_none(widget, _, self):
     for key, item in self.item_rows.items():
-        item.check_button.set_active(False) 
+        item.check_button.set_active(False)
     plotting_tools.refresh_plot(self)
     enable_data_dependent_buttons(self, False)
 
@@ -223,11 +223,11 @@ def add_sample_to_menu(self, filename, color, id, select_item = False):
     self.list_box.append(row)
     self.item_rows[id] = row
     self.sample_menu[id] = self.list_box.get_last_child()
-    
+
 def toggle_data(widget,  self, id):
     plotting_tools.refresh_plot(self)
     enable_data_dependent_buttons(self, utilities.get_selected_keys(self))
-    
+
 def save_file_dialog(self, documenttype="Text file (*.txt)"):
     def save_file_chooser(action):
         dialog = Gtk.FileChooserNative.new(
@@ -242,7 +242,7 @@ def save_file_dialog(self, documenttype="Text file (*.txt)"):
         chooser = save_file_chooser(Gtk.FileChooserAction.SAVE)
     elif len(self.datadict) > 1:
         chooser = save_file_chooser(Gtk.FileChooserAction.SELECT_FOLDER)
-        
+
     if len(self.datadict) == 1:
         filename = list(self.datadict.values())[0].filename
         chooser.set_current_name(f"{filename}.txt")
