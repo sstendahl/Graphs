@@ -78,7 +78,7 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
         if set(filenames) != set(self.get_chooser_list(self.datalist_chooser)):
             utilities.populate_chooser(self.datalist_chooser, filenames)
         self.datalist_chooser.set_selected(index)
-        self.load_config(parent)
+        self.load_config(parent, id = None)
         self.chooser_changed = False
 
     def load_config(self, parent, id):
@@ -193,7 +193,7 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
     def save_settings(self, parent):
         item = self.item
         new_item = self.set_config(item, parent)
-        max_length = int(28)
+        max_length = int(26)
         if len(new_item.filename) > max_length:
             label = f"{new_item.filename[:max_length]}..."
         else:

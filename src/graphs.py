@@ -209,7 +209,7 @@ def add_sample_to_menu(self, filename, color, id, select_item = False):
     win = self.props.active_window
     self.list_box = win.list_box
     row = samplerow.SampleBox(self, filename, id)
-    row.gesture.connect("pressed", row.clicked, self)
+    row.gesture.connect("released", row.clicked, self)
     row.color_picker = colorpicker.ColorPicker(color, row=row, parent=self)
     row.color_picker.set_hexpand(False)
     label = row.sample_ID_label

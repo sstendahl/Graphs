@@ -21,6 +21,7 @@ class SampleBox(Gtk.Box):
         self.one_click_trigger = False
         self.time_first_click  = 0        
         self.gesture = Gtk.GestureClick()
+        self.gesture.set_button(0)
         self.add_controller(self.gesture)
 
     def rgba_to_tuple(rgba):
@@ -41,5 +42,4 @@ class SampleBox(Gtk.Box):
                 self.time_first_click = 0 
                 double_click = True
                 plot_settings.open_plot_settings(None, None, graphs, self.id)
-                print("You double clicked")
-        pass
+                
