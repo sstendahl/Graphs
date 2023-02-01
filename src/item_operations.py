@@ -91,6 +91,7 @@ def delete_selected_data(self):
             key_list.append(key)
     for key in key_list:
         del (self.datadict[key])
+        
 
 def pick_data_selection(self, item, startx, stopx):
     """
@@ -196,8 +197,15 @@ def select_data(self):
             xrange_top = max(self.canvas.top_left_axis.get_xlim()) - min(self.canvas.top_left_axis.get_xlim())
             startx = ((startx - min(self.canvas.top_left_axis.get_xlim())) / xrange_top) * xrange_bottom + min(self.canvas.ax.get_xlim())
             stopx = ((stopx - min(self.canvas.top_left_axis.get_xlim())) / xrange_top) * xrange_bottom + min(self.canvas.ax.get_xlim())
+            print(startx)
+            print(stopx)
+            if self.canvas.ax.get_xscale() == "log":
+                startx = get_value_at_percentage(min(highlight.extents)*100, min(self.canvas.ax.get_xlim()), max(self.canvas.ax.get_xlim()))
+                stopx = get_value_at_percentage(max(highlight.extents)*100, min(self.canvas.ax.get_xlim()), max(self.canvas.ax.get_xlim()))
+                print(startx)
+                print(stopx)
         
-        #Select data
+        #If startx and stopx are not out of range, that is, if the sample data is within the highlight
         if not ((startx < min(item.xdata) and stopx < min(item.xdata)) or (startx > max(item.xdata))):
             selected_data = pick_data_selection(self, item, startx, stopx)
             selected_dict[f"{key}_selected"] = selected_data
@@ -208,6 +216,13 @@ def select_data(self):
         if len(selected_dict) > 0:
             self.datadict.update(selected_dict)
     return True
+
+def get_value_at_percentage(percentage, start, end):
+    log_start = np.log10(start)
+    log_end = np.log10(end)
+    log_range = log_end - log_start
+    log_value = log_start + log_range * percentage / 100
+    return pow(10, log_value)
 
 def get_derivative(widget, shortcut, self):
     """
