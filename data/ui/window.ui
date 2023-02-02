@@ -61,10 +61,11 @@
               <object class="GtkBox">
                 <property name="spacing">5</property>
                 <child>
-                  <object class="GtkMenuButton" id="view_menu_button">
-                    <property name="always-show-arrow">true</property>
+                  <object class="AdwSplitButton" id="view_menu_button">
+                    <property name="action-name">app.restore_view</property>
                     <property name="menu-model">view_menu</property>
                     <property name="icon-name">view-reveal-symbolic</property>
+                    <property name="tooltip-text">Restore View / View Options</property>
                   </object>
                 </child>
                 <child>
