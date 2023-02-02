@@ -94,7 +94,7 @@ class GraphsApplication(Adw.Application):
         win.maximize()
         win.present()
 
-    def on_about_action(self, widget, shortcutself):
+    def on_about_action(self, widget, shortcut):
         """Callback for the app.about action."""
         about = Adw.AboutWindow(transient_for=self.props.active_window,
                                 application_name='Graphs',
