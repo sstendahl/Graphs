@@ -7,7 +7,7 @@ from matplotlib import colors
 from matplotlib.backends.backend_gtk4agg import (
     FigureCanvasGTK4Agg as FigureCanvas)
 from matplotlib.backend_bases import _Mode
-from . import graphs, utilities, rename_label, toolbar
+from . import graphs, utilities, rename_label
 from matplotlib.widgets import SpanSelector
 from cycler import cycler
 import matplotlib.font_manager

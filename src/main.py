@@ -13,7 +13,7 @@ from gi.repository import Gtk, Gio, Gdk, Adw
 from .window import GraphsWindow
 import matplotlib.pyplot as plt
 from matplotlib.backend_bases import _Mode
-from . import graphs, plotting_tools, item_operations, transform_data, preferences, add_equation, add_data_advanced, plot_settings, toolbar
+from . import graphs, plotting_tools, item_operations, transform_data, preferences, add_equation, add_data_advanced, plot_settings
 from .utilities import InteractionMode
 
 class GraphsApplication(Adw.Application):
