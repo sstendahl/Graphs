@@ -1,5 +1,6 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 from gi.repository import Gdk
+from enum import Enum
 
 def set_chooser(chooser, choice):
     model = chooser.get_model()
@@ -73,4 +74,10 @@ def create_rgba(r, g, b, a=1):
     res.blue = b
     res.alpha = a
     return res
+
+class InteractionMode(Enum):
+    NONE = 1
+    PAN = 2
+    ZOOM = 3
+    SELECT = 4
 

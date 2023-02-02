@@ -5,6 +5,10 @@ from gi.repository import Adw, Gio, Gtk
 class GraphsWindow(Adw.ApplicationWindow):
     __gtype_name__ = 'GraphsWindow'
     selection_box = Gtk.Template.Child()
+    none_button = Gtk.Template.Child()
+    pan_button = Gtk.Template.Child()
+    zoom_button = Gtk.Template.Child()
+    select_button = Gtk.Template.Child()
     undo_button = Gtk.Template.Child()
     redo_button = Gtk.Template.Child()
     translate_x_entry = Gtk.Template.Child()
@@ -22,12 +26,9 @@ class GraphsWindow(Adw.ApplicationWindow):
     normalize_button = Gtk.Template.Child()
     center_data_button = Gtk.Template.Child()
     shift_vertically_button = Gtk.Template.Child()
-    select_data_button = Gtk.Template.Child()
     toast_overlay = Gtk.Template.Child()
     list_box = Gtk.Template.Child()
     sidebar_flap = Gtk.Template.Child()
-    pan_button = Gtk.Template.Child()
-    zoom_button = Gtk.Template.Child()
     derivative_button = Gtk.Template.Child()
     integral_button = Gtk.Template.Child()
     transform_data_button = Gtk.Template.Child()
