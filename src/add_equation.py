@@ -35,15 +35,15 @@ def on_accept(widget, self, window):
                     window.toast_overlay.add_toast(Adw.Toast(title="Item with this name already exists"))
                     return
                 elif handle_duplicates == "Override existing items":
-                    new_file.xdata_clipboard = [new_file.xdata]
-                    new_file.ydata_clipboard = [new_file.ydata]
+                    new_file.xdata_clipboard = [new_file.xdata.copy()]
+                    new_file.ydata_clipboard = [new_file.ydata.copy()]
                     new_file.clipboard_pos = -1
                     self.datadict[key] = new_file
                     plotting_tools.refresh_plot(self)
                     window.destroy()
                     return
-        new_file.xdata_clipboard = [new_file.xdata]
-        new_file.ydata_clipboard = [new_file.ydata]
+        new_file.xdata_clipboard = [new_file.xdata.copy()]
+        new_file.ydata_clipboard = [new_file.ydata.copy()]
         new_file.clipboard_pos = -1
         color = plotting_tools.get_next_color(self)
         self.datadict[new_file.id] = new_file
