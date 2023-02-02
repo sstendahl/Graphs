@@ -91,7 +91,7 @@ def delete_selected_data(self):
             key_list.append(key)
     for key in key_list:
         del (self.datadict[key])
-        
+
 
 def pick_data_selection(self, item, startx, stopx):
     """
@@ -196,7 +196,7 @@ def select_data(self):
         if item.plot_X_position == "bottom":
             xrange_bottom = max(self.canvas.ax.get_xlim()) - min(self.canvas.ax.get_xlim())
             xrange_top = max(self.canvas.top_left_axis.get_xlim()) - min(self.canvas.top_left_axis.get_xlim())
-            #Run into issues if the range is different, so we calculate this by 
+            #Run into issues if the range is different, so we calculate this by
             #getting what fraction of top axis is highlighted
             if self.canvas.top_left_axis.get_xscale() == "log":
                 fraction_left_limit = get_fraction_at_value(min(highlight.extents), min(self.canvas.top_left_axis.get_xlim()), max(self.canvas.top_left_axis.get_xlim()))
@@ -211,7 +211,7 @@ def select_data(self):
                 startx = get_value_at_fraction(fraction_left_limit, min(self.canvas.ax.get_xlim()), max(self.canvas.ax.get_xlim()))
                 stopx = get_value_at_fraction(fraction_right_limit, min(self.canvas.ax.get_xlim()), max(self.canvas.ax.get_xlim()))
             elif self.canvas.ax.get_xscale() == "linear":
-                startx = min(self.canvas.ax.get_xlim()) + xrange_bottom * fraction_left_limit 
+                startx = min(self.canvas.ax.get_xlim()) + xrange_bottom * fraction_left_limit
                 stopx = min(self.canvas.ax.get_xlim()) + xrange_bottom * fraction_right_limit
 
         #If startx and stopx are not out of range, that is, if the sample data is within the highlight
@@ -238,7 +238,7 @@ def get_value_at_fraction(fraction, start, end):
     log_range = log_end - log_start
     log_value = log_start + log_range * fraction
     return pow(10, log_value)
-    
+
 def get_fraction_at_value(value, start, end):
     """
     Obtain the fraction of the total length of the selected axis a specific
@@ -381,32 +381,48 @@ def shift_vertically(shortcut, _, self):
     By default it scales linear data by 1.5 times the total span of the 
     ydata, and log data by a factor of 10000.
     """
-    shifter = 1
-    shift_value_log = 0
+    selected_keys = utilities.get_selected_keys(self)
+    shift_value_log = 1
     shift_value_linear = 0
+    if self._mode == "select/cut":
+        selection, start_stop = select_data(self)
         
-    for key, item in self.datadict.items():
-        item.ydata = normalize(item.ydata)
-        ymin = min(x for x in item.ydata if x != 0)
-        ymax = max(x for x in item.ydata if x != 0)
-        shift_value_linear += 1.5*(ymax - ymin)
-        shift_value_log += 5*10**(np.log10(ymax/ymin))
-        #Check which axes the data is on, so it can choose the appropriate
-        #scaling (log/linear)
-        if item.plot_Y_position == "left":
-            if self.plot_settings.yscale == "log":
-                item.ydata = [value * shifter for value in item.ydata]
-            if self.plot_settings.yscale == "linear":
-                item.ydata = [value + shift_value_linear for value in item.ydata]
-        if item.plot_Y_position == "right":
-            if self.plot_settings.right_scale == "log":
-                item.ydata = [value * shifter for value in item.ydata]
-            if self.plot_settings.right_scale == "linear":
-                item.ydata = [value + shift_value_linear for value in item.ydata]
-                
-        shifter *= shift_value_log
+    for key in selected_keys:
+        if f"{key}_selected" in self.datadict:
+            #Define the highlighted area
+            selected_item = self.datadict[f"{key}_selected"]
+            ymin = min(x for x in selected_item.ydata if x != 0)
+            ymax = max(x for x in selected_item.ydata if x != 0)
+            shift_value_linear += 1.2*(ymax - ymin)
+            shift_value_log *= 10**(np.log10(ymax/ymin))
+            shift_item(self, selected_item, shift_value_log, shift_value_linear)
+            start_index, stop_index = start_stop[key][0], start_stop[key][1]
+            self.datadict[key].ydata[start_index:stop_index] = selected_item.ydata
+        if self._mode != "select/cut":
+            item = self.datadict[key]
+            ymin = min(x for x in item.ydata if x != 0)
+            ymax = max(x for x in item.ydata if x != 0)
+            shift_value_linear += 1.2*(ymax - ymin)
+            shift_value_log *= 10**(np.log10(ymax/ymin))
+            shift_item(self, item, shift_value_log, shift_value_linear)
+
+    delete_selected_data(self)
     add_to_clipboard(self)
     plotting_tools.refresh_plot(self)
+
+def shift_item(self, item, shift_value_log, shift_value_linear):
+    #Check which axes the data is on, so it can choose the appropriate
+    #scaling (log/linear)
+    if item.plot_Y_position == "left":
+        if self.plot_settings.yscale == "log":
+            item.ydata = [value * shift_value_log for value in item.ydata]
+        if self.plot_settings.yscale == "linear":
+            item.ydata = [value + shift_value_linear for value in item.ydata]
+    if item.plot_Y_position == "right":
+        if self.plot_settings.right_scale == "log":
+            item.ydata = [value * shift_value_log for value in item.ydata]
+        if self.plot_settings.right_scale == "linear":
+            item.ydata = [value + shift_value_linear for value in item.ydata]
 
 def translate_x(shortcut, _, self):
     """
@@ -482,7 +498,7 @@ def translate_y(shortcut, _, self):
 def multiply_x(shortcut, _, self):
     """
     Multiply all selected data on the x-axis
-    Amount to be shifted is equal to the value in the multiply_y entry widget
+    Amount to be shifted is equal to the value in the multiply_x entry widget
     Will show a toast if a ValueError is raised, typically when a user entered
     an invalid number (e.g. comma instead of point separators)
     """
@@ -634,3 +650,4 @@ def center_data_middle(xdata):
     middle_value = (min(xdata) + max(xdata)) / 2
     xdata = [coordinate - middle_value for coordinate in xdata]
     return xdata
+
