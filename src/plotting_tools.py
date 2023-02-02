@@ -7,7 +7,7 @@ from matplotlib import colors
 from matplotlib.backends.backend_gtk4agg import (
     FigureCanvasGTK4Agg as FigureCanvas)
 from matplotlib.backend_bases import _Mode
-from . import graphs, utilities, rename_label, toolbar
+from . import graphs, utilities, rename_label
 from matplotlib.widgets import SpanSelector
 from cycler import cycler
 import matplotlib.font_manager
@@ -31,16 +31,6 @@ def define_highlight(self, span=None):
         drag_from_anywhere=True)
     if span is not None:
         self.highlight.extents = span
-
-def select(shortcut, _, self):
-    """
-    Toggle the SpanSelector.
-    """
-    if self.main_window.select_data_button.get_active():
-        set_mode(self, "none")
-    else:
-        set_mode(self, "select/cut")
-
 
 def plot_figure(self, canvas, X, Y, filename="", xlim=None, linewidth = 2, title="", scale="log",marker=None, linestyle="solid",
                      revert = False, color = None, marker_size = 10, y_axis = "left", x_axis = "bottom"):
@@ -390,6 +380,14 @@ def restore_view(widget, shortcut, self):
     set_canvas_limits_axis(self, self.canvas)
     self.canvas.draw()
 
+def view_back(widget, shortcut, self):
+    self.dummy_toolbar._nav_stack.back()
+    self.dummy_toolbar._update_view()
+
+def view_forward(widget, shortcut, self):
+    self.dummy_toolbar._nav_stack.forward()
+    self.dummy_toolbar._update_view()
+
 def get_next_color(self):
     """
     Get the color that is to be used for the next data set
@@ -419,54 +417,6 @@ def load_fonts(self):
         except:
             print(f"Could not load {font}")
             
-def set_mode(self, mode):
-    """
-    Set the current UI interaction mode (pan, zoom or select/cut)
-    """
-    win = self.main_window
-    pan_button = win.pan_button
-    zoom_button = win.zoom_button
-    select_button = win.select_data_button
-    cut_button = win.cut_data_button
-    if self.highlight == None:
-        define_highlight(self)
-    highlight = self.highlight
-    if(mode == "none"):
-        self.dummy_toolbar.mode = _Mode.NONE
-        pan_button.set_active(False)
-        zoom_button.set_active(False)
-        select_button.set_active(False)
-        cut_button.set_visible(False)
-        highlight.set_visible(False)
-        highlight.set_active(False)
-    elif(mode == "pan"):
-        self.dummy_toolbar.mode = _Mode.PAN
-        pan_button.set_active(True)
-        zoom_button.set_active(False)
-        select_button.set_active(False)
-        cut_button.set_visible(False)
-        highlight.set_visible(False)
-        highlight.set_active(False)
-    elif(mode == "zoom"):
-        self.dummy_toolbar.mode = _Mode.ZOOM
-        pan_button.set_active(False)
-        zoom_button.set_active(True)
-        select_button.set_active(False)
-        cut_button.set_visible(False)
-        highlight.set_visible(False)
-        highlight.set_active(False)
-    elif(mode == "select/cut"):
-        self.dummy_toolbar.mode = _Mode.NONE
-        pan_button.set_active(False)
-        zoom_button.set_active(False)
-        select_button.set_active(True)
-        cut_button.set_visible(True)
-        highlight.set_visible(True)
-        highlight.set_active(True)
-    for axis in self.canvas.figure.get_axes():
-            axis.set_navigate_mode(self.dummy_toolbar.mode._navigate_mode)
-    self._mode = mode
-    self.canvas.draw()
 
 # https://github.com/matplotlib/matplotlib/blob/c23ccdde6f0f8c071b09a88770e24452f2859e99/lib/matplotlib/backends/backend_gtk4.py#L306
 def export_data(widget, shortcut, self):

@@ -29,7 +29,6 @@ graphs_sources = [
   'preferences.py',
   'rename_label.py',
   'samplerow.py',
-  'toolbar.py',
   'transform_data.py',
   'utilities.py',
   'window.py',

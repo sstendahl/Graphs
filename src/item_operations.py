@@ -7,6 +7,7 @@ from .plotting_tools import PlotWidget
 from . import plotting_tools, graphs, utilities
 from scipy import integrate
 from .data import Data
+from .utilities import InteractionMode
 from matplotlib.backends.backend_gtk4 import (
     NavigationToolbar2GTK4 as NavigationToolbar)
 
@@ -144,9 +145,7 @@ def cut_data(widget, _, self):
     """
     Cut selected data over the span that is selected
     """
-    win = self.props.active_window
-    button = win.select_data_button
-    if button.get_active():
+    if self._mode == InteractionMode.SELECT:
         if select_data(self): #If select_data ran succesfully
             for key, item in self.datadict.items():
                 xdata = item.xdata
@@ -254,13 +253,13 @@ def get_derivative(widget, shortcut, self):
     """
     Calculate derivative of all selected data
     """
-    if self._mode == "select/cut":
+    if self._mode == InteractionMode.SELECT:
         selection, start_stop = select_data(self)
     selected_keys = utilities.get_selected_keys(self)
     for key in selected_keys:
         if f"{key}_selected" in self.datadict:
             item = self.datadict[f"{key}_selected"]
-        if self._mode != "select/cut":
+        if self._mode != InteractionMode.SELECT:
             item = self.datadict[key]
         x = np.array(item.xdata)
         y = np.array(item.ydata)
@@ -275,13 +274,13 @@ def get_integral(widget, shortcut, self):
     """
     Calculate indefinite integral of all selected data
     """
-    if self._mode == "select/cut":
+    if self._mode == InteractionMode.SELECT:
         selection, start_stop = select_data(self)
     selected_keys = utilities.get_selected_keys(self)
     for key in selected_keys:
         if f"{key}_selected" in self.datadict:
             item = self.datadict[f"{key}_selected"]
-        if self._mode != "select/cut":
+        if self._mode != InteractionMode.SELECT:
             item = self.datadict[key]
         x = np.array(item.xdata)
         y = np.array(item.ydata)
@@ -297,13 +296,13 @@ def get_inverse_fourier(widget, shortcut, self):
     """
     Perform Inverse Fourier transformation on all selected data
     """
-    if self._mode == "select/cut":
+    if self._mode == InteractionMode.SELECT:
         selection, start_stop = select_data(self)
     selected_keys = utilities.get_selected_keys(self)
     for key in selected_keys:
         if f"{key}_selected" in self.datadict:
             item = self.datadict[f"{key}_selected"]
-        if self._mode != "select/cut":
+        if self._mode != InteractionMode.SELECT:
             item = self.datadict[key]
         x = np.array(item.xdata)
         y = np.array(item.ydata)
@@ -321,13 +320,13 @@ def get_fourier(widget, shortcut, self):
     """
     Perform Fourier transformation on all selected data
     """
-    if self._mode == "select/cut":
+    if self._mode == InteractionMode.SELECT:
         selection, start_stop = select_data(self)
     selected_keys = utilities.get_selected_keys(self)
     for key in selected_keys:
         if f"{key}_selected" in self.datadict:
             item = self.datadict[f"{key}_selected"]
-        if self._mode != "select/cut":
+        if self._mode != InteractionMode.SELECT:
             item = self.datadict[key]
         x = np.array(item.xdata)
         y = np.array(item.ydata)
@@ -347,7 +346,7 @@ def smoothen_data(widget, shortcut, self):
     Smoothen y-data.
     """
     selected_keys = utilities.get_selected_keys(self)
-    if self._mode == "select/cut":
+    if self._mode == InteractionMode.SELECT:
         selection, start_stop = select_data(self)
     for key in selected_keys:
         if f"{key}_selected" in self.datadict:
@@ -358,7 +357,7 @@ def smoothen_data(widget, shortcut, self):
             start_index, stop_index = start_stop[key][0], start_stop[key][1]
             #Replace the highlighted part in the original data set
             self.datadict[key].ydata[start_index:stop_index] = selected_item.ydata
-        if self._mode != "select/cut":
+        if self._mode != InteractionMode.SELECT:
             ydata = self.datadict[key].ydata
             ydata = smooth(ydata, 4)
             self.datadict[key].ydata = ydata
@@ -384,7 +383,7 @@ def shift_vertically(shortcut, _, self):
     selected_keys = utilities.get_selected_keys(self)
     shift_value_log = 1
     shift_value_linear = 0
-    if self._mode == "select/cut":
+    if self._mode == InteractionMode.SELECT:
         selection, start_stop = select_data(self)
         
     for key in selected_keys:
@@ -398,7 +397,7 @@ def shift_vertically(shortcut, _, self):
             shift_item(self, selected_item, shift_value_log, shift_value_linear)
             start_index, stop_index = start_stop[key][0], start_stop[key][1]
             self.datadict[key].ydata[start_index:stop_index] = selected_item.ydata
-        if self._mode != "select/cut":
+        if self._mode != InteractionMode.SELECT:
             item = self.datadict[key]
             ymin = min(x for x in item.ydata if x != 0)
             ymax = max(x for x in item.ydata if x != 0)
@@ -439,7 +438,7 @@ def translate_x(shortcut, _, self):
         print(f"{e}: Unable to do translation, make sure to enter a valid number")
         win.toast_overlay.add_toast(Adw.Toast(title=f"{exception_type}: Unable to do translation, make sure to enter a valid number"))
         offset = 0
-    if self._mode == "select/cut":
+    if self._mode == InteractionMode.SELECT:
         selection, start_stop = select_data(self)
     selected_keys = utilities.get_selected_keys(self)
     for key in selected_keys:
@@ -451,7 +450,7 @@ def translate_x(shortcut, _, self):
             start_index, stop_index = start_stop[key][0], start_stop[key][1]
             #Replace the highlighted part in the original data set
             self.datadict[key].xdata[start_index:stop_index] = selected_item.xdata
-        if self._mode != "select/cut":
+        if self._mode != InteractionMode.SELECT:
             self.datadict[key].xdata = [value + offset for value in self.datadict[key].xdata]
         self.datadict[key].xdata, self.datadict[key].ydata = sort_data(self.datadict[key].xdata, self.datadict[key].ydata)
     add_to_clipboard(self)
@@ -477,7 +476,7 @@ def translate_y(shortcut, _, self):
     selected_keys = utilities.get_selected_keys(self)
 
     # If we are in selection mode, then select the highlighted data
-    if self._mode == "select/cut":
+    if self._mode == InteractionMode.SELECT:
         selection, start_stop = select_data(self)
     for key in selected_keys:
         #If the selected data exists, so this will get ignored when we're not in selection mode
@@ -490,7 +489,7 @@ def translate_y(shortcut, _, self):
             start_index, stop_index = start_stop[key][0], start_stop[key][1]
             #Replace the highlighted part in the original data set
             self.datadict[key].ydata[start_index:stop_index] = selected_item.ydata
-        if self._mode != "select/cut":
+        if self._mode != InteractionMode.SELECT:
             self.datadict[key].ydata = [value + offset for value in self.datadict[key].ydata]
     add_to_clipboard(self)
     #Throw away the selected/highlighted datasets
@@ -513,7 +512,7 @@ def multiply_x(shortcut, _, self):
         win.toast_overlay.add_toast(Adw.Toast(title=f"{exception_type}: Unable to do multiplication, make sure to enter a valid number"))
         multiplier = 1
     selected_keys = utilities.get_selected_keys(self)
-    if self._mode == "select/cut":
+    if self._mode == InteractionMode.SELECT:
         selection, start_stop = select_data(self)
     for key in selected_keys:
         #If the selected data exists, so this will get ignored when we're not in selection mode
@@ -525,7 +524,7 @@ def multiply_x(shortcut, _, self):
             start_index, stop_index = start_stop[key][0], start_stop[key][1]
             #Replace the highlighted part in the original data set
             self.datadict[key].xdata[start_index:stop_index] = selected_item.xdata
-        if self._mode != "select/cut":
+        if self._mode != InteractionMode.SELECT:
             self.datadict[key].xdata = [value * multiplier for value in self.datadict[key].xdata]
         self.datadict[key].xdata, self.datadict[key].ydata = sort_data(self.datadict[key].xdata, self.datadict[key].ydata)
     delete_selected_data(self)
@@ -548,7 +547,7 @@ def multiply_y(shortcut, _, self):
         win.toast_overlay.add_toast(Adw.Toast(title=f"{exception_type}: Unable to do multiplication, make sure to enter a valid number"))
         multiplier = 1
     selected_keys = utilities.get_selected_keys(self)
-    if self._mode == "select/cut":
+    if self._mode == InteractionMode.SELECT:
         selection, start_stop = select_data(self)
     for key in selected_keys:
         #If the selected data exists, so this will get ignored when we're not in selection mode
@@ -560,7 +559,7 @@ def multiply_y(shortcut, _, self):
             start_index, stop_index = start_stop[key][0], start_stop[key][1]
             #Replace the highlighted part in the original data set
             self.datadict[key].ydata[start_index:stop_index] = selected_item.ydata
-        if self._mode != "select/cut":
+        if self._mode != InteractionMode.SELECT:
             self.datadict[key].ydata = [value * multiplier for value in self.datadict[key].ydata]
     delete_selected_data(self)
     add_to_clipboard(self)
@@ -572,7 +571,7 @@ def normalize_data(shortcut, _, self):
     Normalize all selected data
     """
     selected_keys = utilities.get_selected_keys(self)
-    if self._mode == "select/cut":
+    if self._mode == InteractionMode.SELECT:
         selection, start_stop = select_data(self)
     for key in selected_keys:
         #If the selected data exists, so this will get ignored when we're not in selection mode
@@ -585,7 +584,7 @@ def normalize_data(shortcut, _, self):
             #Replace the highlighted part in the original data set
             self.datadict[key].ydata[start_index:stop_index] = selected_item.ydata
             self.datadict[key].xdata[start_index:stop_index] = selected_item.xdata
-        if self._mode != "select/cut":
+        if self._mode != InteractionMode.SELECT:
             self.datadict[key].ydata = normalize(self.datadict[key].ydata)
     delete_selected_data(self)
     add_to_clipboard(self)
@@ -607,7 +606,7 @@ def center_data(shortcut, _, self):
     the maximum value of the data
     """
     selected_keys = utilities.get_selected_keys(self)
-    if self._mode == "select/cut":
+    if self._mode == InteractionMode.SELECT:
         selection, start_stop = select_data(self)
     for key in selected_keys:
         #If the selected data exists, so this will get ignored when we're not in selection mode
@@ -623,7 +622,7 @@ def center_data(shortcut, _, self):
             #Replace the highlighted part in the original data set
             self.datadict[key].ydata[start_index:stop_index] = selected_item.ydata
             self.datadict[key].xdata[start_index:stop_index] = selected_item.xdata
-        if self._mode != "select/cut":
+        if self._mode != InteractionMode.SELECT:
             if self.preferences.config["action_center_data"] == "Center at maximum Y value":
                 self.datadict[key].xdata = center_data_max_Y(self.datadict[key].xdata, self.datadict[key].ydata)
             elif self.preferences.config["action_center_data"] == "Center at middle coordinate":
