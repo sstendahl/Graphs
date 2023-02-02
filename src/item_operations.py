@@ -336,7 +336,6 @@ def get_fourier(widget, shortcut, self):
         x_fourier, y_fourier = sort_data(x_fourier.tolist(), y_fourier)
         self.datadict[key].ydata =  y_fourier
         self.datadict[key].xdata = x_fourier
-        print("OK dan")
     delete_selected_data(self)
     add_to_clipboard(self)
     plotting_tools.refresh_plot(self)
@@ -455,7 +454,6 @@ def translate_x(shortcut, _, self):
         self.datadict[key].xdata, self.datadict[key].ydata = sort_data(self.datadict[key].xdata, self.datadict[key].ydata)
     add_to_clipboard(self)
     delete_selected_data(self)
-    print(self.canvas.top_left_axis.get_xlim())
     plotting_tools.refresh_plot(self)
 
 def translate_y(shortcut, _, self):
