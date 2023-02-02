@@ -30,8 +30,8 @@
             "buildsystem" : "meson",
             "sources" : [
                 {
-                    "type" : "git",
-                    "branch" : "main"
+                    "type" : "dir",
+                    "path" : "."
                 }
             ]
         }
