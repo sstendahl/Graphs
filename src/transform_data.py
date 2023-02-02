@@ -17,40 +17,63 @@ def open_transform_window(widget, _, self):
 def on_accept(widget, self, window):
     input_x = str(window.transform_x_entry.get_text())
     input_y = str(window.transform_y_entry.get_text())
-    try:
-        operation(self, input_x, input_y)
-    except:
-        win = self.props.active_window
-        win.toast_overlay.add_toast(Adw.Toast(title=f"Unable to perform transformation, make sure the syntax is correct"))
-    window.destroy()
-
-def operation(self, input_x, input_y):
     selected_keys = utilities.get_selected_keys(self)
+    if self._mode == "select/cut":
+        selection, start_stop = item_operations.select_data(self)
+
     for key in selected_keys:
-        x_array = []
-        y_array = []
-        Y_range = self.datadict[key].ydata
-        X_range = self.datadict[key].xdata
-        operations = []
-        for xy_operation in [input_x, input_y]:
-            xy_operation = xy_operation.replace("Y_range", "y_range")
-            xy_operation = xy_operation.replace("X_range", "x_range")
-            xy_operation = xy_operation.replace("Y", "self.datadict[key].ydata[index]")
-            xy_operation = xy_operation.replace("X", "self.datadict[key].xdata[index]")
-            xy_operation = xy_operation.replace("y_range", "Y_range")
-            xy_operation = xy_operation.replace("x_range", "X_range")
-            xy_operation = xy_operation.replace("^", "**")
-            operations.append(xy_operation)
-
-        x_operation, y_operation = operations[0], operations[1]
-        for index, value in enumerate(self.datadict[key].xdata):
-            x_array.append(eval(x_operation))
-            y_array.append(eval(y_operation))
-        self.datadict[key].xdata = x_array
-        self.datadict[key].ydata = y_array
-
+        if f"{key}_selected" in self.datadict:
+            selected_item = self.datadict[f"{key}_selected"]
+            start_index, stop_index = start_stop[key][0], start_stop[key][1]
+            xdata_in = self.datadict[key].xdata[start_index:stop_index]
+            ydata_in = self.datadict[key].ydata[start_index:stop_index]
+            try:
+                xdata_out, ydata_out = operation(key, xdata_in, ydata_in, input_x, input_y)
+            except Exception as e:
+                exception_type = e.__class__.__name__
+                win = self.props.active_window
+                win.toast_overlay.add_toast(Adw.Toast(title=f"{exception_type}: Unable to do transformation, make sure the syntax is correct"))
+                return
+            self.datadict[key].xdata[start_index:stop_index] = xdata_out
+            self.datadict[key].ydata[start_index:stop_index] = ydata_out
+        if self._mode != "select/cut":
+            xdata_in = self.datadict[key].xdata
+            ydata_in = self.datadict[key].ydata
+            try:
+                xdata_out, ydata_out = operation(key, xdata_in, ydata_in, input_x, input_y)
+            except Exception as e:
+                exception_type = e.__class__.__name__
+                win = self.props.active_window
+                win.toast_overlay.add_toast(Adw.Toast(title=f"{exception_type}: Unable to do transformation, make sure the syntax is correct"))
+                return
+            self.datadict[key].xdata = xdata_out
+            self.datadict[key].ydata = ydata_out
+        self.datadict[key].xdata, self.datadict[key].ydata = sort_data(self.datadict[key].xdata, self.datadict[key].ydata)
+    item_operations.delete_selected_data(self)
     item_operations.add_to_clipboard(self)
     plotting_tools.refresh_plot(self)
+    window.destroy()
+
+def operation(key, xdata, ydata, input_x, input_y):
+    x_array = []
+    y_array = []
+    Y_range = xdata
+    X_range = ydata
+    operations = []
+    for xy_operation in [input_x, input_y]:
+        xy_operation = xy_operation.replace("Y_range", "y_range")
+        xy_operation = xy_operation.replace("X_range", "x_range")
+        xy_operation = xy_operation.replace("Y", "ydata[index]")
+        xy_operation = xy_operation.replace("X", "xdata[index]")
+        xy_operation = xy_operation.replace("y_range", "Y_range")
+        xy_operation = xy_operation.replace("x_range", "X_range")
+        xy_operation = xy_operation.replace("^", "**")
+        operations.append(xy_operation)
+    x_operation, y_operation = operations[0], operations[1]
+    for index, value in enumerate(xdata):
+        x_array.append(eval(x_operation))
+        y_array.append(eval(y_operation))
+    return x_array, y_array
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/transform_window.ui")
 class TransformWindow(Adw.Window):

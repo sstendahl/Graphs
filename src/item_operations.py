@@ -453,6 +453,7 @@ def translate_x(shortcut, _, self):
             self.datadict[key].xdata[start_index:stop_index] = selected_item.xdata
         if self._mode != "select/cut":
             self.datadict[key].xdata = [value + offset for value in self.datadict[key].xdata]
+        self.datadict[key].xdata, self.datadict[key].ydata = sort_data(self.datadict[key].xdata, self.datadict[key].ydata)
     add_to_clipboard(self)
     delete_selected_data(self)
     plotting_tools.refresh_plot(self)
@@ -525,6 +526,7 @@ def multiply_x(shortcut, _, self):
             self.datadict[key].xdata[start_index:stop_index] = selected_item.xdata
         if self._mode != "select/cut":
             self.datadict[key].xdata = [value * multiplier for value in self.datadict[key].xdata]
+        self.datadict[key].xdata, self.datadict[key].ydata = sort_data(self.datadict[key].xdata, self.datadict[key].ydata)
     delete_selected_data(self)
     add_to_clipboard(self)
     plotting_tools.refresh_plot(self)
