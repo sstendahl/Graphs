@@ -336,7 +336,6 @@ def get_fourier(widget, shortcut, self):
         x_fourier, y_fourier = sort_data(x_fourier.tolist(), y_fourier)
         self.datadict[key].ydata =  y_fourier
         self.datadict[key].xdata = x_fourier
-        print("OK dan")
     delete_selected_data(self)
     add_to_clipboard(self)
     plotting_tools.refresh_plot(self)
