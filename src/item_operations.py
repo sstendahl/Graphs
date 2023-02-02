@@ -456,6 +456,7 @@ def translate_x(shortcut, _, self):
         self.datadict[key].xdata, self.datadict[key].ydata = sort_data(self.datadict[key].xdata, self.datadict[key].ydata)
     add_to_clipboard(self)
     delete_selected_data(self)
+    print(self.canvas.top_left_axis.get_xlim())
     plotting_tools.refresh_plot(self)
 
 def translate_y(shortcut, _, self):

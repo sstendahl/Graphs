@@ -116,6 +116,7 @@ class GraphsApplication(Adw.Application):
         flap = win.sidebar_flap
         enabled = not flap.get_reveal_flap()
         flap.set_reveal_flap(enabled)
+        win.selection_button.set_visible(enabled)
 
     def create_action(self, name, callback, shortcuts=None, *args):
         """Add an application action.
