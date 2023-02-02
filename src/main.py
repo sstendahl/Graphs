@@ -60,6 +60,7 @@ class GraphsApplication(Adw.Application):
         self.create_action('normalize_data', item_operations.normalize_data, None, self)
         self.create_action('translate_x', item_operations.translate_x, None, self)
         self.create_action('translate_y', item_operations.translate_y, None, self)
+        self.create_action('combine_data', item_operations.combine_data, None, self)
         self.create_action('multiply_x', item_operations.multiply_x, None, self)
         self.create_action('cut_data', item_operations.cut_data, None, self)
         self.create_action('multiply_y', item_operations.multiply_y, None, self)

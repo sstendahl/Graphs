@@ -1,6 +1,8 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 from gi.repository import Gdk
 from enum import Enum
+from .data import Data
+import uuid
 
 def set_chooser(chooser, choice):
     model = chooser.get_model()
@@ -66,6 +68,22 @@ def get_selected_keys(self):
         if item.check_button.get_active():
             selected_keys.append(item.id)
     return selected_keys
+    
+def create_data(self, xdata = [], ydata = [], name = "New data"):
+    new_file = Data()
+    new_file.id = str(uuid.uuid4())
+    new_file.xdata = xdata
+    new_file.ydata = ydata
+    new_file.filename = name
+    new_file.linestyle_selected = self.preferences.config["plot_selected_linestyle"]
+    new_file.linestyle_unselected = self.preferences.config["plot_unselected_linestyle"]
+    new_file.selected_line_thickness = self.preferences.config["selected_linewidth"]
+    new_file.unselected_line_thickness = self.preferences.config["unselected_linewidth"]
+    new_file.selected_markers = self.preferences.config["plot_selected_markers"]
+    new_file.unselected_markers = self.preferences.config["plot_unselected_markers"]
+    new_file.selected_marker_size = self.preferences.config["plot_selected_marker_size"]
+    new_file.unselected_marker_size = self.preferences.config["plot_unselected_marker_size"]
+    return new_file
     
 def create_rgba(r, g, b, a=1):
     res = Gdk.RGBA()
