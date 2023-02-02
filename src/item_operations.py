@@ -195,16 +195,24 @@ def select_data(self):
         if item.plot_X_position == "bottom":
             xrange_bottom = max(self.canvas.ax.get_xlim()) - min(self.canvas.ax.get_xlim())
             xrange_top = max(self.canvas.top_left_axis.get_xlim()) - min(self.canvas.top_left_axis.get_xlim())
-            startx = ((startx - min(self.canvas.top_left_axis.get_xlim())) / xrange_top) * xrange_bottom + min(self.canvas.ax.get_xlim())
-            stopx = ((stopx - min(self.canvas.top_left_axis.get_xlim())) / xrange_top) * xrange_bottom + min(self.canvas.ax.get_xlim())
-            print(startx)
-            print(stopx)
+            #Run into issues if the range is different, so we calculate this by 
+            #getting what fraction of top axis is highlighted
+            if self.canvas.top_left_axis.get_xscale() == "log":
+                fraction_left_limit = get_fraction_at_value(min(highlight.extents), min(self.canvas.top_left_axis.get_xlim()), max(self.canvas.top_left_axis.get_xlim()))
+                fraction_right_limit = get_fraction_at_value(max(highlight.extents), min(self.canvas.top_left_axis.get_xlim()), max(self.canvas.top_left_axis.get_xlim()))
+            elif self.canvas.top_left_axis.get_xscale() == "linear":
+                fraction_left_limit = (min(highlight.extents) - min(self.canvas.top_left_axis.get_xlim())) / (xrange_top)
+                fraction_right_limit = (max(highlight.extents) - min(self.canvas.top_left_axis.get_xlim())) / (xrange_top)
+
+            #Use the fraction that is higlighted on top to calculate to what
+            #values this corresponds on bottom axis
             if self.canvas.ax.get_xscale() == "log":
-                startx = get_value_at_percentage(min(highlight.extents)*100, min(self.canvas.ax.get_xlim()), max(self.canvas.ax.get_xlim()))
-                stopx = get_value_at_percentage(max(highlight.extents)*100, min(self.canvas.ax.get_xlim()), max(self.canvas.ax.get_xlim()))
-                print(startx)
-                print(stopx)
-        
+                startx = get_value_at_fraction(fraction_left_limit, min(self.canvas.ax.get_xlim()), max(self.canvas.ax.get_xlim()))
+                stopx = get_value_at_fraction(fraction_right_limit, min(self.canvas.ax.get_xlim()), max(self.canvas.ax.get_xlim()))
+            elif self.canvas.ax.get_xscale() == "linear":
+                startx = min(self.canvas.ax.get_xlim()) + xrange_bottom * fraction_left_limit 
+                stopx = min(self.canvas.ax.get_xlim()) + xrange_bottom * fraction_right_limit
+
         #If startx and stopx are not out of range, that is, if the sample data is within the highlight
         if not ((startx < min(item.xdata) and stopx < min(item.xdata)) or (startx > max(item.xdata))):
             selected_data = pick_data_selection(self, item, startx, stopx)
@@ -217,12 +225,28 @@ def select_data(self):
             self.datadict.update(selected_dict)
     return True
 
-def get_value_at_percentage(percentage, start, end):
+def get_value_at_fraction(fraction, start, end):
+    """
+    Obtain the selected value of an axis given at which percentage (in terms of
+    fraction) of the length this axis is selected given the start and end range
+    of this axis
+    """
     log_start = np.log10(start)
     log_end = np.log10(end)
     log_range = log_end - log_start
-    log_value = log_start + log_range * percentage / 100
+    log_value = log_start + log_range * fraction
     return pow(10, log_value)
+    
+def get_fraction_at_value(value, start, end):
+    """
+    Obtain the fraction of the total length of the selected axis a specific
+    value corresponds to given the start and end range of the axis.
+    """
+    log_start = np.log10(start)
+    log_end = np.log10(end)
+    log_value = np.log10(value)
+    log_range = log_end - log_start
+    return (log_value - log_start) / log_range
 
 def get_derivative(widget, shortcut, self):
     """
