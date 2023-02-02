@@ -126,10 +126,10 @@
                     <property name="margin-start">12</property>
                     <property name="margin-end">12</property>
                     <child>
-                      <object class="GtkButton" id="restore_view_button">
-                        <property name="icon-name">go-home-symbolic-symbolic</property>
-                        <property name="tooltip-text" translatable="yes">Restore original view</property>
-                        <property name="action-name">app.restore_view</property>
+                      <object class="GtkToggleButton" id="none_button">
+                        <property name="icon-name">input-mouse-symbolic</property>
+                        <property name="tooltip-text" translatable="yes">Normal mouse pointer</property>
+                        <property name="action-name">app.mode_none</property>
                         <property name="hexpand">true</property>
                       </object>
                     </child>
@@ -137,7 +137,7 @@
                       <object class="GtkToggleButton" id="pan_button">
                         <property name="icon-name">move-tool-symbolic</property>
                         <property name="tooltip-text" translatable="yes">Left button to pan, right button to zoom. Hold control to to keep aspect ratio fixed</property>
-                        <property name="action-name">app.pan</property>
+                        <property name="action-name">app.mode_pan</property>
                         <property name="hexpand">true</property>
                       </object>
                     </child>
@@ -145,36 +145,16 @@
                       <object class="GtkToggleButton" id="zoom_button">
                         <property name="icon-name">loupe-symbolic</property>
                         <property name="tooltip-text" translatable="yes">Zoom to rectangle</property>
-                        <property name="action-name">app.zoom</property>
+                        <property name="action-name">app.mode_zoom</property>
                         <property name="hexpand">true</property>
                       </object>
                     </child>
                     <child>
-                      <object class="GtkBox">
-                        <style>
-                          <class name="linked" />
-                        </style>
+                      <object class="GtkToggleButton" id="select_button">
+                        <property name="icon-name">edit-select-all-symbolic</property>
+                        <property name="tooltip-text" translatable="yes">Select a span of data</property>
+                        <property name="action-name">app.mode_select</property>
                         <property name="hexpand">true</property>
-                        <child>
-                          <object class="GtkToggleButton" id="select_data_button">
-                            <property name="icon-name">edit-select-all-symbolic</property>
-                            <property name="tooltip-text" translatable="yes">Select a span of data</property>
-                            <property name="action-name">app.select_data_toggle</property>
-                            <property name="hexpand">true</property>
-                          </object>
-                        </child>
-                        <child>
-                          <object class="GtkToggleButton" id="cut_data_button">
-                            <property name="icon-name">edit-cut-symbolic</property>
-                            <property name="tooltip-text" translatable="yes">Cut the selected span</property>
-                            <property name="action-name">app.cut_data</property>
-                            <style>
-                              <class name="destructive-action" />
-                            </style>
-                            <property name="hexpand">true</property>
-                            <property name="visible">false</property>
-                          </object>
-                        </child>
                       </object>
                     </child>
                   </object>
@@ -322,6 +302,38 @@
                                             <layout>
                                               <property name="column">1</property>
                                               <property name="row">1</property>
+                                            </layout>
+                                          </object>
+                                        </child>
+                                        <child>
+                                          <object class="GtkButton" id="cut_data_button">
+                                            <child>
+                                              <object class="GtkBox">
+                                                <property name="halign">center</property>
+                                                <child>
+                                                  <object class="GtkImage">
+                                                    <property name="icon-name">edit-cut-symbolic</property>
+                                                    <property name="margin-end">6</property>
+                                                  </object>
+                                                </child>
+                                                <child>
+                                                  <object class="GtkLabel">
+                                                    <property name="label">Cut</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </child>
+                                            <property name="tooltip-text" translatable="yes">Cut selected data</property>
+                                            <property name="action-name">app.cut_data</property>
+                                            <property name="margin-bottom">5</property>
+                                            <property name="margin-top">5</property>
+                                            <property name="margin-start">5</property>
+                                            <property name="margin-end">5</property>
+                                            <property name="hexpand">True</property>
+                                            <layout>
+                                              <property name="column">0</property>
+                                              <property name="row">2</property>
+                                              <property name="column-span">2</property>
                                             </layout>
                                           </object>
                                         </child>
