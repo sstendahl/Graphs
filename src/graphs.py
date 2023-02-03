@@ -5,7 +5,7 @@ import os
 import re
 import uuid
 from .plotting_tools import PlotWidget
-from . import plotting_tools, samplerow, colorpicker, utilities, item_operations
+from . import plotting_tools, samplerow, colorpicker, utilities
 import numpy as np
 from .data import Data
 from matplotlib import colors
