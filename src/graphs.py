@@ -5,7 +5,7 @@ import os
 import re
 import uuid
 from .plotting_tools import PlotWidget
-from . import plotting_tools, samplerow, colorpicker, utilities
+from . import plotting_tools, samplerow, colorpicker, utilities, item_operations
 import numpy as np
 from .data import Data
 from matplotlib import colors
@@ -22,63 +22,63 @@ def get_theme_color(self):
     color_hex = '#{:02x}{:02x}{:02x}'.format(*rgba_tuple)
     return color_hex
 
-def open_selection(self, files, from_dictionary = False, import_settings = None, canvas = None):
-    if canvas == None:
-        canvas = self.canvas
-    if from_dictionary:
-        for key, item in self.datadict.items():
+def open_selection_from_dict(self):
+    for key, item in self.datadict.items():
+        if item is not None:
+            if self.item_rows[key].check_button.get_active():
+                linewidth = item.selected_line_thickness
+                linestyle = item.linestyle_selected
+                marker = item.selected_markers
+                marker_size = item.selected_marker_size
+            else:
+                linewidth = item.unselected_line_thickness
+                linestyle = item.linestyle_unselected
+                marker = item.unselected_markers
+                marker_size = item.unselected_marker_size
+            color = self.item_rows[key].color_picker.color
+            y_axis = item.plot_Y_position
+            x_axis = item.plot_X_position
+            plotting_tools.plot_figure(self, self.canvas, item.xdata,item.ydata, item.filename, linewidth = linewidth, linestyle=linestyle, color = color, marker = marker, marker_size = marker_size, y_axis = y_axis, x_axis = x_axis)
+
+def open_selection_from_file(self, files, import_settings):
+    for path in files:
+        if path != "":
+            try:
+                item = get_data(self, path, import_settings)
+                if item.xdata == []:
+                    continue
+            except IndexError:
+                self.props.active_window.toast_overlay.add_toast(Adw.Toast(title=f"Could not open data, the column index was out of range"))
+                break
+            except UnicodeDecodeError:
+                self.props.active_window.toast_overlay.add_toast(Adw.Toast(title=f"Could not open data, wrong filetype"))
+                break
             if item is not None:
-                if self.item_rows[key].check_button.get_active():
-                    linewidth = item.selected_line_thickness
-                    linestyle = item.linestyle_selected
-                    marker = item.selected_markers
-                    marker_size = item.selected_marker_size
-                else:
-                    linewidth = item.unselected_line_thickness
-                    linestyle = item.linestyle_unselected
-                    marker = item.unselected_markers
-                    marker_size = item.unselected_marker_size
-                color = self.item_rows[key].color_picker.color
+                handle_duplicates = self.preferences.config["handle_duplicates"]
+                if not handle_duplicates == "Add duplicates":
+                    for key, item2 in self.datadict.items():
+                        if item.filename == item2.filename:
+                            if handle_duplicates == "Auto-rename duplicates":
+                                item.filename = get_duplicate_filename(self, item.filename)
+                            elif handle_duplicates == "Ignore duplicates":
+                                self.props.active_window.toast_overlay.add_toast(Adw.Toast(title=f"Item \"{item.filename}\" already exists"))
+                                return
+                            elif handle_duplicates == "Override existing items":
+                                y_axis = item.plot_Y_position
+                                x_axis = item.plot_X_position
+                                self.datadict[key] = item
+                                plotting_tools.reload_plot(self)
+                                return
                 y_axis = item.plot_Y_position
                 x_axis = item.plot_X_position
-                plotting_tools.plot_figure(self, canvas, item.xdata,item.ydata, item.filename, linewidth = linewidth, linestyle=linestyle, color = color, marker = marker, marker_size = marker_size, y_axis = y_axis, x_axis = x_axis)
-    else:
-        for path in files:
-            if path != "":
-                try:
-                    item = get_data(self, path, import_settings)
-                except IndexError:
-                    self.props.active_window.toast_overlay.add_toast(Adw.Toast(title=f"Could not open data, the column index was out of range"))
-                    break
-                except UnicodeDecodeError:
-                    self.props.active_window.toast_overlay.add_toast(Adw.Toast(title=f"Could not open data, wrong filetype"))
-                    break
-                if item is not None:
-                    handle_duplicates = self.preferences.config["handle_duplicates"]
-                    if not handle_duplicates == "Add duplicates":
-                        for key, item2 in self.datadict.items():
-                            if item.filename == item2.filename:
-                                if handle_duplicates == "Auto-rename duplicates":
-                                    item.filename = get_duplicate_filename(self, item.filename)
-                                elif handle_duplicates == "Ignore duplicates":
-                                    self.props.active_window.toast_overlay.add_toast(Adw.Toast(title=f"Item \"{item.filename}\" already exists"))
-                                    return
-                                elif handle_duplicates == "Override existing items":
-                                    y_axis = item.plot_Y_position
-                                    x_axis = item.plot_X_position
-                                    self.datadict[key] = item
-                                    plotting_tools.reload_plot(self)
-                                    return
-                    y_axis = item.plot_Y_position
-                    x_axis = item.plot_X_position
-                    self.datadict[item.id] = item
-                    item.color = plotting_tools.get_next_color(self)
-                    plotting_tools.plot_figure(self, canvas, item.xdata,item.ydata, item.filename, item.color, y_axis = y_axis, x_axis = x_axis)
-                    add_sample_to_menu(self, item.filename, item.color, item.id, select_item = True)
-                    select_item(self, item.id)
-                    plotting_tools.reload_plot(self)
-        self.canvas.draw()
-        plotting_tools.set_canvas_limits_axis(self, self.canvas)
+                self.datadict[item.id] = item
+                item.color = plotting_tools.get_next_color(self)
+                plotting_tools.plot_figure(self, self.canvas, item.xdata,item.ydata, item.filename, item.color, y_axis = y_axis, x_axis = x_axis)
+                add_sample_to_menu(self, item.filename, item.color, item.id, select_item = True)
+                select_item(self, item.id)
+                plotting_tools.reload_plot(self)
+    self.canvas.draw()
+    plotting_tools.set_canvas_limits_axis(self, self.canvas)
 
 def get_duplicate_filename(self, name):
     loop = True
@@ -125,13 +125,30 @@ def get_data(self, path, import_settings):
                 try:
                     data_array[0].append(float(data_line[import_settings["column_x"]]))
                     data_array[1].append(float(data_line[import_settings["column_y"]]))
+                    
+                #If it finds non-numbers, it will raise a ValueError, this is the cue to 
+                #start looking for headers
                 except ValueError:
                     if import_settings["guess_headers"]:
-                        headers = re.split("\s{2,}", line)
-                        self.plot_settings.xlabel = headers[import_settings["column_x"]]
-                        self.plot_settings.ylabel = headers[import_settings["column_y"]]
+                        #By default it will check for headers using at least two whitespaces
+                        #as delimiter (often tabs), but if that doesn't work it will try
+                        #the same delimiter as used for the data import itself
+                        #The reasoning is that some people use tabs for the headers, but 
+                        #e.g. commas for the data
+                        try:
+                            headers = re.split("\s{2,}", line)
+                            self.plot_settings.xlabel = headers[import_settings["column_x"]]
+                            self.plot_settings.ylabel = headers[import_settings["column_y"]]
+                        except IndexError:
+                            try:
+                                headers = re.split(import_settings["delimiter"], line)
+                                self.plot_settings.xlabel = headers[import_settings["column_x"]]
+                                self.plot_settings.ylabel = headers[import_settings["column_y"]]
+                            #If neither heuristic works, we just skip the headers
+                            except IndexError:
+                                pass
     data.xdata = data_array[0]
-    data.ydata = data_array[1]
+    data.ydata = data_array[1]   
     data.xdata_clipboard = [data.xdata.copy()]
     data.ydata_clipboard = [data.ydata.copy()]
     data.clipboard_pos = -1
@@ -317,7 +334,7 @@ def on_open_response(dialog, response, self, import_settings):
         elif len(dialog.get_files()) == 1:
             import_settings["mode"] = "single"
 
-        open_selection(self, files, import_settings = import_settings)
+        open_selection_from_file(self, files, import_settings)
 
 
 def load_empty(self):

@@ -2,6 +2,7 @@
 from gi.repository import Gtk, Adw, GObject, Gio
 from numpy import *
 from . import item_operations, plotting_tools, utilities
+from .utilities import InteractionMode
 
 def open_transform_window(widget, _, self):
     win = TransformWindow(self)
@@ -18,7 +19,7 @@ def on_accept(widget, self, window):
     input_x = str(window.transform_x_entry.get_text())
     input_y = str(window.transform_y_entry.get_text())
     selected_keys = utilities.get_selected_keys(self)
-    if self._mode == "select/cut":
+    if self._mode == InteractionMode.SELECT:
         selection, start_stop = item_operations.select_data(self)
 
     for key in selected_keys:
@@ -36,9 +37,11 @@ def on_accept(widget, self, window):
                 return
             self.datadict[key].xdata[start_index:stop_index] = xdata_out
             self.datadict[key].ydata[start_index:stop_index] = ydata_out
-        if self._mode != "select/cut":
+            print(max(xdata_out))
+        if self._mode != InteractionMode.SELECT:
             xdata_in = self.datadict[key].xdata
             ydata_in = self.datadict[key].ydata
+            print("WAT")
             try:
                 xdata_out, ydata_out = operation(key, xdata_in, ydata_in, input_x, input_y)
             except Exception as e:
@@ -48,7 +51,7 @@ def on_accept(widget, self, window):
                 return
             self.datadict[key].xdata = xdata_out
             self.datadict[key].ydata = ydata_out
-        self.datadict[key].xdata, self.datadict[key].ydata = sort_data(self.datadict[key].xdata, self.datadict[key].ydata)
+        self.datadict[key].xdata, self.datadict[key].ydata = item_operations.sort_data(self.datadict[key].xdata, self.datadict[key].ydata)
     item_operations.delete_selected_data(self)
     item_operations.add_to_clipboard(self)
     plotting_tools.refresh_plot(self)

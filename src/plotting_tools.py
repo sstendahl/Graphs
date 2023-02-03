@@ -229,7 +229,7 @@ def reload_plot(self, from_dictionary = True):
     graphs.load_empty(self)
     if len(self.datadict) > 0:
         hide_unused_axes(self, self.canvas)
-        graphs.open_selection(self, None, from_dictionary)
+        graphs.open_selection_from_dict(self)
         if (not self.highlight == None):
             self.highlight.set_visible(False)
             self.highlight.set_active(False)
@@ -255,7 +255,7 @@ def refresh_plot(self, canvas = None, from_dictionary = True, set_limits = True)
         line.remove()
     if len(self.datadict) > 0:
         hide_unused_axes(self, canvas)
-    graphs.open_selection(self, None, from_dictionary, canvas = canvas)
+    graphs.open_selection_from_dict(self)
     if set_limits and len(self.datadict) > 0:
         set_canvas_limits_axis(self, canvas)
     self.canvas.draw()
