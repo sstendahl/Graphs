@@ -1,4 +1,4 @@
-<a href='https://flathub.org/apps/details/se.sjoerd.DatMan'><img width='180' alt='Download on Flathub' src='https://flathub.org/assets/badges/flathub-badge-en.svg'/></a>
+<a href='https://flathub.org/apps/details/se.sjoerd.Graphs'><img width='180' alt='Download on Flathub' src='https://flathub.org/assets/badges/flathub-badge-en.svg'/></a>
 
 # Graphs
 
@@ -18,3 +18,6 @@ include options like:
   - Custom transformations using anything that is compatible with the numpy module
  
 For feedback or general issues, please file an issue [at the Github issue tracker](https://github.com/SjoerdB93/Graphs/issues).
+
+## Code of Conduct
+This project follows the [GNOME Code of Conduct.](https://wiki.gnome.org/Foundation/CodeOfConduct)
