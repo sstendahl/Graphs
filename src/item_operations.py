@@ -43,7 +43,7 @@ def add_to_clipboard(self):
 
         item.clipboard_pos = -1
         item.xdata_clipboard.append(item.xdata.copy())
-        item.ydata_clipboard.append(item.ydata.copy())
+        item.ydata_clipboard.append(item.ydata.copy()) 
 
 def undo(widget, shortcut, self):
     """
@@ -314,6 +314,45 @@ def get_inverse_fourier(widget, shortcut, self):
         self.datadict[key].xdata = x_fourier
     add_to_clipboard(self)
     delete_selected_data(self)
+    plotting_tools.refresh_plot(self)
+
+    
+def combine_data(widget, shortcut, self):
+    """
+    Combine the selected data into a new data set
+    """
+    if self._mode == InteractionMode.SELECT:
+        selection, start_stop = select_data(self)
+    selected_keys = utilities.get_selected_keys(self)
+    
+    new_xdata = []
+    new_ydata = []
+    for key in selected_keys:
+        if f"{key}_selected" in self.datadict:
+            item = self.datadict[f"{key}_selected"]
+        if self._mode != InteractionMode.SELECT:
+            item = self.datadict[key]
+        new_xdata.extend(item.xdata.copy())
+        new_ydata.extend(item.ydata.copy())
+    
+    
+    #Create the sample itself
+    new_item = utilities.create_data(self, xdata = new_xdata, ydata = new_ydata, name = "Combined Data")
+    filename_list = utilities.get_all_filenames(self)
+        
+    if new_item.filename in filename_list:
+         new_item.filename = graphs.get_duplicate_filename(self, new_item.filename)
+    new_item.xdata, new_item.ydata = sort_data(new_item.xdata, new_item.ydata)
+    new_item.xdata_clipboard = [new_item.xdata.copy()]
+    new_item.ydata_clipboard = [new_item.ydata.copy()]
+    new_item.clipboard_pos = -1
+    color = plotting_tools.get_next_color(self)
+    self.datadict[new_item.id] = new_item
+    
+    delete_selected_data(self)
+    graphs.reset_clipboard(self)
+    graphs.add_sample_to_menu(self, new_item.filename, color, new_item.id)
+    graphs.select_item(self, new_item.id)
     plotting_tools.refresh_plot(self)
 
 def get_fourier(widget, shortcut, self):
@@ -620,11 +659,13 @@ def center_data(shortcut, _, self):
             #Replace the highlighted part in the original data set
             self.datadict[key].ydata[start_index:stop_index] = selected_item.ydata
             self.datadict[key].xdata[start_index:stop_index] = selected_item.xdata
+            self.datadict[key].xdata, self.datadict[key].ydata = sort_data(self.datadict[key].xdata, self.datadict[key].ydata)
         if self._mode != InteractionMode.SELECT:
             if self.preferences.config["action_center_data"] == "Center at maximum Y value":
                 self.datadict[key].xdata = center_data_max_Y(self.datadict[key].xdata, self.datadict[key].ydata)
             elif self.preferences.config["action_center_data"] == "Center at middle coordinate":
                 self.datadict[key].xdata = center_data_middle(self.datadict[key].xdata)
+            self.datadict[key].xdata, self.datadict[key].ydata = sort_data(self.datadict[key].xdata, self.datadict[key].ydata)
     delete_selected_data(self)
     add_to_clipboard(self)
     plotting_tools.refresh_plot(self)

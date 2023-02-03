@@ -205,3 +205,4 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
     def on_close(self, _, parent):
         self.save_settings(parent)
         plotting_tools.reload_plot(parent)
+

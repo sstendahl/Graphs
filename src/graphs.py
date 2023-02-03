@@ -182,10 +182,7 @@ def delete(widget,  self, id, give_toast = True):
         self.canvas.ax.legend().remove()
         self.canvas.ax.set_prop_cycle(None)
 
-    for key, item in self.datadict.items():
-        item.xdata_clipboard = [item.xdata]
-        item.ydata_clipboard = [item.ydata]
-        item.clipboard_pos = -1
+    reset_clipboard(self)
     plotting_tools.refresh_plot(self)
     enable_data_dependent_buttons(self, utilities.get_selected_keys(self))
 
@@ -321,11 +318,6 @@ def on_open_response(dialog, response, self, import_settings):
             import_settings["mode"] = "single"
 
         open_selection(self, files, import_settings = import_settings)
-        win = self.props.active_window
-        button = win.select_data_button
-        if not button.get_active():
-            self.highlight.set_visible(False)
-            self.highlight.set_active(False)
 
 
 def load_empty(self):
@@ -340,6 +332,13 @@ def disable_clipboard_buttons(self):
     win = self.main_window
     win.redo_button.set_sensitive(False)
     win.undo_button.set_sensitive(False)
+
+def reset_clipboard(self):
+    for key, item in self.datadict.items():
+        item.xdata_clipboard = [item.xdata]
+        item.ydata_clipboard = [item.ydata]
+        item.clipboard_pos = -1
+    disable_clipboard_buttons(self)
 
 def enable_data_dependent_buttons(self, enabled):
     win = self.main_window
@@ -358,6 +357,7 @@ def enable_data_dependent_buttons(self, enabled):
     win.derivative_button,
     win.integral_button,
     win.transform_data_button,
+    win.combine_data_button,
     ]
 
     for button in dependent_buttons:

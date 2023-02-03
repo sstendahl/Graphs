@@ -32,6 +32,7 @@ class GraphsWindow(Adw.ApplicationWindow):
     derivative_button = Gtk.Template.Child()
     integral_button = Gtk.Template.Child()
     transform_data_button = Gtk.Template.Child()
+    combine_data_button = Gtk.Template.Child()
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
