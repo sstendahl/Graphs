@@ -595,30 +595,26 @@ class PlotWidget(FigureCanvas):
         plt.rcParams.update(plt.rcParamsDefault)
         if Adw.StyleManager.get_default().get_dark():
             self.figure.patch.set_facecolor("#242424")
-            params = {"ytick.color" : "w",
-            "xtick.color" : "w",
-            "axes.labelcolor" : "w",
-            "font.family": "sans-serif",
-            "font.weight": parent.plot_settings.font_weight,
-            "font.sans-serif": parent.plot_settings.font_family,
-            "font.size": parent.plot_settings.font_size,
-            "font.style": parent.plot_settings.font_style,
-            "mathtext.default": "regular"
-            }
-            plt.style.use(parent.plot_settings.plot_style)
+            text_color = "white"
         else:
             self.figure.patch.set_facecolor("#fafafa")
-            params = {"ytick.color" : "black",
-            "xtick.color" : "black",
-            "axes.labelcolor" : "black",
-            "font.family": "sans-serif",
-            "font.weight": parent.plot_settings.font_weight,
-            "font.sans-serif": parent.plot_settings.font_family,
-            "font.size": parent.plot_settings.font_size,
-            "font.style": parent.plot_settings.font_style,
-            "mathtext.default": "regular"
-            }
-            plt.style.use(parent.plot_settings.plot_style)
+            text_color = "black"
+        params = {
+        "font.weight": parent.plot_settings.font_weight,
+        "font.sans-serif": parent.plot_settings.font_family,
+        "font.size": parent.plot_settings.font_size,
+        "axes.labelsize": parent.plot_settings.font_size,
+        "xtick.labelsize": parent.plot_settings.font_size,
+        "ytick.labelsize": parent.plot_settings.font_size,
+        "axes.titlesize": parent.plot_settings.font_size,
+        "legend.fontsize": parent.plot_settings.font_size,
+        "font.style": parent.plot_settings.font_style,
+        "mathtext.default": "regular",
+        "xtick.color" : text_color,
+        "ytick.color" : text_color,
+        "axes.labelcolor" : text_color,
+        }
+        plt.style.use(parent.plot_settings.plot_style)
         plt.rcParams.update(params)
 
     def set_color_cycle(self, parent):

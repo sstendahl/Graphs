@@ -60,3 +60,12 @@ install_data(
 )
 
 install_data('config.json', install_dir: moduledir, install_mode: 'rwxrwxrwx')
+
+styles_dir = 'styles'
+styles = [
+join_paths(styles_dir, 'adwaita.mplstyle'),
+join_paths(styles_dir, 'adwaita-dark.mplstyle'),
+]
+# this isn't pretty, but since the install target is only flatpak, this doesn't affect other applications
+matplotlib_styles_dir = '/app/lib/python3.10/site-packages/matplotlib/mpl-data/stylelib'
+install_data(styles, install_dir: matplotlib_styles_dir, install_mode: 'rwxrwxrwx')
