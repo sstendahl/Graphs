@@ -657,12 +657,13 @@ def center_data(shortcut, _, self):
             #Replace the highlighted part in the original data set
             self.datadict[key].ydata[start_index:stop_index] = selected_item.ydata
             self.datadict[key].xdata[start_index:stop_index] = selected_item.xdata
+            self.datadict[key].xdata, self.datadict[key].ydata = sort_data(self.datadict[key].xdata, self.datadict[key].ydata)
         if self._mode != InteractionMode.SELECT:
             if self.preferences.config["action_center_data"] == "Center at maximum Y value":
                 self.datadict[key].xdata = center_data_max_Y(self.datadict[key].xdata, self.datadict[key].ydata)
             elif self.preferences.config["action_center_data"] == "Center at middle coordinate":
                 self.datadict[key].xdata = center_data_middle(self.datadict[key].xdata)
-        self.datadict[key].xdata, self.datadict[key].ydata = sort_data(self.datadict[key].xdata, self.datadict[key].ydata)
+            self.datadict[key].xdata, self.datadict[key].ydata = sort_data(self.datadict[key].xdata, self.datadict[key].ydata)
     delete_selected_data(self)
     add_to_clipboard(self)
     plotting_tools.refresh_plot(self)
