@@ -302,7 +302,7 @@ def hide_unused_axes(self, canvas):
     canvas.top_left_axis.get_yaxis().set_visible(False)
     
 
-def change_yscale(widget, shortcut, self):
+def change_yscale(action, target, self):
     selected_keys = utilities.get_selected_keys(self)
     left = False
     right = False
@@ -312,24 +312,24 @@ def change_yscale(widget, shortcut, self):
         if self.datadict[key].plot_Y_position == "right":
             right = True
 
+    if left or right:
+        action.change_state(target)
     if left:
-        current_scale = self.canvas.ax.get_yscale()
-        if current_scale == "linear":
+        if target.get_string() == 'logarithmic':
             self.canvas.ax.set_yscale('log')
             self.canvas.set_ticks(self)
             self.plot_settings.yscale = "log"
-        elif current_scale == "log":
+        else:
             self.canvas.ax.set_yscale('linear')
             self.canvas.set_ticks(self)
             self.plot_settings.yscale = "linear"
     if right:
-        current_scale = self.canvas.right_axis.get_yscale()
-        if current_scale == "linear":
+        if target.get_string() == 'logarithmic':
             self.canvas.top_right_axis.set_yscale('log')
             self.canvas.right_axis.set_yscale('log')
             self.canvas.set_ticks(self)
             self.plot_settings.right_scale = "log"
-        elif current_scale == "log":
+        else:
             self.canvas.top_right_axis.set_yscale('linear')
             self.canvas.right_axis.set_yscale('linear')
             self.canvas.set_ticks(self)
@@ -338,7 +338,7 @@ def change_yscale(widget, shortcut, self):
     set_canvas_limits_axis(self, self.canvas)
     self.canvas.draw()
 
-def change_xscale(widget, shortcut, self):
+def change_xscale(action, target, self):
     selected_keys = utilities.get_selected_keys(self)
     top = False
     bottom = False
@@ -348,26 +348,26 @@ def change_xscale(widget, shortcut, self):
         if self.datadict[key].plot_X_position == "bottom":
             bottom = True
 
+    if top or bottom:
+        action.change_state(target)
     if top:
-        current_scale = self.canvas.top_left_axis.get_xscale()
-        if current_scale == "linear":
+        if target.get_string() == 'logarithmic':
             self.canvas.top_left_axis.set_xscale('log')
             self.canvas.top_right_axis.set_xscale('log')
             self.canvas.set_ticks(self)
             self.plot_settings.top_scale = "log"
-        elif current_scale == "log":
+        else:
             self.canvas.top_left_axis.set_xscale('linear')
             self.canvas.top_right_axis.set_xscale('linear')
             self.plot_settings.top_scale = "linear"
             self.canvas.set_ticks(self)
     if bottom:
-        current_scale = self.canvas.ax.get_xscale()
-        if current_scale == "linear":
+        if target.get_string() == 'logarithmic':
             self.canvas.ax.set_xscale('log')
             self.canvas.right_axis.set_xscale('log')
             self.canvas.set_ticks(self)
             self.plot_settings.xscale = "log"
-        elif current_scale == "log":
+        else:
             self.canvas.ax.set_xscale('linear')
             self.canvas.right_axis.set_xscale('linear')
             self.plot_settings.xscale = "linear"

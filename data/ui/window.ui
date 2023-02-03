@@ -710,7 +710,7 @@
   <menu id="view_menu">
     <section>
       <item>
-        <attribute name="label" translatable="yes">_Toggle Sidebar</attribute>
+        <attribute name="label" translatable="yes">Show Sidebar</attribute>
         <attribute name="action">app.toggle_sidebar</attribute>
       </item>
     </section>
@@ -729,14 +729,32 @@
       </item>
     </section>
     <section>
-      <item>
-        <attribute name="label" translatable="yes">_Logarithmic X Scale</attribute>
-        <attribute name="action">app.change_xscale</attribute>
-      </item>
-      <item>
-        <attribute name="label" translatable="yes">_Logarithmic Y Scale</attribute>
-        <attribute name="action">app.change_yscale</attribute>
-      </item>
+      <submenu>
+        <attribute name="label" translatable="yes">_X Scale</attribute>
+        <item>
+          <attribute name="label" translatable="yes">Logarithmic</attribute>
+          <attribute name="action">app.change_xscale</attribute>
+          <attribute name="target">logarithmic</attribute>
+        </item>
+        <item>
+          <attribute name="label" translatable="yes">Linear</attribute>
+          <attribute name="action">app.change_xscale</attribute>
+          <attribute name="target">linear</attribute>
+        </item>
+      </submenu>
+      <submenu>
+        <attribute name="label" translatable="yes">_Y Scale</attribute>
+        <item>
+          <attribute name="label" translatable="yes">Logarithmic</attribute>
+          <attribute name="action">app.change_yscale</attribute>
+          <attribute name="target">logarithmic</attribute>
+        </item>
+        <item>
+          <attribute name="label" translatable="yes">Linear</attribute>
+          <attribute name="action">app.change_yscale</attribute>
+          <attribute name="target">linear</attribute>
+        </item>
+      </submenu>
     </section>
   </menu>
   <menu id="primary_menu">
