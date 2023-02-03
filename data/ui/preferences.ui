@@ -254,7 +254,7 @@
           <object class="AdwPreferencesGroup">
             <property name="visible">True</property>
             <property name="title" translatable="yes">Plot Labels</property>
-            <property name="description" translatable="yes">Set the labels and titels for the axis</property>"
+            <property name="description" translatable="yes">Set the labels and title that are used upon launch</property>"
             <child>
               <object class="AdwEntryRow" id="plot_title">
                 <property name="visible">True</property>
@@ -333,13 +333,13 @@
             <property name="visible">True</property>
             <property name="can-focus">False</property>
             <property name="title" translatable="yes">Axes settings</property>
-            <property name="description" translatable="yes">Set the axes scale and position</property>
+            <property name="description" translatable="yes">Set the default axes scale and position used upon launch</property>
              <child>
               <object class="AdwComboRow" id="plot_Y_scale">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
                 <property name="title" translatable="yes">Left Axis Scale</property>
-                <property name="subtitle" translatable="yes">The default scaling on the left-hand axis</property>
+                <property name="subtitle" translatable="yes">The scaling on the left-hand axis</property>
                 <property name="use-underline">True</property>
                 <property name="model">
                   <object class="GtkStringList">
@@ -356,7 +356,7 @@
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
                 <property name="title" translatable="yes">Bottom Axis Scale</property>
-                <property name="subtitle" translatable="yes">The default scaling on the bottom axis</property>
+                <property name="subtitle" translatable="yes">The scaling on the bottom axis</property>
                 <property name="use-underline">True</property>
                 <property name="model">
                   <object class="GtkStringList">
@@ -373,7 +373,7 @@
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
                 <property name="title" translatable="yes">Right Axis Scale</property>
-                <property name="subtitle" translatable="yes">The default scaling on the right-hand axis</property>
+                <property name="subtitle" translatable="yes">The scaling on the right-hand axis</property>
                 <property name="use-underline">True</property>
                 <property name="model">
                   <object class="GtkStringList">
@@ -390,7 +390,7 @@
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
                 <property name="title" translatable="yes">Top Axis Scale</property>
-                <property name="subtitle" translatable="yes">The default scaling on the top axis</property>
+                <property name="subtitle" translatable="yes">The scaling on the top axis</property>
                 <property name="use-underline">True</property>
                 <property name="model">
                   <object class="GtkStringList">
@@ -407,7 +407,7 @@
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
                 <property name="title" translatable="yes">Y-Axis Position</property>
-                <property name="subtitle" translatable="yes">The default position of the Y-axis</property>
+                <property name="subtitle" translatable="yes">The position of the Y-axis</property>
                 <property name="use-underline">True</property>
                 <property name="model">
                   <object class="GtkStringList">
@@ -424,7 +424,7 @@
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
                 <property name="title" translatable="yes">X-Axis Position</property>
-                <property name="subtitle" translatable="yes">The default position of the X-axis</property>
+                <property name="subtitle" translatable="yes">The position of the X-axis</property>
                 <property name="use-underline">True</property>
                 <property name="model">
                   <object class="GtkStringList">
@@ -443,7 +443,7 @@
             <property name="visible">True</property>
             <property name="can-focus">False</property>
             <property name="title" translatable="yes">Line Style</property>
-            <property name="description" translatable="yes">Settings for the lines used in the plots</property>
+            <property name="description" translatable="yes">Set the default linestyle when opening new data</property>
             <child>
               <object class="AdwComboRow" id="plot_selected_linestyle_chooser">
                 <property name="visible">True</property>
@@ -521,7 +521,7 @@
             <property name="visible">True</property>
             <property name="can-focus">False</property>
             <property name="title" translatable="yes">Markers</property>
-            <property name="description" translatable="yes">Settings for the markers used in the plot</property>
+            <property name="description" translatable="yes">Set the markers used when opening new data</property>
             <child>
               <object class="AdwComboRow" id="plot_selected_markers_chooser">
                 <property name="visible">True</property>
@@ -591,7 +591,7 @@
             <property name="visible">True</property>
             <property name="can-focus">False</property>
             <property name="title" translatable="yes">Ticks</property>
-            <property name="description" translatable="yes">Settings for the ticks that are used in the plots</property>
+            <property name="description" translatable="yes">Set the ticks that are used upon launch</property>
             <child>
               <object class="AdwComboRow" id="plot_tick_direction">
                 <property name="visible">True</property>
@@ -735,7 +735,7 @@
           <object class="AdwPreferencesGroup">
             <property name="visible">True</property>
             <property name="title" translatable="yes">Style</property>
-            <property name="description" translatable="yes">Settings for the graph style</property>
+            <property name="description" translatable="yes">Set the default graph styling that is used</property>
             <child>
               <object class="AdwActionRow">
                 <property name="visible">True</property>
