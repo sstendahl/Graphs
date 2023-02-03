@@ -7,7 +7,7 @@ axes.edgecolor: black
 axes.facecolor: white
 axes.grid: True
 axes.labelcolor: black
-axes.labelsize: 11
+axes.labelsize: 12
 axes.linewidth: .8
 axes.prop_cycle: cycler('color', ['4C72B0', '55A868', 'C44E52', '8172B2', 'CCB974', '64B5CD'])
 axes.titlesize: 14
