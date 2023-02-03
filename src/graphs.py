@@ -5,7 +5,7 @@ import os
 import re
 import uuid
 from .plotting_tools import PlotWidget
-from . import plotting_tools, samplerow, colorpicker, utilities
+from . import plotting_tools, samplerow, colorpicker, utilities, item_operations
 import numpy as np
 from .data import Data
 from matplotlib import colors
@@ -182,10 +182,7 @@ def delete(widget,  self, id, give_toast = True):
         self.canvas.ax.legend().remove()
         self.canvas.ax.set_prop_cycle(None)
 
-    for key, item in self.datadict.items():
-        item.xdata_clipboard = [item.xdata]
-        item.ydata_clipboard = [item.ydata]
-        item.clipboard_pos = -1
+    reset_clipboard(self)
     plotting_tools.refresh_plot(self)
     enable_data_dependent_buttons(self, utilities.get_selected_keys(self))
 
@@ -335,6 +332,13 @@ def disable_clipboard_buttons(self):
     win = self.main_window
     win.redo_button.set_sensitive(False)
     win.undo_button.set_sensitive(False)
+
+def reset_clipboard(self):
+    for key, item in self.datadict.items():
+        item.xdata_clipboard = [item.xdata]
+        item.ydata_clipboard = [item.ydata]
+        item.clipboard_pos = -1
+    disable_clipboard_buttons(self)
 
 def enable_data_dependent_buttons(self, enabled):
     win = self.main_window

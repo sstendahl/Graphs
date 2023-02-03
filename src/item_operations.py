@@ -43,7 +43,7 @@ def add_to_clipboard(self):
 
         item.clipboard_pos = -1
         item.xdata_clipboard.append(item.xdata.copy())
-        item.ydata_clipboard.append(item.ydata.copy())
+        item.ydata_clipboard.append(item.ydata.copy()) 
 
 def undo(widget, shortcut, self):
     """
@@ -315,6 +315,7 @@ def get_inverse_fourier(widget, shortcut, self):
     add_to_clipboard(self)
     delete_selected_data(self)
     plotting_tools.refresh_plot(self)
+
     
 def combine_data(widget, shortcut, self):
     """
@@ -333,7 +334,7 @@ def combine_data(widget, shortcut, self):
             item = self.datadict[key]
         new_xdata.extend(item.xdata.copy())
         new_ydata.extend(item.ydata.copy())
-    new_xdata, new_ydata = sort_data(new_xdata, new_ydata)
+    
     
     #Create the sample itself
     new_item = utilities.create_data(self, xdata = new_xdata, ydata = new_ydata, name = "Combined Data")
@@ -341,6 +342,7 @@ def combine_data(widget, shortcut, self):
         
     if new_item.filename in filename_list:
          new_item.filename = graphs.get_duplicate_filename(self, new_item.filename)
+    new_item.xdata, new_item.ydata = sort_data(new_item.xdata, new_item.ydata)
     new_item.xdata_clipboard = [new_item.xdata.copy()]
     new_item.ydata_clipboard = [new_item.ydata.copy()]
     new_item.clipboard_pos = -1
@@ -348,7 +350,7 @@ def combine_data(widget, shortcut, self):
     self.datadict[new_item.id] = new_item
     
     delete_selected_data(self)
-    add_to_clipboard(self)
+    graphs.reset_clipboard(self)
     graphs.add_sample_to_menu(self, new_item.filename, color, new_item.id)
     graphs.select_item(self, new_item.id)
     plotting_tools.refresh_plot(self)
@@ -689,3 +691,4 @@ def center_data_middle(xdata):
     middle_value = (min(xdata) + max(xdata)) / 2
     xdata = [coordinate - middle_value for coordinate in xdata]
     return xdata
+
