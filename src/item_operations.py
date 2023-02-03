@@ -291,6 +291,29 @@ def get_integral(widget, shortcut, self):
     add_to_clipboard(self)
     delete_selected_data(self)
     plotting_tools.refresh_plot(self)
+    
+def get_fourier(widget, shortcut, self):
+    """
+    Perform Fourier transformation on all selected data
+    """
+    if self._mode == InteractionMode.SELECT:
+        selection, start_stop = select_data(self)
+    selected_keys = utilities.get_selected_keys(self)
+    for key in selected_keys:
+        if f"{key}_selected" in self.datadict:
+            item = self.datadict[f"{key}_selected"]
+        if self._mode != InteractionMode.SELECT:
+            item = self.datadict[key]
+        x = np.array(item.xdata)
+        y = np.array(item.ydata)
+        y_fourier = np.fft.fft(y)
+        x_fourier = np.fft.fftfreq(len(x), x[1] - x[0])
+        y_fourier = [value.real for value in y_fourier]
+        self.datadict[key].ydata =  y_fourier
+        self.datadict[key].xdata = x_fourier
+    delete_selected_data(self)
+    add_to_clipboard(self)
+    plotting_tools.refresh_plot(self)    
 
 def get_inverse_fourier(widget, shortcut, self):
     """
@@ -309,7 +332,6 @@ def get_inverse_fourier(widget, shortcut, self):
         y_fourier = np.fft.ifft(y)
         x_fourier = np.fft.fftfreq(len(x), x[1] - x[0])
         y_fourier = [value.real for value in y_fourier]
-        x_fourier, y_fourier = sort_data(x_fourier.tolist(), y_fourier)
         self.datadict[key].ydata =  y_fourier
         self.datadict[key].xdata = x_fourier
     add_to_clipboard(self)
@@ -355,29 +377,6 @@ def combine_data(widget, shortcut, self):
     graphs.select_item(self, new_item.id)
     plotting_tools.refresh_plot(self)
 
-def get_fourier(widget, shortcut, self):
-    """
-    Perform Fourier transformation on all selected data
-    """
-    if self._mode == InteractionMode.SELECT:
-        selection, start_stop = select_data(self)
-    selected_keys = utilities.get_selected_keys(self)
-    for key in selected_keys:
-        if f"{key}_selected" in self.datadict:
-            item = self.datadict[f"{key}_selected"]
-        if self._mode != InteractionMode.SELECT:
-            item = self.datadict[key]
-        x = np.array(item.xdata)
-        y = np.array(item.ydata)
-        y_fourier = np.fft.fft(y)
-        x_fourier = np.fft.fftfreq(len(x), x[1] - x[0])
-        y_fourier = [value.real for value in y_fourier]
-        x_fourier, y_fourier = sort_data(x_fourier.tolist(), y_fourier)
-        self.datadict[key].ydata =  y_fourier
-        self.datadict[key].xdata = x_fourier
-    delete_selected_data(self)
-    add_to_clipboard(self)
-    plotting_tools.refresh_plot(self)
 
 def smoothen_data(widget, shortcut, self):
     """

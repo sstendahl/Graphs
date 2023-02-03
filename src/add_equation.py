@@ -2,10 +2,13 @@
 from gi.repository import Gtk, Adw, GObject, Gio
 import uuid
 from numpy import *
-from . import item_operations, plotting_tools, graphs
+from . import item_operations, plotting_tools, graphs, utilities
 from .data import Data
 
 def open_add_equation_window(widget, _, self):
+    """
+    Open the window for adding a new dataset from an equation
+    """
     win = AddEquationWindow(self)
     win.set_transient_for(self.props.active_window)
     win.set_modal(True)
@@ -15,22 +18,30 @@ def open_add_equation_window(widget, _, self):
     win.present()
 
 def on_accept(widget, self, window):
+    """
+    Launched when the accept button is pressed on the equation window
+    """
     x_start = window.X_start_entry.get_text()
     x_stop = window.X_stop_entry.get_text()
     step_size = window.step_size_entry.get_text()
     equation = str(window.equation_entry.get_text())
+
+    dataset = create_dataset(self, x_start, x_stop, equation, step_size, str(window.name_entry.get_text()))
     try:
-        new_file = create_data(self, x_start, x_stop, equation, step_size, str(window.name_entry.get_text()))
-        name = new_file.filename
+        new_file = utilities.create_data(self, dataset["xdata"], dataset["ydata"], dataset["name"])
     except Exception as e:
         exception_type = e.__class__.__name__
         window.toast_overlay.add_toast(Adw.Toast(title=f"{exception_type} - Unable to add data from equation"))
+        return
+
+    #Choose how to handle duplicates filenames. Add them, ignore them, overide them,
+    #Or rename the file
     handle_duplicates = self.preferences.config["handle_duplicates"]
     if not handle_duplicates == "Add duplicates":
         for key, item in self.datadict.items():
-            if name == item.filename:
+            if new_file.filename in item.filename:
                 if handle_duplicates == "Auto-rename duplicates":
-                    new_file.filename = graphs.get_duplicate_filename(self, name)
+                    new_file.filename = graphs.get_duplicate_filename(self, new_file.filename)
                 elif handle_duplicates == "Ignore duplicates":
                     window.toast_overlay.add_toast(Adw.Toast(title="Item with this name already exists"))
                     return
@@ -42,40 +53,35 @@ def on_accept(widget, self, window):
                     plotting_tools.refresh_plot(self)
                     window.destroy()
                     return
-        new_file.xdata_clipboard = [new_file.xdata.copy()]
-        new_file.ydata_clipboard = [new_file.ydata.copy()]
-        new_file.clipboard_pos = -1
-        color = plotting_tools.get_next_color(self)
-        self.datadict[new_file.id] = new_file
-        graphs.add_sample_to_menu(self, new_file.filename, color, new_file.id)
-        graphs.select_item(self, new_file.id)
-        plotting_tools.refresh_plot(self)
-        window.destroy()
+            
+    new_file.xdata_clipboard = [new_file.xdata.copy()]
+    new_file.ydata_clipboard = [new_file.ydata.copy()]
+    new_file.clipboard_pos = -1
+    color = plotting_tools.get_next_color(self)
+    self.datadict[new_file.id] = new_file
+    graphs.add_sample_to_menu(self, new_file.filename, color, new_file.id)
+    graphs.select_item(self, new_file.id)
+    plotting_tools.refresh_plot(self)
+    window.destroy()
 
 
-def create_data(self, x_start, x_stop, equation, step_size, name):
-    new_file = Data()
-    new_file.id = str(uuid.uuid4())
+    
+def create_dataset(self, x_start, x_stop, equation, step_size, name):
+    """
+    Create all data set parameters that are required to create a new data object
+    """
+    dataset = dict()
     if name == "":
         name = f"Y = {str(equation)}"
+    dataset["name"] = name
     datapoints = int(abs(eval(x_start) - eval(x_stop))/eval(step_size))
-    new_file.xdata =  linspace(eval(x_start),eval(x_stop),datapoints)
-    equation = equation.replace("X", "new_file.xdata")
+    xdata =  linspace(eval(x_start),eval(x_stop),datapoints)
+    equation = equation.replace("X", "xdata")
     equation = str(equation.replace("^", "**"))
-    equation = str(equation.replace(",", "."))  
-    equation += " + new_file.xdata*0"
-    new_file.ydata = eval(equation)
-    new_file.xdata = ndarray.tolist(new_file.xdata)
-    new_file.filename = name
-    new_file.linestyle_selected = self.preferences.config["plot_selected_linestyle"]
-    new_file.linestyle_unselected = self.preferences.config["plot_unselected_linestyle"]
-    new_file.selected_line_thickness = self.preferences.config["selected_linewidth"]
-    new_file.unselected_line_thickness = self.preferences.config["unselected_linewidth"]
-    new_file.selected_markers = self.preferences.config["plot_selected_markers"]
-    new_file.unselected_markers = self.preferences.config["plot_unselected_markers"]
-    new_file.selected_marker_size = self.preferences.config["plot_selected_marker_size"]
-    new_file.unselected_marker_size = self.preferences.config["plot_unselected_marker_size"]
-    return new_file
+    equation += " + xdata*0"
+    dataset["ydata"] = eval(equation)
+    dataset["xdata"] = ndarray.tolist(xdata)
+    return dataset
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/add_equation_window.ui")
 class AddEquationWindow(Adw.Window):
