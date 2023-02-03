@@ -687,3 +687,4 @@ def center_data_middle(xdata):
     middle_value = (min(xdata) + max(xdata)) / 2
     xdata = [coordinate - middle_value for coordinate in xdata]
     return xdata
+
