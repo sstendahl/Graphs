@@ -318,11 +318,12 @@ def get_inverse_fourier(widget, shortcut, self):
     
 def combine_data(widget, shortcut, self):
     """
-    Perform Fourier transformation on all selected data
+    Combine the selected data into a new data set
     """
     if self._mode == InteractionMode.SELECT:
         selection, start_stop = select_data(self)
     selected_keys = utilities.get_selected_keys(self)
+    
     new_xdata = []
     new_ydata = []
     for key in selected_keys:
@@ -333,8 +334,9 @@ def combine_data(widget, shortcut, self):
         new_xdata.extend(item.xdata.copy())
         new_ydata.extend(item.ydata.copy())
     new_xdata, new_ydata = sort_data(new_xdata, new_ydata)
+    
+    #Create the sample itself
     new_item = utilities.create_data(self, xdata = new_xdata, ydata = new_ydata, name = "Combined Data")
-    handle_duplicates = self.preferences.config["handle_duplicates"]
     if new_item.filename in self.datadict:
          new_item.filename = graphs.get_duplicate_filename(self, name)
     new_item.xdata_clipboard = [new_item.xdata.copy()]
@@ -342,10 +344,11 @@ def combine_data(widget, shortcut, self):
     new_item.clipboard_pos = -1
     color = plotting_tools.get_next_color(self)
     self.datadict[new_item.id] = new_item
-    graphs.add_sample_to_menu(self, new_item.filename, color, new_item.id)
-    graphs.select_item(self, new_item.id)
+    
     delete_selected_data(self)
     add_to_clipboard(self)
+    graphs.add_sample_to_menu(self, new_item.filename, color, new_item.id)
+    graphs.select_item(self, new_item.id)
     plotting_tools.refresh_plot(self)
 
 def get_fourier(widget, shortcut, self):

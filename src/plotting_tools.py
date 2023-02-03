@@ -234,7 +234,7 @@ def reload_plot(self, from_dictionary = True):
             self.highlight.set_visible(False)
             self.highlight.set_active(False)
             self.highlight = None
-        set_mode(self, self._mode)
+        self.set_mode(None, None, self._mode)
         set_canvas_limits_axis(self, self.canvas)
     self.canvas.grab_focus()
 

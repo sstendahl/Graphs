@@ -332,12 +332,44 @@
                                             <property name="margin-end">5</property>
                                             <property name="hexpand">True</property>
                                             <layout>
-                                              <property name="column">0</property>
+                                              <property name="column">1</property>
                                               <property name="row">2</property>
-                                              <property name="column-span">2</property>
+                                              <property name="column-span">1</property>
                                             </layout>
                                           </object>
                                         </child>
+                                        <child>
+                                          <object class="GtkButton" id="combine_data_button">
+                                            <child>
+                                              <object class="GtkBox">
+                                                <property name="halign">center</property>
+                                                <child>
+                                                  <object class="GtkImage">
+                                                    <property name="icon-name">edit-paste-symbolic</property>
+                                                    <property name="margin-end">6</property>
+                                                  </object>
+                                                </child>
+                                                <child>
+                                                  <object class="GtkLabel">
+                                                    <property name="label">Combine</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </child>
+                                            <property name="tooltip-text" translatable="yes">Combine selected data</property>
+                                            <property name="action-name">app.combine_data</property>
+                                            <property name="margin-bottom">5</property>
+                                            <property name="margin-top">5</property>
+                                            <property name="margin-start">5</property>
+                                            <property name="margin-end">5</property>
+                                            <property name="hexpand">True</property>
+                                            <layout>
+                                              <property name="column">0</property>
+                                              <property name="row">2</property>
+                                              <property name="column-span">1</property>
+                                            </layout>
+                                          </object>
+                                        </child>                                        
                                       </object>
                                     </child>
                                   </object>

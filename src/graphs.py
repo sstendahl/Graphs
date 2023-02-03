@@ -321,11 +321,6 @@ def on_open_response(dialog, response, self, import_settings):
             import_settings["mode"] = "single"
 
         open_selection(self, files, import_settings = import_settings)
-        win = self.props.active_window
-        button = win.select_data_button
-        if not button.get_active():
-            self.highlight.set_visible(False)
-            self.highlight.set_active(False)
 
 
 def load_empty(self):
@@ -358,6 +353,7 @@ def enable_data_dependent_buttons(self, enabled):
     win.derivative_button,
     win.integral_button,
     win.transform_data_button,
+    win.combine_data_button,
     ]
 
     for button in dependent_buttons:
