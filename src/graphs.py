@@ -46,6 +46,7 @@ def open_selection_from_file(self, files, import_settings):
             try:
                 item = get_data(self, path, import_settings)
                 if item.xdata == []:
+                    self.props.active_window.toast_overlay.add_toast(Adw.Toast(title=f"At least one data set could not be imported"))                    
                     continue
             except IndexError:
                 self.props.active_window.toast_overlay.add_toast(Adw.Toast(title=f"Could not open data, the column index was out of range"))
