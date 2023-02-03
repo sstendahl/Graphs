@@ -595,30 +595,15 @@ class PlotWidget(FigureCanvas):
         plt.rcParams.update(plt.rcParamsDefault)
         if Adw.StyleManager.get_default().get_dark():
             self.figure.patch.set_facecolor("#242424")
-            params = {"ytick.color" : "w",
-            "xtick.color" : "w",
-            "axes.labelcolor" : "w",
-            "font.family": "sans-serif",
-            "font.weight": parent.plot_settings.font_weight,
-            "font.sans-serif": parent.plot_settings.font_family,
-            "font.size": parent.plot_settings.font_size,
-            "font.style": parent.plot_settings.font_style,
-            "mathtext.default": "regular"
-            }
-            plt.style.use(parent.plot_settings.plot_style)
         else:
             self.figure.patch.set_facecolor("#fafafa")
-            params = {"ytick.color" : "black",
-            "xtick.color" : "black",
-            "axes.labelcolor" : "black",
-            "font.family": "sans-serif",
-            "font.weight": parent.plot_settings.font_weight,
-            "font.sans-serif": parent.plot_settings.font_family,
-            "font.size": parent.plot_settings.font_size,
-            "font.style": parent.plot_settings.font_style,
-            "mathtext.default": "regular"
-            }
-            plt.style.use(parent.plot_settings.plot_style)
+        params = {
+        "font.weight": parent.plot_settings.font_weight,
+        "font.sans-serif": parent.plot_settings.font_family,
+        "font.size": parent.plot_settings.font_size,
+        "font.style": parent.plot_settings.font_style,
+        }
+        plt.style.use(parent.plot_settings.plot_style)
         plt.rcParams.update(params)
 
     def set_color_cycle(self, parent):
