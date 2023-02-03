@@ -662,6 +662,7 @@ def center_data(shortcut, _, self):
                 self.datadict[key].xdata = center_data_max_Y(self.datadict[key].xdata, self.datadict[key].ydata)
             elif self.preferences.config["action_center_data"] == "Center at middle coordinate":
                 self.datadict[key].xdata = center_data_middle(self.datadict[key].xdata)
+        self.datadict[key].xdata, self.datadict[key].ydata = sort_data(self.datadict[key].xdata, self.datadict[key].ydata)
     delete_selected_data(self)
     add_to_clipboard(self)
     plotting_tools.refresh_plot(self)
@@ -687,4 +688,3 @@ def center_data_middle(xdata):
     middle_value = (min(xdata) + max(xdata)) / 2
     xdata = [coordinate - middle_value for coordinate in xdata]
     return xdata
-
