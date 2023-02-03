@@ -28,6 +28,7 @@ class GraphsApplication(Adw.Application):
         self.highlights = []        
         self.item_rows = {}
         self.sample_menu = {}
+        self.load_preferences()
         self.connect_actions()
         
     def load_preferences(self):
@@ -73,13 +74,10 @@ class GraphsApplication(Adw.Application):
         self.create_action('get_inverse_fourier', item_operations.get_inverse_fourier, None, self)        
         self.create_action('delete_selected', graphs.delete_selected, ['Delete'], self)
 
-        change_xscale = Gio.SimpleAction.new_stateful("change_xscale", GLib.VariantType.new("s"), GLib.Variant.new_string("linear"))
-        change_xscale.connect("activate", plotting_tools.change_xscale, self)
-        self.add_action(change_xscale)
-
-        change_yscale = Gio.SimpleAction.new_stateful("change_yscale", GLib.VariantType.new("s"), GLib.Variant.new_string("linear"))
-        change_yscale.connect("activate", plotting_tools.change_yscale, self)
-        self.add_action(change_yscale)
+        self.create_axis_action('change_left_yscale', plotting_tools.change_left_yscale, 'plot_Y_scale')
+        self.create_axis_action('change_right_yscale', plotting_tools.change_right_yscale, 'plot_right_scale')
+        self.create_axis_action('change_top_xscale', plotting_tools.change_top_xscale, 'plot_top_scale')
+        self.create_axis_action('change_bottom_xscale', plotting_tools.change_bottom_xscale, 'plot_X_scale')
 
         toggle_sidebar = Gio.SimpleAction.new_stateful("toggle_sidebar", None, GLib.Variant.new_boolean(True))
         toggle_sidebar.connect("activate", self.toggle_sidebar)
@@ -97,7 +95,6 @@ class GraphsApplication(Adw.Application):
         if not win:
             win = GraphsWindow(application=self)
         self.main_window = win
-        self.load_preferences()
         graphs.load_empty(self)
         graphs.disable_clipboard_buttons(self)
         graphs.enable_data_dependent_buttons(self, False)
@@ -202,6 +199,11 @@ class GraphsApplication(Adw.Application):
         self.add_action(action)
         if shortcuts:
             self.set_accels_for_action(f"app.{name}", shortcuts)
+
+    def create_axis_action(self, name, callback, config_key):
+        action = Gio.SimpleAction.new_stateful(name, GLib.VariantType.new("s"), GLib.Variant.new_string(self.preferences.config[config_key]))
+        action.connect("activate", callback, self)
+        self.add_action(action)
 
 
 def main(version):

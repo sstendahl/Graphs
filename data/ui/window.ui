@@ -730,28 +730,54 @@
     </section>
     <section>
       <submenu>
-        <attribute name="label" translatable="yes">_X Scale</attribute>
+        <attribute name="label" translatable="yes">Top X Scale</attribute>
         <item>
           <attribute name="label" translatable="yes">Logarithmic</attribute>
-          <attribute name="action">app.change_xscale</attribute>
-          <attribute name="target">logarithmic</attribute>
+          <attribute name="action">app.change_top_xscale</attribute>
+          <attribute name="target">log</attribute>
         </item>
         <item>
           <attribute name="label" translatable="yes">Linear</attribute>
-          <attribute name="action">app.change_xscale</attribute>
+          <attribute name="action">app.change_top_xscale</attribute>
           <attribute name="target">linear</attribute>
         </item>
       </submenu>
       <submenu>
-        <attribute name="label" translatable="yes">_Y Scale</attribute>
+        <attribute name="label" translatable="yes">Bottom X Scale</attribute>
         <item>
           <attribute name="label" translatable="yes">Logarithmic</attribute>
-          <attribute name="action">app.change_yscale</attribute>
-          <attribute name="target">logarithmic</attribute>
+          <attribute name="action">app.change_bottom_xscale</attribute>
+          <attribute name="target">log</attribute>
         </item>
         <item>
           <attribute name="label" translatable="yes">Linear</attribute>
-          <attribute name="action">app.change_yscale</attribute>
+          <attribute name="action">app.change_bottom_xscale</attribute>
+          <attribute name="target">linear</attribute>
+        </item>
+      </submenu>
+      <submenu>
+        <attribute name="label" translatable="yes">Left Y Scale</attribute>
+        <item>
+          <attribute name="label" translatable="yes">Logarithmic</attribute>
+          <attribute name="action">app.change_left_yscale</attribute>
+          <attribute name="target">log</attribute>
+        </item>
+        <item>
+          <attribute name="label" translatable="yes">Linear</attribute>
+          <attribute name="action">app.change_left_yscale</attribute>
+          <attribute name="target">linear</attribute>
+        </item>
+      </submenu>
+      <submenu>
+        <attribute name="label" translatable="yes">Right Y Scale</attribute>
+        <item>
+          <attribute name="label" translatable="yes">Logarithmic</attribute>
+          <attribute name="action">app.change_right_yscale</attribute>
+          <attribute name="target">log</attribute>
+        </item>
+        <item>
+          <attribute name="label" translatable="yes">Linear</attribute>
+          <attribute name="action">app.change_right_yscale</attribute>
           <attribute name="target">linear</attribute>
         </item>
       </submenu>
