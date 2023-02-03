@@ -337,8 +337,10 @@ def combine_data(widget, shortcut, self):
     
     #Create the sample itself
     new_item = utilities.create_data(self, xdata = new_xdata, ydata = new_ydata, name = "Combined Data")
-    if new_item.filename in self.datadict:
-         new_item.filename = graphs.get_duplicate_filename(self, name)
+    filename_list = utilities.get_all_filenames(self)
+        
+    if new_item.filename in filename_list:
+         new_item.filename = graphs.get_duplicate_filename(self, new_item.filename)
     new_item.xdata_clipboard = [new_item.xdata.copy()]
     new_item.ydata_clipboard = [new_item.ydata.copy()]
     new_item.clipboard_pos = -1
@@ -685,4 +687,3 @@ def center_data_middle(xdata):
     middle_value = (min(xdata) + max(xdata)) / 2
     xdata = [coordinate - middle_value for coordinate in xdata]
     return xdata
-
