@@ -61,8 +61,8 @@ def create_data(self, x_start, x_stop, equation, step_size, name):
     datapoints = int(abs(eval(x_start) - eval(x_stop))/eval(step_size))
     new_file.xdata =  linspace(eval(x_start),eval(x_stop),datapoints)
     equation = equation.replace("X", "new_file.xdata")
-    equation = str(equation.replace(",", "."))      
     equation = str(equation.replace("^", "**"))
+    equation = str(equation.replace(",", "."))        
     equation += " + new_file.xdata*0"
     new_file.ydata = eval(equation)
     new_file.xdata = ndarray.tolist(new_file.xdata)
