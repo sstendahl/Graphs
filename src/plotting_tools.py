@@ -602,6 +602,10 @@ class PlotWidget(FigureCanvas):
         "font.sans-serif": parent.plot_settings.font_family,
         "font.size": parent.plot_settings.font_size,
         "axes.labelsize": parent.plot_settings.font_size,
+        "xtick.labelsize": parent.plot_settings.font_size,
+        "ytick.labelsize": parent.plot_settings.font_size,
+        "axes.titlesize": parent.plot_settings.font_size,
+        "legend.fontsize": parent.plot_settings.font_size,
         "font.style": parent.plot_settings.font_style,
         }
         plt.style.use(parent.plot_settings.plot_style)
