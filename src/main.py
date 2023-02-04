@@ -9,7 +9,7 @@ import datetime
 gi.require_version('Gtk', '4.0')
 gi.require_version('Adw', '1')
 
-from gi.repository import Gtk, Gio, Gdk, Adw
+from gi.repository import Gtk, Gio, Gdk, Adw, GLib
 from .window import GraphsWindow
 import matplotlib.pyplot as plt
 from matplotlib.backend_bases import _Mode
@@ -28,6 +28,7 @@ class GraphsApplication(Adw.Application):
         self.highlights = []        
         self.item_rows = {}
         self.sample_menu = {}
+        self.load_preferences()
         self.connect_actions()
         
     def load_preferences(self):
@@ -38,7 +39,6 @@ class GraphsApplication(Adw.Application):
     def connect_actions(self):
         self.create_action('quit', self.on_quit_action, ['<primary>q'])
         self.create_action('about', self.on_about_action)
-        self.create_action('toggle_sidebar', self.toggle_sidebar, ['F9'])
         self.create_action('mode_none', self.set_mode, ['<shift>N', 'F1'], InteractionMode.NONE)
         self.create_action('mode_pan', self.set_mode, ['<shift>P', 'F2'], InteractionMode.PAN)
         self.create_action('mode_zoom', self.set_mode, ['<shift>Z', 'F3'], InteractionMode.ZOOM)
@@ -73,8 +73,16 @@ class GraphsApplication(Adw.Application):
         self.create_action('get_fourier', item_operations.get_fourier, None, self)
         self.create_action('get_inverse_fourier', item_operations.get_inverse_fourier, None, self)        
         self.create_action('delete_selected', graphs.delete_selected, ['Delete'], self)
-        self.create_action('change_xscale', plotting_tools.change_xscale, None, self)
-        self.create_action('change_yscale', plotting_tools.change_yscale, None, self)
+
+        self.create_axis_action('change_left_yscale', plotting_tools.change_left_yscale, 'plot_Y_scale')
+        self.create_axis_action('change_right_yscale', plotting_tools.change_right_yscale, 'plot_right_scale')
+        self.create_axis_action('change_top_xscale', plotting_tools.change_top_xscale, 'plot_top_scale')
+        self.create_axis_action('change_bottom_xscale', plotting_tools.change_bottom_xscale, 'plot_X_scale')
+
+        toggle_sidebar = Gio.SimpleAction.new_stateful("toggle_sidebar", None, GLib.Variant.new_boolean(True))
+        toggle_sidebar.connect("activate", self.toggle_sidebar)
+        self.add_action(toggle_sidebar)
+        self.set_accels_for_action("app.toggle_sidebar", ['F9'])
 
         Adw.StyleManager.get_default().connect("notify", graphs.toggle_darkmode, None, self)
 
@@ -87,7 +95,6 @@ class GraphsApplication(Adw.Application):
         if not win:
             win = GraphsWindow(application=self)
         self.main_window = win
-        self.load_preferences()
         graphs.load_empty(self)
         graphs.disable_clipboard_buttons(self)
         graphs.enable_data_dependent_buttons(self, False)
@@ -115,10 +122,11 @@ class GraphsApplication(Adw.Application):
     def on_quit_action(self, widget, shortcut):
         self.quit()
 
-    def toggle_sidebar(self, widget, shortcut):
+    def toggle_sidebar(self, action, shortcut):
         win = self.main_window
         flap = win.sidebar_flap
         enabled = not flap.get_reveal_flap()
+        action.change_state(GLib.Variant.new_boolean(enabled))
         flap.set_reveal_flap(enabled)
 
     def set_mode(self, widget, shortcut, mode):
@@ -191,6 +199,11 @@ class GraphsApplication(Adw.Application):
         self.add_action(action)
         if shortcuts:
             self.set_accels_for_action(f"app.{name}", shortcuts)
+
+    def create_axis_action(self, name, callback, config_key):
+        action = Gio.SimpleAction.new_stateful(name, GLib.VariantType.new("s"), GLib.Variant.new_string(self.preferences.config[config_key]))
+        action.connect("activate", callback, self)
+        self.add_action(action)
 
 
 def main(version):
