@@ -9,6 +9,7 @@ application_id = 'se.sjoerd.Graphs'
 
 i18n = import('i18n')
 gnome = import('gnome')
+fs = import('fs')
 
 prefix = get_option('prefix')
 datadir = get_option('datadir')
