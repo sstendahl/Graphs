@@ -1,9 +1,8 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
-from gi.repository import Gtk, Adw, GObject, Gio
-import uuid
+from gi.repository import Gtk, Adw
 from numpy import *
-from . import item_operations, plotting_tools, graphs, utilities
-from .data import Data
+
+from . import plotting_tools, graphs, utilities
 
 def open_add_equation_window(widget, _, self):
     """

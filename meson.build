@@ -10,9 +10,11 @@ application_id = 'se.sjoerd.Graphs'
 i18n = import('i18n')
 gnome = import('gnome')
 
+prefix = get_option('prefix')
 datadir = get_option('datadir')
-pkgdatadir = join_paths(get_option('prefix'), datadir, meson.project_name())
+pkgdatadir = join_paths(prefix, datadir, meson.project_name())
 moduledir = join_paths(pkgdatadir, meson.project_name())
+localedir = join_paths(prefix, get_option('localedir'))
 
 subdir('data')
 subdir('src')

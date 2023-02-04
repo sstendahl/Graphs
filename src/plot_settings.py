@@ -1,11 +1,11 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
-from gi.repository import Gtk, Adw, GObject, Gio
-from numpy import *
-from . import item_operations, plotting_tools, graphs, utilities
-from .data import Data
-import uuid
+from gi.repository import Gtk, Adw
+
 from matplotlib.lines import Line2D
 import matplotlib.pyplot as plt
+
+from . import plotting_tools, graphs, utilities
+from .data import Data
 
 def open_plot_settings(widget, _, self, id = None):
     win = PlotSettingsWindow(self, id)

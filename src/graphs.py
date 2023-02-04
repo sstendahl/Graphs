@@ -1,18 +1,15 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
-from gi.repository import Gtk, Gdk, Gio, GObject, Adw
 import gi
 import os
 import re
-import uuid
-from .plotting_tools import PlotWidget
-from . import plotting_tools, samplerow, colorpicker, utilities
-import numpy as np
-from .data import Data
-from matplotlib import colors
+import numpy
+
+from gi.repository import Gtk, Adw
 from matplotlib.backends.backend_gtk4 import NavigationToolbar2GTK4 as NavigationToolbar
 
-gi.require_version('Adw', '1')
-gi.require_version('Gtk', '4.0')
+from . import plotting_tools, samplerow, colorpicker, utilities
+from .plotting_tools import PlotWidget
+from .data import Data
 
 def get_theme_color(self):
     win = self.props.active_window
@@ -109,7 +106,6 @@ def select_item(self, key):
 
 def get_data(self, path, import_settings):
     data = Data()
-    data.id = str(uuid.uuid4())
     data.plot_Y_position = self.preferences.config["plot_Y_position"]
     data.plot_X_position = self.preferences.config["plot_X_position"]
     data_array = [[], []]
@@ -282,18 +278,18 @@ def save_file(self, path):
             xdata = item.xdata
             ydata = item.ydata
         filename = path
-        array = np.stack([xdata, ydata], axis=1)
-        np.savetxt(str(filename), array, delimiter="\t")
+        array = numpy.stack([xdata, ydata], axis=1)
+        numpy.savetxt(str(filename), array, delimiter="\t")
     elif len(self.datadict) > 1:
         for key, item in self.datadict.items():
             xdata = item.xdata
             ydata = item.ydata
             filename = key
-            array = np.stack([xdata, ydata], axis=1)
+            array = numpy.stack([xdata, ydata], axis=1)
             if os.path.exists(f"{path}/{filename}.txt"):
-                np.savetxt(str(path + "/" + filename) + " (copy).txt", array, delimiter="\t")
+                numpy.savetxt(str(path + "/" + filename) + " (copy).txt", array, delimiter="\t")
             else:
-                np.savetxt(str(path + "/" + filename) + ".txt", array, delimiter="\t")
+                numpy.savetxt(str(path + "/" + filename) + ".txt", array, delimiter="\t")
 
 
 def open_file_dialog(widget, _, self, import_settings = None):

@@ -1,9 +1,11 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
+import uuid
+
 from dataclasses import dataclass, field
 
 @dataclass
 class Data:
-    id: str = ""
+    id: str = str(uuid.uuid4())
     filename: str = ""
     clipboard_pos: int = 0
     xdata: list = field(default_factory=list)

@@ -1,12 +1,14 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
-from gi.repository import Gtk, Adw, GObject
 import os
 import shutil
-from . import plotting_tools, graphs, utilities
 import json
-from matplotlib.lines import Line2D
 import matplotlib.pyplot as plt
 import matplotlib.font_manager
+
+from gi.repository import Gtk, Adw
+from matplotlib.lines import Line2D
+
+from . import plotting_tools, graphs, utilities
 
 
 def open_preferences_window(widget, _, self):

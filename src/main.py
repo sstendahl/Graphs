@@ -1,20 +1,13 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
-
-import sys
-import gi
-import shutil
-import os
 import datetime
+import sys
 
-gi.require_version('Gtk', '4.0')
-gi.require_version('Adw', '1')
-
-from gi.repository import Gtk, Gio, Gdk, Adw, GLib
-from .window import GraphsWindow
-import matplotlib.pyplot as plt
+from gi.repository import Gio, Adw, GLib
 from matplotlib.backend_bases import _Mode
+
 from . import graphs, plotting_tools, item_operations, transform_data, preferences, add_equation, add_data_advanced, plot_settings
 from .utilities import InteractionMode
+from .window import GraphsWindow
 
 class GraphsApplication(Adw.Application):
     """The main application singleton class."""

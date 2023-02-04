@@ -1,8 +1,8 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
-import gi
-from . import plotting_tools, utilities
-from gi.repository import Gtk, GObject, Gdk
+from gi.repository import Gtk
 from matplotlib import colors
+
+from . import plotting_tools, utilities
 
 class ColorPicker(Gtk.Button):
     def __init__(self, color, row, parent):

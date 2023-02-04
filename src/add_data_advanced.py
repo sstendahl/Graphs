@@ -1,8 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
-from gi.repository import Gtk, Adw, GObject, Gio
-from numpy import *
-from . import item_operations, graphs, utilities
-from .data import Data
+from gi.repository import Gtk, Adw
+
+from . import graphs, utilities
 
 def open_add_data_advanced_window(widget, _, self):
     """
