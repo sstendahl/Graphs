@@ -2,3 +2,12 @@
 # German Translation
 msgid ""
 msgstr""
+"Project-Id-Version: graphs\n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: data/ui/window.ui:21
+msgid "Add new data"
+msgstr "Neue Daten hinzufügen"
