@@ -49,6 +49,7 @@ def plot_figure(self, canvas, X, Y, filename="", xlim=None, linewidth = 2, title
             canvas.right_axis.plot(X, Y, linewidth = linewidth ,label=filename, linestyle=linestyle, marker=marker, color = color, markersize=marker_size)
         elif x_axis == "top":
             canvas.top_right_axis.plot(X, Y, linewidth = linewidth ,label=filename, linestyle=linestyle, marker=marker, color = color, markersize=marker_size)
+            canvas.top_right_axis.set_yscale(self.plot_settings.right_scale)          
     set_legend(self, canvas)
 
 def set_legend(self, canvas):
