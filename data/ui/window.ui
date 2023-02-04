@@ -92,7 +92,7 @@
             <property name="fold-duration">1</property>
             <property name="fold-policy">ADW_FLAP_FOLD_POLICY_NEVER</property>
             <child type="flap">
-              <object class="GtkBox" id="selection_box">"
+              <object class="GtkBox">
                 <property name="orientation">vertical</property>
                 <property name="width-request">370</property>
                 <property name="hexpand">false</property>
@@ -104,15 +104,23 @@
                     <property name="child">
                       <object class="GtkViewport">
                         <property name="child">
-                          <object class="GtkListBox" id="list_box">
-                            <property name="margin-bottom">12</property>
-                            <property name="margin-top">12</property>
-                            <property name="margin-start">12</property>
-                            <property name="margin-end">12</property>
-                            <property name="selection-mode">none</property>
-                            <style>
-                              <class name="boxed-list" />
-                            </style>
+                          <object class="GtkBox">
+                            <child>
+                              <object class="GtkListBox" id="list_box">
+                                <property name="margin-bottom">12</property>
+                                <property name="margin-top">12</property>
+                                <property name="margin-start">12</property>
+                                <property name="margin-end">12</property>
+                                <property name="vexpand">false</property>
+                                <property name="valign">start</property>
+                                <property name="hexpand">true</property>
+                                <property name="visible">false</property>
+                                <property name="selection-mode">none</property>
+                                <style>
+                                  <class name="boxed-list" />
+                                </style>
+                              </object>
+                            </child>
                           </object>
                         </property>
                       </object>
@@ -120,10 +128,15 @@
                   </object>
                 </child>
                 <child>
+                  <object class="GtkSeparator">
+                    <property name="orientation">horizontal</property>
+                  </object>
+                </child>
+                <child>
                   <object class="GtkBox">
                     <property name="spacing">10</property>
-                    <property name="margin-top">6</property>
-                    <property name="margin-bottom">6</property>
+                    <property name="margin-top">12</property>
+                    <property name="margin-bottom">12</property>
                     <property name="margin-start">12</property>
                     <property name="margin-end">12</property>
                     <child>
@@ -158,6 +171,11 @@
                         <property name="hexpand">true</property>
                       </object>
                     </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkSeparator">
+                    <property name="orientation">horizontal</property>
                   </object>
                 </child>
                 <child>
@@ -816,4 +834,5 @@
     </section>
   </menu>
 </interface>
+
 

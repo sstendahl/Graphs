@@ -189,7 +189,7 @@ def delete(widget,  self, id, give_toast = True):
     layout = self.list_box
     for key, item in self.sample_menu.items():
         if key == id:
-            self.list_box.remove(item)
+            layout.remove(item)
     filename = self.datadict[id].filename
     del self.item_rows[id]
     del self.datadict[id]
@@ -199,6 +199,7 @@ def delete(widget,  self, id, give_toast = True):
     if len(self.datadict) == 0:
         self.canvas.ax.legend().remove()
         self.canvas.ax.set_prop_cycle(None)
+        layout.set_visible(False)
 
     reset_clipboard(self)
     plotting_tools.refresh_plot(self)
@@ -219,7 +220,8 @@ def select_none(widget, _, self):
     enable_data_dependent_buttons(self, False)
 
 def add_sample_to_menu(self, filename, color, id, select_item = False):
-    win = self.props.active_window
+    win = self.main_window
+    self.main_window.list_box.set_visible(True)
     self.list_box = win.list_box
     row = samplerow.SampleBox(self, filename, id)
     row.gesture.connect("released", row.clicked, self)
