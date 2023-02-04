@@ -7,13 +7,12 @@ from . import plotting_tools, utilities
 class ColorPicker(Gtk.Button):
     def __init__(self, color, row, parent):
         super().__init__()
-        #self.set_size_request(45, -1)
         self.row = row
         self.parent = parent
         self.set_tooltip_text(_("Pick a color"))
         self.color = color
-        style_context = self.get_style_context()
-        style_context.add_class("circular")
+        self.add_css_class("flat")
+        self.set_child(Gtk.Image.new_from_icon_name("fill-tool-symbolic"))
 
         press_gesture = Gtk.GestureClick()
         press_gesture.connect("pressed", self.change_color)
@@ -66,7 +65,7 @@ class ColorPicker(Gtk.Button):
         return color_hex
 
     def update_color(self):
-        css = f'button {{ background: {self.get_rgba().to_string()}; }}'
+        css = f'button {{ color: {self.get_rgba().to_string()}; }}'
         self.provider.load_from_data(css.encode())
 
     def set_css(self):

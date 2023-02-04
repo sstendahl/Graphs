@@ -26,3 +26,4 @@ class Data:
     plot_X_position: str = "bottom"
     selected: bool = True
 
+
