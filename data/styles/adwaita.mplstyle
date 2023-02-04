@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
 # adwaita
 patch.facecolor: FAFAFA
 patch.linewidth: .3

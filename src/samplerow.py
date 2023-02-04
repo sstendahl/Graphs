@@ -1,9 +1,10 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
-import gi
-from gi.repository import Gtk, Gdk, Gio, GdkPixbuf, Adw, GObject
-from . import graphs, plot_settings
 import time
-from . import plotting_tools
+
+from gi.repository import Gtk, Adw
+
+from . import graphs, plot_settings
+
 @Gtk.Template(resource_path='/se/sjoerd/Graphs/ui/sample_box.ui')
 class SampleBox(Gtk.Box):
     __gtype_name__ = "SampleBox"

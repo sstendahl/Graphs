@@ -1,18 +1,18 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
-from gi.repository import Gtk, Adw, Gio, GLib, Gdk, GdkPixbuf
 import copy
-from matplotlib.figure import Figure
+import os
+import time
+import matplotlib.font_manager
 import matplotlib.pyplot as plt
+
+from gi.repository import Gtk, Adw
 from matplotlib import colors
-from matplotlib.backends.backend_gtk4agg import (
-    FigureCanvasGTK4Agg as FigureCanvas)
-from matplotlib.backend_bases import _Mode
-from . import graphs, utilities, rename_label
+from matplotlib.backends.backend_gtk4agg import FigureCanvasGTK4Agg as FigureCanvas
+from matplotlib.figure import Figure
 from matplotlib.widgets import SpanSelector
 from cycler import cycler
-import matplotlib.font_manager
-import time 
-import os
+
+from . import graphs, utilities, rename_label
 
 def define_highlight(self, span=None):
     """

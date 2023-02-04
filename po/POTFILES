@@ -1,6 +1,12 @@
-data/se.sjoerd.DatMan.desktop.in
-data/se.sjoerd.DatMan.appdata.xml.in
-data/se.sjoerd.DatMan.gschema.xml
-src/main.py
-src/window.py
-src/window.ui
+# SPDX-License-Identifier: GPL-3.0-or-later
+data/se.sjoerd.Graphs.appdata.xml.in
+data/se.sjoerd.Graphs.desktop.in
+data/ui/add_data_advanced.ui
+data/ui/add_equation_window.ui
+data/ui/help_overlay.ui
+data/ui/plot_settings.ui
+data/ui/preferences.ui
+data/ui/rename_label_window.ui
+data/ui/sample_box.ui
+data/ui/transform_windo.ui
+data/ui/window.ui

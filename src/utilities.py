@@ -1,8 +1,8 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 from gi.repository import Gdk
 from enum import Enum
+
 from .data import Data
-import uuid
 
 def set_chooser(chooser, choice):
     """
@@ -93,7 +93,6 @@ def create_data(self, xdata = [], ydata = [], name = "New data"):
     Create a new dataset using the xdata, ydata and name of the dataset as argument
     """
     new_file = Data()
-    new_file.id = str(uuid.uuid4())
     new_file.xdata = xdata
     new_file.ydata = ydata
     new_file.filename = name

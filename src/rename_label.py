@@ -1,7 +1,6 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
-from gi.repository import Gtk, Adw, GObject, Gio
-from numpy import *
-from .data import Data
+from gi.repository import Gtk, Adw
+
 from . import plotting_tools
 
 def open_rename_label_window(self, axis):

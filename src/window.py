@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
-from gi.repository import Adw, Gio, Gtk
+from gi.repository import Adw, Gtk
 
 @Gtk.Template(resource_path='/se/sjoerd/Graphs/ui/window.ui')
 class GraphsWindow(Adw.ApplicationWindow):

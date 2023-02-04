@@ -1,18 +1,14 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
-from gi.repository import Gtk, Gio, GObject, Adw
-import gi
 import re
 import numpy as np
-from .plotting_tools import PlotWidget
-from . import plotting_tools, graphs, utilities
+
+from gi.repository import Adw
 from scipy import integrate
+
+from . import plotting_tools, graphs, utilities
 from .data import Data
 from .utilities import InteractionMode
-from matplotlib.backends.backend_gtk4 import (
-    NavigationToolbar2GTK4 as NavigationToolbar)
-
-gi.require_version('Adw', '1')
-gi.require_version('Gtk', '4.0')
+from .plotting_tools import PlotWidget
 
 def save_data(widget, _, self):
     """
