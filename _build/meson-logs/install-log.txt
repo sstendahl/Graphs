@@ -1,0 +1,28 @@
+# List of files installed by Meson
+# Does not contain files installed by custom scripts.
+/app/share/applications/se.sjoerd.Graphs.desktop
+/app/share/appdata/se.sjoerd.Graphs.appdata.xml
+/app/share/graphs/se.sjoerd.Graphs.gresource
+/app/share/locale/de/LC_MESSAGES/graphs.mo
+/app/share/glib-2.0/schemas/se.sjoerd.Graphs.gschema.xml
+/app/share/icons/hicolor/scalable/apps/se.sjoerd.Graphs.svg
+/app/share/icons/hicolor/symbolic/apps/se.sjoerd.Graphs-symbolic.svg
+/app/share/graphs/graphs/config.json
+/app/lib/python3.10/site-packages/matplotlib/mpl-data/stylelib/adwaita.mplstyle
+/app/lib/python3.10/site-packages/matplotlib/mpl-data/stylelib/adwaita-dark.mplstyle
+/app/bin/graphs
+/app/share/graphs/graphs/add_data_advanced.py
+/app/share/graphs/graphs/add_equation.py
+/app/share/graphs/graphs/colorpicker.py
+/app/share/graphs/graphs/data.py
+/app/share/graphs/graphs/graphs.py
+/app/share/graphs/graphs/item_operations.py
+/app/share/graphs/graphs/main.py
+/app/share/graphs/graphs/plot_settings.py
+/app/share/graphs/graphs/plotting_tools.py
+/app/share/graphs/graphs/preferences.py
+/app/share/graphs/graphs/rename_label.py
+/app/share/graphs/graphs/samplerow.py
+/app/share/graphs/graphs/transform_data.py
+/app/share/graphs/graphs/utilities.py
+/app/share/graphs/graphs/window.py
