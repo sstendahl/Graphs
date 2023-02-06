@@ -217,6 +217,7 @@ def select_none(widget, _, self):
 def add_sample_to_menu(self, filename, color, id, select_item = False):
     win = self.main_window
     self.main_window.list_box.set_visible(True)
+    self.item_rows[id] = row
     self.list_box = win.list_box
     row = samplerow.SampleBox(self, filename, id)
     row.gesture.connect("released", row.clicked, self)
@@ -235,7 +236,6 @@ def add_sample_to_menu(self, filename, color, id, select_item = False):
         row.check_button.set_active(True)
     row.sample_ID_label.set_text(label)
     self.list_box.append(row)
-    self.item_rows[id] = row
     self.sample_menu[id] = self.list_box.get_last_child()
 
 def toggle_data(widget,  self, id):
@@ -379,4 +379,3 @@ def enable_data_dependent_buttons(self, enabled):
 
     for button in dependent_buttons:
         button.set_sensitive(enabled)
-
