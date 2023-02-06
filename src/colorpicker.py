@@ -5,9 +5,8 @@ from matplotlib import colors
 from . import plotting_tools, utilities
 
 class ColorPicker(Gtk.Button):
-    def __init__(self, color, row, parent):
+    def __init__(self, color, parent):
         super().__init__()
-        self.row = row
         self.parent = parent
         self.set_tooltip_text(_("Pick a color"))
         self.color = color
