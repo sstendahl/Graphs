@@ -217,7 +217,6 @@ def select_none(widget, _, self):
 def add_sample_to_menu(self, filename, color, id, select_item = False):
     win = self.main_window
     self.main_window.list_box.set_visible(True)
-    self.item_rows[id] = row
     self.list_box = win.list_box
     row = samplerow.SampleBox(self, filename, id)
     row.gesture.connect("released", row.clicked, self)
@@ -227,6 +226,7 @@ def add_sample_to_menu(self, filename, color, id, select_item = False):
     row.sample_box.insert_child_after(row.color_picker, row.sample_ID_label)
     row.check_button.connect("toggled", toggle_data, self, id)
     row.delete_button.connect("clicked", delete, self, id)
+    self.item_rows[id] = row
     max_length = int(26)
     if len(filename) > max_length:
         label = f"{filename[:max_length]}..."
