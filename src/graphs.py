@@ -73,7 +73,7 @@ def open_selection_from_file(self, files, import_settings):
                 item.color = plotting_tools.get_next_color(self)
                 plotting_tools.plot_figure(self, self.canvas, item.xdata,item.ydata, item.filename, item.color, y_axis = y_axis, x_axis = x_axis)
                 add_sample_to_menu(self, item.filename, item.color, item.id, select_item = True)
-    plotting_tools.reload_plot(self)
+
     self.canvas.draw()
     plotting_tools.set_canvas_limits_axis(self, self.canvas)
 
@@ -223,6 +223,8 @@ def add_sample_to_menu(self, filename, color, id, select_item = False):
     row.color_picker = colorpicker.ColorPicker(color, parent=self)
     row.color_picker.set_hexpand(False)
     label = row.sample_ID_label
+    if select_item:
+        row.check_button.set_active(True)
     row.sample_box.insert_child_after(row.color_picker, row.sample_ID_label)
     row.check_button.connect("toggled", toggle_data, self, id)
     row.delete_button.connect("clicked", delete, self, id)
@@ -232,8 +234,6 @@ def add_sample_to_menu(self, filename, color, id, select_item = False):
         label = f"{filename[:max_length]}..."
     else:
         label = filename
-    if select_item:
-        row.check_button.set_active(True)
     row.sample_ID_label.set_text(label)
     self.list_box.append(row)
     self.sample_menu[id] = self.list_box.get_last_child()
