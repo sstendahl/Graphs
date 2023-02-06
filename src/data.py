@@ -1,6 +1,5 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 import uuid
-
 from dataclasses import dataclass, field
 
 @dataclass
@@ -24,6 +23,7 @@ class Data:
     plot_Y_position: str = "left"
     plot_X_position: str = "bottom"
     selected: bool = True
-
+    color: str = ""
+    
     def __init__(self):
         self.id: str = str(uuid.uuid4())

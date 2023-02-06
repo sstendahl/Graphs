@@ -4,9 +4,10 @@ import shutil
 import json
 import matplotlib.pyplot as plt
 import matplotlib.font_manager
-
+import pickle
 from gi.repository import Gtk, Adw
 from matplotlib.lines import Line2D
+from . import plotting_tools, graphs
 
 from . import plotting_tools, graphs, utilities
 
@@ -16,7 +17,6 @@ def open_preferences_window(widget, _, self):
     win.set_transient_for(self.props.active_window)
     self.preferences.load_config()
     win.present()
-
 
 class Preferences():
     def __init__(self, parent):
@@ -85,7 +85,6 @@ class Preferences():
         os.chdir(config_path)
         with open("config.json", 'w') as f:
             json.dump(self.config, f)
-
 
     def get_config_path(self) -> str:
         if os.getenv("XDG_CONFIG_HOME"):
@@ -340,4 +339,3 @@ class PreferencesWindow(Adw.PreferencesWindow):
     def on_close(self, _, parent):
         parent.preferences.config = self.set_config()
         parent.preferences.save_config()
-

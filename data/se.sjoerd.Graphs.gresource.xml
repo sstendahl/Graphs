@@ -17,5 +17,6 @@
     <file preprocess="xml-stripblanks" alias="move-tool-symbolic.svg">icons/move-tool-symbolic.svg</file>
     <file preprocess="xml-stripblanks" alias="axes-one-quadrant-symbolic.svg">icons/axes-one-quadrant-symbolic.svg</file>
     <file preprocess="xml-stripblanks" alias="function-third-order-symbolic.svg">icons/function-third-order-symbolic.svg</file>
+    <file preprocess="xml-stripblanks" alias="color-picker-symbolic.svg">icons/color-picker-symbolic.svg</file>
   </gresource>
 </gresources>

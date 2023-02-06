@@ -4,8 +4,8 @@
   <requires lib="gtk" version="4.0" />
   <requires lib="Adw" version="1.2" />
   <template class="GraphsWindow" parent="AdwApplicationWindow">
-    <property name="default-width">1024</property>
-    <property name="default-height">768</property>
+    <property name="default-width">960</property>
+    <property name="default-height">540</property>
     <property name="title">Graphs</property>
     <child>
       <object class="GtkBox">
@@ -713,6 +713,10 @@
   <menu id="add_data_menu">
     <section>
       <item>
+        <attribute name="label" translatable="yes">_Open Project</attribute>
+        <attribute name="action">app.open_project</attribute>
+      </item>
+      <item>
         <attribute name="label" translatable="yes">_Add Data from File</attribute>
         <attribute name="action">app.add_data</attribute>
       </item>
@@ -804,6 +808,10 @@
   </menu>
   <menu id="primary_menu">
     <section>
+      <item>
+        <attribute name="label" translatable="yes">_Save Project</attribute>
+        <attribute name="action">app.save_project</attribute>
+      </item>    
       <item>
         <attribute name="label" translatable="yes">_Export Data</attribute>
         <attribute name="action">app.save_data</attribute>

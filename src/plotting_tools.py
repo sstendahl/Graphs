@@ -383,6 +383,8 @@ def get_next_color(self):
         item_rows = dict(item_rows_list)
     for key, item in item_rows.items():
         used_colors.append(item.color_picker.color)
+    used_colors = [colors.to_rgb(color) for color in used_colors]
+    
     for color in color_list:
         if color not in used_colors:
             return color
@@ -643,3 +645,4 @@ class PlotWidget(FigureCanvas):
             rename_label.open_rename_label_window(self.parent, self.left_label)
         if self.right_label.contains(event)[0] and double_click:
             rename_label.open_rename_label_window(self.parent, self.right_label)
+
