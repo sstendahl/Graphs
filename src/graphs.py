@@ -77,6 +77,7 @@ def open_selection_from_file(self, files, import_settings):
     self.canvas.draw()
     plotting_tools.set_canvas_limits_axis(self, self.canvas)
     plotting_tools.refresh_plot(self)
+    enable_data_dependent_buttons(self, utilities.get_selected_keys(self))    
     
     
 def get_duplicate_filename(self, name):
