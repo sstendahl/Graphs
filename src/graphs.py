@@ -76,7 +76,9 @@ def open_selection_from_file(self, files, import_settings):
 
     self.canvas.draw()
     plotting_tools.set_canvas_limits_axis(self, self.canvas)
-
+    plotting_tools.refresh_plot(self)
+    
+    
 def get_duplicate_filename(self, name):
     loop = True
     i = 0
