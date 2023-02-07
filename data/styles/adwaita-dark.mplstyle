@@ -11,7 +11,7 @@ axes.labelcolor: white
 axes.labelsize: 12
 axes.linewidth: .8
 axes.prop_cycle: cycler('color', ['4C72B0', '55A868', 'C44E52', '8172B2', 'CCB974', '64B5CD'])
-axes.titlesize: 14
+axes.titlesize: 12
 
 font.family: sans-serif
 font.sans-serif: Cantarell
@@ -43,7 +43,7 @@ text.color: white
 
 xtick.color: white
 xtick.direction: out
-xtick.labelsize: 10
+xtick.labelsize: 12
 xtick.major.pad: 7
 xtick.major.size: 0
 xtick.major.width: .8
@@ -52,7 +52,7 @@ xtick.minor.width: .6
 
 ytick.color: white
 ytick.direction: out
-ytick.labelsize: 10
+ytick.labelsize: 12
 ytick.major.pad: 7
 ytick.major.size: 0
 ytick.major.width: .8
