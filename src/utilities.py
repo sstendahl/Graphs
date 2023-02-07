@@ -20,7 +20,7 @@ def empty_chooser(chooser):
     model = chooser.get_model()
     for item in model:
         model.remove(0)
-
+        
 def populate_chooser(chooser, chooser_list):
     """
     Fill the dropdown menu with the strings in a chooser_list
