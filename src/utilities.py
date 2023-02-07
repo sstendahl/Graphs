@@ -92,9 +92,7 @@ def create_data(self, xdata = [], ydata = [], name = "New data"):
     """
     Create a new dataset using the xdata, ydata and name of the dataset as argument
     """
-    new_file = Data()
-    new_file.xdata = xdata
-    new_file.ydata = ydata
+    new_file = Data(xdata, ydata)
     new_file.filename = name
     new_file.linestyle_selected = self.preferences.config["plot_selected_linestyle"]
     new_file.linestyle_unselected = self.preferences.config["plot_unselected_linestyle"]

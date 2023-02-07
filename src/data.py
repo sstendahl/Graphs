@@ -6,12 +6,8 @@ from dataclasses import dataclass, field
 class Data:
     filename: str = ""
     clipboard_pos: int = 0
-    xdata: list = field(default_factory=list)
-    ydata: list = field(default_factory=list)
     xdata_selected: list = field(default_factory=list)
     ydata_selected: list = field(default_factory=list)
-    xdata_clipboard: list = field(default_factory=list)
-    ydata_clipboard: list = field(default_factory=list)
     linestyle_selected: str = ""
     linestyle_unselected: str = ""
     selected_line_thickness: float = 0
@@ -24,6 +20,11 @@ class Data:
     plot_X_position: str = "bottom"
     selected: bool = True
     color: str = ""
-    
-    def __init__(self):
+
+    def __init__(self, xdata, ydata):
+        self.xdata = xdata
+        self.ydata = ydata
+        self.clipboard_pos = 0
+        self.xdata_clipboard = [self.xdata.copy()]
+        self.ydata_clipboard = [self.ydata.copy()]
         self.id: str = str(uuid.uuid4())

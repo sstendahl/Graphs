@@ -5,7 +5,7 @@ from matplotlib import colors
 from . import plotting_tools, utilities
 
 class ColorPicker(Gtk.Button):
-    def __init__(self, color, key, parent):
+    def __init__(self, color, parent):
         super().__init__()
         self.parent = parent
         self.key = key
@@ -13,7 +13,7 @@ class ColorPicker(Gtk.Button):
         self.color = color
         self.add_css_class("flat")
         self.set_child(Gtk.Image.new_from_icon_name("color-picker-symbolic"))
-        self.get_child().set_pixel_size(25)
+        self.get_child().set_pixel_size(20)
         
         press_gesture = Gtk.GestureClick()
         press_gesture.connect("pressed", self.change_color)
@@ -31,6 +31,7 @@ class ColorPicker(Gtk.Button):
         self.set_css()
         self.color = self.get_color()
         parent.datadict[self.key].color = self.color
+
 
     def set_rgba(self, color):
         self.color_chooser.set_rgba(color)

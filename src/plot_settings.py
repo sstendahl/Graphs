@@ -128,8 +128,11 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
         utilities.populate_chooser(self.unselected_markers_chooser, list(Line2D.markers.values()))
         self.unselected_markers_chooser.get_model().append("none")
         utilities.set_chooser(self.plot_style, parent.plot_settings.plot_style)
-        utilities.set_chooser(self.selected_markers_chooser, item.selected_markers)
-        utilities.set_chooser(self.unselected_markers_chooser, item.unselected_markers)
+        marker_dict = Line2D.markers
+        unselected_marker_value = marker_dict[item.unselected_markers]
+        selected_marker_value = marker_dict[item.selected_markers]
+        utilities.set_chooser(self.selected_markers_chooser, selected_marker_value)
+        utilities.set_chooser(self.unselected_markers_chooser, unselected_marker_value)
         self.item = item
         if parent.plot_settings.tick_left:
             self.plot_tick_left.set_active(True)
