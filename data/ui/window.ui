@@ -137,12 +137,12 @@
                                 </child>
                                 <child>
                                   <object class="GtkLabel">"
-                                    <property name="label">Add Data using the button</property>
+                                    <property name="label">Use the button in the top left corner</property>
                                   </object>
                                 </child>
                                 <child>
                                   <object class="GtkLabel">
-                                    <property name="label">on the top left of the window.</property>
+                                    <property name="label">to add data from files or equations.</property>
                                   </object>
                                 </child>>
                               </object>
