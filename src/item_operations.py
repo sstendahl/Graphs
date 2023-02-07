@@ -359,7 +359,6 @@ def combine_data(widget, shortcut, self):
         
     if new_item.filename in filename_list:
          new_item.filename = graphs.get_duplicate_filename(self, new_item.filename)
-    new_item.xdata, new_item.ydata = sort_data(new_item.xdata, new_item.ydata)
     color = plotting_tools.get_next_color(self)
     self.datadict[new_item.id] = new_item
     delete_selected_data(self)
