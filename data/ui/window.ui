@@ -805,10 +805,6 @@
   <menu id="primary_menu">
     <section>
       <item>
-        <attribute name="label" translatable="yes">_Save Project</attribute>
-        <attribute name="action">app.save_data</attribute>
-      </item>    
-      <item>
         <attribute name="label" translatable="yes">_Export Data</attribute>
         <attribute name="action">app.save_data</attribute>
       </item>
