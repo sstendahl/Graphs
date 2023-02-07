@@ -70,10 +70,10 @@ def open_selection_from_file(self, files, import_settings):
                                 return
                 y_axis = item.plot_Y_position
                 x_axis = item.plot_X_position
-                self.datadict[item.id] = item
+                self.datadict[item.key] = item
                 item.color = plotting_tools.get_next_color(self)
                 plotting_tools.plot_figure(self, self.canvas, item.xdata,item.ydata, item.filename, item.color, y_axis = y_axis, x_axis = x_axis)
-                add_sample_to_menu(self, item.filename, item.color, item.id, select_item = True)
+                add_sample_to_menu(self, item.filename, item.color, item.key, select_item = True)
     self.canvas.draw()
     plotting_tools.set_canvas_limits_axis(self, self.canvas)
     plotting_tools.refresh_plot(self)
@@ -193,21 +193,21 @@ def select_none(widget, _, self):
     plotting_tools.refresh_plot(self)
     enable_data_dependent_buttons(self, False)
 
-def add_sample_to_menu(self, filename, color, id, select_item = False):
+def add_sample_to_menu(self, filename, color, key, select_item = False):
     win = self.main_window
     self.main_window.list_box.set_visible(True)
     self.list_box = win.list_box
-    row = samplerow.SampleBox(self, filename, id)
+    row = samplerow.SampleBox(self, filename, key)
     row.gesture.connect("released", row.clicked, self)
-    row.color_picker = colorpicker.ColorPicker(color, id, parent=self)
+    row.color_picker = colorpicker.ColorPicker(color, key, parent=self)
     row.color_picker.set_hexpand(False)
     label = row.sample_ID_label
     if select_item:
         row.check_button.set_active(True)
     row.sample_box.insert_child_after(row.color_picker, row.sample_ID_label)
-    row.check_button.connect("toggled", toggle_data, self, id)
-    row.delete_button.connect("clicked", delete, self, id)
-    self.item_rows[id] = row
+    row.check_button.connect("toggled", toggle_data, self)
+    row.delete_button.connect("clicked", delete, self, key)
+    self.item_rows[key] = row
     max_length = int(26)
     if len(filename) > max_length:
         label = f"{filename[:max_length]}..."
@@ -215,9 +215,9 @@ def add_sample_to_menu(self, filename, color, id, select_item = False):
         label = filename
     row.sample_ID_label.set_text(label)
     self.list_box.append(row)
-    self.sample_menu[id] = self.list_box.get_last_child()
+    self.sample_menu[key] = self.list_box.get_last_child()
     
-def toggle_data(widget,  self, id):
+def toggle_data(widget,  self):
     plotting_tools.refresh_plot(self)
     enable_data_dependent_buttons(self, utilities.get_selected_keys(self))
 
@@ -260,6 +260,7 @@ def save_project_file(self, path):
     project_data = dict()
     project_data["plot_settings"] = self.plot_settings
     project_data["data"] = self.datadict
+    project_data["version"] = self.version
     with open(path, 'wb') as f:
         pickle.dump(project_data, f)
 
@@ -307,7 +308,6 @@ def open_file_dialog(widget, _, self, import_settings = None, open_project = Fal
         action=Gtk.FileChooserAction.OPEN,
         accept_label="_Open",
     )
-
     open_file_chooser.set_modal(True)
     if open_project:
         open_file_chooser.connect("response", load_project, self)
@@ -340,16 +340,50 @@ def load_project(dialog, response, self):
 
     with open(file_path, 'rb') as f:
         project =  pickle.load(f)
-    self.datadict = dict()
-    self.datadict = project["data"]
-    self.plot_settings = project["plot_settings"]
+    project_datadict = project["data"]
+    new_plot_settings = project["plot_settings"]
+    self.plot_settings = new_plot_settings
+    set_attributes(new_plot_settings, self.plot_settings)
+    create_data_from_project(self, project_datadict)
     for key, item in self.datadict.items():
         color = item.color
-        add_sample_to_menu(self, item.filename, color, item.id)
+        add_sample_to_menu(self, item.filename, color, item.key)
     plotting_tools.reload_plot(self)
     select_all(None, None, self)
 
+def create_data_from_project(self, new_dictionary):
+    """
+    Creates self.datadict using a new dictionary.
+    This function uses new dictionary, which contains old Data objects in order to 
+    create a new self.datadict dictionary, with new Data objects.
+    It sets all matching attributes that exist in the old data set to the new data set. 
+    Attributes that were removed and no longer used are not copied over, and will therefore
+    revert to the default value.
+    """
+    self.datadict = dict()
+    for key, item in new_dictionary.items():
+        xdata = item.xdata
+        ydata = item.ydata
+        self.datadict[item.key] = Data(self, xdata, ydata)
+        for attribute in self.datadict[item.key].__dict__:
+            if hasattr(item, attribute):
+                setattr(self.datadict[item.key], attribute, getattr(item, attribute))
+                
+    
 
+def set_attributes(new_object, template):
+    """
+    Sets the attributes of `new_object` to match those of `template`.
+    This function sets the attributes of `new_object` to the values of the attributes in `template` if they don't already exist in `new_object`. 
+    Additionally, it removes any attributes from `new_object` that are not present in `template`.
+    """
+    for attribute in template.__dict__:
+        if not hasattr(new_object, attribute):
+            setattr(new_object, attribute, getattr(template, attribute))
+    for attribute in new_object.__dict__:
+        if not hasattr(template, attribute):
+            delattr(new_object, attr)
+            
 def open_file(dialog, response, self, import_settings):
     files = []
     if response == Gtk.ResponseType.ACCEPT:

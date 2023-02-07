@@ -32,28 +32,10 @@ class Preferences():
         with open("config.json", 'r') as f:
             template = json.load(f)
         if set(config.keys()) != set(template.keys()):
-            config = self.remove_unused_config_keys(config, template)
-            config = self.add_new_config_keys(config, template)
-        return config
-    
-    def remove_unused_config_keys(self, config, template):
-        delete_list = []
-        for key in config.keys():
-            if key not in template.keys():
-                delete_list.append(key)
-        for key in delete_list:
-            del config[key]
+            config = utilities.remove_unused_config_keys(config, template)
+            config = utilities.add_new_config_keys(config, template)
         return config
         
-    def add_new_config_keys(self, config, template):
-        add_list = []
-        for key in template.keys():
-            if key not in config.keys():
-                add_list.append(key)
-        for key in add_list:
-            config[key] = template[key]
-        return config     
-    
     def create_new_config_file(self):
         config_path = self.get_config_path()
         if not os.path.isfile(f"{config_path}/config.json"):

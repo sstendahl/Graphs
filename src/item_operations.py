@@ -350,11 +350,11 @@ def combine_data(widget, shortcut, self):
     if new_item.filename in filename_list:
          new_item.filename = graphs.get_duplicate_filename(self, new_item.filename)
     color = plotting_tools.get_next_color(self)
-    self.datadict[new_item.id] = new_item
+    self.datadict[new_item.key] = new_item
     delete_selected_data(self)
     graphs.reset_clipboard(self)
-    graphs.add_sample_to_menu(self, new_item.filename, color, new_item.id)
-    graphs.select_item(self, new_item.id)
+    graphs.add_sample_to_menu(self, new_item.filename, color, new_item.key)
+    graphs.select_item(self, new_item.key)
     plotting_tools.refresh_plot(self)
 
 

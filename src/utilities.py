@@ -4,6 +4,24 @@ from enum import Enum
 
 from .data import Data
 
+def remove_unused_config_keys(self, config, template):
+    delete_list = []
+    for key in config.keys():
+        if key not in template.keys():
+            delete_list.append(key)
+    for key in delete_list:
+        del config[key]
+    return config
+    
+def add_new_config_keys(self, config, template):
+    add_list = []
+    for key in template.keys():
+        if key not in config.keys():
+            add_list.append(key)
+    for key in add_list:
+        config[key] = template[key]
+    return config     
+
 def set_chooser(chooser, choice):
     """
     Set the value of a dropdown menu to the choice parameter string
@@ -85,7 +103,7 @@ def get_selected_keys(self):
     selected_keys = []
     for key, item in self.item_rows.items():
         if item.check_button.get_active():
-            selected_keys.append(item.id)
+            selected_keys.append(item.key)
     return selected_keys
     
 def create_data(self, xdata = [], ydata = [], name = "New data"):
