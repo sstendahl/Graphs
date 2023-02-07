@@ -29,6 +29,7 @@ def on_accept(widget, self, window):
             start_index, stop_index = start_stop[key][0], start_stop[key][1]
             xdata_in = self.datadict[key].xdata[start_index:stop_index]
             ydata_in = self.datadict[key].ydata[start_index:stop_index]
+            print(xdata_in)
             try:
                 xdata_out, ydata_out = operation(key, xdata_in, ydata_in, input_x, input_y)
             except Exception as e:
@@ -38,11 +39,9 @@ def on_accept(widget, self, window):
                 return
             self.datadict[key].xdata[start_index:stop_index] = xdata_out
             self.datadict[key].ydata[start_index:stop_index] = ydata_out
-            print(max(xdata_out))
         if self._mode != InteractionMode.SELECT:
             xdata_in = self.datadict[key].xdata
             ydata_in = self.datadict[key].ydata
-            print("WAT")
             try:
                 xdata_out, ydata_out = operation(key, xdata_in, ydata_in, input_x, input_y)
             except Exception as e:
@@ -90,4 +89,3 @@ class TransformWindow(Adw.Window):
         super().__init__()
         style_context = self.transform_confirm_button.get_style_context()
         style_context.add_class("suggested-action")
-
