@@ -66,7 +66,6 @@ def redo(widget, shortcut, self):
     undo_button = self.props.active_window.undo_button
     redo_button = self.props.active_window.redo_button
     for key, item in self.datadict.items():
-        print(item.clipboard_pos)
         if item.clipboard_pos < 0:
             undo_button.set_sensitive(True)
             item.clipboard_pos += 1
@@ -110,7 +109,7 @@ def pick_data_selection(self, item, startx, stopx):
         if value > stopx and not found_stop:
             stop_index = index
             found_stop = True
-    selected_data = Data(xdata[start_index:stop_index], ydata[start_index:stop_index])
+    selected_data = Data(self, xdata[start_index:stop_index], ydata[start_index:stop_index])
     if len(selected_data.xdata) > 0 and (found_start or found_stop) == True:
         return selected_data, start_index, stop_index
 
@@ -202,11 +201,9 @@ def select_data(self):
             #Use the fraction that is higlighted on top to calculate to what
             #values this corresponds on bottom axis
             if self.canvas.ax.get_xscale() == "log":
-                print("Log")
                 startx = get_value_at_fraction(fraction_left_limit, min(self.canvas.ax.get_xlim()), max(self.canvas.ax.get_xlim()))
                 stopx = get_value_at_fraction(fraction_right_limit, min(self.canvas.ax.get_xlim()), max(self.canvas.ax.get_xlim()))
             elif self.canvas.ax.get_xscale() == "linear":  
-                print("Linear")
                 startx = min(self.canvas.ax.get_xlim()) + xrange_bottom * fraction_left_limit
                 stopx = min(self.canvas.ax.get_xlim()) + xrange_bottom * fraction_right_limit
 
@@ -356,7 +353,8 @@ def combine_data(widget, shortcut, self):
     
     
     #Create the sample itself
-    new_item = utilities.create_data(self, xdata = new_xdata, ydata = new_ydata, name = "Combined Data")
+    new_item = Data(self, new_xdata, new_ydata)
+    new_item.filename = "Combined Data"
     filename_list = utilities.get_all_filenames(self)
         
     if new_item.filename in filename_list:
@@ -364,7 +362,6 @@ def combine_data(widget, shortcut, self):
     new_item.xdata, new_item.ydata = sort_data(new_item.xdata, new_item.ydata)
     color = plotting_tools.get_next_color(self)
     self.datadict[new_item.id] = new_item
-    
     delete_selected_data(self)
     graphs.reset_clipboard(self)
     graphs.add_sample_to_menu(self, new_item.filename, color, new_item.id)

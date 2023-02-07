@@ -41,7 +41,8 @@ def open_selection_from_file(self, files, import_settings):
     for path in files:
         if path != "":
             try:
-                item = get_data(self, path, import_settings)
+                import_settings["path"] = path
+                item = get_data(self, import_settings)
                 if item.xdata == []:
                     self.props.active_window.toast_overlay.add_toast(Adw.Toast(title=f"At least one data set could not be imported"))                    
                     continue
@@ -105,9 +106,10 @@ def select_item(self, key):
     plotting_tools.refresh_plot(self)
     enable_data_dependent_buttons(self, utilities.get_selected_keys(self))
 
-def get_data(self, path, import_settings):
+def get_data(self, import_settings):
     data_array = [[], []]
     i = 0
+    path = import_settings["path"]
     with (open(path, 'r')) as file:
         for line in file:
             i += 1
@@ -142,27 +144,7 @@ def get_data(self, path, import_settings):
                             #If neither heuristic works, we just skip the headers
                             except IndexError:
                                 pass
-    data = Data(data_array[0], data_array[1])
-    data.plot_Y_position = self.preferences.config["plot_Y_position"]
-    data.plot_X_position = self.preferences.config["plot_X_position"]
-    data = set_data_properties(self, path, data, import_settings)
-    return data
-
-def set_data_properties(self, path, data, import_settings):
-    data.linestyle_selected = self.preferences.config["plot_selected_linestyle"]
-    data.linestyle_unselected = self.preferences.config["plot_unselected_linestyle"]
-    data.selected_line_thickness = self.preferences.config["selected_linewidth"]
-    data.unselected_line_thickness = self.preferences.config["unselected_linewidth"]
-    data.selected_markers = self.preferences.config["plot_selected_markers"]
-    data.unselected_markers = self.preferences.config["plot_unselected_markers"]
-    data.selected_marker_size = self.preferences.config["plot_selected_marker_size"]
-    data.unselected_marker_size = self.preferences.config["plot_unselected_marker_size"]
-    if import_settings["name"] != "" and import_settings["mode"] == "single":
-        filename = import_settings["name"]
-    else:
-        filename = path.split("/")[-1]
-        filename = os.path.splitext(filename)[0]
-    data.filename = filename
+    data = Data(self, data_array[0], data_array[1], import_settings)
     return data
 
 def swap(str1):
@@ -307,6 +289,7 @@ def open_file_dialog(widget, _, self, import_settings = None):
 
 def get_import_settings(self):
     import_settings = dict()
+    import_settings["path"] = ""
     import_settings["delimiter"] = self.preferences.config["import_delimiter"]
     import_settings["guess_headers"] = self.preferences.config["guess_headers"]
     import_settings["separator"] = self.preferences.config["import_separator"]
