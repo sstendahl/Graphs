@@ -118,22 +118,11 @@ def sort_data(x, y):
     Sort x and y-coordinates such that the x-data is continiously increasing
     Takes in x, and y coordinates of that array, and returns the sorted variant
     """
-    bar_list = {"x": x, "y": y}
-    sorted = sort_bar(bar_list)
-    return sorted["x"], sorted["y"]
+    zipped_list = zip(x, y)
+    sorted_lists = sorted(zipped_list, key=lambda x: x[0])
+    sorted_x, sorted_y = zip(*sorted_lists)
+    return list(sorted_x), list(sorted_y)
 
-def sort_bar(bar_list):
-    """
-    Sort x and y-coordinates such that the x-data is continiously increasing
-    Takes in one bar list, sorts it and returns the sorted version
-    """
-    sorted_x = []
-    sorted_x.extend(bar_list['x'])
-    sorted_x.sort()
-    sorted_y = []
-    for x in sorted_x:
-        sorted_y.append(bar_list['y'][bar_list['x'].index(x)])
-    return {"x": sorted_x, "y": sorted_y}
 
 def cut_data(widget, _, self):
     """
@@ -353,6 +342,7 @@ def combine_data(widget, shortcut, self):
     
     
     #Create the sample itself
+    new_xdata, new_ydata = sort_data(new_xdata, new_ydata)
     new_item = Data(self, new_xdata, new_ydata)
     new_item.filename = "Combined Data"
     filename_list = utilities.get_all_filenames(self)
@@ -680,4 +670,3 @@ def center_data_middle(xdata):
     middle_value = (min(xdata) + max(xdata)) / 2
     xdata = [coordinate - middle_value for coordinate in xdata]
     return xdata
-
