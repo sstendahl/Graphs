@@ -1,8 +1,8 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 from gi.repository import Gtk, Adw
 from numpy import *
-
 from . import plotting_tools, graphs, utilities
+from .data import Data
 
 def open_add_equation_window(widget, _, self):
     """
@@ -24,10 +24,11 @@ def on_accept(widget, self, window):
     x_stop = window.X_stop_entry.get_text()
     step_size = window.step_size_entry.get_text()
     equation = str(window.equation_entry.get_text())
-
     dataset = create_dataset(self, x_start, x_stop, equation, step_size, str(window.name_entry.get_text()))
     try:
-        new_file = utilities.create_data(self, dataset["xdata"], dataset["ydata"], dataset["name"])
+        import_settings = graphs.get_import_settings(self)
+        new_file = Data(self, dataset["xdata"], dataset["ydata"], import_settings)
+        new_file.filename = dataset["name"]
     except Exception as e:
         exception_type = e.__class__.__name__
         window.toast_overlay.add_toast(Adw.Toast(title=f"{exception_type} - Unable to add data from equation"))
