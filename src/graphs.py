@@ -161,7 +161,7 @@ def delete_selected(shortcut, _,  self):
 
 def delete(widget,  self, id, give_toast = True):
     layout = self.list_box
-    for key, item in self.data_list.items():
+    for key, item in self.sample_menu.items():
         if key == id:
             layout.remove(item)
     filename = self.datadict[id].filename
@@ -199,7 +199,7 @@ def add_sample_to_menu(self, filename, color, id, select_item = False):
     self.list_box = win.list_box
     row = samplerow.SampleBox(self, filename, id)
     row.gesture.connect("released", row.clicked, self)
-    row.color_picker = colorpicker.ColorPicker(color, parent=self)
+    row.color_picker = colorpicker.ColorPicker(color, id, parent=self)
     row.color_picker.set_hexpand(False)
     label = row.sample_ID_label
     if select_item:

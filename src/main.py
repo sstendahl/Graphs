@@ -20,7 +20,7 @@ class GraphsApplication(Adw.Application):
         self.highlight = None
         self.highlights = []        
         self.item_rows = dict()
-        self.data_list = dict()
+        self.sample_menu = dict()
         self.load_preferences()
         self.connect_actions()
         
