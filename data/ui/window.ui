@@ -122,6 +122,31 @@
                                 </style>
                               </object>
                             </child>
+                            <child>
+                              <object class="GtkBox" id="no_data_label_box">
+                                <property name="orientation">vertical</property>
+                                <property name="valign">center</property>
+                                <property name="hexpand">true</property>
+                                <child>
+                                  <object class="GtkLabel">
+                                    <property name="label">No Data</property>
+                                    <attributes>
+                                      <attribute name="weight" value="PANGO_WEIGHT_BOLD"/>
+                                    </attributes>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkLabel">"
+                                    <property name="label">Add Data using the button</property>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkLabel">
+                                    <property name="label">on the top left of the window.</property>
+                                  </object>
+                                </child>>
+                              </object>
+                            </child>
                           </object>
                         </property>
                       </object>

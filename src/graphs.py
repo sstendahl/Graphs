@@ -174,6 +174,7 @@ def delete(widget,  self, id, give_toast = True):
         self.canvas.ax.legend().remove()
         self.canvas.ax.set_prop_cycle(None)
         layout.set_visible(False)
+        self.main_window.no_data_label_box.set_visible(True)
 
     reset_clipboard(self)
     plotting_tools.refresh_plot(self)
@@ -195,7 +196,8 @@ def select_none(widget, _, self):
 
 def add_sample_to_menu(self, filename, color, id, select_item = False):
     win = self.main_window
-    self.main_window.list_box.set_visible(True)
+    win.list_box.set_visible(True)
+    win.no_data_label_box.set_visible(False)
     self.list_box = win.list_box
     row = samplerow.SampleBox(self, filename, id)
     row.gesture.connect("released", row.clicked, self)
