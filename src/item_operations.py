@@ -66,6 +66,7 @@ def redo(widget, shortcut, self):
     undo_button = self.props.active_window.undo_button
     redo_button = self.props.active_window.redo_button
     for key, item in self.datadict.items():
+        print(item.clipboard_pos)
         if item.clipboard_pos < 0:
             undo_button.set_sensitive(True)
             item.clipboard_pos += 1
@@ -109,9 +110,7 @@ def pick_data_selection(self, item, startx, stopx):
         if value > stopx and not found_stop:
             stop_index = index
             found_stop = True
-    selected_data = Data()
-    selected_data.xdata = xdata[start_index:stop_index]
-    selected_data.ydata = ydata[start_index:stop_index]
+    selected_data = Data(xdata[start_index:stop_index], ydata[start_index:stop_index])
     if len(selected_data.xdata) > 0 and (found_start or found_stop) == True:
         return selected_data, start_index, stop_index
 
@@ -203,9 +202,11 @@ def select_data(self):
             #Use the fraction that is higlighted on top to calculate to what
             #values this corresponds on bottom axis
             if self.canvas.ax.get_xscale() == "log":
+                print("Log")
                 startx = get_value_at_fraction(fraction_left_limit, min(self.canvas.ax.get_xlim()), max(self.canvas.ax.get_xlim()))
                 stopx = get_value_at_fraction(fraction_right_limit, min(self.canvas.ax.get_xlim()), max(self.canvas.ax.get_xlim()))
-            elif self.canvas.ax.get_xscale() == "linear":
+            elif self.canvas.ax.get_xscale() == "linear":  
+                print("Linear")
                 startx = min(self.canvas.ax.get_xlim()) + xrange_bottom * fraction_left_limit
                 stopx = min(self.canvas.ax.get_xlim()) + xrange_bottom * fraction_right_limit
 
@@ -361,9 +362,6 @@ def combine_data(widget, shortcut, self):
     if new_item.filename in filename_list:
          new_item.filename = graphs.get_duplicate_filename(self, new_item.filename)
     new_item.xdata, new_item.ydata = sort_data(new_item.xdata, new_item.ydata)
-    new_item.xdata_clipboard = [new_item.xdata.copy()]
-    new_item.ydata_clipboard = [new_item.ydata.copy()]
-    new_item.clipboard_pos = -1
     color = plotting_tools.get_next_color(self)
     self.datadict[new_item.id] = new_item
     

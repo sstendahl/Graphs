@@ -73,13 +73,12 @@ def open_selection_from_file(self, files, import_settings):
                 item.color = plotting_tools.get_next_color(self)
                 plotting_tools.plot_figure(self, self.canvas, item.xdata,item.ydata, item.filename, item.color, y_axis = y_axis, x_axis = x_axis)
                 add_sample_to_menu(self, item.filename, item.color, item.id, select_item = True)
-
     self.canvas.draw()
     plotting_tools.set_canvas_limits_axis(self, self.canvas)
     plotting_tools.refresh_plot(self)
-    enable_data_dependent_buttons(self, utilities.get_selected_keys(self))    
-    
-    
+    enable_data_dependent_buttons(self, utilities.get_selected_keys(self))
+
+
 def get_duplicate_filename(self, name):
     loop = True
     i = 0
@@ -107,9 +106,6 @@ def select_item(self, key):
     enable_data_dependent_buttons(self, utilities.get_selected_keys(self))
 
 def get_data(self, path, import_settings):
-    data = Data()
-    data.plot_Y_position = self.preferences.config["plot_Y_position"]
-    data.plot_X_position = self.preferences.config["plot_X_position"]
     data_array = [[], []]
     i = 0
     with (open(path, 'r')) as file:
@@ -146,11 +142,9 @@ def get_data(self, path, import_settings):
                             #If neither heuristic works, we just skip the headers
                             except IndexError:
                                 pass
-    data.xdata = data_array[0]
-    data.ydata = data_array[1]   
-    data.xdata_clipboard = [data.xdata.copy()]
-    data.ydata_clipboard = [data.ydata.copy()]
-    data.clipboard_pos = -1
+    data = Data(data_array[0], data_array[1])
+    data.plot_Y_position = self.preferences.config["plot_Y_position"]
+    data.plot_X_position = self.preferences.config["plot_X_position"]
     data = set_data_properties(self, path, data, import_settings)
     return data
 
