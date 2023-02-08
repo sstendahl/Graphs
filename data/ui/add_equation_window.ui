@@ -85,6 +85,7 @@
                         </child>
                         <child>
                           <object class="AdwPreferencesGroup">
+                            <property name="margin-start">6</property>
                             <property name="margin-end">6</property>                                                        
                             <child>
                               <object class="AdwEntryRow" id="X_stop_entry">
