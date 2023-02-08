@@ -39,13 +39,14 @@ def empty_chooser(chooser):
     for item in model:
         model.remove(0)
         
-def populate_chooser(chooser, chooser_list):
+def populate_chooser(chooser, chooser_list, clear = True):
     """
     Fill the dropdown menu with the strings in a chooser_list
     """
     model = chooser.get_model()
-    for item in model:
-        model.remove(0)
+    if clear:
+        for item in model:
+            model.remove(0)
     for item in chooser_list:
         if item != "nothing":
             model.append(str(item))
