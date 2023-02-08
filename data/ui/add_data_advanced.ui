@@ -22,6 +22,9 @@
         <property name="orientation">vertical</property>
         <child>
           <object class="GtkHeaderBar" id="header_bar">
+            <style>
+              <class name="flat" />
+            </style>            
           </object>
         </child>
         <child>

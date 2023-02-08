@@ -21,6 +21,9 @@
         <property name="orientation">vertical</property>
         <child>
           <object class="GtkHeaderBar" id="header_bar">
+            <style>
+              <class name="flat" />
+            </style>
           </object>
         </child>
         <child>
@@ -32,10 +35,9 @@
                   <object class="AdwPreferencesGroup">
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
-                    <property name="title" translatable="yes">Add Equation</property>
                     <property name="margin-start">30</property>
-                    <property name="margin-end">30</property>
-                    <property name="margin-top">20</property>
+                    <property name="margin-end">16</property>
+                    <property name="margin-top">16</property>
                     <property name="margin-bottom">6</property>
                     <child>
                       <object class="AdwEntryRow" id="equation_entry">
@@ -55,7 +57,7 @@
                     <property name="description" translatable="yes">Supports Numpy notation. Use a capital letter for the X coordinate.</property>
                     <property name="margin-start">30</property>
                     <property name="margin-end">30</property>
-                    <property name="margin-bottom">20</property>  
+                    <property name="margin-bottom">20</property>
                     <child>
                       <object class="AdwEntryRow" id="name_entry">
                         <property name="visible">True</property>
@@ -67,12 +69,12 @@
                     </child>
                     <child>
                       <object class="GtkBox">
-                        <property name="margin-top">12</property>
-                        <property name="margin-bottom">6</property>                                                    
+                        <property name="margin-top">20</property>
+                        <property name="margin-bottom">3</property>
                         <property name="orientation">horizontal</property>
                         <child>
                           <object class="AdwPreferencesGroup">
-                            <property name="margin-end">6</property>                            
+                            <property name="margin-end">12</property>
                             <child>
                               <object class="AdwEntryRow" id="X_start_entry">
                                 <property name="visible">True</property>
@@ -85,8 +87,7 @@
                         </child>
                         <child>
                           <object class="AdwPreferencesGroup">
-                            <property name="margin-start">6</property>
-                            <property name="margin-end">6</property>                                                        
+                            <property name="margin-end">12</property>
                             <child>
                               <object class="AdwEntryRow" id="X_stop_entry">
                                 <property name="visible">True</property>
@@ -99,7 +100,6 @@
                         </child>
                         <child>
                           <object class="AdwPreferencesGroup">
-                            <property name="margin-start">6</property>
                             <child>
                               <object class="AdwEntryRow" id="step_size_entry">
                                 <property name="visible">True</property>
@@ -116,8 +116,11 @@
                       <object class="GtkButton" id="add_equation_confirm_button">
                         <property name="label">Add Equation</property>
                         <property name="halign">center</property>
-                        <property name="margin-top">20</property>
+                        <property name="margin-top">12</property>
                         <property name="margin-bottom">10</property>
+                        <style>
+                          <class name="pill" />
+                        </style>
                       </object>
                     </child>
                   </object>
