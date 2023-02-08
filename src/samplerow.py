@@ -13,11 +13,11 @@ class SampleBox(Gtk.Box):
     check_button = Gtk.Template.Child()
     delete_button = Gtk.Template.Child()
     
-    def __init__(self, app, filename = "", id = ""):
+    def __init__(self, app, filename = "", key = ""):
         super().__init__()
         self.filename = filename
         self.sample_ID_label.set_text(filename)
-        self.id = id
+        self.key = key
         self.app = app
         self.one_click_trigger = False
         self.time_first_click  = 0        
@@ -42,5 +42,5 @@ class SampleBox(Gtk.Box):
                 self.one_click_trigger = False
                 self.time_first_click = 0 
                 double_click = True
-                plot_settings.open_plot_settings(None, None, graphs, self.id)
+                plot_settings.open_plot_settings(None, None, graphs, self.key)
                 

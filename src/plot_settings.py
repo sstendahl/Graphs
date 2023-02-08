@@ -7,8 +7,8 @@ import matplotlib.pyplot as plt
 from . import plotting_tools, graphs, utilities
 from .data import Data
 
-def open_plot_settings(widget, _, self, id = None):
-    win = PlotSettingsWindow(self, id)
+def open_plot_settings(widget, _, self, key = None):
+    win = PlotSettingsWindow(self, key)
     win.set_transient_for(self.props.active_window)
     win.set_modal(True)
     name = "transform_confirm"
@@ -52,13 +52,13 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
     plot_legend_check = Gtk.Template.Child()
     plot_font_chooser = Gtk.Template.Child()
 
-    def __init__(self, parent, id):
+    def __init__(self, parent, key):
         super().__init__()
         self.select_item = False
         self.chooser_changed = True
         filenames = utilities.get_all_filenames(parent)
         utilities.populate_chooser(self.datalist_chooser, filenames)
-        self.item = self.load_config(parent, id)
+        self.item = self.load_config(parent, key)
         self.datalist_chooser.connect("notify::selected", self.on_notify, parent)
         self.connect("close-request", self.on_close, parent)
         
@@ -78,14 +78,14 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
         if set(filenames) != set(self.get_chooser_list(self.datalist_chooser)):
             utilities.populate_chooser(self.datalist_chooser, filenames)
         self.datalist_chooser.set_selected(index)
-        self.load_config(parent, id = None)
+        self.load_config(parent, key = None)
         self.chooser_changed = False
 
-    def load_config(self, parent, id):
+    def load_config(self, parent, key):
         data_list = utilities.get_datalist(parent)
         index = self.datalist_chooser.get_selected()
-        if id is not None:
-            index = data_list.index(id)
+        if key is not None:
+            index = data_list.index(key)
         self.datalist_chooser.set_selected(index)
         item = parent.datadict[data_list[index]]
         font_string = parent.plot_settings.font_string
@@ -201,9 +201,9 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
             label = f"{new_item.filename[:max_length]}..."
         else:
             label = new_item.filename
-        parent.item_rows[new_item.id].sample_ID_label.set_text(label)
+        parent.item_rows[new_item.key].sample_ID_label.set_text(label)
         if new_item.selected:
-            graphs.select_item(parent, new_item.id)
+            graphs.select_item(parent, new_item.key)
 
     def on_close(self, _, parent):
         self.save_settings(parent)

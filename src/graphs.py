@@ -3,10 +3,10 @@ import gi
 import os
 import re
 import numpy
+import pickle
 
 from gi.repository import Gtk, Adw
 from matplotlib.backends.backend_gtk4 import NavigationToolbar2GTK4 as NavigationToolbar
-
 from . import plotting_tools, samplerow, colorpicker, utilities
 from .plotting_tools import PlotWidget
 from .data import Data
@@ -70,10 +70,10 @@ def open_selection_from_file(self, files, import_settings):
                                 return
                 y_axis = item.plot_Y_position
                 x_axis = item.plot_X_position
-                self.datadict[item.id] = item
+                self.datadict[item.key] = item
                 item.color = plotting_tools.get_next_color(self)
                 plotting_tools.plot_figure(self, self.canvas, item.xdata,item.ydata, item.filename, item.color, y_axis = y_axis, x_axis = x_axis)
-                add_sample_to_menu(self, item.filename, item.color, item.id, select_item = True)
+                add_sample_to_menu(self, item.filename, item.color, item.key, select_item = True)
     self.canvas.draw()
     plotting_tools.set_canvas_limits_axis(self, self.canvas)
     plotting_tools.refresh_plot(self)
@@ -194,22 +194,22 @@ def select_none(widget, _, self):
     plotting_tools.refresh_plot(self)
     enable_data_dependent_buttons(self, False)
 
-def add_sample_to_menu(self, filename, color, id, select_item = False):
+def add_sample_to_menu(self, filename, color, key, select_item = False):
     win = self.main_window
     win.list_box.set_visible(True)
     win.no_data_label_box.set_visible(False)
     self.list_box = win.list_box
-    row = samplerow.SampleBox(self, filename, id)
+    row = samplerow.SampleBox(self, filename, key)
     row.gesture.connect("released", row.clicked, self)
-    row.color_picker = colorpicker.ColorPicker(color, parent=self)
+    row.color_picker = colorpicker.ColorPicker(color, key, parent=self)
     row.color_picker.set_hexpand(False)
     label = row.sample_ID_label
     if select_item:
         row.check_button.set_active(True)
     row.sample_box.insert_child_after(row.color_picker, row.sample_ID_label)
-    row.check_button.connect("toggled", toggle_data, self, id)
-    row.delete_button.connect("clicked", delete, self, id)
-    self.item_rows[id] = row
+    row.check_button.connect("toggled", toggle_data, self)
+    row.delete_button.connect("clicked", delete, self, key)
+    self.item_rows[key] = row
     max_length = int(26)
     if len(filename) > max_length:
         label = f"{filename[:max_length]}..."
@@ -217,9 +217,9 @@ def add_sample_to_menu(self, filename, color, id, select_item = False):
         label = filename
     row.sample_ID_label.set_text(label)
     self.list_box.append(row)
-    self.sample_menu[id] = self.list_box.get_last_child()
-
-def toggle_data(widget,  self, id):
+    self.sample_menu[key] = self.list_box.get_last_child()
+    
+def toggle_data(widget,  self):
     plotting_tools.refresh_plot(self)
     enable_data_dependent_buttons(self, utilities.get_selected_keys(self))
 
@@ -249,11 +249,22 @@ def save_file_dialog(self, documenttype="Text file (*.txt)"):
         self.props.active_window.toast_overlay.add_toast(Adw.Toast(title=f"Could not open save dialog, make sure you have data opened"))
 
 
-def on_save_response(dialog, response, self):
+def on_save_response(dialog, response, self, project = False):
     files = []
     if response == Gtk.ResponseType.ACCEPT:
         path = dialog.get_file().peek_path()
-        save_file(self, path)
+        if project:
+            save_project_file(self, path)
+        else:
+            save_file(self, path)
+
+def save_project_file(self, path):
+    project_data = dict()
+    project_data["plot_settings"] = self.plot_settings
+    project_data["data"] = self.datadict
+    project_data["version"] = self.version
+    with open(path, 'wb') as f:
+        pickle.dump(project_data, f)
 
 
 def save_file(self, path):
@@ -276,17 +287,35 @@ def save_file(self, path):
                 numpy.savetxt(str(path + "/" + filename) + ".txt", array, delimiter="\t")
 
 
-def open_file_dialog(widget, _, self, import_settings = None):
+def save_project_dialog(widget, _, self, documenttype="Graphs Project (*)"):
+    def save_project_chooser(action):
+        dialog = Gtk.FileChooserNative.new(
+            title="Save files",
+            parent=self.props.active_window,
+            action=action,
+            accept_label="_Save",
+        )
+        return dialog
+
+    chooser = save_project_chooser(Gtk.FileChooserAction.SAVE)
+    chooser.set_modal(True)
+    chooser.connect("response", on_save_response, self, True)
+    chooser.show()
+
+
+def open_file_dialog(widget, _, self, import_settings = None, open_project = False):
     open_file_chooser = Gtk.FileChooserNative.new(
         title="Open new files",
         parent=self.props.active_window,
         action=Gtk.FileChooserAction.OPEN,
         accept_label="_Open",
     )
-
     open_file_chooser.set_modal(True)
-    open_file_chooser.set_select_multiple(True)
-    open_file_chooser.connect("response", on_open_response, self, import_settings)
+    if open_project:
+        open_file_chooser.connect("response", load_project, self)
+    else:
+        open_file_chooser.set_select_multiple(True)
+        open_file_chooser.connect("response", open_file, self, import_settings)
     open_file_chooser.show()
 
 def get_import_settings(self):
@@ -300,8 +329,64 @@ def get_import_settings(self):
     import_settings["column_y"] = int(self.preferences.config["import_column_y"])
     import_settings["name"] = ""
     return import_settings
+    
+def load_project(dialog, response, self):
+    files = []
+    if response == Gtk.ResponseType.ACCEPT:
+        for file in dialog.get_files():
+            file_path = file.peek_path()
+            filename = file_path.split("/")[-1]
+            files.append(file_path)
+    select_all(None, None, self)
+    delete_selected(None, None, self)
 
-def on_open_response(dialog, response, self, import_settings):
+    with open(file_path, 'rb') as f:
+        project =  pickle.load(f)
+    project_datadict = project["data"]
+    new_plot_settings = project["plot_settings"]
+    self.plot_settings = new_plot_settings
+    set_attributes(new_plot_settings, self.plot_settings)
+    create_data_from_project(self, project_datadict)
+    for key, item in self.datadict.items():
+        color = item.color
+        add_sample_to_menu(self, item.filename, color, item.key)
+    plotting_tools.reload_plot(self)
+    select_all(None, None, self)
+
+def create_data_from_project(self, new_dictionary):
+    """
+    Creates self.datadict using a new dictionary.
+    This function uses new dictionary, which contains old Data objects in order to 
+    create a new self.datadict dictionary, with new Data objects.
+    It sets all matching attributes that exist in the old data set to the new data set. 
+    Attributes that were removed and no longer used are not copied over, and will therefore
+    revert to the default value.
+    """
+    self.datadict = dict()
+    for key, item in new_dictionary.items():
+        xdata = item.xdata
+        ydata = item.ydata
+        self.datadict[item.key] = Data(self, xdata, ydata)
+        for attribute in self.datadict[item.key].__dict__:
+            if hasattr(item, attribute):
+                setattr(self.datadict[item.key], attribute, getattr(item, attribute))
+                
+    
+
+def set_attributes(new_object, template):
+    """
+    Sets the attributes of `new_object` to match those of `template`.
+    This function sets the attributes of `new_object` to the values of the attributes in `template` if they don't already exist in `new_object`. 
+    Additionally, it removes any attributes from `new_object` that are not present in `template`.
+    """
+    for attribute in template.__dict__:
+        if not hasattr(new_object, attribute):
+            setattr(new_object, attribute, getattr(template, attribute))
+    for attribute in new_object.__dict__:
+        if not hasattr(template, attribute):
+            delattr(new_object, attr)
+            
+def open_file(dialog, response, self, import_settings):
     files = []
     if response == Gtk.ResponseType.ACCEPT:
         for file in dialog.get_files():

@@ -15,12 +15,12 @@ class GraphsApplication(Adw.Application):
     def __init__(self):
         super().__init__(application_id='se.sjoerd.Graphs',
                          flags=Gio.ApplicationFlags.FLAGS_NONE)
-        self.datadict = {}        
+        self.datadict = dict()        
         self.filename = ""
         self.highlight = None
         self.highlights = []        
-        self.item_rows = {}
-        self.sample_menu = {}
+        self.item_rows = dict()
+        self.sample_menu = dict()
         self.load_preferences()
         self.connect_actions()
         
@@ -41,6 +41,7 @@ class GraphsApplication(Adw.Application):
         self.create_action('add_data', graphs.open_file_dialog, ['<primary>N'], self)
         self.create_action('add_data_advanced', add_data_advanced.open_add_data_advanced_window, ['<primary><shift>N'], self)
         self.create_action('add_equation', add_equation.open_add_equation_window, ['<primary><alt>N'], self)
+        self.create_action('open_project', graphs.open_file_dialog, ['<shift><alt>N'], self, None, True)        
         self.create_action('select_all', graphs.select_all, ['<primary>A'], self)
         self.create_action('select_none', graphs.select_none, ['<primary><shift>A'], self)
         self.create_action('undo', item_operations.undo, ['<primary>Z'], self)
@@ -49,6 +50,7 @@ class GraphsApplication(Adw.Application):
         self.create_action('view_back', plotting_tools.view_back, ['<alt>Z'], self)
         self.create_action('view_forward', plotting_tools.view_forward, ['<alt><shift>Z'], self)
         self.create_action('save_data', item_operations.save_data, ['<primary>S'], self)
+        self.create_action('save_project', graphs.save_project_dialog, ['<primary><shift>S'], self)
         self.create_action('export_data', plotting_tools.export_data, ["<primary>E"], self)
         self.create_action('normalize_data', item_operations.normalize_data, None, self)
         self.create_action('translate_x', item_operations.translate_x, None, self)

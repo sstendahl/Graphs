@@ -5,9 +5,10 @@ from matplotlib import colors
 from . import plotting_tools, utilities
 
 class ColorPicker(Gtk.Button):
-    def __init__(self, color, parent):
+    def __init__(self, color, key, parent):
         super().__init__()
         self.parent = parent
+        self.key = key
         self.set_tooltip_text(_("Pick a color"))
         self.color = color
         self.add_css_class("flat")
@@ -16,7 +17,6 @@ class ColorPicker(Gtk.Button):
         
         press_gesture = Gtk.GestureClick()
         press_gesture.connect("pressed", self.change_color)
-        
         self.color_chooser = Gtk.ColorChooserWidget.new()
         self.color_chooser.set_use_alpha(False)
         self.color_chooser.show()
@@ -30,6 +30,8 @@ class ColorPicker(Gtk.Button):
         self.connect("clicked", self.on_click)
         self.set_css()
         self.color = self.get_color()
+        parent.datadict[self.key].color = self.color
+
 
     def set_rgba(self, color):
         self.color_chooser.set_rgba(color)
@@ -44,10 +46,11 @@ class ColorPicker(Gtk.Button):
         self.set_rgba(color)
         self.color = self.get_color()
         self.update_color()
+        self.parent.datadict[self.key].color = self.color
         plotting_tools.refresh_plot(self.parent)
 
     def change_color(self, *args):
-        self.set_color(self.color_chooser, self.get_rgba())
+        self.set_color(self.color_chooser, self.get_rgba(), self.parent)
 
     def get_rgba(self):
         return self.color_chooser.get_rgba()

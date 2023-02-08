@@ -750,6 +750,12 @@
         <attribute name="action">app.add_equation</attribute>
       </item>
     </section>
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">_Open Project</attribute>
+        <attribute name="action">app.open_project</attribute>
+      </item>
+    </section>
   </menu>
   <menu id="view_menu">
     <section>
@@ -837,6 +843,10 @@
         <attribute name="label" translatable="yes">_Export Figure</attribute>
         <attribute name="action">app.export_data</attribute>
       </item>
+      <item>
+        <attribute name="label" translatable="yes">_Export Project</attribute>
+        <attribute name="action">app.save_project</attribute>
+      </item>    
     </section>
     <section>
       <item>
@@ -860,5 +870,3 @@
     </section>
   </menu>
 </interface>
-
-
