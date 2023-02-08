@@ -4,7 +4,7 @@ from enum import Enum
 
 from .data import Data
 
-def remove_unused_config_keys(self, config, template):
+def remove_unused_config_keys(config, template):
     delete_list = []
     for key in config.keys():
         if key not in template.keys():
@@ -13,7 +13,7 @@ def remove_unused_config_keys(self, config, template):
         del config[key]
     return config
     
-def add_new_config_keys(self, config, template):
+def add_new_config_keys(config, template):
     add_list = []
     for key in template.keys():
         if key not in config.keys():
