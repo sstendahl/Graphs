@@ -122,11 +122,9 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
         self.unselected_line_thickness_slider.set_value(item.unselected_line_thickness)
         self.selected_marker_size.set_value(item.selected_marker_size)
         self.unselected_marker_size.set_value(item.unselected_marker_size)
-        utilities.populate_chooser(self.selected_markers_chooser, list(Line2D.markers.values()))
-        self.selected_markers_chooser.get_model().append("none")
+        utilities.populate_chooser(self.selected_markers_chooser, list(Line2D.markers.values()), clear = False)
         utilities.populate_chooser(self.plot_style, plt.style.available)
-        utilities.populate_chooser(self.unselected_markers_chooser, list(Line2D.markers.values()))
-        self.unselected_markers_chooser.get_model().append("none")
+        utilities.populate_chooser(self.unselected_markers_chooser, list(Line2D.markers.values()), clear = False)
         utilities.set_chooser(self.plot_style, parent.plot_settings.plot_style)
         marker_dict = Line2D.markers
         unselected_marker_value = marker_dict[item.unselected_markers]

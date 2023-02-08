@@ -135,26 +135,14 @@ class PreferencesWindow(Adw.PreferencesWindow):
             'Pastel1', 'Pastel2', 'Paired', 'Accent',
             'Dark2', 'Set1', 'Set2', 'Set3',
             'tab10', 'tab20', 'tab20b', 'tab20c']
-        self.populate_chooser(self.plot_color_cycle, color_cycles)
-        self.populate_chooser(self.plot_style_dark, plt.style.available)
-        self.populate_chooser(self.plot_style_light, plt.style.available)
-        self.populate_chooser(self.plot_selected_markers_chooser, list(Line2D.markers.values()))
-        self.populate_chooser(self.plot_unselected_markers_chooser, list(Line2D.markers.values()))
+        utilities.populate_chooser(self.plot_color_cycle, color_cycles)
+        utilities.populate_chooser(self.plot_style_dark, plt.style.available)
+        utilities.populate_chooser(self.plot_style_light, plt.style.available)
+        utilities.populate_chooser(self.plot_selected_markers_chooser, list(Line2D.markers.values()), clear = False)
+        utilities.populate_chooser(self.plot_unselected_markers_chooser, list(Line2D.markers.values()), clear = False)
         config = parent.preferences.config
         config = self.load_configuration(config)
         self.connect("close-request", self.on_close, parent)
-
-    def set_chooser(self, chooser, choice):
-        model = chooser.get_model()
-        for index, option in enumerate(model):
-            if option.get_string() == choice:
-                chooser.set_selected(index)
-
-    def populate_chooser(self, chooser, chooser_list):
-        model = chooser.get_model()
-        for item in chooser_list:
-            if item != "nothing":
-                model.append(str(item))
 
     def load_configuration(self, config):
         font_string = config["plot_font_string"]
@@ -190,27 +178,27 @@ class PreferencesWindow(Adw.PreferencesWindow):
         self.plot_right_label.set_text(config["plot_right_label"])
         self.plot_top_label.set_text(config["plot_top_label"])
         self.plot_title.set_text(config["plot_title"])
-        self.set_chooser(self.savefig_filetype_chooser, config["savefig_filetype"])
-        self.set_chooser(self.center_data_chooser, config["action_center_data"])
-        self.set_chooser(self.plot_X_scale, config["plot_X_scale"])
-        self.set_chooser(self.plot_top_scale, config["plot_top_scale"])
-        self.set_chooser(self.plot_right_scale, config["plot_right_scale"])
-        self.set_chooser(self.plot_Y_scale, config["plot_Y_scale"])
-        self.set_chooser(self.plot_X_position, config["plot_X_position"])
-        self.set_chooser(self.plot_Y_position, config["plot_Y_position"])
-        self.set_chooser(self.plot_tick_direction, config["plot_tick_direction"])
-        self.set_chooser(self.handle_duplicates_chooser, config["handle_duplicates"])
-        self.set_chooser(self.import_separator, config["import_separator"])
-        self.set_chooser(self.plot_color_cycle, config["plot_color_cycle"])
-        self.set_chooser(self.plot_selected_linestyle_chooser, config["plot_selected_linestyle"])
-        self.set_chooser(self.plot_unselected_linestyle_chooser, config["plot_unselected_linestyle"])
-        self.set_chooser(self.plot_style_light, config["plot_style_light"])
-        self.set_chooser(self.plot_style_dark, config["plot_style_dark"])
+        utilities.set_chooser(self.savefig_filetype_chooser, config["savefig_filetype"])
+        utilities.set_chooser(self.center_data_chooser, config["action_center_data"])
+        utilities.set_chooser(self.plot_X_scale, config["plot_X_scale"])
+        utilities.set_chooser(self.plot_top_scale, config["plot_top_scale"])
+        utilities.set_chooser(self.plot_right_scale, config["plot_right_scale"])
+        utilities.set_chooser(self.plot_Y_scale, config["plot_Y_scale"])
+        utilities.set_chooser(self.plot_X_position, config["plot_X_position"])
+        utilities.set_chooser(self.plot_Y_position, config["plot_Y_position"])
+        utilities.set_chooser(self.plot_tick_direction, config["plot_tick_direction"])
+        utilities.set_chooser(self.handle_duplicates_chooser, config["handle_duplicates"])
+        utilities.set_chooser(self.import_separator, config["import_separator"])
+        utilities.set_chooser(self.plot_color_cycle, config["plot_color_cycle"])
+        utilities.set_chooser(self.plot_selected_linestyle_chooser, config["plot_selected_linestyle"])
+        utilities.set_chooser(self.plot_unselected_linestyle_chooser, config["plot_unselected_linestyle"])
+        utilities.set_chooser(self.plot_style_light, config["plot_style_light"])
+        utilities.set_chooser(self.plot_style_dark, config["plot_style_dark"])
         marker_dict = Line2D.markers
         unselected_marker_value = marker_dict[config["plot_unselected_markers"]]
         selected_marker_value = marker_dict[config["plot_selected_markers"]]
-        self.set_chooser(self.plot_selected_markers_chooser, selected_marker_value)
-        self.set_chooser(self.plot_unselected_markers_chooser, unselected_marker_value)
+        utilities.set_chooser(self.plot_selected_markers_chooser, selected_marker_value)
+        utilities.set_chooser(self.plot_unselected_markers_chooser, unselected_marker_value)
         if config["plot_tick_left"]:
             self.plot_tick_left.set_active(True)
         if config["plot_tick_right"]:
