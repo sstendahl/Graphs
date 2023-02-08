@@ -494,7 +494,7 @@ class PlotWidget(FigureCanvas):
     """
     Create the widget that contains the graph itself
     """
-    def __init__(self, parent=None, xlabel="", ylabel="", yscale = "log", title="", scale="linear", style = "seaborn-whitegrid"):
+    def __init__(self, parent=None, xlabel="", ylabel="", yscale = "log", title="", scale="linear", style = "adwaita"):
         self.figure = Figure()
         self.figure.set_tight_layout(True)
         self.canvas = FigureCanvas(self.figure)
@@ -507,12 +507,6 @@ class PlotWidget(FigureCanvas):
         self.right_axis = self.ax.twinx()
         self.top_left_axis = self.ax.twiny()
         self.top_right_axis = self.top_left_axis.twinx()
-
-        #Set the coordinates in the bottom-right corner as an empty string
-        #These only work for the top-right axis anyway, so is broken in 95% of
-        #the cases, and makes the experience very bad for small window sizes.
-        #This feature should be implemented differently perhaps.
-        self.top_right_axis.format_coord = lambda x, y: ""
         self.set_ax_properties(parent)
         self.set_save_properties(parent)
         self.set_color_cycle(parent)
@@ -645,3 +639,29 @@ class PlotWidget(FigureCanvas):
             rename_label.open_rename_label_window(self.parent, self.left_label)
         if self.right_label.contains(event)[0] and double_click:
             rename_label.open_rename_label_window(self.parent, self.right_label)
+
+    def _post_draw(self, widget, context):
+        """
+        Override with custom implementation of rubberband to allow for custom rubberband style
+        @param context: https://pycairo.readthedocs.io/en/latest/reference/context.html
+        """
+        if self._rubberband_rect is None:
+            return
+
+        lw = 1.5
+        if not self._context_is_scaled:
+            x0, y0, w, h = (dim / self.device_pixel_ratio
+                            for dim in self._rubberband_rect)
+        else:
+            x0, y0, w, h = self._rubberband_rect
+            lw *= self.device_pixel_ratio
+        x1 = x0 + w
+        y1 = y0 + h
+
+        context.set_antialias(1)
+        context.set_line_width(lw)
+        context.rectangle(x0, y0, w, h)
+        #input are floats so divide rgb value by 255
+        context.set_source_rgba(120 / 255, 174 / 255, 237 / 255, 1)
+        context.stroke()
+
