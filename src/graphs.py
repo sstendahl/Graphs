@@ -409,6 +409,9 @@ def load_empty(self):
     xlabel = self.plot_settings.xlabel
     ylabel = self.plot_settings.ylabel
     self.canvas = PlotWidget(parent = self, xlabel=xlabel, ylabel=ylabel)
+    for axis in [self.canvas.right_axis, self.canvas.top_left_axis, self.canvas.top_right_axis]:
+        axis.get_xaxis().set_visible(False)
+        axis.get_yaxis().set_visible(False)    
     self.dummy_toolbar = NavigationToolbar(self.canvas)
     win.toast_overlay.set_child(self.canvas)
 
