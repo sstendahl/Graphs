@@ -32,8 +32,8 @@ class Preferences():
         with open("config.json", 'r') as f:
             template = json.load(f)
         if set(config.keys()) != set(template.keys()):
-            config = utilities.remove_unused_config_keys(config, template)
-            config = utilities.add_new_config_keys(config, template)
+            config = utilities.remove_unused_config_keys(self, config, template)
+            config = utilities.add_new_config_keys(self, config, template)
         return config
         
     def create_new_config_file(self):
