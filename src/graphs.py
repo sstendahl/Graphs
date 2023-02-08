@@ -337,8 +337,8 @@ def load_project(dialog, response, self):
             file_path = file.peek_path()
             filename = file_path.split("/")[-1]
             files.append(file_path)
-    select_all(None, None, self)
-    delete_selected(None, None, self)
+        select_all(None, None, self)
+        delete_selected(None, None, self)
 
     with open(file_path, 'rb') as f:
         project =  pickle.load(f)
