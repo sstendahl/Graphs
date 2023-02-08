@@ -713,10 +713,6 @@
   <menu id="add_data_menu">
     <section>
       <item>
-        <attribute name="label" translatable="yes">_Open Project</attribute>
-        <attribute name="action">app.open_project</attribute>
-      </item>
-      <item>
         <attribute name="label" translatable="yes">_Add Data from File</attribute>
         <attribute name="action">app.add_data</attribute>
       </item>
@@ -727,6 +723,12 @@
       <item>
         <attribute name="label" translatable="yes">_Add Data from Equation</attribute>
         <attribute name="action">app.add_equation</attribute>
+      </item>
+    </section>
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">_Open Project</attribute>
+        <attribute name="action">app.open_project</attribute>
       </item>
     </section>
   </menu>
@@ -809,10 +811,6 @@
   <menu id="primary_menu">
     <section>
       <item>
-        <attribute name="label" translatable="yes">_Save Project</attribute>
-        <attribute name="action">app.save_project</attribute>
-      </item>    
-      <item>
         <attribute name="label" translatable="yes">_Export Data</attribute>
         <attribute name="action">app.save_data</attribute>
       </item>
@@ -820,6 +818,10 @@
         <attribute name="label" translatable="yes">_Export Figure</attribute>
         <attribute name="action">app.export_data</attribute>
       </item>
+      <item>
+        <attribute name="label" translatable="yes">_Export Project</attribute>
+        <attribute name="action">app.save_project</attribute>
+      </item>    
     </section>
     <section>
       <item>
@@ -843,5 +845,3 @@
     </section>
   </menu>
 </interface>
-
-
