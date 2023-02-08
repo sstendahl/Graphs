@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 
 from gi.repository import Gtk, Adw
 from matplotlib import colors
-from matplotlib.backends.backend_gtk4agg import FigureCanvasGTK4Agg as FigureCanvas
+from matplotlib.backends.backend_gtk4cairo import FigureCanvas
 from matplotlib.figure import Figure
 from matplotlib.widgets import SpanSelector
 from cycler import cycler
@@ -645,4 +645,3 @@ class PlotWidget(FigureCanvas):
             rename_label.open_rename_label_window(self.parent, self.left_label)
         if self.right_label.contains(event)[0] and double_click:
             rename_label.open_rename_label_window(self.parent, self.right_label)
-
