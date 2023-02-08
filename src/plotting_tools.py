@@ -25,7 +25,7 @@ def define_highlight(self, span=None):
         lambda x, y: x,
         "horizontal",
         useblit=True,
-        props=dict(alpha=0.3, facecolor = "tab:blue", linewidth = 0),
+        props=dict(facecolor = (120 / 255, 174 / 255, 237 / 255, 0.2), edgecolor = (120 / 255, 174 / 255, 237 / 255, 1), linewidth = 1),
         handle_props=dict(linewidth=0),
         interactive=True,
         drag_from_anywhere=True)
