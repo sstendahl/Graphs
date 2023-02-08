@@ -6,10 +6,10 @@ import numpy
 import pickle
 
 from gi.repository import Gtk, Adw
-from matplotlib.backends.backend_gtk4 import NavigationToolbar2GTK4 as NavigationToolbar
 from . import plotting_tools, samplerow, colorpicker, utilities
 from .plotting_tools import PlotWidget
 from .data import Data
+from .utilities import DummyToolbar
 
 def get_theme_color(self):
     win = self.props.active_window
@@ -412,7 +412,7 @@ def load_empty(self):
     for axis in [self.canvas.right_axis, self.canvas.top_left_axis, self.canvas.top_right_axis]:
         axis.get_xaxis().set_visible(False)
         axis.get_yaxis().set_visible(False)    
-    self.dummy_toolbar = NavigationToolbar(self.canvas)
+    self.dummy_toolbar = DummyToolbar(self.canvas)
     win.toast_overlay.set_child(self.canvas)
 
 def disable_clipboard_buttons(self):
