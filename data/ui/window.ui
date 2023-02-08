@@ -233,7 +233,7 @@
                                                 <property name="halign">center</property>
                                                 <child>
                                                   <object class="GtkImage">
-                                                    <property name="icon-name">shift</property>
+                                                    <property name="icon-name">function-third-order</property>
                                                     <property name="margin-end">6</property>
                                                   </object>
                                                 </child>
@@ -264,7 +264,7 @@
                                                 <property name="halign">center</property>
                                                 <child>
                                                   <object class="GtkImage">
-                                                    <property name="icon-name">normalize</property>
+                                                    <property name="icon-name">function-third-order</property>
                                                     <property name="margin-end">6</property>
                                                   </object>
                                                 </child>
@@ -295,7 +295,7 @@
                                                 <property name="halign">center</property>
                                                 <child>
                                                   <object class="GtkImage">
-                                                    <property name="icon-name">smoothen</property>
+                                                    <property name="icon-name">function-third-order</property>
                                                     <property name="margin-end">6</property>
                                                   </object>
                                                 </child>
@@ -326,7 +326,7 @@
                                                 <property name="halign">center</property>
                                                 <child>
                                                   <object class="GtkImage">
-                                                    <property name="icon-name">center</property>
+                                                    <property name="icon-name">function-third-order</property>
                                                     <property name="margin-end">6</property>
                                                   </object>
                                                 </child>
@@ -432,13 +432,13 @@
                                                 <property name="halign">center</property>
                                                 <child>
                                                   <object class="GtkImage">
-                                                    <property name="icon-name">horizontal-arrows</property>
+                                                    <property name="icon-name">function-third-order</property>
                                                     <property name="margin-end">6</property>
                                                   </object>
                                                 </child>
                                                 <child>
                                                   <object class="GtkLabel">
-                                                    <property name="label">Translate</property>
+                                                    <property name="label">Transform</property>
                                                   </object>
                                                 </child>
                                               </object>
@@ -461,7 +461,7 @@
                                                 <property name="halign">center</property>
                                                 <child>
                                                   <object class="GtkImage">
-                                                    <property name="icon-name">vertical-arrows</property>
+                                                    <property name="icon-name">function-third-order</property>
                                                     <property name="margin-end">6</property>
                                                   </object>
                                                 </child>
@@ -491,7 +491,7 @@
                                                 <property name="halign">center</property>
                                                 <child>
                                                   <object class="GtkImage">
-                                                    <property name="icon-name">horizontal-arrows</property>
+                                                    <property name="icon-name">function-third-order</property>
                                                     <property name="margin-end">6</property>
                                                   </object>
                                                 </child>
@@ -521,7 +521,7 @@
                                                 <property name="halign">center</property>
                                                 <child>
                                                   <object class="GtkImage">
-                                                    <property name="icon-name">vertical-arrows</property>
+                                                    <property name="icon-name">function-third-order</property>
                                                     <property name="margin-end">6</property>
                                                   </object>
                                                 </child>
@@ -554,7 +554,7 @@
                                                 <property name="halign">center</property>
                                                 <child>
                                                   <object class="GtkImage">
-                                                    <property name="icon-name">derivative2</property>
+                                                    <property name="icon-name">function-third-order</property>
                                                     <property name="margin-end">6</property>
                                                   </object>
                                                 </child>
@@ -585,7 +585,7 @@
                                                 <property name="halign">center</property>
                                                 <child>
                                                   <object class="GtkImage">
-                                                    <property name="icon-name">integral</property>
+                                                    <property name="icon-name">function-third-order</property>
                                                     <property name="margin-end">6</property>
                                                   </object>
                                                 </child>
@@ -616,7 +616,7 @@
                                                 <property name="halign">center</property>
                                                 <child>
                                                   <object class="GtkImage">
-                                                    <property name="icon-name">fast-fourier-transform</property>
+                                                    <property name="icon-name">function-third-order</property>
                                                     <property name="margin-end">6</property>
                                                   </object>
                                                 </child>
@@ -647,7 +647,7 @@
                                                 <property name="halign">center</property>
                                                 <child>
                                                   <object class="GtkImage">
-                                                    <property name="icon-name">inverse-fast-fourier-transform</property>
+                                                    <property name="icon-name">function-third-order</property>
                                                     <property name="margin-end">6</property>
                                                   </object>
                                                 </child>
@@ -677,7 +677,7 @@
                                                 <property name="halign">center</property>
                                                 <child>
                                                   <object class="GtkImage">
-                                                    <property name="icon-name">transform</property>
+                                                    <property name="icon-name">function-third-order</property>
                                                     <property name="margin-end">6</property>
                                                   </object>
                                                 </child>
