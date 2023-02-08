@@ -648,7 +648,7 @@ class PlotWidget(FigureCanvas):
         if self._rubberband_rect is None:
             return
 
-        lw = 1.5
+        lw = 1
         if not self._context_is_scaled:
             x0, y0, w, h = (dim / self.device_pixel_ratio
                             for dim in self._rubberband_rect)
@@ -660,8 +660,11 @@ class PlotWidget(FigureCanvas):
 
         context.set_antialias(1)
         context.set_line_width(lw)
-        context.rectangle(x0, y0, w, h)
+        context.rectangle(x0 + lw, y0 + lw, w - (2 * lw) , h - (2 - lw))
         #input are floats so divide rgb value by 255
+        context.set_source_rgba(120 / 255, 174 / 255, 237 / 255, 0.2)
+        context.fill()
+        context.rectangle(x0, y0, w, h)
         context.set_source_rgba(120 / 255, 174 / 255, 237 / 255, 1)
         context.stroke()
 
