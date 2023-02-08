@@ -145,7 +145,10 @@
             </child>            
             <child>
               <object class="GtkButton" id="open_advanced_confirm_button">
-                <property name="hexpand">true</property>
+                <style>
+                  <class name="pill" />
+                </style>                
+                <property name="halign">center</property>
                 <property name="label">Open files</property>
                 <property name="margin-end">10</property>
                 <property name="margin-top">20</property>
