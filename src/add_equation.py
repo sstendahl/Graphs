@@ -58,9 +58,9 @@ def on_accept(widget, self, window):
     new_file.ydata_clipboard = [new_file.ydata.copy()]
     new_file.clipboard_pos = -1
     color = plotting_tools.get_next_color(self)
-    self.datadict[new_file.id] = new_file
-    graphs.add_sample_to_menu(self, new_file.filename, color, new_file.id)
-    graphs.select_item(self, new_file.id)
+    self.datadict[new_file.key] = new_file
+    graphs.add_sample_to_menu(self, new_file.filename, color, new_file.key)
+    graphs.select_item(self, new_file.key)
     plotting_tools.refresh_plot(self)
     window.destroy()
 
