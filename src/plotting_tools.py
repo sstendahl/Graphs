@@ -660,7 +660,7 @@ class PlotWidget(FigureCanvas):
 
         context.set_antialias(1)
         context.set_line_width(lw)
-        context.rectangle(x0 + lw, y0 + lw, w - (2 * lw) , h - (2 - lw))
+        context.rectangle(x0, y0, w, h)
         #input are floats so divide rgb value by 255
         context.set_source_rgba(120 / 255, 174 / 255, 237 / 255, 0.2)
         context.fill()
