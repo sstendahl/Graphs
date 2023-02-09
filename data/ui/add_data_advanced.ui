@@ -22,18 +22,18 @@
         <property name="orientation">vertical</property>
         <child>
           <object class="GtkHeaderBar" id="header_bar">
+            <style>
+              <class name="flat" />
+            </style>            
           </object>
         </child>
         <child>
           <object class="AdwPreferencesGroup">
-            <property name="title" translatable="yes">Open Data</property>
-            <property name="description" translatable="yes">Advanced settings for importing data</property>
             <property name="visible">True</property>
             <property name="can-focus">True</property>
             <property name="margin-start">30</property>
             <property name="margin-end">30</property>
-            <property name="margin-top">20</property>
-            <property name="margin-bottom">20</property>
+            <property name="margin-top">12</property>
             <child>
               <object class="AdwEntryRow" id="name">
                 <property name="visible">True</property>
@@ -142,10 +142,13 @@
             </child>            
             <child>
               <object class="GtkButton" id="open_advanced_confirm_button">
-                <property name="hexpand">true</property>
-                <property name="label">Open files</property>
-                <property name="margin-end">10</property>
-                <property name="margin-top">20</property>
+                <style>
+                  <class name="pill" />
+                </style>                
+                <property name="halign">center</property>
+                <property name="label">Open Files</property>
+                <property name="margin-top">26</property>
+                <property name="margin-bottom">26</property>
               </object>
             </child>
           </object>
