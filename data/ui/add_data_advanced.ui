@@ -29,14 +29,11 @@
         </child>
         <child>
           <object class="AdwPreferencesGroup">
-            <property name="title" translatable="yes">Open Data</property>
-            <property name="description" translatable="yes">Advanced settings for importing data</property>
             <property name="visible">True</property>
             <property name="can-focus">True</property>
             <property name="margin-start">30</property>
             <property name="margin-end">30</property>
-            <property name="margin-top">20</property>
-            <property name="margin-bottom">20</property>
+            <property name="margin-top">12</property>
             <child>
               <object class="AdwEntryRow" id="name">
                 <property name="visible">True</property>
@@ -150,8 +147,8 @@
                 </style>                
                 <property name="halign">center</property>
                 <property name="label">Open files</property>
-                <property name="margin-end">10</property>
-                <property name="margin-top">20</property>
+                <property name="margin-top">26</property>
+                <property name="margin-bottom">26</property>
               </object>
             </child>
           </object>
