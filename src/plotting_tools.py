@@ -416,7 +416,7 @@ def load_fonts(self):
             
 
 # https://github.com/matplotlib/matplotlib/blob/c23ccdde6f0f8c071b09a88770e24452f2859e99/lib/matplotlib/backends/backend_gtk4.py#L306
-def export_data(widget, shortcut, self):
+def export_figure(widget, shortcut, self):
     dialog = Gtk.FileChooserNative(
         title='Save the figure',
         transient_for=self.main_window,
