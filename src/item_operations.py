@@ -10,9 +10,9 @@ from .data import Data
 from .utilities import InteractionMode
 from .plotting_tools import PlotWidget
 
-def save_data(widget, _, self):
+def export_data(widget, _, self):
     """
-    Open the save file dialog.
+    Open the export data dialog.
     """
     delete_selected_data(self)
     graphs.save_file_dialog(self)
