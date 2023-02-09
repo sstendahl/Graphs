@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 from gi.repository import Gdk
 from enum import Enum
+from matplotlib.backend_bases import NavigationToolbar2
 
 from .data import Data
 
@@ -139,4 +140,19 @@ class InteractionMode(Enum):
     PAN = 2
     ZOOM = 3
     SELECT = 4
+
+class DummyToolbar(NavigationToolbar2):
+    """
+    Own implementation of NavigationToolbar2. Needed for rubberband support.
+    """
+    def __init__(self, canvas):
+        super().__init__(canvas)
+
+    def draw_rubberband(self, event, x0, y0, x1, y1):
+        self.canvas._rubberband_rect = [int(val) for val in (x0, self.canvas.figure.bbox.height - y0, x1 - x0, y0 - y1)]
+        self.canvas.queue_draw()
+
+    def remove_rubberband(self):
+        self.canvas._rubberband_rect = None
+        self.canvas.queue_draw()
 
