@@ -19,10 +19,9 @@ def define_highlight(self, span=None):
     Create a span selector object, to highlight part of the graph.
     If a span already exists, make it visible instead
     """
-    #This lamdba function is not pretty, but it doesn't accept a "Pass"
     self.highlight = SpanSelector(
         self.canvas.top_right_axis,
-        lambda x, y: x,
+        lambda x, y: on_highlight_define(self),
         "horizontal",
         useblit=True,
         props=dict(facecolor = (120 / 255, 174 / 255, 237 / 255, 0.2), edgecolor = (120 / 255, 174 / 255, 237 / 255, 1), linewidth = 1),
@@ -31,6 +30,22 @@ def define_highlight(self, span=None):
         drag_from_anywhere=True)
     if span is not None:
         self.highlight.extents = span
+
+def on_highlight_define(self):
+    """
+    This ensures that the span selector doesn't go out of range
+    There are some obscure cases where this otherwise happens, and the selection
+    tool becomes unusable.
+    """
+    xmin = min(self.canvas.top_right_axis.get_xlim())
+    xmax = max(self.canvas.top_right_axis.get_xlim())
+    extend_min = self.highlight.extents[0]
+    extend_max = self.highlight.extents[1]    
+    if self.highlight.extents[0] < xmin:
+        extend_min = xmin
+    if self.highlight.extents[1] > xmax:
+        extend_max = xmax  
+    self.highlight.extents = (extend_min, extend_max)
 
 def plot_figure(self, canvas, X, Y, filename="", xlim=None, linewidth = 2, title="", scale="log",marker=None, linestyle="solid",
                      revert = False, color = None, marker_size = 10, y_axis = "left", x_axis = "bottom"):
@@ -84,12 +99,12 @@ def set_canvas_limits_axis(self, canvas, limits = {"xmin":None, "xmax":None, "ym
             left_items = []
             for key in item_list["left"]:
                 left_items.append(key)
-            left_limits = find_limits(self, axis, canvas, left_items)
+            left_limits = find_limits(self, self.canvas.ax.get_yscale(), canvas, left_items)
         if axis == "right":
             right_items = []
             for key in item_list["right"]:
                 right_items.append(key)
-            right_limits = find_limits(self, axis, canvas, right_items)
+            right_limits = find_limits(self, self.canvas.right_axis.get_yscale(), canvas, right_items)
         if axis == "top":
             top_items = []
             for key in item_list["top"]:
@@ -144,17 +159,16 @@ def get_used_axes(self):
     item_list["bottom"] = bottom_items
     return used_axis, item_list
 
-def set_canvas_limits(self, graph_limits, axis, axis_type, limits = {"xmin":None, "xmax":None, "ymin":None, "ymax":None}, kind = "HOi"):
+def set_canvas_limits(self, graph_limits, axis, axis_type, limits = {"xmin":None, "xmax":None, "ymin":None, "ymax":None}):
     """
     Set an calculate the canvas limits for a given axis.
     """
-
     #Update graph limits with limits that were given as argument
     for key, item in limits.items():
         if item is not None:
             graph_limits[key] = item
     x_span = (graph_limits["xmax"] - graph_limits["xmin"])
-    y_span = (graph_limits["ymax"] - graph_limits["ymin"]) 
+    y_span = (graph_limits["ymax"] - graph_limits["ymin"])
     if axis.get_xscale() == "linear":
         graph_limits["xmin"] -= 0.015*x_span
         graph_limits["xmax"] += 0.015*x_span
@@ -196,7 +210,8 @@ def find_limits(self, axis, canvas, datadict):
             nonzero_ydata = list(filter(lambda x: (x != 0), item.ydata))
             xmin_item = min(item.xdata)
             xmax_item = max(item.xdata)
-            if len(nonzero_ydata) > 0:
+            
+            if axis == "log" and len(nonzero_ydata) > 0:
                 ymin_item = min(nonzero_ydata)
             else:
                 ymin_item = min(item.ydata)
@@ -210,7 +225,6 @@ def find_limits(self, axis, canvas, datadict):
                 ymin_all = ymin_item
             if ymax_all == None:
                 ymax_all = ymax_item
-
             if xmin_item < xmin_all:
                 xmin_all = xmin_item
             if xmax_item > xmax_all:
