@@ -146,7 +146,7 @@
                   <class name="pill" />
                 </style>                
                 <property name="halign">center</property>
-                <property name="label">Open files</property>
+                <property name="label">Open Files</property>
                 <property name="margin-top">26</property>
                 <property name="margin-bottom">26</property>
               </object>
