@@ -5,7 +5,6 @@
   <template class="AddEquationWindow" parent="AdwWindow">
     <property name="title">Add Equation</property>
     <property name="default-width">450</property>
-    <property name="default-height">125</property>
     <child>
       <object class="GtkShortcutController">
         <child>
@@ -35,8 +34,8 @@
                   <object class="AdwPreferencesGroup">
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
-                    <property name="margin-start">30</property>
-                    <property name="margin-end">16</property>
+                    <property name="margin-start">26</property>
+                    <property name="margin-end">26</property>
                     <property name="margin-top">16</property>
                     <property name="margin-bottom">6</property>
                     <child>
@@ -55,8 +54,8 @@
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="description" translatable="yes">Supports Numpy notation. Use a capital letter for the X coordinate.</property>
-                    <property name="margin-start">30</property>
-                    <property name="margin-end">30</property>
+                    <property name="margin-start">26</property>
+                    <property name="margin-end">26</property>
                     <property name="margin-bottom">20</property>
                     <child>
                       <object class="AdwEntryRow" id="name_entry">
@@ -116,8 +115,8 @@
                       <object class="GtkButton" id="add_equation_confirm_button">
                         <property name="label">Add Equation</property>
                         <property name="halign">center</property>
-                        <property name="margin-top">12</property>
-                        <property name="margin-bottom">10</property>
+                        <property name="margin-top">26</property>
+                        <property name="margin-bottom">26</property>
                         <style>
                           <class name="pill" />
                         </style>
