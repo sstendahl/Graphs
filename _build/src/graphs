@@ -1,0 +1,54 @@
+#!/usr/bin/python3
+
+# Graphs
+# Plot and manipulate data in a breeze
+#
+# https://www.sjoerd.se/Graphs
+# https://github.com/SjoerdB93/Graphs
+#
+# Copyright 2022 - 2023 Sjoerd Broekhuijsen
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+# SPDX-License-Identifier: GPL-3.0-or-later
+
+import os
+import sys
+import signal
+import locale
+import gettext
+
+VERSION = '1.4.1'
+pkgdatadir = '/app/share/graphs'
+localedir = '/app/share/locale'
+
+sys.path.insert(1, pkgdatadir)
+signal.signal(signal.SIGINT, signal.SIG_DFL)
+locale.bindtextdomain('graphs', localedir)
+locale.textdomain('graphs')
+gettext.install('graphs', localedir)
+
+if __name__ == '__main__':
+    import gi
+
+    gi.require_version('Adw', '1')
+    gi.require_version('Gtk', '4.0')
+
+    from gi.repository import Gio
+    resource = Gio.Resource.load(os.path.join(pkgdatadir, 'se.sjoerd.Graphs.gresource'))
+    resource._register()
+
+    from graphs import main
+    sys.exit(main.main(VERSION))
+
