@@ -136,10 +136,9 @@ def create_rgba(r, g, b, a=1):
     return res
 
 class InteractionMode(Enum):
-    NONE = 1
-    PAN = 2
-    ZOOM = 3
-    SELECT = 4
+    PAN = 1
+    ZOOM = 2
+    SELECT = 3
 
 class DummyToolbar(NavigationToolbar2):
     """

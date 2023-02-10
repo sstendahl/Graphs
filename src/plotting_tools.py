@@ -416,7 +416,7 @@ def load_fonts(self):
             
 
 # https://github.com/matplotlib/matplotlib/blob/c23ccdde6f0f8c071b09a88770e24452f2859e99/lib/matplotlib/backends/backend_gtk4.py#L306
-def export_figure(widget, shortcut, self):
+def export_data(widget, shortcut, self):
     dialog = Gtk.FileChooserNative(
         title='Save the figure',
         transient_for=self.main_window,
@@ -681,3 +681,4 @@ class PlotWidget(FigureCanvas):
         context.rectangle(x0, y0, w, h)
         context.set_source_rgba(120 / 255, 174 / 255, 237 / 255, 1)
         context.stroke()
+
