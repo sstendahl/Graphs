@@ -4,7 +4,6 @@ from gi.repository import Adw, Gtk
 @Gtk.Template(resource_path='/se/sjoerd/Graphs/ui/window.ui')
 class GraphsWindow(Adw.ApplicationWindow):
     __gtype_name__ = 'GraphsWindow'
-    none_button = Gtk.Template.Child()
     pan_button = Gtk.Template.Child()
     zoom_button = Gtk.Template.Child()
     select_button = Gtk.Template.Child()
