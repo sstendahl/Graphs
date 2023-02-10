@@ -26,6 +26,7 @@
     <file preprocess="xml-stripblanks" alias="inverse-fast-fourier-transform-symbolic.svg">icons/inverse-fast-fourier-transform-symbolic.svg</file>
     <file preprocess="xml-stripblanks" alias="fast-fourier-transform-symbolic.svg">icons/fast-fourier-transform-symbolic.svg</file>
     <file preprocess="xml-stripblanks" alias="integral-symbolic.svg">icons/integral-symbolic.svg</file>    
+    <file preprocess="xml-stripblanks" alias="graph-symbolic.svg">icons/graph-symbolic.svg</file> 
     <file preprocess="xml-stripblanks" alias="normalize-symbolic.svg">icons/normalize-symbolic.svg</file>  
     <file preprocess="xml-stripblanks" alias="derivative2-symbolic.svg">icons/derivative2-symbolic.svg</file>    
     <file preprocess="xml-stripblanks" alias="center-symbolic.svg">icons/center-symbolic.svg</file>

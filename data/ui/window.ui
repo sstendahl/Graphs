@@ -1,5 +1,4 @@
 <?xml version='1.0' encoding='utf-8'?>
-<!--SPDX-License-Identifier: GPL-3.0-or-later-->
 <interface>
   <requires lib="gtk" version="4.0" />
   <requires lib="Adw" version="1.2" />
@@ -123,28 +122,17 @@
                               </object>
                             </child>
                             <child>
-                              <object class="GtkBox" id="no_data_label_box">
-                                <property name="orientation">vertical</property>
-                                <property name="valign">center</property>
-                                <property name="hexpand">true</property>
-                                <child>
+                              <object class="AdwStatusPage" id="no_data_label_box">
+                                <property name="icon-name">graph</property>
+                                <property name="title">No Data</property>
+                                <style>
+                                  <class name="compact" />
+                                </style>"                                
+                                  <child>
                                   <object class="GtkLabel">
-                                    <property name="label">No Data</property>
-                                    <attributes>
-                                      <attribute name="weight" value="PANGO_WEIGHT_BOLD"/>
-                                    </attributes>
+                                    <property name="label">Add data from a file or manually as an equation</property>
                                   </object>
                                 </child>
-                                <child>
-                                  <object class="GtkLabel">"
-                                    <property name="label">Use the button in the top left corner</property>
-                                  </object>
-                                </child>
-                                <child>
-                                  <object class="GtkLabel">
-                                    <property name="label">to add data from files or equations.</property>
-                                  </object>
-                                </child>>
                               </object>
                             </child>
                           </object>
@@ -405,7 +393,7 @@
                                               <property name="column-span">1</property>
                                             </layout>
                                           </object>
-                                        </child>                                        
+                                        </child>
                                       </object>
                                     </child>
                                   </object>
@@ -536,7 +524,7 @@
                                 </child>
                                 <child>
                                   <object class="AdwExpanderRow">
-                                    <property name="title">Manipulate Data</property>
+                                    <property name="title">Mathematical Operations</property>
                                     <child>
                                       <object class="GtkGrid">
                                         <child>
@@ -742,12 +730,6 @@
         <attribute name="action">app.add_equation</attribute>
       </item>
     </section>
-    <section>
-      <item>
-        <attribute name="label" translatable="yes">_Open Project</attribute>
-        <attribute name="action">app.open_project</attribute>
-      </item>
-    </section>
   </menu>
   <menu id="view_menu">
     <section>
@@ -772,53 +754,53 @@
     </section>
     <section>
       <submenu>
-        <attribute name="label" translatable="yes">Top X Scale</attribute>
+        <attribute name="label" translatable="yes">_Top X Scale</attribute>
         <item>
-          <attribute name="label" translatable="yes">Logarithmic</attribute>
+          <attribute name="label" translatable="yes">_Logarithmic</attribute>
           <attribute name="action">app.change_top_xscale</attribute>
           <attribute name="target">log</attribute>
         </item>
         <item>
-          <attribute name="label" translatable="yes">Linear</attribute>
+          <attribute name="label" translatable="yes">_Linear</attribute>
           <attribute name="action">app.change_top_xscale</attribute>
           <attribute name="target">linear</attribute>
         </item>
       </submenu>
       <submenu>
-        <attribute name="label" translatable="yes">Bottom X Scale</attribute>
+        <attribute name="label" translatable="yes">_Bottom X Scale</attribute>
         <item>
-          <attribute name="label" translatable="yes">Logarithmic</attribute>
+          <attribute name="label" translatable="yes">_Logarithmic</attribute>
           <attribute name="action">app.change_bottom_xscale</attribute>
           <attribute name="target">log</attribute>
         </item>
         <item>
-          <attribute name="label" translatable="yes">Linear</attribute>
+          <attribute name="label" translatable="yes">_Linear</attribute>
           <attribute name="action">app.change_bottom_xscale</attribute>
           <attribute name="target">linear</attribute>
         </item>
       </submenu>
       <submenu>
-        <attribute name="label" translatable="yes">Left Y Scale</attribute>
+        <attribute name="label" translatable="yes">_Left Y Scale</attribute>
         <item>
-          <attribute name="label" translatable="yes">Logarithmic</attribute>
+          <attribute name="label" translatable="yes">_Logarithmic</attribute>
           <attribute name="action">app.change_left_yscale</attribute>
           <attribute name="target">log</attribute>
         </item>
         <item>
-          <attribute name="label" translatable="yes">Linear</attribute>
+          <attribute name="label" translatable="yes">_Linear</attribute>
           <attribute name="action">app.change_left_yscale</attribute>
           <attribute name="target">linear</attribute>
         </item>
       </submenu>
       <submenu>
-        <attribute name="label" translatable="yes">Right Y Scale</attribute>
+        <attribute name="label" translatable="yes">_Right Y Scale</attribute>
         <item>
-          <attribute name="label" translatable="yes">Logarithmic</attribute>
+          <attribute name="label" translatable="yes">_Logarithmic</attribute>
           <attribute name="action">app.change_right_yscale</attribute>
           <attribute name="target">log</attribute>
         </item>
         <item>
-          <attribute name="label" translatable="yes">Linear</attribute>
+          <attribute name="label" translatable="yes">_Linear</attribute>
           <attribute name="action">app.change_right_yscale</attribute>
           <attribute name="target">linear</attribute>
         </item>
@@ -828,29 +810,35 @@
   <menu id="primary_menu">
     <section>
       <item>
-        <attribute name="label" translatable="yes">_Export Data</attribute>
-        <attribute name="action">app.save_data</attribute>
+        <attribute name="label" translatable="yes">_Save Project</attribute>
+        <attribute name="action">app.save_project</attribute>
       </item>
+      <item>
+        <attribute name="label" translatable="yes">_Open Project</attribute>
+        <attribute name="action">app.open_project</attribute>
+      </item>
+    </section>
+    <section>
       <item>
         <attribute name="label" translatable="yes">_Export Figure</attribute>
-        <attribute name="action">app.export_data</attribute>
+        <attribute name="action">app.export_figure</attribute>
       </item>
       <item>
-        <attribute name="label" translatable="yes">_Export Project</attribute>
-        <attribute name="action">app.save_project</attribute>
-      </item>    
+        <attribute name="label" translatable="yes">_Export Data</attribute>
+        <attribute name="action">app.export_data</attribute>
+      </item>
     </section>
     <section>
       <item>
         <attribute name="label" translatable="yes">_Plot Settings</attribute>
         <attribute name="action">app.plot_settings</attribute>
       </item>
-    </section>
-    <section>
       <item>
         <attribute name="label" translatable="yes">_Preferences</attribute>
         <attribute name="action">app.preferences</attribute>
       </item>
+    </section>
+    <section>
       <item>
         <attribute name="label" translatable="yes">_Keyboard Shortcuts</attribute>
         <attribute name="action">win.show-help-overlay</attribute>
