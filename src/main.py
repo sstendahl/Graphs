@@ -32,7 +32,6 @@ class GraphsApplication(Adw.Application):
     def connect_actions(self):
         self.create_action('quit', self.on_quit_action, ['<primary>q'])
         self.create_action('about', self.on_about_action)
-        self.create_action('mode_none', self.set_mode, ['<shift>N', 'F1'], InteractionMode.NONE)
         self.create_action('mode_pan', self.set_mode, ['<shift>P', 'F2'], InteractionMode.PAN)
         self.create_action('mode_zoom', self.set_mode, ['<shift>Z', 'F3'], InteractionMode.ZOOM)
         self.create_action('mode_select', self.set_mode, ['<shift>S', 'F4'], InteractionMode.SELECT)
@@ -68,7 +67,7 @@ class GraphsApplication(Adw.Application):
         self.create_action('get_fourier', item_operations.get_fourier, None, self)
         self.create_action('get_inverse_fourier', item_operations.get_inverse_fourier, None, self)        
         self.create_action('delete_selected', graphs.delete_selected, ['Delete'], self)
-
+        
         self.create_axis_action('change_left_yscale', plotting_tools.change_left_yscale, 'plot_Y_scale')
         self.create_axis_action('change_right_yscale', plotting_tools.change_right_yscale, 'plot_right_scale')
         self.create_axis_action('change_top_xscale', plotting_tools.change_top_xscale, 'plot_top_scale')
@@ -137,18 +136,8 @@ class GraphsApplication(Adw.Application):
         if self.highlight == None:
             plotting_tools.define_highlight(self)
         highlight = self.highlight
-        if(mode == InteractionMode.NONE):
-            self.dummy_toolbar.mode = _Mode.NONE
-            none_button.set_active(True)
-            pan_button.set_active(False)
-            zoom_button.set_active(False)
-            select_button.set_active(False)
-            cut_button.set_sensitive(False)
-            highlight.set_visible(False)
-            highlight.set_active(False)
-        elif(mode == InteractionMode.PAN):
+        if(mode == InteractionMode.PAN):
             self.dummy_toolbar.mode = _Mode.PAN
-            none_button.set_active(False)
             pan_button.set_active(True)
             zoom_button.set_active(False)
             select_button.set_active(False)
@@ -157,7 +146,6 @@ class GraphsApplication(Adw.Application):
             highlight.set_active(False)
         elif(mode == InteractionMode.ZOOM):
             self.dummy_toolbar.mode = _Mode.ZOOM
-            none_button.set_active(False)
             pan_button.set_active(False)
             zoom_button.set_active(True)
             select_button.set_active(False)
@@ -166,7 +154,6 @@ class GraphsApplication(Adw.Application):
             highlight.set_active(False)
         elif(mode == InteractionMode.SELECT):
             self.dummy_toolbar.mode = _Mode.NONE
-            none_button.set_active(False)
             pan_button.set_active(False)
             zoom_button.set_active(False)
             select_button.set_active(True)
