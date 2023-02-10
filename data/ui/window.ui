@@ -125,7 +125,9 @@
                             <child>
                               <object class="AdwStatusPage" id="no_data_label_box">
                                 <property name="icon-name">graph</property>
-                                <property name="hexpand">true</property>                                 
+                                <property name="hexpand">true</property>                  
+                                <property name="width-request">240</property>
+                                <property name="halign">center</property>
                                 <property name="title">No Data</property>
                                 <property name="description">Add data from a file or manually as an equation</property>   
                                 <style>
@@ -848,4 +850,3 @@
     </section>
   </menu>
 </interface>
-
