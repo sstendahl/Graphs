@@ -32,14 +32,15 @@ class GraphsApplication(Adw.Application):
     def connect_actions(self):
         self.create_action('quit', self.on_quit_action, ['<primary>q'])
         self.create_action('about', self.on_about_action)
-        self.create_action('mode_pan', self.set_mode, ['<shift>P', 'F2'], InteractionMode.PAN)
-        self.create_action('mode_zoom', self.set_mode, ['<shift>Z', 'F3'], InteractionMode.ZOOM)
-        self.create_action('mode_select', self.set_mode, ['<shift>S', 'F4'], InteractionMode.SELECT)
+        self.create_action('mode_pan', self.set_mode, ['<shift>P', 'F1'], InteractionMode.PAN)
+        self.create_action('mode_zoom', self.set_mode, ['<shift>Z', 'F2'], InteractionMode.ZOOM)
+        self.create_action('mode_select', self.set_mode, ['<shift>S', 'F3'], InteractionMode.SELECT)
         self.create_action('preferences', preferences.open_preferences_window, ['<primary>p'], self)
         self.create_action('plot_settings', plot_settings.open_plot_settings, ["<primary><shift>P"], self)
         self.create_action('add_data', graphs.open_file_dialog, ['<primary>N'], self)
         self.create_action('add_data_advanced', add_data_advanced.open_add_data_advanced_window, ['<primary><shift>N'], self)
         self.create_action('add_equation', add_equation.open_add_equation_window, ['<primary><alt>N'], self)
+        self.create_action('open_project', graphs.open_file_dialog, ['<shift><alt>N'], self, None, True)        
         self.create_action('select_all', graphs.select_all, ['<primary>A'], self)
         self.create_action('select_none', graphs.select_none, ['<primary><shift>A'], self)
         self.create_action('undo', item_operations.undo, ['<primary>Z'], self)
@@ -47,10 +48,9 @@ class GraphsApplication(Adw.Application):
         self.create_action('restore_view', plotting_tools.restore_view, ['<primary>R'], self)
         self.create_action('view_back', plotting_tools.view_back, ['<alt>Z'], self)
         self.create_action('view_forward', plotting_tools.view_forward, ['<alt><shift>Z'], self)
-        self.create_action('export_figure', plotting_tools.export_figure, ["<primary>E"], self)
-        self.create_action('export_data', item_operations.export_data, ['<primary><shift>E'], self)
-        self.create_action('save_project', graphs.save_project_dialog, ['<primary>S'], self)
-        self.create_action('open_project', graphs.open_file_dialog, ['<primary>O'], self, None, True)
+        self.create_action('save_data', item_operations.save_data, ['<primary>S'], self)
+        self.create_action('save_project', graphs.save_project_dialog, ['<primary><shift>S'], self)
+        self.create_action('export_data', plotting_tools.export_data, ["<primary>E"], self)
         self.create_action('normalize_data', item_operations.normalize_data, None, self)
         self.create_action('translate_x', item_operations.translate_x, None, self)
         self.create_action('translate_y', item_operations.translate_y, None, self)
@@ -67,7 +67,7 @@ class GraphsApplication(Adw.Application):
         self.create_action('get_fourier', item_operations.get_fourier, None, self)
         self.create_action('get_inverse_fourier', item_operations.get_inverse_fourier, None, self)        
         self.create_action('delete_selected', graphs.delete_selected, ['Delete'], self)
-        
+
         self.create_axis_action('change_left_yscale', plotting_tools.change_left_yscale, 'plot_Y_scale')
         self.create_axis_action('change_right_yscale', plotting_tools.change_right_yscale, 'plot_right_scale')
         self.create_axis_action('change_top_xscale', plotting_tools.change_top_xscale, 'plot_top_scale')
@@ -92,7 +92,7 @@ class GraphsApplication(Adw.Application):
         graphs.load_empty(self)
         graphs.disable_clipboard_buttons(self)
         graphs.enable_data_dependent_buttons(self, False)
-        self.set_mode(None, None, InteractionMode.NONE)
+        self.set_mode(None, None, InteractionMode.PAN)
         win.maximize()
         win.present()
 
@@ -194,4 +194,5 @@ def main(version):
     app.version = version
 
     return app.run(sys.argv)
+
 
