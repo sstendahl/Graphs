@@ -128,7 +128,6 @@ class GraphsApplication(Adw.Application):
         Set the current UI interaction mode (none, pan, zoom or select)
         """
         win = self.main_window
-        none_button = win.none_button
         pan_button = win.pan_button
         zoom_button = win.zoom_button
         select_button = win.select_button
