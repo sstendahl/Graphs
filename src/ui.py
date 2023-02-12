@@ -110,3 +110,54 @@ def on_save_response(dialog, response, self, project):
             file_io.save_project(self, path)
         else:
             file_io.save_file(self, path)
+
+# https://github.com/matplotlib/matplotlib/blob/c23ccdde6f0f8c071b09a88770e24452f2859e99/lib/matplotlib/backends/backend_gtk4.py#L306
+def export_data(widget, shortcut, self):
+    dialog = Gtk.FileChooserNative(
+        title='Save the figure',
+        transient_for=self.main_window,
+        action=Gtk.FileChooserAction.SAVE,
+        modal=True)
+
+    ff = Gtk.FileFilter()
+    ff.set_name('All files')
+    ff.add_pattern('*')
+    dialog.add_filter(ff)
+    dialog.set_filter(ff)
+
+    formats = []
+    default_format = None
+    for i, (name, fmts) in enumerate(
+            self.canvas.get_supported_filetypes_grouped().items()):
+        ff = Gtk.FileFilter()
+        ff.set_name(name)
+        for fmt in fmts:
+            ff.add_pattern(f'*.{fmt}')
+        dialog.add_filter(ff)
+        formats.append(name)
+        if self.canvas.get_default_filetype() in fmts:
+            default_format = i
+    # Setting the choice doesn't always work, so make sure the default
+    # format is first.
+    formats = [formats[default_format], *formats[:default_format],
+               *formats[default_format+1:]]
+    dialog.add_choice('format', 'File format', formats, formats)
+    dialog.set_choice('format', formats[default_format])
+
+    dialog.set_current_name(self.canvas.get_default_filename())
+    dialog.connect("response", on_save_response, self)
+    dialog.show()
+
+# https://github.com/matplotlib/matplotlib/blob/c23ccdde6f0f8c071b09a88770e24452f2859e99/lib/matplotlib/backends/backend_gtk4.py#L344
+def on_save_response(dialog, response, self):
+    file = dialog.get_file()
+    fmt = dialog.get_choice('format')
+    fmt = self.canvas.get_supported_filetypes_grouped()[fmt][0]
+    dialog.destroy()
+    if response != Gtk.ResponseType.ACCEPT:
+        return
+    try:
+        self.canvas.figure.savefig(file.get_path(), format=fmt)
+    except Exception as e:
+        self.main_window.toast_overlay.add_toast(Adw.Toast(title=f"Unable to save image"))
+

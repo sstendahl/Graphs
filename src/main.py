@@ -50,7 +50,7 @@ class GraphsApplication(Adw.Application):
         self.create_action('view_forward', plotting_tools.view_forward, ['<alt><shift>Z'], self)
         self.create_action('save_data', item_operations.save_data, ['<primary>S'], self)
         self.create_action('save_project', ui.save_project_dialog, ['<primary><shift>S'], self)
-        self.create_action('export_data', plotting_tools.export_data, ["<primary>E"], self)
+        self.create_action('export_data', ui.export_data, ["<primary>E"], self)
         self.create_action('normalize_data', item_operations.normalize_data, None, self)
         self.create_action('translate_x', item_operations.translate_x, None, self)
         self.create_action('translate_y', item_operations.translate_y, None, self)
