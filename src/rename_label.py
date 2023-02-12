@@ -5,7 +5,7 @@ from . import plotting_tools
 
 def open_rename_label_window(self, axis):
     win = RenameLabelWindow(self, axis)
-    win.set_transient_for(self.props.active_window)
+    win.set_transient_for(self.main_window)
     win.set_modal(True)
     button = win.rename_label_confirm_button
     button.connect("clicked", on_accept, self, win, axis)

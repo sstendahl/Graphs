@@ -7,7 +7,7 @@ from .misc import InteractionMode
 
 def open_transform_window(widget, _, self):
     win = TransformWindow(self)
-    win.set_transient_for(self.props.active_window)
+    win.set_transient_for(self.main_window)
     win.set_modal(True)
     button = win.transform_confirm_button
     button.connect("clicked", on_accept, self, win)
@@ -33,7 +33,7 @@ def on_accept(widget, self, window):
                 xdata_out, ydata_out = operation(key, xdata_in, ydata_in, input_x, input_y)
             except Exception as e:
                 exception_type = e.__class__.__name__
-                win = self.props.active_window
+                win = self.main_window
                 win.toast_overlay.add_toast(Adw.Toast(title=f"{exception_type}: Unable to do transformation, make sure the syntax is correct"))
                 return
             self.datadict[key].xdata[start_index:stop_index] = xdata_out
@@ -45,7 +45,7 @@ def on_accept(widget, self, window):
                 xdata_out, ydata_out = operation(key, xdata_in, ydata_in, input_x, input_y)
             except Exception as e:
                 exception_type = e.__class__.__name__
-                win = self.props.active_window
+                win = self.main_window
                 win.toast_overlay.add_toast(Adw.Toast(title=f"{exception_type}: Unable to do transformation, make sure the syntax is correct"))
                 return
             self.datadict[key].xdata = xdata_out

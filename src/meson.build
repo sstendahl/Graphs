@@ -33,6 +33,7 @@ graphs_sources = [
   'rename_label.py',
   'samplerow.py',
   'transform_data.py',
+  'ui.py',
   'utilities.py',
   'window.py',
 ]

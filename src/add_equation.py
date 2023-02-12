@@ -9,7 +9,7 @@ def open_add_equation_window(widget, _, self):
     Open the window for adding a new dataset from an equation
     """
     win = AddEquationWindow(self)
-    win.set_transient_for(self.props.active_window)
+    win.set_transient_for(self.main_window)
     win.set_modal(True)
     name = "transform_confirm"
     button = win.add_equation_confirm_button
@@ -58,9 +58,7 @@ def on_accept(widget, self, window):
     new_file.clipboard_pos = -1
     color = plotting_tools.get_next_color(self)
     self.datadict[new_file.key] = new_file
-    graphs.add_sample_to_menu(self, new_file.filename, color, new_file.key)
-    graphs.select_item(self, new_file.key)
-    plotting_tools.refresh_plot(self)
+    graphs.add_sample_to_menu(self, new_file.filename, color, new_file.key, True)
     window.destroy()
 
 

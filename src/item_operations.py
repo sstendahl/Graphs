@@ -21,7 +21,7 @@ def add_to_clipboard(self):
     Add data to the clipboard, is performed whenever an action is performed.
     Appends the latest state to the clipboard.
     """
-    undo_button = self.props.active_window.undo_button
+    undo_button = self.main_window.undo_button
     undo_button.set_sensitive(True)
     
     #If a couple of redo's were performed previously, it deletes the clipboard
@@ -33,7 +33,7 @@ def add_to_clipboard(self):
             del item.xdata_clipboard[-1]
             del item.ydata_clipboard[-1]
         if delete_lists != 0:
-            redo_button = self.props.active_window.redo_button
+            redo_button = self.main_window.redo_button
             redo_button.set_sensitive(False)
 
         item.clipboard_pos = -1
@@ -45,8 +45,8 @@ def undo(widget, shortcut, self):
     Undo an action, moves the clipboard position backwards by one and changes
     the dataset to the state before the previous action was performed
     """
-    undo_button = self.props.active_window.undo_button
-    redo_button = self.props.active_window.redo_button
+    undo_button = self.main_window.undo_button
+    redo_button = self.main_window.redo_button
     for key, item in self.datadict.items():
         if abs(item.clipboard_pos) < len(item.xdata_clipboard):
             redo_button.set_sensitive(True)
@@ -62,8 +62,8 @@ def redo(widget, shortcut, self):
     Redo an action, moves the clipboard position forwards by one and changes the 
     dataset to the state before the previous action was undone
     """
-    undo_button = self.props.active_window.undo_button
-    redo_button = self.props.active_window.redo_button
+    undo_button = self.main_window.undo_button
+    redo_button = self.main_window.redo_button
     for key, item in self.datadict.items():
         if item.clipboard_pos < 0:
             undo_button.set_sensitive(True)
@@ -446,7 +446,7 @@ def translate_x(shortcut, _, self):
     Will show a toast if a ValueError is raised, typically when a user entered
     an invalid number (e.g. comma instead of point separators)
     """
-    win = self.props.active_window
+    win = self.main_window
     try:
         offset = eval(win.translate_x_entry.get_text())
     except Exception as e:
@@ -480,7 +480,7 @@ def translate_y(shortcut, _, self):
     Will show a toast if a ValueError is raised, typically when a user entered
     an invalid number (e.g. comma instead of point separators)
     """
-    win = self.props.active_window
+    win = self.main_window
     try:
         offset = eval(win.translate_y_entry.get_text())
     except Exception as e:
@@ -518,7 +518,7 @@ def multiply_x(shortcut, _, self):
     Will show a toast if a ValueError is raised, typically when a user entered
     an invalid number (e.g. comma instead of point separators)
     """
-    win = self.props.active_window
+    win = self.main_window
     try:
         multiplier = eval(win.multiply_x_entry.get_text())
     except Exception as e:
@@ -553,7 +553,7 @@ def multiply_y(shortcut, _, self):
     Will show a toast if a ValueError is raised, typically when a user entered
     an invalid number (e.g. comma instead of point separators)
     """
-    win = self.props.active_window
+    win = self.main_window
     try:
         multiplier = eval(win.multiply_y_entry.get_text())
     except Exception as e:

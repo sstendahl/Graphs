@@ -235,7 +235,7 @@ def reload_plot(self, from_dictionary = True):
     """
     Completely reload the plot of the graph
     """
-    win = self.props.active_window
+    win = self.main_window
     graphs.load_empty(self)
     if len(self.datadict) > 0:
         hide_unused_axes(self, self.canvas)
