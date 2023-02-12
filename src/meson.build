@@ -26,6 +26,7 @@ graphs_sources = [
   'graphs.py',
   'item_operations.py',
   'main.py',
+  'misc.py',
   'plot_settings.py',
   'plotting_tools.py',
   'preferences.py',

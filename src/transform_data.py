@@ -3,7 +3,7 @@ from gi.repository import Gtk, Adw
 from numpy import *
 
 from . import item_operations, plotting_tools, utilities
-from .utilities import InteractionMode
+from .misc import InteractionMode
 
 def open_transform_window(widget, _, self):
     win = TransformWindow(self)

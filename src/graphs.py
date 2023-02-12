@@ -6,7 +6,7 @@ from gi.repository import Gtk, Adw
 from . import plotting_tools, samplerow, colorpicker, utilities, file_io
 from .canvas import Canvas
 from .data import Data
-from .utilities import DummyToolbar, ImportSettings
+from .misc import DummyToolbar, ImportSettings
 
 def get_theme_color(self):
     win = self.props.active_window

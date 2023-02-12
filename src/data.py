@@ -2,6 +2,7 @@
 import uuid
 import os
 from . import graphs, utilities
+from .misc import ImportSettings
 
 class Data:  
     def __init__(self, parent, xdata, ydata, import_settings = None):
@@ -25,7 +26,7 @@ class Data:
         self.ydata_clipboard = [self.ydata.copy()]
         self.key: str = str(uuid.uuid4())
         if(import_settings == None):
-            import_settings = utilities.ImportSettings(parent)
+            import_settings = ImportSettings(parent)
         self.set_data_properties(parent, import_settings)
                     
     def set_data_properties(self, parent, import_settings):

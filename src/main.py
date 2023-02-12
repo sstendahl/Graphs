@@ -6,7 +6,7 @@ from gi.repository import Gio, Adw, GLib
 from matplotlib.backend_bases import _Mode
 
 from . import graphs, plotting_tools, item_operations, transform_data, preferences, add_equation, add_data_advanced, plot_settings
-from .utilities import InteractionMode
+from .misc import InteractionMode
 from .window import GraphsWindow
 
 class GraphsApplication(Adw.Application):

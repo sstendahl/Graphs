@@ -7,7 +7,7 @@ from scipy import integrate
 
 from . import plotting_tools, graphs, utilities
 from .data import Data
-from .utilities import InteractionMode
+from .misc import InteractionMode
 
 def save_data(widget, _, self):
     """
