@@ -14,12 +14,13 @@ def define_highlight(self, span=None):
     Create a span selector object, to highlight part of the graph.
     If a span already exists, make it visible instead
     """
+    color = self.main_window.get_style_context().lookup_color('accent_color')[1]
     self.highlight = SpanSelector(
         self.canvas.top_right_axis,
         lambda x, y: on_highlight_define(self),
         "horizontal",
         useblit=True,
-        props=dict(facecolor = (120 / 255, 174 / 255, 237 / 255, 0.2), edgecolor = (120 / 255, 174 / 255, 237 / 255, 1), linewidth = 1),
+        props=dict(facecolor = (color.red, color.green, color.blue, 0.3), edgecolor = (color.red, color.green, color.blue, 1), linewidth = 1),
         handle_props=dict(linewidth=0),
         interactive=True,
         drag_from_anywhere=True)

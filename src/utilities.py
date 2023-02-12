@@ -133,3 +133,27 @@ def create_rgba(r, g, b, a=1):
     res.alpha = a
     return res
 
+def get_theme_color(self):
+    styles = self.main_window.get_style_context()
+    rgba = styles.lookup_color('theme_bg_color')[1]
+    rgba_tuple = (round(rgba.red*255), round(rgba.green*255), round(rgba.blue*255), round(rgba.alpha*255))
+    color_hex = '#{:02x}{:02x}{:02x}'.format(*rgba_tuple)
+    return color_hex
+
+def get_duplicate_filename(self, name):
+    loop = True
+    i = 0
+    while loop:
+        i += 1
+        new_name = f"{name} ({i})"
+        loop = False
+        for key, item in self.datadict.items():
+            if new_name == item.filename:
+                loop = True
+    return new_name
+
+def swap(str1):
+    str1 = str1.replace(',', 'third')
+    str1 = str1.replace('.', ', ')
+    str1 = str1.replace('third', '.')
+    return str1

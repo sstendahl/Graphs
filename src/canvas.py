@@ -7,10 +7,9 @@ from matplotlib.figure import Figure
 from matplotlib.backends.backend_gtk4cairo import FigureCanvas
 from cycler import cycler
 
-from . import rename_label
+from . import rename_label, utilities
 
 class Canvas(FigureCanvas):
-    rubberband_color_float = [120 / 255, 174 / 255, 237 / 255]
     """
     Create the graph widget
     """
@@ -29,6 +28,7 @@ class Canvas(FigureCanvas):
         self.set_ax_properties(parent)
         self.set_save_properties(parent)
         self.set_color_cycle(parent)
+        self.rubberband_color = parent.main_window.get_style_context().lookup_color('accent_color')[1]
         super().__init__(self.figure)
 
     def set_save_properties(self, parent):
@@ -179,10 +179,10 @@ class Canvas(FigureCanvas):
         context.set_antialias(1)
         context.set_line_width(lw)
         context.rectangle(x0, y0, w, h)
-        ca = self.rubberband_color_float
-        context.set_source_rgba(ca[0], ca[1], ca[2], 0.2)
+        ca = self.rubberband_color
+        context.set_source_rgba(ca.red, ca.green, ca.blue, 0.3)
         context.fill()
         context.rectangle(x0, y0, w, h)
-        context.set_source_rgba(ca[0], ca[1], ca[2], 1)
+        context.set_source_rgba(ca.red, ca.green, ca.blue, 1)
         context.stroke()
 

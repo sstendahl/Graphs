@@ -40,7 +40,7 @@ def on_accept(widget, self, window):
         for key, item in self.datadict.items():
             if new_file.filename in item.filename:
                 if handle_duplicates == "Auto-rename duplicates":
-                    new_file.filename = graphs.get_duplicate_filename(self, new_file.filename)
+                    new_file.filename = utilities.get_duplicate_filename(self, new_file.filename)
                 elif handle_duplicates == "Ignore duplicates":
                     window.toast_overlay.add_toast(Adw.Toast(title="Item with this name already exists"))
                     return

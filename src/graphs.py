@@ -2,19 +2,10 @@
 import os
 import numpy
 
-from gi.repository import Gtk, Adw
 from . import plotting_tools, samplerow, colorpicker, utilities, file_io, ui
 from .canvas import Canvas
 from .data import Data
 from .misc import DummyToolbar, ImportSettings
-
-def get_theme_color(self):
-    win = self.main_window
-    styles = win.get_style_context()
-    rgba = styles.lookup_color('theme_bg_color')[1]
-    rgba_tuple = (round(rgba.red*255), round(rgba.green*255), round(rgba.blue*255), round(rgba.alpha*255))
-    color_hex = '#{:02x}{:02x}{:02x}'.format(*rgba_tuple)
-    return color_hex
 
 def open_selection_from_dict(self):
     for key, item in self.datadict.items():
@@ -61,7 +52,7 @@ def open_files(self, files):
                     for key, item2 in self.datadict.items():
                         if item.filename == item2.filename:
                             if handle_duplicates == "Auto-rename duplicates":
-                                item.filename = get_duplicate_filename(self, item.filename)
+                                item.filename = utilities.get_duplicate_filename(self, item.filename)
                             elif handle_duplicates == "Ignore duplicates":
                                 self.main_window.toast_overlay.add_toast(Adw.Toast(title=f"Item \"{item.filename}\" already exists"))
                                 return
@@ -81,34 +72,15 @@ def open_files(self, files):
     plotting_tools.set_canvas_limits_axis(self, self.canvas)
     toggle_data(None, self)
 
-def get_duplicate_filename(self, name):
-    loop = True
-    i = 0
-    while loop:
-        i += 1
-        new_name = f"{name} ({i})"
-        loop = False
-        for key, item in self.datadict.items():
-            if new_name == item.filename:
-                loop = True
-    return new_name
-
 def select_item(self, key):
     item = self.item_rows[key]
     item.check_button.set_active(True)
     toggle_data(None, self)
 
-def swap(str1):
-    str1 = str1.replace(',', 'third')
-    str1 = str1.replace('.', ', ')
-    str1 = str1.replace('third', '.')
-    return str1
-
 def delete_selected(shortcut, _,  self):
     selected_keys = utilities.get_selected_keys(self)
     for key in selected_keys:
         delete(None, self, key)
-
 
 def delete(widget,  self, id, give_toast = True):
     layout = self.list_box
