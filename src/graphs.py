@@ -7,7 +7,7 @@ import pickle
 
 from gi.repository import Gtk, Adw
 from . import plotting_tools, samplerow, colorpicker, utilities
-from .plotting_tools import PlotWidget
+from .canvas import Canvas
 from .data import Data
 from .utilities import DummyToolbar
 
@@ -408,7 +408,7 @@ def load_empty(self):
     win = self.main_window
     xlabel = self.plot_settings.xlabel
     ylabel = self.plot_settings.ylabel
-    self.canvas = PlotWidget(parent = self, xlabel=xlabel, ylabel=ylabel)
+    self.canvas = Canvas(parent = self, xlabel=xlabel, ylabel=ylabel)
     for axis in [self.canvas.right_axis, self.canvas.top_left_axis, self.canvas.top_right_axis]:
         axis.get_xaxis().set_visible(False)
         axis.get_yaxis().set_visible(False)    

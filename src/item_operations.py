@@ -8,7 +8,6 @@ from scipy import integrate
 from . import plotting_tools, graphs, utilities
 from .data import Data
 from .utilities import InteractionMode
-from .plotting_tools import PlotWidget
 
 def save_data(widget, _, self):
     """

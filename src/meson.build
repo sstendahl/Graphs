@@ -19,6 +19,7 @@ configure_file(
 graphs_sources = [
   'add_data_advanced.py',
   'add_equation.py',
+  'canvas.py',
   'colorpicker.py',
   'data.py',
   'graphs.py',
