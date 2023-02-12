@@ -26,8 +26,7 @@ def on_accept(widget, self, window):
     equation = str(window.equation_entry.get_text())
     dataset = create_dataset(self, x_start, x_stop, equation, step_size, str(window.name_entry.get_text()))
     try:
-        import_settings = graphs.get_import_settings(self)
-        new_file = Data(self, dataset["xdata"], dataset["ydata"], import_settings)
+        new_file = Data(self, dataset["xdata"], dataset["ydata"])
         new_file.filename = dataset["name"]
     except Exception as e:
         exception_type = e.__class__.__name__
