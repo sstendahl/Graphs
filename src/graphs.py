@@ -2,6 +2,7 @@
 import os
 import numpy
 
+from gi.repository import Adw
 from . import plotting_tools, samplerow, colorpicker, utilities, file_io, ui
 from .canvas import Canvas
 from .data import Data
