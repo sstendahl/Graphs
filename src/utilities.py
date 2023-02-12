@@ -155,3 +155,15 @@ class DummyToolbar(NavigationToolbar2):
         self.canvas._rubberband_rect = None
         self.canvas.queue_draw()
 
+class ImportSettings():
+    def __init__(self, parent):
+        cfg = parent.preferences.config
+        self.name = ""
+        self.path = ""
+        self.delimiter = cfg["import_delimiter"]
+        self.guess_headers = cfg["guess_headers"]
+        self.separator = cfg["import_separator"]
+        self.skip_rows = cfg["import_skip_rows"]
+        self.column_x = cfg["import_column_x"]
+        self.column_y = cfg["import_column_y"]
+

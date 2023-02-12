@@ -1,15 +1,12 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
-import gi
 import os
-import re
 import numpy
-import pickle
 
 from gi.repository import Gtk, Adw
-from . import plotting_tools, samplerow, colorpicker, utilities
+from . import plotting_tools, samplerow, colorpicker, utilities, file_io
 from .canvas import Canvas
 from .data import Data
-from .utilities import DummyToolbar
+from .utilities import DummyToolbar, ImportSettings
 
 def get_theme_color(self):
     win = self.props.active_window
@@ -37,20 +34,26 @@ def open_selection_from_dict(self):
             x_axis = item.plot_X_position
             plotting_tools.plot_figure(self, self.canvas, item.xdata,item.ydata, item.filename, linewidth = linewidth, linestyle=linestyle, color = color, marker = marker, marker_size = marker_size, y_axis = y_axis, x_axis = x_axis)
 
-def open_selection_from_file(self, files, import_settings):
-    for path in files:
+def open_files(self, files):
+    import_settings = ImportSettings(self)
+    if len(files) > 1:
+        import_settings.mode = "multiple"
+    elif len(files) == 1:
+        import_settings.mode = "single"
+    for file in files:
+        path = file.peek_path()
         if path != "":
             try:
-                import_settings["path"] = path
-                item = get_data(self, import_settings)
+                import_settings.path = path
+                item = file_io.get_data(self, import_settings)
                 if item.xdata == []:
-                    self.props.active_window.toast_overlay.add_toast(Adw.Toast(title=f"At least one data set could not be imported"))                    
+                    self.main_window.toast_overlay.add_toast(Adw.Toast(title=f"At least one data set could not be imported"))
                     continue
             except IndexError:
-                self.props.active_window.toast_overlay.add_toast(Adw.Toast(title=f"Could not open data, the column index was out of range"))
+                self.main_window.toast_overlay.add_toast(Adw.Toast(title=f"Could not open data, the column index was out of range"))
                 break
             except UnicodeDecodeError:
-                self.props.active_window.toast_overlay.add_toast(Adw.Toast(title=f"Could not open data, wrong filetype"))
+                self.main_window.toast_overlay.add_toast(Adw.Toast(title=f"Could not open data, wrong filetype"))
                 break
             if item is not None:
                 handle_duplicates = self.preferences.config["handle_duplicates"]
@@ -79,7 +82,6 @@ def open_selection_from_file(self, files, import_settings):
     plotting_tools.refresh_plot(self)
     enable_data_dependent_buttons(self, utilities.get_selected_keys(self))
 
-
 def get_duplicate_filename(self, name):
     loop = True
     i = 0
@@ -105,47 +107,6 @@ def select_item(self, key):
     item.check_button.set_active(True)
     plotting_tools.refresh_plot(self)
     enable_data_dependent_buttons(self, utilities.get_selected_keys(self))
-
-def get_data(self, import_settings):
-    data_array = [[], []]
-    i = 0
-    path = import_settings["path"]
-    with (open(path, 'r')) as file:
-        for line in file:
-            i += 1
-            if i > import_settings["skip_rows"]:
-                line = line.strip()
-                data_line = re.split(str(import_settings["delimiter"]), line)
-                if import_settings["separator"] == ",":
-                    for index, value in enumerate(data_line):
-                        data_line[index] = swap(value)
-                try:
-                    data_array[0].append(float(data_line[import_settings["column_x"]]))
-                    data_array[1].append(float(data_line[import_settings["column_y"]]))
-                    
-                #If it finds non-numbers, it will raise a ValueError, this is the cue to 
-                #start looking for headers
-                except ValueError:
-                    if import_settings["guess_headers"]:
-                        #By default it will check for headers using at least two whitespaces
-                        #as delimiter (often tabs), but if that doesn't work it will try
-                        #the same delimiter as used for the data import itself
-                        #The reasoning is that some people use tabs for the headers, but 
-                        #e.g. commas for the data
-                        try:
-                            headers = re.split("\s{2,}", line)
-                            self.plot_settings.xlabel = headers[import_settings["column_x"]]
-                            self.plot_settings.ylabel = headers[import_settings["column_y"]]
-                        except IndexError:
-                            try:
-                                headers = re.split(import_settings["delimiter"], line)
-                                self.plot_settings.xlabel = headers[import_settings["column_x"]]
-                                self.plot_settings.ylabel = headers[import_settings["column_y"]]
-                            #If neither heuristic works, we just skip the headers
-                            except IndexError:
-                                pass
-    data = Data(self, data_array[0], data_array[1], import_settings)
-    return data
 
 def swap(str1):
     str1 = str1.replace(',', 'third')
@@ -243,49 +204,19 @@ def save_file_dialog(self, documenttype="Text file (*.txt)"):
         chooser.set_current_name(f"{filename}.txt")
     try:
         chooser.set_modal(True)
-        chooser.connect("response", on_save_response, self)
+        chooser.connect("response", on_save_response, self, False)
         chooser.show()
     except UnboundLocalError:
         self.props.active_window.toast_overlay.add_toast(Adw.Toast(title=f"Could not open save dialog, make sure you have data opened"))
 
 
-def on_save_response(dialog, response, self, project = False):
-    files = []
+def on_save_response(dialog, response, self, project):
     if response == Gtk.ResponseType.ACCEPT:
         path = dialog.get_file().peek_path()
         if project:
-            save_project_file(self, path)
+            file_io.save_project(self, path)
         else:
-            save_file(self, path)
-
-def save_project_file(self, path):
-    project_data = dict()
-    project_data["plot_settings"] = self.plot_settings
-    project_data["data"] = self.datadict
-    project_data["version"] = self.version
-    with open(path, 'wb') as f:
-        pickle.dump(project_data, f)
-
-
-def save_file(self, path):
-    if len(self.datadict) == 1:
-        for key, item in self.datadict.items():
-            xdata = item.xdata
-            ydata = item.ydata
-        filename = path
-        array = numpy.stack([xdata, ydata], axis=1)
-        numpy.savetxt(str(filename), array, delimiter="\t")
-    elif len(self.datadict) > 1:
-        for key, item in self.datadict.items():
-            xdata = item.xdata
-            ydata = item.ydata
-            filename = item.filename
-            array = numpy.stack([xdata, ydata], axis=1)
-            if os.path.exists(f"{path}/{filename}.txt"):
-                numpy.savetxt(str(path + "/" + filename) + " (copy).txt", array, delimiter="\t")
-            else:
-                numpy.savetxt(str(path + "/" + filename) + ".txt", array, delimiter="\t")
-
+            file_io.save_file(self, path)
 
 def save_project_dialog(widget, _, self, documenttype="Graphs Project (*)"):
     def save_project_chooser(action):
@@ -303,7 +234,7 @@ def save_project_dialog(widget, _, self, documenttype="Graphs Project (*)"):
     chooser.show()
 
 
-def open_file_dialog(widget, _, self, import_settings = None, open_project = False):
+def open_file_dialog(widget, _, self, open_project):
     open_file_chooser = Gtk.FileChooserNative.new(
         title="Open new files",
         parent=self.props.active_window,
@@ -311,47 +242,16 @@ def open_file_dialog(widget, _, self, import_settings = None, open_project = Fal
         accept_label="_Open",
     )
     open_file_chooser.set_modal(True)
-    if open_project:
-        open_file_chooser.connect("response", load_project, self)
-    else:
-        open_file_chooser.set_select_multiple(True)
-        open_file_chooser.connect("response", open_file, self, import_settings)
+    open_file_chooser.set_select_multiple(open_project)
+    open_file_chooser.connect("response", on_open_response, self, open_project)
     open_file_chooser.show()
 
-def get_import_settings(self):
-    import_settings = dict()
-    import_settings["path"] = ""
-    import_settings["delimiter"] = self.preferences.config["import_delimiter"]
-    import_settings["guess_headers"] = self.preferences.config["guess_headers"]
-    import_settings["separator"] = self.preferences.config["import_separator"]
-    import_settings["skip_rows"] = int(self.preferences.config["import_skip_rows"])
-    import_settings["column_x"] = int(self.preferences.config["import_column_x"])
-    import_settings["column_y"] = int(self.preferences.config["import_column_y"])
-    import_settings["name"] = ""
-    return import_settings
-    
-def load_project(dialog, response, self):
-    files = []
+def on_open_response(dialog, response, self, project):
     if response == Gtk.ResponseType.ACCEPT:
-        for file in dialog.get_files():
-            file_path = file.peek_path()
-            filename = file_path.split("/")[-1]
-            files.append(file_path)
-        select_all(None, None, self)
-        delete_selected(None, None, self)
-
-    with open(file_path, 'rb') as f:
-        project =  pickle.load(f)
-    project_datadict = project["data"]
-    new_plot_settings = project["plot_settings"]
-    self.plot_settings = new_plot_settings
-    set_attributes(new_plot_settings, self.plot_settings)
-    create_data_from_project(self, project_datadict)
-    for key, item in self.datadict.items():
-        color = item.color
-        add_sample_to_menu(self, item.filename, color, item.key)
-    plotting_tools.reload_plot(self)
-    select_all(None, None, self)
+        if(project):
+            file_io.load_project(self, dialog.get_files())
+        else:
+            open_files(self, dialog.get_files())
 
 def create_data_from_project(self, new_dictionary):
     """
@@ -370,8 +270,6 @@ def create_data_from_project(self, new_dictionary):
         for attribute in self.datadict[item.key].__dict__:
             if hasattr(item, attribute):
                 setattr(self.datadict[item.key], attribute, getattr(item, attribute))
-                
-    
 
 def set_attributes(new_object, template):
     """
@@ -385,24 +283,6 @@ def set_attributes(new_object, template):
     for attribute in new_object.__dict__:
         if not hasattr(template, attribute):
             delattr(new_object, attr)
-            
-def open_file(dialog, response, self, import_settings):
-    files = []
-    if response == Gtk.ResponseType.ACCEPT:
-        for file in dialog.get_files():
-            file_path = file.peek_path()
-            filename = file_path.split("/")[-1]
-            files.append(file_path)
-
-        if import_settings is None:
-            import_settings = get_import_settings(self)
-        if len(dialog.get_files()) > 1:
-            import_settings["mode"] = "multiple"
-        elif len(dialog.get_files()) == 1:
-            import_settings["mode"] = "single"
-
-        open_selection_from_file(self, files, import_settings)
-
 
 def load_empty(self):
     win = self.main_window

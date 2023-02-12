@@ -22,6 +22,7 @@ graphs_sources = [
   'canvas.py',
   'colorpicker.py',
   'data.py',
+  'file_io.py',
   'graphs.py',
   'item_operations.py',
   'main.py',
