@@ -6,7 +6,7 @@ from gi.repository import Adw
 from . import plotting_tools, samplerow, colorpicker, utilities, file_io, ui
 from .canvas import Canvas
 from .data import Data
-from .misc import DummyToolbar, ImportSettings
+from .misc import DummyToolbar, ImportSettings, ImportMode
 
 def open_selection_from_dict(self):
     for key, item in self.datadict.items():
@@ -29,9 +29,9 @@ def open_selection_from_dict(self):
 def open_files(self, files):
     import_settings = ImportSettings(self)
     if len(files) > 1:
-        import_settings.mode = "multiple"
+        import_settings.mode = ImportMode.MULTIPLE
     elif len(files) == 1:
-        import_settings.mode = "single"
+        import_settings.mode = ImportMode.SINGLE
     for file in files:
         path = file.peek_path()
         if path != "":
