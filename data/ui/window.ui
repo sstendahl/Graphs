@@ -124,7 +124,7 @@
                             </child>
                             <child>
                               <object class="AdwStatusPage" id="no_data_label_box">
-                                <property name="icon-name">graph</property>
+                                <property name="icon-name">list-compact</property>
                                 <property name="hexpand">true</property>                  
                                 <property name="width-request">240</property>
                                 <property name="halign">center</property>
@@ -850,3 +850,4 @@
     </section>
   </menu>
 </interface>
+
