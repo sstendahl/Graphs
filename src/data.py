@@ -25,7 +25,7 @@ class Data:
         self.xdata_clipboard = [self.xdata.copy()]
         self.ydata_clipboard = [self.ydata.copy()]
         self.key: str = str(uuid.uuid4())
-        if(import_settings == None):
+        if import_settings is None:
             import_settings = ImportSettings(parent)
         self.set_data_properties(parent, import_settings)
                     

@@ -125,7 +125,7 @@ class GraphsApplication(Adw.Application):
         zoom_button = win.zoom_button
         select_button = win.select_button
         cut_button = win.cut_data_button
-        if self.highlight == None:
+        if self.highlight is None:
             plotting_tools.define_highlight(self)
         highlight = self.highlight
         if(mode == InteractionMode.PAN):

@@ -139,7 +139,7 @@ def cut_data(widget, _, self):
                 #If our item is among the selected samples, we will cut those
                 if f"{key}_selected" in self.datadict:
                     selected_item = self.datadict[f"{key}_selected"]
-                    if selected_item == None:
+                    if selected_item is None:
                         continue
                     for index, (valuex, valuey) in enumerate(zip(xdata, ydata)):
                         #Appends the values that are within the selected span

@@ -213,13 +213,13 @@ def find_limits(self, axis, canvas, datadict):
                 ymin_item = min(item.ydata)
             ymax_item = max(item.ydata)
 
-            if xmin_all == None:
+            if xmin_all is None:
                 xmin_all = xmin_item
-            if xmax_all == None:
+            if xmax_all is None:
                 xmax_all = xmax_item
-            if ymin_all == None:
+            if ymin_all is None:
                 ymin_all = ymin_item
-            if ymax_all == None:
+            if ymax_all is None:
                 ymax_all = ymax_item
             if xmin_item < xmin_all:
                 xmin_all = xmin_item
@@ -241,7 +241,7 @@ def reload_plot(self, from_dictionary = True):
     if len(self.datadict) > 0:
         hide_unused_axes(self, self.canvas)
         graphs.open_selection_from_dict(self)
-        if (not self.highlight == None):
+        if (not self.highlight is None):
             self.highlight.set_visible(False)
             self.highlight.set_active(False)
             self.highlight = None
@@ -254,7 +254,7 @@ def refresh_plot(self, canvas = None, from_dictionary = True, set_limits = True)
     """
     Refresh the graph without completely reloading it.
     """
-    if canvas == None:
+    if canvas is None:
         canvas = self.canvas
     for line in canvas.ax.lines:
         line.remove()
