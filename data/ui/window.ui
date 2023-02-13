@@ -123,30 +123,18 @@
                               </object>
                             </child>
                             <child>
-                              <object class="GtkBox" id="no_data_label_box">
-                                <property name="orientation">vertical</property>
-                                <property name="valign">center</property>
-                                <property name="hexpand">true</property>
-                                <child>
-                                  <object class="GtkLabel">
-                                    <property name="label">No Data</property>
-                                    <attributes>
-                                      <attribute name="weight" value="PANGO_WEIGHT_BOLD"/>
-                                    </attributes>
-                                  </object>
-                                </child>
-                                <child>
-                                  <object class="GtkLabel">"
-                                    <property name="label">Use the button in the top left corner</property>
-                                  </object>
-                                </child>
-                                <child>
-                                  <object class="GtkLabel">
-                                    <property name="label">to add data from files or equations.</property>
-                                  </object>
-                                </child>>
+                              <object class="AdwStatusPage" id="no_data_label_box">
+                                <property name="icon-name">list-compact</property>
+                                <property name="hexpand">true</property>                  
+                                <property name="width-request">240</property>
+                                <property name="halign">center</property>
+                                <property name="title">No Data</property>
+                                <property name="description">Add data from a file or manually as an equation</property>   
+                                <style>
+                                 <class name="compact" />
+                                </style>
                               </object>
-                            </child>
+                            </child>                            
                           </object>
                         </property>
                       </object>
@@ -862,3 +850,4 @@
     </section>
   </menu>
 </interface>
+
