@@ -1,23 +1,12 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
-import gi
 import os
-import re
 import numpy
-import pickle
 
-from gi.repository import Gtk, Adw
-from . import plotting_tools, samplerow, colorpicker, utilities
-from .plotting_tools import PlotWidget
+from gi.repository import Adw
+from . import plotting_tools, samplerow, colorpicker, utilities, file_io, ui
+from .canvas import Canvas
 from .data import Data
-from .utilities import DummyToolbar
-
-def get_theme_color(self):
-    win = self.props.active_window
-    styles = win.get_style_context()
-    rgba = styles.lookup_color('theme_bg_color')[1]
-    rgba_tuple = (round(rgba.red*255), round(rgba.green*255), round(rgba.blue*255), round(rgba.alpha*255))
-    color_hex = '#{:02x}{:02x}{:02x}'.format(*rgba_tuple)
-    return color_hex
+from .misc import DummyToolbar, ImportSettings, ImportMode
 
 def open_selection_from_dict(self):
     for key, item in self.datadict.items():
@@ -37,20 +26,26 @@ def open_selection_from_dict(self):
             x_axis = item.plot_X_position
             plotting_tools.plot_figure(self, self.canvas, item.xdata,item.ydata, item.filename, linewidth = linewidth, linestyle=linestyle, color = color, marker = marker, marker_size = marker_size, y_axis = y_axis, x_axis = x_axis)
 
-def open_selection_from_file(self, files, import_settings):
-    for path in files:
+def open_files(self, files):
+    import_settings = ImportSettings(self)
+    if len(files) > 1:
+        import_settings.mode = ImportMode.MULTIPLE
+    elif len(files) == 1:
+        import_settings.mode = ImportMode.SINGLE
+    for file in files:
+        path = file.peek_path()
         if path != "":
             try:
-                import_settings["path"] = path
-                item = get_data(self, import_settings)
+                import_settings.path = path
+                item = file_io.get_data(self, import_settings)
                 if item.xdata == []:
-                    self.props.active_window.toast_overlay.add_toast(Adw.Toast(title=f"At least one data set could not be imported"))                    
+                    self.main_window.toast_overlay.add_toast(Adw.Toast(title=f"At least one data set could not be imported"))
                     continue
             except IndexError:
-                self.props.active_window.toast_overlay.add_toast(Adw.Toast(title=f"Could not open data, the column index was out of range"))
+                self.main_window.toast_overlay.add_toast(Adw.Toast(title=f"Could not open data, the column index was out of range"))
                 break
             except UnicodeDecodeError:
-                self.props.active_window.toast_overlay.add_toast(Adw.Toast(title=f"Could not open data, wrong filetype"))
+                self.main_window.toast_overlay.add_toast(Adw.Toast(title=f"Could not open data, wrong filetype"))
                 break
             if item is not None:
                 handle_duplicates = self.preferences.config["handle_duplicates"]
@@ -58,9 +53,9 @@ def open_selection_from_file(self, files, import_settings):
                     for key, item2 in self.datadict.items():
                         if item.filename == item2.filename:
                             if handle_duplicates == "Auto-rename duplicates":
-                                item.filename = get_duplicate_filename(self, item.filename)
+                                item.filename = utilities.get_duplicate_filename(self, item.filename)
                             elif handle_duplicates == "Ignore duplicates":
-                                self.props.active_window.toast_overlay.add_toast(Adw.Toast(title=f"Item \"{item.filename}\" already exists"))
+                                self.main_window.toast_overlay.add_toast(Adw.Toast(title=f"Item \"{item.filename}\" already exists"))
                                 return
                             elif handle_duplicates == "Override existing items":
                                 y_axis = item.plot_Y_position
@@ -76,88 +71,17 @@ def open_selection_from_file(self, files, import_settings):
                 add_sample_to_menu(self, item.filename, item.color, item.key, select_item = True)
     self.canvas.draw()
     plotting_tools.set_canvas_limits_axis(self, self.canvas)
-    plotting_tools.refresh_plot(self)
-    enable_data_dependent_buttons(self, utilities.get_selected_keys(self))
-
-
-def get_duplicate_filename(self, name):
-    loop = True
-    i = 0
-    while loop:
-        i += 1
-        new_name = f"{name} ({i})"
-        loop = False
-        for key, item in self.datadict.items():
-            if new_name == item.filename:
-                loop = True
-    return new_name
-
-def toggle_darkmode(shortcut, theme, widget, self):
-    if Adw.StyleManager.get_default().get_dark():
-        self.plot_settings.plot_style = self.preferences.config["plot_style_dark"]
-    else:
-        self.plot_settings.plot_style = self.preferences.config["plot_style_light"]
-    plotting_tools.reload_plot(self)
-
+    toggle_data(None, self)
 
 def select_item(self, key):
     item = self.item_rows[key]
     item.check_button.set_active(True)
-    plotting_tools.refresh_plot(self)
-    enable_data_dependent_buttons(self, utilities.get_selected_keys(self))
-
-def get_data(self, import_settings):
-    data_array = [[], []]
-    i = 0
-    path = import_settings["path"]
-    with (open(path, 'r')) as file:
-        for line in file:
-            i += 1
-            if i > import_settings["skip_rows"]:
-                line = line.strip()
-                data_line = re.split(str(import_settings["delimiter"]), line)
-                if import_settings["separator"] == ",":
-                    for index, value in enumerate(data_line):
-                        data_line[index] = swap(value)
-                try:
-                    data_array[0].append(float(data_line[import_settings["column_x"]]))
-                    data_array[1].append(float(data_line[import_settings["column_y"]]))
-                    
-                #If it finds non-numbers, it will raise a ValueError, this is the cue to 
-                #start looking for headers
-                except ValueError:
-                    if import_settings["guess_headers"]:
-                        #By default it will check for headers using at least two whitespaces
-                        #as delimiter (often tabs), but if that doesn't work it will try
-                        #the same delimiter as used for the data import itself
-                        #The reasoning is that some people use tabs for the headers, but 
-                        #e.g. commas for the data
-                        try:
-                            headers = re.split("\s{2,}", line)
-                            self.plot_settings.xlabel = headers[import_settings["column_x"]]
-                            self.plot_settings.ylabel = headers[import_settings["column_y"]]
-                        except IndexError:
-                            try:
-                                headers = re.split(import_settings["delimiter"], line)
-                                self.plot_settings.xlabel = headers[import_settings["column_x"]]
-                                self.plot_settings.ylabel = headers[import_settings["column_y"]]
-                            #If neither heuristic works, we just skip the headers
-                            except IndexError:
-                                pass
-    data = Data(self, data_array[0], data_array[1], import_settings)
-    return data
-
-def swap(str1):
-    str1 = str1.replace(',', 'third')
-    str1 = str1.replace('.', ', ')
-    str1 = str1.replace('third', '.')
-    return str1
+    toggle_data(None, self)
 
 def delete_selected(shortcut, _,  self):
     selected_keys = utilities.get_selected_keys(self)
     for key in selected_keys:
         delete(None, self, key)
-
 
 def delete(widget,  self, id, give_toast = True):
     layout = self.list_box
@@ -168,7 +92,7 @@ def delete(widget,  self, id, give_toast = True):
     del self.item_rows[id]
     del self.datadict[id]
     if give_toast:
-        self.props.active_window.toast_overlay.add_toast(Adw.Toast(title=f"Deleted {filename}"))
+        self.main_window.toast_overlay.add_toast(Adw.Toast(title=f"Deleted {filename}"))
 
     if len(self.datadict) == 0:
         self.canvas.ax.legend().remove()
@@ -177,22 +101,18 @@ def delete(widget,  self, id, give_toast = True):
         self.main_window.no_data_label_box.set_visible(True)
 
     reset_clipboard(self)
-    plotting_tools.refresh_plot(self)
-    enable_data_dependent_buttons(self, utilities.get_selected_keys(self))
+    toggle_data(None, self)
 
 
 def select_all(widget, _, self):
     for key, item in self.item_rows.items():
         item.check_button.set_active(True)
-    plotting_tools.refresh_plot(self)
-    enable_data_dependent_buttons(self, utilities.get_selected_keys(self))
-
+    toggle_data(None, self)
 
 def select_none(widget, _, self):
     for key, item in self.item_rows.items():
         item.check_button.set_active(False)
-    plotting_tools.refresh_plot(self)
-    enable_data_dependent_buttons(self, False)
+    toggle_data(None, self)
 
 def add_sample_to_menu(self, filename, color, key, select_item = False):
     win = self.main_window
@@ -218,140 +138,11 @@ def add_sample_to_menu(self, filename, color, key, select_item = False):
     row.sample_ID_label.set_text(label)
     self.list_box.append(row)
     self.sample_menu[key] = self.list_box.get_last_child()
+    toggle_data(None, self)
     
-def toggle_data(widget,  self):
+def toggle_data(_, self):
     plotting_tools.refresh_plot(self)
-    enable_data_dependent_buttons(self, utilities.get_selected_keys(self))
-
-def save_file_dialog(self, documenttype="Text file (*.txt)"):
-    def save_file_chooser(action):
-        dialog = Gtk.FileChooserNative.new(
-            title="Save files",
-            parent=self.props.active_window,
-            action=action,
-            accept_label="_Save",
-        )
-        return dialog
-
-    if len(self.datadict) == 1:
-        chooser = save_file_chooser(Gtk.FileChooserAction.SAVE)
-    elif len(self.datadict) > 1:
-        chooser = save_file_chooser(Gtk.FileChooserAction.SELECT_FOLDER)
-
-    if len(self.datadict) == 1:
-        filename = list(self.datadict.values())[0].filename
-        chooser.set_current_name(f"{filename}.txt")
-    try:
-        chooser.set_modal(True)
-        chooser.connect("response", on_save_response, self)
-        chooser.show()
-    except UnboundLocalError:
-        self.props.active_window.toast_overlay.add_toast(Adw.Toast(title=f"Could not open save dialog, make sure you have data opened"))
-
-
-def on_save_response(dialog, response, self, project = False):
-    files = []
-    if response == Gtk.ResponseType.ACCEPT:
-        path = dialog.get_file().peek_path()
-        if project:
-            save_project_file(self, path)
-        else:
-            save_file(self, path)
-
-def save_project_file(self, path):
-    project_data = dict()
-    project_data["plot_settings"] = self.plot_settings
-    project_data["data"] = self.datadict
-    project_data["version"] = self.version
-    with open(path, 'wb') as f:
-        pickle.dump(project_data, f)
-
-
-def save_file(self, path):
-    if len(self.datadict) == 1:
-        for key, item in self.datadict.items():
-            xdata = item.xdata
-            ydata = item.ydata
-        filename = path
-        array = numpy.stack([xdata, ydata], axis=1)
-        numpy.savetxt(str(filename), array, delimiter="\t")
-    elif len(self.datadict) > 1:
-        for key, item in self.datadict.items():
-            xdata = item.xdata
-            ydata = item.ydata
-            filename = item.filename
-            array = numpy.stack([xdata, ydata], axis=1)
-            if os.path.exists(f"{path}/{filename}.txt"):
-                numpy.savetxt(str(path + "/" + filename) + " (copy).txt", array, delimiter="\t")
-            else:
-                numpy.savetxt(str(path + "/" + filename) + ".txt", array, delimiter="\t")
-
-
-def save_project_dialog(widget, _, self, documenttype="Graphs Project (*)"):
-    def save_project_chooser(action):
-        dialog = Gtk.FileChooserNative.new(
-            title="Save files",
-            parent=self.props.active_window,
-            action=action,
-            accept_label="_Save",
-        )
-        return dialog
-
-    chooser = save_project_chooser(Gtk.FileChooserAction.SAVE)
-    chooser.set_modal(True)
-    chooser.connect("response", on_save_response, self, True)
-    chooser.show()
-
-
-def open_file_dialog(widget, _, self, import_settings = None, open_project = False):
-    open_file_chooser = Gtk.FileChooserNative.new(
-        title="Open new files",
-        parent=self.props.active_window,
-        action=Gtk.FileChooserAction.OPEN,
-        accept_label="_Open",
-    )
-    open_file_chooser.set_modal(True)
-    if open_project:
-        open_file_chooser.connect("response", load_project, self)
-    else:
-        open_file_chooser.set_select_multiple(True)
-        open_file_chooser.connect("response", open_file, self, import_settings)
-    open_file_chooser.show()
-
-def get_import_settings(self):
-    import_settings = dict()
-    import_settings["path"] = ""
-    import_settings["delimiter"] = self.preferences.config["import_delimiter"]
-    import_settings["guess_headers"] = self.preferences.config["guess_headers"]
-    import_settings["separator"] = self.preferences.config["import_separator"]
-    import_settings["skip_rows"] = int(self.preferences.config["import_skip_rows"])
-    import_settings["column_x"] = int(self.preferences.config["import_column_x"])
-    import_settings["column_y"] = int(self.preferences.config["import_column_y"])
-    import_settings["name"] = ""
-    return import_settings
-    
-def load_project(dialog, response, self):
-    files = []
-    if response == Gtk.ResponseType.ACCEPT:
-        for file in dialog.get_files():
-            file_path = file.peek_path()
-            filename = file_path.split("/")[-1]
-            files.append(file_path)
-        select_all(None, None, self)
-        delete_selected(None, None, self)
-
-    with open(file_path, 'rb') as f:
-        project =  pickle.load(f)
-    project_datadict = project["data"]
-    new_plot_settings = project["plot_settings"]
-    self.plot_settings = new_plot_settings
-    set_attributes(new_plot_settings, self.plot_settings)
-    create_data_from_project(self, project_datadict)
-    for key, item in self.datadict.items():
-        color = item.color
-        add_sample_to_menu(self, item.filename, color, item.key)
-    plotting_tools.reload_plot(self)
-    select_all(None, None, self)
+    ui.enable_data_dependent_buttons(self, utilities.get_selected_keys(self))
 
 def create_data_from_project(self, new_dictionary):
     """
@@ -370,8 +161,6 @@ def create_data_from_project(self, new_dictionary):
         for attribute in self.datadict[item.key].__dict__:
             if hasattr(item, attribute):
                 setattr(self.datadict[item.key], attribute, getattr(item, attribute))
-                
-    
 
 def set_attributes(new_object, template):
     """
@@ -385,67 +174,22 @@ def set_attributes(new_object, template):
     for attribute in new_object.__dict__:
         if not hasattr(template, attribute):
             delattr(new_object, attr)
-            
-def open_file(dialog, response, self, import_settings):
-    files = []
-    if response == Gtk.ResponseType.ACCEPT:
-        for file in dialog.get_files():
-            file_path = file.peek_path()
-            filename = file_path.split("/")[-1]
-            files.append(file_path)
-
-        if import_settings is None:
-            import_settings = get_import_settings(self)
-        if len(dialog.get_files()) > 1:
-            import_settings["mode"] = "multiple"
-        elif len(dialog.get_files()) == 1:
-            import_settings["mode"] = "single"
-
-        open_selection_from_file(self, files, import_settings)
-
 
 def load_empty(self):
     win = self.main_window
     xlabel = self.plot_settings.xlabel
     ylabel = self.plot_settings.ylabel
-    self.canvas = PlotWidget(parent = self, xlabel=xlabel, ylabel=ylabel)
+    self.canvas = Canvas(parent = self, xlabel=xlabel, ylabel=ylabel)
     for axis in [self.canvas.right_axis, self.canvas.top_left_axis, self.canvas.top_right_axis]:
         axis.get_xaxis().set_visible(False)
         axis.get_yaxis().set_visible(False)    
     self.dummy_toolbar = DummyToolbar(self.canvas)
     win.toast_overlay.set_child(self.canvas)
 
-def disable_clipboard_buttons(self):
-    win = self.main_window
-    win.redo_button.set_sensitive(False)
-    win.undo_button.set_sensitive(False)
-
 def reset_clipboard(self):
     for key, item in self.datadict.items():
         item.xdata_clipboard = [item.xdata]
         item.ydata_clipboard = [item.ydata]
         item.clipboard_pos = -1
-    disable_clipboard_buttons(self)
+    ui.disable_clipboard_buttons(self)
 
-def enable_data_dependent_buttons(self, enabled):
-    win = self.main_window
-
-    dependent_buttons = [
-    win.shift_vertically_button,
-    win.translate_x_button,
-    win.translate_y_button,
-    win.multiply_x_button,
-    win.multiply_y_button,
-    win.smooth_button,
-    win.fourier_button,
-    win.inverse_fourier_button,
-    win.normalize_button,
-    win.center_data_button,
-    win.derivative_button,
-    win.integral_button,
-    win.transform_data_button,
-    win.combine_data_button,
-    ]
-
-    for button in dependent_buttons:
-        button.set_sensitive(enabled)

@@ -1,7 +1,5 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 from gi.repository import Gdk
-from enum import Enum
-from matplotlib.backend_bases import NavigationToolbar2
 
 from .data import Data
 
@@ -135,23 +133,27 @@ def create_rgba(r, g, b, a=1):
     res.alpha = a
     return res
 
-class InteractionMode(Enum):
-    PAN = 1
-    ZOOM = 2
-    SELECT = 3
+def get_theme_color(self):
+    styles = self.main_window.get_style_context()
+    rgba = styles.lookup_color('theme_bg_color')[1]
+    rgba_tuple = (round(rgba.red*255), round(rgba.green*255), round(rgba.blue*255), round(rgba.alpha*255))
+    color_hex = '#{:02x}{:02x}{:02x}'.format(*rgba_tuple)
+    return color_hex
 
-class DummyToolbar(NavigationToolbar2):
-    """
-    Own implementation of NavigationToolbar2. Needed for rubberband support.
-    """
-    def __init__(self, canvas):
-        super().__init__(canvas)
+def get_duplicate_filename(self, name):
+    loop = True
+    i = 0
+    while loop:
+        i += 1
+        new_name = f"{name} ({i})"
+        loop = False
+        for key, item in self.datadict.items():
+            if new_name == item.filename:
+                loop = True
+    return new_name
 
-    def draw_rubberband(self, event, x0, y0, x1, y1):
-        self.canvas._rubberband_rect = [int(val) for val in (x0, self.canvas.figure.bbox.height - y0, x1 - x0, y0 - y1)]
-        self.canvas.queue_draw()
-
-    def remove_rubberband(self):
-        self.canvas._rubberband_rect = None
-        self.canvas.queue_draw()
-
+def swap(str1):
+    str1 = str1.replace(',', 'third')
+    str1 = str1.replace('.', ', ')
+    str1 = str1.replace('third', '.')
+    return str1

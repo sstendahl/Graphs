@@ -5,8 +5,8 @@ import sys
 from gi.repository import Gio, Adw, GLib
 from matplotlib.backend_bases import _Mode
 
-from . import graphs, plotting_tools, item_operations, transform_data, preferences, add_equation, add_data_advanced, plot_settings
-from .utilities import InteractionMode
+from . import graphs, plotting_tools, item_operations, transform_data, preferences, add_equation, add_data_advanced, plot_settings, ui
+from .misc import InteractionMode
 from .window import GraphsWindow
 
 class GraphsApplication(Adw.Application):
@@ -37,10 +37,10 @@ class GraphsApplication(Adw.Application):
         self.create_action('mode_select', self.set_mode, ['<shift>S', 'F3'], InteractionMode.SELECT)
         self.create_action('preferences', preferences.open_preferences_window, ['<primary>p'], self)
         self.create_action('plot_settings', plot_settings.open_plot_settings, ["<primary><shift>P"], self)
-        self.create_action('add_data', graphs.open_file_dialog, ['<primary>N'], self)
+        self.create_action('add_data', ui.open_file_dialog, ['<primary>N'], self, False)
         self.create_action('add_data_advanced', add_data_advanced.open_add_data_advanced_window, ['<primary><shift>N'], self)
         self.create_action('add_equation', add_equation.open_add_equation_window, ['<primary><alt>N'], self)
-        self.create_action('open_project', graphs.open_file_dialog, ['<shift><alt>N'], self, None, True)        
+        self.create_action('open_project', ui.open_file_dialog, ['<shift><alt>N'], self, True)
         self.create_action('select_all', graphs.select_all, ['<primary>A'], self)
         self.create_action('select_none', graphs.select_none, ['<primary><shift>A'], self)
         self.create_action('undo', item_operations.undo, ['<primary>Z'], self)
@@ -49,8 +49,8 @@ class GraphsApplication(Adw.Application):
         self.create_action('view_back', plotting_tools.view_back, ['<alt>Z'], self)
         self.create_action('view_forward', plotting_tools.view_forward, ['<alt><shift>Z'], self)
         self.create_action('save_data', item_operations.save_data, ['<primary>S'], self)
-        self.create_action('save_project', graphs.save_project_dialog, ['<primary><shift>S'], self)
-        self.create_action('export_data', plotting_tools.export_data, ["<primary>E"], self)
+        self.create_action('save_project', ui.save_project_dialog, ['<primary><shift>S'], self)
+        self.create_action('export_data', ui.export_data, ["<primary>E"], self)
         self.create_action('normalize_data', item_operations.normalize_data, None, self)
         self.create_action('translate_x', item_operations.translate_x, None, self)
         self.create_action('translate_y', item_operations.translate_y, None, self)
@@ -74,11 +74,11 @@ class GraphsApplication(Adw.Application):
         self.create_axis_action('change_bottom_xscale', plotting_tools.change_bottom_xscale, 'plot_X_scale')
 
         toggle_sidebar = Gio.SimpleAction.new_stateful("toggle_sidebar", None, GLib.Variant.new_boolean(True))
-        toggle_sidebar.connect("activate", self.toggle_sidebar)
+        toggle_sidebar.connect("activate", ui.toggle_sidebar, self)
         self.add_action(toggle_sidebar)
         self.set_accels_for_action("app.toggle_sidebar", ['F9'])
 
-        Adw.StyleManager.get_default().connect("notify", graphs.toggle_darkmode, None, self)
+        Adw.StyleManager.get_default().connect("notify", ui.toggle_darkmode, None, self)
 
     def do_activate(self):
         """Called when the application is activated
@@ -90,15 +90,15 @@ class GraphsApplication(Adw.Application):
             win = GraphsWindow(application=self)
         self.main_window = win
         graphs.load_empty(self)
-        graphs.disable_clipboard_buttons(self)
-        graphs.enable_data_dependent_buttons(self, False)
+        ui.disable_clipboard_buttons(self)
+        ui.enable_data_dependent_buttons(self, False)
         self.set_mode(None, None, InteractionMode.PAN)
         win.maximize()
         win.present()
 
     def on_about_action(self, widget, shortcut):
         """Callback for the app.about action."""
-        about = Adw.AboutWindow(transient_for=self.props.active_window,
+        about = Adw.AboutWindow(transient_for=self.main_window,
                                 application_name='Graphs',
                                 application_icon='se.sjoerd.Graphs',
                                 website='https://www.sjoerd.se/Graphs',
@@ -116,13 +116,6 @@ class GraphsApplication(Adw.Application):
     def on_quit_action(self, widget, shortcut):
         self.quit()
 
-    def toggle_sidebar(self, action, shortcut):
-        win = self.main_window
-        flap = win.sidebar_flap
-        enabled = not flap.get_reveal_flap()
-        action.change_state(GLib.Variant.new_boolean(enabled))
-        flap.set_reveal_flap(enabled)
-
     def set_mode(self, widget, shortcut, mode):
         """
         Set the current UI interaction mode (none, pan, zoom or select)
@@ -132,7 +125,7 @@ class GraphsApplication(Adw.Application):
         zoom_button = win.zoom_button
         select_button = win.select_button
         cut_button = win.cut_data_button
-        if self.highlight == None:
+        if self.highlight is None:
             plotting_tools.define_highlight(self)
         highlight = self.highlight
         if(mode == InteractionMode.PAN):

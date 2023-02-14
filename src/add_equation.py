@@ -9,7 +9,7 @@ def open_add_equation_window(widget, _, self):
     Open the window for adding a new dataset from an equation
     """
     win = AddEquationWindow(self)
-    win.set_transient_for(self.props.active_window)
+    win.set_transient_for(self.main_window)
     win.set_modal(True)
     name = "transform_confirm"
     button = win.add_equation_confirm_button
@@ -26,8 +26,7 @@ def on_accept(widget, self, window):
     equation = str(window.equation_entry.get_text())
     dataset = create_dataset(self, x_start, x_stop, equation, step_size, str(window.name_entry.get_text()))
     try:
-        import_settings = graphs.get_import_settings(self)
-        new_file = Data(self, dataset["xdata"], dataset["ydata"], import_settings)
+        new_file = Data(self, dataset["xdata"], dataset["ydata"])
         new_file.filename = dataset["name"]
     except Exception as e:
         exception_type = e.__class__.__name__
@@ -41,7 +40,7 @@ def on_accept(widget, self, window):
         for key, item in self.datadict.items():
             if new_file.filename in item.filename:
                 if handle_duplicates == "Auto-rename duplicates":
-                    new_file.filename = graphs.get_duplicate_filename(self, new_file.filename)
+                    new_file.filename = utilities.get_duplicate_filename(self, new_file.filename)
                 elif handle_duplicates == "Ignore duplicates":
                     window.toast_overlay.add_toast(Adw.Toast(title="Item with this name already exists"))
                     return
@@ -59,9 +58,7 @@ def on_accept(widget, self, window):
     new_file.clipboard_pos = -1
     color = plotting_tools.get_next_color(self)
     self.datadict[new_file.key] = new_file
-    graphs.add_sample_to_menu(self, new_file.filename, color, new_file.key)
-    graphs.select_item(self, new_file.key)
-    plotting_tools.refresh_plot(self)
+    graphs.add_sample_to_menu(self, new_file.filename, color, new_file.key, True)
     window.destroy()
 
 

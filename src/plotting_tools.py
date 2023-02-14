@@ -1,30 +1,26 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 import copy
 import os
-import time
 import matplotlib.font_manager
-import matplotlib.pyplot as plt
 
 from gi.repository import Gtk, Adw
 from matplotlib import colors
-from matplotlib.backends.backend_gtk4cairo import FigureCanvas
-from matplotlib.figure import Figure
 from matplotlib.widgets import SpanSelector
-from cycler import cycler
 
-from . import graphs, utilities, rename_label
+from . import graphs, utilities
 
 def define_highlight(self, span=None):
     """
     Create a span selector object, to highlight part of the graph.
     If a span already exists, make it visible instead
     """
+    color = self.main_window.get_style_context().lookup_color('accent_color')[1]
     self.highlight = SpanSelector(
         self.canvas.top_right_axis,
         lambda x, y: on_highlight_define(self),
         "horizontal",
         useblit=True,
-        props=dict(facecolor = (120 / 255, 174 / 255, 237 / 255, 0.2), edgecolor = (120 / 255, 174 / 255, 237 / 255, 1), linewidth = 1),
+        props=dict(facecolor = (color.red, color.green, color.blue, 0.3), edgecolor = (color.red, color.green, color.blue, 1), linewidth = 1),
         handle_props=dict(linewidth=0),
         interactive=True,
         drag_from_anywhere=True)
@@ -217,13 +213,13 @@ def find_limits(self, axis, canvas, datadict):
                 ymin_item = min(item.ydata)
             ymax_item = max(item.ydata)
 
-            if xmin_all == None:
+            if xmin_all is None:
                 xmin_all = xmin_item
-            if xmax_all == None:
+            if xmax_all is None:
                 xmax_all = xmax_item
-            if ymin_all == None:
+            if ymin_all is None:
                 ymin_all = ymin_item
-            if ymax_all == None:
+            if ymax_all is None:
                 ymax_all = ymax_item
             if xmin_item < xmin_all:
                 xmin_all = xmin_item
@@ -240,12 +236,12 @@ def reload_plot(self, from_dictionary = True):
     """
     Completely reload the plot of the graph
     """
-    win = self.props.active_window
+    win = self.main_window
     graphs.load_empty(self)
     if len(self.datadict) > 0:
         hide_unused_axes(self, self.canvas)
         graphs.open_selection_from_dict(self)
-        if (not self.highlight == None):
+        if (not self.highlight is None):
             self.highlight.set_visible(False)
             self.highlight.set_active(False)
             self.highlight = None
@@ -258,7 +254,7 @@ def refresh_plot(self, canvas = None, from_dictionary = True, set_limits = True)
     """
     Refresh the graph without completely reloading it.
     """
-    if canvas == None:
+    if canvas is None:
         canvas = self.canvas
     for line in canvas.ax.lines:
         line.remove()
@@ -413,59 +409,6 @@ def load_fonts(self):
             matplotlib.font_manager.fontManager.addfont(font)
         except:
             print(f"Could not load {font}")
-            
-
-# https://github.com/matplotlib/matplotlib/blob/c23ccdde6f0f8c071b09a88770e24452f2859e99/lib/matplotlib/backends/backend_gtk4.py#L306
-def export_data(widget, shortcut, self):
-    dialog = Gtk.FileChooserNative(
-        title='Save the figure',
-        transient_for=self.main_window,
-        action=Gtk.FileChooserAction.SAVE,
-        modal=True)
-    self._save_dialog = dialog  # Must keep a reference.
-
-    ff = Gtk.FileFilter()
-    ff.set_name('All files')
-    ff.add_pattern('*')
-    dialog.add_filter(ff)
-    dialog.set_filter(ff)
-
-    formats = []
-    default_format = None
-    for i, (name, fmts) in enumerate(
-            self.canvas.get_supported_filetypes_grouped().items()):
-        ff = Gtk.FileFilter()
-        ff.set_name(name)
-        for fmt in fmts:
-            ff.add_pattern(f'*.{fmt}')
-        dialog.add_filter(ff)
-        formats.append(name)
-        if self.canvas.get_default_filetype() in fmts:
-            default_format = i
-    # Setting the choice doesn't always work, so make sure the default
-    # format is first.
-    formats = [formats[default_format], *formats[:default_format],
-               *formats[default_format+1:]]
-    dialog.add_choice('format', 'File format', formats, formats)
-    dialog.set_choice('format', formats[default_format])
-
-    dialog.set_current_name(self.canvas.get_default_filename())
-    dialog.connect("response", on_save_response, self)
-    dialog.show()
-
-# https://github.com/matplotlib/matplotlib/blob/c23ccdde6f0f8c071b09a88770e24452f2859e99/lib/matplotlib/backends/backend_gtk4.py#L344
-def on_save_response(dialog, response, self):
-    file = dialog.get_file()
-    fmt = dialog.get_choice('format')
-    fmt = self.canvas.get_supported_filetypes_grouped()[fmt][0]
-    dialog.destroy()
-    self._save_dialog = None
-    if response != Gtk.ResponseType.ACCEPT:
-        return
-    try:
-        self.canvas.figure.savefig(file.get_path(), format=fmt)
-    except Exception as e:
-        self.main_window.toast_overlay.add_toast(Adw.Toast(title=f"Unable to save image"))
 
 class PlotSettings:
     """
@@ -501,184 +444,4 @@ class PlotSettings:
             self.plot_style = parent.preferences.config["plot_style_dark"]
         else:
             self.plot_style = parent.preferences.config["plot_style_light"]
-
-        
-
-class PlotWidget(FigureCanvas):
-    """
-    Create the widget that contains the graph itself
-    """
-    def __init__(self, parent=None, xlabel="", ylabel="", yscale = "log", title="", scale="linear", style = "adwaita"):
-        self.figure = Figure()
-        self.figure.set_tight_layout(True)
-        self.canvas = FigureCanvas(self.figure)
-        self.one_click_trigger = False
-        self.time_first_click  = 0
-        self.parent = parent
-        self.canvas.mpl_connect('button_release_event', self)
-        self.set_style(parent)
-        self.ax = self.figure.add_subplot(111)
-        self.right_axis = self.ax.twinx()
-        self.top_left_axis = self.ax.twiny()
-        self.top_right_axis = self.top_left_axis.twinx()
-        self.set_ax_properties(parent)
-        self.set_save_properties(parent)
-        self.set_color_cycle(parent)
-        super(PlotWidget, self).__init__(self.figure)
-
-    def set_save_properties(self, parent):
-        """
-        Set the properties that are related to saving the figure. Currently
-        limited to savefig, but will include the background colour soon.
-        """
-        plt.rcParams["savefig.format"] = parent.preferences.config["savefig_filetype"]
-        if parent.preferences.config["savefig_transparent"]:
-            plt.rcParams["savefig.transparent"] = True
-
-    def set_ax_properties(self, parent):
-        """
-        Set the properties that are related to the axes.
-        """
-        self.title = self.ax.set_title(parent.plot_settings.title)
-        self.bottom_label = self.ax.set_xlabel(parent.plot_settings.xlabel, fontweight = parent.plot_settings.font_weight)
-        self.right_label = self.right_axis.set_ylabel(parent.plot_settings.right_label, fontweight = parent.plot_settings.font_weight)
-        self.top_label = self.top_left_axis.set_xlabel(parent.plot_settings.top_label, fontweight = parent.plot_settings.font_weight)
-        self.left_label = self.ax.set_ylabel(parent.plot_settings.ylabel, fontweight = parent.plot_settings.font_weight)
-        self.ax.set_yscale(parent.plot_settings.yscale)
-        self.right_axis.set_yscale(parent.plot_settings.right_scale)
-        self.top_left_axis.set_xscale(parent.plot_settings.top_scale)
-        self.top_right_axis.set_xscale(parent.plot_settings.top_scale)
-        self.ax.set_xscale(parent.plot_settings.xscale)
-        self.set_ticks(parent)
-
-    def set_ticks(self, parent):
-        """
-        Set the ticks that are to be used in the graph.
-        """
-        for axis in [self.top_right_axis, self.top_left_axis, self.ax, self.right_axis]:
-            axis.tick_params(direction=parent.plot_settings.tick_direction, length=parent.plot_settings.major_tick_length, width=parent.plot_settings.major_tick_width, which="major")
-            axis.tick_params(direction=parent.plot_settings.tick_direction, length=parent.plot_settings.minor_tick_length, width=parent.plot_settings.minor_tick_width, which="minor")
-            axis.tick_params(axis='x',which='minor')
-            axis.tick_params(axis='y',which='minor')
-            axis.minorticks_on()
-            top = False
-            bottom = False
-            left = False
-            right = False
-            for key in parent.datadict.keys():
-                if parent.datadict[key].plot_X_position == "top":
-                    top = True
-                if parent.datadict[key].plot_X_position == "bottom":
-                    bottom = True
-                if parent.datadict[key].plot_Y_position == "left":
-                    left = True
-                if parent.datadict[key].plot_Y_position == "right":
-                    right = True
-            if not (top and bottom):
-                axis.tick_params(which = "both", bottom=parent.plot_settings.tick_bottom, top=parent.plot_settings.tick_top)
-            if not (left and right):
-                axis.tick_params(which = "both", left=parent.plot_settings.tick_left, right=parent.plot_settings.tick_right)
-
-    def set_style(self, parent):
-        """
-        Set the plot style.
-        """
-        plt.rcParams.update(plt.rcParamsDefault)
-        if Adw.StyleManager.get_default().get_dark():
-            self.figure.patch.set_facecolor("#242424")
-            text_color = "white"
-        else:
-            self.figure.patch.set_facecolor("#fafafa")
-            text_color = "black"
-        params = {
-        "font.weight": parent.plot_settings.font_weight,
-        "font.sans-serif": parent.plot_settings.font_family,
-        "font.size": parent.plot_settings.font_size,
-        "axes.labelsize": parent.plot_settings.font_size,
-        "xtick.labelsize": parent.plot_settings.font_size,
-        "ytick.labelsize": parent.plot_settings.font_size,
-        "axes.titlesize": parent.plot_settings.font_size,
-        "legend.fontsize": parent.plot_settings.font_size,
-        "font.style": parent.plot_settings.font_style,
-        "mathtext.default": "regular",
-        "xtick.color" : text_color,
-        "ytick.color" : text_color,
-        "axes.labelcolor" : text_color,
-        }
-        plt.style.use(parent.plot_settings.plot_style)
-        plt.rcParams.update(params)
-
-    def set_color_cycle(self, parent):
-        """
-        Set the color cycle that will be used for the graphs.
-        """
-        cmap = parent.preferences.config["plot_color_cycle"]
-        reverse_dark = parent.preferences.config["plot_invert_color_cycle_dark"]
-        if Adw.StyleManager.get_default().get_dark() and reverse_dark:
-            cmap += "_r"
-        color_cycle = cycler(color=plt.get_cmap(cmap).colors)
-        self.color_cycle = color_cycle.by_key()['color']
-
-    def __call__(self, event):
-        """
-        The function is called when a user clicks on it.
-        If two clicks are performed close to each other, it registers as a double
-        click, and if these were on a specific item (e.g. the title) it triggers
-        a dialog to edit this item.
-
-        Unfortunately the GTK Doubleclick signal doesn't work with matplotlib
-        hence this custom function.
-        """
-        double_click = False
-        if self.one_click_trigger == False:
-            self.one_click_trigger = True
-            self.time_first_click = time.time()
-        else:
-            double_click_interval = time.time() - self.time_first_click
-            if double_click_interval > 0.5:
-                self.one_click_trigger = True
-                self.time_first_click = time.time()
-            else:
-                self.one_click_trigger = False
-                self.time_first_click = 0 
-                double_click = True
-                
-        if self.title.contains(event)[0] and double_click:
-            rename_label.open_rename_label_window(self.parent, self.title)
-        if self.top_label.contains(event)[0] and double_click:
-            rename_label.open_rename_label_window(self.parent, self.top_label)
-        if self.bottom_label.contains(event)[0] and double_click:
-            rename_label.open_rename_label_window(self.parent, self.bottom_label)
-        if self.left_label.contains(event)[0] and double_click:
-            rename_label.open_rename_label_window(self.parent, self.left_label)
-        if self.right_label.contains(event)[0] and double_click:
-            rename_label.open_rename_label_window(self.parent, self.right_label)
-
-    def _post_draw(self, widget, context):
-        """
-        Override with custom implementation of rubberband to allow for custom rubberband style
-        @param context: https://pycairo.readthedocs.io/en/latest/reference/context.html
-        """
-        if self._rubberband_rect is None:
-            return
-
-        lw = 1
-        if not self._context_is_scaled:
-            x0, y0, w, h = (dim / self.device_pixel_ratio
-                            for dim in self._rubberband_rect)
-        else:
-            x0, y0, w, h = self._rubberband_rect
-            lw *= self.device_pixel_ratio
-        x1 = x0 + w
-        y1 = y0 + h
-
-        context.set_antialias(1)
-        context.set_line_width(lw)
-        context.rectangle(x0, y0, w, h)
-        #input are floats so divide rgb value by 255
-        context.set_source_rgba(120 / 255, 174 / 255, 237 / 255, 0.2)
-        context.fill()
-        context.rectangle(x0, y0, w, h)
-        context.set_source_rgba(120 / 255, 174 / 255, 237 / 255, 1)
-        context.stroke()
 
