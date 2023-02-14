@@ -5,16 +5,16 @@ import numpy as np
 from gi.repository import Adw
 from scipy import integrate
 
-from . import plotting_tools, graphs, utilities
+from . import plotting_tools, graphs, utilities, ui
 from .data import Data
 from .misc import InteractionMode
 
-def save_data(widget, _, self):
+def export_data(widget, _, self):
     """
     Open the save file dialog.
     """
     delete_selected_data(self)
-    graphs.save_file_dialog(self)
+    ui.save_file_dialog(self)
 
 def add_to_clipboard(self):
     """

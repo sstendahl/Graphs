@@ -730,12 +730,6 @@
         <attribute name="action">app.add_equation</attribute>
       </item>
     </section>
-    <section>
-      <item>
-        <attribute name="label" translatable="yes">_Open Project</attribute>
-        <attribute name="action">app.open_project</attribute>
-      </item>
-    </section>
   </menu>
   <menu id="view_menu">
     <section>
@@ -816,16 +810,22 @@
   <menu id="primary_menu">
     <section>
       <item>
-        <attribute name="label" translatable="yes">_Export Data</attribute>
-        <attribute name="action">app.save_data</attribute>
+        <attribute name="label" translatable="yes">_Save Project</attribute>
+        <attribute name="action">app.save_project</attribute>
       </item>
       <item>
-        <attribute name="label" translatable="yes">_Export Figure</attribute>
+        <attribute name="label" translatable="yes">_Open Project</attribute>
+        <attribute name="action">app.open_project</attribute>
+      </item>
+    </section>
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">_Export Data</attribute>
         <attribute name="action">app.export_data</attribute>
       </item>
       <item>
-        <attribute name="label" translatable="yes">_Export Project</attribute>
-        <attribute name="action">app.save_project</attribute>
+        <attribute name="label" translatable="yes">_Export Figure</attribute>
+        <attribute name="action">app.export_figure</attribute>
       </item>    
     </section>
     <section>
@@ -833,12 +833,12 @@
         <attribute name="label" translatable="yes">_Plot Settings</attribute>
         <attribute name="action">app.plot_settings</attribute>
       </item>
-    </section>
-    <section>
       <item>
         <attribute name="label" translatable="yes">_Preferences</attribute>
         <attribute name="action">app.preferences</attribute>
       </item>
+    </section>
+    <section>
       <item>
         <attribute name="label" translatable="yes">_Keyboard Shortcuts</attribute>
         <attribute name="action">win.show-help-overlay</attribute>
