@@ -5,7 +5,7 @@ from gi.repository import Gio, Adw, GLib
 from matplotlib.backend_bases import _Mode
 from inspect import getmembers, isfunction
 
-from . import graphs, actions, plotting_tools, item_operations, transform_data, preferences, add_equation, add_data_advanced, plot_settings, ui
+from . import actions, plotting_tools, preferences, graphs, ui
 from .misc import InteractionMode
 from .window import GraphsWindow
 
@@ -22,9 +22,6 @@ class GraphsApplication(Adw.Application):
         self.item_rows = dict()
         self.sample_menu = dict()
         self.load_preferences()
-        self._action_methods = dict()
-        for key, item in getmembers(globals().copy()["actions"], isfunction):
-            self._action_methods[key] = item
         self.connect_actions()
         
     def load_preferences(self):
@@ -33,40 +30,53 @@ class GraphsApplication(Adw.Application):
         self.plot_settings = plotting_tools.PlotSettings(self)
 
     def connect_actions(self):
-        self.create_action('quit', ['<primary>q'])
-        self.create_action('about')
-        self.create_action('preferences', ['<primary>p'])
-        self.create_action('plot_settings', ["<primary><shift>P"])
-        self.create_action('add_data', ['<primary>N'])
-        self.create_action('add_data_advanced', ['<primary><shift>N'])
-        self.create_action('add_equation', ['<primary><alt>N'])
-        self.create_action('select_all', ['<primary>A'])
-        self.create_action('select_none', ['<primary><shift>A'])
-        self.create_action('undo', ['<primary>Z'])
-        self.create_action('redo', ['<primary><shift>Z'])
-        self.create_action('restore_view', ['<primary>R'])
-        self.create_action('view_back', ['<alt>Z'])
-        self.create_action('view_forward', ['<alt><shift>Z'])
-        #self.create_action('export_data', item_operations.export_data, ['<primary><shift>E'])
-        #self.create_action('export_figure', ui.export_figure, ["<primary>E"])
-        #self.create_action('save_project', ui.save_project_dialog, ['<primary>S'])
-        #self.create_action('open_project', ui.open_file_dialog, ['<primary>O'], True)
-        #self.create_action('normalize_data', item_operations.normalize_data)
-        #self.create_action('translate_x', item_operations.translate_x)
-        #self.create_action('translate_y', item_operations.translate_y)
-        #self.create_action('combine_data', item_operations.combine_data)
-        #self.create_action('multiply_x', item_operations.multiply_x)
-        #self.create_action('cut_data', item_operations.cut_data)
-        #self.create_action('multiply_y', item_operations.multiply_y)
-        #self.create_action('smooth', item_operations.smoothen_data)
-        #self.create_action('center_data', item_operations.center_data)
-        #self.create_action('shift_vertically', item_operations.shift_vertically)
-        #self.create_action('transform_data', transform_data.open_transform_window)
-        #self.create_action('get_derivative', item_operations.get_derivative)
-        #self.create_action('get_integral', item_operations.get_integral)
-        #self.create_action('get_fourier', item_operations.get_fourier)
-        #self.create_action('get_inverse_fourier', item_operations.get_inverse_fourier)
-        #self.create_action('delete_selected', graphs.delete_selected, ['Delete'])
+        """
+        To create an action, add name and keybinds to the list and implement a function in actions.py
+        """
+        new_actions = [
+        ('quit', ['<primary>q']),
+        ('about', None),
+        ('preferences', ['<primary>p']),
+        ('plot_settings', ["<primary><shift>P"]),
+        ('add_data', ['<primary>N']),
+        ('add_data_advanced', ['<primary><shift>N']),
+        ('add_equation', ['<primary><alt>N']),
+        ('select_all', ['<primary>A']),
+        ('select_none', ['<primary><shift>A']),
+        ('undo', ['<primary>Z']),
+        ('redo', ['<primary><shift>Z']),
+        ('restore_view', ['<primary>R']),
+        ('view_back', ['<alt>Z']),
+        ('view_forward', ['<alt><shift>Z']),
+        ('export_data', ['<primary><shift>E']),
+        ('export_figure', ["<primary>E"]),
+        ('save_project', ['<primary>S']),
+        ('open_project', ['<primary>O']),
+        ('delete_selected', ['Delete']),
+        ('translate_x', None),
+        ('translate_y', None),
+        ('multiply_x', None),
+        ('multiply_y', None),
+        ('normalize', None),
+        ('smoothen', None),
+        ('center', None),
+        ('shift_vertically', None),
+        ('combine', None),
+        ('cut_selected', None),
+        ('get_derivative', None),
+        ('get_integral', None),
+        ('get_fourier', None),
+        ('get_inverse_fourier', None)
+        ]
+        methods = dict()
+        for key, item in getmembers(globals().copy()["actions"], isfunction):
+            methods[key] = item
+        for name, keybinds in new_actions:
+            action = Gio.SimpleAction.new(name, None)
+            action.connect("activate", methods[f'{name}_action'], self)
+            self.add_action(action)
+            if keybinds:
+                self.set_accels_for_action(f"app.{name}", keybinds)
 
         self.create_axis_action('change_left_yscale', plotting_tools.change_left_yscale, 'plot_Y_scale')
         self.create_axis_action('change_right_yscale', plotting_tools.change_right_yscale, 'plot_right_scale')
@@ -140,23 +150,6 @@ class GraphsApplication(Adw.Application):
             axis.set_navigate_mode(self.dummy_toolbar.mode._navigate_mode)
         self._mode = mode
         self.canvas.draw()
-
-    def create_action(self, name, shortcuts=None, *args):
-        """Add an application action.
-
-        Args:
-            name: the name of the action
-            callback: the function to be called when the action is
-              activated
-            shortcuts: an optional list of accelerators
-            *args: Optional extra arguments
-        """
-
-        action = Gio.SimpleAction.new(name, None)
-        action.connect("activate", self._action_methods[f'{name}_action'], self, *args)
-        self.add_action(action)
-        if shortcuts:
-            self.set_accels_for_action(f"app.{name}", shortcuts)
 
     def create_axis_action(self, name, callback, config_key):
         action = Gio.SimpleAction.new_stateful(name, GLib.VariantType.new("s"), GLib.Variant.new_string(self.preferences.config[config_key]))

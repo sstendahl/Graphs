@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
-from . import ui, preferences, add_data_advanced, graphs
+from . import ui, preferences, utilities, add_data_advanced, plot_settings, graphs, item_operations, transform_data
 from .misc import InteractionMode
 
 def quit_action(action, target, self):
@@ -46,3 +46,65 @@ def view_back_action(action, target, self):
 def view_forward_action(action, target, self):
     self.dummy_toolbar._nav_stack.forward()
     self.dummy_toolbar._update_view()
+
+def export_data_action(action, target, self):
+    item_operations.delete_selected_data(self)
+    ui.save_file_dialog(self)
+
+def export_figure_action(action, target, self):
+    ui.export_figure(self)
+
+def save_project_action(action, target, self):
+    ui.save_project_dialog(self)
+
+def open_project_action(action, target, self):
+    ui.open_file_dialog(self, True)
+
+def delete_selected_action(action, target, self):
+    for key in utilities.get_selected_keys(self):
+        graphs.delete(None, self, key)
+
+def translate_x_action(action, target, self):
+    item_operations.translate_x(self)
+
+def translate_y_action(action, target, self):
+    item_operations.translate_y(self)
+
+def multiply_x_action(action, target, self):
+    item_operations.multiply_x(self)
+
+def multiply_y_action(action, target, self):
+    item_operations.multiply_y(self)
+
+def normalize_action(action, target, self):
+    item_operations.normalize_data(self)
+
+def smoothen_action(action, target, self):
+    item_operations.smoothen_data(self)
+
+def center_action(action, target, self):
+    item_operations.center_data(self)
+
+def shift_vertically_action(action, target, self):
+    item_operations.shift_vertically(self)
+
+def combine_action(action, target, self):
+    item_operations.combine_data(self)
+
+def cut_selected_action(action, target, self):
+    item_operations.cut_data(self)
+
+def get_derivative_action(action, target, self):
+    item_operations.get_derivative(self)
+
+def get_integral_action(action, target, self):
+    item_operations.get_integral(self)
+
+def get_fourier_action(action, target, self):
+    item_operations.get_fourier(self)
+
+def get_inverse_fourier_action(action, target, self):
+    item_operations.get_inverse_fourier(self)
+
+def transform_action(action, target, self):
+    transform_data.open_transform_window(self)

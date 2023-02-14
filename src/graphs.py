@@ -78,12 +78,7 @@ def select_item(self, key):
     item.check_button.set_active(True)
     toggle_data(None, self)
 
-def delete_selected(shortcut, _,  self):
-    selected_keys = utilities.get_selected_keys(self)
-    for key in selected_keys:
-        delete(None, self, key)
-
-def delete(widget,  self, id, give_toast = True):
+def delete(self, id, give_toast = True):
     layout = self.list_box
     for key, item in self.sample_menu.items():
         if key == id:

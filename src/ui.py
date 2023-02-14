@@ -64,7 +64,7 @@ def on_open_file_response(dialog, response, self, project):
         else:
             graphs.open_files(self, dialog.get_files())
 
-def save_project_dialog(widget, _, self, documenttype="Graphs Project (*)"):
+def save_project_dialog(self, documenttypes="Graphs Project (*)"):
     def save_project_chooser(action):
         dialog = Gtk.FileChooserNative.new(
             title="Save files",
@@ -113,7 +113,7 @@ def on_save_response(dialog, response, self, project):
             file_io.save_file(self, path)
 
 # https://github.com/matplotlib/matplotlib/blob/c23ccdde6f0f8c071b09a88770e24452f2859e99/lib/matplotlib/backends/backend_gtk4.py#L306
-def export_figure(widget, shortcut, self):
+def export_figure(self):
     dialog = Gtk.FileChooserNative(
         title='Save the figure',
         transient_for=self.main_window,
