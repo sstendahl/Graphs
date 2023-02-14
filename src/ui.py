@@ -45,7 +45,7 @@ def disable_clipboard_buttons(self):
     win.redo_button.set_sensitive(False)
     win.undo_button.set_sensitive(False)
 
-def open_file_dialog(self, open_project):
+def open_file_dialog(self, open_project, import_settings = None):
     open_file_chooser = Gtk.FileChooserNative.new(
         title="Open new files",
         parent=self.main_window,
@@ -54,15 +54,15 @@ def open_file_dialog(self, open_project):
     )
     open_file_chooser.set_modal(True)
     open_file_chooser.set_select_multiple(open_project)
-    open_file_chooser.connect("response", on_open_file_response, self, open_project)
+    open_file_chooser.connect("response", on_open_file_response, self, open_project, import_settings)
     open_file_chooser.show()
 
-def on_open_file_response(dialog, response, self, project):
+def on_open_file_response(dialog, response, self, project, import_settings):
     if response == Gtk.ResponseType.ACCEPT:
         if(project):
             file_io.load_project(self, dialog.get_files())
         else:
-            graphs.open_files(self, dialog.get_files())
+            graphs.open_files(self, dialog.get_files(), import_settings)
 
 def save_project_dialog(self, documenttypes="Graphs Project (*)"):
     def save_project_chooser(action):

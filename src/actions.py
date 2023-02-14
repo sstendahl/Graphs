@@ -1,6 +1,10 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
-from . import ui, preferences, utilities, add_data_advanced, plot_settings, graphs, item_operations, transform_data
+from . import ui, utilities, plot_settings, graphs, item_operations
 from .misc import InteractionMode
+from .preferences import PreferencesWindow
+from .add_data_advanced import AddAdvancedWindow
+from .add_equation import AddEquationWindow
+from .transform_data import TransformWindow
 
 def quit_action(action, target, self):
     self.quit()
@@ -9,7 +13,9 @@ def about_action(action, target, self):
     ui.show_about_window(self)
 
 def preferences_action(action, target, self):
-    preferences.open_preferences_window(self)
+    win = PreferencesWindow(self)
+    win.set_transient_for(self.main_window)
+    win.present()
 
 def plot_settings_action(action, target, self):
     plot_settings.open_plot_settings(self)
@@ -18,16 +24,26 @@ def add_data_action(action, target, self):
     ui.open_file_dialog(self, False)
 
 def add_data_advanced_action(action, target, self):
-    add_data_advanced.open_add_data_advanced_window(self)
+    win = AddAdvancedWindow(self)
+    win.set_transient_for(self.main_window)
+    win.set_modal(True)
+    win.present()
 
 def add_equation_action(action, target, self):
-    add_equation.open_add_equation_window(self)
+    win = AddEquationWindow(self)
+    win.set_transient_for(self.main_window)
+    win.set_modal(True)
+    win.present()
 
 def select_all_action(action, target, self):
-    graphs.select_all(self)
+    for key, item in self.item_rows.items():
+        item.check_button.set_active(True)
+    graphs.toggle_data(None, self)
 
 def select_none_action(action, target, self):
-    graphs.select_none(self)
+    for key, item in self.item_rows.items():
+        item.check_button.set_active(False)
+    graphs.toggle_data(None, self)
 
 def undo_action(action, target, self):
     item_operations.undo(self)
@@ -48,7 +64,6 @@ def view_forward_action(action, target, self):
     self.dummy_toolbar._update_view()
 
 def export_data_action(action, target, self):
-    item_operations.delete_selected_data(self)
     ui.save_file_dialog(self)
 
 def export_figure_action(action, target, self):
@@ -62,7 +77,7 @@ def open_project_action(action, target, self):
 
 def delete_selected_action(action, target, self):
     for key in utilities.get_selected_keys(self):
-        graphs.delete(None, self, key)
+        graphs.delete(self, key, True)
 
 def translate_x_action(action, target, self):
     item_operations.translate_x(self)
@@ -107,4 +122,7 @@ def get_inverse_fourier_action(action, target, self):
     item_operations.get_inverse_fourier(self)
 
 def transform_action(action, target, self):
-    transform_data.open_transform_window(self)
+    win = TransformWindow(self)
+    win.set_transient_for(self.main_window)
+    win.set_modal(True)
+    win.present()

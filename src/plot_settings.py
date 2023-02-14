@@ -11,7 +11,6 @@ def open_plot_settings(self, key = None):
     win = PlotSettingsWindow(self, key)
     win.set_transient_for(self.props.active_window)
     win.set_modal(True)
-    name = "transform_confirm"
     win.present()
 
 
