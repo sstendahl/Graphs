@@ -157,3 +157,6 @@ def swap(str1):
     str1 = str1.replace('.', ', ')
     str1 = str1.replace('third', '.')
     return str1
+
+def rgba_to_tuple(rgba):
+    return (rgba.red, rgba.green, rgba.blue, rgba.alpha)

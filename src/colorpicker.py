@@ -12,6 +12,7 @@ class ColorPicker(Gtk.Button):
         self.set_tooltip_text(_("Pick a color"))
         self.color = color
         self.add_css_class("flat")
+        self.set_hexpand(False)
         self.set_child(Gtk.Image.new_from_icon_name("color-picker-symbolic"))
         self.get_child().set_pixel_size(20)
         

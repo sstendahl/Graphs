@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
-from . import ui, utilities, plot_settings, graphs, item_operations
+from . import ui, utilities, plot_settings, graphs, item_operations, plotting_tools
 from .misc import InteractionMode
 from .preferences import PreferencesWindow
 from .add_data_advanced import AddAdvancedWindow
@@ -38,12 +38,14 @@ def add_equation_action(action, target, self):
 def select_all_action(action, target, self):
     for key, item in self.item_rows.items():
         item.check_button.set_active(True)
-    graphs.toggle_data(None, self)
+    plotting_tools.refresh_plot(self)
+    ui.enable_data_dependent_buttons(self, True)
 
 def select_none_action(action, target, self):
     for key, item in self.item_rows.items():
         item.check_button.set_active(False)
-    graphs.toggle_data(None, self)
+    plotting_tools.refresh_plot(self)
+    ui.enable_data_dependent_buttons(self, False)
 
 def undo_action(action, target, self):
     item_operations.undo(self)
