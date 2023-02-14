@@ -367,18 +367,6 @@ def change_bottom_xscale(action, target, self):
     set_canvas_limits_axis(self, self.canvas)
     self.canvas.draw()
 
-def restore_view(widget, shortcut, self):
-    set_canvas_limits_axis(self, self.canvas)
-    self.canvas.draw()
-
-def view_back(widget, shortcut, self):
-    self.dummy_toolbar._nav_stack.back()
-    self.dummy_toolbar._update_view()
-
-def view_forward(widget, shortcut, self):
-    self.dummy_toolbar._nav_stack.forward()
-    self.dummy_toolbar._update_view()
-
 def get_next_color(self):
     """
     Get the color that is to be used for the next data set
