@@ -1,5 +1,4 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
-import datetime
 from gi.repository import GLib, Adw, Gtk
 
 from . import plotting_tools, file_io, graphs
@@ -164,16 +163,16 @@ def on_save_response(dialog, response, self):
 
 def show_about_window(self):
     about = Adw.AboutWindow(transient_for=self.main_window,
-                            application_name='Graphs',
-                            application_icon='se.sjoerd.Graphs',
-                            website='https://www.sjoerd.se/Graphs',
-                            developer_name='Sjoerd Broekhuijsen',
-                            issue_url="https://github.com/SjoerdB93/Graphs/issues",
+                            application_name=self.name,
+                            application_icon=self.appid,
+                            website=self.website,
+                            developer_name=self.author,
+                            issue_url=self.issues,
                             version=self.version,
                             developers=[
                             'Sjoerd Broekhuijsen <contact@sjoerd.se>',
                             'Christoph Kohnen <christoph.kohnen@disroot.org>'
                             ],
-                            copyright=f"© 2022-{datetime.date.today().year} Sjoerd Broekhuijsen",
-                            license_type="GTK_LICENSE_GPL_3_0")
+                            copyright=f'© {self.copyright} {self.author}',
+                            license_type='GTK_LICENSE_GPL_3_0')
     about.present()

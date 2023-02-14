@@ -1,12 +1,12 @@
 <?xml version='1.0' encoding='utf-8'?>
 <!--SPDX-License-Identifier: GPL-3.0-or-later-->
 <component type="desktop-application">
-  <id>se.sjoerd.Graphs</id>
+  <id>@appid@</id>
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPL-3.0-or-later</project_license>
-  <name>Graphs</name>
-  <summary>Plot and manipulate data in a breeze</summary>
-  <developer_name>Sjoerd Broekhuijsen</developer_name>
+  <name>@name@</name>
+  <summary>@description_short@</summary>
+  <developer_name>@author@</developer_name>
   <description>
     <p>
   Graphs is a simple yet powerful tool that allows you to plot and manipulate your data in a breeze. Graphs can open and plot two-column data files, or generate new data from equations. Imported data, and data generated from an equation are treated the same, and both can be manipulated and saved as text files for future use. The plots can be customized to your liking with a wide range of options including axis labels, scaling, tick marks, line thickness and style, and fonts. Graphs also has a range of data manipulation tools, such as the ability to select, cut, translate, multiply, center, and smooth data, as well as apply any custom transformations using numpy notation.
@@ -18,10 +18,10 @@ Graphs is an excellent fit both plotting and data manipulation. The plots create
       For any feedback or general issues, please file an issue on the Github page.
     </p>
   </description>
-  <launchable type="desktop-id">se.sjoerd.Graphs.desktop</launchable>
-  <url type="bugtracker">https://github.com/SjoerdB93/Graphs/issues</url>
-  <url type="help">https://github.com/SjoerdB93/Graphs/</url>
-  <url type="homepage">https://www.sjoerd.se/Graphs</url>
+  <launchable type="desktop-id">@appid@.desktop</launchable>
+  <url type="bugtracker">@issues@</url>
+  <url type="help">@issues@</url>
+  <url type="homepage">@website@</url>
   <screenshots>
     <screenshot type="default">
       <caption>1 - Plot and manipulate any data set inserted by equation or from file</caption>
@@ -47,16 +47,16 @@ Graphs is an excellent fit both plotting and data manipulation. The plots create
         <ul>
           <li>The sidebar is now retractable</li>
           <li>Graphs now uses symbolic GNOME icons in the toolbar wherever possible</li>
-          <li>The legend is now accomponied with a frame for all styles in order to improve readability</li>          
-          <li>Some code clean-up has been performed</li>          
+          <li>The legend is now accomponied with a frame for all styles in order to improve readability</li>
+          <li>Some code clean-up has been performed</li>
           <li>The new app-id for Graphs is now se.sjoerd.Graphs</li>
         </ul>
         </description>
       </release>
             <release version="1.4.0" date="2023-01-28">
       <description>
-        <p>Major update with a significant UI overhaul.</p>      
-        <p>New in Graphs:</p>               
+        <p>Major update with a significant UI overhaul.</p>
+        <p>New in Graphs:</p>
         <ul>
           <li>The data list has been completely redesigned, with a selection mode toggle to select/deselect data sets</li>
           <li>The action grid on the left has been replaced by Expander Rows, sorting the actions by category</li>
@@ -65,67 +65,67 @@ Graphs is an excellent fit both plotting and data manipulation. The plots create
           <li>The save data button has been moved to the header bar</li>
           <li>There's no longer an error shown when a new config file is loaded (such as on initial setup)</li>
           <li>There's now multiple options to choose from on how to handle data with the same name</li>
-          <li>The translation and multiplication transforms now also accept basic expressions (such as 1/2 instead of 0.5)</li>          
+          <li>The translation and multiplication transforms now also accept basic expressions (such as 1/2 instead of 0.5)</li>
         </ul>
-        <p>Bugfixes and other changes:</p>                       
+        <p>Bugfixes and other changes:</p>
         <ul>
           <li>"Shift vertically" option now works properly on linear scale as well</li>
           <li>Fixed a bug where the last graph to be deleted was still shown</li>
-          <li>Fixed a bug where the text in the dropdown menu of plot-settings didn't update when changing the name of a data set</li>    
-          <li>Fourier transforms are now sorted so that the x-data is continiously increasing</li>      
-          <li>Added new screenshots for Flathub</li> 
-          <li>Some code clean-up has been performed</li> 
+          <li>Fixed a bug where the text in the dropdown menu of plot-settings didn't update when changing the name of a data set</li>
+          <li>Fourier transforms are now sorted so that the x-data is continiously increasing</li>
+          <li>Added new screenshots for Flathub</li>
+          <li>Some code clean-up has been performed</li>
         </ul>
         </description>
-      </release>        
+      </release>
         <release version="1.3.5" date="2023-01-14">
       <description>
-        <p>Minor update with some bugfixes, plus a new logo!</p>      
-        <p>New in Graphs:</p>               
+        <p>Minor update with some bugfixes, plus a new logo!</p>
+        <p>New in Graphs:</p>
         <ul>
           <li>Graphs has a new icon that is more in-line with the GNOME guidelines!</li>
         </ul>
-        <p>Bugfixes:</p>                       
+        <p>Bugfixes:</p>
         <ul>
           <li>Fixed a bug where the graph lines was drawn on top of the legend in certain cases</li>
-          <li>Fixed a bug where the legend wasn't shown for the picture-in-picture graph</li>          
+          <li>Fixed a bug where the legend wasn't shown for the picture-in-picture graph</li>
         </ul>
         </description>
-      </release>        
+      </release>
         <release version="1.3.4" date="2023-01-05">
       <description>
-        <p>Slightly bigger update than usual, with new features and some bug fixes.</p>      
-        <p>New in Graphs:</p>               
+        <p>Slightly bigger update than usual, with new features and some bug fixes.</p>
+        <p>New in Graphs:</p>
         <ul>
           <li>Added the ability to get the derivative of the data</li>
           <li>Added the ability to get the indefinite integral of the data</li>
           <li>Added the ability to get the Fast Fourier Transform of the data</li>
           <li>Added the ability to get the Inverse Fast Fourier Transform of the data</li>
-          <li>Added preference options for the default settings in the "Add equation" window</li>     
-          <li>Added tooltips for all buttons on the main window</li>                   
+          <li>Added preference options for the default settings in the "Add equation" window</li>
+          <li>Added tooltips for all buttons on the main window</li>
         </ul>
-        <p>Other Changes:</p>                       
+        <p>Other Changes:</p>
         <ul>
-          <li>Default graph limits have been improved, most prominently the y-axis scaling on a linear scale now shows a small margin in both directions if the y-data has a constant value</li>    
-          <li>Changed the "reset view" button to use Graph's own canvas limits function, as the built-in version of the toolbar didn't always work properly</li>     
-          <li>Gave the "Save Data" option a blue "Suggested action" colour</li>          
-          <li>Update Screenshots on Flathub</li>         
+          <li>Default graph limits have been improved, most prominently the y-axis scaling on a linear scale now shows a small margin in both directions if the y-data has a constant value</li>
+          <li>Changed the "reset view" button to use Graph's own canvas limits function, as the built-in version of the toolbar didn't always work properly</li>
+          <li>Gave the "Save Data" option a blue "Suggested action" colour</li>
+          <li>Update Screenshots on Flathub</li>
         </ul>
-        <p>Bugfixes:</p>                       
+        <p>Bugfixes:</p>
         <ul>
           <li>Fixed a bug where the x-axis limits were not applied properly if the y-axis was on the right-hand side</li>
           <li>Fixed a bug where equations would not function without having an X variable. (e.g. Y = 5 is now an accepted equation)</li>
           <li>Fixed a bug where the initial values for data generated by equation were not added to the clipboard, making it possible to "undo" to the initial state</li>
         </ul>
         </description>
-      </release>    
+      </release>
         <release version="1.3.3" date="2023-01-03">
       <description>
        <p>Minor update mostly focused on the color picker, plus minor quality of life stuff.</p>
         <ul>
           <li>Changed the color picker to a pop-over window</li>
           <li>Data set no longer deselects when changing the color</li>
-          <li>Removed the file extensions in the label used for each data set</li>          
+          <li>Removed the file extensions in the label used for each data set</li>
           <li>When saving multiple files, files that already exists are saved with a (copy) suffix instead of overwriting the existing file</li>
           <li>Minor code cleanup</li>
         </ul>
@@ -175,7 +175,7 @@ Graphs is an excellent fit both plotting and data manipulation. The plots create
     </release>
       <release version="1.2.0" date="2022-12-21">
       <description>
-        <p>With the ability to edit axes properties without changing the default settings, all essential features are in and it's time to declare v1.2.0. Also added some QoL features. Still many ideas are yet to be implemented. See current changelog below:</p>        
+        <p>With the ability to edit axes properties without changing the default settings, all essential features are in and it's time to declare v1.2.0. Also added some QoL features. Still many ideas are yet to be implemented. See current changelog below:</p>
         <ul>
           <li>The "Plot Settings" button now also contains a tab to edit the axes properties</li>
           <li>The pop-up graph now follows the same scaling as the regular graph</li>

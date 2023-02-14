@@ -1,7 +1,7 @@
 [Desktop Entry]
-Name=Graphs
-Exec=graphs
-Icon=se.sjoerd.Graphs
+Name=@name@
+Exec=@project@
+Icon=@appid@
 Terminal=false
 Type=Application
 Categories=Education;Science

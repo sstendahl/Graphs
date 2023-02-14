@@ -163,10 +163,16 @@ class GraphsApplication(Adw.Application):
         self.set_accels_for_action(f"app.{name}", shortcuts)
 
 
-def main(version):
+def main(version, appid, name, copyright, website, issues, author):
     """The application's entry point."""
     app = GraphsApplication()
     app.version = version
+    app.appid = appid
+    app.name = name
+    app.copyright = copyright
+    app.website = website
+    app.issues = issues
+    app.author = author
 
     return app.run(sys.argv)
 
