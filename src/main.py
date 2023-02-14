@@ -1,11 +1,10 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
-import datetime
 import sys
 
 from gi.repository import Gio, Adw, GLib
 from matplotlib.backend_bases import _Mode
 
-from . import graphs, plotting_tools, item_operations, transform_data, preferences, add_equation, add_data_advanced, plot_settings, ui
+from . import graphs, actions, plotting_tools, item_operations, transform_data, preferences, add_equation, add_data_advanced, plot_settings, ui
 from .misc import InteractionMode
 from .window import GraphsWindow
 
@@ -30,43 +29,40 @@ class GraphsApplication(Adw.Application):
         self.plot_settings = plotting_tools.PlotSettings(self)
 
     def connect_actions(self):
-        self.create_action('quit', self.on_quit_action, ['<primary>q'])
-        self.create_action('about', self.on_about_action)
-        self.create_action('mode_pan', self.set_mode, ['<shift>P', 'F1'], InteractionMode.PAN)
-        self.create_action('mode_zoom', self.set_mode, ['<shift>Z', 'F2'], InteractionMode.ZOOM)
-        self.create_action('mode_select', self.set_mode, ['<shift>S', 'F3'], InteractionMode.SELECT)
-        self.create_action('preferences', preferences.open_preferences_window, ['<primary>p'], self)
-        self.create_action('plot_settings', plot_settings.open_plot_settings, ["<primary><shift>P"], self)
-        self.create_action('add_data', ui.open_file_dialog, ['<primary>N'], self, False)
-        self.create_action('add_data_advanced', add_data_advanced.open_add_data_advanced_window, ['<primary><shift>N'], self)
-        self.create_action('add_equation', add_equation.open_add_equation_window, ['<primary><alt>N'], self)
-        self.create_action('select_all', graphs.select_all, ['<primary>A'], self)
-        self.create_action('select_none', graphs.select_none, ['<primary><shift>A'], self)
-        self.create_action('undo', item_operations.undo, ['<primary>Z'], self)
-        self.create_action('redo', item_operations.redo, ['<primary><shift>Z'], self)
-        self.create_action('restore_view', plotting_tools.restore_view, ['<primary>R'], self)
-        self.create_action('view_back', plotting_tools.view_back, ['<alt>Z'], self)
-        self.create_action('view_forward', plotting_tools.view_forward, ['<alt><shift>Z'], self)
-        self.create_action('export_data', item_operations.export_data, ['<primary><shift>E'], self)
-        self.create_action('export_figure', ui.export_figure, ["<primary>E"], self)
-        self.create_action('save_project', ui.save_project_dialog, ['<primary>S'], self)
-        self.create_action('open_project', ui.open_file_dialog, ['<primary>O'], self, True)
-        self.create_action('normalize_data', item_operations.normalize_data, None, self)
-        self.create_action('translate_x', item_operations.translate_x, None, self)
-        self.create_action('translate_y', item_operations.translate_y, None, self)
-        self.create_action('combine_data', item_operations.combine_data, None, self)
-        self.create_action('multiply_x', item_operations.multiply_x, None, self)
-        self.create_action('cut_data', item_operations.cut_data, None, self)
-        self.create_action('multiply_y', item_operations.multiply_y, None, self)
-        self.create_action('smooth', item_operations.smoothen_data, None, self)
-        self.create_action('center_data', item_operations.center_data, None, self)
-        self.create_action('shift_vertically', item_operations.shift_vertically, None, self)
-        self.create_action('transform_data', transform_data.open_transform_window, None, self)
-        self.create_action('get_derivative', item_operations.get_derivative, None, self)
-        self.create_action('get_integral', item_operations.get_integral, None, self)
-        self.create_action('get_fourier', item_operations.get_fourier, None, self)
-        self.create_action('get_inverse_fourier', item_operations.get_inverse_fourier, None, self)        
-        self.create_action('delete_selected', graphs.delete_selected, ['Delete'], self)
+        self.create_action('quit', actions.quit_action, ['<primary>q'])
+        self.create_action('about', actions.about_action)
+        self.create_action('preferences', actions.preferences_action, ['<primary>p'])
+        self.create_action('plot_settings', actions.plot_settings_action, ["<primary><shift>P"])
+        self.create_action('add_data', actions.add_data_action, ['<primary>N'])
+        self.create_action('add_data_advanced', actions.add_data_advanced_action, ['<primary><shift>N'])
+        self.create_action('add_equation', actions.add_equation_action, ['<primary><alt>N'])
+        self.create_action('select_all', actions.select_all_action, ['<primary>A'])
+        self.create_action('select_none', actions.select_none_action, ['<primary><shift>A'])
+        self.create_action('undo', item_operations.undo, ['<primary>Z'])
+        self.create_action('redo', item_operations.redo, ['<primary><shift>Z'])
+        self.create_action('restore_view', plotting_tools.restore_view, ['<primary>R'])
+        self.create_action('view_back', plotting_tools.view_back, ['<alt>Z'])
+        self.create_action('view_forward', plotting_tools.view_forward, ['<alt><shift>Z'])
+        self.create_action('export_data', item_operations.export_data, ['<primary><shift>E'])
+        self.create_action('export_figure', ui.export_figure, ["<primary>E"])
+        self.create_action('save_project', ui.save_project_dialog, ['<primary>S'])
+        self.create_action('open_project', ui.open_file_dialog, ['<primary>O'], True)
+        self.create_action('normalize_data', item_operations.normalize_data)
+        self.create_action('translate_x', item_operations.translate_x)
+        self.create_action('translate_y', item_operations.translate_y)
+        self.create_action('combine_data', item_operations.combine_data)
+        self.create_action('multiply_x', item_operations.multiply_x)
+        self.create_action('cut_data', item_operations.cut_data)
+        self.create_action('multiply_y', item_operations.multiply_y)
+        self.create_action('smooth', item_operations.smoothen_data)
+        self.create_action('center_data', item_operations.center_data)
+        self.create_action('shift_vertically', item_operations.shift_vertically)
+        self.create_action('transform_data', transform_data.open_transform_window)
+        self.create_action('get_derivative', item_operations.get_derivative)
+        self.create_action('get_integral', item_operations.get_integral)
+        self.create_action('get_fourier', item_operations.get_fourier)
+        self.create_action('get_inverse_fourier', item_operations.get_inverse_fourier)
+        self.create_action('delete_selected', graphs.delete_selected, ['Delete'])
 
         self.create_axis_action('change_left_yscale', plotting_tools.change_left_yscale, 'plot_Y_scale')
         self.create_axis_action('change_right_yscale', plotting_tools.change_right_yscale, 'plot_right_scale')
@@ -77,6 +73,10 @@ class GraphsApplication(Adw.Application):
         toggle_sidebar.connect("activate", ui.toggle_sidebar, self)
         self.add_action(toggle_sidebar)
         self.set_accels_for_action("app.toggle_sidebar", ['F9'])
+
+        self.create_mode_action('mode_pan', ['<shift>P', 'F1'], InteractionMode.PAN)
+        self.create_mode_action('mode_zoom', ['<shift>Z', 'F2'], InteractionMode.ZOOM)
+        self.create_mode_action('mode_select', ['<shift>S', 'F3'], InteractionMode.SELECT)
 
         Adw.StyleManager.get_default().connect("notify", ui.toggle_darkmode, None, self)
 
@@ -96,27 +96,7 @@ class GraphsApplication(Adw.Application):
         win.maximize()
         win.present()
 
-    def on_about_action(self, widget, shortcut):
-        """Callback for the app.about action."""
-        about = Adw.AboutWindow(transient_for=self.main_window,
-                                application_name='Graphs',
-                                application_icon='se.sjoerd.Graphs',
-                                website='https://www.sjoerd.se/Graphs',
-                                developer_name='Sjoerd Broekhuijsen',
-                                issue_url="https://github.com/SjoerdB93/Graphs/issues",
-                                version=self.version,
-                                developers=[
-                                'Sjoerd Broekhuijsen <contact@sjoerd.se>',
-                                'Christoph Kohnen <christoph.kohnen@disroot.org>'
-                                ],
-                                copyright=f"© 2022-{datetime.date.today().year} Sjoerd Broekhuijsen",
-                                license_type="GTK_LICENSE_GPL_3_0")
-        about.present()
-
-    def on_quit_action(self, widget, shortcut):
-        self.quit()
-
-    def set_mode(self, widget, shortcut, mode):
+    def set_mode(self, action, target, mode):
         """
         Set the current UI interaction mode (none, pan, zoom or select)
         """
@@ -169,7 +149,7 @@ class GraphsApplication(Adw.Application):
         """
 
         action = Gio.SimpleAction.new(name, None)
-        action.connect("activate", callback, *args)
+        action.connect("activate", callback, self, *args)
         self.add_action(action)
         if shortcuts:
             self.set_accels_for_action(f"app.{name}", shortcuts)
@@ -178,6 +158,12 @@ class GraphsApplication(Adw.Application):
         action = Gio.SimpleAction.new_stateful(name, GLib.VariantType.new("s"), GLib.Variant.new_string(self.preferences.config[config_key]))
         action.connect("activate", callback, self)
         self.add_action(action)
+
+    def create_mode_action(self, name, shortcuts, mode):
+        action = Gio.SimpleAction.new(name, None)
+        action.connect("activate", self.set_mode, mode)
+        self.add_action(action)
+        self.set_accels_for_action(f"app.{name}", shortcuts)
 
 
 def main(version):

@@ -4,7 +4,7 @@ from numpy import *
 from . import plotting_tools, graphs, utilities
 from .data import Data
 
-def open_add_equation_window(widget, _, self):
+def open_add_equation_window(self):
     """
     Open the window for adding a new dataset from an equation
     """

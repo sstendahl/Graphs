@@ -17,6 +17,7 @@ configure_file(
 )
 
 graphs_sources = [
+  'actions.py',
   'add_data_advanced.py',
   'add_equation.py',
   'canvas.py',

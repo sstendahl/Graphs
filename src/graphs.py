@@ -104,12 +104,12 @@ def delete(widget,  self, id, give_toast = True):
     toggle_data(None, self)
 
 
-def select_all(widget, _, self):
+def select_all(self):
     for key, item in self.item_rows.items():
         item.check_button.set_active(True)
     toggle_data(None, self)
 
-def select_none(widget, _, self):
+def select_none(self):
     for key, item in self.item_rows.items():
         item.check_button.set_active(False)
     toggle_data(None, self)

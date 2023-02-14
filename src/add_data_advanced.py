@@ -3,7 +3,7 @@ from gi.repository import Gtk, Adw
 
 from . import graphs, utilities
 
-def open_add_data_advanced_window(widget, _, self):
+def open_add_data_advanced_window(self):
     """
     Open the window for adding a new dataset from file with custom settings
     """

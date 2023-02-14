@@ -12,7 +12,7 @@ from . import plotting_tools, graphs
 from . import plotting_tools, graphs, utilities
 
 
-def open_preferences_window(widget, _, self):
+def open_preferences_window(self):
     win = PreferencesWindow(self)
     win.set_transient_for(self.props.active_window)
     self.preferences.load_config()

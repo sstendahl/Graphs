@@ -20,7 +20,7 @@ def load_project(self, files):
         file_path = file.peek_path()
         filename = file_path.split("/")[-1]
         new_files.append(file_path)
-    graphs.select_all(None, None, self)
+    graphs.select_all(self)
     graphs.delete_selected(None, None, self)
     with open(file_path, 'rb') as f:
         project =  pickle.load(f)

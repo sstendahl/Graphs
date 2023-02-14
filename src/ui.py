@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
+import datetime
 from gi.repository import GLib, Adw, Gtk
 
 from . import plotting_tools, file_io, graphs
@@ -44,7 +45,7 @@ def disable_clipboard_buttons(self):
     win.redo_button.set_sensitive(False)
     win.undo_button.set_sensitive(False)
 
-def open_file_dialog(widget, _, self, open_project):
+def open_file_dialog(self, open_project):
     open_file_chooser = Gtk.FileChooserNative.new(
         title="Open new files",
         parent=self.main_window,
@@ -161,3 +162,18 @@ def on_save_response(dialog, response, self):
     except Exception as e:
         self.main_window.toast_overlay.add_toast(Adw.Toast(title=f"Unable to save image"))
 
+def show_about_window(self):
+    about = Adw.AboutWindow(transient_for=self.main_window,
+                            application_name='Graphs',
+                            application_icon='se.sjoerd.Graphs',
+                            website='https://www.sjoerd.se/Graphs',
+                            developer_name='Sjoerd Broekhuijsen',
+                            issue_url="https://github.com/SjoerdB93/Graphs/issues",
+                            version=self.version,
+                            developers=[
+                            'Sjoerd Broekhuijsen <contact@sjoerd.se>',
+                            'Christoph Kohnen <christoph.kohnen@disroot.org>'
+                            ],
+                            copyright=f"© 2022-{datetime.date.today().year} Sjoerd Broekhuijsen",
+                            license_type="GTK_LICENSE_GPL_3_0")
+    about.present()
