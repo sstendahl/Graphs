@@ -95,3 +95,5 @@ class AddEquationWindow(Adw.Window):
         style_context = self.add_equation_confirm_button.get_style_context()
         style_context.add_class("suggested-action")
         self.add_equation_confirm_button.connect("clicked", on_accept, parent, self)
+        self.set_transient_for(parent.main_window)
+        self.set_modal(True)

@@ -14,7 +14,6 @@ def about_action(action, target, self):
 
 def preferences_action(action, target, self):
     win = PreferencesWindow(self)
-    win.set_transient_for(self.main_window)
     win.present()
 
 def plot_settings_action(action, target, self):
@@ -25,14 +24,10 @@ def add_data_action(action, target, self):
 
 def add_data_advanced_action(action, target, self):
     win = AddAdvancedWindow(self)
-    win.set_transient_for(self.main_window)
-    win.set_modal(True)
     win.present()
 
 def add_equation_action(action, target, self):
     win = AddEquationWindow(self)
-    win.set_transient_for(self.main_window)
-    win.set_modal(True)
     win.present()
 
 def select_all_action(action, target, self):
@@ -125,6 +120,4 @@ def get_inverse_fourier_action(action, target, self):
 
 def transform_action(action, target, self):
     win = TransformWindow(self)
-    win.set_transient_for(self.main_window)
-    win.set_modal(True)
     win.present()

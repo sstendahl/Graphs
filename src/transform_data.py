@@ -81,4 +81,6 @@ class TransformWindow(Adw.Window):
         self.transform_x_entry.set_text("X")
         self.transform_y_entry.set_text("Y")
         self.transform_confirm_button.connect("clicked", on_accept, parent, self)
+        self.set_transient_for(parent.main_window)
+        self.set_modal(True)
     
