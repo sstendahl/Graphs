@@ -33,8 +33,6 @@ appstream_file = i18n.merge_file(
   install_dir: join_paths(datadir, 'appdata')
 )
 
-install_data(application_id + '.releases.xml', install_dir: join_paths(datadir, 'metainfo', 'releases'), install_mode: 'rwxrwxrwx')
-
 appstream_util = find_program('appstream-util', required: false)
 if appstream_util.found()
   test('Validate appstream file', appstream_util, args: ['validate', appstream_file])
