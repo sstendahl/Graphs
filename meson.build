@@ -9,6 +9,7 @@ application_id = 'se.sjoerd.Graphs'
 name = 'Graphs'
 copyright = '2022 - 2023'
 website = 'https://www.sjoerd.se/Graphs'
+github = 'https://github.com/SjoerdB93/Graphs'
 issues = 'https://github.com/SjoerdB93/Graphs/issues'
 author = 'Sjoerd Broekhuijsen'
 description_short = 'Plot and manipulate data in a breeze'
@@ -34,6 +35,7 @@ conf.set('copyright', copyright)
 conf.set('appid', application_id)
 conf.set('name', name)
 conf.set('website', website)
+conf.set('github', github)
 conf.set('issues', issues)
 conf.set('author', author)
 conf.set('description_short', description_short)

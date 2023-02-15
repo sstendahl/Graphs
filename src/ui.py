@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
+import os
 from gi.repository import GLib, Adw, Gtk
 
 from . import plotting_tools, file_io, graphs
@@ -162,6 +163,8 @@ def on_save_response(dialog, response, self):
         self.main_window.toast_overlay.add_toast(Adw.Toast(title=f"Unable to save image"))
 
 def show_about_window(self):
+    whats_new = open(os.path.join(os.getenv('XDG_DATA_DIRS')).split(":")[0] + '/graphs/graphs/whats_new', 'r').read()
+    print(whats_new)
     about = Adw.AboutWindow(transient_for=self.main_window,
                             application_name=self.name,
                             application_icon=self.appid,
@@ -175,4 +178,5 @@ def show_about_window(self):
                             ],
                             copyright=f'© {self.copyright} {self.author}',
                             license_type='GTK_LICENSE_GPL_3_0')
+    about.set_release_notes(whats_new)
     about.present()
