@@ -12,7 +12,7 @@ jobs:
       options: --privileged
     steps:
     - uses: actions/checkout@master
-    - uses: bilelmoussaoui/flatpak-github-actions/flatpak-builder@gnome-43
+    - uses: bilelmoussaoui/flatpak-github-actions/flatpak-builder@v4
       with:
         bundle: graphs.flatpak
         manifest-path: se.sjoerd.Graphs.json
