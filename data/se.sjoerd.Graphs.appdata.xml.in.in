@@ -40,7 +40,7 @@ Graphs is an excellent fit both plotting and data manipulation. The plots create
       <image>http://www.sjoerd.se/graphs_open_data.png</image>
     </screenshot>
   </screenshots>
-  <releases type="external"/>
+  <releases type="external" />
   <recommends>
     <control>keyboard</control>
     <control>pointing</control>
