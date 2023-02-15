@@ -133,12 +133,14 @@ def create_rgba(r, g, b, a=1):
     res.alpha = a
     return res
 
-def get_theme_color(self):
-    styles = self.main_window.get_style_context()
-    rgba = styles.lookup_color('theme_bg_color')[1]
-    rgba_tuple = (round(rgba.red*255), round(rgba.green*255), round(rgba.blue*255), round(rgba.alpha*255))
-    color_hex = '#{:02x}{:02x}{:02x}'.format(*rgba_tuple)
-    return color_hex
+def lookup_color(self, color):
+    return self.main_window.get_style_context().lookup_color(color)[1]
+
+def rgba_to_hex(rgba):
+    return '#{:02x}{:02x}{:02x}'.format(round(rgba.red*255), round(rgba.green*255), round(rgba.blue*255), round(rgba.alpha*255))
+
+def rgba_to_tuple(rgba):
+    return (rgba.red, rgba.green, rgba.blue, rgba.alpha)
 
 def get_duplicate_filename(self, name):
     loop = True
@@ -158,5 +160,3 @@ def swap(str1):
     str1 = str1.replace('third', '.')
     return str1
 
-def rgba_to_tuple(rgba):
-    return (rgba.red, rgba.green, rgba.blue, rgba.alpha)

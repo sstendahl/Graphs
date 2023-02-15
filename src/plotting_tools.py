@@ -14,7 +14,7 @@ def define_highlight(self, span=None):
     Create a span selector object, to highlight part of the graph.
     If a span already exists, make it visible instead
     """
-    color = self.main_window.get_style_context().lookup_color('accent_color')[1]
+    color = utilities.lookup_color(self, 'accent_color')
     self.highlight = SpanSelector(
         self.canvas.top_right_axis,
         lambda x, y: on_highlight_define(self),
