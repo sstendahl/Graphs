@@ -5,15 +5,17 @@ on:
 name: CI
 jobs:
   flatpak:
-    name: "build-packages"
+    name: "Flatpak"
     runs-on: ubuntu-latest
     container:
       image: bilelmoussaoui/flatpak-github-actions:gnome-43
       options: --privileged
     steps:
-    - uses: actions/checkout@v2
-    - uses: bilelmoussaoui/flatpak-github-actions/flatpak-builder@v4
+    - uses: actions/checkout@master
+    - uses: bilelmoussaoui/flatpak-github-actions/flatpak-builder@wip
       with:
         bundle: graphs.flatpak
         manifest-path: se.sjoerd.Graphs.json
+        app-id: se.sjoerd.Graphs
+        flatpak-module: graphs
         cache-key: flatpak-builder-${{ github.sha }}
