@@ -4,6 +4,7 @@ from gi.repository import Adw, Gtk
 from graphs import graphs, plotting_tools, utilities
 from graphs.data import Data
 
+import numpy
 from numpy import *
 
 
@@ -68,12 +69,12 @@ def create_dataset(self, x_start, x_stop, equation, step_size, name):
         name = f'Y = {str(equation)}'
     dataset['name'] = name
     datapoints = int(abs(eval(x_start) - eval(x_stop)) / eval(step_size))
-    xdata = linspace(eval(x_start), eval(x_stop), datapoints)
+    xdata = numpy.linspace(eval(x_start), eval(x_stop), datapoints)
     equation = equation.replace('X', 'xdata')
     equation = str(equation.replace('^', '**'))
     equation += ' + xdata*0'
     dataset['ydata'] = eval(equation)
-    dataset['xdata'] = ndarray.tolist(xdata)
+    dataset['xdata'] = numpy.ndarray.tolist(xdata)
     return dataset
 
 

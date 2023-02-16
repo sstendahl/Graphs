@@ -33,7 +33,7 @@ class DummyToolbar(NavigationToolbar2):
     Own implementation of NavigationToolbar2. Needed for rubberband support.
     """
     def draw_rubberband(self, event, x_0, y_0, x_1, y_1):
-        self.canvas._rubberband_rect = [int(val) for val in (x0, self.canvas.figure.bbox.height - y_0, x_1 - x_0, y_0 - y_1)]
+        self.canvas._rubberband_rect = [int(val) for val in (x_0, self.canvas.figure.bbox.height - y_0, x_1 - x_0, y_0 - y_1)]
         self.canvas.queue_draw()
 
     def remove_rubberband(self):

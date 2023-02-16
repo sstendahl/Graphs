@@ -170,7 +170,7 @@ class Canvas(FigureCanvas):
         line_width = 1
         if not self._context_is_scaled:
             x_0, y_0, width, height = (dim / self.device_pixel_ratio
-                            for dim in self._rubberband_rect)
+                                       for dim in self._rubberband_rect)
         else:
             x_0, y_0, width, height = self._rubberband_rect
             line_width *= self.device_pixel_ratio

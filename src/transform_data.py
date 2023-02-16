@@ -33,7 +33,7 @@ def on_accept(widget, self, window):
             ydata_in = self.datadict[key].ydata
             try:
                 xdata_out, ydata_out = operation(key, xdata_in, ydata_in, input_x, input_y)
-            except Exception as excepton:
+            except Exception as exception:
                 exception_type = exception.__class__.__name__
                 win = self.main_window
                 win.toast_overlay.add_toast(Adw.Toast(title=f'{exception_type}: Unable to do transformation, make sure the syntax is correct'))

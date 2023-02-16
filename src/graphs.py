@@ -21,9 +21,9 @@ def open_selection_from_dict(self):
                 marker = item.unselected_markers
                 marker_size = item.unselected_marker_size
             color = self.item_rows[key].color_picker.color
-            y_axis = item.plot_Y_position
-            x_axis = item.plot_X_position
-            plotting_tools.plot_figure(self, self.canvas, item.xdata, item.ydata, item.filename, linewidth, linestyle, color, marker, marker_size, y_axis, x_axis)
+            y_axis = item.plot_y_position
+            x_axis = item.plot_x_position
+            plotting_tools.plot_figure(self, self.canvas, item.xdata, item.ydata, item.filename, linewidth=linewidth, linestyle=linestyle, color=color, marker=marker, marker_size=marker_size, y_axis=y_axis, x_axis=x_axis)
 
 
 def open_files(self, files, import_settings):
@@ -59,16 +59,16 @@ def open_files(self, files, import_settings):
                                 self.main_window.toast_overlay.add_toast(Adw.Toast(title=f'Item \'{item.filename}\' already exists'))
                                 return
                             elif handle_duplicates == 'Override existing items':
-                                y_axis = item.plot_Y_position
-                                x_axis = item.plot_X_position
+                                y_axis = item.plot_y_position
+                                x_axis = item.plot_x_position
                                 self.datadict[key] = item
                                 plotting_tools.reload_plot(self)
                                 return
-                y_axis = item.plot_Y_position
-                x_axis = item.plot_X_position
+                y_axis = item.plot_y_position
+                x_axis = item.plot_x_position
                 self.datadict[item.key] = item
                 item.color = plotting_tools.get_next_color(self)
-                plotting_tools.plot_figure(self, self.canvas, item.xdata, item.ydata, item.filename, item.color, y_axis, x_axis)
+                plotting_tools.plot_figure(self, self.canvas, item.xdata, item.ydata, item.filename, item.color, y_axis=y_axis, x_axis=x_axis)
                 add_sample_to_menu(self, item.filename, item.color, item.key, select_item=True)
     self.canvas.draw()
     plotting_tools.set_canvas_limits_axis(self, self.canvas)

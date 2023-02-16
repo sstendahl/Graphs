@@ -134,16 +134,16 @@ def get_used_axes(self):
     bottom_items = []
 
     for key, item in self.datadict.items():
-        if item.plot_Y_position == 'left':
+        if item.plot_y_position == 'left':
             used_axis['left'] = True
             left_items.append(key)
-        if item.plot_Y_position == 'right':
+        if item.plot_y_position == 'right':
             used_axis['right'] = True
             right_items.append(key)
-        if item.plot_X_position == 'top':
+        if item.plot_x_position == 'top':
             used_axis['top'] = True
             top_items.append(key)
-        if item.plot_X_position == 'bottom':
+        if item.plot_x_position == 'bottom':
             used_axis['bottom'] = True
             bottom_items.append(key)
     item_list['left'] = left_items
@@ -283,13 +283,13 @@ def hide_unused_axes(self, canvas):
     top = False
     bottom = False
     for key, item in self.datadict.items():
-        if item.plot_Y_position == 'left':
+        if item.plot_y_position == 'left':
             left = True
-        if item.plot_Y_position == 'right':
+        if item.plot_y_position == 'right':
             right = True
-        if item.plot_X_position == 'top':
+        if item.plot_x_position == 'top':
             top = True
-        if item.plot_X_position == 'bottom':
+        if item.plot_x_position == 'bottom':
             bottom = True
     if not left:
         canvas.top_left_axis.get_yaxis().set_visible(False)
