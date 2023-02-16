@@ -1,7 +1,8 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
-from gi.repository import Gtk, Adw
+from gi.repository import Adw, Gtk
 
-from . import plotting_tools
+from graphs import plotting_tools
+
 
 def open_rename_label_window(self, axis):
     win = RenameLabelWindow(self, axis)
@@ -11,10 +12,12 @@ def open_rename_label_window(self, axis):
     button.connect('clicked', on_accept, self, win, axis)
     win.present()
 
+
 def on_accept(widget, self, window, axis):
     window.rename(self, axis)
     plotting_tools.reload_plot(self)
     window.destroy()
+
 
 @Gtk.Template(resource_path='/se/sjoerd/Graphs/ui/rename_label_window.ui')
 class RenameLabelWindow(Adw.Window):
@@ -33,10 +36,10 @@ class RenameLabelWindow(Adw.Window):
             self.preferencegroup.set_description('Here you can change the title of the plot')
             self.label_entry.set_title('Title')
         self.load_settings(parent, axis)
-    
+
     def load_settings(self, parent, axis):
         self.label_entry.set_text(axis.get_text())
-        
+
     def rename(self, parent, axis):
         if axis == parent.canvas.top_label:
             parent.plot_settings.top_label = self.label_entry.get_text()
