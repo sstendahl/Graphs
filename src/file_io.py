@@ -1,29 +1,32 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
-import numpy
-import re
+import os
 import pickle
+import re
 
-from . import graphs, plotting_tools
-from .data import Data
+from graphs import graphs, plotting_tools, utilities
+from graphs.data import Data
+
+import numpy
+
 
 def save_project(self, path):
-    project_data = dict()
+    project_data = {}
     project_data['plot_settings'] = self.plot_settings
     project_data['data'] = self.datadict
     project_data['version'] = self.version
     with open(path, 'wb') as f:
         pickle.dump(project_data, f)
 
+
 def load_project(self, files):
     new_files = []
     for file in files:
         file_path = file.peek_path()
-        filename = file_path.split('/')[-1]
         new_files.append(file_path)
     for key in self.datadict.copy():
         graphs.delete(self, key)
     with open(file_path, 'rb') as f:
-        project =  pickle.load(f)
+        project = pickle.load(f)
     project_datadict = project['data']
     new_plot_settings = project['plot_settings']
     self.plot_settings = new_plot_settings
@@ -35,6 +38,7 @@ def load_project(self, files):
     for key, item in self.item_rows.items():
         item.check_button.set_active(True)
     graphs.toggle_data(None, self)
+
 
 def save_file(self, path):
     if len(self.datadict) == 1:
@@ -55,6 +59,7 @@ def save_file(self, path):
             else:
                 numpy.savetxt(str(path + '/' + filename) + '.txt', array, delimiter='\t')
 
+
 def get_data(self, import_settings):
     data_array = [[], []]
     i = 0
@@ -67,22 +72,22 @@ def get_data(self, import_settings):
                 data_line = re.split(str(import_settings.delimiter), line)
                 if import_settings.separator == ',':
                     for index, value in enumerate(data_line):
-                        data_line[index] = swap(value)
+                        data_line[index] = utilities.swap(value)
                 try:
                     data_array[0].append(float(data_line[import_settings.column_x]))
                     data_array[1].append(float(data_line[import_settings.column_y]))
 
-                #If it finds non-numbers, it will raise a ValueError, this is the cue to
-                #start looking for headers
+                # If it finds non-numbers, it will raise a ValueError, this is the cue to
+                # start looking for headers
                 except ValueError:
                     if import_settings.guess_headers:
-                        #By default it will check for headers using at least two whitespaces
-                        #as delimiter (often tabs), but if that doesn't work it will try
-                        #the same delimiter as used for the data import itself
-                        #The reasoning is that some people use tabs for the headers, but
-                        #e.g. commas for the data
+                        # By default it will check for headers using at least two whitespaces
+                        # as delimiter (often tabs), but if that doesn't work it will try
+                        # the same delimiter as used for the data import itself
+                        # The reasoning is that some people use tabs for the headers, but
+                        # e.g. commas for the data
                         try:
-                            headers = re.split('\s{2,}', line)
+                            headers = re.split('\\s{2,}', line)
                             self.plot_settings.xlabel = headers[import_settings.column_x]
                             self.plot_settings.ylabel = headers[import_settings.column_y]
                         except IndexError:
@@ -90,9 +95,8 @@ def get_data(self, import_settings):
                                 headers = re.split(import_settings['delimiter'], line)
                                 self.plot_settings.xlabel = headers[import_settings.column_x]
                                 self.plot_settings.ylabel = headers[import_settings.column_y]
-                            #If neither heuristic works, we just skip the headers
+                            # If neither heuristic works, we just skip the headers
                             except IndexError:
                                 pass
     data = Data(self, data_array[0], data_array[1], import_settings)
     return data
-
