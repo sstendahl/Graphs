@@ -1,13 +1,13 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
-from gi.repository import Gtk, Adw
+from gi.repository import Adw, Gtk
 
-from matplotlib.lines import Line2D
+from graphs import graphs, plotting_tools, utilities
+
 import matplotlib.pyplot as plt
+from matplotlib.lines import Line2D
 
-from . import plotting_tools, graphs, utilities
-from .data import Data
 
-def open_plot_settings(self, key = None):
+def open_plot_settings(self, key=None):
     win = PlotSettingsWindow(self, key)
     win.set_transient_for(self.props.active_window)
     win.set_modal(True)
@@ -60,15 +60,14 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
         self.item = self.load_config(parent, key)
         self.datalist_chooser.connect('notify::selected', self.on_notify, parent)
         self.connect('close-request', self.on_close, parent)
-        
+
     def get_chooser_list(self, chooser):
         model = chooser.get_model()
         chooser_list = []
         for item in model:
             chooser_list.append(item.get_string())
         return chooser_list
-        
-            
+
     def on_notify(self, _, __, parent):
         self.save_settings(parent)
         filenames = utilities.get_all_filenames(parent)
@@ -77,7 +76,7 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
         if set(filenames) != set(self.get_chooser_list(self.datalist_chooser)):
             utilities.populate_chooser(self.datalist_chooser, filenames)
         self.datalist_chooser.set_selected(index)
-        self.load_config(parent, key = None)
+        self.load_config(parent, key=None)
         self.chooser_changed = False
 
     def load_config(self, parent, key):
@@ -121,9 +120,9 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
         self.unselected_line_thickness_slider.set_value(item.unselected_line_thickness)
         self.selected_marker_size.set_value(item.selected_marker_size)
         self.unselected_marker_size.set_value(item.unselected_marker_size)
-        utilities.populate_chooser(self.selected_markers_chooser, list(Line2D.markers.values()), clear = False)
+        utilities.populate_chooser(self.selected_markers_chooser, list(Line2D.markers.values()), clear=False)
         utilities.populate_chooser(self.plot_style, plt.style.available)
-        utilities.populate_chooser(self.unselected_markers_chooser, list(Line2D.markers.values()), clear = False)
+        utilities.populate_chooser(self.unselected_markers_chooser, list(Line2D.markers.values()), clear=False)
         utilities.set_chooser(self.plot_style, parent.plot_settings.plot_style)
         marker_dict = Line2D.markers
         unselected_marker_value = marker_dict[item.unselected_markers]
@@ -156,9 +155,9 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
         parent.plot_settings.legend = self.plot_legend_check.get_active()
         parent.plot_settings.title = self.plot_title.get_text()
         parent.plot_settings.tick_left = self.plot_tick_left.get_active()
-        parent.plot_settings.tick_right  = self.plot_tick_right.get_active()
-        parent.plot_settings.tick_top  = self.plot_tick_top.get_active()
-        parent.plot_settings.tick_bottom  = self.plot_tick_bottom.get_active()
+        parent.plot_settings.tick_right = self.plot_tick_right.get_active()
+        parent.plot_settings.tick_top = self.plot_tick_top.get_active()
+        parent.plot_settings.tick_bottom = self.plot_tick_bottom.get_active()
         parent.plot_settings.major_tick_width = self.plot_major_tick_width.get_value()
         parent.plot_settings.minor_tick_width = self.plot_minor_tick_width.get_value()
         parent.plot_settings.major_tick_length = self.plot_major_tick_length.get_value()
@@ -166,13 +165,13 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
         parent.plot_settings.tick_direction = self.plot_tick_direction.get_selected_item().get_string()
         parent.plot_settings.ylabel = self.plot_Y_label.get_text()
         parent.plot_settings.xlabel = self.plot_X_label.get_text()
-        parent.plot_settings.right_label = self.plot_right_label.get_text()      
-        parent.plot_settings.top_label = self.plot_top_label.get_text()      
+        parent.plot_settings.right_label = self.plot_right_label.get_text()
+        parent.plot_settings.top_label = self.plot_top_label.get_text()
         parent.plot_settings.xscale = self.plot_X_scale.get_selected_item().get_string()
         parent.plot_settings.yscale = self.plot_Y_scale.get_selected_item().get_string()
         parent.plot_settings.right_scale = self.plot_right_scale.get_selected_item().get_string()
         parent.plot_settings.top_scale = self.plot_top_scale.get_selected_item().get_string()
-        parent.plot_settings.plot_style = self.plot_style.get_selected_item().get_string()      
+        parent.plot_settings.plot_style = self.plot_style.get_selected_item().get_string()
         if self.name_entry.get_text() != '':
             item.filename = self.name_entry.get_text()
         item.plot_Y_position = self.plot_Y_position.get_selected_item().get_string()
@@ -189,7 +188,7 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
         item.selected_markers = utilities.get_dict_by_value(marker_dict, self.selected_markers_chooser.get_selected_item().get_string())
         item.unselected_markers = utilities.get_dict_by_value(marker_dict, self.unselected_markers_chooser.get_selected_item().get_string())
         return item
-        
+
     def save_settings(self, parent):
         item = self.item
         new_item = self.set_config(item, parent)
@@ -205,4 +204,3 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
     def on_close(self, _, parent):
         self.save_settings(parent)
         plotting_tools.reload_plot(parent)
-
