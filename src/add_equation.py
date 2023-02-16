@@ -1,8 +1,11 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
-from gi.repository import Gtk, Adw
+from gi.repository import Adw, Gtk
+
+from graphs import graphs, plotting_tools, utilities
+from graphs.data import Data
+
 from numpy import *
-from . import plotting_tools, graphs, utilities
-from .data import Data
+
 
 def open_add_equation_window(self):
     """
@@ -27,8 +30,8 @@ def on_accept(widget, self, window):
         window.toast_overlay.add_toast(Adw.Toast(title=f'{exception_type} - Unable to add data from equation'))
         return
 
-    #Choose how to handle duplicates filenames. Add them, ignore them, overide them,
-    #Or rename the file
+    # Choose how to handle duplicates filenames. Add them, ignore them, overide them,
+    # Or rename the file
     handle_duplicates = self.preferences.config['handle_duplicates']
     if not handle_duplicates == 'Add duplicates':
         for key, item in self.datadict.items():
@@ -46,7 +49,7 @@ def on_accept(widget, self, window):
                     plotting_tools.refresh_plot(self)
                     window.destroy()
                     return
-            
+
     new_file.xdata_clipboard = [new_file.xdata.copy()]
     new_file.ydata_clipboard = [new_file.ydata.copy()]
     new_file.clipboard_pos = -1
@@ -56,23 +59,23 @@ def on_accept(widget, self, window):
     window.destroy()
 
 
-    
 def create_dataset(self, x_start, x_stop, equation, step_size, name):
     """
     Create all data set parameters that are required to create a new data object
     """
-    dataset = dict()
+    dataset = {}
     if name == '':
         name = f'Y = {str(equation)}'
     dataset['name'] = name
-    datapoints = int(abs(eval(x_start) - eval(x_stop))/eval(step_size))
-    xdata =  linspace(eval(x_start),eval(x_stop),datapoints)
+    datapoints = int(abs(eval(x_start) - eval(x_stop)) / eval(step_size))
+    xdata = linspace(eval(x_start), eval(x_stop), datapoints)
     equation = equation.replace('X', 'xdata')
     equation = str(equation.replace('^', '**'))
     equation += ' + xdata*0'
     dataset['ydata'] = eval(equation)
     dataset['xdata'] = ndarray.tolist(xdata)
     return dataset
+
 
 @Gtk.Template(resource_path='/se/sjoerd/Graphs/ui/add_equation_window.ui')
 class AddEquationWindow(Adw.Window):
