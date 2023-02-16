@@ -1,7 +1,8 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 from gi.repository import Gdk
 
-from .data import Data
+from graphs.data import Data
+
 
 def remove_unused_config_keys(config, template):
     delete_list = []
@@ -11,7 +12,8 @@ def remove_unused_config_keys(config, template):
     for key in delete_list:
         del config[key]
     return config
-    
+
+
 def add_new_config_keys(config, template):
     add_list = []
     for key in template.keys():
@@ -19,7 +21,8 @@ def add_new_config_keys(config, template):
             add_list.append(key)
     for key in add_list:
         config[key] = template[key]
-    return config     
+    return config
+
 
 def set_chooser(chooser, choice):
     """
@@ -30,6 +33,7 @@ def set_chooser(chooser, choice):
         if option.get_string() == choice:
             chooser.set_selected(index)
 
+
 def empty_chooser(chooser):
     """
     Remove all the values in a dropdown menu
@@ -37,8 +41,9 @@ def empty_chooser(chooser):
     model = chooser.get_model()
     for item in model:
         model.remove(0)
-        
-def populate_chooser(chooser, chooser_list, clear = True):
+
+
+def populate_chooser(chooser, chooser_list, clear=True):
     """
     Fill the dropdown menu with the strings in a chooser_list
     """
@@ -49,12 +54,14 @@ def populate_chooser(chooser, chooser_list, clear = True):
     for item in chooser_list:
         if item != 'nothing':
             model.append(str(item))
-            
+
+
 def get_datalist(parent):
     """
     Get a list of all data id's present in the datadict dictionary
     """
     return list(parent.datadict.keys())
+
 
 def get_all_filenames(parent):
     """
@@ -65,6 +72,7 @@ def get_all_filenames(parent):
         filenames.append(item[1].filename)
     return filenames
 
+
 def get_dict_by_value(dictionary, value):
     """
     Swap the keys and items of a dictionary
@@ -73,7 +81,8 @@ def get_dict_by_value(dictionary, value):
     if value == 'none':
         return 'none'
     return new_dict[value]
-    
+
+
 def get_font_weight(font_name):
     """
     Get the weight of the font that is used using the full font name
@@ -87,6 +96,7 @@ def get_font_weight(font_name):
         new_weight = 'normal'
     return new_weight
 
+
 def get_font_style(font_name):
     """
     Get the style of the font that is used using the full font name
@@ -95,6 +105,7 @@ def get_font_style(font_name):
     if font_name[-2] == ('italic' or 'oblique' or 'normal'):
         new_style = font_name[-2]
     return new_style
+
 
 def get_selected_keys(self):
     """
@@ -105,8 +116,9 @@ def get_selected_keys(self):
         if item.check_button.get_active():
             selected_keys.append(item.key)
     return selected_keys
-    
-def create_data(self, xdata = [], ydata = [], name = 'New data'):
+
+
+def create_data(self, xdata=[], ydata=[], name='New data'):
     """
     Create a new dataset using the xdata, ydata and name of the dataset as argument
     """
@@ -121,7 +133,8 @@ def create_data(self, xdata = [], ydata = [], name = 'New data'):
     new_file.selected_marker_size = self.preferences.config['plot_selected_marker_size']
     new_file.unselected_marker_size = self.preferences.config['plot_unselected_marker_size']
     return new_file
-    
+
+
 def create_rgba(r, g, b, a=1):
     """
     Create a valid RGBA object from rgba values.
@@ -133,14 +146,18 @@ def create_rgba(r, g, b, a=1):
     res.alpha = a
     return res
 
+
 def lookup_color(self, color):
     return self.main_window.get_style_context().lookup_color(color)[1]
 
+
 def rgba_to_hex(rgba):
-    return '#{:02x}{:02x}{:02x}'.format(round(rgba.red*255), round(rgba.green*255), round(rgba.blue*255), round(rgba.alpha*255))
+    return '#{:02x}{:02x}{:02x}'.format(round(rgba.red * 255), round(rgba.green * 255), round(rgba.blue * 255))
+
 
 def rgba_to_tuple(rgba):
     return (rgba.red, rgba.green, rgba.blue, rgba.alpha)
+
 
 def get_duplicate_filename(self, name):
     loop = True
@@ -154,9 +171,9 @@ def get_duplicate_filename(self, name):
                 loop = True
     return new_name
 
+
 def swap(str1):
     str1 = str1.replace(',', 'third')
     str1 = str1.replace('.', ', ')
     str1 = str1.replace('third', '.')
     return str1
-
