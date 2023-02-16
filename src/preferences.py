@@ -1,15 +1,16 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
+import json
 import os
 import shutil
-import json
-import matplotlib.pyplot as plt
-import matplotlib.font_manager
-import pickle
-from gi.repository import Gtk, Adw
-from matplotlib.lines import Line2D
-from . import plotting_tools, graphs
 
-from . import plotting_tools, graphs, utilities
+from gi.repository import Adw, Gtk
+
+from graphs import utilities
+
+import matplotlib.font_manager
+import matplotlib.pyplot as plt
+from matplotlib.lines import Line2D
+
 
 class Preferences():
     def __init__(self, parent):
@@ -28,11 +29,11 @@ class Preferences():
             config = utilities.remove_unused_config_keys(config, template)
             config = utilities.add_new_config_keys(config, template)
         return config
-        
+
     def create_new_config_file(self):
         config_path = self.get_config_path()
         if not os.path.isfile(f'{config_path}/config.json'):
-            self.reset_config()    
+            self.reset_config()
             print('New configuration file created')
         else:
             print('Loading configuration file')
@@ -78,8 +79,8 @@ class PreferencesWindow(Adw.PreferencesWindow):
     savefig_filetype_list = Gtk.Template.Child()
     addequation_equation = Gtk.Template.Child()
     addequation_X_start = Gtk.Template.Child()
-    addequation_X_stop = Gtk.Template.Child()    
-    addequation_step_size = Gtk.Template.Child()    
+    addequation_X_stop = Gtk.Template.Child()
+    addequation_step_size = Gtk.Template.Child()
     plot_Y_label = Gtk.Template.Child()
     plot_X_label = Gtk.Template.Child()
     plot_right_label = Gtk.Template.Child()
@@ -124,15 +125,15 @@ class PreferencesWindow(Adw.PreferencesWindow):
     def __init__(self, parent):
         super().__init__()
         self.props.modal = True
-        color_cycles =  [
+        color_cycles = [
             'Pastel1', 'Pastel2', 'Paired', 'Accent',
             'Dark2', 'Set1', 'Set2', 'Set3',
             'tab10', 'tab20', 'tab20b', 'tab20c']
         utilities.populate_chooser(self.plot_color_cycle, color_cycles)
         utilities.populate_chooser(self.plot_style_dark, plt.style.available)
         utilities.populate_chooser(self.plot_style_light, plt.style.available)
-        utilities.populate_chooser(self.plot_selected_markers_chooser, list(Line2D.markers.values()), clear = False)
-        utilities.populate_chooser(self.plot_unselected_markers_chooser, list(Line2D.markers.values()), clear = False)
+        utilities.populate_chooser(self.plot_selected_markers_chooser, list(Line2D.markers.values()), clear=False)
+        utilities.populate_chooser(self.plot_unselected_markers_chooser, list(Line2D.markers.values()), clear=False)
         config = parent.preferences.config
         config = self.load_configuration(config)
         self.connect('close-request', self.on_close, parent)
@@ -153,8 +154,8 @@ class PreferencesWindow(Adw.PreferencesWindow):
         self.plot_unselected_marker_size.set_range(0, 30)
         self.addequation_equation.set_text(str(config['addequation_equation']))
         self.addequation_X_start.set_text(str(config['addequation_X_start']))
-        self.addequation_X_stop.set_text(str(config['addequation_X_stop']))    
-        self.addequation_step_size.set_text(str(config['addequation_step_size']))          
+        self.addequation_X_stop.set_text(str(config['addequation_X_stop']))
+        self.addequation_step_size.set_text(str(config['addequation_step_size']))
         self.import_skip_rows.set_value(int(config['import_skip_rows']))
         self.column_y.set_value(int(config['import_column_y']))
         self.column_x.set_value(int(config['import_column_x']))
@@ -227,7 +228,6 @@ class PreferencesWindow(Adw.PreferencesWindow):
             new_style = font_name[-2]
         return new_style
 
-
     def get_available_fonts(self):
         available_fonts = matplotlib.font_manager.get_font_names()
         font_list = []
@@ -236,7 +236,7 @@ class PreferencesWindow(Adw.PreferencesWindow):
         return sorted(font_list)
 
     def set_config(self):
-        config = dict()
+        config = {}
         font_name = self.plot_font_chooser.get_font_desc().to_string().lower().split(' ')
         font_size = font_name[-1]
         font_weight = self.get_font_weight(font_name)
