@@ -21,8 +21,8 @@ def on_accept(widget, self, window):
             ydata_in = self.datadict[key].ydata[start_index:stop_index]
             try:
                 xdata_out, ydata_out = operation(key, xdata_in, ydata_in, input_x, input_y)
-            except Exception as e:
-                exception_type = e.__class__.__name__
+            except Exception as exception:
+                exception_type = exception.__class__.__name__
                 win = self.main_window
                 win.toast_overlay.add_toast(Adw.Toast(title=f'{exception_type}: Unable to do transformation, make sure the syntax is correct'))
                 return
@@ -33,8 +33,8 @@ def on_accept(widget, self, window):
             ydata_in = self.datadict[key].ydata
             try:
                 xdata_out, ydata_out = operation(key, xdata_in, ydata_in, input_x, input_y)
-            except Exception as e:
-                exception_type = e.__class__.__name__
+            except Exception as excepton:
+                exception_type = exception.__class__.__name__
                 win = self.main_window
                 win.toast_overlay.add_toast(Adw.Toast(title=f'{exception_type}: Unable to do transformation, make sure the syntax is correct'))
                 return

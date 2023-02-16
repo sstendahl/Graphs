@@ -23,8 +23,8 @@ class Preferences():
         template_path = os.path.join(os.getenv('XDG_DATA_DIRS'))
         template_path = template_path.split(':')[0] + '/graphs/graphs'
         os.chdir(template_path)
-        with open('config.json', 'r') as f:
-            template = json.load(f)
+        with open('config.json', 'r') as file:
+            template = json.load(file)
         if set(config.keys()) != set(template.keys()):
             config = utilities.remove_unused_config_keys(config, template)
             config = utilities.add_new_config_keys(config, template)
@@ -51,16 +51,16 @@ class Preferences():
     def load_config(self):
         config_path = self.get_config_path()
         os.chdir(config_path)
-        with open('config.json', 'r') as f:
-            config = json.load(f)
+        with open('config.json', 'r') as file:
+            config = json.load(file)
         config = self.check_config(config)
         return config
 
     def save_config(self):
         config_path = self.get_config_path()
         os.chdir(config_path)
-        with open('config.json', 'w') as f:
-            json.dump(self.config, f)
+        with open('config.json', 'w') as file:
+            json.dump(self.config, file)
 
     def get_config_path(self) -> str:
         if os.getenv('XDG_CONFIG_HOME'):

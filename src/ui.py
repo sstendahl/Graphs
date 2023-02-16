@@ -129,21 +129,21 @@ def export_figure(self):
         action=Gtk.FileChooserAction.SAVE,
         modal=True)
 
-    ff = Gtk.FileFilter()
-    ff.set_name('All files')
-    ff.add_pattern('*')
-    dialog.add_filter(ff)
-    dialog.set_filter(ff)
+    file_filter = Gtk.FileFilter()
+    file_filter.set_name('All files')
+    file_filter.add_pattern('*')
+    dialog.add_filter(file_filter)
+    dialog.set_filter(file_filter)
 
     formats = []
     default_format = None
     for i, (name, fmts) in enumerate(
             self.canvas.get_supported_filetypes_grouped().items()):
-        ff = Gtk.FileFilter()
-        ff.set_name(name)
+        file_filter = Gtk.FileFilter()
+        file_filter.set_name(name)
         for fmt in fmts:
-            ff.add_pattern(f'*.{fmt}')
-        dialog.add_filter(ff)
+            file_filter.add_pattern(f'*.{fmt}')
+        dialog.add_filter(file_filter)
         formats.append(name)
         if self.canvas.get_default_filetype() in fmts:
             default_format = i

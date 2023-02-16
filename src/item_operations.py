@@ -109,13 +109,13 @@ def pick_data_selection(self, item, startx, stopx):
         return selected_data, start_index, stop_index
 
 
-def sort_data(x, y):
+def sort_data(x_values, y_values):
     """
     Sort x and y-coordinates such that the x-data is continiously increasing
     Takes in x, and y coordinates of that array, and returns the sorted variant
     """
-    zipped_list = zip(x, y)
-    sorted_lists = sorted(zipped_list, key=lambda x: x[0])
+    zipped_list = zip(x_values, y_values)
+    sorted_lists = sorted(zipped_list, key=lambda x_values: x_values[0])
     sorted_x, sorted_y = zip(*sorted_lists)
     return list(sorted_x), list(sorted_y)
 
@@ -244,9 +244,9 @@ def get_derivative(self):
             item = self.datadict[f'{key}_selected']
         if self._mode != InteractionMode.SELECT:
             item = self.datadict[key]
-        x = np.array(item.xdata)
-        y = np.array(item.ydata)
-        dy_dx = np.gradient(y, x)
+        x_values = np.array(item.xdata)
+        y_values = np.array(item.ydata)
+        dy_dx = np.gradient(y_values, x_values)
         self.datadict[key].xdata = item.xdata
         self.datadict[key].ydata = dy_dx.tolist()
     add_to_clipboard(self)
@@ -266,11 +266,11 @@ def get_integral(self):
             item = self.datadict[f'{key}_selected']
         if self._mode != InteractionMode.SELECT:
             item = self.datadict[key]
-        x = np.array(item.xdata)
-        y = np.array(item.ydata)
-        F = integrate.cumtrapz(y, x, initial=0)
+        x_values = np.array(item.xdata)
+        y_values = np.array(item.ydata)
+        indefinite_integral = integrate.cumtrapz(y_values, x_values, initial=0)
         self.datadict[key].xdata = item.xdata
-        self.datadict[key].ydata = F.tolist()
+        self.datadict[key].ydata = indefinite_integral.tolist()
 
     add_to_clipboard(self)
     delete_selected_data(self)
@@ -289,10 +289,10 @@ def get_fourier(self):
             item = self.datadict[f'{key}_selected']
         if self._mode != InteractionMode.SELECT:
             item = self.datadict[key]
-        x = np.array(item.xdata)
-        y = np.array(item.ydata)
-        y_fourier = np.fft.fft(y)
-        x_fourier = np.fft.fftfreq(len(x), x[1] - x[0])
+        x_values = np.array(item.xdata)
+        y_values = np.array(item.ydata)
+        y_fourier = np.fft.fft(y_values)
+        x_fourier = np.fft.fftfreq(len(x_values), x_values[1] - x_values[0])
         y_fourier = [value.real for value in y_fourier]
         self.datadict[key].ydata = y_fourier
         self.datadict[key].xdata = x_fourier
@@ -313,10 +313,10 @@ def get_inverse_fourier(self):
             item = self.datadict[f'{key}_selected']
         if self._mode != InteractionMode.SELECT:
             item = self.datadict[key]
-        x = np.array(item.xdata)
-        y = np.array(item.ydata)
-        y_fourier = np.fft.ifft(y)
-        x_fourier = np.fft.fftfreq(len(x), x[1] - x[0])
+        x_values = np.array(item.xdata)
+        y_values = np.array(item.ydata)
+        y_fourier = np.fft.ifft(y_values)
+        x_fourier = np.fft.fftfreq(len(x_values), x_values[1] - x_values[0])
         y_fourier = [value.real for value in y_fourier]
         self.datadict[key].ydata = y_fourier
         self.datadict[key].xdata = x_fourier
@@ -456,9 +456,9 @@ def translate_x(self):
     win = self.main_window
     try:
         offset = eval(win.translate_x_entry.get_text())
-    except Exception as e:
-        exception_type = e.__class__.__name__
-        print(f'{e}: Unable to do translation, make sure to enter a valid number')
+    except Exception as exception:
+        exception_type = exception.__class__.__name__
+        print(f'{exception}: Unable to do translation, make sure to enter a valid number')
         win.toast_overlay.add_toast(Adw.Toast(title=f'{exception_type}: Unable to do translation, make sure to enter a valid number'))
         offset = 0
     if self._mode == InteractionMode.SELECT:
@@ -491,9 +491,9 @@ def translate_y(self):
     win = self.main_window
     try:
         offset = eval(win.translate_y_entry.get_text())
-    except Exception as e:
-        exception_type = e.__class__.__name__
-        print(f'{e}: Unable to do translation, make sure to enter a valid number')
+    except Exception as exception:
+        exception_type = exception.__class__.__name__
+        print(f'{exception}: Unable to do translation, make sure to enter a valid number')
         win.toast_overlay.add_toast(Adw.Toast(title=f'{exception_type}: Unable to do translation, make sure to enter a valid number'))
         offset = 0
     selected_keys = utilities.get_selected_keys(self)
@@ -530,9 +530,9 @@ def multiply_x(self):
     win = self.main_window
     try:
         multiplier = eval(win.multiply_x_entry.get_text())
-    except Exception as e:
-        exception_type = e.__class__.__name__
-        print(f'{e}: Unable to do multiplication, make sure to enter a valid number')
+    except Exception as exception:
+        exception_type = exception.__class__.__name__
+        print(f'{exception}: Unable to do multiplication, make sure to enter a valid number')
         win.toast_overlay.add_toast(Adw.Toast(title=f'{exception_type}: Unable to do multiplication, make sure to enter a valid number'))
         multiplier = 1
     selected_keys = utilities.get_selected_keys(self)
@@ -566,9 +566,9 @@ def multiply_y(self):
     win = self.main_window
     try:
         multiplier = eval(win.multiply_y_entry.get_text())
-    except Exception as e:
-        exception_type = e.__class__.__name__
-        print(f'{e}: Unable to do multiplication, make sure to enter a valid number')
+    except Exception as exception:
+        exception_type = exception.__class__.__name__
+        print(f'{exception}: Unable to do multiplication, make sure to enter a valid number')
         win.toast_overlay.add_toast(Adw.Toast(title=f'{exception_type}: Unable to do multiplication, make sure to enter a valid number'))
         multiplier = 1
     selected_keys = utilities.get_selected_keys(self)
@@ -642,7 +642,7 @@ def center_data(self):
             selected_item = self.datadict[f'{key}_selected']
             # Perform the operation on the highlighted area
             if self.preferences.config['action_center_data'] == 'Center at maximum Y value':
-                selected_item.xdata = center_data_max_Y(selected_item.xdata, selected_item.ydata)
+                selected_item.xdata = center_data_max_y(selected_item.xdata, selected_item.ydata)
             elif self.preferences.config['action_center_data'] == 'Center at middle coordinate':
                 selected_item.xdata = center_data_middle(selected_item.xdata)
             start_index, stop_index = start_stop[key][0], start_stop[key][1]
@@ -652,7 +652,7 @@ def center_data(self):
             self.datadict[key].xdata, self.datadict[key].ydata = sort_data(self.datadict[key].xdata, self.datadict[key].ydata)
         if self._mode != InteractionMode.SELECT:
             if self.preferences.config['action_center_data'] == 'Center at maximum Y value':
-                self.datadict[key].xdata = center_data_max_Y(self.datadict[key].xdata, self.datadict[key].ydata)
+                self.datadict[key].xdata = center_data_max_y(self.datadict[key].xdata, self.datadict[key].ydata)
             elif self.preferences.config['action_center_data'] == 'Center at middle coordinate':
                 self.datadict[key].xdata = center_data_middle(self.datadict[key].xdata)
             self.datadict[key].xdata, self.datadict[key].ydata = sort_data(self.datadict[key].xdata, self.datadict[key].ydata)
@@ -661,7 +661,7 @@ def center_data(self):
     plotting_tools.refresh_plot(self)
 
 
-def center_data_max_Y(xdata, ydata):
+def center_data_max_y(xdata, ydata):
     """
     Center data on the maximum y value, takes in x array and y array.
     Centers the x-data at index where the y-data has its maximum

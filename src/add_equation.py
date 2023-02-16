@@ -25,8 +25,8 @@ def on_accept(widget, self, window):
     try:
         new_file = Data(self, dataset['xdata'], dataset['ydata'])
         new_file.filename = dataset['name']
-    except Exception as e:
-        exception_type = e.__class__.__name__
+    except Exception as exception:
+        exception_type = exception.__class__.__name__
         window.toast_overlay.add_toast(Adw.Toast(title=f'{exception_type} - Unable to add data from equation'))
         return
 

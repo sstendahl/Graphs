@@ -46,7 +46,7 @@ def on_highlight_define(self):
     self.highlight.extents = (extend_min, extend_max)
 
 
-def plot_figure(self, canvas, X, Y, filename='', xlim=None, linewidth=2, title='', scale='log', marker=None, linestyle='solid',
+def plot_figure(self, canvas, x_data, y_data, filename='', xlim=None, linewidth=2, title='', scale='log', marker=None, linestyle='solid',
                 revert=False, color=None, marker_size=10, y_axis='left', x_axis='bottom'):
     """
     Plot the figure on the graph
@@ -55,14 +55,14 @@ def plot_figure(self, canvas, X, Y, filename='', xlim=None, linewidth=2, title='
     """
     if y_axis == 'left':
         if x_axis == 'bottom':
-            canvas.ax.plot(X, Y, linewidth=linewidth, label=filename, linestyle=linestyle, marker=marker, color=color, markersize=marker_size)
+            canvas.ax.plot(x_data, y_data, linewidth=linewidth, label=filename, linestyle=linestyle, marker=marker, color=color, markersize=marker_size)
         elif x_axis == 'top':
-            canvas.top_left_axis.plot(X, Y, linewidth=linewidth, label=filename, linestyle=linestyle, marker=marker, color=color, markersize=marker_size)
+            canvas.top_left_axis.plot(x_data, y_data, linewidth=linewidth, label=filename, linestyle=linestyle, marker=marker, color=color, markersize=marker_size)
     elif y_axis == 'right':
         if x_axis == 'bottom':
-            canvas.right_axis.plot(X, Y, linewidth=linewidth, label=filename, linestyle=linestyle, marker=marker, color=color, markersize=marker_size)
+            canvas.right_axis.plot(x_data, y_data, linewidth=linewidth, label=filename, linestyle=linestyle, marker=marker, color=color, markersize=marker_size)
         elif x_axis == 'top':
-            canvas.top_right_axis.plot(X, Y, linewidth=linewidth, label=filename, linestyle=linestyle, marker=marker, color=color, markersize=marker_size)
+            canvas.top_right_axis.plot(x_data, y_data, linewidth=linewidth, label=filename, linestyle=linestyle, marker=marker, color=color, markersize=marker_size)
             canvas.top_right_axis.set_yscale(self.plot_settings.right_scale)
     set_legend(self, canvas)
 

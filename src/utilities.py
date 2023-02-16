@@ -135,15 +135,15 @@ def create_data(self, xdata=[], ydata=[], name='New data'):
     return new_file
 
 
-def create_rgba(r, g, b, a=1):
+def create_rgba(red, green, blue, alpha=1):
     """
     Create a valid RGBA object from rgba values.
     """
     res = Gdk.RGBA()
-    res.red = r
-    res.green = g
-    res.blue = b
-    res.alpha = a
+    res.red = red
+    res.green = green
+    res.blue = blue
+    res.alpha = alpha
     return res
 
 

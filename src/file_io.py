@@ -14,8 +14,8 @@ def save_project(self, path):
     project_data['plot_settings'] = self.plot_settings
     project_data['data'] = self.datadict
     project_data['version'] = self.version
-    with open(path, 'wb') as f:
-        pickle.dump(project_data, f)
+    with open(path, 'wb') as file:
+        pickle.dump(project_data, file)
 
 
 def load_project(self, files):
@@ -25,8 +25,8 @@ def load_project(self, files):
         new_files.append(file_path)
     for key in self.datadict.copy():
         graphs.delete(self, key)
-    with open(file_path, 'rb') as f:
-        project = pickle.load(f)
+    with open(file_path, 'rb') as file:
+        project = pickle.load(file)
     project_datadict = project['data']
     new_plot_settings = project['plot_settings']
     self.plot_settings = new_plot_settings

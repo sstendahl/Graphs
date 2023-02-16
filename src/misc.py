@@ -35,8 +35,8 @@ class DummyToolbar(NavigationToolbar2):
     def __init__(self, canvas):
         super().__init__(canvas)
 
-    def draw_rubberband(self, event, x0, y0, x1, y1):
-        self.canvas._rubberband_rect = [int(val) for val in (x0, self.canvas.figure.bbox.height - y0, x1 - x0, y0 - y1)]
+    def draw_rubberband(self, event, x_0, y_0, x_1, y_1):
+        self.canvas._rubberband_rect = [int(val) for val in (x0, self.canvas.figure.bbox.height - y_0, x_1 - x_0, y_0 - y_1)]
         self.canvas.queue_draw()
 
     def remove_rubberband(self):

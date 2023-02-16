@@ -16,8 +16,8 @@ class Data:
         self.unselected_markers = ''
         self.selected_marker_size = float(0)
         self.unselected_marker_size = float(0)
-        self.plot_Y_position = 'left'
-        self.plot_X_position = 'bottom'
+        self.plot_y_position = 'left'
+        self.plot_x_position = 'bottom'
         self.selected = True
         self.color = ''
         self.xdata = xdata
@@ -31,8 +31,8 @@ class Data:
         self.set_data_properties(parent, import_settings)
 
     def set_data_properties(self, parent, import_settings):
-        self.plot_Y_position = parent.preferences.config['plot_Y_position']
-        self.plot_X_position = parent.preferences.config['plot_X_position']
+        self.plot_y_position = parent.preferences.config['plot_Y_position']
+        self.plot_x_position = parent.preferences.config['plot_X_position']
         self.linestyle_selected = parent.preferences.config['plot_selected_linestyle']
         self.linestyle_unselected = parent.preferences.config['plot_unselected_linestyle']
         self.selected_line_thickness = parent.preferences.config['selected_linewidth']

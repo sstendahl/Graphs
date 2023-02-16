@@ -167,20 +167,20 @@ class Canvas(FigureCanvas):
         if self._rubberband_rect is None:
             return
 
-        lw = 1
+        line_width = 1
         if not self._context_is_scaled:
-            x0, y0, w, h = (dim / self.device_pixel_ratio
+            x_0, y_0, width, height = (dim / self.device_pixel_ratio
                             for dim in self._rubberband_rect)
         else:
-            x0, y0, w, h = self._rubberband_rect
-            lw *= self.device_pixel_ratio
+            x_0, y_0, width, height = self._rubberband_rect
+            line_width *= self.device_pixel_ratio
 
         context.set_antialias(1)
-        context.set_line_width(lw)
-        context.rectangle(x0, y0, w, h)
-        ca = self.rubberband_color
-        context.set_source_rgba(ca.red, ca.green, ca.blue, 0.3)
+        context.set_line_width(line_width)
+        context.rectangle(x_0, y_0, width, height)
+        color = self.rubberband_color
+        context.set_source_rgba(color.red, color.green, color.blue, 0.3)
         context.fill()
-        context.rectangle(x0, y0, w, h)
-        context.set_source_rgba(ca.red, ca.green, ca.blue, 1)
+        context.rectangle(x_0, y_0, width, height)
+        context.set_source_rgba(color.red, color.green, color.blue, 1)
         context.stroke()
