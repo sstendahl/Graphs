@@ -1,74 +1,84 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
+"""Main application."""
 import sys
-
-from gi.repository import Gio, Adw, GLib
-from matplotlib.backend_bases import _Mode
 from inspect import getmembers, isfunction
 
-from . import actions, plotting_tools, preferences, graphs, ui
-from .misc import InteractionMode
-from .window import GraphsWindow
+from gi.repository import Adw, GLib, Gio
+
+from graphs import actions, graphs, plotting_tools, preferences, ui
+from graphs.misc import InteractionMode
+from graphs.window import GraphsWindow
+
+from matplotlib.backend_bases import _Mode
+
 
 class GraphsApplication(Adw.Application):
     """The main application singleton class."""
 
-    def __init__(self):
-        super().__init__(application_id='se.sjoerd.Graphs',
+    def __init__(self, args):
+        """Init the application."""
+        self.appid = args[1]
+        super().__init__(application_id=self.appid,
                          flags=Gio.ApplicationFlags.FLAGS_NONE)
-        self.datadict = dict()        
+        self.version = args[0]
+        self.name = args[2]
+        self.copyright = args[3]
+        self.website = args[4]
+        self.issues = args[5]
+        self.author = args[6]
+        self.datadict = {}
         self.filename = ''
         self.highlight = None
-        self.highlights = []        
-        self.item_rows = dict()
-        self.sample_menu = dict()
+        self.highlights = []
+        self.item_rows = {}
+        self.sample_menu = {}
         self.load_preferences()
         self.connect_actions()
-        
+
     def load_preferences(self):
+        """Load preferences."""
         plotting_tools.load_fonts(self)
         self.preferences = preferences.Preferences(self)
         self.plot_settings = plotting_tools.PlotSettings(self)
 
     def connect_actions(self):
-        """
-        To create an action, add name and keybinds to the list and implement a function in actions.py
-        """
+        """Create actions, which are defined in actions.py."""
         new_actions = [
-        ('quit', ['<primary>q']),
-        ('about', None),
-        ('preferences', ['<primary>p']),
-        ('plot_settings', ['<primary><shift>P']),
-        ('add_data', ['<primary>N']),
-        ('add_data_advanced', ['<primary><shift>N']),
-        ('add_equation', ['<primary><alt>N']),
-        ('select_all', ['<primary>A']),
-        ('select_none', ['<primary><shift>A']),
-        ('undo', ['<primary>Z']),
-        ('redo', ['<primary><shift>Z']),
-        ('restore_view', ['<primary>R']),
-        ('view_back', ['<alt>Z']),
-        ('view_forward', ['<alt><shift>Z']),
-        ('export_data', ['<primary><shift>E']),
-        ('export_figure', ['<primary>E']),
-        ('save_project', ['<primary>S']),
-        ('open_project', ['<primary>O']),
-        ('delete_selected', ['Delete']),
-        ('translate_x', None),
-        ('translate_y', None),
-        ('multiply_x', None),
-        ('multiply_y', None),
-        ('normalize', None),
-        ('smoothen', None),
-        ('center', None),
-        ('shift_vertically', None),
-        ('combine', None),
-        ('cut_selected', None),
-        ('get_derivative', None),
-        ('get_integral', None),
-        ('get_fourier', None),
-        ('get_inverse_fourier', None)
+            ('quit', ['<primary>q']),
+            ('about', None),
+            ('preferences', ['<primary>p']),
+            ('plot_settings', ['<primary><shift>P']),
+            ('add_data', ['<primary>N']),
+            ('add_data_advanced', ['<primary><shift>N']),
+            ('add_equation', ['<primary><alt>N']),
+            ('select_all', ['<primary>A']),
+            ('select_none', ['<primary><shift>A']),
+            ('undo', ['<primary>Z']),
+            ('redo', ['<primary><shift>Z']),
+            ('restore_view', ['<primary>R']),
+            ('view_back', ['<alt>Z']),
+            ('view_forward', ['<alt><shift>Z']),
+            ('export_data', ['<primary><shift>E']),
+            ('export_figure', ['<primary>E']),
+            ('save_project', ['<primary>S']),
+            ('open_project', ['<primary>O']),
+            ('delete_selected', ['Delete']),
+            ('translate_x', None),
+            ('translate_y', None),
+            ('multiply_x', None),
+            ('multiply_y', None),
+            ('normalize', None),
+            ('smoothen', None),
+            ('center', None),
+            ('shift_vertically', None),
+            ('combine', None),
+            ('cut_selected', None),
+            ('get_derivative', None),
+            ('get_integral', None),
+            ('get_fourier', None),
+            ('get_inverse_fourier', None)
         ]
-        methods = dict()
+        methods = {}
         for key, item in getmembers(globals().copy()['actions'], isfunction):
             methods[key] = item
         for name, keybinds in new_actions:
@@ -95,7 +105,8 @@ class GraphsApplication(Adw.Application):
         Adw.StyleManager.get_default().connect('notify', ui.toggle_darkmode, None, self)
 
     def do_activate(self):
-        """Called when the application is activated
+        """Called when the application is activated.
+
         We raise the application's main window, creating it if
         necessary.
         """
@@ -110,10 +121,8 @@ class GraphsApplication(Adw.Application):
         win.maximize()
         win.present()
 
-    def set_mode(self, action, target, mode):
-        """
-        Set the current UI interaction mode (none, pan, zoom or select)
-        """
+    def set_mode(self, _action, _target, mode):
+        """Set the current UI interaction mode (none, pan, zoom or select)."""
         win = self.main_window
         pan_button = win.pan_button
         zoom_button = win.zoom_button
@@ -122,7 +131,7 @@ class GraphsApplication(Adw.Application):
         if self.highlight is None:
             plotting_tools.define_highlight(self)
         highlight = self.highlight
-        if(mode == InteractionMode.PAN):
+        if mode == InteractionMode.PAN:
             self.dummy_toolbar.mode = _Mode.PAN
             pan_button.set_active(True)
             zoom_button.set_active(False)
@@ -130,7 +139,7 @@ class GraphsApplication(Adw.Application):
             cut_button.set_sensitive(False)
             highlight.set_visible(False)
             highlight.set_active(False)
-        elif(mode == InteractionMode.ZOOM):
+        elif mode == InteractionMode.ZOOM:
             self.dummy_toolbar.mode = _Mode.ZOOM
             pan_button.set_active(False)
             zoom_button.set_active(True)
@@ -138,7 +147,7 @@ class GraphsApplication(Adw.Application):
             cut_button.set_sensitive(False)
             highlight.set_visible(False)
             highlight.set_active(False)
-        elif(mode == InteractionMode.SELECT):
+        elif mode == InteractionMode.SELECT:
             self.dummy_toolbar.mode = _Mode.NONE
             pan_button.set_active(False)
             zoom_button.set_active(False)
@@ -152,11 +161,13 @@ class GraphsApplication(Adw.Application):
         self.canvas.draw()
 
     def create_axis_action(self, name, callback, config_key):
+        """Create action for setting axis scale."""
         action = Gio.SimpleAction.new_stateful(name, GLib.VariantType.new('s'), GLib.Variant.new_string(self.preferences.config[config_key]))
         action.connect('activate', callback, self)
         self.add_action(action)
 
     def create_mode_action(self, name, shortcuts, mode):
+        """Create action for mode setting."""
         action = Gio.SimpleAction.new(name, None)
         action.connect('activate', self.set_mode, mode)
         self.add_action(action)
@@ -165,15 +176,6 @@ class GraphsApplication(Adw.Application):
 
 def main(args):
     """The application's entry point."""
-    app = GraphsApplication()
-    app.version = args[0]
-    app.appid = args[1]
-    app.name = args[2]
-    app.copyright = args[3]
-    app.website = args[4]
-    app.issues = args[5]
-    app.author = args[6]
+    app = GraphsApplication(args)
 
     return app.run(sys.argv)
-
-
