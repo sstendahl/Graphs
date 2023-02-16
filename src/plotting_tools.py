@@ -21,8 +21,8 @@ def define_highlight(self, span=None):
         lambda x, y: on_highlight_define(self),
         'horizontal',
         useblit=True,
-        props={(color.red, color.green, color.blue, 0.3), (color.red, color.green, color.blue, 1), 1},
-        handle_props={0},
+        props={'facecolor': (color.red, color.green, color.blue, 0.3), 'edgecolor': (color.red, color.green, color.blue, 1), 'linewidth': 1},
+        handle_props={'linewidth': 0},
         interactive=True,
         drag_from_anywhere=True)
     if span is not None:
