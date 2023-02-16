@@ -1,29 +1,31 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 from gi.repository import Gtk
+
+from graphs import plotting_tools, utilities
+
 from matplotlib import colors
 
-from . import plotting_tools, utilities
 
 class ColorPicker(Gtk.Button):
     def __init__(self, color, key, parent):
         super().__init__()
         self.parent = parent
         self.key = key
-        self.set_tooltip_text(_('Pick a color'))
+        self.set_tooltip_text('Pick a color')
         self.color = color
         self.add_css_class('flat')
         self.set_hexpand(False)
         self.set_child(Gtk.Image.new_from_icon_name('color-picker-symbolic'))
         self.get_child().set_pixel_size(20)
-        
+
         press_gesture = Gtk.GestureClick()
         press_gesture.connect('pressed', self.change_color)
         self.color_chooser = Gtk.ColorChooserWidget.new()
         self.color_chooser.set_use_alpha(False)
         self.color_chooser.show()
-        self.color_chooser.connect('color-activated', self.change_color)        
+        self.color_chooser.connect('color-activated', self.change_color)
         self.color_chooser.add_controller(press_gesture)
-            
+
         self.color_popover = Gtk.Popover()
         self.color_popover.set_parent(self)
         self.color_popover.set_child(self.color_chooser)
@@ -32,7 +34,6 @@ class ColorPicker(Gtk.Button):
         self.set_css()
         self.color = self.get_color()
         parent.datadict[self.key].color = self.color
-
 
     def set_rgba(self, color):
         self.color_chooser.set_rgba(color)
@@ -43,7 +44,7 @@ class ColorPicker(Gtk.Button):
         self.color_chooser.props.show_editor = False
         self.color_popover.popup()
 
-    def set_color(self, chooser, color, _ = None):
+    def set_color(self, chooser, color, _=None):
         self.set_rgba(color)
         self.color = self.get_color()
         self.update_color()
@@ -57,7 +58,7 @@ class ColorPicker(Gtk.Button):
         return self.color_chooser.get_rgba()
 
     def convert_rgba(self, rgba):
-        return (round(rgba.red*255), round(rgba.green*255), round(rgba.blue*255), round(rgba.alpha*255))
+        return (round(rgba.red * 255), round(rgba.green * 255), round(rgba.blue * 255), round(rgba.alpha * 255))
 
     def get_color(self):
         color_rgba = self.convert_rgba(self.get_rgba())
@@ -76,4 +77,3 @@ class ColorPicker(Gtk.Button):
         self.set_rgba(rgba)
         self.set_rgba(self.get_rgba())
         self.update_color()
-
