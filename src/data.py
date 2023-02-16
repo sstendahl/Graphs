@@ -1,11 +1,12 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
-import uuid
 import os
-from . import graphs, utilities
-from .misc import ImportSettings, ImportMode
+import uuid
 
-class Data:  
-    def __init__(self, parent, xdata, ydata, import_settings = None):
+from graphs.misc import ImportMode, ImportSettings
+
+
+class Data:
+    def __init__(self, parent, xdata, ydata, import_settings=None):
         self.filename = ''
         self.linestyle_selected = ''
         self.linestyle_unselected = ''
@@ -28,7 +29,7 @@ class Data:
         if import_settings is None:
             import_settings = ImportSettings(parent)
         self.set_data_properties(parent, import_settings)
-                    
+
     def set_data_properties(self, parent, import_settings):
         self.plot_Y_position = parent.preferences.config['plot_Y_position']
         self.plot_X_position = parent.preferences.config['plot_X_position']
@@ -45,5 +46,4 @@ class Data:
         else:
             filename = import_settings.path.split('/')[-1]
             filename = os.path.splitext(filename)[0]
-        self.filename = filename          
-       
+        self.filename = filename
