@@ -33,6 +33,3 @@ class GraphsWindow(Adw.ApplicationWindow):
     transform_data_button = Gtk.Template.Child()
     combine_data_button = Gtk.Template.Child()
     no_data_label_box = Gtk.Template.Child()
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
