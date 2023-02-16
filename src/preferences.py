@@ -11,13 +11,6 @@ from . import plotting_tools, graphs
 
 from . import plotting_tools, graphs, utilities
 
-
-def open_preferences_window(widget, _, self):
-    win = PreferencesWindow(self)
-    win.set_transient_for(self.props.active_window)
-    self.preferences.load_config()
-    win.present()
-
 class Preferences():
     def __init__(self, parent):
         self.parent = parent
@@ -143,6 +136,7 @@ class PreferencesWindow(Adw.PreferencesWindow):
         config = parent.preferences.config
         config = self.load_configuration(config)
         self.connect("close-request", self.on_close, parent)
+        self.set_transient_for(parent.main_window)
 
     def load_configuration(self, config):
         font_string = config["plot_font_string"]

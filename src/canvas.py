@@ -28,7 +28,7 @@ class Canvas(FigureCanvas):
         self.set_ax_properties(parent)
         self.set_save_properties(parent)
         self.set_color_cycle(parent)
-        self.rubberband_color = parent.main_window.get_style_context().lookup_color('accent_color')[1]
+        self.rubberband_color = utilities.lookup_color(parent, 'accent_color')
         super().__init__(self.figure)
 
     def set_save_properties(self, parent):
@@ -105,8 +105,6 @@ class Canvas(FigureCanvas):
         "legend.fontsize": parent.plot_settings.font_size,
         "font.style": parent.plot_settings.font_style,
         "mathtext.default": "regular",
-        "xtick.color" : text_color,
-        "ytick.color" : text_color,
         "axes.labelcolor" : text_color,
         }
         plt.style.use(parent.plot_settings.plot_style)

@@ -1,0 +1,8 @@
+<p>Minor update with updated AppID.</p>
+<ul>
+  <li>The sidebar is now retractable</li>
+  <li>Graphs now uses symbolic GNOME icons in the toolbar wherever possible</li>
+  <li>The legend is now accomponied with a frame for all styles in order to improve readability</li>
+  <li>Some code clean-up has been performed</li>
+  <li>The new app-id for Graphs is now se.sjoerd.Graphs</li>
+</ul>

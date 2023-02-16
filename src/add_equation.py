@@ -4,17 +4,11 @@ from numpy import *
 from . import plotting_tools, graphs, utilities
 from .data import Data
 
-def open_add_equation_window(widget, _, self):
+def open_add_equation_window(self):
     """
     Open the window for adding a new dataset from an equation
     """
-    win = AddEquationWindow(self)
-    win.set_transient_for(self.main_window)
-    win.set_modal(True)
-    name = "transform_confirm"
-    button = win.add_equation_confirm_button
-    button.connect("clicked", on_accept, self, win)
-    win.present()
+
 
 def on_accept(widget, self, window):
     """
@@ -100,3 +94,6 @@ class AddEquationWindow(Adw.Window):
 
         style_context = self.add_equation_confirm_button.get_style_context()
         style_context.add_class("suggested-action")
+        self.add_equation_confirm_button.connect("clicked", on_accept, parent, self)
+        self.set_transient_for(parent.main_window)
+        self.set_modal(True)

@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
+import os
 from gi.repository import GLib, Adw, Gtk
 
 from . import plotting_tools, file_io, graphs
@@ -44,7 +45,7 @@ def disable_clipboard_buttons(self):
     win.redo_button.set_sensitive(False)
     win.undo_button.set_sensitive(False)
 
-def open_file_dialog(widget, _, self, open_project):
+def open_file_dialog(self, open_project, import_settings = None):
     open_file_chooser = Gtk.FileChooserNative.new(
         title="Open new files",
         parent=self.main_window,
@@ -53,17 +54,17 @@ def open_file_dialog(widget, _, self, open_project):
     )
     open_file_chooser.set_modal(True)
     open_file_chooser.set_select_multiple(open_project)
-    open_file_chooser.connect("response", on_open_file_response, self, open_project)
+    open_file_chooser.connect("response", on_open_file_response, self, open_project, import_settings)
     open_file_chooser.show()
 
-def on_open_file_response(dialog, response, self, project):
+def on_open_file_response(dialog, response, self, project, import_settings):
     if response == Gtk.ResponseType.ACCEPT:
         if(project):
             file_io.load_project(self, dialog.get_files())
         else:
-            graphs.open_files(self, dialog.get_files())
+            graphs.open_files(self, dialog.get_files(), import_settings)
 
-def save_project_dialog(widget, _, self, documenttype="Graphs Project (*)"):
+def save_project_dialog(self, documenttypes="Graphs Project (*)"):
     def save_project_chooser(action):
         dialog = Gtk.FileChooserNative.new(
             title="Save files",
@@ -112,7 +113,7 @@ def on_save_response(dialog, response, self, project):
             file_io.save_file(self, path)
 
 # https://github.com/matplotlib/matplotlib/blob/c23ccdde6f0f8c071b09a88770e24452f2859e99/lib/matplotlib/backends/backend_gtk4.py#L306
-def export_figure(widget, shortcut, self):
+def export_figure(self):
     dialog = Gtk.FileChooserNative(
         title='Save the figure',
         transient_for=self.main_window,
@@ -161,3 +162,21 @@ def on_save_response(dialog, response, self):
     except Exception as e:
         self.main_window.toast_overlay.add_toast(Adw.Toast(title=f"Unable to save image"))
 
+def show_about_window(self):
+    whats_new = open(os.path.join(os.getenv('XDG_DATA_DIRS')).split(":")[0] + '/graphs/graphs/whats_new', 'r').read()
+    print(whats_new)
+    about = Adw.AboutWindow(transient_for=self.main_window,
+                            application_name=self.name,
+                            application_icon=self.appid,
+                            website=self.website,
+                            developer_name=self.author,
+                            issue_url=self.issues,
+                            version=self.version,
+                            developers=[
+                            'Sjoerd Broekhuijsen <contact@sjoerd.se>',
+                            'Christoph Kohnen <christoph.kohnen@disroot.org>'
+                            ],
+                            copyright=f'© {self.copyright} {self.author}',
+                            license_type='GTK_LICENSE_GPL_3_0')
+    about.set_release_notes(whats_new)
+    about.present()

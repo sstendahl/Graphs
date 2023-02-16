@@ -9,13 +9,6 @@ from . import plotting_tools, graphs, utilities, ui
 from .data import Data
 from .misc import InteractionMode
 
-def export_data(widget, _, self):
-    """
-    Open the save file dialog.
-    """
-    delete_selected_data(self)
-    ui.save_file_dialog(self)
-
 def add_to_clipboard(self):
     """
     Add data to the clipboard, is performed whenever an action is performed.
@@ -40,7 +33,7 @@ def add_to_clipboard(self):
         item.xdata_clipboard.append(item.xdata.copy())
         item.ydata_clipboard.append(item.ydata.copy()) 
 
-def undo(widget, shortcut, self):
+def undo(self):
     """
     Undo an action, moves the clipboard position backwards by one and changes
     the dataset to the state before the previous action was performed
@@ -57,7 +50,7 @@ def undo(widget, shortcut, self):
         undo_button.set_sensitive(False)
     plotting_tools.refresh_plot(self)
 
-def redo(widget, shortcut, self):
+def redo(self):
     """
     Redo an action, moves the clipboard position forwards by one and changes the 
     dataset to the state before the previous action was undone
@@ -123,7 +116,7 @@ def sort_data(x, y):
     return list(sorted_x), list(sorted_y)
 
 
-def cut_data(widget, _, self):
+def cut_data(self):
     """
     Cut selected data over the span that is selected
     """
@@ -231,7 +224,7 @@ def get_fraction_at_value(value, start, end):
     log_range = log_end - log_start
     return (log_value - log_start) / log_range
 
-def get_derivative(widget, shortcut, self):
+def get_derivative(self):
     """
     Calculate derivative of all selected data
     """
@@ -252,7 +245,7 @@ def get_derivative(widget, shortcut, self):
     delete_selected_data(self)
     plotting_tools.refresh_plot(self)
 
-def get_integral(widget, shortcut, self):
+def get_integral(self):
     """
     Calculate indefinite integral of all selected data
     """
@@ -274,7 +267,7 @@ def get_integral(widget, shortcut, self):
     delete_selected_data(self)
     plotting_tools.refresh_plot(self)
     
-def get_fourier(widget, shortcut, self):
+def get_fourier(self):
     """
     Perform Fourier transformation on all selected data
     """
@@ -297,7 +290,7 @@ def get_fourier(widget, shortcut, self):
     add_to_clipboard(self)
     plotting_tools.refresh_plot(self)    
 
-def get_inverse_fourier(widget, shortcut, self):
+def get_inverse_fourier(self):
     """
     Perform Inverse Fourier transformation on all selected data
     """
@@ -321,7 +314,7 @@ def get_inverse_fourier(widget, shortcut, self):
     plotting_tools.refresh_plot(self)
 
     
-def combine_data(widget, shortcut, self):
+def combine_data(self):
     """
     Combine the selected data into a new data set
     """
@@ -357,7 +350,7 @@ def combine_data(widget, shortcut, self):
     plotting_tools.refresh_plot(self)
 
 
-def smoothen_data(widget, shortcut, self):
+def smoothen_data(self):
     """
     Smoothen y-data.
     """
@@ -390,7 +383,7 @@ def smooth(y_data, box_points):
     y_smooth = np.convolve(y_data, box, mode="same")
     return y_smooth
 
-def shift_vertically(shortcut, _, self):
+def shift_vertically(self):
     """
     Shifts data vertically with respect to each other
     By default it scales linear data by 1.5 times the total span of the 
@@ -439,7 +432,7 @@ def shift_item(self, item, shift_value_log, shift_value_linear):
         if self.plot_settings.right_scale == "linear":
             item.ydata = [value + shift_value_linear for value in item.ydata]
 
-def translate_x(shortcut, _, self):
+def translate_x(self):
     """
     Translate all selected data on the x-axis
     Amount to be shifted is equal to the value in the translate_x entry widget
@@ -473,7 +466,7 @@ def translate_x(shortcut, _, self):
     delete_selected_data(self)
     plotting_tools.refresh_plot(self)
 
-def translate_y(shortcut, _, self):
+def translate_y(self):
     """
     Translate all selected data on the y-axis
     Amount to be shifted is equal to the value in the translate_y entry widget
@@ -511,7 +504,7 @@ def translate_y(shortcut, _, self):
     delete_selected_data(self)
     plotting_tools.refresh_plot(self)
 
-def multiply_x(shortcut, _, self):
+def multiply_x(self):
     """
     Multiply all selected data on the x-axis
     Amount to be shifted is equal to the value in the multiply_x entry widget
@@ -546,7 +539,7 @@ def multiply_x(shortcut, _, self):
     add_to_clipboard(self)
     plotting_tools.refresh_plot(self)
 
-def multiply_y(shortcut, _, self):
+def multiply_y(self):
     """
     Multiply all selected data on the y-axis
     Amount to be shifted is equal to the value in the multiply_y entry widget
@@ -581,7 +574,7 @@ def multiply_y(shortcut, _, self):
     plotting_tools.refresh_plot(self)
 
 
-def normalize_data(shortcut, _, self):
+def normalize_data(self):
     """
     Normalize all selected data
     """
@@ -614,7 +607,7 @@ def normalize(ydata):
     new_y = [value / max_y for value in ydata]
     return new_y
 
-def center_data(shortcut, _, self):
+def center_data(self):
     """
     Center all selected data
     Depending on the key, will center either on the middle coordinate, or on

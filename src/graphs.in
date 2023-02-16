@@ -1,12 +1,12 @@
 #!@PYTHON@
 
-# Graphs
-# Plot and manipulate data in a breeze
+# @name@
+# @description_short@
 #
-# https://www.sjoerd.se/Graphs
-# https://github.com/SjoerdB93/Graphs
+# @website@
+# @github@
 #
-# Copyright 2022 - 2023 Sjoerd Broekhuijsen
+# Copyright @copyright@ @author@
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -29,15 +29,22 @@ import signal
 import locale
 import gettext
 
-VERSION = '@VERSION@'
+VERSION = '@version@'
+project = '@project@'
 pkgdatadir = '@pkgdatadir@'
 localedir = '@localedir@'
+copyright = '@copyright@'
+appid = '@appid@'
+name = '@name@'
+website = '@website@'
+issues = '@issues@'
+author = '@author@'
 
 sys.path.insert(1, pkgdatadir)
 signal.signal(signal.SIGINT, signal.SIG_DFL)
-locale.bindtextdomain('graphs', localedir)
-locale.textdomain('graphs')
-gettext.install('graphs', localedir)
+locale.bindtextdomain(project, localedir)
+locale.textdomain(project)
+gettext.install(project, localedir)
 
 if __name__ == '__main__':
     import gi
@@ -46,9 +53,9 @@ if __name__ == '__main__':
     gi.require_version('Gtk', '4.0')
 
     from gi.repository import Gio
-    resource = Gio.Resource.load(os.path.join(pkgdatadir, 'se.sjoerd.Graphs.gresource'))
+    resource = Gio.Resource.load(os.path.join(pkgdatadir, '@appid@.gresource'))
     resource._register()
 
-    from graphs import main
-    sys.exit(main.main(VERSION))
+    from @project@ import main
+    sys.exit(main.main(VERSION, appid, name, copyright, website, issues, author))
 

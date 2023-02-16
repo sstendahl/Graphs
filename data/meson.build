@@ -1,6 +1,12 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
+desktop_file_in = configure_file(
+        input: application_id + '.desktop.in.in',
+       output: application_id + '.desktop.in',
+configuration: conf
+)
+
 desktop_file = i18n.merge_file(
-        input: application_id + '.desktop.in',
+        input: desktop_file_in,
        output: application_id + '.desktop',
          type: 'desktop',
        po_dir: '../po',
@@ -13,8 +19,14 @@ if desktop_utils.found()
   test('Validate desktop file', desktop_utils, args: [desktop_file])
 endif
 
+appstream_file_in = configure_file(
+        input: application_id + '.appdata.xml.in.in',
+       output: application_id + '.appdata.xml.in',
+configuration: conf
+)
+
 appstream_file = i18n.merge_file(
-        input: application_id + '.appdata.xml.in',
+        input: appstream_file_in,
        output: application_id + '.appdata.xml',
        po_dir: '../po',
       install: true,
@@ -26,7 +38,13 @@ if appstream_util.found()
   test('Validate appstream file', appstream_util, args: ['validate', appstream_file])
 endif
 
-install_data(application_id + '.gschema.xml',
+gschema_file = configure_file(
+        input: application_id + '.gschema.xml.in',
+       output: application_id + '.gschema.xml',
+configuration: conf
+)
+
+install_data(gschema_file,
   install_dir: join_paths(datadir, 'glib-2.0/schemas'),
     install_mode: 'rwxrwxrwx'
 )
@@ -60,6 +78,7 @@ install_data(
 )
 
 install_data('config.json', install_dir: moduledir, install_mode: 'rwxrwxrwx')
+install_data('whats_new', install_dir: moduledir, install_mode: 'rwxrwxrwx')
 
 styles_dir = 'styles'
 styles = [

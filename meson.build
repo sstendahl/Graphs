@@ -6,16 +6,39 @@ project('graphs',
 )
 
 application_id = 'se.sjoerd.Graphs'
+name = 'Graphs'
+copyright = '2022 - 2023'
+website = 'https://www.sjoerd.se/Graphs'
+github = 'https://github.com/SjoerdB93/Graphs'
+issues = 'https://github.com/SjoerdB93/Graphs/issues'
+author = 'Sjoerd Broekhuijsen'
+description_short = 'Plot and manipulate data in a breeze'
 
 i18n = import('i18n')
 gnome = import('gnome')
 fs = import('fs')
+python = import('python')
 
 prefix = get_option('prefix')
 datadir = get_option('datadir')
 pkgdatadir = join_paths(prefix, datadir, meson.project_name())
 moduledir = join_paths(pkgdatadir, meson.project_name())
 localedir = join_paths(prefix, get_option('localedir'))
+
+conf = configuration_data()
+conf.set('PYTHON', python.find_installation('python3').path())
+conf.set('project', meson.project_name())
+conf.set('version', meson.project_version())
+conf.set('localedir', localedir)
+conf.set('pkgdatadir', pkgdatadir)
+conf.set('copyright', copyright)
+conf.set('appid', application_id)
+conf.set('name', name)
+conf.set('website', website)
+conf.set('github', github)
+conf.set('issues', issues)
+conf.set('author', author)
+conf.set('description_short', description_short)
 
 subdir('data')
 subdir('src')

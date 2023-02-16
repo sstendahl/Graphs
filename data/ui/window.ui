@@ -255,8 +255,8 @@
                                                 </child>
                                               </object>
                                             </child>
-                                            <property name="tooltip-text" translatable="yes">Normalize data</property>
-                                            <property name="action-name">app.normalize_data</property>
+                                            <property name="tooltip-text" translatable="yes">Normalize Data</property>
+                                            <property name="action-name">app.normalize</property>
                                             <property name="margin-bottom">5</property>
                                             <property name="margin-top">5</property>
                                             <property name="margin-start">5</property>
@@ -287,7 +287,7 @@
                                               </object>
                                             </child>
                                             <property name="tooltip-text" translatable="yes">Smoothen the data</property>
-                                            <property name="action-name">app.smooth</property>
+                                            <property name="action-name">app.smoothen</property>
                                             <property name="margin-bottom">5</property>
                                             <property name="margin-top">5</property>
                                             <property name="margin-start">5</property>
@@ -318,7 +318,7 @@
                                               </object>
                                             </child>
                                             <property name="tooltip-text" translatable="yes">Center the data</property>
-                                            <property name="action-name">app.center_data</property>
+                                            <property name="action-name">app.center</property>
                                             <property name="margin-bottom">5</property>
                                             <property name="margin-top">5</property>
                                             <property name="margin-start">5</property>
@@ -349,7 +349,7 @@
                                               </object>
                                             </child>
                                             <property name="tooltip-text" translatable="yes">Cut selected data</property>
-                                            <property name="action-name">app.cut_data</property>
+                                            <property name="action-name">app.selected</property>
                                             <property name="margin-bottom">5</property>
                                             <property name="margin-top">5</property>
                                             <property name="margin-start">5</property>
@@ -381,7 +381,7 @@
                                               </object>
                                             </child>
                                             <property name="tooltip-text" translatable="yes">Combine selected data</property>
-                                            <property name="action-name">app.combine_data</property>
+                                            <property name="action-name">app.combine</property>
                                             <property name="margin-bottom">5</property>
                                             <property name="margin-top">5</property>
                                             <property name="margin-start">5</property>

@@ -5,17 +5,6 @@ from numpy import *
 from . import item_operations, plotting_tools, utilities
 from .misc import InteractionMode
 
-def open_transform_window(widget, _, self):
-    win = TransformWindow(self)
-    win.set_transient_for(self.main_window)
-    win.set_modal(True)
-    button = win.transform_confirm_button
-    button.connect("clicked", on_accept, self, win)
-    win.transform_x_entry.set_text("X")
-    win.transform_y_entry.set_text("Y")
-    win.present()
-    pass
-
 def on_accept(widget, self, window):
     input_x = str(window.transform_x_entry.get_text())
     input_y = str(window.transform_y_entry.get_text())
@@ -88,4 +77,10 @@ class TransformWindow(Adw.Window):
         super().__init__()
         style_context = self.transform_confirm_button.get_style_context()
         style_context.add_class("suggested-action")
+
+        self.transform_x_entry.set_text("X")
+        self.transform_y_entry.set_text("Y")
+        self.transform_confirm_button.connect("clicked", on_accept, parent, self)
+        self.set_transient_for(parent.main_window)
+        self.set_modal(True)
     

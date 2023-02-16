@@ -26,8 +26,9 @@ def open_selection_from_dict(self):
             x_axis = item.plot_X_position
             plotting_tools.plot_figure(self, self.canvas, item.xdata,item.ydata, item.filename, linewidth = linewidth, linestyle=linestyle, color = color, marker = marker, marker_size = marker_size, y_axis = y_axis, x_axis = x_axis)
 
-def open_files(self, files):
-    import_settings = ImportSettings(self)
+def open_files(self, files, import_settings):
+    if import_settings is None:
+        import_settings = ImportSettings(self)
     if len(files) > 1:
         import_settings.mode = ImportMode.MULTIPLE
     elif len(files) == 1:
@@ -71,19 +72,16 @@ def open_files(self, files):
                 add_sample_to_menu(self, item.filename, item.color, item.key, select_item = True)
     self.canvas.draw()
     plotting_tools.set_canvas_limits_axis(self, self.canvas)
-    toggle_data(None, self)
+    plotting_tools.refresh_plot(self)
+    ui.enable_data_dependent_buttons(self, True)
 
 def select_item(self, key):
     item = self.item_rows[key]
     item.check_button.set_active(True)
-    toggle_data(None, self)
+    plotting_tools.refresh_plot(self)
+    ui.enable_data_dependent_buttons(self, utilities.get_selected_keys(self))
 
-def delete_selected(shortcut, _,  self):
-    selected_keys = utilities.get_selected_keys(self)
-    for key in selected_keys:
-        delete(None, self, key)
-
-def delete(widget,  self, id, give_toast = True):
+def delete(self, id, give_toast = False):
     layout = self.list_box
     for key, item in self.sample_menu.items():
         if key == id:
@@ -101,48 +99,20 @@ def delete(widget,  self, id, give_toast = True):
         self.main_window.no_data_label_box.set_visible(True)
 
     reset_clipboard(self)
-    toggle_data(None, self)
-
-
-def select_all(widget, _, self):
-    for key, item in self.item_rows.items():
-        item.check_button.set_active(True)
-    toggle_data(None, self)
-
-def select_none(widget, _, self):
-    for key, item in self.item_rows.items():
-        item.check_button.set_active(False)
-    toggle_data(None, self)
+    plotting_tools.refresh_plot(self)
+    ui.enable_data_dependent_buttons(self, utilities.get_selected_keys(self))
 
 def add_sample_to_menu(self, filename, color, key, select_item = False):
     win = self.main_window
     win.list_box.set_visible(True)
     win.no_data_label_box.set_visible(False)
     self.list_box = win.list_box
-    row = samplerow.SampleBox(self, filename, key)
-    row.gesture.connect("released", row.clicked, self)
-    row.color_picker = colorpicker.ColorPicker(color, key, parent=self)
-    row.color_picker.set_hexpand(False)
-    label = row.sample_ID_label
-    if select_item:
-        row.check_button.set_active(True)
-    row.sample_box.insert_child_after(row.color_picker, row.sample_ID_label)
-    row.check_button.connect("toggled", toggle_data, self)
-    row.delete_button.connect("clicked", delete, self, key)
+    row = samplerow.SampleBox(self, key, color, filename, select_item)
     self.item_rows[key] = row
-    max_length = int(26)
-    if len(filename) > max_length:
-        label = f"{filename[:max_length]}..."
-    else:
-        label = filename
-    row.sample_ID_label.set_text(label)
     self.list_box.append(row)
     self.sample_menu[key] = self.list_box.get_last_child()
-    toggle_data(None, self)
-    
-def toggle_data(_, self):
     plotting_tools.refresh_plot(self)
-    ui.enable_data_dependent_buttons(self, utilities.get_selected_keys(self))
+    ui.enable_data_dependent_buttons(self, True)
 
 def create_data_from_project(self, new_dictionary):
     """

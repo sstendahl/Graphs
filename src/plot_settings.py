@@ -7,11 +7,10 @@ import matplotlib.pyplot as plt
 from . import plotting_tools, graphs, utilities
 from .data import Data
 
-def open_plot_settings(widget, _, self, key = None):
+def open_plot_settings(self, key = None):
     win = PlotSettingsWindow(self, key)
     win.set_transient_for(self.props.active_window)
     win.set_modal(True)
-    name = "transform_confirm"
     win.present()
 
 

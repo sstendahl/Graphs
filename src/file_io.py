@@ -20,8 +20,8 @@ def load_project(self, files):
         file_path = file.peek_path()
         filename = file_path.split("/")[-1]
         new_files.append(file_path)
-    graphs.select_all(None, None, self)
-    graphs.delete_selected(None, None, self)
+    for key in self.datadict.copy():
+        graphs.delete(self, key)
     with open(file_path, 'rb') as f:
         project =  pickle.load(f)
     project_datadict = project["data"]
@@ -32,7 +32,9 @@ def load_project(self, files):
     for key, item in self.datadict.items():
         graphs.add_sample_to_menu(self, item.filename, item.color, item.key)
     plotting_tools.reload_plot(self)
-    graphs.select_all(None, None, self)
+    for key, item in self.item_rows.items():
+        item.check_button.set_active(True)
+    graphs.toggle_data(None, self)
 
 def save_file(self, path):
     if len(self.datadict) == 1:

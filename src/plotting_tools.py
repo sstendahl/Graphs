@@ -14,7 +14,7 @@ def define_highlight(self, span=None):
     Create a span selector object, to highlight part of the graph.
     If a span already exists, make it visible instead
     """
-    color = self.main_window.get_style_context().lookup_color('accent_color')[1]
+    color = utilities.lookup_color(self, 'accent_color')
     self.highlight = SpanSelector(
         self.canvas.top_right_axis,
         lambda x, y: on_highlight_define(self),
@@ -366,18 +366,6 @@ def change_bottom_xscale(action, target, self):
     action.change_state(target)
     set_canvas_limits_axis(self, self.canvas)
     self.canvas.draw()
-
-def restore_view(widget, shortcut, self):
-    set_canvas_limits_axis(self, self.canvas)
-    self.canvas.draw()
-
-def view_back(widget, shortcut, self):
-    self.dummy_toolbar._nav_stack.back()
-    self.dummy_toolbar._update_view()
-
-def view_forward(widget, shortcut, self):
-    self.dummy_toolbar._nav_stack.forward()
-    self.dummy_toolbar._update_view()
 
 def get_next_color(self):
     """
