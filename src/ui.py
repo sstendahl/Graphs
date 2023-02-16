@@ -12,9 +12,9 @@ def toggle_sidebar(action, shortcut, self):
 
 def toggle_darkmode(shortcut, theme, widget, self):
     if Adw.StyleManager.get_default().get_dark():
-        self.plot_settings.plot_style = self.preferences.config["plot_style_dark"]
+        self.plot_settings.plot_style = self.preferences.config['plot_style_dark']
     else:
-        self.plot_settings.plot_style = self.preferences.config["plot_style_light"]
+        self.plot_settings.plot_style = self.preferences.config['plot_style_light']
     plotting_tools.reload_plot(self)
 
 def enable_data_dependent_buttons(self, enabled):
@@ -47,14 +47,14 @@ def disable_clipboard_buttons(self):
 
 def open_file_dialog(self, open_project, import_settings = None):
     open_file_chooser = Gtk.FileChooserNative.new(
-        title="Open new files",
+        title='Open new files',
         parent=self.main_window,
         action=Gtk.FileChooserAction.OPEN,
-        accept_label="_Open",
+        accept_label='_Open',
     )
     open_file_chooser.set_modal(True)
     open_file_chooser.set_select_multiple(open_project)
-    open_file_chooser.connect("response", on_open_file_response, self, open_project, import_settings)
+    open_file_chooser.connect('response', on_open_file_response, self, open_project, import_settings)
     open_file_chooser.show()
 
 def on_open_file_response(dialog, response, self, project, import_settings):
@@ -64,28 +64,28 @@ def on_open_file_response(dialog, response, self, project, import_settings):
         else:
             graphs.open_files(self, dialog.get_files(), import_settings)
 
-def save_project_dialog(self, documenttypes="Graphs Project (*)"):
+def save_project_dialog(self, documenttypes='Graphs Project (*)'):
     def save_project_chooser(action):
         dialog = Gtk.FileChooserNative.new(
-            title="Save files",
+            title='Save files',
             parent=self.main_window,
             action=action,
-            accept_label="_Save",
+            accept_label='_Save',
         )
         return dialog
 
     chooser = save_project_chooser(Gtk.FileChooserAction.SAVE)
     chooser.set_modal(True)
-    chooser.connect("response", on_save_response, self, True)
+    chooser.connect('response', on_save_response, self, True)
     chooser.show()
 
-def save_file_dialog(self, documenttype="Text file (*.txt)"):
+def save_file_dialog(self, documenttype='Text file (*.txt)'):
     def save_file_chooser(action):
         dialog = Gtk.FileChooserNative.new(
-            title="Save files",
+            title='Save files',
             parent=self.main_window,
             action=action,
-            accept_label="_Save",
+            accept_label='_Save',
         )
         return dialog
 
@@ -96,13 +96,13 @@ def save_file_dialog(self, documenttype="Text file (*.txt)"):
 
     if len(self.datadict) == 1:
         filename = list(self.datadict.values())[0].filename
-        chooser.set_current_name(f"{filename}.txt")
+        chooser.set_current_name(f'{filename}.txt')
     try:
         chooser.set_modal(True)
-        chooser.connect("response", on_save_response, self, False)
+        chooser.connect('response', on_save_response, self, False)
         chooser.show()
     except UnboundLocalError:
-        self.main_window.toast_overlay.add_toast(Adw.Toast(title=f"Could not open save dialog, make sure you have data opened"))
+        self.main_window.toast_overlay.add_toast(Adw.Toast(title=f'Could not open save dialog, make sure you have data opened'))
 
 def on_save_response(dialog, response, self, project):
     if response == Gtk.ResponseType.ACCEPT:
@@ -146,7 +146,7 @@ def export_figure(self):
     dialog.set_choice('format', formats[default_format])
 
     dialog.set_current_name(self.canvas.get_default_filename())
-    dialog.connect("response", on_save_response, self)
+    dialog.connect('response', on_save_response, self)
     dialog.show()
 
 # https://github.com/matplotlib/matplotlib/blob/c23ccdde6f0f8c071b09a88770e24452f2859e99/lib/matplotlib/backends/backend_gtk4.py#L344
@@ -160,10 +160,10 @@ def on_save_response(dialog, response, self):
     try:
         self.canvas.figure.savefig(file.get_path(), format=fmt)
     except Exception as e:
-        self.main_window.toast_overlay.add_toast(Adw.Toast(title=f"Unable to save image"))
+        self.main_window.toast_overlay.add_toast(Adw.Toast(title=f'Unable to save image'))
 
 def show_about_window(self):
-    whats_new = open(os.path.join(os.getenv('XDG_DATA_DIRS')).split(":")[0] + '/graphs/graphs/whats_new', 'r').read()
+    whats_new = open(os.path.join(os.getenv('XDG_DATA_DIRS')).split(':')[0] + '/graphs/graphs/whats_new', 'r').read()
     print(whats_new)
     about = Adw.AboutWindow(transient_for=self.main_window,
                             application_name=self.name,

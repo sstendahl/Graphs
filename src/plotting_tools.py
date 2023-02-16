@@ -18,7 +18,7 @@ def define_highlight(self, span=None):
     self.highlight = SpanSelector(
         self.canvas.top_right_axis,
         lambda x, y: on_highlight_define(self),
-        "horizontal",
+        'horizontal',
         useblit=True,
         props=dict(facecolor = (color.red, color.green, color.blue, 0.3), edgecolor = (color.red, color.green, color.blue, 1), linewidth = 1),
         handle_props=dict(linewidth=0),
@@ -43,22 +43,22 @@ def on_highlight_define(self):
         extend_max = xmax  
     self.highlight.extents = (extend_min, extend_max)
 
-def plot_figure(self, canvas, X, Y, filename="", xlim=None, linewidth = 2, title="", scale="log",marker=None, linestyle="solid",
-                     revert = False, color = None, marker_size = 10, y_axis = "left", x_axis = "bottom"):
+def plot_figure(self, canvas, X, Y, filename=', xlim=None, linewidth = 2, title=', scale='log',marker=None, linestyle='solid',
+                     revert = False, color = None, marker_size = 10, y_axis = 'left', x_axis = 'bottom'):
     """
     Plot the figure on the graph
     Necessary input arguments are self, the canvas to plot the figure on and the
     X and Y data
     """
-    if y_axis == "left":
-        if x_axis == "bottom":
+    if y_axis == 'left':
+        if x_axis == 'bottom':
             canvas.ax.plot(X, Y, linewidth = linewidth ,label=filename, linestyle=linestyle, marker=marker, color = color, markersize=marker_size)
-        elif x_axis == "top":
+        elif x_axis == 'top':
             canvas.top_left_axis.plot(X, Y, linewidth = linewidth ,label=filename, linestyle=linestyle, marker=marker, color = color, markersize=marker_size)
-    elif y_axis == "right":
-        if x_axis == "bottom":
+    elif y_axis == 'right':
+        if x_axis == 'bottom':
             canvas.right_axis.plot(X, Y, linewidth = linewidth ,label=filename, linestyle=linestyle, marker=marker, color = color, markersize=marker_size)
-        elif x_axis == "top":
+        elif x_axis == 'top':
             canvas.top_right_axis.plot(X, Y, linewidth = linewidth ,label=filename, linestyle=linestyle, marker=marker, color = color, markersize=marker_size)
             canvas.top_right_axis.set_yscale(self.plot_settings.right_scale)          
     set_legend(self, canvas)
@@ -75,7 +75,7 @@ def set_legend(self, canvas):
         lines4, labels4 = canvas.top_right_axis.get_legend_handles_labels()
         canvas.top_right_axis.legend(lines + lines2 + lines3 + lines4, labels + labels2 + labels3 + labels4, loc=0, frameon=True)
 
-def set_canvas_limits_axis(self, canvas, limits = {"xmin":None, "xmax":None, "ymin":None, "ymax":None}):
+def set_canvas_limits_axis(self, canvas, limits = {'xmin':None, 'xmax':None, 'ymin':None, 'ymax':None}):
     """
     Set the canvas limits for each axis that is present
     """
@@ -91,45 +91,45 @@ def set_canvas_limits_axis(self, canvas, limits = {"xmin":None, "xmax":None, "ym
     used_axes, item_list = get_used_axes(self)
 
     for axis in used_axes:
-        if axis == "left":
+        if axis == 'left':
             left_items = []
-            for key in item_list["left"]:
+            for key in item_list['left']:
                 left_items.append(key)
             left_limits = find_limits(self, self.canvas.ax.get_yscale(), canvas, left_items)
-        if axis == "right":
+        if axis == 'right':
             right_items = []
-            for key in item_list["right"]:
+            for key in item_list['right']:
                 right_items.append(key)
             right_limits = find_limits(self, self.canvas.right_axis.get_yscale(), canvas, right_items)
-        if axis == "top":
+        if axis == 'top':
             top_items = []
-            for key in item_list["top"]:
+            for key in item_list['top']:
                 top_items.append(key)
             top_limits = find_limits(self, axis, canvas, top_items)
-        if axis == "bottom":
+        if axis == 'bottom':
             bottom_items = []
-            for key in item_list["bottom"]:
+            for key in item_list['bottom']:
                 bottom_items.append(key)
             bottom_limits = find_limits(self, axis, canvas, bottom_items)
-    if used_axes["left"] and used_axes["bottom"]:
-        set_canvas_limits(self, left_limits, self.canvas.ax, axis_type = "Y")
-        set_canvas_limits(self, bottom_limits, self.canvas.ax, axis_type = "X")
-    if used_axes["left"] and used_axes["top"]:
-        set_canvas_limits(self, left_limits, self.canvas.top_left_axis, axis_type = "Y")
-        set_canvas_limits(self, top_limits, self.canvas.top_left_axis, axis_type = "X")
-    if used_axes["right"] and used_axes["bottom"]:
-        set_canvas_limits(self, right_limits, self.canvas.right_axis, axis_type = "Y")
-        set_canvas_limits(self, bottom_limits, self.canvas.right_axis, axis_type = "X")
-    if used_axes["right"] and used_axes["top"]:
-        set_canvas_limits(self, right_limits, self.canvas.top_right_axis, axis_type = "Y")
-        set_canvas_limits(self, top_limits, self.canvas.top_right_axis, axis_type = "X")
+    if used_axes['left'] and used_axes['bottom']:
+        set_canvas_limits(self, left_limits, self.canvas.ax, axis_type = 'Y')
+        set_canvas_limits(self, bottom_limits, self.canvas.ax, axis_type = 'X')
+    if used_axes['left'] and used_axes['top']:
+        set_canvas_limits(self, left_limits, self.canvas.top_left_axis, axis_type = 'Y')
+        set_canvas_limits(self, top_limits, self.canvas.top_left_axis, axis_type = 'X')
+    if used_axes['right'] and used_axes['bottom']:
+        set_canvas_limits(self, right_limits, self.canvas.right_axis, axis_type = 'Y')
+        set_canvas_limits(self, bottom_limits, self.canvas.right_axis, axis_type = 'X')
+    if used_axes['right'] and used_axes['top']:
+        set_canvas_limits(self, right_limits, self.canvas.top_right_axis, axis_type = 'Y')
+        set_canvas_limits(self, top_limits, self.canvas.top_right_axis, axis_type = 'X')
 
 def get_used_axes(self):
     used_axis = dict()
-    used_axis["left"] = False
-    used_axis["right"] = False
-    used_axis["top"] = False
-    used_axis["bottom"] = False
+    used_axis['left'] = False
+    used_axis['right'] = False
+    used_axis['top'] = False
+    used_axis['bottom'] = False
     item_list = dict()
     left_items = []
     right_items = []
@@ -137,25 +137,25 @@ def get_used_axes(self):
     bottom_items = []
 
     for key, item in self.datadict.items():
-        if item.plot_Y_position == "left":
-            used_axis["left"] = True
+        if item.plot_Y_position == 'left':
+            used_axis['left'] = True
             left_items.append(key)
-        if item.plot_Y_position == "right":
-            used_axis["right"] = True
+        if item.plot_Y_position == 'right':
+            used_axis['right'] = True
             right_items.append(key)
-        if item.plot_X_position == "top":
-            used_axis["top"] = True
+        if item.plot_X_position == 'top':
+            used_axis['top'] = True
             top_items.append(key)
-        if item.plot_X_position == "bottom":
-            used_axis["bottom"] = True
+        if item.plot_X_position == 'bottom':
+            used_axis['bottom'] = True
             bottom_items.append(key)
-    item_list["left"] = left_items
-    item_list["right"] = right_items
-    item_list["top"] = top_items
-    item_list["bottom"] = bottom_items
+    item_list['left'] = left_items
+    item_list['right'] = right_items
+    item_list['top'] = top_items
+    item_list['bottom'] = bottom_items
     return used_axis, item_list
 
-def set_canvas_limits(self, graph_limits, axis, axis_type, limits = {"xmin":None, "xmax":None, "ymin":None, "ymax":None}):
+def set_canvas_limits(self, graph_limits, axis, axis_type, limits = {'xmin':None, 'xmax':None, 'ymin':None, 'ymax':None}):
     """
     Set an calculate the canvas limits for a given axis.
     """
@@ -163,31 +163,31 @@ def set_canvas_limits(self, graph_limits, axis, axis_type, limits = {"xmin":None
     for key, item in limits.items():
         if item is not None:
             graph_limits[key] = item
-    x_span = (graph_limits["xmax"] - graph_limits["xmin"])
-    y_span = (graph_limits["ymax"] - graph_limits["ymin"])
-    if axis.get_xscale() == "linear":
-        graph_limits["xmin"] -= 0.015*x_span
-        graph_limits["xmax"] += 0.015*x_span
-    if axis.get_yscale() == "linear":
+    x_span = (graph_limits['xmax'] - graph_limits['xmin'])
+    y_span = (graph_limits['ymax'] - graph_limits['ymin'])
+    if axis.get_xscale() == 'linear':
+        graph_limits['xmin'] -= 0.015*x_span
+        graph_limits['xmax'] += 0.015*x_span
+    if axis.get_yscale() == 'linear':
         if y_span != 0:
-            if graph_limits["ymin"] > 0:
-                graph_limits["ymin"] *= 0.95
+            if graph_limits['ymin'] > 0:
+                graph_limits['ymin'] *= 0.95
             else:
-                graph_limits["ymin"] *= 1.05
-            graph_limits["ymax"] *= 1.05        
+                graph_limits['ymin'] *= 1.05
+            graph_limits['ymax'] *= 1.05
         else:
-            graph_limits["ymax"] +=  abs(graph_limits["ymax"]*0.05)            
-            graph_limits["ymin"] -=  abs(graph_limits["ymin"]*0.05)
+            graph_limits['ymax'] +=  abs(graph_limits['ymax']*0.05)
+            graph_limits['ymin'] -=  abs(graph_limits['ymin']*0.05)
     else:
-        graph_limits["ymin"] *= 0.5
-        graph_limits["ymax"] *= 2
+        graph_limits['ymin'] *= 0.5
+        graph_limits['ymax'] *= 2
     try:
-        if axis_type == "X":
-            axis.set_xlim(graph_limits["xmin"], graph_limits["xmax"])
-        if axis_type == "Y":
-            axis.set_ylim(graph_limits["ymin"], graph_limits["ymax"])
+        if axis_type == 'X':
+            axis.set_xlim(graph_limits['xmin'], graph_limits['xmax'])
+        if axis_type == 'Y':
+            axis.set_ylim(graph_limits['ymin'], graph_limits['ymax'])
     except ValueError:
-        print("Could not set limits, one of the values was probably infinite")
+        print('Could not set limits, one of the values was probably infinite')
         
 def find_limits(self, axis, canvas, datadict):
     """
@@ -207,7 +207,7 @@ def find_limits(self, axis, canvas, datadict):
             xmin_item = min(item.xdata)
             xmax_item = max(item.xdata)
             
-            if axis == "log" and len(nonzero_ydata) > 0:
+            if axis == 'log' and len(nonzero_ydata) > 0:
                 ymin_item = min(nonzero_ydata)
             else:
                 ymin_item = min(item.ydata)
@@ -229,7 +229,7 @@ def find_limits(self, axis, canvas, datadict):
                 ymin_all = ymin_item
             if ymax_item > ymax_all:
                 ymax_all = ymax_item
-    return {"xmin":xmin_all, "xmax":xmax_all, "ymin":ymin_all, "ymax":ymax_all}
+    return {'xmin':xmin_all, 'xmax':xmax_all, 'ymin':ymin_all, 'ymax':ymax_all}
 
 
 def reload_plot(self, from_dictionary = True):
@@ -286,13 +286,13 @@ def hide_unused_axes(self, canvas):
     top = False
     bottom = False
     for key, item in self.datadict.items():
-        if item.plot_Y_position == "left":
+        if item.plot_Y_position == 'left':
             left = True
-        if item.plot_Y_position == "right":
+        if item.plot_Y_position == 'right':
             right = True
-        if item.plot_X_position == "top":
+        if item.plot_X_position == 'top':
             top = True
-        if item.plot_X_position == "bottom":
+        if item.plot_X_position == 'bottom':
             bottom = True
     if not left:
         canvas.top_left_axis.get_yaxis().set_visible(False)
@@ -316,10 +316,10 @@ def hide_unused_axes(self, canvas):
 def change_left_yscale(action, target, self):
     if target.get_string() == 'log':
         self.canvas.ax.set_yscale('log')
-        self.plot_settings.yscale = "log"
+        self.plot_settings.yscale = 'log'
     else:
         self.canvas.ax.set_yscale('linear')
-        self.plot_settings.yscale = "linear"
+        self.plot_settings.yscale = 'linear'
     self.canvas.set_ticks(self)
     action.change_state(target)
     set_canvas_limits_axis(self, self.canvas)
@@ -329,11 +329,11 @@ def change_right_yscale(action, target, self):
     if target.get_string() == 'log':
         self.canvas.top_right_axis.set_yscale('log')
         self.canvas.right_axis.set_yscale('log')
-        self.plot_settings.right_scale = "log"
+        self.plot_settings.right_scale = 'log'
     else:
         self.canvas.top_right_axis.set_yscale('linear')
         self.canvas.right_axis.set_yscale('linear')
-        self.plot_settings.right_scale = "linear"
+        self.plot_settings.right_scale = 'linear'
     self.canvas.set_ticks(self)
     action.change_state(target)
     set_canvas_limits_axis(self, self.canvas)
@@ -343,11 +343,11 @@ def change_top_xscale(action, target, self):
     if target.get_string() == 'log':
         self.canvas.top_left_axis.set_xscale('log')
         self.canvas.top_right_axis.set_xscale('log')
-        self.plot_settings.top_scale = "log"
+        self.plot_settings.top_scale = 'log'
     else:
         self.canvas.top_left_axis.set_xscale('linear')
         self.canvas.top_right_axis.set_xscale('linear')
-        self.plot_settings.top_scale = "linear"
+        self.plot_settings.top_scale = 'linear'
     self.canvas.set_ticks(self)
     action.change_state(target)
     set_canvas_limits_axis(self, self.canvas)
@@ -357,11 +357,11 @@ def change_bottom_xscale(action, target, self):
     if target.get_string() == 'log':
         self.canvas.ax.set_xscale('log')
         self.canvas.right_axis.set_xscale('log')
-        self.plot_settings.xscale = "log"
+        self.plot_settings.xscale = 'log'
     else:
         self.canvas.ax.set_xscale('linear')
         self.canvas.right_axis.set_xscale('linear')
-        self.plot_settings.xscale = "linear"
+        self.plot_settings.xscale = 'linear'
     self.canvas.set_ticks(self)
     action.change_state(target)
     set_canvas_limits_axis(self, self.canvas)
@@ -396,7 +396,7 @@ def load_fonts(self):
         try:
             matplotlib.font_manager.fontManager.addfont(font)
         except:
-            print(f"Could not load {font}")
+            print(f'Could not load {font}')
 
 class PlotSettings:
     """
@@ -404,32 +404,32 @@ class PlotSettings:
     retreived from the config file through preferences.
     """
     def __init__(self, parent):
-        self.font_string = parent.preferences.config["plot_font_string"]
-        self.xlabel = parent.preferences.config["plot_X_label"]
-        self.right_label = parent.preferences.config["plot_right_label"]
-        self.top_label = parent.preferences.config["plot_top_label"]
-        self.ylabel = parent.preferences.config["plot_Y_label"]
-        self.xscale = parent.preferences.config["plot_X_scale"]
-        self.yscale = parent.preferences.config["plot_Y_scale"]
-        self.right_scale = parent.preferences.config["plot_right_scale"]
-        self.top_scale = parent.preferences.config["plot_top_scale"]
-        self.title = parent.preferences.config["plot_title"]
-        self.font_weight = parent.preferences.config["plot_font_weight"]
-        self.font_family = parent.preferences.config["plot_font_family"]
-        self.font_size = parent.preferences.config["plot_font_size"]
-        self.font_style = parent.preferences.config["plot_font_style"]
-        self.tick_direction = parent.preferences.config["plot_tick_direction"]
-        self.major_tick_length = parent.preferences.config["plot_major_tick_length"]
-        self.minor_tick_length = parent.preferences.config["plot_minor_tick_length"]
-        self.major_tick_width = parent.preferences.config["plot_major_tick_width"]
-        self.minor_tick_width = parent.preferences.config["plot_minor_tick_width"]
-        self.tick_top = parent.preferences.config["plot_tick_top"]
-        self.tick_bottom = parent.preferences.config["plot_tick_bottom"]
-        self.tick_left = parent.preferences.config["plot_tick_left"]
-        self.tick_right = parent.preferences.config["plot_tick_right"]
-        self.legend = parent.preferences.config["plot_legend"]
+        self.font_string = parent.preferences.config['plot_font_string']
+        self.xlabel = parent.preferences.config['plot_X_label']
+        self.right_label = parent.preferences.config['plot_right_label']
+        self.top_label = parent.preferences.config['plot_top_label']
+        self.ylabel = parent.preferences.config['plot_Y_label']
+        self.xscale = parent.preferences.config['plot_X_scale']
+        self.yscale = parent.preferences.config['plot_Y_scale']
+        self.right_scale = parent.preferences.config['plot_right_scale']
+        self.top_scale = parent.preferences.config['plot_top_scale']
+        self.title = parent.preferences.config['plot_title']
+        self.font_weight = parent.preferences.config['plot_font_weight']
+        self.font_family = parent.preferences.config['plot_font_family']
+        self.font_size = parent.preferences.config['plot_font_size']
+        self.font_style = parent.preferences.config['plot_font_style']
+        self.tick_direction = parent.preferences.config['plot_tick_direction']
+        self.major_tick_length = parent.preferences.config['plot_major_tick_length']
+        self.minor_tick_length = parent.preferences.config['plot_minor_tick_length']
+        self.major_tick_width = parent.preferences.config['plot_major_tick_width']
+        self.minor_tick_width = parent.preferences.config['plot_minor_tick_width']
+        self.tick_top = parent.preferences.config['plot_tick_top']
+        self.tick_bottom = parent.preferences.config['plot_tick_bottom']
+        self.tick_left = parent.preferences.config['plot_tick_left']
+        self.tick_right = parent.preferences.config['plot_tick_right']
+        self.legend = parent.preferences.config['plot_legend']
         if Adw.StyleManager.get_default().get_dark(): 
-            self.plot_style = parent.preferences.config["plot_style_dark"]
+            self.plot_style = parent.preferences.config['plot_style_dark']
         else:
-            self.plot_style = parent.preferences.config["plot_style_light"]
+            self.plot_style = parent.preferences.config['plot_style_light']
 

@@ -76,7 +76,7 @@ def delete_selected_data(self):
     """
     key_list = []
     for key in self.datadict:
-        if key.endswith("_selected"):
+        if key.endswith('_selected'):
             key_list.append(key)
     for key in key_list:
         del (self.datadict[key])
@@ -130,8 +130,8 @@ def cut_data(self):
                 new_y = []
                 
                 #If our item is among the selected samples, we will cut those
-                if f"{key}_selected" in self.datadict:
-                    selected_item = self.datadict[f"{key}_selected"]
+                if f'{key}_selected' in self.datadict:
+                    selected_item = self.datadict[f'{key}_selected']
                     if selected_item is None:
                         continue
                     for index, (valuex, valuey) in enumerate(zip(xdata, ydata)):
@@ -148,7 +148,7 @@ def cut_data(self):
 def select_data(self):
     """
     Select data that is highlighted by the span
-    Basically just creates new data_sets with the key "_selected" appended
+    Basically just creates new data_sets with the key '_selected' appended
     """
     #First delete previously selected data
     delete_selected_data(self)
@@ -167,31 +167,31 @@ def select_data(self):
         #Selection is different for bottom and top axis. The span selector takes
         #the top axis coordinates. So for the data that uses the bottom axis as
         #x-axis coordinates, the coordinates first needs to be converted.
-        if item.plot_X_position == "bottom":
+        if item.plot_X_position == 'bottom':
             xrange_bottom = max(self.canvas.ax.get_xlim()) - min(self.canvas.ax.get_xlim())
             xrange_top = max(self.canvas.top_left_axis.get_xlim()) - min(self.canvas.top_left_axis.get_xlim())
             #Run into issues if the range is different, so we calculate this by
             #getting what fraction of top axis is highlighted
-            if self.canvas.top_left_axis.get_xscale() == "log":
+            if self.canvas.top_left_axis.get_xscale() == 'log':
                 fraction_left_limit = get_fraction_at_value(min(highlight.extents), min(self.canvas.top_left_axis.get_xlim()), max(self.canvas.top_left_axis.get_xlim()))
                 fraction_right_limit = get_fraction_at_value(max(highlight.extents), min(self.canvas.top_left_axis.get_xlim()), max(self.canvas.top_left_axis.get_xlim()))
-            elif self.canvas.top_left_axis.get_xscale() == "linear":
+            elif self.canvas.top_left_axis.get_xscale() == 'linear':
                 fraction_left_limit = (min(highlight.extents) - min(self.canvas.top_left_axis.get_xlim())) / (xrange_top)
                 fraction_right_limit = (max(highlight.extents) - min(self.canvas.top_left_axis.get_xlim())) / (xrange_top)
 
             #Use the fraction that is higlighted on top to calculate to what
             #values this corresponds on bottom axis
-            if self.canvas.ax.get_xscale() == "log":
+            if self.canvas.ax.get_xscale() == 'log':
                 startx = get_value_at_fraction(fraction_left_limit, min(self.canvas.ax.get_xlim()), max(self.canvas.ax.get_xlim()))
                 stopx = get_value_at_fraction(fraction_right_limit, min(self.canvas.ax.get_xlim()), max(self.canvas.ax.get_xlim()))
-            elif self.canvas.ax.get_xscale() == "linear":  
+            elif self.canvas.ax.get_xscale() == 'linear':  
                 startx = min(self.canvas.ax.get_xlim()) + xrange_bottom * fraction_left_limit
                 stopx = min(self.canvas.ax.get_xlim()) + xrange_bottom * fraction_right_limit
 
         #If startx and stopx are not out of range, that is, if the sample data is within the highlight
         if not ((startx < min(item.xdata) and stopx < min(item.xdata)) or (startx > max(item.xdata))):
             selected_data, start_index, stop_index = pick_data_selection(self, item, startx, stopx)
-            selected_dict[f"{key}_selected"] = selected_data
+            selected_dict[f'{key}_selected'] = selected_data
         if (startx < min(item.xdata) and stopx < min(item.xdata)) or (startx > max(item.xdata)):
             delete_selected_data(self)
         #Update the dataset to include the selected data, only if we actually
@@ -232,8 +232,8 @@ def get_derivative(self):
         selection, start_stop = select_data(self)
     selected_keys = utilities.get_selected_keys(self)
     for key in selected_keys:
-        if f"{key}_selected" in self.datadict:
-            item = self.datadict[f"{key}_selected"]
+        if f'{key}_selected' in self.datadict:
+            item = self.datadict[f'{key}_selected']
         if self._mode != InteractionMode.SELECT:
             item = self.datadict[key]
         x = np.array(item.xdata)
@@ -253,8 +253,8 @@ def get_integral(self):
         selection, start_stop = select_data(self)
     selected_keys = utilities.get_selected_keys(self)
     for key in selected_keys:
-        if f"{key}_selected" in self.datadict:
-            item = self.datadict[f"{key}_selected"]
+        if f'{key}_selected' in self.datadict:
+            item = self.datadict[f'{key}_selected']
         if self._mode != InteractionMode.SELECT:
             item = self.datadict[key]
         x = np.array(item.xdata)
@@ -275,8 +275,8 @@ def get_fourier(self):
         selection, start_stop = select_data(self)
     selected_keys = utilities.get_selected_keys(self)
     for key in selected_keys:
-        if f"{key}_selected" in self.datadict:
-            item = self.datadict[f"{key}_selected"]
+        if f'{key}_selected' in self.datadict:
+            item = self.datadict[f'{key}_selected']
         if self._mode != InteractionMode.SELECT:
             item = self.datadict[key]
         x = np.array(item.xdata)
@@ -298,8 +298,8 @@ def get_inverse_fourier(self):
         selection, start_stop = select_data(self)
     selected_keys = utilities.get_selected_keys(self)
     for key in selected_keys:
-        if f"{key}_selected" in self.datadict:
-            item = self.datadict[f"{key}_selected"]
+        if f'{key}_selected' in self.datadict:
+            item = self.datadict[f'{key}_selected']
         if self._mode != InteractionMode.SELECT:
             item = self.datadict[key]
         x = np.array(item.xdata)
@@ -325,8 +325,8 @@ def combine_data(self):
     new_xdata = []
     new_ydata = []
     for key in selected_keys:
-        if f"{key}_selected" in self.datadict:
-            item = self.datadict[f"{key}_selected"]
+        if f'{key}_selected' in self.datadict:
+            item = self.datadict[f'{key}_selected']
         if self._mode != InteractionMode.SELECT:
             item = self.datadict[key]
         new_xdata.extend(item.xdata.copy())
@@ -336,7 +336,7 @@ def combine_data(self):
     #Create the sample itself
     new_xdata, new_ydata = sort_data(new_xdata, new_ydata)
     new_item = Data(self, new_xdata, new_ydata)
-    new_item.filename = "Combined Data"
+    new_item.filename = 'Combined Data'
     filename_list = utilities.get_all_filenames(self)
         
     if new_item.filename in filename_list:
@@ -358,9 +358,9 @@ def smoothen_data(self):
     if self._mode == InteractionMode.SELECT:
         selection, start_stop = select_data(self)
     for key in selected_keys:
-        if f"{key}_selected" in self.datadict:
+        if f'{key}_selected' in self.datadict:
             #Define the highlighted area
-            selected_item = self.datadict[f"{key}_selected"]
+            selected_item = self.datadict[f'{key}_selected']
             #Perform the operation on the highlighted area
             selected_item.ydata = smooth(selected_item.ydata, 4)
             start_index, stop_index = start_stop[key][0], start_stop[key][1]
@@ -380,7 +380,7 @@ def smooth(y_data, box_points):
     values are used for smoothening. Returns smoothened array
     """
     box = np.ones(box_points) / box_points
-    y_smooth = np.convolve(y_data, box, mode="same")
+    y_smooth = np.convolve(y_data, box, mode='same')
     return y_smooth
 
 def shift_vertically(self):
@@ -396,9 +396,9 @@ def shift_vertically(self):
         selection, start_stop = select_data(self)
         
     for key in selected_keys:
-        if f"{key}_selected" in self.datadict:
+        if f'{key}_selected' in self.datadict:
             #Define the highlighted area
-            selected_item = self.datadict[f"{key}_selected"]
+            selected_item = self.datadict[f'{key}_selected']
             ymin = min(x for x in selected_item.ydata if x != 0)
             ymax = max(x for x in selected_item.ydata if x != 0)
             shift_value_linear += 1.2*(ymax - ymin)
@@ -421,15 +421,15 @@ def shift_vertically(self):
 def shift_item(self, item, shift_value_log, shift_value_linear):
     #Check which axes the data is on, so it can choose the appropriate
     #scaling (log/linear)
-    if item.plot_Y_position == "left":
-        if self.plot_settings.yscale == "log":
+    if item.plot_Y_position == 'left':
+        if self.plot_settings.yscale == 'log':
             item.ydata = [value * shift_value_log for value in item.ydata]
-        if self.plot_settings.yscale == "linear":
+        if self.plot_settings.yscale == 'linear':
             item.ydata = [value + shift_value_linear for value in item.ydata]
-    if item.plot_Y_position == "right":
-        if self.plot_settings.right_scale == "log":
+    if item.plot_Y_position == 'right':
+        if self.plot_settings.right_scale == 'log':
             item.ydata = [value * shift_value_log for value in item.ydata]
-        if self.plot_settings.right_scale == "linear":
+        if self.plot_settings.right_scale == 'linear':
             item.ydata = [value + shift_value_linear for value in item.ydata]
 
 def translate_x(self):
@@ -444,16 +444,16 @@ def translate_x(self):
         offset = eval(win.translate_x_entry.get_text())
     except Exception as e:
         exception_type = e.__class__.__name__
-        print(f"{e}: Unable to do translation, make sure to enter a valid number")
-        win.toast_overlay.add_toast(Adw.Toast(title=f"{exception_type}: Unable to do translation, make sure to enter a valid number"))
+        print(f'{e}: Unable to do translation, make sure to enter a valid number')
+        win.toast_overlay.add_toast(Adw.Toast(title=f'{exception_type}: Unable to do translation, make sure to enter a valid number'))
         offset = 0
     if self._mode == InteractionMode.SELECT:
         selection, start_stop = select_data(self)
     selected_keys = utilities.get_selected_keys(self)
     for key in selected_keys:
-        if f"{key}_selected" in self.datadict:
+        if f'{key}_selected' in self.datadict:
             #Define the highlighted area
-            selected_item = self.datadict[f"{key}_selected"]
+            selected_item = self.datadict[f'{key}_selected']
             #Perform the operation on the highlighted area
             selected_item.xdata = [value + offset for value in selected_item.xdata]
             start_index, stop_index = start_stop[key][0], start_stop[key][1]
@@ -478,8 +478,8 @@ def translate_y(self):
         offset = eval(win.translate_y_entry.get_text())
     except Exception as e:
         exception_type = e.__class__.__name__
-        print(f"{e}: Unable to do translation, make sure to enter a valid number")
-        win.toast_overlay.add_toast(Adw.Toast(title=f"{exception_type}: Unable to do translation, make sure to enter a valid number"))
+        print(f'{e}: Unable to do translation, make sure to enter a valid number')
+        win.toast_overlay.add_toast(Adw.Toast(title=f'{exception_type}: Unable to do translation, make sure to enter a valid number'))
         offset = 0
     selected_keys = utilities.get_selected_keys(self)
 
@@ -488,10 +488,10 @@ def translate_y(self):
         selection, start_stop = select_data(self)
     for key in selected_keys:
         #If the selected data exists, so this will get ignored when we're not in selection mode
-        if f"{key}_selected" in self.datadict:
+        if f'{key}_selected' in self.datadict:
             print(self.datadict[key].filename)
             #Define the highlighted area
-            selected_item = self.datadict[f"{key}_selected"]
+            selected_item = self.datadict[f'{key}_selected']
             #Perform the operation on the highlighted area
             selected_item.ydata = [value + offset for value in selected_item.ydata]
             start_index, stop_index = start_stop[key][0], start_stop[key][1]
@@ -516,17 +516,17 @@ def multiply_x(self):
         multiplier = eval(win.multiply_x_entry.get_text())
     except Exception as e:
         exception_type = e.__class__.__name__
-        print(f"{e}: Unable to do multiplication, make sure to enter a valid number")
-        win.toast_overlay.add_toast(Adw.Toast(title=f"{exception_type}: Unable to do multiplication, make sure to enter a valid number"))
+        print(f'{e}: Unable to do multiplication, make sure to enter a valid number')
+        win.toast_overlay.add_toast(Adw.Toast(title=f'{exception_type}: Unable to do multiplication, make sure to enter a valid number'))
         multiplier = 1
     selected_keys = utilities.get_selected_keys(self)
     if self._mode == InteractionMode.SELECT:
         selection, start_stop = select_data(self)
     for key in selected_keys:
         #If the selected data exists, so this will get ignored when we're not in selection mode
-        if f"{key}_selected" in self.datadict:
+        if f'{key}_selected' in self.datadict:
             #Define the highlighted area
-            selected_item = self.datadict[f"{key}_selected"]
+            selected_item = self.datadict[f'{key}_selected']
             #Perform the operation on the highlighted area
             selected_item.xdata = [value * multiplier for value in selected_item.xdata]
             start_index, stop_index = start_stop[key][0], start_stop[key][1]
@@ -551,17 +551,17 @@ def multiply_y(self):
         multiplier = eval(win.multiply_y_entry.get_text())
     except Exception as e:
         exception_type = e.__class__.__name__
-        print(f"{e}: Unable to do multiplication, make sure to enter a valid number")
-        win.toast_overlay.add_toast(Adw.Toast(title=f"{exception_type}: Unable to do multiplication, make sure to enter a valid number"))
+        print(f'{e}: Unable to do multiplication, make sure to enter a valid number')
+        win.toast_overlay.add_toast(Adw.Toast(title=f'{exception_type}: Unable to do multiplication, make sure to enter a valid number'))
         multiplier = 1
     selected_keys = utilities.get_selected_keys(self)
     if self._mode == InteractionMode.SELECT:
         selection, start_stop = select_data(self)
     for key in selected_keys:
         #If the selected data exists, so this will get ignored when we're not in selection mode
-        if f"{key}_selected" in self.datadict:
+        if f'{key}_selected' in self.datadict:
             #Define the highlighted area
-            selected_item = self.datadict[f"{key}_selected"]
+            selected_item = self.datadict[f'{key}_selected']
             #Perform the operation on the highlighted area
             selected_item.ydata = [value * multiplier for value in selected_item.ydata]
             start_index, stop_index = start_stop[key][0], start_stop[key][1]
@@ -583,9 +583,9 @@ def normalize_data(self):
         selection, start_stop = select_data(self)
     for key in selected_keys:
         #If the selected data exists, so this will get ignored when we're not in selection mode
-        if f"{key}_selected" in self.datadict:
+        if f'{key}_selected' in self.datadict:
             #Define the highlighted area
-            selected_item = self.datadict[f"{key}_selected"]
+            selected_item = self.datadict[f'{key}_selected']
             #Perform the operation on the highlighted area
             selected_item.ydata = normalize(selected_item.ydata)
             start_index, stop_index = start_stop[key][0], start_stop[key][1]
@@ -618,13 +618,13 @@ def center_data(self):
         selection, start_stop = select_data(self)
     for key in selected_keys:
         #If the selected data exists, so this will get ignored when we're not in selection mode
-        if f"{key}_selected" in self.datadict:
+        if f'{key}_selected' in self.datadict:
             #Define the highlighted area
-            selected_item = self.datadict[f"{key}_selected"]
+            selected_item = self.datadict[f'{key}_selected']
             #Perform the operation on the highlighted area
-            if self.preferences.config["action_center_data"] == "Center at maximum Y value":
+            if self.preferences.config['action_center_data'] == 'Center at maximum Y value':
                 selected_item.xdata = center_data_max_Y(selected_item.xdata, selected_item.ydata)
-            elif self.preferences.config["action_center_data"] == "Center at middle coordinate":
+            elif self.preferences.config['action_center_data'] == 'Center at middle coordinate':
                 selected_item.xdata = center_data_middle(selected_item.xdata)
             start_index, stop_index = start_stop[key][0], start_stop[key][1]
             #Replace the highlighted part in the original data set
@@ -632,9 +632,9 @@ def center_data(self):
             self.datadict[key].xdata[start_index:stop_index] = selected_item.xdata
             self.datadict[key].xdata, self.datadict[key].ydata = sort_data(self.datadict[key].xdata, self.datadict[key].ydata)
         if self._mode != InteractionMode.SELECT:
-            if self.preferences.config["action_center_data"] == "Center at maximum Y value":
+            if self.preferences.config['action_center_data'] == 'Center at maximum Y value':
                 self.datadict[key].xdata = center_data_max_Y(self.datadict[key].xdata, self.datadict[key].ydata)
-            elif self.preferences.config["action_center_data"] == "Center at middle coordinate":
+            elif self.preferences.config['action_center_data'] == 'Center at middle coordinate':
                 self.datadict[key].xdata = center_data_middle(self.datadict[key].xdata)
             self.datadict[key].xdata, self.datadict[key].ydata = sort_data(self.datadict[key].xdata, self.datadict[key].ydata)
     delete_selected_data(self)

@@ -35,30 +35,30 @@ def open_files(self, files, import_settings):
         import_settings.mode = ImportMode.SINGLE
     for file in files:
         path = file.peek_path()
-        if path != "":
+        if path != '':
             try:
                 import_settings.path = path
                 item = file_io.get_data(self, import_settings)
                 if item.xdata == []:
-                    self.main_window.toast_overlay.add_toast(Adw.Toast(title=f"At least one data set could not be imported"))
+                    self.main_window.toast_overlay.add_toast(Adw.Toast(title=f'At least one data set could not be imported'))
                     continue
             except IndexError:
-                self.main_window.toast_overlay.add_toast(Adw.Toast(title=f"Could not open data, the column index was out of range"))
+                self.main_window.toast_overlay.add_toast(Adw.Toast(title=f'Could not open data, the column index was out of range'))
                 break
             except UnicodeDecodeError:
-                self.main_window.toast_overlay.add_toast(Adw.Toast(title=f"Could not open data, wrong filetype"))
+                self.main_window.toast_overlay.add_toast(Adw.Toast(title=f'Could not open data, wrong filetype'))
                 break
             if item is not None:
-                handle_duplicates = self.preferences.config["handle_duplicates"]
-                if not handle_duplicates == "Add duplicates":
+                handle_duplicates = self.preferences.config['handle_duplicates']
+                if not handle_duplicates == 'Add duplicates':
                     for key, item2 in self.datadict.items():
                         if item.filename == item2.filename:
-                            if handle_duplicates == "Auto-rename duplicates":
+                            if handle_duplicates == 'Auto-rename duplicates':
                                 item.filename = utilities.get_duplicate_filename(self, item.filename)
-                            elif handle_duplicates == "Ignore duplicates":
-                                self.main_window.toast_overlay.add_toast(Adw.Toast(title=f"Item \"{item.filename}\" already exists"))
+                            elif handle_duplicates == 'Ignore duplicates':
+                                self.main_window.toast_overlay.add_toast(Adw.Toast(title=f'Item \'{item.filename}\' already exists'))
                                 return
-                            elif handle_duplicates == "Override existing items":
+                            elif handle_duplicates == 'Override existing items':
                                 y_axis = item.plot_Y_position
                                 x_axis = item.plot_X_position
                                 self.datadict[key] = item
@@ -90,7 +90,7 @@ def delete(self, id, give_toast = False):
     del self.item_rows[id]
     del self.datadict[id]
     if give_toast:
-        self.main_window.toast_overlay.add_toast(Adw.Toast(title=f"Deleted {filename}"))
+        self.main_window.toast_overlay.add_toast(Adw.Toast(title=f'Deleted {filename}'))
 
     if len(self.datadict) == 0:
         self.canvas.ax.legend().remove()
