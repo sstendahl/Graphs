@@ -1,12 +1,13 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
-from gi.repository import Gtk, Adw
+from gi.repository import Adw, Gtk
 
-from . import graphs, utilities, ui
-from .misc import ImportSettings
+from graphs import ui, utilities
+from graphs.misc import ImportSettings
+
 
 def on_accept(widget, self, window):
     """
-    Runs when the dataset is loaded, uses the selected settings in the window 
+    Runs when the dataset is loaded, uses the selected settings in the window
     to set the import settings during loading
     """
     import_settings = ImportSettings
@@ -19,6 +20,7 @@ def on_accept(widget, self, window):
     import_settings.name = window.name.get_text()
     ui.open_file_dialog(self, False, import_settings)
     window.destroy()
+
 
 @Gtk.Template(resource_path='/se/sjoerd/Graphs/ui/add_data_advanced.ui')
 class AddAdvancedWindow(Adw.Window):
