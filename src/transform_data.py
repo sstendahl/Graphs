@@ -1,9 +1,11 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
-from gi.repository import Gtk, Adw
+from gi.repository import Adw, Gtk
+
+from graphs import item_operations, plotting_tools, utilities
+from graphs.misc import InteractionMode
+
 from numpy import *
 
-from . import item_operations, plotting_tools, utilities
-from .misc import InteractionMode
 
 def on_accept(widget, self, window):
     input_x = str(window.transform_x_entry.get_text())
@@ -14,7 +16,6 @@ def on_accept(widget, self, window):
 
     for key in selected_keys:
         if f'{key}_selected' in self.datadict:
-            selected_item = self.datadict[f'{key}_selected']
             start_index, stop_index = start_stop[key][0], start_stop[key][1]
             xdata_in = self.datadict[key].xdata[start_index:stop_index]
             ydata_in = self.datadict[key].ydata[start_index:stop_index]
@@ -45,11 +46,10 @@ def on_accept(widget, self, window):
     plotting_tools.refresh_plot(self)
     window.destroy()
 
+
 def operation(key, xdata, ydata, input_x, input_y):
     x_array = []
     y_array = []
-    Y_range = xdata
-    X_range = ydata
     operations = []
     for xy_operation in [input_x, input_y]:
         xy_operation = xy_operation.replace('Y_range', 'y_range')
@@ -65,6 +65,7 @@ def operation(key, xdata, ydata, input_x, input_y):
         x_array.append(eval(x_operation))
         y_array.append(eval(y_operation))
     return x_array, y_array
+
 
 @Gtk.Template(resource_path='/se/sjoerd/Graphs/ui/transform_window.ui')
 class TransformWindow(Adw.Window):
@@ -83,4 +84,3 @@ class TransformWindow(Adw.Window):
         self.transform_confirm_button.connect('clicked', on_accept, parent, self)
         self.set_transient_for(parent.main_window)
         self.set_modal(True)
-    
