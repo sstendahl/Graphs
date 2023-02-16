@@ -1,6 +1,8 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 from enum import Enum
+
 from matplotlib.backend_bases import NavigationToolbar2
+
 
 class ImportSettings():
     def __init__(self, parent):
@@ -14,14 +16,17 @@ class ImportSettings():
         self.column_x = cfg['import_column_x']
         self.column_y = cfg['import_column_y']
 
+
 class ImportMode(Enum):
     SINGLE = 1
     MULTIPLE = 2
+
 
 class InteractionMode(Enum):
     PAN = 1
     ZOOM = 2
     SELECT = 3
+
 
 class DummyToolbar(NavigationToolbar2):
     """
@@ -37,4 +42,3 @@ class DummyToolbar(NavigationToolbar2):
     def remove_rubberband(self):
         self.canvas._rubberband_rect = None
         self.canvas.queue_draw()
-
