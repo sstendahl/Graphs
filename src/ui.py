@@ -13,7 +13,7 @@ def toggle_sidebar(action, _shortcut, self):
     flap.set_reveal_flap(enabled)
 
 
-def toggle_darkmode(shortcut, _theme, _widget, self):
+def toggle_darkmode(_shortcut, _theme, _widget, self):
     if Adw.StyleManager.get_default().get_dark():
         self.plot_settings.plot_style = self.preferences.config['plot_style_dark']
     else:
