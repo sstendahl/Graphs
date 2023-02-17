@@ -1,19 +1,34 @@
-on:
-  push:
-    branches: [main]
-  pull_request:
+on: [push, pull_request]
 name: CI
 jobs:
   flatpak:
-    name: "build-packages"
+    name: "build-flatpak"
     runs-on: ubuntu-latest
     container:
       image: bilelmoussaoui/flatpak-github-actions:gnome-43
       options: --privileged
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@main
     - uses: bilelmoussaoui/flatpak-github-actions/flatpak-builder@v4
       with:
         bundle: graphs.flatpak
         manifest-path: se.sjoerd.Graphs.json
         cache-key: flatpak-builder-${{ github.sha }}
+
+  flake8-lint:
+    runs-on: ubuntu-latest
+    name: flake8
+    steps:
+      - uses: actions/checkout@main
+      - name: Set up Python environment
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.10"
+      # Install specific flake8 version (this step is not required. Default is "latest").
+      - run: pip install flake8==6.0.0
+      # Install flake8 extensions (this step is not required. Default is "None").
+      - run: pip install flake8-docstrings flake8-simplify flake8-unused-arguments flake8-quotes
+      - name: flake8 Lint
+        uses: reviewdog/action-flake8@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
