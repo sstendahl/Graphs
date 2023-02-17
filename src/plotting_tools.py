@@ -46,8 +46,8 @@ def on_highlight_define(self):
     self.highlight.extents = (extend_min, extend_max)
 
 
-def plot_figure(self, canvas, x_data, y_data, filename='', xlim=None, linewidth=2, title='', scale='log', marker=None, linestyle='solid',
-                revert=False, color=None, marker_size=10, y_axis='left', x_axis='bottom'):
+def plot_figure(self, canvas, x_data, y_data, filename='', linewidth=2, marker=None, linestyle='solid',
+                color=None, marker_size=10, y_axis='left', x_axis='bottom'):
     """
     Plot the figure on the graph
     Necessary input arguments are self, the canvas to plot the figure on and the
@@ -80,7 +80,7 @@ def set_legend(self, canvas):
         canvas.top_right_axis.legend(lines + lines2 + lines3 + lines4, labels + labels2 + labels3 + labels4, loc=0, frameon=True)
 
 
-def set_canvas_limits_axis(self, canvas, limits={'xmin': None, 'xmax': None, 'ymin': None, 'ymax': None}):
+def set_canvas_limits_axis(self):
     """
     Set the canvas limits for each axis that is present
     """
@@ -91,34 +91,34 @@ def set_canvas_limits_axis(self, canvas, limits={'xmin': None, 'xmax': None, 'ym
             left_items = []
             for key in item_list['left']:
                 left_items.append(key)
-            left_limits = find_limits(self, self.canvas.ax.get_yscale(), canvas, left_items)
+            left_limits = find_limits(self, self.canvas.ax.get_yscale(), left_items)
         if axis == 'right':
             right_items = []
             for key in item_list['right']:
                 right_items.append(key)
-            right_limits = find_limits(self, self.canvas.right_axis.get_yscale(), canvas, right_items)
+            right_limits = find_limits(self, self.canvas.right_axis.get_yscale(), right_items)
         if axis == 'top':
             top_items = []
             for key in item_list['top']:
                 top_items.append(key)
-            top_limits = find_limits(self, axis, canvas, top_items)
+            top_limits = find_limits(self, axis, top_items)
         if axis == 'bottom':
             bottom_items = []
             for key in item_list['bottom']:
                 bottom_items.append(key)
-            bottom_limits = find_limits(self, axis, canvas, bottom_items)
+            bottom_limits = find_limits(self, axis, bottom_items)
     if used_axes['left'] and used_axes['bottom']:
-        set_canvas_limits(self, left_limits, self.canvas.ax, axis_type='Y')
-        set_canvas_limits(self, bottom_limits, self.canvas.ax, axis_type='X')
+        set_canvas_limits(left_limits, self.canvas.ax, axis_type='Y')
+        set_canvas_limits(bottom_limits, self.canvas.ax, axis_type='X')
     if used_axes['left'] and used_axes['top']:
-        set_canvas_limits(self, left_limits, self.canvas.top_left_axis, axis_type='Y')
-        set_canvas_limits(self, top_limits, self.canvas.top_left_axis, axis_type='X')
+        set_canvas_limits(left_limits, self.canvas.top_left_axis, axis_type='Y')
+        set_canvas_limits(top_limits, self.canvas.top_left_axis, axis_type='X')
     if used_axes['right'] and used_axes['bottom']:
-        set_canvas_limits(self, right_limits, self.canvas.right_axis, axis_type='Y')
-        set_canvas_limits(self, bottom_limits, self.canvas.right_axis, axis_type='X')
+        set_canvas_limits(right_limits, self.canvas.right_axis, axis_type='Y')
+        set_canvas_limits(bottom_limits, self.canvas.right_axis, axis_type='X')
     if used_axes['right'] and used_axes['top']:
-        set_canvas_limits(self, right_limits, self.canvas.top_right_axis, axis_type='Y')
-        set_canvas_limits(self, top_limits, self.canvas.top_right_axis, axis_type='X')
+        set_canvas_limits(right_limits, self.canvas.top_right_axis, axis_type='Y')
+        set_canvas_limits(top_limits, self.canvas.top_right_axis, axis_type='X')
 
 
 def get_used_axes(self):
@@ -153,7 +153,7 @@ def get_used_axes(self):
     return used_axis, item_list
 
 
-def set_canvas_limits(self, graph_limits, axis, axis_type, limits={'xmin': None, 'xmax': None, 'ymin': None, 'ymax': None}):
+def set_canvas_limits(graph_limits, axis, axis_type, limits={'xmin': None, 'xmax': None, 'ymin': None, 'ymax': None}):
     """
     Set an calculate the canvas limits for a given axis.
     """
@@ -188,7 +188,7 @@ def set_canvas_limits(self, graph_limits, axis, axis_type, limits={'xmin': None,
         print('Could not set limits, one of the values was probably infinite')
 
 
-def find_limits(self, axis, canvas, datadict):
+def find_limits(self, axis, datadict):
     """
     Find the limits that are to be used for the axes.
     """
@@ -231,7 +231,7 @@ def find_limits(self, axis, canvas, datadict):
     return {'xmin': xmin_all, 'xmax': xmax_all, 'ymin': ymin_all, 'ymax': ymax_all}
 
 
-def reload_plot(self, from_dictionary=True):
+def reload_plot(self):
     """
     Completely reload the plot of the graph
     """
@@ -243,12 +243,12 @@ def reload_plot(self, from_dictionary=True):
             self.highlight.set_visible(False)
             self.highlight.set_active(False)
             self.highlight = None
-        self.set_mode(None, None, self._mode)
-        set_canvas_limits_axis(self, self.canvas)
+        self.set_mode(None, None, self.interaction_mode)
+        set_canvas_limits_axis(self)
     self.canvas.grab_focus()
 
 
-def refresh_plot(self, canvas=None, from_dictionary=True, set_limits=True):
+def refresh_plot(self, canvas=None, set_limits=True):
     """
     Refresh the graph without completely reloading it.
     """
@@ -266,7 +266,7 @@ def refresh_plot(self, canvas=None, from_dictionary=True, set_limits=True):
         hide_unused_axes(self, canvas)
     graphs.open_selection_from_dict(self)
     if set_limits and len(self.datadict) > 0:
-        set_canvas_limits_axis(self, canvas)
+        set_canvas_limits_axis(self)
     self.canvas.draw()
 
 
@@ -282,7 +282,7 @@ def hide_unused_axes(self, canvas):
     right = False
     top = False
     bottom = False
-    for key, item in self.datadict.items():
+    for _key, item in self.datadict.items():
         if item.plot_y_position == 'left':
             left = True
         if item.plot_y_position == 'right':
@@ -319,7 +319,7 @@ def change_left_yscale(action, target, self):
         self.plot_settings.yscale = 'linear'
     self.canvas.set_ticks(self)
     action.change_state(target)
-    set_canvas_limits_axis(self, self.canvas)
+    set_canvas_limits_axis(self)
     self.canvas.draw()
 
 
@@ -334,7 +334,7 @@ def change_right_yscale(action, target, self):
         self.plot_settings.right_scale = 'linear'
     self.canvas.set_ticks(self)
     action.change_state(target)
-    set_canvas_limits_axis(self, self.canvas)
+    set_canvas_limits_axis(self)
     self.canvas.draw()
 
 
@@ -349,7 +349,7 @@ def change_top_xscale(action, target, self):
         self.plot_settings.top_scale = 'linear'
     self.canvas.set_ticks(self)
     action.change_state(target)
-    set_canvas_limits_axis(self, self.canvas)
+    set_canvas_limits_axis(self)
     self.canvas.draw()
 
 
@@ -364,7 +364,7 @@ def change_bottom_xscale(action, target, self):
         self.plot_settings.xscale = 'linear'
     self.canvas.set_ticks(self)
     action.change_state(target)
-    set_canvas_limits_axis(self, self.canvas)
+    set_canvas_limits_axis(self)
     self.canvas.draw()
 
 
@@ -380,16 +380,17 @@ def get_next_color(self):
         item_rows_list = list(item_rows.items())
         item_rows_list = item_rows_list[- color_length + 1:]
         item_rows = dict(item_rows_list)
-    for key, item in item_rows.items():
+    for _key, item in item_rows.items():
         used_colors.append(item.color_picker.color)
     used_colors = [colors.to_rgb(color) for color in used_colors]
 
     for color in color_list:
         if color not in used_colors:
             return color
+    return None
 
 
-def load_fonts(self):
+def load_fonts():
     """
     Load system fonts that are installed on the system
     """

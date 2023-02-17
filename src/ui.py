@@ -6,14 +6,14 @@ from gi.repository import Adw, GLib, Gtk
 from graphs import file_io, graphs, plotting_tools
 
 
-def toggle_sidebar(action, shortcut, self):
+def toggle_sidebar(action, _shortcut, self):
     flap = self.main_window.sidebar_flap
     enabled = not flap.get_reveal_flap()
     action.change_state(GLib.Variant.new_boolean(enabled))
     flap.set_reveal_flap(enabled)
 
 
-def toggle_darkmode(shortcut, theme, widget, self):
+def toggle_darkmode(shortcut, _theme, _widget, self):
     if Adw.StyleManager.get_default().get_dark():
         self.plot_settings.plot_style = self.preferences.config['plot_style_dark']
     else:
@@ -70,7 +70,7 @@ def on_open_file_response(dialog, response, self, project, import_settings):
             graphs.open_files(self, dialog.get_files(), import_settings)
 
 
-def save_project_dialog(self, documenttypes='Graphs Project (*)'):
+def save_project_dialog(self):
     def save_project_chooser(action):
         dialog = Gtk.FileChooserNative.new(
             title='Save files',
@@ -86,7 +86,7 @@ def save_project_dialog(self, documenttypes='Graphs Project (*)'):
     chooser.show()
 
 
-def save_file_dialog(self, documenttype='Text file (*.txt)'):
+def save_file_dialog(self):
     def save_file_chooser(action):
         dialog = Gtk.FileChooserNative.new(
             title='Save files',
@@ -174,7 +174,6 @@ def on_figure_save_response(dialog, response, self):
 
 
 def show_about_window(self):
-    whats_new = open(os.path.join(os.getenv('XDG_DATA_DIRS')).split(':')[0] + '/graphs/graphs/whats_new', 'r').read()
     about = Adw.AboutWindow(transient_for=self.main_window,
                             application_name=self.name,
                             application_icon=self.appid,
@@ -188,5 +187,6 @@ def show_about_window(self):
                             ],
                             copyright=f'© {self.copyright} {self.author}',
                             license_type='GTK_LICENSE_GPL_3_0')
-    about.set_release_notes(whats_new)
+    with open(os.path.join(os.getenv('XDG_DATA_DIRS')).split(':')[0] + '/graphs/graphs/whats_new', 'r', encoding='utf-8') as file:
+        about.set_release_notes(file.read())
     about.present()

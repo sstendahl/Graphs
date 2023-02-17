@@ -42,7 +42,7 @@ class SampleBox(Gtk.Box):
         plotting_tools.refresh_plot(self.parent)
         ui.enable_data_dependent_buttons(self.parent, utilities.get_selected_keys(self.parent))
 
-    def clicked(self, gesture, _, xpos, ypos, graphs):
+    def clicked(self, _gesture, _, _xpos, _ypos, graph):
         if not self.one_click_trigger:
             self.one_click_trigger = True
             self.time_first_click = time.time()
@@ -54,4 +54,4 @@ class SampleBox(Gtk.Box):
             else:
                 self.one_click_trigger = False
                 self.time_first_click = 0
-                plot_settings.open_plot_settings(None, None, graphs, self.key)
+                plot_settings.open_plot_settings(None, None, graph, self.key)

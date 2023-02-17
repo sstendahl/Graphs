@@ -21,9 +21,9 @@ def add_to_clipboard(self):
     # If a couple of redo's were performed previously, it deletes the clipboard
     # data that is located after the current clipboard position and disables the
     # redo button
-    for key, item in self.datadict.items():
+    for _key, item in self.datadict.items():
         delete_lists = - item.clipboard_pos - 1
-        for index in range(delete_lists):
+        for _index in range(delete_lists):
             del item.xdata_clipboard[-1]
             del item.ydata_clipboard[-1]
         if delete_lists != 0:
@@ -42,7 +42,7 @@ def undo(self):
     """
     undo_button = self.main_window.undo_button
     redo_button = self.main_window.redo_button
-    for key, item in self.datadict.items():
+    for _key, item in self.datadict.items():
         if abs(item.clipboard_pos) < len(item.xdata_clipboard):
             redo_button.set_sensitive(True)
             item.clipboard_pos -= 1
@@ -60,7 +60,7 @@ def redo(self):
     """
     undo_button = self.main_window.undo_button
     redo_button = self.main_window.redo_button
-    for key, item in self.datadict.items():
+    for _key, item in self.datadict.items():
         if item.clipboard_pos < 0:
             undo_button.set_sensitive(True)
             item.clipboard_pos += 1
@@ -107,6 +107,7 @@ def pick_data_selection(self, item, startx, stopx):
     selected_data = Data(self, xdata[start_index:stop_index], ydata[start_index:stop_index])
     if len(selected_data.xdata) > 0 and (found_start or found_stop):
         return selected_data, start_index, stop_index
+    return None
 
 
 def sort_data(x_values, y_values):
@@ -124,7 +125,7 @@ def cut_data(self):
     """
     Cut selected data over the span that is selected
     """
-    if self._mode == InteractionMode.SELECT:
+    if self.interaction_mode == InteractionMode.SELECT:
         if select_data(self):  # If select_data ran succesfully
             for key, item in self.datadict.items():
                 xdata = item.xdata
@@ -138,7 +139,7 @@ def cut_data(self):
                     selected_item = self.datadict[f'{key}_selected']
                     if selected_item is None:
                         continue
-                    for index, (valuex, valuey) in enumerate(zip(xdata, ydata)):
+                    for _index, (valuex, valuey) in enumerate(zip(xdata, ydata)):
                         # Appends the values that are within the selected span
                         if valuex < min(selected_item.xdata) or valuex > max(selected_item.xdata):
                             new_x.append(valuex)
@@ -236,13 +237,13 @@ def get_derivative(self):
     """
     Calculate derivative of all selected data
     """
-    if self._mode == InteractionMode.SELECT:
-        selection, start_stop = select_data(self)
+    if self.interaction_mode == InteractionMode.SELECT:
+        select_data(self)
     selected_keys = utilities.get_selected_keys(self)
     for key in selected_keys:
         if f'{key}_selected' in self.datadict:
             item = self.datadict[f'{key}_selected']
-        if self._mode != InteractionMode.SELECT:
+        if self.interaction_mode != InteractionMode.SELECT:
             item = self.datadict[key]
         x_values = np.array(item.xdata)
         y_values = np.array(item.ydata)
@@ -258,13 +259,13 @@ def get_integral(self):
     """
     Calculate indefinite integral of all selected data
     """
-    if self._mode == InteractionMode.SELECT:
-        selection, start_stop = select_data(self)
+    if self.interaction_mode == InteractionMode.SELECT:
+        select_data(self)
     selected_keys = utilities.get_selected_keys(self)
     for key in selected_keys:
         if f'{key}_selected' in self.datadict:
             item = self.datadict[f'{key}_selected']
-        if self._mode != InteractionMode.SELECT:
+        if self.interaction_mode != InteractionMode.SELECT:
             item = self.datadict[key]
         x_values = np.array(item.xdata)
         y_values = np.array(item.ydata)
@@ -281,13 +282,13 @@ def get_fourier(self):
     """
     Perform Fourier transformation on all selected data
     """
-    if self._mode == InteractionMode.SELECT:
-        selection, start_stop = select_data(self)
+    if self.interaction_mode == InteractionMode.SELECT:
+        select_data(self)
     selected_keys = utilities.get_selected_keys(self)
     for key in selected_keys:
         if f'{key}_selected' in self.datadict:
             item = self.datadict[f'{key}_selected']
-        if self._mode != InteractionMode.SELECT:
+        if self.interaction_mode != InteractionMode.SELECT:
             item = self.datadict[key]
         x_values = np.array(item.xdata)
         y_values = np.array(item.ydata)
@@ -305,13 +306,13 @@ def get_inverse_fourier(self):
     """
     Perform Inverse Fourier transformation on all selected data
     """
-    if self._mode == InteractionMode.SELECT:
-        selection, start_stop = select_data(self)
+    if self.interaction_mode == InteractionMode.SELECT:
+        select_data(self)
     selected_keys = utilities.get_selected_keys(self)
     for key in selected_keys:
         if f'{key}_selected' in self.datadict:
             item = self.datadict[f'{key}_selected']
-        if self._mode != InteractionMode.SELECT:
+        if self.interaction_mode != InteractionMode.SELECT:
             item = self.datadict[key]
         x_values = np.array(item.xdata)
         y_values = np.array(item.ydata)
@@ -329,8 +330,8 @@ def combine_data(self):
     """
     Combine the selected data into a new data set
     """
-    if self._mode == InteractionMode.SELECT:
-        selection, start_stop = select_data(self)
+    if self.interaction_mode == InteractionMode.SELECT:
+        select_data(self)
     selected_keys = utilities.get_selected_keys(self)
 
     new_xdata = []
@@ -338,7 +339,7 @@ def combine_data(self):
     for key in selected_keys:
         if f'{key}_selected' in self.datadict:
             item = self.datadict[f'{key}_selected']
-        if self._mode != InteractionMode.SELECT:
+        if self.interaction_mode != InteractionMode.SELECT:
             item = self.datadict[key]
         new_xdata.extend(item.xdata.copy())
         new_ydata.extend(item.ydata.copy())
@@ -365,8 +366,8 @@ def smoothen_data(self):
     Smoothen y-data.
     """
     selected_keys = utilities.get_selected_keys(self)
-    if self._mode == InteractionMode.SELECT:
-        selection, start_stop = select_data(self)
+    if self.interaction_mode == InteractionMode.SELECT:
+        _selection, start_stop = select_data(self)
     for key in selected_keys:
         if f'{key}_selected' in self.datadict:
             # Define the highlighted area
@@ -376,7 +377,7 @@ def smoothen_data(self):
             start_index, stop_index = start_stop[key][0], start_stop[key][1]
             # Replace the highlighted part in the original data set
             self.datadict[key].ydata[start_index:stop_index] = selected_item.ydata
-        if self._mode != InteractionMode.SELECT:
+        if self.interaction_mode != InteractionMode.SELECT:
             ydata = self.datadict[key].ydata
             ydata = smooth(ydata, 4)
             self.datadict[key].ydata = ydata
@@ -404,8 +405,8 @@ def shift_vertically(self):
     selected_keys = utilities.get_selected_keys(self)
     shift_value_log = 1
     shift_value_linear = 0
-    if self._mode == InteractionMode.SELECT:
-        selection, start_stop = select_data(self)
+    if self.interaction_mode == InteractionMode.SELECT:
+        _selection, start_stop = select_data(self)
 
     for key in selected_keys:
         if f'{key}_selected' in self.datadict:
@@ -418,7 +419,7 @@ def shift_vertically(self):
             shift_item(self, selected_item, shift_value_log, shift_value_linear)
             start_index, stop_index = start_stop[key][0], start_stop[key][1]
             self.datadict[key].ydata[start_index:stop_index] = selected_item.ydata
-        if self._mode != InteractionMode.SELECT:
+        if self.interaction_mode != InteractionMode.SELECT:
             item = self.datadict[key]
             ymin = min(x for x in item.ydata if x != 0)
             ymax = max(x for x in item.ydata if x != 0)
@@ -461,8 +462,8 @@ def translate_x(self):
         print(f'{exception}: Unable to do translation, make sure to enter a valid number')
         win.toast_overlay.add_toast(Adw.Toast(title=f'{exception_type}: Unable to do translation, make sure to enter a valid number'))
         offset = 0
-    if self._mode == InteractionMode.SELECT:
-        selection, start_stop = select_data(self)
+    if self.interaction_mode == InteractionMode.SELECT:
+        _selection, start_stop = select_data(self)
     selected_keys = utilities.get_selected_keys(self)
     for key in selected_keys:
         if f'{key}_selected' in self.datadict:
@@ -473,7 +474,7 @@ def translate_x(self):
             start_index, stop_index = start_stop[key][0], start_stop[key][1]
             # Replace the highlighted part in the original data set
             self.datadict[key].xdata[start_index:stop_index] = selected_item.xdata
-        if self._mode != InteractionMode.SELECT:
+        if self.interaction_mode != InteractionMode.SELECT:
             self.datadict[key].xdata = [value + offset for value in self.datadict[key].xdata]
         self.datadict[key].xdata, self.datadict[key].ydata = sort_data(self.datadict[key].xdata, self.datadict[key].ydata)
     add_to_clipboard(self)
@@ -499,8 +500,8 @@ def translate_y(self):
     selected_keys = utilities.get_selected_keys(self)
 
     # If we are in selection mode, then select the highlighted data
-    if self._mode == InteractionMode.SELECT:
-        selection, start_stop = select_data(self)
+    if self.interaction_mode == InteractionMode.SELECT:
+        _selection, start_stop = select_data(self)
     for key in selected_keys:
         # If the selected data exists, so this will get ignored when we're not in selection mode
         if f'{key}_selected' in self.datadict:
@@ -512,7 +513,7 @@ def translate_y(self):
             start_index, stop_index = start_stop[key][0], start_stop[key][1]
             # Replace the highlighted part in the original data set
             self.datadict[key].ydata[start_index:stop_index] = selected_item.ydata
-        if self._mode != InteractionMode.SELECT:
+        if self.interaction_mode != InteractionMode.SELECT:
             self.datadict[key].ydata = [value + offset for value in self.datadict[key].ydata]
     add_to_clipboard(self)
     # Throw away the selected/highlighted datasets
@@ -536,8 +537,8 @@ def multiply_x(self):
         win.toast_overlay.add_toast(Adw.Toast(title=f'{exception_type}: Unable to do multiplication, make sure to enter a valid number'))
         multiplier = 1
     selected_keys = utilities.get_selected_keys(self)
-    if self._mode == InteractionMode.SELECT:
-        selection, start_stop = select_data(self)
+    if self.interaction_mode == InteractionMode.SELECT:
+        _selection, start_stop = select_data(self)
     for key in selected_keys:
         # If the selected data exists, so this will get ignored when we're not in selection mode
         if f'{key}_selected' in self.datadict:
@@ -548,7 +549,7 @@ def multiply_x(self):
             start_index, stop_index = start_stop[key][0], start_stop[key][1]
             # Replace the highlighted part in the original data set
             self.datadict[key].xdata[start_index:stop_index] = selected_item.xdata
-        if self._mode != InteractionMode.SELECT:
+        if self.interaction_mode != InteractionMode.SELECT:
             self.datadict[key].xdata = [value * multiplier for value in self.datadict[key].xdata]
         self.datadict[key].xdata, self.datadict[key].ydata = sort_data(self.datadict[key].xdata, self.datadict[key].ydata)
     delete_selected_data(self)
@@ -572,8 +573,8 @@ def multiply_y(self):
         win.toast_overlay.add_toast(Adw.Toast(title=f'{exception_type}: Unable to do multiplication, make sure to enter a valid number'))
         multiplier = 1
     selected_keys = utilities.get_selected_keys(self)
-    if self._mode == InteractionMode.SELECT:
-        selection, start_stop = select_data(self)
+    if self.interaction_mode == InteractionMode.SELECT:
+        _selection, start_stop = select_data(self)
     for key in selected_keys:
         # If the selected data exists, so this will get ignored when we're not in selection mode
         if f'{key}_selected' in self.datadict:
@@ -584,7 +585,7 @@ def multiply_y(self):
             start_index, stop_index = start_stop[key][0], start_stop[key][1]
             # Replace the highlighted part in the original data set
             self.datadict[key].ydata[start_index:stop_index] = selected_item.ydata
-        if self._mode != InteractionMode.SELECT:
+        if self.interaction_mode != InteractionMode.SELECT:
             self.datadict[key].ydata = [value * multiplier for value in self.datadict[key].ydata]
     delete_selected_data(self)
     add_to_clipboard(self)
@@ -596,8 +597,8 @@ def normalize_data(self):
     Normalize all selected data
     """
     selected_keys = utilities.get_selected_keys(self)
-    if self._mode == InteractionMode.SELECT:
-        selection, start_stop = select_data(self)
+    if self.interaction_mode == InteractionMode.SELECT:
+        _selection, start_stop = select_data(self)
     for key in selected_keys:
         # If the selected data exists, so this will get ignored when we're not in selection mode
         if f'{key}_selected' in self.datadict:
@@ -609,7 +610,7 @@ def normalize_data(self):
             # Replace the highlighted part in the original data set
             self.datadict[key].ydata[start_index:stop_index] = selected_item.ydata
             self.datadict[key].xdata[start_index:stop_index] = selected_item.xdata
-        if self._mode != InteractionMode.SELECT:
+        if self.interaction_mode != InteractionMode.SELECT:
             self.datadict[key].ydata = normalize(self.datadict[key].ydata)
     delete_selected_data(self)
     add_to_clipboard(self)
@@ -633,8 +634,8 @@ def center_data(self):
     the maximum value of the data
     """
     selected_keys = utilities.get_selected_keys(self)
-    if self._mode == InteractionMode.SELECT:
-        selection, start_stop = select_data(self)
+    if self.interaction_mode == InteractionMode.SELECT:
+        _selection, start_stop = select_data(self)
     for key in selected_keys:
         # If the selected data exists, so this will get ignored when we're not in selection mode
         if f'{key}_selected' in self.datadict:
@@ -650,7 +651,7 @@ def center_data(self):
             self.datadict[key].ydata[start_index:stop_index] = selected_item.ydata
             self.datadict[key].xdata[start_index:stop_index] = selected_item.xdata
             self.datadict[key].xdata, self.datadict[key].ydata = sort_data(self.datadict[key].xdata, self.datadict[key].ydata)
-        if self._mode != InteractionMode.SELECT:
+        if self.interaction_mode != InteractionMode.SELECT:
             if self.preferences.config['action_center_data'] == 'Center at maximum Y value':
                 self.datadict[key].xdata = center_data_max_y(self.datadict[key].xdata, self.datadict[key].ydata)
             elif self.preferences.config['action_center_data'] == 'Center at middle coordinate':

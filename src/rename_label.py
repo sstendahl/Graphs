@@ -13,7 +13,7 @@ def open_rename_label_window(self, axis):
     win.present()
 
 
-def on_accept(widget, self, window, axis):
+def on_accept(_widget, self, window, axis):
     window.rename(self, axis)
     plotting_tools.reload_plot(self)
     window.destroy()
@@ -35,9 +35,6 @@ class RenameLabelWindow(Adw.Window):
             self.preferencegroup.set_title('Change Title')
             self.preferencegroup.set_description('Here you can change the title of the plot')
             self.label_entry.set_title('Title')
-        self.load_settings(parent, axis)
-
-    def load_settings(self, parent, axis):
         self.label_entry.set_text(axis.get_text())
 
     def rename(self, parent, axis):

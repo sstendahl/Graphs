@@ -2,6 +2,7 @@
 import json
 import os
 import shutil
+from pathlib import Path
 
 from gi.repository import Adw, Gtk
 
@@ -23,7 +24,7 @@ class Preferences():
         template_path = os.path.join(os.getenv('XDG_DATA_DIRS'))
         template_path = template_path.split(':')[0] + '/graphs/graphs'
         os.chdir(template_path)
-        with open('config.json', 'r') as file:
+        with open('config.json', 'r', encoding='utf-8') as file:
             template = json.load(file)
         if set(config.keys()) != set(template.keys()):
             config = utilities.remove_unused_config_keys(config, template)
@@ -65,8 +66,7 @@ class Preferences():
     def get_config_path(self) -> str:
         if os.getenv('XDG_CONFIG_HOME'):
             return os.path.join(os.getenv('XDG_CONFIG_HOME'), 'Graphs')
-        else:
-            return os.path.join(str(Path.home()), '.local', 'share', 'Graphs')
+        return os.path.join(str(Path.home()), '.local', 'share', 'Graphs')
 
 
 @Gtk.Template(resource_path='/se/sjoerd/Graphs/ui/preferences.ui')

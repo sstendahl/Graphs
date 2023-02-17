@@ -39,7 +39,7 @@ def empty_chooser(chooser):
     Remove all the values in a dropdown menu
     """
     model = chooser.get_model()
-    for item in model:
+    for _index in model:
         model.remove(0)
 
 
@@ -112,7 +112,7 @@ def get_selected_keys(self):
     Get a list of the ID's of all the datasets that are currently selected
     """
     selected_keys = []
-    for key, item in self.item_rows.items():
+    for _key, item in self.item_rows.items():
         if item.check_button.get_active():
             selected_keys.append(item.key)
     return selected_keys
@@ -166,7 +166,7 @@ def get_duplicate_filename(self, name):
         i += 1
         new_name = f'{name} ({i})'
         loop = False
-        for key, item in self.datadict.items():
+        for _key, item in self.datadict.items():
             if new_name == item.filename:
                 loop = True
     return new_name

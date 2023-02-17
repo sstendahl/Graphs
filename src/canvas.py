@@ -16,7 +16,7 @@ class Canvas(FigureCanvas):
     """
     Create the graph widget
     """
-    def __init__(self, parent, xlabel='', ylabel='', yscale='log', title='', scale='linear', style='adwaita'):
+    def __init__(self, parent):
         self.figure = Figure()
         self.figure.set_tight_layout(True)
         self.one_click_trigger = False
@@ -159,7 +159,7 @@ class Canvas(FigureCanvas):
         if self.right_label.contains(event)[0] and double_click:
             rename_label.open_rename_label_window(self.parent, self.right_label)
 
-    def _post_draw(self, widget, context):
+    def _post_draw(self, _widget, context):
         """
         Override with custom implementation of rubberband to allow for custom rubberband style
         @param context: https://pycairo.readthedocs.io/en/latest/reference/context.html

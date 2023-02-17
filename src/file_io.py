@@ -42,14 +42,14 @@ def load_project(self, files):
 
 def save_file(self, path):
     if len(self.datadict) == 1:
-        for key, item in self.datadict.items():
+        for _key, item in self.datadict.items():
             xdata = item.xdata
             ydata = item.ydata
         filename = path
         array = numpy.stack([xdata, ydata], axis=1)
         numpy.savetxt(str(filename), array, delimiter='\t')
     elif len(self.datadict) > 1:
-        for key, item in self.datadict.items():
+        for _key, item in self.datadict.items():
             xdata = item.xdata
             ydata = item.ydata
             filename = item.filename
@@ -64,7 +64,7 @@ def get_data(self, import_settings):
     data_array = [[], []]
     i = 0
     path = import_settings.path
-    with (open(path, 'r')) as file:
+    with open(path, 'r', encoding='utf-8') as file:
         for line in file:
             i += 1
             if i > import_settings.skip_rows:

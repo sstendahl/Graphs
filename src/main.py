@@ -37,7 +37,7 @@ class GraphsApplication(Adw.Application):
 
     def load_preferences(self):
         """Load preferences."""
-        plotting_tools.load_fonts(self)
+        plotting_tools.load_fonts()
         self.preferences = preferences.Preferences(self)
         self.plot_settings = plotting_tools.PlotSettings(self)
 
@@ -157,7 +157,7 @@ class GraphsApplication(Adw.Application):
             highlight.set_active(True)
         for axis in self.canvas.figure.get_axes():
             axis.set_navigate_mode(self.dummy_toolbar.mode._navigate_mode)
-        self._mode = mode
+        self.interaction_mode = mode
         self.canvas.draw()
 
     def create_axis_action(self, name, callback, config_key):

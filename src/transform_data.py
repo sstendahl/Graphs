@@ -7,12 +7,12 @@ from graphs.misc import InteractionMode
 from numpy import *
 
 
-def on_accept(widget, self, window):
+def on_accept(_widget, self, window):
     input_x = str(window.transform_x_entry.get_text())
     input_y = str(window.transform_y_entry.get_text())
     selected_keys = utilities.get_selected_keys(self)
-    if self._mode == InteractionMode.SELECT:
-        selection, start_stop = item_operations.select_data(self)
+    if self.interaction_mode == InteractionMode.SELECT:
+        _selection, start_stop = item_operations.select_data(self)
 
     for key in selected_keys:
         if f'{key}_selected' in self.datadict:
@@ -20,7 +20,7 @@ def on_accept(widget, self, window):
             xdata_in = self.datadict[key].xdata[start_index:stop_index]
             ydata_in = self.datadict[key].ydata[start_index:stop_index]
             try:
-                xdata_out, ydata_out = operation(key, xdata_in, ydata_in, input_x, input_y)
+                xdata_out, ydata_out = operation(xdata_in, input_x, input_y)
             except Exception as exception:
                 exception_type = exception.__class__.__name__
                 win = self.main_window
@@ -28,7 +28,7 @@ def on_accept(widget, self, window):
                 return
             self.datadict[key].xdata[start_index:stop_index] = xdata_out
             self.datadict[key].ydata[start_index:stop_index] = ydata_out
-        if self._mode != InteractionMode.SELECT:
+        if self.interaction_mode != InteractionMode.SELECT:
             xdata_in = self.datadict[key].xdata
             ydata_in = self.datadict[key].ydata
             try:
@@ -47,7 +47,7 @@ def on_accept(widget, self, window):
     window.destroy()
 
 
-def operation(key, xdata, ydata, input_x, input_y):
+def operation(xdata, input_x, input_y):
     x_array = []
     y_array = []
     operations = []
@@ -61,7 +61,7 @@ def operation(key, xdata, ydata, input_x, input_y):
         xy_operation = xy_operation.replace('^', '**')
         operations.append(xy_operation)
     x_operation, y_operation = operations[0], operations[1]
-    for index, value in enumerate(xdata):
+    for _index in enumerate(xdata):
         x_array.append(eval(x_operation))
         y_array.append(eval(y_operation))
     return x_array, y_array

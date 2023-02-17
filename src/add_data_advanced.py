@@ -5,7 +5,7 @@ from graphs import ui, utilities
 from graphs.misc import ImportSettings
 
 
-def on_accept(widget, self, window):
+def on_accept(_widget, self, window):
     """
     Runs when the dataset is loaded, uses the selected settings in the window
     to set the import settings during loading

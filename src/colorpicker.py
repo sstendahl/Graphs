@@ -39,31 +39,27 @@ class ColorPicker(Gtk.Button):
         self.color_chooser.set_rgba(color)
         self.update_color()
 
-    def on_click(self, button):
+    def on_click(self, _button):
         self.popover_active = True
         self.color_chooser.props.show_editor = False
         self.color_popover.popup()
 
-    def set_color(self, chooser, color, _=None):
+    def set_color(self, color):
         self.set_rgba(color)
         self.color = self.get_color()
         self.update_color()
         self.parent.datadict[self.key].color = self.color
         plotting_tools.refresh_plot(self.parent)
 
-    def change_color(self, *args):
-        self.set_color(self.color_chooser, self.get_rgba(), self.parent)
+    def change_color(self, *_args):
+        self.set_color(self.get_rgba())
 
     def get_rgba(self):
         return self.color_chooser.get_rgba()
 
-    def convert_rgba(self, rgba):
-        return (round(rgba.red * 255), round(rgba.green * 255), round(rgba.blue * 255), round(rgba.alpha * 255))
-
     def get_color(self):
-        color_rgba = self.convert_rgba(self.get_rgba())
-        color_hex = '#{:02x}{:02x}{:02x}'.format(*color_rgba)
-        return color_hex
+        color_rgba = self.get_rgba()
+        return utilities.rgba_to_hex(color_rgba)
 
     def update_color(self):
         css = f'button {{ color: {self.get_rgba().to_string()}; }}'

@@ -59,19 +59,15 @@ def open_files(self, files, import_settings):
                                 self.main_window.toast_overlay.add_toast(Adw.Toast(title=f'Item \'{item.filename}\' already exists'))
                                 return
                             elif handle_duplicates == 'Override existing items':
-                                y_axis = item.plot_y_position
-                                x_axis = item.plot_x_position
                                 self.datadict[key] = item
                                 plotting_tools.reload_plot(self)
                                 return
-                y_axis = item.plot_y_position
-                x_axis = item.plot_x_position
                 self.datadict[item.key] = item
                 item.color = plotting_tools.get_next_color(self)
-                plotting_tools.plot_figure(self, self.canvas, item.xdata, item.ydata, item.filename, item.color, y_axis=y_axis, x_axis=x_axis)
-                add_sample_to_menu(self, item.filename, item.color, item.key, select_item=True)
+                plotting_tools.plot_figure(self, self.canvas, item.xdata, item.ydata, filename=item.filename)
+                add_sample_to_menu(self, item.filename, item.color, item.key, select=True)
     self.canvas.draw()
-    plotting_tools.set_canvas_limits_axis(self, self.canvas)
+    plotting_tools.set_canvas_limits_axis(self)
     plotting_tools.refresh_plot(self)
     ui.enable_data_dependent_buttons(self, True)
 
@@ -105,12 +101,12 @@ def delete(self, key, give_toast=False):
     ui.enable_data_dependent_buttons(self, utilities.get_selected_keys(self))
 
 
-def add_sample_to_menu(self, filename, color, key, select_item=False):
+def add_sample_to_menu(self, filename, color, key, select=False):
     win = self.main_window
     win.list_box.set_visible(True)
     win.no_data_label_box.set_visible(False)
     self.list_box = win.list_box
-    row = samplerow.SampleBox(self, key, color, filename, select_item)
+    row = samplerow.SampleBox(self, key, color, filename, select)
     self.item_rows[key] = row
     self.list_box.append(row)
     self.sample_menu[key] = self.list_box.get_last_child()
@@ -128,7 +124,7 @@ def create_data_from_project(self, new_dictionary):
     revert to the default value.
     """
     self.datadict = {}
-    for key, item in new_dictionary.items():
+    for _key, item in new_dictionary.items():
         xdata = item.xdata
         ydata = item.ydata
         self.datadict[item.key] = Data(self, xdata, ydata)
@@ -153,9 +149,7 @@ def set_attributes(new_object, template):
 
 def load_empty(self):
     win = self.main_window
-    xlabel = self.plot_settings.xlabel
-    ylabel = self.plot_settings.ylabel
-    self.canvas = Canvas(parent=self, xlabel=xlabel, ylabel=ylabel)
+    self.canvas = Canvas(parent=self)
     for axis in [self.canvas.right_axis, self.canvas.top_left_axis, self.canvas.top_right_axis]:
         axis.get_xaxis().set_visible(False)
         axis.get_yaxis().set_visible(False)
@@ -164,7 +158,7 @@ def load_empty(self):
 
 
 def reset_clipboard(self):
-    for key, item in self.datadict.items():
+    for _key, item in self.datadict.items():
         item.xdata_clipboard = [item.xdata]
         item.ydata_clipboard = [item.ydata]
         item.clipboard_pos = -1
