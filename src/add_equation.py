@@ -9,9 +9,7 @@ from numpy import *
 
 
 def on_accept(_widget, self, window):
-    """
-    Launched when the accept button is pressed on the equation window
-    """
+    """Launched when the accept button is pressed on the equation window"""
     x_start = window.X_start_entry.get_text()
     x_stop = window.X_stop_entry.get_text()
     step_size = window.step_size_entry.get_text()
@@ -55,9 +53,7 @@ def on_accept(_widget, self, window):
 
 
 def create_dataset(x_start, x_stop, equation, step_size, name):
-    """
-    Create all data set parameters that are required to create a new data object
-    """
+    """Create all data set parameters that are required to create a new data object"""
     dataset = {}
     if name == '':
         name = f'Y = {str(equation)}'

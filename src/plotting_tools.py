@@ -68,9 +68,7 @@ def plot_figure(self, canvas, x_data, y_data, filename='', linewidth=2, marker=N
 
 
 def set_legend(self, canvas):
-    """
-    Set the legend of the graph
-    """
+    """Set the legend of the graph"""
     if self.plot_settings.legend:
         canvas.legends = []
         lines, labels = canvas.ax.get_legend_handles_labels()
@@ -81,9 +79,7 @@ def set_legend(self, canvas):
 
 
 def set_canvas_limits_axis(self):
-    """
-    Set the canvas limits for each axis that is present
-    """
+    """Set the canvas limits for each axis that is present"""
     used_axes, item_list = get_used_axes(self)
 
     for axis in used_axes:
@@ -154,9 +150,7 @@ def get_used_axes(self):
 
 
 def set_canvas_limits(graph_limits, axis, axis_type, limits={'xmin': None, 'xmax': None, 'ymin': None, 'ymax': None}):
-    """
-    Set an calculate the canvas limits for a given axis.
-    """
+    """Set an calculate the canvas limits for a given axis."""
     # Update graph limits with limits that were given as argument
     for key, item in limits.items():
         if item is not None:
@@ -189,9 +183,7 @@ def set_canvas_limits(graph_limits, axis, axis_type, limits={'xmin': None, 'xmax
 
 
 def find_limits(self, axis, datadict):
-    """
-    Find the limits that are to be used for the axes.
-    """
+    """Find the limits that are to be used for the axes."""
     xmin_all = None
     xmax_all = None
     ymin_all = None
@@ -232,9 +224,7 @@ def find_limits(self, axis, datadict):
 
 
 def reload_plot(self):
-    """
-    Completely reload the plot of the graph
-    """
+    """Completely reload the plot of the graph"""
     graphs.load_empty(self)
     if len(self.datadict) > 0:
         hide_unused_axes(self, self.canvas)
@@ -249,9 +239,7 @@ def reload_plot(self):
 
 
 def refresh_plot(self, canvas=None, set_limits=True):
-    """
-    Refresh the graph without completely reloading it.
-    """
+    """Refresh the graph without completely reloading it."""
     if canvas is None:
         canvas = self.canvas
     for line in canvas.ax.lines:
@@ -271,9 +259,7 @@ def refresh_plot(self, canvas=None, set_limits=True):
 
 
 def hide_unused_axes(self, canvas):
-    """
-    Hide axes that are not in use, to avoid unnecessary ticks in the plots.
-    """
+    """Hide axes that are not in use, to avoid unnecessary ticks in the plots."""
     # Double check the code here, seems to work but this is too messy
     for axis in [canvas.ax, canvas.right_axis, canvas.top_left_axis, canvas.top_right_axis]:
         axis.get_xaxis().set_visible(True)
@@ -369,9 +355,7 @@ def change_bottom_xscale(action, target, self):
 
 
 def get_next_color(self):
-    """
-    Get the color that is to be used for the next data set
-    """
+    """Get the color that is to be used for the next data set"""
     color_list = self.canvas.color_cycle
     used_colors = []
     item_rows = copy.copy(self.item_rows)
@@ -391,9 +375,7 @@ def get_next_color(self):
 
 
 def load_fonts():
-    """
-    Load system fonts that are installed on the system
-    """
+    """Load system fonts that are installed on the system"""
     font_list = matplotlib.font_manager.findSystemFonts(fontpaths=None, fontext='ttf')
     for font in font_list:
         try:

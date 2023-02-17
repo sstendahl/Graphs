@@ -122,9 +122,7 @@ def sort_data(x_values, y_values):
 
 
 def cut_data(self):
-    """
-    Cut selected data over the span that is selected
-    """
+    """Cut selected data over the span that is selected"""
     if self.interaction_mode == InteractionMode.SELECT:
         if select_data(self):  # If select_data ran succesfully
             for key, item in self.datadict.items():
@@ -234,9 +232,7 @@ def get_fraction_at_value(value, start, end):
 
 
 def get_derivative(self):
-    """
-    Calculate derivative of all selected data
-    """
+    """Calculate derivative of all selected data"""
     if self.interaction_mode == InteractionMode.SELECT:
         select_data(self)
     selected_keys = utilities.get_selected_keys(self)
@@ -256,9 +252,7 @@ def get_derivative(self):
 
 
 def get_integral(self):
-    """
-    Calculate indefinite integral of all selected data
-    """
+    """Calculate indefinite integral of all selected data"""
     if self.interaction_mode == InteractionMode.SELECT:
         select_data(self)
     selected_keys = utilities.get_selected_keys(self)
@@ -279,9 +273,7 @@ def get_integral(self):
 
 
 def get_fourier(self):
-    """
-    Perform Fourier transformation on all selected data
-    """
+    """Perform Fourier transformation on all selected data"""
     if self.interaction_mode == InteractionMode.SELECT:
         select_data(self)
     selected_keys = utilities.get_selected_keys(self)
@@ -303,9 +295,7 @@ def get_fourier(self):
 
 
 def get_inverse_fourier(self):
-    """
-    Perform Inverse Fourier transformation on all selected data
-    """
+    """Perform Inverse Fourier transformation on all selected data"""
     if self.interaction_mode == InteractionMode.SELECT:
         select_data(self)
     selected_keys = utilities.get_selected_keys(self)
@@ -327,9 +317,7 @@ def get_inverse_fourier(self):
 
 
 def combine_data(self):
-    """
-    Combine the selected data into a new data set
-    """
+    """Combine the selected data into a new data set"""
     if self.interaction_mode == InteractionMode.SELECT:
         select_data(self)
     selected_keys = utilities.get_selected_keys(self)
@@ -362,9 +350,7 @@ def combine_data(self):
 
 
 def smoothen_data(self):
-    """
-    Smoothen y-data.
-    """
+    """Smoothen y-data."""
     selected_keys = utilities.get_selected_keys(self)
     if self.interaction_mode == InteractionMode.SELECT:
         _selection, start_stop = select_data(self)
@@ -593,9 +579,7 @@ def multiply_y(self):
 
 
 def normalize_data(self):
-    """
-    Normalize all selected data
-    """
+    """Normalize all selected data"""
     selected_keys = utilities.get_selected_keys(self)
     if self.interaction_mode == InteractionMode.SELECT:
         _selection, start_stop = select_data(self)

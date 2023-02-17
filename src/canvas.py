@@ -13,9 +13,7 @@ from matplotlib.figure import Figure
 
 
 class Canvas(FigureCanvas):
-    """
-    Create the graph widget
-    """
+    """Create the graph widget"""
     def __init__(self, parent):
         self.figure = Figure()
         self.figure.set_tight_layout(True)
@@ -43,9 +41,7 @@ class Canvas(FigureCanvas):
         plt.rcParams['savefig.transparent'] = parent.preferences.config['savefig_transparent']
 
     def set_ax_properties(self, parent):
-        """
-        Set the properties that are related to the axes.
-        """
+        """Set the properties that are related to the axes."""
         self.title = self.ax.set_title(parent.plot_settings.title)
         self.bottom_label = self.ax.set_xlabel(parent.plot_settings.xlabel, fontweight=parent.plot_settings.font_weight)
         self.right_label = self.right_axis.set_ylabel(parent.plot_settings.right_label, fontweight=parent.plot_settings.font_weight)
@@ -59,9 +55,7 @@ class Canvas(FigureCanvas):
         self.set_ticks(parent)
 
     def set_ticks(self, parent):
-        """
-        Set the ticks that are to be used in the graph.
-        """
+        """Set the ticks that are to be used in the graph."""
         for axis in [self.top_right_axis, self.top_left_axis, self.ax, self.right_axis]:
             axis.tick_params(direction=parent.plot_settings.tick_direction, length=parent.plot_settings.major_tick_length, width=parent.plot_settings.major_tick_width, which='major')
             axis.tick_params(direction=parent.plot_settings.tick_direction, length=parent.plot_settings.minor_tick_length, width=parent.plot_settings.minor_tick_width, which='minor')
@@ -87,9 +81,7 @@ class Canvas(FigureCanvas):
                 axis.tick_params(which='both', left=parent.plot_settings.tick_left, right=parent.plot_settings.tick_right)
 
     def set_style(self, parent):
-        """
-        Set the plot style.
-        """
+        """Set the plot style."""
         plt.rcParams.update(plt.rcParamsDefault)
         if Adw.StyleManager.get_default().get_dark():
             self.figure.patch.set_facecolor('#242424')
@@ -114,9 +106,7 @@ class Canvas(FigureCanvas):
         plt.rcParams.update(params)
 
     def set_color_cycle(self, parent):
-        """
-        Set the color cycle that will be used for the graphs.
-        """
+        """Set the color cycle that will be used for the graphs."""
         cmap = parent.preferences.config['plot_color_cycle']
         reverse_dark = parent.preferences.config['plot_invert_color_cycle_dark']
         if Adw.StyleManager.get_default().get_dark() and reverse_dark:
