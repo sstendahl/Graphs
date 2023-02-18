@@ -1,0 +1,106 @@
+using Gtk 4.0;
+using Adw 1;
+
+template AddEquationWindow : Adw.Window {
+  default-width: 450;
+  title: _("Add Equation");
+
+  ShortcutController {
+    Shortcut {
+      trigger: "Escape";
+      action: "action(window.close)";
+    }
+  }
+
+  Box {
+    orientation: vertical;
+    HeaderBar header_bar {
+      styles [
+        "flat",
+      ]
+    }
+
+    Adw.ToastOverlay toast_overlay {
+      child: Box {
+        orientation: vertical;
+
+        Adw.PreferencesGroup {
+          margin-start: 26;
+          margin-end: 26;
+          margin-top: 12;
+          margin-bottom: 6;
+          Adw.EntryRow equation_entry {
+            visible: true;
+            can-focus: true;
+            use-underline: true;
+            max-width-chars: 25;
+            title: _("Y =");
+            styles ["preferencesgroup"]
+          }
+        }
+
+        Adw.PreferencesGroup {
+          visible: true;
+          can-focus: true;
+          margin-start: 26;
+          margin-end: 26;
+          margin-bottom: 20;
+          description: _("Supports Numpy notation. Use a capital letter for the X coordinate.");
+
+          Adw.EntryRow name_entry {
+            visible: true;
+            can-focus: true;
+            use-underline: true;
+            max-width-chars: 25;
+            title: _("Name (optional)");
+          }
+
+          Box {
+            margin-top: 20;
+            margin-bottom: 3;
+            orientation: horizontal;
+
+            Adw.PreferencesGroup {
+              margin-end: 12;
+              Adw.EntryRow x_start_entry {
+                visible: true;
+                can-focus: true;
+                use-underline: true;
+                title: _("X Start");
+              }
+            }
+
+            Adw.PreferencesGroup {
+              margin-end: 12;
+              Adw.EntryRow x_stop_entry {
+                visible: true;
+                can-focus: true;
+                use-underline: true;
+                title: _("X Stop");
+              }
+            }
+
+            Adw.PreferencesGroup {
+              Adw.EntryRow step_size_entry {
+                visible: true;
+                can-focus: true;
+                use-underline: true;
+                title: _("Step Size");
+              }
+            }
+          }
+
+          Button add_equation_confirm_button {
+            halign: center;
+            margin-top: 26;
+            margin-bottom: 26;
+            label: _("Add Equation");
+            styles [
+              "pill",
+            ]
+          }
+        }
+      };
+    }
+  }
+}
