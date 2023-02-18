@@ -58,6 +58,7 @@ endif
 
 blueprints = custom_target('blueprints',
   input: files(
+    'ui/window.blp',
     'ui/add_data_advanced.blp',
     'ui/add_equation_window.blp',
     'ui/rename_label_window.blp',
