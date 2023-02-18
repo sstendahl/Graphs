@@ -123,7 +123,7 @@
                               </object>
                             </child>
                             <child>
-                              <object class="AdwStatusPage" id="no_data_label_box">
+                              <object class="AdwStatusPage" id="no_data_no_datalabel_box">
                                 <property name="icon-name">list-compact</property>
                                 <property name="hexpand">true</property>                  
                                 <property name="width-request">240</property>
