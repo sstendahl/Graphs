@@ -22,29 +22,30 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
+"""Main graphs module."""
 
-import os
-import sys
-import signal
-import locale
 import gettext
+import locale
+import os
+import signal
+import sys
 
 VERSION = '@version@'
-project = '@project@'
-pkgdatadir = '@pkgdatadir@'
-localedir = '@localedir@'
-copyright = '@copyright@'
-appid = '@appid@'
-name = '@name@'
-website = '@website@'
-issues = '@issues@'
-author = '@author@'
+PROJECT = '@project@'
+PKGDATADIR = '@pkgdatadir@'
+LOCALEDIR = '@localedir@'
+COPYRIGHT = '@copyright@'
+APPID = '@appid@'
+NAME = '@name@'
+WEBSITE = '@website@'
+ISSUES = '@issues@'
+AUTHOR = '@author@'
 
-sys.path.insert(1, pkgdatadir)
+sys.path.insert(1, PKGDATADIR)
 signal.signal(signal.SIGINT, signal.SIG_DFL)
-locale.bindtextdomain(project, localedir)
-locale.textdomain(project)
-gettext.install(project, localedir)
+locale.bindtextdomain(PROJECT, LOCALEDIR)
+locale.textdomain(PROJECT)
+gettext.install(PROJECT, LOCALEDIR)
 
 if __name__ == '__main__':
     import gi
@@ -53,9 +54,10 @@ if __name__ == '__main__':
     gi.require_version('Gtk', '4.0')
 
     from gi.repository import Gio
-    resource = Gio.Resource.load(os.path.join(pkgdatadir, '@appid@.gresource'))
+    resource = Gio.Resource.load(os.path.join(PKGDATADIR, '@appid@.gresource'))
     resource._register()
 
-    from @project@ import main
-    sys.exit(main.main(VERSION, appid, name, copyright, website, issues, author))
+    args = [VERSION, APPID, NAME, COPYRIGHT, WEBSITE, ISSUES, AUTHOR]
 
+    from graphs import main
+    sys.exit(main.main(args))
