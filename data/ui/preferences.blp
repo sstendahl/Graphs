@@ -1,0 +1,474 @@
+using Gtk 4.0;
+using Adw 1;
+
+template PreferencesWindow : Adw.PreferencesWindow {
+  can-navigate-back: true;
+
+  Adw.PreferencesPage {
+    icon-name: "applications-system-symbolic";
+    title: "General";
+
+    Adw.PreferencesGroup {
+      title: _("Import Settings");
+      description: _("Settings for importing graphs");
+
+      Adw.EntryRow import_delimiter {
+        title: _("Delimiter");
+        max-width-chars: 10;
+      }
+
+      Adw.ComboRow import_separator {
+        title: _("Decimal Separator");
+        subtitle: _("The character that is used as decimal separator");
+        model: StringList {
+          strings [".", ","]
+        };
+      }
+
+      Adw.ActionRow {
+        title: _("Column X");
+        subtitle: _("Which column to load for the X-data");
+
+        SpinButton column_x {
+          valign: center;
+          adjustment: column_spin;
+          numeric: true;
+          value: 0;
+          wrap: true;
+        }
+      }
+
+      Adw.ActionRow {
+        vexpand: false;
+        title: _("Column Y");
+        subtitle: _("Which column to load for the Y-data");
+
+        SpinButton column_y {
+          valign: center;
+          adjustment: column_spin;
+          numeric: true;
+          value: 1;
+          wrap: true;
+        }
+      }
+
+      Adw.ActionRow {
+        vexpand: false;
+        title: _("Skip Rows");
+        subtitle: _("How many rows to skip while loading data");
+
+        SpinButton import_skip_rows {
+          valign: center;
+          adjustment: spin_button_skip_rows;
+          numeric: true;
+          value: 1;
+          wrap: true;
+        }
+      }
+    }
+
+    Adw.PreferencesGroup {
+      title: _("Saved Plots");
+      description: _("General settings for the saved graphs");
+
+      Adw.ComboRow savefig_filetype_chooser {
+        title: _("Default Filetype");
+        subtitle: _("The default filetype of saved graphs");
+        model: StringList savefig_filetype_list {
+          strings ["png", "ps", "pdf", "svg"]
+        };
+      }
+
+      Adw.ActionRow {
+        title: _("Transparent Background");
+        subtitle: _("Use a transparent background for the saved plots");
+        activatable-widget: savefig_transparent_check_button;
+
+        Switch savefig_transparent_check_button {
+          valign: center;
+        }
+      }
+    }
+
+    Adw.PreferencesGroup {
+      title: _("Action Behaviour");
+      description: _("Preset behaviour of specific actions");
+
+      Adw.ComboRow center_data_chooser {
+        title: _("Center Data");
+        subtitle: _("The default behaviour of the center data button");
+        model: StringList {
+          strings ["Center at maximum Y value", "Center at middle coordinate"]
+        };
+      }
+    }
+
+    Adw.PreferencesGroup {
+      title: _("Add Equation");
+      description: _("Settings for the \"Add Equation\" option");
+
+      Adw.EntryRow addequation_equation {
+        title: _("Y =");
+        max-width-chars: 20;
+      }
+
+      Adw.EntryRow addequation_X_start {
+        title: _("X start");
+        max-width-chars: 20;
+      }
+
+      Adw.EntryRow addequation_X_stop {
+        title: _("X stop");
+        max-width-chars: 20;
+      }
+
+      Adw.EntryRow addequation_step_size {
+        title: _("Step Size");
+        max-width-chars: 20;
+      }
+    }
+
+    Adw.PreferencesGroup {
+      title: _("Other");
+      description: _("Other general settings");
+
+      Adw.ComboRow handle_duplicates_chooser {
+        title: _("Handle duplicate entries");
+        subtitle: _("Choose how to handle duplicate entries to be loaded");
+        model: StringList {
+          strings ["Auto-rename duplicates", "Ignore duplicates", "Add duplicates", "Override existing items"]
+        };
+      }
+    }
+  }
+
+  Adw.PreferencesPage {
+    icon-name: "axes-one-quadrant";
+    title: "Plot";
+
+    Adw.PreferencesGroup {
+      title: _("Plot Labels");
+      description: _("Set the labels and title that are used upon launch");
+
+      Adw.EntryRow plot_title {
+        title: _("Plot Title");
+      }
+
+      Adw.EntryRow plot_Y_label {
+        title: _("Left Axis label");
+      }
+
+      Adw.EntryRow plot_X_label {
+        title: _("Bottom Axis Label");
+      }
+
+      Adw.EntryRow plot_right_label {
+        title: _("Right Axis label");
+      }
+
+      Adw.EntryRow plot_top_label {
+        title: _("Top Axis Label");
+      }
+
+      Adw.ActionRow {
+        title: _("Font");
+        activatable-widget: plot_font_chooser;
+
+        FontButton plot_font_chooser {
+          valign: center;
+        }
+      }
+
+      Adw.ActionRow {
+        title: _("Retrieve label");
+        subtitle: _("Try and retrieve label from the header in the dataset");
+        activatable-widget: guess_headers;
+
+        Switch guess_headers {
+          valign: center;
+        }
+      }
+    }
+
+    Adw.PreferencesGroup {
+      title: _("Axes settings");
+      description: _("Set the default axes scale and position used upon launch");
+
+      Adw.ComboRow plot_Y_scale {
+        title: _("Left Axis Scale");
+        subtitle: _("The scaling on the left-hand axis");
+        model: StringList {
+          strings ["log", "linear"]
+        };
+      }
+
+      Adw.ComboRow plot_X_scale {
+        title: _("Bottom Axis Scale");
+        subtitle: _("The scaling on the bottom axis");
+        model: StringList {
+          strings ["log", "linear"]
+        };
+      }
+
+      Adw.ComboRow plot_right_scale {
+        title: _("Right Axis Scale");
+        subtitle: _("The scaling on the right-hand axis");
+        model: StringList {
+          strings ["log", "linear"]
+        };
+      }
+
+      Adw.ComboRow plot_top_scale {
+        title: _("Top Axis Scale");
+        subtitle: _("The scaling on the top axis");
+        model: StringList {
+          strings ["log", "linear"]
+        };
+      }
+
+      Adw.ComboRow plot_Y_position {
+        title: _("Y-Axis Position");
+        subtitle: _("The position of the Y-axis");
+        model: StringList {
+          strings ["left", "right"]
+        };
+      }
+
+      Adw.ComboRow plot_X_position {
+        title: _("X-Axis Position");
+        subtitle: _("The position of the X-axis");
+        model: StringList {
+          strings ["top", "bottom"]
+        };
+      }
+    }
+
+    Adw.PreferencesGroup {
+      title: _("Line Style");
+      description: _("Set the default linestyle when opening new data");
+
+      Adw.ComboRow plot_selected_linestyle_chooser {
+        title: _("Selected Linestyle");
+        subtitle: _("The width of the lines that are selected");
+        model: StringList {
+          strings ["none", "solid", "dotted", "dashed", "dashdot"]
+        };
+      }
+
+      Adw.ComboRow plot_unselected_linestyle_chooser {
+        title: _("Unselected Linestyle");
+        subtitle: _("The width of the lines that are not selected");
+        model: StringList {
+          strings ["none", "solid", "dotted", "dashed", "dashdot"]
+        };
+      }
+
+      Adw.ActionRow {
+        title: _("Selected Linewidth");
+        subtitle: _("The width of the lines that are selected");
+
+        Scale selected_line_thickness_slider {
+          draw-value: true;
+          width-request: 200;
+        }
+      }
+
+      Adw.ActionRow {
+        title: _("Unselected Linewidth");
+        subtitle: _("The width of the lines that are not selected");
+
+        Scale unselected_line_thickness_slider {
+          draw-value: true;
+          width-request: 200;
+        }
+      }
+    }
+
+    Adw.PreferencesGroup {
+      title: _("Markers");
+      description: _("Set the markers used when opening new data");
+
+      Adw.ComboRow plot_selected_markers_chooser {
+        title: _("Selected Markers");
+        subtitle: _("The markers used for lines that are selected");
+        model: StringList {
+          strings ["none"]
+        };
+      }
+
+      Adw.ComboRow plot_unselected_markers_chooser {
+        title: _("Unselected Markers");
+        subtitle: _("The markers used for lines that are not selected");
+        model: StringList {
+          strings ["none"]
+        };
+      }
+
+      Adw.ActionRow {
+        title: _("Selected Marker Size");
+        subtitle: _("The size of the markers used for lines that are selected");
+
+        Scale plot_selected_marker_size {
+          draw-value: true;
+          width-request: 200;
+        }
+      }
+
+      Adw.ActionRow {
+        title: _("Unselected Marker Size");
+        subtitle: _("The size of the markers used for lines that are not selected");
+
+        Scale plot_unselected_marker_size {
+          draw-value: true;
+          width-request: 200;
+        }
+      }
+    }
+
+    Adw.PreferencesGroup {
+      title: _("Ticks");
+      description: _("Set the ticks that are used upon launch");
+
+      Adw.ComboRow plot_tick_direction {
+        title: _("Tick Directions");
+        subtitle: _("Choose to have the ticks either in or out");
+        model: StringList {
+          strings ["in", "out"]
+        };
+      }
+
+      Adw.ActionRow {
+        title: _("Major Tick Width");
+        subtitle: _("The thickness of the major ticks");
+
+        Scale plot_major_tick_width {
+          draw-value: true;
+          width-request: 200;
+        }
+      }
+
+      Adw.ActionRow {
+        title: _("Minor Tick Width");
+        subtitle: _("The thickness of the minor ticks");
+
+        Scale plot_minor_tick_width {
+          draw-value: true;
+          width-request: 200;
+        }
+      }
+
+      Adw.ActionRow {
+        title: _("Major Tick Length");
+        subtitle: _("The length of the major ticks");
+
+        Scale plot_major_tick_length {
+          draw-value: true;
+          width-request: 200;
+        }
+      }
+
+      Adw.ActionRow {
+        title: _("Minor Tick Length");
+        subtitle: _("The length of the minor ticks");
+
+        Scale plot_minor_tick_length {
+          draw-value: true;
+          width-request: 200;
+        }
+      }
+
+      Adw.ActionRow {
+        title: _("Ticks on Left Axis");
+        subtitle: _("Show ticks on the left-hand axis");
+        activatable-widget: plot_tick_left;
+
+        Switch plot_tick_left {
+          valign: center;
+        }
+      }
+
+      Adw.ActionRow {
+        title: _("Ticks on Bottom Axis");
+        subtitle: _("Show ticks on the bottom");
+        activatable-widget: plot_tick_bottom;
+
+        Switch plot_tick_bottom {
+          valign: center;
+        }
+      }
+
+      Adw.ActionRow {
+        title: _("Ticks on Top Axis");
+        subtitle: _("Show ticks on the top");
+        activatable-widget: plot_tick_top;
+
+        Switch plot_tick_top {
+          valign: center;
+        }
+      }
+
+      Adw.ActionRow {
+        title: _("Ticks on Right Axis");
+        subtitle: _("Show ticks on the right");
+        activatable-widget: plot_tick_right;
+
+        Switch plot_tick_right {
+          valign: center;
+        }
+      }
+    }
+
+    Adw.PreferencesGroup {
+      title: _("Style");
+      description: _("Set the default graph styling that is used");
+
+      Adw.ActionRow {
+        title: _("Legend");
+        subtitle: _("Use a legend for the lines");
+        activatable-widget: plot_legend_check;
+
+        Switch plot_legend_check {
+          valign: center;
+        }
+      }
+
+      Adw.ComboRow plot_color_cycle {
+        title: _("Color Cycle");
+        subtitle: _("The default color cycle set that is used while plotting new data");
+        model: StringList {};
+      }
+
+      Adw.ActionRow {
+        title: _("Invert Color Cycle in Dark Mode");
+        subtitle: _("Use inverted colors for the color cycle used in dark mode");
+        activatable-widget: plot_invert_color_cycle_dark;
+
+        Switch plot_invert_color_cycle_dark {
+          valign: center;
+        }
+      }
+
+      Adw.ComboRow plot_style_light {
+        title: _("Graph Style Light");
+        subtitle: _("The style sheet used for the graph in light mode");
+        model: StringList {};
+      }
+
+      Adw.ComboRow plot_style_dark {
+        title: _("Graph Style Dark");
+        subtitle: _("The style used for the graph in dark mode");
+        model: StringList {};
+      }
+    }
+  }
+}
+
+Adjustment column_spin {
+  step-increment: 1;
+  upper: 100;
+}
+
+Adjustment spin_button_skip_rows {
+  step-increment: 1;
+  upper: 999;
+}

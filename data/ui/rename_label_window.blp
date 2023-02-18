@@ -16,13 +16,9 @@ template RenameLabelWindow : Adw.Window {
   Box {
     orientation: vertical;
     HeaderBar header_bar {
-      styles [
-        "flat",
-      ]
+      styles ["flat"]
     }
     Adw.PreferencesGroup preferencegroup {
-      visible: true;
-      can-focus: true;
       margin-start: 30;
       margin-end: 30;
       margin-top: 20;
@@ -31,9 +27,6 @@ template RenameLabelWindow : Adw.Window {
       description: _("Here you can change the label of the selected axis.");
 
       Adw.EntryRow label_entry {
-        visible: true;
-        can-focus: true;
-        use-underline: true;
         max-width-chars: 10;
         title: _("Label");
       }

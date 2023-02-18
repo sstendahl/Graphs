@@ -1,0 +1,140 @@
+using Gtk 4.0;
+
+ShortcutsWindow help_overlay {
+  modal: true;
+
+  ShortcutsSection {
+    section-name: "shortcuts";
+    max-height: 10;
+
+    ShortcutsGroup {
+      title: C_("shortcut window", "General");
+
+      ShortcutsShortcut {
+        title: C_("shortcut window", "Show Shortcuts");
+        action-name: "win.show-help-overlay";
+      }
+
+      ShortcutsShortcut {
+        title: C_("shortcut window", "Open Preferences");
+        action-name: "app.preferences";
+      }
+
+      ShortcutsShortcut {
+        title: C_("shortcut window", "Open Plot Settings");
+        action-name: "app.plot_settings";
+      }
+
+      ShortcutsShortcut {
+        title: C_("shortcut window", "Quit");
+        action-name: "app.quit";
+      }
+    }
+
+    ShortcutsGroup {
+      title: C_("shortcut window", "Mode Switching");
+
+      ShortcutsShortcut {
+        title: C_("shortcut window", "Default Mode");
+        action-name: "app.mode_none";
+      }
+
+      ShortcutsShortcut {
+        title: C_("shortcut window", "Pan Mode");
+        action-name: "app.mode_pan";
+      }
+
+      ShortcutsShortcut {
+        title: C_("shortcut window", "Zoom Mode");
+        action-name: "app.mode_zoom";
+      }
+
+      ShortcutsShortcut {
+        title: C_("shortcut window", "Select Mode");
+        action-name: "app.mode_select";
+      }
+    }
+
+    ShortcutsGroup {
+      title: C_("shortcut window", "Data");
+
+      ShortcutsShortcut {
+        title: C_("shortcut window", "Open new File");
+        action-name: "app.add_data";
+      }
+
+      ShortcutsShortcut {
+        title: C_("shortcut window", "Open new File (Advanced)");
+        action-name: "app.add_data_advanced";
+      }
+
+      ShortcutsShortcut {
+        title: C_("shortcut window", "Add Data from Equation");
+        action-name: "app.add_equation";
+      }
+
+      ShortcutsShortcut {
+        title: C_("shortcut window", "Export Data");
+        action-name: "app.save_data";
+      }
+
+      ShortcutsShortcut {
+        title: C_("shortcut window", "Export Figure");
+        action-name: "app.export_data";
+      }
+
+      ShortcutsShortcut {
+        title: C_("shortcut window", "Delete Selected Data");
+        action-name: "app.delete_selected";
+      }
+    }
+
+    ShortcutsGroup {
+      title: C_("shortcut window", "View");
+
+      ShortcutsShortcut {
+        title: C_("shortcut window", "Restore View");
+        action-name: "app.restore_view";
+      }
+
+      ShortcutsShortcut {
+        title: C_("shortcut window", "Previous View");
+        action-name: "app.view_back";
+      }
+
+      ShortcutsShortcut {
+        title: C_("shortcut window", "Next View");
+        action-name: "app.view_forward";
+      }
+
+      ShortcutsShortcut {
+        title: C_("shortcut window", "Toggle Sidebar");
+        action-name: "app.toggle_sidebar";
+      }
+    }
+
+    ShortcutsGroup {
+      title: C_("shortcut window", "Actions");
+
+      ShortcutsShortcut {
+        title: C_("shortcut window", "Select All");
+        action-name: "app.select_all";
+      }
+
+      ShortcutsShortcut {
+        title: C_("shortcut window", "Select None");
+        action-name: "app.select_none";
+      }
+
+      ShortcutsShortcut {
+        title: C_("shortcut window", "Undo Action");
+        action-name: "app.undo";
+      }
+
+      ShortcutsShortcut {
+        title: C_("shortcut window", "Redo Action");
+        action-name: "app.redo";
+      }
+    }
+  }
+}
