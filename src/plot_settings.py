@@ -107,8 +107,8 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
         self.plot_major_tick_width.set_value(parent.plot_settings.major_tick_width)
         self.plot_minor_tick_length.set_value(parent.plot_settings.minor_tick_length)
         self.plot_major_tick_length.set_value(parent.plot_settings.major_tick_length)
-        utilities.set_chooser(self.plot_Y_position, item.plot_Y_position)
-        utilities.set_chooser(self.plot_X_position, item.plot_X_position)
+        utilities.set_chooser(self.plot_Y_position, item.plot_y_position)
+        utilities.set_chooser(self.plot_X_position, item.plot_x_position)
         utilities.set_chooser(self.plot_X_scale, parent.plot_settings.xscale)
         utilities.set_chooser(self.plot_Y_scale, parent.plot_settings.yscale)
         utilities.set_chooser(self.plot_right_scale, parent.plot_settings.right_scale)
@@ -197,7 +197,7 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
             label = f'{new_item.filename[:max_length]}...'
         else:
             label = new_item.filename
-        parent.item_rows[new_item.key].sample_ID_label.set_text(label)
+        parent.item_rows[new_item.key].sample_id_label.set_text(label)
         if new_item.selected:
             graphs.select_item(parent, new_item.key)
 
