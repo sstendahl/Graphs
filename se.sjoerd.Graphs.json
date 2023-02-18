@@ -22,6 +22,7 @@
         "*.a"
     ],
     "modules" : [
+    	"blueprint-compiler.json",
     	"python3-numpy.json",
     	"python3-matplotlib.json",
     	"python3-scipy.json",

@@ -56,9 +56,18 @@ if compile_schemas.found()
        args: ['--strict', '--dry-run', meson.current_source_dir()])
 endif
 
+blueprints = custom_target('blueprints',
+  input: files(
+    'ui/sample_box.blp'
+  ),
+  output: '.',
+  command: [find_program('blueprint-compiler'), 'batch-compile', '@OUTPUT@', '@CURRENT_SOURCE_DIR@', '@INPUT@'],
+)
+
 resources = gnome.compile_resources(
   application_id,
   application_id + '.gresource.xml',
+  dependencies: blueprints,
   gresource_bundle: true,
   source_dir: meson.current_build_dir(),
   install: true,
