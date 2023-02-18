@@ -60,7 +60,8 @@ blueprints = custom_target('blueprints',
   input: files(
     'ui/add_equation_window.blp',
     'ui/rename_label_window.blp',
-    'ui/sample_box.blp'
+    'ui/sample_box.blp',
+    'ui/transform_window.blp'
   ),
   output: '.',
   command: [find_program('blueprint-compiler'), 'batch-compile', '@OUTPUT@', '@CURRENT_SOURCE_DIR@', '@INPUT@'],
