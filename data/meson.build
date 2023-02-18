@@ -58,6 +58,7 @@ endif
 
 blueprints = custom_target('blueprints',
   input: files(
+    'ui/rename_label_window.blp',
     'ui/sample_box.blp'
   ),
   output: '.',
