@@ -10,8 +10,8 @@ from numpy import *
 
 def on_accept(_widget, self, window):
     """Launched when the accept button is pressed on the equation window"""
-    x_start = window.X_start_entry.get_text()
-    x_stop = window.X_stop_entry.get_text()
+    x_start = window.x_start_entry.get_text()
+    x_stop = window.x_stop_entry.get_text()
     step_size = window.step_size_entry.get_text()
     equation = str(window.equation_entry.get_text())
     dataset = create_dataset(x_start, x_stop, equation, step_size, str(window.name_entry.get_text()))
@@ -73,8 +73,8 @@ class AddEquationWindow(Adw.Window):
     __gtype_name__ = 'AddEquationWindow'
     add_equation_confirm_button = Gtk.Template.Child()
     step_size_entry = Gtk.Template.Child()
-    X_stop_entry = Gtk.Template.Child()
-    X_start_entry = Gtk.Template.Child()
+    x_stop_entry = Gtk.Template.Child()
+    x_start_entry = Gtk.Template.Child()
     equation_entry = Gtk.Template.Child()
     name_entry = Gtk.Template.Child()
     toast_overlay = Gtk.Template.Child()
@@ -82,8 +82,8 @@ class AddEquationWindow(Adw.Window):
     def __init__(self, parent):
         super().__init__()
         self.step_size_entry.set_text(parent.preferences.config['addequation_step_size'])
-        self.X_start_entry.set_text(parent.preferences.config['addequation_X_start'])
-        self.X_stop_entry.set_text(parent.preferences.config['addequation_X_stop'])
+        self.x_start_entry.set_text(parent.preferences.config['addequation_X_start'])
+        self.x_stop_entry.set_text(parent.preferences.config['addequation_X_stop'])
         self.equation_entry.set_text(parent.preferences.config['addequation_equation'])
 
         style_context = self.add_equation_confirm_button.get_style_context()
