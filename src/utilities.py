@@ -46,12 +46,12 @@ def populate_chooser(chooser, chooser_list, clear=True):
         for item in model:
             model.remove(0)
     for item in chooser_list:
-        if item != 'nothing':
+        if item != "nothing":
             model.append(str(item))
 
 
 def get_datalist(parent):
-    """Get a list of all data id's present in the datadict dictionary"""
+    """Get a list of all data id"s present in the datadict dictionary"""
     return list(parent.datadict.keys())
 
 
@@ -66,33 +66,34 @@ def get_all_filenames(parent):
 def get_dict_by_value(dictionary, value):
     """Swap the keys and items of a dictionary"""
     new_dict = {(k, v): (v, k) for k, v in dictionary.items()}
-    if value == 'none':
-        return 'none'
+    if value == "none":
+        return "none"
     return new_dict[value]
 
 
 def get_font_weight(font_name):
     """Get the weight of the font that is used using the full font name"""
-    valid_weights = ['normal', 'bold', 'heavy', 'light', 'ultrabold', 'ultralight']
-    if font_name[-2] != 'italic':
+    valid_weights = ["normal", "bold", "heavy",
+                     "light", "ultrabold", "ultralight"]
+    if font_name[-2] != "italic":
         new_weight = font_name[-2]
     else:
         new_weight = font_name[-3]
     if new_weight not in valid_weights:
-        new_weight = 'normal'
+        new_weight = "normal"
     return new_weight
 
 
 def get_font_style(font_name):
     """Get the style of the font that is used using the full font name"""
-    new_style = 'normal'
-    if font_name[-2] == ('italic' or 'oblique' or 'normal'):
+    new_style = "normal"
+    if font_name[-2] == ("italic" or "oblique" or "normal"):
         new_style = font_name[-2]
     return new_style
 
 
 def get_selected_keys(self):
-    """Get a list of the ID's of all the datasets that are currently selected"""
+    """Get a list of ID's of all the datasets that are currently selected"""
     selected_keys = []
     for _key, item in self.item_rows.items():
         if item.check_button.get_active():
@@ -100,18 +101,29 @@ def get_selected_keys(self):
     return selected_keys
 
 
-def create_data(self, xdata=[], ydata=[], name='New data'):
-    """Create a new dataset using the xdata, ydata and name of the dataset as argument"""
+def create_data(self, xdata=[], ydata=[], name="New data"):
+    """
+    Create a new dataset using the xdata, ydata
+    and name of the dataset as argument
+    """
     new_file = Data(xdata, ydata)
     new_file.filename = name
-    new_file.linestyle_selected = self.preferences.config['plot_selected_linestyle']
-    new_file.linestyle_unselected = self.preferences.config['plot_unselected_linestyle']
-    new_file.selected_line_thickness = self.preferences.config['selected_linewidth']
-    new_file.unselected_line_thickness = self.preferences.config['unselected_linewidth']
-    new_file.selected_markers = self.preferences.config['plot_selected_markers']
-    new_file.unselected_markers = self.preferences.config['plot_unselected_markers']
-    new_file.selected_marker_size = self.preferences.config['plot_selected_marker_size']
-    new_file.unselected_marker_size = self.preferences.config['plot_unselected_marker_size']
+    new_file.linestyle_selected = self.preferences.config[
+        "plot_selected_linestyle"]
+    new_file.linestyle_unselected = self.preferences.config[
+        "plot_unselected_linestyle"]
+    new_file.selected_line_thickness = self.preferences.config[
+        "selected_linewidth"]
+    new_file.unselected_line_thickness = self.preferences.config[
+        "unselected_linewidth"]
+    new_file.selected_markers = self.preferences.config[
+        "plot_selected_markers"]
+    new_file.unselected_markers = self.preferences.config[
+        "plot_unselected_markers"]
+    new_file.selected_marker_size = self.preferences.config[
+        "plot_selected_marker_size"]
+    new_file.unselected_marker_size = self.preferences.config[
+        "plot_unselected_marker_size"]
     return new_file
 
 
@@ -130,7 +142,10 @@ def lookup_color(self, color):
 
 
 def rgba_to_hex(rgba):
-    return '#{:02x}{:02x}{:02x}'.format(round(rgba.red * 255), round(rgba.green * 255), round(rgba.blue * 255))
+    return "#{:02x}{:02x}{:02x}".format(
+        round(rgba.red * 255),
+        round(rgba.green * 255),
+        round(rgba.blue * 255))
 
 
 def rgba_to_tuple(rgba):
@@ -142,7 +157,7 @@ def get_duplicate_filename(self, name):
     i = 0
     while loop:
         i += 1
-        new_name = f'{name} ({i})'
+        new_name = f"{name} ({i})"
         loop = False
         for _key, item in self.datadict.items():
             if new_name == item.filename:
@@ -151,7 +166,7 @@ def get_duplicate_filename(self, name):
 
 
 def swap(str1):
-    str1 = str1.replace(',', 'third')
-    str1 = str1.replace('.', ', ')
-    str1 = str1.replace('third', '.')
+    str1 = str1.replace(",", "third")
+    str1 = str1.replace(".", ", ")
+    str1 = str1.replace("third", ".")
     return str1

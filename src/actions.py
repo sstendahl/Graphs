@@ -1,8 +1,9 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Main actions."""
-from graphs import graphs, item_operations, plot_settings, plotting_tools, ui, utilities
+from graphs import graphs, item_operations, plotting_tools, ui, utilities
 from graphs.add_data_advanced import AddAdvancedWindow
 from graphs.add_equation import AddEquationWindow
+from graphs.plot_settings import PlotSettingsWindow
 from graphs.preferences import PreferencesWindow
 from graphs.transform_data import TransformWindow
 
@@ -21,7 +22,8 @@ def preferences_action(_action, _target, self):
 
 
 def plot_settings_action(_action, _target, self):
-    plot_settings.open_plot_settings(self)
+    win = PlotSettingsWindow(self)
+    win.present()
 
 
 def add_data_action(_action, _target, self):
@@ -42,7 +44,7 @@ def select_all_action(_action, _target, self):
     for _key, item in self.item_rows.items():
         item.check_button.set_active(True)
     plotting_tools.refresh_plot(self)
-    ui.enable_data_dependent_buttons(self, True)
+    ui.enable_data_dependent_buttons(self, utilities.get_selected_keys(self))
 
 
 def select_none_action(_action, _target, self):

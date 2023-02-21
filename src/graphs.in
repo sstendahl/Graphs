@@ -30,16 +30,16 @@ import os
 import signal
 import sys
 
-VERSION = '@version@'
-PROJECT = '@project@'
-PKGDATADIR = '@pkgdatadir@'
-LOCALEDIR = '@localedir@'
-COPYRIGHT = '@copyright@'
-APPID = '@appid@'
-NAME = '@name@'
-WEBSITE = '@website@'
-ISSUES = '@issues@'
-AUTHOR = '@author@'
+VERSION = "@version@"
+PROJECT = "@project@"
+PKGDATADIR = "@pkgdatadir@"
+LOCALEDIR = "@localedir@"
+COPYRIGHT = "@copyright@"
+APPID = "@appid@"
+NAME = "@name@"
+WEBSITE = "@website@"
+ISSUES = "@issues@"
+AUTHOR = "@author@"
 
 sys.path.insert(1, PKGDATADIR)
 signal.signal(signal.SIGINT, signal.SIG_DFL)
@@ -47,14 +47,14 @@ locale.bindtextdomain(PROJECT, LOCALEDIR)
 locale.textdomain(PROJECT)
 gettext.install(PROJECT, LOCALEDIR)
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     import gi
 
-    gi.require_version('Adw', '1')
-    gi.require_version('Gtk', '4.0')
+    gi.require_version("Adw", "1")
+    gi.require_version("Gtk", "4.0")
 
     from gi.repository import Gio
-    resource = Gio.Resource.load(os.path.join(PKGDATADIR, '@appid@.gresource'))
+    resource = Gio.Resource.load(os.path.join(PKGDATADIR, "@appid@.gresource"))
     resource._register()
 
     args = [VERSION, APPID, NAME, COPYRIGHT, WEBSITE, ISSUES, AUTHOR]

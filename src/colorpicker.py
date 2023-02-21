@@ -11,26 +11,26 @@ class ColorPicker(Gtk.Button):
         super().__init__()
         self.parent = parent
         self.key = key
-        self.set_tooltip_text('Pick a color')
+        self.set_tooltip_text("Pick a color")
         self.color = color
-        self.add_css_class('flat')
+        self.add_css_class("flat")
         self.set_hexpand(False)
-        self.set_child(Gtk.Image.new_from_icon_name('color-picker-symbolic'))
+        self.set_child(Gtk.Image.new_from_icon_name("color-picker-symbolic"))
         self.get_child().set_pixel_size(20)
 
         press_gesture = Gtk.GestureClick()
-        press_gesture.connect('pressed', self.change_color)
+        press_gesture.connect("pressed", self.change_color)
         self.color_chooser = Gtk.ColorChooserWidget.new()
         self.color_chooser.set_use_alpha(False)
         self.color_chooser.show()
-        self.color_chooser.connect('color-activated', self.change_color)
+        self.color_chooser.connect("color-activated", self.change_color)
         self.color_chooser.add_controller(press_gesture)
 
         self.color_popover = Gtk.Popover()
         self.color_popover.set_parent(self)
         self.color_popover.set_child(self.color_chooser)
-        self.color_popover.connect('closed', self.change_color)
-        self.connect('clicked', self.on_click)
+        self.color_popover.connect("closed", self.change_color)
+        self.connect("clicked", self.on_click)
         self.set_css()
         self.color = self.get_color()
         parent.datadict[self.key].color = self.color
@@ -62,13 +62,14 @@ class ColorPicker(Gtk.Button):
         return utilities.rgba_to_hex(color_rgba)
 
     def update_color(self):
-        css = f'button {{ color: {self.get_rgba().to_string()}; }}'
+        css = f"button {{ color: {self.get_rgba().to_string()}; }}"
         self.provider.load_from_data(css.encode())
 
     def set_css(self):
         self.provider = Gtk.CssProvider()
         context = self.get_style_context()
-        context.add_provider(self.provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION)
+        context.add_provider(
+            self.provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION)
         rgba = utilities.create_rgba(*colors.to_rgba(self.color))
         self.set_rgba(rgba)
         self.set_rgba(self.get_rgba())
