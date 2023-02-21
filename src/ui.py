@@ -15,9 +15,9 @@ def toggle_sidebar(action, _shortcut, self):
 
 def toggle_darkmode(_shortcut, _theme, _widget, self):
     if Adw.StyleManager.get_default().get_dark():
-        self.plot_settings.plot_style = self.preferences.config['plot_style_dark']
+        self.plot_settings.plot_style = self.preferences.config["plot_style_dark"]
     else:
-        self.plot_settings.plot_style = self.preferences.config['plot_style_light']
+        self.plot_settings.plot_style = self.preferences.config["plot_style_light"]
     plotting_tools.reload_plot(self)
 
 
@@ -51,14 +51,14 @@ def disable_clipboard_buttons(self):
 
 def open_file_dialog(self, open_project, import_settings=None):
     open_file_chooser = Gtk.FileChooserNative.new(
-        title='Open new files',
+        title="Open new files",
         parent=self.main_window,
         action=Gtk.FileChooserAction.OPEN,
-        accept_label='_Open',
+        accept_label="_Open",
     )
     open_file_chooser.set_modal(True)
     open_file_chooser.set_select_multiple(open_project)
-    open_file_chooser.connect('response', on_open_file_response, self, open_project, import_settings)
+    open_file_chooser.connect("response", on_open_file_response, self, open_project, import_settings)
     open_file_chooser.show()
 
 
@@ -73,26 +73,26 @@ def on_open_file_response(dialog, response, self, project, import_settings):
 def save_project_dialog(self):
     def save_project_chooser(action):
         dialog = Gtk.FileChooserNative.new(
-            title='Save files',
+            title="Save files",
             parent=self.main_window,
             action=action,
-            accept_label='_Save',
+            accept_label="_Save",
         )
         return dialog
 
     chooser = save_project_chooser(Gtk.FileChooserAction.SAVE)
     chooser.set_modal(True)
-    chooser.connect('response', on_save_response, self, True)
+    chooser.connect("response", on_save_response, self, True)
     chooser.show()
 
 
 def save_file_dialog(self):
     def save_file_chooser(action):
         dialog = Gtk.FileChooserNative.new(
-            title='Save files',
+            title="Save files",
             parent=self.main_window,
             action=action,
-            accept_label='_Save',
+            accept_label="_Save",
         )
         return dialog
 
@@ -103,13 +103,13 @@ def save_file_dialog(self):
 
     if len(self.datadict) == 1:
         filename = list(self.datadict.values())[0].filename
-        chooser.set_current_name(f'{filename}.txt')
+        chooser.set_current_name(f"{filename}.txt")
     try:
         chooser.set_modal(True)
-        chooser.connect('response', on_save_response, self, False)
+        chooser.connect("response", on_save_response, self, False)
         chooser.show()
     except UnboundLocalError:
-        self.main_window.toast_overlay.add_toast(Adw.Toast(title='Could not open save dialog, make sure you have data opened'))
+        self.main_window.toast_overlay.add_toast(Adw.Toast(title="Could not open save dialog, make sure you have data opened"))
 
 
 def on_save_response(dialog, response, self, project):
@@ -124,14 +124,14 @@ def on_save_response(dialog, response, self, project):
 # https://github.com/matplotlib/matplotlib/blob/c23ccdde6f0f8c071b09a88770e24452f2859e99/lib/matplotlib/backends/backend_gtk4.py#L306
 def export_figure(self):
     dialog = Gtk.FileChooserNative(
-        title='Save the figure',
+        title="Save the figure",
         transient_for=self.main_window,
         action=Gtk.FileChooserAction.SAVE,
         modal=True)
 
     file_filter = Gtk.FileFilter()
-    file_filter.set_name('All files')
-    file_filter.add_pattern('*')
+    file_filter.set_name("All files")
+    file_filter.add_pattern("*")
     dialog.add_filter(file_filter)
     dialog.set_filter(file_filter)
 
@@ -142,27 +142,27 @@ def export_figure(self):
         file_filter = Gtk.FileFilter()
         file_filter.set_name(name)
         for fmt in fmts:
-            file_filter.add_pattern(f'*.{fmt}')
+            file_filter.add_pattern(f"*.{fmt}")
         dialog.add_filter(file_filter)
         formats.append(name)
         if self.canvas.get_default_filetype() in fmts:
             default_format = i
-    # Setting the choice doesn't always work, so make sure the default
+    # Setting the choice doesn"t always work, so make sure the default
     # format is first.
     formats = [formats[default_format], *formats[:default_format],
                *formats[default_format + 1:]]
-    dialog.add_choice('format', 'File format', formats, formats)
-    dialog.set_choice('format', formats[default_format])
+    dialog.add_choice("format", "File format", formats, formats)
+    dialog.set_choice("format", formats[default_format])
 
     dialog.set_current_name(self.canvas.get_default_filename())
-    dialog.connect('response', on_figure_save_response, self)
+    dialog.connect("response", on_figure_save_response, self)
     dialog.show()
 
 
 # https://github.com/matplotlib/matplotlib/blob/c23ccdde6f0f8c071b09a88770e24452f2859e99/lib/matplotlib/backends/backend_gtk4.py#L344
 def on_figure_save_response(dialog, response, self):
     file = dialog.get_file()
-    fmt = dialog.get_choice('format')
+    fmt = dialog.get_choice("format")
     fmt = self.canvas.get_supported_filetypes_grouped()[fmt][0]
     dialog.destroy()
     if response != Gtk.ResponseType.ACCEPT:
@@ -170,7 +170,7 @@ def on_figure_save_response(dialog, response, self):
     try:
         self.canvas.figure.savefig(file.get_path(), format=fmt)
     except Exception:
-        self.main_window.toast_overlay.add_toast(Adw.Toast(title='Unable to save image'))
+        self.main_window.toast_overlay.add_toast(Adw.Toast(title="Unable to save image"))
 
 
 def show_about_window(self):
@@ -182,11 +182,11 @@ def show_about_window(self):
                             issue_url=self.issues,
                             version=self.version,
                             developers=[
-                                'Sjoerd Broekhuijsen <contact@sjoerd.se>',
-                                'Christoph Kohnen <christoph.kohnen@disroot.org>'
+                                "Sjoerd Broekhuijsen <contact@sjoerd.se>",
+                                "Christoph Kohnen <christoph.kohnen@disroot.org>"
                             ],
-                            copyright=f'© {self.copyright} {self.author}',
-                            license_type='GTK_LICENSE_GPL_3_0')
-    with open(os.path.join(os.getenv('XDG_DATA_DIRS')).split(':')[0] + '/graphs/graphs/whats_new', 'r', encoding='utf-8') as file:
+                            copyright=f"© {self.copyright} {self.author}",
+                            license_type="GTK_LICENSE_GPL_3_0")
+    with open(os.path.join(os.getenv("XDG_DATA_DIRS")).split(":")[0] + "/graphs/graphs/whats_new", "r", encoding="utf-8") as file:
         about.set_release_notes(file.read())
     about.present()

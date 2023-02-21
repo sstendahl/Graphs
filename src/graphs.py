@@ -35,30 +35,30 @@ def open_files(self, files, import_settings):
         import_settings.mode = ImportMode.SINGLE
     for file in files:
         path = file.peek_path()
-        if path != '':
+        if path != "":
             try:
                 import_settings.path = path
                 item = file_io.get_data(self, import_settings)
                 if item.xdata == []:
-                    self.main_window.toast_overlay.add_toast(Adw.Toast(title='At least one data set could not be imported'))
+                    self.main_window.toast_overlay.add_toast(Adw.Toast(title="At least one data set could not be imported"))
                     continue
             except IndexError:
-                self.main_window.toast_overlay.add_toast(Adw.Toast(title='Could not open data, the column index was out of range'))
+                self.main_window.toast_overlay.add_toast(Adw.Toast(title="Could not open data, the column index was out of range"))
                 break
             except UnicodeDecodeError:
-                self.main_window.toast_overlay.add_toast(Adw.Toast(title='Could not open data, wrong filetype'))
+                self.main_window.toast_overlay.add_toast(Adw.Toast(title="Could not open data, wrong filetype"))
                 break
             if item is not None:
-                handle_duplicates = self.preferences.config['handle_duplicates']
-                if not handle_duplicates == 'Add duplicates':
+                handle_duplicates = self.preferences.config["handle_duplicates"]
+                if not handle_duplicates == "Add duplicates":
                     for key, item2 in self.datadict.items():
                         if item.filename == item2.filename:
-                            if handle_duplicates == 'Auto-rename duplicates':
+                            if handle_duplicates == "Auto-rename duplicates":
                                 item.filename = utilities.get_duplicate_filename(self, item.filename)
-                            elif handle_duplicates == 'Ignore duplicates':
-                                self.main_window.toast_overlay.add_toast(Adw.Toast(title=f'Item \'{item.filename}\' already exists'))
+                            elif handle_duplicates == "Ignore duplicates":
+                                self.main_window.toast_overlay.add_toast(Adw.Toast(title=f'Item "{item.filename}" already exists'))
                                 return
-                            elif handle_duplicates == 'Override existing items':
+                            elif handle_duplicates == "Override existing items":
                                 self.datadict[key] = item
                                 plotting_tools.reload_plot(self)
                                 return
@@ -88,7 +88,7 @@ def delete(self, key, give_toast=False):
     del self.item_rows[key]
     del self.datadict[key]
     if give_toast:
-        self.main_window.toast_overlay.add_toast(Adw.Toast(title=f'Deleted {filename}'))
+        self.main_window.toast_overlay.add_toast(Adw.Toast(title=f"Deleted {filename}"))
 
     if len(self.datadict) == 0:
         self.canvas.ax.legend().remove()
@@ -136,7 +136,7 @@ def create_data_from_project(self, new_dictionary):
 def set_attributes(new_object, template):
     """
     Sets the attributes of `new_object` to match those of `template`.
-    This function sets the attributes of `new_object` to the values of the attributes in `template` if they don't already exist in `new_object`.
+    This function sets the attributes of `new_object` to the values of the attributes in `template` if they don"t already exist in `new_object`.
     Additionally, it removes any attributes from `new_object` that are not present in `template`.
     """
     for attribute in template.__dict__:

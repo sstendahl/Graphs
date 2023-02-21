@@ -20,7 +20,7 @@ class Canvas(FigureCanvas):
         self.one_click_trigger = False
         self.time_first_click = 0
         self.parent = parent
-        self.mpl_connect('button_release_event', self)
+        self.mpl_connect("button_release_event", self)
         self.set_style(parent)
         self.ax = self.figure.add_subplot(111)
         self.right_axis = self.ax.twinx()
@@ -29,7 +29,7 @@ class Canvas(FigureCanvas):
         self.set_ax_properties(parent)
         self.set_save_properties(parent)
         self.set_color_cycle(parent)
-        self.rubberband_color = utilities.lookup_color(parent, 'accent_color')
+        self.rubberband_color = utilities.lookup_color(parent, "accent_color")
         super().__init__(self.figure)
 
     def set_save_properties(self, parent):
@@ -37,8 +37,8 @@ class Canvas(FigureCanvas):
         Set the properties that are related to saving the figure. Currently
         limited to savefig, but will include the background colour soon.
         """
-        plt.rcParams['savefig.format'] = parent.preferences.config['savefig_filetype']
-        plt.rcParams['savefig.transparent'] = parent.preferences.config['savefig_transparent']
+        plt.rcParams["savefig.format"] = parent.preferences.config["savefig_filetype"]
+        plt.rcParams["savefig.transparent"] = parent.preferences.config["savefig_transparent"]
 
     def set_ax_properties(self, parent):
         """Set the properties that are related to the axes."""
@@ -57,62 +57,62 @@ class Canvas(FigureCanvas):
     def set_ticks(self, parent):
         """Set the ticks that are to be used in the graph."""
         for axis in [self.top_right_axis, self.top_left_axis, self.ax, self.right_axis]:
-            axis.tick_params(direction=parent.plot_settings.tick_direction, length=parent.plot_settings.major_tick_length, width=parent.plot_settings.major_tick_width, which='major')
-            axis.tick_params(direction=parent.plot_settings.tick_direction, length=parent.plot_settings.minor_tick_length, width=parent.plot_settings.minor_tick_width, which='minor')
-            axis.tick_params(axis='x', which='minor')
-            axis.tick_params(axis='y', which='minor')
+            axis.tick_params(direction=parent.plot_settings.tick_direction, length=parent.plot_settings.major_tick_length, width=parent.plot_settings.major_tick_width, which="major")
+            axis.tick_params(direction=parent.plot_settings.tick_direction, length=parent.plot_settings.minor_tick_length, width=parent.plot_settings.minor_tick_width, which="minor")
+            axis.tick_params(axis="x", which="minor")
+            axis.tick_params(axis="y", which="minor")
             axis.minorticks_on()
             top = False
             bottom = False
             left = False
             right = False
             for key in parent.datadict.keys():
-                if parent.datadict[key].plot_X_position == 'top':
+                if parent.datadict[key].plot_x_position == "top":
                     top = True
-                if parent.datadict[key].plot_X_position == 'bottom':
+                if parent.datadict[key].plot_x_position == "bottom":
                     bottom = True
-                if parent.datadict[key].plot_Y_position == 'left':
+                if parent.datadict[key].plot_y_position == "left":
                     left = True
-                if parent.datadict[key].plot_Y_position == 'right':
+                if parent.datadict[key].plot_y_position == "right":
                     right = True
             if not (top and bottom):
-                axis.tick_params(which='both', bottom=parent.plot_settings.tick_bottom, top=parent.plot_settings.tick_top)
+                axis.tick_params(which="both", bottom=parent.plot_settings.tick_bottom, top=parent.plot_settings.tick_top)
             if not (left and right):
-                axis.tick_params(which='both', left=parent.plot_settings.tick_left, right=parent.plot_settings.tick_right)
+                axis.tick_params(which="both", left=parent.plot_settings.tick_left, right=parent.plot_settings.tick_right)
 
     def set_style(self, parent):
         """Set the plot style."""
         plt.rcParams.update(plt.rcParamsDefault)
         if Adw.StyleManager.get_default().get_dark():
-            self.figure.patch.set_facecolor('#242424')
-            text_color = 'white'
+            self.figure.patch.set_facecolor("#242424")
+            text_color = "white"
         else:
-            self.figure.patch.set_facecolor('#fafafa')
-            text_color = 'black'
+            self.figure.patch.set_facecolor("#fafafa")
+            text_color = "black"
         params = {
-            'font.weight': parent.plot_settings.font_weight,
-            'font.sans-serif': parent.plot_settings.font_family,
-            'font.size': parent.plot_settings.font_size,
-            'axes.labelsize': parent.plot_settings.font_size,
-            'xtick.labelsize': parent.plot_settings.font_size,
-            'ytick.labelsize': parent.plot_settings.font_size,
-            'axes.titlesize': parent.plot_settings.font_size,
-            'legend.fontsize': parent.plot_settings.font_size,
-            'font.style': parent.plot_settings.font_style,
-            'mathtext.default': 'regular',
-            'axes.labelcolor': text_color,
+            "font.weight": parent.plot_settings.font_weight,
+            "font.sans-serif": parent.plot_settings.font_family,
+            "font.size": parent.plot_settings.font_size,
+            "axes.labelsize": parent.plot_settings.font_size,
+            "xtick.labelsize": parent.plot_settings.font_size,
+            "ytick.labelsize": parent.plot_settings.font_size,
+            "axes.titlesize": parent.plot_settings.font_size,
+            "legend.fontsize": parent.plot_settings.font_size,
+            "font.style": parent.plot_settings.font_style,
+            "mathtext.default": "regular",
+            "axes.labelcolor": text_color,
         }
         plt.style.use(parent.plot_settings.plot_style)
         plt.rcParams.update(params)
 
     def set_color_cycle(self, parent):
         """Set the color cycle that will be used for the graphs."""
-        cmap = parent.preferences.config['plot_color_cycle']
-        reverse_dark = parent.preferences.config['plot_invert_color_cycle_dark']
+        cmap = parent.preferences.config["plot_color_cycle"]
+        reverse_dark = parent.preferences.config["plot_invert_color_cycle_dark"]
         if Adw.StyleManager.get_default().get_dark() and reverse_dark:
-            cmap += '_r'
+            cmap += "_r"
         color_cycle = cycler(color=plt.get_cmap(cmap).colors)
-        self.color_cycle = color_cycle.by_key()['color']
+        self.color_cycle = color_cycle.by_key()["color"]
 
     def __call__(self, event):
         """
@@ -121,7 +121,7 @@ class Canvas(FigureCanvas):
         click, and if these were on a specific item (e.g. the title) it triggers
         a dialog to edit this item.
 
-        Unfortunately the GTK Doubleclick signal doesn't work with matplotlib
+        Unfortunately the GTK Doubleclick signal doesn"t work with matplotlib
         hence this custom function.
         """
         double_click = False

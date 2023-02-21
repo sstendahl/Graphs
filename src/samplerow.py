@@ -7,9 +7,9 @@ from graphs import colorpicker, graphs, plotting_tools, ui, utilities
 from graphs.plot_settings import PlotSettingsWindow
 
 
-@Gtk.Template(resource_path='/se/sjoerd/Graphs/ui/sample_box.ui')
+@Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/sample_box.ui")
 class SampleBox(Gtk.Box):
-    __gtype_name__ = 'SampleBox'
+    __gtype_name__ = "SampleBox"
     sample_box = Gtk.Template.Child()
     sample_id_label = Gtk.Template.Child()
     check_button = Gtk.Template.Child()
@@ -19,7 +19,7 @@ class SampleBox(Gtk.Box):
         super().__init__()
         max_length = int(26)
         if len(label) > max_length:
-            label = f'{label[:max_length]}...'
+            label = f"{label[:max_length]}..."
         if selected:
             self.check_button.set_active(True)
         self.sample_id_label.set_text(label)
@@ -30,11 +30,11 @@ class SampleBox(Gtk.Box):
         self.gesture = Gtk.GestureClick()
         self.gesture.set_button(0)
         self.add_controller(self.gesture)
-        self.gesture.connect('released', self.clicked, parent)
-        self.delete_button.connect('clicked', self.delete)
+        self.gesture.connect("released", self.clicked, parent)
+        self.delete_button.connect("clicked", self.delete)
         self.color_picker = colorpicker.ColorPicker(color, key, parent)
         self.sample_box.insert_child_after(self.color_picker, self.sample_id_label)
-        self.check_button.connect('toggled', self.toggled)
+        self.check_button.connect("toggled", self.toggled)
 
     def delete(self, _):
         graphs.delete(self.parent, self.key, True)

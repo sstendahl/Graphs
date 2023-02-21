@@ -27,7 +27,7 @@ class GraphsApplication(Adw.Application):
         self.issues = args[5]
         self.author = args[6]
         self.datadict = {}
-        self.filename = ''
+        self.filename = ""
         self.highlight = None
         self.highlights = []
         self.item_rows = {}
@@ -44,70 +44,70 @@ class GraphsApplication(Adw.Application):
     def connect_actions(self):
         """Create actions, which are defined in actions.py."""
         new_actions = [
-            ('quit', ['<primary>q']),
-            ('about', None),
-            ('preferences', ['<primary>p']),
-            ('plot_settings', ['<primary><shift>P']),
-            ('add_data', ['<primary>N']),
-            ('add_data_advanced', ['<primary><shift>N']),
-            ('add_equation', ['<primary><alt>N']),
-            ('select_all', ['<primary>A']),
-            ('select_none', ['<primary><shift>A']),
-            ('undo', ['<primary>Z']),
-            ('redo', ['<primary><shift>Z']),
-            ('restore_view', ['<primary>R']),
-            ('view_back', ['<alt>Z']),
-            ('view_forward', ['<alt><shift>Z']),
-            ('export_data', ['<primary><shift>E']),
-            ('export_figure', ['<primary>E']),
-            ('save_project', ['<primary>S']),
-            ('open_project', ['<primary>O']),
-            ('delete_selected', ['Delete']),
-            ('translate_x', None),
-            ('translate_y', None),
-            ('multiply_x', None),
-            ('multiply_y', None),
-            ('normalize', None),
-            ('smoothen', None),
-            ('center', None),
-            ('shift_vertically', None),
-            ('combine', None),
-            ('cut_selected', None),
-            ('get_derivative', None),
-            ('get_integral', None),
-            ('get_fourier', None),
-            ('get_inverse_fourier', None)
+            ("quit", ["<primary>q"]),
+            ("about", None),
+            ("preferences", ["<primary>p"]),
+            ("plot_settings", ["<primary><shift>P"]),
+            ("add_data", ["<primary>N"]),
+            ("add_data_advanced", ["<primary><shift>N"]),
+            ("add_equation", ["<primary><alt>N"]),
+            ("select_all", ["<primary>A"]),
+            ("select_none", ["<primary><shift>A"]),
+            ("undo", ["<primary>Z"]),
+            ("redo", ["<primary><shift>Z"]),
+            ("restore_view", ["<primary>R"]),
+            ("view_back", ["<alt>Z"]),
+            ("view_forward", ["<alt><shift>Z"]),
+            ("export_data", ["<primary><shift>E"]),
+            ("export_figure", ["<primary>E"]),
+            ("save_project", ["<primary>S"]),
+            ("open_project", ["<primary>O"]),
+            ("delete_selected", ["Delete"]),
+            ("translate_x", None),
+            ("translate_y", None),
+            ("multiply_x", None),
+            ("multiply_y", None),
+            ("normalize", None),
+            ("smoothen", None),
+            ("center", None),
+            ("shift_vertically", None),
+            ("combine", None),
+            ("cut_selected", None),
+            ("get_derivative", None),
+            ("get_integral", None),
+            ("get_fourier", None),
+            ("get_inverse_fourier", None)
         ]
         methods = {}
-        for key, item in getmembers(globals().copy()['actions'], isfunction):
+        for key, item in getmembers(globals().copy()["actions"], isfunction):
             methods[key] = item
         for name, keybinds in new_actions:
             action = Gio.SimpleAction.new(name, None)
-            action.connect('activate', methods[f'{name}_action'], self)
+            action.connect("activate", methods[f"{name}_action"], self)
             self.add_action(action)
             if keybinds:
-                self.set_accels_for_action(f'app.{name}', keybinds)
+                self.set_accels_for_action(f"app.{name}", keybinds)
 
-        self.create_axis_action('change_left_yscale', plotting_tools.change_left_yscale, 'plot_Y_scale')
-        self.create_axis_action('change_right_yscale', plotting_tools.change_right_yscale, 'plot_right_scale')
-        self.create_axis_action('change_top_xscale', plotting_tools.change_top_xscale, 'plot_top_scale')
-        self.create_axis_action('change_bottom_xscale', plotting_tools.change_bottom_xscale, 'plot_X_scale')
+        self.create_axis_action("change_left_yscale", plotting_tools.change_left_yscale, "plot_Y_scale")
+        self.create_axis_action("change_right_yscale", plotting_tools.change_right_yscale, "plot_right_scale")
+        self.create_axis_action("change_top_xscale", plotting_tools.change_top_xscale, "plot_top_scale")
+        self.create_axis_action("change_bottom_xscale", plotting_tools.change_bottom_xscale, "plot_X_scale")
 
-        toggle_sidebar = Gio.SimpleAction.new_stateful('toggle_sidebar', None, GLib.Variant.new_boolean(True))
-        toggle_sidebar.connect('activate', ui.toggle_sidebar, self)
+        toggle_sidebar = Gio.SimpleAction.new_stateful("toggle_sidebar", None, GLib.Variant.new_boolean(True))
+        toggle_sidebar.connect("activate", ui.toggle_sidebar, self)
         self.add_action(toggle_sidebar)
-        self.set_accels_for_action('app.toggle_sidebar', ['F9'])
+        self.set_accels_for_action("app.toggle_sidebar", ["F9"])
 
-        self.create_mode_action('mode_pan', ['<shift>P', 'F1'], InteractionMode.PAN)
-        self.create_mode_action('mode_zoom', ['<shift>Z', 'F2'], InteractionMode.ZOOM)
-        self.create_mode_action('mode_select', ['<shift>S', 'F3'], InteractionMode.SELECT)
+        self.create_mode_action("mode_pan", ["<shift>P", "F1"], InteractionMode.PAN)
+        self.create_mode_action("mode_zoom", ["<shift>Z", "F2"], InteractionMode.ZOOM)
+        self.create_mode_action("mode_select", ["<shift>S", "F3"], InteractionMode.SELECT)
 
-        Adw.StyleManager.get_default().connect('notify', ui.toggle_darkmode, None, self)
+        Adw.StyleManager.get_default().connect("notify", ui.toggle_darkmode, None, self)
 
     def do_activate(self):
         """Called when the application is activated.
 
-        We raise the application's main window, creating it if
+        We raise the application"s main window, creating it if
         necessary.
         """
         win = self.props.active_window
@@ -162,20 +162,20 @@ class GraphsApplication(Adw.Application):
 
     def create_axis_action(self, name, callback, config_key):
         """Create action for setting axis scale."""
-        action = Gio.SimpleAction.new_stateful(name, GLib.VariantType.new('s'), GLib.Variant.new_string(self.preferences.config[config_key]))
-        action.connect('activate', callback, self)
+        action = Gio.SimpleAction.new_stateful(name, GLib.VariantType.new("s"), GLib.Variant.new_string(self.preferences.config[config_key]))
+        action.connect("activate", callback, self)
         self.add_action(action)
 
     def create_mode_action(self, name, shortcuts, mode):
         """Create action for mode setting."""
         action = Gio.SimpleAction.new(name, None)
-        action.connect('activate', self.set_mode, mode)
+        action.connect("activate", self.set_mode, mode)
         self.add_action(action)
-        self.set_accels_for_action(f'app.{name}', shortcuts)
+        self.set_accels_for_action(f"app.{name}", shortcuts)
 
 
 def main(args):
-    """The application's entry point."""
+    """The application"s entry point."""
     app = GraphsApplication(args)
 
     return app.run(sys.argv)

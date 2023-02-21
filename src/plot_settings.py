@@ -7,9 +7,9 @@ import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
 
 
-@Gtk.Template(resource_path='/se/sjoerd/Graphs/ui/plot_settings.ui')
+@Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/plot_settings.ui")
 class PlotSettingsWindow(Adw.PreferencesWindow):
-    __gtype_name__ = 'PlotSettingsWindow'
+    __gtype_name__ = "PlotSettingsWindow"
     datalist_chooser = Gtk.Template.Child()
     name_entry = Gtk.Template.Child()
     linestyle_selected = Gtk.Template.Child()
@@ -51,8 +51,8 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
         filenames = utilities.get_all_filenames(parent)
         utilities.populate_chooser(self.datalist_chooser, filenames)
         self.item = self.load_config(parent, key)
-        self.datalist_chooser.connect('notify::selected', self.on_notify, parent)
-        self.connect('close-request', self.on_close, parent)
+        self.datalist_chooser.connect("notify::selected", self.on_notify, parent)
+        self.connect("close-request", self.on_close, parent)
         self.set_transient_for(parent.main_window)
         self.set_modal(True)
 
@@ -66,7 +66,7 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
     def on_notify(self, _, __, parent):
         self.save_settings(parent)
         filenames = utilities.get_all_filenames(parent)
-        self.name_entry.set_text('')
+        self.name_entry.set_text("")
         index = self.datalist_chooser.get_selected()
         if set(filenames) != set(self.get_chooser_list(self.datalist_chooser)):
             utilities.populate_chooser(self.datalist_chooser, filenames)
@@ -138,7 +138,7 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
         return item
 
     def set_config(self, item, parent):
-        font_name = self.plot_font_chooser.get_font_desc().to_string().lower().split(' ')
+        font_name = self.plot_font_chooser.get_font_desc().to_string().lower().split(" ")
         font_size = font_name[-1]
         font_weight = utilities.get_font_weight(font_name)
         font_style = utilities.get_font_style(font_name)
@@ -167,7 +167,7 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
         parent.plot_settings.right_scale = self.plot_right_scale.get_selected_item().get_string()
         parent.plot_settings.top_scale = self.plot_top_scale.get_selected_item().get_string()
         parent.plot_settings.plot_style = self.plot_style.get_selected_item().get_string()
-        if self.name_entry.get_text() != '':
+        if self.name_entry.get_text() != "":
             item.filename = self.name_entry.get_text()
         item.plot_Y_position = self.plot_Y_position.get_selected_item().get_string()
         item.plot_X_position = self.plot_X_position.get_selected_item().get_string()
@@ -189,7 +189,7 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
         new_item = self.set_config(item, parent)
         max_length = int(26)
         if len(new_item.filename) > max_length:
-            label = f'{new_item.filename[:max_length]}...'
+            label = f"{new_item.filename[:max_length]}..."
         else:
             label = new_item.filename
         parent.item_rows[new_item.key].sample_id_label.set_text(label)
