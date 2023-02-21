@@ -10,8 +10,8 @@ from numpy import *
 
 def on_accept(_widget, self, window):
     """Launched when the accept button is pressed on the equation window"""
-    x_start = window.x_start_entry.get_text()
-    x_stop = window.x_stop_entry.get_text()
+    x_start = window.X_start_entry.get_text()
+    x_stop = window.X_stop_entry.get_text()
     step_size = window.step_size_entry.get_text()
     equation = str(window.equation_entry.get_text())
     dataset = create_dataset(x_start, x_stop, equation, step_size, str(window.name_entry.get_text()))
