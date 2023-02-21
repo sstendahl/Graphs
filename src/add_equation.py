@@ -73,8 +73,8 @@ class AddEquationWindow(Adw.Window):
     __gtype_name__ = 'AddEquationWindow'
     add_equation_confirm_button = Gtk.Template.Child()
     step_size_entry = Gtk.Template.Child()
-    x_stop_entry = Gtk.Template.Child()
-    x_start_entry = Gtk.Template.Child()
+    X_stop_entry = Gtk.Template.Child()
+    X_start_entry = Gtk.Template.Child()
     equation_entry = Gtk.Template.Child()
     name_entry = Gtk.Template.Child()
     toast_overlay = Gtk.Template.Child()
@@ -82,8 +82,8 @@ class AddEquationWindow(Adw.Window):
     def __init__(self, parent):
         super().__init__()
         self.step_size_entry.set_text(parent.preferences.config['addequation_step_size'])
-        self.x_start_entry.set_text(parent.preferences.config['addequation_X_start'])
-        self.x_stop_entry.set_text(parent.preferences.config['addequation_X_stop'])
+        self.X_start_entry.set_text(parent.preferences.config['addequation_X_start'])
+        self.X_stop_entry.set_text(parent.preferences.config['addequation_X_stop'])
         self.equation_entry.set_text(parent.preferences.config['addequation_equation'])
 
         style_context = self.add_equation_confirm_button.get_style_context()
