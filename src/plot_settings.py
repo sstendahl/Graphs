@@ -7,13 +7,6 @@ import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
 
 
-def open_plot_settings(self, key=None):
-    win = PlotSettingsWindow(self, key)
-    win.set_transient_for(self.props.active_window)
-    win.set_modal(True)
-    win.present()
-
-
 @Gtk.Template(resource_path='/se/sjoerd/Graphs/ui/plot_settings.ui')
 class PlotSettingsWindow(Adw.PreferencesWindow):
     __gtype_name__ = 'PlotSettingsWindow'
@@ -51,7 +44,7 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
     plot_legend_check = Gtk.Template.Child()
     plot_font_chooser = Gtk.Template.Child()
 
-    def __init__(self, parent, key):
+    def __init__(self, parent, key=None):
         super().__init__()
         self.select_item = False
         self.chooser_changed = True
@@ -60,6 +53,8 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
         self.item = self.load_config(parent, key)
         self.datalist_chooser.connect('notify::selected', self.on_notify, parent)
         self.connect('close-request', self.on_close, parent)
+        self.set_transient_for(parent.main_window)
+        self.set_modal(True)
 
     def get_chooser_list(self, chooser):
         model = chooser.get_model()

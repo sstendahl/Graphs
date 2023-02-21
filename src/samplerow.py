@@ -3,14 +3,15 @@ import time
 
 from gi.repository import Gtk
 
-from graphs import colorpicker, graphs, plot_settings, plotting_tools, ui, utilities
+from graphs import colorpicker, graphs, plotting_tools, ui, utilities
+from graphs.plot_settings import PlotSettingsWindow
 
 
 @Gtk.Template(resource_path='/se/sjoerd/Graphs/ui/sample_box.ui')
 class SampleBox(Gtk.Box):
     __gtype_name__ = 'SampleBox'
     sample_box = Gtk.Template.Child()
-    sample_ID_label = Gtk.Template.Child()
+    sample_id_label = Gtk.Template.Child()
     check_button = Gtk.Template.Child()
     delete_button = Gtk.Template.Child()
 
@@ -21,7 +22,7 @@ class SampleBox(Gtk.Box):
             label = f'{label[:max_length]}...'
         if selected:
             self.check_button.set_active(True)
-        self.sample_ID_label.set_text(label)
+        self.sample_id_label.set_text(label)
         self.key = key
         self.parent = parent
         self.one_click_trigger = False
@@ -32,7 +33,7 @@ class SampleBox(Gtk.Box):
         self.gesture.connect('released', self.clicked, parent)
         self.delete_button.connect('clicked', self.delete)
         self.color_picker = colorpicker.ColorPicker(color, key, parent)
-        self.sample_box.insert_child_after(self.color_picker, self.sample_ID_label)
+        self.sample_box.insert_child_after(self.color_picker, self.sample_id_label)
         self.check_button.connect('toggled', self.toggled)
 
     def delete(self, _):
@@ -54,4 +55,5 @@ class SampleBox(Gtk.Box):
             else:
                 self.one_click_trigger = False
                 self.time_first_click = 0
-                plot_settings.open_plot_settings(None, None, graph, self.key)
+                win = PlotSettingsWindow(self.parent, self.key)
+                win.present()
