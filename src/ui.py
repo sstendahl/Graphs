@@ -15,9 +15,11 @@ def toggle_sidebar(action, _shortcut, self):
 
 def toggle_darkmode(_shortcut, _theme, _widget, self):
     if Adw.StyleManager.get_default().get_dark():
-        self.plot_settings.plot_style = self.preferences.config["plot_style_dark"]
+        self.plot_settings.plot_style = self.preferences.config[
+            "plot_style_dark"]
     else:
-        self.plot_settings.plot_style = self.preferences.config["plot_style_light"]
+        self.plot_settings.plot_style = self.preferences.config[
+            "plot_style_light"]
     plotting_tools.reload_plot(self)
 
 
@@ -58,7 +60,8 @@ def open_file_dialog(self, open_project, import_settings=None):
     )
     open_file_chooser.set_modal(True)
     open_file_chooser.set_select_multiple(open_project)
-    open_file_chooser.connect("response", on_open_file_response, self, open_project, import_settings)
+    open_file_chooser.connect("response", on_open_file_response, self,
+                              open_project, import_settings)
     open_file_chooser.show()
 
 
@@ -109,7 +112,8 @@ def save_file_dialog(self):
         chooser.connect("response", on_save_response, self, False)
         chooser.show()
     except UnboundLocalError:
-        self.main_window.toast_overlay.add_toast(Adw.Toast(title="Could not open save dialog, make sure you have data opened"))
+        toast = "Could not open save dialog, make sure you have data opened"
+        self.main_window.toast_overlay.add_toast(Adw.Toast(title=toast))
 
 
 def on_save_response(dialog, response, self, project):
@@ -121,7 +125,6 @@ def on_save_response(dialog, response, self, project):
             file_io.save_file(self, path)
 
 
-# https://github.com/matplotlib/matplotlib/blob/c23ccdde6f0f8c071b09a88770e24452f2859e99/lib/matplotlib/backends/backend_gtk4.py#L306
 def export_figure(self):
     dialog = Gtk.FileChooserNative(
         title="Save the figure",
@@ -159,7 +162,6 @@ def export_figure(self):
     dialog.show()
 
 
-# https://github.com/matplotlib/matplotlib/blob/c23ccdde6f0f8c071b09a88770e24452f2859e99/lib/matplotlib/backends/backend_gtk4.py#L344
 def on_figure_save_response(dialog, response, self):
     file = dialog.get_file()
     fmt = dialog.get_choice("format")
@@ -170,10 +172,15 @@ def on_figure_save_response(dialog, response, self):
     try:
         self.canvas.figure.savefig(file.get_path(), format=fmt)
     except Exception:
-        self.main_window.toast_overlay.add_toast(Adw.Toast(title="Unable to save image"))
+        self.main_window.toast_overlay.add_toast(
+            Adw.Toast(title="Unable to save image"))
 
 
 def show_about_window(self):
+    developers = [
+        "Sjoerd Broekhuijsen <contact@sjoerd.se>",
+        "Christoph Kohnen <christoph.kohnen@disroot.org>"
+    ]
     about = Adw.AboutWindow(transient_for=self.main_window,
                             application_name=self.name,
                             application_icon=self.appid,
@@ -181,12 +188,11 @@ def show_about_window(self):
                             developer_name=self.author,
                             issue_url=self.issues,
                             version=self.version,
-                            developers=[
-                                "Sjoerd Broekhuijsen <contact@sjoerd.se>",
-                                "Christoph Kohnen <christoph.kohnen@disroot.org>"
-                            ],
+                            developers=developers,
                             copyright=f"© {self.copyright} {self.author}",
                             license_type="GTK_LICENSE_GPL_3_0")
-    with open(os.path.join(os.getenv("XDG_DATA_DIRS")).split(":")[0] + "/graphs/graphs/whats_new", "r", encoding="utf-8") as file:
+    path = os.getenv("XDG_DATA_DIRS").split(":")[0]
+    with open(os.path.join(
+            path + "/graphs/graphs/whats_new"), "r", encoding="utf-8") as file:
         about.set_release_notes(file.read())
     about.present()

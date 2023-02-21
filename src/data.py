@@ -31,17 +31,28 @@ class Data:
         self.set_data_properties(parent, import_settings)
 
     def set_data_properties(self, parent, import_settings):
-        self.plot_y_position = parent.preferences.config["plot_Y_position"]
-        self.plot_x_position = parent.preferences.config["plot_X_position"]
-        self.linestyle_selected = parent.preferences.config["plot_selected_linestyle"]
-        self.linestyle_unselected = parent.preferences.config["plot_unselected_linestyle"]
-        self.selected_line_thickness = parent.preferences.config["selected_linewidth"]
-        self.unselected_line_thickness = parent.preferences.config["unselected_linewidth"]
-        self.selected_markers = parent.preferences.config["plot_selected_markers"]
-        self.unselected_markers = parent.preferences.config["plot_unselected_markers"]
-        self.selected_marker_size = parent.preferences.config["plot_selected_marker_size"]
-        self.unselected_marker_size = parent.preferences.config["plot_unselected_marker_size"]
-        if import_settings.name != "" and import_settings.mode == ImportMode.SINGLE:
+        self.plot_y_position = parent.preferences.config[
+            "plot_Y_position"]
+        self.plot_x_position = parent.preferences.config[
+            "plot_X_position"]
+        self.linestyle_selected = parent.preferences.config[
+            "plot_selected_linestyle"]
+        self.linestyle_unselected = parent.preferences.config[
+            "plot_unselected_linestyle"]
+        self.selected_line_thickness = parent.preferences.config[
+            "selected_linewidth"]
+        self.unselected_line_thickness = parent.preferences.config[
+            "unselected_linewidth"]
+        self.selected_markers = parent.preferences.config[
+            "plot_selected_markers"]
+        self.unselected_markers = parent.preferences.config[
+            "plot_unselected_markers"]
+        self.selected_marker_size = parent.preferences.config[
+            "plot_selected_marker_size"]
+        self.unselected_marker_size = parent.preferences.config[
+            "plot_unselected_marker_size"]
+        if import_settings.name != "" \
+                and import_settings.mode == ImportMode.SINGLE:
             filename = import_settings.name
         else:
             filename = import_settings.path.split("/")[-1]

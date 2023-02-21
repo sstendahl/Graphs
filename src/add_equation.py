@@ -14,25 +14,29 @@ def on_accept(_widget, self, window):
     x_stop = window.X_stop_entry.get_text()
     step_size = window.step_size_entry.get_text()
     equation = str(window.equation_entry.get_text())
-    dataset = create_dataset(x_start, x_stop, equation, step_size, str(window.name_entry.get_text()))
+    dataset = create_dataset(x_start, x_stop, equation, step_size,
+                             str(window.name_entry.get_text()))
     try:
         new_file = Data(self, dataset["xdata"], dataset["ydata"])
         new_file.filename = dataset["name"]
     except Exception as exception:
         exception_type = exception.__class__.__name__
-        window.toast_overlay.add_toast(Adw.Toast(title=f"{exception_type} - Unable to add data from equation"))
+        toast = f"{exception_type} - Unable to add data from equation"
+        window.toast_overlay.add_toast(Adw.Toast(title=toast))
         return
 
-    # Choose how to handle duplicates filenames. Add them, ignore them, overide them,
-    # Or rename the file
+    # Choose how to handle duplicates filenames. Add them,
+    # ignore them, overide them, Or rename the file
     handle_duplicates = self.preferences.config["handle_duplicates"]
     if not handle_duplicates == "Add duplicates":
         for key, item in self.datadict.items():
             if new_file.filename in item.filename:
                 if handle_duplicates == "Auto-rename duplicates":
-                    new_file.filename = utilities.get_duplicate_filename(self, new_file.filename)
+                    new_file.filename = utilities.get_duplicate_filename(
+                        self, new_file.filename)
                 elif handle_duplicates == "Ignore duplicates":
-                    window.toast_overlay.add_toast(Adw.Toast(title="Item with this name already exists"))
+                    toast = "Item with this name already exists"
+                    window.toast_overlay.add_toast(Adw.Toast(title=toast))
                     return
                 elif handle_duplicates == "Override existing items":
                     new_file.xdata_clipboard = [new_file.xdata.copy()]
@@ -48,12 +52,16 @@ def on_accept(_widget, self, window):
     new_file.clipboard_pos = -1
     color = plotting_tools.get_next_color(self)
     self.datadict[new_file.key] = new_file
-    graphs.add_sample_to_menu(self, new_file.filename, color, new_file.key, True)
+    graphs.add_sample_to_menu(self, new_file.filename,
+                              color, new_file.key, True)
     window.destroy()
 
 
 def create_dataset(x_start, x_stop, equation, step_size, name):
-    """Create all data set parameters that are required to create a new data object"""
+    """
+    Create all data set parameters that are required
+    to create a new data object
+    """
     dataset = {}
     if name == "":
         name = f"Y = {str(equation)}"
@@ -81,13 +89,18 @@ class AddEquationWindow(Adw.Window):
 
     def __init__(self, parent):
         super().__init__()
-        self.step_size_entry.set_text(parent.preferences.config["addequation_step_size"])
-        self.X_start_entry.set_text(parent.preferences.config["addequation_X_start"])
-        self.X_stop_entry.set_text(parent.preferences.config["addequation_X_stop"])
-        self.equation_entry.set_text(parent.preferences.config["addequation_equation"])
+        self.step_size_entry.set_text(
+            parent.preferences.config["addequation_step_size"])
+        self.X_start_entry.set_text(
+            parent.preferences.config["addequation_X_start"])
+        self.X_stop_entry.set_text(
+            parent.preferences.config["addequation_X_stop"])
+        self.equation_entry.set_text(
+            parent.preferences.config["addequation_equation"])
 
         style_context = self.add_equation_confirm_button.get_style_context()
         style_context.add_class("suggested-action")
-        self.add_equation_confirm_button.connect("clicked", on_accept, parent, self)
+        self.add_equation_confirm_button.connect("clicked", on_accept,
+                                                 parent, self)
         self.set_transient_for(parent.main_window)
         self.set_modal(True)

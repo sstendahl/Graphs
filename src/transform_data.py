@@ -24,7 +24,9 @@ def on_accept(_widget, self, window):
             except Exception as exception:
                 exception_type = exception.__class__.__name__
                 win = self.main_window
-                win.toast_overlay.add_toast(Adw.Toast(title=f"{exception_type}: Unable to do transformation, make sure the syntax is correct"))
+                toast = f"{exception_type}: Unable to do transformation, "
+                + "make sure the syntax is correct"
+                win.toast_overlay.add_toast(Adw.Toast(title=toast))
                 return
             self.datadict[key].xdata[start_index:stop_index] = xdata_out
             self.datadict[key].ydata[start_index:stop_index] = ydata_out
@@ -32,15 +34,20 @@ def on_accept(_widget, self, window):
             xdata_in = self.datadict[key].xdata
             ydata_in = self.datadict[key].ydata
             try:
-                xdata_out, ydata_out = operation(key, xdata_in, ydata_in, input_x, input_y)
+                xdata_out, ydata_out = operation(
+                    key, xdata_in, ydata_in, input_x, input_y)
             except Exception as exception:
                 exception_type = exception.__class__.__name__
                 win = self.main_window
-                win.toast_overlay.add_toast(Adw.Toast(title=f"{exception_type}: Unable to do transformation, make sure the syntax is correct"))
+                toast = f"{exception_type}: Unable to do transformation, "
+                + "make sure the syntax is correct"
+                win.toast_overlay.add_toast(Adw.Toast(title=toast))
                 return
             self.datadict[key].xdata = xdata_out
             self.datadict[key].ydata = ydata_out
-        self.datadict[key].xdata, self.datadict[key].ydata = item_operations.sort_data(self.datadict[key].xdata, self.datadict[key].ydata)
+        self.datadict[key].xdata, self.datadict[
+            key].ydata = item_operations.sort_data(
+                self.datadict[key].xdata, self.datadict[key].ydata)
     item_operations.delete_selected_data(self)
     item_operations.add_to_clipboard(self)
     plotting_tools.refresh_plot(self)
@@ -81,6 +88,7 @@ class TransformWindow(Adw.Window):
 
         self.transform_x_entry.set_text("X")
         self.transform_y_entry.set_text("Y")
-        self.transform_confirm_button.connect("clicked", on_accept, parent, self)
+        self.transform_confirm_button.connect(
+            "clicked", on_accept, parent, self)
         self.set_transient_for(parent.main_window)
         self.set_modal(True)

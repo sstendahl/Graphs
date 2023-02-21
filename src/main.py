@@ -88,21 +88,35 @@ class GraphsApplication(Adw.Application):
             if keybinds:
                 self.set_accels_for_action(f"app.{name}", keybinds)
 
-        self.create_axis_action("change_left_yscale", plotting_tools.change_left_yscale, "plot_Y_scale")
-        self.create_axis_action("change_right_yscale", plotting_tools.change_right_yscale, "plot_right_scale")
-        self.create_axis_action("change_top_xscale", plotting_tools.change_top_xscale, "plot_top_scale")
-        self.create_axis_action("change_bottom_xscale", plotting_tools.change_bottom_xscale, "plot_X_scale")
+        self.create_axis_action("change_left_yscale",
+                                plotting_tools.change_left_yscale,
+                                "plot_Y_scale")
+        self.create_axis_action("change_right_yscale",
+                                plotting_tools.change_right_yscale,
+                                "plot_right_scale")
+        self.create_axis_action("change_top_xscale",
+                                plotting_tools.change_top_xscale,
+                                "plot_top_scale")
+        self.create_axis_action("change_bottom_xscale",
+                                plotting_tools.change_bottom_xscale,
+                                "plot_X_scale")
 
-        toggle_sidebar = Gio.SimpleAction.new_stateful("toggle_sidebar", None, GLib.Variant.new_boolean(True))
+        state = GLib.Variant.new_boolean(True)
+        toggle_sidebar = Gio.SimpleAction.new_stateful("toggle_sidebar",
+                                                       None, state)
         toggle_sidebar.connect("activate", ui.toggle_sidebar, self)
         self.add_action(toggle_sidebar)
         self.set_accels_for_action("app.toggle_sidebar", ["F9"])
 
-        self.create_mode_action("mode_pan", ["<shift>P", "F1"], InteractionMode.PAN)
-        self.create_mode_action("mode_zoom", ["<shift>Z", "F2"], InteractionMode.ZOOM)
-        self.create_mode_action("mode_select", ["<shift>S", "F3"], InteractionMode.SELECT)
+        self.create_mode_action("mode_pan", ["<shift>P", "F1"],
+                                InteractionMode.PAN)
+        self.create_mode_action("mode_zoom", ["<shift>Z", "F2"],
+                                InteractionMode.ZOOM)
+        self.create_mode_action("mode_select", ["<shift>S", "F3"],
+                                InteractionMode.SELECT)
 
-        Adw.StyleManager.get_default().connect("notify", ui.toggle_darkmode, None, self)
+        Adw.StyleManager.get_default().connect("notify",
+                                               ui.toggle_darkmode, None, self)
 
     def do_activate(self):
         """Called when the application is activated.
@@ -162,7 +176,9 @@ class GraphsApplication(Adw.Application):
 
     def create_axis_action(self, name, callback, config_key):
         """Create action for setting axis scale."""
-        action = Gio.SimpleAction.new_stateful(name, GLib.VariantType.new("s"), GLib.Variant.new_string(self.preferences.config[config_key]))
+        config = self.preferences.config[config_key]
+        action = Gio.SimpleAction.new_stateful(
+            name, GLib.VariantType.new("s"), GLib.Variant.new_string(config))
         action.connect("activate", callback, self)
         self.add_action(action)
 

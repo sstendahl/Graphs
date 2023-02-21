@@ -37,16 +37,26 @@ class Canvas(FigureCanvas):
         Set the properties that are related to saving the figure. Currently
         limited to savefig, but will include the background colour soon.
         """
-        plt.rcParams["savefig.format"] = parent.preferences.config["savefig_filetype"]
-        plt.rcParams["savefig.transparent"] = parent.preferences.config["savefig_transparent"]
+        plt.rcParams["savefig.format"] = parent.preferences.config[
+            "savefig_filetype"]
+        plt.rcParams["savefig.transparent"] = parent.preferences.config[
+            "savefig_transparent"]
 
     def set_ax_properties(self, parent):
         """Set the properties that are related to the axes."""
         self.title = self.ax.set_title(parent.plot_settings.title)
-        self.bottom_label = self.ax.set_xlabel(parent.plot_settings.xlabel, fontweight=parent.plot_settings.font_weight)
-        self.right_label = self.right_axis.set_ylabel(parent.plot_settings.right_label, fontweight=parent.plot_settings.font_weight)
-        self.top_label = self.top_left_axis.set_xlabel(parent.plot_settings.top_label, fontweight=parent.plot_settings.font_weight)
-        self.left_label = self.ax.set_ylabel(parent.plot_settings.ylabel, fontweight=parent.plot_settings.font_weight)
+        self.bottom_label = self.ax.set_xlabel(
+            parent.plot_settings.xlabel,
+            fontweight=parent.plot_settings.font_weight)
+        self.right_label = self.right_axis.set_ylabel(
+            parent.plot_settings.right_label,
+            fontweight=parent.plot_settings.font_weight)
+        self.top_label = self.top_left_axis.set_xlabel(
+            parent.plot_settings.top_label,
+            fontweight=parent.plot_settings.font_weight)
+        self.left_label = self.ax.set_ylabel(
+            parent.plot_settings.ylabel,
+            fontweight=parent.plot_settings.font_weight)
         self.ax.set_yscale(parent.plot_settings.yscale)
         self.right_axis.set_yscale(parent.plot_settings.right_scale)
         self.top_left_axis.set_xscale(parent.plot_settings.top_scale)
@@ -56,9 +66,16 @@ class Canvas(FigureCanvas):
 
     def set_ticks(self, parent):
         """Set the ticks that are to be used in the graph."""
-        for axis in [self.top_right_axis, self.top_left_axis, self.ax, self.right_axis]:
-            axis.tick_params(direction=parent.plot_settings.tick_direction, length=parent.plot_settings.major_tick_length, width=parent.plot_settings.major_tick_width, which="major")
-            axis.tick_params(direction=parent.plot_settings.tick_direction, length=parent.plot_settings.minor_tick_length, width=parent.plot_settings.minor_tick_width, which="minor")
+        for axis in [self.top_right_axis,
+                     self.top_left_axis, self.ax, self.right_axis]:
+            axis.tick_params(
+                direction=parent.plot_settings.tick_direction,
+                length=parent.plot_settings.major_tick_length,
+                width=parent.plot_settings.major_tick_width, which="major")
+            axis.tick_params(
+                direction=parent.plot_settings.tick_direction,
+                length=parent.plot_settings.minor_tick_length,
+                width=parent.plot_settings.minor_tick_width, which="minor")
             axis.tick_params(axis="x", which="minor")
             axis.tick_params(axis="y", which="minor")
             axis.minorticks_on()
@@ -76,9 +93,15 @@ class Canvas(FigureCanvas):
                 if parent.datadict[key].plot_y_position == "right":
                     right = True
             if not (top and bottom):
-                axis.tick_params(which="both", bottom=parent.plot_settings.tick_bottom, top=parent.plot_settings.tick_top)
+                axis.tick_params(
+                    which="both",
+                    bottom=parent.plot_settings.tick_bottom,
+                    top=parent.plot_settings.tick_top)
             if not (left and right):
-                axis.tick_params(which="both", left=parent.plot_settings.tick_left, right=parent.plot_settings.tick_right)
+                axis.tick_params(
+                    which="both",
+                    left=parent.plot_settings.tick_left,
+                    right=parent.plot_settings.tick_right)
 
     def set_style(self, parent):
         """Set the plot style."""
@@ -108,7 +131,8 @@ class Canvas(FigureCanvas):
     def set_color_cycle(self, parent):
         """Set the color cycle that will be used for the graphs."""
         cmap = parent.preferences.config["plot_color_cycle"]
-        reverse_dark = parent.preferences.config["plot_invert_color_cycle_dark"]
+        reverse_dark = parent.preferences.config[
+            "plot_invert_color_cycle_dark"]
         if Adw.StyleManager.get_default().get_dark() and reverse_dark:
             cmap += "_r"
         color_cycle = cycler(color=plt.get_cmap(cmap).colors)
@@ -117,9 +141,9 @@ class Canvas(FigureCanvas):
     def __call__(self, event):
         """
         The function is called when a user clicks on it.
-        If two clicks are performed close to each other, it registers as a double
-        click, and if these were on a specific item (e.g. the title) it triggers
-        a dialog to edit this item.
+        If two clicks are performed close to each other, it registers as a
+        double click, and if these were on a specific item (e.g. the title) it
+        triggers a dialog to edit this item.
 
         Unfortunately the GTK Doubleclick signal doesn"t work with matplotlib
         hence this custom function.
@@ -143,16 +167,18 @@ class Canvas(FigureCanvas):
         if self.top_label.contains(event)[0] and double_click:
             rename_label.open_rename_label_window(self.parent, self.top_label)
         if self.bottom_label.contains(event)[0] and double_click:
-            rename_label.open_rename_label_window(self.parent, self.bottom_label)
+            rename_label.open_rename_label_window(
+                self.parent, self.bottom_label)
         if self.left_label.contains(event)[0] and double_click:
             rename_label.open_rename_label_window(self.parent, self.left_label)
         if self.right_label.contains(event)[0] and double_click:
-            rename_label.open_rename_label_window(self.parent, self.right_label)
+            rename_label.open_rename_label_window(
+                self.parent, self.right_label)
 
     def _post_draw(self, _widget, context):
         """
-        Override with custom implementation of rubberband to allow for custom rubberband style
-        @param context: https://pycairo.readthedocs.io/en/latest/reference/context.html
+        Override with custom implementation of rubberband to allow for custom
+        rubberband style
         """
         if self._rubberband_rect is None:
             return

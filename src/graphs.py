@@ -23,7 +23,13 @@ def open_selection_from_dict(self):
             color = self.item_rows[key].color_picker.color
             y_axis = item.plot_y_position
             x_axis = item.plot_x_position
-            plotting_tools.plot_figure(self, self.canvas, item.xdata, item.ydata, item.filename, linewidth=linewidth, linestyle=linestyle, color=color, marker=marker, marker_size=marker_size, y_axis=y_axis, x_axis=x_axis)
+            plotting_tools.plot_figure(self, self.canvas, item.xdata,
+                                       item.ydata, item.filename,
+                                       linewidth=linewidth,
+                                       linestyle=linestyle,
+                                       color=color, marker=marker,
+                                       marker_size=marker_size,
+                                       y_axis=y_axis, x_axis=x_axis)
 
 
 def open_files(self, files, import_settings):
@@ -40,36 +46,52 @@ def open_files(self, files, import_settings):
                 import_settings.path = path
                 item = file_io.get_data(self, import_settings)
                 if item.xdata == []:
-                    self.main_window.toast_overlay.add_toast(Adw.Toast(title="At least one data set could not be imported"))
+                    toast = "At least one data set could not be imported"
+                    self.main_window.toast_overlay.add_toast(
+                        Adw.Toast(title=toast))
                     continue
             except IndexError:
-                self.main_window.toast_overlay.add_toast(Adw.Toast(title="Could not open data, the column index was out of range"))
+                toast = "Could not open data, the column index is out of range"
+                self.main_window.toast_overlay.add_toast(
+                    Adw.Toast(title=toast))
                 break
             except UnicodeDecodeError:
-                self.main_window.toast_overlay.add_toast(Adw.Toast(title="Could not open data, wrong filetype"))
+                toast = "Could not open data, wrong filetype"
+                self.main_window.toast_overlay.add_toast(
+                    Adw.Toast(title=toast))
                 break
             if item is not None:
-                handle_duplicates = self.preferences.config["handle_duplicates"]
-                if not handle_duplicates == "Add duplicates":
-                    for key, item2 in self.datadict.items():
-                        if item.filename == item2.filename:
-                            if handle_duplicates == "Auto-rename duplicates":
-                                item.filename = utilities.get_duplicate_filename(self, item.filename)
-                            elif handle_duplicates == "Ignore duplicates":
-                                self.main_window.toast_overlay.add_toast(Adw.Toast(title=f'Item "{item.filename}" already exists'))
-                                return
-                            elif handle_duplicates == "Override existing items":
-                                self.datadict[key] = item
-                                plotting_tools.reload_plot(self)
-                                return
-                self.datadict[item.key] = item
-                item.color = plotting_tools.get_next_color(self)
-                plotting_tools.plot_figure(self, self.canvas, item.xdata, item.ydata, filename=item.filename)
-                add_sample_to_menu(self, item.filename, item.color, item.key, select=True)
+                open_item(self, item)
     self.canvas.draw()
     plotting_tools.set_canvas_limits_axis(self)
     plotting_tools.refresh_plot(self)
     ui.enable_data_dependent_buttons(self, True)
+
+
+def open_item(self, item):
+    config = self.preferences.config
+    handle_duplicates = config["handle_duplicates"]
+    if not handle_duplicates == "Add duplicates":
+        for key, item2 in self.datadict.items():
+            if item.filename == item2.filename:
+                if handle_duplicates == "Auto-rename duplicates":
+                    item.filename = utilities.get_duplicate_filename(
+                        self, item.filename)
+                elif handle_duplicates == "Ignore duplicates":
+                    toast = f'Item "{item.filename}" already exists'
+                    self.main_window.toast_overlay.add_toast(
+                        Adw.Toast(title=toast))
+                    pass
+                elif handle_duplicates == "Override existing items":
+                    self.datadict[key] = item
+                    plotting_tools.reload_plot(self)
+                    return
+    self.datadict[item.key] = item
+    item.color = plotting_tools.get_next_color(self)
+    plotting_tools.plot_figure(self, self.canvas, item.xdata,
+                               item.ydata, filename=item.filename)
+    add_sample_to_menu(
+        self, item.filename, item.color, item.key, select=True)
 
 
 def select_item(self, key):
@@ -88,7 +110,8 @@ def delete(self, key, give_toast=False):
     del self.item_rows[key]
     del self.datadict[key]
     if give_toast:
-        self.main_window.toast_overlay.add_toast(Adw.Toast(title=f"Deleted {filename}"))
+        self.main_window.toast_overlay.add_toast(
+            Adw.Toast(title=f"Deleted {filename}"))
 
     if len(self.datadict) == 0:
         self.canvas.ax.legend().remove()
@@ -117,11 +140,11 @@ def add_sample_to_menu(self, filename, color, key, select=False):
 def create_data_from_project(self, new_dictionary):
     """
     Creates self.datadict using a new dictionary.
-    This function uses new dictionary, which contains old Data objects in order to
-    create a new self.datadict dictionary, with new Data objects.
-    It sets all matching attributes that exist in the old data set to the new data set.
-    Attributes that were removed and no longer used are not copied over, and will therefore
-    revert to the default value.
+    This function uses new dictionary, which contains old Data objects in order
+    to create a new self.datadict dictionary, with new Data objects.
+    It sets all matching attributes that exist in the old data set to the new
+    data set. Attributes that were removed and no longer used are not copied
+    over, and will therefore revert to the default value.
     """
     self.datadict = {}
     for _key, item in new_dictionary.items():
@@ -130,14 +153,17 @@ def create_data_from_project(self, new_dictionary):
         self.datadict[item.key] = Data(self, xdata, ydata)
         for attribute in self.datadict[item.key].__dict__:
             if hasattr(item, attribute):
-                setattr(self.datadict[item.key], attribute, getattr(item, attribute))
+                setattr(self.datadict[item.key],
+                        attribute, getattr(item, attribute))
 
 
 def set_attributes(new_object, template):
     """
     Sets the attributes of `new_object` to match those of `template`.
-    This function sets the attributes of `new_object` to the values of the attributes in `template` if they don"t already exist in `new_object`.
-    Additionally, it removes any attributes from `new_object` that are not present in `template`.
+    This function sets the attributes of `new_object` to the values of the
+    attributes in `template` if they don"t already exist in `new_object`.
+    Additionally, it removes any attributes from `new_object` that are
+    not present in `template`.
     """
     for attribute in template.__dict__:
         if not hasattr(new_object, attribute):
@@ -150,7 +176,8 @@ def set_attributes(new_object, template):
 def load_empty(self):
     win = self.main_window
     self.canvas = Canvas(parent=self)
-    for axis in [self.canvas.right_axis, self.canvas.top_left_axis, self.canvas.top_right_axis]:
+    for axis in [self.canvas.right_axis, self.canvas.top_left_axis,
+                 self.canvas.top_right_axis]:
         axis.get_xaxis().set_visible(False)
         axis.get_yaxis().set_visible(False)
     self.dummy_toolbar = DummyToolbar(self.canvas)

@@ -73,7 +73,8 @@ def get_dict_by_value(dictionary, value):
 
 def get_font_weight(font_name):
     """Get the weight of the font that is used using the full font name"""
-    valid_weights = ["normal", "bold", "heavy", "light", "ultrabold", "ultralight"]
+    valid_weights = ["normal", "bold", "heavy",
+                     "light", "ultrabold", "ultralight"]
     if font_name[-2] != "italic":
         new_weight = font_name[-2]
     else:
@@ -92,7 +93,7 @@ def get_font_style(font_name):
 
 
 def get_selected_keys(self):
-    """Get a list of the ID's of all the datasets that are currently selected"""
+    """Get a list of ID's of all the datasets that are currently selected"""
     selected_keys = []
     for _key, item in self.item_rows.items():
         if item.check_button.get_active():
@@ -101,17 +102,28 @@ def get_selected_keys(self):
 
 
 def create_data(self, xdata=[], ydata=[], name="New data"):
-    """Create a new dataset using the xdata, ydata and name of the dataset as argument"""
+    """
+    Create a new dataset using the xdata, ydata
+    and name of the dataset as argument
+    """
     new_file = Data(xdata, ydata)
     new_file.filename = name
-    new_file.linestyle_selected = self.preferences.config["plot_selected_linestyle"]
-    new_file.linestyle_unselected = self.preferences.config["plot_unselected_linestyle"]
-    new_file.selected_line_thickness = self.preferences.config["selected_linewidth"]
-    new_file.unselected_line_thickness = self.preferences.config["unselected_linewidth"]
-    new_file.selected_markers = self.preferences.config["plot_selected_markers"]
-    new_file.unselected_markers = self.preferences.config["plot_unselected_markers"]
-    new_file.selected_marker_size = self.preferences.config["plot_selected_marker_size"]
-    new_file.unselected_marker_size = self.preferences.config["plot_unselected_marker_size"]
+    new_file.linestyle_selected = self.preferences.config[
+        "plot_selected_linestyle"]
+    new_file.linestyle_unselected = self.preferences.config[
+        "plot_unselected_linestyle"]
+    new_file.selected_line_thickness = self.preferences.config[
+        "selected_linewidth"]
+    new_file.unselected_line_thickness = self.preferences.config[
+        "unselected_linewidth"]
+    new_file.selected_markers = self.preferences.config[
+        "plot_selected_markers"]
+    new_file.unselected_markers = self.preferences.config[
+        "plot_unselected_markers"]
+    new_file.selected_marker_size = self.preferences.config[
+        "plot_selected_marker_size"]
+    new_file.unselected_marker_size = self.preferences.config[
+        "plot_unselected_marker_size"]
     return new_file
 
 
@@ -130,7 +142,10 @@ def lookup_color(self, color):
 
 
 def rgba_to_hex(rgba):
-    return "#{:02x}{:02x}{:02x}".format(round(rgba.red * 255), round(rgba.green * 255), round(rgba.blue * 255))
+    return "#{:02x}{:02x}{:02x}".format(
+        round(rgba.red * 255),
+        round(rgba.green * 255),
+        round(rgba.blue * 255))
 
 
 def rgba_to_tuple(rgba):

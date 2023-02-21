@@ -132,8 +132,10 @@ class PreferencesWindow(Adw.PreferencesWindow):
         utilities.populate_chooser(self.plot_color_cycle, color_cycles)
         utilities.populate_chooser(self.plot_style_dark, plt.style.available)
         utilities.populate_chooser(self.plot_style_light, plt.style.available)
-        utilities.populate_chooser(self.plot_selected_markers_chooser, list(Line2D.markers.values()), clear=False)
-        utilities.populate_chooser(self.plot_unselected_markers_chooser, list(Line2D.markers.values()), clear=False)
+        utilities.populate_chooser(self.plot_selected_markers_chooser,
+                                   list(Line2D.markers.values()), clear=False)
+        utilities.populate_chooser(self.plot_unselected_markers_chooser,
+                                   list(Line2D.markers.values()), clear=False)
         config = parent.preferences.config
         config = self.load_configuration(config)
         self.connect("close-request", self.on_close, parent)
@@ -141,7 +143,8 @@ class PreferencesWindow(Adw.PreferencesWindow):
 
     def load_configuration(self, config):
         font_string = config["plot_font_string"]
-        font_desc = self.plot_font_chooser.get_font_desc().from_string(font_string)
+        font_desc = self.plot_font_chooser.get_font_desc().from_string(
+            font_string)
         self.plot_font_chooser.set_font_desc(font_desc)
         self.plot_font_chooser.set_use_font(True)
         self.selected_line_thickness_slider.set_range(0.1, 10)
@@ -155,15 +158,20 @@ class PreferencesWindow(Adw.PreferencesWindow):
         self.addequation_equation.set_text(str(config["addequation_equation"]))
         self.addequation_X_start.set_text(str(config["addequation_X_start"]))
         self.addequation_X_stop.set_text(str(config["addequation_X_stop"]))
-        self.addequation_step_size.set_text(str(config["addequation_step_size"]))
+        self.addequation_step_size.set_text(str(config[
+            "addequation_step_size"]))
         self.import_skip_rows.set_value(int(config["import_skip_rows"]))
         self.column_y.set_value(int(config["import_column_y"]))
         self.column_x.set_value(int(config["import_column_x"]))
         self.import_delimiter.set_text(config["import_delimiter"])
-        self.plot_selected_marker_size.set_value(config["plot_selected_marker_size"])
-        self.plot_unselected_marker_size.set_value(config["plot_unselected_marker_size"])
-        self.unselected_line_thickness_slider.set_value(config["unselected_linewidth"])
-        self.selected_line_thickness_slider.set_value(config["selected_linewidth"])
+        self.plot_selected_marker_size.set_value(config[
+            "plot_selected_marker_size"])
+        self.plot_unselected_marker_size.set_value(config[
+            "plot_unselected_marker_size"])
+        self.unselected_line_thickness_slider.set_value(config[
+            "unselected_linewidth"])
+        self.selected_line_thickness_slider.set_value(config[
+            "selected_linewidth"])
         self.plot_minor_tick_width.set_value(config["plot_minor_tick_width"])
         self.plot_major_tick_width.set_value(config["plot_major_tick_width"])
         self.plot_minor_tick_length.set_value(config["plot_minor_tick_length"])
@@ -173,27 +181,40 @@ class PreferencesWindow(Adw.PreferencesWindow):
         self.plot_right_label.set_text(config["plot_right_label"])
         self.plot_top_label.set_text(config["plot_top_label"])
         self.plot_title.set_text(config["plot_title"])
-        utilities.set_chooser(self.savefig_filetype_chooser, config["savefig_filetype"])
-        utilities.set_chooser(self.center_data_chooser, config["action_center_data"])
+        utilities.set_chooser(self.savefig_filetype_chooser, config[
+            "savefig_filetype"])
+        utilities.set_chooser(self.center_data_chooser, config[
+            "action_center_data"])
         utilities.set_chooser(self.plot_X_scale, config["plot_X_scale"])
         utilities.set_chooser(self.plot_top_scale, config["plot_top_scale"])
-        utilities.set_chooser(self.plot_right_scale, config["plot_right_scale"])
+        utilities.set_chooser(self.plot_right_scale, config[
+            "plot_right_scale"])
         utilities.set_chooser(self.plot_Y_scale, config["plot_Y_scale"])
         utilities.set_chooser(self.plot_X_position, config["plot_X_position"])
         utilities.set_chooser(self.plot_Y_position, config["plot_Y_position"])
-        utilities.set_chooser(self.plot_tick_direction, config["plot_tick_direction"])
-        utilities.set_chooser(self.handle_duplicates_chooser, config["handle_duplicates"])
-        utilities.set_chooser(self.import_separator, config["import_separator"])
-        utilities.set_chooser(self.plot_color_cycle, config["plot_color_cycle"])
-        utilities.set_chooser(self.plot_selected_linestyle_chooser, config["plot_selected_linestyle"])
-        utilities.set_chooser(self.plot_unselected_linestyle_chooser, config["plot_unselected_linestyle"])
-        utilities.set_chooser(self.plot_style_light, config["plot_style_light"])
+        utilities.set_chooser(self.plot_tick_direction, config[
+            "plot_tick_direction"])
+        utilities.set_chooser(self.handle_duplicates_chooser, config[
+            "handle_duplicates"])
+        utilities.set_chooser(self.import_separator, config[
+            "import_separator"])
+        utilities.set_chooser(self.plot_color_cycle, config[
+            "plot_color_cycle"])
+        utilities.set_chooser(self.plot_selected_linestyle_chooser, config[
+            "plot_selected_linestyle"])
+        utilities.set_chooser(self.plot_unselected_linestyle_chooser, config[
+            "plot_unselected_linestyle"])
+        utilities.set_chooser(self.plot_style_light, config[
+            "plot_style_light"])
         utilities.set_chooser(self.plot_style_dark, config["plot_style_dark"])
         marker_dict = Line2D.markers
-        unselected_marker_value = marker_dict[config["plot_unselected_markers"]]
+        unselected_marker_value = marker_dict[config[
+            "plot_unselected_markers"]]
         selected_marker_value = marker_dict[config["plot_selected_markers"]]
-        utilities.set_chooser(self.plot_selected_markers_chooser, selected_marker_value)
-        utilities.set_chooser(self.plot_unselected_markers_chooser, unselected_marker_value)
+        utilities.set_chooser(
+            self.plot_selected_markers_chooser, selected_marker_value)
+        utilities.set_chooser(
+            self.plot_unselected_markers_chooser, unselected_marker_value)
         if config["plot_tick_left"]:
             self.plot_tick_left.set_active(True)
         if config["plot_tick_right"]:
@@ -213,7 +234,8 @@ class PreferencesWindow(Adw.PreferencesWindow):
         return config
 
     def get_font_weight(self, font_name):
-        valid_weights = ["normal", "bold", "heavy", "light", "ultrabold", "ultralight"]
+        valid_weights = [
+            "normal", "bold", "heavy", "light", "ultrabold", "ultralight"]
         if font_name[-2] != "italic":
             new_weight = font_name[-2]
         else:
@@ -237,7 +259,8 @@ class PreferencesWindow(Adw.PreferencesWindow):
 
     def set_config(self):
         config = {}
-        font_name = self.plot_font_chooser.get_font_desc().to_string().lower().split(" ")
+        font_description = self.plot_font_chooser.get_font_desc()
+        font_name = font_description.to_string().lower().split(" ")
         font_size = font_name[-1]
         font_weight = self.get_font_weight(font_name)
         font_style = self.get_font_style(font_name)
@@ -245,25 +268,40 @@ class PreferencesWindow(Adw.PreferencesWindow):
         config["addequation_X_start"] = self.addequation_X_start.get_text()
         config["addequation_X_stop"] = self.addequation_X_stop.get_text()
         config["addequation_step_size"] = self.addequation_step_size.get_text()
-        config["plot_font_string"] = self.plot_font_chooser.get_font_desc().to_string()
-        config["plot_selected_marker_size"] = self.plot_selected_marker_size.get_value()
-        config["plot_unselected_marker_size"] = self.plot_unselected_marker_size.get_value()
-        config["selected_linewidth"] = self.selected_line_thickness_slider.get_value()
-        config["unselected_linewidth"] = self.unselected_line_thickness_slider.get_value()
-        config["plot_major_tick_width"] = self.plot_major_tick_width.get_value()
-        config["plot_minor_tick_width"] = self.plot_minor_tick_width.get_value()
-        config["plot_major_tick_length"] = self.plot_major_tick_length.get_value()
-        config["plot_minor_tick_length"] = self.plot_minor_tick_length.get_value()
+        config["plot_font_string"] = self.plot_font_chooser.get_font_desc(
+        ).to_string()
+        selected_marker = self.plot_selected_marker_size
+        config["plot_selected_marker_size"] = selected_marker.get_value()
+        unselected_marker = self.plot_unselected_marker_size
+        config["plot_unselected_marker_size"] = unselected_marker.get_value()
+        selected_thickness = self.selected_line_thickness_slider
+        config["selected_linewidth"] = selected_thickness.get_value()
+        unselected_linewidth = self.unselected_line_thickness_slider
+        config["unselected_linewidth"] = unselected_linewidth.get_value()
+        config[
+            "plot_major_tick_width"] = self.plot_major_tick_width.get_value()
+        config[
+            "plot_minor_tick_width"] = self.plot_minor_tick_width.get_value()
+        config[
+            "plot_major_tick_length"] = self.plot_major_tick_length.get_value()
+        config[
+            "plot_minor_tick_length"] = self.plot_minor_tick_length.get_value()
         config["plot_tick_left"] = self.plot_tick_left.get_active()
         config["plot_tick_right"] = self.plot_tick_right.get_active()
         config["plot_tick_top"] = self.plot_tick_top.get_active()
         config["plot_tick_bottom"] = self.plot_tick_bottom.get_active()
-        config["plot_tick_direction"] = self.plot_tick_direction.get_selected_item().get_string()
+        tick_direction = self.plot_tick_direction
+        config["plot_tick_direction"] = tick_direction.get_selected_item(
+        ).get_string()
         config["guess_headers"] = self.guess_headers.get_active()
-        config["handle_duplicates"] = self.handle_duplicates_chooser.get_selected_item().get_string()
-        config["savefig_transparent"] = self.savefig_transparent_check_button.get_active()
+        handle_duplicates = self.handle_duplicates_chooser
+        config["handle_duplicates"] = handle_duplicates.get_selected_item(
+        ).get_string()
+        transparent = self.savefig_transparent_check_button
+        config["savefig_transparent"] = transparent.get_active()
         config["plot_legend"] = self.plot_legend_check.get_active()
-        config["plot_invert_color_cycle_dark"] = self.plot_invert_color_cycle_dark.get_active()
+        invert_color = self.plot_invert_color_cycle_dark
+        config["plot_invert_color_cycle_dark"] = invert_color.get_active()
         config["plot_Y_label"] = self.plot_Y_label.get_text()
         config["plot_X_label"] = self.plot_X_label.get_text()
         config["plot_right_label"] = self.plot_right_label.get_text()
@@ -271,31 +309,59 @@ class PreferencesWindow(Adw.PreferencesWindow):
         config["plot_font_size"] = font_size
         config["plot_font_style"] = font_style
         config["plot_font_weight"] = font_weight
-        config["plot_font_family"] = self.plot_font_chooser.get_font_desc().get_family()
+        config["plot_font_family"] = self.plot_font_chooser.get_font_desc(
+        ).get_family()
         config["plot_title"] = self.plot_title.get_text()
-        config["savefig_filetype"] = self.savefig_filetype_chooser.get_selected_item().get_string()
-        config["plot_color_cycle"] = self.plot_color_cycle.get_selected_item().get_string()
-        config["plot_X_scale"] = self.plot_X_scale.get_selected_item().get_string()
-        config["plot_Y_scale"] = self.plot_Y_scale.get_selected_item().get_string()
-        config["plot_top_scale"] = self.plot_top_scale.get_selected_item().get_string()
-        config["plot_right_scale"] = self.plot_right_scale.get_selected_item().get_string()
-        config["plot_right_scale"] = self.plot_right_scale.get_selected_item().get_string()
-        config["plot_top_scale"] = self.plot_top_scale.get_selected_item().get_string()
-        config["plot_X_position"] = self.plot_X_position.get_selected_item().get_string()
-        config["plot_Y_position"] = self.plot_Y_position.get_selected_item().get_string()
-        config["action_center_data"] = self.center_data_chooser.get_selected_item().get_string()
-        config["plot_selected_linestyle"] = self.plot_selected_linestyle_chooser.get_selected_item().get_string()
-        config["plot_unselected_linestyle"] = self.plot_unselected_linestyle_chooser.get_selected_item().get_string()
-        config["plot_style_dark"] = self.plot_style_dark.get_selected_item().get_string()
-        config["plot_style_light"] = self.plot_style_light.get_selected_item().get_string()
+        filetype = self.savefig_filetype_chooser
+        config[
+            "savefig_filetype"] = filetype.get_selected_item().get_string()
+        config["plot_color_cycle"] = self.plot_color_cycle.get_selected_item(
+        ).get_string()
+        config["plot_X_scale"] = self.plot_X_scale.get_selected_item(
+        ).get_string()
+        config["plot_Y_scale"] = self.plot_Y_scale.get_selected_item(
+        ).get_string()
+        config["plot_top_scale"] = self.plot_top_scale.get_selected_item(
+        ).get_string()
+        config["plot_right_scale"] = self.plot_right_scale.get_selected_item(
+        ).get_string()
+        config["plot_right_scale"] = self.plot_right_scale.get_selected_item(
+        ).get_string()
+        config["plot_top_scale"] = self.plot_top_scale.get_selected_item(
+        ).get_string()
+        config["plot_X_position"] = self.plot_X_position.get_selected_item(
+        ).get_string()
+        config["plot_Y_position"] = self.plot_Y_position.get_selected_item(
+        ).get_string()
+        config[
+            "action_center_data"] = self.center_data_chooser.get_selected_item(
+        ).get_string()
+        selected_linestyle = self.plot_selected_linestyle_chooser
+        config[
+            "plot_selected_linestyle"] = selected_linestyle.get_selected_item(
+        ).get_string()
+        unselected_line = self.plot_unselected_linestyle_chooser
+        config[
+            "plot_unselected_linestyle"] = unselected_line.get_selected_item(
+        ).get_string()
+        config["plot_style_dark"] = self.plot_style_dark.get_selected_item(
+        ).get_string()
+        config["plot_style_light"] = self.plot_style_light.get_selected_item(
+        ).get_string()
         config["import_column_x"] = int(self.column_x.get_value())
         config["import_column_y"] = int(self.column_y.get_value())
         config["import_skip_rows"] = int(self.import_skip_rows.get_value())
-        config["import_separator"] = self.import_separator.get_selected_item().get_string()
+        config["import_separator"] = self.import_separator.get_selected_item(
+        ).get_string()
         config["import_delimiter"] = self.import_delimiter.get_text()
         marker_dict = Line2D.markers
-        unselected_marker_value = utilities.get_dict_by_value(marker_dict, self.plot_unselected_markers_chooser.get_selected_item().get_string())
-        selected_marker_value = utilities.get_dict_by_value(marker_dict, self.plot_selected_markers_chooser.get_selected_item().get_string())
+        unselected_marker_value = utilities.get_dict_by_value(
+            marker_dict,
+            self.plot_unselected_markers_chooser.get_selected_item(
+            ).get_string())
+        selected_marker_value = utilities.get_dict_by_value(
+            marker_dict, self.plot_selected_markers_chooser.get_selected_item(
+            ).get_string())
         config["plot_unselected_markers"] = unselected_marker_value
         config["plot_selected_markers"] = selected_marker_value
         return config

@@ -33,7 +33,8 @@ class RenameLabelWindow(Adw.Window):
         if axis == parent.canvas.title:
             self.set_title("Rename Title")
             self.preferencegroup.set_title("Change Title")
-            self.preferencegroup.set_description("Here you can change the title of the plot")
+            self.preferencegroup.set_description(
+                "Here you can change the title of the plot")
             self.label_entry.set_title("Title")
         self.label_entry.set_text(axis.get_text())
 

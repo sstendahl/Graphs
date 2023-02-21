@@ -68,7 +68,8 @@ class ColorPicker(Gtk.Button):
     def set_css(self):
         self.provider = Gtk.CssProvider()
         context = self.get_style_context()
-        context.add_provider(self.provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION)
+        context.add_provider(
+            self.provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION)
         rgba = utilities.create_rgba(*colors.to_rgba(self.color))
         self.set_rgba(rgba)
         self.set_rgba(self.get_rgba())

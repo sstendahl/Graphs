@@ -56,9 +56,11 @@ def save_file(self, path):
             filename = item.filename
             array = numpy.stack([xdata, ydata], axis=1)
             if os.path.exists(f"{path}/{filename}.txt"):
-                numpy.savetxt(str(path + "/" + filename) + " (copy).txt", array, delimiter="\t")
+                numpy.savetxt(str(path + "/" + filename) + " (copy).txt",
+                              array, delimiter="\t")
             else:
-                numpy.savetxt(str(path + "/" + filename) + ".txt", array, delimiter="\t")
+                numpy.savetxt(str(path + "/" + filename) + ".txt", array,
+                              delimiter="\t")
 
 
 def get_data(self, import_settings):
@@ -75,28 +77,36 @@ def get_data(self, import_settings):
                     for index, value in enumerate(data_line):
                         data_line[index] = utilities.swap(value)
                 try:
-                    data_array[0].append(float(data_line[import_settings.column_x]))
-                    data_array[1].append(float(data_line[import_settings.column_y]))
+                    data_array[0].append(float(data_line[
+                        import_settings.column_x]))
+                    data_array[1].append(float(data_line[
+                        import_settings.column_y]))
 
-                # If it finds non-numbers, it will raise a ValueError, this is the cue to
-                # start looking for headers
+                # If it finds non-numbers, it will raise a ValueError,
+                # this is the cue to start looking for headers
                 except ValueError:
                     if import_settings.guess_headers:
-                        # By default it will check for headers using at least two whitespaces
-                        # as delimiter (often tabs), but if that doesn"t work it will try
-                        # the same delimiter as used for the data import itself
-                        # The reasoning is that some people use tabs for the headers, but
-                        # e.g. commas for the data
+                        # By default it will check for headers using at least
+                        # two whitespaces as delimiter (often tabs), but if
+                        # that doesn"t work it will try the same delimiter as
+                        # used for the data import itself The reasoning is that
+                        # some people use tabs for the headers, but e.g. commas
+                        # for the data
                         try:
                             headers = re.split("\\s{2,}", line)
-                            self.plot_settings.xlabel = headers[import_settings.column_x]
-                            self.plot_settings.ylabel = headers[import_settings.column_y]
+                            self.plot_settings.xlabel = headers[
+                                import_settings.column_x]
+                            self.plot_settings.ylabel = headers[
+                                import_settings.column_y]
                         except IndexError:
                             try:
-                                headers = re.split(import_settings["delimiter"], line)
-                                self.plot_settings.xlabel = headers[import_settings.column_x]
-                                self.plot_settings.ylabel = headers[import_settings.column_y]
-                            # If neither heuristic works, we just skip the headers
+                                headers = re.split(
+                                    import_settings["delimiter"], line)
+                                self.plot_settings.xlabel = headers[
+                                    import_settings.column_x]
+                                self.plot_settings.ylabel = headers[
+                                    import_settings.column_y]
+                            # If neither heuristic works, we just skip headers
                             except IndexError:
                                 pass
     data = Data(self, data_array[0], data_array[1], import_settings)
