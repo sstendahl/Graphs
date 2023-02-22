@@ -1,5 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Main actions."""
+from gi.repository import Adw
+
 from graphs import graphs, item_operations, plotting_tools, ui, utilities
 from graphs.add_data_advanced import AddAdvancedWindow
 from graphs.add_equation import AddEquationWindow
@@ -27,7 +29,7 @@ def plot_settings_action(_action, _target, self):
 
 
 def add_data_action(_action, _target, self):
-    ui.open_file_dialog(self, False)
+    ui.open_file_dialog(self)
 
 
 def add_data_advanced_action(_action, _target, self):
@@ -90,7 +92,22 @@ def save_project_action(_action, _target, self):
 
 
 def open_project_action(_action, _target, self):
-    ui.open_file_dialog(self, True)
+    if len(self.datadict) > 0:
+        heading = "Override Data?"
+        body = "Opening a project will override any loaded data."
+        dialog = Adw.MessageDialog.new(self.main_window,
+                                       heading,
+                                       body)
+        dialog.add_response("cancel", "Cancel")
+        dialog.add_response("override", "Override")
+        dialog.set_close_response("cancel")
+        dialog.set_default_response("override")
+        dialog.set_response_appearance("override",
+                                       Adw.ResponseAppearance.DESTRUCTIVE)
+        dialog.connect("response", ui.on_confirm_override_response, self)
+        dialog.present()
+        return
+    ui.open_project_dialog(self)
 
 
 def delete_selected_action(_action, _target, self):
