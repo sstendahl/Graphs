@@ -1,9 +1,10 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 from gi.repository import Adw, Gtk
 
-@Gtk.Template(resource_path='/se/sjoerd/Graphs/ui/window.ui')
+
+@Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/window.ui")
 class GraphsWindow(Adw.ApplicationWindow):
-    __gtype_name__ = 'GraphsWindow'
+    __gtype_name__ = "GraphsWindow"
     pan_button = Gtk.Template.Child()
     zoom_button = Gtk.Template.Child()
     select_button = Gtk.Template.Child()
@@ -32,6 +33,3 @@ class GraphsWindow(Adw.ApplicationWindow):
     transform_data_button = Gtk.Template.Child()
     combine_data_button = Gtk.Template.Child()
     no_data_label_box = Gtk.Template.Child()
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)

@@ -1,51 +1,57 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 import os
-from gi.repository import GLib, Adw, Gtk
 
-from . import plotting_tools, file_io, graphs
+from gi.repository import Adw, GLib, Gtk
 
-def toggle_sidebar(action, shortcut, self):
+from graphs import file_io, graphs, plotting_tools
+
+
+def toggle_sidebar(action, _shortcut, self):
     flap = self.main_window.sidebar_flap
     enabled = not flap.get_reveal_flap()
     action.change_state(GLib.Variant.new_boolean(enabled))
     flap.set_reveal_flap(enabled)
 
-def toggle_darkmode(shortcut, theme, widget, self):
+
+def toggle_darkmode(_shortcut, _theme, _widget, self):
     if Adw.StyleManager.get_default().get_dark():
-        self.plot_settings.plot_style = self.preferences.config["plot_style_dark"]
+        self.plot_settings.plot_style = self.preferences.config[
+            "plot_style_dark"]
     else:
-        self.plot_settings.plot_style = self.preferences.config["plot_style_light"]
+        self.plot_settings.plot_style = self.preferences.config[
+            "plot_style_light"]
     plotting_tools.reload_plot(self)
+
 
 def enable_data_dependent_buttons(self, enabled):
     win = self.main_window
-
     dependent_buttons = [
-    win.shift_vertically_button,
-    win.translate_x_button,
-    win.translate_y_button,
-    win.multiply_x_button,
-    win.multiply_y_button,
-    win.smooth_button,
-    win.fourier_button,
-    win.inverse_fourier_button,
-    win.normalize_button,
-    win.center_data_button,
-    win.derivative_button,
-    win.integral_button,
-    win.transform_data_button,
-    win.combine_data_button,
+        win.shift_vertically_button,
+        win.translate_x_button,
+        win.translate_y_button,
+        win.multiply_x_button,
+        win.multiply_y_button,
+        win.smooth_button,
+        win.fourier_button,
+        win.inverse_fourier_button,
+        win.normalize_button,
+        win.center_data_button,
+        win.derivative_button,
+        win.integral_button,
+        win.transform_data_button,
+        win.combine_data_button,
     ]
-
     for button in dependent_buttons:
         button.set_sensitive(enabled)
+
 
 def disable_clipboard_buttons(self):
     win = self.main_window
     win.redo_button.set_sensitive(False)
     win.undo_button.set_sensitive(False)
 
-def open_file_dialog(self, open_project, import_settings = None):
+
+def open_file_dialog(self, open_project, import_settings=None):
     open_file_chooser = Gtk.FileChooserNative.new(
         title="Open new files",
         parent=self.main_window,
@@ -54,17 +60,20 @@ def open_file_dialog(self, open_project, import_settings = None):
     )
     open_file_chooser.set_modal(True)
     open_file_chooser.set_select_multiple(open_project)
-    open_file_chooser.connect("response", on_open_file_response, self, open_project, import_settings)
+    open_file_chooser.connect("response", on_open_file_response, self,
+                              open_project, import_settings)
     open_file_chooser.show()
+
 
 def on_open_file_response(dialog, response, self, project, import_settings):
     if response == Gtk.ResponseType.ACCEPT:
-        if(project):
+        if project:
             file_io.load_project(self, dialog.get_files())
         else:
             graphs.open_files(self, dialog.get_files(), import_settings)
 
-def save_project_dialog(self, documenttypes="Graphs Project (*)"):
+
+def save_project_dialog(self):
     def save_project_chooser(action):
         dialog = Gtk.FileChooserNative.new(
             title="Save files",
@@ -79,7 +88,8 @@ def save_project_dialog(self, documenttypes="Graphs Project (*)"):
     chooser.connect("response", on_save_response, self, True)
     chooser.show()
 
-def save_file_dialog(self, documenttype="Text file (*.txt)"):
+
+def save_file_dialog(self):
     def save_file_chooser(action):
         dialog = Gtk.FileChooserNative.new(
             title="Save files",
@@ -102,7 +112,9 @@ def save_file_dialog(self, documenttype="Text file (*.txt)"):
         chooser.connect("response", on_save_response, self, False)
         chooser.show()
     except UnboundLocalError:
-        self.main_window.toast_overlay.add_toast(Adw.Toast(title=f"Could not open save dialog, make sure you have data opened"))
+        toast = "Could not open save dialog, make sure you have data opened"
+        self.main_window.toast_overlay.add_toast(Adw.Toast(title=toast))
+
 
 def on_save_response(dialog, response, self, project):
     if response == Gtk.ResponseType.ACCEPT:
@@ -112,59 +124,63 @@ def on_save_response(dialog, response, self, project):
         else:
             file_io.save_file(self, path)
 
-# https://github.com/matplotlib/matplotlib/blob/c23ccdde6f0f8c071b09a88770e24452f2859e99/lib/matplotlib/backends/backend_gtk4.py#L306
+
 def export_figure(self):
     dialog = Gtk.FileChooserNative(
-        title='Save the figure',
+        title="Save the figure",
         transient_for=self.main_window,
         action=Gtk.FileChooserAction.SAVE,
         modal=True)
 
-    ff = Gtk.FileFilter()
-    ff.set_name('All files')
-    ff.add_pattern('*')
-    dialog.add_filter(ff)
-    dialog.set_filter(ff)
+    file_filter = Gtk.FileFilter()
+    file_filter.set_name("All files")
+    file_filter.add_pattern("*")
+    dialog.add_filter(file_filter)
+    dialog.set_filter(file_filter)
 
     formats = []
     default_format = None
     for i, (name, fmts) in enumerate(
             self.canvas.get_supported_filetypes_grouped().items()):
-        ff = Gtk.FileFilter()
-        ff.set_name(name)
+        file_filter = Gtk.FileFilter()
+        file_filter.set_name(name)
         for fmt in fmts:
-            ff.add_pattern(f'*.{fmt}')
-        dialog.add_filter(ff)
+            file_filter.add_pattern(f"*.{fmt}")
+        dialog.add_filter(file_filter)
         formats.append(name)
         if self.canvas.get_default_filetype() in fmts:
             default_format = i
-    # Setting the choice doesn't always work, so make sure the default
+    # Setting the choice doesn"t always work, so make sure the default
     # format is first.
     formats = [formats[default_format], *formats[:default_format],
-               *formats[default_format+1:]]
-    dialog.add_choice('format', 'File format', formats, formats)
-    dialog.set_choice('format', formats[default_format])
+               *formats[default_format + 1:]]
+    dialog.add_choice("format", "File format", formats, formats)
+    dialog.set_choice("format", formats[default_format])
 
     dialog.set_current_name(self.canvas.get_default_filename())
-    dialog.connect("response", on_save_response, self)
+    dialog.connect("response", on_figure_save_response, self)
     dialog.show()
 
-# https://github.com/matplotlib/matplotlib/blob/c23ccdde6f0f8c071b09a88770e24452f2859e99/lib/matplotlib/backends/backend_gtk4.py#L344
-def on_save_response(dialog, response, self):
+
+def on_figure_save_response(dialog, response, self):
     file = dialog.get_file()
-    fmt = dialog.get_choice('format')
+    fmt = dialog.get_choice("format")
     fmt = self.canvas.get_supported_filetypes_grouped()[fmt][0]
     dialog.destroy()
     if response != Gtk.ResponseType.ACCEPT:
         return
     try:
         self.canvas.figure.savefig(file.get_path(), format=fmt)
-    except Exception as e:
-        self.main_window.toast_overlay.add_toast(Adw.Toast(title=f"Unable to save image"))
+    except Exception:
+        self.main_window.toast_overlay.add_toast(
+            Adw.Toast(title="Unable to save image"))
+
 
 def show_about_window(self):
-    whats_new = open(os.path.join(os.getenv('XDG_DATA_DIRS')).split(":")[0] + '/graphs/graphs/whats_new', 'r').read()
-    print(whats_new)
+    developers = [
+        "Sjoerd Broekhuijsen <contact@sjoerd.se>",
+        "Christoph Kohnen <christoph.kohnen@disroot.org>"
+    ]
     about = Adw.AboutWindow(transient_for=self.main_window,
                             application_name=self.name,
                             application_icon=self.appid,
@@ -172,11 +188,11 @@ def show_about_window(self):
                             developer_name=self.author,
                             issue_url=self.issues,
                             version=self.version,
-                            developers=[
-                            'Sjoerd Broekhuijsen <contact@sjoerd.se>',
-                            'Christoph Kohnen <christoph.kohnen@disroot.org>'
-                            ],
-                            copyright=f'© {self.copyright} {self.author}',
-                            license_type='GTK_LICENSE_GPL_3_0')
-    about.set_release_notes(whats_new)
+                            developers=developers,
+                            copyright=f"© {self.copyright} {self.author}",
+                            license_type="GTK_LICENSE_GPL_3_0")
+    path = os.getenv("XDG_DATA_DIRS").split(":")[0]
+    with open(os.path.join(
+            path + "/graphs/graphs/whats_new"), "r", encoding="utf-8") as file:
+        about.set_release_notes(file.read())
     about.present()

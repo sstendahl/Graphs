@@ -1,13 +1,14 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
-import re
+from gi.repository import Adw
+
+from graphs import graphs, plotting_tools, utilities
+from graphs.data import Data
+from graphs.misc import InteractionMode
+
 import numpy as np
 
-from gi.repository import Adw
 from scipy import integrate
 
-from . import plotting_tools, graphs, utilities, ui
-from .data import Data
-from .misc import InteractionMode
 
 def add_to_clipboard(self):
     """
@@ -16,13 +17,13 @@ def add_to_clipboard(self):
     """
     undo_button = self.main_window.undo_button
     undo_button.set_sensitive(True)
-    
-    #If a couple of redo's were performed previously, it deletes the clipboard
-    #data that is located after the current clipboard position and disables the
-    #redo button
-    for key, item in self.datadict.items():
+
+    # If a couple of redo"s were performed previously, it deletes the clipboard
+    # data that is located after the current clipboard position and disables
+    # the redo button
+    for _key, item in self.datadict.items():
         delete_lists = - item.clipboard_pos - 1
-        for index in range(delete_lists):
+        for _index in range(delete_lists):
             del item.xdata_clipboard[-1]
             del item.ydata_clipboard[-1]
         if delete_lists != 0:
@@ -31,7 +32,8 @@ def add_to_clipboard(self):
 
         item.clipboard_pos = -1
         item.xdata_clipboard.append(item.xdata.copy())
-        item.ydata_clipboard.append(item.ydata.copy()) 
+        item.ydata_clipboard.append(item.ydata.copy())
+
 
 def undo(self):
     """
@@ -40,7 +42,7 @@ def undo(self):
     """
     undo_button = self.main_window.undo_button
     redo_button = self.main_window.redo_button
-    for key, item in self.datadict.items():
+    for _key, item in self.datadict.items():
         if abs(item.clipboard_pos) < len(item.xdata_clipboard):
             redo_button.set_sensitive(True)
             item.clipboard_pos -= 1
@@ -50,14 +52,15 @@ def undo(self):
         undo_button.set_sensitive(False)
     plotting_tools.refresh_plot(self)
 
+
 def redo(self):
     """
-    Redo an action, moves the clipboard position forwards by one and changes the 
-    dataset to the state before the previous action was undone
+    Redo an action, moves the clipboard position forwards by one and changes
+    the dataset to the state before the previous action was undone
     """
     undo_button = self.main_window.undo_button
     redo_button = self.main_window.redo_button
-    for key, item in self.datadict.items():
+    for _key, item in self.datadict.items():
         if item.clipboard_pos < 0:
             undo_button.set_sensitive(True)
             item.clipboard_pos += 1
@@ -84,7 +87,7 @@ def delete_selected_data(self):
 
 def pick_data_selection(self, item, startx, stopx):
     """
-    Checks for a given item if it is within the selected span. If it is, it 
+    Checks for a given item if it is within the selected span. If it is, it
     returns the part of the data that is within the span.
     """
     xdata = item.xdata
@@ -101,56 +104,60 @@ def pick_data_selection(self, item, startx, stopx):
         if value > stopx and not found_stop:
             stop_index = index
             found_stop = True
-    selected_data = Data(self, xdata[start_index:stop_index], ydata[start_index:stop_index])
-    if len(selected_data.xdata) > 0 and (found_start or found_stop) == True:
+    selected_data = Data(self, xdata[start_index:stop_index],
+                         ydata[start_index:stop_index])
+    if len(selected_data.xdata) > 0 and (found_start or found_stop):
         return selected_data, start_index, stop_index
+    return None
 
-def sort_data(x, y):
+
+def sort_data(x_values, y_values):
     """
     Sort x and y-coordinates such that the x-data is continiously increasing
     Takes in x, and y coordinates of that array, and returns the sorted variant
     """
-    zipped_list = zip(x, y)
-    sorted_lists = sorted(zipped_list, key=lambda x: x[0])
+    zipped_list = zip(x_values, y_values)
+    sorted_lists = sorted(zipped_list, key=lambda x_values: x_values[0])
     sorted_x, sorted_y = zip(*sorted_lists)
     return list(sorted_x), list(sorted_y)
 
 
 def cut_data(self):
-    """
-    Cut selected data over the span that is selected
-    """
-    if self._mode == InteractionMode.SELECT:
-        if select_data(self): #If select_data ran succesfully
+    """Cut selected data over the span that is selected"""
+    if self.interaction_mode == InteractionMode.SELECT:
+        if select_data(self):  # If select_data ran succesfully
             for key, item in self.datadict.items():
                 xdata = item.xdata
                 ydata = item.ydata
-                #Create empty arrays that will be equal to the new cut data 
+                # Create empty arrays that will be equal to the new cut data
                 new_x = []
                 new_y = []
-                
-                #If our item is among the selected samples, we will cut those
+
+                # If our item is among the selected samples, we will cut those
                 if f"{key}_selected" in self.datadict:
                     selected_item = self.datadict[f"{key}_selected"]
                     if selected_item is None:
                         continue
-                    for index, (valuex, valuey) in enumerate(zip(xdata, ydata)):
-                        #Appends the values that are within the selected span
-                        if valuex < min(selected_item.xdata) or valuex > max(selected_item.xdata):
+                    for _index, (valuex, valuey) \
+                            in enumerate(zip(xdata, ydata)):
+                        # Appends the values that are within the selected span
+                        if valuex < min(selected_item.xdata) \
+                                or valuex > max(selected_item.xdata):
                             new_x.append(valuex)
                             new_y.append(valuey)
                     item.xdata = new_x
                     item.ydata = new_y
             delete_selected_data(self)
             add_to_clipboard(self)
-            plotting_tools.refresh_plot(self, set_limits = False)
+            plotting_tools.refresh_plot(self, set_limits=False)
+
 
 def select_data(self):
     """
     Select data that is highlighted by the span
     Basically just creates new data_sets with the key "_selected" appended
     """
-    #First delete previously selected data
+    # First delete previously selected data
     delete_selected_data(self)
     selected_dict = {}
     selected_keys = utilities.get_selected_keys(self)
@@ -163,43 +170,72 @@ def select_data(self):
         stopx = max(highlight.extents)
         start_index = 0
         stop_index = 0
-        
-        #Selection is different for bottom and top axis. The span selector takes
-        #the top axis coordinates. So for the data that uses the bottom axis as
-        #x-axis coordinates, the coordinates first needs to be converted.
+
+        # Selection is different for bottom and top axis. The span selector
+        # takes the top axis coordinates. So for the data that uses the bottom
+        # axis as x-axis coordinates, the coordinates first
+        # needs to be converted.
         if item.plot_X_position == "bottom":
-            xrange_bottom = max(self.canvas.ax.get_xlim()) - min(self.canvas.ax.get_xlim())
-            xrange_top = max(self.canvas.top_left_axis.get_xlim()) - min(self.canvas.top_left_axis.get_xlim())
-            #Run into issues if the range is different, so we calculate this by
-            #getting what fraction of top axis is highlighted
+            xrange_bottom = max(self.canvas.ax.get_xlim()) \
+                - min(self.canvas.ax.get_xlim())
+            xrange_top = max(self.canvas.top_left_axis.get_xlim()) \
+                - min(self.canvas.top_left_axis.get_xlim())
+            # Run into issues if the range is different, so we calculate this
+            # by getting what fraction of top axis is highlighted
             if self.canvas.top_left_axis.get_xscale() == "log":
-                fraction_left_limit = get_fraction_at_value(min(highlight.extents), min(self.canvas.top_left_axis.get_xlim()), max(self.canvas.top_left_axis.get_xlim()))
-                fraction_right_limit = get_fraction_at_value(max(highlight.extents), min(self.canvas.top_left_axis.get_xlim()), max(self.canvas.top_left_axis.get_xlim()))
+                fraction_left_limit = get_fraction_at_value(
+                    min(highlight.extents),
+                    min(self.canvas.top_left_axis.get_xlim()),
+                    max(self.canvas.top_left_axis.get_xlim()))
+                fraction_right_limit = get_fraction_at_value(
+                    max(highlight.extents),
+                    min(self.canvas.top_left_axis.get_xlim()),
+                    max(self.canvas.top_left_axis.get_xlim()))
             elif self.canvas.top_left_axis.get_xscale() == "linear":
-                fraction_left_limit = (min(highlight.extents) - min(self.canvas.top_left_axis.get_xlim())) / (xrange_top)
-                fraction_right_limit = (max(highlight.extents) - min(self.canvas.top_left_axis.get_xlim())) / (xrange_top)
+                fraction_left_limit = (
+                    min(highlight.extents) - min(
+                        self.canvas.top_left_axis.get_xlim())) / (xrange_top)
+                fraction_right_limit = (
+                    max(highlight.extents) - min(
+                        self.canvas.top_left_axis.get_xlim())) / (xrange_top)
 
-            #Use the fraction that is higlighted on top to calculate to what
-            #values this corresponds on bottom axis
+            # Use the fraction that is higlighted on top to calculate to what
+            # values this corresponds on bottom axis
             if self.canvas.ax.get_xscale() == "log":
-                startx = get_value_at_fraction(fraction_left_limit, min(self.canvas.ax.get_xlim()), max(self.canvas.ax.get_xlim()))
-                stopx = get_value_at_fraction(fraction_right_limit, min(self.canvas.ax.get_xlim()), max(self.canvas.ax.get_xlim()))
-            elif self.canvas.ax.get_xscale() == "linear":  
-                startx = min(self.canvas.ax.get_xlim()) + xrange_bottom * fraction_left_limit
-                stopx = min(self.canvas.ax.get_xlim()) + xrange_bottom * fraction_right_limit
+                startx = get_value_at_fraction(
+                    fraction_left_limit,
+                    min(self.canvas.ax.get_xlim()),
+                    max(self.canvas.ax.get_xlim()))
+                stopx = get_value_at_fraction(
+                    fraction_right_limit,
+                    min(self.canvas.ax.get_xlim()),
+                    max(self.canvas.ax.get_xlim()))
+            elif self.canvas.ax.get_xscale() == "linear":
+                startx = min(
+                    self.canvas.ax.get_xlim())
+                + xrange_bottom * fraction_left_limit
+                stopx = min(
+                    self.canvas.ax.get_xlim())
+                + xrange_bottom * fraction_right_limit
 
-        #If startx and stopx are not out of range, that is, if the sample data is within the highlight
-        if not ((startx < min(item.xdata) and stopx < min(item.xdata)) or (startx > max(item.xdata))):
-            selected_data, start_index, stop_index = pick_data_selection(self, item, startx, stopx)
+        # If startx and stopx are not out of range, that is,
+        # if the sample data is within the highlight
+        if not ((startx < min(
+                item.xdata) and stopx < min(
+                    item.xdata)) or (startx > max(item.xdata))):
+            selected_data, start_index, stop_index = pick_data_selection(
+                self, item, startx, stopx)
             selected_dict[f"{key}_selected"] = selected_data
-        if (startx < min(item.xdata) and stopx < min(item.xdata)) or (startx > max(item.xdata)):
+        if (startx < min(item.xdata) and stopx < min(item.xdata)) \
+                or (startx > max(item.xdata)):
             delete_selected_data(self)
-        #Update the dataset to include the selected data, only if we actually
-        #managed to select data.
+        # Update the dataset to include the selected data, only if we actually
+        # managed to select data.
         if len(selected_dict) > 0:
             self.datadict.update(selected_dict)
         start_stop[key] = [start_index, stop_index]
     return True, start_stop
+
 
 def get_value_at_fraction(fraction, start, end):
     """
@@ -213,6 +249,7 @@ def get_value_at_fraction(fraction, start, end):
     log_value = log_start + log_range * fraction
     return pow(10, log_value)
 
+
 def get_fraction_at_value(value, start, end):
     """
     Obtain the fraction of the total length of the selected axis a specific
@@ -224,123 +261,117 @@ def get_fraction_at_value(value, start, end):
     log_range = log_end - log_start
     return (log_value - log_start) / log_range
 
+
 def get_derivative(self):
-    """
-    Calculate derivative of all selected data
-    """
-    if self._mode == InteractionMode.SELECT:
-        selection, start_stop = select_data(self)
+    """Calculate derivative of all selected data"""
+    if self.interaction_mode == InteractionMode.SELECT:
+        select_data(self)
     selected_keys = utilities.get_selected_keys(self)
     for key in selected_keys:
         if f"{key}_selected" in self.datadict:
             item = self.datadict[f"{key}_selected"]
-        if self._mode != InteractionMode.SELECT:
+        if self.interaction_mode != InteractionMode.SELECT:
             item = self.datadict[key]
-        x = np.array(item.xdata)
-        y = np.array(item.ydata)
-        dy_dx = np.gradient(y, x)
+        x_values = np.array(item.xdata)
+        y_values = np.array(item.ydata)
+        dy_dx = np.gradient(y_values, x_values)
         self.datadict[key].xdata = item.xdata
         self.datadict[key].ydata = dy_dx.tolist()
     add_to_clipboard(self)
     delete_selected_data(self)
     plotting_tools.refresh_plot(self)
 
+
 def get_integral(self):
-    """
-    Calculate indefinite integral of all selected data
-    """
-    if self._mode == InteractionMode.SELECT:
-        selection, start_stop = select_data(self)
+    """Calculate indefinite integral of all selected data"""
+    if self.interaction_mode == InteractionMode.SELECT:
+        select_data(self)
     selected_keys = utilities.get_selected_keys(self)
     for key in selected_keys:
         if f"{key}_selected" in self.datadict:
             item = self.datadict[f"{key}_selected"]
-        if self._mode != InteractionMode.SELECT:
+        if self.interaction_mode != InteractionMode.SELECT:
             item = self.datadict[key]
-        x = np.array(item.xdata)
-        y = np.array(item.ydata)
-        F = integrate.cumtrapz(y, x, initial=0)
+        x_values = np.array(item.xdata)
+        y_values = np.array(item.ydata)
+        indefinite_integral = integrate.cumtrapz(y_values, x_values, initial=0)
         self.datadict[key].xdata = item.xdata
-        self.datadict[key].ydata = F.tolist()
+        self.datadict[key].ydata = indefinite_integral.tolist()
 
     add_to_clipboard(self)
     delete_selected_data(self)
     plotting_tools.refresh_plot(self)
-    
+
+
 def get_fourier(self):
-    """
-    Perform Fourier transformation on all selected data
-    """
-    if self._mode == InteractionMode.SELECT:
-        selection, start_stop = select_data(self)
+    """Perform Fourier transformation on all selected data"""
+    if self.interaction_mode == InteractionMode.SELECT:
+        select_data(self)
     selected_keys = utilities.get_selected_keys(self)
     for key in selected_keys:
         if f"{key}_selected" in self.datadict:
             item = self.datadict[f"{key}_selected"]
-        if self._mode != InteractionMode.SELECT:
+        if self.interaction_mode != InteractionMode.SELECT:
             item = self.datadict[key]
-        x = np.array(item.xdata)
-        y = np.array(item.ydata)
-        y_fourier = np.fft.fft(y)
-        x_fourier = np.fft.fftfreq(len(x), x[1] - x[0])
+        x_values = np.array(item.xdata)
+        y_values = np.array(item.ydata)
+        y_fourier = np.fft.fft(y_values)
+        x_fourier = np.fft.fftfreq(len(x_values), x_values[1] - x_values[0])
         y_fourier = [value.real for value in y_fourier]
-        self.datadict[key].ydata =  y_fourier
+        self.datadict[key].ydata = y_fourier
         self.datadict[key].xdata = x_fourier
     delete_selected_data(self)
     add_to_clipboard(self)
-    plotting_tools.refresh_plot(self)    
+    plotting_tools.refresh_plot(self)
+
 
 def get_inverse_fourier(self):
-    """
-    Perform Inverse Fourier transformation on all selected data
-    """
-    if self._mode == InteractionMode.SELECT:
-        selection, start_stop = select_data(self)
+    """Perform Inverse Fourier transformation on all selected data"""
+    if self.interaction_mode == InteractionMode.SELECT:
+        select_data(self)
     selected_keys = utilities.get_selected_keys(self)
     for key in selected_keys:
         if f"{key}_selected" in self.datadict:
             item = self.datadict[f"{key}_selected"]
-        if self._mode != InteractionMode.SELECT:
+        if self.interaction_mode != InteractionMode.SELECT:
             item = self.datadict[key]
-        x = np.array(item.xdata)
-        y = np.array(item.ydata)
-        y_fourier = np.fft.ifft(y)
-        x_fourier = np.fft.fftfreq(len(x), x[1] - x[0])
+        x_values = np.array(item.xdata)
+        y_values = np.array(item.ydata)
+        y_fourier = np.fft.ifft(y_values)
+        x_fourier = np.fft.fftfreq(len(x_values), x_values[1] - x_values[0])
         y_fourier = [value.real for value in y_fourier]
-        self.datadict[key].ydata =  y_fourier
+        self.datadict[key].ydata = y_fourier
         self.datadict[key].xdata = x_fourier
     add_to_clipboard(self)
     delete_selected_data(self)
     plotting_tools.refresh_plot(self)
 
-    
+
 def combine_data(self):
-    """
-    Combine the selected data into a new data set
-    """
-    if self._mode == InteractionMode.SELECT:
-        selection, start_stop = select_data(self)
+    """Combine the selected data into a new data set"""
+    if self.interaction_mode == InteractionMode.SELECT:
+        select_data(self)
     selected_keys = utilities.get_selected_keys(self)
-    
+
     new_xdata = []
     new_ydata = []
     for key in selected_keys:
         if f"{key}_selected" in self.datadict:
             item = self.datadict[f"{key}_selected"]
-        if self._mode != InteractionMode.SELECT:
+        if self.interaction_mode != InteractionMode.SELECT:
             item = self.datadict[key]
         new_xdata.extend(item.xdata.copy())
         new_ydata.extend(item.ydata.copy())
-    
-    
-    #Create the sample itself
+
+    # Create the sample itself
     new_xdata, new_ydata = sort_data(new_xdata, new_ydata)
     new_item = Data(self, new_xdata, new_ydata)
     new_item.filename = "Combined Data"
     filename_list = utilities.get_all_filenames(self)
-        
+
     if new_item.filename in filename_list:
-         new_item.filename = graphs.get_duplicate_filename(self, new_item.filename)
+        new_item.filename = graphs.get_duplicate_filename(
+            self, new_item.filename)
     color = plotting_tools.get_next_color(self)
     self.datadict[new_item.key] = new_item
     delete_selected_data(self)
@@ -351,28 +382,28 @@ def combine_data(self):
 
 
 def smoothen_data(self):
-    """
-    Smoothen y-data.
-    """
+    """Smoothen y-data."""
     selected_keys = utilities.get_selected_keys(self)
-    if self._mode == InteractionMode.SELECT:
-        selection, start_stop = select_data(self)
+    if self.interaction_mode == InteractionMode.SELECT:
+        _selection, start_stop = select_data(self)
     for key in selected_keys:
         if f"{key}_selected" in self.datadict:
-            #Define the highlighted area
+            # Define the highlighted area
             selected_item = self.datadict[f"{key}_selected"]
-            #Perform the operation on the highlighted area
+            # Perform the operation on the highlighted area
             selected_item.ydata = smooth(selected_item.ydata, 4)
             start_index, stop_index = start_stop[key][0], start_stop[key][1]
-            #Replace the highlighted part in the original data set
-            self.datadict[key].ydata[start_index:stop_index] = selected_item.ydata
-        if self._mode != InteractionMode.SELECT:
+            # Replace the highlighted part in the original data set
+            self.datadict[key].ydata[
+                start_index:stop_index] = selected_item.ydata
+        if self.interaction_mode != InteractionMode.SELECT:
             ydata = self.datadict[key].ydata
             ydata = smooth(ydata, 4)
             self.datadict[key].ydata = ydata
     delete_selected_data(self)
     add_to_clipboard(self)
     plotting_tools.refresh_plot(self)
+
 
 def smooth(y_data, box_points):
     """
@@ -383,44 +414,48 @@ def smooth(y_data, box_points):
     y_smooth = np.convolve(y_data, box, mode="same")
     return y_smooth
 
+
 def shift_vertically(self):
     """
     Shifts data vertically with respect to each other
-    By default it scales linear data by 1.5 times the total span of the 
+    By default it scales linear data by 1.5 times the total span of the
     ydata, and log data by a factor of 10000.
     """
     selected_keys = utilities.get_selected_keys(self)
     shift_value_log = 1
     shift_value_linear = 0
-    if self._mode == InteractionMode.SELECT:
-        selection, start_stop = select_data(self)
-        
+    if self.interaction_mode == InteractionMode.SELECT:
+        _selection, start_stop = select_data(self)
+
     for key in selected_keys:
         if f"{key}_selected" in self.datadict:
-            #Define the highlighted area
+            # Define the highlighted area
             selected_item = self.datadict[f"{key}_selected"]
             ymin = min(x for x in selected_item.ydata if x != 0)
             ymax = max(x for x in selected_item.ydata if x != 0)
-            shift_value_linear += 1.2*(ymax - ymin)
-            shift_value_log *= 10**(np.log10(ymax/ymin))
-            shift_item(self, selected_item, shift_value_log, shift_value_linear)
+            shift_value_linear += 1.2 * (ymax - ymin)
+            shift_value_log *= 10 ** (np.log10(ymax / ymin))
+            shift_item(
+                self, selected_item, shift_value_log, shift_value_linear)
             start_index, stop_index = start_stop[key][0], start_stop[key][1]
-            self.datadict[key].ydata[start_index:stop_index] = selected_item.ydata
-        if self._mode != InteractionMode.SELECT:
+            self.datadict[key].ydata[
+                start_index:stop_index] = selected_item.ydata
+        if self.interaction_mode != InteractionMode.SELECT:
             item = self.datadict[key]
             ymin = min(x for x in item.ydata if x != 0)
             ymax = max(x for x in item.ydata if x != 0)
-            shift_value_linear += 1.2*(ymax - ymin)
-            shift_value_log *= 10**(np.log10(ymax/ymin))
+            shift_value_linear += 1.2 * (ymax - ymin)
+            shift_value_log *= 10 ** (np.log10(ymax / ymin))
             shift_item(self, item, shift_value_log, shift_value_linear)
 
     delete_selected_data(self)
     add_to_clipboard(self)
     plotting_tools.refresh_plot(self)
 
+
 def shift_item(self, item, shift_value_log, shift_value_linear):
-    #Check which axes the data is on, so it can choose the appropriate
-    #scaling (log/linear)
+    # Check which axes the data is on, so it can choose the appropriate
+    # scaling (log/linear)
     if item.plot_Y_position == "left":
         if self.plot_settings.yscale == "log":
             item.ydata = [value * shift_value_log for value in item.ydata]
@@ -432,6 +467,7 @@ def shift_item(self, item, shift_value_log, shift_value_linear):
         if self.plot_settings.right_scale == "linear":
             item.ydata = [value + shift_value_linear for value in item.ydata]
 
+
 def translate_x(self):
     """
     Translate all selected data on the x-axis
@@ -442,29 +478,35 @@ def translate_x(self):
     win = self.main_window
     try:
         offset = eval(win.translate_x_entry.get_text())
-    except Exception as e:
-        exception_type = e.__class__.__name__
-        print(f"{e}: Unable to do translation, make sure to enter a valid number")
-        win.toast_overlay.add_toast(Adw.Toast(title=f"{exception_type}: Unable to do translation, make sure to enter a valid number"))
+    except Exception as exception:
+        exception_type = exception.__class__.__name__
+        toast = f"{exception_type}: Unable to do translation, "
+        + "make sure to enter a valid number"
+        win.toast_overlay.add_toast(Adw.Toast(title=toast))
         offset = 0
-    if self._mode == InteractionMode.SELECT:
-        selection, start_stop = select_data(self)
+    if self.interaction_mode == InteractionMode.SELECT:
+        _selection, start_stop = select_data(self)
     selected_keys = utilities.get_selected_keys(self)
     for key in selected_keys:
         if f"{key}_selected" in self.datadict:
-            #Define the highlighted area
+            # Define the highlighted area
             selected_item = self.datadict[f"{key}_selected"]
-            #Perform the operation on the highlighted area
-            selected_item.xdata = [value + offset for value in selected_item.xdata]
+            # Perform the operation on the highlighted area
+            selected_item.xdata = [
+                value + offset for value in selected_item.xdata]
             start_index, stop_index = start_stop[key][0], start_stop[key][1]
-            #Replace the highlighted part in the original data set
-            self.datadict[key].xdata[start_index:stop_index] = selected_item.xdata
-        if self._mode != InteractionMode.SELECT:
-            self.datadict[key].xdata = [value + offset for value in self.datadict[key].xdata]
-        self.datadict[key].xdata, self.datadict[key].ydata = sort_data(self.datadict[key].xdata, self.datadict[key].ydata)
+            # Replace the highlighted part in the original data set
+            self.datadict[key].xdata[
+                start_index:stop_index] = selected_item.xdata
+        if self.interaction_mode != InteractionMode.SELECT:
+            self.datadict[key].xdata = [
+                value + offset for value in self.datadict[key].xdata]
+        self.datadict[key].xdata, self.datadict[key].ydata = sort_data(
+            self.datadict[key].xdata, self.datadict[key].ydata)
     add_to_clipboard(self)
     delete_selected_data(self)
     plotting_tools.refresh_plot(self)
+
 
 def translate_y(self):
     """
@@ -476,33 +518,39 @@ def translate_y(self):
     win = self.main_window
     try:
         offset = eval(win.translate_y_entry.get_text())
-    except Exception as e:
-        exception_type = e.__class__.__name__
-        print(f"{e}: Unable to do translation, make sure to enter a valid number")
-        win.toast_overlay.add_toast(Adw.Toast(title=f"{exception_type}: Unable to do translation, make sure to enter a valid number"))
+    except Exception as exception:
+        exception_type = exception.__class__.__name__
+        toast = f"{exception_type}: Unable to do translation, "
+        + "make sure to enter a valid number"
+        win.toast_overlay.add_toast(Adw.Toast(title=toast))
         offset = 0
     selected_keys = utilities.get_selected_keys(self)
 
     # If we are in selection mode, then select the highlighted data
-    if self._mode == InteractionMode.SELECT:
-        selection, start_stop = select_data(self)
+    if self.interaction_mode == InteractionMode.SELECT:
+        _selection, start_stop = select_data(self)
     for key in selected_keys:
-        #If the selected data exists, so this will get ignored when we're not in selection mode
+        # If the selected data exists, so this will get ignored when we"re
+        # not in selection mode
         if f"{key}_selected" in self.datadict:
             print(self.datadict[key].filename)
-            #Define the highlighted area
+            # Define the highlighted area
             selected_item = self.datadict[f"{key}_selected"]
-            #Perform the operation on the highlighted area
-            selected_item.ydata = [value + offset for value in selected_item.ydata]
+            # Perform the operation on the highlighted area
+            selected_item.ydata = [
+                value + offset for value in selected_item.ydata]
             start_index, stop_index = start_stop[key][0], start_stop[key][1]
-            #Replace the highlighted part in the original data set
-            self.datadict[key].ydata[start_index:stop_index] = selected_item.ydata
-        if self._mode != InteractionMode.SELECT:
-            self.datadict[key].ydata = [value + offset for value in self.datadict[key].ydata]
+            # Replace the highlighted part in the original data set
+            self.datadict[key].ydata[
+                start_index:stop_index] = selected_item.ydata
+        if self.interaction_mode != InteractionMode.SELECT:
+            self.datadict[key].ydata = [
+                value + offset for value in self.datadict[key].ydata]
     add_to_clipboard(self)
-    #Throw away the selected/highlighted datasets
+    # Throw away the selected/highlighted datasets
     delete_selected_data(self)
     plotting_tools.refresh_plot(self)
+
 
 def multiply_x(self):
     """
@@ -514,30 +562,37 @@ def multiply_x(self):
     win = self.main_window
     try:
         multiplier = eval(win.multiply_x_entry.get_text())
-    except Exception as e:
-        exception_type = e.__class__.__name__
-        print(f"{e}: Unable to do multiplication, make sure to enter a valid number")
-        win.toast_overlay.add_toast(Adw.Toast(title=f"{exception_type}: Unable to do multiplication, make sure to enter a valid number"))
+    except Exception as exception:
+        exception_type = exception.__class__.__name__
+        toast = f"{exception_type}: Unable to do multiplication, "
+        + "make sure to enter a valid number"
+        win.toast_overlay.add_toast(Adw.Toast(title=toast))
         multiplier = 1
     selected_keys = utilities.get_selected_keys(self)
-    if self._mode == InteractionMode.SELECT:
-        selection, start_stop = select_data(self)
+    if self.interaction_mode == InteractionMode.SELECT:
+        _selection, start_stop = select_data(self)
     for key in selected_keys:
-        #If the selected data exists, so this will get ignored when we're not in selection mode
+        # If the selected data exists, so this will get ignored when
+        # we"re not in selection mode
         if f"{key}_selected" in self.datadict:
-            #Define the highlighted area
+            # Define the highlighted area
             selected_item = self.datadict[f"{key}_selected"]
-            #Perform the operation on the highlighted area
-            selected_item.xdata = [value * multiplier for value in selected_item.xdata]
+            # Perform the operation on the highlighted area
+            selected_item.xdata = [
+                value * multiplier for value in selected_item.xdata]
             start_index, stop_index = start_stop[key][0], start_stop[key][1]
-            #Replace the highlighted part in the original data set
-            self.datadict[key].xdata[start_index:stop_index] = selected_item.xdata
-        if self._mode != InteractionMode.SELECT:
-            self.datadict[key].xdata = [value * multiplier for value in self.datadict[key].xdata]
-        self.datadict[key].xdata, self.datadict[key].ydata = sort_data(self.datadict[key].xdata, self.datadict[key].ydata)
+            # Replace the highlighted part in the original data set
+            self.datadict[key].xdata[
+                start_index:stop_index] = selected_item.xdata
+        if self.interaction_mode != InteractionMode.SELECT:
+            self.datadict[key].xdata = [
+                value * multiplier for value in self.datadict[key].xdata]
+        self.datadict[key].xdata, self.datadict[key].ydata = sort_data(
+            self.datadict[key].xdata, self.datadict[key].ydata)
     delete_selected_data(self)
     add_to_clipboard(self)
     plotting_tools.refresh_plot(self)
+
 
 def multiply_y(self):
     """
@@ -549,54 +604,61 @@ def multiply_y(self):
     win = self.main_window
     try:
         multiplier = eval(win.multiply_y_entry.get_text())
-    except Exception as e:
-        exception_type = e.__class__.__name__
-        print(f"{e}: Unable to do multiplication, make sure to enter a valid number")
-        win.toast_overlay.add_toast(Adw.Toast(title=f"{exception_type}: Unable to do multiplication, make sure to enter a valid number"))
+    except Exception as exception:
+        exception_type = exception.__class__.__name__
+        toast = f"{exception_type}: Unable to do multiplication, "
+        + "make sure to enter a valid number"
+        win.toast_overlay.add_toast(Adw.Toast(title=toast))
         multiplier = 1
     selected_keys = utilities.get_selected_keys(self)
-    if self._mode == InteractionMode.SELECT:
-        selection, start_stop = select_data(self)
+    if self.interaction_mode == InteractionMode.SELECT:
+        _selection, start_stop = select_data(self)
     for key in selected_keys:
-        #If the selected data exists, so this will get ignored when we're not in selection mode
+        # If the selected data exists, so this will get ignored when
+        # we"re not in selection mode
         if f"{key}_selected" in self.datadict:
-            #Define the highlighted area
+            # Define the highlighted area
             selected_item = self.datadict[f"{key}_selected"]
-            #Perform the operation on the highlighted area
-            selected_item.ydata = [value * multiplier for value in selected_item.ydata]
+            # Perform the operation on the highlighted area
+            selected_item.ydata = [
+                value * multiplier for value in selected_item.ydata]
             start_index, stop_index = start_stop[key][0], start_stop[key][1]
-            #Replace the highlighted part in the original data set
-            self.datadict[key].ydata[start_index:stop_index] = selected_item.ydata
-        if self._mode != InteractionMode.SELECT:
-            self.datadict[key].ydata = [value * multiplier for value in self.datadict[key].ydata]
+            # Replace the highlighted part in the original data set
+            self.datadict[key].ydata[
+                start_index:stop_index] = selected_item.ydata
+        if self.interaction_mode != InteractionMode.SELECT:
+            self.datadict[key].ydata = [
+                value * multiplier for value in self.datadict[key].ydata]
     delete_selected_data(self)
     add_to_clipboard(self)
     plotting_tools.refresh_plot(self)
 
 
 def normalize_data(self):
-    """
-    Normalize all selected data
-    """
+    """Normalize all selected data"""
     selected_keys = utilities.get_selected_keys(self)
-    if self._mode == InteractionMode.SELECT:
-        selection, start_stop = select_data(self)
+    if self.interaction_mode == InteractionMode.SELECT:
+        _selection, start_stop = select_data(self)
     for key in selected_keys:
-        #If the selected data exists, so this will get ignored when we're not in selection mode
+        # If the selected data exists, so this will get ignored when we"re
+        # not in selection mode
         if f"{key}_selected" in self.datadict:
-            #Define the highlighted area
+            # Define the highlighted area
             selected_item = self.datadict[f"{key}_selected"]
-            #Perform the operation on the highlighted area
+            # Perform the operation on the highlighted area
             selected_item.ydata = normalize(selected_item.ydata)
             start_index, stop_index = start_stop[key][0], start_stop[key][1]
-            #Replace the highlighted part in the original data set
-            self.datadict[key].ydata[start_index:stop_index] = selected_item.ydata
-            self.datadict[key].xdata[start_index:stop_index] = selected_item.xdata
-        if self._mode != InteractionMode.SELECT:
+            # Replace the highlighted part in the original data set
+            self.datadict[key].ydata[
+                start_index:stop_index] = selected_item.ydata
+            self.datadict[key].xdata[
+                start_index:stop_index] = selected_item.xdata
+        if self.interaction_mode != InteractionMode.SELECT:
             self.datadict[key].ydata = normalize(self.datadict[key].ydata)
     delete_selected_data(self)
     add_to_clipboard(self)
     plotting_tools.refresh_plot(self)
+
 
 def normalize(ydata):
     """
@@ -607,6 +669,7 @@ def normalize(ydata):
     new_y = [value / max_y for value in ydata]
     return new_y
 
+
 def center_data(self):
     """
     Center all selected data
@@ -614,35 +677,47 @@ def center_data(self):
     the maximum value of the data
     """
     selected_keys = utilities.get_selected_keys(self)
-    if self._mode == InteractionMode.SELECT:
-        selection, start_stop = select_data(self)
+    if self.interaction_mode == InteractionMode.SELECT:
+        _selection, start_stop = select_data(self)
     for key in selected_keys:
-        #If the selected data exists, so this will get ignored when we're not in selection mode
+        # If the selected data exists, so this will get ignored when we"re
+        # not in selection mode
         if f"{key}_selected" in self.datadict:
-            #Define the highlighted area
+            # Define the highlighted area
             selected_item = self.datadict[f"{key}_selected"]
-            #Perform the operation on the highlighted area
-            if self.preferences.config["action_center_data"] == "Center at maximum Y value":
-                selected_item.xdata = center_data_max_Y(selected_item.xdata, selected_item.ydata)
-            elif self.preferences.config["action_center_data"] == "Center at middle coordinate":
+            # Perform the operation on the highlighted area
+            if self.preferences.config[
+                    "action_center_data"] == "Center at maximum Y value":
+                selected_item.xdata = center_data_max_y(
+                    selected_item.xdata, selected_item.ydata)
+            elif self.preferences.config[
+                    "action_center_data"] == "Center at middle coordinate":
                 selected_item.xdata = center_data_middle(selected_item.xdata)
             start_index, stop_index = start_stop[key][0], start_stop[key][1]
-            #Replace the highlighted part in the original data set
-            self.datadict[key].ydata[start_index:stop_index] = selected_item.ydata
-            self.datadict[key].xdata[start_index:stop_index] = selected_item.xdata
-            self.datadict[key].xdata, self.datadict[key].ydata = sort_data(self.datadict[key].xdata, self.datadict[key].ydata)
-        if self._mode != InteractionMode.SELECT:
-            if self.preferences.config["action_center_data"] == "Center at maximum Y value":
-                self.datadict[key].xdata = center_data_max_Y(self.datadict[key].xdata, self.datadict[key].ydata)
-            elif self.preferences.config["action_center_data"] == "Center at middle coordinate":
-                self.datadict[key].xdata = center_data_middle(self.datadict[key].xdata)
-            self.datadict[key].xdata, self.datadict[key].ydata = sort_data(self.datadict[key].xdata, self.datadict[key].ydata)
+            # Replace the highlighted part in the original data set
+            self.datadict[key].ydata[
+                start_index:stop_index] = selected_item.ydata
+            self.datadict[key].xdata[
+                start_index:stop_index] = selected_item.xdata
+            self.datadict[key].xdata, self.datadict[key].ydata = sort_data(
+                self.datadict[key].xdata, self.datadict[key].ydata)
+        if self.interaction_mode != InteractionMode.SELECT:
+            if self.preferences.config[
+                    "action_center_data"] == "Center at maximum Y value":
+                self.datadict[key].xdata = center_data_max_y(
+                    self.datadict[key].xdata, self.datadict[key].ydata)
+            elif self.preferences.config[
+                    "action_center_data"] == "Center at middle coordinate":
+                self.datadict[key].xdata = center_data_middle(
+                    self.datadict[key].xdata)
+            self.datadict[key].xdata, self.datadict[key].ydata = sort_data(
+                self.datadict[key].xdata, self.datadict[key].ydata)
     delete_selected_data(self)
     add_to_clipboard(self)
     plotting_tools.refresh_plot(self)
 
 
-def center_data_max_Y(xdata, ydata):
+def center_data_max_y(xdata, ydata):
     """
     Center data on the maximum y value, takes in x array and y array.
     Centers the x-data at index where the y-data has its maximum
@@ -652,6 +727,7 @@ def center_data_max_Y(xdata, ydata):
     middle_value = xdata[middle_index]
     xdata = [coordinate - middle_value for coordinate in xdata]
     return xdata
+
 
 def center_data_middle(xdata):
     """
