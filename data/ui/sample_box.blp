@@ -21,6 +21,15 @@ template SampleBox : Box {
       hexpand: true;
     }
 
+    Button color_button {
+      tooltip-text: _("Pick a color");
+      styles ["flat"]
+      Image {
+        hexpand: false;
+        icon-name: "color-picker-symbolic";
+      }
+    }
+
     Button delete_button {
       tooltip-text: _("Remove");
       styles ["flat"]
