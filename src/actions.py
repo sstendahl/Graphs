@@ -93,18 +93,18 @@ def save_project_action(_action, _target, self):
 
 def open_project_action(_action, _target, self):
     if len(self.datadict) > 0:
-        heading = "Override Data?"
-        body = "Opening a project will override any loaded data."
+        heading = "Discard Data?"
+        body = "Opening a project will discard all open data."
         dialog = Adw.MessageDialog.new(self.main_window,
                                        heading,
                                        body)
         dialog.add_response("cancel", "Cancel")
-        dialog.add_response("override", "Override")
+        dialog.add_response("discard", "Discard")
         dialog.set_close_response("cancel")
-        dialog.set_default_response("override")
-        dialog.set_response_appearance("override",
+        dialog.set_default_response("discard")
+        dialog.set_response_appearance("discard",
                                        Adw.ResponseAppearance.DESTRUCTIVE)
-        dialog.connect("response", ui.on_confirm_override_response, self)
+        dialog.connect("response", ui.on_confirm_discard_response, self)
         dialog.present()
         return
     ui.open_project_dialog(self)

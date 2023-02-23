@@ -51,8 +51,8 @@ def disable_clipboard_buttons(self):
     win.undo_button.set_sensitive(False)
 
 
-def on_confirm_override_response(_dialog, response, self):
-    if response == "override":
+def on_confirm_discard_response(_dialog, response, self):
+    if response == "discard":
         open_project_dialog(self)
 
 
