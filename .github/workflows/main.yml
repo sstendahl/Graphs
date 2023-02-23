@@ -13,7 +13,7 @@ jobs:
       # Don't fail the whole workflow if one architecture fails
       fail-fast: false
     steps:
-    - uses: actions/checkout@v3.3.3
+    - uses: actions/checkout@v3
     - name: Install deps
       run: |
         dnf -y install docker
@@ -34,16 +34,16 @@ jobs:
     name: flake8
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3.3.3
+      - uses: actions/checkout@v3
       - name: Set up Python environment
-        uses: actions/setup-python@v4.5.0
+        uses: actions/setup-python@v4
         with:
           python-version: "3.10"
       # Install flake8 extensions (this step is not required. Default is "None").
       - name: Set up flake8
         run: pip install flake8-docstrings flake8-simplify flake8-unused-arguments flake8-quotes
       - name: flake8 Lint
-        uses: reviewdog/action-flake8@v3.6.1
+        uses: reviewdog/action-flake8@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           fail_on_error: true
