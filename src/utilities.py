@@ -68,7 +68,7 @@ def get_dict_by_value(dictionary, value):
     for k, v in dictionary.items():
         if v == value:
             return k
-    return None
+    return "none"
 
 def get_font_weight(font_name):
     """Get the weight of the font that is used using the full font name"""
