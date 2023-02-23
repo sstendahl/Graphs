@@ -51,7 +51,26 @@ def disable_clipboard_buttons(self):
     win.undo_button.set_sensitive(False)
 
 
-def open_file_dialog(self, open_project, import_settings=None):
+def on_confirm_discard_response(_dialog, response, self):
+    if response == "discard":
+        open_project_dialog(self)
+
+
+def open_project_dialog(self):
+    open_project_chooser = Gtk.FileChooserNative.new(
+        title="Open Project",
+        parent=self.main_window,
+        action=Gtk.FileChooserAction.OPEN,
+        accept_label="_Open",
+    )
+    open_project_chooser.set_modal(True)
+    open_project_chooser.set_select_multiple(False)
+    open_project_chooser.connect("response", on_open_response, self,
+                                 True, None)
+    open_project_chooser.show()
+
+
+def open_file_dialog(self, import_settings=None):
     open_file_chooser = Gtk.FileChooserNative.new(
         title="Open new files",
         parent=self.main_window,
@@ -59,13 +78,13 @@ def open_file_dialog(self, open_project, import_settings=None):
         accept_label="_Open",
     )
     open_file_chooser.set_modal(True)
-    open_file_chooser.set_select_multiple(open_project)
-    open_file_chooser.connect("response", on_open_file_response, self,
-                              open_project, import_settings)
+    open_file_chooser.set_select_multiple(True)
+    open_file_chooser.connect("response", on_open_response, self,
+                              False, import_settings)
     open_file_chooser.show()
 
 
-def on_open_file_response(dialog, response, self, project, import_settings):
+def on_open_response(dialog, response, self, project, import_settings):
     if response == Gtk.ResponseType.ACCEPT:
         if project:
             file_io.load_project(self, dialog.get_files())
