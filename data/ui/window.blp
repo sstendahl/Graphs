@@ -72,41 +72,42 @@ template GraphsWindow : Adw.ApplicationWindow {
 
         Box {
           visible: bind sidebar_flap.folded;
-          spacing: 10;
-          margin-top: 12;
-          margin-bottom: 12;
-          margin-start: 12;
-          margin-end: 12;
+          margin-top: 6;
+          margin-bottom: 6;
+          margin-start: 6;
+          margin-end: 6;
           Adw.SplitButton {
             icon-name: bind add_button.icon-name;
             action-name: bind add_button.action-name;
             tooltip-text: bind add_button.tooltip-text;
             menu-model: bind add_button.menu-model;
-            hexpand: true;
+            styles ["flat"]
           }
-          Box {
-            styles ["linked"]
-            Button {
-              action-name: bind undo_button.action-name;
-              icon-name: bind undo_button.icon-name;
-              tooltip-text: bind undo_button.tooltip-text;
-              sensitive: bind undo_button.sensitive;
-              hexpand: true;
-            }
-            Button {
-              action-name: bind redo_button.action-name;
-              icon-name: bind redo_button.icon-name;
-              tooltip-text: bind redo_button.tooltip-text;
-              sensitive: bind redo_button.sensitive;
-              hexpand: true;
-            }
+          Separator {styles ["spacer"]}
+          Button {
+            action-name: bind undo_button.action-name;
+            icon-name: bind undo_button.icon-name;
+            tooltip-text: bind undo_button.tooltip-text;
+            sensitive: bind undo_button.sensitive;
+            styles ["flat"]
+          }
+          Button {
+            action-name: bind redo_button.action-name;
+            icon-name: bind redo_button.icon-name;
+            tooltip-text: bind redo_button.tooltip-text;
+            sensitive: bind redo_button.sensitive;
+            styles ["flat"]
+          }
+          Separator {
+            hexpand: true;
+            styles ["spacer"]
           }
           Adw.SplitButton {
             icon-name: bind view_menu_button.icon-name;
             action-name: bind view_menu_button.action-name;
             tooltip-text: bind view_menu_button.tooltip-text;
             menu-model: bind view_menu_button.menu-model;
-            hexpand: true;
+            styles ["flat"]
           }
         }
         Separator {
