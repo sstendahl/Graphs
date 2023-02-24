@@ -21,14 +21,24 @@ python = import('python')
 
 prefix = get_option('prefix')
 datadir = get_option('datadir')
+bindir = get_option('bindir')
+version = meson.project_version()
+project_name = meson.project_name()
 pkgdatadir = join_paths(prefix, datadir, meson.project_name())
 moduledir = join_paths(pkgdatadir, meson.project_name())
 localedir = join_paths(prefix, get_option('localedir'))
+debug = get_option('buildtype') == 'debug'
+
+if debug
+  version += '-' + run_command('git', 'rev-parse', '--short', 'HEAD', check: true).stdout().strip()
+  name += ' (Development)'
+  application_id += '.Devel'
+endif
 
 conf = configuration_data()
 conf.set('PYTHON', python.find_installation('python3').path())
-conf.set('project', meson.project_name())
-conf.set('version', meson.project_version())
+conf.set('project', project_name)
+conf.set('version', version)
 conf.set('localedir', localedir)
 conf.set('pkgdatadir', pkgdatadir)
 conf.set('copyright', copyright)
@@ -39,7 +49,11 @@ conf.set('github', github)
 conf.set('issues', issues)
 conf.set('author', author)
 conf.set('description_short', description_short)
-conf.set('log_level', 'INFO')
+if debug
+  conf.set('log_level', 'DEBUG')
+else
+  conf.set('log_level', 'INFO')
+endif
 
 subdir('data')
 subdir('src')

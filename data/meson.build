@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 desktop_file_in = configure_file(
-        input: application_id + '.desktop.in.in',
+        input: application_id.replace('.Devel','') + '.desktop.in.in',
        output: application_id + '.desktop.in',
 configuration: conf
 )
@@ -20,7 +20,7 @@ if desktop_utils.found()
 endif
 
 appstream_file_in = configure_file(
-        input: application_id + '.appdata.xml.in.in',
+        input: application_id.replace('.Devel','') + '.appdata.xml.in.in',
        output: application_id + '.appdata.xml.in',
 configuration: conf
 )
@@ -39,7 +39,7 @@ if appstream_util.found()
 endif
 
 gschema_file = configure_file(
-        input: application_id + '.gschema.xml.in',
+        input: application_id.replace('.Devel','') + '.gschema.xml.in',
        output: application_id + '.gschema.xml',
 configuration: conf
 )
@@ -74,7 +74,7 @@ blueprints = custom_target('blueprints',
 
 resources = gnome.compile_resources(
   application_id,
-  application_id + '.gresource.xml',
+  application_id.replace('.Devel','') + '.gresource.xml',
   dependencies: blueprints,
   gresource_bundle: true,
   source_dir: meson.current_build_dir(),
@@ -90,7 +90,7 @@ install_data(
 
 symbolic_dir = join_paths('icons', 'hicolor', 'symbolic', 'apps')
 install_data(
-  join_paths(symbolic_dir, ('@0@-symbolic.svg').format(application_id)),
+  join_paths(symbolic_dir, ('@0@-symbolic.svg').format(application_id.replace('.Devel',''))),
   install_dir: join_paths(datadir, symbolic_dir)
 )
 

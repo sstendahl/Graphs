@@ -22,13 +22,14 @@
         "*.a"
     ],
     "modules" : [
-        "blueprint-compiler.json",
-        "python3-numpy.json",
-        "python3-matplotlib.json",
-        "python3-scipy.json",
+    	"blueprint-compiler.json",
+    	"python3-numpy.json",
+    	"python3-matplotlib.json",
+    	"python3-scipy.json",
         {
             "name" : "graphs",
             "buildsystem" : "meson",
+            "config-opts" : "-Ddevel=true",
             "sources" : [
                 {
                     "type" : "dir",
