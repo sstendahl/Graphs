@@ -6,17 +6,13 @@ from graphs import plotting_tools, utilities
 from matplotlib import colors
 
 
-class ColorPicker(Gtk.Button):
-    def __init__(self, color, key, parent):
+class ColorPicker():
+    def __init__(self, color, key, parent, button):
         super().__init__()
         self.parent = parent
         self.key = key
-        self.set_tooltip_text("Pick a color")
+        self.button = button
         self.color = color
-        self.add_css_class("flat")
-        self.set_hexpand(False)
-        self.set_child(Gtk.Image.new_from_icon_name("color-picker-symbolic"))
-        self.get_child().set_pixel_size(20)
 
         press_gesture = Gtk.GestureClick()
         press_gesture.connect("pressed", self.change_color)
@@ -27,10 +23,10 @@ class ColorPicker(Gtk.Button):
         self.color_chooser.add_controller(press_gesture)
 
         self.color_popover = Gtk.Popover()
-        self.color_popover.set_parent(self)
+        self.color_popover.set_parent(self.button)
         self.color_popover.set_child(self.color_chooser)
         self.color_popover.connect("closed", self.change_color)
-        self.connect("clicked", self.on_click)
+        self.button.connect("clicked", self.on_click)
         self.set_css()
         self.color = self.get_color()
         parent.datadict[self.key].color = self.color
@@ -67,7 +63,7 @@ class ColorPicker(Gtk.Button):
 
     def set_css(self):
         self.provider = Gtk.CssProvider()
-        context = self.get_style_context()
+        context = self.button.get_style_context()
         context.add_provider(
             self.provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION)
         rgba = utilities.create_rgba(*colors.to_rgba(self.color))
