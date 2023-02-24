@@ -170,7 +170,6 @@ def select_data(self):
         stopx = max(highlight.extents)
         start_index = 0
         stop_index = 0
-
         # Selection is different for bottom and top axis. The span selector
         # takes the top axis coordinates. So for the data that uses the bottom
         # axis as x-axis coordinates, the coordinates first
@@ -211,18 +210,13 @@ def select_data(self):
                     min(self.canvas.ax.get_xlim()),
                     max(self.canvas.ax.get_xlim()))
             elif self.canvas.ax.get_xscale() == "linear":
-                startx = min(
-                    self.canvas.ax.get_xlim())
-                + xrange_bottom * fraction_left_limit
-                stopx = min(
-                    self.canvas.ax.get_xlim())
-                + xrange_bottom * fraction_right_limit
-
+                startx = min(self.canvas.ax.get_xlim()) + xrange_bottom * fraction_left_limit
+                stopx = min(self.canvas.ax.get_xlim()) + xrange_bottom * fraction_right_limit
         # If startx and stopx are not out of range, that is,
         # if the sample data is within the highlight
-        if not ((startx < min(
-                item.xdata) and stopx < min(
-                    item.xdata)) or (startx > max(item.xdata))):
+        if not (    (startx < min(item.xdata) and stopx < min(item.xdata))
+                 or (startx > max(item.xdata))
+                ):
             selected_data, start_index, stop_index = pick_data_selection(
                 self, item, startx, stopx)
             selected_dict[f"{key}_selected"] = selected_data
@@ -533,7 +527,6 @@ def translate_y(self):
         # If the selected data exists, so this will get ignored when we"re
         # not in selection mode
         if f"{key}_selected" in self.datadict:
-            print(self.datadict[key].filename)
             # Define the highlighted area
             selected_item = self.datadict[f"{key}_selected"]
             # Perform the operation on the highlighted area

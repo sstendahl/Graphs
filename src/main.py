@@ -85,6 +85,7 @@ class GraphsApplication(Adw.Application):
             action = Gio.SimpleAction.new(name, None)
             action.connect("activate", methods[f"{name}_action"], self)
             self.add_action(action)
+
             if keybinds:
                 self.set_accels_for_action(f"app.{name}", keybinds)
 
