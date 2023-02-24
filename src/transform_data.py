@@ -1,4 +1,6 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
+import logging
+
 from gi.repository import Adw, Gtk
 
 from graphs import item_operations, plotting_tools, utilities
@@ -18,7 +20,6 @@ def on_accept(_widget, self, window):
         if f"{key}_selected" in self.datadict:
             start_index, stop_index = start_stop[key][0], start_stop[key][1]
             xdata_in = self.datadict[key].xdata[start_index:stop_index]
-            ydata_in = self.datadict[key].ydata[start_index:stop_index]
             try:
                 xdata_out, ydata_out = operation(xdata_in, input_x, input_y)
             except Exception as exception:
@@ -26,7 +27,7 @@ def on_accept(_widget, self, window):
                 win = self.main_window
                 toast = f"{exception_type}: Unable to do transformation, "
                 + "make sure the syntax is correct"
-                win.toast_overlay.add_toast(Adw.Toast(title=toast))
+                win.add_toast(toast)
                 return
             self.datadict[key].xdata[start_index:stop_index] = xdata_out
             self.datadict[key].ydata[start_index:stop_index] = ydata_out
@@ -35,13 +36,14 @@ def on_accept(_widget, self, window):
             ydata_in = self.datadict[key].ydata
             try:
                 xdata_out, ydata_out = operation(
-                    key, xdata_in, ydata_in, input_x, input_y)
+                    xdata_in, ydata_in, input_x, input_y)
             except Exception as exception:
                 exception_type = exception.__class__.__name__
                 win = self.main_window
-                toast = f"{exception_type}: Unable to do transformation, "
-                + "make sure the syntax is correct"
-                win.toast_overlay.add_toast(Adw.Toast(title=toast))
+                toast = f"{exception_type}: Unable to do transformation, \
+make sure the syntax is correct"
+                win.add_toast(toast)
+                logging.exception("Unable to do transformation")
                 return
             self.datadict[key].xdata = xdata_out
             self.datadict[key].ydata = ydata_out
@@ -54,23 +56,22 @@ def on_accept(_widget, self, window):
     window.destroy()
 
 
-def operation(xdata, input_x, input_y):
+def operation(xdata, ydata, input_x, input_y):
     x_array = []
     y_array = []
     operations = []
     for xy_operation in [input_x, input_y]:
         xy_operation = xy_operation.replace("Y_range", "y_range")
         xy_operation = xy_operation.replace("X_range", "x_range")
-        xy_operation = xy_operation.replace("Y", "ydata[index]")
-        xy_operation = xy_operation.replace("X", "xdata[index]")
+        xy_operation = xy_operation.replace("Y", "ydata[index[0]]")
+        xy_operation = xy_operation.replace("X", "xdata[index[0]]")
         xy_operation = xy_operation.replace("y_range", "Y_range")
         xy_operation = xy_operation.replace("x_range", "X_range")
         xy_operation = xy_operation.replace("^", "**")
         operations.append(xy_operation)
-    x_operation, y_operation = operations[0], operations[1]
-    for _index in enumerate(xdata):
-        x_array.append(eval(x_operation))
-        y_array.append(eval(y_operation))
+    for index in enumerate(xdata):
+        x_array.append(eval(operations[0]))
+        y_array.append(eval(operations[1]))
     return x_array, y_array
 
 

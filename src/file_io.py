@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
+import logging
 import os
 import pickle
 import re
@@ -25,20 +26,27 @@ def load_project(self, files):
         new_files.append(file_path)
     for key in self.datadict.copy():
         graphs.delete(self, key)
-    with open(file_path, "rb") as file:
-        project = pickle.load(file)
-    project_datadict = project["data"]
-    new_plot_settings = project["plot_settings"]
-    self.plot_settings = new_plot_settings
-    graphs.set_attributes(new_plot_settings, self.plot_settings)
-    graphs.create_data_from_project(self, project_datadict)
-    for key, item in self.datadict.items():
-        graphs.add_sample_to_menu(self, item.filename, item.color, item.key)
-    plotting_tools.reload_plot(self)
-    for key, item in self.item_rows.items():
-        item.check_button.set_active(True)
-    plotting_tools.refresh_plot(self)
-    ui.enable_data_dependent_buttons(self, utilities.get_selected_keys(self))
+    try:
+        with open(file_path, "rb") as file:
+            project = pickle.load(file)
+        project_datadict = project["data"]
+        new_plot_settings = project["plot_settings"]
+        self.plot_settings = new_plot_settings
+        graphs.set_attributes(new_plot_settings, self.plot_settings)
+        graphs.create_data_from_project(self, project_datadict)
+        for key, item in self.datadict.items():
+            graphs.add_sample_to_menu(
+                self, item.filename, item.color, item.key)
+        plotting_tools.reload_plot(self)
+        for key, item in self.item_rows.items():
+            item.check_button.set_active(True)
+        plotting_tools.refresh_plot(self)
+        ui.enable_data_dependent_buttons(
+            self, utilities.get_selected_keys(self))
+    except Exception:
+        message = "Could not open project"
+        self.main_window.add_toast(message)
+        logging.exception(message)
 
 
 def save_file(self, path):

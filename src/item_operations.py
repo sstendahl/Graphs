@@ -1,6 +1,4 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
-from gi.repository import Adw
-
 from graphs import graphs, plotting_tools, utilities
 from graphs.data import Data
 from graphs.misc import InteractionMode
@@ -210,13 +208,13 @@ def select_data(self):
                     min(self.canvas.ax.get_xlim()),
                     max(self.canvas.ax.get_xlim()))
             elif self.canvas.ax.get_xscale() == "linear":
-                startx = min(self.canvas.ax.get_xlim()) + xrange_bottom * fraction_left_limit
-                stopx = min(self.canvas.ax.get_xlim()) + xrange_bottom * fraction_right_limit
+                xlim = min(self.canvas.ax.get_xlim())
+                startx = xlim + xrange_bottom * fraction_left_limit
+                stopx = xlim + xrange_bottom * fraction_right_limit
         # If startx and stopx are not out of range, that is,
         # if the sample data is within the highlight
-        if not (    (startx < min(item.xdata) and stopx < min(item.xdata))
-                 or (startx > max(item.xdata))
-                ):
+        if not ((startx < min(item.xdata) and stopx < min(item.xdata)) or (
+                startx > max(item.xdata))):
             selected_data, start_index, stop_index = pick_data_selection(
                 self, item, startx, stopx)
             selected_dict[f"{key}_selected"] = selected_data
@@ -476,7 +474,7 @@ def translate_x(self):
         exception_type = exception.__class__.__name__
         toast = f"{exception_type}: Unable to do translation, "
         + "make sure to enter a valid number"
-        win.toast_overlay.add_toast(Adw.Toast(title=toast))
+        win.add_toast(toast)
         offset = 0
     if self.interaction_mode == InteractionMode.SELECT:
         _selection, start_stop = select_data(self)
@@ -514,9 +512,9 @@ def translate_y(self):
         offset = eval(win.translate_y_entry.get_text())
     except Exception as exception:
         exception_type = exception.__class__.__name__
-        toast = f"{exception_type}: Unable to do translation, "
-        + "make sure to enter a valid number"
-        win.toast_overlay.add_toast(Adw.Toast(title=toast))
+        toast = f"{exception_type}: Unable to do translation, \
+make sure to enter a valid number"
+        win.add_toast(toast)
         offset = 0
     selected_keys = utilities.get_selected_keys(self)
 
@@ -559,7 +557,7 @@ def multiply_x(self):
         exception_type = exception.__class__.__name__
         toast = f"{exception_type}: Unable to do multiplication, "
         + "make sure to enter a valid number"
-        win.toast_overlay.add_toast(Adw.Toast(title=toast))
+        win.add_toast(toast)
         multiplier = 1
     selected_keys = utilities.get_selected_keys(self)
     if self.interaction_mode == InteractionMode.SELECT:
@@ -601,7 +599,7 @@ def multiply_y(self):
         exception_type = exception.__class__.__name__
         toast = f"{exception_type}: Unable to do multiplication, "
         + "make sure to enter a valid number"
-        win.toast_overlay.add_toast(Adw.Toast(title=toast))
+        win.add_toast(toast)
         multiplier = 1
     selected_keys = utilities.get_selected_keys(self)
     if self.interaction_mode == InteractionMode.SELECT:

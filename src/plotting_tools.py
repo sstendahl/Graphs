@@ -1,5 +1,6 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 import copy
+import logging
 
 from gi.repository import Adw
 
@@ -203,7 +204,8 @@ def set_canvas_limits(graph_limits, axis, axis_type,
         if axis_type == "Y":
             axis.set_ylim(graph_limits["ymin"], graph_limits["ymax"])
     except ValueError:
-        print("Could not set limits, one of the values was probably infinite")
+        logging.error(
+            "Could not set limits, one of the values was probably infinite")
 
 
 def find_limits(self, axis, datadict):
@@ -415,7 +417,7 @@ def load_fonts():
         try:
             matplotlib.font_manager.fontManager.addfont(font)
         except Exception:
-            print(f"Could not load {font}")
+            logging.warning(f"Could not load {font}")
 
 
 class PlotSettings:

@@ -1,5 +1,6 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 import json
+import logging
 import os
 import shutil
 from pathlib import Path
@@ -35,9 +36,9 @@ class Preferences():
         config_path = self.get_config_path()
         if not os.path.isfile(f"{config_path}/config.json"):
             self.reset_config()
-            print("New configuration file created")
+            logging.info("New configuration file created")
         else:
-            print("Loading configuration file")
+            logging.info("Loading configuration file")
 
     def reset_config(self):
         config_path = self.get_config_path()
@@ -47,7 +48,7 @@ class Preferences():
             os.mkdir(config_path)
         path = config_path + "/config.json"
         shutil.copy(f"{old_path}/config.json", path)
-        print("Loaded new config")
+        logging.info("Loaded new config")
 
     def load_config(self):
         config_path = self.get_config_path()

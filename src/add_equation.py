@@ -54,6 +54,7 @@ def on_accept(_widget, self, window):
     self.datadict[new_file.key] = new_file
     graphs.add_sample_to_menu(self, new_file.filename,
                               color, new_file.key, True)
+    plotting_tools.refresh_plot(self)
     window.destroy()
 
 
