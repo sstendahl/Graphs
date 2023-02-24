@@ -16,8 +16,8 @@ class Data:
         self.unselected_markers = ""
         self.selected_marker_size = float(0)
         self.unselected_marker_size = float(0)
-        self.plot_y_position = "left"
-        self.plot_x_position = "bottom"
+        self.plot_Y_position = "left"
+        self.plot_X_position = "bottom"
         self.selected = True
         self.color = ""
         self.xdata = xdata
