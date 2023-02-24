@@ -50,7 +50,10 @@ template AddAdvancedWindow : Adw.Window {
           numeric: true;
           value: 0;
           wrap: true;
-          adjustment: column_adjustment;
+          adjustment: Adjustment {
+            step-increment: 1;
+            upper: 100;
+          };
         }
       }
 
@@ -62,7 +65,10 @@ template AddAdvancedWindow : Adw.Window {
           numeric: true;
           value: 0;
           wrap: true;
-          adjustment: column_adjustment;
+          adjustment: Adjustment {
+            step-increment: 1;
+            upper: 100;
+          };
         }
       }
 
@@ -98,9 +104,4 @@ template AddAdvancedWindow : Adw.Window {
       }
     }
   }
-}
-
-Adjustment column_adjustment {
-  step-increment: 1;
-  upper: 100;
 }

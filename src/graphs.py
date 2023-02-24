@@ -133,7 +133,6 @@ def add_sample_to_menu(self, filename, color, key, select=False):
     self.item_rows[key] = row
     self.list_box.append(row)
     self.sample_menu[key] = self.list_box.get_last_child()
-    plotting_tools.refresh_plot(self)
     ui.enable_data_dependent_buttons(self, True)
 
 

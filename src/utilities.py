@@ -64,12 +64,11 @@ def get_all_filenames(parent):
 
 
 def get_dict_by_value(dictionary, value):
-    """Swap the keys and items of a dictionary"""
-    new_dict = {(k, v): (v, k) for k, v in dictionary.items()}
-    if value == "none":
-        return "none"
-    return new_dict[value]
-
+    """Return the key associated with the given value in the dictionary"""
+    for k, v in dictionary.items():
+        if v == value:
+            return k
+    return "none"
 
 def get_font_weight(font_name):
     """Get the weight of the font that is used using the full font name"""

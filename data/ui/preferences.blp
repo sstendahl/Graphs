@@ -31,10 +31,13 @@ template PreferencesWindow : Adw.PreferencesWindow {
 
         SpinButton column_x {
           valign: center;
-          adjustment: column_spin;
           numeric: true;
           value: 0;
           wrap: true;
+          adjustment: Adjustment {
+            step-increment: 1;
+            upper: 100;
+          };
         }
       }
 
@@ -45,10 +48,13 @@ template PreferencesWindow : Adw.PreferencesWindow {
 
         SpinButton column_y {
           valign: center;
-          adjustment: column_spin;
           numeric: true;
           value: 1;
           wrap: true;
+          adjustment: Adjustment {
+            step-increment: 1;
+            upper: 100;
+          };
         }
       }
 
@@ -59,10 +65,13 @@ template PreferencesWindow : Adw.PreferencesWindow {
 
         SpinButton import_skip_rows {
           valign: center;
-          adjustment: spin_button_skip_rows;
           numeric: true;
           value: 1;
           wrap: true;
+          adjustment: Adjustment spin_button_skip_rows {
+            step-increment: 1;
+            upper: 999;
+          };
         }
       }
     }
@@ -461,14 +470,4 @@ template PreferencesWindow : Adw.PreferencesWindow {
       }
     }
   }
-}
-
-Adjustment column_spin {
-  step-increment: 1;
-  upper: 100;
-}
-
-Adjustment spin_button_skip_rows {
-  step-increment: 1;
-  upper: 999;
 }
