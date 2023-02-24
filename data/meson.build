@@ -56,9 +56,26 @@ if compile_schemas.found()
        args: ['--strict', '--dry-run', meson.current_source_dir()])
 endif
 
+blueprints = custom_target('blueprints',
+  input: files(
+    'ui/window.blp',
+    'ui/add_data_advanced.blp',
+    'ui/add_equation_window.blp',
+    'ui/help_overlay.blp',
+    'ui/plot_settings.blp',
+    'ui/preferences.blp',
+    'ui/rename_label_window.blp',
+    'ui/sample_box.blp',
+    'ui/transform_window.blp'
+  ),
+  output: '.',
+  command: [find_program('blueprint-compiler'), 'batch-compile', '@OUTPUT@', '@CURRENT_SOURCE_DIR@', '@INPUT@'],
+)
+
 resources = gnome.compile_resources(
   application_id,
   application_id + '.gresource.xml',
+  dependencies: blueprints,
   gresource_bundle: true,
   source_dir: meson.current_build_dir(),
   install: true,
