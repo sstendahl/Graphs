@@ -102,10 +102,10 @@ class GraphsApplication(Adw.Application):
                                 "plot_X_scale")
 
         state = GLib.Variant.new_boolean(True)
-        toggle_sidebar = Gio.SimpleAction.new_stateful("toggle_sidebar",
-                                                       None, state)
-        toggle_sidebar.connect("activate", ui.toggle_sidebar, self)
-        self.add_action(toggle_sidebar)
+        self.toggle_sidebar = Gio.SimpleAction.new_stateful(
+            "toggle_sidebar", None, state)
+        self.toggle_sidebar.connect("activate", actions.toggle_sidebar, self)
+        self.add_action(self.toggle_sidebar)
         self.set_accels_for_action("app.toggle_sidebar", ["F9"])
 
         self.create_mode_action("mode_pan", ["<shift>P", "F1"],
@@ -128,6 +128,7 @@ class GraphsApplication(Adw.Application):
         if not win:
             win = GraphsWindow(application=self)
         self.main_window = win
+        win.sidebar_flap.connect("notify", self.on_sidebar_toggle)
         graphs.load_empty(self)
         ui.disable_clipboard_buttons(self)
         ui.enable_data_dependent_buttons(self, False)
@@ -173,6 +174,10 @@ class GraphsApplication(Adw.Application):
             axis.set_navigate_mode(self.dummy_toolbar.mode._navigate_mode)
         self.interaction_mode = mode
         self.canvas.draw()
+
+    def on_sidebar_toggle(self, _a, _b):
+        visible = self.main_window.sidebar_flap.get_reveal_flap()
+        self.toggle_sidebar.change_state(GLib.Variant.new_boolean(visible))
 
     def create_axis_action(self, name, callback, config_key):
         """Create action for setting axis scale."""

@@ -8,8 +8,15 @@ template GraphsWindow : Adw.ApplicationWindow {
   Box {
     orientation: vertical;
     HeaderBar header_bar {
+      ToggleButton sidebar_button {
+        visible: bind sidebar_flap.folded;
+        action-name: "app.toggle_sidebar";
+        icon-name: "sidebar-show-symbolic";
+        active: bind sidebar_flap.reveal_flap;
+      }
       Box {
-        Adw.SplitButton {
+        visible: bind sidebar_flap.folded inverted;
+        Adw.SplitButton add_button {
           icon-name: "list-add-symbolic";
           action-name: "app.add_data";
           tooltip-text: _("Add new data");
@@ -39,6 +46,7 @@ template GraphsWindow : Adw.ApplicationWindow {
           action-name: "app.restore_view";
           tooltip-text: _("Restore View / View Options");
           menu-model: view_menu;
+          visible: bind sidebar_flap.folded inverted;
         }
         Separator {styles ["spacer"]}
         MenuButton {
@@ -51,13 +59,61 @@ template GraphsWindow : Adw.ApplicationWindow {
     }
     Adw.Flap sidebar_flap {
       reveal-flap: true;
-      fold-policy: never;
+      fold-policy: auto;
+      swipe-to-open: true;
+      swipe-to-close: true;
 
       [flap]
       Box {
         orientation: vertical;
         width-request: 370;
         hexpand: false;
+        styles ["background"]
+
+        Box {
+          visible: bind sidebar_flap.folded;
+          margin-top: 6;
+          margin-bottom: 6;
+          margin-start: 6;
+          margin-end: 6;
+          Adw.SplitButton {
+            icon-name: bind add_button.icon-name;
+            action-name: bind add_button.action-name;
+            tooltip-text: bind add_button.tooltip-text;
+            menu-model: bind add_button.menu-model;
+            styles ["flat"]
+          }
+          Separator {styles ["spacer"]}
+          Button {
+            action-name: bind undo_button.action-name;
+            icon-name: bind undo_button.icon-name;
+            tooltip-text: bind undo_button.tooltip-text;
+            sensitive: bind undo_button.sensitive;
+            styles ["flat"]
+          }
+          Button {
+            action-name: bind redo_button.action-name;
+            icon-name: bind redo_button.icon-name;
+            tooltip-text: bind redo_button.tooltip-text;
+            sensitive: bind redo_button.sensitive;
+            styles ["flat"]
+          }
+          Separator {
+            hexpand: true;
+            styles ["spacer"]
+          }
+          Adw.SplitButton {
+            icon-name: bind view_menu_button.icon-name;
+            action-name: bind view_menu_button.action-name;
+            tooltip-text: bind view_menu_button.tooltip-text;
+            menu-model: bind view_menu_button.menu-model;
+            styles ["flat"]
+          }
+        }
+        Separator {
+          orientation: horizontal;
+          visible: bind sidebar_flap.folded;
+        }
 
         ScrolledWindow equation_scroll {
           height-request: 250;
@@ -435,6 +491,8 @@ template GraphsWindow : Adw.ApplicationWindow {
         margin-bottom: 5;
         margin-start: 5;
         margin-end: 5;
+        height-request: 200;
+        width-request: 200;
       }
     }
   }

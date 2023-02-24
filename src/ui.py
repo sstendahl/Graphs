@@ -1,16 +1,9 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 import os
 
-from gi.repository import Adw, GLib, Gtk
+from gi.repository import Adw, Gtk
 
 from graphs import file_io, graphs, plotting_tools
-
-
-def toggle_sidebar(action, _shortcut, self):
-    flap = self.main_window.sidebar_flap
-    enabled = not flap.get_reveal_flap()
-    action.change_state(GLib.Variant.new_boolean(enabled))
-    flap.set_reveal_flap(enabled)
 
 
 def toggle_darkmode(_shortcut, _theme, _widget, self):

@@ -10,6 +10,11 @@ from graphs.preferences import PreferencesWindow
 from graphs.transform_data import TransformWindow
 
 
+def toggle_sidebar(_action, _shortcut, self):
+    flap = self.main_window.sidebar_flap
+    flap.set_reveal_flap(not flap.get_reveal_flap())
+
+
 def quit_action(_action, _target, self):
     self.quit()
 
