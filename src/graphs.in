@@ -26,6 +26,7 @@
 
 import gettext
 import locale
+import logging
 import os
 import signal
 import sys
@@ -56,6 +57,9 @@ if __name__ == "__main__":
     from gi.repository import Gio
     resource = Gio.Resource.load(os.path.join(PKGDATADIR, "@appid@.gresource"))
     resource._register()
+
+    format = "%(levelname)s: %(message)s"
+    logging.basicConfig(format=format, level=logging.@log_level@)
 
     args = [VERSION, APPID, NAME, COPYRIGHT, WEBSITE, ISSUES, AUTHOR]
 

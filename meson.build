@@ -39,6 +39,7 @@ conf.set('github', github)
 conf.set('issues', issues)
 conf.set('author', author)
 conf.set('description_short', description_short)
+conf.set('log_level', 'INFO')
 
 subdir('data')
 subdir('src')

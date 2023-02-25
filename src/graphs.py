@@ -1,6 +1,4 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
-from gi.repository import Adw
-
 from graphs import file_io, plotting_tools, samplerow, ui, utilities
 from graphs.canvas import Canvas
 from graphs.data import Data
@@ -47,18 +45,15 @@ def open_files(self, files, import_settings):
                 item = file_io.get_data(self, import_settings)
                 if item.xdata == []:
                     toast = "At least one data set could not be imported"
-                    self.main_window.toast_overlay.add_toast(
-                        Adw.Toast(title=toast))
+                    self.main_window.add_toast(toast)
                     continue
             except IndexError:
                 toast = "Could not open data, the column index is out of range"
-                self.main_window.toast_overlay.add_toast(
-                    Adw.Toast(title=toast))
+                self.main_window.add_toast(toast)
                 break
             except UnicodeDecodeError:
                 toast = "Could not open data, wrong filetype"
-                self.main_window.toast_overlay.add_toast(
-                    Adw.Toast(title=toast))
+                self.main_window.add_toast(toast)
                 break
             if item is not None:
                 open_item(self, item)
@@ -79,8 +74,7 @@ def open_item(self, item):
                         self, item.filename)
                 elif handle_duplicates == "Ignore duplicates":
                     toast = f'Item "{item.filename}" already exists'
-                    self.main_window.toast_overlay.add_toast(
-                        Adw.Toast(title=toast))
+                    self.main_window.add_toast(toast)
                     pass
                 elif handle_duplicates == "Override existing items":
                     self.datadict[key] = item
@@ -110,8 +104,7 @@ def delete(self, key, give_toast=False):
     del self.item_rows[key]
     del self.datadict[key]
     if give_toast:
-        self.main_window.toast_overlay.add_toast(
-            Adw.Toast(title=f"Deleted {filename}"))
+        self.main_window.add_toast(f"Deleted {filename}")
 
     if len(self.datadict) == 0:
         self.canvas.ax.legend().remove()

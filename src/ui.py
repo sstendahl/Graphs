@@ -125,7 +125,7 @@ def save_file_dialog(self):
         chooser.show()
     except UnboundLocalError:
         toast = "Could not open save dialog, make sure you have data opened"
-        self.main_window.toast_overlay.add_toast(Adw.Toast(title=toast))
+        self.main_window.add_toast(toast)
 
 
 def on_save_response(dialog, response, self, project):
@@ -184,8 +184,7 @@ def on_figure_save_response(dialog, response, self):
     try:
         self.canvas.figure.savefig(file.get_path(), format=fmt)
     except Exception:
-        self.main_window.toast_overlay.add_toast(
-            Adw.Toast(title="Unable to save image"))
+        self.main_window.add_toast("Unable to save Image")
 
 
 def show_about_window(self):

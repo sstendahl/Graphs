@@ -70,6 +70,7 @@ def get_dict_by_value(dictionary, value):
             return k
     return "none"
 
+
 def get_font_weight(font_name):
     """Get the weight of the font that is used using the full font name"""
     valid_weights = ["normal", "bold", "heavy",
