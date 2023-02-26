@@ -1,11 +1,8 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 from gi.repository import Adw, Gtk
 
-from graphs import graphs, plotting_tools, utilities
+from graphs import graphs, operation, plotting_tools, utilities
 from graphs.data import Data
-
-import numpy
-from numpy import *
 
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/add_equation_window.ui")
@@ -28,6 +25,7 @@ class AddEquationWindow(Adw.Window):
         self.equation_entry.set_text(cfg["addequation_equation"])
         self.confirm_button.connect("clicked", self.on_accept, parent)
         self.set_transient_for(parent.main_window)
+        self.present()
 
     def on_accept(self, _widget, parent):
         """Launched when the accept button is pressed on the equation window"""
@@ -35,7 +33,7 @@ class AddEquationWindow(Adw.Window):
         x_stop = self.x_stop_entry.get_text()
         step_size = self.step_size_entry.get_text()
         equation = str(self.equation_entry.get_text())
-        dataset = utilities.create_dataset(
+        dataset = operation.create_dataset(
             x_start, x_stop, equation, step_size,
             str(self.name_entry.get_text()))
         try:

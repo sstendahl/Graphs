@@ -5,7 +5,7 @@ from inspect import getmembers, isfunction
 
 from gi.repository import Adw, GLib, Gio, Gtk
 
-from graphs import actions, graphs, plotting_tools, preferences, ui
+from graphs import actions, plotting_tools, preferences, ui
 from graphs.canvas import Canvas
 from graphs.misc import InteractionMode, PlotSettings
 from graphs.window import GraphsWindow

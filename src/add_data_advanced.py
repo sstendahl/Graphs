@@ -29,6 +29,7 @@ class AddAdvancedWindow(Adw.Window):
         self.guess_headers.set_active(config["guess_headers"])
         self.confirm_button.connect("clicked", self.accept)
         self.set_transient_for(parent.main_window)
+        self.present()
 
     def accept(self, _widget):
         """

@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 from enum import Enum
 
+
 class ImportSettings():
     def __init__(self, parent, name="", path="", params=None):
         self.name = name

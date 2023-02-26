@@ -2,6 +2,7 @@ using Gtk 4.0;
 using Adw 1;
 
 template RenameLabelWindow : Adw.Window {
+  modal: true;
   title: _("Rename Label");
   default-width: 575;
   default-height: 125;
@@ -31,9 +32,11 @@ template RenameLabelWindow : Adw.Window {
         title: _("Label");
       }
 
-      Button rename_label_confirm_button {
+      Button confirm_button {
         margin-top: 20;
         label: _("Confirm");
+        halign: center;
+        styles ["suggested-action", "pill"]
       }
     }
   }

@@ -2,9 +2,7 @@
 import copy
 import logging
 
-from gi.repository import Adw
-
-from graphs import graphs, utilities
+from graphs import graphs
 from graphs.canvas import Canvas
 
 import matplotlib.font_manager

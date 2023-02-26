@@ -141,6 +141,7 @@ class PreferencesWindow(Adw.PreferencesWindow):
         config = self.load_configuration(config)
         self.connect("close-request", self.on_close, parent)
         self.set_transient_for(parent.main_window)
+        self.present()
 
     def load_configuration(self, config):
         font_string = config["plot_font_string"]

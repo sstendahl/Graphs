@@ -2,6 +2,7 @@ using Gtk 4.0;
 using Adw 1;
 
 template TransformWindow : Adw.Window {
+  modal: true;
   default-width: 450;
   title: _("Transform Data");
 
@@ -43,7 +44,7 @@ template TransformWindow : Adw.Window {
       halign: center;
       margin-bottom: 26;
       label: _("Transform");
-      styles ["pill"]
+      styles ["suggested-action", "pill"]
     }
   }
 }

@@ -24,13 +24,11 @@ def about_action(_action, _target, self):
 
 
 def preferences_action(_action, _target, self):
-    win = PreferencesWindow(self)
-    win.present()
+    PreferencesWindow(self)
 
 
 def plot_settings_action(_action, _target, self):
-    win = PlotSettingsWindow(self)
-    win.present()
+    PlotSettingsWindow(self)
 
 
 def add_data_action(_action, _target, self):
@@ -40,13 +38,11 @@ def add_data_action(_action, _target, self):
 
 
 def add_data_advanced_action(_action, _target, self):
-    win = AddAdvancedWindow(self)
-    win.present()
+    AddAdvancedWindow(self)
 
 
 def add_equation_action(_action, _target, self):
-    win = AddEquationWindow(self)
-    win.present()
+    AddEquationWindow(self)
 
 
 def select_all_action(_action, _target, self):

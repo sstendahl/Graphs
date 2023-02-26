@@ -5,7 +5,8 @@ from cycler import cycler
 
 from gi.repository import Adw
 
-from graphs import rename_label, utilities
+from graphs import utilities
+from graphs.rename_label import RenameLabelWindow
 
 import matplotlib.pyplot as plt
 from matplotlib.backend_bases import NavigationToolbar2
@@ -171,17 +172,15 @@ class Canvas(FigureCanvas):
                 double_click = True
 
         if self.title.contains(event)[0] and double_click:
-            rename_label.open_rename_label_window(self.parent, self.title)
+            RenameLabelWindow(self.parent, self.title)
         if self.top_label.contains(event)[0] and double_click:
-            rename_label.open_rename_label_window(self.parent, self.top_label)
+            RenameLabelWindow(self.parent, self.top_label)
         if self.bottom_label.contains(event)[0] and double_click:
-            rename_label.open_rename_label_window(
-                self.parent, self.bottom_label)
+            RenameLabelWindow(self.parent, self.bottom_label)
         if self.left_label.contains(event)[0] and double_click:
-            rename_label.open_rename_label_window(self.parent, self.left_label)
+            RenameLabelWindow(self.parent, self.left_label)
         if self.right_label.contains(event)[0] and double_click:
-            rename_label.open_rename_label_window(
-                self.parent, self.right_label)
+            RenameLabelWindow(self.parent, self.right_label)
 
     def _post_draw(self, _widget, context):
         """

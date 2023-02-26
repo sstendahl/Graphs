@@ -55,7 +55,7 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
             "notify::selected", self.on_notify, parent)
         self.connect("close-request", self.on_close, parent)
         self.set_transient_for(parent.main_window)
-        self.set_modal(True)
+        self.present()
 
     def get_chooser_list(self, chooser):
         model = chooser.get_model()
