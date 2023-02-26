@@ -3,7 +3,7 @@ from graphs.data import Data
 import numpy
 
 
-def select_data(self, keys, select_mode):
+def select_data(self, keys):
     """
     Select data that is highlighted by the span
     Basically just creates new data_sets with the key "_selected" appended
