@@ -34,7 +34,9 @@ def plot_settings_action(_action, _target, self):
 
 
 def add_data_action(_action, _target, self):
-    ui.open_file_dialog(self)
+    chooser = self.build("dialogs", "open_files")
+    chooser.connect("response", ui.on_open_response, self, False)
+    chooser.show()
 
 
 def add_data_advanced_action(_action, _target, self):
@@ -85,7 +87,18 @@ def view_forward_action(_action, _target, self):
 
 
 def export_data_action(_action, _target, self):
-    ui.save_file_dialog(self)
+    chooser = self.build("dialogs", "export_data")
+    chooser.set_transient_for(self.main_window)
+    if len(self.datadict) > 1:
+        chooser.set_action(Gtk.FileChooserAction.SELECT_FOLDER)
+    elif len(self.datadict) == 1:
+        filename = list(self.datadict.values())[0].filename
+        chooser.set_current_name(f"{filename}.txt")
+    else:
+        chooser.destroy
+        return
+    chooser.connect("response", ui.on_save_response, self, False)
+    chooser.show()
 
 
 def export_figure_action(_action, _target, self):
@@ -93,7 +106,10 @@ def export_figure_action(_action, _target, self):
 
 
 def save_project_action(_action, _target, self):
-    ui.save_project_dialog(self)
+    chooser = self.build("dialogs", "save_project")
+    chooser.set_transient_for(self.main_window)
+    chooser.connect("response", ui.on_save_response, self, True)
+    chooser.show()
 
 
 def open_project_action(_action, _target, self):
@@ -112,7 +128,10 @@ def open_project_action(_action, _target, self):
         dialog.connect("response", ui.on_confirm_discard_response, self)
         dialog.present()
         return
-    ui.open_project_dialog(self)
+    chooser = self.build("dialogs", "open_project")
+    chooser.set_transient_for(self.main_window)
+    chooser.connect("response", ui.on_open_response, self, True)
+    chooser.show()
 
 
 def delete_selected_action(_action, _target, self):

@@ -19,7 +19,10 @@ def on_accept(_widget, self, window):
     import_settings.delimiter = window.delimiter.get_text()
     import_settings.guess_headers = window.guess_headers.get_active()
     import_settings.name = window.name.get_text()
-    ui.open_file_dialog(self, import_settings)
+    chooser = self.build("dialogs", "open_files")
+    chooser.connect(
+        "response", ui.on_open_response, self, False, import_settings)
+    chooser.show()
     window.destroy()
 
 

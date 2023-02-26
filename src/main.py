@@ -3,7 +3,7 @@
 import sys
 from inspect import getmembers, isfunction
 
-from gi.repository import Adw, GLib, Gio
+from gi.repository import Adw, Gtk, GLib, Gio
 
 from graphs import actions, graphs, plotting_tools, preferences, ui
 from graphs.misc import InteractionMode
@@ -195,6 +195,10 @@ class GraphsApplication(Adw.Application):
         action.connect("activate", self.set_mode, mode)
         self.add_action(action)
         self.set_accels_for_action(f"app.{name}", shortcuts)
+
+    def build(self, resource_name, name):
+        return Gtk.Builder.new_from_resource(
+            f"/se/sjoerd/Graphs/ui/{resource_name}.ui").get_object(name)
 
 
 def main(args):
