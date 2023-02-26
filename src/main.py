@@ -146,29 +146,25 @@ class GraphsApplication(Adw.Application):
         win = self.main_window
         pan_button = win.pan_button
         zoom_button = win.zoom_button
-        select_button = win.select_button
-        highlight = self.canvas.highlight
         if mode == InteractionMode.PAN:
             self.canvas.dummy_toolbar.mode = _Mode.PAN
             pan_button.set_active(True)
             zoom_button.set_active(False)
-            select_button.set_active(False)
-            highlight.set_visible(False)
-            highlight.set_active(False)
+            select = False
         elif mode == InteractionMode.ZOOM:
             self.canvas.dummy_toolbar.mode = _Mode.ZOOM
             pan_button.set_active(False)
             zoom_button.set_active(True)
-            select_button.set_active(False)
-            highlight.set_visible(False)
-            highlight.set_active(False)
+            select = False
         elif mode == InteractionMode.SELECT:
             self.canvas.dummy_toolbar.mode = _Mode.NONE
             pan_button.set_active(False)
             zoom_button.set_active(False)
-            select_button.set_active(True)
-            highlight.set_visible(True)
-            highlight.set_active(True)
+            select = True
+        win.select_button.set_active(select)
+        self.canvas.highlight.set_active(select)
+        self.canvas.highlight.set_visible(select)
+        win.cut_button.set_sensitive(select)
         for axis in self.canvas.figure.get_axes():
             axis.set_navigate_mode(
                 self.canvas.dummy_toolbar.mode._navigate_mode)

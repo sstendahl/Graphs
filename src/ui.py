@@ -28,11 +28,11 @@ def enable_data_dependent_buttons(self, enabled):
         win.fourier_button,
         win.inverse_fourier_button,
         win.normalize_button,
-        win.center_data_button,
+        win.center_button,
         win.derivative_button,
         win.integral_button,
-        win.transform_data_button,
-        win.combine_data_button,
+        win.transform_button,
+        win.combine_button,
     ]
     for button in dependent_buttons:
         button.set_sensitive(enabled)

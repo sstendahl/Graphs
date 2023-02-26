@@ -252,7 +252,7 @@ template GraphsWindow : Adw.ApplicationWindow {
                     action-name: "app.smoothen";
                   }
 
-                  Button center_data_button {
+                  Button center_button {
                     margin-start: 5;
                     margin-end: 5;
                     margin-top: 5;
@@ -272,7 +272,7 @@ template GraphsWindow : Adw.ApplicationWindow {
                     action-name: "app.center";
                   }
 
-                  Button combine_data_button {
+                  Button combine_button {
                     margin-start: 5;
                     margin-end: 5;
                     margin-top: 5;
@@ -292,7 +292,7 @@ template GraphsWindow : Adw.ApplicationWindow {
                     action-name: "app.combine";
                   }
 
-                  Button cut_data_button {
+                  Button cut_button {
                     margin-start: 5;
                     margin-end: 5;
                     margin-top: 5;
@@ -310,7 +310,6 @@ template GraphsWindow : Adw.ApplicationWindow {
                     }
                     tooltip-text: _("Cut selected Data");
                     action-name: "app.cut_selected";
-                    sensitive: bind select_button.active;
                   }
                 }
               }
@@ -453,7 +452,7 @@ template GraphsWindow : Adw.ApplicationWindow {
                     action-name: "app.get_inverse_fourier";
                   }
 
-                  Button transform_data_button {
+                  Button transform_button {
                     margin-start: 5;
                     margin-end: 5;
                     margin-top: 5;
