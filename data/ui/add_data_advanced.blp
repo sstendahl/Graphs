@@ -2,6 +2,7 @@ using Gtk 4.0;
 using Adw 1;
 
 template AddAdvancedWindow : Adw.Window {
+  modal: true;
   default-width: 650;
   default-height: 125;
   title: _("Open Data From File (Advanced)");

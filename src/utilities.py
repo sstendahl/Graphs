@@ -170,3 +170,21 @@ def swap(str1):
     str1 = str1.replace(".", ", ")
     str1 = str1.replace("third", ".")
     return str1
+
+def create_dataset(x_start, x_stop, equation, step_size, name):
+    """
+    Create all data set parameters that are required
+    to create a new data object
+    """
+    dataset = {}
+    if name == "":
+        name = f"Y = {str(equation)}"
+    dataset["name"] = name
+    datapoints = int(abs(eval(x_start) - eval(x_stop)) / eval(step_size))
+    xdata = numpy.linspace(eval(x_start), eval(x_stop), datapoints)
+    equation = equation.replace("X", "xdata")
+    equation = str(equation.replace("^", "**"))
+    equation += " + xdata*0"
+    dataset["ydata"] = eval(equation)
+    dataset["xdata"] = numpy.ndarray.tolist(xdata)
+    return dataset

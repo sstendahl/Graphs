@@ -2,6 +2,7 @@ using Gtk 4.0;
 using Adw 1;
 
 template AddEquationWindow : Adw.Window {
+  modal: true;
   default-width: 450;
   title: _("Add Equation");
 
@@ -71,12 +72,12 @@ template AddEquationWindow : Adw.Window {
             }
           }
 
-          Button add_equation_confirm_button {
+          Button confirm_button {
             halign: center;
             margin-top: 26;
             margin-bottom: 26;
             label: _("Add Equation");
-            styles ["pill"]
+            styles ["suggested-action", "pill"]
           }
         }
       };
