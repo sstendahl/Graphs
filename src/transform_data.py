@@ -3,7 +3,8 @@ import logging
 
 from gi.repository import Adw, Gtk
 
-from graphs import item_operations, operation, plotting_tools, utilities
+from graphs import calculation, operation_tools
+from graphs import clipboard, plotting_tools, utilities
 from graphs.misc import InteractionMode
 
 
@@ -12,14 +13,13 @@ class TransformWindow(Adw.Window):
     __gtype_name__ = "TransformWindow"
     transform_x_entry = Gtk.Template.Child()
     transform_y_entry = Gtk.Template.Child()
-    transform_confirm_button = Gtk.Template.Child()
+    confirm_button = Gtk.Template.Child()
 
     def __init__(self, parent):
         super().__init__()
         self.transform_x_entry.set_text("X")
         self.transform_y_entry.set_text("Y")
-        self.transform_confirm_button.connect(
-            "clicked", self.accept, parent)
+        self.confirm_button.connect("clicked", self.accept, parent)
         self.set_transient_for(parent.main_window)
         self.present()
 
@@ -28,7 +28,7 @@ class TransformWindow(Adw.Window):
         input_y = str(self.transform_y_entry.get_text())
         selected_keys = utilities.get_selected_keys(parent)
         if parent.interaction_mode == InteractionMode.SELECT:
-            _selection, start_stop = item_operations.select_data(parent)
+            _selection, start_stop = operation_tools.select_data(parent)
 
         for key in selected_keys:
             if f"{key}_selected" in parent.datadict:
@@ -36,7 +36,7 @@ class TransformWindow(Adw.Window):
                 stop_index = start_stop[key][1]
                 xdata_in = parent.datadict[key].xdata[start_index:stop_index]
                 try:
-                    xdata_out, ydata_out = operation(
+                    xdata_out, ydata_out = calculation.operation(
                         xdata_in, input_x, input_y)
                 except Exception as exception:
                     exception_type = exception.__class__.__name__
@@ -51,7 +51,7 @@ class TransformWindow(Adw.Window):
                 xdata_in = parent.datadict[key].xdata
                 ydata_in = parent.datadict[key].ydata
                 try:
-                    xdata_out, ydata_out = operation.operation(
+                    xdata_out, ydata_out = calculation.operation(
                         xdata_in, ydata_in, input_x, input_y)
                 except Exception as exception:
                     exception_type = exception.__class__.__name__
@@ -63,9 +63,11 @@ make sure the syntax is correct"
                 parent.datadict[key].xdata = xdata_out
                 parent.datadict[key].ydata = ydata_out
             parent.datadict[key].xdata, parent.datadict[
-                key].ydata = item_operations.sort_data(
+                key].ydata = operation_tools.sort_data(
                     parent.datadict[key].xdata, parent.datadict[key].ydata)
-        item_operations.delete_selected_data(parent)
-        item_operations.add_to_clipboard(parent)
+        for key in parent.datadict.copy():
+            if key.endswith("_selected"):
+                del (parent.datadict[key])
+        clipboard.add(parent)
         plotting_tools.refresh_plot(parent)
         self.destroy()

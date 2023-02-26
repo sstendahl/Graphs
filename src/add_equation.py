@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 from gi.repository import Adw, Gtk
 
-from graphs import graphs, operation, plotting_tools, utilities
+from graphs import calculation, graphs, plotting_tools, utilities
 from graphs.data import Data
 
 
@@ -33,7 +33,7 @@ class AddEquationWindow(Adw.Window):
         x_stop = self.x_stop_entry.get_text()
         step_size = self.step_size_entry.get_text()
         equation = str(self.equation_entry.get_text())
-        dataset = operation.create_dataset(
+        dataset = calculation.create_dataset(
             x_start, x_stop, equation, step_size,
             str(self.name_entry.get_text()))
         try:

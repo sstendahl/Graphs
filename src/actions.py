@@ -2,7 +2,7 @@
 """Main actions."""
 from gi.repository import Adw, Gtk
 
-from graphs import graphs, item_operations, plotting_tools, ui, utilities
+from graphs import clipboard, graphs, operations, plotting_tools, ui, utilities
 from graphs.add_data_advanced import AddAdvancedWindow
 from graphs.add_equation import AddEquationWindow
 from graphs.plot_settings import PlotSettingsWindow
@@ -60,11 +60,11 @@ def select_none_action(_action, _target, self):
 
 
 def undo_action(_action, _target, self):
-    item_operations.undo(self)
+    clipboard.undo(self)
 
 
 def redo_action(_action, _target, self):
-    item_operations.redo(self)
+    clipboard.redo(self)
 
 
 def restore_view_action(_action, _target, self):
@@ -136,59 +136,59 @@ def delete_selected_action(_action, _target, self):
 
 
 def translate_x_action(_action, _target, self):
-    item_operations.translate_x(self)
+    operations.operation(self, operations.translate_x)
 
 
 def translate_y_action(_action, _target, self):
-    item_operations.translate_y(self)
+    operations.operation(self, operations.translate_y)
 
 
 def multiply_x_action(_action, _target, self):
-    item_operations.multiply_x(self)
+    operations.operation(self, operations.multiply_x)
 
 
 def multiply_y_action(_action, _target, self):
-    item_operations.multiply_y(self)
+    operations.operation(self, operations.multiply_y)
 
 
 def normalize_action(_action, _target, self):
-    item_operations.normalize_data(self)
+    operations.operation(self, operations.normalize)
 
 
 def smoothen_action(_action, _target, self):
-    item_operations.smoothen_data(self)
+    operations.operation(self, operations.smoothen)
 
 
 def center_action(_action, _target, self):
-    item_operations.center_data(self)
+    operations.operation(self, operations.center)
 
 
 def shift_vertically_action(_action, _target, self):
-    item_operations.shift_vertically(self)
+    operations.operation(self, operations.shift_vertically)
 
 
 def combine_action(_action, _target, self):
-    item_operations.combine_data(self)
+    operations.operation(self, operations.combine)
 
 
 def cut_selected_action(_action, _target, self):
-    item_operations.cut_data(self)
+    operations.operation(self, operations.cut_selected)
 
 
 def get_derivative_action(_action, _target, self):
-    item_operations.get_derivative(self)
+    operations.operation(self, operations.get_derivative)
 
 
 def get_integral_action(_action, _target, self):
-    item_operations.get_integral(self)
+    operations.operation(self, operations.get_integral)
 
 
 def get_fourier_action(_action, _target, self):
-    item_operations.get_fourier(self)
+    operations.operation(self, operations.get_fourier)
 
 
 def get_inverse_fourier_action(_action, _target, self):
-    item_operations.get_inverse_fourier(self)
+    operations.operation(self, operations.get_inverse_fourier)
 
 
 def transform_action(_action, _target, self):
