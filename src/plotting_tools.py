@@ -5,49 +5,10 @@ import logging
 from gi.repository import Adw
 
 from graphs import graphs, utilities
+from graphs.canvas import Canvas
 
 import matplotlib.font_manager
 from matplotlib import colors
-from matplotlib.widgets import SpanSelector
-
-
-def define_highlight(self, span=None):
-    """
-    Create a span selector object, to highlight part of the graph.
-    If a span already exists, make it visible instead
-    """
-    color = utilities.lookup_color(self, "accent_color")
-    self.highlight = SpanSelector(
-        self.canvas.top_right_axis,
-        lambda x, y: on_highlight_define(self),
-        "horizontal",
-        useblit=True,
-        props={
-            "facecolor": (color.red, color.green, color.blue, 0.3),
-            "edgecolor": (color.red, color.green, color.blue, 1),
-            "linewidth": 1},
-        handle_props={"linewidth": 0},
-        interactive=True,
-        drag_from_anywhere=True)
-    if span is not None:
-        self.highlight.extents = span
-
-
-def on_highlight_define(self):
-    """
-    This ensures that the span selector doesn"t go out of range
-    There are some obscure cases where this otherwise happens, and the
-    selection tool becomes unusable.
-    """
-    xmin = min(self.canvas.top_right_axis.get_xlim())
-    xmax = max(self.canvas.top_right_axis.get_xlim())
-    extend_min = self.highlight.extents[0]
-    extend_max = self.highlight.extents[1]
-    if self.highlight.extents[0] < xmin:
-        extend_min = xmin
-    if self.highlight.extents[1] > xmax:
-        extend_max = xmax
-    self.highlight.extents = (extend_min, extend_max)
 
 
 def plot_figure(self, canvas, x_data, y_data, filename="", linewidth=2,
@@ -256,23 +217,16 @@ def find_limits(self, axis, datadict):
 
 def reload_plot(self):
     """Completely reload the plot of the graph"""
-    graphs.load_empty(self)
-    if len(self.datadict) > 0:
-        hide_unused_axes(self, self.canvas)
-        graphs.open_selection_from_dict(self)
-        if self.highlight is not None:
-            self.highlight.set_visible(False)
-            self.highlight.set_active(False)
-            self.highlight = None
-        self.set_mode(None, None, self.interaction_mode)
-        set_canvas_limits_axis(self)
+    self.canvas = Canvas(parent=self)
+    self.main_window.toast_overlay.set_child(self.canvas)
+    refresh_plot(self, self.canvas)
+    self.set_mode(None, None, self.interaction_mode)
     self.canvas.grab_focus()
 
 
-def refresh_plot(self, canvas=None, set_limits=True):
+def refresh_plot(self, set_limits=True):
     """Refresh the graph without completely reloading it."""
-    if canvas is None:
-        canvas = self.canvas
+    canvas = self.canvas
     for line in canvas.ax.lines:
         line.remove()
     for line in canvas.right_axis.lines:
@@ -418,43 +372,3 @@ def load_fonts():
             matplotlib.font_manager.fontManager.addfont(font)
         except Exception:
             logging.warning(f"Could not load {font}")
-
-
-class PlotSettings:
-    """
-    The plot-related settings for the current session. The default values are
-    retreived from the config file through preferences.
-    """
-    def __init__(self, parent):
-        self.font_string = parent.preferences.config["plot_font_string"]
-        self.xlabel = parent.preferences.config["plot_X_label"]
-        self.right_label = parent.preferences.config["plot_right_label"]
-        self.top_label = parent.preferences.config["plot_top_label"]
-        self.ylabel = parent.preferences.config["plot_Y_label"]
-        self.xscale = parent.preferences.config["plot_X_scale"]
-        self.yscale = parent.preferences.config["plot_Y_scale"]
-        self.right_scale = parent.preferences.config["plot_right_scale"]
-        self.top_scale = parent.preferences.config["plot_top_scale"]
-        self.title = parent.preferences.config["plot_title"]
-        self.font_weight = parent.preferences.config["plot_font_weight"]
-        self.font_family = parent.preferences.config["plot_font_family"]
-        self.font_size = parent.preferences.config["plot_font_size"]
-        self.font_style = parent.preferences.config["plot_font_style"]
-        self.tick_direction = parent.preferences.config["plot_tick_direction"]
-        self.major_tick_length = parent.preferences.config[
-            "plot_major_tick_length"]
-        self.minor_tick_length = parent.preferences.config[
-            "plot_minor_tick_length"]
-        self.major_tick_width = parent.preferences.config[
-            "plot_major_tick_width"]
-        self.minor_tick_width = parent.preferences.config[
-            "plot_minor_tick_width"]
-        self.tick_top = parent.preferences.config["plot_tick_top"]
-        self.tick_bottom = parent.preferences.config["plot_tick_bottom"]
-        self.tick_left = parent.preferences.config["plot_tick_left"]
-        self.tick_right = parent.preferences.config["plot_tick_right"]
-        self.legend = parent.preferences.config["plot_legend"]
-        if Adw.StyleManager.get_default().get_dark():
-            self.plot_style = parent.preferences.config["plot_style_dark"]
-        else:
-            self.plot_style = parent.preferences.config["plot_style_light"]

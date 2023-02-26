@@ -1,8 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 from graphs import file_io, plotting_tools, samplerow, ui, utilities
-from graphs.canvas import Canvas
 from graphs.data import Data
-from graphs.misc import DummyToolbar, ImportMode, ImportSettings
+from graphs.misc import ImportMode, ImportSettings
 
 
 def open_selection_from_dict(self):
@@ -163,17 +162,6 @@ def set_attributes(new_object, template):
     for attribute in new_object.__dict__:
         if not hasattr(template, attribute):
             delattr(new_object, attribute)
-
-
-def load_empty(self):
-    win = self.main_window
-    self.canvas = Canvas(parent=self)
-    for axis in [self.canvas.right_axis, self.canvas.top_left_axis,
-                 self.canvas.top_right_axis]:
-        axis.get_xaxis().set_visible(False)
-        axis.get_yaxis().set_visible(False)
-    self.dummy_toolbar = DummyToolbar(self.canvas)
-    win.toast_overlay.set_child(self.canvas)
 
 
 def reset_clipboard(self):

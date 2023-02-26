@@ -74,7 +74,7 @@ class AddEquationWindow(Adw.Window):
         new_file.clipboard_pos = -1
         color = plotting_tools.get_next_color(parent)
         parent.datadict[new_file.key] = new_file
-        graphs.add_sample_to_menu(parent, new_file.filename,
-                              color, new_file.key, True)
+        graphs.add_sample_to_menu(
+            parent, new_file.filename, color, new_file.key, True)
         plotting_tools.refresh_plot(parent)
         self.destroy()

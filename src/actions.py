@@ -77,13 +77,13 @@ def restore_view_action(_action, _target, self):
 
 
 def view_back_action(_action, _target, self):
-    self.dummy_toolbar._nav_stack.back()
-    self.dummy_toolbar._update_view()
+    self.canvas.dummy_toolbar._nav_stack.back()
+    self.canvas.dummy_toolbar._update_view()
 
 
 def view_forward_action(_action, _target, self):
-    self.dummy_toolbar._nav_stack.forward()
-    self.dummy_toolbar._update_view()
+    self.canvas.dummy_toolbar._nav_stack.forward()
+    self.canvas.dummy_toolbar._update_view()
 
 
 def export_data_action(_action, _target, self):

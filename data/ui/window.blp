@@ -310,6 +310,7 @@ template GraphsWindow : Adw.ApplicationWindow {
                     }
                     tooltip-text: _("Cut selected Data");
                     action-name: "app.cut_selected";
+                    sensitive: bind select_button.active;
                   }
                 }
               }

@@ -6,7 +6,8 @@ from inspect import getmembers, isfunction
 from gi.repository import Adw, GLib, Gio, Gtk
 
 from graphs import actions, graphs, plotting_tools, preferences, ui
-from graphs.misc import InteractionMode
+from graphs.canvas import Canvas
+from graphs.misc import InteractionMode, PlotSettings
 from graphs.window import GraphsWindow
 
 from matplotlib.backend_bases import _Mode
@@ -32,14 +33,9 @@ class GraphsApplication(Adw.Application):
         self.highlights = []
         self.item_rows = {}
         self.sample_menu = {}
-        self.load_preferences()
-        self.connect_actions()
-
-    def load_preferences(self):
-        """Load preferences."""
         plotting_tools.load_fonts()
         self.preferences = preferences.Preferences(self)
-        self.plot_settings = plotting_tools.PlotSettings(self)
+        self.connect_actions()
 
     def connect_actions(self):
         """Create actions, which are defined in actions.py."""
@@ -130,12 +126,19 @@ class GraphsApplication(Adw.Application):
         if not win:
             win = GraphsWindow(application=self)
         self.main_window = win
+        config = self.preferences.config
+        self.plot_settings = PlotSettings(config)
+        if Adw.StyleManager.get_default().get_dark():
+            style = "plot_style_dark"
+        else:
+            style = "plot_style_light"
+        self.plot_settings.plot_style = config[style]
+        self.canvas = Canvas(self)
+        win.toast_overlay.set_child(self.canvas)
         win.sidebar_flap.connect("notify", self.on_sidebar_toggle)
-        graphs.load_empty(self)
         ui.disable_clipboard_buttons(self)
         ui.enable_data_dependent_buttons(self, False)
         self.set_mode(None, None, InteractionMode.PAN)
-        win.maximize()
         win.present()
 
     def set_mode(self, _action, _target, mode):
@@ -144,36 +147,31 @@ class GraphsApplication(Adw.Application):
         pan_button = win.pan_button
         zoom_button = win.zoom_button
         select_button = win.select_button
-        cut_button = win.cut_data_button
-        if self.highlight is None:
-            plotting_tools.define_highlight(self)
-        highlight = self.highlight
+        highlight = self.canvas.highlight
         if mode == InteractionMode.PAN:
-            self.dummy_toolbar.mode = _Mode.PAN
+            self.canvas.dummy_toolbar.mode = _Mode.PAN
             pan_button.set_active(True)
             zoom_button.set_active(False)
             select_button.set_active(False)
-            cut_button.set_sensitive(False)
             highlight.set_visible(False)
             highlight.set_active(False)
         elif mode == InteractionMode.ZOOM:
-            self.dummy_toolbar.mode = _Mode.ZOOM
+            self.canvas.dummy_toolbar.mode = _Mode.ZOOM
             pan_button.set_active(False)
             zoom_button.set_active(True)
             select_button.set_active(False)
-            cut_button.set_sensitive(False)
             highlight.set_visible(False)
             highlight.set_active(False)
         elif mode == InteractionMode.SELECT:
-            self.dummy_toolbar.mode = _Mode.NONE
+            self.canvas.dummy_toolbar.mode = _Mode.NONE
             pan_button.set_active(False)
             zoom_button.set_active(False)
             select_button.set_active(True)
-            cut_button.set_sensitive(True)
             highlight.set_visible(True)
             highlight.set_active(True)
         for axis in self.canvas.figure.get_axes():
-            axis.set_navigate_mode(self.dummy_toolbar.mode._navigate_mode)
+            axis.set_navigate_mode(
+                self.canvas.dummy_toolbar.mode._navigate_mode)
         self.interaction_mode = mode
         self.canvas.draw()
 

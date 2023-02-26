@@ -3,6 +3,8 @@ from gi.repository import Gdk
 
 from graphs.data import Data
 
+import numpy
+
 
 def remove_unused_config_keys(config, template):
     delete_list = []
@@ -170,6 +172,7 @@ def swap(str1):
     str1 = str1.replace(".", ", ")
     str1 = str1.replace("third", ".")
     return str1
+
 
 def create_dataset(x_start, x_stop, equation, step_size, name):
     """

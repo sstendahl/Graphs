@@ -8,8 +8,10 @@ from gi.repository import Adw
 from graphs import rename_label, utilities
 
 import matplotlib.pyplot as plt
+from matplotlib.backend_bases import NavigationToolbar2
 from matplotlib.backends.backend_gtk4cairo import FigureCanvas
 from matplotlib.figure import Figure
+from matplotlib.widgets import SpanSelector
 
 
 class Canvas(FigureCanvas):
@@ -31,6 +33,12 @@ class Canvas(FigureCanvas):
         self.set_color_cycle(parent)
         self.rubberband_color = utilities.lookup_color(parent, "accent_color")
         super().__init__(self.figure)
+        for axis in [self.right_axis, self.top_left_axis,
+                     self.top_right_axis]:
+            axis.get_xaxis().set_visible(False)
+            axis.get_yaxis().set_visible(False)
+        self.dummy_toolbar = DummyToolbar(self)
+        self.highlight = Highlight(self)
 
     def set_save_properties(self, parent):
         """
@@ -200,3 +208,57 @@ class Canvas(FigureCanvas):
         context.rectangle(x_0, y_0, width, height)
         context.set_source_rgba(color.red, color.green, color.blue, 1)
         context.stroke()
+
+
+class DummyToolbar(NavigationToolbar2):
+    """Own implementation of NavigationToolbar2 for rubberband support."""
+    def draw_rubberband(self, _event, x_0, y_0, x_1, y_1):
+        self.canvas._rubberband_rect = [int(val) for val in (x_0,
+                                        self.canvas.figure.bbox.height - y_0,
+                                        x_1 - x_0, y_0 - y_1)]
+        self.canvas.queue_draw()
+
+    def remove_rubberband(self):
+        self.canvas._rubberband_rect = None
+        self.canvas.queue_draw()
+
+
+class Highlight(SpanSelector):
+    def __init__(self, canvas, span=None):
+        """
+        Create a span selector object, to highlight part of the graph.
+        If a span already exists, make it visible instead
+        """
+        color = utilities.lookup_color(canvas.parent, "accent_color")
+        super().__init__(
+            canvas.top_right_axis,
+            lambda x, y: self.on_define(canvas),
+            "horizontal",
+            useblit=True,
+            props={
+                "facecolor": (color.red, color.green, color.blue, 0.3),
+                "edgecolor": (color.red, color.green, color.blue, 1),
+                "linewidth": 1
+            },
+            handle_props={"linewidth": 0},
+            interactive=True,
+            drag_from_anywhere=True
+        )
+        if span is not None:
+            self.extents = span
+
+    def on_define(self, canvas):
+        """
+        This ensures that the span selector doesn"t go out of range
+        There are some obscure cases where this otherwise happens, and the
+        selection tool becomes unusable.
+        """
+        xmin = min(canvas.top_right_axis.get_xlim())
+        xmax = max(canvas.top_right_axis.get_xlim())
+        extend_min = self.extents[0]
+        extend_max = self.extents[1]
+        if self.extents[0] < xmin:
+            extend_min = xmin
+        if self.extents[1] > xmax:
+            extend_max = xmax
+        self.extents = (extend_min, extend_max)
