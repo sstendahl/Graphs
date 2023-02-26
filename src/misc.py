@@ -5,16 +5,25 @@ from matplotlib.backend_bases import NavigationToolbar2
 
 
 class ImportSettings():
-    def __init__(self, parent):
-        cfg = parent.preferences.config
-        self.name = ""
-        self.path = ""
-        self.delimiter = cfg["import_delimiter"]
-        self.guess_headers = cfg["guess_headers"]
-        self.separator = cfg["import_separator"]
-        self.skip_rows = cfg["import_skip_rows"]
-        self.column_x = cfg["import_column_x"]
-        self.column_y = cfg["import_column_y"]
+    def __init__(self, parent, name="", path="", params=None):
+        self.name = name
+        self.path = path
+        if params is None:
+            cfg = parent.preferences.config
+            params = {
+                "delimiter": cfg["import_delimiter"],
+                "guess_headers": cfg["guess_headers"],
+                "separator": cfg["import_separator"],
+                "skip_rows": cfg["import_skip_rows"],
+                "column_x": cfg["import_column_x"],
+                "column_y": cfg["import_column_y"]
+            }
+        self.delimiter = params["delimiter"]
+        self.guess_headers = params["guess_headers"]
+        self.separator = params["separator"]
+        self.skip_rows = params["skip_rows"]
+        self.column_x = params["column_x"]
+        self.column_y = params["column_y"]
 
 
 class ImportMode(Enum):

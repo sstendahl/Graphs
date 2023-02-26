@@ -3,7 +3,7 @@
 import sys
 from inspect import getmembers, isfunction
 
-from gi.repository import Adw, Gtk, GLib, Gio
+from gi.repository import Adw, GLib, Gio, Gtk
 
 from graphs import actions, graphs, plotting_tools, preferences, ui
 from graphs.misc import InteractionMode

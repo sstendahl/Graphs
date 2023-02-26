@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Main actions."""
-from gi.repository import Adw
+from gi.repository import Adw, Gtk
 
 from graphs import graphs, item_operations, plotting_tools, ui, utilities
 from graphs.add_data_advanced import AddAdvancedWindow

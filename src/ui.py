@@ -46,7 +46,10 @@ def disable_clipboard_buttons(self):
 
 def on_confirm_discard_response(_dialog, response, self):
     if response == "discard":
-        open_project_dialog(self)
+        chooser = self.build("dialogs", "open_project")
+        chooser.set_transient_for(self.main_window)
+        chooser.connect("response", on_open_response, self, True)
+        chooser.show()
 
 
 def on_open_response(dialog, response, self, project, import_settings=None):
