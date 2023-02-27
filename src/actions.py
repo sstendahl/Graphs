@@ -211,7 +211,7 @@ def shift_vertically_action(_action, _target, self):
 
 
 def combine_action(_action, _target, self):
-    operations.operation(self, operations.combine)
+    operations.combine(self)
 
 
 def cut_selected_action(_action, _target, self):

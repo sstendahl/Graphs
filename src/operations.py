@@ -136,33 +136,6 @@ def shift_vertically(self, item,
     return item.xdata, new_ydata, False
 
 
-def combine(self, keys, start_stop):
-    # TODO: MOVE
-    """Combine the selected data into a new data set"""
-    new_xdata = []
-    new_ydata = []
-    for key in keys:
-        item = get_item(self, key)
-        new_xdata.extend(item.xdata.copy())
-        new_ydata.extend(item.ydata.copy())
-
-    # Create the sample itself
-    new_xdata, new_ydata = operation_tools.sort_data(new_xdata, new_ydata)
-    new_item = Data(self, new_xdata, new_ydata)
-    new_item.filename = "Combined Data"
-    filename_list = utilities.get_all_filenames(self)
-
-    if new_item.filename in filename_list:
-        new_item.filename = graphs.get_duplicate_filename(
-            self, new_item.filename)
-    color = plotting_tools.get_next_color(self)
-    self.datadict[new_item.key] = new_item
-    graphs.reset_clipboard(self)
-    graphs.add_sample_to_menu(self, new_item.filename, color, new_item.key)
-    operation_tools.delete_selected(self)
-    graphs.select_item(self, new_item.key)
-
-
 def cut_selected(self, item):
     """Cut selected data over the span that is selected"""
     return [], [], False
@@ -207,3 +180,33 @@ def get_inverse_fourier(self, item):
 def transform(self, item, input_x, input_y):
     return calculation.operation(
         item.xdata, item.ydata, input_x, input_y), True
+
+
+def combine(self):
+    """Combine the selected data into a new data set"""
+    keys = utilities.get_selected_keys(self)
+    if self.interaction_mode == InteractionMode.SELECT:
+        operation_tools.select_data(self, keys)
+    new_xdata = []
+    new_ydata = []
+    for key in keys:
+        item = operation_tools.get_item(self, key)
+        new_xdata.extend(item.xdata)
+        new_ydata.extend(item.ydata)
+
+    # Create the sample itself
+    new_xdata, new_ydata = operation_tools.sort_data(new_xdata, new_ydata)
+    new_item = Data(self, new_xdata, new_ydata)
+    new_item.filename = "Combined Data"
+    filename_list = utilities.get_all_filenames(self)
+
+    if new_item.filename in filename_list:
+        new_item.filename = graphs.get_duplicate_filename(
+            self, new_item.filename)
+    color = plotting_tools.get_next_color(self)
+    self.datadict[new_item.key] = new_item
+    graphs.reset_clipboard(self)
+    graphs.add_sample_to_menu(self, new_item.filename, color, new_item.key)
+    operation_tools.delete_selected(self)
+    graphs.select_item(self, new_item.key)
+    plotting_tools.refresh_plot(self)
