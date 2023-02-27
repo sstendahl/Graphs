@@ -261,3 +261,48 @@ class Highlight(SpanSelector):
         if self.extents[1] > xmax:
             extend_max = xmax
         self.extents = (extend_min, extend_max)
+
+    def get_start_stop(self, bottom_x):
+        if bottom_x:
+            xrange_bottom = max(self.canvas.ax.get_xlim()) \
+                - min(self.canvas.ax.get_xlim())
+            xrange_top = max(self.canvas.top_left_axis.get_xlim()) \
+                - min(self.canvas.top_left_axis.get_xlim())
+            # Run into issues if the range is different, so we calculate this
+            # by getting what fraction of top axis is highlighted
+            if self.canvas.top_left_axis.get_xscale() == "log":
+                fraction_left_limit = utilities.get_fraction_at_value(
+                    min(self.extents),
+                    min(self.canvas.top_left_axis.get_xlim()),
+                    max(self.canvas.top_left_axis.get_xlim()))
+                fraction_right_limit = utilities.get_fraction_at_value(
+                    max(self.extents),
+                    min(self.canvas.top_left_axis.get_xlim()),
+                    max(self.canvas.top_left_axis.get_xlim()))
+            elif self.canvas.top_left_axis.get_xscale() == "linear":
+                fraction_left_limit = (
+                    min(self.extents) - min(
+                        self.canvas.top_left_axis.get_xlim())) / (xrange_top)
+                fraction_right_limit = (
+                    max(self.extents) - min(
+                        self.canvas.top_left_axis.get_xlim())) / (xrange_top)
+
+            # Use the fraction that is higlighted on top to calculate to what
+            # values this corresponds on bottom axis
+            if self.canvas.ax.get_xscale() == "log":
+                startx = utilities.get_value_at_fraction(
+                    fraction_left_limit,
+                    min(self.canvas.ax.get_xlim()),
+                    max(self.canvas.ax.get_xlim()))
+                stopx = utilities.get_value_at_fraction(
+                    fraction_right_limit,
+                    min(self.canvas.ax.get_xlim()),
+                    max(self.canvas.ax.get_xlim()))
+            elif self.canvas.ax.get_xscale() == "linear":
+                xlim = min(self.canvas.ax.get_xlim())
+                startx = xlim + xrange_bottom * fraction_left_limit
+                stopx = xlim + xrange_bottom * fraction_right_limit
+        else:
+            startx = min(self.extents)
+            stopx = max(self.extents)
+        return startx, stopx

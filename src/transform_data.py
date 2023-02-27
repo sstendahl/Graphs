@@ -25,7 +25,7 @@ class TransformWindow(Adw.Window):
         try:
             input_x = str(self.transform_x_entry.get_text())
             input_y = str(self.transform_y_entry.get_text())
-            operations.operation(self, operations.transform,
+            operations.operation(parent, operations.transform,
                                  input_x, input_y)
         except Exception as exception:
             exception_type = exception.__class__.__name__

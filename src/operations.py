@@ -1,8 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 import logging
 
-from graphs import calculation, plotting_tools, utilities
-from graphs import clipboard, graphs, operation_tools
+from graphs import calculation, clipboard, graphs, plotting_tools, utilities
 from graphs.data import Data
 from graphs.misc import InteractionMode
 
@@ -11,35 +10,68 @@ import numpy
 from scipy import integrate
 
 
+def get_item(self, key):
+    """
+    Retrieve item from datadict with start and stop index.
+    If interaction_mode is set to "SELECT"
+    """
+    item = self.datadict[key]
+    start_index = 0
+    stop_index = len(item.xdata)
+    if self.interaction_mode == InteractionMode.SELECT:
+        startx, stopx = self.canvas.highlight.get_start_stop(
+            item.plot_x_position == "bottom")
+
+        # If startx and stopx are not out of range, that is,
+        # if the sample data is within the highlight
+        if not ((startx < min(item.xdata) and stopx < min(item.xdata)) or (
+                startx > max(item.xdata))):
+            new_x, new_y = sort_data(item.xdata, item.ydata)
+            found_start = False
+            found_stop = False
+            for index, value in enumerate(item.xdata):
+                if value > startx and not found_start:
+                    start_index = index
+                    found_start = True
+                if value > stopx and not found_stop:
+                    stop_index = index
+                    found_stop = True
+            item = Data(
+                self,
+                new_x[start_index:stop_index],
+                new_y[start_index:stop_index])
+        else:
+            item = None
+            start_index = None
+            stop_index = None
+    return item, start_index, stop_index
+
+
+def sort_data(xdata, ydata):
+    sorted_lists = sorted(
+        zip(xdata, ydata), key=lambda x_values: x_values[0])
+    sorted_x, sorted_y = zip(*sorted_lists)
+    return list(sorted_x), list(sorted_y)
+
+
 def operation(self, callback, *args):
     try:
         keys = utilities.get_selected_keys(self)
-        # Select data being selected via select mode
-        if self.interaction_mode == InteractionMode.SELECT:
-            start_stop = operation_tools.select_data(self, keys)
-        else:
-            # If mode isn't selection, set start and stop
-            start_stop = {}
-            for key in keys:
-                item = self.datadict[key]
-                start_stop[key] = [0, len(item.xdata)]
         for key in keys:
-            item = operation_tools.get_item(self, key)
-            xdata, ydata, sort = callback(self, item, *args)
-            start_index, stop_index = start_stop[key][0], start_stop[key][1]
-            self.datadict[key].xdata[start_index:stop_index] = xdata
-            self.datadict[key].ydata[start_index:stop_index] = ydata
-            if sort:
-                operation_tools.sort_data(
-                    self.datadict[key].xdata, self.datadict[key].ydata)
-        operation_tools.delete_selected(self)
+            item, start_index, stop_index = get_item(self, key)
+            if item is not None:
+                xdata, ydata, sort = callback(self, item, *args)
+                self.datadict[key].xdata[start_index:stop_index] = xdata
+                self.datadict[key].ydata[start_index:stop_index] = ydata
+                if sort:
+                    sort_data(
+                        self.datadict[key].xdata, self.datadict[key].ydata)
         clipboard.add(self)
         plotting_tools.refresh_plot(self)
     except Exception:
         message = "Couldn't perform operation"
         self.main_window.add_toast(message)
         logging.exception(message)
-        operation_tools.delete_selected(self)
 
 
 def translate_x(self, item, offset):
@@ -178,24 +210,23 @@ def get_inverse_fourier(self, item):
 
 
 def transform(self, item, input_x, input_y):
-    return calculation.operation(
-        item.xdata, item.ydata, input_x, input_y), True
+    xdata, ydata = calculation.operation(
+        item.xdata, item.ydata, input_x, input_y)
+    return xdata, ydata, True
 
 
 def combine(self):
     """Combine the selected data into a new data set"""
     keys = utilities.get_selected_keys(self)
-    if self.interaction_mode == InteractionMode.SELECT:
-        operation_tools.select_data(self, keys)
     new_xdata = []
     new_ydata = []
     for key in keys:
-        item = operation_tools.get_item(self, key)
+        item = get_item(self, key)[0]
         new_xdata.extend(item.xdata)
         new_ydata.extend(item.ydata)
 
     # Create the sample itself
-    new_xdata, new_ydata = operation_tools.sort_data(new_xdata, new_ydata)
+    new_xdata, new_ydata = sort_data(new_xdata, new_ydata)
     new_item = Data(self, new_xdata, new_ydata)
     new_item.filename = "Combined Data"
     filename_list = utilities.get_all_filenames(self)
@@ -207,6 +238,5 @@ def combine(self):
     self.datadict[new_item.key] = new_item
     graphs.reset_clipboard(self)
     graphs.add_sample_to_menu(self, new_item.filename, color, new_item.key)
-    operation_tools.delete_selected(self)
     graphs.select_item(self, new_item.key)
     plotting_tools.refresh_plot(self)
