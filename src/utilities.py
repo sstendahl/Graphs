@@ -154,19 +154,6 @@ def rgba_to_tuple(rgba):
     return (rgba.red, rgba.green, rgba.blue, rgba.alpha)
 
 
-def get_duplicate_filename(self, name):
-    loop = True
-    i = 0
-    while loop:
-        i += 1
-        new_name = f"{name} ({i})"
-        loop = False
-        for _key, item in self.datadict.items():
-            if new_name == item.filename:
-                loop = True
-    return new_name
-
-
 def swap(str1):
     str1 = str1.replace(",", "third")
     str1 = str1.replace(".", ", ")

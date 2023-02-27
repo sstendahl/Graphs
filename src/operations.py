@@ -229,14 +229,6 @@ def combine(self):
     new_xdata, new_ydata = sort_data(new_xdata, new_ydata)
     new_item = Data(self, new_xdata, new_ydata)
     new_item.filename = "Combined Data"
-    filename_list = utilities.get_all_filenames(self)
-
-    if new_item.filename in filename_list:
-        new_item.filename = graphs.get_duplicate_filename(
-            self, new_item.filename)
-    color = plotting_tools.get_next_color(self)
-    self.datadict[new_item.key] = new_item
+    new_item.color = plotting_tools.get_next_color(self)
+    graphs.add_item(self, new_item)
     graphs.reset_clipboard(self)
-    graphs.add_sample_to_menu(self, new_item.filename, color, new_item.key)
-    graphs.select_item(self, new_item.key)
-    plotting_tools.refresh_plot(self)

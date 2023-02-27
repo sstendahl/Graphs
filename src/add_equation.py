@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 from gi.repository import Adw, Gtk
 
-from graphs import calculation, graphs, plotting_tools, utilities
+from graphs import calculation, graphs, plotting_tools
 from graphs.data import Data
 
 
@@ -45,34 +45,6 @@ class AddEquationWindow(Adw.Window):
             self.toast_overlay.add_toast(Adw.Toast(title=toast))
             return
 
-        # Choose how to handle duplicates filenames. Add them,
-        # ignore them, overide them, Or rename the file
-        handle_duplicates = parent.preferences.config["handle_duplicates"]
-        if not handle_duplicates == "Add duplicates":
-            for key, item in parent.datadict.items():
-                if new_file.filename in item.filename:
-                    if handle_duplicates == "Auto-rename duplicates":
-                        new_file.filename = utilities.get_duplicate_filename(
-                            parent, new_file.filename)
-                    elif handle_duplicates == "Ignore duplicates":
-                        toast = "Item with this name already exists"
-                        self.toast_overlay.add_toast(Adw.Toast(title=toast))
-                        return
-                    elif handle_duplicates == "Override existing items":
-                        new_file.xdata_clipboard = [new_file.xdata.copy()]
-                        new_file.ydata_clipboard = [new_file.ydata.copy()]
-                        new_file.clipboard_pos = -1
-                        parent.datadict[key] = new_file
-                        plotting_tools.refresh_plot(parent)
-                        self.destroy()
-                        return
-
-        new_file.xdata_clipboard = [new_file.xdata.copy()]
-        new_file.ydata_clipboard = [new_file.ydata.copy()]
-        new_file.clipboard_pos = -1
-        color = plotting_tools.get_next_color(parent)
-        parent.datadict[new_file.key] = new_file
-        graphs.add_sample_to_menu(
-            parent, new_file.filename, color, new_file.key, True)
-        plotting_tools.refresh_plot(parent)
+        new_file.color = plotting_tools.get_next_color(parent)
+        graphs.add_item(parent, new_file)
         self.destroy()

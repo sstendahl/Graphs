@@ -55,7 +55,7 @@ def on_confirm_discard_response(_dialog, response, self):
 def on_open_response(dialog, response, self, project, import_settings=None):
     if response == Gtk.ResponseType.ACCEPT:
         if project:
-            file_io.load_project(self, dialog.get_files())
+            graphs.open_project(self, dialog.get_files()[0])
         else:
             graphs.open_files(self, dialog.get_files(), import_settings)
 
@@ -64,7 +64,11 @@ def on_save_response(dialog, response, self, project):
     if response == Gtk.ResponseType.ACCEPT:
         path = dialog.get_file().peek_path()
         if project:
-            file_io.save_project(self, path)
+            file_io.save_project(
+                path,
+                self.plot_settings,
+                self.datadict,
+                self.version)
         else:
             file_io.save_file(self, path)
 
