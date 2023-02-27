@@ -3,7 +3,7 @@ import logging
 
 from gi.repository import Adw
 
-from graphs import file_io, plotting_tools, samplerow, ui, utilities
+from graphs import clipboard, file_io, plotting_tools, samplerow, ui, utilities
 from graphs.data import Data
 from graphs.misc import ImportMode, ImportSettings
 
@@ -121,6 +121,7 @@ def add_item(self, item, select=True):
     win.list_box.append(row)
     self.sample_menu[key] = win.list_box.get_last_child()
     ui.enable_data_dependent_buttons(self, True)
+    clipboard.reset(self)
     plotting_tools.refresh_plot(self)
 
 
@@ -147,8 +148,7 @@ def delete(self, key, give_toast=False):
         self.canvas.ax.set_prop_cycle(None)
         layout.set_visible(False)
         self.main_window.no_data_label_box.set_visible(True)
-
-    reset_clipboard(self)
+    clipboard.reset(self)
     plotting_tools.refresh_plot(self)
     ui.enable_data_dependent_buttons(self, utilities.get_selected_keys(self))
 
@@ -167,11 +167,3 @@ def set_attributes(new_object, template):
     for attribute in new_object.__dict__:
         if not hasattr(template, attribute):
             delattr(new_object, attribute)
-
-
-def reset_clipboard(self):
-    for _key, item in self.datadict.items():
-        item.xdata_clipboard = [item.xdata]
-        item.ydata_clipboard = [item.ydata]
-        item.clipboard_pos = -1
-    ui.disable_clipboard_buttons(self)

@@ -38,12 +38,6 @@ def enable_data_dependent_buttons(self, enabled):
         button.set_sensitive(enabled)
 
 
-def disable_clipboard_buttons(self):
-    win = self.main_window
-    win.redo_button.set_sensitive(False)
-    win.undo_button.set_sensitive(False)
-
-
 def on_confirm_discard_response(_dialog, response, self):
     if response == "discard":
         chooser = self.build("dialogs", "open_project")

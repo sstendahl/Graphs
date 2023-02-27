@@ -231,4 +231,4 @@ def combine(self):
     new_item.filename = "Combined Data"
     new_item.color = plotting_tools.get_next_color(self)
     graphs.add_item(self, new_item)
-    graphs.reset_clipboard(self)
+    clipboard.reset(self)

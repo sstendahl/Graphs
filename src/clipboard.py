@@ -2,6 +2,16 @@
 from graphs import plotting_tools
 
 
+def reset(self):
+    for _key, item in self.datadict.items():
+        item.xdata_clipboard = [item.xdata]
+        item.ydata_clipboard = [item.ydata]
+        item.clipboard_pos = -1
+    win = self.main_window
+    win.redo_button.set_sensitive(False)
+    win.undo_button.set_sensitive(False)
+
+
 def add(self):
     """
     Add data to the clipboard, is performed whenever an action is performed.
