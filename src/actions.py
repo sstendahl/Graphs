@@ -1,10 +1,13 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Main actions."""
+import logging
+
 from gi.repository import Adw, Gtk
 
 from graphs import clipboard, graphs, operations, plotting_tools, ui, utilities
 from graphs.add_data_advanced import AddAdvancedWindow
 from graphs.add_equation import AddEquationWindow
+from graphs.misc import InteractionMode
 from graphs.plot_settings import PlotSettingsWindow
 from graphs.preferences import PreferencesWindow
 from graphs.transform_data import TransformWindow
@@ -136,19 +139,59 @@ def delete_selected_action(_action, _target, self):
 
 
 def translate_x_action(_action, _target, self):
-    operations.operation(self, operations.translate_x)
+    win = self.main_window
+    try:
+        offset = eval(win.translate_x_entry.get_text())
+    except Exception as exception:
+        exception_type = exception.__class__.__name__
+        message = f"{exception_type}: Unable to do translation, \
+make sure to enter a valid number"
+        win.add_toast(message)
+        logging.exception(message)
+        offset = 0
+    operations.operation(self, operations.translate_x, offset)
 
 
 def translate_y_action(_action, _target, self):
-    operations.operation(self, operations.translate_y)
+    win = self.main_window
+    try:
+        offset = eval(win.translate_y_entry.get_text())
+    except Exception as exception:
+        exception_type = exception.__class__.__name__
+        message = f"{exception_type}: Unable to do translation, \
+make sure to enter a valid number"
+        win.add_toast(message)
+        logging.exception(message)
+        offset = 0
+    operations.operation(self, operations.translate_y, offset)
 
 
 def multiply_x_action(_action, _target, self):
-    operations.operation(self, operations.multiply_x)
+    win = self.main_window
+    try:
+        multiplier = eval(win.multiply_x_entry.get_text())
+    except Exception as exception:
+        exception_type = exception.__class__.__name__
+        message = f"{exception_type}: Unable to do multiplication, \
+make sure to enter a valid number"
+        win.add_toast(message)
+        logging.exception(message)
+        multiplier = 1
+    operations.operation(self, operations.multiply_x, multiplier)
 
 
 def multiply_y_action(_action, _target, self):
-    operations.operation(self, operations.multiply_y)
+    win = self.main_window
+    try:
+        multiplier = eval(win.multiply_y_entry.get_text())
+    except Exception as exception:
+        exception_type = exception.__class__.__name__
+        message = f"{exception_type}: Unable to do multiplication, \
+make sure to enter a valid number"
+        win.add_toast(message)
+        logging.exception(message)
+        multiplier = 1
+    operations.operation(self, operations.multiply_y, multiplier)
 
 
 def normalize_action(_action, _target, self):
@@ -172,7 +215,8 @@ def combine_action(_action, _target, self):
 
 
 def cut_selected_action(_action, _target, self):
-    operations.operation(self, operations.cut_selected)
+    if self.interaction_mode == InteractionMode.SELECT:
+        operations.operation(self, operations.cut_selected)
 
 
 def get_derivative_action(_action, _target, self):

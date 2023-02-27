@@ -1,5 +1,6 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 from graphs.data import Data
+from graphs.misc import InteractionMode
 
 import numpy
 
@@ -150,3 +151,11 @@ def delete_selected(self):
     for key in self.datadict.copy():
         if key.endswith("_selected"):
             del (self.datadict[key])
+
+
+def get_item(self, key):
+    if f"{key}_selected" in self.datadict:
+        return self.datadict[f"{key}_selected"]
+    if self.interaction_mode != InteractionMode.SELECT:
+        return self.datadict[key]
+    return None
