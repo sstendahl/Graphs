@@ -34,6 +34,7 @@ class Canvas(FigureCanvas):
         self.set_color_cycle(parent)
         self.rubberband_color = utilities.lookup_color(parent, "accent_color")
         super().__init__(self.figure)
+        self.legends = []
         for axis in [self.right_axis, self.top_left_axis,
                      self.top_right_axis]:
             axis.get_xaxis().set_visible(False)

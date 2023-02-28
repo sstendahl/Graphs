@@ -74,9 +74,9 @@ def get_all_filenames(parent):
 
 def get_dict_by_value(dictionary, value):
     """Return the key associated with the given value in the dictionary"""
-    for k, v in dictionary.items():
-        if v == value:
-            return k
+    for key, dict_value in dictionary.items():
+        if dict_value == value:
+            return key
     return "none"
 
 

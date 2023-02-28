@@ -65,7 +65,7 @@ def open_project(self, file):
     for key in self.datadict.copy():
         delete(self, key)
     try:
-        new_plot_settings, new_datadict, version = \
+        new_plot_settings, new_datadict, _version = \
             file_io.load_project(file.peek_path())
         if Adw.StyleManager.get_default().get_dark():
             style = self.preferences.config["plot_style_dark"]
@@ -93,7 +93,7 @@ def add_item(self, item, select=True):
     key = item.key
     win = self.main_window
     handle_duplicates = self.preferences.config["handle_duplicates"]
-    for key_1, item_1 in self.datadict.items():
+    for _key_1, item_1 in self.datadict.items():
         if item.filename == item_1.filename:
             if handle_duplicates == "Auto-rename duplicates":
                 loop = True
@@ -102,7 +102,7 @@ def add_item(self, item, select=True):
                     i += 1
                     new_name = f"{item.filename} ({i})"
                     loop = False
-                    for key_2, item_2 in self.datadict.items():
+                    for _key_2, item_2 in self.datadict.items():
                         if new_name == item_2.filename:
                             loop = True
                 item.filename = new_name
