@@ -180,33 +180,33 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
         plot_settings.xlabel = self.plot_x_label.get_text()
         plot_settings.right_label = self.plot_right_label.get_text()
         plot_settings.top_label = self.plot_top_label.get_text()
-        plot_settings.xscale = self.plot_x_scale.get_selected_item(
-        ).get_string()
-        plot_settings.yscale = self.plot_y_scale.get_selected_item(
-        ).get_string()
-        plot_settings.right_scale = self.plot_right_scale.get_selected_item(
-        ).get_string()
-        plot_settings.top_scale = self.plot_top_scale.get_selected_item(
-        ).get_string()
-        plot_settings.plot_style = self.plot_style.get_selected_item(
-        ).get_string()
+        plot_settings.xscale = \
+            self.plot_x_scale.get_selected_item().get_string()
+        plot_settings.yscale = \
+            self.plot_y_scale.get_selected_item().get_string()
+        plot_settings.right_scale = \
+            self.plot_right_scale.get_selected_item().get_string()
+        plot_settings.top_scale = \
+            self.plot_top_scale.get_selected_item().get_string()
+        plot_settings.plot_style = \
+            self.plot_style.get_selected_item().get_string()
         if self.name_entry.get_text() != "":
             item.filename = self.name_entry.get_text()
-        item.plot_Y_position = self.plot_y_position.get_selected_item(
-        ).get_string()
-        item.plot_X_position = self.plot_x_position.get_selected_item(
-        ).get_string()
-        item.linestyle_selected = self.linestyle_selected.get_selected_item(
-        ).get_string()
+        item.plot_Y_position = \
+            self.plot_y_position.get_selected_item().get_string()
+        item.plot_X_position = \
+            self.plot_x_position.get_selected_item().get_string()
+        item.linestyle_selected = \
+            self.linestyle_selected.get_selected_item().get_string()
         linestyle_unselected = self.linestyle_unselected
-        item.linestyle_unselected = linestyle_unselected.get_selected_item(
-        ).get_string()
+        item.linestyle_unselected = \
+            linestyle_unselected.get_selected_item().get_string()
         selected_markers = self.selected_markers_chooser
-        item.selected_markers = selected_markers.get_selected_item(
-        ).get_string()
+        item.selected_markers = \
+            selected_markers.get_selected_item().get_string()
         unselected_markers = self.unselected_markers_chooser
-        item.unselected_markers = unselected_markers.get_selected_item(
-        ).get_string()
+        item.unselected_markers = \
+            unselected_markers.get_selected_item().get_string()
         selected_slider = self.selected_line_thickness_slider
         item.selected_line_thickness = selected_slider.get_value()
         unselected_slider = self.unselected_line_thickness_slider
