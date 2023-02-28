@@ -8,26 +8,6 @@ from graphs.data import Data
 from graphs.misc import ImportMode, ImportSettings
 
 
-def open_selection_from_dict(self):
-    for key, item in self.datadict.items():
-        if item is not None:
-            if self.item_rows[key].check_button.get_active():
-                linewidth = item.selected_line_thickness
-                linestyle = item.linestyle_selected
-                marker = item.selected_markers
-                marker_size = item.selected_marker_size
-            else:
-                linewidth = item.unselected_line_thickness
-                linestyle = item.linestyle_unselected
-                marker = item.unselected_markers
-                marker_size = item.unselected_marker_size
-            plotting_tools.plot_figure(
-                self, self.canvas, item.xdata, item.ydata, item.filename,
-                linewidth=linewidth, linestyle=linestyle, color=item.color,
-                marker=marker, marker_size=marker_size,
-                y_axis=item.plot_y_position, x_axis=item.plot_x_position)
-
-
 def open_files(self, files, import_settings):
     if import_settings is None:
         import_settings = ImportSettings(self)
@@ -63,7 +43,7 @@ def open_files(self, files, import_settings):
 
 def open_project(self, file):
     for key in self.datadict.copy():
-        delete(self, key)
+        delete_item(self, key)
     try:
         new_plot_settings, new_datadict, _version = \
             file_io.load_project(file.peek_path())
@@ -121,19 +101,19 @@ def add_item(self, item, select=True):
     self.item_rows[key] = row
     win.list_box.append(row)
     self.sample_menu[key] = win.list_box.get_last_child()
-    ui.enable_data_dependent_buttons(self, True)
     clipboard.reset(self)
     plotting_tools.refresh_plot(self)
+    ui.enable_data_dependent_buttons(self, True)
 
 
 def select_item(self, key):
-    item = self.item_rows[key]
-    item.check_button.set_active(True)
+    item_row = self.item_rows[key]
+    item_row.check_button.set_active(True)
     plotting_tools.refresh_plot(self)
     ui.enable_data_dependent_buttons(self, utilities.get_selected_keys(self))
 
 
-def delete(self, key, give_toast=False):
+def delete_item(self, key, give_toast=False):
     layout = self.main_window.list_box
     for sample_menu_key, item in self.sample_menu.items():
         if sample_menu_key == key:
@@ -143,12 +123,11 @@ def delete(self, key, give_toast=False):
     del self.datadict[key]
     if give_toast:
         self.main_window.add_toast(f"Deleted {filename}")
-
-    if len(self.datadict) == 0:
-        self.canvas.ax.legend().remove()
-        self.canvas.ax.set_prop_cycle(None)
-        layout.set_visible(False)
-        self.main_window.no_data_label_box.set_visible(True)
     clipboard.reset(self)
-    plotting_tools.refresh_plot(self)
-    ui.enable_data_dependent_buttons(self, utilities.get_selected_keys(self))
+    if self.datadict:
+        plotting_tools.refresh_plot(self)
+        ui.enable_data_dependent_buttons(
+            self, utilities.get_selected_keys(self))
+    else:
+        plotting_tools.reload_plot(self)
+        ui.enable_data_dependent_buttons(self, False)

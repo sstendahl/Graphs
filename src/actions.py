@@ -136,7 +136,7 @@ def open_project_action(_action, _target, self):
 
 def delete_selected_action(_action, _target, self):
     for key in utilities.get_selected_keys(self):
-        graphs.delete(self, key, True)
+        graphs.delete_item(self, key, True)
 
 
 def translate_x_action(_action, _target, self):

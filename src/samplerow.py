@@ -38,7 +38,7 @@ class SampleBox(Gtk.Box):
         self.check_button.connect("toggled", self.toggled)
 
     def delete(self, _):
-        graphs.delete(self.parent, self.key, True)
+        graphs.delete_item(self.parent, self.key, True)
 
     def toggled(self, _):
         plotting_tools.refresh_plot(self.parent, False)

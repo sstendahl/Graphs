@@ -8,7 +8,7 @@ from gi.repository import Adw
 from graphs import plotting_tools, utilities
 from graphs.rename_label import RenameLabelWindow
 
-import matplotlib.pyplot as plt
+import matplotlib.pyplot as pyplot
 from matplotlib.backend_bases import NavigationToolbar2
 from matplotlib.backends.backend_gtk4cairo import FigureCanvas
 from matplotlib.figure import Figure
@@ -42,15 +42,43 @@ class Canvas(FigureCanvas):
         self.dummy_toolbar = DummyToolbar(self)
         self.highlight = Highlight(self)
 
+    def plot(self, item, selected):
+        x_axis = item.plot_x_position
+        y_axis = item.plot_y_position
+        if y_axis == "left":
+            if x_axis == "bottom":
+                axis = self.ax
+                axis = self.top_left_axis
+        elif y_axis == "right":
+            if x_axis == "bottom":
+                axis = self.right_axis
+            elif x_axis == "top":
+                axis = self.top_right_axis
+        if selected:
+            linewidth = item.selected_line_thickness
+            linestyle = item.linestyle_selected
+            marker = item.selected_markers
+            marker_size = item.selected_marker_size
+        else:
+            linewidth = item.unselected_line_thickness
+            linestyle = item.linestyle_unselected
+            marker = item.unselected_markers
+            marker_size = item.unselected_marker_size
+        axis.plot(
+            item.xdata, item.ydata, linewidth=linewidth, label=item.filename,
+            linestyle=linestyle, marker=marker, color=item.color,
+            markersize=marker_size)
+        self.set_legend()
+
     def set_save_properties(self, parent):
         """
         Set the properties that are related to saving the figure. Currently
         limited to savefig, but will include the background colour soon.
         """
-        plt.rcParams["savefig.format"] = parent.preferences.config[
-            "savefig_filetype"]
-        plt.rcParams["savefig.transparent"] = parent.preferences.config[
-            "savefig_transparent"]
+        pyplot.rcParams["savefig.format"] = \
+            parent.preferences.config["savefig_filetype"]
+        pyplot.rcParams["savefig.transparent"] = \
+            parent.preferences.config["savefig_transparent"]
 
     def set_ax_properties(self, parent):
         """Set the properties that are related to the axes."""
@@ -115,7 +143,7 @@ class Canvas(FigureCanvas):
 
     def set_style(self, parent):
         """Set the plot style."""
-        plt.rcParams.update(plt.rcParamsDefault)
+        pyplot.rcParams.update(pyplot.rcParamsDefault)
         if Adw.StyleManager.get_default().get_dark():
             self.figure.patch.set_facecolor("#242424")
             text_color = "white"
@@ -135,8 +163,8 @@ class Canvas(FigureCanvas):
             "mathtext.default": "regular",
             "axes.labelcolor": text_color,
         }
-        plt.style.use(parent.plot_settings.plot_style)
-        plt.rcParams.update(params)
+        pyplot.style.use(parent.plot_settings.plot_style)
+        pyplot.rcParams.update(params)
 
     def set_color_cycle(self, parent):
         """Set the color cycle that will be used for the graphs."""
@@ -145,7 +173,7 @@ class Canvas(FigureCanvas):
             "plot_invert_color_cycle_dark"]
         if Adw.StyleManager.get_default().get_dark() and reverse_dark:
             cmap += "_r"
-        color_cycle = cycler(color=plt.get_cmap(cmap).colors)
+        color_cycle = cycler(color=pyplot.get_cmap(cmap).colors)
         self.color_cycle = color_cycle.by_key()["color"]
 
     def __call__(self, event):
@@ -272,10 +300,10 @@ class Canvas(FigureCanvas):
 
 class DummyToolbar(NavigationToolbar2):
     """Own implementation of NavigationToolbar2 for rubberband support."""
-    def draw_rubberband(self, _event, x_0, y_0, x_1, y_1):
-        self.canvas._rubberband_rect = [int(val) for val in (x_0,
-                                        self.canvas.figure.bbox.height - y_0,
-                                        x_1 - x_0, y_0 - y_1)]
+    def draw_rubberband(self, _event, x0, y0, x1, y1):
+        self.canvas._rubberband_rect = [int(val) for val in (x0,
+                                        self.canvas.figure.bbox.height - y0,
+                                        x1 - x0, y0 - y1)]
         self.canvas.queue_draw()
 
     def remove_rubberband(self):

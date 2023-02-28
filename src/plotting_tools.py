@@ -2,43 +2,9 @@
 import copy
 import logging
 
-from graphs import graphs
 from graphs.canvas import Canvas
 
 from matplotlib import colors
-
-
-def plot_figure(self, canvas, x_data, y_data, filename="", linewidth=2,
-                marker=None, linestyle="solid", color=None, marker_size=10,
-                y_axis="left", x_axis="bottom"):
-    """
-    Plot the figure on the graph
-    Necessary input arguments are self, the canvas to plot the figure on and
-    the X and Y data
-    """
-    if y_axis == "left":
-        if x_axis == "bottom":
-            canvas.ax.plot(x_data, y_data, linewidth=linewidth, label=filename,
-                           linestyle=linestyle, marker=marker, color=color,
-                           markersize=marker_size)
-        elif x_axis == "top":
-            canvas.top_left_axis.plot(x_data, y_data, linewidth=linewidth,
-                                      label=filename, linestyle=linestyle,
-                                      marker=marker, color=color,
-                                      markersize=marker_size)
-    elif y_axis == "right":
-        if x_axis == "bottom":
-            canvas.right_axis.plot(x_data, y_data, linewidth=linewidth,
-                                   label=filename, linestyle=linestyle,
-                                   marker=marker, color=color,
-                                   markersize=marker_size)
-        elif x_axis == "top":
-            canvas.top_right_axis.plot(x_data, y_data, linewidth=linewidth,
-                                       label=filename, linestyle=linestyle,
-                                       marker=marker, color=color,
-                                       markersize=marker_size)
-            canvas.top_right_axis.set_yscale(self.plot_settings.right_scale)
-    canvas.set_legend()
 
 
 def get_used_axes(self):
@@ -177,7 +143,10 @@ def refresh_plot(self, _axis=True):
         line.remove()
     if len(self.datadict) > 0:
         hide_unused_axes(self, canvas)
-    graphs.open_selection_from_dict(self)
+    for key, item in self.datadict.items():
+        if item is not None:
+            selected = self.item_rows[key].check_button.get_active()
+            self.canvas.plot(item, selected)
     if _axis and len(self.datadict) > 0:
         used_axes, item_list = get_used_axes(self)
         self.canvas.set_limits_axis(used_axes, item_list)
