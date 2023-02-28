@@ -1,5 +1,6 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Main application."""
+import logging
 import sys
 from inspect import getmembers, isfunction
 
@@ -10,6 +11,7 @@ from graphs.canvas import Canvas
 from graphs.misc import InteractionMode, PlotSettings
 from graphs.window import GraphsWindow
 
+import matplotlib.font_manager
 from matplotlib.backend_bases import _Mode
 
 
@@ -33,7 +35,13 @@ class GraphsApplication(Adw.Application):
         self.highlights = []
         self.item_rows = {}
         self.sample_menu = {}
-        plotting_tools.load_fonts()
+        font_list = matplotlib.font_manager.findSystemFonts(
+            fontpaths=None, fontext="ttf")
+        for font in font_list:
+            try:
+                matplotlib.font_manager.fontManager.addfont(font)
+            except Exception:
+                logging.warning(f"Could not load {font}")
         self.preferences = preferences.Preferences(self)
         self.connect_actions()
 

@@ -5,7 +5,7 @@ from cycler import cycler
 
 from gi.repository import Adw
 
-from graphs import utilities
+from graphs import plotting_tools, utilities
 from graphs.rename_label import RenameLabelWindow
 
 import matplotlib.pyplot as plt
@@ -208,6 +208,66 @@ class Canvas(FigureCanvas):
         context.set_source_rgba(color.red, color.green, color.blue, 1)
         context.stroke()
 
+    def set_legend(self):
+        """Set the legend of the graph"""
+        if self.parent.plot_settings.legend:
+            self.legends = []
+            lines, labels = self.ax.get_legend_handles_labels()
+            lines2, labels2 = self.right_axis.get_legend_handles_labels()
+            lines3, labels3 = self.top_left_axis.get_legend_handles_labels()
+            lines4, labels4 = self.top_right_axis.get_legend_handles_labels()
+            self.top_right_axis.legend(
+                lines + lines2 + lines3 + lines4,
+                labels + labels2 + labels3 + labels4, loc=0, frameon=True)
+
+    def set_limits_axis(self, used_axes, item_list):
+        """Set the canvas limits for each axis that is present"""
+        for axis in used_axes:
+            if axis == "left":
+                left_items = []
+                for key in item_list["left"]:
+                    left_items.append(key)
+                left_limits = plotting_tools.find_limits(
+                    self.parent, self.ax.get_yscale(), left_items)
+            if axis == "right":
+                right_items = []
+                for key in item_list["right"]:
+                    right_items.append(key)
+                right_limits = plotting_tools.find_limits(
+                    self, self.right_axis.get_yscale(), right_items)
+            if axis == "top":
+                top_items = []
+                for key in item_list["top"]:
+                    top_items.append(key)
+                top_limits = plotting_tools.find_limits(
+                    self.parent, axis, top_items)
+            if axis == "bottom":
+                bottom_items = []
+                for key in item_list["bottom"]:
+                    bottom_items.append(key)
+                bottom_limits = plotting_tools.find_limits(
+                    self.parent, axis, bottom_items)
+        if used_axes["left"] and used_axes["bottom"]:
+            plotting_tools.set_canvas_limits(
+                left_limits, self.ax, axis_type="Y")
+            plotting_tools.set_canvas_limits(
+                bottom_limits, self.ax, axis_type="X")
+        if used_axes["left"] and used_axes["top"]:
+            plotting_tools.set_canvas_limits(
+                left_limits, self.top_left_axis, axis_type="Y")
+            plotting_tools.set_canvas_limits(
+                top_limits, self.top_left_axis, axis_type="X")
+        if used_axes["right"] and used_axes["bottom"]:
+            plotting_tools.set_canvas_limits(
+                right_limits, self.right_axis, axis_type="Y")
+            plotting_tools.set_canvas_limits(
+                bottom_limits, self.right_axis, axis_type="X")
+        if used_axes["right"] and used_axes["top"]:
+            plotting_tools.set_canvas_limits(
+                right_limits, self.top_right_axis, axis_type="Y")
+            plotting_tools.set_canvas_limits(
+                top_limits, self.top_right_axis, axis_type="X")
+
 
 class DummyToolbar(NavigationToolbar2):
     """Own implementation of NavigationToolbar2 for rubberband support."""
@@ -228,7 +288,7 @@ class Highlight(SpanSelector):
         Create a span selector object, to highlight part of the graph.
         If a span already exists, make it visible instead
         """
-        color = utilities.lookup_color(canvas.parent, "accent_color")
+        color = canvas.rubberband_color
         super().__init__(
             canvas.top_right_axis,
             lambda x, y: self.on_define(canvas),

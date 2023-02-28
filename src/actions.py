@@ -71,7 +71,8 @@ def redo_action(_action, _target, self):
 
 
 def restore_view_action(_action, _target, self):
-    plotting_tools.set_canvas_limits_axis(self)
+    used_axes, item_list = plotting_tools.get_used_axes(self)
+    self.canvas.set_limits_axis(used_axes, item_list)
     self.canvas.draw()
 
 

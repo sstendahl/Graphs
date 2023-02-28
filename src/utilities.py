@@ -52,6 +52,13 @@ def populate_chooser(chooser, chooser_list, clear=True):
             model.append(str(item))
 
 
+def get_chooser_list(chooser):
+    chooser_list = []
+    for item in chooser.get_model():
+        chooser_list.append(item.get_string())
+    return chooser_list
+
+
 def get_datalist(parent):
     """Get a list of all data id"s present in the datadict dictionary"""
     return list(parent.datadict.keys())
@@ -97,9 +104,9 @@ def get_font_style(font_name):
 def get_selected_keys(self):
     """Get a list of ID's of all the datasets that are currently selected"""
     selected_keys = []
-    for _key, item in self.item_rows.items():
+    for key, item in self.item_rows.items():
         if item.check_button.get_active():
-            selected_keys.append(item.key)
+            selected_keys.append(key)
     return selected_keys
 
 
@@ -184,3 +191,19 @@ def get_fraction_at_value(value, start, end):
     log_value = numpy.log10(value)
     log_range = log_end - log_start
     return (log_value - log_start) / log_range
+
+
+def set_attributes(new_object, template):
+    """
+    Sets the attributes of `new_object` to match those of `template`.
+    This function sets the attributes of `new_object` to the values of the
+    attributes in `template` if they don"t already exist in `new_object`.
+    Additionally, it removes any attributes from `new_object` that are
+    not present in `template`.
+    """
+    for attribute in template.__dict__:
+        if not hasattr(new_object, attribute):
+            setattr(new_object, attribute, getattr(template, attribute))
+    for attribute in new_object.__dict__:
+        if not hasattr(template, attribute):
+            delattr(new_object, attribute)

@@ -57,7 +57,8 @@ def open_files(self, files, import_settings):
             if item is not None:
                 item.color = plotting_tools.get_next_color(self)
                 add_item(self, item)
-    plotting_tools.set_canvas_limits_axis(self)
+    used_axes, item_list = plotting_tools.get_used_axes(self)
+    self.canvas.set_limits_axis(used_axes, item_list)
 
 
 def open_project(self, file):
@@ -72,7 +73,7 @@ def open_project(self, file):
             style = self.preferences.config["plot_style_light"]
         new_plot_settings.plot_style = style
         self.plot_settings = new_plot_settings
-        set_attributes(new_plot_settings, self.plot_settings)
+        utilities.set_attributes(new_plot_settings, self.plot_settings)
         self.datadict = {}
         for key, item in new_datadict.items():
             new_item = Data(self, item.xdata, item.ydata)
@@ -151,19 +152,3 @@ def delete(self, key, give_toast=False):
     clipboard.reset(self)
     plotting_tools.refresh_plot(self)
     ui.enable_data_dependent_buttons(self, utilities.get_selected_keys(self))
-
-
-def set_attributes(new_object, template):
-    """
-    Sets the attributes of `new_object` to match those of `template`.
-    This function sets the attributes of `new_object` to the values of the
-    attributes in `template` if they don"t already exist in `new_object`.
-    Additionally, it removes any attributes from `new_object` that are
-    not present in `template`.
-    """
-    for attribute in template.__dict__:
-        if not hasattr(new_object, attribute):
-            setattr(new_object, attribute, getattr(template, attribute))
-    for attribute in new_object.__dict__:
-        if not hasattr(template, attribute):
-            delattr(new_object, attribute)

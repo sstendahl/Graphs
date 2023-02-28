@@ -5,7 +5,6 @@ import logging
 from graphs import graphs
 from graphs.canvas import Canvas
 
-import matplotlib.font_manager
 from matplotlib import colors
 
 
@@ -39,64 +38,7 @@ def plot_figure(self, canvas, x_data, y_data, filename="", linewidth=2,
                                        marker=marker, color=color,
                                        markersize=marker_size)
             canvas.top_right_axis.set_yscale(self.plot_settings.right_scale)
-    set_legend(self, canvas)
-
-
-def set_legend(self, canvas):
-    """Set the legend of the graph"""
-    if self.plot_settings.legend:
-        canvas.legends = []
-        lines, labels = canvas.ax.get_legend_handles_labels()
-        lines2, labels2 = canvas.right_axis.get_legend_handles_labels()
-        lines3, labels3 = canvas.top_left_axis.get_legend_handles_labels()
-        lines4, labels4 = canvas.top_right_axis.get_legend_handles_labels()
-        canvas.top_right_axis.legend(
-            lines + lines2 + lines3 + lines4,
-            labels + labels2 + labels3 + labels4, loc=0, frameon=True)
-
-
-def set_canvas_limits_axis(self):
-    """Set the canvas limits for each axis that is present"""
-    used_axes, item_list = get_used_axes(self)
-
-    for axis in used_axes:
-        if axis == "left":
-            left_items = []
-            for key in item_list["left"]:
-                left_items.append(key)
-            left_limits = find_limits(
-                self, self.canvas.ax.get_yscale(), left_items)
-        if axis == "right":
-            right_items = []
-            for key in item_list["right"]:
-                right_items.append(key)
-            right_limits = find_limits(
-                self, self.canvas.right_axis.get_yscale(), right_items)
-        if axis == "top":
-            top_items = []
-            for key in item_list["top"]:
-                top_items.append(key)
-            top_limits = find_limits(self, axis, top_items)
-        if axis == "bottom":
-            bottom_items = []
-            for key in item_list["bottom"]:
-                bottom_items.append(key)
-            bottom_limits = find_limits(self, axis, bottom_items)
-    if used_axes["left"] and used_axes["bottom"]:
-        set_canvas_limits(left_limits, self.canvas.ax, axis_type="Y")
-        set_canvas_limits(bottom_limits, self.canvas.ax, axis_type="X")
-    if used_axes["left"] and used_axes["top"]:
-        set_canvas_limits(
-            left_limits, self.canvas.top_left_axis, axis_type="Y")
-        set_canvas_limits(top_limits, self.canvas.top_left_axis, axis_type="X")
-    if used_axes["right"] and used_axes["bottom"]:
-        set_canvas_limits(right_limits, self.canvas.right_axis, axis_type="Y")
-        set_canvas_limits(bottom_limits, self.canvas.right_axis, axis_type="X")
-    if used_axes["right"] and used_axes["top"]:
-        set_canvas_limits(
-            right_limits, self.canvas.top_right_axis, axis_type="Y")
-        set_canvas_limits(
-            top_limits, self.canvas.top_right_axis, axis_type="X")
+    canvas.set_legend()
 
 
 def get_used_axes(self):
@@ -222,7 +164,7 @@ def reload_plot(self):
     self.canvas.grab_focus()
 
 
-def refresh_plot(self, set_limits=True):
+def refresh_plot(self, _axis=True):
     """Refresh the graph without completely reloading it."""
     canvas = self.canvas
     for line in canvas.ax.lines:
@@ -236,8 +178,9 @@ def refresh_plot(self, set_limits=True):
     if len(self.datadict) > 0:
         hide_unused_axes(self, canvas)
     graphs.open_selection_from_dict(self)
-    if set_limits and len(self.datadict) > 0:
-        set_canvas_limits_axis(self)
+    if _axis and len(self.datadict) > 0:
+        used_axes, item_list = get_used_axes(self)
+        self.canvas.set_limits_axis(used_axes, item_list)
     self.canvas.draw()
 
 
@@ -292,7 +235,8 @@ def change_left_yscale(action, target, self):
         self.plot_settings.yscale = "linear"
     self.canvas.set_ticks(self)
     action.change_state(target)
-    set_canvas_limits_axis(self)
+    used_axes, item_list = get_used_axes(self)
+    self.canvas.set_limits_axis(used_axes, item_list)
     self.canvas.draw()
 
 
@@ -305,9 +249,10 @@ def change_right_yscale(action, target, self):
         self.canvas.top_right_axis.set_yscale("linear")
         self.canvas.right_axis.set_yscale("linear")
         self.plot_settings.right_scale = "linear"
-    self.canvas.set_ticks(self)
+    used_axes, item_list = get_used_axes(self)
+    self.canvas.set_limits_axis(used_axes, item_list)
     action.change_state(target)
-    set_canvas_limits_axis(self)
+    self.canvas.set_limits_axis(get_used_axes(self))
     self.canvas.draw()
 
 
@@ -322,7 +267,8 @@ def change_top_xscale(action, target, self):
         self.plot_settings.top_scale = "linear"
     self.canvas.set_ticks(self)
     action.change_state(target)
-    set_canvas_limits_axis(self)
+    used_axes, item_list = get_used_axes(self)
+    self.canvas.set_limits_axis(used_axes, item_list)
     self.canvas.draw()
 
 
@@ -337,7 +283,8 @@ def change_bottom_xscale(action, target, self):
         self.plot_settings.xscale = "linear"
     self.canvas.set_ticks(self)
     action.change_state(target)
-    set_canvas_limits_axis(self)
+    used_axes, item_list = get_used_axes(self)
+    self.canvas.set_limits_axis(used_axes, item_list)
     self.canvas.draw()
 
 
@@ -359,14 +306,3 @@ def get_next_color(self):
         if color not in used_colors:
             return color
     return None
-
-
-def load_fonts():
-    """Load system fonts that are installed on the system"""
-    font_list = matplotlib.font_manager.findSystemFonts(
-        fontpaths=None, fontext="ttf")
-    for font in font_list:
-        try:
-            matplotlib.font_manager.fontManager.addfont(font)
-        except Exception:
-            logging.warning(f"Could not load {font}")

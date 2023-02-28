@@ -22,14 +22,14 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
     unselected_marker_size = Gtk.Template.Child()
     plot_title = Gtk.Template.Child()
     plot_style = Gtk.Template.Child()
-    plot_X_scale = Gtk.Template.Child()
-    plot_Y_scale = Gtk.Template.Child()
+    plot_x_scale = Gtk.Template.Child()
+    plot_y_scale = Gtk.Template.Child()
     plot_right_scale = Gtk.Template.Child()
     plot_top_scale = Gtk.Template.Child()
-    plot_Y_position = Gtk.Template.Child()
-    plot_X_position = Gtk.Template.Child()
-    plot_Y_label = Gtk.Template.Child()
-    plot_X_label = Gtk.Template.Child()
+    plot_y_position = Gtk.Template.Child()
+    plot_x_position = Gtk.Template.Child()
+    plot_y_label = Gtk.Template.Child()
+    plot_x_label = Gtk.Template.Child()
     plot_right_label = Gtk.Template.Child()
     plot_top_label = Gtk.Template.Child()
     plot_tick_direction = Gtk.Template.Child()
@@ -57,19 +57,13 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
         self.set_transient_for(parent.main_window)
         self.present()
 
-    def get_chooser_list(self, chooser):
-        model = chooser.get_model()
-        chooser_list = []
-        for item in model:
-            chooser_list.append(item.get_string())
-        return chooser_list
-
     def on_notify(self, _, __, parent):
         self.save_settings(parent)
         filenames = utilities.get_all_filenames(parent)
         self.name_entry.set_text("")
         index = self.datalist_chooser.get_selected()
-        if set(filenames) != set(self.get_chooser_list(self.datalist_chooser)):
+        if set(filenames) != \
+                set(utilities.get_chooser_list(self.datalist_chooser)):
             utilities.populate_chooser(self.datalist_chooser, filenames)
         self.datalist_chooser.set_selected(index)
         self.load_config(parent, key=None)
@@ -228,7 +222,7 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
             self.unselected_markers_chooser.get_selected_item().get_string())
         return item
 
-    def save_settings(self, parent):
+    def on_close(self, _, parent):
         item = self.item
         new_item = self.set_config(item, parent)
         max_length = int(26)
@@ -239,7 +233,4 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
         parent.item_rows[new_item.key].sample_id_label.set_text(label)
         if new_item.selected:
             graphs.select_item(parent, new_item.key)
-
-    def on_close(self, _, parent):
-        self.save_settings(parent)
-        plotting_tools.reload_plot(parent)
+        plotting_tools.refresh_plot(parent)

@@ -32,7 +32,7 @@ template PlotSettingsWindow : Adw.PreferencesWindow {
         max-width-chars: 25;
       }
 
-      Adw.ComboRow plot_Y_position {
+      Adw.ComboRow plot_y_position {
         title: _("Y-Axis Position");
         subtitle: _("The position of the Y-axis");
         model: StringList {
@@ -40,7 +40,7 @@ template PlotSettingsWindow : Adw.PreferencesWindow {
         };
       }
 
-      Adw.ComboRow plot_X_position {
+      Adw.ComboRow plot_x_position {
         title: _("X-Axis Position");
         subtitle: _("The position of the X-axis");
         model: StringList {
@@ -144,11 +144,11 @@ template PlotSettingsWindow : Adw.PreferencesWindow {
         title: _("Plot Title");
       }
 
-      Adw.EntryRow plot_Y_label {
+      Adw.EntryRow plot_y_label {
         title: _("Left Axis Label");
       }
 
-      Adw.EntryRow plot_X_label {
+      Adw.EntryRow plot_x_label {
         title: _("Bottom Axis Label");
       }
 
@@ -175,7 +175,7 @@ template PlotSettingsWindow : Adw.PreferencesWindow {
       title: _("Scaling");
       description: _("The scaling used for each axis");
 
-      Adw.ComboRow plot_Y_scale {
+      Adw.ComboRow plot_y_scale {
         title: _("Left Axis Scale");
         subtitle: _("Scaling used for the left-hand axis");
         model: StringList {
@@ -183,7 +183,7 @@ template PlotSettingsWindow : Adw.PreferencesWindow {
         };
       }
 
-      Adw.ComboRow plot_X_scale {
+      Adw.ComboRow plot_x_scale {
         title: _("Bottom Axis Scale");
         subtitle: _("Scaling on the bottom axis");
         model: StringList {
