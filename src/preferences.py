@@ -158,8 +158,8 @@ class PreferencesWindow(Adw.PreferencesWindow):
         self.plot_selected_marker_size.set_range(0, 30)
         self.plot_unselected_marker_size.set_range(0, 30)
         self.addequation_equation.set_text(str(config["addequation_equation"]))
-        self.addequation_X_start.set_text(str(config["addequation_X_start"]))
-        self.addequation_X_stop.set_text(str(config["addequation_X_stop"]))
+        self.addequation_x_start.set_text(str(config["addequation_X_start"]))
+        self.addequation_x_stop.set_text(str(config["addequation_X_stop"]))
         self.addequation_step_size.set_text(str(config[
             "addequation_step_size"]))
         self.import_skip_rows.set_value(int(config["import_skip_rows"]))
@@ -178,8 +178,8 @@ class PreferencesWindow(Adw.PreferencesWindow):
         self.plot_major_tick_width.set_value(config["plot_major_tick_width"])
         self.plot_minor_tick_length.set_value(config["plot_minor_tick_length"])
         self.plot_major_tick_length.set_value(config["plot_major_tick_length"])
-        self.plot_Y_label.set_text(config["plot_Y_label"])
-        self.plot_X_label.set_text(config["plot_X_label"])
+        self.plot_y_label.set_text(config["plot_Y_label"])
+        self.plot_x_label.set_text(config["plot_X_label"])
         self.plot_right_label.set_text(config["plot_right_label"])
         self.plot_top_label.set_text(config["plot_top_label"])
         self.plot_title.set_text(config["plot_title"])
@@ -187,13 +187,13 @@ class PreferencesWindow(Adw.PreferencesWindow):
             "savefig_filetype"])
         utilities.set_chooser(self.center_data_chooser, config[
             "action_center_data"])
-        utilities.set_chooser(self.plot_X_scale, config["plot_X_scale"])
+        utilities.set_chooser(self.plot_x_scale, config["plot_X_scale"])
         utilities.set_chooser(self.plot_top_scale, config["plot_top_scale"])
         utilities.set_chooser(self.plot_right_scale, config[
             "plot_right_scale"])
-        utilities.set_chooser(self.plot_Y_scale, config["plot_Y_scale"])
-        utilities.set_chooser(self.plot_X_position, config["plot_X_position"])
-        utilities.set_chooser(self.plot_Y_position, config["plot_Y_position"])
+        utilities.set_chooser(self.plot_y_scale, config["plot_Y_scale"])
+        utilities.set_chooser(self.plot_x_position, config["plot_X_position"])
+        utilities.set_chooser(self.plot_y_position, config["plot_Y_position"])
         utilities.set_chooser(self.plot_tick_direction, config[
             "plot_tick_direction"])
         utilities.set_chooser(self.handle_duplicates_chooser, config[
@@ -267,8 +267,8 @@ class PreferencesWindow(Adw.PreferencesWindow):
         font_weight = self.get_font_weight(font_name)
         font_style = self.get_font_style(font_name)
         config["addequation_equation"] = self.addequation_equation.get_text()
-        config["addequation_X_start"] = self.addequation_X_start.get_text()
-        config["addequation_X_stop"] = self.addequation_X_stop.get_text()
+        config["addequation_X_start"] = self.addequation_x_start.get_text()
+        config["addequation_X_stop"] = self.addequation_x_stop.get_text()
         config["addequation_step_size"] = self.addequation_step_size.get_text()
         config["plot_font_string"] = self.plot_font_chooser.get_font_desc(
         ).to_string()
@@ -304,8 +304,8 @@ class PreferencesWindow(Adw.PreferencesWindow):
         config["plot_legend"] = self.plot_legend_check.get_active()
         invert_color = self.plot_invert_color_cycle_dark
         config["plot_invert_color_cycle_dark"] = invert_color.get_active()
-        config["plot_Y_label"] = self.plot_Y_label.get_text()
-        config["plot_X_label"] = self.plot_X_label.get_text()
+        config["plot_Y_label"] = self.plot_y_label.get_text()
+        config["plot_X_label"] = self.plot_x_label.get_text()
         config["plot_right_label"] = self.plot_right_label.get_text()
         config["plot_top_label"] = self.plot_top_label.get_text()
         config["plot_font_size"] = font_size
@@ -319,9 +319,9 @@ class PreferencesWindow(Adw.PreferencesWindow):
             "savefig_filetype"] = filetype.get_selected_item().get_string()
         config["plot_color_cycle"] = self.plot_color_cycle.get_selected_item(
         ).get_string()
-        config["plot_X_scale"] = self.plot_X_scale.get_selected_item(
+        config["plot_X_scale"] = self.plot_x_scale.get_selected_item(
         ).get_string()
-        config["plot_Y_scale"] = self.plot_Y_scale.get_selected_item(
+        config["plot_Y_scale"] = self.plot_y_scale.get_selected_item(
         ).get_string()
         config["plot_top_scale"] = self.plot_top_scale.get_selected_item(
         ).get_string()
@@ -331,9 +331,9 @@ class PreferencesWindow(Adw.PreferencesWindow):
         ).get_string()
         config["plot_top_scale"] = self.plot_top_scale.get_selected_item(
         ).get_string()
-        config["plot_X_position"] = self.plot_X_position.get_selected_item(
+        config["plot_X_position"] = self.plot_x_position.get_selected_item(
         ).get_string()
-        config["plot_Y_position"] = self.plot_Y_position.get_selected_item(
+        config["plot_Y_position"] = self.plot_y_position.get_selected_item(
         ).get_string()
         config[
             "action_center_data"] = self.center_data_chooser.get_selected_item(

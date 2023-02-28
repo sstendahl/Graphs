@@ -90,8 +90,8 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
         self.plot_major_tick_length.set_range(0, 20)
         self.plot_minor_tick_length.set_range(0, 20)
         self.plot_title.set_text(parent.plot_settings.title)
-        self.plot_Y_label.set_text(parent.plot_settings.ylabel)
-        self.plot_X_label.set_text(parent.plot_settings.xlabel)
+        self.plot_y_label.set_text(parent.plot_settings.ylabel)
+        self.plot_x_label.set_text(parent.plot_settings.xlabel)
         self.plot_right_label.set_text(parent.plot_settings.right_label)
         self.plot_top_label.set_text(parent.plot_settings.top_label)
         self.plot_minor_tick_width.set_value(
@@ -102,10 +102,10 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
             parent.plot_settings.minor_tick_length)
         self.plot_major_tick_length.set_value(
             parent.plot_settings.major_tick_length)
-        utilities.set_chooser(self.plot_Y_position, item.plot_y_position)
-        utilities.set_chooser(self.plot_X_position, item.plot_x_position)
-        utilities.set_chooser(self.plot_X_scale, parent.plot_settings.xscale)
-        utilities.set_chooser(self.plot_Y_scale, parent.plot_settings.yscale)
+        utilities.set_chooser(self.plot_y_position, item.plot_y_position)
+        utilities.set_chooser(self.plot_x_position, item.plot_x_position)
+        utilities.set_chooser(self.plot_x_scale, parent.plot_settings.xscale)
+        utilities.set_chooser(self.plot_y_scale, parent.plot_settings.yscale)
         utilities.set_chooser(
             self.plot_right_scale, parent.plot_settings.right_scale)
         utilities.set_chooser(
@@ -176,13 +176,13 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
         plot_settings.minor_tick_length = plot_minor_tick_length.get_value()
         selected_item = self.plot_tick_direction.get_selected_item()
         plot_settings.tick_direction = selected_item.get_string()
-        plot_settings.ylabel = self.plot_Y_label.get_text()
-        plot_settings.xlabel = self.plot_X_label.get_text()
+        plot_settings.ylabel = self.plot_y_label.get_text()
+        plot_settings.xlabel = self.plot_x_label.get_text()
         plot_settings.right_label = self.plot_right_label.get_text()
         plot_settings.top_label = self.plot_top_label.get_text()
-        plot_settings.xscale = self.plot_X_scale.get_selected_item(
+        plot_settings.xscale = self.plot_x_scale.get_selected_item(
         ).get_string()
-        plot_settings.yscale = self.plot_Y_scale.get_selected_item(
+        plot_settings.yscale = self.plot_y_scale.get_selected_item(
         ).get_string()
         plot_settings.right_scale = self.plot_right_scale.get_selected_item(
         ).get_string()
@@ -192,9 +192,9 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
         ).get_string()
         if self.name_entry.get_text() != "":
             item.filename = self.name_entry.get_text()
-        item.plot_Y_position = self.plot_Y_position.get_selected_item(
+        item.plot_Y_position = self.plot_y_position.get_selected_item(
         ).get_string()
-        item.plot_X_position = self.plot_X_position.get_selected_item(
+        item.plot_X_position = self.plot_x_position.get_selected_item(
         ).get_string()
         item.linestyle_selected = self.linestyle_selected.get_selected_item(
         ).get_string()
