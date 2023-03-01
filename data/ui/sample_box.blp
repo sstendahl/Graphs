@@ -21,6 +21,16 @@ template SampleBox : Box {
       hexpand: true;
     }
 
+    Button edit_button {
+      tooltip-text: _("Edit Item");
+      styles ["flat"]
+      Image {
+        hexpand: false;
+        icon-name: "edit-symbolic";
+        pixel-size: 20;
+      }
+    }
+
     Button color_button {
       tooltip-text: _("Pick a color");
       styles ["flat"]

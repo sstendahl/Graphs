@@ -31,5 +31,6 @@
     <file preprocess="xml-stripblanks" alias="normalize-symbolic.svg">icons/normalize-symbolic.svg</file>
     <file preprocess="xml-stripblanks" alias="derivative2-symbolic.svg">icons/derivative2-symbolic.svg</file>    
     <file preprocess="xml-stripblanks" alias="center-symbolic.svg">icons/center-symbolic.svg</file>
+    <file preprocess="xml-stripblanks" alias="edit-symbolic.svg">icons/edit-symbolic.svg</file>
   </gresource>
 </gresources>
