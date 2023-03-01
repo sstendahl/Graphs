@@ -4,6 +4,8 @@ import os
 import pickle
 import re
 
+from gi.repository import Adw
+
 from graphs import graphs, plotting_tools, ui, utilities
 from graphs.data import Data
 
@@ -31,6 +33,11 @@ def load_project(self, files):
             project = pickle.load(file)
         project_datadict = project["data"]
         new_plot_settings = project["plot_settings"]
+        if Adw.StyleManager.get_default().get_dark():
+            style = self.preferences.config["plot_style_dark"]
+        else:
+            style = self.preferences.config["plot_style_light"]
+        new_plot_settings.plot_style = style
         self.plot_settings = new_plot_settings
         graphs.set_attributes(new_plot_settings, self.plot_settings)
         graphs.create_data_from_project(self, project_datadict)
@@ -109,7 +116,7 @@ def get_data(self, import_settings):
                         except IndexError:
                             try:
                                 headers = re.split(
-                                    import_settings["delimiter"], line)
+                                    import_settings.delimiter, line)
                                 self.plot_settings.xlabel = headers[
                                     import_settings.column_x]
                                 self.plot_settings.ylabel = headers[
