@@ -24,12 +24,17 @@ template TransformWindow : Adw.Window {
       margin-end: 26;
       margin-top: 12;
       Adw.EntryRow transform_x_entry {
-        use-underline: true;
         title: _("X =");
       }
       Adw.EntryRow transform_y_entry {
-        use-underline: true;
         title: _("Y =");
+      }
+      Adw.ActionRow discard_row {
+        title: _("Discard Unselected Data");
+        activatable-widget: discard;
+        Switch discard {
+          valign: center;
+        }
       }
     }
 
