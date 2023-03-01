@@ -60,9 +60,13 @@ def operation(self, callback, *args):
         for key in keys:
             item, start_index, stop_index = get_item(self, key)
             if item is not None:
-                xdata, ydata, sort = callback(self, item, *args)
-                self.datadict[key].xdata[start_index:stop_index] = xdata
-                self.datadict[key].ydata[start_index:stop_index] = ydata
+                xdata, ydata, sort, discard = callback(self, item, *args)
+                if discard:
+                    self.datadict[key].xdata = xdata
+                    self.datadict[key].ydata = ydata
+                else:
+                    self.datadict[key].xdata[start_index:stop_index] = xdata
+                    self.datadict[key].ydata[start_index:stop_index] = ydata
                 if sort:
                     sort_data(
                         self.datadict[key].xdata, self.datadict[key].ydata)
@@ -81,7 +85,7 @@ def translate_x(self, item, offset):
     Will show a toast if a ValueError is raised, typically when a user entered
     an invalid number (e.g. comma instead of point separators)
     """
-    return [value + offset for value in item.xdata], item.ydata, True
+    return [value + offset for value in item.xdata], item.ydata, True, False
 
 
 def translate_y(self, item, offset):
@@ -91,7 +95,7 @@ def translate_y(self, item, offset):
     Will show a toast if a ValueError is raised, typically when a user entered
     an invalid number (e.g. comma instead of point separators)
     """
-    return item.xdata, [value + offset for value in item.ydata], False
+    return item.xdata, [value + offset for value in item.ydata], False, False
 
 
 def multiply_x(self, item, multiplier):
@@ -101,7 +105,7 @@ def multiply_x(self, item, multiplier):
     Will show a toast if a ValueError is raised, typically when a user entered
     an invalid number (e.g. comma instead of point separators)
     """
-    return [value * multiplier for value in item.xdata], item.ydata, True
+    return [value * multiplier for value in item.xdata], item.ydata, True, False
 
 
 def multiply_y(self, item, multiplier):
@@ -111,12 +115,14 @@ def multiply_y(self, item, multiplier):
     Will show a toast if a ValueError is raised, typically when a user entered
     an invalid number (e.g. comma instead of point separators)
     """
-    return item.xdata, [value * multiplier for value in item.ydata], False
+    return \
+        item.xdata, [value * multiplier for value in item.ydata], False, False
 
 
 def normalize(self, item):
     """Normalize all selected data"""
-    return item.xdata, [value / max(item.ydata) for value in item.ydata], False
+    return \
+        item.xdata, [value / max(item.ydata) for value in item.ydata], False, False
 
 
 def smoothen(self, item):
@@ -124,7 +130,7 @@ def smoothen(self, item):
     box_points = 4
     box = numpy.ones(box_points) / box_points
     new_ydata = numpy.convolve(item.ydata, box, mode="same")
-    return item.xdata, new_ydata, False
+    return item.xdata, new_ydata, False, False
 
 
 def center(self, item):
@@ -141,7 +147,7 @@ def center(self, item):
             "Center at middle coordinate":
         middle_value = (min(item.xdata) + max(item.xdata)) / 2
     new_xdata = [coordinate - middle_value for coordinate in item.xdata]
-    return new_xdata, item.ydata, True
+    return new_xdata, item.ydata, True, True
 
 
 def shift_vertically(self, item,
@@ -165,7 +171,7 @@ def shift_vertically(self, item,
             new_ydata = [value * shift_value_log for value in item.ydata]
         if self.plot_settings.right_scale == "linear":
             new_ydata = [value + shift_value_linear for value in item.ydata]
-    return item.xdata, new_ydata, False
+    return item.xdata, new_ydata, False, False
 
 
 def cut_selected(self, item):
@@ -178,7 +184,7 @@ def get_derivative(self, item):
     x_values = numpy.array(item.xdata)
     y_values = numpy.array(item.ydata)
     dy_dx = numpy.gradient(y_values, x_values)
-    return item.xdata, dy_dx.tolist(), False
+    return item.xdata, dy_dx.tolist(), False, True
 
 
 def get_integral(self, item):
@@ -186,7 +192,7 @@ def get_integral(self, item):
     x_values = numpy.array(item.xdata)
     y_values = numpy.array(item.ydata)
     indefinite_integral = integrate.cumtrapz(y_values, x_values, initial=0)
-    return item.xdata, indefinite_integral.tolist(), False
+    return item.xdata, indefinite_integral.tolist(), False, True
 
 
 def get_fourier(self, item):
@@ -196,7 +202,7 @@ def get_fourier(self, item):
     y_fourier = numpy.fft.fft(y_values)
     x_fourier = numpy.fft.fftfreq(len(x_values), x_values[1] - x_values[0])
     y_fourier = [value.real for value in y_fourier]
-    return x_fourier, y_fourier, False
+    return x_fourier, y_fourier, False, True
 
 
 def get_inverse_fourier(self, item):
@@ -206,13 +212,13 @@ def get_inverse_fourier(self, item):
     y_fourier = numpy.fft.ifft(y_values)
     x_fourier = numpy.fft.fftfreq(len(x_values), x_values[1] - x_values[0])
     y_fourier = [value.real for value in y_fourier]
-    return x_fourier, y_fourier, False
+    return x_fourier, y_fourier, False, True
 
 
-def transform(self, item, input_x, input_y):
+def transform(self, item, input_x, input_y, discard=False):
     xdata, ydata = calculation.operation(
         item.xdata, item.ydata, input_x, input_y)
-    return xdata, ydata, True
+    return xdata, ydata, True, discard
 
 
 def combine(self):

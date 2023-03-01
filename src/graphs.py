@@ -130,4 +130,6 @@ def delete_item(self, key, give_toast=False):
             self, utilities.get_selected_keys(self))
     else:
         plotting_tools.reload_plot(self)
+        self.main_window.no_data_label_box.set_visible(True)
+        self.main_window.list_box.set_visible(False)
         ui.enable_data_dependent_buttons(self, False)
