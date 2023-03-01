@@ -105,7 +105,8 @@ def multiply_x(self, item, multiplier):
     Will show a toast if a ValueError is raised, typically when a user entered
     an invalid number (e.g. comma instead of point separators)
     """
-    return [value * multiplier for value in item.xdata], item.ydata, True, False
+    return \
+        [value * multiplier for value in item.xdata], item.ydata, True, False
 
 
 def multiply_y(self, item, multiplier):
@@ -121,8 +122,8 @@ def multiply_y(self, item, multiplier):
 
 def normalize(self, item):
     """Normalize all selected data"""
-    return \
-        item.xdata, [value / max(item.ydata) for value in item.ydata], False, False
+    return item.xdata, [value / max(item.ydata) for value in item.ydata],
+    False, False
 
 
 def smoothen(self, item):
