@@ -84,7 +84,7 @@ def get_data(self, import_settings):
                         except IndexError:
                             try:
                                 headers = re.split(
-                                    import_settings["delimiter"], line)
+                                    import_settings.delimiter, line)
                                 self.plot_settings.xlabel = headers[
                                     import_settings.column_x]
                                 self.plot_settings.ylabel = headers[
