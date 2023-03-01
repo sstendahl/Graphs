@@ -32,7 +32,6 @@ debug = get_option('buildtype') == 'debug'
 if debug
   version += '-' + run_command('git', 'rev-parse', '--short', 'HEAD', check: true).stdout().strip()
   name += ' (Development)'
-  application_id += '.Devel'
 endif
 
 conf = configuration_data()

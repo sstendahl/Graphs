@@ -18,7 +18,7 @@ class GraphsApplication(Adw.Application):
     def __init__(self, args):
         """Init the application."""
         self.appid = args[1]
-        super().__init__(application_id=self.appid.replace(".Devel", ""),
+        super().__init__(application_id=self.appid,
                          flags=Gio.ApplicationFlags.FLAGS_NONE)
         self.version = args[0]
         self.name = args[2]
@@ -131,7 +131,7 @@ class GraphsApplication(Adw.Application):
             win = GraphsWindow(application=self)
         self.main_window = win
         win.set_title(self.name)
-        if ".Devel" in self.appid:
+        if "(Development)" in self.name:
             win.add_css_class("devel")
         win.sidebar_flap.connect("notify", self.on_sidebar_toggle)
         graphs.load_empty(self)
