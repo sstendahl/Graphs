@@ -48,6 +48,7 @@ class Canvas(FigureCanvas):
         if y_axis == "left":
             if x_axis == "bottom":
                 axis = self.ax
+            elif x_axis == "top":
                 axis = self.top_left_axis
         elif y_axis == "right":
             if x_axis == "bottom":
@@ -68,7 +69,6 @@ class Canvas(FigureCanvas):
             item.xdata, item.ydata, linewidth=linewidth, label=item.filename,
             linestyle=linestyle, marker=marker, color=item.color,
             markersize=marker_size)
-        self.set_legend()
 
     def set_save_properties(self, parent):
         """
@@ -241,13 +241,18 @@ class Canvas(FigureCanvas):
         """Set the legend of the graph"""
         if self.parent.plot_settings.legend:
             self.legends = []
-            lines, labels = self.ax.get_legend_handles_labels()
+            lines1, labels1 = self.ax.get_legend_handles_labels()
             lines2, labels2 = self.right_axis.get_legend_handles_labels()
             lines3, labels3 = self.top_left_axis.get_legend_handles_labels()
             lines4, labels4 = self.top_right_axis.get_legend_handles_labels()
-            self.top_right_axis.legend(
-                lines + lines2 + lines3 + lines4,
-                labels + labels2 + labels3 + labels4, loc=0, frameon=True)
+            new_lines = lines1 + lines2 + lines3 + lines4
+            new_labels = labels1 + labels2 + labels3 + labels4
+            labels = []
+            for label in new_labels:
+                labels.append(utilities.shorten_label(label))
+            if labels:
+                self.top_right_axis.legend(
+                    new_lines, labels, loc=0, frameon=True)
 
     def set_limits_axis(self, used_axes, item_list):
         """Set the canvas limits for each axis that is present"""

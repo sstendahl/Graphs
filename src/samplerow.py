@@ -9,7 +9,7 @@ from graphs.edit_item import EditItemWindow
 class SampleBox(Gtk.Box):
     __gtype_name__ = "SampleBox"
     sample_box = Gtk.Template.Child()
-    sample_id_label = Gtk.Template.Child()
+    label = Gtk.Template.Child()
     check_button = Gtk.Template.Child()
     edit_button = Gtk.Template.Child()
     color_button = Gtk.Template.Child()
@@ -17,12 +17,9 @@ class SampleBox(Gtk.Box):
 
     def __init__(self, parent, key, color, label, selected=False):
         super().__init__()
-        max_length = int(26)
-        if len(label) > max_length:
-            label = f"{label[:max_length]}..."
+        self.label.set_text(utilities.shorten_label(label))
         if selected:
             self.check_button.set_active(True)
-        self.sample_id_label.set_text(label)
         self.key = key
         self.parent = parent
         self.one_click_trigger = False
@@ -40,9 +37,9 @@ class SampleBox(Gtk.Box):
         graphs.delete_item(self.parent, self.key, True)
 
     def toggled(self, _):
-        plotting_tools.refresh_plot(self.parent, False)
+        plotting_tools.refresh_plot(self.parent)
         ui.enable_data_dependent_buttons(
             self.parent, utilities.get_selected_keys(self.parent))
 
     def edit(self, _):
-        EditItemWindow(self.parent, self.key)
+        EditItemWindow(self.parent, self.parent.datadict[self.key])

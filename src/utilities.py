@@ -207,3 +207,10 @@ def set_attributes(new_object, template):
     for attribute in new_object.__dict__:
         if not hasattr(template, attribute):
             delattr(new_object, attribute)
+
+
+def shorten_label(label):
+    max_length = int(20)
+    if len(label) > max_length:
+        label = f"{label[:max_length]}..."
+    return label

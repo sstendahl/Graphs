@@ -125,21 +125,16 @@ def reload_plot(self):
     """Completely reload the plot of the graph"""
     self.canvas = Canvas(parent=self)
     self.main_window.toast_overlay.set_child(self.canvas)
-    refresh_plot(self, self.canvas)
+    refresh_plot(self)
     self.set_mode(None, None, self.interaction_mode)
     self.canvas.grab_focus()
 
 
-def refresh_plot(self, _axis=True):
+def refresh_plot(self):
     """Refresh the graph without completely reloading it."""
     canvas = self.canvas
-    for line in canvas.ax.lines:
-        line.remove()
-    for line in canvas.right_axis.lines:
-        line.remove()
-    for line in canvas.top_left_axis.lines:
-        line.remove()
-    for line in canvas.top_right_axis.lines:
+    for line in canvas.ax.lines + canvas.right_axis.lines + \
+            canvas.top_left_axis.lines + canvas.top_right_axis.lines:
         line.remove()
     if len(self.datadict) > 0:
         hide_unused_axes(self, canvas)
@@ -147,9 +142,10 @@ def refresh_plot(self, _axis=True):
         if item is not None:
             selected = self.item_rows[key].check_button.get_active()
             self.canvas.plot(item, selected)
-    if _axis and len(self.datadict) > 0:
+    if len(self.datadict) > 0:
         used_axes, item_list = get_used_axes(self)
         self.canvas.set_limits_axis(used_axes, item_list)
+    self.canvas.set_legend()
     self.canvas.draw()
 
 

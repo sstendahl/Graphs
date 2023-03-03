@@ -20,19 +20,19 @@ template EditItemWindow : Adw.PreferencesWindow {
         max-width-chars: 25;
       }
 
-      Adw.ComboRow plot_y_position {
-        title: _("Y-Axis Position");
-        subtitle: _("The position of the Y-axis");
-        model: StringList {
-          strings ["left", "right"]
-        };
-      }
-
       Adw.ComboRow plot_x_position {
         title: _("X-Axis Position");
         subtitle: _("The position of the X-axis");
         model: StringList {
           strings ["top", "bottom"]
+        };
+      }
+
+      Adw.ComboRow plot_y_position {
+        title: _("Y-Axis Position");
+        subtitle: _("The position of the Y-axis");
+        model: StringList {
+          strings ["left", "right"]
         };
       }
     }
