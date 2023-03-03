@@ -2,7 +2,7 @@
 from gi.repository import Gtk
 
 from graphs import colorpicker, graphs, plotting_tools, ui, utilities
-from graphs.plot_settings import PlotSettingsWindow
+from graphs.edit_item import EditItemWindow
 
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/sample_box.ui")
@@ -45,4 +45,4 @@ class SampleBox(Gtk.Box):
             self.parent, utilities.get_selected_keys(self.parent))
 
     def edit(self, _):
-        PlotSettingsWindow(self.parent, self.key)
+        EditItemWindow(self.parent, self.key)
