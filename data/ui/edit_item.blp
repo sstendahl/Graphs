@@ -1,0 +1,122 @@
+using Gtk 4.0;
+using Adw 1;
+
+template EditItemWindow : Adw.PreferencesWindow {
+  modal: true;
+  ShortcutController {
+    Shortcut {
+      trigger: "Escape";
+      action: "action(window.close)";
+    }
+  }
+
+  Adw.PreferencesPage {
+    Adw.PreferencesGroup {
+      title: _("Data");
+      description: _("Choose which data set to edit, the name of the data set and the axis positions");
+
+      Adw.EntryRow name_entry {
+        title: _("Change Name");
+        max-width-chars: 25;
+      }
+
+      Adw.ComboRow plot_y_position {
+        title: _("Y-Axis Position");
+        subtitle: _("The position of the Y-axis");
+        model: StringList {
+          strings ["left", "right"]
+        };
+      }
+
+      Adw.ComboRow plot_x_position {
+        title: _("X-Axis Position");
+        subtitle: _("The position of the X-axis");
+        model: StringList {
+          strings ["top", "bottom"]
+        };
+      }
+    }
+
+    Adw.PreferencesGroup {
+      title: _("Line Style");
+      description: _("Change properties of the line style and thickness");
+
+      Adw.ComboRow linestyle_selected {
+        title: _("Linestyle Selected");
+        subtitle: _("The linestyle when the data set is selected");
+        model: StringList {
+          strings ["none", "solid", "dotted", "dashed", "dashdot"]
+        };
+      }
+
+      Adw.ComboRow linestyle_unselected {
+        title: _("Linestyle Unselected");
+        subtitle: _("The linestyle when the data set is not selected");
+        model: StringList {
+          strings ["none", "solid", "dotted", "dashed", "dashdot"]
+        };
+      }
+
+      Adw.ActionRow {
+        title: _("Selected Linewidth");
+        subtitle: _("The width of lines when the data set is selected");
+
+        Scale selected_line_thickness_slider {
+          draw-value: true;
+          width-request: 200;
+        }
+      }
+
+      Adw.ActionRow {
+        title: _("Unselected Linewidth");
+        subtitle: _("The width of lines when the data set is not selected");
+
+        Scale unselected_line_thickness_slider {
+          draw-value: true;
+          width-request: 200;
+        }
+      }
+    }
+
+    Adw.PreferencesGroup {
+      title: _("Markers");
+      description: _("Change the type and size of the markers that are used");
+
+      Adw.ComboRow selected_markers_chooser {
+        title: _("Selected Markers");
+        subtitle: _("The markers that are used when the data set is selected");
+        model: StringList {
+          strings ["none"]
+        };
+      }
+
+      Adw.ComboRow unselected_markers_chooser {
+        title: _("Unselected Markers");
+        subtitle: _("The markers that are used when the data set is selected");
+        model: StringList {
+          strings ["none"]
+        };
+      }
+
+      Adw.ActionRow {
+        title: _("Selected Marker Size");
+        subtitle: _("The size of the markers used in selected lines");
+
+        Scale selected_marker_size {
+          draw-value: true;
+          width-request: 200;
+        }
+      }
+
+      Adw.ActionRow {
+        title: _("Unselected Marker Size");
+        subtitle: _("The size of the markers used in unselected lines");
+
+        Scale unselected_marker_size {
+          draw-value: true;
+          width-request: 200;
+        }
+      }
+    }
+  }
+}
