@@ -31,9 +31,9 @@ class Data:
         self.set_data_properties(parent, import_settings)
 
     def set_data_properties(self, parent, import_settings):
-        self.plot_y_position = parent.preferences.config[
+        self.plot_Y_position = parent.preferences.config[
             "plot_Y_position"]
-        self.plot_x_position = parent.preferences.config[
+        self.plot_X_position = parent.preferences.config[
             "plot_X_position"]
         self.linestyle_selected = parent.preferences.config[
             "plot_selected_linestyle"]
