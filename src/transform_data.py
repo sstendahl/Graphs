@@ -20,6 +20,7 @@ def on_accept(_widget, self, window):
         if f"{key}_selected" in self.datadict:
             start_index, stop_index = start_stop[key][0], start_stop[key][1]
             xdata_in = self.datadict[key].xdata[start_index:stop_index]
+            xdata_out, ydata_out = operation(xdata_in, input_x, input_y)
             try:
                 xdata_out, ydata_out = operation(xdata_in, input_x, input_y)
             except Exception as exception:
@@ -59,6 +60,8 @@ make sure the syntax is correct"
 def operation(xdata, ydata, input_x, input_y):
     x_array = []
     y_array = []
+    Y_range = ydata
+    X_range = xdata
     operations = []
     for xy_operation in [input_x, input_y]:
         xy_operation = xy_operation.replace("Y_range", "y_range")

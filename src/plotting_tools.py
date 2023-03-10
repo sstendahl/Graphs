@@ -338,10 +338,8 @@ def change_left_yscale(action, target, self):
     else:
         self.canvas.ax.set_yscale("linear")
         self.plot_settings.yscale = "linear"
-    self.canvas.set_ticks(self)
     action.change_state(target)
-    set_canvas_limits_axis(self)
-    self.canvas.draw()
+    refresh_plot(self)
 
 
 def change_right_yscale(action, target, self):
@@ -353,10 +351,8 @@ def change_right_yscale(action, target, self):
         self.canvas.top_right_axis.set_yscale("linear")
         self.canvas.right_axis.set_yscale("linear")
         self.plot_settings.right_scale = "linear"
-    self.canvas.set_ticks(self)
     action.change_state(target)
-    set_canvas_limits_axis(self)
-    self.canvas.draw()
+    refresh_plot(self)
 
 
 def change_top_xscale(action, target, self):
@@ -368,10 +364,8 @@ def change_top_xscale(action, target, self):
         self.canvas.top_left_axis.set_xscale("linear")
         self.canvas.top_right_axis.set_xscale("linear")
         self.plot_settings.top_scale = "linear"
-    self.canvas.set_ticks(self)
     action.change_state(target)
-    set_canvas_limits_axis(self)
-    self.canvas.draw()
+    refresh_plot(self)
 
 
 def change_bottom_xscale(action, target, self):
@@ -383,10 +377,8 @@ def change_bottom_xscale(action, target, self):
         self.canvas.ax.set_xscale("linear")
         self.canvas.right_axis.set_xscale("linear")
         self.plot_settings.xscale = "linear"
-    self.canvas.set_ticks(self)
     action.change_state(target)
-    set_canvas_limits_axis(self)
-    self.canvas.draw()
+    refresh_plot(self)
 
 
 def get_next_color(self):
