@@ -47,9 +47,9 @@ def undo(self):
     for _key, item in self.datadict.items():
         if abs(item.clipboard_pos) < len(item.xdata_clipboard):
             redo_button.set_sensitive(True)
-            item.clipboard_pos -= 1
             item.xdata = item.xdata_clipboard[item.clipboard_pos].copy()
             item.ydata = item.ydata_clipboard[item.clipboard_pos].copy()
+            item.clipboard_pos -= 1
     if abs(item.clipboard_pos) >= len(item.xdata_clipboard):
         undo_button.set_sensitive(False)
     plotting_tools.refresh_plot(self)

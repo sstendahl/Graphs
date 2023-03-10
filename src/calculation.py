@@ -25,6 +25,8 @@ def create_dataset(x_start, x_stop, equation, step_size, name):
 def operation(xdata, ydata, input_x, input_y):
     x_array = []
     y_array = []
+    X_range = xdata
+    Y_Range = ydata
     operations = []
     for xy_operation in [input_x, input_y]:
         xy_operation = xy_operation.replace("Y_range", "y_range")
