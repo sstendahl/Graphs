@@ -22,7 +22,7 @@ class Data:
         self.color = ""
         self.xdata = xdata
         self.ydata = ydata
-        self.clipboard_pos = 0
+        self.clipboard_pos = -1
         self.xdata_clipboard = [self.xdata.copy()]
         self.ydata_clipboard = [self.ydata.copy()]
         self.key: str = str(uuid.uuid4())
