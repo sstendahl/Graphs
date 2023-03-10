@@ -177,7 +177,7 @@ def shift_vertically(self, item,
     return item.xdata, new_ydata, False, False
 
 
-def cut_selected(self, item):
+def cut_selected(self, _item):
     """Cut selected data over the span that is selected"""
     return [], [], False, False
 
