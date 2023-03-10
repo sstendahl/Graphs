@@ -36,10 +36,8 @@ def get_item(self, key):
                 if value > stopx and not found_stop:
                     stop_index = index
                     found_stop = True
-            item = Data(
-                self,
-                new_x[start_index:stop_index],
-                new_y[start_index:stop_index])
+            item.xdata = new_x[start_index:stop_index]
+            item.ydata = new_y[start_index:stop_index]
         else:
             item = None
             start_index = None
@@ -57,23 +55,27 @@ def sort_data(xdata, ydata):
 def operation(self, callback, *args):
     try:
         keys = utilities.get_selected_keys(self)
+        clipboard.add(self)
         for key in keys:
             item, start_index, stop_index = get_item(self, key)
             if item is not None:
                 xdata, ydata, sort, discard = callback(self, item, *args)
                 if discard:
+                    print("Discard is true")
                     self.datadict[key].xdata = xdata
                     self.datadict[key].ydata = ydata
                 else:
+                    print("Discard is false")
                     self.datadict[key].xdata[start_index:stop_index] = xdata
                     self.datadict[key].ydata[start_index:stop_index] = ydata
                 if sort:
+                    print("Sorting data")
                     sort_data(
                         self.datadict[key].xdata, self.datadict[key].ydata)
-        clipboard.add(self)
         plotting_tools.refresh_plot(self)
-    except Exception:
-        message = "Couldn't perform operation"
+    except Exception as exception:
+        exception_type = exception.__class__.__name__
+        message = f"Couldn't perform operation: {exception_type}"
         self.main_window.add_toast(message)
         logging.exception(message)
 
@@ -122,8 +124,8 @@ def multiply_y(self, item, multiplier):
 
 def normalize(self, item):
     """Normalize all selected data"""
-    return item.xdata, [value / max(item.ydata) for value in item.ydata],
-    False, False
+    new_ydata = [value / max(item.ydata) for value in item.ydata]
+    return item.xdata, new_ydata, False, False
 
 
 def smoothen(self, item):
@@ -143,12 +145,12 @@ def center(self, item):
     if self.preferences.config["action_center_data"] == \
             "Center at maximum Y value":
         middle_index = item.ydata.index(max(item.ydata))
-        middle_value = item.xdata[middle_index]
     elif self.preferences.config["action_center_data"] == \
             "Center at middle coordinate":
         middle_value = (min(item.xdata) + max(item.xdata)) / 2
+    print(middle_value)
     new_xdata = [coordinate - middle_value for coordinate in item.xdata]
-    return new_xdata, item.ydata, True, True
+    return new_xdata, item.ydata, False, False
 
 
 def shift_vertically(self, item,
@@ -177,7 +179,7 @@ def shift_vertically(self, item,
 
 def cut_selected(self, item):
     """Cut selected data over the span that is selected"""
-    return [], [], False
+    return [], [], False, False
 
 
 def get_derivative(self, item):
