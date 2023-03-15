@@ -17,6 +17,8 @@ def get_data(self, item):
     """
     xdata = item.xdata
     ydata = item.ydata
+    new_xdata = xdata.copy()
+    new_ydata = ydata.copy()    
     start_index = 0
     stop_index = len(xdata)
     if self.interaction_mode == InteractionMode.SELECT:
