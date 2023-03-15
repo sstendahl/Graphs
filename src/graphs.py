@@ -37,8 +37,7 @@ def open_files(self, files, import_settings):
             if item is not None:
                 item.color = plotting_tools.get_next_color(self)
                 add_item(self, item)
-    used_axes, item_list = plotting_tools.get_used_axes(self)
-    self.canvas.set_limits_axis(used_axes, item_list)
+    self.canvas.set_limits(used_axes, item_list)
 
 
 def open_project(self, file):

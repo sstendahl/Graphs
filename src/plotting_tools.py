@@ -8,11 +8,12 @@ from matplotlib import colors
 
 
 def get_used_axes(self):
-    used_axis = {}
-    used_axis["left"] = False
-    used_axis["right"] = False
-    used_axis["top"] = False
-    used_axis["bottom"] = False
+    used_axis = {
+        "left": False,
+        "right": False,
+        "top": False,
+        "bottom": False
+    }
     item_list = {}
     left_items = []
     right_items = []
@@ -148,8 +149,7 @@ def refresh_plot(self, _axis=True):
             selected = self.item_rows[key].check_button.get_active()
             self.canvas.plot(item, selected)
     if _axis and len(self.datadict) > 0:
-        used_axes, item_list = get_used_axes(self)
-        self.canvas.set_limits_axis(used_axes, item_list)
+        self.canvas.set_limits(used_axes, item_list)
     self.canvas.draw()
 
 

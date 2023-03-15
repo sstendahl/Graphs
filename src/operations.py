@@ -18,7 +18,7 @@ def get_data(self, item):
     xdata = item.xdata
     ydata = item.ydata
     new_xdata = xdata.copy()
-    new_ydata = ydata.copy()    
+    new_ydata = ydata.copy()
     start_index = 0
     stop_index = len(xdata)
     if self.interaction_mode == InteractionMode.SELECT:
@@ -65,7 +65,7 @@ def operation(self, callback, *args):
             xdata, ydata, start_index, stop_index = get_data(self, item)
             if xdata is not None:
                 new_xdata, new_ydata, sort, discard = callback(
-                    self, item, xdata, ydata, *args)
+                    item, xdata, ydata, *args)
                 if discard:
                     logging.info("Discard is true")
                     item.xdata = new_xdata
@@ -88,7 +88,7 @@ def operation(self, callback, *args):
         logging.exception(message)
 
 
-def translate_x(self, item, xdata, ydata, offset):
+def translate_x(_item, xdata, ydata, offset):
     """
     Translate all selected data on the x-axis
     Amount to be shifted is equal to the value in the translate_x entry widget
@@ -98,7 +98,7 @@ def translate_x(self, item, xdata, ydata, offset):
     return [value + offset for value in xdata], ydata, True, False
 
 
-def translate_y(self, item, xdata, ydata, offset):
+def translate_y(_item, xdata, ydata, offset):
     """
     Translate all selected data on the y-axis
     Amount to be shifted is equal to the value in the translate_y entry widget
@@ -108,7 +108,7 @@ def translate_y(self, item, xdata, ydata, offset):
     return xdata, [value + offset for value in ydata], False, False
 
 
-def multiply_x(self, item, xdata, ydata, multiplier):
+def multiply_x(_item, xdata, ydata, multiplier):
     """
     Multiply all selected data on the x-axis
     Amount to be shifted is equal to the value in the multiply_x entry widget
@@ -118,7 +118,7 @@ def multiply_x(self, item, xdata, ydata, multiplier):
     return [value * multiplier for value in xdata], ydata, True, False
 
 
-def multiply_y(self, item, xdata, ydata, multiplier):
+def multiply_y(_item, xdata, ydata, multiplier):
     """
     Multiply all selected data on the y-axis
     Amount to be shifted is equal to the value in the multiply_y entry widget
@@ -128,13 +128,13 @@ def multiply_y(self, item, xdata, ydata, multiplier):
     return xdata, [value * multiplier for value in ydata], False, False
 
 
-def normalize(self, item, xdata, ydata):
+def normalize(_item, xdata, ydata):
     """Normalize all selected data"""
     new_ydata = [value / max(ydata) for value in ydata]
     return xdata, new_ydata, False, False
 
 
-def smoothen(self, item, xdata, ydata):
+def smoothen(_item, xdata, ydata):
     """Smoothen y-data."""
     box_points = 4
     box = numpy.ones(box_points) / box_points
@@ -142,25 +142,22 @@ def smoothen(self, item, xdata, ydata):
     return xdata, new_ydata, False, False
 
 
-def center(self, item, xdata, ydata):
+def center(_item, xdata, ydata, center_maximum):
     """
     Center all selected data
     Depending on the key, will center either on the middle coordinate, or on
     the maximum value of the data
     """
-    if self.preferences.config["action_center_data"] == \
-            "Center at maximum Y value":
+    if center_maximum == "Center at maximum Y value":
         middle_index = ydata.index(max(ydata))
         middle_value = xdata[middle_index]
-    elif self.preferences.config["action_center_data"] == \
-            "Center at middle coordinate":
+    elif center_maximum == "Center at middle coordinate":
         middle_value = (min(xdata) + max(xdata)) / 2
     new_xdata = [coordinate - middle_value for coordinate in xdata]
     return new_xdata, ydata, False, False
 
 
-def shift_vertically(self, item, xdata, ydata,
-                     shift_value_log=1, shift_value_linear=0):
+def shift_vertically(item, xdata, ydata, yscale, right_scale):
     """
     Shifts data vertically with respect to each other
     By default it scales linear data by 1.5 times the total span of the
@@ -168,27 +165,23 @@ def shift_vertically(self, item, xdata, ydata,
     """
     ymin = min(x for x in ydata if x != 0)
     ymax = max(x for x in ydata if x != 0)
-    shift_value_linear += 1.2 * (ymax - ymin)
-    shift_value_log *= 10 ** (numpy.log10(ymax / ymin))
     if item.plot_y_position == "left":
-        if self.plot_settings.yscale == "log":
-            new_ydata = [value * shift_value_log for value in ydata]
-        if self.plot_settings.yscale == "linear":
-            new_ydata = [value + shift_value_linear for value in ydata]
+        linear = (yscale == "linear")
     if item.plot_y_position == "right":
-        if self.plot_settings.right_scale == "log":
-            new_ydata = [value * shift_value_log for value in ydata]
-        if self.plot_settings.right_scale == "linear":
-            new_ydata = [value + shift_value_linear for value in ydata]
-    return xdata, new_ydata, False, False
+        linear = (right_scale == "linear")
+    if linear:
+        shift_value = 1.2 * (ymax - ymin)
+    else:
+        shift_value = 10 ** (numpy.log10(ymax / ymin))
+    return xdata, [value + shift_value for value in ydata], False, False
 
 
-def cut_selected(self, item, xdata, ydata):
+def cut_selected(_item, _xdata, _ydata):
     """Cut selected data over the span that is selected"""
     return [], [], False, False
 
 
-def get_derivative(self, item, xdata, ydata):
+def get_derivative(_item, xdata, ydata):
     """Calculate derivative of all selected data"""
     x_values = numpy.array(xdata)
     y_values = numpy.array(ydata)
@@ -196,7 +189,7 @@ def get_derivative(self, item, xdata, ydata):
     return xdata, dy_dx.tolist(), False, True
 
 
-def get_integral(self, item, xdata, ydata):
+def get_integral(_item, xdata, ydata):
     """Calculate indefinite integral of all selected data"""
     x_values = numpy.array(xdata)
     y_values = numpy.array(ydata)
@@ -204,7 +197,7 @@ def get_integral(self, item, xdata, ydata):
     return xdata, indefinite_integral.tolist(), False, True
 
 
-def get_fourier(self, item, xdata, ydata):
+def get_fourier(_item, xdata, ydata):
     """Perform Fourier transformation on all selected data"""
     x_values = numpy.array(xdata)
     y_values = numpy.array(ydata)
@@ -214,7 +207,7 @@ def get_fourier(self, item, xdata, ydata):
     return x_fourier, y_fourier, False, True
 
 
-def get_inverse_fourier(self, item, xdata, ydata):
+def get_inverse_fourier(_item, xdata, ydata):
     """Perform Inverse Fourier transformation on all selected data"""
     x_values = numpy.array(xdata)
     y_values = numpy.array(ydata)
@@ -224,7 +217,7 @@ def get_inverse_fourier(self, item, xdata, ydata):
     return x_fourier, y_fourier, False, True
 
 
-def transform(self, item, xdata, ydata, input_x, input_y, discard=False):
+def transform(_item, xdata, ydata, input_x, input_y, discard=False):
     new_xdata, new_ydata = calculation.operation(
         xdata, ydata, input_x, input_y)
     return new_xdata, new_ydata, True, discard

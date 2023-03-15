@@ -250,7 +250,8 @@ class Canvas(FigureCanvas):
                 lines + lines2 + lines3 + lines4,
                 labels + labels2 + labels3 + labels4, loc=0, frameon=True)
 
-    def set_limits_axis(self, used_axes, item_list):
+    def set_limits(self):
+        used_axes, item_list = plotting_tools.get_used_axes(self.parent)
         """Set the canvas limits for each axis that is present"""
         for axis in used_axes:
             if axis == "left":

@@ -71,8 +71,7 @@ def redo_action(_action, _target, self):
 
 
 def restore_view_action(_action, _target, self):
-    used_axes, item_list = plotting_tools.get_used_axes(self)
-    self.canvas.set_limits_axis(used_axes, item_list)
+    self.canvas.set_limits(used_axes, item_list)
     self.canvas.draw()
 
 
@@ -204,11 +203,15 @@ def smoothen_action(_action, _target, self):
 
 
 def center_action(_action, _target, self):
-    operations.operation(self, operations.center)
+    operations.operation(
+        self, operations.center,
+        self.preferences.config["action_center_data"])
 
 
 def shift_vertically_action(_action, _target, self):
-    operations.operation(self, operations.shift_vertically)
+    operations.operation(
+        self, operations.shift_vertically,
+        self.plot_settings.yscale, self.plot_settings.right_scale)
 
 
 def combine_action(_action, _target, self):
