@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
-from graphs import plotting_tools
+from graphs import graphs
 
 
 def reset(self):
@@ -52,7 +52,7 @@ def undo(self):
             item.clipboard_pos -= 1
     if abs(item.clipboard_pos) >= len(item.xdata_clipboard):
         undo_button.set_sensitive(False)
-    plotting_tools.refresh_plot(self)
+    graphs.refresh(self)
 
 
 def redo(self):
@@ -70,4 +70,4 @@ def redo(self):
             item.ydata = item.ydata_clipboard[item.clipboard_pos].copy()
     if item.clipboard_pos >= -1:
         redo_button.set_sensitive(False)
-    plotting_tools.refresh_plot(self)
+    graphs.refresh(self)

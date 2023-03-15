@@ -3,7 +3,7 @@ import os
 
 from gi.repository import Adw, Gtk
 
-from graphs import file_io, graphs, plotting_tools
+from graphs import file_io, graphs
 
 
 def toggle_darkmode(_shortcut, _theme, _widget, self):
@@ -13,7 +13,7 @@ def toggle_darkmode(_shortcut, _theme, _widget, self):
     else:
         self.plot_settings.plot_style = self.preferences.config[
             "plot_style_light"]
-    plotting_tools.reload_plot(self)
+    graphs.reload(self)
 
 
 def enable_data_dependent_buttons(self, enabled):

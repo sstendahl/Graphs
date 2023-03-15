@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 from gi.repository import Adw, Gtk
 
-from graphs import plotting_tools, utilities
+from graphs import graphs, utilities
 
 import matplotlib.pyplot as plt
 
@@ -123,4 +123,15 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
         plot_settings.plot_style = \
             self.plot_style.get_selected_item().get_string()
 
-        plotting_tools.reload_plot(parent)
+    def on_close(self, _, parent):
+        item = self.item
+        new_item = self.set_config(item, parent)
+        max_length = int(26)
+        if len(new_item.filename) > max_length:
+            label = f"{new_item.filename[:max_length]}..."
+        else:
+            label = new_item.filename
+        parent.item_rows[new_item.key].sample_id_label.set_text(label)
+        if new_item.selected:
+            graphs.select_item(parent, new_item.key)
+        graphs.refresh(parent)

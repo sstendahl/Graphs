@@ -254,7 +254,8 @@ class Canvas(FigureCanvas):
                 self.top_right_axis.legend(
                     new_lines, labels, loc=0, frameon=True)
 
-    def set_limits_axis(self, used_axes, item_list):
+    def set_limits(self):
+        used_axes, item_list = plotting_tools.get_used_axes(self.parent)
         """Set the canvas limits for each axis that is present"""
         for axis in used_axes:
             if axis == "left":

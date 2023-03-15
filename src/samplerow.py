@@ -37,7 +37,7 @@ class SampleBox(Gtk.Box):
         graphs.delete_item(self.parent, self.key, True)
 
     def toggled(self, _):
-        plotting_tools.refresh_plot(self.parent)
+        graphs.refresh(self.parent, False)
         ui.enable_data_dependent_buttons(
             self.parent, utilities.get_selected_keys(self.parent))
 
