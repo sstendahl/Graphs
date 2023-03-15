@@ -31,7 +31,7 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
     plot_legend_check = Gtk.Template.Child()
     plot_style = Gtk.Template.Child()
 
-    def __init__(self, parent, key=None):
+    def __init__(self, parent):
         super().__init__()
 
         self.plot_title.set_text(parent.plot_settings.title)
@@ -122,16 +122,4 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
         plot_settings.legend = self.plot_legend_check.get_active()
         plot_settings.plot_style = \
             self.plot_style.get_selected_item().get_string()
-
-    def on_close(self, _, parent):
-        item = self.item
-        new_item = self.set_config(item, parent)
-        max_length = int(26)
-        if len(new_item.filename) > max_length:
-            label = f"{new_item.filename[:max_length]}..."
-        else:
-            label = new_item.filename
-        parent.item_rows[new_item.key].sample_id_label.set_text(label)
-        if new_item.selected:
-            graphs.select_item(parent, new_item.key)
         graphs.refresh(parent)

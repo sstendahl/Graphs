@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 from gi.repository import Gtk
 
-from graphs import colorpicker, graphs, plotting_tools, ui, utilities
+from graphs import colorpicker, graphs, ui, utilities
 from graphs.edit_item import EditItemWindow
 
 

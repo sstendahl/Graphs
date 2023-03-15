@@ -121,8 +121,6 @@ def find_limits(self, axis, datadict):
         "ymin": ymin_all,
         "ymax": ymax_all}
 
-
-
 def hide_unused_axes(self, canvas):
     """
     Hide axes that are not in use,
