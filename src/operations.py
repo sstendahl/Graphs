@@ -80,7 +80,7 @@ def operation(self, callback, *args):
                     item.xdata = sorted_x
                     item.ydata = sorted_y
 
-        plotting_tools.refresh_plot(self)
+        graphs.refresh(self)
     except Exception as exception:
         exception_type = exception.__class__.__name__
         message = f"Couldn't perform operation: {exception_type}"

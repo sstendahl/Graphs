@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 from gi.repository import Gtk
 
-from graphs import plotting_tools, utilities
+from graphs import graphs, utilities
 
 from matplotlib import colors
 
@@ -45,7 +45,7 @@ class ColorPicker():
         self.color = self.get_color()
         self.update_color()
         self.parent.datadict[self.key].color = self.color
-        plotting_tools.refresh_plot(self.parent)
+        graphs.refresh(self.parent)
 
     def change_color(self, *_args):
         self.set_color(self.get_rgba())

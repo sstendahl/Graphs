@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 from gi.repository import Adw, Gtk
 
-from graphs import graphs, plotting_tools, utilities
+from graphs import graphs, utilities
 
 import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
@@ -233,4 +233,4 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
         parent.item_rows[new_item.key].sample_id_label.set_text(label)
         if new_item.selected:
             graphs.select_item(parent, new_item.key)
-        plotting_tools.refresh_plot(parent)
+        graphs.refresh(parent)

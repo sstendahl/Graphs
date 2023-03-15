@@ -4,6 +4,7 @@ import logging
 from gi.repository import Adw
 
 from graphs import clipboard, file_io, plotting_tools, samplerow, ui, utilities
+from graphs.canvas import Canvas
 from graphs.data import Data
 from graphs.misc import ImportMode, ImportSettings
 
@@ -37,7 +38,7 @@ def open_files(self, files, import_settings):
             if item is not None:
                 item.color = plotting_tools.get_next_color(self)
                 add_item(self, item)
-    self.canvas.set_limits(used_axes, item_list)
+    self.canvas.set_limits()
 
 
 def open_project(self, file):
@@ -91,7 +92,7 @@ def add_item(self, item, select=True):
                 return
             elif handle_duplicates == "Override existing items":
                 self.datadict[key] = item
-                plotting_tools.reload_plot(self)
+                reload(self)
                 return
     self.datadict[key] = item
     win.list_box.set_visible(True)
@@ -101,14 +102,14 @@ def add_item(self, item, select=True):
     win.list_box.append(row)
     self.sample_menu[key] = win.list_box.get_last_child()
     clipboard.reset(self)
-    plotting_tools.refresh_plot(self)
+    refresh(self)
     ui.enable_data_dependent_buttons(self, True)
 
 
 def select_item(self, key):
     item_row = self.item_rows[key]
     item_row.check_button.set_active(True)
-    plotting_tools.refresh_plot(self)
+    refresh(self)
     ui.enable_data_dependent_buttons(self, utilities.get_selected_keys(self))
 
 
@@ -124,11 +125,37 @@ def delete_item(self, key, give_toast=False):
         self.main_window.add_toast(f"Deleted {filename}")
     clipboard.reset(self)
     if self.datadict:
-        plotting_tools.refresh_plot(self)
+        refresh(self)
         ui.enable_data_dependent_buttons(
             self, utilities.get_selected_keys(self))
     else:
-        plotting_tools.reload_plot(self)
+        reload(self)
         self.main_window.no_data_label_box.set_visible(True)
         self.main_window.list_box.set_visible(False)
         ui.enable_data_dependent_buttons(self, False)
+
+
+def reload(self):
+    """Completely reload the plot of the graph"""
+    self.canvas = Canvas(parent=self)
+    self.main_window.toast_overlay.set_child(self.canvas)
+    refresh(self)
+    self.set_mode(None, None, self.interaction_mode)
+    self.canvas.grab_focus()
+
+
+def refresh(self, set_limits=False):
+    """Refresh the graph without completely reloading it."""
+    canvas = self.canvas
+    for line in canvas.ax.lines + canvas.right_axis.lines + \
+            canvas.top_left_axis.lines + canvas.top_right_axis.lines:
+        line.remove()
+    if len(self.datadict) > 0:
+        plotting_tools.hide_unused_axes(self, canvas)
+    for key, item in self.datadict.items():
+        if item is not None:
+            selected = self.item_rows[key].check_button.get_active()
+            self.canvas.plot(item, selected)
+    if set_limits and len(self.datadict) > 0:
+        self.canvas.set_limits()
+    self.canvas.draw()

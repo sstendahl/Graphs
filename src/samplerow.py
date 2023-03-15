@@ -3,7 +3,7 @@ import time
 
 from gi.repository import Gtk
 
-from graphs import colorpicker, graphs, plotting_tools, ui, utilities
+from graphs import colorpicker, graphs, ui, utilities
 from graphs.plot_settings import PlotSettingsWindow
 
 
@@ -41,7 +41,7 @@ class SampleBox(Gtk.Box):
         graphs.delete_item(self.parent, self.key, True)
 
     def toggled(self, _):
-        plotting_tools.refresh_plot(self.parent, False)
+        graphs.refresh(self.parent, False)
         ui.enable_data_dependent_buttons(
             self.parent, utilities.get_selected_keys(self.parent))
 
