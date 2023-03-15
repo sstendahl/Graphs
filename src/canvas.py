@@ -48,12 +48,13 @@ class Canvas(FigureCanvas):
         if y_axis == "left":
             if x_axis == "bottom":
                 axis = self.ax
+            elif x_axis == "top":
                 axis = self.top_left_axis
         elif y_axis == "right":
             if x_axis == "bottom":
                 axis = self.right_axis
             elif x_axis == "top":
-                axis = self.top_right_axis
+                axis = self.top_right_axis                
         if selected:
             linewidth = item.selected_line_thickness
             linestyle = item.linestyle_selected
