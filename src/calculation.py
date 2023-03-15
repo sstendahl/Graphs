@@ -26,7 +26,7 @@ def operation(xdata, ydata, input_x, input_y):
     x_array = []
     y_array = []
     X_range = xdata
-    Y_Range = ydata
+    Y_range = ydata
     operations = []
     for xy_operation in [input_x, input_y]:
         xy_operation = xy_operation.replace("Y_range", "y_range")
