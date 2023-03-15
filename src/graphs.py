@@ -27,6 +27,8 @@ def open_files(self, files, import_settings):
                     self.main_window.add_toast(toast)
                     continue
                 item = Data(self, xdata, ydata, import_settings)
+                item.color = plotting_tools.get_next_color(self)
+                add_item(self, item)
             except IndexError:
                 toast = "Could not open data, the column index is out of range"
                 self.main_window.add_toast(toast)
@@ -35,9 +37,6 @@ def open_files(self, files, import_settings):
                 toast = "Could not open data, wrong filetype"
                 self.main_window.add_toast(toast)
                 break
-            if item is not None:
-                item.color = plotting_tools.get_next_color(self)
-                add_item(self, item)
     self.canvas.set_limits()
 
 
@@ -71,7 +70,6 @@ def open_project(self, file):
 
 def add_item(self, item, select=True):
     key = item.key
-    win = self.main_window
     handle_duplicates = self.preferences.config["handle_duplicates"]
     for _key_1, item_1 in self.datadict.items():
         if item.filename == item_1.filename:
@@ -88,36 +86,34 @@ def add_item(self, item, select=True):
                 item.filename = new_name
             elif handle_duplicates == "Ignore duplicates":
                 toast = f'Item "{item.filename}" already exists'
-                win.add_toast(toast)
+                self.main_window.add_toast(toast)
                 return
             elif handle_duplicates == "Override existing items":
                 self.datadict[key] = item
                 reload(self)
                 return
     self.datadict[key] = item
-    win.list_box.set_visible(True)
-    win.no_data_label_box.set_visible(False)
+    self.main_window.list_box.set_visible(True)
+    self.main_window.no_data_label_box.set_visible(False)
     row = samplerow.SampleBox(self, key, item.color, item.filename, select)
     self.item_rows[key] = row
-    win.list_box.append(row)
-    self.sample_menu[key] = win.list_box.get_last_child()
+    self.main_window.list_box.append(row)
+    self.sample_menu[key] = self.main_window.list_box.get_last_child()
     clipboard.reset(self)
     refresh(self)
     ui.enable_data_dependent_buttons(self, True)
 
 
 def select_item(self, key):
-    item_row = self.item_rows[key]
-    item_row.check_button.set_active(True)
+    self.item_rows[key].check_button.set_active(True)
     refresh(self)
     ui.enable_data_dependent_buttons(self, utilities.get_selected_keys(self))
 
 
 def delete_item(self, key, give_toast=False):
-    layout = self.main_window.list_box
     for sample_menu_key, item in self.sample_menu.items():
         if sample_menu_key == key:
-            layout.remove(item)
+            self.main_window.list_box.remove(item)
     filename = self.datadict[key].filename
     del self.item_rows[key]
     del self.datadict[key]
