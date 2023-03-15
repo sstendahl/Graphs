@@ -172,7 +172,7 @@ def change_left_yscale(action, target, self):
         self.canvas.ax.set_yscale("linear")
         self.plot_settings.yscale = "linear"
     action.change_state(target)
-    graphs.graphs.refresh(self)
+    graphs.refresh(self)
 
 
 def change_right_yscale(action, target, self):
@@ -185,7 +185,7 @@ def change_right_yscale(action, target, self):
         self.canvas.right_axis.set_yscale("linear")
         self.plot_settings.right_scale = "linear"
     action.change_state(target)
-    graphs.graphs.refresh(self)
+    graphs.refresh(self)
 
 
 def change_top_xscale(action, target, self):
@@ -198,7 +198,7 @@ def change_top_xscale(action, target, self):
         self.canvas.top_right_axis.set_xscale("linear")
         self.plot_settings.top_scale = "linear"
     action.change_state(target)
-    graphs.graphs.refresh(self)
+    graphs.refresh(self)
 
 
 def change_bottom_xscale(action, target, self):
@@ -211,7 +211,7 @@ def change_bottom_xscale(action, target, self):
         self.canvas.right_axis.set_xscale("linear")
         self.plot_settings.xscale = "linear"
     action.change_state(target)
-    graphs.graphs.refresh(self)
+    graphs.refresh(self)
 
 
 def get_next_color(self):

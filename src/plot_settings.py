@@ -58,7 +58,7 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
         self.present()
 
     def on_notify(self, _, __, parent):
-        self.save_settings(parent)
+        self.on_close(_, parent)
         filenames = utilities.get_all_filenames(parent)
         self.name_entry.set_text("")
         index = self.datalist_chooser.get_selected()
@@ -89,6 +89,7 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
         self.plot_minor_tick_width.set_range(0, 4)
         self.plot_major_tick_length.set_range(0, 20)
         self.plot_minor_tick_length.set_range(0, 20)
+        self.name_entry.set_text(item.filename)
         self.plot_title.set_text(parent.plot_settings.title)
         self.plot_y_label.set_text(parent.plot_settings.ylabel)
         self.plot_x_label.set_text(parent.plot_settings.xlabel)
@@ -190,8 +191,7 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
             self.plot_top_scale.get_selected_item().get_string()
         plot_settings.plot_style = \
             self.plot_style.get_selected_item().get_string()
-        if self.name_entry.get_text() != "":
-            item.filename = self.name_entry.get_text()
+        item.filename = self.name_entry.get_text()
         item.plot_Y_position = \
             self.plot_y_position.get_selected_item().get_string()
         item.plot_X_position = \

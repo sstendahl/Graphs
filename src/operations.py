@@ -80,7 +80,7 @@ def operation(self, callback, *args):
                     item.xdata = sorted_x
                     item.ydata = sorted_y
 
-        graphs.refresh(self)
+        graphs.refresh(self, set_limits=True)
     except Exception as exception:
         exception_type = exception.__class__.__name__
         message = f"Couldn't perform operation: {exception_type}"
@@ -154,7 +154,7 @@ def center(_item, xdata, ydata, center_maximum):
     elif center_maximum == "Center at middle coordinate":
         middle_value = (min(xdata) + max(xdata)) / 2
     new_xdata = [coordinate - middle_value for coordinate in xdata]
-    return new_xdata, ydata, False, False
+    return new_xdata, ydata, True, False
 
 
 def shift_vertically(item, xdata, ydata, yscale, right_scale):
