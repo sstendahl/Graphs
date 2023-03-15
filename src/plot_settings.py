@@ -191,8 +191,7 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
             self.plot_top_scale.get_selected_item().get_string()
         plot_settings.plot_style = \
             self.plot_style.get_selected_item().get_string()
-        if self.name_entry.get_text() != "":
-            item.filename = self.name_entry.get_text()
+        item.filename = self.name_entry.get_text()
         item.plot_Y_position = \
             self.plot_y_position.get_selected_item().get_string()
         item.plot_X_position = \
