@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 from gi.repository import Adw, Gtk
 
-from graphs import graphs, plotting_tools, utilities
+from graphs import graphs, utilities
 
 import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
@@ -22,14 +22,14 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
     unselected_marker_size = Gtk.Template.Child()
     plot_title = Gtk.Template.Child()
     plot_style = Gtk.Template.Child()
-    plot_X_scale = Gtk.Template.Child()
-    plot_Y_scale = Gtk.Template.Child()
+    plot_x_scale = Gtk.Template.Child()
+    plot_y_scale = Gtk.Template.Child()
     plot_right_scale = Gtk.Template.Child()
     plot_top_scale = Gtk.Template.Child()
-    plot_Y_position = Gtk.Template.Child()
-    plot_X_position = Gtk.Template.Child()
-    plot_Y_label = Gtk.Template.Child()
-    plot_X_label = Gtk.Template.Child()
+    plot_y_position = Gtk.Template.Child()
+    plot_x_position = Gtk.Template.Child()
+    plot_y_label = Gtk.Template.Child()
+    plot_x_label = Gtk.Template.Child()
     plot_right_label = Gtk.Template.Child()
     plot_top_label = Gtk.Template.Child()
     plot_tick_direction = Gtk.Template.Child()
@@ -55,21 +55,15 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
             "notify::selected", self.on_notify, parent)
         self.connect("close-request", self.on_close, parent)
         self.set_transient_for(parent.main_window)
-        self.set_modal(True)
-
-    def get_chooser_list(self, chooser):
-        model = chooser.get_model()
-        chooser_list = []
-        for item in model:
-            chooser_list.append(item.get_string())
-        return chooser_list
+        self.present()
 
     def on_notify(self, _, __, parent):
         self.save_settings(parent)
         filenames = utilities.get_all_filenames(parent)
         self.name_entry.set_text("")
         index = self.datalist_chooser.get_selected()
-        if set(filenames) != set(self.get_chooser_list(self.datalist_chooser)):
+        if set(filenames) != \
+                set(utilities.get_chooser_list(self.datalist_chooser)):
             utilities.populate_chooser(self.datalist_chooser, filenames)
         self.datalist_chooser.set_selected(index)
         self.load_config(parent, key=None)
@@ -96,8 +90,8 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
         self.plot_major_tick_length.set_range(0, 20)
         self.plot_minor_tick_length.set_range(0, 20)
         self.plot_title.set_text(parent.plot_settings.title)
-        self.plot_Y_label.set_text(parent.plot_settings.ylabel)
-        self.plot_X_label.set_text(parent.plot_settings.xlabel)
+        self.plot_y_label.set_text(parent.plot_settings.ylabel)
+        self.plot_x_label.set_text(parent.plot_settings.xlabel)
         self.plot_right_label.set_text(parent.plot_settings.right_label)
         self.plot_top_label.set_text(parent.plot_settings.top_label)
         self.plot_minor_tick_width.set_value(
@@ -108,10 +102,10 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
             parent.plot_settings.minor_tick_length)
         self.plot_major_tick_length.set_value(
             parent.plot_settings.major_tick_length)
-        utilities.set_chooser(self.plot_Y_position, item.plot_y_position)
-        utilities.set_chooser(self.plot_X_position, item.plot_x_position)
-        utilities.set_chooser(self.plot_X_scale, parent.plot_settings.xscale)
-        utilities.set_chooser(self.plot_Y_scale, parent.plot_settings.yscale)
+        utilities.set_chooser(self.plot_y_position, item.plot_y_position)
+        utilities.set_chooser(self.plot_x_position, item.plot_x_position)
+        utilities.set_chooser(self.plot_x_scale, parent.plot_settings.xscale)
+        utilities.set_chooser(self.plot_y_scale, parent.plot_settings.yscale)
         utilities.set_chooser(
             self.plot_right_scale, parent.plot_settings.right_scale)
         utilities.set_chooser(
@@ -182,37 +176,37 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
         plot_settings.minor_tick_length = plot_minor_tick_length.get_value()
         selected_item = self.plot_tick_direction.get_selected_item()
         plot_settings.tick_direction = selected_item.get_string()
-        plot_settings.ylabel = self.plot_Y_label.get_text()
-        plot_settings.xlabel = self.plot_X_label.get_text()
+        plot_settings.ylabel = self.plot_y_label.get_text()
+        plot_settings.xlabel = self.plot_x_label.get_text()
         plot_settings.right_label = self.plot_right_label.get_text()
         plot_settings.top_label = self.plot_top_label.get_text()
-        plot_settings.xscale = self.plot_X_scale.get_selected_item(
-        ).get_string()
-        plot_settings.yscale = self.plot_Y_scale.get_selected_item(
-        ).get_string()
-        plot_settings.right_scale = self.plot_right_scale.get_selected_item(
-        ).get_string()
-        plot_settings.top_scale = self.plot_top_scale.get_selected_item(
-        ).get_string()
-        plot_settings.plot_style = self.plot_style.get_selected_item(
-        ).get_string()
+        plot_settings.xscale = \
+            self.plot_x_scale.get_selected_item().get_string()
+        plot_settings.yscale = \
+            self.plot_y_scale.get_selected_item().get_string()
+        plot_settings.right_scale = \
+            self.plot_right_scale.get_selected_item().get_string()
+        plot_settings.top_scale = \
+            self.plot_top_scale.get_selected_item().get_string()
+        plot_settings.plot_style = \
+            self.plot_style.get_selected_item().get_string()
         if self.name_entry.get_text() != "":
             item.filename = self.name_entry.get_text()
-        item.plot_Y_position = self.plot_Y_position.get_selected_item(
-        ).get_string()
-        item.plot_X_position = self.plot_X_position.get_selected_item(
-        ).get_string()
-        item.linestyle_selected = self.linestyle_selected.get_selected_item(
-        ).get_string()
+        item.plot_Y_position = \
+            self.plot_y_position.get_selected_item().get_string()
+        item.plot_X_position = \
+            self.plot_x_position.get_selected_item().get_string()
+        item.linestyle_selected = \
+            self.linestyle_selected.get_selected_item().get_string()
         linestyle_unselected = self.linestyle_unselected
-        item.linestyle_unselected = linestyle_unselected.get_selected_item(
-        ).get_string()
+        item.linestyle_unselected = \
+            linestyle_unselected.get_selected_item().get_string()
         selected_markers = self.selected_markers_chooser
-        item.selected_markers = selected_markers.get_selected_item(
-        ).get_string()
+        item.selected_markers = \
+            selected_markers.get_selected_item().get_string()
         unselected_markers = self.unselected_markers_chooser
-        item.unselected_markers = unselected_markers.get_selected_item(
-        ).get_string()
+        item.unselected_markers = \
+            unselected_markers.get_selected_item().get_string()
         selected_slider = self.selected_line_thickness_slider
         item.selected_line_thickness = selected_slider.get_value()
         unselected_slider = self.unselected_line_thickness_slider
@@ -228,7 +222,7 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
             self.unselected_markers_chooser.get_selected_item().get_string())
         return item
 
-    def save_settings(self, parent):
+    def on_close(self, _, parent):
         item = self.item
         new_item = self.set_config(item, parent)
         max_length = int(26)
@@ -239,7 +233,4 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
         parent.item_rows[new_item.key].sample_id_label.set_text(label)
         if new_item.selected:
             graphs.select_item(parent, new_item.key)
-
-    def on_close(self, _, parent):
-        self.save_settings(parent)
-        plotting_tools.reload_plot(parent)
+        graphs.refresh(parent)

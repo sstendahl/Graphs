@@ -1,0 +1,33 @@
+using Gtk 4.0;
+
+FileChooserNative save_project {
+  modal: true;
+  action: save;
+  accept-label: _("Save Project");
+}
+
+FileChooserNative open_project {
+  modal: true;
+  select-multiple: false;
+  action: open;
+  title: _("Open Project File");
+}
+
+FileChooserNative open_files {
+  modal: true;
+  select-multiple: true;
+  action: open;
+  title: _("Open New Files");
+}
+
+FileChooserNative export_data {
+  modal: true;
+  action: save;
+  accept-label: _("Export Data");
+}
+
+FileChooserNative export_figure {
+  modal: true;
+  action: save;
+  accept-label: _("Export Figure");
+}

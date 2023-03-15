@@ -1,10 +1,13 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Main actions."""
-from gi.repository import Adw
+import logging
 
-from graphs import graphs, item_operations, plotting_tools, ui, utilities
+from gi.repository import Adw, Gtk
+
+from graphs import clipboard, graphs, operations, ui, utilities
 from graphs.add_data_advanced import AddAdvancedWindow
 from graphs.add_equation import AddEquationWindow
+from graphs.misc import InteractionMode
 from graphs.plot_settings import PlotSettingsWindow
 from graphs.preferences import PreferencesWindow
 from graphs.transform_data import TransformWindow
@@ -24,68 +27,77 @@ def about_action(_action, _target, self):
 
 
 def preferences_action(_action, _target, self):
-    win = PreferencesWindow(self)
-    win.present()
+    PreferencesWindow(self)
 
 
 def plot_settings_action(_action, _target, self):
-    win = PlotSettingsWindow(self)
-    win.present()
+    PlotSettingsWindow(self)
 
 
 def add_data_action(_action, _target, self):
-    ui.open_file_dialog(self)
+    chooser = self.build("dialogs", "open_files")
+    chooser.connect("response", ui.on_open_response, self, False)
+    chooser.show()
 
 
 def add_data_advanced_action(_action, _target, self):
-    win = AddAdvancedWindow(self)
-    win.present()
+    AddAdvancedWindow(self)
 
 
 def add_equation_action(_action, _target, self):
-    win = AddEquationWindow(self)
-    win.present()
+    AddEquationWindow(self)
 
 
 def select_all_action(_action, _target, self):
     for _key, item in self.item_rows.items():
         item.check_button.set_active(True)
-    plotting_tools.refresh_plot(self)
+    graphs.refresh(self)
     ui.enable_data_dependent_buttons(self, utilities.get_selected_keys(self))
 
 
 def select_none_action(_action, _target, self):
     for _key, item in self.item_rows.items():
         item.check_button.set_active(False)
-    plotting_tools.refresh_plot(self)
+    graphs.refresh(self)
     ui.enable_data_dependent_buttons(self, False)
 
 
 def undo_action(_action, _target, self):
-    item_operations.undo(self)
+    clipboard.undo(self)
 
 
 def redo_action(_action, _target, self):
-    item_operations.redo(self)
+    clipboard.redo(self)
 
 
 def restore_view_action(_action, _target, self):
-    plotting_tools.set_canvas_limits_axis(self)
+    self.canvas.set_limits()
     self.canvas.draw()
 
 
 def view_back_action(_action, _target, self):
-    self.dummy_toolbar._nav_stack.back()
-    self.dummy_toolbar._update_view()
+    self.canvas.dummy_toolbar._nav_stack.back()
+    self.canvas.dummy_toolbar._update_view()
 
 
 def view_forward_action(_action, _target, self):
-    self.dummy_toolbar._nav_stack.forward()
-    self.dummy_toolbar._update_view()
+    self.canvas.dummy_toolbar._nav_stack.forward()
+    self.canvas.dummy_toolbar._update_view()
 
 
 def export_data_action(_action, _target, self):
-    ui.save_file_dialog(self)
+    chooser = self.build("dialogs", "export_data")
+    chooser.set_transient_for(self.main_window)
+    if len(self.datadict) > 1:
+        chooser.set_action(Gtk.FileChooserAction.SELECT_FOLDER)
+    elif len(self.datadict) == 1:
+        filename = list(self.datadict.values())[0].filename
+        chooser.set_current_name(f"{filename}.txt")
+    else:
+        chooser.destroy
+        return
+    chooser.connect("response", ui.on_save_response, self, False)
+    chooser.show()
 
 
 def export_figure_action(_action, _target, self):
@@ -93,7 +105,10 @@ def export_figure_action(_action, _target, self):
 
 
 def save_project_action(_action, _target, self):
-    ui.save_project_dialog(self)
+    chooser = self.build("dialogs", "save_project")
+    chooser.set_transient_for(self.main_window)
+    chooser.connect("response", ui.on_save_response, self, True)
+    chooser.show()
 
 
 def open_project_action(_action, _target, self):
@@ -112,68 +127,116 @@ def open_project_action(_action, _target, self):
         dialog.connect("response", ui.on_confirm_discard_response, self)
         dialog.present()
         return
-    ui.open_project_dialog(self)
+    chooser = self.build("dialogs", "open_project")
+    chooser.set_transient_for(self.main_window)
+    chooser.connect("response", ui.on_open_response, self, True)
+    chooser.show()
 
 
 def delete_selected_action(_action, _target, self):
     for key in utilities.get_selected_keys(self):
-        graphs.delete(self, key, True)
+        graphs.delete_item(self, key, True)
 
 
 def translate_x_action(_action, _target, self):
-    item_operations.translate_x(self)
+    win = self.main_window
+    try:
+        offset = eval(win.translate_x_entry.get_text())
+    except Exception as exception:
+        exception_type = exception.__class__.__name__
+        message = f"{exception_type}: Unable to do translation, \
+make sure to enter a valid number"
+        win.add_toast(message)
+        logging.exception(message)
+        offset = 0
+    operations.operation(self, operations.translate_x, offset)
 
 
 def translate_y_action(_action, _target, self):
-    item_operations.translate_y(self)
+    win = self.main_window
+    try:
+        offset = eval(win.translate_y_entry.get_text())
+    except Exception as exception:
+        exception_type = exception.__class__.__name__
+        message = f"{exception_type}: Unable to do translation, \
+make sure to enter a valid number"
+        win.add_toast(message)
+        logging.exception(message)
+        offset = 0
+    operations.operation(self, operations.translate_y, offset)
 
 
 def multiply_x_action(_action, _target, self):
-    item_operations.multiply_x(self)
+    win = self.main_window
+    try:
+        multiplier = eval(win.multiply_x_entry.get_text())
+    except Exception as exception:
+        exception_type = exception.__class__.__name__
+        message = f"{exception_type}: Unable to do multiplication, \
+make sure to enter a valid number"
+        win.add_toast(message)
+        logging.exception(message)
+        multiplier = 1
+    operations.operation(self, operations.multiply_x, multiplier)
 
 
 def multiply_y_action(_action, _target, self):
-    item_operations.multiply_y(self)
+    win = self.main_window
+    try:
+        multiplier = eval(win.multiply_y_entry.get_text())
+    except Exception as exception:
+        exception_type = exception.__class__.__name__
+        message = f"{exception_type}: Unable to do multiplication, \
+make sure to enter a valid number"
+        win.add_toast(message)
+        logging.exception(message)
+        multiplier = 1
+    operations.operation(self, operations.multiply_y, multiplier)
 
 
 def normalize_action(_action, _target, self):
-    item_operations.normalize_data(self)
+    operations.operation(self, operations.normalize)
 
 
 def smoothen_action(_action, _target, self):
-    item_operations.smoothen_data(self)
+    operations.operation(self, operations.smoothen)
 
 
 def center_action(_action, _target, self):
-    item_operations.center_data(self)
+    operations.operation(
+        self, operations.center,
+        self.preferences.config["action_center_data"])
 
 
 def shift_vertically_action(_action, _target, self):
-    item_operations.shift_vertically(self)
+    operations.operation(
+        self, operations.shift_vertically,
+        self.plot_settings.yscale, self.plot_settings.right_scale)
 
 
 def combine_action(_action, _target, self):
-    item_operations.combine_data(self)
+    operations.combine(self)
 
 
 def cut_selected_action(_action, _target, self):
-    item_operations.cut_data(self)
+    if self.interaction_mode == InteractionMode.SELECT:
+        operations.operation(self, operations.cut_selected)
 
 
 def get_derivative_action(_action, _target, self):
-    item_operations.get_derivative(self)
+    operations.operation(self, operations.get_derivative)
 
 
 def get_integral_action(_action, _target, self):
-    item_operations.get_integral(self)
+    operations.operation(self, operations.get_integral)
 
 
 def get_fourier_action(_action, _target, self):
-    item_operations.get_fourier(self)
+    operations.operation(self, operations.get_fourier)
 
 
 def get_inverse_fourier_action(_action, _target, self):
-    item_operations.get_inverse_fourier(self)
+    operations.operation(self, operations.get_inverse_fourier)
 
 
 def transform_action(_action, _target, self):

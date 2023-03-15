@@ -22,7 +22,7 @@ class Data:
         self.color = ""
         self.xdata = xdata
         self.ydata = ydata
-        self.clipboard_pos = 0
+        self.clipboard_pos = -1
         self.xdata_clipboard = [self.xdata.copy()]
         self.ydata_clipboard = [self.ydata.copy()]
         self.key: str = str(uuid.uuid4())
@@ -31,26 +31,17 @@ class Data:
         self.set_data_properties(parent, import_settings)
 
     def set_data_properties(self, parent, import_settings):
-        self.plot_Y_position = parent.preferences.config[
-            "plot_Y_position"]
-        self.plot_X_position = parent.preferences.config[
-            "plot_X_position"]
-        self.linestyle_selected = parent.preferences.config[
-            "plot_selected_linestyle"]
-        self.linestyle_unselected = parent.preferences.config[
-            "plot_unselected_linestyle"]
-        self.selected_line_thickness = parent.preferences.config[
-            "selected_linewidth"]
-        self.unselected_line_thickness = parent.preferences.config[
-            "unselected_linewidth"]
-        self.selected_markers = parent.preferences.config[
-            "plot_selected_markers"]
-        self.unselected_markers = parent.preferences.config[
-            "plot_unselected_markers"]
-        self.selected_marker_size = parent.preferences.config[
-            "plot_selected_marker_size"]
-        self.unselected_marker_size = parent.preferences.config[
-            "plot_unselected_marker_size"]
+        cfg = parent.preferences.config
+        self.plot_y_position = cfg["plot_Y_position"]
+        self.plot_x_position = cfg["plot_X_position"]
+        self.linestyle_selected = cfg["plot_selected_linestyle"]
+        self.linestyle_unselected = cfg["plot_unselected_linestyle"]
+        self.selected_line_thickness = cfg["selected_linewidth"]
+        self.unselected_line_thickness = cfg["unselected_linewidth"]
+        self.selected_markers = cfg["plot_selected_markers"]
+        self.unselected_markers = cfg["plot_unselected_markers"]
+        self.selected_marker_size = cfg["plot_selected_marker_size"]
+        self.unselected_marker_size = cfg["plot_unselected_marker_size"]
         if import_settings.name != "" \
                 and import_settings.mode == ImportMode.SINGLE:
             filename = import_settings.name

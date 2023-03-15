@@ -2,6 +2,7 @@ using Gtk 4.0;
 using Adw 1;
 
 template AddAdvancedWindow : Adw.Window {
+  modal: true;
   default-width: 650;
   default-height: 125;
   title: _("Open Data From File (Advanced)");
@@ -15,7 +16,7 @@ template AddAdvancedWindow : Adw.Window {
 
   Box {
     orientation: vertical;
-    HeaderBar header_bar {
+    Adw.HeaderBar {
       styles ["flat"]
     }
 
@@ -96,11 +97,12 @@ template AddAdvancedWindow : Adw.Window {
         }
       }
 
-      Button open_advanced_confirm_button {
+      Button confirm_button {
         halign: center;
         margin-top: 26;
         margin-bottom: 26;
         label: _("Open Files");
+        styles ["suggested-action", "pill"]
       }
     }
   }

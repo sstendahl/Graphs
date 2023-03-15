@@ -4,6 +4,7 @@
   <gresource prefix="/se/sjoerd/Graphs">
     <file alias="gtk/help-overlay.ui" preprocess="xml-stripblanks">ui/help_overlay.ui</file>
     <file preprocess="xml-stripblanks">ui/window.ui</file>
+    <file preprocess="xml-stripblanks">ui/dialogs.ui</file>
     <file preprocess="xml-stripblanks">ui/sample_box.ui</file>
     <file preprocess="xml-stripblanks">ui/preferences.ui</file>
     <file preprocess="xml-stripblanks">ui/plot_settings.ui</file>
