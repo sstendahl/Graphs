@@ -33,5 +33,6 @@
     <file preprocess="xml-stripblanks" alias="derivative2-symbolic.svg">icons/derivative2-symbolic.svg</file>    
     <file preprocess="xml-stripblanks" alias="center-symbolic.svg">icons/center-symbolic.svg</file>
     <file preprocess="xml-stripblanks" alias="settings-symbolic.svg">icons/settings-symbolic.svg</file>
+    <file preprocess="xml-stripblanks" alias="info-symbolic.svg">icons/info-symbolic.svg</file>
   </gresource>
 </gresources>
