@@ -17,7 +17,7 @@ def create_dataset(x_start, x_stop, equation, step_size, name):
     equation = equation.replace("X", "xdata")
     equation = str(equation.replace("^", "**"))
     equation += " + xdata*0"
-    dataset["ydata"] = eval(equation)
+    dataset["ydata"] = numpy.ndarray.tolist(eval(equation))
     dataset["xdata"] = numpy.ndarray.tolist(xdata)
     return dataset
 
