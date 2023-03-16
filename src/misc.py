@@ -31,12 +31,12 @@ class PlotSettings:
     """
     def __init__(self, config):
         self.font_string = config["plot_font_string"]
-        self.xlabel = config["plot_X_label"]
+        self.xlabel = config["plot_x_label"]
         self.right_label = config["plot_right_label"]
         self.top_label = config["plot_top_label"]
-        self.ylabel = config["plot_Y_label"]
-        self.xscale = config["plot_X_scale"]
-        self.yscale = config["plot_Y_scale"]
+        self.ylabel = config["plot_y_label"]
+        self.xscale = config["plot_x_scale"]
+        self.yscale = config["plot_y_scale"]
         self.right_scale = config["plot_right_scale"]
         self.top_scale = config["plot_top_scale"]
         self.title = config["plot_title"]

@@ -22,8 +22,8 @@ class AddEquationWindow(Adw.Window):
         super().__init__()
         cfg = parent.preferences.config
         self.step_size_entry.set_text(cfg["addequation_step_size"])
-        self.x_start_entry.set_text(cfg["addequation_X_start"])
-        self.x_stop_entry.set_text(cfg["addequation_X_stop"])
+        self.x_start_entry.set_text(cfg["addequation_x_start"])
+        self.x_stop_entry.set_text(cfg["addequation_x_stop"])
         self.equation_entry.set_text(cfg["addequation_equation"])
         self.confirm_button.connect("clicked", self.on_accept, parent)
         self.set_transient_for(parent.main_window)
