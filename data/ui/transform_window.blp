@@ -33,15 +33,27 @@ template TransformWindow : Adw.Window {
       }
     }
 
-    Adw.PreferencesGroup {
-      margin-start: 26;
-      margin-end: 26;
+    Button help_button {
+      Adw.ButtonContent {
+      halign: center;
+      icon-name: "info-symbolic";
+      Popover help_popover {
+        position: bottom;
+        Label help_info {
+        label: _("The transformation tool uses Numpy notation, with capital letters for the coordinates.\nTransformations are done piece-wise, if you want access to the entire range use X_range or Y_range. \n e.g. Y = Y/max(X_range) divides each Y value by the largest value of X.\n\nTo convert a value from degrees into radians use radians(value), e.g. Y = sin(radians(X)).");
+      	}
+      }
+      }
       margin-top: 12;
-      description: _("The transformation tool uses Numpy notation, with capital letters for the coordinates.\nTransformations are done piece-wise, if you want access to the entire range use X_range or Y_range. e.g. Y = Y/max(X_range) divides each Y value by the largest value of X.\n\nTo convert a value from degrees into radians use radians(value), e.g. Y = sin(radians(X)).");
-    }
+      margin-end: 26;
+      halign: end;
+      tooltip-text: _("More info");
+      styles ["flat"]
+}
 
     Button confirm_button {
       halign: center;
+      margin-top: 12;
       margin-bottom: 26;
       label: _("Transform");
       styles ["suggested-action", "pill"]
