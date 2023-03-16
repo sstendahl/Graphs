@@ -3,23 +3,19 @@ import numpy
 from numpy import *
 
 
-def create_dataset(x_start, x_stop, equation, step_size, name):
+def create_dataset(x_start, x_stop, equation, step_size):
     """
     Create all data set parameters that are required
     to create a new data object
     """
-    dataset = {}
-    if name == "":
-        name = f"Y = {str(equation)}"
-    dataset["name"] = name
     datapoints = int(abs(eval(x_start) - eval(x_stop)) / eval(step_size))
     xdata = numpy.linspace(eval(x_start), eval(x_stop), datapoints)
     equation = equation.replace("X", "xdata")
     equation = str(equation.replace("^", "**"))
     equation += " + xdata*0"
-    dataset["ydata"] = numpy.ndarray.tolist(eval(equation))
-    dataset["xdata"] = numpy.ndarray.tolist(xdata)
-    return dataset
+    ydata = numpy.ndarray.tolist(eval(equation))
+    xdata = numpy.ndarray.tolist(xdata)
+    return xdata, ydata
 
 
 def operation(xdata, ydata, input_x, input_y):

@@ -67,15 +67,15 @@ def operation(self, callback, *args):
                 new_xdata, new_ydata, sort, discard = callback(
                     item, xdata, ydata, *args)
                 if discard:
-                    logging.info("Discard is true")
+                    logging.debug("Discard is true")
                     item.xdata = new_xdata
                     item.ydata = new_ydata
                 else:
-                    logging.info("Discard is false")
+                    logging.debug("Discard is false")
                     item.xdata[start_index:stop_index] = new_xdata
                     item.ydata[start_index:stop_index] = new_ydata
                 if sort:
-                    logging.info("Sorting data")
+                    logging.debug("Sorting data")
                     sorted_x, sorted_y = sort_data(item.xdata, item.ydata)
                     item.xdata = sorted_x
                     item.ydata = sorted_y
@@ -185,9 +185,11 @@ def shift_vertically(item, xdata, ydata, yscale, right_scale, selected_keys,
             shift_value_log += numpy.log10(ymax / ymin)
         if item.key == data_item.key:
             if linear:
-                return xdata, [value + shift_value_linear for value in ydata], False, False
+                new_ydata = [value + shift_value_linear for value in ydata]
             else:
-                return xdata, [value * 10 ** shift_value_log for value in ydata], False, False
+                new_ydata = [value * 10 ** shift_value_log for value in ydata]
+            return xdata, new_ydata, False, False
+
 
 def cut_selected(_item, _xdata, _ydata):
     """Cut selected data over the span that is selected"""

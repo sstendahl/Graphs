@@ -38,7 +38,7 @@ class Preferences():
             self.reset_config()
             logging.info("New configuration file created")
         else:
-            logging.info("Loading configuration file")
+            logging.debug("Loading configuration file")
 
     def reset_config(self):
         config_path = self.get_config_path()
@@ -48,7 +48,7 @@ class Preferences():
             os.mkdir(config_path)
         path = config_path + "/config.json"
         shutil.copy(f"{old_path}/config.json", path)
-        logging.info("Loaded new config")
+        logging.debug("Loaded new config")
 
     def load_config(self):
         config_path = self.get_config_path()
