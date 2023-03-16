@@ -32,8 +32,8 @@ class Data:
 
     def set_data_properties(self, parent, import_settings):
         cfg = parent.preferences.config
-        self.plot_y_position = cfg["plot_Y_position"]
-        self.plot_x_position = cfg["plot_X_position"]
+        self.plot_y_position = cfg["plot_y_position"]
+        self.plot_x_position = cfg["plot_x_position"]
         self.linestyle_selected = cfg["plot_selected_linestyle"]
         self.linestyle_unselected = cfg["plot_unselected_linestyle"]
         self.selected_line_thickness = cfg["selected_linewidth"]
