@@ -250,7 +250,7 @@ class Canvas(FigureCanvas):
             new_labels = labels1 + labels2 + labels3 + labels4
             labels = []
             for label in new_labels:
-                labels.append(utilities.shorten_label(label))
+                labels.append(utilities.shorten_label(label, 40))
             if labels:
                 self.top_right_axis.legend(
                     new_lines, labels, loc=0, frameon=True)

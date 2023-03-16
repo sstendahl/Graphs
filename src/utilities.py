@@ -204,8 +204,7 @@ def set_attributes(new_object, template):
             delattr(new_object, attribute)
 
 
-def shorten_label(label):
-    max_length = int(20)
+def shorten_label(label, max_length=20):
     if len(label) > max_length:
         label = f"{label[:max_length]}..."
     return label
