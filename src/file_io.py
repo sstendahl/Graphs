@@ -2,7 +2,7 @@
 import os
 import pickle
 import re
-
+from xml.dom import minidom
 from graphs import utilities
 
 import numpy
@@ -45,14 +45,40 @@ def save_file(self, path):
                 numpy.savetxt(str(path + "/" + filename) + ".txt", array,
                               delimiter="\t")
 
+def get_xrdml(self, path):
+    file = minidom.parse(path)  # parse an open file
+    intensities = file.getElementsByTagName('intensities')
+    counting_time = file.getElementsByTagName('commonCountingTime')
+    counting_time = float(counting_time[0].firstChild.data)
+    ydata = intensities[0].firstChild.data.split()
+    ydata = [int(value)/counting_time for value in ydata]
+    scan_type = file.getElementsByTagName('scan')
 
-def get_data(self, import_settings):
+    scan_axis = scan_type[0].attributes['scanAxis'].value
+    if scan_axis.startswith("2Theta"):
+        scan_axis = "2Theta"
+    if scan_axis.startswith("Omega"):
+        scan_axis = "Omega"
+
+    data_points = file.getElementsByTagName('positions')
+    for position in data_points:
+        axis = position.attributes["axis"]
+        if axis.value == scan_axis:
+            unit = position.attributes["unit"].value
+            start_pos = position.getElementsByTagName("startPosition")
+            end_pos = position.getElementsByTagName("endPosition")
+            start_pos = float(start_pos[0].firstChild.data)
+            end_pos = float(end_pos[0].firstChild.data)
+            xdata = numpy.linspace(start_pos, end_pos, len(ydata))
+
+    self.plot_settings.xlabel = f"{scan_axis} ({unit})"
+    self.plot_settings.ylabel = "Intensity (cps)"
+    return xdata, ydata
+
+def get_column_file(self, path, import_settings):
     data_array = [[], []]
-    i = 0
-    path = import_settings.path
     with open(path, "r", encoding="utf-8") as file:
-        for line in file:
-            i += 1
+        for i, line in enumerate(file):
             if i > import_settings.skip_rows:
                 line = line.strip()
                 data_line = re.split(str(import_settings.delimiter), line)
@@ -93,3 +119,10 @@ def get_data(self, import_settings):
                             except IndexError:
                                 pass
     return data_array[0], data_array[1]
+
+def get_data(self, import_settings):
+    path = import_settings.path
+    if path.endswith('.xrdml'):
+        return get_xrdml(self, path)
+    else:
+        return get_column_file(self, path, import_settings)

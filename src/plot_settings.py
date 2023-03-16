@@ -122,4 +122,4 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
         plot_settings.legend = self.plot_legend_check.get_active()
         plot_settings.plot_style = \
             self.plot_style.get_selected_item().get_string()
-        graphs.refresh(parent)
+        graphs.reload(parent)

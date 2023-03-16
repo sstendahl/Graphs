@@ -37,7 +37,7 @@ def open_files(self, files, import_settings):
                 toast = "Could not open data, wrong filetype"
                 self.main_window.add_toast(toast)
                 break
-    self.canvas.set_limits()
+    reload(self)
 
 
 def open_project(self, file):
