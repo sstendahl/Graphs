@@ -37,7 +37,6 @@ class EditItemWindow(Adw.PreferencesWindow):
 
     def on_select(self, _action, _target):
         self.apply(None)
-        filenames = utilities.get_all_filenames(self.parent)
         data_list = list(self.parent.datadict.keys())
         index = self.item_selector.get_selected()
         self.item = self.parent.datadict[data_list[index]]
