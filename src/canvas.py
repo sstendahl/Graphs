@@ -69,7 +69,8 @@ class Canvas(FigureCanvas):
             item.xdata, item.ydata, linewidth=linewidth, label=item.filename,
             linestyle=linestyle, marker=marker, color=item.color,
             markersize=marker_size)
-
+        self.set_legend()
+        
     def set_save_properties(self, parent):
         """
         Set the properties that are related to saving the figure. Currently
