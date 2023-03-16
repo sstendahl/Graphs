@@ -40,9 +40,7 @@ class EditItemWindow(Adw.PreferencesWindow):
         filenames = utilities.get_all_filenames(self.parent)
         data_list = list(self.parent.datadict.keys())
         index = self.item_selector.get_selected()
-        key = data_list[index]
-        self.item = self.parent.datadict[key]
-        self.item_selector.set_selected(filenames.index(self.item.filename))
+        self.item = self.parent.datadict[data_list[index]]
         self.load_values()
 
     def load_values(self):
