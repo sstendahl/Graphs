@@ -134,6 +134,9 @@ class GraphsApplication(Adw.Application):
         if not win:
             win = GraphsWindow(application=self)
         self.main_window = win
+        win.set_title(self.name)
+        if "(Development)" in self.name:
+            win.add_css_class("devel")
         config = self.preferences.config
         self.plot_settings = PlotSettings(config)
         if Adw.StyleManager.get_default().get_dark():

@@ -1,11 +1,11 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 configure_file(
   input: 'graphs.in',
-  output: meson.project_name(),
+  output: project_name,
   configuration: conf,
   install: true,
   install_mode: 'rwxr-xr-x',
-  install_dir: get_option('bindir')
+  install_dir: bindir
 )
 
 graphs_sources = [

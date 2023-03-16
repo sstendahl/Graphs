@@ -84,8 +84,13 @@ resources = gnome.compile_resources(
 )
 
 scalable_dir = join_paths('icons', 'hicolor', 'scalable', 'apps')
+icon_name = ('@0@.svg').format(application_id)
+if debug
+  icon_name = ('@0@.Devel.svg').format(application_id)
+endif
 install_data(
-  join_paths(scalable_dir, ('@0@.svg').format(application_id)),
+  join_paths(scalable_dir, icon_name),
+  rename: ('@0@.svg').format(application_id),
   install_dir: join_paths(datadir, scalable_dir)
 )
 
