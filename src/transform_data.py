@@ -22,7 +22,7 @@ class TransformWindow(Adw.Window):
         self.confirm_button.connect("clicked", self.accept, parent)
         self.set_transient_for(parent.main_window)
         self.present()
-        self.help_button.connect("clicked", self.help_popover.popup())    
+        self.help_button.connect("clicked", self.help_popover.popup())
 
     def accept(self, _widget, parent):
         try:
