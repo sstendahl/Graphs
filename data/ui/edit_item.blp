@@ -12,8 +12,16 @@ template EditItemWindow : Adw.PreferencesWindow {
 
   Adw.PreferencesPage {
     Adw.PreferencesGroup {
+      Adw.ComboRow item_selector {
+        title: _("Selected Item");
+        subtitle: _("Choose which item to edit");
+        model: StringList {};
+      }
+    }
+
+    Adw.PreferencesGroup {
       title: _("Data");
-      description: _("Choose which data set to edit, the name of the data set and the axis positions");
+      description: _("Change the name of the data set and the axis positions");
 
       Adw.EntryRow name_entry {
         title: _("Change Name");

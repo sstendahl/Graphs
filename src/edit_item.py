@@ -9,6 +9,7 @@ from matplotlib.lines import Line2D
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/edit_item.ui")
 class EditItemWindow(Adw.PreferencesWindow):
     __gtype_name__ = "EditItemWindow"
+    item_selector = Gtk.Template.Child()
     name_entry = Gtk.Template.Child()
     plot_x_position = Gtk.Template.Child()
     plot_y_position = Gtk.Template.Child()
@@ -25,8 +26,27 @@ class EditItemWindow(Adw.PreferencesWindow):
         super().__init__()
         self.parent = parent
         self.item = item
-        marker_dict = Line2D.markers
+        filenames = utilities.get_all_filenames(self.parent)
+        utilities.populate_chooser(self.item_selector, filenames)
+        self.item_selector.set_selected(filenames.index(self.item.filename))
+        self.load_values()
+        self.item_selector.connect("notify::selected", self.on_select)
+        self.connect("close-request", self.apply)
+        self.set_transient_for(parent.main_window)
+        self.present()
 
+    def on_select(self, _action, _target):
+        self.apply(None)
+        filenames = utilities.get_all_filenames(self.parent)
+        data_list = list(self.parent.datadict.keys())
+        index = self.item_selector.get_selected()
+        key = data_list[index]
+        self.item = self.parent.datadict[key]
+        self.item_selector.set_selected(filenames.index(self.item.filename))
+        self.load_values()
+
+    def load_values(self):
+        marker_dict = Line2D.markers
         self.set_title(self.item.filename)
         self.name_entry.set_text(self.item.filename)
         utilities.set_chooser(
@@ -60,11 +80,7 @@ class EditItemWindow(Adw.PreferencesWindow):
         self.unselected_marker_size.set_range(0, 30)
         self.unselected_marker_size.set_value(self.item.unselected_marker_size)
 
-        self.connect("close-request", self.on_close)
-        self.set_transient_for(parent.main_window)
-        self.present()
-
-    def on_close(self, _):
+    def apply(self, _):
         self.item.filename = self.name_entry.get_text()
         self.item.plot_x_position = \
             self.plot_x_position.get_selected_item().get_string()

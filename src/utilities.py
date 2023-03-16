@@ -59,11 +59,6 @@ def get_chooser_list(chooser):
     return chooser_list
 
 
-def get_datalist(parent):
-    """Get a list of all data id"s present in the datadict dictionary"""
-    return list(parent.datadict.keys())
-
-
 def get_all_filenames(parent):
     """Get a list of all filenames present in the datadict dictionary"""
     filenames = []
