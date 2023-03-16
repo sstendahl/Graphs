@@ -7,7 +7,7 @@ template GraphsWindow : Adw.ApplicationWindow {
   title: _("Graphs");
   Box {
     orientation: vertical;
-    HeaderBar header_bar {
+    Adw.HeaderBar {
       ToggleButton sidebar_button {
         visible: bind sidebar_flap.folded;
         action-name: "app.toggle_sidebar";
@@ -23,19 +23,17 @@ template GraphsWindow : Adw.ApplicationWindow {
           menu-model: add_data_menu;
         }
         Separator {styles ["spacer"]}
-        Box {
-          Button undo_button {
-            action-name: "app.undo";
-            icon-name: "edit-undo-symbolic";
-            tooltip-text: _("Undo");
-            styles ["flat"]
-          }
-          Button redo_button {
-            action-name: "app.redo";
-            icon-name: "edit-redo-symbolic";
-            tooltip-text: _("Redo");
-            styles ["flat"]
-          }
+        Button undo_button {
+          action-name: "app.undo";
+          icon-name: "edit-undo-symbolic";
+          tooltip-text: _("Undo");
+          styles ["flat"]
+        }
+        Button redo_button {
+          action-name: "app.redo";
+          icon-name: "edit-redo-symbolic";
+          tooltip-text: _("Redo");
+          styles ["flat"]
         }
       }
       [end]
@@ -202,11 +200,10 @@ template GraphsWindow : Adw.ApplicationWindow {
                       column: 0;
                       row: 0;
                     }
-                    Box {
+                    Adw.ButtonContent {
                       halign: center;
-                      spacing: 6;
-                      Image {icon-name: "shift";}
-                      Label {label: _("Shift");}
+                      icon-name: "shift-symbolic";
+                      label: _("Shift");
                     }
                     tooltip-text: _("Shift all data vertically with respect to each other");
                     action-name: "app.shift_vertically";
@@ -222,11 +219,10 @@ template GraphsWindow : Adw.ApplicationWindow {
                       column: 1;
                       row: 0;
                     }
-                    Box {
+                    Adw.ButtonContent {
                       halign: center;
-                      spacing: 6;
-                      Image {icon-name: "normalize";}
-                      Label {label: _("Normalize");}
+                      icon-name: "normalize-symbolic";
+                      label: _("Normalize");
                     }
                     tooltip-text: _("Normalize Data");
                     action-name: "app.normalize";
@@ -242,11 +238,10 @@ template GraphsWindow : Adw.ApplicationWindow {
                       column: 0;
                       row: 1;
                     }
-                    Box {
+                    Adw.ButtonContent {
                       halign: center;
-                      spacing: 6;
-                      Image {icon-name: "smoothen";}
-                      Label {label: _("Smoothen");}
+                      icon-name: "smoothen-symbolic";
+                      label: _("Smoothen");
                     }
                     tooltip-text: _("Smoothen the Data");
                     action-name: "app.smoothen";
@@ -262,11 +257,10 @@ template GraphsWindow : Adw.ApplicationWindow {
                       column: 1;
                       row: 1;
                     }
-                    Box {
+                    Adw.ButtonContent {
                       halign: center;
-                      spacing: 6;
-                      Image {icon-name: "center";}
-                      Label {label: _("Center");}
+                      icon-name: "center-symbolic";
+                      label: _("Center");
                     }
                     tooltip-text: _("Center the data");
                     action-name: "app.center";
@@ -282,11 +276,10 @@ template GraphsWindow : Adw.ApplicationWindow {
                       column: 0;
                       row: 2;
                     }
-                    Box {
+                    Adw.ButtonContent {
                       halign: center;
-                      spacing: 6;
-                      Image {icon-name: "edit-paste-symbolic";}
-                      Label {label: _("Combine");}
+                      icon-name: "edit-paste-symbolic";
+                      label: _("Combine");
                     }
                     tooltip-text: _("Combine");
                     action-name: "app.combine";
@@ -302,11 +295,10 @@ template GraphsWindow : Adw.ApplicationWindow {
                       column: 1;
                       row: 2;
                     }
-                    Box {
+                    Adw.ButtonContent {
                       halign: center;
-                      spacing: 6;
-                      Image {icon-name: "edit-cut-symbolic";}
-                      Label {label: _("Cut");}
+                      icon-name: "edit-cut-symbolic";
+                      label: _("Cut");
                     }
                     tooltip-text: _("Cut selected Data");
                     action-name: "app.cut_selected";
@@ -322,9 +314,9 @@ template GraphsWindow : Adw.ApplicationWindow {
                   Button translate_x_button {
                     valign: center;
                     action-name: "app.translate_x";
-                    Box {
-                      Image {icon-name: "horizontal-arrows";}
-                      Label {label: _("Translate");}
+                    Adw.ButtonContent {
+                      icon-name: "horizontal-arrows-symbolic";
+                      label: _("Translate");
                     }
                   }
                 }
@@ -335,9 +327,9 @@ template GraphsWindow : Adw.ApplicationWindow {
                   Button translate_y_button {
                     valign: center;
                     action-name: "app.translate_y";
-                    Box {
-                      Image {icon-name: "vertical-arrows";}
-                      Label {label: _("Translate");}
+                    Adw.ButtonContent {
+                      icon-name: "vertical-arrows-symbolic";
+                      label: _("Translate");
                     }
                   }
                 }
@@ -348,9 +340,9 @@ template GraphsWindow : Adw.ApplicationWindow {
                   Button multiply_x_button {
                     valign: center;
                     action-name: "app.multiply_x";
-                    Box {
-                      Image {icon-name: "horizontal-arrows";}
-                      Label {label: _("Multiply");}
+                    Adw.ButtonContent {
+                      icon-name: "horizontal-arrows-symbolic";
+                      label: _("Multiply");
                     }
                   }
                 }
@@ -361,9 +353,9 @@ template GraphsWindow : Adw.ApplicationWindow {
                   Button multiply_y_button {
                     valign: center;
                     action-name: "app.multiply_y";
-                    Box {
-                      Image {icon-name: "vertical-arrows";}
-                      Label {label: _("Multiply");}
+                    Adw.ButtonContent {
+                      icon-name: "vertical-arrows-symbolic";
+                      label: _("Multiply");
                     }
                   }
                 }
@@ -382,11 +374,10 @@ template GraphsWindow : Adw.ApplicationWindow {
                       column: 0;
                       row: 0;
                     }
-                    Box {
+                    Adw.ButtonContent {
                       halign: center;
-                      spacing: 6;
-                      Image {icon-name: "derivative2";}
-                      Label {label: _("Derivative");}
+                      icon-name: "derivative2-symbolic";
+                      label: _("Derivative");
                     }
                     tooltip-text: _("Get the derivative of the data");
                     action-name: "app.get_derivative";
@@ -402,11 +393,10 @@ template GraphsWindow : Adw.ApplicationWindow {
                       column: 1;
                       row: 0;
                     }
-                    Box {
+                    Adw.ButtonContent {
                       halign: center;
-                      spacing: 6;
-                      Image {icon-name: "integral";}
-                      Label {label: _("Integral");}
+                      icon-name: "integral-symbolic";
+                      label: _("Integral");
                     }
                     tooltip-text: _("Get the indefinite integral of the data");
                     action-name: "app.get_integral";
@@ -422,11 +412,10 @@ template GraphsWindow : Adw.ApplicationWindow {
                       column: 0;
                       row: 1;
                     }
-                    Box {
+                    Adw.ButtonContent {
                       halign: center;
-                      spacing: 6;
-                      Image {icon-name: "fast-fourier-transform";}
-                      Label {label: _("FFT");}
+                      icon-name: "fast-fourier-transform-symbolic";
+                      label: _("FFT");
                     }
                     tooltip-text: _("Get the Fast Fourier Transform of the data");
                     action-name: "app.get_fourier";
@@ -442,11 +431,10 @@ template GraphsWindow : Adw.ApplicationWindow {
                       column: 1;
                       row: 1;
                     }
-                    Box {
+                    Adw.ButtonContent {
                       halign: center;
-                      spacing: 6;
-                      Image {icon-name: "inverse-fast-fourier-transform";}
-                      Label {label: _("inverse FFT");}
+                      icon-name: "inverse-fast-fourier-transform-symbolic";
+                      label: _("inverse FFT");
                     }
                     tooltip-text: _("Get the Inverse Fast Fourier Transform of the data");
                     action-name: "app.get_inverse_fourier";
@@ -463,11 +451,10 @@ template GraphsWindow : Adw.ApplicationWindow {
                       row: 2;
                       column-span: 2;
                     }
-                    Box {
+                    Adw.ButtonContent {
                       halign: center;
-                      spacing: 6;
-                      Image {icon-name: "transform";}
-                      Label {label: _("Transform");}
+                      icon-name: "transform-symbolic";
+                      label: _("Transform");
                     }
                     tooltip-text: _("Perform custom transformations on the data");
                     action-name: "app.transform";

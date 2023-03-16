@@ -4,7 +4,7 @@ import logging
 
 from gi.repository import Adw, Gtk
 
-from graphs import clipboard, graphs, operations, plotting_tools, ui, utilities
+from graphs import clipboard, graphs, operations, ui, utilities
 from graphs.add_data_advanced import AddAdvancedWindow
 from graphs.add_equation import AddEquationWindow
 from graphs.misc import InteractionMode
@@ -51,14 +51,14 @@ def add_equation_action(_action, _target, self):
 def select_all_action(_action, _target, self):
     for _key, item in self.item_rows.items():
         item.check_button.set_active(True)
-    plotting_tools.refresh_plot(self)
+    graphs.refresh(self)
     ui.enable_data_dependent_buttons(self, utilities.get_selected_keys(self))
 
 
 def select_none_action(_action, _target, self):
     for _key, item in self.item_rows.items():
         item.check_button.set_active(False)
-    plotting_tools.refresh_plot(self)
+    graphs.refresh(self)
     ui.enable_data_dependent_buttons(self, False)
 
 
@@ -71,8 +71,7 @@ def redo_action(_action, _target, self):
 
 
 def restore_view_action(_action, _target, self):
-    used_axes, item_list = plotting_tools.get_used_axes(self)
-    self.canvas.set_limits_axis(used_axes, item_list)
+    self.canvas.set_limits()
     self.canvas.draw()
 
 
@@ -204,11 +203,15 @@ def smoothen_action(_action, _target, self):
 
 
 def center_action(_action, _target, self):
-    operations.operation(self, operations.center)
+    operations.operation(
+        self, operations.center,
+        self.preferences.config["action_center_data"])
 
 
 def shift_vertically_action(_action, _target, self):
-    operations.operation(self, operations.shift_vertically)
+    operations.operation(
+        self, operations.shift_vertically,
+        self.plot_settings.yscale, self.plot_settings.right_scale)
 
 
 def combine_action(_action, _target, self):

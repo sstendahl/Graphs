@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 from gi.repository import Adw, Gtk
 
-from graphs import plotting_tools
+from graphs import graphs
 
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/rename_label_window.ui")
@@ -35,5 +35,5 @@ class RenameLabelWindow(Adw.Window):
             parent.plot_settings.right_label = self.label_entry.get_text()
         if axis == parent.canvas.title:
             parent.plot_settings.title = self.label_entry.get_text()
-        plotting_tools.reload_plot(parent)
+        graphs.reload(parent)
         self.destroy()

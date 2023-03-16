@@ -2,17 +2,18 @@
 import copy
 import logging
 
-from graphs.canvas import Canvas
+from graphs import graphs
 
 from matplotlib import colors
 
 
 def get_used_axes(self):
-    used_axis = {}
-    used_axis["left"] = False
-    used_axis["right"] = False
-    used_axis["top"] = False
-    used_axis["bottom"] = False
+    used_axis = {
+        "left": False,
+        "right": False,
+        "top": False,
+        "bottom": False
+    }
     item_list = {}
     left_items = []
     right_items = []
@@ -121,38 +122,6 @@ def find_limits(self, axis, datadict):
         "ymax": ymax_all}
 
 
-def reload_plot(self):
-    """Completely reload the plot of the graph"""
-    self.canvas = Canvas(parent=self)
-    self.main_window.toast_overlay.set_child(self.canvas)
-    refresh_plot(self, self.canvas)
-    self.set_mode(None, None, self.interaction_mode)
-    self.canvas.grab_focus()
-
-
-def refresh_plot(self, _axis=True):
-    """Refresh the graph without completely reloading it."""
-    canvas = self.canvas
-    for line in canvas.ax.lines:
-        line.remove()
-    for line in canvas.right_axis.lines:
-        line.remove()
-    for line in canvas.top_left_axis.lines:
-        line.remove()
-    for line in canvas.top_right_axis.lines:
-        line.remove()
-    if len(self.datadict) > 0:
-        hide_unused_axes(self, canvas)
-    for key, item in self.datadict.items():
-        if item is not None:
-            selected = self.item_rows[key].check_button.get_active()
-            self.canvas.plot(item, selected)
-    if _axis and len(self.datadict) > 0:
-        used_axes, item_list = get_used_axes(self)
-        self.canvas.set_limits_axis(used_axes, item_list)
-    self.canvas.draw()
-
-
 def hide_unused_axes(self, canvas):
     """
     Hide axes that are not in use,
@@ -203,7 +172,7 @@ def change_left_yscale(action, target, self):
         self.canvas.ax.set_yscale("linear")
         self.plot_settings.yscale = "linear"
     action.change_state(target)
-    refresh_plot(self)
+    graphs.refresh(self)
 
 
 def change_right_yscale(action, target, self):
@@ -216,7 +185,7 @@ def change_right_yscale(action, target, self):
         self.canvas.right_axis.set_yscale("linear")
         self.plot_settings.right_scale = "linear"
     action.change_state(target)
-    refresh_plot(self)
+    graphs.refresh(self)
 
 
 def change_top_xscale(action, target, self):
@@ -229,7 +198,7 @@ def change_top_xscale(action, target, self):
         self.canvas.top_right_axis.set_xscale("linear")
         self.plot_settings.top_scale = "linear"
     action.change_state(target)
-    refresh_plot(self)
+    graphs.refresh(self)
 
 
 def change_bottom_xscale(action, target, self):
@@ -242,7 +211,7 @@ def change_bottom_xscale(action, target, self):
         self.canvas.right_axis.set_xscale("linear")
         self.plot_settings.xscale = "linear"
     action.change_state(target)
-    refresh_plot(self)
+    graphs.refresh(self)
 
 
 def get_next_color(self):
