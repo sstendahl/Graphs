@@ -28,7 +28,7 @@ class TransformWindow(Adw.Window):
         self.set_transient_for(parent.main_window)
         self.present()
         self.help_button.connect("clicked",
-            lambda x: self.help_popover.popup())
+            lambda _x: self.help_popover.popup())
 
     def accept(self, _widget, parent):
         try:
