@@ -3,6 +3,8 @@ from gi.repository import Gdk
 
 from graphs.data import Data
 
+import numpy
+
 
 def remove_unused_config_keys(config, template):
     delete_list = []
@@ -50,6 +52,13 @@ def populate_chooser(chooser, chooser_list, clear=True):
             model.append(str(item))
 
 
+def get_chooser_list(chooser):
+    chooser_list = []
+    for item in chooser.get_model():
+        chooser_list.append(item.get_string())
+    return chooser_list
+
+
 def get_datalist(parent):
     """Get a list of all data id"s present in the datadict dictionary"""
     return list(parent.datadict.keys())
@@ -65,9 +74,9 @@ def get_all_filenames(parent):
 
 def get_dict_by_value(dictionary, value):
     """Return the key associated with the given value in the dictionary"""
-    for k, v in dictionary.items():
-        if v == value:
-            return k
+    for key, dict_value in dictionary.items():
+        if dict_value == value:
+            return key
     return "none"
 
 
@@ -95,9 +104,9 @@ def get_font_style(font_name):
 def get_selected_keys(self):
     """Get a list of ID's of all the datasets that are currently selected"""
     selected_keys = []
-    for _key, item in self.item_rows.items():
+    for key, item in self.item_rows.items():
         if item.check_button.get_active():
-            selected_keys.append(item.key)
+            selected_keys.append(key)
     return selected_keys
 
 
@@ -152,21 +161,49 @@ def rgba_to_tuple(rgba):
     return (rgba.red, rgba.green, rgba.blue, rgba.alpha)
 
 
-def get_duplicate_filename(self, name):
-    loop = True
-    i = 0
-    while loop:
-        i += 1
-        new_name = f"{name} ({i})"
-        loop = False
-        for _key, item in self.datadict.items():
-            if new_name == item.filename:
-                loop = True
-    return new_name
-
-
 def swap(str1):
     str1 = str1.replace(",", "third")
     str1 = str1.replace(".", ", ")
     str1 = str1.replace("third", ".")
     return str1
+
+
+def get_value_at_fraction(fraction, start, end):
+    """
+    Obtain the selected value of an axis given at which percentage (in terms of
+    fraction) of the length this axis is selected given the start and end range
+    of this axis
+    """
+    log_start = numpy.log10(start)
+    log_end = numpy.log10(end)
+    log_range = log_end - log_start
+    log_value = log_start + log_range * fraction
+    return pow(10, log_value)
+
+
+def get_fraction_at_value(value, start, end):
+    """
+    Obtain the fraction of the total length of the selected axis a specific
+    value corresponds to given the start and end range of the axis.
+    """
+    log_start = numpy.log10(start)
+    log_end = numpy.log10(end)
+    log_value = numpy.log10(value)
+    log_range = log_end - log_start
+    return (log_value - log_start) / log_range
+
+
+def set_attributes(new_object, template):
+    """
+    Sets the attributes of `new_object` to match those of `template`.
+    This function sets the attributes of `new_object` to the values of the
+    attributes in `template` if they don"t already exist in `new_object`.
+    Additionally, it removes any attributes from `new_object` that are
+    not present in `template`.
+    """
+    for attribute in template.__dict__:
+        if not hasattr(new_object, attribute):
+            setattr(new_object, attribute, getattr(template, attribute))
+    for attribute in new_object.__dict__:
+        if not hasattr(template, attribute):
+            delattr(new_object, attribute)

@@ -2,6 +2,7 @@ using Gtk 4.0;
 using Adw 1;
 
 template TransformWindow : Adw.Window {
+  modal: true;
   default-width: 450;
   title: _("Transform Data");
 
@@ -14,7 +15,7 @@ template TransformWindow : Adw.Window {
 
   Box {
     orientation: vertical;
-    HeaderBar header_bar {
+    Adw.HeaderBar {
       styles ["flat"]
     }
 
@@ -39,11 +40,11 @@ template TransformWindow : Adw.Window {
       description: _("The transformation tool uses Numpy notation, with capital letters for the coordinates.\nTransformations are done piece-wise, if you want access to the entire range use X_range or Y_range. e.g. Y = Y/max(X_range) divides each Y value by the largest value of X.\n\nTo convert a value from degrees into radians use radians(value), e.g. Y = sin(radians(X)).");
     }
 
-    Button transform_confirm_button {
+    Button confirm_button {
       halign: center;
       margin-bottom: 26;
       label: _("Transform");
-      styles ["pill"]
+      styles ["suggested-action", "pill"]
     }
   }
 }

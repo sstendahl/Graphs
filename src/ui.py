@@ -3,7 +3,7 @@ import os
 
 from gi.repository import Adw, Gtk
 
-from graphs import file_io, graphs, plotting_tools
+from graphs import file_io, graphs
 
 
 def toggle_darkmode(_shortcut, _theme, _widget, self):
@@ -13,7 +13,7 @@ def toggle_darkmode(_shortcut, _theme, _widget, self):
     else:
         self.plot_settings.plot_style = self.preferences.config[
             "plot_style_light"]
-    plotting_tools.reload_plot(self)
+    graphs.reload(self)
 
 
 def enable_data_dependent_buttons(self, enabled):
@@ -28,128 +28,48 @@ def enable_data_dependent_buttons(self, enabled):
         win.fourier_button,
         win.inverse_fourier_button,
         win.normalize_button,
-        win.center_data_button,
+        win.center_button,
         win.derivative_button,
         win.integral_button,
-        win.transform_data_button,
-        win.combine_data_button,
+        win.transform_button,
+        win.combine_button,
     ]
     for button in dependent_buttons:
         button.set_sensitive(enabled)
 
 
-def disable_clipboard_buttons(self):
-    win = self.main_window
-    win.redo_button.set_sensitive(False)
-    win.undo_button.set_sensitive(False)
-
-
 def on_confirm_discard_response(_dialog, response, self):
     if response == "discard":
-        open_project_dialog(self)
+        chooser = self.build("dialogs", "open_project")
+        chooser.set_transient_for(self.main_window)
+        chooser.connect("response", on_open_response, self, True)
+        chooser.show()
 
 
-def open_project_dialog(self):
-    open_project_chooser = Gtk.FileChooserNative.new(
-        title="Open Project",
-        parent=self.main_window,
-        action=Gtk.FileChooserAction.OPEN,
-        accept_label="_Open",
-    )
-    open_project_chooser.set_modal(True)
-    open_project_chooser.set_select_multiple(False)
-    open_project_chooser.connect("response", on_open_response, self,
-                                 True, None)
-    open_project_chooser.show()
-
-
-def open_file_dialog(self, import_settings=None):
-    open_file_chooser = Gtk.FileChooserNative.new(
-        title="Open new files",
-        parent=self.main_window,
-        action=Gtk.FileChooserAction.OPEN,
-        accept_label="_Open",
-    )
-    open_file_chooser.set_modal(True)
-    open_file_chooser.set_select_multiple(True)
-    open_file_chooser.connect("response", on_open_response, self,
-                              False, import_settings)
-    open_file_chooser.show()
-
-
-def on_open_response(dialog, response, self, project, import_settings):
+def on_open_response(dialog, response, self, project, import_settings=None):
     if response == Gtk.ResponseType.ACCEPT:
         if project:
-            file_io.load_project(self, dialog.get_files())
+            graphs.open_project(self, dialog.get_files()[0])
         else:
             graphs.open_files(self, dialog.get_files(), import_settings)
-
-
-def save_project_dialog(self):
-    def save_project_chooser(action):
-        dialog = Gtk.FileChooserNative.new(
-            title="Save files",
-            parent=self.main_window,
-            action=action,
-            accept_label="_Save",
-        )
-        return dialog
-
-    chooser = save_project_chooser(Gtk.FileChooserAction.SAVE)
-    chooser.set_modal(True)
-    chooser.connect("response", on_save_response, self, True)
-    chooser.show()
-
-
-def save_file_dialog(self):
-    def save_file_chooser(action):
-        dialog = Gtk.FileChooserNative.new(
-            title="Save files",
-            parent=self.main_window,
-            action=action,
-            accept_label="_Save",
-        )
-        return dialog
-
-    if len(self.datadict) == 1:
-        chooser = save_file_chooser(Gtk.FileChooserAction.SAVE)
-    elif len(self.datadict) > 1:
-        chooser = save_file_chooser(Gtk.FileChooserAction.SELECT_FOLDER)
-
-    if len(self.datadict) == 1:
-        filename = list(self.datadict.values())[0].filename
-        chooser.set_current_name(f"{filename}.txt")
-    try:
-        chooser.set_modal(True)
-        chooser.connect("response", on_save_response, self, False)
-        chooser.show()
-    except UnboundLocalError:
-        toast = "Could not open save dialog, make sure you have data opened"
-        self.main_window.add_toast(toast)
 
 
 def on_save_response(dialog, response, self, project):
     if response == Gtk.ResponseType.ACCEPT:
         path = dialog.get_file().peek_path()
         if project:
-            file_io.save_project(self, path)
+            file_io.save_project(
+                path,
+                self.plot_settings,
+                self.datadict,
+                self.version)
         else:
             file_io.save_file(self, path)
 
 
 def export_figure(self):
-    dialog = Gtk.FileChooserNative(
-        title="Save the figure",
-        transient_for=self.main_window,
-        action=Gtk.FileChooserAction.SAVE,
-        modal=True)
-
-    file_filter = Gtk.FileFilter()
-    file_filter.set_name("All files")
-    file_filter.add_pattern("*")
-    dialog.add_filter(file_filter)
-    dialog.set_filter(file_filter)
-
+    dialog = self.build("dialogs", "export_figure")
+    dialog.set_transient_for(self.main_window)
     formats = []
     default_format = None
     for i, (name, fmts) in enumerate(

@@ -2,150 +2,18 @@
 import copy
 import logging
 
-from gi.repository import Adw
+from graphs import graphs
 
-from graphs import graphs, utilities
-
-import matplotlib.font_manager
 from matplotlib import colors
-from matplotlib.widgets import SpanSelector
-
-
-def define_highlight(self, span=None):
-    """
-    Create a span selector object, to highlight part of the graph.
-    If a span already exists, make it visible instead
-    """
-    color = utilities.lookup_color(self, "accent_color")
-    self.highlight = SpanSelector(
-        self.canvas.top_right_axis,
-        lambda x, y: on_highlight_define(self),
-        "horizontal",
-        useblit=True,
-        props={
-            "facecolor": (color.red, color.green, color.blue, 0.3),
-            "edgecolor": (color.red, color.green, color.blue, 1),
-            "linewidth": 1},
-        handle_props={"linewidth": 0},
-        interactive=True,
-        drag_from_anywhere=True)
-    if span is not None:
-        self.highlight.extents = span
-
-
-def on_highlight_define(self):
-    """
-    This ensures that the span selector doesn"t go out of range
-    There are some obscure cases where this otherwise happens, and the
-    selection tool becomes unusable.
-    """
-    xmin = min(self.canvas.top_right_axis.get_xlim())
-    xmax = max(self.canvas.top_right_axis.get_xlim())
-    extend_min = self.highlight.extents[0]
-    extend_max = self.highlight.extents[1]
-    if self.highlight.extents[0] < xmin:
-        extend_min = xmin
-    if self.highlight.extents[1] > xmax:
-        extend_max = xmax
-    self.highlight.extents = (extend_min, extend_max)
-
-
-def plot_figure(self, canvas, x_data, y_data, filename="", linewidth=2,
-                marker=None, linestyle="solid", color=None, marker_size=10,
-                y_axis="left", x_axis="bottom"):
-    """
-    Plot the figure on the graph
-    Necessary input arguments are self, the canvas to plot the figure on and
-    the X and Y data
-    """
-    if y_axis == "left":
-        if x_axis == "bottom":
-            canvas.ax.plot(x_data, y_data, linewidth=linewidth, label=filename,
-                           linestyle=linestyle, marker=marker, color=color,
-                           markersize=marker_size)
-        elif x_axis == "top":
-            canvas.top_left_axis.plot(x_data, y_data, linewidth=linewidth,
-                                      label=filename, linestyle=linestyle,
-                                      marker=marker, color=color,
-                                      markersize=marker_size)
-    elif y_axis == "right":
-        if x_axis == "bottom":
-            canvas.right_axis.plot(x_data, y_data, linewidth=linewidth,
-                                   label=filename, linestyle=linestyle,
-                                   marker=marker, color=color,
-                                   markersize=marker_size)
-        elif x_axis == "top":
-            canvas.top_right_axis.plot(x_data, y_data, linewidth=linewidth,
-                                       label=filename, linestyle=linestyle,
-                                       marker=marker, color=color,
-                                       markersize=marker_size)
-            canvas.top_right_axis.set_yscale(self.plot_settings.right_scale)
-    set_legend(self, canvas)
-
-
-def set_legend(self, canvas):
-    """Set the legend of the graph"""
-    if self.plot_settings.legend:
-        canvas.legends = []
-        lines, labels = canvas.ax.get_legend_handles_labels()
-        lines2, labels2 = canvas.right_axis.get_legend_handles_labels()
-        lines3, labels3 = canvas.top_left_axis.get_legend_handles_labels()
-        lines4, labels4 = canvas.top_right_axis.get_legend_handles_labels()
-        canvas.top_right_axis.legend(
-            lines + lines2 + lines3 + lines4,
-            labels + labels2 + labels3 + labels4, loc=0, frameon=True)
-
-
-def set_canvas_limits_axis(self):
-    """Set the canvas limits for each axis that is present"""
-    used_axes, item_list = get_used_axes(self)
-
-    for axis in used_axes:
-        if axis == "left":
-            left_items = []
-            for key in item_list["left"]:
-                left_items.append(key)
-            left_limits = find_limits(
-                self, self.canvas.ax.get_yscale(), left_items)
-        if axis == "right":
-            right_items = []
-            for key in item_list["right"]:
-                right_items.append(key)
-            right_limits = find_limits(
-                self, self.canvas.right_axis.get_yscale(), right_items)
-        if axis == "top":
-            top_items = []
-            for key in item_list["top"]:
-                top_items.append(key)
-            top_limits = find_limits(self, axis, top_items)
-        if axis == "bottom":
-            bottom_items = []
-            for key in item_list["bottom"]:
-                bottom_items.append(key)
-            bottom_limits = find_limits(self, axis, bottom_items)
-    if used_axes["left"] and used_axes["bottom"]:
-        set_canvas_limits(left_limits, self.canvas.ax, axis_type="Y")
-        set_canvas_limits(bottom_limits, self.canvas.ax, axis_type="X")
-    if used_axes["left"] and used_axes["top"]:
-        set_canvas_limits(
-            left_limits, self.canvas.top_left_axis, axis_type="Y")
-        set_canvas_limits(top_limits, self.canvas.top_left_axis, axis_type="X")
-    if used_axes["right"] and used_axes["bottom"]:
-        set_canvas_limits(right_limits, self.canvas.right_axis, axis_type="Y")
-        set_canvas_limits(bottom_limits, self.canvas.right_axis, axis_type="X")
-    if used_axes["right"] and used_axes["top"]:
-        set_canvas_limits(
-            right_limits, self.canvas.top_right_axis, axis_type="Y")
-        set_canvas_limits(
-            top_limits, self.canvas.top_right_axis, axis_type="X")
 
 
 def get_used_axes(self):
-    used_axis = {}
-    used_axis["left"] = False
-    used_axis["right"] = False
-    used_axis["top"] = False
-    used_axis["bottom"] = False
+    used_axis = {
+        "left": False,
+        "right": False,
+        "top": False,
+        "bottom": False
+    }
     item_list = {}
     left_items = []
     right_items = []
@@ -254,41 +122,6 @@ def find_limits(self, axis, datadict):
         "ymax": ymax_all}
 
 
-def reload_plot(self):
-    """Completely reload the plot of the graph"""
-    graphs.load_empty(self)
-    if len(self.datadict) > 0:
-        hide_unused_axes(self, self.canvas)
-        graphs.open_selection_from_dict(self)
-        if self.highlight is not None:
-            self.highlight.set_visible(False)
-            self.highlight.set_active(False)
-            self.highlight = None
-        self.set_mode(None, None, self.interaction_mode)
-        set_canvas_limits_axis(self)
-    self.canvas.grab_focus()
-
-
-def refresh_plot(self, canvas=None, set_limits=True):
-    """Refresh the graph without completely reloading it."""
-    if canvas is None:
-        canvas = self.canvas
-    for line in canvas.ax.lines:
-        line.remove()
-    for line in canvas.right_axis.lines:
-        line.remove()
-    for line in canvas.top_left_axis.lines:
-        line.remove()
-    for line in canvas.top_right_axis.lines:
-        line.remove()
-    if len(self.datadict) > 0:
-        hide_unused_axes(self, canvas)
-    graphs.open_selection_from_dict(self)
-    if set_limits and len(self.datadict) > 0:
-        set_canvas_limits_axis(self)
-    self.canvas.draw()
-
-
 def hide_unused_axes(self, canvas):
     """
     Hide axes that are not in use,
@@ -338,10 +171,8 @@ def change_left_yscale(action, target, self):
     else:
         self.canvas.ax.set_yscale("linear")
         self.plot_settings.yscale = "linear"
-    self.canvas.set_ticks(self)
     action.change_state(target)
-    set_canvas_limits_axis(self)
-    self.canvas.draw()
+    graphs.refresh(self)
 
 
 def change_right_yscale(action, target, self):
@@ -353,10 +184,8 @@ def change_right_yscale(action, target, self):
         self.canvas.top_right_axis.set_yscale("linear")
         self.canvas.right_axis.set_yscale("linear")
         self.plot_settings.right_scale = "linear"
-    self.canvas.set_ticks(self)
     action.change_state(target)
-    set_canvas_limits_axis(self)
-    self.canvas.draw()
+    graphs.refresh(self)
 
 
 def change_top_xscale(action, target, self):
@@ -368,10 +197,8 @@ def change_top_xscale(action, target, self):
         self.canvas.top_left_axis.set_xscale("linear")
         self.canvas.top_right_axis.set_xscale("linear")
         self.plot_settings.top_scale = "linear"
-    self.canvas.set_ticks(self)
     action.change_state(target)
-    set_canvas_limits_axis(self)
-    self.canvas.draw()
+    graphs.refresh(self)
 
 
 def change_bottom_xscale(action, target, self):
@@ -383,10 +210,8 @@ def change_bottom_xscale(action, target, self):
         self.canvas.ax.set_xscale("linear")
         self.canvas.right_axis.set_xscale("linear")
         self.plot_settings.xscale = "linear"
-    self.canvas.set_ticks(self)
     action.change_state(target)
-    set_canvas_limits_axis(self)
-    self.canvas.draw()
+    graphs.refresh(self)
 
 
 def get_next_color(self):
@@ -407,54 +232,3 @@ def get_next_color(self):
         if color not in used_colors:
             return color
     return None
-
-
-def load_fonts():
-    """Load system fonts that are installed on the system"""
-    font_list = matplotlib.font_manager.findSystemFonts(
-        fontpaths=None, fontext="ttf")
-    for font in font_list:
-        try:
-            matplotlib.font_manager.fontManager.addfont(font)
-        except Exception:
-            logging.warning(f"Could not load {font}")
-
-
-class PlotSettings:
-    """
-    The plot-related settings for the current session. The default values are
-    retreived from the config file through preferences.
-    """
-    def __init__(self, parent):
-        self.font_string = parent.preferences.config["plot_font_string"]
-        self.xlabel = parent.preferences.config["plot_X_label"]
-        self.right_label = parent.preferences.config["plot_right_label"]
-        self.top_label = parent.preferences.config["plot_top_label"]
-        self.ylabel = parent.preferences.config["plot_Y_label"]
-        self.xscale = parent.preferences.config["plot_X_scale"]
-        self.yscale = parent.preferences.config["plot_Y_scale"]
-        self.right_scale = parent.preferences.config["plot_right_scale"]
-        self.top_scale = parent.preferences.config["plot_top_scale"]
-        self.title = parent.preferences.config["plot_title"]
-        self.font_weight = parent.preferences.config["plot_font_weight"]
-        self.font_family = parent.preferences.config["plot_font_family"]
-        self.font_size = parent.preferences.config["plot_font_size"]
-        self.font_style = parent.preferences.config["plot_font_style"]
-        self.tick_direction = parent.preferences.config["plot_tick_direction"]
-        self.major_tick_length = parent.preferences.config[
-            "plot_major_tick_length"]
-        self.minor_tick_length = parent.preferences.config[
-            "plot_minor_tick_length"]
-        self.major_tick_width = parent.preferences.config[
-            "plot_major_tick_width"]
-        self.minor_tick_width = parent.preferences.config[
-            "plot_minor_tick_width"]
-        self.tick_top = parent.preferences.config["plot_tick_top"]
-        self.tick_bottom = parent.preferences.config["plot_tick_bottom"]
-        self.tick_left = parent.preferences.config["plot_tick_left"]
-        self.tick_right = parent.preferences.config["plot_tick_right"]
-        self.legend = parent.preferences.config["plot_legend"]
-        if Adw.StyleManager.get_default().get_dark():
-            self.plot_style = parent.preferences.config["plot_style_dark"]
-        else:
-            self.plot_style = parent.preferences.config["plot_style_light"]
