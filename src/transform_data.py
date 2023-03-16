@@ -15,6 +15,8 @@ class TransformWindow(Adw.Window):
     confirm_button = Gtk.Template.Child()
     discard_row = Gtk.Template.Child()
     discard = Gtk.Template.Child()
+    help_button = Gtk.Template.Child()
+    help_popover = Gtk.Template.Child()
 
     def __init__(self, parent):
         super().__init__()
@@ -25,6 +27,7 @@ class TransformWindow(Adw.Window):
         self.confirm_button.connect("clicked", self.accept, parent)
         self.set_transient_for(parent.main_window)
         self.present()
+        self.help_button.connect("clicked", self.help_popover.popup())
 
     def accept(self, _widget, parent):
         try:
