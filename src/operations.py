@@ -157,24 +157,37 @@ def center(_item, xdata, ydata, center_maximum):
     return new_xdata, ydata, True, False
 
 
-def shift_vertically(item, xdata, ydata, yscale, right_scale):
+def shift_vertically(item, xdata, ydata, yscale, right_scale, selected_keys,
+                     datadict):
     """
     Shifts data vertically with respect to each other
-    By default it scales linear data by 1.5 times the total span of the
-    ydata, and log data by a factor of 10000.
+    By default it scales linear data by 1.2 times the total span of the
+    ydata, and log data 10 to the power of the yspan.
     """
-    ymin = min(x for x in ydata if x != 0)
-    ymax = max(x for x in ydata if x != 0)
-    if item.plot_y_position == "left":
-        linear = (yscale == "linear")
-    if item.plot_y_position == "right":
-        linear = (right_scale == "linear")
-    if linear:
-        shift_value = 1.2 * (ymax - ymin)
-    else:
-        shift_value = 10 ** (numpy.log10(ymax / ymin))
-    return xdata, [value + shift_value for value in ydata], False, False
+    shift_value_log = 1
+    shift_value_linear = 0
+    data_list = []
 
+    for key in selected_keys:
+        data_list.append(datadict[key])
+
+    for index, data_item in enumerate(data_list):
+        previous_ydata = data_list[index - 1].ydata
+        ymin = min(x for x in previous_ydata if x != 0)
+        ymax = max(x for x in previous_ydata if x != 0)
+        if item.plot_y_position == "left":
+            linear = (yscale == "linear")
+        if item.plot_y_position == "right":
+            linear = (right_scale == "linear")
+        if linear:
+            shift_value_linear += 1.2 * (ymax - ymin)
+        else:
+            shift_value_log += numpy.log10(ymax / ymin)
+        if item.key == data_item.key:
+            if linear:
+                return xdata, [value + shift_value_linear for value in ydata], False, False
+            else:
+                return xdata, [value * 10 ** shift_value_log for value in ydata], False, False
 
 def cut_selected(_item, _xdata, _ydata):
     """Cut selected data over the span that is selected"""

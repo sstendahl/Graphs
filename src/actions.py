@@ -209,9 +209,11 @@ def center_action(_action, _target, self):
 
 
 def shift_vertically_action(_action, _target, self):
+    selected_keys = utilities.get_selected_keys(self)
     operations.operation(
         self, operations.shift_vertically,
-        self.plot_settings.yscale, self.plot_settings.right_scale)
+        self.plot_settings.yscale, self.plot_settings.right_scale,
+        selected_keys, self.datadict)
 
 
 def combine_action(_action, _target, self):
