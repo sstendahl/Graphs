@@ -42,13 +42,12 @@ class EditItemWindow(Adw.PreferencesWindow):
         self.item = self.parent.datadict[data_list[index]]
         self.load_values()
 
-        #If item_selector no longer matches with filename, repopulate it
-        index = self.item_selector.get_selected()
+        # If item_selector no longer matches with filename, repopulate it
         filenames = utilities.get_all_filenames(self.parent)
         if set(filenames) != \
                 set(utilities.get_chooser_list(self.item_selector)):
             utilities.populate_chooser(self.item_selector, filenames)
-        self.item_selector.set_selected(index)
+            self.item_selector.set_selected(index)
 
     def load_values(self):
         marker_dict = Line2D.markers

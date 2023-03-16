@@ -1,4 +1,6 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
+import logging
+
 from gi.repository import Adw, Gtk
 
 from graphs import calculation, graphs, plotting_tools
@@ -33,18 +35,19 @@ class AddEquationWindow(Adw.Window):
         x_stop = self.x_stop_entry.get_text()
         step_size = self.step_size_entry.get_text()
         equation = str(self.equation_entry.get_text())
-        dataset = calculation.create_dataset(
-            x_start, x_stop, equation, step_size,
-            str(self.name_entry.get_text()))
+        xdata, ydata = calculation.create_dataset(
+            x_start, x_stop, equation, step_size)
+        name = str(self.name_entry.get_text())
+        if name == "":
+            name = f"Y = {str(equation)}"
         try:
-            new_file = Data(parent, dataset["xdata"], dataset["ydata"])
-            new_file.filename = dataset["name"]
+            new_file = Data(parent, xdata, ydata)
+            new_file.filename = name
+            new_file.color = plotting_tools.get_next_color(parent)
+            graphs.add_item(parent, new_file)
+            self.destroy()
         except Exception as exception:
             exception_type = exception.__class__.__name__
             toast = f"{exception_type} - Unable to add data from equation"
             self.toast_overlay.add_toast(Adw.Toast(title=toast))
-            return
-
-        new_file.color = plotting_tools.get_next_color(parent)
-        graphs.add_item(parent, new_file)
-        self.destroy()
+            logging.exception(toast)
