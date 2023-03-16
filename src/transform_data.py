@@ -4,6 +4,7 @@ import logging
 from gi.repository import Adw, Gtk
 
 from graphs import operations
+from graphs.misc import InteractionMode
 
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/transform_window.ui")
@@ -12,6 +13,8 @@ class TransformWindow(Adw.Window):
     transform_x_entry = Gtk.Template.Child()
     transform_y_entry = Gtk.Template.Child()
     confirm_button = Gtk.Template.Child()
+    discard_row = Gtk.Template.Child()
+    discard = Gtk.Template.Child()
     help_button = Gtk.Template.Child()
     help_popover = Gtk.Template.Child()
 
@@ -19,6 +22,8 @@ class TransformWindow(Adw.Window):
         super().__init__()
         self.transform_x_entry.set_text("X")
         self.transform_y_entry.set_text("Y")
+        self.discard_row.set_visible(
+            parent.interaction_mode == InteractionMode.SELECT)
         self.confirm_button.connect("clicked", self.accept, parent)
         self.set_transient_for(parent.main_window)
         self.present()
@@ -28,8 +33,9 @@ class TransformWindow(Adw.Window):
         try:
             input_x = str(self.transform_x_entry.get_text())
             input_y = str(self.transform_y_entry.get_text())
-            operations.operation(parent, operations.transform,
-                                 input_x, input_y)
+            discard = self.discard.get_active()
+            operations.operation(
+                parent, operations.transform, input_x, input_y, discard)
         except Exception as exception:
             exception_type = exception.__class__.__name__
             toast = f"{exception_type}: Unable to do transformation, \
