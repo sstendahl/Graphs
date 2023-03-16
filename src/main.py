@@ -96,7 +96,7 @@ class GraphsApplication(Adw.Application):
 
         self.create_axis_action("change_left_yscale",
                                 plotting_tools.change_left_yscale,
-                                "plot_Y_scale")
+                                "plot_y_scale")
         self.create_axis_action("change_right_yscale",
                                 plotting_tools.change_right_yscale,
                                 "plot_right_scale")
@@ -105,7 +105,7 @@ class GraphsApplication(Adw.Application):
                                 "plot_top_scale")
         self.create_axis_action("change_bottom_xscale",
                                 plotting_tools.change_bottom_xscale,
-                                "plot_X_scale")
+                                "plot_x_scale")
 
         state = GLib.Variant.new_boolean(True)
         self.toggle_sidebar = Gio.SimpleAction.new_stateful(
