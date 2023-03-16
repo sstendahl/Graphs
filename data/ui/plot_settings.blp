@@ -14,127 +14,6 @@ template PlotSettingsWindow : Adw.PreferencesWindow {
   }
 
   Adw.PreferencesPage {
-    icon-name: "function-third-order-symbolic";
-    title: "Lines";
-
-    Adw.PreferencesGroup {
-      title: _("Data");
-      description: _("Choose which data set to edit, the name of the data set and the axis positions");
-
-      Adw.ComboRow datalist_chooser {
-        title: _("Selected Item");
-        subtitle: _("Choose which item to edit");
-        model: StringList {};
-      }
-
-      Adw.EntryRow name_entry {
-        title: _("Item name");
-      }
-
-      Adw.ComboRow plot_y_position {
-        title: _("Y-Axis Position");
-        subtitle: _("The position of the Y-axis");
-        model: StringList {
-          strings ["left", "right"]
-        };
-      }
-
-      Adw.ComboRow plot_x_position {
-        title: _("X-Axis Position");
-        subtitle: _("The position of the X-axis");
-        model: StringList {
-          strings ["top", "bottom"]
-        };
-      }
-    }
-
-    Adw.PreferencesGroup {
-      title: _("Line Style");
-      description: _("Change properties of the line style and thickness");
-
-      Adw.ComboRow linestyle_selected {
-        title: _("Linestyle Selected");
-        subtitle: _("The linestyle when the data set is selected");
-        model: StringList {
-          strings ["none", "solid", "dotted", "dashed", "dashdot"]
-        };
-      }
-
-      Adw.ComboRow linestyle_unselected {
-        title: _("Linestyle Unselected");
-        subtitle: _("The linestyle when the data set is not selected");
-        model: StringList {
-          strings ["none", "solid", "dotted", "dashed", "dashdot"]
-        };
-      }
-
-      Adw.ActionRow {
-        title: _("Selected Linewidth");
-        subtitle: _("The width of lines when the data set is selected");
-
-        Scale selected_line_thickness_slider {
-          draw-value: true;
-          width-request: 200;
-        }
-      }
-
-      Adw.ActionRow {
-        title: _("Unselected Linewidth");
-        subtitle: _("The width of lines when the data set is not selected");
-
-        Scale unselected_line_thickness_slider {
-          draw-value: true;
-          width-request: 200;
-        }
-      }
-    }
-
-    Adw.PreferencesGroup {
-      title: _("Markers");
-      description: _("Change the type and size of the markers that are used");
-
-      Adw.ComboRow selected_markers_chooser {
-        title: _("Selected Markers");
-        subtitle: _("The markers that are used when the data set is selected");
-        model: StringList {
-          strings ["none"]
-        };
-      }
-
-      Adw.ComboRow unselected_markers_chooser {
-        title: _("Unselected Markers");
-        subtitle: _("The markers that are used when the data set is selected");
-        model: StringList {
-          strings ["none"]
-        };
-      }
-
-      Adw.ActionRow {
-        title: _("Selected Marker Size");
-        subtitle: _("The size of the markers used in selected lines");
-
-        Scale selected_marker_size {
-          draw-value: true;
-          width-request: 200;
-        }
-      }
-
-      Adw.ActionRow {
-        title: _("Unselected Marker Size");
-        subtitle: _("The size of the markers used in unselected lines");
-
-        Scale unselected_marker_size {
-          draw-value: true;
-          width-request: 200;
-        }
-      }
-    }
-  }
-
-  Adw.PreferencesPage {
-    icon-name: "axes-one-quadrant-symbolic";
-    title: "Axes";
-
     Adw.PreferencesGroup {
       title: _("Plot Labels");
       description: _("Settings for the plot title and labels");
@@ -143,20 +22,20 @@ template PlotSettingsWindow : Adw.PreferencesWindow {
         title: _("Plot Title");
       }
 
-      Adw.EntryRow plot_y_label {
-        title: _("Left Axis Label");
-      }
-
       Adw.EntryRow plot_x_label {
         title: _("Bottom Axis Label");
       }
 
-      Adw.EntryRow plot_right_label {
-        title: _("Right Axis Label");
+      Adw.EntryRow plot_y_label {
+        title: _("Left Axis Label");
       }
 
       Adw.EntryRow plot_top_label {
         title: _("Top Axis Label");
+      }
+
+      Adw.EntryRow plot_right_label {
+        title: _("Right Axis Label");
       }
 
       Adw.ActionRow {
@@ -174,14 +53,6 @@ template PlotSettingsWindow : Adw.PreferencesWindow {
       title: _("Scaling");
       description: _("The scaling used for each axis");
 
-      Adw.ComboRow plot_y_scale {
-        title: _("Left Axis Scale");
-        subtitle: _("Scaling used for the left-hand axis");
-        model: StringList {
-          strings ["log", "linear"]
-        };
-      }
-
       Adw.ComboRow plot_x_scale {
         title: _("Bottom Axis Scale");
         subtitle: _("Scaling on the bottom axis");
@@ -190,9 +61,9 @@ template PlotSettingsWindow : Adw.PreferencesWindow {
         };
       }
 
-      Adw.ComboRow plot_right_scale {
-        title: _("Right Axis Scale");
-        subtitle: _("Scaling used for the right-hand axis");
+      Adw.ComboRow plot_y_scale {
+        title: _("Left Axis Scale");
+        subtitle: _("Scaling used for the left-hand axis");
         model: StringList {
           strings ["log", "linear"]
         };
@@ -201,6 +72,14 @@ template PlotSettingsWindow : Adw.PreferencesWindow {
       Adw.ComboRow plot_top_scale {
         title: _("Top Axis Scale");
         subtitle: _("Scaling used for the top axis");
+        model: StringList {
+          strings ["log", "linear"]
+        };
+      }
+
+      Adw.ComboRow plot_right_scale {
+        title: _("Right Axis Scale");
+        subtitle: _("Scaling used for the right-hand axis");
         model: StringList {
           strings ["log", "linear"]
         };
@@ -260,16 +139,6 @@ template PlotSettingsWindow : Adw.PreferencesWindow {
       }
 
       Adw.ActionRow {
-        title: _("Ticks on Left Axis");
-        subtitle: _("Show ticks on the left-hand axis");
-        activatable-widget: plot_tick_left;
-
-        Switch plot_tick_left {
-          valign: center;
-        }
-      }
-
-      Adw.ActionRow {
         title: _("Ticks on Bottom Axis");
         subtitle: _("Show ticks on the bottom");
         activatable-widget: plot_tick_bottom;
@@ -280,11 +149,11 @@ template PlotSettingsWindow : Adw.PreferencesWindow {
       }
 
       Adw.ActionRow {
-        title: _("Ticks on Top Axis");
-        subtitle: _("Show ticks on the top");
-        activatable-widget: plot_tick_top;
+        title: _("Ticks on Left Axis");
+        subtitle: _("Show ticks on the left-hand axis");
+        activatable-widget: plot_tick_left;
 
-        Switch plot_tick_top {
+        Switch plot_tick_left {
           valign: center;
         }
       }
@@ -295,6 +164,16 @@ template PlotSettingsWindow : Adw.PreferencesWindow {
         activatable-widget: plot_tick_right;
 
         Switch plot_tick_right {
+          valign: center;
+        }
+      }
+
+      Adw.ActionRow {
+        title: _("Ticks on Top Axis");
+        subtitle: _("Show ticks on the top");
+        activatable-widget: plot_tick_top;
+
+        Switch plot_tick_top {
           valign: center;
         }
       }

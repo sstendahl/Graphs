@@ -59,11 +59,6 @@ def get_chooser_list(chooser):
     return chooser_list
 
 
-def get_datalist(parent):
-    """Get a list of all data id"s present in the datadict dictionary"""
-    return list(parent.datadict.keys())
-
-
 def get_all_filenames(parent):
     """Get a list of all filenames present in the datadict dictionary"""
     filenames = []
@@ -207,3 +202,9 @@ def set_attributes(new_object, template):
     for attribute in new_object.__dict__:
         if not hasattr(template, attribute):
             delattr(new_object, attribute)
+
+
+def shorten_label(label, max_length=20):
+    if len(label) > max_length:
+        label = f"{label[:max_length]}..."
+    return label
