@@ -72,6 +72,7 @@ def get_xrdml(self, import_settings):
             start_pos = float(start_pos[0].firstChild.data)
             end_pos = float(end_pos[0].firstChild.data)
             xdata = numpy.linspace(start_pos, end_pos, len(ydata))
+            xdata = numpy.ndarray.tolist(xdata)
 
     self.plot_settings.xlabel = f"{scan_axis} ({unit})"
     self.plot_settings.ylabel = "Intensity (cps)"
