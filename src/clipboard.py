@@ -4,8 +4,8 @@ from graphs import graphs
 
 def reset(self):
     for _key, item in self.datadict.items():
-        item.xdata_clipboard = [item.xdata]
-        item.ydata_clipboard = [item.ydata]
+        item.xdata_clipboard = [item.xdata.copy()]
+        item.ydata_clipboard = [item.ydata.copy()]
         item.clipboard_pos = -1
     win = self.main_window
     win.redo_button.set_sensitive(False)
@@ -46,10 +46,10 @@ def undo(self):
     redo_button = self.main_window.redo_button
     for _key, item in self.datadict.items():
         if abs(item.clipboard_pos) < len(item.xdata_clipboard):
+            item.clipboard_pos -= 1
             redo_button.set_sensitive(True)
             item.xdata = item.xdata_clipboard[item.clipboard_pos].copy()
             item.ydata = item.ydata_clipboard[item.clipboard_pos].copy()
-            item.clipboard_pos -= 1
     if abs(item.clipboard_pos) >= len(item.xdata_clipboard):
         undo_button.set_sensitive(False)
     graphs.refresh(self, set_limits=True)
@@ -63,7 +63,7 @@ def redo(self):
     undo_button = self.main_window.undo_button
     redo_button = self.main_window.redo_button
     for _key, item in self.datadict.items():
-        if item.clipboard_pos < 0:
+        if item.clipboard_pos < -1:
             undo_button.set_sensitive(True)
             item.clipboard_pos += 1
             item.xdata = item.xdata_clipboard[item.clipboard_pos].copy()

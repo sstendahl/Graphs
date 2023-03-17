@@ -60,7 +60,10 @@ def open_project(self, file):
             for attribute in new_item.__dict__:
                 if hasattr(item, attribute):
                     setattr(new_item, attribute, getattr(item, attribute))
-            add_item(self, new_item)
+            add_item(self, new_item, reset_clipboard = False)
+        if len(item.xdata_clipboard) > 1:
+            undo_button = self.main_window.undo_button
+            undo_button.set_sensitive(True)
         ui.enable_data_dependent_buttons(
             self, utilities.get_selected_keys(self))
     except Exception:
@@ -69,7 +72,7 @@ def open_project(self, file):
         logging.exception(message)
 
 
-def add_item(self, item, select=True):
+def add_item(self, item, select=True, reset_clipboard = True):
     key = item.key
     handle_duplicates = self.preferences.config["handle_duplicates"]
     for _key_1, item_1 in self.datadict.items():
@@ -100,7 +103,8 @@ def add_item(self, item, select=True):
     self.item_rows[key] = row
     self.main_window.list_box.append(row)
     self.sample_menu[key] = self.main_window.list_box.get_last_child()
-    clipboard.reset(self)
+    if reset_clipboard:
+        clipboard.reset(self)
     reload(self)
     ui.enable_data_dependent_buttons(self, True)
 
