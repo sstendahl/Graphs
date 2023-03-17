@@ -40,7 +40,7 @@ Graphs is an excellent fit both plotting and data manipulation. The plots create
     </screenshot>
   </screenshots>
   <releases>
-    <release version="1.4.1" date="2022-12-30">
+    <release version="1.4.1" date="2023-01-30">
       <description>
         <p>Minor update with updated AppID.</p>
         <ul>
