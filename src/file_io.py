@@ -46,7 +46,8 @@ def save_file(self, path):
                               delimiter="\t")
 
 
-def get_xrdml(self, path):
+def get_xrdml(self, import_settings):
+    path = import_settings.path
     file = minidom.parse(path)
     intensities = file.getElementsByTagName("intensities")
     counting_time = file.getElementsByTagName("commonCountingTime")
@@ -77,8 +78,9 @@ def get_xrdml(self, path):
     return xdata, ydata
 
 
-def get_column_file(self, path, import_settings):
+def get_column_file(self, import_settings):
     data_array = [[], []]
+    path = import_settings.path
     with open(path, "r", encoding="utf-8") as file:
         for i, line in enumerate(file):
             if i > import_settings.skip_rows:
@@ -124,8 +126,7 @@ def get_column_file(self, path, import_settings):
 
 
 def get_data(self, import_settings):
-    path = import_settings.path
-    if path.endswith(".xrdml"):
-        return get_xrdml(self, path)
+    if import_settings.path.endswith(".xrdml"):
+        return get_xrdml(self, import_settings)
     else:
-        return get_column_file(self, path, import_settings)
+        return get_column_file(self, import_settings)

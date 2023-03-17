@@ -23,7 +23,8 @@ def open_files(self, files, import_settings):
                 import_settings.path = path
                 xdata, ydata = file_io.get_data(self, import_settings)
                 if xdata == []:
-                    toast = "At least one data set could not be imported"
+                    filename = import_settings.path.split("/")[-1]
+                    toast = f"Unable to retreive data for {filename}"
                     self.main_window.add_toast(toast)
                     continue
                 item = Data(self, xdata, ydata, import_settings)
@@ -32,12 +33,12 @@ def open_files(self, files, import_settings):
             except IndexError:
                 toast = "Could not open data, the column index is out of range"
                 self.main_window.add_toast(toast)
-                break
+                continue
             except UnicodeDecodeError:
                 toast = "Could not open data, wrong filetype"
                 self.main_window.add_toast(toast)
-                break
-    reload(self)
+                continue
+    self.canvas.set_limits()
 
 
 def open_project(self, file):
@@ -100,7 +101,7 @@ def add_item(self, item, select=True):
     self.main_window.list_box.append(row)
     self.sample_menu[key] = self.main_window.list_box.get_last_child()
     clipboard.reset(self)
-    refresh(self)
+    reload(self)
     ui.enable_data_dependent_buttons(self, True)
 
 
