@@ -8,7 +8,7 @@ def create_dataset(x_start, x_stop, equation, step_size):
     Create all data set parameters that are required
     to create a new data object
     """
-    datapoints = int(abs(eval(x_start) - eval(x_stop)) / eval(step_size))
+    datapoints = int(abs(eval(x_start) - eval(x_stop)) / eval(step_size)) + 1
     xdata = numpy.linspace(eval(x_start), eval(x_stop), datapoints)
     equation = equation.replace("X", "xdata")
     equation = str(equation.replace("^", "**"))
