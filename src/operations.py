@@ -243,7 +243,7 @@ def combine(self):
     new_xdata = []
     new_ydata = []
     for key in keys:
-        xdata, ydata = get_data(self, self.datadict[key])[0:1]
+        xdata, ydata = get_data(self, self.datadict[key])[:2]
         new_xdata.extend(xdata)
         new_ydata.extend(ydata)
 
