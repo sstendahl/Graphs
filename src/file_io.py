@@ -30,7 +30,6 @@ def save_file(self, path):
             xdata = item.xdata
             ydata = item.ydata
         filename = path
-        print(filename)
         array = numpy.stack([xdata, ydata], axis=1)
         numpy.savetxt(str(filename), array, delimiter="\t")
     elif len(self.datadict) > 1:
