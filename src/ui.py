@@ -57,6 +57,7 @@ def on_open_response(dialog, response, self, project, import_settings=None):
 def on_save_response(dialog, response, self, project):
     if response == Gtk.ResponseType.ACCEPT:
         path = dialog.get_file().peek_path()
+        print(self.plot_settings.plot_style)
         if project:
             file_io.save_project(
                 path,

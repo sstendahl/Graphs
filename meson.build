@@ -49,7 +49,7 @@ conf.set('issues', issues)
 conf.set('author', author)
 conf.set('description_short', description_short)
 if debug
-  conf.set('log_level', 'DEBUG')
+  conf.set('log_level', 'INFO')
 else
   conf.set('log_level', 'INFO')
 endif
