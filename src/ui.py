@@ -74,12 +74,9 @@ def export_figure(self):
     default_format = None
     for i, (name, fmts) in enumerate(
             self.canvas.get_supported_filetypes_grouped().items()):
-        file_filter = Gtk.FileFilter()
-        file_filter.set_name(name)
-        for fmt in fmts:
-            file_filter.add_pattern(f"*.{fmt}")
-        dialog.add_filter(file_filter)
         formats.append(name)
+        print(fmts)
+        print(name)
         if self.canvas.get_default_filetype() in fmts:
             default_format = i
     # Setting the choice doesn"t always work, so make sure the default
@@ -87,7 +84,7 @@ def export_figure(self):
     formats = [formats[default_format], *formats[:default_format],
                *formats[default_format + 1:]]
     dialog.add_choice("format", "File format", formats, formats)
-    dialog.set_choice("format", formats[default_format])
+    dialog.set_choice("format", formats[0])
 
     dialog.set_current_name(self.canvas.get_default_filename())
     dialog.connect("response", on_figure_save_response, self)

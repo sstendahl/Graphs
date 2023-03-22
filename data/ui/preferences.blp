@@ -84,7 +84,8 @@ template PreferencesWindow : Adw.PreferencesWindow {
         title: _("Default Filetype");
         subtitle: _("The default filetype of saved graphs");
         model: StringList savefig_filetype_list {
-          strings ["png", "ps", "pdf", "svg"]
+          strings ["png", "ps", "pdf", "svg", "jpeg", "webp", "eps", "tiff",
+          	   "pgf"]
         };
       }
 
