@@ -47,11 +47,6 @@ def open_project(self, file):
     try:
         new_plot_settings, new_datadict, _version = \
             file_io.load_project(file.peek_path())
-        if Adw.StyleManager.get_default().get_dark():
-            style = self.preferences.config["plot_style_dark"]
-        else:
-            style = self.preferences.config["plot_style_light"]
-        new_plot_settings.plot_style = style
         self.plot_settings = new_plot_settings
         utilities.set_attributes(new_plot_settings, self.plot_settings)
         self.datadict = {}
@@ -66,6 +61,7 @@ def open_project(self, file):
             undo_button.set_sensitive(True)
         ui.enable_data_dependent_buttons(
             self, utilities.get_selected_keys(self))
+        self.canvas.set_limits()
     except Exception:
         message = "Could not open project"
         self.main_window.add_toast(message)
@@ -140,7 +136,7 @@ def reload(self):
     """Completely reload the plot of the graph"""
     self.canvas = Canvas(parent=self)
     self.main_window.toast_overlay.set_child(self.canvas)
-    refresh(self)
+    refresh(self, set_limits = True)
     self.set_mode(None, None, self.interaction_mode)
     self.canvas.grab_focus()
 
