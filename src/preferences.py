@@ -8,6 +8,7 @@ from pathlib import Path
 from gi.repository import Adw, Gtk
 
 from graphs import utilities
+from graphs import graphs
 
 import matplotlib.font_manager
 import matplotlib.pyplot as plt
@@ -373,3 +374,4 @@ class PreferencesWindow(Adw.PreferencesWindow):
     def on_close(self, _, parent):
         parent.preferences.config = self.set_config()
         parent.preferences.save_config()
+        graphs.reload(parent)
