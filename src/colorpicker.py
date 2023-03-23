@@ -59,7 +59,7 @@ class ColorPicker():
 
     def update_color(self):
         css = f"button {{ color: {self.get_rgba().to_string()}; }}"
-        self.provider.load_from_data(css.encode())
+        self.provider.load_from_data(css, -1)
 
     def set_css(self):
         self.provider = Gtk.CssProvider()
