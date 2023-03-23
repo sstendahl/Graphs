@@ -15,7 +15,6 @@ graphs_sources = [
   'calculation.py',
   'clipboard.py',
   'canvas.py',
-  'colorpicker.py',
   'data.py',
   'edit_item.py',
   'file_io.py',

@@ -36,7 +36,7 @@ def save_file(self, path):
         for _key, item in self.datadict.items():
             xdata = item.xdata
             ydata = item.ydata
-            filename = item.filename.replace("/","")
+            filename = item.filename.replace("/", "")
             array = numpy.stack([xdata, ydata], axis=1)
             if os.path.exists(f"{path}/{filename}.txt"):
                 numpy.savetxt(str(path + "/" + filename) + " (copy).txt",

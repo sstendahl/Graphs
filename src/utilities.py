@@ -141,6 +141,11 @@ def create_rgba(red, green, blue, alpha=1):
     return res
 
 
+def tuple_to_rgba(rgba_tuple):
+    red, green, blue = rgba_tuple
+    return create_rgba(red, green, blue)
+
+
 def lookup_color(self, color):
     return self.main_window.get_style_context().lookup_color(color)[1]
 
@@ -152,8 +157,11 @@ def rgba_to_hex(rgba):
         round(rgba.blue * 255))
 
 
-def rgba_to_tuple(rgba):
-    return (rgba.red, rgba.green, rgba.blue, rgba.alpha)
+def rgba_to_tuple(rgba, alpha=False):
+    if alpha:
+        return (rgba.red, rgba.green, rgba.blue, rgba.alpha)
+    else:
+        return (rgba.red, rgba.green, rgba.blue)
 
 
 def swap(str1):
