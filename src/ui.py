@@ -1,8 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 import os
-import pathlib
 
-from gi.repository import Adw, Gtk, GLib, Gio
+from gi.repository import Adw, Gtk, GLib
 
 from graphs import file_io, graphs
 
@@ -41,10 +40,8 @@ def enable_data_dependent_buttons(self, enabled):
 
 def on_confirm_discard_response(_dialog, response, self):
     if response == "discard":
-        chooser = self.build("dialogs", "open_project")
-        chooser.set_transient_for(self.main_window)
-        chooser.connect("response", on_open_response, self, True)
-        chooser.show()
+        dialog = Gtk.FileDialog()
+        dialog.open(self.main_window, None, on_open_project_response, self)
 
 
 def on_add_data_response(dialog, response, self, import_settings=None):

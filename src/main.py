@@ -4,7 +4,7 @@ import logging
 import sys
 from inspect import getmembers, isfunction
 
-from gi.repository import Adw, GLib, Gio, Gtk
+from gi.repository import Adw, GLib, Gio
 
 from graphs import actions, plotting_tools, preferences, ui
 from graphs.canvas import Canvas

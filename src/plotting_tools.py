@@ -1,10 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
-import copy
 import logging
 
 from graphs import graphs
-
-from matplotlib import colors
 
 
 def get_used_axes(self):
