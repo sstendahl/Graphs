@@ -202,10 +202,6 @@ class GraphsApplication(Adw.Application):
         self.add_action(action)
         self.set_accels_for_action(f"app.{name}", shortcuts)
 
-    def build(self, resource_name, name):
-        return Gtk.Builder.new_from_resource(
-            f"/se/sjoerd/Graphs/ui/{resource_name}.ui").get_object(name)
-
 
 def main(args):
     """The application"s entry point."""

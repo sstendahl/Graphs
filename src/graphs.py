@@ -39,12 +39,12 @@ def open_files(self, files, import_settings):
     self.canvas.set_limits()
 
 
-def open_project(self, file):
+def open_project(self, path):
     for key in self.datadict.copy():
         delete_item(self, key)
     try:
         new_plot_settings, new_datadict, _version = \
-            file_io.load_project(file.peek_path())
+            file_io.load_project(path)
         self.plot_settings = new_plot_settings
         utilities.set_attributes(new_plot_settings, self.plot_settings)
         self.datadict = {}

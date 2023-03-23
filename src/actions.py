@@ -7,6 +7,7 @@ from gi.repository import Adw, Gtk
 from graphs import clipboard, graphs, operations, ui, utilities
 from graphs.add_data_advanced import AddAdvancedWindow
 from graphs.add_equation import AddEquationWindow
+from graphs.export_figure import ExportFigureWindow
 from graphs.misc import InteractionMode
 from graphs.plot_settings import PlotSettingsWindow
 from graphs.preferences import PreferencesWindow
@@ -35,9 +36,8 @@ def plot_settings_action(_action, _target, self):
 
 
 def add_data_action(_action, _target, self):
-    chooser = self.build("dialogs", "open_files")
-    chooser.connect("response", ui.on_open_response, self, False)
-    chooser.show()
+    dialog = Gtk.FileDialog()
+    dialog.open_multiple(self.main_window, None, ui.on_add_data_response, self)
 
 
 def add_data_advanced_action(_action, _target, self):
@@ -86,29 +86,24 @@ def view_forward_action(_action, _target, self):
 
 
 def export_data_action(_action, _target, self):
-    chooser = self.build("dialogs", "export_data")
-    chooser.set_transient_for(self.main_window)
+    dialog = Gtk.FileDialog()
     if len(self.datadict) > 1:
-        chooser.set_action(Gtk.FileChooserAction.SELECT_FOLDER)
+        dialog.select_folder(
+            self.main_window, None, ui.on_export_data_response, self, True)
     elif len(self.datadict) == 1:
-        filename = list(self.datadict.values())[0].filename
-        chooser.set_current_name(f"{filename}.txt")
-    else:
-        chooser.destroy
-        return
-    chooser.connect("response", ui.on_save_response, self, False)
-    chooser.show()
+        filename = f"{list(self.datadict.values())[0].filename}.txt"
+        dialog.set_initial_name(filename)
+        dialog.save(
+            self.main_window, None, ui.on_export_data_response, self, False)
 
 
 def export_figure_action(_action, _target, self):
-    ui.export_figure(self)
+    ExportFigureWindow(self)
 
 
 def save_project_action(_action, _target, self):
-    chooser = self.build("dialogs", "save_project")
-    chooser.set_transient_for(self.main_window)
-    chooser.connect("response", ui.on_save_response, self, True)
-    chooser.show()
+    dialog = Gtk.FileDialog()
+    dialog.save(self.main_window, None, ui.on_save_project_response, self)
 
 
 def open_project_action(_action, _target, self):
@@ -127,10 +122,8 @@ def open_project_action(_action, _target, self):
         dialog.connect("response", ui.on_confirm_discard_response, self)
         dialog.present()
         return
-    chooser = self.build("dialogs", "open_project")
-    chooser.set_transient_for(self.main_window)
-    chooser.connect("response", ui.on_open_response, self, True)
-    chooser.show()
+    dialog = Gtk.FileDialog()
+    dialog.open(self.main_window, None, ui.on_open_project_response, self)
 
 
 def delete_selected_action(_action, _target, self):
