@@ -43,8 +43,9 @@ template PlotSettingsWindow : Adw.PreferencesWindow {
         subtitle: _("The font used in the graph");
         activatable-widget: plot_font_chooser;
 
-        FontButton plot_font_chooser {
+        FontDialogButton plot_font_chooser {
           valign: center;
+          dialog: FontDialog {};
         }
       }
     }

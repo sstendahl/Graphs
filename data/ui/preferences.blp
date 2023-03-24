@@ -183,8 +183,9 @@ template PreferencesWindow : Adw.PreferencesWindow {
         title: _("Font");
         activatable-widget: plot_font_chooser;
 
-        FontButton plot_font_chooser {
+        FontDialogButton plot_font_chooser {
           valign: center;
+          dialog: FontDialog {};
         }
       }
 
