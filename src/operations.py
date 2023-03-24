@@ -186,7 +186,7 @@ def shift_vertically(item, xdata, ydata, yscale, right_scale, selected_keys,
             if linear:
                 new_ydata = [value + shift_value_linear for value in ydata]
             else:
-                new_ydata = [value *  10 ** shift_value_log for value in ydata]
+                new_ydata = [value * 10 ** shift_value_log for value in ydata]
             return xdata, new_ydata, False, False
 
 

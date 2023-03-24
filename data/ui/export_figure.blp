@@ -1,0 +1,42 @@
+using Gtk 4.0;
+using Adw 1;
+
+template ExportFigureWindow : Adw.Window {
+  modal: true;
+  title: _("Export Figure");
+  default-width: 575;
+  default-height: 125;
+
+  ShortcutController {
+    Shortcut {
+      trigger: "Escape";
+      action: "action(window.close)";
+    }
+  }
+
+  Box {
+    orientation: vertical;
+    Adw.HeaderBar {
+      styles ["flat"]
+    }
+    Adw.PreferencesGroup {
+      margin-start: 30;
+      margin-end: 30;
+      margin-top: 20;
+      margin-bottom: 20;
+
+      Adw.ComboRow file_format {
+        title: _("File Format");
+        subtitle: _("In Which File Format should the Graph be exported?");
+        model: StringList {};
+      }
+
+      Button confirm_button {
+        margin-top: 20;
+        label: _("Confirm");
+        halign: center;
+        styles ["suggested-action", "pill"]
+      }
+    }
+  }
+}

@@ -1,8 +1,6 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 import logging
 
-from gi.repository import Adw
-
 from graphs import clipboard, file_io, plotting_tools, samplerow, ui, utilities
 from graphs.canvas import Canvas
 from graphs.data import Data
@@ -41,12 +39,12 @@ def open_files(self, files, import_settings):
     self.canvas.set_limits()
 
 
-def open_project(self, file):
+def open_project(self, path):
     for key in self.datadict.copy():
         delete_item(self, key)
     try:
         new_plot_settings, new_datadict, _version = \
-            file_io.load_project(file.peek_path())
+            file_io.load_project(path)
         self.plot_settings = new_plot_settings
         utilities.set_attributes(new_plot_settings, self.plot_settings)
         self.datadict = {}
@@ -95,7 +93,7 @@ def add_item(self, item, select=True, reset_clipboard = True):
     self.datadict[key] = item
     self.main_window.list_box.set_visible(True)
     self.main_window.no_data_label_box.set_visible(False)
-    row = samplerow.SampleBox(self, key, item.color, item.filename, select)
+    row = samplerow.SampleBox(self, item, select)
     self.item_rows[key] = row
     self.main_window.list_box.append(row)
     self.sample_menu[key] = self.main_window.list_box.get_last_child()

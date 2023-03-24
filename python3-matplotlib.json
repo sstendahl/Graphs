@@ -63,8 +63,8 @@
         },
         {
             "type": "file",
-            "url": "https://files.pythonhosted.org/packages/e3/d9/e9bae85e84737e76ebbcbea13607236da0c0699baed0ae4f1151b728a608/fonttools-4.38.0-py3-none-any.whl",
-            "sha256": "820466f43c8be8c3009aef8b87e785014133508f0de64ec469e4efb643ae54fb"
+            "url": "https://files.pythonhosted.org/packages/0c/e6/77183fd874c8f6162a1c8f3b91a96ad910d10aef010a51a4db8c2f96f3dd/fonttools-4.39.2-py3-none-any.whl",
+            "sha256": "85245aa2fd4cf502a643c9a9a2b5a393703e150a6eaacc3e0e84bb448053f061"
         },
         {
             "type": "file",
@@ -72,17 +72,17 @@
             "sha256": "3a27e95f763a428a739d2add979fa7494c912a32c17c4c38c4d5f082cad165a3"
         },
         {
-            "type": "file",
-            "url": "https://files.pythonhosted.org/packages/f8/1e/a611f1dcb2408bc421121009d5f1f1e7f7940c199c3289eb5fb317705de2/matplotlib-3.6.3-cp310-cp310-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
-            "sha256": "d00c248ab6b92bea3f8148714837937053a083ff03b4c5e30ed37e28fc0e7e56",
-            "only-arches": "aarch64"
-        },
-                {
-            "type": "file",
-            "url": "https://files.pythonhosted.org/packages/44/15/4225ce5758885913338c8bf2bf2cad8bd00691fdcfea85147450a4eb495d/matplotlib-3.6.3-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
-            "sha256": "59400cc9451094b7f08cc3f321972e6e1db4cd37a978d4e8a12824bf7fd2f03b",
-            "only-arches": "x86_64"
-        }
+           "type": "file",
+           "url": "https://files.pythonhosted.org/packages/8a/d3/35c62c9f64ddef5f25763580a10cb1ff4a19dc1a2bf940ad06dbb10b248d/matplotlib-3.7.1-cp310-cp310-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
+           "sha256": "56d94989191de3fcc4e002f93f7f1be5da476385dde410ddafbb70686acf00ea",
+           "only-arches": "aarch64"
+       },
+               {
+           "type": "file",
+           "url": "https://files.pythonhosted.org/packages/89/f3/84a9a6613ab0d89931d785f13fa2606e03f07252875acc8ebf5b676fa3c5/matplotlib-3.7.1-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+           "sha256": "eb7d248c34a341cd4c31a06fd34d64306624c8cd8d0def7abb08792a5abfd556",
+           "only-arches": "x86_64"
+       }
     ]
 }
 ]

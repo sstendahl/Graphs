@@ -1,10 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
-import copy
 import logging
 
 from graphs import graphs
-
-from matplotlib import colors
 
 
 def get_used_axes(self):
@@ -218,15 +215,8 @@ def get_next_color(self):
     """Get the color that is to be used for the next data set"""
     color_list = self.canvas.color_cycle
     used_colors = []
-    item_rows = copy.copy(self.item_rows)
-    color_length = len(color_list)
-    if len(item_rows) >= color_length:
-        item_rows_list = list(item_rows.items())
-        item_rows_list = item_rows_list[- color_length + 1:]
-        item_rows = dict(item_rows_list)
-    for _key, item in item_rows.items():
-        used_colors.append(item.color_picker.color)
-    used_colors = [colors.to_rgb(color) for color in used_colors]
+    for _key, item in self.datadict.items():
+        used_colors.append(item.color)
 
     for color in color_list:
         if color not in used_colors:

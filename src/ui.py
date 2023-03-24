@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 import os
 
-from gi.repository import Adw, Gtk
+from gi.repository import Adw, Gtk, GLib
 
 from graphs import file_io, graphs
 
@@ -40,69 +40,47 @@ def enable_data_dependent_buttons(self, enabled):
 
 def on_confirm_discard_response(_dialog, response, self):
     if response == "discard":
-        chooser = self.build("dialogs", "open_project")
-        chooser.set_transient_for(self.main_window)
-        chooser.connect("response", on_open_response, self, True)
-        chooser.show()
+        dialog = Gtk.FileDialog()
+        dialog.open(self.main_window, None, on_open_project_response, self)
 
 
-def on_open_response(dialog, response, self, project, import_settings=None):
-    if response == Gtk.ResponseType.ACCEPT:
-        if project:
-            graphs.open_project(self, dialog.get_files()[0])
-        else:
-            graphs.open_files(self, dialog.get_files(), import_settings)
-
-
-def on_save_response(dialog, response, self, project):
-    if response == Gtk.ResponseType.ACCEPT:
-        path = dialog.get_file().peek_path()
-        print(self.plot_settings.plot_style)
-        if project:
-            file_io.save_project(
-                path,
-                self.plot_settings,
-                self.datadict,
-                self.version)
-        else:
-            file_io.save_file(self, path)
-
-
-def export_figure(self):
-    dialog = self.build("dialogs", "export_figure")
-    dialog.set_transient_for(self.main_window)
-    formats = []
-    default_format = None
-    for i, (name, fmts) in enumerate(
-            self.canvas.get_supported_filetypes_grouped().items()):
-        formats.append(name)
-        print(fmts)
-        print(name)
-        if self.canvas.get_default_filetype() in fmts:
-            default_format = i
-    # Setting the choice doesn"t always work, so make sure the default
-    # format is first.
-    formats = [formats[default_format], *formats[:default_format],
-               *formats[default_format + 1:]]
-    dialog.add_choice("format", "File format", formats, formats)
-    dialog.set_choice("format", formats[0])
-
-    dialog.set_current_name(self.canvas.get_default_filename())
-    dialog.connect("response", on_figure_save_response, self)
-    dialog.show()
-
-
-def on_figure_save_response(dialog, response, self):
-    file = dialog.get_file()
-    fmt = dialog.get_choice("format")
-    fmt = self.canvas.get_supported_filetypes_grouped()[fmt][0]
-    dialog.destroy()
-    if response != Gtk.ResponseType.ACCEPT:
-        return
+def on_add_data_response(dialog, response, self, import_settings=None):
     try:
-        self.canvas.figure.savefig(file.get_path(), format=fmt)
-    except Exception:
-        self.main_window.add_toast("Unable to save Image")
+        files = dialog.open_multiple_finish(response)
+        graphs.open_files(self, files, import_settings)
+    except GLib.GError:
+        pass
+
+
+def on_export_data_response(dialog, response, self, multiple):
+    try:
+        if multiple:
+            path = dialog.select_folder_finish(response).peek_path()
+        else:
+            path = dialog.save_finish(response).peek_path()
+        file_io.save_file(self, path)
+    except GLib.GError:
+        pass
+
+
+def on_open_project_response(dialog, response, self):
+    try:
+        path = dialog.open_finish(response).peek_path()
+        graphs.open_project(self, path)
+    except GLib.GError:
+        pass
+
+
+def on_save_project_response(dialog, response, self):
+    try:
+        path = dialog.save_finish(response).peek_path()
+        file_io.save_project(
+            path,
+            self.plot_settings,
+            self.datadict,
+            self.version)
+    except GLib.GError:
+        pass
 
 
 def show_about_window(self):
