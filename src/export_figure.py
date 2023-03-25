@@ -39,6 +39,7 @@ class ExportFigureWindow(Adw.Window):
         filename = pathlib.Path(self.parent.canvas.get_default_filename()).stem
         dialog = Gtk.FileDialog()
         dialog.set_initial_name(f"{filename}.{file_suffix}")
+        dialog.set_accept_label("Export")
         dialog.save(
             self.parent.main_window, None, self.on_figure_save_response,
             file_suffix)
