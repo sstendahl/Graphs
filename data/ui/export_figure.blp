@@ -27,13 +27,23 @@ template ExportFigureWindow : Adw.Window {
 
       Adw.ComboRow file_format {
         title: _("File Format");
-        subtitle: _("In Which File Format should the Graph be exported?");
+        subtitle: _("In which file format should the graph be exported?");
         model: StringList {};
+      }
+
+      Adw.ActionRow {
+        title: _("Transparent Background");
+        subtitle: _("Export using a transparent background.");
+        activatable-widget: transparent_switch;
+
+        Switch transparent_switch {
+          valign: center;
+        }
       }
 
       Button confirm_button {
         margin-top: 20;
-        label: _("Confirm");
+        label: _("Export");
         halign: center;
         styles ["suggested-action", "pill"]
       }

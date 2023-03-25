@@ -236,7 +236,7 @@ class PreferencesWindow(Adw.PreferencesWindow):
             self.plot_tick_top.set_active(True)
         if config["guess_headers"]:
             self.guess_headers.set_active(True)
-        if config["savefig_transparent"]:
+        if config["export_figure_transparent"]:
             self.savefig_transparent_check_button.set_active(True)
         if config["plot_legend"]:
             self.plot_legend_check.set_active(True)
@@ -306,8 +306,8 @@ class PreferencesWindow(Adw.PreferencesWindow):
         config["guess_headers"] = self.guess_headers.get_active()
         config["handle_duplicates"] = \
             self.handle_duplicates_chooser.get_selected_item().get_string()
-        transparent = self.savefig_transparent_check_button
-        config["savefig_transparent"] = transparent.get_active()
+        config["export_figure_transparent"] = \
+            self.savefig_transparent_check_button.get_active()
         config["plot_legend"] = self.plot_legend_check.get_active()
         config["plot_invert_color_cycle_dark"] = \
             self.plot_invert_color_cycle_dark.get_active()

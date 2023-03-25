@@ -15,7 +15,7 @@
 "guess_headers": true,
 "plot_tick_direction": "in",
 "handle_duplicates": "Auto-rename duplicates",
-"savefig_transparent": true, 
+"export_figure_transparent": true,
 "plot_legend": true,
 "plot_invert_color_cycle_dark": false, 
 "plot_y_label": "Y Value",
