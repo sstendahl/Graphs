@@ -30,7 +30,6 @@ class Canvas(FigureCanvas):
         self.top_left_axis = self.ax.twiny()
         self.top_right_axis = self.top_left_axis.twinx()
         self.set_ax_properties(parent)
-        self.set_save_properties(parent)
         self.set_color_cycle(parent)
         self.rubberband_color = utilities.lookup_color(parent, "accent_color")
         super().__init__(self.figure)
@@ -70,16 +69,6 @@ class Canvas(FigureCanvas):
             linestyle=linestyle, marker=marker, color=item.color,
             markersize=marker_size)
         self.set_legend()
-
-    def set_save_properties(self, parent):
-        """
-        Set the properties that are related to saving the figure. Currently
-        limited to savefig, but will include the background colour soon.
-        """
-        pyplot.rcParams["savefig.format"] = \
-            parent.preferences.config["savefig_filetype"]
-        pyplot.rcParams["savefig.transparent"] = \
-            parent.preferences.config["savefig_transparent"]
 
     def set_ax_properties(self, parent):
         """Set the properties that are related to the axes."""

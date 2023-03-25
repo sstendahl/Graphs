@@ -31,6 +31,16 @@ template ExportFigureWindow : Adw.Window {
         model: StringList {};
       }
 
+      Adw.ActionRow {
+        title: _("Transparent Background");
+        subtitle: _("Export using a transparent backgroud.");
+        activatable-widget: transparent_switch;
+
+        Switch transparent_switch {
+          valign: center;
+        }
+      }
+
       Button confirm_button {
         margin-top: 20;
         label: _("Export");
