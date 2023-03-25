@@ -56,5 +56,6 @@ class ExportFigureWindow(Adw.Window):
             if path is not None:
                 self.parent.canvas.figure.savefig(
                     path, format=file_suffix, transparent=transparent)
+                self.parent.main_window.add_toast("Exported Figure")
         except GLib.GError:
             pass
