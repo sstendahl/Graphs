@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--SPDX-License-Identifier: GPL-3.0-or-later-->
-<schemalist gettext-domain="@project@">
-	<schema id="@appid@" path="/se/sjoerd/Graphs/"/>
+<schemalist gettext-domain="@PROJECT_NAME@">
+	<schema id="@APPLICATION_ID@" path="/se/sjoerd/Graphs/"/>
 </schemalist>

@@ -1,7 +1,7 @@
 [Desktop Entry]
-Name=@name@
-Exec=@project@
-Icon=@appid@
+Name=@NAME@
+Exec=@PROJECT_NAME@
+Icon=@APPLICATION_ID@
 Terminal=false
 Type=Application
 Categories=Education;Science

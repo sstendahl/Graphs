@@ -1,11 +1,11 @@
 <?xml version='1.0' encoding='utf-8'?>
 <component type="desktop-application">
-  <id>@appid@</id>
+  <id>@APPLICATION_ID@</id>
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPL-3.0-or-later</project_license>
-  <name>@name@</name>
-  <summary>@description_short@</summary>
-  <developer_name>@author@</developer_name>
+  <name>@NAME@</name>
+  <summary>@DESCRIPTION_SHORT@</summary>
+  <developer_name>@AUTHOR@</developer_name>
   <description>
     <p>
   Graphs is a simple yet powerful tool that allows you to plot and manipulate your data in a breeze. Graphs can open and plot two-column data files, or generate new data from equations. Imported data, and data generated from an equation are treated the same, and both can be manipulated and saved as text files for future use. The plots can be customized to your liking with a wide range of options including axis labels, scaling, tick marks, line thickness and style, and fonts. Graphs also has a range of data manipulation tools, such as the ability to select, cut, translate, multiply, center, and smooth data, as well as apply any custom transformations using numpy notation.
@@ -17,10 +17,10 @@ Graphs is an excellent fit both plotting and data manipulation. The plots create
       For any feedback or general issues, please file an issue on the Github page.
     </p>
   </description>
-  <launchable type="desktop-id">@appid@.desktop</launchable>
-  <url type="bugtracker">@issues@</url>
-  <url type="help">@github@</url>
-  <url type="homepage">@website@</url>
+  <launchable type="desktop-id">@APPLICATION_ID@.desktop</launchable>
+  <url type="bugtracker">@ISSUE_URL@</url>
+  <url type="help">@GITHUB_URL@</url>
+  <url type="homepage">@HOMEPAGE_URL@</url>
   <screenshots>
     <screenshot type="default">
       <caption>1 - Plot and manipulate any data set inserted by equation or from file</caption>
