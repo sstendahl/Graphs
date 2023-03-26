@@ -27,7 +27,7 @@ graphs_sources = [
   'plotting_tools.py',
   'preferences.py',
   'rename_label.py',
-  'samplerow.py',
+  'sample_box.py',
   'transform_data.py',
   'ui.py',
   'utilities.py',

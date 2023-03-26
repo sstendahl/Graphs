@@ -1,10 +1,11 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 import logging
 
-from graphs import clipboard, file_io, plotting_tools, samplerow, ui, utilities
+from graphs import clipboard, file_io, plotting_tools, ui, utilities
 from graphs.canvas import Canvas
 from graphs.data import Data
 from graphs.misc import ImportMode, ImportSettings
+from graphs.sample_box import SampleBox
 
 
 def open_files(self, files, import_settings):
@@ -93,9 +94,9 @@ def add_item(self, item, select=True, reset_clipboard = True):
     self.datadict[key] = item
     self.main_window.list_box.set_visible(True)
     self.main_window.no_data_label_box.set_visible(False)
-    row = samplerow.SampleBox(self, item, select)
-    self.item_rows[key] = row
-    self.main_window.list_box.append(row)
+    sample_box = SampleBox(self, item, select)
+    self.item_rows[key] = sample_box
+    self.main_window.list_box.append(sample_box)
     self.sample_menu[key] = self.main_window.list_box.get_last_child()
     if reset_clipboard:
         clipboard.reset(self)
