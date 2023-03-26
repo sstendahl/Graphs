@@ -9,7 +9,7 @@
     <file preprocess="xml-stripblanks">ui/export_figure.ui</file>
     <file preprocess="xml-stripblanks">ui/plot_settings.ui</file>
     <file preprocess="xml-stripblanks">ui/preferences.ui</file>
-    <file preprocess="xml-stripblanks">ui/rename_label_window.ui</file>
+    <file preprocess="xml-stripblanks">ui/rename_window.ui</file>
     <file preprocess="xml-stripblanks">ui/sample_box.ui</file>
     <file preprocess="xml-stripblanks">ui/transform_window.ui</file>
     <file preprocess="xml-stripblanks">ui/window.ui</file>

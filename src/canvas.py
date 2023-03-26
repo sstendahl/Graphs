@@ -6,7 +6,7 @@ from cycler import cycler
 from gi.repository import Adw
 
 from graphs import plotting_tools, utilities
-from graphs.rename_label import RenameLabelWindow
+from graphs.rename import RenameWindow
 
 import matplotlib.pyplot as pyplot
 from matplotlib.backend_bases import NavigationToolbar2
@@ -176,7 +176,6 @@ class Canvas(FigureCanvas):
         Unfortunately the GTK Doubleclick signal doesn"t work with matplotlib
         hence this custom function.
         """
-        double_click = False
         if not self.one_click_trigger:
             self.one_click_trigger = True
             self.time_first_click = time.time()
@@ -188,18 +187,11 @@ class Canvas(FigureCanvas):
             else:
                 self.one_click_trigger = False
                 self.time_first_click = 0
-                double_click = True
-
-        if self.title.contains(event)[0] and double_click:
-            RenameLabelWindow(self.parent, self.title)
-        if self.top_label.contains(event)[0] and double_click:
-            RenameLabelWindow(self.parent, self.top_label)
-        if self.bottom_label.contains(event)[0] and double_click:
-            RenameLabelWindow(self.parent, self.bottom_label)
-        if self.left_label.contains(event)[0] and double_click:
-            RenameLabelWindow(self.parent, self.left_label)
-        if self.right_label.contains(event)[0] and double_click:
-            RenameLabelWindow(self.parent, self.right_label)
+                items = {self.title, self.top_label, self.bottom_label,
+                         self.left_label, self.right_label}
+                for item in items:
+                    if item.contains(event)[0]:
+                        RenameWindow(self.parent, item)
 
     def _post_draw(self, _widget, context):
         """

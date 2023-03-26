@@ -66,7 +66,7 @@ blueprints = custom_target('blueprints',
     'ui/help_overlay.blp',
     'ui/plot_settings.blp',
     'ui/preferences.blp',
-    'ui/rename_label_window.blp',
+    'ui/rename_window.blp',
     'ui/sample_box.blp',
     'ui/transform_window.blp'
   ),
