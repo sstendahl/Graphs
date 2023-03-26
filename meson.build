@@ -35,19 +35,20 @@ if debug
 endif
 
 conf = configuration_data()
-conf.set('PYTHON', python.find_installation('python3').path())
-conf.set('project', project_name)
-conf.set('version', version)
-conf.set('localedir', localedir)
-conf.set('pkgdatadir', pkgdatadir)
-conf.set('copyright', copyright)
 conf.set('appid', application_id)
-conf.set('name', name)
-conf.set('website', website)
+conf.set('author', author)
+conf.set('copyright', copyright)
+conf.set('description_short', description_short)
 conf.set('github', github)
 conf.set('issues', issues)
-conf.set('author', author)
-conf.set('description_short', description_short)
+conf.set('localedir', localedir)
+conf.set('name', name)
+conf.set('pkgdatadir', pkgdatadir)
+conf.set('project', project_name)
+conf.set('PYTHON', python.find_installation('python3').path())
+conf.set('version', version)
+conf.set('website', website)
+
 if debug
   conf.set('log_level', 'DEBUG')
 else
