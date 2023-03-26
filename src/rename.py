@@ -23,7 +23,7 @@ class RenameWindow(Adw.Window):
             group_title = "Change Title"
             group_description = \
                 "Here you can change the title of the plot."
-            text = "Title"
+            text = parent.plot_settings.title
         self.set_title(title)
         self.preferencegroup.set_title(group_title)
         self.preferencegroup.set_description(group_description)
