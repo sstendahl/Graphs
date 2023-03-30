@@ -24,13 +24,14 @@ class Canvas(FigureCanvas):
         self.time_first_click = 0
         self.parent = parent
         self.mpl_connect("button_release_event", self)
-        self.set_style(parent)
+        self.set_style()
         self.ax = self.figure.add_subplot(111)
         self.right_axis = self.ax.twinx()
         self.top_left_axis = self.ax.twiny()
         self.top_right_axis = self.top_left_axis.twinx()
-        self.set_ax_properties(parent)
-        self.set_color_cycle(parent)
+        self.set_ax_properties()
+        self.set_ticks()
+        self.set_color_cycle()
         self.rubberband_color = utilities.lookup_color(parent, "accent_color")
         super().__init__(self.figure)
         self.legends = []
@@ -70,30 +71,31 @@ class Canvas(FigureCanvas):
             markersize=marker_size)
         self.set_legend()
 
-    def set_ax_properties(self, parent):
+    def set_ax_properties(self):
         """Set the properties that are related to the axes."""
-        self.title = self.ax.set_title(parent.plot_settings.title)
+        plot_settings = self.parent.plot_settings
+        self.title = self.ax.set_title(plot_settings.title)
         self.bottom_label = self.ax.set_xlabel(
-            parent.plot_settings.xlabel,
-            fontweight=parent.plot_settings.font_weight)
+            plot_settings.xlabel,
+            fontweight=plot_settings.font_weight)
         self.right_label = self.right_axis.set_ylabel(
-            parent.plot_settings.right_label,
-            fontweight=parent.plot_settings.font_weight)
+            plot_settings.right_label,
+            fontweight=plot_settings.font_weight)
         self.top_label = self.top_left_axis.set_xlabel(
-            parent.plot_settings.top_label,
-            fontweight=parent.plot_settings.font_weight)
+            plot_settings.top_label,
+            fontweight=plot_settings.font_weight)
         self.left_label = self.ax.set_ylabel(
-            parent.plot_settings.ylabel,
-            fontweight=parent.plot_settings.font_weight)
-        self.ax.set_yscale(parent.plot_settings.yscale)
-        self.right_axis.set_yscale(parent.plot_settings.right_scale)
-        self.top_left_axis.set_xscale(parent.plot_settings.top_scale)
-        self.top_right_axis.set_xscale(parent.plot_settings.top_scale)
-        self.ax.set_xscale(parent.plot_settings.xscale)
-        self.set_ticks(parent)
+            plot_settings.ylabel,
+            fontweight=plot_settings.font_weight)
+        self.ax.set_yscale(plot_settings.yscale)
+        self.right_axis.set_yscale(plot_settings.right_scale)
+        self.top_left_axis.set_xscale(plot_settings.top_scale)
+        self.top_right_axis.set_xscale(plot_settings.top_scale)
+        self.ax.set_xscale(plot_settings.xscale)
 
-    def set_ticks(self, parent):
+    def set_ticks(self):
         """Set the ticks that are to be used in the graph."""
+        parent = self.parent
         for axis in [self.top_right_axis,
                      self.top_left_axis, self.ax, self.right_axis]:
             axis.tick_params(
@@ -131,8 +133,9 @@ class Canvas(FigureCanvas):
                     left=parent.plot_settings.tick_left,
                     right=parent.plot_settings.tick_right)
 
-    def set_style(self, parent):
+    def set_style(self):
         """Set the plot style."""
+        parent = self.parent
         pyplot.rcParams.update(pyplot.rcParamsDefault)
         if Adw.StyleManager.get_default().get_dark():
             self.figure.patch.set_facecolor("#242424")
@@ -156,16 +159,16 @@ class Canvas(FigureCanvas):
         pyplot.style.use(parent.plot_settings.plot_style)
         pyplot.rcParams.update(params)
 
-    def set_color_cycle(self, parent):
+    def set_color_cycle(self):
         """Set the color cycle that will be used for the graphs."""
-        cmap = parent.preferences.config["plot_color_cycle"]
-        reverse_dark = parent.preferences.config[
-            "plot_invert_color_cycle_dark"]
-        if Adw.StyleManager.get_default().get_dark() and reverse_dark:
+        cmap = self.parent.preferences.config["plot_color_cycle"]
+        if Adw.StyleManager.get_default().get_dark() and \
+                self.parent.preferences.config["plot_invert_color_cycle_dark"]:
             cmap += "_r"
-        color_cycle = cycler(color=pyplot.get_cmap(cmap).colors)
-        self.color_cycle = color_cycle.by_key()["color"]
+        self.color_cycle = \
+            cycler(color=pyplot.get_cmap(cmap).colors).by_key()["color"]
 
+    # Overwritten function - do not change name
     def __call__(self, event):
         """
         The function is called when a user clicks on it.
@@ -193,6 +196,7 @@ class Canvas(FigureCanvas):
                     if item.contains(event)[0]:
                         RenameWindow(self.parent, item)
 
+    # Overwritten function - do not change name
     def _post_draw(self, _widget, context):
         """
         Override with custom implementation of rubberband to allow for custom
@@ -288,12 +292,14 @@ class Canvas(FigureCanvas):
 
 class DummyToolbar(NavigationToolbar2):
     """Own implementation of NavigationToolbar2 for rubberband support."""
+    # Overwritten function - do not change name
     def draw_rubberband(self, _event, x0, y0, x1, y1):
         self.canvas._rubberband_rect = [int(val) for val in (x0,
                                         self.canvas.figure.bbox.height - y0,
                                         x1 - x0, y0 - y1)]
         self.canvas.queue_draw()
 
+    # Overwritten function - do not change name
     def remove_rubberband(self):
         self.canvas._rubberband_rect = None
         self.canvas.queue_draw()
