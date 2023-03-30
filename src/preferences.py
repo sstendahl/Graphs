@@ -7,8 +7,7 @@ from pathlib import Path
 
 from gi.repository import Adw, Gtk
 
-from graphs import utilities
-from graphs import graphs
+from graphs import graphs, utilities
 
 import matplotlib.font_manager
 import matplotlib.pyplot as plt
@@ -236,37 +235,13 @@ class PreferencesWindow(Adw.PreferencesWindow):
         self.plot_legend_check.set_active(config["plot_legend"])
         self.plot_invert_color_cycle_dark.set_active(config["plot_invert_color_cycle_dark"])
 
-    def get_font_weight(self, font_name):
-        valid_weights = [
-            "normal", "bold", "heavy", "light", "ultrabold", "ultralight"]
-        if font_name[-2] != "italic":
-            new_weight = font_name[-2]
-        else:
-            new_weight = font_name[-3]
-        if new_weight not in valid_weights:
-            new_weight = "normal"
-        return new_weight
-
-    def get_font_style(self, font_name):
-        new_style = "normal"
-        if font_name[-2] == ("italic" or "oblique" or "normal"):
-            new_style = font_name[-2]
-        return new_style
-
-    def get_available_fonts(self):
-        available_fonts = matplotlib.font_manager.get_font_names()
-        font_list = []
-        for font in available_fonts:
-            font_list.append(font)
-        return sorted(font_list)
-
     def set_config(self):
         config = self.parent.preferences.config
         font_description = self.plot_font_chooser.get_font_desc()
         font_name = font_description.to_string().lower().split(" ")
         font_size = font_name[-1]
-        font_weight = self.get_font_weight(font_name)
-        font_style = self.get_font_style(font_name)
+        font_weight = utilities.get_font_weight(font_name)
+        font_style = utilities.get_font_style(font_name)
         config["addequation_equation"] = self.addequation_equation.get_text()
         config["addequation_x_start"] = self.addequation_x_start.get_text()
         config["addequation_x_stop"] = self.addequation_x_stop.get_text()
