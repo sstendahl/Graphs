@@ -147,7 +147,7 @@ def reload(self):
 def refresh(self, set_limits=False):
     """Refresh the graph without completely reloading it."""
     canvas = self.canvas
-    for line in canvas.ax.lines + canvas.right_axis.lines + \
+    for line in canvas.axis.lines + canvas.right_axis.lines + \
             canvas.top_left_axis.lines + canvas.top_right_axis.lines:
         line.remove()
     if len(self.datadict) > 0:

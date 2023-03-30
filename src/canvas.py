@@ -25,9 +25,9 @@ class Canvas(FigureCanvas):
         self.parent = parent
         self.mpl_connect("button_release_event", self)
         self.set_style()
-        self.ax = self.figure.add_subplot(111)
-        self.right_axis = self.ax.twinx()
-        self.top_left_axis = self.ax.twiny()
+        self.axis = self.figure.add_subplot(111)
+        self.right_axis = self.axis.twinx()
+        self.top_left_axis = self.axis.twiny()
         self.top_right_axis = self.top_left_axis.twinx()
         self.set_axis_properties()
         self.set_ticks()
@@ -47,7 +47,7 @@ class Canvas(FigureCanvas):
         y_axis = item.plot_y_position
         if y_axis == "left":
             if x_axis == "bottom":
-                axis = self.ax
+                axis = self.axis
             elif x_axis == "top":
                 axis = self.top_left_axis
         elif y_axis == "right":
@@ -74,8 +74,8 @@ class Canvas(FigureCanvas):
     def set_axis_properties(self):
         """Set the properties that are related to the axes."""
         plot_settings = self.parent.plot_settings
-        self.title = self.ax.set_title(plot_settings.title)
-        self.bottom_label = self.ax.set_xlabel(
+        self.title = self.axis.set_title(plot_settings.title)
+        self.bottom_label = self.axis.set_xlabel(
             plot_settings.xlabel,
             fontweight=plot_settings.font_weight)
         self.right_label = self.right_axis.set_ylabel(
@@ -84,20 +84,20 @@ class Canvas(FigureCanvas):
         self.top_label = self.top_left_axis.set_xlabel(
             plot_settings.top_label,
             fontweight=plot_settings.font_weight)
-        self.left_label = self.ax.set_ylabel(
+        self.left_label = self.axis.set_ylabel(
             plot_settings.ylabel,
             fontweight=plot_settings.font_weight)
-        self.ax.set_yscale(plot_settings.yscale)
+        self.axis.set_yscale(plot_settings.yscale)
         self.right_axis.set_yscale(plot_settings.right_scale)
         self.top_left_axis.set_xscale(plot_settings.top_scale)
         self.top_right_axis.set_xscale(plot_settings.top_scale)
-        self.ax.set_xscale(plot_settings.xscale)
+        self.axis.set_xscale(plot_settings.xscale)
 
     def set_ticks(self):
         """Set the ticks that are to be used in the graph."""
         parent = self.parent
         for axis in [self.top_right_axis,
-                     self.top_left_axis, self.ax, self.right_axis]:
+                     self.top_left_axis, self.axis, self.right_axis]:
             axis.tick_params(
                 direction=parent.plot_settings.tick_direction,
                 length=parent.plot_settings.major_tick_length,
@@ -227,7 +227,7 @@ class Canvas(FigureCanvas):
         """Set the legend of the graph"""
         if self.parent.plot_settings.legend:
             self.legends = []
-            lines1, labels1 = self.ax.get_legend_handles_labels()
+            lines1, labels1 = self.axis.get_legend_handles_labels()
             lines2, labels2 = self.right_axis.get_legend_handles_labels()
             lines3, labels3 = self.top_left_axis.get_legend_handles_labels()
             lines4, labels4 = self.top_right_axis.get_legend_handles_labels()
@@ -249,7 +249,7 @@ class Canvas(FigureCanvas):
                 for key in item_list["left"]:
                     left_items.append(key)
                 left_limits = plotting_tools.find_limits(
-                    self.parent, self.ax.get_yscale(), left_items)
+                    self.parent, self.axis.get_yscale(), left_items)
             if axis == "right":
                 right_items = []
                 for key in item_list["right"]:
@@ -270,9 +270,9 @@ class Canvas(FigureCanvas):
                     self.parent, axis, bottom_items)
         if used_axes["left"] and used_axes["bottom"]:
             plotting_tools.set_canvas_limits(
-                left_limits, self.ax, axis_type="Y")
+                left_limits, self.axis, axis_type="Y")
             plotting_tools.set_canvas_limits(
-                bottom_limits, self.ax, axis_type="X")
+                bottom_limits, self.axis, axis_type="X")
         if used_axes["left"] and used_axes["top"]:
             plotting_tools.set_canvas_limits(
                 left_limits, self.top_left_axis, axis_type="Y")
@@ -350,7 +350,7 @@ class Highlight(SpanSelector):
 
     def get_start_stop(self, bottom_x):
         if bottom_x:
-            xrange_bottom = max(self.canvas.ax.get_xlim()) \
+            xrange_bottom = max(self.canvas.axis.get_xlim()) \
                 - min(self.canvas.ax.get_xlim())
             xrange_top = max(self.canvas.top_left_axis.get_xlim()) \
                 - min(self.canvas.top_left_axis.get_xlim())
@@ -375,17 +375,17 @@ class Highlight(SpanSelector):
 
             # Use the fraction that is higlighted on top to calculate to what
             # values this corresponds on bottom axis
-            if self.canvas.ax.get_xscale() == "log":
+            if self.canvas.axis.get_xscale() == "log":
                 startx = utilities.get_value_at_fraction(
                     fraction_left_limit,
-                    min(self.canvas.ax.get_xlim()),
-                    max(self.canvas.ax.get_xlim()))
+                    min(self.canvas.axis.get_xlim()),
+                    max(self.canvas.axis.get_xlim()))
                 stopx = utilities.get_value_at_fraction(
                     fraction_right_limit,
-                    min(self.canvas.ax.get_xlim()),
-                    max(self.canvas.ax.get_xlim()))
+                    min(self.canvas.axis.get_xlim()),
+                    max(self.canvas.axis.get_xlim()))
             elif self.canvas.ax.get_xscale() == "linear":
-                xlim = min(self.canvas.ax.get_xlim())
+                xlim = min(self.canvas.axis.get_xlim())
                 startx = xlim + xrange_bottom * fraction_left_limit
                 stopx = xlim + xrange_bottom * fraction_right_limit
         else:

@@ -125,7 +125,7 @@ def hide_unused_axes(self, canvas):
     to avoid unnecessary ticks in the plots.
     """
     # Double check the code here, seems to work but this is too messy
-    for axis in [canvas.ax, canvas.right_axis,
+    for axis in [canvas.axis, canvas.right_axis,
                  canvas.top_left_axis, canvas.top_right_axis]:
         axis.get_xaxis().set_visible(True)
         axis.get_yaxis().set_visible(True)
@@ -144,7 +144,7 @@ def hide_unused_axes(self, canvas):
             bottom = True
     if not left:
         canvas.top_left_axis.get_yaxis().set_visible(False)
-        canvas.ax.get_yaxis().set_visible(False)
+        canvas.axis.get_yaxis().set_visible(False)
     if not right:
         canvas.top_right_axis.get_yaxis().set_visible(False)
         canvas.right_axis.get_yaxis().set_visible(False)
@@ -152,7 +152,7 @@ def hide_unused_axes(self, canvas):
         canvas.top_right_axis.get_xaxis().set_visible(False)
         canvas.top_left_axis.get_xaxis().set_visible(False)
     if not bottom:
-        canvas.ax.get_xaxis().set_visible(False)
+        canvas.axis.get_xaxis().set_visible(False)
         canvas.right_axis.get_xaxis().set_visible(False)
 
     canvas.top_right_axis.get_xaxis().set_visible(False)
@@ -163,10 +163,10 @@ def hide_unused_axes(self, canvas):
 
 def change_left_yscale(action, target, self):
     if target.get_string() == "log":
-        self.canvas.ax.set_yscale("log")
+        self.canvas.axis.set_yscale("log")
         self.plot_settings.yscale = "log"
     else:
-        self.canvas.ax.set_yscale("linear")
+        self.canvas.axis.set_yscale("linear")
         self.plot_settings.yscale = "linear"
     action.change_state(target)
     graphs.refresh(self, set_limits = True)
@@ -200,11 +200,11 @@ def change_top_xscale(action, target, self):
 
 def change_bottom_xscale(action, target, self):
     if target.get_string() == "log":
-        self.canvas.ax.set_xscale("log")
+        self.canvas.axis.set_xscale("log")
         self.canvas.right_axis.set_xscale("log")
         self.plot_settings.xscale = "log"
     else:
-        self.canvas.ax.set_xscale("linear")
+        self.canvas.axi.set_xscale("linear")
         self.canvas.right_axis.set_xscale("linear")
         self.plot_settings.xscale = "linear"
     action.change_state(target)
