@@ -46,9 +46,8 @@ class AddAdvancedWindow(Adw.Window):
         }
         name = self.name.get_text()
         config = self.parent.preferences.config
-        import_settings = ImportSettings(config, params=params, name=name)
-        chooser = parent.build("dialogs", "open_files")
-        chooser.connect(
-            "response", ui.on_open_response, parent, False, import_settings)
-        chooser.show()
+        dialog = Gtk.FileDialog()
+        dialog.open_multiple(
+            self.parent.main_window, None, ui.on_add_data_response,
+            self.parent, ImportSettings(config, params=params, name=name))
         self.destroy()
