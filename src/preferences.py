@@ -9,7 +9,6 @@ from gi.repository import Adw, Gtk
 
 from graphs import graphs, utilities
 
-import matplotlib.font_manager
 import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
 
@@ -231,9 +230,11 @@ class PreferencesWindow(Adw.PreferencesWindow):
         self.plot_tick_bottom.set_active(config["plot_tick_bottom"])
         self.plot_tick_top.set_active(config["plot_tick_top"])
         self.guess_headers.set_active(config["guess_headers"])
-        self.savefig_transparent_check_button.set_active(config["export_figure_transparent"])
+        self.savefig_transparent_check_button.set_active(
+            config["export_figure_transparent"])
         self.plot_legend_check.set_active(config["plot_legend"])
-        self.plot_invert_color_cycle_dark.set_active(config["plot_invert_color_cycle_dark"])
+        self.plot_invert_color_cycle_dark.set_active(
+            config["plot_invert_color_cycle_dark"])
 
     def set_config(self):
         config = self.parent.preferences.config

@@ -129,5 +129,4 @@ def get_column_file(self, import_settings):
 def get_data(self, import_settings):
     if import_settings.path.endswith(".xrdml"):
         return get_xrdml(self, import_settings)
-    else:
-        return get_column_file(self, import_settings)
+    return get_column_file(self, import_settings)

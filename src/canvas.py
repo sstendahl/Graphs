@@ -8,7 +8,7 @@ from gi.repository import Adw
 from graphs import plotting_tools, utilities
 from graphs.rename import RenameWindow
 
-import matplotlib.pyplot as pyplot
+from matplotlib import pyplot
 from matplotlib.backend_bases import NavigationToolbar2
 from matplotlib.backends.backend_gtk4cairo import FigureCanvas
 from matplotlib.figure import Figure
@@ -303,6 +303,9 @@ class DummyToolbar(NavigationToolbar2):
     def remove_rubberband(self):
         self.canvas._rubberband_rect = None
         self.canvas.queue_draw()
+
+    def save_figure(self):
+        raise NotImplementedError
 
 
 class Highlight(SpanSelector):

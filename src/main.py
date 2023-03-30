@@ -41,7 +41,7 @@ class GraphsApplication(Adw.Application):
             try:
                 matplotlib.font_manager.fontManager.addfont(font)
             except Exception:
-                logging.warning(f"Could not load {font}")
+                logging.warning("Could not load %s", font)
         self.preferences = preferences.Preferences(self)
         self.connect_actions()
 
