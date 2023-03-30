@@ -126,6 +126,7 @@ class PreferencesWindow(Adw.PreferencesWindow):
 
     def __init__(self, parent):
         super().__init__()
+        self.parent = parent
         self.props.modal = True
         color_cycles = [
             "Pastel1", "Pastel2", "Paired", "Accent",
@@ -138,13 +139,13 @@ class PreferencesWindow(Adw.PreferencesWindow):
                                    list(Line2D.markers.values()), clear=False)
         utilities.populate_chooser(self.plot_unselected_markers_chooser,
                                    list(Line2D.markers.values()), clear=False)
-        config = parent.preferences.config
-        config = self.load_configuration(config)
-        self.connect("close-request", self.on_close, parent)
-        self.set_transient_for(parent.main_window)
+        self.load_configuration()
+        self.connect("close-request", self.on_close, self.parent)
+        self.set_transient_for(self.parent.main_window)
         self.present()
 
-    def load_configuration(self, config):
+    def load_configuration(self):
+        config = self.parent.preferences.config
         font_string = config["plot_font_string"]
         font_desc = \
             self.plot_font_chooser.get_font_desc().from_string(font_string)
@@ -226,23 +227,14 @@ class PreferencesWindow(Adw.PreferencesWindow):
             self.plot_selected_markers_chooser, selected_marker_value)
         utilities.set_chooser(
             self.plot_unselected_markers_chooser, unselected_marker_value)
-        if config["plot_tick_left"]:
-            self.plot_tick_left.set_active(True)
-        if config["plot_tick_right"]:
-            self.plot_tick_right.set_active(True)
-        if config["plot_tick_bottom"]:
-            self.plot_tick_bottom.set_active(True)
-        if config["plot_tick_top"]:
-            self.plot_tick_top.set_active(True)
-        if config["guess_headers"]:
-            self.guess_headers.set_active(True)
-        if config["export_figure_transparent"]:
-            self.savefig_transparent_check_button.set_active(True)
-        if config["plot_legend"]:
-            self.plot_legend_check.set_active(True)
-        if config["plot_invert_color_cycle_dark"]:
-            self.plot_invert_color_cycle_dark.set_active(True)
-        return config
+        self.plot_tick_left.set_active(config["plot_tick_left"])
+        self.plot_tick_right.set_active(config["plot_tick_right"])
+        self.plot_tick_bottom.set_active(config["plot_tick_bottom"])
+        self.plot_tick_top.set_active(config["plot_tick_top"])
+        self.guess_headers.set_active(config["guess_headers"])
+        self.savefig_transparent_check_button.set_active(config["export_figure_transparent"])
+        self.plot_legend_check.set_active(config["plot_legend"])
+        self.plot_invert_color_cycle_dark.set_active(config["plot_invert_color_cycle_dark"])
 
     def get_font_weight(self, font_name):
         valid_weights = [
@@ -269,7 +261,7 @@ class PreferencesWindow(Adw.PreferencesWindow):
         return sorted(font_list)
 
     def set_config(self):
-        config = {}
+        config = self.parent.preferences.config
         font_description = self.plot_font_chooser.get_font_desc()
         font_name = font_description.to_string().lower().split(" ")
         font_size = font_name[-1]
@@ -369,9 +361,8 @@ class PreferencesWindow(Adw.PreferencesWindow):
             ).get_string())
         config["plot_unselected_markers"] = unselected_marker_value
         config["plot_selected_markers"] = selected_marker_value
-        return config
 
     def on_close(self, _, parent):
-        parent.preferences.config = self.set_config()
+        self.set_config()
         parent.preferences.save_config()
         graphs.reload(parent)
