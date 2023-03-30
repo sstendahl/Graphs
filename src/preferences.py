@@ -53,7 +53,7 @@ class Preferences():
     def load_config(self):
         config_path = self.get_config_path()
         os.chdir(config_path)
-        with open("config.json", "r") as file:
+        with open("config.json", "r", encoding="utf-8") as file:
             config = json.load(file)
         config = self.check_config(config)
         return config
@@ -61,7 +61,7 @@ class Preferences():
     def save_config(self):
         config_path = self.get_config_path()
         os.chdir(config_path)
-        with open("config.json", "w") as file:
+        with open("config.json", "w", encoding="utf-8") as file:
             json.dump(self.config, file)
 
     def get_config_path(self) -> str:
