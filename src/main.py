@@ -30,7 +30,6 @@ class GraphsApplication(Adw.Application):
         self.issues = args[5]
         self.author = args[6]
         self.datadict = {}
-        self.filename = ""
         self.highlight = None
         self.highlights = []
         self.item_rows = {}

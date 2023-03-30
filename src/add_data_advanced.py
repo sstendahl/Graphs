@@ -45,8 +45,8 @@ class AddAdvancedWindow(Adw.Window):
             "guess_headers": self.guess_headers.get_active()
         }
         name = self.name.get_text()
-        parent = self.parent
-        import_settings = ImportSettings(parent, params=params, name=name)
+        config = self.parent.preferences.config
+        import_settings = ImportSettings(config, params=params, name=name)
         chooser = parent.build("dialogs", "open_files")
         chooser.connect(
             "response", ui.on_open_response, parent, False, import_settings)

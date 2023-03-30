@@ -1,16 +1,17 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
+import pathlib
 import logging
 
 from graphs import clipboard, file_io, plotting_tools, ui, utilities
 from graphs.canvas import Canvas
-from graphs.data import Data
+from graphs.item import Item
 from graphs.misc import ImportMode, ImportSettings
 from graphs.sample_box import SampleBox
 
 
 def open_files(self, files, import_settings):
     if import_settings is None:
-        import_settings = ImportSettings(self)
+        import_settings = ImportSettings(self.preferences.config)
     if len(files) > 1:
         import_settings.mode = ImportMode.MULTIPLE
     elif len(files) == 1:
@@ -22,13 +23,16 @@ def open_files(self, files, import_settings):
                 import_settings.path = path
                 xdata, ydata = file_io.get_data(self, import_settings)
                 if xdata == []:
-                    filename = import_settings.path.split("/")[-1]
+                    filename = pathlib.Path(import_settings.path).stem
                     toast = f"Unable to retreive data for {filename}"
                     self.main_window.add_toast(toast)
                     continue
-                item = Data(self, xdata, ydata, import_settings)
-                item.color = plotting_tools.get_next_color(self)
-                add_item(self, item)
+                name = import_settings.name
+                if name == "":
+                    name = pathlib.Path(import_settings.path).stem
+                color = plotting_tools.get_next_color(self)
+                cfg = self.preferences.config
+                add_item(self, Item(cfg, xdata, ydata, name, color))
             except IndexError:
                 toast = "Could not open data, the column index is out of range"
                 self.main_window.add_toast(toast)
@@ -50,7 +54,7 @@ def open_project(self, path):
         utilities.set_attributes(new_plot_settings, self.plot_settings)
         self.datadict = {}
         for key, item in new_datadict.items():
-            new_item = Data(self, item.xdata, item.ydata)
+            new_item = Item(self.preferences.config, item.xdata, item.ydata)
             for attribute in new_item.__dict__:
                 if hasattr(item, attribute):
                     setattr(new_item, attribute, getattr(item, attribute))
@@ -71,20 +75,20 @@ def add_item(self, item, select=True, reset_clipboard = True):
     key = item.key
     handle_duplicates = self.preferences.config["handle_duplicates"]
     for _key_1, item_1 in self.datadict.items():
-        if item.filename == item_1.filename:
+        if item.name == item_1.name:
             if handle_duplicates == "Auto-rename duplicates":
                 loop = True
                 i = 0
                 while loop:
                     i += 1
-                    new_name = f"{item.filename} ({i})"
+                    new_name = f"{item.name} ({i})"
                     loop = False
                     for _key_2, item_2 in self.datadict.items():
-                        if new_name == item_2.filename:
+                        if new_name == item_2.name:
                             loop = True
-                item.filename = new_name
+                item.name = new_name
             elif handle_duplicates == "Ignore duplicates":
-                toast = f'Item "{item.filename}" already exists'
+                toast = f'Item "{item.name}" already exists'
                 self.main_window.add_toast(toast)
                 return
             elif handle_duplicates == "Override existing items":
@@ -114,11 +118,11 @@ def delete_item(self, key, give_toast=False):
     for sample_menu_key, item in self.sample_menu.items():
         if sample_menu_key == key:
             self.main_window.list_box.remove(item)
-    filename = self.datadict[key].filename
+    name = self.datadict[key].name
     del self.item_rows[key]
     del self.datadict[key]
     if give_toast:
-        self.main_window.add_toast(f"Deleted {filename}")
+        self.main_window.add_toast(f"Deleted {name}")
     clipboard.reset(self)
     if self.datadict:
         refresh(self)

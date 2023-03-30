@@ -66,7 +66,7 @@ class Canvas(FigureCanvas):
             marker = item.unselected_markers
             marker_size = item.unselected_marker_size
         axis.plot(
-            item.xdata, item.ydata, linewidth=linewidth, label=item.filename,
+            item.xdata, item.ydata, linewidth=linewidth, label=item.name,
             linestyle=linestyle, marker=marker, color=item.color,
             markersize=marker_size)
         self.set_legend()

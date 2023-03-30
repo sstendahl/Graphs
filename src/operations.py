@@ -2,7 +2,7 @@
 import logging
 
 from graphs import calculation, clipboard, graphs, plotting_tools, utilities
-from graphs.data import Data
+from graphs.item import Item
 from graphs.misc import InteractionMode
 
 import numpy
@@ -249,8 +249,7 @@ def combine(self):
 
     # Create the sample itself
     new_xdata, new_ydata = sort_data(new_xdata, new_ydata)
-    new_item = Data(self, new_xdata, new_ydata)
-    new_item.filename = "Combined Data"
-    new_item.color = plotting_tools.get_next_color(self)
-    graphs.add_item(self, new_item)
+    graphs.add_item(self, Item(
+        self.preferences.config, new_xdata, new_ydata, "Combined Data",
+        plotting_tools.get_next_color(self)))
     clipboard.reset(self)

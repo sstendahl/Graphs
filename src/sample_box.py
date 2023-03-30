@@ -18,7 +18,7 @@ class SampleBox(Gtk.Box):
     def __init__(self, parent, item, selected=False):
         super().__init__()
         self.item = item
-        self.label.set_text(utilities.shorten_label(item.filename))
+        self.label.set_text(utilities.shorten_label(item.name))
         if selected:
             self.check_button.set_active(True)
         self.parent = parent

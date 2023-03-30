@@ -91,7 +91,7 @@ def export_data_action(_action, _target, self):
         dialog.select_folder(
             self.main_window, None, ui.on_export_data_response, self, True)
     elif len(self.datadict) == 1:
-        filename = f"{list(self.datadict.values())[0].filename}.txt"
+        filename = f"{list(self.datadict.values())[0].name}.txt"
         dialog.set_initial_name(filename)
         dialog.save(
             self.main_window, None, ui.on_export_data_response, self, False)

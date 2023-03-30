@@ -29,21 +29,18 @@ def save_file(self, path):
         for _key, item in self.datadict.items():
             xdata = item.xdata
             ydata = item.ydata
-        filename = path
         array = numpy.stack([xdata, ydata], axis=1)
-        numpy.savetxt(str(filename), array, delimiter="\t")
+        numpy.savetxt(str(path), array, delimiter="\t")
     elif len(self.datadict) > 1:
         for _key, item in self.datadict.items():
             xdata = item.xdata
             ydata = item.ydata
-            filename = item.filename.replace("/", "")
+            filename = item.name.replace("/", "")
             array = numpy.stack([xdata, ydata], axis=1)
-            if os.path.exists(f"{path}/{filename}.txt"):
-                numpy.savetxt(str(path + "/" + filename) + " (copy).txt",
-                              array, delimiter="\t")
-            else:
-                numpy.savetxt(str(path + "/" + filename) + ".txt", array,
-                              delimiter="\t")
+            file_path = f"{path}/{filename}.txt"
+            if os.path.exists(file_path):
+                file_path = f"{path}/{filename} (copy).txt"
+            numpy.savetxt(str(file_path, array, delimiter="\t"))
 
 
 def get_xrdml(self, import_settings):

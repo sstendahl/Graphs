@@ -3,18 +3,17 @@ from enum import Enum
 
 
 class ImportSettings():
-    def __init__(self, parent, name="", path="", params=None):
+    def __init__(self, config, name="", path="", params=None):
         self.name = name
         self.path = path
         if params is None:
-            cfg = parent.preferences.config
             params = {
-                "delimiter": cfg["import_delimiter"],
-                "guess_headers": cfg["guess_headers"],
-                "separator": cfg["import_separator"],
-                "skip_rows": cfg["import_skip_rows"],
-                "column_x": cfg["import_column_x"],
-                "column_y": cfg["import_column_y"]
+                "delimiter": config["import_delimiter"],
+                "guess_headers": config["guess_headers"],
+                "separator": config["import_separator"],
+                "skip_rows": config["import_skip_rows"],
+                "column_x": config["import_column_x"],
+                "column_y": config["import_column_y"]
             }
         self.delimiter = params["delimiter"]
         self.guess_headers = params["guess_headers"]

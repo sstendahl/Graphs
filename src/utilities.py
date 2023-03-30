@@ -1,8 +1,6 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 from gi.repository import Gdk
 
-from graphs.data import Data
-
 import numpy
 
 
@@ -59,12 +57,12 @@ def get_chooser_list(chooser):
     return chooser_list
 
 
-def get_all_filenames(parent):
+def get_all_names(parent):
     """Get a list of all filenames present in the datadict dictionary"""
-    filenames = []
+    names = []
     for item in parent.datadict.items():
-        filenames.append(item[1].filename)
-    return filenames
+        names.append(item[1].name)
+    return names
 
 
 def get_dict_by_value(dictionary, value):
@@ -103,32 +101,6 @@ def get_selected_keys(self):
         if item.check_button.get_active():
             selected_keys.append(key)
     return selected_keys
-
-
-def create_data(self, xdata=[], ydata=[], name="New data"):
-    """
-    Create a new dataset using the xdata, ydata
-    and name of the dataset as argument
-    """
-    new_file = Data(xdata, ydata)
-    new_file.filename = name
-    new_file.linestyle_selected = self.preferences.config[
-        "plot_selected_linestyle"]
-    new_file.linestyle_unselected = self.preferences.config[
-        "plot_unselected_linestyle"]
-    new_file.selected_line_thickness = self.preferences.config[
-        "selected_linewidth"]
-    new_file.unselected_line_thickness = self.preferences.config[
-        "unselected_linewidth"]
-    new_file.selected_markers = self.preferences.config[
-        "plot_selected_markers"]
-    new_file.unselected_markers = self.preferences.config[
-        "plot_unselected_markers"]
-    new_file.selected_marker_size = self.preferences.config[
-        "plot_selected_marker_size"]
-    new_file.unselected_marker_size = self.preferences.config[
-        "plot_unselected_marker_size"]
-    return new_file
 
 
 def create_rgba(red, green, blue, alpha=1):
