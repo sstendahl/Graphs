@@ -29,7 +29,7 @@ class Canvas(FigureCanvas):
         self.right_axis = self.ax.twinx()
         self.top_left_axis = self.ax.twiny()
         self.top_right_axis = self.top_left_axis.twinx()
-        self.set_ax_properties()
+        self.set_axis_properties()
         self.set_ticks()
         self.set_color_cycle()
         self.rubberband_color = utilities.lookup_color(parent, "accent_color")
@@ -71,7 +71,7 @@ class Canvas(FigureCanvas):
             markersize=marker_size)
         self.set_legend()
 
-    def set_ax_properties(self):
+    def set_axis_properties(self):
         """Set the properties that are related to the axes."""
         plot_settings = self.parent.plot_settings
         self.title = self.ax.set_title(plot_settings.title)

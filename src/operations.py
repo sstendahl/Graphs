@@ -56,7 +56,7 @@ def sort_data(xdata, ydata):
     return list(sorted_x), list(sorted_y)
 
 
-def operation(self, callback, *args):
+def perform_operation(self, callback, *args):
     try:
         keys = utilities.get_selected_keys(self)
         for key in keys:

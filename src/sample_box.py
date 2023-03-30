@@ -30,7 +30,7 @@ class SampleBox(Gtk.Box):
         self.edit_button.connect("clicked", self.edit)
         self.color_button.connect("clicked", self.choose_color)
         self.delete_button.connect("clicked", self.delete)
-        self.check_button.connect("toggled", self.toggled)
+        self.check_button.connect("toggled", self.on_toggle)
         self.provider = Gtk.CssProvider()
         self.color_button.get_style_context().add_provider(
             self.provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION)
@@ -45,9 +45,9 @@ class SampleBox(Gtk.Box):
         color = utilities.tuple_to_rgba(self.item.color)
         dialog = Gtk.ColorDialog()
         dialog.choose_rgba(
-            self.parent.main_window, color, None, self.on_accept)
+            self.parent.main_window, color, None, self.on_color_dialog_accept)
 
-    def on_accept(self, dialog, result):
+    def on_color_dialog_accept(self, dialog, result):
         try:
             color = dialog.choose_rgba_finish(result)
             if color is not None:
@@ -60,7 +60,7 @@ class SampleBox(Gtk.Box):
     def delete(self, _):
         graphs.delete_item(self.parent, self.item.key, True)
 
-    def toggled(self, _):
+    def on_toggle(self, _):
         graphs.refresh(self.parent, False)
         ui.enable_data_dependent_buttons(
             self.parent, utilities.get_selected_keys(self.parent))

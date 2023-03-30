@@ -29,10 +29,10 @@ class RenameWindow(Adw.Window):
         self.preferencegroup.set_description(group_description)
         self.text_entry.set_text(text)
         self.set_transient_for(parent.main_window)
-        self.confirm_button.connect("clicked", self.accept, parent, item)
+        self.confirm_button.connect("clicked", self.on_accept, parent, item)
         self.present()
 
-    def accept(self, _widget, parent, item):
+    def on_accept(self, _widget, parent, item):
         text = self.text_entry.get_text()
         if item == parent.canvas.top_label:
             parent.plot_settings.top_label = text

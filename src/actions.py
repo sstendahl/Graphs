@@ -142,7 +142,7 @@ make sure to enter a valid number"
         win.add_toast(message)
         logging.exception(message)
         offset = 0
-    operations.operation(self, operations.translate_x, offset)
+    operations.perform_operation(self, operations.translate_x, offset)
 
 
 def translate_y_action(_action, _target, self):
@@ -156,7 +156,7 @@ make sure to enter a valid number"
         win.add_toast(message)
         logging.exception(message)
         offset = 0
-    operations.operation(self, operations.translate_y, offset)
+    operations.perform_operation(self, operations.translate_y, offset)
 
 
 def multiply_x_action(_action, _target, self):
@@ -170,7 +170,7 @@ make sure to enter a valid number"
         win.add_toast(message)
         logging.exception(message)
         multiplier = 1
-    operations.operation(self, operations.multiply_x, multiplier)
+    operations.perform_operation(self, operations.multiply_x, multiplier)
 
 
 def multiply_y_action(_action, _target, self):
@@ -184,26 +184,26 @@ make sure to enter a valid number"
         win.add_toast(message)
         logging.exception(message)
         multiplier = 1
-    operations.operation(self, operations.multiply_y, multiplier)
+    operations.perform_operation(self, operations.multiply_y, multiplier)
 
 
 def normalize_action(_action, _target, self):
-    operations.operation(self, operations.normalize)
+    operations.perform_operation(self, operations.normalize)
 
 
 def smoothen_action(_action, _target, self):
-    operations.operation(self, operations.smoothen)
+    operations.perform_operation(self, operations.smoothen)
 
 
 def center_action(_action, _target, self):
-    operations.operation(
+    operations.perform_operation(
         self, operations.center,
         self.preferences.config["action_center_data"])
 
 
 def shift_vertically_action(_action, _target, self):
     selected_keys = utilities.get_selected_keys(self)
-    operations.operation(
+    operations.perform_operation(
         self, operations.shift_vertically,
         self.plot_settings.yscale, self.plot_settings.right_scale,
         selected_keys, self.datadict)
@@ -215,23 +215,23 @@ def combine_action(_action, _target, self):
 
 def cut_selected_action(_action, _target, self):
     if self.interaction_mode == InteractionMode.SELECT:
-        operations.operation(self, operations.cut_selected)
+        operations.perform_operation(self, operations.cut_selected)
 
 
 def get_derivative_action(_action, _target, self):
-    operations.operation(self, operations.get_derivative)
+    operations.perform_operation(self, operations.get_derivative)
 
 
 def get_integral_action(_action, _target, self):
-    operations.operation(self, operations.get_integral)
+    operations.perform_operation(self, operations.get_integral)
 
 
 def get_fourier_action(_action, _target, self):
-    operations.operation(self, operations.get_fourier)
+    operations.perform_operation(self, operations.get_fourier)
 
 
 def get_inverse_fourier_action(_action, _target, self):
-    operations.operation(self, operations.get_inverse_fourier)
+    operations.perform_operation(self, operations.get_inverse_fourier)
 
 
 def transform_action(_action, _target, self):

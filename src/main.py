@@ -43,9 +43,11 @@ class GraphsApplication(Adw.Application):
             except Exception:
                 logging.warning("Could not load %s", font)
         self.preferences = preferences.Preferences(self)
-        self.connect_actions()
+        self.add_actions()
+        Adw.StyleManager.get_default().connect(
+            "notify", ui.on_style_change, None, self)
 
-    def connect_actions(self):
+    def add_actions(self):
         """Create actions, which are defined in actions.py."""
         new_actions = [
             ("quit", ["<primary>q"]),
@@ -107,9 +109,8 @@ class GraphsApplication(Adw.Application):
                                 plotting_tools.change_bottom_xscale,
                                 "plot_x_scale")
 
-        state = GLib.Variant.new_boolean(True)
         self.toggle_sidebar = Gio.SimpleAction.new_stateful(
-            "toggle_sidebar", None, state)
+            "toggle_sidebar", None, GLib.Variant.new_boolean(True))
         self.toggle_sidebar.connect("activate", actions.toggle_sidebar, self)
         self.add_action(self.toggle_sidebar)
         self.set_accels_for_action("app.toggle_sidebar", ["F9"])
@@ -120,9 +121,6 @@ class GraphsApplication(Adw.Application):
                                 InteractionMode.ZOOM)
         self.create_mode_action("mode_select", ["<shift>S", "F3"],
                                 InteractionMode.SELECT)
-
-        Adw.StyleManager.get_default().connect("notify",
-                                               ui.toggle_darkmode, None, self)
 
     def do_activate(self):
         """Called when the application is activated.

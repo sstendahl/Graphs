@@ -236,7 +236,7 @@ class PreferencesWindow(Adw.PreferencesWindow):
         self.plot_invert_color_cycle_dark.set_active(
             config["plot_invert_color_cycle_dark"])
 
-    def set_config(self):
+    def apply_configuration(self):
         config = self.parent.preferences.config
         font_description = self.plot_font_chooser.get_font_desc()
         font_name = font_description.to_string().lower().split(" ")
@@ -339,6 +339,6 @@ class PreferencesWindow(Adw.PreferencesWindow):
         config["plot_selected_markers"] = selected_marker_value
 
     def on_close(self, _, parent):
-        self.set_config()
+        self.apply_configuration()
         parent.preferences.save_config()
         graphs.reload(parent)

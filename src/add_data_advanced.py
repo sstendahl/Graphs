@@ -27,11 +27,11 @@ class AddAdvancedWindow(Adw.Window):
         self.delimiter.set_text(config["import_delimiter"])
         utilities.set_chooser(self.separator, config["import_separator"])
         self.guess_headers.set_active(config["guess_headers"])
-        self.confirm_button.connect("clicked", self.accept)
+        self.confirm_button.connect("clicked", self.on_accept)
         self.set_transient_for(parent.main_window)
         self.present()
 
-    def accept(self, _widget):
+    def on_accept(self, _widget):
         """
         Runs when the dataset is loaded, uses the selected settings in the
         window to set the import settings during loading

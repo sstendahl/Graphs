@@ -17,7 +17,7 @@ class ExportFigureWindow(Adw.Window):
         super().__init__()
         self.parent = parent
         self.set_transient_for(parent.main_window)
-        self.confirm_button.connect("clicked", self.accept)
+        self.confirm_button.connect("clicked", self.on_accept)
         self.transparent_switch.set_active(
             self.parent.preferences.config["export_figure_transparent"])
         items = self.parent.canvas.get_supported_filetypes_grouped().items()
@@ -32,7 +32,7 @@ class ExportFigureWindow(Adw.Window):
             utilities.set_chooser(self.file_format, default_format)
         self.present()
 
-    def accept(self, _):
+    def on_accept(self, _):
         fmt = self.file_format.get_selected_item().get_string()
         file_suffix = None
         items = self.parent.canvas.get_supported_filetypes_grouped().items()
