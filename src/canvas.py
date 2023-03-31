@@ -99,19 +99,7 @@ class Canvas(FigureCanvas):
     def set_ticks(self):
         """Set the ticks that are to be used in the graph."""
         parent = self.parent
-        top = False
-        bottom = False
-        left = False
-        right = False
-        for _key, item in parent.datadict.items():
-            if item.plot_x_position == "top":
-                top = True
-            if item.plot_x_position == "bottom":
-                bottom = True
-            if item.plot_y_position == "left":
-                left = True
-            if item.plot_y_position == "right":
-                right = True
+        used_axes = plotting_tools.get_used_axes(parent)[0]
         for axis in [self.top_right_axis,
                      self.top_left_axis, self.axis, self.right_axis]:
             axis.tick_params(
@@ -125,12 +113,12 @@ class Canvas(FigureCanvas):
             axis.tick_params(axis="x", which="minor")
             axis.tick_params(axis="y", which="minor")
             axis.minorticks_on()
-            if not (top and bottom):
+            if not (used_axes["top"] and used_axes["bottom"]):
                 axis.tick_params(
                     which="both",
                     bottom=parent.plot_settings.tick_bottom,
                     top=parent.plot_settings.tick_top)
-            if not (left and right):
+            if not (used_axes["left"] and used_axes["right"]):
                 axis.tick_params(
                     which="both",
                     left=parent.plot_settings.tick_left,
@@ -242,53 +230,40 @@ class Canvas(FigureCanvas):
                     new_lines, labels, loc=0, frameon=True)
 
     def set_limits(self):
-        used_axes, item_list = plotting_tools.get_used_axes(self.parent)
         """Set the canvas limits for each axis that is present"""
-        for axis in used_axes:
-            if axis == "left":
-                left_items = []
-                for key in item_list["left"]:
-                    left_items.append(key)
-                left_limits = plotting_tools.find_limits(
-                    self.parent, self.axis.get_yscale(), left_items)
-            if axis == "right":
-                right_items = []
-                for key in item_list["right"]:
-                    right_items.append(key)
-                right_limits = plotting_tools.find_limits(
-                    self.parent, self.right_axis.get_yscale(), right_items)
-            if axis == "top":
-                top_items = []
-                for key in item_list["top"]:
-                    top_items.append(key)
-                top_limits = plotting_tools.find_limits(
-                    self.parent, axis, top_items)
-            if axis == "bottom":
-                bottom_items = []
-                for key in item_list["bottom"]:
-                    bottom_items.append(key)
-                bottom_limits = plotting_tools.find_limits(
-                    self.parent, axis, bottom_items)
-        if used_axes["left"] and used_axes["bottom"]:
-            plotting_tools.set_canvas_limits(
-                left_limits, self.axis, axis_type="Y")
-            plotting_tools.set_canvas_limits(
-                bottom_limits, self.axis, axis_type="X")
-        if used_axes["left"] and used_axes["top"]:
-            plotting_tools.set_canvas_limits(
-                left_limits, self.top_left_axis, axis_type="Y")
-            plotting_tools.set_canvas_limits(
-                top_limits, self.top_left_axis, axis_type="X")
-        if used_axes["right"] and used_axes["bottom"]:
-            plotting_tools.set_canvas_limits(
-                right_limits, self.right_axis, axis_type="Y")
-            plotting_tools.set_canvas_limits(
-                bottom_limits, self.right_axis, axis_type="X")
-        if used_axes["right"] and used_axes["top"]:
-            plotting_tools.set_canvas_limits(
-                right_limits, self.top_right_axis, axis_type="Y")
-            plotting_tools.set_canvas_limits(
-                top_limits, self.top_right_axis, axis_type="X")
+        used_axes, items = plotting_tools.get_used_axes(self.parent)
+        axes = {
+            "left": self.axis.get_yscale(),
+            "right": self.right_axis.get_yscale(),
+            "top": self.top_left_axis.get_xscale(),
+            "bottom": self.axis.get_xscale()
+        }
+        limits = {}
+        for position, scale in axes.items():
+            limits[position] = plotting_tools.find_limits(
+                scale, items[position])
+        if used_axes["left"]:
+            if used_axes["bottom"]:
+                plotting_tools.set_canvas_limits(
+                    limits["left"], self.axis, axis_type="Y")
+                plotting_tools.set_canvas_limits(
+                    limits["bottom"], self.axis, axis_type="X")
+            if used_axes["top"]:
+                plotting_tools.set_canvas_limits(
+                    limits["left"], self.top_left_axis, axis_type="Y")
+                plotting_tools.set_canvas_limits(
+                    limits["top"], self.top_left_axis, axis_type="X")
+        if used_axes["right"]:
+            if used_axes["bottom"]:
+                plotting_tools.set_canvas_limits(
+                    limits["right"], self.right_axis, axis_type="Y")
+                plotting_tools.set_canvas_limits(
+                    limits["bottom"], self.right_axis, axis_type="X")
+            if used_axes["top"]:
+                plotting_tools.set_canvas_limits(
+                    limits["right"], self.top_right_axis, axis_type="Y")
+                plotting_tools.set_canvas_limits(
+                    limits["top"], self.top_right_axis, axis_type="X")
 
 
 class DummyToolbar(NavigationToolbar2):
