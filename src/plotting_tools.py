@@ -5,41 +5,37 @@ from graphs import graphs
 
 
 def get_used_axes(self):
-    used_axis = {
+    used_axes = {
         "left": False,
         "right": False,
         "top": False,
         "bottom": False
     }
-    item_list = {}
-    left_items = []
-    right_items = []
-    top_items = []
-    bottom_items = []
-
-    for key, item in self.datadict.items():
+    items = {
+        "left": [],
+        "right": [],
+        "top": [],
+        "bottom": []
+    }
+    for _key, item in self.datadict.items():
         if item.plot_y_position == "left":
-            used_axis["left"] = True
-            left_items.append(key)
+            used_axes["left"] = True
+            items["left"].append(item)
         if item.plot_y_position == "right":
-            used_axis["right"] = True
-            right_items.append(key)
+            used_axes["right"] = True
+            items["right"].append(item)
         if item.plot_x_position == "top":
-            used_axis["top"] = True
-            top_items.append(key)
+            used_axes["top"] = True
+            items["top"].append(item)
         if item.plot_x_position == "bottom":
-            used_axis["bottom"] = True
-            bottom_items.append(key)
-    item_list["left"] = left_items
-    item_list["right"] = right_items
-    item_list["top"] = top_items
-    item_list["bottom"] = bottom_items
-    return used_axis, item_list
+            used_axes["bottom"] = True
+            items["bottom"].append(item)
+    return used_axes, items
 
 
-def set_canvas_limits(graph_limits, axis, axis_type,
-                      limits={"xmin": None, "xmax": None,
-                              "ymin": None, "ymax": None}):
+def set_axis_limits(graph_limits, axis, axis_type,
+                    limits={"xmin": None, "xmax": None,
+                            "ymin": None, "ymax": None}):
     """Set an calculate the canvas limits for a given axis."""
     # Update graph limits with limits that were given as argument
     for key, item in limits.items():
@@ -73,15 +69,14 @@ def set_canvas_limits(graph_limits, axis, axis_type,
             "Could not set limits, one of the values was probably infinite")
 
 
-def find_limits(self, axis, datadict):
+def find_limits(scale, items):
     """Find the limits that are to be used for the axes."""
     xmin_all = None
     xmax_all = None
     ymin_all = None
     ymax_all = None
 
-    for key in datadict:
-        item = self.datadict[key]
+    for item in items:
         # Check the limits of each item, as long as it exists and it has the
         # same axes as the one we"re adjusting right now
         if item is not None and len(item.xdata) > 0:
@@ -90,7 +85,7 @@ def find_limits(self, axis, datadict):
             xmin_item = min(item.xdata)
             xmax_item = max(item.xdata)
 
-            if axis == "log" and len(nonzero_ydata) > 0:
+            if scale == "log" and len(nonzero_ydata) > 0:
                 ymin_item = min(nonzero_ydata)
             else:
                 ymin_item = min(item.ydata)
@@ -124,52 +119,34 @@ def hide_unused_axes(self, canvas):
     Hide axes that are not in use,
     to avoid unnecessary ticks in the plots.
     """
-    # Double check the code here, seems to work but this is too messy
-    for axis in [canvas.ax, canvas.right_axis,
+    for axis in [canvas.axis, canvas.right_axis,
                  canvas.top_left_axis, canvas.top_right_axis]:
-        axis.get_xaxis().set_visible(True)
-        axis.get_yaxis().set_visible(True)
-    left = False
-    right = False
-    top = False
-    bottom = False
-    for _key, item in self.datadict.items():
-        if item.plot_y_position == "left":
-            left = True
-        if item.plot_y_position == "right":
-            right = True
-        if item.plot_x_position == "top":
-            top = True
-        if item.plot_x_position == "bottom":
-            bottom = True
-    if not left:
-        canvas.top_left_axis.get_yaxis().set_visible(False)
-        canvas.ax.get_yaxis().set_visible(False)
-    if not right:
-        canvas.top_right_axis.get_yaxis().set_visible(False)
-        canvas.right_axis.get_yaxis().set_visible(False)
-    if not top:
-        canvas.top_right_axis.get_xaxis().set_visible(False)
-        canvas.top_left_axis.get_xaxis().set_visible(False)
-    if not bottom:
-        canvas.ax.get_xaxis().set_visible(False)
-        canvas.right_axis.get_xaxis().set_visible(False)
-
-    canvas.top_right_axis.get_xaxis().set_visible(False)
-    canvas.right_axis.get_xaxis().set_visible(False)
-    canvas.top_right_axis.get_yaxis().set_visible(False)
-    canvas.top_left_axis.get_yaxis().set_visible(False)
+        axis.get_xaxis().set_visible(False)
+        axis.get_yaxis().set_visible(False)
+    used_axes = get_used_axes(self)[0]
+    if used_axes["left"]:
+        canvas.top_left_axis.get_yaxis().set_visible(True)
+        canvas.axis.get_yaxis().set_visible(True)
+    if used_axes["right"]:
+        canvas.top_right_axis.get_yaxis().set_visible(True)
+        canvas.right_axis.get_yaxis().set_visible(True)
+    if used_axes["top"]:
+        canvas.top_right_axis.get_xaxis().set_visible(True)
+        canvas.top_left_axis.get_xaxis().set_visible(True)
+    if used_axes["bottom"]:
+        canvas.axis.get_xaxis().set_visible(True)
+        canvas.right_axis.get_xaxis().set_visible(True)
 
 
 def change_left_yscale(action, target, self):
     if target.get_string() == "log":
-        self.canvas.ax.set_yscale("log")
+        self.canvas.axis.set_yscale("log")
         self.plot_settings.yscale = "log"
     else:
-        self.canvas.ax.set_yscale("linear")
+        self.canvas.axis.set_yscale("linear")
         self.plot_settings.yscale = "linear"
     action.change_state(target)
-    graphs.refresh(self, set_limits = True)
+    graphs.refresh(self, set_limits=True)
 
 
 def change_right_yscale(action, target, self):
@@ -182,7 +159,7 @@ def change_right_yscale(action, target, self):
         self.canvas.right_axis.set_yscale("linear")
         self.plot_settings.right_scale = "linear"
     action.change_state(target)
-    graphs.refresh(self, set_limits = True)
+    graphs.refresh(self, set_limits=True)
 
 
 def change_top_xscale(action, target, self):
@@ -195,20 +172,20 @@ def change_top_xscale(action, target, self):
         self.canvas.top_right_axis.set_xscale("linear")
         self.plot_settings.top_scale = "linear"
     action.change_state(target)
-    graphs.refresh(self, set_limits = True)
+    graphs.refresh(self, set_limits=True)
 
 
 def change_bottom_xscale(action, target, self):
     if target.get_string() == "log":
-        self.canvas.ax.set_xscale("log")
+        self.canvas.axis.set_xscale("log")
         self.canvas.right_axis.set_xscale("log")
         self.plot_settings.xscale = "log"
     else:
-        self.canvas.ax.set_xscale("linear")
+        self.canvas.axis.set_xscale("linear")
         self.canvas.right_axis.set_xscale("linear")
         self.plot_settings.xscale = "linear"
     action.change_state(target)
-    graphs.refresh(self, set_limits = True)
+    graphs.refresh(self, set_limits=True)
 
 
 def get_next_color(self):

@@ -7,10 +7,8 @@ from pathlib import Path
 
 from gi.repository import Adw, Gtk
 
-from graphs import utilities
-from graphs import graphs
+from graphs import graphs, utilities
 
-import matplotlib.font_manager
 import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
 
@@ -54,7 +52,7 @@ class Preferences():
     def load_config(self):
         config_path = self.get_config_path()
         os.chdir(config_path)
-        with open("config.json", "r") as file:
+        with open("config.json", "r", encoding="utf-8") as file:
             config = json.load(file)
         config = self.check_config(config)
         return config
@@ -62,7 +60,7 @@ class Preferences():
     def save_config(self):
         config_path = self.get_config_path()
         os.chdir(config_path)
-        with open("config.json", "w") as file:
+        with open("config.json", "w", encoding="utf-8") as file:
             json.dump(self.config, file)
 
     def get_config_path(self) -> str:
@@ -126,6 +124,7 @@ class PreferencesWindow(Adw.PreferencesWindow):
 
     def __init__(self, parent):
         super().__init__()
+        self.parent = parent
         self.props.modal = True
         color_cycles = [
             "Pastel1", "Pastel2", "Paired", "Accent",
@@ -138,13 +137,13 @@ class PreferencesWindow(Adw.PreferencesWindow):
                                    list(Line2D.markers.values()), clear=False)
         utilities.populate_chooser(self.plot_unselected_markers_chooser,
                                    list(Line2D.markers.values()), clear=False)
-        config = parent.preferences.config
-        config = self.load_configuration(config)
-        self.connect("close-request", self.on_close, parent)
-        self.set_transient_for(parent.main_window)
+        self.load_configuration()
+        self.connect("close-request", self.on_close, self.parent)
+        self.set_transient_for(self.parent.main_window)
         self.present()
 
-    def load_configuration(self, config):
+    def load_configuration(self):
+        config = self.parent.preferences.config
         font_string = config["plot_font_string"]
         font_desc = \
             self.plot_font_chooser.get_font_desc().from_string(font_string)
@@ -226,55 +225,24 @@ class PreferencesWindow(Adw.PreferencesWindow):
             self.plot_selected_markers_chooser, selected_marker_value)
         utilities.set_chooser(
             self.plot_unselected_markers_chooser, unselected_marker_value)
-        if config["plot_tick_left"]:
-            self.plot_tick_left.set_active(True)
-        if config["plot_tick_right"]:
-            self.plot_tick_right.set_active(True)
-        if config["plot_tick_bottom"]:
-            self.plot_tick_bottom.set_active(True)
-        if config["plot_tick_top"]:
-            self.plot_tick_top.set_active(True)
-        if config["guess_headers"]:
-            self.guess_headers.set_active(True)
-        if config["export_figure_transparent"]:
-            self.savefig_transparent_check_button.set_active(True)
-        if config["plot_legend"]:
-            self.plot_legend_check.set_active(True)
-        if config["plot_invert_color_cycle_dark"]:
-            self.plot_invert_color_cycle_dark.set_active(True)
-        return config
+        self.plot_tick_left.set_active(config["plot_tick_left"])
+        self.plot_tick_right.set_active(config["plot_tick_right"])
+        self.plot_tick_bottom.set_active(config["plot_tick_bottom"])
+        self.plot_tick_top.set_active(config["plot_tick_top"])
+        self.guess_headers.set_active(config["guess_headers"])
+        self.savefig_transparent_check_button.set_active(
+            config["export_figure_transparent"])
+        self.plot_legend_check.set_active(config["plot_legend"])
+        self.plot_invert_color_cycle_dark.set_active(
+            config["plot_invert_color_cycle_dark"])
 
-    def get_font_weight(self, font_name):
-        valid_weights = [
-            "normal", "bold", "heavy", "light", "ultrabold", "ultralight"]
-        if font_name[-2] != "italic":
-            new_weight = font_name[-2]
-        else:
-            new_weight = font_name[-3]
-        if new_weight not in valid_weights:
-            new_weight = "normal"
-        return new_weight
-
-    def get_font_style(self, font_name):
-        new_style = "normal"
-        if font_name[-2] == ("italic" or "oblique" or "normal"):
-            new_style = font_name[-2]
-        return new_style
-
-    def get_available_fonts(self):
-        available_fonts = matplotlib.font_manager.get_font_names()
-        font_list = []
-        for font in available_fonts:
-            font_list.append(font)
-        return sorted(font_list)
-
-    def set_config(self):
-        config = {}
+    def apply_configuration(self):
+        config = self.parent.preferences.config
         font_description = self.plot_font_chooser.get_font_desc()
         font_name = font_description.to_string().lower().split(" ")
         font_size = font_name[-1]
-        font_weight = self.get_font_weight(font_name)
-        font_style = self.get_font_style(font_name)
+        font_weight = utilities.get_font_weight(font_name)
+        font_style = utilities.get_font_style(font_name)
         config["addequation_equation"] = self.addequation_equation.get_text()
         config["addequation_x_start"] = self.addequation_x_start.get_text()
         config["addequation_x_stop"] = self.addequation_x_stop.get_text()
@@ -369,9 +337,8 @@ class PreferencesWindow(Adw.PreferencesWindow):
             ).get_string())
         config["plot_unselected_markers"] = unselected_marker_value
         config["plot_selected_markers"] = selected_marker_value
-        return config
 
     def on_close(self, _, parent):
-        parent.preferences.config = self.set_config()
+        self.apply_configuration()
         parent.preferences.save_config()
         graphs.reload(parent)

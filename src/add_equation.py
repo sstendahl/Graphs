@@ -4,7 +4,7 @@ import logging
 from gi.repository import Adw, Gtk
 
 from graphs import calculation, graphs, plotting_tools
-from graphs.data import Data
+from graphs.item import Item
 
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/add_equation_window.ui")
@@ -41,10 +41,9 @@ class AddEquationWindow(Adw.Window):
         if name == "":
             name = f"Y = {str(equation)}"
         try:
-            new_file = Data(parent, xdata, ydata)
-            new_file.filename = name
-            new_file.color = plotting_tools.get_next_color(parent)
-            graphs.add_item(parent, new_file)
+            color = plotting_tools.get_next_color(parent)
+            cfg = parent.preferences.config
+            graphs.add_item(parent, Item(cfg, xdata, ydata, name, color))
             self.destroy()
         except Exception as exception:
             exception_type = exception.__class__.__name__

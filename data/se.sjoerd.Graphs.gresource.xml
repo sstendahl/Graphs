@@ -3,37 +3,37 @@
 <gresources>
   <gresource prefix="/se/sjoerd/Graphs">
     <file alias="gtk/help-overlay.ui" preprocess="xml-stripblanks">ui/help_overlay.ui</file>
-    <file preprocess="xml-stripblanks">ui/window.ui</file>
+    <file preprocess="xml-stripblanks">ui/add_data_advanced.ui</file>
+    <file preprocess="xml-stripblanks">ui/add_equation_window.ui</file>
     <file preprocess="xml-stripblanks">ui/edit_item.ui</file>
     <file preprocess="xml-stripblanks">ui/export_figure.ui</file>
-    <file preprocess="xml-stripblanks">ui/sample_box.ui</file>
-    <file preprocess="xml-stripblanks">ui/preferences.ui</file>
+    <file preprocess="xml-stripblanks">ui/item_box.ui</file>
     <file preprocess="xml-stripblanks">ui/plot_settings.ui</file>
-    <file preprocess="xml-stripblanks">ui/add_equation_window.ui</file>
-    <file preprocess="xml-stripblanks">ui/add_data_advanced.ui</file>
-    <file preprocess="xml-stripblanks">ui/rename_label_window.ui</file>
+    <file preprocess="xml-stripblanks">ui/preferences.ui</file>
+    <file preprocess="xml-stripblanks">ui/rename_window.ui</file>
     <file preprocess="xml-stripblanks">ui/transform_window.ui</file>
+    <file preprocess="xml-stripblanks">ui/window.ui</file>
   </gresource>
   <gresource prefix="/se/sjoerd/Graphs/icons/scalable/actions/">
+    <file preprocess="xml-stripblanks" alias="axes-one-quadrant-symbolic.svg">icons/axes-one-quadrant-symbolic.svg</file>
+    <file preprocess="xml-stripblanks" alias="center-symbolic.svg">icons/center-symbolic.svg</file>
     <file preprocess="xml-stripblanks" alias="color-picker-symbolic.svg">icons/color-picker-symbolic.svg</file>
+    <file preprocess="xml-stripblanks" alias="derivative2-symbolic.svg">icons/derivative2-symbolic.svg</file>
+    <file preprocess="xml-stripblanks" alias="fast-fourier-transform-symbolic.svg">icons/fast-fourier-transform-symbolic.svg</file>
+    <file preprocess="xml-stripblanks" alias="function-third-order-symbolic.svg">icons/function-third-order-symbolic.svg</file>
+    <file preprocess="xml-stripblanks" alias="horizontal-arrows-symbolic.svg">icons/horizontal-arrows-symbolic.svg</file>
+    <file preprocess="xml-stripblanks" alias="info-symbolic.svg">icons/info-symbolic.svg</file>
+    <file preprocess="xml-stripblanks" alias="integral-symbolic.svg">icons/integral-symbolic.svg</file>
+    <file preprocess="xml-stripblanks" alias="inverse-fast-fourier-transform-symbolic.svg">icons/inverse-fast-fourier-transform-symbolic.svg</file>
+    <file preprocess="xml-stripblanks" alias="list-compact-symbolic.svg">icons/list-compact-symbolic.svg</file>
     <file preprocess="xml-stripblanks" alias="loupe-symbolic.svg">icons/loupe-symbolic.svg</file>
     <file preprocess="xml-stripblanks" alias="move-tool-symbolic.svg">icons/move-tool-symbolic.svg</file>
-    <file preprocess="xml-stripblanks" alias="axes-one-quadrant-symbolic.svg">icons/axes-one-quadrant-symbolic.svg</file>
-    <file preprocess="xml-stripblanks" alias="function-third-order-symbolic.svg">icons/function-third-order-symbolic.svg</file>
-    <file preprocess="xml-stripblanks" alias="vertical-arrows-symbolic.svg">icons/vertical-arrows-symbolic.svg</file>
-    <file preprocess="xml-stripblanks" alias="horizontal-arrows-symbolic.svg">icons/horizontal-arrows-symbolic.svg</file>
-    <file preprocess="xml-stripblanks" alias="transform-symbolic.svg">icons/transform-symbolic.svg</file>
-    <file preprocess="xml-stripblanks" alias="smoothen-symbolic.svg">icons/smoothen-symbolic.svg</file>
-    <file preprocess="xml-stripblanks" alias="shift-symbolic.svg">icons/shift-symbolic.svg</file>
-    <file preprocess="xml-stripblanks" alias="inverse-fast-fourier-transform-symbolic.svg">icons/inverse-fast-fourier-transform-symbolic.svg</file>
-    <file preprocess="xml-stripblanks" alias="fast-fourier-transform-symbolic.svg">icons/fast-fourier-transform-symbolic.svg</file>
-    <file preprocess="xml-stripblanks" alias="integral-symbolic.svg">icons/integral-symbolic.svg</file>    
-    <file preprocess="xml-stripblanks" alias="list-compact-symbolic.svg">icons/list-compact-symbolic.svg</file> 
     <file preprocess="xml-stripblanks" alias="normalize-symbolic.svg">icons/normalize-symbolic.svg</file>
-    <file preprocess="xml-stripblanks" alias="derivative2-symbolic.svg">icons/derivative2-symbolic.svg</file>    
-    <file preprocess="xml-stripblanks" alias="center-symbolic.svg">icons/center-symbolic.svg</file>
     <file preprocess="xml-stripblanks" alias="settings-symbolic.svg">icons/settings-symbolic.svg</file>
-    <file preprocess="xml-stripblanks" alias="info-symbolic.svg">icons/info-symbolic.svg</file>
+    <file preprocess="xml-stripblanks" alias="shift-symbolic.svg">icons/shift-symbolic.svg</file>
+    <file preprocess="xml-stripblanks" alias="smoothen-symbolic.svg">icons/smoothen-symbolic.svg</file>
+    <file preprocess="xml-stripblanks" alias="transform-symbolic.svg">icons/transform-symbolic.svg</file>
+    <file preprocess="xml-stripblanks" alias="vertical-arrows-symbolic.svg">icons/vertical-arrows-symbolic.svg</file>
   </gresource>
 </gresources>
 

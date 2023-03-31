@@ -1,9 +1,8 @@
 using Gtk 4.0;
 using Adw 1;
 
-template RenameLabelWindow : Adw.Window {
+template RenameWindow : Adw.Window {
   modal: true;
-  title: _("Rename Label");
   default-width: 575;
   default-height: 125;
 
@@ -24,17 +23,15 @@ template RenameLabelWindow : Adw.Window {
       margin-end: 30;
       margin-top: 20;
       margin-bottom: 20;
-      title: _("Change Label");
-      description: _("Here you can change the label of the selected axis.");
 
-      Adw.EntryRow label_entry {
+      Adw.EntryRow text_entry {
         max-width-chars: 10;
         title: _("Label");
       }
 
       Button confirm_button {
         margin-top: 20;
-        label: _("Confirm");
+        label: _("Rename");
         halign: center;
         styles ["suggested-action", "pill"]
       }

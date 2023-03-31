@@ -26,9 +26,9 @@ class EditItemWindow(Adw.PreferencesWindow):
         super().__init__()
         self.parent = parent
         self.item = item
-        filenames = utilities.get_all_filenames(self.parent)
-        utilities.populate_chooser(self.item_selector, filenames)
-        self.item_selector.set_selected(filenames.index(self.item.filename))
+        names = utilities.get_all_names(self.parent)
+        utilities.populate_chooser(self.item_selector, names)
+        self.item_selector.set_selected(names.index(self.item.name))
         self.load_values()
         self.item_selector.connect("notify::selected", self.on_select)
         self.connect("close-request", self.apply)
@@ -42,17 +42,17 @@ class EditItemWindow(Adw.PreferencesWindow):
         self.item = self.parent.datadict[data_list[index]]
         self.load_values()
 
-        # If item_selector no longer matches with filename, repopulate it
-        filenames = utilities.get_all_filenames(self.parent)
-        if set(filenames) != \
+        # If item_selector no longer matches with name, repopulate it
+        names = utilities.get_all_names(self.parent)
+        if set(names) != \
                 set(utilities.get_chooser_list(self.item_selector)):
-            utilities.populate_chooser(self.item_selector, filenames)
+            utilities.populate_chooser(self.item_selector, names)
             self.item_selector.set_selected(index)
 
     def load_values(self):
         marker_dict = Line2D.markers
-        self.set_title(self.item.filename)
-        self.name_entry.set_text(self.item.filename)
+        self.set_title(self.item.name)
+        self.name_entry.set_text(self.item.name)
         utilities.set_chooser(
             self.plot_x_position, self.item.plot_x_position)
         utilities.set_chooser(
@@ -85,7 +85,7 @@ class EditItemWindow(Adw.PreferencesWindow):
         self.unselected_marker_size.set_value(self.item.unselected_marker_size)
 
     def apply(self, _):
-        self.item.filename = self.name_entry.get_text()
+        self.item.name = self.name_entry.get_text()
         self.item.plot_x_position = \
             self.plot_x_position.get_selected_item().get_string()
         self.item.plot_y_position = \
@@ -109,7 +109,6 @@ class EditItemWindow(Adw.PreferencesWindow):
         self.item.unselected_marker_size = \
             self.unselected_marker_size.get_value()
 
-        self.parent.item_rows[self.item.key].label.set_text(
-            utilities.shorten_label(self.item.filename))
-        if self.item.selected:
-            graphs.select_item(self.parent, self.item.key)
+        self.parent.item_boxes[self.item.key].label.set_text(
+            utilities.shorten_label(self.item.name))
+        graphs.refresh(self.parent)

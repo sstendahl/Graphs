@@ -8,9 +8,9 @@ project('graphs',
 application_id = 'se.sjoerd.Graphs'
 name = 'Graphs'
 copyright = '2022 - 2023'
-website = 'https://www.sjoerd.se/Graphs'
-github = 'https://github.com/SjoerdB93/Graphs'
-issues = 'https://github.com/SjoerdB93/Graphs/issues'
+homepage_url = 'https://www.sjoerd.se/Graphs'
+github_url = 'https://github.com/SjoerdB93/Graphs'
+issue_url = github_url + '/issues'
 author = 'Sjoerd Broekhuijsen'
 description_short = 'Plot and manipulate data in a breeze'
 
@@ -35,23 +35,24 @@ if debug
 endif
 
 conf = configuration_data()
+conf.set('APPLICATION_ID', application_id)
+conf.set('AUTHOR', author)
+conf.set('COPYRIGHT', copyright)
+conf.set('DESCRIPTION_SHORT', description_short)
+conf.set('GITHUB_URL', github_url)
+conf.set('ISSUE_URL', issue_url)
+conf.set('LOCALEDIR', localedir)
+conf.set('NAME', name)
+conf.set('PKGDATADIR', pkgdatadir)
+conf.set('PROJECT_NAME', project_name)
 conf.set('PYTHON', python.find_installation('python3').path())
-conf.set('project', project_name)
-conf.set('version', version)
-conf.set('localedir', localedir)
-conf.set('pkgdatadir', pkgdatadir)
-conf.set('copyright', copyright)
-conf.set('appid', application_id)
-conf.set('name', name)
-conf.set('website', website)
-conf.set('github', github)
-conf.set('issues', issues)
-conf.set('author', author)
-conf.set('description_short', description_short)
+conf.set('VERSION', version)
+conf.set('HOMEPAGE_URL', homepage_url)
+
 if debug
-  conf.set('log_level', 'DEBUG')
+  conf.set('LOG_LEVEL', 'DEBUG')
 else
-  conf.set('log_level', 'INFO')
+  conf.set('LOG_LEVEL', 'INFO')
 endif
 
 subdir('data')

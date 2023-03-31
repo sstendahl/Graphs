@@ -49,15 +49,17 @@ def add_equation_action(_action, _target, self):
 
 
 def select_all_action(_action, _target, self):
-    for _key, item in self.item_rows.items():
-        item.check_button.set_active(True)
+    for key, item in self.datadict.items():
+        item.selected = True
+        self.item_boxes[key].check_button.set_active(True)
     graphs.refresh(self)
     ui.enable_data_dependent_buttons(self, utilities.get_selected_keys(self))
 
 
 def select_none_action(_action, _target, self):
-    for _key, item in self.item_rows.items():
-        item.check_button.set_active(False)
+    for key, item in self.datadict.items():
+        item.selected = False
+        self.item_boxes[key].check_button.set_active(False)
     graphs.refresh(self)
     ui.enable_data_dependent_buttons(self, False)
 
@@ -91,7 +93,7 @@ def export_data_action(_action, _target, self):
         dialog.select_folder(
             self.main_window, None, ui.on_export_data_response, self, True)
     elif len(self.datadict) == 1:
-        filename = f"{list(self.datadict.values())[0].filename}.txt"
+        filename = f"{list(self.datadict.values())[0].name}.txt"
         dialog.set_initial_name(filename)
         dialog.save(
             self.main_window, None, ui.on_export_data_response, self, False)
@@ -142,7 +144,7 @@ make sure to enter a valid number"
         win.add_toast(message)
         logging.exception(message)
         offset = 0
-    operations.operation(self, operations.translate_x, offset)
+    operations.perform_operation(self, operations.translate_x, offset)
 
 
 def translate_y_action(_action, _target, self):
@@ -156,7 +158,7 @@ make sure to enter a valid number"
         win.add_toast(message)
         logging.exception(message)
         offset = 0
-    operations.operation(self, operations.translate_y, offset)
+    operations.perform_operation(self, operations.translate_y, offset)
 
 
 def multiply_x_action(_action, _target, self):
@@ -170,7 +172,7 @@ make sure to enter a valid number"
         win.add_toast(message)
         logging.exception(message)
         multiplier = 1
-    operations.operation(self, operations.multiply_x, multiplier)
+    operations.perform_operation(self, operations.multiply_x, multiplier)
 
 
 def multiply_y_action(_action, _target, self):
@@ -184,26 +186,26 @@ make sure to enter a valid number"
         win.add_toast(message)
         logging.exception(message)
         multiplier = 1
-    operations.operation(self, operations.multiply_y, multiplier)
+    operations.perform_operation(self, operations.multiply_y, multiplier)
 
 
 def normalize_action(_action, _target, self):
-    operations.operation(self, operations.normalize)
+    operations.perform_operation(self, operations.normalize)
 
 
 def smoothen_action(_action, _target, self):
-    operations.operation(self, operations.smoothen)
+    operations.perform_operation(self, operations.smoothen)
 
 
 def center_action(_action, _target, self):
-    operations.operation(
+    operations.perform_operation(
         self, operations.center,
         self.preferences.config["action_center_data"])
 
 
 def shift_vertically_action(_action, _target, self):
     selected_keys = utilities.get_selected_keys(self)
-    operations.operation(
+    operations.perform_operation(
         self, operations.shift_vertically,
         self.plot_settings.yscale, self.plot_settings.right_scale,
         selected_keys, self.datadict)
@@ -215,23 +217,23 @@ def combine_action(_action, _target, self):
 
 def cut_selected_action(_action, _target, self):
     if self.interaction_mode == InteractionMode.SELECT:
-        operations.operation(self, operations.cut_selected)
+        operations.perform_operation(self, operations.cut_selected)
 
 
 def get_derivative_action(_action, _target, self):
-    operations.operation(self, operations.get_derivative)
+    operations.perform_operation(self, operations.get_derivative)
 
 
 def get_integral_action(_action, _target, self):
-    operations.operation(self, operations.get_integral)
+    operations.perform_operation(self, operations.get_integral)
 
 
 def get_fourier_action(_action, _target, self):
-    operations.operation(self, operations.get_fourier)
+    operations.perform_operation(self, operations.get_fourier)
 
 
 def get_inverse_fourier_action(_action, _target, self):
-    operations.operation(self, operations.get_inverse_fourier)
+    operations.perform_operation(self, operations.get_inverse_fourier)
 
 
 def transform_action(_action, _target, self):

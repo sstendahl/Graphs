@@ -2,7 +2,7 @@
 import logging
 
 from graphs import calculation, clipboard, graphs, plotting_tools, utilities
-from graphs.data import Data
+from graphs.item import Item
 from graphs.misc import InteractionMode
 
 import numpy
@@ -26,7 +26,7 @@ def get_data(self, item):
             item.plot_x_position == "bottom")
 
         # If startx and stopx are not out of range, that is,
-        # if the sample data is within the highlight
+        # if the item data is within the highlight
         if not ((startx < min(xdata) and stopx < min(xdata)) or (
                 startx > max(xdata))):
             new_x, new_y = sort_data(xdata, ydata)
@@ -56,7 +56,7 @@ def sort_data(xdata, ydata):
     return list(sorted_x), list(sorted_y)
 
 
-def operation(self, callback, *args):
+def perform_operation(self, callback, *args):
     try:
         keys = utilities.get_selected_keys(self)
         for key in keys:
@@ -247,10 +247,9 @@ def combine(self):
         new_xdata.extend(xdata)
         new_ydata.extend(ydata)
 
-    # Create the sample itself
+    # Create the item itself
     new_xdata, new_ydata = sort_data(new_xdata, new_ydata)
-    new_item = Data(self, new_xdata, new_ydata)
-    new_item.filename = "Combined Data"
-    new_item.color = plotting_tools.get_next_color(self)
-    graphs.add_item(self, new_item)
+    graphs.add_item(self, Item(
+        self.preferences.config, new_xdata, new_ydata, "Combined Data",
+        plotting_tools.get_next_color(self)))
     clipboard.reset(self)

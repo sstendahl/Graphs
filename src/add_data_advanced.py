@@ -27,11 +27,11 @@ class AddAdvancedWindow(Adw.Window):
         self.delimiter.set_text(config["import_delimiter"])
         utilities.set_chooser(self.separator, config["import_separator"])
         self.guess_headers.set_active(config["guess_headers"])
-        self.confirm_button.connect("clicked", self.accept)
+        self.confirm_button.connect("clicked", self.on_accept)
         self.set_transient_for(parent.main_window)
         self.present()
 
-    def accept(self, _widget):
+    def on_accept(self, _widget):
         """
         Runs when the dataset is loaded, uses the selected settings in the
         window to set the import settings during loading
@@ -45,10 +45,9 @@ class AddAdvancedWindow(Adw.Window):
             "guess_headers": self.guess_headers.get_active()
         }
         name = self.name.get_text()
-        parent = self.parent
-        import_settings = ImportSettings(parent, params=params, name=name)
-        chooser = parent.build("dialogs", "open_files")
-        chooser.connect(
-            "response", ui.on_open_response, parent, False, import_settings)
-        chooser.show()
+        config = self.parent.preferences.config
+        dialog = Gtk.FileDialog()
+        dialog.open_multiple(
+            self.parent.main_window, None, ui.on_add_data_response,
+            self.parent, ImportSettings(config, params=params, name=name))
         self.destroy()

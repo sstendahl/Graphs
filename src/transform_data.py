@@ -24,18 +24,18 @@ class TransformWindow(Adw.Window):
         self.transform_y_entry.set_text("Y")
         self.discard_row.set_visible(
             parent.interaction_mode == InteractionMode.SELECT)
-        self.confirm_button.connect("clicked", self.accept, parent)
+        self.confirm_button.connect("clicked", self.on_accept, parent)
         self.set_transient_for(parent.main_window)
         self.present()
         self.help_button.connect("clicked",
                                  lambda _x: self.help_popover.popup())
 
-    def accept(self, _widget, parent):
+    def on_accept(self, _widget, parent):
         try:
             input_x = str(self.transform_x_entry.get_text())
             input_y = str(self.transform_y_entry.get_text())
             discard = self.discard.get_active()
-            operations.operation(
+            operations.perform_operation(
                 parent, operations.transform, input_x, input_y, discard)
         except Exception as exception:
             exception_type = exception.__class__.__name__

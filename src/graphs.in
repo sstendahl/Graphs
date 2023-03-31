@@ -1,12 +1,12 @@
 #!@PYTHON@
 
-# @name@
-# @description_short@
+# @NAME@
+# @DESCRIPTION_SHORT@
 #
-# @website@
-# @github@
+# @HOMEPAGE_URL@
+# @GITHUB_URL@
 #
-# Copyright @copyright@ @author@
+# Copyright @COPYRIGHT@ @AUTHOR@
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -31,22 +31,22 @@ import os
 import signal
 import sys
 
-VERSION = "@version@"
-PROJECT = "@project@"
-PKGDATADIR = "@pkgdatadir@"
-LOCALEDIR = "@localedir@"
-COPYRIGHT = "@copyright@"
-APPID = "@appid@"
-NAME = "@name@"
-WEBSITE = "@website@"
-ISSUES = "@issues@"
-AUTHOR = "@author@"
+VERSION = "@VERSION@"
+PROJECT_NAME = "@PROJECT_NAME@"
+PKGDATADIR = "@PKGDATADIR@"
+LOCALEDIR = "@LOCALEDIR@"
+COPYRIGHT = "@COPYRIGHT@"
+APPID = "@APPLICATION_ID@"
+NAME = "@NAME@"
+WEBSITE = "@HOMEPAGE_URL@"
+ISSUES = "@ISSUES@"
+AUTHOR = "@AUTHOR@"
 
 sys.path.insert(1, PKGDATADIR)
 signal.signal(signal.SIGINT, signal.SIG_DFL)
-locale.bindtextdomain(PROJECT, LOCALEDIR)
-locale.textdomain(PROJECT)
-gettext.install(PROJECT, LOCALEDIR)
+locale.bindtextdomain(PROJECT_NAME, LOCALEDIR)
+locale.textdomain(PROJECT_NAME)
+gettext.install(PROJECT_NAME, LOCALEDIR)
 
 if __name__ == "__main__":
     import gi
@@ -55,11 +55,11 @@ if __name__ == "__main__":
     gi.require_version("Gtk", "4.0")
 
     from gi.repository import Gio
-    resource = Gio.Resource.load(os.path.join(PKGDATADIR, "@appid@.gresource"))
+    resource = Gio.Resource.load(os.path.join(PKGDATADIR, "@APPLICATION_ID@.gresource"))
     resource._register()
 
     format = "%(levelname)s: %(message)s"
-    logging.basicConfig(format=format, level=logging.@log_level@)
+    logging.basicConfig(format=format, level=logging.@LOG_LEVEL@)
 
     args = [VERSION, APPID, NAME, COPYRIGHT, WEBSITE, ISSUES, AUTHOR]
 

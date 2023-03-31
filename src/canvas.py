@@ -6,9 +6,9 @@ from cycler import cycler
 from gi.repository import Adw
 
 from graphs import plotting_tools, utilities
-from graphs.rename_label import RenameLabelWindow
+from graphs.rename import RenameWindow
 
-import matplotlib.pyplot as pyplot
+from matplotlib import pyplot
 from matplotlib.backend_bases import NavigationToolbar2
 from matplotlib.backends.backend_gtk4cairo import FigureCanvas
 from matplotlib.figure import Figure
@@ -24,14 +24,18 @@ class Canvas(FigureCanvas):
         self.time_first_click = 0
         self.parent = parent
         self.mpl_connect("button_release_event", self)
-        self.set_style(parent)
-        self.ax = self.figure.add_subplot(111)
-        self.right_axis = self.ax.twinx()
-        self.top_left_axis = self.ax.twiny()
+        self.set_style()
+        self.axis = self.figure.add_subplot(111)
+        self.right_axis = self.axis.twinx()
+        self.top_left_axis = self.axis.twiny()
         self.top_right_axis = self.top_left_axis.twinx()
-        self.set_ax_properties(parent)
-        self.set_color_cycle(parent)
-        self.rubberband_color = utilities.lookup_color(parent, "accent_color")
+        self.set_axis_properties()
+        self.set_ticks()
+        self.set_color_cycle()
+        color_rgba = utilities.lookup_color(parent, "accent_color")
+        self.rubberband_edge_color = utilities.rgba_to_tuple(color_rgba, True)
+        color_rgba.alpha = 0.3
+        self.rubberband_fill_color = utilities.rgba_to_tuple(color_rgba, True)
         super().__init__(self.figure)
         self.legends = []
         for axis in [self.right_axis, self.top_left_axis,
@@ -46,7 +50,7 @@ class Canvas(FigureCanvas):
         y_axis = item.plot_y_position
         if y_axis == "left":
             if x_axis == "bottom":
-                axis = self.ax
+                axis = self.axis
             elif x_axis == "top":
                 axis = self.top_left_axis
         elif y_axis == "right":
@@ -65,37 +69,39 @@ class Canvas(FigureCanvas):
             marker = item.unselected_markers
             marker_size = item.unselected_marker_size
         axis.plot(
-            item.xdata, item.ydata, linewidth=linewidth, label=item.filename,
+            item.xdata, item.ydata, linewidth=linewidth, label=item.name,
             linestyle=linestyle, marker=marker, color=item.color,
             markersize=marker_size)
         self.set_legend()
 
-    def set_ax_properties(self, parent):
+    def set_axis_properties(self):
         """Set the properties that are related to the axes."""
-        self.title = self.ax.set_title(parent.plot_settings.title)
-        self.bottom_label = self.ax.set_xlabel(
-            parent.plot_settings.xlabel,
-            fontweight=parent.plot_settings.font_weight)
+        plot_settings = self.parent.plot_settings
+        self.title = self.axis.set_title(plot_settings.title)
+        self.bottom_label = self.axis.set_xlabel(
+            plot_settings.xlabel,
+            fontweight=plot_settings.font_weight)
         self.right_label = self.right_axis.set_ylabel(
-            parent.plot_settings.right_label,
-            fontweight=parent.plot_settings.font_weight)
+            plot_settings.right_label,
+            fontweight=plot_settings.font_weight)
         self.top_label = self.top_left_axis.set_xlabel(
-            parent.plot_settings.top_label,
-            fontweight=parent.plot_settings.font_weight)
-        self.left_label = self.ax.set_ylabel(
-            parent.plot_settings.ylabel,
-            fontweight=parent.plot_settings.font_weight)
-        self.ax.set_yscale(parent.plot_settings.yscale)
-        self.right_axis.set_yscale(parent.plot_settings.right_scale)
-        self.top_left_axis.set_xscale(parent.plot_settings.top_scale)
-        self.top_right_axis.set_xscale(parent.plot_settings.top_scale)
-        self.ax.set_xscale(parent.plot_settings.xscale)
-        self.set_ticks(parent)
+            plot_settings.top_label,
+            fontweight=plot_settings.font_weight)
+        self.left_label = self.axis.set_ylabel(
+            plot_settings.ylabel,
+            fontweight=plot_settings.font_weight)
+        self.axis.set_yscale(plot_settings.yscale)
+        self.right_axis.set_yscale(plot_settings.right_scale)
+        self.top_left_axis.set_xscale(plot_settings.top_scale)
+        self.top_right_axis.set_xscale(plot_settings.top_scale)
+        self.axis.set_xscale(plot_settings.xscale)
 
-    def set_ticks(self, parent):
+    def set_ticks(self):
         """Set the ticks that are to be used in the graph."""
+        parent = self.parent
+        used_axes = plotting_tools.get_used_axes(parent)[0]
         for axis in [self.top_right_axis,
-                     self.top_left_axis, self.ax, self.right_axis]:
+                     self.top_left_axis, self.axis, self.right_axis]:
             axis.tick_params(
                 direction=parent.plot_settings.tick_direction,
                 length=parent.plot_settings.major_tick_length,
@@ -107,32 +113,20 @@ class Canvas(FigureCanvas):
             axis.tick_params(axis="x", which="minor")
             axis.tick_params(axis="y", which="minor")
             axis.minorticks_on()
-            top = False
-            bottom = False
-            left = False
-            right = False
-            for key in parent.datadict.keys():
-                if parent.datadict[key].plot_x_position == "top":
-                    top = True
-                if parent.datadict[key].plot_x_position == "bottom":
-                    bottom = True
-                if parent.datadict[key].plot_y_position == "left":
-                    left = True
-                if parent.datadict[key].plot_y_position == "right":
-                    right = True
-            if not (top and bottom):
+            if not (used_axes["top"] and used_axes["bottom"]):
                 axis.tick_params(
                     which="both",
                     bottom=parent.plot_settings.tick_bottom,
                     top=parent.plot_settings.tick_top)
-            if not (left and right):
+            if not (used_axes["left"] and used_axes["right"]):
                 axis.tick_params(
                     which="both",
                     left=parent.plot_settings.tick_left,
                     right=parent.plot_settings.tick_right)
 
-    def set_style(self, parent):
+    def set_style(self):
         """Set the plot style."""
+        parent = self.parent
         pyplot.rcParams.update(pyplot.rcParamsDefault)
         if Adw.StyleManager.get_default().get_dark():
             self.figure.patch.set_facecolor("#242424")
@@ -156,16 +150,16 @@ class Canvas(FigureCanvas):
         pyplot.style.use(parent.plot_settings.plot_style)
         pyplot.rcParams.update(params)
 
-    def set_color_cycle(self, parent):
+    def set_color_cycle(self):
         """Set the color cycle that will be used for the graphs."""
-        cmap = parent.preferences.config["plot_color_cycle"]
-        reverse_dark = parent.preferences.config[
-            "plot_invert_color_cycle_dark"]
-        if Adw.StyleManager.get_default().get_dark() and reverse_dark:
+        cmap = self.parent.preferences.config["plot_color_cycle"]
+        if Adw.StyleManager.get_default().get_dark() and \
+                self.parent.preferences.config["plot_invert_color_cycle_dark"]:
             cmap += "_r"
-        color_cycle = cycler(color=pyplot.get_cmap(cmap).colors)
-        self.color_cycle = color_cycle.by_key()["color"]
+        self.color_cycle = \
+            cycler(color=pyplot.get_cmap(cmap).colors).by_key()["color"]
 
+    # Overwritten function - do not change name
     def __call__(self, event):
         """
         The function is called when a user clicks on it.
@@ -176,39 +170,29 @@ class Canvas(FigureCanvas):
         Unfortunately the GTK Doubleclick signal doesn"t work with matplotlib
         hence this custom function.
         """
-        double_click = False
-        if not self.one_click_trigger:
+        double_click_interval = time.time() - self.time_first_click
+        if (not self.one_click_trigger) or (double_click_interval > 0.5):
             self.one_click_trigger = True
             self.time_first_click = time.time()
-        else:
-            double_click_interval = time.time() - self.time_first_click
-            if double_click_interval > 0.5:
-                self.one_click_trigger = True
-                self.time_first_click = time.time()
-            else:
-                self.one_click_trigger = False
-                self.time_first_click = 0
-                double_click = True
+            return
+        self.one_click_trigger = False
+        self.time_first_click = 0
+        items = {self.title, self.top_label, self.bottom_label,
+                 self.left_label, self.right_label}
+        for item in items:
+            if item.contains(event)[0]:
+                RenameWindow(self.parent, item)
 
-        if self.title.contains(event)[0] and double_click:
-            RenameLabelWindow(self.parent, self.title)
-        if self.top_label.contains(event)[0] and double_click:
-            RenameLabelWindow(self.parent, self.top_label)
-        if self.bottom_label.contains(event)[0] and double_click:
-            RenameLabelWindow(self.parent, self.bottom_label)
-        if self.left_label.contains(event)[0] and double_click:
-            RenameLabelWindow(self.parent, self.left_label)
-        if self.right_label.contains(event)[0] and double_click:
-            RenameLabelWindow(self.parent, self.right_label)
-
+    # Overwritten function - do not change name
     def _post_draw(self, _widget, context):
         """
         Override with custom implementation of rubberband to allow for custom
         rubberband style
         """
-        if self._rubberband_rect is None:
-            return
+        if self._rubberband_rect is not None:
+            self.draw_rubberband(context)
 
+    def draw_rubberband(self, context):
         line_width = 1
         if not self._context_is_scaled:
             x_0, y_0, width, height = (dim / self.device_pixel_ratio
@@ -220,18 +204,19 @@ class Canvas(FigureCanvas):
         context.set_antialias(1)
         context.set_line_width(line_width)
         context.rectangle(x_0, y_0, width, height)
-        color = self.rubberband_color
-        context.set_source_rgba(color.red, color.green, color.blue, 0.3)
+        color = self.rubberband_fill_color
+        context.set_source_rgba(color[0], color[1], color[2], color[3])
         context.fill()
         context.rectangle(x_0, y_0, width, height)
-        context.set_source_rgba(color.red, color.green, color.blue, 1)
+        color = self.rubberband_edge_color
+        context.set_source_rgba(color[0], color[1], color[2], color[3])
         context.stroke()
 
     def set_legend(self):
         """Set the legend of the graph"""
         if self.parent.plot_settings.legend:
             self.legends = []
-            lines1, labels1 = self.ax.get_legend_handles_labels()
+            lines1, labels1 = self.axis.get_legend_handles_labels()
             lines2, labels2 = self.right_axis.get_legend_handles_labels()
             lines3, labels3 = self.top_left_axis.get_legend_handles_labels()
             lines4, labels4 = self.top_right_axis.get_legend_handles_labels()
@@ -245,66 +230,58 @@ class Canvas(FigureCanvas):
                     new_lines, labels, loc=0, frameon=True)
 
     def set_limits(self):
-        used_axes, item_list = plotting_tools.get_used_axes(self.parent)
         """Set the canvas limits for each axis that is present"""
-        for axis in used_axes:
-            if axis == "left":
-                left_items = []
-                for key in item_list["left"]:
-                    left_items.append(key)
-                left_limits = plotting_tools.find_limits(
-                    self.parent, self.ax.get_yscale(), left_items)
-            if axis == "right":
-                right_items = []
-                for key in item_list["right"]:
-                    right_items.append(key)
-                right_limits = plotting_tools.find_limits(
-                    self, self.right_axis.get_yscale(), right_items)
-            if axis == "top":
-                top_items = []
-                for key in item_list["top"]:
-                    top_items.append(key)
-                top_limits = plotting_tools.find_limits(
-                    self.parent, axis, top_items)
-            if axis == "bottom":
-                bottom_items = []
-                for key in item_list["bottom"]:
-                    bottom_items.append(key)
-                bottom_limits = plotting_tools.find_limits(
-                    self.parent, axis, bottom_items)
-        if used_axes["left"] and used_axes["bottom"]:
-            plotting_tools.set_canvas_limits(
-                left_limits, self.ax, axis_type="Y")
-            plotting_tools.set_canvas_limits(
-                bottom_limits, self.ax, axis_type="X")
-        if used_axes["left"] and used_axes["top"]:
-            plotting_tools.set_canvas_limits(
-                left_limits, self.top_left_axis, axis_type="Y")
-            plotting_tools.set_canvas_limits(
-                top_limits, self.top_left_axis, axis_type="X")
-        if used_axes["right"] and used_axes["bottom"]:
-            plotting_tools.set_canvas_limits(
-                right_limits, self.right_axis, axis_type="Y")
-            plotting_tools.set_canvas_limits(
-                bottom_limits, self.right_axis, axis_type="X")
-        if used_axes["right"] and used_axes["top"]:
-            plotting_tools.set_canvas_limits(
-                right_limits, self.top_right_axis, axis_type="Y")
-            plotting_tools.set_canvas_limits(
-                top_limits, self.top_right_axis, axis_type="X")
+        used_axes, items = plotting_tools.get_used_axes(self.parent)
+        axes = {
+            "left": self.axis.get_yscale(),
+            "right": self.right_axis.get_yscale(),
+            "top": self.top_left_axis.get_xscale(),
+            "bottom": self.axis.get_xscale()
+        }
+        limits = {}
+        for position, scale in axes.items():
+            limits[position] = plotting_tools.find_limits(
+                scale, items[position])
+        if used_axes["left"]:
+            if used_axes["bottom"]:
+                plotting_tools.set_axis_limits(
+                    limits["left"], self.axis, axis_type="Y")
+                plotting_tools.set_axis_limits(
+                    limits["bottom"], self.axis, axis_type="X")
+            if used_axes["top"]:
+                plotting_tools.set_axis_limits(
+                    limits["left"], self.top_left_axis, axis_type="Y")
+                plotting_tools.set_axis_limits(
+                    limits["top"], self.top_left_axis, axis_type="X")
+        if used_axes["right"]:
+            if used_axes["bottom"]:
+                plotting_tools.set_axis_limits(
+                    limits["right"], self.right_axis, axis_type="Y")
+                plotting_tools.set_axis_limits(
+                    limits["bottom"], self.right_axis, axis_type="X")
+            if used_axes["top"]:
+                plotting_tools.set_axis_limits(
+                    limits["right"], self.top_right_axis, axis_type="Y")
+                plotting_tools.set_axis_limits(
+                    limits["top"], self.top_right_axis, axis_type="X")
 
 
 class DummyToolbar(NavigationToolbar2):
     """Own implementation of NavigationToolbar2 for rubberband support."""
+    # Overwritten function - do not change name
     def draw_rubberband(self, _event, x0, y0, x1, y1):
         self.canvas._rubberband_rect = [int(val) for val in (x0,
                                         self.canvas.figure.bbox.height - y0,
                                         x1 - x0, y0 - y1)]
         self.canvas.queue_draw()
 
+    # Overwritten function - do not change name
     def remove_rubberband(self):
         self.canvas._rubberband_rect = None
         self.canvas.queue_draw()
+
+    def save_figure(self):
+        raise NotImplementedError
 
 
 class Highlight(SpanSelector):
@@ -313,15 +290,14 @@ class Highlight(SpanSelector):
         Create a span selector object, to highlight part of the graph.
         If a span already exists, make it visible instead
         """
-        color = canvas.rubberband_color
         super().__init__(
             canvas.top_right_axis,
             lambda x, y: self.on_define(canvas),
             "horizontal",
             useblit=True,
             props={
-                "facecolor": (color.red, color.green, color.blue, 0.3),
-                "edgecolor": (color.red, color.green, color.blue, 1),
+                "facecolor": canvas.rubberband_fill_color,
+                "edgecolor": canvas.rubberband_edge_color,
                 "linewidth": 1
             },
             handle_props={"linewidth": 0},
@@ -349,44 +325,33 @@ class Highlight(SpanSelector):
 
     def get_start_stop(self, bottom_x):
         if bottom_x:
-            xrange_bottom = max(self.canvas.ax.get_xlim()) \
-                - min(self.canvas.ax.get_xlim())
-            xrange_top = max(self.canvas.top_left_axis.get_xlim()) \
-                - min(self.canvas.top_left_axis.get_xlim())
+            xlim = self.canvas.axis.get_xlim()
+            top_lim = self.canvas.top_left_axis.get_xlim()
+            xrange_bottom = max(xlim) - min(xlim)
+            xrange_top = max(top_lim) - min(top_lim)
             # Run into issues if the range is different, so we calculate this
             # by getting what fraction of top axis is highlighted
             if self.canvas.top_left_axis.get_xscale() == "log":
                 fraction_left_limit = utilities.get_fraction_at_value(
-                    min(self.extents),
-                    min(self.canvas.top_left_axis.get_xlim()),
-                    max(self.canvas.top_left_axis.get_xlim()))
+                    min(self.extents), min(top_lim), max(top_lim))
                 fraction_right_limit = utilities.get_fraction_at_value(
-                    max(self.extents),
-                    min(self.canvas.top_left_axis.get_xlim()),
-                    max(self.canvas.top_left_axis.get_xlim()))
+                    max(self.extents), min(top_lim), max(top_lim))
             elif self.canvas.top_left_axis.get_xscale() == "linear":
-                fraction_left_limit = (
-                    min(self.extents) - min(
-                        self.canvas.top_left_axis.get_xlim())) / (xrange_top)
-                fraction_right_limit = (
-                    max(self.extents) - min(
-                        self.canvas.top_left_axis.get_xlim())) / (xrange_top)
+                fraction_left_limit = \
+                    (min(self.extents) - min(top_lim)) / (xrange_top)
+                fraction_right_limit = \
+                    (max(self.extents) - min(top_lim)) / (xrange_top)
 
             # Use the fraction that is higlighted on top to calculate to what
             # values this corresponds on bottom axis
-            if self.canvas.ax.get_xscale() == "log":
+            if self.canvas.axis.get_xscale() == "log":
                 startx = utilities.get_value_at_fraction(
-                    fraction_left_limit,
-                    min(self.canvas.ax.get_xlim()),
-                    max(self.canvas.ax.get_xlim()))
+                    fraction_left_limit, min(xlim), max(xlim))
                 stopx = utilities.get_value_at_fraction(
-                    fraction_right_limit,
-                    min(self.canvas.ax.get_xlim()),
-                    max(self.canvas.ax.get_xlim()))
-            elif self.canvas.ax.get_xscale() == "linear":
-                xlim = min(self.canvas.ax.get_xlim())
-                startx = xlim + xrange_bottom * fraction_left_limit
-                stopx = xlim + xrange_bottom * fraction_right_limit
+                    fraction_right_limit, min(xlim), max(xlim))
+            elif self.canvas.axis.get_xscale() == "linear":
+                startx = min(xlim) + xrange_bottom * fraction_left_limit
+                stopx = min(xlim) + xrange_bottom * fraction_right_limit
         else:
             startx = min(self.extents)
             stopx = max(self.extents)
