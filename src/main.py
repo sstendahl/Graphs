@@ -66,6 +66,7 @@ class GraphsApplication(Adw.Application):
             ("view_forward", ["<alt><shift>Z"]),
             ("export_data", ["<primary><shift>E"]),
             ("export_figure", ["<primary>E"]),
+            ("plot_styles", None),
             ("save_project", ["<primary>S"]),
             ("open_project", ["<primary>O"]),
             ("delete_selected", ["Delete"]),

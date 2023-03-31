@@ -9,8 +9,10 @@
     <file preprocess="xml-stripblanks">ui/export_figure.ui</file>
     <file preprocess="xml-stripblanks">ui/item_box.ui</file>
     <file preprocess="xml-stripblanks">ui/plot_settings.ui</file>
+    <file preprocess="xml-stripblanks">ui/plot_styles.ui</file>
     <file preprocess="xml-stripblanks">ui/preferences.ui</file>
     <file preprocess="xml-stripblanks">ui/rename_window.ui</file>
+    <file preprocess="xml-stripblanks">ui/style_box.ui</file>
     <file preprocess="xml-stripblanks">ui/transform_window.ui</file>
     <file preprocess="xml-stripblanks">ui/window.ui</file>
   </gresource>
@@ -21,6 +23,7 @@
     <file preprocess="xml-stripblanks" alias="derivative2-symbolic.svg">icons/derivative2-symbolic.svg</file>
     <file preprocess="xml-stripblanks" alias="fast-fourier-transform-symbolic.svg">icons/fast-fourier-transform-symbolic.svg</file>
     <file preprocess="xml-stripblanks" alias="function-third-order-symbolic.svg">icons/function-third-order-symbolic.svg</file>
+    <file preprocess="xml-stripblanks" alias="history-undo-symbolic.svg">icons/history-undo-symbolic.svg</file>
     <file preprocess="xml-stripblanks" alias="horizontal-arrows-symbolic.svg">icons/horizontal-arrows-symbolic.svg</file>
     <file preprocess="xml-stripblanks" alias="info-symbolic.svg">icons/info-symbolic.svg</file>
     <file preprocess="xml-stripblanks" alias="integral-symbolic.svg">icons/integral-symbolic.svg</file>

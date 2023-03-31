@@ -1,0 +1,58 @@
+using Gtk 4.0;
+using Adw 1;
+
+template PlotStylesWindow : Adw.Window {
+  modal: true;
+  default-width: 400;
+  default-height: 600;
+
+  ShortcutController {
+    Shortcut {
+      trigger: "Escape";
+      action: "action(window.close)";
+    }
+  }
+
+  Box {
+    orientation: vertical;
+    Adw.HeaderBar {
+      Button back_button {
+        visible: false;
+      }
+      [end]
+      Button reset_button {
+        icon-name: "history-undo-symbolic";
+        tooltip-text: _("Reset to default styles");
+      }
+      styles ["flat"]
+    }
+
+    Adw.Leaflet leaflet {
+      can-unfold: false;
+      can-navigate-back: true;
+      vexpand: true;
+      Box {
+        ScrolledWindow {
+          hscrollbar-policy: never;
+          Adw.Clamp {
+            ListBox styles_box {
+              margin-bottom: 12;
+              margin-top: 12;
+              margin-start: 12;
+              margin-end: 12;
+              vexpand: false;
+              valign: start;
+              hexpand: true;
+              selection-mode: none;
+              styles ["boxed-list"]
+            }
+          }
+        }
+      }
+
+      Box editor_box {
+        Label {label: "Editor";}
+      }
+    }
+  }
+}

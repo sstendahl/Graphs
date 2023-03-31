@@ -10,6 +10,7 @@ from graphs.add_equation import AddEquationWindow
 from graphs.export_figure import ExportFigureWindow
 from graphs.misc import InteractionMode
 from graphs.plot_settings import PlotSettingsWindow
+from graphs.plot_styles import PlotStylesWindow
 from graphs.preferences import PreferencesWindow
 from graphs.transform_data import TransformWindow
 
@@ -101,6 +102,10 @@ def export_data_action(_action, _target, self):
 
 def export_figure_action(_action, _target, self):
     ExportFigureWindow(self)
+
+
+def plot_styles_action(_action, _target, self):
+    PlotStylesWindow(self)
 
 
 def save_project_action(_action, _target, self):

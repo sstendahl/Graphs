@@ -37,7 +37,7 @@ class Preferences():
 
     def reset_config(self):
         config_path = utilities.get_config_path()
-        old_path = self.parent.moduelpath
+        old_path = self.parent.modulepath
         if not os.path.isdir(config_path):
             os.mkdir(config_path)
         path = config_path + "/config.json"
