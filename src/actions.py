@@ -49,15 +49,17 @@ def add_equation_action(_action, _target, self):
 
 
 def select_all_action(_action, _target, self):
-    for _key, item in self.item_rows.items():
-        item.check_button.set_active(True)
+    for key, item in self.datadict.items():
+        item.selected = True
+        self.item_boxes[key].check_button.set_active(True)
     graphs.refresh(self)
     ui.enable_data_dependent_buttons(self, utilities.get_selected_keys(self))
 
 
 def select_none_action(_action, _target, self):
-    for _key, item in self.item_rows.items():
-        item.check_button.set_active(False)
+    for _key, item in self.datadict.items():
+        item.selected = False
+        self.item_boxes[key].check_button.set_active(False)
     graphs.refresh(self)
     ui.enable_data_dependent_buttons(self, False)
 

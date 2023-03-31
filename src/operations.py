@@ -26,7 +26,7 @@ def get_data(self, item):
             item.plot_x_position == "bottom")
 
         # If startx and stopx are not out of range, that is,
-        # if the sample data is within the highlight
+        # if the item data is within the highlight
         if not ((startx < min(xdata) and stopx < min(xdata)) or (
                 startx > max(xdata))):
             new_x, new_y = sort_data(xdata, ydata)
@@ -247,7 +247,7 @@ def combine(self):
         new_xdata.extend(xdata)
         new_ydata.extend(ydata)
 
-    # Create the sample itself
+    # Create the item itself
     new_xdata, new_ydata = sort_data(new_xdata, new_ydata)
     graphs.add_item(self, Item(
         self.preferences.config, new_xdata, new_ydata, "Combined Data",

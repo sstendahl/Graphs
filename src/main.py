@@ -31,9 +31,7 @@ class GraphsApplication(Adw.Application):
         self.author = args[6]
         self.datadict = {}
         self.highlight = None
-        self.highlights = []
-        self.item_rows = {}
-        self.sample_menu = {}
+        self.item_boxes = {}
         font_list = matplotlib.font_manager.findSystemFonts(
             fontpaths=None, fontext="ttf")
         for font in font_list:

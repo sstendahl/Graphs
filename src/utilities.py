@@ -97,8 +97,8 @@ def get_font_style(font_name):
 def get_selected_keys(self):
     """Get a list of ID's of all the datasets that are currently selected"""
     selected_keys = []
-    for key, item in self.item_rows.items():
-        if item.check_button.get_active():
+    for key, item in self.datadict.items():
+        if item.selected:
             selected_keys.append(key)
     return selected_keys
 

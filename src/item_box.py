@@ -5,22 +5,20 @@ from graphs import graphs, ui, utilities
 from graphs.edit_item import EditItemWindow
 
 
-@Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/sample_box.ui")
-class SampleBox(Gtk.Box):
-    __gtype_name__ = "SampleBox"
-    sample_box = Gtk.Template.Child()
+@Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/item_box.ui")
+class ItemBox(Gtk.Box):
+    __gtype_name__ = "ItemBox"
     label = Gtk.Template.Child()
     check_button = Gtk.Template.Child()
     edit_button = Gtk.Template.Child()
     color_button = Gtk.Template.Child()
     delete_button = Gtk.Template.Child()
 
-    def __init__(self, parent, item, selected=False):
+    def __init__(self, parent, item):
         super().__init__()
         self.item = item
         self.label.set_text(utilities.shorten_label(item.name))
-        if selected:
-            self.check_button.set_active(True)
+        self.check_button.set_active(item.selected)
         self.parent = parent
         self.one_click_trigger = False
         self.time_first_click = 0
@@ -61,6 +59,7 @@ class SampleBox(Gtk.Box):
         graphs.delete_item(self.parent, self.item.key, True)
 
     def on_toggle(self, _):
+        self.item.selected = self.check_button.get_active()
         graphs.refresh(self.parent, False)
         ui.enable_data_dependent_buttons(
             self.parent, utilities.get_selected_keys(self.parent))

@@ -6,7 +6,7 @@ from graphs import clipboard, file_io, plotting_tools, ui, utilities
 from graphs.canvas import Canvas
 from graphs.item import Item
 from graphs.misc import ImportMode, ImportSettings
-from graphs.sample_box import SampleBox
+from graphs.item_box import ItemBox
 
 
 def open_files(self, files, import_settings):
@@ -71,7 +71,7 @@ def open_project(self, path):
         logging.exception(message)
 
 
-def add_item(self, item, select=True, reset_clipboard=True):
+def add_item(self, item, reset_clipboard=True):
     key = item.key
     handle_duplicates = self.preferences.config["handle_duplicates"]
     for _key_1, item_1 in self.datadict.items():
@@ -98,28 +98,18 @@ def add_item(self, item, select=True, reset_clipboard=True):
     self.datadict[key] = item
     self.main_window.list_box.set_visible(True)
     self.main_window.no_data_label_box.set_visible(False)
-    sample_box = SampleBox(self, item, select)
-    self.item_rows[key] = sample_box
-    self.main_window.list_box.append(sample_box)
-    self.sample_menu[key] = self.main_window.list_box.get_last_child()
+    self.item_boxes[key] = ItemBox(self, item)
+    self.main_window.list_box.append(self.item_boxes[key])
     if reset_clipboard:
         clipboard.reset(self)
     reload(self)
     ui.enable_data_dependent_buttons(self, True)
 
 
-def select_item(self, key):
-    self.item_rows[key].check_button.set_active(True)
-    refresh(self)
-    ui.enable_data_dependent_buttons(self, utilities.get_selected_keys(self))
-
-
 def delete_item(self, key, give_toast=False):
-    for sample_menu_key, item in self.sample_menu.items():
-        if sample_menu_key == key:
-            self.main_window.list_box.remove(item)
+    self.main_window.list_box.remove(self.item_boxes[key])
     name = self.datadict[key].name
-    del self.item_rows[key]
+    del self.item_boxes[key]
     del self.datadict[key]
     if give_toast:
         self.main_window.add_toast(f"Deleted {name}")
@@ -152,10 +142,9 @@ def refresh(self, set_limits=False):
         line.remove()
     if len(self.datadict) > 0:
         plotting_tools.hide_unused_axes(self, canvas)
-    for key, item in self.datadict.items():
+    for _key, item in self.datadict.items():
         if item is not None:
-            selected = self.item_rows[key].check_button.get_active()
-            self.canvas.plot(item, selected)
+            self.canvas.plot(item, item.selected)
     if set_limits and len(self.datadict) > 0:
         self.canvas.set_limits()
     self.canvas.draw()
