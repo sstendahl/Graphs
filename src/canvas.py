@@ -32,7 +32,10 @@ class Canvas(FigureCanvas):
         self.set_axis_properties()
         self.set_ticks()
         self.set_color_cycle()
-        self.rubberband_color = utilities.lookup_color(parent, "accent_color")
+        color_rgba = utilities.lookup_color(parent, "accent_color")
+        self.rubberband_edge_color = utilities.rgba_to_tuple(color_rgba, True)
+        color_rgba.alpha = 0.3
+        self.rubberband_fill_color = utilities.rgba_to_tuple(color_rgba, True)
         super().__init__(self.figure)
         self.legends = []
         for axis in [self.right_axis, self.top_left_axis,
@@ -96,6 +99,19 @@ class Canvas(FigureCanvas):
     def set_ticks(self):
         """Set the ticks that are to be used in the graph."""
         parent = self.parent
+        top = False
+        bottom = False
+        left = False
+        right = False
+        for _key, item in parent.datadict.items():
+            if item.plot_x_position == "top":
+                top = True
+            if item.plot_x_position == "bottom":
+                bottom = True
+            if item.plot_y_position == "left":
+                left = True
+            if item.plot_y_position == "right":
+                right = True
         for axis in [self.top_right_axis,
                      self.top_left_axis, self.axis, self.right_axis]:
             axis.tick_params(
@@ -109,19 +125,6 @@ class Canvas(FigureCanvas):
             axis.tick_params(axis="x", which="minor")
             axis.tick_params(axis="y", which="minor")
             axis.minorticks_on()
-            top = False
-            bottom = False
-            left = False
-            right = False
-            for key in parent.datadict.keys():
-                if parent.datadict[key].plot_x_position == "top":
-                    top = True
-                if parent.datadict[key].plot_x_position == "bottom":
-                    bottom = True
-                if parent.datadict[key].plot_y_position == "left":
-                    left = True
-                if parent.datadict[key].plot_y_position == "right":
-                    right = True
             if not (top and bottom):
                 axis.tick_params(
                     which="both",
@@ -179,22 +182,18 @@ class Canvas(FigureCanvas):
         Unfortunately the GTK Doubleclick signal doesn"t work with matplotlib
         hence this custom function.
         """
-        if not self.one_click_trigger:
+        double_click_interval = time.time() - self.time_first_click
+        if (not self.one_click_trigger) or (double_click_interval > 0.5):
             self.one_click_trigger = True
             self.time_first_click = time.time()
-        else:
-            double_click_interval = time.time() - self.time_first_click
-            if double_click_interval > 0.5:
-                self.one_click_trigger = True
-                self.time_first_click = time.time()
-            else:
-                self.one_click_trigger = False
-                self.time_first_click = 0
-                items = {self.title, self.top_label, self.bottom_label,
-                         self.left_label, self.right_label}
-                for item in items:
-                    if item.contains(event)[0]:
-                        RenameWindow(self.parent, item)
+            return
+        self.one_click_trigger = False
+        self.time_first_click = 0
+        items = {self.title, self.top_label, self.bottom_label,
+                 self.left_label, self.right_label}
+        for item in items:
+            if item.contains(event)[0]:
+                RenameWindow(self.parent, item)
 
     # Overwritten function - do not change name
     def _post_draw(self, _widget, context):
@@ -202,9 +201,10 @@ class Canvas(FigureCanvas):
         Override with custom implementation of rubberband to allow for custom
         rubberband style
         """
-        if self._rubberband_rect is None:
-            return
+        if not self._rubberband_rect is None:
+            self.draw_rubberband(context)
 
+    def draw_rubberband(self, context):
         line_width = 1
         if not self._context_is_scaled:
             x_0, y_0, width, height = (dim / self.device_pixel_ratio
@@ -216,11 +216,12 @@ class Canvas(FigureCanvas):
         context.set_antialias(1)
         context.set_line_width(line_width)
         context.rectangle(x_0, y_0, width, height)
-        color = self.rubberband_color
-        context.set_source_rgba(color.red, color.green, color.blue, 0.3)
+        color = self.rubberband_fill_color
+        context.set_source_rgba(color[0], color[1], color[2], color[3])
         context.fill()
         context.rectangle(x_0, y_0, width, height)
-        context.set_source_rgba(color.red, color.green, color.blue, 1)
+        color = self.rubberband_edge_color
+        context.set_source_rgba(color[0], color[1], color[2], color[3])
         context.stroke()
 
     def set_legend(self):
@@ -314,15 +315,14 @@ class Highlight(SpanSelector):
         Create a span selector object, to highlight part of the graph.
         If a span already exists, make it visible instead
         """
-        color = canvas.rubberband_color
         super().__init__(
             canvas.top_right_axis,
             lambda x, y: self.on_define(canvas),
             "horizontal",
             useblit=True,
             props={
-                "facecolor": (color.red, color.green, color.blue, 0.3),
-                "edgecolor": (color.red, color.green, color.blue, 1),
+                "facecolor": canvas.rubberband_fill_color,
+                "edgecolor": canvas.rubberband_edge_color,
                 "linewidth": 1
             },
             handle_props={"linewidth": 0},
@@ -350,44 +350,33 @@ class Highlight(SpanSelector):
 
     def get_start_stop(self, bottom_x):
         if bottom_x:
-            xrange_bottom = max(self.canvas.axis.get_xlim()) \
-                - min(self.canvas.axis.get_xlim())
-            xrange_top = max(self.canvas.top_left_axis.get_xlim()) \
-                - min(self.canvas.top_left_axis.get_xlim())
+            xlim = self.canvas.axis.get_xlim()
+            top_lim = self.canvas.top_left_axis.get_xlim()
+            xrange_bottom = max(xlim) - min(xlim)
+            xrange_top = max(top_lim) - min(top_lim)
             # Run into issues if the range is different, so we calculate this
             # by getting what fraction of top axis is highlighted
             if self.canvas.top_left_axis.get_xscale() == "log":
                 fraction_left_limit = utilities.get_fraction_at_value(
-                    min(self.extents),
-                    min(self.canvas.top_left_axis.get_xlim()),
-                    max(self.canvas.top_left_axis.get_xlim()))
+                    min(self.extents), min(top_lim), max(top_lim))
                 fraction_right_limit = utilities.get_fraction_at_value(
-                    max(self.extents),
-                    min(self.canvas.top_left_axis.get_xlim()),
-                    max(self.canvas.top_left_axis.get_xlim()))
+                    max(self.extents), min(top_lim), max(top_lim))
             elif self.canvas.top_left_axis.get_xscale() == "linear":
-                fraction_left_limit = (
-                    min(self.extents) - min(
-                        self.canvas.top_left_axis.get_xlim())) / (xrange_top)
-                fraction_right_limit = (
-                    max(self.extents) - min(
-                        self.canvas.top_left_axis.get_xlim())) / (xrange_top)
+                fraction_left_limit = \
+                    (min(self.extents) - min(top_lim)) / (xrange_top)
+                fraction_right_limit = \
+                    (max(self.extents) - min(top_lim)) / (xrange_top)
 
             # Use the fraction that is higlighted on top to calculate to what
             # values this corresponds on bottom axis
             if self.canvas.axis.get_xscale() == "log":
                 startx = utilities.get_value_at_fraction(
-                    fraction_left_limit,
-                    min(self.canvas.axis.get_xlim()),
-                    max(self.canvas.axis.get_xlim()))
+                    fraction_left_limit, min(xlim), max(xlim))
                 stopx = utilities.get_value_at_fraction(
-                    fraction_right_limit,
-                    min(self.canvas.axis.get_xlim()),
-                    max(self.canvas.axis.get_xlim()))
+                    fraction_right_limit, min(xlim), max(xlim))
             elif self.canvas.axis.get_xscale() == "linear":
-                xlim = min(self.canvas.axis.get_xlim())
-                startx = xlim + xrange_bottom * fraction_left_limit
-                stopx = xlim + xrange_bottom * fraction_right_limit
+                startx = min(xlim) + xrange_bottom * fraction_left_limit
+                stopx = min(xlim) + xrange_bottom * fraction_right_limit
         else:
             startx = min(self.extents)
             stopx = max(self.extents)
