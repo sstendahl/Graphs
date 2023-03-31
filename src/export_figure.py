@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
-import pathlib
+from pathlib import Path
 
 from gi.repository import Adw, Gtk, GLib
 
@@ -39,7 +39,7 @@ class ExportFigureWindow(Adw.Window):
         for name, formats in items:
             if name == fmt:
                 file_suffix = formats[0]
-        filename = pathlib.Path(self.parent.canvas.get_default_filename()).stem
+        filename = Path(self.parent.canvas.get_default_filename()).stem
         transparent = self.transparent_switch.get_active()
         dialog = Gtk.FileDialog()
         dialog.set_initial_name(f"{filename}.{file_suffix}")

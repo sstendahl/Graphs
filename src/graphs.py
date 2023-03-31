@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
-import pathlib
 import logging
+from pathlib import Path
 
 from graphs import clipboard, file_io, plotting_tools, ui, utilities
 from graphs.canvas import Canvas
@@ -23,13 +23,13 @@ def open_files(self, files, import_settings):
                 import_settings.path = path
                 xdata, ydata = file_io.get_data(self, import_settings)
                 if xdata == []:
-                    filename = pathlib.Path(import_settings.path).stem
+                    filename = Path(import_settings.path).name
                     toast = f"Unable to retreive data for {filename}"
                     self.main_window.add_toast(toast)
                     continue
                 name = import_settings.name
                 if name == "":
-                    name = pathlib.Path(import_settings.path).stem
+                    name = Path(import_settings.path).name
                 color = plotting_tools.get_next_color(self)
                 cfg = self.preferences.config
                 add_item(self, Item(cfg, xdata, ydata, name, color))
