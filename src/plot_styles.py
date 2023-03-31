@@ -50,6 +50,7 @@ class PlotStylesWindow(Adw.Window):
     styles_box = Gtk.Template.Child()
     editor_box = Gtk.Template.Child()
     reset_button = Gtk.Template.Child()
+
     def __init__(self, parent):
         super().__init__()
         self.parent = parent
@@ -95,7 +96,6 @@ class PlotStylesWindow(Adw.Window):
             box = StyleBox(self, style)
             self.styles.append(box)
             self.styles_box.append(box)
-
 
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/style_box.ui")

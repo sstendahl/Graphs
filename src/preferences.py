@@ -19,7 +19,6 @@ class Preferences():
         self.check_config(self.config)
 
     def check_config(self, config):
-        template_path = self.parent.modulepath
         with open("config.json", "r", encoding="utf-8") as file:
             template = json.load(file)
         if set(config.keys()) != set(template.keys()):
