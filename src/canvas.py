@@ -189,7 +189,7 @@ class Canvas(FigureCanvas):
         Override with custom implementation of rubberband to allow for custom
         rubberband style
         """
-        if not self._rubberband_rect is None:
+        if self._rubberband_rect is not None:
             self.draw_rubberband(context)
 
     def draw_rubberband(self, context):

@@ -11,12 +11,13 @@ def get_used_axes(self):
         "top": False,
         "bottom": False
     }
-    items = {}
-    items["left"] = []
-    items["right"] = []
-    items["top"] = []
-    items["bottom"] = []
-    for _key, item  in self.datadict.items():
+    items = {
+        "left": [],
+        "right": [],
+        "top": [],
+        "bottom": []
+    }
+    for _key, item in self.datadict.items():
         if item.plot_y_position == "left":
             used_axes["left"] = True
             items["left"].append(item)
@@ -33,8 +34,8 @@ def get_used_axes(self):
 
 
 def set_axis_limits(graph_limits, axis, axis_type,
-                      limits={"xmin": None, "xmax": None,
-                              "ymin": None, "ymax": None}):
+                    limits={"xmin": None, "xmax": None,
+                            "ymin": None, "ymax": None}):
     """Set an calculate the canvas limits for a given axis."""
     # Update graph limits with limits that were given as argument
     for key, item in limits.items():

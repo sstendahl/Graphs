@@ -57,7 +57,7 @@ def select_all_action(_action, _target, self):
 
 
 def select_none_action(_action, _target, self):
-    for _key, item in self.datadict.items():
+    for key, item in self.datadict.items():
         item.selected = False
         self.item_boxes[key].check_button.set_active(False)
     graphs.refresh(self)
