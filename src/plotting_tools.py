@@ -32,7 +32,7 @@ def get_used_axes(self):
     return used_axes, items
 
 
-def set_canvas_limits(graph_limits, axis, axis_type,
+def set_axis_limits(graph_limits, axis, axis_type,
                       limits={"xmin": None, "xmax": None,
                               "ymin": None, "ymax": None}):
     """Set an calculate the canvas limits for a given axis."""

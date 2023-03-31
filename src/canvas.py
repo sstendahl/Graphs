@@ -244,25 +244,25 @@ class Canvas(FigureCanvas):
                 scale, items[position])
         if used_axes["left"]:
             if used_axes["bottom"]:
-                plotting_tools.set_canvas_limits(
+                plotting_tools.set_axis_limits(
                     limits["left"], self.axis, axis_type="Y")
-                plotting_tools.set_canvas_limits(
+                plotting_tools.set_axis_limits(
                     limits["bottom"], self.axis, axis_type="X")
             if used_axes["top"]:
-                plotting_tools.set_canvas_limits(
+                plotting_tools.set_axis_limits(
                     limits["left"], self.top_left_axis, axis_type="Y")
-                plotting_tools.set_canvas_limits(
+                plotting_tools.set_axis_limits(
                     limits["top"], self.top_left_axis, axis_type="X")
         if used_axes["right"]:
             if used_axes["bottom"]:
-                plotting_tools.set_canvas_limits(
+                plotting_tools.set_axis_limits(
                     limits["right"], self.right_axis, axis_type="Y")
-                plotting_tools.set_canvas_limits(
+                plotting_tools.set_axis_limits(
                     limits["bottom"], self.right_axis, axis_type="X")
             if used_axes["top"]:
-                plotting_tools.set_canvas_limits(
+                plotting_tools.set_axis_limits(
                     limits["right"], self.top_right_axis, axis_type="Y")
-                plotting_tools.set_canvas_limits(
+                plotting_tools.set_axis_limits(
                     limits["top"], self.top_right_axis, axis_type="X")
 
 
