@@ -255,7 +255,7 @@ class Canvas(FigureCanvas):
                 for key in item_list["right"]:
                     right_items.append(key)
                 right_limits = plotting_tools.find_limits(
-                    self, self.right_axis.get_yscale(), right_items)
+                    self.parent, self.right_axis.get_yscale(), right_items)
             if axis == "top":
                 top_items = []
                 for key in item_list["top"]:
