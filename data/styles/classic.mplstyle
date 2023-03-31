@@ -1,0 +1,294 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+# classic
+
+lines.linewidth: 1.0
+lines.linestyle: -
+lines.color: b
+lines.marker: None
+lines.markerfacecolor: auto
+lines.markeredgecolor: auto
+lines.markeredgewidth: 0.5
+lines.markersize: 6
+lines.dash_joinstyle: round
+lines.dash_capstyle: butt
+lines.solid_joinstyle: round
+lines.solid_capstyle: projecting
+lines.antialiased: True
+lines.dashed_pattern: 6, 6
+lines.dashdot_pattern: 3, 5, 1, 5
+lines.dotted_pattern: 1, 3
+lines.scale_dashes: False
+
+markers.fillstyle: full
+
+patch.linewidth: 1.0
+patch.facecolor: b
+patch.force_edgecolor: True
+patch.edgecolor: k
+patch.antialiased: True
+
+hatch.color: k
+hatch.linewidth: 1.0
+
+hist.bins: 10
+
+font.family: sans-serif
+font.style: normal
+font.variant: normal
+font.weight: normal
+font.stretch: normal
+font.size: 12.0
+font.serif: DejaVu Serif, New Century Schoolbook, Century Schoolbook L, Utopia, ITC Bookman, Bookman, Nimbus Roman No9 L, Times New Roman, Times, Palatino, Charter, serif
+font.sans-serif: DejaVu Sans, Lucida Grande, Verdana, Geneva, Lucid, Arial, Helvetica, Avant Garde, sans-serif
+font.cursive: Apple Chancery, Textile, Zapf Chancery, Sand, Script MT, Felipa, cursive
+font.fantasy: Comic Sans MS, Chicago, Charcoal, ImpactWestern, Humor Sans, fantasy
+font.monospace: DejaVu Sans Mono, Andale Mono, Nimbus Mono L, Courier New, Courier, Fixed, Terminal, monospace
+
+text.color: k
+
+text.usetex: False
+text.hinting_factor: 8
+
+text.antialiased: True
+
+mathtext.cal: cursive
+mathtext.rm: serif
+mathtext.tt: monospace
+mathtext.it: serif:italic
+mathtext.bf: serif:bold
+mathtext.sf: sans\-serif
+mathtext.fontset: cm
+mathtext.fallback: cm
+
+axes.facecolor: w
+axes.edgecolor: k
+axes.linewidth: 1.0
+axes.grid: False
+axes.grid.which: major
+axes.grid.axis: both
+axes.titlesize: large
+axes.titley: 1.0
+axes.titlepad: 5.0
+axes.titleweight: normal
+axes.labelsize: medium
+axes.labelpad: 5.0
+axes.labelweight: normal
+axes.labelcolor: k
+axes.axisbelow: False
+
+axes.formatter.limits: -7, 7
+axes.formatter.use_locale: False
+axes.formatter.use_mathtext: False
+axes.formatter.useoffset: True
+axes.formatter.offset_threshold: 2
+
+axes.unicode_minus: True
+axes.prop_cycle: cycler('color', 'bgrcmyk')
+axes.autolimit_mode: round_numbers
+axes.xmargin: 0
+axes.ymargin: 0
+axes.spines.bottom: True
+axes.spines.lef: True
+axes.spines.right: True
+axes.spines.top: True
+polaraxes.grid: True
+axes3d.grid: True
+
+date.autoformatter.year: %Y
+date.autoformatter.month: %b %Y
+date.autoformatter.day: %b %d %Y
+date.autoformatter.hour: %H:%M:%S
+date.autoformatter.minute: %H:%M:%S.%f
+date.autoformatter.second: %H:%M:%S.%f
+date.autoformatter.microsecond: %H:%M:%S.%f
+date.converter: auto
+
+xtick.top: True
+xtick.bottom: True
+xtick.major.size: 4
+xtick.minor.size: 2
+xtick.minor.visible: False
+xtick.major.width: 0.5
+xtick.minor.width: 0.5
+xtick.major.pad: 4
+xtick.minor.pad: 4
+xtick.color: k
+xtick.labelsize: medium
+xtick.direction: in
+xtick.major.top: True
+xtick.major.bottom: True
+xtick.minor.top: True
+xtick.minor.bottom: True
+xtick.alignment : center
+
+ytick.left: True
+ytick.right: True
+ytick.major.size: 4
+ytick.minor.size: 2
+ytick.minor.visible: False
+ytick.major.width: 0.5
+ytick.minor.width: 0.5
+ytick.major.pad: 4
+ytick.minor.pad: 4
+ytick.color: k
+ytick.labelsize: medium
+ytick.direction: in
+ytick.major.left: True
+ytick.major.right: True
+ytick.minor.left: True
+ytick.minor.right: True
+ytick.alignment: center
+
+grid.color: k
+grid.linestyle: -
+grid.linewidth: 0.5
+grid.alpha: 1.0
+
+legend.fancybox: False
+legend.loc: upper right
+legend.numpoints: 2
+legend.fontsize: large
+legend.borderpad: 0.4
+legend.markerscale: 1.0
+legend.labelspacing: 0.5
+legend.handlelength: 2.
+legend.handleheight: 0.7
+legend.handletextpad: 0.8
+legend.borderaxespad: 0.5
+legend.columnspacing: 2.
+legend.shadow: False
+legend.frameon: True
+legend.framealpha: None
+legend.scatterpoints: 3
+legend.facecolor: inherit
+legend.edgecolor: inherit
+
+figure.titlesize: medium
+figure.titleweight: normal
+figure.labelsize: medium
+figure.labelweight: normal
+figure.figsize: 8, 6
+figure.dpi: 80
+figure.facecolor: 0.75
+figure.edgecolor: w
+figure.autolayout: False
+figure.frameon: True
+
+figure.subplot.left: 0.125
+figure.subplot.right: 0.9
+figure.subplot.bottom: 0.1
+figure.subplot.top: 0.9
+figure.subplot.wspace: 0.2
+figure.subplot.hspace: 0.2
+
+image.aspect: equal
+image.interpolation: bilinear
+image.cmap: jet
+image.lut: 256
+image.origin: upper
+image.resample: False
+image.composite_image: True
+
+contour.negative_linestyle: dashed
+contour.corner_mask: True
+
+errorbar.capsize: 3
+
+scatter.marker: o
+
+boxplot.bootstrap: None
+boxplot.boxprops.color: b
+boxplot.boxprops.linestyle: -
+boxplot.boxprops.linewidth: 1.0
+boxplot.capprops.color: k
+boxplot.capprops.linestyle: -
+boxplot.capprops.linewidth: 1.0
+boxplot.flierprops.color: b
+boxplot.flierprops.linestyle: none
+boxplot.flierprops.linewidth: 1.0
+boxplot.flierprops.marker: +
+boxplot.flierprops.markeredgecolor: k
+boxplot.flierprops.markerfacecolor: auto
+boxplot.flierprops.markersize: 6.0
+boxplot.meanline: False
+boxplot.meanprops.color: r
+boxplot.meanprops.linestyle: -
+boxplot.meanprops.linewidth: 1.0
+boxplot.medianprops.color: r
+boxplot.meanprops.marker: s
+boxplot.meanprops.markerfacecolor: r
+boxplot.meanprops.markeredgecolor: k
+boxplot.meanprops.markersize: 6.0
+boxplot.medianprops.linestyle: -
+boxplot.medianprops.linewidth: 1.0
+boxplot.notch: False
+boxplot.patchartist: False
+boxplot.showbox: True
+boxplot.showcaps: True
+boxplot.showfliers: True
+boxplot.showmeans: False
+boxplot.vertical: True
+boxplot.whiskerprops.color: b
+boxplot.whiskerprops.linestyle: --
+boxplot.whiskerprops.linewidth: 1.0
+boxplot.whiskers: 1.5
+
+agg.path.chunksize: 0
+
+path.simplify: True
+path.simplify_threshold: 0.1111111111111111
+path.snap: True
+path.sketch: None
+
+savefig.dpi: 100
+savefig.facecolor: w
+savefig.edgecolor: w
+savefig.format: png
+savefig.bbox: standard
+savefig.pad_inches: 0.1
+savefig.transparent: False
+savefig.orientation: portrait
+
+ps.papersize: letter
+ps.useafm: False
+ps.usedistiller: False
+ps.distiller.res: 6000
+ps.fonttype: 3
+
+pdf.compression: 6
+pdf.fonttype: 3
+pdf.inheritcolor: False
+pdf.use14corefonts: False
+
+pgf.texsystem: xelatex
+pgf.rcfonts: True
+pgf.preamble:
+
+svg.image_inline: True
+svg.fonttype: path
+
+keymap.fullscreen: f, ctrl+f
+keymap.home: h, r, home
+keymap.back: left, c, backspace
+keymap.forward: right, v
+keymap.pan: p
+keymap.zoom: o
+keymap.save: s, ctrl+s
+keymap.quit: ctrl+w, cmd+w
+keymap.grid: g
+keymap.yscale: l
+keymap.xscale: k, L
+
+animation.writer : ffmpeg
+animation.codec : mpeg4
+animation.bitrate: -1
+animation.frame_format: png
+animation.ffmpeg_path: ffmpeg
+animation.ffmpeg_args:
+animation.convert_path: convert
+animation.convert_args:
+animation.html: none
+
+_internal.classic_mode: True
+
+mathtext.default: regular

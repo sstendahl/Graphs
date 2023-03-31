@@ -1,0 +1,7 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+# fast
+path.simplify: True
+path.simplify_threshold: 1.0
+agg.path.chunksize: 10000
+
+mathtext.default: regular

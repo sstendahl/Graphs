@@ -1,9 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 from gi.repository import Adw, Gtk
 
-from graphs import graphs, utilities
-
-import matplotlib.pyplot as plt
+from graphs import graphs, utilities, plot_styles
 
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/plot_settings.ui")
@@ -76,7 +74,8 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
             self.plot_tick_right.set_active(True)
         if parent.plot_settings.legend:
             self.plot_legend_check.set_active(True)
-        utilities.populate_chooser(self.plot_style, plt.style.available)
+        utilities.populate_chooser(
+            self.plot_style, plot_styles.get_user_styles(parent).keys())
         utilities.set_chooser(self.plot_style, parent.plot_settings.plot_style)
 
         self.connect("close-request", self.on_close, parent)

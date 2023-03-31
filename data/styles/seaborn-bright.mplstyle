@@ -1,0 +1,6 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+# seaborn-bright
+axes.prop_cycle: cycler('color', ['003FFF', '03ED3A', 'E8000B', '8A2BE2', 'FFC400', '00D7FF'])
+patch.facecolor: 003FFF
+
+mathtext.default: regular

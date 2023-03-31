@@ -3,13 +3,11 @@ import json
 import logging
 import os
 import shutil
-from pathlib import Path
 
 from gi.repository import Adw, Gtk
 
-from graphs import graphs, utilities
+from graphs import graphs, utilities, plot_styles
 
-import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
 
 
@@ -21,9 +19,7 @@ class Preferences():
         self.check_config(self.config)
 
     def check_config(self, config):
-        template_path = os.path.join(os.getenv("XDG_DATA_DIRS"))
-        template_path = template_path.split(":")[0] + "/graphs/graphs"
-        os.chdir(template_path)
+        template_path = self.parent.modulepath
         with open("config.json", "r", encoding="utf-8") as file:
             template = json.load(file)
         if set(config.keys()) != set(template.keys()):
@@ -32,7 +28,7 @@ class Preferences():
         return config
 
     def create_new_config_file(self):
-        config_path = self.get_config_path()
+        config_path = utilities.get_config_path()
         if not os.path.isfile(f"{config_path}/config.json"):
             self.reset_config()
             logging.info("New configuration file created")
@@ -40,9 +36,8 @@ class Preferences():
             logging.debug("Loading configuration file")
 
     def reset_config(self):
-        config_path = self.get_config_path()
-        old_path = os.path.join(os.getenv("XDG_DATA_DIRS"))
-        old_path = old_path.split(":")[0] + "/graphs/graphs"
+        config_path = utilities.get_config_path()
+        old_path = self.parent.moduelpath
         if not os.path.isdir(config_path):
             os.mkdir(config_path)
         path = config_path + "/config.json"
@@ -50,7 +45,7 @@ class Preferences():
         logging.debug("Loaded new config")
 
     def load_config(self):
-        config_path = self.get_config_path()
+        config_path = utilities.get_config_path()
         os.chdir(config_path)
         with open("config.json", "r", encoding="utf-8") as file:
             config = json.load(file)
@@ -58,15 +53,10 @@ class Preferences():
         return config
 
     def save_config(self):
-        config_path = self.get_config_path()
+        config_path = utilities.get_config_path()
         os.chdir(config_path)
         with open("config.json", "w", encoding="utf-8") as file:
             json.dump(self.config, file)
-
-    def get_config_path(self) -> str:
-        if os.getenv("XDG_CONFIG_HOME"):
-            return os.path.join(os.getenv("XDG_CONFIG_HOME"), "Graphs")
-        return os.path.join(str(Path.home()), ".local", "share", "Graphs")
 
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/preferences.ui")
@@ -131,8 +121,10 @@ class PreferencesWindow(Adw.PreferencesWindow):
             "Dark2", "Set1", "Set2", "Set3",
             "tab10", "tab20", "tab20b", "tab20c"]
         utilities.populate_chooser(self.plot_color_cycle, color_cycles)
-        utilities.populate_chooser(self.plot_style_dark, plt.style.available)
-        utilities.populate_chooser(self.plot_style_light, plt.style.available)
+        utilities.populate_chooser(
+            self.plot_style_dark, plot_styles.get_user_styles(parent).keys())
+        utilities.populate_chooser(
+            self.plot_style_light, plot_styles.get_user_styles(parent).keys())
         utilities.populate_chooser(self.plot_selected_markers_chooser,
                                    list(Line2D.markers.values()), clear=False)
         utilities.populate_chooser(self.plot_unselected_markers_chooser,

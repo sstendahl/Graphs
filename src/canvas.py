@@ -5,7 +5,7 @@ from cycler import cycler
 
 from gi.repository import Adw
 
-from graphs import plotting_tools, utilities
+from graphs import plotting_tools, utilities, plot_styles
 from graphs.rename import RenameWindow
 
 from matplotlib import pyplot
@@ -144,10 +144,10 @@ class Canvas(FigureCanvas):
             "axes.titlesize": parent.plot_settings.font_size,
             "legend.fontsize": parent.plot_settings.font_size,
             "font.style": parent.plot_settings.font_style,
-            "mathtext.default": "regular",
             "axes.labelcolor": text_color,
         }
-        pyplot.style.use(parent.plot_settings.plot_style)
+        available_styles = plot_styles.get_user_styles(parent)
+        pyplot.style.use(available_styles[parent.plot_settings.plot_style])
         pyplot.rcParams.update(params)
 
     def set_color_cycle(self):
