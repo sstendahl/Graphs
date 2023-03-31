@@ -204,7 +204,7 @@ def change_bottom_xscale(action, target, self):
         self.canvas.right_axis.set_xscale("log")
         self.plot_settings.xscale = "log"
     else:
-        self.canvas.axi.set_xscale("linear")
+        self.canvas.axis.set_xscale("linear")
         self.canvas.right_axis.set_xscale("linear")
         self.plot_settings.xscale = "linear"
     action.change_state(target)

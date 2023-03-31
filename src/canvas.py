@@ -351,7 +351,7 @@ class Highlight(SpanSelector):
     def get_start_stop(self, bottom_x):
         if bottom_x:
             xrange_bottom = max(self.canvas.axis.get_xlim()) \
-                - min(self.canvas.ax.get_xlim())
+                - min(self.canvas.axis.get_xlim())
             xrange_top = max(self.canvas.top_left_axis.get_xlim()) \
                 - min(self.canvas.top_left_axis.get_xlim())
             # Run into issues if the range is different, so we calculate this
@@ -384,7 +384,7 @@ class Highlight(SpanSelector):
                     fraction_right_limit,
                     min(self.canvas.axis.get_xlim()),
                     max(self.canvas.axis.get_xlim()))
-            elif self.canvas.ax.get_xscale() == "linear":
+            elif self.canvas.axis.get_xscale() == "linear":
                 xlim = min(self.canvas.axis.get_xlim())
                 startx = xlim + xrange_bottom * fraction_left_limit
                 stopx = xlim + xrange_bottom * fraction_right_limit
