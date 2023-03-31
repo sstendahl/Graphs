@@ -58,7 +58,7 @@ def open_project(self, path):
             for attribute in new_item.__dict__:
                 if hasattr(item, attribute):
                     setattr(new_item, attribute, getattr(item, attribute))
-            add_item(self, new_item, reset_clipboard = False)
+            add_item(self, new_item, reset_clipboard=False)
         if len(item.xdata_clipboard) > 1:
             undo_button = self.main_window.undo_button
             undo_button.set_sensitive(True)
@@ -71,7 +71,7 @@ def open_project(self, path):
         logging.exception(message)
 
 
-def add_item(self, item, select=True, reset_clipboard = True):
+def add_item(self, item, select=True, reset_clipboard=True):
     key = item.key
     handle_duplicates = self.preferences.config["handle_duplicates"]
     for _key_1, item_1 in self.datadict.items():
@@ -139,7 +139,7 @@ def reload(self):
     """Completely reload the plot of the graph"""
     self.canvas = Canvas(parent=self)
     self.main_window.toast_overlay.set_child(self.canvas)
-    refresh(self, set_limits = True)
+    refresh(self, set_limits=True)
     self.set_mode(None, None, self.interaction_mode)
     self.canvas.grab_focus()
 
