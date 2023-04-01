@@ -51,6 +51,44 @@ template PlotSettingsWindow : Adw.PreferencesWindow {
     }
 
     Adw.PreferencesGroup {
+      title: _("Axes Limits");
+      description: _("Limits used on the axes");
+
+      Adw.EntryRow min_left {
+        title: _("Minimum limit left axis");
+      }
+
+      Adw.EntryRow max_left {
+        title: _("Maximum limit left axis");
+      }
+
+      Adw.EntryRow min_bottom {
+        title: _("Minimum limit bottom axis");
+      }
+
+      Adw.EntryRow max_bottom {
+        title: _("Maximum limit bottom axis");
+      }
+
+     Adw.EntryRow min_right {
+        title: _("Minimum limit right axis");
+      }
+
+      Adw.EntryRow max_right {
+        title: _("Maximum limit right axis");
+      }
+
+      Adw.EntryRow min_top {
+        title: _("Minimum limit top axis");
+      }
+
+      Adw.EntryRow max_top {
+        title: _("Maximum limit top axis");
+      }
+
+    }
+
+    Adw.PreferencesGroup {
       title: _("Scaling");
       description: _("The scaling used for each axis");
 
