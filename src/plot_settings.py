@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 from gi.repository import Adw, Gtk
 
-from graphs import graphs, utilities, plotting_tools
+from graphs import graphs, utilities
 
 import matplotlib.pyplot as plt
 
@@ -156,6 +156,5 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
 
         parent.canvas.axis.set_xlim(min_bottom, max_bottom)
         parent.canvas.axis.set_ylim(min_left, max_left)
-        parent.canvas.right_axis.set_ylim(min_right,max_right)
-        parent.canvas.top_left_axis.set_xlim(min_top,max_top)
-
+        parent.canvas.right_axis.set_ylim(min_right, max_right)
+        parent.canvas.top_left_axis.set_xlim(min_top, max_top)
