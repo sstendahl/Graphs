@@ -31,6 +31,8 @@ ytick.left: True
 xtick.top: True
 ytick.right: True
 
+pathc.facecolor: 000000
+
 mathtext.default: regular
 
 # custom

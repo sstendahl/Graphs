@@ -31,8 +31,9 @@ ytick.left: True
 xtick.top: True
 ytick.right: True
 
+patch.facecolor: FFFFFF
+
 mathtext.default: regular
 
 # custom
 axes.prop_cycle: cycler('color', ['0072B2', '009E73', 'D55E00', 'CC79A7', 'F0E442', '56B4E9'])
-patch.facecolor: 0072B2

@@ -28,13 +28,14 @@ ytick.minor.size: 2
 
 xtick.bottom: True
 ytick.left: True
-xtick.top: True
-ytick.right: True
+xtick.top: False
+ytick.right: False
+
+patch.facecolor: 242424
 
 mathtext.default: regular
 
 # custom
-patch.facecolor: 242424
 patch.linewidth: 1
 
 axes.axisbelow: True
@@ -67,18 +68,7 @@ lines.solid_capstyle: round
 text.color: white
 
 xtick.color: white
-xtick.direction: out
 xtick.major.pad: 7
-xtick.major.size: 0
-xtick.major.width: .8
-xtick.minor.size: 0
-xtick.minor.width: .6
 
 ytick.color: white
-ytick.direction: out
-ytick.labelsize: 12
 ytick.major.pad: 7
-ytick.major.size: 0
-ytick.major.width: .8
-ytick.minor.size: 0
-ytick.minor.width: .6

@@ -31,6 +31,8 @@ ytick.left: True
 xtick.top: True
 ytick.right: True
 
+patch.facecolor: bfbfbf
+
 mathtext.default: regular
 
 # custom

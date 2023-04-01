@@ -28,13 +28,14 @@ ytick.minor.size: 2
 
 xtick.bottom: True
 ytick.left: True
-xtick.top: True
-ytick.right: True
+xtick.top: False
+ytick.right: False
+
+patch.facecolor: FAFAFA
 
 mathtext.default: regular
 
 # custom
-patch.facecolor: FAFAFA
 patch.linewidth: .3
 
 axes.axisbelow: True

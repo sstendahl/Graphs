@@ -32,6 +32,8 @@ xtick.top: True
 ytick.right: True
 
 
+patch.facecolor: FFFFFF
+
 mathtext.default: regular
 
 # custom
@@ -56,7 +58,6 @@ lines.scale_dashes: False
 markers.fillstyle: full
 
 patch.linewidth: 1.0
-patch.facecolor: b
 patch.force_edgecolor: True
 patch.edgecolor: k
 patch.antialiased: True

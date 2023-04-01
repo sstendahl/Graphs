@@ -31,6 +31,8 @@ ytick.left: True
 xtick.top: True
 ytick.right: True
 
+patch.facecolor: FFFFFF
+
 mathtext.default: regular
 
 # custom
@@ -60,7 +62,6 @@ lines.markeredgewidth: 0
 lines.markersize: 7
 lines.solid_capstyle: round
 
-patch.facecolor: 4C72B0
 patch.linewidth: .3
 
 text.color: .15
