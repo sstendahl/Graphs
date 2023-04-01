@@ -1,6 +1,26 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 # seaborn-deep
-axes.prop_cycle: cycler('color', ['4C72B0', '55A868', 'C44E52', '8172B2', 'CCB974', '64B5CD'])
-patch.facecolor: 4C72B0
+
+# ticks
+xtick.direction: out
+xtick.major.width: 1
+xtick.minor.width: 0.5
+xtick.major.size: 4
+xtick.minor.size: 2
+
+ytick.direction: out
+ytick.major.width: 1
+ytick.minor.width: 0.5
+ytick.major.size: 4
+ytick.minor.size: 2
+
+xtick.bottom: True
+ytick.left: True
+xtick.top: True
+ytick.right: True
 
 mathtext.default: regular
+
+# custom
+axes.prop_cycle: cycler('color', ['4C72B0', '55A868', 'C44E52', '8172B2', 'CCB974', '64B5CD'])
+patch.facecolor: 4C72B0

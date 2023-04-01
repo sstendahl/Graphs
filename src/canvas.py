@@ -30,7 +30,7 @@ class Canvas(FigureCanvas):
         self.top_left_axis = self.axis.twiny()
         self.top_right_axis = self.top_left_axis.twinx()
         self.set_axis_properties()
-        self.set_ticks()
+        # self.set_ticks()
         self.set_color_cycle()
         color_rgba = utilities.lookup_color(parent, "accent_color")
         self.rubberband_edge_color = utilities.rgba_to_tuple(color_rgba, True)

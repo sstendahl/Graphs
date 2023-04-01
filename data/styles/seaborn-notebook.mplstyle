@@ -1,5 +1,27 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 # seaborn-notebook
+
+# ticks
+xtick.direction: out
+xtick.major.width: 1
+xtick.minor.width: 0.5
+xtick.major.size: 4
+xtick.minor.size: 2
+
+ytick.direction: out
+ytick.major.width: 1
+ytick.minor.width: 0.5
+ytick.major.size: 4
+ytick.minor.size: 2
+
+xtick.bottom: True
+ytick.left: True
+xtick.top: True
+ytick.right: True
+
+mathtext.default: regular
+
+# custom
 figure.figsize: 8.0, 5.5
 axes.labelsize: 11
 axes.titlesize: 12
@@ -13,12 +35,5 @@ patch.linewidth: .3
 lines.markersize: 7
 lines.markeredgewidth: 0
 
-xtick.major.width: 1
-ytick.major.width: 1
-xtick.minor.width: .5
-ytick.minor.width: .5
-
 xtick.major.pad: 7
 ytick.major.pad: 7
-
-mathtext.default: regular

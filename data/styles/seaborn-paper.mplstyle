@@ -1,5 +1,27 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 # seaborn-paper
+
+# ticks
+xtick.direction: out
+xtick.major.width: 0.8
+xtick.minor.width: 0.4
+xtick.major.size: 4
+xtick.minor.size: 2
+
+ytick.direction: out
+ytick.major.width: 0.8
+ytick.minor.width: 0.4
+ytick.major.size: 4
+ytick.minor.size: 2
+
+xtick.bottom: True
+ytick.left: True
+xtick.top: True
+ytick.right: True
+
+mathtext.default: regular
+
+# custom
 figure.figsize: 6.4, 4.4
 axes.labelsize: 8.8
 axes.titlesize: 9.6
@@ -13,12 +35,5 @@ patch.linewidth: 0.24
 lines.markersize: 5.6
 lines.markeredgewidth: 0
 
-xtick.major.width: 0.8
-ytick.major.width: 0.8
-xtick.minor.width: 0.4
-ytick.minor.width: 0.4
-
 xtick.major.pad: 5.6
 ytick.major.pad: 5.6
-
-mathtext.default: regular

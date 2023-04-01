@@ -1,12 +1,32 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 # seaborn-ticks
+
+# ticks
+xtick.direction: out
+xtick.major.width: 6
+xtick.minor.width: 3
+xtick.major.size: 4
+xtick.minor.size: 2
+
+ytick.direction: out
+ytick.major.width: 6
+ytick.minor.width: 3
+ytick.major.size: 4
+ytick.minor.size: 2
+
+xtick.bottom: True
+ytick.left: True
+xtick.top: True
+ytick.right: True
+
+mathtext.default: regular
+
+# custom
 text.color: .15
 axes.labelcolor: .15
 legend.frameon: False
 legend.numpoints: 1
 legend.scatterpoints: 1
-xtick.direction: out
-ytick.direction: out
 xtick.color: .15
 ytick.color: .15
 axes.axisbelow: True
@@ -21,9 +41,3 @@ axes.facecolor: white
 axes.edgecolor: .15
 axes.linewidth: 1.25
 grid.color: .8
-xtick.major.size: 6
-ytick.major.size: 6
-xtick.minor.size: 3
-ytick.minor.size: 3
-
-mathtext.default: regular

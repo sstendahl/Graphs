@@ -1,5 +1,27 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 # seaborn-poster
+
+# ticks
+xtick.direction: out
+xtick.major.width: 1.6
+xtick.minor.width: 0.8
+xtick.major.size: 4
+xtick.minor.size: 2
+
+ytick.direction: out
+ytick.major.width: 1.6
+ytick.minor.width: 0.8
+ytick.major.size: 4
+ytick.minor.size: 2
+
+xtick.bottom: True
+ytick.left: True
+xtick.top: True
+ytick.right: True
+
+mathtext.default: regular
+
+# custom
 figure.figsize: 12.8, 8.8
 axes.labelsize: 17.6
 axes.titlesize: 19.2
@@ -20,5 +42,3 @@ ytick.minor.width: 0.8
 
 xtick.major.pad: 11.2
 ytick.major.pad: 11.2
-
-mathtext.default: regular

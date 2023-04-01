@@ -1,5 +1,27 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 # adwaita
+
+# ticks
+xtick.direction: in
+xtick.major.width: 1
+xtick.minor.width: 0.5
+xtick.major.size: 4
+xtick.minor.size: 2
+
+ytick.direction: in
+ytick.major.width: 1
+ytick.minor.width: 0.5
+ytick.major.size: 4
+ytick.minor.size: 2
+
+xtick.bottom: True
+ytick.left: True
+xtick.top: True
+ytick.right: True
+
+mathtext.default: regular
+
+# custom
 patch.facecolor: FAFAFA
 patch.linewidth: .3
 
@@ -42,21 +64,9 @@ lines.solid_capstyle: round
 text.color: black
 
 xtick.color: black
-xtick.direction: out
 xtick.labelsize: 12
 xtick.major.pad: 7
-xtick.major.size: 0
-xtick.major.width: .8
-xtick.minor.size: 0
-xtick.minor.width: .6
 
 ytick.color: black
-ytick.direction: out
 ytick.labelsize: 12
 ytick.major.pad: 7
-ytick.major.size: 0
-ytick.major.width: .8
-ytick.minor.size: 0
-ytick.minor.width: .6
-
-mathtext.default: regular

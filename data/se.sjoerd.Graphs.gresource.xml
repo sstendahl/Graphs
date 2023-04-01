@@ -28,6 +28,7 @@
     <file preprocess="xml-stripblanks" alias="info-symbolic.svg">icons/info-symbolic.svg</file>
     <file preprocess="xml-stripblanks" alias="integral-symbolic.svg">icons/integral-symbolic.svg</file>
     <file preprocess="xml-stripblanks" alias="inverse-fast-fourier-transform-symbolic.svg">icons/inverse-fast-fourier-transform-symbolic.svg</file>
+    <file preprocess="xml-stripblanks" alias="left-symbolic.svg">icons/left-symbolic.svg</file>
     <file preprocess="xml-stripblanks" alias="list-compact-symbolic.svg">icons/list-compact-symbolic.svg</file>
     <file preprocess="xml-stripblanks" alias="loupe-symbolic.svg">icons/loupe-symbolic.svg</file>
     <file preprocess="xml-stripblanks" alias="move-tool-symbolic.svg">icons/move-tool-symbolic.svg</file>

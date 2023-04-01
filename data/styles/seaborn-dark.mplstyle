@@ -1,13 +1,33 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 # seaborn-dark
+
+# ticks
+xtick.direction: out
+xtick.major.width: 1
+xtick.minor.width: 0.5
+xtick.major.size: 4
+xtick.minor.size: 2
+
+ytick.direction: out
+ytick.major.width: 1
+ytick.minor.width: 0.5
+ytick.major.size: 4
+ytick.minor.size: 2
+
+xtick.bottom: True
+ytick.left: True
+xtick.top: True
+ytick.right: True
+
+mathtext.default: regular
+
+# custom
 figure.facecolor: white
 text.color: .15
 axes.labelcolor: .15
 legend.frameon: False
 legend.numpoints: 1
 legend.scatterpoints: 1
-xtick.direction: out
-ytick.direction: out
 xtick.color: .15
 ytick.color: .15
 axes.axisbelow: True
@@ -17,15 +37,8 @@ font.sans-serif: Arial, Liberation Sans, DejaVu Sans, Bitstream Vera Sans, sans-
 grid.linestyle: -
 lines.solid_capstyle: round
 
-# Seaborn dark parameters
 axes.grid: False
 axes.facecolor: EAEAF2
 axes.edgecolor: white
 axes.linewidth: 0
 grid.color: white
-xtick.major.size: 0
-ytick.major.size: 0
-xtick.minor.size: 0
-ytick.minor.size: 0
-
-mathtext.default: regular

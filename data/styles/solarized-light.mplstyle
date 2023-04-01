@@ -1,29 +1,46 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 # solarized-light
 
-figure.facecolor    : FDF6E3
+# ticks
+xtick.direction: out
+xtick.major.width: 1
+xtick.minor.width: 0.5
+xtick.major.size: 4
+xtick.minor.size: 2
 
-patch.antialiased   : True
+ytick.direction: out
+ytick.major.width: 1
+ytick.minor.width: 0.5
+ytick.major.size: 4
+ytick.minor.size: 2
 
-lines.linewidth     : 2.0
-lines.solid_capstyle: butt
-
-axes.titlesize      : 16
-axes.labelsize      : 12
-axes.labelcolor     : 657b83
-axes.facecolor      : eee8d5
-axes.edgecolor      : eee8d5
-axes.axisbelow      : True
-axes.prop_cycle    : cycler('color', ['268BD2', '2AA198', '859900', 'B58900', 'CB4B16', 'DC322F', 'D33682', '6C71C4'])
-axes.grid           : True
-grid.color          : fdf6e3
-grid.linestyle      : -
-grid.linewidth      : 1
-
-xtick.color         : 657b83
-xtick.direction     : out
-
-ytick.color         : 657b83
-ytick.direction     : out
+xtick.bottom: True
+ytick.left: True
+xtick.top: True
+ytick.right: True
 
 mathtext.default: regular
+
+# custom
+figure.facecolor: FDF6E3
+
+patch.antialiased: True
+
+lines.linewidth: 2.0
+lines.solid_capstyle: butt
+
+axes.titlesize: 16
+axes.labelsize: 12
+axes.labelcolor: 657b83
+axes.facecolor: eee8d5
+axes.edgecolor: eee8d5
+axes.axisbelow: True
+axes.prop_cycle: cycler('color', ['268BD2', '2AA198', '859900', 'B58900', 'CB4B16', 'DC322F', 'D33682', '6C71C4'])
+axes.grid: True
+grid.color: fdf6e3
+grid.linestyle: -
+grid.linewidth: 1
+
+xtick.color: 657b83
+
+ytick.color: 657b83

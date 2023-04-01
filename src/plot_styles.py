@@ -5,7 +5,7 @@ from pathlib import Path
 
 from gi.repository import Adw, Gtk
 
-from graphs import utilities
+from graphs import utilities, file_io, graphs
 
 
 def get_system_styles(self):
@@ -48,21 +48,92 @@ class PlotStylesWindow(Adw.Window):
     __gtype_name__ = "PlotStylesWindow"
     leaflet = Gtk.Template.Child()
     styles_box = Gtk.Template.Child()
-    editor_box = Gtk.Template.Child()
     reset_button = Gtk.Template.Child()
+    back_button = Gtk.Template.Child()
+    tick_direction = Gtk.Template.Child()
+    major_tick_width = Gtk.Template.Child()
+    minor_tick_width = Gtk.Template.Child()
+    major_tick_length = Gtk.Template.Child()
+    minor_tick_length = Gtk.Template.Child()
+    tick_bottom = Gtk.Template.Child()
+    tick_left = Gtk.Template.Child()
+    tick_top = Gtk.Template.Child()
+    tick_right = Gtk.Template.Child()
 
     def __init__(self, parent):
         super().__init__()
         self.parent = parent
         self.set_transient_for(self.parent.main_window)
         self.styles = []
+        self.style = None
         self.reload()
         self.reset_button.connect("clicked", self.reset)
+        self.back_button.connect("clicked", self.back)
+        self.connect("close-request", self.on_close)
         self.set_title("Plot Styles")
+
+        # setup editor
+        self.major_tick_width.set_range(0, 4)
+        self.minor_tick_width.set_range(0, 4)
+        self.major_tick_length.set_range(0, 20)
+        self.minor_tick_length.set_range(0, 20)
+
         self.present()
 
     def edit(self, _, style):
-        pass
+        self.style = file_io.get_style(get_user_styles(self.parent)[style])
+        self.style["name"] = style
+        try:
+            self.load()
+        except KeyError:
+            return
+        self.leaflet.navigate(1)
+        self.back_button.set_visible(True)
+        self.set_title(style)
+
+    def back(self, _):
+        self.apply()
+        graphs.reload(self.parent)
+        self.leaflet.navigate(0)
+        self.back_button.set_visible(False)
+        self.set_title("Plot Styles")
+
+    def load(self):
+        style = self.style
+
+        # ticks
+        utilities.set_chooser(self.tick_direction, style["xtick.direction"])
+        self.major_tick_width.set_value(float(style["xtick.major.width"]))
+        self.minor_tick_width.set_value(float(style["xtick.minor.width"]))
+        self.major_tick_length.set_value(float(style["xtick.major.size"]))
+        self.minor_tick_length.set_value(float(style["xtick.minor.size"]))
+        self.tick_bottom.set_active(bool(style["xtick.bottom"]))
+        self.tick_left.set_active(bool(style["ytick.left"]))
+        self.tick_top.set_active(bool(style["xtick.top"]))
+        self.tick_right.set_active(bool(style["ytick.right"]))
+
+    def apply(self):
+        style = self.style
+
+        # ticks
+        tick_direction = self.tick_direction.get_selected_item().get_string()
+        style["xtick.direction"] = tick_direction
+        style["ytick.direction"] = tick_direction
+        style["xtick.major.width"] = self.major_tick_width.get_value()
+        style["ytick.major.width"] = self.major_tick_width.get_value()
+        style["xtick.minor.width"] = self.minor_tick_width.get_value()
+        style["ytick.minor.width"] = self.minor_tick_width.get_value()
+        style["xtick.major.size"] = self.major_tick_length.get_value()
+        style["ytick.major.size"] = self.major_tick_length.get_value()
+        style["xtick.minor.size"] = self.minor_tick_length.get_value()
+        style["ytick.minor.size"] = self.minor_tick_length.get_value()
+        style["xtick.bottom"] = self.tick_bottom.get_active()
+        style["ytick.left"] = self.tick_left.get_active()
+        style["xtick.top"] = self.tick_top.get_active()
+        style["ytick.left"] = self.tick_right.get_active()
+
+        path = get_user_styles(self.parent)[style["name"]]
+        file_io.write_style(path, style)
 
     def delete(self, _, style):
         os.remove(get_user_styles(self.parent)[style])
@@ -96,6 +167,12 @@ class PlotStylesWindow(Adw.Window):
             box = StyleBox(self, style)
             self.styles.append(box)
             self.styles_box.append(box)
+
+    def on_close(self, _):
+        if self.style is not None:
+            self.apply()
+            graphs.reload(self.parent)
+        self.destroy()
 
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/style_box.ui")

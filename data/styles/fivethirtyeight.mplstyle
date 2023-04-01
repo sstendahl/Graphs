@@ -1,6 +1,27 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 # fivethirtyeight
 
+# ticks
+xtick.direction: out
+xtick.major.width: 0
+xtick.minor.width: 0
+xtick.major.size: 0
+xtick.minor.size: 0
+
+ytick.direction: out
+ytick.major.width: 0
+ytick.minor.width: 0
+ytick.major.size: 0
+ytick.minor.size: 0
+
+xtick.bottom: False
+ytick.left: False
+xtick.top: False
+ytick.right: False
+
+mathtext.default: regular
+
+# custom
 lines.linewidth: 4
 lines.solid_capstyle: butt
 
@@ -24,11 +45,6 @@ grid.linestyle: -
 grid.linewidth: 1.0
 grid.color: cbcbcb
 
-xtick.major.size: 0
-xtick.minor.size: 0
-ytick.major.size: 0
-ytick.minor.size: 0
-
 font.size:14.0
 
 savefig.edgecolor: f0f0f0
@@ -38,5 +54,3 @@ figure.subplot.left: 0.08
 figure.subplot.right: 0.95
 figure.subplot.bottom: 0.07
 figure.facecolor: f0f0f0
-
-mathtext.default: regular

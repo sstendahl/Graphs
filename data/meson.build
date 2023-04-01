@@ -112,7 +112,6 @@ styles = files(
   'styles/bmh.mplstyle',
   'styles/classic.mplstyle',
   'styles/dark-background.mplstyle',
-  'styles/fast.mplstyle',
   'styles/fivethirtyeight.mplstyle',
   'styles/ggplot.mplstyle',
   'styles/grayscale.mplstyle',
@@ -125,6 +124,13 @@ styles = files(
   'styles/seaborn-deep.mplstyle',
   'styles/seaborn-muted.mplstyle',
   'styles/seaborn-notebook.mplstyle',
+  'styles/seaborn-paper.mplstyle',
+  'styles/seaborn-talk.mplstyle',
+  'styles/seaborn-ticks.mplstyle',
+  'styles/seaborn-white.mplstyle',
+  'styles/seaborn-whitegrid.mplstyle',
+  'styles/solarized-light.mplstyle',
+  'styles/tableau-colorblind10.mplstyle',
 )
 styles_dir = join_paths(moduledir, 'styles')
 install_data(styles, install_dir: styles_dir, install_mode: 'rwxrwxrwx')

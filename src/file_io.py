@@ -127,3 +127,26 @@ def get_data(self, import_settings):
     if import_settings.path.endswith(".xrdml"):
         return get_xrdml(self, import_settings)
     return get_column_file(self, import_settings)
+
+
+def get_style(path):
+    style = {}
+    with open(path, "r", encoding="utf-8") as file:
+        lines = file.readlines()
+        for line in lines:
+            line = line.replace("\n", "")
+            if line != "" and not line.startswith("#"):
+                try:
+                    key, value = line.split(": ")
+                    style[key] = value
+                except ValueError:
+                    pass
+    return style
+
+
+def write_style(path, style):
+    with open(path, "w", encoding="utf-8") as file:
+        file.write(f"# {style['name']}\n")
+        for key, value in style.items():
+            if key != "name":
+                file.write(f"{key}: {value}\n")
