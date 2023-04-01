@@ -30,10 +30,7 @@ def get_used_axes(self):
         if item.plot_x_position == "bottom":
             used_axes["bottom"] = True
             items["bottom"].append(item)
-    return used_axes, items
-
-
-def set_axis_limits(graph_limits, axis, axis_type,
+    return used_axes, itemsdef set_axis_limits(graph_limits, axis, axis_type,
                     limits={"xmin": None, "xmax": None,
                             "ymin": None, "ymax": None}):
     """Set an calculate the canvas limits for a given axis."""
@@ -123,7 +120,7 @@ def hide_unused_axes(self, canvas):
                  canvas.top_left_axis, canvas.top_right_axis]:
         axis.get_xaxis().set_visible(False)
         axis.get_yaxis().set_visible(False)
-    used_axes = get_used_axes(self)[0]
+    used_axes = utilities.get_used_axes(self)[0]
     if used_axes["left"]:
         canvas.top_left_axis.get_yaxis().set_visible(True)
         canvas.axis.get_yaxis().set_visible(True)
