@@ -1,6 +1,18 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 # seaborn-notebook
 
+# font
+font.family: sans-serif
+font.sans-serif: DejaVu Sans
+font.style: normal
+font.weight: normal
+font.size: 12
+axes.labelsize: 12
+xtick.labelsize: 12
+ytick.labelsize: 12
+axes.titlesize: 12
+legend.fontsize: 12
+
 # ticks
 xtick.direction: out
 xtick.major.width: 1
@@ -23,11 +35,6 @@ mathtext.default: regular
 
 # custom
 figure.figsize: 8.0, 5.5
-axes.labelsize: 11
-axes.titlesize: 12
-xtick.labelsize: 10
-ytick.labelsize: 10
-legend.fontsize: 10
 
 grid.linewidth: 1
 lines.linewidth: 1.75

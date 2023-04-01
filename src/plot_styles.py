@@ -50,6 +50,7 @@ class PlotStylesWindow(Adw.Window):
     styles_box = Gtk.Template.Child()
     reset_button = Gtk.Template.Child()
     back_button = Gtk.Template.Child()
+    font_chooser = Gtk.Template.Child()
     tick_direction = Gtk.Template.Child()
     major_tick_width = Gtk.Template.Child()
     minor_tick_width = Gtk.Template.Child()
@@ -73,6 +74,7 @@ class PlotStylesWindow(Adw.Window):
         self.set_title("Plot Styles")
 
         # setup editor
+        self.font_chooser.set_use_font(True)
         self.major_tick_width.set_range(0, 4)
         self.minor_tick_width.set_range(0, 4)
         self.major_tick_length.set_range(0, 20)
@@ -101,19 +103,38 @@ class PlotStylesWindow(Adw.Window):
     def load(self):
         style = self.style
 
+        # font
+        font_description = self.font_chooser.get_font_desc().from_string(
+            f"{style['font.sans-serif']} {style['font.size']}")
+        self.font_chooser.set_font_desc(font_description)
+
         # ticks
         utilities.set_chooser(self.tick_direction, style["xtick.direction"])
         self.major_tick_width.set_value(float(style["xtick.major.width"]))
         self.minor_tick_width.set_value(float(style["xtick.minor.width"]))
         self.major_tick_length.set_value(float(style["xtick.major.size"]))
         self.minor_tick_length.set_value(float(style["xtick.minor.size"]))
-        self.tick_bottom.set_active(bool(style["xtick.bottom"]))
-        self.tick_left.set_active(bool(style["ytick.left"]))
-        self.tick_top.set_active(bool(style["xtick.top"]))
-        self.tick_right.set_active(bool(style["ytick.right"]))
+        self.tick_bottom.set_active(style["xtick.bottom"] == "True")
+        self.tick_left.set_active(style["ytick.left"] == "True")
+        self.tick_top.set_active(style["xtick.top"] == "True")
+        self.tick_right.set_active(style["ytick.right"] == "True")
 
     def apply(self):
         style = self.style
+
+        # font
+        font_description = self.font_chooser.get_font_desc()
+        style["font.sans-serif"] = font_description.get_family()
+        font_name = font_description.to_string().lower().split(" ")
+        style["font.style"] = utilities.get_font_style(font_name)
+        style["font.weight"] = utilities.get_font_weight(font_name)
+        font_size = font_name[-1]
+        style["font.size"] = font_size
+        style["axes.labelsize"] = font_size
+        style["xtick.labelsize"] = font_size
+        style["ytick.labelsize"] = font_size
+        style["axes.titlesize"] = font_size
+        style["legend.fontsize"] = font_size
 
         # ticks
         tick_direction = self.tick_direction.get_selected_item().get_string()
@@ -130,7 +151,7 @@ class PlotStylesWindow(Adw.Window):
         style["xtick.bottom"] = self.tick_bottom.get_active()
         style["ytick.left"] = self.tick_left.get_active()
         style["xtick.top"] = self.tick_top.get_active()
-        style["ytick.left"] = self.tick_right.get_active()
+        style["ytick.right"] = self.tick_right.get_active()
 
         path = get_user_styles(self.parent)[style["name"]]
         file_io.write_style(path, style)

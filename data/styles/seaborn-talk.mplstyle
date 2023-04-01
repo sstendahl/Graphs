@@ -1,6 +1,18 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 # seaborn-talk
 
+# font
+font.family: sans-serif
+font.sans-serif: DejaVu Sans
+font.style: normal
+font.weight: normal
+font.size: 13
+axes.labelsize: 13
+xtick.labelsize: 13
+ytick.labelsize: 13
+axes.titlesize: 13
+legend.fontsize: 13
+
 # ticks
 xtick.direction: out
 xtick.major.width: 1.3
@@ -23,11 +35,6 @@ mathtext.default: regular
 
 # custom
 figure.figsize: 10.4, 7.15
-axes.labelsize: 14.3
-axes.titlesize: 15.6
-xtick.labelsize: 13
-ytick.labelsize: 13
-legend.fontsize: 13
 
 grid.linewidth: 1.3
 lines.linewidth: 2.275

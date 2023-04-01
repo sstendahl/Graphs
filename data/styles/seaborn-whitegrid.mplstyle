@@ -1,6 +1,18 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 # seaborn-whitegrid
 
+# font
+font.family: sans-serif
+font.sans-serif: DejaVu Sans
+font.style: normal
+font.weight: normal
+font.size: 12
+axes.labelsize: 12
+xtick.labelsize: 12
+ytick.labelsize: 12
+axes.titlesize: 12
+legend.fontsize: 12
+
 # ticks
 xtick.direction: out
 xtick.major.width: 0
@@ -32,8 +44,6 @@ xtick.color: .15
 ytick.color: .15
 axes.axisbelow: True
 image.cmap: Greys
-font.family: sans-serif
-font.sans-serif: Arial, Liberation Sans, DejaVu Sans, Bitstream Vera Sans, sans-serif
 grid.linestyle: -
 lines.solid_capstyle: round
 

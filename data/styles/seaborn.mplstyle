@@ -1,6 +1,18 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 # seaborn
 
+# font
+font.family: sans-serif
+font.sans-serif: DejaVu Sans
+font.style: normal
+font.weight: normal
+font.size: 12
+axes.labelsize: 12
+xtick.labelsize: 12
+ytick.labelsize: 12
+axes.titlesize: 12
+legend.fontsize: 12
+
 # ticks
 xtick.direction: out
 xtick.major.width: 1
@@ -27,16 +39,11 @@ axes.edgecolor: white
 axes.facecolor: EAEAF2
 axes.grid: True
 axes.labelcolor: .15
-axes.labelsize: 11
 axes.linewidth: 0
 axes.prop_cycle: cycler('color', ['4C72B0', '55A868', 'C44E52', '8172B2', 'CCB974', '64B5CD'])
-axes.titlesize: 12
 
 figure.facecolor: white
 figure.figsize: 8.0, 5.5
-
-font.family: sans-serif
-font.sans-serif: Arial, Liberation Sans, DejaVu Sans, Bitstream Vera Sans, sans-serif
 
 grid.color: white
 grid.linestyle: -
@@ -44,7 +51,6 @@ grid.linewidth: 1
 
 image.cmap: Greys
 
-legend.fontsize: 10
 legend.frameon: False
 legend.numpoints: 1
 legend.scatterpoints: 1
@@ -60,9 +66,7 @@ patch.linewidth: .3
 text.color: .15
 
 xtick.color: .15
-xtick.labelsize: 10
 xtick.major.pad: 7
 
 ytick.color: .15
-ytick.labelsize: 10
 ytick.major.pad: 7

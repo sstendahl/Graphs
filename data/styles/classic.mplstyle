@@ -1,6 +1,18 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 # classic
 
+# font
+font.family: sans-serif
+font.sans-serif: DejaVu Sans
+font.style: normal
+font.weight: normal
+font.size: 12
+axes.labelsize: 12
+xtick.labelsize: 12
+ytick.labelsize: 12
+axes.titlesize: 12
+legend.fontsize: 12
+
 # ticks
 xtick.direction: in
 xtick.major.width: 0.5
@@ -54,14 +66,9 @@ hatch.linewidth: 1.0
 
 hist.bins: 10
 
-font.family: sans-serif
-font.style: normal
 font.variant: normal
-font.weight: normal
 font.stretch: normal
-font.size: 12.0
 font.serif: DejaVu Serif, New Century Schoolbook, Century Schoolbook L, Utopia, ITC Bookman, Bookman, Nimbus Roman No9 L, Times New Roman, Times, Palatino, Charter, serif
-font.sans-serif: DejaVu Sans, Lucida Grande, Verdana, Geneva, Lucid, Arial, Helvetica, Avant Garde, sans-serif
 font.cursive: Apple Chancery, Textile, Zapf Chancery, Sand, Script MT, Felipa, cursive
 font.fantasy: Comic Sans MS, Chicago, Charcoal, ImpactWestern, Humor Sans, fantasy
 font.monospace: DejaVu Sans Mono, Andale Mono, Nimbus Mono L, Courier New, Courier, Fixed, Terminal, monospace
@@ -88,11 +95,9 @@ axes.linewidth: 1.0
 axes.grid: False
 axes.grid.which: major
 axes.grid.axis: both
-axes.titlesize: large
 axes.titley: 1.0
 axes.titlepad: 5.0
 axes.titleweight: normal
-axes.labelsize: medium
 axes.labelpad: 5.0
 axes.labelweight: normal
 axes.labelcolor: k
@@ -129,14 +134,12 @@ xtick.minor.visible: False
 xtick.major.pad: 4
 xtick.minor.pad: 4
 xtick.color: k
-xtick.labelsize: medium
 xtick.alignment : center
 
 ytick.minor.visible: False
 ytick.major.pad: 4
 ytick.minor.pad: 4
 ytick.color: k
-ytick.labelsize: medium
 ytick.alignment: center
 
 grid.color: k
@@ -147,7 +150,6 @@ grid.alpha: 1.0
 legend.fancybox: False
 legend.loc: upper right
 legend.numpoints: 2
-legend.fontsize: large
 legend.borderpad: 0.4
 legend.markerscale: 1.0
 legend.labelspacing: 0.5

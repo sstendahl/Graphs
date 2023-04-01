@@ -1,6 +1,18 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 # adwaita
 
+# font
+font.family: sans-serif
+font.sans-serif: Cantarell
+font.style: normal
+font.weight: normal
+font.size: 12
+axes.labelsize: 12
+xtick.labelsize: 12
+ytick.labelsize: 12
+axes.titlesize: 12
+legend.fontsize: 12
+
 # ticks
 xtick.direction: in
 xtick.major.width: 1
@@ -30,16 +42,8 @@ axes.edgecolor: black
 axes.facecolor: white
 axes.grid: True
 axes.labelcolor: black
-axes.labelsize: 12
 axes.linewidth: .8
 axes.prop_cycle: cycler('color', ['4C72B0', '55A868', 'C44E52', '8172B2', 'CCB974', '64B5CD'])
-axes.titlesize: 12
-
-font.family: sans-serif
-font.sans-serif: Cantarell
-font.weight: normal
-font.size: 12
-font.style: normal
 
 figure.facecolor: FAFAFA
 figure.edgecolor: FAFAFA
@@ -51,7 +55,6 @@ grid.linewidth: .6
 
 image.cmap: Greys
 
-legend.fontsize: 12
 legend.frameon: False
 legend.numpoints: 1
 legend.scatterpoints: 1
@@ -64,9 +67,7 @@ lines.solid_capstyle: round
 text.color: black
 
 xtick.color: black
-xtick.labelsize: 12
 xtick.major.pad: 7
 
 ytick.color: black
-ytick.labelsize: 12
 ytick.major.pad: 7

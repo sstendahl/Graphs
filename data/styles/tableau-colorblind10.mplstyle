@@ -1,5 +1,17 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
-# Tableau colorblind 10 palette
+# tableau-colorblind10
+
+# font
+font.family: sans-serif
+font.sans-serif: DejaVu Sans
+font.style: normal
+font.weight: normal
+font.size: 12
+axes.labelsize: 12
+xtick.labelsize: 12
+ytick.labelsize: 12
+axes.titlesize: 12
+legend.fontsize: 12
 
 # ticks
 xtick.direction: out

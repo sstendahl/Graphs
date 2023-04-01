@@ -1,6 +1,18 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 # solarized-light
 
+# font
+font.family: sans-serif
+font.sans-serif: DejaVu Sans
+font.style: normal
+font.weight: normal
+font.size: 12
+axes.labelsize: 12
+xtick.labelsize: 12
+ytick.labelsize: 12
+axes.titlesize: 12
+legend.fontsize: 12
+
 # ticks
 xtick.direction: out
 xtick.major.width: 1
@@ -29,8 +41,6 @@ patch.antialiased: True
 lines.linewidth: 2.0
 lines.solid_capstyle: butt
 
-axes.titlesize: 16
-axes.labelsize: 12
 axes.labelcolor: 657b83
 axes.facecolor: eee8d5
 axes.edgecolor: eee8d5
