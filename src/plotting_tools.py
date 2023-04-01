@@ -3,34 +3,7 @@ import logging
 
 from graphs import graphs
 
-
-def get_used_axes(self):
-    used_axes = {
-        "left": False,
-        "right": False,
-        "top": False,
-        "bottom": False
-    }
-    items = {
-        "left": [],
-        "right": [],
-        "top": [],
-        "bottom": []
-    }
-    for _key, item in self.datadict.items():
-        if item.plot_y_position == "left":
-            used_axes["left"] = True
-            items["left"].append(item)
-        if item.plot_y_position == "right":
-            used_axes["right"] = True
-            items["right"].append(item)
-        if item.plot_x_position == "top":
-            used_axes["top"] = True
-            items["top"].append(item)
-        if item.plot_x_position == "bottom":
-            used_axes["bottom"] = True
-            items["bottom"].append(item)
-    return used_axes, itemsdef set_axis_limits(graph_limits, axis, axis_type,
+def set_axis_limits(graph_limits, axis, axis_type,
                     limits={"xmin": None, "xmax": None,
                             "ymin": None, "ymax": None}):
     """Set an calculate the canvas limits for a given axis."""

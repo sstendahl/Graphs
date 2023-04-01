@@ -99,7 +99,7 @@ class Canvas(FigureCanvas):
     def set_ticks(self):
         """Set the ticks that are to be used in the graph."""
         parent = self.parent
-        used_axes = plotting_tools.get_used_axes(parent)[0]
+        used_axes = utilities.get_used_axes(parent)[0]
         for axis in [self.top_right_axis,
                      self.top_left_axis, self.axis, self.right_axis]:
             axis.tick_params(
