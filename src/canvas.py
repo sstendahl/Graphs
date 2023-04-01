@@ -3,7 +3,7 @@ import time
 
 from cycler import cycler
 
-from gi.repository import Adw, Gdk
+from gi.repository import Adw
 
 from graphs import plotting_tools, utilities, plot_styles, file_io
 from graphs.rename import RenameWindow
@@ -109,8 +109,8 @@ class Canvas(FigureCanvas):
         right = used_axes["right"] and (self.style["ytick.right"] == "True")
         for axis in [self.top_right_axis,
                      self.top_left_axis, self.axis, self.right_axis]:
-             axis.tick_params(bottom=bottom, left=left, top=top, right=right)
-             axis.minorticks_on()
+            axis.tick_params(bottom=bottom, left=left, top=top, right=right)
+            axis.minorticks_on()
 
     def set_color_cycle(self):
         """Set the color cycle that will be used for the graphs."""
