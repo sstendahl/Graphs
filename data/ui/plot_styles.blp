@@ -65,6 +65,10 @@ template PlotStylesWindow : Adw.Window {
             spacing: 20;
 
             Adw.PreferencesGroup {
+              Adw.EntryRow style_name {
+                title: _("Style Name");
+              }
+
               Adw.ActionRow {
                 title: _("Font");
                 subtitle: _("The font used in the graph");

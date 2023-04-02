@@ -50,6 +50,7 @@ class PlotStylesWindow(Adw.Window):
     styles_box = Gtk.Template.Child()
     reset_button = Gtk.Template.Child()
     back_button = Gtk.Template.Child()
+    style_name = Gtk.Template.Child()
     font_chooser = Gtk.Template.Child()
     tick_direction = Gtk.Template.Child()
     major_tick_width = Gtk.Template.Child()
@@ -95,13 +96,17 @@ class PlotStylesWindow(Adw.Window):
 
     def back(self, _):
         self.apply()
-        graphs.reload(self.parent)
+        self.reload()
+        self.style = None
         self.leaflet.navigate(0)
         self.back_button.set_visible(False)
         self.set_title("Plot Styles")
+        graphs.reload(self.parent)
 
     def load(self):
         style = self.style
+
+        self.style_name.set_text(style["name"])
 
         # font
         font_description = self.font_chooser.get_font_desc().from_string(
@@ -153,8 +158,12 @@ class PlotStylesWindow(Adw.Window):
         style["xtick.top"] = self.tick_top.get_active()
         style["ytick.right"] = self.tick_right.get_active()
 
-        path = get_user_styles(self.parent)[style["name"]]
-        file_io.write_style(path, style)
+        # name
+        styles_path = os.path.join(utilities.get_config_path(), "styles")
+        os.remove(os.path.join(styles_path, f"{style['name']}.mplstyle"))
+        style["name"] = self.style_name.get_text()
+        file_io.write_style(
+            os.path.join(styles_path, f"{style['name']}.mplstyle"), style)
 
     def delete(self, _, style):
         os.remove(get_user_styles(self.parent)[style])
