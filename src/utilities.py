@@ -63,6 +63,7 @@ def get_used_axes(self):
             items["bottom"].append(item)
     return used_axes, items
 
+
 def add_new_config_keys(config, template):
     add_list = []
     for key in template.keys():

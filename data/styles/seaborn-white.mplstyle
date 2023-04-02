@@ -6,50 +6,78 @@ font.family: sans-serif
 font.sans-serif: DejaVu Sans
 font.style: normal
 font.weight: normal
+axes.titleweight: normal
+axes.labelweight: normal
+figure.titleweight: normal
+figure.labelweight: normal
 font.size: 12
 axes.labelsize: 12
 xtick.labelsize: 12
 ytick.labelsize: 12
 axes.titlesize: 12
 legend.fontsize: 12
+figure.titlesize: 12
+figure.labelsize: 12
 
 # ticks
 xtick.direction: out
+xtick.minor.visible: False
 xtick.major.width: 0
 xtick.minor.width: 0
 xtick.major.size: 0
 xtick.minor.size: 0
+xtick.alignment: center
 
 ytick.direction: out
+ytick.minor.visible: False
 ytick.major.width: 0
 ytick.minor.width: 0
 ytick.major.size: 0
 ytick.minor.size: 0
+ytick.alignment: center
 
 xtick.bottom: False
 ytick.left: False
 xtick.top: False
 ytick.right: False
 
+# grid
+axes.grid: False
+axes.grid.which: major
+axes.grid.axis: both
+grid.linewidth: 1.0
+grid.alpha: 1.0
+grid.linestyle: -
+
+# padding
+xtick.major.pad: 7
+xtick.minor.pad: 7
+ytick.major.pad: 7
+ytick.minor.pad: 7
+axes.labelpad: 5
+axes.titlepad: 15
+
+# other
+axes.linewidth: 1
+
 patch.facecolor: FFFFFF
 
 mathtext.default: regular
+axes.axisbelow: True
+legend.fancybox: True
+legend.frameon: True
 
 # custom
 figure.facecolor: white
 text.color: .15
 axes.labelcolor: .15
-legend.frameon: False
 legend.numpoints: 1
 legend.scatterpoints: 1
 xtick.color: .15
 ytick.color: .15
-axes.axisbelow: True
 image.cmap: Greys
-grid.linestyle: -
 lines.solid_capstyle: round
 
-axes.grid: False
 axes.facecolor: white
 axes.edgecolor: .15
 axes.linewidth: 1.25

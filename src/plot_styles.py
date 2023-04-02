@@ -50,8 +50,10 @@ class PlotStylesWindow(Adw.Window):
     styles_box = Gtk.Template.Child()
     reset_button = Gtk.Template.Child()
     back_button = Gtk.Template.Child()
+    style_name = Gtk.Template.Child()
     font_chooser = Gtk.Template.Child()
     tick_direction = Gtk.Template.Child()
+    minor_ticks = Gtk.Template.Child()
     major_tick_width = Gtk.Template.Child()
     minor_tick_width = Gtk.Template.Child()
     major_tick_length = Gtk.Template.Child()
@@ -60,6 +62,13 @@ class PlotStylesWindow(Adw.Window):
     tick_left = Gtk.Template.Child()
     tick_top = Gtk.Template.Child()
     tick_right = Gtk.Template.Child()
+    show_grid = Gtk.Template.Child()
+    grid_linewidth = Gtk.Template.Child()
+    grid_transparency = Gtk.Template.Child()
+    value_padding = Gtk.Template.Child()
+    label_padding = Gtk.Template.Child()
+    title_padding = Gtk.Template.Child()
+    axis_width = Gtk.Template.Child()
 
     def __init__(self, parent):
         super().__init__()
@@ -79,6 +88,12 @@ class PlotStylesWindow(Adw.Window):
         self.minor_tick_width.set_range(0, 4)
         self.major_tick_length.set_range(0, 20)
         self.minor_tick_length.set_range(0, 20)
+        self.grid_linewidth.set_range(0, 4)
+        self.grid_transparency.set_range(0, 1)
+        self.value_padding.set_range(0, 40)
+        self.label_padding.set_range(0, 40)
+        self.title_padding.set_range(0, 40)
+        self.axis_width.set_range(0, 4)
 
         self.present()
 
@@ -95,13 +110,17 @@ class PlotStylesWindow(Adw.Window):
 
     def back(self, _):
         self.apply()
-        graphs.reload(self.parent)
+        self.reload()
+        self.style = None
         self.leaflet.navigate(0)
         self.back_button.set_visible(False)
         self.set_title("Plot Styles")
+        graphs.reload(self.parent)
 
     def load(self):
         style = self.style
+
+        self.style_name.set_text(style["name"])
 
         # font
         font_description = self.font_chooser.get_font_desc().from_string(
@@ -110,6 +129,7 @@ class PlotStylesWindow(Adw.Window):
 
         # ticks
         utilities.set_chooser(self.tick_direction, style["xtick.direction"])
+        self.minor_ticks.set_active(style["xtick.minor.visible"] == "True")
         self.major_tick_width.set_value(float(style["xtick.major.width"]))
         self.minor_tick_width.set_value(float(style["xtick.minor.width"]))
         self.major_tick_length.set_value(float(style["xtick.major.size"]))
@@ -119,6 +139,19 @@ class PlotStylesWindow(Adw.Window):
         self.tick_top.set_active(style["xtick.top"] == "True")
         self.tick_right.set_active(style["ytick.right"] == "True")
 
+        # grid
+        self.show_grid.set_active(style["axes.grid"] == "True")
+        self.grid_linewidth.set_value(float(style["grid.linewidth"]))
+        self.grid_transparency.set_value(1 - float(style["grid.alpha"]))
+
+        # padding
+        self.value_padding.set_value(float(style["xtick.major.pad"]))
+        self.label_padding.set_value(float(style["axes.labelpad"]))
+        self.title_padding.set_value(float(style["axes.titlepad"]))
+
+        # other
+        self.axis_width.set_value(float(style["axes.linewidth"]))
+
     def apply(self):
         style = self.style
 
@@ -127,7 +160,12 @@ class PlotStylesWindow(Adw.Window):
         style["font.sans-serif"] = font_description.get_family()
         font_name = font_description.to_string().lower().split(" ")
         style["font.style"] = utilities.get_font_style(font_name)
-        style["font.weight"] = utilities.get_font_weight(font_name)
+        font_weight = utilities.get_font_weight(font_name)
+        style["font.weight"] = font_weight
+        style["axes.titleweight"] = font_weight
+        style["axes.labelweight"] = font_weight
+        style["figure.titleweight"] = font_weight
+        style["figure.labelweight"] = font_weight
         font_size = font_name[-1]
         style["font.size"] = font_size
         style["axes.labelsize"] = font_size
@@ -135,11 +173,16 @@ class PlotStylesWindow(Adw.Window):
         style["ytick.labelsize"] = font_size
         style["axes.titlesize"] = font_size
         style["legend.fontsize"] = font_size
+        style["figure.titlesize"] = font_size
+        style["figure.labelsize"] = font_size
 
         # ticks
         tick_direction = self.tick_direction.get_selected_item().get_string()
         style["xtick.direction"] = tick_direction
         style["ytick.direction"] = tick_direction
+        minor_ticks = self.minor_ticks.get_active()
+        style["xtick.minor.visible"] = minor_ticks
+        style["ytick.minor.visible"] = minor_ticks
         style["xtick.major.width"] = self.major_tick_width.get_value()
         style["ytick.major.width"] = self.major_tick_width.get_value()
         style["xtick.minor.width"] = self.minor_tick_width.get_value()
@@ -153,8 +196,28 @@ class PlotStylesWindow(Adw.Window):
         style["xtick.top"] = self.tick_top.get_active()
         style["ytick.right"] = self.tick_right.get_active()
 
-        path = get_user_styles(self.parent)[style["name"]]
-        file_io.write_style(path, style)
+        # grid
+        style["axes.grid"] = self.show_grid.get_active()
+        style["grid.linewidth"] = self.grid_linewidth.get_value()
+        style["grid.alpha"] = 1 - self.grid_transparency.get_value()
+
+        # padding
+        style["xtick.major.pad"] = self.value_padding.get_value()
+        style["xtick.minor.pad"] = self.value_padding.get_value()
+        style["ytick.major.pad"] = self.value_padding.get_value()
+        style["ytick.minor.pad"] = self.value_padding.get_value()
+        style["axes.labelpad"] = self.label_padding.get_value()
+        style["axes.titlepad"] = self.title_padding.get_value()
+
+        # other
+        style["axes.linewidth"] = self.axis_width.get_value()
+
+        # name & save
+        styles_path = os.path.join(utilities.get_config_path(), "styles")
+        os.remove(os.path.join(styles_path, f"{style['name']}.mplstyle"))
+        style["name"] = self.style_name.get_text()
+        file_io.write_style(
+            os.path.join(styles_path, f"{style['name']}.mplstyle"), style)
 
     def delete(self, _, style):
         os.remove(get_user_styles(self.parent)[style])

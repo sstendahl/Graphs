@@ -6,48 +6,74 @@ font.family: sans-serif
 font.sans-serif: DejaVu Sans
 font.style: normal
 font.weight: normal
+axes.titleweight: normal
+axes.labelweight: normal
+figure.titleweight: normal
+figure.labelweight: normal
 font.size: 16
 axes.labelsize: 16
 xtick.labelsize: 16
 ytick.labelsize: 16
 axes.titlesize: 16
 legend.fontsize: 16
+figure.titlesize: 16
+figure.labelsize: 16
 
 # ticks
 xtick.direction: out
+xtick.minor.visible: False
 xtick.major.width: 1.6
 xtick.minor.width: 0.8
 xtick.major.size: 4
 xtick.minor.size: 2
+xtick.major.pad: 11.2
+xtick.minor.pad: 11.2
+xtick.alignment : center
 
 ytick.direction: out
+ytick.minor.visible: False
 ytick.major.width: 1.6
 ytick.minor.width: 0.8
 ytick.major.size: 4
 ytick.minor.size: 2
+ytick.alignment: center
 
 xtick.bottom: True
 ytick.left: True
 xtick.top: True
 ytick.right: True
+ytick.alignment: center
+
+# grid
+axes.grid: False
+axes.grid.which: major
+axes.grid.axis: both
+grid.linewidth: 1.6
+grid.alpha: 1.0
+grid.linestyle: -
+
+# padding
+xtick.major.pad: 11.2
+xtick.minor.pad: 11.2
+ytick.major.pad: 11.2
+ytick.minor.pad: 11.2
+axes.labelpad: 6
+axes.titlepad: 18
+
+# other
+axes.linewidth: 1
 
 patch.facecolor: FFFFFF
 
 mathtext.default: regular
+axes.axisbelow: True
+legend.fancybox: True
+legend.frameon: True
 
 # custom
 figure.figsize: 12.8, 8.8
 
-grid.linewidth: 1.6
 lines.linewidth: 2.8
 patch.linewidth: 0.48
 lines.markersize: 11.2
 lines.markeredgewidth: 0
-
-xtick.major.width: 1.6
-ytick.major.width: 1.6
-xtick.minor.width: 0.8
-ytick.minor.width: 0.8
-
-xtick.major.pad: 11.2
-ytick.major.pad: 11.2

@@ -65,6 +65,10 @@ template PlotStylesWindow : Adw.Window {
             spacing: 20;
 
             Adw.PreferencesGroup {
+              Adw.EntryRow style_name {
+                title: _("Style Name");
+              }
+
               Adw.ActionRow {
                 title: _("Font");
                 subtitle: _("The font used in the graph");
@@ -90,6 +94,16 @@ template PlotStylesWindow : Adw.Window {
               }
 
               Adw.ActionRow {
+                title: _("Minor Ticks");
+                subtitle: _("Show Minor Ticks");
+                activatable-widget: minor_ticks;
+
+                Switch minor_ticks {
+                  valign: center;
+                }
+              }
+
+              Adw.ActionRow {
                 title: _("Major Tick Width");
                 subtitle: _("The thickness of the major ticks");
 
@@ -102,6 +116,7 @@ template PlotStylesWindow : Adw.Window {
               Adw.ActionRow {
                 title: _("Minor Tick Width");
                 subtitle: _("The thickness of the minor ticks");
+                visible: bind minor_ticks.active;
 
                 Scale minor_tick_width {
                   draw-value: true;
@@ -122,6 +137,7 @@ template PlotStylesWindow : Adw.Window {
               Adw.ActionRow {
                 title: _("Minor Tick Length");
                 subtitle: _("The length of the minor ticks");
+                visible: bind minor_ticks.active;
 
                 Scale minor_tick_length {
                   draw-value: true;
@@ -166,6 +182,92 @@ template PlotStylesWindow : Adw.Window {
 
                 Switch tick_top {
                   valign: center;
+                }
+              }
+            }
+
+            Adw.PreferencesGroup {
+              title: _("Grid");
+              description: _("Settings for the grid that is used in the plots");
+
+              Adw.ActionRow {
+                title: _("Show Grid");
+                subtitle: _("Show Show Grid on the Graph");
+                activatable-widget: show_grid;
+
+                Switch show_grid {
+                  valign: center;
+                }
+              }
+
+              Adw.ActionRow {
+                title: _("Grid Width");
+                subtitle: _("Width of the Lines in the Grid");
+                visible: bind show_grid.active;
+
+                Scale grid_linewidth {
+                  draw-value: true;
+                  width-request: 200;
+                }
+              }
+
+              Adw.ActionRow {
+                title: _("Grid Transparency");
+                subtitle: _("The Transparency of the Grid");
+                visible: bind show_grid.active;
+
+                Scale grid_transparency {
+                  draw-value: true;
+                  width-request: 200;
+                }
+              }
+            }
+
+            Adw.PreferencesGroup {
+              title: _("Padding");
+              description: _("Padding for different parts of the plot");
+
+              Adw.ActionRow {
+                title: _("Value Padding");
+                subtitle: _("The padding between axis and values");
+
+                Scale value_padding {
+                  draw-value: true;
+                  width-request: 200;
+                }
+              }
+
+              Adw.ActionRow {
+                title: _("Label Padding");
+                subtitle: _("The padding between axis and labels");
+
+                Scale label_padding {
+                  draw-value: true;
+                  width-request: 200;
+                }
+              }
+
+              Adw.ActionRow {
+                title: _("Title Padding");
+                subtitle: _("The padding between axis and the title");
+
+                Scale title_padding {
+                  draw-value: true;
+                  width-request: 200;
+                }
+              }
+            }
+
+            Adw.PreferencesGroup {
+              title: _("Other");
+
+              Adw.ActionRow {
+                title: _("Axis Width");
+                subtitle: _("The thickness of the axes");
+
+                Scale axis_width {
+                  draw-value: true;
+                  width-request: 200;
                 }
               }
             }
