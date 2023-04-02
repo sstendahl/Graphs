@@ -13,13 +13,12 @@ def remove_unused_config_keys(config, template):
         del config[key]
     return config
 
+
 def sig_fig_round(number, digits):
-    """
-    Round a number to the specified number of significant digits.
-    """
-    if number == None:
+    """Round a number to the specified number of significant digits."""
+    if number is None:
         return None
-    power = "{:e}".format(float(number)).split('e')[1]
+    power = "{:e}".format(float(number)).split("e")[1]
     return round(float(number), -(int(power) - digits + 1))
 
 
