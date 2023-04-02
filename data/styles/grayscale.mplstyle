@@ -63,6 +63,9 @@ axes.linewidth: 1
 patch.facecolor: bfbfbf
 
 mathtext.default: regular
+axes.axisbelow: True
+legend.fancybox: True
+legend.frameon: True
 
 # custom
 lines.color: black

@@ -63,6 +63,9 @@ axes.linewidth: 1
 patch.facecolor: FFFFFF
 
 mathtext.default: regular
+axes.axisbelow: True
+legend.fancybox: True
+legend.frameon: True
 
 # custom
 axes.prop_cycle: cycler('color', ['003FFF', '03ED3A', 'E8000B', '8A2BE2', 'FFC400', '00D7FF'])

@@ -63,6 +63,9 @@ axes.linewidth: 1
 patch.facecolor: FFFFFF
 
 mathtext.default: regular
+axes.axisbelow: True
+legend.fancybox: True
+legend.frameon: True
 
 # custom
 figure.figsize: 8.0, 5.5

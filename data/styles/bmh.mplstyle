@@ -63,6 +63,9 @@ axes.linewidth: 1
 patch.facecolor: FFFFFF
 
 mathtext.default: regular
+axes.axisbelow: True
+legend.fancybox: True
+legend.frameon: True
 
 # custom
 lines.linewidth: 2.0
@@ -80,5 +83,3 @@ axes.edgecolor: bcbcbc
 axes.prop_cycle: cycler('color', ['348ABD', 'A60628', '7A68A6', '467821', 'D55E00', 'CC79A7', '56B4E9', '009E73', 'F0E442', '0072B2'])
 
 grid.color: b2b2b2
-
-legend.fancybox: True

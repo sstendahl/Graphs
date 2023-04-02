@@ -63,9 +63,11 @@ axes.linewidth: 0
 patch.facecolor: FFFFFF
 
 mathtext.default: regular
+axes.axisbelow: True
+legend.fancybox: True
+legend.frameon: True
 
 # custom
-axes.axisbelow: True
 axes.edgecolor: white
 axes.facecolor: EAEAF2
 axes.labelcolor: .15
@@ -78,7 +80,6 @@ grid.color: white
 
 image.cmap: Greys
 
-legend.frameon: False
 legend.numpoints: 1
 legend.scatterpoints: 1
 

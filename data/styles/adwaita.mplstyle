@@ -63,11 +63,13 @@ axes.linewidth: 0.8
 patch.facecolor: FAFAFA
 
 mathtext.default: regular
+axes.axisbelow: True
+legend.fancybox: True
+legend.frameon: True
 
 # custom
 patch.linewidth: .3
 
-axes.axisbelow: True
 axes.edgecolor: black
 axes.facecolor: white
 axes.labelcolor: black
@@ -81,7 +83,6 @@ grid.color: 646464
 
 image.cmap: Greys
 
-legend.frameon: False
 legend.numpoints: 1
 legend.scatterpoints: 1
 

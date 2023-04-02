@@ -63,12 +63,13 @@ axes.linewidth: 3
 patch.facecolor: f0f0f0
 
 mathtext.default: regular
+axes.axisbelow: True
+legend.fancybox: True
+legend.frameon: True
 
 # custom
 lines.linewidth: 4
 lines.solid_capstyle: butt
-
-legend.fancybox: true
 
 axes.prop_cycle: cycler('color', ['008fd5', 'fc4f30', 'e5ae38', '6d904f', '8b8b8b', '810f7c'])
 axes.facecolor: f0f0f0

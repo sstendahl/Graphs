@@ -63,6 +63,9 @@ axes.linewidth: 1.0
 patch.facecolor: FFFFFF
 
 mathtext.default: regular
+axes.axisbelow: True
+legend.fancybox: True
+legend.frameon: True
 
 # custom
 lines.linewidth: 1.0
@@ -122,7 +125,6 @@ axes.facecolor: w
 axes.edgecolor: k
 axes.titley: 1.0
 axes.labelcolor: k
-axes.axisbelow: False
 
 axes.formatter.limits: -7, 7
 axes.formatter.use_locale: False
@@ -157,7 +159,6 @@ ytick.color: k
 
 grid.color: k
 
-legend.fancybox: False
 legend.loc: upper right
 legend.numpoints: 2
 legend.borderpad: 0.4
@@ -169,7 +170,6 @@ legend.handletextpad: 0.8
 legend.borderaxespad: 0.5
 legend.columnspacing: 2.
 legend.shadow: False
-legend.frameon: True
 legend.framealpha: None
 legend.scatterpoints: 3
 legend.facecolor: inherit
