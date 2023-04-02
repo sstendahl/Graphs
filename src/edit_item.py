@@ -111,4 +111,4 @@ class EditItemWindow(Adw.PreferencesWindow):
 
         self.parent.item_boxes[self.item.key].label.set_text(
             utilities.shorten_label(self.item.name))
-        graphs.refresh(self.parent)
+        graphs.refresh(self.parent, set_limits=True)
