@@ -1,0 +1,48 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+# seaborn-paper
+
+# font
+font.family: sans-serif
+font.sans-serif: DejaVu Sans
+font.style: normal
+font.weight: normal
+font.size: 10
+axes.labelsize: 10
+xtick.labelsize: 10
+ytick.labelsize: 10
+axes.titlesize: 10
+legend.fontsize: 10
+
+# ticks
+xtick.direction: out
+xtick.major.width: 0.8
+xtick.minor.width: 0.4
+xtick.major.size: 4
+xtick.minor.size: 2
+
+ytick.direction: out
+ytick.major.width: 0.8
+ytick.minor.width: 0.4
+ytick.major.size: 4
+ytick.minor.size: 2
+
+xtick.bottom: True
+ytick.left: True
+xtick.top: True
+ytick.right: True
+
+patch.facecolor: FFFFFF
+
+mathtext.default: regular
+
+# custom
+figure.figsize: 6.4, 4.4
+
+grid.linewidth: 0.8
+lines.linewidth: 1.4
+patch.linewidth: 0.24
+lines.markersize: 5.6
+lines.markeredgewidth: 0
+
+xtick.major.pad: 5.6
+ytick.major.pad: 5.6

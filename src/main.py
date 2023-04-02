@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Main application."""
 import logging
+import os
 import sys
 from inspect import getmembers, isfunction
 
@@ -23,6 +24,8 @@ class GraphsApplication(Adw.Application):
         self.appid = args[1]
         super().__init__(application_id=self.appid,
                          flags=Gio.ApplicationFlags.FLAGS_NONE)
+        self.modulepath = os.path.join(
+            os.getenv("XDG_DATA_DIRS").split(":")[0], "graphs", "graphs")
         self.version = args[0]
         self.name = args[2]
         self.copyright = args[3]
@@ -64,6 +67,7 @@ class GraphsApplication(Adw.Application):
             ("view_forward", ["<alt><shift>Z"]),
             ("export_data", ["<primary><shift>E"]),
             ("export_figure", ["<primary>E"]),
+            ("plot_styles", None),
             ("save_project", ["<primary>S"]),
             ("open_project", ["<primary>O"]),
             ("delete_selected", ["Delete"]),

@@ -1,0 +1,60 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+# ggplot
+
+# font
+font.family: sans-serif
+font.sans-serif: DejaVu Sans
+font.style: normal
+font.weight: normal
+font.size: 10
+axes.labelsize: 10
+xtick.labelsize: 10
+ytick.labelsize: 10
+axes.titlesize: 10
+legend.fontsize: 10
+
+# ticks
+xtick.direction: out
+xtick.major.width: 1
+xtick.minor.width: 0.5
+xtick.major.size: 4
+xtick.minor.size: 2
+
+ytick.direction: out
+ytick.major.width: 1
+ytick.minor.width: 0.5
+ytick.major.size: 4
+ytick.minor.size: 2
+
+xtick.bottom: True
+ytick.left: True
+xtick.top: True
+ytick.right: True
+
+patch.facecolor: FFFFFF
+
+mathtext.default: regular
+
+# custom
+patch.linewidth: 0.5
+patch.edgecolor: EEEEEE
+patch.antialiased: True
+
+axes.facecolor: E5E5E5
+axes.edgecolor: white
+axes.linewidth: 1
+axes.grid: True
+axes.labelcolor: 555555
+axes.axisbelow: True
+
+axes.prop_cycle: cycler('color', ['E24A33', '348ABD', '988ED5', '777777', 'FBC15E', '8EBA42', 'FFB5B8'])
+
+xtick.color: 555555
+
+ytick.color: 555555
+
+grid.color: white
+grid.linestyle: -
+
+figure.facecolor: white
+figure.edgecolor: 0.50

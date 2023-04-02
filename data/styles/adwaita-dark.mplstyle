@@ -1,6 +1,41 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 # adwaita-dark
+
+# font
+font.family: sans-serif
+font.sans-serif: Cantarell
+font.style: normal
+font.weight: normal
+font.size: 12
+axes.labelsize: 12
+xtick.labelsize: 12
+ytick.labelsize: 12
+axes.titlesize: 12
+legend.fontsize: 12
+
+# ticks
+xtick.direction: in
+xtick.major.width: 1
+xtick.minor.width: 0.5
+xtick.major.size: 4
+xtick.minor.size: 2
+
+ytick.direction: in
+ytick.major.width: 1
+ytick.minor.width: 0.5
+ytick.major.size: 4
+ytick.minor.size: 2
+
+xtick.bottom: True
+ytick.left: True
+xtick.top: False
+ytick.right: False
+
 patch.facecolor: 242424
+
+mathtext.default: regular
+
+# custom
 patch.linewidth: 1
 
 axes.axisbelow: True
@@ -8,16 +43,8 @@ axes.edgecolor: white
 axes.facecolor: 242424
 axes.grid: True
 axes.labelcolor: white
-axes.labelsize: 12
 axes.linewidth: .8
 axes.prop_cycle: cycler('color', ['4C72B0', '55A868', 'C44E52', '8172B2', 'CCB974', '64B5CD'])
-axes.titlesize: 12
-
-font.family: sans-serif
-font.sans-serif: Cantarell
-font.weight: normal
-font.size: 12
-font.style: normal
 
 figure.facecolor: 242424
 figure.edgecolor: 242424
@@ -29,7 +56,6 @@ grid.linewidth: .6
 
 image.cmap: Greys
 
-legend.fontsize: 12
 legend.frameon: False
 legend.numpoints: 1
 legend.scatterpoints: 1
@@ -42,21 +68,7 @@ lines.solid_capstyle: round
 text.color: white
 
 xtick.color: white
-xtick.direction: out
-xtick.labelsize: 12
 xtick.major.pad: 7
-xtick.major.size: 0
-xtick.major.width: .8
-xtick.minor.size: 0
-xtick.minor.width: .6
 
 ytick.color: white
-ytick.direction: out
-ytick.labelsize: 12
 ytick.major.pad: 7
-ytick.major.size: 0
-ytick.major.width: .8
-ytick.minor.size: 0
-ytick.minor.width: .6
-
-mathtext.default: regular

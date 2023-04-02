@@ -1,0 +1,56 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+# seaborn-whitegrid
+
+# font
+font.family: sans-serif
+font.sans-serif: DejaVu Sans
+font.style: normal
+font.weight: normal
+font.size: 12
+axes.labelsize: 12
+xtick.labelsize: 12
+ytick.labelsize: 12
+axes.titlesize: 12
+legend.fontsize: 12
+
+# ticks
+xtick.direction: out
+xtick.major.width: 0
+xtick.minor.width: 0
+xtick.major.size: 0
+xtick.minor.size: 0
+
+ytick.direction: out
+ytick.major.width: 0
+ytick.minor.width: 0
+ytick.major.size: 0
+ytick.minor.size: 0
+
+xtick.bottom: False
+ytick.left: False
+xtick.top: False
+ytick.right: False
+
+patch.facecolor: FFFFFF
+
+mathtext.default: regular
+
+# custom
+figure.facecolor: white
+text.color: .15
+axes.labelcolor: .15
+legend.frameon: False
+legend.numpoints: 1
+legend.scatterpoints: 1
+xtick.color: .15
+ytick.color: .15
+axes.axisbelow: True
+image.cmap: Greys
+grid.linestyle: -
+lines.solid_capstyle: round
+
+axes.grid: True
+axes.facecolor: white
+axes.edgecolor: .8
+axes.linewidth: 1
+grid.color: .8

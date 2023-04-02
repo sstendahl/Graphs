@@ -66,8 +66,10 @@ blueprints = custom_target('blueprints',
     'ui/help_overlay.blp',
     'ui/item_box.blp',
     'ui/plot_settings.blp',
+    'ui/plot_styles.blp',
     'ui/preferences.blp',
     'ui/rename_window.blp',
+    'ui/style_box.blp',
     'ui/transform_window.blp'
   ),
   output: '.',
@@ -104,11 +106,31 @@ install_data(
 install_data('config.json', install_dir: moduledir, install_mode: 'rwxrwxrwx')
 install_data('whats_new', install_dir: moduledir, install_mode: 'rwxrwxrwx')
 
-styles_dir = 'styles'
-styles = [
-join_paths(styles_dir, 'adwaita.mplstyle'),
-join_paths(styles_dir, 'adwaita-dark.mplstyle'),
-]
-# this isn't pretty, but since the install target is only flatpak, this doesn't affect other applications
-matplotlib_styles_dir = '/app/lib/python3.10/site-packages/matplotlib/mpl-data/stylelib'
-install_data(styles, install_dir: matplotlib_styles_dir, install_mode: 'rwxrwxrwx')
+styles = files(
+  'styles/adwaita.mplstyle',
+  'styles/adwaita-dark.mplstyle',
+  'styles/bmh.mplstyle',
+  'styles/classic.mplstyle',
+  'styles/dark-background.mplstyle',
+  'styles/fivethirtyeight.mplstyle',
+  'styles/ggplot.mplstyle',
+  'styles/grayscale.mplstyle',
+  'styles/seaborn.mplstyle',
+  'styles/seaborn-bright.mplstyle',
+  'styles/seaborn-colorblind.mplstyle',
+  'styles/seaborn-dark.mplstyle',
+  'styles/seaborn-darkgrid.mplstyle',
+  'styles/seaborn-dark-palette.mplstyle',
+  'styles/seaborn-deep.mplstyle',
+  'styles/seaborn-muted.mplstyle',
+  'styles/seaborn-notebook.mplstyle',
+  'styles/seaborn-paper.mplstyle',
+  'styles/seaborn-talk.mplstyle',
+  'styles/seaborn-ticks.mplstyle',
+  'styles/seaborn-white.mplstyle',
+  'styles/seaborn-whitegrid.mplstyle',
+  'styles/solarized-light.mplstyle',
+  'styles/tableau-colorblind10.mplstyle',
+)
+styles_dir = join_paths(moduledir, 'styles')
+install_data(styles, install_dir: styles_dir, install_mode: 'rwxrwxrwx')
