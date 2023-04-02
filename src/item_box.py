@@ -40,30 +40,26 @@ class ItemBox(Gtk.Box):
 
 
         self.drop_source = Gtk.DropTarget.new(str, Gdk.DragAction.COPY)
-
+        self.drop_source.key = item.key
         self.drop_source.connect('drop', self.on_dnd_drop)
         self.drag_source.connect('prepare', self.on_dnd_prepare)
-        self.drag_source.connect('drag-begin', self.test)
-        self.drag_source.connect('drag-end', self.end)
+
         self.add_controller(self.drag_source)
         self.add_controller(self.drop_source)
 
     def on_dnd_drop(self, drop_target, value, x, y):
         # Handle the dropped data here
-        print("Yo")
-        print(f"Dropped data: {value}")
+        self.parent.datadict = utilities.swap_key_positions(self.parent.datadict, drop_target.key, value)
+        self.parent.item_boxes = utilities.swap_key_positions(self.parent.item_boxes, drop_target.key, value)
+        self.parent.item_menu = utilities.swap_key_positions(self.parent.item_menu, drop_target.key, value)
+        for key, item in self.parent.item_menu.items():
+            self.parent.main_window.list_box.remove(item)
+            self.parent.main_window.list_box.append(item)
+        graphs.reload(self.parent)
 
-
-    def test(self, *args):
-        print("start")
-        #print(*args)
-
-    def end(self, *args):
-        print("end")
-        print(*args)
 
     def on_dnd_prepare(self, drag_source, x, y):
-        data = self.item.name
+        data = self.item.key
         content = Gdk.ContentProvider.new_for_value(data)
         return content
 
