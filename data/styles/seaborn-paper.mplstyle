@@ -57,6 +57,17 @@ ytick.minor.pad: 5.6
 axes.labelpad: 5
 axes.titlepad: 15
 
+# colors
+text.color: 262626
+axes.labelcolor: 262626
+xtick.color: 262626
+ytick.color: 262626
+axes.edgecolor: FFFFFF
+grid.color: FFFFFF
+axes.facecolor: EAEAF2
+figure.facecolor: FFFFFF
+figure.edgecolor: FFFFFF
+
 # other
 axes.linewidth: 1
 

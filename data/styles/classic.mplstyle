@@ -57,6 +57,17 @@ ytick.minor.pad: 4
 axes.labelpad: 5
 axes.titlepad: 15
 
+# colors
+text.color: 000000
+axes.labelcolor: 000000
+xtick.color: 000000
+ytick.color: 000000
+axes.edgecolor: 000000
+grid.color: 000000
+axes.facecolor: FFFFFF
+figure.facecolor: BFBFBF
+figure.edgecolor: BFBFBF
+
 # other
 axes.linewidth: 1.0
 
@@ -104,8 +115,6 @@ font.cursive: Apple Chancery, Textile, Zapf Chancery, Sand, Script MT, Felipa, c
 font.fantasy: Comic Sans MS, Chicago, Charcoal, ImpactWestern, Humor Sans, fantasy
 font.monospace: DejaVu Sans Mono, Andale Mono, Nimbus Mono L, Courier New, Courier, Fixed, Terminal, monospace
 
-text.color: k
-
 text.usetex: False
 text.hinting_factor: 8
 
@@ -120,10 +129,7 @@ mathtext.sf: sans\-serif
 mathtext.fontset: cm
 mathtext.fallback: cm
 
-axes.facecolor: w
-axes.edgecolor: k
 axes.titley: 1.0
-axes.labelcolor: k
 
 axes.formatter.limits: -7, 7
 axes.formatter.use_locale: False
@@ -152,12 +158,6 @@ date.autoformatter.second: %H:%M:%S.%f
 date.autoformatter.microsecond: %H:%M:%S.%f
 date.converter: auto
 
-xtick.color: k
-
-ytick.color: k
-
-grid.color: k
-
 legend.loc: upper right
 legend.numpoints: 2
 legend.borderpad: 0.4
@@ -176,8 +176,6 @@ legend.edgecolor: inherit
 
 figure.figsize: 8, 6
 figure.dpi: 80
-figure.facecolor: 0.75
-figure.edgecolor: w
 figure.autolayout: False
 figure.frameon: True
 

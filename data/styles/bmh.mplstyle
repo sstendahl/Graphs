@@ -57,6 +57,17 @@ ytick.minor.pad: 7
 axes.labelpad: 5
 axes.titlepad: 15
 
+# colors
+text.color: 262626
+axes.labelcolor: 262626
+xtick.color: 262626
+ytick.color: 262626
+axes.edgecolor: BCBCBC
+grid.color: B2B2B2
+axes.facecolor: EEEEEE
+figure.facecolor: FFFFFF
+figure.edgecolor: FFFFFF
+
 # other
 axes.linewidth: 1
 
@@ -77,8 +88,4 @@ text.hinting_factor: 8
 
 mathtext.fontset: cm
 
-axes.facecolor: eeeeee
-axes.edgecolor: bcbcbc
 axes.prop_cycle: cycler('color', ['348ABD', 'A60628', '7A68A6', '467821', 'D55E00', 'CC79A7', '56B4E9', '009E73', 'F0E442', '0072B2'])
-
-grid.color: b2b2b2

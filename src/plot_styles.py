@@ -3,7 +3,7 @@ import os
 import shutil
 from pathlib import Path
 
-from gi.repository import Adw, Gtk
+from gi.repository import Adw, Gtk, Gdk, GLib
 
 from graphs import utilities, file_io, graphs
 
@@ -69,6 +69,12 @@ class PlotStylesWindow(Adw.Window):
     label_padding = Gtk.Template.Child()
     title_padding = Gtk.Template.Child()
     axis_width = Gtk.Template.Child()
+    text_color = Gtk.Template.Child()
+    tick_color = Gtk.Template.Child()
+    axis_color = Gtk.Template.Child()
+    grid_color = Gtk.Template.Child()
+    background_color = Gtk.Template.Child()
+    edge_color = Gtk.Template.Child()
 
     def __init__(self, parent):
         super().__init__()
@@ -94,6 +100,21 @@ class PlotStylesWindow(Adw.Window):
         self.label_padding.set_range(0, 40)
         self.title_padding.set_range(0, 40)
         self.axis_width.set_range(0, 4)
+
+        # color actions
+        self.color_buttons = [
+            self.text_color,
+            self.tick_color,
+            self.axis_color,
+            self.grid_color,
+            self.background_color,
+            self.edge_color,
+        ]
+        for button in self.color_buttons:
+            button.connect("clicked", self.on_color_change)
+            button.provider = Gtk.CssProvider()
+            button.get_style_context().add_provider(
+                button.provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION)
 
         self.present()
 
@@ -148,6 +169,18 @@ class PlotStylesWindow(Adw.Window):
         self.value_padding.set_value(float(style["xtick.major.pad"]))
         self.label_padding.set_value(float(style["axes.labelpad"]))
         self.title_padding.set_value(float(style["axes.titlepad"]))
+
+        # colors
+        self.text_color.color = style["text.color"]
+        self.tick_color.color = style["xtick.color"]
+        self.axis_color.color = style["axes.edgecolor"]
+        self.grid_color.color = style["grid.color"]
+        self.background_color.color = style["axes.facecolor"]
+        self.edge_color.color = style["figure.facecolor"]
+
+        for button in self.color_buttons:
+            button.provider.load_from_data(
+                f"button {{ color: #{button.color}; }}", -1)
 
         # other
         self.axis_width.set_value(float(style["axes.linewidth"]))
@@ -209,6 +242,17 @@ class PlotStylesWindow(Adw.Window):
         style["axes.labelpad"] = self.label_padding.get_value()
         style["axes.titlepad"] = self.title_padding.get_value()
 
+        # colors
+        style["text.color"] = self.text_color.color
+        style["axes.labelcolor"] = self.text_color.color
+        style["xtick.color"] = self.tick_color.color
+        style["ytick.color"] = self.tick_color.color
+        style["axes.edgecolor"] = self.axis_color.color
+        style["grid.color"] = self.grid_color.color
+        style["axes.facecolor"] = self.background_color.color
+        style["figure.facecolor"] = self.edge_color.color
+        style["figure.edgecolor"] = self.edge_color.color
+
         # other
         style["axes.linewidth"] = self.axis_width.get_value()
 
@@ -257,6 +301,28 @@ class PlotStylesWindow(Adw.Window):
             self.apply()
             graphs.reload(self.parent)
         self.destroy()
+
+
+    def on_color_change(self, button):
+        color = Gdk.RGBA()
+        color.parse(button.color)
+        dialog = Gtk.ColorDialog()
+        dialog.set_with_alpha(False)
+        dialog.choose_rgba(
+            self.parent.main_window, color, None, self.on_color_change_accept,
+            button)
+
+
+    def on_color_change_accept(self, dialog, result, button):
+        try:
+            color = dialog.choose_rgba_finish(result)
+            if color is not None:
+                color_hex = utilities.rgba_to_hex(color)
+                button.provider.load_from_data(
+                    f"button {{ color: {color_hex}; }}", -1)
+                button.color = color_hex.replace("#", "")
+        except GLib.GError:
+            pass
 
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/style_box.ui")

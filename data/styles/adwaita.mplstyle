@@ -57,6 +57,17 @@ ytick.minor.pad: 7
 axes.labelpad: 5
 axes.titlepad: 15
 
+# colors
+text.color: 000000
+axes.labelcolor: 000000
+xtick.color: 000000
+ytick.color: 000000
+axes.edgecolor: 000000
+grid.color: 646464
+axes.facecolor: FFFFFF
+figure.facecolor: FAFAFA
+figure.edgecolor: FAFAFA
+
 # other
 axes.linewidth: 0.8
 
@@ -68,16 +79,9 @@ legend.frameon: True
 # custom
 patch.linewidth: .3
 
-axes.edgecolor: black
-axes.facecolor: FFFFFF
-axes.labelcolor: black
 axes.prop_cycle: cycler('color', ['4C72B0', '55A868', 'C44E52', '8172B2', 'CCB974', '64B5CD'])
 
-figure.facecolor: FAFAFA
-figure.edgecolor: FAFAFA
 figure.figsize: 8.0, 15.5
-
-grid.color: 646464
 
 image.cmap: Greys
 
@@ -88,9 +92,3 @@ lines.linewidth: 1
 lines.markeredgewidth: 0
 lines.markersize: 7
 lines.solid_capstyle: round
-
-text.color: black
-
-xtick.color: black
-
-ytick.color: black

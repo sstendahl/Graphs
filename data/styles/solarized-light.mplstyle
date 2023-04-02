@@ -57,6 +57,17 @@ ytick.minor.pad: 7
 axes.labelpad: 5
 axes.titlepad: 15
 
+# colors
+text.color: 657B83
+axes.labelcolor: 657B83
+xtick.color: 657B83
+ytick.color: 657B83
+axes.edgecolor: EEE8D5
+grid.color: FDF6E3
+axes.facecolor: EEE8D5
+figure.facecolor: FDF6E3
+figure.edgecolor: FDF6E3
+
 # other
 axes.linewidth: 1
 
@@ -66,19 +77,9 @@ legend.fancybox: True
 legend.frameon: True
 
 # custom
-figure.facecolor: FDF6E3
-
 patch.antialiased: True
 
 lines.linewidth: 2.0
 lines.solid_capstyle: butt
 
-axes.labelcolor: 657b83
-axes.facecolor: eee8d5
-axes.edgecolor: eee8d5
 axes.prop_cycle: cycler('color', ['268BD2', '2AA198', '859900', 'B58900', 'CB4B16', 'DC322F', 'D33682', '6C71C4'])
-grid.color: fdf6e3
-
-xtick.color: 657b83
-
-ytick.color: 657b83
