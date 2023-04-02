@@ -6,12 +6,18 @@ font.family: sans-serif
 font.sans-serif: DejaVu Sans
 font.style: normal
 font.weight: normal
+axes.titleweight: normal
+axes.labelweight: normal
+figure.titleweight: normal
+figure.labelweight: normal
 font.size: 12
 axes.labelsize: 12
 xtick.labelsize: 12
 ytick.labelsize: 12
 axes.titlesize: 12
 legend.fontsize: 12
+figure.titlesize: 12
+figure.labelsize: 12
 
 # ticks
 xtick.direction: in
@@ -113,10 +119,6 @@ axes.facecolor: w
 axes.edgecolor: k
 axes.linewidth: 1.0
 axes.titley: 1.0
-axes.titlepad: 5.0
-axes.titleweight: normal
-axes.labelpad: 5.0
-axes.labelweight: normal
 axes.labelcolor: k
 axes.axisbelow: False
 
@@ -171,10 +173,6 @@ legend.scatterpoints: 3
 legend.facecolor: inherit
 legend.edgecolor: inherit
 
-figure.titlesize: medium
-figure.titleweight: normal
-figure.labelsize: medium
-figure.labelweight: normal
 figure.figsize: 8, 6
 figure.dpi: 80
 figure.facecolor: 0.75

@@ -155,7 +155,12 @@ class PlotStylesWindow(Adw.Window):
         style["font.sans-serif"] = font_description.get_family()
         font_name = font_description.to_string().lower().split(" ")
         style["font.style"] = utilities.get_font_style(font_name)
-        style["font.weight"] = utilities.get_font_weight(font_name)
+        font_weight = utilities.get_font_weight(font_name)
+        style["font.weight"] = font_weight
+        style["axes.titleweight"] = font_weight
+        style["axes.labelweight"] = font_weight
+        style["figure.titleweight"] = font_weight
+        style["figure.labelweight"] = font_weight
         font_size = font_name[-1]
         style["font.size"] = font_size
         style["axes.labelsize"] = font_size
@@ -163,6 +168,8 @@ class PlotStylesWindow(Adw.Window):
         style["ytick.labelsize"] = font_size
         style["axes.titlesize"] = font_size
         style["legend.fontsize"] = font_size
+        style["figure.titlesize"] = font_size
+        style["figure.labelsize"] = font_size
 
         # ticks
         tick_direction = self.tick_direction.get_selected_item().get_string()

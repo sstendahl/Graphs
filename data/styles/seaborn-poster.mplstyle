@@ -6,12 +6,18 @@ font.family: sans-serif
 font.sans-serif: DejaVu Sans
 font.style: normal
 font.weight: normal
+axes.titleweight: normal
+axes.labelweight: normal
+figure.titleweight: normal
+figure.labelweight: normal
 font.size: 16
 axes.labelsize: 16
 xtick.labelsize: 16
 ytick.labelsize: 16
 axes.titlesize: 16
 legend.fontsize: 16
+figure.titlesize: 16
+figure.labelsize: 16
 
 # ticks
 xtick.direction: out
