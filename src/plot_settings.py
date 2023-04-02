@@ -26,6 +26,7 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
     max_right = Gtk.Template.Child()
     min_top = Gtk.Template.Child()
     max_top = Gtk.Template.Child()
+    no_data_message = Gtk.Template.Child()
 
     def __init__(self, parent):
         super().__init__()
@@ -58,6 +59,8 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
         utilities.set_chooser(self.plot_style, parent.plot_settings.plot_style)
         self.plot_legend_check.set_active(parent.plot_settings.legend)
         self.hide_unused_axes_limits(parent)
+        if len(parent.datadict) > 0:
+            self.no_data_message.set_visible(False)
         self.connect("close-request", self.on_close, parent)
         self.set_transient_for(parent.main_window)
         self.present()

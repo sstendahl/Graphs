@@ -40,8 +40,12 @@ template PlotSettingsWindow : Adw.PreferencesWindow {
     }
 
     Adw.PreferencesGroup {
-      title: _("Axes Limits");
+      title: _("Axis Limits");
       description: _("Limits used on the axes");
+      Adw.ActionRow no_data_message {
+      title: _("No data");
+      subtitle: _("Add data to the graph to set the axis limits.");
+      }
       Box {
       	orientation: horizontal;
       	margin-bottom: 12;
@@ -92,7 +96,6 @@ template PlotSettingsWindow : Adw.PreferencesWindow {
 	}
       Box {
       	orientation: horizontal;
-      	margin-bottom: 12;
       	Adw.PreferencesGroup {
       	margin-end: 3;
       	Adw.EntryRow min_top {
