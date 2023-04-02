@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
-from gi.repository import Gtk, GLib
+from gi.repository import Gtk, GLib, Gdk, gio
 
 from graphs import graphs, ui, utilities
 from graphs.edit_item import EditItemWindow
@@ -20,6 +20,7 @@ class ItemBox(Gtk.Box):
         self.label.set_text(utilities.shorten_label(item.name))
         self.check_button.set_active(item.selected)
         self.parent = parent
+
         self.one_click_trigger = False
         self.time_first_click = 0
         self.gesture = Gtk.GestureClick()
@@ -33,6 +34,22 @@ class ItemBox(Gtk.Box):
         self.color_button.get_style_context().add_provider(
             self.provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION)
         self.update_color()
+        self.drag_source = Gtk.DragSource.new()
+        self.drag_source.set_actions(Gdk.DragAction.COPY)
+        self.drag_source.connect('prepare', self.on_dnd_prepare)
+        self.drag_source.connect('drag-begin', self.test)
+        self.drag_source.connect('drag-end', self.test)
+        self.add_controller(self.drag_source)
+
+    def test(self, *args):
+        print("hoi")
+
+    def on_dnd_prepare(self, drag_source, x, y):
+
+
+
+        content = gdk.ContentProvider.new_for_value(gobject.Value(gio.ListModel, data))
+        return content
 
     def update_color(self):
         color = utilities.tuple_to_rgba(self.item.color)
