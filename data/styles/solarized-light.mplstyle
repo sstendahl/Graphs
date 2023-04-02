@@ -63,6 +63,9 @@ axes.linewidth: 1
 patch.facecolor: FFFFFF
 
 mathtext.default: regular
+axes.axisbelow: True
+legend.fancybox: True
+legend.frameon: True
 
 # custom
 figure.facecolor: FDF6E3
@@ -75,7 +78,6 @@ lines.solid_capstyle: butt
 axes.labelcolor: 657b83
 axes.facecolor: eee8d5
 axes.edgecolor: eee8d5
-axes.axisbelow: True
 axes.prop_cycle: cycler('color', ['268BD2', '2AA198', '859900', 'B58900', 'CB4B16', 'DC322F', 'D33682', '6C71C4'])
 grid.color: fdf6e3
 

@@ -63,17 +63,18 @@ axes.linewidth: 1
 patch.facecolor: FFFFFF
 
 mathtext.default: regular
+axes.axisbelow: True
+legend.fancybox: True
+legend.frameon: True
 
 # custom
 figure.facecolor: white
 text.color: .15
 axes.labelcolor: .15
-legend.frameon: False
 legend.numpoints: 1
 legend.scatterpoints: 1
 xtick.color: .15
 ytick.color: .15
-axes.axisbelow: True
 image.cmap: Greys
 lines.solid_capstyle: round
 
