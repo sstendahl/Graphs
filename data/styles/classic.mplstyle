@@ -33,6 +33,13 @@ ytick.left: True
 xtick.top: True
 ytick.right: True
 
+# grid
+axes.grid: False
+axes.grid.which: major
+axes.grid.axis: both
+grid.linewidth: 0.5
+grid.alpha: 1.0
+grid.linestyle: -
 
 patch.facecolor: FFFFFF
 
@@ -95,9 +102,6 @@ mathtext.fallback: cm
 axes.facecolor: w
 axes.edgecolor: k
 axes.linewidth: 1.0
-axes.grid: False
-axes.grid.which: major
-axes.grid.axis: both
 axes.titley: 1.0
 axes.titlepad: 5.0
 axes.titleweight: normal
@@ -144,9 +148,6 @@ ytick.color: k
 ytick.alignment: center
 
 grid.color: k
-grid.linestyle: -
-grid.linewidth: 0.5
-grid.alpha: 1.0
 
 legend.fancybox: False
 legend.loc: upper right

@@ -33,6 +33,14 @@ ytick.left: True
 xtick.top: True
 ytick.right: True
 
+# grid
+axes.grid: True
+axes.grid.which: major
+axes.grid.axis: both
+grid.linewidth: 1.0
+grid.alpha: 1.0
+grid.linestyle: -
+
 patch.facecolor: FFFFFF
 
 mathtext.default: regular
@@ -50,10 +58,7 @@ axes.facecolor: eee8d5
 axes.edgecolor: eee8d5
 axes.axisbelow: True
 axes.prop_cycle: cycler('color', ['268BD2', '2AA198', '859900', 'B58900', 'CB4B16', 'DC322F', 'D33682', '6C71C4'])
-axes.grid: True
 grid.color: fdf6e3
-grid.linestyle: -
-grid.linewidth: 1
 
 xtick.color: 657b83
 

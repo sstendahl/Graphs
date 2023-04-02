@@ -33,13 +33,20 @@ ytick.left: True
 xtick.top: True
 ytick.right: True
 
+# grid
+axes.grid: False
+axes.grid.which: major
+axes.grid.axis: both
+grid.linewidth: 0.5
+grid.alpha: 1.0
+grid.linestyle: -
+
 patch.facecolor: bfbfbf
 
 mathtext.default: regular
 
 # custom
 lines.color: black
-patch.facecolor: gray
 patch.edgecolor: black
 
 text.color: black

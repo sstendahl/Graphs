@@ -33,6 +33,14 @@ ytick.left: True
 xtick.top: True
 ytick.right: True
 
+# grid
+axes.grid: True
+axes.grid.which: major
+axes.grid.axis: both
+grid.linewidth: 1.0
+grid.alpha: 1.0
+grid.linestyle: -
+
 patch.facecolor: FFFFFF
 
 mathtext.default: regular
@@ -41,7 +49,6 @@ mathtext.default: regular
 axes.axisbelow: True
 axes.edgecolor: white
 axes.facecolor: EAEAF2
-axes.grid: True
 axes.labelcolor: .15
 axes.linewidth: 0
 axes.prop_cycle: cycler('color', ['4C72B0', '55A868', 'C44E52', '8172B2', 'CCB974', '64B5CD'])
@@ -50,8 +57,6 @@ figure.facecolor: white
 figure.figsize: 8.0, 5.5
 
 grid.color: white
-grid.linestyle: -
-grid.linewidth: 1
 
 image.cmap: Greys
 

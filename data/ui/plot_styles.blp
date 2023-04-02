@@ -185,6 +185,43 @@ template PlotStylesWindow : Adw.Window {
                 }
               }
             }
+
+            Adw.PreferencesGroup {
+              title: _("Grid");
+              description: _("Settings for the grid that is used in the plots");
+
+              Adw.ActionRow {
+                title: _("Show Grid");
+                subtitle: _("Show Show Grid on the Graph");
+                activatable-widget: show_grid;
+
+                Switch show_grid {
+                  valign: center;
+                }
+              }
+
+              Adw.ActionRow {
+                title: _("Grid Width");
+                subtitle: _("Width of the Lines in the Grid");
+                visible: bind show_grid.active;
+
+                Scale grid_linewidth {
+                  draw-value: true;
+                  width-request: 200;
+                }
+              }
+
+              Adw.ActionRow {
+                title: _("Grid Transparency");
+                subtitle: _("The Transparency of the Grid");
+                visible: bind show_grid.active;
+
+                Scale grid_transparency {
+                  draw-value: true;
+                  width-request: 200;
+                }
+              }
+            }
           }
         }
       }

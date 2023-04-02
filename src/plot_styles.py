@@ -62,6 +62,9 @@ class PlotStylesWindow(Adw.Window):
     tick_left = Gtk.Template.Child()
     tick_top = Gtk.Template.Child()
     tick_right = Gtk.Template.Child()
+    show_grid = Gtk.Template.Child()
+    grid_linewidth = Gtk.Template.Child()
+    grid_transparency = Gtk.Template.Child()
 
     def __init__(self, parent):
         super().__init__()
@@ -81,6 +84,8 @@ class PlotStylesWindow(Adw.Window):
         self.minor_tick_width.set_range(0, 4)
         self.major_tick_length.set_range(0, 20)
         self.minor_tick_length.set_range(0, 20)
+        self.grid_linewidth.set_range(0, 4)
+        self.grid_transparency.set_range(0, 1)
 
         self.present()
 
@@ -126,6 +131,11 @@ class PlotStylesWindow(Adw.Window):
         self.tick_top.set_active(style["xtick.top"] == "True")
         self.tick_right.set_active(style["ytick.right"] == "True")
 
+        # grid
+        self.show_grid.set_active(style["axes.grid"] == "True")
+        self.grid_linewidth.set_value(float(style["grid.linewidth"]))
+        self.grid_transparency.set_value(1 - float(style["grid.alpha"]))
+
     def apply(self):
         style = self.style
 
@@ -162,6 +172,11 @@ class PlotStylesWindow(Adw.Window):
         style["ytick.left"] = self.tick_left.get_active()
         style["xtick.top"] = self.tick_top.get_active()
         style["ytick.right"] = self.tick_right.get_active()
+
+        # grid
+        style["axes.grid"] = self.show_grid.get_active()
+        style["grid.linewidth"] = self.grid_linewidth.get_value()
+        style["grid.alpha"] = 1 - self.grid_transparency.get_value()
 
         # name
         styles_path = os.path.join(utilities.get_config_path(), "styles")

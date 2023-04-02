@@ -33,6 +33,14 @@ ytick.left: True
 xtick.top: True
 ytick.right: True
 
+# grid
+axes.grid: False
+axes.grid.which: major
+axes.grid.axis: both
+grid.linewidth: 1.0
+grid.alpha: 1.0
+grid.linestyle: -
+
 patch.facecolor: FFFFFF
 
 mathtext.default: regular
@@ -47,10 +55,8 @@ xtick.color: .15
 ytick.color: .15
 axes.axisbelow: True
 image.cmap: Greys
-grid.linestyle: -
 lines.solid_capstyle: round
 
-axes.grid: False
 axes.facecolor: white
 axes.edgecolor: .15
 axes.linewidth: 1.25

@@ -33,6 +33,14 @@ ytick.left: True
 xtick.top: True
 ytick.right: True
 
+# grid
+axes.grid: False
+axes.grid.which: major
+axes.grid.axis: both
+grid.linewidth: 1.3
+grid.alpha: 1.0
+grid.linestyle: -
+
 patch.facecolor: FFFFFF
 
 mathtext.default: regular
@@ -40,7 +48,6 @@ mathtext.default: regular
 # custom
 figure.figsize: 10.4, 7.15
 
-grid.linewidth: 1.3
 lines.linewidth: 2.275
 patch.linewidth: 0.39
 lines.markersize: 9.1

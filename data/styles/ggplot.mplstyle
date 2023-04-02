@@ -33,6 +33,14 @@ ytick.left: True
 xtick.top: True
 ytick.right: True
 
+# grid
+axes.grid: True
+axes.grid.which: major
+axes.grid.axis: both
+grid.linewidth: 0.5
+grid.alpha: 1.0
+grid.linestyle: -
+
 patch.facecolor: FFFFFF
 
 mathtext.default: regular
@@ -45,7 +53,6 @@ patch.antialiased: True
 axes.facecolor: E5E5E5
 axes.edgecolor: white
 axes.linewidth: 1
-axes.grid: True
 axes.labelcolor: 555555
 axes.axisbelow: True
 
@@ -56,7 +63,6 @@ xtick.color: 555555
 ytick.color: 555555
 
 grid.color: white
-grid.linestyle: -
 
 figure.facecolor: white
 figure.edgecolor: 0.50

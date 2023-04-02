@@ -33,7 +33,15 @@ ytick.left: True
 xtick.top: True
 ytick.right: True
 
-pathc.facecolor: 000000
+# grid
+axes.grid: False
+axes.grid.which: major
+axes.grid.axis: both
+grid.linewidth: 0.5
+grid.alpha: 1.0
+grid.linestyle: -
+
+patch.facecolor: 000000
 
 mathtext.default: regular
 
