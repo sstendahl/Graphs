@@ -3,6 +3,7 @@ from gi.repository import Gtk, GLib, Gdk
 
 from graphs import graphs, ui, utilities
 from graphs.edit_item import EditItemWindow
+from gi.repository import GObject
 
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/item_box.ui")
@@ -36,16 +37,30 @@ class ItemBox(Gtk.Box):
         self.update_color()
         self.drag_source = Gtk.DragSource.new()
         self.drag_source.set_actions(Gdk.DragAction.COPY)
+
+
+        self.drop_source = Gtk.DropTarget.new(str, Gdk.DragAction.COPY)
+
+        self.drop_source.connect('drop', self.on_dnd_drop)
         self.drag_source.connect('prepare', self.on_dnd_prepare)
         self.drag_source.connect('drag-begin', self.test)
         self.drag_source.connect('drag-end', self.end)
         self.add_controller(self.drag_source)
+        self.add_controller(self.drop_source)
+
+    def on_dnd_drop(self, drop_target, value, x, y):
+        # Handle the dropped data here
+        print("Yo")
+        print(f"Dropped data: {value}")
+
 
     def test(self, *args):
         print("start")
+        #print(*args)
 
     def end(self, *args):
         print("end")
+        print(*args)
 
     def on_dnd_prepare(self, drag_source, x, y):
         data = self.item.name
