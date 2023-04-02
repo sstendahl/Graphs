@@ -181,7 +181,7 @@ class Canvas(FigureCanvas):
 
     def set_limits(self):
         """Set the canvas limits for each axis that is present"""
-        used_axes, items = plotting_tools.get_used_axes(self.parent)
+        used_axes, items = utilities.get_used_axes(self.parent)
         axes = {
             "left": self.axis.get_yscale(),
             "right": self.right_axis.get_yscale(),
