@@ -16,6 +16,42 @@ def remove_unused_config_keys(config, template):
     return config
 
 
+def sig_fig_round(number, digits):
+    """Round a number to the specified number of significant digits."""
+    if number is None:
+        return None
+    power = "{:e}".format(float(number)).split("e")[1]
+    return round(float(number), -(int(power) - digits + 1))
+
+
+def get_used_axes(self):
+    used_axes = {
+        "left": False,
+        "right": False,
+        "top": False,
+        "bottom": False
+    }
+    items = {
+        "left": [],
+        "right": [],
+        "top": [],
+        "bottom": []
+    }
+    for _key, item in self.datadict.items():
+        if item.plot_y_position == "left":
+            used_axes["left"] = True
+            items["left"].append(item)
+        if item.plot_y_position == "right":
+            used_axes["right"] = True
+            items["right"].append(item)
+        if item.plot_x_position == "top":
+            used_axes["top"] = True
+            items["top"].append(item)
+        if item.plot_x_position == "bottom":
+            used_axes["bottom"] = True
+            items["bottom"].append(item)
+    return used_axes, items
+
 def add_new_config_keys(config, template):
     add_list = []
     for key in template.keys():

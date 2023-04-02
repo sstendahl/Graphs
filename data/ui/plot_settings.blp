@@ -40,6 +40,75 @@ template PlotSettingsWindow : Adw.PreferencesWindow {
     }
 
     Adw.PreferencesGroup {
+      title: _("Axes Limits");
+      description: _("Limits used on the axes");
+      Box {
+      	orientation: horizontal;
+      	margin-bottom: 12;
+      	Adw.PreferencesGroup {
+      	margin-end: 3;
+      	Adw.EntryRow min_left {
+	title: _("Minimum left-hand Y-axis");
+	}
+	}
+	Adw.PreferencesGroup {
+      	margin-start: 3;
+      	Adw.EntryRow max_left {
+	title: _("Maximum left-hand Y-axis");
+	}
+	}
+	}
+      Box {
+      	orientation: horizontal;
+      	margin-bottom: 12;
+      	Adw.PreferencesGroup {
+      	margin-end: 3;
+      	Adw.EntryRow min_bottom {
+	title: _("Minimum bottom X-axis");
+	}
+	}
+	Adw.PreferencesGroup {
+      	margin-start: 3;
+      	Adw.EntryRow max_bottom {
+	title: _("Maximum bottom X-axis");
+	}
+	}
+	}
+      Box {
+      	orientation: horizontal;
+      	margin-bottom: 12;
+      	Adw.PreferencesGroup {
+      	margin-end: 3;
+      	Adw.EntryRow min_right {
+	title: _("Minimum right-hand Y-axis");
+	}
+	}
+	Adw.PreferencesGroup {
+      	margin-start: 3;
+      	Adw.EntryRow max_right {
+	title: _("Maximum right-hand Y-axis");
+	}
+	}
+	}
+      Box {
+      	orientation: horizontal;
+      	margin-bottom: 12;
+      	Adw.PreferencesGroup {
+      	margin-end: 3;
+      	Adw.EntryRow min_top {
+	title: _("Minimum top X-axis");
+	}
+	}
+	Adw.PreferencesGroup {
+      	margin-start: 3;
+      	Adw.EntryRow max_top {
+	title: _("Maximum top Y-axis");
+	}
+	}
+	}
+    }
+
+    Adw.PreferencesGroup {
       title: _("Scaling");
       description: _("The scaling used for each axis");
 

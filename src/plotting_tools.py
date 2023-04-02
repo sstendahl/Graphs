@@ -1,37 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 import logging
 
-from graphs import graphs
-
-
-def get_used_axes(self):
-    used_axes = {
-        "left": False,
-        "right": False,
-        "top": False,
-        "bottom": False
-    }
-    items = {
-        "left": [],
-        "right": [],
-        "top": [],
-        "bottom": []
-    }
-    for _key, item in self.datadict.items():
-        if item.plot_y_position == "left":
-            used_axes["left"] = True
-            items["left"].append(item)
-        if item.plot_y_position == "right":
-            used_axes["right"] = True
-            items["right"].append(item)
-        if item.plot_x_position == "top":
-            used_axes["top"] = True
-            items["top"].append(item)
-        if item.plot_x_position == "bottom":
-            used_axes["bottom"] = True
-            items["bottom"].append(item)
-    return used_axes, items
-
+from graphs import graphs, utilities
 
 def set_axis_limits(graph_limits, axis, axis_type,
                     limits={"xmin": None, "xmax": None,
@@ -61,9 +31,13 @@ def set_axis_limits(graph_limits, axis, axis_type,
         graph_limits["ymax"] *= 2
     try:
         if axis_type == "X":
-            axis.set_xlim(graph_limits["xmin"], graph_limits["xmax"])
+            xmin = utilities.sig_fig_round(graph_limits["xmin"], 3)
+            xmax = utilities.sig_fig_round(graph_limits["xmax"], 3)
+            axis.set_xlim(xmin, xmax)
         if axis_type == "Y":
-            axis.set_ylim(graph_limits["ymin"], graph_limits["ymax"])
+            ymin = utilities.sig_fig_round(graph_limits["ymin"], 3)
+            ymax = utilities.sig_fig_round(graph_limits["ymax"], 3)
+            axis.set_ylim(ymin, ymax)
     except ValueError:
         logging.error(
             "Could not set limits, one of the values was probably infinite")
@@ -123,7 +97,7 @@ def hide_unused_axes(self, canvas):
                  canvas.top_left_axis, canvas.top_right_axis]:
         axis.get_xaxis().set_visible(False)
         axis.get_yaxis().set_visible(False)
-    used_axes = get_used_axes(self)[0]
+    used_axes = utilities.get_used_axes(self)[0]
     if used_axes["left"]:
         canvas.top_left_axis.get_yaxis().set_visible(True)
         canvas.axis.get_yaxis().set_visible(True)
@@ -136,6 +110,11 @@ def hide_unused_axes(self, canvas):
     if used_axes["bottom"]:
         canvas.axis.get_xaxis().set_visible(True)
         canvas.right_axis.get_xaxis().set_visible(True)
+
+    canvas.top_right_axis.get_xaxis().set_visible(False)
+    canvas.right_axis.get_xaxis().set_visible(False)
+    canvas.top_right_axis.get_yaxis().set_visible(False)
+    canvas.top_left_axis.get_yaxis().set_visible(False)
 
 
 def change_left_yscale(action, target, self):
