@@ -102,7 +102,7 @@ class Canvas(FigureCanvas):
         self.axis.set_xscale(plot_settings.xscale)
 
     def set_ticks(self):
-        used_axes = plotting_tools.get_used_axes(self.parent)[0]
+        used_axes = utilities.get_used_axes(self.parent)[0]
         bottom = used_axes["bottom"] and (self.style["xtick.bottom"] == "True")
         left = used_axes["left"] and (self.style["ytick.left"] == "True")
         top = used_axes["top"] and (self.style["xtick.top"] == "True")
@@ -193,7 +193,7 @@ class Canvas(FigureCanvas):
 
     def set_limits(self):
         """Set the canvas limits for each axis that is present"""
-        used_axes, items = plotting_tools.get_used_axes(self.parent)
+        used_axes, items = utilities.get_used_axes(self.parent)
         axes = {
             "left": self.axis.get_yscale(),
             "right": self.right_axis.get_yscale(),
