@@ -100,6 +100,7 @@ def add_item(self, item, reset_clipboard=True):
     self.main_window.no_data_label_box.set_visible(False)
     self.item_boxes[key] = ItemBox(self, item)
     self.main_window.list_box.append(self.item_boxes[key])
+    self.item_menu[key] = self.main_window.list_box.get_last_child()
     if reset_clipboard:
         clipboard.reset(self)
     reload(self)
@@ -107,7 +108,7 @@ def add_item(self, item, reset_clipboard=True):
 
 
 def delete_item(self, key, give_toast=False):
-    self.main_window.list_box.remove(self.item_boxes[key])
+    self.main_window.list_box.remove(self.item_menu[key])
     name = self.datadict[key].name
     del self.item_boxes[key]
     del self.datadict[key]
