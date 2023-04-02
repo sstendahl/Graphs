@@ -31,9 +31,13 @@ def set_axis_limits(graph_limits, axis, axis_type,
         graph_limits["ymax"] *= 2
     try:
         if axis_type == "X":
-            axis.set_xlim(graph_limits["xmin"], graph_limits["xmax"])
+            xmin = utilities.sig_fig_round(graph_limits["xmin"], 3)
+            xmax = utilities.sig_fig_round(graph_limits["xmax"], 3)
+            axis.set_xlim(xmin, xmax)
         if axis_type == "Y":
-            axis.set_ylim(graph_limits["ymin"], graph_limits["ymax"])
+            ymin = utilities.sig_fig_round(graph_limits["ymin"], 3)
+            ymax = utilities.sig_fig_round(graph_limits["ymax"], 3)
+            axis.set_ylim(ymin, ymax)
     except ValueError:
         logging.error(
             "Could not set limits, one of the values was probably infinite")
