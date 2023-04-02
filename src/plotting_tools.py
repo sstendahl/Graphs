@@ -3,6 +3,7 @@ import logging
 
 from graphs import graphs, utilities
 
+
 def set_axis_limits(graph_limits, axis, axis_type,
                     limits={"xmin": None, "xmax": None,
                             "ymin": None, "ymax": None}):
