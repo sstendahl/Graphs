@@ -257,6 +257,20 @@ template PlotStylesWindow : Adw.Window {
                 }
               }
             }
+
+            Adw.PreferencesGroup {
+              title: _("Other");
+
+              Adw.ActionRow {
+                title: _("Axis Width");
+                subtitle: _("The thickness of the axes");
+
+                Scale axis_width {
+                  draw-value: true;
+                  width-request: 200;
+                }
+              }
+            }
           }
         }
       }

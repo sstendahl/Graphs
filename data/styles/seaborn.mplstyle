@@ -57,6 +57,9 @@ ytick.minor.pad: 7
 axes.labelpad: 5
 axes.titlepad: 15
 
+# other
+axes.linewidth: 0
+
 patch.facecolor: FFFFFF
 
 mathtext.default: regular
@@ -66,7 +69,6 @@ axes.axisbelow: True
 axes.edgecolor: white
 axes.facecolor: EAEAF2
 axes.labelcolor: .15
-axes.linewidth: 0
 axes.prop_cycle: cycler('color', ['4C72B0', '55A868', 'C44E52', '8172B2', 'CCB974', '64B5CD'])
 
 figure.facecolor: white

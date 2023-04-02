@@ -57,6 +57,9 @@ ytick.minor.pad: 7
 axes.labelpad: 5
 axes.titlepad: 15
 
+# other
+axes.linewidth: 1
+
 patch.facecolor: FFFFFF
 
 mathtext.default: regular
@@ -76,5 +79,4 @@ lines.solid_capstyle: round
 
 axes.facecolor: white
 axes.edgecolor: .8
-axes.linewidth: 1
 grid.color: .8

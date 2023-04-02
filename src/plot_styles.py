@@ -68,6 +68,7 @@ class PlotStylesWindow(Adw.Window):
     value_padding = Gtk.Template.Child()
     label_padding = Gtk.Template.Child()
     title_padding = Gtk.Template.Child()
+    axis_width = Gtk.Template.Child()
 
     def __init__(self, parent):
         super().__init__()
@@ -92,6 +93,7 @@ class PlotStylesWindow(Adw.Window):
         self.value_padding.set_range(0, 40)
         self.label_padding.set_range(0, 40)
         self.title_padding.set_range(0, 40)
+        self.axis_width.set_range(0, 4)
 
         self.present()
 
@@ -146,6 +148,9 @@ class PlotStylesWindow(Adw.Window):
         self.value_padding.set_value(float(style["xtick.major.pad"]))
         self.label_padding.set_value(float(style["axes.labelpad"]))
         self.title_padding.set_value(float(style["axes.titlepad"]))
+
+        # other
+        self.axis_width.set_value(float(style["axes.linewidth"]))
 
     def apply(self):
         style = self.style
@@ -203,6 +208,9 @@ class PlotStylesWindow(Adw.Window):
         style["ytick.minor.pad"] = self.value_padding.get_value()
         style["axes.labelpad"] = self.label_padding.get_value()
         style["axes.titlepad"] = self.title_padding.get_value()
+
+        # other
+        style["axes.linewidth"] = self.axis_width.get_value()
 
         # name & save
         styles_path = os.path.join(utilities.get_config_path(), "styles")

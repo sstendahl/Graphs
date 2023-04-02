@@ -57,6 +57,9 @@ ytick.minor.pad: 7
 axes.labelpad: 5
 axes.titlepad: 15
 
+# other
+axes.linewidth: 1
+
 patch.facecolor: 000000
 
 mathtext.default: regular
