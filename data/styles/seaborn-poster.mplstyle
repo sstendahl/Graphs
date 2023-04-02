@@ -20,6 +20,9 @@ xtick.major.width: 1.6
 xtick.minor.width: 0.8
 xtick.major.size: 4
 xtick.minor.size: 2
+xtick.major.pad: 11.2
+xtick.minor.pad: 11.2
+xtick.alignment : center
 
 ytick.direction: out
 ytick.minor.visible: False
@@ -27,11 +30,13 @@ ytick.major.width: 1.6
 ytick.minor.width: 0.8
 ytick.major.size: 4
 ytick.minor.size: 2
+ytick.alignment: center
 
 xtick.bottom: True
 ytick.left: True
 xtick.top: True
 ytick.right: True
+ytick.alignment: center
 
 # grid
 axes.grid: False
@@ -40,6 +45,14 @@ axes.grid.axis: both
 grid.linewidth: 1.6
 grid.alpha: 1.0
 grid.linestyle: -
+
+# padding
+xtick.major.pad: 11.2
+xtick.minor.pad: 11.2
+ytick.major.pad: 11.2
+ytick.minor.pad: 11.2
+axes.labelpad: 6
+axes.titlepad: 18
 
 patch.facecolor: FFFFFF
 
@@ -52,6 +65,3 @@ lines.linewidth: 2.8
 patch.linewidth: 0.48
 lines.markersize: 11.2
 lines.markeredgewidth: 0
-
-xtick.major.pad: 11.2
-ytick.major.pad: 11.2

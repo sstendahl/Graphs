@@ -65,6 +65,9 @@ class PlotStylesWindow(Adw.Window):
     show_grid = Gtk.Template.Child()
     grid_linewidth = Gtk.Template.Child()
     grid_transparency = Gtk.Template.Child()
+    value_padding = Gtk.Template.Child()
+    label_padding = Gtk.Template.Child()
+    title_padding = Gtk.Template.Child()
 
     def __init__(self, parent):
         super().__init__()
@@ -86,6 +89,9 @@ class PlotStylesWindow(Adw.Window):
         self.minor_tick_length.set_range(0, 20)
         self.grid_linewidth.set_range(0, 4)
         self.grid_transparency.set_range(0, 1)
+        self.value_padding.set_range(0, 40)
+        self.label_padding.set_range(0, 40)
+        self.title_padding.set_range(0, 40)
 
         self.present()
 
@@ -136,6 +142,11 @@ class PlotStylesWindow(Adw.Window):
         self.grid_linewidth.set_value(float(style["grid.linewidth"]))
         self.grid_transparency.set_value(1 - float(style["grid.alpha"]))
 
+        # padding
+        self.value_padding.set_value(float(style["xtick.major.pad"]))
+        self.label_padding.set_value(float(style["axes.labelpad"]))
+        self.title_padding.set_value(float(style["axes.titlepad"]))
+
     def apply(self):
         style = self.style
 
@@ -178,7 +189,15 @@ class PlotStylesWindow(Adw.Window):
         style["grid.linewidth"] = self.grid_linewidth.get_value()
         style["grid.alpha"] = 1 - self.grid_transparency.get_value()
 
-        # name
+        # padding
+        style["xtick.major.pad"] = self.value_padding.get_value()
+        style["xtick.minor.pad"] = self.value_padding.get_value()
+        style["ytick.major.pad"] = self.value_padding.get_value()
+        style["ytick.minor.pad"] = self.value_padding.get_value()
+        style["axes.labelpad"] = self.label_padding.get_value()
+        style["axes.titlepad"] = self.title_padding.get_value()
+
+        # name & save
         styles_path = os.path.join(utilities.get_config_path(), "styles")
         os.remove(os.path.join(styles_path, f"{style['name']}.mplstyle"))
         style["name"] = self.style_name.get_text()

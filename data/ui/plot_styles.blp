@@ -222,6 +222,41 @@ template PlotStylesWindow : Adw.Window {
                 }
               }
             }
+
+            Adw.PreferencesGroup {
+              title: _("Padding");
+              description: _("Padding for different parts of the plot");
+
+              Adw.ActionRow {
+                title: _("Value Padding");
+                subtitle: _("The padding between axis and values");
+
+                Scale value_padding {
+                  draw-value: true;
+                  width-request: 200;
+                }
+              }
+
+              Adw.ActionRow {
+                title: _("Label Padding");
+                subtitle: _("The padding between axis and labels");
+
+                Scale label_padding {
+                  draw-value: true;
+                  width-request: 200;
+                }
+              }
+
+              Adw.ActionRow {
+                title: _("Title Padding");
+                subtitle: _("The padding between axis and the title");
+
+                Scale title_padding {
+                  draw-value: true;
+                  width-request: 200;
+                }
+              }
+            }
           }
         }
       }

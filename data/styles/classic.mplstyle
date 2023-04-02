@@ -20,6 +20,7 @@ xtick.major.width: 0.5
 xtick.minor.width: 0.5
 xtick.major.size: 4
 xtick.minor.size: 2
+xtick.alignment: center
 
 ytick.direction: in
 ytick.minor.visible: False
@@ -27,6 +28,7 @@ ytick.major.width: 0.5
 ytick.minor.width: 0.5
 ytick.major.size: 4
 ytick.minor.size: 2
+ytick.alignment: center
 
 xtick.bottom: True
 ytick.left: True
@@ -39,7 +41,15 @@ axes.grid.which: major
 axes.grid.axis: both
 grid.linewidth: 0.5
 grid.alpha: 1.0
-grid.linestyle: -
+grid.linestyle: :
+
+# padding
+xtick.major.pad: 4
+xtick.minor.pad: 4
+ytick.major.pad: 4
+ytick.minor.pad: 4
+axes.labelpad: 5
+axes.titlepad: 15
 
 patch.facecolor: FFFFFF
 
@@ -137,15 +147,9 @@ date.autoformatter.second: %H:%M:%S.%f
 date.autoformatter.microsecond: %H:%M:%S.%f
 date.converter: auto
 
-xtick.major.pad: 4
-xtick.minor.pad: 4
 xtick.color: k
-xtick.alignment : center
 
-ytick.major.pad: 4
-ytick.minor.pad: 4
 ytick.color: k
-ytick.alignment: center
 
 grid.color: k
 
