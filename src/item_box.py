@@ -3,7 +3,6 @@ from gi.repository import Gtk, GLib, Gdk
 
 from graphs import graphs, ui, utilities
 from graphs.edit_item import EditItemWindow
-from gi.repository import GObject
 
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/item_box.ui")
@@ -49,9 +48,12 @@ class ItemBox(Gtk.Box):
 
     def on_dnd_drop(self, drop_target, value, x, y):
         # Handle the dropped data here
-        self.parent.datadict = utilities.swap_key_positions(self.parent.datadict, drop_target.key, value)
-        self.parent.item_boxes = utilities.swap_key_positions(self.parent.item_boxes, drop_target.key, value)
-        self.parent.item_menu = utilities.swap_key_positions(self.parent.item_menu, drop_target.key, value)
+        self.parent.datadict = utilities.swap_key_positions(
+        self.parent.datadict, drop_target.key, value)
+        self.parent.item_boxes = utilities.swap_key_positions(
+        self.parent.item_boxes, drop_target.key, value)
+        self.parent.item_menu = utilities.swap_key_positions(
+        self.parent.item_menu, drop_target.key, value)
         for key, item in self.parent.item_menu.items():
             self.parent.main_window.list_box.remove(item)
             self.parent.main_window.list_box.append(item)
