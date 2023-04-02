@@ -96,10 +96,40 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
             self.plot_legend_check.set_active(True)
         utilities.populate_chooser(self.plot_style, plt.style.available)
         utilities.set_chooser(self.plot_style, parent.plot_settings.plot_style)
-
+        self.hide_unused_axes_limits(parent)
         self.connect("close-request", self.on_close, parent)
         self.set_transient_for(parent.main_window)
         self.present()
+
+    def hide_unused_axes_limits(self, parent):
+        used_axes = utilities.get_used_axes(parent)[0]
+        if not used_axes["left"]:
+            self.min_left.set_visible(False)
+            self.max_left.set_visible(False)
+        if not used_axes["right"]:
+            self.min_right.set_visible(False)
+            self.max_right.set_visible(False)
+        if not used_axes["top"]:
+            self.min_top.set_visible(False)
+            self.max_top.set_visible(False)
+        if not used_axes["bottom"]:
+            self.min_bottom.set_visible(False)
+            self.max_bottom.set_visible(False)
+
+    def set_limits(self, parent):
+        min_left = float(self.min_left.get_text())
+        max_left = float(self.max_left.get_text())
+        min_bottom = float(self.min_bottom.get_text())
+        max_bottom = float(self.max_bottom.get_text())
+        min_right = float(self.min_right.get_text())
+        max_right = float(self.max_right.get_text())
+        min_top = float(self.min_top.get_text())
+        max_top = float(self.max_top.get_text())
+
+        parent.canvas.axis.set_xlim(min_bottom, max_bottom)
+        parent.canvas.axis.set_ylim(min_left, max_left)
+        parent.canvas.right_axis.set_ylim(min_right, max_right)
+        parent.canvas.top_left_axis.set_xlim(min_top, max_top)
 
     def on_close(self, _, parent):
         plot_settings = parent.plot_settings
@@ -140,21 +170,5 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
         plot_settings.legend = self.plot_legend_check.get_active()
         plot_settings.plot_style = \
             self.plot_style.get_selected_item().get_string()
-
-
-
-
         graphs.reload(parent)
-        min_left = float(self.min_left.get_text())
-        max_left = float(self.max_left.get_text())
-        min_bottom = float(self.min_bottom.get_text())
-        max_bottom = float(self.max_bottom.get_text())
-        min_right = float(self.min_right.get_text())
-        max_right = float(self.max_right.get_text())
-        min_top = float(self.min_top.get_text())
-        max_top = float(self.max_top.get_text())
-
-        parent.canvas.axis.set_xlim(min_bottom, max_bottom)
-        parent.canvas.axis.set_ylim(min_left, max_left)
-        parent.canvas.right_axis.set_ylim(min_right, max_right)
-        parent.canvas.top_left_axis.set_xlim(min_top, max_top)
+        self.set_limits(parent)
