@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 import logging
 
-from graphs import graphs
+from graphs import graphs, utilities
 
 def set_axis_limits(graph_limits, axis, axis_type,
                     limits={"xmin": None, "xmax": None,
@@ -106,6 +106,11 @@ def hide_unused_axes(self, canvas):
     if used_axes["bottom"]:
         canvas.axis.get_xaxis().set_visible(True)
         canvas.right_axis.get_xaxis().set_visible(True)
+
+    canvas.top_right_axis.get_xaxis().set_visible(False)
+    canvas.right_axis.get_xaxis().set_visible(False)
+    canvas.top_right_axis.get_yaxis().set_visible(False)
+    canvas.top_left_axis.get_yaxis().set_visible(False)
 
 
 def change_left_yscale(action, target, self):
