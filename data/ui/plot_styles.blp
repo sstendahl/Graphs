@@ -1,0 +1,177 @@
+using Gtk 4.0;
+using Adw 1;
+
+template PlotStylesWindow : Adw.Window {
+  modal: true;
+  default-width: 650;
+  default-height: 400;
+
+  ShortcutController {
+    Shortcut {
+      trigger: "Escape";
+      action: "action(window.close)";
+    }
+  }
+
+  Box {
+    orientation: vertical;
+    Adw.HeaderBar {
+      Button back_button {
+        icon-name: "left-symbolic";
+        visible: false;
+      }
+      [end]
+      Button reset_button {
+        icon-name: "history-undo-symbolic";
+        tooltip-text: _("Reset to default styles");
+        visible: bind back_button.visible inverted;
+      }
+      styles ["flat"]
+    }
+
+    Adw.Leaflet leaflet {
+      can-unfold: false;
+      can-navigate-back: false;
+      can-navigate-forward: false;
+      vexpand: true;
+      hexpand: true;
+      ScrolledWindow {
+        hscrollbar-policy: never;
+        Adw.Clamp {
+          margin-bottom: 12;
+          margin-top: 12;
+          margin-start: 12;
+          margin-end: 12;
+          ListBox styles_box {
+            vexpand: false;
+            valign: start;
+            hexpand: true;
+            selection-mode: none;
+            styles ["boxed-list"]
+          }
+        }
+      }
+
+      ScrolledWindow {
+        hscrollbar-policy: never;
+        Adw.Clamp {
+          margin-bottom: 12;
+          margin-top: 12;
+          margin-start: 12;
+          margin-end: 12;
+          Box {
+            orientation: vertical;
+            hexpand: true;
+            spacing: 20;
+
+            Adw.PreferencesGroup {
+              Adw.ActionRow {
+                title: _("Font");
+                subtitle: _("The font used in the graph");
+                activatable-widget: font_chooser;
+
+                FontDialogButton font_chooser {
+                  valign: center;
+                  dialog: FontDialog {};
+                }
+              }
+            }
+
+            Adw.PreferencesGroup {
+              title: _("Ticks");
+              description: _("Settings for the ticks that are used in the plots");
+
+              Adw.ComboRow tick_direction {
+                title: _("Tick Directions");
+                subtitle: _("Choose to have the ticks in the plot either in or out");
+                model: StringList {
+                  strings ["in", "out"]
+                };
+              }
+
+              Adw.ActionRow {
+                title: _("Major Tick Width");
+                subtitle: _("The thickness of the major ticks");
+
+                Scale major_tick_width {
+                  draw-value: true;
+                  width-request: 200;
+                }
+              }
+
+              Adw.ActionRow {
+                title: _("Minor Tick Width");
+                subtitle: _("The thickness of the minor ticks");
+
+                Scale minor_tick_width {
+                  draw-value: true;
+                  width-request: 200;
+                }
+              }
+
+              Adw.ActionRow {
+                title: _("Major Tick Length");
+                subtitle: _("The length of the major ticks");
+
+                Scale major_tick_length {
+                  draw-value: true;
+                  width-request: 200;
+                }
+              }
+
+              Adw.ActionRow {
+                title: _("Minor Tick Length");
+                subtitle: _("The length of the minor ticks");
+
+                Scale minor_tick_length {
+                  draw-value: true;
+                  width-request: 200;
+                }
+              }
+
+              Adw.ActionRow {
+                title: _("Ticks on Bottom Axis");
+                subtitle: _("Show ticks on the bottom");
+                activatable-widget: tick_bottom;
+
+                Switch tick_bottom {
+                  valign: center;
+                }
+              }
+
+              Adw.ActionRow {
+                title: _("Ticks on Left Axis");
+                subtitle: _("Show ticks on the left-hand axis");
+                activatable-widget: tick_left;
+
+                Switch tick_left {
+                  valign: center;
+                }
+              }
+
+              Adw.ActionRow {
+                title: _("Ticks on Right Axis");
+                subtitle: _("Show ticks on the right");
+                activatable-widget: tick_right;
+
+                Switch tick_right {
+                  valign: center;
+                }
+              }
+
+              Adw.ActionRow {
+                title: _("Ticks on Top Axis");
+                subtitle: _("Show ticks on the top");
+                activatable-widget: tick_top;
+
+                Switch tick_top {
+                  valign: center;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

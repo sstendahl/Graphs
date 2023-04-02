@@ -1,5 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
+import os
 from gi.repository import Gdk
+from pathlib import Path
 
 import numpy
 
@@ -187,3 +189,9 @@ def shorten_label(label, max_length=20):
     if len(label) > max_length:
         label = f"{label[:max_length]}..."
     return label
+
+
+def get_config_path() -> str:
+    if os.getenv("XDG_CONFIG_HOME"):
+        return os.path.join(os.getenv("XDG_CONFIG_HOME"), "Graphs")
+    return os.path.join(str(Path.home()), ".local", "share", "Graphs")

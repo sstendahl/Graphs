@@ -1,0 +1,58 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+# bmh
+
+# font
+font.family: sans-serif
+font.sans-serif: DejaVu Sans
+font.style: normal
+font.weight: normal
+font.size: 12
+axes.labelsize: 12
+xtick.labelsize: 12
+ytick.labelsize: 12
+axes.titlesize: 12
+legend.fontsize: 12
+
+# ticks
+xtick.direction: in
+xtick.major.width: 1
+xtick.minor.width: 0.5
+xtick.major.size: 4
+xtick.minor.size: 2
+
+ytick.direction: in
+ytick.major.width: 1
+ytick.minor.width: 0.5
+ytick.major.size: 4
+ytick.minor.size: 2
+
+xtick.bottom: True
+ytick.left: True
+xtick.top: True
+ytick.right: True
+
+patch.facecolor: FFFFFF
+
+mathtext.default: regular
+
+# custom
+lines.linewidth: 2.0
+
+patch.linewidth: 0.5
+patch.edgecolor: eeeeee
+patch.antialiased: True
+
+text.hinting_factor: 8
+
+mathtext.fontset: cm
+
+axes.facecolor: eeeeee
+axes.edgecolor: bcbcbc
+axes.grid : True
+axes.prop_cycle: cycler('color', ['348ABD', 'A60628', '7A68A6', '467821', 'D55E00', 'CC79A7', '56B4E9', '009E73', 'F0E442', '0072B2'])
+
+grid.color: b2b2b2
+grid.linestyle: --
+grid.linewidth: 0.5
+
+legend.fancybox: True

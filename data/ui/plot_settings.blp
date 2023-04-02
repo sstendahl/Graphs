@@ -37,17 +37,6 @@ template PlotSettingsWindow : Adw.PreferencesWindow {
       Adw.EntryRow plot_right_label {
         title: _("Right Axis Label");
       }
-
-      Adw.ActionRow {
-        title: _("Font");
-        subtitle: _("The font used in the graph");
-        activatable-widget: plot_font_chooser;
-
-        FontDialogButton plot_font_chooser {
-          valign: center;
-          dialog: FontDialog {};
-        }
-      }
     }
 
     Adw.PreferencesGroup {
@@ -84,99 +73,6 @@ template PlotSettingsWindow : Adw.PreferencesWindow {
         model: StringList {
           strings ["log", "linear"]
         };
-      }
-    }
-
-    Adw.PreferencesGroup {
-      title: _("Ticks");
-      description: _("Settings for the ticks that are used in the plots");
-
-      Adw.ComboRow plot_tick_direction {
-        title: _("Tick Directions");
-        subtitle: _("Choose to have the ticks in the plot either in or out");
-        model: StringList {
-          strings ["in", "out"]
-        };
-      }
-
-      Adw.ActionRow {
-        title: _("Major Tick Width");
-        subtitle: _("The thickness of the major ticks");
-
-        Scale plot_major_tick_width {
-          draw-value: true;
-          width-request: 200;
-        }
-      }
-
-      Adw.ActionRow {
-        title: _("Minor Tick Width");
-        subtitle: _("The thickness of the minor ticks");
-
-        Scale plot_minor_tick_width {
-          draw-value: true;
-          width-request: 200;
-        }
-      }
-
-      Adw.ActionRow {
-        title: _("Major Tick Length");
-        subtitle: _("The length of the major ticks");
-
-        Scale plot_major_tick_length {
-          draw-value: true;
-          width-request: 200;
-        }
-      }
-
-      Adw.ActionRow {
-        title: _("Minor Tick Length");
-        subtitle: _("The length of the minor ticks");
-
-        Scale plot_minor_tick_length {
-          draw-value: true;
-          width-request: 200;
-        }
-      }
-
-      Adw.ActionRow {
-        title: _("Ticks on Bottom Axis");
-        subtitle: _("Show ticks on the bottom");
-        activatable-widget: plot_tick_bottom;
-
-        Switch plot_tick_bottom {
-          valign: center;
-        }
-      }
-
-      Adw.ActionRow {
-        title: _("Ticks on Left Axis");
-        subtitle: _("Show ticks on the left-hand axis");
-        activatable-widget: plot_tick_left;
-
-        Switch plot_tick_left {
-          valign: center;
-        }
-      }
-
-      Adw.ActionRow {
-        title: _("Ticks on Right Axis");
-        subtitle: _("Show ticks on the right");
-        activatable-widget: plot_tick_right;
-
-        Switch plot_tick_right {
-          valign: center;
-        }
-      }
-
-      Adw.ActionRow {
-        title: _("Ticks on Top Axis");
-        subtitle: _("Show ticks on the top");
-        activatable-widget: plot_tick_top;
-
-        Switch plot_tick_top {
-          valign: center;
-        }
       }
     }
 

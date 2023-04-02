@@ -1,0 +1,61 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+# grayscale
+
+# font
+font.family: sans-serif
+font.sans-serif: DejaVu Sans
+font.style: normal
+font.weight: normal
+font.size: 12
+axes.labelsize: 12
+xtick.labelsize: 12
+ytick.labelsize: 12
+axes.titlesize: 12
+legend.fontsize: 12
+
+# ticks
+xtick.direction: out
+xtick.major.width: 1
+xtick.minor.width: 0.5
+xtick.major.size: 4
+xtick.minor.size: 2
+
+ytick.direction: out
+ytick.major.width: 1
+ytick.minor.width: 0.5
+ytick.major.size: 4
+ytick.minor.size: 2
+
+xtick.bottom: True
+ytick.left: True
+xtick.top: True
+ytick.right: True
+
+patch.facecolor: bfbfbf
+
+mathtext.default: regular
+
+# custom
+lines.color: black
+patch.facecolor: gray
+patch.edgecolor: black
+
+text.color: black
+
+axes.facecolor: white
+axes.edgecolor: black
+axes.labelcolor: black
+axes.prop_cycle: cycler('color', ['0.00', '0.40', '0.60', '0.70'])
+
+xtick.color: black
+ytick.color: black
+
+grid.color: black
+
+figure.facecolor: 0.75
+figure.edgecolor: white
+
+image.cmap: gray
+
+savefig.facecolor: white
+savefig.edgecolor: white

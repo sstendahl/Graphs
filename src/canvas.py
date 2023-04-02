@@ -5,7 +5,7 @@ from cycler import cycler
 
 from gi.repository import Adw
 
-from graphs import plotting_tools, utilities
+from graphs import plotting_tools, utilities, plot_styles, file_io
 from graphs.rename import RenameWindow
 
 from matplotlib import pyplot
@@ -18,13 +18,17 @@ from matplotlib.widgets import SpanSelector
 class Canvas(FigureCanvas):
     """Create the graph widget"""
     def __init__(self, parent):
+        self.parent = parent
+        style_path = plot_styles.get_user_styles(
+            self.parent)[self.parent.plot_settings.plot_style]
+        pyplot.style.use(style_path)
+        self.style = file_io.get_style(style_path)
         self.figure = Figure()
         self.figure.set_tight_layout(True)
+        self.figure.patch.set_facecolor(f"#{self.style['patch.facecolor']}")
         self.one_click_trigger = False
         self.time_first_click = 0
-        self.parent = parent
         self.mpl_connect("button_release_event", self)
-        self.set_style()
         self.axis = self.figure.add_subplot(111)
         self.right_axis = self.axis.twinx()
         self.top_left_axis = self.axis.twiny()
@@ -78,18 +82,19 @@ class Canvas(FigureCanvas):
         """Set the properties that are related to the axes."""
         plot_settings = self.parent.plot_settings
         self.title = self.axis.set_title(plot_settings.title)
+        font_weight = self.style["font.weight"]
         self.bottom_label = self.axis.set_xlabel(
             plot_settings.xlabel,
-            fontweight=plot_settings.font_weight)
+            fontweight=font_weight)
         self.right_label = self.right_axis.set_ylabel(
             plot_settings.right_label,
-            fontweight=plot_settings.font_weight)
+            fontweight=font_weight)
         self.top_label = self.top_left_axis.set_xlabel(
             plot_settings.top_label,
-            fontweight=plot_settings.font_weight)
+            fontweight=font_weight)
         self.left_label = self.axis.set_ylabel(
             plot_settings.ylabel,
-            fontweight=plot_settings.font_weight)
+            fontweight=font_weight)
         self.axis.set_yscale(plot_settings.yscale)
         self.right_axis.set_yscale(plot_settings.right_scale)
         self.top_left_axis.set_xscale(plot_settings.top_scale)
@@ -97,58 +102,15 @@ class Canvas(FigureCanvas):
         self.axis.set_xscale(plot_settings.xscale)
 
     def set_ticks(self):
-        """Set the ticks that are to be used in the graph."""
-        parent = self.parent
-        used_axes = plotting_tools.get_used_axes(parent)[0]
+        used_axes = plotting_tools.get_used_axes(self.parent)[0]
+        bottom = used_axes["bottom"] and (self.style["xtick.bottom"] == "True")
+        left = used_axes["left"] and (self.style["ytick.left"] == "True")
+        top = used_axes["top"] and (self.style["xtick.top"] == "True")
+        right = used_axes["right"] and (self.style["ytick.right"] == "True")
         for axis in [self.top_right_axis,
                      self.top_left_axis, self.axis, self.right_axis]:
-            axis.tick_params(
-                direction=parent.plot_settings.tick_direction,
-                length=parent.plot_settings.major_tick_length,
-                width=parent.plot_settings.major_tick_width, which="major")
-            axis.tick_params(
-                direction=parent.plot_settings.tick_direction,
-                length=parent.plot_settings.minor_tick_length,
-                width=parent.plot_settings.minor_tick_width, which="minor")
-            axis.tick_params(axis="x", which="minor")
-            axis.tick_params(axis="y", which="minor")
+            axis.tick_params(bottom=bottom, left=left, top=top, right=right)
             axis.minorticks_on()
-            if not (used_axes["top"] and used_axes["bottom"]):
-                axis.tick_params(
-                    which="both",
-                    bottom=parent.plot_settings.tick_bottom,
-                    top=parent.plot_settings.tick_top)
-            if not (used_axes["left"] and used_axes["right"]):
-                axis.tick_params(
-                    which="both",
-                    left=parent.plot_settings.tick_left,
-                    right=parent.plot_settings.tick_right)
-
-    def set_style(self):
-        """Set the plot style."""
-        parent = self.parent
-        pyplot.rcParams.update(pyplot.rcParamsDefault)
-        if Adw.StyleManager.get_default().get_dark():
-            self.figure.patch.set_facecolor("#242424")
-            text_color = "white"
-        else:
-            self.figure.patch.set_facecolor("#fafafa")
-            text_color = "black"
-        params = {
-            "font.weight": parent.plot_settings.font_weight,
-            "font.sans-serif": parent.plot_settings.font_family,
-            "font.size": parent.plot_settings.font_size,
-            "axes.labelsize": parent.plot_settings.font_size,
-            "xtick.labelsize": parent.plot_settings.font_size,
-            "ytick.labelsize": parent.plot_settings.font_size,
-            "axes.titlesize": parent.plot_settings.font_size,
-            "legend.fontsize": parent.plot_settings.font_size,
-            "font.style": parent.plot_settings.font_style,
-            "mathtext.default": "regular",
-            "axes.labelcolor": text_color,
-        }
-        pyplot.style.use(parent.plot_settings.plot_style)
-        pyplot.rcParams.update(params)
 
     def set_color_cycle(self):
         """Set the color cycle that will be used for the graphs."""

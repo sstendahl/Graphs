@@ -1,9 +1,9 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
-# adwaita
+# seaborn
 
 # font
 font.family: sans-serif
-font.sans-serif: Cantarell
+font.sans-serif: DejaVu Sans
 font.style: normal
 font.weight: normal
 font.size: 12
@@ -14,13 +14,13 @@ axes.titlesize: 12
 legend.fontsize: 12
 
 # ticks
-xtick.direction: in
+xtick.direction: out
 xtick.major.width: 1
 xtick.minor.width: 0.5
 xtick.major.size: 4
 xtick.minor.size: 2
 
-ytick.direction: in
+ytick.direction: out
 ytick.major.width: 1
 ytick.minor.width: 0.5
 ytick.major.size: 4
@@ -28,31 +28,28 @@ ytick.minor.size: 2
 
 xtick.bottom: True
 ytick.left: True
-xtick.top: False
-ytick.right: False
+xtick.top: True
+ytick.right: True
 
-patch.facecolor: FAFAFA
+patch.facecolor: FFFFFF
 
 mathtext.default: regular
 
 # custom
-patch.linewidth: .3
-
 axes.axisbelow: True
-axes.edgecolor: black
-axes.facecolor: white
+axes.edgecolor: white
+axes.facecolor: EAEAF2
 axes.grid: True
-axes.labelcolor: black
-axes.linewidth: .8
+axes.labelcolor: .15
+axes.linewidth: 0
 axes.prop_cycle: cycler('color', ['4C72B0', '55A868', 'C44E52', '8172B2', 'CCB974', '64B5CD'])
 
-figure.facecolor: FAFAFA
-figure.edgecolor: FAFAFA
-figure.figsize: 8.0, 15.5
+figure.facecolor: white
+figure.figsize: 8.0, 5.5
 
-grid.color: 646464
+grid.color: white
 grid.linestyle: -
-grid.linewidth: .6
+grid.linewidth: 1
 
 image.cmap: Greys
 
@@ -60,15 +57,17 @@ legend.frameon: False
 legend.numpoints: 1
 legend.scatterpoints: 1
 
-lines.linewidth: 1
+lines.linewidth: 1.75
 lines.markeredgewidth: 0
 lines.markersize: 7
 lines.solid_capstyle: round
 
-text.color: black
+patch.linewidth: .3
 
-xtick.color: black
+text.color: .15
+
+xtick.color: .15
 xtick.major.pad: 7
 
-ytick.color: black
+ytick.color: .15
 ytick.major.pad: 7
