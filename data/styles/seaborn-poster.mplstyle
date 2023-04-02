@@ -63,8 +63,6 @@ axes.titlepad: 18
 # other
 axes.linewidth: 1
 
-patch.facecolor: FFFFFF
-
 mathtext.default: regular
 axes.axisbelow: True
 legend.fancybox: True

@@ -60,8 +60,6 @@ axes.titlepad: 15
 # other
 axes.linewidth: 1
 
-patch.facecolor: FFFFFF
-
 mathtext.default: regular
 axes.axisbelow: True
 legend.fancybox: True
@@ -73,6 +71,7 @@ lines.linewidth: 2.0
 patch.linewidth: 0.5
 patch.edgecolor: eeeeee
 patch.antialiased: True
+patch.facecolor: blue
 
 text.hinting_factor: 8
 

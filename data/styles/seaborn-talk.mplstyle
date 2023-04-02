@@ -60,7 +60,6 @@ axes.titlepad: 20
 # other
 axes.linewidth: 1
 
-patch.facecolor: FFFFFF
 
 mathtext.default: regular
 axes.axisbelow: True

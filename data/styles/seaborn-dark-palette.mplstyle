@@ -60,8 +60,6 @@ axes.titlepad: 15
 # other
 axes.linewidth: 1
 
-patch.facecolor: FFFFFF
-
 mathtext.default: regular
 axes.axisbelow: True
 legend.fancybox: True
@@ -69,3 +67,4 @@ legend.frameon: True
 
 # custom
 axes.prop_cycle: cycler('color', ['001C7F', '017517', '8C0900', '7600A1', 'B8860B', '006374'])
+patch.facecolor: 001C7F

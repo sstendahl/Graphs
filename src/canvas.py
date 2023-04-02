@@ -25,7 +25,6 @@ class Canvas(FigureCanvas):
         self.style = file_io.get_style(style_path)
         self.figure = Figure()
         self.figure.set_tight_layout(True)
-        self.figure.patch.set_facecolor(f"#{self.style['patch.facecolor']}")
         self.one_click_trigger = False
         self.time_first_click = 0
         self.mpl_connect("button_release_event", self)

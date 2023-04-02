@@ -60,8 +60,6 @@ axes.titlepad: 15
 # other
 axes.linewidth: 1
 
-patch.facecolor: FFFFFF
-
 mathtext.default: regular
 axes.axisbelow: True
 legend.fancybox: True
@@ -69,6 +67,7 @@ legend.frameon: True
 
 # custom
 patch.linewidth: 0.5
+patch.facecolor: 348ABD
 patch.edgecolor: EEEEEE
 patch.antialiased: True
 
