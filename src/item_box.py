@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
-from gi.repository import Gtk, GLib, Gdk, gio
+from gi.repository import Gtk, GLib, Gdk
 
 from graphs import graphs, ui, utilities
 from graphs.edit_item import EditItemWindow
@@ -38,17 +38,18 @@ class ItemBox(Gtk.Box):
         self.drag_source.set_actions(Gdk.DragAction.COPY)
         self.drag_source.connect('prepare', self.on_dnd_prepare)
         self.drag_source.connect('drag-begin', self.test)
-        self.drag_source.connect('drag-end', self.test)
+        self.drag_source.connect('drag-end', self.end)
         self.add_controller(self.drag_source)
 
     def test(self, *args):
-        print("hoi")
+        print("start")
+
+    def end(self, *args):
+        print("end")
 
     def on_dnd_prepare(self, drag_source, x, y):
-
-
-
-        content = gdk.ContentProvider.new_for_value(gobject.Value(gio.ListModel, data))
+        data = self.item.name
+        content = Gdk.ContentProvider.new_for_value(data)
         return content
 
     def update_color(self):
