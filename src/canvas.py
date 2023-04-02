@@ -35,6 +35,7 @@ class Canvas(FigureCanvas):
         self.top_right_axis = self.top_left_axis.twinx()
         self.set_axis_properties()
         self.set_color_cycle()
+        self.set_ticks()
         color_rgba = utilities.lookup_color(parent, "accent_color")
         self.rubberband_edge_color = utilities.rgba_to_tuple(color_rgba, True)
         color_rgba.alpha = 0.3
@@ -106,10 +107,12 @@ class Canvas(FigureCanvas):
         left = self.style["ytick.left"] == "True"
         top = self.style["xtick.top"] == "True"
         right = self.style["ytick.right"] == "True"
+        minor = self.style["xtick.minor.visible"] == "True"
         for axis in [self.top_right_axis,
                      self.top_left_axis, self.axis, self.right_axis]:
             axis.tick_params(bottom=bottom, left=left, top=top, right=right)
-            axis.minorticks_on()
+            if minor:
+                axis.minorticks_on()
 
     def set_color_cycle(self):
         """Set the color cycle that will be used for the graphs."""
