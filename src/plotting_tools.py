@@ -120,9 +120,11 @@ def hide_unused_axes(self, canvas):
 def change_left_yscale(action, target, self):
     if target.get_string() == "log":
         self.canvas.axis.set_yscale("log")
+        self.canvas.top_left_axis.set_yscale("log")
         self.plot_settings.yscale = "log"
     else:
         self.canvas.axis.set_yscale("linear")
+        self.canvas.top_left_axis.set_yscale("linear")
         self.plot_settings.yscale = "linear"
     action.change_state(target)
     graphs.refresh(self, set_limits=True)
