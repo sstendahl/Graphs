@@ -100,6 +100,17 @@ class Canvas(FigureCanvas):
         self.top_right_axis.set_xscale(plot_settings.top_scale)
         self.axis.set_xscale(plot_settings.xscale)
 
+    def set_ticks(self):
+        used_axes = utilities.get_used_axes(self.parent)[0]
+        bottom = self.style["xtick.bottom"] == "True"
+        left = self.style["ytick.left"] == "True"
+        top = self.style["xtick.top"] == "True"
+        right = self.style["ytick.right"] == "True"
+        for axis in [self.top_right_axis,
+                     self.top_left_axis, self.axis, self.right_axis]:
+            axis.tick_params(bottom=bottom, left=left, top=top, right=right)
+            axis.minorticks_on()
+
     def set_color_cycle(self):
         """Set the color cycle that will be used for the graphs."""
         cmap = self.parent.preferences.config["plot_color_cycle"]
