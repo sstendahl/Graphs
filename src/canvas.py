@@ -101,7 +101,6 @@ class Canvas(FigureCanvas):
         self.axis.set_xscale(plot_settings.xscale)
 
     def set_ticks(self):
-        used_axes = utilities.get_used_axes(self.parent)[0]
         bottom = self.style["xtick.bottom"] == "True"
         left = self.style["ytick.left"] == "True"
         top = self.style["xtick.top"] == "True"

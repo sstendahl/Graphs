@@ -302,7 +302,6 @@ class PlotStylesWindow(Adw.Window):
             graphs.reload(self.parent)
         self.destroy()
 
-
     def on_color_change(self, button):
         color = Gdk.RGBA()
         color.parse(button.color)
@@ -311,7 +310,6 @@ class PlotStylesWindow(Adw.Window):
         dialog.choose_rgba(
             self.parent.main_window, color, None, self.on_color_change_accept,
             button)
-
 
     def on_color_change_accept(self, dialog, result, button):
         try:
