@@ -103,10 +103,10 @@ class Canvas(FigureCanvas):
 
     def set_ticks(self):
         used_axes = utilities.get_used_axes(self.parent)[0]
-        bottom = used_axes["bottom"] and (self.style["xtick.bottom"] == "True")
-        left = used_axes["left"] and (self.style["ytick.left"] == "True")
-        top = used_axes["top"] and (self.style["xtick.top"] == "True")
-        right = used_axes["right"] and (self.style["ytick.right"] == "True")
+        bottom = self.style["xtick.bottom"] == "True"
+        left = self.style["ytick.left"] == "True"
+        top = self.style["xtick.top"] == "True"
+        right = self.style["ytick.right"] == "True"
         for axis in [self.top_right_axis,
                      self.top_left_axis, self.axis, self.right_axis]:
             axis.tick_params(bottom=bottom, left=left, top=top, right=right)
