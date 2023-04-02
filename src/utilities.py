@@ -23,6 +23,7 @@ def sig_fig_round(number, digits):
     power = "{:e}".format(float(number)).split("e")[1]
     return round(float(number), -(int(power) - digits + 1))
 
+
 def swap_key_positions(d, key1, key2):
     new_dict = {}
     for key, value in d.items():

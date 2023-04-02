@@ -36,31 +36,29 @@ class ItemBox(Gtk.Box):
         self.update_color()
         self.drag_source = Gtk.DragSource.new()
         self.drag_source.set_actions(Gdk.DragAction.COPY)
-
+        self.drag_source.connect("prepare", self.on_dnd_prepare)
 
         self.drop_source = Gtk.DropTarget.new(str, Gdk.DragAction.COPY)
         self.drop_source.key = item.key
-        self.drop_source.connect('drop', self.on_dnd_drop)
-        self.drag_source.connect('prepare', self.on_dnd_prepare)
+        self.drop_source.connect("drop", self.on_dnd_drop)
 
         self.add_controller(self.drag_source)
         self.add_controller(self.drop_source)
 
-    def on_dnd_drop(self, drop_target, value, x, y):
+    def on_dnd_drop(self, drop_target, value, _x, _y):
         # Handle the dropped data here
         self.parent.datadict = utilities.swap_key_positions(
         self.parent.datadict, drop_target.key, value)
         self.parent.item_boxes = utilities.swap_key_positions(
-        self.parent.item_boxes, drop_target.key, value)
+            self.parent.item_boxes, drop_target.key, value)
         self.parent.item_menu = utilities.swap_key_positions(
-        self.parent.item_menu, drop_target.key, value)
+            self.parent.item_menu, drop_target.key, value)
         for key, item in self.parent.item_menu.items():
             self.parent.main_window.list_box.remove(item)
             self.parent.main_window.list_box.append(item)
         graphs.reload(self.parent)
 
-
-    def on_dnd_prepare(self, drag_source, x, y):
+    def on_dnd_prepare(self, _drag_source, _x, _y):
         data = self.item.key
         content = Gdk.ContentProvider.new_for_value(data)
         return content
