@@ -15,12 +15,14 @@ legend.fontsize: 13
 
 # ticks
 xtick.direction: out
+xtick.minor.visible: False
 xtick.major.width: 1.3
 xtick.minor.width: 0.65
 xtick.major.size: 4
 xtick.minor.size: 2
 
 ytick.direction: out
+ytick.minor.visible: False
 ytick.major.width: 1.3
 ytick.minor.width: 0.65
 ytick.major.size: 4

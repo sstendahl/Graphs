@@ -15,12 +15,14 @@ legend.fontsize: 16
 
 # ticks
 xtick.direction: out
+xtick.minor.visible: False
 xtick.major.width: 1.6
 xtick.minor.width: 0.8
 xtick.major.size: 4
 xtick.minor.size: 2
 
 ytick.direction: out
+ytick.minor.visible: False
 ytick.major.width: 1.6
 ytick.minor.width: 0.8
 ytick.major.size: 4
@@ -43,11 +45,6 @@ lines.linewidth: 2.8
 patch.linewidth: 0.48
 lines.markersize: 11.2
 lines.markeredgewidth: 0
-
-xtick.major.width: 1.6
-ytick.major.width: 1.6
-xtick.minor.width: 0.8
-ytick.minor.width: 0.8
 
 xtick.major.pad: 11.2
 ytick.major.pad: 11.2

@@ -94,6 +94,16 @@ template PlotStylesWindow : Adw.Window {
               }
 
               Adw.ActionRow {
+                title: _("Minor Ticks");
+                subtitle: _("Show Minor Ticks");
+                activatable-widget: minor_ticks;
+
+                Switch minor_ticks {
+                  valign: center;
+                }
+              }
+
+              Adw.ActionRow {
                 title: _("Major Tick Width");
                 subtitle: _("The thickness of the major ticks");
 
@@ -106,6 +116,7 @@ template PlotStylesWindow : Adw.Window {
               Adw.ActionRow {
                 title: _("Minor Tick Width");
                 subtitle: _("The thickness of the minor ticks");
+                visible: bind minor_ticks.active;
 
                 Scale minor_tick_width {
                   draw-value: true;
@@ -126,6 +137,7 @@ template PlotStylesWindow : Adw.Window {
               Adw.ActionRow {
                 title: _("Minor Tick Length");
                 subtitle: _("The length of the minor ticks");
+                visible: bind minor_ticks.active;
 
                 Scale minor_tick_length {
                   draw-value: true;

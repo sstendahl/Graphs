@@ -53,6 +53,7 @@ class PlotStylesWindow(Adw.Window):
     style_name = Gtk.Template.Child()
     font_chooser = Gtk.Template.Child()
     tick_direction = Gtk.Template.Child()
+    minor_ticks = Gtk.Template.Child()
     major_tick_width = Gtk.Template.Child()
     minor_tick_width = Gtk.Template.Child()
     major_tick_length = Gtk.Template.Child()
@@ -115,6 +116,7 @@ class PlotStylesWindow(Adw.Window):
 
         # ticks
         utilities.set_chooser(self.tick_direction, style["xtick.direction"])
+        self.minor_ticks.set_active(style["xtick.minor.visible"] == "True")
         self.major_tick_width.set_value(float(style["xtick.major.width"]))
         self.minor_tick_width.set_value(float(style["xtick.minor.width"]))
         self.major_tick_length.set_value(float(style["xtick.major.size"]))
@@ -145,6 +147,9 @@ class PlotStylesWindow(Adw.Window):
         tick_direction = self.tick_direction.get_selected_item().get_string()
         style["xtick.direction"] = tick_direction
         style["ytick.direction"] = tick_direction
+        minor_ticks = self.minor_ticks.get_active()
+        style["xtick.minor.visible"] = minor_ticks
+        style["ytick.minor.visible"] = minor_ticks
         style["xtick.major.width"] = self.major_tick_width.get_value()
         style["ytick.major.width"] = self.major_tick_width.get_value()
         style["xtick.minor.width"] = self.minor_tick_width.get_value()
