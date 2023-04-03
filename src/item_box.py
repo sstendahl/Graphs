@@ -48,7 +48,7 @@ class ItemBox(Gtk.Box):
     def on_dnd_drop(self, drop_target, value, _x, _y):
         # Handle the dropped data here
         self.parent.datadict = utilities.swap_key_positions(
-        self.parent.datadict, drop_target.key, value)
+            self.parent.datadict, drop_target.key, value)
         self.parent.item_boxes = utilities.swap_key_positions(
             self.parent.item_boxes, drop_target.key, value)
         self.parent.item_menu = utilities.swap_key_positions(
