@@ -81,19 +81,11 @@ class Canvas(FigureCanvas):
         """Set the properties that are related to the axes."""
         plot_settings = self.parent.plot_settings
         self.title = self.axis.set_title(plot_settings.title)
-        font_weight = self.style["font.weight"]
-        self.bottom_label = self.axis.set_xlabel(
-            plot_settings.xlabel,
-            fontweight=font_weight)
+        self.bottom_label = self.axis.set_xlabel(plot_settings.xlabel)
         self.right_label = self.right_axis.set_ylabel(
-            plot_settings.right_label,
-            fontweight=font_weight)
-        self.top_label = self.top_left_axis.set_xlabel(
-            plot_settings.top_label,
-            fontweight=font_weight)
-        self.left_label = self.axis.set_ylabel(
-            plot_settings.ylabel,
-            fontweight=font_weight)
+            plot_settings.right_label)
+        self.top_label = self.top_left_axis.set_xlabel(plot_settings.top_label)
+        self.left_label = self.axis.set_ylabel(plot_settings.ylabel)
         self.axis.set_yscale(plot_settings.yscale)
         self.right_axis.set_yscale(plot_settings.right_scale)
         self.top_left_axis.set_xscale(plot_settings.top_scale)
