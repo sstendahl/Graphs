@@ -57,10 +57,20 @@ ytick.minor.pad: 9.1
 axes.labelpad: 10
 axes.titlepad: 20
 
+# colors
+text.color: 262626
+axes.labelcolor: 262626
+xtick.color: 262626
+ytick.color: 262626
+axes.edgecolor: FFFFFF
+grid.color: FFFFFF
+axes.facecolor: EAEAF2
+figure.facecolor: FFFFFF
+figure.edgecolor: FFFFFF
+
 # other
 axes.linewidth: 1
 
-patch.facecolor: FFFFFF
 
 mathtext.default: regular
 axes.axisbelow: True

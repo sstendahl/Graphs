@@ -57,10 +57,19 @@ ytick.minor.pad: 7
 axes.labelpad: 5
 axes.titlepad: 15
 
+# colors
+text.color: 555555
+axes.labelcolor: 555555
+xtick.color: 555555
+ytick.color: 555555
+axes.edgecolor: FFFFFF
+grid.color: FFFFFF
+axes.facecolor: E5E5E5
+figure.facecolor: FFFFFF
+figure.edgecolor: FFFFFF
+
 # other
 axes.linewidth: 1
-
-patch.facecolor: FFFFFF
 
 mathtext.default: regular
 axes.axisbelow: True
@@ -69,21 +78,8 @@ legend.frameon: True
 
 # custom
 patch.linewidth: 0.5
+patch.facecolor: 348ABD
 patch.edgecolor: EEEEEE
 patch.antialiased: True
 
-axes.facecolor: E5E5E5
-axes.edgecolor: white
-axes.labelcolor: 555555
-axes.axisbelow: True
-
 axes.prop_cycle: cycler('color', ['E24A33', '348ABD', '988ED5', '777777', 'FBC15E', '8EBA42', 'FFB5B8'])
-
-xtick.color: 555555
-
-ytick.color: 555555
-
-grid.color: white
-
-figure.facecolor: white
-figure.edgecolor: 0.50

@@ -259,6 +259,154 @@ template PlotStylesWindow : Adw.Window {
             }
 
             Adw.PreferencesGroup {
+              title: _("Colors");
+              description: _("The colors for different parts of the plot");
+
+              Grid {
+                row-spacing: 20;
+                column-spacing: 20;
+                Adw.PreferencesGroup {
+                  layout {
+                    column: 0;
+                    row: 0;
+                  }
+
+                  Adw.ActionRow {
+                    title: _("Text Color");
+                    subtitle: _("The Color of the text in the plot");
+                    activatable-widget: text_color;
+                    hexpand: true;
+
+                    Button text_color {
+                      tooltip-text: _("Change Color");
+                      valign: center;
+                      styles ["flat"]
+                      Image {
+                        icon-name: "color-picker-symbolic";
+                        pixel-size: 20;
+                      }
+                    }
+                  }
+                }
+
+                Adw.PreferencesGroup {
+                  layout {
+                    column: 1;
+                    row: 0;
+                  }
+                  Adw.ActionRow {
+                    title: _("Tick Color");
+                    subtitle: _("The Color of the ticks in the plot");
+                    activatable-widget: tick_color;
+                    hexpand: true;
+
+                    Button tick_color {
+                      tooltip-text: _("Change Color");
+                      valign: center;
+                      styles ["flat"]
+                      Image {
+                        icon-name: "color-picker-symbolic";
+                        pixel-size: 20;
+                      }
+                    }
+                  }
+                }
+
+                Adw.PreferencesGroup {
+                  layout {
+                    column: 0;
+                    row: 1;
+                  }
+                  Adw.ActionRow {
+                    title: _("Axis Color");
+                    subtitle: _("The Color of the axes in the plot");
+                    activatable-widget: axis_color;
+                    hexpand: true;
+
+                    Button axis_color {
+                      tooltip-text: _("Change Color");
+                      valign: center;
+                      styles ["flat"]
+                      Image {
+                        icon-name: "color-picker-symbolic";
+                        pixel-size: 20;
+                      }
+                    }
+                  }
+                }
+
+                Adw.PreferencesGroup {
+                  layout {
+                    column: 1;
+                    row: 1;
+                  }
+                  Adw.ActionRow {
+                    title: _("Grid Color");
+                    subtitle: _("The Color of the grid in the plot");
+                    activatable-widget: grid_color;
+                    hexpand: true;
+
+                    Button grid_color {
+                      tooltip-text: _("Change Color");
+                      valign: center;
+                      styles ["flat"]
+                      Image {
+                        icon-name: "color-picker-symbolic";
+                        pixel-size: 20;
+                      }
+                    }
+                  }
+                }
+
+                Adw.PreferencesGroup {
+                  layout {
+                    column: 0;
+                    row: 2;
+                  }
+                  Adw.ActionRow {
+                    title: _("Background Color");
+                    subtitle: _("The Color of the plot background");
+                    activatable-widget: background_color;
+                    hexpand: true;
+
+                    Button background_color {
+                      tooltip-text: _("Change Color");
+                      valign: center;
+                      styles ["flat"]
+                      Image {
+                        icon-name: "color-picker-symbolic";
+                        pixel-size: 20;
+                      }
+                    }
+                  }
+                }
+
+                Adw.PreferencesGroup {
+                  layout {
+                    column: 1;
+                    row: 2;
+                  }
+                  Adw.ActionRow {
+                    title: _("Edge Color");
+                    subtitle: _("The Color of the edge of the plot");
+                    activatable-widget: edge_color;
+                    hexpand: true;
+
+                    Button edge_color {
+                      tooltip-text: _("Change Color");
+                      valign: center;
+                      styles ["flat"]
+                      Image {
+                        icon-name: "color-picker-symbolic";
+                        pixel-size: 20;
+                      }
+                    }
+                  }
+                }
+              }
+            }
+
+            Adw.PreferencesGroup {
               title: _("Other");
 
               Adw.ActionRow {

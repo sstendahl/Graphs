@@ -57,10 +57,19 @@ ytick.minor.pad: 7
 axes.labelpad: 5
 axes.titlepad: 15
 
+# colors
+text.color: FFFFFF
+axes.labelcolor: FFFFFF
+xtick.color: FFFFFF
+ytick.color: FFFFFF
+axes.edgecolor: FFFFFF
+grid.color: A7A7A7
+axes.facecolor: 242424
+figure.facecolor: 242424
+figure.edgecolor: 242424
+
 # other
 axes.linewidth: 0.8
-
-patch.facecolor: 242424
 
 mathtext.default: regular
 axes.axisbelow: True
@@ -70,16 +79,9 @@ legend.frameon: True
 # custom
 patch.linewidth: 1
 
-axes.edgecolor: white
-axes.facecolor: 242424
-axes.labelcolor: white
 axes.prop_cycle: cycler('color', ['4C72B0', '55A868', 'C44E52', '8172B2', 'CCB974', '64B5CD'])
 
-figure.facecolor: 242424
-figure.edgecolor: 242424
 figure.figsize: 8.0, 15.5
-
-grid.color: a7a7a7
 
 image.cmap: Greys
 
@@ -90,11 +92,3 @@ lines.linewidth: 1
 lines.markeredgewidth: 0
 lines.markersize: 7
 lines.solid_capstyle: round
-
-text.color: white
-
-xtick.color: white
-xtick.major.pad: 7
-
-ytick.color: white
-ytick.major.pad: 7
