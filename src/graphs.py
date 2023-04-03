@@ -30,9 +30,8 @@ def open_files(self, files, import_settings):
                 name = import_settings.name
                 if name == "":
                     name = Path(import_settings.path).name
-                color = plotting_tools.get_next_color(self)
-                cfg = self.preferences.config
-                add_item(self, Item(cfg, xdata, ydata, name, color))
+                add_item(
+                    self, Item(self, xdata, ydata, name))
             except IndexError:
                 toast = "Could not open data, the column index is out of range"
                 self.main_window.add_toast(toast)
@@ -54,7 +53,7 @@ def open_project(self, path):
         utilities.set_attributes(new_plot_settings, self.plot_settings)
         self.datadict = {}
         for key, item in new_datadict.items():
-            new_item = Item(self.preferences.config, item.xdata, item.ydata)
+            new_item = Item(self, item.xdata, item.ydata)
             for attribute in new_item.__dict__:
                 if hasattr(item, attribute):
                     setattr(new_item, attribute, getattr(item, attribute))
@@ -135,15 +134,16 @@ def reload(self):
 
 def refresh(self, set_limits=False):
     """Refresh the graph without completely reloading it."""
-    canvas = self.canvas
-    for line in canvas.axis.lines + canvas.right_axis.lines + \
-            canvas.top_left_axis.lines + canvas.top_right_axis.lines:
+    for line in self.canvas.axis.lines + self.canvas.right_axis.lines + \
+            self.canvas.top_left_axis.lines + self.canvas.top_right_axis.lines:
         line.remove()
     if len(self.datadict) > 0:
-        plotting_tools.hide_unused_axes(self, canvas)
+        plotting_tools.hide_unused_axes(self, self.canvas)
     for _key, item in reversed(self.datadict.items()):
-        if item is not None:
-            self.canvas.plot(item, item.selected)
+        if (item is not None) and not \
+                (self.preferences.config["hide_unselected"] and not
+                 item.selected):
+            self.canvas.plot(item)
     if set_limits and len(self.datadict) > 0:
         self.canvas.set_limits()
     self.canvas.draw()

@@ -3,7 +3,7 @@ import logging
 
 from gi.repository import Adw, Gtk
 
-from graphs import calculation, graphs, plotting_tools
+from graphs import calculation, graphs
 from graphs.item import Item
 
 
@@ -41,9 +41,8 @@ class AddEquationWindow(Adw.Window):
         if name == "":
             name = f"Y = {str(equation)}"
         try:
-            color = plotting_tools.get_next_color(parent)
-            cfg = parent.preferences.config
-            graphs.add_item(parent, Item(cfg, xdata, ydata, name, color))
+            graphs.add_item(
+                parent, Item(parent, xdata, ydata, name))
             self.destroy()
         except Exception as exception:
             exception_type = exception.__class__.__name__

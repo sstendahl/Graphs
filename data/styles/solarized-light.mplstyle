@@ -19,6 +19,25 @@ legend.fontsize: 12
 figure.titlesize: 12
 figure.labelsize: 12
 
+# lines
+lines.linewidth: 2
+lines.linestyle: solid
+lines.marker: none
+lines.markersize: 7
+lines.markerfacecolor: auto
+lines.markeredgecolor: auto
+lines.markeredgewidth: 0
+lines.dash_joinstyle: round
+lines.dash_capstyle: butt
+lines.solid_joinstyle: round
+lines.solid_capstyle: butt
+lines.antialiased: True
+lines.dashed_pattern: 6, 6
+lines.dashdot_pattern: 3, 5, 1, 5
+lines.dotted_pattern: 1, 3
+lines.scale_dashes: False
+markers.fillstyle: full
+
 # ticks
 xtick.direction: out
 xtick.minor.visible: False
@@ -78,8 +97,5 @@ legend.frameon: True
 
 # custom
 patch.antialiased: True
-
-lines.linewidth: 2.0
-lines.solid_capstyle: butt
 
 axes.prop_cycle: cycler('color', ['268BD2', '2AA198', '859900', 'B58900', 'CB4B16', 'DC322F', 'D33682', '6C71C4'])

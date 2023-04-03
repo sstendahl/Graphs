@@ -47,80 +47,39 @@ template EditItemWindow : Adw.PreferencesWindow {
 
     Adw.PreferencesGroup {
       title: _("Line Style");
-      description: _("Change properties of the line style and thickness");
+      description: _("Change properties of the lines");
 
-      Adw.ComboRow linestyle_selected {
-        title: _("Linestyle Selected");
-        subtitle: _("The linestyle when the data set is selected");
-        model: StringList {
-          strings ["none", "solid", "dotted", "dashed", "dashdot"]
-        };
-      }
-
-      Adw.ComboRow linestyle_unselected {
-        title: _("Linestyle Unselected");
-        subtitle: _("The linestyle when the data set is not selected");
+      Adw.ComboRow linestyle {
+        title: _("Linestyle");
+        subtitle: _("The linestyle");
         model: StringList {
           strings ["none", "solid", "dotted", "dashed", "dashdot"]
         };
       }
 
       Adw.ActionRow {
-        title: _("Selected Linewidth");
-        subtitle: _("The width of lines when the data set is selected");
+        title: _("Linewidth");
+        subtitle: _("The width of lines");
 
-        Scale selected_line_thickness_slider {
+        Scale linewidth {
           draw-value: true;
           width-request: 200;
         }
       }
 
-      Adw.ActionRow {
-        title: _("Unselected Linewidth");
-        subtitle: _("The width of lines when the data set is not selected");
-
-        Scale unselected_line_thickness_slider {
-          draw-value: true;
-          width-request: 200;
-        }
-      }
-    }
-
-    Adw.PreferencesGroup {
-      title: _("Markers");
-      description: _("Change the type and size of the markers that are used");
-
-      Adw.ComboRow selected_markers_chooser {
-        title: _("Selected Markers");
-        subtitle: _("The markers that are used when the data set is selected");
-        model: StringList {
-          strings ["none"]
-        };
-      }
-
-      Adw.ComboRow unselected_markers_chooser {
-        title: _("Unselected Markers");
-        subtitle: _("The markers that are used when the data set is selected");
+      Adw.ComboRow markers {
+        title: _("Markers");
+        subtitle: _("The markers that are used");
         model: StringList {
           strings ["none"]
         };
       }
 
       Adw.ActionRow {
-        title: _("Selected Marker Size");
-        subtitle: _("The size of the markers used in selected lines");
+        title: _("Marker Size");
+        subtitle: _("The size of the markers");
 
-        Scale selected_marker_size {
-          draw-value: true;
-          width-request: 200;
-        }
-      }
-
-      Adw.ActionRow {
-        title: _("Unselected Marker Size");
-        subtitle: _("The size of the markers used in unselected lines");
-
-        Scale unselected_marker_size {
+        Scale markersize {
           draw-value: true;
           width-request: 200;
         }

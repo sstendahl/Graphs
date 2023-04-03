@@ -53,7 +53,7 @@ class Canvas(FigureCanvas):
         self.dummy_toolbar = DummyToolbar(self)
         self.highlight = Highlight(self)
 
-    def plot(self, item, selected):
+    def plot(self, item):
         x_axis = item.plot_x_position
         y_axis = item.plot_y_position
         if y_axis == "left":
@@ -66,39 +66,26 @@ class Canvas(FigureCanvas):
                 axis = self.right_axis
             elif x_axis == "top":
                 axis = self.top_right_axis
-        if selected:
-            linewidth = item.selected_line_thickness
-            linestyle = item.linestyle_selected
-            marker = item.selected_markers
-            marker_size = item.selected_marker_size
-        else:
-            linewidth = item.unselected_line_thickness
-            linestyle = item.linestyle_unselected
-            marker = item.unselected_markers
-            marker_size = item.unselected_marker_size
+        linewidth = item.linewidth
+        markersize = item.markersize
+        if not item.selected:
+            linewidth *= 0.6
+            markersize *= 0.6
         axis.plot(
-            item.xdata, item.ydata, linewidth=linewidth, label=item.name,
-            linestyle=linestyle, marker=marker, color=item.color,
-            markersize=marker_size)
+            item.xdata, item.ydata, label=item.name, color=item.color,
+            marker=item.markerstyle, linestyle=item.linestyle,
+            linewidth=linewidth, markersize=markersize)
         self.set_legend()
 
     def set_axis_properties(self):
         """Set the properties that are related to the axes."""
         plot_settings = self.parent.plot_settings
         self.title = self.axis.set_title(plot_settings.title)
-        font_weight = self.style["font.weight"]
-        self.bottom_label = self.axis.set_xlabel(
-            plot_settings.xlabel,
-            fontweight=font_weight)
+        self.bottom_label = self.axis.set_xlabel(plot_settings.xlabel)
         self.right_label = self.right_axis.set_ylabel(
-            plot_settings.right_label,
-            fontweight=font_weight)
-        self.top_label = self.top_left_axis.set_xlabel(
-            plot_settings.top_label,
-            fontweight=font_weight)
-        self.left_label = self.axis.set_ylabel(
-            plot_settings.ylabel,
-            fontweight=font_weight)
+            plot_settings.right_label)
+        self.top_label = self.top_left_axis.set_xlabel(plot_settings.top_label)
+        self.left_label = self.axis.set_ylabel(plot_settings.ylabel)
         self.axis.set_yscale(plot_settings.yscale)
         self.right_axis.set_yscale(plot_settings.right_scale)
         self.top_left_axis.set_xscale(plot_settings.top_scale)

@@ -29,7 +29,6 @@ class PlotSettings:
     retreived from the config file through preferences.
     """
     def __init__(self, config):
-        self.font_string = config["plot_font_string"]
         self.xlabel = config["plot_x_label"]
         self.right_label = config["plot_right_label"]
         self.top_label = config["plot_top_label"]

@@ -82,6 +82,47 @@ template PlotStylesWindow : Adw.Window {
             }
 
             Adw.PreferencesGroup {
+              title: _("Lines");
+              description: _("Change properties of the line and markers");
+
+              Adw.ComboRow linestyle {
+                title: _("Linestyle");
+                subtitle: _("The linestyle used");
+                model: StringList {
+                  strings ["solid", "dotted", "dashed", "dashdot"]
+                };
+              }
+
+              Adw.ActionRow {
+                title: _("Linewidth");
+                subtitle: _("The width of lines");
+
+                Scale linewidth {
+                  draw-value: true;
+                  width-request: 200;
+                }
+              }
+
+              Adw.ComboRow markers {
+                title: _("Markers");
+                subtitle: _("The markers that are used");
+                model: StringList {
+                  strings ["none"]
+                };
+              }
+
+              Adw.ActionRow {
+                title: _("Marker Size");
+                subtitle: _("The size of the markers");
+
+                Scale markersize {
+                  draw-value: true;
+                  width-request: 200;
+                }
+              }
+            }
+
+            Adw.PreferencesGroup {
               title: _("Ticks");
               description: _("Settings for the ticks that are used in the plots");
 

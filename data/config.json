@@ -1,9 +1,4 @@
 {
-"plot_font_string": "Cantarell 12",
-"plot_selected_marker_size": 8.0, 
-"plot_unselected_marker_size": 8.0,
-"selected_linewidth": 3.0, 
-"unselected_linewidth": 1.0,
 "guess_headers": true,
 "handle_duplicates": "Auto-rename duplicates",
 "export_figure_transparent": true,
@@ -13,10 +8,6 @@
 "plot_x_label": "X Value",
 "plot_right_label": "Y Value 2", 
 "plot_top_label": "X Value 2", 
-"plot_font_size": "12", 
-"plot_font_style": "normal", 
-"plot_font_weight": "normal",
-"plot_font_family": "Cantarell",
 "plot_title": "", 
 "savefig_filetype": "svg", 
 "plot_color_cycle": "tab10", 
@@ -27,8 +18,6 @@
 "plot_x_position": "bottom",
 "plot_y_position": "left",
 "action_center_data": "Center at middle coordinate", 
-"plot_selected_linestyle": "solid",
-"plot_unselected_linestyle": "solid", 
 "plot_style_dark": "adwaita-dark",
 "plot_style_light": "adwaita",
 "import_column_x": 0,
@@ -36,10 +25,9 @@
 "import_skip_rows": 0, 
 "import_separator": ".",
 "import_delimiter": "\\s+", 
-"plot_unselected_markers": "none",
-"plot_selected_markers": "none",
 "addequation_equation": "X",
 "addequation_x_start": "0",
 "addequation_x_stop": "10",
-"addequation_step_size": "0.01"
+"addequation_step_size": "0.01",
+"hide_unselected": false
 }
