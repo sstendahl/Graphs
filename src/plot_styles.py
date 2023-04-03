@@ -307,8 +307,6 @@ class PlotStylesWindow(Adw.Window):
         color.parse(f"#{button.color}")
         dialog = Gtk.ColorDialog()
         dialog.set_with_alpha(False)
-        print(button.color)
-        print(utilities.rgba_to_hex(color))
         dialog.choose_rgba(
             self.parent.main_window, color, None, self.on_color_change_accept,
             button)
