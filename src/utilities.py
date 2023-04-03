@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 import os
-from gi.repository import Gdk, Gtk
+from gi.repository import Gdk
 from pathlib import Path
 
 import numpy

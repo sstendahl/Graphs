@@ -4,7 +4,7 @@ import uuid
 
 class Item:
     def __init__(self, config, xdata, ydata, name="", color=(0, 0, 0),
-            markerstyle="none"):
+                 markerstyle="none"):
         self.key: str = str(uuid.uuid4())
         self.name = name
         self.plot_y_position = config["plot_y_position"]

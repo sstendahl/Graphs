@@ -137,14 +137,16 @@ def reload(self):
 
 def refresh(self, set_limits=False):
     """Refresh the graph without completely reloading it."""
-    canvas = self.canvas
-    for line in canvas.axis.lines + canvas.right_axis.lines + \
-            canvas.top_left_axis.lines + canvas.top_right_axis.lines:
+    for line in self.canvas.axis.lines + self.canvas.right_axis.lines + \
+            self.canvas.top_left_axis.lines + self.canvas.top_right_axis.lines:
         line.remove()
     if len(self.datadict) > 0:
-        plotting_tools.hide_unused_axes(self, canvas)
+        plotting_tools.hide_unused_axes(self, self.canvas)
+    print(self.preferences.config)
     for _key, item in reversed(self.datadict.items()):
-        if item is not None:
+        if (item is not None) and not \
+                (self.preferences.config["hide_unselected"] and not
+                 item.selected):
             self.canvas.plot(item)
     if set_limits and len(self.datadict) > 0:
         self.canvas.set_limits()
