@@ -19,6 +19,25 @@ legend.fontsize: 12
 figure.titlesize: 12
 figure.labelsize: 12
 
+# lines
+lines.linewidth: 1.75
+lines.linestyle: solid
+lines.marker: none
+lines.markersize: 7
+lines.markerfacecolor: auto
+lines.markeredgecolor: auto
+lines.markeredgewidth: 0
+lines.dash_joinstyle: round
+lines.dash_capstyle: butt
+lines.solid_joinstyle: round
+lines.solid_capstyle: round
+lines.antialiased: True
+lines.dashed_pattern: 6, 6
+lines.dashdot_pattern: 3, 5, 1, 5
+lines.dotted_pattern: 1, 3
+lines.scale_dashes: False
+markers.fillstyle: full
+
 # ticks
 xtick.direction: out
 xtick.minor.visible: False
@@ -77,8 +96,6 @@ legend.fancybox: True
 legend.frameon: True
 
 # custom
-legend.frameon: False
 legend.numpoints: 1
 legend.scatterpoints: 1
 image.cmap: Greys
-lines.solid_capstyle: round

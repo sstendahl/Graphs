@@ -7,6 +7,8 @@ from gi.repository import Adw, Gtk, Gdk, GLib
 
 from graphs import utilities, file_io, graphs
 
+from matplotlib.lines import Line2D
+
 
 def get_system_styles(self):
     path = os.path.join(self.modulepath, "styles")
@@ -52,6 +54,10 @@ class PlotStylesWindow(Adw.Window):
     back_button = Gtk.Template.Child()
     style_name = Gtk.Template.Child()
     font_chooser = Gtk.Template.Child()
+    linestyle = Gtk.Template.Child()
+    linewidth = Gtk.Template.Child()
+    markers = Gtk.Template.Child()
+    markersize = Gtk.Template.Child()
     tick_direction = Gtk.Template.Child()
     minor_ticks = Gtk.Template.Child()
     major_tick_width = Gtk.Template.Child()
@@ -89,7 +95,13 @@ class PlotStylesWindow(Adw.Window):
         self.set_title("Plot Styles")
 
         # setup editor
+        self.marker_dict = Line2D.markers.copy()
+        self.marker_dict["none"] = "none"
         self.font_chooser.set_use_font(True)
+        self.linewidth.set_range(0, 10)
+        utilities.populate_chooser(
+            self.markers, sorted(list(self.marker_dict.values())))
+        self.markersize.set_range(0, 10)
         self.major_tick_width.set_range(0, 4)
         self.minor_tick_width.set_range(0, 4)
         self.major_tick_length.set_range(0, 20)
@@ -147,6 +159,13 @@ class PlotStylesWindow(Adw.Window):
         font_description = self.font_chooser.get_font_desc().from_string(
             f"{style['font.sans-serif']} {style['font.size']}")
         self.font_chooser.set_font_desc(font_description)
+
+        # lines
+        utilities.set_chooser(self.linestyle, style["lines.linestyle"])
+        self.linewidth.set_value(float(style["lines.linewidth"]))
+        utilities.set_chooser(
+            self.markers, self.marker_dict[style["lines.marker"]])
+        self.markersize.set_value(float(style["lines.markersize"]))
 
         # ticks
         utilities.set_chooser(self.tick_direction, style["xtick.direction"])
@@ -208,6 +227,14 @@ class PlotStylesWindow(Adw.Window):
         style["legend.fontsize"] = font_size
         style["figure.titlesize"] = font_size
         style["figure.labelsize"] = font_size
+
+        # lines
+        style["lines.linestyle"] = \
+            self.linestyle.get_selected_item().get_string()
+        style["lines.linewidth"] = self.linewidth.get_value()
+        style["lines.marker"] = utilities.get_dict_by_value(
+            self.marker_dict, self.markers.get_selected_item().get_string())
+        style["lines.markersize"] = self.markersize.get_value()
 
         # ticks
         tick_direction = self.tick_direction.get_selected_item().get_string()
