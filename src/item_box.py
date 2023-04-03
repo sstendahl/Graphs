@@ -1,6 +1,5 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
-from gi.repository import Gtk, GLib
-
+from gi.repository import Gtk, GLib, Gdk
 from graphs import graphs, ui, utilities
 from graphs.edit_item import EditItemWindow
 
@@ -20,8 +19,7 @@ class ItemBox(Gtk.Box):
         self.label.set_text(utilities.shorten_label(item.name))
         self.check_button.set_active(item.selected)
         self.parent = parent
-        self.one_click_trigger = False
-        self.time_first_click = 0
+
         self.gesture = Gtk.GestureClick()
         self.gesture.set_button(0)
         self.add_controller(self.gesture)
@@ -33,6 +31,39 @@ class ItemBox(Gtk.Box):
         self.color_button.get_style_context().add_provider(
             self.provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION)
         self.update_color()
+        self.drag_source = Gtk.DragSource.new()
+        self.drag_source.set_actions(Gdk.DragAction.COPY)
+        self.drag_source.connect("prepare", self.on_dnd_prepare)
+        self.drop_source = Gtk.DropTarget.new(str, Gdk.DragAction.COPY)
+        self.drop_source.key = item.key
+        self.drop_source.connect("drop", self.on_dnd_drop)
+
+        self.add_controller(self.drag_source)
+        self.add_controller(self.drop_source)
+
+    def on_dnd_drop(self, drop_target, value, _x, _y):
+        # Handle the dropped data here
+        self.parent.datadict
+        self.parent.datadict = utilities.change_key_position(
+            self.parent.datadict, drop_target.key, value)
+        self.parent.item_boxes = utilities.change_key_position(
+            self.parent.item_boxes, drop_target.key, value)
+        self.parent.item_menu = utilities.change_key_position(
+            self.parent.item_menu, drop_target.key, value)
+        for key, item in self.parent.item_menu.items():
+            self.parent.main_window.list_box.remove(item)
+            self.parent.main_window.list_box.append(item)
+        graphs.reload(self.parent)
+
+    def on_dnd_prepare(self, drag_source, x, y):
+        snapshot = Gtk.Snapshot.new()
+        self.do_snapshot(self, snapshot)
+        paintable = snapshot.to_paintable()
+        drag_source.set_icon(paintable, int(x), int(y))
+
+        data = self.item.key
+        content = Gdk.ContentProvider.new_for_value(data)
+        return content
 
     def update_color(self):
         color = utilities.tuple_to_rgba(self.item.color)
