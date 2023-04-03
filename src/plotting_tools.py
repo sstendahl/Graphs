@@ -180,4 +180,4 @@ def get_next_color(self):
     for color in color_list:
         if color not in used_colors:
             return color
-    return None
+    return (0, 0, 0)
