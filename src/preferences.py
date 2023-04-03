@@ -19,7 +19,8 @@ class Preferences():
         self.check_config(self.config)
 
     def check_config(self, config):
-        with open("config.json", "r", encoding="utf-8") as file:
+        config_path = self.parent.modulepath
+        with open(f"{config_path}/config.json", "r", encoding="utf-8") as file:
             template = json.load(file)
         if set(config.keys()) != set(template.keys()):
             config = utilities.remove_unused_config_keys(config, template)

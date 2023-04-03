@@ -19,8 +19,13 @@ class Canvas(FigureCanvas):
     """Create the graph widget"""
     def __init__(self, parent):
         self.parent = parent
-        style_path = plot_styles.get_user_styles(
-            self.parent)[self.parent.plot_settings.plot_style]
+        try:
+            style_path = plot_styles.get_user_styles(
+                self.parent)[self.parent.plot_settings.plot_style]
+        except KeyError:
+            self.parent.plot_settings.plot_style = "adwaita"
+            style_path = plot_styles.get_user_styles(
+                self.parent)[self.parent.plot_settings.plot_style]
         pyplot.style.use(style_path)
         self.style = file_io.get_style(style_path)
         self.figure = Figure()
