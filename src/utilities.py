@@ -35,7 +35,7 @@ def change_key_position(dictionary, key1, key2):
     if index1 < index2:
         keys[index1:index2 + 1] = keys[index1 + 1:index2 + 1] + [key2]
         values[index1:index2 + 1] = values[index1 + 1:index2 + 1] + \
-        [dictionary[key2]]
+                                   [dictionary[key2]]
     else:
         keys[index2:index1 + 1] = [key2] + keys[index2:index1]
         values[index2:index1 + 1] = [dictionary[key2]] + values[index2:index1]
