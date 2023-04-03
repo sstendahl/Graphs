@@ -13,7 +13,10 @@ class EditItemWindow(Adw.PreferencesWindow):
     name_entry = Gtk.Template.Child()
     plot_x_position = Gtk.Template.Child()
     plot_y_position = Gtk.Template.Child()
+    linestyle = Gtk.Template.Child()
+    linewidth = Gtk.Template.Child()
     markers = Gtk.Template.Child()
+    markersize = Gtk.Template.Child()
 
     def __init__(self, parent, item):
         super().__init__()
@@ -24,8 +27,10 @@ class EditItemWindow(Adw.PreferencesWindow):
         self.item_selector.set_selected(names.index(self.item.name))
         self.marker_dict = Line2D.markers.copy()
         self.marker_dict["none"] = "none"
+        self.linewidth.set_range(0, 10)
         utilities.populate_chooser(
             self.markers, sorted(list(self.marker_dict.values())))
+        self.markersize.set_range(0, 10)
         self.load_values()
         self.item_selector.connect("notify::selected", self.on_select)
         self.connect("close-request", self.apply)
@@ -53,8 +58,11 @@ class EditItemWindow(Adw.PreferencesWindow):
             self.plot_x_position, self.item.plot_x_position)
         utilities.set_chooser(
             self.plot_y_position, self.item.plot_y_position)
+        utilities.set_chooser(self.linestyle, self.item.linestyle)
+        self.linewidth.set_value(self.item.linewidth)
         utilities.set_chooser(
             self.markers, self.marker_dict[self.item.markerstyle])
+        self.markersize.set_value(self.item.markersize)
 
     def apply(self, _):
         self.item.name = self.name_entry.get_text()
@@ -62,8 +70,11 @@ class EditItemWindow(Adw.PreferencesWindow):
             self.plot_x_position.get_selected_item().get_string()
         self.item.plot_y_position = \
             self.plot_y_position.get_selected_item().get_string()
+        self.item.linestyle = self.linestyle.get_selected_item().get_string()
+        self.item.linewidth = self.linewidth.get_value()
         self.item.markerstyle = utilities.get_dict_by_value(
             self.marker_dict, self.markers.get_selected_item().get_string())
+        self.item.markersize = self.markersize.get_value()
 
         self.parent.item_menu[self.item.key].get_child().label.set_text(
             utilities.shorten_label(self.item.name))

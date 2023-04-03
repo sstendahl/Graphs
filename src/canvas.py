@@ -66,14 +66,15 @@ class Canvas(FigureCanvas):
                 axis = self.right_axis
             elif x_axis == "top":
                 axis = self.top_right_axis
-        linewidth = float(self.style["lines.linewidth"])
-        markersize = float(self.style["lines.markersize"])
+        linewidth = item.linewidth
+        markersize = item.markersize
         if not item.selected:
             linewidth *= 0.6
             markersize *= 0.6
         axis.plot(
-            item.xdata, item.ydata, linewidth=linewidth, label=item.name,
-            color=item.color, markersize=markersize, marker=item.markerstyle)
+            item.xdata, item.ydata, label=item.name, color=item.color,
+            marker=item.markerstyle, linestyle=item.linestyle,
+            linewidth=linewidth, markersize=markersize)
         self.set_legend()
 
     def set_axis_properties(self):

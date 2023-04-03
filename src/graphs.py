@@ -30,11 +30,8 @@ def open_files(self, files, import_settings):
                 name = import_settings.name
                 if name == "":
                     name = Path(import_settings.path).name
-                color = plotting_tools.get_next_color(self)
-                cfg = self.preferences.config
-                markerstyle = self.canvas.style["lines.marker"]
                 add_item(
-                    self, Item(cfg, xdata, ydata, name, color, markerstyle))
+                    self, Item(self, xdata, ydata, name))
             except IndexError:
                 toast = "Could not open data, the column index is out of range"
                 self.main_window.add_toast(toast)
@@ -56,7 +53,7 @@ def open_project(self, path):
         utilities.set_attributes(new_plot_settings, self.plot_settings)
         self.datadict = {}
         for key, item in new_datadict.items():
-            new_item = Item(self.preferences.config, item.xdata, item.ydata)
+            new_item = Item(self, item.xdata, item.ydata)
             for attribute in new_item.__dict__:
                 if hasattr(item, attribute):
                     setattr(new_item, attribute, getattr(item, attribute))

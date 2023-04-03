@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 import logging
 
-from graphs import calculation, clipboard, graphs, plotting_tools, utilities
+from graphs import calculation, clipboard, graphs, utilities
 from graphs.item import Item
 from graphs.misc import InteractionMode
 
@@ -249,8 +249,5 @@ def combine(self):
 
     # Create the item itself
     new_xdata, new_ydata = sort_data(new_xdata, new_ydata)
-    graphs.add_item(self, Item(
-        self.preferences.config, new_xdata, new_ydata, "Combined Data",
-        plotting_tools.get_next_color(self),
-        self.canvas.style["lines.marker"]))
+    graphs.add_item(self, Item(self, new_xdata, new_ydata, "Combined Data"))
     clipboard.reset(self)

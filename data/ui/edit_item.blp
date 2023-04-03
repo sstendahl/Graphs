@@ -46,7 +46,26 @@ template EditItemWindow : Adw.PreferencesWindow {
     }
 
     Adw.PreferencesGroup {
-      title: _("Other");
+      title: _("Line Style");
+      description: _("Change properties of the lines");
+
+      Adw.ComboRow linestyle {
+        title: _("Linestyle");
+        subtitle: _("The linestyle");
+        model: StringList {
+          strings ["none", "solid", "dotted", "dashed", "dashdot"]
+        };
+      }
+
+      Adw.ActionRow {
+        title: _("Linewidth");
+        subtitle: _("The width of lines");
+
+        Scale linewidth {
+          draw-value: true;
+          width-request: 200;
+        }
+      }
 
       Adw.ComboRow markers {
         title: _("Markers");
@@ -54,6 +73,16 @@ template EditItemWindow : Adw.PreferencesWindow {
         model: StringList {
           strings ["none"]
         };
+      }
+
+      Adw.ActionRow {
+        title: _("Marker Size");
+        subtitle: _("The size of the markers");
+
+        Scale markersize {
+          draw-value: true;
+          width-request: 200;
+        }
       }
     }
   }
