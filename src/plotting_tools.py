@@ -176,8 +176,12 @@ def get_next_color(self):
     used_colors = []
     for _key, item in self.datadict.items():
         used_colors.append(item.color)
+        # If we've got all colors once, remove those from used_colors so we
+        # can loop around
+        if set(used_colors) == set(color_list):
+            for color in color_list:
+                used_colors.remove(color)
 
     for color in color_list:
         if color not in used_colors:
             return color
-    return (0, 0, 0)
