@@ -148,6 +148,16 @@ template PreferencesWindow : Adw.PreferencesWindow {
           strings ["Auto-rename duplicates", "Ignore duplicates", "Add duplicates", "Override existing items"]
         };
       }
+
+      Adw.ActionRow {
+        title: _("Hide Unselected");
+        subtitle: _("Whether to hide items, that aren't selected");
+        activatable-widget: hide_unselected;
+
+        Switch hide_unselected {
+          valign: center;
+        }
+      }
     }
   }
 
@@ -240,88 +250,6 @@ template PreferencesWindow : Adw.PreferencesWindow {
         model: StringList {
           strings ["top", "bottom"]
         };
-      }
-    }
-
-    Adw.PreferencesGroup {
-      title: _("Line Style");
-      description: _("Set the default linestyle when opening new data");
-
-      Adw.ComboRow plot_selected_linestyle_chooser {
-        title: _("Selected Linestyle");
-        subtitle: _("The width of the lines that are selected");
-        model: StringList {
-          strings ["none", "solid", "dotted", "dashed", "dashdot"]
-        };
-      }
-
-      Adw.ComboRow plot_unselected_linestyle_chooser {
-        title: _("Unselected Linestyle");
-        subtitle: _("The width of the lines that are not selected");
-        model: StringList {
-          strings ["none", "solid", "dotted", "dashed", "dashdot"]
-        };
-      }
-
-      Adw.ActionRow {
-        title: _("Selected Linewidth");
-        subtitle: _("The width of the lines that are selected");
-
-        Scale selected_line_thickness_slider {
-          draw-value: true;
-          width-request: 200;
-        }
-      }
-
-      Adw.ActionRow {
-        title: _("Unselected Linewidth");
-        subtitle: _("The width of the lines that are not selected");
-
-        Scale unselected_line_thickness_slider {
-          draw-value: true;
-          width-request: 200;
-        }
-      }
-    }
-
-    Adw.PreferencesGroup {
-      title: _("Markers");
-      description: _("Set the markers used when opening new data");
-
-      Adw.ComboRow plot_selected_markers_chooser {
-        title: _("Selected Markers");
-        subtitle: _("The markers used for lines that are selected");
-        model: StringList {
-          strings ["none"]
-        };
-      }
-
-      Adw.ComboRow plot_unselected_markers_chooser {
-        title: _("Unselected Markers");
-        subtitle: _("The markers used for lines that are not selected");
-        model: StringList {
-          strings ["none"]
-        };
-      }
-
-      Adw.ActionRow {
-        title: _("Selected Marker Size");
-        subtitle: _("The size of the markers used for lines that are selected");
-
-        Scale plot_selected_marker_size {
-          draw-value: true;
-          width-request: 200;
-        }
-      }
-
-      Adw.ActionRow {
-        title: _("Unselected Marker Size");
-        subtitle: _("The size of the markers used for lines that are not selected");
-
-        Scale plot_unselected_marker_size {
-          draw-value: true;
-          width-request: 200;
-        }
       }
     }
 
