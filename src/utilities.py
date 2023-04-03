@@ -28,9 +28,9 @@ def swap_key_positions(dictionary, key1, key2):
     new_dictionary = {}
     for key, value in dictionary.items():
         if key == key1:
-            new_dictionary[key2] = d[key2]
+            new_dictionary[key2] = dictionary[key2]
         elif key == key2:
-            new_dictionary[key1] = d[key1]
+            new_dictionary[key1] = dictionary[key1]
         else:
             new_dictionary[key] = value
     return new_dictionary
