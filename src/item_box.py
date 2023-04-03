@@ -56,11 +56,11 @@ class ItemBox(Gtk.Box):
             self.parent.main_window.list_box.append(item)
         graphs.reload(self.parent)
 
-    def on_dnd_prepare(self, drag_source, _x, _y):
+    def on_dnd_prepare(self, drag_source, x, y):
         snapshot = Gtk.Snapshot.new()
         self.do_snapshot(self, snapshot)
         paintable = snapshot.to_paintable()
-        self.drag_source.set_icon(paintable, 128, 16)
+        drag_source.set_icon(paintable, int(x), int(y))
 
         data = self.item.key
         content = Gdk.ContentProvider.new_for_value(data)
