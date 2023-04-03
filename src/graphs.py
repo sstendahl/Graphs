@@ -120,7 +120,7 @@ def delete_item(self, key, give_toast=False):
         ui.enable_data_dependent_buttons(
             self, utilities.get_selected_keys(self))
     else:
-        reload(self, set_limits=True)
+        reload(self)
         self.main_window.no_data_label_box.set_visible(True)
         self.main_window.list_box.set_visible(False)
         ui.enable_data_dependent_buttons(self, False)
