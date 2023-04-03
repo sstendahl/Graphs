@@ -10,7 +10,6 @@
 "plot_top_label": "X Value 2", 
 "plot_title": "", 
 "savefig_filetype": "svg", 
-"plot_color_cycle": "tab10", 
 "plot_x_scale": "linear",
 "plot_y_scale": "linear",
 "plot_top_scale": "linear", 

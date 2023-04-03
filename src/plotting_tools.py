@@ -3,6 +3,8 @@ import logging
 
 from graphs import graphs, utilities
 
+from matplotlib import pyplot
+
 
 def set_axis_limits(graph_limits, axis, axis_type,
                     limits={"xmin": None, "xmax": None,
@@ -172,16 +174,16 @@ def change_bottom_xscale(action, target, self):
 
 def get_next_color(self):
     """Get the color that is to be used for the next data set"""
-    color_list = self.canvas.color_cycle
+    color_cycle = pyplot.rcParams["axes.prop_cycle"].by_key()["color"]
     used_colors = []
     for _key, item in self.datadict.items():
         used_colors.append(item.color)
         # If we've got all colors once, remove those from used_colors so we
         # can loop around
-        if set(used_colors) == set(color_list):
-            for color in color_list:
+        if set(used_colors) == set(color_cycle):
+            for color in color_cycle:
                 used_colors.remove(color)
 
-    for color in color_list:
+    for color in color_cycle:
         if color not in used_colors:
             return color

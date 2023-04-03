@@ -81,8 +81,6 @@ class PreferencesWindow(Adw.PreferencesWindow):
     plot_style_light = Gtk.Template.Child()
     plot_legend_check = Gtk.Template.Child()
     plot_title = Gtk.Template.Child()
-    plot_color_cycle = Gtk.Template.Child()
-    plot_invert_color_cycle_dark = Gtk.Template.Child()
     center_data_chooser = Gtk.Template.Child()
     handle_duplicates_chooser = Gtk.Template.Child()
     column_x = Gtk.Template.Child()
@@ -97,11 +95,6 @@ class PreferencesWindow(Adw.PreferencesWindow):
         super().__init__()
         self.parent = parent
         self.props.modal = True
-        color_cycles = [
-            "Pastel1", "Pastel2", "Paired", "Accent",
-            "Dark2", "Set1", "Set2", "Set3",
-            "tab10", "tab20", "tab20b", "tab20c"]
-        utilities.populate_chooser(self.plot_color_cycle, color_cycles)
         utilities.populate_chooser(
             self.plot_style_dark, plot_styles.get_user_styles(parent).keys())
         utilities.populate_chooser(
@@ -148,8 +141,6 @@ class PreferencesWindow(Adw.PreferencesWindow):
         utilities.set_chooser(
             self.import_separator, config["import_separator"])
         utilities.set_chooser(
-            self.plot_color_cycle, config["plot_color_cycle"])
-        utilities.set_chooser(
             self.plot_style_light, config["plot_style_light"])
         utilities.set_chooser(self.plot_style_dark, config["plot_style_dark"])
         self.guess_headers.set_active(config["guess_headers"])
@@ -157,8 +148,6 @@ class PreferencesWindow(Adw.PreferencesWindow):
             config["export_figure_transparent"])
         self.plot_legend_check.set_active(config["plot_legend"])
         self.hide_unselected.set_active(config["hide_unselected"])
-        self.plot_invert_color_cycle_dark.set_active(
-            config["plot_invert_color_cycle_dark"])
 
     def apply_configuration(self):
         config = self.parent.preferences.config
@@ -173,8 +162,6 @@ class PreferencesWindow(Adw.PreferencesWindow):
             self.savefig_transparent_check_button.get_active()
         config["plot_legend"] = self.plot_legend_check.get_active()
         config["hide_unselected"] = self.hide_unselected.get_active()
-        config["plot_invert_color_cycle_dark"] = \
-            self.plot_invert_color_cycle_dark.get_active()
         config["plot_y_label"] = self.plot_y_label.get_text()
         config["plot_x_label"] = self.plot_x_label.get_text()
         config["plot_right_label"] = self.plot_right_label.get_text()
@@ -182,8 +169,6 @@ class PreferencesWindow(Adw.PreferencesWindow):
         config["plot_title"] = self.plot_title.get_text()
         filetype = self.savefig_filetype_chooser
         config["savefig_filetype"] = filetype.get_selected_item().get_string()
-        config["plot_color_cycle"] = \
-            self.plot_color_cycle.get_selected_item().get_string()
         config["plot_x_scale"] = \
             self.plot_x_scale.get_selected_item().get_string()
         config["plot_y_scale"] = \

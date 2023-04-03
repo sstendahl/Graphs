@@ -19,15 +19,14 @@ class Canvas(FigureCanvas):
     """Create the graph widget"""
     def __init__(self, parent):
         self.parent = parent
+        available_styles = plot_styles.get_user_styles(self.parent)
+        stylename = self.parent.plot_settings.plot_style
         try:
-            style_path = plot_styles.get_user_styles(
-                self.parent)[self.parent.plot_settings.plot_style]
+            style_path = available_styles[stylename]
         except KeyError:
-            first_style = next(iter(plot_styles.get_user_styles(self.parent)))
-            style_path = plot_styles.get_user_styles(
-                self.parent)[first_style]
+            style_path = available_styles[next(iter(available_styles))]
+            self.parent.main_window.add_toast(f"{stylename} does not exist")
         pyplot.style.use(style_path)
-        self.style = file_io.get_style(style_path)
         self.figure = Figure()
         self.figure.set_tight_layout(True)
         self.one_click_trigger = False
@@ -38,7 +37,6 @@ class Canvas(FigureCanvas):
         self.top_left_axis = self.axis.twiny()
         self.top_right_axis = self.top_left_axis.twinx()
         self.set_axis_properties()
-        self.set_color_cycle()
         self.set_ticks()
         color_rgba = utilities.lookup_color(parent, "accent_color")
         self.rubberband_edge_color = utilities.rgba_to_tuple(color_rgba, True)
@@ -93,25 +91,16 @@ class Canvas(FigureCanvas):
         self.axis.set_xscale(plot_settings.xscale)
 
     def set_ticks(self):
-        bottom = self.style["xtick.bottom"] == "True"
-        left = self.style["ytick.left"] == "True"
-        top = self.style["xtick.top"] == "True"
-        right = self.style["ytick.right"] == "True"
-        minor = self.style["xtick.minor.visible"] == "True"
+        bottom = pyplot.rcParams["xtick.bottom"] == "True"
+        left = pyplot.rcParams["ytick.left"] == "True"
+        top = pyplot.rcParams["xtick.top"] == "True"
+        right = pyplot.rcParams["ytick.right"] == "True"
+        minor = pyplot.rcParams["xtick.minor.visible"] == "True"
         for axis in [self.top_right_axis,
                      self.top_left_axis, self.axis, self.right_axis]:
             axis.tick_params(bottom=bottom, left=left, top=top, right=right)
             if minor:
                 axis.minorticks_on()
-
-    def set_color_cycle(self):
-        """Set the color cycle that will be used for the graphs."""
-        cmap = self.parent.preferences.config["plot_color_cycle"]
-        if Adw.StyleManager.get_default().get_dark() and \
-                self.parent.preferences.config["plot_invert_color_cycle_dark"]:
-            cmap += "_r"
-        self.color_cycle = \
-            cycler(color=pyplot.get_cmap(cmap).colors).by_key()["color"]
 
     # Overwritten function - do not change name
     def __call__(self, event):

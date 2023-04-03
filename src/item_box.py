@@ -64,13 +64,13 @@ class ItemBox(Gtk.Box):
         return content
 
     def update_color(self):
-        color = utilities.tuple_to_rgba(self.item.color)
-        css = f"button {{ color: {color.to_string()}; }}"
-        self.provider.load_from_data(css, -1)
+        self.provider.load_from_data(
+            f"button {{ color: {self.item.color}; }}", -1)
 
     def choose_color(self, _):
-        color = utilities.tuple_to_rgba(self.item.color)
+        color = utilities.hex_to_rgba(self.item.color)
         dialog = Gtk.ColorDialog()
+        dialog.set_with_alpha(False)
         dialog.choose_rgba(
             self.parent.main_window, color, None, self.on_color_dialog_accept)
 
@@ -78,7 +78,7 @@ class ItemBox(Gtk.Box):
         try:
             color = dialog.choose_rgba_finish(result)
             if color is not None:
-                self.item.color = utilities.rgba_to_tuple(color)
+                self.item.color = utilities.rgba_to_hex(color)
                 self.update_color()
                 graphs.refresh(self.parent)
         except GLib.GError:
