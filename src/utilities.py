@@ -33,7 +33,7 @@ def change_key_position(dictionary, key1, key2):
     #below the target key. Otherwise put it above.
     if index1 < index2:
         keys[index1:index2+1] = keys[index1+1:index2+1] + [key2]
-        values[index1:index2+1] = values[index1+1:index2+1] +
+        values[index1:index2+1] = values[index1+1:index2+1]  + \
                                   [dictionary[key2]]
     else:
         keys[index2:index1+1] = [key2] + keys[index2:index1]
