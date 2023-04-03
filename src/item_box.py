@@ -20,8 +20,6 @@ class ItemBox(Gtk.Box):
         self.check_button.set_active(item.selected)
         self.parent = parent
 
-        self.one_click_trigger = False
-        self.time_first_click = 0
         self.gesture = Gtk.GestureClick()
         self.gesture.set_button(0)
         self.add_controller(self.gesture)
