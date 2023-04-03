@@ -23,18 +23,22 @@ def sig_fig_round(number, digits):
     power = "{:e}".format(float(number)).split("e")[1]
     return round(float(number), -(int(power) - digits + 1))
 
-
-def swap_key_positions(dictionary, key1, key2):
-    new_dictionary = {}
-    for key, value in dictionary.items():
-        if key == key1:
-            new_dictionary[key2] = dictionary[key2]
-        elif key == key2:
-            new_dictionary[key1] = dictionary[key1]
-        else:
-            new_dictionary[key] = value
-    return new_dictionary
-
+def change_key_position(dictionary, key1, key2):
+    """Change key position of key2 to that of key1."""
+    keys = list(dictionary.keys())
+    values = list(dictionary.values())
+    index1 = keys.index(key2)
+    index2 = keys.index(key1)
+    #Check if target key is lower in the order, if so we can put the old key
+    #below the target key. Otherwise put it above.
+    if index1 < index2:
+        keys[index1:index2+1] = keys[index1+1:index2+1] + [key2]
+        values[index1:index2+1] = values[index1+1:index2+1] +
+                                  [dictionary[key2]]
+    else:
+        keys[index2:index1+1] = [key2] + keys[index2:index1]
+        values[index2:index1+1] = [dictionary[key2]] + values[index2:index1]
+    return dict(zip(keys, values))
 
 def get_used_axes(self):
     used_axes = {
