@@ -46,8 +46,6 @@ class ItemBox(Gtk.Box):
         self.parent.datadict
         self.parent.datadict = utilities.change_key_position(
             self.parent.datadict, drop_target.key, value)
-        self.parent.item_boxes = utilities.change_key_position(
-            self.parent.item_boxes, drop_target.key, value)
         self.parent.item_menu = utilities.change_key_position(
             self.parent.item_menu, drop_target.key, value)
         for _key, item in self.parent.item_menu.items():
