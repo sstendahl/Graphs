@@ -32,7 +32,9 @@ def open_files(self, files, import_settings):
                     name = Path(import_settings.path).name
                 color = plotting_tools.get_next_color(self)
                 cfg = self.preferences.config
-                add_item(self, Item(cfg, xdata, ydata, name, color))
+                markerstyle = self.canvas.style["lines.marker"]
+                add_item(
+                    self, Item(cfg, xdata, ydata, name, color, markerstyle))
             except IndexError:
                 toast = "Could not open data, the column index is out of range"
                 self.main_window.add_toast(toast)
@@ -143,7 +145,7 @@ def refresh(self, set_limits=False):
         plotting_tools.hide_unused_axes(self, canvas)
     for _key, item in reversed(self.datadict.items()):
         if item is not None:
-            self.canvas.plot(item, item.selected)
+            self.canvas.plot(item)
     if set_limits and len(self.datadict) > 0:
         self.canvas.set_limits()
     self.canvas.draw()

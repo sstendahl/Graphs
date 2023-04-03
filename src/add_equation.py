@@ -43,7 +43,9 @@ class AddEquationWindow(Adw.Window):
         try:
             color = plotting_tools.get_next_color(parent)
             cfg = parent.preferences.config
-            graphs.add_item(parent, Item(cfg, xdata, ydata, name, color))
+            markerstyle = self.canvas.style["lines.marker"]
+            graphs.add_item(
+                parent, Item(cfg, xdata, ydata, name, color, markerstyle))
             self.destroy()
         except Exception as exception:
             exception_type = exception.__class__.__name__

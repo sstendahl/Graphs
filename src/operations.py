@@ -251,5 +251,6 @@ def combine(self):
     new_xdata, new_ydata = sort_data(new_xdata, new_ydata)
     graphs.add_item(self, Item(
         self.preferences.config, new_xdata, new_ydata, "Combined Data",
-        plotting_tools.get_next_color(self)))
+        plotting_tools.get_next_color(self),
+        self.canvas.style["lines.marker"]))
     clipboard.reset(self)

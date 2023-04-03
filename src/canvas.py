@@ -48,7 +48,7 @@ class Canvas(FigureCanvas):
         self.dummy_toolbar = DummyToolbar(self)
         self.highlight = Highlight(self)
 
-    def plot(self, item, selected):
+    def plot(self, item):
         x_axis = item.plot_x_position
         y_axis = item.plot_y_position
         if y_axis == "left":
@@ -61,20 +61,14 @@ class Canvas(FigureCanvas):
                 axis = self.right_axis
             elif x_axis == "top":
                 axis = self.top_right_axis
-        if selected:
-            linewidth = item.selected_line_thickness
-            linestyle = item.linestyle_selected
-            marker = item.selected_markers
-            marker_size = item.selected_marker_size
-        else:
-            linewidth = item.unselected_line_thickness
-            linestyle = item.linestyle_unselected
-            marker = item.unselected_markers
-            marker_size = item.unselected_marker_size
+        linewidth = float(self.style["lines.linewidth"])
+        markersize = float(self.style["lines.markersize"])
+        if not item.selected:
+            linewidth *= 0.6
+            markersize *= 0.6
         axis.plot(
             item.xdata, item.ydata, linewidth=linewidth, label=item.name,
-            linestyle=linestyle, marker=marker, color=item.color,
-            markersize=marker_size)
+            color=item.color, markersize=markersize, marker=item.markerstyle)
         self.set_legend()
 
     def set_axis_properties(self):
