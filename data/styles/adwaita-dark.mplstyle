@@ -106,8 +106,3 @@ image.cmap: Greys
 
 legend.numpoints: 1
 legend.scatterpoints: 1
-
-lines.linewidth: 1
-lines.markeredgewidth: 0
-lines.markersize: 7
-lines.solid_capstyle: round
