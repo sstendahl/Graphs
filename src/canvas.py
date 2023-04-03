@@ -23,9 +23,9 @@ class Canvas(FigureCanvas):
             style_path = plot_styles.get_user_styles(
                 self.parent)[self.parent.plot_settings.plot_style]
         except KeyError:
-            self.parent.plot_settings.plot_style = "adwaita"
+            first_style = next(iter(plot_styles.get_user_styles(self.parent)))
             style_path = plot_styles.get_user_styles(
-                self.parent)[self.parent.plot_settings.plot_style]
+                self.parent)[first_style]
         pyplot.style.use(style_path)
         self.style = file_io.get_style(style_path)
         self.figure = Figure()
