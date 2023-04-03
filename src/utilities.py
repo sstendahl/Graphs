@@ -24,16 +24,16 @@ def sig_fig_round(number, digits):
     return round(float(number), -(int(power) - digits + 1))
 
 
-def swap_key_positions(d, key1, key2):
-    new_dict = {}
-    for key, value in d.items():
+def swap_key_positions(dictionary, key1, key2):
+    new_dictionary = {}
+    for key, value in dictionary.items():
         if key == key1:
-            new_dict[key2] = d[key2]
+            new_dictionary[key2] = d[key2]
         elif key == key2:
-            new_dict[key1] = d[key1]
+            new_dictionary[key1] = d[key1]
         else:
-            new_dict[key] = value
-    return new_dict
+            new_dictionary[key] = value
+    return new_dictionary
 
 
 def get_used_axes(self):
