@@ -87,6 +87,9 @@ axes.facecolor: EEE8D5
 figure.facecolor: FDF6E3
 figure.edgecolor: FDF6E3
 
+axes.prop_cycle: cycler('color', ['268BD2', '2AA198', '859900', 'B58900', 'CB4B16', 'DC322F', 'D33682', '6C71C4'])
+patch.facecolor: 268BD2
+
 # other
 axes.linewidth: 1
 
@@ -97,5 +100,3 @@ legend.frameon: True
 
 # custom
 patch.antialiased: True
-
-axes.prop_cycle: cycler('color', ['268BD2', '2AA198', '859900', 'B58900', 'CB4B16', 'DC322F', 'D33682', '6C71C4'])

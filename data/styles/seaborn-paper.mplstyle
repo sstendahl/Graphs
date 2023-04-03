@@ -87,6 +87,9 @@ axes.facecolor: EAEAF2
 figure.facecolor: FFFFFF
 figure.edgecolor: FFFFFF
 
+axes.prop_cycle: cycler('color', ['4C72B0', '55A868', 'C44E52', '8172B2', 'CCB974', '64B5CD'])
+patch.facecolor: 4C72B0
+
 # other
 axes.linewidth: 1
 
@@ -97,5 +100,4 @@ legend.frameon: True
 
 # custom
 figure.figsize: 6.4, 4.4
-
 patch.linewidth: 0.24
