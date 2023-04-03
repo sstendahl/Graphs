@@ -63,8 +63,8 @@ class Canvas(FigureCanvas):
         linewidth = item.linewidth
         markersize = item.markersize
         if not item.selected:
-            linewidth *= 0.6
-            markersize *= 0.6
+            linewidth *= 0.35
+            markersize *= 0.35
         axis.plot(
             item.xdata, item.ydata, label=item.name, color=item.color,
             marker=item.markerstyle, linestyle=item.linestyle,
