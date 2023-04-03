@@ -143,7 +143,7 @@ def refresh(self, set_limits=False):
         line.remove()
     if len(self.datadict) > 0:
         plotting_tools.hide_unused_axes(self, canvas)
-    for _key, item in self.datadict.items():
+    for _key, item in reversed(self.datadict.items()):
         if item is not None:
             self.canvas.plot(item, item.selected)
     if set_limits and len(self.datadict) > 0:
