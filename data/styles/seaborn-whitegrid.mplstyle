@@ -57,10 +57,19 @@ ytick.minor.pad: 7
 axes.labelpad: 5
 axes.titlepad: 15
 
+# colors
+text.color: 262626
+axes.labelcolor: 262626
+xtick.color: 262626
+ytick.color: 262626
+axes.edgecolor: CCCCCC
+grid.color: CCCCCC
+axes.facecolor: FFFFFF
+figure.facecolor: FFFFFF
+figure.edgecolor: FFFFFF
+
 # other
 axes.linewidth: 1
-
-patch.facecolor: FFFFFF
 
 mathtext.default: regular
 axes.axisbelow: True
@@ -68,16 +77,7 @@ legend.fancybox: True
 legend.frameon: True
 
 # custom
-figure.facecolor: white
-text.color: .15
-axes.labelcolor: .15
 legend.numpoints: 1
 legend.scatterpoints: 1
-xtick.color: .15
-ytick.color: .15
 image.cmap: Greys
 lines.solid_capstyle: round
-
-axes.facecolor: white
-axes.edgecolor: .8
-grid.color: .8

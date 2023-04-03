@@ -25,7 +25,6 @@ class Canvas(FigureCanvas):
         self.style = file_io.get_style(style_path)
         self.figure = Figure()
         self.figure.set_tight_layout(True)
-        self.figure.patch.set_facecolor(f"#{self.style['patch.facecolor']}")
         self.one_click_trigger = False
         self.time_first_click = 0
         self.mpl_connect("button_release_event", self)
@@ -102,7 +101,6 @@ class Canvas(FigureCanvas):
         self.axis.set_xscale(plot_settings.xscale)
 
     def set_ticks(self):
-        used_axes = utilities.get_used_axes(self.parent)[0]
         bottom = self.style["xtick.bottom"] == "True"
         left = self.style["ytick.left"] == "True"
         top = self.style["xtick.top"] == "True"
