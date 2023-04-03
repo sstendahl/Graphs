@@ -48,7 +48,7 @@ class ItemBox(Gtk.Box):
             self.parent.datadict, drop_target.key, value)
         self.parent.item_menu = utilities.change_key_position(
             self.parent.item_menu, drop_target.key, value)
-        for key, item in self.parent.item_menu.items():
+        for _key, item in self.parent.item_menu.items():
             self.parent.main_window.list_box.remove(item)
             self.parent.main_window.list_box.append(item)
         graphs.reload(self.parent)

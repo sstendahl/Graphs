@@ -109,6 +109,6 @@ class EditItemWindow(Adw.PreferencesWindow):
         self.item.unselected_marker_size = \
             self.unselected_marker_size.get_value()
 
-        self.parent.item_boxes[self.item.key].label.set_text(
+        self.parent.item_menu[self.item.key].get_child().label.set_text(
             utilities.shorten_label(self.item.name))
         graphs.refresh(self.parent, set_limits=True)
