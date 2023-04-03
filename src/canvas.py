@@ -1,11 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 import time
 
-from cycler import cycler
-
-from gi.repository import Adw
-
-from graphs import plotting_tools, utilities, plot_styles, file_io
+from graphs import plotting_tools, utilities, plot_styles
 from graphs.rename import RenameWindow
 
 from matplotlib import pyplot
