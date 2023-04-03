@@ -41,6 +41,7 @@ def change_key_position(dictionary, key1, key2):
         values[index2:index1 + 1] = [dictionary[key2]] + values[index2:index1]
     return dict(zip(keys, values))
 
+
 def get_used_axes(self):
     used_axes = {
         "left": False,
