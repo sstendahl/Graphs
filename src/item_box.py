@@ -1,6 +1,5 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 from gi.repository import Gtk, GLib, Gdk
-
 from graphs import graphs, ui, utilities
 from graphs.edit_item import EditItemWindow
 
@@ -37,7 +36,6 @@ class ItemBox(Gtk.Box):
         self.drag_source = Gtk.DragSource.new()
         self.drag_source.set_actions(Gdk.DragAction.COPY)
         self.drag_source.connect("prepare", self.on_dnd_prepare)
-
         self.drop_source = Gtk.DropTarget.new(str, Gdk.DragAction.COPY)
         self.drop_source.key = item.key
         self.drop_source.connect("drop", self.on_dnd_drop)
@@ -58,7 +56,12 @@ class ItemBox(Gtk.Box):
             self.parent.main_window.list_box.append(item)
         graphs.reload(self.parent)
 
-    def on_dnd_prepare(self, _drag_source, _x, _y):
+    def on_dnd_prepare(self, drag_source, _x, _y):
+        snapshot = Gtk.Snapshot.new()
+        self.do_snapshot(self, snapshot)
+        paintable = snapshot.to_paintable()
+        self.drag_source.set_icon(paintable, 128, 16)
+
         data = self.item.key
         content = Gdk.ContentProvider.new_for_value(data)
         return content
