@@ -100,12 +100,13 @@ class Canvas(FigureCanvas):
         left = pyplot.rcParams["ytick.left"]
         top = pyplot.rcParams["xtick.top"]
         right = pyplot.rcParams["ytick.right"]
-        minor = pyplot.rcParams["xtick.minor.visible"]
         for axis in [self.top_right_axis, self.axis]:
-            axis.tick_params(bottom=bottom, left=left, top=top, right=right)
-            if minor:
-                axis.tick_params(bottom=bottom, left=left, top=top,
-                                 right=right, which="minor")
+            if pyplot.rcParams["xtick.minor.visible"]:
+                ticks = "both"
+            else:
+                ticks = "major"
+            axis.tick_params(bottom=bottom, left=left, top=top,
+                                 right=right, which=ticks)
 
     # Overwritten function - do not change name
     def __call__(self, event):
