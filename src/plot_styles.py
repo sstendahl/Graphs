@@ -326,7 +326,7 @@ class PlotStylesWindow(Adw.Window):
     def on_close(self, _):
         if self.style is not None:
             self.apply()
-            graphs.reload(self.parent)
+        graphs.reload(self.parent)
         self.destroy()
 
     def on_color_change(self, button):
