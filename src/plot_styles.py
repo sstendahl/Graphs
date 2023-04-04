@@ -296,6 +296,8 @@ class PlotStylesWindow(Adw.Window):
         # colors
         style["text.color"] = self.text_color.color
         style["axes.labelcolor"] = self.text_color.color
+        style["xtick.labelcolor"] = self.text_color.color
+        style["ytick.labelcolor"] = self.text_color.color
         style["xtick.color"] = self.tick_color.color
         style["ytick.color"] = self.tick_color.color
         style["axes.edgecolor"] = self.axis_color.color
