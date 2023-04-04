@@ -27,7 +27,8 @@ class Canvas(FigureCanvas):
                 default_style = template_config["plot_style_dark"]
             else:
                 default_style = template_config["plot_style_light"]
-            style_path = available_styles[default_style]
+            system_styles = plot_styles.get_system_styles(self.parent)
+            style_path = system_styles[default_style]
             self.parent.main_window.add_toast(f"Plot style {stylename}"
                                               " does not exist")
         pyplot.style.use(style_path)
