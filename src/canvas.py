@@ -95,16 +95,16 @@ class Canvas(FigureCanvas):
         self.axis.set_xscale(plot_settings.xscale)
 
     def set_ticks(self):
-        bottom = pyplot.rcParams["xtick.bottom"] == "True"
-        left = pyplot.rcParams["ytick.left"] == "True"
-        top = pyplot.rcParams["xtick.top"] == "True"
-        right = pyplot.rcParams["ytick.right"] == "True"
-        minor = pyplot.rcParams["xtick.minor.visible"] == "True"
-        for axis in [self.top_right_axis,
-                     self.top_left_axis, self.axis, self.right_axis]:
+        bottom = pyplot.rcParams["xtick.bottom"]
+        left = pyplot.rcParams["ytick.left"]
+        top = pyplot.rcParams["xtick.top"]
+        right = pyplot.rcParams["ytick.right"]
+        minor = pyplot.rcParams["xtick.minor.visible"]
+        for axis in [self.top_right_axis, self.axis]:
             axis.tick_params(bottom=bottom, left=left, top=top, right=right)
             if minor:
-                axis.minorticks_on()
+                axis.tick_params(bottom=bottom, left=left, top=top,
+                                 right=right, which="minor")
 
     # Overwritten function - do not change name
     def __call__(self, event):
