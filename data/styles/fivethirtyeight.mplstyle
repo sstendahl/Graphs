@@ -102,7 +102,6 @@ legend.frameon: True
 
 # custom
 axes.labelsize: large
-axes.axisbelow: true
 patch.edgecolor: f0f0f0
 patch.linewidth: 0.5
 svg.fonttype: path

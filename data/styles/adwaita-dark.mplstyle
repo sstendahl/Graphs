@@ -102,10 +102,7 @@ legend.frameon: True
 
 # custom
 patch.linewidth: 1
-
 figure.figsize: 8.0, 15.5
-
 image.cmap: Greys
-
 legend.numpoints: 1
 legend.scatterpoints: 1
