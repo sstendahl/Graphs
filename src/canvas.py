@@ -1,6 +1,8 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 import time
 
+from gi.repository import Adw, Gtk, GLib
+
 from graphs import plotting_tools, utilities, plot_styles
 from graphs.rename import RenameWindow
 
@@ -20,8 +22,14 @@ class Canvas(FigureCanvas):
         try:
             style_path = available_styles[stylename]
         except KeyError:
-            style_path = available_styles[next(iter(available_styles))]
-            self.parent.main_window.add_toast(f"{stylename} does not exist")
+            if Adw.StyleManager.get_default().get_dark():
+                default_style = self.parent.preferences.template["plot_style_dark"]
+            else:
+                default_style = \
+                           self.parent.preferences.template["plot_style_light"]
+            style_path = available_styles[default_style]
+            self.parent.main_window.add_toast(f"Plot style {stylename}"
+                                              " does not exist")
         pyplot.style.use(style_path)
         self.figure = Figure()
         self.figure.set_tight_layout(True)
