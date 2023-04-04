@@ -138,7 +138,6 @@ class PlotStylesWindow(Adw.Window):
         except KeyError:
             return
         self.leaflet.navigate(1)
-        self.back_button.set_visible(True)
         self.set_title(style)
 
     def back(self, _):
@@ -146,7 +145,6 @@ class PlotStylesWindow(Adw.Window):
         self.reload()
         self.style = None
         self.leaflet.navigate(0)
-        self.back_button.set_visible(False)
         self.set_title("Plot Styles")
         graphs.reload(self.parent)
 

@@ -13,30 +13,23 @@ template PlotStylesWindow : Adw.Window {
     }
   }
 
-  Box {
-    orientation: vertical;
-    Adw.HeaderBar {
-      Button back_button {
-        icon-name: "left-symbolic";
-        visible: false;
+  Adw.Leaflet leaflet {
+    can-unfold: false;
+    can-navigate-back: false;
+    can-navigate-forward: false;
+    Box {
+      orientation: vertical;
+      Adw.HeaderBar {
+        [end]
+        Button reset_button {
+          icon-name: "history-undo-symbolic";
+          tooltip-text: _("Reset to default styles");
+        }
+        styles ["flat"]
       }
-      [end]
-      Button reset_button {
-        icon-name: "history-undo-symbolic";
-        tooltip-text: _("Reset to default styles");
-        visible: bind back_button.visible inverted;
-      }
-      styles ["flat"]
-    }
-
-    Adw.Leaflet leaflet {
-      can-unfold: false;
-      can-navigate-back: false;
-      can-navigate-forward: false;
-      vexpand: true;
-      hexpand: true;
       ScrolledWindow {
         hscrollbar-policy: never;
+        vexpand: true;
         Adw.Clamp {
           margin-bottom: 12;
           margin-top: 12;
@@ -51,9 +44,20 @@ template PlotStylesWindow : Adw.Window {
           }
         }
       }
+    }
+
+    Box {
+      orientation: vertical;
+      Adw.HeaderBar {
+        Button back_button {
+          icon-name: "left-symbolic";
+        }
+        styles ["flat"]
+      }
 
       ScrolledWindow {
         hscrollbar-policy: never;
+        vexpand: true;
         Adw.Clamp {
           margin-bottom: 12;
           margin-top: 12;
