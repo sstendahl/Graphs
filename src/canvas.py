@@ -20,13 +20,13 @@ class Canvas(FigureCanvas):
         available_styles = plot_styles.get_user_styles(self.parent)
         stylename = self.parent.plot_settings.plot_style
         try:
-            style_path = available_styles[stylename]
+            style_path = available_styles["a"]
         except KeyError:
+            template_config = self.parent.preferences.template
             if Adw.StyleManager.get_default().get_dark():
-                default_style = self.parent.preferences.template["plot_style_dark"]
+                default_style = template_config["plot_style_dark"]
             else:
-                default_style = \
-                           self.parent.preferences.template["plot_style_light"]
+                default_style = template_config["plot_style_light"]
             style_path = available_styles[default_style]
             self.parent.main_window.add_toast(f"Plot style {stylename}"
                                               " does not exist")
