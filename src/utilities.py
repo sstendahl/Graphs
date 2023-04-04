@@ -5,7 +5,6 @@ from pathlib import Path
 
 import numpy
 
-
 def remove_unused_config_keys(config, template):
     delete_list = []
     for key in config.keys():
@@ -18,9 +17,11 @@ def remove_unused_config_keys(config, template):
 
 def sig_fig_round(number, digits):
     """Round a number to the specified number of significant digits."""
-    if number is None:
+    try:
+        # Convert to scientific notation, and get power
+        power = "{:e}".format(float(number)).split("e")[1]
+    except IndexError:
         return None
-    power = "{:e}".format(float(number)).split("e")[1]
     return round(float(number), -(int(power) - digits + 1))
 
 
