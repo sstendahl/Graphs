@@ -24,11 +24,10 @@ class Canvas(FigureCanvas):
         except KeyError:
             template_config = self.parent.preferences.template
             if Adw.StyleManager.get_default().get_dark():
-                default_style = template_config["plot_style_dark"]
+                stylename = template_config["plot_style_dark"]
             else:
-                default_style = template_config["plot_style_light"]
-            system_styles = plot_styles.get_system_styles(self.parent)
-            style_path = system_styles[default_style]
+                stylename = template_config["plot_style_light"]
+            style_path = plot_styles.get_user_styles(self.parent)[stylename]
             self.parent.main_window.add_toast(f"Plot style {stylename}"
                                               " does not exist")
         pyplot.style.use(style_path)
