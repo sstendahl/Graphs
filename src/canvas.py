@@ -106,7 +106,7 @@ class Canvas(FigureCanvas):
             else:
                 ticks = "major"
             axis.tick_params(bottom=bottom, left=left, top=top,
-                                 right=right, which=ticks)
+                             right=right, which=ticks)
 
     # Overwritten function - do not change name
     def __call__(self, event):
