@@ -100,11 +100,11 @@ class Canvas(FigureCanvas):
         left = pyplot.rcParams["ytick.left"]
         top = pyplot.rcParams["xtick.top"]
         right = pyplot.rcParams["ytick.right"]
+        if pyplot.rcParams["xtick.minor.visible"]:
+            ticks = "both"
+        else:
+            ticks = "major"
         for axis in [self.top_right_axis, self.axis]:
-            if pyplot.rcParams["xtick.minor.visible"]:
-                ticks = "both"
-            else:
-                ticks = "major"
             axis.tick_params(bottom=bottom, left=left, top=top,
                              right=right, which=ticks)
 
