@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 import time
 
-from gi.repository import Adw, Gtk, GLib
+from gi.repository import Adw
 
 from graphs import plotting_tools, utilities, plot_styles
 from graphs.rename import RenameWindow
@@ -20,7 +20,7 @@ class Canvas(FigureCanvas):
         available_styles = plot_styles.get_user_styles(self.parent)
         stylename = self.parent.plot_settings.plot_style
         try:
-            style_path = available_styles["a"]
+            style_path = available_styles[stylename]
         except KeyError:
             template_config = self.parent.preferences.template
             if Adw.StyleManager.get_default().get_dark():
