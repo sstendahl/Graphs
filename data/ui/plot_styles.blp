@@ -448,6 +448,29 @@ template PlotStylesWindow : Adw.Window {
                     }
                   }
                 }
+
+                Adw.PreferencesGroup {
+                  layout {
+                    column: 0;
+                    row: 3;
+                    column-span: 2;
+                  }
+                  Adw.ActionRow {
+                    title: _("Line Colors");
+                    subtitle: _("Change the available line colors");
+                    activatable-widget: line_colors;
+                    hexpand: true;
+
+                    Button line_colors {
+                      tooltip-text: _("Edit Colors");
+                      valign: center;
+                      styles ["flat"]
+                      Image {
+                        icon-name: "right-symbolic";
+                      }
+                    }
+                  }
+                }
               }
             }
 
@@ -463,6 +486,45 @@ template PlotStylesWindow : Adw.Window {
                   width-request: 200;
                 }
               }
+            }
+          }
+        }
+      }
+    }
+
+    Box {
+      orientation: vertical;
+      Adw.HeaderBar {
+        Button line_colors_back_button {
+          icon-name: "left-symbolic";
+        }
+        styles ["flat"]
+      }
+      ScrolledWindow {
+        hscrollbar-policy: never;
+        vexpand: true;
+        Adw.Clamp {
+          margin-bottom: 12;
+          margin-top: 12;
+          margin-start: 12;
+          margin-end: 12;
+          Adw.PreferencesGroup {
+            title: _("Line Colors");
+            description: _("The colors which will be used for the lines");
+            header-suffix: Button add_color_button {
+              Adw.ButtonContent {
+                halign: center;
+                icon-name: "list-add-symbolic";
+                label: _("Add Color");
+              }
+              styles ["flat"]
+            };
+            ListBox line_colors_box {
+              vexpand: false;
+              valign: start;
+              hexpand: true;
+              selection-mode: none;
+              styles ["boxed-list"]
             }
           }
         }

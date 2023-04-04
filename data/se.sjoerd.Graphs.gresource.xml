@@ -13,6 +13,7 @@
     <file preprocess="xml-stripblanks">ui/preferences.ui</file>
     <file preprocess="xml-stripblanks">ui/rename_window.ui</file>
     <file preprocess="xml-stripblanks">ui/style_box.ui</file>
+    <file preprocess="xml-stripblanks">ui/style_color_box.ui</file>
     <file preprocess="xml-stripblanks">ui/transform_window.ui</file>
     <file preprocess="xml-stripblanks">ui/window.ui</file>
   </gresource>
@@ -33,6 +34,7 @@
     <file preprocess="xml-stripblanks" alias="loupe-symbolic.svg">icons/loupe-symbolic.svg</file>
     <file preprocess="xml-stripblanks" alias="move-tool-symbolic.svg">icons/move-tool-symbolic.svg</file>
     <file preprocess="xml-stripblanks" alias="normalize-symbolic.svg">icons/normalize-symbolic.svg</file>
+    <file preprocess="xml-stripblanks" alias="right-symbolic.svg">icons/right-symbolic.svg</file>
     <file preprocess="xml-stripblanks" alias="settings-symbolic.svg">icons/settings-symbolic.svg</file>
     <file preprocess="xml-stripblanks" alias="shift-symbolic.svg">icons/shift-symbolic.svg</file>
     <file preprocess="xml-stripblanks" alias="smoothen-symbolic.svg">icons/smoothen-symbolic.svg</file>
