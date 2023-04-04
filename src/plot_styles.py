@@ -313,6 +313,7 @@ class PlotStylesWindow(Adw.Window):
             self.line_colors_box.remove(list_box)
             del self.color_boxes[color_box]
         style["axes.prop_cycle"] = cycler(color=line_colors)
+        style["patch.facecolor"] = line_colors[0]
 
         # other
         style["axes.linewidth"] = self.axis_width.get_value()
