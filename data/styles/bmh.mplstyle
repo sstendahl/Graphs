@@ -87,6 +87,9 @@ axes.facecolor: EEEEEE
 figure.facecolor: FFFFFF
 figure.edgecolor: FFFFFF
 
+axes.prop_cycle: cycler('color', ['348ABD', 'A60628', '7A68A6', '467821', 'D55E00', 'CC79A7', '56B4E9', '009E73', 'F0E442', '0072B2'])
+patch.facecolor: 348ABD
+
 # other
 axes.linewidth: 1
 
@@ -99,10 +102,5 @@ legend.frameon: True
 patch.linewidth: 0.5
 patch.edgecolor: eeeeee
 patch.antialiased: True
-patch.facecolor: blue
-
 text.hinting_factor: 8
-
 mathtext.fontset: cm
-
-axes.prop_cycle: cycler('color', ['348ABD', 'A60628', '7A68A6', '467821', 'D55E00', 'CC79A7', '56B4E9', '009E73', 'F0E442', '0072B2'])

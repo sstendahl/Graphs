@@ -160,19 +160,10 @@ def get_selected_keys(self):
     return selected_keys
 
 
-def create_rgba(red, green, blue, alpha=1):
-    """Create a valid RGBA object from rgba values."""
-    res = Gdk.RGBA()
-    res.red = red
-    res.green = green
-    res.blue = blue
-    res.alpha = alpha
-    return res
-
-
-def tuple_to_rgba(rgba_tuple):
-    red, green, blue = rgba_tuple
-    return create_rgba(red, green, blue)
+def hex_to_rgba(hex_str):
+    rgba = Gdk.RGBA()
+    rgba.parse(str(hex_str))
+    return rgba
 
 
 def lookup_color(self, color):

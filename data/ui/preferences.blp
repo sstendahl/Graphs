@@ -267,22 +267,6 @@ template PreferencesWindow : Adw.PreferencesWindow {
         }
       }
 
-      Adw.ComboRow plot_color_cycle {
-        title: _("Color Cycle");
-        subtitle: _("The default color cycle set that is used while plotting new data");
-        model: StringList {};
-      }
-
-      Adw.ActionRow {
-        title: _("Invert Color Cycle in Dark Mode");
-        subtitle: _("Use inverted colors for the color cycle used in dark mode");
-        activatable-widget: plot_invert_color_cycle_dark;
-
-        Switch plot_invert_color_cycle_dark {
-          valign: center;
-        }
-      }
-
       Adw.ComboRow plot_style_light {
         title: _("Graph Style Light");
         subtitle: _("The style sheet used for the graph in light mode");

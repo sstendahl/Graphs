@@ -3,11 +3,12 @@ import uuid
 
 from graphs import plotting_tools
 
+from matplotlib import pyplot
+
 
 class Item:
     def __init__(self, parent, xdata, ydata, name=""):
         config = parent.preferences.config
-        style = parent.canvas.style
         self.key: str = str(uuid.uuid4())
         self.name = name
         self.plot_y_position = config["plot_y_position"]
@@ -19,7 +20,7 @@ class Item:
         self.clipboard_pos = -1
         self.xdata_clipboard = [self.xdata.copy()]
         self.ydata_clipboard = [self.ydata.copy()]
-        self.linestyle = style["lines.linestyle"]
-        self.linewidth = float(style["lines.linewidth"])
-        self.markerstyle = style["lines.marker"]
-        self.markersize = float(style["lines.markersize"])
+        self.linestyle = pyplot.rcParams["lines.linestyle"]
+        self.linewidth = float(pyplot.rcParams["lines.linewidth"])
+        self.markerstyle = pyplot.rcParams["lines.marker"]
+        self.markersize = float(pyplot.rcParams["lines.markersize"])

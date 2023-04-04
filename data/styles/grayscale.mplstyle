@@ -87,6 +87,9 @@ axes.facecolor: FFFFFF
 figure.facecolor: BFBFBF
 figure.edgecolor: BFBFBF
 
+axes.prop_cycle: cycler('color', ['0.00', '0.40', '0.60', '0.70'])
+patch.facecolor: gray
+
 # other
 axes.linewidth: 1
 
@@ -96,12 +99,7 @@ legend.fancybox: True
 legend.frameon: True
 
 # custom
-patch.facecolor: gray
 patch.edgecolor: black
-
-axes.prop_cycle: cycler('color', ['0.00', '0.40', '0.60', '0.70'])
-
 image.cmap: gray
-
 savefig.facecolor: white
 savefig.edgecolor: white

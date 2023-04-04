@@ -87,6 +87,9 @@ axes.facecolor: EAEAF2
 figure.facecolor: FFFFFF
 figure.edgecolor: FFFFFF
 
+axes.prop_cycle: cycler('color', ['006BA4', 'FF800E', 'ABABAB', '595959', '5F9ED1', 'C85200', '898989', 'A2C8EC', 'FFBC79', 'CFCFCF'])
+patch.facecolor: 006BA4
+
 # other
 axes.linewidth: 1
 
@@ -94,7 +97,3 @@ mathtext.default: regular
 axes.axisbelow: True
 legend.fancybox: True
 legend.frameon: True
-
-# custom
-axes.prop_cycle: cycler('color', ['006BA4', 'FF800E', 'ABABAB', '595959', '5F9ED1', 'C85200', '898989', 'A2C8EC', 'FFBC79', 'CFCFCF'])
-patch.facecolor: 006BA4

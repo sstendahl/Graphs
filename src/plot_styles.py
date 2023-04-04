@@ -3,7 +3,7 @@ import os
 import shutil
 from pathlib import Path
 
-from gi.repository import Adw, Gtk, Gdk, GLib
+from gi.repository import Adw, Gtk, GLib
 
 from graphs import utilities, file_io, graphs
 
@@ -330,8 +330,7 @@ class PlotStylesWindow(Adw.Window):
         self.destroy()
 
     def on_color_change(self, button):
-        color = Gdk.RGBA()
-        color.parse(f"#{button.color}")
+        color = utilities.hex_to_rgba(f"#{button.color}")
         dialog = Gtk.ColorDialog()
         dialog.set_with_alpha(False)
         dialog.choose_rgba(
