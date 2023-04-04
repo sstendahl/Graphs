@@ -1,6 +1,8 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 import time
 
+from gi.repository import Adw
+
 from graphs import plotting_tools, utilities, plot_styles
 from graphs.rename import RenameWindow
 
@@ -20,8 +22,14 @@ class Canvas(FigureCanvas):
         try:
             style_path = available_styles[stylename]
         except KeyError:
-            style_path = available_styles[next(iter(available_styles))]
-            self.parent.main_window.add_toast(f"{stylename} does not exist")
+            template_config = self.parent.preferences.template
+            if Adw.StyleManager.get_default().get_dark():
+                stylename = template_config["plot_style_dark"]
+            else:
+                stylename = template_config["plot_style_light"]
+            style_path = plot_styles.get_user_styles(self.parent)[stylename]
+            self.parent.main_window.add_toast(f"Plot style {stylename}"
+                                              " does not exist")
         pyplot.style.use(style_path)
         self.figure = Figure()
         self.figure.set_tight_layout(True)
@@ -87,16 +95,17 @@ class Canvas(FigureCanvas):
         self.axis.set_xscale(plot_settings.xscale)
 
     def set_ticks(self):
-        bottom = pyplot.rcParams["xtick.bottom"] == "True"
-        left = pyplot.rcParams["ytick.left"] == "True"
-        top = pyplot.rcParams["xtick.top"] == "True"
-        right = pyplot.rcParams["ytick.right"] == "True"
-        minor = pyplot.rcParams["xtick.minor.visible"] == "True"
-        for axis in [self.top_right_axis,
-                     self.top_left_axis, self.axis, self.right_axis]:
-            axis.tick_params(bottom=bottom, left=left, top=top, right=right)
-            if minor:
-                axis.minorticks_on()
+        bottom = pyplot.rcParams["xtick.bottom"]
+        left = pyplot.rcParams["ytick.left"]
+        top = pyplot.rcParams["xtick.top"]
+        right = pyplot.rcParams["ytick.right"]
+        if pyplot.rcParams["xtick.minor.visible"]:
+            ticks = "both"
+        else:
+            ticks = "major"
+        for axis in [self.top_right_axis, self.axis]:
+            axis.tick_params(bottom=bottom, left=left, top=top,
+                             right=right, which=ticks)
 
     # Overwritten function - do not change name
     def __call__(self, event):
