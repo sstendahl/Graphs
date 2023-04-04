@@ -9,6 +9,8 @@ from graphs import utilities, file_io, graphs
 
 from matplotlib.lines import Line2D
 
+from cycler import cycler
+
 
 def get_system_styles(self):
     path = os.path.join(self.modulepath, "styles")
@@ -52,6 +54,10 @@ class PlotStylesWindow(Adw.Window):
     styles_box = Gtk.Template.Child()
     reset_button = Gtk.Template.Child()
     back_button = Gtk.Template.Child()
+    line_colors_box = Gtk.Template.Child()
+    line_colors_back_button = Gtk.Template.Child()
+    line_colors = Gtk.Template.Child()
+    add_color_button = Gtk.Template.Child()
     style_name = Gtk.Template.Child()
     font_chooser = Gtk.Template.Child()
     linestyle = Gtk.Template.Child()
@@ -128,6 +134,12 @@ class PlotStylesWindow(Adw.Window):
             button.get_style_context().add_provider(
                 button.provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION)
 
+        # line colors
+        self.line_colors.connect("clicked", self.edit_line_colors)
+        self.line_colors_back_button.connect("clicked", self.back_line_colors)
+        self.add_color_button.connect("clicked", self.add_color)
+        self.color_boxes = {}
+
         self.present()
 
     def edit(self, _, style):
@@ -138,7 +150,6 @@ class PlotStylesWindow(Adw.Window):
         except KeyError:
             return
         self.leaflet.navigate(1)
-        self.back_button.set_visible(True)
         self.set_title(style)
 
     def back(self, _):
@@ -146,9 +157,16 @@ class PlotStylesWindow(Adw.Window):
         self.reload()
         self.style = None
         self.leaflet.navigate(0)
-        self.back_button.set_visible(False)
         self.set_title("Plot Styles")
         graphs.reload(self.parent)
+
+    def edit_line_colors(self, _):
+        self.leaflet.navigate(1)
+        self.set_title(f"{self.style['name']} - line colors")
+
+    def back_line_colors(self, _):
+        self.leaflet.navigate(0)
+        self.set_title(self.style["name"])
 
     def load(self):
         style = self.style
@@ -200,6 +218,12 @@ class PlotStylesWindow(Adw.Window):
         for button in self.color_buttons:
             button.provider.load_from_data(
                 f"button {{ color: #{button.color}; }}", -1)
+
+        # line colors
+        for color in self.style["axes.prop_cycle"].by_key()["color"]:
+            box = StyleColorBox(self, color)
+            self.line_colors_box.append(box)
+            self.color_boxes[box] = self.line_colors_box.get_last_child()
 
         # other
         self.axis_width.set_value(float(style["axes.linewidth"]))
@@ -280,6 +304,14 @@ class PlotStylesWindow(Adw.Window):
         style["figure.facecolor"] = self.edge_color.color
         style["figure.edgecolor"] = self.edge_color.color
 
+        # line colors
+        line_colors = []
+        for color_box, list_box in self.color_boxes.copy().items():
+            line_colors.append(color_box.color_button.color)
+            self.line_colors_box.remove(list_box)
+            del self.color_boxes[color_box]
+        style["axes.prop_cycle"] = cycler(color=line_colors)
+
         # other
         style["axes.linewidth"] = self.axis_width.get_value()
 
@@ -289,6 +321,17 @@ class PlotStylesWindow(Adw.Window):
         style["name"] = self.style_name.get_text()
         file_io.write_style(
             os.path.join(styles_path, f"{style['name']}.mplstyle"), style)
+
+    def delete_color(self, _, color_box):
+        self.line_colors_box.remove(self.color_boxes[color_box])
+        del self.color_boxes[color_box]
+        if not self.color_boxes:
+            self.add_color(None)
+
+    def add_color(self, _):
+        box = StyleColorBox(self, "000000")
+        self.line_colors_box.append(box)
+        self.color_boxes[box] = self.line_colors_box.get_last_child()
 
     def delete(self, _, style):
         os.remove(get_user_styles(self.parent)[style])
@@ -326,7 +369,7 @@ class PlotStylesWindow(Adw.Window):
     def on_close(self, _):
         if self.style is not None:
             self.apply()
-            graphs.reload(self.parent)
+        graphs.reload(self.parent)
         self.destroy()
 
     def on_color_change(self, button):
@@ -363,3 +406,24 @@ class StyleBox(Gtk.Box):
         self.copy_button.connect("clicked", parent.copy, style)
         self.delete_button.connect("clicked", parent.delete, style)
         self.edit_button.connect("clicked", parent.edit, style)
+
+
+@Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/style_color_box.ui")
+class StyleColorBox(Gtk.Box):
+    __gtype_name__ = "StyleColorBox"
+    label = Gtk.Template.Child()
+    color_button = Gtk.Template.Child()
+    delete_button = Gtk.Template.Child()
+
+    def __init__(self, parent, color):
+        super().__init__()
+        self.label.set_label(f"Color {len(parent.color_boxes) + 1}")
+        self.color_button.color = color
+        self.color_button.provider = Gtk.CssProvider()
+        self.color_button.get_style_context().add_provider(
+            self.color_button.provider,
+            Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION)
+        self.color_button.provider.load_from_data(
+            f"button {{ color: #{color}; }}", -1)
+        self.color_button.connect("clicked", parent.on_color_change)
+        self.delete_button.connect("clicked", parent.delete_color, self)

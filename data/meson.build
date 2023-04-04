@@ -70,6 +70,7 @@ blueprints = custom_target('blueprints',
     'ui/preferences.blp',
     'ui/rename_window.blp',
     'ui/style_box.blp',
+    'ui/style_color_box.blp',
     'ui/transform_window.blp'
   ),
   output: '.',
