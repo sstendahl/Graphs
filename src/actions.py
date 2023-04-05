@@ -141,8 +141,8 @@ def delete_selected_action(_action, _target, self):
 def translate_x_action(_action, _target, self):
     win = self.main_window
     try:
-        offset = eval(win.translate_x_entry.get_text())
-    except Exception as exception:
+        offset = float(win.translate_x_entry.get_text())
+    except ValueError as exception:
         exception_type = exception.__class__.__name__
         message = f"{exception_type}: Unable to do translation, \
 make sure to enter a valid number"
@@ -155,8 +155,8 @@ make sure to enter a valid number"
 def translate_y_action(_action, _target, self):
     win = self.main_window
     try:
-        offset = eval(win.translate_y_entry.get_text())
-    except Exception as exception:
+        offset = float(win.translate_y_entry.get_text())
+    except ValueError as exception:
         exception_type = exception.__class__.__name__
         message = f"{exception_type}: Unable to do translation, \
 make sure to enter a valid number"
@@ -169,8 +169,8 @@ make sure to enter a valid number"
 def multiply_x_action(_action, _target, self):
     win = self.main_window
     try:
-        multiplier = eval(win.multiply_x_entry.get_text())
-    except Exception as exception:
+        multiplier = float(win.multiply_x_entry.get_text())
+    except ValueError as exception:
         exception_type = exception.__class__.__name__
         message = f"{exception_type}: Unable to do multiplication, \
 make sure to enter a valid number"
@@ -183,8 +183,8 @@ make sure to enter a valid number"
 def multiply_y_action(_action, _target, self):
     win = self.main_window
     try:
-        multiplier = eval(win.multiply_y_entry.get_text())
-    except Exception as exception:
+        multiplier = float(win.multiply_y_entry.get_text())
+    except ValueError as exception:
         exception_type = exception.__class__.__name__
         message = f"{exception_type}: Unable to do multiplication, \
 make sure to enter a valid number"

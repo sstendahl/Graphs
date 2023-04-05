@@ -35,16 +35,15 @@ class AddEquationWindow(Adw.Window):
         x_stop = self.x_stop_entry.get_text()
         step_size = self.step_size_entry.get_text()
         equation = str(self.equation_entry.get_text())
-        xdata, ydata = calculation.create_dataset(
-            x_start, x_stop, equation, step_size)
-        name = str(self.name_entry.get_text())
-        if name == "":
-            name = f"Y = {str(equation)}"
         try:
-            graphs.add_item(
-                parent, Item(parent, xdata, ydata, name))
+            xdata, ydata = calculation.create_dataset(
+                x_start, x_stop, equation, step_size)
+            name = str(self.name_entry.get_text())
+            if name == "":
+                name = f"Y = {str(equation)}"
+            graphs.add_item(parent, Item(parent, xdata, ydata, name))
             self.destroy()
-        except Exception as exception:
+        except (NameError, SyntaxError) as exception:
             exception_type = exception.__class__.__name__
             toast = f"{exception_type} - Unable to add data from equation"
             self.toast_overlay.add_toast(Adw.Toast(title=toast))

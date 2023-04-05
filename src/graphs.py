@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 import logging
 from pathlib import Path
+from pickle import UnpicklingError
 
 from graphs import clipboard, file_io, plotting_tools, ui, utilities
 from graphs.canvas import Canvas
@@ -64,7 +65,7 @@ def open_project(self, path):
         ui.enable_data_dependent_buttons(
             self, utilities.get_selected_keys(self))
         self.canvas.set_limits()
-    except Exception:
+    except (EOFError, UnpicklingError):
         message = "Could not open project"
         self.main_window.add_toast(message)
         logging.exception(message)

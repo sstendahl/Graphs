@@ -40,7 +40,7 @@ class GraphsApplication(Adw.Application):
         for font in font_list:
             try:
                 matplotlib.font_manager.fontManager.addfont(font)
-            except Exception:
+            except RuntimeError:
                 logging.warning("Could not load %s", font)
         self.preferences = preferences.Preferences(self)
         self.add_actions()
