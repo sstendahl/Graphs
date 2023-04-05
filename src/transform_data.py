@@ -37,7 +37,7 @@ class TransformWindow(Adw.Window):
             discard = self.discard.get_active()
             operations.perform_operation(
                 parent, operations.transform, input_x, input_y, discard)
-        except Exception as exception:
+        except (NameError, SyntaxError) as exception:
             exception_type = exception.__class__.__name__
             toast = f"{exception_type}: Unable to do transformation, \
 make sure the syntax is correct"

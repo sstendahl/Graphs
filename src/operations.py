@@ -57,34 +57,28 @@ def sort_data(xdata, ydata):
 
 
 def perform_operation(self, callback, *args):
-    try:
-        keys = utilities.get_selected_keys(self)
-        for key in keys:
-            item = self.datadict[key]
-            xdata, ydata, start_index, stop_index = get_data(self, item)
-            if xdata is not None:
-                new_xdata, new_ydata, sort, discard = callback(
-                    item, xdata, ydata, *args)
-                if discard:
-                    logging.debug("Discard is true")
-                    item.xdata = new_xdata
-                    item.ydata = new_ydata
-                else:
-                    logging.debug("Discard is false")
-                    item.xdata[start_index:stop_index] = new_xdata
-                    item.ydata[start_index:stop_index] = new_ydata
-                if sort:
-                    logging.debug("Sorting data")
-                    sorted_x, sorted_y = sort_data(item.xdata, item.ydata)
-                    item.xdata = sorted_x
-                    item.ydata = sorted_y
-        clipboard.add(self)
-        graphs.refresh(self, set_limits=True)
-    except Exception as exception:
-        exception_type = exception.__class__.__name__
-        message = f"Couldn't perform operation: {exception_type}"
-        self.main_window.add_toast(message)
-        logging.exception(message)
+    keys = utilities.get_selected_keys(self)
+    for key in keys:
+        item = self.datadict[key]
+        xdata, ydata, start_index, stop_index = get_data(self, item)
+        if xdata is not None:
+            new_xdata, new_ydata, sort, discard = callback(
+                item, xdata, ydata, *args)
+            if discard:
+                logging.debug("Discard is true")
+                item.xdata = new_xdata
+                item.ydata = new_ydata
+            else:
+                logging.debug("Discard is false")
+                item.xdata[start_index:stop_index] = new_xdata
+                item.ydata[start_index:stop_index] = new_ydata
+            if sort:
+                logging.debug("Sorting data")
+                sorted_x, sorted_y = sort_data(item.xdata, item.ydata)
+                item.xdata = sorted_x
+                item.ydata = sorted_y
+    clipboard.add(self)
+    graphs.refresh(self, set_limits=True)
 
 
 def translate_x(_item, xdata, ydata, offset):
