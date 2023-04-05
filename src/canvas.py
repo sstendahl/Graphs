@@ -23,8 +23,8 @@ class Canvas(FigureCanvas):
             style_path = available_styles[stylename]
         except KeyError:
             template_config = self.parent.preferences.template
-            self.parent.main_window.add_toast(f"Plot style {stylename}"
-                                            " does not exist, loading default")
+            self.parent.main_window.add_toast(
+                f"Plot style {stylename} does not exist, loading default")
             if Adw.StyleManager.get_default().get_dark():
                 stylename = template_config["plot_style_dark"]
             else:

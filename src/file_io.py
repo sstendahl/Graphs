@@ -5,8 +5,6 @@ import re
 from xml.dom import minidom
 from graphs import utilities
 
-from cycler import cycler
-
 import numpy
 
 
@@ -143,13 +141,6 @@ def get_style(path):
                     style[key] = value
                 except ValueError:
                     pass
-    cycler_string = style["axes.prop_cycle"]
-    color_string = \
-        cycler_string[cycler_string.find("[") + 1: cycler_string.find("]")]
-    color_list = []
-    for string in color_string.split(", "):
-        color_list.append(string.replace("'", ""))
-    style["axes.prop_cycle"] = cycler(color=color_list)
     return style
 
 

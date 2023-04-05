@@ -89,8 +89,8 @@ axes.facecolor: FFFFFF
 figure.facecolor: BFBFBF
 figure.edgecolor: BFBFBF
 
-axes.prop_cycle: cycler('color', 'bgrcmyk')
-patch.facecolor: b
+axes.prop_cycle: cycler('color', ['0000FF', '008000', 'FF0000', '00BFBF', 'BF00BF', 'BFBF00', '000000'])
+patch.facecolor: 0000FF
 
 # other
 axes.linewidth: 1.0
@@ -145,7 +145,7 @@ axes.autolimit_mode: round_numbers
 axes.xmargin: 0
 axes.ymargin: 0
 axes.spines.bottom: True
-axes.spines.lef: True
+axes.spines.left: True
 axes.spines.right: True
 axes.spines.top: True
 polaraxes.grid: True
