@@ -1,5 +1,6 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
-from gi.repository import Gtk, GLib, Gdk
+from gi.repository import GLib, Gdk, Gtk
+
 from graphs import graphs, ui, utilities
 from graphs.edit_item import EditItemWindow
 
@@ -60,8 +61,7 @@ class ItemBox(Gtk.Box):
         drag_source.set_icon(paintable, int(x), int(y))
 
         data = self.item.key
-        content = Gdk.ContentProvider.new_for_value(data)
-        return content
+        return Gdk.ContentProvider.new_for_value(data)
 
     def update_color(self):
         self.provider.load_from_data(

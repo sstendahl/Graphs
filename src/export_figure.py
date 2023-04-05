@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 from pathlib import Path
 
-from gi.repository import Adw, Gtk, GLib
+from gi.repository import Adw, GLib, Gtk
 
 from graphs import utilities
 

@@ -3,7 +3,7 @@ import time
 
 from gi.repository import Adw
 
-from graphs import plotting_tools, utilities, plot_styles
+from graphs import plot_styles, plotting_tools, utilities
 from graphs.rename import RenameWindow
 
 from matplotlib import pyplot
@@ -185,7 +185,7 @@ class Canvas(FigureCanvas):
             "left": self.axis.get_yscale(),
             "right": self.right_axis.get_yscale(),
             "top": self.top_left_axis.get_xscale(),
-            "bottom": self.axis.get_xscale()
+            "bottom": self.axis.get_xscale(),
         }
         limits = {}
         for position, scale in axes.items():
@@ -247,11 +247,11 @@ class Highlight(SpanSelector):
             props={
                 "facecolor": canvas.rubberband_fill_color,
                 "edgecolor": canvas.rubberband_edge_color,
-                "linewidth": 1
+                "linewidth": 1,
             },
             handle_props={"linewidth": 0},
             interactive=True,
-            drag_from_anywhere=True
+            drag_from_anywhere=True,
         )
         if span is not None:
             self.extents = span

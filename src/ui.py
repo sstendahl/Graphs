@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 import os
 
-from gi.repository import Adw, Gtk, GLib
+from gi.repository import Adw, GLib, Gtk
 
 from graphs import file_io, graphs
 
@@ -86,7 +86,7 @@ def on_save_project_response(dialog, response, self):
 def show_about_window(self):
     developers = [
         "Sjoerd Broekhuijsen <contact@sjoerd.se>",
-        "Christoph Kohnen <christoph.kohnen@disroot.org>"
+        "Christoph Kohnen <christoph.kohnen@disroot.org>",
     ]
     about = Adw.AboutWindow(transient_for=self.main_window,
                             application_name=self.name,

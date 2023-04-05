@@ -6,7 +6,7 @@ import shutil
 
 from gi.repository import Adw, Gtk
 
-from graphs import graphs, utilities, plot_styles
+from graphs import graphs, plot_styles, utilities
 
 
 class Preferences():
@@ -47,8 +47,7 @@ class Preferences():
         os.chdir(config_path)
         with open("config.json", "r", encoding="utf-8") as file:
             config = json.load(file)
-        config = self.check_config(config)
-        return config
+        return self.check_config(config)
 
     def save_config(self):
         config_path = utilities.get_config_path()

@@ -1,7 +1,8 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 import os
-from gi.repository import Gdk
 from pathlib import Path
+
+from gi.repository import Gdk
 
 import numpy
 
@@ -49,13 +50,13 @@ def get_used_axes(self):
         "left": False,
         "right": False,
         "top": False,
-        "bottom": False
+        "bottom": False,
     }
     items = {
         "left": [],
         "right": [],
         "top": [],
-        "bottom": []
+        "bottom": [],
     }
     for _key, item in self.datadict.items():
         if item.plot_y_position == "left":
@@ -102,7 +103,7 @@ def populate_chooser(chooser, chooser_list, clear=True):
     """Fill the dropdown menu with the strings in a chooser_list"""
     model = chooser.get_model()
     if clear:
-        for item in model:
+        for _item in model:
             model.remove(0)
     for item in chooser_list:
         if item != "nothing":
@@ -188,8 +189,7 @@ def rgba_to_tuple(rgba, alpha=False):
 def swap(str1):
     str1 = str1.replace(",", "third")
     str1 = str1.replace(".", ", ")
-    str1 = str1.replace("third", ".")
-    return str1
+    return str1.replace("third", ".")
 
 
 def get_value_at_fraction(fraction, start, end):

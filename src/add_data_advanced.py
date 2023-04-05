@@ -42,7 +42,7 @@ class AddAdvancedWindow(Adw.Window):
             "skip_rows": int(self.skip_rows.get_value()),
             "separator": self.separator.get_selected_item().get_string(),
             "delimiter": self.delimiter.get_text(),
-            "guess_headers": self.guess_headers.get_active()
+            "guess_headers": self.guess_headers.get_active(),
         }
         name = self.name.get_text()
         config = self.parent.preferences.config

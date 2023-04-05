@@ -6,10 +6,10 @@ from graphs import graphs, utilities
 from matplotlib import pyplot
 
 
-def set_axis_limits(graph_limits, axis, axis_type,
-                    limits={"xmin": None, "xmax": None,
-                            "ymin": None, "ymax": None}):
+def set_axis_limits(graph_limits, axis, axis_type, limits=None):
     """Set an calculate the canvas limits for a given axis."""
+    if not limits:
+        limits = {"xmin": None, "xmax": None, "ymin": None, "ymax": None}
     # Update graph limits with limits that were given as argument
     for key, item in limits.items():
         if item is not None:

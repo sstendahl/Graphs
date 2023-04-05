@@ -84,7 +84,7 @@ class GraphsApplication(Adw.Application):
             ("get_integral", None),
             ("get_fourier", None),
             ("get_inverse_fourier", None),
-            ("transform", None)
+            ("transform", None),
         ]
         methods = {}
         for key, item in getmembers(globals().copy()["actions"], isfunction):
