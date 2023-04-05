@@ -79,6 +79,8 @@ axes.titlepad: 15
 # colors
 text.color: 000000
 axes.labelcolor: 000000
+xtick.labelcolor: 000000
+ytick.labelcolor: 000000
 xtick.color: 000000
 ytick.color: 000000
 axes.edgecolor: 000000
@@ -87,8 +89,8 @@ axes.facecolor: FFFFFF
 figure.facecolor: FAFAFA
 figure.edgecolor: FAFAFA
 
-axes.prop_cycle: cycler('color', ['4C72B0', '55A868', 'C44E52', '8172B2', 'CCB974', '64B5CD'])
-patch.facecolor: 4C72B0
+axes.prop_cycle: cycler('color', ['1A5FB4', '26A269', 'E5A50A', 'C64600', 'A51D2D', '613583', '63452C', '9A9996'])
+patch.facecolor: 1A5FB4
 
 # other
 axes.linewidth: 0.8

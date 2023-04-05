@@ -79,6 +79,8 @@ axes.titlepad: 15
 # colors
 text.color: 657B83
 axes.labelcolor: 657B83
+xtick.labelcolor: 657B83
+ytick.labelcolor: 657B83
 xtick.color: 657B83
 ytick.color: 657B83
 axes.edgecolor: EEE8D5
