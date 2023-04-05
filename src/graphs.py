@@ -108,6 +108,7 @@ def add_item(self, item, reset_clipboard=True):
 
 def delete_item(self, key, give_toast=False):
     self.main_window.list_box.remove(self.item_menu[key])
+    self.item_menu.pop(key)
     name = self.datadict[key].name
     del self.datadict[key]
     if give_toast:
