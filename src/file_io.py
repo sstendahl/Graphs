@@ -3,6 +3,7 @@ import os
 import pickle
 import re
 from xml.dom import minidom
+
 from graphs import utilities
 
 import numpy
@@ -12,7 +13,7 @@ def save_project(path, plot_settings, datadict, version):
     project_data = {
         "plot_settings": plot_settings,
         "data": datadict,
-        "version": version
+        "version": version,
     }
     with open(path, "wb") as file:
         pickle.dump(project_data, file)

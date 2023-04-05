@@ -5,8 +5,8 @@ from pathlib import Path
 from graphs import clipboard, file_io, plotting_tools, ui, utilities
 from graphs.canvas import Canvas
 from graphs.item import Item
-from graphs.misc import ImportMode, ImportSettings
 from graphs.item_box import ItemBox
+from graphs.misc import ImportMode, ImportSettings
 
 
 def open_files(self, files, import_settings):
@@ -52,7 +52,7 @@ def open_project(self, path):
         self.plot_settings = new_plot_settings
         utilities.set_attributes(new_plot_settings, self.plot_settings)
         self.datadict = {}
-        for key, item in new_datadict.items():
+        for _key, item in new_datadict.items():
             new_item = Item(self, item.xdata, item.ydata)
             for attribute in new_item.__dict__:
                 if hasattr(item, attribute):

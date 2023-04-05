@@ -3,13 +3,13 @@ import os
 import shutil
 from pathlib import Path
 
-from gi.repository import Adw, Gtk, GLib
+from cycler import cycler
 
-from graphs import utilities, file_io, graphs
+from gi.repository import Adw, GLib, Gtk
+
+from graphs import file_io, graphs, utilities
 
 from matplotlib.lines import Line2D
-
-from cycler import cycler
 
 
 def get_system_styles(self):

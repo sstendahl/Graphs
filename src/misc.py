@@ -13,7 +13,7 @@ class ImportSettings():
                 "separator": config["import_separator"],
                 "skip_rows": config["import_skip_rows"],
                 "column_x": config["import_column_x"],
-                "column_y": config["import_column_y"]
+                "column_y": config["import_column_y"],
             }
         self.delimiter = params["delimiter"]
         self.guess_headers = params["guess_headers"]
