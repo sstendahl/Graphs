@@ -47,6 +47,40 @@ def reset_user_styles(self):
         shutil.copy(path, os.path.join(user_path, f"{style}.mplstyle"))
 
 
+def get_style(self, stylename):
+    """
+    Get the style based on the stylename.
+
+    Returns a dictionary that has always valid keys. This is ensured through
+    checking against the styles base (if available) and copying missing params
+    as needed. The property "axes.prop_cycle" is parsed into a cycler. All
+    other ones are treated as a string.
+    """
+    user_styles = get_user_styles(self)
+    system_styles = get_system_styles(self)
+    style = file_io.get_style(user_styles[stylename])
+    try:
+        base_stylepath = system_styles[stylename]
+    except KeyError:
+        template_config = self.preferences.template
+        if Adw.StyleManager.get_default().get_dark():
+            base_stylepath = system_styles[template_config["plot_style_dark"]]
+        else:
+            base_stylepath = system_styles[template_config["plot_style_light"]]
+    base_style = file_io.get_style(base_stylepath)
+    for key, item in base_style.items():
+        if key not in style.keys():
+            style[key] = item
+    cycler_string = style["axes.prop_cycle"]
+    color_string = \
+        cycler_string[cycler_string.find("[") + 1: cycler_string.find("]")]
+    color_list = []
+    for string in color_string.split(", "):
+        color_list.append(string.replace("'", ""))
+    style["axes.prop_cycle"] = cycler(color=color_list)
+    return style
+
+
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/plot_styles.ui")
 class PlotStylesWindow(Adw.Window):
     __gtype_name__ = "PlotStylesWindow"
@@ -143,7 +177,7 @@ class PlotStylesWindow(Adw.Window):
         self.present()
 
     def edit(self, _, style):
-        self.style = file_io.get_style(get_user_styles(self.parent)[style])
+        self.style = get_style(self.parent, style)
         self.style["name"] = style
         try:
             self.load()

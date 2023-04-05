@@ -5,6 +5,7 @@ from pathlib import Path
 
 import numpy
 
+
 def remove_unused_config_keys(config, template):
     delete_list = []
     for key in config.keys():
