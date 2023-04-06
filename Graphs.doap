@@ -23,7 +23,7 @@ include options like:
 
   <homepage rdf:resource="https://sjoerd.se/Graphs" />
   <download-page rdf:resource="https://flathub.org/apps/details/se.sjoerd.Graphs" />
-  <bug-database rdf:resource="https://github.com/SjoerdB93/Graphs/issues" />
+  <bug-database rdf:resource="https://github.com/Sjoerd1993/Graphs/issues" />
 
   <programming-language>Python</programming-language>
 
@@ -32,12 +32,12 @@ include options like:
 
   <maintainer>
     <foaf:Person>
-      <foaf:name>Sjoerd Broekhuijsen</foaf:name>
+      <foaf:name>Sjoerd Stendahl</foaf:name>
       <foaf:mbox rdf:resource="mailto:contact@sjoerd.se" />
       <foaf:account>
         <foaf:OnlineAccount>
           <foaf:accountServiceHomepage rdf:resource="https://github.com"/>
-          <foaf:accountName>SjoerdB93</foaf:accountName>
+          <foaf:accountName>Sjoerd1993</foaf:accountName>
         </foaf:OnlineAccount>
       </foaf:account>
     </foaf:Person>
