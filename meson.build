@@ -11,7 +11,7 @@ copyright = '2022 - 2023'
 homepage_url = 'https://www.sjoerd.se/Graphs'
 github_url = 'https://github.com/SjoerdB93/Graphs'
 issue_url = github_url + '/issues'
-author = 'Sjoerd Broekhuijsen'
+author = 'Sjoerd Stendahl'
 description_short = 'Plot and manipulate data in a breeze'
 
 i18n = import('i18n')
