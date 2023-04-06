@@ -78,7 +78,7 @@ class ItemBox(Gtk.Box):
         try:
             color = dialog.choose_rgba_finish(result)
             if color is not None:
-                self.item.color = utilities.rgba_to_hex(color)
+                self.item.color = utilities.rgba_to_hex(color).upper()
                 self.update_color()
                 graphs.refresh(self.parent)
         except GLib.GError:

@@ -27,8 +27,8 @@ def operation(xdata, ydata, input_x, input_y):
     for xy_operation in [input_x, input_y]:
         xy_operation = xy_operation.replace("Y_range", "y_range")
         xy_operation = xy_operation.replace("X_range", "x_range")
-        xy_operation = xy_operation.replace("Y", "ydata[index[0]]")
-        xy_operation = xy_operation.replace("X", "xdata[index[0]]")
+        xy_operation = xy_operation.replace("Y", "ydata[_index[0]]")
+        xy_operation = xy_operation.replace("X", "xdata[_index[0]]")
         xy_operation = xy_operation.replace("^", "**")
         operations.append(xy_operation)
     for _index in enumerate(xdata):
