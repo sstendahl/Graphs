@@ -9,6 +9,7 @@ from gi.repository import Adw, GLib, Gtk
 
 from graphs import file_io, graphs, utilities
 
+from matplotlib import pyplot
 from matplotlib.lines import Line2D
 
 
@@ -89,17 +90,12 @@ def get_style(self, stylename):
     system_styles = get_system_styles(self)
     style = file_io.get_style(user_styles[stylename])
     try:
-        base_stylepath = system_styles[stylename]
+        base_style = file_io.get_style(system_styles[stylename])
+        for key, item in base_style.items():
+            if key not in style.keys():
+                style[key] = item
     except KeyError:
-        template_config = self.preferences.template
-        if Adw.StyleManager.get_default().get_dark():
-            base_stylepath = system_styles[template_config["plot_style_dark"]]
-        else:
-            base_stylepath = system_styles[template_config["plot_style_light"]]
-    base_style = file_io.get_style(base_stylepath)
-    for key, item in base_style.items():
-        if key not in style.keys():
-            style[key] = item
+        pass
     cycler_string = style["axes.prop_cycle"]
     color_string = \
         cycler_string[cycler_string.find("[") + 1: cycler_string.find("]")]
@@ -107,6 +103,9 @@ def get_style(self, stylename):
     for string in color_string.split(", "):
         color_list.append(string.replace("'", ""))
     style["axes.prop_cycle"] = cycler(color=color_list)
+    for key, item in pyplot.rcParams.items():
+        if key not in style.keys():
+            style[key] = item
     return style
 
 
