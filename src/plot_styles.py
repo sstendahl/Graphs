@@ -47,6 +47,35 @@ def reset_user_styles(self):
         shutil.copy(path, os.path.join(user_path, f"{style}.mplstyle"))
 
 
+def get_system_preferred_style(self):
+    system_style = "adwaita"
+    if Adw.StyleManager.get_default().get_dark():
+        system_style += "-dark"
+    try:
+        stylepath = get_user_styles(self)[system_style]
+    except KeyError:
+        self.main_window.add_toast(f"{system_style} not found, recreating it")
+        stylepath = os.path.join(
+            utilities.get_config_path(), "styles", f"{system_style}.mplstyle")
+        shutil.copy(get_system_styles(self)[system_style], stylepath)
+    return stylepath
+
+
+def get_preferred_style(self):
+    config = self.preferences.config
+    if not config["use_custom_plot_style"]:
+        return get_system_preferred_style(self)
+    available_styles = get_user_styles(self)
+    stylename = config["custom_plot_style"]
+    try:
+        style_path = available_styles[stylename]
+    except KeyError:
+        self.parent.main_window.add_toast(
+            f"Plot style {stylename} does not exist, loading first available")
+        style_path = available_styles[next(iter(available_styles))]
+    return style_path
+
+
 def get_style(self, stylename):
     """
     Get the style based on the stylename.

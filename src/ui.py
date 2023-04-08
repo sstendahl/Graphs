@@ -3,16 +3,12 @@ import os
 
 from gi.repository import Adw, GLib, Gtk
 
-from graphs import file_io, graphs
+from graphs import file_io, graphs, plot_styles
 
 
 def on_style_change(_shortcut, _theme, _widget, self):
-    if Adw.StyleManager.get_default().get_dark():
-        self.plot_settings.plot_style = self.preferences.config[
-            "plot_style_dark"]
-    else:
-        self.plot_settings.plot_style = self.preferences.config[
-            "plot_style_light"]
+    if not self.preferences.config["use_custom_plot_style"]:
+        self.plot_settings.plot_style = plot_styles.get_preferred_style(self)
     graphs.reload(self)
 
 

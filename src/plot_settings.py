@@ -54,9 +54,12 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
             self.plot_top_scale, parent.plot_settings.top_scale)
         utilities.set_chooser(
             self.plot_right_scale, parent.plot_settings.right_scale)
-        utilities.populate_chooser(
-            self.plot_style, plot_styles.get_user_styles(parent).keys())
-        utilities.set_chooser(self.plot_style, parent.plot_settings.plot_style)
+        available_styles = plot_styles.get_user_styles(parent)
+        utilities.populate_chooser(self.plot_style, available_styles.keys())
+        for style, path in available_styles.items():
+            if parent.plot_settings.plot_style == path:
+                stylename = style
+        utilities.set_chooser(self.plot_style, stylename)
         self.plot_legend_check.set_active(parent.plot_settings.legend)
         self.hide_unused_axes_limits(parent)
         if len(parent.datadict) > 0:
@@ -111,7 +114,8 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
         plot_settings.right_scale = \
             self.plot_right_scale.get_selected_item().get_string()
         plot_settings.legend = self.plot_legend_check.get_active()
-        plot_settings.plot_style = \
-            self.plot_style.get_selected_item().get_string()
+        styles = plot_styles.get_user_styles(parent)
+        plot_style = self.plot_style.get_selected_item().get_string()
+        plot_settings.plot_style = styles[plot_style]
         graphs.reload(parent)
         self.set_limits(parent)
