@@ -7,7 +7,7 @@ from inspect import getmembers, isfunction
 
 from gi.repository import Adw, GLib, Gio
 
-from graphs import actions, plot_styles, plotting_tools, preferences, ui
+from graphs import actions, plotting_tools, preferences, ui
 from graphs.canvas import Canvas
 from graphs.misc import InteractionMode, PlotSettings
 from graphs.window import GraphsWindow
@@ -138,7 +138,6 @@ class GraphsApplication(Adw.Application):
             win.add_css_class("devel")
         config = self.preferences.config
         self.plot_settings = PlotSettings(config)
-        self.plot_settings.plot_style = plot_styles.get_preferred_style(self)
         self.canvas = Canvas(self)
         win.toast_overlay.set_child(self.canvas)
         win.sidebar_flap.connect("notify", self.on_sidebar_toggle)

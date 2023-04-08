@@ -162,10 +162,15 @@ template PlotSettingsWindow : Adw.PreferencesWindow {
         }
       }
 
-      Adw.ComboRow plot_style {
-        title: _("Graph Style");
-        subtitle: _("The style sheet used for the graph");
-        model: StringList {};
+      Adw.ExpanderRow use_custom_plot_style {
+        title: _("Custom Plot Style");
+        subtitle: _("Use a custom plot style instead of following preferences");
+        show-enable-switch: true;
+        Adw.ComboRow custom_plot_style {
+          title: _("Graph Style");
+          subtitle: _("The style sheet used for the graph");
+          model: StringList {};
+        }
       }
     }
   }

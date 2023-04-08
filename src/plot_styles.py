@@ -61,16 +61,16 @@ def get_system_preferred_style(self):
     return stylepath
 
 
-def get_preferred_style(self):
-    config = self.preferences.config
-    if not config["use_custom_plot_style"]:
+def get_preferred_style_path(self):
+    if not self.preferences.config["use_custom_plot_style"] and \
+            not self.plot_settings.use_custom_plot_style:
         return get_system_preferred_style(self)
     available_styles = get_user_styles(self)
-    stylename = config["custom_plot_style"]
+    stylename = self.plot_settings.custom_plot_style
     try:
         style_path = available_styles[stylename]
     except KeyError:
-        self.parent.main_window.add_toast(
+        self.main_window.add_toast(
             f"Plot style {stylename} does not exist, loading first available")
         style_path = available_styles[next(iter(available_styles))]
     return style_path

@@ -3,12 +3,10 @@ import os
 
 from gi.repository import Adw, GLib, Gtk
 
-from graphs import file_io, graphs, plot_styles
+from graphs import file_io, graphs
 
 
 def on_style_change(_shortcut, _theme, _widget, self):
-    if not self.preferences.config["use_custom_plot_style"]:
-        self.plot_settings.plot_style = plot_styles.get_preferred_style(self)
     graphs.reload(self)
 
 
