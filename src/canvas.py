@@ -155,9 +155,8 @@ class Canvas(FigureCanvas):
             lines4, labels4 = self.top_right_axis.get_legend_handles_labels()
             new_lines = lines1 + lines2 + lines3 + lines4
             new_labels = labels1 + labels2 + labels3 + labels4
-            labels = []
-            for label in new_labels:
-                labels.append(utilities.shorten_label(label, 40))
+            labels = \
+                [utilities.shorten_label(label, 40) for label in new_labels]
             if labels:
                 self.top_right_axis.legend(
                     new_lines, labels, loc=0, frameon=True, reverse=True)
@@ -214,7 +213,7 @@ class DummyToolbar(NavigationToolbar2):
         self.canvas.queue_draw()
 
     def save_figure(self):
-        raise NotImplementedError
+        pass
 
 
 class Highlight(SpanSelector):

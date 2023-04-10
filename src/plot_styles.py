@@ -9,7 +9,6 @@ from gi.repository import Adw, GLib, Gtk
 
 from graphs import file_io, graphs, utilities
 
-from matplotlib import pyplot
 from matplotlib.lines import Line2D
 
 
@@ -48,7 +47,7 @@ def reset_user_styles(self):
         shutil.copy(path, os.path.join(user_path, f"{style}.mplstyle"))
 
 
-def get_system_preferred_style(self):
+def get_system_preferred_style_path(self):
     system_style = "adwaita"
     if Adw.StyleManager.get_default().get_dark():
         system_style += "-dark"
@@ -63,16 +62,16 @@ def get_system_preferred_style(self):
 
 
 def get_preferred_style_path(self):
-    if not self.preferences.config["use_custom_plot_style"] and \
+    if not self.preferences.config["plot_use_custom_style"] and \
             not self.plot_settings.use_custom_plot_style:
-        return get_system_preferred_style(self)
+        return get_system_preferred_style_path(self)
     stylename = self.plot_settings.custom_plot_style
     try:
         return get_user_styles(self)[stylename]
     except KeyError:
         self.main_window.add_toast(
             f"Plot style {stylename} does not exist loading system preferred")
-        return get_system_preferred_style(self)
+        return get_system_preferred_style_path(self)
 
 
 def get_style(self, stylename):
@@ -97,11 +96,9 @@ def get_style(self, stylename):
     cycler_string = style["axes.prop_cycle"]
     color_string = \
         cycler_string[cycler_string.find("[") + 1: cycler_string.find("]")]
-    color_list = []
-    for string in color_string.split(", "):
-        color_list.append(string.replace("'", ""))
-    style["axes.prop_cycle"] = cycler(color=color_list)
-    for key, item in pyplot.rcParams.items():
+    style["axes.prop_cycle"] = cycler(
+        color=[string.replace("'", "") for string in color_string.split(", ")])
+    for key, item in file_io.get_style(system_styles["adwaita"]).items():
         if key not in style.keys():
             style[key] = item
     return style
@@ -146,7 +143,7 @@ class PlotStylesWindow(Adw.Window):
     axis_color = Gtk.Template.Child()
     grid_color = Gtk.Template.Child()
     background_color = Gtk.Template.Child()
-    edge_color = Gtk.Template.Child()
+    outline_color = Gtk.Template.Child()
 
     def __init__(self, parent):
         super().__init__()
@@ -154,8 +151,8 @@ class PlotStylesWindow(Adw.Window):
         self.set_transient_for(self.parent.main_window)
         self.styles = []
         self.style = None
-        self.reload()
-        self.reset_button.connect("clicked", self.reset)
+        self.reload_styles()
+        self.reset_button.connect("clicked", self.reset_styles)
         self.back_button.connect("clicked", self.back)
         self.connect("close-request", self.on_close)
         self.set_title("Plot Styles")
@@ -186,7 +183,7 @@ class PlotStylesWindow(Adw.Window):
             self.axis_color,
             self.grid_color,
             self.background_color,
-            self.edge_color,
+            self.outline_color,
         ]
         for button in self.color_buttons:
             button.connect("clicked", self.on_color_change)
@@ -202,19 +199,16 @@ class PlotStylesWindow(Adw.Window):
 
         self.present()
 
-    def edit(self, _, style):
+    def edit_style(self, _, style):
         self.style = get_style(self.parent, style)
         self.style["name"] = style
-        try:
-            self.load()
-        except KeyError:
-            return
+        self.load_style()
         self.leaflet.navigate(1)
         self.set_title(style)
 
     def back(self, _):
-        self.apply()
-        self.reload()
+        self.save_style()
+        self.reload_styles()
         self.style = None
         self.leaflet.navigate(0)
         self.set_title("Plot Styles")
@@ -228,7 +222,7 @@ class PlotStylesWindow(Adw.Window):
         self.leaflet.navigate(0)
         self.set_title(self.style["name"])
 
-    def load(self):
+    def load_style(self):
         style = self.style
 
         self.style_name.set_text(style["name"])
@@ -273,7 +267,7 @@ class PlotStylesWindow(Adw.Window):
         self.axis_color.color = style["axes.edgecolor"]
         self.grid_color.color = style["grid.color"]
         self.background_color.color = style["axes.facecolor"]
-        self.edge_color.color = style["figure.facecolor"]
+        self.outline_color.color = style["figure.facecolor"]
 
         for button in self.color_buttons:
             button.provider.load_from_data(
@@ -288,7 +282,7 @@ class PlotStylesWindow(Adw.Window):
         # other
         self.axis_width.set_value(float(style["axes.linewidth"]))
 
-    def apply(self):
+    def save_style(self):
         style = self.style
 
         # font
@@ -363,8 +357,8 @@ class PlotStylesWindow(Adw.Window):
         style["axes.edgecolor"] = self.axis_color.color
         style["grid.color"] = self.grid_color.color
         style["axes.facecolor"] = self.background_color.color
-        style["figure.facecolor"] = self.edge_color.color
-        style["figure.edgecolor"] = self.edge_color.color
+        style["figure.facecolor"] = self.outline_color.color
+        style["figure.edgecolor"] = self.outline_color.color
 
         # line colors
         line_colors = []
@@ -396,11 +390,11 @@ class PlotStylesWindow(Adw.Window):
         self.line_colors_box.append(box)
         self.color_boxes[box] = self.line_colors_box.get_last_child()
 
-    def delete(self, _, style):
+    def delete_style(self, _, style):
         os.remove(get_user_styles(self.parent)[style])
-        self.reload()
+        self.reload_styles()
 
-    def copy(self, _, style):
+    def copy_style(self, _, style):
         loop = True
         i = 0
         while loop:
@@ -414,13 +408,13 @@ class PlotStylesWindow(Adw.Window):
         shutil.copy(
             os.path.join(user_path, f"{style}.mplstyle"),
             os.path.join(user_path, f"{new_style}.mplstyle"))
-        self.reload()
+        self.reload_styles()
 
-    def reset(self, _):
+    def reset_styles(self, _):
         reset_user_styles(self.parent)
-        self.reload()
+        self.reload_styles()
 
-    def reload(self):
+    def reload_styles(self):
         for box in self.styles.copy():
             self.styles.remove(box)
             self.styles_box.remove(self.styles_box.get_row_at_index(0))
@@ -431,7 +425,7 @@ class PlotStylesWindow(Adw.Window):
 
     def on_close(self, _):
         if self.style is not None:
-            self.apply()
+            self.save_style()
         graphs.reload(self.parent)
         self.destroy()
 
@@ -466,9 +460,9 @@ class StyleBox(Gtk.Box):
     def __init__(self, parent, style):
         super().__init__()
         self.label.set_label(utilities.shorten_label(style, 50))
-        self.copy_button.connect("clicked", parent.copy, style)
-        self.delete_button.connect("clicked", parent.delete, style)
-        self.edit_button.connect("clicked", parent.edit, style)
+        self.copy_button.connect("clicked", parent.copy_style, style)
+        self.delete_button.connect("clicked", parent.delete_style, style)
+        self.edit_button.connect("clicked", parent.edit_style, style)
 
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/style_color_box.ui")

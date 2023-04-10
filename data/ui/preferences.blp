@@ -30,7 +30,7 @@ template PreferencesWindow : Adw.PreferencesWindow {
         title: _("Column X");
         subtitle: _("Which column to load for the X-data");
 
-        SpinButton column_x {
+        SpinButton import_column_x {
           valign: center;
           numeric: true;
           value: 0;
@@ -47,7 +47,7 @@ template PreferencesWindow : Adw.PreferencesWindow {
         title: _("Column Y");
         subtitle: _("Which column to load for the Y-data");
 
-        SpinButton column_y {
+        SpinButton import_column_y {
           valign: center;
           numeric: true;
           value: 1;
@@ -78,42 +78,6 @@ template PreferencesWindow : Adw.PreferencesWindow {
     }
 
     Adw.PreferencesGroup {
-      title: _("Saved Plots");
-      description: _("General settings for the saved graphs");
-
-      Adw.ComboRow savefig_filetype_chooser {
-        title: _("Default Filetype");
-        subtitle: _("The default filetype of saved graphs");
-        model: StringList savefig_filetype_list {
-          strings ["png", "ps", "pdf", "svg", "jpeg", "webp", "eps", "tiff"]
-        };
-      }
-
-      Adw.ActionRow {
-        title: _("Transparent Background");
-        subtitle: _("Use a transparent background for the saved plots");
-        activatable-widget: savefig_transparent_check_button;
-
-        Switch savefig_transparent_check_button {
-          valign: center;
-        }
-      }
-    }
-
-    Adw.PreferencesGroup {
-      title: _("Action Behaviour");
-      description: _("Preset behaviour of specific actions");
-
-      Adw.ComboRow center_data_chooser {
-        title: _("Center Data");
-        subtitle: _("The default behaviour of the center data button");
-        model: StringList {
-          strings ["Center at maximum Y value", "Center at middle coordinate"]
-        };
-      }
-    }
-
-    Adw.PreferencesGroup {
       title: _("Add Equation");
       description: _("Settings for the \"Add Equation\" option");
 
@@ -139,10 +103,46 @@ template PreferencesWindow : Adw.PreferencesWindow {
     }
 
     Adw.PreferencesGroup {
+      title: _("Saved Plots");
+      description: _("General settings for the saved graphs");
+
+      Adw.ComboRow export_figure_filetype {
+        title: _("Default Filetype");
+        subtitle: _("The default filetype of saved graphs");
+        model: StringList {
+          strings ["png", "ps", "pdf", "svg", "jpeg", "webp", "eps", "tiff"]
+        };
+      }
+
+      Adw.ActionRow {
+        title: _("Transparent Background");
+        subtitle: _("Use a transparent background for the saved plots");
+        activatable-widget: export_figure_transparent;
+
+        Switch export_figure_transparent {
+          valign: center;
+        }
+      }
+    }
+
+    Adw.PreferencesGroup {
+      title: _("Action Behaviour");
+      description: _("Preset behaviour of specific actions");
+
+      Adw.ComboRow action_center_data {
+        title: _("Center Data");
+        subtitle: _("The default behaviour of the center data button");
+        model: StringList {
+          strings ["Center at maximum Y value", "Center at middle coordinate"]
+        };
+      }
+    }
+
+    Adw.PreferencesGroup {
       title: _("Other");
       description: _("Other general settings");
 
-      Adw.ComboRow handle_duplicates_chooser {
+      Adw.ComboRow other_handle_duplicates {
         title: _("Handle duplicate entries");
         subtitle: _("Choose how to handle duplicate entries to be loaded");
         model: StringList {
@@ -153,9 +153,9 @@ template PreferencesWindow : Adw.PreferencesWindow {
       Adw.ActionRow {
         title: _("Hide Unselected");
         subtitle: _("Whether to hide items, that aren't selected");
-        activatable-widget: hide_unselected;
+        activatable-widget: other_hide_unselected;
 
-        Switch hide_unselected {
+        Switch other_hide_unselected {
           valign: center;
         }
       }
@@ -175,27 +175,27 @@ template PreferencesWindow : Adw.PreferencesWindow {
       }
 
       Adw.EntryRow plot_y_label {
-        title: _("Left Axis label");
+        title: _("Bottom Axis label");
       }
 
       Adw.EntryRow plot_x_label {
-        title: _("Bottom Axis Label");
-      }
-
-      Adw.EntryRow plot_right_label {
-        title: _("Right Axis label");
+        title: _("Left Axis Label");
       }
 
       Adw.EntryRow plot_top_label {
-        title: _("Top Axis Label");
+        title: _("Top Axis label");
+      }
+
+      Adw.EntryRow plot_right_label {
+        title: _("Right Axis Label");
       }
 
       Adw.ActionRow {
         title: _("Retrieve label");
         subtitle: _("Try and retrieve label from the header in the dataset");
-        activatable-widget: guess_headers;
+        activatable-widget: plot_guess_headers;
 
-        Switch guess_headers {
+        Switch plot_guess_headers {
           valign: center;
         }
       }
@@ -205,14 +205,6 @@ template PreferencesWindow : Adw.PreferencesWindow {
       title: _("Axes settings");
       description: _("Set the default axes scale and position used upon launch");
 
-      Adw.ComboRow plot_y_scale {
-        title: _("Left Axis Scale");
-        subtitle: _("The scaling on the left-hand axis");
-        model: StringList {
-          strings ["log", "linear"]
-        };
-      }
-
       Adw.ComboRow plot_x_scale {
         title: _("Bottom Axis Scale");
         subtitle: _("The scaling on the bottom axis");
@@ -221,9 +213,9 @@ template PreferencesWindow : Adw.PreferencesWindow {
         };
       }
 
-      Adw.ComboRow plot_right_scale {
-        title: _("Right Axis Scale");
-        subtitle: _("The scaling on the right-hand axis");
+      Adw.ComboRow plot_y_scale {
+        title: _("Left Axis Scale");
+        subtitle: _("The scaling on the left-hand axis");
         model: StringList {
           strings ["log", "linear"]
         };
@@ -237,11 +229,11 @@ template PreferencesWindow : Adw.PreferencesWindow {
         };
       }
 
-      Adw.ComboRow plot_y_position {
-        title: _("Y-Axis Position");
-        subtitle: _("The position of the Y-axis");
+      Adw.ComboRow plot_right_scale {
+        title: _("Right Axis Scale");
+        subtitle: _("The scaling on the right-hand axis");
         model: StringList {
-          strings ["left", "right"]
+          strings ["log", "linear"]
         };
       }
 
@@ -250,6 +242,14 @@ template PreferencesWindow : Adw.PreferencesWindow {
         subtitle: _("The position of the X-axis");
         model: StringList {
           strings ["top", "bottom"]
+        };
+      }
+
+      Adw.ComboRow plot_y_position {
+        title: _("Y-Axis Position");
+        subtitle: _("The position of the Y-axis");
+        model: StringList {
+          strings ["left", "right"]
         };
       }
     }
@@ -261,19 +261,19 @@ template PreferencesWindow : Adw.PreferencesWindow {
       Adw.ActionRow {
         title: _("Legend");
         subtitle: _("Use a legend for the lines");
-        activatable-widget: plot_legend_check;
+        activatable-widget: plot_legend;
 
-        Switch plot_legend_check {
+        Switch plot_legend {
           valign: center;
         }
       }
 
-      Adw.ExpanderRow use_custom_plot_style {
+      Adw.ExpanderRow plot_use_custom_style {
         title: _("Custom Plot Style");
         subtitle: _("Use a custom plot style instead of following the System preferred one");
         show-enable-switch: true;
 
-        Adw.ComboRow custom_plot_style {
+        Adw.ComboRow plot_custom_style {
           title: _("Graph Style");
           subtitle: _("The style sheet used for the plot");
           model: StringList {};

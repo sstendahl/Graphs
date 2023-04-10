@@ -96,10 +96,9 @@ def add_item(self, item, reset_clipboard=True):
                 reload(self)
                 return
     self.datadict[key] = item
-    self.main_window.list_box.set_visible(True)
-    self.main_window.no_data_label_box.set_visible(False)
-    self.main_window.list_box.append(ItemBox(self, item))
-    self.item_menu[key] = self.main_window.list_box.get_last_child()
+    self.main_window.item_list.set_visible(True)
+    self.main_window.item_list.append(ItemBox(self, item))
+    self.item_menu[key] = self.main_window.item_list.get_last_child()
     if reset_clipboard:
         clipboard.reset(self)
     reload(self)
@@ -107,7 +106,7 @@ def add_item(self, item, reset_clipboard=True):
 
 
 def delete_item(self, key, give_toast=False):
-    self.main_window.list_box.remove(self.item_menu[key])
+    self.main_window.item_list.remove(self.item_menu[key])
     self.item_menu.pop(key)
     name = self.datadict[key].name
     del self.datadict[key]
@@ -120,8 +119,7 @@ def delete_item(self, key, give_toast=False):
             self, utilities.get_selected_keys(self))
     else:
         reload(self)
-        self.main_window.no_data_label_box.set_visible(True)
-        self.main_window.list_box.set_visible(False)
+        self.main_window.item_list.set_visible(False)
         ui.enable_data_dependent_buttons(self, False)
 
 

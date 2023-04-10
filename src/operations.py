@@ -159,10 +159,7 @@ def shift_vertically(item, xdata, ydata, yscale, right_scale, selected_keys,
     """
     shift_value_log = 1
     shift_value_linear = 0
-    data_list = []
-
-    for key in selected_keys:
-        data_list.append(datadict[key])
+    data_list = [datadict[key] for key in selected_keys]
 
     for index, data_item in enumerate(data_list):
         previous_ydata = data_list[index - 1].ydata

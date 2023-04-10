@@ -8,11 +8,7 @@ import numpy
 
 
 def remove_unused_config_keys(config, template):
-    delete_list = []
-    for key in config.keys():
-        if key not in template.keys():
-            delete_list.append(key)
-    for key in delete_list:
+    for key in [key for key in config.keys() if key not in template.keys()]:
         del config[key]
     return config
 
@@ -75,11 +71,7 @@ def get_used_axes(self):
 
 
 def add_new_config_keys(config, template):
-    add_list = []
-    for key in template.keys():
-        if key not in config.keys():
-            add_list.append(key)
-    for key in add_list:
+    for key in [key for key in template.keys() if key not in config.keys()]:
         config[key] = template[key]
     return config
 
@@ -111,18 +103,12 @@ def populate_chooser(chooser, chooser_list, clear=True):
 
 
 def get_chooser_list(chooser):
-    chooser_list = []
-    for item in chooser.get_model():
-        chooser_list.append(item.get_string())
-    return chooser_list
+    return [item.get_string() for item in chooser.get_model()]
 
 
 def get_all_names(parent):
     """Get a list of all filenames present in the datadict dictionary"""
-    names = []
-    for item in parent.datadict.items():
-        names.append(item[1].name)
-    return names
+    return [item.name for _key, item in parent.datadict.items()]
 
 
 def get_dict_by_value(dictionary, value):
@@ -156,11 +142,7 @@ def get_font_style(font_name):
 
 def get_selected_keys(self):
     """Get a list of ID's of all the datasets that are currently selected"""
-    selected_keys = []
-    for key, item in self.datadict.items():
-        if item.selected:
-            selected_keys.append(key)
-    return selected_keys
+    return [key for key, item in self.datadict.items() if item.selected]
 
 
 def hex_to_rgba(hex_str):
