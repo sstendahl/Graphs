@@ -33,32 +33,36 @@ template TransformWindow : Adw.Window {
       }
       styles ["flat"]
     }
-
-    Adw.PreferencesGroup {
-      margin-start: 26;
-      margin-end: 26;
+    Adw.Clamp {
+      margin-start: 12;
+      margin-end: 12;
       margin-top: 12;
-      Adw.EntryRow transform_x_entry {
-        title: _("X =");
-      }
-      Adw.EntryRow transform_y_entry {
-        title: _("Y =");
-      }
-      Adw.ActionRow discard_row {
-        title: _("Discard Unselected Data");
-        activatable-widget: discard;
-        Switch discard {
-          valign: center;
+      margin-bottom: 12;
+      Adw.PreferencesGroup {
+        Adw.EntryRow transform_x_entry {
+          title: _("X =");
+        }
+
+        Adw.EntryRow transform_y_entry {
+          title: _("Y =");
+        }
+
+        Adw.ActionRow discard_row {
+          title: _("Discard Unselected Data");
+          activatable-widget: discard;
+          Switch discard {
+            valign: center;
+          }
+        }
+
+        Button confirm_button {
+          halign: center;
+          margin-top: 24;
+          margin-bottom: 12;
+          label: _("Transform");
+          styles ["suggested-action", "pill"]
         }
       }
-    }
-
-    Button confirm_button {
-      halign: center;
-      margin-top: 12;
-      margin-bottom: 26;
-      label: _("Transform");
-      styles ["suggested-action", "pill"]
     }
   }
 }

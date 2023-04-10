@@ -18,22 +18,25 @@ template RenameWindow : Adw.Window {
     Adw.HeaderBar {
       styles ["flat"]
     }
-    Adw.PreferencesGroup preferencegroup {
-      margin-start: 30;
-      margin-end: 30;
-      margin-top: 20;
-      margin-bottom: 20;
 
-      Adw.EntryRow text_entry {
-        max-width-chars: 10;
-        title: _("Label");
-      }
+    Adw.Clamp {
+      margin-start: 12;
+      margin-end: 12;
+      margin-top: 12;
+      margin-bottom: 12;
+      Adw.PreferencesGroup preferencegroup {
+        Adw.EntryRow text_entry {
+          max-width-chars: 10;
+          title: _("Label");
+        }
 
-      Button confirm_button {
-        margin-top: 20;
-        label: _("Rename");
-        halign: center;
-        styles ["suggested-action", "pill"]
+        Button confirm_button {
+          margin-top: 24;
+          margin-bottom: 12;
+          label: _("Rename");
+          halign: center;
+          styles ["suggested-action", "pill"]
+        }
       }
     }
   }
