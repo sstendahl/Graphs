@@ -40,7 +40,7 @@ class PlotSettings:
         self.title = config["plot_title"]
         self.legend = config["plot_legend"]
         self.use_custom_plot_style = False
-        self.custom_plot_style = config["custom_plot_style"]
+        self.custom_plot_style = config["plot_custom_style"]
 
 
 class ImportMode(Enum):

@@ -7,7 +7,7 @@ template GraphsWindow : Adw.ApplicationWindow {
   Box {
     orientation: vertical;
     Adw.HeaderBar {
-      ToggleButton sidebar_button {
+      ToggleButton {
         visible: bind sidebar_flap.folded;
         action-name: "app.toggle_sidebar";
         icon-name: "sidebar-show-symbolic";
@@ -111,12 +111,12 @@ template GraphsWindow : Adw.ApplicationWindow {
           visible: bind sidebar_flap.folded;
         }
 
-        ScrolledWindow equation_scroll {
+        ScrolledWindow {
           height-request: 250;
           hscrollbar-policy: never;
           Viewport {
             Box {
-              ListBox list_box {
+              ListBox item_list {
                 margin-bottom: 12;
                 margin-top: 12;
                 margin-start: 12;
@@ -128,11 +128,12 @@ template GraphsWindow : Adw.ApplicationWindow {
                 selection-mode: none;
                 styles ["boxed-list"]
               }
-              Adw.StatusPage no_data_label_box {
+              Adw.StatusPage {
                 icon-name: "list-compact";
                 hexpand: true;
                 width-request: 240;
                 halign: center;
+                visible: bind item_list.visible inverted;
                 title: _("No Data");
                 description: _("Add data from a file or manually as an equation");
                 styles ["compact"]
@@ -519,8 +520,8 @@ menu view_menu {
   }
   section {
     item (_("Restore View"), "app.restore_view")
-    item (_("Previous View"), "app.previous_view")
-    item (_("Next View"), "app.next_view")
+    item (_("Previous View"), "app.view_back")
+    item (_("Next View"), "app.view_forward")
   }
   section {
     submenu {
