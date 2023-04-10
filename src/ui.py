@@ -7,12 +7,6 @@ from graphs import file_io, graphs
 
 
 def on_style_change(_shortcut, _theme, _widget, self):
-    if Adw.StyleManager.get_default().get_dark():
-        self.plot_settings.plot_style = self.preferences.config[
-            "plot_style_dark"]
-    else:
-        self.plot_settings.plot_style = self.preferences.config[
-            "plot_style_light"]
     graphs.reload(self)
 
 

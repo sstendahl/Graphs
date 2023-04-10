@@ -50,65 +50,65 @@ template PlotSettingsWindow : Adw.PreferencesWindow {
       	orientation: horizontal;
       	margin-bottom: 12;
       	Adw.PreferencesGroup {
-      	margin-end: 3;
-      	Adw.EntryRow min_left {
-	title: _("Minimum left-hand Y-axis");
-	}
-	}
-	Adw.PreferencesGroup {
-      	margin-start: 3;
-      	Adw.EntryRow max_left {
-	title: _("Maximum left-hand Y-axis");
-	}
-	}
-	}
+      	  margin-end: 3;
+      	  Adw.EntryRow min_left {
+	          title: _("Minimum left-hand Y-axis");
+	        }
+        }
+	      Adw.PreferencesGroup {
+    	    margin-start: 3;
+    	    Adw.EntryRow max_left {
+	          title: _("Maximum left-hand Y-axis");
+	        }
+	      }
+	    }
       Box {
       	orientation: horizontal;
       	margin-bottom: 12;
       	Adw.PreferencesGroup {
-      	margin-end: 3;
-      	Adw.EntryRow min_bottom {
-	title: _("Minimum bottom X-axis");
-	}
-	}
-	Adw.PreferencesGroup {
-      	margin-start: 3;
-      	Adw.EntryRow max_bottom {
-	title: _("Maximum bottom X-axis");
-	}
-	}
-	}
+      	  margin-end: 3;
+      	  Adw.EntryRow min_bottom {
+	          title: _("Minimum bottom X-axis");
+	        }
+	      }
+	      Adw.PreferencesGroup {
+      	  margin-start: 3;
+      	  Adw.EntryRow max_bottom {
+	          title: _("Maximum bottom X-axis");
+	        }
+	      }
+	    }
       Box {
       	orientation: horizontal;
       	margin-bottom: 12;
-      	Adw.PreferencesGroup {
-      	margin-end: 3;
-      	Adw.EntryRow min_right {
-	title: _("Minimum right-hand Y-axis");
-	}
-	}
-	Adw.PreferencesGroup {
-      	margin-start: 3;
-      	Adw.EntryRow max_right {
-	title: _("Maximum right-hand Y-axis");
-	}
-	}
-	}
+    	  Adw.PreferencesGroup {
+      	  margin-end: 3;
+      	  Adw.EntryRow min_right {
+	          title: _("Minimum right-hand Y-axis");
+	        }
+        }
+	      Adw.PreferencesGroup {
+      	  margin-start: 3;
+      	  Adw.EntryRow max_right {
+	          title: _("Maximum right-hand Y-axis");
+	        }
+	      }
+	    }
       Box {
       	orientation: horizontal;
-      	Adw.PreferencesGroup {
-      	margin-end: 3;
-      	Adw.EntryRow min_top {
-	title: _("Minimum top X-axis");
-	}
-	}
-	Adw.PreferencesGroup {
-      	margin-start: 3;
-      	Adw.EntryRow max_top {
-	title: _("Maximum top Y-axis");
-	}
-	}
-	}
+    	  Adw.PreferencesGroup {
+      	  margin-end: 3;
+      	  Adw.EntryRow min_top {
+	          title: _("Minimum top X-axis");
+	        }
+	      }
+	      Adw.PreferencesGroup {
+      	  margin-start: 3;
+      	  Adw.EntryRow max_top {
+	          title: _("Maximum top Y-axis");
+	        }
+	      }
+	    }
     }
 
     Adw.PreferencesGroup {
@@ -162,10 +162,15 @@ template PlotSettingsWindow : Adw.PreferencesWindow {
         }
       }
 
-      Adw.ComboRow plot_style {
-        title: _("Graph Style");
-        subtitle: _("The style sheet used for the graph");
-        model: StringList {};
+      Adw.ExpanderRow use_custom_plot_style {
+        title: _("Custom Plot Style");
+        subtitle: _("Use a custom plot style instead of following preferences");
+        show-enable-switch: true;
+        Adw.ComboRow custom_plot_style {
+          title: _("Graph Style");
+          subtitle: _("The style sheet used for the graph");
+          model: StringList {};
+        }
       }
     }
   }

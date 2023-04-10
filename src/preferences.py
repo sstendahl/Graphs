@@ -76,8 +76,8 @@ class PreferencesWindow(Adw.PreferencesWindow):
     plot_y_scale = Gtk.Template.Child()
     plot_top_scale = Gtk.Template.Child()
     plot_right_scale = Gtk.Template.Child()
-    plot_style_dark = Gtk.Template.Child()
-    plot_style_light = Gtk.Template.Child()
+    use_custom_plot_style = Gtk.Template.Child()
+    custom_plot_style = Gtk.Template.Child()
     plot_legend_check = Gtk.Template.Child()
     plot_title = Gtk.Template.Child()
     center_data_chooser = Gtk.Template.Child()
@@ -93,11 +93,8 @@ class PreferencesWindow(Adw.PreferencesWindow):
     def __init__(self, parent):
         super().__init__()
         self.parent = parent
-        self.props.modal = True
         utilities.populate_chooser(
-            self.plot_style_dark, plot_styles.get_user_styles(parent).keys())
-        utilities.populate_chooser(
-            self.plot_style_light, plot_styles.get_user_styles(parent).keys())
+            self.custom_plot_style, plot_styles.get_user_styles(parent).keys())
         self.load_configuration()
         self.connect("close-request", self.on_close, self.parent)
         self.set_transient_for(self.parent.main_window)
@@ -140,8 +137,9 @@ class PreferencesWindow(Adw.PreferencesWindow):
         utilities.set_chooser(
             self.import_separator, config["import_separator"])
         utilities.set_chooser(
-            self.plot_style_light, config["plot_style_light"])
-        utilities.set_chooser(self.plot_style_dark, config["plot_style_dark"])
+            self.custom_plot_style, config["custom_plot_style"])
+        self.use_custom_plot_style.set_enable_expansion(
+            config["use_custom_plot_style"])
         self.guess_headers.set_active(config["guess_headers"])
         self.savefig_transparent_check_button.set_active(
             config["export_figure_transparent"])
@@ -186,10 +184,10 @@ class PreferencesWindow(Adw.PreferencesWindow):
             self.plot_y_position.get_selected_item().get_string()
         config["action_center_data"] = \
             self.center_data_chooser.get_selected_item().get_string()
-        config["plot_style_dark"] = \
-            self.plot_style_dark.get_selected_item().get_string()
-        config["plot_style_light"] = \
-            self.plot_style_light.get_selected_item().get_string()
+        config["use_custom_plot_style"] = \
+            self.use_custom_plot_style.get_enable_expansion()
+        config["custom_plot_style"] = \
+            self.custom_plot_style.get_selected_item().get_string()
         config["import_column_x"] = int(self.column_x.get_value())
         config["import_column_y"] = int(self.column_y.get_value())
         config["import_skip_rows"] = int(self.import_skip_rows.get_value())

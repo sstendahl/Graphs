@@ -3,6 +3,7 @@ using Adw 1;
 
 template PreferencesWindow : Adw.PreferencesWindow {
   can-navigate-back: true;
+  modal: true;
 
   Adw.PreferencesPage {
     icon-name: "applications-system-symbolic";
@@ -267,16 +268,16 @@ template PreferencesWindow : Adw.PreferencesWindow {
         }
       }
 
-      Adw.ComboRow plot_style_light {
-        title: _("Graph Style Light");
-        subtitle: _("The style sheet used for the graph in light mode");
-        model: StringList {};
-      }
+      Adw.ExpanderRow use_custom_plot_style {
+        title: _("Custom Plot Style");
+        subtitle: _("Use a custom plot style instead of following the System preferred one");
+        show-enable-switch: true;
 
-      Adw.ComboRow plot_style_dark {
-        title: _("Graph Style Dark");
-        subtitle: _("The style used for the graph in dark mode");
-        model: StringList {};
+        Adw.ComboRow custom_plot_style {
+          title: _("Graph Style");
+          subtitle: _("The style sheet used for the plot");
+          model: StringList {};
+        }
       }
     }
   }

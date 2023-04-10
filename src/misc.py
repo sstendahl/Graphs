@@ -39,6 +39,8 @@ class PlotSettings:
         self.top_scale = config["plot_top_scale"]
         self.title = config["plot_title"]
         self.legend = config["plot_legend"]
+        self.use_custom_plot_style = False
+        self.custom_plot_style = config["custom_plot_style"]
 
 
 class ImportMode(Enum):

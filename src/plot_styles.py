@@ -9,6 +9,7 @@ from gi.repository import Adw, GLib, Gtk
 
 from graphs import file_io, graphs, utilities
 
+from matplotlib import pyplot
 from matplotlib.lines import Line2D
 
 
@@ -47,6 +48,33 @@ def reset_user_styles(self):
         shutil.copy(path, os.path.join(user_path, f"{style}.mplstyle"))
 
 
+def get_system_preferred_style(self):
+    system_style = "adwaita"
+    if Adw.StyleManager.get_default().get_dark():
+        system_style += "-dark"
+    try:
+        stylepath = get_user_styles(self)[system_style]
+    except KeyError:
+        self.main_window.add_toast(f"{system_style} not found, recreating it")
+        stylepath = os.path.join(
+            utilities.get_config_path(), "styles", f"{system_style}.mplstyle")
+        shutil.copy(get_system_styles(self)[system_style], stylepath)
+    return stylepath
+
+
+def get_preferred_style_path(self):
+    if not self.preferences.config["use_custom_plot_style"] and \
+            not self.plot_settings.use_custom_plot_style:
+        return get_system_preferred_style(self)
+    stylename = self.plot_settings.custom_plot_style
+    try:
+        return get_user_styles(self)[stylename]
+    except KeyError:
+        self.main_window.add_toast(
+            f"Plot style {stylename} does not exist loading system preferred")
+        return get_system_preferred_style(self)
+
+
 def get_style(self, stylename):
     """
     Get the style based on the stylename.
@@ -60,17 +88,12 @@ def get_style(self, stylename):
     system_styles = get_system_styles(self)
     style = file_io.get_style(user_styles[stylename])
     try:
-        base_stylepath = system_styles[stylename]
+        base_style = file_io.get_style(system_styles[stylename])
+        for key, item in base_style.items():
+            if key not in style.keys():
+                style[key] = item
     except KeyError:
-        template_config = self.preferences.template
-        if Adw.StyleManager.get_default().get_dark():
-            base_stylepath = system_styles[template_config["plot_style_dark"]]
-        else:
-            base_stylepath = system_styles[template_config["plot_style_light"]]
-    base_style = file_io.get_style(base_stylepath)
-    for key, item in base_style.items():
-        if key not in style.keys():
-            style[key] = item
+        pass
     cycler_string = style["axes.prop_cycle"]
     color_string = \
         cycler_string[cycler_string.find("[") + 1: cycler_string.find("]")]
@@ -78,6 +101,9 @@ def get_style(self, stylename):
     for string in color_string.split(", "):
         color_list.append(string.replace("'", ""))
     style["axes.prop_cycle"] = cycler(color=color_list)
+    for key, item in pyplot.rcParams.items():
+        if key not in style.keys():
+            style[key] = item
     return style
 
 

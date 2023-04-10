@@ -1,8 +1,6 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 import time
 
-from gi.repository import Adw
-
 from graphs import plot_styles, plotting_tools, utilities
 from graphs.rename import RenameWindow
 
@@ -17,21 +15,7 @@ class Canvas(FigureCanvas):
     """Create the graph widget"""
     def __init__(self, parent):
         self.parent = parent
-        available_styles = plot_styles.get_user_styles(self.parent)
-        stylename = self.parent.plot_settings.plot_style
-        try:
-            style_path = available_styles[stylename]
-        except KeyError:
-            template_config = self.parent.preferences.template
-            self.parent.main_window.add_toast(
-                f"Plot style {stylename} does not exist, loading default")
-            if Adw.StyleManager.get_default().get_dark():
-                stylename = template_config["plot_style_dark"]
-            else:
-                stylename = template_config["plot_style_light"]
-            style_path = plot_styles.get_user_styles(self.parent)[stylename]
-
-        pyplot.style.use(style_path)
+        pyplot.style.use(plot_styles.get_preferred_style_path(parent))
         self.figure = Figure()
         self.figure.set_tight_layout(True)
         self.one_click_trigger = False

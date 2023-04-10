@@ -138,11 +138,6 @@ class GraphsApplication(Adw.Application):
             win.add_css_class("devel")
         config = self.preferences.config
         self.plot_settings = PlotSettings(config)
-        if Adw.StyleManager.get_default().get_dark():
-            style = "plot_style_dark"
-        else:
-            style = "plot_style_light"
-        self.plot_settings.plot_style = config[style]
         self.canvas = Canvas(self)
         win.toast_overlay.set_child(self.canvas)
         win.sidebar_flap.connect("notify", self.on_sidebar_toggle)

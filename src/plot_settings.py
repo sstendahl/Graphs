@@ -17,7 +17,8 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
     plot_top_scale = Gtk.Template.Child()
     plot_right_scale = Gtk.Template.Child()
     plot_legend_check = Gtk.Template.Child()
-    plot_style = Gtk.Template.Child()
+    use_custom_plot_style = Gtk.Template.Child()
+    custom_plot_style = Gtk.Template.Child()
     min_left = Gtk.Template.Child()
     max_left = Gtk.Template.Child()
     min_bottom = Gtk.Template.Child()
@@ -54,9 +55,12 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
             self.plot_top_scale, parent.plot_settings.top_scale)
         utilities.set_chooser(
             self.plot_right_scale, parent.plot_settings.right_scale)
+        self.use_custom_plot_style.set_enable_expansion(
+            parent.plot_settings.use_custom_plot_style)
         utilities.populate_chooser(
-            self.plot_style, plot_styles.get_user_styles(parent).keys())
-        utilities.set_chooser(self.plot_style, parent.plot_settings.plot_style)
+            self.custom_plot_style, plot_styles.get_user_styles(parent).keys())
+        utilities.set_chooser(
+            self.custom_plot_style, parent.plot_settings.custom_plot_style)
         self.plot_legend_check.set_active(parent.plot_settings.legend)
         self.hide_unused_axes_limits(parent)
         if len(parent.datadict) > 0:
@@ -111,7 +115,9 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
         plot_settings.right_scale = \
             self.plot_right_scale.get_selected_item().get_string()
         plot_settings.legend = self.plot_legend_check.get_active()
-        plot_settings.plot_style = \
-            self.plot_style.get_selected_item().get_string()
+        plot_settings.use_custom_plot_style = \
+            self.use_custom_plot_style.get_enable_expansion()
+        plot_settings.custom_plot_style = \
+            self.custom_plot_style.get_selected_item().get_string()
         graphs.reload(parent)
         self.set_limits(parent)
