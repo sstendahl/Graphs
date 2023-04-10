@@ -25,7 +25,7 @@ class ExportFigureWindow(Adw.Window):
         default_format = None
         for name, formats in items:
             file_formats.append(name)
-            if self.parent.preferences.config["savefig_filetype"] in formats:
+            if parent.preferences.config["export_figure_filetype"] in formats:
                 default_format = name
         utilities.populate_chooser(self.file_format, file_formats)
         if default_format is not None:
@@ -44,6 +44,7 @@ class ExportFigureWindow(Adw.Window):
         dialog = Gtk.FileDialog()
         dialog.set_initial_name(f"{filename}.{file_suffix}")
         dialog.set_accept_label("Export")
+        dialog.set_filters(utilities.create_file_filters([(fmt, file_suffix)]))
         dialog.save(
             self.parent.main_window, None, self.on_figure_save_response,
             file_suffix, transparent)
