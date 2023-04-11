@@ -50,8 +50,8 @@ def open_project(self, path):
     try:
         new_plot_settings, new_datadict, _version = \
             file_io.load_project(path)
-        self.plot_settings = new_plot_settings
         utilities.set_attributes(new_plot_settings, self.plot_settings)
+        self.plot_settings = new_plot_settings
         self.datadict = {}
         for _key, item in new_datadict.items():
             new_item = Item(self, item.xdata, item.ydata)
