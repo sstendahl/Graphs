@@ -29,7 +29,7 @@ class ExportFigureWindow(Adw.Window):
         for name, formats in items:
             file_formats.append(name)
             if self.parent.preferences.config["export_figure_filetype"] in \
-                formats:
+                    formats:
                 default_format = name
         utilities.populate_chooser(self.file_format, file_formats)
         if default_format is not None:
