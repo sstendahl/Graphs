@@ -8,24 +8,24 @@ from graphs.misc import ImportSettings
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/add_data_advanced.ui")
 class AddAdvancedWindow(Adw.Window):
     __gtype_name__ = "AddAdvancedWindow"
+    name = Gtk.Template.Child()
     delimiter = Gtk.Template.Child()
     separator = Gtk.Template.Child()
     column_x = Gtk.Template.Child()
-    name = Gtk.Template.Child()
-    guess_headers = Gtk.Template.Child()
     column_y = Gtk.Template.Child()
     skip_rows = Gtk.Template.Child()
+    guess_headers = Gtk.Template.Child()
     confirm_button = Gtk.Template.Child()
 
     def __init__(self, parent):
         super().__init__()
         self.parent = parent
         config = parent.preferences.config
-        self.skip_rows.set_value(int(config["import_skip_rows"]))
-        self.column_y.set_value(int(config["import_column_y"]))
-        self.column_x.set_value(int(config["import_column_x"]))
         self.delimiter.set_text(config["import_delimiter"])
         utilities.set_chooser(self.separator, config["import_separator"])
+        self.column_x.set_value(int(config["import_column_x"]))
+        self.column_y.set_value(int(config["import_column_y"]))
+        self.skip_rows.set_value(int(config["import_skip_rows"]))
         self.guess_headers.set_active(config["guess_headers"])
         self.confirm_button.connect("clicked", self.on_accept)
         self.set_transient_for(parent.main_window)

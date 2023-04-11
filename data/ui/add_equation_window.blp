@@ -33,7 +33,7 @@ template AddEquationWindow : Adw.Window {
             margin-end: 26;
             margin-top: 12;
             margin-bottom: 6;
-            Adw.EntryRow equation_entry {
+            Adw.EntryRow equation {
               max-width-chars: 25;
               title: _("Y =");
               styles ["preferencesgroup"]
@@ -46,7 +46,7 @@ template AddEquationWindow : Adw.Window {
             margin-bottom: 20;
             description: _("Supports Numpy notation. Use a capital letter for the X coordinate.");
 
-            Adw.EntryRow name_entry {
+            Adw.EntryRow name {
               max-width-chars: 25;
               title: _("Name (optional)");
             }
@@ -58,20 +58,20 @@ template AddEquationWindow : Adw.Window {
 
               Adw.PreferencesGroup {
                 margin-end: 12;
-                Adw.EntryRow x_start_entry {
+                Adw.EntryRow x_start {
                   title: _("X Start");
                 }
               }
 
               Adw.PreferencesGroup {
                 margin-end: 12;
-                Adw.EntryRow x_stop_entry {
+                Adw.EntryRow x_stop {
                   title: _("X Stop");
                 }
               }
 
               Adw.PreferencesGroup {
-                Adw.EntryRow step_size_entry {
+                Adw.EntryRow step_size {
                   title: _("Step Size");
                 }
               }
