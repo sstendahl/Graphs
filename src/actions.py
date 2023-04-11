@@ -93,6 +93,8 @@ def export_data_action(_action, _target, self):
     elif len(self.datadict) == 1:
         filename = f"{list(self.datadict.values())[0].name}.txt"
         dialog.set_initial_name(filename)
+        dialog.set_filters(
+            utilities.create_file_filters([("Text Files", "txt")]))
         dialog.save(
             self.main_window, None, ui.on_export_data_response, self, False)
 
@@ -107,6 +109,8 @@ def plot_styles_action(_action, _target, self):
 
 def save_project_action(_action, _target, self):
     dialog = Gtk.FileDialog()
+    dialog.set_filters(
+        utilities.create_file_filters([("Graphs Project File", "graphs")]))
     dialog.save(self.main_window, None, ui.on_save_project_response, self)
 
 
@@ -127,6 +131,8 @@ def open_project_action(_action, _target, self):
         dialog.present()
         return
     dialog = Gtk.FileDialog()
+    dialog.set_filters(
+        utilities.create_file_filters([("Graphs Project File", "graphs")]))
     dialog.open(self.main_window, None, ui.on_open_project_response, self)
 
 
