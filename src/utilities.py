@@ -209,8 +209,9 @@ def set_attributes(new_object, template):
     for attribute in template.__dict__:
         if not hasattr(new_object, attribute):
             setattr(new_object, attribute, getattr(template, attribute))
+
     delete_attributes = [attribute for attribute in new_object.__dict__
-        if not hasattr(template, attribute)]
+                        if not hasattr(template, attribute)]
     for attribute in delete_attributes:
         delattr(new_object, attribute)
 
