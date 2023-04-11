@@ -20,89 +20,91 @@ template AddAdvancedWindow : Adw.Window {
       styles ["flat"]
     }
 
-    Adw.PreferencesGroup {
-      margin-start: 30;
-      margin-end: 30;
+    Adw.Clamp {
+      margin-start: 12;
+      margin-end: 12;
       margin-top: 12;
+      margin-bottom: 12;
+      Adw.PreferencesGroup {
+        Adw.EntryRow name {
+          max-width-chars: 10;
+          title: _("Name (Single File Only)");
+        }
 
-      Adw.EntryRow name {
-        max-width-chars: 10;
-        title: _("Name (Single File Only)");
-      }
+        Adw.EntryRow delimiter {
+          max-width-chars: 10;
+          title: _("Delimiter (\s+ for whitespace)");
+        }
 
-      Adw.EntryRow delimiter {
-        max-width-chars: 10;
-        title: _("Delimiter (\s+ for whitespace)");
-      }
-
-      Adw.ComboRow separator {
-        title: _("Decimal Separator");
-        subtitle: _("The character that is used as decimal separator");
-        model: StringList {
-          strings [".", ","]
-        };
-      }
-
-      Adw.ActionRow {
-        title: _("Column X");
-        subtitle: _("Choose which column to load for the X-data");
-        SpinButton column_x {
-          valign: center;
-          numeric: true;
-          value: 0;
-          wrap: true;
-          adjustment: Adjustment {
-            step-increment: 1;
-            upper: 100;
+        Adw.ComboRow separator {
+          title: _("Decimal Separator");
+          subtitle: _("The character that is used as decimal separator");
+          model: StringList {
+            strings [".", ","]
           };
         }
-      }
 
-      Adw.ActionRow {
-        title: _("Column Y");
-        subtitle: _("Choose which column to load for the Y-data");
-        SpinButton column_y {
-          valign: center;
-          numeric: true;
-          value: 0;
-          wrap: true;
-          adjustment: Adjustment {
-            step-increment: 1;
-            upper: 100;
-          };
+        Adw.ActionRow {
+          title: _("Column X");
+          subtitle: _("Choose which column to load for the X-data");
+          SpinButton column_x {
+            valign: center;
+            numeric: true;
+            value: 0;
+            wrap: true;
+            adjustment: Adjustment {
+              step-increment: 1;
+              upper: 100;
+            };
+          }
         }
-      }
 
-      Adw.ActionRow {
-        title: _("Skip Rows");
-        subtitle: _("Choose how many rows to skip while loading data");
-        SpinButton skip_rows {
-          valign: center;
-          numeric: true;
-          value: 0;
-          wrap: true;
-          adjustment: Adjustment {
-            step-increment: 1;
-            upper: 999;
-          };
+        Adw.ActionRow {
+          title: _("Column Y");
+          subtitle: _("Choose which column to load for the Y-data");
+          SpinButton column_y {
+            valign: center;
+            numeric: true;
+            value: 0;
+            wrap: true;
+            adjustment: Adjustment {
+              step-increment: 1;
+              upper: 100;
+            };
+          }
         }
-      }
 
-      Adw.ActionRow {
-        title: _("Retrieve Label");
-        subtitle: _("Try and retrieve label from the header in the dataset");
-        activatable-widget: guess_headers;
-        Switch guess_headers {
-          valign: center;
+        Adw.ActionRow {
+          title: _("Skip Rows");
+          subtitle: _("Choose how many rows to skip while loading data");
+          SpinButton skip_rows {
+            valign: center;
+            numeric: true;
+            value: 0;
+            wrap: true;
+            adjustment: Adjustment {
+              step-increment: 1;
+              upper: 999;
+            };
+          }
         }
-      }
 
-      Button confirm_button {
-        halign: center;
-        margin-top: 26;
-        margin-bottom: 26;
-        label: _("Open Files");
-        styles ["suggested-action", "pill"]
+        Adw.ActionRow {
+          title: _("Retrieve Label");
+          subtitle: _("Try and retrieve label from the header in the dataset");
+          activatable-widget: guess_headers;
+          Switch guess_headers {
+            valign: center;
+          }
+        }
+
+        Button confirm_button {
+          halign: center;
+          margin-top: 24;
+          margin-bottom: 12;
+          label: _("Open Files");
+          styles ["suggested-action", "pill"]
+        }
       }
     }
   }

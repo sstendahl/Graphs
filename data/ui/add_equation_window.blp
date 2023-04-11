@@ -19,68 +19,74 @@ template AddEquationWindow : Adw.Window {
       styles ["flat"]
     }
 
-    Adw.ToastOverlay toast_overlay {
-      child: Box {
-        orientation: vertical;
+    Adw.Clamp {
+      margin-start: 12;
+      margin-end: 12;
+      margin-top: 12;
+      margin-bottom: 12;
+      Adw.ToastOverlay toast_overlay {
+        child: Box {
+          orientation: vertical;
 
-        Adw.PreferencesGroup {
-          margin-start: 26;
-          margin-end: 26;
-          margin-top: 12;
-          margin-bottom: 6;
-          Adw.EntryRow equation_entry {
-            max-width-chars: 25;
-            title: _("Y =");
-            styles ["preferencesgroup"]
-          }
-        }
-
-        Adw.PreferencesGroup {
-          margin-start: 26;
-          margin-end: 26;
-          margin-bottom: 20;
-          description: _("Supports Numpy notation. Use a capital letter for the X coordinate.");
-
-          Adw.EntryRow name_entry {
-            max-width-chars: 25;
-            title: _("Name (optional)");
-          }
-
-          Box {
-            margin-top: 20;
-            margin-bottom: 3;
-            orientation: horizontal;
-
-            Adw.PreferencesGroup {
-              margin-end: 12;
-              Adw.EntryRow x_start_entry {
-                title: _("X Start");
-              }
-            }
-
-            Adw.PreferencesGroup {
-              margin-end: 12;
-              Adw.EntryRow x_stop_entry {
-                title: _("X Stop");
-              }
-            }
-
-            Adw.PreferencesGroup {
-              Adw.EntryRow step_size_entry {
-                title: _("Step Size");
-              }
+          Adw.PreferencesGroup {
+            margin-start: 26;
+            margin-end: 26;
+            margin-top: 12;
+            margin-bottom: 6;
+            Adw.EntryRow equation_entry {
+              max-width-chars: 25;
+              title: _("Y =");
+              styles ["preferencesgroup"]
             }
           }
 
-          Button confirm_button {
-            halign: center;
-            margin-top: 26;
-            margin-bottom: 26;
-            label: _("Add Equation");
-            styles ["suggested-action", "pill"]
+          Adw.PreferencesGroup {
+            margin-start: 26;
+            margin-end: 26;
+            margin-bottom: 20;
+            description: _("Supports Numpy notation. Use a capital letter for the X coordinate.");
+
+            Adw.EntryRow name_entry {
+              max-width-chars: 25;
+              title: _("Name (optional)");
+            }
+
+            Box {
+              margin-top: 20;
+              margin-bottom: 3;
+              orientation: horizontal;
+
+              Adw.PreferencesGroup {
+                margin-end: 12;
+                Adw.EntryRow x_start_entry {
+                  title: _("X Start");
+                }
+              }
+
+              Adw.PreferencesGroup {
+                margin-end: 12;
+                Adw.EntryRow x_stop_entry {
+                  title: _("X Stop");
+                }
+              }
+
+              Adw.PreferencesGroup {
+                Adw.EntryRow step_size_entry {
+                  title: _("Step Size");
+                }
+              }
+            }
+
+            Button confirm_button {
+              halign: center;
+              margin-top: 24;
+              margin-bottom: 12;
+              label: _("Add Equation");
+              styles ["suggested-action", "pill"]
+            }
           }
-        }
-      };
+        };
+      }
     }
   }
 }

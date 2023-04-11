@@ -19,33 +19,52 @@ template ExportFigureWindow : Adw.Window {
     Adw.HeaderBar {
       styles ["flat"]
     }
-    Adw.PreferencesGroup {
-      margin-start: 30;
-      margin-end: 30;
-      margin-top: 20;
-      margin-bottom: 20;
 
-      Adw.ComboRow file_format {
-        title: _("File Format");
-        subtitle: _("In which file format should the graph be exported?");
-        model: StringList {};
-      }
+    Adw.Clamp {
+      margin-start: 12;
+      margin-end: 12;
+      margin-top: 12;
+      margin-bottom: 12;
+      Adw.PreferencesGroup {
+        Adw.ComboRow file_format {
+          title: _("File Format");
+          subtitle: _("In which file format should the graph be exported?");
+          model: StringList {};
+        }
 
       Adw.ActionRow {
-        title: _("Transparent Background");
-        subtitle: _("Export using a transparent background.");
-        activatable-widget: transparent_switch;
+        title: _("Graph dpi");
+        subtitle: _("Set the resolution of the graph in dots per inch ");
 
-        Switch transparent_switch {
+        SpinButton export_figure_dpi {
           valign: center;
+          numeric: true;
+          value: 100;
+          wrap: true;
+          adjustment: Adjustment {
+            step-increment: 1;
+            upper: 999;
+          };
         }
       }
 
-      Button confirm_button {
-        margin-top: 20;
-        label: _("Export");
-        halign: center;
-        styles ["suggested-action", "pill"]
+        Adw.ActionRow {
+          title: _("Transparent Background");
+          subtitle: _("Export using a transparent background.");
+          activatable-widget: transparent_switch;
+
+          Switch transparent_switch {
+            valign: center;
+          }
+        }
+
+        Button confirm_button {
+          margin-top: 24;
+          margin-bottom: 12;
+          label: _("Export");
+          halign: center;
+          styles ["suggested-action", "pill"]
+        }
       }
     }
   }
