@@ -59,9 +59,8 @@ def open_project(self, path):
                 if hasattr(item, attribute):
                     setattr(new_item, attribute, getattr(item, attribute))
             add_item(self, new_item, reset_clipboard=False)
-        if len(item.xdata_clipboard) > 1:
-            undo_button = self.main_window.undo_button
-            undo_button.set_sensitive(True)
+            if len(new_item.xdata_clipboard) > 1:
+                self.main_window.undo_button.set_sensitive(True)
         ui.enable_data_dependent_buttons(
             self, utilities.get_selected_keys(self))
         self.canvas.set_limits()
