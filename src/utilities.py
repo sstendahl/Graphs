@@ -5,6 +5,7 @@ from pathlib import Path
 from gi.repository import Gdk, Gio, Gtk
 
 import numpy
+import pickle
 
 
 def remove_unused_config_keys(config, template):
@@ -210,9 +211,12 @@ def set_attributes(new_object, template):
     for attribute in template.__dict__:
         if not hasattr(new_object, attribute):
             setattr(new_object, attribute, getattr(template, attribute))
+    delete_attributes = []
     for attribute in new_object.__dict__:
         if not hasattr(template, attribute):
-            delattr(new_object, attribute)
+            delete_attributes.append(attribute)
+    for attribute in delete_attributes:
+        delattr(new_object, attribute)
 
 
 def shorten_label(label, max_length=20):
