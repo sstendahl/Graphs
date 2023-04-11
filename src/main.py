@@ -1,7 +1,6 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Main application."""
 import logging
-import os
 import sys
 from inspect import getmembers, isfunction
 
@@ -24,14 +23,13 @@ class GraphsApplication(Adw.Application):
         self.appid = args[1]
         super().__init__(application_id=self.appid,
                          flags=Gio.ApplicationFlags.FLAGS_NONE)
-        self.modulepath = os.path.join(
-            os.getenv("XDG_DATA_DIRS").split(":")[0], "graphs", "graphs")
         self.version = args[0]
         self.name = args[2]
         self.copyright = args[3]
         self.website = args[4]
         self.issues = args[5]
         self.author = args[6]
+        self.pkgdatadir = args[7]
         self.datadict = {}
         self.highlight = None
         self.item_menu = {}

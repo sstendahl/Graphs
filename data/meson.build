@@ -104,8 +104,8 @@ install_data(
   install_dir: join_paths(datadir, symbolic_dir)
 )
 
-install_data('config.json', install_dir: moduledir, install_mode: 'rwxrwxrwx')
-install_data('whats_new', install_dir: moduledir, install_mode: 'rwxrwxrwx')
+install_data('config.json', install_dir: pkgdatadir, install_mode: 'rwxrwxrwx')
+install_data('whats_new', install_dir: pkgdatadir, install_mode: 'rwxrwxrwx')
 
 styles = files(
   'styles/adwaita.mplstyle',
@@ -133,5 +133,5 @@ styles = files(
   'styles/solarized-light.mplstyle',
   'styles/tableau-colorblind10.mplstyle',
 )
-styles_dir = join_paths(moduledir, 'styles')
+styles_dir = join_paths(pkgdatadir, 'styles')
 install_data(styles, install_dir: styles_dir, install_mode: 'rwxrwxrwx')

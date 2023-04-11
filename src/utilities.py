@@ -6,6 +6,7 @@ from gi.repository import Gdk, Gio, Gtk
 
 import numpy
 
+
 def remove_unused_config_keys(config, template):
     for key in [key for key in config.keys() if key not in template.keys()]:
         del config[key]

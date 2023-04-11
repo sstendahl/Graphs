@@ -36,7 +36,7 @@ template ExportFigureWindow : Adw.Window {
         title: _("Graph dpi");
         subtitle: _("Set the resolution of the graph in dots per inch ");
 
-        SpinButton export_figure_dpi {
+        SpinButton dpi {
           valign: center;
           numeric: true;
           value: 100;
@@ -51,9 +51,9 @@ template ExportFigureWindow : Adw.Window {
         Adw.ActionRow {
           title: _("Transparent Background");
           subtitle: _("Export using a transparent background.");
-          activatable-widget: transparent_switch;
+          activatable-widget: transparent;
 
-          Switch transparent_switch {
+          Switch transparent {
             valign: center;
           }
         }

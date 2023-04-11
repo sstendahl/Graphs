@@ -96,7 +96,7 @@ def show_about_window(self):
                             developers=developers,
                             copyright=f"© {self.copyright} {self.author}",
                             license_type="GTK_LICENSE_GPL_3_0")
-    path = self.modulepath
-    with open(os.path.join(path, "whats_new"), "r", encoding="utf-8") as file:
+    whats_new_path = os.path.join(self.pkgdatadir, "whats_new")
+    with open(whats_new_path, "r", encoding="utf-8") as file:
         about.set_release_notes(file.read())
     about.present()

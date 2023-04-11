@@ -13,7 +13,7 @@ from matplotlib.lines import Line2D
 
 
 def get_system_styles(self):
-    path = os.path.join(self.modulepath, "styles")
+    path = os.path.join(self.pkgdatadir, "styles")
     styles = {}
     for file in os.listdir(path):
         if os.path.isfile(os.path.join(path, file)):
