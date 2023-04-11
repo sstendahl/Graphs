@@ -115,6 +115,22 @@ template PreferencesWindow : Adw.PreferencesWindow {
       }
 
       Adw.ActionRow {
+        title: _("Graph dpi");
+        subtitle: _("Set the default resolution of the graph in dots per inch ");
+
+        SpinButton export_figure_dpi {
+          valign: center;
+          numeric: true;
+          value: 100;
+          wrap: true;
+          adjustment: Adjustment {
+            step-increment: 1;
+            upper: 999;
+          };
+        }
+      }
+
+      Adw.ActionRow {
         title: _("Transparent Background");
         subtitle: _("Use a transparent background for the saved plots");
         activatable-widget: export_figure_transparent;

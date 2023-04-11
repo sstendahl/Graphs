@@ -3,7 +3,7 @@ import os
 
 from gi.repository import Adw, GLib, Gtk
 
-from graphs import file_io, graphs
+from graphs import file_io, graphs, utilities
 
 
 def on_style_change(_shortcut, _theme, _widget, self):
@@ -35,6 +35,8 @@ def enable_data_dependent_buttons(self, enabled):
 def on_confirm_discard_response(_dialog, response, self):
     if response == "discard":
         dialog = Gtk.FileDialog()
+        dialog.set_filters(
+            utilities.create_file_filters([("Graphs Project File", "graphs")]))
         dialog.open(self.main_window, None, on_open_project_response, self)
 
 
@@ -68,6 +70,8 @@ def on_open_project_response(dialog, response, self):
 def on_save_project_response(dialog, response, self):
     try:
         path = dialog.save_finish(response).peek_path()
+        if not path.endswith(".graphs"):
+            path += ".graphs"
         file_io.save_project(
             path,
             self.plot_settings,
