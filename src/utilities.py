@@ -2,7 +2,7 @@
 import os
 from pathlib import Path
 
-from gi.repository import Gdk
+from gi.repository import Gdk, Gio, Gtk
 
 import numpy
 
@@ -225,3 +225,18 @@ def get_config_path() -> str:
     if os.getenv("XDG_CONFIG_HOME"):
         return os.path.join(os.getenv("XDG_CONFIG_HOME"), "Graphs")
     return os.path.join(str(Path.home()), ".local", "share", "Graphs")
+
+
+def create_file_filters(filters, add_all=True):
+    list_store = Gio.ListStore()
+    for name, suffix in filters:
+        file_filter = Gtk.FileFilter()
+        file_filter.set_name(name)
+        file_filter.add_suffix(suffix)
+        list_store.append(file_filter)
+    if add_all:
+        file_filter = Gtk.FileFilter()
+        file_filter.set_name("All Files")
+        file_filter.add_pattern("*")
+        list_store.append(file_filter)
+    return list_store
