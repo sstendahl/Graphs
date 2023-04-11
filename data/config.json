@@ -4,6 +4,7 @@
 "addequation_step_size": "0.01",
 "addequation_x_start": "0",
 "addequation_x_stop": "10",
+"export_figure_dpi": "100",
 "export_figure_filetype": "svg",
 "export_figure_transparent": true,
 "guess_headers": true,

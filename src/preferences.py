@@ -68,6 +68,7 @@ class PreferencesWindow(Adw.PreferencesWindow):
     addequation_x_start = Gtk.Template.Child()
     addequation_x_stop = Gtk.Template.Child()
     addequation_step_size = Gtk.Template.Child()
+    export_figure_dpi = Gtk.Template.Child()
     export_figure_filetype = Gtk.Template.Child()
     export_figure_transparent = Gtk.Template.Child()
     action_center_data = Gtk.Template.Child()
@@ -112,6 +113,7 @@ class PreferencesWindow(Adw.PreferencesWindow):
         self.addequation_x_stop.set_text(str(config["addequation_x_stop"]))
         self.addequation_step_size.set_text(
             str(config["addequation_step_size"]))
+        self.export_figure_dpi.set_value(int(config["export_figure_dpi"]))
         utilities.set_chooser(
             self.export_figure_filetype, config["export_figure_filetype"])
         self.export_figure_transparent.set_active(
@@ -158,6 +160,7 @@ class PreferencesWindow(Adw.PreferencesWindow):
         config["addequation_x_start"] = self.addequation_x_start.get_text()
         config["addequation_x_stop"] = self.addequation_x_stop.get_text()
         config["addequation_step_size"] = self.addequation_step_size.get_text()
+        config["export_figure_dpi"] = int(self.export_figure_dpi.get_value())
         config["export_figure_filetype"] = \
             self.export_figure_filetype.get_selected_item().get_string()
         config["export_figure_transparent"] = \
