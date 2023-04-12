@@ -77,6 +77,7 @@ class ItemBox(Gtk.Box):
             if color is not None:
                 self.item.color = utilities.rgba_to_hex(color).upper()
                 self.update_color()
+                clipboard.add(self.parent)
                 graphs.refresh(self.parent)
         except GLib.GError:
             pass
