@@ -156,19 +156,19 @@ template GraphsWindow : Adw.ApplicationWindow {
             icon-name: "move-tool-symbolic";
             action-name: "app.mode_pan";
             hexpand: true;
-            tooltip-text: _("Left button to pan, right button to zoom. Hold control to to keep aspect ratio fixed");
+            tooltip-text: _("Panning mode. Use left mouse button to pan, right mouse button to zoom. Hold control to to keep aspect ratio fixed");
           }
           ToggleButton zoom_button {
             icon-name: "loupe-symbolic";
             action-name: "app.mode_zoom";
             hexpand: true;
-            tooltip-text: _("Left button to pan, right button to zoom. Hold control to to keep aspect ratio fixed");
+            tooltip-text: _("Zoom mode. Select an area on the graph to zoom in");
           }
           ToggleButton select_button {
             icon-name: "edit-select-all-symbolic";
             action-name: "app.mode_select";
             hexpand: true;
-            tooltip-text: _("Left button to pan, right button to zoom. Hold control to to keep aspect ratio fixed");
+            tooltip-text: _("Highlight mode, click and drag over the graph to highlight the workable area");
           }
         }
 
