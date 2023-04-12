@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 from gi.repository import GLib, Gdk, Gtk
 
-from graphs import graphs, ui, utilities
+from graphs import graphs, ui, utilities, clipboard
 from graphs.edit_item import EditItemWindow
 
 
@@ -48,6 +48,7 @@ class ItemBox(Gtk.Box):
         self.parent.datadict = utilities.change_key_position(
             self.parent.datadict, drop_target.key, value)
         ui.reload_item_menu(self.parent)
+        clipboard.add(self.parent)
         graphs.reload(self.parent)
 
     def on_dnd_prepare(self, drag_source, x, y):
