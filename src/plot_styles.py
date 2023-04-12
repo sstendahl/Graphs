@@ -14,21 +14,18 @@ from matplotlib.lines import Line2D
 
 def get_system_styles(self):
     path = os.path.join(self.pkgdatadir, "styles")
-    styles = {}
-    for file in os.listdir(path):
-        if os.path.isfile(os.path.join(path, file)):
-            styles[Path(file).stem] = os.path.join(path, file)
-    return styles
+    return {Path(file).stem: os.path.join(path, file) for file
+            in os.listdir(path)
+            if os.path.isfile(os.path.join(path, file))}
 
 
 def get_user_styles(self):
     path = os.path.join(utilities.get_config_path(), "styles")
     if not os.path.exists(path):
         reset_user_styles(self)
-    styles = {}
-    for file in sorted(os.listdir(path)):
-        if os.path.isfile(os.path.join(path, file)):
-            styles[Path(file).stem] = os.path.join(path, file)
+    styles = {Path(file).stem: os.path.join(path, file) for file
+              in sorted(os.listdir(path))
+              if os.path.isfile(os.path.join(path, file))}
     if not styles:
         reset_user_styles(self)
         styles = get_user_styles(self)
@@ -163,7 +160,7 @@ class PlotStylesWindow(Adw.Window):
         self.font_chooser.set_use_font(True)
         self.linewidth.set_range(0, 10)
         utilities.populate_chooser(
-            self.markers, sorted(list(self.marker_dict.values())))
+            self.markers, sorted(self.marker_dict.values()))
         self.markersize.set_range(0, 10)
         self.major_tick_width.set_range(0, 4)
         self.minor_tick_width.set_range(0, 4)

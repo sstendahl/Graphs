@@ -29,7 +29,7 @@ class EditItemWindow(Adw.PreferencesWindow):
         self.marker_dict["none"] = "none"
         self.linewidth.set_range(0, 10)
         utilities.populate_chooser(
-            self.markers, sorted(list(self.marker_dict.values())))
+            self.markers, sorted(self.marker_dict.values()))
         self.markersize.set_range(0, 10)
         self.load_values()
         self.item_selector.connect("notify::selected", self.on_select)
