@@ -33,6 +33,8 @@ class GraphsApplication(Adw.Application):
         self.issues = args[5]
         self.author = args[6]
         self.datadict = {}
+        self.datadict_clipboard = []
+        self.clipboard_pos = -1
         self.highlight = None
         self.item_menu = {}
         font_list = matplotlib.font_manager.findSystemFonts(

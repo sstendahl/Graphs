@@ -241,4 +241,5 @@ def combine(self):
     # Create the item itself
     new_xdata, new_ydata = sort_data(new_xdata, new_ydata)
     graphs.add_item(self, Item(self, new_xdata, new_ydata, "Combined Data"))
-    clipboard.reset(self)
+    clipboard.add(self)
+    ui.reload_item_menu(self)

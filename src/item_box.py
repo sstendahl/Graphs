@@ -47,11 +47,7 @@ class ItemBox(Gtk.Box):
         self.parent.datadict
         self.parent.datadict = utilities.change_key_position(
             self.parent.datadict, drop_target.key, value)
-        self.parent.item_menu = utilities.change_key_position(
-            self.parent.item_menu, drop_target.key, value)
-        for _key, item in self.parent.item_menu.items():
-            self.parent.main_window.list_box.remove(item)
-            self.parent.main_window.list_box.append(item)
+        ui.reload_item_menu(self.parent)
         graphs.reload(self.parent)
 
     def on_dnd_prepare(self, drag_source, x, y):

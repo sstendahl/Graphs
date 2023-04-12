@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 from gi.repository import Adw, Gtk
 
-from graphs import graphs, utilities
+from graphs import graphs, utilities, ui
 
 from matplotlib.lines import Line2D
 
@@ -78,4 +78,5 @@ class EditItemWindow(Adw.PreferencesWindow):
 
         self.parent.item_menu[self.item.key].get_child().label.set_text(
             utilities.shorten_label(self.item.name))
+        ui.reload_item_menu(self)
         graphs.refresh(self.parent, set_limits=True)
