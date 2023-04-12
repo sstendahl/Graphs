@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 from gi.repository import GLib, Gdk, Gtk
 
-from graphs import graphs, ui, utilities, clipboard
+from graphs import clipboard, graphs, ui, utilities
 from graphs.edit_item import EditItemWindow
 
 
