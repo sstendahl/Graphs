@@ -111,7 +111,11 @@ def delete_item(self, key, give_toast=False):
     if give_toast:
         self.main_window.add_toast(f"Deleted {name}")
     clipboard.add(self)
+    check_open_data(self)
+
+def check_open_data(self):
     if self.datadict:
+        self.main_window.item_list.set_visible(True)
         refresh(self, set_limits=True)
         ui.enable_data_dependent_buttons(
             self, utilities.get_selected_keys(self))
@@ -119,7 +123,6 @@ def delete_item(self, key, give_toast=False):
         reload(self)
         self.main_window.item_list.set_visible(False)
         ui.enable_data_dependent_buttons(self, False)
-
 
 def reload(self):
     """Completely reload the plot of the graph"""
