@@ -158,6 +158,22 @@ template PreferencesWindow : Adw.PreferencesWindow {
       title: _("Other");
       description: _("Other general settings");
 
+      Adw.ActionRow {
+        title: _("Clipboard length");
+        subtitle: _("Choose how many states are stored in the clipboard");
+
+        SpinButton clipboard_length {
+          valign: center;
+          numeric: true;
+          value: 15;
+          wrap: true;
+          adjustment: Adjustment {
+            step-increment: 1;
+            upper: 999;
+          };
+        }
+      }
+
       Adw.ComboRow other_handle_duplicates {
         title: _("Handle duplicate entries");
         subtitle: _("Choose how to handle duplicate entries to be loaded");

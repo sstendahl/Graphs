@@ -58,7 +58,7 @@ def open_project(self, path):
             for attribute in new_item.__dict__:
                 if hasattr(item, attribute):
                     setattr(new_item, attribute, getattr(item, attribute))
-            add_item(self, new_item, reset_clipboard=False)
+            add_item(self, new_item)
         if len(item.xdata_clipboard) > 1:
             undo_button = self.main_window.undo_button
             undo_button.set_sensitive(True)
@@ -71,7 +71,7 @@ def open_project(self, path):
         logging.exception(message)
 
 
-def add_item(self, item, reset_clipboard=True):
+def add_item(self, item):
     key = item.key
     handle_duplicates = self.preferences.config["handle_duplicates"]
     for _key_1, item_1 in self.datadict.items():
@@ -96,24 +96,26 @@ def add_item(self, item, reset_clipboard=True):
                 reload(self)
                 return
     self.datadict[key] = item
+    ui.reload_item_menu(self)
+    clipboard.add(self)
     self.main_window.item_list.set_visible(True)
-    self.main_window.item_list.append(ItemBox(self, item))
-    self.item_menu[key] = self.main_window.item_list.get_last_child()
-    if reset_clipboard:
-        clipboard.reset(self)
     reload(self)
     ui.enable_data_dependent_buttons(self, True)
 
 
 def delete_item(self, key, give_toast=False):
-    self.main_window.item_list.remove(self.item_menu[key])
-    self.item_menu.pop(key)
     name = self.datadict[key].name
     del self.datadict[key]
+    ui.reload_item_menu(self)
     if give_toast:
         self.main_window.add_toast(f"Deleted {name}")
-    clipboard.reset(self)
+    clipboard.add(self)
+    check_open_data(self)
+
+
+def check_open_data(self):
     if self.datadict:
+        self.main_window.item_list.set_visible(True)
         refresh(self, set_limits=True)
         ui.enable_data_dependent_buttons(
             self, utilities.get_selected_keys(self))
@@ -121,7 +123,6 @@ def delete_item(self, key, give_toast=False):
         reload(self)
         self.main_window.item_list.set_visible(False)
         ui.enable_data_dependent_buttons(self, False)
-
 
 def reload(self):
     """Completely reload the plot of the graph"""

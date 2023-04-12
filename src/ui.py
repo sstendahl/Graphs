@@ -4,7 +4,7 @@ import os
 from gi.repository import Adw, GLib, Gtk
 
 from graphs import file_io, graphs, utilities
-
+from graphs.item_box import ItemBox
 
 def on_style_change(_shortcut, _theme, _widget, self):
     graphs.reload(self)
@@ -30,6 +30,15 @@ def enable_data_dependent_buttons(self, enabled):
     ]
     for button in dependent_buttons:
         button.set_sensitive(enabled)
+
+
+def reload_item_menu(self):
+    while self.main_window.item_list.get_last_child() is not None:
+        self.main_window.item_list.remove(
+            self.main_window.item_list.get_last_child())
+
+    for _key, item in self.datadict.items():
+        self.main_window.item_list.append(ItemBox(self, item))
 
 
 def on_confirm_discard_response(_dialog, response, self):
