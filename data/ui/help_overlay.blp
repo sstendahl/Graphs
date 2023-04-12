@@ -26,6 +26,11 @@ ShortcutsWindow help_overlay {
       }
 
       ShortcutsShortcut {
+        title: C_("shortcut window", "Open Plot Styles");
+        action-name: "app.plot_styles";
+      }
+
+      ShortcutsShortcut {
         title: C_("shortcut window", "Quit");
         action-name: "app.quit";
       }
@@ -33,11 +38,6 @@ ShortcutsWindow help_overlay {
 
     ShortcutsGroup {
       title: C_("shortcut window", "Mode Switching");
-
-      ShortcutsShortcut {
-        title: C_("shortcut window", "Default Mode");
-        action-name: "app.mode_none";
-      }
 
       ShortcutsShortcut {
         title: C_("shortcut window", "Pan Mode");
@@ -56,7 +56,12 @@ ShortcutsWindow help_overlay {
     }
 
     ShortcutsGroup {
-      title: C_("shortcut window", "Data");
+      title: C_("shortcut window", "New Data");
+
+      ShortcutsShortcut {
+        title: C_("shortcut window", "Add Data from Equation");
+        action-name: "app.add_equation";
+      }
 
       ShortcutsShortcut {
         title: C_("shortcut window", "Open new File");
@@ -68,24 +73,30 @@ ShortcutsWindow help_overlay {
         action-name: "app.add_data_advanced";
       }
 
-      ShortcutsShortcut {
-        title: C_("shortcut window", "Add Data from Equation");
-        action-name: "app.add_equation";
-      }
-
-      ShortcutsShortcut {
-        title: C_("shortcut window", "Export Data");
-        action-name: "app.save_data";
-      }
-
-      ShortcutsShortcut {
-        title: C_("shortcut window", "Export Figure");
-        action-name: "app.export_data";
+       ShortcutsShortcut {
+        title: C_("shortcut window", "Open Project");
+        action-name: "app.open_project";
       }
 
       ShortcutsShortcut {
         title: C_("shortcut window", "Delete Selected Data");
         action-name: "app.delete_selected";
+      }
+    }
+
+    ShortcutsGroup {
+      title: C_("shortcut window", "Save and Export");
+      ShortcutsShortcut {
+        title: C_("shortcut window", "Export Data");
+        action-name: "app.export_data";
+      }
+      ShortcutsShortcut {
+        title: C_("shortcut window", "Export Figure");
+        action-name: "app.export_figure";
+      }
+      ShortcutsShortcut {
+        title: C_("shortcut window", "Save Project");
+        action-name: "app.save_project";
       }
     }
 
