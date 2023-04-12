@@ -75,8 +75,5 @@ class EditItemWindow(Adw.PreferencesWindow):
         self.item.markerstyle = utilities.get_dict_by_value(
             self.marker_dict, self.markers.get_selected_item().get_string())
         self.item.markersize = self.markersize.get_value()
-
-        self.parent.item_menu[self.item.key].get_child().label.set_text(
-            utilities.shorten_label(self.item.name))
-        ui.reload_item_menu(self)
+        ui.reload_item_menu(self.parent)
         graphs.refresh(self.parent, set_limits=True)
