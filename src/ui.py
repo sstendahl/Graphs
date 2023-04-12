@@ -46,6 +46,7 @@ def on_confirm_discard_response(_dialog, response, self):
         dialog = Gtk.FileDialog()
         dialog.set_filters(
             utilities.create_file_filters([("Graphs Project File", "graphs")]))
+        dialog.set_initial_name("project.graphs")
         dialog.open(self.main_window, None, on_open_project_response, self)
 
 
@@ -78,11 +79,9 @@ def on_open_project_response(dialog, response, self):
 
 def on_save_project_response(dialog, response, self):
     try:
-        path = dialog.save_finish(response).peek_path()
-        if not path.endswith(".graphs"):
-            path += ".graphs"
+        file = dialog.save_finish(response)
         file_io.save_project(
-            path,
+            file.get_path(),
             self.plot_settings,
             self.datadict,
             self.datadict_clipboard,
