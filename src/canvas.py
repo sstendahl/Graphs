@@ -170,10 +170,8 @@ class Canvas(FigureCanvas):
             "top": self.top_left_axis.get_xscale(),
             "bottom": self.axis.get_xscale(),
         }
-        limits = {}
-        for position, scale in axes.items():
-            limits[position] = plotting_tools.find_limits(
-                scale, items[position])
+        limits = {position: plotting_tools.find_limits(
+            scale, items[position]) for position, scale in axes.items()}
         if used_axes["left"]:
             if used_axes["bottom"]:
                 plotting_tools.set_axis_limits(
