@@ -33,7 +33,6 @@ def enable_data_dependent_buttons(self, enabled):
 
 
 def reload_item_menu(self):
-    child_counter = 0
     while self.main_window.item_list.get_last_child() is not None:
         self.main_window.item_list.remove(
             self.main_window.item_list.get_last_child())

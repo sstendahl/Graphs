@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 import logging
 
-from graphs import calculation, clipboard, graphs, utilities
+from graphs import calculation, clipboard, graphs, ui, utilities
 from graphs.item import Item
 from graphs.misc import InteractionMode
 

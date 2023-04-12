@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
-from graphs import graphs, ui
 import copy
+
+from graphs import graphs, ui
 
 
 def add(self):
@@ -15,7 +16,7 @@ def add(self):
     # the redo button
     if self.clipboard_pos != -1:
         self.datadict_clipboard = \
-            self.datadict_clipboard[:self.clipboard_pos+1]
+            self.datadict_clipboard[:self.clipboard_pos + 1]
     self.clipboard_pos = -1
     self.datadict_clipboard.append(copy.deepcopy(self.datadict))
     self.main_window.redo_button.set_sensitive(False)

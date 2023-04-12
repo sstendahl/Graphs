@@ -2,7 +2,6 @@
 import logging
 from pathlib import Path
 from pickle import UnpicklingError
-import copy
 
 from graphs import clipboard, file_io, plotting_tools, ui, utilities
 from graphs.canvas import Canvas
@@ -112,6 +111,7 @@ def delete_item(self, key, give_toast=False):
         self.main_window.add_toast(f"Deleted {name}")
     clipboard.add(self)
     check_open_data(self)
+
 
 def check_open_data(self):
     if self.datadict:

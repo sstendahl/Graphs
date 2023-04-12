@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 from gi.repository import Adw, Gtk
 
-from graphs import graphs, utilities, ui
+from graphs import graphs, ui, utilities
 
 from matplotlib.lines import Line2D
 
