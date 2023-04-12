@@ -27,13 +27,13 @@ def load_project(path):
 
 def save_file(self, path):
     if len(self.datadict) == 1:
-        for _key, item in self.datadict.items():
+        for item in self.datadict.values():
             xdata = item.xdata
             ydata = item.ydata
         array = numpy.stack([xdata, ydata], axis=1)
         numpy.savetxt(str(path), array, delimiter="\t")
     elif len(self.datadict) > 1:
-        for _key, item in self.datadict.items():
+        for item in self.datadict.values():
             xdata = item.xdata
             ydata = item.ydata
             filename = item.name.replace("/", "")

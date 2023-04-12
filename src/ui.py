@@ -37,7 +37,7 @@ def reload_item_menu(self):
         self.main_window.item_list.remove(
             self.main_window.item_list.get_last_child())
 
-    for _key, item in self.datadict.items():
+    for item in self.datadict.values():
         self.main_window.item_list.append(ItemBox(self, item))
 
 
