@@ -17,17 +17,17 @@ class Preferences():
         self.check_config(self.config)
 
     def check_config(self, config):
-        template_path = os.path.join(self.parent.modulepath, "config.json")
+        template_path = os.path.join(self.parent.pkgdatadir, "config.json")
         with open(template_path, "r", encoding="utf-8") as file:
-            self.template = json.load(file)
-        if set(config.keys()) != set(self.template.keys()):
-            config = utilities.remove_unused_config_keys(config, self.template)
-            config = utilities.add_new_config_keys(config, self.template)
+            template = json.load(file)
+        if set(config.keys()) != set(template.keys()):
+            config = utilities.remove_unused_config_keys(config, template)
+            config = utilities.add_new_config_keys(config, template)
         return config
 
     def create_new_config_file(self):
-        config_path = utilities.get_config_path()
-        if not os.path.isfile(f"{config_path}/config.json"):
+        config_path = os.path.join(utilities.get_config_path(), "config.json")
+        if not os.path.isfile(config_path):
             self.reset_config()
             logging.info("New configuration file created")
         else:
@@ -35,11 +35,11 @@ class Preferences():
 
     def reset_config(self):
         config_path = utilities.get_config_path()
-        old_path = self.parent.modulepath
         if not os.path.isdir(config_path):
             os.mkdir(config_path)
-        path = config_path + "/config.json"
-        shutil.copy(f"{old_path}/config.json", path)
+        shutil.copy(
+            os.path.join(self.parent.pkgdatadir, "config.json"),
+            os.path.join(config_path, "config.json"))
         logging.debug("Loaded new config")
 
     def load_config(self):

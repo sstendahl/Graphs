@@ -61,7 +61,7 @@ if __name__ == "__main__":
     format = "%(levelname)s: %(message)s"
     logging.basicConfig(format=format, level=logging.@LOG_LEVEL@)
 
-    args = [VERSION, APPID, NAME, COPYRIGHT, WEBSITE, ISSUES, AUTHOR]
+    args = [VERSION, APPID, NAME, COPYRIGHT, WEBSITE, ISSUES, AUTHOR, PKGDATADIR]
 
     from graphs import main
     sys.exit(main.main(args))
