@@ -58,10 +58,12 @@ def sort_data(xdata, ydata):
 
 def perform_operation(self, callback, *args):
     keys = utilities.get_selected_keys(self)
+    data_selected = False
     for key in keys:
         item = self.datadict[key]
         xdata, ydata, start_index, stop_index = get_data(self, item)
-        if xdata is not None:
+        if xdata is not None and len(xdata) != 0:
+            data_selected = True
             new_xdata, new_ydata, sort, discard = callback(
                 item, xdata, ydata, *args)
             if discard:
@@ -77,6 +79,9 @@ def perform_operation(self, callback, *args):
                 sorted_x, sorted_y = sort_data(item.xdata, item.ydata)
                 item.xdata = sorted_x
                 item.ydata = sorted_y
+    if not data_selected:
+        self.main_window.add_toast("No data found within the highlighted area")
+
     clipboard.add(self)
     graphs.refresh(self, set_limits=True)
 
