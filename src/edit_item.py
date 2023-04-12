@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 from gi.repository import Adw, Gtk
 
-from graphs import graphs, utilities
+from graphs import clipboard, graphs, ui, utilities
 
 from matplotlib.lines import Line2D
 
@@ -29,7 +29,7 @@ class EditItemWindow(Adw.PreferencesWindow):
         self.marker_dict["none"] = "none"
         self.linewidth.set_range(0, 10)
         utilities.populate_chooser(
-            self.markers, sorted(list(self.marker_dict.values())))
+            self.markers, sorted(self.marker_dict.values()))
         self.markersize.set_range(0, 10)
         self.load_values()
         self.item_selector.connect("notify::selected", self.on_select)
@@ -50,6 +50,8 @@ class EditItemWindow(Adw.PreferencesWindow):
                 set(utilities.get_chooser_list(self.item_selector)):
             utilities.populate_chooser(self.item_selector, names)
             self.item_selector.set_selected(index)
+            self.parent.datadict_clipboard = \
+                self.parent.datadict_clipboard[:-1]
 
     def load_values(self):
         self.set_title(self.item.name)
@@ -75,7 +77,6 @@ class EditItemWindow(Adw.PreferencesWindow):
         self.item.markerstyle = utilities.get_dict_by_value(
             self.marker_dict, self.markers.get_selected_item().get_string())
         self.item.markersize = self.markersize.get_value()
-
-        self.parent.item_menu[self.item.key].get_child().label.set_text(
-            utilities.shorten_label(self.item.name))
+        ui.reload_item_menu(self.parent)
+        clipboard.add(self.parent)
         graphs.refresh(self.parent, set_limits=True)

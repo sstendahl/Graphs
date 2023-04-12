@@ -48,19 +48,20 @@ def open_project(self, path):
     for key in self.datadict.copy():
         delete_item(self, key)
     try:
-        new_plot_settings, new_datadict, _version = \
-            file_io.load_project(path)
+        new_plot_settings, new_datadict, datadict_clipboard, clipboard_pos, \
+            _version = file_io.load_project(path)
         utilities.set_attributes(new_plot_settings, self.plot_settings)
         self.plot_settings = new_plot_settings
+        self.clipboard_pos = clipboard_pos
+        self.datadict_clipboard = datadict_clipboard
         self.datadict = {}
-        for _key, item in new_datadict.items():
+        for item in new_datadict.values():
             new_item = Item(self, item.xdata, item.ydata)
             for attribute in new_item.__dict__:
                 if hasattr(item, attribute):
                     setattr(new_item, attribute, getattr(item, attribute))
-            add_item(self, new_item, reset_clipboard=False)
-            if len(new_item.xdata_clipboard) > 1:
-                self.main_window.undo_button.set_sensitive(True)
+            add_item(self, new_item)
+            self.datadict_clipboard = self.datadict_clipboard[:-1]
         ui.enable_data_dependent_buttons(
             self, utilities.get_selected_keys(self))
         self.canvas.set_limits()
@@ -70,10 +71,10 @@ def open_project(self, path):
         logging.exception(message)
 
 
-def add_item(self, item, reset_clipboard=True):
+def add_item(self, item):
     key = item.key
     handle_duplicates = self.preferences.config["handle_duplicates"]
-    for _key_1, item_1 in self.datadict.items():
+    for item_1 in self.datadict.values():
         if item.name == item_1.name:
             if handle_duplicates == "Auto-rename duplicates":
                 loop = True
@@ -82,7 +83,7 @@ def add_item(self, item, reset_clipboard=True):
                     i += 1
                     new_name = f"{item.name} ({i})"
                     loop = False
-                    for _key_2, item_2 in self.datadict.items():
+                    for item_2 in self.datadict.values():
                         if new_name == item_2.name:
                             loop = True
                 item.name = new_name
@@ -95,24 +96,26 @@ def add_item(self, item, reset_clipboard=True):
                 reload(self)
                 return
     self.datadict[key] = item
+    ui.reload_item_menu(self)
+    clipboard.add(self)
     self.main_window.item_list.set_visible(True)
-    self.main_window.item_list.append(ItemBox(self, item))
-    self.item_menu[key] = self.main_window.item_list.get_last_child()
-    if reset_clipboard:
-        clipboard.reset(self)
     reload(self)
     ui.enable_data_dependent_buttons(self, True)
 
 
 def delete_item(self, key, give_toast=False):
-    self.main_window.item_list.remove(self.item_menu[key])
-    self.item_menu.pop(key)
     name = self.datadict[key].name
     del self.datadict[key]
+    ui.reload_item_menu(self)
     if give_toast:
         self.main_window.add_toast(f"Deleted {name}")
-    clipboard.reset(self)
+    clipboard.add(self)
+    check_open_data(self)
+
+
+def check_open_data(self):
     if self.datadict:
+        self.main_window.item_list.set_visible(True)
         refresh(self, set_limits=True)
         ui.enable_data_dependent_buttons(
             self, utilities.get_selected_keys(self))
@@ -120,7 +123,6 @@ def delete_item(self, key, give_toast=False):
         reload(self)
         self.main_window.item_list.set_visible(False)
         ui.enable_data_dependent_buttons(self, False)
-
 
 def reload(self):
     """Completely reload the plot of the graph"""
@@ -138,7 +140,7 @@ def refresh(self, set_limits=False):
         line.remove()
     if len(self.datadict) > 0:
         plotting_tools.hide_unused_axes(self, self.canvas)
-    for _key, item in reversed(self.datadict.items()):
+    for item in reversed(self.datadict.values()):
         if (item is not None) and not \
                 (self.preferences.config["hide_unselected"] and not
                  item.selected):

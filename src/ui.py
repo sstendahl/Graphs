@@ -4,7 +4,7 @@ import os
 from gi.repository import Adw, GLib, Gtk
 
 from graphs import file_io, graphs, utilities
-
+from graphs.item_box import ItemBox
 
 def on_style_change(_shortcut, _theme, _widget, self):
     graphs.reload(self)
@@ -30,6 +30,15 @@ def enable_data_dependent_buttons(self, enabled):
     ]
     for button in dependent_buttons:
         button.set_sensitive(enabled)
+
+
+def reload_item_menu(self):
+    while self.main_window.item_list.get_last_child() is not None:
+        self.main_window.item_list.remove(
+            self.main_window.item_list.get_last_child())
+
+    for item in self.datadict.values():
+        self.main_window.item_list.append(ItemBox(self, item))
 
 
 def on_confirm_discard_response(_dialog, response, self):
@@ -75,6 +84,8 @@ def on_save_project_response(dialog, response, self):
             file.get_path(),
             self.plot_settings,
             self.datadict,
+            self.datadict_clipboard,
+            self.clipboard_pos,
             self.version)
     except GLib.GError:
         pass
@@ -82,7 +93,7 @@ def on_save_project_response(dialog, response, self):
 
 def show_about_window(self):
     developers = [
-        "Sjoerd Broekhuijsen <contact@sjoerd.se>",
+        "Sjoerd Stendahl <contact@sjoerd.se>",
         "Christoph Kohnen <christoph.kohnen@disroot.org>",
     ]
     about = Adw.AboutWindow(transient_for=self.main_window,

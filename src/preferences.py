@@ -59,6 +59,7 @@ class Preferences():
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/preferences.ui")
 class PreferencesWindow(Adw.PreferencesWindow):
     __gtype_name__ = "PreferencesWindow"
+    clipboard_length = Gtk.Template.Child()
     import_delimiter = Gtk.Template.Child()
     import_separator = Gtk.Template.Child()
     import_column_x = Gtk.Template.Child()
@@ -102,6 +103,7 @@ class PreferencesWindow(Adw.PreferencesWindow):
 
     def load_configuration(self):
         config = self.parent.preferences.config
+        self.clipboard_length.set_value(int(config["clipboard_length"]))
         self.import_delimiter.set_text(config["import_delimiter"])
         utilities.set_chooser(
             self.import_separator, config["import_separator"])
@@ -160,6 +162,7 @@ class PreferencesWindow(Adw.PreferencesWindow):
         config["addequation_x_start"] = self.addequation_x_start.get_text()
         config["addequation_x_stop"] = self.addequation_x_stop.get_text()
         config["addequation_step_size"] = self.addequation_step_size.get_text()
+        config["clipboard_length"] = int(self.clipboard_length.get_value())
         config["export_figure_dpi"] = int(self.export_figure_dpi.get_value())
         config["export_figure_filetype"] = \
             self.export_figure_filetype.get_selected_item().get_string()

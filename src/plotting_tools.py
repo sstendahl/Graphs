@@ -176,7 +176,7 @@ def get_next_color(self):
     """Get the color that is to be used for the next data set"""
     color_cycle = pyplot.rcParams["axes.prop_cycle"].by_key()["color"]
     used_colors = []
-    for _key, item in self.datadict.items():
+    for item in self.datadict.values():
         used_colors.append(item.color)
         # If we've got all colors once, remove those from used_colors so we
         # can loop around

@@ -31,8 +31,9 @@ class GraphsApplication(Adw.Application):
         self.author = args[6]
         self.pkgdatadir = args[7]
         self.datadict = {}
+        self.datadict_clipboard = [{}]
+        self.clipboard_pos = -1
         self.highlight = None
-        self.item_menu = {}
         font_list = matplotlib.font_manager.findSystemFonts(
             fontpaths=None, fontext="ttf")
         for font in font_list:
@@ -84,9 +85,8 @@ class GraphsApplication(Adw.Application):
             ("get_inverse_fourier", None),
             ("transform", None),
         ]
-        methods = {}
-        for key, item in getmembers(globals().copy()["actions"], isfunction):
-            methods[key] = item
+        methods = {key: item for key, item
+                   in getmembers(globals().copy()["actions"], isfunction)}
         for name, keybinds in new_actions:
             action = Gio.SimpleAction.new(name, None)
             action.connect("activate", methods[f"{name}_action"], self)

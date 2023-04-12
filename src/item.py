@@ -17,9 +17,6 @@ class Item:
         self.color = plotting_tools.get_next_color(parent)
         self.xdata = xdata
         self.ydata = ydata
-        self.clipboard_pos = -1
-        self.xdata_clipboard = [self.xdata.copy()]
-        self.ydata_clipboard = [self.ydata.copy()]
         self.linestyle = pyplot.rcParams["lines.linestyle"]
         self.linewidth = float(pyplot.rcParams["lines.linewidth"])
         self.markerstyle = pyplot.rcParams["lines.marker"]

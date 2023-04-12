@@ -50,18 +50,18 @@ def add_equation_action(_action, _target, self):
 
 
 def select_all_action(_action, _target, self):
-    for key, item in self.datadict.items():
+    for item in self.datadict.values():
         item.selected = True
-        self.item_menu[key].get_child().check_button.set_active(True)
     graphs.refresh(self)
+    ui.reload_item_menu(self)
     ui.enable_data_dependent_buttons(self, utilities.get_selected_keys(self))
 
 
 def select_none_action(_action, _target, self):
-    for key, item in self.datadict.items():
+    for item in self.datadict.values():
         item.selected = False
-        self.item_menu[key].get_child().check_button.set_active(False)
     graphs.refresh(self)
+    ui.reload_item_menu(self)
     ui.enable_data_dependent_buttons(self, False)
 
 

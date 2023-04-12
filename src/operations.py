@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 import logging
 
-from graphs import calculation, clipboard, graphs, utilities
+from graphs import calculation, clipboard, graphs, ui, utilities
 from graphs.item import Item
 from graphs.misc import InteractionMode
 
@@ -241,4 +241,5 @@ def combine(self):
     # Create the item itself
     new_xdata, new_ydata = sort_data(new_xdata, new_ydata)
     graphs.add_item(self, Item(self, new_xdata, new_ydata, "Combined Data"))
-    clipboard.reset(self)
+    clipboard.add(self)
+    ui.reload_item_menu(self)
