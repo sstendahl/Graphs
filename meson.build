@@ -25,7 +25,6 @@ bindir = get_option('bindir')
 version = meson.project_version()
 project_name = meson.project_name()
 pkgdatadir = join_paths(prefix, datadir, meson.project_name())
-moduledir = join_paths(pkgdatadir, meson.project_name())
 localedir = join_paths(prefix, get_option('localedir'))
 debug = get_option('buildtype') == 'debug'
 

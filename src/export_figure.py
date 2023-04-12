@@ -11,18 +11,18 @@ class ExportFigureWindow(Adw.Window):
     __gtype_name__ = "ExportFigureWindow"
     confirm_button = Gtk.Template.Child()
     file_format = Gtk.Template.Child()
-    transparent_switch = Gtk.Template.Child()
-    export_figure_dpi = Gtk.Template.Child()
+    transparent = Gtk.Template.Child()
+    dpi = Gtk.Template.Child()
 
     def __init__(self, parent):
         super().__init__()
         self.parent = parent
         self.set_transient_for(parent.main_window)
         self.confirm_button.connect("clicked", self.on_accept)
-        self.transparent_switch.set_active(
+        self.transparent.set_active(
             self.parent.preferences.config["export_figure_transparent"])
         items = self.parent.canvas.get_supported_filetypes_grouped().items()
-        self.export_figure_dpi.set_value(
+        self.dpi.set_value(
             int(self.parent.preferences.config["export_figure_dpi"]))
         file_formats = []
         default_format = None
@@ -37,7 +37,7 @@ class ExportFigureWindow(Adw.Window):
         self.present()
 
     def on_accept(self, _):
-        dpi = int(self.export_figure_dpi.get_value())
+        dpi = int(self.dpi.get_value())
         fmt = self.file_format.get_selected_item().get_string()
         file_suffix = None
         items = self.parent.canvas.get_supported_filetypes_grouped().items()
@@ -45,7 +45,7 @@ class ExportFigureWindow(Adw.Window):
             if name == fmt:
                 file_suffix = formats[0]
         filename = Path(self.parent.canvas.get_default_filename()).stem
-        transparent = self.transparent_switch.get_active()
+        transparent = self.transparent.get_active()
         dialog = Gtk.FileDialog()
         dialog.set_initial_name(f"{filename}.{file_suffix}")
         dialog.set_accept_label("Export")
