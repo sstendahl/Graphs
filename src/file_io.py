@@ -9,10 +9,13 @@ from graphs import utilities
 import numpy
 
 
-def save_project(path, plot_settings, datadict, version):
+def save_project(path, plot_settings, datadict, datadict_clipboard,
+                 clipboard_pos, version):
     project_data = {
         "plot_settings": plot_settings,
         "data": datadict,
+        "datadict_clipboard": datadict_clipboard,
+        "clipboard_pos": clipboard_pos,
         "version": version,
     }
     with open(path, "wb") as file:
@@ -22,7 +25,9 @@ def save_project(path, plot_settings, datadict, version):
 def load_project(path):
     with open(path, "rb") as file:
         project = pickle.load(file)
-        return project["plot_settings"], project["data"], project["version"]
+        return project["plot_settings"], project["data"], \
+            project["datadict_clipboard"], project["clipboard_pos"], \
+            project["version"]
 
 
 def save_file(self, path):

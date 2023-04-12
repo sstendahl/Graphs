@@ -85,6 +85,8 @@ def on_save_project_response(dialog, response, self):
             path,
             self.plot_settings,
             self.datadict,
+            self.datadict_clipboard,
+            self.clipboard_pos,
             self.version)
     except GLib.GError:
         pass
