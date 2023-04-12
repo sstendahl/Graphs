@@ -17,8 +17,14 @@ def add(self):
     if self.clipboard_pos != -1:
         self.datadict_clipboard = \
             self.datadict_clipboard[:self.clipboard_pos + 1]
+
     self.clipboard_pos = -1
     self.datadict_clipboard.append(copy.deepcopy(self.datadict))
+    if len(self.datadict_clipboard) > \
+            self.preferences.config["clipboard_length"] + 1:
+        self.datadict_clipboard = \
+            self.datadict_clipboard[1:]
+
     self.main_window.redo_button.set_sensitive(False)
 
 
