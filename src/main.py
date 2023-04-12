@@ -84,9 +84,8 @@ class GraphsApplication(Adw.Application):
             ("get_inverse_fourier", None),
             ("transform", None),
         ]
-        methods = {}
-        for key, item in getmembers(globals().copy()["actions"], isfunction):
-            methods[key] = item
+        methods = {key: item for key, item
+                   in getmembers(globals().copy()["actions"], isfunction)}
         for name, keybinds in new_actions:
             action = Gio.SimpleAction.new(name, None)
             action.connect("activate", methods[f"{name}_action"], self)
