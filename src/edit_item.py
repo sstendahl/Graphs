@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 from gi.repository import Adw, Gtk
 
-from graphs import graphs, ui, utilities
+from graphs import clipboard, graphs, ui, utilities
 
 from matplotlib.lines import Line2D
 
@@ -76,4 +76,5 @@ class EditItemWindow(Adw.PreferencesWindow):
             self.marker_dict, self.markers.get_selected_item().get_string())
         self.item.markersize = self.markersize.get_value()
         ui.reload_item_menu(self.parent)
+        clipboard.add(self.parent)
         graphs.refresh(self.parent, set_limits=True)
