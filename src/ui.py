@@ -94,7 +94,7 @@ def on_save_project_response(dialog, response, self):
 
 def show_about_window(self):
     developers = [
-        "Sjoerd Broekhuijsen <contact@sjoerd.se>",
+        "Sjoerd Stendahl <contact@sjoerd.se>",
         "Christoph Kohnen <christoph.kohnen@disroot.org>",
     ]
     about = Adw.AboutWindow(transient_for=self.main_window,
