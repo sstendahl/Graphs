@@ -48,10 +48,12 @@ def open_project(self, path):
     for key in self.datadict.copy():
         delete_item(self, key)
     try:
-        new_plot_settings, new_datadict, _version = \
-            file_io.load_project(path)
+        new_plot_settings, new_datadict, datadict_clipboard, clipboard_pos, \
+            _version = file_io.load_project(path)
         utilities.set_attributes(new_plot_settings, self.plot_settings)
         self.plot_settings = new_plot_settings
+        self.clipboard_pos = clipboard_pos
+        self.datadict_clipboard = datadict_clipboard
         self.datadict = {}
         for item in new_datadict.values():
             new_item = Item(self, item.xdata, item.ydata)
@@ -59,9 +61,7 @@ def open_project(self, path):
                 if hasattr(item, attribute):
                     setattr(new_item, attribute, getattr(item, attribute))
             add_item(self, new_item)
-        if len(item.xdata_clipboard) > 1:
-            undo_button = self.main_window.undo_button
-            undo_button.set_sensitive(True)
+            self.datadict_clipboard = self.datadict_clipboard[:-1]
         ui.enable_data_dependent_buttons(
             self, utilities.get_selected_keys(self))
         self.canvas.set_limits()
