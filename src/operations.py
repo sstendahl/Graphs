@@ -80,7 +80,7 @@ def perform_operation(self, callback, *args):
                 item.xdata = sorted_x
                 item.ydata = sorted_y
     if not data_selected:
-        self.main_window.add_toast("No data found within the selection")
+        self.main_window.add_toast("No data found within the highlighted area")
 
     clipboard.add(self)
     graphs.refresh(self, set_limits=True)
