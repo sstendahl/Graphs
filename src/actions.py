@@ -50,7 +50,7 @@ def add_equation_action(_action, _target, self):
 
 
 def select_all_action(_action, _target, self):
-    for key, item in self.datadict.items():
+    for item in self.datadict.values():
         item.selected = True
     graphs.refresh(self)
     ui.reload_item_menu(self)
@@ -58,7 +58,7 @@ def select_all_action(_action, _target, self):
 
 
 def select_none_action(_action, _target, self):
-    for key, item in self.datadict.items():
+    for item in self.datadict.values():
         item.selected = False
     graphs.refresh(self)
     ui.reload_item_menu(self)

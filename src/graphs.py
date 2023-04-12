@@ -53,7 +53,7 @@ def open_project(self, path):
         utilities.set_attributes(new_plot_settings, self.plot_settings)
         self.plot_settings = new_plot_settings
         self.datadict = {}
-        for _key, item in new_datadict.items():
+        for item in new_datadict.values():
             new_item = Item(self, item.xdata, item.ydata)
             for attribute in new_item.__dict__:
                 if hasattr(item, attribute):
@@ -74,7 +74,7 @@ def open_project(self, path):
 def add_item(self, item):
     key = item.key
     handle_duplicates = self.preferences.config["handle_duplicates"]
-    for _key_1, item_1 in self.datadict.items():
+    for item_1 in self.datadict.values():
         if item.name == item_1.name:
             if handle_duplicates == "Auto-rename duplicates":
                 loop = True
@@ -83,7 +83,7 @@ def add_item(self, item):
                     i += 1
                     new_name = f"{item.name} ({i})"
                     loop = False
-                    for _key_2, item_2 in self.datadict.items():
+                    for item_2 in self.datadict.values():
                         if new_name == item_2.name:
                             loop = True
                 item.name = new_name
@@ -140,7 +140,7 @@ def refresh(self, set_limits=False):
         line.remove()
     if len(self.datadict) > 0:
         plotting_tools.hide_unused_axes(self, self.canvas)
-    for _key, item in reversed(self.datadict.items()):
+    for item in reversed(self.datadict.values()):
         if (item is not None) and not \
                 (self.preferences.config["hide_unselected"] and not
                  item.selected):

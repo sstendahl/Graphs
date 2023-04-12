@@ -54,7 +54,7 @@ def get_used_axes(self):
         "top": [],
         "bottom": [],
     }
-    for _key, item in self.datadict.items():
+    for item in self.datadict.values():
         if item.plot_y_position == "left":
             used_axes["left"] = True
             items["left"].append(item)
@@ -108,7 +108,7 @@ def get_chooser_list(chooser):
 
 def get_all_names(parent):
     """Get a list of all filenames present in the datadict dictionary"""
-    return [item.name for _key, item in parent.datadict.items()]
+    return [item.name for item in parent.datadict.values()]
 
 
 def get_dict_by_value(dictionary, value):
