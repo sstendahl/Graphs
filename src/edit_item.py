@@ -50,6 +50,8 @@ class EditItemWindow(Adw.PreferencesWindow):
                 set(utilities.get_chooser_list(self.item_selector)):
             utilities.populate_chooser(self.item_selector, names)
             self.item_selector.set_selected(index)
+            self.parent.datadict_clipboard = \
+                self.parent.datadict_clipboard[:-1]
 
     def load_values(self):
         self.set_title(self.item.name)
