@@ -159,7 +159,9 @@ class Canvas(FigureCanvas):
                 [utilities.shorten_label(label, 40) for label in new_labels]
             if labels:
                 self.top_right_axis.legend(
-                    new_lines, labels, loc=0, frameon=True, reverse=True)
+                    new_lines, labels,
+                    loc=self.parent.plot_settings.legend_position,
+                    frameon=True, reverse=True)
 
     def set_limits(self):
         """Set the canvas limits for each axis that is present"""

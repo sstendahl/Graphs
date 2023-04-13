@@ -16,7 +16,8 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
     plot_y_scale = Gtk.Template.Child()
     plot_top_scale = Gtk.Template.Child()
     plot_right_scale = Gtk.Template.Child()
-    plot_legend_check = Gtk.Template.Child()
+    plot_legend = Gtk.Template.Child()
+    plot_legend_position = Gtk.Template.Child()
     use_custom_plot_style = Gtk.Template.Child()
     custom_plot_style = Gtk.Template.Child()
     min_left = Gtk.Template.Child()
@@ -61,7 +62,10 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
             self.custom_plot_style, plot_styles.get_user_styles(parent).keys())
         utilities.set_chooser(
             self.custom_plot_style, parent.plot_settings.custom_plot_style)
-        self.plot_legend_check.set_active(parent.plot_settings.legend)
+        self.plot_legend.set_enable_expansion(
+            parent.plot_settings.legend)
+        self.plot_legend_position.set_selected(
+            int(parent.plot_settings.legend_position))
         self.hide_unused_axes_limits(parent)
         if len(parent.datadict) > 0:
             self.no_data_message.set_visible(False)
@@ -114,7 +118,9 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
             self.plot_top_scale.get_selected_item().get_string()
         plot_settings.right_scale = \
             self.plot_right_scale.get_selected_item().get_string()
-        plot_settings.legend = self.plot_legend_check.get_active()
+        plot_settings.legend = self.plot_legend.get_enable_expansion()
+        plot_settings.legend_position = \
+            self.plot_legend_position.get_selected()
         plot_settings.use_custom_plot_style = \
             self.use_custom_plot_style.get_enable_expansion()
         plot_settings.custom_plot_style = \

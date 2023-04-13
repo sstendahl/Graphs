@@ -290,15 +290,18 @@ template PreferencesWindow : Adw.PreferencesWindow {
       title: _("Style");
       description: _("Set the default graph styling that is used");
 
-      Adw.ActionRow {
+      Adw.ExpanderRow plot_legend {
         title: _("Legend");
         subtitle: _("Use a legend for the lines");
-        activatable-widget: plot_legend;
-
-        Switch plot_legend {
-          valign: center;
-        }
+        show-enable-switch: true;
+        Adw.ComboRow plot_legend_position {
+          title: _("Legend position");
+          subtitle: _("The position of the legend");
+          model: StringList {
+          strings ["best", "upper right", "upper_left", "lower left", "lower right", "right", "center left", "center right", "lower center", "upper center", "center"]
+        };
       }
+    }
 
       Adw.ExpanderRow plot_use_custom_style {
         title: _("Custom Plot Style");
