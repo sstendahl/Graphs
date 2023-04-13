@@ -204,7 +204,8 @@ class PlotStylesWindow(Adw.Window):
         self.load_style()
         self.leaflet.navigate(1)
         edit_page = self.leaflet.get_visible_child()
-        self.set_active_style.connect("state-set", self.toggle_style, edit_page)
+        self.set_active_style.connect("state-set", self.toggle_style,
+                                      edit_page)
         self.set_title(style)
 
     def back(self, _):
@@ -227,7 +228,8 @@ class PlotStylesWindow(Adw.Window):
         edit_page = args[-1]
         if self.leaflet.get_visible_child() == edit_page:
             if self.set_active_style.get_active():
-                self.parent.plot_settings.custom_plot_style = self.style["name"]
+                self.parent.plot_settings.custom_plot_style = \
+                    self.style["name"]
             else:
                 system_style = "adwaita"
                 if Adw.StyleManager.get_default().get_dark():
