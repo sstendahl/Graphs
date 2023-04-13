@@ -57,6 +57,7 @@ def get_system_preferred_style_path(self):
         shutil.copy(get_system_styles(self)[system_style], stylepath)
     return stylepath
 
+
 def get_preferred_style_path(self):
     if not self.plot_settings.use_custom_plot_style:
         return get_system_preferred_style_path(self)
@@ -415,9 +416,7 @@ class PlotStylesWindow(Adw.Window):
             self.styles_box.remove(self.styles_box.get_row_at_index(0))
         for style in get_user_styles(self.parent).keys():
             box = StyleBox(self, style)
-            current_style = os.path.splitext(
-                Path(get_preferred_style_path(self.parent)).name)[0]
-            if not style == current_style:
+            if not style == Path(get_preferred_style_path(self.parent)).stem:
                 box.check_mark.hide()
                 box.label.set_hexpand(True)
             self.styles.append(box)
