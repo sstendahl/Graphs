@@ -1,8 +1,43 @@
-<p>Minor update with updated AppID.</p>
+<p>Major Highlights</p>
 <ul>
-  <li>The sidebar is now retractable</li>
-  <li>Graphs now uses symbolic GNOME icons in the toolbar wherever possible</li>
-  <li>The legend is now accomponied with a frame for all styles in order to improve readability</li>
-  <li>Some code clean-up has been performed</li>
-  <li>The new app-id for Graphs is now se.sjoerd.Graphs</li>
+  <li>Massive UI overhaul</li>
+  <li>Save and Load functionality</li>
+  <li>Customizable Plot Styles</li>
+  <li>Loads of optimizations and refactors in the background</li>
+</ul>
+<p>Detailed Changelist</p>
+<ul>
+  <li>Removed PIP mode</li>
+  <li>Removed Toolbar</li>
+  <li>Sidebar is now responsive</li>
+  <li>Rearranged button layouts</li>
+  <li>Dialogs now save automatically</li>
+  <li>Graph now has three different interaction modes: pan, zoom and select</li>
+  <li>Operation Buttons are now enabled only when items are selected</li>
+  <li>Operations can now be be performed for just a selected span of data</li>
+  <li>Added combine operation</li>
+  <li>Added custom Adwaita stylesheets for the graph</li>
+  <li>Added a function to quickly change axis scale in the view menu</li>
+  <li>Added a notice when no data is loaded</li>
+  <li>Added functionality to save and load a project</li>
+  <li>Graph ornaments like the zoom rectangle and selector overlay now follow the system colors</li>
+  <li>Follow GNOME HIG in regards to keyboard shortcuts</li>
+  <li>Add a warning dialog, when opening a project while data is loaded</li>
+  <li>Separate Item related options into own dialog</li>
+  <li>Added Toasts on some occasions</li>
+  <li>Removed some options in Preferences, Plot Settings and the Item menu</li>
+  <li>Added a Plot Style editor</li>
+  <li>Plot limits can now be set in Plot Settings</li>
+  <li>Added reordering of items via drag and drop</li>
+  <li>Added an option to hide unselected items from the graph</li>
+  <li>Added a dialog before exporting the figure</li>
+  <li>Support for Panalytical .xdrml files</li>
+</ul>
+<p>Background Changes</p>
+<ul>
+  <li>Loads of optimizations and refactors</li>
+  <li>Migrate to GNOME 44</li>
+  <li>Blueprint is now used for the UI</li>
+  <li>Introduce linting and follow PEP8</li>
+  <li>Many fixed bugs and edge cases</li>
 </ul>
