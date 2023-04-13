@@ -59,8 +59,7 @@ def get_system_preferred_style_path(self):
 
 
 def get_preferred_style_path(self):
-    if not self.preferences.config["plot_use_custom_style"] and \
-            not self.plot_settings.use_custom_plot_style:
+    if not self.plot_settings.use_custom_plot_style:
         return get_system_preferred_style_path(self)
     stylename = self.plot_settings.custom_plot_style
     try:
@@ -219,9 +218,9 @@ class PlotStylesWindow(Adw.Window):
         self.leaflet.navigate(0)
         self.set_title(self.style["name"])
 
+
     def load_style(self):
         style = self.style
-
         self.style_name.set_text(style["name"])
 
         # font
@@ -417,6 +416,9 @@ class PlotStylesWindow(Adw.Window):
             self.styles_box.remove(self.styles_box.get_row_at_index(0))
         for style in get_user_styles(self.parent).keys():
             box = StyleBox(self, style)
+            if not style == Path(get_preferred_style_path(self.parent)).stem:
+                box.check_mark.hide()
+                box.label.set_hexpand(True)
             self.styles.append(box)
             self.styles_box.append(box)
 
@@ -450,6 +452,7 @@ class PlotStylesWindow(Adw.Window):
 class StyleBox(Gtk.Box):
     __gtype_name__ = "StyleBox"
     label = Gtk.Template.Child()
+    check_mark = Gtk.Template.Child()
     copy_button = Gtk.Template.Child()
     delete_button = Gtk.Template.Child()
     edit_button = Gtk.Template.Child()
