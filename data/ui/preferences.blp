@@ -82,29 +82,29 @@ template PreferencesWindow : Adw.PreferencesWindow {
       description: _("Settings for the \"Add Equation\" option");
 
       Adw.EntryRow addequation_equation {
-        title: _("Y =");
+        title: _("Default Equation: Y =");
         max-width-chars: 20;
       }
 
       Adw.EntryRow addequation_x_start {
-        title: _("X start");
+        title: _("Default X start");
         max-width-chars: 20;
       }
 
       Adw.EntryRow addequation_x_stop {
-        title: _("X stop");
+        title: _("Default X stop");
         max-width-chars: 20;
       }
 
       Adw.EntryRow addequation_step_size {
-        title: _("Step Size");
+        title: _("Default Step Size");
         max-width-chars: 20;
       }
     }
 
     Adw.PreferencesGroup {
-      title: _("Saved Plots");
-      description: _("General settings for the saved graphs");
+      title: _("Export Options");
+      description: _("Options for exporting the graph");
 
       Adw.ComboRow export_figure_filetype {
         title: _("Default Filetype");
@@ -115,8 +115,8 @@ template PreferencesWindow : Adw.PreferencesWindow {
       }
 
       Adw.ActionRow {
-        title: _("Graph dpi");
-        subtitle: _("Set the default resolution of the graph in dots per inch ");
+        title: _("Default dpi");
+        subtitle: _("The default resolution of saved graphs in dots per inch");
 
         SpinButton export_figure_dpi {
           valign: center;
@@ -132,7 +132,7 @@ template PreferencesWindow : Adw.PreferencesWindow {
 
       Adw.ActionRow {
         title: _("Transparent Background");
-        subtitle: _("Use a transparent background for the saved plots");
+        subtitle: _("Use a transparent background for the saved plots by default");
         activatable-widget: export_figure_transparent;
 
         Switch export_figure_transparent {
@@ -143,11 +143,11 @@ template PreferencesWindow : Adw.PreferencesWindow {
 
     Adw.PreferencesGroup {
       title: _("Action Behaviour");
-      description: _("Preset behaviour of specific actions");
+      description: _("Behaviour of specific actions");
 
       Adw.ComboRow action_center_data {
         title: _("Center Data");
-        subtitle: _("The default behaviour of the center data button");
+        subtitle: _("The behaviour of the center data button");
         model: StringList {
           strings ["Center at maximum Y value", "Center at middle coordinate"]
         };
@@ -200,26 +200,26 @@ template PreferencesWindow : Adw.PreferencesWindow {
 
     Adw.PreferencesGroup {
       title: _("Plot Labels");
-      description: _("Set the labels and title that are used upon launch");
+      description: _("Set the labels and title that are used by default");
 
       Adw.EntryRow plot_title {
-        title: _("Plot Title");
+        title: _("Default Title");
       }
 
       Adw.EntryRow plot_y_label {
-        title: _("Bottom Axis label");
+        title: _("Default Bottom Axis label");
       }
 
       Adw.EntryRow plot_x_label {
-        title: _("Left Axis Label");
+        title: _("Default Left Axis Label");
       }
 
       Adw.EntryRow plot_top_label {
-        title: _("Top Axis label");
+        title: _("Default Top Axis label");
       }
 
       Adw.EntryRow plot_right_label {
-        title: _("Right Axis Label");
+        title: _("Default Right Axis Label");
       }
 
       Adw.ActionRow {
@@ -238,7 +238,7 @@ template PreferencesWindow : Adw.PreferencesWindow {
       description: _("Set the default axes scale and position used upon launch");
 
       Adw.ComboRow plot_x_scale {
-        title: _("Bottom Axis Scale");
+        title: _("Default Bottom Axis Scale");
         subtitle: _("The scaling on the bottom axis");
         model: StringList {
           strings ["log", "linear"]
@@ -246,7 +246,7 @@ template PreferencesWindow : Adw.PreferencesWindow {
       }
 
       Adw.ComboRow plot_y_scale {
-        title: _("Left Axis Scale");
+        title: _("Default Left Axis Scale");
         subtitle: _("The scaling on the left-hand axis");
         model: StringList {
           strings ["log", "linear"]
@@ -254,7 +254,7 @@ template PreferencesWindow : Adw.PreferencesWindow {
       }
 
       Adw.ComboRow plot_top_scale {
-        title: _("Top Axis Scale");
+        title: _("Default Top Axis Scale");
         subtitle: _("The scaling on the top axis");
         model: StringList {
           strings ["log", "linear"]
@@ -262,7 +262,7 @@ template PreferencesWindow : Adw.PreferencesWindow {
       }
 
       Adw.ComboRow plot_right_scale {
-        title: _("Right Axis Scale");
+        title: _("Default Right Axis Scale");
         subtitle: _("The scaling on the right-hand axis");
         model: StringList {
           strings ["log", "linear"]
@@ -270,7 +270,7 @@ template PreferencesWindow : Adw.PreferencesWindow {
       }
 
       Adw.ComboRow plot_x_position {
-        title: _("X-Axis Position");
+        title: _("Default X-Axis Position");
         subtitle: _("The position of the X-axis");
         model: StringList {
           strings ["top", "bottom"]
@@ -278,8 +278,8 @@ template PreferencesWindow : Adw.PreferencesWindow {
       }
 
       Adw.ComboRow plot_y_position {
-        title: _("Y-Axis Position");
-        subtitle: _("The position of the Y-axis");
+        title: _("Default Y-Axis Position");
+        subtitle: _("The default position of the Y-axis");
         model: StringList {
           strings ["left", "right"]
         };
@@ -287,16 +287,16 @@ template PreferencesWindow : Adw.PreferencesWindow {
     }
 
     Adw.PreferencesGroup {
-      title: _("Style");
-      description: _("Set the default graph styling that is used");
+      title: _("Styling");
+      description: _("Change default plot style and other visual changes");
 
       Adw.ExpanderRow plot_legend {
         title: _("Legend");
-        subtitle: _("Use a legend for the lines");
+        subtitle: _("Use a legend by default");
         show-enable-switch: true;
         Adw.ComboRow plot_legend_position {
           title: _("Legend position");
-          subtitle: _("The position of the legend");
+          subtitle: _("The default position of the legend");
           model: StringList {
           strings ["Best", "Upper right", "Upper left", "Lower left", "Lower right", "Center left", "Center right", "Lower center", "Upper center", "Center"]
         };
@@ -305,12 +305,12 @@ template PreferencesWindow : Adw.PreferencesWindow {
 
       Adw.ExpanderRow plot_use_custom_style {
         title: _("Custom Plot Style");
-        subtitle: _("Use a custom plot style instead of following the System preferred one");
+        subtitle: _("Use a custom plot style instead of following the system style by default");
         show-enable-switch: true;
 
         Adw.ComboRow plot_custom_style {
-          title: _("Graph Style");
-          subtitle: _("The style sheet used for the plot");
+          title: _("Custom Style");
+          subtitle: _("The custom style sheet used by default");
           model: StringList {};
         }
       }
