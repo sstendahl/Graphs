@@ -392,8 +392,6 @@ class PlotStylesWindow(Adw.Window):
 
         # other
         style["axes.linewidth"] = self.axis_width.get_value()
-        if self.set_active_style.get_active():
-            self.parent.plot_settings.custom_plot_style = style["name"]
 
         # name & save
         styles_path = os.path.join(utilities.get_config_path(), "styles")
