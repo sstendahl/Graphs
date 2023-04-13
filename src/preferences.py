@@ -145,9 +145,9 @@ class PreferencesWindow(Adw.PreferencesWindow):
             self.plot_x_position, config["plot_x_position"])
         utilities.set_chooser(
             self.plot_y_position, config["plot_y_position"])
+        utilities.set_chooser(
+            self.plot_legend_position, config["plot_legend_position"])
         self.plot_legend.set_enable_expansion(config["plot_legend"])
-        self.plot_legend_position.set_selected(
-            config["plot_legend_position"])
         self.plot_use_custom_style.set_enable_expansion(
             config["plot_use_custom_style"])
         utilities.set_chooser(
@@ -197,7 +197,7 @@ class PreferencesWindow(Adw.PreferencesWindow):
             self.plot_y_position.get_selected_item().get_string()
         config["plot_legend"] = self.plot_legend.get_enable_expansion()
         config["plot_legend_position"] = \
-            self.plot_legend_position.get_selected()
+            self.plot_legend_position.get_selected_item().get_string().lower()
         config["plot_use_custom_style"] = \
             self.plot_use_custom_style.get_enable_expansion()
         config["plot_custom_style"] = \

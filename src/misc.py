@@ -40,9 +40,7 @@ class PlotSettings:
         self.title = config["plot_title"]
         self.legend = config["plot_legend"]
         # Matplotlib has index number five as duplicate, so we skip that one
-        self.legend_position = int(config["plot_legend_position"])
-        if self.legend_position > 4:
-            self.legend_position += 1
+        self.legend_position = config["plot_legend_position"]
         self.use_custom_plot_style = False
         self.custom_plot_style = config["plot_custom_style"]
 
