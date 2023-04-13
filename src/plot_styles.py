@@ -57,6 +57,7 @@ def get_system_preferred_style_path(self):
         shutil.copy(get_system_styles(self)[system_style], stylepath)
     return stylepath
 
+
 def get_current_style(self):
     if not self.parent.plot_settings.use_custom_plot_style:
         style = "adwaita"
