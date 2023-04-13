@@ -160,7 +160,6 @@ date.autoformatter.second: %H:%M:%S.%f
 date.autoformatter.microsecond: %H:%M:%S.%f
 date.converter: auto
 
-legend.loc: upper right
 legend.numpoints: 2
 legend.borderpad: 0.4
 legend.markerscale: 1.0
