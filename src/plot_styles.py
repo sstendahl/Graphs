@@ -133,8 +133,6 @@ class PlotStylesWindow(Adw.Window):
     minor_tick_width = Gtk.Template.Child()
     major_tick_length = Gtk.Template.Child()
     minor_tick_length = Gtk.Template.Child()
-    set_active_style = Gtk.Template.Child()
-    set_active_style_row = Gtk.Template.Child()
     tick_bottom = Gtk.Template.Child()
     tick_left = Gtk.Template.Child()
     tick_top = Gtk.Template.Child()
@@ -212,9 +210,6 @@ class PlotStylesWindow(Adw.Window):
         self.style["name"] = style
         self.load_style()
         self.leaflet.navigate(1)
-        edit_page = self.leaflet.get_visible_child()
-        self.set_active_style.connect("state-set", self.toggle_style,
-                                      edit_page)
         self.set_title(style)
 
     def back(self, _):
@@ -233,26 +228,10 @@ class PlotStylesWindow(Adw.Window):
         self.leaflet.navigate(0)
         self.set_title(self.style["name"])
 
-    def toggle_style(self, *args):
-        edit_page = args[-1]
-        if self.leaflet.get_visible_child() == edit_page:
-            if self.set_active_style.get_active():
-                self.parent.plot_settings.use_custom_plot_style = True
-                self.parent.plot_settings.custom_plot_style = \
-                    self.style["name"]
-            else:
-                self.parent.plot_settings.use_custom_plot_style = False
-            graphs.reload(self.parent)
 
     def load_style(self):
         style = self.style
         self.style_name.set_text(style["name"])
-
-        if style["name"] == self.parent.plot_settings.custom_plot_style and \
-                self.parent.plot_settings.use_custom_plot_style:
-            self.set_active_style.set_active(True)
-        else:
-            self.set_active_style.set_active(False)
 
         # font
         font_description = self.font_chooser.get_font_desc().from_string(
@@ -447,7 +426,10 @@ class PlotStylesWindow(Adw.Window):
             self.styles_box.remove(self.styles_box.get_row_at_index(0))
         for style in get_user_styles(self.parent).keys():
             box = StyleBox(self, style)
-            if not style == get_current_style(self):
+            current_style = os.path.splitext(
+                Path(get_preferred_style_path(self.parent)).name)[0]
+            print(current_style)
+            if not style == current_style:
                 box.check_mark.hide()
                 box.label.set_hexpand(True)
             self.styles.append(box)
