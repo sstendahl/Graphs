@@ -124,6 +124,8 @@ class PlotStylesWindow(Adw.Window):
     minor_tick_width = Gtk.Template.Child()
     major_tick_length = Gtk.Template.Child()
     minor_tick_length = Gtk.Template.Child()
+    set_active_style = Gtk.Template.Child()
+    set_active_style_row = Gtk.Template.Child()
     tick_bottom = Gtk.Template.Child()
     tick_left = Gtk.Template.Child()
     tick_top = Gtk.Template.Child()
@@ -201,6 +203,8 @@ class PlotStylesWindow(Adw.Window):
         self.style["name"] = style
         self.load_style()
         self.leaflet.navigate(1)
+        edit_page = self.leaflet.get_visible_child()
+        self.set_active_style.connect("state-set", self.toggle_style, edit_page)
         self.set_title(style)
 
     def back(self, _):
@@ -219,10 +223,28 @@ class PlotStylesWindow(Adw.Window):
         self.leaflet.navigate(0)
         self.set_title(self.style["name"])
 
+    def toggle_style(self, *args):
+        edit_page = args[-1]
+        if self.leaflet.get_visible_child() == edit_page:
+            if self.set_active_style.get_active():
+                self.parent.plot_settings.custom_plot_style = self.style["name"]
+            else:
+                system_style = "adwaita"
+                if Adw.StyleManager.get_default().get_dark():
+                    system_style += "-dark"
+                self.parent.plot_settings.custom_plot_style = system_style
+            graphs.reload(self.parent)
+
     def load_style(self):
         style = self.style
-
         self.style_name.set_text(style["name"])
+
+        if not self.parent.plot_settings.use_custom_plot_style:
+            self.set_active_style_row.hide()
+        if style["name"] == self.parent.plot_settings.custom_plot_style:
+            self.set_active_style.set_active(True)
+        else:
+            self.set_active_style.set_active(False)
 
         # font
         font_description = self.font_chooser.get_font_desc().from_string(
@@ -368,6 +390,8 @@ class PlotStylesWindow(Adw.Window):
 
         # other
         style["axes.linewidth"] = self.axis_width.get_value()
+        if self.set_active_style.get_active():
+            self.parent.plot_settings.custom_plot_style = style["name"]
 
         # name & save
         styles_path = os.path.join(utilities.get_config_path(), "styles")
