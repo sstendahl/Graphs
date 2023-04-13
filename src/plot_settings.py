@@ -121,6 +121,9 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
         plot_settings.legend = self.plot_legend.get_enable_expansion()
         plot_settings.legend_position = \
             self.plot_legend_position.get_selected()
+        # Matplotlib has index number five as duplicate, so we skip that one
+        if plot_settings.legend_position > 4:
+            plot_settings.legend_position += 1
         plot_settings.use_custom_plot_style = \
             self.use_custom_plot_style.get_enable_expansion()
         plot_settings.custom_plot_style = \
