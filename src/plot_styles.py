@@ -57,10 +57,18 @@ def get_system_preferred_style_path(self):
         shutil.copy(get_system_styles(self)[system_style], stylepath)
     return stylepath
 
+def get_current_style(self):
+    if not self.parent.plot_settings.use_custom_plot_style:
+        style = "adwaita"
+        if Adw.StyleManager.get_default().get_dark():
+            style += "-dark"
+    else:
+        style = self.parent.plot_settings.custom_plot_style
+    return style
+
 
 def get_preferred_style_path(self):
-    if not self.preferences.config["plot_use_custom_style"] and \
-            not self.plot_settings.use_custom_plot_style:
+    if not self.plot_settings.use_custom_plot_style:
         return get_system_preferred_style_path(self)
     stylename = self.plot_settings.custom_plot_style
     try:
@@ -417,6 +425,9 @@ class PlotStylesWindow(Adw.Window):
             self.styles_box.remove(self.styles_box.get_row_at_index(0))
         for style in get_user_styles(self.parent).keys():
             box = StyleBox(self, style)
+            if not style == get_current_style(self):
+                box.check_mark.hide()
+                box.label.set_hexpand(True)
             self.styles.append(box)
             self.styles_box.append(box)
 
@@ -450,6 +461,7 @@ class PlotStylesWindow(Adw.Window):
 class StyleBox(Gtk.Box):
     __gtype_name__ = "StyleBox"
     label = Gtk.Template.Child()
+    check_mark = Gtk.Template.Child()
     copy_button = Gtk.Template.Child()
     delete_button = Gtk.Template.Child()
     edit_button = Gtk.Template.Child()
