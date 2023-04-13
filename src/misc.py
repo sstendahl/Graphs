@@ -39,7 +39,7 @@ class PlotSettings:
         self.top_scale = config["plot_top_scale"]
         self.title = config["plot_title"]
         self.legend = config["plot_legend"]
-        self.use_custom_plot_style = False
+        self.use_custom_plot_style = config["plot_use_custom_style"]
         self.custom_plot_style = config["plot_custom_style"]
 
 
