@@ -237,21 +237,17 @@ class PlotStylesWindow(Adw.Window):
         edit_page = args[-1]
         if self.leaflet.get_visible_child() == edit_page:
             if self.set_active_style.get_active():
+                self.parent.plot_settings.use_custom_plot_style = True
                 self.parent.plot_settings.custom_plot_style = \
                     self.style["name"]
             else:
-                system_style = "adwaita"
-                if Adw.StyleManager.get_default().get_dark():
-                    system_style += "-dark"
-                self.parent.plot_settings.custom_plot_style = system_style
+                self.parent.plot_settings.use_custom_plot_style = False
             graphs.reload(self.parent)
 
     def load_style(self):
         style = self.style
         self.style_name.set_text(style["name"])
 
-        if not self.parent.plot_settings.use_custom_plot_style:
-            self.set_active_style_row.hide()
         if style["name"] == self.parent.plot_settings.custom_plot_style:
             self.set_active_style.set_active(True)
         else:
