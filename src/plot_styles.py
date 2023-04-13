@@ -248,7 +248,8 @@ class PlotStylesWindow(Adw.Window):
         style = self.style
         self.style_name.set_text(style["name"])
 
-        if style["name"] == self.parent.plot_settings.custom_plot_style:
+        if style["name"] == self.parent.plot_settings.custom_plot_style and \
+            self.parent.plot_settings.use_custom_plot_style:
             self.set_active_style.set_active(True)
         else:
             self.set_active_style.set_active(False)
