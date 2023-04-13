@@ -65,7 +65,8 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
         self.plot_legend.set_enable_expansion(
             parent.plot_settings.legend)
         utilities.set_chooser(
-            self.plot_legend_position, parent.plot_settings.legend_position)
+            self.plot_legend_position,
+            parent.plot_settings.legend_position.capitalize())
         self.hide_unused_axes_limits(parent)
         if len(parent.datadict) > 0:
             self.no_data_message.set_visible(False)

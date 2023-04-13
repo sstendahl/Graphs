@@ -146,7 +146,8 @@ class PreferencesWindow(Adw.PreferencesWindow):
         utilities.set_chooser(
             self.plot_y_position, config["plot_y_position"])
         utilities.set_chooser(
-            self.plot_legend_position, config["plot_legend_position"])
+            self.plot_legend_position,
+            config["plot_legend_position"].capitalize())
         self.plot_legend.set_enable_expansion(config["plot_legend"])
         self.plot_use_custom_style.set_enable_expansion(
             config["plot_use_custom_style"])
