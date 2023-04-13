@@ -18,6 +18,7 @@
 "import_skip_rows": 0,
 "plot_custom_style": "adwaita",
 "plot_legend": true,
+"plot_legend_position": "best",
 "plot_right_label": "Y Value 2",
 "plot_right_scale": "linear",
 "plot_title": "",
