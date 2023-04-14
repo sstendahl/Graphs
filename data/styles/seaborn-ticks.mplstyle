@@ -57,8 +57,8 @@ ytick.alignment: center
 
 xtick.bottom: True
 ytick.left: True
-xtick.top: True
-ytick.right: True
+xtick.top: False
+ytick.right: False
 
 xtick.bottom: True
 ytick.left: True
