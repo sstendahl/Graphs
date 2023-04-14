@@ -1,9 +1,10 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 from gi.repository import Adw, Gtk
-from matplotlib import pyplot
 
 from graphs import graphs, plot_styles, plotting_tools, ui, utilities
 from graphs.canvas import Canvas
+
+from matplotlib import pyplot
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/plot_settings.ui")
 class PlotSettingsWindow(Adw.PreferencesWindow):
