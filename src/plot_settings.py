@@ -112,11 +112,9 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
         self.style_changed = False
         if parent.preferences.config["override_style_change"]:
             # Check if style is changed
-            if plot_settings.use_custom_plot_style != \
-                    self.use_custom_plot_style.get_enable_expansion():
-                self.style_changed = True
-            elif plot_settings.custom_plot_style != \
-                    self.custom_plot_style.get_selected_item().get_string():
+            if plot_settings.custom_plot_style or \
+                    plot_settings.custom_plot_style and \
+                    plot_settings.custom_plot_style:
                 self.style_changed = True
 
         # Set new plot settings
