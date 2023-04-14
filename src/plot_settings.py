@@ -74,7 +74,6 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
         self.set_transient_for(parent.main_window)
         self.present()
 
-
     def hide_unused_axes_limits(self, parent):
         used_axes = utilities.get_used_axes(parent)[0]
         if not used_axes["left"]:
