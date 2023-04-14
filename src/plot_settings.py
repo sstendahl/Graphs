@@ -6,6 +6,7 @@ from graphs.canvas import Canvas
 
 from matplotlib import pyplot
 
+
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/plot_settings.ui")
 class PlotSettingsWindow(Adw.PreferencesWindow):
     __gtype_name__ = "PlotSettingsWindow"

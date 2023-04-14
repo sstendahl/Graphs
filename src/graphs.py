@@ -6,7 +6,6 @@ from pickle import UnpicklingError
 from graphs import clipboard, file_io, plotting_tools, ui, utilities
 from graphs.canvas import Canvas
 from graphs.item import Item
-from graphs.item_box import ItemBox
 from graphs.misc import ImportMode, ImportSettings
 
 
@@ -123,6 +122,7 @@ def check_open_data(self):
         reload(self)
         self.main_window.item_list.set_visible(False)
         ui.enable_data_dependent_buttons(self, False)
+
 
 def reload(self):
     """Completely reload the plot of the graph"""

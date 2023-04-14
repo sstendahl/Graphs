@@ -6,6 +6,7 @@ from gi.repository import Adw, GLib, Gtk
 from graphs import file_io, graphs, utilities
 from graphs.item_box import ItemBox
 
+
 def on_style_change(_shortcut, _theme, _widget, self):
     graphs.reload(self)
 
