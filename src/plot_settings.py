@@ -72,17 +72,9 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
         if len(parent.datadict) > 0:
             self.no_data_message.set_visible(False)
         self.connect("close-request", self.on_close, parent)
-        self.custom_plot_style.connect("notify::selected",
-                                       self.on_style_select, parent)
         self.set_transient_for(parent.main_window)
         self.present()
 
-    def on_style_select(self, _action, _target, parent):
-        if self.custom_plot_style.get_selected_item().get_string() != \
-                parent.plot_settings.custom_plot_style:
-            self.style_changed = True
-        else:
-            self.style_changed = False
 
     def hide_unused_axes_limits(self, parent):
         used_axes = utilities.get_used_axes(parent)[0]
@@ -115,7 +107,19 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
         parent.canvas.top_left_axis.set_xlim(min_top, max_top)
 
     def on_close(self, _, parent):
+
         plot_settings = parent.plot_settings
+        #Check if style is changed
+        if plot_settings.use_custom_plot_style != \
+                self.use_custom_plot_style.get_enable_expansion():
+            self.style_changed = True
+        elif plot_settings.custom_plot_style != \
+                self.custom_plot_style.get_selected_item().get_string():
+            self.style_changed = True
+        else:
+            self.style_changed = False
+
+        #Set new plot settings
         plot_settings.title = self.plot_title.get_text()
         plot_settings.xlabel = self.plot_x_label.get_text()
         plot_settings.ylabel = self.plot_y_label.get_text()
@@ -136,11 +140,15 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
             self.use_custom_plot_style.get_enable_expansion()
         plot_settings.custom_plot_style = \
             self.custom_plot_style.get_selected_item().get_string()
+
+        #Set color cycle
         parent.canvas = Canvas(parent=parent)
         if self.style_changed:
             for item in parent.datadict.values():
                 item.color = None
                 item.color = plotting_tools.get_next_color(parent)
+
+        #Reload UI
         ui.reload_item_menu(parent)
         graphs.reload(parent)
         self.set_limits(parent)
