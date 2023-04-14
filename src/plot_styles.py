@@ -218,7 +218,6 @@ class PlotStylesWindow(Adw.Window):
         self.leaflet.navigate(0)
         self.set_title(self.style["name"])
 
-
     def load_style(self):
         style = self.style
         self.style_name.set_text(style["name"])
@@ -416,7 +415,7 @@ class PlotStylesWindow(Adw.Window):
             self.styles_box.remove(self.styles_box.get_row_at_index(0))
         for style in get_user_styles(self.parent).keys():
             box = StyleBox(self, style)
-            if not style == Path(get_preferred_style_path(self.parent)).stem:
+            if style != Path(get_preferred_style_path(self.parent)).stem:
                 box.check_mark.hide()
                 box.label.set_hexpand(True)
             self.styles.append(box)

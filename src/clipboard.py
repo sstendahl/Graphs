@@ -47,7 +47,6 @@ def undo(self):
     ui.reload_item_menu(self)
 
 
-
 def redo(self):
     """
     Redo an action, moves the clipboard position forwards by one and changes
