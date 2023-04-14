@@ -132,6 +132,7 @@ styles = files(
   'styles/seaborn-whitegrid.mplstyle',
   'styles/solarized-light.mplstyle',
   'styles/tableau-colorblind10.mplstyle',
+  'styles/thesis.mplstyle',
 )
 styles_dir = join_paths(pkgdatadir, 'styles')
 install_data(styles, install_dir: styles_dir, install_mode: 'rwxrwxrwx')
