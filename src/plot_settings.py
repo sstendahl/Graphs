@@ -107,15 +107,18 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
 
     def on_close(self, _, parent):
         plot_settings = parent.plot_settings
-        # Check if style is changed
-        if plot_settings.use_custom_plot_style != \
-                self.use_custom_plot_style.get_enable_expansion():
-            self.style_changed = True
-        elif plot_settings.custom_plot_style != \
-                self.custom_plot_style.get_selected_item().get_string():
-            self.style_changed = True
-        else:
-            self.style_changed = False
+
+        # Check if style change when override is enabled
+        self.style_changed = False
+        if parent.preferences.config["override_style_change"]:
+            parent.canvas = Canvas(parent=parent)
+            # Check if style is changed
+            if plot_settings.use_custom_plot_style != \
+                    self.use_custom_plot_style.get_enable_expansion():
+                self.style_changed = True
+            elif plot_settings.custom_plot_style != \
+                    self.custom_plot_style.get_selected_item().get_string():
+                self.style_changed = True
 
         # Set new plot settings
         plot_settings.title = self.plot_title.get_text()
@@ -140,17 +143,15 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
             self.custom_plot_style.get_selected_item().get_string()
 
         # Set color cycle
-        if parent.preferences.config["override_style_change"]:
-            parent.canvas = Canvas(parent=parent)
-            if self.style_changed:
-                for item in parent.datadict.values():
-                    item.color = None
-                    item.color = plotting_tools.get_next_color(parent)
-                    item.linestyle = pyplot.rcParams["lines.linestyle"]
-                    item.linewidth = float(pyplot.rcParams["lines.linewidth"])
-                    item.markerstyle = pyplot.rcParams["lines.marker"]
-                    item.markersize = \
-                        float(pyplot.rcParams["lines.markersize"])
+        if self.style_changed:
+            for item in parent.datadict.values():
+                item.color = None
+                item.color = plotting_tools.get_next_color(parent)
+                item.linestyle = pyplot.rcParams["lines.linestyle"]
+                item.linewidth = float(pyplot.rcParams["lines.linewidth"])
+                item.markerstyle = pyplot.rcParams["lines.marker"]
+                item.markersize = \
+                    float(pyplot.rcParams["lines.markersize"])
 
         # Reload UI
         ui.reload_item_menu(parent)
