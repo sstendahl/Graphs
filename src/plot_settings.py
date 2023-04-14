@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 from gi.repository import Adw, Gtk
 
-from graphs import graphs, plotting_tools, plot_styles, ui, utilities
+from graphs import graphs, plot_styles, plotting_tools, ui, utilities
 from graphs.canvas import Canvas
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/plot_settings.ui")
