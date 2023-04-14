@@ -178,7 +178,8 @@ class PreferencesWindow(Adw.PreferencesWindow):
         config["handle_duplicates"] = \
             self.other_handle_duplicates.get_selected_item().get_string()
         config["hide_unselected"] = self.other_hide_unselected.get_active()
-        config["override_style_change"] = self.override_style_change.get_active()
+        config["override_style_change"] = \
+            self.override_style_change.get_active()
         config["plot_title"] = self.plot_title.get_text()
         config["plot_x_label"] = self.plot_x_label.get_text()
         config["plot_y_label"] = self.plot_y_label.get_text()
