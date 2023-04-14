@@ -88,7 +88,8 @@ class Canvas(FigureCanvas):
             ticks = "both"
         else:
             ticks = "major"
-        for axis in [self.top_right_axis, self.axis]:
+        for axis in [self.top_right_axis, self.axis, self.top_left_axis,
+                     self.right_axis]:
             axis.tick_params(bottom=bottom, left=left, top=top,
                              right=right, which=ticks)
 
