@@ -139,7 +139,7 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
         plot_settings.custom_plot_style = \
             self.custom_plot_style.get_selected_item().get_string()
 
-        # Set color cycle
+        # Set new item properties
         if self.style_changed:
             parent.canvas = Canvas(parent=parent)
             for item in parent.datadict.values():
