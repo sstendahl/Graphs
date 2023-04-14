@@ -109,7 +109,7 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
     def on_close(self, _, parent):
 
         plot_settings = parent.plot_settings
-        #Check if style is changed
+        # Check if style is changed
         if plot_settings.use_custom_plot_style != \
                 self.use_custom_plot_style.get_enable_expansion():
             self.style_changed = True
@@ -119,7 +119,7 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
         else:
             self.style_changed = False
 
-        #Set new plot settings
+        # Set new plot settings
         plot_settings.title = self.plot_title.get_text()
         plot_settings.xlabel = self.plot_x_label.get_text()
         plot_settings.ylabel = self.plot_y_label.get_text()
@@ -141,14 +141,14 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
         plot_settings.custom_plot_style = \
             self.custom_plot_style.get_selected_item().get_string()
 
-        #Set color cycle
+        # Set color cycle
         parent.canvas = Canvas(parent=parent)
         if self.style_changed:
             for item in parent.datadict.values():
                 item.color = None
                 item.color = plotting_tools.get_next_color(parent)
 
-        #Reload UI
+        # Reload UI
         ui.reload_item_menu(parent)
         graphs.reload(parent)
         self.set_limits(parent)
