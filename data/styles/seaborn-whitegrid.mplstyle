@@ -41,18 +41,18 @@ markers.fillstyle: full
 # ticks
 xtick.direction: out
 xtick.minor.visible: False
-xtick.major.width: 0
-xtick.minor.width: 0
-xtick.major.size: 0
-xtick.minor.size: 0
+xtick.major.width: 1
+xtick.minor.width: 0.5
+xtick.major.size: 6
+xtick.minor.size: 3
 xtick.alignment: center
 
 ytick.direction: out
 ytick.minor.visible: False
-ytick.major.width: 0
-ytick.minor.width: 0
-ytick.major.size: 0
-ytick.minor.size: 0
+ytick.major.width: 1
+ytick.minor.width: 0.5
+ytick.major.size: 6
+ytick.minor.size: 3
 ytick.alignment: center
 
 xtick.bottom: False
