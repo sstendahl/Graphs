@@ -114,11 +114,9 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
             # Check if style is changed
             if plot_settings.use_custom_plot_style != \
                     self.use_custom_plot_style.get_enable_expansion():
-                parent.canvas = Canvas(parent=parent)
                 self.style_changed = True
             elif plot_settings.custom_plot_style != \
                     self.custom_plot_style.get_selected_item().get_string():
-                parent.canvas = Canvas(parent=parent)
                 self.style_changed = True
 
         # Set new plot settings
@@ -145,6 +143,7 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
 
         # Set color cycle
         if self.style_changed:
+            parent.canvas = Canvas(parent=parent)
             for item in parent.datadict.values():
                 item.color = None
                 item.color = plotting_tools.get_next_color(parent)
