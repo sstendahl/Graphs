@@ -3,7 +3,7 @@ import logging
 
 from gi.repository import Adw, Gtk
 
-from graphs import calculation, graphs
+from graphs import calculation, graphs, ui
 from graphs.item import Item
 
 
@@ -42,6 +42,8 @@ class AddEquationWindow(Adw.Window):
             if name == "":
                 name = f"Y = {equation}"
             graphs.add_item(parent, Item(parent, xdata, ydata, name))
+            graphs.reload(self)
+            ui.reload_item_menu(self)
             self.destroy()
         except (NameError, SyntaxError) as exception:
             exception_type = exception.__class__.__name__
