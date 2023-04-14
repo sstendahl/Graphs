@@ -111,6 +111,7 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
         self.style_changed = \
             plot_settings.use_custom_plot_style \
             != self.use_custom_plot_style.get_enable_expansion() \
+            and parent.preferences.config["override_style_change"] \
             or plot_settings.custom_plot_style \
             != self.custom_plot_style.get_selected_item().get_string() \
             and parent.preferences.config["override_style_change"]
