@@ -40,6 +40,8 @@ def open_files(self, files, import_settings):
                 toast = "Could not open data, wrong filetype"
                 self.main_window.add_toast(toast)
                 continue
+    ui.reload_item_menu(self)
+    reload(self)
     self.canvas.set_limits()
 
 
@@ -61,8 +63,10 @@ def open_project(self, path):
                     setattr(new_item, attribute, getattr(item, attribute))
             add_item(self, new_item)
             self.datadict_clipboard = self.datadict_clipboard[:-1]
+        ui.reload_item_menu(self)
         ui.enable_data_dependent_buttons(
             self, utilities.get_selected_keys(self))
+        reload(self)
         self.canvas.set_limits()
     except (EOFError, UnpicklingError):
         message = "Could not open project"
@@ -95,10 +99,8 @@ def add_item(self, item):
                 reload(self)
                 return
     self.datadict[key] = item
-    ui.reload_item_menu(self)
     clipboard.add(self)
     self.main_window.item_list.set_visible(True)
-    reload(self)
     ui.enable_data_dependent_buttons(self, True)
 
 
