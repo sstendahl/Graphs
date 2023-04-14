@@ -1,5 +1,6 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 from gi.repository import Adw, Gtk
+from matplotlib import pyplot
 
 from graphs import graphs, plot_styles, plotting_tools, ui, utilities
 from graphs.canvas import Canvas
@@ -143,6 +144,10 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
             for item in parent.datadict.values():
                 item.color = None
                 item.color = plotting_tools.get_next_color(parent)
+                item.linestyle = pyplot.rcParams["lines.linestyle"]
+                item.linewidth = float(pyplot.rcParams["lines.linewidth"])
+                item.markerstyle = pyplot.rcParams["lines.marker"]
+                item.markersize = float(pyplot.rcParams["lines.markersize"])
 
         # Reload UI
         ui.reload_item_menu(parent)
