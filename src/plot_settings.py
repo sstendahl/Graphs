@@ -111,13 +111,14 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
         # Check if style change when override is enabled
         self.style_changed = False
         if parent.preferences.config["override_style_change"]:
-            parent.canvas = Canvas(parent=parent)
             # Check if style is changed
             if plot_settings.use_custom_plot_style != \
                     self.use_custom_plot_style.get_enable_expansion():
+                parent.canvas = Canvas(parent=parent)
                 self.style_changed = True
             elif plot_settings.custom_plot_style != \
                     self.custom_plot_style.get_selected_item().get_string():
+                parent.canvas = Canvas(parent=parent)
                 self.style_changed = True
 
         # Set new plot settings
