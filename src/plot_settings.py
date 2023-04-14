@@ -32,10 +32,7 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
 
     def __init__(self, parent):
         super().__init__()
-        self.style_changed = False
-
         self.plot_title.set_text(parent.plot_settings.title)
-
         self.min_left.set_text(str(min(parent.canvas.axis.get_ylim())))
         self.max_left.set_text(str(max(parent.canvas.axis.get_ylim())))
         self.min_bottom.set_text(str(min(parent.canvas.axis.get_xlim())))
@@ -107,7 +104,6 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
         parent.canvas.top_left_axis.set_xlim(min_top, max_top)
 
     def on_close(self, _, parent):
-
         plot_settings = parent.plot_settings
         # Check if style is changed
         if plot_settings.use_custom_plot_style != \
