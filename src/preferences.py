@@ -75,6 +75,7 @@ class PreferencesWindow(Adw.PreferencesWindow):
     action_center_data = Gtk.Template.Child()
     other_handle_duplicates = Gtk.Template.Child()
     other_hide_unselected = Gtk.Template.Child()
+    override_style_change = Gtk.Template.Child()
     plot_title = Gtk.Template.Child()
     plot_x_label = Gtk.Template.Child()
     plot_y_label = Gtk.Template.Child()
@@ -126,7 +127,7 @@ class PreferencesWindow(Adw.PreferencesWindow):
         utilities.set_chooser(
             self.other_handle_duplicates, config["handle_duplicates"])
         self.other_hide_unselected.set_active(config["hide_unselected"])
-
+        self.override_style_change.set_active(config["override_style_change"])
         self.plot_title.set_text(config["plot_title"])
         self.plot_x_label.set_text(config["plot_x_label"])
         self.plot_y_label.set_text(config["plot_y_label"])
@@ -177,7 +178,8 @@ class PreferencesWindow(Adw.PreferencesWindow):
         config["handle_duplicates"] = \
             self.other_handle_duplicates.get_selected_item().get_string()
         config["hide_unselected"] = self.other_hide_unselected.get_active()
-
+        config["override_style_change"] = \
+            self.override_style_change.get_active()
         config["plot_title"] = self.plot_title.get_text()
         config["plot_x_label"] = self.plot_x_label.get_text()
         config["plot_y_label"] = self.plot_y_label.get_text()

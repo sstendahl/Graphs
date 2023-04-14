@@ -314,6 +314,14 @@ template PreferencesWindow : Adw.PreferencesWindow {
           model: StringList {};
         }
       }
+      Adw.ActionRow {
+        title: _("Override Line Styling on Style Change");
+        subtitle: _("Override the active line styling when switching plot style");
+
+        Switch override_style_change {
+          valign: center;
+        }
+      }
     }
   }
 }
