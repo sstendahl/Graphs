@@ -1,8 +1,8 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 from gi.repository import Adw, Gtk
 
-from graphs import graphs, plot_styles, utilities
-
+from graphs import graphs, plotting_tools, plot_styles, ui, utilities
+from graphs.canvas import Canvas
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/plot_settings.ui")
 class PlotSettingsWindow(Adw.PreferencesWindow):
@@ -32,6 +32,7 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
 
     def __init__(self, parent):
         super().__init__()
+        self.style_changed = False
 
         self.plot_title.set_text(parent.plot_settings.title)
 
@@ -71,8 +72,17 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
         if len(parent.datadict) > 0:
             self.no_data_message.set_visible(False)
         self.connect("close-request", self.on_close, parent)
+        self.custom_plot_style.connect("notify::selected",
+                                       self.on_style_select, parent)
         self.set_transient_for(parent.main_window)
         self.present()
+
+    def on_style_select(self, _action, _target, parent):
+        if self.custom_plot_style.get_selected_item().get_string() != \
+                parent.plot_settings.custom_plot_style:
+            self.style_changed = True
+        else:
+            self.style_changed = False
 
     def hide_unused_axes_limits(self, parent):
         used_axes = utilities.get_used_axes(parent)[0]
@@ -126,5 +136,11 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
             self.use_custom_plot_style.get_enable_expansion()
         plot_settings.custom_plot_style = \
             self.custom_plot_style.get_selected_item().get_string()
+        parent.canvas = Canvas(parent=parent)
+        if self.style_changed:
+            for item in parent.datadict.values():
+                item.color = None
+                item.color = plotting_tools.get_next_color(parent)
+        ui.reload_item_menu(parent)
         graphs.reload(parent)
         self.set_limits(parent)
