@@ -16,6 +16,7 @@
 "import_delimiter": "\\s+",
 "import_separator": ".",
 "import_skip_rows": 0,
+"override_style_change": true,
 "plot_custom_style": "adwaita",
 "plot_legend": true,
 "plot_legend_position": "best",

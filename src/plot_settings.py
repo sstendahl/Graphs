@@ -1,8 +1,10 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 from gi.repository import Adw, Gtk
 
-from graphs import graphs, plot_styles, utilities
+from graphs import graphs, plot_styles, plotting_tools, ui, utilities
+from graphs.canvas import Canvas
 
+from matplotlib import pyplot
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/plot_settings.ui")
 class PlotSettingsWindow(Adw.PreferencesWindow):
@@ -32,9 +34,7 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
 
     def __init__(self, parent):
         super().__init__()
-
         self.plot_title.set_text(parent.plot_settings.title)
-
         self.min_left.set_text(str(min(parent.canvas.axis.get_ylim())))
         self.max_left.set_text(str(max(parent.canvas.axis.get_ylim())))
         self.min_bottom.set_text(str(min(parent.canvas.axis.get_xlim())))
@@ -106,6 +106,16 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
 
     def on_close(self, _, parent):
         plot_settings = parent.plot_settings
+
+        # Check if style change when override is enabled
+        self.style_changed = \
+            parent.preferences.config["override_style_change"] \
+            and (plot_settings.use_custom_plot_style != \
+                 self.use_custom_plot_style.get_enable_expansion()
+                 or plot_settings.custom_plot_style != \
+                 self.custom_plot_style.get_selected_item().get_string())
+
+        # Set new plot settings
         plot_settings.title = self.plot_title.get_text()
         plot_settings.xlabel = self.plot_x_label.get_text()
         plot_settings.ylabel = self.plot_y_label.get_text()
@@ -126,5 +136,20 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
             self.use_custom_plot_style.get_enable_expansion()
         plot_settings.custom_plot_style = \
             self.custom_plot_style.get_selected_item().get_string()
+
+        # Set new item properties
+        if self.style_changed:
+            parent.canvas = Canvas(parent=parent)
+            for item in parent.datadict.values():
+                item.color = None
+                item.color = plotting_tools.get_next_color(parent)
+                item.linestyle = pyplot.rcParams["lines.linestyle"]
+                item.linewidth = float(pyplot.rcParams["lines.linewidth"])
+                item.markerstyle = pyplot.rcParams["lines.marker"]
+                item.markersize = \
+                    float(pyplot.rcParams["lines.markersize"])
+
+        # Reload UI
+        ui.reload_item_menu(parent)
         graphs.reload(parent)
         self.set_limits(parent)
