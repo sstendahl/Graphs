@@ -144,6 +144,7 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
             parent.canvas = Canvas(parent=parent)
             for item in parent.datadict.values():
                 item.color = None
+            for item in parent.datadict.values():                
                 item.color = plotting_tools.get_next_color(parent)
                 item.linestyle = pyplot.rcParams["lines.linestyle"]
                 item.linewidth = float(pyplot.rcParams["lines.linewidth"])
