@@ -47,7 +47,7 @@ def reset_user_styles(self):
         self.plot_styles_window.reload_styles()
 
     heading = "Reset to defaults?"
-    body = f"Are you sure you want to reset to the default styles?"
+    body = "Are you sure you want to reset to the default styles?"
     dialog = Adw.MessageDialog.new(self.plot_styles_window,
                                    heading,
                                    body)
