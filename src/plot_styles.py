@@ -209,10 +209,10 @@ class PlotStylesWindow(Adw.Window):
         dialog.set_default_response("delete")
         dialog.set_response_appearance("reset",
                                        Adw.ResponseAppearance.DESTRUCTIVE)
-        dialog.connect("response", self.on_reset_button_press, self)
+        dialog.connect("response", self.on_reset_button_press)
         dialog.present()
 
-    def on_reset_button_press(self, _, response, __):
+    def on_reset_button_press(self, _, response):
         if response == "reset":
             self.reset_styles(self.parent)
 
