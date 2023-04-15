@@ -19,21 +19,21 @@ template StyleBox : Box {
     hexpand: true;
     }
 
-  Button delete_button {
-    tooltip-text: _("Remove");
-    styles ["flat"]
-    Image {
-      hexpand: false;
-      icon-name: "edit-delete-symbolic";
-    }
-  }
-
   Button edit_button {
     tooltip-text: _("Edit");
     styles ["flat"]
     Image {
       hexpand: false;
       icon-name: "settings-symbolic";
+    }
+  }
+
+  Button delete_button {
+    tooltip-text: _("Remove");
+    styles ["flat"]
+    Image {
+      hexpand: false;
+      icon-name: "edit-delete-symbolic";
     }
   }
 }

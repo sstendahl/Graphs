@@ -58,12 +58,11 @@ endif
 
 blueprints = custom_target('blueprints',
   input: files(
-    'ui/add_style.blp',
-    'ui/window.blp',
-    'ui/edit_item.blp',
-    'ui/export_figure.blp',
     'ui/add_data_advanced.blp',
     'ui/add_equation_window.blp',
+    'ui/add_style.blp',
+    'ui/edit_item.blp',
+    'ui/export_figure.blp',
     'ui/help_overlay.blp',
     'ui/item_box.blp',
     'ui/plot_settings.blp',
@@ -72,7 +71,8 @@ blueprints = custom_target('blueprints',
     'ui/rename_window.blp',
     'ui/style_box.blp',
     'ui/style_color_box.blp',
-    'ui/transform_window.blp'
+    'ui/transform_window.blp',
+    'ui/window.blp'
   ),
   output: '.',
   command: [find_program('blueprint-compiler'), 'batch-compile', '@OUTPUT@', '@CURRENT_SOURCE_DIR@', '@INPUT@'],

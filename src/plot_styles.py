@@ -410,8 +410,7 @@ class PlotStylesWindow(Adw.Window):
         self.reload_styles()
 
     def add_data(self, _):
-        win = AddStyleWindow(self)
-        win.present()
+        AddStyleWindow(self)
 
 
     def reset_styles(self, _):
@@ -503,14 +502,14 @@ class AddStyleWindow(Adw.Window):
         super().__init__()
         self.parent = parent
         utilities.populate_chooser(
-            self.plot_style_templates, get_user_styles(parent.parent).keys())
+            self.plot_style_templates, get_user_styles(parent).keys())
         selected_item = \
             self.plot_style_templates.get_selected_item().get_string()
         self.new_style_name.set_text(f"{selected_item} (copy)")
         self.confirm_button.connect("clicked", self.on_confirm)
         self.plot_style_templates.connect("notify::selected",
                                           self.on_template_changed)
-        self.set_transient_for(parent.parent.plot_styles_window)
+        self.set_transient_for(parent)
         self.present()
 
     def on_template_changed(self, _, __):
@@ -521,5 +520,5 @@ class AddStyleWindow(Adw.Window):
     def on_confirm(self, _):
         style = self.plot_style_templates.get_selected_item().get_string()
         name = self.new_style_name.get_text()
-        self.parent.parent.plot_styles_window.copy_style(self, style, name)
+        self.parent.copy_style(self, style, name)
         self.close()
