@@ -524,7 +524,6 @@ class AddStyleWindow(Adw.Window):
         self.new_style_name.set_text(f"{selected_item} (copy)")
 
     def on_confirm(self, _):
-        style = "adwaita"
         style = self.plot_style_templates.get_selected_item().get_string()
         name = self.new_style_name.get_text()
         self.parent.parent.plot_styles_window.copy_style(self, style, name)
