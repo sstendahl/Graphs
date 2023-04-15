@@ -43,6 +43,7 @@ def reset_user_styles(self):
     for style, path in get_system_styles(self).items():
         shutil.copy(path, os.path.join(user_path, f"{style}.mplstyle"))
 
+
 def get_system_preferred_style_path(self):
     system_style = "adwaita"
     if Adw.StyleManager.get_default().get_dark():
