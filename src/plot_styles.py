@@ -212,7 +212,6 @@ class PlotStylesWindow(Adw.Window):
         dialog.present()
 
     def on_reset_button_press(self, _, response, __):
-        print(__)
         if response == "reset":
             self.reset_styles(self.parent)
 
