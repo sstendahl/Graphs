@@ -5,15 +5,19 @@
 ![image](https://user-images.githubusercontent.com/68477016/215410374-6ec4558b-6a2d-4ca9-9941-80058d853f13.png)
 
 
-Graphs is a simple but powerful data manipulation tool developed with the GNOME environment in mind. It opens and plots two-column data files which then easily can be manipulated and transformed. Alternatively, data can be generated from an equation. Both imported data and generated data are treated the same, and can be saved as .txt file for further use.
+  Graphs is a simple, yet powerful tool that allows you to plot and manipulate your data with ease. You can import data from two-column files or generate it via an equation. All data can be manipulated using a variety of operations.
+  Graphs lets you customize the style of plotted data. You can add and edit stylesheets in detail.
+  Graphs is an excellent fit both plotting and data manipulation. The plots created with Graphs can be saved in a variety of formats suitable for sharing and presenting to a wide audience, such as in a scientific publication or presentations. It is also possible to save the plots as vector images, which can be easily edited in programs like Inkscape for further customization and refinement. Graphs is written with the GNOME environment in mind, but should be suitable for any other desktop environment as well.
 
-Graphs can both be used as plotting tool or as a data manipulation tool. There's an extensive number of options to change the plot layouts including, but not limited to the axis labels the used scaling on either axis, the length and width of the ticks used, the thickness of the lines, the linestyle, the fonts and more. The plots can be saved in multiple formats, including vector images for further work in e.g. Inkscape. The data manipulation tools
-include options like:
-  - Selecting and cutting part of the data
+The operations include:
+  - Shifting data
+  - Normalizing Data
+  - Smoothening data
+  - Centering Data
+  - Cutting Data
+  - Combining Data
   - Translating data
-  - Center data
-  - Smoothening of data
-  - Take the derivative or indefinite integral of your data
+  - Derivative and indefinite integral
   - Fourier Transformations
   - Custom transformations using anything that is compatible with the numpy module
  
