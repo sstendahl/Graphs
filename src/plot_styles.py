@@ -19,8 +19,7 @@ def get_system_styles(self):
             if os.path.isfile(os.path.join(path, file))}
 
 
-def get_user_styles(self, *args):
-    print(*args)
+def get_user_styles(self):
     path = os.path.join(utilities.get_config_path(), "styles")
     if not os.path.exists(path):
         reset_user_styles(self)
@@ -210,10 +209,10 @@ class PlotStylesWindow(Adw.Window):
         dialog.connect("response", self.on_reset_button_press, self)
         dialog.present()
 
-    def on_reset_button_press(self, dialog, response, *args):
+    def on_reset_button_press(self, _, response, __):
+        print(__)
         if response == "reset":
             self.reset_styles(self.parent)
-
 
     def edit_style(self, _, style):
         self.style = get_style(self.parent, style)
