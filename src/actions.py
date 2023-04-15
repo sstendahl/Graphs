@@ -104,7 +104,7 @@ def export_figure_action(_action, _target, self):
 
 
 def plot_styles_action(_action, _target, self):
-    PlotStylesWindow(self)
+    self.plot_styles_window = PlotStylesWindow(self)
 
 
 def save_project_action(_action, _target, self):

@@ -58,6 +58,7 @@ endif
 
 blueprints = custom_target('blueprints',
   input: files(
+    'ui/add_style.blp',
     'ui/window.blp',
     'ui/edit_item.blp',
     'ui/export_figure.blp',

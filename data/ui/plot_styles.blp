@@ -20,6 +20,10 @@ template PlotStylesWindow : Adw.Window {
     Box {
       orientation: vertical;
       Adw.HeaderBar {
+        Button add_button {
+          icon-name: "list-add-symbolic";
+          tooltip-text: _("Add new data");
+        }
         [end]
         Button reset_button {
           icon-name: "history-undo-symbolic";
