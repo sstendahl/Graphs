@@ -24,6 +24,9 @@ template AddStyleWindow : Adw.Window {
       margin-top: 12;
       margin-bottom: 12;
       Adw.PreferencesGroup {
+      	margin-top: 12;
+	margin-start: 26;
+	margin-end: 26;
         Adw.ComboRow plot_style_templates {
           title: _("Template");
           subtitle: _("The template style used for the new style");
@@ -35,15 +38,12 @@ template AddStyleWindow : Adw.Window {
         }
       Box {
         halign: center;
-        margin-top: 12;
-        margin-bottom: 3;
         orientation: horizontal;
 
         Button confirm_button {
           halign: center;
-          margin-start: 6;
-          margin-top: 12;
-          margin-bottom: 12;
+	  margin-top: 24;
+	  margin-bottom: 12;
           label: _("Add New Style");
           styles ["suggested-action", "pill"]
         }
