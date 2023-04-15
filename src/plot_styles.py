@@ -33,15 +33,35 @@ def get_user_styles(self):
 
 
 def reset_user_styles(self):
-    user_path = os.path.join(utilities.get_config_path(), "styles")
-    if not os.path.exists(user_path):
-        os.makedirs(user_path)
-    os.chdir(user_path)
-    for file in os.listdir(user_path):
-        if os.path.isfile(os.path.join(user_path, file)):
-            os.remove(file)
-    for style, path in get_system_styles(self).items():
-        shutil.copy(path, os.path.join(user_path, f"{style}.mplstyle"))
+    def reset_to_default(_, response, self):
+        if response == "reset":
+            user_path = os.path.join(utilities.get_config_path(), "styles")
+            if not os.path.exists(user_path):
+                os.makedirs(user_path)
+            os.chdir(user_path)
+            for file in os.listdir(user_path):
+                if os.path.isfile(os.path.join(user_path, file)):
+                    os.remove(file)
+            for style, path in get_system_styles(self).items():
+                shutil.copy(path, os.path.join(user_path, f"{style}.mplstyle"))
+        self.plot_styles_window.reload_styles()
+
+    heading = "Reset to defaults?"
+    body = f"Are you sure you want to reset to the default styles?"
+    dialog = Adw.MessageDialog.new(self.plot_styles_window,
+                                   heading,
+                                   body)
+    dialog.add_response("cancel", "Cancel")
+    dialog.add_response("reset", "Reset")
+    dialog.set_close_response("cancel")
+    dialog.set_default_response("delete")
+    dialog.set_response_appearance("reset",
+                                   Adw.ResponseAppearance.DESTRUCTIVE)
+    dialog.connect("response", reset_to_default, self)
+    dialog.present()
+
+
+
 
 
 def get_system_preferred_style_path(self):
@@ -386,8 +406,23 @@ class PlotStylesWindow(Adw.Window):
         self.color_boxes[box] = self.line_colors_box.get_last_child()
 
     def delete_style(self, _, style):
-        os.remove(get_user_styles(self.parent)[style])
-        self.reload_styles()
+        def remove_style(_, response, self):
+            if response == "delete":
+                os.remove(get_user_styles(self)[style])
+                self.reload_styles()
+        heading = "Delete style?"
+        body = f"Are you sure you want to delete the {style} style."
+        dialog = Adw.MessageDialog.new(self,
+                                       heading,
+                                       body)
+        dialog.add_response("cancel", "Cancel")
+        dialog.add_response("delete", "Delete")
+        dialog.set_close_response("cancel")
+        dialog.set_default_response("delete")
+        dialog.set_response_appearance("delete",
+                                       Adw.ResponseAppearance.DESTRUCTIVE)
+        dialog.connect("response", remove_style, self)
+        dialog.present()
 
     def copy_style(self, _, style):
         loop = True
