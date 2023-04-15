@@ -19,13 +19,12 @@ template StyleBox : Box {
     hexpand: true;
     }
 
-  Button copy_button {
-    tooltip-text: _("Copy Style");
+  Button edit_button {
+    tooltip-text: _("Edit");
     styles ["flat"]
     Image {
       hexpand: false;
-      icon-name: "edit-copy-symbolic";
-      pixel-size: 20;
+      icon-name: "settings-symbolic";
     }
   }
 
@@ -35,15 +34,6 @@ template StyleBox : Box {
     Image {
       hexpand: false;
       icon-name: "edit-delete-symbolic";
-    }
-  }
-
-  Button edit_button {
-    tooltip-text: _("Edit");
-    styles ["flat"]
-    Image {
-      hexpand: false;
-      icon-name: "settings-symbolic";
     }
   }
 }
