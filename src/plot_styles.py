@@ -411,7 +411,7 @@ class PlotStylesWindow(Adw.Window):
                 os.remove(get_user_styles(self)[style])
                 self.reload_styles()
         heading = "Delete style?"
-        body = f"Are you sure you want to delete the {style} style."
+        body = f"Are you sure you want to delete the {style} style?"
         dialog = Adw.MessageDialog.new(self,
                                        heading,
                                        body)
