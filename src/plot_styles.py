@@ -510,8 +510,8 @@ class AddStyleWindow(Adw.Window):
         self.new_style_name.set_text(f"{selected_item} (copy)")
         self.cancel_button.connect("clicked", self.on_cancel)
         self.confirm_button.connect("clicked", self.on_confirm)
-        self.plot_style_templates.connect("notify::selected", \
-            self.on_template_changed)
+        self.plot_style_templates.connect("notify::selected",
+                                          self.on_template_changed)
         self.set_transient_for(parent.parent.plot_styles_window)
         self.present()
 
@@ -529,3 +529,4 @@ class AddStyleWindow(Adw.Window):
         name = self.new_style_name.get_text()
         self.parent.parent.plot_styles_window.copy_style(self, style, name)
         self.close()
+        
