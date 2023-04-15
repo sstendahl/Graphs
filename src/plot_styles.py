@@ -495,7 +495,6 @@ class StyleColorBox(Gtk.Box):
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/add_style.ui")
 class AddStyleWindow(Adw.Window):
     __gtype_name__ = "AddStyleWindow"
-    cancel_button = Gtk.Template.Child()
     confirm_button = Gtk.Template.Child()
     new_style_name = Gtk.Template.Child()
     plot_style_templates = Gtk.Template.Child()
@@ -508,15 +507,11 @@ class AddStyleWindow(Adw.Window):
         selected_item = \
             self.plot_style_templates.get_selected_item().get_string()
         self.new_style_name.set_text(f"{selected_item} (copy)")
-        self.cancel_button.connect("clicked", self.on_cancel)
         self.confirm_button.connect("clicked", self.on_confirm)
         self.plot_style_templates.connect("notify::selected",
                                           self.on_template_changed)
         self.set_transient_for(parent.parent.plot_styles_window)
         self.present()
-
-    def on_cancel(self, _):
-        self.close()
 
     def on_template_changed(self, _, __):
         selected_item = \
