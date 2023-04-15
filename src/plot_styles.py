@@ -19,7 +19,8 @@ def get_system_styles(self):
             if os.path.isfile(os.path.join(path, file))}
 
 
-def get_user_styles(self):
+def get_user_styles(self, *args):
+    print(*args)
     path = os.path.join(utilities.get_config_path(), "styles")
     if not os.path.exists(path):
         reset_user_styles(self)
@@ -33,36 +34,15 @@ def get_user_styles(self):
 
 
 def reset_user_styles(self):
-    def reset_to_default(_, response, self):
-        if response == "reset":
-            user_path = os.path.join(utilities.get_config_path(), "styles")
-            if not os.path.exists(user_path):
-                os.makedirs(user_path)
-            os.chdir(user_path)
-            for file in os.listdir(user_path):
-                if os.path.isfile(os.path.join(user_path, file)):
-                    os.remove(file)
-            for style, path in get_system_styles(self).items():
-                shutil.copy(path, os.path.join(user_path, f"{style}.mplstyle"))
-        self.plot_styles_window.reload_styles()
-
-    heading = "Reset to defaults?"
-    body = "Are you sure you want to reset to the default styles?"
-    dialog = Adw.MessageDialog.new(self.plot_styles_window,
-                                   heading,
-                                   body)
-    dialog.add_response("cancel", "Cancel")
-    dialog.add_response("reset", "Reset")
-    dialog.set_close_response("cancel")
-    dialog.set_default_response("delete")
-    dialog.set_response_appearance("reset",
-                                   Adw.ResponseAppearance.DESTRUCTIVE)
-    dialog.connect("response", reset_to_default, self)
-    dialog.present()
-
-
-
-
+    user_path = os.path.join(utilities.get_config_path(), "styles")
+    if not os.path.exists(user_path):
+        os.makedirs(user_path)
+    os.chdir(user_path)
+    for file in os.listdir(user_path):
+        if os.path.isfile(os.path.join(user_path, file)):
+            os.remove(file)
+    for style, path in get_system_styles(self).items():
+        shutil.copy(path, os.path.join(user_path, f"{style}.mplstyle"))
 
 def get_system_preferred_style_path(self):
     system_style = "adwaita"
@@ -168,7 +148,7 @@ class PlotStylesWindow(Adw.Window):
         self.styles = []
         self.style = None
         self.reload_styles()
-        self.reset_button.connect("clicked", self.reset_styles)
+        self.reset_button.connect("clicked", self.on_reset_button)
         self.back_button.connect("clicked", self.back)
         self.connect("close-request", self.on_close)
         self.set_title("Plot Styles")
@@ -214,6 +194,26 @@ class PlotStylesWindow(Adw.Window):
         self.color_boxes = {}
 
         self.present()
+
+    def on_reset_button(self, _):
+        heading = "Reset to defaults?"
+        body = "Are you sure you want to reset to the default styles?"
+        dialog = Adw.MessageDialog.new(self,
+                                       heading,
+                                       body)
+        dialog.add_response("cancel", "Cancel")
+        dialog.add_response("reset", "Reset")
+        dialog.set_close_response("cancel")
+        dialog.set_default_response("delete")
+        dialog.set_response_appearance("reset",
+                                       Adw.ResponseAppearance.DESTRUCTIVE)
+        dialog.connect("response", self.on_reset_button_press, self)
+        dialog.present()
+
+    def on_reset_button_press(self, dialog, response, *args):
+        if response == "reset":
+            self.reset_styles(self.parent)
+
 
     def edit_style(self, _, style):
         self.style = get_style(self.parent, style)
