@@ -529,4 +529,3 @@ class AddStyleWindow(Adw.Window):
         name = self.new_style_name.get_text()
         self.parent.parent.plot_styles_window.copy_style(self, style, name)
         self.close()
-        
