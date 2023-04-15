@@ -48,9 +48,10 @@ cd Graphs
 meson setup build
 ninja -C build
 ninja -C build/ install
-mkdir -p ~/.local/share/flatpak/exports/share/graphs/graphs && cp data/config.json $_
-mkdir -p ~/.config/matplotlib/stylelib && cp data/styles/adwaita.mplstyle $_
-mkdir -p ~/.config/matplotlib/stylelib && cp data/styles/adwaita-dark.mplstyle $_
+```
+Uninstall could then be done with the following:
+```
+ninja -C build/ uninstall
 ```
 
 Please note, that this install might have issues, that the flatpak version does not.
