@@ -2,7 +2,7 @@
 
 # Graphs
 
-![image](https://user-images.githubusercontent.com/68477016/215410374-6ec4558b-6a2d-4ca9-9941-80058d853f13.png)
+![image](https://raw.githubusercontent.com/Sjoerd1993/Graphs/main/data/screenshots/sin_cos.png)
 
 
   Graphs is a simple, yet powerful tool that allows you to plot and manipulate your data with ease. You can import data from two-column files or generate it via an equation. All data can be manipulated using a variety of operations.
