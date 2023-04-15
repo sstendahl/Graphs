@@ -1,0 +1,54 @@
+using Gtk 4.0;
+using Adw 1;
+
+template AddStyleWindow : Adw.Window {
+  modal: true;
+  default-width: 450;
+  title: _("Add new style");
+
+  ShortcutController {
+    Shortcut {
+      trigger: "Escape";
+      action: "action(window.close)";
+    }
+  }
+
+  Box {
+    orientation: vertical;
+    Adw.HeaderBar {
+      styles ["flat"]
+    }
+    Adw.Clamp {
+      margin-start: 12;
+      margin-end: 12;
+      margin-top: 12;
+      margin-bottom: 12;
+      Adw.PreferencesGroup {
+      	margin-top: 12;
+	margin-start: 26;
+	margin-end: 26;
+        Adw.ComboRow plot_style_templates {
+          title: _("Template");
+          subtitle: _("The template style used for the new style");
+          model: StringList {};
+        }
+
+        Adw.EntryRow new_style_name {
+          title: _("New Style Name");
+        }
+      Box {
+        halign: center;
+        orientation: horizontal;
+
+        Button confirm_button {
+          halign: center;
+	  margin-top: 24;
+	  margin-bottom: 12;
+          label: _("Add New Style");
+          styles ["suggested-action", "pill"]
+        }
+        }
+      }
+    }
+  }
+}

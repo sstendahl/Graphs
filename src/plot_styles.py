@@ -102,6 +102,7 @@ def get_style(self, stylename):
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/plot_styles.ui")
 class PlotStylesWindow(Adw.Window):
     __gtype_name__ = "PlotStylesWindow"
+    add_button = Gtk.Template.Child()
     leaflet = Gtk.Template.Child()
     styles_box = Gtk.Template.Child()
     reset_button = Gtk.Template.Child()
@@ -148,6 +149,7 @@ class PlotStylesWindow(Adw.Window):
         self.style = None
         self.reload_styles()
         self.reset_button.connect("clicked", self.on_reset_button)
+        self.add_button.connect("clicked", self.add_data)
         self.back_button.connect("clicked", self.back)
         self.connect("close-request", self.on_close)
         self.set_title("Plot Styles")
@@ -423,21 +425,27 @@ class PlotStylesWindow(Adw.Window):
         dialog.connect("response", remove_style, self)
         dialog.present()
 
-    def copy_style(self, _, style):
+    def copy_style(self, _, style, new_style):
         loop = True
         i = 0
         while loop:
-            i += 1
-            new_style = f"{style} ({i})"
-            loop = False
             for style_1 in get_user_styles(self.parent).keys():
+                i += 1
                 if new_style == style_1:
                     loop = True
+                    new_style = f"{new_style} ({i})"
+                    continue
+                else:
+                    loop = False
         user_path = os.path.join(utilities.get_config_path(), "styles")
         shutil.copy(
             os.path.join(user_path, f"{style}.mplstyle"),
             os.path.join(user_path, f"{new_style}.mplstyle"))
         self.reload_styles()
+
+    def add_data(self, _):
+        AddStyleWindow(self)
+
 
     def reset_styles(self, _):
         reset_user_styles(self.parent)
@@ -486,14 +494,12 @@ class StyleBox(Gtk.Box):
     __gtype_name__ = "StyleBox"
     label = Gtk.Template.Child()
     check_mark = Gtk.Template.Child()
-    copy_button = Gtk.Template.Child()
     delete_button = Gtk.Template.Child()
     edit_button = Gtk.Template.Child()
 
     def __init__(self, parent, style):
         super().__init__()
         self.label.set_label(utilities.shorten_label(style, 50))
-        self.copy_button.connect("clicked", parent.copy_style, style)
         self.delete_button.connect("clicked", parent.delete_style, style)
         self.edit_button.connect("clicked", parent.edit_style, style)
 
@@ -517,3 +523,36 @@ class StyleColorBox(Gtk.Box):
             f"button {{ color: #{color}; }}", -1)
         self.color_button.connect("clicked", parent.on_color_change)
         self.delete_button.connect("clicked", parent.delete_color, self)
+
+
+@Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/add_style.ui")
+class AddStyleWindow(Adw.Window):
+    __gtype_name__ = "AddStyleWindow"
+    confirm_button = Gtk.Template.Child()
+    new_style_name = Gtk.Template.Child()
+    plot_style_templates = Gtk.Template.Child()
+
+    def __init__(self, parent):
+        super().__init__()
+        self.parent = parent
+        utilities.populate_chooser(
+            self.plot_style_templates, get_user_styles(parent).keys())
+        selected_item = \
+            self.plot_style_templates.get_selected_item().get_string()
+        self.new_style_name.set_text(f"{selected_item} (copy)")
+        self.confirm_button.connect("clicked", self.on_confirm)
+        self.plot_style_templates.connect("notify::selected",
+                                          self.on_template_changed)
+        self.set_transient_for(parent)
+        self.present()
+
+    def on_template_changed(self, _, __):
+        selected_item = \
+            self.plot_style_templates.get_selected_item().get_string()
+        self.new_style_name.set_text(f"{selected_item} (copy)")
+
+    def on_confirm(self, _):
+        style = self.plot_style_templates.get_selected_item().get_string()
+        name = self.new_style_name.get_text()
+        self.parent.copy_style(self, style, name)
+        self.close()
