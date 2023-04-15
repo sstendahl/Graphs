@@ -30,5 +30,30 @@ When the project successfully ran, you can create a flatpak-bundle on the buildc
 
 If you want to try the latest development, we urge you to try the flathub beta branch instead of building yourself.
 
+### Build without flatpak
+This project targets the GNOME Platform on flathub. Any other platform is currently **not supported**.
+
+If you want to build without flatpak anyway these instructions might help:
+
+build-time dependencies: `meson, blueprint-compiler, gettext`
+
+runtime dependencies: `matplotlib, python3-matplotlib-gtk4, scipy, numpy`
+
+The actual package names might vary depending on your distribution.
+
+building:
+```
+git clone https://github.com/Sjoerd1993/Graphs.git
+cd Graphs
+meson setup build
+ninja -C build
+ninja -C build/ install
+mkdir -p ~/.local/share/flatpak/exports/share/graphs/graphs && cp data/config.json $_
+mkdir -p ~/.config/matplotlib/stylelib && cp data/styles/adwaita.mplstyle $_
+mkdir -p ~/.config/matplotlib/stylelib && cp data/styles/adwaita-dark.mplstyle $_
+```
+
+Please note, that this install might have issues, that the flatpak version does not.
+
 ## Code of Conduct
 This project follows the [GNOME Code of Conduct](https://wiki.gnome.org/Foundation/CodeOfConduct).
