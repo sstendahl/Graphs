@@ -83,6 +83,7 @@
           <li>Added an option to hide unselected items from the graph</li>
           <li>Added a dialog before exporting the figure</li>
           <li>Support for Panalytical .xdrml files</li>
+          <li>Improved clipboard behaviour</li>
         </ul>
         <p>Background Changes</p>
         <ul>
