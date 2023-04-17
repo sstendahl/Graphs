@@ -16,7 +16,6 @@ description_short = 'Plot and manipulate data in a breeze'
 
 i18n = import('i18n')
 gnome = import('gnome')
-fs = import('fs')
 python = import('python')
 
 prefix = get_option('prefix')

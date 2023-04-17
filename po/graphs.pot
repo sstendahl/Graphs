@@ -1,21 +1,21 @@
-# German translations for graphs package.
-# Copyright (C) 2023 THE graphs'S COPYRIGHT HOLDER
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the graphs package.
-# Automatically generated, 2023.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
+#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: graphs\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-04-17 18:34+0200\n"
-"PO-Revision-Date: 2023-04-17 17:45+0200\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
-"Language: de\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: data/ui/add_data_advanced.blp:8
 msgid "Open Data From File (Advanced)"
@@ -832,15 +832,15 @@ msgstr ""
 
 #: data/ui/window.blp:21
 msgid "Add new data"
-msgstr "Neue Daten hinzufügen"
+msgstr ""
 
 #: data/ui/window.blp:28
 msgid "Undo"
-msgstr "Rückgängig machen"
+msgstr ""
 
 #: data/ui/window.blp:34
 msgid "Redo"
-msgstr "Wiederholen"
+msgstr ""
 
 #: data/ui/window.blp:43
 msgid "Restore View / View Options"
@@ -1848,6 +1848,3 @@ msgstr ""
 #, python-format
 msgid "Could not load %s"
 msgstr ""
-
-#~ msgid "Starting new Graphs instance"
-#~ msgstr "Neue Graphs Instanz wird gestartet"
