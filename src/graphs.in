@@ -46,7 +46,8 @@ sys.path.insert(1, PKGDATADIR)
 signal.signal(signal.SIGINT, signal.SIG_DFL)
 locale.bindtextdomain(PROJECT_NAME, LOCALEDIR)
 locale.textdomain(PROJECT_NAME)
-gettext.install(PROJECT_NAME, LOCALEDIR)
+gettext.bindtextdomain(PROJECT_NAME, LOCALEDIR)
+gettext.textdomain(PROJECT_NAME)
 
 if __name__ == "__main__":
     import gi

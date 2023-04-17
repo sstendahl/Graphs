@@ -2,6 +2,7 @@
 """Main application."""
 import logging
 import sys
+from gettext import gettext as _
 from inspect import getmembers, isfunction
 
 from gi.repository import Adw, GLib, Gio
@@ -40,7 +41,7 @@ class GraphsApplication(Adw.Application):
             try:
                 matplotlib.font_manager.fontManager.addfont(font)
             except RuntimeError:
-                logging.warning("Could not load %s", font)
+                logging.warning(_("Could not load %s"), font)
         self.preferences = preferences.Preferences(self)
         self.add_actions()
         Adw.StyleManager.get_default().connect(
