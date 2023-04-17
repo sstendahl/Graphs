@@ -49,8 +49,7 @@
   <releases>
     <release version="1.5.1" date="2023-04-17">
       <description>
-        <p>Hotfix update.</p>
-        <p>Bug fixes</p>
+        <p>Hotfix update with bug fixes:</p>
         <ul>
           <li>Fixes a bug that prevents "Add Equation" from generating new data</li>
           <li>Fixes a bug where a change of item properties was not included in the clipboard when loading a new style</li>
