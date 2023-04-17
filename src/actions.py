@@ -74,7 +74,7 @@ def redo_action(_action, _target, self):
 
 
 def restore_view_action(_action, _target, self):
-    self.canvas.dummy_toolbar.home()
+    graphs.reload(self)
 
 
 def view_back_action(_action, _target, self):
