@@ -22,7 +22,7 @@
     </p>
   </description>
 
-  <homepage rdf:resource="https://sjoerd.se/Graphs" />
+  <homepage rdf:resource="https://graphs.sjoerd.se" />
   <download-page rdf:resource="https://flathub.org/apps/details/se.sjoerd.Graphs" />
   <bug-database rdf:resource="https://github.com/Sjoerd1993/Graphs/issues" />
 

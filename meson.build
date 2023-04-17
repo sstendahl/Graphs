@@ -8,7 +8,7 @@ project('graphs',
 application_id = 'se.sjoerd.Graphs'
 name = 'Graphs'
 copyright = '2022 - 2023'
-homepage_url = 'https://www.sjoerd.se/Graphs'
+homepage_url = 'https://www.graphs.sjoerd.se/'
 github_url = 'https://github.com/sjoerd1993/Graphs'
 issue_url = github_url + '/issues'
 author = 'Sjoerd Stendahl'
