@@ -42,8 +42,8 @@ class AddEquationWindow(Adw.Window):
             if name == "":
                 name = f"Y = {equation}"
             graphs.add_item(parent, Item(parent, xdata, ydata, name))
-            graphs.reload(self)
-            ui.reload_item_menu(self)
+            graphs.reload(parent)
+            ui.reload_item_menu(parent)
             self.destroy()
         except (NameError, SyntaxError) as exception:
             exception_type = exception.__class__.__name__
