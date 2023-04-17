@@ -43,7 +43,7 @@ conf.set('LOCALEDIR', localedir)
 conf.set('NAME', name)
 conf.set('PKGDATADIR', pkgdatadir)
 conf.set('PROJECT_NAME', project_name)
-conf.set('PYTHON', python.find_installation('python3').path())
+conf.set('PYTHON', python.find_installation('python3').full_path())
 conf.set('VERSION', version)
 conf.set('HOMEPAGE_URL', homepage_url)
 

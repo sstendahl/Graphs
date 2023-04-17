@@ -36,10 +36,10 @@ PROJECT_NAME = "@PROJECT_NAME@"
 PKGDATADIR = "@PKGDATADIR@"
 LOCALEDIR = "@LOCALEDIR@"
 COPYRIGHT = "@COPYRIGHT@"
-APPID = "@APPLICATION_ID@"
+APPLICATION_ID = "@APPLICATION_ID@"
 NAME = "@NAME@"
-WEBSITE = "@HOMEPAGE_URL@"
-ISSUES = "@ISSUES@"
+HOMEPAGE_URL = "@HOMEPAGE_URL@"
+ISSUE_URL = "@ISSUE_URL@"
 AUTHOR = "@AUTHOR@"
 
 sys.path.insert(1, PKGDATADIR)
@@ -62,7 +62,7 @@ if __name__ == "__main__":
     format = "%(levelname)s: %(message)s"
     logging.basicConfig(format=format, level=logging.@LOG_LEVEL@)
 
-    args = [VERSION, APPID, NAME, COPYRIGHT, WEBSITE, ISSUES, AUTHOR, PKGDATADIR]
+    args = [VERSION, APPLICATION_ID, NAME, COPYRIGHT, HOMEPAGE_URL, ISSUE_URL, AUTHOR, PKGDATADIR]
 
     from graphs import main
     sys.exit(main.main(args))
