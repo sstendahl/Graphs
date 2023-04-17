@@ -1,7 +1,8 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 from gi.repository import Adw, Gtk
 
-from graphs import clipboard, graphs, plot_styles, plotting_tools, ui, utilities
+from graphs import (clipboard, graphs, plot_styles, plotting_tools, ui,
+                    utilities)
 from graphs.canvas import Canvas
 
 from matplotlib import pyplot
