@@ -1,0 +1,232 @@
+@font-face {
+  font-family: "Cantarell";
+  font-style: normal;
+  font-weight: 800;
+  src: local("Cantarell Extra Bold"), local("Cantarell-ExtraBold"), url(fonts/cantarell-extra-bold-latin.woff2) format("woff2");
+  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+2074,U+20AC,U+2122,U+2212,U+2215;
+}
+@font-face {
+  font-family: "Cantarell";
+  font-style: normal;
+  font-weight: 600;
+  src: local("Cantarell Bold"), local("Cantarell-Bold"), url(fonts/cantarell-bold-latin.woff2) format("woff2");
+  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+2074,U+20AC,U+2122,U+2212,U+2215;
+}
+@font-face {
+  font-family: "Cantarell";
+  font-style: normal;
+  font-weight: 400;
+  src: local("Cantarell Regular"), local("Cantarell-Regular"), url(fonts/cantarell-regular-latin.woff2) format("woff2");
+  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+2074,U+20AC,U+2122,U+2212,U+2215;
+}
+
+/* fonts */
+p, a, main1, main2, h1, h2, h3, li, span, .catalogue-title, .post-title, .catalogue-time {
+  font-family: "Cantarell";
+}
+
+/* Gör bakgrunden vit och centrerar sidan*/
+body{
+	background: #FAFAFA;
+    margin-left: auto;
+    margin-right: auto;
+
+}
+
+
+/* Klass som används för att centrera vissa bilder*/
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  height: 30px;
+}
+
+
+
+/* Container för själva innehållet på sidan*/
+.main2{
+  margin-top: 75px;
+  margin-right: auto;
+  min-width: 500px;
+  margin-left: auto; 
+  max-width: calc(50% - 20px);
+    }
+
+/* Container för själva innehållet på sidan*/
+.main {
+  box-shadow: 0 0 0 1px rgba(0,0,0,0.03), 0 1px 3px 1px rgba(0,0,0,0.07), 0 2px 6px 2px rgba(0,0,0,0.03);
+  padding: 20px;
+  background-color: #FFFFFF;
+  margin-right: auto;
+    font-size: 18px;  
+  margin-left: auto; 
+  min-width: 500px;
+  max-width: calc(50% - 20px);
+  border:1.5px solid #e5e5e5;
+  border-radius: 12px;
+    }
+
+
+/* Bilder ska aldrig vara bredare än 1200 px*/
+img {
+  max-width: 100%;
+}
+/* Stil för menyn*/
+.navbar {
+  overflow: hidden;
+  font-size: 22px;  
+  background-color: #EBEBEB;
+    margin-left: auto;  
+  position: fixed;
+  top: 0;
+    border:1.5px solid #e5e5e5;
+  width: 100%;
+}
+
+/* Bulleted lists används för menyknappar. Listan i menyklassen ska centreras horisontellt*/
+ul.navlist{
+	display: flex;
+	margin: auto;
+  list-style-type: none;	
+    margin-left: auto;	
+    align-items: flex-start;	
+    justify-content: flex-start;
+}
+
+/* Anger stilen för menyknappar*/
+li.navlist {
+    margin-left: auto;
+    color: black;
+    margin: auto;
+    border:1.5px solid #EBEBEB;
+}
+
+/* Ger en effekt när man har muspekaren över menyknappar*/
+li.navlist:hover {
+  background: #CFCFCF;
+  color: black;
+  border:1.5px solid #e5e5e5;
+  border-radius: 12px;
+  background-size: 100% 100%;
+  animation: spring 300ms ease-out;
+  }
+  
+
+li.navlist:active {
+  transform: scale(1.05);
+}
+
+@media all and (max-width: 600px) {
+   ul.navlist {
+      flex-direction: column;
+   }
+   
+   .main {
+  min-width: calc(90% - 20px);
+  max-width: calc(90% - 20px);
+}
+      .main2 {
+  margin-top: 150px;
+  min-width: calc(90% - 20px);
+  max-width: calc(90% - 20px);
+}
+   
+}
+
+
+/* Länkar är blåa */
+a {
+  color: #6AACE6;
+  text-decoration: none;
+}
+/* Länkar i menyn är svarta */
+a.navlist {
+        margin-left: auto;
+    color: black;
+    display: flex;
+    height: 100%; 
+    padding: 10px;
+
+}
+/* Länkar i menyn stannar svarta när man håller muspekaren över dem */
+
+
+
+/* Länkar blir röda när man håller muspekaren över dem */
+
+
+/* Ge lite padding i tabellen */
+td {
+    padding: 5px;
+    text-align: left;
+}
+
+
+/* Ge ett streck på undersidan av rubriken i tabellen */
+th{
+  border-bottom:1px solid #000;
+  padding-bottom:1px;
+  padding-left: 10px;
+  padding-top: 10px;
+  padding-right: 20px;
+  text-align: left;
+}
+
+
+/* Definierar effekten som används för menyn */
+@keyframes spring {
+  25% {
+    -webkit-transform-origin: center center;
+    -webkit-transform: scale(0.9, 0.9);
+  }
+  50% {
+    -webkit-transform-origin: center center;
+    -webkit-transform: scale(0.98, 0.98);
+  }
+  75% {
+    -webkit-transform-origin: center center;
+    -webkit-transform: scale(1.03, 1.0);
+  }
+  100% {
+    -webkit-transform-origin: center center;
+    -webkit-transform: scale(1.02, 1.02);
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+    body{
+        color: #FFFFFF;
+        background-color: #242424;
+        }
+
+    .main{
+        background-color: #363636;
+        border-color: black;
+    }
+    
+.navbar {
+  background-color: #303030;
+      border:1.5px solid #3A3A3A;
+}
+
+a.navlist {
+    color: white;
+}
+
+li.navlist {
+  border:1.5px solid #303030;
+  }  
+  
+li.navlist:hover {
+  background: #4E4E4E;
+  border:1.5px solid #3A3A3A;
+  }  
+    
+    main2{
+        color: #FFFFFF;
+    }
+
+    
+}
+
