@@ -44,14 +44,12 @@ class ItemBox(Gtk.Box):
 
     def on_dnd_drop(self, drop_target, value, _x, _y):
         # Handle the dropped data here
-        limits = self.parent.canvas.get_limits()
         self.parent.datadict
         self.parent.datadict = utilities.change_key_position(
             self.parent.datadict, drop_target.key, value)
         ui.reload_item_menu(self.parent)
         clipboard.add(self.parent)
-        graphs.reload(self.parent)
-        self.parent.canvas.set_manual_limits(limits)
+        graphs.reload(self.parent, reset_limits = False)
 
     def on_dnd_prepare(self, drag_source, x, y):
         snapshot = Gtk.Snapshot.new()

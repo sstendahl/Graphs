@@ -126,11 +126,14 @@ def check_open_data(self):
         ui.enable_data_dependent_buttons(self, False)
 
 
-def reload(self, canvas_limits = None):
+def reload(self, reset_limits = True):
     """Completely reload the plot of the graph"""
+    limits = self.canvas.get_limits()
     self.canvas = Canvas(parent=self)
     self.main_window.toast_overlay.set_child(self.canvas)
     refresh(self, set_limits=True)
+    if not reset_limits:
+        self.canvas.set_manual_limits(limits)
     self.set_mode(None, None, self.interaction_mode)
     self.canvas.grab_focus()
 
