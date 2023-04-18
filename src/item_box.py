@@ -49,7 +49,7 @@ class ItemBox(Gtk.Box):
             self.parent.datadict, drop_target.key, value)
         ui.reload_item_menu(self.parent)
         clipboard.add(self.parent)
-        graphs.reload(self.parent, reset_limits = False)
+        graphs.reload(self.parent, reset_limits=False)
 
     def on_dnd_prepare(self, drag_source, x, y):
         snapshot = Gtk.Snapshot.new()

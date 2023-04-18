@@ -126,7 +126,7 @@ def check_open_data(self):
         ui.enable_data_dependent_buttons(self, False)
 
 
-def reload(self, reset_limits = True):
+def reload(self, reset_limits=True):
     """Completely reload the plot of the graph"""
     limits = self.canvas.get_limits()
     self.canvas = Canvas(parent=self)
