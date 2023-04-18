@@ -126,7 +126,7 @@ def check_open_data(self):
         ui.enable_data_dependent_buttons(self, False)
 
 
-def reload(self):
+def reload(self, canvas_limits = None):
     """Completely reload the plot of the graph"""
     self.canvas = Canvas(parent=self)
     self.main_window.toast_overlay.set_child(self.canvas)

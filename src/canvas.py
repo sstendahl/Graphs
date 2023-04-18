@@ -64,6 +64,28 @@ class Canvas(FigureCanvas):
             linewidth=linewidth, markersize=markersize)
         self.set_legend()
 
+    def set_manual_limits(self, limits):
+        self.axis.set_xlim(float(limits["min_bottom"]),
+                           float(limits["max_bottom"]))
+        self.axis.set_ylim(float(limits["min_left"]),
+                           float(limits["max_left"]))
+        self.right_axis.set_ylim(float(limits["min_right"]),
+                                 float(limits["max_right"]))
+        self.top_left_axis.set_xlim(float(limits["min_top"]),
+                                    float(limits["max_top"]))
+
+    def get_limits(self):
+        limits = {}
+        limits["min_left"] = min(self.axis.get_ylim())
+        limits["max_left"] = max(self.axis.get_ylim())
+        limits["min_bottom"] = min(self.axis.get_xlim())
+        limits["max_bottom"] = max(self.axis.get_xlim())
+        limits["min_right"] = min(self.right_axis.get_ylim())
+        limits["max_right"] = max(self.right_axis.get_ylim())
+        limits["min_top"] = min(self.top_left_axis.get_ylim())
+        limits["max_top"] = max(self.top_left_axis.get_ylim())
+        return limits
+
     def set_axis_properties(self):
         """Set the properties that are related to the axes."""
         plot_settings = self.parent.plot_settings
