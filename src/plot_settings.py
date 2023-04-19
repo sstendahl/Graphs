@@ -91,20 +91,17 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
             self.min_bottom.set_visible(False)
             self.max_bottom.set_visible(False)
 
-    def set_limits(self, parent):
-        min_left = float(self.min_left.get_text())
-        max_left = float(self.max_left.get_text())
-        min_bottom = float(self.min_bottom.get_text())
-        max_bottom = float(self.max_bottom.get_text())
-        min_right = float(self.min_right.get_text())
-        max_right = float(self.max_right.get_text())
-        min_top = float(self.min_top.get_text())
-        max_top = float(self.max_top.get_text())
-
-        parent.canvas.axis.set_xlim(min_bottom, max_bottom)
-        parent.canvas.axis.set_ylim(min_left, max_left)
-        parent.canvas.right_axis.set_ylim(min_right, max_right)
-        parent.canvas.top_left_axis.set_xlim(min_top, max_top)
+    def get_limits(self):
+        limits = {}
+        limits["min_left"] = float(self.min_left.get_text())
+        limits["max_left"] = float(self.max_left.get_text())
+        limits["min_bottom"] = float(self.min_bottom.get_text())
+        limits["max_bottom"] = float(self.max_bottom.get_text())
+        limits["min_right"] = float(self.min_right.get_text())
+        limits["max_right"] = float(self.max_right.get_text())
+        limits["min_top"] = float(self.min_top.get_text())
+        limits["max_top"] = float(self.max_top.get_text())
+        return limits
 
     def on_close(self, _, parent):
         plot_settings = parent.plot_settings
@@ -157,4 +154,4 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
         # Reload UI
         ui.reload_item_menu(parent)
         graphs.reload(parent)
-        self.set_limits(parent)
+        parent.canvas.set_limits(self.get_limits())
