@@ -47,6 +47,16 @@
     </screenshot>
   </screenshots>
   <releases>
+    <release version="1.5.2" date="2023-04-19">
+      <description>
+        <p>Changes:</p>
+        <ul>
+          <li>Changed the behaviour of the canvas so that the limits are not reset unnecessarily</li>
+          <li>Started initial work on localization support</li>
+          <li>Refactors under-the-hood</li>
+        </ul>
+      </description>
+    </release>
     <release version="1.5.1" date="2023-04-17">
       <description>
         <p>Hotfix update with bug fixes:</p>

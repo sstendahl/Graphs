@@ -42,7 +42,6 @@ def open_files(self, files, import_settings):
                 continue
     ui.reload_item_menu(self)
     reload(self)
-    self.canvas.set_limits()
 
 
 def open_project(self, path):
@@ -67,7 +66,6 @@ def open_project(self, path):
         ui.enable_data_dependent_buttons(
             self, utilities.get_selected_keys(self))
         reload(self)
-        self.canvas.set_limits()
     except (EOFError, UnpicklingError):
         message = "Could not open project"
         self.main_window.add_toast(message)
@@ -133,7 +131,7 @@ def reload(self, reset_limits=True):
     self.main_window.toast_overlay.set_child(self.canvas)
     refresh(self, set_limits=True)
     if not reset_limits:
-        self.canvas.set_manual_limits(limits)
+        self.canvas.set_limits(limits)
     self.set_mode(None, None, self.interaction_mode)
     self.canvas.grab_focus()
 
@@ -151,5 +149,5 @@ def refresh(self, set_limits=False):
                  item.selected):
             self.canvas.plot(item)
     if set_limits and len(self.datadict) > 0:
-        self.canvas.set_limits()
+        self.canvas.restore_view()
     self.canvas.draw()
