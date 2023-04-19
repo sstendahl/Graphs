@@ -72,10 +72,10 @@ class EditItemWindow(Adw.PreferencesWindow):
 
         # Only change limits when axes change, otherwise this is not needed
         set_limits = (
-            self.item.plot_x_position !=
-            self.plot_x_position.get_selected_item().get_string()
-            or self.item.plot_y_position !=
-            self.plot_y_position.get_selected_item().get_string()
+            self.item.plot_x_position
+            != self.plot_x_position.get_selected_item().get_string()
+            or self.item.plot_y_position
+            != self.plot_y_position.get_selected_item().get_string()
         )
 
         self.item.plot_x_position = \
