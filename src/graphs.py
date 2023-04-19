@@ -129,7 +129,7 @@ def reload(self, reset_limits=True):
     limits = self.canvas.get_limits()
     self.canvas = Canvas(parent=self)
     self.main_window.toast_overlay.set_child(self.canvas)
-    refresh(self, set_limits=True)
+    refresh(self, set_limits=reset_limits)
     if not reset_limits:
         self.canvas.set_limits(limits)
     self.set_mode(None, None, self.interaction_mode)
