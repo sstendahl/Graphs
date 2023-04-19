@@ -206,7 +206,7 @@ class Canvas(FigureCanvas):
             "left": self.axis,
             "right": self.right_axis,
             "top": self.top_left_axis,
-            "bottom": self.axis
+            "bottom": self.axis,
         }
 
         # Find the limits from data

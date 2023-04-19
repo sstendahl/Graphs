@@ -32,14 +32,14 @@ def set_limit_padding(axis_direction, axis):
         ymin *= 0.5
         ymax *= 2
     try:
-            xmin = utilities.sig_fig_round(xmin, 3)
-            xmax = utilities.sig_fig_round(xmax, 3)
-            ymin = utilities.sig_fig_round(ymin, 3)
-            ymax = utilities.sig_fig_round(ymax, 3)
-            if axis_direction in ["left", "right"]:
-                axis.set_ylim(ymin, ymax)
-            if axis_direction in ["top", "bottom"]:
-                axis.set_xlim(xmin, xmax)
+        xmin = utilities.sig_fig_round(xmin, 3)
+        xmax = utilities.sig_fig_round(xmax, 3)
+        ymin = utilities.sig_fig_round(ymin, 3)
+        ymax = utilities.sig_fig_round(ymax, 3)
+        if axis_direction in ["left", "right"]:
+            axis.set_ylim(ymin, ymax)
+        if axis_direction in ["top", "bottom"]:
+            axis.set_xlim(xmin, xmax)
     except ValueError:
         logging.error(
             "Could not set limits, one of the values was probably infinite")
@@ -51,10 +51,10 @@ def find_min_max(axis, items, axis_type):
     max_all = None
 
     for item in items:
-        if axis_type == 'X':
+        if axis_type == "X":
             data = item.xdata
             scale = axis.get_xscale()
-        elif axis_type == 'Y':
+        elif axis_type == "Y":
             data = item.ydata
             scale = axis.get_yscale()
 
@@ -103,29 +103,6 @@ def hide_unused_axes(self, canvas):
     canvas.right_axis.get_xaxis().set_visible(False)
     canvas.top_right_axis.get_yaxis().set_visible(False)
     canvas.top_left_axis.get_yaxis().set_visible(False)
-
-def change_scale(action, target, self, scale_type, axis_type):
-    scale = target.get_string()
-    if scale_type == 'X':
-        if axis_type == 'top':
-            self.canvas.top_left_axis.set_xscale(scale)
-            self.canvas.top_right_axis.set_xscale(scale)
-            self.plot_settings.top_scale = scale
-        elif axis_type == 'bottom':
-            self.canvas.axis.set_xscale(scale)
-            self.canvas.right_axis.set_xscale(scale)
-            self.plot_settings.xscale = scale
-    elif scale_type == 'Y':
-        if axis_type == 'left':
-            self.canvas.axis.set_yscale(scale)
-            self.canvas.top_left_axis.set_yscale(scale)
-            self.plot_settings.yscale = scale
-        elif axis_type == 'right':
-            self.canvas.top_right_axis.set_yscale(scale)
-            self.canvas.right_axis.set_yscale(scale)
-            self.plot_settings.right_scale = scale
-    action.change_state(target)
-    graphs.refresh(self, set_limits=True)
 
 
 def change_left_yscale(action, target, self):
