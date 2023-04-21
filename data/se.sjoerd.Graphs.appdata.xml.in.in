@@ -55,6 +55,10 @@
           <li>Started initial work on localization support</li>
           <li>Refactors under-the-hood</li>
         </ul>
+        <p>Bug fixes:</p>
+        <ul>
+          <li>Fixed a bug where data was not saved when multiple files were exported simultaniously</li>
+        </ul>
       </description>
     </release>
     <release version="1.5.1" date="2023-04-17">
