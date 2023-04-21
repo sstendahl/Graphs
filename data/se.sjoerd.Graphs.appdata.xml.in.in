@@ -57,7 +57,7 @@
         </ul>
         <p>Bug fixes:</p>
         <ul>
-          <li>Fixed a bug where data was not saved when multiple files were exported simultaniously</li>
+          <li>Fixed a bug where data was not saved when multiple files were exported simultaneously</li>
         </ul>
       </description>
     </release>
