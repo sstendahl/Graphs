@@ -46,7 +46,7 @@ def save_file(self, path):
             file_path = f"{path}/{filename}.txt"
             if os.path.exists(file_path):
                 file_path = f"{path}/{filename} (copy).txt"
-            numpy.savetxt(str(file_path, array, delimiter="\t"))
+            numpy.savetxt(str(file_path, array), delimiter="\t")
 
 
 def get_xrdml(self, import_settings):
