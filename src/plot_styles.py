@@ -446,7 +446,6 @@ class PlotStylesWindow(Adw.Window):
     def add_data(self, _):
         AddStyleWindow(self)
 
-
     def reset_styles(self, _):
         reset_user_styles(self.parent)
         self.reload_styles()

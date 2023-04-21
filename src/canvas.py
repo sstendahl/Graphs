@@ -65,7 +65,7 @@ class Canvas(FigureCanvas):
         self.set_legend()
 
     def set_limits(self, limits):
-        used_axes, _items = utilities.get_used_axes(self.parent)
+        used_axes = utilities.get_used_axes(self.parent)[0]
         if used_axes["bottom"]:
             for axis in [self.axis, self.right_axis]:
                 axis.set_xlim(float(limits["min_bottom"]),
@@ -84,16 +84,16 @@ class Canvas(FigureCanvas):
                               float(limits["max_top"]))
 
     def get_limits(self):
-        limits = {}
-        limits["min_left"] = min(self.axis.get_ylim())
-        limits["max_left"] = max(self.axis.get_ylim())
-        limits["min_bottom"] = min(self.axis.get_xlim())
-        limits["max_bottom"] = max(self.axis.get_xlim())
-        limits["min_right"] = min(self.right_axis.get_ylim())
-        limits["max_right"] = max(self.right_axis.get_ylim())
-        limits["min_top"] = min(self.top_left_axis.get_ylim())
-        limits["max_top"] = max(self.top_left_axis.get_ylim())
-        return limits
+        return {
+            "min_left": min(self.axis.get_ylim()),
+            "max_left": max(self.axis.get_ylim()),
+            "min_bottom": min(self.axis.get_xlim()),
+            "max_bottom": max(self.axis.get_xlim()),
+            "min_right": min(self.right_axis.get_ylim()),
+            "max_right": max(self.right_axis.get_ylim()),
+            "min_top": min(self.top_left_axis.get_ylim()),
+            "max_top": max(self.top_left_axis.get_ylim()),
+        }
 
     def set_axis_properties(self):
         """Set the properties that are related to the axes."""
@@ -112,7 +112,6 @@ class Canvas(FigureCanvas):
         self.top_left_axis.set_yscale(plot_settings.yscale)
         self.top_right_axis.set_xscale(plot_settings.top_scale)
         self.top_right_axis.set_yscale(plot_settings.right_scale)
-
 
     def set_ticks(self):
         bottom = pyplot.rcParams["xtick.bottom"]

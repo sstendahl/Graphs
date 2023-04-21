@@ -92,16 +92,16 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
             self.max_bottom.set_visible(False)
 
     def get_limits(self):
-        limits = {}
-        limits["min_left"] = float(self.min_left.get_text())
-        limits["max_left"] = float(self.max_left.get_text())
-        limits["min_bottom"] = float(self.min_bottom.get_text())
-        limits["max_bottom"] = float(self.max_bottom.get_text())
-        limits["min_right"] = float(self.min_right.get_text())
-        limits["max_right"] = float(self.max_right.get_text())
-        limits["min_top"] = float(self.min_top.get_text())
-        limits["max_top"] = float(self.max_top.get_text())
-        return limits
+        return {
+            "min_left": float(self.min_left.get_text()),
+            "max_left": float(self.max_left.get_text()),
+            "min_bottom": float(self.min_bottom.get_text()),
+            "max_bottom": float(self.max_bottom.get_text()),
+            "min_right": float(self.min_right.get_text()),
+            "max_right": float(self.max_right.get_text()),
+            "min_top": float(self.min_top.get_text()),
+            "max_top": float(self.max_top.get_text()),
+        }
 
     def on_close(self, _, parent):
         plot_settings = parent.plot_settings
@@ -142,7 +142,7 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
             parent.canvas = Canvas(parent=parent)
             for item in parent.datadict.values():
                 item.color = None
-            for item in parent.datadict.values():                
+            for item in parent.datadict.values():
                 item.color = plotting_tools.get_next_color(parent)
                 item.linestyle = pyplot.rcParams["lines.linestyle"]
                 item.linewidth = float(pyplot.rcParams["lines.linewidth"])
