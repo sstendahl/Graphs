@@ -67,7 +67,16 @@ class EditItemWindow(Adw.PreferencesWindow):
         self.markersize.set_value(self.item.markersize)
 
     def apply(self, _):
+
         self.item.name = self.name_entry.get_text()
+
+        # Only change limits when axes change, otherwise this is not needed
+        set_limits = \
+            self.item.plot_x_position \
+            != self.plot_x_position.get_selected_item().get_string() \
+            or self.item.plot_y_position \
+            != self.plot_y_position.get_selected_item().get_string()
+
         self.item.plot_x_position = \
             self.plot_x_position.get_selected_item().get_string()
         self.item.plot_y_position = \
@@ -79,4 +88,4 @@ class EditItemWindow(Adw.PreferencesWindow):
         self.item.markersize = self.markersize.get_value()
         ui.reload_item_menu(self.parent)
         clipboard.add(self.parent)
-        graphs.refresh(self.parent, set_limits=True)
+        graphs.refresh(self.parent, set_limits)

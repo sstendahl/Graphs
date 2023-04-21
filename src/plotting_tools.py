@@ -6,89 +6,74 @@ from graphs import graphs, utilities
 from matplotlib import pyplot
 
 
-def set_axis_limits(graph_limits, axis, axis_type, limits=None):
-    """Set an calculate the canvas limits for a given axis."""
-    if not limits:
-        limits = {"xmin": None, "xmax": None, "ymin": None, "ymax": None}
+def set_limit_padding(axis_direction, axis):
+    """Apply some padding to the limits on the axes."""
     # Update graph limits with limits that were given as argument
-    for key, item in limits.items():
-        if item is not None:
-            graph_limits[key] = item
-    x_span = (graph_limits["xmax"] - graph_limits["xmin"])
-    y_span = (graph_limits["ymax"] - graph_limits["ymin"])
+    xmin = min(axis.get_xlim())
+    xmax = max(axis.get_xlim())
+    ymin = min(axis.get_ylim())
+    ymax = max(axis.get_ylim())
+    x_span = xmax - xmin
+    y_span = ymax - ymin
     if axis.get_xscale() == "linear":
-        graph_limits["xmin"] -= 0.015 * x_span
-        graph_limits["xmax"] += 0.015 * x_span
+        xmin -= 0.015 * x_span
+        xmax += 0.015 * x_span
     if axis.get_yscale() == "linear":
         if y_span != 0:
-            if graph_limits["ymin"] > 0:
-                graph_limits["ymin"] *= 0.95
+            if ymin > 0:
+                ymin *= 0.95
             else:
-                graph_limits["ymin"] *= 1.05
-            graph_limits["ymax"] *= 1.05
+                ymin *= 1.05
+            ymax *= 1.05
         else:
-            graph_limits["ymax"] += abs(graph_limits["ymax"] * 0.05)
-            graph_limits["ymin"] -= abs(graph_limits["ymin"] * 0.05)
+            ymax += abs(ymax * 0.05)
+            ymin -= abs(ymin * 0.05)
     else:
-        graph_limits["ymin"] *= 0.5
-        graph_limits["ymax"] *= 2
+        ymin *= 0.5
+        ymax *= 2
     try:
-        if axis_type == "X":
-            xmin = utilities.sig_fig_round(graph_limits["xmin"], 3)
-            xmax = utilities.sig_fig_round(graph_limits["xmax"], 3)
-            axis.set_xlim(xmin, xmax)
-        if axis_type == "Y":
-            ymin = utilities.sig_fig_round(graph_limits["ymin"], 3)
-            ymax = utilities.sig_fig_round(graph_limits["ymax"], 3)
+        xmin = utilities.sig_fig_round(xmin, 3)
+        xmax = utilities.sig_fig_round(xmax, 3)
+        ymin = utilities.sig_fig_round(ymin, 3)
+        ymax = utilities.sig_fig_round(ymax, 3)
+        if axis_direction in ["left", "right"]:
             axis.set_ylim(ymin, ymax)
+        if axis_direction in ["top", "bottom"]:
+            axis.set_xlim(xmin, xmax)
     except ValueError:
         logging.error(
             "Could not set limits, one of the values was probably infinite")
 
 
-def find_limits(scale, items):
-    """Find the limits that are to be used for the axes."""
-    xmin_all = None
-    xmax_all = None
-    ymin_all = None
-    ymax_all = None
+def find_min_max(axis, items, axis_type):
+    """Find min and max value on a given axis, skip zeroes for log scale."""
+    min_all = None
+    max_all = None
 
     for item in items:
-        # Check the limits of each item, as long as it exists and it has the
-        # same axes as the one we"re adjusting right now
-        if item is not None and len(item.xdata) > 0:
-            # Nonzero ydata is needed for logs
-            nonzero_ydata = list(filter(lambda x: (x != 0), item.ydata))
-            xmin_item = min(item.xdata)
-            xmax_item = max(item.xdata)
+        if axis_type == "X":
+            data = item.xdata
+            scale = axis.get_xscale()
+        elif axis_type == "Y":
+            data = item.ydata
+            scale = axis.get_yscale()
 
-            if scale == "log" and len(nonzero_ydata) > 0:
-                ymin_item = min(nonzero_ydata)
-            else:
-                ymin_item = min(item.ydata)
-            ymax_item = max(item.ydata)
+        nonzero_data = list(filter(lambda x: (x != 0), data))
+        if scale == "log" and len(nonzero_data) > 0:
+            min_item = min(nonzero_data)
+        else:
+            min_item = min(data)
+        max_item = max(data)
+        if min_all is None:
+            min_all = min_item
+        if max_all is None:
+            max_all = max_item
+        if min_item < min_all:
+            min_all = min_item
+        if max_item > max_all:
+            max_all = max_item
 
-            if xmin_all is None:
-                xmin_all = xmin_item
-            if xmax_all is None:
-                xmax_all = xmax_item
-            if ymin_all is None:
-                ymin_all = ymin_item
-            if ymax_all is None:
-                ymax_all = ymax_item
-            if xmin_item < xmin_all:
-                xmin_all = xmin_item
-            if xmax_item > xmax_all:
-                xmax_all = xmax_item
-            if (ymin_item < ymin_all):
-                ymin_all = ymin_item
-            if ymax_item > ymax_all:
-                ymax_all = ymax_item
-    return {
-        "xmin": xmin_all,
-        "xmax": xmax_all,
-        "ymin": ymin_all,
-        "ymax": ymax_all}
+    return min_all, max_all
 
 
 def hide_unused_axes(self, canvas):
