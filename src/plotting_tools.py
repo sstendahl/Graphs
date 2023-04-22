@@ -106,53 +106,33 @@ def hide_unused_axes(self, canvas):
 
 
 def change_left_yscale(action, target, self):
-    if target.get_string() == "log":
-        self.canvas.axis.set_yscale("log")
-        self.canvas.top_left_axis.set_yscale("log")
-        self.plot_settings.yscale = "log"
-    else:
-        self.canvas.axis.set_yscale("linear")
-        self.canvas.top_left_axis.set_yscale("linear")
-        self.plot_settings.yscale = "linear"
+    self.canvas.axis.set_yscale(target.get_string())
+    self.canvas.top_left_axis.set_yscale(target.get_string())
+    self.plot_settings.yscale = target.get_string()
     action.change_state(target)
     graphs.refresh(self, set_limits=True)
 
 
 def change_right_yscale(action, target, self):
-    if target.get_string() == "log":
-        self.canvas.top_right_axis.set_yscale("log")
-        self.canvas.right_axis.set_yscale("log")
-        self.plot_settings.right_scale = "log"
-    else:
-        self.canvas.top_right_axis.set_yscale("linear")
-        self.canvas.right_axis.set_yscale("linear")
-        self.plot_settings.right_scale = "linear"
+    self.canvas.top_right_axis.set_yscale(target.get_string())
+    self.canvas.right_axis.set_yscale(target.get_string())
+    self.plot_settings.right_scale = target.get_string()
     action.change_state(target)
     graphs.refresh(self, set_limits=True)
 
 
 def change_top_xscale(action, target, self):
-    if target.get_string() == "log":
-        self.canvas.top_left_axis.set_xscale("log")
-        self.canvas.top_right_axis.set_xscale("log")
-        self.plot_settings.top_scale = "log"
-    else:
-        self.canvas.top_left_axis.set_xscale("linear")
-        self.canvas.top_right_axis.set_xscale("linear")
-        self.plot_settings.top_scale = "linear"
+    self.canvas.top_left_axis.set_xscale(target.get_string())
+    self.canvas.top_right_axis.set_xscale(target.get_string())
+    self.plot_settings.top_scale = target.get_string()
     action.change_state(target)
     graphs.refresh(self, set_limits=True)
 
 
 def change_bottom_xscale(action, target, self):
-    if target.get_string() == "log":
-        self.canvas.axis.set_xscale("log")
-        self.canvas.right_axis.set_xscale("log")
-        self.plot_settings.xscale = "log"
-    else:
-        self.canvas.axis.set_xscale("linear")
-        self.canvas.right_axis.set_xscale("linear")
-        self.plot_settings.xscale = "linear"
+    self.canvas.axis.set_xscale(target.get_string())
+    self.canvas.right_axis.set_xscale(target.get_string())
+    self.plot_settings.xscale = target.get_string()
     action.change_state(target)
     graphs.refresh(self, set_limits=True)
 
