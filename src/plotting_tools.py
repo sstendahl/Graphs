@@ -45,19 +45,12 @@ def set_limit_padding(axis_direction, axis):
             "Could not set limits, one of the values was probably infinite")
 
 
-def find_min_max(axis, items, axis_type):
+def find_min_max(scale, datalist):
     """Find min and max value on a given axis, skip zeroes for log scale."""
     min_all = None
     max_all = None
 
-    for item in items:
-        if axis_type == "X":
-            data = item.xdata
-            scale = axis.get_xscale()
-        elif axis_type == "Y":
-            data = item.ydata
-            scale = axis.get_yscale()
-
+    for data in datalist:
         nonzero_data = list(filter(lambda x: (x != 0), data))
         if scale == "log" and len(nonzero_data) > 0:
             min_item = min(nonzero_data)
