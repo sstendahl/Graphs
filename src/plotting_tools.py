@@ -45,19 +45,12 @@ def set_limit_padding(axis_direction, axis):
             "Could not set limits, one of the values was probably infinite")
 
 
-def find_min_max(axis, items, axis_type):
+def find_min_max(scale, datalist):
     """Find min and max value on a given axis, skip zeroes for log scale."""
     min_all = None
     max_all = None
 
-    for item in items:
-        if axis_type == "X":
-            data = item.xdata
-            scale = axis.get_xscale()
-        elif axis_type == "Y":
-            data = item.ydata
-            scale = axis.get_yscale()
-
+    for data in datalist:
         nonzero_data = list(filter(lambda x: (x != 0), data))
         if scale == "log" and len(nonzero_data) > 0:
             min_item = min(nonzero_data)
@@ -106,53 +99,33 @@ def hide_unused_axes(self, canvas):
 
 
 def change_left_yscale(action, target, self):
-    if target.get_string() == "log":
-        self.canvas.axis.set_yscale("log")
-        self.canvas.top_left_axis.set_yscale("log")
-        self.plot_settings.yscale = "log"
-    else:
-        self.canvas.axis.set_yscale("linear")
-        self.canvas.top_left_axis.set_yscale("linear")
-        self.plot_settings.yscale = "linear"
+    self.canvas.axis.set_yscale(target.get_string())
+    self.canvas.top_left_axis.set_yscale(target.get_string())
+    self.plot_settings.yscale = target.get_string()
     action.change_state(target)
     graphs.refresh(self, set_limits=True)
 
 
 def change_right_yscale(action, target, self):
-    if target.get_string() == "log":
-        self.canvas.top_right_axis.set_yscale("log")
-        self.canvas.right_axis.set_yscale("log")
-        self.plot_settings.right_scale = "log"
-    else:
-        self.canvas.top_right_axis.set_yscale("linear")
-        self.canvas.right_axis.set_yscale("linear")
-        self.plot_settings.right_scale = "linear"
+    self.canvas.top_right_axis.set_yscale(target.get_string())
+    self.canvas.right_axis.set_yscale(target.get_string())
+    self.plot_settings.right_scale = target.get_string()
     action.change_state(target)
     graphs.refresh(self, set_limits=True)
 
 
 def change_top_xscale(action, target, self):
-    if target.get_string() == "log":
-        self.canvas.top_left_axis.set_xscale("log")
-        self.canvas.top_right_axis.set_xscale("log")
-        self.plot_settings.top_scale = "log"
-    else:
-        self.canvas.top_left_axis.set_xscale("linear")
-        self.canvas.top_right_axis.set_xscale("linear")
-        self.plot_settings.top_scale = "linear"
+    self.canvas.top_left_axis.set_xscale(target.get_string())
+    self.canvas.top_right_axis.set_xscale(target.get_string())
+    self.plot_settings.top_scale = target.get_string()
     action.change_state(target)
     graphs.refresh(self, set_limits=True)
 
 
 def change_bottom_xscale(action, target, self):
-    if target.get_string() == "log":
-        self.canvas.axis.set_xscale("log")
-        self.canvas.right_axis.set_xscale("log")
-        self.plot_settings.xscale = "log"
-    else:
-        self.canvas.axis.set_xscale("linear")
-        self.canvas.right_axis.set_xscale("linear")
-        self.plot_settings.xscale = "linear"
+    self.canvas.axis.set_xscale(target.get_string())
+    self.canvas.right_axis.set_xscale(target.get_string())
+    self.plot_settings.xscale = target.get_string()
     action.change_state(target)
     graphs.refresh(self, set_limits=True)
 

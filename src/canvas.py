@@ -213,13 +213,13 @@ class Canvas(FigureCanvas):
         for direction, used in used_axes.items():
             if used:
                 if direction in ["top", "bottom"]:
-                    limits[f"min_{direction}"], limits[f"max_{direction}"] = \
-                        plotting_tools.find_min_max(
-                        axis_map[direction], items[direction], "X")
-                if direction in ["left", "right"]:
-                    limits[f"min_{direction}"], limits[f"max_{direction}"] = \
-                        plotting_tools.find_min_max(
-                        axis_map[direction], items[direction], "Y")
+                    scale = axis_map[direction].get_xscale()
+                    datalist = [item.xdata for item in items[direction]]
+                elif direction in ["left", "right"]:
+                    scale = axis_map[direction].get_yscale()
+                    datalist = [item.ydata for item in items[direction]]
+                limits[f"min_{direction}"], limits[f"max_{direction}"] = \
+                    plotting_tools.find_min_max(scale, datalist)
 
         # Add padding to the limits
         self.set_limits(limits)
