@@ -82,6 +82,26 @@ def get_xrdml(self, import_settings):
     return xdata, ydata
 
 
+def get_xry(self, import_settings):
+    """
+    Import data from .xry files used by Leybold X-ray apparatus.
+
+    Slightly modified version of
+    https://github.com/rdbeerman/Readxry/blob/master/manual.py
+    """
+    with open(import_settings.path, "r", encoding="ISO-8859-1") as file:
+        rawdata = [line.strip() for line in file.readlines()]
+        b_min = float(rawdata[4].split()[0])
+        b_max = float(rawdata[4].split()[1])
+
+        ydata = numpy.array(rawdata[18:-11]).astype(float)
+        xdata = numpy.arange(b_min, b_max, (b_max - b_min) / len(ydata))
+
+        self.plot_settings.xlabel = "β (°)"
+        self.plot_settings.ylabel = "Intensity (s⁻¹)"
+        return xdata, ydata
+
+
 def get_column_file(self, import_settings):
     data_array = [[], []]
     path = import_settings.path
@@ -132,6 +152,8 @@ def get_column_file(self, import_settings):
 def get_data(self, import_settings):
     if import_settings.path.endswith(".xrdml"):
         return get_xrdml(self, import_settings)
+    if import_settings.path.endswith(".xry"):
+        return get_xry(self, import_settings)
     return get_column_file(self, import_settings)
 
 

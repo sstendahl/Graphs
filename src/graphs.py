@@ -37,8 +37,9 @@ def open_files(self, files, import_settings):
                 self.main_window.add_toast(toast)
                 continue
             except UnicodeDecodeError:
-                toast = "Could not open data, wrong filetype"
-                self.main_window.add_toast(toast)
+                message = "Could not open data, wrong filetype"
+                self.main_window.add_toast(message)
+                logging.exception(message)
                 continue
     ui.reload_item_menu(self)
     reload(self)
