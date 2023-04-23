@@ -97,7 +97,7 @@ def get_xry(self, import_settings):
         ydata = numpy.array(rawdata[18:-11]).astype(float)
         xdata = numpy.arange(b_min, b_max, (b_max - b_min) / len(ydata))
 
-        self.plot_settings.xlabel = f"β (°)"
+        self.plot_settings.xlabel = "β (°)"
         self.plot_settings.ylabel = "Intensity (s⁻¹)"
         return xdata, ydata
 
