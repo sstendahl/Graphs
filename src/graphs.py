@@ -24,7 +24,7 @@ def open_files(self, files, import_settings):
                 xdata, ydata = file_io.get_data(self, import_settings)
                 if xdata == []:
                     filename = Path(import_settings.path).name
-                    toast = f"Unable to retreive data for {filename}"
+                    toast = f"Unable to retrieve data for {filename}"
                     self.main_window.add_toast(toast)
                     continue
                 name = import_settings.name

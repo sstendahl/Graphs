@@ -94,10 +94,14 @@ def get_column_file(self, import_settings):
                     for index, value in enumerate(data_line):
                         data_line[index] = utilities.swap(value)
                 try:
-                    data_array[0].append(float(data_line[
-                        import_settings.column_x]))
-                    data_array[1].append(float(data_line[
-                        import_settings.column_y]))
+                    if len(data_line) == 1:
+                        data_array[0].append(i)
+                        data_array[1].append(float(data_line[0]))
+                    else:
+                        data_array[0].append(float(data_line[
+                            import_settings.column_x]))
+                        data_array[1].append(float(data_line[
+                            import_settings.column_y]))
 
                 # If it finds non-numbers, it will raise a ValueError,
                 # this is the cue to start looking for headers
