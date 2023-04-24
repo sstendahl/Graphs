@@ -113,15 +113,18 @@ def get_column_file(self, import_settings):
                 if import_settings.separator == ",":
                     for index, value in enumerate(data_line):
                         data_line[index] = utilities.swap(value)
-                try:
-                    data_array[0].append(float(data_line[
-                        import_settings.column_x]))
-                    data_array[1].append(float(data_line[
-                        import_settings.column_y]))
-
-                # If it finds non-numbers, it will raise a ValueError,
-                # this is the cue to start looking for headers
-                except ValueError:
+                if utilities.check_if_floats(data_line):
+                    if len(data_line) == 1:
+                        data_array[0].append(i)
+                        data_array[1].append(float(data_line[0]))
+                    else:
+                        data_array[0].append(float(data_line[
+                            import_settings.column_x]))
+                        data_array[1].append(float(data_line[
+                            import_settings.column_y]))
+                # If not all values in the line are floats, start looking for
+                # headers instead
+                else:
                     if import_settings.guess_headers:
                         # By default it will check for headers using at least
                         # two whitespaces as delimiter (often tabs), but if
