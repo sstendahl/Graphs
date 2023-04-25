@@ -3,6 +3,7 @@ import json
 import logging
 import os
 import shutil
+from gettext import gettext as _
 
 from gi.repository import Adw, Gtk
 
@@ -29,9 +30,9 @@ class Preferences():
         config_path = os.path.join(utilities.get_config_path(), "config.json")
         if not os.path.isfile(config_path):
             self.reset_config()
-            logging.info("New configuration file created")
+            logging.info(_("New configuration file created"))
         else:
-            logging.debug("Loading configuration file")
+            logging.debug(_("Loading configuration file"))
 
     def reset_config(self):
         config_path = utilities.get_config_path()
@@ -40,7 +41,7 @@ class Preferences():
         shutil.copy(
             os.path.join(self.parent.pkgdatadir, "config.json"),
             os.path.join(config_path, "config.json"))
-        logging.debug("Loaded new config")
+        logging.debug(_("Loaded new config"))
 
     def load_config(self):
         config_path = utilities.get_config_path()

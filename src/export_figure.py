@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
+from gettext import gettext as _
 from pathlib import Path
 
 from gi.repository import Adw, GLib, Gtk
@@ -48,7 +49,7 @@ class ExportFigureWindow(Adw.Window):
         transparent = self.transparent.get_active()
         dialog = Gtk.FileDialog()
         dialog.set_initial_name(f"{filename}.{file_suffix}")
-        dialog.set_accept_label("Export")
+        dialog.set_accept_label(_("Export"))
         dialog.set_filters(utilities.create_file_filters([(fmt, file_suffix)]))
         dialog.save(
             self.parent.main_window, None, self.on_figure_save_response, dpi,
@@ -62,6 +63,6 @@ class ExportFigureWindow(Adw.Window):
             if path is not None:
                 self.parent.canvas.figure.savefig(
                     path, dpi=dpi, format=file_suffix, transparent=transparent)
-                self.parent.main_window.add_toast("Exported Figure")
+                self.parent.main_window.add_toast(_("Exported Figure"))
         except GLib.GError:
             pass
