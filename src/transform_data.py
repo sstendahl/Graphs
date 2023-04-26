@@ -1,5 +1,6 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 import logging
+from gettext import gettext as _
 
 from gi.repository import Adw, Gtk
 
@@ -38,9 +39,8 @@ class TransformWindow(Adw.Window):
             operations.perform_operation(
                 parent, operations.transform, input_x, input_y, discard)
         except (NameError, SyntaxError) as exception:
-            exception_type = exception.__class__.__name__
-            toast = f"{exception_type}: Unable to do transformation, \
-make sure the syntax is correct"
+            toast = _("{name}: Unable to do transformation, \
+make sure the syntax is correct").format(name=exception.__class__.__name__)
             parent.main_window.add_toast(toast)
-            logging.exception("Unable to do transformation")
+            logging.exception(_("Unable to do transformation"))
         self.destroy()

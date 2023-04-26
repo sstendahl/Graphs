@@ -1,5 +1,6 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 import logging
+from gettext import gettext as _
 
 from graphs import graphs, utilities
 
@@ -42,7 +43,7 @@ def set_limit_padding(axis_direction, axis):
             axis.set_xlim(xmin, xmax)
     except ValueError:
         logging.error(
-            "Could not set limits, one of the values was probably infinite")
+            _("Could not set limits, one of the values was probably infinite"))
 
 
 def find_min_max(scale, datalist):

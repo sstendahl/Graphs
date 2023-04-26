@@ -2,6 +2,7 @@
 import os
 import pickle
 import re
+from gettext import gettext as _
 from xml.dom import minidom
 
 from graphs import utilities
@@ -61,9 +62,9 @@ def get_xrdml(self, import_settings):
     scan_type = file.getElementsByTagName("scan")
     scan_axis = scan_type[0].attributes["scanAxis"].value
     if scan_axis.startswith("2Theta"):
-        scan_axis = "2Theta"
+        scan_axis = _("2Theta")
     if scan_axis.startswith("Omega"):
-        scan_axis = "Omega"
+        scan_axis = _("Omega")
 
     data_points = file.getElementsByTagName("positions")
     for position in data_points:
@@ -78,7 +79,7 @@ def get_xrdml(self, import_settings):
             xdata = numpy.ndarray.tolist(xdata)
 
     self.plot_settings.xlabel = f"{scan_axis} ({unit})"
-    self.plot_settings.ylabel = "Intensity (cps)"
+    self.plot_settings.ylabel = _("Intensity (cps)")
     return xdata, ydata
 
 
@@ -97,8 +98,8 @@ def get_xry(self, import_settings):
         ydata = numpy.array(rawdata[18:-11]).astype(float)
         xdata = numpy.arange(b_min, b_max, (b_max - b_min) / len(ydata))
 
-        self.plot_settings.xlabel = "β (°)"
-        self.plot_settings.ylabel = "Intensity (s⁻¹)"
+        self.plot_settings.xlabel = _("β (°)")
+        self.plot_settings.ylabel = _("Intensity (s⁻¹)")
         return xdata, ydata
 
 
