@@ -1,5 +1,6 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 import logging
+from gettext import gettext as _
 
 from gi.repository import Adw, Gtk
 
@@ -46,7 +47,7 @@ class AddEquationWindow(Adw.Window):
             ui.reload_item_menu(parent)
             self.destroy()
         except (NameError, SyntaxError) as exception:
-            exception_type = exception.__class__.__name__
-            toast = f"{exception_type} - Unable to add data from equation"
+            toast = _("{error} - Unable to add data from equation").format(
+                error=exception.__class__.__name__)
             self.toast_overlay.add_toast(Adw.Toast(title=toast))
             logging.exception(toast)

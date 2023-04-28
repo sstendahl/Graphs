@@ -1,5 +1,6 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 import logging
+from gettext import gettext as _
 from pathlib import Path
 from pickle import UnpicklingError
 
@@ -33,11 +34,12 @@ def open_files(self, files, import_settings):
                 add_item(
                     self, Item(self, xdata, ydata, name))
             except IndexError:
-                toast = "Could not open data, the column index is out of range"
+                toast = \
+                    _("Could not open data, the column index is out of range")
                 self.main_window.add_toast(toast)
                 continue
             except UnicodeDecodeError:
-                message = "Could not open data, wrong filetype"
+                message = _("Could not open data, wrong filetype")
                 self.main_window.add_toast(message)
                 logging.exception(message)
                 continue
@@ -68,7 +70,7 @@ def open_project(self, path):
             self, utilities.get_selected_keys(self))
         reload(self)
     except (EOFError, UnpicklingError):
-        message = "Could not open project"
+        message = _("Could not open project")
         self.main_window.add_toast(message)
         logging.exception(message)
 
@@ -108,7 +110,7 @@ def delete_item(self, key, give_toast=False):
     del self.datadict[key]
     ui.reload_item_menu(self)
     if give_toast:
-        self.main_window.add_toast(f"Deleted {name}")
+        self.main_window.add_toast(_("Deleted {name}").format(name=name))
     clipboard.add(self)
     check_open_data(self)
 

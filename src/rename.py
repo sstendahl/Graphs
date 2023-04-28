@@ -1,4 +1,6 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
+from gettext import gettext as _
+
 from gi.repository import Adw, Gtk
 
 from graphs import graphs
@@ -13,16 +15,16 @@ class RenameWindow(Adw.Window):
 
     def __init__(self, parent, item):
         super().__init__()
-        title = "Rename Label"
-        group_title = "Change Label"
+        title = _("Rename Label")
+        group_title = _("Change Label")
         group_description = \
-            "Here you can change the label of the selected axis."
+            _("Here you can change the label of the selected axis.")
         text = item.get_text()
         if item == parent.canvas.title:
-            title = "Rename Title"
-            group_title = "Change Title"
+            title = _("Rename Title")
+            group_title = _("Change Title")
             group_description = \
-                "Here you can change the title of the plot."
+                _("Here you can change the title of the plot.")
             text = parent.plot_settings.title
         self.set_title(title)
         self.preferencegroup.set_title(group_title)

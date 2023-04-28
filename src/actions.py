@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Main actions."""
 import logging
+from gettext import gettext as _
 
 from gi.repository import Adw, Gtk
 
@@ -94,7 +95,7 @@ def export_data_action(_action, _target, self):
         filename = f"{list(self.datadict.values())[0].name}.txt"
         dialog.set_initial_name(filename)
         dialog.set_filters(
-            utilities.create_file_filters([("Text Files", "txt")]))
+            utilities.create_file_filters([(_("Text Files"), "txt")]))
         dialog.save(
             self.main_window, None, ui.on_export_data_response, self, False)
 
@@ -110,7 +111,7 @@ def plot_styles_action(_action, _target, self):
 def save_project_action(_action, _target, self):
     dialog = Gtk.FileDialog()
     dialog.set_filters(
-        utilities.create_file_filters([("Graphs Project File", "graphs")]))
+        utilities.create_file_filters([(_("Graphs Project File"), "graphs")]))
     dialog.set_initial_name("project.graphs")
     dialog.save(self.main_window, None, ui.on_save_project_response, self)
 
@@ -122,8 +123,8 @@ def open_project_action(_action, _target, self):
         dialog = Adw.MessageDialog.new(self.main_window,
                                        heading,
                                        body)
-        dialog.add_response("cancel", "Cancel")
-        dialog.add_response("discard", "Discard")
+        dialog.add_response("cancel", _("Cancel"))
+        dialog.add_response("discard", _("Discard"))
         dialog.set_close_response("cancel")
         dialog.set_default_response("discard")
         dialog.set_response_appearance("discard",
@@ -133,7 +134,7 @@ def open_project_action(_action, _target, self):
         return
     dialog = Gtk.FileDialog()
     dialog.set_filters(
-        utilities.create_file_filters([("Graphs Project File", "graphs")]))
+        utilities.create_file_filters([(_("Graphs Project File"), "graphs")]))
     dialog.open(self.main_window, None, ui.on_open_project_response, self)
 
 
@@ -147,9 +148,8 @@ def translate_x_action(_action, _target, self):
     try:
         offset = eval(win.translate_x_entry.get_text())
     except ValueError as exception:
-        exception_type = exception.__class__.__name__
-        message = f"{exception_type}: Unable to do translation, \
-make sure to enter a valid number"
+        message = _("{error}: Unable to do translation, \
+make sure to enter a valid number").format(error=exception.__class__.__name__)
         win.add_toast(message)
         logging.exception(message)
         offset = 0
@@ -161,9 +161,8 @@ def translate_y_action(_action, _target, self):
     try:
         offset = eval(win.translate_y_entry.get_text())
     except ValueError as exception:
-        exception_type = exception.__class__.__name__
-        message = f"{exception_type}: Unable to do translation, \
-make sure to enter a valid number"
+        message = _("{error}: Unable to do translation, \
+make sure to enter a valid number").format(error=exception.__class__.__name__)
         win.add_toast(message)
         logging.exception(message)
         offset = 0
@@ -175,9 +174,8 @@ def multiply_x_action(_action, _target, self):
     try:
         multiplier = eval(win.multiply_x_entry.get_text())
     except ValueError as exception:
-        exception_type = exception.__class__.__name__
-        message = f"{exception_type}: Unable to do multiplication, \
-make sure to enter a valid number"
+        message = _("{error}: Unable to do translation, \
+make sure to enter a valid number").format(error=exception.__class__.__name__)
         win.add_toast(message)
         logging.exception(message)
         multiplier = 1
@@ -189,9 +187,8 @@ def multiply_y_action(_action, _target, self):
     try:
         multiplier = eval(win.multiply_y_entry.get_text())
     except ValueError as exception:
-        exception_type = exception.__class__.__name__
-        message = f"{exception_type}: Unable to do multiplication, \
-make sure to enter a valid number"
+        message = _("{error}: Unable to do translation, \
+make sure to enter a valid number").format(error=exception.__class__.__name__)
         win.add_toast(message)
         logging.exception(message)
         multiplier = 1

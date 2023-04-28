@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 import os
 import shutil
+from gettext import gettext as _
 from pathlib import Path
 
 from cycler import cycler
@@ -203,8 +204,8 @@ class PlotStylesWindow(Adw.Window):
         dialog = Adw.MessageDialog.new(self,
                                        heading,
                                        body)
-        dialog.add_response("cancel", "Cancel")
-        dialog.add_response("reset", "Reset")
+        dialog.add_response("cancel", _("Cancel"))
+        dialog.add_response("reset", _("Reset"))
         dialog.set_close_response("cancel")
         dialog.set_default_response("delete")
         dialog.set_response_appearance("reset",
@@ -228,12 +229,13 @@ class PlotStylesWindow(Adw.Window):
         self.reload_styles()
         self.style = None
         self.leaflet.navigate(0)
-        self.set_title("Plot Styles")
+        self.set_title(_("Plot Styles"))
         graphs.reload(self.parent, reset_limits=False)
 
     def edit_line_colors(self, _):
         self.leaflet.navigate(1)
-        self.set_title(f"{self.style['name']} - line colors")
+        self.set_title(
+            _("{name} - line colors").format(name=self.style["name"]))
 
     def back_line_colors(self, _):
         self.leaflet.navigate(0)
@@ -416,8 +418,8 @@ class PlotStylesWindow(Adw.Window):
         dialog = Adw.MessageDialog.new(self,
                                        heading,
                                        body)
-        dialog.add_response("cancel", "Cancel")
-        dialog.add_response("delete", "Delete")
+        dialog.add_response("cancel", _("Cancel"))
+        dialog.add_response("delete", _("Delete"))
         dialog.set_close_response("cancel")
         dialog.set_default_response("delete")
         dialog.set_response_appearance("delete",
@@ -538,17 +540,19 @@ class AddStyleWindow(Adw.Window):
             self.plot_style_templates, get_user_styles(parent).keys())
         selected_item = \
             self.plot_style_templates.get_selected_item().get_string()
-        self.new_style_name.set_text(f"{selected_item} (copy)")
+        self.new_style_name.set_text(
+            _("{name} (copy)").format(name=selected_item))
         self.confirm_button.connect("clicked", self.on_confirm)
-        self.plot_style_templates.connect("notify::selected",
-                                          self.on_template_changed)
+        self.plot_style_templates.connect(
+            "notify::selected", self.on_template_changed)
         self.set_transient_for(parent)
         self.present()
 
     def on_template_changed(self, _, __):
         selected_item = \
             self.plot_style_templates.get_selected_item().get_string()
-        self.new_style_name.set_text(f"{selected_item} (copy)")
+        self.new_style_name.set_text(
+            _("{name} (copy)").format(name=selected_item))
 
     def on_confirm(self, _):
         style = self.plot_style_templates.get_selected_item().get_string()
