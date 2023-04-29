@@ -1,5 +1,6 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 import os
+from gettext import gettext as _
 from pathlib import Path
 
 from gi.repository import Gdk, Gio, Gtk
@@ -78,32 +79,25 @@ def add_new_config_keys(config, template):
 
 def set_chooser(chooser, choice):
     """Set the value of a dropdown menu to the choice parameter string"""
-    model = chooser.get_model()
-    for index, option in enumerate(model):
-        if option.get_string() == choice:
+    for index, item in enumerate(chooser.untranslated_items):
+        if item == choice:
             chooser.set_selected(index)
 
 
-def empty_chooser(chooser):
-    """Remove all the values in a dropdown menu"""
-    model = chooser.get_model()
-    for _index in model:
-        model.remove(0)
-
-
-def populate_chooser(chooser, chooser_list, clear=True):
+def populate_chooser(chooser, chooser_list, translate=True):
     """Fill the dropdown menu with the strings in a chooser_list"""
-    model = chooser.get_model()
-    if clear:
-        for _item in model:
-            model.remove(0)
+    chooser.untranslated_items = []
+    model = Gtk.StringList()
     for item in chooser_list:
-        if item != "nothing":
-            model.append(str(item))
+        chooser.untranslated_items.append(item)
+        if translate:
+            item = _(item)
+        model.append(item)
+    chooser.set_model(model)
 
 
-def get_chooser_list(chooser):
-    return [item.get_string() for item in chooser.get_model()]
+def get_selected_chooser_item(chooser):
+    return chooser.untranslated_items[int(chooser.get_selected())]
 
 
 def get_all_names(parent):

@@ -8,9 +8,7 @@ from cycler import cycler
 
 from gi.repository import Adw, GLib, Gtk
 
-from graphs import file_io, graphs, utilities
-
-from matplotlib.lines import Line2D
+from graphs import file_io, graphs, misc, utilities
 
 
 def get_system_styles(self):
@@ -157,12 +155,11 @@ class PlotStylesWindow(Adw.Window):
         self.set_title("Plot Styles")
 
         # setup editor
-        self.marker_dict = Line2D.markers.copy()
-        self.marker_dict["none"] = "none"
         self.font_chooser.set_use_font(True)
         self.linewidth.set_range(0, 10)
-        utilities.populate_chooser(
-            self.markers, sorted(self.marker_dict.values()))
+        utilities.populate_chooser(self.linestyle, misc.LINESTYLES)
+        utilities.populate_chooser(self.markers, sorted(misc.MARKERS.keys()))
+        utilities.populate_chooser(self.tick_direction, misc.TICK_DIRECTIONS)
         self.markersize.set_range(0, 10)
         self.major_tick_width.set_range(0, 4)
         self.minor_tick_width.set_range(0, 4)
@@ -224,7 +221,7 @@ class PlotStylesWindow(Adw.Window):
         self.leaflet.navigate(1)
         self.set_title(style)
 
-    def back(self, _):
+    def back(self, _button):
         self.save_style()
         self.reload_styles()
         self.style = None
@@ -254,7 +251,8 @@ class PlotStylesWindow(Adw.Window):
         utilities.set_chooser(self.linestyle, style["lines.linestyle"])
         self.linewidth.set_value(float(style["lines.linewidth"]))
         utilities.set_chooser(
-            self.markers, self.marker_dict[style["lines.marker"]])
+            self.markers, utilities.get_dict_by_value(
+                misc.MARKERS, style["lines.marker"]))
         self.markersize.set_value(float(style["lines.markersize"]))
 
         # ticks
@@ -326,14 +324,15 @@ class PlotStylesWindow(Adw.Window):
 
         # lines
         style["lines.linestyle"] = \
-            self.linestyle.get_selected_item().get_string()
+            utilities.get_selected_chooser_item(self.linestyle)
         style["lines.linewidth"] = self.linewidth.get_value()
-        style["lines.marker"] = utilities.get_dict_by_value(
-            self.marker_dict, self.markers.get_selected_item().get_string())
+        style["lines.marker"] = \
+            misc.MARKERS[utilities.get_selected_chooser_item(self.markers)]
         style["lines.markersize"] = self.markersize.get_value()
 
         # ticks
-        tick_direction = self.tick_direction.get_selected_item().get_string()
+        tick_direction = \
+            utilities.get_selected_chooser_item(self.tick_direction)
         style["xtick.direction"] = tick_direction
         style["ytick.direction"] = tick_direction
         minor_ticks = self.minor_ticks.get_active()
@@ -537,9 +536,9 @@ class AddStyleWindow(Adw.Window):
         super().__init__()
         self.parent = parent
         utilities.populate_chooser(
-            self.plot_style_templates, get_user_styles(parent).keys())
+            self.plot_style_templates, get_user_styles(parent).keys(), False)
         selected_item = \
-            self.plot_style_templates.get_selected_item().get_string()
+            utilities.get_selected_chooser_item(self.plot_style_templates)
         self.new_style_name.set_text(
             _("{name} (copy)").format(name=selected_item))
         self.confirm_button.connect("clicked", self.on_confirm)
@@ -550,12 +549,12 @@ class AddStyleWindow(Adw.Window):
 
     def on_template_changed(self, _, __):
         selected_item = \
-            self.plot_style_templates.get_selected_item().get_string()
+            utilities.get_selected_chooser_item(self.plot_style_templates)
         self.new_style_name.set_text(
             _("{name} (copy)").format(name=selected_item))
 
     def on_confirm(self, _):
-        style = self.plot_style_templates.get_selected_item().get_string()
+        style = utilities.get_selected_chooser_item(self.plot_style_templates)
         name = self.new_style_name.get_text()
         self.parent.copy_style(self, style, name)
         self.close()

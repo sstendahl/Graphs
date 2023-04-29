@@ -118,33 +118,21 @@ template PlotSettingsWindow : Adw.PreferencesWindow {
       Adw.ComboRow plot_x_scale {
         title: _("Bottom Axis Scale");
         subtitle: _("Scaling on the bottom axis");
-        model: StringList {
-          strings ["log", "linear"]
-        };
       }
 
       Adw.ComboRow plot_y_scale {
         title: _("Left Axis Scale");
         subtitle: _("Scaling used for the left-hand axis");
-        model: StringList {
-          strings ["log", "linear"]
-        };
       }
 
       Adw.ComboRow plot_top_scale {
         title: _("Top Axis Scale");
         subtitle: _("Scaling used for the top axis");
-        model: StringList {
-          strings ["log", "linear"]
-        };
       }
 
       Adw.ComboRow plot_right_scale {
         title: _("Right Axis Scale");
         subtitle: _("Scaling used for the right-hand axis");
-        model: StringList {
-          strings ["log", "linear"]
-        };
       }
     }
 
@@ -158,11 +146,8 @@ template PlotSettingsWindow : Adw.PreferencesWindow {
         Adw.ComboRow plot_legend_position {
           title: _("Legend position");
           subtitle: _("The position of the legend");
-          model: StringList {
-          strings ["Best", "Upper right", "Upper left", "Lower left", "Lower right", "Center left", "Center right", "Lower center", "Upper center", "Center"]
-        };
+        }
       }
-    }
 
       Adw.ExpanderRow use_custom_plot_style {
         title: _("Custom Plot Style");
@@ -171,7 +156,6 @@ template PlotSettingsWindow : Adw.PreferencesWindow {
         Adw.ComboRow custom_plot_style {
           title: _("Graph Style");
           subtitle: _("The style sheet used for the graph");
-          model: StringList {};
         }
       }
     }
