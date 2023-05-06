@@ -1,7 +1,5 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
-import os
-
-from gi.repository import Adw, GLib, Gtk, Gio
+from gi.repository import Adw, GLib, Gio, Gtk
 
 from graphs import file_io, graphs, utilities
 from graphs.item_box import ItemBox
@@ -108,7 +106,7 @@ def show_about_window(self):
                             copyright=f"© {self.copyright} {self.author}",
                             license_type="GTK_LICENSE_GPL_3_0")
     whats_new_file = Gio.File.new_for_uri(
-            "resource:///se/sjoerd/Graphs/whats_new")
+        "resource:///se/sjoerd/Graphs/whats_new")
     release_notes = whats_new_file.read(None).read_bytes(8192, None).get_data()
     about.set_release_notes(release_notes.decode("utf-8"))
     about.present()

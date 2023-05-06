@@ -2,10 +2,9 @@
 import json
 import logging
 import os
-import shutil
 from gettext import gettext as _
 
-from gi.repository import Adw, Gtk, Gio
+from gi.repository import Adw, Gio, Gtk
 
 from graphs import graphs, plot_styles, utilities
 
