@@ -5,7 +5,7 @@ import os
 import shutil
 from gettext import gettext as _
 
-from gi.repository import Adw, Gtk
+from gi.repository import Adw, Gtk, Gio
 
 from graphs import graphs, plot_styles, utilities
 
@@ -18,9 +18,10 @@ class Preferences():
         self.check_config(self.config)
 
     def check_config(self, config):
-        template_path = os.path.join(self.parent.pkgdatadir, "config.json")
-        with open(template_path, "r", encoding="utf-8") as file:
-            template = json.load(file)
+        template_file = Gio.File.new_for_uri(
+            "resource:///se/sjoerd/Graphs/config.json")
+        template = json.loads(
+            template_file.read(None).read_bytes(8192, None).get_data())
         if set(config.keys()) != set(template.keys()):
             config = utilities.remove_unused_config_keys(config, template)
             config = utilities.add_new_config_keys(config, template)
@@ -38,9 +39,11 @@ class Preferences():
         config_path = utilities.get_config_path()
         if not os.path.isdir(config_path):
             os.mkdir(config_path)
-        shutil.copy(
-            os.path.join(self.parent.pkgdatadir, "config.json"),
+        template_file = Gio.File.new_for_uri(
+            "resource:///se/sjoerd/Graphs/config.json")
+        config_file = Gio.File.new_for_path(
             os.path.join(config_path, "config.json"))
+        template_file.copy(config_file, Gio.FileCopyFlags(1), None, None, None)
         logging.debug(_("Loaded new config"))
 
     def load_config(self):

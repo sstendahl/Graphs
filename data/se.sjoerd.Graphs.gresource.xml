@@ -17,6 +17,8 @@
     <file preprocess="xml-stripblanks">ui/style_color_box.ui</file>
     <file preprocess="xml-stripblanks">ui/transform_window.ui</file>
     <file preprocess="xml-stripblanks">ui/window.ui</file>
+    <file preprocess="json-stripblanks" compressed="True">config.json</file>
+    <file compressed="True">whats_new</file>
   </gresource>
   <gresource prefix="/se/sjoerd/Graphs/icons/scalable/actions/">
     <file preprocess="xml-stripblanks" alias="axes-one-quadrant-symbolic.svg">icons/axes-one-quadrant-symbolic.svg</file>

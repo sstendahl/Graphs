@@ -105,9 +105,6 @@ install_data(
   install_dir: join_paths(datadir, symbolic_dir)
 )
 
-install_data('config.json', install_dir: pkgdatadir, install_mode: 'rwxrwxrwx')
-install_data('whats_new', install_dir: pkgdatadir, install_mode: 'rwxrwxrwx')
-
 styles = files(
   'styles/adwaita.mplstyle',
   'styles/adwaita-dark.mplstyle',
