@@ -16,7 +16,7 @@ description_short = 'Plot and manipulate data in a breeze'
 
 i18n = import('i18n')
 gnome = import('gnome')
-python = import('python')
+python = import('python').find_installation('python3')
 
 prefix = get_option('prefix')
 datadir = get_option('datadir')
@@ -43,7 +43,7 @@ conf.set('LOCALEDIR', localedir)
 conf.set('NAME', name)
 conf.set('PKGDATADIR', pkgdatadir)
 conf.set('PROJECT_NAME', project_name)
-conf.set('PYTHON', python.find_installation('python3').full_path())
+conf.set('PYTHON', python.full_path())
 conf.set('VERSION', version)
 conf.set('HOMEPAGE_URL', homepage_url)
 
