@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: graphs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-25 21:15+0200\n"
+"POT-Creation-Date: 2023-04-29 20:52+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -37,44 +37,44 @@ msgstr ""
 msgid "The character that is used as decimal separator"
 msgstr ""
 
-#: data/ui/add_data_advanced.blp:48 data/ui/preferences.blp:30
+#: data/ui/add_data_advanced.blp:45 data/ui/preferences.blp:27
 msgid "Column X"
 msgstr ""
 
-#: data/ui/add_data_advanced.blp:49
+#: data/ui/add_data_advanced.blp:46
 msgid "Choose which column to load for the X-data"
 msgstr ""
 
-#: data/ui/add_data_advanced.blp:63 data/ui/preferences.blp:47
+#: data/ui/add_data_advanced.blp:60 data/ui/preferences.blp:44
 msgid "Column Y"
 msgstr ""
 
-#: data/ui/add_data_advanced.blp:64
+#: data/ui/add_data_advanced.blp:61
 msgid "Choose which column to load for the Y-data"
 msgstr ""
 
-#: data/ui/add_data_advanced.blp:78 data/ui/preferences.blp:64
+#: data/ui/add_data_advanced.blp:75 data/ui/preferences.blp:61
 msgid "Skip Rows"
 msgstr ""
 
-#: data/ui/add_data_advanced.blp:79
+#: data/ui/add_data_advanced.blp:76
 msgid "Choose how many rows to skip while loading data"
 msgstr ""
 
-#: data/ui/add_data_advanced.blp:93
+#: data/ui/add_data_advanced.blp:90
 msgid "Retrieve Label"
 msgstr ""
 
-#: data/ui/add_data_advanced.blp:94 data/ui/preferences.blp:227
+#: data/ui/add_data_advanced.blp:91 data/ui/preferences.blp:215
 msgid "Try and retrieve label from the header in the dataset"
 msgstr ""
 
-#: data/ui/add_data_advanced.blp:105
+#: data/ui/add_data_advanced.blp:102
 msgid "Open Files"
 msgstr ""
 
 #: data/ui/add_equation_window.blp:7 data/ui/add_equation_window.blp:84
-#: data/ui/preferences.blp:81
+#: data/ui/preferences.blp:78
 msgid "Add Equation"
 msgstr ""
 
@@ -114,11 +114,11 @@ msgstr ""
 msgid "The template style used for the new style"
 msgstr ""
 
-#: data/ui/add_style.blp:37
+#: data/ui/add_style.blp:36
 msgid "New Style Name"
 msgstr ""
 
-#: data/ui/add_style.blp:47
+#: data/ui/add_style.blp:46
 msgid "Add New Style"
 msgstr ""
 
@@ -130,71 +130,71 @@ msgstr ""
 msgid "Choose which item to edit"
 msgstr ""
 
-#: data/ui/edit_item.blp:23
+#: data/ui/edit_item.blp:22
 msgid "Data"
 msgstr ""
 
-#: data/ui/edit_item.blp:24
+#: data/ui/edit_item.blp:23
 msgid "Change the name of the data set and the axis positions"
 msgstr ""
 
-#: data/ui/edit_item.blp:27
+#: data/ui/edit_item.blp:26
 msgid "Change Name"
 msgstr ""
 
-#: data/ui/edit_item.blp:32
+#: data/ui/edit_item.blp:31
 msgid "X-Axis Position"
 msgstr ""
 
-#: data/ui/edit_item.blp:33 data/ui/preferences.blp:274
+#: data/ui/edit_item.blp:32 data/ui/preferences.blp:250
 msgid "The position of the X-axis"
 msgstr ""
 
-#: data/ui/edit_item.blp:40
+#: data/ui/edit_item.blp:36
 msgid "Y-Axis Position"
 msgstr ""
 
-#: data/ui/edit_item.blp:41
+#: data/ui/edit_item.blp:37
 msgid "The position of the Y-axis"
 msgstr ""
 
-#: data/ui/edit_item.blp:49
+#: data/ui/edit_item.blp:42
 msgid "Line Style"
 msgstr ""
 
-#: data/ui/edit_item.blp:50
+#: data/ui/edit_item.blp:43
 msgid "Change properties of the lines"
 msgstr ""
 
-#: data/ui/edit_item.blp:53
+#: data/ui/edit_item.blp:46
 msgid "Linestyle"
 msgstr ""
 
-#: data/ui/edit_item.blp:54
+#: data/ui/edit_item.blp:47
 msgid "The linestyle"
 msgstr ""
 
-#: data/ui/edit_item.blp:61
+#: data/ui/edit_item.blp:51
 msgid "Linewidth"
 msgstr ""
 
-#: data/ui/edit_item.blp:62
+#: data/ui/edit_item.blp:52
 msgid "The width of lines"
 msgstr ""
 
-#: data/ui/edit_item.blp:71
+#: data/ui/edit_item.blp:61
 msgid "Markers"
 msgstr ""
 
-#: data/ui/edit_item.blp:72
+#: data/ui/edit_item.blp:62
 msgid "The markers that are used"
 msgstr ""
 
-#: data/ui/edit_item.blp:79
+#: data/ui/edit_item.blp:66
 msgid "Marker Size"
 msgstr ""
 
-#: data/ui/edit_item.blp:80
+#: data/ui/edit_item.blp:67
 msgid "The size of the markers"
 msgstr ""
 
@@ -210,23 +210,23 @@ msgstr ""
 msgid "In which file format should the graph be exported?"
 msgstr ""
 
-#: data/ui/export_figure.blp:36
+#: data/ui/export_figure.blp:35
 msgid "Graph dpi"
 msgstr ""
 
-#: data/ui/export_figure.blp:37
+#: data/ui/export_figure.blp:36
 msgid "Set the resolution of the graph in dots per inch "
 msgstr ""
 
-#: data/ui/export_figure.blp:52 data/ui/preferences.blp:134
+#: data/ui/export_figure.blp:51 data/ui/preferences.blp:128
 msgid "Transparent Background"
 msgstr ""
 
-#: data/ui/export_figure.blp:53
+#: data/ui/export_figure.blp:52
 msgid "Export using a transparent background."
 msgstr ""
 
-#: data/ui/export_figure.blp:64 src/export_figure.py:52
+#: data/ui/export_figure.blp:63 src/export_figure.py:52
 msgid "Export"
 msgstr ""
 
@@ -393,7 +393,7 @@ msgstr ""
 msgid "Remove"
 msgstr ""
 
-#: data/ui/plot_settings.blp:18 data/ui/preferences.blp:202
+#: data/ui/plot_settings.blp:18 data/ui/preferences.blp:190
 msgid "Plot Labels"
 msgstr ""
 
@@ -485,67 +485,67 @@ msgstr ""
 msgid "Scaling on the bottom axis"
 msgstr ""
 
-#: data/ui/plot_settings.blp:127
+#: data/ui/plot_settings.blp:124
 msgid "Left Axis Scale"
 msgstr ""
 
-#: data/ui/plot_settings.blp:128
+#: data/ui/plot_settings.blp:125
 msgid "Scaling used for the left-hand axis"
 msgstr ""
 
-#: data/ui/plot_settings.blp:135
+#: data/ui/plot_settings.blp:129
 msgid "Top Axis Scale"
 msgstr ""
 
-#: data/ui/plot_settings.blp:136
+#: data/ui/plot_settings.blp:130
 msgid "Scaling used for the top axis"
 msgstr ""
 
-#: data/ui/plot_settings.blp:143
+#: data/ui/plot_settings.blp:134
 msgid "Right Axis Scale"
 msgstr ""
 
-#: data/ui/plot_settings.blp:144
+#: data/ui/plot_settings.blp:135
 msgid "Scaling used for the right-hand axis"
 msgstr ""
 
-#: data/ui/plot_settings.blp:152
+#: data/ui/plot_settings.blp:140
 msgid "Style"
 msgstr ""
 
-#: data/ui/plot_settings.blp:153
+#: data/ui/plot_settings.blp:141
 msgid "Settings for the graph style"
 msgstr ""
 
-#: data/ui/plot_settings.blp:155 data/ui/preferences.blp:294
+#: data/ui/plot_settings.blp:143 data/ui/preferences.blp:264
 msgid "Legend"
 msgstr ""
 
-#: data/ui/plot_settings.blp:156
+#: data/ui/plot_settings.blp:144
 msgid "Use a legend for the lines"
 msgstr ""
 
-#: data/ui/plot_settings.blp:159 data/ui/preferences.blp:298
+#: data/ui/plot_settings.blp:147 data/ui/preferences.blp:268
 msgid "Legend position"
 msgstr ""
 
-#: data/ui/plot_settings.blp:160
+#: data/ui/plot_settings.blp:148
 msgid "The position of the legend"
 msgstr ""
 
-#: data/ui/plot_settings.blp:168 data/ui/preferences.blp:307
+#: data/ui/plot_settings.blp:153 data/ui/preferences.blp:274
 msgid "Custom Plot Style"
 msgstr ""
 
-#: data/ui/plot_settings.blp:169
+#: data/ui/plot_settings.blp:154
 msgid "Use a custom plot style instead of following the system style"
 msgstr ""
 
-#: data/ui/plot_settings.blp:172
+#: data/ui/plot_settings.blp:157
 msgid "Graph Style"
 msgstr ""
 
-#: data/ui/plot_settings.blp:173
+#: data/ui/plot_settings.blp:158
 msgid "The style sheet used for the graph"
 msgstr ""
 
@@ -561,228 +561,228 @@ msgstr ""
 msgid "Delimiter"
 msgstr ""
 
-#: data/ui/preferences.blp:31
+#: data/ui/preferences.blp:28
 msgid "Which column to load for the X-data"
 msgstr ""
 
-#: data/ui/preferences.blp:48
+#: data/ui/preferences.blp:45
 msgid "Which column to load for the Y-data"
 msgstr ""
 
-#: data/ui/preferences.blp:65
+#: data/ui/preferences.blp:62
 msgid "How many rows to skip while loading data"
 msgstr ""
 
-#: data/ui/preferences.blp:82
+#: data/ui/preferences.blp:79
 msgid "Settings for the \"Add Equation\" option"
 msgstr ""
 
-#: data/ui/preferences.blp:85
+#: data/ui/preferences.blp:82
 msgid "Default Equation: Y ="
 msgstr ""
 
-#: data/ui/preferences.blp:90
+#: data/ui/preferences.blp:87
 msgid "Default X start"
 msgstr ""
 
-#: data/ui/preferences.blp:95
+#: data/ui/preferences.blp:92
 msgid "Default X stop"
 msgstr ""
 
-#: data/ui/preferences.blp:100
+#: data/ui/preferences.blp:97
 msgid "Default Step Size"
 msgstr ""
 
-#: data/ui/preferences.blp:106
+#: data/ui/preferences.blp:103
 msgid "Export Options"
 msgstr ""
 
-#: data/ui/preferences.blp:107
+#: data/ui/preferences.blp:104
 msgid "Options for exporting the graph"
 msgstr ""
 
-#: data/ui/preferences.blp:110
+#: data/ui/preferences.blp:107
 msgid "Default Filetype"
 msgstr ""
 
-#: data/ui/preferences.blp:111
+#: data/ui/preferences.blp:108
 msgid "The default filetype of saved graphs"
 msgstr ""
 
-#: data/ui/preferences.blp:118
+#: data/ui/preferences.blp:112
 msgid "Default dpi"
 msgstr ""
 
-#: data/ui/preferences.blp:119
+#: data/ui/preferences.blp:113
 msgid "The default resolution of saved graphs in dots per inch"
 msgstr ""
 
-#: data/ui/preferences.blp:135
+#: data/ui/preferences.blp:129
 msgid "Use a transparent background for the saved plots by default"
 msgstr ""
 
-#: data/ui/preferences.blp:145
+#: data/ui/preferences.blp:139
 msgid "Action Behaviour"
 msgstr ""
 
-#: data/ui/preferences.blp:146
+#: data/ui/preferences.blp:140
 msgid "Behaviour of specific actions"
 msgstr ""
 
-#: data/ui/preferences.blp:149
+#: data/ui/preferences.blp:143
 msgid "Center Data"
 msgstr ""
 
-#: data/ui/preferences.blp:150
+#: data/ui/preferences.blp:144
 msgid "The behaviour of the center data button"
 msgstr ""
 
-#: data/ui/preferences.blp:158
+#: data/ui/preferences.blp:149
 msgid "Other"
 msgstr ""
 
-#: data/ui/preferences.blp:159
+#: data/ui/preferences.blp:150
 msgid "Other general settings"
 msgstr ""
 
-#: data/ui/preferences.blp:162
+#: data/ui/preferences.blp:153
 msgid "Clipboard length"
 msgstr ""
 
-#: data/ui/preferences.blp:163
+#: data/ui/preferences.blp:154
 msgid "Choose how many states are stored in the clipboard"
 msgstr ""
 
-#: data/ui/preferences.blp:178
+#: data/ui/preferences.blp:169
 msgid "Handle duplicate entries"
 msgstr ""
 
-#: data/ui/preferences.blp:179
+#: data/ui/preferences.blp:170
 msgid "Choose how to handle duplicate entries to be loaded"
 msgstr ""
 
-#: data/ui/preferences.blp:186
+#: data/ui/preferences.blp:174
 msgid "Hide Unselected"
 msgstr ""
 
-#: data/ui/preferences.blp:187
+#: data/ui/preferences.blp:175
 msgid "Whether to hide items, that aren't selected"
 msgstr ""
 
-#: data/ui/preferences.blp:203
+#: data/ui/preferences.blp:191
 msgid "Set the labels and title that are used by default"
 msgstr ""
 
-#: data/ui/preferences.blp:206
+#: data/ui/preferences.blp:194
 msgid "Default Title"
 msgstr ""
 
-#: data/ui/preferences.blp:210
+#: data/ui/preferences.blp:198
 msgid "Default Bottom Axis label"
 msgstr ""
 
-#: data/ui/preferences.blp:214
+#: data/ui/preferences.blp:202
 msgid "Default Left Axis Label"
 msgstr ""
 
-#: data/ui/preferences.blp:218
+#: data/ui/preferences.blp:206
 msgid "Default Top Axis label"
 msgstr ""
 
-#: data/ui/preferences.blp:222
+#: data/ui/preferences.blp:210
 msgid "Default Right Axis Label"
 msgstr ""
 
-#: data/ui/preferences.blp:226
+#: data/ui/preferences.blp:214
 msgid "Retrieve label"
 msgstr ""
 
-#: data/ui/preferences.blp:237
+#: data/ui/preferences.blp:225
 msgid "Axes settings"
 msgstr ""
 
-#: data/ui/preferences.blp:238
+#: data/ui/preferences.blp:226
 msgid "Set the default axes scale and position used upon launch"
 msgstr ""
 
-#: data/ui/preferences.blp:241
+#: data/ui/preferences.blp:229
 msgid "Default Bottom Axis Scale"
 msgstr ""
 
-#: data/ui/preferences.blp:242
+#: data/ui/preferences.blp:230
 msgid "The scaling on the bottom axis"
 msgstr ""
 
-#: data/ui/preferences.blp:249
+#: data/ui/preferences.blp:234
 msgid "Default Left Axis Scale"
 msgstr ""
 
-#: data/ui/preferences.blp:250
+#: data/ui/preferences.blp:235
 msgid "The scaling on the left-hand axis"
 msgstr ""
 
-#: data/ui/preferences.blp:257
+#: data/ui/preferences.blp:239
 msgid "Default Top Axis Scale"
 msgstr ""
 
-#: data/ui/preferences.blp:258
+#: data/ui/preferences.blp:240
 msgid "The scaling on the top axis"
 msgstr ""
 
-#: data/ui/preferences.blp:265
+#: data/ui/preferences.blp:244
 msgid "Default Right Axis Scale"
 msgstr ""
 
-#: data/ui/preferences.blp:266
+#: data/ui/preferences.blp:245
 msgid "The scaling on the right-hand axis"
 msgstr ""
 
-#: data/ui/preferences.blp:273
+#: data/ui/preferences.blp:249
 msgid "Default X-Axis Position"
 msgstr ""
 
-#: data/ui/preferences.blp:281
+#: data/ui/preferences.blp:254
 msgid "Default Y-Axis Position"
 msgstr ""
 
-#: data/ui/preferences.blp:282
+#: data/ui/preferences.blp:255
 msgid "The default position of the Y-axis"
 msgstr ""
 
-#: data/ui/preferences.blp:290
+#: data/ui/preferences.blp:260
 msgid "Styling"
 msgstr ""
 
-#: data/ui/preferences.blp:291
+#: data/ui/preferences.blp:261
 msgid "Change default plot style and other visual changes"
 msgstr ""
 
-#: data/ui/preferences.blp:295
+#: data/ui/preferences.blp:265
 msgid "Use a legend by default"
 msgstr ""
 
-#: data/ui/preferences.blp:299
+#: data/ui/preferences.blp:269
 msgid "The default position of the legend"
 msgstr ""
 
-#: data/ui/preferences.blp:308
+#: data/ui/preferences.blp:275
 msgid ""
 "Use a custom plot style instead of following the system style by default"
 msgstr ""
 
-#: data/ui/preferences.blp:312
+#: data/ui/preferences.blp:279
 msgid "Custom Style"
 msgstr ""
 
-#: data/ui/preferences.blp:313
+#: data/ui/preferences.blp:280
 msgid "The custom style sheet used by default"
 msgstr ""
 
-#: data/ui/preferences.blp:318
+#: data/ui/preferences.blp:284
 msgid "Override Line Styling on Style Change"
 msgstr ""
 
-#: data/ui/preferences.blp:319
+#: data/ui/preferences.blp:285
 msgid "Override the active line styling when switching plot style"
 msgstr ""
 
@@ -901,7 +901,7 @@ msgstr ""
 msgid "Smoothen the Data"
 msgstr ""
 
-#: data/ui/window.blp:263
+#: data/ui/window.blp:263 src/misc.py:67
 msgid "Center"
 msgstr ""
 
@@ -1001,7 +1001,7 @@ msgstr ""
 msgid "Export Data"
 msgstr ""
 
-#: data/ui/window.blp:497 src/plot_styles.py:232
+#: data/ui/window.blp:497 src/plot_styles.py:229
 msgid "Plot Styles"
 msgstr ""
 
@@ -1888,7 +1888,7 @@ msgstr ""
 msgid "Graphs Project File"
 msgstr ""
 
-#: src/actions.py:126 src/plot_styles.py:207 src/plot_styles.py:421
+#: src/actions.py:126 src/plot_styles.py:204 src/plot_styles.py:420
 msgid "Cancel"
 msgstr ""
 
@@ -1952,24 +1952,224 @@ msgstr ""
 msgid "Could not load %s"
 msgstr ""
 
+#: src/misc.py:63
+msgid "linear"
+msgstr ""
+
+#: src/misc.py:63
+msgid "log"
+msgstr ""
+
+#: src/misc.py:65
+msgid "Best"
+msgstr ""
+
+#: src/misc.py:65
+msgid "Upper right"
+msgstr ""
+
+#: src/misc.py:65
+msgid "Upper left"
+msgstr ""
+
+#: src/misc.py:65
+msgid "Lower left"
+msgstr ""
+
+#: src/misc.py:66
+msgid "Lower right"
+msgstr ""
+
+#: src/misc.py:66
+msgid "Center left"
+msgstr ""
+
+#: src/misc.py:66
+msgid "Center right"
+msgstr ""
+
+#: src/misc.py:66
+msgid "Lower center"
+msgstr ""
+
+#: src/misc.py:67
+msgid "Upper center"
+msgstr ""
+
+#: src/misc.py:69
+msgid "top"
+msgstr ""
+
+#: src/misc.py:69
+msgid "bottom"
+msgstr ""
+
+#: src/misc.py:70
+msgid "left"
+msgstr ""
+
+#: src/misc.py:70
+msgid "right"
+msgstr ""
+
+#: src/misc.py:73
+msgid "Center at maximum Y value"
+msgstr ""
+
+#: src/misc.py:73
+msgid "Center at middle coordinate"
+msgstr ""
+
+#: src/misc.py:76
+msgid "Auto-rename duplicates"
+msgstr ""
+
+#: src/misc.py:76
+msgid "Ignore duplicates"
+msgstr ""
+
+#: src/misc.py:76
+msgid "Add duplicates"
+msgstr ""
+
+#: src/misc.py:77
+msgid "Override existing items"
+msgstr ""
+
+#: src/misc.py:79
+msgid "none"
+msgstr ""
+
+#: src/misc.py:79
+msgid "solid"
+msgstr ""
+
+#: src/misc.py:79
+msgid "dotted"
+msgstr ""
+
+#: src/misc.py:79
+msgid "dashed"
+msgstr ""
+
+#: src/misc.py:79
+msgid "dashdot"
+msgstr ""
+
+#: src/misc.py:81
+msgid "Point"
+msgstr ""
+
+#: src/misc.py:81
+msgid "Pixel"
+msgstr ""
+
+#: src/misc.py:81
+msgid "Circle"
+msgstr ""
+
+#: src/misc.py:82
+msgid "Triangle down"
+msgstr ""
+
+#: src/misc.py:82
+msgid "Triangle up"
+msgstr ""
+
+#: src/misc.py:82
+msgid "Triangle left"
+msgstr ""
+
+#: src/misc.py:83
+msgid "Triangle right"
+msgstr ""
+
+#: src/misc.py:83
+msgid "Octagon"
+msgstr ""
+
+#: src/misc.py:83
+msgid "Square"
+msgstr ""
+
+#: src/misc.py:84
+msgid "Pentagon"
+msgstr ""
+
+#: src/misc.py:84
+msgid "Star"
+msgstr ""
+
+#: src/misc.py:84
+msgid "Hexagon 1"
+msgstr ""
+
+#: src/misc.py:85
+msgid "Hexagon 2"
+msgstr ""
+
+#: src/misc.py:85
+msgid "Plus"
+msgstr ""
+
+#: src/misc.py:85
+msgid "x"
+msgstr ""
+
+#: src/misc.py:85
+msgid "Diamond"
+msgstr ""
+
+#: src/misc.py:86
+msgid "Thin diamond"
+msgstr ""
+
+#: src/misc.py:86
+msgid "Vertical line"
+msgstr ""
+
+#: src/misc.py:86
+msgid "Horizontal line"
+msgstr ""
+
+#: src/misc.py:87
+msgid "Filled plus"
+msgstr ""
+
+#: src/misc.py:87
+msgid "Filled x"
+msgstr ""
+
+#: src/misc.py:87
+msgid "Nothing"
+msgstr ""
+
+#: src/misc.py:89
+msgid "in"
+msgstr ""
+
+#: src/misc.py:89
+msgid "out"
+msgstr ""
+
 #: src/operations.py:85
 msgid "No data found within the highlighted area"
 msgstr ""
 
-#: src/plot_styles.py:208
+#: src/plot_styles.py:205
 msgid "Reset"
 msgstr ""
 
-#: src/plot_styles.py:238
+#: src/plot_styles.py:235
 #, python-brace-format
 msgid "{name} - line colors"
 msgstr ""
 
-#: src/plot_styles.py:422
+#: src/plot_styles.py:421
 msgid "Delete"
 msgstr ""
 
-#: src/plot_styles.py:544 src/plot_styles.py:555
+#: src/plot_styles.py:543 src/plot_styles.py:554
 #, python-brace-format
 msgid "{name} (copy)"
 msgstr ""

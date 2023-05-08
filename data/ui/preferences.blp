@@ -21,9 +21,6 @@ template PreferencesWindow : Adw.PreferencesWindow {
       Adw.ComboRow import_separator {
         title: _("Decimal Separator");
         subtitle: _("The character that is used as decimal separator");
-        model: StringList {
-          strings [".", ","]
-        };
       }
 
       Adw.ActionRow {
@@ -109,9 +106,6 @@ template PreferencesWindow : Adw.PreferencesWindow {
       Adw.ComboRow export_figure_filetype {
         title: _("Default Filetype");
         subtitle: _("The default filetype of saved graphs");
-        model: StringList {
-          strings ["png", "ps", "pdf", "svg", "jpeg", "webp", "eps", "tiff"]
-        };
       }
 
       Adw.ActionRow {
@@ -148,9 +142,6 @@ template PreferencesWindow : Adw.PreferencesWindow {
       Adw.ComboRow action_center_data {
         title: _("Center Data");
         subtitle: _("The behaviour of the center data button");
-        model: StringList {
-          strings ["Center at maximum Y value", "Center at middle coordinate"]
-        };
       }
     }
 
@@ -177,9 +168,6 @@ template PreferencesWindow : Adw.PreferencesWindow {
       Adw.ComboRow other_handle_duplicates {
         title: _("Handle duplicate entries");
         subtitle: _("Choose how to handle duplicate entries to be loaded");
-        model: StringList {
-          strings ["Auto-rename duplicates", "Ignore duplicates", "Add duplicates", "Override existing items"]
-        };
       }
 
       Adw.ActionRow {
@@ -240,49 +228,31 @@ template PreferencesWindow : Adw.PreferencesWindow {
       Adw.ComboRow plot_x_scale {
         title: _("Default Bottom Axis Scale");
         subtitle: _("The scaling on the bottom axis");
-        model: StringList {
-          strings ["log", "linear"]
-        };
       }
 
       Adw.ComboRow plot_y_scale {
         title: _("Default Left Axis Scale");
         subtitle: _("The scaling on the left-hand axis");
-        model: StringList {
-          strings ["log", "linear"]
-        };
       }
 
       Adw.ComboRow plot_top_scale {
         title: _("Default Top Axis Scale");
         subtitle: _("The scaling on the top axis");
-        model: StringList {
-          strings ["log", "linear"]
-        };
       }
 
       Adw.ComboRow plot_right_scale {
         title: _("Default Right Axis Scale");
         subtitle: _("The scaling on the right-hand axis");
-        model: StringList {
-          strings ["log", "linear"]
-        };
       }
 
       Adw.ComboRow plot_x_position {
         title: _("Default X-Axis Position");
         subtitle: _("The position of the X-axis");
-        model: StringList {
-          strings ["top", "bottom"]
-        };
       }
 
       Adw.ComboRow plot_y_position {
         title: _("Default Y-Axis Position");
         subtitle: _("The default position of the Y-axis");
-        model: StringList {
-          strings ["left", "right"]
-        };
       }
     }
 
@@ -297,9 +267,6 @@ template PreferencesWindow : Adw.PreferencesWindow {
         Adw.ComboRow plot_legend_position {
           title: _("Legend position");
           subtitle: _("The default position of the legend");
-          model: StringList {
-          strings ["Best", "Upper right", "Upper left", "Lower left", "Lower right", "Center left", "Center right", "Lower center", "Upper center", "Center"]
-        };
       }
     }
 
@@ -311,7 +278,6 @@ template PreferencesWindow : Adw.PreferencesWindow {
         Adw.ComboRow plot_custom_style {
           title: _("Custom Style");
           subtitle: _("The custom style sheet used by default");
-          model: StringList {};
         }
       }
       Adw.ActionRow {

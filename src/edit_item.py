@@ -1,9 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 from gi.repository import Adw, Gtk
 
-from graphs import clipboard, graphs, ui, utilities
-
-from matplotlib.lines import Line2D
+from graphs import clipboard, graphs, misc, ui, utilities
 
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/edit_item.ui")
@@ -25,11 +23,12 @@ class EditItemWindow(Adw.PreferencesWindow):
         names = utilities.get_all_names(self.parent)
         utilities.populate_chooser(self.item_selector, names)
         self.item_selector.set_selected(names.index(self.item.name))
-        self.marker_dict = Line2D.markers.copy()
-        self.marker_dict["none"] = "none"
+
         self.linewidth.set_range(0, 10)
-        utilities.populate_chooser(
-            self.markers, sorted(self.marker_dict.values()))
+        utilities.populate_chooser(self.plot_x_position, misc.X_POSITIONS)
+        utilities.populate_chooser(self.plot_y_position, misc.Y_POSITIONS)
+        utilities.populate_chooser(self.linestyle, misc.LINESTYLES)
+        utilities.populate_chooser(self.markers, sorted(misc.MARKERS.keys()))
         self.markersize.set_range(0, 10)
         self.load_values()
         self.item_selector.connect("notify::selected", self.on_select)
@@ -46,9 +45,8 @@ class EditItemWindow(Adw.PreferencesWindow):
 
         # If item_selector no longer matches with name, repopulate it
         names = utilities.get_all_names(self.parent)
-        if set(names) != \
-                set(utilities.get_chooser_list(self.item_selector)):
-            utilities.populate_chooser(self.item_selector, names)
+        if set(names) != set(self.item_selector.untranslated_items):
+            utilities.populate_chooser(self.item_selector, names, False)
             self.item_selector.set_selected(index)
             self.parent.datadict_clipboard = \
                 self.parent.datadict_clipboard[:-1]
@@ -62,8 +60,9 @@ class EditItemWindow(Adw.PreferencesWindow):
             self.plot_y_position, self.item.plot_y_position)
         utilities.set_chooser(self.linestyle, self.item.linestyle)
         self.linewidth.set_value(self.item.linewidth)
-        utilities.set_chooser(
-            self.markers, self.marker_dict[self.item.markerstyle])
+        markerstyle = utilities.get_dict_by_value(
+            misc.MARKERS, self.item.markerstyle)
+        utilities.set_chooser(self.markers, markerstyle)
         self.markersize.set_value(self.item.markersize)
 
     def apply(self, _):
@@ -73,18 +72,19 @@ class EditItemWindow(Adw.PreferencesWindow):
         # Only change limits when axes change, otherwise this is not needed
         set_limits = \
             self.item.plot_x_position \
-            != self.plot_x_position.get_selected_item().get_string() \
+            != utilities.get_selected_chooser_item(self.plot_x_position) \
             or self.item.plot_y_position \
-            != self.plot_y_position.get_selected_item().get_string()
+            != utilities.get_selected_chooser_item(self.plot_y_position)
 
         self.item.plot_x_position = \
-            self.plot_x_position.get_selected_item().get_string()
+            utilities.get_selected_chooser_item(self.plot_x_position)
         self.item.plot_y_position = \
-            self.plot_y_position.get_selected_item().get_string()
-        self.item.linestyle = self.linestyle.get_selected_item().get_string()
+            utilities.get_selected_chooser_item(self.plot_y_position)
+        self.item.linestyle = \
+            utilities.get_selected_chooser_item(self.linestyle)
         self.item.linewidth = self.linewidth.get_value()
-        self.item.markerstyle = utilities.get_dict_by_value(
-            self.marker_dict, self.markers.get_selected_item().get_string())
+        self.item.markerstyle = \
+            misc.MARKERS[utilities.get_selected_chooser_item(self.markers)]
         self.item.markersize = self.markersize.get_value()
         ui.reload_item_menu(self.parent)
         clipboard.add(self.parent)

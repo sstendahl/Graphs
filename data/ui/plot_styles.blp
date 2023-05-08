@@ -96,9 +96,6 @@ template PlotStylesWindow : Adw.Window {
               Adw.ComboRow linestyle {
                 title: _("Linestyle");
                 subtitle: _("The linestyle used");
-                model: StringList {
-                  strings ["solid", "dotted", "dashed", "dashdot"]
-                };
               }
 
               Adw.ActionRow {
@@ -114,9 +111,6 @@ template PlotStylesWindow : Adw.Window {
               Adw.ComboRow markers {
                 title: _("Markers");
                 subtitle: _("The markers that are used");
-                model: StringList {
-                  strings ["none"]
-                };
               }
 
               Adw.ActionRow {
@@ -137,9 +131,6 @@ template PlotStylesWindow : Adw.Window {
               Adw.ComboRow tick_direction {
                 title: _("Tick Directions");
                 subtitle: _("Choose to have the ticks in the plot either in or out");
-                model: StringList {
-                  strings ["in", "out"]
-                };
               }
 
               Adw.ActionRow {

@@ -22,27 +22,27 @@ class ExportFigureWindow(Adw.Window):
         self.confirm_button.connect("clicked", self.on_accept)
         self.transparent.set_active(
             self.parent.preferences.config["export_figure_transparent"])
-        items = self.parent.canvas.get_supported_filetypes_grouped().items()
+        self.items = \
+            self.parent.canvas.get_supported_filetypes_grouped().items()
         self.dpi.set_value(
             int(self.parent.preferences.config["export_figure_dpi"]))
         file_formats = []
         default_format = None
-        for name, formats in items:
+        for name, formats in self.items:
             file_formats.append(name)
             if self.parent.preferences.config["export_figure_filetype"] in \
                     formats:
                 default_format = name
-        utilities.populate_chooser(self.file_format, file_formats)
+        utilities.populate_chooser(self.file_format, file_formats, False)
         if default_format is not None:
             utilities.set_chooser(self.file_format, default_format)
         self.present()
 
-    def on_accept(self, _):
+    def on_accept(self, _button):
         dpi = int(self.dpi.get_value())
-        fmt = self.file_format.get_selected_item().get_string()
+        fmt = utilities.get_selected_chooser_item(self.file_format)
         file_suffix = None
-        items = self.parent.canvas.get_supported_filetypes_grouped().items()
-        for name, formats in items:
+        for name, formats in self.items:
             if name == fmt:
                 file_suffix = formats[0]
         filename = Path(self.parent.canvas.get_default_filename()).stem

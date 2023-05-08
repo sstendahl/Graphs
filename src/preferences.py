@@ -7,7 +7,7 @@ from gettext import gettext as _
 
 from gi.repository import Adw, Gtk
 
-from graphs import graphs, plot_styles, utilities
+from graphs import graphs, misc, plot_styles, utilities
 
 
 class Preferences():
@@ -97,8 +97,30 @@ class PreferencesWindow(Adw.PreferencesWindow):
     def __init__(self, parent):
         super().__init__()
         self.parent = parent
+        self.supported_filetypes = \
+            self.parent.canvas.get_supported_filetypes_grouped()
+
         utilities.populate_chooser(
-            self.plot_custom_style, plot_styles.get_user_styles(parent).keys())
+            self.import_separator, misc.SEPARATORS, translate=False)
+        utilities.populate_chooser(
+            self.export_figure_filetype, self.supported_filetypes.keys(),
+            translate=False)
+        utilities.populate_chooser(
+            self.action_center_data, misc.ACTION_CENTER_DATA)
+        utilities.populate_chooser(
+            self.other_handle_duplicates, misc.HANDLE_DUPLICATES)
+        utilities.populate_chooser(self.plot_x_scale, misc.SCALES)
+        utilities.populate_chooser(self.plot_y_scale, misc.SCALES)
+        utilities.populate_chooser(self.plot_top_scale, misc.SCALES)
+        utilities.populate_chooser(self.plot_right_scale, misc.SCALES)
+        utilities.populate_chooser(self.plot_x_position, misc.X_POSITIONS)
+        utilities.populate_chooser(self.plot_y_position, misc.Y_POSITIONS)
+        utilities.populate_chooser(
+            self.plot_legend_position, misc.LEGEND_POSITIONS)
+
+        utilities.populate_chooser(
+            self.plot_custom_style, plot_styles.get_user_styles(parent).keys(),
+            translate=False)
         self.load_configuration()
         self.connect("close-request", self.on_close, self.parent)
         self.set_transient_for(self.parent.main_window)
@@ -119,8 +141,10 @@ class PreferencesWindow(Adw.PreferencesWindow):
         self.addequation_step_size.set_text(
             str(config["addequation_step_size"]))
         self.export_figure_dpi.set_value(int(config["export_figure_dpi"]))
-        utilities.set_chooser(
-            self.export_figure_filetype, config["export_figure_filetype"])
+        for name, formats in self.supported_filetypes.items():
+            if config["export_figure_filetype"] in formats:
+                filetype = name
+        utilities.set_chooser(self.export_figure_filetype, filetype)
         self.export_figure_transparent.set_active(
             config["export_figure_transparent"])
         utilities.set_chooser(
@@ -160,7 +184,7 @@ class PreferencesWindow(Adw.PreferencesWindow):
         config = self.parent.preferences.config
         config["import_delimiter"] = self.import_delimiter.get_text()
         config["import_separator"] = \
-            self.import_separator.get_selected_item().get_string()
+            utilities.get_selected_chooser_item(self.import_separator)
         config["import_column_x"] = int(self.import_column_x.get_value())
         config["import_column_y"] = int(self.import_column_y.get_value())
         config["import_skip_rows"] = int(self.import_skip_rows.get_value())
@@ -170,14 +194,19 @@ class PreferencesWindow(Adw.PreferencesWindow):
         config["addequation_step_size"] = self.addequation_step_size.get_text()
         config["clipboard_length"] = int(self.clipboard_length.get_value())
         config["export_figure_dpi"] = int(self.export_figure_dpi.get_value())
-        config["export_figure_filetype"] = \
-            self.export_figure_filetype.get_selected_item().get_string()
+        filetype_name = \
+            utilities.get_selected_chooser_item(self.export_figure_filetype)
+        for name, formats in \
+                self.parent.canvas.get_supported_filetypes_grouped().items():
+            if name == filetype_name:
+                export_figure_filetyope = formats[0]
+        config["export_figure_filetype"] = export_figure_filetyope
         config["export_figure_transparent"] = \
             self.export_figure_transparent.get_active()
         config["action_center_data"] = \
-            self.action_center_data.get_selected_item().get_string()
+            utilities.get_selected_chooser_item(self.action_center_data)
         config["handle_duplicates"] = \
-            self.other_handle_duplicates.get_selected_item().get_string()
+            utilities.get_selected_chooser_item(self.other_handle_duplicates)
         config["hide_unselected"] = self.other_hide_unselected.get_active()
         config["override_style_change"] = \
             self.override_style_change.get_active()
@@ -188,24 +217,25 @@ class PreferencesWindow(Adw.PreferencesWindow):
         config["plot_right_label"] = self.plot_right_label.get_text()
         config["guess_headers"] = self.plot_guess_headers.get_active()
         config["plot_x_scale"] = \
-            self.plot_x_scale.get_selected_item().get_string()
+            utilities.get_selected_chooser_item(self.plot_x_scale)
         config["plot_y_scale"] = \
-            self.plot_y_scale.get_selected_item().get_string()
+            utilities.get_selected_chooser_item(self.plot_y_scale)
         config["plot_top_scale"] = \
-            self.plot_top_scale.get_selected_item().get_string()
+            utilities.get_selected_chooser_item(self.plot_top_scale)
         config["plot_right_scale"] = \
-            self.plot_right_scale.get_selected_item().get_string()
+            utilities.get_selected_chooser_item(self.plot_right_scale)
         config["plot_x_position"] = \
-            self.plot_x_position.get_selected_item().get_string()
+            utilities.get_selected_chooser_item(self.plot_x_position)
         config["plot_y_position"] = \
-            self.plot_y_position.get_selected_item().get_string()
+            utilities.get_selected_chooser_item(self.plot_y_position)
         config["plot_legend"] = self.plot_legend.get_enable_expansion()
         config["plot_legend_position"] = \
-            self.plot_legend_position.get_selected_item().get_string().lower()
+            utilities.get_selected_chooser_item(
+                self.plot_legend_position).lower()
         config["plot_use_custom_style"] = \
             self.plot_use_custom_style.get_enable_expansion()
         config["plot_custom_style"] = \
-            self.plot_custom_style.get_selected_item().get_string()
+            utilities.get_selected_chooser_item(self.plot_custom_style)
 
     def on_close(self, _, parent):
         self.apply_configuration()

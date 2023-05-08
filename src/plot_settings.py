@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 from gi.repository import Adw, Gtk
 
-from graphs import (clipboard, graphs, plot_styles, plotting_tools, ui,
+from graphs import (clipboard, graphs, misc, plot_styles, plotting_tools, ui,
                     utilities)
 from graphs.canvas import Canvas
 
@@ -50,22 +50,29 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
         self.plot_y_label.set_text(parent.plot_settings.ylabel)
         self.plot_top_label.set_text(parent.plot_settings.top_label)
         self.plot_right_label.set_text(parent.plot_settings.right_label)
+        utilities.populate_chooser(self.plot_x_scale, misc.SCALES)
         utilities.set_chooser(
             self.plot_x_scale, parent.plot_settings.xscale)
+        utilities.populate_chooser(self.plot_y_scale, misc.SCALES)
         utilities.set_chooser(
             self.plot_y_scale, parent.plot_settings.yscale)
+        utilities.populate_chooser(self.plot_top_scale, misc.SCALES)
         utilities.set_chooser(
             self.plot_top_scale, parent.plot_settings.top_scale)
+        utilities.populate_chooser(self.plot_right_scale, misc.SCALES)
         utilities.set_chooser(
             self.plot_right_scale, parent.plot_settings.right_scale)
         self.use_custom_plot_style.set_enable_expansion(
             parent.plot_settings.use_custom_plot_style)
         utilities.populate_chooser(
-            self.custom_plot_style, plot_styles.get_user_styles(parent).keys())
+            self.custom_plot_style, plot_styles.get_user_styles(parent).keys(),
+            translate=False)
         utilities.set_chooser(
             self.custom_plot_style, parent.plot_settings.custom_plot_style)
         self.plot_legend.set_enable_expansion(
             parent.plot_settings.legend)
+        utilities.populate_chooser(
+            self.plot_legend_position, misc.LEGEND_POSITIONS)
         utilities.set_chooser(
             self.plot_legend_position,
             parent.plot_settings.legend_position.capitalize())
@@ -112,7 +119,7 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
             != self.use_custom_plot_style.get_enable_expansion() \
             and parent.preferences.config["override_style_change"] \
             or plot_settings.custom_plot_style \
-            != self.custom_plot_style.get_selected_item().get_string() \
+            != utilities.get_selected_chooser_item(self.custom_plot_style) \
             and parent.preferences.config["override_style_change"]
 
         # Set new plot settings
@@ -122,20 +129,20 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
         plot_settings.top_label = self.plot_top_label.get_text()
         plot_settings.right_label = self.plot_right_label.get_text()
         plot_settings.xscale = \
-            self.plot_x_scale.get_selected_item().get_string()
+            utilities.get_selected_chooser_item(self.plot_x_scale)
         plot_settings.yscale = \
-            self.plot_y_scale.get_selected_item().get_string()
+            utilities.get_selected_chooser_item(self.plot_y_scale)
         plot_settings.top_scale = \
-            self.plot_top_scale.get_selected_item().get_string()
+            utilities.get_selected_chooser_item(self.plot_top_scale)
         plot_settings.right_scale = \
-            self.plot_right_scale.get_selected_item().get_string()
+            utilities.get_selected_chooser_item(self.plot_right_scale)
         plot_settings.legend = self.plot_legend.get_enable_expansion()
         plot_settings.legend_position = \
-            self.plot_legend_position.get_selected_item().get_string().lower()
+            utilities.get_selected_chooser_item(self.plot_x_scale).lower()
         plot_settings.use_custom_plot_style = \
             self.use_custom_plot_style.get_enable_expansion()
         plot_settings.custom_plot_style = \
-            self.custom_plot_style.get_selected_item().get_string()
+            utilities.get_selected_chooser_item(self.custom_plot_style)
 
         # Set new item properties
         if self.style_changed:
