@@ -37,7 +37,7 @@ class ExportFigureWindow(Adw.Window):
             utilities.set_chooser(self.file_format, default_format)
         self.present()
 
-    def on_accept(self, _):
+    def on_accept(self, _button):
         dpi = int(self.dpi.get_value())
         fmt = self.file_format.get_selected_item().get_string()
         file_suffix = None
