@@ -15,7 +15,6 @@ template EditItemWindow : Adw.PreferencesWindow {
       Adw.ComboRow item_selector {
         title: _("Selected Item");
         subtitle: _("Choose which item to edit");
-        model: StringList {};
       }
     }
 
@@ -31,17 +30,11 @@ template EditItemWindow : Adw.PreferencesWindow {
       Adw.ComboRow plot_x_position {
         title: _("X-Axis Position");
         subtitle: _("The position of the X-axis");
-        model: StringList {
-          strings ["top", "bottom"]
-        };
       }
 
       Adw.ComboRow plot_y_position {
         title: _("Y-Axis Position");
         subtitle: _("The position of the Y-axis");
-        model: StringList {
-          strings ["left", "right"]
-        };
       }
     }
 
@@ -52,9 +45,6 @@ template EditItemWindow : Adw.PreferencesWindow {
       Adw.ComboRow linestyle {
         title: _("Linestyle");
         subtitle: _("The linestyle");
-        model: StringList {
-          strings ["none", "solid", "dotted", "dashed", "dashdot"]
-        };
       }
 
       Adw.ActionRow {
@@ -70,9 +60,6 @@ template EditItemWindow : Adw.PreferencesWindow {
       Adw.ComboRow markers {
         title: _("Markers");
         subtitle: _("The markers that are used");
-        model: StringList {
-          strings ["none"]
-        };
       }
 
       Adw.ActionRow {

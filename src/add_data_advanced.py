@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 from gi.repository import Adw, Gtk
 
-from graphs import ui, utilities
+from graphs import misc, ui, utilities
 from graphs.misc import ImportSettings
 
 
@@ -22,6 +22,7 @@ class AddAdvancedWindow(Adw.Window):
         self.parent = parent
         config = parent.preferences.config
         self.delimiter.set_text(config["import_delimiter"])
+        utilities.populate_chooser(self.separator, misc.SEPARATORS, False)
         utilities.set_chooser(self.separator, config["import_separator"])
         self.column_x.set_value(int(config["import_column_x"]))
         self.column_y.set_value(int(config["import_column_y"]))
@@ -40,7 +41,7 @@ class AddAdvancedWindow(Adw.Window):
             "column_x": int(self.column_x.get_value()),
             "column_y": int(self.column_y.get_value()),
             "skip_rows": int(self.skip_rows.get_value()),
-            "separator": self.separator.get_selected_item().get_string(),
+            "separator": utilities.get_selected_chooser_item(self.separator),
             "delimiter": self.delimiter.get_text(),
             "guess_headers": self.guess_headers.get_active(),
         }

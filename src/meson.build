@@ -35,5 +35,4 @@ graphs_sources = [
   'window.py',
 ]
 
-moduledir = join_paths(pkgdatadir, meson.project_name())
-install_data(graphs_sources, install_dir: moduledir, install_mode: 'rwxrwxrwx')
+python.install_sources(graphs_sources, subdir: project_name)
