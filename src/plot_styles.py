@@ -6,7 +6,7 @@ from pathlib import Path
 
 from cycler import cycler
 
-from gi.repository import Adw, GLib, Gtk
+from gi.repository import Adw, GLib, Gio, Gtk
 
 from graphs import file_io, graphs, misc, utilities
 
@@ -80,20 +80,18 @@ def get_style(self, stylename):
     """
     user_styles = get_user_styles(self)
     system_styles = get_system_styles(self)
-    style = file_io.get_style(user_styles[stylename])
+    user_file = Gio.File.new_for_path(user_styles[stylename])
+    style = file_io.parse_style(user_file)
     try:
-        base_style = file_io.get_style(system_styles[stylename])
+        system_file = Gio.File.new_for_path(system_styles[stylename])
+        base_style = file_io.parse_style(system_file)
         for key, item in base_style.items():
             if key not in style.keys():
                 style[key] = item
     except KeyError:
         pass
-    cycler_string = style["axes.prop_cycle"]
-    color_string = \
-        cycler_string[cycler_string.find("[") + 1: cycler_string.find("]")]
-    style["axes.prop_cycle"] = cycler(
-        color=[string.replace("'", "") for string in color_string.split(", ")])
-    for key, item in file_io.get_style(system_styles["adwaita"]).items():
+    adwaita = Gio.File.new_for_path(system_styles["adwaita"])
+    for key, item in file_io.parse_style(adwaita).items():
         if key not in style.keys():
             style[key] = item
     return style
@@ -195,7 +193,7 @@ class PlotStylesWindow(Adw.Window):
 
         self.present()
 
-    def on_reset_button(self, _):
+    def on_reset_button(self, _button):
         heading = "Reset to defaults?"
         body = "Are you sure you want to reset to the default styles?"
         dialog = Adw.MessageDialog.new(self,
@@ -216,7 +214,6 @@ class PlotStylesWindow(Adw.Window):
 
     def edit_style(self, _, style):
         self.style = get_style(self.parent, style)
-        self.style["name"] = style
         self.load_style()
         self.leaflet.navigate(1)
         self.set_title(style)
@@ -229,18 +226,18 @@ class PlotStylesWindow(Adw.Window):
         self.set_title(_("Plot Styles"))
         graphs.reload(self.parent, reset_limits=False)
 
-    def edit_line_colors(self, _):
+    def edit_line_colors(self, _button):
         self.leaflet.navigate(1)
         self.set_title(
-            _("{name} - line colors").format(name=self.style["name"]))
+            _("{name} - line colors").format(name=self.style.name))
 
     def back_line_colors(self, _):
         self.leaflet.navigate(0)
-        self.set_title(self.style["name"])
+        self.set_title(self.style.name)
 
     def load_style(self):
         style = self.style
-        self.style_name.set_text(style["name"])
+        self.style_name.set_text(style.name)
 
         # font
         font_description = self.font_chooser.get_font_desc().from_string(
@@ -257,18 +254,18 @@ class PlotStylesWindow(Adw.Window):
 
         # ticks
         utilities.set_chooser(self.tick_direction, style["xtick.direction"])
-        self.minor_ticks.set_active(style["xtick.minor.visible"] == "True")
+        self.minor_ticks.set_active(style["xtick.minor.visible"])
         self.major_tick_width.set_value(float(style["xtick.major.width"]))
         self.minor_tick_width.set_value(float(style["xtick.minor.width"]))
         self.major_tick_length.set_value(float(style["xtick.major.size"]))
         self.minor_tick_length.set_value(float(style["xtick.minor.size"]))
-        self.tick_bottom.set_active(style["xtick.bottom"] == "True")
-        self.tick_left.set_active(style["ytick.left"] == "True")
-        self.tick_top.set_active(style["xtick.top"] == "True")
-        self.tick_right.set_active(style["ytick.right"] == "True")
+        self.tick_bottom.set_active(style["xtick.bottom"])
+        self.tick_left.set_active(style["ytick.left"])
+        self.tick_top.set_active(style["xtick.top"])
+        self.tick_right.set_active(style["ytick.right"])
 
         # grid
-        self.show_grid.set_active(style["axes.grid"] == "True")
+        self.show_grid.set_active(style["axes.grid"])
         self.grid_linewidth.set_value(float(style["grid.linewidth"]))
         self.grid_transparency.set_value(1 - float(style["grid.alpha"]))
 
@@ -287,7 +284,7 @@ class PlotStylesWindow(Adw.Window):
 
         for button in self.color_buttons:
             button.provider.load_from_data(
-                f"button {{ color: #{button.color}; }}", -1)
+                f"button {{ color: {button.color}; }}", -1)
 
         # line colors
         for color in self.style["axes.prop_cycle"].by_key()["color"]:
@@ -391,10 +388,10 @@ class PlotStylesWindow(Adw.Window):
 
         # name & save
         styles_path = os.path.join(utilities.get_config_path(), "styles")
-        os.remove(os.path.join(styles_path, f"{style['name']}.mplstyle"))
-        style["name"] = self.style_name.get_text()
-        file_io.write_style(
-            os.path.join(styles_path, f"{style['name']}.mplstyle"), style)
+        style.name = self.style_name.get_text()
+        file = Gio.File.new_for_path(
+            os.path.join(styles_path, f"{style.name}.mplstyle"))
+        file_io.write_style(file, style)
 
     def delete_color(self, _, color_box):
         self.line_colors_box.remove(self.color_boxes[color_box])
@@ -470,7 +467,7 @@ class PlotStylesWindow(Adw.Window):
         self.destroy()
 
     def on_color_change(self, button):
-        color = utilities.hex_to_rgba(f"#{button.color}")
+        color = utilities.hex_to_rgba(f"{button.color}")
         dialog = Gtk.ColorDialog()
         dialog.set_with_alpha(False)
         dialog.choose_rgba(
@@ -481,10 +478,9 @@ class PlotStylesWindow(Adw.Window):
         try:
             color = dialog.choose_rgba_finish(result)
             if color is not None:
-                color_hex = utilities.rgba_to_hex(color)
+                button.color = utilities.rgba_to_hex(color)
                 button.provider.load_from_data(
-                    f"button {{ color: {color_hex}; }}", -1)
-                button.color = color_hex.replace("#", "")
+                    f"button {{ color: {button.color}; }}", -1)
         except GLib.GError:
             pass
 
@@ -520,7 +516,7 @@ class StyleColorBox(Gtk.Box):
             self.color_button.provider,
             Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION)
         self.color_button.provider.load_from_data(
-            f"button {{ color: #{color}; }}", -1)
+            f"button {{ color: {color}; }}", -1)
         self.color_button.connect("clicked", parent.on_color_change)
         self.delete_button.connect("clicked", parent.delete_color, self)
 
