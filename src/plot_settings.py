@@ -138,7 +138,7 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
             utilities.get_selected_chooser_item(self.plot_right_scale)
         plot_settings.legend = self.plot_legend.get_enable_expansion()
         plot_settings.legend_position = \
-            utilities.get_selected_chooser_item(self.plot_x_scale).lower()
+            utilities.get_selected_chooser_item(self.plot_legend_position).lower()
         plot_settings.use_custom_plot_style = \
             self.use_custom_plot_style.get_enable_expansion()
         plot_settings.custom_plot_style = \
