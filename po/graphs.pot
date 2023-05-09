@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: graphs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-08 10:54-0400\n"
+"POT-Creation-Date: 2023-05-08 16:47+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1161,7 +1161,7 @@ msgid ""
 msgstr ""
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:57
-msgid "Started initial work on localization support"
+msgid "Started work to add localization support"
 msgstr ""
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:58

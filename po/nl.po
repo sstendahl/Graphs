@@ -1,4 +1,4 @@
-# German translations for graphs package.
+# Dutch translations for graphs package.
 # Copyright (C) 2023 THE graphs'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the graphs package.
 # Automatically generated, 2023.
@@ -8,799 +8,806 @@ msgstr ""
 "Project-Id-Version: graphs\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-08 16:47+0200\n"
-"PO-Revision-Date: 2023-04-17 18:28+0200\n"
+"PO-Revision-Date: 2023-05-09 16:12+0200\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
-"Language: de\n"
+"Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.1.1\n"
 
 #: data/ui/add_data_advanced.blp:8
 msgid "Open Data From File (Advanced)"
-msgstr ""
+msgstr "Open data van een bestand (geavanceerd)"
 
 #: data/ui/add_data_advanced.blp:31
 msgid "Name (Single File Only)"
-msgstr ""
+msgstr "Naam (alleen met één bestand)"
 
 #: data/ui/add_data_advanced.blp:36
 msgid "Delimiter (s+ for whitespace)"
-msgstr ""
+msgstr "Scheidingsteken (s+ voor witruimte)"
 
 #: data/ui/add_data_advanced.blp:40 data/ui/preferences.blp:22
 msgid "Decimal Separator"
-msgstr ""
+msgstr "Decimaalscheidingsteken"
 
 #: data/ui/add_data_advanced.blp:41 data/ui/preferences.blp:23
 msgid "The character that is used as decimal separator"
-msgstr ""
+msgstr "Welk karakter gebruikt wordt als decimaalscheidingsteken"
 
 #: data/ui/add_data_advanced.blp:45 data/ui/preferences.blp:27
 msgid "Column X"
-msgstr ""
+msgstr "Kolom X"
 
 #: data/ui/add_data_advanced.blp:46
 msgid "Choose which column to load for the X-data"
-msgstr ""
+msgstr "Kies welke kolom gebruikt wordt om X-data te laden"
 
 #: data/ui/add_data_advanced.blp:60 data/ui/preferences.blp:44
 msgid "Column Y"
-msgstr ""
+msgstr "Kolom Y"
 
 #: data/ui/add_data_advanced.blp:61
 msgid "Choose which column to load for the Y-data"
-msgstr ""
+msgstr "Kies welke kolom gebruikt wordt om Y-data te laden"
 
 #: data/ui/add_data_advanced.blp:75 data/ui/preferences.blp:61
 msgid "Skip Rows"
-msgstr ""
+msgstr "Rijen overslaan"
 
 #: data/ui/add_data_advanced.blp:76
 msgid "Choose how many rows to skip while loading data"
-msgstr ""
+msgstr "Kies hoeveel rijen overgeslagen worden bij het importeren van data"
 
 #: data/ui/add_data_advanced.blp:90
 msgid "Retrieve Label"
-msgstr ""
+msgstr "Lees labels"
 
 #: data/ui/add_data_advanced.blp:91 data/ui/preferences.blp:215
 msgid "Try and retrieve label from the header in the dataset"
 msgstr ""
+"Probeer labels automatisch in te lezen met hulp van de koppen in de bestanden"
 
 #: data/ui/add_data_advanced.blp:102
 msgid "Open Files"
-msgstr ""
+msgstr "Open bestanden"
 
 #: data/ui/add_equation_window.blp:7 data/ui/add_equation_window.blp:84
 #: data/ui/preferences.blp:78
 msgid "Add Equation"
-msgstr ""
+msgstr "Vergelijking toevoegen"
 
 #: data/ui/add_equation_window.blp:38 data/ui/transform_window.blp:51
 msgid "Y ="
-msgstr ""
+msgstr "Y = "
 
 #: data/ui/add_equation_window.blp:47
 msgid "Supports Numpy notation. Use a capital letter for the X coordinate."
-msgstr ""
+msgstr "Steunt Numpy-notatie. Gebruik een hoofdletter voor de X-coordinaten."
 
 #: data/ui/add_equation_window.blp:51
 msgid "Name (optional)"
-msgstr ""
+msgstr "Naam (optioneel)"
 
 #: data/ui/add_equation_window.blp:62
 msgid "X Start"
-msgstr ""
+msgstr "X Start"
 
 #: data/ui/add_equation_window.blp:69
 msgid "X Stop"
-msgstr ""
+msgstr "X stop"
 
 #: data/ui/add_equation_window.blp:75
 msgid "Step Size"
-msgstr ""
+msgstr "Stapgrootte"
 
 #: data/ui/add_style.blp:7
 msgid "Add new style"
-msgstr ""
+msgstr "Voeg nieuwe stijl toe"
 
 #: data/ui/add_style.blp:31
 msgid "Template"
-msgstr ""
+msgstr "Sjabloon"
 
 #: data/ui/add_style.blp:32
 msgid "The template style used for the new style"
-msgstr ""
+msgstr "De sjabloonstijl voor de nieuwe stijl"
 
 #: data/ui/add_style.blp:36
 msgid "New Style Name"
-msgstr ""
+msgstr "Nieuwe stijlnaam"
 
 #: data/ui/add_style.blp:46
 msgid "Add New Style"
-msgstr ""
+msgstr "Nieuwe stijl toevoegen"
 
 #: data/ui/edit_item.blp:16
 msgid "Selected Item"
-msgstr ""
+msgstr "Geselecteerde object"
 
 #: data/ui/edit_item.blp:17
 msgid "Choose which item to edit"
-msgstr ""
+msgstr "Kies welk object je wil aanpassen"
 
 #: data/ui/edit_item.blp:22
 msgid "Data"
-msgstr ""
+msgstr "Gegevens"
 
 #: data/ui/edit_item.blp:23
 msgid "Change the name of the data set and the axis positions"
-msgstr ""
+msgstr "Verander de naam van de dataset en de asposities"
 
 #: data/ui/edit_item.blp:26
 msgid "Change Name"
-msgstr ""
+msgstr "Verander naam"
 
 #: data/ui/edit_item.blp:31
 msgid "X-Axis Position"
-msgstr ""
+msgstr "X-as positie"
 
 #: data/ui/edit_item.blp:32 data/ui/preferences.blp:250
 msgid "The position of the X-axis"
-msgstr ""
+msgstr "De positie van de X-as"
 
 #: data/ui/edit_item.blp:36
 msgid "Y-Axis Position"
-msgstr ""
+msgstr "Y-as positie"
 
 #: data/ui/edit_item.blp:37
 msgid "The position of the Y-axis"
-msgstr ""
+msgstr "De positie van de Y-as"
 
 #: data/ui/edit_item.blp:42
 msgid "Line Style"
-msgstr ""
+msgstr "Lijnstijl"
 
 #: data/ui/edit_item.blp:43
 msgid "Change properties of the lines"
-msgstr ""
+msgstr "Verander de lijneigenschappen"
 
 #: data/ui/edit_item.blp:46
 msgid "Linestyle"
-msgstr ""
+msgstr "Lijnstijl"
 
 #: data/ui/edit_item.blp:47
 msgid "The linestyle"
-msgstr ""
+msgstr "De lijnstijl"
 
 #: data/ui/edit_item.blp:51
 msgid "Linewidth"
-msgstr ""
+msgstr "Lijnbreedte"
 
 #: data/ui/edit_item.blp:52
 msgid "The width of lines"
-msgstr ""
+msgstr "De breedte van de lijnen"
 
 #: data/ui/edit_item.blp:61
 msgid "Markers"
-msgstr ""
+msgstr "Markeringen"
 
 #: data/ui/edit_item.blp:62
 msgid "The markers that are used"
-msgstr ""
+msgstr "Welke markeringen gebruikt worden"
 
 #: data/ui/edit_item.blp:66
 msgid "Marker Size"
-msgstr ""
+msgstr "Markeringsgrootte"
 
 #: data/ui/edit_item.blp:67
 msgid "The size of the markers"
-msgstr ""
+msgstr "De grootte van de markeringen"
 
 #: data/ui/export_figure.blp:6 data/ui/window.blp:494
 msgid "Export Figure"
-msgstr ""
+msgstr "Figuur exporteren"
 
 #: data/ui/export_figure.blp:30
 msgid "File Format"
-msgstr ""
+msgstr "Bestandsformaat"
 
 #: data/ui/export_figure.blp:31
 msgid "In which file format should the graph be exported?"
-msgstr ""
+msgstr "In welk bestandsformaat moet de grafiek geexporteerd worden?"
 
 #: data/ui/export_figure.blp:35
 msgid "Graph dpi"
-msgstr ""
+msgstr "Grafiek resolutie"
 
 #: data/ui/export_figure.blp:36
 msgid "Set the resolution of the graph in dots per inch "
-msgstr ""
+msgstr "De resolutie van de grafiek in dpi (dots per inch) "
 
 #: data/ui/export_figure.blp:51 data/ui/preferences.blp:128
 msgid "Transparent Background"
-msgstr ""
+msgstr "Doorzichtige achtergrond"
 
 #: data/ui/export_figure.blp:52
 msgid "Export using a transparent background."
-msgstr ""
+msgstr "Exporteer met een doorzichtige achtergrond."
 
 #: data/ui/export_figure.blp:63 src/export_figure.py:52
 msgid "Export"
-msgstr ""
+msgstr "Exporteer"
 
 #: data/ui/help_overlay.blp:11
 msgctxt "shortcut window"
 msgid "General"
-msgstr ""
+msgstr "Algemeen"
 
 #: data/ui/help_overlay.blp:14
 msgctxt "shortcut window"
 msgid "Show Shortcuts"
-msgstr ""
+msgstr "Toon snelkoppelingen"
 
 #: data/ui/help_overlay.blp:19
 msgctxt "shortcut window"
 msgid "Open Preferences"
-msgstr ""
+msgstr "Open voorkeuren"
 
 #: data/ui/help_overlay.blp:24
 msgctxt "shortcut window"
 msgid "Open Plot Settings"
-msgstr ""
+msgstr "Open plotinstellingen"
 
 #: data/ui/help_overlay.blp:29
 msgctxt "shortcut window"
 msgid "Open Plot Styles"
-msgstr ""
+msgstr "Open plotstijl"
 
 #: data/ui/help_overlay.blp:34
 msgctxt "shortcut window"
 msgid "Quit"
-msgstr ""
+msgstr "Afsluiten"
 
 #: data/ui/help_overlay.blp:40
 msgctxt "shortcut window"
 msgid "Mode Switching"
-msgstr ""
+msgstr "Verander modus"
 
 #: data/ui/help_overlay.blp:43
 msgctxt "shortcut window"
 msgid "Pan Mode"
-msgstr ""
+msgstr "Pan-modus"
 
 #: data/ui/help_overlay.blp:48
 msgctxt "shortcut window"
 msgid "Zoom Mode"
-msgstr ""
+msgstr "Zoom-modus"
 
 #: data/ui/help_overlay.blp:53
 msgctxt "shortcut window"
 msgid "Select Mode"
-msgstr ""
+msgstr "Selecteer-modus"
 
 #: data/ui/help_overlay.blp:59
 msgctxt "shortcut window"
 msgid "New Data"
-msgstr ""
+msgstr "Nieuwe gegevens"
 
 #: data/ui/help_overlay.blp:62
 msgctxt "shortcut window"
 msgid "Add Data from Equation"
-msgstr ""
+msgstr "Voeg gegevens toe met een vergelijking"
 
 #: data/ui/help_overlay.blp:67
 msgctxt "shortcut window"
 msgid "Open new File"
-msgstr ""
+msgstr "Open een nieuw bestand"
 
 #: data/ui/help_overlay.blp:72
 msgctxt "shortcut window"
 msgid "Open new File (Advanced)"
-msgstr ""
+msgstr "Open een nieuw bestand (geavanceerd)"
 
 #: data/ui/help_overlay.blp:77
 msgctxt "shortcut window"
 msgid "Open Project"
-msgstr ""
+msgstr "Open project"
 
 #: data/ui/help_overlay.blp:82
 msgctxt "shortcut window"
 msgid "Delete Selected Data"
-msgstr ""
+msgstr "Verwijder geselecteerde gegevens"
 
 #: data/ui/help_overlay.blp:88
 msgctxt "shortcut window"
 msgid "Save and Export"
-msgstr ""
+msgstr "Opslaan en exporteren"
 
 #: data/ui/help_overlay.blp:90
 msgctxt "shortcut window"
 msgid "Export Data"
-msgstr ""
+msgstr "Gegevens exporteren"
 
 #: data/ui/help_overlay.blp:94
 msgctxt "shortcut window"
 msgid "Export Figure"
-msgstr ""
+msgstr "Figuur exporteren"
 
 #: data/ui/help_overlay.blp:98
 msgctxt "shortcut window"
 msgid "Save Project"
-msgstr ""
+msgstr "Project opslaan"
 
 #: data/ui/help_overlay.blp:104
 msgctxt "shortcut window"
 msgid "View"
-msgstr ""
+msgstr "Weergave"
 
 #: data/ui/help_overlay.blp:107
 msgctxt "shortcut window"
 msgid "Restore View"
-msgstr ""
+msgstr "Weergave herstellen"
 
 #: data/ui/help_overlay.blp:112
 msgctxt "shortcut window"
 msgid "Previous View"
-msgstr ""
+msgstr "Vorige weergave"
 
 #: data/ui/help_overlay.blp:117
 msgctxt "shortcut window"
 msgid "Next View"
-msgstr ""
+msgstr "Volgende weergave"
 
 #: data/ui/help_overlay.blp:122
 msgctxt "shortcut window"
 msgid "Toggle Sidebar"
-msgstr ""
+msgstr "Zijbalk schakelen"
 
 #: data/ui/help_overlay.blp:128
 msgctxt "shortcut window"
 msgid "Actions"
-msgstr ""
+msgstr "Acties"
 
 #: data/ui/help_overlay.blp:131
 msgctxt "shortcut window"
 msgid "Select All"
-msgstr ""
+msgstr "Alles selecteren"
 
 #: data/ui/help_overlay.blp:136
 msgctxt "shortcut window"
 msgid "Select None"
-msgstr ""
+msgstr "Niets selecteren"
 
 #: data/ui/help_overlay.blp:141
 msgctxt "shortcut window"
 msgid "Undo Action"
-msgstr ""
+msgstr "Actie ongedaan maken"
 
 #: data/ui/help_overlay.blp:146
 msgctxt "shortcut window"
 msgid "Redo Action"
-msgstr ""
+msgstr "Actie opnieuw uitvoeren"
 
 #: data/ui/item_box.blp:24
 msgid "Edit Item"
-msgstr ""
+msgstr "Item bewerken"
 
 #: data/ui/item_box.blp:34
 msgid "Pick a color"
-msgstr ""
+msgstr "Kies een kleur"
 
 #: data/ui/item_box.blp:44 data/ui/style_box.blp:32
 #: data/ui/style_color_box.blp:28
 msgid "Remove"
-msgstr ""
+msgstr "Verwijderen"
 
 #: data/ui/plot_settings.blp:18 data/ui/preferences.blp:190
 msgid "Plot Labels"
-msgstr ""
+msgstr "Grafieklabelling"
 
 #: data/ui/plot_settings.blp:19
 msgid "Settings for the plot title and labels"
-msgstr ""
+msgstr "Instellingen voor de titel en labelling van de grafiek"
 
 #: data/ui/plot_settings.blp:22
 msgid "Plot Title"
-msgstr ""
+msgstr "Grafiektitel"
 
 #: data/ui/plot_settings.blp:26
 msgid "Bottom Axis Label"
-msgstr ""
+msgstr "Label onderaan"
 
 #: data/ui/plot_settings.blp:30
 msgid "Left Axis Label"
-msgstr ""
+msgstr "Label links"
 
 #: data/ui/plot_settings.blp:34
 msgid "Top Axis Label"
-msgstr ""
+msgstr "Label bovenaan"
 
 #: data/ui/plot_settings.blp:38
 msgid "Right Axis Label"
-msgstr ""
+msgstr "Label rechts"
 
 #: data/ui/plot_settings.blp:43
 msgid "Axis Limits"
-msgstr ""
+msgstr "Asgrenzen"
 
 #: data/ui/plot_settings.blp:44
 msgid "Limits used on the axes"
-msgstr ""
+msgstr "Grenzen gebruikt op de assen"
 
 #: data/ui/plot_settings.blp:46
 msgid "No data"
-msgstr ""
+msgstr "Geen data"
 
 #: data/ui/plot_settings.blp:47
 msgid "Add data to the graph to set the axis limits."
-msgstr ""
+msgstr "Voeg data toe aan de grafiek om de asgrenzen in te stellen."
 
 #: data/ui/plot_settings.blp:55
 msgid "Minimum left-hand Y-axis"
-msgstr ""
+msgstr "Minimum linker Y-as"
 
 #: data/ui/plot_settings.blp:61
 msgid "Maximum left-hand Y-axis"
-msgstr ""
+msgstr "Maximum linker Y-as"
 
 #: data/ui/plot_settings.blp:71
 msgid "Minimum bottom X-axis"
-msgstr ""
+msgstr "Minimum onderste X-as"
 
 #: data/ui/plot_settings.blp:77
 msgid "Maximum bottom X-axis"
-msgstr ""
+msgstr "Maximum onderste X-as"
 
 #: data/ui/plot_settings.blp:87
 msgid "Minimum right-hand Y-axis"
-msgstr ""
+msgstr "Minimum rechter Y-as"
 
 #: data/ui/plot_settings.blp:93
 msgid "Maximum right-hand Y-axis"
-msgstr ""
+msgstr "Maximum rechter Y-as"
 
 #: data/ui/plot_settings.blp:102
 msgid "Minimum top X-axis"
-msgstr ""
+msgstr "Minimum bovenste X-as"
 
 #: data/ui/plot_settings.blp:108
 msgid "Maximum top Y-axis"
-msgstr ""
+msgstr "Maximum bovenste Y-as"
 
 #: data/ui/plot_settings.blp:115
 msgid "Scaling"
-msgstr ""
+msgstr "Schaal"
 
 #: data/ui/plot_settings.blp:116
 msgid "The scaling used for each axis"
-msgstr ""
+msgstr "De Schaal gebruikt voor elke as"
 
 #: data/ui/plot_settings.blp:119
 msgid "Bottom Axis Scale"
-msgstr ""
+msgstr "Schaal onderste as"
 
 #: data/ui/plot_settings.blp:120
 msgid "Scaling on the bottom axis"
-msgstr ""
+msgstr "Schaal op de onderste as"
 
 #: data/ui/plot_settings.blp:124
 msgid "Left Axis Scale"
-msgstr ""
+msgstr "Schaal linkeras"
 
 #: data/ui/plot_settings.blp:125
 msgid "Scaling used for the left-hand axis"
-msgstr ""
+msgstr "Schaal voor de linkeras"
 
 #: data/ui/plot_settings.blp:129
 msgid "Top Axis Scale"
-msgstr ""
+msgstr "Schaal voor de  bovenste as"
 
 #: data/ui/plot_settings.blp:130
 msgid "Scaling used for the top axis"
-msgstr ""
+msgstr "Schaal voor de bovenste as"
 
 #: data/ui/plot_settings.blp:134
 msgid "Right Axis Scale"
-msgstr ""
+msgstr "Schaal voor de rechteras"
 
 #: data/ui/plot_settings.blp:135
 msgid "Scaling used for the right-hand axis"
-msgstr ""
+msgstr "Schaal voor de rechteras"
 
 #: data/ui/plot_settings.blp:140
 msgid "Style"
-msgstr ""
+msgstr "Stijl"
 
 #: data/ui/plot_settings.blp:141
 msgid "Settings for the graph style"
-msgstr ""
+msgstr "Instellingen voor de grafiekstijl"
 
 #: data/ui/plot_settings.blp:143 data/ui/preferences.blp:264
 msgid "Legend"
-msgstr ""
+msgstr "Legenda"
 
 #: data/ui/plot_settings.blp:144
 msgid "Use a legend for the lines"
-msgstr ""
+msgstr "Gebruik een legenda"
 
 #: data/ui/plot_settings.blp:147 data/ui/preferences.blp:268
 msgid "Legend position"
-msgstr ""
+msgstr "Legendepositie"
 
 #: data/ui/plot_settings.blp:148
 msgid "The position of the legend"
-msgstr ""
+msgstr "De plek van de legenda"
 
 #: data/ui/plot_settings.blp:153 data/ui/preferences.blp:274
 msgid "Custom Plot Style"
-msgstr ""
+msgstr "Eigen plotstijl"
 
 #: data/ui/plot_settings.blp:154
 msgid "Use a custom plot style instead of following the system style"
-msgstr ""
+msgstr "Gebruik een eigen plotstijl in plaats van de systeemstijl"
 
 #: data/ui/plot_settings.blp:157
 msgid "Graph Style"
-msgstr ""
+msgstr "Grafiekstijl"
 
 #: data/ui/plot_settings.blp:158
 msgid "The style sheet used for the graph"
-msgstr ""
+msgstr "De stijl voor de grafiek"
 
 #: data/ui/preferences.blp:13
 msgid "Import Settings"
-msgstr ""
+msgstr "Importeerinstellingen"
 
 #: data/ui/preferences.blp:14
 msgid "Settings for importing graphs"
-msgstr ""
+msgstr "Instellingen voor het importeren van grafieken"
 
 #: data/ui/preferences.blp:17
 msgid "Delimiter"
-msgstr ""
+msgstr "Scheidingsteken"
 
 #: data/ui/preferences.blp:28
 msgid "Which column to load for the X-data"
-msgstr ""
+msgstr "Kies welke kolom gebruikt wordt voor het laden van X-data"
 
 #: data/ui/preferences.blp:45
 msgid "Which column to load for the Y-data"
-msgstr ""
+msgstr "Kies welke kolom gebruikt wordt voor het laden van Y-data"
 
 #: data/ui/preferences.blp:62
 msgid "How many rows to skip while loading data"
-msgstr ""
+msgstr "Hoeveel rijen  worden overgeslagen tijdens het laden van gegevens"
 
 #: data/ui/preferences.blp:79
 msgid "Settings for the \"Add Equation\" option"
-msgstr ""
+msgstr "Instellingen voor \"Vergelijking toevoegen\""
 
 #: data/ui/preferences.blp:82
 msgid "Default Equation: Y ="
-msgstr ""
+msgstr "Standaardvergelijking: Y ="
 
 #: data/ui/preferences.blp:87
 msgid "Default X start"
-msgstr ""
+msgstr "Standaard X start"
 
 #: data/ui/preferences.blp:92
 msgid "Default X stop"
-msgstr ""
+msgstr "Standaard X stop"
 
 #: data/ui/preferences.blp:97
 msgid "Default Step Size"
-msgstr ""
+msgstr "Standaard Stapgrootte"
 
 #: data/ui/preferences.blp:103
 msgid "Export Options"
-msgstr ""
+msgstr "Exportinstellingen"
 
 #: data/ui/preferences.blp:104
 msgid "Options for exporting the graph"
-msgstr ""
+msgstr "Opties voor het exporteren van de grafiek"
 
 #: data/ui/preferences.blp:107
 msgid "Default Filetype"
-msgstr ""
+msgstr "Standaard bestandstype"
 
 #: data/ui/preferences.blp:108
 msgid "The default filetype of saved graphs"
-msgstr ""
+msgstr "Het standaard bestandstype van opgeslagen grafieken"
 
 #: data/ui/preferences.blp:112
 msgid "Default dpi"
-msgstr ""
+msgstr "Standaardresolutie"
 
 #: data/ui/preferences.blp:113
 msgid "The default resolution of saved graphs in dots per inch"
-msgstr ""
+msgstr "De standaardresolutie van de opgeslagen grafieken in dots per inch"
 
 #: data/ui/preferences.blp:129
 msgid "Use a transparent background for the saved plots by default"
 msgstr ""
+"Gebruik een doorzichte achtergrond voor opgeslagen grafieken als standaard"
 
 #: data/ui/preferences.blp:139
 msgid "Action Behaviour"
-msgstr ""
+msgstr "Gedrag van de acties"
 
 #: data/ui/preferences.blp:140
 msgid "Behaviour of specific actions"
-msgstr ""
+msgstr "Het gedrag van specifieke acties"
 
 #: data/ui/preferences.blp:143
 msgid "Center Data"
-msgstr ""
+msgstr "Gegevens centreren"
 
 #: data/ui/preferences.blp:144
 msgid "The behaviour of the center data button"
-msgstr ""
+msgstr "Waarop de gegevens gecentreerd worden"
 
 #: data/ui/preferences.blp:149
 msgid "Other"
-msgstr ""
+msgstr "Overige"
 
 #: data/ui/preferences.blp:150
 msgid "Other general settings"
-msgstr ""
+msgstr "Overige algemene instellingen"
 
 #: data/ui/preferences.blp:153
 msgid "Clipboard length"
-msgstr ""
+msgstr "Klembordlengte"
 
 #: data/ui/preferences.blp:154
 msgid "Choose how many states are stored in the clipboard"
-msgstr ""
+msgstr "Hoeveel acties opgeslagen worden in het klembord"
 
 #: data/ui/preferences.blp:169
 msgid "Handle duplicate entries"
-msgstr ""
+msgstr "Dubbele gegevens"
 
 #: data/ui/preferences.blp:170
 msgid "Choose how to handle duplicate entries to be loaded"
-msgstr ""
+msgstr "Hoe nieuwe gegevens met een bestaande naam gehanteerd worden"
 
 #: data/ui/preferences.blp:174
 msgid "Hide Unselected"
-msgstr ""
+msgstr "Verberg niet-geselecteerde data"
 
 #: data/ui/preferences.blp:175
 msgid "Whether to hide items, that aren't selected"
-msgstr ""
+msgstr "Kies of items die niet zijn geselecteerd worden verborgen"
 
 #: data/ui/preferences.blp:191
 msgid "Set the labels and title that are used by default"
-msgstr ""
+msgstr "Stel de labels en titels in die standaard worden gebruikt"
 
 #: data/ui/preferences.blp:194
 msgid "Default Title"
-msgstr ""
+msgstr "Standaardtitel"
 
 #: data/ui/preferences.blp:198
 msgid "Default Bottom Axis label"
-msgstr ""
+msgstr "Standaard onderste aslabel"
 
 #: data/ui/preferences.blp:202
 msgid "Default Left Axis Label"
-msgstr ""
+msgstr "Standaard linkeraslabel"
 
 #: data/ui/preferences.blp:206
 msgid "Default Top Axis label"
-msgstr ""
+msgstr "Standaard bovenste aslabel"
 
 #: data/ui/preferences.blp:210
 msgid "Default Right Axis Label"
-msgstr ""
+msgstr "Standaard rechteraslabel"
 
 #: data/ui/preferences.blp:214
 msgid "Retrieve label"
-msgstr ""
+msgstr "Labels ophalen"
 
 #: data/ui/preferences.blp:225
 msgid "Axes settings"
-msgstr ""
+msgstr "Asinstellingen"
 
 #: data/ui/preferences.blp:226
 msgid "Set the default axes scale and position used upon launch"
 msgstr ""
+"Stel de standaardinstellingen in voor de schaal en posities bij het opstarten"
 
 #: data/ui/preferences.blp:229
 msgid "Default Bottom Axis Scale"
-msgstr ""
+msgstr "Standaardschaal voor de onderste as"
 
 #: data/ui/preferences.blp:230
 msgid "The scaling on the bottom axis"
-msgstr ""
+msgstr "De schaal voor de onderste as"
 
 #: data/ui/preferences.blp:234
 msgid "Default Left Axis Scale"
-msgstr ""
+msgstr "Standaardschaal voor de linkeras"
 
 #: data/ui/preferences.blp:235
 msgid "The scaling on the left-hand axis"
-msgstr ""
+msgstr "De schaal voor de linkeras"
 
 #: data/ui/preferences.blp:239
 msgid "Default Top Axis Scale"
-msgstr ""
+msgstr "Standaardschaal voor de bovenste as"
 
 #: data/ui/preferences.blp:240
 msgid "The scaling on the top axis"
-msgstr ""
+msgstr "De schaal voor de bovenste as"
 
 #: data/ui/preferences.blp:244
 msgid "Default Right Axis Scale"
-msgstr ""
+msgstr "Standaardschaal voor de rechteras"
 
 #: data/ui/preferences.blp:245
 msgid "The scaling on the right-hand axis"
-msgstr ""
+msgstr "Standaardschaal voor de rechteras"
 
 #: data/ui/preferences.blp:249
 msgid "Default X-Axis Position"
-msgstr ""
+msgstr "Standaard X-as positie"
 
 #: data/ui/preferences.blp:254
 msgid "Default Y-Axis Position"
-msgstr ""
+msgstr "Standaard Y-as positie"
 
 #: data/ui/preferences.blp:255
 msgid "The default position of the Y-axis"
-msgstr ""
+msgstr "De positie van de Y-as"
 
 #: data/ui/preferences.blp:260
 msgid "Styling"
-msgstr ""
+msgstr "Stijl"
 
 #: data/ui/preferences.blp:261
 msgid "Change default plot style and other visual changes"
-msgstr ""
+msgstr "Kies de standaardplotstijl en andere visuele instellingen"
 
 #: data/ui/preferences.blp:265
 msgid "Use a legend by default"
-msgstr ""
+msgstr "Gebruik een legenda als standaard"
 
 #: data/ui/preferences.blp:269
 msgid "The default position of the legend"
-msgstr ""
+msgstr "De standaardpositie van de legenda"
 
 #: data/ui/preferences.blp:275
 msgid ""
 "Use a custom plot style instead of following the system style by default"
 msgstr ""
+"Gebruik een eigen plotstijl als standaard in plaats van de systeemstijl"
 
 #: data/ui/preferences.blp:279
 msgid "Custom Style"
-msgstr ""
+msgstr "Eigen stijl"
 
 #: data/ui/preferences.blp:280
 msgid "The custom style sheet used by default"
-msgstr ""
+msgstr "De standaardstijl voor de grafiek"
 
 #: data/ui/preferences.blp:284
 msgid "Override Line Styling on Style Change"
-msgstr ""
+msgstr "Overschrijf de lijnstijl wanneer de stijl is veranderd"
 
 #: data/ui/preferences.blp:285
 msgid "Override the active line styling when switching plot style"
 msgstr ""
+"Gebruik de lijnstijl van de nieuwe stijl wanneer een andere stijl wordt "
+"gebruikt"
 
 #: data/ui/rename_window.blp:30
 msgid "Label"
-msgstr ""
+msgstr "Label"
 
 #: data/ui/rename_window.blp:36
 msgid "Rename"
-msgstr ""
+msgstr "Hernoemen"
 
 #: data/ui/style_box.blp:23 data/ui/style_color_box.blp:18
 msgid "Edit"
-msgstr ""
+msgstr "Aanpassen"
 
 #: data/ui/transform_window.blp:7
 msgid "Transform Data"
-msgstr ""
+msgstr "Transformeer data"
 
 #: data/ui/transform_window.blp:26
 msgid ""
@@ -813,280 +820,293 @@ msgid ""
 "To convert a value from degrees into radians use radians(value), e.g. Y = "
 "sin(radians(X))."
 msgstr ""
+"Het transformatiewerktuig gebruikt Numpynotatie, met hoofdletters voor de "
+"coordinaten.\n"
+"De transformatie wordt punt bij punt gedaan, als je toegang wil "
+"tot de hele lijst gebruik X_range of Y_range\n"
+"Bijvoorbeeld Y = Y/max(X_range) deelt elk Y-coordinaat door de grootste "
+"waarde in X.\n"
+"\n"
+"Om graden te gebruiken in plaats van radialen, gebruik dan radians(waarde), "
+"bijvoorbeeld Y = sin(radians(X))"
 
 #: data/ui/transform_window.blp:31
 msgid "More info"
-msgstr ""
+msgstr "Meer informatie"
 
 #: data/ui/transform_window.blp:47
 msgid "X ="
-msgstr ""
+msgstr "X = "
 
 #: data/ui/transform_window.blp:55
 msgid "Discard Unselected Data"
-msgstr ""
+msgstr "Gooi niet-geselecteerde gegevens weg"
 
 #: data/ui/transform_window.blp:66 data/ui/window.blp:457
 msgid "Transform"
-msgstr ""
+msgstr "Transformeer"
 
 #: data/ui/window.blp:21
 msgid "Add new data"
-msgstr "Neue Daten hinzufügen"
+msgstr "Voeg nieuwe gegevens toe"
 
 #: data/ui/window.blp:28
 msgid "Undo"
-msgstr "Rückgängig machen"
+msgstr "Ongedaan maken"
 
 #: data/ui/window.blp:34
 msgid "Redo"
-msgstr "Wiederholen"
+msgstr "Opnieuw uitvoeren"
 
 #: data/ui/window.blp:43
 msgid "Restore View / View Options"
-msgstr ""
+msgstr "Weergave herstellen/weergaveinstellingen"
 
 #: data/ui/window.blp:51
 msgid "Open Application Menu"
-msgstr ""
+msgstr "Open toepassingmenu"
 
 #: data/ui/window.blp:137
 msgid "No Data"
-msgstr ""
+msgstr "Geen data"
 
 #: data/ui/window.blp:138
 msgid "Add data from a file or manually as an equation"
-msgstr ""
+msgstr "Voeg gegevens toe van een bestand, of van een vergelijking"
 
 #: data/ui/window.blp:159
 msgid ""
 "Panning mode. Use left mouse button to pan, right mouse button to zoom. Hold "
 "control to to keep aspect ratio fixed"
 msgstr ""
+"Panning-modus. Gebruik de linkermuisknop om te pannen, de rechtermuisknop om "
+"te zoomen. Houd de controlknop ingedrukt om de beeldverhouding vast te houden"
 
 #: data/ui/window.blp:165
 msgid "Zoom mode. Select an area on the graph to zoom in"
-msgstr ""
+msgstr "Zoom-modus. Selecteer een gebied op de grafiek om in te zoomen."
 
 #: data/ui/window.blp:171
 msgid ""
 "Highlight mode, click and drag over the graph to highlight the workable area"
 msgstr ""
+"Markeermodus, klik en sleep over de grafiek om het werkbare gebied te "
+"markeren"
 
 #: data/ui/window.blp:191
 msgid "Adjust Data"
-msgstr ""
+msgstr "Gegevens aanpassen"
 
 #: data/ui/window.blp:206
 msgid "Shift"
-msgstr ""
+msgstr "Verschuif"
 
 #: data/ui/window.blp:208
 msgid "Shift all data vertically with respect to each other"
-msgstr ""
+msgstr "Verschuif alle gegevens verticaal ten opzichte van elkaar"
 
 #: data/ui/window.blp:225
 msgid "Normalize"
-msgstr ""
+msgstr "Normaliseer"
 
 #: data/ui/window.blp:227
 msgid "Normalize Data"
-msgstr ""
+msgstr "Normaliseer de gegevens"
 
 #: data/ui/window.blp:244
 msgid "Smoothen"
-msgstr ""
+msgstr "Gladstrijken"
 
 #: data/ui/window.blp:246
 msgid "Smoothen the Data"
-msgstr ""
+msgstr "Strijk de gegevens glad"
 
 #: data/ui/window.blp:263 src/misc.py:67
 msgid "Center"
-msgstr ""
+msgstr "Centreer"
 
 #: data/ui/window.blp:265
 msgid "Center the data"
-msgstr ""
+msgstr "Centreer de data"
 
 #: data/ui/window.blp:282 data/ui/window.blp:284
 msgid "Combine"
-msgstr ""
+msgstr "Combineer"
 
 #: data/ui/window.blp:301
 msgid "Cut"
-msgstr ""
+msgstr "Knippen"
 
 #: data/ui/window.blp:303
 msgid "Cut selected Data"
-msgstr ""
+msgstr "Knip de geselecteerde data"
 
 #: data/ui/window.blp:310
 msgid "Translate and Multiply"
-msgstr ""
+msgstr "Verplaatsen en vermenigvuldigen"
 
 #: data/ui/window.blp:313
 msgid "Translate X-Axis"
-msgstr ""
+msgstr "Verplaats de X-as"
 
 #: data/ui/window.blp:319 data/ui/window.blp:332
 msgid "Translate"
-msgstr ""
+msgstr "Verplaats"
 
 #: data/ui/window.blp:326
 msgid "Translate Y-Axis"
-msgstr ""
+msgstr "Verplaats de Y-as"
 
 #: data/ui/window.blp:339
 msgid "Multiply X-Axis"
-msgstr ""
+msgstr "X-as vermenigvuldigen"
 
 #: data/ui/window.blp:345 data/ui/window.blp:358
 msgid "Multiply"
-msgstr ""
+msgstr "Vermenigvuldig"
 
 #: data/ui/window.blp:352
 msgid "Multiply Y-Axis"
-msgstr ""
+msgstr "Y-as vermenigvuldigen"
 
 #: data/ui/window.blp:365
 msgid "Mathematical Operations"
-msgstr ""
+msgstr "Wiskundige operaties"
 
 #: data/ui/window.blp:380
 msgid "Derivative"
-msgstr ""
+msgstr "Afgeleide"
 
 #: data/ui/window.blp:382
 msgid "Get the derivative of the data"
-msgstr ""
+msgstr "Bereken de afgeleide van de gegevens"
 
 #: data/ui/window.blp:399
 msgid "Integral"
-msgstr ""
+msgstr "Integraal"
 
 #: data/ui/window.blp:401
 msgid "Get the indefinite integral of the data"
-msgstr ""
+msgstr "Bereken de integraal van de gegevens"
 
 #: data/ui/window.blp:418
 msgid "FFT"
-msgstr ""
+msgstr "FFT"
 
 #: data/ui/window.blp:420
 msgid "Get the Fast Fourier Transform of the data"
-msgstr ""
+msgstr "Bereken de Fouriertransformatie (FFT) van de gegevens"
 
 #: data/ui/window.blp:437
 msgid "inverse FFT"
-msgstr ""
+msgstr "Omgekeerde FFT"
 
 #: data/ui/window.blp:439
 msgid "Get the Inverse Fast Fourier Transform of the data"
-msgstr ""
+msgstr "Bereken de omgekeerde Fouriertransformatie van de gegevens"
 
 #: data/ui/window.blp:459
 msgid "Perform custom transformations on the data"
-msgstr ""
+msgstr "Voer aangepaste transformaties uit op de gegevens"
 
 #: data/ui/window.blp:489
 msgid "Save Project"
-msgstr ""
+msgstr "Project opslaan"
 
 #: data/ui/window.blp:490
 msgid "Open Project"
-msgstr ""
+msgstr "Project openen"
 
 #: data/ui/window.blp:493
 msgid "Export Data"
-msgstr ""
+msgstr "Project exporteren"
 
 #: data/ui/window.blp:497 src/plot_styles.py:229
 msgid "Plot Styles"
-msgstr ""
+msgstr "Plotstijlen"
 
 #: data/ui/window.blp:500
 msgid "Plot Settings"
-msgstr ""
+msgstr "Plotinstellingen"
 
 #: data/ui/window.blp:501
 msgid "Preferences"
-msgstr ""
+msgstr "Instellingen"
 
 #: data/ui/window.blp:504
 msgid "Keyboard Shortcuts"
-msgstr ""
+msgstr "Sneltoetsen"
 
 #: data/ui/window.blp:505
 msgid "About Graphs"
-msgstr ""
+msgstr "Over Graphs"
 
 #: data/ui/window.blp:511
 msgid "Add Data from File"
-msgstr ""
+msgstr "Voeg gegevens toe van een bestand"
 
 #: data/ui/window.blp:512
 msgid "Add Data from File (Advanced)"
-msgstr ""
+msgstr "Voeg gegevens toe van een bestand (geavanceerd)"
 
 #: data/ui/window.blp:513
 msgid "Add Data from Equation"
-msgstr ""
+msgstr "Voeg gegevens toe van een vergelijking"
 
 #: data/ui/window.blp:519
 msgid "Toggle Sidebar"
-msgstr ""
+msgstr "Schakel de zijbalk"
 
 #: data/ui/window.blp:522
 msgid "Restore View"
-msgstr ""
+msgstr "Weergave herstellen"
 
 #: data/ui/window.blp:523
 msgid "Previous View"
-msgstr ""
+msgstr "Vorige weergave"
 
 #: data/ui/window.blp:524
 msgid "Next View"
-msgstr ""
+msgstr "Volgende weergave"
 
 #: data/ui/window.blp:528
 msgid "Top X Scale"
-msgstr ""
+msgstr "Bovenste X-schaal"
 
 #: data/ui/window.blp:530 data/ui/window.blp:543 data/ui/window.blp:556
 #: data/ui/window.blp:569
 msgid "Logarithmic"
-msgstr ""
+msgstr "Logaritmisch"
 
 #: data/ui/window.blp:535 data/ui/window.blp:548 data/ui/window.blp:561
 #: data/ui/window.blp:574
 msgid "Linear"
-msgstr ""
+msgstr "Lineair"
 
 #: data/ui/window.blp:541
 msgid "Bottom X Scale"
-msgstr ""
+msgstr "Onderste X-schaal"
 
 #: data/ui/window.blp:554
 msgid "Left Y Scale"
-msgstr ""
+msgstr "Linker Y-schaal"
 
 #: data/ui/window.blp:567
 msgid "Right Y Scale"
-msgstr ""
+msgstr "Rechter Y-schaal"
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:6
 #: data/se.sjoerd.Graphs.desktop.in.in:3
 msgid "@NAME@"
-msgstr ""
+msgstr "@NAME@"
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:7
 msgid "@DESCRIPTION_SHORT@"
-msgstr ""
+msgstr "@DESCRIPTION_SHORT@"
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:8
 msgid "@AUTHOR@"
-msgstr ""
+msgstr "@AUTHOR@"
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:10
 msgid ""
@@ -1097,12 +1117,23 @@ msgid ""
 "and smooth data, as well as apply any custom transformations using numpy "
 "notation."
 msgstr ""
+"Graphs is een eenvoudig maar krachtig hulpmiddel waarmee je je gegevens "
+"gemakkelijk kunt plotten en manipuleren. Je kunt gegevens importeren uit "
+"bestanden met kolommen, of nieuwe gegevens genereren met behulp van een "
+"wiskundige vergelijking. Alle gegevens kunnen worden gemanipuleerd met "
+"behulp van verschillende bewerkingen, zoals selecteren, knippen, "
+"verplaatsen, vermenigvuldigen, centreren en gladstrijken van gegevens, "
+"evenals het toepassen van handmatige transformaties met behulp van numpy-"
+"notatie.\""
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:13
 msgid ""
 "Graphs lets you customize the style of plotted data. You can add and edit "
 "stylesheets in detail."
 msgstr ""
+"Het is mogelijk met Graphs om de stijl van geplotte gegevens volledig aan te "
+"passen. Je kunt gedetailleerde stijlsjablonen toevoegen en bewerken, zodat "
+"je deze later weer kan gebruiken."
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:16
 msgid ""
@@ -1115,36 +1146,50 @@ msgid ""
 "environment in mind, but should be suitable for any other desktop "
 "environment as well."
 msgstr ""
+" Graphs is een uitstekende keuze voor zowel het plotten als voor het "
+"manipuleren van gegevens. De grafieken die met Graphs worden gemaakt, kunnen "
+"in verschillende formaten worden opgeslagen, geschikt voor het delen en "
+"presenteren aan een breed publiek, zoals in een wetenschappelijke publicatie "
+"of presentaties. Het is ook mogelijk om de plots op te slaan als "
+"vectorafbeeldingen, die gemakkelijk kunnen worden bewerkt in programma's "
+"zoals Inkscape voor verdere aanpassing en verfijning. Graphs is ontwikkeld "
+"met de GNOME-omgeving in gedachten, maar werkt in principe met elke andere "
+"desktopomgeving. "
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:19
 msgid ""
 "For any feedback, questions or general issues, please file an issue on the "
 "GitHub page."
 msgstr ""
+"Voor feedback, vragen of algemene problemen, kan je een issue indienen op de "
+"GitHub pagina."
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:29
 msgid "1 - Plot and manipulate any data set inserted by equation or from file"
 msgstr ""
+"1- Plot en manipuleer elke dataset die is ingevoegd door vergelijking of "
+"vanuit een bestand"
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:33
 msgid "2 - Both light and dark mode is supported"
-msgstr ""
+msgstr "2 - Zowel de lichte als de donkere modus wordt ondersteund"
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:37
 msgid "3 - Add data from an equation"
-msgstr ""
+msgstr "3 - Voeg data toe vanuit een vergelijking"
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:41
 msgid "4 - Edit plot stylesheets"
-msgstr ""
+msgstr "4 - Pas stijlsjablonen aan"
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:45
 msgid "5 - Manipulate data using a wide range of operations"
-msgstr ""
+msgstr "5 - Manipuleer gegevens met een breed aantal operaties"
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:52
+#, fuzzy
 msgid "Changes:"
-msgstr ""
+msgstr "Verander naam"
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:54
 msgid "Add support for .xry file types from Leybold X-Ray apparatus."
@@ -1211,8 +1256,9 @@ msgid "Save and Load functionality"
 msgstr ""
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:82
+#, fuzzy
 msgid "Customizable Plot Styles"
-msgstr ""
+msgstr "Eigen plotstijl"
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:83
 msgid "Loads of optimizations and refactors in the background"
@@ -1259,8 +1305,9 @@ msgid "Added combine operation"
 msgstr ""
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:96
+#, fuzzy
 msgid "Added custom Adwaita stylesheets for the graph"
-msgstr ""
+msgstr "De stijl voor de grafiek"
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:97
 msgid "Added a function to quickly change axis scale in the view menu"
@@ -1317,8 +1364,9 @@ msgid "Added an option to hide unselected items from the graph"
 msgstr ""
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:110
+#, fuzzy
 msgid "Added a dialog before exporting the figure"
-msgstr ""
+msgstr "Opties voor het exporteren van de grafiek"
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:111
 msgid "Support for Panalytical .xdrml files"
@@ -1489,20 +1537,24 @@ msgid ""
 msgstr ""
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:180
+#, fuzzy
 msgid "Added the ability to get the derivative of the data"
-msgstr ""
+msgstr "Bereken de afgeleide van de gegevens"
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:181
+#, fuzzy
 msgid "Added the ability to get the indefinite integral of the data"
-msgstr ""
+msgstr "Bereken de integraal van de gegevens"
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:182
+#, fuzzy
 msgid "Added the ability to get the Fast Fourier Transform of the data"
-msgstr ""
+msgstr "Bereken de Fouriertransformatie (FFT) van de gegevens"
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:183
+#, fuzzy
 msgid "Added the ability to get the Inverse Fast Fourier Transform of the data"
-msgstr ""
+msgstr "Bereken de omgekeerde Fouriertransformatie van de gegevens"
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:184
 msgid ""
@@ -1618,8 +1670,9 @@ msgid ""
 msgstr ""
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:235
+#, fuzzy
 msgid "Added the option to plot data on the right-hand axis"
-msgstr ""
+msgstr "Standaardschaal voor de rechteras"
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:236
 msgid "Added the option to plot data on the top axis"
@@ -1773,8 +1826,9 @@ msgid "Improved the UI for the \"Add equation\" and \"Transform data\" windows"
 msgstr ""
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:299
+#, fuzzy
 msgid "Added import settings"
-msgstr ""
+msgstr "Importeerinstellingen"
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:300
 msgid "Added an advanced import setting"
@@ -1882,346 +1936,347 @@ msgstr ""
 
 #: src/actions.py:98
 msgid "Text Files"
-msgstr ""
+msgstr "Tekstbestanden"
 
 #: src/actions.py:114 src/actions.py:137
 msgid "Graphs Project File"
-msgstr ""
+msgstr "Graphs Projectbestand"
 
 #: src/actions.py:126 src/plot_styles.py:204 src/plot_styles.py:420
 msgid "Cancel"
-msgstr ""
+msgstr "Annuleer"
 
 #: src/actions.py:127
 msgid "Discard"
-msgstr ""
+msgstr "Weggooien"
 
 #: src/actions.py:151 src/actions.py:164 src/actions.py:177 src/actions.py:190
 #, python-brace-format
 msgid "{error}: Unable to do translation, make sure to enter a valid number"
-msgstr ""
+msgstr "{error}: Kan niet verplaatsen, let op dat je een geldig getal gebruikt"
 
 #: src/add_equation.py:50
 #, python-brace-format
 msgid "{error} - Unable to add data from equation"
 msgstr ""
+"{error} - Het is niet gelukt om data toe te voegen vanuit de vergelijking"
 
 #: src/export_figure.py:66
 msgid "Exported Figure"
-msgstr ""
+msgstr "Gexporteerde figuur"
 
 #: src/file_io.py:65
 msgid "2Theta"
-msgstr ""
+msgstr "2Theta"
 
 #: src/file_io.py:67
 msgid "Omega"
-msgstr ""
+msgstr "Omega"
 
 #: src/file_io.py:82
 msgid "Intensity (cps)"
-msgstr ""
+msgstr "Intensiteit (cps)"
 
 #: src/file_io.py:101
 msgid "β (°)"
-msgstr ""
+msgstr "β (°)"
 
 #: src/file_io.py:102
 msgid "Intensity (s⁻¹)"
-msgstr ""
+msgstr "Intensiteit (s⁻¹)"
 
 #: src/graphs.py:38
 msgid "Could not open data, the column index is out of range"
-msgstr ""
+msgstr "Kan gegevens niet openen, de kolomindex is buiten bereik"
 
 #: src/graphs.py:42
 msgid "Could not open data, wrong filetype"
-msgstr ""
+msgstr "Kan gegevens niet openen, verkeerd bestandstype"
 
 #: src/graphs.py:73
 msgid "Could not open project"
-msgstr ""
+msgstr "Kan project niet openen"
 
 #: src/graphs.py:113
 #, python-brace-format
 msgid "Deleted {name}"
-msgstr ""
+msgstr "{name} is verwijdert"
 
 #: src/main.py:44
 #, python-format
 msgid "Could not load %s"
-msgstr ""
+msgstr "Kon %s niet laden"
 
 #: src/misc.py:63
 msgid "linear"
-msgstr ""
+msgstr "Liniear"
 
 #: src/misc.py:63
 msgid "log"
-msgstr ""
+msgstr "Logaritmisch"
 
 #: src/misc.py:65
 msgid "Best"
-msgstr ""
+msgstr "Beste"
 
 #: src/misc.py:65
 msgid "Upper right"
-msgstr ""
+msgstr "Rechtsboven"
 
 #: src/misc.py:65
 msgid "Upper left"
-msgstr ""
+msgstr "Linksboven"
 
 #: src/misc.py:65
 msgid "Lower left"
-msgstr ""
+msgstr "Linksonder"
 
 #: src/misc.py:66
 msgid "Lower right"
-msgstr ""
+msgstr "Rechtsonder"
 
 #: src/misc.py:66
 msgid "Center left"
-msgstr ""
+msgstr "Linksmidden"
 
 #: src/misc.py:66
 msgid "Center right"
-msgstr ""
+msgstr "Rechtsmidden"
 
 #: src/misc.py:66
 msgid "Lower center"
-msgstr ""
+msgstr "Onderaan in het midden"
 
 #: src/misc.py:67
 msgid "Upper center"
-msgstr ""
+msgstr "Bovenaan in het midden"
 
 #: src/misc.py:69
 msgid "top"
-msgstr ""
+msgstr "Bovenaan"
 
 #: src/misc.py:69
 msgid "bottom"
-msgstr ""
+msgstr "Onderaan"
 
 #: src/misc.py:70
 msgid "left"
-msgstr ""
+msgstr "Links"
 
 #: src/misc.py:70
 msgid "right"
-msgstr ""
+msgstr "Rechts"
 
 #: src/misc.py:73
 msgid "Center at maximum Y value"
-msgstr ""
+msgstr "Op de maximale Y-waarde"
 
 #: src/misc.py:73
 msgid "Center at middle coordinate"
-msgstr ""
+msgstr "Op het middelste coordinaat"
 
 #: src/misc.py:76
 msgid "Auto-rename duplicates"
-msgstr ""
+msgstr "Hernoemen"
 
 #: src/misc.py:76
 msgid "Ignore duplicates"
-msgstr ""
+msgstr "Negeren"
 
 #: src/misc.py:76
 msgid "Add duplicates"
-msgstr ""
+msgstr "Toevoegen"
 
 #: src/misc.py:77
 msgid "Override existing items"
-msgstr ""
+msgstr "Overschrijven"
 
 #: src/misc.py:79
 msgid "none"
-msgstr ""
+msgstr "Niets"
 
 #: src/misc.py:79
 msgid "solid"
-msgstr ""
+msgstr "Vast"
 
 #: src/misc.py:79
 msgid "dotted"
-msgstr ""
+msgstr "Gestippelt"
 
 #: src/misc.py:79
 msgid "dashed"
-msgstr ""
+msgstr "Gestreept"
 
 #: src/misc.py:79
 msgid "dashdot"
-msgstr ""
+msgstr "Streep-stippel"
 
 #: src/misc.py:81
 msgid "Point"
-msgstr ""
+msgstr "Punt"
 
 #: src/misc.py:81
 msgid "Pixel"
-msgstr ""
+msgstr "Pixel"
 
 #: src/misc.py:81
 msgid "Circle"
-msgstr ""
+msgstr "Cirkel"
 
 #: src/misc.py:82
 msgid "Triangle down"
-msgstr ""
+msgstr "Driehoek naar beneden"
 
 #: src/misc.py:82
 msgid "Triangle up"
-msgstr ""
+msgstr "Driehoek naar boven"
 
 #: src/misc.py:82
 msgid "Triangle left"
-msgstr ""
+msgstr "Driehoek naar links"
 
 #: src/misc.py:83
 msgid "Triangle right"
-msgstr ""
+msgstr "Driehoek naar rechts"
 
 #: src/misc.py:83
 msgid "Octagon"
-msgstr ""
+msgstr "Octagon"
 
 #: src/misc.py:83
 msgid "Square"
-msgstr ""
+msgstr "Vierkant"
 
 #: src/misc.py:84
 msgid "Pentagon"
-msgstr ""
+msgstr "Pentagon"
 
 #: src/misc.py:84
 msgid "Star"
-msgstr ""
+msgstr "Ster"
 
 #: src/misc.py:84
 msgid "Hexagon 1"
-msgstr ""
+msgstr "Hexagon 1"
 
 #: src/misc.py:85
 msgid "Hexagon 2"
-msgstr ""
+msgstr "Hexagon 2"
 
 #: src/misc.py:85
 msgid "Plus"
-msgstr ""
+msgstr "Plus"
 
 #: src/misc.py:85
 msgid "x"
-msgstr ""
+msgstr "Kruis"
 
 #: src/misc.py:85
 msgid "Diamond"
-msgstr ""
+msgstr "Diamand"
 
 #: src/misc.py:86
 msgid "Thin diamond"
-msgstr ""
+msgstr "Dunne diamand"
 
 #: src/misc.py:86
 msgid "Vertical line"
-msgstr ""
+msgstr "Verticale lijn"
 
 #: src/misc.py:86
 msgid "Horizontal line"
-msgstr ""
+msgstr "Horizontale lijn"
 
 #: src/misc.py:87
 msgid "Filled plus"
-msgstr ""
+msgstr "Gevulde plus"
 
 #: src/misc.py:87
 msgid "Filled x"
-msgstr ""
+msgstr "Gevulde kruis"
 
 #: src/misc.py:87
 msgid "Nothing"
-msgstr ""
+msgstr "Niets"
 
 #: src/misc.py:89
 msgid "in"
-msgstr ""
+msgstr "Naar binnen"
 
 #: src/misc.py:89
 msgid "out"
-msgstr ""
+msgstr "Naar buiten"
 
 #: src/operations.py:85
 msgid "No data found within the highlighted area"
-msgstr ""
+msgstr "Geen gegevens gevonden in het geselecteerde gebied"
 
 #: src/plot_styles.py:205
 msgid "Reset"
-msgstr ""
+msgstr "Opnieuw instellen"
 
 #: src/plot_styles.py:235
 #, python-brace-format
 msgid "{name} - line colors"
-msgstr ""
+msgstr "{name} - Lijnkleuren"
 
 #: src/plot_styles.py:421
 msgid "Delete"
-msgstr ""
+msgstr "Verwijderen"
 
 #: src/plot_styles.py:543 src/plot_styles.py:554
 #, python-brace-format
 msgid "{name} (copy)"
-msgstr ""
+msgstr "{name} (Kopie)"
 
 #: src/plotting_tools.py:46
 msgid "Could not set limits, one of the values was probably infinite"
 msgstr ""
+"Kon geen limieten instellen, een van de waarden was waarschijnlijk oneindig"
 
 #: src/preferences.py:33
 msgid "New configuration file created"
-msgstr ""
+msgstr "Nieuw configuratiebestand aangemaakt"
 
 #: src/preferences.py:35
 msgid "Loading configuration file"
-msgstr ""
+msgstr "Configuratiebestand laden"
 
 #: src/preferences.py:46
 msgid "Loaded new config"
-msgstr ""
+msgstr "Nieuw configuratiebestand geladen"
 
 #: src/rename.py:18
 msgid "Rename Label"
-msgstr ""
+msgstr "Hernoem label"
 
 #: src/rename.py:19
 msgid "Change Label"
-msgstr ""
+msgstr "Verander label"
 
 #: src/rename.py:21
 msgid "Here you can change the label of the selected axis."
-msgstr ""
+msgstr "Hier kunt u de label van de geselecteerde as wijzigen."
 
 #: src/rename.py:24
 msgid "Rename Title"
-msgstr ""
+msgstr "Hernoem titel"
 
 #: src/rename.py:25
 msgid "Change Title"
-msgstr ""
+msgstr "Verander titel"
 
 #: src/rename.py:27
 msgid "Here you can change the title of the plot."
-msgstr ""
+msgstr "Hier kunt u de titel van de plot aanpassen"
 
 #: src/transform_data.py:42
 #, python-brace-format
 msgid "{name}: Unable to do transformation, make sure the syntax is correct"
 msgstr ""
+"{name}: Kan transformatie niet uitvoeren, zorg ervoor dat de syntax correct "
+"is"
 
 #: src/transform_data.py:45
 msgid "Unable to do transformation"
-msgstr ""
-
-#~ msgid "Starting new Graphs instance"
-#~ msgstr "Neue Graphs Instanz wird gestartet"
+msgstr "Kan de transformatie niet uitvoeren"
