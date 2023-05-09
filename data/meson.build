@@ -104,33 +104,3 @@ install_data(
   join_paths(symbolic_dir, ('@0@-symbolic.svg').format(application_id)),
   install_dir: join_paths(datadir, symbolic_dir)
 )
-
-styles = files(
-  'styles/adwaita.mplstyle',
-  'styles/adwaita-dark.mplstyle',
-  'styles/bmh.mplstyle',
-  'styles/classic.mplstyle',
-  'styles/dark-background.mplstyle',
-  'styles/fivethirtyeight.mplstyle',
-  'styles/ggplot.mplstyle',
-  'styles/grayscale.mplstyle',
-  'styles/seaborn.mplstyle',
-  'styles/seaborn-bright.mplstyle',
-  'styles/seaborn-colorblind.mplstyle',
-  'styles/seaborn-dark.mplstyle',
-  'styles/seaborn-darkgrid.mplstyle',
-  'styles/seaborn-dark-palette.mplstyle',
-  'styles/seaborn-deep.mplstyle',
-  'styles/seaborn-muted.mplstyle',
-  'styles/seaborn-notebook.mplstyle',
-  'styles/seaborn-paper.mplstyle',
-  'styles/seaborn-talk.mplstyle',
-  'styles/seaborn-ticks.mplstyle',
-  'styles/seaborn-white.mplstyle',
-  'styles/seaborn-whitegrid.mplstyle',
-  'styles/solarized-light.mplstyle',
-  'styles/tableau-colorblind10.mplstyle',
-  'styles/thesis.mplstyle',
-)
-styles_dir = join_paths(pkgdatadir, 'styles')
-install_data(styles, install_dir: styles_dir, install_mode: 'rwxrwxrwx')

@@ -27,8 +27,8 @@ def _styles_in_directory(directory):
 
 
 def get_system_styles(self):
-    path = os.path.join(self.pkgdatadir, "styles")
-    return _styles_in_directory(Gio.File.new_for_path(path))
+    return _styles_in_directory(
+        Gio.File.new_for_uri("resource:///se/sjoerd/Graphs/styles"))
 
 
 def get_user_styles(self):
