@@ -47,6 +47,14 @@
     </screenshot>
   </screenshots>
   <releases>
+    <release version="1.5.3" date="2023-05-09">
+      <description>
+        <p>Changes:</p>
+        <ul>
+	  <li>Adds Dutch translation for Graphs.</li>
+        </ul>
+      </description>
+    </release>
     <release version="1.5.2" date="2023-05-09">
       <description>
         <p>Changes:</p>

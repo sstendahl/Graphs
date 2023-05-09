@@ -1,15 +1,4 @@
 <p>Changes</p>
 <ul>
-	<li>Add support for .xry file types from Leybold X-Ray apparatus.</li>
-	<li>Add support for single-column files</li>
-	<li>Changed the behaviour of the canvas so that the limits are not reset unnecessarily</li>
-	<li>Started initial work on localization support</li>
-	<li>Refactors under-the-hood</li>
-</ul>
-<p>Bug fixes:</p>
-<ul>
-	<li>Fixed a bug where data was not saved when multiple files were exported simultaneously</li>
-	<li>Fixes a bug that prevents "Add Equation" from generating new data</li>
-	<li>Fixes a bug where a change of item properties was not included in the clipboard when loading a new style</li>
-	<li>Fixes a bug where the "Restore View" did not properly find the correct limits in specific situations</li>
+	<li>Adds Dutch translation to Graphs.</li>
 </ul>
