@@ -1,6 +1,5 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 import os
-import shutil
 from gettext import gettext as _
 from pathlib import Path
 
@@ -11,20 +10,33 @@ from gi.repository import Adw, GLib, Gio, Gtk
 from graphs import file_io, graphs, misc, utilities
 
 
+def _styles_in_directory(directory):
+    enumerator = directory.enumerate_children("default::*", 0, None)
+    styles = {}
+    loop = True
+    while loop:
+        file_info = enumerator.next_file(None)
+        if file_info is None:
+            loop = False
+            continue
+        file = enumerator.get_child(file_info)
+        filename = file.query_info("standard::*", 0, None).get_display_name()
+        styles[Path(filename).stem] = file
+    enumerator.close(None)
+    return styles
+
+
 def get_system_styles(self):
     path = os.path.join(self.pkgdatadir, "styles")
-    return {Path(file).stem: os.path.join(path, file) for file
-            in os.listdir(path)
-            if os.path.isfile(os.path.join(path, file))}
+    return _styles_in_directory(Gio.File.new_for_path(path))
 
 
 def get_user_styles(self):
-    path = os.path.join(utilities.get_config_path(), "styles")
-    if not os.path.exists(path):
+    config_dir = utilities.get_config_directory()
+    directory = config_dir.get_child_for_display_name("styles")
+    if not directory.query_exists(None):
         reset_user_styles(self)
-    styles = {Path(file).stem: os.path.join(path, file) for file
-              in sorted(os.listdir(path))
-              if os.path.isfile(os.path.join(path, file))}
+    styles = _styles_in_directory(directory)
     if not styles:
         reset_user_styles(self)
         styles = get_user_styles(self)
@@ -32,15 +44,23 @@ def get_user_styles(self):
 
 
 def reset_user_styles(self):
-    user_path = os.path.join(utilities.get_config_path(), "styles")
-    if not os.path.exists(user_path):
-        os.makedirs(user_path)
-    os.chdir(user_path)
-    for file in os.listdir(user_path):
-        if os.path.isfile(os.path.join(user_path, file)):
-            os.remove(file)
-    for style, path in get_system_styles(self).items():
-        shutil.copy(path, os.path.join(user_path, f"{style}.mplstyle"))
+    config_dir = utilities.get_config_directory()
+    directory = config_dir.get_child_for_display_name("styles")
+    if not directory.query_exists(None):
+        directory.make_directory_with_parents(None)
+    enumerator = directory.enumerate_children("default::*", 0, None)
+    loop = True
+    while loop:
+        file_info = enumerator.next_file(None)
+        if file_info is None:
+            loop = False
+            continue
+        file = enumerator.get_child(file_info)
+        file.delete(None)
+    enumerator.close(None)
+    for style, file in get_system_styles(self).items():
+        style_file = directory.get_child_for_display_name(f"{style}.mplstyle")
+        file.copy(style_file, 0, None)
 
 
 def get_system_preferred_style_path(self):
@@ -51,9 +71,11 @@ def get_system_preferred_style_path(self):
         stylepath = get_user_styles(self)[system_style]
     except KeyError:
         self.main_window.add_toast(f"{system_style} not found, recreating it")
-        stylepath = os.path.join(
-            utilities.get_config_path(), "styles", f"{system_style}.mplstyle")
-        shutil.copy(get_system_styles(self)[system_style], stylepath)
+        config_dir = utilities.get_config_directory()
+        directory = config_dir.get_child_for_display_name("styles")
+        destination = directory.get_child_for_display_name(
+            f"{system_style}.mplstyle")
+        get_system_styles(self)[system_style].copy(destination, 0, None)
     return stylepath
 
 
@@ -80,18 +102,15 @@ def get_style(self, stylename):
     """
     user_styles = get_user_styles(self)
     system_styles = get_system_styles(self)
-    user_file = Gio.File.new_for_path(user_styles[stylename])
-    style = file_io.parse_style(user_file)
+    style = file_io.parse_style(user_styles[stylename])
     try:
-        system_file = Gio.File.new_for_path(system_styles[stylename])
-        base_style = file_io.parse_style(system_file)
+        base_style = file_io.parse_style(system_styles[stylename])
         for key, item in base_style.items():
             if key not in style.keys():
                 style[key] = item
     except KeyError:
         pass
-    adwaita = Gio.File.new_for_path(system_styles["adwaita"])
-    for key, item in file_io.parse_style(adwaita).items():
+    for key, item in file_io.parse_style(system_styles["adwaita"]).items():
         if key not in style.keys():
             style[key] = item
     return style
@@ -387,10 +406,9 @@ class PlotStylesWindow(Adw.Window):
         style["axes.linewidth"] = self.axis_width.get_value()
 
         # name & save
-        styles_path = os.path.join(utilities.get_config_path(), "styles")
-        style.name = self.style_name.get_text()
-        file = Gio.File.new_for_path(
-            os.path.join(styles_path, f"{style.name}.mplstyle"))
+        config_dir = utilities.get_config_directory()
+        directory = config_dir.get_child_for_display_name("styles")
+        file = directory.get_child_for_display_name(f"{style.name}.mplstyle")
         file_io.write_style(file, style)
 
     def delete_color(self, _, color_box):
@@ -426,8 +444,9 @@ class PlotStylesWindow(Adw.Window):
     def copy_style(self, _, style, new_style):
         loop = True
         i = 0
+        user_styles = get_user_styles(self.parent)
         while loop:
-            for style_1 in get_user_styles(self.parent).keys():
+            for style_1 in user_styles.keys():
                 i += 1
                 if new_style == style_1:
                     loop = True
@@ -435,10 +454,11 @@ class PlotStylesWindow(Adw.Window):
                     continue
                 else:
                     loop = False
-        user_path = os.path.join(utilities.get_config_path(), "styles")
-        shutil.copy(
-            os.path.join(user_path, f"{style}.mplstyle"),
-            os.path.join(user_path, f"{new_style}.mplstyle"))
+        config_dir = utilities.get_config_directory()
+        directory = config_dir.get_child_for_display_name("styles")
+        destination = directory.get_child_for_display_name(
+            f"{new_style}.mplstyle")
+        user_styles[style].copy(destination, 0, None)
         self.reload_styles()
 
     def add_data(self, _):
@@ -452,9 +472,9 @@ class PlotStylesWindow(Adw.Window):
         for box in self.styles.copy():
             self.styles.remove(box)
             self.styles_box.remove(self.styles_box.get_row_at_index(0))
-        for style in get_user_styles(self.parent).keys():
+        for style, file in sorted(get_user_styles(self.parent).items()):
             box = StyleBox(self, style)
-            if style != Path(get_preferred_style_path(self.parent)).stem:
+            if not file.equal(get_preferred_style_path(self.parent)):
                 box.check_mark.hide()
                 box.label.set_hexpand(True)
             self.styles.append(box)

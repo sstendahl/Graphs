@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 import time
 
-from graphs import plot_styles, plotting_tools, utilities
+from graphs import file_io, plot_styles, plotting_tools, utilities
 from graphs.rename import RenameWindow
 
 from matplotlib import pyplot
@@ -15,7 +15,8 @@ class Canvas(FigureCanvas):
     """Create the graph widget"""
     def __init__(self, parent):
         self.parent = parent
-        pyplot.style.use(plot_styles.get_preferred_style_path(parent))
+        pyplot.rcParams.update(
+            file_io.parse_style(plot_styles.get_preferred_style_path(parent)))
         self.figure = Figure()
         self.figure.set_tight_layout(True)
         self.one_click_trigger = False
