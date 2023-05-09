@@ -1,4 +1,6 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
+import io
+import json
 import logging
 import os
 import pickle
@@ -230,4 +232,17 @@ def write_style(file, style):
                 value = value[1:-1]  # strip lists
             line = f"{key}: {value}\n"
             stream.write_bytes(GLib.Bytes(line.encode("utf-8")), None)
+    stream.close()
+
+
+def parse_json(file):
+    return json.loads(file.load_bytes(None)[0].get_data())
+
+
+def write_json(file, json_object):
+    buffer = io.StringIO()
+    json.dump(json_object, buffer, indent=4, sort_keys=True)
+    stream = file.replace(None, False, 0, None)
+    stream.write_bytes(GLib.Bytes(buffer.getvalue().encode("utf-8")), None)
+    buffer.close()
     stream.close()
