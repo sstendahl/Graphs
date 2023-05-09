@@ -47,14 +47,14 @@
     </screenshot>
   </screenshots>
   <releases>
-    <release version="1.5.2" date="2023-04-19">
+    <release version="1.5.2" date="2023-05-09">
       <description>
         <p>Changes:</p>
         <ul>
 	  <li>Add support for .xry file types from Leybold X-Ray apparatus.</li>
           <li>Add support for single-column files</li>
           <li>Changed the behaviour of the canvas so that the limits are not reset unnecessarily</li>
-          <li>Started initial work on localization support</li>
+          <li>Started work to add localization support</li>
           <li>Refactors under-the-hood</li>
         </ul>
         <p>Bug fixes:</p>
