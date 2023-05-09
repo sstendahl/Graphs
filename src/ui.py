@@ -107,6 +107,6 @@ def show_about_window(self):
                             license_type="GTK_LICENSE_GPL_3_0")
     whats_new_file = Gio.File.new_for_uri(
         "resource:///se/sjoerd/Graphs/whats_new")
-    release_notes = whats_new_file.read(None).read_bytes(8192, None).get_data()
+    release_notes = whats_new_file.load_bytes(None)[0].get_data()
     about.set_release_notes(release_notes.decode("utf-8"))
     about.present()
