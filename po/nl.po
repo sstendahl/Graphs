@@ -114,7 +114,7 @@ msgstr "Sjabloon"
 
 #: data/ui/add_style.blp:32
 msgid "The template style used for the new style"
-msgstr "De sjabloonstijl die gebruikt wordt voor de nieuwe stijl"
+msgstr "De sjabloonstijl voor de nieuwe stijl"
 
 #: data/ui/add_style.blp:36
 msgid "New Style Name"
@@ -638,7 +638,7 @@ msgstr "Gegevens centreren"
 
 #: data/ui/preferences.blp:144
 msgid "The behaviour of the center data button"
-msgstr "Het standaardgedrag voor de centrerenknop"
+msgstr "Waarop de gegevens gecentreerd worden"
 
 #: data/ui/preferences.blp:149
 msgid "Other"
@@ -658,11 +658,11 @@ msgstr "Hoeveel acties opgeslagen worden in het klembord"
 
 #: data/ui/preferences.blp:169
 msgid "Handle duplicate entries"
-msgstr "Dubbele invoer hanteren"
+msgstr "Dubbele gegevens"
 
 #: data/ui/preferences.blp:170
 msgid "Choose how to handle duplicate entries to be loaded"
-msgstr "Kies hoe het laden van gegevens met dezelfde naam gehanteerd wordt"
+msgstr "Hoe nieuwe gegevens met een bestaande naam gehanteerd worden"
 
 #: data/ui/preferences.blp:174
 msgid "Hide Unselected"
@@ -670,7 +670,7 @@ msgstr "Verberg niet-geselecteerde data"
 
 #: data/ui/preferences.blp:175
 msgid "Whether to hide items, that aren't selected"
-msgstr "Of items die niet zijn geselecteerd moeten worden verborgen"
+msgstr "Kies of items die niet zijn geselecteerd worden verborgen"
 
 #: data/ui/preferences.blp:191
 msgid "Set the labels and title that are used by default"
@@ -822,12 +822,12 @@ msgid ""
 msgstr ""
 "Het transformatiewerktuig gebruikt Numpynotatie, met hoofdletters voor de "
 "coordinaten.\n"
-"De transformatie wordt coordinaat voor coordinaat gedaan, als je toegang wil "
-"tot de hele lijst van koordinaten gebruik X_range of Y_range\n"
-"Bijvoorbeeld Y = Y/max(X_range) deelt elk Y-koordinaat door de grootste "
+"De transformatie wordt punt bij punt gedaan, als je toegang wil "
+"tot de hele lijst gebruik X_range of Y_range\n"
+"Bijvoorbeeld Y = Y/max(X_range) deelt elk Y-coordinaat door de grootste "
 "waarde in X.\n"
 "\n"
-"Om graden te gebruiken in plaats van radianen, gebruik dan radians(waarde), "
+"Om graden te gebruiken in plaats van radialen, gebruik dan radians(waarde), "
 "bijvoorbeeld Y = sin(radians(X))"
 
 #: data/ui/transform_window.blp:31
@@ -872,7 +872,7 @@ msgstr "Geen data"
 
 #: data/ui/window.blp:138
 msgid "Add data from a file or manually as an equation"
-msgstr "Voeg data toe van een bestand, of als een vergelijking"
+msgstr "Voeg gegevens toe van een bestand, of van een vergelijking"
 
 #: data/ui/window.blp:159
 msgid ""
@@ -931,7 +931,7 @@ msgstr "Centreer de data"
 
 #: data/ui/window.blp:282 data/ui/window.blp:284
 msgid "Combine"
-msgstr "Kombineer"
+msgstr "Combineer"
 
 #: data/ui/window.blp:301
 msgid "Cut"
@@ -959,7 +959,7 @@ msgstr "Verplaats de Y-as"
 
 #: data/ui/window.blp:339
 msgid "Multiply X-Axis"
-msgstr "Vermenigvuldig X-as"
+msgstr "X-as vermenigvuldigen"
 
 #: data/ui/window.blp:345 data/ui/window.blp:358
 msgid "Multiply"
@@ -967,7 +967,7 @@ msgstr "Vermenigvuldig"
 
 #: data/ui/window.blp:352
 msgid "Multiply Y-Axis"
-msgstr "Vermenigvuldig de Y-as"
+msgstr "Y-as vermenigvuldigen"
 
 #: data/ui/window.blp:365
 msgid "Mathematical Operations"
@@ -1039,19 +1039,19 @@ msgstr "Sneltoetsen"
 
 #: data/ui/window.blp:505
 msgid "About Graphs"
-msgstr "Om Graphs"
+msgstr "Over Graphs"
 
 #: data/ui/window.blp:511
 msgid "Add Data from File"
-msgstr "Voeg gegevens toe vanuit een bestand"
+msgstr "Voeg gegevens toe van een bestand"
 
 #: data/ui/window.blp:512
 msgid "Add Data from File (Advanced)"
-msgstr "Voeg gegevens toe vanuit een bestand (geavanceerd)"
+msgstr "Voeg gegevens toe van een bestand (geavanceerd)"
 
 #: data/ui/window.blp:513
 msgid "Add Data from Equation"
-msgstr "Voeg gegevens toe vanuit een vergelijking"
+msgstr "Voeg gegevens toe van een vergelijking"
 
 #: data/ui/window.blp:519
 msgid "Toggle Sidebar"
@@ -2069,27 +2069,27 @@ msgstr "Rechts"
 
 #: src/misc.py:73
 msgid "Center at maximum Y value"
-msgstr "Centreer op de maximale Y-waarde"
+msgstr "Op de maximale Y-waarde"
 
 #: src/misc.py:73
 msgid "Center at middle coordinate"
-msgstr "Centreer op het middelste coordinaat"
+msgstr "Op het middelste coordinaat"
 
 #: src/misc.py:76
 msgid "Auto-rename duplicates"
-msgstr "Hernoem dubbele bestanden automatisch"
+msgstr "Hernoemen"
 
 #: src/misc.py:76
 msgid "Ignore duplicates"
-msgstr "Negeer dubbele bestanden"
+msgstr "Negeren"
 
 #: src/misc.py:76
 msgid "Add duplicates"
-msgstr "Voeg dubbele bestanden toe"
+msgstr "Toevoegen"
 
 #: src/misc.py:77
 msgid "Override existing items"
-msgstr "Overschrijf bestaande bestanden"
+msgstr "Overschrijven"
 
 #: src/misc.py:79
 msgid "none"
@@ -2181,7 +2181,7 @@ msgstr "Dunne diamand"
 
 #: src/misc.py:86
 msgid "Vertical line"
-msgstr "Vertikale lijn"
+msgstr "Verticale lijn"
 
 #: src/misc.py:86
 msgid "Horizontal line"
