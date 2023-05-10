@@ -1,7 +1,5 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
-import os
 from gettext import gettext as _
-from pathlib import Path
 
 from gi.repository import GLib, Gdk, Gio, Gtk
 

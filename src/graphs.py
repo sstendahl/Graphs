@@ -1,50 +1,11 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 import logging
 from gettext import gettext as _
-from pathlib import Path
 from pickle import UnpicklingError
 
 from graphs import clipboard, file_io, plotting_tools, ui, utilities
 from graphs.canvas import Canvas
 from graphs.item import Item
-from graphs.misc import ImportMode, ImportSettings
-
-
-def open_files(self, files, import_settings):
-    if import_settings is None:
-        import_settings = ImportSettings(self.preferences.config)
-    if len(files) > 1:
-        import_settings.mode = ImportMode.MULTIPLE
-    elif len(files) == 1:
-        import_settings.mode = ImportMode.SINGLE
-    for file in files:
-        path = file.peek_path()
-        if path != "":
-            try:
-                import_settings.path = path
-                xdata, ydata = file_io.get_data(self, import_settings)
-                if xdata == []:
-                    filename = Path(import_settings.path).name
-                    toast = f"Unable to retrieve data for {filename}"
-                    self.main_window.add_toast(toast)
-                    continue
-                name = import_settings.name
-                if name == "":
-                    name = Path(import_settings.path).name
-                add_item(
-                    self, Item(self, xdata, ydata, name))
-            except IndexError:
-                toast = \
-                    _("Could not open data, the column index is out of range")
-                self.main_window.add_toast(toast)
-                continue
-            except UnicodeDecodeError:
-                message = _("Could not open data, wrong filetype")
-                self.main_window.add_toast(message)
-                logging.exception(message)
-                continue
-    ui.reload_item_menu(self)
-    reload(self)
 
 
 def open_project(self, path):

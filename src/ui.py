@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 from gi.repository import Adw, GLib, Gio, Gtk
 
-from graphs import file_io, graphs, utilities
+from graphs import file_import, file_io, graphs, utilities
 from graphs.item_box import ItemBox
 
 
@@ -52,7 +52,7 @@ def on_confirm_discard_response(_dialog, response, self):
 def on_add_data_response(dialog, response, self, import_settings=None):
     try:
         files = dialog.open_multiple_finish(response)
-        graphs.open_files(self, files, import_settings)
+        file_import.import_from_files(self, files, import_settings)
     except GLib.GError:
         pass
 
