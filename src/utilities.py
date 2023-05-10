@@ -3,7 +3,7 @@ import os
 from gettext import gettext as _
 from pathlib import Path
 
-from gi.repository import Gdk, Gio, Gtk
+from gi.repository import GLib, Gdk, Gio, Gtk
 
 import numpy
 
@@ -226,10 +226,9 @@ def check_if_floats(array):
     return True
 
 
-def get_config_path() -> str:
-    if os.getenv("XDG_CONFIG_HOME"):
-        return os.path.join(os.getenv("XDG_CONFIG_HOME"), "Graphs")
-    return os.path.join(str(Path.home()), ".local", "share", "Graphs")
+def get_config_directory():
+    main_directory = Gio.File.new_for_path(GLib.get_user_config_dir())
+    return main_directory.get_child_for_display_name("Graphs")
 
 
 def create_file_filters(filters, add_all=True):

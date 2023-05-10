@@ -1,62 +1,41 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
-import json
 import logging
-import os
 from gettext import gettext as _
 
 from gi.repository import Adw, Gio, Gtk
 
-from graphs import graphs, misc, plot_styles, utilities
+from graphs import file_io, graphs, misc, plot_styles, utilities
 
 
 class Preferences():
     def __init__(self, parent):
         self.parent = parent
-        self.create_new_config_file()
-        self.config = self.load_config()
-        self.check_config(self.config)
-
-    def check_config(self, config):
-        template_file = Gio.File.new_for_uri(
+        self.template_file = Gio.File.new_for_uri(
             "resource:///se/sjoerd/Graphs/config.json")
-        template = json.loads(
-            template_file.read(None).read_bytes(8192, None).get_data())
+        self.check_config()
+        self.config = self.load_config()
+
+    def check_config(self):
+        config_dir = utilities.get_config_directory()
+        if not config_dir.query_exists(None):
+            config_dir.make_directory_with_parents(None)
+        self.config_file = config_dir.get_child_for_display_name("config.json")
+        if not self.config_file.query_exists(None):
+            self.template_file.copy(
+                self.config_file, Gio.FileCopyFlags(1), None, None, None)
+            logging.info(_("New configuration file created"))
+
+    def load_config(self):
+        logging.debug(_("Loading configuration file"))
+        config = file_io.parse_json(self.config_file)
+        template = file_io.parse_json(self.template_file)
         if set(config.keys()) != set(template.keys()):
             config = utilities.remove_unused_config_keys(config, template)
             config = utilities.add_new_config_keys(config, template)
         return config
 
-    def create_new_config_file(self):
-        config_path = os.path.join(utilities.get_config_path(), "config.json")
-        if not os.path.isfile(config_path):
-            self.reset_config()
-            logging.info(_("New configuration file created"))
-        else:
-            logging.debug(_("Loading configuration file"))
-
-    def reset_config(self):
-        config_path = utilities.get_config_path()
-        if not os.path.isdir(config_path):
-            os.mkdir(config_path)
-        template_file = Gio.File.new_for_uri(
-            "resource:///se/sjoerd/Graphs/config.json")
-        config_file = Gio.File.new_for_path(
-            os.path.join(config_path, "config.json"))
-        template_file.copy(config_file, Gio.FileCopyFlags(1), None, None, None)
-        logging.debug(_("Loaded new config"))
-
-    def load_config(self):
-        config_path = utilities.get_config_path()
-        os.chdir(config_path)
-        with open("config.json", "r", encoding="utf-8") as file:
-            config = json.load(file)
-        return self.check_config(config)
-
     def save_config(self):
-        config_path = utilities.get_config_path()
-        os.chdir(config_path)
-        with open("config.json", "w", encoding="utf-8") as file:
-            json.dump(self.config, file)
+        file_io.write_json(self.config_file, self.config)
 
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/preferences.ui")

@@ -1,11 +1,20 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
+import io
+import json
+import logging
 import os
 import pickle
 import re
 from gettext import gettext as _
+from pathlib import Path
 from xml.dom import minidom
 
+from gi.repository import GLib
+
 from graphs import utilities
+
+from matplotlib import RcParams, cbook
+from matplotlib.style.core import STYLE_BLACKLIST
 
 import numpy
 
@@ -161,24 +170,79 @@ def get_data(self, import_settings):
     return get_column_file(self, import_settings)
 
 
-def get_style(path):
-    style = {}
-    with open(path, "r", encoding="utf-8") as file:
-        lines = file.readlines()
-        for line in lines:
-            line = line.replace("\n", "")
-            if line != "" and not line.startswith("#"):
+def parse_style(file):
+    """
+    Parse a style to RcParams.
+
+    This is an improved version of matplotlibs '_rc_params_in_file()' function.
+    It is also modified to work with GFile instead of the python builtin
+    functions.
+    """
+    style = RcParams()
+    filename = file.query_info("standard::*", 0, None).get_display_name()
+    try:
+        content = file.load_bytes(None)[0].get_data().decode("utf-8")
+        for line_number, line in enumerate(content.splitlines(), 1):
+            stripped_line = cbook._strip_comment(line)
+            if not stripped_line:
+                continue
+            try:
+                key, value = stripped_line.split(":", 1)
+            except ValueError:
+                logging.warning(
+                    _("Missing colon in file {}, line {}").format(
+                        filename, line_number))
+                continue
+            key = key.strip()
+            value = value.strip()
+            if value.startswith('"') and value.endswith('"'):
+                value = value[1:-1]  # strip double quotes
+            if key in STYLE_BLACKLIST:
+                message = _("Stye includes a non-style related parameter, {}")
+                logging.warning(message.format(key))
+            elif key in style:
+                message = _("Duplicate key in file {}, on line {}")
+                logging.warning(message.format(filename, line_number))
+            else:
                 try:
-                    key, value = line.split(": ")
                     style[key] = value
-                except ValueError:
-                    pass
+                except KeyError:
+                    message = _("Bad value in file {} on line {}")
+                    logging.exception(
+                        message.format(filename, line_number))
+    except UnicodeDecodeError:
+        logging.exception(_("Could not parse {}").format(filename))
+    style.name = Path(filename).stem
     return style
 
 
-def write_style(path, style):
-    with open(path, "w", encoding="utf-8") as file:
-        file.write(f"# {style['name']}\n")
-        for key, value in style.items():
-            if key != "name":
-                file.write(f"{key}: {value}\n")
+WRITE_IGNORELIST = [
+    "lines.dash_capstyle", "lines.dash_joinstyle", "lines.solid_capstyle",
+    "lines.solid_joinstyle",
+]
+
+
+def write_style(file, style):
+    stream = file.replace(None, False, 0, None)
+    stream.write_bytes(GLib.Bytes(f"# {style.name}\n".encode("utf-8")), None)
+    for key, value in style.items():
+        if key not in STYLE_BLACKLIST and key not in WRITE_IGNORELIST:
+            value = str(value).replace("#", "")
+            if value.startswith("[") and value.endswith("]"):
+                value = value[1:-1]  # strip lists
+            line = f"{key}: {value}\n"
+            stream.write_bytes(GLib.Bytes(line.encode("utf-8")), None)
+    stream.close()
+
+
+def parse_json(file):
+    return json.loads(file.load_bytes(None)[0].get_data())
+
+
+def write_json(file, json_object):
+    buffer = io.StringIO()
+    json.dump(json_object, buffer, indent=4, sort_keys=True)
+    stream = file.replace(None, False, 0, None)
+    stream.write_bytes(GLib.Bytes(buffer.getvalue().encode("utf-8")), None)
+    buffer.close()
+    stream.close()
