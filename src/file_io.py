@@ -9,7 +9,7 @@ from gettext import gettext as _
 from pathlib import Path
 from xml.dom import minidom
 
-from gi.repository import GLib, Gio
+from gi.repository import GLib
 
 from graphs import utilities
 
@@ -59,9 +59,9 @@ def save_file(self, path):
             numpy.savetxt(str(file_path), array, delimiter="\t")
 
 
-def import_from_xrdml(self, file, import_settings):
+def import_from_xrdml(self, file, _import_settings):
     content = minidom.parses(
-        file.load_bytes(None)[0].get_data().decode("utf-8")
+        file.load_bytes(None)[0].get_data().decode("utf-8"))
     intensities = content.getElementsByTagName("intensities")
     counting_time = content.getElementsByTagName("commonCountingTime")
     counting_time = float(counting_time[0].firstChild.data)
@@ -92,7 +92,7 @@ def import_from_xrdml(self, file, import_settings):
     return xdata, ydata
 
 
-def import_from_xry(self, file, import_settings):
+def import_from_xry(self, file, _import_settings):
     """
     Import data from .xry files used by Leybold X-ray apparatus.
 

@@ -55,4 +55,3 @@ def _import_from_file(self, file, import_settings):
             callback = file_io.import_from_columns
     xdata, ydata = callback(self, file, import_settings)
     return xdata, ydata, name
-
