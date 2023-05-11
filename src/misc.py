@@ -3,9 +3,8 @@ from enum import Enum
 
 
 class ImportSettings():
-    def __init__(self, config, name="", path="", params=None):
+    def __init__(self, config, name="", params=None):
         self.name = name
-        self.path = path
         if params is None:
             params = {
                 "delimiter": config["import_delimiter"],
@@ -42,11 +41,6 @@ class PlotSettings:
         self.use_custom_plot_style = config["plot_use_custom_style"]
         self.legend_position = config["plot_legend_position"]
         self.custom_plot_style = config["plot_custom_style"]
-
-
-class ImportMode(Enum):
-    SINGLE = 1
-    MULTIPLE = 2
 
 
 class InteractionMode(Enum):

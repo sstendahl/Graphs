@@ -17,6 +17,7 @@ graphs_sources = [
   'canvas.py',
   'edit_item.py',
   'export_figure.py',
+  'file_import.py',
   'file_io.py',
   'graphs.py',
   'item.py',
