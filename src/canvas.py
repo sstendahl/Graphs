@@ -1,11 +1,10 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 import time
 
+from contextlib import nullcontext
 from gi.repository import Gtk
 from graphs import file_io, plot_styles, plotting_tools, utilities
 from graphs.rename import RenameWindow
-
-from contextlib import nullcontext
 from matplotlib import pyplot
 from matplotlib.backend_bases import NavigationToolbar2
 from matplotlib.backends.backend_gtk4cairo import FigureCanvas
