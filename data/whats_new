@@ -2,3 +2,8 @@
 <ul>
 	<li>Adds Dutch translation to Graphs.</li>
 </ul>
+
+<p>Bugfixes:</p>
+<ul>
+  <li>Fixes an upstream bug in Matplotlib where part of the Graph would be cut off at scaled resolutions.</li>
+  </ul>
