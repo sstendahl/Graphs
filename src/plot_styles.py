@@ -1,5 +1,4 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
-import os
 from gettext import gettext as _
 from pathlib import Path
 
@@ -56,7 +55,7 @@ def reset_user_styles(self):
             loop = False
             continue
         file = enumerator.get_child(file_info)
-        file.delete(None)
+        file.trash(None)
     enumerator.close(None)
     for style, file in get_system_styles(self).items():
         style_file = directory.get_child_for_display_name(f"{style}.mplstyle")
@@ -411,21 +410,21 @@ class PlotStylesWindow(Adw.Window):
         file = directory.get_child_for_display_name(f"{style.name}.mplstyle")
         file_io.write_style(file, style)
 
-    def delete_color(self, _, color_box):
+    def delete_color(self, _button, color_box):
         self.line_colors_box.remove(self.color_boxes[color_box])
         del self.color_boxes[color_box]
         if not self.color_boxes:
             self.add_color(None)
 
-    def add_color(self, _):
+    def add_color(self, _button):
         box = StyleColorBox(self, "000000")
         self.line_colors_box.append(box)
         self.color_boxes[box] = self.line_colors_box.get_last_child()
 
-    def delete_style(self, _, style):
+    def delete_style(self, _button, style):
         def remove_style(_, response, self):
             if response == "delete":
-                os.remove(get_user_styles(self)[style])
+                get_user_styles(self)[style].trash(None)
                 self.reload_styles()
         heading = "Delete style?"
         body = f"Are you sure you want to delete the {style} style?"
@@ -461,10 +460,10 @@ class PlotStylesWindow(Adw.Window):
         user_styles[style].copy(destination, 0, None)
         self.reload_styles()
 
-    def add_data(self, _):
+    def add_data(self, _button):
         AddStyleWindow(self)
 
-    def reset_styles(self, _):
+    def reset_styles(self, _button):
         reset_user_styles(self.parent)
         self.reload_styles()
 
@@ -480,7 +479,7 @@ class PlotStylesWindow(Adw.Window):
             self.styles.append(box)
             self.styles_box.append(box)
 
-    def on_close(self, _):
+    def on_close(self, _button):
         if self.style is not None:
             self.save_style()
         graphs.reload(self.parent, reset_limits=False)

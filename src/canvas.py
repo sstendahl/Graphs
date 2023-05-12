@@ -3,8 +3,10 @@ import time
 from contextlib import nullcontext
 
 from gi.repository import Gtk
+
 from graphs import file_io, plot_styles, plotting_tools, utilities
 from graphs.rename import RenameWindow
+
 from matplotlib import pyplot
 from matplotlib.backend_bases import NavigationToolbar2
 from matplotlib.backends.backend_gtk4cairo import FigureCanvas
@@ -60,7 +62,6 @@ class Canvas(FigureCanvas):
             self._renderer.height = allocation.height * scale
             self._renderer.dpi = self.figure.dpi
             self.figure.draw(self._renderer)
-
 
     def plot(self, item):
         x_axis = item.plot_x_position
