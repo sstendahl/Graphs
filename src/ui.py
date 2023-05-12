@@ -70,8 +70,8 @@ def on_export_data_response(dialog, response, self, multiple):
 
 def on_open_project_response(dialog, response, self):
     try:
-        path = dialog.open_finish(response).peek_path()
-        graphs.open_project(self, path)
+        file = dialog.open_finish(response)
+        graphs.open_project(self, file)
     except GLib.GError:
         pass
 
@@ -80,7 +80,7 @@ def on_save_project_response(dialog, response, self):
     try:
         file = dialog.save_finish(response)
         file_io.save_project(
-            file.get_path(),
+            file,
             self.plot_settings,
             self.datadict,
             self.datadict_clipboard,
