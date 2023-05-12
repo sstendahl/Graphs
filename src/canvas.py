@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 import time
-
 from contextlib import nullcontext
+
 from gi.repository import Gtk
 from graphs import file_io, plot_styles, plotting_tools, utilities
 from graphs.rename import RenameWindow
