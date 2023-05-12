@@ -53,6 +53,8 @@
         <ul>
 	  <li>Adds Dutch translation for Graphs.</li>
         </ul>
+        <p>Bugfixes:</p>
+	  <li>Fixes an upstream bug in Matplotlib where part of the Graph would be cut off at scaled resolutions.</li>
       </description>
     </release>
     <release version="1.5.2" date="2023-05-09">

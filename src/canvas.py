@@ -1,9 +1,10 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 import time
+from contextlib import nullcontext
 
+from gi.repository import Gtk
 from graphs import file_io, plot_styles, plotting_tools, utilities
 from graphs.rename import RenameWindow
-
 from matplotlib import pyplot
 from matplotlib.backend_bases import NavigationToolbar2
 from matplotlib.backends.backend_gtk4cairo import FigureCanvas
@@ -40,6 +41,26 @@ class Canvas(FigureCanvas):
             axis.get_yaxis().set_visible(False)
         self.dummy_toolbar = DummyToolbar(self)
         self.highlight = Highlight(self)
+
+    # Temporarily overwritten function, see
+    # https://github.com/Sjoerd1993/Graphs/issues/259
+    def on_draw_event(self, widget, ctx):
+        with (self.toolbar._wait_cursor_for_draw_cm() if self.toolbar
+              else nullcontext()):
+            self._renderer.set_context(ctx)
+            scale = self.device_pixel_ratio
+            # Scale physical drawing to logical size.
+            ctx.scale(1 / scale, 1 / scale)
+            allocation = self.get_allocation()
+            Gtk.render_background(
+                self.get_style_context(), ctx,
+                allocation.x, allocation.y,
+                allocation.width, allocation.height)
+            self._renderer.width = allocation.width * scale
+            self._renderer.height = allocation.height * scale
+            self._renderer.dpi = self.figure.dpi
+            self.figure.draw(self._renderer)
+
 
     def plot(self, item):
         x_axis = item.plot_x_position
