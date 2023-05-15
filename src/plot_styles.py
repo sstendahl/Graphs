@@ -72,9 +72,9 @@ def get_system_preferred_style_path(self):
         self.main_window.add_toast(f"{system_style} not found, recreating it")
         config_dir = utilities.get_config_directory()
         directory = config_dir.get_child_for_display_name("styles")
-        destination = directory.get_child_for_display_name(
+        stylepath = directory.get_child_for_display_name(
             f"{system_style}.mplstyle")
-        get_system_styles(self)[system_style].copy(destination, 0, None)
+        get_system_styles(self)[system_style].copy(stylepath, 0, None)
     return stylepath
 
 
@@ -211,7 +211,7 @@ class PlotStylesWindow(Adw.Window):
 
         self.present()
 
-    def edit_style(self, _, style):
+    def edit_style(self, _button, style):
         self.style = get_style(self.parent, style)
         self.load_style()
         self.leaflet.navigate(1)
@@ -403,12 +403,12 @@ class PlotStylesWindow(Adw.Window):
         self.color_boxes[box] = self.line_colors_box.get_last_child()
 
     def delete_style(self, _button, style):
-        def remove_style(_, response, self):
+        def remove_style(_dialog, response, self):
             if response == "delete":
                 get_user_styles(self)[style].trash(None)
                 self.reload_styles()
-        heading = "Delete style?"
-        body = f"Are you sure you want to delete the {style} style?"
+        heading = _("Delete style?")
+        body = _("Are you sure you want to delete the {} style?").format(style)
         dialog = Adw.MessageDialog.new(
             self, heading, body)
         dialog.add_response("cancel", _("Cancel"))
@@ -420,14 +420,14 @@ class PlotStylesWindow(Adw.Window):
         dialog.connect("response", remove_style, self)
         dialog.present()
 
-    def copy_style(self, _, style, new_style):
+    def copy_style(self, _button, style, new_style):
         loop = True
         i = 0
         user_styles = get_user_styles(self.parent)
         while loop:
             for style_1 in user_styles.keys():
-                i += 1
                 if new_style == style_1:
+                    i += 1
                     loop = True
                     new_style = f"{new_style} ({i})"
                     continue
@@ -546,7 +546,8 @@ class AddStyleWindow(Adw.Window):
         super().__init__()
         self.parent = parent
         utilities.populate_chooser(
-            self.plot_style_templates, get_user_styles(parent).keys(), False)
+            self.plot_style_templates,
+            sorted(get_user_styles(parent).keys()), False)
         selected_item = \
             utilities.get_selected_chooser_item(self.plot_style_templates)
         self.new_style_name.set_text(
@@ -557,13 +558,13 @@ class AddStyleWindow(Adw.Window):
         self.set_transient_for(parent)
         self.present()
 
-    def on_template_changed(self, _, __):
+    def on_template_changed(self, _a, _b):
         selected_item = \
             utilities.get_selected_chooser_item(self.plot_style_templates)
         self.new_style_name.set_text(
             _("{name} (copy)").format(name=selected_item))
 
-    def on_confirm(self, _):
+    def on_confirm(self, _button):
         style = utilities.get_selected_chooser_item(self.plot_style_templates)
         name = self.new_style_name.get_text()
         self.parent.copy_style(self, style, name)
