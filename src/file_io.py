@@ -60,7 +60,7 @@ def save_file(self, path):
 
 
 def import_from_xrdml(self, file, _import_settings):
-    content = minidom.parses(
+    content = minidom.parseString(
         file.load_bytes(None)[0].get_data().decode("utf-8"))
     intensities = content.getElementsByTagName("intensities")
     counting_time = content.getElementsByTagName("commonCountingTime")
