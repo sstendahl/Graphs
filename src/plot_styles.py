@@ -403,8 +403,22 @@ class PlotStylesWindow(Adw.Window):
         self.color_boxes[box] = self.line_colors_box.get_last_child()
 
     def delete_style(self, _button, style):
-        get_user_styles(self)[style].trash(None)
-        self.reload_styles()
+        def remove_style(_, response, self):
+            if response == "delete":
+                get_user_styles(self)[style].trash(None)
+                self.reload_styles()
+        heading = "Delete style?"
+        body = f"Are you sure you want to delete the {style} style?"
+        dialog = Adw.MessageDialog.new(
+            self, heading, body)
+        dialog.add_response("cancel", _("Cancel"))
+        dialog.add_response("delete", _("Delete"))
+        dialog.set_close_response("cancel")
+        dialog.set_default_response("delete")
+        dialog.set_response_appearance(
+            "delete", Adw.ResponseAppearance.DESTRUCTIVE)
+        dialog.connect("response", remove_style, self)
+        dialog.present()
 
     def copy_style(self, _, style, new_style):
         loop = True
@@ -430,8 +444,23 @@ class PlotStylesWindow(Adw.Window):
         AddStyleWindow(self)
 
     def reset_styles(self, _button):
-        reset_user_styles(self.parent)
-        self.reload_styles()
+        def on_accept(_dialog, response):
+            if response == "reset":
+                reset_user_styles(self.parent)
+                self.reload_styles()
+
+        heading = "Reset to defaults?"
+        body = "Are you sure you want to reset to the default styles?"
+        dialog = Adw.MessageDialog.new(
+            self, heading, body)
+        dialog.add_response("cancel", _("Cancel"))
+        dialog.add_response("reset", _("Reset"))
+        dialog.set_close_response("cancel")
+        dialog.set_default_response("delete")
+        dialog.set_response_appearance(
+            "reset", Adw.ResponseAppearance.DESTRUCTIVE)
+        dialog.connect("response", on_accept)
+        dialog.present()
 
     def reload_styles(self):
         for box in self.styles.copy():
