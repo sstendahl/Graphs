@@ -17,14 +17,14 @@
 	"sources": [
  		{
         	"type": "file",
-            "url": "https://files.pythonhosted.org/packages/c5/21/275cfa7731ee2e121b1bf85ddb21b8712fe2f409f02a8b61521af6e4993d/numpy-1.24.2-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
-            "sha256": "a51725a815a6188c662fb66fb32077709a9ca38053f0274640293a14fdd22978",
+            "url": "https://files.pythonhosted.org/packages/6f/72/38f9a536bdb5bfb1682f2520f133ec6e08dde8bcca1f632e347641d90763/numpy-1.24.3-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+            "sha256": "2d926b52ba1367f9acb76b0df6ed21f0b16a1ad87c6720a1121674e5cf63e2b6",
             "only-arches": "x86_64"
         },
         {
 	    	"type": "file",
-            "url": "https://files.pythonhosted.org/packages/34/dc/7470dde137734e311c5203d0a5854e03da12d7bef60784937efcbb1f8c08/numpy-1.24.2-cp310-cp310-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
-            "sha256": "6524630f71631be2dabe0c541e7675db82651eb998496bbe16bc4f77f0772253",
+            "url": "https://files.pythonhosted.org/packages/62/e4/cd77d5f3d02c30d9ca8f2995df3cb3974c75cf1cc777fad445753475c4e4/numpy-1.24.3-cp310-cp310-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
+            "sha256": "8535303847b89aa6b0f00aa1dc62867b5a32923e4d1681a35b5eef2d9591a463",
             "only-arches": "aarch64"
         },
      	{
@@ -92,8 +92,8 @@
         },
         {
             "type": "file",
-            "url": "https://files.pythonhosted.org/packages/16/07/1c7547e27f559ec078801d522cc4d5127cdd4ef8e831c8ddcd9584668a07/fonttools-4.39.3-py3-none-any.whl",
-            "sha256": "64c0c05c337f826183637570ac5ab49ee220eec66cf50248e8df527edfa95aeb"
+            "url": "https://files.pythonhosted.org/packages/ad/5f/20da4f41e33e77723b0100ded6539529bd159319ed49d6459a4647cdc7ee/fonttools-4.39.4-py3-none-any.whl",
+            "sha256": "106caf6167c4597556b31a8d9175a3fdc0356fdcd70ab19973c3b0d4c893c461"
         },
         {
             "type": "file",
