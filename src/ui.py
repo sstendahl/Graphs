@@ -91,10 +91,9 @@ def export_data_dialog(self):
                         f"{item.name}.txt")
                     file_io.save_item(file, item.xdata, item.ydata)
             else:
-                file = dialog.save_finish(response)
-                # return value is not subscriptable, so we loop over one item
-                for item in self.datadict.values():
-                    file_io.save_item(file, item.xdata, item.ydata)
+                item = list(self.datadict.values())[0]
+                file_io.save_item(
+                    dialog.save_finish(response), item.xdata, item.ydata)
     dialog = Gtk.FileDialog()
     if multiple:
         dialog.select_folder(self.main_window, None, on_response)
