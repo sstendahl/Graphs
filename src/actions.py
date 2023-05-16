@@ -3,7 +3,7 @@
 import logging
 from gettext import gettext as _
 
-from gi.repository import Adw, Gtk
+from gi.repository import Adw
 
 from graphs import clipboard, graphs, operations, ui, utilities
 from graphs.add_data_advanced import AddAdvancedWindow
@@ -38,8 +38,7 @@ def plot_settings_action(_action, _target, self):
 
 
 def add_data_action(_action, _target, self):
-    dialog = Gtk.FileDialog()
-    dialog.open_multiple(self.main_window, None, ui.on_add_data_response, self)
+    ui.add_data_dialog(self)
 
 
 def add_data_advanced_action(_action, _target, self):
@@ -51,14 +50,18 @@ def add_equation_action(_action, _target, self):
 
 
 def select_all_action(_action, _target, self):
+    if not self.datadict:
+        return
     for item in self.datadict.values():
         item.selected = True
     graphs.refresh(self)
     ui.reload_item_menu(self)
-    ui.enable_data_dependent_buttons(self, utilities.get_selected_keys(self))
+    ui.enable_data_dependent_buttons(self, True)
 
 
 def select_none_action(_action, _target, self):
+    if not self.datadict:
+        return
     for item in self.datadict.values():
         item.selected = False
     graphs.refresh(self)
@@ -87,17 +90,7 @@ def view_forward_action(_action, _target, self):
 
 
 def export_data_action(_action, _target, self):
-    dialog = Gtk.FileDialog()
-    if len(self.datadict) > 1:
-        dialog.select_folder(
-            self.main_window, None, ui.on_export_data_response, self, True)
-    elif len(self.datadict) == 1:
-        filename = f"{list(self.datadict.values())[0].name}.txt"
-        dialog.set_initial_name(filename)
-        dialog.set_filters(
-            utilities.create_file_filters([(_("Text Files"), "txt")]))
-        dialog.save(
-            self.main_window, None, ui.on_export_data_response, self, False)
+    ui.export_data_dialog(self)
 
 
 def export_figure_action(_action, _target, self):
@@ -109,33 +102,28 @@ def plot_styles_action(_action, _target, self):
 
 
 def save_project_action(_action, _target, self):
-    dialog = Gtk.FileDialog()
-    dialog.set_filters(
-        utilities.create_file_filters([(_("Graphs Project File"), "graphs")]))
-    dialog.set_initial_name("project.graphs")
-    dialog.save(self.main_window, None, ui.on_save_project_response, self)
+    ui.save_project_dialog(self)
 
 
 def open_project_action(_action, _target, self):
     if len(self.datadict) > 0:
-        heading = "Discard Data?"
-        body = "Opening a project will discard all open data."
-        dialog = Adw.MessageDialog.new(self.main_window,
-                                       heading,
-                                       body)
+        def on_response(_dialog, response):
+            if response == "discard":
+                ui.open_project_dialog(self)
+        heading = _("Discard Data?")
+        body = _("Opening a project will discard all open data.")
+        dialog = Adw.MessageDialog.new(
+            self.main_window, heading, body)
         dialog.add_response("cancel", _("Cancel"))
         dialog.add_response("discard", _("Discard"))
         dialog.set_close_response("cancel")
         dialog.set_default_response("discard")
-        dialog.set_response_appearance("discard",
-                                       Adw.ResponseAppearance.DESTRUCTIVE)
-        dialog.connect("response", ui.on_confirm_discard_response, self)
+        dialog.set_response_appearance(
+            "discard", Adw.ResponseAppearance.DESTRUCTIVE)
+        dialog.connect("response", on_response)
         dialog.present()
         return
-    dialog = Gtk.FileDialog()
-    dialog.set_filters(
-        utilities.create_file_filters([(_("Graphs Project File"), "graphs")]))
-    dialog.open(self.main_window, None, ui.on_open_project_response, self)
+    ui.open_project_dialog(self)
 
 
 def delete_selected_action(_action, _target, self):

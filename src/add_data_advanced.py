@@ -45,10 +45,8 @@ class AddAdvancedWindow(Adw.Window):
             "delimiter": self.delimiter.get_text(),
             "guess_headers": self.guess_headers.get_active(),
         }
-        name = self.name.get_text()
-        config = self.parent.preferences.config
-        dialog = Gtk.FileDialog()
-        dialog.open_multiple(
-            self.parent.main_window, None, ui.on_add_data_response,
-            self.parent, ImportSettings(config, params=params, name=name))
+        import_settings = ImportSettings(
+            self.parent.preferences.config, params=params,
+            name=self.name.get_text())
+        ui.add_data_dialog(self.parent, import_settings)
         self.destroy()
