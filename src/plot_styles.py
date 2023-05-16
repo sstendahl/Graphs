@@ -1,5 +1,4 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
-import os
 from gettext import gettext as _
 from pathlib import Path
 
@@ -56,7 +55,7 @@ def reset_user_styles(self):
             loop = False
             continue
         file = enumerator.get_child(file_info)
-        file.delete(None)
+        file.trash(None)
     enumerator.close(None)
     for style, file in get_system_styles(self).items():
         style_file = directory.get_child_for_display_name(f"{style}.mplstyle")
@@ -73,9 +72,9 @@ def get_system_preferred_style_path(self):
         self.main_window.add_toast(f"{system_style} not found, recreating it")
         config_dir = utilities.get_config_directory()
         directory = config_dir.get_child_for_display_name("styles")
-        destination = directory.get_child_for_display_name(
+        stylepath = directory.get_child_for_display_name(
             f"{system_style}.mplstyle")
-        get_system_styles(self)[system_style].copy(destination, 0, None)
+        get_system_styles(self)[system_style].copy(stylepath, 0, None)
     return stylepath
 
 
@@ -165,7 +164,7 @@ class PlotStylesWindow(Adw.Window):
         self.styles = []
         self.style = None
         self.reload_styles()
-        self.reset_button.connect("clicked", self.on_reset_button)
+        self.reset_button.connect("clicked", self.reset_styles)
         self.add_button.connect("clicked", self.add_data)
         self.back_button.connect("clicked", self.back)
         self.connect("close-request", self.on_close)
@@ -212,26 +211,7 @@ class PlotStylesWindow(Adw.Window):
 
         self.present()
 
-    def on_reset_button(self, _button):
-        heading = "Reset to defaults?"
-        body = "Are you sure you want to reset to the default styles?"
-        dialog = Adw.MessageDialog.new(self,
-                                       heading,
-                                       body)
-        dialog.add_response("cancel", _("Cancel"))
-        dialog.add_response("reset", _("Reset"))
-        dialog.set_close_response("cancel")
-        dialog.set_default_response("delete")
-        dialog.set_response_appearance("reset",
-                                       Adw.ResponseAppearance.DESTRUCTIVE)
-        dialog.connect("response", self.on_reset_button_press)
-        dialog.present()
-
-    def on_reset_button_press(self, _, response):
-        if response == "reset":
-            self.reset_styles(self.parent)
-
-    def edit_style(self, _, style):
+    def edit_style(self, _button, style):
         self.style = get_style(self.parent, style)
         self.load_style()
         self.leaflet.navigate(1)
@@ -411,44 +391,43 @@ class PlotStylesWindow(Adw.Window):
         file = directory.get_child_for_display_name(f"{style.name}.mplstyle")
         file_io.write_style(file, style)
 
-    def delete_color(self, _, color_box):
+    def delete_color(self, _button, color_box):
         self.line_colors_box.remove(self.color_boxes[color_box])
         del self.color_boxes[color_box]
         if not self.color_boxes:
             self.add_color(None)
 
-    def add_color(self, _):
+    def add_color(self, _button):
         box = StyleColorBox(self, "000000")
         self.line_colors_box.append(box)
         self.color_boxes[box] = self.line_colors_box.get_last_child()
 
-    def delete_style(self, _, style):
-        def remove_style(_, response, self):
+    def delete_style(self, _button, style):
+        def remove_style(_dialog, response, self):
             if response == "delete":
-                os.remove(get_user_styles(self)[style])
+                get_user_styles(self)[style].trash(None)
                 self.reload_styles()
-        heading = "Delete style?"
-        body = f"Are you sure you want to delete the {style} style?"
-        dialog = Adw.MessageDialog.new(self,
-                                       heading,
-                                       body)
+        heading = _("Delete style?")
+        body = _("Are you sure you want to delete the {} style?").format(style)
+        dialog = Adw.MessageDialog.new(
+            self, heading, body)
         dialog.add_response("cancel", _("Cancel"))
         dialog.add_response("delete", _("Delete"))
         dialog.set_close_response("cancel")
         dialog.set_default_response("delete")
-        dialog.set_response_appearance("delete",
-                                       Adw.ResponseAppearance.DESTRUCTIVE)
+        dialog.set_response_appearance(
+            "delete", Adw.ResponseAppearance.DESTRUCTIVE)
         dialog.connect("response", remove_style, self)
         dialog.present()
 
-    def copy_style(self, _, style, new_style):
+    def copy_style(self, _button, style, new_style):
         loop = True
         i = 0
         user_styles = get_user_styles(self.parent)
         while loop:
             for style_1 in user_styles.keys():
-                i += 1
                 if new_style == style_1:
+                    i += 1
                     loop = True
                     new_style = f"{new_style} ({i})"
                     continue
@@ -461,12 +440,27 @@ class PlotStylesWindow(Adw.Window):
         user_styles[style].copy(destination, 0, None)
         self.reload_styles()
 
-    def add_data(self, _):
+    def add_data(self, _button):
         AddStyleWindow(self)
 
-    def reset_styles(self, _):
-        reset_user_styles(self.parent)
-        self.reload_styles()
+    def reset_styles(self, _button):
+        def on_accept(_dialog, response):
+            if response == "reset":
+                reset_user_styles(self.parent)
+                self.reload_styles()
+
+        heading = "Reset to defaults?"
+        body = "Are you sure you want to reset to the default styles?"
+        dialog = Adw.MessageDialog.new(
+            self, heading, body)
+        dialog.add_response("cancel", _("Cancel"))
+        dialog.add_response("reset", _("Reset"))
+        dialog.set_close_response("cancel")
+        dialog.set_default_response("delete")
+        dialog.set_response_appearance(
+            "reset", Adw.ResponseAppearance.DESTRUCTIVE)
+        dialog.connect("response", on_accept)
+        dialog.present()
 
     def reload_styles(self):
         for box in self.styles.copy():
@@ -480,7 +474,7 @@ class PlotStylesWindow(Adw.Window):
             self.styles.append(box)
             self.styles_box.append(box)
 
-    def on_close(self, _):
+    def on_close(self, _button):
         if self.style is not None:
             self.save_style()
         graphs.reload(self.parent, reset_limits=False)
@@ -552,7 +546,8 @@ class AddStyleWindow(Adw.Window):
         super().__init__()
         self.parent = parent
         utilities.populate_chooser(
-            self.plot_style_templates, get_user_styles(parent).keys(), False)
+            self.plot_style_templates,
+            sorted(get_user_styles(parent).keys()), False)
         selected_item = \
             utilities.get_selected_chooser_item(self.plot_style_templates)
         self.new_style_name.set_text(
@@ -563,13 +558,13 @@ class AddStyleWindow(Adw.Window):
         self.set_transient_for(parent)
         self.present()
 
-    def on_template_changed(self, _, __):
+    def on_template_changed(self, _a, _b):
         selected_item = \
             utilities.get_selected_chooser_item(self.plot_style_templates)
         self.new_style_name.set_text(
             _("{name} (copy)").format(name=selected_item))
 
-    def on_confirm(self, _):
+    def on_confirm(self, _button):
         style = utilities.get_selected_chooser_item(self.plot_style_templates)
         name = self.new_style_name.get_text()
         self.parent.copy_style(self, style, name)

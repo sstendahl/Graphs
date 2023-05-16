@@ -19,7 +19,7 @@ from matplotlib.style.core import STYLE_BLACKLIST
 import numpy
 
 
-def save_project(path, plot_settings, datadict, datadict_clipboard,
+def save_project(file, plot_settings, datadict, datadict_clipboard,
                  clipboard_pos, version):
     project_data = {
         "plot_settings": plot_settings,
@@ -28,16 +28,20 @@ def save_project(path, plot_settings, datadict, datadict_clipboard,
         "clipboard_pos": clipboard_pos,
         "version": version,
     }
-    with open(path, "wb") as file:
-        pickle.dump(project_data, file)
+    if file.query_exists(None):
+        stream = file.replace(None, False, 0, None)
+    else:
+        stream = file.create(0, None)
+    stream.write_bytes(GLib.Bytes(pickle.dumps(project_data)))
+    stream.close()
 
 
-def load_project(path):
-    with open(path, "rb") as file:
-        project = pickle.load(file)
-        return project["plot_settings"], project["data"], \
-            project["datadict_clipboard"], project["clipboard_pos"], \
-            project["version"]
+def read_project(file):
+    project = pickle.loads(file.load_bytes(None)[0].get_data())
+    return \
+        project["plot_settings"], project["data"], \
+        project["datadict_clipboard"], project["clipboard_pos"], \
+        project["version"]
 
 
 def save_file(self, path):

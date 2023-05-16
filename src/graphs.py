@@ -8,12 +8,12 @@ from graphs.canvas import Canvas
 from graphs.item import Item
 
 
-def open_project(self, path):
+def open_project(self, file):
     for key in self.datadict.copy():
         delete_item(self, key)
     try:
         new_plot_settings, new_datadict, datadict_clipboard, clipboard_pos, \
-            _version = file_io.load_project(path)
+            _version = file_io.read_project(file)
         utilities.set_attributes(new_plot_settings, self.plot_settings)
         self.plot_settings = new_plot_settings
         self.clipboard_pos = clipboard_pos
