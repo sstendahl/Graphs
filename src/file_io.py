@@ -2,7 +2,6 @@
 import io
 import json
 import logging
-import os
 import pickle
 import re
 from gettext import gettext as _
@@ -44,23 +43,17 @@ def read_project(file):
         project["version"]
 
 
-def save_file(self, path):
-    if len(self.datadict) == 1:
-        for item in self.datadict.values():
-            xdata = item.xdata
-            ydata = item.ydata
-        array = numpy.stack([xdata, ydata], axis=1)
-        numpy.savetxt(str(path), array, delimiter="\t")
-    elif len(self.datadict) > 1:
-        for item in self.datadict.values():
-            xdata = item.xdata
-            ydata = item.ydata
-            filename = item.name.replace("/", "")
-            array = numpy.stack([xdata, ydata], axis=1)
-            file_path = f"{path}/{filename}.txt"
-            if os.path.exists(file_path):
-                file_path = f"{path}/{filename} (copy).txt"
-            numpy.savetxt(str(file_path), array, delimiter="\t")
+def save_file(file, xdata, ydata):
+    array = numpy.stack([xdata, ydata], axis=1)
+    fmt = "\t".join(["%.12e"] * 2)
+    if file.query_exists(None):
+        stream = file.replace(None, False, 0, None)
+    else:
+        stream = file.create(0, None)
+    for row in array:
+        line = (fmt % tuple(row) + "\n").encode("utf-8")
+        stream.write_bytes(GLib.Bytes(line))
+    stream.close()
 
 
 def import_from_xrdml(self, file, _import_settings):

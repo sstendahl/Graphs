@@ -1,4 +1,6 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
+import contextlib
+
 from gi.repository import Adw, GLib, Gio, Gtk
 
 from graphs import file_import, file_io, graphs, utilities
@@ -50,34 +52,33 @@ def on_confirm_discard_response(_dialog, response, self):
 
 
 def on_add_data_response(dialog, response, self, import_settings=None):
-    try:
+    with contextlib.suppress(GLib.GError):
         files = dialog.open_multiple_finish(response)
         file_import.import_from_files(self, files, import_settings)
-    except GLib.GError:
-        pass
 
 
 def on_export_data_response(dialog, response, self, multiple):
-    try:
+    with contextlib.suppress(GLib.GError):
         if multiple:
-            path = dialog.select_folder_finish(response).peek_path()
+            directory = dialog.select_folder_finish(response)
+            for item in self.datadict.values():
+                file = directory.get_child_for_display_name(f"{item.name}.txt")
+                file_io.save_file(file, item.xdata, item.ydata)
         else:
-            path = dialog.save_finish(response).peek_path()
-        file_io.save_file(self, path)
-    except GLib.GError:
-        pass
+            file = dialog.save_finish(response)
+            # return value is not subscriptable, so we loop over one item
+            for item in self.datadict.values():
+                file_io.save_file(file, item.xdata, item.ydata)
 
 
 def on_open_project_response(dialog, response, self):
-    try:
+    with contextlib.suppress(GLib.GError):
         file = dialog.open_finish(response)
         graphs.open_project(self, file)
-    except GLib.GError:
-        pass
 
 
 def on_save_project_response(dialog, response, self):
-    try:
+    with contextlib.suppress(GLib.GError):
         file = dialog.save_finish(response)
         file_io.save_project(
             file,
@@ -86,8 +87,6 @@ def on_save_project_response(dialog, response, self):
             self.datadict_clipboard,
             self.clipboard_pos,
             self.version)
-    except GLib.GError:
-        pass
 
 
 def show_about_window(self):
