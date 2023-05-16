@@ -2,7 +2,6 @@
 import io
 import json
 import logging
-import os
 import pickle
 import re
 from gettext import gettext as _
@@ -12,6 +11,7 @@ from xml.dom import minidom
 from gi.repository import GLib
 
 from graphs import utilities
+from graphs.item import Item
 
 from matplotlib import RcParams, cbook
 from matplotlib.style.core import STYLE_BLACKLIST
@@ -44,23 +44,17 @@ def read_project(file):
         project["version"]
 
 
-def save_file(self, path):
-    if len(self.datadict) == 1:
-        for item in self.datadict.values():
-            xdata = item.xdata
-            ydata = item.ydata
-        array = numpy.stack([xdata, ydata], axis=1)
-        numpy.savetxt(str(path), array, delimiter="\t")
-    elif len(self.datadict) > 1:
-        for item in self.datadict.values():
-            xdata = item.xdata
-            ydata = item.ydata
-            filename = item.name.replace("/", "")
-            array = numpy.stack([xdata, ydata], axis=1)
-            file_path = f"{path}/{filename}.txt"
-            if os.path.exists(file_path):
-                file_path = f"{path}/{filename} (copy).txt"
-            numpy.savetxt(str(file_path), array, delimiter="\t")
+def save_item(file, xdata, ydata):
+    array = numpy.stack([xdata, ydata], axis=1)
+    fmt = "\t".join(["%.12e"] * 2)
+    if file.query_exists(None):
+        stream = file.replace(None, False, 0, None)
+    else:
+        stream = file.create(0, None)
+    for row in array:
+        line = (fmt % tuple(row) + "\n").encode("utf-8")
+        stream.write_bytes(GLib.Bytes(line))
+    stream.close()
 
 
 def import_from_xrdml(self, file, _import_settings):
@@ -93,7 +87,7 @@ def import_from_xrdml(self, file, _import_settings):
 
     self.plot_settings.xlabel = f"{scan_axis} ({unit})"
     self.plot_settings.ylabel = _("Intensity (cps)")
-    return xdata, ydata
+    return Item(self, xdata, ydata)
 
 
 def import_from_xry(self, file, _import_settings):
@@ -113,11 +107,11 @@ def import_from_xry(self, file, _import_settings):
 
     self.plot_settings.xlabel = _("β (°)")
     self.plot_settings.ylabel = _("Intensity (s⁻¹)")
-    return xdata, ydata
+    return Item(self, xdata, ydata)
 
 
 def import_from_columns(self, file, import_settings):
-    data_array = [[], []]
+    xdata, ydata = [], []
     content = file.load_bytes(None)[0].get_data().decode("utf-8")
     for i, line in enumerate(content.splitlines()):
         if i > import_settings.skip_rows:
@@ -128,13 +122,11 @@ def import_from_columns(self, file, import_settings):
                     data_line[index] = utilities.swap(value)
             if utilities.check_if_floats(data_line):
                 if len(data_line) == 1:
-                    data_array[0].append(i)
-                    data_array[1].append(float(data_line[0]))
+                    xdata.append(i)
+                    ydata.append(float(data_line[0]))
                 else:
-                    data_array[0].append(float(data_line[
-                        import_settings.column_x]))
-                    data_array[1].append(float(data_line[
-                        import_settings.column_y]))
+                    xdata.append(float(data_line[import_settings.column_x]))
+                    ydata.append(float(data_line[import_settings.column_y]))
             # If not all values in the line are floats, start looking for
             # headers instead
             else:
@@ -147,22 +139,22 @@ def import_from_columns(self, file, import_settings):
                     # for the data
                     try:
                         headers = re.split("\\s{2,}", line)
-                        self.plot_settings.xlabel = headers[
-                            import_settings.column_x]
-                        self.plot_settings.ylabel = headers[
-                            import_settings.column_y]
+                        self.plot_settings.xlabel = \
+                            headers[import_settings.column_x]
+                        self.plot_settings.ylabel = \
+                            headers[import_settings.column_y]
                     except IndexError:
                         try:
                             headers = re.split(
                                 import_settings.delimiter, line)
-                            self.plot_settings.xlabel = headers[
-                                import_settings.column_x]
-                            self.plot_settings.ylabel = headers[
-                                import_settings.column_y]
+                            self.plot_settings.xlabel = \
+                                headers[import_settings.column_x]
+                            self.plot_settings.ylabel = \
+                                headers[import_settings.column_y]
                         # If neither heuristic works, we just skip headers
                         except IndexError:
                             pass
-    return data_array[0], data_array[1]
+    return Item(self, xdata, ydata)
 
 
 def parse_style(file):

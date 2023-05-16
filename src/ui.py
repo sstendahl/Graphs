@@ -1,4 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
+import contextlib
+from gettext import gettext as _
+
 from gi.repository import Adw, GLib, Gio, Gtk
 
 from graphs import file_import, file_io, graphs, utilities
@@ -40,54 +43,66 @@ def reload_item_menu(self):
         self.main_window.item_list.append(ItemBox(self, item))
 
 
-def on_confirm_discard_response(_dialog, response, self):
-    if response == "discard":
-        dialog = Gtk.FileDialog()
+def add_data_dialog(self, import_settings=None):
+    def on_response(dialog, response):
+        with contextlib.suppress(GLib.GError):
+            files = dialog.open_multiple_finish(response)
+            file_import.import_from_files(self, files, import_settings)
+    dialog = Gtk.FileDialog()
+    dialog.open_multiple(self.main_window, None, on_response)
+
+
+def save_project_dialog(self):
+    def on_response(dialog, response):
+        with contextlib.suppress(GLib.GError):
+            file = dialog.save_finish(response)
+            file_io.save_project(
+                file, self.plot_settings, self.datadict,
+                self.datadict_clipboard, self.clipboard_pos, self.version)
+    dialog = Gtk.FileDialog()
+    dialog.set_filters(
+        utilities.create_file_filters([(_("Graphs Project File"), "graphs")]))
+    dialog.set_initial_name("project.graphs")
+    dialog.save(self.main_window, None, on_response)
+
+
+def open_project_dialog(self):
+    def on_response(dialog, response):
+        with contextlib.suppress(GLib.GError):
+            file = dialog.open_finish(response)
+            graphs.open_project(self, file)
+    dialog = Gtk.FileDialog()
+    dialog.set_filters(
+        utilities.create_file_filters([(_("Graphs Project File"), "graphs")]))
+    dialog.open(self.main_window, None, on_response)
+
+
+def export_data_dialog(self):
+    if not self.datadict:
+        return
+    multiple = len(self.datadict) > 1
+
+    def on_response(dialog, response):
+        with contextlib.suppress(GLib.GError):
+            if multiple:
+                directory = dialog.select_folder_finish(response)
+                for item in self.datadict.values():
+                    file = directory.get_child_for_display_name(
+                        f"{item.name}.txt")
+                    file_io.save_item(file, item.xdata, item.ydata)
+            else:
+                item = list(self.datadict.values())[0]
+                file_io.save_item(
+                    dialog.save_finish(response), item.xdata, item.ydata)
+    dialog = Gtk.FileDialog()
+    if multiple:
+        dialog.select_folder(self.main_window, None, on_response)
+    else:
+        filename = f"{list(self.datadict.values())[0].name}.txt"
+        dialog.set_initial_name(filename)
         dialog.set_filters(
-            utilities.create_file_filters([("Graphs Project File", "graphs")]))
-        dialog.set_initial_name("project.graphs")
-        dialog.open(self.main_window, None, on_open_project_response, self)
-
-
-def on_add_data_response(dialog, response, self, import_settings=None):
-    try:
-        files = dialog.open_multiple_finish(response)
-        file_import.import_from_files(self, files, import_settings)
-    except GLib.GError:
-        pass
-
-
-def on_export_data_response(dialog, response, self, multiple):
-    try:
-        if multiple:
-            path = dialog.select_folder_finish(response).peek_path()
-        else:
-            path = dialog.save_finish(response).peek_path()
-        file_io.save_file(self, path)
-    except GLib.GError:
-        pass
-
-
-def on_open_project_response(dialog, response, self):
-    try:
-        file = dialog.open_finish(response)
-        graphs.open_project(self, file)
-    except GLib.GError:
-        pass
-
-
-def on_save_project_response(dialog, response, self):
-    try:
-        file = dialog.save_finish(response)
-        file_io.save_project(
-            file,
-            self.plot_settings,
-            self.datadict,
-            self.datadict_clipboard,
-            self.clipboard_pos,
-            self.version)
-    except GLib.GError:
-        pass
+            utilities.create_file_filters([(_("Text Files"), "txt")]))
+        dialog.save(self.main_window, None, on_response)
 
 
 def show_about_window(self):
