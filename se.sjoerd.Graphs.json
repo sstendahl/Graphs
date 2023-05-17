@@ -23,9 +23,7 @@
     ],
     "modules" : [
         "blueprint-compiler.json",
-        "python3-numpy.json",
-        "python3-matplotlib.json",
-        "python3-scipy.json",
+        "python-dependencies.json",
         {
             "name" : "graphs",
             "buildsystem" : "meson",
@@ -36,7 +34,7 @@
                 }
             ],
             "config-opts" : [
-		"--buildtype=debug"
+                "--buildtype=debug"
             ]
         }
     ]
