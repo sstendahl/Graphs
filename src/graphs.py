@@ -38,28 +38,26 @@ def add_items(self, items):
     if not items:
         return
     ignored = []
+    handle_duplicates = self.preferences.config["handle_duplicates"]
     for item in items:
-        handle_duplicates = self.preferences.config["handle_duplicates"]
         for item_1 in self.datadict.values():
             if item.name == item_1.name:
                 if handle_duplicates == "Auto-rename duplicates":
-                    loop = True
                     i = 0
-                    while loop:
+                    while True:
                         i += 1
-                        new_name = f"{item.name} ({i})"
-                        loop = False
-                        for item_2 in self.datadict.values():
-                            if new_name == item_2.name:
-                                loop = True
+                        if f"{item.name} ({i})" not in \
+                                utilities.get_all_names(self):
+                            new_name = f"{item.name} ({i})"
+                            break
                     item.name = new_name
                 elif handle_duplicates == "Ignore duplicates":
                     ignored.append(item.name)
                     continue
                 elif handle_duplicates == "Override existing items":
-                    self.datadict[item.key] = item
-                    continue
+                    item.key = item_1.key
         self.datadict[item.key] = item
+
     if ignored:
         if len(ignored) > 1:
             toast = _("Items {} already exist").format(", ".join(ignored))

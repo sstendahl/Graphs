@@ -424,15 +424,13 @@ class PlotStylesWindow(Adw.Window):
         loop = True
         i = 0
         user_styles = get_user_styles(self.parent)
-        while loop:
-            for style_1 in user_styles.keys():
-                if new_style == style_1:
+        for style_1 in user_styles.keys():
+            if new_style == style_1:
+                while True:
                     i += 1
-                    loop = True
-                    new_style = f"{new_style} ({i})"
-                    continue
-                else:
-                    loop = False
+                    if f"{new_style} ({i})" not in user_styles.keys():
+                        new_style = f"{new_style} ({i})"
+                        break
         config_dir = utilities.get_config_directory()
         directory = config_dir.get_child_for_display_name("styles")
         destination = directory.get_child_for_display_name(
