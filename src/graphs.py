@@ -36,6 +36,7 @@ def open_project(self, file):
         logging.exception(message)
 
 
+<<<<<<< Updated upstream
 def add_item(self, item):
     key = item.key
     handle_duplicates = self.preferences.config["handle_duplicates"]
@@ -61,6 +62,43 @@ def add_item(self, item):
                 reload(self)
                 return
     self.datadict[key] = item
+=======
+def add_items(self, items):
+    if not items:
+        return
+    ignored = []
+    delete = []
+    for item in items:
+        handle_duplicates = self.preferences.config["handle_duplicates"]
+        for item_1 in self.datadict.values():
+            if item.name == item_1.name:
+                if handle_duplicates == "Auto-rename duplicates":
+                    i = 0
+                    while True:
+                        i += 1
+                        if f"{item.name} ({i})" not in \
+                                utilities.get_all_names(self):
+                            new_name = f"{item.name} ({i})"
+                            break
+                    item.name = new_name
+                elif handle_duplicates == "Ignore duplicates":
+                    ignored.append(item.name)
+                    continue
+                elif handle_duplicates == "Override existing items":
+                    delete.append(item_1.key)
+                    continue
+
+        for key in delete:
+            del self.datadict[key]
+        self.datadict[item.key] = item
+
+    if ignored:
+        if len(ignored) > 1:
+            toast = _("Items {} already exist").format(", ".join(ignored))
+        else:
+            toast = _("Item {} already exists")
+        self.main_window.add_toast(toast)
+>>>>>>> Stashed changes
     clipboard.add(self)
     self.main_window.item_list.set_visible(True)
     ui.enable_data_dependent_buttons(self, True)
