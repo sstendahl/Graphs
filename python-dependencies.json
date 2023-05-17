@@ -1,15 +1,44 @@
 {
-    "name": "python3-matplotlib_modules",
-    "buildsystem": "simple",
-    "build-commands": [],
-    "modules": [
-{
-    "name": "python3-matplotlib",
+    "name": "python-dependencies",
     "buildsystem": "simple",
     "build-commands": [
-        "pip3 install --verbose --exists-action=i --no-index --find-links=\"file://${PWD}\" --prefix=${FLATPAK_DEST} \"matplotlib\" --no-build-isolation"
+        "pip3 install --verbose --exists-action=i --no-index --find-links=\"file://${PWD}\" --prefix=${FLATPAK_DEST} \"numpy\" \"scipy\" \"matplotlib\""
     ],
+    "build-options": {
+        "env": {
+            "ATLAS": "None",
+            "BLAS": "/app/lib",
+            "LAPACK": "/app/lib",
+            "LDFLAGS": "-shared",
+            "FC": "/usr/lib/sdk/gfortran-62/bin/gfortran",
+            "PATH": "/app/bin:/usr/bin:/usr/lib/sdk/gfortran-62/bin"
+        }
+    },
     "sources": [
+        {
+            "type": "file",
+            "url": "https://files.pythonhosted.org/packages/6f/72/38f9a536bdb5bfb1682f2520f133ec6e08dde8bcca1f632e347641d90763/numpy-1.24.3-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+            "sha256": "2d926b52ba1367f9acb76b0df6ed21f0b16a1ad87c6720a1121674e5cf63e2b6",
+            "only-arches": "x86_64"
+        },
+        {
+            "type": "file",
+            "url": "https://files.pythonhosted.org/packages/62/e4/cd77d5f3d02c30d9ca8f2995df3cb3974c75cf1cc777fad445753475c4e4/numpy-1.24.3-cp310-cp310-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
+            "sha256": "8535303847b89aa6b0f00aa1dc62867b5a32923e4d1681a35b5eef2d9591a463",
+            "only-arches": "aarch64"
+        },
+        {
+            "type": "file",
+            "url": "https://files.pythonhosted.org/packages/1f/4b/3bacad9a166350cb2e518cea80ab891016933cc1653f15c90279512c5fa9/scipy-1.10.1-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+            "sha256": "4c0ff64b06b10e35215abce517252b375e580a6125fd5fdf6421b98efbefb2d2",
+            "only-arches": "x86_64"
+        },
+        {
+            "type": "file",
+            "url": "https://files.pythonhosted.org/packages/04/0b/a1b119c869b79a2ab459b7f9fd7e2dea75a9c7d432e64e915e75586bd00b/scipy-1.10.1-cp310-cp310-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
+            "sha256": "1553b5dcddd64ba9a0d95355e63fe6c3fc303a8fd77c7bc91e77d61363f7433f",
+            "only-arches": "aarch64"
+        },
         {
             "type": "file",
             "url": "https://files.pythonhosted.org/packages/36/7a/87837f39d0296e723bb9b62bbb257d0355c7f6128853c78955f57342a56d/python_dateutil-2.8.2-py2.py3-none-any.whl",
@@ -26,7 +55,7 @@
             "sha256": "8f36397bf3f7d7c6a3abdea815ecf6fd14e7fcd4418ab24bae01008d8d8ca15e",
             "only-arches": "x86_64"
         },
-                {
+        {
             "type": "file",
             "url": "https://files.pythonhosted.org/packages/9a/57/7864b6a22acb5f1d4b70af8c92cbd5e3af25f4d5869c24cd8074ca1f3593/Pillow-9.5.0-cp310-cp310-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
             "sha256": "5ba1b81ee69573fe7124881762bb4cd2e4b6ed9dd28c9c60a632902fe8db8b38",
@@ -43,7 +72,7 @@
             "sha256": "87f4d8941a9564cda3f7fa6a6cd9b32ec575830780677932abdec7bcb61717b0",
             "only-arches": "x86_64"
         },
-         {
+        {
             "type": "file",
             "url": "https://files.pythonhosted.org/packages/8d/cc/c8e32001298b50331348312ac2a965279ddf1c20d25e68ca596fd8a7aaa2/contourpy-1.0.7-cp310-cp310-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
             "sha256": "1c71fdd8f1c0f84ffd58fca37d00ca4ebaa9e502fb49825484da075ac0b0b803",
@@ -55,7 +84,7 @@
             "sha256": "7577c1987baa3adc4b3c62c33bd1118c3ef5c8ddef36f0f2c950ae0b199e100d",
             "only-arches": "x86_64"
         },
-         {
+        {
             "type": "file",
             "url": "https://files.pythonhosted.org/packages/c7/cf/40d5c5d4f91b2d5cb3aadad9a1074964749a19e1054cef3d491cfa73a25e/kiwisolver-1.4.4-cp310-cp310-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
             "sha256": "f8ad8285b01b0d4695102546b342b493b3ccc6781fc28c8c6a1bb63e95d22f09",
@@ -63,8 +92,8 @@
         },
         {
             "type": "file",
-            "url": "https://files.pythonhosted.org/packages/16/07/1c7547e27f559ec078801d522cc4d5127cdd4ef8e831c8ddcd9584668a07/fonttools-4.39.3-py3-none-any.whl",
-            "sha256": "64c0c05c337f826183637570ac5ab49ee220eec66cf50248e8df527edfa95aeb"
+            "url": "https://files.pythonhosted.org/packages/ad/5f/20da4f41e33e77723b0100ded6539529bd159319ed49d6459a4647cdc7ee/fonttools-4.39.4-py3-none-any.whl",
+            "sha256": "106caf6167c4597556b31a8d9175a3fdc0356fdcd70ab19973c3b0d4c893c461"
         },
         {
             "type": "file",
@@ -72,19 +101,19 @@
             "sha256": "3a27e95f763a428a739d2add979fa7494c912a32c17c4c38c4d5f082cad165a3"
         },
         {
-           "type": "file",
-           "url": "https://files.pythonhosted.org/packages/8a/d3/35c62c9f64ddef5f25763580a10cb1ff4a19dc1a2bf940ad06dbb10b248d/matplotlib-3.7.1-cp310-cp310-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
-           "sha256": "56d94989191de3fcc4e002f93f7f1be5da476385dde410ddafbb70686acf00ea",
-           "only-arches": "aarch64"
-       },
-               {
-           "type": "file",
-           "url": "https://files.pythonhosted.org/packages/89/f3/84a9a6613ab0d89931d785f13fa2606e03f07252875acc8ebf5b676fa3c5/matplotlib-3.7.1-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
-           "sha256": "eb7d248c34a341cd4c31a06fd34d64306624c8cd8d0def7abb08792a5abfd556",
-           "only-arches": "x86_64"
-       }
+            "type": "file",
+            "url": "https://files.pythonhosted.org/packages/8a/d3/35c62c9f64ddef5f25763580a10cb1ff4a19dc1a2bf940ad06dbb10b248d/matplotlib-3.7.1-cp310-cp310-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
+            "sha256": "56d94989191de3fcc4e002f93f7f1be5da476385dde410ddafbb70686acf00ea",
+            "only-arches": "aarch64"
+        },
+        {
+            "type": "file",
+            "url": "https://files.pythonhosted.org/packages/89/f3/84a9a6613ab0d89931d785f13fa2606e03f07252875acc8ebf5b676fa3c5/matplotlib-3.7.1-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+            "sha256": "eb7d248c34a341cd4c31a06fd34d64306624c8cd8d0def7abb08792a5abfd556",
+            "only-arches": "x86_64"
+        }
+    ],
+    "cleanup": [
+        "/bin"
     ]
 }
-]
-}
-
