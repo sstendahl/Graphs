@@ -19,50 +19,21 @@ def open_project(self, file):
         self.clipboard_pos = clipboard_pos
         self.datadict_clipboard = datadict_clipboard
         self.datadict = {}
+        items = []
         for item in new_datadict.values():
             new_item = Item(self, item.xdata, item.ydata)
             for attribute in new_item.__dict__:
                 if hasattr(item, attribute):
                     setattr(new_item, attribute, getattr(item, attribute))
-            add_item(self, new_item)
-            self.datadict_clipboard = self.datadict_clipboard[:-1]
-        ui.reload_item_menu(self)
-        ui.enable_data_dependent_buttons(
-            self, utilities.get_selected_keys(self))
-        reload(self)
+            items.append(new_item)
+        add_items(self, items)
+        self.datadict_clipboard = self.datadict_clipboard[:-1]
     except (EOFError, UnpicklingError):
         message = _("Could not open project")
         self.main_window.add_toast(message)
         logging.exception(message)
 
 
-<<<<<<< Updated upstream
-def add_item(self, item):
-    key = item.key
-    handle_duplicates = self.preferences.config["handle_duplicates"]
-    for item_1 in self.datadict.values():
-        if item.name == item_1.name:
-            if handle_duplicates == "Auto-rename duplicates":
-                loop = True
-                i = 0
-                while loop:
-                    i += 1
-                    new_name = f"{item.name} ({i})"
-                    loop = False
-                    for item_2 in self.datadict.values():
-                        if new_name == item_2.name:
-                            loop = True
-                item.name = new_name
-            elif handle_duplicates == "Ignore duplicates":
-                toast = f'Item "{item.name}" already exists'
-                self.main_window.add_toast(toast)
-                return
-            elif handle_duplicates == "Override existing items":
-                self.datadict[key] = item
-                reload(self)
-                return
-    self.datadict[key] = item
-=======
 def add_items(self, items):
     if not items:
         return
@@ -87,10 +58,10 @@ def add_items(self, items):
                 elif handle_duplicates == "Override existing items":
                     delete.append(item_1.key)
                     continue
-
-        for key in delete:
-            del self.datadict[key]
         self.datadict[item.key] = item
+
+    for key in delete:
+        del self.datadict[key]
 
     if ignored:
         if len(ignored) > 1:
@@ -98,10 +69,11 @@ def add_items(self, items):
         else:
             toast = _("Item {} already exists")
         self.main_window.add_toast(toast)
->>>>>>> Stashed changes
     clipboard.add(self)
     self.main_window.item_list.set_visible(True)
+    ui.reload_item_menu(self)
     ui.enable_data_dependent_buttons(self, True)
+    reload(self)
 
 
 def delete_item(self, key, give_toast=False):
