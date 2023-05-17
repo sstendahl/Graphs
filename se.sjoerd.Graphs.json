@@ -34,7 +34,7 @@
                 }
             ],
             "config-opts" : [
-				"--buildtype=debug"
+                "--buildtype=debug"
             ]
         }
     ]
