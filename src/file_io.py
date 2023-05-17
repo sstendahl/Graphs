@@ -57,7 +57,7 @@ def save_item(file, xdata, ydata):
     stream.close()
 
 
-def import_from_xrdml(self, file, _import_settings):
+def import_from_xrdml(self, file, import_settings):
     content = minidom.parseString(
         file.load_bytes(None)[0].get_data().decode("utf-8"))
     intensities = content.getElementsByTagName("intensities")
@@ -90,10 +90,10 @@ def import_from_xrdml(self, file, _import_settings):
 
     self.plot_settings.xlabel = f"{scan_axis} ({unit})"
     self.plot_settings.ylabel = _("Intensity (cps)")
-    return [Item(self, xdata, ydata)]
+    return [Item(self, xdata, ydata, import_settings.name)]
 
 
-def import_from_xry(self, file, _import_settings):
+def import_from_xry(self, file, import_settings):
     """
     Import data from .xry files used by Leybold X-ray apparatus.
 
@@ -114,7 +114,7 @@ def import_from_xry(self, file, _import_settings):
 
     self.plot_settings.xlabel = _("β (°)")
     self.plot_settings.ylabel = _("Intensity (s⁻¹)")
-    return [Item(self, xdata, ydata)]
+    return [Item(self, xdata, ydata, import_settings.name)]
 
 
 def import_from_columns(self, file, import_settings):
@@ -164,7 +164,7 @@ def import_from_columns(self, file, import_settings):
     if len(xdata) == 0:
         filename = file.query_info("standard::*", 0, None).get_display_name()
         raise ValueError(_("Unable to retrieve data for {}".format(filename)))
-    return [Item(self, xdata, ydata)]
+    return [Item(self, xdata, ydata, import_settings.name)]
 
 
 def parse_style(file):

@@ -1,5 +1,6 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 import logging
+from copy import deepcopy
 from gettext import gettext as _
 from pathlib import Path
 
@@ -13,7 +14,8 @@ def import_from_files(self, files, import_settings=None):
     items = []
     for file in files:
         try:
-            items.extend(_import_from_file(self, file, import_settings))
+            items.extend(
+                _import_from_file(self, file, deepcopy(import_settings)))
         except IndexError:
             message = \
                 _("Could not open data, the column index is out of range")
@@ -35,6 +37,8 @@ def import_from_files(self, files, import_settings=None):
 
 def _import_from_file(self, file, import_settings):
     filename = file.query_info("standard::*", 0, None).get_display_name()
+    if not import_settings.name:
+        import_settings.name = filename
     try:
         file_suffix = Path(filename).suffixes[-1]
     except IndexError:
@@ -46,12 +50,4 @@ def _import_from_file(self, file, import_settings):
             callback = file_io.import_from_xry
         case _:
             callback = file_io.import_from_columns
-    items = callback(self, file, import_settings)
-    if not import_settings.name:
-        i = 0
-        for item in items:
-            if i < 1:
-                item.name = filename
-            else:
-                item.name = f"{filename} ({i})"
-    return items
+    return callback(self, file, import_settings)
