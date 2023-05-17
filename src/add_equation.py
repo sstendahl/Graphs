@@ -4,7 +4,7 @@ from gettext import gettext as _
 
 from gi.repository import Adw, Gtk
 
-from graphs import calculation, graphs, ui
+from graphs import calculation, graphs
 from graphs.item import Item
 
 
@@ -42,9 +42,7 @@ class AddEquationWindow(Adw.Window):
             name = str(self.name.get_text())
             if name == "":
                 name = f"Y = {equation}"
-            graphs.add_item(parent, Item(parent, xdata, ydata, name))
-            graphs.reload(parent)
-            ui.reload_item_menu(parent)
+            graphs.add_items(parent, [Item(parent, xdata, ydata, name)])
             self.destroy()
         except (NameError, SyntaxError) as exception:
             toast = _("{error} - Unable to add data from equation").format(

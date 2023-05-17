@@ -2,13 +2,13 @@
 import logging
 from gettext import gettext as _
 
-from graphs import calculation, clipboard, graphs, ui, utilities
+from graphs import calculation, clipboard, graphs, utilities
 from graphs.item import Item
 from graphs.misc import InteractionMode
 
 import numpy
 
-from scipy import integrate
+import scipy
 
 
 def get_data(self, item):
@@ -205,8 +205,9 @@ def get_integral(_item, xdata, ydata):
     """Calculate indefinite integral of all selected data"""
     x_values = numpy.array(xdata)
     y_values = numpy.array(ydata)
-    indefinite_integral = integrate.cumtrapz(y_values, x_values, initial=0)
-    return xdata, indefinite_integral.tolist(), False, True
+    indefinite_integral = \
+        scipy.integrate.cumtrapz(y_values, x_values, initial=0).tolist()
+    return xdata, indefinite_integral, False, True
 
 
 def get_fourier(_item, xdata, ydata):
@@ -238,8 +239,7 @@ def transform(_item, xdata, ydata, input_x, input_y, discard=False):
 def combine(self):
     """Combine the selected data into a new data set"""
     keys = utilities.get_selected_keys(self)
-    new_xdata = []
-    new_ydata = []
+    new_xdata, new_ydata = [], []
     for key in keys:
         xdata, ydata = get_data(self, self.datadict[key])[:2]
         new_xdata.extend(xdata)
@@ -247,7 +247,4 @@ def combine(self):
 
     # Create the item itself
     new_xdata, new_ydata = sort_data(new_xdata, new_ydata)
-    graphs.add_item(self, Item(self, new_xdata, new_ydata, "Combined Data"))
-    graphs.reload(self)
-    clipboard.add(self)
-    ui.reload_item_menu(self)
+    graphs.add_items(self, [Item(self, new_xdata, new_ydata, "Combined Data")])
