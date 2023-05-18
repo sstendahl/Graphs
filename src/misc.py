@@ -8,14 +8,12 @@ class ImportSettings():
         if params is None:
             params = {
                 "delimiter": config["import_delimiter"],
-                "guess_headers": config["guess_headers"],
                 "separator": config["import_separator"],
                 "skip_rows": config["import_skip_rows"],
                 "column_x": config["import_column_x"],
                 "column_y": config["import_column_y"],
             }
         self.delimiter = params["delimiter"]
-        self.guess_headers = params["guess_headers"]
         self.separator = params["separator"]
         self.skip_rows = params["skip_rows"]
         self.column_x = params["column_x"]

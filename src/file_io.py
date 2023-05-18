@@ -140,25 +140,24 @@ def import_from_columns(self, file, import_settings):
             # If not all values in the line are floats, start looking for
             # headers instead
             else:
-                if import_settings.guess_headers:
-                    # By default it will check for headers using at least
-                    # two whitespaces as delimiter (often tabs), but if
-                    # that doesn"t work it will try the same delimiter as
-                    # used for the data import itself The reasoning is that
-                    # some people use tabs for the headers, but e.g. commas
-                    # for the data
+                # By default it will check for headers using at least
+                # two whitespaces as delimiter (often tabs), but if
+                # that doesn"t work it will try the same delimiter as
+                # used for the data import itself The reasoning is that
+                # some people use tabs for the headers, but e.g. commas
+                # for the data
+                try:
+                    headers = re.split("\\s{2,}", line)
+                    xlabel = headers[import_settings.column_x]
+                    ylabel = headers[import_settings.column_y]
+                except IndexError:
                     try:
-                        headers = re.split("\\s{2,}", line)
+                        headers = re.split(import_settings.delimiter, line)
                         xlabel = headers[import_settings.column_x]
                         ylabel = headers[import_settings.column_y]
+                    # If neither heuristic works, we just skip headers
                     except IndexError:
-                        try:
-                            headers = re.split(import_settings.delimiter, line)
-                            xlabel = headers[import_settings.column_x]
-                            ylabel = headers[import_settings.column_y]
-                        # If neither heuristic works, we just skip headers
-                        except IndexError:
-                            pass
+                        pass
     if len(xdata) == 0:
         filename = file.query_info("standard::*", 0, None).get_display_name()
         raise ValueError(_("Unable to retrieve data for {}".format(filename)))

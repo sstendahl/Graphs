@@ -209,16 +209,6 @@ template PreferencesWindow : Adw.PreferencesWindow {
       Adw.EntryRow plot_right_label {
         title: _("Default Right Axis Label");
       }
-
-      Adw.ActionRow {
-        title: _("Retrieve label");
-        subtitle: _("Try and retrieve label from the header in the dataset");
-        activatable-widget: plot_guess_headers;
-
-        Switch plot_guess_headers {
-          valign: center;
-        }
-      }
     }
 
     Adw.PreferencesGroup {

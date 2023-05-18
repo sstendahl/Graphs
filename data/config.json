@@ -8,7 +8,6 @@
 "export_figure_dpi": "100",
 "export_figure_filetype": "svg",
 "export_figure_transparent": true,
-"guess_headers": true,
 "handle_duplicates": "Auto-rename duplicates",
 "hide_unselected": false,
 "import_column_x": 0,
