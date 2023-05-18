@@ -12,18 +12,25 @@ class Preferences():
         self.parent = parent
         self.template_file = Gio.File.new_for_uri(
             "resource:///se/sjoerd/Graphs/config.json")
+        self.template_import_params_file = Gio.File.new_for_uri(
+            "resource:///se/sjoerd/Graphs/import.json")
         self.check_config()
-        self.config = self.load_config()
+        self.config, self.import_params = self.load_config()
 
     def check_config(self):
         config_dir = utilities.get_config_directory()
         if not config_dir.query_exists(None):
             config_dir.make_directory_with_parents(None)
         self.config_file = config_dir.get_child_for_display_name("config.json")
+        self.import_file = config_dir.get_child_for_display_name("import.json")
         if not self.config_file.query_exists(None):
             self.template_file.copy(
                 self.config_file, Gio.FileCopyFlags(1), None, None, None)
             logging.info(_("New configuration file created"))
+        if not self.import_file.query_exists(None):
+            self.template_file.copy(
+                self.import_file, Gio.FileCopyFlags(1), None, None, None)
+            logging.info(_("New Import Settings file created"))
 
     def load_config(self):
         logging.debug(_("Loading configuration file"))
@@ -32,10 +39,19 @@ class Preferences():
         if set(config.keys()) != set(template.keys()):
             config = utilities.remove_unused_config_keys(config, template)
             config = utilities.add_new_config_keys(config, template)
-        return config
+        import_params = file_io.parse_json(self.import_file)
+        import_params_template = \
+            file_io.parse_json(self.template_import_params_file)
+        if set(import_params.keys()) != set(import_params_template.keys()):
+            import_params = utilities.remove_unused_config_keys(
+                import_params, import_params_template)
+            import_params = utilities.add_new_config_keys(
+                import_params, import_params_template)
+        return config, import_params
 
     def save_config(self):
         file_io.write_json(self.config_file, self.config)
+        file_io.write_json(self.import_file, self.import_params)
 
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/preferences.ui")
@@ -108,13 +124,14 @@ class PreferencesWindow(Adw.PreferencesWindow):
 
     def load_configuration(self):
         config = self.parent.preferences.config
+        import_params = self.parent.preferences.import_params["columns"]
         self.clipboard_length.set_value(int(config["clipboard_length"]))
-        self.import_delimiter.set_text(config["import_delimiter"])
+        self.import_delimiter.set_text(import_params["delimiter"])
         utilities.set_chooser(
-            self.import_separator, config["import_separator"])
-        self.import_column_x.set_value(int(config["import_column_x"]))
-        self.import_column_y.set_value(int(config["import_column_y"]))
-        self.import_skip_rows.set_value(int(config["import_skip_rows"]))
+            self.import_separator, import_params["separator"])
+        self.import_column_x.set_value(int(import_params["column_x"]))
+        self.import_column_y.set_value(int(import_params["column_y"]))
+        self.import_skip_rows.set_value(int(import_params["skip_rows"]))
         self.addequation_equation.set_text(str(config["addequation_equation"]))
         self.addequation_x_start.set_text(str(config["addequation_x_start"]))
         self.addequation_x_stop.set_text(str(config["addequation_x_stop"]))
@@ -161,12 +178,13 @@ class PreferencesWindow(Adw.PreferencesWindow):
 
     def apply_configuration(self):
         config = self.parent.preferences.config
-        config["import_delimiter"] = self.import_delimiter.get_text()
-        config["import_separator"] = \
+        import_params = self.parent.preferences.import_params["columns"]
+        import_params["delimiter"] = self.import_delimiter.get_text()
+        import_params["separator"] = \
             utilities.get_selected_chooser_item(self.import_separator)
-        config["import_column_x"] = int(self.import_column_x.get_value())
-        config["import_column_y"] = int(self.import_column_y.get_value())
-        config["import_skip_rows"] = int(self.import_skip_rows.get_value())
+        import_params["column_x"] = int(self.import_column_x.get_value())
+        import_params["column_y"] = int(self.import_column_y.get_value())
+        import_params["skip_rows"] = int(self.import_skip_rows.get_value())
         config["addequation_equation"] = self.addequation_equation.get_text()
         config["addequation_x_start"] = self.addequation_x_start.get_text()
         config["addequation_x_stop"] = self.addequation_x_stop.get_text()

@@ -5,6 +5,7 @@ from gettext import gettext as _
 from gi.repository import Adw, GLib, Gio, Gtk
 
 from graphs import file_import, file_io, graphs, utilities
+from graphs.file_import import ImportSettings
 from graphs.item_box import ItemBox
 
 
@@ -43,11 +44,17 @@ def reload_item_menu(self):
         self.main_window.item_list.append(ItemBox(self, item))
 
 
-def add_data_dialog(self, import_settings=None):
+def add_data_dialog(self, params=None, name=""):
     def on_response(dialog, response):
         with contextlib.suppress(GLib.GError):
             files = dialog.open_multiple_finish(response)
-            file_import.import_from_files(self, files, import_settings)
+            import_settings_list = []
+            for file in files:
+                import_settings = ImportSettings(self, file, name)
+                if params is not None:
+                    import_settings.params = params
+                import_settings_list.append(import_settings)
+            file_import.import_from_files(self, import_settings_list)
     dialog = Gtk.FileDialog()
     dialog.open_multiple(self.main_window, None, on_response)
 

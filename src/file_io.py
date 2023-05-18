@@ -57,7 +57,8 @@ def save_item(file, xdata, ydata):
     stream.close()
 
 
-def import_from_xrdml(self, file, import_settings):
+def import_from_xrdml(self, import_settings):
+    file = import_settings.file
     content = minidom.parseString(
         file.load_bytes(None)[0].get_data().decode("utf-8"))
     intensities = content.getElementsByTagName("intensities")
@@ -94,13 +95,14 @@ def import_from_xrdml(self, file, import_settings):
     return [item]
 
 
-def import_from_xry(self, file, import_settings):
+def import_from_xry(self, import_settings):
     """
     Import data from .xry files used by Leybold X-ray apparatus.
 
     Slightly modified version of
     https://github.com/rdbeerman/Readxry/blob/master/manual.py
     """
+    file = import_settings.file
     content = file.load_bytes(None)[0].get_data().decode("ISO-8859-1")
     rawdata = [line.strip() for line in content.splitlines()]
     b_min = float(rawdata[4].split()[0])
@@ -119,15 +121,17 @@ def import_from_xry(self, file, import_settings):
     return [item]
 
 
-def import_from_columns(self, file, import_settings):
+def import_from_columns(self, import_settings):
+    file = import_settings.file
     xdata, ydata = [], []
     xlabel, ylabel = "", ""
     content = file.load_bytes(None)[0].get_data().decode("utf-8")
+    params = import_settings.params
     for i, line in enumerate(content.splitlines()):
-        if i > import_settings.skip_rows:
+        if i > params["skip_rows"]:
             line = line.strip()
-            data_line = re.split(str(import_settings.delimiter), line)
-            if import_settings.separator == ",":
+            data_line = re.split(str(params["delimiter"]), line)
+            if params["separator"] == ",":
                 for index, value in enumerate(data_line):
                     data_line[index] = utilities.swap(value)
             if utilities.check_if_floats(data_line):
@@ -135,8 +139,8 @@ def import_from_columns(self, file, import_settings):
                     xdata.append(i)
                     ydata.append(float(data_line[0]))
                 else:
-                    xdata.append(float(data_line[import_settings.column_x]))
-                    ydata.append(float(data_line[import_settings.column_y]))
+                    xdata.append(float(data_line[params["column_x"]]))
+                    ydata.append(float(data_line[params["column_y"]]))
             # If not all values in the line are floats, start looking for
             # headers instead
             else:
@@ -148,13 +152,13 @@ def import_from_columns(self, file, import_settings):
                 # for the data
                 try:
                     headers = re.split("\\s{2,}", line)
-                    xlabel = headers[import_settings.column_x]
-                    ylabel = headers[import_settings.column_y]
+                    xlabel = headers[params["column_x"]]
+                    ylabel = headers[params["column_y"]]
                 except IndexError:
                     try:
-                        headers = re.split(import_settings.delimiter, line)
-                        xlabel = headers[import_settings.column_x]
-                        ylabel = headers[import_settings.column_y]
+                        headers = re.split(params.delimiter, line)
+                        xlabel = headers[params["column_x"]]
+                        ylabel = headers[params["column_y"]]
                     # If neither heuristic works, we just skip headers
                     except IndexError:
                         pass
