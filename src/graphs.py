@@ -61,24 +61,25 @@ def add_items(self, items):
             if item.plot_x_position == "bottom":
                 if self.plot_settings.xlabel == config["plot_x_label"]:
                     self.plot_settings.xlabel = item.xlabel
-                elif not item.xlabel == self.plot_settings.xlabel:
+                elif item.xlabel != self.plot_settings.xlabel:
                     item.plot_x_position = "top"
             if item.plot_x_position == "top":
                 if self.plot_settings.top_label == config["plot_top_label"]:
                     self.plot_settings.top_label = item.xlabel
-                elif not item.xlabel == self.plot_settings.xlabel:
+                elif item.xlabel != self.plot_settings.xlabel:
                     item.plot_x_position = original_position
         if item.ylabel:
             original_position = item.plot_y_position
             if item.plot_y_position == "left":
                 if self.plot_settings.ylabel == config["plot_y_label"]:
                     self.plot_settings.ylabel = item.ylabel
-                elif not item.ylabel == self.plot_settings.ylabel:
+                elif item.ylabel != self.plot_settings.ylabel:
                     item.plot_y_position = "right"
             if item.plot_y_position == "right":
-                if self.plot_settings.right_label == config["plot_right_label"]:
+                if self.plot_settings.right_label \
+                        == config["plot_right_label"]:
                     self.plot_settings.right_label = item.ylabel
-                elif not item.ylabel == self.plot_settings.ylabel:
+                elif item.ylabel != self.plot_settings.ylabel:
                     item.plot_y_position = original_position
         if item.color is None:
             item.color = plotting_tools.get_next_color(self)
