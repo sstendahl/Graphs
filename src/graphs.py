@@ -38,11 +38,11 @@ def add_items(self, items):
     if not items:
         return
     ignored = []
-    handle_duplicates = self.preferences.config["handle_duplicates"]
+    config = self.preferences.config
     for item in items:
         for item_1 in self.datadict.values():
             if item.name == item_1.name:
-                if handle_duplicates == "Auto-rename duplicates":
+                if config["handle_duplicates"] == "Auto-rename duplicates":
                     i = 0
                     while True:
                         i += 1
@@ -51,11 +51,35 @@ def add_items(self, items):
                             new_name = f"{item.name} ({i})"
                             break
                     item.name = new_name
-                elif handle_duplicates == "Ignore duplicates":
+                elif config["handle_duplicates"] == "Ignore duplicates":
                     ignored.append(item.name)
                     continue
-                elif handle_duplicates == "Override existing items":
+                elif config["handle_duplicates"] == "Override existing items":
                     item.key = item_1.key
+        if item.xlabel:
+            original_position = item.plot_x_position
+            if item.plot_x_position == "bottom":
+                if self.plot_settings.xlabel == config["plot_x_label"]:
+                    self.plot_settings.xlabel = item.xlabel
+                elif not item.xlabel == self.plot_settings.xlabel:
+                    item.plot_x_position = "top"
+            if item.plot_x_position == "top":
+                if self.plot_settings.top_label == config["plot_top_label"]:
+                    self.plot_settings.top_label = item.xlabel
+                elif not item.xlabel == self.plot_settings.xlabel:
+                    item.plot_x_position = original_position
+        if item.ylabel:
+            original_position = item.plot_y_position
+            if item.plot_y_position == "left":
+                if self.plot_settings.ylabel == config["plot_y_label"]:
+                    self.plot_settings.ylabel = item.ylabel
+                elif not item.ylabel == self.plot_settings.ylabel:
+                    item.plot_y_position = "right"
+            if item.plot_y_position == "right":
+                if self.plot_settings.right_label == config["plot_right_label"]:
+                    self.plot_settings.right_label = item.ylabel
+                elif not item.ylabel == self.plot_settings.ylabel:
+                    item.plot_y_position = original_position
         self.datadict[item.key] = item
 
     if ignored:

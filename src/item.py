@@ -21,3 +21,5 @@ class Item:
         self.linewidth = float(pyplot.rcParams["lines.linewidth"])
         self.markerstyle = pyplot.rcParams["lines.marker"]
         self.markersize = float(pyplot.rcParams["lines.markersize"])
+        self.xlabel = ""
+        self.ylabel = ""

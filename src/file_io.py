@@ -88,9 +88,10 @@ def import_from_xrdml(self, file, import_settings):
         filename = file.query_info("standard::*", 0, None).get_display_name()
         raise ValueError(_("Unable to retrieve data for {}".format(filename)))
 
-    self.plot_settings.xlabel = f"{scan_axis} ({unit})"
-    self.plot_settings.ylabel = _("Intensity (cps)")
-    return [Item(self, xdata, ydata, import_settings.name)]
+    item = Item(self, xdata, ydata, import_settings.name)
+    item.xlabel = f"{scan_axis} ({unit})"
+    item.ylabel = _("Intensity (cps)")
+    return [item]
 
 
 def import_from_xry(self, file, import_settings):
@@ -112,13 +113,15 @@ def import_from_xry(self, file, import_settings):
         filename = file.query_info("standard::*", 0, None).get_display_name()
         raise ValueError(_("Unable to retrieve data for {}".format(filename)))
 
-    self.plot_settings.xlabel = _("β (°)")
-    self.plot_settings.ylabel = _("Intensity (s⁻¹)")
-    return [Item(self, xdata, ydata, import_settings.name)]
+    item = Item(self, xdata, ydata, import_settings.name)
+    item.xlabel = _("β (°)")
+    item.ylabel = _("Intensity (s⁻¹)")
+    return [item]
 
 
 def import_from_columns(self, file, import_settings):
     xdata, ydata = [], []
+    xlabel, ylabel = "", ""
     content = file.load_bytes(None)[0].get_data().decode("utf-8")
     for i, line in enumerate(content.splitlines()):
         if i > import_settings.skip_rows:
@@ -146,25 +149,23 @@ def import_from_columns(self, file, import_settings):
                     # for the data
                     try:
                         headers = re.split("\\s{2,}", line)
-                        self.plot_settings.xlabel = \
-                            headers[import_settings.column_x]
-                        self.plot_settings.ylabel = \
-                            headers[import_settings.column_y]
+                        xlabel = headers[import_settings.column_x]
+                        ylabel = headers[import_settings.column_y]
                     except IndexError:
                         try:
-                            headers = re.split(
-                                import_settings.delimiter, line)
-                            self.plot_settings.xlabel = \
-                                headers[import_settings.column_x]
-                            self.plot_settings.ylabel = \
-                                headers[import_settings.column_y]
+                            headers = re.split(import_settings.delimiter, line)
+                            xlabel = headers[import_settings.column_x]
+                            ylabel = headers[import_settings.column_y]
                         # If neither heuristic works, we just skip headers
                         except IndexError:
                             pass
     if len(xdata) == 0:
         filename = file.query_info("standard::*", 0, None).get_display_name()
         raise ValueError(_("Unable to retrieve data for {}".format(filename)))
-    return [Item(self, xdata, ydata, import_settings.name)]
+    item = Item(self, xdata, ydata, import_settings.name)
+    item.xlabel = xlabel
+    item.ylabel = ylabel
+    return [item]
 
 
 def parse_style(file):
