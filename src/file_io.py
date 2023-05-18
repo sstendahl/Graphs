@@ -96,29 +96,36 @@ def import_from_xrdml(self, import_settings):
 
 
 def import_from_xry(self, import_settings):
-    """
-    Import data from .xry files used by Leybold X-ray apparatus.
+    """Import data from .xry files used by Leybold X-ray apparatus."""
+    content = import_settings.file.load_bytes(None)[0].get_data()
+    lines = content.decode("ISO-8859-1").splitlines()
 
-    Slightly modified version of
-    https://github.com/rdbeerman/Readxry/blob/master/manual.py
-    """
-    file = import_settings.file
-    content = file.load_bytes(None)[0].get_data().decode("ISO-8859-1")
-    rawdata = [line.strip() for line in content.splitlines()]
-    b_min = float(rawdata[4].split()[0])
-    b_max = float(rawdata[4].split()[1])
+    b_params = lines[4].strip().split()
+    b_min = float(b_params[0])
+    b_step = float(b_params[3])
 
-    ydata = numpy.array(rawdata[18:-11]).astype(float)
-    xdata = numpy.arange(b_min, b_max, (b_max - b_min) / len(ydata))
+    info = lines[17].strip().split()
+    value_count = int(info[1])
+    item_count = int(info[0])
 
-    if len(xdata) == 0:
-        filename = file.query_info("standard::*", 0, None).get_display_name()
-        raise ValueError(_("Unable to retrieve data for {}".format(filename)))
-
-    item = Item(self, xdata, ydata, import_settings.name)
-    item.xlabel = _("β (°)")
-    item.ylabel = _("Intensity (s⁻¹)")
-    return [item]
+    items = []
+    for i in range(item_count):
+        if item_count > 1:
+            name = f"{import_settings.name} - {i + 1}"
+        else:
+            name = import_settings.name
+        item = Item(self, [], [], name)
+        item.xlabel = _("β (°)")
+        item.ylabel = _("Intensity (1/s)")
+        items.append(item)
+    for i in range(value_count):
+        values = lines[18 + i].strip().split()
+        for j in range(item_count):
+            value = values[j]
+            if value != "NaN":
+                items[j].xdata.append(b_step * i + b_min)
+                items[j].ydata.append(float(value))
+    return items
 
 
 def import_from_columns(self, import_settings):
