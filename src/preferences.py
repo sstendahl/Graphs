@@ -63,7 +63,6 @@ class PreferencesWindow(Adw.PreferencesWindow):
     plot_y_label = Gtk.Template.Child()
     plot_top_label = Gtk.Template.Child()
     plot_right_label = Gtk.Template.Child()
-    plot_guess_headers = Gtk.Template.Child()
     plot_x_scale = Gtk.Template.Child()
     plot_y_scale = Gtk.Template.Child()
     plot_top_scale = Gtk.Template.Child()
@@ -139,7 +138,6 @@ class PreferencesWindow(Adw.PreferencesWindow):
         self.plot_y_label.set_text(config["plot_y_label"])
         self.plot_top_label.set_text(config["plot_top_label"])
         self.plot_right_label.set_text(config["plot_right_label"])
-        self.plot_guess_headers.set_active(config["guess_headers"])
         utilities.set_chooser(
             self.plot_x_scale, config["plot_x_scale"])
         utilities.set_chooser(
@@ -196,7 +194,6 @@ class PreferencesWindow(Adw.PreferencesWindow):
         config["plot_y_label"] = self.plot_y_label.get_text()
         config["plot_top_label"] = self.plot_top_label.get_text()
         config["plot_right_label"] = self.plot_right_label.get_text()
-        config["guess_headers"] = self.plot_guess_headers.get_active()
         config["plot_x_scale"] = \
             utilities.get_selected_chooser_item(self.plot_x_scale)
         config["plot_y_scale"] = \

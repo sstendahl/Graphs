@@ -14,7 +14,6 @@ class AddAdvancedWindow(Adw.Window):
     column_x = Gtk.Template.Child()
     column_y = Gtk.Template.Child()
     skip_rows = Gtk.Template.Child()
-    guess_headers = Gtk.Template.Child()
     confirm_button = Gtk.Template.Child()
 
     def __init__(self, parent):
@@ -27,7 +26,6 @@ class AddAdvancedWindow(Adw.Window):
         self.column_x.set_value(int(config["import_column_x"]))
         self.column_y.set_value(int(config["import_column_y"]))
         self.skip_rows.set_value(int(config["import_skip_rows"]))
-        self.guess_headers.set_active(config["guess_headers"])
         self.confirm_button.connect("clicked", self.on_accept)
         self.set_transient_for(parent.main_window)
         self.present()
@@ -43,7 +41,6 @@ class AddAdvancedWindow(Adw.Window):
             "skip_rows": int(self.skip_rows.get_value()),
             "separator": utilities.get_selected_chooser_item(self.separator),
             "delimiter": self.delimiter.get_text(),
-            "guess_headers": self.guess_headers.get_active(),
         }
         import_settings = ImportSettings(
             self.parent.preferences.config, params=params,

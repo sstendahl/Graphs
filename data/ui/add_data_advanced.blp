@@ -86,15 +86,6 @@ template AddAdvancedWindow : Adw.Window {
           }
         }
 
-        Adw.ActionRow {
-          title: _("Retrieve Label");
-          subtitle: _("Try and retrieve label from the header in the dataset");
-          activatable-widget: guess_headers;
-          Switch guess_headers {
-            valign: center;
-          }
-        }
-
         Button confirm_button {
           halign: center;
           margin-top: 24;

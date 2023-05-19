@@ -421,7 +421,6 @@ class PlotStylesWindow(Adw.Window):
         dialog.present()
 
     def copy_style(self, _button, style, new_style):
-        loop = True
         i = 0
         user_styles = get_user_styles(self.parent)
         for style_1 in user_styles.keys():
