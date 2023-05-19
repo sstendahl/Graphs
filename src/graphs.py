@@ -81,7 +81,7 @@ def add_items(self, items):
                     self.plot_settings.right_label = item.ylabel
                 elif item.ylabel != self.plot_settings.ylabel:
                     item.plot_y_position = original_position
-        if item.color is None:
+        if item.color is None and isinstance(item, Item):
             item.color = plotting_tools.get_next_color(self)
         self.datadict[item.key] = item
 
