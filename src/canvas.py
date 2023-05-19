@@ -5,6 +5,7 @@ from contextlib import nullcontext
 from gi.repository import Gtk
 
 from graphs import file_io, plot_styles, plotting_tools, utilities
+from graphs.item import Item, TextItem
 from graphs.rename import RenameWindow
 
 from matplotlib import pyplot
@@ -76,15 +77,18 @@ class Canvas(FigureCanvas):
                 axis = self.right_axis
             elif x_axis == "top":
                 axis = self.top_right_axis
-        linewidth = item.linewidth
-        markersize = item.markersize
-        if not item.selected:
-            linewidth *= 0.35
-            markersize *= 0.35
-        axis.plot(
-            item.xdata, item.ydata, label=item.name, color=item.color,
-            marker=item.markerstyle, linestyle=item.linestyle,
-            linewidth=linewidth, markersize=markersize)
+        if isinstance(item, Item):
+            linewidth = item.linewidth
+            markersize = item.markersize
+            if not item.selected:
+                linewidth *= 0.35
+                markersize *= 0.35
+            axis.plot(
+                item.xdata, item.ydata, label=item.name, color=item.color,
+                marker=item.markerstyle, linestyle=item.linestyle,
+                linewidth=linewidth, markersize=markersize)
+        elif isinstance(item, TextItem):
+            axis.text(item.x_anchor, item.y_anchor, item.text)
         self.set_legend()
 
     def set_limits(self, limits):
@@ -237,10 +241,10 @@ class Canvas(FigureCanvas):
             if used:
                 if direction in ["top", "bottom"]:
                     scale = axis_map[direction].get_xscale()
-                    datalist = [item.xdata for item in items[direction]]
+                    datalist = [item.xdata for item in items[direction] if isinstance(item, Item)]
                 elif direction in ["left", "right"]:
                     scale = axis_map[direction].get_yscale()
-                    datalist = [item.ydata for item in items[direction]]
+                    datalist = [item.ydata for item in items[direction] if isinstance(item, Item)]
                 limits[f"min_{direction}"], limits[f"max_{direction}"] = \
                     plotting_tools.find_min_max(scale, datalist)
 

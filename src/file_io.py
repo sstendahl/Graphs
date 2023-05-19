@@ -11,7 +11,7 @@ from xml.dom import minidom
 from gi.repository import GLib
 
 from graphs import utilities
-from graphs.item import Item
+from graphs.item import Item, TextItem
 
 from matplotlib import RcParams, cbook
 from matplotlib.style.core import STYLE_BLACKLIST
@@ -125,6 +125,11 @@ def import_from_xry(self, import_settings):
             if value != "NaN":
                 items[j].xdata.append(b_step * i + b_min)
                 items[j].ydata.append(float(value))
+    for row in lines[28 + value_count + item_count:]:
+        values = row.strip().split()
+        text = " ".join(values[7:])
+        items.append(
+            TextItem(self, float(values[5]), float(values[6]), text, text))
     return items
 
 
