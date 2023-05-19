@@ -90,7 +90,7 @@ class Canvas(FigureCanvas):
         elif isinstance(item, TextItem):
             axis.text(
                 item.x_anchor, item.y_anchor, item.text, clip_on=True,
-                color=item.color)
+                color=item.color, fontsize=item.size)
         self.set_legend()
 
     def set_limits(self, limits):
