@@ -38,7 +38,8 @@ template EditItemWindow : Adw.PreferencesWindow {
       }
     }
 
-    Adw.PreferencesGroup {
+    Adw.PreferencesGroup item_group {
+      visible: false;
       title: _("Line Style");
       description: _("Change properties of the lines");
 

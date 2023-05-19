@@ -2,6 +2,7 @@
 from gi.repository import Adw, Gtk
 
 from graphs import clipboard, graphs, misc, ui, utilities
+from graphs.item import Item, TextItem
 
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/edit_item.ui")
@@ -11,6 +12,9 @@ class EditItemWindow(Adw.PreferencesWindow):
     name_entry = Gtk.Template.Child()
     plot_x_position = Gtk.Template.Child()
     plot_y_position = Gtk.Template.Child()
+
+    item_group = Gtk.Template.Child()
+
     linestyle = Gtk.Template.Child()
     linewidth = Gtk.Template.Child()
     markers = Gtk.Template.Child()
@@ -58,6 +62,12 @@ class EditItemWindow(Adw.PreferencesWindow):
             self.plot_x_position, self.item.plot_x_position)
         utilities.set_chooser(
             self.plot_y_position, self.item.plot_y_position)
+        self.item_group.set_visible(False)
+        if isinstance(self.item, Item):
+            self.load_item_values()
+
+    def load_item_values(self):
+        self.item_group.set_visible(True)
         utilities.set_chooser(self.linestyle, self.item.linestyle)
         self.linewidth.set_value(self.item.linewidth)
         markerstyle = utilities.get_dict_by_value(
@@ -80,12 +90,16 @@ class EditItemWindow(Adw.PreferencesWindow):
             utilities.get_selected_chooser_item(self.plot_x_position)
         self.item.plot_y_position = \
             utilities.get_selected_chooser_item(self.plot_y_position)
+        if isinstance(self.item, Item):
+            self.apply_item_values()
+        ui.reload_item_menu(self.parent)
+        clipboard.add(self.parent)
+        graphs.refresh(self.parent, set_limits)
+
+    def apply_item_values(self):
         self.item.linestyle = \
             utilities.get_selected_chooser_item(self.linestyle)
         self.item.linewidth = self.linewidth.get_value()
         self.item.markerstyle = \
             misc.MARKERS[utilities.get_selected_chooser_item(self.markers)]
         self.item.markersize = self.markersize.get_value()
-        ui.reload_item_menu(self.parent)
-        clipboard.add(self.parent)
-        graphs.refresh(self.parent, set_limits)
