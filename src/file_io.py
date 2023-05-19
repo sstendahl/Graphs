@@ -58,9 +58,7 @@ def save_item(file, xdata, ydata):
 
 
 def import_from_xrdml(self, import_settings):
-    file = import_settings.file
-    content = minidom.parseString(
-        file.load_bytes(None)[0].get_data().decode("utf-8"))
+    content = parse_xml(import_settings.file)
     intensities = content.getElementsByTagName("intensities")
     counting_time = content.getElementsByTagName("commonCountingTime")
     counting_time = float(counting_time[0].firstChild.data)
@@ -85,10 +83,6 @@ def import_from_xrdml(self, import_settings):
             end_pos = float(end_pos[0].firstChild.data)
             xdata = numpy.linspace(start_pos, end_pos, len(ydata))
             xdata = numpy.ndarray.tolist(xdata)
-    if len(xdata) == 0:
-        filename = file.query_info("standard::*", 0, None).get_display_name()
-        raise ValueError(_("Unable to retrieve data for {}".format(filename)))
-
     item = Item(self, xdata, ydata, import_settings.name)
     item.xlabel = f"{scan_axis} ({unit})"
     item.ylabel = _("Intensity (cps)")
@@ -114,7 +108,7 @@ def import_from_xry(self, import_settings):
             name = f"{import_settings.name} - {i + 1}"
         else:
             name = import_settings.name
-        item = Item(self, [], [], name)
+        item = Item(self, name=name)
         item.xlabel = _("β (°)")
         item.ylabel = _("Intensity (1/s)")
         items.append(item)
@@ -135,8 +129,7 @@ def import_from_xry(self, import_settings):
 
 def import_from_columns(self, import_settings):
     file = import_settings.file
-    xdata, ydata = [], []
-    xlabel, ylabel = "", ""
+    item = Item(self, name=import_settings.name)
     content = file.load_bytes(None)[0].get_data().decode("utf-8")
     params = import_settings.params
     for i, line in enumerate(content.splitlines()):
@@ -148,11 +141,11 @@ def import_from_columns(self, import_settings):
                     data_line[index] = utilities.swap(value)
             if utilities.check_if_floats(data_line):
                 if len(data_line) == 1:
-                    xdata.append(i)
-                    ydata.append(float(data_line[0]))
+                    item.xdata.append(i)
+                    item.ydata.append(float(data_line[0]))
                 else:
-                    xdata.append(float(data_line[params["column_x"]]))
-                    ydata.append(float(data_line[params["column_y"]]))
+                    item.xdata.append(float(data_line[params["column_x"]]))
+                    item.ydata.append(float(data_line[params["column_y"]]))
             # If not all values in the line are floats, start looking for
             # headers instead
             else:
@@ -164,22 +157,16 @@ def import_from_columns(self, import_settings):
                 # for the data
                 try:
                     headers = re.split("\\s{2,}", line)
-                    xlabel = headers[params["column_x"]]
-                    ylabel = headers[params["column_y"]]
+                    item.xlabel = headers[params["column_x"]]
+                    item.ylabel = headers[params["column_y"]]
                 except IndexError:
                     try:
                         headers = re.split(params.delimiter, line)
-                        xlabel = headers[params["column_x"]]
-                        ylabel = headers[params["column_y"]]
+                        item.xlabel = headers[params["column_x"]]
+                        item.ylabel = headers[params["column_y"]]
                     # If neither heuristic works, we just skip headers
                     except IndexError:
                         pass
-    if len(xdata) == 0:
-        filename = file.query_info("standard::*", 0, None).get_display_name()
-        raise ValueError(_("Unable to retrieve data for {}".format(filename)))
-    item = Item(self, xdata, ydata, import_settings.name)
-    item.xlabel = xlabel
-    item.ylabel = ylabel
     return [item]
 
 
@@ -259,3 +246,8 @@ def write_json(file, json_object):
     stream.write_bytes(GLib.Bytes(buffer.getvalue().encode("utf-8")), None)
     buffer.close()
     stream.close()
+
+
+def parse_xml(file):
+    return minidom.parseString(
+        file.load_bytes(None)[0].get_data().decode("utf-8"))
