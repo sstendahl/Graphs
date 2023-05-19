@@ -94,7 +94,7 @@ def add_items(self, items):
     clipboard.add(self)
     self.main_window.item_list.set_visible(True)
     ui.reload_item_menu(self)
-    ui.enable_data_dependent_buttons(self, True)
+    ui.enable_data_dependent_buttons(self)
     reload(self)
 
 
@@ -112,12 +112,11 @@ def check_open_data(self):
     if self.datadict:
         self.main_window.item_list.set_visible(True)
         refresh(self, set_limits=True)
-        ui.enable_data_dependent_buttons(
-            self, utilities.get_selected_keys(self))
+        ui.enable_data_dependent_buttons(self)
     else:
         reload(self)
         self.main_window.item_list.set_visible(False)
-        ui.enable_data_dependent_buttons(self, False)
+        ui.enable_data_dependent_buttons(self)
 
 
 def reload(self, reset_limits=True):
@@ -134,9 +133,12 @@ def reload(self, reset_limits=True):
 
 def refresh(self, set_limits=False):
     """Refresh the graph without completely reloading it."""
-    for line in self.canvas.axis.lines + self.canvas.right_axis.lines + \
-            self.canvas.top_left_axis.lines + self.canvas.top_right_axis.lines:
-        line.remove()
+    remove = []
+    for axis in [self.canvas.axis, self.canvas.right_axis,
+                 self.canvas.top_left_axis, self.canvas.top_right_axis]:
+        remove.extend(axis.lines + axis.texts)
+    for item in remove:
+        item.remove()
     if len(self.datadict) > 0:
         plotting_tools.hide_unused_axes(self, self.canvas)
     for item in reversed(self.datadict.values()):

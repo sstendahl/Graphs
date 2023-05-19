@@ -132,11 +132,6 @@ def get_font_style(font_name):
     return new_style
 
 
-def get_selected_keys(self):
-    """Get a list of ID's of all the datasets that are currently selected"""
-    return [key for key, item in self.datadict.items() if item.selected]
-
-
 def hex_to_rgba(hex_str):
     rgba = Gdk.RGBA()
     rgba.parse(str(hex_str))

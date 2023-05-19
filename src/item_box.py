@@ -88,8 +88,7 @@ class ItemBox(Gtk.Box):
     def on_toggle(self, _):
         self.item.selected = self.check_button.get_active()
         graphs.refresh(self.parent, False)
-        ui.enable_data_dependent_buttons(
-            self.parent, utilities.get_selected_keys(self.parent))
+        ui.enable_data_dependent_buttons(self.parent)
 
     def edit(self, _):
         EditItemWindow(self.parent, self.item)
