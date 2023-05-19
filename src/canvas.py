@@ -88,7 +88,9 @@ class Canvas(FigureCanvas):
                 marker=item.markerstyle, linestyle=item.linestyle,
                 linewidth=linewidth, markersize=markersize)
         elif isinstance(item, TextItem):
-            axis.text(item.x_anchor, item.y_anchor, item.text, clip_on=True)
+            axis.text(
+                item.x_anchor, item.y_anchor, item.text, clip_on=True,
+                color=item.color)
         self.set_legend()
 
     def set_limits(self, limits):
