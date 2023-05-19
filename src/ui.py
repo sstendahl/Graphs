@@ -6,6 +6,7 @@ from gi.repository import Adw, GLib, Gio, Gtk
 
 from graphs import file_import, file_io, graphs, utilities
 from graphs.file_import import ImportSettings
+from graphs.item import Item
 from graphs.item_box import ItemBox
 
 
@@ -13,7 +14,11 @@ def on_style_change(_shortcut, _theme, _widget, self):
     graphs.reload(self, reset_limits=False)
 
 
-def enable_data_dependent_buttons(self, enabled):
+def enable_data_dependent_buttons(self):
+    enabled = False
+    for item in self.datadict.values():
+        if item.selected and isinstance(item, Item):
+            enabled = True
     win = self.main_window
     dependent_buttons = [
         win.shift_vertically_button,

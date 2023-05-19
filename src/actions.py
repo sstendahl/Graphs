@@ -5,7 +5,7 @@ from gettext import gettext as _
 
 from gi.repository import Adw
 
-from graphs import clipboard, graphs, operations, ui, utilities
+from graphs import clipboard, graphs, operations, ui
 from graphs.add_data_advanced import AddAdvancedWindow
 from graphs.add_equation import AddEquationWindow
 from graphs.export_figure import ExportFigureWindow
@@ -56,7 +56,7 @@ def select_all_action(_action, _target, self):
         item.selected = True
     graphs.refresh(self)
     ui.reload_item_menu(self)
-    ui.enable_data_dependent_buttons(self, True)
+    ui.enable_data_dependent_buttons(self)
 
 
 def select_none_action(_action, _target, self):
@@ -66,7 +66,7 @@ def select_none_action(_action, _target, self):
         item.selected = False
     graphs.refresh(self)
     ui.reload_item_menu(self)
-    ui.enable_data_dependent_buttons(self, False)
+    ui.enable_data_dependent_buttons(self)
 
 
 def undo_action(_action, _target, self):
@@ -127,8 +127,9 @@ def open_project_action(_action, _target, self):
 
 
 def delete_selected_action(_action, _target, self):
-    for key in utilities.get_selected_keys(self):
-        graphs.delete_item(self, key, True)
+    for item in self.datadict.values():
+        if item.selected:
+            graphs.delete_item(self, item.key, True)
 
 
 def translate_x_action(_action, _target, self):
@@ -198,11 +199,10 @@ def center_action(_action, _target, self):
 
 
 def shift_vertically_action(_action, _target, self):
-    selected_keys = utilities.get_selected_keys(self)
     operations.perform_operation(
         self, operations.shift_vertically,
         self.plot_settings.yscale, self.plot_settings.right_scale,
-        selected_keys, self.datadict)
+        self.datadict)
 
 
 def combine_action(_action, _target, self):

@@ -142,7 +142,7 @@ class GraphsApplication(Adw.Application):
         win.sidebar_flap.connect("notify", self.on_sidebar_toggle)
         win.redo_button.set_sensitive(False)
         win.undo_button.set_sensitive(False)
-        ui.enable_data_dependent_buttons(self, False)
+        ui.enable_data_dependent_buttons(self)
         self.set_mode(None, None, InteractionMode.PAN)
         win.present()
 

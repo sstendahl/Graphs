@@ -88,7 +88,7 @@ class Canvas(FigureCanvas):
                 marker=item.markerstyle, linestyle=item.linestyle,
                 linewidth=linewidth, markersize=markersize)
         elif isinstance(item, TextItem):
-            axis.text(item.x_anchor, item.y_anchor, item.text)
+            axis.text(item.x_anchor, item.y_anchor, item.text, clip_on=True)
         self.set_legend()
 
     def set_limits(self, limits):
@@ -241,10 +241,12 @@ class Canvas(FigureCanvas):
             if used:
                 if direction in ["top", "bottom"]:
                     scale = axis_map[direction].get_xscale()
-                    datalist = [item.xdata for item in items[direction] if isinstance(item, Item)]
+                    datalist = [item.xdata for item in items[direction]
+                                if isinstance(item, Item)]
                 elif direction in ["left", "right"]:
                     scale = axis_map[direction].get_yscale()
-                    datalist = [item.ydata for item in items[direction] if isinstance(item, Item)]
+                    datalist = [item.ydata for item in items[direction]
+                                if isinstance(item, Item)]
                 limits[f"min_{direction}"], limits[f"max_{direction}"] = \
                     plotting_tools.find_min_max(scale, datalist)
 

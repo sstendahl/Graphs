@@ -2,7 +2,7 @@
 from gi.repository import Adw, Gtk
 
 from graphs import clipboard, graphs, misc, ui, utilities
-from graphs.item import Item, TextItem
+from graphs.item import Item
 
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/edit_item.ui")

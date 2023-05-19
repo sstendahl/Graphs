@@ -2,7 +2,7 @@
 import logging
 from gettext import gettext as _
 
-from graphs import calculation, clipboard, graphs, utilities
+from graphs import calculation, clipboard, graphs
 from graphs.item import Item
 from graphs.misc import InteractionMode
 
@@ -58,10 +58,10 @@ def sort_data(xdata, ydata):
 
 
 def perform_operation(self, callback, *args):
-    keys = utilities.get_selected_keys(self)
     data_selected = False
-    for key in keys:
-        item = self.datadict[key]
+    for item in self.datadict.values():
+        if not item.selected or isinstance(item, Item):
+            continue
         xdata, ydata, start_index, stop_index = get_data(self, item)
         if xdata is not None and len(xdata) != 0:
             data_selected = True
@@ -157,8 +157,7 @@ def center(_item, xdata, ydata, center_maximum):
     return new_xdata, ydata, True, False
 
 
-def shift_vertically(item, xdata, ydata, yscale, right_scale, selected_keys,
-                     datadict):
+def shift_vertically(item, xdata, ydata, yscale, right_scale, datadict):
     """
     Shifts data vertically with respect to each other
     By default it scales linear data by 1.2 times the total span of the
@@ -166,7 +165,8 @@ def shift_vertically(item, xdata, ydata, yscale, right_scale, selected_keys,
     """
     shift_value_log = 1
     shift_value_linear = 0
-    data_list = [datadict[key] for key in selected_keys]
+    data_list = [item for item in datadict.values()
+                 if item.selected and isinstance(item, Item)]
 
     for index, data_item in enumerate(data_list):
         previous_ydata = data_list[index - 1].ydata
@@ -238,10 +238,11 @@ def transform(_item, xdata, ydata, input_x, input_y, discard=False):
 
 def combine(self):
     """Combine the selected data into a new data set"""
-    keys = utilities.get_selected_keys(self)
     new_xdata, new_ydata = [], []
-    for key in keys:
-        xdata, ydata = get_data(self, self.datadict[key])[:2]
+    for item in self.datadict.values():
+        if not item.selected or isinstance(item, Item):
+            continue
+        xdata, ydata = get_data(self, item)[:2]
         new_xdata.extend(xdata)
         new_ydata.extend(ydata)
 
