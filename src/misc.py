@@ -2,24 +2,6 @@
 from enum import Enum
 
 
-class ImportSettings():
-    def __init__(self, config, name="", params=None):
-        self.name = name
-        if params is None:
-            params = {
-                "delimiter": config["import_delimiter"],
-                "separator": config["import_separator"],
-                "skip_rows": config["import_skip_rows"],
-                "column_x": config["import_column_x"],
-                "column_y": config["import_column_y"],
-            }
-        self.delimiter = params["delimiter"]
-        self.separator = params["separator"]
-        self.skip_rows = params["skip_rows"]
-        self.column_x = params["column_x"]
-        self.column_y = params["column_y"]
-
-
 class PlotSettings:
     """
     The plot-related settings for the current session. The default values are

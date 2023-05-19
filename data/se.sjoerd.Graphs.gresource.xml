@@ -43,6 +43,7 @@
     <file preprocess="xml-stripblanks">ui/transform_window.ui</file>
     <file preprocess="xml-stripblanks">ui/window.ui</file>
     <file preprocess="json-stripblanks" compressed="True">config.json</file>
+    <file preprocess="json-stripblanks" compressed="True">import.json</file>
     <file compressed="True">whats_new</file>
   </gresource>
   <gresource prefix="/se/sjoerd/Graphs/icons/scalable/actions/">
