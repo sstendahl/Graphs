@@ -60,7 +60,7 @@ def sort_data(xdata, ydata):
 def perform_operation(self, callback, *args):
     data_selected = False
     for item in self.datadict.values():
-        if not item.selected or isinstance(item, Item):
+        if not item.selected or not isinstance(item, Item):
             continue
         xdata, ydata, start_index, stop_index = get_data(self, item)
         if xdata is not None and len(xdata) != 0:
@@ -240,7 +240,7 @@ def combine(self):
     """Combine the selected data into a new data set"""
     new_xdata, new_ydata = [], []
     for item in self.datadict.values():
-        if not item.selected or isinstance(item, Item):
+        if not item.selected or not isinstance(item, Item):
             continue
         xdata, ydata = get_data(self, item)[:2]
         new_xdata.extend(xdata)
@@ -248,4 +248,5 @@ def combine(self):
 
     # Create the item itself
     new_xdata, new_ydata = sort_data(new_xdata, new_ydata)
-    graphs.add_items(self, [Item(self, new_xdata, new_ydata, "Combined Data")])
+    graphs.add_items(
+        self, [Item(self, new_xdata, new_ydata, name=_("Combined Data"))])

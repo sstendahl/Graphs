@@ -83,10 +83,8 @@ def import_from_xrdml(self, import_settings):
             end_pos = float(end_pos[0].firstChild.data)
             xdata = numpy.linspace(start_pos, end_pos, len(ydata))
             xdata = numpy.ndarray.tolist(xdata)
-    item = Item(self, xdata, ydata, import_settings.name)
-    item.xlabel = f"{scan_axis} ({unit})"
-    item.ylabel = _("Intensity (cps)")
-    return [item]
+    return [Item(self, xdata, ydata, import_settings.name,
+                 xlabel=f"{scan_axis} ({unit})", ylabel=_("Intensity (cps)"))]
 
 
 def import_from_xry(self, import_settings):
@@ -108,10 +106,8 @@ def import_from_xry(self, import_settings):
             name = f"{import_settings.name} - {i + 1}"
         else:
             name = import_settings.name
-        item = Item(self, name=name)
-        item.xlabel = _("β (°)")
-        item.ylabel = _("Intensity (1/s)")
-        items.append(item)
+        items.append(
+            Item(self, name=name, xlabel=_("β (°)"), ylabel=_("R (1/s)")))
     for i in range(value_count):
         values = lines[18 + i].strip().split()
         for j in range(item_count):
