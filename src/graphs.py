@@ -16,18 +16,12 @@ def open_project(self, file):
             _version = file_io.read_project(file)
         utilities.set_attributes(new_plot_settings, self.plot_settings)
         self.plot_settings = new_plot_settings
+        self.datadict = {}
+        add_items(self,
+                  [utilities.check_item(self, item)
+                   for item in new_datadict.values()])
         self.clipboard_pos = clipboard_pos
         self.datadict_clipboard = datadict_clipboard
-        self.datadict = {}
-        items = []
-        for item in new_datadict.values():
-            new_item = Item(self, item.xdata, item.ydata)
-            for attribute in new_item.__dict__:
-                if hasattr(item, attribute):
-                    setattr(new_item, attribute, getattr(item, attribute))
-            items.append(new_item)
-        add_items(self, items)
-        self.datadict_clipboard = self.datadict_clipboard[:-1]
     except (EOFError, UnpicklingError):
         message = _("Could not open project")
         self.main_window.add_toast(message)
