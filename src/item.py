@@ -31,7 +31,7 @@ class Item(ItemBase):
 
 
 class TextItem(ItemBase):
-    def __init__(self, parent, x_anchor, y_anchor, text, name=""):
+    def __init__(self, parent, x_anchor=0, y_anchor=0, text="", name=""):
         config = parent.preferences.config
         super().__init__(
             config, name=name, color=pyplot.rcParams["text.color"])

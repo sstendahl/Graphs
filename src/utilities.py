@@ -3,6 +3,8 @@ from gettext import gettext as _
 
 from gi.repository import GLib, Gdk, Gio, Gtk
 
+from graphs.item import Item, TextItem
+
 import numpy
 
 
@@ -237,3 +239,14 @@ def create_file_filters(filters, add_all=True):
         file_filter.add_pattern("*")
         list_store.append(file_filter)
     return list_store
+
+
+def check_item(self, item):
+    if isinstance(item, Item):
+        new_item = Item(self)
+    elif isinstance(item, TextItem):
+        new_item = TextItem(self)
+    for attribute in new_item.__dict__:
+        if hasattr(item, attribute):
+            setattr(new_item, attribute, getattr(item, attribute))
+    return new_item
