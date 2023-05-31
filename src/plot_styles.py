@@ -520,7 +520,7 @@ class StyleColorBox(Gtk.Box):
 
     def __init__(self, parent, color):
         super().__init__()
-        self.label.set_label(f"Color {len(parent.color_boxes) + 1}")
+        self.label.set_label(_("Color {}").format(len(parent.color_boxes) + 1))
         self.color_button.color = color
         self.color_button.provider = Gtk.CssProvider()
         self.color_button.get_style_context().add_provider(
