@@ -1,0 +1,2589 @@
+# Turkish translation for se.sjoerd.Graphs
+# Copyright (C) 2023 se.sjoerd.Graphs' COPYRIGHT HOLDER
+# This file is distributed under the same license as the se.sjoerd.Graphs package.
+#
+# Sabri Ünal <libreajans@gmail.com>, 2023.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: se.sjoerd.Graphs\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-05-31 23:30+0300\n"
+"PO-Revision-Date: 2023-05-31 23:36+0300\n"
+"Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
+"Language-Team: Türkçe <takim@gnome.org.tr>\n"
+"Language: tr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Poedit 3.2.2\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:6
+#: data/se.sjoerd.Graphs.desktop.in.in:3
+msgid "@NAME@"
+msgstr "@NAME@"
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:7
+msgid "@DESCRIPTION_SHORT@"
+msgstr "@DESCRIPTION_SHORT@"
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:8
+msgid "@AUTHOR@"
+msgstr "@AUTHOR@"
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:10
+msgid ""
+"Graphs is a simple, yet powerful tool that allows you to plot and manipulate "
+"your data with ease. You can import data from two-column files or generate "
+"it via an equation. All data can be manipulated using a variety of "
+"operations such as the ability to select, cut, translate, multiply, center "
+"and smooth data, as well as apply any custom transformations using numpy "
+"notation."
+msgstr ""
+"Grafikler, verilerinizi kolaylıkla çizmenize ve manipüle etmenize olanak "
+"sağlayan basit ancak güçlü bir araçtır. İki sütunlu dosyalardan veri içe "
+"aktarabilir veya bir denklem aracılığıyla veri oluşturabilirsiniz. Tüm "
+"veriler, seçme, kesme, çeviri, çarpma, ortalama ve düzleştirme gibi çeşitli "
+"işlemler kullanılarak düzenlenebilir. Ayrıca, numpy gösterimi kullanarak "
+"özel dönüşümler uygulanabilir."
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:13
+msgid ""
+"Graphs lets you customize the style of plotted data. You can add and edit "
+"stylesheets in detail."
+msgstr ""
+"Grafikler, çizilen verilerin biçemini özelleştirmenize olanak sağlar. Biçem "
+"sayfalarını ayrıntılı şekilde ekleyip düzenleyebilirsiniz."
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:16
+msgid ""
+"Graphs is an excellent fit for both plotting and data manipulation. The "
+"plots created with Graphs can be saved in a variety of formats suitable for "
+"sharing and presenting to a wide audience, such as in a scientific "
+"publication or presentations. It is also possible to save the plots as "
+"vector images, which can be easily edited in programs like Inkscape for "
+"further customization and refinement. Graphs is written with the GNOME "
+"environment in mind, but should be suitable for any other desktop "
+"environment as well."
+msgstr ""
+"Grafikler, hem çizim yapmak hem de veri düzenlemesi için mükemmel bir "
+"seçimdir. Grafikler ile oluşturulan çizimler, bilimsel yayınlarda veya "
+"sunumlarda paylaşmak ve geniş bir kitleye sunmak için uygun birçok biçimde "
+"kaydedilebilir. Ayrıca, çizimleri vektör görüntüler olarak kaydetmek de "
+"mümkündür. Bu görüntüler, Inkscape gibi programlarla kolayca düzenlenebilir, "
+"özelleştirilebilir ve iyileştirilebilir. Grafikler, GNOME ortamı göz önünde "
+"bulundurularak yazılmış olsa da, diğer masaüstü ortamlarında da "
+"kullanılabilmektedir."
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:19
+msgid ""
+"For any feedback, questions or general issues, please file an issue on the "
+"GitHub page."
+msgstr ""
+"Herhangi bir geri bildirim, soru veya genel sorun için lütfen GitHub "
+"sayfasından hata bildiriminde bulunun."
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:29
+msgid "1 - Plot and manipulate any data set inserted by equation or from file"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:33
+msgid "2 - Both light and dark mode is supported"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:37
+msgid "3 - Add data from an equation"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:41
+msgid "4 - Edit plot stylesheets"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:45
+msgid "5 - Manipulate data using a wide range of operations"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:52
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:64
+msgid "Changes:"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:54
+msgid "Adds Dutch translation for Graphs."
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:56
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:180
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:206
+msgid "Bugfixes:"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:58
+msgid ""
+"Fixes an upstream bug in Matplotlib where part of the Graph would be cut off "
+"at scaled resolutions."
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:66
+msgid "Add support for .xry file types from Leybold X-Ray apparatus."
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:67
+msgid "Add support for single-column files"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:68
+msgid ""
+"Changed the behaviour of the canvas so that the limits are not reset "
+"unnecessarily"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:69
+msgid "Started work to add localization support"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:70
+msgid "Refactors under-the-hood"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:72
+msgid "Bug fixes:"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:74
+msgid ""
+"Fixed a bug where data was not saved when multiple files were exported "
+"simultaneously"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:80
+msgid "Hotfix update with bug fixes:"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:82
+msgid "Fixes a bug that prevents \"Add Equation\" from generating new data"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:83
+msgid ""
+"Fixes a bug where a change of item properties was not included in the "
+"clipboard when loading a new style"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:84
+msgid ""
+"Fixes a bug where the \"Restore View\" did not properly find the correct "
+"limits in specific situations"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:90
+msgid "Major Highlights"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:92
+msgid "Massive UI overhaul"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:93
+msgid "Save and Load functionality"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:94
+msgid "Customizable Plot Styles"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:95
+msgid "Loads of optimizations and refactors in the background"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:97
+msgid "Detailed Changelist"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:99
+msgid "Removed PIP mode"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:100
+msgid "Removed Toolbar"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:101
+msgid "Sidebar is now responsive"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:102
+msgid "Rearranged button layouts"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:103
+msgid "Dialogs now save automatically"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:104
+msgid "Graph now has three different interaction modes: pan, zoom and select"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:105
+msgid "Operation Buttons are now enabled only when items are selected"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:106
+msgid "Operations can now be be performed for just a selected span of data"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:107
+msgid "Added combine operation"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:108
+msgid "Added custom Adwaita stylesheets for the graph"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:109
+msgid "Added a function to quickly change axis scale in the view menu"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:110
+msgid "Added a notice when no data is loaded"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:111
+msgid "Added functionality to save and load a project"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:112
+msgid ""
+"Graph ornaments like the zoom rectangle and selector overlay now follow the "
+"system colors"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:113
+msgid "Follow GNOME HIG in regards to keyboard shortcuts"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:114
+msgid "Add a warning dialog, when opening a project while data is loaded"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:115
+msgid "Separate Item related options into own dialog"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:116
+msgid "Added Toasts on some occasions"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:117
+msgid "Removed some options in Preferences, Plot Settings and the Item menu"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:118
+msgid "Added a Plot Style editor"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:119
+msgid "Plot limits can now be set in Plot Settings"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:120
+msgid "Added reordering of items via drag and drop"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:121
+msgid "Added an option to hide unselected items from the graph"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:122
+msgid "Added a dialog before exporting the figure"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:123
+msgid "Support for Panalytical .xdrml files"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:124
+msgid "Improved clipboard behaviour"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:126
+msgid "Background Changes"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:128
+msgid "Loads of optimizations and refactors"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:129
+msgid "Migrate to GNOME 44"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:130
+msgid "Blueprint is now used for the UI"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:131
+msgid "Introduce linting and follow PEP8"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:132
+msgid "Many fixed bugs and edge cases"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:138
+msgid "Minor update with updated AppID."
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:140
+msgid "The sidebar is now retractable"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:141
+msgid "Graphs now uses symbolic GNOME icons in the toolbar wherever possible"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:142
+msgid ""
+"The legend is now accomponied with a frame for all styles in order to "
+"improve readability"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:143
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:169
+msgid "Some code clean-up has been performed"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:144
+msgid "The new app-id for Graphs is now se.sjoerd.Graphs"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:150
+msgid "Major update with a significant UI overhaul."
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:151
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:176
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:190
+msgid "New in Graphs:"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:153
+msgid ""
+"The data list has been completely redesigned, with a selection mode toggle "
+"to select/deselect data sets"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:154
+msgid ""
+"The action grid on the left has been replaced by Expander Rows, sorting the "
+"actions by category"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:155
+msgid "Checkboxes in settings have been replaced by switches"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:156
+msgid "Old entry rows have been replaced by AdwEntryRows"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:157
+msgid "The save data button has been moved to the header bar"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:158
+msgid ""
+"There's no longer an error shown when a new config file is loaded (such as "
+"on initial setup)"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:159
+msgid ""
+"There's now multiple options to choose from on how to handle data with the "
+"same name"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:160
+msgid ""
+"The translation and multiplication transforms now also accept basic "
+"expressions (such as 1/2 instead of 0.5)"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:162
+msgid "Bugfixes and other changes:"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:164
+msgid "\"Shift vertically\" option now works properly on linear scale as well"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:165
+msgid "Fixed a bug where the last graph to be deleted was still shown"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:166
+msgid ""
+"Fixed a bug where the text in the dropdown menu of plot-settings didn't "
+"update when changing the name of a data set"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:167
+msgid ""
+"Fourier transforms are now sorted so that the x-data is continiously "
+"increasing"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:168
+msgid "Added new screenshots for Flathub"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:175
+msgid "Minor update with some bugfixes, plus a new logo!"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:178
+msgid "Graphs has a new icon that is more in-line with the GNOME guidelines!"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:182
+msgid ""
+"Fixed a bug where the graph lines was drawn on top of the legend in certain "
+"cases"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:183
+msgid ""
+"Fixed a bug where the legend wasn't shown for the picture-in-picture graph"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:189
+msgid ""
+"Slightly bigger update than usual, with new features and some bug fixes."
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:192
+msgid "Added the ability to get the derivative of the data"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:193
+msgid "Added the ability to get the indefinite integral of the data"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:194
+msgid "Added the ability to get the Fast Fourier Transform of the data"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:195
+msgid "Added the ability to get the Inverse Fast Fourier Transform of the data"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:196
+msgid ""
+"Added preference options for the default settings in the \"Add equation\" "
+"window"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:197
+msgid "Added tooltips for all buttons on the main window"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:199
+msgid "Other Changes:"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:201
+msgid ""
+"Default graph limits have been improved, most prominently the y-axis scaling "
+"on a linear scale now shows a small margin in both directions if the y-data "
+"has a constant value"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:202
+msgid ""
+"Changed the \"reset view\" button to use Graph's own canvas limits function, "
+"as the built-in version of the toolbar didn't always work properly"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:203
+msgid "Gave the \"Save Data\" option a blue \"Suggested action\" colour"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:204
+msgid "Update Screenshots on Flathub"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:208
+msgid ""
+"Fixed a bug where the x-axis limits were not applied properly if the y-axis "
+"was on the right-hand side"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:209
+msgid ""
+"Fixed a bug where equations would not function without having an X variable. "
+"(e.g. Y = 5 is now an accepted equation)"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:210
+msgid ""
+"Fixed a bug where the initial values for data generated by equation were not "
+"added to the clipboard, making it possible to \"undo\" to the initial state"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:216
+msgid ""
+"Minor update mostly focused on the color picker, plus minor quality of life "
+"stuff."
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:218
+msgid "Changed the color picker to a pop-over window"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:219
+msgid "Data set no longer deselects when changing the color"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:220
+msgid "Removed the file extensions in the label used for each data set"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:221
+msgid ""
+"When saving multiple files, files that already exists are saved with a "
+"(copy) suffix instead of overwriting the existing file"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:222
+msgid "Minor code cleanup"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:229
+msgid "Made all pop-up windows modal"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:230
+msgid ""
+"Added the ability to change axes labels and the title of the plot by double "
+"clicking"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:236
+msgid "Brings some minor quality of life features."
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:238
+msgid "Ctrl+S now opens the Save Data dialog"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:239
+msgid ""
+"Fixed a bug where custom settings for tick positions no longer worked "
+"properly"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:245
+msgid ""
+"Probably last update of the year, most noteworthy is the ability to plot "
+"data on right and bottom axis independently. Operations on cutting data "
+"still work seamlessly, even when using different axes! Next few updates will "
+"probably mainly focus on polish and code clean-up."
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:247
+msgid "Added the option to plot data on the right-hand axis"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:248
+msgid "Added the option to plot data on the top axis"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:249
+msgid "Added the ability to use different labels for right and top axis"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:250
+msgid "Scaling of top-bottom and right-left is now handled independently"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:251
+msgid "Added a series of toast pop-ups for common actions and errors"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:252
+msgid "Made some linguistic changes"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:258
+msgid "Hot-fix update, fixes some bugs with the new \"plot settings\" window"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:260
+msgid ""
+"Fixed a bug where the axes labels and title would go back to default when "
+"plot settings was opened twice"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:261
+msgid ""
+"Fixed a bug where the new font wouldn't properly display in plot settings "
+"menu"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:262
+msgid ""
+"Fixed a bug where shortcut would stop working after opening plot settings "
+"menu"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:263
+msgid "Added a shortcut to open plot settings menu (ctrl+shift+p)"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:264
+msgid "Reordered Flathub screenshots"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:270
+msgid ""
+"With the ability to edit axes properties without changing the default "
+"settings, all essential features are in and it's time to declare v1.2.0. "
+"Also added some QoL features. Still many ideas are yet to be implemented. "
+"See current changelog below:"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:272
+msgid ""
+"The \"Plot Settings\" button now also contains a tab to edit the axes "
+"properties"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:273
+msgid "The pop-up graph now follows the same scaling as the regular graph"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:274
+msgid "Added a shortcut to select all data sets"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:275
+msgid "Added a shortcut to deselect all data sets"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:276
+msgid "Pressing delete now deletes all selected data sets"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:277
+msgid "Changed the wording in \"Transform Data\" ui to be less confusing"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:278
+msgid "Tweaked the save icon a bit"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:279
+msgid "Updated Flathub description"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:280
+msgid "Made new screenshots for Flathub"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:281
+msgid ""
+"Changed the webpage to direct to the landing page of Graphs (under "
+"construction)"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:288
+msgid ""
+"Added a \"Plot settings\" option to control the individual line settings"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:289
+msgid "Added a pop-up button to show the graph in a separate window"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:290
+msgid "Gave certain buttons a blue \"Suggested action\" colour"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:291
+msgid ""
+"Fixed a bug where the advanced column choice didn't work for column indices "
+"higher than 1'"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:292
+msgid "Some minor bug fixes"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:298
+msgid ""
+"Minor update, next update will add an option to control individual line "
+"settings (e.g. thickness and style):"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:300
+msgid "Cleaned up preferences, making it easier to find the correct setting"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:301
+msgid "Linguistic chances"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:302
+msgid "Minor UI tweaks in the pop up windows"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:303
+msgid "Groundwork for the individual line settings in the code"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:310
+msgid "Improved the UI for the \"Add equation\" and \"Transform data\" windows"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:311
+msgid "Added import settings"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:312
+msgid "Added an advanced import setting"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:313
+msgid "Changed the \"general\" tab in settings to be the default view"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:314
+msgid "Changed screenshots for Flathub"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:315
+msgid "Changed capitalization to be more in line with the GNOME HIG"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:316
+msgid "Other minor linguistic changes"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:322
+msgid ""
+"Minor update with some bug fixes, next update will focus on adding more "
+"options for file imports:"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:324
+msgid ""
+"Fixed a bug where files with a special character in the name didn't save"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:325
+msgid ""
+"Fixed a bug where minor ticks would show anyway when ticks were turned off"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:326
+msgid ""
+"Configuration now resets when new options are detected (instead of crashing "
+"the application)"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:327
+msgid "Added an option to allow for duplicate filenames when importing"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:334
+msgid ""
+"Changed the name of the application to be more in line with the GNOME HIG"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:335
+msgid "Transformation window can be closed with the escape button"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:336
+msgid ""
+"Fixed a bug where graph would not plot if any of the values where infinite "
+"(e.g. if equation Y = 1/X was plotted)"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:337
+msgid ""
+"Step-size, X-start and X-stop in add-equation window now also handle numpy "
+"notation"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:344
+msgid "Add equation window can now be closed with the escape button"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:345
+msgid ""
+"File chooser dialog and preference dialogs are modal (stick to parent window)"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:346
+msgid "Remove arrow from hamburger menu"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:347
+msgid "Add a placeholder hint to Add equation window name"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:348
+msgid ""
+"Changed saving behaviour to allow saving files without file system access "
+"for flatpak"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:349
+msgid "Fixed a bug in the add equation window where powers were not working"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:350
+msgid ""
+"Fixed a bug in add equation window where duplicate filenames were not "
+"detected properly"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:357
+msgid "Initial release"
+msgstr ""
+
+#: data/ui/add_equation_window.blp:7 data/ui/add_equation_window.blp:84
+#: data/ui/preferences.blp:78
+msgid "Add Equation"
+msgstr "Denklem Ekle"
+
+#: data/ui/add_equation_window.blp:38 data/ui/transform_window.blp:51
+msgid "Y ="
+msgstr "Y ="
+
+#: data/ui/add_equation_window.blp:47
+msgid "Supports Numpy notation. Use a capital letter for the X coordinate."
+msgstr "Numpy gösterimini destekler. X koordinatı için büyük harf kullanın."
+
+#: data/ui/add_equation_window.blp:51
+msgid "Name (optional)"
+msgstr "Ad (isteğe bağlı)"
+
+#: data/ui/add_equation_window.blp:62
+msgid "X Start"
+msgstr "X Başlangıç"
+
+#: data/ui/add_equation_window.blp:69
+msgid "X Stop"
+msgstr "X Bitiş"
+
+#: data/ui/add_equation_window.blp:75
+msgid "Step Size"
+msgstr "Adım Sayısı"
+
+#: data/ui/add_style.blp:7 data/ui/plot_styles.blp:25
+msgid "Add new style"
+msgstr "Yeni biçem ekle"
+
+#: data/ui/add_style.blp:31
+msgid "Template"
+msgstr "Şablon"
+
+#: data/ui/add_style.blp:32
+msgid "The template style used for the new style"
+msgstr "Yeni biçem için kullanılan şablon biçemi"
+
+#: data/ui/add_style.blp:36
+msgid "New Style Name"
+msgstr "Yeni Biçem Adı"
+
+#: data/ui/add_style.blp:46
+msgid "Add New Style"
+msgstr "Yeni Biçem Ekle"
+
+#: data/ui/edit_item.blp:16
+msgid "Selected Item"
+msgstr "Seçili Öge"
+
+#: data/ui/edit_item.blp:17
+msgid "Choose which item to edit"
+msgstr "Hangi ögenin düzenleneceğini seçin"
+
+#: data/ui/edit_item.blp:22
+msgid "Data"
+msgstr "Veri"
+
+#: data/ui/edit_item.blp:23
+msgid "Change the name of the data set and the axis positions"
+msgstr "Veri kümesinin adını ve eksen konumlarını değiştir"
+
+#: data/ui/edit_item.blp:26
+msgid "Change Name"
+msgstr "Ad Değiştir"
+
+#: data/ui/edit_item.blp:31
+msgid "X-Axis Position"
+msgstr "X Ekseni Konumu"
+
+#: data/ui/edit_item.blp:32 data/ui/preferences.blp:240
+msgid "The position of the X-axis"
+msgstr "X ekseninin konumu"
+
+#: data/ui/edit_item.blp:36
+msgid "Y-Axis Position"
+msgstr "Y Ekseni Konumu"
+
+#: data/ui/edit_item.blp:37
+msgid "The position of the Y-axis"
+msgstr "X ekseninin konumu"
+
+#: data/ui/edit_item.blp:43
+msgid "Line Style"
+msgstr "Çizgi Biçemi"
+
+#: data/ui/edit_item.blp:44
+msgid "Change properties of the lines"
+msgstr "Çizgi özelliklerini değiştir"
+
+#: data/ui/edit_item.blp:47 data/ui/plot_styles.blp:97
+msgid "Linestyle"
+msgstr "Çizgi Biçemi"
+
+#: data/ui/edit_item.blp:48
+msgid "The linestyle"
+msgstr "Çizgi biçemi"
+
+#: data/ui/edit_item.blp:52 data/ui/plot_styles.blp:102
+msgid "Linewidth"
+msgstr "Çizgi Genişliği"
+
+#: data/ui/edit_item.blp:53 data/ui/plot_styles.blp:103
+msgid "The width of lines"
+msgstr "Çizgilerin genişliği"
+
+#: data/ui/edit_item.blp:62 data/ui/plot_styles.blp:112
+msgid "Markers"
+msgstr "İmleyiciler"
+
+#: data/ui/edit_item.blp:63 data/ui/plot_styles.blp:113
+msgid "The markers that are used"
+msgstr "Kullanılan imleyiciler"
+
+#: data/ui/edit_item.blp:67 data/ui/plot_styles.blp:117
+msgid "Marker Size"
+msgstr "İmleyici Boyutu"
+
+#: data/ui/edit_item.blp:68 data/ui/plot_styles.blp:118
+msgid "The size of the markers"
+msgstr "İmleyicilerin boyutu"
+
+#: data/ui/export_figure.blp:6 data/ui/window.blp:494
+msgid "Export Figure"
+msgstr "Şekli Dışa Aktar"
+
+#: data/ui/export_figure.blp:30
+msgid "File Format"
+msgstr "Dosya Biçimi"
+
+#: data/ui/export_figure.blp:31
+msgid "In which file format should the graph be exported?"
+msgstr "Grafik hangi dosya biçiminde dışa aktarılsın?"
+
+#: data/ui/export_figure.blp:35
+msgid "Graph dpi"
+msgstr "Grafik dpi"
+
+#: data/ui/export_figure.blp:36
+msgid "Set the resolution of the graph in dots per inch "
+msgstr "Grafiğin çözünürlüğünü (dpi) inç başına nokta cinsinden ayarlayın "
+
+#: data/ui/export_figure.blp:51 data/ui/preferences.blp:128
+msgid "Transparent Background"
+msgstr "Saydam Arka Plan"
+
+#: data/ui/export_figure.blp:52
+msgid "Export using a transparent background."
+msgstr "Saydam arka plan kullanarak dışa aktar."
+
+#: data/ui/export_figure.blp:63 src/export_figure.py:52
+msgid "Export"
+msgstr "Dışa Aktar"
+
+#: data/ui/help_overlay.blp:11
+msgctxt "shortcut window"
+msgid "General"
+msgstr "Genel"
+
+#: data/ui/help_overlay.blp:14
+msgctxt "shortcut window"
+msgid "Show Shortcuts"
+msgstr "Kısayolları Göster"
+
+#: data/ui/help_overlay.blp:19
+msgctxt "shortcut window"
+msgid "Open Preferences"
+msgstr "Tercihleri Aç"
+
+#: data/ui/help_overlay.blp:24
+msgctxt "shortcut window"
+msgid "Open Plot Settings"
+msgstr "Çizim Ayarlarını Aç"
+
+#: data/ui/help_overlay.blp:29
+msgctxt "shortcut window"
+msgid "Open Plot Styles"
+msgstr "Çizim Biçemlerini Aç"
+
+#: data/ui/help_overlay.blp:34
+msgctxt "shortcut window"
+msgid "Quit"
+msgstr "Çık"
+
+#: data/ui/help_overlay.blp:40
+msgctxt "shortcut window"
+msgid "Mode Switching"
+msgstr "Mode Değiştirme"
+
+#: data/ui/help_overlay.blp:43
+msgctxt "shortcut window"
+msgid "Pan Mode"
+msgstr "Kaydırma Kipi"
+
+#: data/ui/help_overlay.blp:48
+msgctxt "shortcut window"
+msgid "Zoom Mode"
+msgstr "Yakınlaştırma Kipi"
+
+#: data/ui/help_overlay.blp:53
+msgctxt "shortcut window"
+msgid "Select Mode"
+msgstr "Seçim Kipi"
+
+#: data/ui/help_overlay.blp:59
+msgctxt "shortcut window"
+msgid "New Data"
+msgstr "Yeni Veri"
+
+#: data/ui/help_overlay.blp:62
+msgctxt "shortcut window"
+msgid "Add Data from Equation"
+msgstr "Denklemden Veri Ekle"
+
+#: data/ui/help_overlay.blp:67
+msgctxt "shortcut window"
+msgid "Open new File"
+msgstr "Yeni Dosya Aç"
+
+#: data/ui/help_overlay.blp:72
+msgctxt "shortcut window"
+msgid "Open new File (Advanced)"
+msgstr "Yeni Dosya Aç (Gelişmiş)"
+
+#: data/ui/help_overlay.blp:77
+msgctxt "shortcut window"
+msgid "Open Project"
+msgstr "Proje Aç"
+
+#: data/ui/help_overlay.blp:82
+msgctxt "shortcut window"
+msgid "Delete Selected Data"
+msgstr "Seçilen Veriyi Sil"
+
+#: data/ui/help_overlay.blp:88
+msgctxt "shortcut window"
+msgid "Save and Export"
+msgstr "Kaydet ve Dışa Aktar"
+
+#: data/ui/help_overlay.blp:90
+msgctxt "shortcut window"
+msgid "Export Data"
+msgstr "Verileri Dışa Aktar"
+
+#: data/ui/help_overlay.blp:94
+msgctxt "shortcut window"
+msgid "Export Figure"
+msgstr "Şekli Dışa Aktar"
+
+#: data/ui/help_overlay.blp:98
+msgctxt "shortcut window"
+msgid "Save Project"
+msgstr "Projeyi Kaydet"
+
+#: data/ui/help_overlay.blp:104
+msgctxt "shortcut window"
+msgid "View"
+msgstr "Görünüm"
+
+#: data/ui/help_overlay.blp:107
+msgctxt "shortcut window"
+msgid "Restore View"
+msgstr "Görünümü Geri Yükle"
+
+#: data/ui/help_overlay.blp:112
+msgctxt "shortcut window"
+msgid "Previous View"
+msgstr "Önceki Görünüm"
+
+#: data/ui/help_overlay.blp:117
+msgctxt "shortcut window"
+msgid "Next View"
+msgstr "Sonraki Görünüm"
+
+#: data/ui/help_overlay.blp:122
+msgctxt "shortcut window"
+msgid "Toggle Sidebar"
+msgstr "Kenar Çubuğunu Aç/Kapa"
+
+#: data/ui/help_overlay.blp:128
+msgctxt "shortcut window"
+msgid "Actions"
+msgstr "İşlemler"
+
+#: data/ui/help_overlay.blp:131
+msgctxt "shortcut window"
+msgid "Select All"
+msgstr "Tümünü Seç"
+
+#: data/ui/help_overlay.blp:136
+msgctxt "shortcut window"
+msgid "Select None"
+msgstr "Hiçbirini Seçme"
+
+#: data/ui/help_overlay.blp:141
+msgctxt "shortcut window"
+msgid "Undo Action"
+msgstr "Son İşlemi Geri Al"
+
+#: data/ui/help_overlay.blp:146
+msgctxt "shortcut window"
+msgid "Redo Action"
+msgstr "Son İşlemi Yinele"
+
+#: data/ui/import.blp:8
+msgid "Modify import Parameters"
+msgstr "İçe Aktarma Parametrelerini Değiştir"
+
+#: data/ui/import.blp:32
+msgid "Delimiter (s+ for whitespace)"
+msgstr "Ayraç (boşluklar için s+)"
+
+#: data/ui/import.blp:36 data/ui/preferences.blp:22
+msgid "Decimal Separator"
+msgstr "Ondalık Ayraç"
+
+#: data/ui/import.blp:37 data/ui/preferences.blp:23
+msgid "The character that is used as decimal separator"
+msgstr "Ondalık ayraç olarak kullanılacak karakter"
+
+#: data/ui/import.blp:41 data/ui/preferences.blp:27
+msgid "Column X"
+msgstr "X Sütunu"
+
+#: data/ui/import.blp:42
+msgid "Choose which column to load for the X-data"
+msgstr "X verileri için hangi sütunun yükleneceğini seçin"
+
+#: data/ui/import.blp:56 data/ui/preferences.blp:44
+msgid "Column Y"
+msgstr "Y Sütunu"
+
+#: data/ui/import.blp:57
+msgid "Choose which column to load for the Y-data"
+msgstr "Y verileri için hangi sütunun yükleneceğini seçin"
+
+#: data/ui/import.blp:71 data/ui/preferences.blp:61
+msgid "Skip Rows"
+msgstr "Satırları Atla"
+
+#: data/ui/import.blp:72
+msgid "Choose how many rows to skip while loading data"
+msgstr "Veri yüklenirken kaç satırın atlanacağını seçin"
+
+#: data/ui/import.blp:89
+msgid "Confirm"
+msgstr "Doğrula"
+
+#: data/ui/item_box.blp:24
+msgid "Edit Item"
+msgstr "Öge Düzenle"
+
+#: data/ui/item_box.blp:34
+msgid "Pick a color"
+msgstr "Renk seç"
+
+#: data/ui/item_box.blp:44 data/ui/style_box.blp:32
+#: data/ui/style_color_box.blp:28
+msgid "Remove"
+msgstr "Kaldır"
+
+#: data/ui/plot_settings.blp:7 data/ui/window.blp:500
+msgid "Plot Settings"
+msgstr "Çizim Ayarları"
+
+#: data/ui/plot_settings.blp:18 data/ui/preferences.blp:190
+msgid "Plot Labels"
+msgstr "Çizim Etiketleri"
+
+#: data/ui/plot_settings.blp:19
+msgid "Settings for the plot title and labels"
+msgstr "Çizim başlığı ve etiketleri için ayarlar"
+
+#: data/ui/plot_settings.blp:22
+msgid "Plot Title"
+msgstr "Çizim Başlığı"
+
+#: data/ui/plot_settings.blp:26
+msgid "Bottom Axis Label"
+msgstr "Alt Eksen Etiketi"
+
+#: data/ui/plot_settings.blp:30
+msgid "Left Axis Label"
+msgstr "Sol Eksen Etiketi"
+
+#: data/ui/plot_settings.blp:34
+msgid "Top Axis Label"
+msgstr "Üst Eksen Etiketi"
+
+#: data/ui/plot_settings.blp:38
+msgid "Right Axis Label"
+msgstr "Sağ Eksen Etiketi"
+
+#: data/ui/plot_settings.blp:43
+msgid "Axis Limits"
+msgstr "Eksen Sınırları"
+
+#: data/ui/plot_settings.blp:44
+msgid "Limits used on the axes"
+msgstr "Eksenlerde kullanılan sınırlar"
+
+#: data/ui/plot_settings.blp:46
+msgid "No data"
+msgstr "Veri yok"
+
+#: data/ui/plot_settings.blp:47
+msgid "Add data to the graph to set the axis limits."
+msgstr "Eksen sınırlarını ayarlamak için grafiğe veri ekleyin."
+
+#: data/ui/plot_settings.blp:55
+msgid "Minimum left-hand Y-axis"
+msgstr "En düşük sol Y ekseni"
+
+#: data/ui/plot_settings.blp:61
+msgid "Maximum left-hand Y-axis"
+msgstr "En yüksek sol Y ekseni"
+
+#: data/ui/plot_settings.blp:71
+msgid "Minimum bottom X-axis"
+msgstr "En düşük alt X ekseni"
+
+#: data/ui/plot_settings.blp:77
+msgid "Maximum bottom X-axis"
+msgstr "En yüksek alt X ekseni"
+
+#: data/ui/plot_settings.blp:87
+msgid "Minimum right-hand Y-axis"
+msgstr "En düşük sağ Y ekseni"
+
+#: data/ui/plot_settings.blp:93
+msgid "Maximum right-hand Y-axis"
+msgstr "En yüksek sağ Y ekseni"
+
+#: data/ui/plot_settings.blp:102
+msgid "Minimum top X-axis"
+msgstr "En düşük üst X ekseni"
+
+#: data/ui/plot_settings.blp:108
+msgid "Maximum top Y-axis"
+msgstr "En yüksek üst Y ekseni"
+
+#: data/ui/plot_settings.blp:115
+msgid "Scaling"
+msgstr "Ölçekleme"
+
+#: data/ui/plot_settings.blp:116
+msgid "The scaling used for each axis"
+msgstr "Her eksen için kullanılacak ölçek"
+
+#: data/ui/plot_settings.blp:119
+msgid "Bottom Axis Scale"
+msgstr "Alt Eksen Ölçeği"
+
+#: data/ui/plot_settings.blp:120
+msgid "Scaling on the bottom axis"
+msgstr "Alt eksen için kullanılacak ölçek"
+
+#: data/ui/plot_settings.blp:124
+msgid "Left Axis Scale"
+msgstr "Sol Eksen Ölçeği"
+
+#: data/ui/plot_settings.blp:125
+msgid "Scaling used for the left-hand axis"
+msgstr "Sol eksen için kullanılacak ölçek"
+
+#: data/ui/plot_settings.blp:129
+msgid "Top Axis Scale"
+msgstr "Üst Eksen Ölçeği"
+
+#: data/ui/plot_settings.blp:130
+msgid "Scaling used for the top axis"
+msgstr "Üst eksen için kullanılacak ölçek"
+
+#: data/ui/plot_settings.blp:134
+msgid "Right Axis Scale"
+msgstr "Sağ Eksen Ölçeği"
+
+#: data/ui/plot_settings.blp:135
+msgid "Scaling used for the right-hand axis"
+msgstr "Sağ eksen için kullanılacak ölçek"
+
+#: data/ui/plot_settings.blp:140
+msgid "Style"
+msgstr "Biçem"
+
+#: data/ui/plot_settings.blp:141
+msgid "Settings for the graph style"
+msgstr "Grafik biçemi ayarları"
+
+#: data/ui/plot_settings.blp:143 data/ui/preferences.blp:254
+msgid "Legend"
+msgstr "Gösterge"
+
+#: data/ui/plot_settings.blp:144
+msgid "Use a legend for the lines"
+msgstr "Satırlar için gösterle kullan"
+
+#: data/ui/plot_settings.blp:147 data/ui/preferences.blp:258
+msgid "Legend position"
+msgstr "Gösterge konumu"
+
+#: data/ui/plot_settings.blp:148
+msgid "The position of the legend"
+msgstr "Göstergenin konumu"
+
+#: data/ui/plot_settings.blp:153 data/ui/preferences.blp:264
+msgid "Custom Plot Style"
+msgstr "Özel Çizim Biçemi"
+
+#: data/ui/plot_settings.blp:154
+msgid "Use a custom plot style instead of following the system style"
+msgstr "Sistem biçemini takip etmek yerine özel çizim biçemi kullan"
+
+#: data/ui/plot_settings.blp:157
+msgid "Graph Style"
+msgstr "Grafik Biçemi"
+
+#: data/ui/plot_settings.blp:158
+msgid "The style sheet used for the graph"
+msgstr "Grafik için kullanılan biçem sayfası"
+
+#: data/ui/plot_styles.blp:30
+msgid "Reset to default styles"
+msgstr "Öntanımlı biçemlere sıfırla"
+
+#: data/ui/plot_styles.blp:77
+msgid "Style Name"
+msgstr "Biçem Adı"
+
+#: data/ui/plot_styles.blp:81
+msgid "Font"
+msgstr "Yazı tipi"
+
+#: data/ui/plot_styles.blp:82
+msgid "The font used in the graph"
+msgstr "Grafikte kullanılan yazı tipi"
+
+#: data/ui/plot_styles.blp:93
+msgid "Lines"
+msgstr "Çizgiler"
+
+#: data/ui/plot_styles.blp:94
+msgid "Change properties of the line and markers"
+msgstr "Çizginin ve imleyicinin özelliklerini değiştir"
+
+#: data/ui/plot_styles.blp:98
+msgid "The linestyle used"
+msgstr "Kullanılan çizgi biçemi"
+
+#: data/ui/plot_styles.blp:128
+msgid "Ticks"
+msgstr "Onay işaretleri"
+
+#: data/ui/plot_styles.blp:129
+msgid "Settings for the ticks that are used in the plots"
+msgstr "Grafiklerde kullanılan onay işaretleri için ayarlar"
+
+#: data/ui/plot_styles.blp:132
+msgid "Tick Directions"
+msgstr "Onay İşareti Yönleri"
+
+#: data/ui/plot_styles.blp:133
+msgid "Choose to have the ticks in the plot either in or out"
+msgstr "Çizimdeki onay işaretlerinin içeride veya dışarıda olmasını seçin"
+
+#: data/ui/plot_styles.blp:137
+msgid "Minor Ticks"
+msgstr "Küçük Onay İşaretleri"
+
+#: data/ui/plot_styles.blp:138
+msgid "Show Minor Ticks"
+msgstr "Küçük Onay İşaretleri Göster"
+
+#: data/ui/plot_styles.blp:147
+msgid "Major Tick Width"
+msgstr "Büyük Onay İşareti Genişliği"
+
+#: data/ui/plot_styles.blp:148
+msgid "The thickness of the major ticks"
+msgstr "Büyük onay işaretlerinin kalınlığı"
+
+#: data/ui/plot_styles.blp:157
+msgid "Minor Tick Width"
+msgstr "Küçük Onay İşareti Genişliği"
+
+#: data/ui/plot_styles.blp:158
+msgid "The thickness of the minor ticks"
+msgstr "Küçük onay işaretlerinin kalınlığı"
+
+#: data/ui/plot_styles.blp:168
+msgid "Major Tick Length"
+msgstr "Büyük Onay İşareti Uzunluğu"
+
+#: data/ui/plot_styles.blp:169
+msgid "The length of the major ticks"
+msgstr "Büyük onay işaretlerinin uzunluğu"
+
+#: data/ui/plot_styles.blp:178
+msgid "Minor Tick Length"
+msgstr "Küçük Onay İşareti Uzunluğu"
+
+#: data/ui/plot_styles.blp:179
+msgid "The length of the minor ticks"
+msgstr "Küçük onay işaretlerinin uzunluğu"
+
+#: data/ui/plot_styles.blp:189
+msgid "Ticks on Bottom Axis"
+msgstr "Alt Eksende Onay İşaretleri"
+
+#: data/ui/plot_styles.blp:190
+msgid "Show ticks on the bottom"
+msgstr "Alt eksende onay işaretleri göster"
+
+#: data/ui/plot_styles.blp:199
+msgid "Ticks on Left Axis"
+msgstr "Sol Eksende Onay İşaretleri"
+
+#: data/ui/plot_styles.blp:200
+msgid "Show ticks on the left-hand axis"
+msgstr "Sol eksende onay işaretleri göster"
+
+#: data/ui/plot_styles.blp:209
+msgid "Ticks on Right Axis"
+msgstr "Sağ Eksende Onay İşaretleri"
+
+#: data/ui/plot_styles.blp:210
+msgid "Show ticks on the right"
+msgstr "Sağ eksende onay işaretleri göster"
+
+#: data/ui/plot_styles.blp:219
+msgid "Ticks on Top Axis"
+msgstr "Üst Eksende Onay İşaretleri"
+
+#: data/ui/plot_styles.blp:220
+msgid "Show ticks on the top"
+msgstr "Üstte onay işaretleri göster"
+
+#: data/ui/plot_styles.blp:230
+msgid "Grid"
+msgstr "Izgara"
+
+#: data/ui/plot_styles.blp:231
+msgid "Settings for the grid that is used in the plots"
+msgstr "Çizimlerde kullanılan ızgara ayarları"
+
+#: data/ui/plot_styles.blp:234
+msgid "Show Grid"
+msgstr "Izgarayı Göster"
+
+#: data/ui/plot_styles.blp:235
+msgid "Show Show Grid on the Graph"
+msgstr "Grafikte Izgarayı Göster"
+
+#: data/ui/plot_styles.blp:244
+msgid "Grid Width"
+msgstr "Izgara Genişliği"
+
+#: data/ui/plot_styles.blp:245
+msgid "Width of the Lines in the Grid"
+msgstr "Izgaradaki Çizgilerin Genişliği"
+
+#: data/ui/plot_styles.blp:255
+msgid "Grid Transparency"
+msgstr "Izgara Saydamlığı"
+
+#: data/ui/plot_styles.blp:256
+msgid "The Transparency of the Grid"
+msgstr "Izgara Saydamlığı"
+
+#: data/ui/plot_styles.blp:267
+msgid "Padding"
+msgstr "Dolgu"
+
+#: data/ui/plot_styles.blp:268
+msgid "Padding for different parts of the plot"
+msgstr "Çizimin farklı bölümleri için dolgu"
+
+#: data/ui/plot_styles.blp:271
+msgid "Value Padding"
+msgstr "Değer Dolgusu"
+
+#: data/ui/plot_styles.blp:272
+msgid "The padding between axis and values"
+msgstr "Eksenler ve değerler arasındaki doldu"
+
+#: data/ui/plot_styles.blp:281
+msgid "Label Padding"
+msgstr "Etiket Dolgusu"
+
+#: data/ui/plot_styles.blp:282
+msgid "The padding between axis and labels"
+msgstr "Eksenler ve etiketler arasındaki doldu"
+
+#: data/ui/plot_styles.blp:291
+msgid "Title Padding"
+msgstr "Başlık Dolgusu"
+
+#: data/ui/plot_styles.blp:292
+msgid "The padding between axis and the title"
+msgstr "Eksenler ve başlıklar arasındaki doldu"
+
+#: data/ui/plot_styles.blp:302
+msgid "Colors"
+msgstr "Renkler"
+
+#: data/ui/plot_styles.blp:303
+msgid "The colors for different parts of the plot"
+msgstr "Çizimin farklı bölümleri için renkler"
+
+#: data/ui/plot_styles.blp:315
+msgid "Text Color"
+msgstr "Metin Rengi"
+
+#: data/ui/plot_styles.blp:316
+msgid "The color of the text in the plot"
+msgstr "Çizimdeki metinlerin rengi"
+
+#: data/ui/plot_styles.blp:321 data/ui/plot_styles.blp:344
+#: data/ui/plot_styles.blp:367 data/ui/plot_styles.blp:390
+#: data/ui/plot_styles.blp:413 data/ui/plot_styles.blp:436
+msgid "Change Color"
+msgstr "Renk Değiştir"
+
+#: data/ui/plot_styles.blp:338
+msgid "Tick Color"
+msgstr "Onay İşareti Rengi"
+
+#: data/ui/plot_styles.blp:339
+msgid "The color of the ticks in the plot"
+msgstr "Çizimdeki onay işaretlerinin rengi"
+
+#: data/ui/plot_styles.blp:361
+msgid "Axis Color"
+msgstr "Eksen Renkleri"
+
+#: data/ui/plot_styles.blp:362
+msgid "The color of the axes in the plot"
+msgstr "Çizimdeki eksenlerin rengi"
+
+#: data/ui/plot_styles.blp:384
+msgid "Grid Color"
+msgstr "Izgara Rengi"
+
+#: data/ui/plot_styles.blp:385
+msgid "The color of the grid in the plot"
+msgstr "Çizimdeki ızgaranın rengi"
+
+#: data/ui/plot_styles.blp:407
+msgid "Background Color"
+msgstr "Arka Plan Rengi"
+
+#: data/ui/plot_styles.blp:408
+msgid "The color of the plot background"
+msgstr "Çizgim arka planının rengi"
+
+#: data/ui/plot_styles.blp:430
+msgid "Outline Color"
+msgstr "Anahat Rengi"
+
+#: data/ui/plot_styles.blp:431
+msgid "The color of the outline of the plot"
+msgstr "Çizimin ana hat rengi"
+
+#: data/ui/plot_styles.blp:454 data/ui/plot_styles.blp:507
+msgid "Line Colors"
+msgstr "Çizgi Renkleri"
+
+#: data/ui/plot_styles.blp:455
+msgid "Change the available line colors"
+msgstr "Kullanılabilir çizgi renklerini değiştir"
+
+#: data/ui/plot_styles.blp:460
+msgid "Edit Colors"
+msgstr "Renkleri Düzenle"
+
+#: data/ui/plot_styles.blp:473 data/ui/preferences.blp:149
+msgid "Other"
+msgstr "Diğer"
+
+#: data/ui/plot_styles.blp:476
+msgid "Axis Width"
+msgstr "Eksen Genişliği"
+
+#: data/ui/plot_styles.blp:477
+msgid "The thickness of the axes"
+msgstr "Eksenlerin kalınlığı"
+
+#: data/ui/plot_styles.blp:508
+msgid "The colors which will be used for the lines"
+msgstr "Çizgiler için kullanılacak renkler"
+
+#: data/ui/plot_styles.blp:513
+msgid "Add Color"
+msgstr "Renk Ekle"
+
+#: data/ui/preferences.blp:13
+msgid "Import Settings"
+msgstr "İçe Aktarma Ayarları"
+
+#: data/ui/preferences.blp:14
+msgid "Settings for importing graphs"
+msgstr "Grafik içe aktarma ayarları"
+
+#: data/ui/preferences.blp:17
+msgid "Delimiter"
+msgstr "Ayraç"
+
+#: data/ui/preferences.blp:28
+msgid "Which column to load for the X-data"
+msgstr "X verileri için hangi sütunun yükleneceği"
+
+#: data/ui/preferences.blp:45
+msgid "Which column to load for the Y-data"
+msgstr "Y verileri için hangi sütunun yükleneceği"
+
+#: data/ui/preferences.blp:62
+msgid "How many rows to skip while loading data"
+msgstr "Veri yüklenirken kaç satırın atlanacağı"
+
+#: data/ui/preferences.blp:79
+msgid "Settings for the \"Add Equation\" option"
+msgstr "\"Denklem Ekle\" seçeneği ayarları"
+
+#: data/ui/preferences.blp:82
+msgid "Default Equation: Y ="
+msgstr "Öntanımlı Denklem: Y ="
+
+#: data/ui/preferences.blp:87
+msgid "Default X start"
+msgstr "Öntanımlı X başlangıcı"
+
+#: data/ui/preferences.blp:92
+msgid "Default X stop"
+msgstr "Öntanımlı X bitişi"
+
+#: data/ui/preferences.blp:97
+msgid "Default Step Size"
+msgstr "Öntanımlı Basamak Boyutu"
+
+#: data/ui/preferences.blp:103
+msgid "Export Options"
+msgstr "Dışa Aktarma Seçenekleri"
+
+#: data/ui/preferences.blp:104
+msgid "Options for exporting the graph"
+msgstr "Grafik dışa aktarma seçenekleri"
+
+#: data/ui/preferences.blp:107
+msgid "Default Filetype"
+msgstr "Öntanımlı Dosya Türü"
+
+#: data/ui/preferences.blp:108
+msgid "The default filetype of saved graphs"
+msgstr "Kaydedilen grafiklerin öntanımlı dosya türü"
+
+#: data/ui/preferences.blp:112
+msgid "Default dpi"
+msgstr "Öntanımlı dpi"
+
+#: data/ui/preferences.blp:113
+msgid "The default resolution of saved graphs in dots per inch"
+msgstr ""
+"Kaydedilen grafiklerin öntanımlı çözünürlüğü, (dpi) inç başına nokta "
+"cinsinden"
+
+#: data/ui/preferences.blp:129
+msgid "Use a transparent background for the saved plots by default"
+msgstr "Kaydedilen çizimler için öntanımlı olarak şeffaf arka plan kullan"
+
+#: data/ui/preferences.blp:139
+msgid "Action Behaviour"
+msgstr "İşlem Davranışı"
+
+#: data/ui/preferences.blp:140
+msgid "Behaviour of specific actions"
+msgstr "Belirli işlemlerin davranışı"
+
+#: data/ui/preferences.blp:143
+msgid "Center Data"
+msgstr "Veriyi Ortala"
+
+#: data/ui/preferences.blp:144
+msgid "The behaviour of the center data button"
+msgstr "Ortala veri düğmesinin davranışı"
+
+#: data/ui/preferences.blp:150
+msgid "Other general settings"
+msgstr "Diğer genel ayarlar"
+
+#: data/ui/preferences.blp:153
+msgid "Clipboard length"
+msgstr "Pano uzunluğu"
+
+#: data/ui/preferences.blp:154
+msgid "Choose how many states are stored in the clipboard"
+msgstr "Panoda kaç durumun saklanacağını seçin"
+
+#: data/ui/preferences.blp:169
+msgid "Handle duplicate entries"
+msgstr "İkiz girdileri işle"
+
+#: data/ui/preferences.blp:170
+msgid "Choose how to handle duplicate entries to be loaded"
+msgstr "Yüklenecek ikiz girdilerin nasıl işleneceğini seçin"
+
+#: data/ui/preferences.blp:174
+msgid "Hide Unselected"
+msgstr "Seçilmemişi Gizle"
+
+#: data/ui/preferences.blp:175
+msgid "Whether to hide items, that aren't selected"
+msgstr "Seçilmemiş ögelerin gizlenme durumu"
+
+#: data/ui/preferences.blp:191
+msgid "Set the labels and title that are used by default"
+msgstr "Öntanımlı olarak kullanılan etiketleri ve başlığı ayarlayın"
+
+#: data/ui/preferences.blp:194
+msgid "Default Title"
+msgstr "Öntanımlı Başlık"
+
+#: data/ui/preferences.blp:198
+msgid "Default Bottom Axis label"
+msgstr "Öntanımlı Alt Eksen Etiketi"
+
+#: data/ui/preferences.blp:202
+msgid "Default Left Axis Label"
+msgstr "Öntanımlı Sol Eksen Etiketi"
+
+#: data/ui/preferences.blp:206
+msgid "Default Top Axis label"
+msgstr "Öntanımlı Üst Eksen Etiketi"
+
+#: data/ui/preferences.blp:210
+msgid "Default Right Axis Label"
+msgstr "Öntanımlı Sağ Eksen Etiketi"
+
+#: data/ui/preferences.blp:215
+msgid "Axes settings"
+msgstr "Eksen ayarları"
+
+#: data/ui/preferences.blp:216
+msgid "Set the default axes scale and position used upon launch"
+msgstr ""
+"Başlatma sırasında kullanılan öntanımlı eksen ölçeğini ve konumunu ayarlayın"
+
+#: data/ui/preferences.blp:219
+msgid "Default Bottom Axis Scale"
+msgstr "Öntanımlı Alt Eksen Ölçeği"
+
+#: data/ui/preferences.blp:220
+msgid "The scaling on the bottom axis"
+msgstr "Alt eksende ölçekleme"
+
+#: data/ui/preferences.blp:224
+msgid "Default Left Axis Scale"
+msgstr "Öntanımlı Sol Eksen Ölçeği"
+
+#: data/ui/preferences.blp:225
+msgid "The scaling on the left-hand axis"
+msgstr "Sol eksende ölçekleme"
+
+#: data/ui/preferences.blp:229
+msgid "Default Top Axis Scale"
+msgstr "Öntanımlı Üst Eksen Ölçeği"
+
+#: data/ui/preferences.blp:230
+msgid "The scaling on the top axis"
+msgstr "Üst eksende ölçekleme"
+
+#: data/ui/preferences.blp:234
+msgid "Default Right Axis Scale"
+msgstr "Öntanımlı Sağ Eksen Ölçeği"
+
+#: data/ui/preferences.blp:235
+msgid "The scaling on the right-hand axis"
+msgstr "Sağ eksende ölçekleme"
+
+#: data/ui/preferences.blp:239
+msgid "Default X-Axis Position"
+msgstr "Öntanımlı X Eksen Konumu"
+
+#: data/ui/preferences.blp:244
+msgid "Default Y-Axis Position"
+msgstr "Öntanımlı Y Eksen Konumu"
+
+#: data/ui/preferences.blp:245
+msgid "The default position of the Y-axis"
+msgstr "Y ekseninin öntanımlı konumu"
+
+#: data/ui/preferences.blp:250
+msgid "Styling"
+msgstr "Biçem"
+
+#: data/ui/preferences.blp:251
+msgid "Change default plot style and other visual changes"
+msgstr "Öntanımlı çizim biçemini ve diğer görsel değişiklikleri değiştirin"
+
+#: data/ui/preferences.blp:255
+msgid "Use a legend by default"
+msgstr "Öntanımlı olarak gösterge kullan"
+
+#: data/ui/preferences.blp:259
+msgid "The default position of the legend"
+msgstr "Göstergenin öntanımlı konumu"
+
+#: data/ui/preferences.blp:265
+msgid ""
+"Use a custom plot style instead of following the system style by default"
+msgstr ""
+"Öntanımlı olarak sistem biçemini takip etmek yerine özel çizim biçemi kullan"
+
+#: data/ui/preferences.blp:269
+msgid "Custom Style"
+msgstr "Özel Biçem"
+
+#: data/ui/preferences.blp:270
+msgid "The custom style sheet used by default"
+msgstr "Öntanımlı olarak kullanılan özel biçem sayfası"
+
+#: data/ui/preferences.blp:274
+msgid "Override Line Styling on Style Change"
+msgstr "Biçem Değişikliğinde Çizgi Biçemini Geçersiz Kıl"
+
+#: data/ui/preferences.blp:275
+msgid "Override the active line styling when switching plot style"
+msgstr "Çizim biçemini değiştirirken etkin çizgi biçemini geçersiz kıl"
+
+#: data/ui/rename_window.blp:30
+msgid "Label"
+msgstr "Etiket"
+
+#: data/ui/rename_window.blp:36
+msgid "Rename"
+msgstr "Yeniden Adlandır"
+
+#: data/ui/style_box.blp:23 data/ui/style_color_box.blp:18
+msgid "Edit"
+msgstr "Düzenle"
+
+#: data/ui/transform_window.blp:7
+msgid "Transform Data"
+msgstr "Veri Dönüştür"
+
+#: data/ui/transform_window.blp:26
+msgid ""
+"The transformation tool uses Numpy notation, with capital letters for the "
+"coordinates.\n"
+"Transformations are done piece-wise, if you want access to the entire range "
+"use X_range or Y_range. \n"
+" e.g. Y = Y/max(X_range) divides each Y value by the largest value of X.\n"
+"\n"
+"To convert a value from degrees into radians use radians(value), e.g. Y = "
+"sin(radians(X))."
+msgstr ""
+"Dönüşüm aracı Numpy gösterimini kullanır, koordinatlar için büyük harfler "
+"kullanılır.\n"
+"Dönüşümler parça parça yapılır, tüm aralığa erişmek isterseniz X_range veya "
+"Y_range kullanın.\n"
+"Örneğin, Y = Y/max(X_range), her Y değerini Xʼin en büyük değeriyle böler.\n"
+"\n"
+"Bir değeri dereceden radyana çevirmek için radians(değer) kullanın, örneğin "
+"Y = sin(radians(X))."
+
+#: data/ui/transform_window.blp:31
+msgid "More info"
+msgstr "Daha fazla bilgi"
+
+#: data/ui/transform_window.blp:47
+msgid "X ="
+msgstr "X ="
+
+#: data/ui/transform_window.blp:55
+msgid "Discard Unselected Data"
+msgstr "Seçilmemiş Veriyi Gözden Çıkar"
+
+#: data/ui/transform_window.blp:66 data/ui/window.blp:457
+msgid "Transform"
+msgstr "Dönüştür"
+
+#: data/ui/window.blp:21
+msgid "Add new data"
+msgstr "Yeni veri ekle"
+
+#: data/ui/window.blp:28
+msgid "Undo"
+msgstr "Geri al"
+
+#: data/ui/window.blp:34
+msgid "Redo"
+msgstr "Yinele"
+
+#: data/ui/window.blp:43
+msgid "Restore View / View Options"
+msgstr "Görünümü Geri Yükle / Seçenekleri Görüntüle"
+
+#: data/ui/window.blp:51
+msgid "Open Application Menu"
+msgstr "Uygulama Menüsünü Aç"
+
+#: data/ui/window.blp:137
+msgid "No Data"
+msgstr "Veri Yok"
+
+#: data/ui/window.blp:138
+msgid "Add data from a file or manually as an equation"
+msgstr "Bir dosyadan veya elle denklem olarak veri ekleyin"
+
+#: data/ui/window.blp:159
+msgid ""
+"Panning mode. Use left mouse button to pan, right mouse button to zoom. Hold "
+"control to to keep aspect ratio fixed"
+msgstr ""
+"Kaydırma kipi. Kaydırmak için farenin sol düğmesini, yakınlaştırmak için "
+"farenin sağ düğmesini kullanın. En boy oranını sabit tutmak için ctrl tuşunu "
+"basılı tutun"
+
+#: data/ui/window.blp:165
+msgid "Zoom mode. Select an area on the graph to zoom in"
+msgstr "Yakınlaştırma kipi. Yakınlaştırmak için grafikte bir alan seçin"
+
+#: data/ui/window.blp:171
+msgid ""
+"Highlight mode, click and drag over the graph to highlight the workable area"
+msgstr ""
+"Vurgu kipi, çalışılabilir alanı vurgulamak için grafiğin üzerine tıklayıp "
+"sürükleyin"
+
+#: data/ui/window.blp:191
+msgid "Adjust Data"
+msgstr "Veri Ayarla"
+
+#: data/ui/window.blp:206
+msgid "Shift"
+msgstr "Kaydır"
+
+#: data/ui/window.blp:208
+msgid "Shift all data vertically with respect to each other"
+msgstr "Tüm verileri birbirine göre dikey olarak kaydır"
+
+#: data/ui/window.blp:225
+msgid "Normalize"
+msgstr "Normalleştir"
+
+#: data/ui/window.blp:227
+msgid "Normalize Data"
+msgstr "Verileri Normalleştir"
+
+#: data/ui/window.blp:244
+msgid "Smoothen"
+msgstr "Düzleştir"
+
+#: data/ui/window.blp:246
+msgid "Smoothen the Data"
+msgstr "Verileri Düzleştir"
+
+#: data/ui/window.blp:263 src/misc.py:41
+msgid "Center"
+msgstr "Ortala"
+
+#: data/ui/window.blp:265
+msgid "Center the data"
+msgstr "Veriyi ortala"
+
+#: data/ui/window.blp:282 data/ui/window.blp:284
+msgid "Combine"
+msgstr "Birleştir"
+
+#: data/ui/window.blp:301
+msgid "Cut"
+msgstr "Kes"
+
+#: data/ui/window.blp:303
+msgid "Cut selected Data"
+msgstr "Seçilen Veriyi Kes"
+
+#: data/ui/window.blp:310
+msgid "Translate and Multiply"
+msgstr "Çevir ve Çoğalt"
+
+#: data/ui/window.blp:313
+msgid "Translate X-Axis"
+msgstr "X Eksenini Çevir"
+
+#: data/ui/window.blp:319 data/ui/window.blp:332
+msgid "Translate"
+msgstr "Çevir"
+
+#: data/ui/window.blp:326
+msgid "Translate Y-Axis"
+msgstr "Y Ekseni Çevir"
+
+#: data/ui/window.blp:339
+msgid "Multiply X-Axis"
+msgstr "X Eksenini Çoğalt"
+
+#: data/ui/window.blp:345 data/ui/window.blp:358
+msgid "Multiply"
+msgstr "Çoğalt"
+
+#: data/ui/window.blp:352
+msgid "Multiply Y-Axis"
+msgstr "Y Eksenini Çoğalt"
+
+#: data/ui/window.blp:365
+msgid "Mathematical Operations"
+msgstr "Matematiksel İşlemler"
+
+#: data/ui/window.blp:380
+msgid "Derivative"
+msgstr "Türev"
+
+#: data/ui/window.blp:382
+msgid "Get the derivative of the data"
+msgstr "Verinin türevini getir"
+
+#: data/ui/window.blp:399
+msgid "Integral"
+msgstr "İntegral"
+
+#: data/ui/window.blp:401
+msgid "Get the indefinite integral of the data"
+msgstr "Verilerin belirsiz integralini alın"
+
+#: data/ui/window.blp:418
+msgid "FFT"
+msgstr "FFT"
+
+#: data/ui/window.blp:420
+msgid "Get the Fast Fourier Transform of the data"
+msgstr "Verilerin Hızlı Fourier Dönüşümünü Alın"
+
+#: data/ui/window.blp:437
+msgid "inverse FFT"
+msgstr "ters FFT"
+
+#: data/ui/window.blp:439
+msgid "Get the Inverse Fast Fourier Transform of the data"
+msgstr "Verilerin Ters Hızlı Fourier Dönüşümünü Alın"
+
+#: data/ui/window.blp:459
+msgid "Perform custom transformations on the data"
+msgstr "Veriler üzerinde özel dönüşümler gerçekleştir"
+
+#: data/ui/window.blp:489
+msgid "Save Project"
+msgstr "Projeyi Kaydet"
+
+#: data/ui/window.blp:490
+msgid "Open Project"
+msgstr "Proje Aç"
+
+#: data/ui/window.blp:493
+msgid "Export Data"
+msgstr "Verileri Dışa Aktar"
+
+#: data/ui/window.blp:497 src/plot_styles.py:171 src/plot_styles.py:225
+msgid "Plot Styles"
+msgstr "Çizim Biçemleri"
+
+#: data/ui/window.blp:501
+msgid "Preferences"
+msgstr "Tercihleri"
+
+#: data/ui/window.blp:504
+msgid "Keyboard Shortcuts"
+msgstr "Klavye Kısayolları"
+
+#: data/ui/window.blp:505
+msgid "About Graphs"
+msgstr "Grafikler Hakkında"
+
+#: data/ui/window.blp:511
+msgid "Add Data from File"
+msgstr "Dosyadan Veri Ekle"
+
+#: data/ui/window.blp:512
+msgid "Add Data from File (Advanced)"
+msgstr "Dosyadan Veri Ekle (Gelişmiş)"
+
+#: data/ui/window.blp:513
+msgid "Add Data from Equation"
+msgstr "Denklemden Veri Ekle"
+
+#: data/ui/window.blp:519
+msgid "Toggle Sidebar"
+msgstr "Kenar Çubuğunu Aç/Kapa"
+
+#: data/ui/window.blp:522
+msgid "Restore View"
+msgstr "Görünümü Geri Yükle"
+
+#: data/ui/window.blp:523
+msgid "Previous View"
+msgstr "Önceki Görünüm"
+
+#: data/ui/window.blp:524
+msgid "Next View"
+msgstr "Sonraki Görünüm"
+
+#: data/ui/window.blp:528
+msgid "Top X Scale"
+msgstr "Üst X Ölçeği"
+
+#: data/ui/window.blp:530 data/ui/window.blp:543 data/ui/window.blp:556
+#: data/ui/window.blp:569
+msgid "Logarithmic"
+msgstr "Logaritmik"
+
+#: data/ui/window.blp:535 data/ui/window.blp:548 data/ui/window.blp:561
+#: data/ui/window.blp:574
+msgid "Linear"
+msgstr "Doğrusal"
+
+#: data/ui/window.blp:541
+msgid "Bottom X Scale"
+msgstr "Alt X Ölçeği"
+
+#: data/ui/window.blp:554
+msgid "Left Y Scale"
+msgstr "Sol Y Ölçeği"
+
+#: data/ui/window.blp:567
+msgid "Right Y Scale"
+msgstr "Sağ Y Ölçeği"
+
+#: src/actions.py:112
+msgid "Discard Data?"
+msgstr "Veri Gözden Çıkarılsın Mı?"
+
+#: src/actions.py:113
+msgid "Opening a project will discard all open data."
+msgstr "Bir projeyi açmak, tüm açık verileri gözden çıkarır."
+
+#: src/actions.py:116 src/plot_styles.py:414 src/plot_styles.py:453
+msgid "Cancel"
+msgstr "İptal"
+
+#: src/actions.py:117
+msgid "Discard"
+msgstr "Gözden Çıkar"
+
+#: src/actions.py:139 src/actions.py:152 src/actions.py:165 src/actions.py:178
+#, python-brace-format
+msgid "{error}: Unable to do translation, make sure to enter a valid number"
+msgstr "{error}: Çeviri yapılamadı, geçerli bir sayı girdiğinizden emin olun"
+
+#: src/add_equation.py:48
+#, python-brace-format
+msgid "{error} - Unable to add data from equation"
+msgstr "{error} - Denklemden veri eklenemedi"
+
+#: src/export_figure.py:66
+msgid "Exported Figure"
+msgstr "Şekil Dışa Aktarıldı"
+
+#: src/file_io.py:71
+msgid "2Theta"
+msgstr "2Theta"
+
+#: src/file_io.py:73
+msgid "Omega"
+msgstr "Omega"
+
+#: src/file_io.py:87
+msgid "Intensity (cps)"
+msgstr "Yoğunluk (cps)"
+
+#: src/file_io.py:110
+msgid "β (°)"
+msgstr "β (°)"
+
+#: src/file_io.py:110
+msgid "R (1/s)"
+msgstr "R (1/s)"
+
+#: src/file_io.py:189
+msgid "Missing colon in file {}, line {}"
+msgstr "{} dosyasının {}. satırında kayıp sütun"
+
+#: src/file_io.py:197
+msgid "Style includes a non-style related parameter, {}"
+msgstr "Biçem, biçemle ilgili olmayan bir parametre içeriyor, {}"
+
+#: src/file_io.py:200
+msgid "Duplicate key in file {}, on line {}"
+msgstr "{} dosyasının {}. satırında ikiz anahtar"
+
+#: src/file_io.py:206
+msgid "Bad value in file {} on line {}"
+msgstr "{} dosyasının {}. satırında kötü değer"
+
+#: src/file_io.py:210
+msgid "Could not parse {}"
+msgstr "{} ayrıştırılamadı"
+
+#: src/graphs.py:26
+msgid "Could not open project"
+msgstr "Proje açılamadı"
+
+#: src/graphs.py:84
+msgid "Items {} already exist"
+msgstr "{} ögeleri zaten var"
+
+#: src/graphs.py:86
+msgid "Item {} already exists"
+msgstr "{} ögesi zaten var"
+
+#: src/graphs.py:100
+#, python-brace-format
+msgid "Deleted {name}"
+msgstr "Silinmiş {name}"
+
+#: src/main.py:44
+#, python-format
+msgid "Could not load %s"
+msgstr "%s yüklenemedi"
+
+#: src/misc.py:37
+msgid "linear"
+msgstr "doğrusal"
+
+#: src/misc.py:37
+msgid "log"
+msgstr "log"
+
+#: src/misc.py:39
+msgid "Best"
+msgstr "En iyi"
+
+#: src/misc.py:39
+msgid "Upper right"
+msgstr "Üst sağ"
+
+#: src/misc.py:39
+msgid "Upper left"
+msgstr "Üst sol"
+
+#: src/misc.py:39
+msgid "Lower left"
+msgstr "Alt sol"
+
+#: src/misc.py:40
+msgid "Lower right"
+msgstr "Alt sağ"
+
+#: src/misc.py:40
+msgid "Center left"
+msgstr "Orta sol"
+
+#: src/misc.py:40
+msgid "Center right"
+msgstr "Orta sağ"
+
+#: src/misc.py:40
+msgid "Lower center"
+msgstr "Alt orta"
+
+#: src/misc.py:41
+msgid "Upper center"
+msgstr "Üst orta"
+
+#: src/misc.py:43
+msgid "top"
+msgstr "üst"
+
+#: src/misc.py:43
+msgid "bottom"
+msgstr "alt"
+
+#: src/misc.py:44
+msgid "left"
+msgstr "sol"
+
+#: src/misc.py:44
+msgid "right"
+msgstr "sağ"
+
+#: src/misc.py:47
+msgid "Center at maximum Y value"
+msgstr "En büyük Y değerinde ortala"
+
+#: src/misc.py:47
+msgid "Center at middle coordinate"
+msgstr "Orta koordinatta ortala"
+
+#: src/misc.py:50
+msgid "Auto-rename duplicates"
+msgstr "İkizleri kendiliğinden yeniden adlandır"
+
+#: src/misc.py:50
+msgid "Ignore duplicates"
+msgstr "İkizleri görmezden gel"
+
+#: src/misc.py:50
+msgid "Add duplicates"
+msgstr "İkizler ekle"
+
+#: src/misc.py:51
+msgid "Override existing items"
+msgstr "Var olan ögelerin üzerine yaz"
+
+#: src/misc.py:53
+msgid "none"
+msgstr "hiçbiri"
+
+#: src/misc.py:53
+msgid "solid"
+msgstr "düz"
+
+#: src/misc.py:53
+msgid "dotted"
+msgstr "noktalı"
+
+#: src/misc.py:53
+msgid "dashed"
+msgstr "kesik"
+
+#: src/misc.py:53
+msgid "dashdot"
+msgstr "kesik-nokta"
+
+#: src/misc.py:55
+msgid "Point"
+msgstr "Nokta"
+
+#: src/misc.py:55
+msgid "Pixel"
+msgstr "Piksel"
+
+#: src/misc.py:55
+msgid "Circle"
+msgstr "Daire"
+
+#: src/misc.py:56
+msgid "Triangle down"
+msgstr "Üçgen aşağı"
+
+#: src/misc.py:56
+msgid "Triangle up"
+msgstr "Üçgen yukarı"
+
+#: src/misc.py:56
+msgid "Triangle left"
+msgstr "Üçgen sol"
+
+#: src/misc.py:57
+msgid "Triangle right"
+msgstr "Üçgen sağ"
+
+#: src/misc.py:57
+msgid "Octagon"
+msgstr "Sekizgen"
+
+#: src/misc.py:57
+msgid "Square"
+msgstr "Kare"
+
+#: src/misc.py:58
+msgid "Pentagon"
+msgstr "Beşgen"
+
+#: src/misc.py:58
+msgid "Star"
+msgstr "Yıldız"
+
+#: src/misc.py:58
+msgid "Hexagon 1"
+msgstr "Altıgen 1"
+
+#: src/misc.py:59
+msgid "Hexagon 2"
+msgstr "Altıgen 2"
+
+#: src/misc.py:59
+msgid "Plus"
+msgstr "Artı"
+
+#: src/misc.py:59
+msgid "x"
+msgstr "x"
+
+#: src/misc.py:59
+msgid "Diamond"
+msgstr "Karo"
+
+#: src/misc.py:60
+msgid "Thin diamond"
+msgstr "İnce karo"
+
+#: src/misc.py:60
+msgid "Vertical line"
+msgstr "Dikey çizgi"
+
+#: src/misc.py:60
+msgid "Horizontal line"
+msgstr "Yatay çizgi"
+
+#: src/misc.py:61
+msgid "Filled plus"
+msgstr "Doldurulmuş artı"
+
+#: src/misc.py:61
+msgid "Filled x"
+msgstr "Doldurulmuş x"
+
+#: src/misc.py:61
+msgid "Nothing"
+msgstr "Hiçbir şey"
+
+#: src/misc.py:63
+msgid "in"
+msgstr "girdi"
+
+#: src/misc.py:63
+msgid "out"
+msgstr "çıktı"
+
+#: src/operations.py:85
+msgid "No data found within the highlighted area"
+msgstr "Vurgulanan alanda veri bulunamadı"
+
+#: src/operations.py:252
+msgid "Combined Data"
+msgstr "Birleştirilmiş Veri"
+
+#: src/plot_styles.py:231
+#, python-brace-format
+msgid "{name} - line colors"
+msgstr "{name} - çizgi renkleri"
+
+#: src/plot_styles.py:410
+msgid "Delete style?"
+msgstr "Biçem silinsin mi?"
+
+#: src/plot_styles.py:411
+msgid "Are you sure you want to delete the {} style?"
+msgstr "{} biçemini silmek istediğinize emin misiniz?"
+
+#: src/plot_styles.py:415
+msgid "Delete"
+msgstr "Sil"
+
+#: src/plot_styles.py:449
+msgid "Reset to defaults?"
+msgstr "Öntanımlılara sıfırlansın mı?"
+
+#: src/plot_styles.py:450
+msgid "Are you sure you want to reset to the default styles?"
+msgstr "Öntanımlı biçimlere sıfırlamak istediğinize emin misiniz?"
+
+#: src/plot_styles.py:454
+msgid "Reset"
+msgstr "Sıfırla"
+
+#: src/plot_styles.py:523
+msgid "Color {}"
+msgstr "Renk {}"
+
+#: src/plot_styles.py:551 src/plot_styles.py:562
+#, python-brace-format
+msgid "{name} (copy)"
+msgstr "{name} (kopya)"
+
+#: src/plotting_tools.py:46
+msgid "Could not set limits, one of the values was probably infinite"
+msgstr "Sınırlar ayarlanamadı, değerlerden biri muhtemelen sonsuzdu"
+
+#: src/preferences.py:29
+msgid "New configuration file created"
+msgstr "Yeni yapılandırma dosyası uluşturuldu"
+
+#: src/preferences.py:33
+msgid "New Import Settings file created"
+msgstr "Yeni İçe Aktarma Ayarları dosyası oluşturuldu"
+
+#: src/preferences.py:36
+msgid "Loading configuration file"
+msgstr "Yapılandırma dosyası yükleniyor"
+
+#: src/rename.py:18
+msgid "Rename Label"
+msgstr "Etiketi Yeniden Adlandır"
+
+#: src/rename.py:19
+msgid "Change Label"
+msgstr "Etiket Değiştir"
+
+#: src/rename.py:21
+msgid "Here you can change the label of the selected axis."
+msgstr "Buradan seçilen eksenin etiketini değiştirebilirsiniz."
+
+#: src/rename.py:24
+msgid "Rename Title"
+msgstr "Başlığı Yeniden Adlandır"
+
+#: src/rename.py:25
+msgid "Change Title"
+msgstr "Başlığı Değiştir"
+
+#: src/rename.py:27
+msgid "Here you can change the title of the plot."
+msgstr "Buradan çizim başlığını değiştirebilirsiniz."
+
+#: src/transform_data.py:42
+#, python-brace-format
+msgid "{name}: Unable to do transformation, make sure the syntax is correct"
+msgstr "{name}: Dönüşüm yapılamadı, sözdiziminin doğru olduğundan emin olun"
+
+#: src/transform_data.py:45
+msgid "Unable to do transformation"
+msgstr "Dönüşüm gerçekleştirilemedi"
+
+#: src/ui.py:69 src/ui.py:81
+msgid "Graphs Project File"
+msgstr "Grafik Proje Dosyası"
+
+#: src/ui.py:109
+msgid "Text Files"
+msgstr "Metin Dosyaları"
+
+#~ msgid "Open Data From File (Advanced)"
+#~ msgstr "Dosyadan Veri Aç (Gelişmiş)"
+
+#~ msgid "Name (Single File Only)"
+#~ msgstr "Ad (Sadece Tek Dosya)"
+
+#~ msgid "Open Files"
+#~ msgstr "Dosya Aç"
