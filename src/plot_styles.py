@@ -168,7 +168,7 @@ class PlotStylesWindow(Adw.Window):
         self.add_button.connect("clicked", self.add_data)
         self.back_button.connect("clicked", self.back)
         self.connect("close-request", self.on_close)
-        self.set_title("Plot Styles")
+        self.set_title(_("Plot Styles"))
 
         # setup editor
         self.font_chooser.set_use_font(True)
@@ -446,8 +446,8 @@ class PlotStylesWindow(Adw.Window):
                 reset_user_styles(self.parent)
                 self.reload_styles()
 
-        heading = "Reset to defaults?"
-        body = "Are you sure you want to reset to the default styles?"
+        heading = _("Reset to defaults?")
+        body = _("Are you sure you want to reset to the default styles?")
         dialog = Adw.MessageDialog.new(
             self, heading, body)
         dialog.add_response("cancel", _("Cancel"))
