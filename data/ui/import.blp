@@ -1,11 +1,11 @@
 using Gtk 4.0;
 using Adw 1;
 
-template AddAdvancedWindow : Adw.Window {
+template ImportWindow : Adw.Window {
   modal: true;
   default-width: 650;
   default-height: 125;
-  title: _("Open Data From File (Advanced)");
+  title: _("Modify import Parameters");
 
   ShortcutController {
     Shortcut {
@@ -25,12 +25,8 @@ template AddAdvancedWindow : Adw.Window {
       margin-end: 12;
       margin-top: 12;
       margin-bottom: 12;
-      Adw.PreferencesGroup {
-        Adw.EntryRow name {
-          max-width-chars: 10;
-          title: _("Name (Single File Only)");
-        }
-
+      Adw.PreferencesGroup columns_group {
+        visible: false;
         Adw.EntryRow delimiter {
           max-width-chars: 10;
           title: _("Delimiter (\s+ for whitespace)");
@@ -90,7 +86,7 @@ template AddAdvancedWindow : Adw.Window {
           halign: center;
           margin-top: 24;
           margin-bottom: 12;
-          label: _("Open Files");
+          label: _("Confirm");
           styles ["suggested-action", "pill"]
         }
       }

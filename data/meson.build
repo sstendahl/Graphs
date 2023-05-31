@@ -58,11 +58,11 @@ endif
 
 blueprints = custom_target('blueprints',
   input: files(
-    'ui/add_data_advanced.blp',
     'ui/add_equation_window.blp',
     'ui/add_style.blp',
     'ui/edit_item.blp',
     'ui/export_figure.blp',
+    'ui/import.blp',
     'ui/help_overlay.blp',
     'ui/item_box.blp',
     'ui/plot_settings.blp',

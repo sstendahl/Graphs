@@ -6,7 +6,6 @@ from gettext import gettext as _
 from gi.repository import Adw
 
 from graphs import clipboard, graphs, operations, ui
-from graphs.add_data_advanced import AddAdvancedWindow
 from graphs.add_equation import AddEquationWindow
 from graphs.export_figure import ExportFigureWindow
 from graphs.misc import InteractionMode
@@ -42,7 +41,7 @@ def add_data_action(_action, _target, self):
 
 
 def add_data_advanced_action(_action, _target, self):
-    AddAdvancedWindow(self)
+    ui.add_data_dialog(self, True)
 
 
 def add_equation_action(_action, _target, self):

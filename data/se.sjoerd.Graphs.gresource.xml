@@ -28,11 +28,12 @@
     <file compressed="True">styles/solarized-light.mplstyle</file>
     <file compressed="True">styles/tableau-colorblind10.mplstyle</file>
     <file compressed="True">styles/thesis.mplstyle</file>
-    <file preprocess="xml-stripblanks">ui/add_data_advanced.ui</file>
+
     <file preprocess="xml-stripblanks">ui/add_equation_window.ui</file>
     <file preprocess="xml-stripblanks">ui/add_style.ui</file>
     <file preprocess="xml-stripblanks">ui/edit_item.ui</file>
     <file preprocess="xml-stripblanks">ui/export_figure.ui</file>
+    <file preprocess="xml-stripblanks">ui/import.ui</file>
     <file preprocess="xml-stripblanks">ui/item_box.ui</file>
     <file preprocess="xml-stripblanks">ui/plot_settings.ui</file>
     <file preprocess="xml-stripblanks">ui/plot_styles.ui</file>
