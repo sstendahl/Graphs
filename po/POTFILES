@@ -7,6 +7,7 @@ data/ui/export_figure.blp
 data/ui/help_overlay.blp
 data/ui/item_box.blp
 data/ui/plot_settings.blp
+data/ui/plot_styles.blp
 data/ui/preferences.blp
 data/ui/rename_window.blp
 data/ui/style_box.blp
