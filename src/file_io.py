@@ -194,7 +194,7 @@ def parse_style(file):
             if value.startswith('"') and value.endswith('"'):
                 value = value[1:-1]  # strip double quotes
             if key in STYLE_BLACKLIST:
-                message = _("Stye includes a non-style related parameter, {}")
+                message = _("Style includes a non-style related parameter, {}")
                 logging.warning(message.format(key))
             elif key in style:
                 message = _("Duplicate key in file {}, on line {}")
