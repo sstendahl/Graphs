@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: graphs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-01 13:18+0200\n"
-"PO-Revision-Date: 2023-06-01 14:08+0200\n"
+"POT-Creation-Date: 2023-05-12 11:39+0200\n"
+"PO-Revision-Date: 2023-06-01 14:31+0200\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: nl\n"
@@ -1385,7 +1385,7 @@ msgstr "De stijl voor de grafiek"
 
 #: data/ui/plot_styles.blp:30
 msgid "Reset to default styles"
-msgstr "Hersteld de standaardstijlen"
+msgstr "Herstel de standaardstijlen"
 
 #: data/ui/plot_styles.blp:77
 msgid "Style Name"
@@ -1657,6 +1657,10 @@ msgstr "Welke kleuren gebruikt worden voor de lijnen"
 msgid "Add Color"
 msgstr "Kleur toevoegen"
 
+#: data/ui/preferences.blp:10
+msgid "General"
+msgstr "Algemeen"
+
 #: data/ui/preferences.blp:13
 msgid "Import Settings"
 msgstr "Importeerinstellingen"
@@ -1773,6 +1777,10 @@ msgstr "Verberg niet-geselecteerde gegevens"
 #: data/ui/preferences.blp:175
 msgid "Whether to hide items, that aren't selected"
 msgstr "Kies of items die niet zijn geselecteerd worden verborgen"
+
+#: data/ui/preferences.blp:187
+msgid "Plot"
+msgstr "Grafiek"
 
 #: data/ui/preferences.blp:191
 msgid "Set the labels and title that are used by default"
@@ -2238,7 +2246,7 @@ msgstr "β (°)"
 
 #: src/file_io.py:110
 msgid "R (1/s)"
-msgstr ""
+msgstr "R (1/s)"
 
 #: src/file_io.py:189
 msgid "Missing colon in file {}, line {}"
