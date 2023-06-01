@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: graphs\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-06-01 13:18+0200\n"
-"PO-Revision-Date: 2023-06-01 14:00+0200\n"
+"PO-Revision-Date: 2023-06-01 14:08+0200\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: nl\n"
@@ -90,7 +90,7 @@ msgstr ""
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:29
 msgid "1 - Plot and manipulate any data set inserted by equation or from file"
 msgstr ""
-"1- Plot en manipuleer elke dataset die is ingevoegd door vergelijking of "
+"1- Plot en manipuleer elke gegevensset die is ingevoegd door vergelijking of "
 "vanuit een bestand"
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:33
@@ -99,7 +99,7 @@ msgstr "2 - Zowel de lichte als de donkere modus wordt ondersteund"
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:37
 msgid "3 - Add data from an equation"
-msgstr "3 - Voeg data toe vanuit een vergelijking"
+msgstr "3 - Voeg gegevens toe vanuit een vergelijking"
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:41
 msgid "4 - Edit plot stylesheets"
@@ -922,7 +922,7 @@ msgstr "Gegevens"
 
 #: data/ui/edit_item.blp:23
 msgid "Change the name of the data set and the axis positions"
-msgstr "Verander de naam van de dataset en de asposities"
+msgstr "Verander de naam van de gegevensset en de asposities"
 
 #: data/ui/edit_item.blp:26
 msgid "Change Name"
@@ -1188,7 +1188,7 @@ msgstr "Kolom X"
 
 #: data/ui/import.blp:42
 msgid "Choose which column to load for the X-data"
-msgstr "Kies welke kolom gebruikt wordt om X-data te laden"
+msgstr "Kies welke kolom gebruikt wordt om X-gegevens te laden"
 
 #: data/ui/import.blp:56 data/ui/preferences.blp:44
 msgid "Column Y"
@@ -1196,7 +1196,7 @@ msgstr "Kolom Y"
 
 #: data/ui/import.blp:57
 msgid "Choose which column to load for the Y-data"
-msgstr "Kies welke kolom gebruikt wordt om Y-data te laden"
+msgstr "Kies welke kolom gebruikt wordt om Y-gegevens te laden"
 
 #: data/ui/import.blp:71 data/ui/preferences.blp:61
 msgid "Skip Rows"
@@ -1204,7 +1204,7 @@ msgstr "Rijen overslaan"
 
 #: data/ui/import.blp:72
 msgid "Choose how many rows to skip while loading data"
-msgstr "Kies hoeveel rijen overgeslagen worden bij het importeren van data"
+msgstr "Kies hoeveel rijen overgeslagen worden bij het importeren van gegevens"
 
 #: data/ui/import.blp:89
 msgid "Confirm"
@@ -1265,11 +1265,11 @@ msgstr "Grenzen gebruikt op de assen"
 
 #: data/ui/plot_settings.blp:46
 msgid "No data"
-msgstr "Geen data"
+msgstr "Geen gegevens"
 
 #: data/ui/plot_settings.blp:47
 msgid "Add data to the graph to set the axis limits."
-msgstr "Voeg data toe aan de grafiek om de asgrenzen in te stellen."
+msgstr "Voeg gegevens toe aan de grafiek om de asgrenzen in te stellen."
 
 #: data/ui/plot_settings.blp:55
 msgid "Minimum left-hand Y-axis"
@@ -1671,11 +1671,11 @@ msgstr "Scheidingsteken"
 
 #: data/ui/preferences.blp:28
 msgid "Which column to load for the X-data"
-msgstr "Kies welke kolom gebruikt wordt voor het laden van X-data"
+msgstr "Kies welke kolom gebruikt wordt voor het laden van X-gegevens"
 
 #: data/ui/preferences.blp:45
 msgid "Which column to load for the Y-data"
-msgstr "Kies welke kolom gebruikt wordt voor het laden van Y-data"
+msgstr "Kies welke kolom gebruikt wordt voor het laden van Y-gegevens"
 
 #: data/ui/preferences.blp:62
 msgid "How many rows to skip while loading data"
@@ -1768,7 +1768,7 @@ msgstr "Hoe nieuwe gegevens met een bestaande naam gehanteerd worden"
 
 #: data/ui/preferences.blp:174
 msgid "Hide Unselected"
-msgstr "Verberg niet-geselecteerde data"
+msgstr "Verberg niet-geselecteerde gegevens"
 
 #: data/ui/preferences.blp:175
 msgid "Whether to hide items, that aren't selected"
@@ -1905,7 +1905,7 @@ msgstr "Aanpassen"
 
 #: data/ui/transform_window.blp:7
 msgid "Transform Data"
-msgstr "Transformeer data"
+msgstr "Transformeer gegevens"
 
 #: data/ui/transform_window.blp:26
 msgid ""
@@ -1966,11 +1966,11 @@ msgstr "Open toepassingmenu"
 
 #: data/ui/window.blp:137
 msgid "No Data"
-msgstr "Geen data"
+msgstr "Geen gegevens"
 
 #: data/ui/window.blp:138
 msgid "Add data from a file or manually as an equation"
-msgstr "Voeg gegevens toe van een bestand, of van een vergelijking"
+msgstr "Voeg gegevens toe vanuit een bestand, of met een vergelijking"
 
 #: data/ui/window.blp:159
 msgid ""
@@ -2025,7 +2025,7 @@ msgstr "Centreer"
 
 #: data/ui/window.blp:265
 msgid "Center the data"
-msgstr "Centreer de data"
+msgstr "Centreer de gegevens"
 
 #: data/ui/window.blp:282 data/ui/window.blp:284
 msgid "Combine"
@@ -2037,7 +2037,7 @@ msgstr "Knippen"
 
 #: data/ui/window.blp:303
 msgid "Cut selected Data"
-msgstr "Knip de geselecteerde data"
+msgstr "Knip de geselecteerde gegevens"
 
 #: data/ui/window.blp:310
 msgid "Translate and Multiply"
@@ -2195,7 +2195,7 @@ msgstr "Weggooien"
 
 #: src/actions.py:113
 msgid "Opening a project will discard all open data."
-msgstr "Als je een project opent dan wordt alle open data verwijdert"
+msgstr "Als je een project opent dan worden alle open gegevens verwijdert."
 
 #: src/actions.py:116 src/plot_styles.py:414 src/plot_styles.py:453
 msgid "Cancel"
@@ -2214,7 +2214,7 @@ msgstr "{error}: Kan niet verplaatsen, let op dat je een geldig getal gebruikt"
 #, python-brace-format
 msgid "{error} - Unable to add data from equation"
 msgstr ""
-"{error} - Het is niet gelukt om data toe te voegen vanuit de vergelijking"
+"{error} - Het is niet gelukt om gegevens toe te voegen vanuit de vergelijking"
 
 #: src/export_figure.py:66
 msgid "Exported Figure"
@@ -2488,7 +2488,7 @@ msgstr "Geen gegevens gevonden in het geselecteerde gebied"
 
 #: src/operations.py:252
 msgid "Combined Data"
-msgstr "Gecombineerde data"
+msgstr "Gecombineerde gegevens"
 
 #: src/plot_styles.py:231
 #, python-brace-format
