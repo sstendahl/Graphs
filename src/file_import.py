@@ -124,9 +124,8 @@ class ImportWindow(Adw.Window):
         self.skip_rows.set_value(int(params["skip_rows"]))
 
     def on_accept(self, _widget):
-        self.param_dict = self.get_columns()
         if "columns" in self.modes:
-            self.load_columns()
+            self.get_columns()
         import_settings_list = []
         for mode in IMPORT_MODES:
             try:
@@ -142,6 +141,7 @@ class ImportWindow(Adw.Window):
         self.destroy()
 
     def get_columns(self):
+        print("WOOPS")
         self.param_dict["columns"] = {
             "column_x": int(self.column_x.get_value()),
             "column_y": int(self.column_y.get_value()),
