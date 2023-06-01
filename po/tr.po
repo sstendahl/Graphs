@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: se.sjoerd.Graphs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-31 23:30+0300\n"
+"POT-Creation-Date: 2023-06-01 13:18+0200\n"
 "PO-Revision-Date: 2023-05-31 23:36+0300\n"
 "Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
 "Language-Team: Türkçe <takim@gnome.org.tr>\n"
@@ -2578,6 +2578,10 @@ msgstr "Grafik Proje Dosyası"
 #: src/ui.py:109
 msgid "Text Files"
 msgstr "Metin Dosyaları"
+
+#: src/ui.py:128
+msgid "translator-credits"
+msgstr "Sabri Ünal <libreajans@gmail.com>"
 
 #~ msgid "Open Data From File (Advanced)"
 #~ msgstr "Dosyadan Veri Aç (Gelişmiş)"

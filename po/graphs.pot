@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: graphs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-31 23:30+0300\n"
+"POT-Creation-Date: 2023-06-01 13:18+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2539,4 +2539,8 @@ msgstr ""
 
 #: src/ui.py:109
 msgid "Text Files"
+msgstr ""
+
+#: src/ui.py:128
+msgid "translator-credits"
 msgstr ""
