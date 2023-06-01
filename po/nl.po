@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: graphs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-01 13:12+0200\n"
+"POT-Creation-Date: 2023-06-01 13:18+0200\n"
 "PO-Revision-Date: 2023-05-09 16:12+0200\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -2624,6 +2624,10 @@ msgstr "Graphs Projectbestand"
 #: src/ui.py:109
 msgid "Text Files"
 msgstr "Tekstbestanden"
+
+#: src/ui.py:128
+msgid "translator-credits"
+msgstr "Sjoerd Stendahl <contact@sjoerd.se>"
 
 #~ msgid "Open Data From File (Advanced)"
 #~ msgstr "Open data van een bestand (geavanceerd)"

@@ -125,6 +125,7 @@ def show_about_window(self):
                             developers=developers,
                             copyright=f"© {self.copyright} {self.author}",
                             license_type="GTK_LICENSE_GPL_3_0")
+    about.set_translator_credits(_("translator-credits"))
     whats_new_file = Gio.File.new_for_uri(
         "resource:///se/sjoerd/Graphs/whats_new")
     release_notes = whats_new_file.load_bytes(None)[0].get_data()
