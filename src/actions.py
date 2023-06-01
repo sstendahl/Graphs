@@ -78,6 +78,7 @@ def redo_action(_action, _target, self):
 
 def restore_view_action(_action, _target, self):
     self.canvas.load_limits()
+    graphs.refresh(self)
 
 
 def view_back_action(_action, _target, self):
