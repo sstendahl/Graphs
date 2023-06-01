@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: graphs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-01 13:18+0200\n"
-"PO-Revision-Date: 2023-05-09 16:12+0200\n"
+"POT-Creation-Date: 2023-05-12 11:39+0200\n"
+"PO-Revision-Date: 2023-06-01 14:31+0200\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: nl\n"
@@ -90,7 +90,7 @@ msgstr ""
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:29
 msgid "1 - Plot and manipulate any data set inserted by equation or from file"
 msgstr ""
-"1- Plot en manipuleer elke dataset die is ingevoegd door vergelijking of "
+"1- Plot en manipuleer elke gegevensset die is ingevoegd door vergelijking of "
 "vanuit een bestand"
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:33
@@ -99,7 +99,7 @@ msgstr "2 - Zowel de lichte als de donkere modus wordt ondersteund"
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:37
 msgid "3 - Add data from an equation"
-msgstr "3 - Voeg data toe vanuit een vergelijking"
+msgstr "3 - Voeg gegevens toe vanuit een vergelijking"
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:41
 msgid "4 - Edit plot stylesheets"
@@ -111,9 +111,8 @@ msgstr "5 - Manipuleer gegevens met een breed aantal operaties"
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:52
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:64
-#, fuzzy
 msgid "Changes:"
-msgstr "Verander naam"
+msgstr "Veranderingen:"
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:54
 msgid "Adds Dutch translation for Graphs."
@@ -196,9 +195,8 @@ msgid "Save and Load functionality"
 msgstr ""
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:94
-#, fuzzy
 msgid "Customizable Plot Styles"
-msgstr "Eigen plotstijl"
+msgstr ""
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:95
 msgid "Loads of optimizations and refactors in the background"
@@ -245,9 +243,8 @@ msgid "Added combine operation"
 msgstr ""
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:108
-#, fuzzy
 msgid "Added custom Adwaita stylesheets for the graph"
-msgstr "De stijl voor de grafiek"
+msgstr ""
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:109
 msgid "Added a function to quickly change axis scale in the view menu"
@@ -304,9 +301,8 @@ msgid "Added an option to hide unselected items from the graph"
 msgstr ""
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:122
-#, fuzzy
 msgid "Added a dialog before exporting the figure"
-msgstr "Opties voor het exporteren van de grafiek"
+msgstr ""
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:123
 msgid "Support for Panalytical .xdrml files"
@@ -472,24 +468,20 @@ msgid ""
 msgstr ""
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:192
-#, fuzzy
 msgid "Added the ability to get the derivative of the data"
-msgstr "Bereken de afgeleide van de gegevens"
+msgstr ""
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:193
-#, fuzzy
 msgid "Added the ability to get the indefinite integral of the data"
-msgstr "Bereken de integraal van de gegevens"
+msgstr ""
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:194
-#, fuzzy
 msgid "Added the ability to get the Fast Fourier Transform of the data"
-msgstr "Bereken de Fouriertransformatie (FFT) van de gegevens"
+msgstr ""
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:195
-#, fuzzy
 msgid "Added the ability to get the Inverse Fast Fourier Transform of the data"
-msgstr "Bereken de omgekeerde Fouriertransformatie van de gegevens"
+msgstr ""
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:196
 msgid ""
@@ -605,9 +597,8 @@ msgid ""
 msgstr ""
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:247
-#, fuzzy
 msgid "Added the option to plot data on the right-hand axis"
-msgstr "Standaardschaal voor de rechteras"
+msgstr ""
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:248
 msgid "Added the option to plot data on the top axis"
@@ -761,9 +752,8 @@ msgid "Improved the UI for the \"Add equation\" and \"Transform data\" windows"
 msgstr ""
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:311
-#, fuzzy
 msgid "Added import settings"
-msgstr "Importeerinstellingen"
+msgstr ""
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:312
 msgid "Added an advanced import setting"
@@ -932,7 +922,7 @@ msgstr "Gegevens"
 
 #: data/ui/edit_item.blp:23
 msgid "Change the name of the data set and the axis positions"
-msgstr "Verander de naam van de dataset en de asposities"
+msgstr "Verander de naam van de gegevensset en de asposities"
 
 #: data/ui/edit_item.blp:26
 msgid "Change Name"
@@ -1178,7 +1168,7 @@ msgstr "Actie opnieuw uitvoeren"
 
 #: data/ui/import.blp:8
 msgid "Modify import Parameters"
-msgstr ""
+msgstr "Pas de importeerinstellingen aan"
 
 #: data/ui/import.blp:32
 msgid "Delimiter (s+ for whitespace)"
@@ -1198,7 +1188,7 @@ msgstr "Kolom X"
 
 #: data/ui/import.blp:42
 msgid "Choose which column to load for the X-data"
-msgstr "Kies welke kolom gebruikt wordt om X-data te laden"
+msgstr "Kies welke kolom gebruikt wordt om X-gegevens te laden"
 
 #: data/ui/import.blp:56 data/ui/preferences.blp:44
 msgid "Column Y"
@@ -1206,7 +1196,7 @@ msgstr "Kolom Y"
 
 #: data/ui/import.blp:57
 msgid "Choose which column to load for the Y-data"
-msgstr "Kies welke kolom gebruikt wordt om Y-data te laden"
+msgstr "Kies welke kolom gebruikt wordt om Y-gegevens te laden"
 
 #: data/ui/import.blp:71 data/ui/preferences.blp:61
 msgid "Skip Rows"
@@ -1214,11 +1204,11 @@ msgstr "Rijen overslaan"
 
 #: data/ui/import.blp:72
 msgid "Choose how many rows to skip while loading data"
-msgstr "Kies hoeveel rijen overgeslagen worden bij het importeren van data"
+msgstr "Kies hoeveel rijen overgeslagen worden bij het importeren van gegevens"
 
 #: data/ui/import.blp:89
 msgid "Confirm"
-msgstr ""
+msgstr "Bevestigen"
 
 #: data/ui/item_box.blp:24
 msgid "Edit Item"
@@ -1275,11 +1265,11 @@ msgstr "Grenzen gebruikt op de assen"
 
 #: data/ui/plot_settings.blp:46
 msgid "No data"
-msgstr "Geen data"
+msgstr "Geen gegevens"
 
 #: data/ui/plot_settings.blp:47
 msgid "Add data to the graph to set the axis limits."
-msgstr "Voeg data toe aan de grafiek om de asgrenzen in te stellen."
+msgstr "Voeg gegevens toe aan de grafiek om de asgrenzen in te stellen."
 
 #: data/ui/plot_settings.blp:55
 msgid "Minimum left-hand Y-axis"
@@ -1395,299 +1385,281 @@ msgstr "De stijl voor de grafiek"
 
 #: data/ui/plot_styles.blp:30
 msgid "Reset to default styles"
-msgstr ""
+msgstr "Herstel de standaardstijlen"
 
 #: data/ui/plot_styles.blp:77
-#, fuzzy
 msgid "Style Name"
 msgstr "Nieuwe stijlnaam"
 
 #: data/ui/plot_styles.blp:81
 msgid "Font"
-msgstr ""
+msgstr "Lettertype"
 
 #: data/ui/plot_styles.blp:82
-#, fuzzy
 msgid "The font used in the graph"
-msgstr "De stijl voor de grafiek"
+msgstr "Welk lettertype gebruikt wordt in de grafiek"
 
 #: data/ui/plot_styles.blp:93
-#, fuzzy
 msgid "Lines"
-msgstr "Lineair"
+msgstr "Lijnen"
 
 #: data/ui/plot_styles.blp:94
-#, fuzzy
 msgid "Change properties of the line and markers"
 msgstr "Verander de lijneigenschappen"
 
 #: data/ui/plot_styles.blp:98
-#, fuzzy
 msgid "The linestyle used"
 msgstr "De lijnstijl"
 
 #: data/ui/plot_styles.blp:128
 msgid "Ticks"
-msgstr ""
+msgstr "Maatstreepjes"
 
 #: data/ui/plot_styles.blp:129
-#, fuzzy
 msgid "Settings for the ticks that are used in the plots"
-msgstr "Instellingen voor de titel en labelling van de grafiek"
+msgstr "Instellingen voor de maatstreepjes in de grafieken"
 
 #: data/ui/plot_styles.blp:132
 msgid "Tick Directions"
-msgstr ""
+msgstr "Maatstreepjes richting"
 
 #: data/ui/plot_styles.blp:133
 msgid "Choose to have the ticks in the plot either in or out"
-msgstr ""
+msgstr "Kies om de maastreepjes naar binnen of naar buiten staan"
 
 #: data/ui/plot_styles.blp:137
 msgid "Minor Ticks"
-msgstr ""
+msgstr "Kleine maatstreepjes"
 
 #: data/ui/plot_styles.blp:138
 msgid "Show Minor Ticks"
-msgstr ""
+msgstr "Toon kleine maatstreepjes"
 
 #: data/ui/plot_styles.blp:147
 msgid "Major Tick Width"
-msgstr ""
+msgstr "Grote maatstreepjes breedte"
 
 #: data/ui/plot_styles.blp:148
-#, fuzzy
 msgid "The thickness of the major ticks"
-msgstr "De grootte van de markeringen"
+msgstr "De breedte van de grote maatstreepjes"
 
 #: data/ui/plot_styles.blp:157
 msgid "Minor Tick Width"
-msgstr ""
+msgstr "Kleine maatstreepjes breedte"
 
 #: data/ui/plot_styles.blp:158
-#, fuzzy
 msgid "The thickness of the minor ticks"
-msgstr "De grootte van de markeringen"
+msgstr "De breedte van de kleine maatstreepjes"
 
 #: data/ui/plot_styles.blp:168
 msgid "Major Tick Length"
-msgstr ""
+msgstr "Grote maatstreepjes lengte"
 
 #: data/ui/plot_styles.blp:169
-#, fuzzy
 msgid "The length of the major ticks"
-msgstr "De grootte van de markeringen"
+msgstr "De lengte van de grote maatstreepjes"
 
 #: data/ui/plot_styles.blp:178
 msgid "Minor Tick Length"
-msgstr ""
+msgstr "Kleine maatstreepjes lengte"
 
 #: data/ui/plot_styles.blp:179
-#, fuzzy
 msgid "The length of the minor ticks"
-msgstr "De grootte van de markeringen"
+msgstr "De lengte van de kleine maastreepjes"
 
 #: data/ui/plot_styles.blp:189
-#, fuzzy
 msgid "Ticks on Bottom Axis"
-msgstr "Schaal op de onderste as"
+msgstr "Maatstreepjes op de onderste as "
 
 #: data/ui/plot_styles.blp:190
-#, fuzzy
 msgid "Show ticks on the bottom"
-msgstr "Schaal op de onderste as"
+msgstr "Toon maastreepjes op de onderste as"
 
 #: data/ui/plot_styles.blp:199
 msgid "Ticks on Left Axis"
-msgstr ""
+msgstr "Maatstreepjes op de linkeras"
 
 #: data/ui/plot_styles.blp:200
-#, fuzzy
 msgid "Show ticks on the left-hand axis"
-msgstr "De schaal voor de linkeras"
+msgstr "Toon maatstreepjes op de linkeras"
 
 #: data/ui/plot_styles.blp:209
 msgid "Ticks on Right Axis"
-msgstr ""
+msgstr "Maatstreepjes rechteras"
 
 #: data/ui/plot_styles.blp:210
 msgid "Show ticks on the right"
-msgstr ""
+msgstr "Toon maatstreepjes op de rechteras"
 
 #: data/ui/plot_styles.blp:219
 msgid "Ticks on Top Axis"
-msgstr ""
+msgstr "Maatstreepjes bovenste as"
 
 #: data/ui/plot_styles.blp:220
 msgid "Show ticks on the top"
-msgstr ""
+msgstr "Toon maatstreepjes op de bovenste as"
 
 #: data/ui/plot_styles.blp:230
 msgid "Grid"
-msgstr ""
+msgstr "Rooster"
 
 #: data/ui/plot_styles.blp:231
-#, fuzzy
 msgid "Settings for the grid that is used in the plots"
-msgstr "Instellingen voor de grafiekstijl"
+msgstr "Roosterinstellingen in de grafieken"
 
 #: data/ui/plot_styles.blp:234
 msgid "Show Grid"
-msgstr ""
+msgstr "Toon rooster"
 
 #: data/ui/plot_styles.blp:235
 msgid "Show Show Grid on the Graph"
-msgstr ""
+msgstr "Toon een rooster in de grafieken"
 
 #: data/ui/plot_styles.blp:244
 msgid "Grid Width"
-msgstr ""
+msgstr "Roosterbreedte"
 
 #: data/ui/plot_styles.blp:245
 msgid "Width of the Lines in the Grid"
-msgstr ""
+msgstr "De breedte van de lijnen in het rooster"
 
 #: data/ui/plot_styles.blp:255
 msgid "Grid Transparency"
-msgstr ""
+msgstr "Roostertransparantie"
 
 #: data/ui/plot_styles.blp:256
 msgid "The Transparency of the Grid"
-msgstr ""
+msgstr "Transparantie van het rooster"
 
 #: data/ui/plot_styles.blp:267
 msgid "Padding"
-msgstr ""
+msgstr "Opvulling"
 
 #: data/ui/plot_styles.blp:268
 msgid "Padding for different parts of the plot"
-msgstr ""
+msgstr "Opvulling in verschillende plaatsten van de grafiek"
 
 #: data/ui/plot_styles.blp:271
 msgid "Value Padding"
-msgstr ""
+msgstr "Waardenopvulling"
 
 #: data/ui/plot_styles.blp:272
 msgid "The padding between axis and values"
-msgstr ""
+msgstr "De opvulling tussen de assen en de waarden"
 
 #: data/ui/plot_styles.blp:281
 msgid "Label Padding"
-msgstr ""
+msgstr "Labelopvulling"
 
 #: data/ui/plot_styles.blp:282
 msgid "The padding between axis and labels"
-msgstr ""
+msgstr "De opvulling tussen de as en de labels"
 
 #: data/ui/plot_styles.blp:291
 msgid "Title Padding"
-msgstr ""
+msgstr "Titelopvulling"
 
 #: data/ui/plot_styles.blp:292
 msgid "The padding between axis and the title"
-msgstr ""
+msgstr "De opvulling tussen de as en de titel"
 
 #: data/ui/plot_styles.blp:302
 msgid "Colors"
-msgstr ""
+msgstr "Kleuren"
 
 #: data/ui/plot_styles.blp:303
 msgid "The colors for different parts of the plot"
-msgstr ""
+msgstr "De kleuren voor verschillende delen van de grafiek"
 
 #: data/ui/plot_styles.blp:315
-#, fuzzy
 msgid "Text Color"
-msgstr "Tekstbestanden"
+msgstr "Textkleur"
 
 #: data/ui/plot_styles.blp:316
 msgid "The color of the text in the plot"
-msgstr ""
+msgstr "De kleur van verschillende delen in de grafiek"
 
 #: data/ui/plot_styles.blp:321 data/ui/plot_styles.blp:344
 #: data/ui/plot_styles.blp:367 data/ui/plot_styles.blp:390
 #: data/ui/plot_styles.blp:413 data/ui/plot_styles.blp:436
-#, fuzzy
 msgid "Change Color"
-msgstr "Verander label"
+msgstr "Verander kleur"
 
 #: data/ui/plot_styles.blp:338
-#, fuzzy
 msgid "Tick Color"
-msgstr "Kies een kleur"
+msgstr "Maatstreepjeskleur"
 
 #: data/ui/plot_styles.blp:339
 msgid "The color of the ticks in the plot"
-msgstr ""
+msgstr "De kleur van de maatstreepjes in de grafiek"
 
 #: data/ui/plot_styles.blp:361
 msgid "Axis Color"
-msgstr ""
+msgstr "Assenkleur"
 
 #: data/ui/plot_styles.blp:362
 msgid "The color of the axes in the plot"
-msgstr ""
+msgstr "De kleur van de assen in de plot"
 
 #: data/ui/plot_styles.blp:384
 msgid "Grid Color"
-msgstr ""
+msgstr "Roosterkleur"
 
 #: data/ui/plot_styles.blp:385
 msgid "The color of the grid in the plot"
-msgstr ""
+msgstr "De kleur van het rooster in de plot"
 
 #: data/ui/plot_styles.blp:407
 msgid "Background Color"
-msgstr ""
+msgstr "Achtergrondkleur"
 
 #: data/ui/plot_styles.blp:408
-#, fuzzy
 msgid "The color of the plot background"
-msgstr "De plek van de legenda"
+msgstr "De kleur van de achtergrond in de grafiek"
 
 #: data/ui/plot_styles.blp:430
 msgid "Outline Color"
-msgstr ""
+msgstr "Omlijningskleur"
 
 #: data/ui/plot_styles.blp:431
-#, fuzzy
 msgid "The color of the outline of the plot"
-msgstr "Hier kunt u de titel van de plot aanpassen"
+msgstr "De omlijningskleur van de grafiek"
 
 #: data/ui/plot_styles.blp:454 data/ui/plot_styles.blp:507
 msgid "Line Colors"
-msgstr ""
+msgstr "Lijnkleur"
 
 #: data/ui/plot_styles.blp:455
 msgid "Change the available line colors"
-msgstr ""
+msgstr "Verander de beschikbare lijnkleuren"
 
 #: data/ui/plot_styles.blp:460
 msgid "Edit Colors"
-msgstr ""
+msgstr "Kleuren aanpassen"
 
 #: data/ui/plot_styles.blp:473 data/ui/preferences.blp:149
 msgid "Other"
 msgstr "Overige"
 
 #: data/ui/plot_styles.blp:476
-#, fuzzy
 msgid "Axis Width"
-msgstr "Asgrenzen"
+msgstr "Asbreedte"
 
 #: data/ui/plot_styles.blp:477
-#, fuzzy
 msgid "The thickness of the axes"
-msgstr "De grootte van de markeringen"
+msgstr "De breedte van de assen"
 
 #: data/ui/plot_styles.blp:508
-#, fuzzy
 msgid "The colors which will be used for the lines"
-msgstr "Gebruik een legenda"
+msgstr "Welke kleuren gebruikt worden voor de lijnen"
 
 #: data/ui/plot_styles.blp:513
 msgid "Add Color"
-msgstr ""
+msgstr "Kleur toevoegen"
+
+#: data/ui/preferences.blp:10
+msgid "General"
+msgstr "Algemeen"
 
 #: data/ui/preferences.blp:13
 msgid "Import Settings"
@@ -1703,11 +1675,11 @@ msgstr "Scheidingsteken"
 
 #: data/ui/preferences.blp:28
 msgid "Which column to load for the X-data"
-msgstr "Kies welke kolom gebruikt wordt voor het laden van X-data"
+msgstr "Kies welke kolom gebruikt wordt voor het laden van X-gegevens"
 
 #: data/ui/preferences.blp:45
 msgid "Which column to load for the Y-data"
-msgstr "Kies welke kolom gebruikt wordt voor het laden van Y-data"
+msgstr "Kies welke kolom gebruikt wordt voor het laden van Y-gegevens"
 
 #: data/ui/preferences.blp:62
 msgid "How many rows to skip while loading data"
@@ -1800,11 +1772,15 @@ msgstr "Hoe nieuwe gegevens met een bestaande naam gehanteerd worden"
 
 #: data/ui/preferences.blp:174
 msgid "Hide Unselected"
-msgstr "Verberg niet-geselecteerde data"
+msgstr "Verberg niet-geselecteerde gegevens"
 
 #: data/ui/preferences.blp:175
 msgid "Whether to hide items, that aren't selected"
 msgstr "Kies of items die niet zijn geselecteerd worden verborgen"
+
+#: data/ui/preferences.blp:187
+msgid "Plot"
+msgstr "Grafiek"
 
 #: data/ui/preferences.blp:191
 msgid "Set the labels and title that are used by default"
@@ -1937,7 +1913,7 @@ msgstr "Aanpassen"
 
 #: data/ui/transform_window.blp:7
 msgid "Transform Data"
-msgstr "Transformeer data"
+msgstr "Transformeer gegevens"
 
 #: data/ui/transform_window.blp:26
 msgid ""
@@ -1998,11 +1974,11 @@ msgstr "Open toepassingmenu"
 
 #: data/ui/window.blp:137
 msgid "No Data"
-msgstr "Geen data"
+msgstr "Geen gegevens"
 
 #: data/ui/window.blp:138
 msgid "Add data from a file or manually as an equation"
-msgstr "Voeg gegevens toe van een bestand, of van een vergelijking"
+msgstr "Voeg gegevens toe vanuit een bestand, of met een vergelijking"
 
 #: data/ui/window.blp:159
 msgid ""
@@ -2057,7 +2033,7 @@ msgstr "Centreer"
 
 #: data/ui/window.blp:265
 msgid "Center the data"
-msgstr "Centreer de data"
+msgstr "Centreer de gegevens"
 
 #: data/ui/window.blp:282 data/ui/window.blp:284
 msgid "Combine"
@@ -2069,7 +2045,7 @@ msgstr "Knippen"
 
 #: data/ui/window.blp:303
 msgid "Cut selected Data"
-msgstr "Knip de geselecteerde data"
+msgstr "Knip de geselecteerde gegevens"
 
 #: data/ui/window.blp:310
 msgid "Translate and Multiply"
@@ -2222,13 +2198,12 @@ msgid "Right Y Scale"
 msgstr "Rechter Y-schaal"
 
 #: src/actions.py:112
-#, fuzzy
 msgid "Discard Data?"
 msgstr "Weggooien"
 
 #: src/actions.py:113
 msgid "Opening a project will discard all open data."
-msgstr ""
+msgstr "Als je een project opent dan worden alle open gegevens verwijdert."
 
 #: src/actions.py:116 src/plot_styles.py:414 src/plot_styles.py:453
 msgid "Cancel"
@@ -2247,7 +2222,7 @@ msgstr "{error}: Kan niet verplaatsen, let op dat je een geldig getal gebruikt"
 #, python-brace-format
 msgid "{error} - Unable to add data from equation"
 msgstr ""
-"{error} - Het is niet gelukt om data toe te voegen vanuit de vergelijking"
+"{error} - Het is niet gelukt om gegevens toe te voegen vanuit de vergelijking"
 
 #: src/export_figure.py:66
 msgid "Exported Figure"
@@ -2271,28 +2246,27 @@ msgstr "β (°)"
 
 #: src/file_io.py:110
 msgid "R (1/s)"
-msgstr ""
+msgstr "R (1/s)"
 
 #: src/file_io.py:189
 msgid "Missing colon in file {}, line {}"
-msgstr ""
+msgstr "Een missende dubbele punt in bestand {}, lijn {}"
 
 #: src/file_io.py:197
 msgid "Style includes a non-style related parameter, {}"
-msgstr ""
+msgstr "Stijl bevat een verkeerde parameter, {}"
 
 #: src/file_io.py:200
 msgid "Duplicate key in file {}, on line {}"
-msgstr ""
+msgstr "Dubbele waarde in bestand {} op lijn {}"
 
 #: src/file_io.py:206
 msgid "Bad value in file {} on line {}"
-msgstr ""
+msgstr "Verkeerde waarde in het bestand {} op lijn {}"
 
 #: src/file_io.py:210
-#, fuzzy
 msgid "Could not parse {}"
-msgstr "Kon %s niet laden"
+msgstr "Kon {} niet laden"
 
 #: src/graphs.py:26
 msgid "Could not open project"
@@ -2300,11 +2274,11 @@ msgstr "Kan project niet openen"
 
 #: src/graphs.py:84
 msgid "Items {} already exist"
-msgstr ""
+msgstr "{} bestaan al"
 
 #: src/graphs.py:86
 msgid "Item {} already exists"
-msgstr ""
+msgstr "{} bestaat al"
 
 #: src/graphs.py:100
 #, python-brace-format
@@ -2521,9 +2495,8 @@ msgid "No data found within the highlighted area"
 msgstr "Geen gegevens gevonden in het geselecteerde gebied"
 
 #: src/operations.py:252
-#, fuzzy
 msgid "Combined Data"
-msgstr "Combineer"
+msgstr "Gecombineerde gegevens"
 
 #: src/plot_styles.py:231
 #, python-brace-format
@@ -2531,13 +2504,12 @@ msgid "{name} - line colors"
 msgstr "{name} - Lijnkleuren"
 
 #: src/plot_styles.py:410
-#, fuzzy
 msgid "Delete style?"
-msgstr "Verwijderen"
+msgstr "Verwijder de stijl?"
 
 #: src/plot_styles.py:411
 msgid "Are you sure you want to delete the {} style?"
-msgstr ""
+msgstr "Weet u zeker dat u {} wilt verwijderen?"
 
 #: src/plot_styles.py:415
 msgid "Delete"
@@ -2545,11 +2517,11 @@ msgstr "Verwijderen"
 
 #: src/plot_styles.py:449
 msgid "Reset to defaults?"
-msgstr ""
+msgstr "Herstel standaardinstellingen?"
 
 #: src/plot_styles.py:450
 msgid "Are you sure you want to reset to the default styles?"
-msgstr ""
+msgstr "Weet u zeker dat u de standaardstijlen wil herstellen?"
 
 #: src/plot_styles.py:454
 msgid "Reset"
@@ -2557,7 +2529,7 @@ msgstr "Opnieuw instellen"
 
 #: src/plot_styles.py:523
 msgid "Color {}"
-msgstr ""
+msgstr "Kleur {}"
 
 #: src/plot_styles.py:551 src/plot_styles.py:562
 #, python-brace-format
@@ -2574,7 +2546,6 @@ msgid "New configuration file created"
 msgstr "Nieuw configuratiebestand aangemaakt"
 
 #: src/preferences.py:33
-#, fuzzy
 msgid "New Import Settings file created"
 msgstr "Nieuw configuratiebestand aangemaakt"
 

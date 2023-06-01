@@ -1,14 +1,14 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the graphs package.
+# This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: graphs\n"
+"Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-01 13:18+0200\n"
+"POT-Creation-Date: 2023-05-12 11:39+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1632,6 +1632,10 @@ msgstr ""
 msgid "Add Color"
 msgstr ""
 
+#: data/ui/preferences.blp:10
+msgid "General"
+msgstr ""
+
 #: data/ui/preferences.blp:13
 msgid "Import Settings"
 msgstr ""
@@ -1746,6 +1750,10 @@ msgstr ""
 
 #: data/ui/preferences.blp:175
 msgid "Whether to hide items, that aren't selected"
+msgstr ""
+
+#: data/ui/preferences.blp:187
+msgid "Plot"
 msgstr ""
 
 #: data/ui/preferences.blp:191
