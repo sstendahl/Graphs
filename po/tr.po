@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: se.sjoerd.Graphs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-01 13:18+0200\n"
-"PO-Revision-Date: 2023-05-31 23:36+0300\n"
+"POT-Creation-Date: 2023-05-12 11:39+0200\n"
+"PO-Revision-Date: 2023-06-01 14:38+0200\n"
 "Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
 "Language-Team: Türkçe <takim@gnome.org.tr>\n"
 "Language: tr\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.2.2\n"
+"X-Generator: Poedit 3.1.1\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:6
@@ -1653,6 +1653,10 @@ msgstr "Çizgiler için kullanılacak renkler"
 msgid "Add Color"
 msgstr "Renk Ekle"
 
+#: data/ui/preferences.blp:10
+msgid "General"
+msgstr "Genel"
+
 #: data/ui/preferences.blp:13
 msgid "Import Settings"
 msgstr "İçe Aktarma Ayarları"
@@ -1770,6 +1774,10 @@ msgstr "Seçilmemişi Gizle"
 #: data/ui/preferences.blp:175
 msgid "Whether to hide items, that aren't selected"
 msgstr "Seçilmemiş ögelerin gizlenme durumu"
+
+#: data/ui/preferences.blp:187
+msgid "Plot"
+msgstr "Çizim"
 
 #: data/ui/preferences.blp:191
 msgid "Set the labels and title that are used by default"
