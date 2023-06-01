@@ -157,7 +157,7 @@ def import_from_columns(self, import_settings):
                     item.ylabel = headers[params["column_y"]]
                 except IndexError:
                     try:
-                        headers = re.split(params.delimiter, line)
+                        headers = re.split(params["delimiter"], line)
                         item.xlabel = headers[params["column_x"]]
                         item.ylabel = headers[params["column_y"]]
                     # If neither heuristic works, we just skip headers

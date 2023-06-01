@@ -100,6 +100,7 @@ class ImportWindow(Adw.Window):
         self.import_dict = import_dict
         self.import_params = parent.preferences.import_params
         visible = False
+        self.param_dict = {}
         if "columns" in self.modes:
             self.load_columns()
             visible = True
@@ -123,7 +124,7 @@ class ImportWindow(Adw.Window):
         self.skip_rows.set_value(int(params["skip_rows"]))
 
     def on_accept(self, _widget):
-        self.param_dict = {}
+        self.param_dict = self.get_columns()
         if "columns" in self.modes:
             self.load_columns()
         import_settings_list = []
@@ -148,6 +149,7 @@ class ImportWindow(Adw.Window):
             "separator": utilities.get_selected_chooser_item(self.separator),
             "delimiter": self.delimiter.get_text(),
         }
+        return self.param_dict
 
     def on_close(self, _widget):
         prepare_import_finish(self.parent, self.import_dict)
