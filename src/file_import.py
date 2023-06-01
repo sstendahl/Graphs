@@ -100,7 +100,6 @@ class ImportWindow(Adw.Window):
         self.import_dict = import_dict
         self.import_params = parent.preferences.import_params
         visible = False
-        self.param_dict = {}
         if "columns" in self.modes:
             self.load_columns()
             visible = True
@@ -124,6 +123,7 @@ class ImportWindow(Adw.Window):
         self.skip_rows.set_value(int(params["skip_rows"]))
 
     def on_accept(self, _widget):
+        self.param_dict = {}
         if "columns" in self.modes:
             self.get_columns()
         import_settings_list = []
