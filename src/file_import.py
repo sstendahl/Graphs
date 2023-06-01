@@ -148,7 +148,7 @@ class ImportWindow(Adw.Window):
             "separator": utilities.get_selected_chooser_item(self.separator),
             "delimiter": self.delimiter.get_text(),
         }
-        
+
     def on_close(self, _widget):
         prepare_import_finish(self.parent, self.import_dict)
 
