@@ -141,7 +141,6 @@ class ImportWindow(Adw.Window):
         self.destroy()
 
     def get_columns(self):
-        print("WOOPS")
         self.param_dict["columns"] = {
             "column_x": int(self.column_x.get_value()),
             "column_y": int(self.column_y.get_value()),
