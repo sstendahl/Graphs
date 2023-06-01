@@ -1,21 +1,22 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
-data/ui/add_data_advanced.blp
+data/se.sjoerd.Graphs.appdata.xml.in.in
+data/se.sjoerd.Graphs.desktop.in.in
+data/se.sjoerd.Graphs.gschema.xml.in
 data/ui/add_equation_window.blp
 data/ui/add_style.blp
 data/ui/edit_item.blp
 data/ui/export_figure.blp
 data/ui/help_overlay.blp
+data/ui/import.blp
 data/ui/item_box.blp
 data/ui/plot_settings.blp
+data/ui/plot_styles.blp
 data/ui/preferences.blp
 data/ui/rename_window.blp
 data/ui/style_box.blp
 data/ui/style_color_box.blp
 data/ui/transform_window.blp
 data/ui/window.blp
-data/se.sjoerd.Graphs.appdata.xml.in.in
-data/se.sjoerd.Graphs.desktop.in.in
-data/se.sjoerd.Graphs.gschema.xml.in
 src/actions.py
 src/add_data_advanced.py
 src/add_equation.py

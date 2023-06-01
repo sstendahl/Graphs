@@ -168,7 +168,7 @@ class PlotStylesWindow(Adw.Window):
         self.add_button.connect("clicked", self.add_data)
         self.back_button.connect("clicked", self.back)
         self.connect("close-request", self.on_close)
-        self.set_title("Plot Styles")
+        self.set_title(_("Plot Styles"))
 
         # setup editor
         self.font_chooser.set_use_font(True)
@@ -446,8 +446,8 @@ class PlotStylesWindow(Adw.Window):
                 reset_user_styles(self.parent)
                 self.reload_styles()
 
-        heading = "Reset to defaults?"
-        body = "Are you sure you want to reset to the default styles?"
+        heading = _("Reset to defaults?")
+        body = _("Are you sure you want to reset to the default styles?")
         dialog = Adw.MessageDialog.new(
             self, heading, body)
         dialog.add_response("cancel", _("Cancel"))
@@ -520,7 +520,7 @@ class StyleColorBox(Gtk.Box):
 
     def __init__(self, parent, color):
         super().__init__()
-        self.label.set_label(f"Color {len(parent.color_boxes) + 1}")
+        self.label.set_label(_("Color {}").format(len(parent.color_boxes) + 1))
         self.color_button.color = color
         self.color_button.provider = Gtk.CssProvider()
         self.color_button.get_style_context().add_provider(
