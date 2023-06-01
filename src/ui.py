@@ -10,7 +10,7 @@ from graphs.item_box import ItemBox
 
 
 def on_style_change(_shortcut, _theme, _widget, self):
-    graphs.reload(self, reset_limits=False)
+    graphs.reload(self)
 
 
 def enable_data_dependent_buttons(self):

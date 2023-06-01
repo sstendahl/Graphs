@@ -2,7 +2,7 @@
 import logging
 from gettext import gettext as _
 
-from graphs import calculation, clipboard, graphs
+from graphs import calculation, clipboard, graphs, plotting_tools
 from graphs.item import Item
 from graphs.misc import InteractionMode
 
@@ -85,7 +85,8 @@ def perform_operation(self, callback, *args):
             _("No data found within the highlighted area"))
 
     clipboard.add(self)
-    graphs.refresh(self, set_limits=True)
+    graphs.refresh(self)
+    plotting_tools.optimize_limits(self)
 
 
 def translate_x(_item, xdata, ydata, offset):
