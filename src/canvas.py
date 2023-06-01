@@ -4,7 +4,7 @@ from contextlib import nullcontext
 
 from gi.repository import Gtk
 
-from graphs import file_io, plot_styles, plotting_tools, utilities
+from graphs import file_io, plot_styles, utilities
 from graphs.item import Item, TextItem
 from graphs.rename import RenameWindow
 
@@ -37,6 +37,7 @@ class Canvas(FigureCanvas):
         color_rgba.alpha = 0.3
         self.rubberband_fill_color = utilities.rgba_to_tuple(color_rgba, True)
         super().__init__(self.figure)
+        self.load_limits()
         self.legends = []
         for axis in [self.right_axis, self.top_left_axis,
                      self.top_right_axis]:
@@ -93,36 +94,27 @@ class Canvas(FigureCanvas):
                 color=item.color, fontsize=item.size)
         self.set_legend()
 
-    def set_limits(self, limits):
-        used_axes = utilities.get_used_axes(self.parent)[0]
-        if used_axes["bottom"]:
-            for axis in [self.axis, self.right_axis]:
-                axis.set_xlim(float(limits["min_bottom"]),
-                              float(limits["max_bottom"]))
-        if used_axes["left"]:
-            for axis in [self.axis, self.top_left_axis]:
-                axis.set_ylim(float(limits["min_left"]),
-                              float(limits["max_left"]))
-        if used_axes["right"]:
-            for axis in [self.right_axis, self.top_right_axis]:
-                axis.set_ylim(float(limits["min_right"]),
-                              float(limits["max_right"]))
-        if used_axes["top"]:
-            for axis in [self.top_left_axis, self.top_right_axis]:
-                axis.set_xlim(float(limits["min_top"]),
-                              float(limits["max_top"]))
+    def load_limits(self):
+        plot_settings = self.parent.plot_settings
+        for axis in [self.axis, self.right_axis]:
+            axis.set_xlim(plot_settings.min_bottom, plot_settings.max_bottom)
+        for axis in [self.top_left_axis, self.top_right_axis]:
+            axis.set_xlim(plot_settings.min_top, plot_settings.max_top)
+        for axis in [self.axis, self.top_left_axis]:
+            axis.set_ylim(plot_settings.min_left, plot_settings.max_left)
+        for axis in [self.right_axis, self.top_right_axis]:
+            axis.set_ylim(plot_settings.min_right, plot_settings.max_right)
 
-    def get_limits(self):
-        return {
-            "min_left": min(self.axis.get_ylim()),
-            "max_left": max(self.axis.get_ylim()),
-            "min_bottom": min(self.axis.get_xlim()),
-            "max_bottom": max(self.axis.get_xlim()),
-            "min_right": min(self.right_axis.get_ylim()),
-            "max_right": max(self.right_axis.get_ylim()),
-            "min_top": min(self.top_left_axis.get_ylim()),
-            "max_top": max(self.top_left_axis.get_ylim()),
-        }
+    def apply_limits(self):
+        plot_settings = self.parent.plot_settings
+        plot_settings.min_bottom = min(self.axis.get_xlim())
+        plot_settings.max_bottom = max(self.axis.get_xlim())
+        plot_settings.min_top = min(self.top_left_axis.get_ylim())
+        plot_settings.max_top = max(self.top_left_axis.get_ylim())
+        plot_settings.min_left = min(self.axis.get_ylim())
+        plot_settings.max_left = max(self.axis.get_ylim())
+        plot_settings.min_right = min(self.right_axis.get_ylim())
+        plot_settings.max_right = max(self.right_axis.get_ylim())
 
     def set_axis_properties(self):
         """Set the properties that are related to the axes."""
@@ -226,37 +218,6 @@ class Canvas(FigureCanvas):
                     new_lines, labels,
                     loc=self.parent.plot_settings.legend_position,
                     frameon=True, reverse=True)
-
-    def restore_view(self):
-        """Set the canvas limits for each axis to the initial view"""
-        used_axes, items = utilities.get_used_axes(self.parent)
-        axis_map = {
-            "left": self.axis,
-            "right": self.right_axis,
-            "top": self.top_left_axis,
-            "bottom": self.axis,
-        }
-
-        # Find the limits from data
-        limits = {}
-        for direction, used in used_axes.items():
-            if used:
-                if direction in ["top", "bottom"]:
-                    scale = axis_map[direction].get_xscale()
-                    datalist = [item.xdata for item in items[direction]
-                                if isinstance(item, Item)]
-                elif direction in ["left", "right"]:
-                    scale = axis_map[direction].get_yscale()
-                    datalist = [item.ydata for item in items[direction]
-                                if isinstance(item, Item)]
-                limits[f"min_{direction}"], limits[f"max_{direction}"] = \
-                    plotting_tools.find_min_max(scale, datalist)
-
-        # Add padding to the limits
-        self.set_limits(limits)
-        for position, axis in used_axes.items():
-            if axis:
-                plotting_tools.set_limit_padding(position, axis_map[position])
 
 
 class DummyToolbar(NavigationToolbar2):

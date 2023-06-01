@@ -90,6 +90,7 @@ def add_items(self, items):
     ui.reload_item_menu(self)
     ui.enable_data_dependent_buttons(self)
     reload(self)
+    plotting_tools.optimize_limits(self)
 
 
 def delete_item(self, key, give_toast=False):
@@ -105,7 +106,7 @@ def delete_item(self, key, give_toast=False):
 def check_open_data(self):
     if self.datadict:
         self.main_window.item_list.set_visible(True)
-        refresh(self, set_limits=True)
+        refresh(self)
         ui.enable_data_dependent_buttons(self)
     else:
         reload(self)
@@ -113,19 +114,16 @@ def check_open_data(self):
         ui.enable_data_dependent_buttons(self)
 
 
-def reload(self, reset_limits=True):
+def reload(self):
     """Completely reload the plot of the graph"""
-    limits = self.canvas.get_limits()
     self.canvas = Canvas(parent=self)
     self.main_window.toast_overlay.set_child(self.canvas)
-    refresh(self, set_limits=reset_limits)
-    if not reset_limits:
-        self.canvas.set_limits(limits)
+    refresh(self)
     self.set_mode(None, None, self.interaction_mode)
     self.canvas.grab_focus()
 
 
-def refresh(self, set_limits=False):
+def refresh(self):
     """Refresh the graph without completely reloading it."""
     remove = []
     for axis in [self.canvas.axis, self.canvas.right_axis,
@@ -140,6 +138,4 @@ def refresh(self, set_limits=False):
                 (self.preferences.config["hide_unselected"] and not
                  item.selected):
             self.canvas.plot(item)
-    if set_limits and len(self.datadict) > 0:
-        self.canvas.restore_view()
     self.canvas.draw()

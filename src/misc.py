@@ -21,6 +21,14 @@ class PlotSettings:
         self.use_custom_plot_style = config["plot_use_custom_style"]
         self.legend_position = config["plot_legend_position"]
         self.custom_plot_style = config["plot_custom_style"]
+        self.min_bottom = 0
+        self.max_bottom = 1
+        self.min_top = 0
+        self.max_top = 10
+        self.min_left = 0
+        self.max_left = 1
+        self.min_right = 0
+        self.max_right = 10
 
 
 class InteractionMode(Enum):

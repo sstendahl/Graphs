@@ -49,7 +49,7 @@ class ItemBox(Gtk.Box):
             self.parent.datadict, drop_target.key, value)
         ui.reload_item_menu(self.parent)
         clipboard.add(self.parent)
-        graphs.reload(self.parent, reset_limits=False)
+        graphs.reload(self.parent)
 
     def on_dnd_prepare(self, drag_source, x, y):
         snapshot = Gtk.Snapshot.new()
@@ -87,7 +87,7 @@ class ItemBox(Gtk.Box):
 
     def on_toggle(self, _):
         self.item.selected = self.check_button.get_active()
-        graphs.refresh(self.parent, False)
+        graphs.refresh(self.parent)
         ui.enable_data_dependent_buttons(self.parent)
 
     def edit(self, _):

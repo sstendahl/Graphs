@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 from gi.repository import Adw, Gtk
 
-from graphs import clipboard, graphs, misc, ui, utilities
+from graphs import clipboard, graphs, misc, plotting_tools, ui, utilities
 from graphs.item import Item
 
 
@@ -94,7 +94,9 @@ class EditItemWindow(Adw.PreferencesWindow):
             self.apply_item_values()
         ui.reload_item_menu(self.parent)
         clipboard.add(self.parent)
-        graphs.refresh(self.parent, set_limits)
+        graphs.refresh(self.parent)
+        if set_limits:
+            plotting_tools.optimize_limits(self)
 
     def apply_item_values(self):
         self.item.linestyle = \

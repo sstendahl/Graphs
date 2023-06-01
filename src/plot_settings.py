@@ -36,46 +36,42 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
 
     def __init__(self, parent):
         super().__init__()
-        self.plot_title.set_text(parent.plot_settings.title)
-        self.min_left.set_text(str(min(parent.canvas.axis.get_ylim())))
-        self.max_left.set_text(str(max(parent.canvas.axis.get_ylim())))
-        self.min_bottom.set_text(str(min(parent.canvas.axis.get_xlim())))
-        self.max_bottom.set_text(str(max(parent.canvas.axis.get_xlim())))
-        self.min_right.set_text(str(min(parent.canvas.right_axis.get_ylim())))
-        self.max_right.set_text(str(max(parent.canvas.right_axis.get_ylim())))
-        self.min_top.set_text(str(min(parent.canvas.top_left_axis.get_xlim())))
-        self.max_top.set_text(str(max(parent.canvas.top_left_axis.get_xlim())))
+        plot_settings = parent.plot_settings
+        self.plot_title.set_text(plot_settings.title)
+        self.min_left.set_text(str(plot_settings.min_left))
+        self.max_left.set_text(str(plot_settings.max_left))
+        self.min_bottom.set_text(str(plot_settings.min_bottom))
+        self.max_bottom.set_text(str(plot_settings.max_bottom))
+        self.min_right.set_text(str(plot_settings.min_right))
+        self.max_right.set_text(str(plot_settings.max_right))
+        self.min_top.set_text(str(plot_settings.min_top))
+        self.max_top.set_text(str(plot_settings.max_top))
 
-        self.plot_x_label.set_text(parent.plot_settings.xlabel)
-        self.plot_y_label.set_text(parent.plot_settings.ylabel)
-        self.plot_top_label.set_text(parent.plot_settings.top_label)
-        self.plot_right_label.set_text(parent.plot_settings.right_label)
+        self.plot_x_label.set_text(plot_settings.xlabel)
+        self.plot_y_label.set_text(plot_settings.ylabel)
+        self.plot_top_label.set_text(plot_settings.top_label)
+        self.plot_right_label.set_text(plot_settings.right_label)
         utilities.populate_chooser(self.plot_x_scale, misc.SCALES)
-        utilities.set_chooser(
-            self.plot_x_scale, parent.plot_settings.xscale)
+        utilities.set_chooser(self.plot_x_scale, plot_settings.xscale)
         utilities.populate_chooser(self.plot_y_scale, misc.SCALES)
-        utilities.set_chooser(
-            self.plot_y_scale, parent.plot_settings.yscale)
+        utilities.set_chooser(self.plot_y_scale, plot_settings.yscale)
         utilities.populate_chooser(self.plot_top_scale, misc.SCALES)
-        utilities.set_chooser(
-            self.plot_top_scale, parent.plot_settings.top_scale)
+        utilities.set_chooser(self.plot_top_scale, plot_settings.top_scale)
         utilities.populate_chooser(self.plot_right_scale, misc.SCALES)
-        utilities.set_chooser(
-            self.plot_right_scale, parent.plot_settings.right_scale)
+        utilities.set_chooser(self.plot_right_scale, plot_settings.right_scale)
         self.use_custom_plot_style.set_enable_expansion(
-            parent.plot_settings.use_custom_plot_style)
+            plot_settings.use_custom_plot_style)
         utilities.populate_chooser(
             self.custom_plot_style, plot_styles.get_user_styles(parent).keys(),
             translate=False)
         utilities.set_chooser(
-            self.custom_plot_style, parent.plot_settings.custom_plot_style)
-        self.plot_legend.set_enable_expansion(
-            parent.plot_settings.legend)
+            self.custom_plot_style, plot_settings.custom_plot_style)
+        self.plot_legend.set_enable_expansion(plot_settings.legend)
         utilities.populate_chooser(
             self.plot_legend_position, misc.LEGEND_POSITIONS)
         utilities.set_chooser(
             self.plot_legend_position,
-            parent.plot_settings.legend_position.capitalize())
+            plot_settings.legend_position.capitalize())
         self.hide_unused_axes_limits(parent)
         if len(parent.datadict) > 0:
             self.no_data_message.set_visible(False)
@@ -97,18 +93,6 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
         if not used_axes["bottom"]:
             self.min_bottom.set_visible(False)
             self.max_bottom.set_visible(False)
-
-    def get_limits(self):
-        return {
-            "min_left": float(self.min_left.get_text()),
-            "max_left": float(self.max_left.get_text()),
-            "min_bottom": float(self.min_bottom.get_text()),
-            "max_bottom": float(self.max_bottom.get_text()),
-            "min_right": float(self.min_right.get_text()),
-            "max_right": float(self.max_right.get_text()),
-            "min_top": float(self.min_top.get_text()),
-            "max_top": float(self.max_top.get_text()),
-        }
 
     def on_close(self, _, parent):
         plot_settings = parent.plot_settings
@@ -145,6 +129,15 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
         plot_settings.custom_plot_style = \
             utilities.get_selected_chooser_item(self.custom_plot_style)
 
+        plot_settings.min_bottom = float(self.min_bottom.get_text())
+        plot_settings.max_bottom = float(self.max_bottom.get_text())
+        plot_settings.min_top = float(self.min_top.get_text())
+        plot_settings.max_top = float(self.max_top.get_text())
+        plot_settings.min_left = float(self.min_left.get_text())
+        plot_settings.max_left = float(self.max_left.get_text())
+        plot_settings.mix_right = float(self.min_right.get_text())
+        plot_settings.max_right = float(self.max_right.get_text())
+
         # Set new item properties
         if self.style_changed:
             parent.canvas = Canvas(parent=parent)
@@ -162,4 +155,3 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
         # Reload UI
         ui.reload_item_menu(parent)
         graphs.reload(parent)
-        parent.canvas.set_limits(self.get_limits())

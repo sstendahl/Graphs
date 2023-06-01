@@ -223,7 +223,7 @@ class PlotStylesWindow(Adw.Window):
         self.style = None
         self.leaflet.navigate(0)
         self.set_title(_("Plot Styles"))
-        graphs.reload(self.parent, reset_limits=False)
+        graphs.reload(self.parent)
 
     def edit_line_colors(self, _button):
         self.leaflet.navigate(1)
@@ -474,7 +474,7 @@ class PlotStylesWindow(Adw.Window):
     def on_close(self, _button):
         if self.style is not None:
             self.save_style()
-        graphs.reload(self.parent, reset_limits=False)
+        graphs.reload(self.parent)
         self.destroy()
 
     def on_color_change(self, button):
