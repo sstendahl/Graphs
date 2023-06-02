@@ -153,6 +153,5 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
             clipboard.add(parent)
             graphs.reload(parent)
         else:
-            parent.canvas.set_axis_properties()
             parent.canvas.load_limits()
             graphs.refresh(parent)

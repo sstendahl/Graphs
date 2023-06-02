@@ -90,7 +90,6 @@ class Canvas(FigureCanvas):
             axis.text(
                 item.x_anchor, item.y_anchor, item.text, clip_on=True,
                 color=item.color, fontsize=item.size)
-        self.set_legend()
 
     def load_limits(self):
         plot_settings = self.parent.plot_settings
@@ -154,7 +153,7 @@ class Canvas(FigureCanvas):
         double click, and if these were on a specific item (e.g. the title) it
         triggers a dialog to edit this item.
 
-        Unfortunately the GTK Doubleclick signal doesn"t work with matplotlib
+        Unfortunately the GTK Doubleclick signal doesn't work with matplotlib
         hence this custom function.
         """
         double_click_interval = time.time() - self.time_first_click
