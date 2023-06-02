@@ -223,7 +223,6 @@ class PlotStylesWindow(Adw.Window):
         self.style = None
         self.leaflet.navigate(0)
         self.set_title(_("Plot Styles"))
-        graphs.reload(self.parent)
 
     def edit_line_colors(self, _button):
         self.leaflet.navigate(1)

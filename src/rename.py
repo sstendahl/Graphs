@@ -3,8 +3,6 @@ from gettext import gettext as _
 
 from gi.repository import Adw, Gtk
 
-from graphs import graphs
-
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/rename_window.ui")
 class RenameWindow(Adw.Window):
@@ -46,5 +44,5 @@ class RenameWindow(Adw.Window):
             parent.plot_settings.right_label = text
         if item == parent.canvas.title:
             parent.plot_settings.title = text
-        graphs.reload(parent)
+        parent.canvas.set_axis_properties()
         self.destroy()

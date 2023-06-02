@@ -4,7 +4,7 @@ from contextlib import nullcontext
 
 from gi.repository import Gtk
 
-from graphs import file_io, plot_styles, utilities
+from graphs import utilities
 from graphs.item import Item, TextItem
 from graphs.rename import RenameWindow
 
@@ -19,8 +19,6 @@ class Canvas(FigureCanvas):
     """Create the graph widget"""
     def __init__(self, parent):
         self.parent = parent
-        pyplot.rcParams.update(
-            file_io.parse_style(plot_styles.get_preferred_style_path(parent)))
         self.figure = Figure()
         self.figure.set_tight_layout(True)
         self.one_click_trigger = False
