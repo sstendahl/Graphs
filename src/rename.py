@@ -46,5 +46,5 @@ class RenameWindow(Adw.Window):
             parent.plot_settings.right_label = text
         if item == parent.canvas.title:
             parent.plot_settings.title = text
-        graphs.reload(parent)
+        graphs.refresh(parent)
         self.destroy()

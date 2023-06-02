@@ -4,7 +4,7 @@ from contextlib import nullcontext
 
 from gi.repository import Gtk
 
-from graphs import file_io, plot_styles, utilities
+from graphs import utilities
 from graphs.item import Item, TextItem
 from graphs.rename import RenameWindow
 
@@ -19,8 +19,6 @@ class Canvas(FigureCanvas):
     """Create the graph widget"""
     def __init__(self, parent):
         self.parent = parent
-        pyplot.rcParams.update(
-            file_io.parse_style(plot_styles.get_preferred_style_path(parent)))
         self.figure = Figure()
         self.figure.set_tight_layout(True)
         self.one_click_trigger = False
@@ -92,7 +90,6 @@ class Canvas(FigureCanvas):
             axis.text(
                 item.x_anchor, item.y_anchor, item.text, clip_on=True,
                 color=item.color, fontsize=item.size)
-        self.set_legend()
 
     def load_limits(self):
         plot_settings = self.parent.plot_settings
@@ -156,7 +153,7 @@ class Canvas(FigureCanvas):
         double click, and if these were on a specific item (e.g. the title) it
         triggers a dialog to edit this item.
 
-        Unfortunately the GTK Doubleclick signal doesn"t work with matplotlib
+        Unfortunately the GTK Doubleclick signal doesn't work with matplotlib
         hence this custom function.
         """
         double_click_interval = time.time() - self.time_first_click

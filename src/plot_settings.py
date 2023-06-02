@@ -1,9 +1,8 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 from gi.repository import Adw, Gtk
 
-from graphs import (clipboard, graphs, misc, plot_styles, plotting_tools, ui,
-                    utilities)
-from graphs.canvas import Canvas
+from graphs import (clipboard, file_io, graphs, misc, plot_styles,
+                    plotting_tools, utilities)
 
 from matplotlib import pyplot
 
@@ -140,7 +139,8 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
 
         # Set new item properties
         if self.style_changed:
-            parent.canvas = Canvas(parent=parent)
+            pyplot.rcParams.update(file_io.parse_style(
+                plot_styles.get_preferred_style_path(parent)))
             for item in parent.datadict.values():
                 item.color = None
             for item in parent.datadict.values():
@@ -151,7 +151,7 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
                 item.markersize = \
                     float(pyplot.rcParams["lines.markersize"])
             clipboard.add(parent)
-
-        # Reload UI
-        ui.reload_item_menu(parent)
-        graphs.reload(parent)
+            graphs.reload(parent)
+        else:
+            parent.canvas.load_limits()
+            graphs.refresh(parent)

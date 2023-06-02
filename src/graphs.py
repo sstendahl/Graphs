@@ -3,9 +3,12 @@ import logging
 from gettext import gettext as _
 from pickle import UnpicklingError
 
-from graphs import clipboard, file_io, plotting_tools, ui, utilities
+from graphs import (clipboard, file_io, plot_styles, plotting_tools, ui,
+                    utilities)
 from graphs.canvas import Canvas
 from graphs.item import Item
+
+from matplotlib import pyplot
 
 
 def open_project(self, file):
@@ -89,7 +92,7 @@ def add_items(self, items):
     self.main_window.item_list.set_visible(True)
     ui.reload_item_menu(self)
     ui.enable_data_dependent_buttons(self)
-    reload(self)
+    refresh(self)
     plotting_tools.optimize_limits(self)
 
 
@@ -116,6 +119,8 @@ def check_open_data(self):
 
 def reload(self):
     """Completely reload the plot of the graph"""
+    pyplot.rcParams.update(
+        file_io.parse_style(plot_styles.get_preferred_style_path(self)))
     self.canvas = Canvas(parent=self)
     self.main_window.toast_overlay.set_child(self.canvas)
     refresh(self)
@@ -133,9 +138,11 @@ def refresh(self):
         item.remove()
     if len(self.datadict) > 0:
         plotting_tools.hide_unused_axes(self, self.canvas)
+    self.canvas.set_axis_properties()
     for item in reversed(self.datadict.values()):
         if (item is not None) and not \
                 (self.preferences.config["hide_unselected"] and not
                  item.selected):
             self.canvas.plot(item)
+    self.canvas.set_legend()
     self.canvas.draw()

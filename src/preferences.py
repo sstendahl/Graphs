@@ -236,4 +236,4 @@ class PreferencesWindow(Adw.PreferencesWindow):
     def on_close(self, _, parent):
         self.apply_configuration()
         parent.preferences.save_config()
-        graphs.reload(parent)
+        graphs.refresh(parent)

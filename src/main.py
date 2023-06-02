@@ -7,12 +7,13 @@ from inspect import getmembers, isfunction
 
 from gi.repository import Adw, GLib, Gio
 
-from graphs import actions, plotting_tools, preferences, ui
+from graphs import (actions, file_io, plot_styles, plotting_tools, preferences,
+                    ui)
 from graphs.canvas import Canvas
 from graphs.misc import InteractionMode, PlotSettings
 from graphs.window import GraphsWindow
 
-import matplotlib.font_manager
+from matplotlib import font_manager, pyplot
 from matplotlib.backend_bases import _Mode
 
 
@@ -35,11 +36,11 @@ class GraphsApplication(Adw.Application):
         self.datadict_clipboard = [{}]
         self.clipboard_pos = -1
         self.highlight = None
-        font_list = matplotlib.font_manager.findSystemFonts(
+        font_list = font_manager.findSystemFonts(
             fontpaths=None, fontext="ttf")
         for font in font_list:
             try:
-                matplotlib.font_manager.fontManager.addfont(font)
+                font_manager.fontManager.addfont(font)
             except RuntimeError:
                 logging.warning(_("Could not load %s"), font)
         self.preferences = preferences.Preferences(self)
@@ -137,6 +138,8 @@ class GraphsApplication(Adw.Application):
             win.add_css_class("devel")
         config = self.preferences.config
         self.plot_settings = PlotSettings(config)
+        pyplot.rcParams.update(
+            file_io.parse_style(plot_styles.get_preferred_style_path(self)))
         self.canvas = Canvas(self)
         win.toast_overlay.set_child(self.canvas)
         win.sidebar_flap.connect("notify", self.on_sidebar_toggle)
