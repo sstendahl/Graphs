@@ -96,6 +96,20 @@ def populate_chooser(chooser, chooser_list, translate=True):
     chooser.set_model(model)
 
 
+def repopulate_chooser_from_list(chooser, chooser_list):
+    """Fill the dropdown menu with the strings from a given list"""
+    model = chooser.get_model()
+    for _item in model:
+        model.remove(0)
+    for item in chooser_list:
+        if item != "nothing":
+            model.append(str(item))
+
+
+def get_chooser_list(chooser):
+    return [item.get_string() for item in chooser.get_model()]
+
+
 def get_selected_chooser_item(chooser):
     return chooser.untranslated_items[int(chooser.get_selected())]
 

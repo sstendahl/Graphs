@@ -49,8 +49,10 @@ class EditItemWindow(Adw.PreferencesWindow):
 
         # If item_selector no longer matches with name, repopulate it
         names = utilities.get_all_names(self.parent)
-        if set(names) != set(self.item_selector.untranslated_items):
-            utilities.populate_chooser(self.item_selector, names, False)
+        if set(names) != \
+                set(utilities.get_chooser_list(self.item_selector)):
+            utilities.repopulate_chooser_from_list(
+                self.item_selector, names)
             self.item_selector.set_selected(index)
             self.parent.datadict_clipboard = \
                 self.parent.datadict_clipboard[:-1]
