@@ -107,14 +107,9 @@ def delete_item(self, key, give_toast=False):
 
 
 def check_open_data(self):
-    if self.datadict:
-        self.main_window.item_list.set_visible(True)
-        refresh(self)
-        ui.enable_data_dependent_buttons(self)
-    else:
-        reload(self)
-        self.main_window.item_list.set_visible(False)
-        ui.enable_data_dependent_buttons(self)
+    self.main_window.item_list.set_visible(self.datadict)
+    refresh(self)
+    ui.enable_data_dependent_buttons(self)
 
 
 def reload(self):
