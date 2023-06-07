@@ -215,6 +215,8 @@ class Canvas(FigureCanvas):
                     new_lines, labels,
                     loc=self.parent.plot_settings.legend_position,
                     frameon=True, reverse=True)
+            else:
+                self.top_right_axis.get_legend().remove()
 
 
 class DummyToolbar(NavigationToolbar2):
