@@ -8,7 +8,7 @@ from gi.repository import Adw, Gtk
 from graphs import file_io, graphs, misc, utilities
 
 
-IMPORT_MODES = ["xrdml", "xry", "columns"]
+IMPORT_MODES = ["project", "xrdml", "xry", "columns"]
 
 
 def prepare_import(self, files, advanced):
@@ -64,6 +64,8 @@ def import_from_files(self, import_settings_list):
 
 def _import_from_file(self, import_settings):
     match import_settings.mode:
+        case "project":
+            callback = file_io.import_from_project
         case "xrdml":
             callback = file_io.import_from_xrdml
         case "xry":
@@ -160,6 +162,8 @@ def guess_import_mode(file):
     except IndexError:
         file_suffix = None
     match file_suffix:
+        case ".graphs":
+            return "project"
         case ".xrdml":
             return "xrdml"
         case ".xry":

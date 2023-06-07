@@ -57,6 +57,11 @@ def save_item(file, xdata, ydata):
     stream.close()
 
 
+def import_from_project(self, import_settings):
+    return [utilities.check_item(self, item)
+            for item in read_project(import_settings.file)[1].values()]
+
+
 def import_from_xrdml(self, import_settings):
     content = parse_xml(import_settings.file)
     intensities = content.getElementsByTagName("intensities")
