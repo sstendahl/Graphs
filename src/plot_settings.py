@@ -2,7 +2,7 @@
 from gi.repository import Adw, Gtk
 
 from graphs import (clipboard, file_io, graphs, misc, plot_styles,
-                    plotting_tools, utilities)
+                    plotting_tools, ui, utilities)
 
 from matplotlib import pyplot
 
@@ -61,7 +61,8 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
         self.use_custom_plot_style.set_enable_expansion(
             plot_settings.use_custom_plot_style)
         utilities.populate_chooser(
-            self.custom_plot_style, plot_styles.get_user_styles(parent).keys(),
+            self.custom_plot_style,
+            sorted(plot_styles.get_user_styles(parent).keys()),
             translate=False)
         utilities.set_chooser(
             self.custom_plot_style, plot_settings.custom_plot_style)
@@ -152,6 +153,7 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
                     float(pyplot.rcParams["lines.markersize"])
             clipboard.add(parent)
             graphs.reload(parent)
+            ui.reload_item_menu(parent)
         else:
             parent.canvas.load_limits()
             graphs.refresh(parent)
