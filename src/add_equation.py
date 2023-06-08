@@ -49,3 +49,4 @@ class AddEquationWindow(Adw.Window):
                 error=exception.__class__.__name__)
             self.toast_overlay.add_toast(Adw.Toast(title=toast))
             logging.exception(toast)
+

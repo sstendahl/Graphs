@@ -1,0 +1,34 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.MessageDialog discard_data {
+  heading: _("Discard Data?");
+  body: _("Opening a project will discard all open data.");
+  responses [
+    cancel_open_project: _("Cancel"),
+    discard: _("Discard") destructive,
+  ]
+  close-response: "cancel_open_project";
+  default-response: "discard";
+}
+
+Adw.MessageDialog delete_style {
+  heading: _("Delete style?");
+  responses [
+    cancel_delete_style: _("Cancel"),
+    delete: _("Delete") destructive,
+  ]
+  close-response: "cancel_delete_style";
+  default-response: "delete";
+}
+
+Adw.MessageDialog reset_styles {
+  heading: _("Reset to defaults?");
+  body: _("Are you sure you want to reset to the default styles?");
+  responses [
+    cancel_reset_styles: _("Cancel"),
+    reset: _("Reset") destructive,
+  ]
+  close-response: "cancel_reset_styles";
+  default-response: "reset";
+}

@@ -6,7 +6,7 @@ from cycler import cycler
 
 from gi.repository import Adw, GLib, Gio, Gtk
 
-from graphs import file_io, graphs, misc, utilities
+from graphs import file_io, graphs, misc, utilities, ui
 
 
 def _styles_in_directory(directory):
@@ -399,16 +399,9 @@ class PlotStylesWindow(Adw.Window):
             if response == "delete":
                 get_user_styles(self)[style].trash(None)
                 self.reload_styles()
-        heading = _("Delete style?")
         body = _("Are you sure you want to delete the {} style?").format(style)
-        dialog = Adw.MessageDialog.new(
-            self, heading, body)
-        dialog.add_response("cancel", _("Cancel"))
-        dialog.add_response("delete", _("Delete"))
-        dialog.set_close_response("cancel")
-        dialog.set_default_response("delete")
-        dialog.set_response_appearance(
-            "delete", Adw.ResponseAppearance.DESTRUCTIVE)
+        dialog = ui.build_dialog("delete_style")
+        dialog.set_transient_for(self)
         dialog.connect("response", remove_style, self)
         dialog.present()
 
@@ -437,17 +430,8 @@ class PlotStylesWindow(Adw.Window):
             if response == "reset":
                 reset_user_styles(self.parent)
                 self.reload_styles()
-
-        heading = _("Reset to defaults?")
-        body = _("Are you sure you want to reset to the default styles?")
-        dialog = Adw.MessageDialog.new(
-            self, heading, body)
-        dialog.add_response("cancel", _("Cancel"))
-        dialog.add_response("reset", _("Reset"))
-        dialog.set_close_response("cancel")
-        dialog.set_default_response("delete")
-        dialog.set_response_appearance(
-            "reset", Adw.ResponseAppearance.DESTRUCTIVE)
+        dialog = ui.build_dialog("reset_styles")
+        dialog.set_transient_for(self)
         dialog.connect("response", on_accept)
         dialog.present()
 

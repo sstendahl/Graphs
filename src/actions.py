@@ -110,16 +110,8 @@ def open_project_action(_action, _target, self):
         def on_response(_dialog, response):
             if response == "discard":
                 ui.open_project_dialog(self)
-        heading = _("Discard Data?")
-        body = _("Opening a project will discard all open data.")
-        dialog = Adw.MessageDialog.new(
-            self.main_window, heading, body)
-        dialog.add_response("cancel", _("Cancel"))
-        dialog.add_response("discard", _("Discard"))
-        dialog.set_close_response("cancel")
-        dialog.set_default_response("discard")
-        dialog.set_response_appearance(
-            "discard", Adw.ResponseAppearance.DESTRUCTIVE)
+        dialog = ui.build_dialog("discard_data")
+        dialog.set_transient_for(self.main_window)
         dialog.connect("response", on_response)
         dialog.present()
         return
