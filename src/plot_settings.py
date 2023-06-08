@@ -141,7 +141,7 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
         # Set new item properties
         if self.style_changed:
             pyplot.rcParams.update(file_io.parse_style(
-                plot_styles.get_preferred_style_path(parent)))
+                plot_styles.get_preferred_style(parent)))
             for item in parent.datadict.values():
                 item.color = None
             for item in parent.datadict.values():
