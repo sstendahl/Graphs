@@ -1,0 +1,23 @@
+diff -Naur a/data/se.sjoerd.Graphs.appdata.xml.in.in b/data/se.sjoerd.Graphs.appdata.xml.in.in
+--- a/data/se.sjoerd.Graphs.appdata.xml.in.in	2023-06-03 00:54:00.654168386 +0530
++++ b/data/se.sjoerd.Graphs.appdata.xml.in.in	2023-06-03 00:56:07.482182787 +0530
+@@ -1,6 +1,7 @@
+ <?xml version='1.0' encoding='utf-8'?>
+ <component type="desktop-application">
+   <id>@APPLICATION_ID@</id>
++  <icon type="stock">snap.graphs.se.sjoerd.Graphs</icon>
+   <metadata_license>CC0-1.0</metadata_license>
+   <project_license>GPL-3.0-or-later</project_license>
+   <name>@NAME@</name>
+diff -Naur a/data/se.sjoerd.Graphs.desktop.in.in b/data/se.sjoerd.Graphs.desktop.in.in
+--- a/data/se.sjoerd.Graphs.desktop.in.in	2023-06-03 00:54:24.818167300 +0530
++++ b/data/se.sjoerd.Graphs.desktop.in.in	2023-06-03 00:56:22.354187492 +0530
+@@ -1,7 +1,7 @@
+ [Desktop Entry]
+ Name=@NAME@
+ Exec=@PROJECT_NAME@
+-Icon=@APPLICATION_ID@
++Icon=snap.graphs.@APPLICATION_ID@
+ Terminal=false
+ Type=Application
+ Categories=Education;Science
