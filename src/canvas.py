@@ -216,7 +216,9 @@ class Canvas(FigureCanvas):
                     loc=self.parent.plot_settings.legend_position,
                     frameon=True, reverse=True)
             else:
-                self.top_right_axis.get_legend().remove()
+                legend = self.top_right_axis.get_legend()
+                if legend is not None:
+                    legend.remove()
 
 
 class DummyToolbar(NavigationToolbar2):
