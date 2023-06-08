@@ -3,8 +3,6 @@
 import logging
 from gettext import gettext as _
 
-from gi.repository import Adw
-
 from graphs import clipboard, graphs, operations, ui
 from graphs.add_equation import AddEquationWindow
 from graphs.export_figure import ExportFigureWindow

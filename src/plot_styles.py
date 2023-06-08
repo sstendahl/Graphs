@@ -6,7 +6,7 @@ from cycler import cycler
 
 from gi.repository import Adw, GLib, Gio, Gtk
 
-from graphs import file_io, graphs, misc, utilities, ui
+from graphs import file_io, graphs, misc, ui, utilities
 
 
 def _styles_in_directory(directory):
@@ -401,6 +401,7 @@ class PlotStylesWindow(Adw.Window):
                 self.reload_styles()
         body = _("Are you sure you want to delete the {} style?").format(style)
         dialog = ui.build_dialog("delete_style")
+        dialog.set_body(body)
         dialog.set_transient_for(self)
         dialog.connect("response", remove_style, self)
         dialog.present()
