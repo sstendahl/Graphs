@@ -62,32 +62,25 @@ def reset_user_styles(self):
         file.copy(style_file, 0, None)
 
 
-def get_system_preferred_style_path(self):
+def get_system_preferred_style(self):
     system_style = "adwaita"
     if Adw.StyleManager.get_default().get_dark():
         system_style += "-dark"
-    try:
-        stylepath = get_user_styles(self)[system_style]
-    except KeyError:
-        self.main_window.add_toast(f"{system_style} not found, recreating it")
-        config_dir = utilities.get_config_directory()
-        directory = config_dir.get_child_for_display_name("styles")
-        stylepath = directory.get_child_for_display_name(
-            f"{system_style}.mplstyle")
-        get_system_styles(self)[system_style].copy(stylepath, 0, None)
-    return stylepath
+    return get_system_styles(self)[system_style]
 
 
-def get_preferred_style_path(self):
+def get_preferred_style(self):
     if not self.plot_settings.use_custom_plot_style:
-        return get_system_preferred_style_path(self)
+        return get_system_preferred_style(self)
     stylename = self.plot_settings.custom_plot_style
     try:
         return get_user_styles(self)[stylename]
     except KeyError:
         self.main_window.add_toast(
-            f"Plot style {stylename} does not exist loading system preferred")
-        return get_system_preferred_style_path(self)
+            _(f"Plot style {stylename} does not exist "
+              "loading system preferred"))
+        self.plot_settings.use_custom_plot_style = False
+        return get_system_preferred_style(self)
 
 
 def get_style(self, stylename):
@@ -462,9 +455,11 @@ class PlotStylesWindow(Adw.Window):
         for box in self.styles.copy():
             self.styles.remove(box)
             self.styles_box.remove(self.styles_box.get_row_at_index(0))
+        custom_style = self.parent.plot_settings.use_custom_plot_style
         for style, file in sorted(get_user_styles(self.parent).items()):
             box = StyleBox(self, style)
-            if not file.equal(get_preferred_style_path(self.parent)):
+            if not custom_style and \
+                    not file.equal(get_preferred_style(self.parent)):
                 box.check_mark.hide()
                 box.label.set_hexpand(True)
             self.styles.append(box)

@@ -139,7 +139,7 @@ class GraphsApplication(Adw.Application):
         config = self.preferences.config
         self.plot_settings = PlotSettings(config)
         pyplot.rcParams.update(
-            file_io.parse_style(plot_styles.get_preferred_style_path(self)))
+            file_io.parse_style(plot_styles.get_preferred_style(self)))
         self.canvas = Canvas(self)
         win.toast_overlay.set_child(self.canvas)
         win.sidebar_flap.connect("notify", self.on_sidebar_toggle)
