@@ -1,8 +1,9 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
+import contextlib
 from gettext import gettext as _
 from pathlib import Path
 
-from gi.repository import Adw, GLib, Gtk
+from gi.repository import Adw, GLib, Gio, Gtk
 
 from graphs import utilities
 
@@ -58,11 +59,12 @@ class ExportFigureWindow(Adw.Window):
 
     def on_figure_save_response(
             self, dialog, response, dpi, file_suffix, transparent):
-        try:
-            path = dialog.save_finish(response).get_path()
-            if path is not None:
-                self.parent.canvas.figure.savefig(
-                    path, dpi=dpi, format=file_suffix, transparent=transparent)
-                self.parent.main_window.add_toast(_("Exported Figure"))
-        except GLib.GError:
-            pass
+        with contextlib.suppress(GLib.GError):
+            destination = dialog.save_finish(response)
+            file, stream = Gio.File.new_tmp("graphs-XXXXXX")
+            stream.close()
+            self.parent.canvas.figure.savefig(
+                file.peek_path(), dpi=dpi, format=file_suffix,
+                transparent=transparent)
+            file.move(destination, Gio.FileCopyFlags(1), None)
+            self.parent.main_window.add_toast(_("Exported Figure"))
