@@ -19,8 +19,9 @@ template $StyleBox : Box {
     hexpand: true;
     }
 
-  Button edit_button {
+  Button {
     tooltip-text: _("Edit");
+    clicked => $on_edit();
     styles ["flat"]
     Image {
       hexpand: false;
@@ -28,8 +29,9 @@ template $StyleBox : Box {
     }
   }
 
-  Button delete_button {
+  Button {
     tooltip-text: _("Remove");
+    clicked => $on_delete();
     styles ["flat"]
     Image {
       hexpand: false;

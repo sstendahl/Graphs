@@ -58,6 +58,7 @@ template $GraphsWindow : Adw.ApplicationWindow {
       fold-policy: auto;
       swipe-to-open: true;
       swipe-to-close: true;
+      notify => $on_sidebar_toggle();
 
       [flap]
       Box {

@@ -28,20 +28,20 @@ class EditItemWindow(Adw.PreferencesWindow):
         utilities.populate_chooser(self.item_selector, names)
         self.item_selector.set_selected(names.index(self.item.name))
 
-        self.linewidth.set_range(0, 10)
         utilities.populate_chooser(self.plot_x_position, misc.X_POSITIONS)
         utilities.populate_chooser(self.plot_y_position, misc.Y_POSITIONS)
         utilities.populate_chooser(self.linestyle, misc.LINESTYLES)
         utilities.populate_chooser(self.markers, sorted(misc.MARKERS.keys()))
-        self.markersize.set_range(0, 10)
         self.load_values()
-        self.item_selector.connect("notify::selected", self.on_select)
-        self.connect("close-request", self.apply)
         self.set_transient_for(parent.main_window)
         self.present()
 
+    def on_close(self, *_args):
+        self.apply()
+
+    @Gtk.Template.Callback()
     def on_select(self, _action, _target):
-        self.apply(None)
+        self.apply()
         data_list = list(self.parent.datadict.keys())
         index = self.item_selector.get_selected()
         self.item = self.parent.datadict[data_list[index]]
@@ -75,8 +75,7 @@ class EditItemWindow(Adw.PreferencesWindow):
         utilities.set_chooser(self.markers, markerstyle)
         self.markersize.set_value(self.item.markersize)
 
-    def apply(self, _):
-
+    def apply(self):
         self.item.name = self.name_entry.get_text()
 
         # Only change limits when axes change, otherwise this is not needed

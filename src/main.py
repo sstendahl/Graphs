@@ -142,7 +142,6 @@ class GraphsApplication(Adw.Application):
             file_io.parse_style(plot_styles.get_preferred_style(self)))
         self.canvas = Canvas(self)
         win.toast_overlay.set_child(self.canvas)
-        win.sidebar_flap.connect("notify", self.on_sidebar_toggle)
         win.redo_button.set_sensitive(False)
         win.undo_button.set_sensitive(False)
         ui.enable_data_dependent_buttons(self)

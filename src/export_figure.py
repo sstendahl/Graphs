@@ -10,7 +10,6 @@ from graphs import utilities
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/export_figure.ui")
 class ExportFigureWindow(Adw.Window):
     __gtype_name__ = "ExportFigureWindow"
-    confirm_button = Gtk.Template.Child()
     file_format = Gtk.Template.Child()
     transparent = Gtk.Template.Child()
     dpi = Gtk.Template.Child()
@@ -19,7 +18,6 @@ class ExportFigureWindow(Adw.Window):
         super().__init__()
         self.parent = parent
         self.set_transient_for(parent.main_window)
-        self.confirm_button.connect("clicked", self.on_accept)
         self.transparent.set_active(
             self.parent.preferences.config["export_figure_transparent"])
         self.items = \
@@ -38,6 +36,7 @@ class ExportFigureWindow(Adw.Window):
             utilities.set_chooser(self.file_format, default_format)
         self.present()
 
+    @Gtk.Template.Callback()
     def on_accept(self, _button):
         dpi = int(self.dpi.get_value())
         fmt = utilities.get_selected_chooser_item(self.file_format)

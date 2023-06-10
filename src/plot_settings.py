@@ -35,7 +35,8 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
 
     def __init__(self, parent):
         super().__init__()
-        plot_settings = parent.plot_settings
+        self.parent = parent
+        plot_settings = self.parent.plot_settings
         self.plot_title.set_text(plot_settings.title)
         self.min_left.set_text(str(plot_settings.min_left))
         self.max_left.set_text(str(plot_settings.max_left))
@@ -62,7 +63,7 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
             plot_settings.use_custom_plot_style)
         utilities.populate_chooser(
             self.custom_plot_style,
-            sorted(plot_styles.get_user_styles(parent).keys()),
+            sorted(plot_styles.get_user_styles(self.parent).keys()),
             translate=False)
         utilities.set_chooser(
             self.custom_plot_style, plot_settings.custom_plot_style)
@@ -72,11 +73,10 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
         utilities.set_chooser(
             self.plot_legend_position,
             plot_settings.legend_position.capitalize())
-        self.hide_unused_axes_limits(parent)
-        if len(parent.datadict) > 0:
+        self.hide_unused_axes_limits(self.parent)
+        if len(self.parent.datadict) > 0:
             self.no_data_message.set_visible(False)
-        self.connect("close-request", self.on_close, parent)
-        self.set_transient_for(parent.main_window)
+        self.set_transient_for(self.parent.main_window)
         self.present()
 
     def hide_unused_axes_limits(self, parent):
@@ -94,17 +94,18 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
             self.min_bottom.set_visible(False)
             self.max_bottom.set_visible(False)
 
-    def on_close(self, _, parent):
-        plot_settings = parent.plot_settings
+    @Gtk.Template.Callback()
+    def on_close(self, *_args):
+        plot_settings = self.parent.plot_settings
 
         # Check if style change when override is enabled
         self.style_changed = \
             plot_settings.use_custom_plot_style \
             != self.use_custom_plot_style.get_enable_expansion() \
-            and parent.preferences.config["override_style_change"] \
+            and self.parent.preferences.config["override_style_change"] \
             or plot_settings.custom_plot_style \
             != utilities.get_selected_chooser_item(self.custom_plot_style) \
-            and parent.preferences.config["override_style_change"]
+            and self.parent.preferences.config["override_style_change"]
 
         # Set new plot settings
         plot_settings.title = self.plot_title.get_text()
@@ -141,19 +142,19 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
         # Set new item properties
         if self.style_changed:
             pyplot.rcParams.update(file_io.parse_style(
-                plot_styles.get_preferred_style(parent)))
-            for item in parent.datadict.values():
+                plot_styles.get_preferred_style(self.parent)))
+            for item in self.parent.datadict.values():
                 item.color = None
-            for item in parent.datadict.values():
-                item.color = plotting_tools.get_next_color(parent)
+            for item in self.parent.datadict.values():
+                item.color = plotting_tools.get_next_color(self.parent)
                 item.linestyle = pyplot.rcParams["lines.linestyle"]
                 item.linewidth = float(pyplot.rcParams["lines.linewidth"])
                 item.markerstyle = pyplot.rcParams["lines.marker"]
                 item.markersize = \
                     float(pyplot.rcParams["lines.markersize"])
-            clipboard.add(parent)
-            graphs.reload(parent)
-            ui.reload_item_menu(parent)
+            clipboard.add(self.parent)
+            graphs.reload(self.parent)
+            ui.reload_item_menu(self.parent)
         else:
-            parent.canvas.load_limits()
-            graphs.refresh(parent)
+            self.parent.canvas.load_limits()
+            graphs.refresh(self.parent)

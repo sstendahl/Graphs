@@ -30,11 +30,12 @@ template $RenameWindow : Adw.Window {
           title: _("Label");
         }
 
-        Button confirm_button {
+        Button {
           margin-top: 24;
           margin-bottom: 12;
           label: _("Rename");
           halign: center;
+          clicked => $on_accept();
           styles ["suggested-action", "pill"]
         }
       }

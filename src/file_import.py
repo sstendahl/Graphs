@@ -86,7 +86,6 @@ class ImportSettings():
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/import.ui")
 class ImportWindow(Adw.Window):
     __gtype_name__ = "ImportWindow"
-    confirm_button = Gtk.Template.Child()
     columns_group = Gtk.Template.Child()
 
     delimiter = Gtk.Template.Child()
@@ -109,9 +108,7 @@ class ImportWindow(Adw.Window):
             prepare_import_finish(self.parent, self.import_dict)
             self.destroy()
             return
-        self.confirm_button.connect("clicked", self.on_accept)
         self.set_transient_for(parent.main_window)
-        self.connect("close-request", self.on_close)
         self.present()
 
     def load_columns(self):
@@ -124,6 +121,7 @@ class ImportWindow(Adw.Window):
         self.column_y.set_value(int(params["column_y"]))
         self.skip_rows.set_value(int(params["skip_rows"]))
 
+    @Gtk.Template.Callback()
     def on_accept(self, _widget):
         self.param_dict = {}
         if "columns" in self.modes:
@@ -151,6 +149,7 @@ class ImportWindow(Adw.Window):
             "delimiter": self.delimiter.get_text(),
         }
 
+    @Gtk.Template.Callback()
     def on_close(self, _widget):
         prepare_import_finish(self.parent, self.import_dict)
 
