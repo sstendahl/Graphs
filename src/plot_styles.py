@@ -450,10 +450,10 @@ class StyleBox(Gtk.Box):
         self.parent.leaflet.navigate(1)
         self.parent.set_title(self.style)
 
-
     @Gtk.Template.Callback()
     def on_delete(self, _button):
         style = self.style
+
         def remove_style(_dialog, response):
             if response == "delete":
                 get_user_styles(self.parent.parent)[style].trash(None)
