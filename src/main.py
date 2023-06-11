@@ -7,10 +7,10 @@ from inspect import getmembers, isfunction
 
 from gi.repository import Adw, GLib, Gio
 
-from graphs import (actions, file_io, plot_styles, plotting_tools, preferences,
-                    ui)
+from graphs import actions, file_io, plot_styles, plotting_tools, ui
 from graphs.canvas import Canvas
 from graphs.misc import InteractionMode, PlotSettings
+from graphs.preferences import Preferences
 from graphs.window import GraphsWindow
 
 from matplotlib import font_manager, pyplot
@@ -43,9 +43,9 @@ class GraphsApplication(Adw.Application):
                 font_manager.fontManager.addfont(font)
             except RuntimeError:
                 logging.warning(_("Could not load %s"), font)
-        self.preferences = preferences.Preferences(self)
+        self.preferences = Preferences()
         self.add_actions()
-        Adw.StyleManager.get_default().connect(
+        self.get_style_manager().connect(
             "notify", ui.on_style_change, None, self)
 
     def add_actions(self):

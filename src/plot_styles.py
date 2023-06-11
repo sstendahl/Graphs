@@ -144,10 +144,9 @@ class PlotStylesWindow(Adw.Window):
     background_color = Gtk.Template.Child()
     outline_color = Gtk.Template.Child()
 
-    def __init__(self, parent):
-        super().__init__()
-        self.parent = parent
-        self.set_transient_for(self.parent.main_window)
+    def __init__(self, application):
+        super().__init__(application=application)
+        self.set_transient_for(self.props.application.main_window)
         self.styles = []
         self.style = None
         self.reload_styles()
@@ -359,32 +358,15 @@ class PlotStylesWindow(Adw.Window):
         self.line_colors_box.append(box)
         self.color_boxes[box] = self.line_colors_box.get_last_child()
 
-    def copy_style(self, _button, style, new_style):
-        i = 0
-        user_styles = get_user_styles(self.parent)
-        for style_1 in user_styles.keys():
-            if new_style == style_1:
-                while True:
-                    i += 1
-                    if f"{new_style} ({i})" not in user_styles.keys():
-                        new_style = f"{new_style} ({i})"
-                        break
-        config_dir = utilities.get_config_directory()
-        directory = config_dir.get_child_for_display_name("styles")
-        destination = directory.get_child_for_display_name(
-            f"{new_style}.mplstyle")
-        user_styles[style].copy(destination, 0, None)
-        self.reload_styles()
-
     @Gtk.Template.Callback()
     def add_style(self, _button):
-        AddStyleWindow(self)
+        AddStyleWindow(self.props.application, self)
 
     @Gtk.Template.Callback()
     def reset_styles(self, _button):
         def on_accept(_dialog, response):
             if response == "reset":
-                reset_user_styles(self.parent)
+                reset_user_styles(self.props.application)
                 self.reload_styles()
         dialog = ui.build_dialog("reset_styles")
         dialog.set_transient_for(self)
@@ -395,11 +377,14 @@ class PlotStylesWindow(Adw.Window):
         for box in self.styles.copy():
             self.styles.remove(box)
             self.styles_box.remove(self.styles_box.get_row_at_index(0))
-        custom_style = self.parent.plot_settings.use_custom_plot_style
-        for style, file in sorted(get_user_styles(self.parent).items()):
+        custom_style = \
+            self.props.application.plot_settings.use_custom_plot_style
+        for style, file in \
+                sorted(get_user_styles(self.props.application).items()):
             box = StyleBox(self, style)
             if not custom_style and \
-                    not file.equal(get_preferred_style(self.parent)):
+                    not file.equal(
+                        get_preferred_style(self.props.application)):
                 box.check_mark.hide()
                 box.label.set_hexpand(True)
             self.styles.append(box)
@@ -409,7 +394,7 @@ class PlotStylesWindow(Adw.Window):
     def on_close(self, _button):
         if self.style is not None:
             self.save_style()
-        graphs.reload(self.parent)
+        graphs.reload(self.props.application)
         self.destroy()
 
     def on_color_change(self, button):
@@ -417,8 +402,8 @@ class PlotStylesWindow(Adw.Window):
         dialog = Gtk.ColorDialog()
         dialog.set_with_alpha(False)
         dialog.choose_rgba(
-            self.parent.main_window, color, None, self.on_color_change_accept,
-            button)
+            self.props.application.main_window, color, None,
+            self.on_color_change_accept, button)
 
     def on_color_change_accept(self, dialog, result, button):
         try:
@@ -445,7 +430,8 @@ class StyleBox(Gtk.Box):
 
     @Gtk.Template.Callback()
     def on_edit(self, _button):
-        self.parent.style = get_style(self.parent.parent, self.style)
+        self.parent.style = get_style(
+            self.parent.props.application, self.style)
         self.parent.load_style()
         self.parent.leaflet.navigate(1)
         self.parent.set_title(self.style)
@@ -456,7 +442,8 @@ class StyleBox(Gtk.Box):
 
         def remove_style(_dialog, response):
             if response == "delete":
-                get_user_styles(self.parent.parent)[style].trash(None)
+                get_user_styles(
+                    self.parent.props.application)[style].trash(None)
                 self.parent.reload_styles()
         body = _("Are you sure you want to delete the {} style?").format(style)
         dialog = ui.build_dialog("delete_style")
@@ -475,7 +462,8 @@ class StyleColorBox(Gtk.Box):
     def __init__(self, parent, color):
         super().__init__()
         self.parent = parent
-        self.label.set_label(_("Color {}").format(len(parent.color_boxes) + 1))
+        self.label.set_label(
+            _("Color {}").format(len(self.parent.color_boxes) + 1))
         self.color_button.color = color
         self.color_button.provider = Gtk.CssProvider()
         self.color_button.get_style_context().add_provider(
@@ -499,13 +487,13 @@ class AddStyleWindow(Adw.Window):
     new_style_name = Gtk.Template.Child()
     plot_style_templates = Gtk.Template.Child()
 
-    def __init__(self, parent):
-        super().__init__()
+    def __init__(self, application, parent):
+        super().__init__(application=application)
         self.parent = parent
         utilities.populate_chooser(
             self.plot_style_templates,
-            sorted(get_user_styles(parent).keys()), False)
-        self.set_transient_for(parent)
+            sorted(get_user_styles(self.parent).keys()), False)
+        self.set_transient_for(self.parent)
         self.present()
 
     @Gtk.Template.Callback()
@@ -518,6 +506,20 @@ class AddStyleWindow(Adw.Window):
     @Gtk.Template.Callback()
     def on_accept(self, _button):
         style = utilities.get_selected_chooser_item(self.plot_style_templates)
-        name = self.new_style_name.get_text()
-        self.parent.copy_style(self, style, name)
+        new_style = self.new_style_name.get_text()
+        i = 0
+        user_styles = get_user_styles(self.props.application)
+        for style_1 in user_styles.keys():
+            if new_style == style_1:
+                while True:
+                    i += 1
+                    if f"{new_style} ({i})" not in user_styles.keys():
+                        new_style = f"{new_style} ({i})"
+                        break
+        config_dir = utilities.get_config_directory()
+        directory = config_dir.get_child_for_display_name("styles")
+        destination = directory.get_child_for_display_name(
+            f"{new_style}.mplstyle")
+        user_styles[style].copy(destination, 0, None)
+        self.parent.reload_styles()
         self.close()

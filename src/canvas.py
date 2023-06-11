@@ -17,8 +17,8 @@ from matplotlib.widgets import SpanSelector
 
 class Canvas(FigureCanvas):
     """Create the graph widget"""
-    def __init__(self, parent):
-        self.parent = parent
+    def __init__(self, application):
+        self.application = application
         self.figure = Figure()
         self.figure.set_tight_layout(True)
         self.one_click_trigger = False
@@ -30,7 +30,7 @@ class Canvas(FigureCanvas):
         self.top_right_axis = self.top_left_axis.twinx()
         self.set_axis_properties()
         self.set_ticks()
-        color_rgba = utilities.lookup_color(parent, "accent_color")
+        color_rgba = utilities.lookup_color(self.application, "accent_color")
         self.rubberband_edge_color = utilities.rgba_to_tuple(color_rgba, True)
         color_rgba.alpha = 0.3
         self.rubberband_fill_color = utilities.rgba_to_tuple(color_rgba, True)
@@ -92,7 +92,7 @@ class Canvas(FigureCanvas):
                 color=item.color, fontsize=item.size)
 
     def load_limits(self):
-        plot_settings = self.parent.plot_settings
+        plot_settings = self.application.plot_settings
         for axis in [self.axis, self.right_axis]:
             axis.set_xlim(plot_settings.min_bottom, plot_settings.max_bottom)
         for axis in [self.top_left_axis, self.top_right_axis]:
@@ -103,7 +103,7 @@ class Canvas(FigureCanvas):
             axis.set_ylim(plot_settings.min_right, plot_settings.max_right)
 
     def apply_limits(self):
-        plot_settings = self.parent.plot_settings
+        plot_settings = self.application.plot_settings
         plot_settings.min_bottom = min(self.axis.get_xlim())
         plot_settings.max_bottom = max(self.axis.get_xlim())
         plot_settings.min_top = min(self.top_left_axis.get_ylim())
@@ -115,7 +115,7 @@ class Canvas(FigureCanvas):
 
     def set_axis_properties(self):
         """Set the properties that are related to the axes."""
-        plot_settings = self.parent.plot_settings
+        plot_settings = self.application.plot_settings
         self.title = self.axis.set_title(plot_settings.title)
         self.bottom_label = self.axis.set_xlabel(plot_settings.xlabel)
         self.right_label = self.right_axis.set_ylabel(
@@ -167,7 +167,7 @@ class Canvas(FigureCanvas):
                  self.left_label, self.right_label}
         for item in items:
             if item.contains(event)[0]:
-                RenameWindow(self.parent, item)
+                RenameWindow(self.application, item)
 
     # Overwritten function - do not change name
     def _post_draw(self, _widget, context):
@@ -200,7 +200,7 @@ class Canvas(FigureCanvas):
 
     def set_legend(self):
         """Set the legend of the graph"""
-        if self.parent.plot_settings.legend:
+        if self.application.plot_settings.legend:
             self.legends = []
             lines1, labels1 = self.axis.get_legend_handles_labels()
             lines2, labels2 = self.right_axis.get_legend_handles_labels()
@@ -213,7 +213,7 @@ class Canvas(FigureCanvas):
             if labels:
                 self.top_right_axis.legend(
                     new_lines, labels,
-                    loc=self.parent.plot_settings.legend_position,
+                    loc=self.application.plot_settings.legend_position,
                     frameon=True, reverse=True)
             else:
                 legend = self.top_right_axis.get_legend()

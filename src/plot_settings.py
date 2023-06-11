@@ -33,10 +33,9 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
     max_top = Gtk.Template.Child()
     no_data_message = Gtk.Template.Child()
 
-    def __init__(self, parent):
-        super().__init__()
-        self.parent = parent
-        plot_settings = self.parent.plot_settings
+    def __init__(self, application):
+        super().__init__(application=application)
+        plot_settings = self.props.application.plot_settings
         self.plot_title.set_text(plot_settings.title)
         self.min_left.set_text(str(plot_settings.min_left))
         self.max_left.set_text(str(plot_settings.max_left))
@@ -63,7 +62,7 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
             plot_settings.use_custom_plot_style)
         utilities.populate_chooser(
             self.custom_plot_style,
-            sorted(plot_styles.get_user_styles(self.parent).keys()),
+            sorted(plot_styles.get_user_styles(self.props.application).keys()),
             translate=False)
         utilities.set_chooser(
             self.custom_plot_style, plot_settings.custom_plot_style)
@@ -73,14 +72,14 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
         utilities.set_chooser(
             self.plot_legend_position,
             plot_settings.legend_position.capitalize())
-        self.hide_unused_axes_limits(self.parent)
-        if len(self.parent.datadict) > 0:
+        self.hide_unused_axes_limits()
+        if len(self.props.application.datadict) > 0:
             self.no_data_message.set_visible(False)
-        self.set_transient_for(self.parent.main_window)
+        self.set_transient_for(self.props.application.main_window)
         self.present()
 
-    def hide_unused_axes_limits(self, parent):
-        used_axes = utilities.get_used_axes(parent)[0]
+    def hide_unused_axes_limits(self):
+        used_axes = utilities.get_used_axes(self.props.application)[0]
         if not used_axes["left"]:
             self.min_left.set_visible(False)
             self.max_left.set_visible(False)
@@ -96,16 +95,17 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
 
     @Gtk.Template.Callback()
     def on_close(self, *_args):
-        plot_settings = self.parent.plot_settings
+        plot_settings = self.props.application.plot_settings
+        config = self.props.application.preferences.config
 
         # Check if style change when override is enabled
         self.style_changed = \
             plot_settings.use_custom_plot_style \
             != self.use_custom_plot_style.get_enable_expansion() \
-            and self.parent.preferences.config["override_style_change"] \
+            and config["override_style_change"] \
             or plot_settings.custom_plot_style \
             != utilities.get_selected_chooser_item(self.custom_plot_style) \
-            and self.parent.preferences.config["override_style_change"]
+            and config["override_style_change"]
 
         # Set new plot settings
         plot_settings.title = self.plot_title.get_text()
@@ -142,19 +142,20 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
         # Set new item properties
         if self.style_changed:
             pyplot.rcParams.update(file_io.parse_style(
-                plot_styles.get_preferred_style(self.parent)))
-            for item in self.parent.datadict.values():
+                plot_styles.get_preferred_style(self.props.application)))
+            for item in self.props.application.datadict.values():
                 item.color = None
-            for item in self.parent.datadict.values():
-                item.color = plotting_tools.get_next_color(self.parent)
+            for item in self.props.application.datadict.values():
+                item.color = \
+                    plotting_tools.get_next_color(self.props.application)
                 item.linestyle = pyplot.rcParams["lines.linestyle"]
                 item.linewidth = float(pyplot.rcParams["lines.linewidth"])
                 item.markerstyle = pyplot.rcParams["lines.marker"]
                 item.markersize = \
                     float(pyplot.rcParams["lines.markersize"])
-            clipboard.add(self.parent)
-            graphs.reload(self.parent)
-            ui.reload_item_menu(self.parent)
+            clipboard.add(self.props.application)
+            graphs.reload(self.props.application)
+            ui.reload_item_menu(self.props.application)
         else:
-            self.parent.canvas.load_limits()
-            graphs.refresh(self.parent)
+            self.props.application.canvas.load_limits()
+            graphs.refresh(self.props.application)

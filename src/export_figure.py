@@ -14,10 +14,10 @@ class ExportFigureWindow(Adw.Window):
     transparent = Gtk.Template.Child()
     dpi = Gtk.Template.Child()
 
-    def __init__(self, parent):
-        super().__init__()
-        self.parent = parent
-        self.set_transient_for(parent.main_window)
+    def __init__(self, application):
+        super().__init__(application=application)
+        self.set_transient_for(self.props.application.main_window)
+        self.parent = self.props.application
         self.transparent.set_active(
             self.parent.preferences.config["export_figure_transparent"])
         self.items = \

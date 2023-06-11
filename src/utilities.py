@@ -100,9 +100,9 @@ def get_selected_chooser_item(chooser):
     return chooser.untranslated_items[int(chooser.get_selected())]
 
 
-def get_all_names(parent):
+def get_all_names(self):
     """Get a list of all filenames present in the datadict dictionary"""
-    return [item.name for item in parent.datadict.values()]
+    return [item.name for item in self.datadict.values()]
 
 
 def get_dict_by_value(dictionary, value):
