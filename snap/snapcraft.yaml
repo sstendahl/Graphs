@@ -9,6 +9,7 @@ architectures:
   - build-on: amd64
   - build-on: arm64
 
+
 slots:
   graphs:
     interface: dbus
@@ -32,7 +33,7 @@ parts:
     override-build: |
       craftctl default
       pip install --prefix=$CRAFT_PART_INSTALL/usr matplotlib==3.7.1
-      pip install --target=$CRAFT_PART_INSTALL/usr/lib/python3/dist-packages scipy==1.10.1
+      pip install --prefix=$CRAFT_PART_INSTALL/usr scipy==1.10.1
       sed -e '1c#!/usr/bin/env python3' -i ${CRAFT_PART_INSTALL}/snap/graphs/current/usr/bin/graphs
       sed -e '1c#!/usr/bin/python3' -i $CRAFT_PART_INSTALL/usr/local/bin/*
       mkdir -p $CRAFT_PART_INSTALL/meta/gui
@@ -40,9 +41,6 @@ parts:
       for i in `find $CRAFT_PART_INSTALL/meta/gui/icons -name "*.svg" -o -name "*.png"`; do
         mv $i "`dirname $i`/snap.$CRAFT_PROJECT_NAME.`basename $i`"
       done
-    override-prime: | 
-      craftctl default
-      rm -rf $CRAFT_PART_INSTALL/usr/lib/python3.10/bin
     organize:
       snap/graphs/current/usr: usr
       usr/local: usr
