@@ -86,8 +86,14 @@ def set_chooser(chooser, choice):
 
 def populate_chooser(chooser, chooser_list, translate=True):
     """Fill the dropdown menu with the strings in a chooser_list"""
+    if chooser.get_model():
+        model = chooser.get_model()
+        for _item in model:
+            model.remove(0)
+    else:
+        model = Gtk.StringList()
+
     chooser.untranslated_items = []
-    model = Gtk.StringList()
     for item in chooser_list:
         chooser.untranslated_items.append(item)
         if translate:
@@ -96,6 +102,7 @@ def populate_chooser(chooser, chooser_list, translate=True):
     chooser.set_model(model)
 
 
+<<<<<<< Updated upstream
 def repopulate_chooser_from_list(chooser, chooser_list):
     """Fill the dropdown menu with the strings from a given list"""
     model = chooser.get_model()
@@ -109,6 +116,8 @@ def repopulate_chooser_from_list(chooser, chooser_list):
 def get_chooser_list(chooser):
     return [item.get_string() for item in chooser.get_model()]
 
+=======
+>>>>>>> Stashed changes
 
 def get_selected_chooser_item(chooser):
     return chooser.untranslated_items[int(chooser.get_selected())]
