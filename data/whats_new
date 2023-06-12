@@ -1,9 +1,25 @@
-<p>Changes</p>
-<ul>
-	<li>Adds Dutch translation to Graphs.</li>
-</ul>
-
-<p>Bugfixes:</p>
-<ul>
-  <li>Fixes an upstream bug in Matplotlib where part of the Graph would be cut off at scaled resolutions.</li>
-  </ul>
+	<p>New in Graphs:</p>
+	<ul>
+	  <li>Data can now be opened directly from project files.</li>
+	  <li>Adds Dutch translation for Graphs.</li>
+	  <li>Adds Turkish translation for Graphs.</li>
+	  <li>Adds Swedish translation for Graphs.</li>
+	</ul>
+        <p>Changes:</p>
+        <ul>
+	  <li>Graphs now always follows the preset system style, unless custom style is set</li>
+	  <li>Action dialogs have been changed to follow the GNOME HIG.</li>
+	  <li>Labels are now set as an item attribute when loading a new data set with headers, data will be plotted on a new axis when different data types are added.</li>
+	  <li>Axis limits are now persistent when saving and opening projects.</li>
+	  <li>The plot limits are now reset less often when not needed</li>
+	  <li>Graphs now uses GFile when handling data and figures</li>
+	  <li>Multiple refactors under the hood</li>
+        </ul>
+        <p>Bugfixes:</p>
+        <ul>
+	  <li>Fixed an upstream bug in Matplotlib where part of the Graph would be cut off at scaled resolutions.</li>
+	  <li>Fixed a bug where the legend styles could not be deleted</li>
+	  <li>Fixed a bug where the legend styles could not be reset to defaults</li>
+	  <li>Fixed a bug where the legend would remain when all data is removed</li>
+	  <li>Fixed a bug where Graphs would crash when the name of an item is changed and a new item is selected from the dropdown.</li>
+        </ul>
