@@ -110,6 +110,11 @@ def export_data_dialog(self):
         dialog.save(self.main_window, None, on_response)
 
 
+def build_dialog(name):
+    return Gtk.Builder.new_from_resource(
+        "/se/sjoerd/Graphs/ui/dialogs.ui").get_object(name)
+
+
 def show_about_window(self):
     developers = [
         "Sjoerd Stendahl <contact@sjoerd.se>",
