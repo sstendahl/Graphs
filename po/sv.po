@@ -1985,7 +1985,7 @@ msgstr ""
 
 #: data/ui/window.blp:191
 msgid "Adjust Data"
-msgstr "Justera datan"
+msgstr "Justera data"
 
 #: data/ui/window.blp:206
 msgid "Shift"
