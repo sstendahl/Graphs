@@ -24,8 +24,9 @@ template $StyleColorBox : Box {
     }
   }
 
-  Button delete_button {
+  Button {
     tooltip-text: _("Remove");
+    clicked => $on_delete();
     styles ["flat"]
     Image {
       hexpand: false;

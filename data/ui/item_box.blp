@@ -11,6 +11,7 @@ template $ItemBox : Box {
     halign: start;
     hexpand: false;
     styles ["selection-mode"]
+    toggled => $on_toggle();
   }
 
   Label label {
@@ -20,9 +21,10 @@ template $ItemBox : Box {
     hexpand: true;
   }
 
-  Button edit_button {
+  Button {
     tooltip-text: _("Edit Item");
     styles ["flat"]
+    clicked => $edit();
     Image {
       hexpand: false;
       icon-name: "settings-symbolic";
@@ -33,6 +35,7 @@ template $ItemBox : Box {
   Button color_button {
     tooltip-text: _("Pick a color");
     styles ["flat"]
+    clicked => $choose_color();
     Image {
       hexpand: false;
       icon-name: "color-picker-symbolic";
@@ -40,9 +43,10 @@ template $ItemBox : Box {
     }
   }
 
-  Button delete_button {
+  Button {
     tooltip-text: _("Remove");
     styles ["flat"]
+    clicked => $delete();
     Image {
       hexpand: false;
       icon-name: "edit-delete-symbolic";

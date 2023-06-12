@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
-from gi.repository import Adw, Gtk
+from gi.repository import Adw, GLib, Gtk
 
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/window.ui")
@@ -35,3 +35,8 @@ class GraphsWindow(Adw.ApplicationWindow):
 
     def add_toast(self, title):
         self.toast_overlay.add_toast(Adw.Toast(title=title))
+
+    @Gtk.Template.Callback()
+    def on_sidebar_toggle(self, *_args):
+        self.get_application().toggle_sidebar.change_state(
+            GLib.Variant.new_boolean(self.sidebar_flap.get_reveal_flap()))

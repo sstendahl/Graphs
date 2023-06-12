@@ -10,24 +10,18 @@ class ItemBox(Gtk.Box):
     __gtype_name__ = "ItemBox"
     label = Gtk.Template.Child()
     check_button = Gtk.Template.Child()
-    edit_button = Gtk.Template.Child()
     color_button = Gtk.Template.Child()
-    delete_button = Gtk.Template.Child()
 
     def __init__(self, parent, item):
         super().__init__()
         self.item = item
+        self.parent = parent
         self.label.set_text(utilities.shorten_label(item.name))
         self.check_button.set_active(item.selected)
-        self.parent = parent
 
         self.gesture = Gtk.GestureClick()
         self.gesture.set_button(0)
         self.add_controller(self.gesture)
-        self.edit_button.connect("clicked", self.edit)
-        self.color_button.connect("clicked", self.choose_color)
-        self.delete_button.connect("clicked", self.delete)
-        self.check_button.connect("toggled", self.on_toggle)
         self.provider = Gtk.CssProvider()
         self.color_button.get_style_context().add_provider(
             self.provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION)
@@ -64,6 +58,7 @@ class ItemBox(Gtk.Box):
         self.provider.load_from_data(
             f"button {{ color: {self.item.color}; }}", -1)
 
+    @Gtk.Template.Callback()
     def choose_color(self, _):
         color = utilities.hex_to_rgba(self.item.color)
         dialog = Gtk.ColorDialog()
@@ -82,13 +77,16 @@ class ItemBox(Gtk.Box):
         except GLib.GError:
             pass
 
+    @Gtk.Template.Callback()
     def delete(self, _):
         graphs.delete_item(self.parent, self.item.key, True)
 
+    @Gtk.Template.Callback()
     def on_toggle(self, _):
         self.item.selected = self.check_button.get_active()
         graphs.refresh(self.parent)
         ui.enable_data_dependent_buttons(self.parent)
 
+    @Gtk.Template.Callback()
     def edit(self, _):
         EditItemWindow(self.parent, self.item)

@@ -118,7 +118,6 @@ class PreferencesWindow(Adw.PreferencesWindow):
             self.plot_custom_style, plot_styles.get_user_styles(parent).keys(),
             translate=False)
         self.load_configuration()
-        self.connect("close-request", self.on_close, self.parent)
         self.set_transient_for(self.parent.main_window)
         self.present()
 
@@ -233,7 +232,8 @@ class PreferencesWindow(Adw.PreferencesWindow):
         config["plot_custom_style"] = \
             utilities.get_selected_chooser_item(self.plot_custom_style)
 
-    def on_close(self, _, parent):
+    @Gtk.Template.Callback()
+    def on_close(self, _):
         self.apply_configuration()
-        parent.preferences.save_config()
-        graphs.refresh(parent)
+        self.parent.preferences.save_config()
+        graphs.refresh(self.parent)

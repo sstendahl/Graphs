@@ -77,12 +77,13 @@ template $AddEquationWindow : Adw.Window {
               }
             }
 
-            Button confirm_button {
+            Button {
               halign: center;
               margin-top: 24;
               margin-bottom: 12;
               label: _("Add Equation");
               styles ["suggested-action", "pill"]
+              clicked => $on_accept();
             }
           }
         };
