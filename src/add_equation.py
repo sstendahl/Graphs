@@ -18,15 +18,14 @@ class AddEquationWindow(Adw.Window):
     x_stop = Gtk.Template.Child()
     step_size = Gtk.Template.Child()
 
-    def __init__(self, parent):
-        super().__init__()
-        self.parent = parent
-        config = self.parent.preferences.config
+    def __init__(self, application):
+        super().__init__(application=application)
+        self.set_transient_for(self.props.application.main_window)
+        config = self.props.application.preferences.config
         self.equation.set_text(config["addequation_equation"])
         self.x_start.set_text(config["addequation_x_start"])
         self.x_stop.set_text(config["addequation_x_stop"])
         self.step_size.set_text(config["addequation_step_size"])
-        self.set_transient_for(self.parent.main_window)
         self.present()
 
     @Gtk.Template.Callback()
@@ -43,7 +42,8 @@ class AddEquationWindow(Adw.Window):
             if name == "":
                 name = f"Y = {equation}"
             graphs.add_items(
-                self.parent, [Item(self.parent, xdata, ydata, name)])
+                self.props.application,
+                [Item(self.props.application, xdata, ydata, name)])
             self.destroy()
         except (NameError, SyntaxError) as exception:
             toast = _("{error} - Unable to add data from equation").format(

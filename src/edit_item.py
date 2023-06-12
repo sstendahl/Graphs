@@ -20,11 +20,10 @@ class EditItemWindow(Adw.PreferencesWindow):
     markers = Gtk.Template.Child()
     markersize = Gtk.Template.Child()
 
-    def __init__(self, parent, item):
-        super().__init__()
-        self.parent = parent
+    def __init__(self, application, item):
+        super().__init__(application=application)
         self.item = item
-        names = utilities.get_all_names(self.parent)
+        names = utilities.get_all_names(self.props.application)
         utilities.populate_chooser(self.item_selector, names)
         self.item_selector.set_selected(names.index(self.item.name))
 
@@ -33,7 +32,7 @@ class EditItemWindow(Adw.PreferencesWindow):
         utilities.populate_chooser(self.linestyle, misc.LINESTYLES)
         utilities.populate_chooser(self.markers, sorted(misc.MARKERS.keys()))
         self.load_values()
-        self.set_transient_for(parent.main_window)
+        self.set_transient_for(self.props.application.main_window)
         self.present()
 
     def on_close(self, *_args):
@@ -42,18 +41,18 @@ class EditItemWindow(Adw.PreferencesWindow):
     @Gtk.Template.Callback()
     def on_select(self, _action, _target):
         self.apply()
-        data_list = list(self.parent.datadict.keys())
+        data_list = list(self.props.application.datadict.keys())
         index = self.item_selector.get_selected()
-        self.item = self.parent.datadict[data_list[index]]
+        self.item = self.props.application.datadict[data_list[index]]
         self.load_values()
 
         # If item_selector no longer matches with name, repopulate it
-        names = utilities.get_all_names(self.parent)
+        names = utilities.get_all_names(self.props.application)
         if set(names) != set(self.item_selector.untranslated_items):
             utilities.populate_chooser(self.item_selector, names, False)
             self.item_selector.set_selected(index)
-            self.parent.datadict_clipboard = \
-                self.parent.datadict_clipboard[:-1]
+            self.props.application.datadict_clipboard = \
+                self.props.application.datadict_clipboard[:-1]
 
     def load_values(self):
         self.set_title(self.item.name)
@@ -91,9 +90,9 @@ class EditItemWindow(Adw.PreferencesWindow):
             utilities.get_selected_chooser_item(self.plot_y_position)
         if isinstance(self.item, Item):
             self.apply_item_values()
-        ui.reload_item_menu(self.parent)
-        clipboard.add(self.parent)
-        graphs.refresh(self.parent)
+        ui.reload_item_menu(self.props.application)
+        clipboard.add(self.props.application)
+        graphs.refresh(self.props.application)
         if set_limits:
             plotting_tools.optimize_limits(self)
 
