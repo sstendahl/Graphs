@@ -86,11 +86,11 @@ msgstr ""
 msgid "1 - Plot and manipulate any data set inserted by equation or from file"
 msgstr ""
 "1 - Plotta och manipulera vilken datamängd som helst som matas in via en "
-"ekvation eller från en fil."
+"ekvation eller från en fil"
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:33
 msgid "2 - Both light and dark mode is supported"
-msgstr "2 - Både ljust- och mörkt läge stöds."
+msgstr "2 - Både ljust- och mörkt läge stöds"
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:37
 msgid "3 - Add data from an equation"
@@ -98,11 +98,11 @@ msgstr "3 - Lägg till data via en ekvation"
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:41
 msgid "4 - Edit plot stylesheets"
-msgstr "4 - Redigera plottmallar."
+msgstr "4 - Redigera plottmallar"
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:45
 msgid "5 - Manipulate data using a wide range of operations"
-msgstr "5 - Manipulera data med hjälp av ett brett utbud av operationer."
+msgstr "5 - Manipulera data med hjälp av ett brett utbud av operationer"
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:52
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:64
@@ -909,7 +909,7 @@ msgstr "Valt objekt"
 
 #: data/ui/edit_item.blp:17
 msgid "Choose which item to edit"
-msgstr "Välj vilket objekt du vill redigera."
+msgstr "Välj vilket objekt du vill redigera"
 
 #: data/ui/edit_item.blp:22
 msgid "Data"
@@ -917,23 +917,23 @@ msgstr "Data"
 
 #: data/ui/edit_item.blp:23
 msgid "Change the name of the data set and the axis positions"
-msgstr "Ändra namnet på datamängden och axelpositionerna."
+msgstr "Ändra namnet på datamängden och axelpositionerna"
 
 #: data/ui/edit_item.blp:26
 msgid "Change Name"
-msgstr "Byt namn."
+msgstr "Byt namn"
 
 #: data/ui/edit_item.blp:31
 msgid "X-Axis Position"
-msgstr "X-axelposition."
+msgstr "X-axelposition"
 
 #: data/ui/edit_item.blp:32 data/ui/preferences.blp:240
 msgid "The position of the X-axis"
-msgstr "Positionen för X-axeln."
+msgstr "Positionen för X-axeln"
 
 #: data/ui/edit_item.blp:36
 msgid "Y-Axis Position"
-msgstr "Y-axelposition."
+msgstr "Y-axelposition"
 
 #: data/ui/edit_item.blp:37
 msgid "The position of the Y-axis"
@@ -1049,7 +1049,7 @@ msgstr "Ändra läge"
 #: data/ui/help_overlay.blp:43
 msgctxt "shortcut window"
 msgid "Pan Mode"
-msgstr "Panläge"
+msgstr "Panoreringsläge"
 
 #: data/ui/help_overlay.blp:48
 msgctxt "shortcut window"
@@ -1183,7 +1183,7 @@ msgstr "Kolumn X"
 
 #: data/ui/import.blp:42
 msgid "Choose which column to load for the X-data"
-msgstr "Välj vilken kolumn som ska laddas för X-data."
+msgstr "Välj vilken kolumn som ska laddas för X-data"
 
 #: data/ui/import.blp:56 data/ui/preferences.blp:44
 msgid "Column Y"
@@ -1199,7 +1199,7 @@ msgstr "Hoppa över rader"
 
 #: data/ui/import.blp:72
 msgid "Choose how many rows to skip while loading data"
-msgstr "Välj hur många rader som ska hoppas över vid inläsning av data."
+msgstr "Välj hur många rader som ska hoppas över vid inläsning av data"
 
 #: data/ui/import.blp:89
 msgid "Confirm"
@@ -1666,11 +1666,11 @@ msgstr "Avgränsare"
 
 #: data/ui/preferences.blp:28
 msgid "Which column to load for the X-data"
-msgstr "Välj vilken kolumn som ska laddas för X-data."
+msgstr "Välj vilken kolumn som ska laddas för X-data"
 
 #: data/ui/preferences.blp:45
 msgid "Which column to load for the Y-data"
-msgstr "Välj vilken kolumn som ska laddas för Y-data."
+msgstr "Välj vilken kolumn som ska laddas för Y-data"
 
 #: data/ui/preferences.blp:62
 msgid "How many rows to skip while loading data"
@@ -1957,7 +1957,7 @@ msgstr "Öppna programmenyn"
 
 #: data/ui/window.blp:137
 msgid "No Data"
-msgstr "No Data"
+msgstr "Ingen data"
 
 #: data/ui/window.blp:138
 msgid "Add data from a file or manually as an equation"
@@ -2097,11 +2097,11 @@ msgstr "Få den inversa snabb Fourier-transform (FFT) av datan."
 
 #: data/ui/window.blp:459
 msgid "Perform custom transformations on the data"
-msgstr "Utför anpassade transformationer på datan."
+msgstr "Utför anpassade transformationer på datan"
 
 #: data/ui/window.blp:489
 msgid "Save Project"
-msgstr "Spara projektet"
+msgstr "Spara projekt"
 
 #: data/ui/window.blp:490
 msgid "Open Project"
@@ -2133,11 +2133,11 @@ msgstr "Lägg till data från fil"
 
 #: data/ui/window.blp:512
 msgid "Add Data from File (Advanced)"
-msgstr "Lägg till data från fil (avancerad)."
+msgstr "Lägg till data från fil (avancerad)"
 
 #: data/ui/window.blp:513
 msgid "Add Data from Equation"
-msgstr "Lägg till data från ekvation."
+msgstr "Lägg till data från ekvation"
 
 #: data/ui/window.blp:519
 msgid "Toggle Sidebar"
@@ -2237,11 +2237,11 @@ msgstr "R (1/s)"
 
 #: src/file_io.py:189
 msgid "Missing colon in file {}, line {}"
-msgstr "Saknad kolon i filen {}, rad {}."
+msgstr "Saknad kolon i filen {}, rad {}"
 
 #: src/file_io.py:197
 msgid "Style includes a non-style related parameter, {}"
-msgstr "Stilen inkluderar en parameter som inte är relaterad till stilen, {}."
+msgstr "Stilen inkluderar en parameter som inte är relaterad till stilen, {}"
 
 #: src/file_io.py:200
 msgid "Duplicate key in file {}, on line {}"
