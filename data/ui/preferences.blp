@@ -150,6 +150,11 @@ template $PreferencesWindow : Adw.PreferencesWindow {
       title: _("Other");
       description: _("Other general settings");
 
+      Adw.ComboRow language_chooser {
+        title: _("Language");
+        subtitle: _("Set the language that is used (requires restart)");
+      }
+
       Adw.ActionRow {
         title: _("Clipboard length");
         subtitle: _("Choose how many states are stored in the clipboard");

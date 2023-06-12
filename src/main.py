@@ -2,6 +2,7 @@
 """Main application."""
 import logging
 import sys
+import os
 from gettext import gettext as _
 from inspect import getmembers, isfunction
 
@@ -44,6 +45,7 @@ class GraphsApplication(Adw.Application):
             except RuntimeError:
                 logging.warning(_("Could not load %s"), font)
         self.preferences = Preferences()
+        os.environ["LANGUAGE"] = self.preferences.config["language"]
         self.add_actions()
         self.get_style_manager().connect(
             "notify", ui.on_style_change, None, self)

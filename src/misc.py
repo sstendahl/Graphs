@@ -43,6 +43,9 @@ def _(message):
 
 
 SCALES = [_("linear"), _("log")]
+LANGUAGES = [
+    _("System default"), _("English"), _("Dutch"),  _("Swedish"), _("Turkish"),
+]
 LEGEND_POSITIONS = [
     _("Best"), _("Upper right"), _("Upper left"), _("Lower left"),
     _("Lower right"), _("Center left"), _("Center right"), _("Lower center"),
@@ -69,5 +72,4 @@ MARKERS = {
     _("Filled plus"): "P", _("Filled x"): "X", _("Nothing"): "none",
 }
 TICK_DIRECTIONS = [_("in"), _("out")]
-
 del _

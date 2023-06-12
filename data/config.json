@@ -10,6 +10,7 @@
   "export_figure_transparent": true,
   "handle_duplicates": "Auto-rename duplicates",
   "hide_unselected": false,
+  "language": "System default",
   "override_style_change": true,
   "plot_custom_style": "adwaita",
   "plot_legend": true,

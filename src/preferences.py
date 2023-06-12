@@ -70,6 +70,7 @@ class PreferencesWindow(Adw.PreferencesWindow):
     export_figure_filetype = Gtk.Template.Child()
     export_figure_transparent = Gtk.Template.Child()
     action_center_data = Gtk.Template.Child()
+    language_chooser = Gtk.Template.Child()
     other_handle_duplicates = Gtk.Template.Child()
     other_hide_unselected = Gtk.Template.Child()
     override_style_change = Gtk.Template.Child()
@@ -112,6 +113,7 @@ class PreferencesWindow(Adw.PreferencesWindow):
         utilities.populate_chooser(
             self.plot_legend_position, misc.LEGEND_POSITIONS)
 
+        utilities.populate_chooser(self.language_chooser, misc.LANGUAGES)
         utilities.populate_chooser(
             self.plot_custom_style,
             plot_styles.get_user_styles(self.props.application).keys(),
@@ -174,6 +176,8 @@ class PreferencesWindow(Adw.PreferencesWindow):
             config["plot_use_custom_style"])
         utilities.set_chooser(
             self.plot_custom_style, config["plot_custom_style"])
+        utilities.set_chooser(
+            self.language_chooser, config["language"])
 
     def apply_configuration(self):
         config = self.props.application.preferences.config
@@ -233,6 +237,8 @@ class PreferencesWindow(Adw.PreferencesWindow):
             self.plot_use_custom_style.get_enable_expansion()
         config["plot_custom_style"] = \
             utilities.get_selected_chooser_item(self.plot_custom_style)
+        config["language"] = \
+            utilities.get_selected_chooser_item(self.language_chooser)
 
     @Gtk.Template.Callback()
     def on_close(self, _):
