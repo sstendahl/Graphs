@@ -34,6 +34,8 @@ parts:
     meson-parameters:
       - --prefix=/snap/graphs/current/usr
       - --buildtype=release
+    build-environment:
+      - PYTHONPATH: $CRAFT_STAGE/usr/lib/python3/dist-packages:$PYTHONPATH
     override-pull: |
       craftctl default
       patch -p1 < $CRAFT_PROJECT_DIR/snap/graphs.patch
