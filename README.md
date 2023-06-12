@@ -1,5 +1,5 @@
 <p>
-<a href="https://flathub.org/apps/details/se.sjoerd.Graphs"><img height="60" alt="Download on Flathub" src="https://flathub.org/assets/badges/flathub-badge-en.svg"/></a>
+<a href="https://flathub.org/apps/details/se.sjoerd.Graphs"><img height="62" alt="Download on Flathub" src="https://flathub.org/assets/badges/flathub-badge-en.svg"/></a>&nbsp;&nbsp;
 <a href="https://snapcraft.io/graphs"><img height="60" alt="Get it from the Snap Store" src="https://snapcraft.io/static/images/badges/en/snap-store-black.svg"/></a>
 </p>
 
