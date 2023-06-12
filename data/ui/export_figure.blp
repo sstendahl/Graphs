@@ -6,6 +6,7 @@ template $ExportFigureWindow : Adw.Window {
   title: _("Export Figure");
   default-width: 575;
   default-height: 125;
+  focus-widget: confirm_button;
 
   ShortcutController {
     Shortcut {
@@ -25,7 +26,7 @@ template $ExportFigureWindow : Adw.Window {
       }
 
       [end]
-      Button {
+      Button confirm_button {
         label: _("Export");
         styles ["suggested-action"]
         clicked => $on_accept();

@@ -5,6 +5,7 @@ template $RenameWindow : Adw.Window {
   modal: true;
   default-width: 575;
   default-height: 125;
+  focus-widget: confirm_button;
 
   ShortcutController {
     Shortcut {
@@ -24,7 +25,7 @@ template $RenameWindow : Adw.Window {
       }
 
       [end]
-      Button {
+      Button confirm_button {
         label: _("Rename");
         styles ["suggested-action"]
         clicked => $on_accept();
@@ -39,7 +40,6 @@ template $RenameWindow : Adw.Window {
       Adw.PreferencesGroup preferencegroup {
         Adw.EntryRow text_entry {
           max-width-chars: 10;
-          title: _("Label");
         }
       }
     }

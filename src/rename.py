@@ -16,19 +16,14 @@ class RenameWindow(Adw.Window):
         super().__init__(application=application)
         self.item = item
         title = _("Rename Label")
-        group_title = _("Change Label")
-        group_description = \
-            _("Here you can change the label of the selected axis.")
+        label = _("Label")
         text = self.item.get_text()
         if self.item == self.props.application.canvas.title:
             title = _("Rename Title")
-            group_title = _("Change Title")
-            group_description = \
-                _("Here you can change the title of the plot.")
+            label = _("Title")
             text = self.props.application.plot_settings.title
         self.set_title(title)
-        self.preferencegroup.set_title(group_title)
-        self.preferencegroup.set_description(group_description)
+        self.text_entry.set_title(label)
         self.text_entry.set_text(text)
         self.set_transient_for(self.props.application.main_window)
         self.present()

@@ -6,7 +6,7 @@ template $ImportWindow : Adw.Window {
   default-width: 650;
   default-height: 125;
   title: _("Modify import Parameters");
-  close-request => $on_close();
+  focus-widget: confirm_button;
 
   ShortcutController {
     Shortcut {
@@ -26,7 +26,7 @@ template $ImportWindow : Adw.Window {
       }
 
       [end]
-      Button {
+      Button confirm_button {
         label: _("Import");
         styles ["suggested-action"]
         clicked => $on_accept();

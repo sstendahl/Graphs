@@ -5,6 +5,7 @@ template $AddEquationWindow : Adw.Window {
   modal: true;
   default-width: 450;
   title: _("Add Equation");
+  focus-widget: confirm_button;
 
   ShortcutController {
     Shortcut {
@@ -24,7 +25,7 @@ template $AddEquationWindow : Adw.Window {
       }
 
       [end]
-      Button {
+      Button confirm_button {
         label: _("Add");
         styles ["suggested-action"]
         clicked => $on_accept();
