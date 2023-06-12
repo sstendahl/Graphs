@@ -34,8 +34,6 @@ parts:
     meson-parameters:
       - --prefix=/snap/graphs/current/usr
       - --buildtype=release
-    build-packages:
-      - blueprint-compiler
     override-pull: |
       craftctl default
       patch -p1 < $CRAFT_PROJECT_DIR/snap/graphs.patch
