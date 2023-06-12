@@ -18,19 +18,16 @@ class ExportFigureWindow(Adw.Window):
     def __init__(self, application):
         super().__init__(application=application)
         self.set_transient_for(self.props.application.main_window)
-        self.parent = self.props.application
-        self.transparent.set_active(
-            self.parent.preferences.config["export_figure_transparent"])
+        config = self.props.application.preferences.config
+        self.transparent.set_active(config["export_figure_transparent"])
         self.items = \
-            self.parent.canvas.get_supported_filetypes_grouped().items()
-        self.dpi.set_value(
-            int(self.parent.preferences.config["export_figure_dpi"]))
+            application.canvas.get_supported_filetypes_grouped().items()
+        self.dpi.set_value(config["export_figure_dpi"])
         file_formats = []
         default_format = None
         for name, formats in self.items:
             file_formats.append(name)
-            if self.parent.preferences.config["export_figure_filetype"] in \
-                    formats:
+            if config["export_figure_filetype"] in formats:
                 default_format = name
         utilities.populate_chooser(self.file_format, file_formats, False)
         if default_format is not None:
@@ -39,31 +36,31 @@ class ExportFigureWindow(Adw.Window):
 
     @Gtk.Template.Callback()
     def on_accept(self, _button):
+        application = self.props.application
         dpi = int(self.dpi.get_value())
         fmt = utilities.get_selected_chooser_item(self.file_format)
         file_suffix = None
         for name, formats in self.items:
             if name == fmt:
                 file_suffix = formats[0]
-        filename = Path(self.parent.canvas.get_default_filename()).stem
+        filename = Path(application.canvas.get_default_filename()).stem
         transparent = self.transparent.get_active()
+
+        def on_response(dialog, response):
+            with contextlib.suppress(GLib.GError):
+                destination = dialog.save_finish(response)
+                file, stream = Gio.File.new_tmp("graphs-XXXXXX")
+                stream.close()
+                application.canvas.figure.savefig(
+                    file.peek_path(), dpi=dpi, format=file_suffix,
+                    transparent=transparent)
+                file.move(destination, Gio.FileCopyFlags(1), None)
+                application.main_window.add_toast(
+                    _("Exported Figure"))
+
         dialog = Gtk.FileDialog()
         dialog.set_initial_name(f"{filename}.{file_suffix}")
         dialog.set_accept_label(_("Export"))
         dialog.set_filters(utilities.create_file_filters([(fmt, file_suffix)]))
-        dialog.save(
-            self.parent.main_window, None, self.on_figure_save_response, dpi,
-            file_suffix, transparent)
+        dialog.save(application.main_window, None, on_response)
         self.destroy()
-
-    def on_figure_save_response(
-            self, dialog, response, dpi, file_suffix, transparent):
-        with contextlib.suppress(GLib.GError):
-            destination = dialog.save_finish(response)
-            file, stream = Gio.File.new_tmp("graphs-XXXXXX")
-            stream.close()
-            self.parent.canvas.figure.savefig(
-                file.peek_path(), dpi=dpi, format=file_suffix,
-                transparent=transparent)
-            file.move(destination, Gio.FileCopyFlags(1), None)
-            self.parent.main_window.add_toast(_("Exported Figure"))
