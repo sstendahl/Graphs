@@ -18,7 +18,19 @@ template $ImportWindow : Adw.Window {
   Box {
     orientation: vertical;
     Adw.HeaderBar {
-      styles ["flat"]
+      show-end-title-buttons: false;
+      [start]
+      Button {
+        label: _("Cancel");
+        action-name: "window.close";
+      }
+
+      [end]
+      Button {
+        label: _("Import");
+        styles ["suggested-action"]
+        clicked => $on_accept();
+      }
     }
 
     Adw.Clamp {
@@ -81,15 +93,6 @@ template $ImportWindow : Adw.Window {
               upper: 999;
             };
           }
-        }
-
-        Button confirm_button {
-          halign: center;
-          margin-top: 24;
-          margin-bottom: 12;
-          label: _("Confirm");
-          styles ["suggested-action", "pill"]
-          clicked => $on_accept();
         }
       }
     }

@@ -17,7 +17,19 @@ template $ExportFigureWindow : Adw.Window {
   Box {
     orientation: vertical;
     Adw.HeaderBar {
-      styles ["flat"]
+      show-end-title-buttons: false;
+      [start]
+      Button {
+        label: _("Cancel");
+        action-name: "window.close";
+      }
+
+      [end]
+      Button {
+        label: _("Export");
+        styles ["suggested-action"]
+        clicked => $on_accept();
+      }
     }
 
     Adw.Clamp {
@@ -55,15 +67,6 @@ template $ExportFigureWindow : Adw.Window {
           Switch transparent {
             valign: center;
           }
-        }
-
-        Button {
-          margin-top: 24;
-          margin-bottom: 12;
-          label: _("Export");
-          halign: center;
-          styles ["suggested-action", "pill"]
-          clicked => $on_accept();
         }
       }
     }

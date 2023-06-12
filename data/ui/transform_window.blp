@@ -16,6 +16,21 @@ template $TransformWindow : Adw.Window {
   Box {
     orientation: vertical;
     Adw.HeaderBar {
+      show-end-title-buttons: false;
+      [start]
+      Button {
+        label: _("Cancel");
+        action-name: "window.close";
+      }
+
+      [end]
+      Button {
+        label: _("Transform");
+        styles ["suggested-action"]
+        clicked => $on_accept();
+      }
+
+      [end]
       Button help_button {
         Adw.ButtonContent {
           halign: center;
@@ -31,7 +46,6 @@ template $TransformWindow : Adw.Window {
         tooltip-text: _("More info");
         styles ["flat"]
       }
-      styles ["flat"]
     }
     Adw.Clamp {
       margin-start: 12;
@@ -57,15 +71,6 @@ template $TransformWindow : Adw.Window {
           Switch discard {
             valign: center;
           }
-        }
-
-        Button {
-          halign: center;
-          margin-top: 24;
-          margin-bottom: 12;
-          label: _("Transform");
-          clicked => $on_accept();
-          styles ["suggested-action", "pill"]
         }
       }
     }
