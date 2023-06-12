@@ -22,9 +22,8 @@ class GraphsApplication(Adw.Application):
 
     def __init__(self, args):
         """Init the application."""
-        self.appid = args[1]
-        super().__init__(application_id=self.appid,
-                         flags=Gio.ApplicationFlags.FLAGS_NONE)
+        super().__init__(
+            application_id=args[1], flags=Gio.ApplicationFlags.DEFAULT_FLAGS)
         self.version = args[0]
         self.name = args[2]
         self.copyright = args[3]

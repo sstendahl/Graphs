@@ -122,7 +122,7 @@ def show_about_window(self):
     ]
     about = Adw.AboutWindow(transient_for=self.main_window,
                             application_name=self.name,
-                            application_icon=self.appid,
+                            application_icon=self.props.application_id,
                             website=self.website,
                             developer_name=self.author,
                             issue_url=self.issues,
