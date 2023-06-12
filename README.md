@@ -1,8 +1,9 @@
-<a href='https://flathub.org/apps/details/se.sjoerd.Graphs'><img width='180' alt='Download on Flathub' src='https://flathub.org/assets/badges/flathub-badge-en.svg'/></a>
-<p><a href="https://snapcraft.io/graphs">
-  <img width='180' alt="Get it from the Snap Store" src="https://snapcraft.io/static/images/badges/en/snap-store-black.svg" />
-</a>
+<p>
+<a href='https://flathub.org/apps/details/se.sjoerd.Graphs'><img height='60' alt='Download on Flathub' src='https://flathub.org/assets/badges/flathub-badge-en.svg'/></a>
+<a href="https://snapcraft.io/graphs">
+  <img height='60' alt="Get it from the Snap Store" src="https://snapcraft.io/static/images/badges/en/snap-store-black.svg" />
 </p>
+
 # Graphs
 
 ![image](https://raw.githubusercontent.com/Sjoerd1993/Graphs/main/data/screenshots/sin_cos.png)
