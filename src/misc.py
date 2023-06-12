@@ -44,7 +44,7 @@ def _(message):
 
 SCALES = [_("linear"), _("log")]
 LANGUAGES = [
-    _("System default"), _("English"), _("Dutch"),  _("Swedish"), _("Turkish"),
+    _("System default"), _("English"), _("Dutch"), _("Swedish"), _("Turkish"),
 ]
 LEGEND_POSITIONS = [
     _("Best"), _("Upper right"), _("Upper left"), _("Lower left"),
