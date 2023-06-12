@@ -5,6 +5,7 @@ template $AddEquationWindow : Adw.Window {
   modal: true;
   default-width: 450;
   title: _("Add Equation");
+  focus-widget: confirm_button;
 
   ShortcutController {
     Shortcut {
@@ -16,7 +17,19 @@ template $AddEquationWindow : Adw.Window {
   Box {
     orientation: vertical;
     Adw.HeaderBar {
-      styles ["flat"]
+      show-end-title-buttons: false;
+      [start]
+      Button {
+        label: _("Cancel");
+        action-name: "window.close";
+      }
+
+      [end]
+      Button confirm_button {
+        label: _("Add");
+        styles ["suggested-action"]
+        clicked => $on_accept();
+      }
     }
 
     Adw.Clamp {
@@ -75,15 +88,6 @@ template $AddEquationWindow : Adw.Window {
                   title: _("Step Size");
                 }
               }
-            }
-
-            Button {
-              halign: center;
-              margin-top: 24;
-              margin-bottom: 12;
-              label: _("Add Equation");
-              styles ["suggested-action", "pill"]
-              clicked => $on_accept();
             }
           }
         };

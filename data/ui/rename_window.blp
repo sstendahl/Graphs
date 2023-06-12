@@ -5,6 +5,7 @@ template $RenameWindow : Adw.Window {
   modal: true;
   default-width: 575;
   default-height: 125;
+  focus-widget: confirm_button;
 
   ShortcutController {
     Shortcut {
@@ -16,7 +17,19 @@ template $RenameWindow : Adw.Window {
   Box {
     orientation: vertical;
     Adw.HeaderBar {
-      styles ["flat"]
+      show-end-title-buttons: false;
+      [start]
+      Button {
+        label: _("Cancel");
+        action-name: "window.close";
+      }
+
+      [end]
+      Button confirm_button {
+        label: _("Rename");
+        styles ["suggested-action"]
+        clicked => $on_accept();
+      }
     }
 
     Adw.Clamp {
@@ -27,16 +40,6 @@ template $RenameWindow : Adw.Window {
       Adw.PreferencesGroup preferencegroup {
         Adw.EntryRow text_entry {
           max-width-chars: 10;
-          title: _("Label");
-        }
-
-        Button {
-          margin-top: 24;
-          margin-bottom: 12;
-          label: _("Rename");
-          halign: center;
-          clicked => $on_accept();
-          styles ["suggested-action", "pill"]
         }
       }
     }

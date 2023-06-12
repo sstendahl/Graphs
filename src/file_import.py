@@ -148,10 +148,6 @@ class ImportWindow(Adw.Window):
             "delimiter": self.delimiter.get_text(),
         }
 
-    @Gtk.Template.Callback()
-    def on_close(self, _widget):
-        prepare_import_finish(self.props.application, self.import_dict)
-
 
 def guess_import_mode(file):
     try:
