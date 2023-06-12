@@ -17,7 +17,16 @@ slots:
     name: se.sjoerd.Graphs
 
 parts:
+  blueprint-compiler:
+    source: https://gitlab.gnome.org/jwestman/blueprint-compiler.git
+    source-tag: 'v0.8.1'
+    plugin: meson
+    meson-parameters:
+      - --prefix=/usr
+    override-prime: |
+      echo 'Skip'
   graphs:
+    after: [ blueprint-compiler ]
     # See 'snapcraft plugins'
     plugin: meson
     source: https://github.com/Sjoerd1993/Graphs.git
