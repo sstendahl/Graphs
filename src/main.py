@@ -1,8 +1,8 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Main application."""
 import logging
-import sys
 import os
+import sys
 from gettext import gettext as _
 from inspect import getmembers, isfunction
 
