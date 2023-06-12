@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: graphs\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-06-01 13:18+0200\n"
-"PO-Revision-Date: 2023-06-12 17:35+0200\n"
+"PO-Revision-Date: 2023-06-12 21:11+0200\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: fr\n"
@@ -1224,7 +1224,7 @@ msgstr "Plottinställningar"
 
 #: data/ui/plot_settings.blp:18 data/ui/preferences.blp:190
 msgid "Plot Labels"
-msgstr "Plottetiketter"
+msgstr "Etiketter"
 
 #: data/ui/plot_settings.blp:19
 msgid "Settings for the plot title and labels"
@@ -1532,7 +1532,7 @@ msgstr "Padding"
 
 #: data/ui/plot_styles.blp:268
 msgid "Padding for different parts of the plot"
-msgstr "Padding för olika delar i plotten"
+msgstr "Padding för olika delar i grafen"
 
 #: data/ui/plot_styles.blp:271
 msgid "Value Padding"
@@ -1564,7 +1564,7 @@ msgstr "Färger"
 
 #: data/ui/plot_styles.blp:303
 msgid "The colors for different parts of the plot"
-msgstr "Färger i olika delar i plotten"
+msgstr "Färger i olika delar i diagrammet"
 
 #: data/ui/plot_styles.blp:315
 msgid "Text Color"
@@ -1968,239 +1968,248 @@ msgid ""
 "Panning mode. Use left mouse button to pan, right mouse button to zoom. Hold "
 "control to to keep aspect ratio fixed"
 msgstr ""
+"Panoreringsläge. Använd vänster musknapp för att panorera, höger musknapp "
+"för att zooma. Håll ned kontrollknappen för att behålla den fasta "
+"aspektförhållandet."
 
 #: data/ui/window.blp:165
 msgid "Zoom mode. Select an area on the graph to zoom in"
-msgstr ""
+msgstr "Zoomläge. Välj ett område på diagrammet för att zooma in."
 
 #: data/ui/window.blp:171
 msgid ""
 "Highlight mode, click and drag over the graph to highlight the workable area"
 msgstr ""
+"Markeringsläge. Klicka och dra över diagrammet för att markera det "
+"arbetsbara området."
 
 #: data/ui/window.blp:191
 msgid "Adjust Data"
-msgstr ""
+msgstr "Justera datan"
 
 #: data/ui/window.blp:206
 msgid "Shift"
-msgstr ""
+msgstr "Skifta"
 
 #: data/ui/window.blp:208
 msgid "Shift all data vertically with respect to each other"
-msgstr ""
+msgstr "Skifta allt data vertikalt i förhållande till varandra"
 
 #: data/ui/window.blp:225
 msgid "Normalize"
-msgstr ""
+msgstr "Normalisera"
 
 #: data/ui/window.blp:227
 msgid "Normalize Data"
-msgstr ""
+msgstr "Normalisera data"
 
 #: data/ui/window.blp:244
 msgid "Smoothen"
-msgstr ""
+msgstr "Jämna ut"
 
 #: data/ui/window.blp:246
 msgid "Smoothen the Data"
-msgstr ""
+msgstr "Jämna ut datan"
 
 #: data/ui/window.blp:263 src/misc.py:41
 msgid "Center"
-msgstr ""
+msgstr "Centrera"
 
 #: data/ui/window.blp:265
 msgid "Center the data"
-msgstr ""
+msgstr "Centrera datan"
 
 #: data/ui/window.blp:282 data/ui/window.blp:284
 msgid "Combine"
-msgstr ""
+msgstr "Kombinera"
 
 #: data/ui/window.blp:301
 msgid "Cut"
-msgstr ""
+msgstr "Klippa"
 
 #: data/ui/window.blp:303
 msgid "Cut selected Data"
-msgstr ""
+msgstr "Klippa ut markerade datan"
 
 #: data/ui/window.blp:310
 msgid "Translate and Multiply"
-msgstr ""
+msgstr "Förskjut och multiplicera"
 
 #: data/ui/window.blp:313
 msgid "Translate X-Axis"
-msgstr ""
+msgstr "Förskjut X-axeln"
 
 #: data/ui/window.blp:319 data/ui/window.blp:332
 msgid "Translate"
-msgstr ""
+msgstr "Förskjut"
 
 #: data/ui/window.blp:326
 msgid "Translate Y-Axis"
-msgstr ""
+msgstr "Förskjut Y-axeln"
 
 #: data/ui/window.blp:339
 msgid "Multiply X-Axis"
-msgstr ""
+msgstr "Multiplicera X-axeln"
 
 #: data/ui/window.blp:345 data/ui/window.blp:358
 msgid "Multiply"
-msgstr ""
+msgstr "Multiplicera"
 
 #: data/ui/window.blp:352
 msgid "Multiply Y-Axis"
-msgstr ""
+msgstr "Multiplicera Y-axeln"
 
 #: data/ui/window.blp:365
 msgid "Mathematical Operations"
-msgstr ""
+msgstr "Matematiska operationer"
 
 #: data/ui/window.blp:380
 msgid "Derivative"
-msgstr ""
+msgstr "Derivata"
 
 #: data/ui/window.blp:382
 msgid "Get the derivative of the data"
-msgstr ""
+msgstr "Få derivatan av datan"
 
 #: data/ui/window.blp:399
 msgid "Integral"
-msgstr ""
+msgstr "Integral"
 
 #: data/ui/window.blp:401
 msgid "Get the indefinite integral of the data"
-msgstr ""
+msgstr "Få den obestämda integralen av datan"
 
 #: data/ui/window.blp:418
 msgid "FFT"
-msgstr ""
+msgstr "FFT"
 
 #: data/ui/window.blp:420
 msgid "Get the Fast Fourier Transform of the data"
-msgstr ""
+msgstr "Få snabb Fourier-transform (FFT) av datan."
 
 #: data/ui/window.blp:437
 msgid "inverse FFT"
-msgstr ""
+msgstr "Inverse FFT"
 
 #: data/ui/window.blp:439
 msgid "Get the Inverse Fast Fourier Transform of the data"
-msgstr ""
+msgstr "Få den inversa snabb Fourier-transform (FFT) av datan."
 
 #: data/ui/window.blp:459
 msgid "Perform custom transformations on the data"
-msgstr ""
+msgstr "Utför anpassade transformationer på datan."
 
 #: data/ui/window.blp:489
 msgid "Save Project"
-msgstr ""
+msgstr "Spara projektet"
 
 #: data/ui/window.blp:490
 msgid "Open Project"
-msgstr ""
+msgstr "Öppna projekt"
 
 #: data/ui/window.blp:493
 msgid "Export Data"
-msgstr ""
+msgstr "Exportera data"
 
 #: data/ui/window.blp:497 src/plot_styles.py:171 src/plot_styles.py:225
 msgid "Plot Styles"
-msgstr ""
+msgstr "Plottstilar"
 
 #: data/ui/window.blp:501
 msgid "Preferences"
-msgstr ""
+msgstr "Inställningar"
 
 #: data/ui/window.blp:504
 msgid "Keyboard Shortcuts"
-msgstr ""
+msgstr "Tangenbordsgenvegar"
 
 #: data/ui/window.blp:505
 msgid "About Graphs"
-msgstr ""
+msgstr "Om Graphs"
 
 #: data/ui/window.blp:511
 msgid "Add Data from File"
-msgstr ""
+msgstr "Lägg till data från fil"
 
 #: data/ui/window.blp:512
 msgid "Add Data from File (Advanced)"
-msgstr ""
+msgstr "Lägg till data från fil (avancerad)."
 
 #: data/ui/window.blp:513
 msgid "Add Data from Equation"
-msgstr ""
+msgstr "Lägg till data från ekvation."
 
 #: data/ui/window.blp:519
 msgid "Toggle Sidebar"
-msgstr ""
+msgstr "Växla sidofält"
 
 #: data/ui/window.blp:522
 msgid "Restore View"
-msgstr ""
+msgstr "Återställ vy"
 
 #: data/ui/window.blp:523
 msgid "Previous View"
-msgstr ""
+msgstr "Förra vy"
 
 #: data/ui/window.blp:524
 msgid "Next View"
-msgstr ""
+msgstr "Nästa vy"
 
 #: data/ui/window.blp:528
 msgid "Top X Scale"
-msgstr ""
+msgstr "Övre X-skala"
 
 #: data/ui/window.blp:530 data/ui/window.blp:543 data/ui/window.blp:556
 #: data/ui/window.blp:569
 msgid "Logarithmic"
-msgstr ""
+msgstr "Logaritmisk"
 
 #: data/ui/window.blp:535 data/ui/window.blp:548 data/ui/window.blp:561
 #: data/ui/window.blp:574
 msgid "Linear"
-msgstr ""
+msgstr "Linjär"
 
 #: data/ui/window.blp:541
 msgid "Bottom X Scale"
-msgstr ""
+msgstr "Nedre X-skala"
 
 #: data/ui/window.blp:554
 msgid "Left Y Scale"
-msgstr ""
+msgstr "Vänster Y-skala"
 
 #: data/ui/window.blp:567
 msgid "Right Y Scale"
-msgstr ""
+msgstr "Höger Y-skala"
 
 #: src/actions.py:112
 msgid "Discard Data?"
-msgstr ""
+msgstr "Kasta data?"
 
 #: src/actions.py:113
 msgid "Opening a project will discard all open data."
-msgstr ""
+msgstr "Att öppna ett projekt kommer att kasta bort all öppen data"
 
 #: src/actions.py:116 src/plot_styles.py:414 src/plot_styles.py:453
 msgid "Cancel"
-msgstr ""
+msgstr "Avbryt"
 
 #: src/actions.py:117
 msgid "Discard"
-msgstr ""
+msgstr "Kasta bort"
 
 #: src/actions.py:139 src/actions.py:152 src/actions.py:165 src/actions.py:178
 #, python-brace-format
 msgid "{error}: Unable to do translation, make sure to enter a valid number"
 msgstr ""
+"{error}: Det går inte att utföra översättning, se till att ange en giltig "
+"siffra"
 
 #: src/add_equation.py:48
 #, python-brace-format
 msgid "{error} - Unable to add data from equation"
 msgstr ""
+"{error}: Det går inte att utföra förskjutning, se till att ange ett giltigt "
+"nummer"
 
 #: src/export_figure.py:66
 msgid "Exported Figure"
@@ -2208,368 +2217,369 @@ msgstr ""
 
 #: src/file_io.py:71
 msgid "2Theta"
-msgstr ""
+msgstr "Exportera figur"
 
 #: src/file_io.py:73
 msgid "Omega"
-msgstr ""
+msgstr "Omega"
 
 #: src/file_io.py:87
 msgid "Intensity (cps)"
-msgstr ""
+msgstr "Intensitet (cps)"
 
 #: src/file_io.py:110
 msgid "β (°)"
-msgstr ""
+msgstr "β (°)"
 
 #: src/file_io.py:110
 msgid "R (1/s)"
-msgstr ""
+msgstr "R (1/s)"
 
 #: src/file_io.py:189
 msgid "Missing colon in file {}, line {}"
-msgstr ""
+msgstr "Saknad kolon i filen {}, rad {}."
 
 #: src/file_io.py:197
 msgid "Style includes a non-style related parameter, {}"
-msgstr ""
+msgstr "Stilen inkluderar en parameter som inte är relaterad till stilen, {}."
 
 #: src/file_io.py:200
 msgid "Duplicate key in file {}, on line {}"
-msgstr ""
+msgstr "Duplicerad nyckel i filen {}, på raden {}"
 
 #: src/file_io.py:206
 msgid "Bad value in file {} on line {}"
-msgstr ""
+msgstr "Felaktigt värde i filen {} på raden {}"
 
 #: src/file_io.py:210
 msgid "Could not parse {}"
-msgstr ""
+msgstr "Kunde inte tolka {}"
 
 #: src/graphs.py:26
 msgid "Could not open project"
-msgstr ""
+msgstr "Kunda inte öppna projektet"
 
 #: src/graphs.py:84
 msgid "Items {} already exist"
-msgstr ""
+msgstr "Objekten {} finns redan"
 
 #: src/graphs.py:86
 msgid "Item {} already exists"
-msgstr ""
+msgstr "Objektet {} finns redan"
 
 #: src/graphs.py:100
 #, python-brace-format
 msgid "Deleted {name}"
-msgstr ""
+msgstr "Raderad {name}"
 
 #: src/main.py:44
 #, python-format
 msgid "Could not load %s"
-msgstr ""
+msgstr "Kunda inte ladda %s"
 
 #: src/misc.py:37
 msgid "linear"
-msgstr ""
+msgstr "Linjär"
 
 #: src/misc.py:37
 msgid "log"
-msgstr ""
+msgstr "Log"
 
 #: src/misc.py:39
 msgid "Best"
-msgstr ""
+msgstr "Bäst"
 
 #: src/misc.py:39
 msgid "Upper right"
-msgstr ""
+msgstr "Övre höger"
 
 #: src/misc.py:39
 msgid "Upper left"
-msgstr ""
+msgstr "Övre vänster"
 
 #: src/misc.py:39
 msgid "Lower left"
-msgstr ""
+msgstr "Nedre vänster"
 
 #: src/misc.py:40
 msgid "Lower right"
-msgstr ""
+msgstr "Nedre höger"
 
 #: src/misc.py:40
 msgid "Center left"
-msgstr ""
+msgstr "Mitten vänster"
 
 #: src/misc.py:40
 msgid "Center right"
-msgstr ""
+msgstr "Mitten höger"
 
 #: src/misc.py:40
 msgid "Lower center"
-msgstr ""
+msgstr "Nedre mitten"
 
 #: src/misc.py:41
 msgid "Upper center"
-msgstr ""
+msgstr "Övre mitten"
 
 #: src/misc.py:43
 msgid "top"
-msgstr ""
+msgstr "Över"
 
 #: src/misc.py:43
 msgid "bottom"
-msgstr ""
+msgstr "Ner"
 
 #: src/misc.py:44
 msgid "left"
-msgstr ""
+msgstr "Vänster"
 
 #: src/misc.py:44
 msgid "right"
-msgstr ""
+msgstr "Höger"
 
 #: src/misc.py:47
 msgid "Center at maximum Y value"
-msgstr ""
+msgstr "Centrera vid maximalt Y-värde"
 
 #: src/misc.py:47
 msgid "Center at middle coordinate"
-msgstr ""
+msgstr "Centrera vid mittenkoordinat"
 
 #: src/misc.py:50
 msgid "Auto-rename duplicates"
-msgstr ""
+msgstr "Bytt namn på dubletter"
 
 #: src/misc.py:50
 msgid "Ignore duplicates"
-msgstr ""
+msgstr "Ignorera dubbletter"
 
 #: src/misc.py:50
 msgid "Add duplicates"
-msgstr ""
+msgstr "Lägg till dubletter"
 
 #: src/misc.py:51
 msgid "Override existing items"
-msgstr ""
+msgstr "Åsidosätt befintliga objekt"
 
 #: src/misc.py:53
 msgid "none"
-msgstr ""
+msgstr "Ingen"
 
 #: src/misc.py:53
 msgid "solid"
-msgstr ""
+msgstr "Hel"
 
 #: src/misc.py:53
 msgid "dotted"
-msgstr ""
+msgstr "Prickad"
 
 #: src/misc.py:53
 msgid "dashed"
-msgstr ""
+msgstr "Streckad"
 
 #: src/misc.py:53
 msgid "dashdot"
-msgstr ""
+msgstr "Streck-punkt"
 
 #: src/misc.py:55
 msgid "Point"
-msgstr ""
+msgstr "Punkt"
 
 #: src/misc.py:55
 msgid "Pixel"
-msgstr ""
+msgstr "Pixel"
 
 #: src/misc.py:55
 msgid "Circle"
-msgstr ""
+msgstr "Cirkel"
 
 #: src/misc.py:56
 msgid "Triangle down"
-msgstr ""
+msgstr "Triangel nedåt"
 
 #: src/misc.py:56
 msgid "Triangle up"
-msgstr ""
+msgstr "Triangel upåt"
 
 #: src/misc.py:56
 msgid "Triangle left"
-msgstr ""
+msgstr "Triangle vänster"
 
 #: src/misc.py:57
 msgid "Triangle right"
-msgstr ""
+msgstr "Triangle höger"
 
 #: src/misc.py:57
 msgid "Octagon"
-msgstr ""
+msgstr "Oktagon"
 
 #: src/misc.py:57
 msgid "Square"
-msgstr ""
+msgstr "Fyrkant"
 
 #: src/misc.py:58
 msgid "Pentagon"
-msgstr ""
+msgstr "Pentagon"
 
 #: src/misc.py:58
 msgid "Star"
-msgstr ""
+msgstr "Stjärna"
 
 #: src/misc.py:58
 msgid "Hexagon 1"
-msgstr ""
+msgstr "Hexagon 1"
 
 #: src/misc.py:59
 msgid "Hexagon 2"
-msgstr ""
+msgstr "Hexagon 2"
 
 #: src/misc.py:59
 msgid "Plus"
-msgstr ""
+msgstr "Plus"
 
 #: src/misc.py:59
 msgid "x"
-msgstr ""
+msgstr "X"
 
 #: src/misc.py:59
 msgid "Diamond"
-msgstr ""
+msgstr "Diamant"
 
 #: src/misc.py:60
 msgid "Thin diamond"
-msgstr ""
+msgstr "Tunn diamant"
 
 #: src/misc.py:60
 msgid "Vertical line"
-msgstr ""
+msgstr "Vertikal linje"
 
 #: src/misc.py:60
 msgid "Horizontal line"
-msgstr ""
+msgstr "Horisontell linje"
 
 #: src/misc.py:61
 msgid "Filled plus"
-msgstr ""
+msgstr "Fylld plus"
 
 #: src/misc.py:61
 msgid "Filled x"
-msgstr ""
+msgstr "Fylld x"
 
 #: src/misc.py:61
 msgid "Nothing"
-msgstr ""
+msgstr "Ingenting"
 
 #: src/misc.py:63
 msgid "in"
-msgstr ""
+msgstr "In"
 
 #: src/misc.py:63
 msgid "out"
-msgstr ""
+msgstr "Ut"
 
 #: src/operations.py:85
 msgid "No data found within the highlighted area"
-msgstr ""
+msgstr "Ingen data hittades inom det markerade området"
 
 #: src/operations.py:252
 msgid "Combined Data"
-msgstr ""
+msgstr "Kombinerad data"
 
 #: src/plot_styles.py:231
 #, python-brace-format
 msgid "{name} - line colors"
-msgstr ""
+msgstr "{name} - Linjefärger"
 
 #: src/plot_styles.py:410
 msgid "Delete style?"
-msgstr ""
+msgstr "Ta bort stil?"
 
 #: src/plot_styles.py:411
 msgid "Are you sure you want to delete the {} style?"
-msgstr ""
+msgstr "Är du säker på att du vill ta bort stilen {}?"
 
 #: src/plot_styles.py:415
 msgid "Delete"
-msgstr ""
+msgstr "Ta bort"
 
 #: src/plot_styles.py:449
 msgid "Reset to defaults?"
-msgstr ""
+msgstr "Återställ till standardvärden?"
 
 #: src/plot_styles.py:450
 msgid "Are you sure you want to reset to the default styles?"
-msgstr ""
+msgstr "Är du säker på att du vill återställa till standardstilarna?"
 
 #: src/plot_styles.py:454
 msgid "Reset"
-msgstr ""
+msgstr "Återställ"
 
 #: src/plot_styles.py:523
 msgid "Color {}"
-msgstr ""
+msgstr "Färg {}"
 
 #: src/plot_styles.py:551 src/plot_styles.py:562
 #, python-brace-format
 msgid "{name} (copy)"
-msgstr ""
+msgstr "{name} (kopia)"
 
 #: src/plotting_tools.py:46
 msgid "Could not set limits, one of the values was probably infinite"
-msgstr ""
+msgstr "Kunde inte sätta gränserna, ett av värdena var förmodligen oändligt"
 
 #: src/preferences.py:29
 msgid "New configuration file created"
-msgstr ""
+msgstr "Ny konfigurationsfil skapad"
 
 #: src/preferences.py:33
 msgid "New Import Settings file created"
-msgstr ""
+msgstr "Ny importinställningsfil skapad"
 
 #: src/preferences.py:36
 msgid "Loading configuration file"
-msgstr ""
+msgstr "Läser in konfigurationsfilen"
 
 #: src/rename.py:18
 msgid "Rename Label"
-msgstr ""
+msgstr "Byt namn på etiketten"
 
 #: src/rename.py:19
 msgid "Change Label"
-msgstr ""
+msgstr "Ändra etiketten"
 
 #: src/rename.py:21
 msgid "Here you can change the label of the selected axis."
-msgstr ""
+msgstr "Här kan du ändra etiketten för den markerade axeln."
 
 #: src/rename.py:24
 msgid "Rename Title"
-msgstr ""
+msgstr "Byt namn på titeln"
 
 #: src/rename.py:25
 msgid "Change Title"
-msgstr ""
+msgstr "Ändra titeln"
 
 #: src/rename.py:27
 msgid "Here you can change the title of the plot."
-msgstr ""
+msgstr "Här kan du ändra titeln på diagrammet"
 
 #: src/transform_data.py:42
 #, python-brace-format
 msgid "{name}: Unable to do transformation, make sure the syntax is correct"
 msgstr ""
+"{name}: Kan inte utföra transformationen, se till att syntaxen är korrekt"
 
 #: src/transform_data.py:45
 msgid "Unable to do transformation"
-msgstr ""
+msgstr "Kan inte utföra transformationen"
 
 #: src/ui.py:69 src/ui.py:81
 msgid "Graphs Project File"
-msgstr ""
+msgstr "Graphs projektfil"
 
 #: src/ui.py:109
 msgid "Text Files"
-msgstr ""
+msgstr "Textfiler"
 
 #: src/ui.py:128
 msgid "translator-credits"
