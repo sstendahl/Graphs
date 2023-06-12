@@ -86,7 +86,6 @@ class ImportSettings():
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/import.ui")
 class ImportWindow(Adw.Window):
     __gtype_name__ = "ImportWindow"
-    confirm_button = Gtk.Template.Child()
     columns_group = Gtk.Template.Child()
 
     delimiter = Gtk.Template.Child()
@@ -95,23 +94,20 @@ class ImportWindow(Adw.Window):
     column_y = Gtk.Template.Child()
     skip_rows = Gtk.Template.Child()
 
-    def __init__(self, parent, modes, import_dict):
-        super().__init__()
-        self.parent = parent
+    def __init__(self, application, modes, import_dict):
+        super().__init__(application=application)
         self.modes = modes
         self.import_dict = import_dict
-        self.import_params = parent.preferences.import_params
+        self.import_params = self.props.application.preferences.import_params
         visible = False
         if "columns" in self.modes:
             self.load_columns()
             visible = True
         if not visible:
-            prepare_import_finish(self.parent, self.import_dict)
+            prepare_import_finish(self.props.application, self.import_dict)
             self.destroy()
             return
-        self.confirm_button.connect("clicked", self.on_accept)
-        self.set_transient_for(parent.main_window)
-        self.connect("close-request", self.on_close)
+        self.set_transient_for(self.props.application.main_window)
         self.present()
 
     def load_columns(self):
@@ -124,6 +120,7 @@ class ImportWindow(Adw.Window):
         self.column_y.set_value(int(params["column_y"]))
         self.skip_rows.set_value(int(params["skip_rows"]))
 
+    @Gtk.Template.Callback()
     def on_accept(self, _widget):
         self.param_dict = {}
         if "columns" in self.modes:
@@ -139,7 +136,7 @@ class ImportWindow(Adw.Window):
                     params = []
             for file in self.import_dict[mode]:
                 import_settings_list.append(ImportSettings(file, mode, params))
-        import_from_files(self.parent, import_settings_list)
+        import_from_files(self.props.application, import_settings_list)
         self.destroy()
 
     def get_columns(self):
@@ -151,8 +148,9 @@ class ImportWindow(Adw.Window):
             "delimiter": self.delimiter.get_text(),
         }
 
+    @Gtk.Template.Callback()
     def on_close(self, _widget):
-        prepare_import_finish(self.parent, self.import_dict)
+        prepare_import_finish(self.props.application, self.import_dict)
 
 
 def guess_import_mode(file):

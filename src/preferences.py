@@ -8,8 +8,7 @@ from graphs import file_io, graphs, misc, plot_styles, utilities
 
 
 class Preferences():
-    def __init__(self, parent):
-        self.parent = parent
+    def __init__(self):
         self.template_file = Gio.File.new_for_uri(
             "resource:///se/sjoerd/Graphs/config.json")
         self.template_import_params_file = Gio.File.new_for_uri(
@@ -90,11 +89,10 @@ class PreferencesWindow(Adw.PreferencesWindow):
     plot_use_custom_style = Gtk.Template.Child()
     plot_custom_style = Gtk.Template.Child()
 
-    def __init__(self, parent):
-        super().__init__()
-        self.parent = parent
+    def __init__(self, application):
+        super().__init__(application=application)
         self.supported_filetypes = \
-            self.parent.canvas.get_supported_filetypes_grouped()
+            self.props.application.canvas.get_supported_filetypes_grouped()
 
         utilities.populate_chooser(
             self.import_separator, misc.SEPARATORS, translate=False)
@@ -115,16 +113,17 @@ class PreferencesWindow(Adw.PreferencesWindow):
             self.plot_legend_position, misc.LEGEND_POSITIONS)
 
         utilities.populate_chooser(
-            self.plot_custom_style, plot_styles.get_user_styles(parent).keys(),
+            self.plot_custom_style,
+            plot_styles.get_user_styles(self.props.application).keys(),
             translate=False)
         self.load_configuration()
-        self.connect("close-request", self.on_close, self.parent)
-        self.set_transient_for(self.parent.main_window)
+        self.set_transient_for(self.props.application.main_window)
         self.present()
 
     def load_configuration(self):
-        config = self.parent.preferences.config
-        import_params = self.parent.preferences.import_params["columns"]
+        config = self.props.application.preferences.config
+        import_params = \
+            self.props.application.preferences.import_params["columns"]
         self.clipboard_length.set_value(int(config["clipboard_length"]))
         self.import_delimiter.set_text(import_params["delimiter"])
         utilities.set_chooser(
@@ -177,8 +176,9 @@ class PreferencesWindow(Adw.PreferencesWindow):
             self.plot_custom_style, config["plot_custom_style"])
 
     def apply_configuration(self):
-        config = self.parent.preferences.config
-        import_params = self.parent.preferences.import_params["columns"]
+        config = self.props.application.preferences.config
+        import_params = \
+            self.props.application.preferences.import_params["columns"]
         import_params["delimiter"] = self.import_delimiter.get_text()
         import_params["separator"] = \
             utilities.get_selected_chooser_item(self.import_separator)
@@ -193,8 +193,9 @@ class PreferencesWindow(Adw.PreferencesWindow):
         config["export_figure_dpi"] = int(self.export_figure_dpi.get_value())
         filetype_name = \
             utilities.get_selected_chooser_item(self.export_figure_filetype)
-        for name, formats in \
-                self.parent.canvas.get_supported_filetypes_grouped().items():
+        filetypes = \
+            self.props.application.canvas.get_supported_filetypes_grouped()
+        for name, formats in filetypes.items():
             if name == filetype_name:
                 export_figure_filetyope = formats[0]
         config["export_figure_filetype"] = export_figure_filetyope
@@ -233,7 +234,8 @@ class PreferencesWindow(Adw.PreferencesWindow):
         config["plot_custom_style"] = \
             utilities.get_selected_chooser_item(self.plot_custom_style)
 
-    def on_close(self, _, parent):
+    @Gtk.Template.Callback()
+    def on_close(self, _):
         self.apply_configuration()
-        parent.preferences.save_config()
-        graphs.refresh(parent)
+        self.props.application.preferences.save_config()
+        graphs.refresh(self.props.application)

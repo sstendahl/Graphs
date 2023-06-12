@@ -17,32 +17,33 @@ class AddEquationWindow(Adw.Window):
     x_start = Gtk.Template.Child()
     x_stop = Gtk.Template.Child()
     step_size = Gtk.Template.Child()
-    confirm_button = Gtk.Template.Child()
 
-    def __init__(self, parent):
-        super().__init__()
-        config = parent.preferences.config
+    def __init__(self, application):
+        super().__init__(application=application)
+        self.set_transient_for(self.props.application.main_window)
+        config = self.props.application.preferences.config
         self.equation.set_text(config["addequation_equation"])
         self.x_start.set_text(config["addequation_x_start"])
         self.x_stop.set_text(config["addequation_x_stop"])
         self.step_size.set_text(config["addequation_step_size"])
-        self.confirm_button.connect("clicked", self.on_accept, parent)
-        self.set_transient_for(parent.main_window)
         self.present()
 
-    def on_accept(self, _widget, parent):
+    @Gtk.Template.Callback()
+    def on_accept(self, _widget):
         """Launched when the accept button is pressed on the equation window"""
-        x_start = self.x_start.get_text()
-        x_stop = self.x_stop.get_text()
-        step_size = self.step_size.get_text()
-        equation = str(self.equation.get_text())
         try:
+            equation = str(self.equation.get_text())
             xdata, ydata = calculation.create_dataset(
-                x_start, x_stop, equation, step_size)
+                self.x_start.get_text(),
+                self.x_stop.get_text(),
+                equation,
+                self.step_size.get_text())
             name = str(self.name.get_text())
             if name == "":
                 name = f"Y = {equation}"
-            graphs.add_items(parent, [Item(parent, xdata, ydata, name)])
+            graphs.add_items(
+                self.props.application,
+                [Item(self.props.application, xdata, ydata, name)])
             self.destroy()
         except (NameError, SyntaxError) as exception:
             toast = _("{error} - Unable to add data from equation").format(

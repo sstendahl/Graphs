@@ -1,11 +1,12 @@
 using Gtk 4.0;
 using Adw 1;
 
-template ImportWindow : Adw.Window {
+template $ImportWindow : Adw.Window {
   modal: true;
   default-width: 650;
   default-height: 125;
   title: _("Modify import Parameters");
+  close-request => $on_close();
 
   ShortcutController {
     Shortcut {
@@ -88,6 +89,7 @@ template ImportWindow : Adw.Window {
           margin-bottom: 12;
           label: _("Confirm");
           styles ["suggested-action", "pill"]
+          clicked => $on_accept();
         }
       }
     }

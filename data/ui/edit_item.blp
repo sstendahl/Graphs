@@ -1,8 +1,9 @@
 using Gtk 4.0;
 using Adw 1;
 
-template EditItemWindow : Adw.PreferencesWindow {
+template $EditItemWindow : Adw.PreferencesWindow {
   modal: true;
+  close-request => $on_close();
   ShortcutController {
     Shortcut {
       trigger: "Escape";
@@ -15,6 +16,7 @@ template EditItemWindow : Adw.PreferencesWindow {
       Adw.ComboRow item_selector {
         title: _("Selected Item");
         subtitle: _("Choose which item to edit");
+        notify::selected => $on_select();
       }
     }
 
@@ -55,6 +57,10 @@ template EditItemWindow : Adw.PreferencesWindow {
         Scale linewidth {
           draw-value: true;
           width-request: 200;
+          adjustment: Adjustment {
+            lower: 0;
+            upper: 10;
+          };
         }
       }
 
@@ -70,6 +76,10 @@ template EditItemWindow : Adw.PreferencesWindow {
         Scale markersize {
           draw-value: true;
           width-request: 200;
+          adjustment: Adjustment {
+            lower: 0;
+            upper: 10;
+          };
         }
       }
     }

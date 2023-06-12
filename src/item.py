@@ -15,9 +15,9 @@ class ItemBase:
 
 
 class Item(ItemBase):
-    def __init__(self, parent, xdata=None, ydata=None, name="",
+    def __init__(self, application, xdata=None, ydata=None, name="",
                  xlabel="", ylabel=""):
-        config = parent.preferences.config
+        config = application.preferences.config
         super().__init__(config, name=name, xlabel=xlabel, ylabel=ylabel)
         if xdata is None:
             xdata = []
@@ -31,8 +31,8 @@ class Item(ItemBase):
 
 
 class TextItem(ItemBase):
-    def __init__(self, parent, x_anchor=0, y_anchor=0, text="", name=""):
-        config = parent.preferences.config
+    def __init__(self, application, x_anchor=0, y_anchor=0, text="", name=""):
+        config = application.preferences.config
         super().__init__(
             config, name=name, color=pyplot.rcParams["text.color"])
         self.x_anchor, self.y_anchor = float(x_anchor), float(y_anchor)

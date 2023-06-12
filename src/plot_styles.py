@@ -6,7 +6,7 @@ from cycler import cycler
 
 from gi.repository import Adw, GLib, Gio, Gtk
 
-from graphs import file_io, graphs, misc, utilities
+from graphs import file_io, graphs, misc, ui, utilities
 
 
 def _styles_in_directory(directory):
@@ -62,32 +62,25 @@ def reset_user_styles(self):
         file.copy(style_file, 0, None)
 
 
-def get_system_preferred_style_path(self):
+def get_system_preferred_style(self):
     system_style = "adwaita"
     if Adw.StyleManager.get_default().get_dark():
         system_style += "-dark"
-    try:
-        stylepath = get_user_styles(self)[system_style]
-    except KeyError:
-        self.main_window.add_toast(f"{system_style} not found, recreating it")
-        config_dir = utilities.get_config_directory()
-        directory = config_dir.get_child_for_display_name("styles")
-        stylepath = directory.get_child_for_display_name(
-            f"{system_style}.mplstyle")
-        get_system_styles(self)[system_style].copy(stylepath, 0, None)
-    return stylepath
+    return get_system_styles(self)[system_style]
 
 
-def get_preferred_style_path(self):
+def get_preferred_style(self):
     if not self.plot_settings.use_custom_plot_style:
-        return get_system_preferred_style_path(self)
+        return get_system_preferred_style(self)
     stylename = self.plot_settings.custom_plot_style
     try:
         return get_user_styles(self)[stylename]
     except KeyError:
         self.main_window.add_toast(
-            f"Plot style {stylename} does not exist loading system preferred")
-        return get_system_preferred_style_path(self)
+            _(f"Plot style {stylename} does not exist "
+              "loading system preferred"))
+        self.plot_settings.use_custom_plot_style = False
+        return get_system_preferred_style(self)
 
 
 def get_style(self, stylename):
@@ -118,15 +111,9 @@ def get_style(self, stylename):
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/plot_styles.ui")
 class PlotStylesWindow(Adw.Window):
     __gtype_name__ = "PlotStylesWindow"
-    add_button = Gtk.Template.Child()
     leaflet = Gtk.Template.Child()
     styles_box = Gtk.Template.Child()
-    reset_button = Gtk.Template.Child()
-    back_button = Gtk.Template.Child()
     line_colors_box = Gtk.Template.Child()
-    line_colors_back_button = Gtk.Template.Child()
-    line_colors = Gtk.Template.Child()
-    add_color_button = Gtk.Template.Child()
     style_name = Gtk.Template.Child()
     font_chooser = Gtk.Template.Child()
     linestyle = Gtk.Template.Child()
@@ -157,36 +144,17 @@ class PlotStylesWindow(Adw.Window):
     background_color = Gtk.Template.Child()
     outline_color = Gtk.Template.Child()
 
-    def __init__(self, parent):
-        super().__init__()
-        self.parent = parent
-        self.set_transient_for(self.parent.main_window)
+    def __init__(self, application):
+        super().__init__(application=application)
+        self.set_transient_for(self.props.application.main_window)
         self.styles = []
         self.style = None
         self.reload_styles()
-        self.reset_button.connect("clicked", self.reset_styles)
-        self.add_button.connect("clicked", self.add_data)
-        self.back_button.connect("clicked", self.back)
-        self.connect("close-request", self.on_close)
-        self.set_title(_("Plot Styles"))
 
         # setup editor
-        self.font_chooser.set_use_font(True)
-        self.linewidth.set_range(0, 10)
         utilities.populate_chooser(self.linestyle, misc.LINESTYLES)
         utilities.populate_chooser(self.markers, sorted(misc.MARKERS.keys()))
         utilities.populate_chooser(self.tick_direction, misc.TICK_DIRECTIONS)
-        self.markersize.set_range(0, 10)
-        self.major_tick_width.set_range(0, 4)
-        self.minor_tick_width.set_range(0, 4)
-        self.major_tick_length.set_range(0, 20)
-        self.minor_tick_length.set_range(0, 20)
-        self.grid_linewidth.set_range(0, 4)
-        self.grid_transparency.set_range(0, 1)
-        self.value_padding.set_range(0, 40)
-        self.label_padding.set_range(0, 40)
-        self.title_padding.set_range(0, 40)
-        self.axis_width.set_range(0, 4)
 
         # color actions
         self.color_buttons = [
@@ -204,19 +172,11 @@ class PlotStylesWindow(Adw.Window):
                 button.provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION)
 
         # line colors
-        self.line_colors.connect("clicked", self.edit_line_colors)
-        self.line_colors_back_button.connect("clicked", self.back_line_colors)
-        self.add_color_button.connect("clicked", self.add_color)
         self.color_boxes = {}
 
         self.present()
 
-    def edit_style(self, _button, style):
-        self.style = get_style(self.parent, style)
-        self.load_style()
-        self.leaflet.navigate(1)
-        self.set_title(style)
-
+    @Gtk.Template.Callback()
     def back(self, _button):
         self.save_style()
         self.reload_styles()
@@ -224,11 +184,13 @@ class PlotStylesWindow(Adw.Window):
         self.leaflet.navigate(0)
         self.set_title(_("Plot Styles"))
 
+    @Gtk.Template.Callback()
     def edit_line_colors(self, _button):
         self.leaflet.navigate(1)
         self.set_title(
             _("{name} - line colors").format(name=self.style.name))
 
+    @Gtk.Template.Callback()
     def back_line_colors(self, _):
         self.leaflet.navigate(0)
         self.set_title(self.style.name)
@@ -390,71 +352,24 @@ class PlotStylesWindow(Adw.Window):
         file = directory.get_child_for_display_name(f"{style.name}.mplstyle")
         file_io.write_style(file, style)
 
-    def delete_color(self, _button, color_box):
-        self.line_colors_box.remove(self.color_boxes[color_box])
-        del self.color_boxes[color_box]
-        if not self.color_boxes:
-            self.add_color(None)
-
+    @Gtk.Template.Callback()
     def add_color(self, _button):
-        box = StyleColorBox(self, "000000")
+        box = StyleColorBox(self, "#000000")
         self.line_colors_box.append(box)
         self.color_boxes[box] = self.line_colors_box.get_last_child()
 
-    def delete_style(self, _button, style):
-        def remove_style(_dialog, response, self):
-            if response == "delete":
-                get_user_styles(self)[style].trash(None)
-                self.reload_styles()
-        heading = _("Delete style?")
-        body = _("Are you sure you want to delete the {} style?").format(style)
-        dialog = Adw.MessageDialog.new(
-            self, heading, body)
-        dialog.add_response("cancel", _("Cancel"))
-        dialog.add_response("delete", _("Delete"))
-        dialog.set_close_response("cancel")
-        dialog.set_default_response("delete")
-        dialog.set_response_appearance(
-            "delete", Adw.ResponseAppearance.DESTRUCTIVE)
-        dialog.connect("response", remove_style, self)
-        dialog.present()
+    @Gtk.Template.Callback()
+    def add_style(self, _button):
+        AddStyleWindow(self.props.application, self)
 
-    def copy_style(self, _button, style, new_style):
-        i = 0
-        user_styles = get_user_styles(self.parent)
-        for style_1 in user_styles.keys():
-            if new_style == style_1:
-                while True:
-                    i += 1
-                    if f"{new_style} ({i})" not in user_styles.keys():
-                        new_style = f"{new_style} ({i})"
-                        break
-        config_dir = utilities.get_config_directory()
-        directory = config_dir.get_child_for_display_name("styles")
-        destination = directory.get_child_for_display_name(
-            f"{new_style}.mplstyle")
-        user_styles[style].copy(destination, 0, None)
-        self.reload_styles()
-
-    def add_data(self, _button):
-        AddStyleWindow(self)
-
+    @Gtk.Template.Callback()
     def reset_styles(self, _button):
         def on_accept(_dialog, response):
             if response == "reset":
-                reset_user_styles(self.parent)
+                reset_user_styles(self.props.application)
                 self.reload_styles()
-
-        heading = _("Reset to defaults?")
-        body = _("Are you sure you want to reset to the default styles?")
-        dialog = Adw.MessageDialog.new(
-            self, heading, body)
-        dialog.add_response("cancel", _("Cancel"))
-        dialog.add_response("reset", _("Reset"))
-        dialog.set_close_response("cancel")
-        dialog.set_default_response("delete")
-        dialog.set_response_appearance(
-            "reset", Adw.ResponseAppearance.DESTRUCTIVE)
+        dialog = ui.build_dialog("reset_styles")
+        dialog.set_transient_for(self)
         dialog.connect("response", on_accept)
         dialog.present()
 
@@ -462,18 +377,24 @@ class PlotStylesWindow(Adw.Window):
         for box in self.styles.copy():
             self.styles.remove(box)
             self.styles_box.remove(self.styles_box.get_row_at_index(0))
-        for style, file in sorted(get_user_styles(self.parent).items()):
+        custom_style = \
+            self.props.application.plot_settings.use_custom_plot_style
+        for style, file in \
+                sorted(get_user_styles(self.props.application).items()):
             box = StyleBox(self, style)
-            if not file.equal(get_preferred_style_path(self.parent)):
+            if not custom_style and \
+                    not file.equal(
+                        get_preferred_style(self.props.application)):
                 box.check_mark.hide()
                 box.label.set_hexpand(True)
             self.styles.append(box)
             self.styles_box.append(box)
 
+    @Gtk.Template.Callback()
     def on_close(self, _button):
         if self.style is not None:
             self.save_style()
-        graphs.reload(self.parent)
+        graphs.reload(self.props.application)
         self.destroy()
 
     def on_color_change(self, button):
@@ -481,8 +402,8 @@ class PlotStylesWindow(Adw.Window):
         dialog = Gtk.ColorDialog()
         dialog.set_with_alpha(False)
         dialog.choose_rgba(
-            self.parent.main_window, color, None, self.on_color_change_accept,
-            button)
+            self.props.application.main_window, color, None,
+            self.on_color_change_accept, button)
 
     def on_color_change_accept(self, dialog, result, button):
         try:
@@ -500,14 +421,36 @@ class StyleBox(Gtk.Box):
     __gtype_name__ = "StyleBox"
     label = Gtk.Template.Child()
     check_mark = Gtk.Template.Child()
-    delete_button = Gtk.Template.Child()
-    edit_button = Gtk.Template.Child()
 
     def __init__(self, parent, style):
         super().__init__()
-        self.label.set_label(utilities.shorten_label(style, 50))
-        self.delete_button.connect("clicked", parent.delete_style, style)
-        self.edit_button.connect("clicked", parent.edit_style, style)
+        self.parent = parent
+        self.style = style
+        self.label.set_label(utilities.shorten_label(self.style, 50))
+
+    @Gtk.Template.Callback()
+    def on_edit(self, _button):
+        self.parent.style = get_style(
+            self.parent.props.application, self.style)
+        self.parent.load_style()
+        self.parent.leaflet.navigate(1)
+        self.parent.set_title(self.style)
+
+    @Gtk.Template.Callback()
+    def on_delete(self, _button):
+        style = self.style
+
+        def remove_style(_dialog, response):
+            if response == "delete":
+                get_user_styles(
+                    self.parent.props.application)[style].trash(None)
+                self.parent.reload_styles()
+        body = _("Are you sure you want to delete the {} style?").format(style)
+        dialog = ui.build_dialog("delete_style")
+        dialog.set_body(body)
+        dialog.set_transient_for(self.parent)
+        dialog.connect("response", remove_style)
+        dialog.present()
 
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/style_color_box.ui")
@@ -515,11 +458,12 @@ class StyleColorBox(Gtk.Box):
     __gtype_name__ = "StyleColorBox"
     label = Gtk.Template.Child()
     color_button = Gtk.Template.Child()
-    delete_button = Gtk.Template.Child()
 
     def __init__(self, parent, color):
         super().__init__()
-        self.label.set_label(_("Color {}").format(len(parent.color_boxes) + 1))
+        self.parent = parent
+        self.label.set_label(
+            _("Color {}").format(len(self.parent.color_boxes) + 1))
         self.color_button.color = color
         self.color_button.provider = Gtk.CssProvider()
         self.color_button.get_style_context().add_provider(
@@ -527,41 +471,55 @@ class StyleColorBox(Gtk.Box):
             Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION)
         self.color_button.provider.load_from_data(
             f"button {{ color: {color}; }}", -1)
-        self.color_button.connect("clicked", parent.on_color_change)
-        self.delete_button.connect("clicked", parent.delete_color, self)
+        self.color_button.connect("clicked", self.parent.on_color_change)
+
+    @Gtk.Template.Callback()
+    def on_delete(self, _button):
+        self.parent.line_colors_box.remove(self.parent.color_boxes[self])
+        del self.parent.color_boxes[self]
+        if not self.parent.color_boxes:
+            self.parent.add_color(None)
 
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/add_style.ui")
 class AddStyleWindow(Adw.Window):
     __gtype_name__ = "AddStyleWindow"
-    confirm_button = Gtk.Template.Child()
     new_style_name = Gtk.Template.Child()
     plot_style_templates = Gtk.Template.Child()
 
-    def __init__(self, parent):
-        super().__init__()
+    def __init__(self, application, parent):
+        super().__init__(application=application)
         self.parent = parent
         utilities.populate_chooser(
             self.plot_style_templates,
-            sorted(get_user_styles(parent).keys()), False)
-        selected_item = \
-            utilities.get_selected_chooser_item(self.plot_style_templates)
-        self.new_style_name.set_text(
-            _("{name} (copy)").format(name=selected_item))
-        self.confirm_button.connect("clicked", self.on_confirm)
-        self.plot_style_templates.connect(
-            "notify::selected", self.on_template_changed)
-        self.set_transient_for(parent)
+            sorted(get_user_styles(self.parent).keys()), False)
+        self.set_transient_for(self.parent)
         self.present()
 
+    @Gtk.Template.Callback()
     def on_template_changed(self, _a, _b):
         selected_item = \
             utilities.get_selected_chooser_item(self.plot_style_templates)
         self.new_style_name.set_text(
             _("{name} (copy)").format(name=selected_item))
 
-    def on_confirm(self, _button):
+    @Gtk.Template.Callback()
+    def on_accept(self, _button):
         style = utilities.get_selected_chooser_item(self.plot_style_templates)
-        name = self.new_style_name.get_text()
-        self.parent.copy_style(self, style, name)
+        new_style = self.new_style_name.get_text()
+        i = 0
+        user_styles = get_user_styles(self.props.application)
+        for style_1 in user_styles.keys():
+            if new_style == style_1:
+                while True:
+                    i += 1
+                    if f"{new_style} ({i})" not in user_styles.keys():
+                        new_style = f"{new_style} ({i})"
+                        break
+        config_dir = utilities.get_config_directory()
+        directory = config_dir.get_child_for_display_name("styles")
+        destination = directory.get_child_for_display_name(
+            f"{new_style}.mplstyle")
+        user_styles[style].copy(destination, 0, None)
+        self.parent.reload_styles()
         self.close()

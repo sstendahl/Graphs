@@ -60,6 +60,7 @@ blueprints = custom_target('blueprints',
   input: files(
     'ui/add_equation_window.blp',
     'ui/add_style.blp',
+    'ui/dialogs.blp',
     'ui/edit_item.blp',
     'ui/export_figure.blp',
     'ui/import.blp',

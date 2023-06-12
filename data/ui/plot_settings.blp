@@ -1,10 +1,11 @@
 using Gtk 4.0;
 using Adw 1;
 
-template PlotSettingsWindow : Adw.PreferencesWindow {
+template $PlotSettingsWindow : Adw.PreferencesWindow {
   modal: true;
   can-navigate-back: true;
   title: _("Plot Settings");
+  close-request => $on_close();
 
   ShortcutController {
     Shortcut {

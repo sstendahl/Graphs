@@ -1,7 +1,7 @@
 using Gtk 4.0;
 using Adw 1;
 
-template TransformWindow : Adw.Window {
+template $TransformWindow : Adw.Window {
   modal: true;
   default-width: 450;
   title: _("Transform Data");
@@ -16,20 +16,20 @@ template TransformWindow : Adw.Window {
   Box {
     orientation: vertical;
     Adw.HeaderBar {
-    Button help_button {
-      Adw.ButtonContent {
-      halign: center;
-      icon-name: "info-symbolic";
-      Popover help_popover {
-        position: bottom;
-        Label help_info {
-        label: _("The transformation tool uses Numpy notation, with capital letters for the coordinates.\nTransformations are done piece-wise, if you want access to the entire range use X_range or Y_range. \n e.g. Y = Y/max(X_range) divides each Y value by the largest value of X.\n\nTo convert a value from degrees into radians use radians(value), e.g. Y = sin(radians(X)).");
-      	}
-      }
-      }
-      halign: end;
-      tooltip-text: _("More info");
-      styles ["flat"]
+      Button help_button {
+        Adw.ButtonContent {
+          halign: center;
+          icon-name: "info-symbolic";
+          Popover help_popover {
+            position: bottom;
+            Label help_info {
+              label: _("The transformation tool uses Numpy notation, with capital letters for the coordinates.\nTransformations are done piece-wise, if you want access to the entire range use X_range or Y_range. \n e.g. Y = Y/max(X_range) divides each Y value by the largest value of X.\n\nTo convert a value from degrees into radians use radians(value), e.g. Y = sin(radians(X)).");
+          	}
+          }
+        }
+        halign: end;
+        tooltip-text: _("More info");
+        styles ["flat"]
       }
       styles ["flat"]
     }
@@ -59,11 +59,12 @@ template TransformWindow : Adw.Window {
           }
         }
 
-        Button confirm_button {
+        Button {
           halign: center;
           margin-top: 24;
           margin-bottom: 12;
           label: _("Transform");
+          clicked => $on_accept();
           styles ["suggested-action", "pill"]
         }
       }

@@ -1,20 +1,20 @@
 using Gtk 4.0;
 using Adw 1;
 
-template GraphsWindow : Adw.ApplicationWindow {
+template $GraphsWindow : Adw.ApplicationWindow {
   default-width: 1200;
   default-height: 700;
   Box {
     orientation: vertical;
     Adw.HeaderBar {
       ToggleButton {
-        visible: bind sidebar_flap.folded;
+        visible: bind-property sidebar_flap.folded;
         action-name: "app.toggle_sidebar";
         icon-name: "sidebar-show-symbolic";
-        active: bind sidebar_flap.reveal_flap;
+        active: bind-property sidebar_flap.reveal-flap;
       }
       Box {
-        visible: bind sidebar_flap.folded inverted;
+        visible: bind-property sidebar_flap.folded inverted;
         Adw.SplitButton add_button {
           icon-name: "list-add-symbolic";
           action-name: "app.add_data";
@@ -42,7 +42,7 @@ template GraphsWindow : Adw.ApplicationWindow {
           action-name: "app.restore_view";
           tooltip-text: _("Restore View / View Options");
           menu-model: view_menu;
-          visible: bind sidebar_flap.folded inverted;
+          visible: bind-property sidebar_flap.folded inverted;
         }
         Separator {styles ["spacer"]}
         MenuButton {
@@ -58,6 +58,7 @@ template GraphsWindow : Adw.ApplicationWindow {
       fold-policy: auto;
       swipe-to-open: true;
       swipe-to-close: true;
+      notify => $on_sidebar_toggle();
 
       [flap]
       Box {
@@ -133,7 +134,7 @@ template GraphsWindow : Adw.ApplicationWindow {
                 hexpand: true;
                 width-request: 240;
                 halign: center;
-                visible: bind item_list.visible inverted;
+                visible: bind-property item_list.visible inverted;
                 title: _("No Data");
                 description: _("Add data from a file or manually as an equation");
                 styles ["compact"]

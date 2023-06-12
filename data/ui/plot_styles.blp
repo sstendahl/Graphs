@@ -1,10 +1,12 @@
 using Gtk 4.0;
 using Adw 1;
 
-template PlotStylesWindow : Adw.Window {
+template $PlotStylesWindow : Adw.Window {
   modal: true;
   default-width: 650;
   default-height: 400;
+  title: _("Plot Styles");
+  close-request => $on_close();
 
   ShortcutController {
     Shortcut {
@@ -20,14 +22,16 @@ template PlotStylesWindow : Adw.Window {
     Box {
       orientation: vertical;
       Adw.HeaderBar {
-        Button add_button {
+        Button {
           icon-name: "list-add-symbolic";
           tooltip-text: _("Add new style");
+          clicked => $add_style();
         }
         [end]
-        Button reset_button {
+        Button {
           icon-name: "history-undo-symbolic";
           tooltip-text: _("Reset to default styles");
+          clicked => $reset_styles();
         }
         styles ["flat"]
       }
@@ -53,8 +57,9 @@ template PlotStylesWindow : Adw.Window {
     Box {
       orientation: vertical;
       Adw.HeaderBar {
-        Button back_button {
+        Button {
           icon-name: "left-symbolic";
+          clicked => $back();
         }
         styles ["flat"]
       }
@@ -85,6 +90,7 @@ template PlotStylesWindow : Adw.Window {
                 FontDialogButton font_chooser {
                   valign: center;
                   dialog: FontDialog {};
+                  use-font: true;
                 }
               }
             }
@@ -105,6 +111,10 @@ template PlotStylesWindow : Adw.Window {
                 Scale linewidth {
                   draw-value: true;
                   width-request: 200;
+                  adjustment: Adjustment {
+                    lower: 0;
+                    upper: 10;
+                  };
                 }
               }
 
@@ -120,6 +130,10 @@ template PlotStylesWindow : Adw.Window {
                 Scale markersize {
                   draw-value: true;
                   width-request: 200;
+                  adjustment: Adjustment {
+                    lower: 0;
+                    upper: 10;
+                  };
                 }
               }
             }
@@ -150,6 +164,10 @@ template PlotStylesWindow : Adw.Window {
                 Scale major_tick_width {
                   draw-value: true;
                   width-request: 200;
+                  adjustment: Adjustment {
+                    lower: 0;
+                    upper: 4;
+                  };
                 }
               }
 
@@ -161,6 +179,10 @@ template PlotStylesWindow : Adw.Window {
                 Scale minor_tick_width {
                   draw-value: true;
                   width-request: 200;
+                  adjustment: Adjustment {
+                    lower: 0;
+                    upper: 4;
+                  };
                 }
               }
 
@@ -171,6 +193,10 @@ template PlotStylesWindow : Adw.Window {
                 Scale major_tick_length {
                   draw-value: true;
                   width-request: 200;
+                  adjustment: Adjustment {
+                    lower: 0;
+                    upper: 20;
+                  };
                 }
               }
 
@@ -182,6 +208,10 @@ template PlotStylesWindow : Adw.Window {
                 Scale minor_tick_length {
                   draw-value: true;
                   width-request: 200;
+                  adjustment: Adjustment {
+                    lower: 0;
+                    upper: 20;
+                  };
                 }
               }
 
@@ -248,6 +278,10 @@ template PlotStylesWindow : Adw.Window {
                 Scale grid_linewidth {
                   draw-value: true;
                   width-request: 200;
+                  adjustment: Adjustment {
+                    lower: 0;
+                    upper: 4;
+                  };
                 }
               }
 
@@ -259,6 +293,10 @@ template PlotStylesWindow : Adw.Window {
                 Scale grid_transparency {
                   draw-value: true;
                   width-request: 200;
+                  adjustment: Adjustment {
+                    lower: 0;
+                    upper: 1;
+                  };
                 }
               }
             }
@@ -274,6 +312,10 @@ template PlotStylesWindow : Adw.Window {
                 Scale value_padding {
                   draw-value: true;
                   width-request: 200;
+                  adjustment: Adjustment {
+                    lower: 0;
+                    upper: 40;
+                  };
                 }
               }
 
@@ -284,6 +326,10 @@ template PlotStylesWindow : Adw.Window {
                 Scale label_padding {
                   draw-value: true;
                   width-request: 200;
+                  adjustment: Adjustment {
+                    lower: 0;
+                    upper: 40;
+                  };
                 }
               }
 
@@ -294,6 +340,10 @@ template PlotStylesWindow : Adw.Window {
                 Scale title_padding {
                   draw-value: true;
                   width-request: 200;
+                  adjustment: Adjustment {
+                    lower: 0;
+                    upper: 40;
+                  };
                 }
               }
             }
@@ -459,6 +509,7 @@ template PlotStylesWindow : Adw.Window {
                     Button line_colors {
                       tooltip-text: _("Edit Colors");
                       valign: center;
+                      clicked => $edit_line_colors();
                       styles ["flat"]
                       Image {
                         icon-name: "right-symbolic";
@@ -479,6 +530,10 @@ template PlotStylesWindow : Adw.Window {
                 Scale axis_width {
                   draw-value: true;
                   width-request: 200;
+                  adjustment: Adjustment {
+                    lower: 0;
+                    upper: 4;
+                  };
                 }
               }
             }
@@ -490,8 +545,9 @@ template PlotStylesWindow : Adw.Window {
     Box {
       orientation: vertical;
       Adw.HeaderBar {
-        Button line_colors_back_button {
+        Button {
           icon-name: "left-symbolic";
+          clicked => $back_line_colors();
         }
         styles ["flat"]
       }
@@ -506,7 +562,8 @@ template PlotStylesWindow : Adw.Window {
           Adw.PreferencesGroup {
             title: _("Line Colors");
             description: _("The colors which will be used for the lines");
-            header-suffix: Button add_color_button {
+            header-suffix: Button {
+              clicked => $add_color();
               Adw.ButtonContent {
                 halign: center;
                 icon-name: "list-add-symbolic";

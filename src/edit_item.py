@@ -20,31 +20,30 @@ class EditItemWindow(Adw.PreferencesWindow):
     markers = Gtk.Template.Child()
     markersize = Gtk.Template.Child()
 
-    def __init__(self, parent, item):
-        super().__init__()
-        self.parent = parent
+    def __init__(self, application, item):
+        super().__init__(application=application)
         self.item = item
-        names = utilities.get_all_names(self.parent)
+        names = utilities.get_all_names(self.props.application)
         utilities.populate_chooser(self.item_selector, names)
         self.item_selector.set_selected(names.index(self.item.name))
 
-        self.linewidth.set_range(0, 10)
         utilities.populate_chooser(self.plot_x_position, misc.X_POSITIONS)
         utilities.populate_chooser(self.plot_y_position, misc.Y_POSITIONS)
         utilities.populate_chooser(self.linestyle, misc.LINESTYLES)
         utilities.populate_chooser(self.markers, sorted(misc.MARKERS.keys()))
-        self.markersize.set_range(0, 10)
         self.load_values()
-        self.item_selector.connect("notify::selected", self.on_select)
-        self.connect("close-request", self.apply)
-        self.set_transient_for(parent.main_window)
+        self.set_transient_for(self.props.application.main_window)
         self.present()
 
+    def on_close(self, *_args):
+        self.apply()
+
+    @Gtk.Template.Callback()
     def on_select(self, _action, _target):
-        self.apply(None)
-        data_list = list(self.parent.datadict.keys())
+        self.apply()
+        data_list = list(self.props.application.datadict.keys())
         index = self.item_selector.get_selected()
-        self.item = self.parent.datadict[data_list[index]]
+        self.item = self.props.application.datadict[data_list[index]]
         self.load_values()
 
         # If item_selector no longer matches with name, repopulate it
@@ -54,8 +53,8 @@ class EditItemWindow(Adw.PreferencesWindow):
             utilities.repopulate_chooser_from_list(
                 self.item_selector, names)
             self.item_selector.set_selected(index)
-            self.parent.datadict_clipboard = \
-                self.parent.datadict_clipboard[:-1]
+            self.props.application.datadict_clipboard = \
+                self.props.application.datadict_clipboard[:-1]
 
     def load_values(self):
         self.set_title(self.item.name)
@@ -77,8 +76,7 @@ class EditItemWindow(Adw.PreferencesWindow):
         utilities.set_chooser(self.markers, markerstyle)
         self.markersize.set_value(self.item.markersize)
 
-    def apply(self, _):
-
+    def apply(self):
         self.item.name = self.name_entry.get_text()
 
         # Only change limits when axes change, otherwise this is not needed
@@ -94,9 +92,9 @@ class EditItemWindow(Adw.PreferencesWindow):
             utilities.get_selected_chooser_item(self.plot_y_position)
         if isinstance(self.item, Item):
             self.apply_item_values()
-        ui.reload_item_menu(self.parent)
-        clipboard.add(self.parent)
-        graphs.refresh(self.parent)
+        ui.reload_item_menu(self.props.application)
+        clipboard.add(self.props.application)
+        graphs.refresh(self.props.application)
         if set_limits:
             plotting_tools.optimize_limits(self)
 

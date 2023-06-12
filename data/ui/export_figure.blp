@@ -1,7 +1,7 @@
 using Gtk 4.0;
 using Adw 1;
 
-template ExportFigureWindow : Adw.Window {
+template $ExportFigureWindow : Adw.Window {
   modal: true;
   title: _("Export Figure");
   default-width: 575;
@@ -57,12 +57,13 @@ template ExportFigureWindow : Adw.Window {
           }
         }
 
-        Button confirm_button {
+        Button {
           margin-top: 24;
           margin-bottom: 12;
           label: _("Export");
           halign: center;
           styles ["suggested-action", "pill"]
+          clicked => $on_accept();
         }
       }
     }

@@ -10,24 +10,18 @@ class ItemBox(Gtk.Box):
     __gtype_name__ = "ItemBox"
     label = Gtk.Template.Child()
     check_button = Gtk.Template.Child()
-    edit_button = Gtk.Template.Child()
     color_button = Gtk.Template.Child()
-    delete_button = Gtk.Template.Child()
 
-    def __init__(self, parent, item):
+    def __init__(self, application, item):
         super().__init__()
+        self.application = application
         self.item = item
         self.label.set_text(utilities.shorten_label(item.name))
         self.check_button.set_active(item.selected)
-        self.parent = parent
 
         self.gesture = Gtk.GestureClick()
         self.gesture.set_button(0)
         self.add_controller(self.gesture)
-        self.edit_button.connect("clicked", self.edit)
-        self.color_button.connect("clicked", self.choose_color)
-        self.delete_button.connect("clicked", self.delete)
-        self.check_button.connect("toggled", self.on_toggle)
         self.provider = Gtk.CssProvider()
         self.color_button.get_style_context().add_provider(
             self.provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION)
@@ -44,12 +38,12 @@ class ItemBox(Gtk.Box):
 
     def on_dnd_drop(self, drop_target, value, _x, _y):
         # Handle the dropped data here
-        self.parent.datadict
-        self.parent.datadict = utilities.change_key_position(
-            self.parent.datadict, drop_target.key, value)
-        ui.reload_item_menu(self.parent)
-        clipboard.add(self.parent)
-        graphs.refresh(self.parent)
+        self.application.datadict
+        self.application.datadict = utilities.change_key_position(
+            self.application.datadict, drop_target.key, value)
+        ui.reload_item_menu(self.application)
+        clipboard.add(self.application)
+        graphs.refresh(self.application)
 
     def on_dnd_prepare(self, drag_source, x, y):
         snapshot = Gtk.Snapshot.new()
@@ -64,12 +58,14 @@ class ItemBox(Gtk.Box):
         self.provider.load_from_data(
             f"button {{ color: {self.item.color}; }}", -1)
 
+    @Gtk.Template.Callback()
     def choose_color(self, _):
         color = utilities.hex_to_rgba(self.item.color)
         dialog = Gtk.ColorDialog()
         dialog.set_with_alpha(False)
         dialog.choose_rgba(
-            self.parent.main_window, color, None, self.on_color_dialog_accept)
+            self.application.main_window, color, None,
+            self.on_color_dialog_accept)
 
     def on_color_dialog_accept(self, dialog, result):
         try:
@@ -77,18 +73,21 @@ class ItemBox(Gtk.Box):
             if color is not None:
                 self.item.color = utilities.rgba_to_hex(color).upper()
                 self.update_color()
-                clipboard.add(self.parent)
-                graphs.refresh(self.parent)
+                clipboard.add(self.application)
+                graphs.refresh(self.application)
         except GLib.GError:
             pass
 
+    @Gtk.Template.Callback()
     def delete(self, _):
-        graphs.delete_item(self.parent, self.item.key, True)
+        graphs.delete_item(self.application, self.item.key, True)
 
+    @Gtk.Template.Callback()
     def on_toggle(self, _):
         self.item.selected = self.check_button.get_active()
-        graphs.refresh(self.parent)
-        ui.enable_data_dependent_buttons(self.parent)
+        graphs.refresh(self.application)
+        ui.enable_data_dependent_buttons(self.application)
 
+    @Gtk.Template.Callback()
     def edit(self, _):
-        EditItemWindow(self.parent, self.item)
+        EditItemWindow(self.application, self.item)

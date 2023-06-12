@@ -1,7 +1,7 @@
 using Gtk 4.0;
 using Adw 1;
 
-template RenameWindow : Adw.Window {
+template $RenameWindow : Adw.Window {
   modal: true;
   default-width: 575;
   default-height: 125;
@@ -30,11 +30,12 @@ template RenameWindow : Adw.Window {
           title: _("Label");
         }
 
-        Button confirm_button {
+        Button {
           margin-top: 24;
           margin-bottom: 12;
           label: _("Rename");
           halign: center;
+          clicked => $on_accept();
           styles ["suggested-action", "pill"]
         }
       }

@@ -1,7 +1,7 @@
 using Gtk 4.0;
 using Adw 1;
 
-template StyleColorBox : Box {
+template $StyleColorBox : Box {
   margin-start: 6;
   margin-end: 6;
   margin-bottom: 9;
@@ -24,8 +24,9 @@ template StyleColorBox : Box {
     }
   }
 
-  Button delete_button {
+  Button {
     tooltip-text: _("Remove");
+    clicked => $on_delete();
     styles ["flat"]
     Image {
       hexpand: false;

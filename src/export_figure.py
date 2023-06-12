@@ -1,8 +1,9 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
+import contextlib
 from gettext import gettext as _
 from pathlib import Path
 
-from gi.repository import Adw, GLib, Gtk
+from gi.repository import Adw, GLib, Gio, Gtk
 
 from graphs import utilities
 
@@ -10,16 +11,14 @@ from graphs import utilities
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/export_figure.ui")
 class ExportFigureWindow(Adw.Window):
     __gtype_name__ = "ExportFigureWindow"
-    confirm_button = Gtk.Template.Child()
     file_format = Gtk.Template.Child()
     transparent = Gtk.Template.Child()
     dpi = Gtk.Template.Child()
 
-    def __init__(self, parent):
-        super().__init__()
-        self.parent = parent
-        self.set_transient_for(parent.main_window)
-        self.confirm_button.connect("clicked", self.on_accept)
+    def __init__(self, application):
+        super().__init__(application=application)
+        self.set_transient_for(self.props.application.main_window)
+        self.parent = self.props.application
         self.transparent.set_active(
             self.parent.preferences.config["export_figure_transparent"])
         self.items = \
@@ -38,6 +37,7 @@ class ExportFigureWindow(Adw.Window):
             utilities.set_chooser(self.file_format, default_format)
         self.present()
 
+    @Gtk.Template.Callback()
     def on_accept(self, _button):
         dpi = int(self.dpi.get_value())
         fmt = utilities.get_selected_chooser_item(self.file_format)
@@ -58,11 +58,12 @@ class ExportFigureWindow(Adw.Window):
 
     def on_figure_save_response(
             self, dialog, response, dpi, file_suffix, transparent):
-        try:
-            path = dialog.save_finish(response).get_path()
-            if path is not None:
-                self.parent.canvas.figure.savefig(
-                    path, dpi=dpi, format=file_suffix, transparent=transparent)
-                self.parent.main_window.add_toast(_("Exported Figure"))
-        except GLib.GError:
-            pass
+        with contextlib.suppress(GLib.GError):
+            destination = dialog.save_finish(response)
+            file, stream = Gio.File.new_tmp("graphs-XXXXXX")
+            stream.close()
+            self.parent.canvas.figure.savefig(
+                file.peek_path(), dpi=dpi, format=file_suffix,
+                transparent=transparent)
+            file.move(destination, Gio.FileCopyFlags(1), None)
+            self.parent.main_window.add_toast(_("Exported Figure"))

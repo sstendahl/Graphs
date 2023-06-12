@@ -7,10 +7,10 @@ from inspect import getmembers, isfunction
 
 from gi.repository import Adw, GLib, Gio
 
-from graphs import (actions, file_io, plot_styles, plotting_tools, preferences,
-                    ui)
+from graphs import actions, file_io, plot_styles, plotting_tools, ui
 from graphs.canvas import Canvas
 from graphs.misc import InteractionMode, PlotSettings
+from graphs.preferences import Preferences
 from graphs.window import GraphsWindow
 
 from matplotlib import font_manager, pyplot
@@ -43,9 +43,9 @@ class GraphsApplication(Adw.Application):
                 font_manager.fontManager.addfont(font)
             except RuntimeError:
                 logging.warning(_("Could not load %s"), font)
-        self.preferences = preferences.Preferences(self)
+        self.preferences = Preferences()
         self.add_actions()
-        Adw.StyleManager.get_default().connect(
+        self.get_style_manager().connect(
             "notify", ui.on_style_change, None, self)
 
     def add_actions(self):
@@ -139,10 +139,9 @@ class GraphsApplication(Adw.Application):
         config = self.preferences.config
         self.plot_settings = PlotSettings(config)
         pyplot.rcParams.update(
-            file_io.parse_style(plot_styles.get_preferred_style_path(self)))
+            file_io.parse_style(plot_styles.get_preferred_style(self)))
         self.canvas = Canvas(self)
         win.toast_overlay.set_child(self.canvas)
-        win.sidebar_flap.connect("notify", self.on_sidebar_toggle)
         win.redo_button.set_sensitive(False)
         win.undo_button.set_sensitive(False)
         ui.enable_data_dependent_buttons(self)

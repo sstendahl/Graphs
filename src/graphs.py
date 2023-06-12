@@ -115,8 +115,8 @@ def check_open_data(self):
 def reload(self):
     """Completely reload the plot of the graph"""
     pyplot.rcParams.update(
-        file_io.parse_style(plot_styles.get_preferred_style_path(self)))
-    self.canvas = Canvas(parent=self)
+        file_io.parse_style(plot_styles.get_preferred_style(self)))
+    self.canvas = Canvas(self)
     self.main_window.toast_overlay.set_child(self.canvas)
     refresh(self)
     self.set_mode(None, None, self.interaction_mode)

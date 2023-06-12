@@ -1,5 +1,4 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
-import io
 import json
 import logging
 import pickle
@@ -28,10 +27,7 @@ def save_project(file, plot_settings, datadict, datadict_clipboard,
         "clipboard_pos": clipboard_pos,
         "version": version,
     }
-    if file.query_exists(None):
-        stream = file.replace(None, False, 0, None)
-    else:
-        stream = file.create(0, None)
+    stream = get_write_stream(file)
     stream.write_bytes(GLib.Bytes(pickle.dumps(project_data)))
     stream.close()
 
@@ -47,10 +43,7 @@ def read_project(file):
 def save_item(file, xdata, ydata):
     array = numpy.stack([xdata, ydata], axis=1)
     fmt = "\t".join(["%.12e"] * 2)
-    if file.query_exists(None):
-        stream = file.replace(None, False, 0, None)
-    else:
-        stream = file.create(0, None)
+    stream = get_write_stream(file)
     for row in array:
         line = (fmt % tuple(row) + "\n").encode("utf-8")
         stream.write_bytes(GLib.Bytes(line))
@@ -218,19 +211,24 @@ def parse_style(file):
 
 
 WRITE_IGNORELIST = [
-    "lines.dash_capstyle", "lines.dash_joinstyle", "lines.solid_capstyle",
-    "lines.solid_joinstyle",
+    "axes.prop_cycle", "lines.dashdot_pattern", "lines.dashed_pattern",
+    "lines.dotted_pattern", "lines.dash_capstyle", "lines.dash_joinstyle",
+    "lines.solid_capstyle", "lines.solid_joinstyle",
 ]
 
 
 def write_style(file, style):
-    stream = file.replace(None, False, 0, None)
+    stream = get_write_stream(file)
     stream.write_bytes(GLib.Bytes(f"# {style.name}\n".encode("utf-8")), None)
+    prop_cycle = \
+        f"axes.prop_cycle: {str(style['axes.prop_cycle']).replace('#', '')}\n"
+    stream.write_bytes(GLib.Bytes(prop_cycle.encode("utf-8")), None)
     for key, value in style.items():
         if key not in STYLE_BLACKLIST and key not in WRITE_IGNORELIST:
             value = str(value).replace("#", "")
-            if value.startswith("[") and value.endswith("]"):
-                value = value[1:-1]  # strip lists
+            value = value.replace("[", "").replace("]", "")
+            value = value.replace("'", "").replace("'", "")
+            value = value.replace('"', "").replace('"', "")
             line = f"{key}: {value}\n"
             stream.write_bytes(GLib.Bytes(line.encode("utf-8")), None)
     stream.close()
@@ -241,14 +239,19 @@ def parse_json(file):
 
 
 def write_json(file, json_object):
-    buffer = io.StringIO()
-    json.dump(json_object, buffer, indent=4, sort_keys=True)
-    stream = file.replace(None, False, 0, None)
-    stream.write_bytes(GLib.Bytes(buffer.getvalue().encode("utf-8")), None)
-    buffer.close()
+    stream = get_write_stream(file)
+    stream.write_bytes(GLib.Bytes(json.dumps(
+        json_object, indent=4, sort_keys=True).encode("utf-8")), None)
     stream.close()
 
 
 def parse_xml(file):
     return minidom.parseString(
         file.load_bytes(None)[0].get_data().decode("utf-8"))
+
+
+def get_write_stream(file):
+    if file.query_exists(None):
+        return file.replace(None, False, 0, None)
+    else:
+        return file.create(0, None)

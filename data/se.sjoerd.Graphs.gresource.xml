@@ -28,9 +28,9 @@
     <file compressed="True">styles/solarized-light.mplstyle</file>
     <file compressed="True">styles/tableau-colorblind10.mplstyle</file>
     <file compressed="True">styles/thesis.mplstyle</file>
-
     <file preprocess="xml-stripblanks">ui/add_equation_window.ui</file>
     <file preprocess="xml-stripblanks">ui/add_style.ui</file>
+    <file preprocess="xml-stripblanks">ui/dialogs.ui</file>
     <file preprocess="xml-stripblanks">ui/edit_item.ui</file>
     <file preprocess="xml-stripblanks">ui/export_figure.ui</file>
     <file preprocess="xml-stripblanks">ui/import.ui</file>

@@ -13,34 +13,34 @@ class TransformWindow(Adw.Window):
     __gtype_name__ = "TransformWindow"
     transform_x_entry = Gtk.Template.Child()
     transform_y_entry = Gtk.Template.Child()
-    confirm_button = Gtk.Template.Child()
     discard_row = Gtk.Template.Child()
     discard = Gtk.Template.Child()
     help_button = Gtk.Template.Child()
     help_popover = Gtk.Template.Child()
 
-    def __init__(self, parent):
-        super().__init__()
+    def __init__(self, application):
+        super().__init__(application=application)
         self.transform_x_entry.set_text("X")
         self.transform_y_entry.set_text("Y")
         self.discard_row.set_visible(
-            parent.interaction_mode == InteractionMode.SELECT)
-        self.confirm_button.connect("clicked", self.on_accept, parent)
-        self.set_transient_for(parent.main_window)
+            self.props.application.interaction_mode == InteractionMode.SELECT)
+        self.set_transient_for(self.props.application.main_window)
         self.present()
-        self.help_button.connect("clicked",
-                                 lambda _x: self.help_popover.popup())
+        self.help_button.connect(
+            "clicked", lambda _x: self.help_popover.popup())
 
-    def on_accept(self, _widget, parent):
+    @Gtk.Template.Callback()
+    def on_accept(self, _widget):
         try:
             input_x = str(self.transform_x_entry.get_text())
             input_y = str(self.transform_y_entry.get_text())
             discard = self.discard.get_active()
             operations.perform_operation(
-                parent, operations.transform, input_x, input_y, discard)
+                self.props.application, operations.transform,
+                input_x, input_y, discard)
         except (NameError, SyntaxError) as exception:
             toast = _("{name}: Unable to do transformation, \
 make sure the syntax is correct").format(name=exception.__class__.__name__)
-            parent.main_window.add_toast(toast)
+            self.props.application.main_window.add_toast(toast)
             logging.exception(_("Unable to do transformation"))
         self.destroy()
