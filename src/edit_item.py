@@ -24,14 +24,14 @@ class EditItemWindow(Adw.PreferencesWindow):
         super().__init__(application=application)
         self.item = item
         names = utilities.get_all_names(self.props.application)
-        utilities.populate_chooser(self.item_selector, names)
-        self.item_selector.set_selected(names.index(self.item.name))
-
         utilities.populate_chooser(self.plot_x_position, misc.X_POSITIONS)
         utilities.populate_chooser(self.plot_y_position, misc.Y_POSITIONS)
         utilities.populate_chooser(self.linestyle, misc.LINESTYLES)
         utilities.populate_chooser(self.markers, sorted(misc.MARKERS.keys()))
         self.load_values()
+        utilities.populate_chooser(self.item_selector, names)
+
+        self.item_selector.set_selected(names.index(self.item.name))
         self.set_transient_for(self.props.application.main_window)
         self.present()
 
@@ -94,7 +94,7 @@ class EditItemWindow(Adw.PreferencesWindow):
         clipboard.add(self.props.application)
         graphs.refresh(self.props.application)
         if set_limits:
-            plotting_tools.optimize_limits(self)
+            plotting_tools.optimize_limits(self.props.application)
 
     def apply_item_values(self):
         self.item.linestyle = \
