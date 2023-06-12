@@ -17,7 +17,16 @@ slots:
     name: se.sjoerd.Graphs
 
 parts:
+  blueprint-compiler:
+    source: https://gitlab.gnome.org/jwestman/blueprint-compiler.git
+    source-tag: 'v0.8.1'
+    plugin: meson
+    meson-parameters:
+      - --prefix=/usr
+    override-prime: |
+      echo 'Skip'
   graphs:
+    after: [ blueprint-compiler ]
     # See 'snapcraft plugins'
     plugin: meson
     source: https://github.com/Sjoerd1993/Graphs.git
@@ -25,8 +34,9 @@ parts:
     meson-parameters:
       - --prefix=/snap/graphs/current/usr
       - --buildtype=release
-    build-packages:
-      - blueprint-compiler
+    build-environment:
+      - PYTHONPATH: $CRAFT_STAGE/usr/lib/python3/dist-packages:$PYTHONPATH
+      - GI_TYPELIB_PATH: /snap/gnome-42-2204-sdk/current/usr/lib/$CRAFT_ARCH_TRIPLET/girepository-1.0:/snap/gnome-42-2204-sdk/current/usr/lib/girepository-1.0:/snap/webkitgtk-6-gnome-2204-sdk/current/usr/lib/$CRAFT_ARCH_TRIPLET/girepository-1.0
     override-pull: |
       craftctl default
       patch -p1 < $CRAFT_PROJECT_DIR/snap/graphs.patch
