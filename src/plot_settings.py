@@ -96,16 +96,15 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
     @Gtk.Template.Callback()
     def on_close(self, *_args):
         plot_settings = self.props.application.plot_settings
-        config = self.props.application.preferences.config
 
         # Check if style change when override is enabled
         self.style_changed = \
             plot_settings.use_custom_plot_style \
             != self.use_custom_plot_style.get_enable_expansion() \
-            and config["override_style_change"] \
+            and self.props.application.preferences["override_style_change"] \
             or plot_settings.custom_plot_style \
             != utilities.get_selected_chooser_item(self.custom_plot_style) \
-            and config["override_style_change"]
+            and self.props.application.preferences["override_style_change"]
 
         # Set new plot settings
         plot_settings.title = self.plot_title.get_text()

@@ -30,7 +30,7 @@ def prepare_import_finish(self, import_dict):
     import_settings_list = []
     for mode, files in import_dict.items():
         try:
-            params = self.preferences.import_params[mode]
+            params = self.preferences["import_params"][mode]
         except KeyError:
             params = []
         for file in files:
@@ -98,7 +98,8 @@ class ImportWindow(Adw.Window):
         super().__init__(application=application)
         self.modes = modes
         self.import_dict = import_dict
-        self.import_params = self.props.application.preferences.import_params
+        self.import_params = \
+            self.props.application.preferences["import_params"]
         visible = False
         if "columns" in self.modes:
             self.load_columns()

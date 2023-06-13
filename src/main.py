@@ -128,24 +128,22 @@ class GraphsApplication(Adw.Application):
         We raise the application"s main window, creating it if
         necessary.
         """
-        win = self.props.active_window
-        if not win:
-            win = GraphsWindow(application=self)
-        self.main_window = win
-        win.set_title(self.name)
+        self.main_window = self.props.active_window
+        if not self.main_window:
+            self.main_window = GraphsWindow(application=self)
+        self.main_window.set_title(self.name)
         if "(Development)" in self.name:
-            win.add_css_class("devel")
-        config = self.preferences.config
-        self.plot_settings = PlotSettings(config)
+            self.main_window.add_css_class("devel")
+        self.plot_settings = PlotSettings(self.preferences)
         pyplot.rcParams.update(
             file_io.parse_style(plot_styles.get_preferred_style(self)))
         self.canvas = Canvas(self)
-        win.toast_overlay.set_child(self.canvas)
-        win.redo_button.set_sensitive(False)
-        win.undo_button.set_sensitive(False)
+        self.main_window.toast_overlay.set_child(self.canvas)
+        self.main_window.redo_button.set_sensitive(False)
+        self.main_window.undo_button.set_sensitive(False)
         ui.enable_data_dependent_buttons(self)
         self.set_mode(None, None, InteractionMode.PAN)
-        win.present()
+        self.main_window.present()
 
     def set_mode(self, _action, _target, mode):
         """Set the current UI interaction mode (none, pan, zoom or select)."""
@@ -181,11 +179,11 @@ class GraphsApplication(Adw.Application):
         visible = self.main_window.sidebar_flap.get_reveal_flap()
         self.toggle_sidebar.change_state(GLib.Variant.new_boolean(visible))
 
-    def create_axis_action(self, name, callback, config_key):
+    def create_axis_action(self, name, callback, preferences_key):
         """Create action for setting axis scale."""
-        config = self.preferences.config[config_key]
         action = Gio.SimpleAction.new_stateful(
-            name, GLib.VariantType.new("s"), GLib.Variant.new_string(config))
+            name, GLib.VariantType.new("s"),
+            GLib.Variant.new_string(self.preferences[preferences_key]))
         action.connect("activate", callback, self)
         self.add_action(action)
 

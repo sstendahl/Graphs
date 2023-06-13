@@ -18,16 +18,16 @@ class ExportFigureWindow(Adw.Window):
     def __init__(self, application):
         super().__init__(application=application)
         self.set_transient_for(self.props.application.main_window)
-        config = self.props.application.preferences.config
-        self.transparent.set_active(config["export_figure_transparent"])
+        preferences = self.props.application.preferences
+        self.transparent.set_active(preferences["export_figure_transparent"])
         self.items = \
             application.canvas.get_supported_filetypes_grouped().items()
-        self.dpi.set_value(config["export_figure_dpi"])
+        self.dpi.set_value(preferences["export_figure_dpi"])
         file_formats = []
         default_format = None
         for name, formats in self.items:
             file_formats.append(name)
-            if config["export_figure_filetype"] in formats:
+            if preferences["export_figure_filetype"] in formats:
                 default_format = name
         utilities.populate_chooser(self.file_format, file_formats, False)
         if default_format is not None:

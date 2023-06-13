@@ -185,7 +185,7 @@ def smoothen_action(_action, _target, self):
 def center_action(_action, _target, self):
     operations.perform_operation(
         self, operations.center,
-        self.preferences.config["action_center_data"])
+        self.preferences["action_center_data"])
 
 
 def shift_vertically_action(_action, _target, self):

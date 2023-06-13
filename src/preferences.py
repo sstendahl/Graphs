@@ -7,50 +7,65 @@ from gi.repository import Adw, Gio, Gtk
 from graphs import file_io, graphs, misc, plot_styles, utilities
 
 
-class Preferences():
+class Preferences(dict):
     def __init__(self):
-        self.template_file = Gio.File.new_for_uri(
-            "resource:///se/sjoerd/Graphs/config.json")
-        self.template_import_params_file = Gio.File.new_for_uri(
-            "resource:///se/sjoerd/Graphs/import.json")
-        self.check_config()
-        self.config, self.import_params = self.load_config()
+        self.load()
 
-    def check_config(self):
+    def load(self):
         config_dir = utilities.get_config_directory()
         if not config_dir.query_exists(None):
             config_dir.make_directory_with_parents(None)
-        self.config_file = config_dir.get_child_for_display_name("config.json")
-        self.import_file = config_dir.get_child_for_display_name("import.json")
-        if not self.config_file.query_exists(None):
-            self.template_file.copy(
-                self.config_file, Gio.FileCopyFlags(1), None, None, None)
+        config_file = config_dir.get_child_for_display_name("config.json")
+        import_file = config_dir.get_child_for_display_name("import.json")
+        template_config_file = Gio.File.new_for_uri(
+            "resource:///se/sjoerd/Graphs/config.json")
+        template_import_file = Gio.File.new_for_uri(
+            "resource:///se/sjoerd/Graphs/import.json")
+        if not config_file.query_exists(None):
+            template_config_file.copy(
+                config_file, Gio.FileCopyFlags(1), None, None, None)
             logging.info(_("New configuration file created"))
-        if not self.import_file.query_exists(None):
-            self.template_file.copy(
-                self.import_file, Gio.FileCopyFlags(1), None, None, None)
+        if not import_file.query_exists(None):
+            template_import_file.copy(
+                import_file, Gio.FileCopyFlags(1), None, None, None)
             logging.info(_("New Import Settings file created"))
 
-    def load_config(self):
-        logging.debug(_("Loading configuration file"))
-        config = file_io.parse_json(self.config_file)
-        template = file_io.parse_json(self.template_file)
-        if set(config.keys()) != set(template.keys()):
-            config = utilities.remove_unused_config_keys(config, template)
-            config = utilities.add_new_config_keys(config, template)
-        import_params = file_io.parse_json(self.import_file)
-        import_params_template = \
-            file_io.parse_json(self.template_import_params_file)
+        config = file_io.parse_json(config_file)
+        config_template = file_io.parse_json(template_config_file)
+        if set(config.keys()) != set(config_template.keys()):
+            config = utilities.remove_unused_config_keys(
+                config, config_template)
+            config = utilities.add_new_config_keys(
+                config, config_template)
+
+        import_params = file_io.parse_json(import_file)
+        import_params_template = file_io.parse_json(template_import_file)
+        for key, item in import_params.items():
+            if set(item.keys()) != set(import_params_template[key].keys()):
+                import_params[key] = utilities.remove_unused_config_keys(
+                    item, import_params_template[key])
+                import_params[key] = utilities.add_new_config_keys(
+                    item, import_params_template[key])
         if set(import_params.keys()) != set(import_params_template.keys()):
             import_params = utilities.remove_unused_config_keys(
                 import_params, import_params_template)
             import_params = utilities.add_new_config_keys(
                 import_params, import_params_template)
-        return config, import_params
 
-    def save_config(self):
-        file_io.write_json(self.config_file, self.config)
-        file_io.write_json(self.import_file, self.import_params)
+        config["import_params"] = import_params
+        for key, item in config.items():
+            self[key] = item
+
+    def save(self):
+        config_dir = utilities.get_config_directory()
+        config = self.copy()
+        file_io.write_json(
+            config_dir.get_child_for_display_name("import.json"),
+            config["import_params"])
+        del config["import_params"]
+        file_io.write_json(
+            config_dir.get_child_for_display_name("config.json"),
+            config)
 
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/preferences.ui")
@@ -116,81 +131,85 @@ class PreferencesWindow(Adw.PreferencesWindow):
             self.plot_custom_style,
             plot_styles.get_user_styles(self.props.application).keys(),
             translate=False)
-        self.load_configuration()
+        self.load()
         self.set_transient_for(self.props.application.main_window)
         self.present()
 
-    def load_configuration(self):
-        config = self.props.application.preferences.config
-        import_params = \
-            self.props.application.preferences.import_params["columns"]
-        self.clipboard_length.set_value(int(config["clipboard_length"]))
-        self.import_delimiter.set_text(import_params["delimiter"])
+    def load(self):
+        preferences = self.props.application.preferences
+        self.clipboard_length.set_value(int(preferences["clipboard_length"]))
+
+        columns_params = preferences["import_params"]["columns"]
+        self.import_delimiter.set_text(columns_params["delimiter"])
         utilities.set_chooser(
-            self.import_separator, import_params["separator"])
-        self.import_column_x.set_value(int(import_params["column_x"]))
-        self.import_column_y.set_value(int(import_params["column_y"]))
-        self.import_skip_rows.set_value(int(import_params["skip_rows"]))
-        self.addequation_equation.set_text(str(config["addequation_equation"]))
-        self.addequation_x_start.set_text(str(config["addequation_x_start"]))
-        self.addequation_x_stop.set_text(str(config["addequation_x_stop"]))
+            self.import_separator, columns_params["separator"])
+        self.import_column_x.set_value(columns_params["column_x"])
+        self.import_column_y.set_value(columns_params["column_y"])
+        self.import_skip_rows.set_value(columns_params["skip_rows"])
+        self.addequation_equation.set_text(preferences["addequation_equation"])
+        self.addequation_x_start.set_text(preferences["addequation_x_start"])
+        self.addequation_x_stop.set_text(preferences["addequation_x_stop"])
         self.addequation_step_size.set_text(
-            str(config["addequation_step_size"]))
-        self.export_figure_dpi.set_value(int(config["export_figure_dpi"]))
+            preferences["addequation_step_size"])
+        self.export_figure_dpi.set_value(preferences["export_figure_dpi"])
         for name, formats in self.supported_filetypes.items():
-            if config["export_figure_filetype"] in formats:
+            if preferences["export_figure_filetype"] in formats:
                 filetype = name
         utilities.set_chooser(self.export_figure_filetype, filetype)
         self.export_figure_transparent.set_active(
-            config["export_figure_transparent"])
+            preferences["export_figure_transparent"])
         utilities.set_chooser(
-            self.action_center_data, config["action_center_data"])
+            self.action_center_data, preferences["action_center_data"])
         utilities.set_chooser(
-            self.other_handle_duplicates, config["handle_duplicates"])
-        self.other_hide_unselected.set_active(config["hide_unselected"])
-        self.override_style_change.set_active(config["override_style_change"])
-        self.plot_title.set_text(config["plot_title"])
-        self.plot_x_label.set_text(config["plot_x_label"])
-        self.plot_y_label.set_text(config["plot_y_label"])
-        self.plot_top_label.set_text(config["plot_top_label"])
-        self.plot_right_label.set_text(config["plot_right_label"])
+            self.other_handle_duplicates, preferences["handle_duplicates"])
+        self.other_hide_unselected.set_active(preferences["hide_unselected"])
+        self.override_style_change.set_active(
+            preferences["override_style_change"])
+        self.plot_title.set_text(preferences["plot_title"])
+        self.plot_x_label.set_text(preferences["plot_x_label"])
+        self.plot_y_label.set_text(preferences["plot_y_label"])
+        self.plot_top_label.set_text(preferences["plot_top_label"])
+        self.plot_right_label.set_text(preferences["plot_right_label"])
         utilities.set_chooser(
-            self.plot_x_scale, config["plot_x_scale"])
+            self.plot_x_scale, preferences["plot_x_scale"])
         utilities.set_chooser(
-            self.plot_y_scale, config["plot_y_scale"])
+            self.plot_y_scale, preferences["plot_y_scale"])
         utilities.set_chooser(
-            self.plot_top_scale, config["plot_top_scale"])
+            self.plot_top_scale, preferences["plot_top_scale"])
         utilities.set_chooser(
-            self.plot_right_scale, config["plot_right_scale"])
+            self.plot_right_scale, preferences["plot_right_scale"])
         utilities.set_chooser(
-            self.plot_x_position, config["plot_x_position"])
+            self.plot_x_position, preferences["plot_x_position"])
         utilities.set_chooser(
-            self.plot_y_position, config["plot_y_position"])
+            self.plot_y_position, preferences["plot_y_position"])
         utilities.set_chooser(
             self.plot_legend_position,
-            config["plot_legend_position"].capitalize())
-        self.plot_legend.set_enable_expansion(config["plot_legend"])
+            preferences["plot_legend_position"].capitalize())
+        self.plot_legend.set_enable_expansion(preferences["plot_legend"])
         self.plot_use_custom_style.set_enable_expansion(
-            config["plot_use_custom_style"])
+            preferences["plot_use_custom_style"])
         utilities.set_chooser(
-            self.plot_custom_style, config["plot_custom_style"])
+            self.plot_custom_style, preferences["plot_custom_style"])
 
-    def apply_configuration(self):
-        config = self.props.application.preferences.config
-        import_params = \
-            self.props.application.preferences.import_params["columns"]
-        import_params["delimiter"] = self.import_delimiter.get_text()
-        import_params["separator"] = \
+    def apply(self):
+        preferences = self.props.application.preferences
+        columns_params = preferences["import_params"]["columns"]
+        columns_params["delimiter"] = self.import_delimiter.get_text()
+        columns_params["separator"] = \
             utilities.get_selected_chooser_item(self.import_separator)
-        import_params["column_x"] = int(self.import_column_x.get_value())
-        import_params["column_y"] = int(self.import_column_y.get_value())
-        import_params["skip_rows"] = int(self.import_skip_rows.get_value())
-        config["addequation_equation"] = self.addequation_equation.get_text()
-        config["addequation_x_start"] = self.addequation_x_start.get_text()
-        config["addequation_x_stop"] = self.addequation_x_stop.get_text()
-        config["addequation_step_size"] = self.addequation_step_size.get_text()
-        config["clipboard_length"] = int(self.clipboard_length.get_value())
-        config["export_figure_dpi"] = int(self.export_figure_dpi.get_value())
+        columns_params["column_x"] = int(self.import_column_x.get_value())
+        columns_params["column_y"] = int(self.import_column_y.get_value())
+        columns_params["skip_rows"] = int(self.import_skip_rows.get_value())
+        preferences["addequation_equation"] = \
+            self.addequation_equation.get_text()
+        preferences["addequation_x_start"] = \
+            self.addequation_x_start.get_text()
+        preferences["addequation_x_stop"] = \
+            self.addequation_x_stop.get_text()
+        preferences["addequation_step_size"] = \
+            self.addequation_step_size.get_text()
+        preferences["clipboard_length"] = self.clipboard_length.get_value()
+        preferences["export_figure_dpi"] = self.export_figure_dpi.get_value()
         filetype_name = \
             utilities.get_selected_chooser_item(self.export_figure_filetype)
         filetypes = \
@@ -198,44 +217,45 @@ class PreferencesWindow(Adw.PreferencesWindow):
         for name, formats in filetypes.items():
             if name == filetype_name:
                 export_figure_filetyope = formats[0]
-        config["export_figure_filetype"] = export_figure_filetyope
-        config["export_figure_transparent"] = \
+        preferences["export_figure_filetype"] = export_figure_filetyope
+        preferences["export_figure_transparent"] = \
             self.export_figure_transparent.get_active()
-        config["action_center_data"] = \
+        preferences["action_center_data"] = \
             utilities.get_selected_chooser_item(self.action_center_data)
-        config["handle_duplicates"] = \
+        preferences["handle_duplicates"] = \
             utilities.get_selected_chooser_item(self.other_handle_duplicates)
-        config["hide_unselected"] = self.other_hide_unselected.get_active()
-        config["override_style_change"] = \
+        preferences["hide_unselected"] = \
+            self.other_hide_unselected.get_active()
+        preferences["override_style_change"] = \
             self.override_style_change.get_active()
-        config["plot_title"] = self.plot_title.get_text()
-        config["plot_x_label"] = self.plot_x_label.get_text()
-        config["plot_y_label"] = self.plot_y_label.get_text()
-        config["plot_top_label"] = self.plot_top_label.get_text()
-        config["plot_right_label"] = self.plot_right_label.get_text()
-        config["plot_x_scale"] = \
+        preferences["plot_title"] = self.plot_title.get_text()
+        preferences["plot_x_label"] = self.plot_x_label.get_text()
+        preferences["plot_y_label"] = self.plot_y_label.get_text()
+        preferences["plot_top_label"] = self.plot_top_label.get_text()
+        preferences["plot_right_label"] = self.plot_right_label.get_text()
+        preferences["plot_x_scale"] = \
             utilities.get_selected_chooser_item(self.plot_x_scale)
-        config["plot_y_scale"] = \
+        preferences["plot_y_scale"] = \
             utilities.get_selected_chooser_item(self.plot_y_scale)
-        config["plot_top_scale"] = \
+        preferences["plot_top_scale"] = \
             utilities.get_selected_chooser_item(self.plot_top_scale)
-        config["plot_right_scale"] = \
+        preferences["plot_right_scale"] = \
             utilities.get_selected_chooser_item(self.plot_right_scale)
-        config["plot_x_position"] = \
+        preferences["plot_x_position"] = \
             utilities.get_selected_chooser_item(self.plot_x_position)
-        config["plot_y_position"] = \
+        preferences["plot_y_position"] = \
             utilities.get_selected_chooser_item(self.plot_y_position)
-        config["plot_legend"] = self.plot_legend.get_enable_expansion()
-        config["plot_legend_position"] = \
+        preferences["plot_legend"] = self.plot_legend.get_enable_expansion()
+        preferences["plot_legend_position"] = \
             utilities.get_selected_chooser_item(
                 self.plot_legend_position).lower()
-        config["plot_use_custom_style"] = \
+        preferences["plot_use_custom_style"] = \
             self.plot_use_custom_style.get_enable_expansion()
-        config["plot_custom_style"] = \
+        preferences["plot_custom_style"] = \
             utilities.get_selected_chooser_item(self.plot_custom_style)
 
     @Gtk.Template.Callback()
     def on_close(self, _):
-        self.apply_configuration()
-        self.props.application.preferences.save_config()
+        self.apply()
+        self.props.application.preferences.save()
         graphs.refresh(self.props.application)

@@ -21,7 +21,7 @@ def add(self):
     self.clipboard_pos = -1
     self.datadict_clipboard.append(copy.deepcopy(self.datadict))
     if len(self.datadict_clipboard) > \
-            int(self.preferences.config["clipboard_length"]) + 1:
+            int(self.preferences["clipboard_length"]) + 1:
         self.datadict_clipboard = \
             self.datadict_clipboard[1:]
 
