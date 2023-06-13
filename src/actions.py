@@ -117,11 +117,9 @@ def open_project_action(_action, _target, self):
 
 
 def delete_selected_action(_action, _target, self):
-    selected_keys = [key for key, item in self.datadict.items()
-                     if item.selected]
-    for key in selected_keys:
-        graphs.delete_item(self, key, True)
-
+    for item in self.datadict.copy().values():
+        if item.selected:
+            graphs.delete_item(self, item.key, True)
 
 def translate_x_action(_action, _target, self):
     win = self.main_window
