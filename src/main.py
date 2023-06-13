@@ -60,6 +60,7 @@ class GraphsApplication(Adw.Application):
             ("select_none", ["<primary><shift>A"]),
             ("undo", ["<primary>Z"]),
             ("redo", ["<primary><shift>Z"]),
+            ("optimize_limits", ["<primary>L"]),
             ("restore_view", ["<primary>R"]),
             ("view_back", ["<alt>Z"]),
             ("view_forward", ["<alt><shift>Z"]),
