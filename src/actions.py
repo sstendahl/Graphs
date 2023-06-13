@@ -118,7 +118,7 @@ def open_project_action(_action, _target, self):
 
 def delete_selected_action(_action, _target, self):
     selected_keys = [key for key, item in self.datadict.items()
-        if item.selected]
+                     if item.selected]
     for key in selected_keys:
         graphs.delete_item(self, key, True)
 
