@@ -30,9 +30,9 @@ class EditItemWindow(Adw.PreferencesWindow):
         utilities.populate_chooser(self.markers, sorted(misc.MARKERS.keys()))
         self.load_values()
         utilities.populate_chooser(self.item_selector, names)
-
-        self.item_selector.set_selected(names.index(self.item.name))
+        self.item_selector.set_selected(names.index(item.name))
         self.set_transient_for(self.props.application.main_window)
+        self.connect("close-request", self.on_close)
         self.present()
 
     def on_close(self, *_args):
