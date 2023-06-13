@@ -111,6 +111,11 @@ def get_all_names(self):
     return [item.name for item in self.datadict.values()]
 
 
+def get_all_keys(self):
+    """Get a list of all item keys present in the datadict dictionary"""
+    return [item.key for item in self.datadict.values()]
+
+
 def get_dict_by_value(dictionary, value):
     """Return the key associated with the given value in the dictionary"""
     for key, dict_value in dictionary.items():

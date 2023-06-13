@@ -24,17 +24,18 @@ class EditItemWindow(Adw.PreferencesWindow):
         super().__init__(application=application)
         self.item = item
         names = utilities.get_all_names(self.props.application)
+        keys = utilities.get_all_keys(self.props.application)
         utilities.populate_chooser(self.plot_x_position, misc.X_POSITIONS)
         utilities.populate_chooser(self.plot_y_position, misc.Y_POSITIONS)
         utilities.populate_chooser(self.linestyle, misc.LINESTYLES)
         utilities.populate_chooser(self.markers, sorted(misc.MARKERS.keys()))
         self.load_values()
         utilities.populate_chooser(self.item_selector, names)
-
-        self.item_selector.set_selected(names.index(self.item.name))
+        self.item_selector.set_selected(keys.index(item.key))
         self.set_transient_for(self.props.application.main_window)
         self.present()
 
+    @Gtk.Template.Callback()
     def on_close(self, *_args):
         self.apply()
 
