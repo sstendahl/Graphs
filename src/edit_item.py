@@ -32,9 +32,9 @@ class EditItemWindow(Adw.PreferencesWindow):
         utilities.populate_chooser(self.item_selector, names)
         self.item_selector.set_selected(names.index(item.name))
         self.set_transient_for(self.props.application.main_window)
-        self.connect("close-request", self.on_close)
         self.present()
 
+    @Gtk.Template.Callback()
     def on_close(self, *_args):
         self.apply()
 
