@@ -55,7 +55,6 @@ class GraphsApplication(Adw.Application):
             ("preferences", ["<primary>p"]),
             ("plot_settings", ["<primary><shift>P"]),
             ("add_data", ["<primary>N"]),
-            ("add_data_advanced", ["<primary><shift>N"]),
             ("add_equation", ["<primary><alt>N"]),
             ("select_all", ["<primary>A"]),
             ("select_none", ["<primary><shift>A"]),

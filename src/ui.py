@@ -48,11 +48,11 @@ def reload_item_menu(self):
         self.main_window.item_list.append(ItemBox(self, item))
 
 
-def add_data_dialog(self, advanced=False):
+def add_data_dialog(self):
     def on_response(dialog, response):
         with contextlib.suppress(GLib.GError):
             file_import.prepare_import(
-                self, dialog.open_multiple_finish(response), advanced)
+                self, dialog.open_multiple_finish(response))
     dialog = Gtk.FileDialog()
     dialog.open_multiple(self.main_window, None, on_response)
 
