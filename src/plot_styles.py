@@ -382,7 +382,7 @@ class PlotStylesWindow(Adw.Window):
         for style, file in \
                 sorted(get_user_styles(self.props.application).items()):
             box = StyleBox(self, style)
-            if not custom_style and \
+            if custom_style and \
                     not file.equal(
                         get_preferred_style(self.props.application)):
                 box.check_mark.hide()
