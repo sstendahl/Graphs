@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 project('graphs',
-          version: '1.5.3',
+          version: '1.6.0',
     meson_version: '>= 0.59.0',
   default_options: [ 'warning_level=2', 'werror=false', ],
 )
