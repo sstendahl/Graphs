@@ -9,9 +9,10 @@
         <ul>
 	  <li>Graphs now always follows the preset system style, unless custom style is set</li>
 	  <li>Action dialogs have been changed to follow the GNOME HIG.</li>
+	  <li>Regular and advanced import have been merged, offering a single method to import data</li>
 	  <li>Labels are now set as an item attribute when loading a new data set with headers, data will be plotted on a new axis when different data types are added.</li>
 	  <li>Axis limits are now persistent when saving and opening projects.</li>
-	  <li>The plot limits are now reset less often when not needed</li>
+	  <li>The axis limits are now reset more intelligently, resulting in fewer unneeded resets</li>
 	  <li>Graphs now uses GFile when handling data and figures</li>
 	  <li>Multiple refactors under the hood</li>
         </ul>
