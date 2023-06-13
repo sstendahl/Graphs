@@ -121,6 +121,7 @@ def delete_selected_action(_action, _target, self):
         if item.selected:
             graphs.delete_item(self, item.key, True)
 
+
 def translate_x_action(_action, _target, self):
     win = self.main_window
     try:
