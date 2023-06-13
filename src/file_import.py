@@ -11,18 +11,17 @@ from graphs import file_io, graphs, misc, utilities
 IMPORT_MODES = ["project", "xrdml", "xry", "columns"]
 
 
-def prepare_import(self, files, advanced):
+def prepare_import(self, files):
     import_dict = {mode: [] for mode in IMPORT_MODES}
     for file in files:
         import_dict[guess_import_mode(file)].append(file)
-    if advanced:
-        modes = []
-        for mode, files in import_dict.items():
-            if files:
-                modes.append(mode)
-        if modes:
-            ImportWindow(self, modes, import_dict)
-            return
+    modes = []
+    for mode, files in import_dict.items():
+        if files:
+            modes.append(mode)
+    if modes:
+        ImportWindow(self, modes, import_dict)
+        return
     prepare_import_finish(self, import_dict)
 
 

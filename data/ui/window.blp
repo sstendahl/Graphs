@@ -15,10 +15,10 @@ template $GraphsWindow : Adw.ApplicationWindow {
       }
       Box {
         visible: bind-property sidebar_flap.folded inverted;
-        Adw.SplitButton add_button {
+        MenuButton add_button {
           icon-name: "list-add-symbolic";
-          action-name: "app.add_data";
           tooltip-text: _("Add new data");
+          always-show-arrow: true;
           menu-model: add_data_menu;
         }
         Separator {styles ["spacer"]}
@@ -73,11 +73,11 @@ template $GraphsWindow : Adw.ApplicationWindow {
           margin-bottom: 6;
           margin-start: 6;
           margin-end: 6;
-          Adw.SplitButton {
+          MenuButton {
             icon-name: bind add_button.icon-name;
-            action-name: bind add_button.action-name;
             tooltip-text: bind add_button.tooltip-text;
             menu-model: bind add_button.menu-model;
+            always-show-arrow: true;
             styles ["flat"]
           }
           Separator {styles ["spacer"]}
@@ -510,7 +510,8 @@ menu primary_menu {
 menu add_data_menu {
   section {
     item (_("Add Data from File"), "app.add_data")
-    item (_("Add Data from File (Advanced)"), "app.add_data_advanced")
+  }
+  section {
     item (_("Add Data from Equation"), "app.add_equation")
   }
 }
@@ -523,6 +524,7 @@ menu view_menu {
     item (_("Restore View"), "app.restore_view")
     item (_("Previous View"), "app.view_back")
     item (_("Next View"), "app.view_forward")
+    item (_("Optimize Limits"), "app.optimize_limits")
   }
   section {
     submenu {

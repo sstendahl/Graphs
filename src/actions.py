@@ -3,7 +3,7 @@
 import logging
 from gettext import gettext as _
 
-from graphs import clipboard, graphs, operations, ui
+from graphs import clipboard, graphs, operations, plotting_tools, ui
 from graphs.add_equation import AddEquationWindow
 from graphs.export_figure import ExportFigureWindow
 from graphs.misc import InteractionMode
@@ -38,10 +38,6 @@ def add_data_action(_action, _target, self):
     ui.add_data_dialog(self)
 
 
-def add_data_advanced_action(_action, _target, self):
-    ui.add_data_dialog(self, True)
-
-
 def add_equation_action(_action, _target, self):
     AddEquationWindow(self)
 
@@ -72,6 +68,11 @@ def undo_action(_action, _target, self):
 
 def redo_action(_action, _target, self):
     clipboard.redo(self)
+
+
+def optimize_limits_action(_action, _target, self):
+    plotting_tools.optimize_limits(self)
+    graphs.refresh(self)
 
 
 def restore_view_action(_action, _target, self):
