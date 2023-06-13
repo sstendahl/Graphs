@@ -102,7 +102,6 @@ def populate_chooser(chooser, chooser_list, translate=True):
     chooser.set_model(model)
 
 
-
 def get_selected_chooser_item(chooser):
     return chooser.untranslated_items[int(chooser.get_selected())]
 

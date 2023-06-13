@@ -21,11 +21,11 @@ class AddEquationWindow(Adw.Window):
     def __init__(self, application):
         super().__init__(application=application)
         self.set_transient_for(self.props.application.main_window)
-        config = self.props.application.preferences.config
-        self.equation.set_text(config["addequation_equation"])
-        self.x_start.set_text(config["addequation_x_start"])
-        self.x_stop.set_text(config["addequation_x_stop"])
-        self.step_size.set_text(config["addequation_step_size"])
+        preferences = self.props.application.preferences
+        self.equation.set_text(preferences["addequation_equation"])
+        self.x_start.set_text(preferences["addequation_x_start"])
+        self.x_stop.set_text(preferences["addequation_x_stop"])
+        self.step_size.set_text(preferences["addequation_step_size"])
         self.present()
 
     @Gtk.Template.Callback()

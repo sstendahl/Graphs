@@ -5,22 +5,22 @@ from enum import Enum
 class PlotSettings:
     """
     The plot-related settings for the current session. The default values are
-    retreived from the config file through preferences.
+    retreived from the preferencess file.
     """
-    def __init__(self, config):
-        self.xlabel = config["plot_x_label"]
-        self.right_label = config["plot_right_label"]
-        self.top_label = config["plot_top_label"]
-        self.ylabel = config["plot_y_label"]
-        self.xscale = config["plot_x_scale"]
-        self.yscale = config["plot_y_scale"]
-        self.right_scale = config["plot_right_scale"]
-        self.top_scale = config["plot_top_scale"]
-        self.title = config["plot_title"]
-        self.legend = config["plot_legend"]
-        self.use_custom_plot_style = config["plot_use_custom_style"]
-        self.legend_position = config["plot_legend_position"]
-        self.custom_plot_style = config["plot_custom_style"]
+    def __init__(self, preferences):
+        self.xlabel = preferences["plot_x_label"]
+        self.right_label = preferences["plot_right_label"]
+        self.top_label = preferences["plot_top_label"]
+        self.ylabel = preferences["plot_y_label"]
+        self.xscale = preferences["plot_x_scale"]
+        self.yscale = preferences["plot_y_scale"]
+        self.right_scale = preferences["plot_right_scale"]
+        self.top_scale = preferences["plot_top_scale"]
+        self.title = preferences["plot_title"]
+        self.legend = preferences["plot_legend"]
+        self.use_custom_plot_style = preferences["plot_use_custom_style"]
+        self.legend_position = preferences["plot_legend_position"]
+        self.custom_plot_style = preferences["plot_custom_style"]
         self.min_bottom = 0
         self.max_bottom = 1
         self.min_top = 0
