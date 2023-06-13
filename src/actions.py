@@ -38,10 +38,6 @@ def add_data_action(_action, _target, self):
     ui.add_data_dialog(self)
 
 
-def add_data_advanced_action(_action, _target, self):
-    ui.add_data_dialog(self, True)
-
-
 def add_equation_action(_action, _target, self):
     AddEquationWindow(self)
 
