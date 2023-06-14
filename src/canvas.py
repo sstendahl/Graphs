@@ -106,8 +106,8 @@ class Canvas(FigureCanvas):
             for axis in [self.right_axis, self.top_right_axis]:
                 axis.set_ylim(plot_settings.min_right, plot_settings.max_right)
         except ValueError:
-            message =_("Error setting limits, one of the values was "\
-                "probably infinite")
+            message = _("Error setting limits, one of the values was "
+                        "probably infinite")
             self.application.main_window.add_toast(message)
             logging.exception(message)
 
