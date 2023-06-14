@@ -22,7 +22,7 @@ class ExportFigureWindow(Adw.Window):
         self.transparent.set_active(preferences["export_figure_transparent"])
         self.items = \
             application.canvas.get_supported_filetypes_grouped().items()
-        self.dpi.set_value(preferences["export_figure_dpi"])
+        self.dpi.set_value(int(preferences["export_figure_dpi"]))
         file_formats = []
         default_format = None
         for name, formats in self.items:
