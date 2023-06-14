@@ -69,7 +69,8 @@ def save_project_dialog(self):
                 self.datadict_clipboard, self.clipboard_pos, self.version)
     dialog = Gtk.FileDialog()
     dialog.set_filters(
-        utilities.create_file_filters([(_("Graphs Project File"), ["graphs"])]))
+        utilities.create_file_filters([(_("Graphs Project File"),
+                                      ["graphs"])]))
     dialog.set_initial_name("project.graphs")
     dialog.save(self.main_window, None, on_response)
 
@@ -81,7 +82,8 @@ def open_project_dialog(self):
             graphs.open_project(self, file)
     dialog = Gtk.FileDialog()
     dialog.set_filters(
-        utilities.create_file_filters([(_("Graphs Project File"), ["graphs"])]))
+        utilities.create_file_filters([(_("Graphs Project File"),
+                                      ["graphs"])]))
     dialog.open(self.main_window, None, on_response)
 
 
