@@ -98,7 +98,7 @@ class Canvas(FigureCanvas):
         try:
             for axis in [self.axis, self.right_axis]:
                 axis.set_xlim(plot_settings.min_bottom,
-                			  plot_settings.max_bottom)
+                              plot_settings.max_bottom)
             for axis in [self.top_left_axis, self.top_right_axis]:
                 axis.set_xlim(plot_settings.min_top, plot_settings.max_top)
             for axis in [self.axis, self.top_left_axis]:
@@ -106,10 +106,10 @@ class Canvas(FigureCanvas):
             for axis in [self.right_axis, self.top_right_axis]:
                 axis.set_ylim(plot_settings.min_right, plot_settings.max_right)
         except ValueError:
-        	message =_("Error setting limits, one of the values was "\
-        			   "probably infinite")
-        	self.application.main_window.add_toast(message)
-        	logging.exception(message)
+            message =_("Error setting limits, one of the values was "\
+                "probably infinite")
+            self.application.main_window.add_toast(message)
+            logging.exception(message)
 
 
     def apply_limits(self):
