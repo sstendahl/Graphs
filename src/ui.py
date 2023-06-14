@@ -54,6 +54,9 @@ def add_data_dialog(self):
             file_import.prepare_import(
                 self, dialog.open_multiple_finish(response))
     dialog = Gtk.FileDialog()
+    dialog.set_filters(utilities.create_file_filters([(_('ASCII files'),
+                       ['xy', 'dat', 'txt', 'csv']), (_('PANalytical XRDML'
+                       ), ['xrdml']), (_('Leybold xry'), ['xry'])]))
     dialog.open_multiple(self.main_window, None, on_response)
 
 
@@ -66,7 +69,7 @@ def save_project_dialog(self):
                 self.datadict_clipboard, self.clipboard_pos, self.version)
     dialog = Gtk.FileDialog()
     dialog.set_filters(
-        utilities.create_file_filters([(_("Graphs Project File"), "graphs")]))
+        utilities.create_file_filters([(_("Graphs Project File"), ["graphs"])]))
     dialog.set_initial_name("project.graphs")
     dialog.save(self.main_window, None, on_response)
 
@@ -78,7 +81,7 @@ def open_project_dialog(self):
             graphs.open_project(self, file)
     dialog = Gtk.FileDialog()
     dialog.set_filters(
-        utilities.create_file_filters([(_("Graphs Project File"), "graphs")]))
+        utilities.create_file_filters([(_("Graphs Project File"), ["graphs"])]))
     dialog.open(self.main_window, None, on_response)
 
 
@@ -106,7 +109,7 @@ def export_data_dialog(self):
         filename = f"{list(self.datadict.values())[0].name}.txt"
         dialog.set_initial_name(filename)
         dialog.set_filters(
-            utilities.create_file_filters([(_("Text Files"), "txt")]))
+            utilities.create_file_filters([(_("Text Files"), ["txt"])]))
         dialog.save(self.main_window, None, on_response)
 
 
