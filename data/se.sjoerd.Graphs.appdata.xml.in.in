@@ -47,6 +47,15 @@
     </screenshot>
   </screenshots>
   <releases>
+    <release version="1.6.1" data="2023-06-15">
+        <p>Minor patch with some bug fixes:</p>
+        <ul>
+	  <li>Fixed a bug all styles in the style manager had a checkmark if the system preffered style was used.</li>
+	  <li>Fixed a bug where the legend would not be removed from the graph when toggled off, until it was completely reloaded.</li>
+	  <li>Automatic axes limits are no longer rounded, which used to lead to problems with the scaling when using data span with a large amount of significant digits.</li>
+	  <li>Removed some shortcuts that were overlapping with typing a capital character, making it difficult to write a capital for the respective characters in titles and labels.</li>
+        </ul>
+    </release>
     <release version="1.6.0" date="2023-06-13">
       <description>
 	<p>New in Graphs:
