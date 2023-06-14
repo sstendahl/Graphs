@@ -61,6 +61,7 @@ class ExportFigureWindow(Adw.Window):
         dialog = Gtk.FileDialog()
         dialog.set_initial_name(f"{filename}.{file_suffix}")
         dialog.set_accept_label(_("Export"))
-        dialog.set_filters(utilities.create_file_filters([(fmt, [file_suffix])]))
+        dialog.set_filters(utilities.create_file_filters(
+            [(fmt, [file_suffix])]))
         dialog.save(application.main_window, None, on_response)
         self.destroy()
