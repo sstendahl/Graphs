@@ -229,10 +229,11 @@ def get_config_directory():
 
 def create_file_filters(filters, add_all=True):
     list_store = Gio.ListStore()
-    for name, suffix in filters:
+    for name, suffix_list in filters:
         file_filter = Gtk.FileFilter()
         file_filter.set_name(name)
-        file_filter.add_suffix(suffix)
+        for suffix in suffix_list:
+            file_filter.add_suffix(suffix)
         list_store.append(file_filter)
     if add_all:
         file_filter = Gtk.FileFilter()

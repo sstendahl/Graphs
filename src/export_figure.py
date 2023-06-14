@@ -42,7 +42,7 @@ class ExportFigureWindow(Adw.Window):
         file_suffix = None
         for name, formats in self.items:
             if name == fmt:
-                file_suffix = formats[0]
+                file_suffix = formats
         filename = Path(application.canvas.get_default_filename()).stem
         transparent = self.transparent.get_active()
 
@@ -52,15 +52,16 @@ class ExportFigureWindow(Adw.Window):
                 file, stream = Gio.File.new_tmp("graphs-XXXXXX")
                 stream.close()
                 application.canvas.figure.savefig(
-                    file.peek_path(), dpi=dpi, format=file_suffix,
+                    file.peek_path(), dpi=dpi, format=file_suffix[0],
                     transparent=transparent)
                 file.move(destination, Gio.FileCopyFlags(1), None)
                 application.main_window.add_toast(
                     _("Exported Figure"))
 
         dialog = Gtk.FileDialog()
-        dialog.set_initial_name(f"{filename}.{file_suffix}")
+        dialog.set_initial_name(f"{filename}.{file_suffix[0]}")
         dialog.set_accept_label(_("Export"))
-        dialog.set_filters(utilities.create_file_filters([(fmt, file_suffix)]))
+        dialog.set_filters(utilities.create_file_filters(
+            [(fmt, file_suffix)]))
         dialog.save(application.main_window, None, on_response)
         self.destroy()

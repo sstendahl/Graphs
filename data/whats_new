@@ -1,5 +1,6 @@
 	<p>New in Graphs:</p>
 	<ul>
+	  <li>Filters have been added for the "New Data" dialog.</li>
 	  <li>Data can now be opened directly from project files.</li>
 	  <li>Adds Dutch translation for Graphs.</li>
 	  <li>Adds Turkish translation for Graphs.</li>
