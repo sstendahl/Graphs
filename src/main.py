@@ -115,11 +115,11 @@ class GraphsApplication(Adw.Application):
         self.add_action(self.toggle_sidebar)
         self.set_accels_for_action("app.toggle_sidebar", ["F9"])
 
-        self.create_mode_action("mode_pan", ["<shift>P", "F1"],
+        self.create_mode_action("mode_pan", ["F1"],
                                 InteractionMode.PAN)
-        self.create_mode_action("mode_zoom", ["<shift>Z", "F2"],
+        self.create_mode_action("mode_zoom", ["F2"],
                                 InteractionMode.ZOOM)
-        self.create_mode_action("mode_select", ["<shift>S", "F3"],
+        self.create_mode_action("mode_select", ["F3"],
                                 InteractionMode.SELECT)
 
     def do_activate(self):
