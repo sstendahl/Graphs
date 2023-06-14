@@ -215,10 +215,10 @@ class Canvas(FigureCanvas):
                     new_lines, labels,
                     loc=self.application.plot_settings.legend_position,
                     frameon=True, reverse=True)
-            else:
-                legend = self.top_right_axis.get_legend()
-                if legend is not None:
-                    legend.remove()
+        else:
+            legend = self.top_right_axis.get_legend()
+            if legend is not None:
+                legend.remove()
 
 
 class DummyToolbar(NavigationToolbar2):
