@@ -208,8 +208,10 @@ class PreferencesWindow(Adw.PreferencesWindow):
             self.addequation_x_stop.get_text()
         preferences["addequation_step_size"] = \
             self.addequation_step_size.get_text()
-        preferences["clipboard_length"] = self.clipboard_length.get_value()
-        preferences["export_figure_dpi"] = self.export_figure_dpi.get_value()
+        preferences["clipboard_length"] = \
+            int(self.clipboard_length.get_value())
+        preferences["export_figure_dpi"] = \
+            int(self.export_figure_dpi.get_value())
         filetype_name = \
             utilities.get_selected_chooser_item(self.export_figure_filetype)
         filetypes = \
