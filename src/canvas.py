@@ -217,7 +217,7 @@ class Canvas(FigureCanvas):
                     frameon=True, reverse=True)
                 return
         if self.top_right_axis.get_legend() is not None:
-            legend.remove()
+            self.top_right_axis.get_legend().remove()
 
 
 class DummyToolbar(NavigationToolbar2):
