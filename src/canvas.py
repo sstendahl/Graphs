@@ -216,8 +216,7 @@ class Canvas(FigureCanvas):
                     loc=self.application.plot_settings.legend_position,
                     frameon=True, reverse=True)
                 return
-        legend = self.top_right_axis.get_legend()
-        if legend is not None:
+        if self.top_right_axis.get_legend() is not None:
             legend.remove()
 
 
