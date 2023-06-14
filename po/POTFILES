@@ -5,6 +5,7 @@ data/se.sjoerd.Graphs.gschema.xml.in
 data/ui/add_equation_window.blp
 data/ui/add_style.blp
 data/ui/edit_item.blp
+data/ui/dialogs.blp
 data/ui/export_figure.blp
 data/ui/help_overlay.blp
 data/ui/import.blp
