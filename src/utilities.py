@@ -14,16 +14,6 @@ def remove_unused_config_keys(config, template):
     return config
 
 
-def sig_fig_round(number, digits):
-    """Round a number to the specified number of significant digits."""
-    try:
-        # Convert to scientific notation, and get power
-        power = "{:e}".format(float(number)).split("e")[1]
-    except IndexError:
-        return None
-    return round(float(number), -(int(power) - digits + 1))
-
-
 def change_key_position(dictionary, key1, key2):
     """Change key position of key2 to that of key1."""
     keys = list(dictionary.keys())

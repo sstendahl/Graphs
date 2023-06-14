@@ -46,11 +46,6 @@ def optimize_limits(self):
         elif direction in ["left", "right"]:
             min_all *= 0.5
             max_all *= 2
-        try:
-            min_all = utilities.sig_fig_round(min_all, 3)
-            max_all = utilities.sig_fig_round(max_all, 3)
-        except ValueError:
-            pass
         match direction:
             case "bottom":
                 self.plot_settings.min_bottom = min_all
