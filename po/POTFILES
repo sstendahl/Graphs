@@ -19,7 +19,6 @@ data/ui/style_color_box.blp
 data/ui/transform_window.blp
 data/ui/window.blp
 src/actions.py
-src/add_data_advanced.py
 src/add_equation.py
 src/calculation.py
 src/canvas.py
