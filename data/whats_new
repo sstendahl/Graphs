@@ -1,5 +1,6 @@
 	<p>New in Graphs:</p>
 	<ul>
+	  <li>The "Add data from file" dialog now has filters to make it easier to find the required files.</li>
 	  <li>Data can now be opened directly from project files.</li>
 	  <li>Adds Dutch translation for Graphs.</li>
 	  <li>Adds Turkish translation for Graphs.</li>
@@ -18,12 +19,13 @@
         </ul>
         <p>Bugfixes:</p>
         <ul>
+	  <li>Fixed a bug where "Export Figure" and "Preferences" could not be loaded</li>
 	  <li>Fixed an upstream bug in Matplotlib where part of the Graph would be cut off at scaled resolutions.</li>
 	  <li>Fixed a bug where the legend styles could not be deleted</li>
 	  <li>Fixed a bug where the legend styles could not be reset to defaults</li>
 	  <li>Fixed a bug where the legend would remain when all data is removed</li>
 	  <li>Fixed a bug where Graphs would crash when the name of an item is changed and a new item is selected from the dropdown.</li>
-	  <li>Fixed a bug all styles in the style manager had a checkmark if the system preffered style was used.</li>
+	  <li>Fixed a bug all styles in the style manager had a check-mark if the system preferred style was used.</li>
 	  <li>Fixed a bug where the legend would not be removed from the graph when toggled off, until it was completely reloaded.</li>
 	  <li>Automatic axes limits are no longer rounded, which used to lead to problems with the scaling when using data span with a large amount of significant digits.</li>
 	  <li>Removed some shortcuts that were overlapping with typing a capital character, making it difficult to write a capital for the respective characters in titles and labels.</li>
