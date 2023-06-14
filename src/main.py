@@ -117,7 +117,7 @@ class GraphsApplication(Adw.Application):
 
         self.create_mode_action("mode_pan", ["F1"],
                                 InteractionMode.PAN)
-        self.create_mode_action("mode_zoom",  ["F2"],
+        self.create_mode_action("mode_zoom", ["F2"],
                                 InteractionMode.ZOOM)
         self.create_mode_action("mode_select", ["F3"],
                                 InteractionMode.SELECT)
