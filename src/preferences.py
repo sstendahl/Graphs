@@ -151,7 +151,7 @@ class PreferencesWindow(Adw.PreferencesWindow):
         self.addequation_x_stop.set_text(preferences["addequation_x_stop"])
         self.addequation_step_size.set_text(
             preferences["addequation_step_size"])
-        self.export_figure_dpi.set_value(preferences["export_figure_dpi"])
+        self.export_figure_dpi.set_value(int(preferences["export_figure_dpi"]))
         for name, formats in self.supported_filetypes.items():
             if preferences["export_figure_filetype"] in formats:
                 filetype = name
