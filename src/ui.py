@@ -58,8 +58,8 @@ def add_data_dialog(self):
         utilities.create_file_filters([
             (_("ASCII files"), ["xy", "dat", "txt", "csv"]),
             (_("PANalytical XRDML"), ["xrdml"]),
-            (_("Leybold xry"), ["xry"])
-        ])
+            (_("Leybold xry"), ["xry"]),
+        ]),
     )
     dialog.open_multiple(self.main_window, None, on_response)
 
