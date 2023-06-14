@@ -54,9 +54,9 @@ def add_data_dialog(self):
             file_import.prepare_import(
                 self, dialog.open_multiple_finish(response))
     dialog = Gtk.FileDialog()
-    dialog.set_filters(utilities.create_file_filters([(_('ASCII files'),
-                       ['xy', 'dat', 'txt', 'csv']), (_('PANalytical XRDML'
-                       ), ['xrdml']), (_('Leybold xry'), ['xry'])]))
+    dialog.set_filters(utilities.create_file_filters([(_("ASCII files"),
+                       ["xy", "dat", "txt", "csv"]), (_("PANalytical XRDML"
+                       ), ["xrdml"]), (_("Leybold xry"), ["xry"])]))
     dialog.open_multiple(self.main_window, None, on_response)
 
 
