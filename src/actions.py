@@ -76,12 +76,12 @@ def optimize_limits_action(_action, _target, self):
 
 
 def view_back_action(_action, _target, self):
-    self.canvas.dummy_toolbar.back()
+    self.canvas.toolbar.back()
     self.canvas.apply_limits()
 
 
 def view_forward_action(_action, _target, self):
-    self.canvas.dummy_toolbar.forward()
+    self.canvas.toolbar.forward()
     self.canvas.apply_limits()
 
 
