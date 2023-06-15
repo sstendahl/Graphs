@@ -60,14 +60,13 @@
     </release>
     <release version="1.6.0" date="2023-06-13">
       <description>
-	<p>New in Graphs:
+	<p>New in Graphs:</p>
 	<ul>
 	  <li>Data can now be opened directly from project files.</li>
 	  <li>Adds Dutch translation for Graphs.</li>
 	  <li>Adds Turkish translation for Graphs.</li>
 	  <li>Adds Swedish translation for Graphs.</li>
 	</ul>
-	</p>
         <p>Changes:</p>
         <ul>
 	  <li>Graphs now always follows the preset system style, unless custom style is set</li>
