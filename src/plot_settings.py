@@ -157,4 +157,5 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
             ui.reload_item_menu(self.props.application)
         else:
             self.props.application.canvas.load_limits()
+            self.props.application.canvas.dummy_toolbar.push_current()
             graphs.refresh(self.props.application)

@@ -7,6 +7,8 @@ class GraphsWindow(Adw.ApplicationWindow):
     __gtype_name__ = "GraphsWindow"
     undo_button = Gtk.Template.Child()
     redo_button = Gtk.Template.Child()
+    view_back_button = Gtk.Template.Child()
+    view_forward_button = Gtk.Template.Child()
     item_list = Gtk.Template.Child()
     sidebar_flap = Gtk.Template.Child()
     pan_button = Gtk.Template.Child()

@@ -1,8 +1,8 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 import logging
-from gettext import gettext as _
 import time
 from contextlib import nullcontext
+from gettext import gettext as _
 
 from gi.repository import Gtk
 
@@ -110,7 +110,6 @@ class Canvas(FigureCanvas):
                         "probably infinite")
             self.application.main_window.add_toast(message)
             logging.exception(message)
-
 
     def apply_limits(self):
         plot_settings = self.application.plot_settings
@@ -244,6 +243,19 @@ class DummyToolbar(NavigationToolbar2):
         self.canvas._rubberband_rect = None
         self.canvas.queue_draw()
 
+    # Overwritten function - do not change name
+    def push_current(self):
+        super().push_current()
+        self.canvas.apply_limits()
+
+    # Overwritten function - do not change name
+    def set_history_buttons(self):
+        self.canvas.application.main_window.view_back_button.set_sensitive(
+            self._nav_stack._pos > 0)
+        self.canvas.application.main_window.view_forward_button.set_sensitive(
+            self._nav_stack._pos < len(self._nav_stack._elements) - 1)
+
+    # Overwritten function - do not change name
     def save_figure(self):
         pass
 

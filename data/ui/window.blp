@@ -26,31 +26,40 @@ template $GraphsWindow : Adw.ApplicationWindow {
           action-name: "app.undo";
           icon-name: "edit-undo-symbolic";
           tooltip-text: _("Undo");
-          styles ["flat"]
         }
         Button redo_button {
           action-name: "app.redo";
           icon-name: "edit-redo-symbolic";
           tooltip-text: _("Redo");
-          styles ["flat"]
         }
       }
       [end]
+      MenuButton {
+        icon-name: "open-menu-symbolic";
+        menu-model: primary_menu;
+        tooltip-text: _("Open Application Menu");
+        primary: true;
+      }
+      [end]
       Box {
-        Adw.SplitButton view_menu_button {
+        visible: bind-property sidebar_flap.folded inverted;
+        Button view_back_button {
+          action-name: "app.view_back";
+          icon-name: "arrow1-left-symbolic";
+          tooltip-text: _("Previous View");
+        }
+        Button view_forward_button {
+          action-name: "app.view_forward";
+          icon-name: "arrow1-right-symbolic";
+          tooltip-text: _("Next View");
+        }
+        MenuButton view_menu_button {
           icon-name: "view-reveal-symbolic";
-          action-name: "app.restore_view";
-          tooltip-text: _("Restore View / View Options");
+          tooltip-text: _("View Menu");
+          always-show-arrow: true;
           menu-model: view_menu;
-          visible: bind-property sidebar_flap.folded inverted;
         }
         Separator {styles ["spacer"]}
-        MenuButton {
-          icon-name: "open-menu-symbolic";
-          menu-model: primary_menu;
-          tooltip-text: _("Open Application Menu");
-          primary: true;
-        }
       }
     }
     Adw.Flap sidebar_flap {
@@ -99,11 +108,26 @@ template $GraphsWindow : Adw.ApplicationWindow {
             hexpand: true;
             styles ["spacer"]
           }
-          Adw.SplitButton {
+          Button {
+            action-name: bind view_back_button.action-name;
+            icon-name: bind view_back_button.icon-name;
+            tooltip-text: bind view_back_button.tooltip-text;
+            sensitive: bind view_back_button.sensitive;
+            styles ["flat"]
+          }
+          Button {
+            action-name: bind view_forward_button.action-name;
+            icon-name: bind view_forward_button.icon-name;
+            tooltip-text: bind view_forward_button.tooltip-text;
+            sensitive: bind view_forward_button.sensitive;
+            styles ["flat"]
+          }
+          Separator {styles ["spacer"]}
+          MenuButton {
             icon-name: bind view_menu_button.icon-name;
-            action-name: bind view_menu_button.action-name;
             tooltip-text: bind view_menu_button.tooltip-text;
             menu-model: bind view_menu_button.menu-model;
+            always-show-arrow: true;
             styles ["flat"]
           }
         }
@@ -521,9 +545,6 @@ menu view_menu {
     item (_("Toggle Sidebar"), "app.toggle_sidebar")
   }
   section {
-    item (_("Restore View"), "app.restore_view")
-    item (_("Previous View"), "app.view_back")
-    item (_("Next View"), "app.view_forward")
     item (_("Optimize Limits"), "app.optimize_limits")
   }
   section {

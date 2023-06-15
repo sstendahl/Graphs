@@ -60,6 +60,7 @@ def optimize_limits(self):
                 self.plot_settings.min_right = min_all
                 self.plot_settings.max_right = max_all
     self.canvas.load_limits()
+    self.canvas.dummy_toolbar.push_current()
 
 
 def hide_unused_axes(self, canvas):
