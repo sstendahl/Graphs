@@ -18,25 +18,7 @@ def enable_data_dependent_buttons(self):
     for item in self.datadict.values():
         if item.selected and isinstance(item, Item):
             enabled = True
-    win = self.main_window
-    dependent_buttons = [
-        win.shift_vertically_button,
-        win.translate_x_button,
-        win.translate_y_button,
-        win.multiply_x_button,
-        win.multiply_y_button,
-        win.smooth_button,
-        win.fourier_button,
-        win.inverse_fourier_button,
-        win.normalize_button,
-        win.center_button,
-        win.derivative_button,
-        win.integral_button,
-        win.transform_button,
-        win.combine_button,
-    ]
-    for button in dependent_buttons:
-        button.set_sensitive(enabled)
+    self.main_window.shift_vertically_button.set_sensitive(enabled)
 
 
 def reload_item_menu(self):

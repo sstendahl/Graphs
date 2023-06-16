@@ -231,15 +231,16 @@ template $GraphsWindow : Adw.ApplicationWindow {
                       label: _("Shift");
                     }
                     tooltip-text: _("Shift all data vertically with respect to each other");
-                    action-name: "app.shift_vertically";
+                    clicked => $shift_vertically();
                   }
 
-                  Button normalize_button {
+                  Button {
                     margin-start: 5;
                     margin-end: 5;
                     margin-top: 5;
                     margin-bottom: 5;
                     hexpand: true;
+                    sensitive: bind shift_vertically_button.sensitive;
                     layout {
                       column: 1;
                       row: 0;
@@ -250,15 +251,16 @@ template $GraphsWindow : Adw.ApplicationWindow {
                       label: _("Normalize");
                     }
                     tooltip-text: _("Normalize Data");
-                    action-name: "app.normalize";
+                    clicked => $normalize();
                   }
 
-                  Button smooth_button {
+                  Button {
                     margin-start: 5;
                     margin-end: 5;
                     margin-top: 5;
                     margin-bottom: 5;
                     hexpand: true;
+                    sensitive: bind shift_vertically_button.sensitive;
                     layout {
                       column: 0;
                       row: 1;
@@ -269,15 +271,16 @@ template $GraphsWindow : Adw.ApplicationWindow {
                       label: _("Smoothen");
                     }
                     tooltip-text: _("Smoothen the Data");
-                    action-name: "app.smoothen";
+                    clicked => $smoothen();
                   }
 
-                  Button center_button {
+                  Button {
                     margin-start: 5;
                     margin-end: 5;
                     margin-top: 5;
                     margin-bottom: 5;
                     hexpand: true;
+                    sensitive: bind shift_vertically_button.sensitive;
                     layout {
                       column: 1;
                       row: 1;
@@ -288,15 +291,16 @@ template $GraphsWindow : Adw.ApplicationWindow {
                       label: _("Center");
                     }
                     tooltip-text: _("Center the data");
-                    action-name: "app.center";
+                    clicked => $center();
                   }
 
-                  Button combine_button {
+                  Button {
                     margin-start: 5;
                     margin-end: 5;
                     margin-top: 5;
                     margin-bottom: 5;
                     hexpand: true;
+                    sensitive: bind shift_vertically_button.sensitive;
                     layout {
                       column: 0;
                       row: 2;
@@ -307,7 +311,7 @@ template $GraphsWindow : Adw.ApplicationWindow {
                       label: _("Combine");
                     }
                     tooltip-text: _("Combine");
-                    action-name: "app.combine";
+                    clicked => $combine();
                   }
 
                   Button cut_button {
@@ -316,6 +320,7 @@ template $GraphsWindow : Adw.ApplicationWindow {
                     margin-top: 5;
                     margin-bottom: 5;
                     hexpand: true;
+                    sensitive: bind shift_vertically_button.sensitive;
                     layout {
                       column: 1;
                       row: 2;
@@ -326,7 +331,7 @@ template $GraphsWindow : Adw.ApplicationWindow {
                       label: _("Cut");
                     }
                     tooltip-text: _("Cut selected Data");
-                    action-name: "app.cut_selected";
+                    clicked => $cut();
                   }
                 }
               }
@@ -336,9 +341,10 @@ template $GraphsWindow : Adw.ApplicationWindow {
                 Adw.EntryRow translate_x_entry {
                   max-width-chars: 6;
                   title: _("Translate X-Axis");
-                  Button translate_x_button {
+                  Button {
                     valign: center;
-                    action-name: "app.translate_x";
+                    sensitive: bind shift_vertically_button.sensitive;
+                    clicked => $translate_x();
                     Adw.ButtonContent {
                       icon-name: "horizontal-arrows-symbolic";
                       label: _("Translate");
@@ -349,9 +355,10 @@ template $GraphsWindow : Adw.ApplicationWindow {
                 Adw.EntryRow translate_y_entry {
                   max-width-chars: 6;
                   title: _("Translate Y-Axis");
-                  Button translate_y_button {
+                  Button {
                     valign: center;
-                    action-name: "app.translate_y";
+                    sensitive: bind shift_vertically_button.sensitive;
+                    clicked => $translate_y();
                     Adw.ButtonContent {
                       icon-name: "vertical-arrows-symbolic";
                       label: _("Translate");
@@ -362,9 +369,10 @@ template $GraphsWindow : Adw.ApplicationWindow {
                 Adw.EntryRow multiply_x_entry {
                   max-width-chars: 6;
                   title: _("Multiply X-Axis");
-                  Button multiply_x_button {
+                  Button {
                     valign: center;
-                    action-name: "app.multiply_x";
+                    sensitive: bind shift_vertically_button.sensitive;
+                    clicked => $multiply_x();
                     Adw.ButtonContent {
                       icon-name: "horizontal-arrows-symbolic";
                       label: _("Multiply");
@@ -375,9 +383,10 @@ template $GraphsWindow : Adw.ApplicationWindow {
                 Adw.EntryRow multiply_y_entry {
                   max-width-chars: 6;
                   title: _("Multiply Y-Axis");
-                  Button multiply_y_button {
+                  Button {
                     valign: center;
-                    action-name: "app.multiply_y";
+                    sensitive: bind shift_vertically_button.sensitive;
+                    clicked => $multiply_y();
                     Adw.ButtonContent {
                       icon-name: "vertical-arrows-symbolic";
                       label: _("Multiply");
@@ -389,12 +398,13 @@ template $GraphsWindow : Adw.ApplicationWindow {
               Adw.ExpanderRow {
                 title: _("Mathematical Operations");
                 Grid {
-                  Button derivative_button {
+                  Button {
                     margin-start: 5;
                     margin-end: 5;
                     margin-top: 5;
                     margin-bottom: 5;
                     hexpand: true;
+                    sensitive: bind shift_vertically_button.sensitive;
                     layout {
                       column: 0;
                       row: 0;
@@ -405,15 +415,16 @@ template $GraphsWindow : Adw.ApplicationWindow {
                       label: _("Derivative");
                     }
                     tooltip-text: _("Get the derivative of the data");
-                    action-name: "app.get_derivative";
+                    clicked => $derivative();
                   }
 
-                  Button integral_button {
+                  Button {
                     margin-start: 5;
                     margin-end: 5;
                     margin-top: 5;
                     margin-bottom: 5;
                     hexpand: true;
+                    sensitive: bind shift_vertically_button.sensitive;
                     layout {
                       column: 1;
                       row: 0;
@@ -424,15 +435,16 @@ template $GraphsWindow : Adw.ApplicationWindow {
                       label: _("Integral");
                     }
                     tooltip-text: _("Get the indefinite integral of the data");
-                    action-name: "app.get_integral";
+                    clicked => $integral();
                   }
 
-                  Button fourier_button {
+                  Button {
                     margin-start: 5;
                     margin-end: 5;
                     margin-top: 5;
                     margin-bottom: 5;
                     hexpand: true;
+                    sensitive: bind shift_vertically_button.sensitive;
                     layout {
                       column: 0;
                       row: 1;
@@ -443,15 +455,16 @@ template $GraphsWindow : Adw.ApplicationWindow {
                       label: _("FFT");
                     }
                     tooltip-text: _("Get the Fast Fourier Transform of the data");
-                    action-name: "app.get_fourier";
+                    clicked => $fourier();
                   }
 
-                  Button inverse_fourier_button {
+                  Button {
                     margin-start: 5;
                     margin-end: 5;
                     margin-top: 5;
                     margin-bottom: 5;
                     hexpand: true;
+                    sensitive: bind shift_vertically_button.sensitive;
                     layout {
                       column: 1;
                       row: 1;
@@ -462,15 +475,16 @@ template $GraphsWindow : Adw.ApplicationWindow {
                       label: _("inverse FFT");
                     }
                     tooltip-text: _("Get the Inverse Fast Fourier Transform of the data");
-                    action-name: "app.get_inverse_fourier";
+                    clicked => $inverse_fourier();
                   }
 
-                  Button transform_button {
+                  Button {
                     margin-start: 5;
                     margin-end: 5;
                     margin-top: 5;
                     margin-bottom: 5;
                     hexpand: true;
+                    sensitive: bind shift_vertically_button.sensitive;
                     layout {
                       column: 0;
                       row: 2;
@@ -482,7 +496,7 @@ template $GraphsWindow : Adw.ApplicationWindow {
                       label: _("Transform");
                     }
                     tooltip-text: _("Perform custom transformations on the data");
-                    action-name: "app.transform";
+                    clicked => $transform();
                   }
                 }
               }
