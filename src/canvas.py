@@ -37,7 +37,16 @@ class Canvas(FigureCanvas):
         color_rgba.alpha = 0.3
         self.rubberband_fill_color = utilities.rgba_to_tuple(color_rgba, True)
         super().__init__(self.figure)
-        self.load_limits()
+        self.set_limits({
+            "min_bottom": self.application.plot_settings.min_bottom,
+            "max_bottom": self.application.plot_settings.max_bottom,
+            "min_top": self.application.plot_settings.min_top,
+            "max_top": self.application.plot_settings.max_top,
+            "min_left": self.application.plot_settings.min_left,
+            "max_left": self.application.plot_settings.max_left,
+            "min_right": self.application.plot_settings.min_right,
+            "max_right": self.application.plot_settings.max_right,
+        })
         self.legends = []
         for axis in [self.right_axis, self.top_left_axis,
                      self.top_right_axis]:
@@ -93,18 +102,16 @@ class Canvas(FigureCanvas):
                 item.x_anchor, item.y_anchor, item.text, clip_on=True,
                 color=item.color, fontsize=item.size)
 
-    def load_limits(self):
-        plot_settings = self.application.plot_settings
+    def set_limits(self, limits):
         try:
             for axis in [self.axis, self.right_axis]:
-                axis.set_xlim(plot_settings.min_bottom,
-                              plot_settings.max_bottom)
+                axis.set_xlim(limits["min_bottom"], limits["max_bottom"])
             for axis in [self.top_left_axis, self.top_right_axis]:
-                axis.set_xlim(plot_settings.min_top, plot_settings.max_top)
+                axis.set_xlim(limits["min_top"], limits["max_top"])
             for axis in [self.axis, self.top_left_axis]:
-                axis.set_ylim(plot_settings.min_left, plot_settings.max_left)
+                axis.set_ylim(limits["min_left"], limits["max_left"])
             for axis in [self.right_axis, self.top_right_axis]:
-                axis.set_ylim(plot_settings.min_right, plot_settings.max_right)
+                axis.set_ylim(limits["min_right"], limits["max_right"])
         except ValueError:
             message = _("Error setting limits, one of the values was "
                         "probably infinite")
