@@ -47,6 +47,14 @@
     </screenshot>
   </screenshots>
   <releases>
+    <release version="1.6.2" date="2023-06-14">
+      <description>
+        <p>Bugfixes:</p>
+        <ul>
+	  <li>Fixes a bug where the first data point would not be loaded</li>
+        </ul>
+      </description>
+    </release>
     <release version="1.6.1" date="2023-06-14">
         <p>Minor patch with some bug fixes:</p>
         <ul>

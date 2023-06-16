@@ -127,7 +127,7 @@ def import_from_columns(self, import_settings):
     content = file.load_bytes(None)[0].get_data().decode("utf-8")
     params = import_settings.params
     for i, line in enumerate(content.splitlines()):
-        if i > params["skip_rows"]:
+        if i >= params["skip_rows"]:
             line = line.strip()
             data_line = re.split(str(params["delimiter"]), line)
             if params["separator"] == ",":

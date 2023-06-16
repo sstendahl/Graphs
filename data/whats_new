@@ -24,6 +24,7 @@
 	  <li>Fixed a bug where the legend styles could not be deleted</li>
 	  <li>Fixed a bug where the legend styles could not be reset to defaults</li>
 	  <li>Fixed a bug where the legend would remain when all data is removed</li>
+	  <li>Fixes a bug where the first data point would not be loaded</li>
 	  <li>Fixed a bug where Graphs would crash when the name of an item is changed and a new item is selected from the dropdown.</li>
 	  <li>Fixed a bug all styles in the style manager had a check-mark if the system preferred style was used.</li>
 	  <li>Fixed a bug where the legend would not be removed from the graph when toggled off, until it was completely reloaded.</li>
