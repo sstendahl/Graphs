@@ -80,7 +80,7 @@ def view_back_action(_action, _target, self):
         self.canvas.toolbar.back()
         self.canvas.apply_limits()
         # Fix weird view on back
-        self.canvas.draw()
+        graphs.refresh(self)
 
 
 def view_forward_action(_action, _target, self):
