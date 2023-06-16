@@ -129,17 +129,20 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
         plot_settings.custom_plot_style = \
             utilities.get_selected_chooser_item(self.custom_plot_style)
 
-        plot_settings.min_bottom = float(self.min_bottom.get_text())
-        plot_settings.max_bottom = float(self.max_bottom.get_text())
-        plot_settings.min_top = float(self.min_top.get_text())
-        plot_settings.max_top = float(self.max_top.get_text())
-        plot_settings.min_left = float(self.min_left.get_text())
-        plot_settings.max_left = float(self.max_left.get_text())
-        plot_settings.mix_right = float(self.min_right.get_text())
-        plot_settings.max_right = float(self.max_right.get_text())
+        self.props.application.canvas.set_limits({
+            "min_bottom": float(self.min_bottom.get_text()),
+            "max_bottom": float(self.max_bottom.get_text()),
+            "min_top": float(self.min_top.get_text()),
+            "max_top": float(self.max_top.get_text()),
+            "min_left": float(self.min_left.get_text()),
+            "max_left": float(self.max_left.get_text()),
+            "min_right": float(self.min_right.get_text()),
+            "max_right": float(self.max_right.get_text()),
+        })
 
         # Set new item properties
         if self.style_changed:
+            self.props.application.canvas.apply_limits()
             pyplot.rcParams.update(file_io.parse_style(
                 plot_styles.get_preferred_style(self.props.application)))
             for item in self.props.application.datadict.values():
@@ -156,5 +159,5 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
             graphs.reload(self.props.application)
             ui.reload_item_menu(self.props.application)
         else:
-            self.props.application.canvas.load_limits()
+            self.props.application.canvas.toolbar.push_current()
             graphs.refresh(self.props.application)

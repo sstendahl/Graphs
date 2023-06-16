@@ -14,6 +14,16 @@ def optimize_limits(self):
         "bottom": self.canvas.axis,
     }
 
+    limits = {
+        "min_bottom": self.plot_settings.min_bottom,
+        "max_bottom": self.plot_settings.max_bottom,
+        "min_top": self.plot_settings.min_top,
+        "max_top": self.plot_settings.max_top,
+        "min_left": self.plot_settings.min_left,
+        "max_left": self.plot_settings.max_left,
+        "min_right": self.plot_settings.min_right,
+        "max_right": self.plot_settings.max_right,
+    }
     for direction, used in used_axes.items():
         if not used:
             continue
@@ -46,20 +56,10 @@ def optimize_limits(self):
         elif direction in ["left", "right"]:
             min_all *= 0.5
             max_all *= 2
-        match direction:
-            case "bottom":
-                self.plot_settings.min_bottom = min_all
-                self.plot_settings.max_bottom = max_all
-            case "top":
-                self.plot_settings.min_top = min_all
-                self.plot_settings.max_top = max_all
-            case "left":
-                self.plot_settings.min_left = min_all
-                self.plot_settings.max_left = max_all
-            case "right":
-                self.plot_settings.min_right = min_all
-                self.plot_settings.max_right = max_all
-    self.canvas.load_limits()
+        limits[f"min_{direction}"] = min_all
+        limits[f"max_{direction}"] = max_all
+    self.canvas.set_limits(limits)
+    self.canvas.toolbar.push_current()
 
 
 def hide_unused_axes(self, canvas):

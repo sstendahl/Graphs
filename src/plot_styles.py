@@ -377,8 +377,6 @@ class PlotStylesWindow(Adw.Window):
         for box in self.styles.copy():
             self.styles.remove(box)
             self.styles_box.remove(self.styles_box.get_row_at_index(0))
-        custom_style = \
-            self.props.application.plot_settings.use_custom_plot_style
         for style, file in \
                 sorted(get_user_styles(self.props.application).items()):
             box = StyleBox(self, style)

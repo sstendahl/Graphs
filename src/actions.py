@@ -75,17 +75,18 @@ def optimize_limits_action(_action, _target, self):
     graphs.refresh(self)
 
 
-def restore_view_action(_action, _target, self):
-    self.canvas.load_limits()
-    graphs.refresh(self)
-
-
 def view_back_action(_action, _target, self):
-    self.canvas.dummy_toolbar.back()
+    if self.canvas.toolbar.back_enabled:
+        self.canvas.toolbar.back()
+        self.canvas.apply_limits()
+        # Fix weird view on back
+        graphs.refresh(self)
 
 
 def view_forward_action(_action, _target, self):
-    self.canvas.dummy_toolbar.forward()
+    if self.canvas.toolbar.forward_enabled:
+        self.canvas.toolbar.forward()
+        self.canvas.apply_limits()
 
 
 def export_data_action(_action, _target, self):
