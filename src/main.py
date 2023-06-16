@@ -69,21 +69,6 @@ class GraphsApplication(Adw.Application):
             ("save_project", ["<primary>S"]),
             ("open_project", ["<primary>O"]),
             ("delete_selected", ["Delete"]),
-            ("translate_x", None),
-            ("translate_y", None),
-            ("multiply_x", None),
-            ("multiply_y", None),
-            ("normalize", None),
-            ("smoothen", None),
-            ("center", None),
-            ("shift_vertically", None),
-            ("combine", None),
-            ("cut_selected", None),
-            ("get_derivative", None),
-            ("get_integral", None),
-            ("get_fourier", None),
-            ("get_inverse_fourier", None),
-            ("transform", None),
         ]
         methods = {key: item for key, item
                    in getmembers(globals().copy()["actions"], isfunction)}

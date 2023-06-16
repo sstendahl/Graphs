@@ -1,16 +1,11 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Main actions."""
-import logging
-from gettext import gettext as _
-
-from graphs import clipboard, graphs, operations, plotting_tools, ui
+from graphs import clipboard, graphs, plotting_tools, ui
 from graphs.add_equation import AddEquationWindow
 from graphs.export_figure import ExportFigureWindow
-from graphs.misc import InteractionMode
 from graphs.plot_settings import PlotSettingsWindow
 from graphs.plot_styles import PlotStylesWindow
 from graphs.preferences import PreferencesWindow
-from graphs.transform_data import TransformWindow
 
 
 def toggle_sidebar(_action, _shortcut, self):
@@ -122,106 +117,3 @@ def delete_selected_action(_action, _target, self):
     for item in self.datadict.copy().values():
         if item.selected:
             graphs.delete_item(self, item.key, True)
-
-
-def translate_x_action(_action, _target, self):
-    win = self.main_window
-    try:
-        offset = eval(win.translate_x_entry.get_text())
-    except ValueError as exception:
-        message = _("{error}: Unable to do translation, \
-make sure to enter a valid number").format(error=exception.__class__.__name__)
-        win.add_toast(message)
-        logging.exception(message)
-        offset = 0
-    operations.perform_operation(self, operations.translate_x, offset)
-
-
-def translate_y_action(_action, _target, self):
-    win = self.main_window
-    try:
-        offset = eval(win.translate_y_entry.get_text())
-    except ValueError as exception:
-        message = _("{error}: Unable to do translation, \
-make sure to enter a valid number").format(error=exception.__class__.__name__)
-        win.add_toast(message)
-        logging.exception(message)
-        offset = 0
-    operations.perform_operation(self, operations.translate_y, offset)
-
-
-def multiply_x_action(_action, _target, self):
-    win = self.main_window
-    try:
-        multiplier = eval(win.multiply_x_entry.get_text())
-    except ValueError as exception:
-        message = _("{error}: Unable to do translation, \
-make sure to enter a valid number").format(error=exception.__class__.__name__)
-        win.add_toast(message)
-        logging.exception(message)
-        multiplier = 1
-    operations.perform_operation(self, operations.multiply_x, multiplier)
-
-
-def multiply_y_action(_action, _target, self):
-    win = self.main_window
-    try:
-        multiplier = eval(win.multiply_y_entry.get_text())
-    except ValueError as exception:
-        message = _("{error}: Unable to do translation, \
-make sure to enter a valid number").format(error=exception.__class__.__name__)
-        win.add_toast(message)
-        logging.exception(message)
-        multiplier = 1
-    operations.perform_operation(self, operations.multiply_y, multiplier)
-
-
-def normalize_action(_action, _target, self):
-    operations.perform_operation(self, operations.normalize)
-
-
-def smoothen_action(_action, _target, self):
-    operations.perform_operation(self, operations.smoothen)
-
-
-def center_action(_action, _target, self):
-    operations.perform_operation(
-        self, operations.center,
-        self.preferences["action_center_data"])
-
-
-def shift_vertically_action(_action, _target, self):
-    operations.perform_operation(
-        self, operations.shift_vertically,
-        self.plot_settings.yscale, self.plot_settings.right_scale,
-        self.datadict)
-
-
-def combine_action(_action, _target, self):
-    operations.combine(self)
-
-
-def cut_selected_action(_action, _target, self):
-    if self.interaction_mode == InteractionMode.SELECT:
-        operations.perform_operation(self, operations.cut_selected)
-
-
-def get_derivative_action(_action, _target, self):
-    operations.perform_operation(self, operations.get_derivative)
-
-
-def get_integral_action(_action, _target, self):
-    operations.perform_operation(self, operations.get_integral)
-
-
-def get_fourier_action(_action, _target, self):
-    operations.perform_operation(self, operations.get_fourier)
-
-
-def get_inverse_fourier_action(_action, _target, self):
-    operations.perform_operation(self, operations.get_inverse_fourier)
-
-
-def transform_action(_action, _target, self):
-    win = TransformWindow(self)
-    win.present()
