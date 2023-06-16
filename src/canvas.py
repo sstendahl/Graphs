@@ -250,10 +250,13 @@ class DummyToolbar(NavigationToolbar2):
 
     # Overwritten function - do not change name
     def set_history_buttons(self):
+        self.back_enabled = self._nav_stack._pos > 0
+        self.forward_enabled = \
+            self._nav_stack._pos < len(self._nav_stack._elements) - 1
         self.canvas.application.main_window.view_back_button.set_sensitive(
-            self._nav_stack._pos > 0)
+            self.back_enabled)
         self.canvas.application.main_window.view_forward_button.set_sensitive(
-            self._nav_stack._pos < len(self._nav_stack._elements) - 1)
+            self.forward_enabled)
 
     # Overwritten function - do not change name
     def save_figure(self):

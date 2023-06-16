@@ -76,13 +76,15 @@ def optimize_limits_action(_action, _target, self):
 
 
 def view_back_action(_action, _target, self):
-    self.canvas.toolbar.back()
-    self.canvas.apply_limits()
+    if self.canvas.toolbar.back_enabled:
+        self.canvas.toolbar.back()
+        self.canvas.apply_limits()
 
 
 def view_forward_action(_action, _target, self):
-    self.canvas.toolbar.forward()
-    self.canvas.apply_limits()
+    if self.canvas.toolbar.forward_enabled:
+        self.canvas.toolbar.forward()
+        self.canvas.apply_limits()
 
 
 def export_data_action(_action, _target, self):
