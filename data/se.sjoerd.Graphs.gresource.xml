@@ -55,6 +55,7 @@
     <file preprocess="xml-stripblanks" alias="color-picker-symbolic.svg">icons/color-picker-symbolic.svg</file>
     <file preprocess="xml-stripblanks" alias="derivative2-symbolic.svg">icons/derivative2-symbolic.svg</file>
     <file preprocess="xml-stripblanks" alias="fast-fourier-transform-symbolic.svg">icons/fast-fourier-transform-symbolic.svg</file>
+    <file preprocess="xml-stripblanks" alias="graph-symbolic.svg">icons/graph-symbolic.svg</file>
     <file preprocess="xml-stripblanks" alias="function-third-order-symbolic.svg">icons/function-third-order-symbolic.svg</file>
     <file preprocess="xml-stripblanks" alias="history-undo-symbolic.svg">icons/history-undo-symbolic.svg</file>
     <file preprocess="xml-stripblanks" alias="horizontal-arrows-symbolic.svg">icons/horizontal-arrows-symbolic.svg</file>
