@@ -81,11 +81,6 @@ def hide_unused_axes(self, canvas):
     if used_axes["bottom"]:
         canvas.axis.get_xaxis().set_visible(True)
 
-    canvas.top_right_axis.get_xaxis().set_visible(False)
-    canvas.right_axis.get_xaxis().set_visible(False)
-    canvas.top_right_axis.get_yaxis().set_visible(False)
-    canvas.top_left_axis.get_yaxis().set_visible(False)
-
 
 def change_left_yscale(action, target, self):
     self.canvas.axis.set_yscale(target.get_string())
