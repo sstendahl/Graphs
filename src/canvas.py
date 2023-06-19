@@ -31,7 +31,7 @@ class Canvas(FigureCanvas):
         self.top_left_axis = self.axis.twiny()
         self.top_right_axis = self.top_left_axis.twinx()
         self.set_axis_properties()
-        self.set_ticks(application)
+        self.set_ticks()
         color_rgba = utilities.lookup_color(self.application, "accent_color")
         self.rubberband_edge_color = utilities.rgba_to_tuple(color_rgba, True)
         color_rgba.alpha = 0.3
@@ -75,6 +75,7 @@ class Canvas(FigureCanvas):
             self.figure.draw(self._renderer)
 
     def plot(self, item):
+        self.set_ticks()
         x_axis = item.plot_x_position
         y_axis = item.plot_y_position
         if y_axis == "left":
@@ -147,7 +148,7 @@ class Canvas(FigureCanvas):
         self.top_right_axis.set_xscale(plot_settings.top_scale)
         self.top_right_axis.set_yscale(plot_settings.right_scale)
 
-    def set_ticks(self, application):
+    def set_ticks(self):
         bottom = pyplot.rcParams["xtick.bottom"]
         left = pyplot.rcParams["ytick.left"]
         top = pyplot.rcParams["xtick.top"]
@@ -156,7 +157,7 @@ class Canvas(FigureCanvas):
             ticks = "both"
         else:
             ticks = "major"
-        used_axes = utilities.get_used_axes(application)[0]
+        used_axes = utilities.get_used_axes(self.application)[0]
         left_ticks = right_ticks = top_ticks = bottom_ticks = False
 
         if right and not used_axes["right"]:
@@ -171,7 +172,7 @@ class Canvas(FigureCanvas):
         if bottom and not used_axes["bottom"]:
             bottom_ticks = True
         self.top_right_axis.tick_params(bottom=bottom_ticks, left=left_ticks,
-                                        top=top_ticks, right=right, which=ticks)
+                                        top=top, right=right, which=ticks)
 
         if right and not used_axes["right"]:
             right_ticks = True
