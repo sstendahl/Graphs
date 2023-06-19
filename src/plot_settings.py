@@ -106,6 +106,15 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
             != utilities.get_selected_chooser_item(self.custom_plot_style) \
             and self.props.application.preferences["override_style_change"]
 
+        self.scale_changed = \
+            plot_settings.xscale \
+            != utilities.get_selected_chooser_item(self.plot_x_scale) \
+            or plot_settings.yscale \
+            != utilities.get_selected_chooser_item(self.plot_y_scale) \
+            or plot_settings.top_scale \
+            != utilities.get_selected_chooser_item(self.plot_top_scale) \
+            or plot_settings.right_scale \
+            != utilities.get_selected_chooser_item(self.plot_right_scale) \
         # Set new plot settings
         plot_settings.title = self.plot_title.get_text()
         plot_settings.xlabel = self.plot_x_label.get_text()
@@ -158,6 +167,10 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
             clipboard.add(self.props.application)
             graphs.reload(self.props.application)
             ui.reload_item_menu(self.props.application)
+        elif self.scale_changed:
+            self.props.application.canvas.toolbar.push_current()
+            # Trigger axis change and set correct value in menu!
+            graphs.reload(self.props.application)
         else:
             self.props.application.canvas.toolbar.push_current()
             graphs.refresh(self.props.application)

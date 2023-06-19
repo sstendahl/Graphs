@@ -27,6 +27,10 @@ class GraphsWindow(Adw.ApplicationWindow):
     translate_y_entry = Gtk.Template.Child()
     multiply_x_entry = Gtk.Template.Child()
     multiply_y_entry = Gtk.Template.Child()
+    top_scale = Gtk.Template.Child()
+    left_scale = Gtk.Template.Child()
+    bottom_scale = Gtk.Template.Child()
+    right_scale = Gtk.Template.Child()
     toast_overlay = Gtk.Template.Child()
 
     def add_toast(self, title):
