@@ -73,22 +73,13 @@ def hide_unused_axes(self, canvas):
         axis.get_yaxis().set_visible(False)
     used_axes = utilities.get_used_axes(self)[0]
     if used_axes["left"]:
-        canvas.top_left_axis.get_yaxis().set_visible(True)
         canvas.axis.get_yaxis().set_visible(True)
     if used_axes["right"]:
-        canvas.top_right_axis.get_yaxis().set_visible(True)
         canvas.right_axis.get_yaxis().set_visible(True)
     if used_axes["top"]:
-        canvas.top_right_axis.get_xaxis().set_visible(True)
         canvas.top_left_axis.get_xaxis().set_visible(True)
     if used_axes["bottom"]:
         canvas.axis.get_xaxis().set_visible(True)
-        canvas.right_axis.get_xaxis().set_visible(True)
-
-    canvas.top_right_axis.get_xaxis().set_visible(False)
-    canvas.right_axis.get_xaxis().set_visible(False)
-    canvas.top_right_axis.get_yaxis().set_visible(False)
-    canvas.top_left_axis.get_yaxis().set_visible(False)
 
 
 def change_left_yscale(action, target, self):
