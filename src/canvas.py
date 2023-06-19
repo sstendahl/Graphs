@@ -31,7 +31,7 @@ class Canvas(FigureCanvas):
         self.top_left_axis = self.axis.twiny()
         self.top_right_axis = self.top_left_axis.twinx()
         self.set_axis_properties()
-        self.set_ticks()
+        self.set_ticks(application)
         color_rgba = utilities.lookup_color(self.application, "accent_color")
         self.rubberband_edge_color = utilities.rgba_to_tuple(color_rgba, True)
         color_rgba.alpha = 0.3
@@ -147,7 +147,7 @@ class Canvas(FigureCanvas):
         self.top_right_axis.set_xscale(plot_settings.top_scale)
         self.top_right_axis.set_yscale(plot_settings.right_scale)
 
-    def set_ticks(self):
+    def set_ticks(self, application):
         bottom = pyplot.rcParams["xtick.bottom"]
         left = pyplot.rcParams["ytick.left"]
         top = pyplot.rcParams["xtick.top"]
@@ -156,10 +156,36 @@ class Canvas(FigureCanvas):
             ticks = "both"
         else:
             ticks = "major"
-        for axis in [self.top_right_axis, self.axis, self.top_left_axis,
-                     self.right_axis]:
-            axis.tick_params(bottom=bottom, left=left, top=top,
-                             right=right, which=ticks)
+        used_axes = utilities.get_used_axes(application)[0]
+        left_ticks = right_ticks = top_ticks = bottom_ticks = False
+
+        if right and not used_axes["right"]:
+            right_ticks = True
+        if top and not used_axes["top"]:
+            top_ticks = True
+        self.axis.tick_params(bottom=bottom, left=left, top=top_ticks,
+                              right=right_ticks, which=ticks)
+
+        if left and not used_axes["left"]:
+            left_ticks = True
+        if bottom and not used_axes["bottom"]:
+            bottom_ticks = True
+        self.top_right_axis.tick_params(bottom=bottom_ticks, left=left_ticks,
+                                        top=top_ticks, right=right, which=ticks)
+
+        if right and not used_axes["right"]:
+            right_ticks = True
+        if bottom and not used_axes["bottom"]:
+            bottom_ticks = True
+        self.top_left_axis.tick_params(bottom=bottom_ticks, left=left, top=top,
+                                       right=right_ticks, which=ticks)
+
+        if left and not used_axes["left"]:
+            left_ticks = True
+        if top and not used_axes["top"]:
+            top_ticks = True
+        self.right_axis.tick_params(bottom=bottom, left=left_ticks,
+                                    top=top_ticks, right=right, which=ticks)
 
     # Overwritten function - do not change name
     def __call__(self, event):
