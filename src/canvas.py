@@ -148,18 +148,35 @@ class Canvas(FigureCanvas):
         self.top_right_axis.set_yscale(plot_settings.right_scale)
 
     def set_ticks(self):
+        """Set the tick parameters for the axes in the plot"""
         bottom = pyplot.rcParams["xtick.bottom"]
         left = pyplot.rcParams["ytick.left"]
         top = pyplot.rcParams["xtick.top"]
         right = pyplot.rcParams["ytick.right"]
-        if pyplot.rcParams["xtick.minor.visible"]:
-            ticks = "both"
-        else:
-            ticks = "major"
-        for axis in [self.top_right_axis, self.axis, self.top_left_axis,
-                     self.right_axis]:
-            axis.tick_params(bottom=bottom, left=left, top=top,
-                             right=right, which=ticks)
+        ticks = "both" if pyplot.rcParams["xtick.minor.visible"] else "major"
+        used_axes = utilities.get_used_axes(self.application)[0]
+
+        # Define axes and their directions
+        axes = {
+            self.axis: ["bottom", "left"],
+            self.top_right_axis: ["top", "right"],
+            self.top_left_axis: ["top", "left"],
+            self.right_axis: ["bottom", "right"],
+        }
+
+        for axis, directions in axes.items():
+            # Set tick where requested, as long as that axis is not occupied
+            tick_params = {
+                "bottom": bottom and (
+                    "bottom" in directions or not used_axes["bottom"]),
+                "left": left and (
+                    "left" in directions or not used_axes["left"]),
+                "top": top and (
+                    "top" in directions or not used_axes["top"]),
+                "right": right and (
+                    "right" in directions or not used_axes["right"]),
+            }
+            axis.tick_params(which=ticks, **tick_params)
 
     # Overwritten function - do not change name
     def __call__(self, event):

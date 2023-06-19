@@ -137,6 +137,7 @@ def refresh(self):
     if len(self.datadict) > 0:
         plotting_tools.hide_unused_axes(self, self.canvas)
     self.canvas.set_axis_properties()
+    self.canvas.set_ticks()
     for item in reversed(self.datadict.values()):
         if (item is not None) and not \
                 (self.preferences["hide_unselected"] and not item.selected):
