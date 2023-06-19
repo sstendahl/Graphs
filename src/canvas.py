@@ -122,8 +122,8 @@ class Canvas(FigureCanvas):
         plot_settings = self.application.plot_settings
         plot_settings.min_bottom = min(self.axis.get_xlim())
         plot_settings.max_bottom = max(self.axis.get_xlim())
-        plot_settings.min_top = min(self.top_left_axis.get_ylim())
-        plot_settings.max_top = max(self.top_left_axis.get_ylim())
+        plot_settings.min_top = min(self.top_left_axis.get_xlim())
+        plot_settings.max_top = max(self.top_left_axis.get_xlim())
         plot_settings.min_left = min(self.axis.get_ylim())
         plot_settings.max_left = max(self.axis.get_ylim())
         plot_settings.min_right = min(self.right_axis.get_ylim())
