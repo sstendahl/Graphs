@@ -167,14 +167,14 @@ class Canvas(FigureCanvas):
         for axis, directions in axes.items():
             # Set tick where requested, as long as that axis is not occupied
             tick_params = {
-                "bottom": bottom and
-                          ("bottom" in directions or not used_axes["bottom"]),
-                "left": left and
-                        ("left" in directions or not used_axes["left"]),
-                "top": top and
-                       ("top" in directions or not used_axes["top"]),
-                "right": right and
-                         ("right" in directions or not used_axes["right"]),
+                "bottom": bottom
+                and ("bottom" in directions or not used_axes["bottom"]),
+                "left": left
+                and ("left" in directions or not used_axes["left"]),
+                "top": top
+                and ("top" in directions or not used_axes["top"]),
+                "right": right
+                and ("right" in directions or not used_axes["right"]),
             }
             axis.tick_params(which=ticks, **tick_params)
 
