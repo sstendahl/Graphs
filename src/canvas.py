@@ -75,7 +75,6 @@ class Canvas(FigureCanvas):
             self.figure.draw(self._renderer)
 
     def plot(self, item):
-        self.set_ticks()
         x_axis = item.plot_x_position
         y_axis = item.plot_y_position
         if y_axis == "left":
@@ -149,44 +148,37 @@ class Canvas(FigureCanvas):
         self.top_right_axis.set_yscale(plot_settings.right_scale)
 
     def set_ticks(self):
+        """
+        Set the tick parameters for the axes in the plot.
+        """
         bottom = pyplot.rcParams["xtick.bottom"]
         left = pyplot.rcParams["ytick.left"]
         top = pyplot.rcParams["xtick.top"]
         right = pyplot.rcParams["ytick.right"]
-        if pyplot.rcParams["xtick.minor.visible"]:
-            ticks = "both"
-        else:
-            ticks = "major"
+        ticks = "both" if pyplot.rcParams["xtick.minor.visible"] else "major"
         used_axes = utilities.get_used_axes(self.application)[0]
-        left_ticks = right_ticks = top_ticks = bottom_ticks = False
 
-        if right and not used_axes["right"]:
-            right_ticks = True
-        if top and not used_axes["top"]:
-            top_ticks = True
-        self.axis.tick_params(bottom=bottom, left=left, top=top_ticks,
-                              right=right_ticks, which=ticks)
+        #Define axes and their directions
+        axes = {
+            self.axis: ["bottom", "left"],
+            self.top_right_axis: ["top", "right"],
+            self.top_left_axis: ["top", "left"],
+            self.right_axis: ["bottom", "right"]
+        }
 
-        if left and not used_axes["left"]:
-            left_ticks = True
-        if bottom and not used_axes["bottom"]:
-            bottom_ticks = True
-        self.top_right_axis.tick_params(bottom=bottom_ticks, left=left_ticks,
-                                        top=top, right=right, which=ticks)
-
-        if right and not used_axes["right"]:
-            right_ticks = True
-        if bottom and not used_axes["bottom"]:
-            bottom_ticks = True
-        self.top_left_axis.tick_params(bottom=bottom_ticks, left=left, top=top,
-                                       right=right_ticks, which=ticks)
-
-        if left and not used_axes["left"]:
-            left_ticks = True
-        if top and not used_axes["top"]:
-            top_ticks = True
-        self.right_axis.tick_params(bottom=bottom, left=left_ticks,
-                                    top=top_ticks, right=right, which=ticks)
+        for axis, directions in axes.items():
+            # Set tick parameters if
+            tick_params = {
+                "bottom": bottom
+                and ("bottom" in directions or not used_axes["bottom"]),
+                "left": left
+                and ("left" in directions or not used_axes["left"]),
+                "top": top
+                and ("top" in directions or not used_axes["top"]),
+                "right": right
+                and ("right" in directions or not used_axes["right"])
+            }
+            axis.tick_params(which=ticks, **tick_params)
 
     # Overwritten function - do not change name
     def __call__(self, event):
