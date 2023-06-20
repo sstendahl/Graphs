@@ -286,11 +286,11 @@ template $PlotStylesWindow : Adw.Window {
               }
 
               Adw.ActionRow {
-                title: _("Grid Transparency");
-                subtitle: _("The Transparency of the Grid");
+                title: _("Grid Opacity");
+                subtitle: _("The opacity of the grid");
                 visible: bind show_grid.active;
 
-                Scale grid_transparency {
+                Scale grid_opacity {
                   draw-value: true;
                   width-request: 200;
                   adjustment: Adjustment {

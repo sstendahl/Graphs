@@ -12,7 +12,6 @@ class EditItemWindow(Adw.PreferencesWindow):
     name_entry = Gtk.Template.Child()
     plot_x_position = Gtk.Template.Child()
     plot_y_position = Gtk.Template.Child()
-    transparency = Gtk.Template.Child()
 
     item_group = Gtk.Template.Child()
 
@@ -63,7 +62,6 @@ class EditItemWindow(Adw.PreferencesWindow):
             self.plot_x_position, self.item.plot_x_position)
         utilities.set_chooser(
             self.plot_y_position, self.item.plot_y_position)
-        self.transparency.set_value(self.item.transparency)
         self.item_group.set_visible(False)
         if isinstance(self.item, Item):
             self.load_item_values()
@@ -91,7 +89,6 @@ class EditItemWindow(Adw.PreferencesWindow):
             utilities.get_selected_chooser_item(self.plot_x_position)
         self.item.plot_y_position = \
             utilities.get_selected_chooser_item(self.plot_y_position)
-        self.item.transparency = float(self.transparency.get_value())
         if isinstance(self.item, Item):
             self.apply_item_values()
         ui.reload_item_menu(self.props.application)
