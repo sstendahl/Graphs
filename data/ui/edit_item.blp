@@ -38,6 +38,20 @@ template $EditItemWindow : Adw.PreferencesWindow {
         title: _("Y-Axis Position");
         subtitle: _("The position of the Y-axis");
       }
+
+      Adw.ActionRow {
+        title: _("Transparency");
+        subtitle: _("The transparency of the item");
+
+        Scale transparency {
+          draw-value: true;
+          width-request: 200;
+          adjustment: Adjustment {
+            lower: 0;
+            upper: 100;
+          };
+        }
+      }
     }
 
     Adw.PreferencesGroup item_group {

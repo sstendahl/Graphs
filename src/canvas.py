@@ -89,7 +89,7 @@ class Canvas(FigureCanvas):
                 axis = self.top_right_axis
         common_parameters = {
             "color": item.color,
-            "alpha": 1 - item.transparency,
+            "alpha": 1 - (item.transparency / 100),
         }
         if isinstance(item, Item):
             linewidth = item.linewidth

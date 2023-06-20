@@ -227,7 +227,8 @@ class PlotStylesWindow(Adw.Window):
         # grid
         self.show_grid.set_active(style["axes.grid"])
         self.grid_linewidth.set_value(float(style["grid.linewidth"]))
-        self.grid_transparency.set_value(1 - float(style["grid.alpha"]))
+        self.grid_transparency.set_value(
+            1 - (float(style["grid.alpha"] * 100)))
 
         # padding
         self.value_padding.set_value(float(style["xtick.major.pad"]))
@@ -311,7 +312,7 @@ class PlotStylesWindow(Adw.Window):
         # grid
         style["axes.grid"] = self.show_grid.get_active()
         style["grid.linewidth"] = self.grid_linewidth.get_value()
-        style["grid.alpha"] = 1 - self.grid_transparency.get_value()
+        style["grid.alpha"] = 1 - (self.grid_transparency.get_value() / 100)
 
         # padding
         style["xtick.major.pad"] = self.value_padding.get_value()
