@@ -1,4 +1,6 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
+import contextlib
+
 from gi.repository import GLib, Gdk, Gtk
 
 from graphs import clipboard, graphs, ui, utilities
@@ -62,21 +64,19 @@ class ItemBox(Gtk.Box):
     def choose_color(self, _):
         color = utilities.hex_to_rgba(self.item.color)
         dialog = Gtk.ColorDialog()
-        dialog.set_with_alpha(False)
         dialog.choose_rgba(
             self.application.main_window, color, None,
             self.on_color_dialog_accept)
 
     def on_color_dialog_accept(self, dialog, result):
-        try:
+        with contextlib.suppress(GLib.GError):
             color = dialog.choose_rgba_finish(result)
             if color is not None:
                 self.item.color = utilities.rgba_to_hex(color).upper()
+                self.item.alpha = color.alpha
                 self.update_color()
                 clipboard.add(self.application)
                 graphs.refresh(self.application)
-        except GLib.GError:
-            pass
 
     @Gtk.Template.Callback()
     def delete(self, _):
