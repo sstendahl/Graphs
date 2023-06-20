@@ -87,6 +87,10 @@ class Canvas(FigureCanvas):
                 axis = self.right_axis
             elif x_axis == "top":
                 axis = self.top_right_axis
+        common_parameters = {
+            "color": item.color,
+            "alpha": 1 - item.transparency,
+        }
         if isinstance(item, Item):
             linewidth = item.linewidth
             markersize = item.markersize
@@ -94,13 +98,15 @@ class Canvas(FigureCanvas):
                 linewidth *= 0.35
                 markersize *= 0.35
             axis.plot(
-                item.xdata, item.ydata, label=item.name, color=item.color,
+                item.xdata, item.ydata,
+                **common_parameters,
                 marker=item.markerstyle, linestyle=item.linestyle,
-                linewidth=linewidth, markersize=markersize)
+                linewidth=linewidth, markersize=markersize, label=item.name)
         elif isinstance(item, TextItem):
             axis.text(
-                item.x_anchor, item.y_anchor, item.text, clip_on=True,
-                color=item.color, fontsize=item.size)
+                item.x_anchor, item.y_anchor, item.text,
+                **common_parameters,
+                clip_on=True, fontsize=item.size, rotation=item.rotation)
 
     def set_limits(self, limits):
         try:
