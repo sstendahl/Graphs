@@ -12,7 +12,7 @@ class ItemBase:
         self.xlabel, self.ylabel = xlabel, ylabel
         self.plot_y_position = preferences["plot_y_position"]
         self.plot_x_position = preferences["plot_x_position"]
-        self.transparency = 0
+        self.alpha = 1
 
 
 class Item(ItemBase):
