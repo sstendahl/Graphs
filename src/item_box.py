@@ -56,11 +56,16 @@ class ItemBox(Gtk.Box):
 
     def update_color(self):
         self.provider.load_from_data(
-            f"button {{ color: {self.item.color}; }}", -1)
+            ("button {"
+             f" color: {self.item.color};"
+             f" opacity: {self.item.alpha};"
+             "}"),
+            -1)
 
     @Gtk.Template.Callback()
     def choose_color(self, _):
         color = utilities.hex_to_rgba(self.item.color)
+        color.alpha = self.item.alpha
         dialog = Gtk.ColorDialog()
         dialog.set_with_alpha(False)
         dialog.choose_rgba(
