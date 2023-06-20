@@ -12,6 +12,7 @@ class ItemBase:
         self.xlabel, self.ylabel = xlabel, ylabel
         self.plot_y_position = preferences["plot_y_position"]
         self.plot_x_position = preferences["plot_x_position"]
+        self.transparency = 0
 
 
 class Item(ItemBase):
@@ -38,3 +39,4 @@ class TextItem(ItemBase):
         self.x_anchor, self.y_anchor = float(x_anchor), float(y_anchor)
         self.text = text
         self.size = float(pyplot.rcParams["font.size"])
+        self.rotation = 0
