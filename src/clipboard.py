@@ -43,7 +43,7 @@ def undo(self):
     if self.clipboard_pos < -1:
         self.main_window.redo_button.set_sensitive(True)
     graphs.check_open_data(self)
-    actions.view_back_action(None,None,self)
+    actions.view_back_action(None, None, self)
     ui.reload_item_menu(self)
 
 
@@ -61,5 +61,5 @@ def redo(self):
     if self.clipboard_pos >= -1:
         self.main_window.redo_button.set_sensitive(False)
     graphs.check_open_data(self)
-    actions.view_forward_action(None,None,self)
+    actions.view_forward_action(None, None, self)
     ui.reload_item_menu(self)
