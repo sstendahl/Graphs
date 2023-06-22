@@ -27,26 +27,27 @@ def save_project(file, plot_settings, datadict, datadict_clipboard,
         "clipboard_pos": clipboard_pos,
         "version": version,
     }
-    stream = get_write_stream(file)
+    stream = _get_write_stream(file)
     stream.write_bytes(GLib.Bytes(pickle.dumps(project_data)))
     stream.close()
 
 
 def read_project(file):
-    project = pickle.loads(file.load_bytes(None)[0].get_data())
+    project = pickle.loads(_read_file(file))
     return \
         project["plot_settings"], project["data"], \
         project["datadict_clipboard"], project["clipboard_pos"], \
         project["version"]
 
 
-def save_item(file, xdata, ydata):
-    array = numpy.stack([xdata, ydata], axis=1)
-    fmt = "\t".join(["%.12e"] * 2)
-    stream = get_write_stream(file)
-    for row in array:
-        line = (fmt % tuple(row) + "\n").encode("utf-8")
-        stream.write_bytes(GLib.Bytes(line))
+def save_item(file, item):
+    delimiter = "\t"
+    fmt = delimiter.join(["%.12e"] * 2)
+    stream = _get_write_stream(file)
+    if item.xlabel != "" and item.ylabel != "":
+        _write_string(stream, item.xlabel + delimiter + item.ylabel + "\n")
+    for row in numpy.stack([item.xdata, item.ydata], axis=1):
+        _write_string(stream, fmt % tuple(row) + "\n")
     stream.close()
 
 
@@ -87,8 +88,8 @@ def import_from_xrdml(self, import_settings):
 
 def import_from_xry(self, import_settings):
     """Import data from .xry files used by Leybold X-ray apparatus."""
-    content = import_settings.file.load_bytes(None)[0].get_data()
-    lines = content.decode("ISO-8859-1").splitlines()
+    lines = \
+        _read_file(import_settings.file, encoding="ISO-8859-1").splitlines()
 
     b_params = lines[4].strip().split()
     b_min = float(b_params[0])
@@ -122,11 +123,9 @@ def import_from_xry(self, import_settings):
 
 
 def import_from_columns(self, import_settings):
-    file = import_settings.file
     item = Item(self, name=import_settings.name)
-    content = file.load_bytes(None)[0].get_data().decode("utf-8")
     params = import_settings.params
-    for i, line in enumerate(content.splitlines()):
+    for i, line in enumerate(_read_file(import_settings.file).splitlines()):
         if i >= params["skip_rows"]:
             line = line.strip()
             data_line = re.split(str(params["delimiter"]), line)
@@ -175,8 +174,7 @@ def parse_style(file):
     style = RcParams()
     filename = file.query_info("standard::*", 0, None).get_display_name()
     try:
-        content = file.load_bytes(None)[0].get_data().decode("utf-8")
-        for line_number, line in enumerate(content.splitlines(), 1):
+        for line_number, line in enumerate(_read_file(file).splitlines(), 1):
             stripped_line = cbook._strip_comment(line)
             if not stripped_line:
                 continue
@@ -218,11 +216,11 @@ WRITE_IGNORELIST = [
 
 
 def write_style(file, style):
-    stream = get_write_stream(file)
-    stream.write_bytes(GLib.Bytes(f"# {style.name}\n".encode("utf-8")), None)
-    prop_cycle = \
-        f"axes.prop_cycle: {str(style['axes.prop_cycle']).replace('#', '')}\n"
-    stream.write_bytes(GLib.Bytes(prop_cycle.encode("utf-8")), None)
+    stream = _get_write_stream(file)
+    _write_string(stream, f"# {style.name}\n")
+    _write_string(
+        stream,
+        f"axes.prop_cycle: {str(style['axes.prop_cycle']).replace('#', '')}\n")
     for key, value in style.items():
         if key not in STYLE_BLACKLIST and key not in WRITE_IGNORELIST:
             value = str(value).replace("#", "")
@@ -230,7 +228,7 @@ def write_style(file, style):
             value = value.replace("'", "").replace("'", "")
             value = value.replace('"', "").replace('"', "")
             line = f"{key}: {value}\n"
-            stream.write_bytes(GLib.Bytes(line.encode("utf-8")), None)
+            _write_string(stream, line)
     stream.close()
 
 
@@ -239,19 +237,25 @@ def parse_json(file):
 
 
 def write_json(file, json_object):
-    stream = get_write_stream(file)
-    stream.write_bytes(GLib.Bytes(json.dumps(
-        json_object, indent=4, sort_keys=True).encode("utf-8")), None)
+    stream = _get_write_stream(file)
+    _write_string(stream, json.dumps(json_object, indent=4, sort_keys=True))
     stream.close()
 
 
 def parse_xml(file):
-    return minidom.parseString(
-        file.load_bytes(None)[0].get_data().decode("utf-8"))
+    return minidom.parseString(_read_file(file))
 
 
-def get_write_stream(file):
+def _get_write_stream(file):
     if file.query_exists(None):
         return file.replace(None, False, 0, None)
     else:
         return file.create(0, None)
+
+
+def _write_string(stream, line, encoding="utf-8"):
+    stream.write_bytes(GLib.Bytes(line.encode(encoding)), None)
+
+
+def _read_file(file, encoding="utf-8"):
+    return file.load_bytes(None)[0].get_data().decode(encoding)

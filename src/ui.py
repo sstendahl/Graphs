@@ -85,11 +85,10 @@ def export_data_dialog(self):
                 for item in self.datadict.values():
                     file = directory.get_child_for_display_name(
                         f"{item.name}.txt")
-                    file_io.save_item(file, item.xdata, item.ydata)
+                    file_io.save_item(file, item)
             else:
                 item = list(self.datadict.values())[0]
-                file_io.save_item(
-                    dialog.save_finish(response), item.xdata, item.ydata)
+                file_io.save_item(dialog.save_finish(response), item)
     dialog = Gtk.FileDialog()
     if multiple:
         dialog.select_folder(self.main_window, None, on_response)
