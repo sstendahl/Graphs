@@ -5,7 +5,7 @@ template $ImportWindow : Adw.Window {
   modal: true;
   default-width: 650;
   default-height: 125;
-  title: _("Modify import Parameters");
+  title: _("Modify Import Parameters");
   focus-widget: confirm_button;
 
   ShortcutController {
@@ -47,12 +47,12 @@ template $ImportWindow : Adw.Window {
 
         Adw.ComboRow separator {
           title: _("Decimal Separator");
-          subtitle: _("The character that is used as decimal separator");
+          subtitle: _("Character used as decimal separator");
         }
 
         Adw.ActionRow {
           title: _("Column X");
-          subtitle: _("Choose which column to load for the X-data");
+          subtitle: _("X-data column index");
           SpinButton column_x {
             valign: center;
             numeric: true;
@@ -67,7 +67,7 @@ template $ImportWindow : Adw.Window {
 
         Adw.ActionRow {
           title: _("Column Y");
-          subtitle: _("Choose which column to load for the Y-data");
+          subtitle: _("Y-data column index");
           SpinButton column_y {
             valign: center;
             numeric: true;
@@ -82,7 +82,7 @@ template $ImportWindow : Adw.Window {
 
         Adw.ActionRow {
           title: _("Skip Rows");
-          subtitle: _("Choose how many rows to skip while loading data");
+          subtitle: _("Ignored row indices");
           SpinButton skip_rows {
             valign: center;
             numeric: true;

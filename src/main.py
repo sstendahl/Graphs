@@ -35,8 +35,7 @@ class GraphsApplication(Adw.Application):
         self.datadict_clipboard = [{}]
         self.clipboard_pos = -1
         self.highlight = None
-        font_list = font_manager.findSystemFonts(
-            fontpaths=None, fontext="ttf")
+        font_list = font_manager.findSystemFonts(fontpaths=None, fontext="ttf")
         for font in font_list:
             try:
                 font_manager.fontManager.addfont(font)

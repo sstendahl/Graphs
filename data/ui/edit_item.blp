@@ -31,28 +31,27 @@ template $EditItemWindow : Adw.PreferencesWindow {
 
       Adw.ComboRow plot_x_position {
         title: _("X-Axis Position");
-        subtitle: _("The position of the X-axis");
+        subtitle: _("Position of the X-axis");
       }
 
       Adw.ComboRow plot_y_position {
         title: _("Y-Axis Position");
-        subtitle: _("The position of the Y-axis");
+        subtitle: _("Position of the Y-axis");
       }
     }
 
     Adw.PreferencesGroup item_group {
       visible: false;
       title: _("Line Style");
-      description: _("Change properties of the lines");
+      description: _("Change line properties");
 
       Adw.ComboRow linestyle {
         title: _("Linestyle");
-        subtitle: _("The linestyle");
       }
 
       Adw.ActionRow {
         title: _("Linewidth");
-        subtitle: _("The width of lines");
+        subtitle: _("Width of the Line");
 
         Scale linewidth {
           draw-value: true;
@@ -66,12 +65,12 @@ template $EditItemWindow : Adw.PreferencesWindow {
 
       Adw.ComboRow markers {
         title: _("Markers");
-        subtitle: _("The markers that are used");
+        subtitle: _("Used markers");
       }
 
       Adw.ActionRow {
         title: _("Marker Size");
-        subtitle: _("The size of the markers");
+        subtitle: _("Size of the markers");
 
         Scale markersize {
           draw-value: true;

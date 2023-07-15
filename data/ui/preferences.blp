@@ -12,16 +12,16 @@ template $PreferencesWindow : Adw.PreferencesWindow {
 
     Adw.PreferencesGroup {
       title: _("Export Options");
-      description: _("Options for exporting the graph");
+      description: _("Options for exporting the figure");
 
       Adw.ComboRow export_figure_filetype {
-        title: _("Default Filetype");
-        subtitle: _("The default filetype of saved graphs");
+        title: _("Default Format");
+        subtitle: _("Default format used to export the figure");
       }
 
       Adw.ActionRow {
         title: _("Default dpi");
-        subtitle: _("The default resolution of saved graphs in dots per inch");
+        subtitle: _("Default figure resolution in dots per inch");
 
         SpinButton export_figure_dpi {
           valign: center;
@@ -37,7 +37,7 @@ template $PreferencesWindow : Adw.PreferencesWindow {
 
       Adw.ActionRow {
         title: _("Transparent Background");
-        subtitle: _("Use a transparent background for the saved plots by default");
+        subtitle: _("Use a transparent background by default");
         activatable-widget: export_figure_transparent;
 
         Switch export_figure_transparent {
@@ -52,7 +52,7 @@ template $PreferencesWindow : Adw.PreferencesWindow {
 
       Adw.ComboRow action_center_data {
         title: _("Center Data");
-        subtitle: _("The behaviour of the center data button");
+        subtitle: _("Behaviour of the center data action");
       }
     }
 
@@ -61,8 +61,8 @@ template $PreferencesWindow : Adw.PreferencesWindow {
       description: _("Other general settings");
 
       Adw.ActionRow {
-        title: _("Clipboard length");
-        subtitle: _("Choose how many states are stored in the clipboard");
+        title: _("Clipboard Length");
+        subtitle: _("Number of states stored in the clipboard");
 
         SpinButton clipboard_length {
           valign: center;
@@ -77,13 +77,13 @@ template $PreferencesWindow : Adw.PreferencesWindow {
       }
 
       Adw.ComboRow other_handle_duplicates {
-        title: _("Handle duplicate entries");
-        subtitle: _("Choose how to handle duplicate entries to be loaded");
+        title: _("Handle Duplicate Items");
+        subtitle: _("Choose how to handle duplicate items when added");
       }
 
       Adw.ActionRow {
         title: _("Hide Unselected");
-        subtitle: _("Whether to hide items, that aren't selected");
+        subtitle: _("Whether to hide items, that are not selected");
         activatable-widget: other_hide_unselected;
 
         Switch other_hide_unselected {
@@ -95,11 +95,11 @@ template $PreferencesWindow : Adw.PreferencesWindow {
 
   Adw.PreferencesPage {
     icon-name: "axes-one-quadrant";
-    title: _("Plot");
+    title: _("Figure");
 
     Adw.PreferencesGroup {
-      title: _("Plot Labels");
-      description: _("Set the labels and title that are used by default");
+      title: _("Labels");
+      description: _("Settings for title and labels used by default");
 
       Adw.EntryRow plot_title {
         title: _("Default Title");
@@ -114,7 +114,7 @@ template $PreferencesWindow : Adw.PreferencesWindow {
       }
 
       Adw.EntryRow plot_top_label {
-        title: _("Default Top Axis label");
+        title: _("Default Top Axis Label");
       }
 
       Adw.EntryRow plot_right_label {
@@ -123,67 +123,67 @@ template $PreferencesWindow : Adw.PreferencesWindow {
     }
 
     Adw.PreferencesGroup {
-      title: _("Axes settings");
+      title: _("Axes Settings");
       description: _("Set the default axes scale and position used upon launch");
 
       Adw.ComboRow plot_x_scale {
         title: _("Default Bottom Axis Scale");
-        subtitle: _("The scaling on the bottom axis");
+        subtitle: _("Default scaling on the bottom axis");
       }
 
       Adw.ComboRow plot_y_scale {
         title: _("Default Left Axis Scale");
-        subtitle: _("The scaling on the left-hand axis");
+        subtitle: _("Default scaling on the left-hand axis");
       }
 
       Adw.ComboRow plot_top_scale {
         title: _("Default Top Axis Scale");
-        subtitle: _("The scaling on the top axis");
+        subtitle: _("Default scaling on the top axis");
       }
 
       Adw.ComboRow plot_right_scale {
         title: _("Default Right Axis Scale");
-        subtitle: _("The scaling on the right-hand axis");
+        subtitle: _("Default scaling on the right-hand axis");
       }
 
       Adw.ComboRow plot_x_position {
         title: _("Default X-Axis Position");
-        subtitle: _("The position of the X-axis");
+        subtitle: _("Default position of the X-axis");
       }
 
       Adw.ComboRow plot_y_position {
         title: _("Default Y-Axis Position");
-        subtitle: _("The default position of the Y-axis");
+        subtitle: _("Default position of the Y-axis");
       }
     }
 
     Adw.PreferencesGroup {
       title: _("Styling");
-      description: _("Change default plot style and other visual changes");
+      description: _("Change default style and other visual changes");
 
       Adw.ExpanderRow plot_legend {
         title: _("Legend");
         subtitle: _("Use a legend by default");
         show-enable-switch: true;
         Adw.ComboRow plot_legend_position {
-          title: _("Legend position");
-          subtitle: _("The default position of the legend");
+          title: _("Legend Position");
+          subtitle: _("Default position of the legend");
       }
     }
 
       Adw.ExpanderRow plot_use_custom_style {
-        title: _("Custom Plot Style");
-        subtitle: _("Use a custom plot style instead of following the system style by default");
+        title: _("Use Custom Style");
+        subtitle: _("Use a custom style instead of following the system style by default");
         show-enable-switch: true;
 
         Adw.ComboRow plot_custom_style {
-          title: _("Custom Style");
-          subtitle: _("The custom style sheet used by default");
+          title: _("Style");
+          subtitle: _("Custom style used by default");
         }
       }
       Adw.ActionRow {
         title: _("Override Line Styling on Style Change");
-        subtitle: _("Override the active line styling when switching plot style");
+        subtitle: _("Override the active line styling when switching styles");
 
         Switch override_style_change {
           valign: center;
@@ -198,21 +198,21 @@ template $PreferencesWindow : Adw.PreferencesWindow {
 
     Adw.PreferencesGroup {
       title: _("Import Settings");
-      description: _("Settings for importing graphs");
+      description: _("Default settings for importing data");
 
       Adw.EntryRow import_delimiter {
-        title: _("Delimiter");
+        title: _("Delimiter (\s+ for whitespace)");
         max-width-chars: 10;
       }
 
       Adw.ComboRow import_separator {
         title: _("Decimal Separator");
-        subtitle: _("The character that is used as decimal separator");
+        subtitle: _("Default character used as decimal separator");
       }
 
       Adw.ActionRow {
         title: _("Column X");
-        subtitle: _("Which column to load for the X-data");
+        subtitle: _("Default x-data column index");
 
         SpinButton import_column_x {
           valign: center;
@@ -229,7 +229,7 @@ template $PreferencesWindow : Adw.PreferencesWindow {
       Adw.ActionRow {
         vexpand: false;
         title: _("Column Y");
-        subtitle: _("Which column to load for the Y-data");
+        subtitle: _("Default y-data column index");
 
         SpinButton import_column_y {
           valign: center;
@@ -246,7 +246,7 @@ template $PreferencesWindow : Adw.PreferencesWindow {
       Adw.ActionRow {
         vexpand: false;
         title: _("Skip Rows");
-        subtitle: _("How many rows to skip while loading data");
+        subtitle: _("Row indices ignored by default");
 
         SpinButton import_skip_rows {
           valign: center;
@@ -263,7 +263,7 @@ template $PreferencesWindow : Adw.PreferencesWindow {
 
     Adw.PreferencesGroup {
       title: _("Add Equation");
-      description: _("Settings for the \"Add Equation\" option");
+      description: _("Settings for the “Add Equation” action");
 
       Adw.EntryRow addequation_equation {
         title: _("Default Equation: Y =");

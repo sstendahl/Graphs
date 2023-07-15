@@ -43,13 +43,12 @@ def import_from_files(self, import_settings_list):
         try:
             items.extend(_import_from_file(self, import_settings))
         except IndexError:
-            message = \
-                _("Could not open data, the column index is out of range")
+            message = _("Could not open data, column index out of range")
             self.main_window.add_toast(message)
             logging.exception(message)
             continue
         except UnicodeDecodeError:
-            message = _("Could not open data, wrong filetype")
+            message = _("Could not open data, wrong file format")
             self.main_window.add_toast(message)
             logging.exception(message)
             continue
