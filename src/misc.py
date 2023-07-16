@@ -37,6 +37,12 @@ class InteractionMode(Enum):
     SELECT = 3
 
 
+class ImportError(Exception):
+    def __init__(self, message):
+        self.message = message
+        super().__init__(self.message)
+
+
 # Translatable lists
 def _(message):
     return message
