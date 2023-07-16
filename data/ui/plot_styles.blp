@@ -84,7 +84,7 @@ template $PlotStylesWindow : Adw.Window {
 
               Adw.ActionRow {
                 title: _("Font");
-                subtitle: _("The font used in the graph");
+                subtitle: _("Font used in the figure");
                 activatable-widget: font_chooser;
 
                 FontDialogButton font_chooser {
@@ -140,11 +140,11 @@ template $PlotStylesWindow : Adw.Window {
 
             Adw.PreferencesGroup {
               title: _("Ticks");
-              description: _("Settings for the ticks that are used in the plots");
+              description: _("Settings for the ticks that are used on axes");
 
               Adw.ComboRow tick_direction {
                 title: _("Tick Directions");
-                subtitle: _("Choose to have the ticks in the plot either in or out");
+                subtitle: _("Whether ticks are pointing in or out");
               }
 
               Adw.ActionRow {
@@ -258,7 +258,7 @@ template $PlotStylesWindow : Adw.Window {
 
             Adw.PreferencesGroup {
               title: _("Grid");
-              description: _("Settings for the grid that is used in the plots");
+              description: _("Settings for the grid");
 
               Adw.ActionRow {
                 title: _("Show Grid");
@@ -303,7 +303,7 @@ template $PlotStylesWindow : Adw.Window {
 
             Adw.PreferencesGroup {
               title: _("Padding");
-              description: _("Padding for different parts of the plot");
+              description: _("Padding for different parts of the figure");
 
               Adw.ActionRow {
                 title: _("Value Padding");
@@ -350,7 +350,7 @@ template $PlotStylesWindow : Adw.Window {
 
             Adw.PreferencesGroup {
               title: _("Colors");
-              description: _("The colors for different parts of the plot");
+              description: _("The colors for different parts of the figure");
 
               Grid {
                 row-spacing: 20;
@@ -363,7 +363,7 @@ template $PlotStylesWindow : Adw.Window {
 
                   Adw.ActionRow {
                     title: _("Text Color");
-                    subtitle: _("The color of the text in the plot");
+                    subtitle: _("The color of the text in the figure");
                     activatable-widget: text_color;
                     hexpand: true;
 
@@ -386,7 +386,7 @@ template $PlotStylesWindow : Adw.Window {
                   }
                   Adw.ActionRow {
                     title: _("Tick Color");
-                    subtitle: _("The color of the ticks in the plot");
+                    subtitle: _("The color of the ticks in the figure");
                     activatable-widget: tick_color;
                     hexpand: true;
 
@@ -409,7 +409,7 @@ template $PlotStylesWindow : Adw.Window {
                   }
                   Adw.ActionRow {
                     title: _("Axis Color");
-                    subtitle: _("The color of the axes in the plot");
+                    subtitle: _("The color of the axes in the figure");
                     activatable-widget: axis_color;
                     hexpand: true;
 
@@ -432,7 +432,7 @@ template $PlotStylesWindow : Adw.Window {
                   }
                   Adw.ActionRow {
                     title: _("Grid Color");
-                    subtitle: _("The color of the grid in the plot");
+                    subtitle: _("The color of the grid in the figure");
                     activatable-widget: grid_color;
                     hexpand: true;
 
@@ -455,7 +455,7 @@ template $PlotStylesWindow : Adw.Window {
                   }
                   Adw.ActionRow {
                     title: _("Background Color");
-                    subtitle: _("The color of the plot background");
+                    subtitle: _("The color of the background");
                     activatable-widget: background_color;
                     hexpand: true;
 
@@ -478,7 +478,7 @@ template $PlotStylesWindow : Adw.Window {
                   }
                   Adw.ActionRow {
                     title: _("Outline Color");
-                    subtitle: _("The color of the outline of the plot");
+                    subtitle: _("The color of the outline of the figure");
                     activatable-widget: outline_color;
                     hexpand: true;
 

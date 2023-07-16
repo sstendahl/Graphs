@@ -182,7 +182,7 @@ class PlotStylesWindow(Adw.Window):
         self.reload_styles()
         self.style = None
         self.leaflet.navigate(0)
-        self.set_title(_("Plot Styles"))
+        self.set_title(_("Styles"))
 
     @Gtk.Template.Callback()
     def edit_line_colors(self, _button):

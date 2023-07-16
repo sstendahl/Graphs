@@ -41,12 +41,12 @@ template $ExportFigureWindow : Adw.Window {
       Adw.PreferencesGroup {
         Adw.ComboRow file_format {
           title: _("File Format");
-          subtitle: _("In which file format should the graph be exported?");
+          subtitle: _("Format used to export the figure");
         }
 
       Adw.ActionRow {
         title: _("Graph dpi");
-        subtitle: _("Set the resolution of the graph in dots per inch ");
+        subtitle: _("Figure resolution in dots per inch");
 
         SpinButton dpi {
           valign: center;
@@ -62,7 +62,7 @@ template $ExportFigureWindow : Adw.Window {
 
         Adw.ActionRow {
           title: _("Transparent Background");
-          subtitle: _("Export using a transparent background.");
+          subtitle: _("Use a transparent background");
           activatable-widget: transparent;
 
           Switch transparent {
