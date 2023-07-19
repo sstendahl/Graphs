@@ -17,7 +17,7 @@ template $GraphsWindow : Adw.ApplicationWindow {
         visible: bind-property sidebar_flap.folded inverted;
         MenuButton add_button {
           icon-name: "list-add-symbolic";
-          tooltip-text: _("Add new data");
+          tooltip-text: _("Add new Data");
           always-show-arrow: true;
           menu-model: add_data_menu;
         }
@@ -181,19 +181,19 @@ template $GraphsWindow : Adw.ApplicationWindow {
             icon-name: "move-tool-symbolic";
             action-name: "app.mode_pan";
             hexpand: true;
-            tooltip-text: _("Panning mode. Use left mouse button to pan, right mouse button to zoom. Hold control to to keep aspect ratio fixed");
+            tooltip-text: _("Panning mode. Click and drag to pan");
           }
           ToggleButton zoom_button {
             icon-name: "loupe-symbolic";
             action-name: "app.mode_zoom";
             hexpand: true;
-            tooltip-text: _("Zoom mode. Select an area on the graph to zoom in");
+            tooltip-text: _("Zoom mode. Select an area on the figure to zoom in");
           }
           ToggleButton select_button {
             icon-name: "edit-select-all-symbolic";
             action-name: "app.mode_select";
             hexpand: true;
-            tooltip-text: _("Highlight mode, click and drag over the graph to highlight the workable area");
+            tooltip-text: _("Highlight mode. Click and drag to make a selection of data");
           }
         }
 
@@ -250,7 +250,7 @@ template $GraphsWindow : Adw.ApplicationWindow {
                       icon-name: "normalize-symbolic";
                       label: _("Normalize");
                     }
-                    tooltip-text: _("Normalize Data");
+                    tooltip-text: _("Normalize data");
                     clicked => $normalize();
                   }
 
@@ -270,7 +270,7 @@ template $GraphsWindow : Adw.ApplicationWindow {
                       icon-name: "smoothen-symbolic";
                       label: _("Smoothen");
                     }
-                    tooltip-text: _("Smoothen the Data");
+                    tooltip-text: _("Smoothen data");
                     clicked => $smoothen();
                   }
 
@@ -290,7 +290,7 @@ template $GraphsWindow : Adw.ApplicationWindow {
                       icon-name: "center-symbolic";
                       label: _("Center");
                     }
-                    tooltip-text: _("Center the data");
+                    tooltip-text: _("Center data");
                     clicked => $center();
                   }
 
@@ -310,7 +310,7 @@ template $GraphsWindow : Adw.ApplicationWindow {
                       icon-name: "edit-paste-symbolic";
                       label: _("Combine");
                     }
-                    tooltip-text: _("Combine");
+                    tooltip-text: _("Combine all selected data");
                     clicked => $combine();
                   }
 
@@ -330,7 +330,7 @@ template $GraphsWindow : Adw.ApplicationWindow {
                       icon-name: "edit-cut-symbolic";
                       label: _("Cut");
                     }
-                    tooltip-text: _("Cut selected Data");
+                    tooltip-text: _("Cut selected data");
                     clicked => $cut();
                   }
                 }
@@ -472,7 +472,7 @@ template $GraphsWindow : Adw.ApplicationWindow {
                     Adw.ButtonContent {
                       halign: center;
                       icon-name: "inverse-fast-fourier-transform-symbolic";
-                      label: _("inverse FFT");
+                      label: _("Inverse FFT");
                     }
                     tooltip-text: _("Get the Inverse Fast Fourier Transform of the data");
                     clicked => $inverse_fourier();
@@ -525,18 +525,18 @@ template $GraphsWindow : Adw.ApplicationWindow {
 
 menu primary_menu {
   section{
-    item (_("Save Project"), "app.save_project")
-    item (_("Open Project"), "app.open_project")
+    item (_("Save Project…"), "app.save_project")
+    item (_("Open Project…"), "app.open_project")
   }
   section {
-    item (_("Export Data"), "app.export_data")
-    item (_("Export Figure"), "app.export_figure")
+    item (_("Export Data…"), "app.export_data")
+    item (_("Export Figure…"), "app.export_figure")
   }
   section {
-    item (_("Plot Styles"), "app.plot_styles")
+    item (_("Styles"), "app.plot_styles")
   }
   section {
-    item (_("Plot Settings"), "app.plot_settings")
+    item (_("Figure Settings"), "app.plot_settings")
     item (_("Preferences"), "app.preferences")
   }
   section {
@@ -547,10 +547,10 @@ menu primary_menu {
 
 menu add_data_menu {
   section {
-    item (_("Add Data from File"), "app.add_data")
+    item (_("Add Data from File…"), "app.add_data")
   }
   section {
-    item (_("Add Data from Equation"), "app.add_equation")
+    item (_("Add Data from Equation…"), "app.add_equation")
   }
 }
 
