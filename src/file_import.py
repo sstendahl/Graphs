@@ -1,11 +1,10 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
-import logging
-from gettext import gettext as _
 from pathlib import Path
 
 from gi.repository import Adw, Gtk
 
 from graphs import file_io, graphs, misc, utilities
+from graphs.misc import ParseError
 
 
 IMPORT_MODES = ["project", "xrdml", "xry", "columns"]
@@ -42,20 +41,8 @@ def import_from_files(self, import_settings_list):
     for import_settings in import_settings_list:
         try:
             items.extend(_import_from_file(self, import_settings))
-        except IndexError:
-            message = _("Could not open data, column index out of range")
-            self.main_window.add_toast(message)
-            logging.exception(message)
-            continue
-        except UnicodeDecodeError:
-            message = _("Could not open data, wrong file format")
-            self.main_window.add_toast(message)
-            logging.exception(message)
-            continue
-        except ValueError as error:
-            message = error.message
-            self.main_window.add_toast(message)
-            logging.exception(message)
+        except ParseError as error:
+            self.main_window.add_toast(error.message)
             continue
     graphs.add_items(self, items)
 

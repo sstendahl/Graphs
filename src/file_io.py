@@ -11,6 +11,7 @@ from gi.repository import GLib
 
 from graphs import utilities
 from graphs.item import Item, TextItem
+from graphs.misc import ParseError
 
 from matplotlib import RcParams, cbook
 from matplotlib.style.core import STYLE_BLACKLIST
@@ -33,7 +34,7 @@ def save_project(file, plot_settings, datadict, datadict_clipboard,
 
 
 def read_project(file):
-    project = pickle.loads(_read_file(file))
+    project = pickle.loads(_read_file(file, None))
     return \
         project["plot_settings"], project["data"], \
         project["datadict_clipboard"], project["clipboard_pos"], \
@@ -90,6 +91,8 @@ def import_from_xry(self, import_settings):
     """Import data from .xry files used by Leybold X-ray apparatus."""
     lines = \
         _read_file(import_settings.file, encoding="ISO-8859-1").splitlines()
+    if lines[0].strip() != "XR01":
+        raise ParseError(_("Invalid .xry format"))
 
     b_params = lines[4].strip().split()
     b_min = float(b_params[0])
@@ -127,8 +130,7 @@ def import_from_columns(self, import_settings):
     params = import_settings.params
     for i, line in enumerate(_read_file(import_settings.file).splitlines()):
         if i >= params["skip_rows"]:
-            line = line.strip()
-            data_line = re.split(str(params["delimiter"]), line)
+            data_line = re.split(str(params["delimiter"]), line.strip())
             if params["separator"] == ",":
                 for index, value in enumerate(data_line):
                     data_line[index] = utilities.swap(value)
@@ -137,8 +139,12 @@ def import_from_columns(self, import_settings):
                     item.xdata.append(i)
                     item.ydata.append(float(data_line[0]))
                 else:
-                    item.xdata.append(float(data_line[params["column_x"]]))
-                    item.ydata.append(float(data_line[params["column_y"]]))
+                    try:
+                        item.xdata.append(float(data_line[params["column_x"]]))
+                        item.ydata.append(float(data_line[params["column_y"]]))
+                    except IndexError:
+                        raise ParseError(
+                            _("Import failed, column index out of range"))
             # If not all values in the line are floats, start looking for
             # headers instead
             else:
@@ -160,6 +166,8 @@ def import_from_columns(self, import_settings):
                     # If neither heuristic works, we just skip headers
                     except IndexError:
                         pass
+    if not item.xdata:
+        raise ParseError(_("Unable to import from file"))
     return [item]
 
 
@@ -258,4 +266,5 @@ def _write_string(stream, line, encoding="utf-8"):
 
 
 def _read_file(file, encoding="utf-8"):
-    return file.load_bytes(None)[0].get_data().decode(encoding)
+    content = file.load_bytes(None)[0].get_data()
+    return content if encoding is None else content.decode(encoding)
