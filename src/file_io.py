@@ -34,7 +34,7 @@ def save_project(file, plot_settings, datadict, datadict_clipboard,
 
 
 def read_project(file):
-    project = pickle.loads(_read_file(file))
+    project = pickle.loads(_read_file(file, None))
     return \
         project["plot_settings"], project["data"], \
         project["datadict_clipboard"], project["clipboard_pos"], \
@@ -266,4 +266,5 @@ def _write_string(stream, line, encoding="utf-8"):
 
 
 def _read_file(file, encoding="utf-8"):
-    return file.load_bytes(None)[0].get_data().decode(encoding)
+    content = file.load_bytes(None)[0].get_data()
+    return content if encoding is None else content.decode(encoding)
