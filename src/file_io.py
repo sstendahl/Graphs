@@ -11,7 +11,7 @@ from gi.repository import GLib
 
 from graphs import utilities
 from graphs.item import Item, TextItem
-from graphs.misc import ImportError
+from graphs.misc import ParseError
 
 from matplotlib import RcParams, cbook
 from matplotlib.style.core import STYLE_BLACKLIST
@@ -92,7 +92,7 @@ def import_from_xry(self, import_settings):
     lines = \
         _read_file(import_settings.file, encoding="ISO-8859-1").splitlines()
     if lines[0].strip() != "XR01":
-        raise ImportError(_("Invalid .xry format"))
+        raise ParseError(_("Invalid .xry format"))
 
     b_params = lines[4].strip().split()
     b_min = float(b_params[0])
@@ -143,7 +143,7 @@ def import_from_columns(self, import_settings):
                         item.xdata.append(float(data_line[params["column_x"]]))
                         item.ydata.append(float(data_line[params["column_y"]]))
                     except IndexError:
-                        raise ImportError(
+                        raise ParseError(
                             _("Import failed, column index out of range"))
             # If not all values in the line are floats, start looking for
             # headers instead
@@ -167,7 +167,7 @@ def import_from_columns(self, import_settings):
                     except IndexError:
                         pass
     if not item.xdata:
-        raise ImportError(_(f"Unable to import from file"))
+        raise ParseError(_("Unable to import from file"))
     return [item]
 
 
