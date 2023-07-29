@@ -265,10 +265,7 @@ def string_to_float(string: str):
     number = float(result.group("b"))
     exponent = result.group("e")
     if exponent is not None:
-        exponent = int(exponent)
-        if exponent >= 0:
-            factor = numpy.power(10, int(exponent))
-        else:
-            factor = 1 / numpy.power(10, numpy.abs(int(exponent)))
+        factor = numpy.power(10, int(exponent)) if int(exponent) >= 0 \
+            else 1 / numpy.power(10, numpy.abs(int(exponent)))
         number *= factor
     return number
