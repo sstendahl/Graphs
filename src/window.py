@@ -1,10 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
-import logging
-from gettext import gettext as _
-
 from gi.repository import Adw, GLib, Gtk
 
-from graphs import operations
+from graphs import operations, utilities
 from graphs.misc import InteractionMode
 from graphs.transform_data import TransformWindow
 
@@ -74,54 +71,42 @@ class GraphsWindow(Adw.ApplicationWindow):
     @Gtk.Template.Callback()
     def translate_x(self, *_args):
         try:
-            offset = eval(self.translate_x_entry.get_text())
-        except ValueError as exception:
-            message = _("{error}: Unable to do translation, \
-make sure to enter a valid number").format(error=exception.__class__.__name__)
-            self.add_toast(message)
-            logging.exception(message)
-            offset = 0
-        operations.perform_operation(
-            self.props.application, operations.translate_x, offset)
+            offset = utilities.string_to_float(
+                self.translate_x_entry.get_text())
+            operations.perform_operation(
+                self.props.application, operations.translate_x, offset)
+        except ValueError as error:
+            self.add_toast(error)
 
     @Gtk.Template.Callback()
     def translate_y(self, *_args):
         try:
-            offset = eval(self.translate_y_entry.get_text())
-        except ValueError as exception:
-            message = _("{error}: Unable to do translation, \
-make sure to enter a valid number").format(error=exception.__class__.__name__)
-            self.add_toast(message)
-            logging.exception(message)
-            offset = 0
-        operations.perform_operation(
-            self.props.application, operations.translate_y, offset)
+            offset = utilities.string_to_float(
+                self.translate_y_entry.get_text())
+            operations.perform_operation(
+                self.props.application, operations.translate_y, offset)
+        except ValueError as error:
+            self.add_toast(error)
 
     @Gtk.Template.Callback()
     def multiply_x(self, *_args):
         try:
-            multiplier = eval(self.multiply_x_entry.get_text())
-        except ValueError as exception:
-            message = _("{error}: Unable to do translation, \
-make sure to enter a valid number").format(error=exception.__class__.__name__)
-            self.add_toast(message)
-            logging.exception(message)
-            multiplier = 1
-        operations.perform_operation(
-            self.props.application, operations.multiply_x, multiplier)
+            multiplier = utilities.string_to_float(
+                self.multiply_x_entry.get_text())
+            operations.perform_operation(
+                self.props.application, operations.multiply_x, multiplier)
+        except ValueError as error:
+            self.add_toast(error)
 
     @Gtk.Template.Callback()
     def multiply_y(self, *_args):
         try:
-            multiplier = eval(self.multiply_y_entry.get_text())
-        except ValueError as exception:
-            message = _("{error}: Unable to do translation, \
-make sure to enter a valid number").format(error=exception.__class__.__name__)
-            self.add_toast(message)
-            logging.exception(message)
-            multiplier = 1
-        operations.perform_operation(
-            self.props.application, operations.multiply_y, multiplier)
+            multiplier = utilities.string_to_float(
+                self.multiply_y_entry.get_text())
+            operations.perform_operation(
+                self.props.application, operations.multiply_y, multiplier)
+        except ValueError as error:
+            self.add_toast(error)
 
     @Gtk.Template.Callback()
     def derivative(self, *_args):

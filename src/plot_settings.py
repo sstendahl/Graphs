@@ -130,14 +130,16 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
             utilities.get_selected_chooser_item(self.custom_plot_style)
 
         self.props.application.canvas.set_limits({
-            "min_bottom": float(self.min_bottom.get_text()),
-            "max_bottom": float(self.max_bottom.get_text()),
-            "min_top": float(self.min_top.get_text()),
-            "max_top": float(self.max_top.get_text()),
-            "min_left": float(self.min_left.get_text()),
-            "max_left": float(self.max_left.get_text()),
-            "min_right": float(self.min_right.get_text()),
-            "max_right": float(self.max_right.get_text()),
+            "min_bottom": utilities.string_to_float(
+                self.min_bottom.get_text()),
+            "max_bottom": utilities.string_to_float(
+                self.max_bottom.get_text()),
+            "min_top": utilities.string_to_float(self.min_top.get_text()),
+            "max_top": utilities.string_to_float(self.max_top.get_text()),
+            "min_left": utilities.string_to_float(self.min_left.get_text()),
+            "max_left": utilities.string_to_float(self.max_left.get_text()),
+            "min_right": utilities.string_to_float(self.min_right.get_text()),
+            "max_right": utilities.string_to_float(self.max_right.get_text()),
         })
 
         # Set new item properties
