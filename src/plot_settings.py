@@ -129,17 +129,18 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
         plot_settings.custom_plot_style = \
             utilities.get_selected_chooser_item(self.custom_plot_style)
 
+        def get_float(entry):
+            return utilities.string_to_float(entry.get_text())
+
         self.props.application.canvas.set_limits({
-            "min_bottom": utilities.string_to_float(
-                self.min_bottom.get_text()),
-            "max_bottom": utilities.string_to_float(
-                self.max_bottom.get_text()),
-            "min_top": utilities.string_to_float(self.min_top.get_text()),
-            "max_top": utilities.string_to_float(self.max_top.get_text()),
-            "min_left": utilities.string_to_float(self.min_left.get_text()),
-            "max_left": utilities.string_to_float(self.max_left.get_text()),
-            "min_right": utilities.string_to_float(self.min_right.get_text()),
-            "max_right": utilities.string_to_float(self.max_right.get_text()),
+            "min_bottom": get_float(self.min_bottom),
+            "max_bottom": get_float(self.max_bottom),
+            "min_top": get_float(self.min_top),
+            "max_top": get_float(self.max_top),
+            "min_left": get_float(self.min_left),
+            "max_left": get_float(self.max_left),
+            "min_right": get_float(self.min_right),
+            "max_right": get_float(self.max_right),
         })
 
         # Set new item properties
