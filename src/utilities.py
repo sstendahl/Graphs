@@ -215,15 +215,6 @@ def shorten_label(label, max_length=20):
     return label
 
 
-def check_if_floats(array):
-    for item in array:
-        try:
-            float(item)
-        except ValueError:
-            return False
-    return True
-
-
 def get_config_directory():
     main_directory = Gio.File.new_for_path(GLib.get_user_config_dir())
     return main_directory.get_child_for_display_name("Graphs")
