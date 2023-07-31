@@ -40,7 +40,7 @@ def save_project(file, plot_settings, datadict, clipboard, version):
 def read_project(file):
     project = pickle.loads(_read_file(file, None))
     project_items = ["plot_settings", "data", "clipboard", "version"]
-    project.extend({key, None for key in project_items if key not in project})
+    project.extend({key: None for key in project_items if key not in project})
     return \
         project["plot_settings"], project["data"], \
         project["clipboard"], project["version"]
