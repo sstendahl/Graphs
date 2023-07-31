@@ -48,11 +48,12 @@ def add_data_dialog(self):
 
 def save_project_dialog(self):
     def on_response(dialog, response):
+        self.Clipboard.limits_clipboard[-1] = self.canvas.get_limits()
         with contextlib.suppress(GLib.GError):
             file = dialog.save_finish(response)
             file_io.save_project(
-                file, self.plot_settings, self.datadict,
-                self.datadict_clipboard, self.clipboard_pos, self.version)
+                file, self.plot_settings, self.datadict, self.Clipboard,
+                self.version)
     dialog = Gtk.FileDialog()
     dialog.set_filters(
         utilities.create_file_filters([(_("Graphs Project File"),

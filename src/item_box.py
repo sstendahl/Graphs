@@ -3,7 +3,7 @@ import contextlib
 
 from gi.repository import GLib, Gdk, Gtk
 
-from graphs import clipboard, graphs, ui, utilities
+from graphs import graphs, ui, utilities
 from graphs.edit_item import EditItemWindow
 
 
@@ -44,7 +44,7 @@ class ItemBox(Gtk.Box):
         self.application.datadict = utilities.change_key_position(
             self.application.datadict, drop_target.key, value)
         ui.reload_item_menu(self.application)
-        clipboard.add(self.application)
+        self.application.Clipboard.add()
         graphs.refresh(self.application)
 
     def on_dnd_prepare(self, drag_source, x, y):
@@ -80,7 +80,7 @@ class ItemBox(Gtk.Box):
                 self.item.color = utilities.rgba_to_hex(color).upper()
                 self.item.alpha = color.alpha
                 self.update_color()
-                clipboard.add(self.application)
+                self.application.Clipboard.add()
                 graphs.refresh(self.application)
 
     @Gtk.Template.Callback()
