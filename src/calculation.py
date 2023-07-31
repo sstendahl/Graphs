@@ -3,13 +3,13 @@ import numpy
 from numpy import *
 
 
-def create_dataset(x_start, x_stop, equation, step_size):
+def create_dataset(x_start: float, x_stop: float, equation, step_size: float):
     """
     Create all data set parameters that are required
     to create a new data object
     """
-    datapoints = int(abs(eval(x_start) - eval(x_stop)) / eval(step_size)) + 1
-    xdata = numpy.linspace(eval(x_start), eval(x_stop), datapoints)
+    datapoints = int(abs(x_start - x_stop) / step_size) + 1
+    xdata = numpy.linspace(x_start, x_stop, datapoints)
     equation = equation.replace("X", "xdata")
     equation = str(equation.replace("^", "**"))
     equation += " + xdata*0"

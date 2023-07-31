@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
+import re
 from gettext import gettext as _
 
 from gi.repository import GLib, Gdk, Gio, Gtk
@@ -252,3 +253,25 @@ def check_item(self, item):
         if hasattr(item, attribute):
             setattr(new_item, attribute, getattr(item, attribute))
     return new_item
+
+
+def string_to_float(string: str):
+    pattern = re.compile(
+        # Match all numbers with respect to scientific notation
+        r"(?P<b>[+\-]?(?:0|[1-9]\d*)(?:\.\d*)?)(?:[eE](?P<e>[+\-]?\d+))?$")
+    result = pattern.search(string)
+    if result is not None:
+        number = float(result.group("b"))
+        exponent = result.group("e")
+        if exponent is not None:
+            number *= numpy.power(10, int(exponent)) if int(exponent) >= 0 \
+                else 1 / numpy.power(10, numpy.abs(int(exponent)))
+        return number
+    pi_pattern = re.compile(
+        # match pi with optional factor (e. g. "2.4pi")
+        r"(?P<f>[+\-]?(?:0|[1-9]\d*)(?:\.\d*)?)?(?:pi|π)$")
+    pi_result = pi_pattern.search(string)
+    if pi_result is not None:
+        factor = pi_result.group("f")
+        return numpy.pi if factor is None else numpy.pi * float(factor)
+    raise ValueError(_("No valid number specified"))
