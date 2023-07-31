@@ -18,19 +18,19 @@ def open_project(self, file):
         new_plot_settings, new_datadict, clipboard, version = \
             file_io.read_project(file)
         utilities.set_attributes(new_plot_settings, self.plot_settings)
-
-        # Set attributes
-        if clipboard is None:
-            # Use empty clipboard if not in project file for older versions
-            # of Graphs
-            self.Clipboard.clear()
-        else:
-            self.Clipboard = clipboard
+        self.Clipboard.clear()
         self.plot_settings = new_plot_settings
         self.datadict = {}
         add_items(self,
                   [utilities.check_item(self, item)
                    for item in new_datadict.values()])
+
+        # Set attributes
+        if clipboard is not None:
+            for key, value in clipboard.items():
+                self.Clipboard[key] = value
+        self.canvas.set_limits(self.Clipboard.limits_clipboard[-1])
+        refresh(self)
     except (EOFError, UnpicklingError):
         message = _("Could not open project")
         self.main_window.add_toast(message)

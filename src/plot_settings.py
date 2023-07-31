@@ -160,7 +160,7 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
                     float(pyplot.rcParams["lines.markersize"])
             graphs.reload(self.props.application)
             ui.reload_item_menu(self.props.application)
-            self.Clipboard.add()
         else:
             self.props.application.canvas.toolbar.push_current()
             graphs.refresh(self.props.application)
+        self.props.application.Clipboard.add()        

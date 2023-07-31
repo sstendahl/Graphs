@@ -11,6 +11,9 @@ class Clipboard:
         self.limits_clipboard = [self.application.canvas.get_limits()]
         self.clipboard_pos = -1
 
+    def __setitem__(self, key, value):
+        setattr(self, key, value)
+
     def add(self):
         """
         Add data to the clipboard, is performed whenever an action is performed

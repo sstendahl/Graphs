@@ -20,10 +20,16 @@ import numpy
 
 
 def save_project(file, plot_settings, datadict, clipboard, version):
+
+    clipboard_dict = {
+        "datadict_clipboard": clipboard.datadict_clipboard,
+        "limits_clipboard": clipboard.limits_clipboard,
+        "clipboard_pos": clipboard.clipboard_pos,
+    }
     project_data = {
         "plot_settings": plot_settings,
         "data": datadict,
-        "clipboard": clipboard,
+        "clipboard": clipboard_dict,
         "version": version,
     }
     stream = _get_write_stream(file)

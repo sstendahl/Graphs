@@ -33,6 +33,7 @@ class GraphsApplication(Adw.Application):
         self.author = args[6]
         self.pkgdatadir = args[7]
         self.highlight = None
+        self.datadict = {}
         font_list = font_manager.findSystemFonts(fontpaths=None, fontext="ttf")
         for font in font_list:
             try:
