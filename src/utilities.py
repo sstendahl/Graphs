@@ -1,5 +1,6 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
-import re
+import ast
+import operator as op
 from gettext import gettext as _
 
 from gi.repository import GLib, Gdk, Gio, Gtk
@@ -256,22 +257,22 @@ def check_item(self, item):
 
 
 def string_to_float(string: str):
-    pattern = re.compile(
-        # Match all numbers with respect to scientific notation
-        r"(?P<b>[+\-]?(?:0|[1-9]\d*)(?:\.\d*)?)(?:[eE](?P<e>[+\-]?\d+))?$")
-    result = pattern.search(string)
-    if result is not None:
-        number = float(result.group("b"))
-        exponent = result.group("e")
-        if exponent is not None:
-            number *= numpy.power(10, int(exponent)) if int(exponent) >= 0 \
-                else 1 / numpy.power(10, numpy.abs(int(exponent)))
-        return number
-    pi_pattern = re.compile(
-        # match pi with optional factor (e. g. "2.4pi")
-        r"(?P<f>[+\-]?(?:0|[1-9]\d*)(?:\.\d*)?)?(?:pi|π)$")
-    pi_result = pi_pattern.search(string)
-    if pi_result is not None:
-        factor = pi_result.group("f")
-        return numpy.pi if factor is None else numpy.pi * float(factor)
-    raise ValueError(_("No valid number specified"))
+    string = string.replace("pi", f"({float(numpy.pi)})")
+    string = string.replace("^", "**")
+    return _eval(ast.parse(string, mode="eval").body)
+
+
+OPERATORS = {ast.Add: op.add, ast.Sub: op.sub, ast.Mult: op.mul,
+             ast.Div: op.truediv, ast.Pow: op.pow, ast.BitXor: op.xor,
+             ast.USub: op.neg}
+
+
+def _eval(node):
+    if isinstance(node, ast.Num):  # <number>
+        return node.n
+    elif isinstance(node, ast.BinOp):  # <left> <operator> <right>
+        return OPERATORS[type(node.op)](_eval(node.left), _eval(node.right))
+    elif isinstance(node, ast.UnaryOp):  # <operator> <operand> e.g., -1
+        return OPERATORS[type(node.op)](_eval(node.operand))
+    else:
+        raise ValueError(_("No valid number specified"))
