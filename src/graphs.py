@@ -25,7 +25,7 @@ def open_project(self, file):
                   [utilities.check_item(self, item)
                    for item in new_datadict.values()])
 
-        # Set attributes
+        # Set clipboard
         if clipboard is not None:
             for key, value in clipboard.items():
                 self.Clipboard[key] = value

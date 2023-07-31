@@ -163,4 +163,4 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
         else:
             self.props.application.canvas.toolbar.push_current()
             graphs.refresh(self.props.application)
-        self.props.application.Clipboard.add()        
+        self.props.application.Clipboard.add()
