@@ -134,20 +134,22 @@ def import_from_columns(self, import_settings):
             if params["separator"] == ",":
                 for index, value in enumerate(data_line):
                     data_line[index] = utilities.swap(value)
-            if utilities.check_if_floats(data_line):
+            try:
                 if len(data_line) == 1:
                     item.xdata.append(i)
-                    item.ydata.append(float(data_line[0]))
+                    item.ydata.append(utilities.string_to_float(data_line[0]))
                 else:
                     try:
-                        item.xdata.append(float(data_line[params["column_x"]]))
-                        item.ydata.append(float(data_line[params["column_y"]]))
+                        item.xdata.append(utilities.string_to_float(
+                            data_line[params["column_x"]]))
+                        item.ydata.append(utilities.string_to_float(
+                            data_line[params["column_y"]]))
                     except IndexError:
                         raise ParseError(
                             _("Import failed, column index out of range"))
             # If not all values in the line are floats, start looking for
             # headers instead
-            else:
+            except ValueError:
                 # By default it will check for headers using at least
                 # two whitespaces as delimiter (often tabs), but if
                 # that doesn"t work it will try the same delimiter as
