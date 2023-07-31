@@ -81,9 +81,7 @@ class Clipboard:
         ui.reload_item_menu(self.application)
 
     def clear(self):
-        """
-        Clear the clipboard to the initial state
-        """
+        """Clear the clipboard to the initial state"""
         self.datadict_clipboard = [{}]
         self.limits_clipboard = [self.application.canvas.get_limits()]
         self.clipboard_pos = -1
