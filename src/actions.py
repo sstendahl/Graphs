@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Main actions."""
-from graphs import clipboard, graphs, plotting_tools, ui
+from graphs import graphs, plotting_tools, ui
 from graphs.add_equation import AddEquationWindow
 from graphs.export_figure import ExportFigureWindow
 from graphs.plot_settings import PlotSettingsWindow
@@ -58,11 +58,11 @@ def select_none_action(_action, _target, self):
 
 
 def undo_action(_action, _target, self):
-    clipboard.undo(self)
+    self.Clipboard.undo()
 
 
 def redo_action(_action, _target, self):
-    clipboard.redo(self)
+    self.Clipboard.redo()
 
 
 def optimize_limits_action(_action, _target, self):

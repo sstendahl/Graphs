@@ -51,8 +51,8 @@ def save_project_dialog(self):
         with contextlib.suppress(GLib.GError):
             file = dialog.save_finish(response)
             file_io.save_project(
-                file, self.plot_settings, self.datadict,
-                self.datadict_clipboard, self.clipboard_pos, self.version)
+                file, self.plot_settings, self.datadict, self.Clipboard,
+                self.version)
     dialog = Gtk.FileDialog()
     dialog.set_filters(
         utilities.create_file_filters([(_("Graphs Project File"),

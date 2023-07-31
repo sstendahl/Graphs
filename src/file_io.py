@@ -19,13 +19,11 @@ from matplotlib.style.core import STYLE_BLACKLIST
 import numpy
 
 
-def save_project(file, plot_settings, datadict, datadict_clipboard,
-                 clipboard_pos, version):
+def save_project(file, plot_settings, datadict, clipboard, version):
     project_data = {
         "plot_settings": plot_settings,
         "data": datadict,
-        "datadict_clipboard": datadict_clipboard,
-        "clipboard_pos": clipboard_pos,
+        "clipboard": clipboard,
         "version": version,
     }
     stream = _get_write_stream(file)
@@ -35,10 +33,13 @@ def save_project(file, plot_settings, datadict, datadict_clipboard,
 
 def read_project(file):
     project = pickle.loads(_read_file(file, None))
+    project_items = ["plot_settings", "data", "clipboard", "version"]
+    for item in project_items:
+        if item not in project:
+            project[item] = None
     return \
         project["plot_settings"], project["data"], \
-        project["datadict_clipboard"], project["clipboard_pos"], \
-        project["version"]
+        project["clipboard"], project["version"]
 
 
 def save_item(file, item):

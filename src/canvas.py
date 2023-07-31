@@ -135,6 +135,19 @@ class Canvas(FigureCanvas):
         plot_settings.min_right = min(self.right_axis.get_ylim())
         plot_settings.max_right = max(self.right_axis.get_ylim())
 
+    def get_limits(self):
+        limits = {
+            "min_bottom": min(self.axis.get_xlim()),
+            "max_bottom": max(self.axis.get_xlim()),
+            "min_top": min(self.top_left_axis.get_xlim()),
+            "max_top": max(self.top_left_axis.get_xlim()),
+            "min_left": min(self.axis.get_ylim()),
+            "max_left": max(self.axis.get_ylim()),
+            "min_right": min(self.right_axis.get_ylim()),
+            "max_right": max(self.right_axis.get_ylim()),
+        }
+        return limits
+
     def set_axis_properties(self):
         """Set the properties that are related to the axes."""
         plot_settings = self.application.plot_settings

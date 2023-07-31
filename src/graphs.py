@@ -3,7 +3,7 @@ import logging
 from gettext import gettext as _
 from pickle import UnpicklingError
 
-from graphs import (clipboard, file_io, plot_styles, plotting_tools, ui,
+from graphs import (file_io, plot_styles, plotting_tools, ui,
                     utilities)
 from graphs.canvas import Canvas
 from graphs.item import Item
@@ -15,16 +15,22 @@ def open_project(self, file):
     for key in self.datadict.copy():
         delete_item(self, key)
     try:
-        new_plot_settings, new_datadict, datadict_clipboard, clipboard_pos, \
-            _version = file_io.read_project(file)
+        new_plot_settings, new_datadict, clipboard, version = \
+            file_io.read_project(file)
         utilities.set_attributes(new_plot_settings, self.plot_settings)
+
+        # Set attributes
+        if clipboard is None:
+            # Use empty clipboard if not in project file for older versions
+            # of Graphs
+            self.Clipboard.clear()
+        else:
+            self.Clipboard = clipboard
         self.plot_settings = new_plot_settings
         self.datadict = {}
         add_items(self,
                   [utilities.check_item(self, item)
                    for item in new_datadict.values()])
-        self.clipboard_pos = clipboard_pos
-        self.datadict_clipboard = datadict_clipboard
     except (EOFError, UnpicklingError):
         message = _("Could not open project")
         self.main_window.add_toast(message)
@@ -91,12 +97,12 @@ def add_items(self, items):
         else:
             toast = _("Item {} already exists")
         self.main_window.add_toast(toast)
-    clipboard.add(self)
     self.main_window.item_list.set_visible(True)
     ui.reload_item_menu(self)
     ui.enable_data_dependent_buttons(self)
     refresh(self)
     plotting_tools.optimize_limits(self)
+    self.Clipboard.add()
 
 
 def delete_item(self, key, give_toast=False):
@@ -105,7 +111,7 @@ def delete_item(self, key, give_toast=False):
     ui.reload_item_menu(self)
     if give_toast:
         self.main_window.add_toast(_("Deleted {name}").format(name=name))
-    clipboard.add(self)
+    self.Clipboard.add()
     check_open_data(self)
 
 

@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 from gi.repository import Adw, Gtk
 
-from graphs import (clipboard, file_io, graphs, misc, plot_styles,
+from graphs import (file_io, graphs, misc, plot_styles,
                     plotting_tools, ui, utilities)
 
 from matplotlib import pyplot
@@ -158,9 +158,9 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
                 item.markerstyle = pyplot.rcParams["lines.marker"]
                 item.markersize = \
                     float(pyplot.rcParams["lines.markersize"])
-            clipboard.add(self.props.application)
             graphs.reload(self.props.application)
             ui.reload_item_menu(self.props.application)
+            self.Clipboard.add()
         else:
             self.props.application.canvas.toolbar.push_current()
             graphs.refresh(self.props.application)

@@ -9,6 +9,7 @@ from gi.repository import Adw, GLib, Gio
 
 from graphs import actions, file_io, plot_styles, plotting_tools, ui
 from graphs.canvas import Canvas
+from graphs.clipboard import Clipboard
 from graphs.misc import InteractionMode, PlotSettings
 from graphs.preferences import Preferences
 from graphs.window import GraphsWindow
@@ -31,9 +32,6 @@ class GraphsApplication(Adw.Application):
         self.issues = args[5]
         self.author = args[6]
         self.pkgdatadir = args[7]
-        self.datadict = {}
-        self.datadict_clipboard = [{}]
-        self.clipboard_pos = -1
         self.highlight = None
         font_list = font_manager.findSystemFonts(fontpaths=None, fontext="ttf")
         for font in font_list:
@@ -121,6 +119,7 @@ class GraphsApplication(Adw.Application):
         pyplot.rcParams.update(
             file_io.parse_style(plot_styles.get_preferred_style(self)))
         self.canvas = Canvas(self)
+        self.Clipboard = Clipboard(self)
         self.main_window.toast_overlay.set_child(self.canvas)
         self.main_window.redo_button.set_sensitive(False)
         self.main_window.undo_button.set_sensitive(False)
