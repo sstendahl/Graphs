@@ -12,6 +12,7 @@ class Clipboard:
         self.clipboard_pos = -1
 
     def __setitem__(self, key, value):
+        """Allow to set the attributes in the Clipboard like a dictionary"""
         setattr(self, key, value)
 
     def add(self):
