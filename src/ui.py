@@ -48,6 +48,7 @@ def add_data_dialog(self):
 
 def save_project_dialog(self):
     def on_response(dialog, response):
+        self.Clipboard.limits_clipboard[-1] = self.canvas.get_limits()
         with contextlib.suppress(GLib.GError):
             file = dialog.save_finish(response)
             file_io.save_project(
