@@ -52,7 +52,7 @@ class Canvas(FigureCanvas):
                      self.top_right_axis]:
             axis.get_xaxis().set_visible(False)
             axis.get_yaxis().set_visible(False)
-        self.dummy_toolbar = DummyToolbar(self)
+        DummyToolbar(self)
         self.highlight = Highlight(self)
 
     # Temporarily overwritten function, see
