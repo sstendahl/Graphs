@@ -61,7 +61,7 @@ class Clipboard:
             self.application.main_window.redo_button.set_sensitive(True)
         graphs.check_open_data(self.application)
         ui.reload_item_menu(self.application)
-        self.application.canvas.dummy_toolbar.push_current()
+        self.application.canvas.toolbar.push_current()
 
     def redo(self):
         """
