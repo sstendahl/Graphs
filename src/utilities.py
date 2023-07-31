@@ -257,6 +257,8 @@ def check_item(self, item):
 
 
 def string_to_float(string: str):
+    string = string.replace("pi", f"({float(numpy.pi)})")
+    string = string.replace("^", "**")
     return _eval(ast.parse(string, mode="eval").body)
 
 
