@@ -39,7 +39,6 @@ class DataClipboard(BaseClipboard):
         Appends the latest state to the clipboard.
         """
         super().add(copy.deepcopy(self.application.datadict))
-
         # Keep clipboard length limited to preference values
         if len(self.clipboard) > \
                 int(self.application.preferences["clipboard_length"]) + 1:
@@ -63,7 +62,8 @@ class DataClipboard(BaseClipboard):
                 self.application.main_window.redo_button.set_sensitive(True)
             graphs.check_open_data(self.application)
             ui.reload_item_menu(self.application)
-            self.application.ViewClipboard.undo()
+            if self.application.ViewClipboard.view_changed:
+                self.application.ViewClipboard.undo()
 
     def redo(self):
 
@@ -82,8 +82,8 @@ class DataClipboard(BaseClipboard):
             self.application.main_window.redo_button.set_sensitive(False)
         graphs.check_open_data(self.application)
         ui.reload_item_menu(self.application)
-        self.application.ViewClipboard.redo()
-
+        if self.application.ViewClipboard.view_changed:
+            self.application.ViewClipboard.redo()
 
     def clear(self):
 
@@ -100,6 +100,7 @@ class ViewClipboard(BaseClipboard):
         self.clipboard = [self.application.canvas.get_limits()]
         self.undo_button = self.application.main_window.view_back_button
         self.redo_button = self.application.main_window.view_forward_button
+        self.view_changed = False
 
     def add(self):
 
@@ -107,13 +108,14 @@ class ViewClipboard(BaseClipboard):
         Add the latest view to the clipboard, skip in case the new view is
         the same as previous one (e.g. if an action does not change the limits)
         """
+        self.view_changed = False
         if self.application.canvas.get_limits() != self.clipboard[-1]:
             super().add(self.application.canvas.get_limits())
+            self.view_changed = True
 
     def undo(self):
 
         """Go back to the previous view"""
-
         if abs(self.clipboard_pos) < len(self.clipboard):
             self.clipboard_pos -= 1
             self.application.canvas.set_limits(

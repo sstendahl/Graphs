@@ -161,6 +161,6 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
             graphs.reload(self.props.application)
             ui.reload_item_menu(self.props.application)
         else:
-            self.props.application.canvas.toolbar.push_current()
             graphs.refresh(self.props.application)
         self.props.application.Clipboard.add()
+        self.props.application.ViewClipboard.add()
