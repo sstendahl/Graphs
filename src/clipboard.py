@@ -39,8 +39,7 @@ class BaseClipboard:
             self.clipboard_pos += 1
             self.set_clipboard_state()
             self.undo_button.set_sensitive(True)
-
-        if self.clipboard_pos >= -1:
+        else:
             self.redo_button.set_sensitive(False)
 
     def __setitem__(self, key, value):
