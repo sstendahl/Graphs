@@ -8,13 +8,13 @@ template $GraphsWindow : Adw.ApplicationWindow {
     orientation: vertical;
     Adw.HeaderBar {
       ToggleButton {
-        visible: bind-property sidebar_flap.folded;
+        visible: bind sidebar_flap.folded;
         action-name: "app.toggle_sidebar";
         icon-name: "sidebar-show-symbolic";
-        active: bind-property sidebar_flap.reveal-flap;
+        active: bind sidebar_flap.reveal-flap;
       }
       Box {
-        visible: bind-property sidebar_flap.folded inverted;
+        visible: bind sidebar_flap.folded inverted;
         MenuButton add_button {
           icon-name: "list-add-symbolic";
           tooltip-text: _("Add new Data");
@@ -42,7 +42,7 @@ template $GraphsWindow : Adw.ApplicationWindow {
       }
       [end]
       Box {
-        visible: bind-property sidebar_flap.folded inverted;
+        visible: bind sidebar_flap.folded inverted;
         Button view_back_button {
           action-name: "app.view_back";
           icon-name: "arrow1-left-symbolic";
@@ -158,7 +158,7 @@ template $GraphsWindow : Adw.ApplicationWindow {
                 hexpand: true;
                 width-request: 240;
                 halign: center;
-                visible: bind-property item_list.visible inverted;
+                visible: bind item_list.visible inverted;
                 title: _("No Data");
                 description: _("Add data from a file or manually as an equation");
                 styles ["compact"]
