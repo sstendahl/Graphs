@@ -30,7 +30,7 @@ class DataClipboard(BaseClipboard):
     def __init__(self, application):
         super().__init__(application)
         self.clipboard = [{"datadict": {},
-                           "view": self.application.canvas.get_limits()}]
+                           "view": self.application.canvas.limits}]
         self.undo_button = self.application.main_window.undo_button
         self.redo_button = self.application.main_window.redo_button
 
@@ -40,7 +40,7 @@ class DataClipboard(BaseClipboard):
         Appends the latest state to the clipboard.
         """
         data = {"datadict": copy.deepcopy(self.application.datadict),
-                "view": self.application.canvas.get_limits()}
+                "view": self.application.canvas.limits}
         super().add(copy.deepcopy(data))
         # Keep clipboard length limited to preference values
         if len(self.clipboard) > \
@@ -65,8 +65,8 @@ class DataClipboard(BaseClipboard):
             graphs.check_open_data(self.application)
             ui.reload_item_menu(self.application)
         if self.application.ViewClipboard.view_changed:
-            self.application.canvas.set_limits(
-                self.clipboard[self.clipboard_pos]["view"])
+            self.application.canvas.limits = \
+                self.clipboard[self.clipboard_pos]["view"]
         self.application.ViewClipboard.add()
 
     def redo(self):
@@ -78,8 +78,8 @@ class DataClipboard(BaseClipboard):
             self.clipboard_pos += 1
             self.application.datadict = \
                 copy.deepcopy(self.clipboard[self.clipboard_pos]["datadict"])
-            self.application.canvas.set_limits(
-                self.clipboard[self.clipboard_pos]["view"])
+            self.application.canvas.limits = \
+                self.clipboard[self.clipboard_pos]["view"]
             self.application.main_window.undo_button.set_sensitive(True)
 
         if self.clipboard_pos >= -1:
@@ -87,14 +87,14 @@ class DataClipboard(BaseClipboard):
         graphs.check_open_data(self.application)
         ui.reload_item_menu(self.application)
         if self.application.ViewClipboard.view_changed:
-            self.application.canvas.set_limits(
-                self.clipboard[self.clipboard_pos]["view"])
+            self.application.canvas.limits = \
+                self.clipboard[self.clipboard_pos]["view"]
         self.application.ViewClipboard.add()
 
     def clear(self):
         """Clear the clipboard to the initial state"""
         self.clipboard = [{"datadict": {},
-                           "view": self.application.canvas.get_limits()}]
+                           "view": self.application.canvas.limits}]
         self.clipboard_pos = -1
 
 
@@ -103,7 +103,7 @@ class ViewClipboard(BaseClipboard):
     def __init__(self, application):
 
         super().__init__(application)
-        self.clipboard = [self.application.canvas.get_limits()]
+        self.clipboard = [self.application.canvas.limits]
         self.undo_button = self.application.main_window.view_back_button
         self.redo_button = self.application.main_window.view_forward_button
         self.view_changed = False
@@ -114,16 +114,15 @@ class ViewClipboard(BaseClipboard):
         the same as previous one (e.g. if an action does not change the limits)
         """
         self.view_changed = False
-        if self.application.canvas.get_limits() != self.clipboard[-1]:
-            super().add(self.application.canvas.get_limits())
+        if self.application.canvas.limits != self.clipboard[-1]:
+            super().add(self.application.canvas.limits)
             self.view_changed = True
 
     def undo(self):
         """Go back to the previous view"""
         if abs(self.clipboard_pos) < len(self.clipboard):
             self.clipboard_pos -= 1
-            self.application.canvas.set_limits(
-                self.clipboard[self.clipboard_pos])
+            self.application.canvas.limits = self.clipboard[self.clipboard_pos]
 
         if abs(self.clipboard_pos) >= len(self.clipboard):
             self.application.main_window.view_back_button.set_sensitive(False)
@@ -135,17 +134,15 @@ class ViewClipboard(BaseClipboard):
         """Go back to the next view"""
         if self.clipboard_pos < -1:
             self.clipboard_pos += 1
-            self.application.canvas.set_limits(
-                self.clipboard[self.clipboard_pos])
+            self.application.canvas.limits = self.clipboard[self.clipboard_pos]
             self.application.main_window.view_back_button.set_sensitive(True)
 
         if self.clipboard_pos >= -1:
             self.application.main_window.view_forward_button.set_sensitive(
                 False)
-        self.application.canvas.set_limits(
-            self.clipboard[self.clipboard_pos])
+        self.application.canvas.limits = self.clipboard[self.clipboard_pos]
 
     def clear(self):
         """Clear the clipboard to the initial state"""
-        self.clipboard = [self.application.canvas.get_limits()]
+        self.clipboard = [self.application.canvas.limits]
         self.clipboard_pos = -1

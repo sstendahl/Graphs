@@ -35,7 +35,7 @@ def open_project(self, file):
             for key, value in view_clipboard.items():
                 self.ViewClipboard[key] = value
 
-        self.canvas.set_limits(self.ViewClipboard.clipboard[-1])
+        self.canvas.limits = self.ViewClipboard.clipboard[-1]
         ui.set_clipboard_buttons(self)
         refresh(self)
     except (EOFError, UnpicklingError):

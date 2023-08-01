@@ -11,7 +11,7 @@ from graphs.item import Item, TextItem
 from graphs.misc import InteractionMode
 from graphs.rename import RenameWindow
 
-from matplotlib import backend_tools as tools, cbook, pyplot
+from matplotlib import backend_tools as tools, pyplot
 from matplotlib.backend_bases import NavigationToolbar2
 from matplotlib.backends.backend_gtk4cairo import FigureCanvas
 from matplotlib.figure import Figure
@@ -38,7 +38,7 @@ class Canvas(FigureCanvas):
         color_rgba.alpha = 0.3
         self.rubberband_fill_color = utilities.rgba_to_tuple(color_rgba, True)
         super().__init__(self.figure)
-        self.set_limits({
+        self.limits = {
             "min_bottom": self.application.plot_settings.min_bottom,
             "max_bottom": self.application.plot_settings.max_bottom,
             "min_top": self.application.plot_settings.min_top,
@@ -47,7 +47,7 @@ class Canvas(FigureCanvas):
             "max_left": self.application.plot_settings.max_left,
             "min_right": self.application.plot_settings.min_right,
             "max_right": self.application.plot_settings.max_right,
-        })
+        }
         self.legends = []
         for axis in [self.right_axis, self.top_left_axis,
                      self.top_right_axis]:
@@ -109,22 +109,6 @@ class Canvas(FigureCanvas):
                 **common_parameters,
                 clip_on=True, fontsize=item.size, rotation=item.rotation)
 
-    def set_limits(self, limits):
-        try:
-            for axis in [self.axis, self.right_axis]:
-                axis.set_xlim(limits["min_bottom"], limits["max_bottom"])
-            for axis in [self.top_left_axis, self.top_right_axis]:
-                axis.set_xlim(limits["min_top"], limits["max_top"])
-            for axis in [self.axis, self.top_left_axis]:
-                axis.set_ylim(limits["min_left"], limits["max_left"])
-            for axis in [self.right_axis, self.top_right_axis]:
-                axis.set_ylim(limits["min_right"], limits["max_right"])
-        except ValueError:
-            message = _("Error setting limits, one of the values was "
-                        "probably infinite")
-            self.application.main_window.add_toast(message)
-            logging.exception(message)
-
     def apply_limits(self):
         plot_settings = self.application.plot_settings
         plot_settings.min_bottom = min(self.axis.get_xlim())
@@ -136,7 +120,8 @@ class Canvas(FigureCanvas):
         plot_settings.min_right = min(self.right_axis.get_ylim())
         plot_settings.max_right = max(self.right_axis.get_ylim())
 
-    def get_limits(self):
+    @property
+    def limits(self):
         return {
             "min_bottom": min(self.axis.get_xlim()),
             "max_bottom": max(self.axis.get_xlim()),
@@ -147,6 +132,23 @@ class Canvas(FigureCanvas):
             "min_right": min(self.right_axis.get_ylim()),
             "max_right": max(self.right_axis.get_ylim()),
         }
+
+    @limits.setter
+    def limits(self, value):
+        try:
+            for axis in [self.axis, self.right_axis]:
+                axis.set_xlim(value["min_bottom"], value["max_bottom"])
+            for axis in [self.top_left_axis, self.top_right_axis]:
+                axis.set_xlim(value["min_top"], value["max_top"])
+            for axis in [self.axis, self.top_left_axis]:
+                axis.set_ylim(value["min_left"], value["max_left"])
+            for axis in [self.right_axis, self.top_right_axis]:
+                axis.set_ylim(value["min_right"], value["max_right"])
+        except ValueError:
+            message = _("Error setting limits, one of the values was "
+                        "probably infinite")
+            self.application.main_window.add_toast(message)
+            logging.exception(message)
 
     def set_axis_properties(self):
         """Set the properties that are related to the axes."""

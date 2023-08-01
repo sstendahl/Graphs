@@ -7,7 +7,7 @@ from matplotlib import pyplot
 
 def optimize_limits(self):
     self.Clipboard.clipboard[self.Clipboard.clipboard_pos]["view"] = \
-        self.canvas.get_limits()
+        self.canvas.limits
     used_axes, items = utilities.get_used_axes(self)
     axis_map = {
         "left": self.canvas.axis,
@@ -60,7 +60,7 @@ def optimize_limits(self):
             max_all *= 2
         limits[f"min_{direction}"] = min_all
         limits[f"max_{direction}"] = max_all
-    self.canvas.set_limits(limits)
+    self.canvas.limits = limits
     self.canvas.application.ViewClipboard.add()
 
 
