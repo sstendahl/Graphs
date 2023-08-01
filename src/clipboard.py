@@ -56,15 +56,17 @@ class DataClipboard(BaseClipboard):
             self.clipboard_pos -= 1
             self.application.datadict = \
                 copy.deepcopy(self.clipboard[self.clipboard_pos]["datadict"])
-            self.application.canvas.set_limits(
-                self.clipboard[self.clipboard_pos]["view"])
+
             if abs(self.clipboard_pos) >= len(self.clipboard):
                 self.application.main_window.undo_button.set_sensitive(False)
             if self.clipboard_pos < -1:
                 self.application.main_window.redo_button.set_sensitive(True)
             graphs.check_open_data(self.application)
             ui.reload_item_menu(self.application)
-            self.application.ViewClipboard.add()
+        if self.application.ViewClipboard.view_changed:
+            self.application.canvas.set_limits(
+                self.clipboard[self.clipboard_pos]["view"])
+        self.application.ViewClipboard.add()
 
 
 
@@ -86,6 +88,9 @@ class DataClipboard(BaseClipboard):
             self.application.main_window.redo_button.set_sensitive(False)
         graphs.check_open_data(self.application)
         ui.reload_item_menu(self.application)
+        if self.application.ViewClipboard.view_changed:
+            self.application.canvas.set_limits(
+                self.clipboard[self.clipboard_pos]["view"])
         self.application.ViewClipboard.add()
 
     def clear(self):
