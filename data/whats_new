@@ -10,6 +10,6 @@
 </ul>
 <p>Bugfixes and changes under the hood:</p>
 <ul>
-  <li>Translate and multiply buttons are now handles safely without calling the Python eval function</li>
+  <li>Number inputs are now handled safely without calling the Python eval function</li>
   <li>The clipboard implementation has been rewritten </li>
 </ul>
