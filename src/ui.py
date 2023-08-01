@@ -13,6 +13,28 @@ def on_style_change(_shortcut, _theme, _widget, self):
     graphs.reload(self)
 
 
+def set_clipboard_buttons(self):
+    """
+    Enable and disable the buttons for the undo and redo buttons and backwards
+    and forwards view.
+    """
+    self.main_window.view_forward_button.set_sensitive(True)
+    self.main_window.view_back_button.set_sensitive(True)
+    self.main_window.undo_button.set_sensitive(True)
+    self.main_window.redo_button.set_sensitive(True)
+
+    if abs(self.Clipboard.clipboard_pos) >= len(self.Clipboard.clipboard):
+        self.main_window.undo_button.set_sensitive(False)
+    if abs(self.ViewClipboard.clipboard_pos) \
+            >= len(self.ViewClipboard.clipboard):
+        self.main_window.view_back_button.set_sensitive(False)
+
+    if self.Clipboard.clipboard_pos >= -1:
+        self.main_window.redo_button.set_sensitive(False)
+    if self.ViewClipboard.clipboard_pos >= -1:
+        self.main_window.view_forward_button.set_sensitive(False)
+
+
 def enable_data_dependent_buttons(self):
     enabled = False
     for item in self.datadict.values():
@@ -48,12 +70,11 @@ def add_data_dialog(self):
 
 def save_project_dialog(self):
     def on_response(dialog, response):
-        self.Clipboard.limits_clipboard[-1] = self.canvas.get_limits()
         with contextlib.suppress(GLib.GError):
             file = dialog.save_finish(response)
             file_io.save_project(
                 file, self.plot_settings, self.datadict, self.Clipboard,
-                self.version)
+                self.ViewClipboard, self.version)
     dialog = Gtk.FileDialog()
     dialog.set_filters(
         utilities.create_file_filters([(_("Graphs Project File"),

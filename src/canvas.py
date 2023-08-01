@@ -289,6 +289,7 @@ class DummyToolbar(NavigationToolbar2):
     def push_current(self):
         super().push_current()
         self.canvas.apply_limits()
+        self.canvas.application.ViewClipboard.add()
 
     # Overwritten function - do not change name
     def set_history_buttons(self):

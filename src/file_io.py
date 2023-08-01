@@ -19,17 +19,24 @@ from matplotlib.style.core import STYLE_BLACKLIST
 import numpy
 
 
-def save_project(file, plot_settings, datadict, clipboard, version):
+def save_project(file, plot_settings, datadict, data_clipboard, view_clipboard,
+                 version):
 
-    clipboard_dict = {
-        "datadict_clipboard": clipboard.datadict_clipboard,
-        "limits_clipboard": clipboard.limits_clipboard,
-        "clipboard_pos": clipboard.clipboard_pos,
+    # Clipboards are saved as dictionaries because our custom classes cannot
+    # be pickled
+    data_clipboard_dict = {
+        "clipboard": data_clipboard.clipboard,
+        "clipboard_pos": data_clipboard.clipboard_pos,
     }
+
+    view_clipboard_dict = {"clipboard": view_clipboard.clipboard,
+                           "clipboard_pos": view_clipboard.clipboard_pos}
+
     project_data = {
         "plot_settings": plot_settings,
         "data": datadict,
-        "clipboard": clipboard_dict,
+        "data_clipboard": data_clipboard_dict,
+        "view_clipboard": view_clipboard_dict,
         "version": version,
     }
     stream = _get_write_stream(file)
@@ -39,11 +46,17 @@ def save_project(file, plot_settings, datadict, clipboard, version):
 
 def read_project(file):
     project = pickle.loads(_read_file(file, None))
-    project_items = ["plot_settings", "data", "clipboard", "version"]
-    project.extend({key: None for key in project_items if key not in project})
+
+    # Load empty values if attribute does not exist in Project file, to
+    # ensure backwards compatibility with older project files
+    project_items = ["plot_settings", "data", "data_clipboard",
+                     "view_clipboard", "version"]
+
+    project.update({key: None for key in project_items if key not in project})
     return \
         project["plot_settings"], project["data"], \
-        project["clipboard"], project["version"]
+        project["data_clipboard"], project["view_clipboard"], \
+        project["version"]
 
 
 def save_item(file, item):
