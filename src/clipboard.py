@@ -1,6 +1,5 @@
 import copy
 from graphs import graphs, ui
-from typing import Any
 
 
 class BaseClipboard:
@@ -21,7 +20,7 @@ class BaseClipboard:
         self.clipboard.append(new_state)
         self.redo_button.set_sensitive(False)
 
-    def __setitem__(self, key: str, value: Any) -> None:
+    def __setitem__(self, key: str) -> None:
         """Allow to set the attributes in the Clipboard like a dictionary"""
         setattr(self, key, value)
 
@@ -66,7 +65,6 @@ class DataClipboard(BaseClipboard):
                 self.application.ViewClipboard.undo()
 
     def redo(self):
-
         """
         Redo an action, moves the clipboard position forwards by one and
         changes the dataset to the state before the previous action was undone
@@ -86,7 +84,6 @@ class DataClipboard(BaseClipboard):
             self.application.ViewClipboard.redo()
 
     def clear(self):
-
         """Clear the clipboard to the initial state"""
         self.clipboard = [{}]
         self.clipboard_pos = -1
@@ -103,7 +100,6 @@ class ViewClipboard(BaseClipboard):
         self.view_changed = False
 
     def add(self):
-
         """
         Add the latest view to the clipboard, skip in case the new view is
         the same as previous one (e.g. if an action does not change the limits)
@@ -114,7 +110,6 @@ class ViewClipboard(BaseClipboard):
             self.view_changed = True
 
     def undo(self):
-
         """Go back to the previous view"""
         if abs(self.clipboard_pos) < len(self.clipboard):
             self.clipboard_pos -= 1
@@ -130,7 +125,6 @@ class ViewClipboard(BaseClipboard):
             self.clipboard[self.clipboard_pos])
 
     def redo(self):
-
         """Go back to the next view"""
 
         if self.clipboard_pos < -1:
