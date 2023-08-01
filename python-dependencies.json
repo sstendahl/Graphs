@@ -2,7 +2,7 @@
     "name": "python-dependencies",
     "buildsystem": "simple",
     "build-commands": [
-        "pip3 install --verbose --exists-action=i --no-index --find-links=\"file://${PWD}\" --prefix=${FLATPAK_DEST} \"numpy\" \"scipy\" \"matplotlib\""
+        "pip3 install --verbose --exists-action=i --no-index --find-links=\"file://${PWD}\" --prefix=${FLATPAK_DEST} \"numpy\" \"scipy\" \"matplotlib\" \"numexpr\""
     ],
     "build-options": {
         "env": {
@@ -110,6 +110,18 @@
             "type": "file",
             "url": "https://files.pythonhosted.org/packages/64/e1/e7ee2ac522b66aed3022da0ab33b90e7d7f58aa17adbfaf123247598a0af/matplotlib-3.7.2-cp310-cp310-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
             "sha256": "71667eb2ccca4c3537d9414b1bc00554cb7f91527c17ee4ec38027201f8f1603",
+            "only-arches": "aarch64"
+        },
+        {
+            "type": "file",
+            "url": "https://files.pythonhosted.org/packages/8f/34/3c2fd908056c042704c72e41396352289ccb03d72608633874530a989009/numexpr-2.8.4-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+            "sha256": "9e34931089a6bafc77aaae21f37ad6594b98aa1085bb8b45d5b3cd038c3c17d9",
+            "only-arches": "x86_64"
+        },
+        {
+            "type": "file",
+            "url": "https://files.pythonhosted.org/packages/af/8f/ee084776ff9366c6af968184020cccdb8d6e1534ede2dc292f0974ec2837/numexpr-2.8.4-cp310-cp310-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
+            "sha256": "7bca95f4473b444428061d4cda8e59ac564dc7dc6a1dea3015af9805c6bc2946",
             "only-arches": "aarch64"
         }
     ],
