@@ -150,7 +150,7 @@ class GraphsApplication(Adw.Application):
         self.canvas.highlight.set_visible(select)
         win.cut_button.set_sensitive(select)
         for axis in self.canvas.figure.get_axes():
-            axis.set_navigate_mode(mode._navigate_mode)
+            axis.set_navigate_mode(mode.name if mode.name != "" else None)
         self.interaction_mode = mode
         self.canvas.draw()
 

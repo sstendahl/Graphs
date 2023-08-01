@@ -36,10 +36,6 @@ class InteractionMode(str, Enum):
     ZOOM = "zoom rect"
     SELECT = ""
 
-    @property
-    def _navigate_mode(self):
-        return self.name if self.name != "" else None
-
 
 class ParseError(Exception):
     def __init__(self, message):
