@@ -1,10 +1,10 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
+from graphs import utilities
+
 import numexpr
 
 import numpy
 from numpy import *
-
-from graphs import utilities
 
 
 def create_dataset(x_start: float, x_stop: float, equation, step_size: float):
