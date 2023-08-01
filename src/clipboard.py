@@ -128,4 +128,3 @@ class ViewClipboard(BaseClipboard):
 
     def set_clipboard_state(self):
         self.application.canvas.limits = self.clipboard[self.clipboard_pos]
-
