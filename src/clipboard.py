@@ -25,8 +25,7 @@ class BaseClipboard:
         if abs(self.clipboard_pos) < len(self.clipboard):
             self.clipboard_pos -= 1
             self.set_clipboard_state()
-
-        if abs(self.clipboard_pos) >= len(self.clipboard):
+        else:
             self.undo_button.set_sensitive(False)
         if self.clipboard_pos < -1:
             self.redo_button.set_sensitive(True)
