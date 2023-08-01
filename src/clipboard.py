@@ -1,4 +1,5 @@
 import copy
+
 from graphs import graphs, ui
 
 
@@ -68,14 +69,11 @@ class DataClipboard(BaseClipboard):
                 self.clipboard[self.clipboard_pos]["view"])
         self.application.ViewClipboard.add()
 
-
-
     def redo(self):
         """
         Redo an action, moves the clipboard position forwards by one and
         changes the dataset to the state before the previous action was undone
         """
-
         if self.clipboard_pos < -1:
             self.clipboard_pos += 1
             self.application.datadict = \

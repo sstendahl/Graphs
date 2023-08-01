@@ -31,10 +31,14 @@ class PlotSettings:
         self.max_right = 10
 
 
-class InteractionMode(Enum):
-    PAN = 1
-    ZOOM = 2
-    SELECT = 3
+class InteractionMode(str, Enum):
+    PAN = "pan/zoom"
+    ZOOM = "zoom rect"
+    SELECT = ""
+
+    @property
+    def _navigate_mode(self):
+        return self.name if self.name != "" else None
 
 
 class ParseError(Exception):
