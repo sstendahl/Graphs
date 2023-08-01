@@ -18,6 +18,7 @@ def open_project(self, file):
         new_plot_settings, new_datadict, data_clipboard, view_clipboard, \
             version = file_io.read_project(file)
         utilities.set_attributes(new_plot_settings, self.plot_settings)
+
         self.Clipboard.clear()
         self.ViewClipboard.clear()
         self.plot_settings = new_plot_settings

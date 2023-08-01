@@ -25,14 +25,12 @@ def save_project(file, plot_settings, datadict, data_clipboard, view_clipboard,
     # Clipboards are saved as dictionaries because our custom classes cannot
     # be pickled
     data_clipboard_dict = {
-        "datadict_clipboard": data_clipboard.clipboard,
-        "data_clipboard_pos": data_clipboard.clipboard_pos,
+        "clipboard": data_clipboard.clipboard,
+        "clipboard_pos": data_clipboard.clipboard_pos,
     }
 
-    view_clipboard_dict = {
-        "view_clipboard": view_clipboard.clipboard,
-        "view_clipboard_pos": view_clipboard.clipboard_pos,
-    }
+    view_clipboard_dict = {"clipboard": view_clipboard.clipboard,
+                           "clipboard_pos": view_clipboard.clipboard_pos}
 
     project_data = {
         "plot_settings": plot_settings,

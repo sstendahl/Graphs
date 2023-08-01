@@ -20,7 +20,7 @@ class BaseClipboard:
         self.clipboard.append(new_state)
         self.redo_button.set_sensitive(False)
 
-    def __setitem__(self, key: str):
+    def __setitem__(self, key, value):
         """Allow to set the attributes in the Clipboard like a dictionary"""
         setattr(self, key, value)
 
@@ -28,10 +28,8 @@ class BaseClipboard:
 class DataClipboard(BaseClipboard):
     def __init__(self, application):
         super().__init__(application)
-        self.clipboard = [{
-                           "datadict": {},
-                           "view": self.application.canvas.get_limits()
-                          }]
+        self.clipboard = [{"datadict": {},
+                           "view": self.application.canvas.get_limits()}]
         self.undo_button = self.application.main_window.undo_button
         self.redo_button = self.application.main_window.redo_button
 
@@ -67,9 +65,9 @@ class DataClipboard(BaseClipboard):
             graphs.check_open_data(self.application)
             ui.reload_item_menu(self.application)
             if self.application.ViewClipboard.view_changed:
+                self.application.ViewClipboard.add()
                 self.application.canvas.set_limits(
                     self.clipboard[self.clipboard_pos]["view"])
-
 
     def redo(self):
         """
@@ -88,13 +86,14 @@ class DataClipboard(BaseClipboard):
         graphs.check_open_data(self.application)
         ui.reload_item_menu(self.application)
         if self.application.ViewClipboard.view_changed:
+            self.application.ViewClipboard.add()
             self.application.canvas.set_limits(
                 self.clipboard[self.clipboard_pos]["view"])
 
-
     def clear(self):
         """Clear the clipboard to the initial state"""
-        self.clipboard = [{}]
+        self.clipboard = [{"datadict": {},
+                           "view": self.application.canvas.get_limits()}]
         self.clipboard_pos = -1
 
 
