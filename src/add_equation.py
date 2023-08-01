@@ -48,7 +48,7 @@ class AddEquationWindow(Adw.Window):
             self.destroy()
         except ValueError as error:
             self.toast_overlay.add_toast(Adw.Toast(title=error))
-        except (NameError, SyntaxError) as exception:
+        except (NameError, SyntaxError, TypeError) as exception:
             toast = _("{error} - Unable to add data from equation").format(
                 error=exception.__class__.__name__)
             self.toast_overlay.add_toast(Adw.Toast(title=toast))

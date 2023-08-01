@@ -1,6 +1,10 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
+import numexpr
+
 import numpy
 from numpy import *
+
+from graphs import utilities
 
 
 def create_dataset(x_start: float, x_stop: float, equation, step_size: float):
@@ -10,10 +14,9 @@ def create_dataset(x_start: float, x_stop: float, equation, step_size: float):
     """
     datapoints = int(abs(x_start - x_stop) / step_size) + 1
     xdata = numpy.linspace(x_start, x_stop, datapoints)
-    equation = equation.replace("X", "xdata")
-    equation = str(equation.replace("^", "**"))
+    equation = utilities.preprocess(equation).replace("x", "xdata")
     equation += " + xdata*0"
-    ydata = numpy.ndarray.tolist(eval(equation))
+    ydata = numpy.ndarray.tolist(numexpr.evaluate(equation))
     xdata = numpy.ndarray.tolist(xdata)
     return xdata, ydata
 

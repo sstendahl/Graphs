@@ -248,9 +248,7 @@ def check_item(self, item):
 
 
 def string_to_float(string: str):
-    string = string.replace("pi", f"({float(numpy.pi)})")
-    string = string.replace("^", "**")
-    return _eval(ast.parse(string, mode="eval").body)
+    return _eval(ast.parse(preprocess(string), mode="eval").body)
 
 
 OPERATORS = {ast.Add: op.add, ast.Sub: op.sub, ast.Mult: op.mul,
@@ -267,3 +265,9 @@ def _eval(node):
         return OPERATORS[type(node.op)](_eval(node.operand))
     else:
         raise ValueError(_("No valid number specified"))
+
+
+def preprocess(string: str):
+    string = string.replace("pi", f"({float(numpy.pi)})")
+    string = string.replace("^", "**")
+    return string.lower()
