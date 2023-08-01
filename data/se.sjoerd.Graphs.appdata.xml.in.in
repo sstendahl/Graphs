@@ -62,7 +62,6 @@
         <p>Bugfixes and changes under the hood:</p>
         <ul>
           <li>Number inputs are now handled safely without calling the Python eval function</li>
-          <li>The used dependencies have been updated to the latest available releases</li>
           <li>The clipboard implementation has been rewritten </li>
         </ul>
       </description>
