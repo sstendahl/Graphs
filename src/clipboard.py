@@ -126,7 +126,6 @@ class ViewClipboard(BaseClipboard):
 
     def redo(self):
         """Go back to the next view"""
-
         if self.clipboard_pos < -1:
             self.clipboard_pos += 1
             self.application.canvas.set_limits(
