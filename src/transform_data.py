@@ -38,7 +38,7 @@ class TransformWindow(Adw.Window):
             operations.perform_operation(
                 self.props.application, operations.transform,
                 input_x, input_y, discard)
-        except (NameError, SyntaxError) as exception:
+        except (RuntimeError, KeyError) as exception:
             toast = _("{name}: Unable to do transformation, \
 make sure the syntax is correct").format(name=exception.__class__.__name__)
             self.props.application.main_window.add_toast(toast)
