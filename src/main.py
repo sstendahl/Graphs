@@ -15,7 +15,6 @@ from graphs.preferences import Preferences
 from graphs.window import GraphsWindow
 
 from matplotlib import font_manager, pyplot
-from matplotlib.backend_bases import _Mode
 
 
 class GraphsApplication(Adw.Application):
@@ -135,17 +134,14 @@ class GraphsApplication(Adw.Application):
         pan_button = win.pan_button
         zoom_button = win.zoom_button
         if mode == InteractionMode.PAN:
-            self.canvas.toolbar.mode = _Mode.PAN
             pan_button.set_active(True)
             zoom_button.set_active(False)
             select = False
         elif mode == InteractionMode.ZOOM:
-            self.canvas.toolbar.mode = _Mode.ZOOM
             pan_button.set_active(False)
             zoom_button.set_active(True)
             select = False
         elif mode == InteractionMode.SELECT:
-            self.canvas.toolbar.mode = _Mode.NONE
             pan_button.set_active(False)
             zoom_button.set_active(False)
             select = True
@@ -154,7 +150,7 @@ class GraphsApplication(Adw.Application):
         self.canvas.highlight.set_visible(select)
         win.cut_button.set_sensitive(select)
         for axis in self.canvas.figure.get_axes():
-            axis.set_navigate_mode(self.canvas.toolbar.mode._navigate_mode)
+            axis.set_navigate_mode(mode.name if mode.name != "" else None)
         self.interaction_mode = mode
         self.canvas.draw()
 

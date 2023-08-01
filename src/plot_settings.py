@@ -132,7 +132,7 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
         def get_float(entry):
             return utilities.string_to_float(entry.get_text())
 
-        self.props.application.canvas.set_limits({
+        self.props.application.canvas.limits = {
             "min_bottom": get_float(self.min_bottom),
             "max_bottom": get_float(self.max_bottom),
             "min_top": get_float(self.min_top),
@@ -141,7 +141,7 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
             "max_left": get_float(self.max_left),
             "min_right": get_float(self.min_right),
             "max_right": get_float(self.max_right),
-        })
+        }
 
         # Set new item properties
         if self.style_changed:

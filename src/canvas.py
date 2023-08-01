@@ -8,9 +8,10 @@ from gi.repository import Gtk
 
 from graphs import utilities
 from graphs.item import Item, TextItem
+from graphs.misc import InteractionMode
 from graphs.rename import RenameWindow
 
-from matplotlib import pyplot
+from matplotlib import backend_tools as tools, pyplot
 from matplotlib.backend_bases import NavigationToolbar2
 from matplotlib.backends.backend_gtk4cairo import FigureCanvas
 from matplotlib.figure import Figure
@@ -37,7 +38,7 @@ class Canvas(FigureCanvas):
         color_rgba.alpha = 0.3
         self.rubberband_fill_color = utilities.rgba_to_tuple(color_rgba, True)
         super().__init__(self.figure)
-        self.set_limits({
+        self.limits = {
             "min_bottom": self.application.plot_settings.min_bottom,
             "max_bottom": self.application.plot_settings.max_bottom,
             "min_top": self.application.plot_settings.min_top,
@@ -46,7 +47,7 @@ class Canvas(FigureCanvas):
             "max_left": self.application.plot_settings.max_left,
             "min_right": self.application.plot_settings.min_right,
             "max_right": self.application.plot_settings.max_right,
-        })
+        }
         self.legends = []
         for axis in [self.right_axis, self.top_left_axis,
                      self.top_right_axis]:
@@ -108,22 +109,6 @@ class Canvas(FigureCanvas):
                 **common_parameters,
                 clip_on=True, fontsize=item.size, rotation=item.rotation)
 
-    def set_limits(self, limits):
-        try:
-            for axis in [self.axis, self.right_axis]:
-                axis.set_xlim(limits["min_bottom"], limits["max_bottom"])
-            for axis in [self.top_left_axis, self.top_right_axis]:
-                axis.set_xlim(limits["min_top"], limits["max_top"])
-            for axis in [self.axis, self.top_left_axis]:
-                axis.set_ylim(limits["min_left"], limits["max_left"])
-            for axis in [self.right_axis, self.top_right_axis]:
-                axis.set_ylim(limits["min_right"], limits["max_right"])
-        except ValueError:
-            message = _("Error setting limits, one of the values was "
-                        "probably infinite")
-            self.application.main_window.add_toast(message)
-            logging.exception(message)
-
     def apply_limits(self):
         plot_settings = self.application.plot_settings
         plot_settings.min_bottom = min(self.axis.get_xlim())
@@ -135,7 +120,8 @@ class Canvas(FigureCanvas):
         plot_settings.min_right = min(self.right_axis.get_ylim())
         plot_settings.max_right = max(self.right_axis.get_ylim())
 
-    def get_limits(self):
+    @property
+    def limits(self):
         return {
             "min_bottom": min(self.axis.get_xlim()),
             "max_bottom": max(self.axis.get_xlim()),
@@ -146,6 +132,23 @@ class Canvas(FigureCanvas):
             "min_right": min(self.right_axis.get_ylim()),
             "max_right": max(self.right_axis.get_ylim()),
         }
+
+    @limits.setter
+    def limits(self, value):
+        try:
+            for axis in [self.axis, self.right_axis]:
+                axis.set_xlim(value["min_bottom"], value["max_bottom"])
+            for axis in [self.top_left_axis, self.top_right_axis]:
+                axis.set_xlim(value["min_top"], value["max_top"])
+            for axis in [self.axis, self.top_left_axis]:
+                axis.set_ylim(value["min_left"], value["max_left"])
+            for axis in [self.right_axis, self.top_right_axis]:
+                axis.set_ylim(value["min_right"], value["max_right"])
+        except ValueError:
+            message = _("Error setting limits, one of the values was "
+                        "probably infinite")
+            self.application.main_window.add_toast(message)
+            logging.exception(message)
 
     def set_axis_properties(self):
         """Set the properties that are related to the axes."""
@@ -274,6 +277,37 @@ class Canvas(FigureCanvas):
 class DummyToolbar(NavigationToolbar2):
     """Own implementation of NavigationToolbar2 for rubberband support."""
     # Overwritten function - do not change name
+    def _zoom_pan_handler(self, event):
+        if event.button != 1:
+            return
+        if self.canvas.application.interaction_mode == InteractionMode.PAN:
+            if event.name == "button_press_event":
+                self.press_pan(event)
+            elif event.name == "button_release_event":
+                self.release_pan(event)
+        elif self.canvas.application.interaction_mode == InteractionMode.ZOOM:
+            if event.name == "button_press_event":
+                self.press_zoom(event)
+            elif event.name == "button_release_event":
+                self.release_zoom(event)
+
+    # Overwritten function - do not change name
+    def _update_cursor(self, event):
+        mode = self.canvas.application.interaction_mode
+        if event.inaxes and event.inaxes.get_navigate():
+            if (mode == InteractionMode.ZOOM
+                    and self._last_cursor != tools.Cursors.SELECT_REGION):
+                self.canvas.set_cursor(tools.Cursors.SELECT_REGION)
+                self._last_cursor = tools.Cursors.SELECT_REGION
+            elif (mode == InteractionMode.PAN
+                  and self._last_cursor != tools.Cursors.MOVE):
+                self.canvas.set_cursor(tools.Cursors.MOVE)
+                self._last_cursor = tools.Cursors.MOVE
+        elif self._last_cursor != tools.Cursors.POINTER:
+            self.canvas.set_cursor(tools.Cursors.POINTER)
+            self._last_cursor = tools.Cursors.POINTER
+
+    # Overwritten function - do not change name
     def draw_rubberband(self, _event, x0, y0, x1, y1):
         self.canvas._rubberband_rect = [int(val) for val in (x0,
                                         self.canvas.figure.bbox.height - y0,
@@ -287,19 +321,8 @@ class DummyToolbar(NavigationToolbar2):
 
     # Overwritten function - do not change name
     def push_current(self):
-        super().push_current()
         self.canvas.apply_limits()
         self.canvas.application.ViewClipboard.add()
-
-    # Overwritten function - do not change name
-    def set_history_buttons(self):
-        self.back_enabled = self._nav_stack._pos > 0
-        self.forward_enabled = \
-            self._nav_stack._pos < len(self._nav_stack._elements) - 1
-        self.canvas.application.main_window.view_back_button.set_sensitive(
-            self.back_enabled)
-        self.canvas.application.main_window.view_forward_button.set_sensitive(
-            self.forward_enabled)
 
     # Overwritten function - do not change name
     def save_figure(self):
