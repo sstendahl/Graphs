@@ -10,7 +10,7 @@ class BaseClipboard:
 
     def add(self, new_state):
         self.undo_button.set_sensitive(True)
-        # If a couple of redo"s were performed previously, it deletes the
+        # If a couple of redo's were performed previously, it deletes the
         # clipboard data that is located after the current clipboard position
         # and disables the redo button
         if self.clipboard_pos != -1:
