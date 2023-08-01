@@ -25,7 +25,8 @@ def set_clipboard_buttons(self):
 
     if abs(self.Clipboard.clipboard_pos) >= len(self.Clipboard.clipboard):
         self.main_window.undo_button.set_sensitive(False)
-    if abs(self.ViewClipboard.clipboard_pos) >= len(self.ViewClipboard.clipboard):
+    if abs(self.ViewClipboard.clipboard_pos) \
+            >= len(self.ViewClipboard.clipboard):
         self.main_window.view_back_button.set_sensitive(False)
 
     if self.Clipboard.clipboard_pos >= -1:

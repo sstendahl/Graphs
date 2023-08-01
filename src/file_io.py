@@ -52,12 +52,13 @@ def read_project(file):
     # Load empty values if attribute does not exist in Project file, to
     # ensure backwards compatibility with older project files
     project_items = ["plot_settings", "data", "data_clipboard",
-        "view_clipboard", "version"]
+                     "view_clipboard", "version"]
 
     project.update({key: None for key in project_items if key not in project})
     return \
         project["plot_settings"], project["data"], \
-        project["data_clipboard"], project["view_clipboard"], project["version"]
+        project["data_clipboard"], project["view_clipboard"], \
+        project["version"]
 
 
 def save_item(file, item):

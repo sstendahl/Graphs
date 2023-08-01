@@ -42,6 +42,7 @@ def open_project(self, file):
         self.main_window.add_toast(message)
         logging.exception(message)
 
+
 def add_items(self, items):
     if not items:
         return

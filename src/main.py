@@ -183,4 +183,3 @@ def main(args):
     app = GraphsApplication(args)
 
     return app.run(sys.argv)
-

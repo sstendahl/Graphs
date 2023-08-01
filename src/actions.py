@@ -84,6 +84,7 @@ def view_forward_action(_action, _target, self):
         self.canvas.apply_limits()
         graphs.refresh(self)
 
+
 def export_data_action(_action, _target, self):
     ui.export_data_dialog(self)
 

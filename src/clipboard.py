@@ -10,6 +10,7 @@ class BaseClipboard:
         self.clipboard_pos = -1
 
     def add(self, new_state):
+        self.undo_button.set_sensitive(True)
         # If a couple of redo"s were performed previously, it deletes the
         # clipboard data that is located after the current clipboard position
         # and disables the redo button
@@ -18,28 +19,31 @@ class BaseClipboard:
                 self.clipboard[:self.clipboard_pos + 1]
         self.clipboard_pos = -1
         self.clipboard.append(new_state)
+        self.redo_button.set_sensitive(False)
 
     def __setitem__(self, key: str, value: Any) -> None:
         """Allow to set the attributes in the Clipboard like a dictionary"""
         setattr(self, key, value)
 
+
 class DataClipboard(BaseClipboard):
     def __init__(self, application):
         super().__init__(application)
         self.clipboard = [{}]
+        self.undo_button = self.application.main_window.undo_button
+        self.redo_button = self.application.main_window.redo_button
 
     def add(self):
         """
         Add data to the clipboard, is performed whenever an action is performed
         Appends the latest state to the clipboard.
         """
-        self.application.main_window.undo_button.set_sensitive(True)
         super().add(copy.deepcopy(self.application.datadict))
+
+        # Keep clipboard length limited to preference values
         if len(self.clipboard) > \
                 int(self.application.preferences["clipboard_length"]) + 1:
             self.clipboard = self.clipboard[1:]
-
-        self.application.main_window.redo_button.set_sensitive(False)
 
     def undo(self):
         """
@@ -80,6 +84,7 @@ class DataClipboard(BaseClipboard):
         ui.reload_item_menu(self.application)
         self.application.ViewClipboard.redo()
 
+
     def clear(self):
 
         """Clear the clipboard to the initial state"""
@@ -93,6 +98,8 @@ class ViewClipboard(BaseClipboard):
 
         super().__init__(application)
         self.clipboard = [self.application.canvas.get_limits()]
+        self.undo_button = self.application.main_window.view_back_button
+        self.redo_button = self.application.main_window.view_forward_button
 
     def add(self):
 
@@ -100,10 +107,8 @@ class ViewClipboard(BaseClipboard):
         Add the latest view to the clipboard, skip in case the new view is
         the same as previous one (e.g. if an action does not change the limits)
         """
-
         if self.application.canvas.get_limits() != self.clipboard[-1]:
             super().add(self.application.canvas.get_limits())
-        self.application.main_window.view_forward_button.set_sensitive(False)
 
     def undo(self):
 
