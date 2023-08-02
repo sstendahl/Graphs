@@ -275,5 +275,5 @@ def preprocess(string: str):
 
     string = string.replace("pi", f"({float(numpy.pi)})")
     string = string.replace("^", "**")
-    string = re.sub(r'd\((.*?)\)', convert_degrees, string)
+    string = re.sub(r"d\((.*?)\)", convert_degrees, string)
     return string.lower()
