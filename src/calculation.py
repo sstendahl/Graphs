@@ -17,11 +17,15 @@ def create_dataset(x_start: float, x_stop: float, equation, step_size: float):
     return xdata, ydata
 
 
-def operation(x, y, input_x: str, input_y: str):
+def operation(x, y, input_x: str, input_y: str) -> tuple[numpy.ndarray,
+                                                         numpy.ndarray]:
     """Perform custom transformation on given x- and y-data"""
     x_min, x_max = min(x), max(x)
     y_min, y_max = min(y), max(y)
+
+    # Add array of zeros to return values, such that output remains a list
+    # of the correct size, even when a float is given as input.
     return (
-        numexpr.evaluate(utilities.preprocess(input_x)),
-        numexpr.evaluate(utilities.preprocess(input_y)),
+        numexpr.evaluate(utilities.preprocess(input_x) + "+ 0*x"),
+        numexpr.evaluate(utilities.preprocess(input_y) + "+ 0*y"),
     )
