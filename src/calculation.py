@@ -24,4 +24,4 @@ def operation(x, y, input_x: str, input_y: str):
     return (
         numexpr.evaluate(utilities.preprocess(input_x) + "+ 0*x"),
         numexpr.evaluate(utilities.preprocess(input_y) + "+ 0*y"),
-    ))
+    )
