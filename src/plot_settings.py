@@ -33,12 +33,10 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
     max_top = Gtk.Template.Child()
     no_data_message = Gtk.Template.Child()
 
-    @property
-    def plot_settings(self):
-        return self.props.application.plot_settings
-
     def __init__(self, application):
         super().__init__(application=application)
+        self.plot_settings = self.props.application.plot_settings
+
         self.plot_title.set_text(self.plot_settings.title)
         self.min_left.set_text(str(self.plot_settings.min_left))
         self.max_left.set_text(str(self.plot_settings.max_left))
