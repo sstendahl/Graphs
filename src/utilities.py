@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 import ast
 import operator as op
+import re
 from gettext import gettext as _
 
 from gi.repository import GLib, Gdk, Gio, Gtk
@@ -268,6 +269,11 @@ def _eval(node):
 
 
 def preprocess(string: str):
+    def convert_degrees(match):
+        expression = match.group(1)  # Get the content inside the brackets
+        return f"(({expression})*{float(numpy.pi)}/180)"
+
     string = string.replace("pi", f"({float(numpy.pi)})")
     string = string.replace("^", "**")
+    string = re.sub(r'd\((.*?)\)', convert_degrees, string)
     return string.lower()

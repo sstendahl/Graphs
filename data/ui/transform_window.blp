@@ -39,7 +39,7 @@ template $TransformWindow : Adw.Window {
           Popover help_popover {
             position: bottom;
             Label help_info {
-              label: _("The transformation tool uses Numpy notation, with capital letters for the coordinates.\nTransformations are done piece-wise, if you want access to the entire range use X_range or Y_range. \n e.g. Y = Y/max(X_range) divides each Y value by the largest value of X.\n\nTo convert a value from degrees into radians use radians(value), e.g. Y = sin(radians(X)).");
+              label: _("Additional variables:\nx_min, y_min\nx_max, y_max \n\nTrigometric functions use radians\nby default, append d to the function\nto use degrees, e.g. sind(x) or cosd(x).");
           	}
           }
         }
@@ -76,4 +76,4 @@ template $TransformWindow : Adw.Window {
       }
     }
   }
-}
+})
