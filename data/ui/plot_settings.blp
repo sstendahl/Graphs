@@ -154,9 +154,11 @@ template $PlotSettingsWindow : Adw.PreferencesWindow {
         title: _("Use Custom Style");
         subtitle: _("Use a custom style instead of following the system style");
         show-enable-switch: true;
+        notify => $on_custom_style_enable();
         Adw.ComboRow custom_plot_style {
           title: _("Style");
           subtitle: _("Custom style used for the figure");
+          notify::selected => $on_custom_style_select();
         }
       }
     }
