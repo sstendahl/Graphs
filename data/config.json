@@ -13,7 +13,7 @@
   "override_style_change": true,
   "plot_custom_style": "adwaita",
   "plot_legend": true,
-  "plot_legend_position": "best",
+  "plot_legend_position": "Best",
   "plot_right_label": "Y Value 2",
   "plot_right_scale": "linear",
   "plot_title": "",

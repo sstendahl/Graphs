@@ -74,7 +74,7 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
             self.plot_legend_position, misc.LEGEND_POSITIONS)
         utilities.set_chooser(
             self.plot_legend_position,
-            self.plot_settings.legend_position.capitalize())
+            self.plot_settings.legend_position)
         self.hide_unused_axes_limits()
         if len(self.props.application.datadict) > 0:
             self.no_data_message.set_visible(False)
@@ -114,8 +114,7 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
             utilities.get_selected_chooser_item(self.plot_right_scale)
         self.plot_settings.legend = self.plot_legend.get_enable_expansion()
         self.plot_settings.legend_position = \
-            utilities.get_selected_chooser_item(
-                self.plot_legend_position).lower()
+            utilities.get_selected_chooser_item(self.plot_legend_position)
 
         def get_float(entry):
             return utilities.string_to_float(entry.get_text())
