@@ -61,6 +61,7 @@ def optimize_limits(self):
         limits[f"min_{direction}"] = min_all
         limits[f"max_{direction}"] = max_all
     self.canvas.limits = limits
+    self.canvas.apply_limits()
     self.canvas.application.ViewClipboard.add()
 
 
