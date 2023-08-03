@@ -267,7 +267,7 @@ class Canvas(FigureCanvas):
             if labels:
                 self.top_right_axis.legend(
                     new_lines, labels,
-                    loc=self.application.plot_settings.legend_position,
+                    loc=self.application.plot_settings.legend_position.lower(),
                     frameon=True, reverse=True)
                 return
         if self.top_right_axis.get_legend() is not None:
