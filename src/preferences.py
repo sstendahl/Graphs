@@ -15,17 +15,12 @@ MIGRATION_KEYS = {
 
 
 def _check_against_template(config: dict, template: dict):
-    if set(config.keys()) != set(template.keys()):
-        config = utilities.remove_unused_config_keys(config, template)
-        config = utilities.add_new_config_keys(config, template)
-    return config
+    return {key: config[key] if key in config else value
+            for key, value in template.items()}
 
 
 class Preferences(dict):
     def __init__(self):
-        self.load()
-
-    def load(self):
         config_dir = utilities.get_config_directory()
         if not config_dir.query_exists(None):
             config_dir.make_directory_with_parents(None)

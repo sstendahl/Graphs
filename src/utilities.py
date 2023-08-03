@@ -11,12 +11,6 @@ from graphs.item import Item, TextItem
 import numpy
 
 
-def remove_unused_config_keys(config, template):
-    for key in [key for key in config.keys() if key not in template.keys()]:
-        del config[key]
-    return config
-
-
 def change_key_position(dictionary, key1, key2):
     """Change key position of key2 to that of key1."""
     keys = list(dictionary.keys())
@@ -62,12 +56,6 @@ def get_used_axes(self):
             used_axes["bottom"] = True
             items["bottom"].append(item)
     return used_axes, items
-
-
-def add_new_config_keys(config, template):
-    for key in [key for key in template.keys() if key not in config.keys()]:
-        config[key] = template[key]
-    return config
 
 
 def set_chooser(chooser, choice):
