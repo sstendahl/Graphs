@@ -15,9 +15,10 @@ MIGRATION_KEYS = {
 
 
 def _validate(config: dict, template: dict):
-    return {key: config[MIGRATION_KEYS[key] if key in MIGRATION_KEYS
-                        and MIGRATION_KEYS[key] in config else key]
-            if key in config else value for key, value in template.items()}
+    return {key: config[key if key in config else MIGRATION_KEYS[key]]
+            if key in config
+            or (key in MIGRATION_KEYS and MIGRATION_KEYS[key] in config)
+            else value for key, value in template.items()}
 
 
 class Preferences(dict):
