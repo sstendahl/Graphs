@@ -48,7 +48,7 @@ def add_items(self, items):
     if not items:
         return
     ignored = []
-    handle_duplicates = self.preferences["handle_duplicates"]
+    handle_duplicates = self.preferences["other_handle_duplicates"]
     for item in items:
         for item_1 in self.datadict.values():
             if item.name == item_1.name:
@@ -152,8 +152,10 @@ def refresh(self):
     self.canvas.set_axis_properties()
     self.canvas.set_ticks()
     for item in reversed(self.datadict.values()):
-        if (item is not None) and not \
-                (self.preferences["hide_unselected"] and not item.selected):
-            self.canvas.plot(item)
+        if item is None \
+                or (self.preferences["other_hide_unselected"]
+                    and not item.selected):
+            continue
+        self.canvas.plot(item)
     self.canvas.set_legend()
     self.canvas.draw()
