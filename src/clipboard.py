@@ -10,7 +10,6 @@ class BaseClipboard:
         self.clipboard_pos = -1
 
     def add(self, new_state):
-        self.undo_button.set_sensitive(True)
         # If a couple of redo's were performed previously, it deletes the
         # clipboard data that is located after the current clipboard position
         # and disables the redo button
@@ -19,16 +18,13 @@ class BaseClipboard:
                 self.clipboard[:self.clipboard_pos + 1]
         self.clipboard_pos = -1
         self.clipboard.append(new_state)
-        self.redo_button.set_sensitive(False)
+        ui.set_clipboard_buttons(self.application)
 
     def undo(self):
         if abs(self.clipboard_pos) < len(self.clipboard):
             self.clipboard_pos -= 1
             self.set_clipboard_state()
-        else:
-            self.undo_button.set_sensitive(False)
-        if self.clipboard_pos < -1:
-            self.redo_button.set_sensitive(True)
+        ui.set_clipboard_buttons(self.application)
 
     def redo(self):
         """
@@ -38,9 +34,7 @@ class BaseClipboard:
         if self.clipboard_pos < -1:
             self.clipboard_pos += 1
             self.set_clipboard_state()
-            self.undo_button.set_sensitive(True)
-        else:
-            self.redo_button.set_sensitive(False)
+        ui.set_clipboard_buttons(self.application)
 
     def __setitem__(self, key, value):
         """Allow to set the attributes in the Clipboard like a dictionary"""
