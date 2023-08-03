@@ -171,9 +171,9 @@ class PreferencesWindow(Adw.PreferencesWindow):
             self.props.application.canvas.get_supported_filetypes_grouped()
         for name, formats in filetypes.items():
             if name == filetype_name:
-                export_figure_filetyope = formats[0]
+                export_figure_filetype = formats[0]
         self.props.application.preferences["export_figure_filetype"] = \
-            export_figure_filetyope
+            export_figure_filetype
 
     @Gtk.Template.Callback()
     def on_close(self, _):
