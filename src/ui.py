@@ -22,7 +22,7 @@ def set_clipboard_buttons(self):
         self.ViewClipboard.clipboard_pos < - 1)
     self.main_window.view_back_button.set_sensitive(
         abs(self.ViewClipboard.clipboard_pos)
-            < len(self.ViewClipboard.clipboard))
+        < len(self.ViewClipboard.clipboard))
     self.main_window.undo_button.set_sensitive(
         abs(self.Clipboard.clipboard_pos) < len(self.Clipboard.clipboard))
     self.main_window.redo_button.set_sensitive(
