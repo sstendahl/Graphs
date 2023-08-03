@@ -7,11 +7,18 @@ from gi.repository import Adw, Gio, Gtk
 from graphs import file_io, graphs, misc, plot_styles, utilities
 
 
-MIGRATION_KEYS = [
+MIGRATION_KEYS = {
     # old -> new
-    ("handle_duplicates", "other_handle_duplicates"),
-    ("hide_unselected", "other_hide_unselected"),
-]
+    "handle_duplicates": "other_handle_duplicates",
+    "hide_unselected": "other_hide_unselected",
+}
+
+
+def _check_against_template(config: dict, template: dict):
+    if set(config.keys()) != set(template.keys()):
+        config = utilities.remove_unused_config_keys(config, template)
+        config = utilities.add_new_config_keys(config, template)
+    return config
 
 
 class Preferences(dict):
@@ -37,37 +44,16 @@ class Preferences(dict):
                 import_file, Gio.FileCopyFlags(1), None, None, None)
             logging.info(_("New Import Settings file created"))
 
-        config = file_io.parse_json(config_file)
+        self.update(_check_against_template({
+            MIGRATION_KEYS[key] if key in MIGRATION_KEYS else key: value
+            for key, value in file_io.parse_json(config_file).items()
+        }, file_io.parse_json(template_config_file)))
 
-        for old_key, new_key in MIGRATION_KEYS:
-            if old_key in config:
-                config[new_key] = config[old_key]
-                del config[old_key]
-
-        config_template = file_io.parse_json(template_config_file)
-        if set(config.keys()) != set(config_template.keys()):
-            config = utilities.remove_unused_config_keys(
-                config, config_template)
-            config = utilities.add_new_config_keys(
-                config, config_template)
-
-        import_params = file_io.parse_json(import_file)
         import_params_template = file_io.parse_json(template_import_file)
-        for key, item in import_params.items():
-            if set(item.keys()) != set(import_params_template[key].keys()):
-                import_params[key] = utilities.remove_unused_config_keys(
-                    item, import_params_template[key])
-                import_params[key] = utilities.add_new_config_keys(
-                    item, import_params_template[key])
-        if set(import_params.keys()) != set(import_params_template.keys()):
-            import_params = utilities.remove_unused_config_keys(
-                import_params, import_params_template)
-            import_params = utilities.add_new_config_keys(
-                import_params, import_params_template)
-
-        config["import_params"] = import_params
-        for key, item in config.items():
-            self[key] = item
+        self["import_params"] = _check_against_template({
+            key: _check_against_template(item, import_params_template[key])
+            for key, item in file_io.parse_json(import_file).items()
+        }, import_params_template)
 
     def save(self):
         config_dir = utilities.get_config_directory()
