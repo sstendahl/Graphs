@@ -38,17 +38,18 @@ class Preferences(dict):
             logging.info(_("New Import Settings file created"))
 
         config = file_io.parse_json(config_file)
+
+        for old_key, new_key in MIGRATION_KEYS:
+            if old_key in config:
+                config[new_key] = config[old_key]
+                del config[old_key]
+
         config_template = file_io.parse_json(template_config_file)
         if set(config.keys()) != set(config_template.keys()):
             config = utilities.remove_unused_config_keys(
                 config, config_template)
             config = utilities.add_new_config_keys(
                 config, config_template)
-
-        for old_key, new_key in MIGRATION_KEYS:
-            if old_key in config:
-                config[new_key] = config[old_key]
-                del config[old_key]
 
         import_params = file_io.parse_json(import_file)
         import_params_template = file_io.parse_json(template_import_file)
