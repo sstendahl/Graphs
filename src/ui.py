@@ -1,5 +1,6 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 import contextlib
+import logging
 from gettext import gettext as _
 
 from gi.repository import Adw, GLib, Gio, Gtk
@@ -142,3 +143,43 @@ def show_about_window(self):
     release_notes = whats_new_file.load_bytes(None)[0].get_data()
     about.set_release_notes(release_notes.decode("utf-8"))
     about.present()
+
+
+def load_values_from_dict(window, values, ignorelist=None):
+    for key, value in values.items():
+        if ignorelist is not None and key in ignorelist:
+            continue
+        try:
+            widget = getattr(window, key)
+            if isinstance(widget, Adw.EntryRow):
+                widget.set_text(str(value))
+            elif isinstance(widget, Adw.ComboRow):
+                utilities.set_chooser(widget, value)
+            elif isinstance(widget, Gtk.SpinButton):
+                widget.set_value(value)
+            elif isinstance(widget, Gtk.Switch):
+                widget.set_active(bool(value))
+            elif isinstance(widget, Adw.ExpanderRow):
+                widget.set_enable_expansion(bool(value))
+            else:
+                logging.warn(_("Unsupported Widget {}").format(type(widget)))
+        except AttributeError:
+            logging.warn(_("No way to apply “{}”").format(key))
+
+
+def save_values_to_dict(window, values, ignorelist=None):
+    for key in values.keys():
+        if ignorelist is not None and key in ignorelist:
+            continue
+        with contextlib.suppress(AttributeError):
+            widget = getattr(window, key)
+            if isinstance(widget, Adw.EntryRow):
+                values[key] = str(widget.get_text())
+            elif isinstance(widget, Adw.ComboRow):
+                values[key] = utilities.get_selected_chooser_item(widget)
+            elif isinstance(widget, Gtk.SpinButton):
+                values[key] = widget.get_value()
+            elif isinstance(widget, Gtk.Switch):
+                values[key] = bool(widget.get_active())
+            elif isinstance(widget, Adw.ExpanderRow):
+                values[key] = bool(widget.get_enable_expansion())

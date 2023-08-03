@@ -4,7 +4,7 @@ from gettext import gettext as _
 
 from gi.repository import Adw, Gio, Gtk
 
-from graphs import file_io, graphs, misc, plot_styles, utilities
+from graphs import file_io, graphs, misc, plot_styles, ui, utilities
 
 
 MIGRATION_KEYS = {
@@ -135,26 +135,8 @@ class PreferencesWindow(Adw.PreferencesWindow):
         self.present()
 
     def load(self):
-        for key, value in self.props.application.preferences.items():
-            if key in CONFIG_IGNORELIST:
-                continue
-            try:
-                widget = getattr(self, key)
-                if isinstance(widget, Adw.EntryRow):
-                    widget.set_text(str(value))
-                elif isinstance(widget, Adw.ComboRow):
-                    utilities.set_chooser(widget, value)
-                elif isinstance(widget, Gtk.SpinButton):
-                    widget.set_value(value)
-                elif isinstance(widget, Gtk.Switch):
-                    widget.set_active(bool(value))
-                elif isinstance(widget, Adw.ExpanderRow):
-                    widget.set_enable_expansion(bool(value))
-                else:
-                    logging.warn(_("Unsupported Type {}").format(type(widget)))
-            except AttributeError:
-                logging.warn(_("No way to configure “{}”").format(key))
-
+        ui.load_values_from_dict(self, self.props.application.preferences,
+                                 ignorelist=CONFIG_IGNORELIST)
         columns_params = \
             self.props.application.preferences["import_params"]["columns"]
         self.import_delimiter.set_text(columns_params["delimiter"])
@@ -172,26 +154,8 @@ class PreferencesWindow(Adw.PreferencesWindow):
         utilities.set_chooser(self.export_figure_filetype, filetype)
 
     def apply(self):
-        preferences = self.props.application.preferences
-        for key in preferences.keys():
-            if key in CONFIG_IGNORELIST:
-                continue
-            try:
-                widget = getattr(self, key)
-                if isinstance(widget, Adw.EntryRow):
-                    preferences[key] = str(widget.get_text())
-                elif isinstance(widget, Adw.ComboRow):
-                    preferences[key] = \
-                        utilities.get_selected_chooser_item(widget)
-                elif isinstance(widget, Gtk.SpinButton):
-                    preferences[key] = widget.get_value()
-                elif isinstance(widget, Gtk.Switch):
-                    preferences[key] = bool(widget.get_active())
-                elif isinstance(widget, Adw.ExpanderRow):
-                    preferences[key] = bool(widget.get_enable_expansion())
-            except AttributeError:
-                pass
-
+        ui.save_values_to_dict(self, self.props.application.preferences,
+                               ignorelist=CONFIG_IGNORELIST)
         columns_params = \
             self.props.application.preferences["import_params"]["columns"]
         columns_params["delimiter"] = self.import_delimiter.get_text()
@@ -208,7 +172,8 @@ class PreferencesWindow(Adw.PreferencesWindow):
         for name, formats in filetypes.items():
             if name == filetype_name:
                 export_figure_filetyope = formats[0]
-        preferences["export_figure_filetype"] = export_figure_filetyope
+        self.props.application.preferences["export_figure_filetype"] = \
+            export_figure_filetyope
 
     @Gtk.Template.Callback()
     def on_close(self, _):
