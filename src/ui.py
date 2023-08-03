@@ -19,14 +19,14 @@ def set_clipboard_buttons(self):
     and forwards view.
     """
     self.main_window.view_forward_button.set_sensitive(
-        self.ViewClipboard.clipboard_pos
-        < len(self.ViewClipboard.clipboard) - 1)
+        self.ViewClipboard.clipboard_pos < - 1)
     self.main_window.view_back_button.set_sensitive(
-        self.ViewClipboard.clipboard_pos > -len(self.ViewClipboard.clipboard))
+        abs(self.ViewClipboard.clipboard_pos)
+        < len(self.ViewClipboard.clipboard))
     self.main_window.undo_button.set_sensitive(
-        self.Clipboard.clipboard_pos > -len(self.Clipboard.clipboard))
+        abs(self.Clipboard.clipboard_pos) < len(self.Clipboard.clipboard))
     self.main_window.redo_button.set_sensitive(
-        self.Clipboard.clipboard_pos < len(self.Clipboard.clipboard) - 1)
+        self.Clipboard.clipboard_pos < - 1)
 
 
 def enable_data_dependent_buttons(self):
