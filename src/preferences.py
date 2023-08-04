@@ -15,6 +15,21 @@ MIGRATION_KEYS = {
 
 
 def _validate(config: dict, template: dict):
+    """Validates a given dictionary against a template, such that they
+    remain compatible with updated versions of Graphs. If the key in the
+    dictionary is not present in the template due to an update, the key will
+    be updated using MIGRATION_KEYS.
+
+    If the template or validated key does not match with the MIGRATION_KEYS,
+    the template keys and their associated values will be used instead for
+    the validated dictionary.
+
+    Args:
+        config: Dictionary to be validated
+        template: Template dictionary to which the config is validated against
+    Returns:
+        dict: Validated dictionary
+    """
     return {key: config[key if key in config else MIGRATION_KEYS[key]]
             if key in config
             or (key in MIGRATION_KEYS and MIGRATION_KEYS[key] in config)
