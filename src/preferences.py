@@ -8,15 +8,33 @@ from graphs import file_io, graphs, misc, plot_styles, ui, utilities
 
 
 MIGRATION_KEYS = {
-    # old -> new
-    "handle_duplicates": "other_handle_duplicates",
-    "hide_unselected": "other_hide_unselected",
+    # new: old
+    "other_handle_duplicates": "handle_duplicates",
+    "other_hide_unselected": "hide_unselected",
 }
 
 
-def _check_against_template(config: dict, template: dict):
-    return {key: config[key] if key in config else value
-            for key, value in template.items()}
+def _validate(config: dict, template: dict):
+    """
+    Validates a given dictionary against a template, such that they
+    remain compatible with updated versions of Graphs. If the key in the
+    dictionary is not present in the template due to an update, the key will
+    be updated using MIGRATION_KEYS.
+
+    If the template or validated key does not match with the MIGRATION_KEYS,
+    the template keys and their associated values will be used instead for
+    the validated dictionary.
+
+    Args:
+        config: Dictionary to be validated
+        template: Template dictionary to which the config is validated against
+    Returns:
+        dict: Validated dictionary
+    """
+    return {key: config[key if key in config else MIGRATION_KEYS[key]]
+            if key in config
+            or (key in MIGRATION_KEYS and MIGRATION_KEYS[key] in config)
+            else value for key, value in template.items()}
 
 
 class Preferences(dict):
@@ -39,14 +57,13 @@ class Preferences(dict):
                 import_file, Gio.FileCopyFlags(1), None, None, None)
             logging.info(_("New Import Settings file created"))
 
-        self.update(_check_against_template({
-            MIGRATION_KEYS[key] if key in MIGRATION_KEYS else key: value
-            for key, value in file_io.parse_json(config_file).items()
-        }, file_io.parse_json(template_config_file)))
+        self.update(_validate(
+            file_io.parse_json(config_file),
+            file_io.parse_json(template_config_file)))
 
         import_params_template = file_io.parse_json(template_import_file)
-        self["import_params"] = _check_against_template({
-            key: _check_against_template(item, import_params_template[key])
+        self["import_params"] = _validate({
+            key: _validate(item, import_params_template[key])
             for key, item in file_io.parse_json(import_file).items()
         }, import_params_template)
 
