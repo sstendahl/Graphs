@@ -1,6 +1,6 @@
 import copy
 
-from gi.repository import Adw, Gtk, GObject
+from gi.repository import Adw, GObject, Gtk
 
 from graphs import graphs, ui
 
@@ -59,7 +59,7 @@ class DataClipboard(BaseClipboard):
             clipboard=[{"datadict": {},
                         "view": application.canvas.limits}],
             undo_button=application.main_window.undo_button,
-            redo_button=application.main_window.redo_button
+            redo_button=application.main_window.redo_button,
         )
 
     def add(self):

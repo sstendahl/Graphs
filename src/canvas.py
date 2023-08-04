@@ -4,7 +4,7 @@ import time
 from contextlib import nullcontext
 from gettext import gettext as _
 
-from gi.repository import Gtk
+from gi.repository import Adw, GObject, Gtk
 
 from graphs import utilities
 from graphs.item import Item, TextItem
@@ -14,19 +14,19 @@ from graphs.rename import RenameWindow
 from matplotlib import backend_tools as tools, pyplot
 from matplotlib.backend_bases import NavigationToolbar2
 from matplotlib.backends.backend_gtk4cairo import FigureCanvas
-from matplotlib.figure import Figure
 from matplotlib.widgets import SpanSelector
 
 
 class Canvas(FigureCanvas):
+    application = GObject.Property(type=Adw.Application)
+    one_click_trigger = GObject.Property(type=bool, default=False)
+    time_first_click = GObject.Property(type=float, default=0)
+
     """Create the graph widget"""
     def __init__(self, application):
-        print(Canvas.__mro__)
-        self.application = application
-        self.figure = Figure()
+        GObject.Object.__init__(self, application=application)
+        super().__init__()
         self.figure.set_tight_layout(True)
-        self.one_click_trigger = False
-        self.time_first_click = 0
         self.mpl_connect("button_release_event", self)
         self.axis = self.figure.add_subplot(111)
         self.right_axis = self.axis.twinx()
@@ -38,7 +38,6 @@ class Canvas(FigureCanvas):
         self.rubberband_edge_color = utilities.rgba_to_tuple(color_rgba, True)
         color_rgba.alpha = 0.3
         self.rubberband_fill_color = utilities.rgba_to_tuple(color_rgba, True)
-        super().__init__(self.figure)
         self.limits = {
             "min_bottom": self.application.plot_settings.min_bottom,
             "max_bottom": self.application.plot_settings.max_bottom,
@@ -121,7 +120,7 @@ class Canvas(FigureCanvas):
         plot_settings.min_right = min(self.right_axis.get_ylim())
         plot_settings.max_right = max(self.right_axis.get_ylim())
 
-    @property
+    @GObject.Property
     def limits(self):
         return {
             "min_bottom": min(self.axis.get_xlim()),
