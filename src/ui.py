@@ -124,15 +124,14 @@ def build_dialog(name):
 
 
 def show_about_window(self):
-    developers = [
-        "Sjoerd Stendahl <contact@sjoerd.se>",
-        "Christoph Kohnen <christoph.kohnen@disroot.org>",
-    ]
     Adw.AboutWindow(
         transient_for=self.main_window, application_name=self.name,
         application_icon=self.props.application_id, website=self.website,
         developer_name=self.author, issue_url=self.issues,
-        version=self.version, developers=developers,
+        version=self.version, developers=[
+            "Sjoerd Stendahl <contact@sjoerd.se>",
+            "Christoph Kohnen <christoph.kohnen@disroot.org>",
+        ],
         copyright=f"© 2022 – {datetime.date.today().year} {self.author}",
         license_type="GTK_LICENSE_GPL_3_0",
         translator_credits=_("translator-credits"),
