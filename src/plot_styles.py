@@ -134,6 +134,7 @@ STYLE_DICT = {
     "tick_color": ["xtick.color", "ytick.color"],
     "axis_color": ["axes.edgecolor"],
     "grid_color": ["grid.color"],
+    "grid_opacity": ["grid.alpha"],
     "background_color": ["axes.facecolor"],
     "outline_color": ["figure.facecolor", "figure.edgecolor"],
 }
@@ -242,10 +243,6 @@ class PlotStylesWindow(Adw.Window):
             self.markers, utilities.get_dict_by_value(
                 misc.MARKERS, self.style["lines.marker"]))
 
-        # grid
-        self.grid_opacity.set_value(
-            1 - (float(self.style["grid.alpha"]) * 100))
-
         for button in self.color_buttons:
             button.provider.load_from_data(
                 f"button {{ color: {button.color}; }}", -1)
@@ -282,9 +279,6 @@ class PlotStylesWindow(Adw.Window):
         # lines
         self.style["lines.marker"] = \
             misc.MARKERS[utilities.get_selected_chooser_item(self.markers)]
-
-        # grid
-        self.style["grid.alpha"] = 1 - (self.grid_opacity.get_value() / 100)
 
         # line colors
         line_colors = []
