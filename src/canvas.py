@@ -21,6 +21,7 @@ from matplotlib.widgets import SpanSelector
 class Canvas(FigureCanvas):
     """Create the graph widget"""
     def __init__(self, application):
+        print(Canvas.__mro__)
         self.application = application
         self.figure = Figure()
         self.figure.set_tight_layout(True)

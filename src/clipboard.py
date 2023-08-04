@@ -1,13 +1,21 @@
 import copy
 
+from gi.repository import Adw, Gtk, GObject
+
 from graphs import graphs, ui
 
 
-class BaseClipboard:
-    def __init__(self, application):
-        self.application = application
-        self.clipboard = []
-        self.clipboard_pos = -1
+class BaseClipboard(GObject.Object):
+    application = GObject.Property(type=Adw.Application)
+    clipboard = GObject.Property(type=object)
+    clipboard_pos = GObject.Property(type=int, default=-1)
+    undo_button = GObject.Property(type=Gtk.Button)
+    redo_button = GObject.Property(type=Gtk.Button)
+
+    def __init__(self, clipboard=None, **kwargs):
+        if clipboard is None:
+            clipboard = []
+        super().__init__(clipboard=clipboard, **kwargs)
 
     def add(self, new_state):
         # If a couple of redo's were performed previously, it deletes the
@@ -46,11 +54,13 @@ class BaseClipboard:
 
 class DataClipboard(BaseClipboard):
     def __init__(self, application):
-        super().__init__(application)
-        self.clipboard = [{"datadict": {},
-                           "view": self.application.canvas.limits}]
-        self.undo_button = self.application.main_window.undo_button
-        self.redo_button = self.application.main_window.redo_button
+        super().__init__(
+            application=application,
+            clipboard=[{"datadict": {},
+                        "view": application.canvas.limits}],
+            undo_button=application.main_window.undo_button,
+            redo_button=application.main_window.redo_button
+        )
 
     def add(self):
         """
@@ -95,13 +105,15 @@ class DataClipboard(BaseClipboard):
 
 
 class ViewClipboard(BaseClipboard):
+    view_changed = GObject.Property(type=bool, default=False)
 
     def __init__(self, application):
-        super().__init__(application)
-        self.clipboard = [self.application.canvas.limits]
-        self.undo_button = self.application.main_window.view_back_button
-        self.redo_button = self.application.main_window.view_forward_button
-        self.view_changed = False
+        super().__init__(
+            application=application,
+            clipboard=[application.canvas.limits],
+            undo_button=application.main_window.view_back_button,
+            redo_button=application.main_window.view_forward_button,
+        )
 
     def add(self):
         """
