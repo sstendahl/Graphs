@@ -5,7 +5,7 @@ import sys
 from gettext import gettext as _
 from inspect import getmembers, isfunction
 
-from gi.repository import Adw, GLib, Gio, GObject
+from gi.repository import Adw, GLib, GObject, Gio
 
 from graphs import actions, file_io, plot_styles, plotting_tools, ui
 from graphs.canvas import Canvas
@@ -22,7 +22,6 @@ class GraphsApplication(Adw.Application):
     preferences = GObject.Property(type=object)
     version = GObject.Property(type=str, default="")
     name = GObject.Property(type=str, default="")
-    copyright = GObject.Property(type=str, default="")
     website = GObject.Property(type=str, default="")
     issues = GObject.Property(type=str, default="")
     author = GObject.Property(type=str, default="")
@@ -33,9 +32,9 @@ class GraphsApplication(Adw.Application):
         """Init the application."""
         super().__init__(
             application_id=args[1], flags=Gio.ApplicationFlags.DEFAULT_FLAGS,
-            version=args[0], name=args[2], copyright=args[3], website=args[4],
-            issues=args[5], author=args[6], pkgdatadir=args[7],
-            datadict={}, preferences=Preferences()
+            version=args[0], name=args[2], website=args[3], issues=args[4],
+            author=args[5], pkgdatadir=args[6],
+            datadict={}, preferences=Preferences(),
         )
         font_list = font_manager.findSystemFonts(fontpaths=None, fontext="ttf")
         for font in font_list:
