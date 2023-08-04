@@ -358,15 +358,10 @@ class Highlight(SpanSelector):
         There are some obscure cases where this otherwise happens, and the
         selection tool becomes unusable.
         """
-        xmin = min(canvas.top_right_axis.get_xlim())
-        xmax = max(canvas.top_right_axis.get_xlim())
-        extend_min = self.extents[0]
-        extend_max = self.extents[1]
-        if self.extents[0] < xmin:
-            extend_min = xmin
-        if self.extents[1] > xmax:
-            extend_max = xmax
-        self.extents = (extend_min, extend_max)
+        xmin, xmax = canvas.top_right_axis.get_xlim()
+        extent_min = max(xmin, self.extents[0])
+        extent_max = min(xmax, self.extents[1])
+        self.extents = (extent_min, extent_max)
 
     def get_start_stop(self, bottom_x):
         if bottom_x:
