@@ -161,6 +161,7 @@ def load_values_from_dict(window, values, ignorelist=None):
                 widget.set_active(bool(value))
             elif isinstance(widget, Adw.ExpanderRow):
                 widget.set_enable_expansion(bool(value))
+                widget.set_expanded(bool(value))
             elif isinstance(widget, Gtk.Scale):
                 widget.set_value(value)
             elif isinstance(widget, Gtk.Button):
