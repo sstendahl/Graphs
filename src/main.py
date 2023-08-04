@@ -5,7 +5,7 @@ import sys
 from gettext import gettext as _
 from inspect import getmembers, isfunction
 
-from gi.repository import Adw, GLib, Gio
+from gi.repository import Adw, GLib, Gio, GObject
 
 from graphs import actions, file_io, plot_styles, plotting_tools, ui
 from graphs.canvas import Canvas
@@ -19,27 +19,30 @@ from matplotlib import font_manager, pyplot
 
 class GraphsApplication(Adw.Application):
     """The main application singleton class."""
+    preferences = GObject.Property(type=object)
+    version = GObject.Property(type=str, default="")
+    name = GObject.Property(type=str, default="")
+    copyright = GObject.Property(type=str, default="")
+    website = GObject.Property(type=str, default="")
+    issues = GObject.Property(type=str, default="")
+    author = GObject.Property(type=str, default="")
+    pkgdatadir = GObject.Property(type=str, default="")
+    datadict = GObject.Property(type=object)
 
     def __init__(self, args):
         """Init the application."""
         super().__init__(
-            application_id=args[1], flags=Gio.ApplicationFlags.DEFAULT_FLAGS)
-        self.version = args[0]
-        self.name = args[2]
-        self.copyright = args[3]
-        self.website = args[4]
-        self.issues = args[5]
-        self.author = args[6]
-        self.pkgdatadir = args[7]
-        self.highlight = None
-        self.datadict = {}
+            application_id=args[1], flags=Gio.ApplicationFlags.DEFAULT_FLAGS,
+            version=args[0], name=args[2], copyright=args[3], website=args[4],
+            issues=args[5], author=args[6], pkgdatadir=args[7],
+            datadict={}, preferences=Preferences()
+        )
         font_list = font_manager.findSystemFonts(fontpaths=None, fontext="ttf")
         for font in font_list:
             try:
                 font_manager.fontManager.addfont(font)
             except RuntimeError:
                 logging.warning(_("Could not load %s"), font)
-        self.preferences = Preferences()
         self.add_actions()
         self.get_style_manager().connect(
             "notify", ui.on_style_change, None, self)

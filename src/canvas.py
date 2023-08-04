@@ -330,7 +330,7 @@ class DummyToolbar(NavigationToolbar2):
 
 
 class Highlight(SpanSelector):
-    def __init__(self, canvas, span=None):
+    def __init__(self, canvas):
         """
         Create a span selector object, to highlight part of the graph.
         If a span already exists, make it visible instead
@@ -349,8 +349,6 @@ class Highlight(SpanSelector):
             interactive=True,
             drag_from_anywhere=True,
         )
-        if span is not None:
-            self.extents = span
 
     def on_define(self, canvas):
         """
