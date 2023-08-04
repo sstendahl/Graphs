@@ -15,7 +15,8 @@ MIGRATION_KEYS = {
 
 
 def _validate(config: dict, template: dict):
-    """Validates a given dictionary against a template, such that they
+    """
+    Validates a given dictionary against a template, such that they
     remain compatible with updated versions of Graphs. If the key in the
     dictionary is not present in the template due to an update, the key will
     be updated using MIGRATION_KEYS.
