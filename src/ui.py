@@ -161,6 +161,10 @@ def load_values_from_dict(window, values, ignorelist=None):
                 widget.set_active(bool(value))
             elif isinstance(widget, Adw.ExpanderRow):
                 widget.set_enable_expansion(bool(value))
+            elif isinstance(widget, Gtk.Scale):
+                widget.set_value(value)
+            elif isinstance(widget, Gtk.Button):
+                widget.color = value
             else:
                 logging.warn(_("Unsupported Widget {}").format(type(widget)))
         except AttributeError:
@@ -183,3 +187,7 @@ def save_values_to_dict(window, values, ignorelist=None):
                 values[key] = bool(widget.get_active())
             elif isinstance(widget, Adw.ExpanderRow):
                 values[key] = bool(widget.get_enable_expansion())
+            elif isinstance(widget, Gtk.Scale):
+                values[key] = widget.get_value()
+            elif isinstance(widget, Gtk.Button):
+                values[key] = widget.color

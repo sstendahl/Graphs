@@ -108,6 +108,37 @@ def get_style(self, stylename):
     return style
 
 
+STYLE_DICT = {
+    "linestyle": ["lines.linestyle"],
+    "linewidth": ["lines.linewidth"],
+    "markersize": ["lines.markersize"],
+    "tick_direction": ["xtick.direction", "ytick.direction"],
+    "minor_ticks": ["xtick.minor.visible", "ytick.minor.visible"],
+    "major_tick_width": ["xtick.major.width", "ytick.major.width"],
+    "minor_tick_width": ["xtick.minor.width", "ytick.minor.width"],
+    "major_tick_length": ["xtick.major.size", "ytick.major.size"],
+    "minor_tick_length": ["xtick.minor.size", "ytick.minor.size"],
+    "tick_bottom": ["xtick.bottom"],
+    "tick_left": ["ytick.left"],
+    "tick_top": ["xtick.top"],
+    "tick_right": ["ytick.right"],
+    "show_grid": ["axes.grid"],
+    "grid_linewidth": ["grid.linewidth"],
+    "value_padding": ["xtick.major.pad", "xtick.minor.pad",
+                      "ytick.major.pad", "ytick.minor.pad"],
+    "label_padding": ["axes.labelpad"],
+    "title_padding": ["axes.titlepad"],
+    "axis_width": ["axes.linewidth"],
+    "text_color": ["text.color", "axes.labelcolor", "xtick.labelcolor",
+                   "ytick.labelcolor"],
+    "tick_color": ["xtick.color", "ytick.color"],
+    "axis_color": ["axes.edgecolor"],
+    "grid_color": ["grid.color"],
+    "background_color": ["axes.facecolor"],
+    "outline_color": ["figure.facecolor", "figure.edgecolor"],
+}
+
+
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/plot_styles.ui")
 class PlotStylesWindow(Adw.Window):
     __gtype_name__ = "PlotStylesWindow"
@@ -196,52 +227,24 @@ class PlotStylesWindow(Adw.Window):
         self.set_title(self.style.name)
 
     def load_style(self):
-        style = self.style
-        self.style_name.set_text(style.name)
+        self.style_name.set_text(self.style.name)
+        ui.load_values_from_dict(
+            self,
+            {key: self.style[value[0]] for key, value in STYLE_DICT.items()})
 
         # font
         font_description = self.font_chooser.get_font_desc().from_string(
-            f"{style['font.sans-serif']} {style['font.size']}")
+            f"{self.style['font.sans-serif']} {self.style['font.size']}")
         self.font_chooser.set_font_desc(font_description)
 
         # lines
-        utilities.set_chooser(self.linestyle, style["lines.linestyle"])
-        self.linewidth.set_value(float(style["lines.linewidth"]))
         utilities.set_chooser(
             self.markers, utilities.get_dict_by_value(
-                misc.MARKERS, style["lines.marker"]))
-        self.markersize.set_value(float(style["lines.markersize"]))
-
-        # ticks
-        utilities.set_chooser(self.tick_direction, style["xtick.direction"])
-        self.minor_ticks.set_active(style["xtick.minor.visible"])
-        self.major_tick_width.set_value(float(style["xtick.major.width"]))
-        self.minor_tick_width.set_value(float(style["xtick.minor.width"]))
-        self.major_tick_length.set_value(float(style["xtick.major.size"]))
-        self.minor_tick_length.set_value(float(style["xtick.minor.size"]))
-        self.tick_bottom.set_active(style["xtick.bottom"])
-        self.tick_left.set_active(style["ytick.left"])
-        self.tick_top.set_active(style["xtick.top"])
-        self.tick_right.set_active(style["ytick.right"])
+                misc.MARKERS, self.style["lines.marker"]))
 
         # grid
-        self.show_grid.set_active(style["axes.grid"])
-        self.grid_linewidth.set_value(float(style["grid.linewidth"]))
         self.grid_opacity.set_value(
-            1 - (float(style["grid.alpha"]) * 100))
-
-        # padding
-        self.value_padding.set_value(float(style["xtick.major.pad"]))
-        self.label_padding.set_value(float(style["axes.labelpad"]))
-        self.title_padding.set_value(float(style["axes.titlepad"]))
-
-        # colors
-        self.text_color.color = style["text.color"]
-        self.tick_color.color = style["xtick.color"]
-        self.axis_color.color = style["axes.edgecolor"]
-        self.grid_color.color = style["grid.color"]
-        self.background_color.color = style["axes.facecolor"]
-        self.outline_color.color = style["figure.facecolor"]
+            1 - (float(self.style["grid.alpha"]) * 100))
 
         for button in self.color_buttons:
             button.provider.load_from_data(
@@ -253,87 +256,35 @@ class PlotStylesWindow(Adw.Window):
             self.line_colors_box.append(box)
             self.color_boxes[box] = self.line_colors_box.get_last_child()
 
-        # other
-        self.axis_width.set_value(float(style["axes.linewidth"]))
-
     def save_style(self):
-        style = self.style
+        new_values = {key: None for key in STYLE_DICT.keys()}
+        ui.save_values_to_dict(self, new_values)
+        for key, value in new_values.items():
+            if value is not None:
+                for item in STYLE_DICT[key]:
+                    self.style[item] = value
 
         # font
         font_description = self.font_chooser.get_font_desc()
-        style["font.sans-serif"] = font_description.get_family()
+        self.style["font.sans-serif"] = font_description.get_family()
         font_name = font_description.to_string().lower().split(" ")
-        style["font.style"] = utilities.get_font_style(font_name)
+        self.style["font.style"] = utilities.get_font_style(font_name)
         font_weight = utilities.get_font_weight(font_name)
-        style["font.weight"] = font_weight
-        style["axes.titleweight"] = font_weight
-        style["axes.labelweight"] = font_weight
-        style["figure.titleweight"] = font_weight
-        style["figure.labelweight"] = font_weight
+        for key in ["font.weight", "axes.titleweight", "axes.labelweight",
+                    "figure.titleweight", "figure.labelweight"]:
+            self.style[key] = font_weight
         font_size = font_name[-1]
-        style["font.size"] = font_size
-        style["axes.labelsize"] = font_size
-        style["xtick.labelsize"] = font_size
-        style["ytick.labelsize"] = font_size
-        style["axes.titlesize"] = font_size
-        style["legend.fontsize"] = font_size
-        style["figure.titlesize"] = font_size
-        style["figure.labelsize"] = font_size
+        for key in ["font.size", "axes.labelsize", "xtick.labelsize",
+                    "ytick.labelsize", "axes.titlesize", "legend.fontsize",
+                    "figure.titlesize", "figure.labelsize"]:
+            self.style[key] = font_size
 
         # lines
-        style["lines.linestyle"] = \
-            utilities.get_selected_chooser_item(self.linestyle)
-        style["lines.linewidth"] = self.linewidth.get_value()
-        style["lines.marker"] = \
+        self.style["lines.marker"] = \
             misc.MARKERS[utilities.get_selected_chooser_item(self.markers)]
-        style["lines.markersize"] = self.markersize.get_value()
-
-        # ticks
-        tick_direction = \
-            utilities.get_selected_chooser_item(self.tick_direction)
-        style["xtick.direction"] = tick_direction
-        style["ytick.direction"] = tick_direction
-        minor_ticks = self.minor_ticks.get_active()
-        style["xtick.minor.visible"] = minor_ticks
-        style["ytick.minor.visible"] = minor_ticks
-        style["xtick.major.width"] = self.major_tick_width.get_value()
-        style["ytick.major.width"] = self.major_tick_width.get_value()
-        style["xtick.minor.width"] = self.minor_tick_width.get_value()
-        style["ytick.minor.width"] = self.minor_tick_width.get_value()
-        style["xtick.major.size"] = self.major_tick_length.get_value()
-        style["ytick.major.size"] = self.major_tick_length.get_value()
-        style["xtick.minor.size"] = self.minor_tick_length.get_value()
-        style["ytick.minor.size"] = self.minor_tick_length.get_value()
-        style["xtick.bottom"] = self.tick_bottom.get_active()
-        style["ytick.left"] = self.tick_left.get_active()
-        style["xtick.top"] = self.tick_top.get_active()
-        style["ytick.right"] = self.tick_right.get_active()
 
         # grid
-        style["axes.grid"] = self.show_grid.get_active()
-        style["grid.linewidth"] = self.grid_linewidth.get_value()
-        style["grid.alpha"] = 1 - (self.grid_opacity.get_value() / 100)
-
-        # padding
-        style["xtick.major.pad"] = self.value_padding.get_value()
-        style["xtick.minor.pad"] = self.value_padding.get_value()
-        style["ytick.major.pad"] = self.value_padding.get_value()
-        style["ytick.minor.pad"] = self.value_padding.get_value()
-        style["axes.labelpad"] = self.label_padding.get_value()
-        style["axes.titlepad"] = self.title_padding.get_value()
-
-        # colors
-        style["text.color"] = self.text_color.color
-        style["axes.labelcolor"] = self.text_color.color
-        style["xtick.labelcolor"] = self.text_color.color
-        style["ytick.labelcolor"] = self.text_color.color
-        style["xtick.color"] = self.tick_color.color
-        style["ytick.color"] = self.tick_color.color
-        style["axes.edgecolor"] = self.axis_color.color
-        style["grid.color"] = self.grid_color.color
-        style["axes.facecolor"] = self.background_color.color
-        style["figure.facecolor"] = self.outline_color.color
-        style["figure.edgecolor"] = self.outline_color.color
+        self.style["grid.alpha"] = 1 - (self.grid_opacity.get_value() / 100)
 
         # line colors
         line_colors = []
@@ -341,17 +292,15 @@ class PlotStylesWindow(Adw.Window):
             line_colors.append(color_box.color_button.color)
             self.line_colors_box.remove(list_box)
             del self.color_boxes[color_box]
-        style["axes.prop_cycle"] = cycler(color=line_colors)
-        style["patch.facecolor"] = line_colors[0]
-
-        # other
-        style["axes.linewidth"] = self.axis_width.get_value()
+        self.style["axes.prop_cycle"] = cycler(color=line_colors)
+        self.style["patch.facecolor"] = line_colors[0]
 
         # name & save
         config_dir = utilities.get_config_directory()
         directory = config_dir.get_child_for_display_name("styles")
-        file = directory.get_child_for_display_name(f"{style.name}.mplstyle")
-        file_io.write_style(file, style)
+        file = \
+            directory.get_child_for_display_name(f"{self.style.name}.mplstyle")
+        file_io.write_style(file, self.style)
 
     @Gtk.Template.Callback()
     def add_color(self, _button):
