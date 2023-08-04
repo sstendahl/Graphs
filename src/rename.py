@@ -13,7 +13,8 @@ class RenameWindow(Adw.Window):
     preferencegroup = Gtk.Template.Child()
 
     def __init__(self, application, item):
-        super().__init__(application=application)
+        super().__init__(application=application,
+                         transient_for=application.main_window)
         self.item = item
         title = _("Rename Label")
         label = _("Label")
@@ -25,7 +26,6 @@ class RenameWindow(Adw.Window):
         self.set_title(title)
         self.text_entry.set_title(label)
         self.text_entry.set_text(text)
-        self.set_transient_for(self.props.application.main_window)
         self.present()
 
     @Gtk.Template.Callback()

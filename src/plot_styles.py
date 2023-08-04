@@ -176,8 +176,8 @@ class PlotStylesWindow(Adw.Window):
     outline_color = Gtk.Template.Child()
 
     def __init__(self, application):
-        super().__init__(application=application)
-        self.set_transient_for(self.props.application.main_window)
+        super().__init__(application=application,
+                         transient_for=application.main_window)
         self.styles = []
         self.style = None
         self.reload_styles()
@@ -434,12 +434,12 @@ class AddStyleWindow(Adw.Window):
     plot_style_templates = Gtk.Template.Child()
 
     def __init__(self, application, parent):
-        super().__init__(application=application)
+        super().__init__(application=application,
+                         transient_for=parent)
         self.parent = parent
         utilities.populate_chooser(
             self.plot_style_templates,
             sorted(get_user_styles(self.parent).keys()), False)
-        self.set_transient_for(self.parent)
         self.present()
 
     @Gtk.Template.Callback()
