@@ -337,65 +337,6 @@ template $GraphsWindow : Adw.ApplicationWindow {
               }
 
               Adw.ExpanderRow {
-                title: _("Translate and Multiply");
-                Adw.EntryRow translate_x_entry {
-                  max-width-chars: 6;
-                  title: _("Translate X-Axis");
-                  Button {
-                    valign: center;
-                    sensitive: bind shift_vertically_button.sensitive;
-                    clicked => $translate_x();
-                    Adw.ButtonContent {
-                      icon-name: "horizontal-arrows-symbolic";
-                      label: _("Translate");
-                    }
-                  }
-                }
-
-                Adw.EntryRow translate_y_entry {
-                  max-width-chars: 6;
-                  title: _("Translate Y-Axis");
-                  Button {
-                    valign: center;
-                    sensitive: bind shift_vertically_button.sensitive;
-                    clicked => $translate_y();
-                    Adw.ButtonContent {
-                      icon-name: "vertical-arrows-symbolic";
-                      label: _("Translate");
-                    }
-                  }
-                }
-
-                Adw.EntryRow multiply_x_entry {
-                  max-width-chars: 6;
-                  title: _("Multiply X-Axis");
-                  Button {
-                    valign: center;
-                    sensitive: bind shift_vertically_button.sensitive;
-                    clicked => $multiply_x();
-                    Adw.ButtonContent {
-                      icon-name: "horizontal-arrows-symbolic";
-                      label: _("Multiply");
-                    }
-                  }
-                }
-
-                Adw.EntryRow multiply_y_entry {
-                  max-width-chars: 6;
-                  title: _("Multiply Y-Axis");
-                  Button {
-                    valign: center;
-                    sensitive: bind shift_vertically_button.sensitive;
-                    clicked => $multiply_y();
-                    Adw.ButtonContent {
-                      icon-name: "vertical-arrows-symbolic";
-                      label: _("Multiply");
-                    }
-                  }
-                }
-              }
-
-              Adw.ExpanderRow {
                 title: _("Mathematical Operations");
                 Grid {
                   Button {
@@ -493,10 +434,69 @@ template $GraphsWindow : Adw.ApplicationWindow {
                     Adw.ButtonContent {
                       halign: center;
                       icon-name: "transform-symbolic";
-                      label: _("Transform");
+                      label: _("Custom Transformation");
                     }
                     tooltip-text: _("Perform custom transformations on the data");
                     clicked => $transform();
+                  }
+                }
+              }
+
+              Adw.ExpanderRow {
+                title: _("Translate and Multiply");
+                Adw.EntryRow translate_x_entry {
+                  max-width-chars: 6;
+                  title: _("Translate X-Axis");
+                  Button {
+                    valign: center;
+                    sensitive: bind shift_vertically_button.sensitive;
+                    clicked => $translate_x();
+                    Adw.ButtonContent {
+                      icon-name: "horizontal-arrows-symbolic";
+                      label: _("Translate");
+                    }
+                  }
+                }
+
+                Adw.EntryRow translate_y_entry {
+                  max-width-chars: 6;
+                  title: _("Translate Y-Axis");
+                  Button {
+                    valign: center;
+                    sensitive: bind shift_vertically_button.sensitive;
+                    clicked => $translate_y();
+                    Adw.ButtonContent {
+                      icon-name: "vertical-arrows-symbolic";
+                      label: _("Translate");
+                    }
+                  }
+                }
+
+                Adw.EntryRow multiply_x_entry {
+                  max-width-chars: 6;
+                  title: _("Multiply X-Axis");
+                  Button {
+                    valign: center;
+                    sensitive: bind shift_vertically_button.sensitive;
+                    clicked => $multiply_x();
+                    Adw.ButtonContent {
+                      icon-name: "horizontal-arrows-symbolic";
+                      label: _("Multiply");
+                    }
+                  }
+                }
+
+                Adw.EntryRow multiply_y_entry {
+                  max-width-chars: 6;
+                  title: _("Multiply Y-Axis");
+                  Button {
+                    valign: center;
+                    sensitive: bind shift_vertically_button.sensitive;
+                    clicked => $multiply_y();
+                    Adw.ButtonContent {
+                      icon-name: "vertical-arrows-symbolic";
+                      label: _("Multiply");
+                    }
                   }
                 }
               }
