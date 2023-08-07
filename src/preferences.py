@@ -87,7 +87,6 @@ CONFIG_IGNORELIST = [
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/preferences.ui")
 class PreferencesWindow(Adw.PreferencesWindow):
     __gtype_name__ = "PreferencesWindow"
-    clipboard_length = Gtk.Template.Child()
     import_delimiter = Gtk.Template.Child()
     import_separator = Gtk.Template.Child()
     import_column_x = Gtk.Template.Child()
