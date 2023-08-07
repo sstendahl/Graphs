@@ -16,8 +16,8 @@ class ExportFigureWindow(Adw.Window):
     dpi = Gtk.Template.Child()
 
     def __init__(self, application):
-        super().__init__(application=application)
-        self.set_transient_for(self.props.application.main_window)
+        super().__init__(application=application,
+                         transient_for=application.main_window)
         preferences = self.props.application.preferences
         self.transparent.set_active(preferences["export_figure_transparent"])
         self.items = \

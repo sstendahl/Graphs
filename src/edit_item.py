@@ -21,7 +21,8 @@ class EditItemWindow(Adw.PreferencesWindow):
     markersize = Gtk.Template.Child()
 
     def __init__(self, application, item):
-        super().__init__(application=application)
+        super().__init__(application=application,
+                         transient_for=application.main_window)
         self.item = item
         names = utilities.get_all_names(self.props.application)
         keys = utilities.get_all_keys(self.props.application)
@@ -32,7 +33,6 @@ class EditItemWindow(Adw.PreferencesWindow):
         self.load_values()
         utilities.populate_chooser(self.item_selector, names)
         self.item_selector.set_selected(keys.index(item.key))
-        self.set_transient_for(self.props.application.main_window)
         self.present()
 
     @Gtk.Template.Callback()

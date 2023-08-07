@@ -45,7 +45,7 @@ def save_project(file, plot_settings, datadict, data_clipboard, view_clipboard,
 
 
 def read_project(file):
-    project = pickle.loads(_read_file(file, None))
+    project = pickle.loads(read_file(file, None))
 
     # Load empty values if attribute does not exist in Project file, to
     # ensure backwards compatibility with older project files
@@ -107,8 +107,7 @@ def import_from_xrdml(self, import_settings):
 
 def import_from_xry(self, import_settings):
     """Import data from .xry files used by Leybold X-ray apparatus."""
-    lines = \
-        _read_file(import_settings.file, encoding="ISO-8859-1").splitlines()
+    lines = read_file(import_settings.file, encoding="ISO-8859-1").splitlines()
     if lines[0].strip() != "XR01":
         raise ParseError(_("Invalid .xry format"))
 
@@ -146,7 +145,7 @@ def import_from_xry(self, import_settings):
 def import_from_columns(self, import_settings):
     item = Item(self, name=import_settings.name)
     params = import_settings.params
-    for i, line in enumerate(_read_file(import_settings.file).splitlines()):
+    for i, line in enumerate(read_file(import_settings.file).splitlines()):
         if i >= params["skip_rows"]:
             data_line = re.split(str(params["delimiter"]), line.strip())
             if params["separator"] == ",":
@@ -202,7 +201,7 @@ def parse_style(file):
     style = RcParams()
     filename = file.query_info("standard::*", 0, None).get_display_name()
     try:
-        for line_number, line in enumerate(_read_file(file).splitlines(), 1):
+        for line_number, line in enumerate(read_file(file).splitlines(), 1):
             stripped_line = cbook._strip_comment(line)
             if not stripped_line:
                 continue
@@ -271,7 +270,7 @@ def write_json(file, json_object):
 
 
 def parse_xml(file):
-    return minidom.parseString(_read_file(file))
+    return minidom.parseString(read_file(file))
 
 
 def _get_write_stream(file):
@@ -285,6 +284,6 @@ def _write_string(stream, line, encoding="utf-8"):
     stream.write_bytes(GLib.Bytes(line.encode(encoding)), None)
 
 
-def _read_file(file, encoding="utf-8"):
+def read_file(file, encoding="utf-8"):
     content = file.load_bytes(None)[0].get_data()
     return content if encoding is None else content.decode(encoding)
