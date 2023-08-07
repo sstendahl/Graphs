@@ -67,8 +67,13 @@ class Preferences(dict):
             for key, item in file_io.parse_json(import_file).items()
         }, import_params_template)
 
-    def update(self, values):
+    def update(self, values: dict):
         super().update(values)
+        self.save()
+
+    def update_modes(self, values: dict):
+        for mode, params in values.items():
+            self["import_params"][mode].update(params)
         self.save()
 
     def save(self):
@@ -121,8 +126,6 @@ class PreferencesWindow(Adw.PreferencesWindow):
                          transient_for=application.main_window)
 
         utilities.populate_chooser(
-            self.import_separator, misc.SEPARATORS, translate=False)
-        utilities.populate_chooser(
             self.action_center_data, misc.ACTION_CENTER_DATA)
         utilities.populate_chooser(
             self.other_handle_duplicates, misc.HANDLE_DUPLICATES)
@@ -139,37 +142,13 @@ class PreferencesWindow(Adw.PreferencesWindow):
             self.plot_custom_style,
             plot_styles.get_user_styles(self.props.application).keys(),
             translate=False)
-        self.load()
-        self.present()
-
-    def load(self):
         ui.load_values_from_dict(
             self, {key: self.props.application.preferences[key]
                    for key in CONFIG_WHITELIST})
-        columns_params = \
-            self.props.application.preferences["import_params"]["columns"]
-        self.import_delimiter.set_text(columns_params["delimiter"])
-        utilities.set_chooser(
-            self.import_separator, columns_params["separator"])
-        self.import_column_x.set_value(columns_params["column_x"])
-        self.import_column_y.set_value(columns_params["column_y"])
-        self.import_skip_rows.set_value(columns_params["skip_rows"])
-
-    def apply(self):
-        # to be removed
-        columns_params = \
-            self.props.application.preferences["import_params"]["columns"]
-        columns_params["delimiter"] = self.import_delimiter.get_text()
-        columns_params["separator"] = \
-            utilities.get_selected_chooser_item(self.import_separator)
-        columns_params["column_x"] = int(self.import_column_x.get_value())
-        columns_params["column_y"] = int(self.import_column_y.get_value())
-        columns_params["skip_rows"] = int(self.import_skip_rows.get_value())
-
-        self.props.application.preferences.update(ui.save_values_to_dict(
-            self, CONFIG_WHITELIST))
+        self.present()
 
     @Gtk.Template.Callback()
     def on_close(self, _):
-        self.apply()
+        self.props.application.preferences.update(ui.save_values_to_dict(
+            self, CONFIG_WHITELIST))
         graphs.refresh(self.props.application)

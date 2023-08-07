@@ -40,20 +40,19 @@ template $ImportWindow : Adw.Window {
       margin-bottom: 12;
       Adw.PreferencesGroup columns_group {
         visible: false;
-        Adw.EntryRow delimiter {
+        Adw.EntryRow columns_delimiter {
           max-width-chars: 10;
           title: _("Delimiter (\s+ for whitespace)");
         }
 
-        Adw.ComboRow separator {
+        Adw.ComboRow columns_separator {
           title: _("Decimal Separator");
-          subtitle: _("Character used as decimal separator");
         }
 
         Adw.ActionRow {
           title: _("Column X");
           subtitle: _("X-data column index");
-          SpinButton column_x {
+          SpinButton columns_column_x {
             valign: center;
             numeric: true;
             value: 0;
@@ -68,7 +67,7 @@ template $ImportWindow : Adw.Window {
         Adw.ActionRow {
           title: _("Column Y");
           subtitle: _("Y-data column index");
-          SpinButton column_y {
+          SpinButton columns_column_y {
             valign: center;
             numeric: true;
             value: 0;
@@ -83,7 +82,7 @@ template $ImportWindow : Adw.Window {
         Adw.ActionRow {
           title: _("Skip Rows");
           subtitle: _("Ignored row indices");
-          SpinButton skip_rows {
+          SpinButton columns_skip_rows {
             valign: center;
             numeric: true;
             value: 0;

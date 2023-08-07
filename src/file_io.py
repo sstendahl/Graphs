@@ -158,9 +158,9 @@ def import_from_columns(self, import_settings):
                 else:
                     try:
                         item.xdata.append(utilities.string_to_float(
-                            data_line[params["column_x"]]))
+                            data_line[int(params["column_x"])]))
                         item.ydata.append(utilities.string_to_float(
-                            data_line[params["column_y"]]))
+                            data_line[int(params["column_y"])]))
                     except IndexError:
                         raise ParseError(
                             _("Import failed, column index out of range"))
