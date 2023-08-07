@@ -35,7 +35,6 @@ class AddEquationWindow(Adw.Window):
     def on_accept(self, _widget):
         """Launched when the accept button is pressed on the equation window"""
         values = ui.save_values_to_dict(self, KEYS)
-        self.props.application.preferences.update(values)
         try:
             xdata, ydata = calculation.create_dataset(
                 utilities.string_to_float(values["addequation_x_start"]),
@@ -43,6 +42,7 @@ class AddEquationWindow(Adw.Window):
                 values["addequation_equation"],
                 utilities.string_to_float(values["addequation_step_size"]),
             )
+            self.props.application.preferences.update(values)
             name = str(self.name.get_text())
             if name == "":
                 name = f"Y = {values['addequation_equation']}"
