@@ -80,7 +80,7 @@ class Preferences(dict):
 
 
 CONFIG_IGNORELIST = [
-    "import_params", "export_figure_filetype",
+    "import_params", "export_figure_filetype", "clipboard_length",
 ]
 
 
