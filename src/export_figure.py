@@ -36,32 +36,38 @@ class ExportFigureWindow(Adw.Window):
 
     @Gtk.Template.Callback()
     def on_accept(self, _button):
-        application = self.props.application
         dpi = int(self.dpi.get_value())
         fmt = utilities.get_selected_chooser_item(self.file_format)
-        file_suffix = None
+        file_suffixes = None
         for name, formats in self.items:
             if name == fmt:
-                file_suffix = formats
-        filename = Path(application.canvas.get_default_filename()).stem
+                file_suffixes = formats
+        filename = \
+            Path(self.props.application.canvas.get_default_filename()).stem
         transparent = self.transparent.get_active()
+
+        self.props.application.preferences.update({
+            "export_figure_filetype": file_suffixes[0],
+            "export_figure_transparent": transparent,
+            "export_figure_dpi": dpi,
+        })
 
         def on_response(dialog, response):
             with contextlib.suppress(GLib.GError):
                 destination = dialog.save_finish(response)
                 file, stream = Gio.File.new_tmp("graphs-XXXXXX")
                 stream.close()
-                application.canvas.figure.savefig(
-                    file.peek_path(), dpi=dpi, format=file_suffix[0],
+                self.props.application.canvas.figure.savefig(
+                    file.peek_path(), dpi=dpi, format=file_suffixes[0],
                     transparent=transparent)
                 file.move(destination, Gio.FileCopyFlags(1), None)
-                application.main_window.add_toast(
+                self.props.application.main_window.add_toast(
                     _("Exported Figure"))
 
         dialog = Gtk.FileDialog()
-        dialog.set_initial_name(f"{filename}.{file_suffix[0]}")
+        dialog.set_initial_name(f"{filename}.{file_suffixes[0]}")
         dialog.set_accept_label(_("Export"))
         dialog.set_filters(utilities.create_file_filters(
-            [(fmt, file_suffix)]))
-        dialog.save(application.main_window, None, on_response)
+            [(fmt, file_suffixes)]))
+        dialog.save(self.props.application.main_window, None, on_response)
         self.destroy()

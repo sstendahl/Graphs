@@ -85,6 +85,7 @@ class Preferences(dict):
 
 CONFIG_IGNORELIST = [
     "import_params", "export_figure_filetype", "clipboard_length",
+    "export_figure_transparent", "export_figure_dpi",
 ]
 
 
@@ -100,9 +101,6 @@ class PreferencesWindow(Adw.PreferencesWindow):
     addequation_x_start = Gtk.Template.Child()
     addequation_x_stop = Gtk.Template.Child()
     addequation_step_size = Gtk.Template.Child()
-    export_figure_dpi = Gtk.Template.Child()
-    export_figure_filetype = Gtk.Template.Child()
-    export_figure_transparent = Gtk.Template.Child()
     action_center_data = Gtk.Template.Child()
     other_handle_duplicates = Gtk.Template.Child()
     other_hide_unselected = Gtk.Template.Child()
@@ -126,14 +124,9 @@ class PreferencesWindow(Adw.PreferencesWindow):
     def __init__(self, application):
         super().__init__(application=application,
                          transient_for=application.main_window)
-        self.supported_filetypes = \
-            self.props.application.canvas.get_supported_filetypes_grouped()
 
         utilities.populate_chooser(
             self.import_separator, misc.SEPARATORS, translate=False)
-        utilities.populate_chooser(
-            self.export_figure_filetype, self.supported_filetypes.keys(),
-            translate=False)
         utilities.populate_chooser(
             self.action_center_data, misc.ACTION_CENTER_DATA)
         utilities.populate_chooser(
@@ -166,13 +159,6 @@ class PreferencesWindow(Adw.PreferencesWindow):
         self.import_column_y.set_value(columns_params["column_y"])
         self.import_skip_rows.set_value(columns_params["skip_rows"])
 
-        wanted_filetype = \
-            self.props.application.preferences["export_figure_filetype"]
-        for name, formats in self.supported_filetypes.items():
-            if wanted_filetype in formats:
-                filetype = name
-        utilities.set_chooser(self.export_figure_filetype, filetype)
-
     def apply(self):
         # to be removed
         columns_params = \
@@ -184,17 +170,9 @@ class PreferencesWindow(Adw.PreferencesWindow):
         columns_params["column_y"] = int(self.import_column_y.get_value())
         columns_params["skip_rows"] = int(self.import_skip_rows.get_value())
 
-        new_values = ui.save_values_to_dict(
+        self.props.application.preferences.update(ui.save_values_to_dict(
             self, self.props.application.preferences.keys(),
-            ignorelist=CONFIG_IGNORELIST)
-        filetype_name = \
-            utilities.get_selected_chooser_item(self.export_figure_filetype)
-        filetypes = \
-            self.props.application.canvas.get_supported_filetypes_grouped()
-        for name, formats in filetypes.items():
-            if name == filetype_name:
-                new_values["export_figure_filetype"] = formats[0]
-        self.props.application.preferences.update(new_values)
+            ignorelist=CONFIG_IGNORELIST))
 
     @Gtk.Template.Callback()
     def on_close(self, _):

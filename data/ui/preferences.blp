@@ -11,39 +11,6 @@ template $PreferencesWindow : Adw.PreferencesWindow {
     title: _("General");
 
     Adw.PreferencesGroup {
-      title: _("Default Export Options");
-      description: _("Default options for exporting the figure");
-
-      Adw.ComboRow export_figure_filetype {
-        title: _("File Format");
-      }
-
-      Adw.ActionRow {
-        title: _("Resolution (dpi)");
-
-        SpinButton export_figure_dpi {
-          valign: center;
-          numeric: true;
-          value: 100;
-          wrap: true;
-          adjustment: Adjustment {
-            step-increment: 1;
-            upper: 999;
-          };
-        }
-      }
-
-      Adw.ActionRow {
-        title: _("Transparent Background");
-        activatable-widget: export_figure_transparent;
-
-        Switch export_figure_transparent {
-          valign: center;
-        }
-      }
-    }
-
-    Adw.PreferencesGroup {
       title: _("Action Behaviour");
       description: _("Behaviour of specific actions");
 
