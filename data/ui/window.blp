@@ -215,11 +215,13 @@ template $GraphsWindow : Adw.ApplicationWindow {
               Adw.ExpanderRow {
                 title: _("Adjust Data");
                 Grid {
+                  column-spacing: 10;
+                  row-spacing: 10;
+                  margin-start: 10;
+                  margin-end: 10;
+                  margin-top: 10;
+                  margin-bottom: 10;
                   Button shift_vertically_button {
-                    margin-start: 5;
-                    margin-end: 5;
-                    margin-top: 5;
-                    margin-bottom: 5;
                     hexpand: true;
                     layout {
                       column: 0;
@@ -235,10 +237,6 @@ template $GraphsWindow : Adw.ApplicationWindow {
                   }
 
                   Button {
-                    margin-start: 5;
-                    margin-end: 5;
-                    margin-top: 5;
-                    margin-bottom: 5;
                     hexpand: true;
                     sensitive: bind shift_vertically_button.sensitive;
                     layout {
@@ -255,10 +253,6 @@ template $GraphsWindow : Adw.ApplicationWindow {
                   }
 
                   Button {
-                    margin-start: 5;
-                    margin-end: 5;
-                    margin-top: 5;
-                    margin-bottom: 5;
                     hexpand: true;
                     sensitive: bind shift_vertically_button.sensitive;
                     layout {
@@ -275,10 +269,6 @@ template $GraphsWindow : Adw.ApplicationWindow {
                   }
 
                   Button {
-                    margin-start: 5;
-                    margin-end: 5;
-                    margin-top: 5;
-                    margin-bottom: 5;
                     hexpand: true;
                     sensitive: bind shift_vertically_button.sensitive;
                     layout {
@@ -295,10 +285,6 @@ template $GraphsWindow : Adw.ApplicationWindow {
                   }
 
                   Button {
-                    margin-start: 5;
-                    margin-end: 5;
-                    margin-top: 5;
-                    margin-bottom: 5;
                     hexpand: true;
                     sensitive: bind shift_vertically_button.sensitive;
                     layout {
@@ -315,10 +301,6 @@ template $GraphsWindow : Adw.ApplicationWindow {
                   }
 
                   Button cut_button {
-                    margin-start: 5;
-                    margin-end: 5;
-                    margin-top: 5;
-                    margin-bottom: 5;
                     hexpand: true;
                     sensitive: bind shift_vertically_button.sensitive;
                     layout {
@@ -337,72 +319,15 @@ template $GraphsWindow : Adw.ApplicationWindow {
               }
 
               Adw.ExpanderRow {
-                title: _("Translate and Multiply");
-                Adw.EntryRow translate_x_entry {
-                  max-width-chars: 6;
-                  title: _("Translate X-Axis");
-                  Button {
-                    valign: center;
-                    sensitive: bind shift_vertically_button.sensitive;
-                    clicked => $translate_x();
-                    Adw.ButtonContent {
-                      icon-name: "horizontal-arrows-symbolic";
-                      label: _("Translate");
-                    }
-                  }
-                }
-
-                Adw.EntryRow translate_y_entry {
-                  max-width-chars: 6;
-                  title: _("Translate Y-Axis");
-                  Button {
-                    valign: center;
-                    sensitive: bind shift_vertically_button.sensitive;
-                    clicked => $translate_y();
-                    Adw.ButtonContent {
-                      icon-name: "vertical-arrows-symbolic";
-                      label: _("Translate");
-                    }
-                  }
-                }
-
-                Adw.EntryRow multiply_x_entry {
-                  max-width-chars: 6;
-                  title: _("Multiply X-Axis");
-                  Button {
-                    valign: center;
-                    sensitive: bind shift_vertically_button.sensitive;
-                    clicked => $multiply_x();
-                    Adw.ButtonContent {
-                      icon-name: "horizontal-arrows-symbolic";
-                      label: _("Multiply");
-                    }
-                  }
-                }
-
-                Adw.EntryRow multiply_y_entry {
-                  max-width-chars: 6;
-                  title: _("Multiply Y-Axis");
-                  Button {
-                    valign: center;
-                    sensitive: bind shift_vertically_button.sensitive;
-                    clicked => $multiply_y();
-                    Adw.ButtonContent {
-                      icon-name: "vertical-arrows-symbolic";
-                      label: _("Multiply");
-                    }
-                  }
-                }
-              }
-
-              Adw.ExpanderRow {
                 title: _("Mathematical Operations");
                 Grid {
+                  column-spacing: 10;
+                  row-spacing: 10;
+                  margin-start: 10;
+                  margin-end: 10;
+                  margin-top: 10;
+                  margin-bottom: 10;
                   Button {
-                    margin-start: 5;
-                    margin-end: 5;
-                    margin-top: 5;
-                    margin-bottom: 5;
                     hexpand: true;
                     sensitive: bind shift_vertically_button.sensitive;
                     layout {
@@ -419,10 +344,6 @@ template $GraphsWindow : Adw.ApplicationWindow {
                   }
 
                   Button {
-                    margin-start: 5;
-                    margin-end: 5;
-                    margin-top: 5;
-                    margin-bottom: 5;
                     hexpand: true;
                     sensitive: bind shift_vertically_button.sensitive;
                     layout {
@@ -439,10 +360,6 @@ template $GraphsWindow : Adw.ApplicationWindow {
                   }
 
                   Button {
-                    margin-start: 5;
-                    margin-end: 5;
-                    margin-top: 5;
-                    margin-bottom: 5;
                     hexpand: true;
                     sensitive: bind shift_vertically_button.sensitive;
                     layout {
@@ -459,10 +376,6 @@ template $GraphsWindow : Adw.ApplicationWindow {
                   }
 
                   Button {
-                    margin-start: 5;
-                    margin-end: 5;
-                    margin-top: 5;
-                    margin-bottom: 5;
                     hexpand: true;
                     sensitive: bind shift_vertically_button.sensitive;
                     layout {
@@ -479,10 +392,6 @@ template $GraphsWindow : Adw.ApplicationWindow {
                   }
 
                   Button {
-                    margin-start: 5;
-                    margin-end: 5;
-                    margin-top: 5;
-                    margin-bottom: 5;
                     hexpand: true;
                     sensitive: bind shift_vertically_button.sensitive;
                     layout {
@@ -493,10 +402,114 @@ template $GraphsWindow : Adw.ApplicationWindow {
                     Adw.ButtonContent {
                       halign: center;
                       icon-name: "transform-symbolic";
-                      label: _("Transform");
+                      label: _("Custom Transformation");
                     }
                     tooltip-text: _("Perform custom transformations on the data");
                     clicked => $transform();
+                  }
+                }
+              }
+
+              Adw.ExpanderRow {
+                title: _("Translate and Multiply");
+
+                Grid {
+                  column-spacing: 10;
+                  row-spacing: 10;
+                  margin-start: 10;
+                  margin-end: 10;
+                  margin-top: 10;
+                  margin-bottom: 10;
+                  Entry translate_x_entry {
+                    max-width-chars: 6;
+                    hexpand: true;
+                    layout {
+                      column: 0;
+                      row: 0;
+                    }
+                  }
+                  Button {
+                    valign: center;
+                    sensitive: bind shift_vertically_button.sensitive;
+                    clicked => $translate_x();
+                    width-request: 120;
+                    Adw.ButtonContent {
+                      icon-name: "horizontal-arrows-symbolic";
+                      label: _("Translate X");
+                    }
+                    layout {
+                      column: 1;
+                      row: 0;
+                    }
+                  }
+
+                  Entry translate_y_entry {
+                    max-width-chars: 6;
+                    hexpand: true;
+                    layout {
+                      column: 0;
+                      row: 1;
+                    }
+                  }
+                  Button {
+                    valign: center;
+                    sensitive: bind shift_vertically_button.sensitive;
+                    clicked => $translate_y();
+                    width-request: 120;
+                    Adw.ButtonContent {
+                      icon-name: "vertical-arrows-symbolic";
+                      label: _("Translate Y");
+                    }
+                    layout {
+                      column: 1;
+                      row: 1;
+                    }
+                  }
+
+                  Entry multiply_x_entry {
+                    max-width-chars: 6;
+                    hexpand: true;
+                    layout {
+                      column: 0;
+                      row: 2;
+                    }
+                  }
+                  Button {
+                    valign: center;
+                    sensitive: bind shift_vertically_button.sensitive;
+                    clicked => $multiply_x();
+                    width-request: 120;
+                    Adw.ButtonContent {
+                      icon-name: "horizontal-arrows-symbolic";
+                      label: _("Multiply X");
+                    }
+                    layout {
+                      column: 1;
+                      row: 2;
+                    }
+                  }
+
+                  Entry multiply_y_entry {
+                    max-width-chars: 6;
+                    hexpand: true;
+                    layout {
+                      column: 0;
+                      row: 3;
+                    }
+                  }
+                  Button {
+                    valign: center;
+                    sensitive: bind shift_vertically_button.sensitive;
+                    clicked => $multiply_y();
+                    width-request: 120;
+                    Adw.ButtonContent {
+                      icon-name: "vertical-arrows-symbolic";
+                      label: _("Multiply Y");
+                    }
+                    layout {
+                      column: 1;
+                      row: 3;
+                    }
                   }
                 }
               }

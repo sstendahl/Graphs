@@ -42,10 +42,9 @@ template $PlotSettingsWindow : Adw.PreferencesWindow {
 
     Adw.PreferencesGroup {
       title: _("Axis Limits");
-      description: _("Limits used on the axes");
       Adw.ActionRow no_data_message {
-      title: _("No Data");
-      subtitle: _("Add data to the figure to set axis limits");
+        title: _("No Data");
+        subtitle: _("Add data to the figure to set axis limits");
       }
       Box {
       	orientation: horizontal;
@@ -114,50 +113,40 @@ template $PlotSettingsWindow : Adw.PreferencesWindow {
 
     Adw.PreferencesGroup {
       title: _("Scaling");
-      description: _("Scaling of each axis");
 
       Adw.ComboRow plot_x_scale {
         title: _("Bottom Axis Scale");
-        subtitle: _("Scaling of the bottom axis");
       }
 
       Adw.ComboRow plot_y_scale {
         title: _("Left Axis Scale");
-        subtitle: _("Scaling of the left-hand axis");
       }
 
       Adw.ComboRow plot_top_scale {
         title: _("Top Axis Scale");
-        subtitle: _("Scaling of the top axis");
       }
 
       Adw.ComboRow plot_right_scale {
         title: _("Right Axis Scale");
-        subtitle: _("Scaling of the right-hand axis");
       }
     }
 
     Adw.PreferencesGroup {
       title: _("Style");
-      description: _("Settings for the figure style");
       Adw.ExpanderRow plot_legend {
         title: _("Legend");
-        subtitle: _("Use a legend for the items");
         show-enable-switch: true;
         Adw.ComboRow plot_legend_position {
-          title: _("Legend position");
-          subtitle: _("Position of the legend");
+          title: _("Legend Position");
         }
       }
 
       Adw.ExpanderRow use_custom_plot_style {
         title: _("Use Custom Style");
-        subtitle: _("Use a custom style instead of following the system style");
         show-enable-switch: true;
         notify => $on_custom_style_enable();
         Adw.ComboRow custom_plot_style {
           title: _("Style");
-          subtitle: _("Custom style used for the figure");
           notify::selected => $on_custom_style_select();
         }
       }
