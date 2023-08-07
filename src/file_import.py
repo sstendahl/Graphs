@@ -80,7 +80,8 @@ class ImportWindow(Adw.Window):
     skip_rows = Gtk.Template.Child()
 
     def __init__(self, application, modes, import_dict):
-        super().__init__(application=application)
+        super().__init__(application=application,
+                         transient_for=application.main_window)
         self.modes = modes
         self.import_dict = import_dict
         self.import_params = \
@@ -93,7 +94,6 @@ class ImportWindow(Adw.Window):
             prepare_import_finish(self.props.application, self.import_dict)
             self.destroy()
             return
-        self.set_transient_for(self.props.application.main_window)
         self.present()
 
     def load_columns(self):

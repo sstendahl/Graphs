@@ -34,7 +34,8 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
     no_data_message = Gtk.Template.Child()
 
     def __init__(self, application):
-        super().__init__(application=application)
+        super().__init__(application=application,
+                         transient_for=application.main_window)
         self.plot_settings = self.props.application.plot_settings
 
         self.plot_title.set_text(self.plot_settings.title)
@@ -78,7 +79,6 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
         self.hide_unused_axes_limits()
         if len(self.props.application.datadict) > 0:
             self.no_data_message.set_visible(False)
-        self.set_transient_for(self.props.application.main_window)
         self.present()
 
     def hide_unused_axes_limits(self):

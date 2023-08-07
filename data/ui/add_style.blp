@@ -42,12 +42,11 @@ template $AddStyleWindow : Adw.Window {
 	      margin-end: 26;
         Adw.ComboRow plot_style_templates {
           title: _("Template");
-          subtitle: _("Template style used as a base");
           notify::selected => $on_template_changed();
         }
 
         Adw.EntryRow new_style_name {
-          title: _("New Style Name");
+          title: _("Name");
         }
       }
     }

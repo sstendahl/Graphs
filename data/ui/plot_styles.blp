@@ -84,7 +84,6 @@ template $PlotStylesWindow : Adw.Window {
 
               Adw.ActionRow {
                 title: _("Font");
-                subtitle: _("Font used in the figure");
                 activatable-widget: font_chooser;
 
                 FontDialogButton font_chooser {
@@ -101,12 +100,10 @@ template $PlotStylesWindow : Adw.Window {
 
               Adw.ComboRow linestyle {
                 title: _("Linestyle");
-                subtitle: _("The linestyle used");
               }
 
               Adw.ActionRow {
                 title: _("Linewidth");
-                subtitle: _("The width of lines");
 
                 Scale linewidth {
                   draw-value: true;
@@ -120,12 +117,10 @@ template $PlotStylesWindow : Adw.Window {
 
               Adw.ComboRow markers {
                 title: _("Markers");
-                subtitle: _("The markers that are used");
               }
 
               Adw.ActionRow {
                 title: _("Marker Size");
-                subtitle: _("The size of the markers");
 
                 Scale markersize {
                   draw-value: true;
@@ -144,12 +139,10 @@ template $PlotStylesWindow : Adw.Window {
 
               Adw.ComboRow tick_direction {
                 title: _("Tick Directions");
-                subtitle: _("Whether ticks are pointing in or out");
               }
 
               Adw.ActionRow {
                 title: _("Minor Ticks");
-                subtitle: _("Show Minor Ticks");
                 activatable-widget: minor_ticks;
 
                 Switch minor_ticks {
@@ -159,7 +152,6 @@ template $PlotStylesWindow : Adw.Window {
 
               Adw.ActionRow {
                 title: _("Major Tick Width");
-                subtitle: _("The thickness of the major ticks");
 
                 Scale major_tick_width {
                   draw-value: true;
@@ -173,7 +165,6 @@ template $PlotStylesWindow : Adw.Window {
 
               Adw.ActionRow {
                 title: _("Minor Tick Width");
-                subtitle: _("The thickness of the minor ticks");
                 visible: bind minor_ticks.active;
 
                 Scale minor_tick_width {
@@ -188,7 +179,6 @@ template $PlotStylesWindow : Adw.Window {
 
               Adw.ActionRow {
                 title: _("Major Tick Length");
-                subtitle: _("The length of the major ticks");
 
                 Scale major_tick_length {
                   draw-value: true;
@@ -202,7 +192,6 @@ template $PlotStylesWindow : Adw.Window {
 
               Adw.ActionRow {
                 title: _("Minor Tick Length");
-                subtitle: _("The length of the minor ticks");
                 visible: bind minor_ticks.active;
 
                 Scale minor_tick_length {
@@ -217,7 +206,6 @@ template $PlotStylesWindow : Adw.Window {
 
               Adw.ActionRow {
                 title: _("Ticks on Bottom Axis");
-                subtitle: _("Show ticks on the bottom");
                 activatable-widget: tick_bottom;
 
                 Switch tick_bottom {
@@ -227,7 +215,6 @@ template $PlotStylesWindow : Adw.Window {
 
               Adw.ActionRow {
                 title: _("Ticks on Left Axis");
-                subtitle: _("Show ticks on the left-hand axis");
                 activatable-widget: tick_left;
 
                 Switch tick_left {
@@ -237,7 +224,6 @@ template $PlotStylesWindow : Adw.Window {
 
               Adw.ActionRow {
                 title: _("Ticks on Right Axis");
-                subtitle: _("Show ticks on the right");
                 activatable-widget: tick_right;
 
                 Switch tick_right {
@@ -247,7 +233,6 @@ template $PlotStylesWindow : Adw.Window {
 
               Adw.ActionRow {
                 title: _("Ticks on Top Axis");
-                subtitle: _("Show ticks on the top");
                 activatable-widget: tick_top;
 
                 Switch tick_top {
@@ -262,7 +247,6 @@ template $PlotStylesWindow : Adw.Window {
 
               Adw.ActionRow {
                 title: _("Show Grid");
-                subtitle: _("Show Show Grid on the Graph");
                 activatable-widget: show_grid;
 
                 Switch show_grid {
@@ -272,7 +256,6 @@ template $PlotStylesWindow : Adw.Window {
 
               Adw.ActionRow {
                 title: _("Grid Width");
-                subtitle: _("Width of the Lines in the Grid");
                 visible: bind show_grid.active;
 
                 Scale grid_linewidth {
@@ -287,7 +270,6 @@ template $PlotStylesWindow : Adw.Window {
 
               Adw.ActionRow {
                 title: _("Grid Opacity");
-                subtitle: _("The opacity of the grid");
                 visible: bind show_grid.active;
 
                 Scale grid_opacity {
@@ -307,7 +289,7 @@ template $PlotStylesWindow : Adw.Window {
 
               Adw.ActionRow {
                 title: _("Value Padding");
-                subtitle: _("The padding between axis and values");
+                subtitle: _("The padding between axes and values");
 
                 Scale value_padding {
                   draw-value: true;
@@ -321,7 +303,7 @@ template $PlotStylesWindow : Adw.Window {
 
               Adw.ActionRow {
                 title: _("Label Padding");
-                subtitle: _("The padding between axis and labels");
+                subtitle: _("The padding between axes and labels");
 
                 Scale label_padding {
                   draw-value: true;
@@ -335,7 +317,7 @@ template $PlotStylesWindow : Adw.Window {
 
               Adw.ActionRow {
                 title: _("Title Padding");
-                subtitle: _("The padding between axis and the title");
+                subtitle: _("The padding between axes and the title");
 
                 Scale title_padding {
                   draw-value: true;
@@ -350,7 +332,6 @@ template $PlotStylesWindow : Adw.Window {
 
             Adw.PreferencesGroup {
               title: _("Colors");
-              description: _("The colors for different parts of the figure");
 
               Grid {
                 row-spacing: 20;
@@ -363,7 +344,6 @@ template $PlotStylesWindow : Adw.Window {
 
                   Adw.ActionRow {
                     title: _("Text Color");
-                    subtitle: _("The color of the text in the figure");
                     activatable-widget: text_color;
                     hexpand: true;
 
@@ -386,7 +366,6 @@ template $PlotStylesWindow : Adw.Window {
                   }
                   Adw.ActionRow {
                     title: _("Tick Color");
-                    subtitle: _("The color of the ticks in the figure");
                     activatable-widget: tick_color;
                     hexpand: true;
 
@@ -409,7 +388,6 @@ template $PlotStylesWindow : Adw.Window {
                   }
                   Adw.ActionRow {
                     title: _("Axis Color");
-                    subtitle: _("The color of the axes in the figure");
                     activatable-widget: axis_color;
                     hexpand: true;
 
@@ -432,7 +410,6 @@ template $PlotStylesWindow : Adw.Window {
                   }
                   Adw.ActionRow {
                     title: _("Grid Color");
-                    subtitle: _("The color of the grid in the figure");
                     activatable-widget: grid_color;
                     hexpand: true;
 
@@ -455,7 +432,6 @@ template $PlotStylesWindow : Adw.Window {
                   }
                   Adw.ActionRow {
                     title: _("Background Color");
-                    subtitle: _("The color of the background");
                     activatable-widget: background_color;
                     hexpand: true;
 
@@ -478,7 +454,6 @@ template $PlotStylesWindow : Adw.Window {
                   }
                   Adw.ActionRow {
                     title: _("Outline Color");
-                    subtitle: _("The color of the outline of the figure");
                     activatable-widget: outline_color;
                     hexpand: true;
 
@@ -502,7 +477,6 @@ template $PlotStylesWindow : Adw.Window {
                   }
                   Adw.ActionRow {
                     title: _("Line Colors");
-                    subtitle: _("Change the available line colors");
                     activatable-widget: line_colors;
                     hexpand: true;
 
@@ -525,7 +499,6 @@ template $PlotStylesWindow : Adw.Window {
 
               Adw.ActionRow {
                 title: _("Axis Width");
-                subtitle: _("The thickness of the axes");
 
                 Scale axis_width {
                   draw-value: true;
@@ -561,7 +534,6 @@ template $PlotStylesWindow : Adw.Window {
           margin-end: 12;
           Adw.PreferencesGroup {
             title: _("Line Colors");
-            description: _("The colors which will be used for the lines");
             header-suffix: Button {
               clicked => $add_color();
               Adw.ButtonContent {

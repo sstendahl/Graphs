@@ -11,17 +11,15 @@ template $PreferencesWindow : Adw.PreferencesWindow {
     title: _("General");
 
     Adw.PreferencesGroup {
-      title: _("Export Options");
-      description: _("Options for exporting the figure");
+      title: _("Default Export Options");
+      description: _("Default options for exporting the figure");
 
       Adw.ComboRow export_figure_filetype {
-        title: _("Default Format");
-        subtitle: _("Default format used to export the figure");
+        title: _("File Format");
       }
 
       Adw.ActionRow {
-        title: _("Default dpi");
-        subtitle: _("Default figure resolution in dots per inch");
+        title: _("Resolution (dpi)");
 
         SpinButton export_figure_dpi {
           valign: center;
@@ -37,7 +35,6 @@ template $PreferencesWindow : Adw.PreferencesWindow {
 
       Adw.ActionRow {
         title: _("Transparent Background");
-        subtitle: _("Use a transparent background by default");
         activatable-widget: export_figure_transparent;
 
         Switch export_figure_transparent {
@@ -52,22 +49,18 @@ template $PreferencesWindow : Adw.PreferencesWindow {
 
       Adw.ComboRow action_center_data {
         title: _("Center Data");
-        subtitle: _("Behaviour of the center data action");
       }
     }
 
     Adw.PreferencesGroup {
       title: _("Other");
-      description: _("Other general settings");
 
       Adw.ComboRow other_handle_duplicates {
         title: _("Handle Duplicate Items");
-        subtitle: _("Choose how to handle duplicate items when added");
       }
 
       Adw.ActionRow {
-        title: _("Hide Unselected");
-        subtitle: _("Whether to hide items, that are not selected");
+        title: _("Hide Unselected Items");
         activatable-widget: other_hide_unselected;
 
         Switch other_hide_unselected {
@@ -108,36 +101,30 @@ template $PreferencesWindow : Adw.PreferencesWindow {
 
     Adw.PreferencesGroup {
       title: _("Axes Settings");
-      description: _("Set the default axes scale and position used upon launch");
+      description: _("Default axes scale and position");
 
       Adw.ComboRow plot_x_scale {
         title: _("Default Bottom Axis Scale");
-        subtitle: _("Default scaling on the bottom axis");
       }
 
       Adw.ComboRow plot_y_scale {
         title: _("Default Left Axis Scale");
-        subtitle: _("Default scaling on the left-hand axis");
       }
 
       Adw.ComboRow plot_top_scale {
         title: _("Default Top Axis Scale");
-        subtitle: _("Default scaling on the top axis");
       }
 
       Adw.ComboRow plot_right_scale {
         title: _("Default Right Axis Scale");
-        subtitle: _("Default scaling on the right-hand axis");
       }
 
       Adw.ComboRow plot_x_position {
         title: _("Default X-Axis Position");
-        subtitle: _("Default position of the X-axis");
       }
 
       Adw.ComboRow plot_y_position {
         title: _("Default Y-Axis Position");
-        subtitle: _("Default position of the Y-axis");
       }
     }
 
@@ -151,23 +138,19 @@ template $PreferencesWindow : Adw.PreferencesWindow {
         show-enable-switch: true;
         Adw.ComboRow plot_legend_position {
           title: _("Legend Position");
-          subtitle: _("Default position of the legend");
       }
     }
 
       Adw.ExpanderRow plot_use_custom_style {
         title: _("Use Custom Style");
-        subtitle: _("Use a custom style instead of following the system style by default");
         show-enable-switch: true;
 
         Adw.ComboRow plot_custom_style {
           title: _("Style");
-          subtitle: _("Custom style used by default");
         }
       }
       Adw.ActionRow {
         title: _("Override Line Styling on Style Change");
-        subtitle: _("Override the active line styling when switching styles");
 
         Switch override_style_change {
           valign: center;

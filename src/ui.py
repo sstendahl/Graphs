@@ -1,5 +1,6 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 import contextlib
+import datetime
 import logging
 from gettext import gettext as _
 
@@ -123,26 +124,20 @@ def build_dialog(name):
 
 
 def show_about_window(self):
-    developers = [
-        "Sjoerd Stendahl <contact@sjoerd.se>",
-        "Christoph Kohnen <christoph.kohnen@disroot.org>",
-    ]
-    about = Adw.AboutWindow(transient_for=self.main_window,
-                            application_name=self.name,
-                            application_icon=self.props.application_id,
-                            website=self.website,
-                            developer_name=self.author,
-                            issue_url=self.issues,
-                            version=self.version,
-                            developers=developers,
-                            copyright=f"© {self.copyright} {self.author}",
-                            license_type="GTK_LICENSE_GPL_3_0")
-    about.set_translator_credits(_("translator-credits"))
-    whats_new_file = Gio.File.new_for_uri(
-        "resource:///se/sjoerd/Graphs/whats_new")
-    release_notes = whats_new_file.load_bytes(None)[0].get_data()
-    about.set_release_notes(release_notes.decode("utf-8"))
-    about.present()
+    Adw.AboutWindow(
+        transient_for=self.main_window, application_name=self.name,
+        application_icon=self.props.application_id, website=self.website,
+        developer_name=self.author, issue_url=self.issues,
+        version=self.version, developers=[
+            "Sjoerd Stendahl <contact@sjoerd.se>",
+            "Christoph Kohnen <christoph.kohnen@disroot.org>",
+        ],
+        copyright=f"© 2022 – {datetime.date.today().year} {self.author}",
+        license_type="GTK_LICENSE_GPL_3_0",
+        translator_credits=_("translator-credits"),
+        release_notes=file_io.read_file(
+            Gio.File.new_for_uri("resource:///se/sjoerd/Graphs/whats_new")),
+    ).present()
 
 
 def load_values_from_dict(window, values, ignorelist=None):

@@ -19,12 +19,12 @@ class TransformWindow(Adw.Window):
     help_popover = Gtk.Template.Child()
 
     def __init__(self, application):
-        super().__init__(application=application)
+        super().__init__(application=application,
+                         transient_for=application.main_window)
         self.transform_x_entry.set_text("X")
         self.transform_y_entry.set_text("Y")
         self.discard_row.set_visible(
             self.props.application.interaction_mode == InteractionMode.SELECT)
-        self.set_transient_for(self.props.application.main_window)
         self.present()
         self.help_button.connect(
             "clicked", lambda _x: self.help_popover.popup())

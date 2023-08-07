@@ -120,7 +120,8 @@ class PreferencesWindow(Adw.PreferencesWindow):
     plot_custom_style = Gtk.Template.Child()
 
     def __init__(self, application):
-        super().__init__(application=application)
+        super().__init__(application=application,
+                         transient_for=application.main_window)
         self.supported_filetypes = \
             self.props.application.canvas.get_supported_filetypes_grouped()
 
@@ -147,7 +148,6 @@ class PreferencesWindow(Adw.PreferencesWindow):
             plot_styles.get_user_styles(self.props.application).keys(),
             translate=False)
         self.load()
-        self.set_transient_for(self.props.application.main_window)
         self.present()
 
     def load(self):

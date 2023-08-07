@@ -19,8 +19,8 @@ class AddEquationWindow(Adw.Window):
     step_size = Gtk.Template.Child()
 
     def __init__(self, application):
-        super().__init__(application=application)
-        self.set_transient_for(self.props.application.main_window)
+        super().__init__(application=application,
+                         transient_for=application.main_window)
         preferences = self.props.application.preferences
         self.equation.set_text(preferences["addequation_equation"])
         self.x_start.set_text(preferences["addequation_x_start"])
