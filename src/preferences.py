@@ -83,20 +83,19 @@ class Preferences(dict):
             config)
 
 
-CONFIG_IGNORELIST = [
-    "import_params", "export_figure_filetype", "clipboard_length",
-    "export_figure_transparent", "export_figure_dpi",
+CONFIG_WHITELIST = [
+    "action_center_data", "other_handle_duplicates", "other_hide_unselected",
+    "override_style_change", "plot_title", "plot_x_label", "plot_y_label",
+    "plot_top_label", "plot_right_label", "plot_x_scale", "plot_y_scale",
+    "plot_top_scale", "plot_right_scale", "plot_x_position", "plot_y_position",
+    "plot_legend", "plot_legend_position", "plot_use_custom_style",
+    "plot_custom_style",
 ]
 
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/preferences.ui")
 class PreferencesWindow(Adw.PreferencesWindow):
     __gtype_name__ = "PreferencesWindow"
-    import_delimiter = Gtk.Template.Child()
-    import_separator = Gtk.Template.Child()
-    import_column_x = Gtk.Template.Child()
-    import_column_y = Gtk.Template.Child()
-    import_skip_rows = Gtk.Template.Child()
     action_center_data = Gtk.Template.Child()
     other_handle_duplicates = Gtk.Template.Child()
     other_hide_unselected = Gtk.Template.Child()
@@ -144,8 +143,9 @@ class PreferencesWindow(Adw.PreferencesWindow):
         self.present()
 
     def load(self):
-        ui.load_values_from_dict(self, self.props.application.preferences,
-                                 ignorelist=CONFIG_IGNORELIST)
+        ui.load_values_from_dict(
+            self, {key: self.props.application.preferences[key]
+                   for key in CONFIG_WHITELIST})
         columns_params = \
             self.props.application.preferences["import_params"]["columns"]
         self.import_delimiter.set_text(columns_params["delimiter"])
@@ -167,8 +167,7 @@ class PreferencesWindow(Adw.PreferencesWindow):
         columns_params["skip_rows"] = int(self.import_skip_rows.get_value())
 
         self.props.application.preferences.update(ui.save_values_to_dict(
-            self, self.props.application.preferences.keys(),
-            ignorelist=CONFIG_IGNORELIST))
+            self, CONFIG_WHITELIST))
 
     @Gtk.Template.Callback()
     def on_close(self, _):
