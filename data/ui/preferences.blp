@@ -55,21 +55,6 @@ template $PreferencesWindow : Adw.PreferencesWindow {
     Adw.PreferencesGroup {
       title: _("Other");
 
-      Adw.ActionRow {
-        title: _("Clipboard Length");
-
-        SpinButton clipboard_length {
-          valign: center;
-          numeric: true;
-          value: 15;
-          wrap: true;
-          adjustment: Adjustment {
-            step-increment: 1;
-            upper: 999;
-          };
-        }
-      }
-
       Adw.ComboRow other_handle_duplicates {
         title: _("Handle Duplicate Items");
       }
