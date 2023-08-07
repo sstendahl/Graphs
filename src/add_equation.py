@@ -4,7 +4,7 @@ from gettext import gettext as _
 
 from gi.repository import Adw, Gtk
 
-from graphs import calculation, graphs, utilities, ui
+from graphs import calculation, graphs, ui, utilities
 from graphs.item import Item
 
 KEYS = [
