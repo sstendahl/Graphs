@@ -254,8 +254,7 @@ class PlotStylesWindow(Adw.Window):
             self.color_boxes[box] = self.line_colors_box.get_last_child()
 
     def save_style(self):
-        new_values = {key: None for key in STYLE_DICT.keys()}
-        ui.save_values_to_dict(self, new_values)
+        new_values = ui.save_values_to_dict(self, STYLE_DICT.keys())
         for key, value in new_values.items():
             if value is not None:
                 for item in STYLE_DICT[key]:

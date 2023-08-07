@@ -57,7 +57,7 @@ class Preferences(dict):
                 import_file, Gio.FileCopyFlags(1), None, None, None)
             logging.info(_("New Import Settings file created"))
 
-        self.update(_validate(
+        super().update(_validate(
             file_io.parse_json(config_file),
             file_io.parse_json(template_config_file)))
 
@@ -66,6 +66,10 @@ class Preferences(dict):
             key: _validate(item, import_params_template[key])
             for key, item in file_io.parse_json(import_file).items()
         }, import_params_template)
+
+    def update(self, values):
+        super().update(values)
+        self.save()
 
     def save(self):
         config_dir = utilities.get_config_directory()
@@ -170,8 +174,7 @@ class PreferencesWindow(Adw.PreferencesWindow):
         utilities.set_chooser(self.export_figure_filetype, filetype)
 
     def apply(self):
-        ui.save_values_to_dict(self, self.props.application.preferences,
-                               ignorelist=CONFIG_IGNORELIST)
+        # to be removed
         columns_params = \
             self.props.application.preferences["import_params"]["columns"]
         columns_params["delimiter"] = self.import_delimiter.get_text()
@@ -181,18 +184,19 @@ class PreferencesWindow(Adw.PreferencesWindow):
         columns_params["column_y"] = int(self.import_column_y.get_value())
         columns_params["skip_rows"] = int(self.import_skip_rows.get_value())
 
+        new_values = ui.save_values_to_dict(
+            self, self.props.application.preferences.keys(),
+            ignorelist=CONFIG_IGNORELIST)
         filetype_name = \
             utilities.get_selected_chooser_item(self.export_figure_filetype)
         filetypes = \
             self.props.application.canvas.get_supported_filetypes_grouped()
         for name, formats in filetypes.items():
             if name == filetype_name:
-                export_figure_filetype = formats[0]
-        self.props.application.preferences["export_figure_filetype"] = \
-            export_figure_filetype
+                new_values["export_figure_filetype"] = formats[0]
+        self.props.application.preferences.update(new_values)
 
     @Gtk.Template.Callback()
     def on_close(self, _):
         self.apply()
-        self.props.application.preferences.save()
         graphs.refresh(self.props.application)

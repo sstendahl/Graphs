@@ -140,7 +140,7 @@ def show_about_window(self):
     ).present()
 
 
-def load_values_from_dict(window, values, ignorelist=None):
+def load_values_from_dict(window, values: dict, ignorelist=None):
     for key, value in values.items():
         if ignorelist is not None and key in ignorelist:
             continue
@@ -167,8 +167,9 @@ def load_values_from_dict(window, values, ignorelist=None):
             logging.warn(_("No way to apply “{}”").format(key))
 
 
-def save_values_to_dict(window, values, ignorelist=None):
-    for key in values.keys():
+def save_values_to_dict(window, keys: list, ignorelist=None):
+    values = {}
+    for key in keys:
         if ignorelist is not None and key in ignorelist:
             continue
         with contextlib.suppress(AttributeError):
@@ -187,3 +188,4 @@ def save_values_to_dict(window, values, ignorelist=None):
                 values[key] = widget.get_value()
             elif isinstance(widget, Gtk.Button):
                 values[key] = widget.color
+    return values
