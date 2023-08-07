@@ -194,30 +194,5 @@ template $PreferencesWindow : Adw.PreferencesWindow {
         }
       }
     }
-
-    Adw.PreferencesGroup {
-      title: _("Add Equation");
-      description: _("Settings for the “Add Equation” action");
-
-      Adw.EntryRow addequation_equation {
-        title: _("Default Equation: Y =");
-        max-width-chars: 20;
-      }
-
-      Adw.EntryRow addequation_x_start {
-        title: _("Default X start");
-        max-width-chars: 20;
-      }
-
-      Adw.EntryRow addequation_x_stop {
-        title: _("Default X stop");
-        max-width-chars: 20;
-      }
-
-      Adw.EntryRow addequation_step_size {
-        title: _("Default Step Size");
-        max-width-chars: 20;
-      }
-    }
   }
 }
