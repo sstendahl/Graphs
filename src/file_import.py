@@ -1,17 +1,28 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
+from gettext import gettext as _
 from pathlib import Path
 
-from gi.repository import Adw, GObject, Gtk
+from gi.repository import Adw, GObject, Gio, Gtk
 
 from graphs import file_io, graphs, misc, ui, utilities
 from graphs.misc import ParseError
 
 
-IMPORT_MODES = ["project", "xrdml", "xry", "columns"]
+IMPORT_MODES = {
+    # name: suffix
+    "project": ".graphs", "xrdml": ".xrdml", "xry": ".xry", "columns": None,
+}
 
 
-def prepare_import(self, files):
-    import_dict = {mode: [] for mode in IMPORT_MODES}
+class ImportSettings(GObject.Object):
+    file = GObject.Property(type=Gio.File)
+    mode = GObject.Property(type=str, default="columns")
+    params = GObject.Property(type=object)
+    name = GObject.Property(type=str, default=_("Imported Data"))
+
+
+def prepare_import(self, files: list):
+    import_dict = {mode: [] for mode in IMPORT_MODES.keys()}
     for file in files:
         import_dict[guess_import_mode(file)].append(file)
     modes = []
@@ -24,19 +35,17 @@ def prepare_import(self, files):
     prepare_import_finish(self, import_dict)
 
 
-def prepare_import_finish(self, import_dict):
-    import_settings_list = []
-    for mode, files in import_dict.items():
-        try:
-            params = self.preferences["import_params"][mode]
-        except KeyError:
-            params = []
-        for file in files:
-            import_settings_list.append(ImportSettings(file, mode, params))
-    import_from_files(self, import_settings_list)
+def prepare_import_finish(self, import_dict: dict):
+    import_params = self.preferences["import_params"]
+    import_from_files(self, [
+        ImportSettings(
+            file=file, mode=mode, name=utilities.get_filename(file),
+            params=import_params[mode] if mode in import_params else [],
+        ) for mode, files in import_dict.items() for file in files
+    ])
 
 
-def import_from_files(self, import_settings_list):
+def import_from_files(self, import_settings_list: list):
     items = []
     for import_settings in import_settings_list:
         try:
@@ -47,7 +56,7 @@ def import_from_files(self, import_settings_list):
     graphs.add_items(self, items)
 
 
-def _import_from_file(self, import_settings):
+def _import_from_file(self, import_settings: ImportSettings):
     match import_settings.mode:
         case "project":
             callback = file_io.import_from_project
@@ -58,14 +67,6 @@ def _import_from_file(self, import_settings):
         case "columns":
             callback = file_io.import_from_columns
     return callback(self, import_settings)
-
-
-class ImportSettings():
-    def __init__(self, file, mode, params):
-        self.file = file
-        self.mode = mode
-        self.params = params
-        self.name = file.query_info("standard::*", 0, None).get_display_name()
 
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/import.ui")
@@ -82,7 +83,7 @@ class ImportWindow(Adw.Window):
     modes = GObject.Property(type=object)
     import_dict = GObject.Property(type=object)
 
-    def __init__(self, application, modes, import_dict):
+    def __init__(self, application, modes: list, import_dict: dict):
         super().__init__(
             application=application, transient_for=application.main_window,
             modes=modes, import_dict=import_dict,
@@ -126,24 +127,21 @@ class ImportWindow(Adw.Window):
 
         import_from_files(self.props.application, [
             ImportSettings(
-                file, mode, param_dict[mode] if mode in self.modes else [])
-            for mode in IMPORT_MODES for file in self.import_dict[mode]
+                file=file, mode=mode, name=utilities.get_filename(file),
+                params=param_dict[mode] if mode in self.modes else [],
+            )
+            for mode in IMPORT_MODES.keys() for file in self.import_dict[mode]
         ])
         self.destroy()
 
 
 def guess_import_mode(file):
     try:
-        filename = file.query_info("standard::*", 0, None).get_display_name()
+        filename = utilities.get_filename(file)
         file_suffix = Path(filename).suffixes[-1]
     except IndexError:
         file_suffix = None
-    match file_suffix:
-        case ".graphs":
-            return "project"
-        case ".xrdml":
-            return "xrdml"
-        case ".xry":
-            return "xry"
-        case _:
-            return "columns"
+    for mode, suffix in IMPORT_MODES.items():
+        if suffix is not None and file_suffix == suffix:
+            return mode
+    return "columns"
