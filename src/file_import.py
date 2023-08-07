@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 from pathlib import Path
 
-from gi.repository import Adw, Gtk
+from gi.repository import Adw, GObject, Gtk
 
 from graphs import file_io, graphs, misc, ui, utilities
 from graphs.misc import ParseError
@@ -79,11 +79,14 @@ class ImportWindow(Adw.Window):
     columns_column_y = Gtk.Template.Child()
     columns_skip_rows = Gtk.Template.Child()
 
+    modes = GObject.Property(type=object)
+    import_dict = GObject.Property(type=object)
+
     def __init__(self, application, modes, import_dict):
-        super().__init__(application=application,
-                         transient_for=application.main_window)
-        self.modes = modes
-        self.import_dict = import_dict
+        super().__init__(
+            application=application, transient_for=application.main_window,
+            modes=modes, import_dict=import_dict,
+        )
 
         utilities.populate_chooser(
             self.columns_separator, misc.SEPARATORS, False)
