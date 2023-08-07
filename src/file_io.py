@@ -199,7 +199,7 @@ def parse_style(file):
     functions.
     """
     style = RcParams()
-    filename = file.query_info("standard::*", 0, None).get_display_name()
+    filename = utilities.get_filename(file)
     try:
         for line_number, line in enumerate(read_file(file).splitlines(), 1):
             stripped_line = cbook._strip_comment(line)
