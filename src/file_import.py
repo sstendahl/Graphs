@@ -72,6 +72,7 @@ def _import_from_file(self, import_settings: ImportSettings):
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/import.ui")
 class ImportWindow(Adw.Window):
     __gtype_name__ = "ImportWindow"
+    save_values = Gtk.Template.Child()
 
     columns_group = Gtk.Template.Child()
     columns_delimiter = Gtk.Template.Child()
@@ -109,8 +110,6 @@ class ImportWindow(Adw.Window):
 
     @Gtk.Template.Callback()
     def on_accept(self, _widget):
-        save_values = True
-
         param_dict = {
             mode: {
                 key.replace(f"{mode}_", ""): value for key, value
@@ -122,7 +121,7 @@ class ImportWindow(Adw.Window):
             if mode in self.modes
         }
 
-        if save_values:
+        if self.save_values.get_active():
             self.props.application.preferences.update_modes(param_dict)
 
         import_from_files(self.props.application, [

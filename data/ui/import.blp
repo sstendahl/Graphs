@@ -38,60 +38,70 @@ template $ImportWindow : Adw.Window {
       margin-end: 12;
       margin-top: 12;
       margin-bottom: 12;
-      Adw.PreferencesGroup columns_group {
-        visible: false;
-        Adw.EntryRow columns_delimiter {
-          max-width-chars: 10;
-          title: _("Delimiter (\s+ for whitespace)");
-        }
 
-        Adw.ComboRow columns_separator {
-          title: _("Decimal Separator");
-        }
+      Box {
+        orientation: vertical;
+        spacing: 10;
+        Adw.PreferencesGroup columns_group {
+          visible: false;
+          Adw.EntryRow columns_delimiter {
+            max-width-chars: 10;
+            title: _("Delimiter (\s+ for whitespace)");
+          }
 
-        Adw.ActionRow {
-          title: _("Column X");
-          subtitle: _("X-data column index");
-          SpinButton columns_column_x {
-            valign: center;
-            numeric: true;
-            value: 0;
-            wrap: true;
-            adjustment: Adjustment {
-              step-increment: 1;
-              upper: 100;
-            };
+          Adw.ComboRow columns_separator {
+            title: _("Decimal Separator");
+          }
+
+          Adw.ActionRow {
+            title: _("Column X");
+            subtitle: _("X-data column index");
+            SpinButton columns_column_x {
+              valign: center;
+              numeric: true;
+              value: 0;
+              wrap: true;
+              adjustment: Adjustment {
+                step-increment: 1;
+                upper: 100;
+              };
+            }
+          }
+
+          Adw.ActionRow {
+            title: _("Column Y");
+            subtitle: _("Y-data column index");
+            SpinButton columns_column_y {
+              valign: center;
+              numeric: true;
+              value: 0;
+              wrap: true;
+              adjustment: Adjustment {
+                step-increment: 1;
+                upper: 100;
+              };
+            }
+          }
+
+          Adw.ActionRow {
+            title: _("Skip Rows");
+            subtitle: _("Ignored row indices");
+            SpinButton columns_skip_rows {
+              valign: center;
+              numeric: true;
+              value: 0;
+              wrap: true;
+              adjustment: Adjustment {
+                step-increment: 1;
+                upper: 999;
+              };
+            }
           }
         }
 
-        Adw.ActionRow {
-          title: _("Column Y");
-          subtitle: _("Y-data column index");
-          SpinButton columns_column_y {
-            valign: center;
-            numeric: true;
-            value: 0;
-            wrap: true;
-            adjustment: Adjustment {
-              step-increment: 1;
-              upper: 100;
-            };
-          }
-        }
-
-        Adw.ActionRow {
-          title: _("Skip Rows");
-          subtitle: _("Ignored row indices");
-          SpinButton columns_skip_rows {
-            valign: center;
-            numeric: true;
-            value: 0;
-            wrap: true;
-            adjustment: Adjustment {
-              step-increment: 1;
-              upper: 999;
-            };
-          }
+        CheckButton save_values {
+          label: _("Remember");
+          active: true;
         }
       }
     }
