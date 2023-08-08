@@ -19,11 +19,8 @@ class ExportFigureWindow(Adw.Window):
         super().__init__(application=application,
                          transient_for=application.main_window)
         preferences = self.props.application.preferences
-        self.set_values(preferences)
-        self.present()
 
-    def set_values(self, preferences):
-        application = self.props.application
+        # Set values in Export Figure dialog:
         self.transparent.set_active(preferences["export_figure_transparent"])
         self.items = \
             application.canvas.get_supported_filetypes_grouped().items()
@@ -37,6 +34,7 @@ class ExportFigureWindow(Adw.Window):
         utilities.populate_chooser(self.file_format, file_formats, False)
         if default_format is not None:
             utilities.set_chooser(self.file_format, default_format)
+        self.present()
 
     @Gtk.Template.Callback()
     def on_accept(self, _button):
