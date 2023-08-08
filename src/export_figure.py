@@ -7,7 +7,7 @@ from gi.repository import Adw, GLib, Gio, Gtk, GObject
 
 from graphs import utilities, ui
 
-KEYS = ["dpi", "file_format", "transparent"]
+KEYS = ["dpi", "file-format", "transparent"]
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/export_figure.ui")
 class ExportFigureWindow(Adw.Window):

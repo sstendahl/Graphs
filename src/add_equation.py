@@ -7,7 +7,7 @@ from gi.repository import Adw, Gtk
 from graphs import calculation, graphs, ui, utilities
 from graphs.item import Item
 
-KEYS = ["equation", "step_size", "x_start", "x_stop"]
+KEYS = ["equation", "step-size", "x-start", "x-stop"]
 
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/add_equation_window.ui")
