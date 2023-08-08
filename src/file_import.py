@@ -117,8 +117,12 @@ class ImportWindow(Adw.Window):
         dialog.present()
 
     def reset_import(self):
-        pass
-        # TODO reimplement
+        import_params = \
+            self.props.application.settings.get_child("import-params")
+        for mode in import_params.list_children():
+            settings = import_params.get_child(mode)
+            for key in settings.props.settings_schema.list_keys():
+                settings.reset(key)
 
     @Gtk.Template.Callback()
     def on_accept(self, _widget):
