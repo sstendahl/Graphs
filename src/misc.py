@@ -7,20 +7,20 @@ class PlotSettings:
     The plot-related settings for the current session. The default values are
     retreived from the preferencess file.
     """
-    def __init__(self, preferences):
+    def __init__(self, settings):
         self.xlabel = None
         self.right_label = None
         self.top_label = None
         self.ylabel = None
-        self.xscale = preferences["plot_x_scale"]
-        self.yscale = preferences["plot_y_scale"]
-        self.right_scale = preferences["plot_right_scale"]
-        self.top_scale = preferences["plot_top_scale"]
-        self.title = preferences["plot_title"]
-        self.legend = preferences["plot_legend"]
-        self.use_custom_plot_style = preferences["plot_use_custom_style"]
-        self.legend_position = preferences["plot_legend_position"]
-        self.custom_plot_style = preferences["plot_custom_style"]
+        self.xscale = settings.get_string("bottom-scale")
+        self.yscale = settings.get_string("left-scale")
+        self.right_scale = settings.get_string("right-scale")
+        self.top_scale = settings.get_string("top-scale")
+        self.title = settings.get_string("title")
+        self.legend = settings.get_boolean("legend")
+        self.use_custom_plot_style = settings.get_boolean("use-custom-style")
+        self.legend_position = settings.get_string("legend-position")
+        self.custom_plot_style = settings.get_string("custom-style")
         self.min_bottom = 0
         self.max_bottom = 1
         self.min_top = 0

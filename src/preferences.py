@@ -88,15 +88,6 @@ class Preferences(dict):
             config)
 
 
-CONFIG_WHITELIST = [
-    "plot_title", "plot_x_label", "plot_y_label",
-    "plot_top_label", "plot_right_label", "plot_x_scale", "plot_y_scale",
-    "plot_top_scale", "plot_right_scale", "plot_x_position", "plot_y_position",
-    "plot_legend", "plot_legend_position", "plot_use_custom_style",
-    "plot_custom_style",
-]
-
-
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/preferences.ui")
 class PreferencesWindow(Adw.PreferencesWindow):
     __gtype_name__ = "PreferencesWindow"
@@ -105,12 +96,12 @@ class PreferencesWindow(Adw.PreferencesWindow):
     general_hide_unselected = Gtk.Template.Child()
     general_override_item_properties = Gtk.Template.Child()
     plot_title = Gtk.Template.Child()
-    plot_x_label = Gtk.Template.Child()
-    plot_y_label = Gtk.Template.Child()
+    plot_bottom_label = Gtk.Template.Child()
+    plot_left_label = Gtk.Template.Child()
     plot_top_label = Gtk.Template.Child()
     plot_right_label = Gtk.Template.Child()
-    plot_x_scale = Gtk.Template.Child()
-    plot_y_scale = Gtk.Template.Child()
+    plot_bottom_scale = Gtk.Template.Child()
+    plot_left_scale = Gtk.Template.Child()
     plot_top_scale = Gtk.Template.Child()
     plot_right_scale = Gtk.Template.Child()
     plot_x_position = Gtk.Template.Child()
@@ -128,8 +119,8 @@ class PreferencesWindow(Adw.PreferencesWindow):
             self.general_center_data, misc.ACTION_CENTER_DATA)
         utilities.populate_chooser(
             self.general_handle_duplicates, misc.HANDLE_DUPLICATES)
-        utilities.populate_chooser(self.plot_x_scale, misc.SCALES)
-        utilities.populate_chooser(self.plot_y_scale, misc.SCALES)
+        utilities.populate_chooser(self.plot_bottom_scale, misc.SCALES)
+        utilities.populate_chooser(self.plot_left_scale, misc.SCALES)
         utilities.populate_chooser(self.plot_top_scale, misc.SCALES)
         utilities.populate_chooser(self.plot_right_scale, misc.SCALES)
         utilities.populate_chooser(self.plot_x_position, misc.X_POSITIONS)
@@ -141,16 +132,13 @@ class PreferencesWindow(Adw.PreferencesWindow):
             self.plot_custom_style,
             plot_styles.get_user_styles(self.props.application).keys(),
             translate=False)
+        settings = self.props.application.settings
         ui.bind_values_to_settings(
-            self.props.application.settings, self, prefix="general_",
-            ignorelist=["clipboard-length"])
-        ui.load_values_from_dict(
-            self, {key: self.props.application.preferences[key]
-                   for key in CONFIG_WHITELIST})
+            settings.get_child("figure"), self, prefix="plot_")
+        ui.bind_values_to_settings(
+            settings, self, prefix="general_", ignorelist=["clipboard-length"])
         self.present()
 
     @Gtk.Template.Callback()
     def on_close(self, _):
-        self.props.application.preferences.update(ui.save_values_to_dict(
-            self, CONFIG_WHITELIST))
         graphs.refresh(self.props.application)

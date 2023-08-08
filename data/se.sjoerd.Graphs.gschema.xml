@@ -3,26 +3,71 @@
   <schema id="se.sjoerd.Graphs" path="/se/sjoerd/Graphs/">
     <child name="add-equation" schema="se.sjoerd.Graphs.add-equation"/>
     <child name="export-figure" schema="se.sjoerd.Graphs.export-figure"/>
+    <child name="figure" schema="se.sjoerd.Graphs.figure"/>
     <child name="import-params" schema="se.sjoerd.Graphs.import-params"/>
 
     <key name="center-data" type="s">
       <default>"Center at middle coordinate"</default>
     </key>
-
     <key name="clipboard-length" type="i">
       <default>75</default>
     </key>
-
     <key name="handle-duplicates" type="s">
       <default>"Auto-rename duplicates"</default>
     </key>
-
     <key name="hide-unselected" type="b">
       <default>false</default>
     </key>
-
     <key name="override-item-properties" type="b">
       <default>true</default>
+    </key>
+  </schema>
+
+  <schema id="se.sjoerd.Graphs.figure">
+    <key name="bottom-label" type="s">
+      <default>"X Value"</default>
+    </key>
+    <key name="bottom-scale" type="s">
+      <default>"linear"</default>
+    </key>
+    <key name="custom-style" type="s">
+      <default>"adwaita"</default>
+    </key>
+    <key name="left-label" type="s">
+      <default>"Y Value"</default>
+    </key>
+    <key name="left-scale" type="s">
+      <default>"linear"</default>
+    </key>
+    <key name="legend" type="b">
+      <default>true</default>
+    </key>
+    <key name="legend-position" type="s">
+      <default>"Best"</default>
+    </key>
+    <key name="right-label" type="s">
+      <default>"Y Value 2"</default>
+    </key>
+    <key name="right-scale" type="s">
+      <default>"linear"</default>
+    </key>
+    <key name="title" type="s">
+      <default>""</default>
+    </key>
+    <key name="top-label" type="s">
+      <default>"X Value 2"</default>
+    </key>
+    <key name="top-scale" type="s">
+      <default>"linear"</default>
+    </key>
+    <key name="use-custom-style" type="b">
+      <default>false</default>
+    </key>
+    <key name="x-position" type="s">
+      <default>"bottom"</default>
+    </key>
+    <key name="y-position" type="s">
+      <default>"left"</default>
     </key>
   </schema>
 

@@ -153,16 +153,16 @@ class Canvas(FigureCanvas):
     def set_axis_properties(self):
         """Set the properties that are related to the axes."""
         plot_settings = self.application.plot_settings
-        settings = self.application.preferences
+        settings = self.application.settings.get_child("figure")
         title = settings["plot_title"] \
             if plot_settings.title is None else plot_settings.title
-        bottom_label = settings["plot_x_label"] \
+        bottom_label = settings.get_string("bottom-label") \
             if plot_settings.xlabel is None else plot_settings.xlabel
-        right_label = settings["plot_right_label"] \
+        right_label = settings.get_string("right-label") \
             if plot_settings.right_label is None else plot_settings.right_label
-        top_label = settings["plot_top_label"] \
+        top_label = settings.get_string("top-label") \
             if plot_settings.top_label is None else plot_settings.top_label
-        left_label = settings["plot_y_label"] \
+        left_label = settings.get_string("left-label") \
             if plot_settings.ylabel is None else plot_settings.ylabel
         self.title = self.axis.set_title(title)
         self.bottom_label = self.axis.set_xlabel(bottom_label)

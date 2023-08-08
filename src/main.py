@@ -19,7 +19,6 @@ from matplotlib import font_manager, pyplot
 
 class GraphsApplication(Adw.Application):
     """The main application singleton class."""
-    preferences = GObject.Property(type=object)
     settings = GObject.Property(type=Gio.Settings)
     version = GObject.Property(type=str, default="")
     name = GObject.Property(type=str, default="")
@@ -35,8 +34,7 @@ class GraphsApplication(Adw.Application):
             application_id=args[1], flags=Gio.ApplicationFlags.DEFAULT_FLAGS,
             version=args[0], name=args[2], website=args[3], issues=args[4],
             author=args[5], pkgdatadir=args[6],
-            datadict={}, preferences=Preferences(),
-            settings=Gio.Settings(args[1]),
+            datadict={}, settings=Gio.Settings(args[1]),
         )
         font_list = font_manager.findSystemFonts(fontpaths=None, fontext="ttf")
         for font in font_list:
@@ -81,6 +79,8 @@ class GraphsApplication(Adw.Application):
             if keybinds:
                 self.set_accels_for_action(f"app.{name}", keybinds)
 
+        # TODO implement actions again
+        """
         self.create_axis_action("change_left_yscale",
                                 plotting_tools.change_left_yscale,
                                 "plot_y_scale")
@@ -93,6 +93,7 @@ class GraphsApplication(Adw.Application):
         self.create_axis_action("change_bottom_xscale",
                                 plotting_tools.change_bottom_xscale,
                                 "plot_x_scale")
+        """
 
         self.toggle_sidebar = Gio.SimpleAction.new_stateful(
             "toggle_sidebar", None, GLib.Variant.new_boolean(True))
@@ -119,7 +120,7 @@ class GraphsApplication(Adw.Application):
         self.main_window.set_title(self.name)
         if "(Development)" in self.name:
             self.main_window.add_css_class("devel")
-        self.plot_settings = PlotSettings(self.preferences)
+        self.plot_settings = PlotSettings(self.settings.get_child("figure"))
         pyplot.rcParams.update(
             file_io.parse_style(plot_styles.get_preferred_style(self)))
         self.canvas = Canvas(self)
