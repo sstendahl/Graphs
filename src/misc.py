@@ -8,10 +8,10 @@ class PlotSettings:
     retreived from the preferencess file.
     """
     def __init__(self, preferences):
-        self.xlabel = preferences["plot_x_label"]
-        self.right_label = preferences["plot_right_label"]
-        self.top_label = preferences["plot_top_label"]
-        self.ylabel = preferences["plot_y_label"]
+        self.xlabel = None
+        self.right_label = None
+        self.top_label = None
+        self.ylabel = None
         self.xscale = preferences["plot_x_scale"]
         self.yscale = preferences["plot_y_scale"]
         self.right_scale = preferences["plot_right_scale"]

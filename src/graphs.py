@@ -69,28 +69,24 @@ def add_items(self, items):
         if item.xlabel:
             original_position = item.plot_x_position
             if item.plot_x_position == "bottom":
-                if self.plot_settings.xlabel \
-                        == self.preferences["plot_x_label"]:
+                if self.plot_settings.xlabel is None:
                     self.plot_settings.xlabel = item.xlabel
                 elif item.xlabel != self.plot_settings.xlabel:
                     item.plot_x_position = "top"
             if item.plot_x_position == "top":
-                if self.plot_settings.top_label \
-                        == self.preferences["plot_top_label"]:
+                if self.plot_settings.top_label is None:
                     self.plot_settings.top_label = item.xlabel
                 elif item.xlabel != self.plot_settings.xlabel:
                     item.plot_x_position = original_position
         if item.ylabel:
             original_position = item.plot_y_position
             if item.plot_y_position == "left":
-                if self.plot_settings.ylabel \
-                        == self.preferences["plot_y_label"]:
+                if self.plot_settings.ylabel is None:
                     self.plot_settings.ylabel = item.ylabel
                 elif item.ylabel != self.plot_settings.ylabel:
                     item.plot_y_position = "right"
             if item.plot_y_position == "right":
-                if self.plot_settings.right_label \
-                        == self.preferences["plot_right_label"]:
+                if self.plot_settings.right_label is None:
                     self.plot_settings.right_label = item.ylabel
                 elif item.ylabel != self.plot_settings.ylabel:
                     item.plot_y_position = original_position
