@@ -19,6 +19,8 @@ class ExportFigureWindow(Adw.Window):
         super().__init__(application=application,
                          transient_for=application.main_window)
         preferences = self.props.application.preferences
+
+        # Set values in Export Figure dialog:
         self.transparent.set_active(preferences["export_figure_transparent"])
         self.items = \
             application.canvas.get_supported_filetypes_grouped().items()

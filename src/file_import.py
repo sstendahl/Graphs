@@ -72,7 +72,6 @@ def _import_from_file(self, import_settings: ImportSettings):
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/import.ui")
 class ImportWindow(Adw.Window):
     __gtype_name__ = "ImportWindow"
-    save_values = Gtk.Template.Child()
 
     columns_group = Gtk.Template.Child()
     columns_delimiter = Gtk.Template.Child()
@@ -93,20 +92,40 @@ class ImportWindow(Adw.Window):
         utilities.populate_chooser(
             self.columns_separator, misc.SEPARATORS, False)
 
+        if not self.set_values(
+                self.props.application.preferences["import_params"]):
+            prepare_import_finish(self.props.application, self.import_dict)
+            self.destroy()
+            return
+        self.present()
+
+    def set_values(self, import_settings):
         visible = False
-        for mode, values \
-                in self.props.application.preferences["import_params"].items():
+        for mode, values in import_settings.items():
             if mode in self.modes:
                 ui.load_values_from_dict(self, {
                     f"{mode}_{key}": value for key, value in values.items()})
                 getattr(self, f"{mode}_group").set_visible(True)
                 visible = True
+        return visible
 
-        if not visible:
-            prepare_import_finish(self.props.application, self.import_dict)
-            self.destroy()
-            return
-        self.present()
+    @Gtk.Template.Callback()
+    def on_reset(self, _widget):
+        def on_accept(_dialog, response):
+            if response == "reset":
+                self.reset_import()
+        body = _("Are you sure you want to reset the import settings?")
+        dialog = ui.build_dialog("reset_to_defaults")
+        dialog.set_body(body)
+        dialog.set_transient_for(self)
+        dialog.connect("response", on_accept)
+        dialog.present()
+
+    def reset_import(self):
+        template_import_file = Gio.File.new_for_uri(
+            "resource:///se/sjoerd/Graphs/import.json")
+        import_params_template = file_io.parse_json(template_import_file)
+        self.set_values(import_params_template)
 
     @Gtk.Template.Callback()
     def on_accept(self, _widget):
@@ -121,8 +140,8 @@ class ImportWindow(Adw.Window):
             if mode in self.modes
         }
 
-        if self.save_values.get_active():
-            self.props.application.preferences.update_modes(param_dict)
+        # Remember settings
+        self.props.application.preferences.update_modes(param_dict)
 
         import_from_files(self.props.application, [
             ImportSettings(

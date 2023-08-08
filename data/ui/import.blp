@@ -24,12 +24,19 @@ template $ImportWindow : Adw.Window {
         label: _("Cancel");
         action-name: "window.close";
       }
-
       [end]
-      Button confirm_button {
-        label: _("Import");
-        styles ["suggested-action"]
-        clicked => $on_accept();
+      Box {
+        orientation: horizontal;
+        spacing: 10;
+        Button {
+          icon-name: "history-undo-symbolic";
+          clicked => $on_reset();
+        }
+        Button confirm_button {
+          label: _("Import");
+          styles ["suggested-action"]
+          clicked => $on_accept();
+        }
       }
     }
 
@@ -97,11 +104,6 @@ template $ImportWindow : Adw.Window {
               };
             }
           }
-        }
-
-        CheckButton save_values {
-          label: _("Remember");
-          active: true;
         }
       }
     }
