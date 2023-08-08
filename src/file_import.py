@@ -1,17 +1,28 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
+from gettext import gettext as _
 from pathlib import Path
 
-from gi.repository import Adw, Gtk
+from gi.repository import Adw, GObject, Gio, Gtk
 
-from graphs import file_io, graphs, misc, utilities
+from graphs import file_io, graphs, misc, ui, utilities
 from graphs.misc import ParseError
 
 
-IMPORT_MODES = ["project", "xrdml", "xry", "columns"]
+IMPORT_MODES = {
+    # name: suffix
+    "project": ".graphs", "xrdml": ".xrdml", "xry": ".xry", "columns": None,
+}
 
 
-def prepare_import(self, files):
-    import_dict = {mode: [] for mode in IMPORT_MODES}
+class ImportSettings(GObject.Object):
+    file = GObject.Property(type=Gio.File)
+    mode = GObject.Property(type=str, default="columns")
+    params = GObject.Property(type=object)
+    name = GObject.Property(type=str, default=_("Imported Data"))
+
+
+def prepare_import(self, files: list):
+    import_dict = {mode: [] for mode in IMPORT_MODES.keys()}
     for file in files:
         import_dict[guess_import_mode(file)].append(file)
     modes = []
@@ -24,19 +35,17 @@ def prepare_import(self, files):
     prepare_import_finish(self, import_dict)
 
 
-def prepare_import_finish(self, import_dict):
-    import_settings_list = []
-    for mode, files in import_dict.items():
-        try:
-            params = self.preferences["import_params"][mode]
-        except KeyError:
-            params = []
-        for file in files:
-            import_settings_list.append(ImportSettings(file, mode, params))
-    import_from_files(self, import_settings_list)
+def prepare_import_finish(self, import_dict: dict):
+    import_params = self.preferences["import_params"]
+    import_from_files(self, [
+        ImportSettings(
+            file=file, mode=mode, name=utilities.get_filename(file),
+            params=import_params[mode] if mode in import_params else [],
+        ) for mode, files in import_dict.items() for file in files
+    ])
 
 
-def import_from_files(self, import_settings_list):
+def import_from_files(self, import_settings_list: list):
     items = []
     for import_settings in import_settings_list:
         try:
@@ -47,7 +56,7 @@ def import_from_files(self, import_settings_list):
     graphs.add_items(self, items)
 
 
-def _import_from_file(self, import_settings):
+def _import_from_file(self, import_settings: ImportSettings):
     match import_settings.mode:
         case "project":
             callback = file_io.import_from_project
@@ -60,93 +69,78 @@ def _import_from_file(self, import_settings):
     return callback(self, import_settings)
 
 
-class ImportSettings():
-    def __init__(self, file, mode, params):
-        self.file = file
-        self.mode = mode
-        self.params = params
-        self.name = file.query_info("standard::*", 0, None).get_display_name()
-
-
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/import.ui")
 class ImportWindow(Adw.Window):
     __gtype_name__ = "ImportWindow"
+    save_values = Gtk.Template.Child()
+
     columns_group = Gtk.Template.Child()
+    columns_delimiter = Gtk.Template.Child()
+    columns_separator = Gtk.Template.Child()
+    columns_column_x = Gtk.Template.Child()
+    columns_column_y = Gtk.Template.Child()
+    columns_skip_rows = Gtk.Template.Child()
 
-    delimiter = Gtk.Template.Child()
-    separator = Gtk.Template.Child()
-    column_x = Gtk.Template.Child()
-    column_y = Gtk.Template.Child()
-    skip_rows = Gtk.Template.Child()
+    modes = GObject.Property(type=object)
+    import_dict = GObject.Property(type=object)
 
-    def __init__(self, application, modes, import_dict):
-        super().__init__(application=application,
-                         transient_for=application.main_window)
-        self.modes = modes
-        self.import_dict = import_dict
-        self.import_params = \
-            self.props.application.preferences["import_params"]
+    def __init__(self, application, modes: list, import_dict: dict):
+        super().__init__(
+            application=application, transient_for=application.main_window,
+            modes=modes, import_dict=import_dict,
+        )
+
+        utilities.populate_chooser(
+            self.columns_separator, misc.SEPARATORS, False)
+
         visible = False
-        if "columns" in self.modes:
-            self.load_columns()
-            visible = True
+        for mode, values \
+                in self.props.application.preferences["import_params"].items():
+            if mode in self.modes:
+                ui.load_values_from_dict(self, {
+                    f"{mode}_{key}": value for key, value in values.items()})
+                getattr(self, f"{mode}_group").set_visible(True)
+                visible = True
+
         if not visible:
             prepare_import_finish(self.props.application, self.import_dict)
             self.destroy()
             return
         self.present()
 
-    def load_columns(self):
-        params = self.import_params["columns"]
-        self.columns_group.set_visible(True)
-        self.delimiter.set_text(params["delimiter"])
-        utilities.populate_chooser(self.separator, misc.SEPARATORS, False)
-        utilities.set_chooser(self.separator, params["separator"])
-        self.column_x.set_value(int(params["column_x"]))
-        self.column_y.set_value(int(params["column_y"]))
-        self.skip_rows.set_value(int(params["skip_rows"]))
-
     @Gtk.Template.Callback()
     def on_accept(self, _widget):
-        self.param_dict = {}
-        if "columns" in self.modes:
-            self.get_columns()
-        import_settings_list = []
-        for mode in IMPORT_MODES:
-            try:
-                params = self.param_dict[mode]
-            except KeyError:
-                try:
-                    params = self.import_params[mode]
-                except KeyError:
-                    params = []
-            for file in self.import_dict[mode]:
-                import_settings_list.append(ImportSettings(file, mode, params))
-        import_from_files(self.props.application, import_settings_list)
-        self.destroy()
-
-    def get_columns(self):
-        self.param_dict["columns"] = {
-            "column_x": int(self.column_x.get_value()),
-            "column_y": int(self.column_y.get_value()),
-            "skip_rows": int(self.skip_rows.get_value()),
-            "separator": utilities.get_selected_chooser_item(self.separator),
-            "delimiter": self.delimiter.get_text(),
+        param_dict = {
+            mode: {
+                key.replace(f"{mode}_", ""): value for key, value
+                in ui.save_values_to_dict(
+                    self, [f"{mode}_{key}" for key in params.keys()],
+                ).items()
+            } for mode, params
+            in self.props.application.preferences["import_params"].items()
+            if mode in self.modes
         }
+
+        if self.save_values.get_active():
+            self.props.application.preferences.update_modes(param_dict)
+
+        import_from_files(self.props.application, [
+            ImportSettings(
+                file=file, mode=mode, name=utilities.get_filename(file),
+                params=param_dict[mode] if mode in self.modes else [],
+            )
+            for mode in IMPORT_MODES.keys() for file in self.import_dict[mode]
+        ])
+        self.destroy()
 
 
 def guess_import_mode(file):
     try:
-        filename = file.query_info("standard::*", 0, None).get_display_name()
+        filename = utilities.get_filename(file)
         file_suffix = Path(filename).suffixes[-1]
     except IndexError:
         file_suffix = None
-    match file_suffix:
-        case ".graphs":
-            return "project"
-        case ".xrdml":
-            return "xrdml"
-        case ".xry":
-            return "xry"
-        case _:
-            return "columns"
+    for mode, suffix in IMPORT_MODES.items():
+        if suffix is not None and file_suffix == suffix:
+            return mode
+    return "columns"

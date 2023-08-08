@@ -265,3 +265,7 @@ def preprocess(string: str):
     string = string.replace("^", "**")
     string = re.sub(r"d\((.*?)\)", convert_degrees, string)
     return string.lower()
+
+
+def get_filename(file: Gio.File):
+    return file.query_info("standard::*", 0, None).get_display_name()

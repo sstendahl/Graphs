@@ -67,8 +67,13 @@ class Preferences(dict):
             for key, item in file_io.parse_json(import_file).items()
         }, import_params_template)
 
-    def update(self, values):
+    def update(self, values: dict):
         super().update(values)
+        self.save()
+
+    def update_modes(self, values: dict):
+        for mode, params in values.items():
+            self["import_params"][mode].update(params)
         self.save()
 
     def save(self):
@@ -83,26 +88,19 @@ class Preferences(dict):
             config)
 
 
-CONFIG_IGNORELIST = [
-    "import_params", "export_figure_filetype", "clipboard_length",
+CONFIG_WHITELIST = [
+    "action_center_data", "other_handle_duplicates", "other_hide_unselected",
+    "override_style_change", "plot_title", "plot_x_label", "plot_y_label",
+    "plot_top_label", "plot_right_label", "plot_x_scale", "plot_y_scale",
+    "plot_top_scale", "plot_right_scale", "plot_x_position", "plot_y_position",
+    "plot_legend", "plot_legend_position", "plot_use_custom_style",
+    "plot_custom_style",
 ]
 
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/preferences.ui")
 class PreferencesWindow(Adw.PreferencesWindow):
     __gtype_name__ = "PreferencesWindow"
-    import_delimiter = Gtk.Template.Child()
-    import_separator = Gtk.Template.Child()
-    import_column_x = Gtk.Template.Child()
-    import_column_y = Gtk.Template.Child()
-    import_skip_rows = Gtk.Template.Child()
-    addequation_equation = Gtk.Template.Child()
-    addequation_x_start = Gtk.Template.Child()
-    addequation_x_stop = Gtk.Template.Child()
-    addequation_step_size = Gtk.Template.Child()
-    export_figure_dpi = Gtk.Template.Child()
-    export_figure_filetype = Gtk.Template.Child()
-    export_figure_transparent = Gtk.Template.Child()
     action_center_data = Gtk.Template.Child()
     other_handle_duplicates = Gtk.Template.Child()
     other_hide_unselected = Gtk.Template.Child()
@@ -126,14 +124,7 @@ class PreferencesWindow(Adw.PreferencesWindow):
     def __init__(self, application):
         super().__init__(application=application,
                          transient_for=application.main_window)
-        self.supported_filetypes = \
-            self.props.application.canvas.get_supported_filetypes_grouped()
 
-        utilities.populate_chooser(
-            self.import_separator, misc.SEPARATORS, translate=False)
-        utilities.populate_chooser(
-            self.export_figure_filetype, self.supported_filetypes.keys(),
-            translate=False)
         utilities.populate_chooser(
             self.action_center_data, misc.ACTION_CENTER_DATA)
         utilities.populate_chooser(
@@ -151,52 +142,13 @@ class PreferencesWindow(Adw.PreferencesWindow):
             self.plot_custom_style,
             plot_styles.get_user_styles(self.props.application).keys(),
             translate=False)
-        self.load()
+        ui.load_values_from_dict(
+            self, {key: self.props.application.preferences[key]
+                   for key in CONFIG_WHITELIST})
         self.present()
-
-    def load(self):
-        ui.load_values_from_dict(self, self.props.application.preferences,
-                                 ignorelist=CONFIG_IGNORELIST)
-        columns_params = \
-            self.props.application.preferences["import_params"]["columns"]
-        self.import_delimiter.set_text(columns_params["delimiter"])
-        utilities.set_chooser(
-            self.import_separator, columns_params["separator"])
-        self.import_column_x.set_value(columns_params["column_x"])
-        self.import_column_y.set_value(columns_params["column_y"])
-        self.import_skip_rows.set_value(columns_params["skip_rows"])
-
-        wanted_filetype = \
-            self.props.application.preferences["export_figure_filetype"]
-        for name, formats in self.supported_filetypes.items():
-            if wanted_filetype in formats:
-                filetype = name
-        utilities.set_chooser(self.export_figure_filetype, filetype)
-
-    def apply(self):
-        # to be removed
-        columns_params = \
-            self.props.application.preferences["import_params"]["columns"]
-        columns_params["delimiter"] = self.import_delimiter.get_text()
-        columns_params["separator"] = \
-            utilities.get_selected_chooser_item(self.import_separator)
-        columns_params["column_x"] = int(self.import_column_x.get_value())
-        columns_params["column_y"] = int(self.import_column_y.get_value())
-        columns_params["skip_rows"] = int(self.import_skip_rows.get_value())
-
-        new_values = ui.save_values_to_dict(
-            self, self.props.application.preferences.keys(),
-            ignorelist=CONFIG_IGNORELIST)
-        filetype_name = \
-            utilities.get_selected_chooser_item(self.export_figure_filetype)
-        filetypes = \
-            self.props.application.canvas.get_supported_filetypes_grouped()
-        for name, formats in filetypes.items():
-            if name == filetype_name:
-                new_values["export_figure_filetype"] = formats[0]
-        self.props.application.preferences.update(new_values)
 
     @Gtk.Template.Callback()
     def on_close(self, _):
-        self.apply()
+        self.props.application.preferences.update(ui.save_values_to_dict(
+            self, CONFIG_WHITELIST))
         graphs.refresh(self.props.application)

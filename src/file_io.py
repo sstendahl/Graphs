@@ -158,9 +158,9 @@ def import_from_columns(self, import_settings):
                 else:
                     try:
                         item.xdata.append(utilities.string_to_float(
-                            data_line[params["column_x"]]))
+                            data_line[int(params["column_x"])]))
                         item.ydata.append(utilities.string_to_float(
-                            data_line[params["column_y"]]))
+                            data_line[int(params["column_y"])]))
                     except IndexError:
                         raise ParseError(
                             _("Import failed, column index out of range"))
@@ -199,7 +199,7 @@ def parse_style(file):
     functions.
     """
     style = RcParams()
-    filename = file.query_info("standard::*", 0, None).get_display_name()
+    filename = utilities.get_filename(file)
     try:
         for line_number, line in enumerate(read_file(file).splitlines(), 1):
             stripped_line = cbook._strip_comment(line)
