@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schemalist gettext-domain="graphs">
-	<schema id="se.sjoerd.Graphs" path="/se/sjoerd/Graphs/">
+  <schema id="se.sjoerd.Graphs" path="/se/sjoerd/Graphs/">
     <child name="add-equation" schema="se.sjoerd.Graphs.add-equation"/>
-	  <child name="export-figure" schema="se.sjoerd.Graphs.export-figure"/>
+    <child name="export-figure" schema="se.sjoerd.Graphs.export-figure"/>
 
-	  <child name="import-params" schema="se.sjoerd.Graphs.import-params"/>
+    <child name="import-params" schema="se.sjoerd.Graphs.import-params"/>
   </schema>
 
   <schema id="se.sjoerd.Graphs.add-equation">
@@ -24,14 +24,14 @@
 
   <schema id="se.sjoerd.Graphs.export-figure">
     <key name="dpi" type="i">
-	    <default>100</default>
-	  </key>
-	  <key name="file-format" type="s">
-	    <default>"Portable Network Graphics"</default>
-	  </key>
-	  <key name="transparent" type="b">
-	    <default>true</default>
-	  </key>
+      <default>100</default>
+    </key>
+    <key name="file-format" type="s">
+      <default>"Portable Network Graphics"</default>
+    </key>
+    <key name="transparent" type="b">
+      <default>true</default>
+    </key>
   </schema>
 
 
@@ -41,19 +41,19 @@
 
   <schema id="se.sjoerd.Graphs.import-params.columns">
     <key name="column-x" type="i">
-	    <default>0</default>
-	  </key>
+      <default>0</default>
+    </key>
     <key name="column-y" type="i">
-	    <default>1</default>
-	  </key>
+      <default>1</default>
+    </key>
     <key name="delimiter" type="s">
-	    <default>"\\s+"</default>
-	  </key>
+      <default>"\\s+"</default>
+    </key>
     <key name="separator" type="s">
-	    <default>"."</default>
-	  </key>
+      <default>"."</default>
+    </key>
     <key name="skip-rows" type="i">
-	    <default>0</default>
-	  </key>
+      <default>0</default>
+    </key>
   </schema>
 </schemalist>
