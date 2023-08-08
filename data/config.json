@@ -6,7 +6,7 @@
   "addequation_x_stop": "10",
   "clipboard_length": 75,
   "export_figure_dpi": 100,
-  "export_figure_filetype": "svg",
+  "export_figure_filetype": "png",
   "export_figure_transparent": true,
   "other_handle_duplicates": "Auto-rename duplicates",
   "other_hide_unselected": false,

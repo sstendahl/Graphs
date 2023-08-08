@@ -5,7 +5,7 @@ from pathlib import Path
 
 from gi.repository import Adw, GLib, Gio, Gtk
 
-from graphs import utilities
+from graphs import file_io, ui, utilities
 
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/export_figure.ui")
@@ -19,6 +19,11 @@ class ExportFigureWindow(Adw.Window):
         super().__init__(application=application,
                          transient_for=application.main_window)
         preferences = self.props.application.preferences
+        self.set_values(preferences)
+        self.present()
+
+    def set_values(self, preferences):
+        application = self.props.application
         self.transparent.set_active(preferences["export_figure_transparent"])
         self.items = \
             application.canvas.get_supported_filetypes_grouped().items()
@@ -32,7 +37,24 @@ class ExportFigureWindow(Adw.Window):
         utilities.populate_chooser(self.file_format, file_formats, False)
         if default_format is not None:
             utilities.set_chooser(self.file_format, default_format)
-        self.present()
+
+    @Gtk.Template.Callback()
+    def on_reset(self, _widget):
+        def on_accept(_dialog, response):
+            if response == "reset":
+                self.reset_figure_settings()
+        body = _("Are you sure you want to reset the figure options to the default values?")
+        dialog = ui.build_dialog("reset_to_defaults")
+        dialog.set_body(body)
+        dialog.set_transient_for(self)
+        dialog.connect("response", on_accept)
+        dialog.present()
+
+    def reset_figure_settings(self):
+        template_file = Gio.File.new_for_uri(
+            "resource:///se/sjoerd/Graphs/config.json")
+        params_template = file_io.parse_json(template_file)
+        self.set_values(params_template)
 
     @Gtk.Template.Callback()
     def on_accept(self, _button):
