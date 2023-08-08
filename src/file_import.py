@@ -92,10 +92,8 @@ class ImportWindow(Adw.Window):
         utilities.populate_chooser(
             self.columns_separator, misc.SEPARATORS, False)
 
-        visible = self.set_values(
-            self.props.application.preferences["import_params"])
-
-        if not visible:
+        if not self.set_values(
+                self.props.application.preferences["import_params"]):
             prepare_import_finish(self.props.application, self.import_dict)
             self.destroy()
             return
