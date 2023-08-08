@@ -33,10 +33,10 @@ class AddEquationWindow(Adw.Window):
         values = ui.save_values_to_dict(self, KEYS)
         try:
             xdata, ydata = calculation.create_dataset(
-                utilities.string_to_float(values["x_start"]),
-                utilities.string_to_float(values["x_stop"]),
+                utilities.string_to_float(values["x-start"]),
+                utilities.string_to_float(values["x-stop"]),
                 values["equation"],
-                utilities.string_to_float(values["step_size"]),
+                utilities.string_to_float(values["step-size"]),
             )
             name = str(self.name.get_text())
             if name == "":

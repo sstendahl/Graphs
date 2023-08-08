@@ -143,7 +143,7 @@ def show_about_window(self):
 def load_values_from_dict(window, values: dict):
     for key, value in values.items():
         try:
-            widget = getattr(window, key)
+            widget = getattr(window, key.replace("-", "_"))
             if isinstance(widget, Adw.EntryRow):
                 widget.set_text(str(value))
             elif isinstance(widget, Adw.ComboRow):
@@ -169,7 +169,7 @@ def save_values_to_dict(window, keys: list):
     values = {}
     for key in keys:
         with contextlib.suppress(AttributeError):
-            widget = getattr(window, key)
+            widget = getattr(window, key.replace("-", "_"))
             if isinstance(widget, Adw.EntryRow):
                 values[key] = str(widget.get_text())
             elif isinstance(widget, Adw.ComboRow):
