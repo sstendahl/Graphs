@@ -7,8 +7,6 @@ from gi.repository import Adw, GLib, Gio, Gtk, GObject
 
 from graphs import utilities, ui
 
-KEYS = ["dpi", "file-format", "transparent"]
-
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/export_figure.ui")
 class ExportFigureWindow(Adw.Window):
     __gtype_name__ = "ExportFigureWindow"
@@ -26,8 +24,7 @@ class ExportFigureWindow(Adw.Window):
 
         utilities.populate_chooser(self.file_format, self.file_formats.keys())
         ui.bind_values_to_settings(
-            self.props.application.settings.get_child("export-figure"),
-            self, KEYS)
+            self.props.application.settings.get_child("export-figure"), self)
         self.present()
 
     @Gtk.Template.Callback()
