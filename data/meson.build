@@ -46,7 +46,7 @@ configuration: conf
 
 install_data(gschema_file,
   install_dir: join_paths(datadir, 'glib-2.0/schemas'),
-    install_mode: 'rwxrwxrwx'
+ install_mode: 'rwxrwxrwx'
 )
 
 compile_schemas = find_program('glib-compile-schemas', required: false)

@@ -20,6 +20,7 @@ from matplotlib import font_manager, pyplot
 class GraphsApplication(Adw.Application):
     """The main application singleton class."""
     preferences = GObject.Property(type=object)
+    settings = GObject.Property(type=Gio.Settings)
     version = GObject.Property(type=str, default="")
     name = GObject.Property(type=str, default="")
     website = GObject.Property(type=str, default="")
@@ -35,6 +36,7 @@ class GraphsApplication(Adw.Application):
             version=args[0], name=args[2], website=args[3], issues=args[4],
             author=args[5], pkgdatadir=args[6],
             datadict={}, preferences=Preferences(),
+            settings=Gio.Settings(args[1]),
         )
         font_list = font_manager.findSystemFonts(fontpaths=None, fontext="ttf")
         for font in font_list:

@@ -185,3 +185,27 @@ def save_values_to_dict(window, keys: list):
             elif isinstance(widget, Gtk.Button):
                 values[key] = widget.color
     return values
+
+
+def bind_values_to_settings(settings, window, keys: list):
+    for key in keys:
+        try:
+            widget = getattr(window, key)
+            key = key.replace("_", "-")
+            if isinstance(widget, Adw.EntryRow):
+                settings.bind(key, widget, "text", 0)
+            elif isinstance(widget, Adw.ComboRow):
+                utilities.set_chooser(widget, settings.get_string(key))
+                # TODO: handle change
+            elif isinstance(widget, Gtk.SpinButton):
+                settings.bind(key, widget, "value", 0)
+            elif isinstance(widget, Gtk.Switch):
+                settings.bind(key, widget, "active", 0)
+            elif isinstance(widget, Adw.ExpanderRow):
+                settings.bind(key, widget, "enable-expansion", 0)
+            elif isinstance(widget, Gtk.Scale):
+                settings.bind(key, widget, "value", 0)
+            else:
+                logging.warn(_("Unsupported Widget {}").format(type(widget)))
+        except AttributeError:
+            logging.warn(_("No way to apply “{}”").format(key))

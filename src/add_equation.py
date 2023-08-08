@@ -26,9 +26,7 @@ class AddEquationWindow(Adw.Window):
     def __init__(self, application):
         super().__init__(application=application,
                          transient_for=application.main_window)
-        ui.load_values_from_dict(self, {
-            key: self.props.application.preferences[key] for key in KEYS
-        })
+        ui.bind_values_to_settings(self.props.application.settings, self, KEYS)
         self.present()
 
     @Gtk.Template.Callback()
@@ -42,7 +40,6 @@ class AddEquationWindow(Adw.Window):
                 values["addequation_equation"],
                 utilities.string_to_float(values["addequation_step_size"]),
             )
-            self.props.application.preferences.update(values)
             name = str(self.name.get_text())
             if name == "":
                 name = f"Y = {values['addequation_equation']}"

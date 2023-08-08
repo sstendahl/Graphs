@@ -3,56 +3,43 @@ import contextlib
 from gettext import gettext as _
 from pathlib import Path
 
-from gi.repository import Adw, GLib, Gio, Gtk
+from gi.repository import Adw, GLib, Gio, Gtk, GObject
 
-from graphs import utilities
+from graphs import utilities, ui
 
+KEYS = [
+    "export_figure_dpi", "export_figure_file_format",
+    "export_figure_transparent",
+]
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/export_figure.ui")
 class ExportFigureWindow(Adw.Window):
     __gtype_name__ = "ExportFigureWindow"
-    file_format = Gtk.Template.Child()
-    transparent = Gtk.Template.Child()
-    dpi = Gtk.Template.Child()
+    export_figure_dpi = Gtk.Template.Child()
+    export_figure_file_format = Gtk.Template.Child()
+    export_figure_transparent = Gtk.Template.Child()
+
+    file_formats = GObject.Property(type=object)
 
     def __init__(self, application):
-        super().__init__(application=application,
-                         transient_for=application.main_window)
-        preferences = self.props.application.preferences
+        super().__init__(
+            application=application, transient_for=application.main_window,
+            file_formats=application.canvas.get_supported_filetypes_grouped(),
+        )
 
-        # Set values in Export Figure dialog:
-        self.transparent.set_active(preferences["export_figure_transparent"])
-        self.items = \
-            application.canvas.get_supported_filetypes_grouped().items()
-        self.dpi.set_value(int(preferences["export_figure_dpi"]))
-        file_formats = []
-        default_format = None
-        for name, formats in self.items:
-            file_formats.append(name)
-            if preferences["export_figure_filetype"] in formats:
-                default_format = name
-        utilities.populate_chooser(self.file_format, file_formats, False)
-        if default_format is not None:
-            utilities.set_chooser(self.file_format, default_format)
+        utilities.populate_chooser(
+            self.export_figure_file_format, self.file_formats.keys())
+
+        ui.bind_values_to_settings(self.props.application.settings, self, KEYS)
         self.present()
 
     @Gtk.Template.Callback()
     def on_accept(self, _button):
-        dpi = int(self.dpi.get_value())
-        fmt = utilities.get_selected_chooser_item(self.file_format)
-        file_suffixes = None
-        for name, formats in self.items:
-            if name == fmt:
-                file_suffixes = formats
+        file_format = \
+            utilities.get_selected_chooser_item(self.export_figure_file_format)
+        file_suffixes = self.file_formats[file_format]
         filename = \
             Path(self.props.application.canvas.get_default_filename()).stem
-        transparent = self.transparent.get_active()
-
-        self.props.application.preferences.update({
-            "export_figure_filetype": file_suffixes[0],
-            "export_figure_transparent": transparent,
-            "export_figure_dpi": dpi,
-        })
 
         def on_response(dialog, response):
             with contextlib.suppress(GLib.GError):
@@ -60,16 +47,17 @@ class ExportFigureWindow(Adw.Window):
                 file, stream = Gio.File.new_tmp("graphs-XXXXXX")
                 stream.close()
                 self.props.application.canvas.figure.savefig(
-                    file.peek_path(), dpi=dpi, format=file_suffixes[0],
-                    transparent=transparent)
+                    file.peek_path(), format=file_suffixes[0],
+                    dpi=int(self.export_figure_dpi.get_value()),
+                    transparent=self.export_figure_transparent.get_active())
                 file.move(destination, Gio.FileCopyFlags(1), None)
                 self.props.application.main_window.add_toast(
                     _("Exported Figure"))
+                self.destroy()
 
         dialog = Gtk.FileDialog()
         dialog.set_initial_name(f"{filename}.{file_suffixes[0]}")
         dialog.set_accept_label(_("Export"))
         dialog.set_filters(utilities.create_file_filters(
-            [(fmt, file_suffixes)]))
+            [(file_format, file_suffixes)]))
         dialog.save(self.props.application.main_window, None, on_response)
-        self.destroy()

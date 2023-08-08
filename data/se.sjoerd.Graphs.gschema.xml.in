@@ -1,5 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--SPDX-License-Identifier: GPL-3.0-or-later-->
 <schemalist gettext-domain="@PROJECT_NAME@">
-	<schema id="@APPLICATION_ID@" path="/se/sjoerd/Graphs/"/>
+	<schema id="@APPLICATION_ID@" path="/se/sjoerd/Graphs/">
+	  <key name="addequation-equation" type="s">
+      <default>"X"</default>
+    </key>
+    <key name="addequation-step-size" type="s">
+      <default>"0.01"</default>
+    </key>
+	  <key name="addequation-x-start" type="s">
+      <default>"0"</default>
+    </key>
+	  <key name="addequation-x-stop" type="s">
+      <default>"10"</default>
+    </key>
+	  <key name="export-figure-dpi" type="i">
+	    <default>100</default>
+	  </key>
+	  <key name="export-figure-file-format" type="s">
+	    <default>"Portable Network Graphics"</default>
+	  </key>
+	  <key name="export-figure-transparent" type="b">
+	    <default>true</default>
+	  </key>
+  </schema>
 </schemalist>
