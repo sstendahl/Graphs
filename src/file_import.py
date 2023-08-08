@@ -17,7 +17,6 @@ IMPORT_MODES = {
 class ImportSettings(GObject.Object):
     file = GObject.Property(type=Gio.File)
     mode = GObject.Property(type=str, default="columns")
-    params = GObject.Property(type=object)
     name = GObject.Property(type=str, default=_("Imported Data"))
 
 
@@ -36,12 +35,9 @@ def prepare_import(self, files: list):
 
 
 def prepare_import_finish(self, import_dict: dict):
-    import_params = self.preferences["import_params"]
     import_from_files(self, [
-        ImportSettings(
-            file=file, mode=mode, name=utilities.get_filename(file),
-            params=import_params[mode] if mode in import_params else [],
-        ) for mode, files in import_dict.items() for file in files
+        ImportSettings(file=file, mode=mode, name=utilities.get_filename(file))
+        for mode, files in import_dict.items() for file in files
     ])
 
 
@@ -92,22 +88,21 @@ class ImportWindow(Adw.Window):
         utilities.populate_chooser(
             self.columns_separator, misc.SEPARATORS, False)
 
-        if not self.set_values(
-                self.props.application.preferences["import_params"]):
+        import_params = \
+            self.props.application.settings.get_child("import-params")
+        visible = False
+        for mode in import_params.list_children():
+            if mode in self.modes:
+                ui.bind_values_to_settings(
+                    import_params.get_child(mode), self, f"{mode}_")
+                getattr(self, f"{mode}_group").set_visible(True)
+                visible = True
+
+        if not visible:
             prepare_import_finish(self.props.application, self.import_dict)
             self.destroy()
             return
         self.present()
-
-    def set_values(self, import_settings):
-        visible = False
-        for mode, values in import_settings.items():
-            if mode in self.modes:
-                ui.load_values_from_dict(self, {
-                    f"{mode}_{key}": value for key, value in values.items()})
-                getattr(self, f"{mode}_group").set_visible(True)
-                visible = True
-        return visible
 
     @Gtk.Template.Callback()
     def on_reset(self, _widget):
@@ -122,32 +117,14 @@ class ImportWindow(Adw.Window):
         dialog.present()
 
     def reset_import(self):
-        template_import_file = Gio.File.new_for_uri(
-            "resource:///se/sjoerd/Graphs/import.json")
-        import_params_template = file_io.parse_json(template_import_file)
-        self.set_values(import_params_template)
+        pass
+        # TODO reimplement
 
     @Gtk.Template.Callback()
     def on_accept(self, _widget):
-        param_dict = {
-            mode: {
-                key.replace(f"{mode}_", ""): value for key, value
-                in ui.save_values_to_dict(
-                    self, [f"{mode}_{key}" for key in params.keys()],
-                ).items()
-            } for mode, params
-            in self.props.application.preferences["import_params"].items()
-            if mode in self.modes
-        }
-
-        # Remember settings
-        self.props.application.preferences.update_modes(param_dict)
-
         import_from_files(self.props.application, [
             ImportSettings(
-                file=file, mode=mode, name=utilities.get_filename(file),
-                params=param_dict[mode] if mode in self.modes else [],
-            )
+                file=file, mode=mode, name=utilities.get_filename(file))
             for mode in IMPORT_MODES.keys() for file in self.import_dict[mode]
         ])
         self.destroy()

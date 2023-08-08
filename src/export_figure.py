@@ -3,9 +3,10 @@ import contextlib
 from gettext import gettext as _
 from pathlib import Path
 
-from gi.repository import Adw, GLib, Gio, Gtk, GObject
+from gi.repository import Adw, GLib, GObject, Gio, Gtk
 
-from graphs import utilities, ui
+from graphs import ui, utilities
+
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/export_figure.ui")
 class ExportFigureWindow(Adw.Window):

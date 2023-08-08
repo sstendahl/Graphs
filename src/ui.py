@@ -187,10 +187,10 @@ def save_values_to_dict(window, keys: list):
     return values
 
 
-def bind_values_to_settings(settings, window):
+def bind_values_to_settings(settings, window, prefix=""):
     for key in settings.props.settings_schema.list_keys():
         try:
-            widget = getattr(window, key.replace("-", "_"))
+            widget = getattr(window, prefix + key.replace("-", "_"))
             if isinstance(widget, Adw.EntryRow):
                 settings.bind(key, widget, "text", 0)
             elif isinstance(widget, Adw.ComboRow):
