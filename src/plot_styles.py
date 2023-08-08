@@ -310,7 +310,10 @@ class PlotStylesWindow(Adw.Window):
             if response == "reset":
                 reset_user_styles(self.props.application)
                 self.reload_styles()
-        dialog = ui.build_dialog("reset_styles")
+        body = _("Are you sure you want to reset to the default styles?")
+        heading = _("Reset to default?")
+        dialog = ui.build_dialog("reset_to_defaults")
+        dialog.set_body(body)
         dialog.set_transient_for(self)
         dialog.connect("response", on_accept)
         dialog.present()

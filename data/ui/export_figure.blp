@@ -26,10 +26,17 @@ template $ExportFigureWindow : Adw.Window {
       }
 
       [end]
-      Button confirm_button {
-        label: _("Export");
-        styles ["suggested-action"]
-        clicked => $on_accept();
+    Box {
+      orientation: horizontal;
+        Button {
+          icon-name: "history-undo-symbolic";
+          clicked => $on_reset();
+        }
+        Button confirm_button {
+          label: _("Export");
+          styles ["suggested-action"]
+          clicked => $on_accept();
+        }
       }
     }
 
