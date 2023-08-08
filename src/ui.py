@@ -187,6 +187,10 @@ def save_values_to_dict(window, keys: list):
     return values
 
 
+def _handle_chooser_update(chooser, _ignored, settings, key):
+    settings.set_string(key, utilities.get_selected_chooser_item(chooser))
+
+
 def bind_values_to_settings(settings, window, prefix="", ignorelist=None):
     for key in settings.props.settings_schema.list_keys():
         if ignorelist is not None and key in ignorelist:
@@ -197,7 +201,8 @@ def bind_values_to_settings(settings, window, prefix="", ignorelist=None):
                 settings.bind(key, widget, "text", 0)
             elif isinstance(widget, Adw.ComboRow):
                 utilities.set_chooser(widget, settings.get_string(key))
-                # TODO: handle change
+                widget.connect("notify::selected", _handle_chooser_update,
+                               settings, key)
             elif isinstance(widget, Gtk.SpinButton):
                 settings.bind(key, widget, "value", 0)
             elif isinstance(widget, Gtk.Switch):
@@ -210,4 +215,3 @@ def bind_values_to_settings(settings, window, prefix="", ignorelist=None):
                 logging.warn(_("Unsupported Widget {}").format(type(widget)))
         except AttributeError:
             logging.warn(_("No way to apply “{}”").format(key))
-

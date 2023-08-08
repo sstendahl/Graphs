@@ -7,11 +7,10 @@ from inspect import getmembers, isfunction
 
 from gi.repository import Adw, GLib, GObject, Gio
 
-from graphs import actions, file_io, plot_styles, plotting_tools, ui
+from graphs import actions, file_io, plot_styles, ui
 from graphs.canvas import Canvas
 from graphs.clipboard import DataClipboard, ViewClipboard
 from graphs.misc import InteractionMode, PlotSettings
-from graphs.preferences import Preferences
 from graphs.window import GraphsWindow
 
 from matplotlib import font_manager, pyplot
