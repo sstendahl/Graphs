@@ -95,21 +95,21 @@ class PreferencesWindow(Adw.PreferencesWindow):
     general_handle_duplicates = Gtk.Template.Child()
     general_hide_unselected = Gtk.Template.Child()
     general_override_item_properties = Gtk.Template.Child()
-    plot_title = Gtk.Template.Child()
-    plot_bottom_label = Gtk.Template.Child()
-    plot_left_label = Gtk.Template.Child()
-    plot_top_label = Gtk.Template.Child()
-    plot_right_label = Gtk.Template.Child()
-    plot_bottom_scale = Gtk.Template.Child()
-    plot_left_scale = Gtk.Template.Child()
-    plot_top_scale = Gtk.Template.Child()
-    plot_right_scale = Gtk.Template.Child()
-    plot_x_position = Gtk.Template.Child()
-    plot_y_position = Gtk.Template.Child()
-    plot_legend = Gtk.Template.Child()
-    plot_legend_position = Gtk.Template.Child()
-    plot_use_custom_style = Gtk.Template.Child()
-    plot_custom_style = Gtk.Template.Child()
+    figure_title = Gtk.Template.Child()
+    figure_bottom_label = Gtk.Template.Child()
+    figure_left_label = Gtk.Template.Child()
+    figure_top_label = Gtk.Template.Child()
+    figure_right_label = Gtk.Template.Child()
+    figure_bottom_scale = Gtk.Template.Child()
+    figure_left_scale = Gtk.Template.Child()
+    figure_top_scale = Gtk.Template.Child()
+    figure_right_scale = Gtk.Template.Child()
+    figure_x_position = Gtk.Template.Child()
+    figure_y_position = Gtk.Template.Child()
+    figure_legend = Gtk.Template.Child()
+    figure_legend_position = Gtk.Template.Child()
+    figure_use_custom_style = Gtk.Template.Child()
+    figure_custom_style = Gtk.Template.Child()
 
     def __init__(self, application):
         super().__init__(application=application,
@@ -119,22 +119,22 @@ class PreferencesWindow(Adw.PreferencesWindow):
             self.general_center_data, misc.ACTION_CENTER_DATA)
         utilities.populate_chooser(
             self.general_handle_duplicates, misc.HANDLE_DUPLICATES)
-        utilities.populate_chooser(self.plot_bottom_scale, misc.SCALES)
-        utilities.populate_chooser(self.plot_left_scale, misc.SCALES)
-        utilities.populate_chooser(self.plot_top_scale, misc.SCALES)
-        utilities.populate_chooser(self.plot_right_scale, misc.SCALES)
-        utilities.populate_chooser(self.plot_x_position, misc.X_POSITIONS)
-        utilities.populate_chooser(self.plot_y_position, misc.Y_POSITIONS)
+        utilities.populate_chooser(self.figure_bottom_scale, misc.SCALES)
+        utilities.populate_chooser(self.figure_left_scale, misc.SCALES)
+        utilities.populate_chooser(self.figure_top_scale, misc.SCALES)
+        utilities.populate_chooser(self.figure_right_scale, misc.SCALES)
+        utilities.populate_chooser(self.figure_x_position, misc.X_POSITIONS)
+        utilities.populate_chooser(self.figure_y_position, misc.Y_POSITIONS)
         utilities.populate_chooser(
-            self.plot_legend_position, misc.LEGEND_POSITIONS)
+            self.figure_legend_position, misc.LEGEND_POSITIONS)
 
         utilities.populate_chooser(
-            self.plot_custom_style,
+            self.figure_custom_style,
             plot_styles.get_user_styles(self.props.application).keys(),
             translate=False)
         settings = self.props.application.settings
         ui.bind_values_to_settings(
-            settings.get_child("figure"), self, prefix="plot_")
+            settings.get_child("figure"), self, prefix="figure_")
         ui.bind_values_to_settings(
             settings, self, prefix="general_", ignorelist=["clipboard-length"])
         self.present()

@@ -45,23 +45,23 @@ template $PreferencesWindow : Adw.PreferencesWindow {
       title: _("Labels");
       description: _("Settings for title and labels used by default");
 
-      Adw.EntryRow plot_title {
+      Adw.EntryRow figure_title {
         title: _("Default Title");
       }
 
-      Adw.EntryRow plot_left_label {
+      Adw.EntryRow figure_left_label {
         title: _("Default Bottom Axis label");
       }
 
-      Adw.EntryRow plot_bottom_label {
+      Adw.EntryRow figure_bottom_label {
         title: _("Default Left Axis Label");
       }
 
-      Adw.EntryRow plot_top_label {
+      Adw.EntryRow figure_top_label {
         title: _("Default Top Axis Label");
       }
 
-      Adw.EntryRow plot_right_label {
+      Adw.EntryRow figure_right_label {
         title: _("Default Right Axis Label");
       }
     }
@@ -70,27 +70,27 @@ template $PreferencesWindow : Adw.PreferencesWindow {
       title: _("Axes Settings");
       description: _("Default axes scale and position");
 
-      Adw.ComboRow plot_bottom_scale {
+      Adw.ComboRow figure_bottom_scale {
         title: _("Default Bottom Axis Scale");
       }
 
-      Adw.ComboRow plot_left_scale {
+      Adw.ComboRow figure_left_scale {
         title: _("Default Left Axis Scale");
       }
 
-      Adw.ComboRow plot_top_scale {
+      Adw.ComboRow figure_top_scale {
         title: _("Default Top Axis Scale");
       }
 
-      Adw.ComboRow plot_right_scale {
+      Adw.ComboRow figure_right_scale {
         title: _("Default Right Axis Scale");
       }
 
-      Adw.ComboRow plot_x_position {
+      Adw.ComboRow figure_x_position {
         title: _("Default X-Axis Position");
       }
 
-      Adw.ComboRow plot_y_position {
+      Adw.ComboRow figure_y_position {
         title: _("Default Y-Axis Position");
       }
     }
@@ -99,20 +99,20 @@ template $PreferencesWindow : Adw.PreferencesWindow {
       title: _("Styling");
       description: _("Change default style and other visual changes");
 
-      Adw.ExpanderRow plot_legend {
+      Adw.ExpanderRow figure_legend {
         title: _("Legend");
         subtitle: _("Use a legend by default");
         show-enable-switch: true;
-        Adw.ComboRow plot_legend_position {
+        Adw.ComboRow figure_legend_position {
           title: _("Legend Position");
       }
     }
 
-      Adw.ExpanderRow plot_use_custom_style {
+      Adw.ExpanderRow figure_use_custom_style {
         title: _("Use Custom Style");
         show-enable-switch: true;
 
-        Adw.ComboRow plot_custom_style {
+        Adw.ComboRow figure_custom_style {
           title: _("Style");
         }
       }
