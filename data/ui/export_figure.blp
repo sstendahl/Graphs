@@ -39,14 +39,14 @@ template $ExportFigureWindow : Adw.Window {
       margin-top: 12;
       margin-bottom: 12;
       Adw.PreferencesGroup {
-        Adw.ComboRow export_figure_file_format {
+        Adw.ComboRow file_format {
           title: _("File Format");
         }
 
       Adw.ActionRow {
         title: _("Resolution (dpi)");
 
-        SpinButton export_figure_dpi {
+        SpinButton dpi {
           valign: center;
           numeric: true;
           value: 100;
@@ -60,9 +60,9 @@ template $ExportFigureWindow : Adw.Window {
 
         Adw.ActionRow {
           title: _("Transparent Background");
-          activatable-widget: export_figure_transparent;
+          activatable-widget: transparent;
 
-          Switch export_figure_transparent {
+          Switch transparent {
             valign: center;
           }
         }

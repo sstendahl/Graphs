@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist gettext-domain="graphs">
+	<schema id="se.sjoerd.Graphs" path="/se/sjoerd/Graphs/">
+	  <child name="add-equation" schema="se.sjoerd.Graphs.add-equation"/>
+	  <child name="export-figure" schema="se.sjoerd.Graphs.export-figure"/>
+  </schema>
+
+  <schema id="se.sjoerd.Graphs.add-equation">
+    <key name="equation" type="s">
+      <default>"X"</default>
+    </key>
+    <key name="step-size" type="s">
+      <default>"0.01"</default>
+    </key>
+    <key name="x-start" type="s">
+      <default>"0"</default>
+    </key>
+    <key name="x-stop" type="s">
+      <default>"10"</default>
+    </key>
+  </schema>
+
+  <schema id="se.sjoerd.Graphs.export-figure">
+    <key name="dpi" type="i">
+	    <default>100</default>
+	  </key>
+	  <key name="file-format" type="s">
+	    <default>"Portable Network Graphics"</default>
+	  </key>
+	  <key name="transparent" type="b">
+	    <default>true</default>
+	  </key>
+  </schema>
+</schemalist>

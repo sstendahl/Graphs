@@ -38,13 +38,7 @@ if appstream_util.found()
   test('Validate appstream file', appstream_util, args: ['validate', appstream_file])
 endif
 
-gschema_file = configure_file(
-        input: application_id + '.gschema.xml.in',
-       output: application_id + '.gschema.xml',
-configuration: conf
-)
-
-install_data(gschema_file,
+install_data(application_id + '.gschema.xml',
   install_dir: join_paths(datadir, 'glib-2.0/schemas'),
  install_mode: 'rwxrwxrwx'
 )

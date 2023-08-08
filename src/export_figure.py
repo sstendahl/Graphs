@@ -7,17 +7,14 @@ from gi.repository import Adw, GLib, Gio, Gtk, GObject
 
 from graphs import utilities, ui
 
-KEYS = [
-    "export_figure_dpi", "export_figure_file_format",
-    "export_figure_transparent",
-]
+KEYS = ["dpi", "file_format", "transparent"]
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/export_figure.ui")
 class ExportFigureWindow(Adw.Window):
     __gtype_name__ = "ExportFigureWindow"
-    export_figure_dpi = Gtk.Template.Child()
-    export_figure_file_format = Gtk.Template.Child()
-    export_figure_transparent = Gtk.Template.Child()
+    dpi = Gtk.Template.Child()
+    file_format = Gtk.Template.Child()
+    transparent = Gtk.Template.Child()
 
     file_formats = GObject.Property(type=object)
 
@@ -27,16 +24,15 @@ class ExportFigureWindow(Adw.Window):
             file_formats=application.canvas.get_supported_filetypes_grouped(),
         )
 
-        utilities.populate_chooser(
-            self.export_figure_file_format, self.file_formats.keys())
-
-        ui.bind_values_to_settings(self.props.application.settings, self, KEYS)
+        utilities.populate_chooser(self.file_format, self.file_formats.keys())
+        ui.bind_values_to_settings(
+            self.props.application.settings.get_child("export-figure"),
+            self, KEYS)
         self.present()
 
     @Gtk.Template.Callback()
     def on_accept(self, _button):
-        file_format = \
-            utilities.get_selected_chooser_item(self.export_figure_file_format)
+        file_format = utilities.get_selected_chooser_item(self.file_format)
         file_suffixes = self.file_formats[file_format]
         filename = \
             Path(self.props.application.canvas.get_default_filename()).stem
@@ -48,8 +44,8 @@ class ExportFigureWindow(Adw.Window):
                 stream.close()
                 self.props.application.canvas.figure.savefig(
                     file.peek_path(), format=file_suffixes[0],
-                    dpi=int(self.export_figure_dpi.get_value()),
-                    transparent=self.export_figure_transparent.get_active())
+                    dpi=int(self.dpi.get_value()),
+                    transparent=self.transparent.get_active())
                 file.move(destination, Gio.FileCopyFlags(1), None)
                 self.props.application.main_window.add_toast(
                     _("Exported Figure"))
