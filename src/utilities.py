@@ -269,4 +269,3 @@ def preprocess(string: str):
 
 def get_filename(file: Gio.File):
     return file.query_info("standard::*", 0, None).get_display_name()
-

@@ -19,8 +19,7 @@ def _styles_in_directory(directory):
             loop = False
             continue
         file = enumerator.get_child(file_info)
-        filename = file.query_info("standard::*", 0, None).get_display_name()
-        styles[Path(filename).stem] = file
+        styles[Path(utilities.get_filename(file)).stem] = file
     enumerator.close(None)
     return styles
 

@@ -166,4 +166,3 @@ def guess_import_mode(file):
         if suffix is not None and file_suffix == suffix:
             return mode
     return "columns"
-

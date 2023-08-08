@@ -140,10 +140,8 @@ def show_about_window(self):
     ).present()
 
 
-def load_values_from_dict(window, values: dict, ignorelist=None):
+def load_values_from_dict(window, values: dict):
     for key, value in values.items():
-        if ignorelist is not None and key in ignorelist:
-            continue
         try:
             widget = getattr(window, key)
             if isinstance(widget, Adw.EntryRow):
@@ -167,11 +165,9 @@ def load_values_from_dict(window, values: dict, ignorelist=None):
             logging.warn(_("No way to apply “{}”").format(key))
 
 
-def save_values_to_dict(window, keys: list, ignorelist=None):
+def save_values_to_dict(window, keys: list):
     values = {}
     for key in keys:
-        if ignorelist is not None and key in ignorelist:
-            continue
         with contextlib.suppress(AttributeError):
             widget = getattr(window, key)
             if isinstance(widget, Adw.EntryRow):
