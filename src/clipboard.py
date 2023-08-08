@@ -72,7 +72,7 @@ class DataClipboard(BaseClipboard):
         super().add(copy.deepcopy(data))
         # Keep clipboard length limited to preference values
         if len(self.clipboard) > \
-                int(self.application.preferences["clipboard_length"]) + 1:
+                int(self.application.settings.get_int("clipboard-length")) + 1:
             self.clipboard = self.clipboard[1:]
 
     def undo(self):

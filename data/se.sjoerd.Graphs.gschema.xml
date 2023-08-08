@@ -3,8 +3,27 @@
   <schema id="se.sjoerd.Graphs" path="/se/sjoerd/Graphs/">
     <child name="add-equation" schema="se.sjoerd.Graphs.add-equation"/>
     <child name="export-figure" schema="se.sjoerd.Graphs.export-figure"/>
-
     <child name="import-params" schema="se.sjoerd.Graphs.import-params"/>
+
+    <key name="center-data" type="s">
+      <default>"Center at middle coordinate"</default>
+    </key>
+
+    <key name="clipboard-length" type="i">
+      <default>75</default>
+    </key>
+
+    <key name="handle-duplicates" type="s">
+      <default>"Auto-rename duplicates"</default>
+    </key>
+
+    <key name="hide-unselected" type="b">
+      <default>false</default>
+    </key>
+
+    <key name="override-item-properties" type="b">
+      <default>true</default>
+    </key>
   </schema>
 
   <schema id="se.sjoerd.Graphs.add-equation">
@@ -33,7 +52,6 @@
       <default>true</default>
     </key>
   </schema>
-
 
   <schema id="se.sjoerd.Graphs.import-params">
     <child name="columns" schema="se.sjoerd.Graphs.import-params.columns"/>

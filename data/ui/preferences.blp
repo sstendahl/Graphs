@@ -14,7 +14,7 @@ template $PreferencesWindow : Adw.PreferencesWindow {
       title: _("Action Behaviour");
       description: _("Behaviour of specific actions");
 
-      Adw.ComboRow action_center_data {
+      Adw.ComboRow general_center_data {
         title: _("Center Data");
       }
     }
@@ -22,15 +22,15 @@ template $PreferencesWindow : Adw.PreferencesWindow {
     Adw.PreferencesGroup {
       title: _("Other");
 
-      Adw.ComboRow other_handle_duplicates {
+      Adw.ComboRow general_handle_duplicates {
         title: _("Handle Duplicate Items");
       }
 
       Adw.ActionRow {
         title: _("Hide Unselected Items");
-        activatable-widget: other_hide_unselected;
+        activatable-widget: general_hide_unselected;
 
-        Switch other_hide_unselected {
+        Switch general_hide_unselected {
           valign: center;
         }
       }
@@ -119,7 +119,7 @@ template $PreferencesWindow : Adw.PreferencesWindow {
       Adw.ActionRow {
         title: _("Override Line Styling on Style Change");
 
-        Switch override_style_change {
+        Switch general_override_item_properties {
           valign: center;
         }
       }

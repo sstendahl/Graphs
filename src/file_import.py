@@ -94,7 +94,7 @@ class ImportWindow(Adw.Window):
         for mode in import_params.list_children():
             if mode in self.modes:
                 ui.bind_values_to_settings(
-                    import_params.get_child(mode), self, f"{mode}_")
+                    import_params.get_child(mode), self, prefix=f"{mode}_")
                 getattr(self, f"{mode}_group").set_visible(True)
                 visible = True
 

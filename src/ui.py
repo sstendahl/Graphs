@@ -187,8 +187,10 @@ def save_values_to_dict(window, keys: list):
     return values
 
 
-def bind_values_to_settings(settings, window, prefix=""):
+def bind_values_to_settings(settings, window, prefix="", ignorelist=None):
     for key in settings.props.settings_schema.list_keys():
+        if ignorelist is not None and key in ignorelist:
+            continue
         try:
             widget = getattr(window, prefix + key.replace("-", "_"))
             if isinstance(widget, Adw.EntryRow):
@@ -208,3 +210,4 @@ def bind_values_to_settings(settings, window, prefix=""):
                 logging.warn(_("Unsupported Widget {}").format(type(widget)))
         except AttributeError:
             logging.warn(_("No way to apply “{}”").format(key))
+

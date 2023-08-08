@@ -89,8 +89,7 @@ class Preferences(dict):
 
 
 CONFIG_WHITELIST = [
-    "action_center_data", "other_handle_duplicates", "other_hide_unselected",
-    "override_style_change", "plot_title", "plot_x_label", "plot_y_label",
+    "plot_title", "plot_x_label", "plot_y_label",
     "plot_top_label", "plot_right_label", "plot_x_scale", "plot_y_scale",
     "plot_top_scale", "plot_right_scale", "plot_x_position", "plot_y_position",
     "plot_legend", "plot_legend_position", "plot_use_custom_style",
@@ -101,10 +100,10 @@ CONFIG_WHITELIST = [
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/preferences.ui")
 class PreferencesWindow(Adw.PreferencesWindow):
     __gtype_name__ = "PreferencesWindow"
-    action_center_data = Gtk.Template.Child()
-    other_handle_duplicates = Gtk.Template.Child()
-    other_hide_unselected = Gtk.Template.Child()
-    override_style_change = Gtk.Template.Child()
+    general_center_data = Gtk.Template.Child()
+    general_handle_duplicates = Gtk.Template.Child()
+    general_hide_unselected = Gtk.Template.Child()
+    general_override_item_properties = Gtk.Template.Child()
     plot_title = Gtk.Template.Child()
     plot_x_label = Gtk.Template.Child()
     plot_y_label = Gtk.Template.Child()
@@ -126,9 +125,9 @@ class PreferencesWindow(Adw.PreferencesWindow):
                          transient_for=application.main_window)
 
         utilities.populate_chooser(
-            self.action_center_data, misc.ACTION_CENTER_DATA)
+            self.general_center_data, misc.ACTION_CENTER_DATA)
         utilities.populate_chooser(
-            self.other_handle_duplicates, misc.HANDLE_DUPLICATES)
+            self.general_handle_duplicates, misc.HANDLE_DUPLICATES)
         utilities.populate_chooser(self.plot_x_scale, misc.SCALES)
         utilities.populate_chooser(self.plot_y_scale, misc.SCALES)
         utilities.populate_chooser(self.plot_top_scale, misc.SCALES)
@@ -142,6 +141,9 @@ class PreferencesWindow(Adw.PreferencesWindow):
             self.plot_custom_style,
             plot_styles.get_user_styles(self.props.application).keys(),
             translate=False)
+        ui.bind_values_to_settings(
+            self.props.application.settings, self, prefix="general_",
+            ignorelist=["clipboard-length"])
         ui.load_values_from_dict(
             self, {key: self.props.application.preferences[key]
                    for key in CONFIG_WHITELIST})
