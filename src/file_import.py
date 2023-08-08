@@ -129,7 +129,6 @@ class ImportWindow(Adw.Window):
         import_params_template = file_io.parse_json(template_import_file)
         self.set_values(import_params_template)
 
-
     @Gtk.Template.Callback()
     def on_accept(self, _widget):
         param_dict = {
