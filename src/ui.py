@@ -218,7 +218,7 @@ def bind_values_to_settings(settings, window, prefix="", ignorelist=None):
                 settings.bind(key, widget, "enable-expansion", 0)
             elif isinstance(widget, Gtk.Scale):
                 settings.bind(key, widget, "value", 0)
-                widget.set_expanded(True)             
+                widget.set_expanded(True)
             else:
                 logging.warn(_("Unsupported Widget {}").format(type(widget)))
         except AttributeError:
