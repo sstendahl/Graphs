@@ -149,7 +149,7 @@ def import_from_columns(self, import_settings):
     column_x = columns_params.get_int("column-x")
     column_y = columns_params.get_int("column-y")
     delimiter = columns_params.get_string("delimiter")
-    separator = columns_params.get_string("separator")
+    separator = columns_params.get_string("separator").replace(" ", "")
     skip_rows = columns_params.get_int("skip-rows")
     for i, line in enumerate(read_file(import_settings.file).splitlines()):
         if i >= skip_rows:
