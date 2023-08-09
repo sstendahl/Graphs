@@ -187,8 +187,13 @@ def save_values_to_dict(window, keys: list):
     return values
 
 
-def _handle_chooser_update(chooser, _ignored, settings, key):
-    settings.set_string(key, utilities.get_selected_chooser_item(chooser))
+def _on_settings_select(chooser, _ignored, settings, key):
+    if settings.get_enum(key) != chooser.get_selected():
+        settings.set_enum(key, chooser.get_selected())
+
+
+def _on_settings_update(settings, key, chooser):
+    chooser.set_selected(settings.get_enum(key))
 
 
 def bind_values_to_settings(settings, window, prefix="", ignorelist=None):
@@ -200,9 +205,11 @@ def bind_values_to_settings(settings, window, prefix="", ignorelist=None):
             if isinstance(widget, Adw.EntryRow):
                 settings.bind(key, widget, "text", 0)
             elif isinstance(widget, Adw.ComboRow):
-                utilities.set_chooser(widget, settings.get_string(key))
-                widget.connect("notify::selected", _handle_chooser_update,
-                               settings, key)
+                widget.set_selected(settings.get_enum(key))
+                settings.connect(
+                    f"changed::{key}", _on_settings_update, widget)
+                widget.connect(
+                    "notify::selected", _on_settings_select, settings, key)
             elif isinstance(widget, Gtk.SpinButton):
                 settings.bind(key, widget, "value", 0)
             elif isinstance(widget, Gtk.Switch):

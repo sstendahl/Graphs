@@ -2,6 +2,10 @@
 from enum import Enum
 
 
+def _get_scale(settings, key):
+    return "linear" if settings.get_enum(key) == 0 else "log"
+
+
 class PlotSettings:
     """
     The plot-related settings for the current session. The default values are
@@ -12,10 +16,10 @@ class PlotSettings:
         self.right_label = None
         self.top_label = None
         self.ylabel = None
-        self.xscale = settings.get_string("bottom-scale")
-        self.yscale = settings.get_string("left-scale")
-        self.right_scale = settings.get_string("right-scale")
-        self.top_scale = settings.get_string("top-scale")
+        self.xscale = _get_scale(settings, "bottom-scale")
+        self.yscale = _get_scale(settings, "left-scale")
+        self.right_scale = _get_scale(settings, "right-scale")
+        self.top_scale = _get_scale(settings, "top-scale")
         self.title = settings.get_string("title")
         self.legend = settings.get_boolean("legend")
         self.use_custom_plot_style = settings.get_boolean("use-custom-style")
@@ -47,23 +51,6 @@ class ParseError(Exception):
 def _(message):
     return message
 
-
-SCALES = [_("linear"), _("log")]
-LEGEND_POSITIONS = [
-    _("Best"), _("Upper right"), _("Upper left"), _("Lower left"),
-    _("Lower right"), _("Center left"), _("Center right"), _("Lower center"),
-    _("Upper center"), _("Center"),
-]
-X_POSITIONS = [_("top"), _("bottom")]
-Y_POSITIONS = [_("left"), _("right")]
-SEPARATORS = [",", "."]
-ACTION_CENTER_DATA = [
-    _("Center at maximum Y value"), _("Center at middle coordinate"),
-]
-HANDLE_DUPLICATES = [
-    _("Auto-rename duplicates"), _("Ignore duplicates"), _("Add duplicates"),
-    _("Override existing items"),
-]
 LINESTYLES = [_("none"), _("solid"), _("dotted"), _("dashed"), _("dashdot")]
 MARKERS = {
     _("Point"): ".", _("Pixel"): ",", _("Circle"): "o",

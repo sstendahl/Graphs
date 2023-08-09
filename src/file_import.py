@@ -4,7 +4,7 @@ from pathlib import Path
 
 from gi.repository import Adw, GObject, Gio, Gtk
 
-from graphs import file_io, graphs, misc, ui, utilities
+from graphs import file_io, graphs, ui, utilities
 from graphs.misc import ParseError
 
 
@@ -84,9 +84,6 @@ class ImportWindow(Adw.Window):
             application=application, transient_for=application.main_window,
             modes=modes, import_dict=import_dict,
         )
-
-        utilities.populate_chooser(
-            self.columns_separator, misc.SEPARATORS, False)
 
         import_params = \
             self.props.application.settings.get_child("import-params")

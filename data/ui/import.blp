@@ -58,6 +58,9 @@ template $ImportWindow : Adw.Window {
 
           Adw.ComboRow columns_separator {
             title: _("Decimal Separator");
+            model: StringList{
+              strings [",", "."]
+            };
           }
 
           Adw.ActionRow {

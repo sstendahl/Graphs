@@ -2,9 +2,9 @@
 import logging
 from gettext import gettext as _
 
-from gi.repository import Adw, Gio, Gtk
+from gi.repository import Adw, GObject, Gio, Gtk
 
-from graphs import file_io, graphs, misc, plot_styles, ui, utilities
+from graphs import file_io, graphs, plot_styles, ui, utilities
 
 
 MIGRATION_KEYS = {
@@ -111,34 +111,29 @@ class PreferencesWindow(Adw.PreferencesWindow):
     figure_use_custom_style = Gtk.Template.Child()
     figure_custom_style = Gtk.Template.Child()
 
+    styles = GObject.Property(type=object)
+
     def __init__(self, application):
-        super().__init__(application=application,
-                         transient_for=application.main_window)
+        super().__init__(
+            application=application, transient_for=application.main_window,
+            styles=sorted(list(
+                plot_styles.get_user_styles(application).keys())),
+        )
 
-        utilities.populate_chooser(
-            self.general_center_data, misc.ACTION_CENTER_DATA)
-        utilities.populate_chooser(
-            self.general_handle_duplicates, misc.HANDLE_DUPLICATES)
-        utilities.populate_chooser(self.figure_bottom_scale, misc.SCALES)
-        utilities.populate_chooser(self.figure_left_scale, misc.SCALES)
-        utilities.populate_chooser(self.figure_top_scale, misc.SCALES)
-        utilities.populate_chooser(self.figure_right_scale, misc.SCALES)
-        utilities.populate_chooser(self.figure_x_position, misc.X_POSITIONS)
-        utilities.populate_chooser(self.figure_y_position, misc.Y_POSITIONS)
-        utilities.populate_chooser(
-            self.figure_legend_position, misc.LEGEND_POSITIONS)
-
-        utilities.populate_chooser(
-            self.figure_custom_style,
-            plot_styles.get_user_styles(self.props.application).keys(),
-            translate=False)
+        self.figure_custom_style.set_model(Gtk.StringList.new(self.styles))
         settings = self.props.application.settings
         ui.bind_values_to_settings(
-            settings.get_child("figure"), self, prefix="figure_")
+            settings.get_child("figure"), self, prefix="figure_",
+            ignorelist=["custom-style"])
         ui.bind_values_to_settings(
             settings, self, prefix="general_", ignorelist=["clipboard-length"])
+        self.figure_custom_style.set_selected(self.styles.index(
+            settings.get_child("figure").get_string("custom-style")))
         self.present()
 
     @Gtk.Template.Callback()
     def on_close(self, _):
+        self.props.application.settings.get_child("figure").set_string(
+            "custom-style",
+            self.figure_custom_style.get_selected_item().get_string())
         graphs.refresh(self.props.application)

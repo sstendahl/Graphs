@@ -104,15 +104,15 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
     @Gtk.Template.Callback()
     def on_close(self, *_args):
         # Set new plot settings
-        if self.plot_title.get_text() !="":
+        if self.plot_title.get_text() != "":
             self.plot_settings.title = self.plot_title.get_text()
-        if self.plot_x_label.get_text() !="":
+        if self.plot_x_label.get_text() != "":
             self.plot_settings.xlabel = self.plot_x_label.get_text()
-        if self.plot_y_label.get_text() !="":
+        if self.plot_y_label.get_text() != "":
             self.plot_settings.ylabel = self.plot_y_label.get_text()
-        if self.plot_top_label.get_text() !="":
+        if self.plot_top_label.get_text() != "":
             self.plot_settings.top_label = self.plot_top_label.get_text()
-        if self.plot_right_label.get_text() !="":
+        if self.plot_right_label.get_text() != "":
             self.plot_settings.right_label = self.plot_right_label.get_text()
         self.plot_settings.xscale = \
             utilities.get_selected_chooser_item(self.plot_x_scale)

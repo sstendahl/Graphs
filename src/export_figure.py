@@ -23,14 +23,15 @@ class ExportFigureWindow(Adw.Window):
             file_formats=application.canvas.get_supported_filetypes_grouped(),
         )
 
-        utilities.populate_chooser(self.file_format, self.file_formats.keys())
+        self.file_format.set_model(
+            Gtk.StringList.new(list(self.file_formats.keys())))
         ui.bind_values_to_settings(
             self.props.application.settings.get_child("export-figure"), self)
         self.present()
 
     @Gtk.Template.Callback()
     def on_accept(self, _button):
-        file_format = utilities.get_selected_chooser_item(self.file_format)
+        file_format = self.file_format.get_selected_item()
         file_suffixes = self.file_formats[file_format]
         filename = \
             Path(self.props.application.canvas.get_default_filename()).stem
