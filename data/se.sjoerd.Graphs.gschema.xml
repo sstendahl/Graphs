@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schemalist gettext-domain="graphs">
-  <enum id="se.sjoerd.Graphs.general.center-data-values">
+  <enum id="se.sjoerd.Graphs.general.center-values">
     <value nick="Center at maximum Y value" value="0"/>
     <value nick="Center at middle coordinate" value="1"/>
   </enum>
@@ -59,16 +59,20 @@
   </enum>
 
   <schema id="se.sjoerd.Graphs" path="/se/sjoerd/Graphs/">
+    <child name="general" schema="se.sjoerd.Graphs.general"/>
     <child name="add-equation" schema="se.sjoerd.Graphs.add-equation"/>
     <child name="export-figure" schema="se.sjoerd.Graphs.export-figure"/>
     <child name="figure" schema="se.sjoerd.Graphs.figure"/>
     <child name="import-params" schema="se.sjoerd.Graphs.import-params"/>
 
-    <key name="center-data" enum="se.sjoerd.Graphs.general.center-data-values">
-      <default>"Center at middle coordinate"</default>
-    </key>
     <key name="clipboard-length" type="i">
       <default>75</default>
+    </key>
+  </schema>
+
+  <schema id="se.sjoerd.Graphs.general">
+    <key name="center" enum="se.sjoerd.Graphs.general.center-values">
+      <default>"Center at middle coordinate"</default>
     </key>
     <key name="handle-duplicates" enum="se.sjoerd.Graphs.general.handle-duplicates-values">
       <default>"Auto-rename duplicates"</default>

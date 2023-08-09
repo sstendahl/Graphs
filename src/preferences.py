@@ -91,7 +91,7 @@ class Preferences(dict):
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/preferences.ui")
 class PreferencesWindow(Adw.PreferencesWindow):
     __gtype_name__ = "PreferencesWindow"
-    general_center_data = Gtk.Template.Child()
+    general_center = Gtk.Template.Child()
     general_handle_duplicates = Gtk.Template.Child()
     general_hide_unselected = Gtk.Template.Child()
     general_override_item_properties = Gtk.Template.Child()
@@ -126,7 +126,7 @@ class PreferencesWindow(Adw.PreferencesWindow):
             settings.get_child("figure"), self, prefix="figure_",
             ignorelist=["custom-style"])
         ui.bind_values_to_settings(
-            settings, self, prefix="general_", ignorelist=["clipboard-length"])
+            settings.get_child("general"), self, prefix="general_")
         self.figure_custom_style.set_selected(self.styles.index(
             settings.get_child("figure").get_string("custom-style")))
         self.present()

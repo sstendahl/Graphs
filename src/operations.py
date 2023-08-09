@@ -148,10 +148,10 @@ def center(_item, xdata, ydata, center_maximum):
     Depending on the key, will center either on the middle coordinate, or on
     the maximum value of the data
     """
-    if center_maximum == "Center at maximum Y value":
+    if center_maximum == 0:  # Center at maximum Y
         middle_index = ydata.index(max(ydata))
         middle_value = xdata[middle_index]
-    elif center_maximum == "Center at middle coordinate":
+    elif center_maximum == 1:  # Center at middle
         middle_value = (min(xdata) + max(xdata)) / 2
     new_xdata = [coordinate - middle_value for coordinate in xdata]
     return new_xdata, ydata, True, False

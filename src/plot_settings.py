@@ -162,8 +162,8 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
 
     def _handle_style_change(self):
         graphs.reload(self.props.application)
-        if not self.props.application.settings.get_boolean(
-                "override-item-properties"):
+        if not self.props.application.settings.get_child(
+                "general").get_boolean("override-item-properties"):
             return
         for item in self.props.application.datadict.values():
             item.color = None

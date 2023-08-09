@@ -51,6 +51,7 @@ class ParseError(Exception):
 def _(message):
     return message
 
+
 LINESTYLES = [_("none"), _("solid"), _("dotted"), _("dashed"), _("dashdot")]
 MARKERS = {
     _("Point"): ".", _("Pixel"): ",", _("Circle"): "o",
