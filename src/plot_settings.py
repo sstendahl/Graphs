@@ -1,10 +1,22 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
+from gettext import gettext as _
+
 from gi.repository import Adw, Gtk
 
-from graphs import graphs, misc, plot_styles, plotting_tools, ui, utilities
+from graphs import graphs, plot_styles, plotting_tools, ui, utilities
 from graphs.item import Item
 
 from matplotlib import pyplot
+
+
+SCALES = [_("linear"), _("log")]
+LEGEND_POSITIONS = [
+    _("Best"), _("Upper right"), _("Upper left"), _("Lower left"),
+    _("Lower right"), _("Center left"), _("Center right"), _("Lower center"),
+    _("Upper center"), _("Center"),
+]
+X_POSITIONS = [_("top"), _("bottom")]
+Y_POSITIONS = [_("left"), _("right")]
 
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/plot_settings.ui")
@@ -57,14 +69,14 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
             self.plot_top_label.set_text(self.plot_settings.top_label)
         if self.plot_settings.right_label is not None:
             self.plot_right_label.set_text(self.plot_settings.right_label)
-        utilities.populate_chooser(self.plot_x_scale, misc.SCALES)
+        utilities.populate_chooser(self.plot_x_scale, SCALES)
         utilities.set_chooser(self.plot_x_scale, self.plot_settings.xscale)
-        utilities.populate_chooser(self.plot_y_scale, misc.SCALES)
+        utilities.populate_chooser(self.plot_y_scale, SCALES)
         utilities.set_chooser(self.plot_y_scale, self.plot_settings.yscale)
-        utilities.populate_chooser(self.plot_top_scale, misc.SCALES)
+        utilities.populate_chooser(self.plot_top_scale, SCALES)
         utilities.set_chooser(
             self.plot_top_scale, self.plot_settings.top_scale)
-        utilities.populate_chooser(self.plot_right_scale, misc.SCALES)
+        utilities.populate_chooser(self.plot_right_scale, SCALES)
         utilities.set_chooser(
             self.plot_right_scale, self.plot_settings.right_scale)
         self.use_custom_plot_style.set_enable_expansion(
@@ -77,7 +89,7 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
             self.custom_plot_style, self.plot_settings.custom_plot_style)
         self.plot_legend.set_enable_expansion(self.plot_settings.legend)
         utilities.populate_chooser(
-            self.plot_legend_position, misc.LEGEND_POSITIONS)
+            self.plot_legend_position, LEGEND_POSITIONS)
         utilities.set_chooser(
             self.plot_legend_position,
             self.plot_settings.legend_position)
