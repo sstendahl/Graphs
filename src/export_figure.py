@@ -31,7 +31,7 @@ class ExportFigureWindow(Adw.Window):
 
     @Gtk.Template.Callback()
     def on_accept(self, _button):
-        file_format = self.file_format.get_selected_item()
+        file_format = self.file_format.get_selected_item().get_string()
         file_suffixes = self.file_formats[file_format]
         filename = \
             Path(self.props.application.canvas.get_default_filename()).stem
