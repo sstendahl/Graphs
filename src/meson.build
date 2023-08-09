@@ -22,6 +22,7 @@ graphs_sources = [
   'item.py',
   'item_box.py',
   'main.py',
+  'migrate.py',
   'misc.py',
   'operations.py',
   'plot_settings.py',

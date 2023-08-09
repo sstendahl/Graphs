@@ -7,7 +7,7 @@ from inspect import getmembers, isfunction
 
 from gi.repository import Adw, GLib, GObject, Gio
 
-from graphs import actions, file_io, plot_styles, ui
+from graphs import actions, file_io, migrate, plot_styles, ui
 from graphs.canvas import Canvas
 from graphs.clipboard import DataClipboard, ViewClipboard
 from graphs.misc import InteractionMode, PlotSettings
@@ -35,6 +35,7 @@ class GraphsApplication(Adw.Application):
             author=args[5], pkgdatadir=args[6],
             datadict={}, settings=Gio.Settings(args[1]),
         )
+        migrate.migrate_config(self)
         font_list = font_manager.findSystemFonts(fontpaths=None, fontext="ttf")
         for font in font_list:
             try:

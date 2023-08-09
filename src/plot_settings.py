@@ -23,6 +23,7 @@ Y_POSITIONS = [_("left"), _("right")]
 
 del _
 
+
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/plot_settings.ui")
 class PlotSettingsWindow(Adw.PreferencesWindow):
     __gtype_name__ = "PlotSettingsWindow"
