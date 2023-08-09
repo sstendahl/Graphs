@@ -1,12 +1,14 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
-from gettext import gettext as _
-
 from gi.repository import Adw, Gtk
 
 from graphs import graphs, plot_styles, plotting_tools, ui, utilities
 from graphs.item import Item
 
 from matplotlib import pyplot
+
+
+def _(message):
+    return message
 
 
 SCALES = [_("linear"), _("log")]
@@ -18,6 +20,8 @@ LEGEND_POSITIONS = [
 X_POSITIONS = [_("top"), _("bottom")]
 Y_POSITIONS = [_("left"), _("right")]
 
+
+del _
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/plot_settings.ui")
 class PlotSettingsWindow(Adw.PreferencesWindow):
