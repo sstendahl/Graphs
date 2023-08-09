@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist gettext-domain="graphs">
+  <enum id="se.sjoerd.Graphs.general.center-values">
+    <value nick="Center at maximum Y value" value="0"/>
+    <value nick="Center at middle coordinate" value="1"/>
+  </enum>
+
+  <enum id="se.sjoerd.Graphs.general.handle-duplicates-values">
+    <value nick="Auto-rename duplicates" value="0"/>
+    <value nick="Ignore duplicates" value="1"/>
+    <value nick="Add duplicates" value="2"/>
+    <value nick="Override existing items" value="3"/>
+  </enum>
+
+  <enum id="se.sjoerd.Graphs.export-figure.file-formats">
+    <value nick="Encapsulated Postscript" value="0"/>
+    <value nick="Joint Photographic Experts Group" value="1"/>
+    <value nick="Portable Document Format" value="2"/>
+    <value nick="PGF code for LaTeX" value="3"/>
+    <value nick="Portable Network Graphics" value="4"/>
+    <value nick="Postscript" value="5"/>
+    <value nick="Raw RGBA bitmap" value="6"/>
+    <value nick="Scalable Vector Graphics" value="7"/>
+    <value nick="Tagged Image File Format" value="8"/>
+    <value nick="WebP Image Format" value="9"/>
+  </enum>
+
+  <enum id="se.sjoerd.Graphs.figure.legend-positions">
+    <value nick="Best" value="0"/>
+    <value nick="Upper right" value="1"/>
+    <value nick="Upper left" value="2"/>
+    <value nick="Lower Left" value="3"/>
+    <value nick="Lower right" value="4"/>
+    <value nick="Center left" value="5"/>
+    <value nick="Center right" value="6"/>
+    <value nick="Lower center" value="7"/>
+    <value nick="Upper center" value="8"/>
+    <value nick="Center" value="9"/>
+  </enum>
+
+  <enum id="se.sjoerd.Graphs.figure.scales">
+    <value nick="linear" value="0"/>
+    <value nick="logarithmic" value="1"/>
+  </enum>
+
+  <enum id="se.sjoerd.Graphs.figure.x-positions">
+    <value nick="bottom" value="0"/>
+    <value nick="top" value="1"/>
+  </enum>
+
+  <enum id="se.sjoerd.Graphs.figure.y-positions">
+    <value nick="left" value="0"/>
+    <value nick="right" value="1"/>
+  </enum>
+
+  <enum id="se.sjoerd.Graphs.import-params.colums.separators">
+    <value nick=", " value="0"/>
+    <value nick=". " value="1"/>
+  </enum>
+
+  <schema id="se.sjoerd.Graphs" path="/se/sjoerd/Graphs/">
+    <child name="general" schema="se.sjoerd.Graphs.general"/>
+    <child name="add-equation" schema="se.sjoerd.Graphs.add-equation"/>
+    <child name="export-figure" schema="se.sjoerd.Graphs.export-figure"/>
+    <child name="figure" schema="se.sjoerd.Graphs.figure"/>
+    <child name="import-params" schema="se.sjoerd.Graphs.import-params"/>
+
+    <key name="clipboard-length" type="i">
+      <default>75</default>
+    </key>
+  </schema>
+
+  <schema id="se.sjoerd.Graphs.general">
+    <key name="center" enum="se.sjoerd.Graphs.general.center-values">
+      <default>"Center at middle coordinate"</default>
+    </key>
+    <key name="handle-duplicates" enum="se.sjoerd.Graphs.general.handle-duplicates-values">
+      <default>"Auto-rename duplicates"</default>
+    </key>
+    <key name="hide-unselected" type="b">
+      <default>false</default>
+    </key>
+    <key name="override-item-properties" type="b">
+      <default>true</default>
+    </key>
+  </schema>
+
+  <schema id="se.sjoerd.Graphs.figure">
+    <key name="bottom-label" type="s">
+      <default>"X Value"</default>
+    </key>
+    <key name="bottom-scale" enum="se.sjoerd.Graphs.figure.scales">
+      <default>"linear"</default>
+    </key>
+    <key name="custom-style" type="s">
+      <default>"adwaita"</default>
+    </key>
+    <key name="left-label" type="s">
+      <default>"Y Value"</default>
+    </key>
+    <key name="left-scale" enum="se.sjoerd.Graphs.figure.scales">
+      <default>"linear"</default>
+    </key>
+    <key name="legend" type="b">
+      <default>true</default>
+    </key>
+    <key name="legend-position" enum="se.sjoerd.Graphs.figure.legend-positions">
+      <default>"Best"</default>
+    </key>
+    <key name="right-label" type="s">
+      <default>"Y Value 2"</default>
+    </key>
+    <key name="right-scale" enum="se.sjoerd.Graphs.figure.scales">
+      <default>"linear"</default>
+    </key>
+    <key name="title" type="s">
+      <default>""</default>
+    </key>
+    <key name="top-label" type="s">
+      <default>"X Value 2"</default>
+    </key>
+    <key name="top-scale" enum="se.sjoerd.Graphs.figure.scales">
+      <default>"linear"</default>
+    </key>
+    <key name="use-custom-style" type="b">
+      <default>false</default>
+    </key>
+    <key name="x-position" enum="se.sjoerd.Graphs.figure.x-positions">
+      <default>"bottom"</default>
+    </key>
+    <key name="y-position" enum="se.sjoerd.Graphs.figure.y-positions">
+      <default>"left"</default>
+    </key>
+  </schema>
+
+  <schema id="se.sjoerd.Graphs.add-equation">
+    <key name="equation" type="s">
+      <default>"X"</default>
+    </key>
+    <key name="step-size" type="s">
+      <default>"0.01"</default>
+    </key>
+    <key name="x-start" type="s">
+      <default>"0"</default>
+    </key>
+    <key name="x-stop" type="s">
+      <default>"10"</default>
+    </key>
+  </schema>
+
+  <schema id="se.sjoerd.Graphs.export-figure">
+    <key name="dpi" type="i">
+      <default>100</default>
+    </key>
+    <key name="file-format" enum="se.sjoerd.Graphs.export-figure.file-formats">
+      <default>"Portable Network Graphics"</default>
+    </key>
+    <key name="transparent" type="b">
+      <default>true</default>
+    </key>
+  </schema>
+
+  <schema id="se.sjoerd.Graphs.import-params">
+    <child name="columns" schema="se.sjoerd.Graphs.import-params.columns"/>
+  </schema>
+
+  <schema id="se.sjoerd.Graphs.import-params.columns">
+    <key name="column-x" type="i">
+      <default>0</default>
+    </key>
+    <key name="column-y" type="i">
+      <default>1</default>
+    </key>
+    <key name="delimiter" type="s">
+      <default>"\\s+"</default>
+    </key>
+    <key name="separator" enum="se.sjoerd.Graphs.import-params.colums.separators">
+      <default>". "</default>
+    </key>
+    <key name="skip-rows" type="i">
+      <default>0</default>
+    </key>
+  </schema>
+</schemalist>

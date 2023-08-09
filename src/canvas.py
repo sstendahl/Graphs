@@ -153,12 +153,22 @@ class Canvas(FigureCanvas):
     def set_axis_properties(self):
         """Set the properties that are related to the axes."""
         plot_settings = self.application.plot_settings
-        self.title = self.axis.set_title(plot_settings.title)
-        self.bottom_label = self.axis.set_xlabel(plot_settings.xlabel)
-        self.right_label = self.right_axis.set_ylabel(
-            plot_settings.right_label)
-        self.top_label = self.top_left_axis.set_xlabel(plot_settings.top_label)
-        self.left_label = self.axis.set_ylabel(plot_settings.ylabel)
+        settings = self.application.settings.get_child("figure")
+        title = settings["plot_title"] \
+            if plot_settings.title is None else plot_settings.title
+        bottom_label = settings.get_string("bottom-label") \
+            if plot_settings.xlabel is None else plot_settings.xlabel
+        right_label = settings.get_string("right-label") \
+            if plot_settings.right_label is None else plot_settings.right_label
+        top_label = settings.get_string("top-label") \
+            if plot_settings.top_label is None else plot_settings.top_label
+        left_label = settings.get_string("left-label") \
+            if plot_settings.ylabel is None else plot_settings.ylabel
+        self.title = self.axis.set_title(title)
+        self.bottom_label = self.axis.set_xlabel(bottom_label)
+        self.right_label = self.right_axis.set_ylabel(right_label)
+        self.top_label = self.top_left_axis.set_xlabel(top_label)
+        self.left_label = self.axis.set_ylabel(left_label)
         self.axis.set_xscale(plot_settings.xscale)
         self.axis.set_yscale(plot_settings.yscale)
         self.right_axis.set_xscale(plot_settings.xscale)

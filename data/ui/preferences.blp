@@ -14,23 +14,29 @@ template $PreferencesWindow : Adw.PreferencesWindow {
       title: _("Action Behaviour");
       description: _("Behaviour of specific actions");
 
-      Adw.ComboRow action_center_data {
+      Adw.ComboRow general_center {
         title: _("Center Data");
+        model: StringList{
+          strings [_("Center at maximum Y value"), _("Center at middle coordinate")]
+        };
       }
     }
 
     Adw.PreferencesGroup {
       title: _("Other");
 
-      Adw.ComboRow other_handle_duplicates {
+      Adw.ComboRow general_handle_duplicates {
         title: _("Handle Duplicate Items");
+        model: StringList{
+          strings [_("Auto-rename duplicates"), _("Ignore duplicates"), _("Add duplicates"), _("Override existing items")]
+        };
       }
 
       Adw.ActionRow {
         title: _("Hide Unselected Items");
-        activatable-widget: other_hide_unselected;
+        activatable-widget: general_hide_unselected;
 
-        Switch other_hide_unselected {
+        Switch general_hide_unselected {
           valign: center;
         }
       }
@@ -45,23 +51,23 @@ template $PreferencesWindow : Adw.PreferencesWindow {
       title: _("Labels");
       description: _("Settings for title and labels used by default");
 
-      Adw.EntryRow plot_title {
+      Adw.EntryRow figure_title {
         title: _("Default Title");
       }
 
-      Adw.EntryRow plot_y_label {
+      Adw.EntryRow figure_left_label {
         title: _("Default Bottom Axis label");
       }
 
-      Adw.EntryRow plot_x_label {
+      Adw.EntryRow figure_bottom_label {
         title: _("Default Left Axis Label");
       }
 
-      Adw.EntryRow plot_top_label {
+      Adw.EntryRow figure_top_label {
         title: _("Default Top Axis Label");
       }
 
-      Adw.EntryRow plot_right_label {
+      Adw.EntryRow figure_right_label {
         title: _("Default Right Axis Label");
       }
     }
@@ -70,28 +76,46 @@ template $PreferencesWindow : Adw.PreferencesWindow {
       title: _("Axes Settings");
       description: _("Default axes scale and position");
 
-      Adw.ComboRow plot_x_scale {
+      Adw.ComboRow figure_bottom_scale {
         title: _("Default Bottom Axis Scale");
+        model: StringList{
+          strings [_("linear"), _("logarithmic")]
+        };
       }
 
-      Adw.ComboRow plot_y_scale {
+      Adw.ComboRow figure_left_scale {
         title: _("Default Left Axis Scale");
+        model: StringList{
+          strings [_("linear"), _("logarithmic")]
+        };
       }
 
-      Adw.ComboRow plot_top_scale {
+      Adw.ComboRow figure_top_scale {
         title: _("Default Top Axis Scale");
+        model: StringList{
+          strings [_("linear"), _("logarithmic")]
+        };
       }
 
-      Adw.ComboRow plot_right_scale {
+      Adw.ComboRow figure_right_scale {
         title: _("Default Right Axis Scale");
+        model: StringList{
+          strings [_("linear"), _("logarithmic")]
+        };
       }
 
-      Adw.ComboRow plot_x_position {
+      Adw.ComboRow figure_x_position {
         title: _("Default X-Axis Position");
+        model: StringList{
+          strings [_("bottom"), _("top")]
+        };
       }
 
-      Adw.ComboRow plot_y_position {
+      Adw.ComboRow figure_y_position {
         title: _("Default Y-Axis Position");
+        model: StringList{
+          strings [_("left"), _("right")]
+        };
       }
     }
 
@@ -99,27 +123,34 @@ template $PreferencesWindow : Adw.PreferencesWindow {
       title: _("Styling");
       description: _("Change default style and other visual changes");
 
-      Adw.ExpanderRow plot_legend {
+      Adw.ExpanderRow figure_legend {
         title: _("Legend");
         subtitle: _("Use a legend by default");
         show-enable-switch: true;
-        Adw.ComboRow plot_legend_position {
+        Adw.ComboRow figure_legend_position {
           title: _("Legend Position");
+          model: StringList{
+            strings [
+              _("Best"), _("Upper right"), _("Upper left"), _("Lower left"),
+              _("Lower right"), _("Center left"), _("Center right"),
+              _("Lower center"), _("Upper center"), _("Center"),
+            ]
+          };
       }
     }
 
-      Adw.ExpanderRow plot_use_custom_style {
+      Adw.ExpanderRow figure_use_custom_style {
         title: _("Use Custom Style");
         show-enable-switch: true;
 
-        Adw.ComboRow plot_custom_style {
+        Adw.ComboRow figure_custom_style {
           title: _("Style");
         }
       }
       Adw.ActionRow {
         title: _("Override Line Styling on Style Change");
 
-        Switch override_style_change {
+        Switch general_override_item_properties {
           valign: center;
         }
       }

@@ -48,11 +48,12 @@ def add_items(self, items):
     if not items:
         return
     ignored = []
-    handle_duplicates = self.preferences["other_handle_duplicates"]
+    handle_duplicates = \
+        self.settings.get_child("general").get_enum("handle-duplicates")
     for item in items:
         for item_1 in self.datadict.values():
             if item.name == item_1.name:
-                if handle_duplicates == "Auto-rename duplicates":
+                if handle_duplicates == 0:  # Auto-add
                     i = 0
                     while True:
                         i += 1
@@ -61,36 +62,32 @@ def add_items(self, items):
                             new_name = f"{item.name} ({i})"
                             break
                     item.name = new_name
-                elif handle_duplicates == "Ignore duplicates":
+                elif handle_duplicates == 1:  # Ignore
                     ignored.append(item.name)
                     continue
-                elif handle_duplicates == "Override existing items":
+                elif handle_duplicates == 3:  # Override
                     item.key = item_1.key
         if item.xlabel:
             original_position = item.plot_x_position
             if item.plot_x_position == "bottom":
-                if self.plot_settings.xlabel \
-                        == self.preferences["plot_x_label"]:
+                if self.plot_settings.xlabel is None:
                     self.plot_settings.xlabel = item.xlabel
                 elif item.xlabel != self.plot_settings.xlabel:
                     item.plot_x_position = "top"
             if item.plot_x_position == "top":
-                if self.plot_settings.top_label \
-                        == self.preferences["plot_top_label"]:
+                if self.plot_settings.top_label is None:
                     self.plot_settings.top_label = item.xlabel
                 elif item.xlabel != self.plot_settings.xlabel:
                     item.plot_x_position = original_position
         if item.ylabel:
             original_position = item.plot_y_position
             if item.plot_y_position == "left":
-                if self.plot_settings.ylabel \
-                        == self.preferences["plot_y_label"]:
+                if self.plot_settings.ylabel is None:
                     self.plot_settings.ylabel = item.ylabel
                 elif item.ylabel != self.plot_settings.ylabel:
                     item.plot_y_position = "right"
             if item.plot_y_position == "right":
-                if self.plot_settings.right_label \
-                        == self.preferences["plot_right_label"]:
+                if self.plot_settings.right_label is None:
                     self.plot_settings.right_label = item.ylabel
                 elif item.ylabel != self.plot_settings.ylabel:
                     item.plot_y_position = original_position
@@ -151,10 +148,10 @@ def refresh(self):
         plotting_tools.hide_unused_axes(self, self.canvas)
     self.canvas.set_axis_properties()
     self.canvas.set_ticks()
+    hide_unselected = \
+        self.settings.get_child("general").get_boolean("hide-unselected")
     for item in reversed(self.datadict.values()):
-        if item is None \
-                or (self.preferences["other_hide_unselected"]
-                    and not item.selected):
+        if item is None or (hide_unselected and not item.selected):
             continue
         self.canvas.plot(item)
     self.canvas.set_legend()

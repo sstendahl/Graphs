@@ -1,9 +1,0 @@
-{
-  "columns": {
-    "column_x": 0,
-    "column_y": 1,
-    "delimiter": "\\s+",
-    "separator": ".",
-    "skip_rows": 0
-  }
-}

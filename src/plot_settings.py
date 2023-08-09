@@ -38,7 +38,8 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
                          transient_for=application.main_window)
         self.plot_settings = self.props.application.plot_settings
 
-        self.plot_title.set_text(self.plot_settings.title)
+        if self.plot_settings.title is not None:
+            self.plot_title.set_text(self.plot_settings.title)
         self.min_left.set_text(str(self.plot_settings.min_left))
         self.max_left.set_text(str(self.plot_settings.max_left))
         self.min_bottom.set_text(str(self.plot_settings.min_bottom))
@@ -48,10 +49,14 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
         self.min_top.set_text(str(self.plot_settings.min_top))
         self.max_top.set_text(str(self.plot_settings.max_top))
 
-        self.plot_x_label.set_text(self.plot_settings.xlabel)
-        self.plot_y_label.set_text(self.plot_settings.ylabel)
-        self.plot_top_label.set_text(self.plot_settings.top_label)
-        self.plot_right_label.set_text(self.plot_settings.right_label)
+        if self.plot_settings.xlabel is not None:
+            self.plot_x_label.set_text(self.plot_settings.xlabel)
+        if self.plot_settings.ylabel is not None:
+            self.plot_y_label.set_text(self.plot_settings.ylabel)
+        if self.plot_settings.top_label is not None:
+            self.plot_top_label.set_text(self.plot_settings.top_label)
+        if self.plot_settings.right_label is not None:
+            self.plot_right_label.set_text(self.plot_settings.right_label)
         utilities.populate_chooser(self.plot_x_scale, misc.SCALES)
         utilities.set_chooser(self.plot_x_scale, self.plot_settings.xscale)
         utilities.populate_chooser(self.plot_y_scale, misc.SCALES)
@@ -99,11 +104,16 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
     @Gtk.Template.Callback()
     def on_close(self, *_args):
         # Set new plot settings
-        self.plot_settings.title = self.plot_title.get_text()
-        self.plot_settings.xlabel = self.plot_x_label.get_text()
-        self.plot_settings.ylabel = self.plot_y_label.get_text()
-        self.plot_settings.top_label = self.plot_top_label.get_text()
-        self.plot_settings.right_label = self.plot_right_label.get_text()
+        if self.plot_title.get_text() != "":
+            self.plot_settings.title = self.plot_title.get_text()
+        if self.plot_x_label.get_text() != "":
+            self.plot_settings.xlabel = self.plot_x_label.get_text()
+        if self.plot_y_label.get_text() != "":
+            self.plot_settings.ylabel = self.plot_y_label.get_text()
+        if self.plot_top_label.get_text() != "":
+            self.plot_settings.top_label = self.plot_top_label.get_text()
+        if self.plot_right_label.get_text() != "":
+            self.plot_settings.right_label = self.plot_right_label.get_text()
         self.plot_settings.xscale = \
             utilities.get_selected_chooser_item(self.plot_x_scale)
         self.plot_settings.yscale = \
@@ -152,7 +162,8 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
 
     def _handle_style_change(self):
         graphs.reload(self.props.application)
-        if not self.props.application.preferences["override_style_change"]:
+        if not self.props.application.settings.get_child(
+                "general").get_boolean("override-item-properties"):
             return
         for item in self.props.application.datadict.values():
             item.color = None

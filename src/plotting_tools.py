@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
-from graphs import graphs, plotting_tools, utilities
+from graphs import graphs, utilities
 from graphs.item import Item
 
 from matplotlib import pyplot
@@ -85,40 +85,38 @@ def hide_unused_axes(self, canvas):
         canvas.axis.get_xaxis().set_visible(True)
 
 
-def change_left_yscale(action, target, self):
+def _change_scale(self, action, target):
+    action.change_state(target)
+    graphs.refresh(self)
+    optimize_limits(self)
+
+
+def change_left_scale(action, target, self):
     self.canvas.axis.set_yscale(target.get_string())
     self.canvas.top_left_axis.set_yscale(target.get_string())
     self.plot_settings.yscale = target.get_string()
-    action.change_state(target)
-    graphs.refresh(self)
-    optimize_limits(self)
+    _change_scale(self, action, target)
 
 
-def change_right_yscale(action, target, self):
+def change_right_scale(action, target, self):
     self.canvas.top_right_axis.set_yscale(target.get_string())
     self.canvas.right_axis.set_yscale(target.get_string())
     self.plot_settings.right_scale = target.get_string()
-    action.change_state(target)
-    graphs.refresh(self)
-    optimize_limits(self)
+    _change_scale(self, action, target)
 
 
-def change_top_xscale(action, target, self):
+def change_top_scale(action, target, self):
     self.canvas.top_left_axis.set_xscale(target.get_string())
     self.canvas.top_right_axis.set_xscale(target.get_string())
     self.plot_settings.top_scale = target.get_string()
-    action.change_state(target)
-    graphs.refresh(self)
-    plotting_tools.optimize_limits(self)
+    _change_scale(self, action, target)
 
 
-def change_bottom_xscale(action, target, self):
+def change_bottom_scale(action, target, self):
     self.canvas.axis.set_xscale(target.get_string())
     self.canvas.right_axis.set_xscale(target.get_string())
     self.plot_settings.xscale = target.get_string()
-    action.change_state(target)
-    graphs.refresh(self)
-    optimize_limits(self)
+    _change_scale(self, action, target)
 
 
 def get_next_color(self):

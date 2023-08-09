@@ -46,7 +46,7 @@ template $AddEquationWindow : Adw.Window {
             margin-end: 26;
             margin-top: 12;
             margin-bottom: 6;
-            Adw.EntryRow addequation_equation {
+            Adw.EntryRow equation {
               max-width-chars: 25;
               title: _("Y =");
               styles ["preferencesgroup"]
@@ -71,20 +71,20 @@ template $AddEquationWindow : Adw.Window {
 
               Adw.PreferencesGroup {
                 margin-end: 12;
-                Adw.EntryRow addequation_x_start {
+                Adw.EntryRow x_start {
                   title: _("X Start");
                 }
               }
 
               Adw.PreferencesGroup {
                 margin-end: 12;
-                Adw.EntryRow addequation_x_stop {
+                Adw.EntryRow x_stop {
                   title: _("X Stop");
                 }
               }
 
               Adw.PreferencesGroup {
-                Adw.EntryRow addequation_step_size {
+                Adw.EntryRow step_size {
                   title: _("Step Size");
                 }
               }

@@ -144,11 +144,17 @@ def import_from_xry(self, import_settings):
 
 def import_from_columns(self, import_settings):
     item = Item(self, name=import_settings.name)
-    params = import_settings.params
+    columns_params = self.settings.get_child(
+        "import-params").get_child("columns")
+    column_x = columns_params.get_int("column-x")
+    column_y = columns_params.get_int("column-y")
+    delimiter = columns_params.get_string("delimiter")
+    separator = columns_params.get_string("separator").replace(" ", "")
+    skip_rows = columns_params.get_int("skip-rows")
     for i, line in enumerate(read_file(import_settings.file).splitlines()):
-        if i >= params["skip_rows"]:
-            data_line = re.split(str(params["delimiter"]), line.strip())
-            if params["separator"] == ",":
+        if i >= skip_rows:
+            data_line = re.split(delimiter, line.strip())
+            if separator == ",":
                 for index, value in enumerate(data_line):
                     data_line[index] = utilities.swap(value)
             try:
@@ -158,9 +164,9 @@ def import_from_columns(self, import_settings):
                 else:
                     try:
                         item.xdata.append(utilities.string_to_float(
-                            data_line[int(params["column_x"])]))
+                            data_line[column_x]))
                         item.ydata.append(utilities.string_to_float(
-                            data_line[int(params["column_y"])]))
+                            data_line[column_y]))
                     except IndexError:
                         raise ParseError(
                             _("Import failed, column index out of range"))
@@ -175,13 +181,13 @@ def import_from_columns(self, import_settings):
                 # for the data
                 try:
                     headers = re.split("\\s{2,}", line)
-                    item.xlabel = headers[params["column_x"]]
-                    item.ylabel = headers[params["column_y"]]
+                    item.xlabel = headers[column_x]
+                    item.ylabel = headers[column_x]
                 except IndexError:
                     try:
-                        headers = re.split(params["delimiter"], line)
-                        item.xlabel = headers[params["column_x"]]
-                        item.ylabel = headers[params["column_y"]]
+                        headers = re.split(delimiter, line)
+                        item.xlabel = headers[column_x]
+                        item.ylabel = headers[column_x]
                     # If neither heuristic works, we just skip headers
                     except IndexError:
                         pass
