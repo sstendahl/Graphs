@@ -22,28 +22,24 @@ template $EditItemWindow : Adw.PreferencesWindow {
 
     Adw.PreferencesGroup {
       title: _("Data");
-      description: _("Change the name of the data set and the axis positions");
 
       Adw.EntryRow name_entry {
-        title: _("Change Name");
+        title: _("Name");
         max-width-chars: 25;
       }
 
       Adw.ComboRow plot_x_position {
         title: _("X-Axis Position");
-        subtitle: _("Position of the X-axis");
       }
 
       Adw.ComboRow plot_y_position {
         title: _("Y-Axis Position");
-        subtitle: _("Position of the Y-axis");
       }
     }
 
     Adw.PreferencesGroup item_group {
       visible: false;
-      title: _("Line Style");
-      description: _("Change line properties");
+      title: _("Line Properties");
 
       Adw.ComboRow linestyle {
         title: _("Linestyle");
@@ -51,8 +47,6 @@ template $EditItemWindow : Adw.PreferencesWindow {
 
       Adw.ActionRow {
         title: _("Linewidth");
-        subtitle: _("Width of the Line");
-
         Scale linewidth {
           draw-value: true;
           width-request: 200;
@@ -65,13 +59,10 @@ template $EditItemWindow : Adw.PreferencesWindow {
 
       Adw.ComboRow markers {
         title: _("Markers");
-        subtitle: _("Used markers");
       }
 
       Adw.ActionRow {
         title: _("Marker Size");
-        subtitle: _("Size of the markers");
-
         Scale markersize {
           draw-value: true;
           width-request: 200;
