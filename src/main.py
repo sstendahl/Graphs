@@ -7,7 +7,7 @@ from inspect import getmembers, isfunction
 
 from gi.repository import Adw, GLib, GObject, Gio
 
-from graphs import actions, file_io, migrate, plot_styles, ui
+from graphs import actions, file_io, migrate, plot_styles, plotting_tools, ui
 from graphs.canvas import Canvas
 from graphs.clipboard import DataClipboard, ViewClipboard
 from graphs.misc import InteractionMode, PlotSettings
@@ -79,21 +79,18 @@ class GraphsApplication(Adw.Application):
             if keybinds:
                 self.set_accels_for_action(f"app.{name}", keybinds)
 
-        # TODO implement actions again
-        """
-        self.create_axis_action("change_left_yscale",
-                                plotting_tools.change_left_yscale,
-                                "plot_y_scale")
-        self.create_axis_action("change_right_yscale",
-                                plotting_tools.change_right_yscale,
-                                "plot_right_scale")
-        self.create_axis_action("change_top_xscale",
-                                plotting_tools.change_top_xscale,
-                                "plot_top_scale")
-        self.create_axis_action("change_bottom_xscale",
-                                plotting_tools.change_bottom_xscale,
-                                "plot_x_scale")
-        """
+        settings = self.settings.get_child("figure")
+        for val in ["left-scale", "right-scale", "top-scale", "bottom-scale"]:
+            string = "linear" if settings.get_enum(val) == 0 else "log"
+            action = Gio.SimpleAction.new_stateful(
+                f"change-{val}", GLib.VariantType.new("s"),
+                GLib.Variant.new_string(string))
+            action.connect(
+                "activate",
+                getattr(plotting_tools, f"change_{val.replace('-', '_')}"),
+                self,
+            )
+            self.add_action(action)
 
         self.toggle_sidebar = Gio.SimpleAction.new_stateful(
             "toggle_sidebar", None, GLib.Variant.new_boolean(True))
@@ -161,14 +158,6 @@ class GraphsApplication(Adw.Application):
     def on_sidebar_toggle(self, _a, _b):
         visible = self.main_window.sidebar_flap.get_reveal_flap()
         self.toggle_sidebar.change_state(GLib.Variant.new_boolean(visible))
-
-    def create_axis_action(self, name, callback, preferences_key):
-        """Create action for setting axis scale."""
-        action = Gio.SimpleAction.new_stateful(
-            name, GLib.VariantType.new("s"),
-            GLib.Variant.new_string(self.preferences[preferences_key]))
-        action.connect("activate", callback, self)
-        self.add_action(action)
 
     def create_mode_action(self, name, shortcuts, mode):
         """Create action for mode setting."""
