@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Main actions."""
-from graphs import graphs, plotting_tools, project, ui
+from graphs import graphs, plotting_tools, ui
 from graphs.add_equation import AddEquationWindow
 from graphs.export_figure import ExportFigureWindow
 from graphs.plot_settings import PlotSettingsWindow
@@ -98,8 +98,7 @@ def plot_styles_action(_action, _target, self):
 
 
 def save_project_action(_action, _target, self):
-    # ui.save_project_dialog(self)
-    project.create_project(self)
+    ui.save_project_dialog(self)
 
 
 def open_project_action(_action, _target, self):

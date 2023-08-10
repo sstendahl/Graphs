@@ -1,46 +1,10 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
-import logging
 from gettext import gettext as _
-from pickle import UnpicklingError
 
-from graphs import (file_io, plot_styles, plotting_tools, ui,
-                    utilities)
+from graphs import file_io, plot_styles, plotting_tools, ui, utilities
 from graphs.canvas import Canvas
 
 from matplotlib import pyplot
-
-
-def open_project(self, file):
-    for key in self.datadict.copy():
-        delete_item(self, key)
-    try:
-        new_plot_settings, new_datadict, data_clipboard, view_clipboard, \
-            version = file_io.read_project(file)
-        utilities.set_attributes(new_plot_settings, self.plot_settings)
-
-        self.Clipboard.clear()
-        self.ViewClipboard.clear()
-        self.plot_settings = new_plot_settings
-        self.datadict = {}
-        add_items(self,
-                  [utilities.check_item(self, item)
-                   for item in new_datadict.values()])
-
-        # Set clipboards
-        if data_clipboard is not None:
-            for key, value in data_clipboard.items():
-                self.Clipboard[key] = value
-        if view_clipboard is not None:
-            for key, value in view_clipboard.items():
-                self.ViewClipboard[key] = value
-
-        self.canvas.limits = self.ViewClipboard.clipboard[-1]
-        ui.set_clipboard_buttons(self)
-        refresh(self)
-    except (EOFError, UnpicklingError):
-        message = _("Could not open project")
-        self.main_window.add_toast(message)
-        logging.exception(message)
 
 
 def add_items(self, items):

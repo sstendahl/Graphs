@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
-from gi.repository import Adw, Gtk, GObject
+from gi.repository import Adw, GObject, Gtk
 
 from graphs import graphs, misc, plot_styles, plotting_tools, ui, utilities
 from graphs.item import Item

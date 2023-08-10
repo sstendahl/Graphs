@@ -26,15 +26,18 @@ class GraphsApplication(Adw.Application):
     issues = GObject.Property(type=str, default="")
     author = GObject.Property(type=str, default="")
     pkgdatadir = GObject.Property(type=str, default="")
+
     datadict = GObject.Property(type=object)
+    figure_settings = GObject.Property(type=FigureSettings)
 
     def __init__(self, args):
         """Init the application."""
+        settings = Gio.Settings(args[1])
         super().__init__(
             application_id=args[1], flags=Gio.ApplicationFlags.DEFAULT_FLAGS,
             version=args[0], name=args[2], website=args[3], issues=args[4],
-            author=args[5], pkgdatadir=args[6],
-            datadict={}, settings=Gio.Settings(args[1]),
+            author=args[5], pkgdatadir=args[6], datadict={}, settings=settings,
+            figure_settings=FigureSettings.new(settings.get_child("figure")),
         )
         migrate.migrate_config(self)
         font_list = font_manager.findSystemFonts(fontpaths=None, fontext="ttf")
@@ -46,6 +49,8 @@ class GraphsApplication(Adw.Application):
         self.add_actions()
         self.get_style_manager().connect(
             "notify", ui.on_style_change, None, self)
+
+        self.plot_settings = self.props.figure_settings
 
     def add_actions(self):
         """Create actions, which are defined in actions.py."""
@@ -118,8 +123,6 @@ class GraphsApplication(Adw.Application):
         self.main_window.set_title(self.name)
         if "(Development)" in self.name:
             self.main_window.add_css_class("devel")
-        self.plot_settings = \
-            FigureSettings.new(self.settings.get_child("figure"))
         pyplot.rcParams.update(
             file_io.parse_style(plot_styles.get_preferred_style(self)))
         self.canvas = Canvas(self)

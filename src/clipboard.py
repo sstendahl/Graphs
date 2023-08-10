@@ -42,10 +42,6 @@ class BaseClipboard(GObject.Object):
             self.set_clipboard_state()
         ui.set_clipboard_buttons(self.props.application)
 
-    def __setitem__(self, key, value):
-        """Allow to set the attributes in the Clipboard like a dictionary"""
-        setattr(self, key, value)
-
     def clear(self):
         self.__init__(self.props.application)
 

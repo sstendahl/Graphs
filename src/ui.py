@@ -6,7 +6,7 @@ from gettext import gettext as _
 
 from gi.repository import Adw, GLib, Gio, Gtk
 
-from graphs import file_import, file_io, graphs, utilities
+from graphs import file_import, file_io, graphs, project, utilities
 from graphs.item import Item
 from graphs.item_box import ItemBox
 
@@ -68,9 +68,7 @@ def save_project_dialog(self):
     def on_response(dialog, response):
         with contextlib.suppress(GLib.GError):
             file = dialog.save_finish(response)
-            file_io.save_project(
-                file, self.plot_settings, self.datadict, self.Clipboard,
-                self.ViewClipboard, self.version)
+            project.save_project(self, file)
     dialog = Gtk.FileDialog()
     dialog.set_filters(
         utilities.create_file_filters([(_("Graphs Project File"),
@@ -83,7 +81,7 @@ def open_project_dialog(self):
     def on_response(dialog, response):
         with contextlib.suppress(GLib.GError):
             file = dialog.open_finish(response)
-            graphs.open_project(self, file)
+            project.load_project(self, file)
     dialog = Gtk.FileDialog()
     dialog.set_filters(
         utilities.create_file_filters([(_("Graphs Project File"),
