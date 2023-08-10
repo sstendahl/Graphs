@@ -1,6 +1,4 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
-import contextlib
-
 from graphs import graphs, utilities
 from graphs.item import Item
 

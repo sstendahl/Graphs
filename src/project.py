@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 from gi.repository import Gio
 
-from graphs import file_io, graphs, item, ui, migrate, plotting_tools
+from graphs import file_io, graphs, item, migrate, plotting_tools, ui
 from graphs.plot_settings import FigureSettings
 
 
@@ -13,7 +13,7 @@ def save_project(self, file: Gio.File):
         "data-clipboard": self.props.clipboard.props.clipboard,
         "data-clipboard-position": self.props.clipboard.props.clipboard_pos,
         "view-clipboard": self.props.view_clipboard.props.clipboard,
-        "view-clipboard-position": \
+        "view-clipboard-position":
             self.props.view_clipboard.props.clipboard_pos,
     })
 
@@ -32,7 +32,8 @@ def load_project(self, file: Gio.File):
     self.props.datadict = {item.key: item for item in items}
 
     self.props.clipboard.props.clipboard = project["data-clipboard"]
-    self.props.clipboard.props.clipboard_pos = project["data-clipboard-position"]
+    self.props.clipboard.props.clipboard_pos = \
+        project["data-clipboard-position"]
 
     # migrated project
     if project["view-clipboard"] is None:

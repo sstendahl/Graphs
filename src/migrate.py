@@ -79,6 +79,7 @@ def _migrate_import_params(self, import_file):
 class PlotSettings:
     pass
 
+
 class Item:
     pass
 
@@ -126,6 +127,7 @@ def _migrate_item(item: Item) -> dict:
     dictionary["item_type"] = "Item"
     return dictionary
 
+
 PLOT_SETTINGS_MIGRATION_TABLE = {
     "xlabel": "bottom_label",
     "ylabel": "left_label",
@@ -134,6 +136,7 @@ PLOT_SETTINGS_MIGRATION_TABLE = {
     "use_custom_plot_style": "use_custom_style",
     "custom_plot_style": "custom_style",
 }
+
 
 def _migrate_plot_settings(item: Item) -> dict:
     return {
