@@ -7,23 +7,15 @@ template $PreferencesWindow : Adw.PreferencesWindow {
   close-request => $on_close();
 
   Adw.PreferencesPage {
-    icon-name: "applications-system-symbolic";
-    title: _("General");
-
     Adw.PreferencesGroup {
-      title: _("Action Behaviour");
-      description: _("Behaviour of specific actions");
+      title: _("General");
 
       Adw.ComboRow general_center {
-        title: _("Center Data");
+        title: _("Center Action Behaviour");
         model: StringList{
           strings [_("Center at maximum Y value"), _("Center at middle coordinate")]
         };
       }
-    }
-
-    Adw.PreferencesGroup {
-      title: _("Other");
 
       Adw.ComboRow general_handle_duplicates {
         title: _("Handle Duplicate Items");
@@ -41,15 +33,9 @@ template $PreferencesWindow : Adw.PreferencesWindow {
         }
       }
     }
-  }
-
-  Adw.PreferencesPage {
-    icon-name: "axes-one-quadrant";
-    title: _("Figure");
 
     Adw.PreferencesGroup {
       title: _("Labels");
-      description: _("Settings for title and labels used by default");
 
       Adw.EntryRow figure_title {
         title: _("Default Title");
@@ -73,8 +59,7 @@ template $PreferencesWindow : Adw.PreferencesWindow {
     }
 
     Adw.PreferencesGroup {
-      title: _("Axes Settings");
-      description: _("Default axes scale and position");
+      title: _("Axes");
 
       Adw.ComboRow figure_bottom_scale {
         title: _("Default Bottom Axis Scale");
@@ -106,6 +91,7 @@ template $PreferencesWindow : Adw.PreferencesWindow {
 
       Adw.ComboRow figure_x_position {
         title: _("Default X-Axis Position");
+        subtitle: _("Which axis should a new item be displayed on");
         model: StringList{
           strings [_("bottom"), _("top")]
         };
@@ -113,6 +99,7 @@ template $PreferencesWindow : Adw.PreferencesWindow {
 
       Adw.ComboRow figure_y_position {
         title: _("Default Y-Axis Position");
+        subtitle: _("Which axis should a new item be displayed on");
         model: StringList{
           strings [_("left"), _("right")]
         };
@@ -121,7 +108,6 @@ template $PreferencesWindow : Adw.PreferencesWindow {
 
     Adw.PreferencesGroup {
       title: _("Styling");
-      description: _("Change default style and other visual changes");
 
       Adw.ExpanderRow figure_legend {
         title: _("Legend");
@@ -136,20 +122,19 @@ template $PreferencesWindow : Adw.PreferencesWindow {
               _("Lower center"), _("Upper center"), _("Center"),
             ]
           };
+        }
       }
-    }
 
       Adw.ExpanderRow figure_use_custom_style {
-        title: _("Use Custom Style");
+        title: _("Custom Style by Default");
         show-enable-switch: true;
-
         Adw.ComboRow figure_custom_style {
           title: _("Style");
         }
       }
-      Adw.ActionRow {
-        title: _("Override Line Styling on Style Change");
 
+      Adw.ActionRow {
+        title: _("Override item properties on style change");
         Switch general_override_item_properties {
           valign: center;
         }
