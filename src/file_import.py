@@ -15,6 +15,8 @@ IMPORT_MODES = {
 
 
 class ImportSettings(GObject.Object):
+    __gtype_name__ = "ImportSettings"
+
     file = GObject.Property(type=Gio.File)
     mode = GObject.Property(type=str, default="columns")
     name = GObject.Property(type=str, default=_("Imported Data"))

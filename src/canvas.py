@@ -18,6 +18,8 @@ from matplotlib.widgets import SpanSelector
 
 
 class Canvas(FigureCanvas):
+    __gtype_name__ = "Canvas"
+
     application = GObject.Property(type=Adw.Application)
     one_click_trigger = GObject.Property(type=bool, default=False)
     time_first_click = GObject.Property(type=float, default=0)
@@ -34,19 +36,20 @@ class Canvas(FigureCanvas):
         self.top_right_axis = self.top_left_axis.twinx()
         self.set_axis_properties()
         self.set_ticks()
-        color_rgba = utilities.lookup_color(self.application, "accent_color")
+        color_rgba = \
+            utilities.lookup_color(self.props.application, "accent_color")
         self.rubberband_edge_color = utilities.rgba_to_tuple(color_rgba, True)
         color_rgba.alpha = 0.3
         self.rubberband_fill_color = utilities.rgba_to_tuple(color_rgba, True)
         self.limits = {
-            "min_bottom": self.application.plot_settings.min_bottom,
-            "max_bottom": self.application.plot_settings.max_bottom,
-            "min_top": self.application.plot_settings.min_top,
-            "max_top": self.application.plot_settings.max_top,
-            "min_left": self.application.plot_settings.min_left,
-            "max_left": self.application.plot_settings.max_left,
-            "min_right": self.application.plot_settings.min_right,
-            "max_right": self.application.plot_settings.max_right,
+            "min_bottom": self.props.application.plot_settings.min_bottom,
+            "max_bottom": self.props.application.plot_settings.max_bottom,
+            "min_top": self.props.application.plot_settings.min_top,
+            "max_top": self.props.application.plot_settings.max_top,
+            "min_left": self.props.application.plot_settings.min_left,
+            "max_left": self.props.application.plot_settings.max_left,
+            "min_right": self.props.application.plot_settings.min_right,
+            "max_right": self.props.application.plot_settings.max_right,
         }
         self.legends = []
         for axis in [self.right_axis, self.top_left_axis,
@@ -110,7 +113,7 @@ class Canvas(FigureCanvas):
                 clip_on=True, fontsize=item.size, rotation=item.rotation)
 
     def apply_limits(self):
-        plot_settings = self.application.plot_settings
+        plot_settings = self.props.application.plot_settings
         plot_settings.min_bottom = min(self.axis.get_xlim())
         plot_settings.max_bottom = max(self.axis.get_xlim())
         plot_settings.min_top = min(self.top_left_axis.get_xlim())
@@ -147,13 +150,13 @@ class Canvas(FigureCanvas):
         except ValueError:
             message = _("Error setting limits, one of the values was "
                         "probably infinite")
-            self.application.main_window.add_toast(message)
+            self.props.application.main_window.add_toast(message)
             logging.exception(message)
 
     def set_axis_properties(self):
         """Set the properties that are related to the axes."""
-        plot_settings = self.application.plot_settings
-        settings = self.application.settings.get_child("figure")
+        plot_settings = self.props.application.plot_settings
+        settings = self.props.application.settings.get_child("figure")
         title = settings["plot_title"] \
             if plot_settings.title is None else plot_settings.title
         bottom_label = settings.get_string("bottom-label") \
@@ -185,7 +188,7 @@ class Canvas(FigureCanvas):
         top = pyplot.rcParams["xtick.top"]
         right = pyplot.rcParams["ytick.right"]
         ticks = "both" if pyplot.rcParams["xtick.minor.visible"] else "major"
-        used_axes = utilities.get_used_axes(self.application)[0]
+        used_axes = utilities.get_used_axes(self.props.application)[0]
 
         # Define axes and their directions
         axes = {
@@ -231,7 +234,7 @@ class Canvas(FigureCanvas):
                  self.left_label, self.right_label}
         for item in items:
             if item.contains(event)[0]:
-                RenameWindow(self.application, item)
+                RenameWindow(self.props.application, item)
 
     # Overwritten function - do not change name
     def _post_draw(self, _widget, context):
@@ -264,7 +267,8 @@ class Canvas(FigureCanvas):
 
     def set_legend(self):
         """Set the legend of the graph"""
-        if self.application.plot_settings.legend:
+        plot_settings = self.props.application.plot_settings
+        if plot_settings.legend:
             self.legends = []
             lines1, labels1 = self.axis.get_legend_handles_labels()
             lines2, labels2 = self.right_axis.get_legend_handles_labels()
@@ -277,7 +281,7 @@ class Canvas(FigureCanvas):
             if labels:
                 self.top_right_axis.legend(
                     new_lines, labels,
-                    loc=self.application.plot_settings.legend_position.lower(),
+                    loc=plot_settings.legend_position.lower(),
                     frameon=True, reverse=True)
                 return
         if self.top_right_axis.get_legend() is not None:
