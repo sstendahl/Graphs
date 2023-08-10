@@ -107,8 +107,8 @@ def migrate_project(file):
         "data-clipboard": [{"data": [],
                             "view": DEFAULT_VIEW.copy()}],
         "data-clipboard-position": project["clipboard_pos"],
-        "view-clipboard": [],
-        "view-clipboard-position": -1,
+        "view-clipboard": None,
+        "view-clipboard-position": None,
     }
 
 

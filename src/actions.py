@@ -58,22 +58,21 @@ def select_none_action(_action, _target, self):
 
 
 def undo_action(_action, _target, self):
-    self.Clipboard.undo()
+    self.props.clipboard.undo()
 
 
 def redo_action(_action, _target, self):
-    self.Clipboard.redo()
+    self.props.clipboard.redo()
 
 
 def optimize_limits_action(_action, _target, self):
     plotting_tools.optimize_limits(self)
-    self.ViewClipboard.add()
     graphs.refresh(self)
 
 
 def view_back_action(_action, _target, self):
     if self.main_window.view_back_button.get_sensitive():
-        self.ViewClipboard.undo()
+        self.props.view_clipboard.undo()
         self.canvas.apply_limits()
         # Fix weird view on back
         graphs.refresh(self)
@@ -81,7 +80,7 @@ def view_back_action(_action, _target, self):
 
 def view_forward_action(_action, _target, self):
     if self.main_window.view_forward_button.get_sensitive():
-        self.ViewClipboard.redo()
+        self.props.view_clipboard.redo()
         self.canvas.apply_limits()
         graphs.refresh(self)
 

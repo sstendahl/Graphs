@@ -46,8 +46,8 @@ class ItemBox(Gtk.Box):
         self.props.application.datadict = utilities.change_key_position(
             self.props.application.datadict, drop_target.key, value)
         ui.reload_item_menu(self.props.application)
-        self.props.application.Clipboard.add()
-        self.props.application.ViewClipboard.add()
+        self.props.application.props.clipboard.add()
+        self.props.application.props.view_clipboard.add()
         graphs.refresh(self.props.application)
 
     def on_dnd_prepare(self, drag_source, x, y):
@@ -83,8 +83,8 @@ class ItemBox(Gtk.Box):
                 self.props.item.color = utilities.rgba_to_hex(color).upper()
                 self.props.item.alpha = color.alpha
                 self.update_color()
-                self.props.application.Clipboard.add()
-                self.props.application.ViewClipboard.add()
+                self.props.application.props.clipboard.add()
+                self.props.application.props.view_clipboard.add()
                 graphs.refresh(self.props.application)
 
     @Gtk.Template.Callback()

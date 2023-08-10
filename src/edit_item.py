@@ -90,11 +90,10 @@ class EditItemWindow(Adw.PreferencesWindow):
         if isinstance(self.item, Item):
             self.apply_item_values()
         ui.reload_item_menu(self.props.application)
-        self.props.application.Clipboard.add()
+        self.props.application.props.clipboard.add()
         graphs.refresh(self.props.application)
         if set_limits:
             plotting_tools.optimize_limits(self.props.application)
-            self.props.application.ViewClipboard.add()
 
     def apply_item_values(self):
         self.item.linestyle = \

@@ -69,8 +69,7 @@ def add_items(self, items):
     ui.enable_data_dependent_buttons(self)
     refresh(self)
     plotting_tools.optimize_limits(self)
-    self.ViewClipboard.add()
-    self.Clipboard.add()
+    self.props.clipboard.add()
 
 
 def delete_item(self, key, give_toast=False):
@@ -79,7 +78,7 @@ def delete_item(self, key, give_toast=False):
     ui.reload_item_menu(self)
     if give_toast:
         self.main_window.add_toast(_("Deleted {name}").format(name=name))
-    self.Clipboard.add()
+    self.props.clipboard.add()
     check_open_data(self)
 
 

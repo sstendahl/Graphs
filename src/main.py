@@ -29,6 +29,8 @@ class GraphsApplication(Adw.Application):
 
     datadict = GObject.Property(type=object)
     figure_settings = GObject.Property(type=FigureSettings)
+    clipboard = GObject.Property(type=DataClipboard)
+    view_clipboard = GObject.Property(type=ViewClipboard)
 
     def __init__(self, args):
         """Init the application."""
@@ -126,8 +128,8 @@ class GraphsApplication(Adw.Application):
         pyplot.rcParams.update(
             file_io.parse_style(plot_styles.get_preferred_style(self)))
         self.canvas = Canvas(self)
-        self.Clipboard = DataClipboard(self)
-        self.ViewClipboard = ViewClipboard(self)
+        self.props.clipboard = DataClipboard(self)
+        self.props.view_clipboard = ViewClipboard(self)
         self.main_window.toast_overlay.set_child(self.canvas)
         ui.set_clipboard_buttons(self)
         ui.enable_data_dependent_buttons(self)

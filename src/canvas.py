@@ -336,7 +336,7 @@ class DummyToolbar(NavigationToolbar2):
     # Overwritten function - do not change name
     def push_current(self):
         self.canvas.apply_limits()
-        self.canvas.application.ViewClipboard.add()
+        self.canvas.application.props.view_clipboard.add()
 
     # Overwritten function - do not change name
     def save_figure(self):

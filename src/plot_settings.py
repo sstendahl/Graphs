@@ -195,8 +195,8 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
         }
 
         graphs.refresh(self.props.application)
-        self.props.application.Clipboard.add()
-        self.props.application.ViewClipboard.add()
+        self.props.application.props.clipboard.add()
+        self.props.application.props.view_clipboard.add()
 
     @Gtk.Template.Callback()
     def on_custom_style_select(self, comborow, _ignored):

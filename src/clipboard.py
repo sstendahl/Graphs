@@ -79,7 +79,7 @@ class DataClipboard(BaseClipboard):
         super().undo()
         graphs.check_open_data(self.props.application)
         ui.reload_item_menu(self.props.application)
-        self.props.application.ViewClipboard.add()
+        self.props.application.props.view_clipboard.add()
 
     def redo(self):
         """
@@ -89,13 +89,13 @@ class DataClipboard(BaseClipboard):
         super().redo()
         graphs.check_open_data(self.props.application)
         ui.reload_item_menu(self.props.application)
-        self.props.application.ViewClipboard.add()
+        self.props.application.props.view_clipboard.add()
 
     def set_clipboard_state(self):
         state = self.props.clipboard[self.props.clipboard_pos]
         items = [item.new_from_dict(d) for d in state["data"]]
         self.props.application.datadict = {item.key: item for item in items}
-        if self.props.application.ViewClipboard.view_changed:
+        if self.props.application.props.view_clipboard.view_changed:
             self.props.application.canvas.limits = state["view"]
 
 
