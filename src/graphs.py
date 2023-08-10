@@ -69,26 +69,26 @@ def add_items(self, items):
         if item.xlabel:
             original_position = item.xposition
             if item.xposition == "bottom":
-                if self.plot_settings.xlabel is None:
-                    self.plot_settings.xlabel = item.xlabel
-                elif item.xlabel != self.plot_settings.xlabel:
+                if self.plot_settings.bottom_label == "":
+                    self.plot_settings.bottom_label = item.xlabel
+                elif item.xlabel != self.plot_settings.bottom_label:
                     item.xposition = "top"
             if item.xposition == "top":
-                if self.plot_settings.top_label is None:
+                if self.plot_settings.top_label == "":
                     self.plot_settings.top_label = item.xlabel
-                elif item.xlabel != self.plot_settings.xlabel:
+                elif item.xlabel != self.plot_settings.bottom_label:
                     item.xposition = original_position
         if item.ylabel:
             original_position = item.yposition
             if item.yposition == "left":
-                if self.plot_settings.ylabel is None:
-                    self.plot_settings.ylabel = item.ylabel
-                elif item.ylabel != self.plot_settings.ylabel:
+                if self.plot_settings.left_label == "":
+                    self.plot_settings.left_label = item.ylabel
+                elif item.ylabel != self.plot_settings.left_label:
                     item.yposition = "right"
             if item.yposition == "right":
-                if self.plot_settings.right_label is None:
+                if self.plot_settings.right_label == "":
                     self.plot_settings.right_label = item.ylabel
-                elif item.ylabel != self.plot_settings.ylabel:
+                elif item.ylabel != self.plot_settings.left_label:
                     item.yposition = original_position
         if item.color == "":
             item.color = plotting_tools.get_next_color(self)

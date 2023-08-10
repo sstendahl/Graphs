@@ -157,27 +157,27 @@ class Canvas(FigureCanvas):
         """Set the properties that are related to the axes."""
         plot_settings = self.props.application.plot_settings
         settings = self.props.application.settings.get_child("figure")
-        title = settings["plot_title"] \
-            if plot_settings.title is None else plot_settings.title
+        title = settings.get_string("title") \
+            if plot_settings.title == "" else plot_settings.title
         bottom_label = settings.get_string("bottom-label") \
-            if plot_settings.xlabel is None else plot_settings.xlabel
+            if plot_settings.bottom_label == "" else plot_settings.bottom_label
         right_label = settings.get_string("right-label") \
-            if plot_settings.right_label is None else plot_settings.right_label
+            if plot_settings.right_label == "" else plot_settings.right_label
         top_label = settings.get_string("top-label") \
-            if plot_settings.top_label is None else plot_settings.top_label
+            if plot_settings.top_label == "" else plot_settings.top_label
         left_label = settings.get_string("left-label") \
-            if plot_settings.ylabel is None else plot_settings.ylabel
+            if plot_settings.left_label == "" else plot_settings.left_label
         self.title = self.axis.set_title(title)
         self.bottom_label = self.axis.set_xlabel(bottom_label)
         self.right_label = self.right_axis.set_ylabel(right_label)
         self.top_label = self.top_left_axis.set_xlabel(top_label)
         self.left_label = self.axis.set_ylabel(left_label)
-        self.axis.set_xscale(plot_settings.xscale)
-        self.axis.set_yscale(plot_settings.yscale)
-        self.right_axis.set_xscale(plot_settings.xscale)
+        self.axis.set_xscale(plot_settings.bottom_scale)
+        self.axis.set_yscale(plot_settings.left_scale)
+        self.right_axis.set_xscale(plot_settings.bottom_scale)
         self.right_axis.set_yscale(plot_settings.right_scale)
         self.top_left_axis.set_xscale(plot_settings.top_scale)
-        self.top_left_axis.set_yscale(plot_settings.yscale)
+        self.top_left_axis.set_yscale(plot_settings.left_scale)
         self.top_right_axis.set_xscale(plot_settings.top_scale)
         self.top_right_axis.set_yscale(plot_settings.right_scale)
 

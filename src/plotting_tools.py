@@ -94,7 +94,7 @@ def _change_scale(self, action, target):
 def change_left_scale(action, target, self):
     self.canvas.axis.set_yscale(target.get_string())
     self.canvas.top_left_axis.set_yscale(target.get_string())
-    self.plot_settings.yscale = target.get_string()
+    self.plot_settings.left_scale = target.get_string()
     _change_scale(self, action, target)
 
 
@@ -115,7 +115,7 @@ def change_top_scale(action, target, self):
 def change_bottom_scale(action, target, self):
     self.canvas.axis.set_xscale(target.get_string())
     self.canvas.right_axis.set_xscale(target.get_string())
-    self.plot_settings.xscale = target.get_string()
+    self.plot_settings.bottom_scale = target.get_string()
     _change_scale(self, action, target)
 
 

@@ -10,7 +10,8 @@ from gi.repository import Adw, GLib, GObject, Gio
 from graphs import actions, file_io, migrate, plot_styles, plotting_tools, ui
 from graphs.canvas import Canvas
 from graphs.clipboard import DataClipboard, ViewClipboard
-from graphs.misc import InteractionMode, PlotSettings
+from graphs.misc import InteractionMode
+from graphs.plot_settings import FigureSettings
 from graphs.window import GraphsWindow
 
 from matplotlib import font_manager, pyplot
@@ -117,7 +118,8 @@ class GraphsApplication(Adw.Application):
         self.main_window.set_title(self.name)
         if "(Development)" in self.name:
             self.main_window.add_css_class("devel")
-        self.plot_settings = PlotSettings(self.settings.get_child("figure"))
+        self.plot_settings = \
+            FigureSettings.new(self.settings.get_child("figure"))
         pyplot.rcParams.update(
             file_io.parse_style(plot_styles.get_preferred_style(self)))
         self.canvas = Canvas(self)
