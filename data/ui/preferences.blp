@@ -11,7 +11,7 @@ template $PreferencesWindow : Adw.PreferencesWindow {
       title: _("General");
 
       Adw.ComboRow general_center {
-        title: _("Center Data Behaviour");
+        title: _("Center Action Behaviour");
         model: StringList{
           strings [_("Center at maximum Y value"), _("Center at middle coordinate")]
         };
@@ -126,7 +126,7 @@ template $PreferencesWindow : Adw.PreferencesWindow {
       }
 
       Adw.ExpanderRow figure_use_custom_style {
-        title: _("Use Custom Style");
+        title: _("Custom Style by Default");
         show-enable-switch: true;
         Adw.ComboRow figure_custom_style {
           title: _("Style");
