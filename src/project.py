@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 from gi.repository import Gio
 
-from graphs import file_io, graphs, item, ui
+from graphs import file_io, graphs, item, ui, migrate, plotting_tools
 from graphs.plot_settings import FigureSettings
 
 
@@ -18,7 +18,10 @@ def save_project(self, file: Gio.File):
 
 
 def load_project(self, file: Gio.File):
-    project = file_io.parse_json(file)
+    try:
+        project = file_io.parse_json(file)
+    except UnicodeDecodeError:
+        project = migrate.migrate_project(file)
 
     self.Clipboard.clear()
     self.ViewClipboard.clear()
@@ -32,7 +35,11 @@ def load_project(self, file: Gio.File):
     self.ViewClipboard.props.clipboard = project["view-clipboard"]
     self.ViewClipboard.props.clipboard_pos = project["view-clipboard-position"]
 
-    self.canvas.limits = self.ViewClipboard.props.clipboard[-1]
+    try:
+        self.canvas.limits = self.ViewClipboard.props.clipboard[-1]
+    except IndexError:
+        self.ViewClipboard.clipboard = [migrate.DEFAULT_VIEW.copy()]
+        plotting_tools.optimize_limits(self)
     self.canvas.apply_limits()
     ui.reload_item_menu(self)
     ui.enable_data_dependent_buttons(self)

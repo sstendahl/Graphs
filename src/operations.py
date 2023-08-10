@@ -85,6 +85,7 @@ def perform_operation(self, callback, *args):
             _("No data found within the highlighted area"))
     graphs.refresh(self)
     plotting_tools.optimize_limits(self)
+    self.ViewClipboard.add()
     self.Clipboard.add()
 
 

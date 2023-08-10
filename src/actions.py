@@ -67,6 +67,7 @@ def redo_action(_action, _target, self):
 
 def optimize_limits_action(_action, _target, self):
     plotting_tools.optimize_limits(self)
+    self.ViewClipboard.add()
     graphs.refresh(self)
 
 

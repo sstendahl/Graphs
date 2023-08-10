@@ -69,6 +69,7 @@ def add_items(self, items):
     ui.enable_data_dependent_buttons(self)
     refresh(self)
     plotting_tools.optimize_limits(self)
+    self.ViewClipboard.add()
     self.Clipboard.add()
 
 

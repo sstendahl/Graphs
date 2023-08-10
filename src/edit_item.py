@@ -94,6 +94,7 @@ class EditItemWindow(Adw.PreferencesWindow):
         graphs.refresh(self.props.application)
         if set_limits:
             plotting_tools.optimize_limits(self.props.application)
+            self.props.application.ViewClipboard.add()
 
     def apply_item_values(self):
         self.item.linestyle = \
