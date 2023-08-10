@@ -76,8 +76,8 @@ class Canvas(FigureCanvas):
             self.figure.draw(self._renderer)
 
     def plot(self, item):
-        x_axis = item.plot_x_position
-        y_axis = item.plot_y_position
+        x_axis = item.xposition
+        y_axis = item.yposition
         if y_axis == "left":
             if x_axis == "bottom":
                 axis = self.axis
@@ -105,7 +105,7 @@ class Canvas(FigureCanvas):
                 linewidth=linewidth, markersize=markersize, label=item.name)
         elif isinstance(item, TextItem):
             axis.text(
-                item.x_anchor, item.y_anchor, item.text,
+                item.xanchor, item.yanchor, item.text,
                 **common_parameters,
                 clip_on=True, fontsize=item.size, rotation=item.rotation)
 

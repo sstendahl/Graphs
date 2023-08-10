@@ -1,8 +1,6 @@
-import copy
-
 from gi.repository import Adw, GObject, Gtk
 
-from graphs import graphs, ui
+from graphs import graphs, item, ui
 
 
 class BaseClipboard(GObject.Object):
@@ -56,7 +54,7 @@ class DataClipboard(BaseClipboard):
     def __init__(self, application):
         super().__init__(
             application=application,
-            clipboard=[{"datadict": {},
+            clipboard=[{"data": [],
                         "view": application.canvas.limits}],
             undo_button=application.main_window.undo_button,
             redo_button=application.main_window.redo_button,
@@ -67,9 +65,9 @@ class DataClipboard(BaseClipboard):
         Add data to the clipboard, is performed whenever an action is performed
         Appends the latest state to the clipboard.
         """
-        data = {"datadict": copy.deepcopy(self.application.datadict),
-                "view": self.application.canvas.limits}
-        super().add(copy.deepcopy(data))
+        items = [item.to_dict() for item in self.application.datadict.values()]
+        super().add({"data": items,
+                     "view": self.application.canvas.limits})
         # Keep clipboard length limited to preference values
         if len(self.clipboard) > \
                 int(self.application.settings.get_int("clipboard-length")) + 1:
@@ -97,11 +95,11 @@ class DataClipboard(BaseClipboard):
         self.application.ViewClipboard.add()
 
     def set_clipboard_state(self):
-        self.application.datadict = \
-            copy.deepcopy(self.clipboard[self.clipboard_pos]["datadict"])
+        state = self.clipboard[self.clipboard_pos]
+        items = [item.new_from_dict(d) for d in state["data"]]
+        self.application.datadict = {item.key: item for item in items}
         if self.application.ViewClipboard.view_changed:
-            self.application.canvas.limits = \
-                self.clipboard[self.clipboard_pos]["view"]
+            self.application.canvas.limits = state["view"]
 
 
 class ViewClipboard(BaseClipboard):

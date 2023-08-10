@@ -6,7 +6,6 @@ from pickle import UnpicklingError
 from graphs import (file_io, plot_styles, plotting_tools, ui,
                     utilities)
 from graphs.canvas import Canvas
-from graphs.item import Item
 
 from matplotlib import pyplot
 
@@ -68,30 +67,30 @@ def add_items(self, items):
                 elif handle_duplicates == 3:  # Override
                     item.key = item_1.key
         if item.xlabel:
-            original_position = item.plot_x_position
-            if item.plot_x_position == "bottom":
+            original_position = item.xposition
+            if item.xposition == "bottom":
                 if self.plot_settings.xlabel is None:
                     self.plot_settings.xlabel = item.xlabel
                 elif item.xlabel != self.plot_settings.xlabel:
-                    item.plot_x_position = "top"
-            if item.plot_x_position == "top":
+                    item.xposition = "top"
+            if item.xposition == "top":
                 if self.plot_settings.top_label is None:
                     self.plot_settings.top_label = item.xlabel
                 elif item.xlabel != self.plot_settings.xlabel:
-                    item.plot_x_position = original_position
+                    item.xposition = original_position
         if item.ylabel:
-            original_position = item.plot_y_position
-            if item.plot_y_position == "left":
+            original_position = item.yposition
+            if item.yposition == "left":
                 if self.plot_settings.ylabel is None:
                     self.plot_settings.ylabel = item.ylabel
                 elif item.ylabel != self.plot_settings.ylabel:
-                    item.plot_y_position = "right"
-            if item.plot_y_position == "right":
+                    item.yposition = "right"
+            if item.yposition == "right":
                 if self.plot_settings.right_label is None:
                     self.plot_settings.right_label = item.ylabel
                 elif item.ylabel != self.plot_settings.ylabel:
-                    item.plot_y_position = original_position
-        if item.color is None and isinstance(item, Item):
+                    item.yposition = original_position
+        if item.color == "":
             item.color = plotting_tools.get_next_color(self)
         self.datadict[item.key] = item
 

@@ -76,11 +76,11 @@ blueprints = custom_target('blueprints',
 resources = gnome.compile_resources(
   application_id,
   application_id + '.gresource.xml',
-  dependencies: blueprints,
-  gresource_bundle: true,
-  source_dir: meson.current_build_dir(),
-  install: true,
-  install_dir: pkgdatadir,
+    dependencies: blueprints,
+gresource_bundle: true,
+      source_dir: meson.current_build_dir(),
+         install: true,
+     install_dir: pkgdatadir,
 )
 
 scalable_dir = join_paths('icons', 'hicolor', 'scalable', 'apps')
@@ -90,8 +90,8 @@ if debug
 endif
 install_data(
   join_paths(scalable_dir, icon_name),
-  rename: ('@0@.svg').format(application_id),
-  install_dir: join_paths(datadir, scalable_dir)
+     rename: ('@0@.svg').format(application_id),
+install_dir: join_paths(datadir, scalable_dir)
 )
 
 symbolic_dir = join_paths('icons', 'hicolor', 'symbolic', 'apps')

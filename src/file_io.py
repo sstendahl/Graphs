@@ -101,8 +101,9 @@ def import_from_xrdml(self, import_settings):
             end_pos = float(end_pos[0].firstChild.data)
             xdata = numpy.linspace(start_pos, end_pos, len(ydata))
             xdata = numpy.ndarray.tolist(xdata)
-    return [Item(self, xdata, ydata, import_settings.name,
-                 xlabel=f"{scan_axis} ({unit})", ylabel=_("Intensity (cps)"))]
+    return [Item.new(
+        self, xdata, ydata, name=import_settings.name,
+        xlabel=f"{scan_axis} ({unit})", ylabel=_("Intensity (cps)"))]
 
 
 def import_from_xry(self, import_settings):
@@ -126,7 +127,7 @@ def import_from_xry(self, import_settings):
         else:
             name = import_settings.name
         items.append(
-            Item(self, name=name, xlabel=_("β (°)"), ylabel=_("R (1/s)")))
+            Item.new(self, name=name, xlabel=_("β (°)"), ylabel=_("R (1/s)")))
     for i in range(value_count):
         values = lines[18 + i].strip().split()
         for j in range(item_count):
@@ -137,13 +138,13 @@ def import_from_xry(self, import_settings):
     for row in lines[28 + value_count + item_count:]:
         values = row.strip().split()
         text = " ".join(values[7:])
-        items.append(
-            TextItem(self, float(values[5]), float(values[6]), text, text))
+        items.append(TextItem.new(
+            self, float(values[5]), float(values[6]), text, name=text))
     return items
 
 
 def import_from_columns(self, import_settings):
-    item = Item(self, name=import_settings.name)
+    item = Item.new(self, name=import_settings.name)
     columns_params = self.settings.get_child(
         "import-params").get_child("columns")
     column_x = columns_params.get_int("column-x")

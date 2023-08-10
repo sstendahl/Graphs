@@ -43,7 +43,7 @@ class AddEquationWindow(Adw.Window):
                 name = f"Y = {values['equation']}"
             graphs.add_items(
                 self.props.application,
-                [Item(self.props.application, xdata, ydata, name)])
+                [Item.new(self.props.application, xdata, ydata, name=name)])
             self.destroy()
         except ValueError as error:
             self.toast_overlay.add_toast(Adw.Toast(title=error))
