@@ -173,6 +173,10 @@ class GraphsApplication(Adw.Application):
         self.add_action(action)
         self.set_accels_for_action(f"app.{name}", shortcuts)
 
+    def get_settings(self, child=None):
+        return self.props.settings if child is None \
+            else self.props.settings.get_child(child)
+
 
 def main(args):
     """The application"s entry point."""

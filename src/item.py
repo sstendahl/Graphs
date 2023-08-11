@@ -3,6 +3,8 @@ import uuid
 
 from gi.repository import GObject
 
+from graphs import utilities
+
 from matplotlib import pyplot
 
 
@@ -19,6 +21,9 @@ def new_from_dict(dictionary: dict):
 
 class ItemBase(GObject.Object):
     __gtype_name__ = "ItemBase"
+    __gsignals__ = {
+        "color-change": (GObject.SIGNAL_RUN_FIRST, None, ()),
+    }
 
     name = GObject.Property(type=str, default="")
     color = GObject.Property(type=str, default="")
@@ -42,6 +47,16 @@ class ItemBase(GObject.Object):
     def to_dict(self):
         return {key: self.get_property(key) for key in dir(self.props)}
 
+    def get_color(self):
+        rgba = utilities.hex_to_rgba(self.props.color)
+        rgba.alpha = self.props.alpha
+        return rgba
+
+    def set_color(self, rgba):
+        self.props.color = utilities.rgba_to_hex(rgba)
+        self.props.alpha = rgba.alpha
+        self.emit("color-change")
+
 
 class Item(ItemBase):
     __gtype_name__ = "Item"
@@ -55,7 +70,7 @@ class Item(ItemBase):
 
     @staticmethod
     def new(application, xdata=None, ydata=None, **kwargs):
-        settings = application.settings.get_child("figure")
+        settings = application.get_settings("figure")
         return Item(
             yposition=settings.get_string("y-position"),
             xposition=settings.get_string("x-position"),
@@ -85,7 +100,7 @@ class TextItem(ItemBase):
 
     @staticmethod
     def new(application, xanchor=0, yanchor=0, text="", **kwargs):
-        settings = application.settings.get_child("figure")
+        settings = application.get_settings("figure")
         return TextItem(
             yposition=settings.get_string("y-position"),
             xposition=settings.get_string("x-position"),

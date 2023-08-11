@@ -156,7 +156,7 @@ class Canvas(FigureCanvas):
     def set_axis_properties(self):
         """Set the properties that are related to the axes."""
         plot_settings = self.props.application.plot_settings
-        settings = self.props.application.settings.get_child("figure")
+        settings = self.props.application.get_settings("figure")
         title = settings.get_string("title") \
             if plot_settings.title == "" else plot_settings.title
         bottom_label = settings.get_string("bottom-label") \

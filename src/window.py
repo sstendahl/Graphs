@@ -56,8 +56,7 @@ class GraphsWindow(Adw.ApplicationWindow):
     def center(self, *_args):
         operations.perform_operation(
             self.props.application, operations.center,
-            self.props.application.settings.get_child(
-                "general").get_enum("center"))
+            self.props.application.get_settings("general").get_enum("center"))
 
     @Gtk.Template.Callback()
     def combine(self, *_args):

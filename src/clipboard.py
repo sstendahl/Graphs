@@ -1,6 +1,6 @@
 from gi.repository import Adw, GObject
 
-from graphs import graphs, item, ui
+from graphs import item, ui
 
 
 class BaseClipboard(GObject.Object):
@@ -66,7 +66,7 @@ class DataClipboard(BaseClipboard):
                      "view": self.props.application.canvas.limits})
         # Keep clipboard length limited to preference values
         max_clipboard_length = \
-            self.props.application.props.settings.get_int("clipboard-length")
+            self.props.application.get_settings().get_int("clipboard-length")
         if len(self.props.clipboard) > max_clipboard_length + 1:
             self.props.clipboard = self.props.clipboard[1:]
 

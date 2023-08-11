@@ -38,7 +38,7 @@ class PreferencesWindow(Adw.PreferencesWindow):
         )
 
         self.figure_custom_style.set_model(Gtk.StringList.new(self.styles))
-        settings = self.props.application.settings
+        settings = self.props.application.props.settings
         ui.bind_values_to_settings(
             settings.get_child("figure"), self, prefix="figure_",
             ignorelist=["custom-style"])
@@ -50,7 +50,7 @@ class PreferencesWindow(Adw.PreferencesWindow):
 
     @Gtk.Template.Callback()
     def on_close(self, _):
-        self.props.application.settings.get_child("figure").set_string(
+        self.props.application.get_settings("figure").set_string(
             "custom-style",
             self.figure_custom_style.get_selected_item().get_string())
         graphs.refresh(self.props.application)

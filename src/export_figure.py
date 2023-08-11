@@ -26,7 +26,7 @@ class ExportFigureWindow(Adw.Window):
         self.file_format.set_model(
             Gtk.StringList.new(list(self.file_formats.keys())))
         ui.bind_values_to_settings(
-            self.props.application.settings.get_child("export-figure"), self)
+            self.props.application.get_settings("export-figure"), self)
         self.present()
 
     @Gtk.Template.Callback()

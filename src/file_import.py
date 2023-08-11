@@ -88,7 +88,7 @@ class ImportWindow(Adw.Window):
         )
 
         import_params = \
-            self.props.application.settings.get_child("import-params")
+            self.props.application.get_settings("import-params")
         visible = False
         for mode in import_params.list_children():
             if mode in self.modes:
@@ -117,7 +117,7 @@ class ImportWindow(Adw.Window):
 
     def reset_import(self):
         import_params = \
-            self.props.application.settings.get_child("import-params")
+            self.props.application.get_settings("import-params")
         for mode in import_params.list_children():
             settings = import_params.get_child(mode)
             for key in settings.props.settings_schema.list_keys():

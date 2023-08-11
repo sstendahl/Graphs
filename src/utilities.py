@@ -6,8 +6,6 @@ from gettext import gettext as _
 
 from gi.repository import GLib, Gdk, Gio, Gtk
 
-from graphs.item import Item, TextItem
-
 import numpy
 
 
@@ -90,11 +88,6 @@ def get_selected_chooser_item(chooser):
 def get_all_names(self):
     """Get a list of all filenames present in the datadict dictionary"""
     return [item.name for item in self.datadict.values()]
-
-
-def get_all_keys(self):
-    """Get a list of all item keys present in the datadict dictionary"""
-    return [item.key for item in self.datadict.values()]
 
 
 def get_dict_by_value(dictionary, value):
@@ -180,24 +173,6 @@ def get_fraction_at_value(value, start, end):
     return (log_value - log_start) / log_range
 
 
-def set_attributes(new_object, template):
-    """
-    Sets the attributes of `new_object` to match those of `template`.
-    This function sets the attributes of `new_object` to the values of the
-    attributes in `template` if they don"t already exist in `new_object`.
-    Additionally, it removes any attributes from `new_object` that are
-    not present in `template`.
-    """
-    for attribute in template.__dict__:
-        if not hasattr(new_object, attribute):
-            setattr(new_object, attribute, getattr(template, attribute))
-
-    delete_attributes = [attribute for attribute in new_object.__dict__
-                         if not hasattr(template, attribute)]
-    for attribute in delete_attributes:
-        delattr(new_object, attribute)
-
-
 def shorten_label(label, max_length=20):
     if len(label) > max_length:
         label = f"{label[:max_length]}…"
@@ -223,17 +198,6 @@ def create_file_filters(filters, add_all=True):
         file_filter.add_pattern("*")
         list_store.append(file_filter)
     return list_store
-
-
-def check_item(self, item):
-    if isinstance(item, Item):
-        new_item = Item(self)
-    elif isinstance(item, TextItem):
-        new_item = TextItem(self)
-    for attribute in new_item.__dict__:
-        if hasattr(item, attribute):
-            setattr(new_item, attribute, getattr(item, attribute))
-    return new_item
 
 
 def string_to_float(string: str):

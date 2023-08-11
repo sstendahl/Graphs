@@ -23,16 +23,16 @@ template $EditItemWindow : Adw.PreferencesWindow {
     Adw.PreferencesGroup {
       title: _("Data");
 
-      Adw.EntryRow name_entry {
+      Adw.EntryRow name {
         title: _("Name");
         max-width-chars: 25;
       }
 
-      Adw.ComboRow plot_x_position {
+      Adw.ComboRow xposition {
         title: _("X-Axis Position");
       }
 
-      Adw.ComboRow plot_y_position {
+      Adw.ComboRow yposition {
         title: _("Y-Axis Position");
       }
     }
@@ -57,7 +57,7 @@ template $EditItemWindow : Adw.PreferencesWindow {
         }
       }
 
-      Adw.ComboRow markers {
+      Adw.ComboRow markerstyle {
         title: _("Markers");
       }
 
