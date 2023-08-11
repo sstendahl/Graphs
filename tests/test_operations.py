@@ -1,18 +1,23 @@
-import pytest
-import numpy as np
 import os
-import sys
+
 from gi.repository import Gio
-sys.modules['graphs'] = __import__('src')
+
+import numpy as np
+import sys
+
+import pytest
+
+
+sys.modules["graphs"] = __import__("src")
 pkgdatadir = os.environ.get("pkgdatadir")
 os.chdir(pkgdatadir)
 resource = Gio.Resource.load("se.sjoerd.Graphs.gresource")
 resource._register()
-
-
-from unittest.mock import Mock
 from graphs import operations
 from graphs.item import Item
+
+from unittest.mock import Mock
+
 
 
 XDATA = [0, 1, 4, 5, 7, 8, 12, 1]
