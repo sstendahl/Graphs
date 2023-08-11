@@ -41,6 +41,7 @@ class GraphsApplication(Adw.Application):
             author=args[5], pkgdatadir=args[6], datadict={}, settings=settings,
             figure_settings=FigureSettings.new(settings.get_child("figure")),
         )
+        print(args[6])
         migrate.migrate_config(self)
         font_list = font_manager.findSystemFonts(fontpaths=None, fontext="ttf")
         for font in font_list:
@@ -179,3 +180,4 @@ def main(args):
     app = GraphsApplication(args)
 
     return app.run(sys.argv)
+
