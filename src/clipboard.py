@@ -77,7 +77,6 @@ class DataClipboard(BaseClipboard):
         performed
         """
         super().undo()
-        graphs.check_open_data(self.props.application)
         ui.reload_item_menu(self.props.application)
         self.props.application.props.view_clipboard.add()
 
@@ -87,7 +86,6 @@ class DataClipboard(BaseClipboard):
         changes the dataset to the state before the previous action was undone
         """
         super().redo()
-        graphs.check_open_data(self.props.application)
         ui.reload_item_menu(self.props.application)
         self.props.application.props.view_clipboard.add()
 
