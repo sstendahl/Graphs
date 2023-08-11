@@ -43,16 +43,16 @@ def get_used_axes(self):
         "bottom": [],
     }
     for item in self.datadict.values():
-        if item.plot_y_position == "left":
+        if item.yposition == "left":
             used_axes["left"] = True
             items["left"].append(item)
-        if item.plot_y_position == "right":
+        if item.yposition == "right":
             used_axes["right"] = True
             items["right"].append(item)
-        if item.plot_x_position == "top":
+        if item.xposition == "top":
             used_axes["top"] = True
             items["top"].append(item)
-        if item.plot_x_position == "bottom":
+        if item.xposition == "bottom":
             used_axes["bottom"] = True
             items["bottom"].append(item)
     return used_axes, items

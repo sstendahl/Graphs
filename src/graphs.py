@@ -1,47 +1,10 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
-import logging
 from gettext import gettext as _
-from pickle import UnpicklingError
 
-from graphs import (file_io, plot_styles, plotting_tools, ui,
-                    utilities)
+from graphs import file_io, plot_styles, plotting_tools, ui, utilities
 from graphs.canvas import Canvas
-from graphs.item import Item
 
 from matplotlib import pyplot
-
-
-def open_project(self, file):
-    for key in self.datadict.copy():
-        delete_item(self, key)
-    try:
-        new_plot_settings, new_datadict, data_clipboard, view_clipboard, \
-            version = file_io.read_project(file)
-        utilities.set_attributes(new_plot_settings, self.plot_settings)
-
-        self.Clipboard.clear()
-        self.ViewClipboard.clear()
-        self.plot_settings = new_plot_settings
-        self.datadict = {}
-        add_items(self,
-                  [utilities.check_item(self, item)
-                   for item in new_datadict.values()])
-
-        # Set clipboards
-        if data_clipboard is not None:
-            for key, value in data_clipboard.items():
-                self.Clipboard[key] = value
-        if view_clipboard is not None:
-            for key, value in view_clipboard.items():
-                self.ViewClipboard[key] = value
-
-        self.canvas.limits = self.ViewClipboard.clipboard[-1]
-        ui.set_clipboard_buttons(self)
-        refresh(self)
-    except (EOFError, UnpicklingError):
-        message = _("Could not open project")
-        self.main_window.add_toast(message)
-        logging.exception(message)
 
 
 def add_items(self, items):
@@ -68,30 +31,30 @@ def add_items(self, items):
                 elif handle_duplicates == 3:  # Override
                     item.key = item_1.key
         if item.xlabel:
-            original_position = item.plot_x_position
-            if item.plot_x_position == "bottom":
-                if self.plot_settings.xlabel is None:
-                    self.plot_settings.xlabel = item.xlabel
-                elif item.xlabel != self.plot_settings.xlabel:
-                    item.plot_x_position = "top"
-            if item.plot_x_position == "top":
-                if self.plot_settings.top_label is None:
+            original_position = item.xposition
+            if item.xposition == "bottom":
+                if self.plot_settings.bottom_label == "":
+                    self.plot_settings.bottom_label = item.xlabel
+                elif item.xlabel != self.plot_settings.bottom_label:
+                    item.xposition = "top"
+            if item.xposition == "top":
+                if self.plot_settings.top_label == "":
                     self.plot_settings.top_label = item.xlabel
-                elif item.xlabel != self.plot_settings.xlabel:
-                    item.plot_x_position = original_position
+                elif item.xlabel != self.plot_settings.bottom_label:
+                    item.xposition = original_position
         if item.ylabel:
-            original_position = item.plot_y_position
-            if item.plot_y_position == "left":
-                if self.plot_settings.ylabel is None:
-                    self.plot_settings.ylabel = item.ylabel
-                elif item.ylabel != self.plot_settings.ylabel:
-                    item.plot_y_position = "right"
-            if item.plot_y_position == "right":
-                if self.plot_settings.right_label is None:
+            original_position = item.yposition
+            if item.yposition == "left":
+                if self.plot_settings.left_label == "":
+                    self.plot_settings.left_label = item.ylabel
+                elif item.ylabel != self.plot_settings.left_label:
+                    item.yposition = "right"
+            if item.yposition == "right":
+                if self.plot_settings.right_label == "":
                     self.plot_settings.right_label = item.ylabel
-                elif item.ylabel != self.plot_settings.ylabel:
-                    item.plot_y_position = original_position
-        if item.color is None and isinstance(item, Item):
+                elif item.ylabel != self.plot_settings.left_label:
+                    item.yposition = original_position
+        if item.color == "":
             item.color = plotting_tools.get_next_color(self)
         self.datadict[item.key] = item
 
@@ -106,7 +69,7 @@ def add_items(self, items):
     ui.enable_data_dependent_buttons(self)
     refresh(self)
     plotting_tools.optimize_limits(self)
-    self.Clipboard.add()
+    self.props.clipboard.add()
 
 
 def delete_item(self, key, give_toast=False):
@@ -115,7 +78,7 @@ def delete_item(self, key, give_toast=False):
     ui.reload_item_menu(self)
     if give_toast:
         self.main_window.add_toast(_("Deleted {name}").format(name=name))
-    self.Clipboard.add()
+    self.props.clipboard.add()
     check_open_data(self)
 
 

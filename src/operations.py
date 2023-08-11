@@ -24,7 +24,7 @@ def get_data(self, item):
     stop_index = len(xdata)
     if self.interaction_mode == InteractionMode.SELECT:
         startx, stopx = self.canvas.highlight.get_start_stop(
-            item.plot_x_position == "bottom")
+            item.xposition == "bottom")
 
         # If startx and stopx are not out of range, that is,
         # if the item data is within the highlight
@@ -85,7 +85,7 @@ def perform_operation(self, callback, *args):
             _("No data found within the highlighted area"))
     graphs.refresh(self)
     plotting_tools.optimize_limits(self)
-    self.Clipboard.add()
+    self.props.clipboard.add()
 
 
 def translate_x(_item, xdata, ydata, offset):
@@ -172,9 +172,9 @@ def shift_vertically(item, xdata, ydata, yscale, right_scale, datadict):
         previous_ydata = data_list[index - 1].ydata
         ymin = min(x for x in previous_ydata if x != 0)
         ymax = max(x for x in previous_ydata if x != 0)
-        if item.plot_y_position == "left":
+        if item.yposition == "left":
             linear = (yscale == "linear")
-        if item.plot_y_position == "right":
+        if item.yposition == "right":
             linear = (right_scale == "linear")
         if linear:
             shift_value_linear += 1.2 * (ymax - ymin)
@@ -249,4 +249,4 @@ def combine(self):
     # Create the item itself
     new_xdata, new_ydata = sort_data(new_xdata, new_ydata)
     graphs.add_items(
-        self, [Item(self, new_xdata, new_ydata, name=_("Combined Data"))])
+        self, [Item.new(self, new_xdata, new_ydata, name=_("Combined Data"))])

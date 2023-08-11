@@ -34,9 +34,9 @@ class RenameWindow(Adw.Window):
         if self.item == self.props.application.canvas.top_label:
             self.props.application.plot_settings.top_label = text
         if self.item == self.props.application.canvas.left_label:
-            self.props.application.plot_settings.ylabel = text
+            self.props.application.plot_settings.left_label = text
         if self.item == self.props.application.canvas.bottom_label:
-            self.props.application.plot_settings.xlabel = text
+            self.props.application.plot_settings.bottom_label = text
         if self.item == self.props.application.canvas.right_label:
             self.props.application.plot_settings.right_label = text
         if self.item == self.props.application.canvas.title:

@@ -6,8 +6,8 @@ from matplotlib import pyplot
 
 
 def optimize_limits(self):
-    self.Clipboard.clipboard[self.Clipboard.clipboard_pos]["view"] = \
-        self.canvas.limits
+    self.props.clipboard.clipboard[self.props.clipboard.clipboard_pos][
+        "view"] = self.canvas.limits
     used_axes, items = utilities.get_used_axes(self)
     axis_map = {
         "left": self.canvas.axis,
@@ -62,7 +62,7 @@ def optimize_limits(self):
         limits[f"max_{direction}"] = max_all
     self.canvas.limits = limits
     self.canvas.apply_limits()
-    self.canvas.application.ViewClipboard.add()
+    self.props.view_clipboard.add()
 
 
 def hide_unused_axes(self, canvas):
@@ -94,7 +94,7 @@ def _change_scale(self, action, target):
 def change_left_scale(action, target, self):
     self.canvas.axis.set_yscale(target.get_string())
     self.canvas.top_left_axis.set_yscale(target.get_string())
-    self.plot_settings.yscale = target.get_string()
+    self.plot_settings.left_scale = target.get_string()
     _change_scale(self, action, target)
 
 
@@ -115,7 +115,7 @@ def change_top_scale(action, target, self):
 def change_bottom_scale(action, target, self):
     self.canvas.axis.set_xscale(target.get_string())
     self.canvas.right_axis.set_xscale(target.get_string())
-    self.plot_settings.xscale = target.get_string()
+    self.plot_settings.bottom_scale = target.get_string()
     _change_scale(self, action, target)
 
 

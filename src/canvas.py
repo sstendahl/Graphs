@@ -18,6 +18,8 @@ from matplotlib.widgets import SpanSelector
 
 
 class Canvas(FigureCanvas):
+    __gtype_name__ = "Canvas"
+
     application = GObject.Property(type=Adw.Application)
     one_click_trigger = GObject.Property(type=bool, default=False)
     time_first_click = GObject.Property(type=float, default=0)
@@ -34,19 +36,20 @@ class Canvas(FigureCanvas):
         self.top_right_axis = self.top_left_axis.twinx()
         self.set_axis_properties()
         self.set_ticks()
-        color_rgba = utilities.lookup_color(self.application, "accent_color")
+        color_rgba = \
+            utilities.lookup_color(self.props.application, "accent_color")
         self.rubberband_edge_color = utilities.rgba_to_tuple(color_rgba, True)
         color_rgba.alpha = 0.3
         self.rubberband_fill_color = utilities.rgba_to_tuple(color_rgba, True)
         self.limits = {
-            "min_bottom": self.application.plot_settings.min_bottom,
-            "max_bottom": self.application.plot_settings.max_bottom,
-            "min_top": self.application.plot_settings.min_top,
-            "max_top": self.application.plot_settings.max_top,
-            "min_left": self.application.plot_settings.min_left,
-            "max_left": self.application.plot_settings.max_left,
-            "min_right": self.application.plot_settings.min_right,
-            "max_right": self.application.plot_settings.max_right,
+            "min_bottom": self.props.application.plot_settings.min_bottom,
+            "max_bottom": self.props.application.plot_settings.max_bottom,
+            "min_top": self.props.application.plot_settings.min_top,
+            "max_top": self.props.application.plot_settings.max_top,
+            "min_left": self.props.application.plot_settings.min_left,
+            "max_left": self.props.application.plot_settings.max_left,
+            "min_right": self.props.application.plot_settings.min_right,
+            "max_right": self.props.application.plot_settings.max_right,
         }
         self.legends = []
         for axis in [self.right_axis, self.top_left_axis,
@@ -76,8 +79,8 @@ class Canvas(FigureCanvas):
             self.figure.draw(self._renderer)
 
     def plot(self, item):
-        x_axis = item.plot_x_position
-        y_axis = item.plot_y_position
+        x_axis = item.xposition
+        y_axis = item.yposition
         if y_axis == "left":
             if x_axis == "bottom":
                 axis = self.axis
@@ -105,12 +108,12 @@ class Canvas(FigureCanvas):
                 linewidth=linewidth, markersize=markersize, label=item.name)
         elif isinstance(item, TextItem):
             axis.text(
-                item.x_anchor, item.y_anchor, item.text,
+                item.xanchor, item.yanchor, item.text,
                 **common_parameters,
                 clip_on=True, fontsize=item.size, rotation=item.rotation)
 
     def apply_limits(self):
-        plot_settings = self.application.plot_settings
+        plot_settings = self.props.application.plot_settings
         plot_settings.min_bottom = min(self.axis.get_xlim())
         plot_settings.max_bottom = max(self.axis.get_xlim())
         plot_settings.min_top = min(self.top_left_axis.get_xlim())
@@ -147,34 +150,34 @@ class Canvas(FigureCanvas):
         except ValueError:
             message = _("Error setting limits, one of the values was "
                         "probably infinite")
-            self.application.main_window.add_toast(message)
+            self.props.application.main_window.add_toast(message)
             logging.exception(message)
 
     def set_axis_properties(self):
         """Set the properties that are related to the axes."""
-        plot_settings = self.application.plot_settings
-        settings = self.application.settings.get_child("figure")
-        title = settings["plot_title"] \
-            if plot_settings.title is None else plot_settings.title
+        plot_settings = self.props.application.plot_settings
+        settings = self.props.application.settings.get_child("figure")
+        title = settings.get_string("title") \
+            if plot_settings.title == "" else plot_settings.title
         bottom_label = settings.get_string("bottom-label") \
-            if plot_settings.xlabel is None else plot_settings.xlabel
+            if plot_settings.bottom_label == "" else plot_settings.bottom_label
         right_label = settings.get_string("right-label") \
-            if plot_settings.right_label is None else plot_settings.right_label
+            if plot_settings.right_label == "" else plot_settings.right_label
         top_label = settings.get_string("top-label") \
-            if plot_settings.top_label is None else plot_settings.top_label
+            if plot_settings.top_label == "" else plot_settings.top_label
         left_label = settings.get_string("left-label") \
-            if plot_settings.ylabel is None else plot_settings.ylabel
+            if plot_settings.left_label == "" else plot_settings.left_label
         self.title = self.axis.set_title(title)
         self.bottom_label = self.axis.set_xlabel(bottom_label)
         self.right_label = self.right_axis.set_ylabel(right_label)
         self.top_label = self.top_left_axis.set_xlabel(top_label)
         self.left_label = self.axis.set_ylabel(left_label)
-        self.axis.set_xscale(plot_settings.xscale)
-        self.axis.set_yscale(plot_settings.yscale)
-        self.right_axis.set_xscale(plot_settings.xscale)
+        self.axis.set_xscale(plot_settings.bottom_scale)
+        self.axis.set_yscale(plot_settings.left_scale)
+        self.right_axis.set_xscale(plot_settings.bottom_scale)
         self.right_axis.set_yscale(plot_settings.right_scale)
         self.top_left_axis.set_xscale(plot_settings.top_scale)
-        self.top_left_axis.set_yscale(plot_settings.yscale)
+        self.top_left_axis.set_yscale(plot_settings.left_scale)
         self.top_right_axis.set_xscale(plot_settings.top_scale)
         self.top_right_axis.set_yscale(plot_settings.right_scale)
 
@@ -185,7 +188,7 @@ class Canvas(FigureCanvas):
         top = pyplot.rcParams["xtick.top"]
         right = pyplot.rcParams["ytick.right"]
         ticks = "both" if pyplot.rcParams["xtick.minor.visible"] else "major"
-        used_axes = utilities.get_used_axes(self.application)[0]
+        used_axes = utilities.get_used_axes(self.props.application)[0]
 
         # Define axes and their directions
         axes = {
@@ -231,7 +234,7 @@ class Canvas(FigureCanvas):
                  self.left_label, self.right_label}
         for item in items:
             if item.contains(event)[0]:
-                RenameWindow(self.application, item)
+                RenameWindow(self.props.application, item)
 
     # Overwritten function - do not change name
     def _post_draw(self, _widget, context):
@@ -264,7 +267,8 @@ class Canvas(FigureCanvas):
 
     def set_legend(self):
         """Set the legend of the graph"""
-        if self.application.plot_settings.legend:
+        plot_settings = self.props.application.plot_settings
+        if plot_settings.legend:
             self.legends = []
             lines1, labels1 = self.axis.get_legend_handles_labels()
             lines2, labels2 = self.right_axis.get_legend_handles_labels()
@@ -277,7 +281,7 @@ class Canvas(FigureCanvas):
             if labels:
                 self.top_right_axis.legend(
                     new_lines, labels,
-                    loc=self.application.plot_settings.legend_position.lower(),
+                    loc=plot_settings.legend_position.lower(),
                     frameon=True, reverse=True)
                 return
         if self.top_right_axis.get_legend() is not None:
@@ -332,7 +336,7 @@ class DummyToolbar(NavigationToolbar2):
     # Overwritten function - do not change name
     def push_current(self):
         self.canvas.apply_limits()
-        self.canvas.application.ViewClipboard.add()
+        self.canvas.application.props.view_clipboard.add()
 
     # Overwritten function - do not change name
     def save_figure(self):

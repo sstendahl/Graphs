@@ -1,10 +1,63 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
-from gi.repository import Adw, Gtk
+from gi.repository import Adw, GObject, Gtk
 
 from graphs import graphs, misc, plot_styles, plotting_tools, ui, utilities
 from graphs.item import Item
 
 from matplotlib import pyplot
+
+
+class FigureSettings(GObject.Object):
+    __gtype_name__ = "FigureSettings"
+
+    title = GObject.Property(type=str, default="")
+    bottom_label = GObject.Property(type=str, default="")
+    left_label = GObject.Property(type=str, default="")
+    top_label = GObject.Property(type=str, default="")
+    right_label = GObject.Property(type=str, default="")
+
+    bottom_scale = GObject.Property(type=str, default="linear")
+    left_scale = GObject.Property(type=str, default="linear")
+    top_scale = GObject.Property(type=str, default="linear")
+    right_scale = GObject.Property(type=str, default="linear")
+
+    legend = GObject.Property(type=bool, default=True)
+    legend_position = GObject.Property(type=str, default="Best")
+    use_custom_style = GObject.Property(type=bool, default=False)
+    custom_style = GObject.Property(type=str, default="adwaita")
+
+    min_bottom = GObject.Property(type=int, default=0)
+    max_bottom = GObject.Property(type=int, default=1)
+    min_left = GObject.Property(type=int, default=0)
+    max_left = GObject.Property(type=int, default=10)
+    min_top = GObject.Property(type=int, default=0)
+    max_top = GObject.Property(type=int, default=1)
+    min_right = GObject.Property(type=int, default=0)
+    max_right = GObject.Property(type=int, default=10)
+
+    @staticmethod
+    def new(settings):
+        def _get_scale(scale):
+            return "linear" if settings.get_enum(scale) == 0 else "log"
+
+        return FigureSettings(
+            bottom_scale=_get_scale("bottom-scale"),
+            left_scale=_get_scale("left-scale"),
+            right_scale=_get_scale("right-scale"),
+            top_scale=_get_scale("top-scale"),
+            title=settings.get_string("title"),
+            legend=settings.get_boolean("legend"),
+            use_custom_style=settings.get_boolean("use-custom-style"),
+            legend_position=settings.get_string("legend-position"),
+            custom_style=settings.get_string("custom-style"),
+        )
+
+    @staticmethod
+    def new_from_dict(dictionary: dict):
+        return FigureSettings(**dictionary)
+
+    def to_dict(self):
+        return {key: self.get_property(key) for key in dir(self.props)}
 
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/plot_settings.ui")
@@ -49,18 +102,19 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
         self.min_top.set_text(str(self.plot_settings.min_top))
         self.max_top.set_text(str(self.plot_settings.max_top))
 
-        if self.plot_settings.xlabel is not None:
-            self.plot_x_label.set_text(self.plot_settings.xlabel)
-        if self.plot_settings.ylabel is not None:
-            self.plot_y_label.set_text(self.plot_settings.ylabel)
-        if self.plot_settings.top_label is not None:
+        if self.plot_settings.bottom_label != "":
+            self.plot_x_label.set_text(self.plot_settings.bottom_label)
+        if self.plot_settings.left_label != "":
+            self.plot_y_label.set_text(self.plot_settings.left_label)
+        if self.plot_settings.top_label != "":
             self.plot_top_label.set_text(self.plot_settings.top_label)
-        if self.plot_settings.right_label is not None:
+        if self.plot_settings.right_label != "":
             self.plot_right_label.set_text(self.plot_settings.right_label)
         utilities.populate_chooser(self.plot_x_scale, misc.SCALES)
-        utilities.set_chooser(self.plot_x_scale, self.plot_settings.xscale)
+        utilities.set_chooser(
+            self.plot_x_scale, self.plot_settings.bottom_scale)
         utilities.populate_chooser(self.plot_y_scale, misc.SCALES)
-        utilities.set_chooser(self.plot_y_scale, self.plot_settings.yscale)
+        utilities.set_chooser(self.plot_y_scale, self.plot_settings.left_scale)
         utilities.populate_chooser(self.plot_top_scale, misc.SCALES)
         utilities.set_chooser(
             self.plot_top_scale, self.plot_settings.top_scale)
@@ -68,13 +122,13 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
         utilities.set_chooser(
             self.plot_right_scale, self.plot_settings.right_scale)
         self.use_custom_plot_style.set_enable_expansion(
-            self.plot_settings.use_custom_plot_style)
+            self.plot_settings.use_custom_style)
         utilities.populate_chooser(
             self.custom_plot_style,
             sorted(plot_styles.get_user_styles(self.props.application).keys()),
             translate=False)
         utilities.set_chooser(
-            self.custom_plot_style, self.plot_settings.custom_plot_style)
+            self.custom_plot_style, self.plot_settings.custom_style)
         self.plot_legend.set_enable_expansion(self.plot_settings.legend)
         utilities.populate_chooser(
             self.plot_legend_position, misc.LEGEND_POSITIONS)
@@ -107,14 +161,14 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
         if self.plot_title.get_text() != "":
             self.plot_settings.title = self.plot_title.get_text()
         if self.plot_x_label.get_text() != "":
-            self.plot_settings.xlabel = self.plot_x_label.get_text()
+            self.plot_settings.bottom_label = self.plot_x_label.get_text()
         if self.plot_y_label.get_text() != "":
-            self.plot_settings.ylabel = self.plot_y_label.get_text()
+            self.plot_settings.left_label = self.plot_y_label.get_text()
         if self.plot_top_label.get_text() != "":
             self.plot_settings.top_label = self.plot_top_label.get_text()
         if self.plot_right_label.get_text() != "":
             self.plot_settings.right_label = self.plot_right_label.get_text()
-        self.plot_settings.xscale = \
+        self.plot_settings.bottom_scale = \
             utilities.get_selected_chooser_item(self.plot_x_scale)
         self.plot_settings.yscale = \
             utilities.get_selected_chooser_item(self.plot_y_scale)
@@ -141,23 +195,23 @@ class PlotSettingsWindow(Adw.PreferencesWindow):
         }
 
         graphs.refresh(self.props.application)
-        self.props.application.Clipboard.add()
-        self.props.application.ViewClipboard.add()
+        self.props.application.props.clipboard.add()
+        self.props.application.props.view_clipboard.add()
 
     @Gtk.Template.Callback()
     def on_custom_style_select(self, comborow, _ignored):
         selected_style = utilities.get_selected_chooser_item(comborow)
-        if selected_style == self.plot_settings.custom_plot_style:
+        if selected_style == self.plot_settings.custom_style:
             return
-        self.plot_settings.custom_plot_style = selected_style
+        self.plot_settings.custom_style = selected_style
         self._handle_style_change()
 
     @Gtk.Template.Callback()
     def on_custom_style_enable(self, expanderrow, _ignored):
         use_custom_style = expanderrow.get_enable_expansion()
-        if use_custom_style == self.plot_settings.use_custom_plot_style:
+        if use_custom_style == self.plot_settings.use_custom_style:
             return
-        self.plot_settings.use_custom_plot_style = use_custom_style
+        self.plot_settings.use_custom_style = use_custom_style
         self._handle_style_change()
 
     def _handle_style_change(self):

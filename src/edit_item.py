@@ -57,9 +57,9 @@ class EditItemWindow(Adw.PreferencesWindow):
         self.set_title(self.item.name)
         self.name_entry.set_text(self.item.name)
         utilities.set_chooser(
-            self.plot_x_position, self.item.plot_x_position)
+            self.plot_x_position, self.item.xposition)
         utilities.set_chooser(
-            self.plot_y_position, self.item.plot_y_position)
+            self.plot_y_position, self.item.yposition)
         self.item_group.set_visible(False)
         if isinstance(self.item, Item):
             self.load_item_values()
@@ -78,19 +78,19 @@ class EditItemWindow(Adw.PreferencesWindow):
 
         # Only change limits when axes change, otherwise this is not needed
         set_limits = \
-            self.item.plot_x_position \
+            self.item.xposition \
             != utilities.get_selected_chooser_item(self.plot_x_position) \
-            or self.item.plot_y_position \
+            or self.item.yposition \
             != utilities.get_selected_chooser_item(self.plot_y_position)
 
-        self.item.plot_x_position = \
+        self.item.xposition = \
             utilities.get_selected_chooser_item(self.plot_x_position)
-        self.item.plot_y_position = \
+        self.item.yposition = \
             utilities.get_selected_chooser_item(self.plot_y_position)
         if isinstance(self.item, Item):
             self.apply_item_values()
         ui.reload_item_menu(self.props.application)
-        self.props.application.Clipboard.add()
+        self.props.application.props.clipboard.add()
         graphs.refresh(self.props.application)
         if set_limits:
             plotting_tools.optimize_limits(self.props.application)

@@ -1,7 +1,6 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 import json
 import logging
-import pickle
 import re
 from gettext import gettext as _
 from pathlib import Path
@@ -9,7 +8,7 @@ from xml.dom import minidom
 
 from gi.repository import GLib
 
-from graphs import utilities
+from graphs import item, utilities
 from graphs.item import Item, TextItem
 from graphs.misc import ParseError
 
@@ -17,46 +16,6 @@ from matplotlib import RcParams, cbook
 from matplotlib.style.core import STYLE_BLACKLIST
 
 import numpy
-
-
-def save_project(file, plot_settings, datadict, data_clipboard, view_clipboard,
-                 version):
-
-    # Clipboards are saved as dictionaries because our custom classes cannot
-    # be pickled
-    data_clipboard_dict = {
-        "clipboard": data_clipboard.clipboard,
-        "clipboard_pos": data_clipboard.clipboard_pos,
-    }
-
-    view_clipboard_dict = {"clipboard": view_clipboard.clipboard,
-                           "clipboard_pos": view_clipboard.clipboard_pos}
-
-    project_data = {
-        "plot_settings": plot_settings,
-        "data": datadict,
-        "data_clipboard": data_clipboard_dict,
-        "view_clipboard": view_clipboard_dict,
-        "version": version,
-    }
-    stream = _get_write_stream(file)
-    stream.write_bytes(GLib.Bytes(pickle.dumps(project_data)))
-    stream.close()
-
-
-def read_project(file):
-    project = pickle.loads(read_file(file, None))
-
-    # Load empty values if attribute does not exist in Project file, to
-    # ensure backwards compatibility with older project files
-    project_items = ["plot_settings", "data", "data_clipboard",
-                     "view_clipboard", "version"]
-
-    project.update({key: None for key in project_items if key not in project})
-    return \
-        project["plot_settings"], project["data"], \
-        project["data_clipboard"], project["view_clipboard"], \
-        project["version"]
 
 
 def save_item(file, item):
@@ -71,8 +30,8 @@ def save_item(file, item):
 
 
 def import_from_project(self, import_settings):
-    return [utilities.check_item(self, item)
-            for item in read_project(import_settings.file)[1].values()]
+    return [item.new_from_dict(dictionary)
+            for dictionary in parse_json(import_settings.file)["data"]]
 
 
 def import_from_xrdml(self, import_settings):
@@ -101,8 +60,9 @@ def import_from_xrdml(self, import_settings):
             end_pos = float(end_pos[0].firstChild.data)
             xdata = numpy.linspace(start_pos, end_pos, len(ydata))
             xdata = numpy.ndarray.tolist(xdata)
-    return [Item(self, xdata, ydata, import_settings.name,
-                 xlabel=f"{scan_axis} ({unit})", ylabel=_("Intensity (cps)"))]
+    return [Item.new(
+        self, xdata, ydata, name=import_settings.name,
+        xlabel=f"{scan_axis} ({unit})", ylabel=_("Intensity (cps)"))]
 
 
 def import_from_xry(self, import_settings):
@@ -126,7 +86,7 @@ def import_from_xry(self, import_settings):
         else:
             name = import_settings.name
         items.append(
-            Item(self, name=name, xlabel=_("β (°)"), ylabel=_("R (1/s)")))
+            Item.new(self, name=name, xlabel=_("β (°)"), ylabel=_("R (1/s)")))
     for i in range(value_count):
         values = lines[18 + i].strip().split()
         for j in range(item_count):
@@ -137,13 +97,13 @@ def import_from_xry(self, import_settings):
     for row in lines[28 + value_count + item_count:]:
         values = row.strip().split()
         text = " ".join(values[7:])
-        items.append(
-            TextItem(self, float(values[5]), float(values[6]), text, text))
+        items.append(TextItem.new(
+            self, float(values[5]), float(values[6]), text, name=text))
     return items
 
 
 def import_from_columns(self, import_settings):
-    item = Item(self, name=import_settings.name)
+    item = Item.new(self, name=import_settings.name)
     columns_params = self.settings.get_child(
         "import-params").get_child("columns")
     column_x = columns_params.get_int("column-x")

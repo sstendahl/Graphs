@@ -1,10 +1,10 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 configure_file(
-  input: 'graphs.in',
-  output: project_name,
-  configuration: conf,
-  install: true,
-  install_mode: 'rwxr-xr-x',
+        input: 'graphs.in',
+       output: project_name,
+configuration: conf,
+      install: true,
+ install_mode: 'rwxr-xr-x',
   install_dir: bindir
 )
 
@@ -29,6 +29,7 @@ graphs_sources = [
   'plot_styles.py',
   'plotting_tools.py',
   'preferences.py',
+  'project.py',
   'rename.py',
   'transform_data.py',
   'ui.py',

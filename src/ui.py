@@ -6,7 +6,7 @@ from gettext import gettext as _
 
 from gi.repository import Adw, GLib, Gio, Gtk
 
-from graphs import file_import, file_io, graphs, utilities
+from graphs import file_import, file_io, graphs, project, utilities
 from graphs.item import Item
 from graphs.item_box import ItemBox
 
@@ -21,14 +21,15 @@ def set_clipboard_buttons(self):
     and forwards view.
     """
     self.main_window.view_forward_button.set_sensitive(
-        self.ViewClipboard.clipboard_pos < - 1)
+        self.props.view_clipboard.clipboard_pos < - 1)
     self.main_window.view_back_button.set_sensitive(
-        abs(self.ViewClipboard.clipboard_pos)
-        < len(self.ViewClipboard.clipboard))
+        abs(self.props.view_clipboard.clipboard_pos)
+        < len(self.props.view_clipboard.clipboard))
     self.main_window.undo_button.set_sensitive(
-        abs(self.Clipboard.clipboard_pos) < len(self.Clipboard.clipboard))
+        abs(self.props.clipboard.clipboard_pos)
+        < len(self.props.clipboard.clipboard))
     self.main_window.redo_button.set_sensitive(
-        self.Clipboard.clipboard_pos < - 1)
+        self.props.clipboard.clipboard_pos < - 1)
 
 
 def enable_data_dependent_buttons(self):
@@ -68,9 +69,7 @@ def save_project_dialog(self):
     def on_response(dialog, response):
         with contextlib.suppress(GLib.GError):
             file = dialog.save_finish(response)
-            file_io.save_project(
-                file, self.plot_settings, self.datadict, self.Clipboard,
-                self.ViewClipboard, self.version)
+            project.save_project(self, file)
     dialog = Gtk.FileDialog()
     dialog.set_filters(
         utilities.create_file_filters([(_("Graphs Project File"),
@@ -83,7 +82,7 @@ def open_project_dialog(self):
     def on_response(dialog, response):
         with contextlib.suppress(GLib.GError):
             file = dialog.open_finish(response)
-            graphs.open_project(self, file)
+            project.load_project(self, file)
     dialog = Gtk.FileDialog()
     dialog.set_filters(
         utilities.create_file_filters([(_("Graphs Project File"),

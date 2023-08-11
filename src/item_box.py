@@ -1,10 +1,11 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 import contextlib
 
-from gi.repository import GLib, Gdk, Gtk
+from gi.repository import Adw, GLib, GObject, Gdk, Gtk
 
 from graphs import graphs, ui, utilities
 from graphs.edit_item import EditItemWindow
+from graphs.item import ItemBase
 
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/item_box.ui")
@@ -14,12 +15,13 @@ class ItemBox(Gtk.Box):
     check_button = Gtk.Template.Child()
     color_button = Gtk.Template.Child()
 
+    application = GObject.Property(type=Adw.Application)
+    item = GObject.Property(type=ItemBase)
+
     def __init__(self, application, item):
-        super().__init__()
-        self.application = application
-        self.item = item
-        self.label.set_text(utilities.shorten_label(item.name))
-        self.check_button.set_active(item.selected)
+        super().__init__(application=application, item=item)
+        self.label.set_text(utilities.shorten_label(self.props.item.name))
+        self.check_button.set_active(self.props.item.selected)
 
         self.gesture = Gtk.GestureClick()
         self.gesture.set_button(0)
@@ -40,13 +42,13 @@ class ItemBox(Gtk.Box):
 
     def on_dnd_drop(self, drop_target, value, _x, _y):
         # Handle the dropped data here
-        self.application.datadict
-        self.application.datadict = utilities.change_key_position(
-            self.application.datadict, drop_target.key, value)
-        ui.reload_item_menu(self.application)
-        self.application.Clipboard.add()
-        self.application.ViewClipboard.add()
-        graphs.refresh(self.application)
+        self.props.application.datadict
+        self.props.application.datadict = utilities.change_key_position(
+            self.props.application.datadict, drop_target.key, value)
+        ui.reload_item_menu(self.props.application)
+        self.props.application.props.clipboard.add()
+        self.props.application.props.view_clipboard.add()
+        graphs.refresh(self.props.application)
 
     def on_dnd_prepare(self, drag_source, x, y):
         snapshot = Gtk.Snapshot.new()
@@ -54,47 +56,47 @@ class ItemBox(Gtk.Box):
         paintable = snapshot.to_paintable()
         drag_source.set_icon(paintable, int(x), int(y))
 
-        data = self.item.key
+        data = self.props.item.key
         return Gdk.ContentProvider.new_for_value(data)
 
     def update_color(self):
         self.provider.load_from_data(
             ("button {"
-             f" color: {self.item.color};"
-             f" opacity: {self.item.alpha};"
+             f" color: {self.props.item.color};"
+             f" opacity: {self.props.item.alpha};"
              "}"),
             -1)
 
     @Gtk.Template.Callback()
     def choose_color(self, _):
-        color = utilities.hex_to_rgba(self.item.color)
-        color.alpha = self.item.alpha
+        color = utilities.hex_to_rgba(self.props.item.color)
+        color.alpha = self.props.item.alpha
         dialog = Gtk.ColorDialog()
         dialog.choose_rgba(
-            self.application.main_window, color, None,
+            self.props.application.main_window, color, None,
             self.on_color_dialog_accept)
 
     def on_color_dialog_accept(self, dialog, result):
         with contextlib.suppress(GLib.GError):
             color = dialog.choose_rgba_finish(result)
             if color is not None:
-                self.item.color = utilities.rgba_to_hex(color).upper()
-                self.item.alpha = color.alpha
+                self.props.item.color = utilities.rgba_to_hex(color).upper()
+                self.props.item.alpha = color.alpha
                 self.update_color()
-                self.application.Clipboard.add()
-                self.application.ViewClipboard.add()
-                graphs.refresh(self.application)
+                self.props.application.props.clipboard.add()
+                self.props.application.props.view_clipboard.add()
+                graphs.refresh(self.props.application)
 
     @Gtk.Template.Callback()
     def delete(self, _):
-        graphs.delete_item(self.application, self.item.key, True)
+        graphs.delete_item(self.props.application, self.props.item.key, True)
 
     @Gtk.Template.Callback()
     def on_toggle(self, _):
-        self.item.selected = self.check_button.get_active()
-        graphs.refresh(self.application)
-        ui.enable_data_dependent_buttons(self.application)
+        self.props.item.selected = self.check_button.get_active()
+        graphs.refresh(self.props.application)
+        ui.enable_data_dependent_buttons(self.props.application)
 
     @Gtk.Template.Callback()
     def edit(self, _):
-        EditItemWindow(self.application, self.item)
+        EditItemWindow(self.props.application, self.props.item)

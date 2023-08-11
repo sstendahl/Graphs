@@ -1,5 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 import contextlib
+import pickle
+import sys
 
 from graphs import file_io, utilities
 
@@ -72,3 +74,73 @@ def _migrate_import_params(self, import_file):
             elif isinstance(value, int):
                 settings.set_int(key, value)
     import_file.delete(None)
+
+
+class PlotSettings:
+    pass
+
+
+class Item:
+    pass
+
+
+DEFAULT_VIEW = {
+    "min_bottom": 0,
+    "max_bottom": 1,
+    "min_top": 0,
+    "max_top": 10,
+    "min_left": 0,
+    "max_left": 1,
+    "min_right": 0,
+    "max_right": 10,
+}
+
+
+def migrate_project(file):
+    sys.modules["graphs.misc"] = sys.modules[__name__]
+    sys.modules["graphs.item"] = sys.modules[__name__]
+    project = pickle.loads(file_io.read_file(file, None))
+
+    return {
+        "version": project["version"],
+        "data": [_migrate_item(item) for item in project["data"].values()],
+        "figure-settings": _migrate_plot_settings(project["plot_settings"]),
+        "data-clipboard": [{"data": [],
+                            "view": DEFAULT_VIEW.copy()}],
+        "data-clipboard-position": project["clipboard_pos"],
+        "view-clipboard": None,
+        "view-clipboard-position": None,
+    }
+
+
+ITEM_MIGRATION_TABLE = {
+    "plot_x_position": "xposition",
+    "plot_y_position": "yposition",
+}
+
+
+def _migrate_item(item: Item) -> dict:
+    dictionary = {
+        ITEM_MIGRATION_TABLE[key] if key in ITEM_MIGRATION_TABLE
+        else key: value for key, value in item.__dict__.items()
+    }
+    dictionary["item_type"] = "Item"
+    return dictionary
+
+
+PLOT_SETTINGS_MIGRATION_TABLE = {
+    "xlabel": "bottom_label",
+    "ylabel": "left_label",
+    "xscale": "bottom_scale",
+    "yscale": "left_scale",
+    "use_custom_plot_style": "use_custom_style",
+    "custom_plot_style": "custom_style",
+}
+
+
+def _migrate_plot_settings(item: Item) -> dict:
+    return {
+        PLOT_SETTINGS_MIGRATION_TABLE[key]
+        if key in PLOT_SETTINGS_MIGRATION_TABLE
+        else key: value for key, value in item.__dict__.items()
+    }
