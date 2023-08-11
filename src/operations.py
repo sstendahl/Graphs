@@ -157,7 +157,7 @@ def center(_item, xdata, ydata, center_maximum):
     return new_xdata, ydata, True, False
 
 
-def shift_vertically(item, xdata, ydata, yscale, right_scale, datadict):
+def shift_vertically(item, xdata, ydata, left_scale, right_scale, datadict):
     """
     Shifts data vertically with respect to each other
     By default it scales linear data by 1.2 times the total span of the
@@ -173,7 +173,7 @@ def shift_vertically(item, xdata, ydata, yscale, right_scale, datadict):
         ymin = min(x for x in previous_ydata if x != 0)
         ymax = max(x for x in previous_ydata if x != 0)
         if item.yposition == "left":
-            linear = (yscale == "linear")
+            linear = (left_scale == "linear")
         if item.yposition == "right":
             linear = (right_scale == "linear")
         if linear:

@@ -79,7 +79,6 @@ def delete_item(self, key, give_toast=False):
     if give_toast:
         self.main_window.add_toast(_("Deleted {name}").format(name=name))
     self.props.clipboard.add()
-    check_open_data(self)
 
 
 def check_open_data(self):

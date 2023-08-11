@@ -47,6 +47,7 @@ def reload_item_menu(self):
 
     for item in self.datadict.values():
         self.main_window.item_list.append(ItemBox(self, item))
+    graphs.check_open_data(self)
 
 
 def add_data_dialog(self):
