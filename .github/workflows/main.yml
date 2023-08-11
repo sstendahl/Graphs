@@ -11,6 +11,8 @@ jobs:
     name: Build and test
     runs-on: ubuntu-latest
     steps:
+    - name: Check out
+      uses: actions/checkout@v3
     - name: Install Dependencies
       run: |
         sudo apt-get update
@@ -18,13 +20,11 @@ jobs:
         pip3 install pytest
         git clone https://gitlab.gnome.org/jwestman/blueprint-compiler.git            
         meson build_blueprint blueprint-compiler
-        sudo ninja -C build_blueprint install        
+        sudo ninja -C build_blueprint install      
     - name: Build and test
       run: |
         meson setup _build
         meson test -C _build -v pytest
-    - name: Check out
-      uses: actions/checkout@v3
   flatpak:
     name: Flatpak
     runs-on: ubuntu-latest
