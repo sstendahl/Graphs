@@ -7,8 +7,7 @@ from inspect import getmembers, isfunction
 
 from gi.repository import Adw, GLib, GObject, Gio
 
-from graphs import (actions, file_io, graphs, migrate, plot_styles,
-                    plotting_tools, ui)
+from graphs import actions, file_io, migrate, plot_styles, plotting_tools, ui
 from graphs.canvas import Canvas
 from graphs.clipboard import DataClipboard, ViewClipboard
 from graphs.figure_settings import FigureSettings
@@ -137,9 +136,6 @@ class GraphsApplication(Adw.Application):
         )
         self.props.figure_settings.connect(
             "notify::custom-style", ui.on_figure_style_change, self,
-        )
-        self.props.figure_settings.connect(
-            "notify", lambda _x, _y: graphs.refresh(self),
         )
         self.main_window.present()
 

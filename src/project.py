@@ -44,8 +44,7 @@ def load_project(self, file: Gio.File):
         clipboard_pos = project["view-clipboard-position"]
         self.props.view_clipboard.props.clipboard = clipboard
         self.props.view_clipboard.props.clipboard_pos = clipboard_pos
-        self.canvas.limits = clipboard[-1]
-    self.canvas.apply_limits()
+        self.props.figure_settings.set_limits(clipboard[-1])
     ui.reload_item_menu(self)
     ui.enable_data_dependent_buttons(self)
     ui.set_clipboard_buttons(self)

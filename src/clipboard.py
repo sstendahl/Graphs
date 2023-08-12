@@ -2,6 +2,8 @@ from gi.repository import Adw, GObject
 
 from graphs import item, ui
 
+import numpy
+
 
 class BaseClipboard(GObject.Object):
     __gtype_name__ = "BaseClipboard"
@@ -52,8 +54,10 @@ class DataClipboard(BaseClipboard):
     def __init__(self, application):
         super().__init__(
             application=application,
-            clipboard=[{"data": [],
-                        "view": application.canvas.limits}],
+            clipboard=[{
+                "data": [],
+                "view": application.props.figure_settings.get_limits(),
+            }],
         )
 
     def add(self):
@@ -62,8 +66,10 @@ class DataClipboard(BaseClipboard):
         Appends the latest state to the clipboard.
         """
         items = self.props.application.datadict.values()
-        super().add({"data": [item.to_dict() for item in items],
-                     "view": self.props.application.canvas.limits})
+        super().add({
+            "data": [item.to_dict() for item in items],
+            "view": self.props.application.props.figure_settings.get_limits(),
+        })
         # Keep clipboard length limited to preference values
         max_clipboard_length = \
             self.props.application.get_settings().get_int("clipboard-length")
@@ -94,7 +100,9 @@ class DataClipboard(BaseClipboard):
         items = [item.new_from_dict(d) for d in state["data"]]
         self.props.application.datadict = {item.key: item for item in items}
         if self.props.application.props.view_clipboard.view_changed:
-            self.props.application.canvas.limits = state["view"]
+            self.props.application.props.figure_settings.set_limits(
+                state["view"],
+            )
 
 
 class ViewClipboard(BaseClipboard):
@@ -105,7 +113,7 @@ class ViewClipboard(BaseClipboard):
     def __init__(self, application):
         super().__init__(
             application=application,
-            clipboard=[application.canvas.limits],
+            clipboard=[application.props.figure_settings.get_limits()],
         )
 
     def add(self):
@@ -113,17 +121,15 @@ class ViewClipboard(BaseClipboard):
         Add the latest view to the clipboard, skip in case the new view is
         the same as previous one (e.g. if an action does not change the limits)
         """
-        self.props.view_changed = False
-        if self.props.application.canvas.limits != self.props.clipboard[-1]:
-            super().add(self.props.application.canvas.limits)
-            self.props.view_changed = True
-
-    def redo(self):
-        """Go back to the next view"""
-        super().redo()
-        self.props.application.canvas.limits = \
-            self.props.clipboard[self.props.clipboard_pos]
+        limits = self.props.application.props.figure_settings.get_limits()
+        self.props.view_changed = all(
+            not numpy.isclose(value, limits[key])
+            for key, value in self.props.clipboard[-1].items()
+        )
+        if self.props.view_changed:
+            super().add(limits)
 
     def set_clipboard_state(self):
-        self.props.application.canvas.limits = \
-            self.props.clipboard[self.props.clipboard_pos]
+        self.props.application.props.figure_settings.set_limits(
+            self.props.clipboard[self.props.clipboard_pos],
+        )

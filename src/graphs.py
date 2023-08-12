@@ -115,7 +115,5 @@ def refresh(self):
         if item is None or (hide_unselected and not item.selected):
             continue
         self.canvas.plot(item)
-    self.canvas.set_axis_properties()
-    self.canvas.limits = self.props.figure_settings.get_limits()
     self.canvas.set_legend()
     self.canvas.draw()

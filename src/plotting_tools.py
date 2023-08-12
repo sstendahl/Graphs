@@ -7,7 +7,7 @@ from matplotlib import pyplot
 
 def optimize_limits(self):
     self.props.clipboard.clipboard[self.props.clipboard.clipboard_pos][
-        "view"] = self.canvas.limits
+        "view"] = self.pops.figure_settings.get_limits()
     used_axes, items = utilities.get_used_axes(self)
     axis_map = {
         "left": self.canvas.axis,
@@ -50,7 +50,6 @@ def optimize_limits(self):
             max_all *= 2
         self.props.figure_settings.set_property(f"min_{direction}", min_all)
         self.props.figure_settings.set_property(f"max_{direction}", max_all)
-    self.canvas.limits = self.props.figure_settings.get_limits()
     self.props.view_clipboard.add()
 
 

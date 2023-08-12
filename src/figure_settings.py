@@ -23,14 +23,14 @@ class FigureSettings(GObject.Object):
     use_custom_style = GObject.Property(type=bool, default=False)
     custom_style = GObject.Property(type=str, default="adwaita")
 
-    min_bottom = GObject.Property(type=int, default=0)
-    max_bottom = GObject.Property(type=int, default=1)
-    min_left = GObject.Property(type=int, default=0)
-    max_left = GObject.Property(type=int, default=10)
-    min_top = GObject.Property(type=int, default=0)
-    max_top = GObject.Property(type=int, default=1)
-    min_right = GObject.Property(type=int, default=0)
-    max_right = GObject.Property(type=int, default=10)
+    min_bottom = GObject.Property(type=float, default=0)
+    max_bottom = GObject.Property(type=float, default=1)
+    min_left = GObject.Property(type=float, default=0)
+    max_left = GObject.Property(type=float, default=10)
+    min_top = GObject.Property(type=float, default=0)
+    max_top = GObject.Property(type=float, default=1)
+    min_right = GObject.Property(type=float, default=0)
+    max_right = GObject.Property(type=float, default=10)
 
     @staticmethod
     def new(settings):
