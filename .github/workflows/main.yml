@@ -17,13 +17,14 @@ jobs:
       run: |
         sudo apt-get update
         sudo apt-get install -y dbus libgirepository1.0 libgirepository1.0-dev gobject-introspection libglib2.0-dev desktop-file-utils meson gettext python3-matplotlib python3-scipy
-        pip3 install pytest
+        pip3 install pytest PyGObject pgi
         git clone https://gitlab.gnome.org/jwestman/blueprint-compiler.git            
         meson build_blueprint blueprint-compiler
         sudo ninja -C build_blueprint install      
     - name: Build and test
       run: |
-        python -m pytest tests
+        meson setup _build
+        meson test -C _build -v pytest
   flatpak:
     name: Flatpak
     runs-on: ubuntu-latest
