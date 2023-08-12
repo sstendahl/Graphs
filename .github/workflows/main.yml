@@ -20,7 +20,7 @@ jobs:
         pip3 install pytest PyGObject pgi
         git clone https://gitlab.gnome.org/jwestman/blueprint-compiler.git            
         meson build_blueprint blueprint-compiler
-        sudo ninja -C build_blueprint install      
+        sudo meson --prefix=/usr build_blueprint install
     - name: Build and test
       run: |
         meson setup _build
