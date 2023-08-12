@@ -88,6 +88,19 @@ class Item(ItemBase):
         if self.props.ydata is None:
             self.props.ydata = []
 
+    def create_artist(self, axis):
+        linewidth = self.props.linewidth
+        markersize = self.props.markersize
+        if not self.props.selected:
+            linewidth *= 0.35
+            markersize *= 0.35
+        return axis.plot(
+            self.props.xdata, self.props.ydata,
+            color=self.props.color, alpha=self.props.alpha,
+            marker=self.props.markerstyle, linestyle=self.props.linestyle,
+            linewidth=linewidth, markersize=markersize, label=self.props.name,
+        )
+
 
 class TextItem(ItemBase):
     __gtype_name__ = "TextItem"
@@ -112,3 +125,10 @@ class TextItem(ItemBase):
         super().__init__(**kwargs)
         if self.props.color == "":
             self.props.color = pyplot.rcParams["text.color"]
+
+    def create_artist(self, axis):
+        return axis.text(
+            self.props.xanchor, self.props.yanchor, self.props.text,
+            color=self.props.color, alpha=self.props.alpha, clip_on=True,
+            fontsize=self.props.size, rotation=self.props.rotation,
+        )

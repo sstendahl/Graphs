@@ -5,7 +5,6 @@ from contextlib import nullcontext
 from gi.repository import Adw, GObject, Gtk
 
 from graphs import utilities
-from graphs.item import Item, TextItem
 from graphs.misc import InteractionMode
 from graphs.rename import RenameWindow
 
@@ -89,45 +88,15 @@ class Canvas(FigureCanvas):
             self.figure.draw(self._renderer)
 
     def plot(self, item):
-        x_axis = item.xposition
-        y_axis = item.yposition
-        if y_axis == "left":
-            if x_axis == "bottom":
-                axis = self.axis
-            elif x_axis == "top":
-                axis = self.top_left_axis
-        elif y_axis == "right":
-            if x_axis == "bottom":
-                axis = self.right_axis
-            elif x_axis == "top":
-                axis = self.top_right_axis
-        common_parameters = {
-            "color": item.color,
-            "alpha": item.alpha,
-        }
-        if isinstance(item, Item):
-            linewidth = item.linewidth
-            markersize = item.markersize
-            if not item.selected:
-                linewidth *= 0.35
-                markersize *= 0.35
-            axis.plot(
-                item.xdata, item.ydata,
-                **common_parameters,
-                marker=item.markerstyle, linestyle=item.linestyle,
-                linewidth=linewidth, markersize=markersize, label=item.name)
-        elif isinstance(item, TextItem):
-            axis.text(
-                item.xanchor, item.yanchor, item.text,
-                **common_parameters,
-                clip_on=True, fontsize=item.size, rotation=item.rotation)
+        item.create_artist(
+            (self.axis if item.xposition == "bottom" else self.top_left_axis)
+            if item.yposition == "left" else
+            (self.right_axis if item.xposition == "bottom"
+                else self.top_right_axis),
+        )
 
     def set_ticks(self):
         """Set the tick parameters for the axes in the plot"""
-        bottom = pyplot.rcParams["xtick.bottom"]
-        left = pyplot.rcParams["ytick.left"]
-        top = pyplot.rcParams["xtick.top"]
-        right = pyplot.rcParams["ytick.right"]
         ticks = "both" if pyplot.rcParams["xtick.minor.visible"] else "major"
         used_axes = utilities.get_used_axes(self.props.application)[0]
 
@@ -142,13 +111,13 @@ class Canvas(FigureCanvas):
         for axis, directions in axes.items():
             # Set tick where requested, as long as that axis is not occupied
             tick_params = {
-                "bottom": bottom and (
+                "bottom": pyplot.rcParams["xtick.bottom"] and (
                     "bottom" in directions or not used_axes["bottom"]),
-                "left": left and (
+                "left": pyplot.rcParams["ytick.left"] and (
                     "left" in directions or not used_axes["left"]),
-                "top": top and (
+                "top": pyplot.rcParams["xtick.top"] and (
                     "top" in directions or not used_axes["top"]),
-                "right": right and (
+                "right": pyplot.rcParams["ytick.right"] and (
                     "right" in directions or not used_axes["right"]),
             }
             axis.tick_params(which=ticks, **tick_params)
@@ -208,8 +177,7 @@ class Canvas(FigureCanvas):
 
     def set_legend(self):
         """Set the legend of the graph"""
-        plot_settings = self.props.application.plot_settings
-        if plot_settings.legend:
+        if self.props.application.figure_settings.legend:
             self.legends = []
             lines1, labels1 = self.axis.get_legend_handles_labels()
             lines2, labels2 = self.right_axis.get_legend_handles_labels()
@@ -222,7 +190,9 @@ class Canvas(FigureCanvas):
             if labels:
                 self.top_right_axis.legend(
                     new_lines, labels,
-                    loc=LEGEND_POSITIONS[plot_settings.legend_position],
+                    loc=LEGEND_POSITIONS[
+                        self.props.application.figure_settings.legend_position
+                    ],
                     frameon=True, reverse=True)
                 return
         if self.top_right_axis.get_legend() is not None:
@@ -280,8 +250,9 @@ class Canvas(FigureCanvas):
     @bottom_scale.setter
     def bottom_scale(self, scale: int):
         scale = _scale_to_string(scale)
-        self.right_axis.set_xscale(scale)
-        self.axis.set_xscale(scale)
+        for axis in [self.axis, self.right_axis]:
+            axis.set_xscale(scale)
+            axis.set_xlim(self.props.min_bottom, self.props.max_bottom)
         self.queue_draw()
 
     @GObject.Property(type=int)
@@ -291,8 +262,9 @@ class Canvas(FigureCanvas):
     @left_scale.setter
     def left_scale(self, scale: int):
         scale = _scale_to_string(scale)
-        self.top_left_axis.set_yscale(scale)
-        self.axis.set_yscale(scale)
+        for axis in [self.axis, self.top_left_axis]:
+            axis.set_yscale(scale)
+            axis.set_ylim(self.props.min_left, self.props.max_left)
         self.queue_draw()
 
     @GObject.Property(type=int)
@@ -302,8 +274,9 @@ class Canvas(FigureCanvas):
     @top_scale.setter
     def top_scale(self, scale: int):
         scale = _scale_to_string(scale)
-        self.top_right_axis.set_xscale(scale)
-        self.top_left_axis.set_xscale(scale)
+        for axis in [self.top_right_axis, self.top_left_axis]:
+            axis.set_xscale(scale)
+            axis.set_xlim(self.props.min_top, self.props.max_top)
         self.queue_draw()
 
     @GObject.Property(type=int)
@@ -313,8 +286,9 @@ class Canvas(FigureCanvas):
     @right_scale.setter
     def right_scale(self, scale: int):
         scale = _scale_to_string(scale)
-        self.top_right_axis.set_yscale(scale)
-        self.right_axis.set_yscale(scale)
+        for axis in [self.top_right_axis, self.right_axis]:
+            axis.set_yscale(scale)
+            axis.set_ylim(self.props.min_right, self.props.max_right)
         self.queue_draw()
 
     @GObject.Property(type=float)
@@ -389,7 +363,7 @@ class Canvas(FigureCanvas):
 
     @GObject.Property(type=float)
     def max_right(self):
-        return min(self.right_axis.get_ylim())
+        return max(self.right_axis.get_ylim())
 
     @max_right.setter
     def max_right(self, value: float):

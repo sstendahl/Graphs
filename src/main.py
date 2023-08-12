@@ -52,8 +52,6 @@ class GraphsApplication(Adw.Application):
         self.get_style_manager().connect(
             "notify", ui.on_style_change, None, self)
 
-        self.plot_settings = self.props.figure_settings
-
     def add_actions(self):
         """Create actions, which are defined in actions.py."""
         new_actions = [
