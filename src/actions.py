@@ -3,7 +3,7 @@
 from graphs import graphs, plotting_tools, ui
 from graphs.add_equation import AddEquationWindow
 from graphs.export_figure import ExportFigureWindow
-from graphs.plot_settings import PlotSettingsWindow
+from graphs.figure_settings import FigureSettingsWindow
 from graphs.plot_styles import PlotStylesWindow
 from graphs.preferences import PreferencesWindow
 
@@ -25,8 +25,8 @@ def preferences_action(_action, _target, self):
     PreferencesWindow(self)
 
 
-def plot_settings_action(_action, _target, self):
-    PlotSettingsWindow(self)
+def figure_settings_action(_action, _target, self):
+    FigureSettingsWindow(self)
 
 
 def add_data_action(_action, _target, self):

@@ -22,7 +22,7 @@ class RenameWindow(Adw.Window):
         if self.item == self.props.application.canvas.title:
             title = _("Rename Title")
             label = _("Title")
-            text = self.props.application.plot_settings.title
+            text = self.props.application.figure_settings.title
         self.set_title(title)
         self.text_entry.set_title(label)
         self.text_entry.set_text(text)
@@ -32,14 +32,14 @@ class RenameWindow(Adw.Window):
     def on_accept(self, _widget):
         text = self.text_entry.get_text()
         if self.item == self.props.application.canvas.top_label:
-            self.props.application.plot_settings.top_label = text
+            self.props.application.figure_settings.top_label = text
         if self.item == self.props.application.canvas.left_label:
-            self.props.application.plot_settings.left_label = text
+            self.props.application.figure_settings.left_label = text
         if self.item == self.props.application.canvas.bottom_label:
-            self.props.application.plot_settings.bottom_label = text
+            self.props.application.figure_settings.bottom_label = text
         if self.item == self.props.application.canvas.right_label:
-            self.props.application.plot_settings.right_label = text
+            self.props.application.figure_settings.right_label = text
         if self.item == self.props.application.canvas.title:
-            self.props.application.plot_settings.title = text
+            self.props.application.figure_settings.title = text
         graphs.refresh(self.props.application)
         self.destroy()

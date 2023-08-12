@@ -6,13 +6,34 @@ from gettext import gettext as _
 
 from gi.repository import Adw, GLib, Gio, Gtk
 
-from graphs import file_import, file_io, graphs, project, utilities
+from graphs import (file_import, file_io, graphs, plotting_tools, project,
+                    utilities)
 from graphs.item import Item
 from graphs.item_box import ItemBox
+
+from matplotlib import pyplot
 
 
 def on_style_change(_shortcut, _theme, _widget, self):
     graphs.reload(self)
+
+
+def on_figure_style_change(_figure_settings, _ignored, self):
+    graphs.reload(self)
+    if not self.get_settings(
+            "general").get_boolean("override-item-properties"):
+        return
+    for item in self.datadict.values():
+        item.color = ""
+    for item in self.datadict.values():
+        item.color = plotting_tools.get_next_color(self)
+        if isinstance(item, Item):
+            item.linestyle = pyplot.rcParams["lines.linestyle"]
+            item.linewidth = float(pyplot.rcParams["lines.linewidth"])
+            item.markerstyle = pyplot.rcParams["lines.marker"]
+            item.markersize = float(pyplot.rcParams["lines.markersize"])
+    graphs.refresh(self)
+    reload_item_menu(self)
 
 
 def set_clipboard_buttons(self):
@@ -219,6 +240,24 @@ def bind_values_to_settings(settings, window, prefix="", ignorelist=None):
             elif isinstance(widget, Gtk.Scale):
                 settings.bind(key, widget, "value", 0)
                 widget.set_expanded(True)
+            else:
+                logging.warn(_("Unsupported Widget {}").format(type(widget)))
+        except AttributeError:
+            logging.warn(_("No way to apply “{}”").format(key))
+
+
+def bind_values_to_object(source, window, ignorelist=None):
+    for key in dir(source.props):
+        if ignorelist is not None and key in ignorelist:
+            continue
+        try:
+            widget = getattr(window, key)
+            if isinstance(widget, Adw.EntryRow):
+                source.bind_property(key, widget, "text", 1 | 2)
+            elif isinstance(widget, Adw.ComboRow):
+                source.bind_property(key, widget, "selected", 1 | 2)
+            elif isinstance(widget, Adw.ExpanderRow):
+                source.bind_property(key, widget, "enable-expansion", 1 | 2)
             else:
                 logging.warn(_("Unsupported Widget {}").format(type(widget)))
         except AttributeError:

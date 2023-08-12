@@ -1,7 +1,7 @@
 using Gtk 4.0;
 using Adw 1;
 
-template $PlotSettingsWindow : Adw.PreferencesWindow {
+template $FigureSettingsWindow : Adw.PreferencesWindow {
   modal: true;
   can-navigate-back: true;
   title: _("Figure Settings");
@@ -18,23 +18,23 @@ template $PlotSettingsWindow : Adw.PreferencesWindow {
     Adw.PreferencesGroup {
       title: _("Labels");
 
-      Adw.EntryRow plot_title {
+      Adw.EntryRow title {
         title: _("Title");
       }
 
-      Adw.EntryRow plot_x_label {
+      Adw.EntryRow bottom_label {
         title: _("Bottom Axis Label");
       }
 
-      Adw.EntryRow plot_y_label {
+      Adw.EntryRow left_label {
         title: _("Left Axis Label");
       }
 
-      Adw.EntryRow plot_top_label {
+      Adw.EntryRow top_label {
         title: _("Top Axis Label");
       }
 
-      Adw.EntryRow plot_right_label {
+      Adw.EntryRow right_label {
         title: _("Right Axis Label");
       }
     }
@@ -113,38 +113,56 @@ template $PlotSettingsWindow : Adw.PreferencesWindow {
     Adw.PreferencesGroup {
       title: _("Scaling");
 
-      Adw.ComboRow plot_x_scale {
+      Adw.ComboRow bottom_scale {
         title: _("Bottom Axis Scale");
+        model: StringList{
+          strings [_("linear"), _("logarithmic")]
+        };
       }
 
-      Adw.ComboRow plot_y_scale {
+      Adw.ComboRow left_scale {
         title: _("Left Axis Scale");
+        model: StringList{
+          strings [_("linear"), _("logarithmic")]
+        };
       }
 
-      Adw.ComboRow plot_top_scale {
+      Adw.ComboRow top_scale {
         title: _("Top Axis Scale");
+        model: StringList{
+          strings [_("linear"), _("logarithmic")]
+        };
       }
 
-      Adw.ComboRow plot_right_scale {
+      Adw.ComboRow right_scale {
         title: _("Right Axis Scale");
+        model: StringList{
+          strings [_("linear"), _("logarithmic")]
+        };
       }
     }
 
     Adw.PreferencesGroup {
       title: _("Style");
-      Adw.ExpanderRow plot_legend {
+      Adw.ExpanderRow legend {
         title: _("Legend");
         show-enable-switch: true;
-        Adw.ComboRow plot_legend_position {
+        Adw.ComboRow legend_position {
           title: _("Legend Position");
+          model: StringList{
+            strings [
+              _("Best"), _("Upper right"), _("Upper left"), _("Lower left"),
+              _("Lower right"), _("Center left"), _("Center right"),
+              _("Lower center"), _("Upper center"), _("Center"),
+            ]
+          };
         }
       }
 
-      Adw.ExpanderRow use_custom_plot_style {
+      Adw.ExpanderRow use_custom_style {
         title: _("Use Custom Style");
         show-enable-switch: true;
-        notify => $on_custom_style_enable();
-        Adw.ComboRow custom_plot_style {
+        Adw.ComboRow custom_style {
           title: _("Style");
           notify::selected => $on_custom_style_select();
         }

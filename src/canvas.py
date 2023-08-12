@@ -16,6 +16,11 @@ from matplotlib.backend_bases import NavigationToolbar2
 from matplotlib.backends.backend_gtk4cairo import FigureCanvas
 from matplotlib.widgets import SpanSelector
 
+LEGEND_POSITIONS = [
+    "best", "upper right", "upper left", "lower left", "lower right",
+    "center left", "center right", "lower center", "upper center", "center",
+]
+
 
 class Canvas(FigureCanvas):
     __gtype_name__ = "Canvas"
@@ -155,31 +160,29 @@ class Canvas(FigureCanvas):
 
     def set_axis_properties(self):
         """Set the properties that are related to the axes."""
-        plot_settings = self.props.application.plot_settings
-        settings = self.props.application.get_settings("figure")
-        title = settings.get_string("title") \
-            if plot_settings.title == "" else plot_settings.title
-        bottom_label = settings.get_string("bottom-label") \
-            if plot_settings.bottom_label == "" else plot_settings.bottom_label
-        right_label = settings.get_string("right-label") \
-            if plot_settings.right_label == "" else plot_settings.right_label
-        top_label = settings.get_string("top-label") \
-            if plot_settings.top_label == "" else plot_settings.top_label
-        left_label = settings.get_string("left-label") \
-            if plot_settings.left_label == "" else plot_settings.left_label
+
+        def _get_scale(scale):
+            return "linear" if scale == 0 else "log"
+
+        figure_settings = self.props.application.props.figure_settings
+        title = figure_settings.title
+        bottom_label = figure_settings.bottom_label
+        right_label = figure_settings.right_label
+        top_label = figure_settings.top_label
+        left_label = figure_settings.left_label
         self.title = self.axis.set_title(title)
         self.bottom_label = self.axis.set_xlabel(bottom_label)
         self.right_label = self.right_axis.set_ylabel(right_label)
         self.top_label = self.top_left_axis.set_xlabel(top_label)
         self.left_label = self.axis.set_ylabel(left_label)
-        self.axis.set_xscale(plot_settings.bottom_scale)
-        self.axis.set_yscale(plot_settings.left_scale)
-        self.right_axis.set_xscale(plot_settings.bottom_scale)
-        self.right_axis.set_yscale(plot_settings.right_scale)
-        self.top_left_axis.set_xscale(plot_settings.top_scale)
-        self.top_left_axis.set_yscale(plot_settings.left_scale)
-        self.top_right_axis.set_xscale(plot_settings.top_scale)
-        self.top_right_axis.set_yscale(plot_settings.right_scale)
+        self.axis.set_xscale(_get_scale(figure_settings.bottom_scale))
+        self.axis.set_yscale(_get_scale(figure_settings.left_scale))
+        self.right_axis.set_xscale(_get_scale(figure_settings.bottom_scale))
+        self.right_axis.set_yscale(_get_scale(figure_settings.right_scale))
+        self.top_left_axis.set_xscale(_get_scale(figure_settings.top_scale))
+        self.top_left_axis.set_yscale(_get_scale(figure_settings.left_scale))
+        self.top_right_axis.set_xscale(_get_scale(figure_settings.top_scale))
+        self.top_right_axis.set_yscale(_get_scale(figure_settings.right_scale))
 
     def set_ticks(self):
         """Set the tick parameters for the axes in the plot"""
@@ -281,7 +284,7 @@ class Canvas(FigureCanvas):
             if labels:
                 self.top_right_axis.legend(
                     new_lines, labels,
-                    loc=plot_settings.legend_position.lower(),
+                    loc=LEGEND_POSITIONS[plot_settings.legend_position],
                     frameon=True, reverse=True)
                 return
         if self.top_right_axis.get_legend() is not None:

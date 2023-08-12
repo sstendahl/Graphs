@@ -108,7 +108,6 @@ def refresh(self):
         item.remove()
     if len(self.datadict) > 0:
         plotting_tools.hide_unused_axes(self, self.canvas)
-    self.canvas.set_axis_properties()
     self.canvas.set_ticks()
     hide_unselected = \
         self.settings.get_child("general").get_boolean("hide-unselected")
@@ -116,5 +115,7 @@ def refresh(self):
         if item is None or (hide_unselected and not item.selected):
             continue
         self.canvas.plot(item)
+    self.canvas.set_axis_properties()
+    self.canvas.limits = self.props.figure_settings.get_limits()
     self.canvas.set_legend()
     self.canvas.draw()

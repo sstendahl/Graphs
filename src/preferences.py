@@ -1,8 +1,8 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-from gi.repository import Adw, GObject, Gtk
+from gi.repository import Adw, Gtk
 
-from graphs import graphs, plot_styles, ui
+from graphs import plot_styles, ui
 
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/preferences.ui")
@@ -28,29 +28,29 @@ class PreferencesWindow(Adw.PreferencesWindow):
     figure_use_custom_style = Gtk.Template.Child()
     figure_custom_style = Gtk.Template.Child()
 
-    styles = GObject.Property(type=object)
-
     def __init__(self, application):
         super().__init__(
             application=application, transient_for=application.main_window,
-            styles=sorted(list(
-                plot_styles.get_user_styles(application).keys())),
         )
 
-        self.figure_custom_style.set_model(Gtk.StringList.new(self.styles))
+        styles = sorted(plot_styles.get_user_styles(application).keys())
+        self.figure_custom_style.set_model(Gtk.StringList.new(styles))
         settings = self.props.application.props.settings
         ui.bind_values_to_settings(
             settings.get_child("figure"), self, prefix="figure_",
             ignorelist=["custom-style"])
         ui.bind_values_to_settings(
             settings.get_child("general"), self, prefix="general_")
-        self.figure_custom_style.set_selected(self.styles.index(
+        self.figure_custom_style.set_selected(styles.index(
             settings.get_child("figure").get_string("custom-style")))
         self.present()
 
     @Gtk.Template.Callback()
-    def on_close(self, _):
+    def on_close(self, _ignored):
+        self.destroy()
+
+    @Gtk.Template.Callback()
+    def on_custom_style_select(self, comborow, _ignored):
         self.props.application.get_settings("figure").set_string(
-            "custom-style",
-            self.figure_custom_style.get_selected_item().get_string())
-        graphs.refresh(self.props.application)
+            "custom-style", comborow.get_selected_item().get_string(),
+        )

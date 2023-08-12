@@ -33,9 +33,9 @@
     <file preprocess="xml-stripblanks">ui/dialogs.ui</file>
     <file preprocess="xml-stripblanks">ui/edit_item.ui</file>
     <file preprocess="xml-stripblanks">ui/export_figure.ui</file>
+    <file preprocess="xml-stripblanks">ui/figure_settings.ui</file>
     <file preprocess="xml-stripblanks">ui/import.ui</file>
     <file preprocess="xml-stripblanks">ui/item_box.ui</file>
-    <file preprocess="xml-stripblanks">ui/plot_settings.ui</file>
     <file preprocess="xml-stripblanks">ui/plot_styles.ui</file>
     <file preprocess="xml-stripblanks">ui/preferences.ui</file>
     <file preprocess="xml-stripblanks">ui/rename_window.ui</file>

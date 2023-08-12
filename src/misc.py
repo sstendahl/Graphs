@@ -19,12 +19,6 @@ def _(message):
     return message
 
 
-SCALES = [_("linear"), _("log")]
-LEGEND_POSITIONS = [
-    _("Best"), _("Upper right"), _("Upper left"), _("Lower left"),
-    _("Lower right"), _("Center left"), _("Center right"), _("Lower center"),
-    _("Upper center"), _("Center"),
-]
 X_POSITIONS = [_("top"), _("bottom")]
 Y_POSITIONS = [_("left"), _("right")]
 LINESTYLES = [_("none"), _("solid"), _("dotted"), _("dashed"), _("dashdot")]

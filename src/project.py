@@ -2,7 +2,7 @@
 from gi.repository import Gio
 
 from graphs import file_io, graphs, item, migrate, plotting_tools, ui
-from graphs.plot_settings import FigureSettings
+from graphs.figure_settings import FigureSettings
 
 
 def save_project(self, file: Gio.File):
