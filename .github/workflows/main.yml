@@ -23,7 +23,7 @@ jobs:
         sudo ninja -C build_blueprint install      
     - name: Build and test
       run: |
-      	pytest tests
+        python -m pytest tests
   flatpak:
     name: Flatpak
     runs-on: ubuntu-latest
