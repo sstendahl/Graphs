@@ -23,8 +23,7 @@ jobs:
         sudo ninja -C build_blueprint install      
     - name: Build and test
       run: |
-        meson setup _build
-        meson test -C _build -v pytest
+      	pytest tests
   flatpak:
     name: Flatpak
     runs-on: ubuntu-latest

@@ -9,8 +9,7 @@ import pytest
 
 
 sys.modules["graphs"] = __import__("src")
-pkgdatadir = os.environ.get("pkgdatadir")
-os.chdir(pkgdatadir)
+os.chdir("/usr/local/share/graphs")
 resource = Gio.Resource.load("se.sjoerd.Graphs.gresource")
 resource._register()
 from graphs import operations
