@@ -9,7 +9,8 @@ import pytest
 
 
 sys.modules["graphs"] = __import__("src")
-os.chdir("/usr/local/share/graphs")
+pkgdatadir = os.environ.get("pkgdatadir")
+os.chdir(pkgdatadir)
 resource = Gio.Resource.load("se.sjoerd.Graphs.gresource")
 resource._register()
 from graphs import operations
@@ -124,3 +125,4 @@ def test_get_integral():
 
     assert len(y_new) == len(xdata)
     assert y_new == pytest.approx([0, 7.5, 20, 32.5, 40], rel=1e-6)
+
