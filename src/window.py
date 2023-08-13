@@ -40,7 +40,8 @@ class GraphsWindow(Adw.ApplicationWindow):
         operations.perform_operation(
             app, operations.shift_vertically,
             app.props.figure_settings.left_scale,
-            app.props.figure_settings.right_scale, app.datadict)
+            app.props.figure_settings.right_scale, app.props.data.props.items,
+        )
 
     @Gtk.Template.Callback()
     def normalize(self, *_args):

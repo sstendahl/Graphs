@@ -40,7 +40,7 @@ def get_used_axes(self):
         "top": [],
         "bottom": [],
     }
-    for item in self.datadict.values():
+    for item in self.props.data.items:
         if item.yposition == "left":
             used_axes["left"] = True
             items["left"].append(item)
@@ -83,11 +83,6 @@ def populate_chooser(chooser, chooser_list, translate=True):
 
 def get_selected_chooser_item(chooser):
     return chooser.untranslated_items[int(chooser.get_selected())]
-
-
-def get_all_names(self):
-    """Get a list of all filenames present in the datadict dictionary"""
-    return [item.name for item in self.datadict.values()]
 
 
 def get_dict_by_value(dictionary, value):

@@ -3,7 +3,7 @@ from gettext import gettext as _
 
 from gi.repository import Adw, Gtk
 
-from graphs import graphs
+from graphs import ui
 
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/rename_window.ui")
@@ -41,5 +41,5 @@ class RenameWindow(Adw.Window):
             self.props.application.figure_settings.right_label = text
         if self.item == self.props.application.canvas.title:
             self.props.application.figure_settings.title = text
-        graphs.refresh(self.props.application)
+        ui.refresh(self.props.application)
         self.destroy()

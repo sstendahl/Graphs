@@ -71,6 +71,7 @@ def hide_unused_axes(self, canvas):
         canvas.top_left_axis.get_xaxis().set_visible(True)
     if used_axes["bottom"]:
         canvas.axis.get_xaxis().set_visible(True)
+    canvas.set_ticks()
 
 
 def change_scale(action, target, self, prop):
@@ -84,7 +85,7 @@ def get_next_color(self):
     """Get the color that is to be used for the next data set"""
     color_cycle = pyplot.rcParams["axes.prop_cycle"].by_key()["color"]
     used_colors = []
-    for item in self.datadict.values():
+    for item in self.props.data.props.items:
         used_colors.append(item.color)
         # If we've got all colors once, remove those from used_colors so we
         # can loop around

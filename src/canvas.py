@@ -87,13 +87,25 @@ class Canvas(FigureCanvas):
             self._renderer.dpi = self.figure.dpi
             self.figure.draw(self._renderer)
 
-    def plot(self, item):
-        item.create_artist(
-            (self.axis if item.xposition == "bottom" else self.top_left_axis)
-            if item.yposition == "left" else
-            (self.right_axis if item.xposition == "bottom"
-                else self.top_right_axis),
-        )
+    def plot_items(self, items):
+        axes = [self.axis, self.right_axis,
+                self.top_left_axis, self.top_right_axis]
+        [i.remove() for ax in axes for i in ax.lines + ax.texts]
+
+        hide_unselected = self.props.application.get_settings(
+            "general").get_boolean("hide-unselected")
+        for item in reversed(items):
+            if hide_unselected and not item.selected:
+                continue
+            item.create_artist(
+                (self.axis if item.xposition == "bottom"
+                    else self.top_left_axis)
+                if item.yposition == "left" else
+                (self.right_axis if item.xposition == "bottom"
+                    else self.top_right_axis),
+            )
+        self.set_legend()
+        self.queue_draw()
 
     def set_ticks(self):
         """Set the tick parameters for the axes in the plot"""

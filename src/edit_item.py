@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 from gi.repository import Adw, Gtk
 
-from graphs import graphs, misc, plotting_tools, ui, utilities
+from graphs import misc, plotting_tools, ui, utilities
 from graphs.item import Item
 
 
@@ -23,8 +23,8 @@ class EditItemWindow(Adw.PreferencesWindow):
         super().__init__(application=application,
                          transient_for=application.main_window)
         self.item = item
-        names = utilities.get_all_names(self.props.application)
-        keys = list(self.props.application.datadict.keys())
+        names = self.props.application.props.data.props.names
+        keys = self.props.application.props.data.props.keys
         utilities.populate_chooser(self.xposition, misc.X_POSITIONS)
         utilities.populate_chooser(self.yposition, misc.Y_POSITIONS)
         utilities.populate_chooser(self.linestyle, misc.LINESTYLES)
@@ -42,13 +42,12 @@ class EditItemWindow(Adw.PreferencesWindow):
     @Gtk.Template.Callback()
     def on_select(self, _action, _target):
         self.apply()
-        data_list = list(self.props.application.datadict.keys())
         index = self.item_selector.get_selected()
-        self.item = self.props.application.datadict[data_list[index]]
+        self.item = self.props.application.props.data.props.items[index]
         self.load_values()
 
         # If item_selector no longer matches with name, repopulate it
-        names = utilities.get_all_names(self.props.application)
+        names = self.props.application.props.data.props.names
         if set(names) != set(self.item_selector.untranslated_items):
             utilities.populate_chooser(self.item_selector, names, False)
             self.item_selector.set_selected(index)
@@ -87,9 +86,8 @@ class EditItemWindow(Adw.PreferencesWindow):
             utilities.get_selected_chooser_item(self.yposition)
         if isinstance(self.item, Item):
             self.apply_item_values()
-        ui.reload_item_menu(self.props.application)
         self.props.application.props.clipboard.add()
-        graphs.refresh(self.props.application)
+        ui.refresh(self.props.application)
         if set_limits:
             plotting_tools.optimize_limits(self.props.application)
 

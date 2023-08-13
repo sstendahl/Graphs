@@ -6,7 +6,7 @@ from cycler import cycler
 
 from gi.repository import Adw, GLib, Gio, Gtk
 
-from graphs import file_io, graphs, misc, ui, utilities
+from graphs import file_io, misc, ui, utilities
 
 
 def _styles_in_directory(directory):
@@ -334,7 +334,7 @@ class PlotStylesWindow(Adw.Window):
     def on_close(self, _button):
         if self.style is not None:
             self.save_style()
-        graphs.reload(self.props.application)
+        ui.reload(self.props.application)
         self.destroy()
 
     def on_color_change(self, button):

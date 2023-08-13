@@ -3,7 +3,7 @@ import contextlib
 
 from gi.repository import Adw, GLib, GObject, Gdk, Gtk
 
-from graphs import graphs, ui, utilities
+from graphs import ui, utilities
 from graphs.edit_item import EditItemWindow
 from graphs.item import ItemBase
 
@@ -45,13 +45,11 @@ class ItemBox(Gtk.Box):
 
     def on_dnd_drop(self, drop_target, value, _x, _y):
         # Handle the dropped data here
-        self.props.application.datadict
         self.props.application.datadict = utilities.change_key_position(
             self.props.application.datadict, drop_target.key, value)
-        ui.reload_item_menu(self.props.application)
         self.props.application.props.clipboard.add()
         self.props.application.props.view_clipboard.add()
-        graphs.refresh(self.props.application)
+        ui.refresh(self.props.application)
 
     def on_dnd_prepare(self, drag_source, x, y):
         snapshot = Gtk.Snapshot.new()
@@ -80,15 +78,19 @@ class ItemBox(Gtk.Box):
                 self.props.item.set_color(color)
                 self.props.application.props.clipboard.add()
                 self.props.application.props.view_clipboard.add()
-                graphs.refresh(self.props.application)
+                ui.refresh(self.props.application)
 
     @Gtk.Template.Callback()
     def delete(self, _):
-        graphs.delete_item(self.props.application, self.props.item.key, True)
+        # name = self.props.item.props.name
+        self.props.application.props.data.delete_items([self.props.item])
+        # self.props.application.main_window.add_toast(
+        #     _("Deleted {name}").format(name=name),
+        # )
 
     @Gtk.Template.Callback()
     def on_toggle(self, _):
-        graphs.refresh(self.props.application)
+        ui.refresh(self.props.application)
         ui.enable_data_dependent_buttons(self.props.application)
 
     @Gtk.Template.Callback()

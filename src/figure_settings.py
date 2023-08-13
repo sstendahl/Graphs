@@ -111,8 +111,9 @@ class FigureSettingsWindow(Adw.PreferencesWindow):
             self.props.application.props.figure_settings.props.custom_style))
 
         self.hide_unused_axes_limits()
-        if len(self.props.application.datadict) > 0:
-            self.no_data_message.set_visible(False)
+        self.no_data_message.set_visible(
+            self.props.application.props.data.is_empty(),
+        )
         self.present()
 
     def hide_unused_axes_limits(self):

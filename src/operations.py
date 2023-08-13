@@ -2,7 +2,7 @@
 import logging
 from gettext import gettext as _
 
-from graphs import calculation, graphs, plotting_tools
+from graphs import calculation, plotting_tools, ui
 from graphs.item import Item
 from graphs.misc import InteractionMode
 
@@ -59,7 +59,7 @@ def sort_data(xdata, ydata):
 
 def perform_operation(self, callback, *args):
     data_selected = False
-    for item in self.datadict.values():
+    for item in self.props.data.props.items:
         if not item.selected or not isinstance(item, Item):
             continue
         xdata, ydata, start_index, stop_index = get_data(self, item)
@@ -83,7 +83,7 @@ def perform_operation(self, callback, *args):
     if not data_selected:
         self.main_window.add_toast(
             _("No data found within the highlighted area"))
-    graphs.refresh(self)
+    ui.refresh(self)
     plotting_tools.optimize_limits(self)
     self.props.clipboard.add()
 
@@ -157,7 +157,7 @@ def center(_item, xdata, ydata, center_maximum):
     return new_xdata, ydata, True, False
 
 
-def shift_vertically(item, xdata, ydata, left_scale, right_scale, datadict):
+def shift_vertically(item, xdata, ydata, left_scale, right_scale, items):
     """
     Shifts data vertically with respect to each other
     By default it scales linear data by 1.2 times the total span of the
@@ -165,7 +165,7 @@ def shift_vertically(item, xdata, ydata, left_scale, right_scale, datadict):
     """
     shift_value_log = 1
     shift_value_linear = 0
-    data_list = [item for item in datadict.values()
+    data_list = [item for item in items
                  if item.selected and isinstance(item, Item)]
 
     for index, data_item in enumerate(data_list):
@@ -239,7 +239,7 @@ def transform(_item, xdata, ydata, input_x, input_y, discard=False):
 def combine(self):
     """Combine the selected data into a new data set"""
     new_xdata, new_ydata = [], []
-    for item in self.datadict.values():
+    for item in self.props.data.props.items:
         if not item.selected or not isinstance(item, Item):
             continue
         xdata, ydata = get_data(self, item)[:2]
@@ -248,5 +248,6 @@ def combine(self):
 
     # Create the item itself
     new_xdata, new_ydata = sort_data(new_xdata, new_ydata)
-    graphs.add_items(
-        self, [Item.new(self, new_xdata, new_ydata, name=_("Combined Data"))])
+    self.props.data.add_items(
+        [Item.new(self, new_xdata, new_ydata, name=_("Combined Data"))],
+    )

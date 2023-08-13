@@ -4,7 +4,7 @@ from gettext import gettext as _
 
 from gi.repository import Adw, Gtk
 
-from graphs import calculation, graphs, ui, utilities
+from graphs import calculation, ui, utilities
 from graphs.item import Item
 
 KEYS = ["equation", "step-size", "x-start", "x-stop"]
@@ -41,9 +41,9 @@ class AddEquationWindow(Adw.Window):
             name = str(self.name.get_text())
             if name == "":
                 name = f"Y = {values['equation']}"
-            graphs.add_items(
-                self.props.application,
-                [Item.new(self.props.application, xdata, ydata, name=name)])
+            self.props.application.props.data.add_items(
+                [Item.new(self.props.application, xdata, ydata, name=name)],
+            )
             self.destroy()
         except ValueError as error:
             self.toast_overlay.add_toast(Adw.Toast(title=error))

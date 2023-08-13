@@ -10,6 +10,7 @@ from gi.repository import Adw, GLib, GObject, Gio
 from graphs import actions, file_io, migrate, plot_styles, plotting_tools, ui
 from graphs.canvas import Canvas
 from graphs.clipboard import DataClipboard, ViewClipboard
+from graphs.data import Data
 from graphs.figure_settings import FigureSettings
 from graphs.misc import InteractionMode
 from graphs.window import GraphsWindow
@@ -27,7 +28,7 @@ class GraphsApplication(Adw.Application):
     author = GObject.Property(type=str, default="")
     pkgdatadir = GObject.Property(type=str, default="")
 
-    datadict = GObject.Property(type=object)
+    data = GObject.Property(type=Data)
     figure_settings = GObject.Property(type=FigureSettings)
     clipboard = GObject.Property(type=DataClipboard)
     view_clipboard = GObject.Property(type=ViewClipboard)
@@ -38,8 +39,9 @@ class GraphsApplication(Adw.Application):
         super().__init__(
             application_id=args[1], flags=Gio.ApplicationFlags.DEFAULT_FLAGS,
             version=args[0], name=args[2], website=args[3], issues=args[4],
-            author=args[5], pkgdatadir=args[6], datadict={}, settings=settings,
+            author=args[5], pkgdatadir=args[6], settings=settings,
             figure_settings=FigureSettings.new(settings.get_child("figure")),
+            data=Data(self),
         )
         migrate.migrate_config(self)
         font_list = font_manager.findSystemFonts(fontpaths=None, fontext="ttf")
@@ -134,6 +136,12 @@ class GraphsApplication(Adw.Application):
         )
         self.props.figure_settings.connect(
             "notify::custom-style", ui.on_figure_style_change, self,
+        )
+        self.props.data.connect(
+            "items-change", ui.on_items_change, self,
+        )
+        self.props.data.connect(
+            "items-ignored", ui.on_items_ignored, self,
         )
         self.main_window.present()
 

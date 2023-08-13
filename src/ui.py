@@ -6,8 +6,9 @@ from gettext import gettext as _
 
 from gi.repository import Adw, GLib, Gio, Gtk
 
-from graphs import (file_import, file_io, graphs, plotting_tools, project,
+from graphs import (file_import, file_io, plot_styles, plotting_tools, project,
                     utilities)
+from graphs.canvas import Canvas
 from graphs.item import Item
 from graphs.item_box import ItemBox
 
@@ -15,25 +16,46 @@ from matplotlib import pyplot
 
 
 def on_style_change(_shortcut, _theme, _widget, self):
-    graphs.reload(self)
+    reload(self)
 
 
 def on_figure_style_change(_figure_settings, _ignored, self):
-    graphs.reload(self)
+    reload(self)
     if not self.get_settings(
             "general").get_boolean("override-item-properties"):
         return
-    for item in self.datadict.values():
+    items = self.props.data.props.items
+    for item in items:
         item.color = ""
-    for item in self.datadict.values():
+    for item in items:
         item.color = plotting_tools.get_next_color(self)
         if isinstance(item, Item):
             item.linestyle = pyplot.rcParams["lines.linestyle"]
             item.linewidth = float(pyplot.rcParams["lines.linewidth"])
             item.markerstyle = pyplot.rcParams["lines.marker"]
             item.markersize = float(pyplot.rcParams["lines.markersize"])
-    graphs.refresh(self)
-    reload_item_menu(self)
+    refresh(self)
+
+
+def on_items_change(data, self):
+    while self.main_window.item_list.get_last_child() is not None:
+        self.main_window.item_list.remove(
+            self.main_window.item_list.get_last_child())
+
+    for item in data.props.items:
+        self.main_window.item_list.append(ItemBox(self, item))
+    self.main_window.item_list.set_visible(not data.is_empty())
+    refresh(self)
+    enable_data_dependent_buttons(self)
+    self.props.view_clipboard.add()
+
+
+def on_items_ignored(_data, _ignored, ignored, self):
+    if len(ignored) > 1:
+        toast = _("Items {} already exist").format(ignored)
+    else:
+        toast = _("Item {} already exists")
+    self.main_window.add_toast(toast)
 
 
 def set_clipboard_buttons(self):
@@ -55,20 +77,10 @@ def set_clipboard_buttons(self):
 
 def enable_data_dependent_buttons(self):
     enabled = False
-    for item in self.datadict.values():
+    for item in self.props.data.props.items:
         if item.selected and isinstance(item, Item):
             enabled = True
     self.main_window.shift_vertically_button.set_sensitive(enabled)
-
-
-def reload_item_menu(self):
-    while self.main_window.item_list.get_last_child() is not None:
-        self.main_window.item_list.remove(
-            self.main_window.item_list.get_last_child())
-
-    for item in self.datadict.values():
-        self.main_window.item_list.append(ItemBox(self, item))
-    graphs.check_open_data(self)
 
 
 def add_data_dialog(self):
@@ -113,26 +125,26 @@ def open_project_dialog(self):
 
 
 def export_data_dialog(self):
-    if not self.datadict:
+    if self.props.data.is_empty():
         return
-    multiple = len(self.datadict) > 1
+    multiple = len(self.props.data) > 1
 
     def on_response(dialog, response):
         with contextlib.suppress(GLib.GError):
             if multiple:
                 directory = dialog.select_folder_finish(response)
-                for item in self.datadict.values():
+                for item in self.props.data.props.items:
                     file = directory.get_child_for_display_name(
                         f"{item.name}.txt")
                     file_io.save_item(file, item)
             else:
-                item = list(self.datadict.values())[0]
+                item = self.props.data.props.items[0]
                 file_io.save_item(dialog.save_finish(response), item)
     dialog = Gtk.FileDialog()
     if multiple:
         dialog.select_folder(self.main_window, None, on_response)
     else:
-        filename = f"{list(self.datadict.values())[0].name}.txt"
+        filename = f"{self.props.data.props.items[0].name}.txt"
         dialog.set_initial_name(filename)
         dialog.set_filters(
             utilities.create_file_filters([(_("Text Files"), ["txt"])]))
@@ -262,3 +274,21 @@ def bind_values_to_object(source, window, ignorelist=None):
                 logging.warn(_("Unsupported Widget {}").format(type(widget)))
         except AttributeError:
             logging.warn(_("No way to apply “{}”").format(key))
+
+
+def reload(self):
+    """Completely reload the plot of the graph"""
+    pyplot.rcParams.update(
+        file_io.parse_style(plot_styles.get_preferred_style(self)))
+    self.canvas = Canvas(self)
+    self.main_window.toast_overlay.set_child(self.canvas)
+    refresh(self)
+    self.set_mode(None, None, self.interaction_mode)
+    self.canvas.grab_focus()
+
+
+def refresh(self):
+    """Refresh the graph without completely reloading it."""
+    if not self.props.data.is_empty():
+        plotting_tools.hide_unused_axes(self, self.canvas)
+    self.canvas.plot_items(self.props.data.items)

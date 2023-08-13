@@ -4,7 +4,7 @@ from pathlib import Path
 
 from gi.repository import Adw, GObject, Gio, Gtk
 
-from graphs import file_io, graphs, ui, utilities
+from graphs import file_io, ui, utilities
 from graphs.misc import ParseError
 
 
@@ -51,7 +51,7 @@ def import_from_files(self, import_settings_list: list):
         except ParseError as error:
             self.main_window.add_toast(error.message)
             continue
-    graphs.add_items(self, items)
+    self.props.data.add_items(items)
 
 
 def _import_from_file(self, import_settings: ImportSettings):
