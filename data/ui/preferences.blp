@@ -130,6 +130,7 @@ template $PreferencesWindow : Adw.PreferencesWindow {
         show-enable-switch: true;
         Adw.ComboRow figure_custom_style {
           title: _("Style");
+          notify::selected => $on_custom_style_select();
         }
       }
 

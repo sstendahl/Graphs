@@ -39,8 +39,8 @@ class GraphsWindow(Adw.ApplicationWindow):
         app = self.props.application
         operations.perform_operation(
             app, operations.shift_vertically,
-            app.plot_settings.left_scale, app.plot_settings.right_scale,
-            app.datadict)
+            app.props.figure_settings.left_scale,
+            app.props.figure_settings.right_scale, app.datadict)
 
     @Gtk.Template.Callback()
     def normalize(self, *_args):
@@ -56,8 +56,7 @@ class GraphsWindow(Adw.ApplicationWindow):
     def center(self, *_args):
         operations.perform_operation(
             self.props.application, operations.center,
-            self.props.application.settings.get_child(
-                "general").get_enum("center"))
+            self.props.application.get_settings("general").get_enum("center"))
 
     @Gtk.Template.Callback()
     def combine(self, *_args):

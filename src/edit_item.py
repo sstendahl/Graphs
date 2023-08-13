@@ -9,15 +9,14 @@ from graphs.item import Item
 class EditItemWindow(Adw.PreferencesWindow):
     __gtype_name__ = "EditItemWindow"
     item_selector = Gtk.Template.Child()
-    name_entry = Gtk.Template.Child()
-    plot_x_position = Gtk.Template.Child()
-    plot_y_position = Gtk.Template.Child()
+    name = Gtk.Template.Child()
+    xposition = Gtk.Template.Child()
+    yposition = Gtk.Template.Child()
 
     item_group = Gtk.Template.Child()
-
     linestyle = Gtk.Template.Child()
     linewidth = Gtk.Template.Child()
-    markers = Gtk.Template.Child()
+    markerstyle = Gtk.Template.Child()
     markersize = Gtk.Template.Child()
 
     def __init__(self, application, item):
@@ -25,11 +24,12 @@ class EditItemWindow(Adw.PreferencesWindow):
                          transient_for=application.main_window)
         self.item = item
         names = utilities.get_all_names(self.props.application)
-        keys = utilities.get_all_keys(self.props.application)
-        utilities.populate_chooser(self.plot_x_position, misc.X_POSITIONS)
-        utilities.populate_chooser(self.plot_y_position, misc.Y_POSITIONS)
+        keys = list(self.props.application.datadict.keys())
+        utilities.populate_chooser(self.xposition, misc.X_POSITIONS)
+        utilities.populate_chooser(self.yposition, misc.Y_POSITIONS)
         utilities.populate_chooser(self.linestyle, misc.LINESTYLES)
-        utilities.populate_chooser(self.markers, sorted(misc.MARKERS.keys()))
+        utilities.populate_chooser(
+            self.markerstyle, sorted(misc.MARKERS.keys()))
         self.load_values()
         utilities.populate_chooser(self.item_selector, names)
         self.item_selector.set_selected(keys.index(item.key))
@@ -55,11 +55,9 @@ class EditItemWindow(Adw.PreferencesWindow):
 
     def load_values(self):
         self.set_title(self.item.name)
-        self.name_entry.set_text(self.item.name)
-        utilities.set_chooser(
-            self.plot_x_position, self.item.xposition)
-        utilities.set_chooser(
-            self.plot_y_position, self.item.yposition)
+        self.name.set_text(self.item.name)
+        utilities.set_chooser(self.xposition, self.item.xposition)
+        utilities.set_chooser(self.yposition, self.item.yposition)
         self.item_group.set_visible(False)
         if isinstance(self.item, Item):
             self.load_item_values()
@@ -70,23 +68,23 @@ class EditItemWindow(Adw.PreferencesWindow):
         self.linewidth.set_value(self.item.linewidth)
         markerstyle = utilities.get_dict_by_value(
             misc.MARKERS, self.item.markerstyle)
-        utilities.set_chooser(self.markers, markerstyle)
+        utilities.set_chooser(self.markerstyle, markerstyle)
         self.markersize.set_value(self.item.markersize)
 
     def apply(self):
-        self.item.name = self.name_entry.get_text()
+        self.item.name = self.name.get_text()
 
         # Only change limits when axes change, otherwise this is not needed
         set_limits = \
             self.item.xposition \
-            != utilities.get_selected_chooser_item(self.plot_x_position) \
+            != utilities.get_selected_chooser_item(self.xposition) \
             or self.item.yposition \
-            != utilities.get_selected_chooser_item(self.plot_y_position)
+            != utilities.get_selected_chooser_item(self.yposition)
 
         self.item.xposition = \
-            utilities.get_selected_chooser_item(self.plot_x_position)
+            utilities.get_selected_chooser_item(self.xposition)
         self.item.yposition = \
-            utilities.get_selected_chooser_item(self.plot_y_position)
+            utilities.get_selected_chooser_item(self.yposition)
         if isinstance(self.item, Item):
             self.apply_item_values()
         ui.reload_item_menu(self.props.application)
@@ -100,5 +98,5 @@ class EditItemWindow(Adw.PreferencesWindow):
             utilities.get_selected_chooser_item(self.linestyle)
         self.item.linewidth = self.linewidth.get_value()
         self.item.markerstyle = \
-            misc.MARKERS[utilities.get_selected_chooser_item(self.markers)]
+            misc.MARKERS[utilities.get_selected_chooser_item(self.markerstyle)]
         self.item.markersize = self.markersize.get_value()

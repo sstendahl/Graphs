@@ -3,6 +3,8 @@ import uuid
 
 from gi.repository import GObject
 
+from graphs import utilities
+
 from matplotlib import pyplot
 
 
@@ -19,6 +21,9 @@ def new_from_dict(dictionary: dict):
 
 class ItemBase(GObject.Object):
     __gtype_name__ = "ItemBase"
+    __gsignals__ = {
+        "color-change": (GObject.SIGNAL_RUN_FIRST, None, ()),
+    }
 
     name = GObject.Property(type=str, default="")
     color = GObject.Property(type=str, default="")
@@ -42,6 +47,16 @@ class ItemBase(GObject.Object):
     def to_dict(self):
         return {key: self.get_property(key) for key in dir(self.props)}
 
+    def get_color(self):
+        rgba = utilities.hex_to_rgba(self.props.color)
+        rgba.alpha = self.props.alpha
+        return rgba
+
+    def set_color(self, rgba):
+        self.props.color = utilities.rgba_to_hex(rgba)
+        self.props.alpha = rgba.alpha
+        self.emit("color-change")
+
 
 class Item(ItemBase):
     __gtype_name__ = "Item"
@@ -55,7 +70,7 @@ class Item(ItemBase):
 
     @staticmethod
     def new(application, xdata=None, ydata=None, **kwargs):
-        settings = application.settings.get_child("figure")
+        settings = application.get_settings("figure")
         return Item(
             yposition=settings.get_string("y-position"),
             xposition=settings.get_string("x-position"),
@@ -73,6 +88,19 @@ class Item(ItemBase):
         if self.props.ydata is None:
             self.props.ydata = []
 
+    def create_artist(self, axis):
+        linewidth = self.props.linewidth
+        markersize = self.props.markersize
+        if not self.props.selected:
+            linewidth *= 0.35
+            markersize *= 0.35
+        return axis.plot(
+            self.props.xdata, self.props.ydata,
+            color=self.props.color, alpha=self.props.alpha,
+            marker=self.props.markerstyle, linestyle=self.props.linestyle,
+            linewidth=linewidth, markersize=markersize, label=self.props.name,
+        )
+
 
 class TextItem(ItemBase):
     __gtype_name__ = "TextItem"
@@ -85,7 +113,7 @@ class TextItem(ItemBase):
 
     @staticmethod
     def new(application, xanchor=0, yanchor=0, text="", **kwargs):
-        settings = application.settings.get_child("figure")
+        settings = application.get_settings("figure")
         return TextItem(
             yposition=settings.get_string("y-position"),
             xposition=settings.get_string("x-position"),
@@ -97,3 +125,10 @@ class TextItem(ItemBase):
         super().__init__(**kwargs)
         if self.props.color == "":
             self.props.color = pyplot.rcParams["text.color"]
+
+    def create_artist(self, axis):
+        return axis.text(
+            self.props.xanchor, self.props.yanchor, self.props.text,
+            color=self.props.color, alpha=self.props.alpha, clip_on=True,
+            fontsize=self.props.size, rotation=self.props.rotation,
+        )

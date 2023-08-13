@@ -76,12 +76,49 @@ def _migrate_import_params(self, import_file):
     import_file.delete(None)
 
 
+ITEM_MIGRATION_TABLE = {
+    "plot_x_position": "xposition",
+    "plot_y_position": "yposition",
+}
+
+
+PLOT_SETTINGS_MIGRATION_TABLE = {
+    "xlabel": "bottom_label",
+    "ylabel": "left_label",
+    "xscale": "bottom_scale",
+    "yscale": "left_scale",
+    "use_custom_plot_style": "use_custom_style",
+    "custom_plot_style": "custom_style",
+}
+
+LEGEND_POSITIONS = [
+    "best", "upper right", "upper left", "lower left", "lower right",
+    "center left", "center right", "lower center", "upper center", "center",
+]
+
+
 class PlotSettings:
-    pass
+    def migrate(self) -> dict:
+        dictionary = {}
+        for key, value in self.__dict__.items():
+            with contextlib.suppress(KeyError):
+                key = PLOT_SETTINGS_MIGRATION_TABLE[key]
+            if "scale" in key:
+                value = 0 if value == "linear" else 1
+            elif key == "legend_position":
+                value = LEGEND_POSITIONS.index(value)
+            dictionary[key] = value
+        return dictionary
 
 
 class Item:
-    pass
+    def migrate(self) -> dict:
+        dictionary = {
+            ITEM_MIGRATION_TABLE[key] if key in ITEM_MIGRATION_TABLE
+            else key: value for key, value in self.__dict__.items()
+        }
+        dictionary["item_type"] = "Item"
+        return dictionary
 
 
 DEFAULT_VIEW = {
@@ -103,44 +140,11 @@ def migrate_project(file):
 
     return {
         "version": project["version"],
-        "data": [_migrate_item(item) for item in project["data"].values()],
-        "figure-settings": _migrate_plot_settings(project["plot_settings"]),
+        "data": [item.migrate() for item in project["data"].values()],
+        "figure-settings": project["plot_settings"].migrate(),
         "data-clipboard": [{"data": [],
                             "view": DEFAULT_VIEW.copy()}],
         "data-clipboard-position": project["clipboard_pos"],
         "view-clipboard": None,
         "view-clipboard-position": None,
-    }
-
-
-ITEM_MIGRATION_TABLE = {
-    "plot_x_position": "xposition",
-    "plot_y_position": "yposition",
-}
-
-
-def _migrate_item(item: Item) -> dict:
-    dictionary = {
-        ITEM_MIGRATION_TABLE[key] if key in ITEM_MIGRATION_TABLE
-        else key: value for key, value in item.__dict__.items()
-    }
-    dictionary["item_type"] = "Item"
-    return dictionary
-
-
-PLOT_SETTINGS_MIGRATION_TABLE = {
-    "xlabel": "bottom_label",
-    "ylabel": "left_label",
-    "xscale": "bottom_scale",
-    "yscale": "left_scale",
-    "use_custom_plot_style": "use_custom_style",
-    "custom_plot_style": "custom_style",
-}
-
-
-def _migrate_plot_settings(item: Item) -> dict:
-    return {
-        PLOT_SETTINGS_MIGRATION_TABLE[key]
-        if key in PLOT_SETTINGS_MIGRATION_TABLE
-        else key: value for key, value in item.__dict__.items()
     }

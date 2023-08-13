@@ -30,29 +30,38 @@ def add_items(self, items):
                     continue
                 elif handle_duplicates == 3:  # Override
                     item.key = item_1.key
+
+        def _is_default(prop):
+            return self.props.figure_settings.get_property(prop) == \
+                self.get_settings("figure").get_string(prop)
+
         if item.xlabel:
             original_position = item.xposition
             if item.xposition == "bottom":
-                if self.plot_settings.bottom_label == "":
-                    self.plot_settings.bottom_label = item.xlabel
-                elif item.xlabel != self.plot_settings.bottom_label:
+                if _is_default("bottom-label"):
+                    self.props.figure_settings.props.bottom_label = item.xlabel
+                elif item.xlabel != \
+                        self.props.figure_settings.props.bottom_label:
                     item.xposition = "top"
             if item.xposition == "top":
-                if self.plot_settings.top_label == "":
-                    self.plot_settings.top_label = item.xlabel
-                elif item.xlabel != self.plot_settings.bottom_label:
+                if _is_default("top-label"):
+                    self.props.figure_settings.props.top_label = item.xlabel
+                elif item.xlabel != \
+                        self.props.figure_settings.props.bottom_label:
                     item.xposition = original_position
         if item.ylabel:
             original_position = item.yposition
             if item.yposition == "left":
-                if self.plot_settings.left_label == "":
-                    self.plot_settings.left_label = item.ylabel
-                elif item.ylabel != self.plot_settings.left_label:
+                if _is_default("left-label"):
+                    self.props.figure_settings.props.left_label = item.ylabel
+                elif item.ylabel != \
+                        self.props.figure_settings.props.left_label:
                     item.yposition = "right"
             if item.yposition == "right":
-                if self.plot_settings.right_label == "":
-                    self.plot_settings.right_label = item.ylabel
-                elif item.ylabel != self.plot_settings.left_label:
+                if _is_default("right-label"):
+                    self.props.figure_settings.props.right_label = item.ylabel
+                elif item.ylabel != \
+                        self.props.figure_settings.props.left_label:
                     item.yposition = original_position
         if item.color == "":
             item.color = plotting_tools.get_next_color(self)
@@ -108,7 +117,6 @@ def refresh(self):
         item.remove()
     if len(self.datadict) > 0:
         plotting_tools.hide_unused_axes(self, self.canvas)
-    self.canvas.set_axis_properties()
     self.canvas.set_ticks()
     hide_unselected = \
         self.settings.get_child("general").get_boolean("hide-unselected")

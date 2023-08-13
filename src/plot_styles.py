@@ -69,16 +69,16 @@ def get_system_preferred_style(self):
 
 
 def get_preferred_style(self):
-    if not self.plot_settings.use_custom_style:
+    if not self.props.figure_settings.props.use_custom_style:
         return get_system_preferred_style(self)
-    stylename = self.plot_settings.custom_style
+    stylename = self.props.figure_settings.props.custom_style
     try:
         return get_user_styles(self)[stylename]
     except KeyError:
         self.main_window.add_toast(
             _(f"Plot style {stylename} does not exist "
               "loading system preferred"))
-        self.plot_settings.use_custom_style = False
+        self.props.figure_settings.props.use_custom_style = False
         return get_system_preferred_style(self)
 
 

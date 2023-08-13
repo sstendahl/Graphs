@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
-from graphs import graphs, utilities
+from graphs import utilities
 from graphs.item import Item
 
 from matplotlib import pyplot
@@ -7,7 +7,7 @@ from matplotlib import pyplot
 
 def optimize_limits(self):
     self.props.clipboard.clipboard[self.props.clipboard.clipboard_pos][
-        "view"] = self.canvas.limits
+        "view"] = self.props.figure_settings.get_limits()
     used_axes, items = utilities.get_used_axes(self)
     axis_map = {
         "left": self.canvas.axis,
@@ -16,16 +16,6 @@ def optimize_limits(self):
         "bottom": self.canvas.axis,
     }
 
-    limits = {
-        "min_bottom": self.plot_settings.min_bottom,
-        "max_bottom": self.plot_settings.max_bottom,
-        "min_top": self.plot_settings.min_top,
-        "max_top": self.plot_settings.max_top,
-        "min_left": self.plot_settings.min_left,
-        "max_left": self.plot_settings.max_left,
-        "min_right": self.plot_settings.min_right,
-        "max_right": self.plot_settings.max_right,
-    }
     for direction, used in used_axes.items():
         if not used:
             continue
@@ -58,10 +48,8 @@ def optimize_limits(self):
         elif direction in ["left", "right"]:
             min_all *= 0.5
             max_all *= 2
-        limits[f"min_{direction}"] = min_all
-        limits[f"max_{direction}"] = max_all
-    self.canvas.limits = limits
-    self.canvas.apply_limits()
+        self.props.figure_settings.set_property(f"min_{direction}", min_all)
+        self.props.figure_settings.set_property(f"max_{direction}", max_all)
     self.props.view_clipboard.add()
 
 
@@ -85,38 +73,11 @@ def hide_unused_axes(self, canvas):
         canvas.axis.get_xaxis().set_visible(True)
 
 
-def _change_scale(self, action, target):
+def change_scale(action, target, self, prop):
+    self.props.figure_settings.set_property(
+        prop, 0 if target.get_string() == "linear" else 1,
+    )
     action.change_state(target)
-    graphs.refresh(self)
-    optimize_limits(self)
-
-
-def change_left_scale(action, target, self):
-    self.canvas.axis.set_yscale(target.get_string())
-    self.canvas.top_left_axis.set_yscale(target.get_string())
-    self.plot_settings.left_scale = target.get_string()
-    _change_scale(self, action, target)
-
-
-def change_right_scale(action, target, self):
-    self.canvas.top_right_axis.set_yscale(target.get_string())
-    self.canvas.right_axis.set_yscale(target.get_string())
-    self.plot_settings.right_scale = target.get_string()
-    _change_scale(self, action, target)
-
-
-def change_top_scale(action, target, self):
-    self.canvas.top_left_axis.set_xscale(target.get_string())
-    self.canvas.top_right_axis.set_xscale(target.get_string())
-    self.plot_settings.top_scale = target.get_string()
-    _change_scale(self, action, target)
-
-
-def change_bottom_scale(action, target, self):
-    self.canvas.axis.set_xscale(target.get_string())
-    self.canvas.right_axis.set_xscale(target.get_string())
-    self.plot_settings.bottom_scale = target.get_string()
-    _change_scale(self, action, target)
 
 
 def get_next_color(self):

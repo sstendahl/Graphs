@@ -1,13 +1,10 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
-import logging
 import time
 from contextlib import nullcontext
-from gettext import gettext as _
 
 from gi.repository import Adw, GObject, Gtk
 
 from graphs import utilities
-from graphs.item import Item, TextItem
 from graphs.misc import InteractionMode
 from graphs.rename import RenameWindow
 
@@ -15,6 +12,19 @@ from matplotlib import backend_tools as tools, pyplot
 from matplotlib.backend_bases import NavigationToolbar2
 from matplotlib.backends.backend_gtk4cairo import FigureCanvas
 from matplotlib.widgets import SpanSelector
+
+LEGEND_POSITIONS = [
+    "best", "upper right", "upper left", "lower left", "lower right",
+    "center left", "center right", "lower center", "upper center", "center",
+]
+
+
+def _scale_to_string(scale):
+    return "linear" if scale == 0 else "log"
+
+
+def _scale_to_int(scale):
+    return 0 if scale == "linear" else 1
 
 
 class Canvas(FigureCanvas):
@@ -34,23 +44,12 @@ class Canvas(FigureCanvas):
         self.right_axis = self.axis.twinx()
         self.top_left_axis = self.axis.twiny()
         self.top_right_axis = self.top_left_axis.twinx()
-        self.set_axis_properties()
         self.set_ticks()
         color_rgba = \
             utilities.lookup_color(self.props.application, "accent_color")
         self.rubberband_edge_color = utilities.rgba_to_tuple(color_rgba, True)
         color_rgba.alpha = 0.3
         self.rubberband_fill_color = utilities.rgba_to_tuple(color_rgba, True)
-        self.limits = {
-            "min_bottom": self.props.application.plot_settings.min_bottom,
-            "max_bottom": self.props.application.plot_settings.max_bottom,
-            "min_top": self.props.application.plot_settings.min_top,
-            "max_top": self.props.application.plot_settings.max_top,
-            "min_left": self.props.application.plot_settings.min_left,
-            "max_left": self.props.application.plot_settings.max_left,
-            "min_right": self.props.application.plot_settings.min_right,
-            "max_right": self.props.application.plot_settings.max_right,
-        }
         self.legends = []
         for axis in [self.right_axis, self.top_left_axis,
                      self.top_right_axis]:
@@ -58,6 +57,16 @@ class Canvas(FigureCanvas):
             axis.get_yaxis().set_visible(False)
         DummyToolbar(self)
         self.highlight = Highlight(self)
+
+        property_ignorelist = [
+            "legend", "legend_position", "use_custom_style", "custom_style",
+        ]
+
+        for prop in dir(self.props.application.props.figure_settings.props):
+            if prop not in property_ignorelist:
+                self.props.application.props.figure_settings.bind_property(
+                    prop, self, prop, 2,
+                )
 
     # Temporarily overwritten function, see
     # https://github.com/Sjoerd1993/Graphs/issues/259
@@ -79,114 +88,15 @@ class Canvas(FigureCanvas):
             self.figure.draw(self._renderer)
 
     def plot(self, item):
-        x_axis = item.xposition
-        y_axis = item.yposition
-        if y_axis == "left":
-            if x_axis == "bottom":
-                axis = self.axis
-            elif x_axis == "top":
-                axis = self.top_left_axis
-        elif y_axis == "right":
-            if x_axis == "bottom":
-                axis = self.right_axis
-            elif x_axis == "top":
-                axis = self.top_right_axis
-        common_parameters = {
-            "color": item.color,
-            "alpha": item.alpha,
-        }
-        if isinstance(item, Item):
-            linewidth = item.linewidth
-            markersize = item.markersize
-            if not item.selected:
-                linewidth *= 0.35
-                markersize *= 0.35
-            axis.plot(
-                item.xdata, item.ydata,
-                **common_parameters,
-                marker=item.markerstyle, linestyle=item.linestyle,
-                linewidth=linewidth, markersize=markersize, label=item.name)
-        elif isinstance(item, TextItem):
-            axis.text(
-                item.xanchor, item.yanchor, item.text,
-                **common_parameters,
-                clip_on=True, fontsize=item.size, rotation=item.rotation)
-
-    def apply_limits(self):
-        plot_settings = self.props.application.plot_settings
-        plot_settings.min_bottom = min(self.axis.get_xlim())
-        plot_settings.max_bottom = max(self.axis.get_xlim())
-        plot_settings.min_top = min(self.top_left_axis.get_xlim())
-        plot_settings.max_top = max(self.top_left_axis.get_xlim())
-        plot_settings.min_left = min(self.axis.get_ylim())
-        plot_settings.max_left = max(self.axis.get_ylim())
-        plot_settings.min_right = min(self.right_axis.get_ylim())
-        plot_settings.max_right = max(self.right_axis.get_ylim())
-
-    @GObject.Property
-    def limits(self):
-        return {
-            "min_bottom": min(self.axis.get_xlim()),
-            "max_bottom": max(self.axis.get_xlim()),
-            "min_top": min(self.top_left_axis.get_xlim()),
-            "max_top": max(self.top_left_axis.get_xlim()),
-            "min_left": min(self.axis.get_ylim()),
-            "max_left": max(self.axis.get_ylim()),
-            "min_right": min(self.right_axis.get_ylim()),
-            "max_right": max(self.right_axis.get_ylim()),
-        }
-
-    @limits.setter
-    def limits(self, value):
-        try:
-            for axis in [self.axis, self.right_axis]:
-                axis.set_xlim(value["min_bottom"], value["max_bottom"])
-            for axis in [self.top_left_axis, self.top_right_axis]:
-                axis.set_xlim(value["min_top"], value["max_top"])
-            for axis in [self.axis, self.top_left_axis]:
-                axis.set_ylim(value["min_left"], value["max_left"])
-            for axis in [self.right_axis, self.top_right_axis]:
-                axis.set_ylim(value["min_right"], value["max_right"])
-        except ValueError:
-            message = _("Error setting limits, one of the values was "
-                        "probably infinite")
-            self.props.application.main_window.add_toast(message)
-            logging.exception(message)
-
-    def set_axis_properties(self):
-        """Set the properties that are related to the axes."""
-        plot_settings = self.props.application.plot_settings
-        settings = self.props.application.settings.get_child("figure")
-        title = settings.get_string("title") \
-            if plot_settings.title == "" else plot_settings.title
-        bottom_label = settings.get_string("bottom-label") \
-            if plot_settings.bottom_label == "" else plot_settings.bottom_label
-        right_label = settings.get_string("right-label") \
-            if plot_settings.right_label == "" else plot_settings.right_label
-        top_label = settings.get_string("top-label") \
-            if plot_settings.top_label == "" else plot_settings.top_label
-        left_label = settings.get_string("left-label") \
-            if plot_settings.left_label == "" else plot_settings.left_label
-        self.title = self.axis.set_title(title)
-        self.bottom_label = self.axis.set_xlabel(bottom_label)
-        self.right_label = self.right_axis.set_ylabel(right_label)
-        self.top_label = self.top_left_axis.set_xlabel(top_label)
-        self.left_label = self.axis.set_ylabel(left_label)
-        self.axis.set_xscale(plot_settings.bottom_scale)
-        self.axis.set_yscale(plot_settings.left_scale)
-        self.right_axis.set_xscale(plot_settings.bottom_scale)
-        self.right_axis.set_yscale(plot_settings.right_scale)
-        self.top_left_axis.set_xscale(plot_settings.top_scale)
-        self.top_left_axis.set_yscale(plot_settings.left_scale)
-        self.top_right_axis.set_xscale(plot_settings.top_scale)
-        self.top_right_axis.set_yscale(plot_settings.right_scale)
+        item.create_artist(
+            (self.axis if item.xposition == "bottom" else self.top_left_axis)
+            if item.yposition == "left" else
+            (self.right_axis if item.xposition == "bottom"
+                else self.top_right_axis),
+        )
 
     def set_ticks(self):
         """Set the tick parameters for the axes in the plot"""
-        bottom = pyplot.rcParams["xtick.bottom"]
-        left = pyplot.rcParams["ytick.left"]
-        top = pyplot.rcParams["xtick.top"]
-        right = pyplot.rcParams["ytick.right"]
         ticks = "both" if pyplot.rcParams["xtick.minor.visible"] else "major"
         used_axes = utilities.get_used_axes(self.props.application)[0]
 
@@ -201,13 +111,13 @@ class Canvas(FigureCanvas):
         for axis, directions in axes.items():
             # Set tick where requested, as long as that axis is not occupied
             tick_params = {
-                "bottom": bottom and (
+                "bottom": pyplot.rcParams["xtick.bottom"] and (
                     "bottom" in directions or not used_axes["bottom"]),
-                "left": left and (
+                "left": pyplot.rcParams["ytick.left"] and (
                     "left" in directions or not used_axes["left"]),
-                "top": top and (
+                "top": pyplot.rcParams["xtick.top"] and (
                     "top" in directions or not used_axes["top"]),
-                "right": right and (
+                "right": pyplot.rcParams["ytick.right"] and (
                     "right" in directions or not used_axes["right"]),
             }
             axis.tick_params(which=ticks, **tick_params)
@@ -230,8 +140,8 @@ class Canvas(FigureCanvas):
             return
         self.one_click_trigger = False
         self.time_first_click = 0
-        items = {self.title, self.top_label, self.bottom_label,
-                 self.left_label, self.right_label}
+        items = {self._title, self._top_label, self._bottom_label,
+                 self._left_label, self._right_label}
         for item in items:
             if item.contains(event)[0]:
                 RenameWindow(self.props.application, item)
@@ -267,8 +177,7 @@ class Canvas(FigureCanvas):
 
     def set_legend(self):
         """Set the legend of the graph"""
-        plot_settings = self.props.application.plot_settings
-        if plot_settings.legend:
+        if self.props.application.figure_settings.legend:
             self.legends = []
             lines1, labels1 = self.axis.get_legend_handles_labels()
             lines2, labels2 = self.right_axis.get_legend_handles_labels()
@@ -281,11 +190,186 @@ class Canvas(FigureCanvas):
             if labels:
                 self.top_right_axis.legend(
                     new_lines, labels,
-                    loc=plot_settings.legend_position.lower(),
+                    loc=LEGEND_POSITIONS[
+                        self.props.application.figure_settings.legend_position
+                    ],
                     frameon=True, reverse=True)
                 return
         if self.top_right_axis.get_legend() is not None:
             self.top_right_axis.get_legend().remove()
+
+    @GObject.Property(type=str)
+    def title(self):
+        return self.axis.get_title()
+
+    @title.setter
+    def title(self, title: str):
+        self._title = self.axis.set_title(title)
+        self.queue_draw()
+
+    @GObject.Property(type=str)
+    def bottom_label(self):
+        return self.axis.get_xlabel()
+
+    @bottom_label.setter
+    def bottom_label(self, label: str):
+        self._bottom_label = self.axis.set_xlabel(label)
+        self.queue_draw()
+
+    @GObject.Property(type=str)
+    def left_label(self):
+        return self.axis.get_ylabel()
+
+    @left_label.setter
+    def left_label(self, label: str):
+        self._left_label = self.axis.set_ylabel(label)
+        self.queue_draw()
+
+    @GObject.Property(type=str)
+    def top_label(self):
+        return self.top_left_axis.get_xlabel()
+
+    @top_label.setter
+    def top_label(self, label: str):
+        self._top_label = self.top_left_axis.set_xlabel(label)
+        self.queue_draw()
+
+    @GObject.Property(type=str)
+    def right_label(self):
+        return self.right_axis.get_ylabel()
+
+    @right_label.setter
+    def right_label(self, label: str):
+        self._right_label = self.right_axis.set_ylabel(label)
+        self.queue_draw()
+
+    @GObject.Property(type=int)
+    def bottom_scale(self):
+        return _scale_to_int(self.axis.get_xscale())
+
+    @bottom_scale.setter
+    def bottom_scale(self, scale: int):
+        scale = _scale_to_string(scale)
+        for axis in [self.axis, self.right_axis]:
+            axis.set_xscale(scale)
+            axis.set_xlim(self.props.min_bottom, self.props.max_bottom)
+        self.queue_draw()
+
+    @GObject.Property(type=int)
+    def left_scale(self):
+        return _scale_to_int(self.axis.get_yscale())
+
+    @left_scale.setter
+    def left_scale(self, scale: int):
+        scale = _scale_to_string(scale)
+        for axis in [self.axis, self.top_left_axis]:
+            axis.set_yscale(scale)
+            axis.set_ylim(self.props.min_left, self.props.max_left)
+        self.queue_draw()
+
+    @GObject.Property(type=int)
+    def top_scale(self):
+        return _scale_to_int(self.top_left_axis.get_xscale())
+
+    @top_scale.setter
+    def top_scale(self, scale: int):
+        scale = _scale_to_string(scale)
+        for axis in [self.top_right_axis, self.top_left_axis]:
+            axis.set_xscale(scale)
+            axis.set_xlim(self.props.min_top, self.props.max_top)
+        self.queue_draw()
+
+    @GObject.Property(type=int)
+    def right_scale(self):
+        return _scale_to_int(self.right_axis.get_yscale())
+
+    @right_scale.setter
+    def right_scale(self, scale: int):
+        scale = _scale_to_string(scale)
+        for axis in [self.top_right_axis, self.right_axis]:
+            axis.set_yscale(scale)
+            axis.set_ylim(self.props.min_right, self.props.max_right)
+        self.queue_draw()
+
+    @GObject.Property(type=float)
+    def min_bottom(self):
+        return min(self.axis.get_xlim())
+
+    @min_bottom.setter
+    def min_bottom(self, value: float):
+        for axis in [self.axis, self.right_axis]:
+            axis.set_xlim(value, self.props.max_bottom)
+        self.queue_draw()
+
+    @GObject.Property(type=float)
+    def max_bottom(self):
+        return max(self.axis.get_xlim())
+
+    @max_bottom.setter
+    def max_bottom(self, value: float):
+        for axis in [self.axis, self.right_axis]:
+            axis.set_xlim(self.props.min_bottom, value)
+        self.queue_draw()
+
+    @GObject.Property(type=float)
+    def min_left(self):
+        return min(self.axis.get_ylim())
+
+    @min_left.setter
+    def min_left(self, value: float):
+        for axis in [self.axis, self.top_left_axis]:
+            axis.set_ylim(value, self.props.max_left)
+        self.queue_draw()
+
+    @GObject.Property(type=float)
+    def max_left(self):
+        return max(self.axis.get_ylim())
+
+    @max_left.setter
+    def max_left(self, value: float):
+        for axis in [self.axis, self.top_left_axis]:
+            axis.set_ylim(self.props.min_left, value)
+        self.queue_draw()
+
+    @GObject.Property(type=float)
+    def min_top(self):
+        return min(self.top_left_axis.get_xlim())
+
+    @min_top.setter
+    def min_top(self, value: float):
+        for axis in [self.top_left_axis, self.top_right_axis]:
+            axis.set_xlim(value, self.props.max_top)
+        self.queue_draw()
+
+    @GObject.Property(type=float)
+    def max_top(self):
+        return max(self.top_left_axis.get_xlim())
+
+    @max_top.setter
+    def max_top(self, value: float):
+        for axis in [self.top_left_axis, self.top_right_axis]:
+            axis.set_xlim(self.props.min_top, value)
+        self.queue_draw()
+
+    @GObject.Property(type=float)
+    def min_right(self):
+        return min(self.right_axis.get_ylim())
+
+    @min_right.setter
+    def min_right(self, value: float):
+        for axis in [self.right_axis, self.top_right_axis]:
+            axis.set_ylim(value, self.props.max_right)
+        self.queue_draw()
+
+    @GObject.Property(type=float)
+    def max_right(self):
+        return max(self.right_axis.get_ylim())
+
+    @max_right.setter
+    def max_right(self, value: float):
+        for axis in [self.right_axis, self.top_right_axis]:
+            axis.set_ylim(self.props.min_right, value)
+        self.queue_draw()
 
 
 class DummyToolbar(NavigationToolbar2):
@@ -335,7 +419,16 @@ class DummyToolbar(NavigationToolbar2):
 
     # Overwritten function - do not change name
     def push_current(self):
-        self.canvas.apply_limits()
+        self.canvas.props.application.props.figure_settings.set_limits({
+            "min_bottom": self.canvas.props.min_bottom,
+            "max_bottom": self.canvas.props.max_bottom,
+            "min_left": self.canvas.props.min_left,
+            "max_left": self.canvas.props.max_left,
+            "min_top": self.canvas.props.min_top,
+            "max_top": self.canvas.props.max_top,
+            "min_right": self.canvas.props.min_right,
+            "max_right": self.canvas.props.max_right,
+        })
         self.canvas.application.props.view_clipboard.add()
 
     # Overwritten function - do not change name

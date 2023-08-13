@@ -10,8 +10,8 @@ from gi.repository import Adw, GLib, GObject, Gio
 from graphs import actions, file_io, migrate, plot_styles, plotting_tools, ui
 from graphs.canvas import Canvas
 from graphs.clipboard import DataClipboard, ViewClipboard
+from graphs.figure_settings import FigureSettings
 from graphs.misc import InteractionMode
-from graphs.plot_settings import FigureSettings
 from graphs.window import GraphsWindow
 
 from matplotlib import font_manager, pyplot
@@ -52,15 +52,13 @@ class GraphsApplication(Adw.Application):
         self.get_style_manager().connect(
             "notify", ui.on_style_change, None, self)
 
-        self.plot_settings = self.props.figure_settings
-
     def add_actions(self):
         """Create actions, which are defined in actions.py."""
         new_actions = [
             ("quit", ["<primary>q"]),
             ("about", None),
             ("preferences", ["<primary>p"]),
-            ("plot_settings", ["<primary><shift>P"]),
+            ("figure_settings", ["<primary><shift>P"]),
             ("add_data", ["<primary>N"]),
             ("add_equation", ["<primary><alt>N"]),
             ("select_all", ["<primary>A"]),
@@ -92,12 +90,9 @@ class GraphsApplication(Adw.Application):
             string = "linear" if settings.get_enum(val) == 0 else "log"
             action = Gio.SimpleAction.new_stateful(
                 f"change-{val}", GLib.VariantType.new("s"),
-                GLib.Variant.new_string(string))
-            action.connect(
-                "activate",
-                getattr(plotting_tools, f"change_{val.replace('-', '_')}"),
-                self,
+                GLib.Variant.new_string(string),
             )
+            action.connect("activate", plotting_tools.change_scale, self, val)
             self.add_action(action)
 
         self.toggle_sidebar = Gio.SimpleAction.new_stateful(
@@ -134,6 +129,12 @@ class GraphsApplication(Adw.Application):
         ui.set_clipboard_buttons(self)
         ui.enable_data_dependent_buttons(self)
         self.set_mode(None, None, InteractionMode.PAN)
+        self.props.figure_settings.connect(
+            "notify::use-custom-style", ui.on_figure_style_change, self,
+        )
+        self.props.figure_settings.connect(
+            "notify::custom-style", ui.on_figure_style_change, self,
+        )
         self.main_window.present()
 
     def set_mode(self, _action, _target, mode):
@@ -172,6 +173,10 @@ class GraphsApplication(Adw.Application):
         action.connect("activate", self.set_mode, mode)
         self.add_action(action)
         self.set_accels_for_action(f"app.{name}", shortcuts)
+
+    def get_settings(self, child=None):
+        return self.props.settings if child is None \
+            else self.props.settings.get_child(child)
 
 
 def main(args):
