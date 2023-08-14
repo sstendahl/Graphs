@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
+import contextlib
 from gettext import gettext as _
 from pathlib import Path
 
@@ -6,7 +7,7 @@ from cycler import cycler
 
 from gi.repository import Adw, GLib, Gio, Gtk
 
-from graphs import file_io, misc, ui, utilities
+from graphs import file_io, ui, utilities
 
 
 def _styles_in_directory(directory):
@@ -110,6 +111,7 @@ def get_style(self, stylename):
 STYLE_DICT = {
     "linestyle": ["lines.linestyle"],
     "linewidth": ["lines.linewidth"],
+    "markers": ["lines.marker"],
     "markersize": ["lines.markersize"],
     "tick_direction": ["xtick.direction", "ytick.direction"],
     "minor_ticks": ["xtick.minor.visible", "ytick.minor.visible"],
@@ -136,6 +138,12 @@ STYLE_DICT = {
     "grid_opacity": ["grid.alpha"],
     "background_color": ["axes.facecolor"],
     "outline_color": ["figure.facecolor", "figure.edgecolor"],
+}
+VALUE_DICT = {
+    "linestyle": ["none", "solid", "dotted", "dashed", "dashdot"],
+    "markers": ["none", ".", ",", "o", "v", "^", "<", ">", "8", "s", "p", "*",
+                "h", "H", "+", "x", "D", "d", "|", "_", "P", "X"],
+    "tick_direction": ["in", "out"],
 }
 
 
@@ -182,11 +190,6 @@ class PlotStylesWindow(Adw.Window):
         self.style = None
         self.reload_styles()
 
-        # setup editor
-        utilities.populate_chooser(self.linestyle, misc.LINESTYLES)
-        utilities.populate_chooser(self.markers, sorted(misc.MARKERS.keys()))
-        utilities.populate_chooser(self.tick_direction, misc.TICK_DIRECTIONS)
-
         # color actions
         self.color_buttons = [
             self.text_color,
@@ -228,19 +231,16 @@ class PlotStylesWindow(Adw.Window):
 
     def load_style(self):
         self.style_name.set_text(self.style.name)
-        ui.load_values_from_dict(
-            self,
-            {key: self.style[value[0]] for key, value in STYLE_DICT.items()})
+        ui.load_values_from_dict(self, {
+            key: VALUE_DICT[key].index(self.style[value[0]])
+            if key in VALUE_DICT else self.style[value[0]]
+            for key, value in STYLE_DICT.items()
+        })
 
         # font
         font_description = self.font_chooser.get_font_desc().from_string(
             f"{self.style['font.sans-serif']} {self.style['font.size']}")
         self.font_chooser.set_font_desc(font_description)
-
-        # lines
-        utilities.set_chooser(
-            self.markers, utilities.get_dict_by_value(
-                misc.MARKERS, self.style["lines.marker"]))
 
         for button in self.color_buttons:
             button.provider.load_from_data(
@@ -256,6 +256,8 @@ class PlotStylesWindow(Adw.Window):
         new_values = ui.save_values_to_dict(self, STYLE_DICT.keys())
         for key, value in new_values.items():
             if value is not None:
+                with contextlib.suppress(KeyError):
+                    value = VALUE_DICT[key][value]
                 for item in STYLE_DICT[key]:
                     self.style[item] = value
 
@@ -273,10 +275,6 @@ class PlotStylesWindow(Adw.Window):
                     "ytick.labelsize", "axes.titlesize", "legend.fontsize",
                     "figure.titlesize", "figure.labelsize"]:
             self.style[key] = font_size
-
-        # lines
-        self.style["lines.marker"] = \
-            misc.MARKERS[utilities.get_selected_chooser_item(self.markers)]
 
         # line colors
         line_colors = []

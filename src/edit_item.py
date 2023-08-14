@@ -1,7 +1,13 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 from gi.repository import Adw, GObject, Gtk
 
+from graphs import ui
 from graphs.item import Item, ItemBase
+
+IGNORELIST = [
+    "alpha", "color", "item_type", "key", "selected", "xdata", "xlabel",
+    "ydata", "ylabel",
+]
 
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/edit_item.ui")
@@ -50,31 +56,16 @@ class EditItemWindow(Adw.PreferencesWindow):
 
     @Gtk.Template.Callback()
     def on_item_change(self, _a, _b):
-        self.set_title(self.item.name)
-        self.name.set_text(self.item.name)
-        self.xposition.set_selected(self.item.xposition)
-        self.yposition.set_selected(self.item.yposition)
-        self.item_group.set_visible(False)
-        if isinstance(self.item, Item):
-            self.load_item_values()
-
-    def load_item_values(self):
-        self.item_group.set_visible(True)
-        self.linestyle.set_selected(self.item.linestyle)
-        self.linewidth.set_value(self.item.linewidth)
-        self.markerstyle.set_selected(self.item.markerstyle)
-        self.markersize.set_value(self.item.markersize)
+        self.set_title(self.props.item.props.name)
+        ui.load_values_from_dict(
+            self, self.props.item.to_dict(), ignorelist=IGNORELIST,
+        )
+        self.item_group.set_visible(isinstance(self.item, Item))
 
     def apply(self):
-        self.item.name = self.name.get_text()
-        self.item.xposition = self.xposition.get_selected()
-        self.item.yposition = self.yposition.get_selected()
-        if isinstance(self.item, Item):
-            self.apply_item_values()
+        new_values = ui.save_values_to_dict(
+            self, dir(self.props.item.props), ignorelist=IGNORELIST,
+        )
+        for key, value in new_values.items():
+            self.props.item.set_property(key, value)
         self.props.application.props.clipboard.add()
-
-    def apply_item_values(self):
-        self.item.linestyle = self.linestyle.get_selected()
-        self.item.linewidth = self.linewidth.get_value()
-        self.item.markerstyle = self.markerstyle.get_selected()
-        self.item.markersize = self.markersize.get_value()

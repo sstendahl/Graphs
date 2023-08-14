@@ -160,14 +160,16 @@ def show_about_window(self):
     ).present()
 
 
-def load_values_from_dict(window, values: dict):
+def load_values_from_dict(window, values: dict, ignorelist=None):
     for key, value in values.items():
+        if ignorelist is not None and key in ignorelist:
+            continue
         try:
             widget = getattr(window, key.replace("-", "_"))
             if isinstance(widget, Adw.EntryRow):
                 widget.set_text(str(value))
             elif isinstance(widget, Adw.ComboRow):
-                utilities.set_chooser(widget, value)
+                widget.set_selected(int(value))
             elif isinstance(widget, Gtk.SpinButton):
                 widget.set_value(value)
             elif isinstance(widget, Gtk.Switch):
@@ -185,15 +187,17 @@ def load_values_from_dict(window, values: dict):
             logging.warn(_("No way to apply “{}”").format(key))
 
 
-def save_values_to_dict(window, keys: list):
+def save_values_to_dict(window, keys: list, ignorelist=None):
     values = {}
     for key in keys:
+        if ignorelist is not None and key in ignorelist:
+            continue
         with contextlib.suppress(AttributeError):
             widget = getattr(window, key.replace("-", "_"))
             if isinstance(widget, Adw.EntryRow):
                 values[key] = str(widget.get_text())
             elif isinstance(widget, Adw.ComboRow):
-                values[key] = utilities.get_selected_chooser_item(widget)
+                values[key] = widget.get_selected()
             elif isinstance(widget, Gtk.SpinButton):
                 values[key] = widget.get_value()
             elif isinstance(widget, Gtk.Switch):

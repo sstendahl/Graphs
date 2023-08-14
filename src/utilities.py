@@ -38,35 +38,6 @@ def get_used_axes(items):
     return used_axes, axes_items
 
 
-def set_chooser(chooser, choice):
-    """Set the value of a dropdown menu to the choice parameter string"""
-    for index, item in enumerate(chooser.untranslated_items):
-        if item == choice:
-            chooser.set_selected(index)
-
-
-def populate_chooser(chooser, chooser_list, translate=True):
-    """Fill the dropdown menu with the strings in a chooser_list"""
-    if chooser.get_model():
-        model = chooser.get_model()
-        for _item in model:
-            model.remove(0)
-    else:
-        model = Gtk.StringList()
-
-    chooser.untranslated_items = []
-    for item in chooser_list:
-        chooser.untranslated_items.append(item)
-        if translate:
-            item = _(item)
-        model.append(item)
-    chooser.set_model(model)
-
-
-def get_selected_chooser_item(chooser):
-    return chooser.untranslated_items[int(chooser.get_selected())]
-
-
 def get_dict_by_value(dictionary, value):
     """Return the key associated with the given value in the dictionary"""
     for key, dict_value in dictionary.items():
