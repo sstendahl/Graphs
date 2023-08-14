@@ -1,6 +1,5 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 from graphs import utilities
-from graphs.item import Item
 
 from matplotlib import pyplot
 
@@ -23,11 +22,11 @@ def optimize_limits(self):
         if direction in ["top", "bottom"]:
             scale = axis_map[direction].get_xscale()
             datalist = [item.xdata for item in items[direction]
-                        if isinstance(item, Item)]
+                        if item.props.item_type == "Item"]
         elif direction in ["left", "right"]:
             scale = axis_map[direction].get_yscale()
             datalist = [item.ydata for item in items[direction]
-                        if isinstance(item, Item)]
+                        if item.props.item_type == "Item"]
         min_all, max_all = [], []
         for data in datalist:
             nonzero_data = list(filter(lambda x: (x != 0), data))

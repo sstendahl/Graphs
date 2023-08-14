@@ -61,7 +61,7 @@ def sort_data(xdata, ydata):
 def perform_operation(self, callback, *args):
     data_selected = False
     for item in self.props.data.props.items:
-        if not item.selected or not isinstance(item, Item):
+        if not item.selected or item.props.item_type != "Item":
             continue
         xdata, ydata, start_index, stop_index = get_data(self, item)
         if xdata is not None and len(xdata) != 0:
@@ -166,7 +166,7 @@ def shift_vertically(item, xdata, ydata, left_scale, right_scale, items):
     shift_value_log = 1
     shift_value_linear = 0
     data_list = [item for item in items
-                 if item.selected and isinstance(item, Item)]
+                 if item.selected and item.props.item_type == "Item"]
 
     for index, data_item in enumerate(data_list):
         previous_ydata = data_list[index - 1].ydata
@@ -240,7 +240,7 @@ def combine(self):
     """Combine the selected data into a new data set"""
     new_xdata, new_ydata = [], []
     for item in self.props.data.props.items:
-        if not item.selected or not isinstance(item, Item):
+        if not item.selected or item.props.item_type != "Item":
             continue
         xdata, ydata = get_data(self, item)[:2]
         new_xdata.extend(xdata)
