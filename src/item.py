@@ -8,6 +8,13 @@ from graphs import utilities
 from matplotlib import pyplot
 
 
+LINESTYLES = ["none", "solid", "dotted", "dashed", "dashdot"]
+MARKERS = [
+    "none", ".", ",", "o", "v", "^", "<", ">", "8", "s", "p", "*", "h", "H",
+    "+", "x", "D", "d", "|", "_", "P", "X",
+]
+
+
 def new_from_dict(dictionary: dict):
     match dictionary["item_type"]:
         case "Item":
@@ -30,8 +37,8 @@ class ItemBase(GObject.Object):
     selected = GObject.Property(type=bool, default=True)
     xlabel = GObject.Property(type=str, default="")
     ylabel = GObject.Property(type=str, default="")
-    xposition = GObject.Property(type=str, default="bottom")
-    yposition = GObject.Property(type=str, default="left")
+    xposition = GObject.Property(type=int, default=0)
+    yposition = GObject.Property(type=int, default=1)
     alpha = GObject.Property(type=float, default=1, minimum=0, maximum=1)
 
     key = GObject.Property(type=str, default="")
@@ -63,20 +70,20 @@ class Item(ItemBase):
 
     xdata = GObject.Property(type=object)
     ydata = GObject.Property(type=object)
-    linestyle = GObject.Property(type=str, default="solid")
+    linestyle = GObject.Property(type=int, default=1)
     linewidth = GObject.Property(type=float, default=3)
-    markerstyle = GObject.Property(type=str, default="none")
+    markerstyle = GObject.Property(type=int, default=0)
     markersize = GObject.Property(type=float, default=7)
 
     @staticmethod
     def new(application, xdata=None, ydata=None, **kwargs):
         settings = application.get_settings("figure")
         return Item(
-            yposition=settings.get_string("y-position"),
-            xposition=settings.get_string("x-position"),
-            linestyle=pyplot.rcParams["lines.linestyle"],
+            yposition=settings.get_enum("y-position"),
+            xposition=settings.get_enum("x-position"),
+            linestyle=LINESTYLES.index(pyplot.rcParams["lines.linestyle"]),
             linewidth=pyplot.rcParams["lines.linewidth"],
-            markerstyle=pyplot.rcParams["lines.marker"],
+            markerstyle=MARKERS.index(pyplot.rcParams["lines.marker"]),
             markersize=pyplot.rcParams["lines.markersize"],
             xdata=xdata, ydata=ydata, **kwargs,
         )
@@ -97,8 +104,9 @@ class Item(ItemBase):
         return axis.plot(
             self.props.xdata, self.props.ydata,
             color=self.props.color, alpha=self.props.alpha,
-            marker=self.props.markerstyle, linestyle=self.props.linestyle,
-            linewidth=linewidth, markersize=markersize, label=self.props.name,
+            marker=MARKERS[self.props.markerstyle], linewidth=linewidth,
+            linestyle=LINESTYLES[self.props.linestyle],
+            markersize=markersize, label=self.props.name,
         )
 
 
@@ -115,8 +123,8 @@ class TextItem(ItemBase):
     def new(application, xanchor=0, yanchor=0, text="", **kwargs):
         settings = application.get_settings("figure")
         return TextItem(
-            yposition=settings.get_string("y-position"),
-            xposition=settings.get_string("x-position"),
+            yposition=settings.get_enum("y-position"),
+            xposition=settings.get_enum("x-position"),
             size=pyplot.rcParams["font.size"],
             xanchor=xanchor, yanchor=yanchor, text=text, **kwargs,
         )

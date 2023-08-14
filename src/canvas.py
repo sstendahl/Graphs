@@ -104,10 +104,9 @@ class Canvas(FigureCanvas):
             if hide_unselected and not item.selected:
                 continue
             item.create_artist(
-                (self.axis if item.xposition == "bottom"
-                    else self.top_left_axis)
-                if item.yposition == "left" else
-                (self.right_axis if item.xposition == "bottom"
+                (self.axis if item.xposition == 0 else self.top_left_axis)
+                if item.yposition == 0 else
+                (self.right_axis if item.xposition == 0
                     else self.top_right_axis),
             )
         self._set_legend()

@@ -1,8 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
-from gi.repository import Adw, Gtk
+from gi.repository import Adw, GObject, Gtk
 
-from graphs import misc, plotting_tools, utilities
-from graphs.item import Item
+from graphs.item import Item, ItemBase
 
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/edit_item.ui")
@@ -19,20 +18,17 @@ class EditItemWindow(Adw.PreferencesWindow):
     markerstyle = Gtk.Template.Child()
     markersize = Gtk.Template.Child()
 
+    item = GObject.Property(type=ItemBase)
+    names = GObject.Property(type=object)
+
     def __init__(self, application, item):
-        super().__init__(application=application,
-                         transient_for=application.main_window)
-        self.item = item
-        names = self.props.application.props.data.get_names()
-        keys = self.props.application.props.data.get_keys()
-        utilities.populate_chooser(self.xposition, misc.X_POSITIONS)
-        utilities.populate_chooser(self.yposition, misc.Y_POSITIONS)
-        utilities.populate_chooser(self.linestyle, misc.LINESTYLES)
-        utilities.populate_chooser(
-            self.markerstyle, sorted(misc.MARKERS.keys()))
-        self.load_values()
-        utilities.populate_chooser(self.item_selector, names)
-        self.item_selector.set_selected(keys.index(item.key))
+        super().__init__(
+            application=application, transient_for=application.main_window,
+            item=item, names=application.props.data.get_names(),
+        )
+        items = self.props.application.props.data.props.items
+        self.item_selector.set_model(Gtk.StringList.new(self.props.names))
+        self.item_selector.set_selected(items.index(item))
         self.present()
 
     @Gtk.Template.Callback()
@@ -44,56 +40,41 @@ class EditItemWindow(Adw.PreferencesWindow):
         self.apply()
         index = self.item_selector.get_selected()
         self.item = self.props.application.props.data.props.items[index]
-        self.load_values()
 
         # If item_selector no longer matches with name, repopulate it
         names = self.props.application.props.data.get_names()
-        if set(names) != set(self.item_selector.untranslated_items):
-            utilities.populate_chooser(self.item_selector, names, False)
+        if set(names) != set(self.props.names):
+            self.props.names = names
+            self.item_selector.set_model(Gtk.StringList.new(names))
             self.item_selector.set_selected(index)
 
-    def load_values(self):
+    @Gtk.Template.Callback()
+    def on_item_change(self, _a, _b):
         self.set_title(self.item.name)
         self.name.set_text(self.item.name)
-        utilities.set_chooser(self.xposition, self.item.xposition)
-        utilities.set_chooser(self.yposition, self.item.yposition)
+        self.xposition.set_selected(self.item.xposition)
+        self.yposition.set_selected(self.item.yposition)
         self.item_group.set_visible(False)
         if isinstance(self.item, Item):
             self.load_item_values()
 
     def load_item_values(self):
         self.item_group.set_visible(True)
-        utilities.set_chooser(self.linestyle, self.item.linestyle)
+        self.linestyle.set_selected(self.item.linestyle)
         self.linewidth.set_value(self.item.linewidth)
-        markerstyle = utilities.get_dict_by_value(
-            misc.MARKERS, self.item.markerstyle)
-        utilities.set_chooser(self.markerstyle, markerstyle)
+        self.markerstyle.set_selected(self.item.markerstyle)
         self.markersize.set_value(self.item.markersize)
 
     def apply(self):
         self.item.name = self.name.get_text()
-
-        # Only change limits when axes change, otherwise this is not needed
-        set_limits = \
-            self.item.xposition \
-            != utilities.get_selected_chooser_item(self.xposition) \
-            or self.item.yposition \
-            != utilities.get_selected_chooser_item(self.yposition)
-
-        self.item.xposition = \
-            utilities.get_selected_chooser_item(self.xposition)
-        self.item.yposition = \
-            utilities.get_selected_chooser_item(self.yposition)
+        self.item.xposition = self.xposition.get_selected()
+        self.item.yposition = self.yposition.get_selected()
         if isinstance(self.item, Item):
             self.apply_item_values()
         self.props.application.props.clipboard.add()
-        if set_limits:
-            plotting_tools.optimize_limits(self.props.application)
 
     def apply_item_values(self):
-        self.item.linestyle = \
-            utilities.get_selected_chooser_item(self.linestyle)
+        self.item.linestyle = self.linestyle.get_selected()
         self.item.linewidth = self.linewidth.get_value()
-        self.item.markerstyle = \
-            misc.MARKERS[utilities.get_selected_chooser_item(self.markerstyle)]
+        self.item.markerstyle = self.markerstyle.get_selected()
         self.item.markersize = self.markersize.get_value()

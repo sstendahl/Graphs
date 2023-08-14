@@ -23,16 +23,16 @@ def get_used_axes(items):
         "bottom": [],
     }
     for item in items:
-        if item.yposition == "left":
+        if item.yposition == 0:
             used_axes["left"] = True
             axes_items["left"].append(item)
-        if item.yposition == "right":
+        if item.yposition == 1:
             used_axes["right"] = True
             axes_items["right"].append(item)
-        if item.xposition == "top":
+        if item.xposition == 1:
             used_axes["top"] = True
             axes_items["top"].append(item)
-        if item.xposition == "bottom":
+        if item.xposition == 0:
             used_axes["bottom"] = True
             axes_items["bottom"].append(item)
     return used_axes, axes_items

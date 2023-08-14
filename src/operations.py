@@ -25,7 +25,7 @@ def get_data(self, item):
     if self.interaction_mode == InteractionMode.SELECT:
         canvas = self.props.main_window.toast_overlay.get_child()
         startx, stopx = canvas.highlight.get_start_stop(
-            item.xposition == "bottom")
+            item.xposition == 0)
 
         # If startx and stopx are not out of range, that is,
         # if the item data is within the highlight

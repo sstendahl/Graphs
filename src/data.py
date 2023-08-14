@@ -42,15 +42,12 @@ class Data(GObject.Object):
     def get_names(self) -> list:
         return [item.name for item in self._items.values()]
 
-    def get_keys(self) -> list:
-        return list(self._items.keys())
-
     def __len__(self) -> int:
         return len(self._items)
 
     def change_position(self, key1: str, key2: str):
         """Change key position of key2 to that of key1."""
-        keys = self.get_keys()
+        keys = list(self._items.keys())
         values = list(self._items.values())
         index1 = keys.index(key2)
         index2 = keys.index(key1)
@@ -95,24 +92,24 @@ class Data(GObject.Object):
 
             if new_item.xlabel:
                 original_position = new_item.xposition
-                if new_item.xposition == "bottom":
+                if new_item.xposition == 0:
                     if _is_default("bottom-label"):
                         figure_settings.props.bottom_label = new_item.xlabel
                     elif new_item.xlabel != figure_settings.props.bottom_label:
-                        new_item.xposition = "top"
-                if new_item.xposition == "top":
+                        new_item.xposition = 1
+                if new_item.xposition == 1:
                     if _is_default("top-label"):
                         figure_settings.props.top_label = new_item.xlabel
                     elif new_item.xlabel != figure_settings.props.bottom_label:
                         new_item.xposition = original_position
             if new_item.ylabel:
                 original_position = new_item.yposition
-                if new_item.yposition == "left":
+                if new_item.yposition == 0:
                     if _is_default("left-label"):
                         figure_settings.props.left_label = new_item.ylabel
                     elif new_item.ylabel != figure_settings.props.left_label:
-                        new_item.yposition = "right"
-                if new_item.yposition == "right":
+                        new_item.yposition = 1
+                if new_item.yposition == 1:
                     if _is_default("right-label"):
                         figure_settings.props.right_label = new_item.ylabel
                     elif new_item.ylabel != figure_settings.props.left_label:
