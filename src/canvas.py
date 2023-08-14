@@ -44,6 +44,10 @@ class Canvas(FigureCanvas):
         self.right_axis = self.axis.twinx()
         self.top_left_axis = self.axis.twiny()
         self.top_right_axis = self.top_left_axis.twinx()
+        self._axes = [
+            self.axis, self.top_left_axis,
+            self.right_axis, self.top_right_axis,
+        ]
         color_rgba = self.get_style_context().lookup_color("accent_color")[1]
         self.rubberband_edge_color = utilities.rgba_to_tuple(color_rgba, True)
         color_rgba.alpha = 0.3
@@ -97,20 +101,21 @@ class Canvas(FigureCanvas):
                 drawable_items.append(item)
                 used_axes[item.xposition] = True
                 used_axes[2 + item.yposition] = True
-        axes = {
-            self.axis: ["bottom", "left"],
-            self.top_left_axis: ["top", "left"],
-            self.right_axis: ["bottom", "right"],
-            self.top_right_axis: ["top", "right"],
-        }
+        axes_directions = [
+            ["bottom", "left"],   # axis
+            ["top", "left"],      # top_left_axis
+            ["bottom", "right"],  # right_axis
+            ["top", "right"],     # top_right_axis
+        ]
         if not any(used_axes):
             used_axes = [True, False, True, False]
 
         ticks = "both" if pyplot.rcParams["xtick.minor.visible"] else "major"
-        for axis, directions in axes.items():
-            # Set tick where requested, as long as that axis is not occupied
+        for count, directions in enumerate(axes_directions):
+            axis = self._axes[count]
             axis.get_xaxis().set_visible(False)
             axis.get_yaxis().set_visible(False)
+            # Set tick where requested, as long as that axis is not occupied
             axis.tick_params(which=ticks, **{
                 key: pyplot.rcParams[f"{'x' if i < 2 else 'y'}tick.{key}"]
                 and (key in directions or not used_axes[i])
@@ -123,9 +128,7 @@ class Canvas(FigureCanvas):
         self.right_axis.get_yaxis().set_visible(used_axes[3])
 
         for item in reversed(drawable_items):
-            item.create_artist(
-                list(axes.keys())[item.yposition * 2 + item.xposition],
-            )
+            item.create_artist(self._axes[item.yposition * 2 + item.xposition])
         self._set_legend()
 
     # Overwritten function - do not change name
@@ -182,22 +185,21 @@ class Canvas(FigureCanvas):
         context.stroke()
 
     def _set_legend(self):
-        """Set the legend of the graph"""
         if self._legend:
-            lines1, labels1 = self.axis.get_legend_handles_labels()
-            lines2, labels2 = self.right_axis.get_legend_handles_labels()
-            lines3, labels3 = self.top_left_axis.get_legend_handles_labels()
-            lines4, labels4 = self.top_right_axis.get_legend_handles_labels()
-            new_lines = lines1 + lines2 + lines3 + lines4
-            new_labels = labels1 + labels2 + labels3 + labels4
-            labels = \
-                [utilities.shorten_label(label, 40) for label in new_labels]
-            if labels:
+            dictionary = {
+                line: utilities.shorten_label(
+                    axis.get_legend_handles_labels()[1][i], 40,
+                ) for axis in self._axes
+                for i, line in enumerate(axis.get_legend_handles_labels()[0])
+            }
+            if dictionary:
                 self.top_right_axis.legend(
-                    new_lines, labels, loc=self._legend_position, frameon=True,
-                    reverse=True,
+                    dictionary.keys(), dictionary.values(),
+                    loc=self._legend_position, frameon=True, reverse=True,
                 )
-        elif self.top_right_axis.get_legend() is not None:
+                self.queue_draw()
+                return
+        if self.top_right_axis.get_legend() is not None:
             self.top_right_axis.get_legend().remove()
         self.queue_draw()
 
