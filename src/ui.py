@@ -6,8 +6,8 @@ from gettext import gettext as _
 
 from gi.repository import Adw, GLib, Gio, Gtk
 
-from graphs import file_import, file_io, plotting_tools, project, utilities
-from graphs.item import Item
+from graphs import (file_import, file_io, plot_styles, plotting_tools,
+                    project, utilities)
 from graphs.item_box import ItemBox
 
 from matplotlib import pyplot
@@ -18,20 +18,19 @@ def on_style_change(_shortcut, _theme, _widget, self):
 
 
 def on_figure_style_change(_figure_settings, _ignored, self):
-    self.main_window.reload_canvas()
     if not self.get_settings(
             "general").get_boolean("override-item-properties"):
+        self.main_window.reload_canvas()
         return
+    pyplot.rcParams.update(file_io.parse_style(
+        plot_styles.get_preferred_style(self)))
     items = self.props.data.props.items
     for item in items:
-        item.color = ""
+        item.reset()
     for item in items:
-        item.color = plotting_tools.get_next_color(items)
-        if isinstance(item, Item):
-            item.linestyle = pyplot.rcParams["lines.linestyle"]
-            item.linewidth = float(pyplot.rcParams["lines.linewidth"])
-            item.markerstyle = pyplot.rcParams["lines.marker"]
-            item.markersize = float(pyplot.rcParams["lines.markersize"])
+        if item.props.item_type == "Item":
+            item.color = plotting_tools.get_next_color(items)
+    self.main_window.reload_canvas()
 
 
 def on_items_change(data, self):

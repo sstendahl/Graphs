@@ -28,9 +28,6 @@ def new_from_dict(dictionary: dict):
 
 class ItemBase(GObject.Object):
     __gtype_name__ = "ItemBase"
-    __gsignals__ = {
-        "color-change": (GObject.SIGNAL_RUN_FIRST, None, ()),
-    }
 
     name = GObject.Property(type=str, default="")
     color = GObject.Property(type=str, default="")
@@ -60,9 +57,8 @@ class ItemBase(GObject.Object):
         return rgba
 
     def set_color(self, rgba):
-        self.props.color = utilities.rgba_to_hex(rgba)
         self.props.alpha = rgba.alpha
-        self.emit("color-change")
+        self.props.color = utilities.rgba_to_hex(rgba)
 
 
 class Item(ItemBase):
@@ -109,6 +105,14 @@ class Item(ItemBase):
             markersize=markersize, label=self.props.name,
         )
 
+    def reset(self):
+        self.props.linestyle = \
+            LINESTYLES.index(pyplot.rcParams["lines.linestyle"])
+        self.props.linewidth = pyplot.rcParams["lines.linewidth"]
+        self.props.markerstyle = MARKERS.index(pyplot.rcParams["lines.marker"])
+        self.props.markersize = pyplot.rcParams["lines.markersize"]
+        self.color = "000000"
+
 
 class TextItem(ItemBase):
     __gtype_name__ = "TextItem"
@@ -140,3 +144,7 @@ class TextItem(ItemBase):
             color=self.props.color, alpha=self.props.alpha, clip_on=True,
             fontsize=self.props.size, rotation=self.props.rotation,
         )
+
+    def reset(self):
+        self.props.size = pyplot.rcParams["font.size"]
+        self.props.color = pyplot.rcParams["text.color"]

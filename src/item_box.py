@@ -37,8 +37,8 @@ class ItemBox(Gtk.Box):
         self.drop_source.key = item.key
         self.drop_source.connect("drop", self.on_dnd_drop)
 
-        self.item.connect("color-change", self.on_color_change)
-        self.on_color_change(self.props.item)
+        self.item.connect("notify::color", self.on_color_change)
+        self.on_color_change(self.props.item, None)
 
         self.add_controller(self.drag_source)
         self.add_controller(self.drop_source)
@@ -59,7 +59,7 @@ class ItemBox(Gtk.Box):
         data = self.props.item.key
         return Gdk.ContentProvider.new_for_value(data)
 
-    def on_color_change(self, item):
+    def on_color_change(self, item, _ignored):
         self.provider.load_from_data(
             f"button {{ color: {item.color}; opacity: {item.alpha};}}", -1)
 
