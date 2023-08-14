@@ -44,15 +44,10 @@ class Canvas(FigureCanvas):
         self.right_axis = self.axis.twinx()
         self.top_left_axis = self.axis.twiny()
         self.top_right_axis = self.top_left_axis.twinx()
-        self.set_ticks()
         color_rgba = self.get_style_context().lookup_color("accent_color")[1]
         self.rubberband_edge_color = utilities.rgba_to_tuple(color_rgba, True)
         color_rgba.alpha = 0.3
         self.rubberband_fill_color = utilities.rgba_to_tuple(color_rgba, True)
-        for axis in [self.right_axis, self.top_left_axis,
-                     self.top_right_axis]:
-            axis.get_xaxis().set_visible(False)
-            axis.get_yaxis().set_visible(False)
         DummyToolbar(self)
         self.highlight = Highlight(self)
         self._legend = True
@@ -92,61 +87,22 @@ class Canvas(FigureCanvas):
 
     @items.setter
     def items(self, items):
-        if items:
-            self.hide_unused_axes(items)
-        axes = [self.axis, self.right_axis,
-                self.top_left_axis, self.top_right_axis]
-        [i.remove() for ax in axes for i in ax.lines + ax.texts]
-
         hide_unselected = self.props.application.get_settings(
             "general").get_boolean("hide-unselected")
-        for item in reversed(items):
-            if hide_unselected and not item.selected:
-                continue
-            item.create_artist(
-                (self.axis if item.xposition == 0 else self.top_left_axis)
-                if item.yposition == 0 else
-                (self.right_axis if item.xposition == 0
-                    else self.top_right_axis),
-            )
-        self._set_legend()
-
-    def hide_unused_axes(self, items):
-        """
-        Hide axes that are not in use,
-        to avoid unnecessary ticks in the plots.
-        """
-        for axis in [self.axis, self.right_axis,
-                     self.top_left_axis, self.top_right_axis]:
-            axis.get_xaxis().set_visible(False)
-            axis.get_yaxis().set_visible(False)
+        items = [i for i in items if not (not i.selected and hide_unselected)]
         used_axes = utilities.get_used_axes(items)[0]
-        if used_axes["left"]:
-            self.axis.get_yaxis().set_visible(True)
-        if used_axes["right"]:
-            self.right_axis.get_yaxis().set_visible(True)
-        if used_axes["top"]:
-            self.top_left_axis.get_xaxis().set_visible(True)
-        if used_axes["bottom"]:
-            self.axis.get_xaxis().set_visible(True)
-        self.set_ticks()
-
-    def set_ticks(self):
-        """Set the tick parameters for the axes in the plot"""
-        ticks = "both" if pyplot.rcParams["xtick.minor.visible"] else "major"
-        used_axes = utilities.get_used_axes(
-            self.props.application.props.data.props.items)[0]
-
-        # Define axes and their directions
         axes = {
             self.axis: ["bottom", "left"],
-            self.top_right_axis: ["top", "right"],
             self.top_left_axis: ["top", "left"],
             self.right_axis: ["bottom", "right"],
+            self.top_right_axis: ["top", "right"],
         }
 
+        ticks = "both" if pyplot.rcParams["xtick.minor.visible"] else "major"
         for axis, directions in axes.items():
             # Set tick where requested, as long as that axis is not occupied
+            axis.get_xaxis().set_visible(False)
+            axis.get_yaxis().set_visible(False)
             tick_params = {
                 "bottom": pyplot.rcParams["xtick.bottom"] and (
                     "bottom" in directions or not used_axes["bottom"]),
@@ -158,6 +114,21 @@ class Canvas(FigureCanvas):
                     "right" in directions or not used_axes["right"]),
             }
             axis.tick_params(which=ticks, **tick_params)
+            [i.remove() for i in axis.lines + axis.texts]
+        if any(used_axes.values()):
+            self.axis.get_yaxis().set_visible(used_axes["left"])
+            self.right_axis.get_yaxis().set_visible(used_axes["right"])
+            self.top_left_axis.get_xaxis().set_visible(used_axes["top"])
+            self.axis.get_xaxis().set_visible(used_axes["bottom"])
+        else:
+            self.axis.get_xaxis().set_visible(True)
+            self.axis.get_yaxis().set_visible(True)
+
+        for item in reversed(items):
+            item.create_artist(
+                list(axes.keys())[item.yposition * 2 + item.xposition],
+            )
+        self._set_legend()
 
     # Overwritten function - do not change name
     def __call__(self, event):
