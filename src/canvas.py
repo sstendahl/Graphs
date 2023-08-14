@@ -89,42 +89,40 @@ class Canvas(FigureCanvas):
     def items(self, items):
         hide_unselected = self.props.application.get_settings(
             "general").get_boolean("hide-unselected")
-        items = [i for i in items if not (not i.selected and hide_unselected)]
-        used_axes = utilities.get_used_axes(items)[0]
+        drawable_items = []
+        # bottom, top, left, right
+        used_axes = [False, False, False, False]
+        for item in items:
+            if item.selected and not hide_unselected:
+                drawable_items.append(item)
+                used_axes[item.xposition] = True
+                used_axes[2 + item.yposition] = True
         axes = {
             self.axis: ["bottom", "left"],
             self.top_left_axis: ["top", "left"],
             self.right_axis: ["bottom", "right"],
             self.top_right_axis: ["top", "right"],
         }
+        if not any(used_axes):
+            used_axes = [True, False, True, False]
 
         ticks = "both" if pyplot.rcParams["xtick.minor.visible"] else "major"
         for axis, directions in axes.items():
             # Set tick where requested, as long as that axis is not occupied
             axis.get_xaxis().set_visible(False)
             axis.get_yaxis().set_visible(False)
-            tick_params = {
-                "bottom": pyplot.rcParams["xtick.bottom"] and (
-                    "bottom" in directions or not used_axes["bottom"]),
-                "left": pyplot.rcParams["ytick.left"] and (
-                    "left" in directions or not used_axes["left"]),
-                "top": pyplot.rcParams["xtick.top"] and (
-                    "top" in directions or not used_axes["top"]),
-                "right": pyplot.rcParams["ytick.right"] and (
-                    "right" in directions or not used_axes["right"]),
-            }
-            axis.tick_params(which=ticks, **tick_params)
+            axis.tick_params(which=ticks, **{
+                key: pyplot.rcParams[f"{'x' if i < 2 else 'y'}tick.{key}"]
+                and (key in directions or not used_axes[i])
+                for i, key in enumerate(["bottom", "top", "left", "right"])
+            })
             [i.remove() for i in axis.lines + axis.texts]
-        if any(used_axes.values()):
-            self.axis.get_yaxis().set_visible(used_axes["left"])
-            self.right_axis.get_yaxis().set_visible(used_axes["right"])
-            self.top_left_axis.get_xaxis().set_visible(used_axes["top"])
-            self.axis.get_xaxis().set_visible(used_axes["bottom"])
-        else:
-            self.axis.get_xaxis().set_visible(True)
-            self.axis.get_yaxis().set_visible(True)
+        self.axis.get_xaxis().set_visible(used_axes[0])
+        self.top_left_axis.get_xaxis().set_visible(used_axes[1])
+        self.axis.get_yaxis().set_visible(used_axes[2])
+        self.right_axis.get_yaxis().set_visible(used_axes[3])
 
-        for item in reversed(items):
+        for item in reversed(drawable_items):
             item.create_artist(
                 list(axes.keys())[item.yposition * 2 + item.xposition],
             )
