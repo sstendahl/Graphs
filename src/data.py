@@ -26,6 +26,10 @@ class Data(GObject.Object):
     def is_empty(self) -> bool:
         return not self._items
 
+    @GObject.Property(type=bool, default=False, flags=1)
+    def items_selected(self) -> bool:
+        return any(i.selected for i in self._items.values())
+
     @GObject.Property
     def items(self) -> list:
         return list(self._items.values())
@@ -33,14 +37,11 @@ class Data(GObject.Object):
     @items.setter
     def items(self, items: list):
         self._items = {item.key: item for item in items}
-        self.emit("items-change")
 
-    @GObject.Property
-    def names(self) -> list:
+    def get_names(self) -> list:
         return [item.name for item in self._items.values()]
 
-    @GObject.Property
-    def keys(self) -> list:
+    def get_keys(self) -> list:
         return list(self._items.keys())
 
     def __len__(self) -> int:
@@ -58,7 +59,7 @@ class Data(GObject.Object):
                 settings.get_child("figure").get_string(prop)
 
         for new_item in items:
-            names = self.props.names
+            names = self.get_names()
             if new_item.name in names:
                 if handle_duplicates == 0:  # Auto-add
                     i = 1
@@ -100,17 +101,27 @@ class Data(GObject.Object):
                     elif new_item.ylabel != figure_settings.props.left_label:
                         new_item.yposition = original_position
             if new_item.color == "":
-                new_item.color = \
-                    plotting_tools.get_next_color(self.props.application)
+                new_item.color = plotting_tools.get_next_color(
+                    self._items.values(),
+                )
 
+            new_item.connect("notify", self.on_item_change)
             self._items[new_item.key] = new_item
         plotting_tools.optimize_limits(self.props.application)
         self.props.application.props.clipboard.add()
         if ignored:
             self.emit("items-ignored", ", ".join(ignored))
         self.emit("items-change")
+        self.notify("items")
+        self.notify("items_selected")
 
     def delete_items(self, items):
         for i in items:
             del self._items[i.key]
         self.emit("items-change")
+        self.notify("items")
+        self.notify("items_selected")
+
+    def on_item_change(self, _item, _ignored):
+        self.notify("items")
+        self.notify("items_selected")

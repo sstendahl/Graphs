@@ -1,9 +1,12 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 from gi.repository import Adw, GLib, Gtk
 
-from graphs import operations, utilities
+from graphs import file_io, operations, plot_styles, utilities
+from graphs.canvas import Canvas
 from graphs.misc import InteractionMode
 from graphs.transform_data import TransformWindow
+
+from matplotlib import pyplot
 
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/window.ui")
@@ -25,6 +28,22 @@ class GraphsWindow(Adw.ApplicationWindow):
     multiply_x_entry = Gtk.Template.Child()
     multiply_y_entry = Gtk.Template.Child()
     toast_overlay = Gtk.Template.Child()
+
+    def __init__(self, application):
+        super().__init__(application=application)
+        self.props.application.props.data.bind_property(
+            "items_selected", self.shift_vertically_button, "sensitive", 2,
+        )
+        self.reload_canvas()
+
+    def reload_canvas(self):
+        pyplot.rcParams.update(file_io.parse_style(
+            plot_styles.get_preferred_style(self.props.application)))
+        canvas = Canvas(self.props.application)
+        self.toast_overlay.set_child(canvas)
+        self.cut_button.bind_property(
+            "sensitive", canvas.highlight, "enabled", 2,
+        )
 
     def add_toast(self, title):
         self.toast_overlay.add_toast(Adw.Toast(title=title))

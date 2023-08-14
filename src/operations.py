@@ -2,7 +2,7 @@
 import logging
 from gettext import gettext as _
 
-from graphs import calculation, plotting_tools, ui
+from graphs import calculation, plotting_tools
 from graphs.item import Item
 from graphs.misc import InteractionMode
 
@@ -23,7 +23,8 @@ def get_data(self, item):
     start_index = 0
     stop_index = len(xdata)
     if self.interaction_mode == InteractionMode.SELECT:
-        startx, stopx = self.canvas.highlight.get_start_stop(
+        canvas = self.props.main_window.toast_overlay.get_child()
+        startx, stopx = canvas.highlight.get_start_stop(
             item.xposition == "bottom")
 
         # If startx and stopx are not out of range, that is,
@@ -83,7 +84,6 @@ def perform_operation(self, callback, *args):
     if not data_selected:
         self.main_window.add_toast(
             _("No data found within the highlighted area"))
-    ui.refresh(self)
     plotting_tools.optimize_limits(self)
     self.props.clipboard.add()
 

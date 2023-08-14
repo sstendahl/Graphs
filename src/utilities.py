@@ -27,33 +27,33 @@ def change_key_position(dictionary, key1, key2):
     return dict(zip(keys, values))
 
 
-def get_used_axes(self):
+def get_used_axes(items):
     used_axes = {
         "left": False,
         "right": False,
         "top": False,
         "bottom": False,
     }
-    items = {
+    axes_items = {
         "left": [],
         "right": [],
         "top": [],
         "bottom": [],
     }
-    for item in self.props.data.items:
+    for item in items:
         if item.yposition == "left":
             used_axes["left"] = True
-            items["left"].append(item)
+            axes_items["left"].append(item)
         if item.yposition == "right":
             used_axes["right"] = True
-            items["right"].append(item)
+            axes_items["right"].append(item)
         if item.xposition == "top":
             used_axes["top"] = True
-            items["top"].append(item)
+            axes_items["top"].append(item)
         if item.xposition == "bottom":
             used_axes["bottom"] = True
-            items["bottom"].append(item)
-    return used_axes, items
+            axes_items["bottom"].append(item)
+    return used_axes, axes_items
 
 
 def set_chooser(chooser, choice):
@@ -118,10 +118,6 @@ def hex_to_rgba(hex_str):
     rgba = Gdk.RGBA()
     rgba.parse(str(hex_str))
     return rgba
-
-
-def lookup_color(self, color):
-    return self.main_window.get_style_context().lookup_color(color)[1]
 
 
 def rgba_to_hex(rgba):

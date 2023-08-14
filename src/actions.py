@@ -40,19 +40,13 @@ def add_equation_action(_action, _target, self):
 
 
 def select_all_action(_action, _target, self):
-    if self.props.data.is_empty():
-        return
     for item in self.props.data.props.items:
         item.selected = True
-    ui.enable_data_dependent_buttons(self)
 
 
 def select_none_action(_action, _target, self):
-    if self.props.data.is_empty():
-        return
     for item in self.props.data.props.items:
         item.selected = False
-    ui.enable_data_dependent_buttons(self)
 
 
 def undo_action(_action, _target, self):
@@ -65,7 +59,6 @@ def redo_action(_action, _target, self):
 
 def optimize_limits_action(_action, _target, self):
     plotting_tools.optimize_limits(self)
-    ui.refresh(self)
 
 
 def view_back_action(_action, _target, self):

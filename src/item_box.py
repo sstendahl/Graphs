@@ -1,9 +1,10 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 import contextlib
+from gettext import gettext as _
 
 from gi.repository import Adw, GLib, GObject, Gdk, Gtk
 
-from graphs import ui, utilities
+from graphs import utilities
 from graphs.edit_item import EditItemWindow
 from graphs.item import ItemBase
 
@@ -49,7 +50,6 @@ class ItemBox(Gtk.Box):
             self.props.application.datadict, drop_target.key, value)
         self.props.application.props.clipboard.add()
         self.props.application.props.view_clipboard.add()
-        ui.refresh(self.props.application)
 
     def on_dnd_prepare(self, drag_source, x, y):
         snapshot = Gtk.Snapshot.new()
@@ -78,20 +78,14 @@ class ItemBox(Gtk.Box):
                 self.props.item.set_color(color)
                 self.props.application.props.clipboard.add()
                 self.props.application.props.view_clipboard.add()
-                ui.refresh(self.props.application)
 
     @Gtk.Template.Callback()
-    def delete(self, _):
-        # name = self.props.item.props.name
+    def delete(self, _button):
+        name = self.props.item.props.name
         self.props.application.props.data.delete_items([self.props.item])
-        # self.props.application.main_window.add_toast(
-        #     _("Deleted {name}").format(name=name),
-        # )
-
-    @Gtk.Template.Callback()
-    def on_toggle(self, _):
-        ui.refresh(self.props.application)
-        ui.enable_data_dependent_buttons(self.props.application)
+        self.props.application.main_window.add_toast(
+            _("Deleted {name}").format(name=name),
+        )
 
     @Gtk.Template.Callback()
     def edit(self, _):

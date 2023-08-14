@@ -45,28 +45,27 @@ class Canvas(FigureCanvas):
         self.top_left_axis = self.axis.twiny()
         self.top_right_axis = self.top_left_axis.twinx()
         self.set_ticks()
-        color_rgba = \
-            utilities.lookup_color(self.props.application, "accent_color")
+        color_rgba = self.get_style_context().lookup_color("accent_color")[1]
         self.rubberband_edge_color = utilities.rgba_to_tuple(color_rgba, True)
         color_rgba.alpha = 0.3
         self.rubberband_fill_color = utilities.rgba_to_tuple(color_rgba, True)
-        self.legends = []
         for axis in [self.right_axis, self.top_left_axis,
                      self.top_right_axis]:
             axis.get_xaxis().set_visible(False)
             axis.get_yaxis().set_visible(False)
         DummyToolbar(self)
         self.highlight = Highlight(self)
-
-        property_ignorelist = [
-            "legend", "legend_position", "use_custom_style", "custom_style",
-        ]
+        self._legend = True
+        self._legend_position = LEGEND_POSITIONS[0]
 
         for prop in dir(self.props.application.props.figure_settings.props):
-            if prop not in property_ignorelist:
+            if prop not in ["use_custom_style", "custom_style"]:
                 self.props.application.props.figure_settings.bind_property(
-                    prop, self, prop, 2,
+                    prop, self, prop, 1 | 2,
                 )
+        self.props.application.props.data.bind_property(
+            "items", self, "items", 2,
+        )
 
     # Temporarily overwritten function, see
     # https://github.com/Sjoerd1993/Graphs/issues/259
@@ -87,7 +86,14 @@ class Canvas(FigureCanvas):
             self._renderer.dpi = self.figure.dpi
             self.figure.draw(self._renderer)
 
-    def plot_items(self, items):
+    @GObject.Property
+    def items(self):
+        return None
+
+    @items.setter
+    def items(self, items):
+        if items:
+            self.hide_unused_axes(items)
         axes = [self.axis, self.right_axis,
                 self.top_left_axis, self.top_right_axis]
         [i.remove() for ax in axes for i in ax.lines + ax.texts]
@@ -104,13 +110,33 @@ class Canvas(FigureCanvas):
                 (self.right_axis if item.xposition == "bottom"
                     else self.top_right_axis),
             )
-        self.set_legend()
-        self.queue_draw()
+        self._set_legend()
+
+    def hide_unused_axes(self, items):
+        """
+        Hide axes that are not in use,
+        to avoid unnecessary ticks in the plots.
+        """
+        for axis in [self.axis, self.right_axis,
+                     self.top_left_axis, self.top_right_axis]:
+            axis.get_xaxis().set_visible(False)
+            axis.get_yaxis().set_visible(False)
+        used_axes = utilities.get_used_axes(items)[0]
+        if used_axes["left"]:
+            self.axis.get_yaxis().set_visible(True)
+        if used_axes["right"]:
+            self.right_axis.get_yaxis().set_visible(True)
+        if used_axes["top"]:
+            self.top_left_axis.get_xaxis().set_visible(True)
+        if used_axes["bottom"]:
+            self.axis.get_xaxis().set_visible(True)
+        self.set_ticks()
 
     def set_ticks(self):
         """Set the tick parameters for the axes in the plot"""
         ticks = "both" if pyplot.rcParams["xtick.minor.visible"] else "major"
-        used_axes = utilities.get_used_axes(self.props.application)[0]
+        used_axes = utilities.get_used_axes(
+            self.props.application.props.data.props.items)[0]
 
         # Define axes and their directions
         axes = {
@@ -187,10 +213,9 @@ class Canvas(FigureCanvas):
         context.set_source_rgba(color[0], color[1], color[2], color[3])
         context.stroke()
 
-    def set_legend(self):
+    def _set_legend(self):
         """Set the legend of the graph"""
-        if self.props.application.figure_settings.legend:
-            self.legends = []
+        if self._legend:
             lines1, labels1 = self.axis.get_legend_handles_labels()
             lines2, labels2 = self.right_axis.get_legend_handles_labels()
             lines3, labels3 = self.top_left_axis.get_legend_handles_labels()
@@ -201,14 +226,31 @@ class Canvas(FigureCanvas):
                 [utilities.shorten_label(label, 40) for label in new_labels]
             if labels:
                 self.top_right_axis.legend(
-                    new_lines, labels,
-                    loc=LEGEND_POSITIONS[
-                        self.props.application.figure_settings.legend_position
-                    ],
-                    frameon=True, reverse=True)
+                    new_lines, labels, loc=self._legend_position, frameon=True,
+                    reverse=True,
+                )
                 return
         if self.top_right_axis.get_legend() is not None:
             self.top_right_axis.get_legend().remove()
+        self.queue_draw()
+
+    @GObject.Property(type=bool, default=True)
+    def legend(self) -> bool:
+        return self._legend
+
+    @legend.setter
+    def legend(self, legend: bool):
+        self._legend = legend
+        self._set_legend()
+
+    @GObject.Property(type=int, default=0)
+    def legend_position(self) -> int:
+        return LEGEND_POSITIONS.index(self._legend_position)
+
+    @legend_position.setter
+    def legend_position(self, legend_position: int):
+        self._legend_position = LEGEND_POSITIONS[legend_position]
+        self._set_legend()
 
     @GObject.Property(type=str)
     def title(self):
@@ -305,7 +347,7 @@ class Canvas(FigureCanvas):
 
     @GObject.Property(type=float)
     def min_bottom(self):
-        return min(self.axis.get_xlim())
+        return self.axis.get_xlim()[0]
 
     @min_bottom.setter
     def min_bottom(self, value: float):
@@ -315,7 +357,7 @@ class Canvas(FigureCanvas):
 
     @GObject.Property(type=float)
     def max_bottom(self):
-        return max(self.axis.get_xlim())
+        return self.axis.get_xlim()[1]
 
     @max_bottom.setter
     def max_bottom(self, value: float):
@@ -325,7 +367,7 @@ class Canvas(FigureCanvas):
 
     @GObject.Property(type=float)
     def min_left(self):
-        return min(self.axis.get_ylim())
+        return self.axis.get_ylim()[0]
 
     @min_left.setter
     def min_left(self, value: float):
@@ -335,7 +377,7 @@ class Canvas(FigureCanvas):
 
     @GObject.Property(type=float)
     def max_left(self):
-        return max(self.axis.get_ylim())
+        return self.axis.get_ylim()[1]
 
     @max_left.setter
     def max_left(self, value: float):
@@ -345,7 +387,7 @@ class Canvas(FigureCanvas):
 
     @GObject.Property(type=float)
     def min_top(self):
-        return min(self.top_left_axis.get_xlim())
+        return self.top_left_axis.get_xlim()[0]
 
     @min_top.setter
     def min_top(self, value: float):
@@ -355,7 +397,7 @@ class Canvas(FigureCanvas):
 
     @GObject.Property(type=float)
     def max_top(self):
-        return max(self.top_left_axis.get_xlim())
+        return self.top_left_axis.get_xlim()[1]
 
     @max_top.setter
     def max_top(self, value: float):
@@ -365,7 +407,7 @@ class Canvas(FigureCanvas):
 
     @GObject.Property(type=float)
     def min_right(self):
-        return min(self.right_axis.get_ylim())
+        return self.right_axis.get_ylim()[0]
 
     @min_right.setter
     def min_right(self, value: float):
@@ -375,7 +417,7 @@ class Canvas(FigureCanvas):
 
     @GObject.Property(type=float)
     def max_right(self):
-        return max(self.right_axis.get_ylim())
+        return self.right_axis.get_ylim()[1]
 
     @max_right.setter
     def max_right(self, value: float):
@@ -431,16 +473,9 @@ class DummyToolbar(NavigationToolbar2):
 
     # Overwritten function - do not change name
     def push_current(self):
-        self.canvas.props.application.props.figure_settings.set_limits({
-            "min_bottom": self.canvas.props.min_bottom,
-            "max_bottom": self.canvas.props.max_bottom,
-            "min_left": self.canvas.props.min_left,
-            "max_left": self.canvas.props.max_left,
-            "min_top": self.canvas.props.min_top,
-            "max_top": self.canvas.props.max_top,
-            "min_right": self.canvas.props.min_right,
-            "max_right": self.canvas.props.max_right,
-        })
+        for direction in ["bottom", "left", "top", "right"]:
+            self.canvas.notify(f"min-{direction}")
+            self.canvas.notify(f"max-{direction}")
         self.canvas.application.props.view_clipboard.add()
 
     # Overwritten function - do not change name
@@ -448,15 +483,20 @@ class DummyToolbar(NavigationToolbar2):
         pass
 
 
-class Highlight(SpanSelector):
+class Highlight(SpanSelector, GObject.Object):
+    __gtype_name__ = "Highlight"
+
+    canvas = GObject.Property(type=Canvas)
+
     def __init__(self, canvas):
         """
         Create a span selector object, to highlight part of the graph.
         If a span already exists, make it visible instead
         """
+        GObject.Object.__init__(self, canvas=canvas)
         super().__init__(
             canvas.top_right_axis,
-            lambda x, y: self.on_define(canvas),
+            lambda x, y: self.on_define(),
             "horizontal",
             useblit=True,
             props={
@@ -469,16 +509,16 @@ class Highlight(SpanSelector):
             drag_from_anywhere=True,
         )
 
-    def on_define(self, canvas):
+    def on_define(self):
         """
         This ensures that the span selector doesn"t go out of range
         There are some obscure cases where this otherwise happens, and the
         selection tool becomes unusable.
         """
-        xmin, xmax = canvas.top_right_axis.get_xlim()
-        extent_min = max(xmin, self.extents[0])
-        extent_max = min(xmax, self.extents[1])
-        self.extents = (extent_min, extent_max)
+        xmin, xmax = self.props.canvas.top_right_axis.get_xlim()
+        self.extents = (
+            max(xmin, self.extents[0]), min(xmax, self.extents[1]),
+        )
 
     def get_start_stop(self, bottom_x):
         if bottom_x:
@@ -513,3 +553,13 @@ class Highlight(SpanSelector):
             startx = min(self.extents)
             stopx = max(self.extents)
         return startx, stopx
+
+    @GObject.Property(type=bool, default=False)
+    def enabled(self) -> bool:
+        return self.get_active()
+
+    @enabled.setter
+    def enabled(self, enabled: bool):
+        self.set_active(enabled)
+        self.set_visible(enabled)
+        self.props.canvas.queue_draw()

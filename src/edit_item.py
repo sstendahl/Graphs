@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 from gi.repository import Adw, Gtk
 
-from graphs import misc, plotting_tools, ui, utilities
+from graphs import misc, plotting_tools, utilities
 from graphs.item import Item
 
 
@@ -23,8 +23,8 @@ class EditItemWindow(Adw.PreferencesWindow):
         super().__init__(application=application,
                          transient_for=application.main_window)
         self.item = item
-        names = self.props.application.props.data.props.names
-        keys = self.props.application.props.data.props.keys
+        names = self.props.application.props.data.get_names()
+        keys = self.props.application.props.data.get_keys()
         utilities.populate_chooser(self.xposition, misc.X_POSITIONS)
         utilities.populate_chooser(self.yposition, misc.Y_POSITIONS)
         utilities.populate_chooser(self.linestyle, misc.LINESTYLES)
@@ -47,7 +47,7 @@ class EditItemWindow(Adw.PreferencesWindow):
         self.load_values()
 
         # If item_selector no longer matches with name, repopulate it
-        names = self.props.application.props.data.props.names
+        names = self.props.application.props.data.get_names()
         if set(names) != set(self.item_selector.untranslated_items):
             utilities.populate_chooser(self.item_selector, names, False)
             self.item_selector.set_selected(index)
@@ -87,7 +87,6 @@ class EditItemWindow(Adw.PreferencesWindow):
         if isinstance(self.item, Item):
             self.apply_item_values()
         self.props.application.props.clipboard.add()
-        ui.refresh(self.props.application)
         if set_limits:
             plotting_tools.optimize_limits(self.props.application)
 

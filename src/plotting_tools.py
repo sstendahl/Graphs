@@ -8,12 +8,13 @@ from matplotlib import pyplot
 def optimize_limits(self):
     self.props.clipboard.clipboard[self.props.clipboard.clipboard_pos][
         "view"] = self.props.figure_settings.get_limits()
-    used_axes, items = utilities.get_used_axes(self)
+    used_axes, items = utilities.get_used_axes(self.props.data.props.items)
+    canvas = self.main_window.toast_overlay.get_child()
     axis_map = {
-        "left": self.canvas.axis,
-        "right": self.canvas.right_axis,
-        "top": self.canvas.top_left_axis,
-        "bottom": self.canvas.axis,
+        "left": canvas.axis,
+        "right": canvas.right_axis,
+        "top": canvas.top_left_axis,
+        "bottom": canvas.axis,
     }
 
     for direction, used in used_axes.items():
@@ -53,27 +54,6 @@ def optimize_limits(self):
     self.props.view_clipboard.add()
 
 
-def hide_unused_axes(self, canvas):
-    """
-    Hide axes that are not in use,
-    to avoid unnecessary ticks in the plots.
-    """
-    for axis in [canvas.axis, canvas.right_axis,
-                 canvas.top_left_axis, canvas.top_right_axis]:
-        axis.get_xaxis().set_visible(False)
-        axis.get_yaxis().set_visible(False)
-    used_axes = utilities.get_used_axes(self)[0]
-    if used_axes["left"]:
-        canvas.axis.get_yaxis().set_visible(True)
-    if used_axes["right"]:
-        canvas.right_axis.get_yaxis().set_visible(True)
-    if used_axes["top"]:
-        canvas.top_left_axis.get_xaxis().set_visible(True)
-    if used_axes["bottom"]:
-        canvas.axis.get_xaxis().set_visible(True)
-    canvas.set_ticks()
-
-
 def change_scale(action, target, self, prop):
     self.props.figure_settings.set_property(
         prop, 0 if target.get_string() == "linear" else 1,
@@ -81,11 +61,11 @@ def change_scale(action, target, self, prop):
     action.change_state(target)
 
 
-def get_next_color(self):
+def get_next_color(items):
     """Get the color that is to be used for the next data set"""
     color_cycle = pyplot.rcParams["axes.prop_cycle"].by_key()["color"]
     used_colors = []
-    for item in self.props.data.props.items:
+    for item in items:
         used_colors.append(item.color)
         # If we've got all colors once, remove those from used_colors so we
         # can loop around

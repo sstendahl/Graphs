@@ -7,15 +7,14 @@ from inspect import getmembers, isfunction
 
 from gi.repository import Adw, GLib, GObject, Gio
 
-from graphs import actions, file_io, migrate, plot_styles, plotting_tools, ui
-from graphs.canvas import Canvas
+from graphs import actions, migrate, plotting_tools, ui
 from graphs.clipboard import DataClipboard, ViewClipboard
 from graphs.data import Data
 from graphs.figure_settings import FigureSettings
 from graphs.misc import InteractionMode
 from graphs.window import GraphsWindow
 
-from matplotlib import font_manager, pyplot
+from matplotlib import font_manager
 
 
 class GraphsApplication(Adw.Application):
@@ -118,18 +117,13 @@ class GraphsApplication(Adw.Application):
         """
         self.main_window = self.props.active_window
         if not self.main_window:
-            self.main_window = GraphsWindow(application=self)
+            self.main_window = GraphsWindow(self)
         self.main_window.set_title(self.name)
         if "(Development)" in self.name:
             self.main_window.add_css_class("devel")
-        pyplot.rcParams.update(
-            file_io.parse_style(plot_styles.get_preferred_style(self)))
-        self.canvas = Canvas(self)
         self.props.clipboard = DataClipboard(self)
         self.props.view_clipboard = ViewClipboard(self)
-        self.main_window.toast_overlay.set_child(self.canvas)
         ui.set_clipboard_buttons(self)
-        ui.enable_data_dependent_buttons(self)
         self.set_mode(None, None, InteractionMode.PAN)
         self.props.figure_settings.connect(
             "notify::use-custom-style", ui.on_figure_style_change, self,
@@ -148,28 +142,10 @@ class GraphsApplication(Adw.Application):
     def set_mode(self, _action, _target, mode):
         """Set the current UI interaction mode (none, pan, zoom or select)."""
         win = self.main_window
-        pan_button = win.pan_button
-        zoom_button = win.zoom_button
-        if mode == InteractionMode.PAN:
-            pan_button.set_active(True)
-            zoom_button.set_active(False)
-            select = False
-        elif mode == InteractionMode.ZOOM:
-            pan_button.set_active(False)
-            zoom_button.set_active(True)
-            select = False
-        elif mode == InteractionMode.SELECT:
-            pan_button.set_active(False)
-            zoom_button.set_active(False)
-            select = True
-        win.select_button.set_active(select)
-        self.canvas.highlight.set_active(select)
-        self.canvas.highlight.set_visible(select)
-        win.cut_button.set_sensitive(select)
-        for axis in self.canvas.figure.get_axes():
-            axis.set_navigate_mode(mode.name if mode.name != "" else None)
+        win.pan_button.set_active(mode == InteractionMode.PAN)
+        win.zoom_button.set_active(mode == InteractionMode.ZOOM)
+        win.select_button.set_active(mode == InteractionMode.SELECT)
         self.interaction_mode = mode
-        self.canvas.draw()
 
     def on_sidebar_toggle(self, _a, _b):
         visible = self.main_window.sidebar_flap.get_reveal_flap()

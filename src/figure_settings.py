@@ -117,7 +117,8 @@ class FigureSettingsWindow(Adw.PreferencesWindow):
         self.present()
 
     def hide_unused_axes_limits(self):
-        used_axes = utilities.get_used_axes(self.props.application)[0]
+        used_axes = utilities.get_used_axes(
+            self.props.application.props.data.props.items)[0]
         if not used_axes["left"]:
             self.min_left.set_visible(False)
             self.max_left.set_visible(False)

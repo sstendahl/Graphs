@@ -334,7 +334,7 @@ class PlotStylesWindow(Adw.Window):
     def on_close(self, _button):
         if self.style is not None:
             self.save_style()
-        ui.reload(self.props.application)
+        self.props.application.main_window.reload_canvas()
         self.destroy()
 
     def on_color_change(self, button):

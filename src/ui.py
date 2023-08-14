@@ -6,9 +6,7 @@ from gettext import gettext as _
 
 from gi.repository import Adw, GLib, Gio, Gtk
 
-from graphs import (file_import, file_io, plot_styles, plotting_tools, project,
-                    utilities)
-from graphs.canvas import Canvas
+from graphs import file_import, file_io, plotting_tools, project, utilities
 from graphs.item import Item
 from graphs.item_box import ItemBox
 
@@ -16,11 +14,11 @@ from matplotlib import pyplot
 
 
 def on_style_change(_shortcut, _theme, _widget, self):
-    reload(self)
+    self.main_window.reload_canvas()
 
 
 def on_figure_style_change(_figure_settings, _ignored, self):
-    reload(self)
+    self.main_window.reload_canvas()
     if not self.get_settings(
             "general").get_boolean("override-item-properties"):
         return
@@ -28,13 +26,12 @@ def on_figure_style_change(_figure_settings, _ignored, self):
     for item in items:
         item.color = ""
     for item in items:
-        item.color = plotting_tools.get_next_color(self)
+        item.color = plotting_tools.get_next_color(items)
         if isinstance(item, Item):
             item.linestyle = pyplot.rcParams["lines.linestyle"]
             item.linewidth = float(pyplot.rcParams["lines.linewidth"])
             item.markerstyle = pyplot.rcParams["lines.marker"]
             item.markersize = float(pyplot.rcParams["lines.markersize"])
-    refresh(self)
 
 
 def on_items_change(data, self):
@@ -45,8 +42,6 @@ def on_items_change(data, self):
     for item in data.props.items:
         self.main_window.item_list.append(ItemBox(self, item))
     self.main_window.item_list.set_visible(not data.is_empty())
-    refresh(self)
-    enable_data_dependent_buttons(self)
     self.props.view_clipboard.add()
 
 
@@ -73,14 +68,6 @@ def set_clipboard_buttons(self):
         < len(self.props.clipboard.clipboard))
     self.main_window.redo_button.set_sensitive(
         self.props.clipboard.clipboard_pos < - 1)
-
-
-def enable_data_dependent_buttons(self):
-    enabled = False
-    for item in self.props.data.props.items:
-        if item.selected and isinstance(item, Item):
-            enabled = True
-    self.main_window.shift_vertically_button.set_sensitive(enabled)
 
 
 def add_data_dialog(self):
@@ -274,21 +261,3 @@ def bind_values_to_object(source, window, ignorelist=None):
                 logging.warn(_("Unsupported Widget {}").format(type(widget)))
         except AttributeError:
             logging.warn(_("No way to apply “{}”").format(key))
-
-
-def reload(self):
-    """Completely reload the plot of the graph"""
-    pyplot.rcParams.update(
-        file_io.parse_style(plot_styles.get_preferred_style(self)))
-    self.canvas = Canvas(self)
-    self.main_window.toast_overlay.set_child(self.canvas)
-    refresh(self)
-    self.set_mode(None, None, self.interaction_mode)
-    self.canvas.grab_focus()
-
-
-def refresh(self):
-    """Refresh the graph without completely reloading it."""
-    if not self.props.data.is_empty():
-        plotting_tools.hide_unused_axes(self, self.canvas)
-    self.canvas.plot_items(self.props.data.items)
