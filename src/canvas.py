@@ -56,6 +56,7 @@ class Canvas(FigureCanvas):
         self.highlight = Highlight(self)
         self._legend = True
         self._legend_position = LEGEND_POSITIONS[0]
+        self._handles = []
 
         for prop in dir(self.props.application.props.figure_settings.props):
             if prop not in ["use_custom_style", "custom_style"]:
@@ -127,8 +128,13 @@ class Canvas(FigureCanvas):
         self.axis.get_yaxis().set_visible(used_axes[2])
         self.right_axis.get_yaxis().set_visible(used_axes[3])
 
+        self._handles = []
         for item in reversed(drawable_items):
-            item.create_artist(self._axes[item.yposition * 2 + item.xposition])
+            handle = item.create_artist(
+                self._axes[item.yposition * 2 + item.xposition],
+            )
+            if item.props.item_type == "Item":
+                self._handles.append(handle)
         self._set_legend()
 
     # Overwritten function - do not change name
@@ -185,21 +191,12 @@ class Canvas(FigureCanvas):
         context.stroke()
 
     def _set_legend(self):
-        if self._legend:
-            dictionary = {
-                line: utilities.shorten_label(
-                    axis.get_legend_handles_labels()[1][i], 40,
-                ) for axis in self._axes
-                for i, line in enumerate(axis.get_legend_handles_labels()[0])
-            }
-            if dictionary:
-                self.top_right_axis.legend(
-                    dictionary.keys(), dictionary.values(),
-                    loc=self._legend_position, frameon=True, reverse=True,
-                )
-                self.queue_draw()
-                return
-        if self.top_right_axis.get_legend() is not None:
+        if self._legend and self._handles:
+            self.top_right_axis.legend(
+                handles=self._handles, loc=self._legend_position,
+                frameon=True, reverse=True,
+            )
+        elif self.top_right_axis.get_legend() is not None:
             self.top_right_axis.get_legend().remove()
         self.queue_draw()
 

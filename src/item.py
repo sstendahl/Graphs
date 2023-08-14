@@ -103,7 +103,7 @@ class Item(ItemBase):
             marker=MARKERS[self.props.markerstyle], linewidth=linewidth,
             linestyle=LINESTYLES[self.props.linestyle],
             markersize=markersize, label=self.props.name,
-        )
+        )[0]
 
     def reset(self):
         self.props.linestyle = \
