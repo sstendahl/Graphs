@@ -174,7 +174,7 @@ def load_values_from_dict(window, values: dict):
                 widget.set_active(bool(value))
             elif isinstance(widget, Adw.ExpanderRow):
                 widget.set_enable_expansion(bool(value))
-                widget.set_expanded(bool(value))
+                widget.set_expanded(True)
             elif isinstance(widget, Gtk.Scale):
                 widget.set_value(value)
             elif isinstance(widget, Gtk.Button):
@@ -257,6 +257,7 @@ def bind_values_to_object(source, window, ignorelist=None):
                 source.bind_property(key, widget, "selected", 1 | 2)
             elif isinstance(widget, Adw.ExpanderRow):
                 source.bind_property(key, widget, "enable-expansion", 1 | 2)
+                widget.set_expanded(True)
             else:
                 logging.warn(_("Unsupported Widget {}").format(type(widget)))
         except AttributeError:

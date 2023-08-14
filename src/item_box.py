@@ -4,7 +4,6 @@ from gettext import gettext as _
 
 from gi.repository import Adw, GLib, GObject, Gdk, Gtk
 
-from graphs import utilities
 from graphs.edit_item import EditItemWindow
 from graphs.item import ItemBase
 
@@ -46,8 +45,8 @@ class ItemBox(Gtk.Box):
 
     def on_dnd_drop(self, drop_target, value, _x, _y):
         # Handle the dropped data here
-        self.props.application.datadict = utilities.change_key_position(
-            self.props.application.datadict, drop_target.key, value)
+        self.props.application.props.data.change_position(
+            drop_target.key, value)
         self.props.application.props.clipboard.add()
         self.props.application.props.view_clipboard.add()
 
@@ -77,7 +76,6 @@ class ItemBox(Gtk.Box):
             if color is not None:
                 self.props.item.set_color(color)
                 self.props.application.props.clipboard.add()
-                self.props.application.props.view_clipboard.add()
 
     @Gtk.Template.Callback()
     def delete(self, _button):

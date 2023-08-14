@@ -86,9 +86,9 @@ class Canvas(FigureCanvas):
             self._renderer.dpi = self.figure.dpi
             self.figure.draw(self._renderer)
 
-    @GObject.Property
+    @GObject.Property(flags=2)
     def items(self):
-        return None
+        pass
 
     @items.setter
     def items(self, items):
@@ -229,8 +229,7 @@ class Canvas(FigureCanvas):
                     new_lines, labels, loc=self._legend_position, frameon=True,
                     reverse=True,
                 )
-                return
-        if self.top_right_axis.get_legend() is not None:
+        elif self.top_right_axis.get_legend() is not None:
             self.top_right_axis.get_legend().remove()
         self.queue_draw()
 

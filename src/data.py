@@ -37,6 +37,7 @@ class Data(GObject.Object):
     @items.setter
     def items(self, items: list):
         self._items = {item.key: item for item in items}
+        self.emit("items-change")
 
     def get_names(self) -> list:
         return [item.name for item in self._items.values()]
@@ -46,6 +47,22 @@ class Data(GObject.Object):
 
     def __len__(self) -> int:
         return len(self._items)
+
+    def change_position(self, key1: str, key2: str):
+        """Change key position of key2 to that of key1."""
+        keys = self.get_keys()
+        values = list(self._items.values())
+        index1 = keys.index(key2)
+        index2 = keys.index(key1)
+        # Check if target key is lower in the order, if so we can put the old
+        # key below the target key. Otherwise put it above.
+        if index1 < index2:
+            values[index1:index2 + 1] = values[index1 + 1:index2 + 1] + \
+                [self._items[key2]]
+        else:
+            values[index2:index1 + 1] = \
+                [self._items[key2]] + values[index2:index1]
+        self.props.items = values
 
     def add_items(self, items: list) -> list:
         ignored = []
