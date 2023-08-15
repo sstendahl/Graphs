@@ -4,7 +4,7 @@ from contextlib import nullcontext
 
 from gi.repository import Adw, GObject, Gtk
 
-from graphs import utilities
+from graphs import artist, utilities
 from graphs.misc import InteractionMode
 from graphs.rename import RenameWindow
 
@@ -44,7 +44,7 @@ class Canvas(FigureCanvas):
         self.right_axis = self.axis.twinx()
         self.top_left_axis = self.axis.twiny()
         self.top_right_axis = self.top_left_axis.twinx()
-        self._axes = [
+        self.axes = [
             self.axis, self.top_left_axis,
             self.right_axis, self.top_right_axis,
         ]
@@ -113,7 +113,7 @@ class Canvas(FigureCanvas):
 
         ticks = "both" if pyplot.rcParams["xtick.minor.visible"] else "major"
         for count, directions in enumerate(axes_directions):
-            axis = self._axes[count]
+            axis = self.axes[count]
             axis.get_xaxis().set_visible(False)
             axis.get_yaxis().set_visible(False)
             # Set tick where requested, as long as that axis is not occupied
@@ -128,14 +128,11 @@ class Canvas(FigureCanvas):
         self.axis.get_yaxis().set_visible(used_axes[2])
         self.right_axis.get_yaxis().set_visible(used_axes[3])
 
-        self._handles = []
-        for item in reversed(drawable_items):
-            handle = item.create_artist(
-                self._axes[item.yposition * 2 + item.xposition],
-            )
-            if item.props.item_type == "Item":
-                self._handles.append(handle)
-        self._set_legend()
+        self._handles = [
+            artist.new_for_item(self, item)
+            for item in reversed(drawable_items)
+        ]
+        self.update_legend()
 
     # Overwritten function - do not change name
     def __call__(self, event):
@@ -190,13 +187,20 @@ class Canvas(FigureCanvas):
         context.set_source_rgba(color[0], color[1], color[2], color[3])
         context.stroke()
 
-    def _set_legend(self):
+    def update_legend(self):
         if self._legend and self._handles:
-            self.top_right_axis.legend(
-                handles=self._handles, loc=self._legend_position,
-                frameon=True, reverse=True,
-            )
-        elif self.top_right_axis.get_legend() is not None:
+            handles = [
+                handle.get_artist() for handle in self._handles
+                if handle.legend
+            ]
+            if handles:
+                self.top_right_axis.legend(
+                    handles=handles, loc=self._legend_position,
+                    frameon=True, reverse=True,
+                )
+                self.queue_draw()
+                return
+        if self.top_right_axis.get_legend() is not None:
             self.top_right_axis.get_legend().remove()
         self.queue_draw()
 
@@ -207,7 +211,7 @@ class Canvas(FigureCanvas):
     @legend.setter
     def legend(self, legend: bool):
         self._legend = legend
-        self._set_legend()
+        self.update_legend()
 
     @GObject.Property(type=int, default=0)
     def legend_position(self) -> int:
@@ -216,7 +220,7 @@ class Canvas(FigureCanvas):
     @legend_position.setter
     def legend_position(self, legend_position: int):
         self._legend_position = LEGEND_POSITIONS[legend_position]
-        self._set_legend()
+        self.update_legend()
 
     @GObject.Property(type=str)
     def title(self):

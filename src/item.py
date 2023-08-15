@@ -3,16 +3,9 @@ import uuid
 
 from gi.repository import GObject
 
-from graphs import utilities
+from graphs import misc, utilities
 
 from matplotlib import pyplot
-
-
-LINESTYLES = ["none", "solid", "dotted", "dashed", "dashdot"]
-MARKERS = [
-    "none", ".", ",", "o", "v", "^", "<", ">", "8", "s", "p", "*", "h", "H",
-    "+", "x", "D", "d", "|", "_", "P", "X",
-]
 
 
 def new_from_dict(dictionary: dict):
@@ -77,9 +70,13 @@ class Item(ItemBase):
         return Item(
             yposition=settings.get_enum("y-position"),
             xposition=settings.get_enum("x-position"),
-            linestyle=LINESTYLES.index(pyplot.rcParams["lines.linestyle"]),
+            linestyle=misc.LINESTYLES.index(
+                pyplot.rcParams["lines.linestyle"],
+            ),
             linewidth=pyplot.rcParams["lines.linewidth"],
-            markerstyle=MARKERS.index(pyplot.rcParams["lines.marker"]),
+            markerstyle=misc.MARKERSTYLES.index(
+                pyplot.rcParams["lines.marker"],
+            ),
             markersize=pyplot.rcParams["lines.markersize"],
             xdata=xdata, ydata=ydata, **kwargs,
         )
@@ -91,25 +88,12 @@ class Item(ItemBase):
         if self.props.ydata is None:
             self.props.ydata = []
 
-    def create_artist(self, axis):
-        linewidth = self.props.linewidth
-        markersize = self.props.markersize
-        if not self.props.selected:
-            linewidth *= 0.35
-            markersize *= 0.35
-        return axis.plot(
-            self.props.xdata, self.props.ydata,
-            color=self.props.color, alpha=self.props.alpha,
-            marker=MARKERS[self.props.markerstyle], linewidth=linewidth,
-            linestyle=LINESTYLES[self.props.linestyle],
-            markersize=markersize, label=self.props.name,
-        )[0]
-
     def reset(self):
         self.props.linestyle = \
-            LINESTYLES.index(pyplot.rcParams["lines.linestyle"])
+            misc.LINESTYLES.index(pyplot.rcParams["lines.linestyle"])
         self.props.linewidth = pyplot.rcParams["lines.linewidth"]
-        self.props.markerstyle = MARKERS.index(pyplot.rcParams["lines.marker"])
+        self.props.markerstyle = \
+            misc.MARKERSTyLES.index(pyplot.rcParams["lines.marker"])
         self.props.markersize = pyplot.rcParams["lines.markersize"]
         self.color = "000000"
 
@@ -137,13 +121,6 @@ class TextItem(ItemBase):
         super().__init__(**kwargs)
         if self.props.color == "":
             self.props.color = pyplot.rcParams["text.color"]
-
-    def create_artist(self, axis):
-        return axis.text(
-            self.props.xanchor, self.props.yanchor, self.props.text,
-            color=self.props.color, alpha=self.props.alpha, clip_on=True,
-            fontsize=self.props.size, rotation=self.props.rotation,
-        )
 
     def reset(self):
         self.props.size = pyplot.rcParams["font.size"]

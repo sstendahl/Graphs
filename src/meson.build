@@ -11,6 +11,7 @@ configuration: conf,
 graphs_sources = [
   'actions.py',
   'add_equation.py',
+  'artist.py',
   'calculation.py',
   'canvas.py',
   'clipboard.py',

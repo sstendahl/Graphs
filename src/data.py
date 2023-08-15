@@ -137,5 +137,4 @@ class Data(GObject.Object):
         self.notify("items_selected")
 
     def on_item_change(self, _item, _ignored):
-        self.notify("items")
         self.notify("items_selected")
