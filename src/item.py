@@ -28,7 +28,7 @@ class ItemBase(GObject.Object):
     xlabel = GObject.Property(type=str, default="")
     ylabel = GObject.Property(type=str, default="")
     xposition = GObject.Property(type=int, default=0)
-    yposition = GObject.Property(type=int, default=1)
+    yposition = GObject.Property(type=int, default=0)
     alpha = GObject.Property(type=float, default=1, minimum=0, maximum=1)
 
     key = GObject.Property(type=str, default="")

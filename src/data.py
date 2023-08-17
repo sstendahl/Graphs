@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 from gi.repository import GObject
 
-from graphs import item, plotting_tools
+from graphs import item, plotting_tools, ui
 
 
 class Data(GObject.Object):
@@ -37,6 +37,8 @@ class Data(GObject.Object):
     @items.setter
     def items(self, items: list):
         self._items = {item.key: item for item in items}
+        for item in items:
+            self._connect_to_item(item)
         self.emit("items-change")
 
     def get_names(self) -> list:
@@ -119,7 +121,7 @@ class Data(GObject.Object):
                     self._items.values(),
                 )
 
-            new_item.connect("notify", self.on_item_change)
+            self._connect_to_item(new_item)
             self._items[new_item.key] = new_item
         plotting_tools.optimize_limits(self.props.application)
         self.props.application.props.clipboard.add()
@@ -136,5 +138,13 @@ class Data(GObject.Object):
         self.notify("items")
         self.notify("items_selected")
 
-    def on_item_change(self, _item, _ignored):
-        self.notify("items_selected")
+    def _connect_to_item(self, item):
+        item.connect(
+            "notify::selected", lambda _x, _y: self.notify("items_selected"),
+        )
+        for prop in ["xposition", "yposition"]:
+            item.connect(f"notify::{prop}", self._on_item_position_change)
+
+    def _on_item_position_change(self, _item, _ignored):
+        plotting_tools.optimize_limits(self.props.application)
+        self.notify("items")
