@@ -2,7 +2,7 @@
 """Main actions."""
 from gettext import gettext as _
 
-from graphs import plotting_tools, ui
+from graphs import ui, utilities
 from graphs.add_equation import AddEquationWindow
 from graphs.export_figure import ExportFigureWindow
 from graphs.figure_settings import FigureSettingsWindow
@@ -58,7 +58,7 @@ def redo_action(_action, _target, self):
 
 
 def optimize_limits_action(_action, _target, self):
-    plotting_tools.optimize_limits(self)
+    utilities.optimize_limits(self)
 
 
 def view_back_action(_action, _target, self):

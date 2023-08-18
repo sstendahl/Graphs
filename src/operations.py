@@ -2,7 +2,7 @@
 import logging
 from gettext import gettext as _
 
-from graphs import calculation, plotting_tools
+from graphs import calculation, utilities
 from graphs.item import Item
 from graphs.misc import InteractionMode
 
@@ -84,7 +84,7 @@ def perform_operation(self, callback, *args):
     if not data_selected:
         self.main_window.add_toast(
             _("No data found within the highlighted area"))
-    plotting_tools.optimize_limits(self)
+    utilities.optimize_limits(self)
     self.props.clipboard.add()
 
 

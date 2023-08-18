@@ -6,8 +6,7 @@ from gettext import gettext as _
 
 from gi.repository import Adw, GLib, Gio, Gtk
 
-from graphs import (file_import, file_io, plot_styles, plotting_tools,
-                    project, utilities)
+from graphs import file_import, file_io, plot_styles, project, utilities
 from graphs.item_box import ItemBox
 
 from matplotlib import pyplot
@@ -29,7 +28,7 @@ def on_figure_style_change(_figure_settings, _ignored, self):
         item.reset()
     for item in items:
         if item.props.item_type == "Item":
-            item.color = plotting_tools.get_next_color(items)
+            item.color = utilities.get_next_color(items)
     self.main_window.reload_canvas()
 
 
@@ -50,6 +49,13 @@ def on_items_ignored(_data, _ignored, ignored, self):
     else:
         toast = _("Item {} already exists")
     self.main_window.add_toast(toast)
+
+
+def on_scale_action(action, target, self, prop):
+    self.props.figure_settings.set_property(
+        prop, 0 if target.get_string() == "linear" else 1,
+    )
+    action.change_state(target)
 
 
 def set_clipboard_buttons(self):

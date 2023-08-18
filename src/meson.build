@@ -28,7 +28,6 @@ graphs_sources = [
   'misc.py',
   'operations.py',
   'plot_styles.py',
-  'plotting_tools.py',
   'preferences.py',
   'project.py',
   'rename.py',

@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 from gi.repository import GObject
 
-from graphs import item, plotting_tools
+from graphs import item, utilities
 
 
 class Data(GObject.Object):
@@ -117,13 +117,13 @@ class Data(GObject.Object):
                     elif new_item.ylabel != figure_settings.props.left_label:
                         new_item.yposition = original_position
             if new_item.color == "":
-                new_item.color = plotting_tools.get_next_color(
+                new_item.color = utilities.get_next_color(
                     self._items.values(),
                 )
 
             self._connect_to_item(new_item)
             self._items[new_item.key] = new_item
-        plotting_tools.optimize_limits(self.props.application)
+        utilities.optimize_limits(self.props.application)
         self.props.application.props.clipboard.add()
         if ignored:
             self.emit("items-ignored", ", ".join(ignored))
@@ -146,5 +146,5 @@ class Data(GObject.Object):
             item.connect(f"notify::{prop}", self._on_item_position_change)
 
     def _on_item_position_change(self, _item, _ignored):
-        plotting_tools.optimize_limits(self.props.application)
+        utilities.optimize_limits(self.props.application)
         self.notify("items")

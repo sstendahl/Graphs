@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 from gi.repository import Gio
 
-from graphs import file_io, migrate, plotting_tools, ui
+from graphs import file_io, migrate, ui, utilities
 from graphs.figure_settings import FigureSettings
 
 
@@ -36,7 +36,7 @@ def load_project(self, file: Gio.File):
 
     # migrated project
     if project["view-clipboard"] is None:
-        plotting_tools.optimize_limits(self)
+        utilities.optimize_limits(self)
         self.props.view_clipboard.add()
     else:
         clipboard = project["view-clipboard"]

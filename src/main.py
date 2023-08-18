@@ -7,7 +7,7 @@ from inspect import getmembers, isfunction
 
 from gi.repository import Adw, GLib, GObject, Gio
 
-from graphs import actions, migrate, plotting_tools, ui
+from graphs import actions, migrate, ui, utilities
 from graphs.clipboard import DataClipboard, ViewClipboard
 from graphs.data import Data
 from graphs.figure_settings import FigureSettings
@@ -93,7 +93,7 @@ class GraphsApplication(Adw.Application):
                 f"change-{val}", GLib.VariantType.new("s"),
                 GLib.Variant.new_string(string),
             )
-            action.connect("activate", plotting_tools.change_scale, self, val)
+            action.connect("activate", ui.on_scale_action, self, val)
             self.add_action(action)
 
         self.toggle_sidebar = Gio.SimpleAction.new_stateful(
