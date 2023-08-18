@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 from gi.repository import Adw, GObject, Gtk
 
-from graphs import plot_styles, ui, utilities
+from graphs import plot_styles, ui
 
 
 class FigureSettings(GObject.Object):
@@ -117,20 +117,18 @@ class FigureSettingsWindow(Adw.PreferencesWindow):
         self.present()
 
     def hide_unused_axes_limits(self):
-        used_axes = utilities.get_used_axes(
-            self.props.application.props.data.props.items)[0]
-        if not used_axes["left"]:
-            self.min_left.set_visible(False)
-            self.max_left.set_visible(False)
-        if not used_axes["right"]:
-            self.min_right.set_visible(False)
-            self.max_right.set_visible(False)
-        if not used_axes["top"]:
-            self.min_top.set_visible(False)
-            self.max_top.set_visible(False)
-        if not used_axes["bottom"]:
-            self.min_bottom.set_visible(False)
-            self.max_bottom.set_visible(False)
+        used_axes = [
+            ["bottom", False],
+            ["left", False],
+            ["top", False],
+            ["right", False],
+        ]
+        for item in self.props.application.props.data.props.items:
+            for index in item.xposition * 2, 1 + item.yposition * 2:
+                used_axes[index][1] = True
+        for (direction, visible) in used_axes:
+            getattr(self, f"min_{direction}").set_visible(visible)
+            getattr(self, f"max_{direction}").set_visible(visible)
 
     @Gtk.Template.Callback()
     def on_close(self, *_args):

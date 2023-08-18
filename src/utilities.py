@@ -9,35 +9,6 @@ from gi.repository import GLib, Gdk, Gio, Gtk
 import numpy
 
 
-def get_used_axes(items):
-    used_axes = {
-        "left": False,
-        "right": False,
-        "top": False,
-        "bottom": False,
-    }
-    axes_items = {
-        "left": [],
-        "right": [],
-        "top": [],
-        "bottom": [],
-    }
-    for item in items:
-        if item.yposition == 0:
-            used_axes["left"] = True
-            axes_items["left"].append(item)
-        if item.yposition == 1:
-            used_axes["right"] = True
-            axes_items["right"].append(item)
-        if item.xposition == 1:
-            used_axes["top"] = True
-            axes_items["top"].append(item)
-        if item.xposition == 0:
-            used_axes["bottom"] = True
-            axes_items["bottom"].append(item)
-    return used_axes, axes_items
-
-
 def get_dict_by_value(dictionary, value):
     """Return the key associated with the given value in the dictionary"""
     for key, dict_value in dictionary.items():
