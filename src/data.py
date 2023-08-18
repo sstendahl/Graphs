@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 from gi.repository import GObject
 
-from graphs import item, plotting_tools, ui
+from graphs import item, plotting_tools
 
 
 class Data(GObject.Object):
@@ -37,8 +37,8 @@ class Data(GObject.Object):
     @items.setter
     def items(self, items: list):
         self._items = {item.key: item for item in items}
-        for item in items:
-            self._connect_to_item(item)
+        for i in items:
+            self._connect_to_item(i)
         self.emit("items-change")
 
     def get_names(self) -> list:
