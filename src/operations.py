@@ -4,7 +4,6 @@ from gettext import gettext as _
 
 from graphs import calculation, utilities
 from graphs.item import Item
-from graphs.misc import InteractionMode
 
 import numpy
 
@@ -22,7 +21,7 @@ def get_data(self, item):
     new_ydata = ydata.copy()
     start_index = 0
     stop_index = len(xdata)
-    if self.interaction_mode == InteractionMode.SELECT:
+    if self.props.mode == 2:
         canvas = self.props.main_window.toast_overlay.get_child()
         startx, stopx = canvas.highlight.get_start_stop(
             item.xposition == 0)

@@ -3,15 +3,13 @@
 import logging
 import sys
 from gettext import gettext as _
-from inspect import getmembers, isfunction
 
 from gi.repository import Adw, GLib, GObject, Gio
 
-from graphs import actions, migrate, ui, utilities
+from graphs import actions, migrate, ui
 from graphs.clipboard import DataClipboard, ViewClipboard
 from graphs.data import Data
 from graphs.figure_settings import FigureSettings
-from graphs.misc import InteractionMode
 from graphs.window import GraphsWindow
 
 from matplotlib import font_manager
@@ -31,6 +29,7 @@ class GraphsApplication(Adw.Application):
     figure_settings = GObject.Property(type=FigureSettings)
     clipboard = GObject.Property(type=DataClipboard)
     view_clipboard = GObject.Property(type=ViewClipboard)
+    mode = GObject.Property(type=int, default=0, minimum=0, maximum=2)
 
     def __init__(self, args):
         """Init the application."""
@@ -52,6 +51,18 @@ class GraphsApplication(Adw.Application):
         self.add_actions()
         self.get_style_manager().connect(
             "notify", ui.on_style_change, None, self)
+        self.props.figure_settings.connect(
+            "notify::use-custom-style", ui.on_figure_style_change, self,
+        )
+        self.props.figure_settings.connect(
+            "notify::custom-style", ui.on_figure_style_change, self,
+        )
+        self.props.data.connect(
+            "items-change", ui.on_items_change, self,
+        )
+        self.props.data.connect(
+            "items-ignored", ui.on_items_ignored, self,
+        )
 
     def add_actions(self):
         """Create actions, which are defined in actions.py."""
@@ -76,13 +87,12 @@ class GraphsApplication(Adw.Application):
             ("open_project", ["<primary>O"]),
             ("delete_selected", ["Delete"]),
         ]
-        methods = {key: item for key, item
-                   in getmembers(globals().copy()["actions"], isfunction)}
         for name, keybinds in new_actions:
             action = Gio.SimpleAction.new(name, None)
-            action.connect("activate", methods[f"{name}_action"], self)
+            action.connect(
+                "activate", getattr(actions, f"{name}_action"), self,
+            )
             self.add_action(action)
-
             if keybinds:
                 self.set_accels_for_action(f"app.{name}", keybinds)
 
@@ -102,12 +112,13 @@ class GraphsApplication(Adw.Application):
         self.add_action(self.toggle_sidebar)
         self.set_accels_for_action("app.toggle_sidebar", ["F9"])
 
-        self.create_mode_action("mode_pan", ["F1"],
-                                InteractionMode.PAN)
-        self.create_mode_action("mode_zoom", ["F2"],
-                                InteractionMode.ZOOM)
-        self.create_mode_action("mode_select", ["F3"],
-                                InteractionMode.SELECT)
+        for count, mode in enumerate(["pan", "zoom", "select"]):
+            action = Gio.SimpleAction.new(f"mode_{mode}", None)
+            action.connect(
+                "activate", actions.set_mode, self, count,
+            )
+            self.add_action(action)
+            self.set_accels_for_action(f"app.mode_{mode}", [f"F{count + 1}"])
 
     def do_activate(self):
         """Called when the application is activated.
@@ -118,45 +129,17 @@ class GraphsApplication(Adw.Application):
         self.main_window = self.props.active_window
         if not self.main_window:
             self.main_window = GraphsWindow(self)
-        self.main_window.set_title(self.name)
-        if "(Development)" in self.name:
-            self.main_window.add_css_class("devel")
-        self.props.clipboard = DataClipboard(self)
-        self.props.view_clipboard = ViewClipboard(self)
-        ui.set_clipboard_buttons(self)
-        self.set_mode(None, None, InteractionMode.PAN)
-        self.props.figure_settings.connect(
-            "notify::use-custom-style", ui.on_figure_style_change, self,
-        )
-        self.props.figure_settings.connect(
-            "notify::custom-style", ui.on_figure_style_change, self,
-        )
-        self.props.data.connect(
-            "items-change", ui.on_items_change, self,
-        )
-        self.props.data.connect(
-            "items-ignored", ui.on_items_ignored, self,
-        )
-        self.main_window.present()
-
-    def set_mode(self, _action, _target, mode):
-        """Set the current UI interaction mode (none, pan, zoom or select)."""
-        win = self.main_window
-        win.pan_button.set_active(mode == InteractionMode.PAN)
-        win.zoom_button.set_active(mode == InteractionMode.ZOOM)
-        win.select_button.set_active(mode == InteractionMode.SELECT)
-        self.interaction_mode = mode
+            self.main_window.set_title(self.name)
+            if "(Development)" in self.name:
+                self.main_window.add_css_class("devel")
+            self.props.clipboard = DataClipboard(self)
+            self.props.view_clipboard = ViewClipboard(self)
+            ui.set_clipboard_buttons(self)
+            self.main_window.present()
 
     def on_sidebar_toggle(self, _a, _b):
         visible = self.main_window.sidebar_flap.get_reveal_flap()
         self.toggle_sidebar.change_state(GLib.Variant.new_boolean(visible))
-
-    def create_mode_action(self, name, shortcuts, mode):
-        """Create action for mode setting."""
-        action = Gio.SimpleAction.new(name, None)
-        action.connect("activate", self.set_mode, mode)
-        self.add_action(action)
-        self.set_accels_for_action(f"app.{name}", shortcuts)
 
     def get_settings(self, child=None):
         return self.props.settings if child is None \

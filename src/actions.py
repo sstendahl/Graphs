@@ -15,6 +15,10 @@ def toggle_sidebar(_action, _shortcut, self):
     flap.set_reveal_flap(not flap.get_reveal_flap())
 
 
+def set_mode(_action, _target, self, mode):
+    self.props.mode = mode
+
+
 def quit_action(_action, _target, self):
     self.quit()
 

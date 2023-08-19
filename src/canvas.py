@@ -5,7 +5,6 @@ from contextlib import nullcontext
 from gi.repository import Adw, GObject, Gtk
 
 from graphs import artist, utilities
-from graphs.misc import InteractionMode
 from graphs.rename import RenameWindow
 
 from matplotlib import backend_tools as tools, pyplot
@@ -402,12 +401,13 @@ class DummyToolbar(NavigationToolbar2):
     def _zoom_pan_handler(self, event):
         if event.button != 1:
             return
-        if self.canvas.application.interaction_mode == InteractionMode.PAN:
+        mode = self.canvas.props.application.props.mode
+        if mode == 0:
             if event.name == "button_press_event":
                 self.press_pan(event)
             elif event.name == "button_release_event":
                 self.release_pan(event)
-        elif self.canvas.application.interaction_mode == InteractionMode.ZOOM:
+        elif mode == 1:
             if event.name == "button_press_event":
                 self.press_zoom(event)
             elif event.name == "button_release_event":
@@ -415,14 +415,12 @@ class DummyToolbar(NavigationToolbar2):
 
     # Overwritten function - do not change name
     def _update_cursor(self, event):
-        mode = self.canvas.application.interaction_mode
+        mode = self.canvas.props.application.props.mode
         if event.inaxes and event.inaxes.get_navigate():
-            if (mode == InteractionMode.ZOOM
-                    and self._last_cursor != tools.Cursors.SELECT_REGION):
+            if mode == 1 and self._last_cursor != tools.Cursors.SELECT_REGION:
                 self.canvas.set_cursor(tools.Cursors.SELECT_REGION)
                 self._last_cursor = tools.Cursors.SELECT_REGION
-            elif (mode == InteractionMode.PAN
-                  and self._last_cursor != tools.Cursors.MOVE):
+            elif mode == 0 and self._last_cursor != tools.Cursors.MOVE:
                 self.canvas.set_cursor(tools.Cursors.MOVE)
                 self._last_cursor = tools.Cursors.MOVE
         elif self._last_cursor != tools.Cursors.POINTER:

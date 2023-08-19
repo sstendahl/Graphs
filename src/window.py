@@ -1,9 +1,8 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
-from gi.repository import Adw, GLib, Gtk
+from gi.repository import Adw, GLib, GObject, Gtk
 
 from graphs import file_io, operations, plot_styles, utilities
 from graphs.canvas import Canvas
-from graphs.misc import InteractionMode
 from graphs.transform_data import TransformWindow
 
 from matplotlib import pyplot
@@ -34,6 +33,7 @@ class GraphsWindow(Adw.ApplicationWindow):
         self.props.application.props.data.bind_property(
             "items_selected", self.shift_vertically_button, "sensitive", 2,
         )
+        self.props.application.bind_property("mode", self, "mode", 2)
         self.reload_canvas()
 
     def reload_canvas(self):
@@ -44,6 +44,16 @@ class GraphsWindow(Adw.ApplicationWindow):
         self.cut_button.bind_property(
             "sensitive", canvas.highlight, "enabled", 2,
         )
+
+    @GObject.Property(type=int, default=0, minimum=0, maximum=2, flags=2)
+    def mode(self):
+        pass
+
+    @mode.setter
+    def mode(self, mode: int):
+        self.pan_button.set_active(mode == 0)
+        self.zoom_button.set_active(mode == 1)
+        self.select_button.set_active(mode == 2)
 
     def add_toast(self, title):
         self.toast_overlay.add_toast(Adw.Toast(title=title))
@@ -84,7 +94,7 @@ class GraphsWindow(Adw.ApplicationWindow):
 
     @Gtk.Template.Callback()
     def cut(self, *_args):
-        if self.props.application.interaction_mode == InteractionMode.SELECT:
+        if self.props.application.props.mode == 2:
             operations.perform_operation(
                 self.props.application, operations.cut_selected)
 
