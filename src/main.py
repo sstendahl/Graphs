@@ -1,7 +1,6 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Main application."""
 import logging
-import sys
 from gettext import gettext as _
 
 from gi.repository import Adw, GLib, GObject, Gio
@@ -31,15 +30,14 @@ class GraphsApplication(Adw.Application):
     view_clipboard = GObject.Property(type=ViewClipboard)
     mode = GObject.Property(type=int, default=0, minimum=0, maximum=2)
 
-    def __init__(self, args):
+    def __init__(self, application_id, **kwargs):
         """Init the application."""
-        settings = Gio.Settings(args[1])
+        settings = Gio.Settings(application_id)
         super().__init__(
-            application_id=args[1], flags=Gio.ApplicationFlags.DEFAULT_FLAGS,
-            version=args[0], name=args[2], website=args[3], issues=args[4],
-            author=args[5], pkgdatadir=args[6], settings=settings,
+            application_id=application_id, settings=settings,
+            flags=Gio.ApplicationFlags.DEFAULT_FLAGS,
             figure_settings=FigureSettings.new(settings.get_child("figure")),
-            data=Data(self),
+            data=Data(self), **kwargs,
         )
         migrate.migrate_config(self)
         font_list = font_manager.findSystemFonts(fontpaths=None, fontext="ttf")
@@ -144,10 +142,3 @@ class GraphsApplication(Adw.Application):
     def get_settings(self, child=None):
         return self.props.settings if child is None \
             else self.props.settings.get_child(child)
-
-
-def main(args):
-    """The application"s entry point."""
-    app = GraphsApplication(args)
-
-    return app.run(sys.argv)
