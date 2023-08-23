@@ -282,7 +282,7 @@ class Canvas(FigureCanvas):
 
     @title.setter
     def title(self, title: str):
-        self._title = self.axis.set_title(title)
+        self.axis.set_title(title, picker=True).id = "title"
         self.queue_draw()
 
     @GObject.Property(type=str)
