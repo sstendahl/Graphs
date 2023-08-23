@@ -1,4 +1,14 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
+"""
+Custom canvas implementation.
+
+Acts as an interface between matplotlib and GObject and contains a custom
+implementation of a `SpanSelector` as well as a dummy toolbar used for
+interactive navigation in conjunction with graphs-specific structures.
+
+    Classes:
+        Canvas
+"""
 import time
 from contextlib import nullcontext
 
@@ -27,6 +37,48 @@ def _scale_to_int(scale):
 
 
 class Canvas(FigureCanvas):
+    """
+    Custom Canvas.
+
+    Implements properties analouge to `FigureSettings`. Automatically connects
+    to `FigureSettings` and `Data.items` during init.
+
+    Properties:
+        application
+        one_click_trigger (for internal use only)
+        time_first_click (for internal use only)
+
+        items: list (write-only)
+
+        title: str
+        bottom_label: str
+        left_label: str
+        top_label: str
+        right_label: str
+
+        bottom_scale: int (0: linear, 1: logarithmic)
+        left_scale: int (0: linear, 1: logarithmic)
+        top_scale: int (0: linear, 1: logarithmic)
+        right_scale: int (0: linear, 1: logarithmic)
+
+        legend: bool
+        legend_position: int
+        use_custom_style: bool
+        custom_style: str
+
+        min_bottom: float
+        max_bottom: float
+        min_left: float
+        max_lef: float
+        min_top: float
+        max_top: float
+        min_right: float
+        max_right: float
+
+        min_selected: float (fraction)
+        max_selected: float (fraction)
+    """
+
     __gtype_name__ = "Canvas"
 
     application = GObject.Property(type=Adw.Application)
@@ -37,6 +89,13 @@ class Canvas(FigureCanvas):
     max_selected = GObject.Property(type=float, default=0)
 
     def __init__(self, application):
+        """
+        Create the canvas.
+
+        Create figure, axes and define rubberband_colors based on the current
+        style context. Bind `items` to `data.items` and all figure settings
+        attributes to their respective values.
+        """
         GObject.Object.__init__(self, application=application)
         super().__init__()
         self.figure.set_tight_layout(True)
@@ -53,8 +112,9 @@ class Canvas(FigureCanvas):
         self.rubberband_edge_color = utilities.rgba_to_tuple(color_rgba, True)
         color_rgba.alpha = 0.3
         self.rubberband_fill_color = utilities.rgba_to_tuple(color_rgba, True)
-        DummyToolbar(self)
-        self.highlight = Highlight(self)
+        # Reference is created by the toolbar itself
+        _DummyToolbar(self)
+        self.highlight = _Highlight(self)
         self._legend = True
         self._legend_position = LEGEND_POSITIONS[0]
         self._handles = []
@@ -68,9 +128,13 @@ class Canvas(FigureCanvas):
             "items", self, "items", 2,
         )
 
-    # Temporarily overwritten function, see
-    # https://github.com/Sjoerd1993/Graphs/issues/259
     def on_draw_event(self, _widget, ctx):
+        """
+        Overwrite super function.
+
+        Fixes a UI scaling bug, see
+        https://github.com/Sjoerd1993/Graphs/issues/259
+        """
         with (self.toolbar._wait_cursor_for_draw_cm() if self.toolbar
               else nullcontext()):
             self._renderer.set_context(ctx)
@@ -89,10 +153,15 @@ class Canvas(FigureCanvas):
 
     @GObject.Property(flags=2)
     def items(self):
-        pass
+        """ignored, property is write-only."""
 
     @items.setter
     def items(self, items):
+        """
+        Setter for items property.
+
+        Automatically hide unused axes and refresh legend.
+        """
         hide_unselected = self.props.application.get_settings(
             "general").get_boolean("hide-unselected")
         drawable_items = []
@@ -134,12 +203,13 @@ class Canvas(FigureCanvas):
             artist.new_for_item(self, item)
             for item in reversed(drawable_items)
         ]
-        self.update_legend()
+        self._update_legend()
 
     # Overwritten function - do not change name
     def __call__(self, event):
         """
-        The function is called when a user clicks on it.
+        Intercept a users click.
+
         If two clicks are performed close to each other, it registers as a
         double click, and if these were on a specific item (e.g. the title) it
         triggers a dialog to edit this item.
@@ -162,10 +232,17 @@ class Canvas(FigureCanvas):
 
     # Overwritten function - do not change name
     def _post_draw(self, _widget, context):
+        """Allow custom rendering extensions."""
         if self._rubberband_rect is not None:
-            self.draw_rubberband(context)
+            self._draw_rubberband(context)
 
-    def draw_rubberband(self, context):
+    def _draw_rubberband(self, context):
+        """
+        Implement custom rubberband.
+
+        Draw a rubberband matching libadwaitas style, where `_rubberband_rect`
+        is set.
+        """
         line_width = 1
         if not self._context_is_scaled:
             x_0, y_0, width, height = (
@@ -186,7 +263,8 @@ class Canvas(FigureCanvas):
         context.set_source_rgba(color[0], color[1], color[2], color[3])
         context.stroke()
 
-    def update_legend(self):
+    def _update_legend(self):
+        """Update the legend or hide if not used."""
         if self._legend and self._handles:
             handles = [
                 handle.get_artist() for handle in self._handles
@@ -205,24 +283,28 @@ class Canvas(FigureCanvas):
 
     @GObject.Property(type=bool, default=True)
     def legend(self) -> bool:
+        """Whether or not, the legend is visible."""
         return self._legend
 
     @legend.setter
     def legend(self, legend: bool):
+        """Whether or not, the legend is visible."""
         self._legend = legend
-        self.update_legend()
+        self._update_legend()
 
     @GObject.Property(type=int, default=0)
     def legend_position(self) -> int:
+        """Legend Position (see `LEGEND_POSITIONS`)."""
         return LEGEND_POSITIONS.index(self._legend_position)
 
     @legend_position.setter
     def legend_position(self, legend_position: int):
         self._legend_position = LEGEND_POSITIONS[legend_position]
-        self.update_legend()
+        self._update_legend()
 
     @GObject.Property(type=str)
     def title(self):
+        """Figure title."""
         return self.axis.get_title()
 
     @title.setter
@@ -232,6 +314,7 @@ class Canvas(FigureCanvas):
 
     @GObject.Property(type=str)
     def bottom_label(self):
+        """Label of the bottom axis."""
         return self.axis.get_xlabel()
 
     @bottom_label.setter
@@ -241,6 +324,7 @@ class Canvas(FigureCanvas):
 
     @GObject.Property(type=str)
     def left_label(self):
+        """Label of the left axis."""
         return self.axis.get_ylabel()
 
     @left_label.setter
@@ -250,6 +334,7 @@ class Canvas(FigureCanvas):
 
     @GObject.Property(type=str)
     def top_label(self):
+        """Label of the top axis."""
         return self.top_left_axis.get_xlabel()
 
     @top_label.setter
@@ -259,6 +344,7 @@ class Canvas(FigureCanvas):
 
     @GObject.Property(type=str)
     def right_label(self):
+        """Label of the right axis."""
         return self.right_axis.get_ylabel()
 
     @right_label.setter
@@ -268,6 +354,7 @@ class Canvas(FigureCanvas):
 
     @GObject.Property(type=int)
     def bottom_scale(self):
+        """Scale of the bottom axis."""
         return _scale_to_int(self.axis.get_xscale())
 
     @bottom_scale.setter
@@ -280,6 +367,7 @@ class Canvas(FigureCanvas):
 
     @GObject.Property(type=int)
     def left_scale(self):
+        """Scale of the left axis."""
         return _scale_to_int(self.axis.get_yscale())
 
     @left_scale.setter
@@ -292,6 +380,7 @@ class Canvas(FigureCanvas):
 
     @GObject.Property(type=int)
     def top_scale(self):
+        """Scale of the top axis."""
         return _scale_to_int(self.top_left_axis.get_xscale())
 
     @top_scale.setter
@@ -304,6 +393,7 @@ class Canvas(FigureCanvas):
 
     @GObject.Property(type=int)
     def right_scale(self):
+        """Scale of the right axis."""
         return _scale_to_int(self.right_axis.get_yscale())
 
     @right_scale.setter
@@ -316,6 +406,7 @@ class Canvas(FigureCanvas):
 
     @GObject.Property(type=float)
     def min_bottom(self):
+        """Lower limit for the bottom axis."""
         return self.axis.get_xlim()[0]
 
     @min_bottom.setter
@@ -326,6 +417,7 @@ class Canvas(FigureCanvas):
 
     @GObject.Property(type=float)
     def max_bottom(self):
+        """Upper limit for the bottom axis."""
         return self.axis.get_xlim()[1]
 
     @max_bottom.setter
@@ -336,6 +428,7 @@ class Canvas(FigureCanvas):
 
     @GObject.Property(type=float)
     def min_left(self):
+        """Lower limit for the left axis."""
         return self.axis.get_ylim()[0]
 
     @min_left.setter
@@ -346,6 +439,7 @@ class Canvas(FigureCanvas):
 
     @GObject.Property(type=float)
     def max_left(self):
+        """Upper limit for the left axis."""
         return self.axis.get_ylim()[1]
 
     @max_left.setter
@@ -356,6 +450,7 @@ class Canvas(FigureCanvas):
 
     @GObject.Property(type=float)
     def min_top(self):
+        """Lower limit for the top axis."""
         return self.top_left_axis.get_xlim()[0]
 
     @min_top.setter
@@ -367,6 +462,7 @@ class Canvas(FigureCanvas):
 
     @GObject.Property(type=float)
     def max_top(self):
+        """Upper limit for the top axis."""
         return self.top_left_axis.get_xlim()[1]
 
     @max_top.setter
@@ -378,6 +474,7 @@ class Canvas(FigureCanvas):
 
     @GObject.Property(type=float)
     def min_right(self):
+        """Lower limit for the right axis."""
         return self.right_axis.get_ylim()[0]
 
     @min_right.setter
@@ -388,6 +485,7 @@ class Canvas(FigureCanvas):
 
     @GObject.Property(type=float)
     def max_right(self):
+        """Upper limit for the right axis."""
         return self.right_axis.get_ylim()[1]
 
     @max_right.setter
@@ -398,6 +496,7 @@ class Canvas(FigureCanvas):
 
     @GObject.Property(type=bool, default=False)
     def highlight_enabled(self) -> bool:
+        """Whether or not the highlight is enabled."""
         return self.highlight.get_active()
 
     @highlight_enabled.setter
@@ -407,7 +506,9 @@ class Canvas(FigureCanvas):
         self.queue_draw()
 
 
-class DummyToolbar(NavigationToolbar2):
+class _DummyToolbar(NavigationToolbar2):
+    """Custom Toolbar implementation."""
+
     # Overwritten function - do not change name
     def _zoom_pan_handler(self, event):
         if event.button != 1:
@@ -453,6 +554,7 @@ class DummyToolbar(NavigationToolbar2):
 
     # Overwritten function - do not change name
     def push_current(self):
+        """Use custom functionality for the view clipboard."""
         self.canvas.highlight.load(self.canvas)
         for direction in ["bottom", "left", "top", "right"]:
             self.canvas.notify(f"min-{direction}")
@@ -464,7 +566,7 @@ class DummyToolbar(NavigationToolbar2):
         pass
 
 
-class Highlight(SpanSelector):
+class _Highlight(SpanSelector):
     def __init__(self, canvas):
         super().__init__(
             canvas.top_right_axis,
