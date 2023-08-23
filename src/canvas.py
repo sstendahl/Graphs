@@ -70,7 +70,7 @@ class Canvas(FigureCanvas):
 
     # Temporarily overwritten function, see
     # https://github.com/Sjoerd1993/Graphs/issues/259
-    def on_draw_event(self, widget, ctx):
+    def on_draw_event(self, _widget, ctx):
         with (self.toolbar._wait_cursor_for_draw_cm() if self.toolbar
               else nullcontext()):
             self._renderer.set_context(ctx)
@@ -468,7 +468,7 @@ class Highlight(SpanSelector):
     def __init__(self, canvas):
         super().__init__(
             canvas.top_right_axis,
-            lambda x, y: self.apply(canvas),
+            lambda _x, _y: self.apply(canvas),
             "horizontal",
             useblit=True,
             props={

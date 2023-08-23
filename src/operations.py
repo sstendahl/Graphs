@@ -2,8 +2,10 @@
 import logging
 from gettext import gettext as _
 
-from graphs import calculation, utilities
+from graphs import utilities
 from graphs.item import Item
+
+import numexpr
 
 import numpy
 
@@ -245,9 +247,18 @@ def get_inverse_fourier(_item, xdata, ydata):
 
 
 def transform(_item, xdata, ydata, input_x, input_y, discard=False):
-    new_xdata, new_ydata = calculation.operation(
-        xdata, ydata, input_x, input_y)
-    return new_xdata, new_ydata, True, discard
+    local_dict = {
+        "x": xdata, "y": ydata,
+        "x_min": min(xdata), "x_max": max(xdata),
+        "y_min": min(ydata), "y_max": max(ydata),
+    }
+    # Add array of zeros to return values, such that output remains a list
+    # of the correct size, even when a float is given as input.
+    return (
+        numexpr.evaluate(utilities.preprocess(input_x) + "+ 0*x", local_dict),
+        numexpr.evaluate(utilities.preprocess(input_y) + "+ 0*y", local_dict),
+        True, discard,
+    )
 
 
 def combine(self):
