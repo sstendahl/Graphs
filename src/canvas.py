@@ -44,8 +44,6 @@ class Canvas(FigureCanvas):
 
     Properties:
         application
-        one_click_trigger (for internal use only)
-        time_first_click (for internal use only)
 
         items: list (write-only)
 
@@ -81,8 +79,6 @@ class Canvas(FigureCanvas):
     __gtype_name__ = "Canvas"
 
     application = GObject.Property(type=Adw.Application)
-    one_click_trigger = GObject.Property(type=bool, default=False)
-    time_first_click = GObject.Property(type=float, default=0)
 
     min_selected = GObject.Property(type=float, default=0)
     max_selected = GObject.Property(type=float, default=0)
