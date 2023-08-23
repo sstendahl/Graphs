@@ -275,7 +275,7 @@ class Canvas(FigureCanvas):
         scale = _scale_to_string(scale)
         for axis in [self.axis, self.right_axis]:
             axis.set_xscale(scale)
-            axis.set_xlim(self.props.min_bottom, self.props.max_bottom)
+            axis.set_xlim(None, None)
         self.queue_draw()
 
     @GObject.Property(type=int)
@@ -287,7 +287,7 @@ class Canvas(FigureCanvas):
         scale = _scale_to_string(scale)
         for axis in [self.axis, self.top_left_axis]:
             axis.set_yscale(scale)
-            axis.set_ylim(self.props.min_left, self.props.max_left)
+            axis.set_ylim(None, None)
         self.queue_draw()
 
     @GObject.Property(type=int)
@@ -299,7 +299,7 @@ class Canvas(FigureCanvas):
         scale = _scale_to_string(scale)
         for axis in [self.top_right_axis, self.top_left_axis]:
             axis.set_xscale(scale)
-            axis.set_xlim(self.props.min_top, self.props.max_top)
+            axis.set_xlim(None, None)
         self.queue_draw()
 
     @GObject.Property(type=int)
@@ -311,7 +311,7 @@ class Canvas(FigureCanvas):
         scale = _scale_to_string(scale)
         for axis in [self.top_right_axis, self.right_axis]:
             axis.set_yscale(scale)
-            axis.set_ylim(self.props.min_right, self.props.max_right)
+            axis.set_ylim(None, None)
         self.queue_draw()
 
     @GObject.Property(type=float)
@@ -321,7 +321,7 @@ class Canvas(FigureCanvas):
     @min_bottom.setter
     def min_bottom(self, value: float):
         for axis in [self.axis, self.right_axis]:
-            axis.set_xlim(value, self.props.max_bottom)
+            axis.set_xlim(value, None)
         self.queue_draw()
 
     @GObject.Property(type=float)
@@ -331,7 +331,7 @@ class Canvas(FigureCanvas):
     @max_bottom.setter
     def max_bottom(self, value: float):
         for axis in [self.axis, self.right_axis]:
-            axis.set_xlim(self.props.min_bottom, value)
+            axis.set_xlim(None, value)
         self.queue_draw()
 
     @GObject.Property(type=float)
@@ -341,7 +341,7 @@ class Canvas(FigureCanvas):
     @min_left.setter
     def min_left(self, value: float):
         for axis in [self.axis, self.top_left_axis]:
-            axis.set_ylim(value, self.props.max_left)
+            axis.set_ylim(value, None)
         self.queue_draw()
 
     @GObject.Property(type=float)
@@ -351,7 +351,7 @@ class Canvas(FigureCanvas):
     @max_left.setter
     def max_left(self, value: float):
         for axis in [self.axis, self.top_left_axis]:
-            axis.set_ylim(self.props.min_left, value)
+            axis.set_ylim(None, value)
         self.queue_draw()
 
     @GObject.Property(type=float)
@@ -361,7 +361,7 @@ class Canvas(FigureCanvas):
     @min_top.setter
     def min_top(self, value: float):
         for axis in [self.top_left_axis, self.top_right_axis]:
-            axis.set_xlim(value, self.props.max_top)
+            axis.set_xlim(value, None)
         self.queue_draw()
 
     @GObject.Property(type=float)
@@ -371,7 +371,7 @@ class Canvas(FigureCanvas):
     @max_top.setter
     def max_top(self, value: float):
         for axis in [self.top_left_axis, self.top_right_axis]:
-            axis.set_xlim(self.props.min_top, value)
+            axis.set_xlim(None, value)
         self.queue_draw()
 
     @GObject.Property(type=float)
@@ -381,7 +381,7 @@ class Canvas(FigureCanvas):
     @min_right.setter
     def min_right(self, value: float):
         for axis in [self.right_axis, self.top_right_axis]:
-            axis.set_ylim(value, self.props.max_right)
+            axis.set_ylim(value, None)
         self.queue_draw()
 
     @GObject.Property(type=float)
@@ -391,7 +391,7 @@ class Canvas(FigureCanvas):
     @max_right.setter
     def max_right(self, value: float):
         for axis in [self.right_axis, self.top_right_axis]:
-            axis.set_ylim(self.props.min_right, value)
+            axis.set_ylim(None, value)
         self.queue_draw()
 
 
