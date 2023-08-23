@@ -9,13 +9,12 @@ interactive navigation in conjunction with graphs-specific structures.
     Classes:
         Canvas
 """
-import time
 from contextlib import nullcontext
 
 from gi.repository import Adw, GObject, Gtk
 
 from graphs import artist, utilities
-from graphs.rename import RenameWindow
+from graphs.figure_settings import FigureSettingsWindow
 
 from matplotlib import backend_tools as tools, pyplot
 from matplotlib.backend_bases import NavigationToolbar2
@@ -99,7 +98,7 @@ class Canvas(FigureCanvas):
         GObject.Object.__init__(self, application=application)
         super().__init__()
         self.figure.set_tight_layout(True)
-        self.mpl_connect("button_release_event", self)
+        self.mpl_connect("pick_event", self.on_pick)
         self.axis = self.figure.add_subplot(111)
         self.right_axis = self.axis.twinx()
         self.top_left_axis = self.axis.twiny()
@@ -205,30 +204,9 @@ class Canvas(FigureCanvas):
         ]
         self._update_legend()
 
-    # Overwritten function - do not change name
-    def __call__(self, event):
-        """
-        Intercept a users click.
-
-        If two clicks are performed close to each other, it registers as a
-        double click, and if these were on a specific item (e.g. the title) it
-        triggers a dialog to edit this item.
-
-        Unfortunately the GTK Doubleclick signal doesn't work with matplotlib
-        hence this custom function.
-        """
-        double_click_interval = time.time() - self.time_first_click
-        if (not self.one_click_trigger) or (double_click_interval > 0.5):
-            self.one_click_trigger = True
-            self.time_first_click = time.time()
-            return
-        self.one_click_trigger = False
-        self.time_first_click = 0
-        items = {self._title, self._top_label, self._bottom_label,
-                 self._left_label, self._right_label}
-        for item in items:
-            if item.contains(event)[0]:
-                RenameWindow(self.props.application, item)
+    def on_pick(self, event):
+        """Invoke FigureSettingsWindow for picked label/title."""
+        FigureSettingsWindow(self.props.application, event.artist.id)
 
     # Overwritten function - do not change name
     def _post_draw(self, _widget, context):
@@ -318,7 +296,7 @@ class Canvas(FigureCanvas):
 
     @bottom_label.setter
     def bottom_label(self, label: str):
-        self._bottom_label = self.axis.set_xlabel(label)
+        self.axis.set_xlabel(label, picker=True).id = "bottom_label"
         self.queue_draw()
 
     @GObject.Property(type=str)
@@ -328,7 +306,7 @@ class Canvas(FigureCanvas):
 
     @left_label.setter
     def left_label(self, label: str):
-        self._left_label = self.axis.set_ylabel(label)
+        self.axis.set_ylabel(label, picker=True).id = "left_label"
         self.queue_draw()
 
     @GObject.Property(type=str)
@@ -338,7 +316,7 @@ class Canvas(FigureCanvas):
 
     @top_label.setter
     def top_label(self, label: str):
-        self._top_label = self.top_left_axis.set_xlabel(label)
+        self.top_left_axis.set_xlabel(label, picker=True).id = "top_label"
         self.queue_draw()
 
     @GObject.Property(type=str)
@@ -348,7 +326,7 @@ class Canvas(FigureCanvas):
 
     @right_label.setter
     def right_label(self, label: str):
-        self._right_label = self.right_axis.set_ylabel(label)
+        self.right_axis.set_ylabel(label, picker=True).id = "right_label"
         self.queue_draw()
 
     @GObject.Property(type=int)

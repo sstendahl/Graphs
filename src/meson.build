@@ -29,7 +29,6 @@ graphs_sources = [
   'plot_styles.py',
   'preferences.py',
   'project.py',
-  'rename.py',
   'transform_data.py',
   'ui.py',
   'utilities.py',

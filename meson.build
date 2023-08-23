@@ -48,7 +48,7 @@ conf.set('VERSION', version)
 conf.set('HOMEPAGE_URL', homepage_url)
 
 if debug
-  conf.set('LOG_LEVEL', 'DEBUG')
+  conf.set('LOG_LEVEL', 'INFO')
 else
   conf.set('LOG_LEVEL', 'INFO')
 endif

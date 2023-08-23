@@ -99,14 +99,14 @@ class FigureSettingsWindow(Adw.PreferencesWindow):
 
     no_data_message = Gtk.Template.Child()
 
-    def __init__(self, application):
+    def __init__(self, application, highlighted=None):
         super().__init__(
             application=application, transient_for=application.main_window,
         )
 
         ui.bind_values_to_object(
             self.props.application.props.figure_settings, self,
-            ignorelist=["custom_style"],
+            ignorelist=["custom_style", "min_selected", "max_selected"],
         )
         styles = sorted(plot_styles.get_user_styles(application).keys())
         self.custom_style.set_model(Gtk.StringList.new(styles))
@@ -117,6 +117,8 @@ class FigureSettingsWindow(Adw.PreferencesWindow):
         self.no_data_message.set_visible(
             self.props.application.props.data.is_empty(),
         )
+        if highlighted is not None:
+            getattr(self, highlighted).grab_focus()
         self.present()
 
     def hide_unused_axes_limits(self):
