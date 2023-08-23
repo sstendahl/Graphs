@@ -25,16 +25,18 @@ class EditItemWindow(Adw.PreferencesWindow):
     markersize = Gtk.Template.Child()
 
     item = GObject.Property(type=ItemBase)
-    names = GObject.Property(type=object)
+    model = GObject.Property(type=Gtk.StringList)
 
     def __init__(self, application, item):
         super().__init__(
             application=application, transient_for=application.main_window,
-            item=item, names=application.props.data.get_names(),
+            item=item,
+            model=Gtk.StringList.new(application.props.data.get_names()),
         )
-        items = self.props.application.props.data.props.items
-        self.item_selector.set_model(Gtk.StringList.new(self.props.names))
-        self.item_selector.set_selected(items.index(item))
+        self.item_selector.set_model(self.props.model)
+        self.item_selector.set_selected(
+            self.props.application.props.data.props.items.index(item),
+        )
         self.present()
 
     @Gtk.Template.Callback()
@@ -43,16 +45,15 @@ class EditItemWindow(Adw.PreferencesWindow):
 
     @Gtk.Template.Callback()
     def on_select(self, _action, _target):
-        self.apply()
-        index = self.item_selector.get_selected()
-        self.item = self.props.application.props.data.props.items[index]
-
-        # If item_selector no longer matches with name, repopulate it
-        names = self.props.application.props.data.get_names()
-        if set(names) != set(self.props.names):
-            self.props.names = names
-            self.item_selector.set_model(Gtk.StringList.new(names))
-            self.item_selector.set_selected(index)
+        item = self.props.application.props.data.props.items[
+            self.item_selector.get_selected()]
+        if item != self.item:
+            self.apply()
+            self.props.model.splice(
+                self.props.application.props.data.props.items.index(self.item),
+                1, [self.item.name],
+            )
+            self.item = item
 
     @Gtk.Template.Callback()
     def on_item_change(self, _a, _b):
