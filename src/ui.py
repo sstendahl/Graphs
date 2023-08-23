@@ -23,12 +23,11 @@ def on_figure_style_change(_figure_settings, _ignored, self):
         return
     pyplot.rcParams.update(file_io.parse_style(
         plot_styles.get_preferred_style(self)))
-    items = self.props.data.props.items
-    for item in items:
+    for item in self.props.data.props:
         item.reset()
-    for item in items:
+    for item in self.props.data.props:
         if item.props.item_type == "Item":
-            item.color = utilities.get_next_color(items)
+            item.color = utilities.get_next_color(self.props.data.props.items)
     self.main_window.reload_canvas()
 
 
@@ -37,7 +36,7 @@ def on_items_change(data, self):
         self.main_window.item_list.remove(
             self.main_window.item_list.get_last_child())
 
-    for item in data.props.items:
+    for item in data:
         self.main_window.item_list.append(ItemBox(self, item))
     self.main_window.item_list.set_visible(not data.is_empty())
     self.props.view_clipboard.add()
@@ -125,18 +124,19 @@ def export_data_dialog(self):
         with contextlib.suppress(GLib.GError):
             if multiple:
                 directory = dialog.select_folder_finish(response)
-                for item in self.props.data.props.items:
+                for item in self.props.data:
                     file = directory.get_child_for_display_name(
                         f"{item.name}.txt")
                     file_io.save_item(file, item)
             else:
-                item = self.props.data.props.items[0]
-                file_io.save_item(dialog.save_finish(response), item)
+                file_io.save_item(
+                    dialog.save_finish(response), self.props.data[0],
+                )
     dialog = Gtk.FileDialog()
     if multiple:
         dialog.select_folder(self.main_window, None, on_response)
     else:
-        filename = f"{self.props.data.props.items[0].name}.txt"
+        filename = f"{self.props.data[0].name}.txt"
         dialog.set_initial_name(filename)
         dialog.set_filters(
             utilities.create_file_filters([(_("Text Files"), ["txt"])]))

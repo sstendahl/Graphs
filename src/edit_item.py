@@ -45,7 +45,7 @@ class EditItemWindow(Adw.PreferencesWindow):
 
     @Gtk.Template.Callback()
     def on_select(self, _action, _target):
-        item = self.props.application.props.data.props.items[
+        item = self.props.application.props.data[
             self.item_selector.get_selected()]
         if item != self.item:
             self.apply()

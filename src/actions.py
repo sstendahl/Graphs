@@ -44,12 +44,12 @@ def add_equation_action(_action, _target, self):
 
 
 def select_all_action(_action, _target, self):
-    for item in self.props.data.props.items:
+    for item in self.props.data:
         item.selected = True
 
 
 def select_none_action(_action, _target, self):
-    for item in self.props.data.props.items:
+    for item in self.props.data:
         item.selected = False
 
 
@@ -105,7 +105,7 @@ def open_project_action(_action, _target, self):
 
 
 def delete_selected_action(_action, _target, self):
-    items = [item for item in self.props.data.props.items if item.selected]
+    items = [item for item in self.props.data if item.selected]
     names = ", ".join([item.name for item in items])
     self.props.data.delete_items(items)
     self.main_window.add_toast(_("Deleted {}").format(names))

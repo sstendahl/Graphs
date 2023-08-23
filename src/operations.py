@@ -73,7 +73,7 @@ def sort_data(xdata, ydata):
 
 def perform_operation(self, callback, *args):
     data_selected = False
-    for item in self.props.data.props.items:
+    for item in self.props.data:
         if not item.selected or item.props.item_type != "Item":
             continue
         xdata, ydata, start_index, stop_index = get_data(self, item)
@@ -264,7 +264,7 @@ def transform(_item, xdata, ydata, input_x, input_y, discard=False):
 def combine(self):
     """Combine the selected data into a new data set"""
     new_xdata, new_ydata = [], []
-    for item in self.props.data.props.items:
+    for item in self.props.data:
         if not item.selected or item.props.item_type != "Item":
             continue
         xdata, ydata = get_data(self, item)[:2]

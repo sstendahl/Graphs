@@ -128,7 +128,7 @@ class FigureSettingsWindow(Adw.PreferencesWindow):
             ["top", False],
             ["right", False],
         ]
-        for item in self.props.application.props.data.props.items:
+        for item in self.props.application.props.data:
             for index in item.xposition * 2, 1 + item.yposition * 2:
                 used_axes[index][1] = True
         for (direction, visible) in used_axes:

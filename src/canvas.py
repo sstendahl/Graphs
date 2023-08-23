@@ -69,6 +69,9 @@ class Canvas(FigureCanvas):
 
         min_selected: float (fraction)
         max_selected: float (fraction)
+
+    Functions:
+        update_legend
     """
 
     __gtype_name__ = "Canvas"
@@ -193,7 +196,7 @@ class Canvas(FigureCanvas):
             artist.new_for_item(self, item)
             for item in reversed(drawable_items)
         ]
-        self._update_legend()
+        self.update_legend()
 
     def on_pick(self, event):
         """Invoke FigureSettingsWindow for picked label/title."""
@@ -232,7 +235,7 @@ class Canvas(FigureCanvas):
         context.set_source_rgba(color[0], color[1], color[2], color[3])
         context.stroke()
 
-    def _update_legend(self):
+    def update_legend(self):
         """Update the legend or hide if not used."""
         if self._legend and self._handles:
             handles = [
@@ -258,7 +261,7 @@ class Canvas(FigureCanvas):
     @legend.setter
     def legend(self, legend: bool):
         self._legend = legend
-        self._update_legend()
+        self.update_legend()
 
     @GObject.Property(type=int, default=0)
     def legend_position(self) -> int:
@@ -268,7 +271,7 @@ class Canvas(FigureCanvas):
     @legend_position.setter
     def legend_position(self, legend_position: int):
         self._legend_position = misc.LEGEND_POSITIONS[legend_position]
-        self._update_legend()
+        self.update_legend()
 
     @GObject.Property(type=str)
     def title(self) -> str:

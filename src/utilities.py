@@ -165,7 +165,7 @@ def optimize_limits(self):
         [direction, False, []]
         for direction in ["bottom", "left", "top", "right"]
     ]
-    for item in self.props.data.props.items:
+    for item in self.props.data:
         for index in item.xposition * 2, 1 + item.yposition * 2:
             axes[index][1] = True
             axes[index][2].append(item)
