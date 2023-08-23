@@ -1,5 +1,10 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
-"""Main application."""
+"""
+Main application.
+
+Classes:
+    GraphsApplication
+"""
 import logging
 from gettext import gettext as _
 
@@ -14,8 +19,51 @@ from graphs.window import GraphsWindow
 from matplotlib import font_manager
 
 
+_ACTIONS = [
+    ("quit", ["<primary>q"]),
+    ("about", None),
+    ("preferences", ["<primary>p"]),
+    ("figure_settings", ["<primary><shift>P"]),
+    ("add_data", ["<primary>N"]),
+    ("add_equation", ["<primary><alt>N"]),
+    ("select_all", ["<primary>A"]),
+    ("select_none", ["<primary><shift>A"]),
+    ("undo", ["<primary>Z"]),
+    ("redo", ["<primary><shift>Z"]),
+    ("optimize_limits", ["<primary>L"]),
+    ("view_back", ["<alt>Z"]),
+    ("view_forward", ["<alt><shift>Z"]),
+    ("export_data", ["<primary><shift>E"]),
+    ("export_figure", ["<primary>E"]),
+    ("plot_styles", ["<primary><alt>P"]),
+    ("save_project", ["<primary>S"]),
+    ("open_project", ["<primary>O"]),
+    ("delete_selected", ["Delete"]),
+]
+
+
 class GraphsApplication(Adw.Application):
-    """The main application singleton class."""
+    """
+    The main application singleton class.
+
+    Properties:
+        settings
+        version: str
+        name: str
+        website: str
+        issues: str
+        author: str
+        pkgdatadir: str
+        data
+        figure_settings
+        clipboard
+        view_clipboard
+        mode: int (pan, zoom, select)
+
+    Functions:
+        get_settings
+    """
+
     settings = GObject.Property(type=Gio.Settings)
     version = GObject.Property(type=str, default="")
     name = GObject.Property(type=str, default="")
@@ -46,46 +94,8 @@ class GraphsApplication(Adw.Application):
                 font_manager.fontManager.addfont(font)
             except RuntimeError:
                 logging.warning(_("Could not load %s"), font)
-        self.add_actions()
-        self.get_style_manager().connect(
-            "notify", ui.on_style_change, None, self)
-        self.props.figure_settings.connect(
-            "notify::use-custom-style", ui.on_figure_style_change, self,
-        )
-        self.props.figure_settings.connect(
-            "notify::custom-style", ui.on_figure_style_change, self,
-        )
-        self.props.data.connect(
-            "items-change", ui.on_items_change, self,
-        )
-        self.props.data.connect(
-            "items-ignored", ui.on_items_ignored, self,
-        )
 
-    def add_actions(self):
-        """Create actions, which are defined in actions.py."""
-        new_actions = [
-            ("quit", ["<primary>q"]),
-            ("about", None),
-            ("preferences", ["<primary>p"]),
-            ("figure_settings", ["<primary><shift>P"]),
-            ("add_data", ["<primary>N"]),
-            ("add_equation", ["<primary><alt>N"]),
-            ("select_all", ["<primary>A"]),
-            ("select_none", ["<primary><shift>A"]),
-            ("undo", ["<primary>Z"]),
-            ("redo", ["<primary><shift>Z"]),
-            ("optimize_limits", ["<primary>L"]),
-            ("view_back", ["<alt>Z"]),
-            ("view_forward", ["<alt><shift>Z"]),
-            ("export_data", ["<primary><shift>E"]),
-            ("export_figure", ["<primary>E"]),
-            ("plot_styles", ["<primary><alt>P"]),
-            ("save_project", ["<primary>S"]),
-            ("open_project", ["<primary>O"]),
-            ("delete_selected", ["Delete"]),
-        ]
-        for name, keybinds in new_actions:
+        for name, keybinds in _ACTIONS:
             action = Gio.SimpleAction.new(name, None)
             action.connect(
                 "activate", getattr(actions, f"{name}_action"), self,
@@ -94,7 +104,7 @@ class GraphsApplication(Adw.Application):
             if keybinds:
                 self.set_accels_for_action(f"app.{name}", keybinds)
 
-        settings = self.settings.get_child("figure")
+        settings = self.get_settings("figure")
         for val in ["left-scale", "right-scale", "top-scale", "bottom-scale"]:
             string = "linear" if settings.get_enum(val) == 0 else "log"
             action = Gio.SimpleAction.new_stateful(
@@ -118,8 +128,24 @@ class GraphsApplication(Adw.Application):
             self.add_action(action)
             self.set_accels_for_action(f"app.mode_{mode}", [f"F{count + 1}"])
 
+        self.get_style_manager().connect(
+            "notify", ui.on_style_change, None, self)
+        self.props.figure_settings.connect(
+            "notify::use-custom-style", ui.on_figure_style_change, self,
+        )
+        self.props.figure_settings.connect(
+            "notify::custom-style", ui.on_figure_style_change, self,
+        )
+        self.props.data.connect(
+            "items-change", ui.on_items_change, self,
+        )
+        self.props.data.connect(
+            "items-ignored", ui.on_items_ignored, self,
+        )
+
     def do_activate(self):
-        """Called when the application is activated.
+        """
+        Activate the application.
 
         We raise the application"s main window, creating it if
         necessary.
@@ -135,10 +161,11 @@ class GraphsApplication(Adw.Application):
             ui.set_clipboard_buttons(self)
             self.main_window.present()
 
-    def on_sidebar_toggle(self, _a, _b):
-        visible = self.main_window.sidebar_flap.get_reveal_flap()
-        self.toggle_sidebar.change_state(GLib.Variant.new_boolean(visible))
-
     def get_settings(self, child=None):
+        """
+        Get the applications settings.
+
+        If child is not specified the main node is returned.
+        """
         return self.props.settings if child is None \
             else self.props.settings.get_child(child)

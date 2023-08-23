@@ -60,8 +60,9 @@ class GraphsWindow(Adw.ApplicationWindow):
 
     @Gtk.Template.Callback()
     def on_sidebar_toggle(self, *_args):
-        self.get_application().toggle_sidebar.change_state(
-            GLib.Variant.new_boolean(self.sidebar_flap.get_reveal_flap()))
+        self.props.application.toggle_sidebar.change_state(
+            GLib.Variant.new_boolean(self.sidebar_flap.get_reveal_flap()),
+        )
 
     @Gtk.Template.Callback()
     def shift_vertically(self, *_args):
