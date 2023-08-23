@@ -5,6 +5,10 @@ class ParseError(Exception):
         super().__init__(self.message)
 
 
+LEGEND_POSITIONS = [
+    "best", "upper right", "upper left", "lower left", "lower right",
+    "center left", "center right", "lower center", "upper center", "center",
+]
 LINESTYLES = ["none", "solid", "dotted", "dashed", "dashdot"]
 MARKERSTYLES = [
     "none", ".", ",", "o", "v", "^", "<", ">", "8", "s", "p", "*", "h", "H",

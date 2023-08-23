@@ -11,8 +11,6 @@ import numexpr
 
 import numpy
 
-KEYS = ["equation", "step-size", "x-start", "x-stop"]
-
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/add_equation_window.ui")
 class AddEquationWindow(Adw.Window):
@@ -34,7 +32,9 @@ class AddEquationWindow(Adw.Window):
     @Gtk.Template.Callback()
     def on_accept(self, _widget):
         """Launched when the accept button is pressed on the equation window"""
-        values = ui.save_values_to_dict(self, KEYS)
+        values = ui.save_values_to_dict(
+            self, ["equation", "step-size", "x-start", "x-stop"],
+        )
         try:
             x_start = utilities.string_to_float(values["x-start"])
             x_stop = utilities.string_to_float(values["x-stop"])

@@ -13,18 +13,13 @@ from contextlib import nullcontext
 
 from gi.repository import Adw, GObject, Gtk
 
-from graphs import artist, utilities
+from graphs import artist, misc, utilities
 from graphs.figure_settings import FigureSettingsWindow
 
 from matplotlib import backend_tools as tools, pyplot
 from matplotlib.backend_bases import NavigationToolbar2
 from matplotlib.backends.backend_gtk4cairo import FigureCanvas
 from matplotlib.widgets import SpanSelector
-
-LEGEND_POSITIONS = [
-    "best", "upper right", "upper left", "lower left", "lower right",
-    "center left", "center right", "lower center", "upper center", "center",
-]
 
 
 def _scale_to_string(scale: int) -> str:
@@ -111,7 +106,7 @@ class Canvas(FigureCanvas):
         _DummyToolbar(self)
         self.highlight = _Highlight(self)
         self._legend = True
-        self._legend_position = LEGEND_POSITIONS[0]
+        self._legend_position = misc.LEGEND_POSITIONS[0]
         self._handles = []
 
         for prop in dir(self.props.application.props.figure_settings.props):
@@ -267,12 +262,12 @@ class Canvas(FigureCanvas):
 
     @GObject.Property(type=int, default=0)
     def legend_position(self) -> int:
-        """Legend Position (see `LEGEND_POSITIONS`)."""
-        return LEGEND_POSITIONS.index(self._legend_position)
+        """Legend Position (see `misc.LEGEND_POSITIONS`)."""
+        return misc.LEGEND_POSITIONS.index(self._legend_position)
 
     @legend_position.setter
     def legend_position(self, legend_position: int):
-        self._legend_position = LEGEND_POSITIONS[legend_position]
+        self._legend_position = misc.LEGEND_POSITIONS[legend_position]
         self._update_legend()
 
     @GObject.Property(type=str)

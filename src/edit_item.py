@@ -4,7 +4,7 @@ from gi.repository import Adw, GObject, Gtk
 from graphs import ui
 from graphs.item import ItemBase
 
-IGNORELIST = [
+_IGNORELIST = [
     "alpha", "color", "item_type", "key", "selected", "xdata", "xlabel",
     "ydata", "ylabel",
 ]
@@ -59,13 +59,13 @@ class EditItemWindow(Adw.PreferencesWindow):
     def on_item_change(self, _a, _b):
         self.set_title(self.props.item.props.name)
         ui.load_values_from_dict(
-            self, self.props.item.to_dict(), ignorelist=IGNORELIST,
+            self, self.props.item.to_dict(), ignorelist=_IGNORELIST,
         )
         self.item_group.set_visible(self.props.item.props.item_type == "Item")
 
     def apply(self):
         new_values = ui.save_values_to_dict(
-            self, dir(self.props.item.props), ignorelist=IGNORELIST,
+            self, dir(self.props.item.props), ignorelist=_IGNORELIST,
         )
         for key, value in new_values.items():
             self.props.item.set_property(key, value)
