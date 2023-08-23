@@ -41,7 +41,7 @@ class ItemBase(GObject.Object):
         if self.props.item_type == "":
             self.props.item_type = self.__gtype_name__
 
-    def to_dict(self):
+    def to_dict(self) -> dict:
         return {key: self.get_property(key) for key in dir(self.props)}
 
     def get_color(self):

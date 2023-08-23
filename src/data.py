@@ -63,7 +63,7 @@ class Data(GObject.Object):
                 [self._items[key2]] + values[index2:index1]
         self.props.items = values
 
-    def add_items(self, items: list) -> list:
+    def add_items(self, items: list):
         ignored = []
         figure_settings = self.props.application.props.figure_settings
         settings = self.props.application.props.settings
@@ -131,7 +131,7 @@ class Data(GObject.Object):
         self.notify("items")
         self.notify("items_selected")
 
-    def delete_items(self, items):
+    def delete_items(self, items: list):
         for i in items:
             del self._items[i.key]
         self.emit("items-change")

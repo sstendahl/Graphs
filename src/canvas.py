@@ -28,11 +28,11 @@ LEGEND_POSITIONS = [
 ]
 
 
-def _scale_to_string(scale):
+def _scale_to_string(scale: int) -> str:
     return "linear" if scale == 0 else "log"
 
 
-def _scale_to_int(scale):
+def _scale_to_int(scale: str) -> int:
     return 0 if scale == "linear" else 1
 
 
@@ -156,7 +156,7 @@ class Canvas(FigureCanvas):
         """ignored, property is write-only."""
 
     @items.setter
-    def items(self, items):
+    def items(self, items: list):
         """
         Setter for items property.
 
@@ -288,7 +288,6 @@ class Canvas(FigureCanvas):
 
     @legend.setter
     def legend(self, legend: bool):
-        """Whether or not, the legend is visible."""
         self._legend = legend
         self._update_legend()
 
@@ -303,7 +302,7 @@ class Canvas(FigureCanvas):
         self._update_legend()
 
     @GObject.Property(type=str)
-    def title(self):
+    def title(self) -> str:
         """Figure title."""
         return self.axis.get_title()
 
@@ -313,7 +312,7 @@ class Canvas(FigureCanvas):
         self.queue_draw()
 
     @GObject.Property(type=str)
-    def bottom_label(self):
+    def bottom_label(self) -> str:
         """Label of the bottom axis."""
         return self.axis.get_xlabel()
 
@@ -323,7 +322,7 @@ class Canvas(FigureCanvas):
         self.queue_draw()
 
     @GObject.Property(type=str)
-    def left_label(self):
+    def left_label(self) -> str:
         """Label of the left axis."""
         return self.axis.get_ylabel()
 
@@ -333,7 +332,7 @@ class Canvas(FigureCanvas):
         self.queue_draw()
 
     @GObject.Property(type=str)
-    def top_label(self):
+    def top_label(self) -> str:
         """Label of the top axis."""
         return self.top_left_axis.get_xlabel()
 
@@ -343,7 +342,7 @@ class Canvas(FigureCanvas):
         self.queue_draw()
 
     @GObject.Property(type=str)
-    def right_label(self):
+    def right_label(self) -> str:
         """Label of the right axis."""
         return self.right_axis.get_ylabel()
 
@@ -353,7 +352,7 @@ class Canvas(FigureCanvas):
         self.queue_draw()
 
     @GObject.Property(type=int)
-    def bottom_scale(self):
+    def bottom_scale(self) -> int:
         """Scale of the bottom axis."""
         return _scale_to_int(self.axis.get_xscale())
 
@@ -366,7 +365,7 @@ class Canvas(FigureCanvas):
         self.queue_draw()
 
     @GObject.Property(type=int)
-    def left_scale(self):
+    def left_scale(self) -> int:
         """Scale of the left axis."""
         return _scale_to_int(self.axis.get_yscale())
 
@@ -379,7 +378,7 @@ class Canvas(FigureCanvas):
         self.queue_draw()
 
     @GObject.Property(type=int)
-    def top_scale(self):
+    def top_scale(self) -> int:
         """Scale of the top axis."""
         return _scale_to_int(self.top_left_axis.get_xscale())
 
@@ -392,7 +391,7 @@ class Canvas(FigureCanvas):
         self.queue_draw()
 
     @GObject.Property(type=int)
-    def right_scale(self):
+    def right_scale(self) -> int:
         """Scale of the right axis."""
         return _scale_to_int(self.right_axis.get_yscale())
 
@@ -405,7 +404,7 @@ class Canvas(FigureCanvas):
         self.queue_draw()
 
     @GObject.Property(type=float)
-    def min_bottom(self):
+    def min_bottom(self) -> float:
         """Lower limit for the bottom axis."""
         return self.axis.get_xlim()[0]
 
@@ -416,7 +415,7 @@ class Canvas(FigureCanvas):
         self.queue_draw()
 
     @GObject.Property(type=float)
-    def max_bottom(self):
+    def max_bottom(self) -> float:
         """Upper limit for the bottom axis."""
         return self.axis.get_xlim()[1]
 
@@ -427,7 +426,7 @@ class Canvas(FigureCanvas):
         self.queue_draw()
 
     @GObject.Property(type=float)
-    def min_left(self):
+    def min_left(self) -> float:
         """Lower limit for the left axis."""
         return self.axis.get_ylim()[0]
 
@@ -438,7 +437,7 @@ class Canvas(FigureCanvas):
         self.queue_draw()
 
     @GObject.Property(type=float)
-    def max_left(self):
+    def max_left(self) -> float:
         """Upper limit for the left axis."""
         return self.axis.get_ylim()[1]
 
@@ -449,7 +448,7 @@ class Canvas(FigureCanvas):
         self.queue_draw()
 
     @GObject.Property(type=float)
-    def min_top(self):
+    def min_top(self) -> float:
         """Lower limit for the top axis."""
         return self.top_left_axis.get_xlim()[0]
 
@@ -461,7 +460,7 @@ class Canvas(FigureCanvas):
         self.queue_draw()
 
     @GObject.Property(type=float)
-    def max_top(self):
+    def max_top(self) -> float:
         """Upper limit for the top axis."""
         return self.top_left_axis.get_xlim()[1]
 
@@ -473,7 +472,7 @@ class Canvas(FigureCanvas):
         self.queue_draw()
 
     @GObject.Property(type=float)
-    def min_right(self):
+    def min_right(self) -> float:
         """Lower limit for the right axis."""
         return self.right_axis.get_ylim()[0]
 
@@ -484,7 +483,7 @@ class Canvas(FigureCanvas):
         self.queue_draw()
 
     @GObject.Property(type=float)
-    def max_right(self):
+    def max_right(self) -> float:
         """Upper limit for the right axis."""
         return self.right_axis.get_ylim()[1]
 
