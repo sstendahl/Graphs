@@ -22,9 +22,21 @@ def get_data(self, item):
     start_index = 0
     stop_index = len(xdata)
     if self.props.mode == 2:
-        canvas = self.props.main_window.toast_overlay.get_child()
-        startx, stopx = canvas.highlight.get_start_stop(
-            item.xposition == 0)
+        figure_settings = self.props.figure_settings
+        if item.xposition == 0:
+            xmin = figure_settings.props.min_bottom
+            xmax = figure_settings.props.max_bottom
+            scale = figure_settings.bottom_scale
+        else:
+            xmin = figure_settings.props.min_top
+            xmax = figure_settings.props.max_top
+            scale = figure_settings.top_scale
+        startx = utilities.get_value_at_fraction(
+            figure_settings.min_selected, xmin, xmax, scale,
+        )
+        stopx = utilities.get_value_at_fraction(
+            figure_settings.max_selected, xmin, xmax, scale,
+        )
 
         # If startx and stopx are not out of range, that is,
         # if the item data is within the highlight
@@ -83,6 +95,9 @@ def perform_operation(self, callback, *args):
     if not data_selected:
         self.main_window.add_toast(
             _("No data found within the highlighted area"))
+        return
+    item.notify("xdata")
+    item.notify("ydata")
     utilities.optimize_limits(self)
     self.props.clipboard.add()
 

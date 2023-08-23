@@ -42,7 +42,7 @@ class GraphsWindow(Adw.ApplicationWindow):
         canvas = Canvas(self.props.application)
         self.toast_overlay.set_child(canvas)
         self.cut_button.bind_property(
-            "sensitive", canvas.highlight, "enabled", 2,
+            "sensitive", canvas, "highlight_enabled", 2,
         )
 
     @GObject.Property(type=int, default=0, minimum=0, maximum=2, flags=2)

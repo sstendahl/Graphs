@@ -32,6 +32,9 @@ class FigureSettings(GObject.Object):
     min_right = GObject.Property(type=float, default=0)
     max_right = GObject.Property(type=float, default=10)
 
+    min_selected = GObject.Property(type=float, default=0)
+    max_selected = GObject.Property(type=float, default=0)
+
     @staticmethod
     def new(settings):
         return FigureSettings(

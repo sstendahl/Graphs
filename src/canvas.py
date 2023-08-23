@@ -33,7 +33,9 @@ class Canvas(FigureCanvas):
     one_click_trigger = GObject.Property(type=bool, default=False)
     time_first_click = GObject.Property(type=float, default=0)
 
-    """Create the graph widget"""
+    min_selected = GObject.Property(type=float, default=0)
+    max_selected = GObject.Property(type=float, default=0)
+
     def __init__(self, application):
         GObject.Object.__init__(self, application=application)
         super().__init__()
@@ -121,7 +123,8 @@ class Canvas(FigureCanvas):
                 and (key in directions or not used_axes[i])
                 for i, key in enumerate(["bottom", "top", "left", "right"])
             })
-            [i.remove() for i in axis.lines + axis.texts]
+            for handle in axis.lines + axis.texts:
+                handle.remove()
         self.axis.get_xaxis().set_visible(used_axes[0])
         self.top_left_axis.get_xaxis().set_visible(used_axes[1])
         self.axis.get_yaxis().set_visible(used_axes[2])
@@ -159,18 +162,15 @@ class Canvas(FigureCanvas):
 
     # Overwritten function - do not change name
     def _post_draw(self, _widget, context):
-        """
-        Override with custom implementation of rubberband to allow for custom
-        rubberband style
-        """
         if self._rubberband_rect is not None:
             self.draw_rubberband(context)
 
     def draw_rubberband(self, context):
         line_width = 1
         if not self._context_is_scaled:
-            x_0, y_0, width, height = (dim / self.device_pixel_ratio
-                                       for dim in self._rubberband_rect)
+            x_0, y_0, width, height = (
+                dim / self.device_pixel_ratio for dim in self._rubberband_rect
+            )
         else:
             x_0, y_0, width, height = self._rubberband_rect
             line_width *= self.device_pixel_ratio
@@ -362,6 +362,7 @@ class Canvas(FigureCanvas):
     def min_top(self, value: float):
         for axis in [self.top_left_axis, self.top_right_axis]:
             axis.set_xlim(value, None)
+        self.highlight.load(self)
         self.queue_draw()
 
     @GObject.Property(type=float)
@@ -372,6 +373,7 @@ class Canvas(FigureCanvas):
     def max_top(self, value: float):
         for axis in [self.top_left_axis, self.top_right_axis]:
             axis.set_xlim(None, value)
+        self.highlight.load(self)
         self.queue_draw()
 
     @GObject.Property(type=float)
@@ -394,9 +396,18 @@ class Canvas(FigureCanvas):
             axis.set_ylim(None, value)
         self.queue_draw()
 
+    @GObject.Property(type=bool, default=False)
+    def highlight_enabled(self) -> bool:
+        return self.highlight.get_active()
+
+    @highlight_enabled.setter
+    def highlight_enabled(self, enabled: bool):
+        self.highlight.set_active(enabled)
+        self.highlight.set_visible(enabled)
+        self.queue_draw()
+
 
 class DummyToolbar(NavigationToolbar2):
-    """Own implementation of NavigationToolbar2 for rubberband support."""
     # Overwritten function - do not change name
     def _zoom_pan_handler(self, event):
         if event.button != 1:
@@ -429,9 +440,10 @@ class DummyToolbar(NavigationToolbar2):
 
     # Overwritten function - do not change name
     def draw_rubberband(self, _event, x0, y0, x1, y1):
-        self.canvas._rubberband_rect = [int(val) for val in (x0,
-                                        self.canvas.figure.bbox.height - y0,
-                                        x1 - x0, y0 - y1)]
+        self.canvas._rubberband_rect = [
+            int(val) for val
+            in (x0, self.canvas.figure.bbox.height - y0, x1 - x0, y0 - y1)
+        ]
         self.canvas.queue_draw()
 
     # Overwritten function - do not change name
@@ -441,6 +453,7 @@ class DummyToolbar(NavigationToolbar2):
 
     # Overwritten function - do not change name
     def push_current(self):
+        self.canvas.highlight.load(self.canvas)
         for direction in ["bottom", "left", "top", "right"]:
             self.canvas.notify(f"min-{direction}")
             self.canvas.notify(f"max-{direction}")
@@ -451,20 +464,11 @@ class DummyToolbar(NavigationToolbar2):
         pass
 
 
-class Highlight(SpanSelector, GObject.Object):
-    __gtype_name__ = "Highlight"
-
-    canvas = GObject.Property(type=Canvas)
-
+class Highlight(SpanSelector):
     def __init__(self, canvas):
-        """
-        Create a span selector object, to highlight part of the graph.
-        If a span already exists, make it visible instead
-        """
-        GObject.Object.__init__(self, canvas=canvas)
         super().__init__(
             canvas.top_right_axis,
-            lambda x, y: self.on_define(),
+            lambda x, y: self.apply(canvas),
             "horizontal",
             useblit=True,
             props={
@@ -476,58 +480,30 @@ class Highlight(SpanSelector, GObject.Object):
             interactive=True,
             drag_from_anywhere=True,
         )
+        self.load(canvas)
 
-    def on_define(self):
-        """
-        This ensures that the span selector doesn"t go out of range
-        There are some obscure cases where this otherwise happens, and the
-        selection tool becomes unusable.
-        """
-        xmin, xmax = self.props.canvas.top_right_axis.get_xlim()
+    def load(self, canvas):
+        xmin, xmax = canvas.top_right_axis.get_xlim()
+        scale = _scale_to_int(canvas.top_left_axis.get_xscale())
         self.extents = (
-            max(xmin, self.extents[0]), min(xmax, self.extents[1]),
+            utilities.get_value_at_fraction(
+                canvas.min_selected, xmin, xmax, scale,
+            ),
+            utilities.get_value_at_fraction(
+                canvas.max_selected, xmin, xmax, scale,
+            ),
         )
 
-    def get_start_stop(self, bottom_x):
-        if bottom_x:
-            xlim = self.canvas.axis.get_xlim()
-            top_lim = self.canvas.top_left_axis.get_xlim()
-            xrange_bottom = max(xlim) - min(xlim)
-            xrange_top = max(top_lim) - min(top_lim)
-            # Run into issues if the range is different, so we calculate this
-            # by getting what fraction of top axis is highlighted
-            if self.canvas.top_left_axis.get_xscale() == "log":
-                fraction_left_limit = utilities.get_fraction_at_value(
-                    min(self.extents), min(top_lim), max(top_lim))
-                fraction_right_limit = utilities.get_fraction_at_value(
-                    max(self.extents), min(top_lim), max(top_lim))
-            elif self.canvas.top_left_axis.get_xscale() == "linear":
-                fraction_left_limit = \
-                    (min(self.extents) - min(top_lim)) / (xrange_top)
-                fraction_right_limit = \
-                    (max(self.extents) - min(top_lim)) / (xrange_top)
+    def apply(self, canvas):
+        xmin, xmax = canvas.top_right_axis.get_xlim()
+        extents = self.extents
+        extents = max(xmin, extents[0]), min(xmax, extents[1])
+        self.extents = extents
 
-            # Use the fraction that is higlighted on top to calculate to what
-            # values this corresponds on bottom axis
-            if self.canvas.axis.get_xscale() == "log":
-                startx = utilities.get_value_at_fraction(
-                    fraction_left_limit, min(xlim), max(xlim))
-                stopx = utilities.get_value_at_fraction(
-                    fraction_right_limit, min(xlim), max(xlim))
-            elif self.canvas.axis.get_xscale() == "linear":
-                startx = min(xlim) + xrange_bottom * fraction_left_limit
-                stopx = min(xlim) + xrange_bottom * fraction_right_limit
-        else:
-            startx = min(self.extents)
-            stopx = max(self.extents)
-        return startx, stopx
-
-    @GObject.Property(type=bool, default=False)
-    def enabled(self) -> bool:
-        return self.get_active()
-
-    @enabled.setter
-    def enabled(self, enabled: bool):
-        self.set_active(enabled)
-        self.set_visible(enabled)
-        self.props.canvas.queue_draw()
+        scale = _scale_to_int(canvas.top_left_axis.get_xscale())
+        canvas.props.min_selected = utilities.get_fraction_at_value(
+            extents[0], xmin, xmax, scale,
+        )
+        canvas.props.max_selected = utilities.get_fraction_at_value(
+            extents[1], xmin, xmax, scale,
+        )

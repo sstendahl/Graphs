@@ -65,29 +65,35 @@ def swap(str1):
     return str1.replace("third", ".")
 
 
-def get_value_at_fraction(fraction, start, end):
+def get_value_at_fraction(fraction, start, end, scale):
     """
     Obtain the selected value of an axis given at which percentage (in terms of
     fraction) of the length this axis is selected given the start and end range
     of this axis
     """
-    log_start = numpy.log10(start)
-    log_end = numpy.log10(end)
-    log_range = log_end - log_start
-    log_value = log_start + log_range * fraction
-    return pow(10, log_value)
+    if scale == 0:
+        return start + fraction * (end - start)
+    else:
+        log_start = numpy.log10(start)
+        log_end = numpy.log10(end)
+        log_range = log_end - log_start
+        log_value = log_start + log_range * fraction
+        return pow(10, log_value)
 
 
-def get_fraction_at_value(value, start, end):
+def get_fraction_at_value(value, start, end, scale):
     """
     Obtain the fraction of the total length of the selected axis a specific
     value corresponds to given the start and end range of the axis.
     """
-    log_start = numpy.log10(start)
-    log_end = numpy.log10(end)
-    log_value = numpy.log10(value)
-    log_range = log_end - log_start
-    return (log_value - log_start) / log_range
+    if scale == 0:
+        return (value - start) / (end - start)
+    else:
+        log_start = numpy.log10(start)
+        log_end = numpy.log10(end)
+        log_value = numpy.log10(value)
+        log_range = log_end - log_start
+        return (log_value - log_start) / log_range
 
 
 def shorten_label(label, max_length=20):
