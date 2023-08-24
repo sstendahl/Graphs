@@ -4,11 +4,11 @@ from pathlib import Path
 
 from gi.repository import Adw, GObject, Gio, Gtk
 
-from graphs import file_io, graphs, ui, utilities
+from graphs import file_io, ui, utilities
 from graphs.misc import ParseError
 
 
-IMPORT_MODES = {
+_IMPORT_MODES = {
     # name: suffix
     "project": ".graphs", "xrdml": ".xrdml", "xry": ".xry", "columns": None,
 }
@@ -23,7 +23,7 @@ class ImportSettings(GObject.Object):
 
 
 def prepare_import(self, files: list):
-    import_dict = {mode: [] for mode in IMPORT_MODES.keys()}
+    import_dict = {mode: [] for mode in _IMPORT_MODES.keys()}
     for file in files:
         import_dict[guess_import_mode(file)].append(file)
     modes = []
@@ -51,7 +51,7 @@ def import_from_files(self, import_settings_list: list):
         except ParseError as error:
             self.main_window.add_toast(error.message)
             continue
-    graphs.add_items(self, items)
+    self.props.data.add_items(items)
 
 
 def _import_from_file(self, import_settings: ImportSettings):
@@ -128,7 +128,7 @@ class ImportWindow(Adw.Window):
         import_from_files(self.props.application, [
             ImportSettings(
                 file=file, mode=mode, name=utilities.get_filename(file))
-            for mode in IMPORT_MODES.keys() for file in self.import_dict[mode]
+            for mode in _IMPORT_MODES.keys() for file in self.import_dict[mode]
         ])
         self.destroy()
 
@@ -139,7 +139,7 @@ def guess_import_mode(file):
         file_suffix = Path(filename).suffixes[-1]
     except IndexError:
         file_suffix = None
-    for mode, suffix in IMPORT_MODES.items():
+    for mode, suffix in _IMPORT_MODES.items():
         if suffix is not None and file_suffix == suffix:
             return mode
     return "columns"

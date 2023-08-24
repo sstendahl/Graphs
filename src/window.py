@@ -1,9 +1,11 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
-from gi.repository import Adw, GLib, Gtk
+from gi.repository import Adw, GLib, GObject, Gtk
 
-from graphs import operations, utilities
-from graphs.misc import InteractionMode
+from graphs import file_io, operations, plot_styles, utilities
+from graphs.canvas import Canvas
 from graphs.transform_data import TransformWindow
+
+from matplotlib import pyplot
 
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/window.ui")
@@ -26,13 +28,41 @@ class GraphsWindow(Adw.ApplicationWindow):
     multiply_y_entry = Gtk.Template.Child()
     toast_overlay = Gtk.Template.Child()
 
+    def __init__(self, application):
+        super().__init__(application=application)
+        self.props.application.props.data.bind_property(
+            "items_selected", self.shift_vertically_button, "sensitive", 2,
+        )
+        self.props.application.bind_property("mode", self, "mode", 2)
+        self.reload_canvas()
+
+    def reload_canvas(self):
+        pyplot.rcParams.update(file_io.parse_style(
+            plot_styles.get_preferred_style(self.props.application)))
+        canvas = Canvas(self.props.application)
+        self.toast_overlay.set_child(canvas)
+        self.cut_button.bind_property(
+            "sensitive", canvas, "highlight_enabled", 2,
+        )
+
+    @GObject.Property(type=int, default=0, minimum=0, maximum=2, flags=2)
+    def mode(self):
+        pass
+
+    @mode.setter
+    def mode(self, mode: int):
+        self.pan_button.set_active(mode == 0)
+        self.zoom_button.set_active(mode == 1)
+        self.select_button.set_active(mode == 2)
+
     def add_toast(self, title):
         self.toast_overlay.add_toast(Adw.Toast(title=title))
 
     @Gtk.Template.Callback()
     def on_sidebar_toggle(self, *_args):
-        self.get_application().toggle_sidebar.change_state(
-            GLib.Variant.new_boolean(self.sidebar_flap.get_reveal_flap()))
+        self.props.application.toggle_sidebar.change_state(
+            GLib.Variant.new_boolean(self.sidebar_flap.get_reveal_flap()),
+        )
 
     @Gtk.Template.Callback()
     def shift_vertically(self, *_args):
@@ -40,7 +70,8 @@ class GraphsWindow(Adw.ApplicationWindow):
         operations.perform_operation(
             app, operations.shift_vertically,
             app.props.figure_settings.left_scale,
-            app.props.figure_settings.right_scale, app.datadict)
+            app.props.figure_settings.right_scale, app.props.data.props.items,
+        )
 
     @Gtk.Template.Callback()
     def normalize(self, *_args):
@@ -64,7 +95,7 @@ class GraphsWindow(Adw.ApplicationWindow):
 
     @Gtk.Template.Callback()
     def cut(self, *_args):
-        if self.props.application.interaction_mode == InteractionMode.SELECT:
+        if self.props.application.props.mode == 2:
             operations.perform_operation(
                 self.props.application, operations.cut_selected)
 

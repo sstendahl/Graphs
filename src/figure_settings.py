@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 from gi.repository import Adw, GObject, Gtk
 
-from graphs import plot_styles, ui, utilities
+from graphs import plot_styles, ui
 
 
 class FigureSettings(GObject.Object):
@@ -31,6 +31,9 @@ class FigureSettings(GObject.Object):
     max_top = GObject.Property(type=float, default=1)
     min_right = GObject.Property(type=float, default=0)
     max_right = GObject.Property(type=float, default=10)
+
+    min_selected = GObject.Property(type=float, default=0)
+    max_selected = GObject.Property(type=float, default=0)
 
     @staticmethod
     def new(settings):
@@ -96,14 +99,14 @@ class FigureSettingsWindow(Adw.PreferencesWindow):
 
     no_data_message = Gtk.Template.Child()
 
-    def __init__(self, application):
+    def __init__(self, application, highlighted=None):
         super().__init__(
             application=application, transient_for=application.main_window,
         )
 
         ui.bind_values_to_object(
             self.props.application.props.figure_settings, self,
-            ignorelist=["custom_style"],
+            ignorelist=["custom_style", "min_selected", "max_selected"],
         )
         styles = sorted(plot_styles.get_user_styles(application).keys())
         self.custom_style.set_model(Gtk.StringList.new(styles))
@@ -111,24 +114,26 @@ class FigureSettingsWindow(Adw.PreferencesWindow):
             self.props.application.props.figure_settings.props.custom_style))
 
         self.hide_unused_axes_limits()
-        if len(self.props.application.datadict) > 0:
-            self.no_data_message.set_visible(False)
+        self.no_data_message.set_visible(
+            self.props.application.props.data.is_empty(),
+        )
+        if highlighted is not None:
+            getattr(self, highlighted).grab_focus()
         self.present()
 
     def hide_unused_axes_limits(self):
-        used_axes = utilities.get_used_axes(self.props.application)[0]
-        if not used_axes["left"]:
-            self.min_left.set_visible(False)
-            self.max_left.set_visible(False)
-        if not used_axes["right"]:
-            self.min_right.set_visible(False)
-            self.max_right.set_visible(False)
-        if not used_axes["top"]:
-            self.min_top.set_visible(False)
-            self.max_top.set_visible(False)
-        if not used_axes["bottom"]:
-            self.min_bottom.set_visible(False)
-            self.max_bottom.set_visible(False)
+        used_axes = [
+            ["bottom", False],
+            ["left", False],
+            ["top", False],
+            ["right", False],
+        ]
+        for item in self.props.application.props.data:
+            for index in item.xposition * 2, 1 + item.yposition * 2:
+                used_axes[index][1] = True
+        for (direction, visible) in used_axes:
+            getattr(self, f"min_{direction}").set_visible(visible)
+            getattr(self, f"max_{direction}").set_visible(visible)
 
     @Gtk.Template.Callback()
     def on_close(self, *_args):

@@ -4,6 +4,7 @@ using Adw 1;
 template $EditItemWindow : Adw.PreferencesWindow {
   modal: true;
   close-request => $on_close();
+  notify::item => $on_item_change();
   ShortcutController {
     Shortcut {
       trigger: "Escape";
@@ -30,10 +31,16 @@ template $EditItemWindow : Adw.PreferencesWindow {
 
       Adw.ComboRow xposition {
         title: _("X-Axis Position");
+        model: StringList {
+          strings ["Bottom", "Top"]
+        };
       }
 
       Adw.ComboRow yposition {
         title: _("Y-Axis Position");
+        model: StringList {
+          strings ["Left", "Right"]
+        };
       }
     }
 
@@ -43,6 +50,9 @@ template $EditItemWindow : Adw.PreferencesWindow {
 
       Adw.ComboRow linestyle {
         title: _("Linestyle");
+        model: StringList {
+          strings [_("None"), _("Solid"), _("Dotted"), _("Dashed"), _("Dashdot")]
+        };
       }
 
       Adw.ActionRow {
@@ -59,6 +69,17 @@ template $EditItemWindow : Adw.PreferencesWindow {
 
       Adw.ComboRow markerstyle {
         title: _("Markers");
+        model: StringList {
+          strings [
+            _("Nothing"), _("Point"), _("Pixel"), _("Circle"),
+            _("Triangle down"), _("Triangle up"), _("Triangle left"),
+            _("Triangle right"), _("Octagon"), _("Square"),
+            _("Pentagon"), _("Star"), _("Hexagon 1"),
+            _("Hexagon 2"), _("Plus"), _("x"), _("Diamond"),
+            _("Thin diamond"), _("Vertical line"), _("Horizontal line"),
+            _("Filled plus"), _("Filled x"),
+          ]
+        };
       }
 
       Adw.ActionRow {

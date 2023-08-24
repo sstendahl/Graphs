@@ -302,7 +302,7 @@ template $GraphsWindow : Adw.ApplicationWindow {
 
                   Button cut_button {
                     hexpand: true;
-                    sensitive: bind shift_vertically_button.sensitive;
+                    sensitive: bind select_button.active;
                     layout {
                       column: 1;
                       row: 2;

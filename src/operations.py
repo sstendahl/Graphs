@@ -2,9 +2,10 @@
 import logging
 from gettext import gettext as _
 
-from graphs import calculation, graphs, plotting_tools
+from graphs import utilities
 from graphs.item import Item
-from graphs.misc import InteractionMode
+
+import numexpr
 
 import numpy
 
@@ -22,9 +23,22 @@ def get_data(self, item):
     new_ydata = ydata.copy()
     start_index = 0
     stop_index = len(xdata)
-    if self.interaction_mode == InteractionMode.SELECT:
-        startx, stopx = self.canvas.highlight.get_start_stop(
-            item.xposition == "bottom")
+    if self.props.mode == 2:
+        figure_settings = self.props.figure_settings
+        if item.xposition == 0:
+            xmin = figure_settings.props.min_bottom
+            xmax = figure_settings.props.max_bottom
+            scale = figure_settings.bottom_scale
+        else:
+            xmin = figure_settings.props.min_top
+            xmax = figure_settings.props.max_top
+            scale = figure_settings.top_scale
+        startx = utilities.get_value_at_fraction(
+            figure_settings.min_selected, xmin, xmax, scale,
+        )
+        stopx = utilities.get_value_at_fraction(
+            figure_settings.max_selected, xmin, xmax, scale,
+        )
 
         # If startx and stopx are not out of range, that is,
         # if the item data is within the highlight
@@ -59,8 +73,8 @@ def sort_data(xdata, ydata):
 
 def perform_operation(self, callback, *args):
     data_selected = False
-    for item in self.datadict.values():
-        if not item.selected or not isinstance(item, Item):
+    for item in self.props.data:
+        if not item.selected or item.props.item_type != "Item":
             continue
         xdata, ydata, start_index, stop_index = get_data(self, item)
         if xdata is not None and len(xdata) != 0:
@@ -83,8 +97,10 @@ def perform_operation(self, callback, *args):
     if not data_selected:
         self.main_window.add_toast(
             _("No data found within the highlighted area"))
-    graphs.refresh(self)
-    plotting_tools.optimize_limits(self)
+        return
+    item.notify("xdata")
+    item.notify("ydata")
+    utilities.optimize_limits(self)
     self.props.clipboard.add()
 
 
@@ -157,7 +173,7 @@ def center(_item, xdata, ydata, center_maximum):
     return new_xdata, ydata, True, False
 
 
-def shift_vertically(item, xdata, ydata, left_scale, right_scale, datadict):
+def shift_vertically(item, xdata, ydata, left_scale, right_scale, items):
     """
     Shifts data vertically with respect to each other
     By default it scales linear data by 1.2 times the total span of the
@@ -165,8 +181,8 @@ def shift_vertically(item, xdata, ydata, left_scale, right_scale, datadict):
     """
     shift_value_log = 1
     shift_value_linear = 0
-    data_list = [item for item in datadict.values()
-                 if item.selected and isinstance(item, Item)]
+    data_list = [item for item in items
+                 if item.selected and item.props.item_type == "Item"]
 
     for index, data_item in enumerate(data_list):
         previous_ydata = data_list[index - 1].ydata
@@ -231,16 +247,25 @@ def get_inverse_fourier(_item, xdata, ydata):
 
 
 def transform(_item, xdata, ydata, input_x, input_y, discard=False):
-    new_xdata, new_ydata = calculation.operation(
-        xdata, ydata, input_x, input_y)
-    return new_xdata, new_ydata, True, discard
+    local_dict = {
+        "x": xdata, "y": ydata,
+        "x_min": min(xdata), "x_max": max(xdata),
+        "y_min": min(ydata), "y_max": max(ydata),
+    }
+    # Add array of zeros to return values, such that output remains a list
+    # of the correct size, even when a float is given as input.
+    return (
+        numexpr.evaluate(utilities.preprocess(input_x) + "+ 0*x", local_dict),
+        numexpr.evaluate(utilities.preprocess(input_y) + "+ 0*y", local_dict),
+        True, discard,
+    )
 
 
 def combine(self):
     """Combine the selected data into a new data set"""
     new_xdata, new_ydata = [], []
-    for item in self.datadict.values():
-        if not item.selected or not isinstance(item, Item):
+    for item in self.props.data:
+        if not item.selected or item.props.item_type != "Item":
             continue
         xdata, ydata = get_data(self, item)[:2]
         new_xdata.extend(xdata)
@@ -248,5 +273,6 @@ def combine(self):
 
     # Create the item itself
     new_xdata, new_ydata = sort_data(new_xdata, new_ydata)
-    graphs.add_items(
-        self, [Item.new(self, new_xdata, new_ydata, name=_("Combined Data"))])
+    self.props.data.add_items(
+        [Item.new(self, new_xdata, new_ydata, name=_("Combined Data"))],
+    )

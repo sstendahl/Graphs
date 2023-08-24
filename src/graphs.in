@@ -15,11 +15,11 @@
 #
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 # GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Main graphs module."""
@@ -31,23 +31,6 @@ import os
 import signal
 import sys
 
-VERSION = "@VERSION@"
-PROJECT_NAME = "@PROJECT_NAME@"
-PKGDATADIR = "@PKGDATADIR@"
-LOCALEDIR = "@LOCALEDIR@"
-COPYRIGHT = "@COPYRIGHT@"
-APPLICATION_ID = "@APPLICATION_ID@"
-NAME = "@NAME@"
-HOMEPAGE_URL = "@HOMEPAGE_URL@"
-ISSUE_URL = "@ISSUE_URL@"
-AUTHOR = "@AUTHOR@"
-
-sys.path.insert(1, PKGDATADIR)
-signal.signal(signal.SIGINT, signal.SIG_DFL)
-locale.bindtextdomain(PROJECT_NAME, LOCALEDIR)
-locale.textdomain(PROJECT_NAME)
-gettext.bindtextdomain(PROJECT_NAME, LOCALEDIR)
-gettext.textdomain(PROJECT_NAME)
 
 if __name__ == "__main__":
     import gi
@@ -55,14 +38,26 @@ if __name__ == "__main__":
     gi.require_version("Adw", "1")
     gi.require_version("Gtk", "4.0")
 
+    sys.path.insert(1, "@PKGDATADIR@")
+    signal.signal(signal.SIGINT, signal.SIG_DFL)
+    locale.bindtextdomain("@PROJECT_NAME@", "@LOCALEDIR@")
+    locale.textdomain("@PROJECT_NAME@")
+    gettext.bindtextdomain("@PROJECT_NAME@", "@LOCALEDIR@")
+    gettext.textdomain("@PROJECT_NAME@")
+
     from gi.repository import Gio
-    resource = Gio.Resource.load(os.path.join(PKGDATADIR, "@APPLICATION_ID@.gresource"))
+    resource = Gio.Resource.load(
+        os.path.join("@PKGDATADIR@", "@APPLICATION_ID@.gresource"),
+    )
     resource._register()
 
-    format = "%(levelname)s: %(message)s"
-    logging.basicConfig(format=format, level=logging.@LOG_LEVEL@)
+    logging.basicConfig(
+        format="%(levelname)s: %(message)s", # level=logging.@LOG_LEVEL@,
+    )
 
-    args = [VERSION, APPLICATION_ID, NAME, HOMEPAGE_URL, ISSUE_URL, AUTHOR, PKGDATADIR]
-
-    from graphs import main
-    sys.exit(main.main(args))
+    from graphs.main import GraphsApplication
+    sys.exit(GraphsApplication(
+        "@APPLICATION_ID@", version="@VERSION@", name="@NAME@",
+        author="@AUTHOR@", website="@HOMEPAGE_URL@", issues="@ISSUE_URL@",
+        pkgdatadir="@PKGDATADIR@",
+    ).run(sys.argv))

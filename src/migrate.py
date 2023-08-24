@@ -81,6 +81,14 @@ ITEM_MIGRATION_TABLE = {
     "plot_y_position": "yposition",
 }
 
+ITEM_VALUE_MIGRATION_TABLE = {
+    "linestyle": ["none", "solid", "dotted", "dashed", "dashdot"],
+    "markerstyle": ["none", ".", ",", "o", "v", "^", "<", ">", "8", "s", "p",
+                    "*", "h", "H", "+", "x", "D", "d", "|", "_", "P", "X"],
+    "xposition": ["bottom", "top"],
+    "yposition": ["left", "right"],
+}
+
 
 PLOT_SETTINGS_MIGRATION_TABLE = {
     "xlabel": "bottom_label",
@@ -113,11 +121,16 @@ class PlotSettings:
 
 class Item:
     def migrate(self) -> dict:
-        dictionary = {
-            ITEM_MIGRATION_TABLE[key] if key in ITEM_MIGRATION_TABLE
-            else key: value for key, value in self.__dict__.items()
-        }
-        dictionary["item_type"] = "Item"
+        dictionary = {"item_type": "Item"}
+        for key, value in self.__dict__.items():
+            with contextlib.suppress(KeyError):
+                key = ITEM_MIGRATION_TABLE[key]
+            if key in ITEM_VALUE_MIGRATION_TABLE:
+                try:
+                    value = ITEM_VALUE_MIGRATION_TABLE[key].index(value)
+                except IndexError:
+                    value = 0
+            dictionary[key] = value
         return dictionary
 
 

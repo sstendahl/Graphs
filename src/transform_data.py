@@ -5,7 +5,6 @@ from gettext import gettext as _
 from gi.repository import Adw, Gtk
 
 from graphs import operations
-from graphs.misc import InteractionMode
 
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/transform_window.ui")
@@ -23,8 +22,7 @@ class TransformWindow(Adw.Window):
                          transient_for=application.main_window)
         self.transform_x_entry.set_text("X")
         self.transform_y_entry.set_text("Y")
-        self.discard_row.set_visible(
-            self.props.application.interaction_mode == InteractionMode.SELECT)
+        self.discard_row.set_visible(self.props.application.props.mode == 2)
         self.present()
         self.help_button.connect(
             "clicked", lambda _x: self.help_popover.popup())

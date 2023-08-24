@@ -6,34 +6,55 @@ from gettext import gettext as _
 
 from gi.repository import Adw, GLib, Gio, Gtk
 
-from graphs import (file_import, file_io, graphs, plotting_tools, project,
-                    utilities)
-from graphs.item import Item
+from graphs import file_import, file_io, plot_styles, project, utilities
 from graphs.item_box import ItemBox
 
 from matplotlib import pyplot
 
 
 def on_style_change(_shortcut, _theme, _widget, self):
-    graphs.reload(self)
+    self.main_window.reload_canvas()
 
 
 def on_figure_style_change(_figure_settings, _ignored, self):
-    graphs.reload(self)
     if not self.get_settings(
             "general").get_boolean("override-item-properties"):
+        self.main_window.reload_canvas()
         return
-    for item in self.datadict.values():
-        item.color = ""
-    for item in self.datadict.values():
-        item.color = plotting_tools.get_next_color(self)
-        if isinstance(item, Item):
-            item.linestyle = pyplot.rcParams["lines.linestyle"]
-            item.linewidth = float(pyplot.rcParams["lines.linewidth"])
-            item.markerstyle = pyplot.rcParams["lines.marker"]
-            item.markersize = float(pyplot.rcParams["lines.markersize"])
-    graphs.refresh(self)
-    reload_item_menu(self)
+    pyplot.rcParams.update(file_io.parse_style(
+        plot_styles.get_preferred_style(self)))
+    for item in self.props.data.props:
+        item.reset()
+    for item in self.props.data.props:
+        if item.props.item_type == "Item":
+            item.color = utilities.get_next_color(self.props.data.props.items)
+    self.main_window.reload_canvas()
+
+
+def on_items_change(data, self):
+    while self.main_window.item_list.get_last_child() is not None:
+        self.main_window.item_list.remove(
+            self.main_window.item_list.get_last_child())
+
+    for item in data:
+        self.main_window.item_list.append(ItemBox(self, item))
+    self.main_window.item_list.set_visible(not data.is_empty())
+    self.props.view_clipboard.add()
+
+
+def on_items_ignored(_data, _ignored, ignored, self):
+    if len(ignored) > 1:
+        toast = _("Items {} already exist").format(ignored)
+    else:
+        toast = _("Item {} already exists")
+    self.main_window.add_toast(toast)
+
+
+def on_scale_action(action, target, self, prop):
+    self.props.figure_settings.set_property(
+        prop, 0 if target.get_string() == "linear" else 1,
+    )
+    action.change_state(target)
 
 
 def set_clipboard_buttons(self):
@@ -51,24 +72,6 @@ def set_clipboard_buttons(self):
         < len(self.props.clipboard.clipboard))
     self.main_window.redo_button.set_sensitive(
         self.props.clipboard.clipboard_pos < - 1)
-
-
-def enable_data_dependent_buttons(self):
-    enabled = False
-    for item in self.datadict.values():
-        if item.selected and isinstance(item, Item):
-            enabled = True
-    self.main_window.shift_vertically_button.set_sensitive(enabled)
-
-
-def reload_item_menu(self):
-    while self.main_window.item_list.get_last_child() is not None:
-        self.main_window.item_list.remove(
-            self.main_window.item_list.get_last_child())
-
-    for item in self.datadict.values():
-        self.main_window.item_list.append(ItemBox(self, item))
-    graphs.check_open_data(self)
 
 
 def add_data_dialog(self):
@@ -113,26 +116,27 @@ def open_project_dialog(self):
 
 
 def export_data_dialog(self):
-    if not self.datadict:
+    if self.props.data.is_empty():
         return
-    multiple = len(self.datadict) > 1
+    multiple = len(self.props.data) > 1
 
     def on_response(dialog, response):
         with contextlib.suppress(GLib.GError):
             if multiple:
                 directory = dialog.select_folder_finish(response)
-                for item in self.datadict.values():
+                for item in self.props.data:
                     file = directory.get_child_for_display_name(
                         f"{item.name}.txt")
                     file_io.save_item(file, item)
             else:
-                item = list(self.datadict.values())[0]
-                file_io.save_item(dialog.save_finish(response), item)
+                file_io.save_item(
+                    dialog.save_finish(response), self.props.data[0],
+                )
     dialog = Gtk.FileDialog()
     if multiple:
         dialog.select_folder(self.main_window, None, on_response)
     else:
-        filename = f"{list(self.datadict.values())[0].name}.txt"
+        filename = f"{self.props.data[0].name}.txt"
         dialog.set_initial_name(filename)
         dialog.set_filters(
             utilities.create_file_filters([(_("Text Files"), ["txt"])]))
@@ -161,21 +165,23 @@ def show_about_window(self):
     ).present()
 
 
-def load_values_from_dict(window, values: dict):
+def load_values_from_dict(window, values: dict, ignorelist=None):
     for key, value in values.items():
+        if ignorelist is not None and key in ignorelist:
+            continue
         try:
             widget = getattr(window, key.replace("-", "_"))
             if isinstance(widget, Adw.EntryRow):
                 widget.set_text(str(value))
             elif isinstance(widget, Adw.ComboRow):
-                utilities.set_chooser(widget, value)
+                widget.set_selected(int(value))
             elif isinstance(widget, Gtk.SpinButton):
                 widget.set_value(value)
             elif isinstance(widget, Gtk.Switch):
                 widget.set_active(bool(value))
             elif isinstance(widget, Adw.ExpanderRow):
                 widget.set_enable_expansion(bool(value))
-                widget.set_expanded(bool(value))
+                widget.set_expanded(True)
             elif isinstance(widget, Gtk.Scale):
                 widget.set_value(value)
             elif isinstance(widget, Gtk.Button):
@@ -186,15 +192,17 @@ def load_values_from_dict(window, values: dict):
             logging.warn(_("No way to apply “{}”").format(key))
 
 
-def save_values_to_dict(window, keys: list):
+def save_values_to_dict(window, keys: list, ignorelist=None):
     values = {}
     for key in keys:
+        if ignorelist is not None and key in ignorelist:
+            continue
         with contextlib.suppress(AttributeError):
             widget = getattr(window, key.replace("-", "_"))
             if isinstance(widget, Adw.EntryRow):
                 values[key] = str(widget.get_text())
             elif isinstance(widget, Adw.ComboRow):
-                values[key] = utilities.get_selected_chooser_item(widget)
+                values[key] = widget.get_selected()
             elif isinstance(widget, Gtk.SpinButton):
                 values[key] = widget.get_value()
             elif isinstance(widget, Gtk.Switch):
@@ -258,6 +266,7 @@ def bind_values_to_object(source, window, ignorelist=None):
                 source.bind_property(key, widget, "selected", 1 | 2)
             elif isinstance(widget, Adw.ExpanderRow):
                 source.bind_property(key, widget, "enable-expansion", 1 | 2)
+                widget.set_expanded(True)
             else:
                 logging.warn(_("Unsupported Widget {}").format(type(widget)))
         except AttributeError:

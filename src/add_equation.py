@@ -4,10 +4,12 @@ from gettext import gettext as _
 
 from gi.repository import Adw, Gtk
 
-from graphs import calculation, graphs, ui, utilities
+from graphs import ui, utilities
 from graphs.item import Item
 
-KEYS = ["equation", "step-size", "x-start", "x-stop"]
+import numexpr
+
+import numpy
 
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/add_equation_window.ui")
@@ -30,20 +32,27 @@ class AddEquationWindow(Adw.Window):
     @Gtk.Template.Callback()
     def on_accept(self, _widget):
         """Launched when the accept button is pressed on the equation window"""
-        values = ui.save_values_to_dict(self, KEYS)
+        values = ui.save_values_to_dict(
+            self, ["equation", "step-size", "x-start", "x-stop"],
+        )
         try:
-            xdata, ydata = calculation.create_dataset(
-                utilities.string_to_float(values["x-start"]),
-                utilities.string_to_float(values["x-stop"]),
-                values["equation"],
-                utilities.string_to_float(values["step-size"]),
+            x_start = utilities.string_to_float(values["x-start"])
+            x_stop = utilities.string_to_float(values["x-stop"])
+            step_size = utilities.string_to_float(values["step-size"])
+            datapoints = int(abs(x_start - x_stop) / step_size) + 1
+            xdata = numpy.ndarray.tolist(
+                numpy.linspace(x_start, x_stop, datapoints),
+            )
+            equation = utilities.preprocess(values["equation"])
+            ydata = numpy.ndarray.tolist(
+                numexpr.evaluate(equation + " + x*0", local_dict={"x": xdata}),
             )
             name = str(self.name.get_text())
             if name == "":
                 name = f"Y = {values['equation']}"
-            graphs.add_items(
-                self.props.application,
-                [Item.new(self.props.application, xdata, ydata, name=name)])
+            self.props.application.props.data.add_items(
+                [Item.new(self.props.application, xdata, ydata, name=name)],
+            )
             self.destroy()
         except ValueError as error:
             self.toast_overlay.add_toast(Adw.Toast(title=error))

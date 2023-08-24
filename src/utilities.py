@@ -6,88 +6,9 @@ from gettext import gettext as _
 
 from gi.repository import GLib, Gdk, Gio, Gtk
 
+from matplotlib import pyplot
+
 import numpy
-
-
-def change_key_position(dictionary, key1, key2):
-    """Change key position of key2 to that of key1."""
-    keys = list(dictionary.keys())
-    values = list(dictionary.values())
-    index1 = keys.index(key2)
-    index2 = keys.index(key1)
-    # Check if target key is lower in the order, if so we can put the old key
-    # below the target key. Otherwise put it above.
-    if index1 < index2:
-        keys[index1:index2 + 1] = keys[index1 + 1:index2 + 1] + [key2]
-        values[index1:index2 + 1] = values[index1 + 1:index2 + 1] + \
-            [dictionary[key2]]
-    else:
-        keys[index2:index1 + 1] = [key2] + keys[index2:index1]
-        values[index2:index1 + 1] = [dictionary[key2]] + values[index2:index1]
-    return dict(zip(keys, values))
-
-
-def get_used_axes(self):
-    used_axes = {
-        "left": False,
-        "right": False,
-        "top": False,
-        "bottom": False,
-    }
-    items = {
-        "left": [],
-        "right": [],
-        "top": [],
-        "bottom": [],
-    }
-    for item in self.datadict.values():
-        if item.yposition == "left":
-            used_axes["left"] = True
-            items["left"].append(item)
-        if item.yposition == "right":
-            used_axes["right"] = True
-            items["right"].append(item)
-        if item.xposition == "top":
-            used_axes["top"] = True
-            items["top"].append(item)
-        if item.xposition == "bottom":
-            used_axes["bottom"] = True
-            items["bottom"].append(item)
-    return used_axes, items
-
-
-def set_chooser(chooser, choice):
-    """Set the value of a dropdown menu to the choice parameter string"""
-    for index, item in enumerate(chooser.untranslated_items):
-        if item == choice:
-            chooser.set_selected(index)
-
-
-def populate_chooser(chooser, chooser_list, translate=True):
-    """Fill the dropdown menu with the strings in a chooser_list"""
-    if chooser.get_model():
-        model = chooser.get_model()
-        for _item in model:
-            model.remove(0)
-    else:
-        model = Gtk.StringList()
-
-    chooser.untranslated_items = []
-    for item in chooser_list:
-        chooser.untranslated_items.append(item)
-        if translate:
-            item = _(item)
-        model.append(item)
-    chooser.set_model(model)
-
-
-def get_selected_chooser_item(chooser):
-    return chooser.untranslated_items[int(chooser.get_selected())]
-
-
-def get_all_names(self):
-    """Get a list of all filenames present in the datadict dictionary"""
-    return [item.name for item in self.datadict.values()]
 
 
 def get_dict_by_value(dictionary, value):
@@ -125,10 +46,6 @@ def hex_to_rgba(hex_str):
     return rgba
 
 
-def lookup_color(self, color):
-    return self.main_window.get_style_context().lookup_color(color)[1]
-
-
 def rgba_to_hex(rgba):
     return "#{:02x}{:02x}{:02x}".format(
         round(rgba.red * 255),
@@ -148,29 +65,35 @@ def swap(str1):
     return str1.replace("third", ".")
 
 
-def get_value_at_fraction(fraction, start, end):
+def get_value_at_fraction(fraction, start, end, scale):
     """
     Obtain the selected value of an axis given at which percentage (in terms of
     fraction) of the length this axis is selected given the start and end range
     of this axis
     """
-    log_start = numpy.log10(start)
-    log_end = numpy.log10(end)
-    log_range = log_end - log_start
-    log_value = log_start + log_range * fraction
-    return pow(10, log_value)
+    if scale == 0:
+        return start + fraction * (end - start)
+    else:
+        log_start = numpy.log10(start)
+        log_end = numpy.log10(end)
+        log_range = log_end - log_start
+        log_value = log_start + log_range * fraction
+        return pow(10, log_value)
 
 
-def get_fraction_at_value(value, start, end):
+def get_fraction_at_value(value, start, end, scale):
     """
     Obtain the fraction of the total length of the selected axis a specific
     value corresponds to given the start and end range of the axis.
     """
-    log_start = numpy.log10(start)
-    log_end = numpy.log10(end)
-    log_value = numpy.log10(value)
-    log_range = log_end - log_start
-    return (log_value - log_start) / log_range
+    if scale == 0:
+        return (value - start) / (end - start)
+    else:
+        log_start = numpy.log10(start)
+        log_end = numpy.log10(end)
+        log_value = numpy.log10(value)
+        log_range = log_end - log_start
+        return (log_value - log_start) / log_range
 
 
 def shorten_label(label, max_length=20):
@@ -233,3 +156,61 @@ def preprocess(string: str):
 
 def get_filename(file: Gio.File):
     return file.query_info("standard::*", 0, None).get_display_name()
+
+
+def optimize_limits(self):
+    self.props.clipboard.clipboard[self.props.clipboard.clipboard_pos][
+        "view"] = self.props.figure_settings.get_limits()
+    axes = [
+        [direction, False, []]
+        for direction in ["bottom", "left", "top", "right"]
+    ]
+    for item in self.props.data:
+        for index in item.xposition * 2, 1 + item.yposition * 2:
+            axes[index][1] = True
+            axes[index][2].append(item)
+
+    for count, (direction, used, items) in enumerate(axes):
+        if not used:
+            continue
+        scale = self.props.figure_settings.get_property(f"{direction}_scale")
+        datalist = [item.ydata if count % 2 else item.xdata for item in items
+                    if item.props.item_type == "Item"]
+        min_all, max_all = [], []
+        for data in datalist:
+            nonzero_data = list(filter(lambda x: (x != 0), data))
+            if scale == 1 and len(nonzero_data) > 0:
+                min_all.append(min(nonzero_data))
+            else:
+                min_all.append(min(data))
+            max_all.append(max(data))
+        min_all = min(min_all)
+        max_all = max(max_all)
+        span = max_all - min_all
+        if scale == 0:
+            padding_factor = 0.05 if count % 2 else 0.015
+            min_all -= padding_factor * span
+            max_all += padding_factor * span
+        elif count % 2:
+            min_all *= 0.5
+            max_all *= 2
+        self.props.figure_settings.set_property(f"min_{direction}", min_all)
+        self.props.figure_settings.set_property(f"max_{direction}", max_all)
+    self.props.view_clipboard.add()
+
+
+def get_next_color(items):
+    """Get the color that is to be used for the next data set"""
+    color_cycle = pyplot.rcParams["axes.prop_cycle"].by_key()["color"]
+    used_colors = []
+    for item in items:
+        used_colors.append(item.color)
+        # If we've got all colors once, remove those from used_colors so we
+        # can loop around
+        if set(used_colors) == set(color_cycle):
+            for color in color_cycle:
+                used_colors.remove(color)
+
+    for color in color_cycle:
+        if color not in used_colors:
+            return color
