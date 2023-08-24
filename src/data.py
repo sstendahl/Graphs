@@ -48,7 +48,7 @@ class Data(GObject.Object):
 
     def to_list(self) -> list:
         """Get a list of all items in dict form."""
-        return [i.to_dict() for i in self]
+        return [item_.to_dict() for item_ in self]
 
     def set_from_list(self, items: list):
         """Set items from a list of items in dict form."""
@@ -61,7 +61,7 @@ class Data(GObject.Object):
     @GObject.Property(type=bool, default=False, flags=1)
     def items_selected(self) -> bool:
         """Whether or not at least one item is selected."""
-        return any(i.selected for i in self)
+        return any(item_.selected for item_ in self)
 
     @GObject.Property
     def items(self) -> list:
@@ -70,14 +70,14 @@ class Data(GObject.Object):
 
     @items.setter
     def items(self, items: list):
-        self._items = {item.key: item for item in items}
-        for i in items:
-            self._connect_to_item(i)
+        self._items = {item_.key: item_ for item_ in items}
+        for item_ in items:
+            self._connect_to_item(item_)
         self.emit("items-change")
 
     def get_names(self) -> list:
         """All items' names."""
-        return [item.name for item in self._items.values()]
+        return [item_.name for item_ in self._items.values()]
 
     def __len__(self) -> int:
         """Amount of managed items."""
@@ -91,24 +91,23 @@ class Data(GObject.Object):
         """Get item by index or key."""
         if isinstance(getter, str):
             return self._items[getter]
-        else:
-            return list(self._items.values())[getter]
+        return list(self._items.values())[getter]
 
     def change_position(self, key1: str, key2: str):
         """Change key position of key2 to that of key1."""
         keys = list(self._items.keys())
-        values = list(self._items.values())
+        items = list(self._items.values())
         index1 = keys.index(key2)
         index2 = keys.index(key1)
         # Check if target key is lower in the order, if so we can put the old
         # key below the target key. Otherwise put it above.
         if index1 < index2:
-            values[index1:index2 + 1] = values[index1 + 1:index2 + 1] + \
+            items[index1:index2 + 1] = items[index1 + 1:index2 + 1] + \
                 [self._items[key2]]
         else:
-            values[index2:index1 + 1] = \
-                [self._items[key2]] + values[index2:index1]
-        self.props.items = values
+            items[index2:index1 + 1] = \
+                [self._items[key2]] + items[index2:index1]
+        self.props.items = items
 
     def add_items(self, items: list):
         """
@@ -195,12 +194,12 @@ class Data(GObject.Object):
         self.notify("items")
         self.notify("items_selected")
 
-    def _connect_to_item(self, item):
-        item.connect(
+    def _connect_to_item(self, item_):
+        item_.connect(
             "notify::selected", lambda _x, _y: self.notify("items_selected"),
         )
         for prop in ["xposition", "yposition"]:
-            item.connect(f"notify::{prop}", self._on_item_position_change)
+            item_.connect(f"notify::{prop}", self._on_item_position_change)
 
     def _on_item_position_change(self, _item, _ignored):
         utilities.optimize_limits(self.props.application)

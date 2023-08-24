@@ -18,18 +18,18 @@ from matplotlib.style.core import STYLE_BLACKLIST
 import numpy
 
 
-def save_item(file, item):
+def save_item(file, item_):
     delimiter = "\t"
     fmt = delimiter.join(["%.12e"] * 2)
     stream = _get_write_stream(file)
-    if item.xlabel != "" and item.ylabel != "":
-        _write_string(stream, item.xlabel + delimiter + item.ylabel + "\n")
-    for row in numpy.stack([item.xdata, item.ydata], axis=1):
+    if item_.xlabel != "" and item_.ylabel != "":
+        _write_string(stream, item_.xlabel + delimiter + item_.ylabel + "\n")
+    for row in numpy.stack([item_.xdata, item_.ydata], axis=1):
         _write_string(stream, fmt % tuple(row) + "\n")
     stream.close()
 
 
-def import_from_project(self, import_settings):
+def import_from_project(_self, import_settings):
     return [item.new_from_dict(dictionary)
             for dictionary in parse_json(import_settings.file)["data"]]
 
@@ -103,7 +103,7 @@ def import_from_xry(self, import_settings):
 
 
 def import_from_columns(self, import_settings):
-    item = Item.new(self, name=import_settings.name)
+    item_ = Item.new(self, name=import_settings.name)
     columns_params = self.settings.get_child(
         "import-params").get_child("columns")
     column_x = columns_params.get_int("column-x")
@@ -119,17 +119,18 @@ def import_from_columns(self, import_settings):
                     data_line[index] = utilities.swap(value)
             try:
                 if len(data_line) == 1:
-                    item.xdata.append(i)
-                    item.ydata.append(utilities.string_to_float(data_line[0]))
+                    item_.xdata.append(i)
+                    item_.ydata.append(utilities.string_to_float(data_line[0]))
                 else:
                     try:
-                        item.xdata.append(utilities.string_to_float(
+                        item_.xdata.append(utilities.string_to_float(
                             data_line[column_x]))
-                        item.ydata.append(utilities.string_to_float(
+                        item_.ydata.append(utilities.string_to_float(
                             data_line[column_y]))
-                    except IndexError:
+                    except IndexError as error:
                         raise ParseError(
-                            _("Import failed, column index out of range"))
+                            _("Import failed, column index out of range"),
+                        ) from error
             # If not all values in the line are floats, start looking for
             # headers instead
             except ValueError:
@@ -141,19 +142,19 @@ def import_from_columns(self, import_settings):
                 # for the data
                 try:
                     headers = re.split("\\s{2,}", line)
-                    item.xlabel = headers[column_x]
-                    item.ylabel = headers[column_x]
+                    item_.xlabel = headers[column_x]
+                    item_.ylabel = headers[column_x]
                 except IndexError:
                     try:
                         headers = re.split(delimiter, line)
-                        item.xlabel = headers[column_x]
-                        item.ylabel = headers[column_x]
+                        item_.xlabel = headers[column_x]
+                        item_.ylabel = headers[column_x]
                     # If neither heuristic works, we just skip headers
                     except IndexError:
                         pass
-    if not item.xdata:
+    if not item_.xdata:
         raise ParseError(_("Unable to import from file"))
-    return [item]
+    return [item_]
 
 
 def parse_style(file):
@@ -242,8 +243,7 @@ def parse_xml(file):
 def _get_write_stream(file):
     if file.query_exists(None):
         return file.replace(None, False, 0, None)
-    else:
-        return file.create(0, None)
+    return file.create(0, None)
 
 
 def _write_string(stream, line, encoding="utf-8"):

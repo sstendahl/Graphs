@@ -189,9 +189,9 @@ def shift_vertically(item, xdata, ydata, left_scale, right_scale, items):
         ymin = min(x for x in previous_ydata if x != 0)
         ymax = max(x for x in previous_ydata if x != 0)
         if item.yposition == "left":
-            linear = (left_scale == "linear")
+            linear = left_scale == "linear"
         if item.yposition == "right":
-            linear = (right_scale == "linear")
+            linear = right_scale == "linear"
         if linear:
             shift_value_linear += 1.2 * (ymax - ymin)
         else:
@@ -201,7 +201,7 @@ def shift_vertically(item, xdata, ydata, left_scale, right_scale, items):
                 new_ydata = [value + shift_value_linear for value in ydata]
             else:
                 new_ydata = [value * 10 ** shift_value_log for value in ydata]
-            return xdata, new_ydata, False, False
+        return xdata, new_ydata, False, False
 
 
 def cut_selected(_item, _xdata, _ydata):

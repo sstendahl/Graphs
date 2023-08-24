@@ -11,14 +11,6 @@ from matplotlib import pyplot
 import numpy
 
 
-def get_dict_by_value(dictionary, value):
-    """Return the key associated with the given value in the dictionary"""
-    for key, dict_value in dictionary.items():
-        if dict_value == value:
-            return key
-    return "none"
-
-
 def get_font_weight(font_name):
     """Get the weight of the font that is used using the full font name"""
     valid_weights = ["normal", "bold", "heavy",
@@ -214,3 +206,4 @@ def get_next_color(items):
     for color in color_cycle:
         if color not in used_colors:
             return color
+    return "000000"
