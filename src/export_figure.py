@@ -20,7 +20,8 @@ class ExportFigureWindow(Adw.Window):
     def __init__(self, application):
         super().__init__(
             application=application, transient_for=application.main_window,
-            file_formats=application.canvas.get_supported_filetypes_grouped(),
+            file_formats=application.main_window.toast_overlay.get_child(
+            ).get_supported_filetypes_grouped(),
         )
 
         self.file_format.set_model(
