@@ -1,11 +1,9 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 from gi.repository import Adw, GLib, GObject, Gtk
 
-from graphs import file_io, operations, plot_styles, utilities
+from graphs import operations, styles, utilities
 from graphs.canvas import Canvas
 from graphs.transform_data import TransformWindow
-
-from matplotlib import pyplot
 
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/window.ui")
@@ -37,8 +35,7 @@ class GraphsWindow(Adw.ApplicationWindow):
         self.reload_canvas()
 
     def reload_canvas(self):
-        pyplot.rcParams.update(file_io.parse_style(
-            plot_styles.get_preferred_style(self.props.application)))
+        styles.update(self.props.application)
         canvas = Canvas(self.props.application)
         self.toast_overlay.set_child(canvas)
         self.cut_button.bind_property(

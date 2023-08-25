@@ -2,7 +2,7 @@
 
 from gi.repository import Adw, Gtk
 
-from graphs import plot_styles, ui
+from graphs import styles, ui
 
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/preferences.ui")
@@ -33,15 +33,15 @@ class PreferencesWindow(Adw.PreferencesWindow):
             application=application, transient_for=application.main_window,
         )
 
-        styles = sorted(plot_styles.get_user_styles(application).keys())
-        self.figure_custom_style.set_model(Gtk.StringList.new(styles))
+        styles_ = sorted(styles.get_user_styles(application).keys())
+        self.figure_custom_style.set_model(Gtk.StringList.new(styles_))
         settings = self.props.application.props.settings
         ui.bind_values_to_settings(
             settings.get_child("figure"), self, prefix="figure_",
             ignorelist=["custom-style"])
         ui.bind_values_to_settings(
             settings.get_child("general"), self, prefix="general_")
-        self.figure_custom_style.set_selected(styles.index(
+        self.figure_custom_style.set_selected(styles_.index(
             settings.get_child("figure").get_string("custom-style")))
         self.present()
 
