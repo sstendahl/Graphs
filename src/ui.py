@@ -6,10 +6,8 @@ from gettext import gettext as _
 
 from gi.repository import Adw, GLib, Gio, Gtk
 
-from graphs import file_import, file_io, plot_styles, project, utilities
+from graphs import file_import, file_io, project, styles, utilities
 from graphs.item_box import ItemBox
-
-from matplotlib import pyplot
 
 
 def on_style_change(_shortcut, _theme, _widget, self):
@@ -21,8 +19,7 @@ def on_figure_style_change(_figure_settings, _ignored, self):
             "general").get_boolean("override-item-properties"):
         self.main_window.reload_canvas()
         return
-    pyplot.rcParams.update(file_io.parse_style(
-        plot_styles.get_preferred_style(self)))
+    styles.update(self)
     for item in self.props.data:
         item.reset()
     for item in self.props.data:

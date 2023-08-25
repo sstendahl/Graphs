@@ -9,6 +9,8 @@ from gi.repository import Adw, GLib, Gio, Gtk
 
 from graphs import file_io, ui, utilities
 
+from matplotlib import pyplot
+
 
 def _styles_in_directory(directory):
     enumerator = directory.enumerate_children("default::*", 0, None)
@@ -83,6 +85,10 @@ def get_preferred_style(self):
         return get_system_preferred_style(self)
 
 
+def update(self):
+    pyplot.rcParams.update(file_io.parse_style(get_preferred_style(self)))
+
+
 def get_style(self, stylename):
     """
     Get the style based on the stylename.
@@ -147,12 +153,14 @@ VALUE_DICT = {
 }
 
 
-@Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/plot_styles.ui")
-class PlotStylesWindow(Adw.Window):
-    __gtype_name__ = "PlotStylesWindow"
+@Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/style_window.ui")
+class StylesWindow(Adw.Window):
+    __gtype_name__ = "StylesWindow"
+
     leaflet = Gtk.Template.Child()
     styles_box = Gtk.Template.Child()
     line_colors_box = Gtk.Template.Child()
+
     style_name = Gtk.Template.Child()
     font_chooser = Gtk.Template.Child()
     linestyle = Gtk.Template.Child()

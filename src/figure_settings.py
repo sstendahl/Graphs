@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 from gi.repository import Adw, GObject, Gtk
 
-from graphs import plot_styles, ui
+from graphs import styles, ui
 
 
 class FigureSettings(GObject.Object):
@@ -108,9 +108,9 @@ class FigureSettingsWindow(Adw.PreferencesWindow):
             self.props.application.props.figure_settings, self,
             ignorelist=["custom_style", "min_selected", "max_selected"],
         )
-        styles = sorted(plot_styles.get_user_styles(application).keys())
-        self.custom_style.set_model(Gtk.StringList.new(styles))
-        self.custom_style.set_selected(styles.index(
+        styles_ = sorted(styles.get_user_styles(application).keys())
+        self.custom_style.set_model(Gtk.StringList.new(styles_))
+        self.custom_style.set_selected(styles_.index(
             self.props.application.props.figure_settings.props.custom_style))
 
         self.hide_unused_axes_limits()

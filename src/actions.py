@@ -6,8 +6,8 @@ from graphs import ui, utilities
 from graphs.add_equation import AddEquationWindow
 from graphs.export_figure import ExportFigureWindow
 from graphs.figure_settings import FigureSettingsWindow
-from graphs.plot_styles import PlotStylesWindow
 from graphs.preferences import PreferencesWindow
+from graphs.styles import StylesWindow
 
 
 def toggle_sidebar(_action, _shortcut, self):
@@ -83,8 +83,8 @@ def export_figure_action(_action, _target, self):
     ExportFigureWindow(self)
 
 
-def plot_styles_action(_action, _target, self):
-    PlotStylesWindow(self)
+def styles_action(_action, _target, self):
+    StylesWindow(self)
 
 
 def save_project_action(_action, _target, self):

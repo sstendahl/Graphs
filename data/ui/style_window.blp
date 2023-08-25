@@ -1,11 +1,11 @@
 using Gtk 4.0;
 using Adw 1;
 
-template $PlotStylesWindow : Adw.Window {
+template $StylesWindow : Adw.Window {
   modal: true;
   default-width: 650;
   default-height: 400;
-  title: _("Plot Styles");
+  title: _("Styles");
   close-request => $on_close();
 
   ShortcutController {
