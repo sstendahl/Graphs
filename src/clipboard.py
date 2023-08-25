@@ -1,8 +1,8 @@
+import copy
+
 from gi.repository import Adw, GObject
 
 from graphs import ui
-
-import copy
 
 import numpy
 
