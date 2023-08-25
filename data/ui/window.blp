@@ -204,23 +204,21 @@ template $GraphsWindow : Adw.ApplicationWindow {
         ScrolledWindow {
           hscrollbar-policy: never;
           Viewport {
-            Adw.PreferencesGroup {
+            Box {
+              orientation: vertical;
               vexpand: true;
               hexpand: false;
+              spacing: 12;
               margin-start: 12;
               margin-end: 12;
-              margin-top: 12;
-              margin-bottom: 12;
+              margin-top: 6;
+              margin-bottom: 18;
 
-              Adw.ExpanderRow {
+              Adw.PreferencesGroup {
                 title: _("Adjust Data");
                 Grid {
                   column-spacing: 10;
                   row-spacing: 10;
-                  margin-start: 10;
-                  margin-end: 10;
-                  margin-top: 10;
-                  margin-bottom: 10;
                   Button shift_vertically_button {
                     hexpand: true;
                     layout {
@@ -318,15 +316,11 @@ template $GraphsWindow : Adw.ApplicationWindow {
                 }
               }
 
-              Adw.ExpanderRow {
+              Adw.PreferencesGroup {
                 title: _("Mathematical Operations");
                 Grid {
                   column-spacing: 10;
                   row-spacing: 10;
-                  margin-start: 10;
-                  margin-end: 10;
-                  margin-top: 10;
-                  margin-bottom: 10;
                   Button {
                     hexpand: true;
                     sensitive: bind shift_vertically_button.sensitive;
@@ -410,16 +404,12 @@ template $GraphsWindow : Adw.ApplicationWindow {
                 }
               }
 
-              Adw.ExpanderRow {
+              Adw.PreferencesGroup {
                 title: _("Translate and Multiply");
 
                 Grid {
                   column-spacing: 10;
                   row-spacing: 10;
-                  margin-start: 10;
-                  margin-end: 10;
-                  margin-top: 10;
-                  margin-bottom: 10;
                   Entry translate_x_entry {
                     max-width-chars: 6;
                     hexpand: true;
