@@ -95,16 +95,11 @@ class DataClipboard(BaseClipboard):
     def set_clipboard_state(self):
         state = self.props.clipboard[self.props.clipboard_pos]
         self.props.application.props.data.set_from_list(state["data"])
-        if self.props.application.props.view_clipboard.view_changed:
-            self.props.application.props.figure_settings.set_limits(
-                state["view"],
-            )
+        self.props.application.props.figure_settings.set_limits(state["view"])
 
 
 class ViewClipboard(BaseClipboard):
     __gtype_name__ = "ViewClipboard"
-
-    view_changed = GObject.Property(type=bool, default=False)
 
     def __init__(self, application):
         super().__init__(
@@ -118,11 +113,11 @@ class ViewClipboard(BaseClipboard):
         the same as previous one (e.g. if an action does not change the limits)
         """
         limits = self.props.application.props.figure_settings.get_limits()
-        self.props.view_changed = all(
+        view_changed = all(
             not numpy.isclose(value, limits[key])
             for key, value in self.props.clipboard[-1].items()
         )
-        if self.props.view_changed:
+        if view_changed:
             super().add(limits)
 
     def set_clipboard_state(self):

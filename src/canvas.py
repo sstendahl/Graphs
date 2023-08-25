@@ -92,7 +92,7 @@ class Canvas(FigureCanvas):
         GObject.Object.__init__(self, application=application)
         super().__init__()
         self.figure.set_tight_layout(True)
-        self.mpl_connect("pick_event", self.on_pick)
+        self.mpl_connect("pick_event", self._on_pick)
         self.axis = self.figure.add_subplot(111)
         self.right_axis = self.axis.twinx()
         self.top_left_axis = self.axis.twiny()
@@ -198,7 +198,7 @@ class Canvas(FigureCanvas):
         ]
         self.update_legend()
 
-    def on_pick(self, event):
+    def _on_pick(self, event):
         """Invoke FigureSettingsWindow for picked label/title."""
         FigureSettingsWindow(self.props.application, event.artist.id)
 

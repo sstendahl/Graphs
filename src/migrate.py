@@ -157,7 +157,7 @@ def migrate_project(file):
         "figure-settings": project["plot_settings"].migrate(),
         "data-clipboard": [{"data": [],
                             "view": DEFAULT_VIEW.copy()}],
-        "data-clipboard-position": project["clipboard_pos"],
+        "data-clipboard-position": -1,
         "view-clipboard": None,
         "view-clipboard-position": None,
     }

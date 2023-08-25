@@ -153,8 +153,8 @@ class GraphsApplication(Adw.Application):
         self.main_window = self.props.active_window
         if not self.main_window:
             self.main_window = GraphsWindow(self)
-            self.main_window.set_title(self.name)
-            if "(Development)" in self.name:
+            self.main_window.set_title(self.props.name)
+            if "(Development)" in self.props.name:
                 self.main_window.add_css_class("devel")
             self.props.clipboard = DataClipboard(self)
             self.props.view_clipboard = ViewClipboard(self)

@@ -91,7 +91,7 @@ class ImportWindow(Adw.Window):
             self.props.application.get_settings("import-params")
         visible = False
         for mode in import_params.list_children():
-            if mode in self.modes:
+            if mode in self.props.modes:
                 ui.bind_values_to_settings(
                     import_params.get_child(mode), self, prefix=f"{mode}_")
                 getattr(self, f"{mode}_group").set_visible(True)

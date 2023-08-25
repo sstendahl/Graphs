@@ -94,12 +94,12 @@ def perform_operation(self, callback, *args):
                 sorted_x, sorted_y = sort_data(item.xdata, item.ydata)
                 item.xdata = sorted_x
                 item.ydata = sorted_y
+        item.notify("xdata")
+        item.notify("ydata")
     if not data_selected:
         self.main_window.add_toast(
             _("No data found within the highlighted area"))
         return
-    item.notify("xdata")
-    item.notify("ydata")
     utilities.optimize_limits(self)
     self.props.clipboard.add()
 
@@ -184,24 +184,21 @@ def shift_vertically(item, xdata, ydata, left_scale, right_scale, items):
     data_list = [item for item in items
                  if item.selected and item.props.item_type == "Item"]
 
-    for index, data_item in enumerate(data_list):
+    for index, item_ in enumerate(data_list):
         previous_ydata = data_list[index - 1].ydata
         ymin = min(x for x in previous_ydata if x != 0)
         ymax = max(x for x in previous_ydata if x != 0)
-        if item.yposition == "left":
-            linear = (left_scale == "linear")
-        if item.yposition == "right":
-            linear = (right_scale == "linear")
-        if linear:
+        scale = right_scale if item.yposition else left_scale
+        if scale == 0:
             shift_value_linear += 1.2 * (ymax - ymin)
         else:
             shift_value_log += numpy.log10(ymax / ymin)
-        if item.key == data_item.key:
-            if linear:
+        if item.key == item_.key:
+            if scale == 0:
                 new_ydata = [value + shift_value_linear for value in ydata]
             else:
                 new_ydata = [value * 10 ** shift_value_log for value in ydata]
-            return xdata, new_ydata, False, False
+        return xdata, new_ydata, False, False
 
 
 def cut_selected(_item, _xdata, _ydata):
