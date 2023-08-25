@@ -433,41 +433,40 @@ class StyleColorBox(Gtk.Box):
 class AddStyleWindow(Adw.Window):
     __gtype_name__ = "AddStyleWindow"
     new_style_name = Gtk.Template.Child()
-    plot_style_templates = Gtk.Template.Child()
+    style_templates = Gtk.Template.Child()
 
     def __init__(self, application, parent):
         super().__init__(application=application,
                          transient_for=parent)
-        self.parent = parent
-        utilities.populate_chooser(
-            self.plot_style_templates,
-            sorted(get_user_styles(self.parent).keys()), False)
+        self.styles = get_user_styles(parent)
+        self.style_templates.set_model(Gtk.StringList.new(
+            sorted(self.styles.keys()),
+        ))
         self.present()
 
     @Gtk.Template.Callback()
     def on_template_changed(self, _a, _b):
-        selected_item = \
-            utilities.get_selected_chooser_item(self.plot_style_templates)
-        self.new_style_name.set_text(
-            _("{name} (copy)").format(name=selected_item))
+        self.new_style_name.set_text(_("{name} (copy)").format(
+            name=self.style_templates.get_selected_item().get_string(),
+        ))
 
     @Gtk.Template.Callback()
     def on_accept(self, _button):
-        style = utilities.get_selected_chooser_item(self.plot_style_templates)
         new_style = self.new_style_name.get_text()
         i = 0
-        user_styles = get_user_styles(self.props.application)
-        for style_1 in user_styles.keys():
+        for style_1 in self.styles.keys():
             if new_style == style_1:
                 while True:
                     i += 1
-                    if f"{new_style} ({i})" not in user_styles.keys():
+                    if f"{new_style} ({i})" not in self.styles.keys():
                         new_style = f"{new_style} ({i})"
                         break
         config_dir = utilities.get_config_directory()
         directory = config_dir.get_child_for_display_name("styles")
         destination = directory.get_child_for_display_name(
             f"{new_style}.mplstyle")
-        user_styles[style].copy(destination, 0, None)
-        self.parent.reload_styles()
+        self.styles[
+            self.style_templates.get_selected_item().get_string()
+        ].copy(destination, 0, None)
+        self.get_transient_for().reload_styles()
         self.close()
