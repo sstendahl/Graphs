@@ -300,6 +300,9 @@ class StylesWindow(Adw.Window):
             directory.get_child_for_display_name(f"{self.style.name}.mplstyle")
         file_io.write_style(file, self.style)
 
+        if file.equal(get_preferred_style(self.props.application)):
+            self.props.application.main_window.reload_canvas()
+
     @Gtk.Template.Callback()
     def add_color(self, _button):
         box = StyleColorBox(self, "#000000")
@@ -340,7 +343,6 @@ class StylesWindow(Adw.Window):
     def on_close(self, _button):
         if self.style is not None:
             self.save_style()
-        self.props.application.main_window.reload_canvas()
         self.destroy()
 
     def on_color_change(self, button):
