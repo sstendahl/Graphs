@@ -198,7 +198,8 @@ def shift_vertically(item, xdata, ydata, left_scale, right_scale, items):
                 new_ydata = [value + shift_value_linear for value in ydata]
             else:
                 new_ydata = [value * 10 ** shift_value_log for value in ydata]
-        return xdata, new_ydata, False, False
+            return xdata, new_ydata, False, False
+    return xdata, ydata, False, False
 
 
 def cut_selected(_item, _xdata, _ydata):
