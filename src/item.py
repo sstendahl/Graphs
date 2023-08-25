@@ -93,7 +93,7 @@ class Item(ItemBase):
             misc.LINESTYLES.index(pyplot.rcParams["lines.linestyle"])
         self.props.linewidth = pyplot.rcParams["lines.linewidth"]
         self.props.markerstyle = \
-            misc.MARKERSTyLES.index(pyplot.rcParams["lines.marker"])
+            misc.MARKERSTYLES.index(pyplot.rcParams["lines.marker"])
         self.props.markersize = pyplot.rcParams["lines.markersize"]
         self.color = "000000"
 

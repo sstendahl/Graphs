@@ -1,3 +1,5 @@
+import copy
+
 from gi.repository import Adw, GObject
 
 from graphs import ui
@@ -66,7 +68,7 @@ class DataClipboard(BaseClipboard):
         Appends the latest state to the clipboard.
         """
         super().add({
-            "data": self.props.application.props.data.to_list(),
+            "data": copy.deepcopy(self.props.application.props.data.to_list()),
             "view": self.props.application.props.figure_settings.get_limits(),
         })
         # Keep clipboard length limited to preference values

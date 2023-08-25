@@ -20,9 +20,9 @@ def on_figure_style_change(_figure_settings, _ignored, self):
         self.main_window.reload_canvas()
         return
     styles.update(self)
-    for item in self.props.data.props:
+    for item in self.props.data:
         item.reset()
-    for item in self.props.data.props:
+    for item in self.props.data:
         if item.props.item_type == "Item":
             item.color = utilities.get_next_color(self.props.data.props.items)
     self.main_window.reload_canvas()
