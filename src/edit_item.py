@@ -26,11 +26,12 @@ class EditItemWindow(Adw.PreferencesWindow):
 
     item = GObject.Property(type=ItemBase)
     model = GObject.Property(type=Gtk.StringList)
+    bindings = GObject.Property(type=object)
 
     def __init__(self, application, item):
         super().__init__(
             application=application, transient_for=application.main_window,
-            item=item,
+            item=item, bindings=[],
             model=Gtk.StringList.new(application.props.data.get_names()),
         )
         self.item_selector.set_model(self.props.model)
@@ -40,33 +41,22 @@ class EditItemWindow(Adw.PreferencesWindow):
         self.present()
 
     @Gtk.Template.Callback()
-    def on_close(self, *_args):
-        self.apply()
-
-    @Gtk.Template.Callback()
     def on_select(self, _action, _target):
         item = self.props.application.props.data[
             self.item_selector.get_selected()]
         if item != self.item:
-            self.apply()
             self.props.model.splice(
                 self.props.application.props.data.props.items.index(self.item),
                 1, [self.item.name],
             )
-            self.item = item
+            self.props.item = item
 
     @Gtk.Template.Callback()
     def on_item_change(self, _a, _b):
         self.set_title(self.props.item.props.name)
-        ui.load_values_from_dict(
-            self, self.props.item.to_dict(), ignorelist=_IGNORELIST,
+        for binding in self.props.bindings:
+            binding.unbind()
+        self.props.bindings = ui.bind_values_to_object(
+            self.props.item, self, ignorelist=_IGNORELIST,
         )
         self.item_group.set_visible(self.props.item.props.item_type == "Item")
-
-    def apply(self):
-        new_values = ui.save_values_to_dict(
-            self, dir(self.props.item.props), ignorelist=_IGNORELIST,
-        )
-        for key, value in new_values.items():
-            self.props.item.set_property(key, value)
-        self.props.application.props.clipboard.add()

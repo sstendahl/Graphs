@@ -3,7 +3,6 @@ using Adw 1;
 
 template $EditItemWindow : Adw.PreferencesWindow {
   modal: true;
-  close-request => $on_close();
   notify::item => $on_item_change();
   ShortcutController {
     Shortcut {

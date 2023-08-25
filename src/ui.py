@@ -245,8 +245,6 @@ def bind_values_to_settings(settings, window, prefix="", ignorelist=None):
                 settings.bind(key, widget, "active", 0)
             elif isinstance(widget, Adw.ExpanderRow):
                 settings.bind(key, widget, "enable-expansion", 0)
-            elif isinstance(widget, Gtk.Scale):
-                settings.bind(key, widget, "value", 0)
                 widget.set_expanded(True)
             else:
                 logging.warn(_("Unsupported Widget {}").format(type(widget)))
@@ -255,19 +253,31 @@ def bind_values_to_settings(settings, window, prefix="", ignorelist=None):
 
 
 def bind_values_to_object(source, window, ignorelist=None):
+    bindings = []
     for key in dir(source.props):
         if ignorelist is not None and key in ignorelist:
             continue
         try:
             widget = getattr(window, key)
             if isinstance(widget, Adw.EntryRow):
-                source.bind_property(key, widget, "text", 1 | 2)
+                bindings.append(source.bind_property(
+                    key, widget, "text", 1 | 2,
+                ))
             elif isinstance(widget, Adw.ComboRow):
-                source.bind_property(key, widget, "selected", 1 | 2)
+                bindings.append(source.bind_property(
+                    key, widget, "selected", 1 | 2,
+                ))
             elif isinstance(widget, Adw.ExpanderRow):
-                source.bind_property(key, widget, "enable-expansion", 1 | 2)
+                bindings.append(source.bind_property(
+                    key, widget, "enable-expansion", 1 | 2,
+                ))
                 widget.set_expanded(True)
+            elif isinstance(widget, Gtk.Scale):
+                bindings.append(source.bind_property(
+                    key, widget.get_adjustment(), "value", 1 | 2,
+                ))
             else:
                 logging.warn(_("Unsupported Widget {}").format(type(widget)))
         except AttributeError:
             logging.warn(_("No way to apply “{}”").format(key))
+    return bindings
