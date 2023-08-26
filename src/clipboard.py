@@ -118,7 +118,7 @@ class DataClipboard(BaseClipboard):
                 data.append(item_)
                 data.change_position(data.get_keys()[change[0]], item_.key)
             elif change_type == 3:
-                data.change_position(data[change[1]].key, data[change[0]].key)
+                data.change_position(data[change[0]].key, data[change[1]].key)
         data.notify("items")
         data.notify("items_selected")
         data.emit("items-change")
