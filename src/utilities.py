@@ -151,8 +151,6 @@ def get_filename(file: Gio.File):
 
 
 def optimize_limits(self):
-    self.props.clipboard.clipboard[self.props.clipboard.clipboard_pos][
-        "view"] = self.props.figure_settings.get_limits()
     axes = [
         [direction, False, []]
         for direction in ["bottom", "left", "top", "right"]

@@ -45,9 +45,14 @@ class ItemBox(Gtk.Box):
 
     def on_dnd_drop(self, drop_target, value, _x, _y):
         # Handle the dropped data here
-        self.props.application.props.data.change_position(
-            drop_target.key, value)
-        self.props.application.props.clipboard.add()
+        data = self.props.application.props.data
+        before_index = data.index(value)
+        data.change_position(drop_target.key, value)
+        clipboard = self.props.application.props.clipboard
+        clipboard.props.current_batch.append((3, (
+            before_index, data.index(value),
+        )))
+        clipboard.add()
         self.props.application.props.view_clipboard.add()
 
     def on_dnd_prepare(self, drag_source, x, y):

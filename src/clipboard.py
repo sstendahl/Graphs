@@ -2,7 +2,7 @@ import copy
 
 from gi.repository import Adw, GObject
 
-from graphs import ui
+from graphs import ui, item
 
 import numpy
 
@@ -33,7 +33,7 @@ class BaseClipboard(GObject.Object):
     def undo(self):
         if abs(self.props.clipboard_pos) < len(self.props.clipboard):
             self.props.clipboard_pos -= 1
-            self.set_clipboard_state()
+            self.perform_undo()
         ui.set_clipboard_buttons(self.props.application)
 
     def redo(self):
@@ -43,7 +43,7 @@ class BaseClipboard(GObject.Object):
         """
         if self.props.clipboard_pos < -1:
             self.props.clipboard_pos += 1
-            self.set_clipboard_state()
+            self.perform_redo()
         ui.set_clipboard_buttons(self.props.application)
 
     def clear(self):
@@ -53,13 +53,13 @@ class BaseClipboard(GObject.Object):
 class DataClipboard(BaseClipboard):
     __gtype_name__ = "DataClipboard"
 
+    current_batch = GObject.Property(type=object)
+    data_copy = GObject.Property(type=object)
+
     def __init__(self, application):
         super().__init__(
-            application=application,
-            clipboard=[{
-                "data": [],
-                "view": application.props.figure_settings.get_limits(),
-            }],
+            application=application, current_batch=[], data_copy={},
+            clipboard=[([], application.props.figure_settings.get_limits())],
         )
 
     def add(self):
@@ -67,15 +67,17 @@ class DataClipboard(BaseClipboard):
         Add data to the clipboard, is performed whenever an action is performed
         Appends the latest state to the clipboard.
         """
-        super().add({
-            "data": copy.deepcopy(self.props.application.props.data.to_list()),
-            "view": self.props.application.props.figure_settings.get_limits(),
-        })
-        # Keep clipboard length limited to preference values
-        max_clipboard_length = \
-            self.props.application.get_settings().get_int("clipboard-length")
-        if len(self.props.clipboard) > max_clipboard_length + 1:
+        super().add((
+            self.props.current_batch,
+            self.props.application.props.figure_settings.get_limits(),
+        ))
+        # Keep clipboard length limited to 100 spots
+        if len(self.props.clipboard) > 101:
             self.props.clipboard = self.props.clipboard[1:]
+        self.props.current_batch = []
+        self.props.data_copy = copy.deepcopy(
+            self.props.application.props.data.to_dict(),
+        )
 
     def undo(self):
         """
@@ -84,6 +86,10 @@ class DataClipboard(BaseClipboard):
         performed
         """
         super().undo()
+        self.props.current_batch = []
+        self.props.data_copy = copy.deepcopy(
+            self.props.application.props.data.to_dict(),
+        )
         self.props.application.props.view_clipboard.add()
 
     def redo(self):
@@ -92,12 +98,55 @@ class DataClipboard(BaseClipboard):
         changes the dataset to the state before the previous action was undone
         """
         super().redo()
+        self.props.current_batch = []
+        self.props.data_copy = copy.deepcopy(
+            self.props.application.props.data.to_dict(),
+        )
         self.props.application.props.view_clipboard.add()
 
-    def set_clipboard_state(self):
+    def perform_undo(self):
+        state = self.props.clipboard[self.props.clipboard_pos + 1]
+        data = self.props.application.props.data
+        for change_type, change in reversed(state[0]):
+            if change_type == 0:
+                key, prop, before, _after = change
+                data[key].set_property(prop, before)
+            elif change_type == 1:
+                data.pop(change["key"])
+            elif change_type == 2:
+                item_ = item.new_from_dict(change[1])
+                data.append(item_)
+                data.change_position(data.get_keys()[change[0]], item_.key)
+            elif change_type == 3:
+                data.change_position(data[change[1]].key, data[change[0]].key)
+        data.notify("items")
+        data.notify("items_selected")
+        data.emit("items-change")
+        self.props.application.props.figure_settings.set_limits(state[1])
+
+    def perform_redo(self):
         state = self.props.clipboard[self.props.clipboard_pos]
-        self.props.application.props.data.set_from_list(state["data"])
-        self.props.application.props.figure_settings.set_limits(state["view"])
+        data = self.props.application.props.data
+        for change_type, change in state[0]:
+            if change_type == 0:
+                key, prop, _before, after = change
+                data[key].set_property(prop, after)
+            elif change_type == 1:
+                data.append(item.new_from_dict(change))
+            elif change_type == 2:
+                data.pop(change[1]["key"])
+            elif change_type == 3:
+                data.change_position(data[change[1]].key, data[change[0]].key)
+        data.notify("items")
+        data.notify("items_selected")
+        data.emit("items-change")
+        self.props.application.props.figure_settings.set_limits(state[1])
+
+    def on_item_change(self, item_, param):
+        self.props.current_batch.append((0, (
+            item_.key, param.name, self.props.data_copy[item_.key][param.name],
+            item_.get_property(param.name),
+        )))
 
 
 class ViewClipboard(BaseClipboard):
@@ -122,7 +171,13 @@ class ViewClipboard(BaseClipboard):
         if view_changed:
             super().add(limits)
 
-    def set_clipboard_state(self):
+    def perform_undo(self):
+        self._set_clipboard_state(self)
+
+    def perform_redo(self):
+        self._set_clipboard_state(self)
+
+    def _set_clipboard_state(self):
         self.props.application.props.figure_settings.set_limits(
             self.props.clipboard[self.props.clipboard_pos],
         )
