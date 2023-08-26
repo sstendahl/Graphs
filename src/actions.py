@@ -46,11 +46,13 @@ def add_equation_action(_action, _target, self):
 def select_all_action(_action, _target, self):
     for item in self.props.data:
         item.selected = True
+    self.props.clipboard.add()
 
 
 def select_none_action(_action, _target, self):
     for item in self.props.data:
         item.selected = False
+    self.props.clipboard.add()
 
 
 def undo_action(_action, _target, self):

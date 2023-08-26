@@ -2,7 +2,7 @@ import copy
 
 from gi.repository import Adw, GObject
 
-from graphs import ui, item
+from graphs import item, ui
 
 import numpy
 
@@ -105,9 +105,9 @@ class DataClipboard(BaseClipboard):
         self.props.application.props.view_clipboard.add()
 
     def perform_undo(self):
-        state = self.props.clipboard[self.props.clipboard_pos + 1]
+        batch = self.props.clipboard[self.props.clipboard_pos + 1][0]
         data = self.props.application.props.data
-        for change_type, change in reversed(state[0]):
+        for change_type, change in reversed(batch):
             if change_type == 0:
                 key, prop, before, _after = change
                 data[key].set_property(prop, before)
@@ -122,7 +122,9 @@ class DataClipboard(BaseClipboard):
         data.notify("items")
         data.notify("items_selected")
         data.emit("items-change")
-        self.props.application.props.figure_settings.set_limits(state[1])
+        self.props.application.props.figure_settings.set_limits(
+            self.props.clipboard[self.props.clipboard_pos][1],
+        )
 
     def perform_redo(self):
         state = self.props.clipboard[self.props.clipboard_pos]

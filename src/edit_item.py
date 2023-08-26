@@ -60,3 +60,8 @@ class EditItemWindow(Adw.PreferencesWindow):
             self.props.item, self, ignorelist=_IGNORELIST,
         )
         self.item_group.set_visible(self.props.item.props.item_type == "Item")
+
+    @Gtk.Template.Callback()
+    def on_close(self, _a):
+        self.props.application.props.clipboard.add()
+        self.destroy()

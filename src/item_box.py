@@ -21,9 +21,7 @@ class ItemBox(Gtk.Box):
     def __init__(self, application, item):
         super().__init__(application=application, item=item)
         self.props.item.bind_property("name", self.label, "label", 2)
-        self.props.item.bind_property(
-            "selected", self.check_button, "active", 1 | 2)
-
+        self.check_button.set_active(item.props.selected)
         self.gesture = Gtk.GestureClick()
         self.gesture.set_button(0)
         self.add_controller(self.gesture)
@@ -67,6 +65,13 @@ class ItemBox(Gtk.Box):
     def on_color_change(self, item, _ignored):
         self.provider.load_from_data(
             f"button {{ color: {item.color}; opacity: {item.alpha};}}", -1)
+
+    @Gtk.Template.Callback()
+    def on_toggle(self, _a, _b):
+        new_value = self.check_button.get_active()
+        if self.props.item.props.selected != new_value:
+            self.props.item.props.selected = new_value
+            self.props.application.props.clipboard.add()
 
     @Gtk.Template.Callback()
     def choose_color(self, _):

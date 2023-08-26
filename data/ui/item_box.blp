@@ -11,6 +11,7 @@ template $ItemBox : Box {
     halign: start;
     hexpand: false;
     styles ["selection-mode"]
+    notify::active => $on_toggle();
   }
 
   Label label {
