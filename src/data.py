@@ -20,7 +20,6 @@ class Data(GObject.Object):
         items
 
     Signals:
-        items-change: Items are added or removed
         items-ignored: Items are ignored during addition
 
     Functions:
@@ -40,7 +39,6 @@ class Data(GObject.Object):
 
     __gtype_name__ = "Data"
     __gsignals__ = {
-        "items-change": (GObject.SIGNAL_RUN_FIRST, None, ()),
         "items-ignored": (GObject.SIGNAL_RUN_FIRST, None, (str,)),
     }
 
@@ -79,21 +77,22 @@ class Data(GObject.Object):
 
     @items.setter
     def items(self, items: list):
-        self._items = {item_.key: item_ for item_ in items}
         for item_ in items:
-            self._connect_to_item(item_)
-        self.emit("items-change")
+            self.append(item_)
+        self._items = {item_.key: item_ for item_ in items}
 
     def append(self, item_):
         """Append items to self."""
         self._connect_to_item(item_)
         self._items[item_.key] = item_
+        self.notify("items")
 
     def pop(self, key):
         """Pop and delete item."""
         item_ = self._items[key]
         self._items.pop(key)
         del item_
+        self.notify("items")
 
     def index(self, key):
         """Get the indexs of key."""
@@ -212,7 +211,6 @@ class Data(GObject.Object):
         self.props.application.props.clipboard.add()
         if ignored:
             self.emit("items-ignored", ", ".join(ignored))
-        self.emit("items-change")
         self.notify("items")
         self.notify("items_selected")
 
@@ -224,8 +222,6 @@ class Data(GObject.Object):
             )
             self.pop(item_.key)
         self.props.application.props.clipboard.add()
-        self.emit("items-change")
-        self.notify("items")
         self.notify("items_selected")
 
     def _connect_to_item(self, item_):

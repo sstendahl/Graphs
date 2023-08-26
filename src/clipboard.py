@@ -67,6 +67,8 @@ class DataClipboard(BaseClipboard):
         Add data to the clipboard, is performed whenever an action is performed
         Appends the latest state to the clipboard.
         """
+        if not self.props.current_batch:
+            return
         super().add((
             self.props.current_batch,
             self.props.application.props.figure_settings.get_limits(),
@@ -107,21 +109,24 @@ class DataClipboard(BaseClipboard):
     def perform_undo(self):
         batch = self.props.clipboard[self.props.clipboard_pos + 1][0]
         data = self.props.application.props.data
+        items_changed = False
         for change_type, change in reversed(batch):
             if change_type == 0:
-                key, prop, before, _after = change
-                data[key].set_property(prop, before)
+                data[change[0]].set_property(change[1], change[2])
             elif change_type == 1:
                 data.pop(change["key"])
+                items_changed = True
             elif change_type == 2:
                 item_ = item.new_from_dict(change[1])
                 data.append(item_)
                 data.change_position(data.get_keys()[change[0]], item_.key)
+                items_changed = True
             elif change_type == 3:
                 data.change_position(data[change[0]].key, data[change[1]].key)
-        data.notify("items")
+                items_changed = True
+        if items_changed:
+            data.notify("items")
         data.notify("items_selected")
-        data.emit("items-change")
         self.props.application.props.figure_settings.set_limits(
             self.props.clipboard[self.props.clipboard_pos][1],
         )
@@ -129,19 +134,22 @@ class DataClipboard(BaseClipboard):
     def perform_redo(self):
         state = self.props.clipboard[self.props.clipboard_pos]
         data = self.props.application.props.data
+        items_changed = False
         for change_type, change in state[0]:
             if change_type == 0:
-                key, prop, _before, after = change
-                data[key].set_property(prop, after)
+                data[change[0]].set_property(change[1], change[3])
             elif change_type == 1:
                 data.append(item.new_from_dict(change))
+                items_changed = True
             elif change_type == 2:
                 data.pop(change[1]["key"])
+                items_changed = True
             elif change_type == 3:
                 data.change_position(data[change[1]].key, data[change[0]].key)
-        data.notify("items")
+                items_changed = True
+        if items_changed:
+            data.notify("items")
         data.notify("items_selected")
-        data.emit("items-change")
         self.props.application.props.figure_settings.set_limits(state[1])
 
     def on_item_change(self, item_, param):

@@ -137,7 +137,7 @@ class GraphsApplication(Adw.Application):
             "notify::custom-style", ui.on_figure_style_change, self,
         )
         self.props.data.connect(
-            "items-change", ui.on_items_change, self,
+            "notify::items", ui.on_items_change, self,
         )
         self.props.data.connect(
             "items-ignored", ui.on_items_ignored, self,

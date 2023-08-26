@@ -21,7 +21,9 @@ class ItemBox(Gtk.Box):
     def __init__(self, application, item):
         super().__init__(application=application, item=item)
         self.props.item.bind_property("name", self.label, "label", 2)
-        self.check_button.set_active(item.props.selected)
+        self.props.item.bind_property(
+            "selected", self.check_button, "active", 2,
+        )
         self.gesture = Gtk.GestureClick()
         self.gesture.set_button(0)
         self.add_controller(self.gesture)
