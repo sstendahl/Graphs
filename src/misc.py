@@ -14,3 +14,7 @@ MARKERSTYLES = [
     "none", ".", ",", "o", "v", "^", "<", ">", "8", "s", "p", "*", "h", "H",
     "+", "x", "D", "d", "|", "_", "P", "X",
 ]
+LIMITS = [
+    "min_bottom", "max_bottom", "min_top", "max_top",
+    "min_left", "max_left", "min_right", "max_right",
+]

@@ -134,16 +134,7 @@ class Item:
         return dictionary
 
 
-DEFAULT_VIEW = {
-    "min_bottom": 0,
-    "max_bottom": 1,
-    "min_top": 0,
-    "max_top": 10,
-    "min_left": 0,
-    "max_left": 1,
-    "min_right": 0,
-    "max_right": 10,
-}
+DEFAULT_VIEW = [0, 1, 0, 10, 0, 1, 0, 10]
 
 
 def migrate_project(file):

@@ -15,7 +15,7 @@ def save_project(self, file: Gio.File):
         "view-clipboard": self.props.view_clipboard.props.clipboard,
         "view-clipboard-position":
             self.props.view_clipboard.props.clipboard_pos,
-    })
+    }, False)
 
 
 def load_project(self, file: Gio.File):

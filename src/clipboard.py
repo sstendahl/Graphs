@@ -175,17 +175,17 @@ class ViewClipboard(BaseClipboard):
         """
         limits = self.props.application.props.figure_settings.get_limits()
         view_changed = all(
-            not numpy.isclose(value, limits[key])
-            for key, value in self.props.clipboard[-1].items()
+            not numpy.isclose(value, limits[count])
+            for count, value in enumerate(self.props.clipboard[-1])
         )
         if view_changed:
             super().add(limits)
 
     def perform_undo(self):
-        self._set_clipboard_state(self)
+        self._set_clipboard_state()
 
     def perform_redo(self):
-        self._set_clipboard_state(self)
+        self._set_clipboard_state()
 
     def _set_clipboard_state(self):
         self.props.application.props.figure_settings.set_limits(
