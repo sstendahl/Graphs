@@ -88,6 +88,14 @@ class Item(ItemBase):
         if self.props.ydata is None:
             self.props.ydata = []
 
+    @property
+    def name(self):
+        return self._name
+
+    @name.setter
+    def name(self, new_name):
+        self._name = f"{new_name[:18]}..."
+
     def reset(self):
         self.props.linestyle = \
             misc.LINESTYLES.index(pyplot.rcParams["lines.linestyle"])
