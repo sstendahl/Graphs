@@ -91,9 +91,7 @@ def perform_operation(self, callback, *args):
                 item.ydata[start_index:stop_index] = new_ydata
             if sort:
                 logging.debug("Sorting data")
-                sorted_x, sorted_y = sort_data(item.xdata, item.ydata)
-                item.xdata = sorted_x
-                item.ydata = sorted_y
+                item.xdata, item.ydata = sort_data(item.xdata, item.ydata)
         item.notify("xdata")
         item.notify("ydata")
     if not data_selected:

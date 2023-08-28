@@ -5,6 +5,8 @@ Data management module.
 Classes:
     Data
 """
+import copy
+
 from gi.repository import GObject
 
 from graphs import item, utilities
@@ -205,7 +207,7 @@ class Data(GObject.Object):
 
             self.append(new_item)
             self.props.application.props.clipboard.props.current_batch.append(
-                (1, new_item.to_dict()),
+                (1, copy.deepcopy(new_item.to_dict())),
             )
         utilities.optimize_limits(self.props.application)
         self.props.application.props.clipboard.add()

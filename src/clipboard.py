@@ -34,7 +34,7 @@ class BaseClipboard(GObject.Object):
         if abs(self.props.clipboard_pos) < len(self.props.clipboard):
             self.props.clipboard_pos -= 1
             self.perform_undo()
-        ui.set_clipboard_buttons(self.props.application)
+            ui.set_clipboard_buttons(self.props.application)
 
     def redo(self):
         """
@@ -44,7 +44,7 @@ class BaseClipboard(GObject.Object):
         if self.props.clipboard_pos < -1:
             self.props.clipboard_pos += 1
             self.perform_redo()
-        ui.set_clipboard_buttons(self.props.application)
+            ui.set_clipboard_buttons(self.props.application)
 
     def clear(self):
         self.__init__(self.props.application)
@@ -154,8 +154,9 @@ class DataClipboard(BaseClipboard):
 
     def on_item_change(self, item_, param):
         self.props.current_batch.append((0, (
-            item_.key, param.name, self.props.data_copy[item_.key][param.name],
-            item_.get_property(param.name),
+            item_.key, param.name,
+            copy.deepcopy(self.props.data_copy[item_.key][param.name]),
+            copy.deepcopy(item_.get_property(param.name)),
         )))
 
 
@@ -174,7 +175,7 @@ class ViewClipboard(BaseClipboard):
         the same as previous one (e.g. if an action does not change the limits)
         """
         limits = self.props.application.props.figure_settings.get_limits()
-        view_changed = all(
+        view_changed = any(
             not numpy.isclose(value, limits[count])
             for count, value in enumerate(self.props.clipboard[-1])
         )
