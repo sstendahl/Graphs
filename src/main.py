@@ -20,25 +20,11 @@ from matplotlib import font_manager
 
 
 _ACTIONS = [
-    ("quit", ["<primary>q"]),
-    ("about", None),
-    ("preferences", ["<primary>p"]),
-    ("figure_settings", ["<primary><shift>P"]),
-    ("add_data", ["<primary>N"]),
-    ("add_equation", ["<primary><alt>N"]),
-    ("select_all", ["<primary>A"]),
-    ("select_none", ["<primary><shift>A"]),
-    ("undo", ["<primary>Z"]),
-    ("redo", ["<primary><shift>Z"]),
-    ("optimize_limits", ["<primary>L"]),
-    ("view_back", ["<alt>Z"]),
-    ("view_forward", ["<alt><shift>Z"]),
-    ("export_data", ["<primary><shift>E"]),
-    ("export_figure", ["<primary>E"]),
-    ("styles", ["<primary><alt>P"]),
-    ("save_project", ["<primary>S"]),
-    ("open_project", ["<primary>O"]),
-    ("delete_selected", ["Delete"]),
+    "quit", "about", "preferences", "figure_settings", "add_data",
+    "add_equation", "select_all", "select_none", "undo", "redo",
+    "optimize_limits", "view_back", "view_forward", "export_data",
+    "export_figure", "styles", "save_project", "open_project",
+    "delete_selected",
 ]
 
 
@@ -95,14 +81,12 @@ class GraphsApplication(Adw.Application):
             except RuntimeError:
                 logging.warning(_("Could not load %s"), font)
 
-        for name, keybinds in _ACTIONS:
+        for name in _ACTIONS:
             action = Gio.SimpleAction.new(name, None)
             action.connect(
                 "activate", getattr(actions, f"{name}_action"), self,
             )
             self.add_action(action)
-            if keybinds:
-                self.set_accels_for_action(f"app.{name}", keybinds)
 
         settings = self.get_settings("figure")
         for val in ["left-scale", "right-scale", "top-scale", "bottom-scale"]:

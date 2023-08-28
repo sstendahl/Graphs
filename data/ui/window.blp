@@ -4,6 +4,81 @@ using Adw 1;
 template $GraphsWindow : Adw.ApplicationWindow {
   default-width: 1200;
   default-height: 700;
+  ShortcutController {
+    Shortcut {
+      trigger: "<primary>q";
+      action: "action(app.quit)";
+    }
+    Shortcut {
+      trigger: "<primary>p";
+      action: "action(app.preferences)";
+    }
+    Shortcut {
+      trigger: "<primary><shift>P";
+      action: "action(app.figure_settings)";
+    }
+    Shortcut {
+      trigger: "<primary>N";
+      action: "action(app.add_data)";
+    }
+    Shortcut {
+      trigger: "<primary><alt>N";
+      action: "action(app.add_equation)";
+    }
+    Shortcut {
+      trigger: "<primary>A";
+      action: "action(app.select_all)";
+    }
+    Shortcut {
+      trigger: "<primary><shift>A";
+      action: "action(app.select_none)";
+    }
+    Shortcut {
+      trigger: "<primary>Z";
+      action: "action(app.undo)";
+    }
+    Shortcut {
+      trigger: "<primary><shift>Z";
+      action: "action(app.redo)";
+    }
+    Shortcut {
+      trigger: "<primary>L";
+      action: "action(app.optimize_limits)";
+    }
+    Shortcut {
+      trigger: "<alt>Z";
+      action: "action(app.view_back)";
+    }
+    Shortcut {
+      trigger: "<alt><shift>Z";
+      action: "action(app.view_forward)";
+    }
+    Shortcut {
+      trigger: "<primary><shift>E";
+      action: "action(app.export_data)";
+    }
+    Shortcut {
+      trigger: "<primary>E";
+      action: "action(app.export_figure)";
+    }
+    Shortcut {
+      trigger: "<primary><alt>P";
+      action: "action(app.styles)";
+    }
+    Shortcut {
+      trigger: "<primary>S";
+      action: "action(app.save_project)";
+    }
+    Shortcut {
+      trigger: "<primary>O";
+      action: "action(app.open_project)";
+    }
+    Shortcut {
+      trigger: "Delete";
+      action: "action(app.delete_selected)";
+    }
+  }
+
   Box {
     orientation: vertical;
     Adw.HeaderBar {
