@@ -26,6 +26,28 @@ The operations include:
  
 For feedback or general issues, please file an issue [at the Github issue tracker](https://github.com/SjoerdB93/Graphs/issues).
 
+## How to contribute
+### Translations
+
+
+Graphs is translated using Weblate.
+If you wish to contribute to the translation of Graphs, in other languages please check out the project page on [Weblate](https://hosted.weblate.org/engage/graphs/).
+We are incredibly grateful to anyone helping to make Graphs available in different languages!
+
+<a href="https://hosted.weblate.org/engage/graphs/">
+<img src="https://hosted.weblate.org/widget/graphs/multi-auto.svg" alt="Translation status" />
+</a>
+
+### Code 
+
+If you wish to contribute to the code of Graphs, feel free to submit a [Pull request](https://github.com/Sjoerd1993/Graphs/pulls). 
+We are always happy for contributions, and new code is generally reviewed within a few days time.
+
+### Feedback and bug reports
+
+If you found an issue or have general feedback, please file an issue at the [issue tracker](https://github.com/Sjoerd1993/Graphs/issues).
+
+
 ## How to build
 This project is developed in [GNOME Builder](https://developer.gnome.org/documentation/introduction/builder.html). After cloning and opening the project, you can press run to verify you have all correct dependencies installed.
 You might need to install meson, if it is not already availabe on your system.
