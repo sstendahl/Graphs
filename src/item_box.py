@@ -7,8 +7,6 @@ from gi.repository import Adw, GLib, GObject, Gdk, Gtk
 from graphs import utilities
 from graphs.edit_item import EditItemWindow
 from graphs.item import ItemBase
-from graphs import utilities
-
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/item_box.ui")
 class ItemBox(Gtk.Box):
