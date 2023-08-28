@@ -8,15 +8,16 @@ msgstr ""
 "Project-Id-Version: graphs\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-08-25 18:33+0200\n"
-"PO-Revision-Date: 2023-06-14 16:54+0200\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2023-08-28 19:02+0000\n"
+"Last-Translator: Sjoerd Stendahl <sjoerd1993@gmail.com>\n"
+"Language-Team: Dutch <https://hosted.weblate.org/projects/graphs/graphs/nl/>"
+"\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.3.1\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.0.1-dev\n"
 
 #: data/ui/add_equation_window.blp:7
 msgid "Add Equation"
@@ -119,9 +120,8 @@ msgid "Y-Axis Position"
 msgstr "Y-as positie"
 
 #: data/ui/edit_item.blp:48
-#, fuzzy
 msgid "Line Properties"
-msgstr "Lijnkleur"
+msgstr "Lijneigenschappen"
 
 #: data/ui/edit_item.blp:51 data/ui/style_window.blp:102
 msgid "Linestyle"
@@ -776,9 +776,8 @@ msgid "Custom Style by Default"
 msgstr "Eigen stijl"
 
 #: data/ui/preferences.blp:138
-#, fuzzy
 msgid "Override item properties on style change"
-msgstr "Overschrijf de lijnstijl wanneer de stijl is veranderd"
+msgstr "Overschrijf de lijnstijl wanneer de stijl is gewijzigd"
 
 #: data/ui/style_box.blp:23 data/ui/style_color_box.blp:18
 msgid "Edit"
@@ -911,7 +910,6 @@ msgid "Label Padding"
 msgstr "Labelopvulling"
 
 #: data/ui/style_window.blp:323
-#, fuzzy
 msgid "Padding between axes and labels"
 msgstr "De opvulling tussen de as en de labels"
 
@@ -1163,24 +1161,20 @@ msgid "Translate and Multiply"
 msgstr "Verplaatsen en vermenigvuldigen"
 
 #: data/ui/window.blp:438
-#, fuzzy
 msgid "Translate X"
-msgstr "Verplaats"
+msgstr "Verplaats X"
 
 #: data/ui/window.blp:461
-#, fuzzy
 msgid "Translate Y"
-msgstr "Verplaats"
+msgstr "Verplaats Y"
 
 #: data/ui/window.blp:484
-#, fuzzy
 msgid "Multiply X"
-msgstr "Vermenigvuldig"
+msgstr "Vermenigvuldig X"
 
 #: data/ui/window.blp:507
-#, fuzzy
 msgid "Multiply Y"
-msgstr "Vermenigvuldig"
+msgstr "Vermenigvuldig Y"
 
 #: data/ui/window.blp:537
 #, fuzzy
@@ -1188,9 +1182,8 @@ msgid "Save Project…"
 msgstr "Project opslaan"
 
 #: data/ui/window.blp:538
-#, fuzzy
 msgid "Open Project…"
-msgstr "Project openen"
+msgstr "Open Project…"
 
 #: data/ui/window.blp:541
 #, fuzzy
