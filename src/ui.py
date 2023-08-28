@@ -28,7 +28,7 @@ def on_figure_style_change(_figure_settings, _ignored, self):
     self.main_window.reload_canvas()
 
 
-def on_items_change(data, self):
+def on_items_change(data, _ignored, self):
     while self.main_window.item_list.get_last_child() is not None:
         self.main_window.item_list.remove(
             self.main_window.item_list.get_last_child())

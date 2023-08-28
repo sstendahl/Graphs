@@ -15,7 +15,7 @@ def save_project(self, file: Gio.File):
         "view-clipboard": self.props.view_clipboard.props.clipboard,
         "view-clipboard-position":
             self.props.view_clipboard.props.clipboard_pos,
-    })
+    }, False)
 
 
 def load_project(self, file: Gio.File):
@@ -30,6 +30,7 @@ def load_project(self, file: Gio.File):
         FigureSettings.new_from_dict(project["figure-settings"])
     self.props.data.set_from_list(project["data"])
 
+    self.props.clipboard.props.data_copy = self.props.data.to_dict()
     self.props.clipboard.props.clipboard = project["data-clipboard"]
     self.props.clipboard.props.clipboard_pos = \
         project["data-clipboard-position"]

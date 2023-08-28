@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 from gi.repository import Adw, GObject, Gtk
 
-from graphs import styles, ui
+from graphs import misc, styles, ui
 
 
 class FigureSettings(GObject.Object):
@@ -60,15 +60,12 @@ class FigureSettings(GObject.Object):
     def to_dict(self):
         return {key: self.get_property(key) for key in dir(self.props)}
 
-    def get_limits(self) -> dict:
-        return {key: self.get_property(key) for key in [
-            "min_bottom", "max_bottom", "min_top", "max_top", "min_left",
-            "max_left", "min_right", "max_right",
-        ]}
+    def get_limits(self) -> list:
+        return [self.get_property(key) for key in misc.LIMITS]
 
-    def set_limits(self, limits: dict):
-        for key, value in limits.items():
-            self.set_property(key, value)
+    def set_limits(self, limits: list):
+        for count, value in enumerate(limits):
+            self.set_property(misc.LIMITS[count], value)
 
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/figure_settings.ui")

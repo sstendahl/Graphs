@@ -134,16 +134,7 @@ class Item:
         return dictionary
 
 
-DEFAULT_VIEW = {
-    "min_bottom": 0,
-    "max_bottom": 1,
-    "min_top": 0,
-    "max_top": 10,
-    "min_left": 0,
-    "max_left": 1,
-    "min_right": 0,
-    "max_right": 10,
-}
+DEFAULT_VIEW = [0, 1, 0, 10, 0, 1, 0, 10]
 
 
 def migrate_project(file):
@@ -155,8 +146,7 @@ def migrate_project(file):
         "version": project["version"],
         "data": [item.migrate() for item in project["data"].values()],
         "figure-settings": project["plot_settings"].migrate(),
-        "data-clipboard": [{"data": [],
-                            "view": DEFAULT_VIEW.copy()}],
+        "data-clipboard": [([], DEFAULT_VIEW.copy())],
         "data-clipboard-position": -1,
         "view-clipboard": None,
         "view-clipboard-position": None,

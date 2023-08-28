@@ -64,10 +64,6 @@
     <child name="export-figure" schema="se.sjoerd.Graphs.export-figure"/>
     <child name="figure" schema="se.sjoerd.Graphs.figure"/>
     <child name="import-params" schema="se.sjoerd.Graphs.import-params"/>
-
-    <key name="clipboard-length" type="i">
-      <default>75</default>
-    </key>
   </schema>
 
   <schema id="se.sjoerd.Graphs.general">

@@ -4,6 +4,7 @@ using Adw 1;
 template $EditItemWindow : Adw.PreferencesWindow {
   modal: true;
   notify::item => $on_item_change();
+  close-request => $on_close();
   ShortcutController {
     Shortcut {
       trigger: "Escape";

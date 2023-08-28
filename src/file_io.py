@@ -230,9 +230,11 @@ def parse_json(file):
     return json.loads(file.load_bytes(None)[0].get_data())
 
 
-def write_json(file, json_object):
+def write_json(file, json_object, pretty_print=True):
     stream = _get_write_stream(file)
-    _write_string(stream, json.dumps(json_object, indent=4, sort_keys=True))
+    _write_string(stream, json.dumps(
+        json_object, indent=4 if pretty_print else None, sort_keys=True,
+    ))
     stream.close()
 
 

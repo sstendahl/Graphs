@@ -22,8 +22,8 @@ class ItemBox(Gtk.Box):
         super().__init__(application=application, item=item)
         self.props.item.bind_property("name", self.label, "label", 2)
         self.props.item.bind_property(
-            "selected", self.check_button, "active", 1 | 2)
-
+            "selected", self.check_button, "active", 2,
+        )
         self.gesture = Gtk.GestureClick()
         self.gesture.set_button(0)
         self.add_controller(self.gesture)
@@ -45,9 +45,14 @@ class ItemBox(Gtk.Box):
 
     def on_dnd_drop(self, drop_target, value, _x, _y):
         # Handle the dropped data here
-        self.props.application.props.data.change_position(
-            drop_target.key, value)
-        self.props.application.props.clipboard.add()
+        data = self.props.application.props.data
+        before_index = data.index(value)
+        data.change_position(drop_target.key, value)
+        clipboard = self.props.application.props.clipboard
+        clipboard.props.current_batch.append((3, (
+            before_index, data.index(value),
+        )))
+        clipboard.add()
         self.props.application.props.view_clipboard.add()
 
     def on_dnd_prepare(self, drag_source, x, y):
@@ -62,6 +67,13 @@ class ItemBox(Gtk.Box):
     def on_color_change(self, item, _ignored):
         self.provider.load_from_data(
             f"button {{ color: {item.color}; opacity: {item.alpha};}}", -1)
+
+    @Gtk.Template.Callback()
+    def on_toggle(self, _a, _b):
+        new_value = self.check_button.get_active()
+        if self.props.item.props.selected != new_value:
+            self.props.item.props.selected = new_value
+            self.props.application.props.clipboard.add()
 
     @Gtk.Template.Callback()
     def choose_color(self, _):

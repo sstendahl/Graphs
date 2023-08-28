@@ -5,6 +5,8 @@ Data management module.
 Classes:
     Data
 """
+import copy
+
 from gi.repository import GObject
 
 from graphs import item, utilities
@@ -20,14 +22,18 @@ class Data(GObject.Object):
         items
 
     Signals:
-        items-change: Items are added or removed
         items-ignored: Items are ignored during addition
 
     Functions:
         to_list
+        to_dict
         set_from_list
         is_empty
+        append
+        pop
+        index
         get_names
+        get_keys
         change_position
         add_items
         delete_items
@@ -35,7 +41,6 @@ class Data(GObject.Object):
 
     __gtype_name__ = "Data"
     __gsignals__ = {
-        "items-change": (GObject.SIGNAL_RUN_FIRST, None, ()),
         "items-ignored": (GObject.SIGNAL_RUN_FIRST, None, (str,)),
     }
 
@@ -49,6 +54,10 @@ class Data(GObject.Object):
     def to_list(self) -> list:
         """Get a list of all items in dict form."""
         return [item_.to_dict() for item_ in self]
+
+    def to_dict(self) -> dict:
+        """Get a dictionary of all items sorted by their key"""
+        return {item_.key: item_.to_dict() for item_ in self}
 
     def set_from_list(self, items: list):
         """Set items from a list of items in dict form."""
@@ -70,14 +79,34 @@ class Data(GObject.Object):
 
     @items.setter
     def items(self, items: list):
-        self._items = {item_.key: item_ for item_ in items}
         for item_ in items:
-            self._connect_to_item(item_)
-        self.emit("items-change")
+            self.append(item_)
+        self._items = {item_.key: item_ for item_ in items}
+
+    def append(self, item_):
+        """Append items to self."""
+        self._connect_to_item(item_)
+        self._items[item_.key] = item_
+        self.notify("items")
+
+    def pop(self, key):
+        """Pop and delete item."""
+        item_ = self._items[key]
+        self._items.pop(key)
+        del item_
+        self.notify("items")
+
+    def index(self, key):
+        """Get the indexs of key."""
+        return self.get_keys().index(key)
 
     def get_names(self) -> list:
         """All items' names."""
         return [item_.name for item_ in self._items.values()]
+
+    def get_keys(self) -> list:
+        """All item's keys."""
+        return list(self._items.keys())
 
     def __len__(self) -> int:
         """Amount of managed items."""
@@ -95,7 +124,7 @@ class Data(GObject.Object):
 
     def change_position(self, key1: str, key2: str):
         """Change key position of key2 to that of key1."""
-        keys = list(self._items.keys())
+        keys = self.get_keys()
         items = list(self._items.values())
         index1 = keys.index(key2)
         index2 = keys.index(key1)
@@ -176,27 +205,33 @@ class Data(GObject.Object):
                     self._items.values(),
                 )
 
-            self._connect_to_item(new_item)
-            self._items[new_item.key] = new_item
+            self.append(new_item)
+            self.props.application.props.clipboard.props.current_batch.append(
+                (1, copy.deepcopy(new_item.to_dict())),
+            )
         utilities.optimize_limits(self.props.application)
         self.props.application.props.clipboard.add()
         if ignored:
             self.emit("items-ignored", ", ".join(ignored))
-        self.emit("items-change")
         self.notify("items")
         self.notify("items_selected")
 
     def delete_items(self, items: list):
         """Delete specified items."""
-        for i in items:
-            del self._items[i.key]
-        self.emit("items-change")
-        self.notify("items")
+        for item_ in items:
+            self.props.application.props.clipboard.props.current_batch.append(
+                (2, (self.index(item_.key), item_.to_dict())),
+            )
+            self.pop(item_.key)
+        self.props.application.props.clipboard.add()
         self.notify("items_selected")
 
     def _connect_to_item(self, item_):
         item_.connect(
             "notify::selected", lambda _x, _y: self.notify("items_selected"),
+        )
+        item_.connect(
+            "notify", self.props.application.props.clipboard.on_item_change,
         )
         for prop in ["xposition", "yposition"]:
             item_.connect(f"notify::{prop}", self._on_item_position_change)
