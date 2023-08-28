@@ -3,7 +3,7 @@ import contextlib
 import pickle
 import sys
 
-from graphs import file_io, utilities
+from graphs import file_io, misc, utilities
 
 
 CONFIG_MIGRATION_TABLE = {
@@ -142,12 +142,92 @@ def migrate_project(file):
     sys.modules["graphs.item"] = sys.modules[__name__]
     project = pickle.loads(file_io.read_file(file, None))
 
+    figure_settings = project["plot_settings"].migrate()
+    current_limits = [figure_settings[key] for key in misc.LIMITS]
+    clipboard_pos = project["clipboard_pos"]
+    clipboard = _migrate_clipboard(
+        project["datadict_clipboard"], clipboard_pos, current_limits,
+    )
+
     return {
         "version": project["version"],
         "data": [item.migrate() for item in project["data"].values()],
-        "figure-settings": project["plot_settings"].migrate(),
-        "data-clipboard": [([], DEFAULT_VIEW.copy())],
-        "data-clipboard-position": -1,
-        "view-clipboard": None,
-        "view-clipboard-position": None,
+        "figure-settings": figure_settings,
+        "data-clipboard": clipboard,
+        "data-clipboard-position": clipboard_pos,
+        "view-clipboard": [DEFAULT_VIEW.copy(), current_limits],
+        "view-clipboard-position": -1,
     }
+
+
+def _migrate_clipboard(clipboard, clipboard_pos, current_limits):
+    if not clipboard:
+        return []
+    new_clipboard = []
+    if len(clipboard) > 100:
+        clipboard = clipboard[len(clipboard) - 100:]
+    states = [
+        {item.key: item.migrate() for item in state.values()}
+        for state in clipboard
+    ]
+    new_clipboard.append(([], DEFAULT_VIEW.copy()))
+    initial_items = states[1].values()
+    new_clipboard.append(
+        ([(1, item) for item in initial_items], _get_limits(initial_items)),
+    )
+    if len(states) > 2:
+        for count in range(len(states) - 2):
+            batch = []
+            previous_state = states[count + 1]
+            current_state = states[count + 2]
+            if len(current_state) < len(previous_state):
+                for key, item in previous_state.copy().items():
+                    if key not in current_state:
+                        batch.append((2, previous_state.index(item), item))
+                        previous_state.pop(item)
+            for count_2, (key, item) in enumerate(current_state.items()):
+                if key in previous_state:
+                    previous_index = list(previous_state.keys()).index(key)
+                    if previous_index != count_2:
+                        batch.append((3, (previous_index, count_2)))
+                    else:
+                        for key_2, value in item.items():
+                            previous_value = previous_state[key][key_2]
+                            if value != previous_value:
+                                batch.append(
+                                    (0, (key, key_2, previous_value, value)),
+                                )
+                else:
+                    batch.append((1, item))
+            if clipboard_pos == count - len(states) + 1:
+                limits = _get_limits(current_state.values())
+            else:
+                limits = current_limits
+            new_clipboard.append((batch, limits))
+    return new_clipboard
+
+
+def _get_limits(items):
+    limits = [None] * 8
+    for item in items:
+        for count, x_or_y in enumerate(["x", "y"]):
+            try:
+                limits[item[f"{x_or_y}position"] * 2 + 4 * count] = min(
+                    limits[item[f"{x_or_y}position"] * 2 + 4 * count],
+                    min(item[f"{x_or_y}data"]),
+                )
+            except TypeError:
+                limits[item[f"{x_or_y}position"] * 2 + 4 * count] = \
+                    min(item[f"{x_or_y}data"])
+            try:
+                limits[item[f"{x_or_y}position"] * 2 + 4 * count + 1] = max(
+                    limits[item[f"{x_or_y}position"] * 2 + 4 * count + 1],
+                    max(item[f"{x_or_y}data"]),
+                )
+            except TypeError:
+                limits[item[f"{x_or_y}position"] * 2 + 4 * count + 1] = \
+                    max(item[f"{x_or_y}data"])
+    for count in range(8):
+        if limits[count] is None:
+            limits[count] = DEFAULT_VIEW.copy()[count]
+    return limits
