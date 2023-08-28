@@ -6,6 +6,7 @@ from gi.repository import Adw, GLib, GObject, Gdk, Gtk
 
 from graphs.edit_item import EditItemWindow
 from graphs.item import ItemBase
+from graphs import utilities
 
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/item_box.ui")
@@ -98,5 +99,9 @@ class ItemBox(Gtk.Box):
         )
 
     @Gtk.Template.Callback()
-    def edit(self, _):
+    def edit(self, _button):
         EditItemWindow(self.props.application, self.props.item)
+
+    @Gtk.Template.Callback()
+    def on_label_change(self, _itembox, _gobject):
+        self.label.set_text(utilities.shorten_label(self.item.name))

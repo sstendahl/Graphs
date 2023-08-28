@@ -15,6 +15,7 @@ template $ItemBox : Box {
   }
 
   Label label {
+    notify => $on_label_change();
     margin-start: 6;
     margin-end: 6;
     halign: start;

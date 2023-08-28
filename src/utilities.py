@@ -88,7 +88,7 @@ def get_fraction_at_value(value, start, end, scale):
         return (log_value - log_start) / log_range
 
 
-def shorten_label(label, max_length=20):
+def shorten_label(label, max_length=19):
     if len(label) > max_length:
         label = f"{label[:max_length]}…"
     return label
