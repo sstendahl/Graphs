@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 from gi.repository import Gio
 
-from graphs import file_io, migrate, ui, utilities
+from graphs import file_io, migrate, ui
 from graphs.figure_settings import FigureSettings
 
 
@@ -34,16 +34,8 @@ def load_project(self, file: Gio.File):
     self.props.clipboard.props.clipboard = project["data-clipboard"]
     self.props.clipboard.props.clipboard_pos = \
         project["data-clipboard-position"]
-
-    # migrated project
-    if project["view-clipboard"] is None:
-        utilities.optimize_limits(self)
-        self.props.view_clipboard.add()
-    else:
-        clipboard = project["view-clipboard"]
-        clipboard_pos = project["view-clipboard-position"]
-        self.props.view_clipboard.props.clipboard = clipboard
-        self.props.view_clipboard.props.clipboard_pos = clipboard_pos
-        self.props.figure_settings.set_limits(clipboard[-1])
+    self.props.view_clipboard.props.clipboard = project["view-clipboard"]
+    self.props.view_clipboard.props.clipboard_pos = \
+        project["view-clipboard-position"]
     ui.set_clipboard_buttons(self)
     self.main_window.reload_canvas()
