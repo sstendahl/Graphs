@@ -1,7 +1,9 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
+import contextlib
+
 from gi.repository import Adw, GObject, Gtk
 
-from graphs import misc, styles, ui
+from graphs import misc, styles, ui, utilities
 
 
 class FigureSettings(GObject.Object):
@@ -68,6 +70,9 @@ class FigureSettings(GObject.Object):
             self.set_property(misc.LIMITS[count], value)
 
 
+_DIRECTIONS = ["bottom", "left", "top", "right"]
+
+
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/figure_settings.ui")
 class FigureSettingsWindow(Adw.PreferencesWindow):
     __gtype_name__ = "FigureSettingsWindow"
@@ -96,21 +101,29 @@ class FigureSettingsWindow(Adw.PreferencesWindow):
 
     no_data_message = Gtk.Template.Child()
 
+    figure_settings = GObject.Property(type=FigureSettings)
+
     def __init__(self, application, highlighted=None):
         super().__init__(
             application=application, transient_for=application.main_window,
+            figure_settings=application.props.figure_settings,
         )
 
+        ignorelist = ["custom_style", "min_selected", "max_selected"]
+        for direction in _DIRECTIONS:
+            ignorelist.append(f"min_{direction}")
+            ignorelist.append(f"max_{direction}")
+
         ui.bind_values_to_object(
-            self.props.application.props.figure_settings, self,
-            ignorelist=["custom_style", "min_selected", "max_selected"],
+            self.props.figure_settings, self, ignorelist=ignorelist,
         )
         styles_ = sorted(styles.get_user_styles(application).keys())
         self.custom_style.set_model(Gtk.StringList.new(styles_))
-        self.custom_style.set_selected(styles_.index(
-            self.props.application.props.figure_settings.props.custom_style))
+        self.custom_style.set_selected(
+            styles_.index(self.props.figure_settings.props.custom_style),
+        )
 
-        self.hide_unused_axes_limits()
+        self.set_axes_entries()
         self.no_data_message.set_visible(
             self.props.application.props.data.is_empty(),
         )
@@ -118,19 +131,28 @@ class FigureSettingsWindow(Adw.PreferencesWindow):
             getattr(self, highlighted).grab_focus()
         self.present()
 
-    def hide_unused_axes_limits(self):
-        used_axes = [
-            ["bottom", False],
-            ["left", False],
-            ["top", False],
-            ["right", False],
-        ]
+    def set_axes_entries(self):
+        used_axes = [[direction, False] for direction in _DIRECTIONS]
         for item in self.props.application.props.data:
             for index in item.xposition * 2, 1 + item.yposition * 2:
                 used_axes[index][1] = True
         for (direction, visible) in used_axes:
-            getattr(self, f"min_{direction}").set_visible(visible)
-            getattr(self, f"max_{direction}").set_visible(visible)
+            if visible:
+                for s in ["min_", "max_"]:
+                    entry = getattr(self, s + direction)
+                    entry.set_visible(True)
+                    entry.set_text(str(self.props.figure_settings.get_property(
+                        s + direction,
+                    )))
+                    entry.connect(
+                        "notify::text", self.on_entry_change, s + direction,
+                    )
+
+    def on_entry_change(self, entry, _param, prop):
+        with contextlib.suppress(SyntaxError):
+            self.props.figure_settings.set_property(
+                prop, utilities.string_to_float(entry.get_text()),
+            )
 
     @Gtk.Template.Callback()
     def on_close(self, *_args):
@@ -140,6 +162,5 @@ class FigureSettingsWindow(Adw.PreferencesWindow):
     @Gtk.Template.Callback()
     def on_custom_style_select(self, comborow, _ignored):
         selected_style = comborow.get_selected_item().get_string()
-        figure_settings = self.props.application.props.figure_settings
-        if selected_style != figure_settings.props.custom_style:
-            figure_settings.props.custom_style = selected_style
+        if selected_style != self.props.figure_settings.props.custom_style:
+            self.props.figure_settings.props.custom_style = selected_style
