@@ -286,14 +286,22 @@ template $GraphsWindow : Adw.ApplicationWindow {
               spacing: 12;
               margin-start: 12;
               margin-end: 12;
-              margin-top: 6;
-              margin-bottom: 18;
-
+              margin-top: 12;
+              margin-bottom: 12;
+              Label {
+                halign: start;
+                hexpand: true;
+                label: "Adjust Data";
+                styles ["heading"]
+              }
               Adw.PreferencesGroup {
-                title: _("Adjust Data");
                 Grid {
                   column-spacing: 10;
                   row-spacing: 10;
+                  margin-start: 12;
+                  margin-end: 12;
+                  margin-top: 12;
+                  margin-bottom:12;
                   Button shift_vertically_button {
                     hexpand: true;
                     layout {
@@ -389,13 +397,23 @@ template $GraphsWindow : Adw.ApplicationWindow {
                     clicked => $cut();
                   }
                 }
+                styles ["card"]
               }
-
+              Label {
+                margin-top: 6;
+                halign: start;
+                hexpand: true;
+                label: "Mathematical Operations";
+                styles ["heading"]
+              }
               Adw.PreferencesGroup {
-                title: _("Mathematical Operations");
                 Grid {
                   column-spacing: 10;
                   row-spacing: 10;
+                  margin-start: 12;
+                  margin-end: 12;
+                  margin-top: 12;
+                  margin-bottom:12;
                   Button {
                     hexpand: true;
                     sensitive: bind shift_vertically_button.sensitive;
@@ -477,14 +495,23 @@ template $GraphsWindow : Adw.ApplicationWindow {
                     clicked => $transform();
                   }
                 }
+                styles ["card"]
               }
-
+              Label {
+                halign: start;
+                margin-top: 6;
+                hexpand: true;
+                label: "Translate and Multiply";
+                styles ["heading"]
+              }
               Adw.PreferencesGroup {
-                title: _("Translate and Multiply");
-
                 Grid {
                   column-spacing: 10;
                   row-spacing: 10;
+                  margin-start: 12;
+                  margin-end: 12;
+                  margin-top: 12;
+                  margin-bottom:12;
                   Entry translate_x_entry {
                     max-width-chars: 6;
                     hexpand: true;
@@ -577,6 +604,7 @@ template $GraphsWindow : Adw.ApplicationWindow {
                     }
                   }
                 }
+                styles ["card"]
               }
             }
           }
