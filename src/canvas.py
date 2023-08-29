@@ -90,7 +90,7 @@ class Canvas(FigureCanvas):
         style context. Bind `items` to `data.items` and all figure settings
         attributes to their respective values.
         """
-        GObject.Object.__init__(self, application=application)
+        GObject.Object.__init__(self, application=application, can_focus=False)
         super().__init__()
         self.set_can_focus(False)
         self.figure.set_tight_layout(True)
