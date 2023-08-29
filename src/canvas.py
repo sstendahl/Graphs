@@ -92,7 +92,6 @@ class Canvas(FigureCanvas):
         """
         GObject.Object.__init__(self, application=application, can_focus=False)
         super().__init__()
-        self.set_can_focus(False)
         self.figure.set_tight_layout(True)
         self.mpl_connect("pick_event", self._on_pick)
         self.axis = self.figure.add_subplot(111)
