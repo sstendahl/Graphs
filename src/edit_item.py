@@ -30,7 +30,7 @@ class EditItemWindow(Adw.PreferencesWindow):
 
     def __init__(self, application, item):
         super().__init__(
-            application=application, transient_for=application.get_window,
+            application=application, transient_for=application.get_window(),
             item=item, bindings=[],
             model=Gtk.StringList.new(application.get_data().get_names()),
         )
