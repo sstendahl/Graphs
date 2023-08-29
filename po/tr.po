@@ -9,15 +9,16 @@ msgstr ""
 "Project-Id-Version: se.sjoerd.Graphs\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-08-25 18:33+0200\n"
-"PO-Revision-Date: 2023-06-01 14:38+0200\n"
+"PO-Revision-Date: 2023-08-29 10:57+0000\n"
 "Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
-"Language-Team: Türkçe <takim@gnome.org.tr>\n"
+"Language-Team: Turkish <https://hosted.weblate.org/projects/graphs/graphs/tr/"
+">\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.1.1\n"
+"X-Generator: Weblate 5.0.1-dev\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
 #: data/ui/add_equation_window.blp:7
@@ -33,7 +34,7 @@ msgstr "İptal"
 
 #: data/ui/add_equation_window.blp:29 data/ui/add_style.blp:29
 msgid "Add"
-msgstr ""
+msgstr "Ekle"
 
 #: data/ui/add_equation_window.blp:48 data/ui/transform_window.blp:62
 msgid "Y ="
@@ -41,7 +42,7 @@ msgstr "Y ="
 
 #: data/ui/add_equation_window.blp:54
 msgid "Enter a mathematical expression to generate data from"
-msgstr ""
+msgstr "Veri oluşturmak için matematiksel bir ifade girin"
 
 #: data/ui/add_equation_window.blp:57
 msgid "Name (optional)"
@@ -69,7 +70,7 @@ msgstr "Şablon"
 
 #: data/ui/add_style.blp:46 data/ui/edit_item.blp:27
 msgid "Name"
-msgstr ""
+msgstr "Ad"
 
 #: data/ui/dialogs.blp:5
 msgid "Discard Data?"
@@ -92,9 +93,8 @@ msgid "Delete"
 msgstr "Sil"
 
 #: data/ui/dialogs.blp:26
-#, fuzzy
 msgid "Reset to Defaults?"
-msgstr "Öntanımlılara sıfırlansın mı?"
+msgstr "Öntanımlılara Sıfırlansın Mı?"
 
 #: data/ui/dialogs.blp:29
 msgid "Reset"
@@ -121,9 +121,8 @@ msgid "Y-Axis Position"
 msgstr "Y Ekseni Konumu"
 
 #: data/ui/edit_item.blp:48
-#, fuzzy
 msgid "Line Properties"
-msgstr "Çizgi Renkleri"
+msgstr "Çizgi Özellikleri"
 
 #: data/ui/edit_item.blp:51 data/ui/style_window.blp:102
 msgid "Linestyle"
@@ -131,27 +130,23 @@ msgstr "Çizgi Biçemi"
 
 #: data/ui/edit_item.blp:53 data/ui/style_window.blp:104
 msgid "None"
-msgstr ""
+msgstr "Hiçbiri"
 
 #: data/ui/edit_item.blp:53 data/ui/style_window.blp:104
-#, fuzzy
 msgid "Solid"
-msgstr "düz"
+msgstr "Kesiksiz"
 
 #: data/ui/edit_item.blp:53 data/ui/style_window.blp:104
-#, fuzzy
 msgid "Dotted"
-msgstr "noktalı"
+msgstr "Noktalı"
 
 #: data/ui/edit_item.blp:53 data/ui/style_window.blp:104
-#, fuzzy
 msgid "Dashed"
-msgstr "kesik"
+msgstr "Kesikli"
 
 #: data/ui/edit_item.blp:53 data/ui/style_window.blp:104
-#, fuzzy
 msgid "Dashdot"
-msgstr "kesik-nokta"
+msgstr "Kesik-nokta"
 
 #: data/ui/edit_item.blp:58 data/ui/style_window.blp:109
 msgid "Linewidth"
@@ -267,26 +262,23 @@ msgstr "Dosya Biçimi"
 
 #: data/ui/export_figure.blp:47
 msgid "Resolution (dpi)"
-msgstr ""
+msgstr "Çözünürlük (dpi)"
 
 #: data/ui/export_figure.blp:62
 msgid "Transparent Background"
 msgstr "Saydam Arka Plan"
 
 #: data/ui/figure_settings.blp:7 data/ui/window.blp:548
-#, fuzzy
 msgid "Figure Settings"
-msgstr "İçe Aktarma Ayarları"
+msgstr "Şekil Ayarları"
 
 #: data/ui/figure_settings.blp:19 data/ui/preferences.blp:38
-#, fuzzy
 msgid "Labels"
-msgstr "Etiket"
+msgstr "Etiketler"
 
 #: data/ui/figure_settings.blp:22
-#, fuzzy
 msgid "Title"
-msgstr "Çizim Başlığı"
+msgstr "Başlık"
 
 #: data/ui/figure_settings.blp:26
 msgid "Bottom Axis Label"
@@ -313,49 +305,40 @@ msgid "No Data"
 msgstr "Veri Yok"
 
 #: data/ui/figure_settings.blp:46
-#, fuzzy
 msgid "Add data to the figure to set axis limits"
-msgstr "Eksen sınırlarını ayarlamak için grafiğe veri ekleyin."
+msgstr "Eksen sınırlarını ayarlamak için şekle veri ekleyin"
 
 #: data/ui/figure_settings.blp:54
-#, fuzzy
 msgid "Minimum Left-Hand Y-Axis"
-msgstr "En düşük sol Y ekseni"
+msgstr "En Düşük Sol Y Ekseni"
 
 #: data/ui/figure_settings.blp:60
-#, fuzzy
 msgid "Maximum Left-Hand Y-Axis"
-msgstr "En yüksek sol Y ekseni"
+msgstr "En Yüksek Sol Y Ekseni"
 
 #: data/ui/figure_settings.blp:70
-#, fuzzy
 msgid "Minimum Bottom X-Axis"
-msgstr "En düşük alt X ekseni"
+msgstr "En Düşük Alt X Ekseni"
 
 #: data/ui/figure_settings.blp:76
-#, fuzzy
 msgid "Maximum Bottom X-Axis"
-msgstr "En yüksek alt X ekseni"
+msgstr "En Yüksek Alt X Ekseni"
 
 #: data/ui/figure_settings.blp:86
-#, fuzzy
 msgid "Minimum Right-Hand Y-Axis"
-msgstr "En düşük sağ Y ekseni"
+msgstr "En Düşük Sağ Y Ekseni"
 
 #: data/ui/figure_settings.blp:92
-#, fuzzy
 msgid "Maximum Right-Hand Y-Axis"
-msgstr "En yüksek sağ Y ekseni"
+msgstr "En Yüksek Sağ Y Ekseni"
 
 #: data/ui/figure_settings.blp:101
-#, fuzzy
 msgid "Minimum Top X-Axis"
-msgstr "En düşük üst X ekseni"
+msgstr "En Düşük Üst X Ekseni"
 
 #: data/ui/figure_settings.blp:107
-#, fuzzy
 msgid "Maximum Top Y-Axis"
-msgstr "En yüksek üst Y ekseni"
+msgstr "En Yüksek Üst Y Ekseni"
 
 #: data/ui/figure_settings.blp:114
 msgid "Scaling"
@@ -376,9 +359,8 @@ msgstr "doğrusal"
 #: data/ui/figure_settings.blp:133 data/ui/figure_settings.blp:140
 #: data/ui/preferences.blp:67 data/ui/preferences.blp:74
 #: data/ui/preferences.blp:81 data/ui/preferences.blp:88
-#, fuzzy
 msgid "logarithmic"
-msgstr "Logaritmik"
+msgstr "logaritmik"
 
 #: data/ui/figure_settings.blp:124
 msgid "Left Axis Scale"
@@ -402,9 +384,8 @@ msgid "Legend"
 msgstr "Gösterge"
 
 #: data/ui/figure_settings.blp:151 data/ui/preferences.blp:117
-#, fuzzy
 msgid "Legend Position"
-msgstr "Gösterge konumu"
+msgstr "Gösterge Konumu"
 
 #: data/ui/figure_settings.blp:154 data/ui/preferences.blp:120
 msgid "Best"
@@ -448,9 +429,8 @@ msgid "Center"
 msgstr "Ortala"
 
 #: data/ui/figure_settings.blp:163
-#, fuzzy
 msgid "Use Custom Style"
-msgstr "Özel Biçem"
+msgstr "Özel Biçem Kullan"
 
 #: data/ui/help_overlay.blp:11
 msgctxt "shortcut window"
@@ -485,7 +465,7 @@ msgstr "Çık"
 #: data/ui/help_overlay.blp:40
 msgctxt "shortcut window"
 msgid "Mode Switching"
-msgstr "Mode Değiştirme"
+msgstr "Kip Değiştirme"
 
 #: data/ui/help_overlay.blp:43
 msgctxt "shortcut window"
@@ -563,10 +543,9 @@ msgid "Next View"
 msgstr "Sonraki Görünüm"
 
 #: data/ui/help_overlay.blp:112
-#, fuzzy
 msgctxt "shortcut window"
 msgid "Optimize Limits"
-msgstr "Eksen Sınırları"
+msgstr "Sınırları Eniyile"
 
 #: data/ui/help_overlay.blp:118
 msgctxt "shortcut window"
@@ -599,14 +578,12 @@ msgid "Redo Action"
 msgstr "Son İşlemi Yinele"
 
 #: data/ui/import.blp:8
-#, fuzzy
 msgid "Modify Import Parameters"
 msgstr "İçe Aktarma Parametrelerini Değiştir"
 
 #: data/ui/import.blp:36
-#, fuzzy
 msgid "Import"
-msgstr "Dışa Aktar"
+msgstr "İçe Aktar"
 
 #: data/ui/import.blp:56
 msgid "Delimiter (s+ for whitespace)"
@@ -622,7 +599,7 @@ msgstr "X Sütunu"
 
 #: data/ui/import.blp:68
 msgid "X-data column index"
-msgstr ""
+msgstr "X verileri sütun indeksi"
 
 #: data/ui/import.blp:82
 msgid "Column Y"
@@ -630,25 +607,23 @@ msgstr "Y Sütunu"
 
 #: data/ui/import.blp:83
 msgid "Y-data column index"
-msgstr ""
+msgstr "Y verileri sütun indeksi"
 
 #: data/ui/import.blp:97
 msgid "Skip Rows"
 msgstr "Satırları Atla"
 
 #: data/ui/import.blp:98
-#, fuzzy
 msgid "Ignored row indices"
-msgstr "İkizleri görmezden gel"
+msgstr "YYoksayılan satır endeksleri"
 
 #: data/ui/item_box.blp:24
 msgid "Edit Item"
-msgstr "Öge Düzenle"
+msgstr "Ögeyi Düzenle"
 
 #: data/ui/item_box.blp:35
-#, fuzzy
 msgid "Pick Color"
-msgstr "Onay İşareti Rengi"
+msgstr "Renk Seç"
 
 #: data/ui/item_box.blp:46 data/ui/style_box.blp:33
 #: data/ui/style_color_box.blp:28
@@ -660,9 +635,8 @@ msgid "General"
 msgstr "Genel"
 
 #: data/ui/preferences.blp:14
-#, fuzzy
 msgid "Center Action Behaviour"
-msgstr "İşlem Davranışı"
+msgstr "Ortala Eylemi Davranışı"
 
 #: data/ui/preferences.blp:16
 msgid "Center at maximum Y value"
@@ -673,9 +647,8 @@ msgid "Center at middle coordinate"
 msgstr "Orta koordinatta ortala"
 
 #: data/ui/preferences.blp:21
-#, fuzzy
 msgid "Handle Duplicate Items"
-msgstr "İkiz girdileri işle"
+msgstr "İkiz Ögeleri İşle"
 
 #: data/ui/preferences.blp:23
 msgid "Auto-rename duplicates"
@@ -694,9 +667,8 @@ msgid "Override existing items"
 msgstr "Var olan ögelerin üzerine yaz"
 
 #: data/ui/preferences.blp:28
-#, fuzzy
 msgid "Hide Unselected Items"
-msgstr "Seçilmemişi Gizle"
+msgstr "Seçilmemiş Ögeleri Gizle"
 
 #: data/ui/preferences.blp:41
 msgid "Default Title"
@@ -711,7 +683,6 @@ msgid "Default Left Axis Label"
 msgstr "Öntanımlı Sol Eksen Etiketi"
 
 #: data/ui/preferences.blp:53
-#, fuzzy
 msgid "Default Top Axis Label"
 msgstr "Öntanımlı Üst Eksen Etiketi"
 
@@ -721,7 +692,7 @@ msgstr "Öntanımlı Sağ Eksen Etiketi"
 
 #: data/ui/preferences.blp:62
 msgid "Axes"
-msgstr ""
+msgstr "Eksenler"
 
 #: data/ui/preferences.blp:65
 msgid "Default Bottom Axis Scale"
@@ -745,7 +716,7 @@ msgstr "Öntanımlı X Eksen Konumu"
 
 #: data/ui/preferences.blp:94 data/ui/preferences.blp:102
 msgid "Which axis should a new item be displayed on"
-msgstr ""
+msgstr "Yeni ögenin hangi eksende gösterileceği"
 
 #: data/ui/preferences.blp:96
 msgid "bottom"
@@ -776,23 +747,20 @@ msgid "Use a legend by default"
 msgstr "Öntanımlı olarak gösterge kullan"
 
 #: data/ui/preferences.blp:129
-#, fuzzy
 msgid "Custom Style by Default"
-msgstr "Özel Biçem"
+msgstr "Öntanımlı Özel Biçem"
 
 #: data/ui/preferences.blp:138
-#, fuzzy
 msgid "Override item properties on style change"
-msgstr "Biçem Değişikliğinde Çizgi Biçemini Geçersiz Kıl"
+msgstr "Biçem değişikliğinde öge özelliklerinin üzerine yaz"
 
 #: data/ui/style_box.blp:23 data/ui/style_color_box.blp:18
 msgid "Edit"
 msgstr "Düzenle"
 
 #: data/ui/style_window.blp:8 data/ui/window.blp:545 src/styles.py:227
-#, fuzzy
 msgid "Styles"
-msgstr "Biçem"
+msgstr "Biçemler"
 
 #: data/ui/style_window.blp:33
 msgid "Reset to default styles"
@@ -819,9 +787,8 @@ msgid "Ticks"
 msgstr "Onay işaretleri"
 
 #: data/ui/style_window.blp:152
-#, fuzzy
 msgid "Settings for the ticks that are used on axes"
-msgstr "Grafiklerde kullanılan onay işaretleri için ayarlar"
+msgstr "Eksenlerde kullanılan onay işaretleri için ayarlar"
 
 #: data/ui/style_window.blp:155
 msgid "Tick Directions"
@@ -829,11 +796,11 @@ msgstr "Onay İşareti Yönleri"
 
 #: data/ui/style_window.blp:157
 msgid "Inwards"
-msgstr ""
+msgstr "İçe Doğru"
 
 #: data/ui/style_window.blp:157
 msgid "Outwards"
-msgstr ""
+msgstr "Dışa Doğru"
 
 #: data/ui/style_window.blp:162
 msgid "Minor Ticks"
@@ -876,9 +843,8 @@ msgid "Grid"
 msgstr "Izgara"
 
 #: data/ui/style_window.blp:263
-#, fuzzy
 msgid "Settings for the grid"
-msgstr "Grafik biçemi ayarları"
+msgstr "Izgara ayarları"
 
 #: data/ui/style_window.blp:266
 msgid "Show Grid"
@@ -889,25 +855,22 @@ msgid "Grid Width"
 msgstr "Izgara Genişliği"
 
 #: data/ui/style_window.blp:289
-#, fuzzy
 msgid "Grid Opacity"
-msgstr "Izgara Genişliği"
+msgstr "Izgara Matlığı"
 
 #: data/ui/style_window.blp:304
 msgid "Padding"
 msgstr "Dolgu"
 
 #: data/ui/style_window.blp:305
-#, fuzzy
 msgid "Padding for different parts of the figure"
-msgstr "Çizimin farklı bölümleri için dolgu"
+msgstr "Şeklin farklı bölümleri için dolgu"
 
 #: data/ui/style_window.blp:308
 msgid "Value Padding"
 msgstr "Değer Dolgusu"
 
 #: data/ui/style_window.blp:309
-#, fuzzy
 msgid "Padding between axes and values"
 msgstr "Eksenler ve değerler arasındaki doldu"
 
@@ -916,7 +879,6 @@ msgid "Label Padding"
 msgstr "Etiket Dolgusu"
 
 #: data/ui/style_window.blp:323
-#, fuzzy
 msgid "Padding between axes and labels"
 msgstr "Eksenler ve etiketler arasındaki doldu"
 
@@ -925,7 +887,6 @@ msgid "Title Padding"
 msgstr "Başlık Dolgusu"
 
 #: data/ui/style_window.blp:337
-#, fuzzy
 msgid "Padding between axes and the title"
 msgstr "Eksenler ve başlıklar arasındaki doldu"
 
@@ -1001,6 +962,13 @@ msgid ""
 "by default, append d to the function\n"
 "to use degrees, e.g. sind(x) or cosd(x)."
 msgstr ""
+"Ek değişkenler:\n"
+"x_min, y_min\n"
+"x_max, y_max \n"
+"\n"
+"Trigonometrik fonksiyonlar öntanımlı olarak radyan kullanır,\n"
+"derece kullanmak için fonksiyona d ekleyin,\n"
+"örneğin sind(x) veya cosd(x)."
 
 #: data/ui/transform_window.blp:47
 msgid "More info"
@@ -1015,13 +983,12 @@ msgid "Discard Unselected Data"
 msgstr "Seçilmemiş Veriyi Gözden Çıkar"
 
 #: data/ui/window.blp:20
-#, fuzzy
 msgid "Add new Data"
-msgstr "Yeni veri ekle"
+msgstr "Yeni Veri Ekle"
 
 #: data/ui/window.blp:28
 msgid "Undo"
-msgstr "Geri al"
+msgstr "Geri Al"
 
 #: data/ui/window.blp:33
 msgid "Redo"
@@ -1040,9 +1007,8 @@ msgid "Next View"
 msgstr "Sonraki Görünüm"
 
 #: data/ui/window.blp:58
-#, fuzzy
 msgid "View Menu"
-msgstr "Görünüm"
+msgstr "Görünüm Menüsü"
 
 #: data/ui/window.blp:163
 msgid "Add data from a file or manually as an equation"
@@ -1050,19 +1016,15 @@ msgstr "Bir dosyadan veya elle denklem olarak veri ekleyin"
 
 #: data/ui/window.blp:184
 msgid "Panning mode. Click and drag to pan"
-msgstr ""
+msgstr "Kaydırma kipi. Kaydırmak için tıklayın ve sürükleyin"
 
 #: data/ui/window.blp:190
-#, fuzzy
 msgid "Zoom mode. Select an area on the figure to zoom in"
-msgstr "Yakınlaştırma kipi. Yakınlaştırmak için grafikte bir alan seçin"
+msgstr "Yakınlaştırma kipi. Yakınlaştırmak için şekilde bir alan seçin"
 
 #: data/ui/window.blp:196
-#, fuzzy
 msgid "Highlight mode. Click and drag to make a selection of data"
-msgstr ""
-"Vurgu kipi, çalışılabilir alanı vurgulamak için grafiğin üzerine tıklayıp "
-"sürükleyin"
+msgstr "Vurgu kipi. Veri seçimi yapmak için tıklayın ve sürükleyin"
 
 #: data/ui/window.blp:216
 msgid "Adjust Data"
@@ -1081,41 +1043,36 @@ msgid "Normalize"
 msgstr "Normalleştir"
 
 #: data/ui/window.blp:251
-#, fuzzy
 msgid "Normalize data"
-msgstr "Verileri Normalleştir"
+msgstr "Verileri normalleştir"
 
 #: data/ui/window.blp:265
 msgid "Smoothen"
 msgstr "Düzleştir"
 
 #: data/ui/window.blp:267
-#, fuzzy
 msgid "Smoothen data"
-msgstr "Verileri Düzleştir"
+msgstr "Verileri düzleştir"
 
 #: data/ui/window.blp:283
-#, fuzzy
 msgid "Center data"
-msgstr "Veriyi Ortala"
+msgstr "Verileri ortala"
 
 #: data/ui/window.blp:297
 msgid "Combine"
 msgstr "Birleştir"
 
 #: data/ui/window.blp:299
-#, fuzzy
 msgid "Combine all selected data"
-msgstr "Seçilen Veriyi Kes"
+msgstr "Tüm seçili verileri birleştir"
 
 #: data/ui/window.blp:313
 msgid "Cut"
 msgstr "Kes"
 
 #: data/ui/window.blp:315
-#, fuzzy
 msgid "Cut selected data"
-msgstr "Seçilen Veriyi Kes"
+msgstr "Seçilen veriyi kes"
 
 #: data/ui/window.blp:322
 msgid "Mathematical Operations"
@@ -1146,18 +1103,16 @@ msgid "Get the Fast Fourier Transform of the data"
 msgstr "Verilerin Hızlı Fourier Dönüşümünü Alın"
 
 #: data/ui/window.blp:388
-#, fuzzy
 msgid "Inverse FFT"
-msgstr "ters FFT"
+msgstr "Ters FFT"
 
 #: data/ui/window.blp:390
 msgid "Get the Inverse Fast Fourier Transform of the data"
 msgstr "Verilerin Ters Hızlı Fourier Dönüşümünü Alın"
 
 #: data/ui/window.blp:405
-#, fuzzy
 msgid "Custom Transformation"
-msgstr "Dönüşüm gerçekleştirilemedi"
+msgstr "Özel Dönüşüm"
 
 #: data/ui/window.blp:407
 msgid "Perform custom transformations on the data"
@@ -1168,48 +1123,40 @@ msgid "Translate and Multiply"
 msgstr "Çevir ve Çoğalt"
 
 #: data/ui/window.blp:438
-#, fuzzy
 msgid "Translate X"
-msgstr "Çevir"
+msgstr "X Çevir"
 
 #: data/ui/window.blp:461
-#, fuzzy
 msgid "Translate Y"
-msgstr "Çevir"
+msgstr "Y Çevir"
 
 #: data/ui/window.blp:484
-#, fuzzy
 msgid "Multiply X"
-msgstr "Çoğalt"
+msgstr "X Çoğalt"
 
 #: data/ui/window.blp:507
-#, fuzzy
 msgid "Multiply Y"
-msgstr "Çoğalt"
+msgstr "Y Çoğalt"
 
 #: data/ui/window.blp:537
-#, fuzzy
 msgid "Save Project…"
-msgstr "Projeyi Kaydet"
+msgstr "Projeyi Kaydet…"
 
 #: data/ui/window.blp:538
-#, fuzzy
 msgid "Open Project…"
-msgstr "Proje Aç"
+msgstr "Proje Aç…"
 
 #: data/ui/window.blp:541
-#, fuzzy
 msgid "Export Data…"
-msgstr "Verileri Dışa Aktar"
+msgstr "Verileri Dışa Aktar…"
 
 #: data/ui/window.blp:542
-#, fuzzy
 msgid "Export Figure…"
-msgstr "Şekli Dışa Aktar"
+msgstr "Şekli Dışa Aktar…"
 
 #: data/ui/window.blp:549
 msgid "Preferences"
-msgstr "Tercihleri"
+msgstr "Tercihler"
 
 #: data/ui/window.blp:552
 msgid "Keyboard Shortcuts"
@@ -1220,23 +1167,20 @@ msgid "About Graphs"
 msgstr "Grafikler Hakkında"
 
 #: data/ui/window.blp:559
-#, fuzzy
 msgid "Add Data from File…"
-msgstr "Dosyadan Veri Ekle"
+msgstr "Dosyadan Veri Ekle…"
 
 #: data/ui/window.blp:562
-#, fuzzy
 msgid "Add Data from Equation…"
-msgstr "Denklemden Veri Ekle"
+msgstr "Denklemden Veri Ekle…"
 
 #: data/ui/window.blp:568
 msgid "Toggle Sidebar"
 msgstr "Kenar Çubuğunu Aç/Kapa"
 
 #: data/ui/window.blp:571
-#, fuzzy
 msgid "Optimize Limits"
-msgstr "Eksen Sınırları"
+msgstr "Sınırları Eniyile"
 
 #: data/ui/window.blp:575
 msgid "Top X Scale"
@@ -1286,7 +1230,7 @@ msgid ""
 "and smooth data, as well as apply any custom transformations using numpy "
 "notation."
 msgstr ""
-"Grafikler, verilerinizi kolaylıkla çizmenize ve manipüle etmenize olanak "
+"Grafikler, verilerinizi kolaylıkla çizmenize ve düzenlemenize olanak "
 "sağlayan basit ancak güçlü bir araçtır. İki sütunlu dosyalardan veri içe "
 "aktarabilir veya bir denklem aracılığıyla veri oluşturabilirsiniz. Tüm "
 "veriler, seçme, kesme, çeviri, çarpma, ortalama ve düzleştirme gibi çeşitli "
@@ -1332,22 +1276,24 @@ msgstr ""
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:29
 msgid "1 - Plot and manipulate any data set inserted by equation or from file"
 msgstr ""
+"1 - Denklemle veya dosyadan eklenen herhangi bir veri kümesini çizin ve "
+"düzenleyin"
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:33
 msgid "2 - Both light and dark mode is supported"
-msgstr ""
+msgstr "2 - Açık ve koyu kip desteklenmektedir"
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:37
 msgid "3 - Add data from an equation"
-msgstr ""
+msgstr "3 - Denklemden veri ekle"
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:41
 msgid "4 - Edit plot stylesheets"
-msgstr ""
+msgstr "4 - Çizim stil sayfalarını düzenleyin"
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:45
 msgid "5 - Manipulate data using a wide range of operations"
-msgstr ""
+msgstr "5 - Çeşitli işlemleri kullanarak verileri işleyin"
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:52
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:90
@@ -1355,7 +1301,7 @@ msgstr ""
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:232
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:246
 msgid "New in Graphs:"
-msgstr ""
+msgstr "Graphs'da Neler Yeni:"
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:54
 msgid ""
@@ -1581,7 +1527,7 @@ msgstr ""
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:155
 msgid "Removed PIP mode"
-msgstr ""
+msgstr "PIP kipi kaldırıldı"
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:156
 msgid "Removed Toolbar"
@@ -2227,9 +2173,8 @@ msgid "Initial release"
 msgstr ""
 
 #: src/actions.py:111
-#, fuzzy
 msgid "Deleted {}"
-msgstr "Silinmiş {name}"
+msgstr "{} silindi"
 
 #: src/add_equation.py:60
 #, python-brace-format
@@ -2241,14 +2186,12 @@ msgid "Exported Figure"
 msgstr "Şekil Dışa Aktarıldı"
 
 #: src/file_import.py:22
-#, fuzzy
 msgid "Imported Data"
-msgstr "Verileri Dışa Aktar"
+msgstr "İçe Aktarılan Veri"
 
 #: src/file_import.py:111
-#, fuzzy
 msgid "Are you sure you want to reset the import settings?"
-msgstr "Öntanımlı biçimlere sıfırlamak istediğinize emin misiniz?"
+msgstr "İçe aktarma ayarlarını sıfırlamak istediğinize emin misiniz?"
 
 #: src/file_io.py:48
 msgid "2Theta"
@@ -2264,7 +2207,7 @@ msgstr "Yoğunluk (cps)"
 
 #: src/file_io.py:72
 msgid "Invalid .xry format"
-msgstr ""
+msgstr "Geçersiz .xry biçimi"
 
 #: src/file_io.py:89
 msgid "β (°)"
@@ -2276,12 +2219,11 @@ msgstr "R (1/s)"
 
 #: src/file_io.py:132
 msgid "Import failed, column index out of range"
-msgstr ""
+msgstr "İçe aktarılamadı, sütun indeksi erim dışı"
 
 #: src/file_io.py:156
-#, fuzzy
 msgid "Unable to import from file"
-msgstr "Dönüşüm gerçekleştirilemedi"
+msgstr "Dosyadan içe aktarılamadı"
 
 #: src/file_io.py:179
 msgid "Missing colon in file {}, line {}"
@@ -2324,7 +2266,7 @@ msgstr "Birleştirilmiş Veri"
 #: src/styles.py:82
 #, python-brace-format
 msgid "Plot style {stylename} does not exist loading system preferred"
-msgstr ""
+msgstr "Çizim biçemi {stylename} yok, yükleme sistemi tercih edildi"
 
 #: src/styles.py:233
 #, python-brace-format
@@ -2367,15 +2309,15 @@ msgstr "{} ögesi zaten var"
 
 #: src/ui.py:82
 msgid "ASCII files"
-msgstr ""
+msgstr "ASCII dosyalar"
 
 #: src/ui.py:83
 msgid "PANalytical XRDML"
-msgstr ""
+msgstr "PANalytical XRDML"
 
 #: src/ui.py:84
 msgid "Leybold xry"
-msgstr ""
+msgstr "Leybold xry"
 
 #: src/ui.py:97 src/ui.py:110
 msgid "Graphs Project File"
@@ -2391,15 +2333,15 @@ msgstr "Sabri Ünal <libreajans@gmail.com>"
 
 #: src/ui.py:187 src/ui.py:247 src/ui.py:277
 msgid "Unsupported Widget {}"
-msgstr ""
+msgstr "Desteklenmeyen Parçacık {}"
 
 #: src/ui.py:189 src/ui.py:249 src/ui.py:279
 msgid "No way to apply “{}”"
-msgstr ""
+msgstr "“{}” uygulamanın yolu yok"
 
 #: src/utilities.py:135
 msgid "No valid number specified"
-msgstr ""
+msgstr "Geçerli bir sayı belirtilmedi"
 
 #~ msgid "Supports Numpy notation. Use a capital letter for the X coordinate."
 #~ msgstr "Numpy gösterimini destekler. X koordinatı için büyük harf kullanın."

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: graphs\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-08-25 18:33+0200\n"
-"PO-Revision-Date: 2023-08-29 07:40+0000\n"
+"PO-Revision-Date: 2023-08-29 10:57+0000\n"
 "Last-Translator: Sjoerd Stendahl <sjoerd1993@gmail.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/graphs/graphs/nl/>"
 "\n"
@@ -40,7 +40,7 @@ msgstr "Y = "
 
 #: data/ui/add_equation_window.blp:54
 msgid "Enter a mathematical expression to generate data from"
-msgstr ""
+msgstr "Voer een wiskundige uitdrukking in om data te genereren"
 
 #: data/ui/add_equation_window.blp:57
 msgid "Name (optional)"
@@ -68,7 +68,7 @@ msgstr "Sjabloon"
 
 #: data/ui/add_style.blp:46 data/ui/edit_item.blp:27
 msgid "Name"
-msgstr ""
+msgstr "Naam"
 
 #: data/ui/dialogs.blp:5
 msgid "Discard Data?"
@@ -128,7 +128,7 @@ msgstr "Lijnstijl"
 
 #: data/ui/edit_item.blp:53 data/ui/style_window.blp:104
 msgid "None"
-msgstr ""
+msgstr "Niets"
 
 #: data/ui/edit_item.blp:53 data/ui/style_window.blp:104
 msgid "Solid"
@@ -260,7 +260,7 @@ msgstr "Bestandsformaat"
 
 #: data/ui/export_figure.blp:47
 msgid "Resolution (dpi)"
-msgstr ""
+msgstr "Resolutie (dpi)"
 
 #: data/ui/export_figure.blp:62
 msgid "Transparent Background"
@@ -597,7 +597,7 @@ msgstr "Kolom X"
 
 #: data/ui/import.blp:68
 msgid "X-data column index"
-msgstr ""
+msgstr "X-data kolumnindex"
 
 #: data/ui/import.blp:82
 msgid "Column Y"
@@ -605,7 +605,7 @@ msgstr "Kolom Y"
 
 #: data/ui/import.blp:83
 msgid "Y-data column index"
-msgstr ""
+msgstr "Y-data kolumnindex"
 
 #: data/ui/import.blp:97
 msgid "Skip Rows"
@@ -690,7 +690,7 @@ msgstr "Standaard rechteraslabel"
 
 #: data/ui/preferences.blp:62
 msgid "Axes"
-msgstr ""
+msgstr "Assen"
 
 #: data/ui/preferences.blp:65
 msgid "Default Bottom Axis Scale"
@@ -714,7 +714,7 @@ msgstr "Standaard X-as positie"
 
 #: data/ui/preferences.blp:94 data/ui/preferences.blp:102
 msgid "Which axis should a new item be displayed on"
-msgstr ""
+msgstr "Op welke as nieuwe gegevens vertoond worden"
 
 #: data/ui/preferences.blp:96
 msgid "bottom"
@@ -794,11 +794,11 @@ msgstr "Maatstreepjes richting"
 
 #: data/ui/style_window.blp:157
 msgid "Inwards"
-msgstr ""
+msgstr "Naar binnen"
 
 #: data/ui/style_window.blp:157
 msgid "Outwards"
-msgstr ""
+msgstr "Naar buiten"
 
 #: data/ui/style_window.blp:162
 msgid "Minor Ticks"
@@ -960,6 +960,13 @@ msgid ""
 "by default, append d to the function\n"
 "to use degrees, e.g. sind(x) or cosd(x)."
 msgstr ""
+"Extra variabelen:\n"
+"x_min, y_min.\n"
+"xmax, y_max.\n"
+"\n"
+"Trigonometrische functies gebruiken radianen\n"
+"als standaard. Voeg d toe aan de functie om\n"
+"graden te gebruiken. Bijvoorbeeld sind(x) of cosd(x)."
 
 #: data/ui/transform_window.blp:47
 msgid "More info"
@@ -1007,7 +1014,7 @@ msgstr "Voeg gegevens toe vanuit een bestand, of met een vergelijking"
 
 #: data/ui/window.blp:184
 msgid "Panning mode. Click and drag to pan"
-msgstr ""
+msgstr "Panningmodus. Klik en sleep"
 
 #: data/ui/window.blp:190
 msgid "Zoom mode. Select an area on the figure to zoom in"
@@ -2205,7 +2212,7 @@ msgstr "Intensiteit (cps)"
 
 #: src/file_io.py:72
 msgid "Invalid .xry format"
-msgstr ""
+msgstr "Ongeldig .xry formaat"
 
 #: src/file_io.py:89
 msgid "β (°)"
@@ -2333,15 +2340,15 @@ msgstr "Sjoerd Stendahl <contact@sjoerd.se>"
 
 #: src/ui.py:187 src/ui.py:247 src/ui.py:277
 msgid "Unsupported Widget {}"
-msgstr ""
+msgstr "Widget {} niet ondersteund"
 
 #: src/ui.py:189 src/ui.py:249 src/ui.py:279
 msgid "No way to apply “{}”"
-msgstr ""
+msgstr "Geen manier om “{}” toe te passen"
 
 #: src/utilities.py:135
 msgid "No valid number specified"
-msgstr ""
+msgstr "Geen geldig nummer"
 
 #~ msgid "Supports Numpy notation. Use a capital letter for the X coordinate."
 #~ msgstr ""
