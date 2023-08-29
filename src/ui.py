@@ -47,13 +47,6 @@ def on_items_ignored(_data, _ignored, ignored, self):
     self.get_window().add_toast(toast)
 
 
-def on_scale_action(action, target, self, prop):
-    self.get_figure_settings().set_property(
-        prop, 0 if target.get_string() == "linear" else 1,
-    )
-    action.change_state(target)
-
-
 def set_clipboard_buttons(self):
     """
     Enable and disable the buttons for the undo and redo buttons and backwards

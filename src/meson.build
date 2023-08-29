@@ -28,6 +28,7 @@ graphs_sources = [
   'operations.py',
   'preferences.py',
   'project.py',
+  'scales.py',
   'styles.py',
   'transform_data.py',
   'ui.py',
