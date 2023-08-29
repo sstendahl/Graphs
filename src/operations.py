@@ -73,6 +73,7 @@ def sort_data(xdata, ydata):
 
 def perform_operation(self, callback, *args):
     data_selected = False
+    old_limits = self.get_figure_settings().get_limits()
     for item in self.get_data():
         if not item.selected or item.props.item_type != "Item":
             continue
@@ -99,7 +100,7 @@ def perform_operation(self, callback, *args):
             _("No data found within the highlighted area"))
         return
     utilities.optimize_limits(self)
-    self.get_clipboard().add()
+    self.get_clipboard().add(old_limits)
 
 
 def translate_x(_item, xdata, ydata, offset):

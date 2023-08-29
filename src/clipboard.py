@@ -83,7 +83,7 @@ class DataClipboard(BaseClipboard):
             clipboard=[([], application.get_figure_settings().get_limits())],
         )
 
-    def add(self):
+    def add(self, old_limits=None):
         """
         Add data to the clipboard, is performed whenever an action is performed
         Appends the latest state to the clipboard.
@@ -94,6 +94,11 @@ class DataClipboard(BaseClipboard):
             self.props.current_batch,
             self.get_application().get_figure_settings().get_limits(),
         ))
+
+        if old_limits is not None:
+            for index in range(8):
+                self.get_clipboard()[self.get_clipboard_pos() - 1][1][index] \
+                    = old_limits[index]
         # Keep clipboard length limited to 100 spots
         if len(self.get_clipboard()) > 101:
             self.set_clipboard(self.get_clipboard()[1:])
