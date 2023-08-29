@@ -61,16 +61,22 @@ def get_value_at_fraction(fraction, start, end, scale):
     """
     Obtain the selected value of an axis given at which percentage (in terms of
     fraction) of the length this axis is selected given the start and end range
-    of this axis
+    of this axis.
     """
-    if scale == 0:
+    if scale == 0 or scale == 2:  # Linear  oscale
         return start + fraction * (end - start)
-    else:
+    elif scale == 1:  # Logarithmic scale
         log_start = numpy.log10(start)
         log_end = numpy.log10(end)
         log_range = log_end - log_start
         log_value = log_start + log_range * fraction
         return pow(10, log_value)
+    elif scale == 3:  # Square root scale
+        sqrt_start = numpy.sqrt(start)
+        sqrt_end = numpy.sqrt(end)
+        sqrt_range = sqrt_end - sqrt_start
+        sqrt_value = sqrt_start + sqrt_range * fraction
+        return sqrt_value * sqrt_value
 
 
 def get_fraction_at_value(value, start, end, scale):
@@ -78,14 +84,20 @@ def get_fraction_at_value(value, start, end, scale):
     Obtain the fraction of the total length of the selected axis a specific
     value corresponds to given the start and end range of the axis.
     """
-    if scale == 0:
+    if scale == 0 or scale == 2:  # Linear or radian scale
         return (value - start) / (end - start)
-    else:
+    elif scale == 1:  # Logarithmic scale
         log_start = numpy.log10(start)
         log_end = numpy.log10(end)
         log_value = numpy.log10(value)
         log_range = log_end - log_start
         return (log_value - log_start) / log_range
+    elif scale == 3:  # Square root scale
+        sqrt_start = numpy.sqrt(start)
+        sqrt_end = numpy.sqrt(end)
+        sqrt_value = numpy.sqrt(value)
+        sqrt_range = sqrt_end - sqrt_start
+        return (sqrt_value - sqrt_start) / sqrt_range
 
 
 def shorten_label(label, max_length=19):
