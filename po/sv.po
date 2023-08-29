@@ -8,15 +8,16 @@ msgstr ""
 "Project-Id-Version: graphs\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-08-25 18:33+0200\n"
-"PO-Revision-Date: 2023-06-14 16:59+0200\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
-"Language: fr\n"
+"PO-Revision-Date: 2023-08-29 07:40+0000\n"
+"Last-Translator: Sjoerd Stendahl <sjoerd1993@gmail.com>\n"
+"Language-Team: Swedish <https://hosted.weblate.org/projects/graphs/graphs/sv/"
+">\n"
+"Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 3.3.1\n"
+"Plural-Forms: nplurals=2; plural=(n>1);\n"
+"X-Generator: Weblate 5.0.1-dev\n"
 
 #: data/ui/add_equation_window.blp:7
 msgid "Add Equation"
@@ -90,7 +91,6 @@ msgid "Delete"
 msgstr "Ta bort"
 
 #: data/ui/dialogs.blp:26
-#, fuzzy
 msgid "Reset to Defaults?"
 msgstr "Återställ till standardvärden?"
 
@@ -119,9 +119,8 @@ msgid "Y-Axis Position"
 msgstr "Y-axelposition"
 
 #: data/ui/edit_item.blp:48
-#, fuzzy
 msgid "Line Properties"
-msgstr "Linjefärger"
+msgstr "Linjeegenskaper"
 
 #: data/ui/edit_item.blp:51 data/ui/style_window.blp:102
 msgid "Linestyle"
@@ -132,22 +131,18 @@ msgid "None"
 msgstr ""
 
 #: data/ui/edit_item.blp:53 data/ui/style_window.blp:104
-#, fuzzy
 msgid "Solid"
 msgstr "Hel"
 
 #: data/ui/edit_item.blp:53 data/ui/style_window.blp:104
-#, fuzzy
 msgid "Dotted"
 msgstr "Prickad"
 
 #: data/ui/edit_item.blp:53 data/ui/style_window.blp:104
-#, fuzzy
 msgid "Dashed"
 msgstr "Streckad"
 
 #: data/ui/edit_item.blp:53 data/ui/style_window.blp:104
-#, fuzzy
 msgid "Dashdot"
 msgstr "Streck-punkt"
 
@@ -272,14 +267,12 @@ msgid "Transparent Background"
 msgstr "Transparent bakgrund"
 
 #: data/ui/figure_settings.blp:7 data/ui/window.blp:548
-#, fuzzy
 msgid "Figure Settings"
-msgstr "Importinställningar"
+msgstr "Figurinställningar"
 
 #: data/ui/figure_settings.blp:19 data/ui/preferences.blp:38
-#, fuzzy
 msgid "Labels"
-msgstr "Etikett"
+msgstr "Etiketter"
 
 #: data/ui/figure_settings.blp:22
 msgid "Title"
@@ -310,47 +303,38 @@ msgid "No Data"
 msgstr "Ingen data"
 
 #: data/ui/figure_settings.blp:46
-#, fuzzy
 msgid "Add data to the figure to set axis limits"
-msgstr "Lägg till data i diagrammet för att ställa in axelgränserna"
+msgstr "Lägg till data  för att ställa in axelgränserna"
 
 #: data/ui/figure_settings.blp:54
-#, fuzzy
 msgid "Minimum Left-Hand Y-Axis"
 msgstr "Minimumvärde för vänster Y-axel"
 
 #: data/ui/figure_settings.blp:60
-#, fuzzy
 msgid "Maximum Left-Hand Y-Axis"
 msgstr "Maximumvärde för vänster Y-axel"
 
 #: data/ui/figure_settings.blp:70
-#, fuzzy
 msgid "Minimum Bottom X-Axis"
 msgstr "Minimumvärde för nedre X-axel"
 
 #: data/ui/figure_settings.blp:76
-#, fuzzy
 msgid "Maximum Bottom X-Axis"
 msgstr "Maximumvärde för nedre X-axel"
 
 #: data/ui/figure_settings.blp:86
-#, fuzzy
 msgid "Minimum Right-Hand Y-Axis"
 msgstr "Minimumvärde för höger Y-axel"
 
 #: data/ui/figure_settings.blp:92
-#, fuzzy
 msgid "Maximum Right-Hand Y-Axis"
 msgstr "Maximumvärde för höger Y-axel"
 
 #: data/ui/figure_settings.blp:101
-#, fuzzy
 msgid "Minimum Top X-Axis"
 msgstr "Minimumvärde för övre X-axel"
 
 #: data/ui/figure_settings.blp:107
-#, fuzzy
 msgid "Maximum Top Y-Axis"
 msgstr "Maximumvärde för övre X-axel"
 
@@ -373,7 +357,6 @@ msgstr "Linjär"
 #: data/ui/figure_settings.blp:133 data/ui/figure_settings.blp:140
 #: data/ui/preferences.blp:67 data/ui/preferences.blp:74
 #: data/ui/preferences.blp:81 data/ui/preferences.blp:88
-#, fuzzy
 msgid "logarithmic"
 msgstr "Logaritmisk"
 
@@ -399,7 +382,6 @@ msgid "Legend"
 msgstr "Legend"
 
 #: data/ui/figure_settings.blp:151 data/ui/preferences.blp:117
-#, fuzzy
 msgid "Legend Position"
 msgstr "Legendens position"
 
@@ -445,9 +427,8 @@ msgid "Center"
 msgstr "Centrera"
 
 #: data/ui/figure_settings.blp:163
-#, fuzzy
 msgid "Use Custom Style"
-msgstr "Anpassad plotstil"
+msgstr "Använd anpassad plotstil"
 
 #: data/ui/help_overlay.blp:11
 msgctxt "shortcut window"
@@ -595,7 +576,6 @@ msgid "Redo Action"
 msgstr "Gör om åtgärd"
 
 #: data/ui/import.blp:8
-#, fuzzy
 msgid "Modify Import Parameters"
 msgstr "Ändra importparametrar"
 
@@ -632,18 +612,16 @@ msgid "Skip Rows"
 msgstr "Hoppa över rader"
 
 #: data/ui/import.blp:98
-#, fuzzy
 msgid "Ignored row indices"
-msgstr "Ignorera dubbletter"
+msgstr "Ignorerade rader"
 
 #: data/ui/item_box.blp:24
 msgid "Edit Item"
 msgstr "Redigera objektet"
 
 #: data/ui/item_box.blp:35
-#, fuzzy
 msgid "Pick Color"
-msgstr "Tickfärg"
+msgstr "Välj en färg"
 
 #: data/ui/item_box.blp:46 data/ui/style_box.blp:33
 #: data/ui/style_color_box.blp:28
@@ -655,9 +633,8 @@ msgid "General"
 msgstr "Allmänt"
 
 #: data/ui/preferences.blp:14
-#, fuzzy
 msgid "Center Action Behaviour"
-msgstr "Åtgärdbeteende"
+msgstr "Centrera data beteende"
 
 #: data/ui/preferences.blp:16
 msgid "Center at maximum Y value"
@@ -668,7 +645,6 @@ msgid "Center at middle coordinate"
 msgstr "Centrera vid mittenkoordinat"
 
 #: data/ui/preferences.blp:21
-#, fuzzy
 msgid "Handle Duplicate Items"
 msgstr "Hantera dubbletter"
 
@@ -689,9 +665,8 @@ msgid "Override existing items"
 msgstr "Åsidosätt befintliga objekt"
 
 #: data/ui/preferences.blp:28
-#, fuzzy
 msgid "Hide Unselected Items"
-msgstr "Dölj omarkerade"
+msgstr "Dölj omarkerade data"
 
 #: data/ui/preferences.blp:41
 msgid "Default Title"
@@ -706,7 +681,6 @@ msgid "Default Left Axis Label"
 msgstr "Standard vänsteretikett"
 
 #: data/ui/preferences.blp:53
-#, fuzzy
 msgid "Default Top Axis Label"
 msgstr "Standard övre etikett"
 
@@ -771,23 +745,20 @@ msgid "Use a legend by default"
 msgstr "Använd en förklaring som standard"
 
 #: data/ui/preferences.blp:129
-#, fuzzy
 msgid "Custom Style by Default"
-msgstr "Anpassad plotstil"
+msgstr "Anpassad plotstil som standard"
 
 #: data/ui/preferences.blp:138
-#, fuzzy
 msgid "Override item properties on style change"
-msgstr "Ändra linjestyling vid stiländring"
+msgstr "Ändra linjestil vid stiländring"
 
 #: data/ui/style_box.blp:23 data/ui/style_color_box.blp:18
 msgid "Edit"
 msgstr "Ändra"
 
 #: data/ui/style_window.blp:8 data/ui/window.blp:545 src/styles.py:227
-#, fuzzy
 msgid "Styles"
-msgstr "Stil"
+msgstr "Stilar"
 
 #: data/ui/style_window.blp:33
 msgid "Reset to default styles"
@@ -814,7 +785,6 @@ msgid "Ticks"
 msgstr "Tickar"
 
 #: data/ui/style_window.blp:152
-#, fuzzy
 msgid "Settings for the ticks that are used on axes"
 msgstr "Inställningar för tickarna som används i diagrammen"
 
@@ -871,9 +841,8 @@ msgid "Grid"
 msgstr "Rutnät"
 
 #: data/ui/style_window.blp:263
-#, fuzzy
 msgid "Settings for the grid"
-msgstr "Inställningar för diagramstilen"
+msgstr "Inställningar för rutnätet"
 
 #: data/ui/style_window.blp:266
 msgid "Show Grid"
@@ -884,25 +853,22 @@ msgid "Grid Width"
 msgstr "Rutnätbredd"
 
 #: data/ui/style_window.blp:289
-#, fuzzy
 msgid "Grid Opacity"
-msgstr "Rutnätbredd"
+msgstr "Rutnätsopacitet"
 
 #: data/ui/style_window.blp:304
 msgid "Padding"
 msgstr "Padding"
 
 #: data/ui/style_window.blp:305
-#, fuzzy
 msgid "Padding for different parts of the figure"
-msgstr "Padding för olika delar i grafen"
+msgstr "Padding mellan de olika delar i grafen"
 
 #: data/ui/style_window.blp:308
 msgid "Value Padding"
 msgstr "Värdenpadding"
 
 #: data/ui/style_window.blp:309
-#, fuzzy
 msgid "Padding between axes and values"
 msgstr "Padding mellan axel och värden"
 
@@ -911,7 +877,6 @@ msgid "Label Padding"
 msgstr "Etikettpadding"
 
 #: data/ui/style_window.blp:323
-#, fuzzy
 msgid "Padding between axes and labels"
 msgstr "Padding mellan axeln och etiketterna"
 
@@ -920,9 +885,8 @@ msgid "Title Padding"
 msgstr "Titelpadding"
 
 #: data/ui/style_window.blp:337
-#, fuzzy
 msgid "Padding between axes and the title"
-msgstr "Padding mellan axeln och titeln "
+msgstr "Padding mellan axeln och titeln"
 
 #: data/ui/style_window.blp:351
 msgid "Colors"
@@ -1010,7 +974,6 @@ msgid "Discard Unselected Data"
 msgstr "Kasta omarkerade data"
 
 #: data/ui/window.blp:20
-#, fuzzy
 msgid "Add new Data"
 msgstr "Lägg till ny data"
 
@@ -1035,9 +998,8 @@ msgid "Next View"
 msgstr "Nästa vy"
 
 #: data/ui/window.blp:58
-#, fuzzy
 msgid "View Menu"
-msgstr "Vy"
+msgstr "Vymeny"
 
 #: data/ui/window.blp:163
 msgid "Add data from a file or manually as an equation"
@@ -1048,12 +1010,10 @@ msgid "Panning mode. Click and drag to pan"
 msgstr ""
 
 #: data/ui/window.blp:190
-#, fuzzy
 msgid "Zoom mode. Select an area on the figure to zoom in"
 msgstr "Zoomläge. Välj ett område på diagrammet för att zooma in."
 
 #: data/ui/window.blp:196
-#, fuzzy
 msgid "Highlight mode. Click and drag to make a selection of data"
 msgstr ""
 "Markeringsläge. Klicka och dra över diagrammet för att markera det "
@@ -1076,7 +1036,6 @@ msgid "Normalize"
 msgstr "Normalisera"
 
 #: data/ui/window.blp:251
-#, fuzzy
 msgid "Normalize data"
 msgstr "Normalisera data"
 
@@ -1085,12 +1044,10 @@ msgid "Smoothen"
 msgstr "Jämna ut"
 
 #: data/ui/window.blp:267
-#, fuzzy
 msgid "Smoothen data"
 msgstr "Jämna ut datan"
 
 #: data/ui/window.blp:283
-#, fuzzy
 msgid "Center data"
 msgstr "Centrera data"
 
@@ -1099,16 +1056,14 @@ msgid "Combine"
 msgstr "Kombinera"
 
 #: data/ui/window.blp:299
-#, fuzzy
 msgid "Combine all selected data"
-msgstr "Klippa ut markerade datan"
+msgstr "Kombinera all selekterad data"
 
 #: data/ui/window.blp:313
 msgid "Cut"
 msgstr "Klippa"
 
 #: data/ui/window.blp:315
-#, fuzzy
 msgid "Cut selected data"
 msgstr "Klippa ut markerade datan"
 
@@ -1141,7 +1096,6 @@ msgid "Get the Fast Fourier Transform of the data"
 msgstr "Få snabb Fourier-transform (FFT) av datan."
 
 #: data/ui/window.blp:388
-#, fuzzy
 msgid "Inverse FFT"
 msgstr "Inverse FFT"
 
@@ -1150,9 +1104,8 @@ msgid "Get the Inverse Fast Fourier Transform of the data"
 msgstr "Få den inversa snabb Fourier-transform (FFT) av datan."
 
 #: data/ui/window.blp:405
-#, fuzzy
 msgid "Custom Transformation"
-msgstr "Kan inte utföra transformationen"
+msgstr "Anpassade transformation"
 
 #: data/ui/window.blp:407
 msgid "Perform custom transformations on the data"
@@ -1163,42 +1116,34 @@ msgid "Translate and Multiply"
 msgstr "Förskjut och multiplicera"
 
 #: data/ui/window.blp:438
-#, fuzzy
 msgid "Translate X"
-msgstr "Förskjut"
+msgstr "Förskjut X"
 
 #: data/ui/window.blp:461
-#, fuzzy
 msgid "Translate Y"
-msgstr "Förskjut"
+msgstr "Förskjut Y"
 
 #: data/ui/window.blp:484
-#, fuzzy
 msgid "Multiply X"
-msgstr "Multiplicera"
+msgstr "Multiplicera X"
 
 #: data/ui/window.blp:507
-#, fuzzy
 msgid "Multiply Y"
-msgstr "Multiplicera"
+msgstr "Multiplicera Y"
 
 #: data/ui/window.blp:537
-#, fuzzy
 msgid "Save Project…"
-msgstr "Spara projekt"
+msgstr "Spara projekt…"
 
 #: data/ui/window.blp:538
-#, fuzzy
 msgid "Open Project…"
-msgstr "Öppna projekt"
+msgstr "Öppna projekt…"
 
 #: data/ui/window.blp:541
-#, fuzzy
 msgid "Export Data…"
-msgstr "Exportera data"
+msgstr "Exportera data…"
 
 #: data/ui/window.blp:542
-#, fuzzy
 msgid "Export Figure…"
 msgstr "Exportera figur"
 
@@ -1215,14 +1160,12 @@ msgid "About Graphs"
 msgstr "Om Graphs"
 
 #: data/ui/window.blp:559
-#, fuzzy
 msgid "Add Data from File…"
-msgstr "Lägg till data från fil"
+msgstr "Lägg till data från fil…"
 
 #: data/ui/window.blp:562
-#, fuzzy
 msgid "Add Data from Equation…"
-msgstr "Lägg till data från ekvation"
+msgstr "Lägg till data från ekvation…"
 
 #: data/ui/window.blp:568
 msgid "Toggle Sidebar"
@@ -2222,7 +2165,6 @@ msgid "Initial release"
 msgstr ""
 
 #: src/actions.py:111
-#, fuzzy
 msgid "Deleted {}"
 msgstr "Raderad {name}"
 
@@ -2238,14 +2180,12 @@ msgid "Exported Figure"
 msgstr "Figur är exporterad"
 
 #: src/file_import.py:22
-#, fuzzy
 msgid "Imported Data"
-msgstr "Exportera data"
+msgstr "Importerad data"
 
 #: src/file_import.py:111
-#, fuzzy
 msgid "Are you sure you want to reset the import settings?"
-msgstr "Är du säker på att du vill återställa till standardstilarna?"
+msgstr "Är du säker på att du vill återställa importinställingarna?"
 
 #: src/file_io.py:48
 msgid "2Theta"
@@ -2276,9 +2216,8 @@ msgid "Import failed, column index out of range"
 msgstr ""
 
 #: src/file_io.py:156
-#, fuzzy
 msgid "Unable to import from file"
-msgstr "Kan inte utföra transformationen"
+msgstr "Kan inte importera filen"
 
 #: src/file_io.py:179
 msgid "Missing colon in file {}, line {}"
