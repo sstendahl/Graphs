@@ -11,12 +11,12 @@ from graphs.styles import StylesWindow
 
 
 def toggle_sidebar(_action, _shortcut, self):
-    flap = self.main_window.sidebar_flap
+    flap = self.get_window().sidebar_flap
     flap.set_reveal_flap(not flap.get_reveal_flap())
 
 
 def set_mode(_action, _target, self, mode):
-    self.props.mode = mode
+    self.set_mode(mode)
 
 
 def quit_action(_action, _target, self):
@@ -44,23 +44,23 @@ def add_equation_action(_action, _target, self):
 
 
 def select_all_action(_action, _target, self):
-    for item in self.props.data:
+    for item in self.get_data():
         item.selected = True
-    self.props.clipboard.add()
+    self.get_clipboard().add()
 
 
 def select_none_action(_action, _target, self):
-    for item in self.props.data:
+    for item in self.get_data():
         item.selected = False
-    self.props.clipboard.add()
+    self.get_clipboard().add()
 
 
 def undo_action(_action, _target, self):
-    self.props.clipboard.undo()
+    self.get_clipboard().undo()
 
 
 def redo_action(_action, _target, self):
-    self.props.clipboard.redo()
+    self.get_clipboard().redo()
 
 
 def optimize_limits_action(_action, _target, self):
@@ -68,13 +68,13 @@ def optimize_limits_action(_action, _target, self):
 
 
 def view_back_action(_action, _target, self):
-    if self.main_window.view_back_button.get_sensitive():
-        self.props.view_clipboard.undo()
+    if self.get_window().view_back_button.get_sensitive():
+        self.get_view_clipboard().undo()
 
 
 def view_forward_action(_action, _target, self):
-    if self.main_window.view_forward_button.get_sensitive():
-        self.props.view_clipboard.redo()
+    if self.get_window().view_forward_button.get_sensitive():
+        self.get_view_clipboard().redo()
 
 
 def export_data_action(_action, _target, self):
@@ -94,12 +94,12 @@ def save_project_action(_action, _target, self):
 
 
 def open_project_action(_action, _target, self):
-    if not self.props.data.is_empty():
+    if not self.get_data().is_empty():
         def on_response(_dialog, response):
             if response == "discard":
                 ui.open_project_dialog(self)
         dialog = ui.build_dialog("discard_data")
-        dialog.set_transient_for(self.main_window)
+        dialog.set_transient_for(self.get_window())
         dialog.connect("response", on_response)
         dialog.present()
         return
@@ -107,7 +107,7 @@ def open_project_action(_action, _target, self):
 
 
 def delete_selected_action(_action, _target, self):
-    items = [item for item in self.props.data if item.selected]
+    items = [item for item in self.get_data() if item.selected]
     names = ", ".join([item.name for item in items])
-    self.props.data.delete_items(items)
-    self.main_window.add_toast(_("Deleted {}").format(names))
+    self.get_data().delete_items(items)
+    self.get_window().add_toast(_("Deleted {}").format(names))

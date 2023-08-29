@@ -11,32 +11,32 @@ from graphs.item_box import ItemBox
 
 
 def on_style_change(_shortcut, _theme, _widget, self):
-    self.main_window.reload_canvas()
+    self.get_window().reload_canvas()
 
 
 def on_figure_style_change(_figure_settings, _ignored, self):
     if not self.get_settings(
             "general").get_boolean("override-item-properties"):
-        self.main_window.reload_canvas()
+        self.get_window().reload_canvas()
         return
     styles.update(self)
-    for item in self.props.data:
+    for item in self.get_data():
         item.reset()
-    for item in self.props.data:
+    for item in self.get_data():
         if item.props.item_type == "Item":
-            item.color = utilities.get_next_color(self.props.data.props.items)
-    self.main_window.reload_canvas()
+            item.color = utilities.get_next_color(self.get_data().get_items())
+    self.get_window().reload_canvas()
 
 
 def on_items_change(data, _ignored, self):
-    while self.main_window.item_list.get_last_child() is not None:
-        self.main_window.item_list.remove(
-            self.main_window.item_list.get_last_child())
+    while self.get_window().item_list.get_last_child() is not None:
+        self.get_window().item_list.remove(
+            self.get_window().item_list.get_last_child())
 
     for item in data:
-        self.main_window.item_list.append(ItemBox(self, item))
-    self.main_window.item_list.set_visible(not data.is_empty())
-    self.props.view_clipboard.add()
+        self.get_window().item_list.append(ItemBox(self, item))
+    self.get_window().item_list.set_visible(not data.is_empty())
+    self.get_view_clipboard().add()
 
 
 def on_items_ignored(_data, _ignored, ignored, self):
@@ -44,11 +44,11 @@ def on_items_ignored(_data, _ignored, ignored, self):
         toast = _("Items {} already exist").format(ignored)
     else:
         toast = _("Item {} already exists")
-    self.main_window.add_toast(toast)
+    self.get_window().add_toast(toast)
 
 
 def on_scale_action(action, target, self, prop):
-    self.props.figure_settings.set_property(
+    self.get_figure_settings().set_property(
         prop, 0 if target.get_string() == "linear" else 1,
     )
     action.change_state(target)
@@ -59,16 +59,16 @@ def set_clipboard_buttons(self):
     Enable and disable the buttons for the undo and redo buttons and backwards
     and forwards view.
     """
-    self.main_window.view_forward_button.set_sensitive(
-        self.props.view_clipboard.clipboard_pos < - 1)
-    self.main_window.view_back_button.set_sensitive(
-        abs(self.props.view_clipboard.clipboard_pos)
-        < len(self.props.view_clipboard.clipboard))
-    self.main_window.undo_button.set_sensitive(
-        abs(self.props.clipboard.clipboard_pos)
-        < len(self.props.clipboard.clipboard))
-    self.main_window.redo_button.set_sensitive(
-        self.props.clipboard.clipboard_pos < - 1)
+    self.get_window().view_forward_button.set_sensitive(
+        self.get_view_clipboard().clipboard_pos < - 1)
+    self.get_window().view_back_button.set_sensitive(
+        abs(self.get_view_clipboard().clipboard_pos)
+        < len(self.get_view_clipboard().clipboard))
+    self.get_window().undo_button.set_sensitive(
+        abs(self.get_clipboard().clipboard_pos)
+        < len(self.get_clipboard().clipboard))
+    self.get_window().redo_button.set_sensitive(
+        self.get_clipboard().clipboard_pos < - 1)
 
 
 def add_data_dialog(self):
@@ -84,7 +84,7 @@ def add_data_dialog(self):
             (_("Leybold xry"), ["xry"]),
         ]),
     )
-    dialog.open_multiple(self.main_window, None, on_response)
+    dialog.open_multiple(self.get_window(), None, on_response)
 
 
 def save_project_dialog(self):
@@ -97,7 +97,7 @@ def save_project_dialog(self):
         utilities.create_file_filters([(_("Graphs Project File"),
                                       ["graphs"])]))
     dialog.set_initial_name("project.graphs")
-    dialog.save(self.main_window, None, on_response)
+    dialog.save(self.get_window(), None, on_response)
 
 
 def open_project_dialog(self):
@@ -109,37 +109,37 @@ def open_project_dialog(self):
     dialog.set_filters(
         utilities.create_file_filters([(_("Graphs Project File"),
                                       ["graphs"])]))
-    dialog.open(self.main_window, None, on_response)
+    dialog.open(self.get_window(), None, on_response)
 
 
 def export_data_dialog(self):
-    if self.props.data.is_empty():
-        self.main_window.add_toast(_("No data to export"))
+    if self.get_data().is_empty():
+        self.get_window().add_toast(_("No data to export"))
         return
-    multiple = len(self.props.data) > 1
+    multiple = len(self.get_data()) > 1
 
     def on_response(dialog, response):
         with contextlib.suppress(GLib.GError):
             if multiple:
                 directory = dialog.select_folder_finish(response)
-                for item in self.props.data:
+                for item in self.get_data():
                     file = directory.get_child_for_display_name(
                         f"{item.name}.txt")
                     file_io.save_item(file, item)
             else:
                 file_io.save_item(
-                    dialog.save_finish(response), self.props.data[0],
+                    dialog.save_finish(response), self.get_data()[0],
                 )
-            self.main_window.add_toast(_("Exported Data"))
+            self.get_window().add_toast(_("Exported Data"))
     dialog = Gtk.FileDialog()
     if multiple:
-        dialog.select_folder(self.main_window, None, on_response)
+        dialog.select_folder(self.get_window(), None, on_response)
     else:
-        filename = f"{self.props.data[0].name}.txt"
+        filename = f"{self.get_data()[0].name}.txt"
         dialog.set_initial_name(filename)
         dialog.set_filters(
             utilities.create_file_filters([(_("Text Files"), ["txt"])]))
-        dialog.save(self.main_window, None, on_response)
+        dialog.save(self.get_window(), None, on_response)
 
 
 def build_dialog(name):
@@ -149,7 +149,7 @@ def build_dialog(name):
 
 def show_about_window(self):
     Adw.AboutWindow(
-        transient_for=self.main_window, application_name=self.name,
+        transient_for=self.get_window(), application_name=self.name,
         application_icon=self.props.application_id, website=self.website,
         developer_name=self.author, issue_url=self.issues,
         version=self.version, developers=[

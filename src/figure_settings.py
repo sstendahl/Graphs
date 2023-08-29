@@ -105,8 +105,8 @@ class FigureSettingsWindow(Adw.PreferencesWindow):
 
     def __init__(self, application, highlighted=None):
         super().__init__(
-            application=application, transient_for=application.main_window,
-            figure_settings=application.props.figure_settings,
+            application=application, transient_for=application.get_window(),
+            figure_settings=application.get_figure_settings(),
         )
 
         ignorelist = ["custom_style", "min_selected", "max_selected"]
@@ -125,7 +125,7 @@ class FigureSettingsWindow(Adw.PreferencesWindow):
 
         self.set_axes_entries()
         self.no_data_message.set_visible(
-            self.props.application.props.data.is_empty(),
+            self.get_application().get_data().is_empty(),
         )
         if highlighted is not None:
             getattr(self, highlighted).grab_focus()
@@ -133,7 +133,7 @@ class FigureSettingsWindow(Adw.PreferencesWindow):
 
     def set_axes_entries(self):
         used_axes = [[direction, False] for direction in _DIRECTIONS]
-        for item in self.props.application.props.data:
+        for item in self.get_application().get_data():
             for index in item.xposition * 2, 1 + item.yposition * 2:
                 used_axes[index][1] = True
         for (direction, visible) in used_axes:
@@ -156,7 +156,7 @@ class FigureSettingsWindow(Adw.PreferencesWindow):
 
     @Gtk.Template.Callback()
     def on_close(self, *_args):
-        self.props.application.props.view_clipboard.add()
+        self.get_application().get_view_clipboard().add()
         self.destroy()
 
     @Gtk.Template.Callback()

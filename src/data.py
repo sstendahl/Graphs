@@ -25,10 +25,13 @@ class Data(GObject.Object):
         items-ignored: Items are ignored during addition
 
     Functions:
+        get_application
         to_list
         to_dict
         set_from_list
         is_empty
+        get_items
+        set_items
         append
         pop
         index
@@ -51,6 +54,10 @@ class Data(GObject.Object):
         super().__init__(application=application)
         self._items = {}
 
+    def get_application(self):
+        """Get application property."""
+        return self.props.application
+
     def to_list(self) -> list:
         """Get a list of all items in dict form."""
         return [item_.to_dict() for item_ in self]
@@ -61,7 +68,7 @@ class Data(GObject.Object):
 
     def set_from_list(self, items: list):
         """Set items from a list of items in dict form."""
-        self.props.items = [item.new_from_dict(d) for d in items]
+        self.set_items([item.new_from_dict(d) for d in items])
 
     def is_empty(self) -> bool:
         """Whether or not the class is empty."""
@@ -75,10 +82,18 @@ class Data(GObject.Object):
     @GObject.Property
     def items(self) -> list:
         """All managed items."""
-        return list(self._items.values())
+        return self.get_items()
 
     @items.setter
     def items(self, items: list):
+        self.set_items(items)
+
+    def get_items(self) -> list:
+        """Get all managed items."""
+        return list(self._items.values())
+
+    def set_items(self, items: list):
+        """Set all managed items."""
         for item_ in items:
             self.append(item_)
         self._items = {item_.key: item_ for item_ in items}
@@ -102,7 +117,7 @@ class Data(GObject.Object):
 
     def get_names(self) -> list:
         """All items' names."""
-        return [item_.name for item_ in self._items.values()]
+        return [item_.name for item_ in self]
 
     def get_keys(self) -> list:
         """All item's keys."""
@@ -114,18 +129,18 @@ class Data(GObject.Object):
 
     def __iter__(self):
         """Iterate over items."""
-        return iter(self._items.values())
+        return iter(self.get_items())
 
     def __getitem__(self, getter):
         """Get item by index or key."""
         if isinstance(getter, str):
             return self._items[getter]
-        return list(self._items.values())[getter]
+        return self.get_items()[getter]
 
     def change_position(self, key1: str, key2: str):
         """Change key position of key2 to that of key1."""
         keys = self.get_keys()
-        items = list(self._items.values())
+        items = self.get_items()
         index1 = keys.index(key2)
         index2 = keys.index(key1)
         # Check if target key is lower in the order, if so we can put the old
@@ -136,7 +151,7 @@ class Data(GObject.Object):
         else:
             items[index2:index1 + 1] = \
                 [self._items[key2]] + items[index2:index1]
-        self.props.items = items
+        self.set_items(items)
 
     def add_items(self, items: list):
         """
@@ -149,8 +164,8 @@ class Data(GObject.Object):
         If items are ignored, the `items-ignored` signal will be emmitted.
         """
         ignored = []
-        figure_settings = self.props.application.props.figure_settings
-        settings = self.props.application.props.settings
+        figure_settings = self.get_application().get_figure_settings()
+        settings = self.get_application().props.settings
         handle_duplicates = \
             settings.get_child("general").get_enum("handle-duplicates")
 
@@ -173,8 +188,7 @@ class Data(GObject.Object):
                     ignored.append(new_item.name)
                     continue
                 elif handle_duplicates == 3:  # Override
-                    new_item.key = \
-                        self.props.items[names.index(new_item.name)].key
+                    new_item.key = self[names.index(new_item.name)].key
 
             if new_item.xlabel:
                 original_position = new_item.xposition
@@ -201,16 +215,14 @@ class Data(GObject.Object):
                     elif new_item.ylabel != figure_settings.props.left_label:
                         new_item.yposition = original_position
             if new_item.color == "":
-                new_item.color = utilities.get_next_color(
-                    self._items.values(),
-                )
+                new_item.color = utilities.get_next_color(self.get_items())
 
             self.append(new_item)
-            self.props.application.props.clipboard.props.current_batch.append(
+            self.get_application().get_clipboard().append(
                 (1, copy.deepcopy(new_item.to_dict())),
             )
-        utilities.optimize_limits(self.props.application)
-        self.props.application.props.clipboard.add()
+        utilities.optimize_limits(self.get_application())
+        self.get_application().get_clipboard().add()
         if ignored:
             self.emit("items-ignored", ", ".join(ignored))
         self.notify("items")
@@ -219,11 +231,11 @@ class Data(GObject.Object):
     def delete_items(self, items: list):
         """Delete specified items."""
         for item_ in items:
-            self.props.application.props.clipboard.props.current_batch.append(
+            self.get_application().get_clipboard().append(
                 (2, (self.index(item_.key), item_.to_dict())),
             )
             self.pop(item_.key)
-        self.props.application.props.clipboard.add()
+        self.get_application().get_clipboard().add()
         self.notify("items_selected")
 
     def _connect_to_item(self, item_):
@@ -231,11 +243,11 @@ class Data(GObject.Object):
             "notify::selected", lambda _x, _y: self.notify("items_selected"),
         )
         item_.connect(
-            "notify", self.props.application.props.clipboard.on_item_change,
+            "notify", self.get_application().get_clipboard().on_item_change,
         )
         for prop in ["xposition", "yposition"]:
             item_.connect(f"notify::{prop}", self._on_item_position_change)
 
     def _on_item_position_change(self, _item, _ignored):
-        utilities.optimize_limits(self.props.application)
+        utilities.optimize_limits(self.get_application())
         self.notify("items")

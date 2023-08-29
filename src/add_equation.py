@@ -24,9 +24,9 @@ class AddEquationWindow(Adw.Window):
 
     def __init__(self, application):
         super().__init__(application=application,
-                         transient_for=application.main_window)
+                         transient_for=application.get_window())
         ui.bind_values_to_settings(
-            self.props.application.get_settings("add-equation"), self)
+            self.get_application().get_settings("add-equation"), self)
         self.present()
 
     @Gtk.Template.Callback()
@@ -50,8 +50,8 @@ class AddEquationWindow(Adw.Window):
             name = str(self.name.get_text())
             if name == "":
                 name = f"Y = {values['equation']}"
-            self.props.application.props.data.add_items(
-                [Item.new(self.props.application, xdata, ydata, name=name)],
+            self.get_application().get_data().add_items(
+                [Item.new(self.get_application(), xdata, ydata, name=name)],
             )
             self.destroy()
         except ValueError as error:

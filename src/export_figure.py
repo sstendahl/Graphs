@@ -18,16 +18,16 @@ class ExportFigureWindow(Adw.Window):
     file_formats = GObject.Property(type=object)
 
     def __init__(self, application):
-        self.canvas = application.main_window.toast_overlay.get_child()
+        self._canvas = application.get_window().get_canvas()
         super().__init__(
-            application=application, transient_for=application.main_window,
-            file_formats=self.canvas.get_supported_filetypes_grouped(),
+            application=application, transient_for=application.get_window(),
+            file_formats=self._canvas.get_supported_filetypes_grouped(),
         )
 
         self.file_format.set_model(
             Gtk.StringList.new(list(self.file_formats.keys())))
         ui.bind_values_to_settings(
-            self.props.application.get_settings("export-figure"), self)
+            self.get_application().get_settings("export-figure"), self)
         self.present()
 
     @Gtk.Template.Callback()
@@ -35,19 +35,19 @@ class ExportFigureWindow(Adw.Window):
         file_format = self.file_format.get_selected_item().get_string()
         file_suffixes = self.props.file_formats[file_format]
         filename = \
-            Path(self.canvas.get_default_filename()).stem
+            Path(self._canvas.get_default_filename()).stem
 
         def on_response(dialog, response):
             with contextlib.suppress(GLib.GError):
                 destination = dialog.save_finish(response)
                 file, stream = Gio.File.new_tmp("graphs-XXXXXX")
                 stream.close()
-                self.canvas.figure.savefig(
+                self._canvas.figure.savefig(
                     file.peek_path(), format=file_suffixes[0],
                     dpi=int(self.dpi.get_value()),
                     transparent=self.transparent.get_active())
                 file.move(destination, Gio.FileCopyFlags(1), None)
-                self.props.application.main_window.add_toast(
+                self.get_application().get_window().add_toast(
                     _("Exported Figure"))
                 self.destroy()
 
@@ -56,4 +56,4 @@ class ExportFigureWindow(Adw.Window):
         dialog.set_accept_label(_("Export"))
         dialog.set_filters(utilities.create_file_filters(
             [(file_format, file_suffixes)]))
-        dialog.save(self.props.application.main_window, None, on_response)
+        dialog.save(self.get_application().get_window(), None, on_response)

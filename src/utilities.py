@@ -155,7 +155,7 @@ def optimize_limits(self):
         [direction, False, []]
         for direction in ["bottom", "left", "top", "right"]
     ]
-    for item in self.props.data:
+    for item in self.get_data():
         for index in item.xposition * 2, 1 + item.yposition * 2:
             axes[index][1] = True
             axes[index][2].append(item)
@@ -163,7 +163,7 @@ def optimize_limits(self):
     for count, (direction, used, items) in enumerate(axes):
         if not used:
             continue
-        scale = self.props.figure_settings.get_property(f"{direction}_scale")
+        scale = self.get_figure_settings().get_property(f"{direction}_scale")
         datalist = [item.ydata if count % 2 else item.xdata for item in items
                     if item.props.item_type == "Item"]
         min_all, max_all = [], []
@@ -184,9 +184,9 @@ def optimize_limits(self):
         elif count % 2:
             min_all *= 0.5
             max_all *= 2
-        self.props.figure_settings.set_property(f"min_{direction}", min_all)
-        self.props.figure_settings.set_property(f"max_{direction}", max_all)
-    self.props.view_clipboard.add()
+        self.get_figure_settings().set_property(f"min_{direction}", min_all)
+        self.get_figure_settings().set_property(f"max_{direction}", max_all)
+    self.get_view_clipboard().add()
 
 
 def get_next_color(items):

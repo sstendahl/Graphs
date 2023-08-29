@@ -30,23 +30,23 @@ class EditItemWindow(Adw.PreferencesWindow):
 
     def __init__(self, application, item):
         super().__init__(
-            application=application, transient_for=application.main_window,
+            application=application, transient_for=application.get_window,
             item=item, bindings=[],
-            model=Gtk.StringList.new(application.props.data.get_names()),
+            model=Gtk.StringList.new(application.get_data().get_names()),
         )
         self.item_selector.set_model(self.props.model)
         self.item_selector.set_selected(
-            self.props.application.props.data.props.items.index(item),
+            self.get_application().get_data().get_items().index(item),
         )
         self.present()
 
     @Gtk.Template.Callback()
     def on_select(self, _action, _target):
-        item = self.props.application.props.data[
+        item = self.get_application().get_data()[
             self.item_selector.get_selected()]
         if item != self.item:
             self.props.model.splice(
-                self.props.application.props.data.props.items.index(self.item),
+                self.get_application().get_data().get_items().index(self.item),
                 1, [self.item.name],
             )
             self.props.item = item
@@ -63,5 +63,5 @@ class EditItemWindow(Adw.PreferencesWindow):
 
     @Gtk.Template.Callback()
     def on_close(self, _a):
-        self.props.application.props.clipboard.add()
+        self.get_application().get_clipboard().add()
         self.destroy()

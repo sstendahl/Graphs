@@ -72,16 +72,16 @@ def get_system_preferred_style(self):
 
 
 def get_preferred_style(self):
-    if not self.props.figure_settings.props.use_custom_style:
+    if not self.get_figure_settings().props.use_custom_style:
         return get_system_preferred_style(self)
-    stylename = self.props.figure_settings.props.custom_style
+    stylename = self.get_figure_settings().props.custom_style
     try:
         return get_user_styles(self)[stylename]
     except KeyError:
-        self.main_window.add_toast(
+        self.get_window().add_toast(
             _(f"Plot style {stylename} does not exist "
               "loading system preferred"))
-        self.props.figure_settings.props.use_custom_style = False
+        self.get_figure_settings().props.use_custom_style = False
         return get_system_preferred_style(self)
 
 
@@ -193,7 +193,7 @@ class StylesWindow(Adw.Window):
 
     def __init__(self, application):
         super().__init__(application=application,
-                         transient_for=application.main_window)
+                         transient_for=application.get_window())
         self.styles = []
         self.style = None
         self.reload_styles()
@@ -300,8 +300,8 @@ class StylesWindow(Adw.Window):
             directory.get_child_for_display_name(f"{self.style.name}.mplstyle")
         file_io.write_style(file, self.style)
 
-        if file.equal(get_preferred_style(self.props.application)):
-            self.props.application.main_window.reload_canvas()
+        if file.equal(get_preferred_style(self.get_application())):
+            self.get_application().get_window().reload_canvas()
 
     @Gtk.Template.Callback()
     def add_color(self, _button):
@@ -311,13 +311,13 @@ class StylesWindow(Adw.Window):
 
     @Gtk.Template.Callback()
     def add_style(self, _button):
-        AddStyleWindow(self.props.application, self)
+        AddStyleWindow(self.get_application(), self)
 
     @Gtk.Template.Callback()
     def reset_styles(self, _button):
         def on_accept(_dialog, response):
             if response == "reset":
-                reset_user_styles(self.props.application)
+                reset_user_styles(self.get_application())
                 self.reload_styles()
         body = _("Are you sure you want to reset to the default styles?")
         dialog = ui.build_dialog("reset_to_defaults")
@@ -331,9 +331,9 @@ class StylesWindow(Adw.Window):
             self.styles.remove(box)
             self.styles_box.remove(self.styles_box.get_row_at_index(0))
         for style, file in \
-                sorted(get_user_styles(self.props.application).items()):
+                sorted(get_user_styles(self.get_application()).items()):
             box = StyleBox(self, style)
-            if not file.equal(get_preferred_style(self.props.application)):
+            if not file.equal(get_preferred_style(self.get_application())):
                 box.check_mark.hide()
                 box.label.set_hexpand(True)
             self.styles.append(box)
@@ -350,7 +350,7 @@ class StylesWindow(Adw.Window):
         dialog = Gtk.ColorDialog()
         dialog.set_with_alpha(False)
         dialog.choose_rgba(
-            self.props.application.main_window, color, None,
+            self.get_application().get_window(), color, None,
             self.on_color_change_accept, button)
 
     def on_color_change_accept(self, dialog, result, button):
@@ -379,7 +379,7 @@ class StyleBox(Gtk.Box):
     @Gtk.Template.Callback()
     def on_edit(self, _button):
         self.parent.style = get_style(
-            self.parent.props.application, self.style)
+            self.parent.get_application(), self.style)
         self.parent.load_style()
         self.parent.leaflet.navigate(1)
         self.parent.set_title(self.style)
@@ -391,7 +391,7 @@ class StyleBox(Gtk.Box):
         def remove_style(_dialog, response):
             if response == "delete":
                 get_user_styles(
-                    self.parent.props.application)[style].trash(None)
+                    self.parent.get_application())[style].trash(None)
                 self.parent.reload_styles()
         body = _("Are you sure you want to delete the {} style?").format(style)
         dialog = ui.build_dialog("delete_style")
