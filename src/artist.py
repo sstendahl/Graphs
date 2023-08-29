@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 from gi.repository import GObject
 
-from graphs import misc
+from graphs import misc, utilities
 
 
 def new_for_item(canvas, item):
@@ -33,7 +33,7 @@ class ArtistWrapperBase(GObject.Object):
 
     @name.setter
     def name(self, name: str):
-        self._artist.set_label(name)
+        self._artist.set_label(utilities.shorten_label(name, 40))
 
     @GObject.Property(type=str, default="000000")
     def color(self) -> str:

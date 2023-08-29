@@ -4,6 +4,7 @@ from gettext import gettext as _
 
 from gi.repository import Adw, GLib, GObject, Gdk, Gtk
 
+from graphs import utilities
 from graphs.edit_item import EditItemWindow
 from graphs.item import ItemBase
 
@@ -20,7 +21,7 @@ class ItemBox(Gtk.Box):
 
     def __init__(self, application, item):
         super().__init__(application=application, item=item)
-        self.props.item.bind_property("name", self.label, "label", 2)
+        self.props.item.bind_property("name", self, "name", 2)
         self.props.item.bind_property(
             "selected", self.check_button, "active", 2,
         )
@@ -98,5 +99,13 @@ class ItemBox(Gtk.Box):
         )
 
     @Gtk.Template.Callback()
-    def edit(self, _):
+    def edit(self, _button):
         EditItemWindow(self.props.application, self.props.item)
+
+    @GObject.Property(type=str, default="")
+    def name(self) -> str:
+        return self.label.get_label()
+
+    @name.setter
+    def name(self, name: str):
+        self.label.set_label(utilities.shorten_label(name))
