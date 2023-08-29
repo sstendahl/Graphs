@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: graphs\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-08-25 18:33+0200\n"
-"PO-Revision-Date: 2023-08-29 07:40+0000\n"
+"PO-Revision-Date: 2023-08-29 10:57+0000\n"
 "Last-Translator: Sjoerd Stendahl <sjoerd1993@gmail.com>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/graphs/graphs/sv/"
 ">\n"
@@ -40,7 +40,7 @@ msgstr "Y = "
 
 #: data/ui/add_equation_window.blp:54
 msgid "Enter a mathematical expression to generate data from"
-msgstr ""
+msgstr "Skriv in ett matematiskt uttryck att generera data från"
 
 #: data/ui/add_equation_window.blp:57
 msgid "Name (optional)"
@@ -68,7 +68,7 @@ msgstr "Mall"
 
 #: data/ui/add_style.blp:46 data/ui/edit_item.blp:27
 msgid "Name"
-msgstr ""
+msgstr "Namn"
 
 #: data/ui/dialogs.blp:5
 msgid "Discard Data?"
@@ -128,7 +128,7 @@ msgstr "Linjestil"
 
 #: data/ui/edit_item.blp:53 data/ui/style_window.blp:104
 msgid "None"
-msgstr ""
+msgstr "Ingen"
 
 #: data/ui/edit_item.blp:53 data/ui/style_window.blp:104
 msgid "Solid"
@@ -260,7 +260,7 @@ msgstr "Filformat"
 
 #: data/ui/export_figure.blp:47
 msgid "Resolution (dpi)"
-msgstr ""
+msgstr "Upplösning (dpi)"
 
 #: data/ui/export_figure.blp:62
 msgid "Transparent Background"
@@ -597,7 +597,7 @@ msgstr "Kolumn X"
 
 #: data/ui/import.blp:68
 msgid "X-data column index"
-msgstr ""
+msgstr "Index för X-datakolumnen"
 
 #: data/ui/import.blp:82
 msgid "Column Y"
@@ -605,7 +605,7 @@ msgstr "Kolumn Y"
 
 #: data/ui/import.blp:83
 msgid "Y-data column index"
-msgstr ""
+msgstr "Index för Y-datakolumnen"
 
 #: data/ui/import.blp:97
 msgid "Skip Rows"
@@ -690,7 +690,7 @@ msgstr "Standard högeretikett"
 
 #: data/ui/preferences.blp:62
 msgid "Axes"
-msgstr ""
+msgstr "Axlar"
 
 #: data/ui/preferences.blp:65
 msgid "Default Bottom Axis Scale"
@@ -714,7 +714,7 @@ msgstr "X-axelns standardposition"
 
 #: data/ui/preferences.blp:94 data/ui/preferences.blp:102
 msgid "Which axis should a new item be displayed on"
-msgstr ""
+msgstr "På vilken axel ny data ska visas"
 
 #: data/ui/preferences.blp:96
 msgid "bottom"
@@ -794,11 +794,11 @@ msgstr "Tickriktning"
 
 #: data/ui/style_window.blp:157
 msgid "Inwards"
-msgstr ""
+msgstr "Inåt"
 
 #: data/ui/style_window.blp:157
 msgid "Outwards"
-msgstr ""
+msgstr "Utåt"
 
 #: data/ui/style_window.blp:162
 msgid "Minor Ticks"
@@ -960,6 +960,13 @@ msgid ""
 "by default, append d to the function\n"
 "to use degrees, e.g. sind(x) or cosd(x)."
 msgstr ""
+"Ytterligare variabler:\n"
+"x_min, y_min\n"
+"x_max, y_max\n"
+"\n"
+"Trigonometriska funktioner använder som\n"
+" standard radianer. Lägg till 'd' i funktionen\n"
+"för att använda grader, t.ex. sind(x) eller cosd(x)."
 
 #: data/ui/transform_window.blp:47
 msgid "More info"
@@ -1007,7 +1014,7 @@ msgstr "Lägg till data från en fil eller manuellt som en ekvation"
 
 #: data/ui/window.blp:184
 msgid "Panning mode. Click and drag to pan"
-msgstr ""
+msgstr "Pannningsläge. Klicka och dra för att flytta innehållet"
 
 #: data/ui/window.blp:190
 msgid "Zoom mode. Select an area on the figure to zoom in"
@@ -2201,7 +2208,7 @@ msgstr "Intensitet (cps)"
 
 #: src/file_io.py:72
 msgid "Invalid .xry format"
-msgstr ""
+msgstr "Ogiltigt .xry format"
 
 #: src/file_io.py:89
 msgid "β (°)"
@@ -2213,7 +2220,7 @@ msgstr "R (1/s)"
 
 #: src/file_io.py:132
 msgid "Import failed, column index out of range"
-msgstr ""
+msgstr "Importfel, kolumnindex är för högt"
 
 #: src/file_io.py:156
 msgid "Unable to import from file"
@@ -2328,15 +2335,15 @@ msgstr "Sjoerd Stendahl <contact@sjoerd.se>"
 
 #: src/ui.py:187 src/ui.py:247 src/ui.py:277
 msgid "Unsupported Widget {}"
-msgstr ""
+msgstr "Widget {} stöds inte"
 
 #: src/ui.py:189 src/ui.py:249 src/ui.py:279
 msgid "No way to apply “{}”"
-msgstr ""
+msgstr "Kan inte applicera \"{}\""
 
 #: src/utilities.py:135
 msgid "No valid number specified"
-msgstr ""
+msgstr "Intet giltigt nummer angivet"
 
 #~ msgid "Supports Numpy notation. Use a capital letter for the X coordinate."
 #~ msgstr "Stödjer numpy-notation. Använd ett stort X for X-koordinaten"
