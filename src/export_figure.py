@@ -18,10 +18,10 @@ class ExportFigureWindow(Adw.Window):
     file_formats = GObject.Property(type=object)
 
     def __init__(self, application):
+        self.canvas = application.main_window.toast_overlay.get_child()
         super().__init__(
             application=application, transient_for=application.main_window,
-            file_formats=application.main_window.toast_overlay.get_child(
-            ).get_supported_filetypes_grouped(),
+            file_formats=self.canvas.get_supported_filetypes_grouped(),
         )
 
         self.file_format.set_model(
@@ -35,14 +35,14 @@ class ExportFigureWindow(Adw.Window):
         file_format = self.file_format.get_selected_item().get_string()
         file_suffixes = self.props.file_formats[file_format]
         filename = \
-            Path(self.props.application.canvas.get_default_filename()).stem
+            Path(self.canvas.get_default_filename()).stem
 
         def on_response(dialog, response):
             with contextlib.suppress(GLib.GError):
                 destination = dialog.save_finish(response)
                 file, stream = Gio.File.new_tmp("graphs-XXXXXX")
                 stream.close()
-                self.props.application.canvas.figure.savefig(
+                self.canvas.figure.savefig(
                     file.peek_path(), format=file_suffixes[0],
                     dpi=int(self.dpi.get_value()),
                     transparent=self.transparent.get_active())
