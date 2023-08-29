@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: graphs\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-08-25 18:33+0200\n"
-"PO-Revision-Date: 2023-08-29 10:57+0000\n"
+"PO-Revision-Date: 2023-08-29 11:05+0000\n"
 "Last-Translator: Christoph Matthias Kohnen <christoph.kohnen@disroot.org>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/graphs/graphs/de/>"
 "\n"
@@ -104,7 +104,7 @@ msgstr ""
 
 #: data/ui/edit_item.blp:18
 msgid "Choose which item to edit"
-msgstr ""
+msgstr "Wähle welcher Datensatz bearbeitet werden soll"
 
 #: data/ui/edit_item.blp:24
 msgid "Data"
@@ -168,7 +168,7 @@ msgstr ""
 
 #: data/ui/edit_item.blp:73 data/ui/style_window.blp:125
 msgid "Circle"
-msgstr ""
+msgstr "Kreis"
 
 #: data/ui/edit_item.blp:74 data/ui/style_window.blp:126
 msgid "Triangle down"
@@ -408,11 +408,11 @@ msgstr ""
 
 #: data/ui/figure_settings.blp:155 data/ui/preferences.blp:121
 msgid "Center left"
-msgstr ""
+msgstr "Links mittig"
 
 #: data/ui/figure_settings.blp:155 data/ui/preferences.blp:121
 msgid "Center right"
-msgstr ""
+msgstr "Rechts mittig"
 
 #: data/ui/figure_settings.blp:156 data/ui/preferences.blp:122
 msgid "Lower center"
@@ -425,7 +425,7 @@ msgstr ""
 #: data/ui/figure_settings.blp:156 data/ui/preferences.blp:122
 #: data/ui/window.blp:281
 msgid "Center"
-msgstr ""
+msgstr "Zentrieren"
 
 #: data/ui/figure_settings.blp:163
 msgid "Use Custom Style"
@@ -594,7 +594,7 @@ msgstr ""
 
 #: data/ui/import.blp:67
 msgid "Column X"
-msgstr ""
+msgstr "X-Spalte"
 
 #: data/ui/import.blp:68
 msgid "X-data column index"
@@ -602,7 +602,7 @@ msgstr ""
 
 #: data/ui/import.blp:82
 msgid "Column Y"
-msgstr ""
+msgstr "Y-Spalte"
 
 #: data/ui/import.blp:83
 msgid "Y-data column index"
@@ -635,15 +635,15 @@ msgstr ""
 
 #: data/ui/preferences.blp:14
 msgid "Center Action Behaviour"
-msgstr ""
+msgstr "Verhalten der Zentrieren-Aktion"
 
 #: data/ui/preferences.blp:16
 msgid "Center at maximum Y value"
-msgstr ""
+msgstr "Am maximalen Hochachsenwert zentrieren"
 
 #: data/ui/preferences.blp:16
 msgid "Center at middle coordinate"
-msgstr ""
+msgstr "An der mittleren Koordinate zentrieren"
 
 #: data/ui/preferences.blp:21
 msgid "Handle Duplicate Items"
@@ -779,7 +779,7 @@ msgstr ""
 
 #: data/ui/style_window.blp:99
 msgid "Change properties of the line and markers"
-msgstr ""
+msgstr "Ändere Eigenschaften von Linien und Markierungen"
 
 #: data/ui/style_window.blp:151
 msgid "Ticks"
@@ -891,7 +891,7 @@ msgstr ""
 
 #: data/ui/style_window.blp:351
 msgid "Colors"
-msgstr ""
+msgstr "Farben"
 
 #: data/ui/style_window.blp:363
 msgid "Text Color"
@@ -901,7 +901,7 @@ msgstr ""
 #: data/ui/style_window.blp:412 data/ui/style_window.blp:434
 #: data/ui/style_window.blp:456 data/ui/style_window.blp:478
 msgid "Change Color"
-msgstr ""
+msgstr "Farbe Ändern"
 
 #: data/ui/style_window.blp:385
 msgid "Tick Color"
@@ -1055,11 +1055,11 @@ msgstr ""
 
 #: data/ui/window.blp:283
 msgid "Center data"
-msgstr ""
+msgstr "Daten zentrieren"
 
 #: data/ui/window.blp:297
 msgid "Combine"
-msgstr ""
+msgstr "Zusammenfügen"
 
 #: data/ui/window.blp:299
 msgid "Combine all selected data"
@@ -2264,7 +2264,7 @@ msgstr "Bist du sicher, dass du den Stil {} löschen möchtest?"
 
 #: src/styles.py:414
 msgid "Color {}"
-msgstr ""
+msgstr "Farbe {}"
 
 #: src/styles.py:449
 #, python-brace-format
