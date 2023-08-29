@@ -97,12 +97,11 @@ class GraphsApplication(Adw.Application):
 
         settings = self.get_settings("figure")
         for val in ["left-scale", "right-scale", "top-scale", "bottom-scale"]:
-            string = "linear" if settings.get_enum(val) == 0 else "log"
             action = Gio.SimpleAction.new_stateful(
                 f"change-{val}", GLib.VariantType.new("s"),
-                GLib.Variant.new_string(string),
+                GLib.Variant.new_string(str(settings.get_enum(f"{val}"))),
             )
-            action.connect("activate", ui.on_scale_action, self, val)
+            action.connect("activate", actions.change_scale, self, val)
             self.add_action(action)
 
         self.toggle_sidebar = Gio.SimpleAction.new_stateful(
