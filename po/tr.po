@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: se.sjoerd.Graphs\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-08-25 18:33+0200\n"
-"PO-Revision-Date: 2023-08-29 10:34+0000\n"
+"PO-Revision-Date: 2023-08-29 10:57+0000\n"
 "Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/graphs/graphs/tr/"
 ">\n"
@@ -465,7 +465,7 @@ msgstr "Çık"
 #: data/ui/help_overlay.blp:40
 msgctxt "shortcut window"
 msgid "Mode Switching"
-msgstr "Mode Değiştirme"
+msgstr "Kip Değiştirme"
 
 #: data/ui/help_overlay.blp:43
 msgctxt "shortcut window"
@@ -619,7 +619,7 @@ msgstr "YYoksayılan satır endeksleri"
 
 #: data/ui/item_box.blp:24
 msgid "Edit Item"
-msgstr "Öge Düzenle"
+msgstr "Ögeyi Düzenle"
 
 #: data/ui/item_box.blp:35
 msgid "Pick Color"
@@ -988,7 +988,7 @@ msgstr "Yeni Veri Ekle"
 
 #: data/ui/window.blp:28
 msgid "Undo"
-msgstr "Geri al"
+msgstr "Geri Al"
 
 #: data/ui/window.blp:33
 msgid "Redo"
@@ -1156,7 +1156,7 @@ msgstr "Şekli Dışa Aktar…"
 
 #: data/ui/window.blp:549
 msgid "Preferences"
-msgstr "Tercihleri"
+msgstr "Tercihler"
 
 #: data/ui/window.blp:552
 msgid "Keyboard Shortcuts"
@@ -1527,7 +1527,7 @@ msgstr ""
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:155
 msgid "Removed PIP mode"
-msgstr ""
+msgstr "PIP kipi kaldırıldı"
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:156
 msgid "Removed Toolbar"
