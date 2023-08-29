@@ -71,6 +71,7 @@ class Canvas(FigureCanvas):
         max_selected: float (fraction)
 
     Functions:
+        get_application
         update_legend
     """
 
@@ -112,14 +113,18 @@ class Canvas(FigureCanvas):
         self._legend_position = misc.LEGEND_POSITIONS[0]
         self._handles = []
 
-        for prop in dir(self.props.application.props.figure_settings.props):
+        for prop in dir(self.get_application().get_figure_settings().props):
             if prop not in ["use_custom_style", "custom_style"]:
-                self.props.application.props.figure_settings.bind_property(
+                self.get_application().get_figure_settings().bind_property(
                     prop, self, prop, 1 | 2,
                 )
-        self.props.application.props.data.bind_property(
+        self.get_application().get_data().bind_property(
             "items", self, "items", 2,
         )
+
+    def get_application(self):
+        """Get application property."""
+        return self.props.application
 
     def on_draw_event(self, _widget, ctx):
         """
@@ -155,7 +160,7 @@ class Canvas(FigureCanvas):
 
         Automatically hide unused axes and refresh legend.
         """
-        hide_unselected = self.props.application.get_settings(
+        hide_unselected = self.get_application().get_settings(
             "general").get_boolean("hide-unselected")
         drawable_items = []
         # bottom, top, left, right
@@ -200,7 +205,7 @@ class Canvas(FigureCanvas):
 
     def _on_pick(self, event):
         """Invoke FigureSettingsWindow for picked label/title."""
-        FigureSettingsWindow(self.props.application, event.artist.id)
+        FigureSettingsWindow(self.get_application(), event.artist.id)
 
     # Overwritten function - do not change name
     def _post_draw(self, _widget, context):
@@ -484,7 +489,7 @@ class _DummyToolbar(NavigationToolbar2):
     def _zoom_pan_handler(self, event):
         if event.button != 1:
             return
-        mode = self.canvas.props.application.props.mode
+        mode = self.canvas.get_application().get_mode()
         if mode == 0:
             if event.name == "button_press_event":
                 self.press_pan(event)
@@ -498,7 +503,7 @@ class _DummyToolbar(NavigationToolbar2):
 
     # Overwritten function - do not change name
     def _update_cursor(self, event):
-        mode = self.canvas.props.application.props.mode
+        mode = self.canvas.get_application().get_mode()
         if event.inaxes and event.inaxes.get_navigate():
             if mode == 1 and self._last_cursor != tools.Cursors.SELECT_REGION:
                 self.canvas.set_cursor(tools.Cursors.SELECT_REGION)
@@ -530,7 +535,7 @@ class _DummyToolbar(NavigationToolbar2):
         for direction in ["bottom", "left", "top", "right"]:
             self.canvas.notify(f"min-{direction}")
             self.canvas.notify(f"max-{direction}")
-        self.canvas.application.props.view_clipboard.add()
+        self.canvas.application.get_view_clipboard().add()
 
     # Overwritten function - do not change name
     def save_figure(self):
@@ -574,9 +579,8 @@ class _Highlight(SpanSelector):
         self.extents = extents
 
         scale = _scale_to_int(canvas.top_left_axis.get_xscale())
-        canvas.props.min_selected = utilities.get_fraction_at_value(
-            extents[0], xmin, xmax, scale,
-        )
-        canvas.props.max_selected = utilities.get_fraction_at_value(
-            extents[1], xmin, xmax, scale,
-        )
+        for i, prefix in enumerate(["min_", "max_"]):
+            canvas.set_property(
+                prefix + "selected",
+                utilities.get_fraction_at_value(extents[i], xmin, xmax, scale),
+            )

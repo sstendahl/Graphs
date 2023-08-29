@@ -30,12 +30,12 @@ class PreferencesWindow(Adw.PreferencesWindow):
 
     def __init__(self, application):
         super().__init__(
-            application=application, transient_for=application.main_window,
+            application=application, transient_for=application.get_window(),
         )
 
         styles_ = sorted(styles.get_user_styles(application).keys())
         self.figure_custom_style.set_model(Gtk.StringList.new(styles_))
-        settings = self.props.application.props.settings
+        settings = self.get_application().get_settings()
         ui.bind_values_to_settings(
             settings.get_child("figure"), self, prefix="figure_",
             ignorelist=["custom-style"])
@@ -51,6 +51,6 @@ class PreferencesWindow(Adw.PreferencesWindow):
 
     @Gtk.Template.Callback()
     def on_custom_style_select(self, comborow, _ignored):
-        self.props.application.get_settings("figure").set_string(
+        self.get_application().get_settings("figure").set_string(
             "custom-style", comborow.get_selected_item().get_string(),
         )

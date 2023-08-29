@@ -28,19 +28,22 @@ class GraphsWindow(Adw.ApplicationWindow):
 
     def __init__(self, application):
         super().__init__(application=application)
-        self.props.application.props.data.bind_property(
+        self.get_application().get_data().bind_property(
             "items_selected", self.shift_vertically_button, "sensitive", 2,
         )
-        self.props.application.bind_property("mode", self, "mode", 2)
+        self.get_application().bind_property("mode", self, "mode", 2)
         self.reload_canvas()
 
     def reload_canvas(self):
-        styles.update(self.props.application)
-        canvas = Canvas(self.props.application)
+        styles.update(self.get_application())
+        canvas = Canvas(self.get_application())
         self.toast_overlay.set_child(canvas)
         self.cut_button.bind_property(
             "sensitive", canvas, "highlight_enabled", 2,
         )
+
+    def get_canvas(self):
+        return self.toast_overlay.get_child()
 
     @GObject.Property(type=int, default=0, minimum=0, maximum=2, flags=2)
     def mode(self):
@@ -57,44 +60,44 @@ class GraphsWindow(Adw.ApplicationWindow):
 
     @Gtk.Template.Callback()
     def on_sidebar_toggle(self, *_args):
-        self.props.application.toggle_sidebar.change_state(
+        self.get_application().toggle_sidebar.change_state(
             GLib.Variant.new_boolean(self.sidebar_flap.get_reveal_flap()),
         )
 
     @Gtk.Template.Callback()
     def shift_vertically(self, *_args):
-        app = self.props.application
+        app = self.get_application()
         operations.perform_operation(
             app, operations.shift_vertically,
-            app.props.figure_settings.left_scale,
-            app.props.figure_settings.right_scale, app.props.data.props.items,
+            app.get_figure_settings().left_scale,
+            app.get_figure_settings().right_scale, app.get_data().get_items(),
         )
 
     @Gtk.Template.Callback()
     def normalize(self, *_args):
         operations.perform_operation(
-            self.props.application, operations.normalize)
+            self.get_application(), operations.normalize)
 
     @Gtk.Template.Callback()
     def smoothen(self, *_args):
         operations.perform_operation(
-            self.props.application, operations.smoothen)
+            self.get_application(), operations.smoothen)
 
     @Gtk.Template.Callback()
     def center(self, *_args):
         operations.perform_operation(
-            self.props.application, operations.center,
-            self.props.application.get_settings("general").get_enum("center"))
+            self.get_application(), operations.center,
+            self.get_application().get_settings("general").get_enum("center"))
 
     @Gtk.Template.Callback()
     def combine(self, *_args):
-        operations.combine(self.props.application)
+        operations.combine(self.get_application())
 
     @Gtk.Template.Callback()
     def cut(self, *_args):
-        if self.props.application.props.mode == 2:
+        if self.get_application().get_mode() == 2:
             operations.perform_operation(
-                self.props.application, operations.cut_selected)
+                self.get_application(), operations.cut_selected)
 
     @Gtk.Template.Callback()
     def translate_x(self, *_args):
@@ -102,7 +105,7 @@ class GraphsWindow(Adw.ApplicationWindow):
             offset = utilities.string_to_float(
                 self.translate_x_entry.get_text())
             operations.perform_operation(
-                self.props.application, operations.translate_x, offset)
+                self.get_application(), operations.translate_x, offset)
         except ValueError as error:
             self.add_toast(error)
 
@@ -112,7 +115,7 @@ class GraphsWindow(Adw.ApplicationWindow):
             offset = utilities.string_to_float(
                 self.translate_y_entry.get_text())
             operations.perform_operation(
-                self.props.application, operations.translate_y, offset)
+                self.get_application(), operations.translate_y, offset)
         except ValueError as error:
             self.add_toast(error)
 
@@ -122,7 +125,7 @@ class GraphsWindow(Adw.ApplicationWindow):
             multiplier = utilities.string_to_float(
                 self.multiply_x_entry.get_text())
             operations.perform_operation(
-                self.props.application, operations.multiply_x, multiplier)
+                self.get_application(), operations.multiply_x, multiplier)
         except ValueError as error:
             self.add_toast(error)
 
@@ -132,30 +135,30 @@ class GraphsWindow(Adw.ApplicationWindow):
             multiplier = utilities.string_to_float(
                 self.multiply_y_entry.get_text())
             operations.perform_operation(
-                self.props.application, operations.multiply_y, multiplier)
+                self.get_application(), operations.multiply_y, multiplier)
         except ValueError as error:
             self.add_toast(error)
 
     @Gtk.Template.Callback()
     def derivative(self, *_args):
         operations.perform_operation(
-            self.props.application, operations.get_derivative)
+            self.get_application(), operations.get_derivative)
 
     @Gtk.Template.Callback()
     def integral(self, *_args):
         operations.perform_operation(
-            self.props.application, operations.get_integral)
+            self.get_application(), operations.get_integral)
 
     @Gtk.Template.Callback()
     def fourier(self, *_args):
         operations.perform_operation(
-            self.props.application, operations.get_fourier)
+            self.get_application(), operations.get_fourier)
 
     @Gtk.Template.Callback()
     def inverse_fourier(self, *_args):
         operations.perform_operation(
-            self.props.application, operations.get_inverse_fourier)
+            self.get_application(), operations.get_inverse_fourier)
 
     @Gtk.Template.Callback()
     def transform(self, *_args):
-        TransformWindow(self.props.application)
+        TransformWindow(self.get_application())

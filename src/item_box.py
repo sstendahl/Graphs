@@ -46,15 +46,13 @@ class ItemBox(Gtk.Box):
 
     def on_dnd_drop(self, drop_target, value, _x, _y):
         # Handle the dropped data here
-        data = self.props.application.props.data
+        data = self.get_application().get_data()
         before_index = data.index(value)
         data.change_position(drop_target.key, value)
-        clipboard = self.props.application.props.clipboard
-        clipboard.props.current_batch.append((3, (
-            before_index, data.index(value),
-        )))
+        clipboard = self.get_application().get_clipboard()
+        clipboard.append((3, (before_index, data.index(value))))
         clipboard.add()
-        self.props.application.props.view_clipboard.add()
+        self.get_application().get_view_clipboard().add()
 
     def on_dnd_prepare(self, drag_source, x, y):
         snapshot = Gtk.Snapshot.new()
@@ -74,13 +72,13 @@ class ItemBox(Gtk.Box):
         new_value = self.check_button.get_active()
         if self.props.item.props.selected != new_value:
             self.props.item.props.selected = new_value
-            self.props.application.props.clipboard.add()
+            self.get_application().get_clipboard().add()
 
     @Gtk.Template.Callback()
     def choose_color(self, _):
         dialog = Gtk.ColorDialog()
         dialog.choose_rgba(
-            self.props.application.main_window, self.props.item.get_color(),
+            self.get_application().get_window(), self.props.item.get_color(),
             None, self.on_color_dialog_accept)
 
     def on_color_dialog_accept(self, dialog, result):
@@ -88,19 +86,19 @@ class ItemBox(Gtk.Box):
             color = dialog.choose_rgba_finish(result)
             if color is not None:
                 self.props.item.set_color(color)
-                self.props.application.props.clipboard.add()
+                self.get_application().get_clipboard().add()
 
     @Gtk.Template.Callback()
     def delete(self, _button):
         name = self.props.item.props.name
-        self.props.application.props.data.delete_items([self.props.item])
-        self.props.application.main_window.add_toast(
+        self.get_application().get_data().delete_items([self.props.item])
+        self.get_application().get_window().add_toast(
             _("Deleted {name}").format(name=name),
         )
 
     @Gtk.Template.Callback()
     def edit(self, _button):
-        EditItemWindow(self.props.application, self.props.item)
+        EditItemWindow(self.get_application(), self.props.item)
 
     @GObject.Property(type=str, default="")
     def name(self) -> str:
@@ -109,3 +107,7 @@ class ItemBox(Gtk.Box):
     @name.setter
     def name(self, name: str):
         self.label.set_label(utilities.shorten_label(name))
+
+    def get_application(self):
+        """Get application property."""
+        return self.props.application

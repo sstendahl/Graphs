@@ -23,8 +23,8 @@ def get_data(self, item):
     new_ydata = ydata.copy()
     start_index = 0
     stop_index = len(xdata)
-    if self.props.mode == 2:
-        figure_settings = self.props.figure_settings
+    if self.get_mode() == 2:
+        figure_settings = self.get_figure_settings()
         if item.xposition == 0:
             xmin = figure_settings.props.min_bottom
             xmax = figure_settings.props.max_bottom
@@ -73,7 +73,7 @@ def sort_data(xdata, ydata):
 
 def perform_operation(self, callback, *args):
     data_selected = False
-    for item in self.props.data:
+    for item in self.get_data():
         if not item.selected or item.props.item_type != "Item":
             continue
         xdata, ydata, start_index, stop_index = get_data(self, item)
@@ -95,11 +95,11 @@ def perform_operation(self, callback, *args):
         item.notify("xdata")
         item.notify("ydata")
     if not data_selected:
-        self.main_window.add_toast(
+        self.get_window().add_toast(
             _("No data found within the highlighted area"))
         return
     utilities.optimize_limits(self)
-    self.props.clipboard.add()
+    self.get_clipboard().add()
 
 
 def translate_x(_item, xdata, ydata, offset):
@@ -260,7 +260,7 @@ def transform(_item, xdata, ydata, input_x, input_y, discard=False):
 def combine(self):
     """Combine the selected data into a new data set"""
     new_xdata, new_ydata = [], []
-    for item in self.props.data:
+    for item in self.get_data():
         if not item.selected or item.props.item_type != "Item":
             continue
         xdata, ydata = get_data(self, item)[:2]
@@ -269,6 +269,6 @@ def combine(self):
 
     # Create the item itself
     new_xdata, new_ydata = sort_data(new_xdata, new_ydata)
-    self.props.data.add_items(
+    self.get_data().add_items(
         [Item.new(self, new_xdata, new_ydata, name=_("Combined Data"))],
     )

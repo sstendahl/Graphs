@@ -49,9 +49,9 @@ def import_from_files(self, import_settings_list: list):
         try:
             items.extend(_import_from_file(self, import_settings))
         except ParseError as error:
-            self.main_window.add_toast(error.message)
+            self.gt_window().add_toast(error.message)
             continue
-    self.props.data.add_items(items)
+    self.get_data().add_items(items)
 
 
 def _import_from_file(self, import_settings: ImportSettings):
@@ -83,12 +83,12 @@ class ImportWindow(Adw.Window):
 
     def __init__(self, application, modes: list, import_dict: dict):
         super().__init__(
-            application=application, transient_for=application.main_window,
+            application=application, transient_for=application.get_window(),
             modes=modes, import_dict=import_dict,
         )
 
         import_params = \
-            self.props.application.get_settings("import-params")
+            self.get_application().get_settings("import-params")
         visible = False
         for mode in import_params.list_children():
             if mode in self.props.modes:
@@ -98,7 +98,7 @@ class ImportWindow(Adw.Window):
                 visible = True
 
         if not visible:
-            prepare_import_finish(self.props.application, self.import_dict)
+            prepare_import_finish(self.get_application(), self.import_dict)
             self.destroy()
             return
         self.present()
@@ -117,7 +117,7 @@ class ImportWindow(Adw.Window):
 
     def reset_import(self):
         import_params = \
-            self.props.application.get_settings("import-params")
+            self.get_application().get_settings("import-params")
         for mode in import_params.list_children():
             settings = import_params.get_child(mode)
             for key in settings.props.settings_schema.list_keys():
@@ -125,7 +125,7 @@ class ImportWindow(Adw.Window):
 
     @Gtk.Template.Callback()
     def on_accept(self, _widget):
-        import_from_files(self.props.application, [
+        import_from_files(self.get_application(), [
             ImportSettings(
                 file=file, mode=mode, name=utilities.get_filename(file))
             for mode in _IMPORT_MODES.keys() for file in self.import_dict[mode]

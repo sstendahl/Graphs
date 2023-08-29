@@ -19,10 +19,10 @@ class TransformWindow(Adw.Window):
 
     def __init__(self, application):
         super().__init__(application=application,
-                         transient_for=application.main_window)
+                         transient_for=application.get_window())
         self.transform_x_entry.set_text("X")
         self.transform_y_entry.set_text("Y")
-        self.discard_row.set_visible(self.props.application.props.mode == 2)
+        self.discard_row.set_visible(self.get_application().get_mode() == 2)
         self.present()
         self.help_button.connect(
             "clicked", lambda _x: self.help_popover.popup())
@@ -34,11 +34,11 @@ class TransformWindow(Adw.Window):
             input_y = str(self.transform_y_entry.get_text())
             discard = self.discard.get_active()
             operations.perform_operation(
-                self.props.application, operations.transform,
+                self.get_application(), operations.transform,
                 input_x, input_y, discard)
         except (RuntimeError, KeyError) as exception:
             toast = _("{name}: Unable to do transformation, \
 make sure the syntax is correct").format(name=exception.__class__.__name__)
-            self.props.application.main_window.add_toast(toast)
+            self.get_application().get_window().add_toast(toast)
             logging.exception(_("Unable to do transformation"))
         self.destroy()
