@@ -8,17 +8,20 @@ msgstr ""
 "Project-Id-Version: graphs\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-08-25 18:33+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2023-08-29 10:57+0000\n"
+"Last-Translator: Christoph Matthias Kohnen <christoph.kohnen@disroot.org>\n"
+"Language-Team: German <https://hosted.weblate.org/projects/graphs/graphs/de/>"
+"\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.0.1-dev\n"
 
 #: data/ui/add_equation_window.blp:7
 msgid "Add Equation"
-msgstr ""
+msgstr "Füge eine Gleichung hinzu"
 
 #: data/ui/add_equation_window.blp:23 data/ui/add_style.blp:23
 #: data/ui/dialogs.blp:8 data/ui/dialogs.blp:18 data/ui/dialogs.blp:28
@@ -29,7 +32,7 @@ msgstr ""
 
 #: data/ui/add_equation_window.blp:29 data/ui/add_style.blp:29
 msgid "Add"
-msgstr ""
+msgstr "Hinzufügen"
 
 #: data/ui/add_equation_window.blp:48 data/ui/transform_window.blp:62
 msgid "Y ="
@@ -57,7 +60,7 @@ msgstr ""
 
 #: data/ui/add_style.blp:7 data/ui/style_window.blp:27
 msgid "Add new style"
-msgstr ""
+msgstr "Neuen Stil hinzufügen"
 
 #: data/ui/add_style.blp:41
 msgid "Template"
@@ -277,7 +280,7 @@ msgstr ""
 
 #: data/ui/figure_settings.blp:26
 msgid "Bottom Axis Label"
-msgstr ""
+msgstr "Unterer Achsenname"
 
 #: data/ui/figure_settings.blp:30
 msgid "Left Axis Label"
@@ -293,7 +296,7 @@ msgstr ""
 
 #: data/ui/figure_settings.blp:43
 msgid "Axis Limits"
-msgstr ""
+msgstr "Achsenbegrenzungen"
 
 #: data/ui/figure_settings.blp:45 data/ui/window.blp:162
 msgid "No Data"
@@ -302,6 +305,7 @@ msgstr ""
 #: data/ui/figure_settings.blp:46
 msgid "Add data to the figure to set axis limits"
 msgstr ""
+"Füge dem Graph Daten hinzu um die Begrenzung der Achsen zu spezifizieren"
 
 #: data/ui/figure_settings.blp:54
 msgid "Minimum Left-Hand Y-Axis"
@@ -341,7 +345,7 @@ msgstr ""
 
 #: data/ui/figure_settings.blp:117
 msgid "Bottom Axis Scale"
-msgstr ""
+msgstr "Untere Achsenskala"
 
 #: data/ui/figure_settings.blp:119 data/ui/figure_settings.blp:126
 #: data/ui/figure_settings.blp:133 data/ui/figure_settings.blp:140
@@ -384,7 +388,7 @@ msgstr ""
 
 #: data/ui/figure_settings.blp:154 data/ui/preferences.blp:120
 msgid "Best"
-msgstr ""
+msgstr "Am Besten"
 
 #: data/ui/figure_settings.blp:154 data/ui/preferences.blp:120
 msgid "Upper right"
@@ -485,7 +489,7 @@ msgstr ""
 #: data/ui/help_overlay.blp:62
 msgctxt "shortcut window"
 msgid "Add Data from Equation"
-msgstr ""
+msgstr "Füge Daten aus einer Gleichung hinzu"
 
 #: data/ui/help_overlay.blp:67
 msgctxt "shortcut window"
@@ -550,7 +554,7 @@ msgstr ""
 #: data/ui/help_overlay.blp:124
 msgctxt "shortcut window"
 msgid "Actions"
-msgstr ""
+msgstr "Aktionen"
 
 #: data/ui/help_overlay.blp:127
 msgctxt "shortcut window"
@@ -647,7 +651,7 @@ msgstr ""
 
 #: data/ui/preferences.blp:23
 msgid "Auto-rename duplicates"
-msgstr ""
+msgstr "Duplikate automatisch umbenennen"
 
 #: data/ui/preferences.blp:23
 msgid "Ignore duplicates"
@@ -655,7 +659,7 @@ msgstr ""
 
 #: data/ui/preferences.blp:23
 msgid "Add duplicates"
-msgstr ""
+msgstr "Füge Duplikate hinzu"
 
 #: data/ui/preferences.blp:23
 msgid "Override existing items"
@@ -687,7 +691,7 @@ msgstr ""
 
 #: data/ui/preferences.blp:62
 msgid "Axes"
-msgstr ""
+msgstr "Achsen"
 
 #: data/ui/preferences.blp:65
 msgid "Default Bottom Axis Scale"
@@ -715,7 +719,7 @@ msgstr ""
 
 #: data/ui/preferences.blp:96
 msgid "bottom"
-msgstr ""
+msgstr "unten"
 
 #: data/ui/preferences.blp:96
 msgid "top"
@@ -905,7 +909,7 @@ msgstr ""
 
 #: data/ui/style_window.blp:407
 msgid "Axis Color"
-msgstr ""
+msgstr "Achsenfarbe"
 
 #: data/ui/style_window.blp:429
 msgid "Grid Color"
@@ -913,7 +917,7 @@ msgstr ""
 
 #: data/ui/style_window.blp:451
 msgid "Background Color"
-msgstr ""
+msgstr "Hintergrundfarbe"
 
 #: data/ui/style_window.blp:473
 msgid "Outline Color"
@@ -933,11 +937,11 @@ msgstr ""
 
 #: data/ui/style_window.blp:518
 msgid "Axis Width"
-msgstr ""
+msgstr "Achsenbreite"
 
 #: data/ui/style_window.blp:559
 msgid "Add Color"
-msgstr ""
+msgstr "Farbe Hinzufügen"
 
 #: data/ui/transform_window.blp:7
 msgid "Transform Data"
@@ -957,6 +961,13 @@ msgid ""
 "by default, append d to the function\n"
 "to use degrees, e.g. sind(x) or cosd(x)."
 msgstr ""
+"Zusätzliche Variablen:\n"
+"x_min, y_min,\n"
+"x_max, y_max,\n"
+"\n"
+"Trigonometrische Funktionen benutzen standardmäßig \n"
+"das Bogenmaß.  Füge der Funktion „d“ hinzu um Grad \n"
+"zu verwenden. Z. B. „sind(x)“ oder „cosd(x)“"
 
 #: data/ui/transform_window.blp:47
 msgid "More info"
@@ -972,7 +983,7 @@ msgstr ""
 
 #: data/ui/window.blp:20
 msgid "Add new Data"
-msgstr ""
+msgstr "Neue Daten hinzufügen"
 
 #: data/ui/window.blp:28
 msgid "Undo"
@@ -1000,7 +1011,7 @@ msgstr ""
 
 #: data/ui/window.blp:163
 msgid "Add data from a file or manually as an equation"
-msgstr ""
+msgstr "Füge Daten aus einer Datei oder manuell als eine Gleichung hinzu"
 
 #: data/ui/window.blp:184
 msgid "Panning mode. Click and drag to pan"
@@ -1152,15 +1163,15 @@ msgstr ""
 
 #: data/ui/window.blp:553
 msgid "About Graphs"
-msgstr ""
+msgstr "Über Graphs"
 
 #: data/ui/window.blp:559
 msgid "Add Data from File…"
-msgstr ""
+msgstr "Füge Daten aus einer Datei hinzu…"
 
 #: data/ui/window.blp:562
 msgid "Add Data from Equation…"
-msgstr ""
+msgstr "Füge Daten aus einer Gleichung hinzu…"
 
 #: data/ui/window.blp:568
 msgid "Toggle Sidebar"
@@ -1246,22 +1257,24 @@ msgstr ""
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:29
 msgid "1 - Plot and manipulate any data set inserted by equation or from file"
 msgstr ""
+"1 - Zeichne und manipuliere beliebige Datensätze aus Dateien importiert oder "
+"durch Gleichungen erstellt"
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:33
 msgid "2 - Both light and dark mode is supported"
-msgstr ""
+msgstr "2 - Sowohl Heller als auch Dunkler Stil wird unterstützt"
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:37
 msgid "3 - Add data from an equation"
-msgstr ""
+msgstr "3 - Füge Daten aus einer Gleichung hinzu"
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:41
 msgid "4 - Edit plot stylesheets"
-msgstr ""
+msgstr "4 - Bearbeite Graphstile"
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:45
 msgid "5 - Manipulate data using a wide range of operations"
-msgstr ""
+msgstr "5 - Manipuliere Daten mit einer breiten Auswahl an Operationen"
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:52
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:90
@@ -1360,7 +1373,7 @@ msgstr ""
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:100
 msgid "Action dialogs have been changed to follow the GNOME HIG."
-msgstr ""
+msgstr "Aktionsdialoge folgen nun den GNOME HIG"
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:101
 msgid ""
@@ -2159,11 +2172,11 @@ msgstr ""
 
 #: src/file_import.py:111
 msgid "Are you sure you want to reset the import settings?"
-msgstr ""
+msgstr "Bist du sicher, dass du die Import-Einstellungen zurücksetzen möchtest?"
 
 #: src/file_io.py:48
 msgid "2Theta"
-msgstr ""
+msgstr "2Theta"
 
 #: src/file_io.py:50
 msgid "Omega"
@@ -2207,7 +2220,7 @@ msgstr ""
 
 #: src/file_io.py:196
 msgid "Bad value in file {} on line {}"
-msgstr ""
+msgstr "Fehlerhafter Wert in Datei {} in Zeile {}"
 
 #: src/file_io.py:200
 msgid "Could not parse {}"
@@ -2243,11 +2256,11 @@ msgstr ""
 
 #: src/styles.py:322
 msgid "Are you sure you want to reset to the default styles?"
-msgstr ""
+msgstr "Bist du sicher, dass du zu den Standard-Stilen zurücksetzen möchtest?"
 
 #: src/styles.py:396
 msgid "Are you sure you want to delete the {} style?"
-msgstr ""
+msgstr "Bist du sicher, dass du den Stil {} löschen möchtest?"
 
 #: src/styles.py:414
 msgid "Color {}"
@@ -2277,7 +2290,7 @@ msgstr ""
 
 #: src/ui.py:82
 msgid "ASCII files"
-msgstr ""
+msgstr "ASCII Dateien"
 
 #: src/ui.py:83
 msgid "PANalytical XRDML"
