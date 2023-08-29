@@ -114,6 +114,7 @@ def open_project_dialog(self):
 
 def export_data_dialog(self):
     if self.props.data.is_empty():
+        self.main_window.add_toast(_("No data to export"))
         return
     multiple = len(self.props.data) > 1
 
@@ -129,6 +130,7 @@ def export_data_dialog(self):
                 file_io.save_item(
                     dialog.save_finish(response), self.props.data[0],
                 )
+            self.main_window.add_toast(_("Exported Data"))
     dialog = Gtk.FileDialog()
     if multiple:
         dialog.select_folder(self.main_window, None, on_response)
