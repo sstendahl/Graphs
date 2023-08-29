@@ -10,7 +10,7 @@ from gettext import gettext as _
 
 from gi.repository import Adw, GLib, GObject, Gio
 
-from graphs import actions, migrate, ui
+from graphs import actions, migrate, scales, ui
 from graphs.clipboard import DataClipboard, ViewClipboard
 from graphs.data import Data
 from graphs.figure_settings import FigureSettings
@@ -87,6 +87,7 @@ class GraphsApplication(Adw.Application):
                 font_manager.fontManager.addfont(font)
             except RuntimeError:
                 logging.warning(_("Could not load %s"), font)
+        scales.register()
 
         for name in _ACTIONS:
             action = Gio.SimpleAction.new(name, None)

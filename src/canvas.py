@@ -13,21 +13,13 @@ from contextlib import nullcontext
 
 from gi.repository import Adw, GObject, Gtk
 
-from graphs import artist, misc, utilities
+from graphs import artist, misc, scales, utilities
 from graphs.figure_settings import FigureSettingsWindow
 
 from matplotlib import backend_tools as tools, pyplot
 from matplotlib.backend_bases import NavigationToolbar2
 from matplotlib.backends.backend_gtk4cairo import FigureCanvas
 from matplotlib.widgets import SpanSelector
-
-
-def _scale_to_string(scale: int) -> str:
-    return "linear" if scale == 0 else "log"
-
-
-def _scale_to_int(scale: str) -> int:
-    return 0 if scale == "linear" else 1
 
 
 class Canvas(FigureCanvas):
@@ -331,11 +323,11 @@ class Canvas(FigureCanvas):
     @GObject.Property(type=int)
     def bottom_scale(self) -> int:
         """Scale of the bottom axis."""
-        return _scale_to_int(self.axis.get_xscale())
+        return scales.to_int(self.axis.get_xscale())
 
     @bottom_scale.setter
     def bottom_scale(self, scale: int):
-        scale = _scale_to_string(scale)
+        scale = scales.to_string(scale)
         for axis in [self.axis, self.right_axis]:
             axis.set_xscale(scale)
             axis.set_xlim(None, None)
@@ -344,11 +336,11 @@ class Canvas(FigureCanvas):
     @GObject.Property(type=int)
     def left_scale(self) -> int:
         """Scale of the left axis."""
-        return _scale_to_int(self.axis.get_yscale())
+        return scales.to_int(self.axis.get_yscale())
 
     @left_scale.setter
     def left_scale(self, scale: int):
-        scale = _scale_to_string(scale)
+        scale = scales.to_string(scale)
         for axis in [self.axis, self.top_left_axis]:
             axis.set_yscale(scale)
             axis.set_ylim(None, None)
@@ -357,11 +349,11 @@ class Canvas(FigureCanvas):
     @GObject.Property(type=int)
     def top_scale(self) -> int:
         """Scale of the top axis."""
-        return _scale_to_int(self.top_left_axis.get_xscale())
+        return scales.to_int(self.top_left_axis.get_xscale())
 
     @top_scale.setter
     def top_scale(self, scale: int):
-        scale = _scale_to_string(scale)
+        scale = scales.to_string(scale)
         for axis in [self.top_right_axis, self.top_left_axis]:
             axis.set_xscale(scale)
             axis.set_xlim(None, None)
@@ -370,11 +362,11 @@ class Canvas(FigureCanvas):
     @GObject.Property(type=int)
     def right_scale(self) -> int:
         """Scale of the right axis."""
-        return _scale_to_int(self.right_axis.get_yscale())
+        return scales.to_int(self.right_axis.get_yscale())
 
     @right_scale.setter
     def right_scale(self, scale: int):
-        scale = _scale_to_string(scale)
+        scale = scales.to_string(scale)
         for axis in [self.top_right_axis, self.right_axis]:
             axis.set_yscale(scale)
             axis.set_ylim(None, None)
@@ -562,7 +554,7 @@ class _Highlight(SpanSelector):
 
     def load(self, canvas):
         xmin, xmax = canvas.top_right_axis.get_xlim()
-        scale = _scale_to_int(canvas.top_left_axis.get_xscale())
+        scale = scales.to_int(canvas.top_left_axis.get_xscale())
         self.extents = (
             utilities.get_value_at_fraction(
                 canvas.min_selected, xmin, xmax, scale,
@@ -578,7 +570,7 @@ class _Highlight(SpanSelector):
         extents = max(xmin, extents[0]), min(xmax, extents[1])
         self.extents = extents
 
-        scale = _scale_to_int(canvas.top_left_axis.get_xscale())
+        scale = scales.to_int(canvas.top_left_axis.get_xscale())
         for i, prefix in enumerate(["min_", "max_"]):
             canvas.set_property(
                 prefix + "selected",
