@@ -8,7 +8,6 @@ custom Scale classes.
     Functions:
         to_string
         to_int
-        register
 """
 from matplotlib import scale, ticker
 
@@ -35,11 +34,9 @@ class RadiansScale(scale.LinearScale):
     def set_default_locators_and_formatters(self, axis):
         super().set_default_locators_and_formatters(axis)
         axis.set_major_formatter(
-            ticker.FuncFormatter(lambda x, _pos=None: f"{x / numpy.pi}π"),
+            ticker.FuncFormatter(lambda x, _pos=None: f"{x / numpy.pi:.0f}π"),
         )
         axis.set_major_locator(ticker.MultipleLocator(base=numpy.pi))
 
 
-def register():
-    """Register custom classes."""
-    scale.register_scale(RadiansScale)
+scale.register_scale(RadiansScale)
