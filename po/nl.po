@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: graphs\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-08-25 18:33+0200\n"
-"PO-Revision-Date: 2023-08-28 19:02+0000\n"
+"PO-Revision-Date: 2023-08-29 07:40+0000\n"
 "Last-Translator: Sjoerd Stendahl <sjoerd1993@gmail.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/graphs/graphs/nl/>"
 "\n"
@@ -91,7 +91,6 @@ msgid "Delete"
 msgstr "Verwijderen"
 
 #: data/ui/dialogs.blp:26
-#, fuzzy
 msgid "Reset to Defaults?"
 msgstr "Herstel standaardinstellingen?"
 
@@ -132,22 +131,18 @@ msgid "None"
 msgstr ""
 
 #: data/ui/edit_item.blp:53 data/ui/style_window.blp:104
-#, fuzzy
 msgid "Solid"
 msgstr "Vast"
 
 #: data/ui/edit_item.blp:53 data/ui/style_window.blp:104
-#, fuzzy
 msgid "Dotted"
 msgstr "Gestippelt"
 
 #: data/ui/edit_item.blp:53 data/ui/style_window.blp:104
-#, fuzzy
 msgid "Dashed"
 msgstr "Gestreept"
 
 #: data/ui/edit_item.blp:53 data/ui/style_window.blp:104
-#, fuzzy
 msgid "Dashdot"
 msgstr "Streep-stippel"
 
@@ -272,14 +267,12 @@ msgid "Transparent Background"
 msgstr "Doorzichtige achtergrond"
 
 #: data/ui/figure_settings.blp:7 data/ui/window.blp:548
-#, fuzzy
 msgid "Figure Settings"
-msgstr "Importeerinstellingen"
+msgstr "Figuurinstellingen"
 
 #: data/ui/figure_settings.blp:19 data/ui/preferences.blp:38
-#, fuzzy
 msgid "Labels"
-msgstr "Label"
+msgstr "Labels"
 
 #: data/ui/figure_settings.blp:22
 msgid "Title"
@@ -310,47 +303,38 @@ msgid "No Data"
 msgstr "Geen gegevens"
 
 #: data/ui/figure_settings.blp:46
-#, fuzzy
 msgid "Add data to the figure to set axis limits"
-msgstr "Voeg gegevens toe aan de grafiek om de asgrenzen in te stellen."
+msgstr "Voeg gegevens toe aan de grafiek om de asgrenzen in te stellen"
 
 #: data/ui/figure_settings.blp:54
-#, fuzzy
 msgid "Minimum Left-Hand Y-Axis"
 msgstr "Minimum linker Y-as"
 
 #: data/ui/figure_settings.blp:60
-#, fuzzy
 msgid "Maximum Left-Hand Y-Axis"
 msgstr "Maximum linker Y-as"
 
 #: data/ui/figure_settings.blp:70
-#, fuzzy
 msgid "Minimum Bottom X-Axis"
 msgstr "Minimum onderste X-as"
 
 #: data/ui/figure_settings.blp:76
-#, fuzzy
 msgid "Maximum Bottom X-Axis"
 msgstr "Maximum onderste X-as"
 
 #: data/ui/figure_settings.blp:86
-#, fuzzy
 msgid "Minimum Right-Hand Y-Axis"
 msgstr "Minimum rechter Y-as"
 
 #: data/ui/figure_settings.blp:92
-#, fuzzy
 msgid "Maximum Right-Hand Y-Axis"
 msgstr "Maximum rechter Y-as"
 
 #: data/ui/figure_settings.blp:101
-#, fuzzy
 msgid "Minimum Top X-Axis"
 msgstr "Minimum bovenste X-as"
 
 #: data/ui/figure_settings.blp:107
-#, fuzzy
 msgid "Maximum Top Y-Axis"
 msgstr "Maximum bovenste Y-as"
 
@@ -373,7 +357,6 @@ msgstr "Liniear"
 #: data/ui/figure_settings.blp:133 data/ui/figure_settings.blp:140
 #: data/ui/preferences.blp:67 data/ui/preferences.blp:74
 #: data/ui/preferences.blp:81 data/ui/preferences.blp:88
-#, fuzzy
 msgid "logarithmic"
 msgstr "Logaritmisch"
 
@@ -399,9 +382,8 @@ msgid "Legend"
 msgstr "Legenda"
 
 #: data/ui/figure_settings.blp:151 data/ui/preferences.blp:117
-#, fuzzy
 msgid "Legend Position"
-msgstr "Legendepositie"
+msgstr "Legendapositie"
 
 #: data/ui/figure_settings.blp:154 data/ui/preferences.blp:120
 msgid "Best"
@@ -445,9 +427,8 @@ msgid "Center"
 msgstr "Centreer"
 
 #: data/ui/figure_settings.blp:163
-#, fuzzy
 msgid "Use Custom Style"
-msgstr "Eigen stijl"
+msgstr "Gebruik eigen stijl"
 
 #: data/ui/help_overlay.blp:11
 msgctxt "shortcut window"
@@ -595,7 +576,6 @@ msgid "Redo Action"
 msgstr "Actie opnieuw uitvoeren"
 
 #: data/ui/import.blp:8
-#, fuzzy
 msgid "Modify Import Parameters"
 msgstr "Pas de importeerinstellingen aan"
 
@@ -632,18 +612,16 @@ msgid "Skip Rows"
 msgstr "Rijen overslaan"
 
 #: data/ui/import.blp:98
-#, fuzzy
 msgid "Ignored row indices"
-msgstr "Negeren"
+msgstr "Genegeerde rijen"
 
 #: data/ui/item_box.blp:24
 msgid "Edit Item"
 msgstr "Item bewerken"
 
 #: data/ui/item_box.blp:35
-#, fuzzy
 msgid "Pick Color"
-msgstr "Maatstreepjeskleur"
+msgstr "Kies een kleur"
 
 #: data/ui/item_box.blp:46 data/ui/style_box.blp:33
 #: data/ui/style_color_box.blp:28
@@ -655,9 +633,8 @@ msgid "General"
 msgstr "Algemeen"
 
 #: data/ui/preferences.blp:14
-#, fuzzy
 msgid "Center Action Behaviour"
-msgstr "Gedrag van de acties"
+msgstr "Gegevens Centreren"
 
 #: data/ui/preferences.blp:16
 msgid "Center at maximum Y value"
@@ -668,7 +645,6 @@ msgid "Center at middle coordinate"
 msgstr "Op het middelste coordinaat"
 
 #: data/ui/preferences.blp:21
-#, fuzzy
 msgid "Handle Duplicate Items"
 msgstr "Dubbele gegevens"
 
@@ -689,7 +665,6 @@ msgid "Override existing items"
 msgstr "Overschrijven"
 
 #: data/ui/preferences.blp:28
-#, fuzzy
 msgid "Hide Unselected Items"
 msgstr "Verberg niet-geselecteerde gegevens"
 
@@ -706,7 +681,6 @@ msgid "Default Left Axis Label"
 msgstr "Standaard linkeraslabel"
 
 #: data/ui/preferences.blp:53
-#, fuzzy
 msgid "Default Top Axis Label"
 msgstr "Standaard bovenste aslabel"
 
@@ -771,7 +745,6 @@ msgid "Use a legend by default"
 msgstr "Gebruik een legenda als standaard"
 
 #: data/ui/preferences.blp:129
-#, fuzzy
 msgid "Custom Style by Default"
 msgstr "Eigen stijl"
 
@@ -784,9 +757,8 @@ msgid "Edit"
 msgstr "Aanpassen"
 
 #: data/ui/style_window.blp:8 data/ui/window.blp:545 src/styles.py:227
-#, fuzzy
 msgid "Styles"
-msgstr "Stijl"
+msgstr "Stijlen"
 
 #: data/ui/style_window.blp:33
 msgid "Reset to default styles"
@@ -813,9 +785,8 @@ msgid "Ticks"
 msgstr "Maatstreepjes"
 
 #: data/ui/style_window.blp:152
-#, fuzzy
 msgid "Settings for the ticks that are used on axes"
-msgstr "Instellingen voor de maatstreepjes in de grafieken"
+msgstr "Instellingen voor de maatstreepjes in de grafiek"
 
 #: data/ui/style_window.blp:155
 msgid "Tick Directions"
@@ -870,9 +841,8 @@ msgid "Grid"
 msgstr "Rooster"
 
 #: data/ui/style_window.blp:263
-#, fuzzy
 msgid "Settings for the grid"
-msgstr "Instellingen voor de grafiekstijl"
+msgstr "Instellingen voor het rooster"
 
 #: data/ui/style_window.blp:266
 msgid "Show Grid"
@@ -883,25 +853,22 @@ msgid "Grid Width"
 msgstr "Roosterbreedte"
 
 #: data/ui/style_window.blp:289
-#, fuzzy
 msgid "Grid Opacity"
-msgstr "Roosterbreedte"
+msgstr "Roostertransparantie"
 
 #: data/ui/style_window.blp:304
 msgid "Padding"
 msgstr "Opvulling"
 
 #: data/ui/style_window.blp:305
-#, fuzzy
 msgid "Padding for different parts of the figure"
-msgstr "Opvulling in verschillende plaatsten van de grafiek"
+msgstr "Opvulling tussen verschillende delen in de grafiek"
 
 #: data/ui/style_window.blp:308
 msgid "Value Padding"
 msgstr "Waardenopvulling"
 
 #: data/ui/style_window.blp:309
-#, fuzzy
 msgid "Padding between axes and values"
 msgstr "De opvulling tussen de assen en de waarden"
 
@@ -918,7 +885,6 @@ msgid "Title Padding"
 msgstr "Titelopvulling"
 
 #: data/ui/style_window.blp:337
-#, fuzzy
 msgid "Padding between axes and the title"
 msgstr "De opvulling tussen de as en de titel"
 
@@ -1008,7 +974,6 @@ msgid "Discard Unselected Data"
 msgstr "Gooi niet-geselecteerde gegevens weg"
 
 #: data/ui/window.blp:20
-#, fuzzy
 msgid "Add new Data"
 msgstr "Voeg nieuwe gegevens toe"
 
@@ -1033,9 +998,8 @@ msgid "Next View"
 msgstr "Volgende weergave"
 
 #: data/ui/window.blp:58
-#, fuzzy
 msgid "View Menu"
-msgstr "Weergave"
+msgstr "Weergavemenu"
 
 #: data/ui/window.blp:163
 msgid "Add data from a file or manually as an equation"
@@ -1046,12 +1010,10 @@ msgid "Panning mode. Click and drag to pan"
 msgstr ""
 
 #: data/ui/window.blp:190
-#, fuzzy
 msgid "Zoom mode. Select an area on the figure to zoom in"
 msgstr "Zoom-modus. Selecteer een gebied op de grafiek om in te zoomen."
 
 #: data/ui/window.blp:196
-#, fuzzy
 msgid "Highlight mode. Click and drag to make a selection of data"
 msgstr ""
 "Markeermodus, klik en sleep over de grafiek om het werkbare gebied te "
@@ -1074,7 +1036,6 @@ msgid "Normalize"
 msgstr "Normaliseer"
 
 #: data/ui/window.blp:251
-#, fuzzy
 msgid "Normalize data"
 msgstr "Normaliseer de gegevens"
 
@@ -1083,12 +1044,10 @@ msgid "Smoothen"
 msgstr "Gladstrijken"
 
 #: data/ui/window.blp:267
-#, fuzzy
 msgid "Smoothen data"
-msgstr "Strijk de gegevens glad"
+msgstr "Gegevens gladstrijken"
 
 #: data/ui/window.blp:283
-#, fuzzy
 msgid "Center data"
 msgstr "Gegevens centreren"
 
@@ -1097,16 +1056,14 @@ msgid "Combine"
 msgstr "Combineer"
 
 #: data/ui/window.blp:299
-#, fuzzy
 msgid "Combine all selected data"
-msgstr "Knip de geselecteerde gegevens"
+msgstr "Combineer de geselecteerde gegevens"
 
 #: data/ui/window.blp:313
 msgid "Cut"
 msgstr "Knippen"
 
 #: data/ui/window.blp:315
-#, fuzzy
 msgid "Cut selected data"
 msgstr "Knip de geselecteerde gegevens"
 
@@ -1139,7 +1096,6 @@ msgid "Get the Fast Fourier Transform of the data"
 msgstr "Bereken de Fouriertransformatie (FFT) van de gegevens"
 
 #: data/ui/window.blp:388
-#, fuzzy
 msgid "Inverse FFT"
 msgstr "Omgekeerde FFT"
 
@@ -1148,9 +1104,8 @@ msgid "Get the Inverse Fast Fourier Transform of the data"
 msgstr "Bereken de omgekeerde Fouriertransformatie van de gegevens"
 
 #: data/ui/window.blp:405
-#, fuzzy
 msgid "Custom Transformation"
-msgstr "Kan de transformatie niet uitvoeren"
+msgstr "Handmatige transformatie"
 
 #: data/ui/window.blp:407
 msgid "Perform custom transformations on the data"
@@ -1177,23 +1132,20 @@ msgid "Multiply Y"
 msgstr "Vermenigvuldig Y"
 
 #: data/ui/window.blp:537
-#, fuzzy
 msgid "Save Project…"
-msgstr "Project opslaan"
+msgstr "Project opslaan…"
 
 #: data/ui/window.blp:538
 msgid "Open Project…"
 msgstr "Open Project…"
 
 #: data/ui/window.blp:541
-#, fuzzy
 msgid "Export Data…"
-msgstr "Project exporteren"
+msgstr "Data exporteren"
 
 #: data/ui/window.blp:542
-#, fuzzy
 msgid "Export Figure…"
-msgstr "Figuur exporteren"
+msgstr "Figuur exporteren…"
 
 #: data/ui/window.blp:549
 msgid "Preferences"
@@ -1208,14 +1160,12 @@ msgid "About Graphs"
 msgstr "Over Graphs"
 
 #: data/ui/window.blp:559
-#, fuzzy
 msgid "Add Data from File…"
-msgstr "Voeg gegevens toe van een bestand"
+msgstr "Voeg gegevens toe van een bestand…"
 
 #: data/ui/window.blp:562
-#, fuzzy
 msgid "Add Data from Equation…"
-msgstr "Voeg gegevens toe van een vergelijking"
+msgstr "Voeg gegevens toe van een vergelijking…"
 
 #: data/ui/window.blp:568
 msgid "Toggle Sidebar"
@@ -2220,9 +2170,8 @@ msgid "Initial release"
 msgstr ""
 
 #: src/actions.py:111
-#, fuzzy
 msgid "Deleted {}"
-msgstr "{name} is verwijdert"
+msgstr "{name} is verwijderd"
 
 #: src/add_equation.py:60
 #, python-brace-format
@@ -2235,12 +2184,10 @@ msgid "Exported Figure"
 msgstr "Gexporteerde figuur"
 
 #: src/file_import.py:22
-#, fuzzy
 msgid "Imported Data"
-msgstr "Project exporteren"
+msgstr "Geimporteerde data"
 
 #: src/file_import.py:111
-#, fuzzy
 msgid "Are you sure you want to reset the import settings?"
 msgstr "Weet u zeker dat u de standaardstijlen wil herstellen?"
 
@@ -2269,14 +2216,12 @@ msgid "R (1/s)"
 msgstr "R (1/s)"
 
 #: src/file_io.py:132
-#, fuzzy
 msgid "Import failed, column index out of range"
 msgstr "Kan gegevens niet openen, de kolomindex is buiten bereik"
 
 #: src/file_io.py:156
-#, fuzzy
 msgid "Unable to import from file"
-msgstr "Kan de transformatie niet uitvoeren"
+msgstr "Kan het bestand niet importeren"
 
 #: src/file_io.py:179
 msgid "Missing colon in file {}, line {}"
