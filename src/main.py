@@ -10,7 +10,7 @@ from gettext import gettext as _
 
 from gi.repository import Adw, GLib, GObject, Gio
 
-from graphs import actions, migrate, scales, ui
+from graphs import actions, migrate, ui
 from graphs.clipboard import DataClipboard, ViewClipboard
 from graphs.data import Data
 from graphs.figure_settings import FigureSettings
