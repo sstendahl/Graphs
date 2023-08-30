@@ -39,8 +39,10 @@
   </enum>
 
   <enum id="se.sjoerd.Graphs.figure.scales">
-    <value nick="linear" value="0"/>
-    <value nick="logarithmic" value="1"/>
+    <value nick="Linear" value="0"/>
+    <value nick="Logarithmic" value="1"/>
+    <value nick="Radians" value="2"/>
+    <value nick="Square Root" value="3"/>
   </enum>
 
   <enum id="se.sjoerd.Graphs.figure.x-positions">
@@ -86,7 +88,7 @@
       <default>"X Value"</default>
     </key>
     <key name="bottom-scale" enum="se.sjoerd.Graphs.figure.scales">
-      <default>"linear"</default>
+      <default>"Linear"</default>
     </key>
     <key name="custom-style" type="s">
       <default>"adwaita"</default>
@@ -95,7 +97,7 @@
       <default>"Y Value"</default>
     </key>
     <key name="left-scale" enum="se.sjoerd.Graphs.figure.scales">
-      <default>"linear"</default>
+      <default>"Linear"</default>
     </key>
     <key name="legend" type="b">
       <default>true</default>
@@ -107,7 +109,7 @@
       <default>"Y Value 2"</default>
     </key>
     <key name="right-scale" enum="se.sjoerd.Graphs.figure.scales">
-      <default>"linear"</default>
+      <default>"Linear"</default>
     </key>
     <key name="title" type="s">
       <default>""</default>
@@ -116,7 +118,7 @@
       <default>"X Value 2"</default>
     </key>
     <key name="top-scale" enum="se.sjoerd.Graphs.figure.scales">
-      <default>"linear"</default>
+      <default>"Linear"</default>
     </key>
     <key name="use-custom-style" type="b">
       <default>false</default>
