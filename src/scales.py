@@ -70,7 +70,7 @@ class SquareRootScale(scale.ScaleBase):
         output_dims = 1  # Amount of output params in transform
         is_separable = True  # Seperable in X and Y dimension
 
-        def transform(self, a):
+        def transform_non_affine(self, a):
             return numpy.array(a)**2
 
         def inverted(self):
