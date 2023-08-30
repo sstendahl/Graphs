@@ -176,5 +176,13 @@ template $FigureSettingsWindow : Adw.PreferencesWindow {
         }
       }
     }
+
+    Adw.PreferencesGroup {
+      Button {
+        label: "Set as Default";
+        styles ["suggested-action"]
+        clicked => $on_set_as_default();
+      }
+    }
   }
 }
