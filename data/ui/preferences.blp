@@ -54,7 +54,8 @@ template $PreferencesWindow : Adw.PreferencesWindow {
       }
 
       Adw.ActionRow {
-        title: _("Override item properties on style change");
+        title: _("Override Item Properties on Style Change");
+        activatable-widget: general_override_item_properties;
         Switch general_override_item_properties {
           valign: center;
         }
