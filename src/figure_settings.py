@@ -1,5 +1,6 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 import contextlib
+from gettext import gettext as _
 
 from gi.repository import Adw, GObject, Gtk
 
@@ -164,3 +165,20 @@ class FigureSettingsWindow(Adw.PreferencesWindow):
         selected_style = comborow.get_selected_item().get_string()
         if selected_style != self.props.figure_settings.props.custom_style:
             self.props.figure_settings.props.custom_style = selected_style
+
+    @Gtk.Template.Callback()
+    def on_set_as_default(self, _button):
+        figure_settings = self.props.figure_settings
+        settings = self.get_application().get_settings("figure")
+        ignorelist = ["min_selected", "max_selected"] + misc.LIMITS
+        for prop in dir(figure_settings.props):
+            if prop not in ignorelist:
+                value = figure_settings.get_property(prop)
+                prop = prop.replace("_", "-")
+                if isinstance(value, str):
+                    settings.set_string(prop, value)
+                elif isinstance(value, bool):
+                    settings.set_boolean(prop, value)
+                elif isinstance(value, int):
+                    settings.set_enum(prop, value)
+        self.add_toast(Adw.Toast(title=_("Defaults Updated")))

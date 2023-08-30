@@ -66,7 +66,7 @@ class Item(ItemBase):
 
     @staticmethod
     def new(application, xdata=None, ydata=None, **kwargs):
-        settings = application.get_settings("figure")
+        settings = application.get_settings("general")
         return Item(
             yposition=settings.get_enum("y-position"),
             xposition=settings.get_enum("x-position"),
@@ -109,7 +109,7 @@ class TextItem(ItemBase):
 
     @staticmethod
     def new(application, xanchor=0, yanchor=0, text="", **kwargs):
-        settings = application.get_settings("figure")
+        settings = application.get_settings("general")
         return TextItem(
             yposition=settings.get_enum("y-position"),
             xposition=settings.get_enum("x-position"),
