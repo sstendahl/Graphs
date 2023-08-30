@@ -63,7 +63,7 @@ def get_value_at_fraction(fraction, start, end, scale):
     fraction) of the length this axis is selected given the start and end range
     of this axis.
     """
-    if scale == 0 or scale == 2:  # Linear  oscale
+    if scale == 0 or scale == 2:  # Linear  or radian scale
         return start + fraction * (end - start)
     elif scale == 1:  # Logarithmic scale
         log_start = numpy.log10(start)
