@@ -43,9 +43,6 @@ class SquareRootScale(scale.ScaleBase):
     """Class for generating custom square root scale."""
     name = "squareroot"
 
-    def __init__(self, axis):
-        scale.ScaleBase.__init__(self, axis)
-
     def set_default_locators_and_formatters(self, axis):
         axis.set_major_locator(ticker.AutoLocator())
         axis.set_major_formatter(ticker.ScalarFormatter())
@@ -57,9 +54,9 @@ class SquareRootScale(scale.ScaleBase):
 
     class SquareRootTransform(transforms.Transform):
         """The transform to convert from linear to square root scale"""
-        input_dims = 1
-        output_dims = 1
-        is_separable = True
+        input_dims = 1 # Amount of input params in transform
+        output_dims = 1 # Amount of output params in transform
+        is_separable = True # Seperable in X and Y dimension
 
         def transform_non_affine(self, a):
             return numpy.array(a)**0.5
