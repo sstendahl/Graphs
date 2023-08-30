@@ -54,9 +54,9 @@ class SquareRootScale(scale.ScaleBase):
 
     class SquareRootTransform(transforms.Transform):
         """The transform to convert from linear to square root scale"""
-        input_dims = 1 # Amount of input params in transform
-        output_dims = 1 # Amount of output params in transform
-        is_separable = True # Seperable in X and Y dimension
+        input_dims = 1  # Amount of input params in transform
+        output_dims = 1  # Amount of output params in transform
+        is_separable = True  # Seperable in X and Y dimension
 
         def transform_non_affine(self, a):
             return numpy.array(a)**0.5
@@ -66,9 +66,9 @@ class SquareRootScale(scale.ScaleBase):
 
     class InvertedSquareRootTransform(transforms.Transform):
         """The inverse transform to convert from square root to linear scale"""
-        input_dims = 1
-        output_dims = 1
-        is_separable = True
+        input_dims = 1  # Amount of input params in transform
+        output_dims = 1  # Amount of output params in transform
+        is_separable = True  # Seperable in X and Y dimension
 
         def transform(self, a):
             return numpy.array(a)**2
