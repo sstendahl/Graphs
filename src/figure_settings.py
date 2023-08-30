@@ -1,8 +1,8 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 import contextlib
+from gettext import gettext as _
 
 from gi.repository import Adw, GObject, Gtk
-from gettext import gettext as _
 
 from graphs import misc, styles, ui, utilities
 
@@ -181,5 +181,4 @@ class FigureSettingsWindow(Adw.PreferencesWindow):
                     settings.set_boolean(prop, value)
                 elif isinstance(value, int):
                     settings.set_enum(prop, value)
-        self.add_toast(Adw.Toast(
-            title=_("Default settings updated")))
+        self.add_toast(Adw.Toast(title=_("Defaults Updated")))

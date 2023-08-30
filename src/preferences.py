@@ -2,7 +2,7 @@
 
 from gi.repository import Adw, Gtk
 
-from graphs import styles, ui
+from graphs import ui
 
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/preferences.ui")
