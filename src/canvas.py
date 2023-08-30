@@ -113,6 +113,8 @@ class Canvas(FigureCanvas):
         self.get_application().get_data().bind_property(
             "items", self, "items", 2,
         )
+        for ax in self.axes:
+            ax.set_yscale('squareroot')
 
     def get_application(self):
         """Get application property."""
@@ -485,6 +487,7 @@ class _DummyToolbar(NavigationToolbar2):
         if mode == 0:
             if event.name == "button_press_event":
                 self.press_pan(event)
+                print(event)
             elif event.name == "button_release_event":
                 self.release_pan(event)
         elif mode == 1:
@@ -506,6 +509,39 @@ class _DummyToolbar(NavigationToolbar2):
         elif self._last_cursor != tools.Cursors.POINTER:
             self.canvas.set_cursor(tools.Cursors.POINTER)
             self._last_cursor = tools.Cursors.POINTER
+
+    def ddrag_pan(self, event):
+        """Callback for dragging in pan/zoom mode."""
+        for ax in self._pan_info.axes:
+            # Using the recorded button at the press is safer than the current
+            # button, as multiple buttons can get pressed during motion.
+            self.ax_drag_pan(ax, self._pan_info.button, event.key, event.x, event.y)
+        self.canvas.draw_idle()
+
+    @staticmethod
+    def ax_drag_pan(self, button, key, x, y):
+        """
+        Called when the mouse moves during a pan operation.
+
+        Parameters
+        ----------
+        button : `.MouseButton`
+            The pressed mouse button.
+        key : str or None
+            The pressed key, if any.
+        x, y : float
+            The mouse coordinates in display coords.
+
+        Notes
+        -----
+        This is intended to be overridden by new projection types.
+        """
+        points = self._get_pan_points(button, key, x, y)
+        ylim = points[:, 1]
+        xlim = points[:, 0]
+        if points is not None:
+            self.set_xlim(xlim)
+            self.set_ylim(ylim)
 
     # Overwritten function - do not change name
     def draw_rubberband(self, _event, x0, y0, x1, y1):
