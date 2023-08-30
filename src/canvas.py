@@ -113,8 +113,6 @@ class Canvas(FigureCanvas):
         self.get_application().get_data().bind_property(
             "items", self, "items", 2,
         )
-        for ax in self.axes:
-            ax.set_yscale('squareroot')
 
     def get_application(self):
         """Get application property."""
@@ -487,7 +485,6 @@ class _DummyToolbar(NavigationToolbar2):
         if mode == 0:
             if event.name == "button_press_event":
                 self.press_pan(event)
-                print(event)
             elif event.name == "button_release_event":
                 self.release_pan(event)
         elif mode == 1:
@@ -510,12 +507,16 @@ class _DummyToolbar(NavigationToolbar2):
             self.canvas.set_cursor(tools.Cursors.POINTER)
             self._last_cursor = tools.Cursors.POINTER
 
-    def ddrag_pan(self, event):
+    # Overwritten function - do not change name
+    def drag_pan(self, event):
         """Callback for dragging in pan/zoom mode."""
         for ax in self._pan_info.axes:
             # Using the recorded button at the press is safer than the current
             # button, as multiple buttons can get pressed during motion.
-            self.ax_drag_pan(ax, self._pan_info.button, event.key, event.x, event.y)
+            # Use custom drag_pan that maxes sure limits are set in right order
+            # even on inverted scale
+            self.ax_drag_pan(ax, self._pan_info.button, event.key, event.x,
+                             event.y)
         self.canvas.draw_idle()
 
     @staticmethod
@@ -540,8 +541,10 @@ class _DummyToolbar(NavigationToolbar2):
         ylim = points[:, 1]
         xlim = points[:, 0]
         if points is not None:
-            self.set_xlim(xlim)
-            self.set_ylim(ylim)
+            # Max and min needs to be defined at correct position for this to
+            # work with inverted scaling
+            self.set_xlim(min(xlim), max(xlim))
+            self.set_ylim(min(ylim), max(ylim))
 
     # Overwritten function - do not change name
     def draw_rubberband(self, _event, x0, y0, x1, y1):
