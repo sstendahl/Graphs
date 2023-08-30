@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: graphs\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-08-25 18:33+0200\n"
-"PO-Revision-Date: 2023-08-29 11:05+0000\n"
+"PO-Revision-Date: 2023-08-30 13:57+0000\n"
 "Last-Translator: Christoph Matthias Kohnen <christoph.kohnen@disroot.org>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/graphs/graphs/de/>"
 "\n"
@@ -108,7 +108,7 @@ msgstr "Wähle welcher Datensatz bearbeitet werden soll"
 
 #: data/ui/edit_item.blp:24
 msgid "Data"
-msgstr ""
+msgstr "Daten"
 
 #: data/ui/edit_item.blp:32
 msgid "X-Axis Position"
@@ -140,11 +140,11 @@ msgstr ""
 
 #: data/ui/edit_item.blp:53 data/ui/style_window.blp:104
 msgid "Dashed"
-msgstr ""
+msgstr "Gestrichelt"
 
 #: data/ui/edit_item.blp:53 data/ui/style_window.blp:104
 msgid "Dashdot"
-msgstr ""
+msgstr "Gestrichel-punktiert"
 
 #: data/ui/edit_item.blp:58 data/ui/style_window.blp:109
 msgid "Linewidth"
@@ -589,8 +589,9 @@ msgid "Delimiter (s+ for whitespace)"
 msgstr ""
 
 #: data/ui/import.blp:60
+#, fuzzy
 msgid "Decimal Separator"
-msgstr ""
+msgstr "Dezimaltrenner"
 
 #: data/ui/import.blp:67
 msgid "Column X"
@@ -747,7 +748,7 @@ msgstr ""
 
 #: data/ui/preferences.blp:129
 msgid "Custom Style by Default"
-msgstr ""
+msgstr "Benutzerdefinierter Stil als Standardwert"
 
 #: data/ui/preferences.blp:138
 msgid "Override item properties on style change"
@@ -759,23 +760,23 @@ msgstr ""
 
 #: data/ui/style_window.blp:8 data/ui/window.blp:545 src/styles.py:227
 msgid "Styles"
-msgstr ""
+msgstr "Stile"
 
 #: data/ui/style_window.blp:33
 msgid "Reset to default styles"
-msgstr ""
+msgstr "Auf Standartstile zurücksetzen"
 
 #: data/ui/style_window.blp:82
 msgid "Style Name"
-msgstr ""
+msgstr "Stilname"
 
 #: data/ui/style_window.blp:86
 msgid "Font"
-msgstr ""
+msgstr "Schriftart"
 
 #: data/ui/style_window.blp:98
 msgid "Lines"
-msgstr ""
+msgstr "Linien"
 
 #: data/ui/style_window.blp:99
 msgid "Change properties of the line and markers"
@@ -875,19 +876,19 @@ msgstr ""
 
 #: data/ui/style_window.blp:322
 msgid "Label Padding"
-msgstr ""
+msgstr "Beschriftungsabstand"
 
 #: data/ui/style_window.blp:323
 msgid "Padding between axes and labels"
-msgstr ""
+msgstr "Abstand zwischen Achsen und Beschriftungen"
 
 #: data/ui/style_window.blp:336
 msgid "Title Padding"
-msgstr ""
+msgstr "Titel Abstand"
 
 #: data/ui/style_window.blp:337
 msgid "Padding between axes and the title"
-msgstr ""
+msgstr "Abstand zwischen Achsen und dem Titel"
 
 #: data/ui/style_window.blp:351
 msgid "Colors"
@@ -895,7 +896,7 @@ msgstr "Farben"
 
 #: data/ui/style_window.blp:363
 msgid "Text Color"
-msgstr ""
+msgstr "Textfarbe"
 
 #: data/ui/style_window.blp:368 data/ui/style_window.blp:390
 #: data/ui/style_window.blp:412 data/ui/style_window.blp:434
@@ -913,7 +914,7 @@ msgstr "Achsenfarbe"
 
 #: data/ui/style_window.blp:429
 msgid "Grid Color"
-msgstr ""
+msgstr "Netzfarbe"
 
 #: data/ui/style_window.blp:451
 msgid "Background Color"
@@ -921,19 +922,19 @@ msgstr "Hintergrundfarbe"
 
 #: data/ui/style_window.blp:473
 msgid "Outline Color"
-msgstr ""
+msgstr "Randfarbe"
 
 #: data/ui/style_window.blp:496 data/ui/style_window.blp:553
 msgid "Line Colors"
-msgstr ""
+msgstr "Linienfarben"
 
 #: data/ui/style_window.blp:501
 msgid "Edit Colors"
-msgstr ""
+msgstr "Farben bearbeiten"
 
 #: data/ui/style_window.blp:515
 msgid "Other"
-msgstr ""
+msgstr "Anderes"
 
 #: data/ui/style_window.blp:518
 msgid "Axis Width"
@@ -945,11 +946,11 @@ msgstr "Farbe Hinzufügen"
 
 #: data/ui/transform_window.blp:7
 msgid "Transform Data"
-msgstr ""
+msgstr "Daten Transformieren"
 
 #: data/ui/transform_window.blp:29
 msgid "Transform"
-msgstr ""
+msgstr "Transformieren"
 
 #: data/ui/transform_window.blp:42
 msgid ""
@@ -971,15 +972,15 @@ msgstr ""
 
 #: data/ui/transform_window.blp:47
 msgid "More info"
-msgstr ""
+msgstr "Mehr Info"
 
 #: data/ui/transform_window.blp:58
 msgid "X ="
-msgstr ""
+msgstr "X ="
 
 #: data/ui/transform_window.blp:66
 msgid "Discard Unselected Data"
-msgstr ""
+msgstr "Nicht ausgewählte Daten verwerfen"
 
 #: data/ui/window.blp:20
 msgid "Add new Data"
@@ -987,23 +988,23 @@ msgstr "Neue Daten hinzufügen"
 
 #: data/ui/window.blp:28
 msgid "Undo"
-msgstr ""
+msgstr "Rückgängig"
 
 #: data/ui/window.blp:33
 msgid "Redo"
-msgstr ""
+msgstr "Wiederherstellen"
 
 #: data/ui/window.blp:40
 msgid "Open Application Menu"
-msgstr ""
+msgstr "Öffne Anwendungsmenü"
 
 #: data/ui/window.blp:49
 msgid "Previous View"
-msgstr ""
+msgstr "Vorherige Ansicht"
 
 #: data/ui/window.blp:54
 msgid "Next View"
-msgstr ""
+msgstr "Nächste Ansicht"
 
 #: data/ui/window.blp:58
 msgid "View Menu"
@@ -1015,43 +1016,43 @@ msgstr "Füge Daten aus einer Datei oder manuell als eine Gleichung hinzu"
 
 #: data/ui/window.blp:184
 msgid "Panning mode. Click and drag to pan"
-msgstr ""
+msgstr "Navigationsmodus. Klicken und Ziehen um zu Navigieren"
 
 #: data/ui/window.blp:190
 msgid "Zoom mode. Select an area on the figure to zoom in"
-msgstr ""
+msgstr "Lupenmodus. Wähle einen Bereich aus um zu vergrößern"
 
 #: data/ui/window.blp:196
 msgid "Highlight mode. Click and drag to make a selection of data"
-msgstr ""
+msgstr "Auswahlmodus. Klicke und Ziehe um eine Auswahl an Daten zu machen"
 
 #: data/ui/window.blp:216
 msgid "Adjust Data"
-msgstr ""
+msgstr "Daten Anpassen"
 
 #: data/ui/window.blp:233
 msgid "Shift"
-msgstr ""
+msgstr "Verschieben"
 
 #: data/ui/window.blp:235
 msgid "Shift all data vertically with respect to each other"
-msgstr ""
+msgstr "Verschiebe alle Daten respektiv zueinander"
 
 #: data/ui/window.blp:249
 msgid "Normalize"
-msgstr ""
+msgstr "Normalisieren"
 
 #: data/ui/window.blp:251
 msgid "Normalize data"
-msgstr ""
+msgstr "Daten Normalisieren"
 
 #: data/ui/window.blp:265
 msgid "Smoothen"
-msgstr ""
+msgstr "Glätten"
 
 #: data/ui/window.blp:267
 msgid "Smoothen data"
-msgstr ""
+msgstr "Daten glätten"
 
 #: data/ui/window.blp:283
 msgid "Center data"
@@ -1063,103 +1064,103 @@ msgstr "Zusammenfügen"
 
 #: data/ui/window.blp:299
 msgid "Combine all selected data"
-msgstr ""
+msgstr "Alle ausgewählten Datensätze zusammenfügen"
 
 #: data/ui/window.blp:313
 msgid "Cut"
-msgstr ""
+msgstr "Ausschneiden"
 
 #: data/ui/window.blp:315
 msgid "Cut selected data"
-msgstr ""
+msgstr "Ausgewählte Daten entfernen"
 
 #: data/ui/window.blp:322
 msgid "Mathematical Operations"
-msgstr ""
+msgstr "Mathematische Operationen"
 
 #: data/ui/window.blp:340
 msgid "Derivative"
-msgstr ""
+msgstr "Ableitung"
 
 #: data/ui/window.blp:342
 msgid "Get the derivative of the data"
-msgstr ""
+msgstr "Bekomm die Ableitung von den Daten"
 
 #: data/ui/window.blp:356
 msgid "Integral"
-msgstr ""
+msgstr "Integral"
 
 #: data/ui/window.blp:358
 msgid "Get the indefinite integral of the data"
-msgstr ""
+msgstr "Bekomm das unbestimmte Integral von den Daten"
 
 #: data/ui/window.blp:372
 msgid "FFT"
-msgstr ""
+msgstr "FFT"
 
 #: data/ui/window.blp:374
 msgid "Get the Fast Fourier Transform of the data"
-msgstr ""
+msgstr "Verwende ein Fast Fourier Transform an den Daten"
 
 #: data/ui/window.blp:388
 msgid "Inverse FFT"
-msgstr ""
+msgstr "Inverses FFT"
 
 #: data/ui/window.blp:390
 msgid "Get the Inverse Fast Fourier Transform of the data"
-msgstr ""
+msgstr "Verwende ein Inverses Fast Fourier Transform an den Daten"
 
 #: data/ui/window.blp:405
 msgid "Custom Transformation"
-msgstr ""
+msgstr "Benutzerdefinierte Transformation"
 
 #: data/ui/window.blp:407
 msgid "Perform custom transformations on the data"
-msgstr ""
+msgstr "Führe benutzerdefinierte Transformationen aus"
 
 #: data/ui/window.blp:414
 msgid "Translate and Multiply"
-msgstr ""
+msgstr "Verschieben und Vervielfachen"
 
 #: data/ui/window.blp:438
 msgid "Translate X"
-msgstr ""
+msgstr "X Verschieben"
 
 #: data/ui/window.blp:461
 msgid "Translate Y"
-msgstr ""
+msgstr "Y Verschieben"
 
 #: data/ui/window.blp:484
 msgid "Multiply X"
-msgstr ""
+msgstr "X Vervielfachen"
 
 #: data/ui/window.blp:507
 msgid "Multiply Y"
-msgstr ""
+msgstr "Y Vervielfachen"
 
 #: data/ui/window.blp:537
 msgid "Save Project…"
-msgstr ""
+msgstr "Projekt Speichern…"
 
 #: data/ui/window.blp:538
 msgid "Open Project…"
-msgstr ""
+msgstr "Projekt Öffnen…"
 
 #: data/ui/window.blp:541
 msgid "Export Data…"
-msgstr ""
+msgstr "Daten Exportieren…"
 
 #: data/ui/window.blp:542
 msgid "Export Figure…"
-msgstr ""
+msgstr "Graph Exportieren…"
 
 #: data/ui/window.blp:549
 msgid "Preferences"
-msgstr ""
+msgstr "Einstellungen"
 
 #: data/ui/window.blp:552
 msgid "Keyboard Shortcuts"
-msgstr ""
+msgstr "Tastaturkürzel"
 
 #: data/ui/window.blp:553
 msgid "About Graphs"
@@ -1175,11 +1176,11 @@ msgstr "Füge Daten aus einer Gleichung hinzu…"
 
 #: data/ui/window.blp:568
 msgid "Toggle Sidebar"
-msgstr ""
+msgstr "Seitenleiste umschalten"
 
 #: data/ui/window.blp:571
 msgid "Optimize Limits"
-msgstr ""
+msgstr "Optimiere Begrenzungen"
 
 #: data/ui/window.blp:575
 msgid "Top X Scale"
@@ -1188,7 +1189,7 @@ msgstr ""
 #: data/ui/window.blp:577 data/ui/window.blp:590 data/ui/window.blp:603
 #: data/ui/window.blp:616
 msgid "Logarithmic"
-msgstr ""
+msgstr "Logarithmisch"
 
 #: data/ui/window.blp:582 data/ui/window.blp:595 data/ui/window.blp:608
 #: data/ui/window.blp:621
@@ -2155,20 +2156,20 @@ msgstr ""
 
 #: src/actions.py:111
 msgid "Deleted {}"
-msgstr ""
+msgstr "{} Gelöscht"
 
 #: src/add_equation.py:60
 #, python-brace-format
 msgid "{error} - Unable to add data from equation"
-msgstr ""
+msgstr "{error} - Konnte Daten nicht aus Gleichung hinzufügen"
 
 #: src/export_figure.py:51
 msgid "Exported Figure"
-msgstr ""
+msgstr "Graph exportiert"
 
 #: src/file_import.py:22
 msgid "Imported Data"
-msgstr ""
+msgstr "Importierte Daten"
 
 #: src/file_import.py:111
 msgid "Are you sure you want to reset the import settings?"
@@ -2180,43 +2181,43 @@ msgstr "2Theta"
 
 #: src/file_io.py:50
 msgid "Omega"
-msgstr ""
+msgstr "Omega"
 
 #: src/file_io.py:65
 msgid "Intensity (cps)"
-msgstr ""
+msgstr "Intensität (cps)"
 
 #: src/file_io.py:72
 msgid "Invalid .xry format"
-msgstr ""
+msgstr "Ungültiges .xry Format"
 
 #: src/file_io.py:89
 msgid "β (°)"
-msgstr ""
+msgstr "β (°)"
 
 #: src/file_io.py:89
 msgid "R (1/s)"
-msgstr ""
+msgstr "R (1/s)"
 
 #: src/file_io.py:132
 msgid "Import failed, column index out of range"
-msgstr ""
+msgstr "Import fehlgeschlagen, Spaltenindex invalide"
 
 #: src/file_io.py:156
 msgid "Unable to import from file"
-msgstr ""
+msgstr "Kann nicht aus Datei importieren"
 
 #: src/file_io.py:179
 msgid "Missing colon in file {}, line {}"
-msgstr ""
+msgstr "Fehlender Doppelpunkt in Datei {}, Linie {}"
 
 #: src/file_io.py:187
 msgid "Style includes a non-style related parameter, {}"
-msgstr ""
+msgstr "Stil enthält nicht Stil-bezogenen Parameter {}"
 
 #: src/file_io.py:190
 msgid "Duplicate key in file {}, on line {}"
-msgstr ""
+msgstr "Doppelter Schlüssel in Datei {}, in Zeile {}"
 
 #: src/file_io.py:196
 msgid "Bad value in file {} on line {}"
@@ -2224,35 +2225,35 @@ msgstr "Fehlerhafter Wert in Datei {} in Zeile {}"
 
 #: src/file_io.py:200
 msgid "Could not parse {}"
-msgstr ""
+msgstr "Konnte {} nicht einlesen"
 
 #: src/item_box.py:85
 #, python-brace-format
 msgid "Deleted {name}"
-msgstr ""
+msgstr "{name} gelöscht"
 
 #: src/main.py:96
 #, python-format
 msgid "Could not load %s"
-msgstr ""
+msgstr "Konnte %s nicht laden"
 
 #: src/operations.py:101
 msgid "No data found within the highlighted area"
-msgstr ""
+msgstr "Keine Daten innerhalb des markierten Bereichs gefunden"
 
 #: src/operations.py:275
 msgid "Combined Data"
-msgstr ""
+msgstr "Zusammengefügte Daten"
 
 #: src/styles.py:82
 #, python-brace-format
 msgid "Plot style {stylename} does not exist loading system preferred"
-msgstr ""
+msgstr "Stil {stylename} existiert nicht, lade Systembevorzugten"
 
 #: src/styles.py:233
 #, python-brace-format
 msgid "{name} - line colors"
-msgstr ""
+msgstr "{name} - Linienfarben"
 
 #: src/styles.py:322
 msgid "Are you sure you want to reset to the default styles?"
@@ -2269,24 +2270,26 @@ msgstr "Farbe {}"
 #: src/styles.py:449
 #, python-brace-format
 msgid "{name} (copy)"
-msgstr ""
+msgstr "{name} (Kopie)"
 
 #: src/transform_data.py:40
 #, python-brace-format
 msgid "{name}: Unable to do transformation, make sure the syntax is correct"
 msgstr ""
+"{name}: Transformation nicht anwendbar, bitte vergewissern, dass der Syntax "
+"korrekt ist"
 
 #: src/transform_data.py:43
 msgid "Unable to do transformation"
-msgstr ""
+msgstr "Transformation nicht anwendbar"
 
 #: src/ui.py:44
 msgid "Items {} already exist"
-msgstr ""
+msgstr "Datensätze {} existieren schon"
 
 #: src/ui.py:46
 msgid "Item {} already exists"
-msgstr ""
+msgstr "Datensatz {} existiert schon"
 
 #: src/ui.py:82
 msgid "ASCII files"
@@ -2294,32 +2297,32 @@ msgstr "ASCII Dateien"
 
 #: src/ui.py:83
 msgid "PANalytical XRDML"
-msgstr ""
+msgstr "PANalytical XRDML"
 
 #: src/ui.py:84
 msgid "Leybold xry"
-msgstr ""
+msgstr "Leybold xry"
 
 #: src/ui.py:97 src/ui.py:110
 msgid "Graphs Project File"
-msgstr ""
+msgstr "Graphs Projekt-Datei"
 
 #: src/ui.py:139
 msgid "Text Files"
-msgstr ""
+msgstr "Text Dateien"
 
 #: src/ui.py:159
 msgid "translator-credits"
-msgstr ""
+msgstr "translator-credits"
 
 #: src/ui.py:187 src/ui.py:247 src/ui.py:277
 msgid "Unsupported Widget {}"
-msgstr ""
+msgstr "Nicht unterstütztes Widget {}"
 
 #: src/ui.py:189 src/ui.py:249 src/ui.py:279
 msgid "No way to apply “{}”"
-msgstr ""
+msgstr "Keine Möglichkeit „{}“ anzuwenden"
 
 #: src/utilities.py:135
 msgid "No valid number specified"
-msgstr ""
+msgstr "Keine gültige Nummer präzisiert"
