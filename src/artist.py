@@ -15,7 +15,7 @@ def new_for_item(canvas, item):
     artist = cls(canvas.axes[item.yposition * 2 + item.xposition], item)
     for prop in dir(artist.props):
         if not (prop == "label" and artist.legend):
-            item.bind_property(prop, artist, prop, 2)
+            item.bind_property(prop, artist, prop, 0)
     artist.connect("notify", lambda _x, _y: canvas.update_legend())
     return artist
 
@@ -103,9 +103,15 @@ class ItemArtistWrapper(ArtistWrapperBase):
         super().__init__()
         self._artist = axis.plot(
             item.props.xdata, item.props.ydata,
+            label=utilities.shorten_label(item.props.name, 40),
+            color=item.props.color, alpha=item.props.alpha,
+            linestyle=misc.LINESTYLES[item.props.linestyle],
+            marker=misc.MARKERSTYLES[item.props.markerstyle],
         )[0]
         for prop in ["selected", "linewidth", "markersize"]:
+            self.set_property(prop, item.get_property(prop))
             self.connect(f"notify::{prop}", self._set_properties)
+        self._set_properties(None, None)
 
 
 class TextItemArtistWrapper(ArtistWrapperBase):
@@ -155,5 +161,7 @@ class TextItemArtistWrapper(ArtistWrapperBase):
         super().__init__()
         self._artist = axis.text(
             item.props.xanchor, item.props.yanchor, item.props.text,
-            clip_on=True,
+            label=utilities.shorten_label(item.props.name, 40), clip_on=True,
+            color=item.props.color, alpha=item.props.alpha,
+            fontsize=item.props.size, rotation=item.props.rotation,
         )
