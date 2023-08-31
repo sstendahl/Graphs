@@ -46,7 +46,7 @@ class SquareRootScale(scale.ScaleBase):
     def set_default_locators_and_formatters(self, axis):
         axis.set_major_locator(ticker.AutoLocator())
         axis.set_major_formatter(ticker.ScalarFormatter())
-        axis.set_minor_locator(ticker.NullLocator())
+        axis.set_minor_locator(ticker.AutoLocator())
         axis.set_minor_formatter(ticker.NullFormatter())
 
     def limit_range_for_scale(self, vmin, vmax, _minpos):
@@ -87,7 +87,7 @@ class InvertedScale(scale.ScaleBase):
     def set_default_locators_and_formatters(self, axis):
         axis.set_major_locator(ticker.AutoLocator())
         axis.set_major_formatter(ticker.ScalarFormatter())
-        axis.set_minor_locator(ticker.NullLocator())
+        axis.set_minor_locator(ticker.AutoLocator())
         axis.set_minor_formatter(ticker.NullFormatter())
 
     def limit_range_for_scale(self, vmin, vmax, _minpos):
