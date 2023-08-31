@@ -21,7 +21,6 @@ def get_data(self, item):
     ydata = item.ydata
     new_xdata = xdata.copy()
     new_ydata = ydata.copy()
-    start_stop = []
     start_index = 0
     stop_index = len(xdata)
     if self.get_mode() == 2:
@@ -50,12 +49,12 @@ def get_data(self, item):
             found_stop = False
             for index, value in enumerate(xdata):
                 if value > startx and not found_start:
-                    start_stop.append(index)
+                    start_index = index
                     found_start = True
                 if value > stopx and not found_stop:
-                    start_stop.append(index)
+                    stop_index = index
                     found_stop = True
-            start_index, stop_index = min(start_stop), max(start_stop)
+            start_index, stop_index = [start_index, stop_index]
             new_xdata = new_x[start_index:stop_index]
             new_ydata = new_y[start_index:stop_index]
         else:
