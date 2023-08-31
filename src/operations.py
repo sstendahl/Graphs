@@ -54,6 +54,8 @@ def get_data(self, item):
                 if value > stopx and not found_stop:
                     stop_index = index
                     found_stop = True
+            start_index, stop_index = min([start_index, stop_index]), \
+                max([start_index, stop_index])
             new_xdata = new_x[start_index:stop_index]
             new_ydata = new_y[start_index:stop_index]
         else:
@@ -188,15 +190,15 @@ def shift_vertically(item, xdata, ydata, left_scale, right_scale, items):
         ymin = min(x for x in previous_ydata if x != 0)
         ymax = max(x for x in previous_ydata if x != 0)
         scale = right_scale if item.yposition else left_scale
-        if scale == 0:
-            shift_value_linear += 1.2 * (ymax - ymin)
-        else:
+        if scale == 1:  # Use log values for log scaling
             shift_value_log += numpy.log10(ymax / ymin)
+        else:
+            shift_value_linear += 1.2 * (ymax - ymin)
         if item.key == item_.key:
-            if scale == 0:
-                new_ydata = [value + shift_value_linear for value in ydata]
-            else:
+            if scale == 1:  # Log scaling
                 new_ydata = [value * 10 ** shift_value_log for value in ydata]
+            else:
+                new_ydata = [value + shift_value_linear for value in ydata]
             return xdata, new_ydata, False, False
     return xdata, ydata, False, False
 

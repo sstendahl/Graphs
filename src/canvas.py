@@ -508,6 +508,45 @@ class _DummyToolbar(NavigationToolbar2):
             self._last_cursor = tools.Cursors.POINTER
 
     # Overwritten function - do not change name
+    def drag_pan(self, event):
+        """Callback for dragging in pan/zoom mode."""
+        for ax in self._pan_info.axes:
+            # Using the recorded button at the press is safer than the current
+            # button, as multiple buttons can get pressed during motion.
+            # Use custom drag_pan that maxes sure limits are set in right order
+            # even on inverted scale
+            self.ax_drag_pan(ax, self._pan_info.button, event.key, event.x,
+                             event.y)
+        self.canvas.draw_idle()
+
+    @staticmethod
+    def ax_drag_pan(self, button, key, x, y):
+        """
+        Called when the mouse moves during a pan operation.
+
+        Parameters
+        ----------
+        button : `.MouseButton`
+            The pressed mouse button.
+        key : str or None
+            The pressed key, if any.
+        x, y : float
+            The mouse coordinates in display coords.
+
+        Notes
+        -----
+        This is intended to be overridden by new projection types.
+        """
+        points = self._get_pan_points(button, key, x, y)
+        ylim = points[:, 1]
+        xlim = points[:, 0]
+        if points is not None:
+            # Max and min needs to be defined at correct position for this to
+            # work with inverted scaling
+            self.set_xlim(min(xlim), max(xlim))
+            self.set_ylim(min(ylim), max(ylim))
+
+    # Overwritten function - do not change name
     def draw_rubberband(self, _event, x0, y0, x1, y1):
         self.canvas._rubberband_rect = [
             int(val) for val

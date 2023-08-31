@@ -63,7 +63,7 @@ def get_value_at_fraction(fraction, start, end, scale):
     fraction) of the length this axis is selected given the start and end range
     of this axis.
     """
-    if scale == 0 or scale == 2:  # Linear  or radian scale
+    if scale == 0 or scale == 2:  # Linear or radian scale
         return start + fraction * (end - start)
     elif scale == 1:  # Logarithmic scale
         log_start = numpy.log10(start)
@@ -72,11 +72,21 @@ def get_value_at_fraction(fraction, start, end, scale):
         log_value = log_start + log_range * fraction
         return pow(10, log_value)
     elif scale == 3:  # Square root scale
+        # Use min limit as defined by scales.py
+        start = max(0, start)
         sqrt_start = numpy.sqrt(start)
         sqrt_end = numpy.sqrt(end)
         sqrt_range = sqrt_end - sqrt_start
         sqrt_value = sqrt_start + sqrt_range * fraction
         return sqrt_value * sqrt_value
+    elif scale == 4:  # Inverted scale (1/X)'
+        # Use min limit as defined by scales.py if min equals zero
+        start = end / 10 if end > 0 and start <= 0 else start
+        scaled_range = 1 / start - 1 / end
+
+        # Calculate the inverse-scaled value at the given percentage
+        scaled_value = 1 / (1 / end + fraction * scaled_range)
+        return scaled_value
 
 
 def get_fraction_at_value(value, start, end, scale):
@@ -93,11 +103,22 @@ def get_fraction_at_value(value, start, end, scale):
         log_range = log_end - log_start
         return (log_value - log_start) / log_range
     elif scale == 3:  # Square root scale
+        # Use min limit as defined by scales.py
+        start = max(0, start)
         sqrt_start = numpy.sqrt(start)
         sqrt_end = numpy.sqrt(end)
         sqrt_value = numpy.sqrt(value)
         sqrt_range = sqrt_end - sqrt_start
         return (sqrt_value - sqrt_start) / sqrt_range
+    elif scale == 4:  # Inverted scale (1/X)
+        # Use min limit as defined by scales.py if min equals zero
+        start = end / 10 if end > 0 and start <= 0 else start
+        scaled_range = 1 / start - 1 / end
+
+        # Calculate the scaled percentage corresponding to the data point
+        scaled_data_point = 1 / value
+        scaled_percentage = (scaled_data_point - 1 / end) / scaled_range
+        return scaled_percentage
 
 
 def shorten_label(label, max_length=19):
@@ -189,13 +210,20 @@ def optimize_limits(self):
         min_all = min(min_all)
         max_all = max(max_all)
         span = max_all - min_all
-        if scale == 0:
+        if scale != 1:
+            # 0.05 padding on y-axis, 0.015 padding on x-axis
             padding_factor = 0.05 if count % 2 else 0.015
-            min_all -= padding_factor * span
             max_all += padding_factor * span
-        elif count % 2:
-            min_all *= 0.5
-            max_all *= 2
+
+            # Don't add minimum padding for inverse scaling as that may lead
+            # to negative values
+            if scale != 4:
+                min_all -= padding_factor * span
+        elif scale == 1:
+            # Use padding factor of 2 for y-axis, 1.025 for x-axis
+            padding_factor = 2 if count % 2 else 1.025
+            min_all *= 1 / padding_factor
+            max_all *= padding_factor
         self.get_figure_settings().set_property(f"min_{direction}", min_all)
         self.get_figure_settings().set_property(f"max_{direction}", max_all)
     self.get_view_clipboard().add()

@@ -43,6 +43,7 @@
     <value nick="Logarithmic" value="1"/>
     <value nick="Radians" value="2"/>
     <value nick="Square Root" value="3"/>
+    <value nick="Inverse" value="4"/>
   </enum>
 
   <enum id="se.sjoerd.Graphs.x-positions">
