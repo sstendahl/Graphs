@@ -13,7 +13,7 @@ from matplotlib import scale, ticker, transforms
 
 import numpy
 
-_SCALES = ["linear", "log", "radians", "squareroot", "inverted"]
+_SCALES = ["linear", "log", "radians", "squareroot", "inverse"]
 
 
 def to_string(scale: int) -> str:
@@ -80,51 +80,38 @@ class SquareRootScale(scale.ScaleBase):
         return self.SquareRootTransform()
 
 
-class InvertedScale(scale.ScaleBase):
-    """Class for generating a custom reciprocal scale."""
-    name = "inverted"
+class InverseScale(scale.ScaleBase):
+    name = "inverse"
 
     def set_default_locators_and_formatters(self, axis):
-        axis.set_major_locator(ticker.AutoLocator())
-        axis.set_major_formatter(ticker.ScalarFormatter())
-        axis.set_minor_locator(ticker.AutoLocator())
-        axis.set_minor_formatter(ticker.NullFormatter())
+        # Implemented in canvas
+        pass
 
-    def limit_range_for_scale(self, vmin, vmax, _minpos):
-        if vmax > 0:
-            if vmin <= 0:
-                return max(vmax / 10, vmin), vmax
-        return vmin, vmax
-
-    class InvertedTransform(transforms.Transform):
-        """The transform to convert between linear and reciprocal scale"""
-        input_dims = 1
-        output_dims = 1
-
-        def transform_non_affine(self, a):
-            return 1 / numpy.array(a)
-
-        def inverted(self):
-            return InvertedScale.InvertedInvertedTransform()
-
-    class InvertedInvertedTransform(transforms.Transform):
-        """
-        The inverse transform to convert the axis between reciprocal and
-        linear scale
-        """
-        input_dims = 1
-        output_dims = 1
-
-        def transform_non_affine(self, a):
-            return 1 / numpy.array(a)
-
-        def inverted(self):
-            return InvertedScale.InvertedTransform()
+    def limit_range_for_scale(self, vmin, vmax, minpos):
+        if not numpy.isfinite(minpos):
+            minpos = 1e-300
+        return (
+            minpos if vmin <= 0 else vmin,
+            minpos if vmax <= 0 else vmax,
+        )
 
     def get_transform(self):
-        return self.InvertedTransform()
+        return InverseScale.InverseTransform()
+
+    class InverseTransform(transforms.Transform):
+        """The transform to invert the scaling on the axis"""
+        input_dims = 1
+        output_dims = 1
+        is_separable = True
+        has_inverse = True
+
+        def inverted(self):
+            return InverseScale.InverseTransform()
+
+        def transform_non_affine(self, a):
+            return 1 / numpy.array(a)
 
 
 scale.register_scale(RadiansScale)
 scale.register_scale(SquareRootScale)
-scale.register_scale(InvertedScale)
+scale.register_scale(InverseScale)

@@ -202,7 +202,7 @@ def optimize_limits(self):
         min_all, max_all = [], []
         for data in datalist:
             nonzero_data = list(filter(lambda x: (x != 0), data))
-            if scale == 1 and len(nonzero_data) > 0:
+            if (scale == 1 or scale == 4) and len(nonzero_data) > 0:
                 min_all.append(min(nonzero_data))
             else:
                 min_all.append(min(data))
@@ -226,6 +226,7 @@ def optimize_limits(self):
             max_all *= padding_factor
         self.get_figure_settings().set_property(f"min_{direction}", min_all)
         self.get_figure_settings().set_property(f"max_{direction}", max_all)
+    self.get_window().get_canvas().update_locators()
     self.get_view_clipboard().add()
 
 
