@@ -16,7 +16,7 @@ from gi.repository import Adw, GObject, Gtk
 from graphs import artist, misc, scales, utilities
 from graphs.figure_settings import FigureSettingsWindow
 
-from matplotlib import backend_tools as tools, ticker, pyplot
+from matplotlib import backend_tools as tools, pyplot, ticker
 from matplotlib.backend_bases import NavigationToolbar2
 from matplotlib.backends.backend_gtk4cairo import FigureCanvas
 from matplotlib.widgets import SpanSelector
