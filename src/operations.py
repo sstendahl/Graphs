@@ -54,7 +54,8 @@ def get_data(self, item):
                 if value > stopx and not found_stop:
                     stop_index = index
                     found_stop = True
-            start_index, stop_index = [start_index, stop_index]
+            start_index, stop_index = min([start_index, stop_index]), \
+                max([start_index, stop_index])
             new_xdata = new_x[start_index:stop_index]
             new_ydata = new_y[start_index:stop_index]
         else:

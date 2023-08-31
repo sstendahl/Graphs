@@ -92,9 +92,9 @@ class InvertedScale(scale.ScaleBase):
 
     def limit_range_for_scale(self, vmin, vmax, _minpos):
         if vmax > 0:
-            return max(vmax / 10, vmin), vmax
-        else:
-            return vmin, vmax
+            if vmin <= 0:
+                return max(vmax / 10, vmin), vmax
+        return vmin, vmax
 
     class InvertedTransform(transforms.Transform):
         """The transform to convert between linear and reciprocal scale"""
