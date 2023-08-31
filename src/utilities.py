@@ -82,8 +82,6 @@ def get_value_at_fraction(fraction, start, end, scale):
 
         # Calculate the inverse-scaled value at the given percentage
         scaled_value = 1 / (1 / end + fraction * scaled_range)
-        print("Value is")
-        print(scaled_value)
         return scaled_value
 
 
@@ -209,7 +207,6 @@ def optimize_limits(self):
             padding_factor = 0.05 if count % 2 else 0.015
             min_all -= padding_factor * span
             max_all += padding_factor * span
-            print(max_all)
         else:
             # Use padding factor of 2 for y-axis, 1.025 for x-axis
             padding_factor = 2 if count % 2 else 1.025
