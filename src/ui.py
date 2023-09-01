@@ -10,11 +10,7 @@ from graphs import file_import, file_io, project, styles, utilities
 from graphs.item_box import ItemBox
 
 
-def on_style_change(_shortcut, _theme, _widget, self):
-    self.get_window().reload_canvas()
-
-
-def on_figure_style_change(_figure_settings, _ignored, self):
+def on_figure_style_change(_a, _b, self):
     if not self.get_settings(
             "general").get_boolean("override-item-properties"):
         self.get_window().reload_canvas()

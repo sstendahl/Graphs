@@ -74,10 +74,11 @@ class GraphsApplication(Adw.Application):
     def __init__(self, application_id, **kwargs):
         """Init the application."""
         settings = Gio.Settings(application_id)
+        figure_settings = FigureSettings.new(settings.get_child("figure"))
         super().__init__(
             application_id=application_id, settings=settings,
             flags=Gio.ApplicationFlags.DEFAULT_FLAGS,
-            figure_settings=FigureSettings.new(settings.get_child("figure")),
+            figure_settings=figure_settings,
             data=Data(self), **kwargs,
         )
         migrate.migrate_config(self)
@@ -95,13 +96,27 @@ class GraphsApplication(Adw.Application):
             )
             self.add_action(action)
 
-        settings = self.get_settings("figure")
         for val in ["left-scale", "right-scale", "top-scale", "bottom-scale"]:
             action = Gio.SimpleAction.new_stateful(
                 f"change-{val}", GLib.VariantType.new("s"),
-                GLib.Variant.new_string(str(settings.get_enum(f"{val}"))),
+                GLib.Variant.new_string(
+                    str(settings.get_child("figure").get_enum(val)),
+                ),
             )
-            action.connect("activate", actions.change_scale, self, val)
+            action.connect(
+                "activate",
+                lambda action_, target: figure_settings.set_property(
+                    action_.get_name()[7:], int(target.get_string()),
+                ),
+            )
+            figure_settings.connect(
+                f"notify::{val}",
+                lambda _x, param, action_: action_.change_state(
+                    GLib.Variant.new_string(
+                        str(figure_settings.get_property(param.name)),
+                    ),
+                ), action,
+            )
             self.add_action(action)
 
         self.toggle_sidebar = Gio.SimpleAction.new_stateful(
@@ -119,13 +134,12 @@ class GraphsApplication(Adw.Application):
             self.set_accels_for_action(f"app.mode_{mode}", [f"F{count + 1}"])
 
         self.get_style_manager().connect(
-            "notify", ui.on_style_change, None, self)
-        self.get_figure_settings().connect(
-            "notify::use-custom-style", ui.on_figure_style_change, self,
+            "notify", ui.on_figure_style_change, self,
         )
-        self.get_figure_settings().connect(
-            "notify::custom-style", ui.on_figure_style_change, self,
-        )
+        for prop in ["use-custom-style", "custom-style"]:
+            figure_settings.connect(
+                f"notify::{prop}", ui.on_figure_style_change, self,
+            )
         self.get_data().connect(
             "notify::items", ui.on_items_change, self,
         )

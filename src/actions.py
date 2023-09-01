@@ -19,12 +19,6 @@ def set_mode(_action, _target, self, mode):
     self.set_mode(mode)
 
 
-def change_scale(action, target, self, prop):
-    self.get_figure_settings().set_property(prop, int(target.get_string()))
-    utilities.optimize_limits(self)
-    action.change_state(target)
-
-
 def quit_action(_action, _target, self):
     self.quit()
 
