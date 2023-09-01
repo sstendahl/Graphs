@@ -210,23 +210,21 @@ def optimize_limits(self):
         min_all = min(min_all)
         max_all = max(max_all)
         span = max_all - min_all
-        if scale != 1:
+        if scale != 1:  # For non-logarithmic scales
             # 0.05 padding on y-axis, 0.015 padding on x-axis
             padding_factor = 0.05 if count % 2 else 0.015
             max_all += padding_factor * span
 
-            # Don't add minimum padding for inverse scaling as that may lead
-            # to negative values
-            if scale != 4:
-                min_all -= padding_factor * span
-        elif scale == 1:
+            # For inverse scale, calculate padding using a factor
+            min_all = (min_all - padding_factor * span if scale != 4
+                       else min_all * 0.99)
+        elif scale == 1:  # Use different scaling type for logarithmic scale
             # Use padding factor of 2 for y-axis, 1.025 for x-axis
             padding_factor = 2 if count % 2 else 1.025
             min_all *= 1 / padding_factor
             max_all *= padding_factor
         self.get_figure_settings().set_property(f"min_{direction}", min_all)
         self.get_figure_settings().set_property(f"max_{direction}", max_all)
-    self.get_window().get_canvas().update_locators()
     self.get_view_clipboard().add()
 
 
