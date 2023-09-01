@@ -173,8 +173,23 @@ def preprocess(string: str):
         expression = match.group(1)  # Get the content inside the brackets
         return f"(({expression})*{float(numpy.pi)}/180)"
 
+    def convert_cot(match):
+        expression = match.group(1)  # Get the content inside the brackets
+        return f"1/(tan({expression}))"
+
+    def convert_sec(match):
+        expression = match.group(1)  # Get the content inside the brackets
+        return f"1/(cos({expression}))"
+
+    def convert_csc(match):
+        expression = match.group(1)  # Get the content inside the brackets
+        return f"1/(sin({expression}))"
+
     string = string.replace("pi", f"({float(numpy.pi)})")
     string = string.replace("^", "**")
+    string = re.sub(r"cot\((.*?)\)", convert_cot, string)
+    string = re.sub(r"sec\((.*?)\)", convert_sec, string)
+    string = re.sub(r"csc\((.*?)\)", convert_csc, string)
     string = re.sub(r"d\((.*?)\)", convert_degrees, string)
     return string.lower()
 
