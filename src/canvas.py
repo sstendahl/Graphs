@@ -16,10 +16,12 @@ from gi.repository import Adw, GObject, Gtk
 from graphs import artist, misc, scales, utilities
 from graphs.figure_settings import FigureSettingsWindow
 
-from matplotlib import backend_tools as tools, pyplot
+from matplotlib import backend_tools as tools, pyplot, ticker
 from matplotlib.backend_bases import NavigationToolbar2
 from matplotlib.backends.backend_gtk4cairo import FigureCanvas
 from matplotlib.widgets import SpanSelector
+
+import numpy
 
 
 class Canvas(FigureCanvas):
@@ -113,6 +115,7 @@ class Canvas(FigureCanvas):
         self.get_application().get_data().bind_property(
             "items", self, "items", 2,
         )
+        self.update_locators()
 
     def get_application(self):
         """Get application property."""
@@ -249,6 +252,28 @@ class Canvas(FigureCanvas):
         if self.top_right_axis.get_legend() is not None:
             self.top_right_axis.get_legend().remove()
         self.queue_draw()
+
+    def update_locators(self):
+        for axis in self.axes:
+            for single_axis in [axis.xaxis, axis.yaxis]:
+                scale = single_axis.get_scale()
+                if scale in ["squareroot", "inverse"]:
+                    min_limit, max_limit = single_axis.get_view_interval()
+                    axis_range = max_limit - min_limit
+                    original_values = numpy.linspace(min_limit, max_limit, 8)
+                    original_values = original_values[original_values != 0]
+                    if scale == "squareroot":
+                        sqrt_values = original_values ** 2
+                    elif scale == "inverse":
+                        sqrt_values = 1 / original_values
+                    tick_range = max(sqrt_values) - min(sqrt_values)
+                    sqrt_values = sqrt_values * (axis_range / tick_range)
+
+                    single_axis.set_major_locator(
+                        ticker.FixedLocator(sqrt_values))
+                    single_axis.set_major_formatter(ticker.ScalarFormatter())
+                    single_axis.set_minor_locator(ticker.AutoLocator())
+                    single_axis.set_minor_formatter(ticker.NullFormatter())
 
     @GObject.Property(type=bool, default=True)
     def legend(self) -> bool:
@@ -487,11 +512,13 @@ class _DummyToolbar(NavigationToolbar2):
                 self.press_pan(event)
             elif event.name == "button_release_event":
                 self.release_pan(event)
+                self.canvas.update_locators()
         elif mode == 1:
             if event.name == "button_press_event":
                 self.press_zoom(event)
             elif event.name == "button_release_event":
                 self.release_zoom(event)
+                self.canvas.update_locators()
 
     # Overwritten function - do not change name
     def _update_cursor(self, event):
