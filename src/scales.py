@@ -44,10 +44,8 @@ class SquareRootScale(scale.ScaleBase):
     name = "squareroot"
 
     def set_default_locators_and_formatters(self, axis):
-        axis.set_major_locator(ticker.AutoLocator())
-        axis.set_major_formatter(ticker.ScalarFormatter())
-        axis.set_minor_locator(ticker.AutoLocator())
-        axis.set_minor_formatter(ticker.NullFormatter())
+        # Implemented in canvas
+        pass
 
     def limit_range_for_scale(self, vmin, vmax, _minpos):
         return max(0, vmin), vmax

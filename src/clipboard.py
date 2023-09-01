@@ -36,6 +36,7 @@ class BaseClipboard(GObject.Object):
             self.props.clipboard_pos -= 1
             self.perform_undo()
             ui.set_clipboard_buttons(self.get_application())
+            self.get_application().get_window().get_canvas().update_locators()
 
     def redo(self):
         """
@@ -46,6 +47,7 @@ class BaseClipboard(GObject.Object):
             self.props.clipboard_pos += 1
             self.perform_redo()
             ui.set_clipboard_buttons(self.get_application())
+            self.get_application().get_window().get_canvas().update_locators()
 
     def clear(self):
         self.__init__(self.get_application())
