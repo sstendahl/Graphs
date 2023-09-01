@@ -104,16 +104,18 @@ class GraphsApplication(Adw.Application):
                 ),
             )
             action.connect(
-                "activate", lambda _a, target: figure_settings.set_property(
-                    val, int(target.get_string()),
+                "activate",
+                lambda action_, target: figure_settings.set_property(
+                    action_.get_name()[7:], int(target.get_string()),
                 ),
             )
             figure_settings.connect(
-                f"notify::{val}", lambda _x, _y: action.change_state(
+                f"notify::{val}",
+                lambda _x, param, action_: action_.change_state(
                     GLib.Variant.new_string(
-                        str(figure_settings.get_property(val)),
+                        str(figure_settings.get_property(param.name)),
                     ),
-                ),
+                ), action,
             )
             self.add_action(action)
 
