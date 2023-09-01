@@ -48,7 +48,7 @@ def rgba_to_hex(rgba):
 def rgba_to_tuple(rgba, alpha=False):
     if alpha:
         return (rgba.red, rgba.green, rgba.blue, rgba.alpha)
-    return (rgba.red, rgba.green, rgba.blue)
+    return (rgba.red, rgba.sqrt_valuegreen, rgba.blue)
 
 
 def swap(str1):
@@ -85,8 +85,7 @@ def get_value_at_fraction(fraction, start, end, scale):
         scaled_range = 1 / start - 1 / end
 
         # Calculate the inverse-scaled value at the given percentage
-        scaled_value = 1 / (1 / end + fraction * scaled_range)
-        return scaled_value
+        return 1 / (1 / end + fraction * scaled_range)
 
 
 def get_fraction_at_value(value, start, end, scale):
@@ -117,8 +116,7 @@ def get_fraction_at_value(value, start, end, scale):
 
         # Calculate the scaled percentage corresponding to the data point
         scaled_data_point = 1 / value
-        scaled_percentage = (scaled_data_point - 1 / end) / scaled_range
-        return scaled_percentage
+        return (scaled_data_point - 1 / end) / scaled_range
 
 
 def shorten_label(label, max_length=19):
@@ -199,35 +197,33 @@ def get_filename(file: Gio.File):
 
 
 def optimize_limits(self):
+    figure_settings = self.get_figure_settings()
     axes = [
-        [direction, False, []]
+        [direction, False, [], [],
+         figure_settings.get_property(f"{direction}_scale")]
         for direction in ["bottom", "left", "top", "right"]
     ]
     for item in self.get_data():
+        if item.props.item_type != "Item":
+            continue
         for index in item.xposition * 2, 1 + item.yposition * 2:
             axes[index][1] = True
-            axes[index][2].append(item)
+            data = numpy.asarray(item.ydata if index % 2 else item.xdata)
+            nonzero_data = list(filter(lambda x: (x != 0), data))
+            axes[index][2].append(
+                nonzero_data[numpy.isfinite(nonzero_data)].min()
+                if axes[index][4] in (1, 4) and len(nonzero_data) > 0
+                else data[numpy.isfinite(data)].min(),
+            )
+            axes[index][3].append(data[numpy.isfinite(data)].max())
 
-    for count, (direction, used, items) in enumerate(axes):
+    for count, (direction, used, min_all, max_all, scale) in enumerate(axes):
         if not used:
             continue
-        scale = self.get_figure_settings().get_property(f"{direction}_scale")
-        datalist = [item.ydata if count % 2 else item.xdata for item in items
-                    if item.props.item_type == "Item"]
-        min_all, max_all = [], []
-        for data in datalist:
-            data = numpy.asarray(data)
-            nonzero_data = list(filter(lambda x: (x != 0), data))
-            if (scale == 1 or scale == 4) and len(nonzero_data) > 0:
-                min_all.append(
-                    nonzero_data[numpy.isfinite(nonzero_data)].min())
-            else:
-                min_all.append(data[numpy.isfinite(data)].min())
-            max_all.append(data[numpy.isfinite(data)].max())
         min_all = min(min_all)
         max_all = max(max_all)
-        span = max_all - min_all
         if scale != 1:  # For non-logarithmic scales
+            span = max_all - min_all
             # 0.05 padding on y-axis, 0.015 padding on x-axis
             padding_factor = 0.05 if count % 2 else 0.015
             max_all += padding_factor * span
@@ -235,13 +231,13 @@ def optimize_limits(self):
             # For inverse scale, calculate padding using a factor
             min_all = (min_all - padding_factor * span if scale != 4
                        else min_all * 0.99)
-        elif scale == 1:  # Use different scaling type for logarithmic scale
+        else:  # Use different scaling type for logarithmic scale
             # Use padding factor of 2 for y-axis, 1.025 for x-axis
             padding_factor = 2 if count % 2 else 1.025
             min_all *= 1 / padding_factor
             max_all *= padding_factor
-        self.get_figure_settings().set_property(f"min_{direction}", min_all)
-        self.get_figure_settings().set_property(f"max_{direction}", max_all)
+        figure_settings.set_property(f"min_{direction}", min_all)
+        figure_settings.set_property(f"max_{direction}", max_all)
     self.get_view_clipboard().add()
 
 

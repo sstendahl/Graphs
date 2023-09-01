@@ -10,6 +10,7 @@ custom Scale classes.
         to_int
 """
 from matplotlib import scale, ticker, transforms
+
 import numpy
 
 _SCALES = ["linear", "log", "radians", "squareroot", "inverse"]
