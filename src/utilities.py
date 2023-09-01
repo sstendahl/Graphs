@@ -216,12 +216,14 @@ def optimize_limits(self):
                     if item.props.item_type == "Item"]
         min_all, max_all = [], []
         for data in datalist:
+            data = numpy.asarray(data)
             nonzero_data = list(filter(lambda x: (x != 0), data))
             if (scale == 1 or scale == 4) and len(nonzero_data) > 0:
-                min_all.append(min(nonzero_data))
+                min_all.append(
+                    nonzero_data[numpy.isfinite(nonzero_data)].min())
             else:
-                min_all.append(min(data))
-            max_all.append(max(data))
+                min_all.append(data[numpy.isfinite(data)].min())
+            max_all.append(data[numpy.isfinite(data)].max())
         min_all = min(min_all)
         max_all = max(max_all)
         span = max_all - min_all
