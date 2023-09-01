@@ -263,7 +263,7 @@ class Canvas(FigureCanvas):
                     original_values = numpy.linspace(min_limit, max_limit, 8)
                     original_values = original_values[original_values != 0]
                     if scale == "squareroot":
-                        sqrt_values = (original_values ** 2)
+                        sqrt_values = original_values ** 2
                     elif scale == "inverse":
                         sqrt_values = 1 / original_values
                     tick_range = max(sqrt_values) - min(sqrt_values)
