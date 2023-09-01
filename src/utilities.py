@@ -48,7 +48,7 @@ def rgba_to_hex(rgba):
 def rgba_to_tuple(rgba, alpha=False):
     if alpha:
         return (rgba.red, rgba.green, rgba.blue, rgba.alpha)
-    return (rgba.red, rgba.sqrt_valuegreen, rgba.blue)
+    return (rgba.red, rgba.green, rgba.blue)
 
 
 def swap(str1):
