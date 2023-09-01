@@ -16,10 +16,12 @@ from gi.repository import Adw, GObject, Gtk
 from graphs import artist, misc, scales, utilities
 from graphs.figure_settings import FigureSettingsWindow
 
-from matplotlib import backend_tools as tools, pyplot
+from matplotlib import backend_tools as tools, pyplot, ticker
 from matplotlib.backend_bases import NavigationToolbar2
 from matplotlib.backends.backend_gtk4cairo import FigureCanvas
 from matplotlib.widgets import SpanSelector
+
+import numpy
 
 
 class Canvas(FigureCanvas):
@@ -113,6 +115,7 @@ class Canvas(FigureCanvas):
         self.get_application().get_data().bind_property(
             "items", self, "items", 2,
         )
+        self.update_locators()
 
     def get_application(self):
         """Get application property."""
@@ -249,6 +252,29 @@ class Canvas(FigureCanvas):
         if self.top_right_axis.get_legend() is not None:
             self.top_right_axis.get_legend().remove()
         self.queue_draw()
+
+    def update_locators(self):
+        for axis in self.axes:
+            for single_axis in [axis.xaxis, axis.yaxis]:
+                scale = single_axis.get_scale()
+                if scale in ["squareroot", "inverse"]:
+                    min_limit, max_limit = single_axis.get_view_interval()
+                    axis_range = max_limit - min_limit
+                    original_values = numpy.linspace(min_limit, max_limit, 8)
+                    original_values = original_values[original_values != 0]
+                    if scale == "squareroot":
+                        sqrt_values = original_values ** 2
+                    elif scale == "inverse":
+                        sqrt_values = 1 / original_values
+                    tick_range = max(sqrt_values) - min(sqrt_values)
+                    sqrt_values = sqrt_values * (axis_range / tick_range)
+                    sqrt_values *= 2 if scale == "squareroot" else 1
+
+                    single_axis.set_major_locator(
+                        ticker.FixedLocator(sqrt_values))
+                    single_axis.set_major_formatter(ticker.ScalarFormatter())
+                    single_axis.set_minor_locator(ticker.AutoLocator())
+                    single_axis.set_minor_formatter(ticker.NullFormatter())
 
     @GObject.Property(type=bool, default=True)
     def legend(self) -> bool:
@@ -487,11 +513,13 @@ class _DummyToolbar(NavigationToolbar2):
                 self.press_pan(event)
             elif event.name == "button_release_event":
                 self.release_pan(event)
+                self.canvas.update_locators()
         elif mode == 1:
             if event.name == "button_press_event":
                 self.press_zoom(event)
             elif event.name == "button_release_event":
                 self.release_zoom(event)
+                self.canvas.update_locators()
 
     # Overwritten function - do not change name
     def _update_cursor(self, event):
@@ -506,6 +534,45 @@ class _DummyToolbar(NavigationToolbar2):
         elif self._last_cursor != tools.Cursors.POINTER:
             self.canvas.set_cursor(tools.Cursors.POINTER)
             self._last_cursor = tools.Cursors.POINTER
+
+    # Overwritten function - do not change name
+    def drag_pan(self, event):
+        """Callback for dragging in pan/zoom mode."""
+        for ax in self._pan_info.axes:
+            # Using the recorded button at the press is safer than the current
+            # button, as multiple buttons can get pressed during motion.
+            # Use custom drag_pan that maxes sure limits are set in right order
+            # even on inverted scale
+            self.ax_drag_pan(ax, self._pan_info.button, event.key, event.x,
+                             event.y)
+        self.canvas.draw_idle()
+
+    @staticmethod
+    def ax_drag_pan(self, button, key, x, y):
+        """
+        Called when the mouse moves during a pan operation.
+
+        Parameters
+        ----------
+        button : `.MouseButton`
+            The pressed mouse button.
+        key : str or None
+            The pressed key, if any.
+        x, y : float
+            The mouse coordinates in display coords.
+
+        Notes
+        -----
+        This is intended to be overridden by new projection types.
+        """
+        points = self._get_pan_points(button, key, x, y)
+        ylim = points[:, 1]
+        xlim = points[:, 0]
+        if points is not None:
+            # Max and min needs to be defined at correct position for this to
+            # work with inverted scaling
+            self.set_xlim(min(xlim), max(xlim))
+            self.set_ylim(min(ylim), max(ylim))
 
     # Overwritten function - do not change name
     def draw_rubberband(self, _event, x0, y0, x1, y1):

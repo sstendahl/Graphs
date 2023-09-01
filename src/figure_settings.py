@@ -119,10 +119,10 @@ class FigureSettingsWindow(Adw.PreferencesWindow):
             self.props.figure_settings, self, ignorelist=ignorelist,
         )
         styles_ = sorted(styles.get_user_styles(application).keys())
+        style_index = styles_.index(
+            self.props.figure_settings.props.custom_style)
         self.custom_style.set_model(Gtk.StringList.new(styles_))
-        self.custom_style.set_selected(
-            styles_.index(self.props.figure_settings.props.custom_style),
-        )
+        self.custom_style.set_selected(style_index)
 
         self.set_axes_entries()
         self.no_data_message.set_visible(
