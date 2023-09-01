@@ -134,13 +134,12 @@ class GraphsApplication(Adw.Application):
             self.set_accels_for_action(f"app.mode_{mode}", [f"F{count + 1}"])
 
         self.get_style_manager().connect(
-            "notify", ui.on_style_change, None, self)
-        figure_settings.connect(
-            "notify::use-custom-style", ui.on_figure_style_change, self,
+            "notify", ui.on_figure_style_change, self,
         )
-        figure_settings.connect(
-            "notify::custom-style", ui.on_figure_style_change, self,
-        )
+        for prop in ["use-custom-style", "custom-style"]:
+            figure_settings.connect(
+                f"notify::{prop}", ui.on_figure_style_change, self,
+            )
         self.get_data().connect(
             "notify::items", ui.on_items_change, self,
         )
