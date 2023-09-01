@@ -44,7 +44,9 @@ class SquareRootScale(scale.ScaleBase):
 
     def set_default_locators_and_formatters(self, axis):
         axis.set_major_locator(CustomScaleLocator())
-        axis.set_minor_locator(CustomScaleLocator(scale_type="minor"))
+        axis.set_minor_locator(CustomScaleLocator(is_minor=True))
+        axis.set_major_formatter(ticker.ScalarFormatter())
+        axis.set_minor_formatter(ticker.NullFormatter())
 
     def limit_range_for_scale(self, vmin, vmax, _minpos):
         return max(0, vmin), vmax
@@ -84,7 +86,9 @@ class InverseScale(scale.ScaleBase):
 
     def set_default_locators_and_formatters(self, axis):
         axis.set_major_locator(CustomScaleLocator())
-        axis.set_minor_locator(CustomScaleLocator(scale_type="minor"))
+        axis.set_minor_locator(CustomScaleLocator(is_minor=True))
+        axis.set_major_formatter(ticker.ScalarFormatter())
+        axis.set_minor_formatter(ticker.NullFormatter())
 
     def limit_range_for_scale(self, vmin, vmax, minpos):
         if not numpy.isfinite(minpos):
@@ -115,8 +119,8 @@ class InverseScale(scale.ScaleBase):
 
 class CustomScaleLocator(ticker.MaxNLocator):
     """Dynamically find tick positions on custom scales."""
-    def __init__(self, scale_type="major"):
-        self.scale_type = scale_type
+    def __init__(self, is_minor=False):
+        self.is_minor = is_minor
 
     @property
     def numticks(self):
@@ -126,21 +130,16 @@ class CustomScaleLocator(ticker.MaxNLocator):
             self._numticks = numpy.clip(numticks, 3, 9)
         else:
             self._numticks = 9
-        if self.scale_type == "minor":
+        if self.is_minor:
             # Amount of minor ticks is equal to amount of major ticks
             # times (N+1) minus N. Where N is the amount of minor ticks
             # in between the major ticks.
-            self.numticks = len(self.axis.get_majorticklocs()) * 4 - 3
+            self._numticks = len(self.axis.get_majorticklocs()) * 4 - 3
         return self._numticks
 
     @numticks.setter
     def numticks(self, numticks):
         self._numticks = numticks
-
-    def __call__(self):
-        """Return the locations of the ticks."""
-        vmin, vmax = self.axis.get_view_interval()
-        return self.tick_values(vmin, vmax)
 
     def tick_values(self, vmin, vmax):
         vmin, vmax = transforms.nonsingular(vmin, vmax, expander=0.05)
