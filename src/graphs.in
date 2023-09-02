@@ -52,8 +52,9 @@ if __name__ == "__main__":
     resource._register()
 
     logging.basicConfig(
-        format="%(levelname)s: %(message)s", # level=logging.@LOG_LEVEL@,
+        format="%(levelname)s: %(message)s", level=logging.@LOG_LEVEL@,
     )
+    logging.getLogger("matplotlib.font_manager").disabled = True
 
     from graphs.main import GraphsApplication
     sys.exit(GraphsApplication(
