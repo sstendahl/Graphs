@@ -74,6 +74,7 @@ class GraphsApplication(Adw.Application):
     def __init__(self, application_id, **kwargs):
         """Init the application."""
         settings = Gio.Settings(application_id)
+        migrate.migrate_config(self)
         figure_settings = FigureSettings.new(settings.get_child("figure"))
         super().__init__(
             application_id=application_id, settings=settings,
@@ -81,7 +82,6 @@ class GraphsApplication(Adw.Application):
             figure_settings=figure_settings,
             data=Data(self), **kwargs,
         )
-        migrate.migrate_config(self)
         font_list = font_manager.findSystemFonts(fontpaths=None, fontext="ttf")
         for font in font_list:
             try:
