@@ -35,7 +35,7 @@ def load_project(self, file: Gio.File):
     self.get_clipboard().set_clipboard(project["data-clipboard"])
     self.get_clipboard().set_clipboard_pos(project["data-clipboard-position"])
     self.get_view_clipboard().set_clipboard(project["view-clipboard"])
-    self.get_view_clipboard().get_clipboard_pos(
+    self.get_view_clipboard().set_clipboard_pos(
         project["view-clipboard-position"],
     )
     ui.set_clipboard_buttons(self)

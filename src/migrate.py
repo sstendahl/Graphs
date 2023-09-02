@@ -35,7 +35,7 @@ CONFIG_MIGRATION_TABLE = {
 }
 
 
-def migrate_config(self):
+def migrate_config(settings):
     """Migrate old file-based user config to dconf"""
     config_dir = utilities.get_config_directory()
     if not config_dir.query_exists(None):
@@ -43,17 +43,19 @@ def migrate_config(self):
     config_file = config_dir.get_child_for_display_name("config.json")
     import_file = config_dir.get_child_for_display_name("import.json")
     if config_file.query_exists(None):
-        _migrate_config(self, config_file)
+        _migrate_config(settings, config_file)
     if config_file.query_exists(None):
-        _migrate_import_params(self, import_file)
+        _migrate_import_params(settings, import_file)
 
 
-def _migrate_config(self, config_file):
+def _migrate_config(settings, config_file):
     config = file_io.parse_json(config_file)
     for old_key, (category, key) in CONFIG_MIGRATION_TABLE.items():
         with contextlib.suppress(KeyError):
-            settings = self.settings.get_child(category)
+            settings = settings.get_child(category)
             value = config[old_key]
+            if "scale" in key:
+                value = value.capitalize()
             if isinstance(value, str):
                 settings.set_string(key, value)
             elif isinstance(value, bool):
@@ -63,9 +65,9 @@ def _migrate_config(self, config_file):
     config_file.delete(None)
 
 
-def _migrate_import_params(self, import_file):
+def _migrate_import_params(settings, import_file):
     for mode, params in file_io.parse_json(import_file).items():
-        settings = self.settings.get_child("import-params").get_child(mode)
+        settings = settings.get_child("import-params").get_child(mode)
         for key, value in params.items():
             if key == "separator":
                 settings.set_string(key, f"{value} ")
@@ -79,6 +81,8 @@ def _migrate_import_params(self, import_file):
 ITEM_MIGRATION_TABLE = {
     "plot_x_position": "xposition",
     "plot_y_position": "yposition",
+    "x_anchor": "xanchor",
+    "y_anchor": "yanchor",
 }
 
 ITEM_VALUE_MIGRATION_TABLE = {
@@ -119,9 +123,9 @@ class PlotSettings:
         return dictionary
 
 
-class Item:
+class ItemBase:
     def migrate(self) -> dict:
-        dictionary = {"item_type": "Item"}
+        dictionary = {"item_type": self.item_type}
         for key, value in self.__dict__.items():
             with contextlib.suppress(KeyError):
                 key = ITEM_MIGRATION_TABLE[key]
@@ -132,6 +136,14 @@ class Item:
                     value = 0
             dictionary[key] = value
         return dictionary
+
+
+class Item(ItemBase):
+    item_type = "Item"
+
+
+class TextItem(ItemBase):
+    item_type = "TextItem"
 
 
 DEFAULT_VIEW = [0, 1, 0, 10, 0, 1, 0, 10]
@@ -210,6 +222,8 @@ def _migrate_clipboard(clipboard, clipboard_pos, current_limits):
 def _get_limits(items):
     limits = [None] * 8
     for item in items:
+        if item["item_type"] != "Item":
+            continue
         for count, x_or_y in enumerate(["x", "y"]):
             try:
                 limits[item[f"{x_or_y}position"] * 2 + 4 * count] = min(
