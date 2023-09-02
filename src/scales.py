@@ -59,7 +59,9 @@ class SquareRootScale(scale.ScaleBase):
         is_separable = True  # Seperable in X and Y dimension
 
         def transform_non_affine(self, a):
-            return numpy.array(a)**0.5
+            # Don't spam about invalid divide by zero errors
+            with numpy.errstate(divide="ignore", invalid="ignore"):
+                return numpy.array(a)**0.5
 
         def inverted(self):
             return SquareRootScale.InvertedSquareRootTransform()
