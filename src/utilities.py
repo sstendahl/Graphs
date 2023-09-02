@@ -209,13 +209,14 @@ def optimize_limits(self):
         for index in item.xposition * 2, 1 + item.yposition * 2:
             axes[index][1] = True
             data = numpy.asarray(item.ydata if index % 2 else item.xdata)
-            nonzero_data = list(filter(lambda x: (x != 0), data))
+            data = data[numpy.isfinite(data)]
+            nonzero_data = numpy.array([value for value in data if value != 0])
             axes[index][2].append(
-                nonzero_data[numpy.isfinite(nonzero_data)].min()
+                nonzero_data.min()
                 if axes[index][4] in (1, 4) and len(nonzero_data) > 0
-                else data[numpy.isfinite(data)].min(),
+                else data.min(),
             )
-            axes[index][3].append(data[numpy.isfinite(data)].max())
+            axes[index][3].append(data.max())
 
     for count, (direction, used, min_all, max_all, scale) in enumerate(axes):
         if not used:
