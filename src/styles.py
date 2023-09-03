@@ -12,32 +12,20 @@ from graphs import file_io, ui, utilities
 from matplotlib import pyplot
 
 
-def _styles_in_directory(directory):
-    enumerator = directory.enumerate_children("default::*", 0, None)
-    styles = {}
-    loop = True
-    while loop:
-        file_info = enumerator.next_file(None)
-        if file_info is None:
-            loop = False
-            continue
-        file = enumerator.get_child(file_info)
-        styles[Path(utilities.get_filename(file)).stem] = file
-    enumerator.close(None)
-    return styles
-
-
-def get_system_styles(self):
-    return _styles_in_directory(
-        Gio.File.new_for_uri("resource:///se/sjoerd/Graphs/styles"))
-
-
 def get_user_styles(self):
     config_dir = utilities.get_config_directory()
     directory = config_dir.get_child_for_display_name("styles")
     if not directory.query_exists(None):
         reset_user_styles(self)
-    styles = _styles_in_directory(directory)
+    styles = {}
+    enumerator = directory.enumerate_children("default::*", 0, None)
+    while 1:
+        file_info = enumerator.next_file(None)
+        if file_info is None:
+            break
+        file = enumerator.get_child(file_info)
+        styles[Path(utilities.get_filename(file)).stem] = file
+    enumerator.close(None)
     if not styles:
         reset_user_styles(self)
         styles = get_user_styles(self)
@@ -50,68 +38,68 @@ def reset_user_styles(self):
     if not directory.query_exists(None):
         directory.make_directory_with_parents(None)
     enumerator = directory.enumerate_children("default::*", 0, None)
-    loop = True
-    while loop:
+    while 1:
         file_info = enumerator.next_file(None)
         if file_info is None:
-            loop = False
-            continue
+            break
         file = enumerator.get_child(file_info)
         file.trash(None)
     enumerator.close(None)
-    for style, file in get_system_styles(self).items():
-        style_file = directory.get_child_for_display_name(f"{style}.mplstyle")
-        file.copy(style_file, 0, None)
+    enumerator = Gio.File.new_for_uri(
+        "resource:///se/sjoerd/Graphs/styles",
+    ).enumerate_children("default::*", 0, None)
+    while 1:
+        file_info = enumerator.next_file(None)
+        if file_info is None:
+            break
+        enumerator.get_child(file_info).copy(
+            directory.get_child_for_display_name(file_info.get_display_name()),
+            0, None,
+        )
+    enumerator.close(None)
 
 
-def get_system_preferred_style(self):
-    system_style = "adwaita"
-    if Adw.StyleManager.get_default().get_dark():
-        system_style += "-dark"
-    return get_system_styles(self)[system_style]
-
-
-def get_preferred_style(self):
-    if not self.get_figure_settings().props.use_custom_style:
-        return get_system_preferred_style(self)
-    stylename = self.get_figure_settings().props.custom_style
-    try:
-        return get_user_styles(self)[stylename]
-    except KeyError:
-        self.get_window().add_toast(
-            _(f"Plot style {stylename} does not exist "
-              "loading system preferred"))
-        self.get_figure_settings().props.use_custom_style = False
-        return get_system_preferred_style(self)
-
-
-def update(self):
-    pyplot.rcParams.update(file_io.parse_style(get_preferred_style(self)))
-
-
-def get_style(self, stylename):
+def get_style(file):
     """
-    Get the style based on the stylename.
+    Get the style based on the file.
 
     Returns a dictionary that has always valid keys. This is ensured through
     checking against the styles base (if available) and copying missing params
-    as needed. The property "axes.prop_cycle" is parsed into a cycler. All
-    other ones are treated as a string.
+    as needed.
     """
-    user_styles = get_user_styles(self)
-    system_styles = get_system_styles(self)
-    style = file_io.parse_style(user_styles[stylename])
-    try:
-        base_style = file_io.parse_style(system_styles[stylename])
-        for key, item in base_style.items():
-            if key not in style.keys():
-                style[key] = item
-    except KeyError:
-        pass
-    for key, item in file_io.parse_style(system_styles["adwaita"]).items():
-        if key not in style.keys():
-            style[key] = item
+    style = file_io.parse_style(file)
+    file = Gio.File.new_for_uri(
+        f"resource:///se/sjoerd/Graphs/styles/{style.name}.mplstyle",
+    )
+    if not file.query_exists():
+        file = Gio.File.new_for_uri(
+            "resource:///se/sjoerd/Graphs/styles/adwaita.mplstyle",
+        )
+    for key, value in file_io.parse_style(file).items():
+        if key not in style:
+            style[key] = value
     return style
+
+
+def update(self):
+    system_stylename = self.get_settings().get_string("system-style")
+    if Adw.StyleManager.get_default().get_dark():
+        system_stylename += "-dark"
+    figure_settings = self.get_figure_settings()
+    if figure_settings.props.use_custom_style:
+        stylename = figure_settings.props.custom_style
+        try:
+            pyplot.rcParams.update(get_style(get_user_styles(self)[stylename]))
+            return
+        except KeyError:
+            self.get_window().add_toast(
+                _(f"Plot style {stylename} does not exist "
+                  "loading system preferred"))
+            figure_settings.props.custom_style = system_stylename
+            figure_settings.props.use_custom_style = False
+    pyplot.rcParams.update(file_io.parse_style(Gio.File.new_for_uri(
+        f"resource:///se/sjoerd/Graphs/styles/{system_stylename}.mplstyle",
+    )))
 
 
 STYLE_DICT = {
@@ -300,7 +288,9 @@ class StylesWindow(Adw.Window):
             directory.get_child_for_display_name(f"{self.style.name}.mplstyle")
         file_io.write_style(file, self.style)
 
-        if file.equal(get_preferred_style(self.get_application())):
+        figure_settings = self.get_application().get_figure_settings()
+        if figure_settings.props.use_custom_style \
+                and figure_settings.props.custom_style == self.style.name:
             self.get_application().get_window().reload_canvas()
 
     @Gtk.Template.Callback()
@@ -332,8 +322,10 @@ class StylesWindow(Adw.Window):
             self.styles_box.remove(self.styles_box.get_row_at_index(0))
         for style, file in \
                 sorted(get_user_styles(self.get_application()).items()):
-            box = StyleBox(self, style)
-            if not file.equal(get_preferred_style(self.get_application())):
+            box = StyleBox(self, style, file)
+            figure_settings = self.get_application().get_figure_settings()
+            if not (figure_settings.props.use_custom_style
+                    and figure_settings.props.custom_style == self.style):
                 box.check_mark.hide()
                 box.label.set_hexpand(True)
             self.styles.append(box)
@@ -370,30 +362,27 @@ class StyleBox(Gtk.Box):
     label = Gtk.Template.Child()
     check_mark = Gtk.Template.Child()
 
-    def __init__(self, parent, style):
+    def __init__(self, parent, style, file):
         super().__init__()
-        self.parent = parent
-        self.style = style
+        self.parent, self.style, self.file = parent, style, file
         self.label.set_label(utilities.shorten_label(self.style, 50))
 
     @Gtk.Template.Callback()
     def on_edit(self, _button):
-        self.parent.style = get_style(
-            self.parent.get_application(), self.style)
+        self.parent.style = get_style(self.file)
         self.parent.load_style()
         self.parent.leaflet.navigate(1)
         self.parent.set_title(self.style)
 
     @Gtk.Template.Callback()
     def on_delete(self, _button):
-        style = self.style
-
         def remove_style(_dialog, response):
             if response == "delete":
-                get_user_styles(
-                    self.parent.get_application())[style].trash(None)
+                self.file.trash(None)
                 self.parent.reload_styles()
-        body = _("Are you sure you want to delete the {} style?").format(style)
+        body = _(
+            "Are you sure you want to delete the {stylename} style?",
+        ).format(stylename=self.style)
         dialog = ui.build_dialog("delete_style")
         dialog.set_body(body)
         dialog.set_transient_for(self.parent)
