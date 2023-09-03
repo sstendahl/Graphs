@@ -75,7 +75,9 @@ def get_style(file):
         file = Gio.File.new_for_uri(
             "resource:///se/sjoerd/Graphs/styles/adwaita.mplstyle",
         )
-    style.update(file_io.parse_style(file) | style)
+    for key, value in file_io.parse_style(file).items():
+        if key not in style:
+            style[key] = value
     return style
 
 
