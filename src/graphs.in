@@ -37,6 +37,7 @@ if __name__ == "__main__":
 
     gi.require_version("Adw", "1")
     gi.require_version("Gtk", "4.0")
+    gi.require_version("Graphs", "1")
 
     sys.path.insert(1, "@PKGDATADIR@")
     signal.signal(signal.SIGINT, signal.SIG_DFL)

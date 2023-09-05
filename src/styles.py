@@ -86,8 +86,8 @@ def update(self):
     if Adw.StyleManager.get_default().get_dark():
         system_stylename += "-dark"
     figure_settings = self.get_figure_settings()
-    if figure_settings.props.use_custom_style:
-        stylename = figure_settings.props.custom_style
+    if figure_settings.get_use_custom_style():
+        stylename = figure_settings.get_custom_style()
         try:
             pyplot.rcParams.update(get_style(get_user_styles(self)[stylename]))
             return
@@ -95,8 +95,8 @@ def update(self):
             self.get_window().add_toast(
                 _(f"Plot style {stylename} does not exist "
                   "loading system preferred"))
-            figure_settings.props.custom_style = system_stylename
-            figure_settings.props.use_custom_style = False
+            figure_settings.set_custom_style(system_stylename)
+            figure_settings.set_use_custom_style(False)
     pyplot.rcParams.update(file_io.parse_style(Gio.File.new_for_uri(
         f"resource:///se/sjoerd/Graphs/styles/{system_stylename}.mplstyle",
     )))
@@ -289,8 +289,8 @@ class StylesWindow(Adw.Window):
         file_io.write_style(file, self.style)
 
         figure_settings = self.get_application().get_figure_settings()
-        if figure_settings.props.use_custom_style \
-                and figure_settings.props.custom_style == self.style.name:
+        if figure_settings.get_use_custom_style() \
+                and figure_settings.get_custom_style() == self.style.name:
             self.get_application().get_window().reload_canvas()
 
     @Gtk.Template.Callback()
@@ -324,8 +324,8 @@ class StylesWindow(Adw.Window):
                 sorted(get_user_styles(self.get_application()).items()):
             box = StyleBox(self, style, file)
             figure_settings = self.get_application().get_figure_settings()
-            if not (figure_settings.props.use_custom_style
-                    and figure_settings.props.custom_style == self.style):
+            if not (figure_settings.get_use_custom_style()
+                    and figure_settings.get_custom_style() == self.style):
                 box.check_mark.hide()
                 box.label.set_hexpand(True)
             self.styles.append(box)

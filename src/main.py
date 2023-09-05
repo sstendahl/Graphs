@@ -8,12 +8,11 @@ Classes:
 import logging
 from gettext import gettext as _
 
-from gi.repository import Adw, GLib, GObject, Gio
+from gi.repository import Adw, GLib, GObject, Gio, Graphs
 
 from graphs import actions, migrate, ui
 from graphs.clipboard import DataClipboard, ViewClipboard
 from graphs.data import Data
-from graphs.figure_settings import FigureSettings
 from graphs.window import GraphsWindow
 
 from matplotlib import font_manager
@@ -51,7 +50,6 @@ class GraphsApplication(Adw.Application):
         get_mode
         set_mode
         get_figure_settings
-        set_figure_settings
         get_settings
         get_clipboard
         get_view_clipboard
@@ -66,7 +64,7 @@ class GraphsApplication(Adw.Application):
     pkgdatadir = GObject.Property(type=str, default="")
 
     data = GObject.Property(type=Data)
-    figure_settings = GObject.Property(type=FigureSettings)
+    figure_settings = GObject.Property(type=Graphs.FigureSettings)
     clipboard = GObject.Property(type=DataClipboard)
     view_clipboard = GObject.Property(type=ViewClipboard)
     mode = GObject.Property(type=int, default=0, minimum=0, maximum=2)
@@ -75,7 +73,8 @@ class GraphsApplication(Adw.Application):
         """Init the application."""
         settings = Gio.Settings(application_id)
         migrate.migrate_config(self)
-        figure_settings = FigureSettings.new(settings.get_child("figure"))
+        figure_settings = \
+            Graphs.FigureSettings.new(settings.get_child("figure"))
         super().__init__(
             application_id=application_id, settings=settings,
             flags=Gio.ApplicationFlags.DEFAULT_FLAGS,
@@ -180,13 +179,9 @@ class GraphsApplication(Adw.Application):
         """Set mode property."""
         self.props.mode = mode
 
-    def get_figure_settings(self) -> FigureSettings:
+    def get_figure_settings(self) -> Graphs.FigureSettings:
         """Get figure settings property."""
         return self.props.figure_settings
-
-    def set_figure_settings(self, figure_settings: FigureSettings):
-        """Set figure settings property."""
-        self.props.figure_settings = figure_settings
 
     def get_settings(self, child=None):
         """

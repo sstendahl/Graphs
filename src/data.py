@@ -194,25 +194,25 @@ class Data(GObject.Object):
                 original_position = new_item.xposition
                 if new_item.xposition == 0:
                     if _is_default("bottom-label"):
-                        figure_settings.props.bottom_label = new_item.xlabel
-                    elif new_item.xlabel != figure_settings.props.bottom_label:
+                        figure_settings.set_bottom_label(new_item.xlabel)
+                    elif new_item.xlabel != figure_settings.get_bottom_label():
                         new_item.xposition = 1
                 if new_item.xposition == 1:
                     if _is_default("top-label"):
-                        figure_settings.props.top_label = new_item.xlabel
-                    elif new_item.xlabel != figure_settings.props.bottom_label:
+                        figure_settings.set_top_label(new_item.xlabel)
+                    elif new_item.xlabel != figure_settings.get_top_label():
                         new_item.xposition = original_position
             if new_item.ylabel:
                 original_position = new_item.yposition
                 if new_item.yposition == 0:
                     if _is_default("left-label"):
-                        figure_settings.props.left_label = new_item.ylabel
-                    elif new_item.ylabel != figure_settings.props.left_label:
+                        figure_settings.set_left_label(new_item.ylabel)
+                    elif new_item.ylabel != figure_settings.get_left_label():
                         new_item.yposition = 1
                 if new_item.yposition == 1:
                     if _is_default("right-label"):
-                        figure_settings.props.right_label = new_item.ylabel
-                    elif new_item.ylabel != figure_settings.props.left_label:
+                        figure_settings.set_right_label(new_item.ylabel)
+                    elif new_item.ylabel != figure_settings.get_right_label():
                         new_item.yposition = original_position
             if new_item.color == "":
                 new_item.color = utilities.get_next_color(self.get_items())
