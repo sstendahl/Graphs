@@ -69,8 +69,9 @@ class GraphsWindow(Adw.ApplicationWindow):
         app = self.get_application()
         operations.perform_operation(
             app, operations.shift_vertically,
-            app.get_figure_settings().left_scale,
-            app.get_figure_settings().right_scale, app.get_data().get_items(),
+            app.get_figure_settings().get_left_scale(),
+            app.get_figure_settings().get_right_scale(),
+            app.get_data().get_items(),
         )
 
     @Gtk.Template.Callback()

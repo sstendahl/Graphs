@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schemalist gettext-domain="graphs">
+  <enum id="se.sjoerd.Graphs.system-styles">
+    <value nick="adwaita" value="0"/>
+  </enum>
+
   <enum id="se.sjoerd.Graphs.general.center-values">
     <value nick="Center at maximum Y value" value="0"/>
     <value nick="Center at middle coordinate" value="1"/>
@@ -67,6 +71,10 @@
     <child name="export-figure" schema="se.sjoerd.Graphs.export-figure"/>
     <child name="figure" schema="se.sjoerd.Graphs.figure"/>
     <child name="import-params" schema="se.sjoerd.Graphs.import-params"/>
+
+    <key name="system-style" enum="se.sjoerd.Graphs.system-styles">
+      <default>"adwaita"</default>
+    </key>
   </schema>
 
   <schema id="se.sjoerd.Graphs.general">

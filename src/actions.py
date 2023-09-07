@@ -24,8 +24,7 @@ def change_scale(action, target, self, prop):
     utilities.optimize_limits(self)
     action.change_state(target)
     self.get_window().toast_overlay.grab_focus()
-
-
+    
 def quit_action(_action, _target, self):
     self.quit()
 

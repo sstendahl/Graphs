@@ -48,10 +48,16 @@ template $AddEquationWindow : Adw.Window {
               title: _("Y =");
               styles ["preferencesgroup"]
             }
+            Label {
+              margin-top: 6;
+              halign: start;
+              hexpand: true;
+              label: _("Enter a mathematical expression to generate data from");
+              styles ["dim-label"]
+            }
           }
 
           Adw.PreferencesGroup {
-            description: _("Enter a mathematical expression to generate data from");
             Adw.EntryRow name {
               max-width-chars: 25;
               title: _("Name (optional)");

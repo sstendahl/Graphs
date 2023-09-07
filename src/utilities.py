@@ -85,8 +85,7 @@ def get_value_at_fraction(fraction, start, end, scale):
         scaled_range = 1 / start - 1 / end
 
         # Calculate the inverse-scaled value at the given percentage
-        scaled_value = 1 / (1 / end + fraction * scaled_range)
-        return scaled_value
+        return 1 / (1 / end + fraction * scaled_range)
 
 
 def get_fraction_at_value(value, start, end, scale):
@@ -117,8 +116,7 @@ def get_fraction_at_value(value, start, end, scale):
 
         # Calculate the scaled percentage corresponding to the data point
         scaled_data_point = 1 / value
-        scaled_percentage = (scaled_data_point - 1 / end) / scaled_range
-        return scaled_percentage
+        return (scaled_data_point - 1 / end) / scaled_range
 
 
 def shorten_label(label, max_length=19):
@@ -173,8 +171,23 @@ def preprocess(string: str):
         expression = match.group(1)  # Get the content inside the brackets
         return f"(({expression})*{float(numpy.pi)}/180)"
 
+    def convert_cot(match):
+        expression = match.group(1)  # Get the content inside the brackets
+        return f"1/(tan({expression}))"
+
+    def convert_sec(match):
+        expression = match.group(1)  # Get the content inside the brackets
+        return f"1/(cos({expression}))"
+
+    def convert_csc(match):
+        expression = match.group(1)  # Get the content inside the brackets
+        return f"1/(sin({expression}))"
+
     string = string.replace("pi", f"({float(numpy.pi)})")
     string = string.replace("^", "**")
+    string = re.sub(r"cot\((.*?)\)", convert_cot, string)
+    string = re.sub(r"sec\((.*?)\)", convert_sec, string)
+    string = re.sub(r"csc\((.*?)\)", convert_csc, string)
     string = re.sub(r"d\((.*?)\)", convert_degrees, string)
     return string.lower()
 
@@ -184,48 +197,48 @@ def get_filename(file: Gio.File):
 
 
 def optimize_limits(self):
+    figure_settings = self.get_figure_settings()
     axes = [
-        [direction, False, []]
+        [direction, False, [], [],
+         figure_settings.get_property(f"{direction}_scale")]
         for direction in ["bottom", "left", "top", "right"]
     ]
     for item in self.get_data():
+        if item.props.item_type != "Item":
+            continue
         for index in item.xposition * 2, 1 + item.yposition * 2:
             axes[index][1] = True
-            axes[index][2].append(item)
+            data = numpy.asarray(item.ydata if index % 2 else item.xdata)
+            data = data[numpy.isfinite(data)]
+            nonzero_data = numpy.array([value for value in data if value != 0])
+            axes[index][2].append(
+                nonzero_data.min()
+                if axes[index][4] in (1, 4) and len(nonzero_data) > 0
+                else data.min(),
+            )
+            axes[index][3].append(data.max())
 
-    for count, (direction, used, items) in enumerate(axes):
+    for count, (direction, used, min_all, max_all, scale) in enumerate(axes):
         if not used:
             continue
-        scale = self.get_figure_settings().get_property(f"{direction}_scale")
-        datalist = [item.ydata if count % 2 else item.xdata for item in items
-                    if item.props.item_type == "Item"]
-        min_all, max_all = [], []
-        for data in datalist:
-            nonzero_data = list(filter(lambda x: (x != 0), data))
-            if scale == 1 and len(nonzero_data) > 0:
-                min_all.append(min(nonzero_data))
-            else:
-                min_all.append(min(data))
-            max_all.append(max(data))
         min_all = min(min_all)
         max_all = max(max_all)
-        span = max_all - min_all
-        if scale != 1:
+        if scale != 1:  # For non-logarithmic scales
+            span = max_all - min_all
             # 0.05 padding on y-axis, 0.015 padding on x-axis
             padding_factor = 0.05 if count % 2 else 0.015
             max_all += padding_factor * span
 
-            # Don't add minimum padding for inverse scaling as that may lead
-            # to negative values
-            if scale != 4:
-                min_all -= padding_factor * span
-        elif scale == 1:
+            # For inverse scale, calculate padding using a factor
+            min_all = (min_all - padding_factor * span if scale != 4
+                       else min_all * 0.99)
+        else:  # Use different scaling type for logarithmic scale
             # Use padding factor of 2 for y-axis, 1.025 for x-axis
             padding_factor = 2 if count % 2 else 1.025
             min_all *= 1 / padding_factor
             max_all *= padding_factor
-        self.get_figure_settings().set_property(f"min_{direction}", min_all)
-        self.get_figure_settings().set_property(f"max_{direction}", max_all)
+        figure_settings.set_property(f"min_{direction}", min_all)
+        figure_settings.set_property(f"max_{direction}", max_all)
     self.get_view_clipboard().add()
 
 

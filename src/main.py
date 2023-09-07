@@ -8,12 +8,11 @@ Classes:
 import logging
 from gettext import gettext as _
 
-from gi.repository import Adw, GLib, GObject, Gio
+from gi.repository import Adw, GLib, GObject, Gio, Graphs
 
 from graphs import actions, migrate, ui
 from graphs.clipboard import DataClipboard, ViewClipboard
 from graphs.data import Data
-from graphs.figure_settings import FigureSettings
 from graphs.window import GraphsWindow
 
 from matplotlib import font_manager
@@ -51,7 +50,6 @@ class GraphsApplication(Adw.Application):
         get_mode
         set_mode
         get_figure_settings
-        set_figure_settings
         get_settings
         get_clipboard
         get_view_clipboard
@@ -66,7 +64,7 @@ class GraphsApplication(Adw.Application):
     pkgdatadir = GObject.Property(type=str, default="")
 
     data = GObject.Property(type=Data)
-    figure_settings = GObject.Property(type=FigureSettings)
+    figure_settings = GObject.Property(type=Graphs.FigureSettings)
     clipboard = GObject.Property(type=DataClipboard)
     view_clipboard = GObject.Property(type=ViewClipboard)
     mode = GObject.Property(type=int, default=0, minimum=0, maximum=2)
@@ -74,13 +72,15 @@ class GraphsApplication(Adw.Application):
     def __init__(self, application_id, **kwargs):
         """Init the application."""
         settings = Gio.Settings(application_id)
+        migrate.migrate_config(self)
+        figure_settings = \
+            Graphs.FigureSettings.new(settings.get_child("figure"))
         super().__init__(
             application_id=application_id, settings=settings,
             flags=Gio.ApplicationFlags.DEFAULT_FLAGS,
-            figure_settings=FigureSettings.new(settings.get_child("figure")),
+            figure_settings=figure_settings,
             data=Data(self), **kwargs,
         )
-        migrate.migrate_config(self)
         font_list = font_manager.findSystemFonts(fontpaths=None, fontext="ttf")
         for font in font_list:
             try:
@@ -95,13 +95,27 @@ class GraphsApplication(Adw.Application):
             )
             self.add_action(action)
 
-        settings = self.get_settings("figure")
         for val in ["left-scale", "right-scale", "top-scale", "bottom-scale"]:
             action = Gio.SimpleAction.new_stateful(
                 f"change-{val}", GLib.VariantType.new("s"),
-                GLib.Variant.new_string(str(settings.get_enum(f"{val}"))),
+                GLib.Variant.new_string(
+                    str(settings.get_child("figure").get_enum(val)),
+                ),
             )
-            action.connect("activate", actions.change_scale, self, val)
+            action.connect(
+                "activate",
+                lambda action_, target: figure_settings.set_property(
+                    action_.get_name()[7:], int(target.get_string()),
+                ),
+            )
+            figure_settings.connect(
+                f"notify::{val}",
+                lambda _x, param, action_: action_.change_state(
+                    GLib.Variant.new_string(
+                        str(figure_settings.get_property(param.name)),
+                    ),
+                ), action,
+            )
             self.add_action(action)
 
         self.toggle_sidebar = Gio.SimpleAction.new_stateful(
@@ -119,13 +133,12 @@ class GraphsApplication(Adw.Application):
             self.set_accels_for_action(f"app.mode_{mode}", [f"F{count + 1}"])
 
         self.get_style_manager().connect(
-            "notify", ui.on_style_change, None, self)
-        self.get_figure_settings().connect(
-            "notify::use-custom-style", ui.on_figure_style_change, self,
+            "notify", ui.on_figure_style_change, self,
         )
-        self.get_figure_settings().connect(
-            "notify::custom-style", ui.on_figure_style_change, self,
-        )
+        for prop in ["use-custom-style", "custom-style"]:
+            figure_settings.connect(
+                f"notify::{prop}", ui.on_figure_style_change, self,
+            )
         self.get_data().connect(
             "notify::items", ui.on_items_change, self,
         )
@@ -166,13 +179,9 @@ class GraphsApplication(Adw.Application):
         """Set mode property."""
         self.props.mode = mode
 
-    def get_figure_settings(self) -> FigureSettings:
+    def get_figure_settings(self) -> Graphs.FigureSettings:
         """Get figure settings property."""
         return self.props.figure_settings
-
-    def set_figure_settings(self, figure_settings: FigureSettings):
-        """Set figure settings property."""
-        self.props.figure_settings = figure_settings
 
     def get_settings(self, child=None):
         """

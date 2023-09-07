@@ -26,18 +26,18 @@ def get_data(self, item):
     if self.get_mode() == 2:
         figure_settings = self.get_figure_settings()
         if item.xposition == 0:
-            xmin = figure_settings.props.min_bottom
-            xmax = figure_settings.props.max_bottom
-            scale = figure_settings.bottom_scale
+            xmin = figure_settings.get_min_bottom()
+            xmax = figure_settings.get_max_bottom()
+            scale = figure_settings.get_bottom_scale()
         else:
-            xmin = figure_settings.props.min_top
-            xmax = figure_settings.props.max_top
-            scale = figure_settings.top_scale
+            xmin = figure_settings.get_min_top()
+            xmax = figure_settings.get_max_top()
+            scale = figure_settings.get_top_scale()
         startx = utilities.get_value_at_fraction(
-            figure_settings.min_selected, xmin, xmax, scale,
+            figure_settings.get_min_selected(), xmin, xmax, scale,
         )
         stopx = utilities.get_value_at_fraction(
-            figure_settings.max_selected, xmin, xmax, scale,
+            figure_settings.get_max_selected(), xmin, xmax, scale,
         )
 
         # If startx and stopx are not out of range, that is,

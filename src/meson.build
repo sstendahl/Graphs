@@ -8,7 +8,7 @@ configuration: conf,
   install_dir: bindir
 )
 
-graphs_sources = [
+python_sources = [
   'actions.py',
   'add_equation.py',
   'artist.py',
@@ -36,4 +36,23 @@ graphs_sources = [
   'window.py',
 ]
 
-python.install_sources(graphs_sources, subdir: project_name)
+python.install_sources(python_sources, subdir: project_name)
+
+vala_sources = [
+  'figure_settings.vala',
+  'misc.vala',
+]
+
+graphs_lib = shared_library('graphs', vala_sources,
+      vala_gir: 'Graphs-1.gir',
+  dependencies: dependencies,
+       install: true,
+   install_dir: [true, true, true, true],
+)
+
+custom_target('graphs typelib',
+       command: [find_program('g-ir-compiler'), '--shared-library', 'libgraphs.so', '--output', '@OUTPUT@', meson.current_build_dir() / 'Graphs-1.gir'],
+        output: 'Graphs-1.typelib',
+       depends: graphs_lib,
+       install: true,
+   install_dir: get_option('libdir') / 'girepository-1.0')

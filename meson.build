@@ -1,9 +1,17 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
-project('graphs',
+project('graphs', 'c', 'vala',
           version: '1.6.1',
     meson_version: '>= 0.59.0',
   default_options: [ 'warning_level=2', 'werror=false', ],
 )
+
+dependencies = [
+  dependency('glib-2.0'),
+  dependency('gobject-2.0'),
+  dependency('gio-2.0'),
+  dependency('gtk4'),
+  dependency('libadwaita-1', version: '>= 1.2'),
+]
 
 application_id = 'se.sjoerd.Graphs'
 name = 'Graphs'
