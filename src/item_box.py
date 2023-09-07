@@ -88,7 +88,6 @@ class ItemBox(Gtk.Box):
                 self.props.item.set_color(color)
                 self.get_application().get_clipboard().add()
 
-    @Gtk.Template.Callback()
     def delete(self, _button):
         name = self.props.item.props.name
         self.get_application().get_data().delete_items([self.props.item])
@@ -96,7 +95,6 @@ class ItemBox(Gtk.Box):
             _("Deleted {name}").format(name=name),
         )
 
-    @Gtk.Template.Callback()
     def edit(self, _button):
         EditItemWindow(self.get_application(), self.props.item)
 
