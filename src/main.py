@@ -102,12 +102,10 @@ class GraphsApplication(Adw.Application):
                     str(settings.get_child("figure").get_enum(val)),
                 ),
             )
-            action.connect(
-                "activate",
-                lambda action_, target: figure_settings.set_property(
-                    action_.get_name()[7:], int(target.get_string()),
-                ),
-            )
+            action.connect("activate", lambda action_, target:
+                           (figure_settings.set_property(
+                            action_.get_name()[7:], int(target.get_string())),
+                            self.get_window().toast_overlay.grab_focus()))
             figure_settings.connect(
                 f"notify::{val}",
                 lambda _x, param, action_: action_.change_state(
