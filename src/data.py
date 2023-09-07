@@ -7,12 +7,12 @@ Classes:
 """
 import copy
 
-from gi.repository import GObject
+from gi.repository import GObject, Graphs
 
 from graphs import item, utilities
 
 
-class Data(GObject.Object):
+class Data(GObject.Object, Graphs.Data):
     """
     Class for managing data.
 

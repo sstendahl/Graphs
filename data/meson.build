@@ -72,14 +72,19 @@ blueprints = custom_target('blueprints',
   command: [find_program('blueprint-compiler'), 'batch-compile', '@OUTPUT@', '@CURRENT_SOURCE_DIR@', '@INPUT@'],
 )
 
-resources = gnome.compile_resources(
-  application_id,
-  application_id + '.gresource.xml',
+gresource_name = application_id + '.gresource.xml'
+gresource_file = join_paths(meson.current_build_dir(), gresource_name)
+
+run_command('cp', gresource_name, gresource_file, check: true)
+
+gresource = gnome.compile_resources(
+  application_id, gresource_file,
     dependencies: blueprints,
 gresource_bundle: true,
       source_dir: meson.current_build_dir(),
          install: true,
      install_dir: pkgdatadir,
+          c_name: project_name,
 )
 
 scalable_dir = join_paths('icons', 'hicolor', 'scalable', 'apps')

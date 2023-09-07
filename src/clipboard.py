@@ -1,13 +1,13 @@
 import copy
 
-from gi.repository import Adw, GObject
+from gi.repository import Adw, GObject, Graphs
 
 from graphs import item, ui
 
 import numpy
 
 
-class BaseClipboard(GObject.Object):
+class BaseClipboard(GObject.Object, Graphs.Clipboard):
     __gtype_name__ = "BaseClipboard"
 
     application = GObject.Property(type=Adw.Application)

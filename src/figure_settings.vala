@@ -58,7 +58,9 @@ namespace Graphs {
             return limits;
         }
 
-        public void set_limits (double[] limits) {
+        public void set_limits (double[] limits)
+                requires (limits.length == 8)
+        {
             for (int i = 0; i < limit_names.length; i++) {
                 set (limit_names[i], limits[i]);
             }

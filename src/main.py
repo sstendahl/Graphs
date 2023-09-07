@@ -27,47 +27,13 @@ _ACTIONS = [
 ]
 
 
-class GraphsApplication(Adw.Application):
+class GraphsApplication(Graphs.Application):
     """
     The main application singleton class.
 
-    Properties:
-        settings
-        version: str
-        name: str
-        website: str
-        issues: str
-        author: str
-        pkgdatadir: str
-        data
-        figure_settings
-        clipboard
-        view_clipboard
-        mode: int (pan, zoom, select)
-
     Functions:
-        get_data
-        get_mode
-        set_mode
-        get_figure_settings
         get_settings
-        get_clipboard
-        get_view_clipboard
     """
-
-    settings = GObject.Property(type=Gio.Settings)
-    version = GObject.Property(type=str, default="")
-    name = GObject.Property(type=str, default="")
-    website = GObject.Property(type=str, default="")
-    issues = GObject.Property(type=str, default="")
-    author = GObject.Property(type=str, default="")
-    pkgdatadir = GObject.Property(type=str, default="")
-
-    data = GObject.Property(type=Data)
-    figure_settings = GObject.Property(type=Graphs.FigureSettings)
-    clipboard = GObject.Property(type=DataClipboard)
-    view_clipboard = GObject.Property(type=ViewClipboard)
-    mode = GObject.Property(type=int, default=0, minimum=0, maximum=2)
 
     def __init__(self, application_id, **kwargs):
         """Init the application."""
@@ -153,35 +119,17 @@ class GraphsApplication(Adw.Application):
         We raise the application"s main window, creating it if
         necessary.
         """
-        self._window = self.props.active_window
-        if not self._window:
-            self._window = GraphsWindow(self)
-            self._window.set_title(self.props.name)
+        window = self.props.active_window
+        if not window:
+            window = GraphsWindow(self)
+            self.set_window(window)
+            window.set_title(self.props.name)
             if "(Development)" in self.props.name:
-                self._window.add_css_class("devel")
-            self.props.clipboard = DataClipboard(self)
-            self.props.view_clipboard = ViewClipboard(self)
+                window.add_css_class("devel")
+            self.set_clipboard(DataClipboard(self))
+            self.set_view_clipboard(ViewClipboard(self))
             ui.set_clipboard_buttons(self)
-            self._window.present()
-
-    def get_window(self):
-        return self._window
-
-    def get_data(self):
-        """Get data property."""
-        return self.props.data
-
-    def get_mode(self):
-        """Get mode property."""
-        return self.props.mode
-
-    def set_mode(self, mode: int):
-        """Set mode property."""
-        self.props.mode = mode
-
-    def get_figure_settings(self) -> Graphs.FigureSettings:
-        """Get figure settings property."""
-        return self.props.figure_settings
+            window.present()
 
     def get_settings(self, child=None):
         """
@@ -191,11 +139,3 @@ class GraphsApplication(Adw.Application):
         """
         return self.props.settings if child is None \
             else self.props.settings.get_child(child)
-
-    def get_clipboard(self):
-        """Get clipboard property."""
-        return self.props.clipboard
-
-    def get_view_clipboard(self):
-        """Get view clipboard property."""
-        return self.props.view_clipboard
