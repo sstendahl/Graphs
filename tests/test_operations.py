@@ -1,24 +1,11 @@
-import os
+from unittest.mock import Mock
 
-from gi.repository import Gio
-
-import numpy as np
-import sys
-
-import pytest
-
-
-sys.modules["graphs"] = __import__("src")
-pkgdatadir = os.environ.get("pkgdatadir")
-os.chdir(pkgdatadir)
-resource = Gio.Resource.load("se.sjoerd.Graphs.gresource")
-resource._register()
 from graphs import operations
 from graphs.item import Item
 
-from unittest.mock import Mock
+import numpy as np
 
-
+import pytest
 
 XDATA = [0, 1, 4, 5, 7, 8, 12, 1]
 YDATA = [5, 2, 7, 1, 31, 5, 123, 156]
@@ -89,16 +76,18 @@ def test_shift_vertically():
     ydata1 = [value / max(ydata1) for value in ydata1]
     ydata2 = [value / max(ydata2) for value in ydata2]
 
-    item1 = Mock(spec=Item, ydata=ydata1, selected=True, yposition="left")
-    item2 = Mock(spec=Item, ydata=ydata2, selected=True, yposition="left")
+    item1 = Mock(spec=Item, ydata=ydata1, selected=True, yposition="left",
+                 key="a", props=Mock(item_type="Item"))
+    item2 = Mock(spec=Item, ydata=ydata2, selected=True, yposition="left",
+                 key="b", props=Mock(item_type="Item"))
 
-    datadict = {"item1": item1, "item2": item2}
+    items = [item1, item2]
     new_xdata1, new_ydata1, _sort, _discard =\
-        operations.shift_vertically(item1, XDATA, ydata1, yscale="log",
-                                    right_scale="log", datadict=datadict)
+        operations.shift_vertically(item1, XDATA, ydata1, left_scale=1,
+                                    right_scale=1, items=items)
     new_xdata2, new_ydata2, _sort, _discard = \
-        operations.shift_vertically(item2, XDATA, ydata2, yscale="log",
-                                    right_scale="log", datadict=datadict)
+        operations.shift_vertically(item2, XDATA, ydata2, left_scale=1,
+                                    right_scale=1, items=items)
     np.testing.assert_array_equal(new_xdata1, XDATA)
     np.testing.assert_array_equal(new_xdata2, XDATA)
     assert len(new_ydata1) == len(ydata1)
@@ -125,4 +114,3 @@ def test_get_integral():
 
     assert len(y_new) == len(xdata)
     assert y_new == pytest.approx([0, 7.5, 20, 32.5, 40], rel=1e-6)
-
