@@ -1,9 +1,6 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 from gi.repository import Adw, GLib, GObject, Gtk
 
-from graphs import operations, utilities
-from graphs.transform_data import TransformWindow
-
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/window.ui")
 class GraphsWindow(Adw.ApplicationWindow):
@@ -54,106 +51,12 @@ class GraphsWindow(Adw.ApplicationWindow):
 
     @Gtk.Template.Callback()
     def on_sidebar_toggle(self, *_args):
-        self.get_application().toggle_sidebar.change_state(
+        self.get_application().lookup_action("toggle_sidebar").change_state(
             GLib.Variant.new_boolean(self.sidebar_flap.get_reveal_flap()),
         )
 
     @Gtk.Template.Callback()
-    def shift_vertically(self, *_args):
-        app = self.get_application()
-        operations.perform_operation(
-            app, operations.shift_vertically,
-            app.get_figure_settings().get_left_scale(),
-            app.get_figure_settings().get_right_scale(),
-            app.get_data().get_items(),
-        )
-
-    @Gtk.Template.Callback()
-    def normalize(self, *_args):
-        operations.perform_operation(
-            self.get_application(), operations.normalize)
-
-    @Gtk.Template.Callback()
-    def smoothen(self, *_args):
-        operations.perform_operation(
-            self.get_application(), operations.smoothen)
-
-    @Gtk.Template.Callback()
-    def center(self, *_args):
-        operations.perform_operation(
-            self.get_application(), operations.center,
-            self.get_application().get_settings("general").get_enum("center"))
-
-    @Gtk.Template.Callback()
-    def combine(self, *_args):
-        operations.combine(self.get_application())
-
-    @Gtk.Template.Callback()
-    def cut(self, *_args):
-        if self.get_application().get_mode() == 2:
-            operations.perform_operation(
-                self.get_application(), operations.cut_selected)
-
-    @Gtk.Template.Callback()
-    def translate_x(self, *_args):
-        try:
-            offset = utilities.string_to_float(
-                self.translate_x_entry.get_text())
-            operations.perform_operation(
-                self.get_application(), operations.translate_x, offset)
-        except ValueError as error:
-            self.add_toast(error)
-
-    @Gtk.Template.Callback()
-    def translate_y(self, *_args):
-        try:
-            offset = utilities.string_to_float(
-                self.translate_y_entry.get_text())
-            operations.perform_operation(
-                self.get_application(), operations.translate_y, offset)
-        except ValueError as error:
-            self.add_toast(error)
-
-    @Gtk.Template.Callback()
-    def multiply_x(self, *_args):
-        try:
-            multiplier = utilities.string_to_float(
-                self.multiply_x_entry.get_text())
-            operations.perform_operation(
-                self.get_application(), operations.multiply_x, multiplier)
-        except ValueError as error:
-            self.add_toast(error)
-
-    @Gtk.Template.Callback()
-    def multiply_y(self, *_args):
-        try:
-            multiplier = utilities.string_to_float(
-                self.multiply_y_entry.get_text())
-            operations.perform_operation(
-                self.get_application(), operations.multiply_y, multiplier)
-        except ValueError as error:
-            self.add_toast(error)
-
-    @Gtk.Template.Callback()
-    def derivative(self, *_args):
-        operations.perform_operation(
-            self.get_application(), operations.get_derivative)
-
-    @Gtk.Template.Callback()
-    def integral(self, *_args):
-        operations.perform_operation(
-            self.get_application(), operations.get_integral)
-
-    @Gtk.Template.Callback()
-    def fourier(self, *_args):
-        operations.perform_operation(
-            self.get_application(), operations.get_fourier)
-
-    @Gtk.Template.Callback()
-    def inverse_fourier(self, *_args):
-        operations.perform_operation(
-            self.get_application(), operations.get_inverse_fourier)
-
-    @Gtk.Template.Callback()
-    def transform(self, *_args):
-        TransformWindow(self.get_application())
+    def perform_operation(self, button):
+        action = self.get_application().lookup_action("app.perform_operation")
+        operation = button.get_child().get_label().lower().replace(" ", "_")
+        action.activate(GLib.Variant.new_string(operation))
