@@ -8,42 +8,45 @@ configuration: conf,
   install_dir: bindir
 )
 
-python_sources = [
-  'actions.py',
-  'add_equation.py',
-  'artist.py',
-  'canvas.py',
-  'clipboard.py',
-  'data.py',
-  'edit_item.py',
-  'export_figure.py',
-  'figure_settings.py',
-  'file_import.py',
-  'file_io.py',
-  'item.py',
-  'item_box.py',
-  'main.py',
-  'migrate.py',
-  'misc.py',
-  'operations.py',
-  'preferences.py',
-  'project.py',
-  'scales.py',
-  'styles.py',
-  'transform_data.py',
-  'ui.py',
-  'utilities.py',
-  'window.py',
-]
+python.install_sources(
+  files(
+	  'actions.py',
+	  'add_equation.py',
+	  'artist.py',
+	  'canvas.py',
+	  'clipboard.py',
+	  'data.py',
+	  'edit_item.py',
+	  'export_figure.py',
+	  'figure_settings.py',
+	  'file_import.py',
+	  'file_io.py',
+	  'item.py',
+	  'item_box.py',
+	  'main.py',
+	  'migrate.py',
+	  'misc.py',
+	  'operations.py',
+	  'preferences.py',
+	  'project.py',
+	  'scales.py',
+	  'styles.py',
+	  'transform_data.py',
+	  'ui.py',
+	  'utilities.py',
+	  'window.py',
+  ),
+  subdir: project_name
+)
 
-python.install_sources(python_sources, subdir: project_name)
-
-vala_sources = [
-  'figure_settings.vala',
-  'misc.vala',
-]
-
-graphs_lib = shared_library('graphs', vala_sources,
+graphs_lib = shared_library(
+  'graphs', files(
+		'application.vala',
+		'clipboard.vala',
+		'data.vala',
+		'figure_settings.vala',
+		'misc.vala',
+  ), gresource,
       vala_gir: 'Graphs-1.gir',
   dependencies: dependencies,
        install: true,

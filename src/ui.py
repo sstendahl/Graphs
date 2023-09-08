@@ -138,14 +138,14 @@ def build_dialog(name):
 
 def show_about_window(self):
     Adw.AboutWindow(
-        transient_for=self.get_window(), application_name=self.name,
-        application_icon=self.props.application_id, website=self.website,
-        developer_name=self.author, issue_url=self.issues,
-        version=self.version, developers=[
+        transient_for=self.get_window(), application_name=self.get_name(),
+        application_icon=self.get_application_id(), website=self.get_website(),
+        developer_name=self.get_author(), issue_url=self.get_issues(),
+        version=self.get_version(), developers=[
             "Sjoerd Stendahl <contact@sjoerd.se>",
             "Christoph Kohnen <christoph.kohnen@disroot.org>",
         ],
-        copyright=f"© 2022 – {datetime.date.today().year} {self.author}",
+        copyright=f"© 2022 – {datetime.date.today().year} {self.get_author()}",
         license_type="GTK_LICENSE_GPL_3_0",
         translator_credits=_("translator-credits"),
         release_notes=file_io.read_file(
