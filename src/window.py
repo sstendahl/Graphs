@@ -1,8 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 from gi.repository import Adw, GLib, GObject, Gtk
 
-from graphs import operations, styles, utilities
-from graphs.canvas import Canvas
+from graphs import operations, utilities
 from graphs.transform_data import TransformWindow
 
 
@@ -32,18 +31,13 @@ class GraphsWindow(Adw.ApplicationWindow):
             "items_selected", self.shift_vertically_button, "sensitive", 2,
         )
         self.get_application().bind_property("mode", self, "mode", 2)
-        self.reload_canvas()
 
-    def reload_canvas(self):
-        styles.update(self.get_application())
-        canvas = Canvas(self.get_application())
+    def set_canvas(self, canvas):
         self.toast_overlay.set_child(canvas)
-        self.cut_button.bind_property(
-            "sensitive", canvas, "highlight_enabled", 2,
-        )
 
     def get_canvas(self):
-        return self.toast_overlay.get_child()
+        widget = self.toast_overlay.get_child()
+        return None if isinstance(widget, Adw.StatusPage) else widget
 
     @GObject.Property(type=int, default=0, minimum=0, maximum=2, flags=2)
     def mode(self):

@@ -127,6 +127,7 @@ class GraphsApplication(Graphs.Application):
             self.set_clipboard(DataClipboard(self))
             self.set_view_clipboard(ViewClipboard(self))
             ui.set_clipboard_buttons(self)
+            ui.reload_canvas(self)
             window.present()
 
     def get_settings(self, child=None):

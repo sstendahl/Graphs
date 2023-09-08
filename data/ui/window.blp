@@ -621,6 +621,10 @@ template $GraphsWindow : Adw.ApplicationWindow {
         focusable: true;
         height-request: 200;
         width-request: 200;
+        child: Adw.StatusPage {
+          icon-name: "dialog-error-symbolic";
+          title: _("Canvas Failed to Load");
+        };
       }
     }
   }

@@ -291,7 +291,7 @@ class StylesWindow(Adw.Window):
         figure_settings = self.get_application().get_figure_settings()
         if figure_settings.get_use_custom_style() \
                 and figure_settings.get_custom_style() == self.style.name:
-            self.get_application().get_window().reload_canvas()
+            ui.reload_canvas(self.get_application())
 
     @Gtk.Template.Callback()
     def add_color(self, _button):
