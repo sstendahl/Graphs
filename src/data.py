@@ -9,7 +9,7 @@ import copy
 
 from gi.repository import GObject
 
-from graphs import item, utilities
+from graphs import item, ui, utilities
 
 
 class Data(GObject.Object):
@@ -92,6 +92,10 @@ class Data(GObject.Object):
         """Get all managed items."""
         return list(self._items.values())
 
+    def get_item_by_index(self, index: int):
+        """Get item given an index."""
+        return list(self._items.values())[index]
+
     def set_items(self, items: list):
         """Set all managed items."""
         for item_ in items:
@@ -152,6 +156,7 @@ class Data(GObject.Object):
             items[index2:index1 + 1] = \
                 [self._items[key2]] + items[index2:index1]
         self.set_items(items)
+        ui.reload_item_menu(self.get_application())
 
     def add_items(self, items: list):
         """

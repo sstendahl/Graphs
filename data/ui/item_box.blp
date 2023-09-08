@@ -49,21 +49,22 @@ menu menu_app {
   section {
     item {
       label: _("Move up");
-      action: "app.about";
+      action: "item_box.move_up";
     }
-
     item {
       label: _("Move down");
-      action: "app.about";
+      action: "item_box.move_down";
     }
+  }
 
-    - {
+  section {
+    item {
       label: _("Edit item");
-      action: "self.edit";
+      action: "item_box.edit";
     }
     item {
       label: _("Remove item");
-      action: "self.edit";
+      action: "item_box.delete";
     }
   }
 }
