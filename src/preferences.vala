@@ -1,0 +1,38 @@
+using Adw;
+using Gtk;
+
+namespace Graphs {
+
+    [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/preferences.ui")]
+    public class PreferencesWindow : Adw.PreferencesWindow {
+
+        [GtkChild]
+        public unowned Adw.ComboRow center { get; }
+
+        [GtkChild]
+        public unowned Adw.ComboRow handle_duplicates { get; }
+
+        [GtkChild]
+        public unowned Gtk.Switch hide_unselected { get; }
+
+        [GtkChild]
+        public unowned Adw.ComboRow x_position { get; }
+
+        [GtkChild]
+        public unowned Adw.ComboRow y_position { get; }
+
+        [GtkChild]
+        public unowned Gtk.Switch override_item_properties { get; }
+
+        public PreferencesWindow (Application application) {
+            Object (
+                application: application,
+                transient_for: application.window
+            );
+            Tools.bind_settings_to_widgets (
+                application.settings.get_child("general"), this
+            );
+            present ();
+        }
+    }
+}

@@ -6,13 +6,50 @@ from gettext import gettext as _
 
 from gi.repository import Adw, GLib, Gio, Gtk
 
-from graphs import file_import, file_io, graphs, project, utilities
-from graphs.item import Item
+from graphs import file_import, file_io, project, styles, utilities
 from graphs.item_box import ItemBox
 
 
-def on_style_change(_shortcut, _theme, _widget, self):
-    graphs.reload(self)
+def on_figure_style_change(_a, _b, self):
+    if not self.get_settings(
+            "general").get_boolean("override-item-properties"):
+        self.get_window().reload_canvas()
+        return
+    styles.update(self)
+    for item in self.get_data():
+        item.reset()
+    for item in self.get_data():
+        if item.props.item_type == "Item":
+            item.color = utilities.get_next_color(self.get_data().get_items())
+    self.get_window().reload_canvas()
+
+
+def reload_item_menu(self):
+    while self.get_window().item_list.get_last_child() is not None:
+        self.get_window().item_list.remove(
+            self.get_window().item_list.get_last_child())
+
+    for item in self.get_data():
+        self.get_window().item_list.append(ItemBox(self, item))
+
+
+def on_items_change(data, _ignored, self):
+    while self.get_window().item_list.get_last_child() is not None:
+        self.get_window().item_list.remove(
+            self.get_window().item_list.get_last_child())
+
+    for item in data:
+        self.get_window().item_list.append(ItemBox(self, item))
+    self.get_window().item_list.set_visible(not data.is_empty())
+    self.get_view_clipboard().add()
+
+
+def on_items_ignored(_data, _ignored, ignored, self):
+    if len(ignored) > 1:
+        toast = _("Items {} already exist").format(ignored)
+    else:
+        toast = _("Item {} already exists")
+    self.get_window().add_toast(toast)
 
 
 def set_clipboard_buttons(self):
@@ -20,33 +57,16 @@ def set_clipboard_buttons(self):
     Enable and disable the buttons for the undo and redo buttons and backwards
     and forwards view.
     """
-    self.main_window.view_forward_button.set_sensitive(
-        self.props.view_clipboard.clipboard_pos < - 1)
-    self.main_window.view_back_button.set_sensitive(
-        abs(self.props.view_clipboard.clipboard_pos)
-        < len(self.props.view_clipboard.clipboard))
-    self.main_window.undo_button.set_sensitive(
-        abs(self.props.clipboard.clipboard_pos)
-        < len(self.props.clipboard.clipboard))
-    self.main_window.redo_button.set_sensitive(
-        self.props.clipboard.clipboard_pos < - 1)
-
-
-def enable_data_dependent_buttons(self):
-    enabled = False
-    for item in self.datadict.values():
-        if item.selected and isinstance(item, Item):
-            enabled = True
-    self.main_window.shift_vertically_button.set_sensitive(enabled)
-
-
-def reload_item_menu(self):
-    while self.main_window.item_list.get_last_child() is not None:
-        self.main_window.item_list.remove(
-            self.main_window.item_list.get_last_child())
-
-    for item in self.datadict.values():
-        self.main_window.item_list.append(ItemBox(self, item))
+    self.get_window().view_forward_button.set_sensitive(
+        self.get_view_clipboard().clipboard_pos < - 1)
+    self.get_window().view_back_button.set_sensitive(
+        abs(self.get_view_clipboard().clipboard_pos)
+        < len(self.get_view_clipboard().clipboard))
+    self.get_window().undo_button.set_sensitive(
+        abs(self.get_clipboard().clipboard_pos)
+        < len(self.get_clipboard().clipboard))
+    self.get_window().redo_button.set_sensitive(
+        self.get_clipboard().clipboard_pos < - 1)
 
 
 def add_data_dialog(self):
@@ -62,7 +82,7 @@ def add_data_dialog(self):
             (_("Leybold xry"), ["xry"]),
         ]),
     )
-    dialog.open_multiple(self.main_window, None, on_response)
+    dialog.open_multiple(self.get_window(), None, on_response)
 
 
 def save_project_dialog(self):
@@ -75,7 +95,7 @@ def save_project_dialog(self):
         utilities.create_file_filters([(_("Graphs Project File"),
                                       ["graphs"])]))
     dialog.set_initial_name("project.graphs")
-    dialog.save(self.main_window, None, on_response)
+    dialog.save(self.get_window(), None, on_response)
 
 
 def open_project_dialog(self):
@@ -87,34 +107,37 @@ def open_project_dialog(self):
     dialog.set_filters(
         utilities.create_file_filters([(_("Graphs Project File"),
                                       ["graphs"])]))
-    dialog.open(self.main_window, None, on_response)
+    dialog.open(self.get_window(), None, on_response)
 
 
 def export_data_dialog(self):
-    if not self.datadict:
+    if self.get_data().is_empty():
+        self.get_window().add_toast(_("No data to export"))
         return
-    multiple = len(self.datadict) > 1
+    multiple = len(self.get_data()) > 1
 
     def on_response(dialog, response):
         with contextlib.suppress(GLib.GError):
             if multiple:
                 directory = dialog.select_folder_finish(response)
-                for item in self.datadict.values():
+                for item in self.get_data():
                     file = directory.get_child_for_display_name(
                         f"{item.name}.txt")
                     file_io.save_item(file, item)
             else:
-                item = list(self.datadict.values())[0]
-                file_io.save_item(dialog.save_finish(response), item)
+                file_io.save_item(
+                    dialog.save_finish(response), self.get_data()[0],
+                )
+            self.get_window().add_toast(_("Exported Data"))
     dialog = Gtk.FileDialog()
     if multiple:
-        dialog.select_folder(self.main_window, None, on_response)
+        dialog.select_folder(self.get_window(), None, on_response)
     else:
-        filename = f"{list(self.datadict.values())[0].name}.txt"
+        filename = f"{self.get_data()[0].name}.txt"
         dialog.set_initial_name(filename)
         dialog.set_filters(
             utilities.create_file_filters([(_("Text Files"), ["txt"])]))
-        dialog.save(self.main_window, None, on_response)
+        dialog.save(self.get_window(), None, on_response)
 
 
 def build_dialog(name):
@@ -124,14 +147,14 @@ def build_dialog(name):
 
 def show_about_window(self):
     Adw.AboutWindow(
-        transient_for=self.main_window, application_name=self.name,
-        application_icon=self.props.application_id, website=self.website,
-        developer_name=self.author, issue_url=self.issues,
-        version=self.version, developers=[
+        transient_for=self.get_window(), application_name=self.get_name(),
+        application_icon=self.get_application_id(), website=self.get_website(),
+        developer_name=self.get_author(), issue_url=self.get_issues(),
+        version=self.get_version(), developers=[
             "Sjoerd Stendahl <contact@sjoerd.se>",
             "Christoph Kohnen <christoph.kohnen@disroot.org>",
         ],
-        copyright=f"© 2022 – {datetime.date.today().year} {self.author}",
+        copyright=f"© 2022 – {datetime.date.today().year} {self.get_author()}",
         license_type="GTK_LICENSE_GPL_3_0",
         translator_credits=_("translator-credits"),
         release_notes=file_io.read_file(
@@ -139,21 +162,23 @@ def show_about_window(self):
     ).present()
 
 
-def load_values_from_dict(window, values: dict):
+def load_values_from_dict(window, values: dict, ignorelist=None):
     for key, value in values.items():
+        if ignorelist is not None and key in ignorelist:
+            continue
         try:
             widget = getattr(window, key.replace("-", "_"))
             if isinstance(widget, Adw.EntryRow):
                 widget.set_text(str(value))
             elif isinstance(widget, Adw.ComboRow):
-                utilities.set_chooser(widget, value)
+                widget.set_selected(int(value))
             elif isinstance(widget, Gtk.SpinButton):
                 widget.set_value(value)
             elif isinstance(widget, Gtk.Switch):
                 widget.set_active(bool(value))
             elif isinstance(widget, Adw.ExpanderRow):
                 widget.set_enable_expansion(bool(value))
-                widget.set_expanded(bool(value))
+                widget.set_expanded(True)
             elif isinstance(widget, Gtk.Scale):
                 widget.set_value(value)
             elif isinstance(widget, Gtk.Button):
@@ -164,15 +189,17 @@ def load_values_from_dict(window, values: dict):
             logging.warn(_("No way to apply “{}”").format(key))
 
 
-def save_values_to_dict(window, keys: list):
+def save_values_to_dict(window, keys: list, ignorelist=None):
     values = {}
     for key in keys:
+        if ignorelist is not None and key in ignorelist:
+            continue
         with contextlib.suppress(AttributeError):
             widget = getattr(window, key.replace("-", "_"))
             if isinstance(widget, Adw.EntryRow):
                 values[key] = str(widget.get_text())
             elif isinstance(widget, Adw.ComboRow):
-                values[key] = utilities.get_selected_chooser_item(widget)
+                values[key] = widget.get_selected()
             elif isinstance(widget, Gtk.SpinButton):
                 values[key] = widget.get_value()
             elif isinstance(widget, Gtk.Switch):
@@ -215,10 +242,39 @@ def bind_values_to_settings(settings, window, prefix="", ignorelist=None):
                 settings.bind(key, widget, "active", 0)
             elif isinstance(widget, Adw.ExpanderRow):
                 settings.bind(key, widget, "enable-expansion", 0)
-            elif isinstance(widget, Gtk.Scale):
-                settings.bind(key, widget, "value", 0)
                 widget.set_expanded(True)
             else:
                 logging.warn(_("Unsupported Widget {}").format(type(widget)))
         except AttributeError:
             logging.warn(_("No way to apply “{}”").format(key))
+
+
+def bind_values_to_object(source, window, ignorelist=None):
+    bindings = []
+    for key in dir(source.props):
+        if ignorelist is not None and key in ignorelist:
+            continue
+        try:
+            widget = getattr(window, key)
+            if isinstance(widget, Adw.EntryRow):
+                bindings.append(source.bind_property(
+                    key, widget, "text", 1 | 2,
+                ))
+            elif isinstance(widget, Adw.ComboRow):
+                bindings.append(source.bind_property(
+                    key, widget, "selected", 1 | 2,
+                ))
+            elif isinstance(widget, Adw.ExpanderRow):
+                bindings.append(source.bind_property(
+                    key, widget, "enable-expansion", 1 | 2,
+                ))
+                widget.set_expanded(True)
+            elif isinstance(widget, Gtk.Scale):
+                bindings.append(source.bind_property(
+                    key, widget.get_adjustment(), "value", 1 | 2,
+                ))
+            else:
+                logging.warn(_("Unsupported Widget {}").format(type(widget)))
+        except AttributeError:
+            logging.warn(_("No way to apply “{}”").format(key))
+    return bindings

@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schemalist gettext-domain="graphs">
+  <enum id="se.sjoerd.Graphs.system-styles">
+    <value nick="adwaita" value="0"/>
+  </enum>
+
   <enum id="se.sjoerd.Graphs.general.center-values">
     <value nick="Center at maximum Y value" value="0"/>
     <value nick="Center at middle coordinate" value="1"/>
@@ -39,16 +43,19 @@
   </enum>
 
   <enum id="se.sjoerd.Graphs.figure.scales">
-    <value nick="linear" value="0"/>
-    <value nick="logarithmic" value="1"/>
+    <value nick="Linear" value="0"/>
+    <value nick="Logarithmic" value="1"/>
+    <value nick="Radians" value="2"/>
+    <value nick="Square Root" value="3"/>
+    <value nick="Inverse" value="4"/>
   </enum>
 
-  <enum id="se.sjoerd.Graphs.figure.x-positions">
+  <enum id="se.sjoerd.Graphs.x-positions">
     <value nick="bottom" value="0"/>
     <value nick="top" value="1"/>
   </enum>
 
-  <enum id="se.sjoerd.Graphs.figure.y-positions">
+  <enum id="se.sjoerd.Graphs.y-positions">
     <value nick="left" value="0"/>
     <value nick="right" value="1"/>
   </enum>
@@ -65,8 +72,8 @@
     <child name="figure" schema="se.sjoerd.Graphs.figure"/>
     <child name="import-params" schema="se.sjoerd.Graphs.import-params"/>
 
-    <key name="clipboard-length" type="i">
-      <default>75</default>
+    <key name="system-style" enum="se.sjoerd.Graphs.system-styles">
+      <default>"adwaita"</default>
     </key>
   </schema>
 
@@ -83,6 +90,12 @@
     <key name="override-item-properties" type="b">
       <default>true</default>
     </key>
+    <key name="x-position" enum="se.sjoerd.Graphs.x-positions">
+      <default>"bottom"</default>
+    </key>
+    <key name="y-position" enum="se.sjoerd.Graphs.y-positions">
+      <default>"left"</default>
+    </key>
   </schema>
 
   <schema id="se.sjoerd.Graphs.figure">
@@ -90,7 +103,7 @@
       <default>"X Value"</default>
     </key>
     <key name="bottom-scale" enum="se.sjoerd.Graphs.figure.scales">
-      <default>"linear"</default>
+      <default>"Linear"</default>
     </key>
     <key name="custom-style" type="s">
       <default>"adwaita"</default>
@@ -99,7 +112,7 @@
       <default>"Y Value"</default>
     </key>
     <key name="left-scale" enum="se.sjoerd.Graphs.figure.scales">
-      <default>"linear"</default>
+      <default>"Linear"</default>
     </key>
     <key name="legend" type="b">
       <default>true</default>
@@ -111,7 +124,7 @@
       <default>"Y Value 2"</default>
     </key>
     <key name="right-scale" enum="se.sjoerd.Graphs.figure.scales">
-      <default>"linear"</default>
+      <default>"Linear"</default>
     </key>
     <key name="title" type="s">
       <default>""</default>
@@ -120,16 +133,10 @@
       <default>"X Value 2"</default>
     </key>
     <key name="top-scale" enum="se.sjoerd.Graphs.figure.scales">
-      <default>"linear"</default>
+      <default>"Linear"</default>
     </key>
     <key name="use-custom-style" type="b">
       <default>false</default>
-    </key>
-    <key name="x-position" enum="se.sjoerd.Graphs.figure.x-positions">
-      <default>"bottom"</default>
-    </key>
-    <key name="y-position" enum="se.sjoerd.Graphs.figure.y-positions">
-      <default>"left"</default>
     </key>
   </schema>
 

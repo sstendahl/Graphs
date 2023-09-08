@@ -4,11 +4,11 @@ from pathlib import Path
 
 from gi.repository import Adw, GObject, Gio, Gtk
 
-from graphs import file_io, graphs, ui, utilities
+from graphs import file_io, ui, utilities
 from graphs.misc import ParseError
 
 
-IMPORT_MODES = {
+_IMPORT_MODES = {
     # name: suffix
     "project": ".graphs", "xrdml": ".xrdml", "xry": ".xry", "columns": None,
 }
@@ -23,7 +23,7 @@ class ImportSettings(GObject.Object):
 
 
 def prepare_import(self, files: list):
-    import_dict = {mode: [] for mode in IMPORT_MODES.keys()}
+    import_dict = {mode: [] for mode in _IMPORT_MODES.keys()}
     for file in files:
         import_dict[guess_import_mode(file)].append(file)
     modes = []
@@ -49,9 +49,9 @@ def import_from_files(self, import_settings_list: list):
         try:
             items.extend(_import_from_file(self, import_settings))
         except ParseError as error:
-            self.main_window.add_toast(error.message)
+            self.get_window().add_toast(error.message)
             continue
-    graphs.add_items(self, items)
+    self.get_data().add_items(items)
 
 
 def _import_from_file(self, import_settings: ImportSettings):
@@ -83,22 +83,22 @@ class ImportWindow(Adw.Window):
 
     def __init__(self, application, modes: list, import_dict: dict):
         super().__init__(
-            application=application, transient_for=application.main_window,
+            application=application, transient_for=application.get_window(),
             modes=modes, import_dict=import_dict,
         )
 
         import_params = \
-            self.props.application.settings.get_child("import-params")
+            self.get_application().get_settings("import-params")
         visible = False
         for mode in import_params.list_children():
-            if mode in self.modes:
+            if mode in self.props.modes:
                 ui.bind_values_to_settings(
                     import_params.get_child(mode), self, prefix=f"{mode}_")
                 getattr(self, f"{mode}_group").set_visible(True)
                 visible = True
 
         if not visible:
-            prepare_import_finish(self.props.application, self.import_dict)
+            prepare_import_finish(self.get_application(), self.import_dict)
             self.destroy()
             return
         self.present()
@@ -117,7 +117,7 @@ class ImportWindow(Adw.Window):
 
     def reset_import(self):
         import_params = \
-            self.props.application.settings.get_child("import-params")
+            self.get_application().get_settings("import-params")
         for mode in import_params.list_children():
             settings = import_params.get_child(mode)
             for key in settings.props.settings_schema.list_keys():
@@ -125,10 +125,10 @@ class ImportWindow(Adw.Window):
 
     @Gtk.Template.Callback()
     def on_accept(self, _widget):
-        import_from_files(self.props.application, [
+        import_from_files(self.get_application(), [
             ImportSettings(
                 file=file, mode=mode, name=utilities.get_filename(file))
-            for mode in IMPORT_MODES.keys() for file in self.import_dict[mode]
+            for mode in _IMPORT_MODES.keys() for file in self.import_dict[mode]
         ])
         self.destroy()
 
@@ -139,7 +139,7 @@ def guess_import_mode(file):
         file_suffix = Path(filename).suffixes[-1]
     except IndexError:
         file_suffix = None
-    for mode, suffix in IMPORT_MODES.items():
+    for mode, suffix in _IMPORT_MODES.items():
         if suffix is not None and file_suffix == suffix:
             return mode
     return "columns"

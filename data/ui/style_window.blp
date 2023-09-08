@@ -1,11 +1,11 @@
 using Gtk 4.0;
 using Adw 1;
 
-template $PlotStylesWindow : Adw.Window {
+template $StylesWindow : Adw.Window {
   modal: true;
   default-width: 650;
   default-height: 400;
-  title: _("Plot Styles");
+  title: _("Styles");
   close-request => $on_close();
 
   ShortcutController {
@@ -100,6 +100,9 @@ template $PlotStylesWindow : Adw.Window {
 
               Adw.ComboRow linestyle {
                 title: _("Linestyle");
+                model: StringList {
+                  strings [_("None"), _("Solid"), _("Dotted"), _("Dashed"), _("Dashdot")]
+                };
               }
 
               Adw.ActionRow {
@@ -117,6 +120,17 @@ template $PlotStylesWindow : Adw.Window {
 
               Adw.ComboRow markers {
                 title: _("Markers");
+                model: StringList {
+                  strings [
+                    _("Nothing"), _("Point"), _("Pixel"), _("Circle"),
+                    _("Triangle down"), _("Triangle up"), _("Triangle left"),
+                    _("Triangle right"), _("Octagon"), _("Square"),
+                    _("Pentagon"), _("Star"), _("Hexagon 1"),
+                    _("Hexagon 2"), _("Plus"), _("x"), _("Diamond"),
+                    _("Thin diamond"), _("Vertical line"), _("Horizontal line"),
+                    _("Filled plus"), _("Filled x"),
+                  ]
+                };
               }
 
               Adw.ActionRow {
@@ -139,6 +153,9 @@ template $PlotStylesWindow : Adw.Window {
 
               Adw.ComboRow tick_direction {
                 title: _("Tick Directions");
+                model: StringList {
+                  strings [_("Inwards"), _("Outwards")]
+                };
               }
 
               Adw.ActionRow {

@@ -11,7 +11,7 @@ template $ItemBox : Box {
     halign: start;
     hexpand: false;
     styles ["selection-mode"]
-    toggled => $on_toggle();
+    notify::active => $on_toggle();
   }
 
   Label label {
@@ -19,17 +19,6 @@ template $ItemBox : Box {
     margin-end: 6;
     halign: start;
     hexpand: true;
-  }
-
-  Button {
-    tooltip-text: _("Edit Item");
-    styles ["flat"]
-    clicked => $edit();
-    Image {
-      hexpand: false;
-      icon-name: "settings-symbolic";
-      pixel-size: 20;
-    }
   }
 
   Button color_button {
@@ -43,13 +32,40 @@ template $ItemBox : Box {
     }
   }
 
-  Button {
-    tooltip-text: _("Remove");
+  MenuButton {
+    icon-name: "view-more-symbolic";
+    popover: popover_menu;
     styles ["flat"]
-    clicked => $delete();
-    Image {
-      hexpand: false;
-      icon-name: "edit-delete-symbolic";
+  }
+}
+
+PopoverMenu popover_menu {
+  name: "popover_menu";
+  has-arrow: false;
+  menu-model: menu_app;
+}
+
+menu menu_app {
+  section {
+    label: _("Move item ");
+    display-hint: "inline-buttons";
+    item {
+      verb-icon: "down-symbolic";
+      action: "item_box.move_down";
+    }
+    item {
+      verb-icon: "up-symbolic";
+      action: "item_box.move_up";
+    }
+  }
+  section {
+    item {
+      label: _("Edit item");
+      action: "item_box.edit";
+    }
+    item {
+      label: _("Remove item");
+      action: "item_box.delete";
     }
   }
 }

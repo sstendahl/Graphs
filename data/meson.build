@@ -50,37 +50,61 @@ if compile_schemas.found()
        args: ['--strict', '--dry-run', meson.current_source_dir()])
 endif
 
+blueprints_source = [
+  'ui/add_equation_window.blp',
+  'ui/add_style.blp',
+  'ui/dialogs.blp',
+  'ui/edit_item.blp',
+  'ui/export_figure.blp',
+  'ui/figure_settings.blp',
+  'ui/import.blp',
+  'ui/help_overlay.blp',
+  'ui/item_box.blp',
+  'ui/preferences.blp',
+  'ui/style_box.blp',
+  'ui/style_color_box.blp',
+  'ui/style_window.blp',
+  'ui/transform_window.blp',
+  'ui/window.blp'
+]
+
+blueprints_ui = []
+blueprints_vala = []
+foreach b : blueprints_source
+	blueprints_ui += b.replace('.blp', '.ui')
+	blueprints_vala += b.replace('ui/', '') + '.vala'
+endforeach
+
 blueprints = custom_target('blueprints',
-  input: files(
-    'ui/add_equation_window.blp',
-    'ui/add_style.blp',
-    'ui/dialogs.blp',
-    'ui/edit_item.blp',
-    'ui/export_figure.blp',
-    'ui/import.blp',
-    'ui/help_overlay.blp',
-    'ui/item_box.blp',
-    'ui/plot_settings.blp',
-    'ui/plot_styles.blp',
-    'ui/preferences.blp',
-    'ui/rename_window.blp',
-    'ui/style_box.blp',
-    'ui/style_color_box.blp',
-    'ui/transform_window.blp',
-    'ui/window.blp'
-  ),
+  input: blueprints_source,
   output: '.',
   command: [find_program('blueprint-compiler'), 'batch-compile', '@OUTPUT@', '@CURRENT_SOURCE_DIR@', '@INPUT@'],
 )
 
-resources = gnome.compile_resources(
-  application_id,
-  application_id + '.gresource.xml',
-    dependencies: blueprints,
+blueprints_hack = custom_target('blueprints_hack',
+	input: blueprints,
+	output: blueprints_vala,
+	command: [find_program('touch'), '@OUTPUT@'],
+)
+
+gresource_name = application_id + '.gresource.xml'
+gresource_file = join_paths(meson.current_build_dir(), gresource_name)
+
+gresource = custom_target('gresource',
+  input: gresource_name,
+  output: gresource_name,
+  command: ['cp', '@INPUT@', '@OUTPUT@'],
+  depends: blueprints,
+)
+
+gresource_bundle = gnome.compile_resources(
+  application_id, gresource,
+    dependencies: gresource,
 gresource_bundle: true,
       source_dir: meson.current_build_dir(),
          install: true,
      install_dir: pkgdatadir,
+          c_name: project_name,
 )
 
 scalable_dir = join_paths('icons', 'hicolor', 'scalable', 'apps')
