@@ -24,6 +24,15 @@ def on_figure_style_change(_a, _b, self):
     self.get_window().reload_canvas()
 
 
+def reload_item_menu(self):
+    while self.get_window().item_list.get_last_child() is not None:
+        self.get_window().item_list.remove(
+            self.get_window().item_list.get_last_child())
+
+    for item in self.get_data():
+        self.get_window().item_list.append(ItemBox(self, item))
+
+
 def on_items_change(data, _ignored, self):
     while self.get_window().item_list.get_last_child() is not None:
         self.get_window().item_list.remove(

@@ -2,7 +2,7 @@
 import contextlib
 from gettext import gettext as _
 
-from gi.repository import Adw, GLib, GObject, Gdk, Gtk
+from gi.repository import Adw, GLib, GObject, Gdk, Gio, Gtk
 
 from graphs import utilities
 from graphs.edit_item import EditItemWindow
@@ -43,6 +43,25 @@ class ItemBox(Gtk.Box):
 
         self.add_controller(self.drag_source)
         self.add_controller(self.drop_source)
+        self.add_actions()
+
+    def add_actions(self):
+        data = self.get_application().get_data()
+        action_list = ["edit", "delete"]
+        if data.index(self.item.key) > 0:
+            action_list += ["move_up"]
+        if data.index(self.item.key) + 1 < len(data.get_items()):
+            action_list += ["move_down"]
+        action_group = Gio.SimpleActionGroup()
+
+        # Set the action group for the widget
+        for name in action_list:
+            action = Gio.SimpleAction.new(name, None)
+            action.connect(
+                "activate", getattr(self, f"{name}"), self.item,
+            )
+            action_group.add_action(action)
+        self.insert_action_group("item_box", action_group)
 
     def on_dnd_drop(self, drop_target, value, _x, _y):
         # Handle the dropped data here
@@ -67,6 +86,28 @@ class ItemBox(Gtk.Box):
         self.provider.load_from_data(
             f"button {{ color: {item.color}; opacity: {item.alpha};}}", -1)
 
+    def move_up(self, _action, _shortcut, item):
+        data = self.get_application().get_data()
+        before_index = data.index(item.key)
+        top_data = data[before_index - 1]
+
+        data.change_position(item.key, top_data.key)
+        clipboard = self.get_application().get_clipboard()
+        clipboard.append((3, (before_index, data.index(item.key))))
+        clipboard.add()
+        self.get_application().get_view_clipboard().add()
+
+    def move_down(self, _action, _shortcut, item):
+        data = self.get_application().get_data()
+        before_index = data.index(item.key)
+        bottom_data = data[before_index + 1]
+
+        data.change_position(item.key, bottom_data.key)
+        clipboard = self.get_application().get_clipboard()
+        clipboard.append((3, (before_index, data.index(item.key))))
+        clipboard.add()
+        self.get_application().get_view_clipboard().add()
+
     @Gtk.Template.Callback()
     def on_toggle(self, _a, _b):
         new_value = self.check_button.get_active()
@@ -88,16 +129,15 @@ class ItemBox(Gtk.Box):
                 self.props.item.set_color(color)
                 self.get_application().get_clipboard().add()
 
-    @Gtk.Template.Callback()
-    def delete(self, _button):
+    def delete(self, _action, _shortcut, _widget):
         name = self.props.item.props.name
         self.get_application().get_data().delete_items([self.props.item])
-        self.get_application().get_window().add_toast(
-            _("Deleted {name}").format(name=name),
-        )
+        toast = Adw.Toast.new(_("Deleted {name}").format(name=name))
+        toast.set_button_label("Undo")
+        toast.set_action_name("app.undo")
+        self.get_application().get_window().toast_overlay.add_toast(toast)
 
-    @Gtk.Template.Callback()
-    def edit(self, _button):
+    def edit(self, _action, _shortcut, _widget):
         EditItemWindow(self.get_application(), self.props.item)
 
     @GObject.Property(type=str, default="")

@@ -8,7 +8,7 @@ Classes:
 import logging
 from gettext import gettext as _
 
-from gi.repository import Adw, GLib, GObject, Gio, Graphs
+from gi.repository import GLib, Gio, Graphs
 
 from graphs import actions, migrate, ui
 from graphs.clipboard import DataClipboard, ViewClipboard
@@ -38,7 +38,7 @@ class GraphsApplication(Graphs.Application):
     def __init__(self, application_id, **kwargs):
         """Init the application."""
         settings = Gio.Settings(application_id)
-        migrate.migrate_config(self)
+        migrate.migrate_config(settings)
         figure_settings = \
             Graphs.FigureSettings.new(settings.get_child("figure"))
         super().__init__(
