@@ -9,7 +9,7 @@ import copy
 
 from gi.repository import GObject
 
-from graphs import item, ui, utilities
+from graphs import item, utilities
 
 
 class Data(GObject.Object):
@@ -155,8 +155,7 @@ class Data(GObject.Object):
         else:
             items[index2:index1 + 1] = \
                 [self._items[key2]] + items[index2:index1]
-        self.set_items(items)
-        ui.reload_item_menu(self.get_application())
+        self.items = items
 
     def add_items(self, items: list):
         """
