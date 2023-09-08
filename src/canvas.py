@@ -105,15 +105,6 @@ class Canvas(FigureCanvas):
         self._legend_position = misc.LEGEND_POSITIONS[0]
         self._handles = []
 
-        for prop in dir(self.get_application().get_figure_settings().props):
-            if prop not in ["use_custom_style", "custom_style"]:
-                self.get_application().get_figure_settings().bind_property(
-                    prop, self, prop, 1 | 2,
-                )
-        self.get_application().get_data().bind_property(
-            "items", self, "items", 2,
-        )
-
     def get_application(self):
         """Get application property."""
         return self.props.application
