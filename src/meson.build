@@ -45,6 +45,8 @@ graphs_lib = shared_library(
     'clipboard.vala',
     'data.vala',
     'figure_settings.vala',
+    'interfaces.vala',
+    'item.vala',
     'misc.vala',
     'preferences.vala',
     'utilities.vala',
