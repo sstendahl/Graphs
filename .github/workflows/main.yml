@@ -7,12 +7,30 @@ on:
       - main
 name: CI
 jobs:
+  test:
+    name: Build and test
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out
+      uses: actions/checkout@v3
+    - name: Install Dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y dbus libgirepository1.0 libgirepository1.0-dev gobject-introspection libglib2.0-dev desktop-file-utils meson gettext python3-matplotlib python3-scipy gobject-introspection
+        pip3 install pytest PyGObject pgi
+        git clone https://gitlab.gnome.org/jwestman/blueprint-compiler.git            
+        meson build_blueprint blueprint-compiler
+        sudo meson --prefix=/usr build_blueprint install
+    - name: Build and test
+      run: |
+        meson setup _build
+        meson test -C _build -v pytest
   flatpak:
     name: Flatpak
     runs-on: ubuntu-latest
     container:
       image: bilelmoussaoui/flatpak-github-actions:gnome-44
-      options: --privileged
+      options: --privileged--
     strategy:
       matrix:
         arch: [x86_64, aarch64]
