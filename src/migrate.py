@@ -48,11 +48,11 @@ def migrate_config(settings):
         _migrate_import_params(settings, import_file)
 
 
-def _migrate_config(settings, config_file):
+def _migrate_config(settings_, config_file):
     config = file_io.parse_json(config_file)
     for old_key, (category, key) in CONFIG_MIGRATION_TABLE.items():
         with contextlib.suppress(KeyError):
-            settings = settings.get_child(category)
+            settings = settings_.get_child(category)
             value = config[old_key]
             if "scale" in key:
                 value = value.capitalize()
@@ -65,9 +65,9 @@ def _migrate_config(settings, config_file):
     config_file.delete(None)
 
 
-def _migrate_import_params(settings, import_file):
+def _migrate_import_params(settings_, import_file):
     for mode, params in file_io.parse_json(import_file).items():
-        settings = settings.get_child("import-params").get_child(mode)
+        settings = settings_.get_child("import-params").get_child(mode)
         for key, value in params.items():
             if key == "separator":
                 settings.set_string(key, f"{value} ")
