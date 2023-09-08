@@ -47,16 +47,17 @@ PopoverMenu popover_menu {
 
 menu menu_app {
   section {
+    label: _("Move item ");
+    display-hint: "inline-buttons";
     item {
-      label: _("Move up");
-      action: "item_box.move_up";
-    }
-    item {
-      label: _("Move down");
+      verb-icon: "down-symbolic";
       action: "item_box.move_down";
     }
+    item {
+      verb-icon: "up-symbolic";
+      action: "item_box.move_up";
+    }
   }
-
   section {
     item {
       label: _("Edit item");
