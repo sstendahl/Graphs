@@ -8,7 +8,7 @@ Classes:
 import logging
 from gettext import gettext as _
 
-from gi.repository import Adw, GLib, GObject, Gio, Graphs
+from gi.repository import GLib, Gio, Graphs
 
 from graphs import actions, migrate, ui
 from graphs.clipboard import DataClipboard, ViewClipboard
