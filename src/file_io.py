@@ -104,7 +104,7 @@ def import_from_xry(self, import_settings):
 
 def import_from_columns(self, import_settings):
     item_ = Item.new(self, name=import_settings.name)
-    columns_params = self.settings.get_child(
+    columns_params = self.get_settings().get_child(
         "import-params").get_child("columns")
     column_x = columns_params.get_int("column-x")
     column_y = columns_params.get_int("column-y")
