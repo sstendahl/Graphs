@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: bilelmoussaoui/flatpak-github-actions:gnome-44
-      options: --privileged--
+      options: --privileged
     strategy:
       matrix:
         arch: [x86_64, aarch64]
