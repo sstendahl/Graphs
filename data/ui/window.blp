@@ -4,6 +4,81 @@ using Adw 1;
 template $GraphsWindow : Adw.ApplicationWindow {
   default-width: 1200;
   default-height: 700;
+  ShortcutController {
+    Shortcut {
+      trigger: "<primary>q";
+      action: "action(app.quit)";
+    }
+    Shortcut {
+      trigger: "<primary>comma";
+      action: "action(app.preferences)";
+    }
+    Shortcut {
+      trigger: "<primary><alt>comma";
+      action: "action(app.figure_settings)";
+    }
+    Shortcut {
+      trigger: "<primary>N";
+      action: "action(app.add_data)";
+    }
+    Shortcut {
+      trigger: "<primary><alt>N";
+      action: "action(app.add_equation)";
+    }
+    Shortcut {
+      trigger: "<primary>A";
+      action: "action(app.select_all)";
+    }
+    Shortcut {
+      trigger: "<primary><shift>A";
+      action: "action(app.select_none)";
+    }
+    Shortcut {
+      trigger: "<primary>Z";
+      action: "action(app.undo)";
+    }
+    Shortcut {
+      trigger: "<primary><shift>Z";
+      action: "action(app.redo)";
+    }
+    Shortcut {
+      trigger: "<primary>0";
+      action: "action(app.optimize_limits)";
+    }
+    Shortcut {
+      trigger: "<alt>Z";
+      action: "action(app.view_back)";
+    }
+    Shortcut {
+      trigger: "<alt><shift>Z";
+      action: "action(app.view_forward)";
+    }
+    Shortcut {
+      trigger: "<primary><shift>E";
+      action: "action(app.export_data)";
+    }
+    Shortcut {
+      trigger: "<primary>E";
+      action: "action(app.export_figure)";
+    }
+    Shortcut {
+      trigger: "<primary>period";
+      action: "action(app.styles)";
+    }
+    Shortcut {
+      trigger: "<primary>S";
+      action: "action(app.save_project)";
+    }
+    Shortcut {
+      trigger: "<primary>O";
+      action: "action(app.open_project)";
+    }
+    Shortcut {
+      trigger: "Delete";
+      action: "action(app.delete_selected)";
+    }
+  }
+
   Box {
     orientation: vertical;
     Adw.HeaderBar {
@@ -204,23 +279,29 @@ template $GraphsWindow : Adw.ApplicationWindow {
         ScrolledWindow {
           hscrollbar-policy: never;
           Viewport {
-            Adw.PreferencesGroup {
+            Box {
+              orientation: vertical;
               vexpand: true;
               hexpand: false;
+              spacing: 12;
               margin-start: 12;
               margin-end: 12;
               margin-top: 12;
               margin-bottom: 12;
-
-              Adw.ExpanderRow {
-                title: _("Adjust Data");
+              Label {
+                halign: start;
+                hexpand: true;
+                label: _("Adjust Data");
+                styles ["heading"]
+              }
+              Adw.PreferencesGroup {
                 Grid {
                   column-spacing: 10;
                   row-spacing: 10;
-                  margin-start: 10;
-                  margin-end: 10;
-                  margin-top: 10;
-                  margin-bottom: 10;
+                  margin-start: 12;
+                  margin-end: 12;
+                  margin-top: 12;
+                  margin-bottom:12;
                   Button shift_vertically_button {
                     hexpand: true;
                     layout {
@@ -302,7 +383,7 @@ template $GraphsWindow : Adw.ApplicationWindow {
 
                   Button cut_button {
                     hexpand: true;
-                    sensitive: bind shift_vertically_button.sensitive;
+                    sensitive: bind select_button.active;
                     layout {
                       column: 1;
                       row: 2;
@@ -316,17 +397,23 @@ template $GraphsWindow : Adw.ApplicationWindow {
                     clicked => $cut();
                   }
                 }
+                styles ["card"]
               }
-
-              Adw.ExpanderRow {
-                title: _("Mathematical Operations");
+              Label {
+                margin-top: 6;
+                halign: start;
+                hexpand: true;
+                label: _("Mathematical Operations");
+                styles ["heading"]
+              }
+              Adw.PreferencesGroup {
                 Grid {
                   column-spacing: 10;
                   row-spacing: 10;
-                  margin-start: 10;
-                  margin-end: 10;
-                  margin-top: 10;
-                  margin-bottom: 10;
+                  margin-start: 12;
+                  margin-end: 12;
+                  margin-top: 12;
+                  margin-bottom:12;
                   Button {
                     hexpand: true;
                     sensitive: bind shift_vertically_button.sensitive;
@@ -408,18 +495,23 @@ template $GraphsWindow : Adw.ApplicationWindow {
                     clicked => $transform();
                   }
                 }
+                styles ["card"]
               }
-
-              Adw.ExpanderRow {
-                title: _("Translate and Multiply");
-
+              Label {
+                halign: start;
+                margin-top: 6;
+                hexpand: true;
+                label: _("Translate and Multiply");
+                styles ["heading"]
+              }
+              Adw.PreferencesGroup {
                 Grid {
                   column-spacing: 10;
                   row-spacing: 10;
-                  margin-start: 10;
-                  margin-end: 10;
-                  margin-top: 10;
-                  margin-bottom: 10;
+                  margin-start: 12;
+                  margin-end: 12;
+                  margin-top: 12;
+                  margin-bottom:12;
                   Entry translate_x_entry {
                     max-width-chars: 6;
                     hexpand: true;
@@ -512,6 +604,7 @@ template $GraphsWindow : Adw.ApplicationWindow {
                     }
                   }
                 }
+                styles ["card"]
               }
             }
           }
@@ -525,10 +618,7 @@ template $GraphsWindow : Adw.ApplicationWindow {
 
       [content]
       Adw.ToastOverlay toast_overlay {
-        margin-top: 5;
-        margin-bottom: 5;
-        margin-start: 5;
-        margin-end: 5;
+        focusable: true;
         height-request: 200;
         width-request: 200;
       }
@@ -546,10 +636,10 @@ menu primary_menu {
     item (_("Export Figure…"), "app.export_figure")
   }
   section {
-    item (_("Styles"), "app.plot_styles")
+    item (_("Styles"), "app.styles")
   }
   section {
-    item (_("Figure Settings"), "app.plot_settings")
+    item (_("Figure Settings"), "app.figure_settings")
     item (_("Preferences"), "app.preferences")
   }
   section {
@@ -578,53 +668,113 @@ menu view_menu {
     submenu {
       label: _("Top X Scale");
       item {
-        label: _("Logarithmic");
-        action: "app.change-top-scale";
-        target: "log";
-      }
-      item {
         label: _("Linear");
         action: "app.change-top-scale";
-        target: "linear";
+        target: "0";
+      }
+      item {
+        label: _("Logarithmic");
+        action: "app.change-top-scale";
+        target: "1";
+      }
+      item {
+        label: _("Radians");
+        action: "app.change-top-scale";
+        target: "2";
+      }
+      item {
+        label: _("Square Root");
+        action: "app.change-top-scale";
+        target: "3";
+      }
+      item {
+        label: _("Inverse");
+        action: "app.change-top-scale";
+        target: "4";
       }
     }
     submenu {
       label: _("Bottom X Scale");
       item {
-        label: _("Logarithmic");
-        action: "app.change-bottom-scale";
-        target: "log";
-      }
-      item {
         label: _("Linear");
         action: "app.change-bottom-scale";
-        target: "linear";
+        target: "0";
+      }
+      item {
+        label: _("Logarithmic");
+        action: "app.change-bottom-scale";
+        target: "1";
+      }
+      item {
+        label: _("Radians");
+        action: "app.change-bottom-scale";
+        target: "2";
+      }
+      item {
+        label: _("Square Root");
+        action: "app.change-bottom-scale";
+        target: "3";
+      }
+      item {
+        label: _("Inverse");
+        action: "app.change-bottom-scale";
+        target: "4";
       }
     }
     submenu {
       label: _("Left Y Scale");
       item {
-        label: _("Logarithmic");
-        action: "app.change-left-scale";
-        target: "log";
-      }
-      item {
         label: _("Linear");
         action: "app.change-left-scale";
-        target: "linear";
+        target: "0";
+      }
+      item {
+        label: _("Logarithmic");
+        action: "app.change-left-scale";
+        target: "1";
+      }
+      item {
+        label: _("Radians");
+        action: "app.change-left-scale";
+        target: "2";
+      }
+      item {
+        label: _("Square Root");
+        action: "app.change-left-scale";
+        target: "3";
+      }
+      item {
+        label: _("Inverse");
+        action: "app.change-left-scale";
+        target: "4";
       }
     }
     submenu {
       label: _("Right Y Scale");
       item {
-        label: _("Logarithmic");
-        action: "app.change-right-scale";
-        target: "log";
-      }
-      item {
         label: _("Linear");
         action: "app.change-right-scale";
-        target: "linear";
+        target: "0";
+      }
+      item {
+        label: _("Logarithmic");
+        action: "app.change-right-scale";
+        target: "1";
+      }
+      item {
+        label: _("Radians");
+        action: "app.change-right-scale";
+        target: "2";
+      }
+      item {
+        label: _("Square Root");
+        action: "app.change-right-scale";
+        target: "3";
+      }
+      item {
+        label: _("Inverse");
+        action: "app.change-right-scale";
+        target: "4";
       }
     }
   }

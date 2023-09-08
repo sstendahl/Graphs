@@ -1,21 +1,25 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 from gi.repository import Gio
 
-from graphs import file_io, graphs, item, migrate, plotting_tools, ui
-from graphs.plot_settings import FigureSettings
+from graphs import file_io, migrate, ui
 
 
 def save_project(self, file: Gio.File):
+    figure_settings = self.get_figure_settings()
+    figure_settings_dict = {
+        key: figure_settings.get_property(key)
+        for key in dir(figure_settings.props)
+    }
     file_io.write_json(file, {
         "version": self.version,
-        "data": [item.to_dict() for item in self.datadict.values()],
-        "figure-settings": self.props.figure_settings.to_dict(),
-        "data-clipboard": self.props.clipboard.props.clipboard,
-        "data-clipboard-position": self.props.clipboard.props.clipboard_pos,
-        "view-clipboard": self.props.view_clipboard.props.clipboard,
+        "data": self.get_data().to_list(),
+        "figure-settings": figure_settings_dict,
+        "data-clipboard": self.get_clipboard().get_clipboard(),
+        "data-clipboard-position": self.get_clipboard().get_clipboard_pos(),
+        "view-clipboard": self.get_view_clipboard().get_clipboard(),
         "view-clipboard-position":
-            self.props.view_clipboard.props.clipboard_pos,
-    })
+            self.get_view_clipboard().get_clipboard_pos(),
+    }, False)
 
 
 def load_project(self, file: Gio.File):
@@ -24,29 +28,19 @@ def load_project(self, file: Gio.File):
     except UnicodeDecodeError:
         project = migrate.migrate_project(file)
 
-    self.props.clipboard.clear()
-    self.props.view_clipboard.clear()
-    self.props.figure_settings = \
-        FigureSettings.new_from_dict(project["figure-settings"])
-    items = [item.new_from_dict(d) for d in project["data"]]
-    self.props.datadict = {item.key: item for item in items}
+    self.get_clipboard().clear()
+    self.get_view_clipboard().clear()
+    figure_settings = self.get_figure_settings()
+    for key, value in project["figure-settings"].items():
+        figure_settings.set_property(key, value)
+    self.get_data().set_from_list(project["data"])
 
-    self.props.clipboard.props.clipboard = project["data-clipboard"]
-    self.props.clipboard.props.clipboard_pos = \
-        project["data-clipboard-position"]
-
-    # migrated project
-    if project["view-clipboard"] is None:
-        plotting_tools.optimize_limits(self)
-        self.props.view_clipboard.add()
-    else:
-        clipboard = project["view-clipboard"]
-        clipboard_pos = project["view-clipboard-position"]
-        self.props.view_clipboard.props.clipboard = clipboard
-        self.props.view_clipboard.props.clipboard_pos = clipboard_pos
-        self.canvas.limits = clipboard[-1]
-    self.canvas.apply_limits()
-    ui.reload_item_menu(self)
-    ui.enable_data_dependent_buttons(self)
+    self.get_clipboard().props.data_copy = self.get_data().to_dict()
+    self.get_clipboard().set_clipboard(project["data-clipboard"])
+    self.get_clipboard().set_clipboard_pos(project["data-clipboard-position"])
+    self.get_view_clipboard().set_clipboard(project["view-clipboard"])
+    self.get_view_clipboard().set_clipboard_pos(
+        project["view-clipboard-position"],
+    )
     ui.set_clipboard_buttons(self)
-    graphs.reload(self)
+    self.get_window().reload_canvas()

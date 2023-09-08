@@ -6,103 +6,9 @@ from gettext import gettext as _
 
 from gi.repository import GLib, Gdk, Gio, Gtk
 
-from graphs.item import Item, TextItem
+from matplotlib import pyplot
 
 import numpy
-
-
-def change_key_position(dictionary, key1, key2):
-    """Change key position of key2 to that of key1."""
-    keys = list(dictionary.keys())
-    values = list(dictionary.values())
-    index1 = keys.index(key2)
-    index2 = keys.index(key1)
-    # Check if target key is lower in the order, if so we can put the old key
-    # below the target key. Otherwise put it above.
-    if index1 < index2:
-        keys[index1:index2 + 1] = keys[index1 + 1:index2 + 1] + [key2]
-        values[index1:index2 + 1] = values[index1 + 1:index2 + 1] + \
-            [dictionary[key2]]
-    else:
-        keys[index2:index1 + 1] = [key2] + keys[index2:index1]
-        values[index2:index1 + 1] = [dictionary[key2]] + values[index2:index1]
-    return dict(zip(keys, values))
-
-
-def get_used_axes(self):
-    used_axes = {
-        "left": False,
-        "right": False,
-        "top": False,
-        "bottom": False,
-    }
-    items = {
-        "left": [],
-        "right": [],
-        "top": [],
-        "bottom": [],
-    }
-    for item in self.datadict.values():
-        if item.yposition == "left":
-            used_axes["left"] = True
-            items["left"].append(item)
-        if item.yposition == "right":
-            used_axes["right"] = True
-            items["right"].append(item)
-        if item.xposition == "top":
-            used_axes["top"] = True
-            items["top"].append(item)
-        if item.xposition == "bottom":
-            used_axes["bottom"] = True
-            items["bottom"].append(item)
-    return used_axes, items
-
-
-def set_chooser(chooser, choice):
-    """Set the value of a dropdown menu to the choice parameter string"""
-    for index, item in enumerate(chooser.untranslated_items):
-        if item == choice:
-            chooser.set_selected(index)
-
-
-def populate_chooser(chooser, chooser_list, translate=True):
-    """Fill the dropdown menu with the strings in a chooser_list"""
-    if chooser.get_model():
-        model = chooser.get_model()
-        for _item in model:
-            model.remove(0)
-    else:
-        model = Gtk.StringList()
-
-    chooser.untranslated_items = []
-    for item in chooser_list:
-        chooser.untranslated_items.append(item)
-        if translate:
-            item = _(item)
-        model.append(item)
-    chooser.set_model(model)
-
-
-def get_selected_chooser_item(chooser):
-    return chooser.untranslated_items[int(chooser.get_selected())]
-
-
-def get_all_names(self):
-    """Get a list of all filenames present in the datadict dictionary"""
-    return [item.name for item in self.datadict.values()]
-
-
-def get_all_keys(self):
-    """Get a list of all item keys present in the datadict dictionary"""
-    return [item.key for item in self.datadict.values()]
-
-
-def get_dict_by_value(dictionary, value):
-    """Return the key associated with the given value in the dictionary"""
-    for key, dict_value in dictionary.items():
-        if dict_value == value:
-            return key
-    return "none"
 
 
 def get_font_weight(font_name):
@@ -132,10 +38,6 @@ def hex_to_rgba(hex_str):
     return rgba
 
 
-def lookup_color(self, color):
-    return self.main_window.get_style_context().lookup_color(color)[1]
-
-
 def rgba_to_hex(rgba):
     return "#{:02x}{:02x}{:02x}".format(
         round(rgba.red * 255),
@@ -155,50 +57,69 @@ def swap(str1):
     return str1.replace("third", ".")
 
 
-def get_value_at_fraction(fraction, start, end):
+def get_value_at_fraction(fraction, start, end, scale):
     """
     Obtain the selected value of an axis given at which percentage (in terms of
     fraction) of the length this axis is selected given the start and end range
-    of this axis
+    of this axis.
     """
-    log_start = numpy.log10(start)
-    log_end = numpy.log10(end)
-    log_range = log_end - log_start
-    log_value = log_start + log_range * fraction
-    return pow(10, log_value)
+    if scale == 0 or scale == 2:  # Linear or radian scale
+        return start + fraction * (end - start)
+    elif scale == 1:  # Logarithmic scale
+        log_start = numpy.log10(start)
+        log_end = numpy.log10(end)
+        log_range = log_end - log_start
+        log_value = log_start + log_range * fraction
+        return pow(10, log_value)
+    elif scale == 3:  # Square root scale
+        # Use min limit as defined by scales.py
+        start = max(0, start)
+        sqrt_start = numpy.sqrt(start)
+        sqrt_end = numpy.sqrt(end)
+        sqrt_range = sqrt_end - sqrt_start
+        sqrt_value = sqrt_start + sqrt_range * fraction
+        return sqrt_value * sqrt_value
+    elif scale == 4:  # Inverted scale (1/X)'
+        # Use min limit as defined by scales.py if min equals zero
+        start = end / 10 if end > 0 and start <= 0 else start
+        scaled_range = 1 / start - 1 / end
+
+        # Calculate the inverse-scaled value at the given percentage
+        return 1 / (1 / end + fraction * scaled_range)
 
 
-def get_fraction_at_value(value, start, end):
+def get_fraction_at_value(value, start, end, scale):
     """
     Obtain the fraction of the total length of the selected axis a specific
     value corresponds to given the start and end range of the axis.
     """
-    log_start = numpy.log10(start)
-    log_end = numpy.log10(end)
-    log_value = numpy.log10(value)
-    log_range = log_end - log_start
-    return (log_value - log_start) / log_range
+    if scale == 0 or scale == 2:  # Linear or radian scale
+        return (value - start) / (end - start)
+    elif scale == 1:  # Logarithmic scale
+        log_start = numpy.log10(start)
+        log_end = numpy.log10(end)
+        log_value = numpy.log10(value)
+        log_range = log_end - log_start
+        return (log_value - log_start) / log_range
+    elif scale == 3:  # Square root scale
+        # Use min limit as defined by scales.py
+        start = max(0, start)
+        sqrt_start = numpy.sqrt(start)
+        sqrt_end = numpy.sqrt(end)
+        sqrt_value = numpy.sqrt(value)
+        sqrt_range = sqrt_end - sqrt_start
+        return (sqrt_value - sqrt_start) / sqrt_range
+    elif scale == 4:  # Inverted scale (1/X)
+        # Use min limit as defined by scales.py if min equals zero
+        start = end / 10 if end > 0 and start <= 0 else start
+        scaled_range = 1 / start - 1 / end
+
+        # Calculate the scaled percentage corresponding to the data point
+        scaled_data_point = 1 / value
+        return (scaled_data_point - 1 / end) / scaled_range
 
 
-def set_attributes(new_object, template):
-    """
-    Sets the attributes of `new_object` to match those of `template`.
-    This function sets the attributes of `new_object` to the values of the
-    attributes in `template` if they don"t already exist in `new_object`.
-    Additionally, it removes any attributes from `new_object` that are
-    not present in `template`.
-    """
-    for attribute in template.__dict__:
-        if not hasattr(new_object, attribute):
-            setattr(new_object, attribute, getattr(template, attribute))
-
-    delete_attributes = [attribute for attribute in new_object.__dict__
-                         if not hasattr(template, attribute)]
-    for attribute in delete_attributes:
-        delattr(new_object, attribute)
-
-
-def shorten_label(label, max_length=20):
+def shorten_label(label, max_length=19):
     if len(label) > max_length:
         label = f"{label[:max_length]}…"
     return label
@@ -223,17 +144,6 @@ def create_file_filters(filters, add_all=True):
         file_filter.add_pattern("*")
         list_store.append(file_filter)
     return list_store
-
-
-def check_item(self, item):
-    if isinstance(item, Item):
-        new_item = Item(self)
-    elif isinstance(item, TextItem):
-        new_item = TextItem(self)
-    for attribute in new_item.__dict__:
-        if hasattr(item, attribute):
-            setattr(new_item, attribute, getattr(item, attribute))
-    return new_item
 
 
 def string_to_float(string: str):
@@ -261,11 +171,90 @@ def preprocess(string: str):
         expression = match.group(1)  # Get the content inside the brackets
         return f"(({expression})*{float(numpy.pi)}/180)"
 
+    def convert_cot(match):
+        expression = match.group(1)  # Get the content inside the brackets
+        return f"1/(tan({expression}))"
+
+    def convert_sec(match):
+        expression = match.group(1)  # Get the content inside the brackets
+        return f"1/(cos({expression}))"
+
+    def convert_csc(match):
+        expression = match.group(1)  # Get the content inside the brackets
+        return f"1/(sin({expression}))"
+
     string = string.replace("pi", f"({float(numpy.pi)})")
     string = string.replace("^", "**")
+    string = re.sub(r"cot\((.*?)\)", convert_cot, string)
+    string = re.sub(r"sec\((.*?)\)", convert_sec, string)
+    string = re.sub(r"csc\((.*?)\)", convert_csc, string)
     string = re.sub(r"d\((.*?)\)", convert_degrees, string)
     return string.lower()
 
 
 def get_filename(file: Gio.File):
     return file.query_info("standard::*", 0, None).get_display_name()
+
+
+def optimize_limits(self):
+    figure_settings = self.get_figure_settings()
+    axes = [
+        [direction, False, [], [],
+         figure_settings.get_property(f"{direction}_scale")]
+        for direction in ["bottom", "left", "top", "right"]
+    ]
+    for item in self.get_data():
+        if item.props.item_type != "Item":
+            continue
+        for index in item.xposition * 2, 1 + item.yposition * 2:
+            axes[index][1] = True
+            data = numpy.asarray(item.ydata if index % 2 else item.xdata)
+            data = data[numpy.isfinite(data)]
+            nonzero_data = numpy.array([value for value in data if value != 0])
+            axes[index][2].append(
+                nonzero_data.min()
+                if axes[index][4] in (1, 4) and len(nonzero_data) > 0
+                else data.min(),
+            )
+            axes[index][3].append(data.max())
+
+    for count, (direction, used, min_all, max_all, scale) in enumerate(axes):
+        if not used:
+            continue
+        min_all = min(min_all)
+        max_all = max(max_all)
+        if scale != 1:  # For non-logarithmic scales
+            span = max_all - min_all
+            # 0.05 padding on y-axis, 0.015 padding on x-axis
+            padding_factor = 0.05 if count % 2 else 0.015
+            max_all += padding_factor * span
+
+            # For inverse scale, calculate padding using a factor
+            min_all = (min_all - padding_factor * span if scale != 4
+                       else min_all * 0.99)
+        else:  # Use different scaling type for logarithmic scale
+            # Use padding factor of 2 for y-axis, 1.025 for x-axis
+            padding_factor = 2 if count % 2 else 1.025
+            min_all *= 1 / padding_factor
+            max_all *= padding_factor
+        figure_settings.set_property(f"min_{direction}", min_all)
+        figure_settings.set_property(f"max_{direction}", max_all)
+    self.get_view_clipboard().add()
+
+
+def get_next_color(items):
+    """Get the color that is to be used for the next data set"""
+    color_cycle = pyplot.rcParams["axes.prop_cycle"].by_key()["color"]
+    used_colors = []
+    for item in items:
+        used_colors.append(item.color)
+        # If we've got all colors once, remove those from used_colors so we
+        # can loop around
+        if set(used_colors) == set(color_cycle):
+            for color in color_cycle:
+                used_colors.remove(color)
+
+    for color in color_cycle:
+        if color not in used_colors:
+            return color
+    return "000000"

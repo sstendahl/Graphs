@@ -1,16 +1,23 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Main actions."""
-from graphs import graphs, plotting_tools, ui
+from gettext import gettext as _
+
+from gi.repository import Graphs
+
+from graphs import ui, utilities
 from graphs.add_equation import AddEquationWindow
 from graphs.export_figure import ExportFigureWindow
-from graphs.plot_settings import PlotSettingsWindow
-from graphs.plot_styles import PlotStylesWindow
-from graphs.preferences import PreferencesWindow
+from graphs.figure_settings import FigureSettingsWindow
+from graphs.styles import StylesWindow
 
 
 def toggle_sidebar(_action, _shortcut, self):
-    flap = self.main_window.sidebar_flap
+    flap = self.get_window().sidebar_flap
     flap.set_reveal_flap(not flap.get_reveal_flap())
+
+
+def set_mode(_action, _target, self, mode):
+    self.set_mode(mode)
 
 
 def quit_action(_action, _target, self):
@@ -22,11 +29,11 @@ def about_action(_action, _target, self):
 
 
 def preferences_action(_action, _target, self):
-    PreferencesWindow(self)
+    Graphs.PreferencesWindow.new(self)
 
 
-def plot_settings_action(_action, _target, self):
-    PlotSettingsWindow(self)
+def figure_settings_action(_action, _target, self):
+    FigureSettingsWindow(self)
 
 
 def add_data_action(_action, _target, self):
@@ -38,51 +45,37 @@ def add_equation_action(_action, _target, self):
 
 
 def select_all_action(_action, _target, self):
-    if not self.datadict:
-        return
-    for item in self.datadict.values():
+    for item in self.get_data():
         item.selected = True
-    graphs.refresh(self)
-    ui.reload_item_menu(self)
-    ui.enable_data_dependent_buttons(self)
+    self.get_clipboard().add()
 
 
 def select_none_action(_action, _target, self):
-    if not self.datadict:
-        return
-    for item in self.datadict.values():
+    for item in self.get_data():
         item.selected = False
-    graphs.refresh(self)
-    ui.reload_item_menu(self)
-    ui.enable_data_dependent_buttons(self)
+    self.get_clipboard().add()
 
 
 def undo_action(_action, _target, self):
-    self.props.clipboard.undo()
+    self.get_clipboard().undo()
 
 
 def redo_action(_action, _target, self):
-    self.props.clipboard.redo()
+    self.get_clipboard().redo()
 
 
 def optimize_limits_action(_action, _target, self):
-    plotting_tools.optimize_limits(self)
-    graphs.refresh(self)
+    utilities.optimize_limits(self)
 
 
 def view_back_action(_action, _target, self):
-    if self.main_window.view_back_button.get_sensitive():
-        self.props.view_clipboard.undo()
-        self.canvas.apply_limits()
-        # Fix weird view on back
-        graphs.refresh(self)
+    if self.get_window().view_back_button.get_sensitive():
+        self.get_view_clipboard().undo()
 
 
 def view_forward_action(_action, _target, self):
-    if self.main_window.view_forward_button.get_sensitive():
-        self.props.view_clipboard.redo()
-        self.canvas.apply_limits()
-        graphs.refresh(self)
+    if self.get_window().view_forward_button.get_sensitive():
+        self.get_view_clipboard().redo()
 
 
 def export_data_action(_action, _target, self):
@@ -93,8 +86,8 @@ def export_figure_action(_action, _target, self):
     ExportFigureWindow(self)
 
 
-def plot_styles_action(_action, _target, self):
-    PlotStylesWindow(self)
+def styles_action(_action, _target, self):
+    StylesWindow(self)
 
 
 def save_project_action(_action, _target, self):
@@ -102,12 +95,12 @@ def save_project_action(_action, _target, self):
 
 
 def open_project_action(_action, _target, self):
-    if len(self.datadict) > 0:
+    if not self.get_data().is_empty():
         def on_response(_dialog, response):
             if response == "discard":
                 ui.open_project_dialog(self)
         dialog = ui.build_dialog("discard_data")
-        dialog.set_transient_for(self.main_window)
+        dialog.set_transient_for(self.get_window())
         dialog.connect("response", on_response)
         dialog.present()
         return
@@ -115,6 +108,7 @@ def open_project_action(_action, _target, self):
 
 
 def delete_selected_action(_action, _target, self):
-    for item in self.datadict.copy().values():
-        if item.selected:
-            graphs.delete_item(self, item.key, True)
+    items = [item for item in self.get_data() if item.selected]
+    names = ", ".join([item.name for item in items])
+    self.get_data().delete_items(items)
+    self.get_window().add_toast(_("Deleted {}").format(names))

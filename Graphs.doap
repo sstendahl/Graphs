@@ -27,6 +27,7 @@
   <bug-database rdf:resource="https://github.com/Sjoerd1993/Graphs/issues" />
 
   <programming-language>Python</programming-language>
+  <programming-language>Vala</programming-language>
 
   <platform>GTK 4</platform>
   <platform>Libadwaita</platform>

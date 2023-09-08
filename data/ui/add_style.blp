@@ -37,10 +37,7 @@ template $AddStyleWindow : Adw.Window {
       margin-top: 12;
       margin-bottom: 12;
       Adw.PreferencesGroup {
-      	margin-top: 12;
-	      margin-start: 26;
-	      margin-end: 26;
-        Adw.ComboRow plot_style_templates {
+        Adw.ComboRow style_templates {
           title: _("Template");
           notify::selected => $on_template_changed();
         }

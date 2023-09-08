@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
+import contextlib
 from gettext import gettext as _
 from pathlib import Path
 
@@ -6,27 +7,9 @@ from cycler import cycler
 
 from gi.repository import Adw, GLib, Gio, Gtk
 
-from graphs import file_io, graphs, misc, ui, utilities
+from graphs import file_io, ui, utilities
 
-
-def _styles_in_directory(directory):
-    enumerator = directory.enumerate_children("default::*", 0, None)
-    styles = {}
-    loop = True
-    while loop:
-        file_info = enumerator.next_file(None)
-        if file_info is None:
-            loop = False
-            continue
-        file = enumerator.get_child(file_info)
-        styles[Path(utilities.get_filename(file)).stem] = file
-    enumerator.close(None)
-    return styles
-
-
-def get_system_styles(self):
-    return _styles_in_directory(
-        Gio.File.new_for_uri("resource:///se/sjoerd/Graphs/styles"))
+from matplotlib import pyplot
 
 
 def get_user_styles(self):
@@ -34,7 +17,15 @@ def get_user_styles(self):
     directory = config_dir.get_child_for_display_name("styles")
     if not directory.query_exists(None):
         reset_user_styles(self)
-    styles = _styles_in_directory(directory)
+    styles = {}
+    enumerator = directory.enumerate_children("default::*", 0, None)
+    while 1:
+        file_info = enumerator.next_file(None)
+        if file_info is None:
+            break
+        file = enumerator.get_child(file_info)
+        styles[Path(utilities.get_filename(file)).stem] = file
+    enumerator.close(None)
     if not styles:
         reset_user_styles(self)
         styles = get_user_styles(self)
@@ -47,69 +38,74 @@ def reset_user_styles(self):
     if not directory.query_exists(None):
         directory.make_directory_with_parents(None)
     enumerator = directory.enumerate_children("default::*", 0, None)
-    loop = True
-    while loop:
+    while 1:
         file_info = enumerator.next_file(None)
         if file_info is None:
-            loop = False
-            continue
+            break
         file = enumerator.get_child(file_info)
         file.trash(None)
     enumerator.close(None)
-    for style, file in get_system_styles(self).items():
-        style_file = directory.get_child_for_display_name(f"{style}.mplstyle")
-        file.copy(style_file, 0, None)
+    enumerator = Gio.File.new_for_uri(
+        "resource:///se/sjoerd/Graphs/styles",
+    ).enumerate_children("default::*", 0, None)
+    while 1:
+        file_info = enumerator.next_file(None)
+        if file_info is None:
+            break
+        enumerator.get_child(file_info).copy(
+            directory.get_child_for_display_name(file_info.get_display_name()),
+            0, None,
+        )
+    enumerator.close(None)
 
 
-def get_system_preferred_style(self):
-    system_style = "adwaita"
-    if Adw.StyleManager.get_default().get_dark():
-        system_style += "-dark"
-    return get_system_styles(self)[system_style]
-
-
-def get_preferred_style(self):
-    if not self.plot_settings.use_custom_style:
-        return get_system_preferred_style(self)
-    stylename = self.plot_settings.custom_style
-    try:
-        return get_user_styles(self)[stylename]
-    except KeyError:
-        self.main_window.add_toast(
-            _(f"Plot style {stylename} does not exist "
-              "loading system preferred"))
-        self.plot_settings.use_custom_style = False
-        return get_system_preferred_style(self)
-
-
-def get_style(self, stylename):
+def get_style(file):
     """
-    Get the style based on the stylename.
+    Get the style based on the file.
 
     Returns a dictionary that has always valid keys. This is ensured through
     checking against the styles base (if available) and copying missing params
-    as needed. The property "axes.prop_cycle" is parsed into a cycler. All
-    other ones are treated as a string.
+    as needed.
     """
-    user_styles = get_user_styles(self)
-    system_styles = get_system_styles(self)
-    style = file_io.parse_style(user_styles[stylename])
-    try:
-        base_style = file_io.parse_style(system_styles[stylename])
-        for key, item in base_style.items():
-            if key not in style.keys():
-                style[key] = item
-    except KeyError:
-        pass
-    for key, item in file_io.parse_style(system_styles["adwaita"]).items():
-        if key not in style.keys():
-            style[key] = item
+    style = file_io.parse_style(file)
+    file = Gio.File.new_for_uri(
+        f"resource:///se/sjoerd/Graphs/styles/{style.name}.mplstyle",
+    )
+    if not file.query_exists():
+        file = Gio.File.new_for_uri(
+            "resource:///se/sjoerd/Graphs/styles/adwaita.mplstyle",
+        )
+    for key, value in file_io.parse_style(file).items():
+        if key not in style:
+            style[key] = value
     return style
+
+
+def update(self):
+    system_stylename = self.get_settings().get_string("system-style")
+    if Adw.StyleManager.get_default().get_dark():
+        system_stylename += "-dark"
+    figure_settings = self.get_figure_settings()
+    if figure_settings.get_use_custom_style():
+        stylename = figure_settings.get_custom_style()
+        try:
+            pyplot.rcParams.update(get_style(get_user_styles(self)[stylename]))
+            return
+        except KeyError:
+            self.get_window().add_toast(
+                _(f"Plot style {stylename} does not exist "
+                  "loading system preferred"))
+            figure_settings.set_custom_style(system_stylename)
+            figure_settings.set_use_custom_style(False)
+    pyplot.rcParams.update(file_io.parse_style(Gio.File.new_for_uri(
+        f"resource:///se/sjoerd/Graphs/styles/{system_stylename}.mplstyle",
+    )))
 
 
 STYLE_DICT = {
     "linestyle": ["lines.linestyle"],
     "linewidth": ["lines.linewidth"],
+    "markers": ["lines.marker"],
     "markersize": ["lines.markersize"],
     "tick_direction": ["xtick.direction", "ytick.direction"],
     "minor_ticks": ["xtick.minor.visible", "ytick.minor.visible"],
@@ -137,14 +133,22 @@ STYLE_DICT = {
     "background_color": ["axes.facecolor"],
     "outline_color": ["figure.facecolor", "figure.edgecolor"],
 }
+VALUE_DICT = {
+    "linestyle": ["none", "solid", "dotted", "dashed", "dashdot"],
+    "markers": ["none", ".", ",", "o", "v", "^", "<", ">", "8", "s", "p", "*",
+                "h", "H", "+", "x", "D", "d", "|", "_", "P", "X"],
+    "tick_direction": ["in", "out"],
+}
 
 
-@Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/plot_styles.ui")
-class PlotStylesWindow(Adw.Window):
-    __gtype_name__ = "PlotStylesWindow"
+@Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/style_window.ui")
+class StylesWindow(Adw.Window):
+    __gtype_name__ = "StylesWindow"
+
     leaflet = Gtk.Template.Child()
     styles_box = Gtk.Template.Child()
     line_colors_box = Gtk.Template.Child()
+
     style_name = Gtk.Template.Child()
     font_chooser = Gtk.Template.Child()
     linestyle = Gtk.Template.Child()
@@ -177,15 +181,10 @@ class PlotStylesWindow(Adw.Window):
 
     def __init__(self, application):
         super().__init__(application=application,
-                         transient_for=application.main_window)
+                         transient_for=application.get_window())
         self.styles = []
         self.style = None
         self.reload_styles()
-
-        # setup editor
-        utilities.populate_chooser(self.linestyle, misc.LINESTYLES)
-        utilities.populate_chooser(self.markers, sorted(misc.MARKERS.keys()))
-        utilities.populate_chooser(self.tick_direction, misc.TICK_DIRECTIONS)
 
         # color actions
         self.color_buttons = [
@@ -228,19 +227,16 @@ class PlotStylesWindow(Adw.Window):
 
     def load_style(self):
         self.style_name.set_text(self.style.name)
-        ui.load_values_from_dict(
-            self,
-            {key: self.style[value[0]] for key, value in STYLE_DICT.items()})
+        ui.load_values_from_dict(self, {
+            key: VALUE_DICT[key].index(self.style[value[0]])
+            if key in VALUE_DICT else self.style[value[0]]
+            for key, value in STYLE_DICT.items()
+        })
 
         # font
         font_description = self.font_chooser.get_font_desc().from_string(
             f"{self.style['font.sans-serif']} {self.style['font.size']}")
         self.font_chooser.set_font_desc(font_description)
-
-        # lines
-        utilities.set_chooser(
-            self.markers, utilities.get_dict_by_value(
-                misc.MARKERS, self.style["lines.marker"]))
 
         for button in self.color_buttons:
             button.provider.load_from_data(
@@ -256,6 +252,8 @@ class PlotStylesWindow(Adw.Window):
         new_values = ui.save_values_to_dict(self, STYLE_DICT.keys())
         for key, value in new_values.items():
             if value is not None:
+                with contextlib.suppress(KeyError):
+                    value = VALUE_DICT[key][value]
                 for item in STYLE_DICT[key]:
                     self.style[item] = value
 
@@ -274,10 +272,6 @@ class PlotStylesWindow(Adw.Window):
                     "figure.titlesize", "figure.labelsize"]:
             self.style[key] = font_size
 
-        # lines
-        self.style["lines.marker"] = \
-            misc.MARKERS[utilities.get_selected_chooser_item(self.markers)]
-
         # line colors
         line_colors = []
         for color_box, list_box in self.color_boxes.copy().items():
@@ -294,6 +288,11 @@ class PlotStylesWindow(Adw.Window):
             directory.get_child_for_display_name(f"{self.style.name}.mplstyle")
         file_io.write_style(file, self.style)
 
+        figure_settings = self.get_application().get_figure_settings()
+        if figure_settings.get_use_custom_style() \
+                and figure_settings.get_custom_style() == self.style.name:
+            self.get_application().get_window().reload_canvas()
+
     @Gtk.Template.Callback()
     def add_color(self, _button):
         box = StyleColorBox(self, "#000000")
@@ -302,13 +301,13 @@ class PlotStylesWindow(Adw.Window):
 
     @Gtk.Template.Callback()
     def add_style(self, _button):
-        AddStyleWindow(self.props.application, self)
+        AddStyleWindow(self.get_application(), self)
 
     @Gtk.Template.Callback()
     def reset_styles(self, _button):
         def on_accept(_dialog, response):
             if response == "reset":
-                reset_user_styles(self.props.application)
+                reset_user_styles(self.get_application())
                 self.reload_styles()
         body = _("Are you sure you want to reset to the default styles?")
         dialog = ui.build_dialog("reset_to_defaults")
@@ -322,9 +321,11 @@ class PlotStylesWindow(Adw.Window):
             self.styles.remove(box)
             self.styles_box.remove(self.styles_box.get_row_at_index(0))
         for style, file in \
-                sorted(get_user_styles(self.props.application).items()):
-            box = StyleBox(self, style)
-            if not file.equal(get_preferred_style(self.props.application)):
+                sorted(get_user_styles(self.get_application()).items()):
+            box = StyleBox(self, style, file)
+            figure_settings = self.get_application().get_figure_settings()
+            if not (figure_settings.get_use_custom_style()
+                    and figure_settings.get_custom_style() == self.style):
                 box.check_mark.hide()
                 box.label.set_hexpand(True)
             self.styles.append(box)
@@ -334,7 +335,6 @@ class PlotStylesWindow(Adw.Window):
     def on_close(self, _button):
         if self.style is not None:
             self.save_style()
-        graphs.reload(self.props.application)
         self.destroy()
 
     def on_color_change(self, button):
@@ -342,7 +342,7 @@ class PlotStylesWindow(Adw.Window):
         dialog = Gtk.ColorDialog()
         dialog.set_with_alpha(False)
         dialog.choose_rgba(
-            self.props.application.main_window, color, None,
+            self.get_application().get_window(), color, None,
             self.on_color_change_accept, button)
 
     def on_color_change_accept(self, dialog, result, button):
@@ -362,30 +362,27 @@ class StyleBox(Gtk.Box):
     label = Gtk.Template.Child()
     check_mark = Gtk.Template.Child()
 
-    def __init__(self, parent, style):
+    def __init__(self, parent, style, file):
         super().__init__()
-        self.parent = parent
-        self.style = style
+        self.parent, self.style, self.file = parent, style, file
         self.label.set_label(utilities.shorten_label(self.style, 50))
 
     @Gtk.Template.Callback()
     def on_edit(self, _button):
-        self.parent.style = get_style(
-            self.parent.props.application, self.style)
+        self.parent.style = get_style(self.file)
         self.parent.load_style()
         self.parent.leaflet.navigate(1)
         self.parent.set_title(self.style)
 
     @Gtk.Template.Callback()
     def on_delete(self, _button):
-        style = self.style
-
         def remove_style(_dialog, response):
             if response == "delete":
-                get_user_styles(
-                    self.parent.props.application)[style].trash(None)
+                self.file.trash(None)
                 self.parent.reload_styles()
-        body = _("Are you sure you want to delete the {} style?").format(style)
+        body = _(
+            "Are you sure you want to delete the {stylename} style?",
+        ).format(stylename=self.style)
         dialog = ui.build_dialog("delete_style")
         dialog.set_body(body)
         dialog.set_transient_for(self.parent)
@@ -425,41 +422,40 @@ class StyleColorBox(Gtk.Box):
 class AddStyleWindow(Adw.Window):
     __gtype_name__ = "AddStyleWindow"
     new_style_name = Gtk.Template.Child()
-    plot_style_templates = Gtk.Template.Child()
+    style_templates = Gtk.Template.Child()
 
     def __init__(self, application, parent):
         super().__init__(application=application,
                          transient_for=parent)
-        self.parent = parent
-        utilities.populate_chooser(
-            self.plot_style_templates,
-            sorted(get_user_styles(self.parent).keys()), False)
+        self.styles = get_user_styles(parent)
+        self.style_templates.set_model(Gtk.StringList.new(
+            sorted(self.styles.keys()),
+        ))
         self.present()
 
     @Gtk.Template.Callback()
     def on_template_changed(self, _a, _b):
-        selected_item = \
-            utilities.get_selected_chooser_item(self.plot_style_templates)
-        self.new_style_name.set_text(
-            _("{name} (copy)").format(name=selected_item))
+        self.new_style_name.set_text(_("{name} (copy)").format(
+            name=self.style_templates.get_selected_item().get_string(),
+        ))
 
     @Gtk.Template.Callback()
     def on_accept(self, _button):
-        style = utilities.get_selected_chooser_item(self.plot_style_templates)
         new_style = self.new_style_name.get_text()
         i = 0
-        user_styles = get_user_styles(self.props.application)
-        for style_1 in user_styles.keys():
+        for style_1 in self.styles.keys():
             if new_style == style_1:
                 while True:
                     i += 1
-                    if f"{new_style} ({i})" not in user_styles.keys():
+                    if f"{new_style} ({i})" not in self.styles.keys():
                         new_style = f"{new_style} ({i})"
                         break
         config_dir = utilities.get_config_directory()
         directory = config_dir.get_child_for_display_name("styles")
         destination = directory.get_child_for_display_name(
             f"{new_style}.mplstyle")
-        user_styles[style].copy(destination, 0, None)
-        self.parent.reload_styles()
+        self.styles[
+            self.style_templates.get_selected_item().get_string()
+        ].copy(destination, 0, None)
+        self.get_transient_for().reload_styles()
         self.close()
