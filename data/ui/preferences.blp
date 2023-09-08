@@ -1,23 +1,22 @@
 using Gtk 4.0;
 using Adw 1;
 
-template $PreferencesWindow : Adw.PreferencesWindow {
+template $GraphsPreferencesWindow : Adw.PreferencesWindow {
   can-navigate-back: true;
   modal: true;
-  close-request => $on_close();
 
   Adw.PreferencesPage {
     Adw.PreferencesGroup {
       title: _("General");
 
-      Adw.ComboRow general_center {
+      Adw.ComboRow center {
         title: _("Center Action Behaviour");
         model: StringList{
           strings [_("Center at maximum Y value"), _("Center at middle coordinate")]
         };
       }
 
-      Adw.ComboRow general_handle_duplicates {
+      Adw.ComboRow handle_duplicates {
         title: _("Handle Duplicate Items");
         model: StringList{
           strings [_("Auto-rename duplicates"), _("Ignore duplicates"), _("Add duplicates"), _("Override existing items")]
@@ -30,14 +29,14 @@ template $PreferencesWindow : Adw.PreferencesWindow {
 
       Adw.ActionRow {
         title: _("Hide Unselected Items");
-        activatable-widget: general_hide_unselected;
+        activatable-widget: hide_unselected;
 
-        Switch general_hide_unselected {
+        Switch hide_unselected {
           valign: center;
         }
       }
 
-      Adw.ComboRow general_x_position {
+      Adw.ComboRow x_position {
         title: _("Default X-Axis Position");
         subtitle: _("Which axis should a new item be displayed on");
         model: StringList{
@@ -45,7 +44,7 @@ template $PreferencesWindow : Adw.PreferencesWindow {
         };
       }
 
-      Adw.ComboRow general_y_position {
+      Adw.ComboRow y_position {
         title: _("Default Y-Axis Position");
         subtitle: _("Which axis should a new item be displayed on");
         model: StringList{
@@ -55,8 +54,8 @@ template $PreferencesWindow : Adw.PreferencesWindow {
 
       Adw.ActionRow {
         title: _("Override Item Properties on Style Change");
-        activatable-widget: general_override_item_properties;
-        Switch general_override_item_properties {
+        activatable-widget: override_item_properties;
+        Switch override_item_properties {
           valign: center;
         }
       }

@@ -2,11 +2,12 @@
 """Main actions."""
 from gettext import gettext as _
 
+from gi.repository import Graphs
+
 from graphs import ui, utilities
 from graphs.add_equation import AddEquationWindow
 from graphs.export_figure import ExportFigureWindow
 from graphs.figure_settings import FigureSettingsWindow
-from graphs.preferences import PreferencesWindow
 from graphs.styles import StylesWindow
 
 
@@ -28,7 +29,7 @@ def about_action(_action, _target, self):
 
 
 def preferences_action(_action, _target, self):
-    PreferencesWindow(self)
+    Graphs.PreferencesWindow.new(self)
 
 
 def figure_settings_action(_action, _target, self):
