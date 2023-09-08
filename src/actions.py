@@ -8,7 +8,6 @@ from graphs import ui, utilities
 from graphs.add_equation import AddEquationWindow
 from graphs.export_figure import ExportFigureWindow
 from graphs.figure_settings import FigureSettingsWindow
-from graphs.preferences import PreferencesWindow
 from graphs.styles import StylesWindow
 
 

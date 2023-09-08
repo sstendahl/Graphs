@@ -75,11 +75,16 @@ blueprints = custom_target('blueprints',
 gresource_name = application_id + '.gresource.xml'
 gresource_file = join_paths(meson.current_build_dir(), gresource_name)
 
-run_command('cp', gresource_name, gresource_file, check: true)
+gresource = custom_target('gresource',
+  input: gresource_name,
+  output: gresource_name,
+  command: ['cp', '@INPUT@', '@OUTPUT@'],
+  depends: blueprints,
+)
 
-gresource = gnome.compile_resources(
-  application_id, gresource_file,
-    dependencies: blueprints,
+gresource_bundle = gnome.compile_resources(
+  application_id, gresource,
+    dependencies: gresource,
 gresource_bundle: true,
       source_dir: meson.current_build_dir(),
          install: true,
