@@ -92,10 +92,6 @@ class Data(GObject.Object):
         """Get all managed items."""
         return list(self._items.values())
 
-    def get_item_by_index(self, index: int):
-        """Get item given an index."""
-        return list(self._items.values())[index]
-
     def set_items(self, items: list):
         """Set all managed items."""
         for item_ in items:

@@ -89,7 +89,7 @@ class ItemBox(Gtk.Box):
     def move_up(self, _action, _shortcut, item):
         data = self.get_application().get_data()
         before_index = data.index(item.key)
-        top_data = data.get_item_by_index(before_index - 1)
+        top_data = data[before_index - 1]
 
         data.change_position(item.key, top_data.key)
         clipboard = self.get_application().get_clipboard()
@@ -100,7 +100,7 @@ class ItemBox(Gtk.Box):
     def move_down(self, _action, _shortcut, item):
         data = self.get_application().get_data()
         before_index = data.index(item.key)
-        bottom_data = data.get_item_by_index(before_index + 1)
+        bottom_data = data[before_index + 1]
 
         data.change_position(item.key, bottom_data.key)
         clipboard = self.get_application().get_clipboard()
