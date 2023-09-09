@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
-from gi.repository import GObject
+from gi.repository import GObject, Graphs
 
 from graphs import misc, utilities
 
@@ -20,7 +20,7 @@ def new_for_item(canvas, item):
     return artist
 
 
-class ArtistWrapperBase(GObject.Object):
+class ArtistWrapperBase(GObject.Object, Graphs.ItemRenderable):
     __gtype_name__ = "ArtistWrapperBase"
     legend = False
 

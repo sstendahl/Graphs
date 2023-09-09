@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 import uuid
 
-from gi.repository import GObject
+from gi.repository import GObject, Graphs
 
 from graphs import misc, utilities
 
@@ -19,7 +19,7 @@ def new_from_dict(dictionary: dict):
     return cls(**dictionary)
 
 
-class ItemBase(GObject.Object):
+class ItemBase(GObject.Object, Graphs.ItemRenderable, Graphs.Item):
     __gtype_name__ = "ItemBase"
 
     name = GObject.Property(type=str, default="")
