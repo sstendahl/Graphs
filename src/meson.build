@@ -12,6 +12,7 @@ python.install_sources(
   files(
     'actions.py',
     'add_equation.py',
+    'application.py',
     'artist.py',
     'canvas.py',
     'clipboard.py',
@@ -23,7 +24,6 @@ python.install_sources(
     'file_io.py',
     'item.py',
     'item_box.py',
-    'main.py',
     'migrate.py',
     'misc.py',
     'operations.py',
