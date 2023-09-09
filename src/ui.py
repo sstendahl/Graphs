@@ -283,4 +283,6 @@ def reload_canvas(self):
     self.get_data().bind_property("items", canvas, "items", 2)
     win = self.get_window()
     win.set_canvas(canvas)
-    win.get_cut_button().bind_property("sensitive", canvas, "highlight_enabled", 2)
+    win.get_cut_button().bind_property(
+        "sensitive", canvas, "highlight_enabled", 2,
+    )
