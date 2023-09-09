@@ -39,6 +39,6 @@ class TransformWindow(Adw.Window):
         except (RuntimeError, KeyError) as exception:
             toast = _("{name}: Unable to do transformation, \
 make sure the syntax is correct").format(name=exception.__class__.__name__)
-            self.get_application().get_window().add_toast(toast)
+            self.get_application().get_window().add_toast_string(toast)
             logging.exception(_("Unable to do transformation"))
         self.destroy()

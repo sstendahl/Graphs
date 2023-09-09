@@ -2,7 +2,7 @@ using Adw;
 
 namespace Graphs {
     public class Application : Adw.Application {
-        public Adw.ApplicationWindow window { get; set; }
+        public Window window { get; set; }
         public Settings settings { get; construct set; }
         public FigureSettings figure_settings { get; construct set; }
         public Data data { get; construct set; }

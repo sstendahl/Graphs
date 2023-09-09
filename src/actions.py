@@ -13,7 +13,7 @@ from graphs.transform_data import TransformWindow
 
 
 def perform_operation(_action, target, self):
-    operation = target.get_string()
+    operation = target.get_string().lower().replace(" ", "_")
     if operation == "combine":
         return operations.combine(self)
     elif operation == "custom_transformation":
@@ -34,18 +34,16 @@ def perform_operation(_action, target, self):
         window = self.get_window()
         try:
             args += [utilities.string_to_float(
-                getattr(window, operation + "_entry").get_text(),
+                window.get_property(operation + "_entry").get_text(),
             )]
         except ValueError as error:
-            window.add_toast(error)
+            window.add_toast_string(error)
             return
-    operations.perform_operation(
-        self, getattr(operations, target.get_string()), *args,
-    )
+    operations.perform_operation(self, getattr(operations, operation), *args)
 
 
 def toggle_sidebar(_action, _shortcut, self):
-    flap = self.get_window().sidebar_flap
+    flap = self.get_window().get_sidebar_flap()
     flap.set_reveal_flap(not flap.get_reveal_flap())
 
 
@@ -102,12 +100,12 @@ def optimize_limits_action(_action, _target, self):
 
 
 def view_back_action(_action, _target, self):
-    if self.get_window().view_back_button.get_sensitive():
+    if self.get_window().get_view_back_button().get_sensitive():
         self.get_view_clipboard().undo()
 
 
 def view_forward_action(_action, _target, self):
-    if self.get_window().view_forward_button.get_sensitive():
+    if self.get_window().get_view_forward_button().get_sensitive():
         self.get_view_clipboard().redo()
 
 
@@ -144,4 +142,4 @@ def delete_selected_action(_action, _target, self):
     items = [item for item in self.get_data() if item.selected]
     names = ", ".join([item.name for item in items])
     self.get_data().delete_items(items)
-    self.get_window().add_toast(_("Deleted {}").format(names))
+    self.get_window().add_toast_string(_("Deleted {}").format(names))

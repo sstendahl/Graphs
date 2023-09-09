@@ -13,7 +13,6 @@ from gi.repository import GLib, Gio, Graphs
 from graphs import actions, migrate, ui
 from graphs.clipboard import DataClipboard, ViewClipboard
 from graphs.data import Data
-from graphs.window import GraphsWindow
 
 from matplotlib import font_manager
 
@@ -71,7 +70,7 @@ class GraphsApplication(Graphs.Application):
             action.connect("activate", lambda action_, target:
                            (figure_settings.set_property(
                             action_.get_name()[7:], int(target.get_string())),
-                            self.get_window().toast_overlay.grab_focus()))
+                            self.get_window().get_canvas().grab_focus()))
             figure_settings.connect(
                 f"notify::{val}",
                 lambda _x, param, action_: action_.change_state(
@@ -125,7 +124,11 @@ class GraphsApplication(Graphs.Application):
         """
         window = self.props.active_window
         if not window:
-            window = GraphsWindow(self)
+            window = Graphs.Window(application=self)
+            self.get_data().bind_property(
+                "items_selected", window.get_shift_button(), "sensitive", 2,
+            )
+            self.bind_property("mode", window, "mode", 2)
             self.set_window(window)
             window.set_title(self.props.name)
             if "(Development)" in self.props.name:

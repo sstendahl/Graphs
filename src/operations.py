@@ -98,7 +98,7 @@ def perform_operation(self, callback, *args):
         item.notify("xdata")
         item.notify("ydata")
     if not data_selected:
-        self.get_window().add_toast(
+        self.get_window().add_toast_string(
             _("No data found within the highlighted area"))
         return
     utilities.optimize_limits(self)

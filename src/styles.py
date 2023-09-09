@@ -92,7 +92,7 @@ def update(self):
             pyplot.rcParams.update(get_style(get_user_styles(self)[stylename]))
             return
         except KeyError:
-            self.get_window().add_toast(
+            self.get_window().add_toast_string(
                 _(f"Plot style {stylename} does not exist "
                   "loading system preferred"))
             figure_settings.set_custom_style(system_stylename)

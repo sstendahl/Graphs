@@ -47,7 +47,7 @@ class ExportFigureWindow(Adw.Window):
                     dpi=int(self.dpi.get_value()),
                     transparent=self.transparent.get_active())
                 file.move(destination, Gio.FileCopyFlags(1), None)
-                self.get_application().get_window().add_toast(
+                self.get_application().get_window().add_toast_string(
                     _("Exported Figure"))
                 self.destroy()
 

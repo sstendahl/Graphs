@@ -33,7 +33,6 @@ python.install_sources(
     'transform_data.py',
     'ui.py',
     'utilities.py',
-    'window.py',
   ),
   subdir: project_name
 )
@@ -50,6 +49,7 @@ graphs_lib = shared_library(
     'misc.vala',
     'preferences.vala',
     'utilities.vala',
+    'window.vala',
   ), blueprints_hack, gresource_bundle,
       vala_gir: 'Graphs-1.gir',
   dependencies: dependencies,
