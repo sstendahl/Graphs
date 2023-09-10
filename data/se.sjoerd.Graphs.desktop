@@ -1,8 +1,0 @@
-[Desktop Entry]
-Name=@NAME@
-Exec=@PROJECT_NAME@
-Icon=@APPLICATION_ID@
-Terminal=false
-Type=Application
-Categories=Education;Science
-StartupNotify=true
