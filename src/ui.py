@@ -7,13 +7,14 @@ from gettext import gettext as _
 from gi.repository import Adw, GLib, Gio, Gtk
 
 from graphs import file_import, file_io, project, styles, utilities
+from graphs.canvas import Canvas
 from graphs.item_box import ItemBox
 
 
 def on_figure_style_change(_a, _b, self):
     if not self.get_settings(
             "general").get_boolean("override-item-properties"):
-        self.get_window().reload_canvas()
+        reload_canvas(self)
         return
     styles.update(self)
     for item in self.get_data():
@@ -21,7 +22,7 @@ def on_figure_style_change(_a, _b, self):
     for item in self.get_data():
         if item.props.item_type == "Item":
             item.color = utilities.get_next_color(self.get_data().get_items())
-    self.get_window().reload_canvas()
+    reload_canvas(self)
 
 
 def reload_item_menu(self):
@@ -278,3 +279,17 @@ def bind_values_to_object(source, window, ignorelist=None):
         except AttributeError:
             logging.warn(_("No way to apply “{}”").format(key))
     return bindings
+
+
+def reload_canvas(self):
+    """Reloads the canvas of the main window"""
+    styles.update(self)
+    canvas = Canvas(self)
+    figure_settings = self.get_figure_settings()
+    for prop in dir(figure_settings.props):
+        if prop not in ["use_custom_style", "custom_style"]:
+            figure_settings.bind_property(prop, canvas, prop, 1 | 2)
+    self.get_data().bind_property("items", canvas, "items", 2)
+    win = self.get_window()
+    win.set_canvas(canvas)
+    win.cut_button.bind_property("sensitive", canvas, "highlight_enabled", 2)

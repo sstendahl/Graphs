@@ -82,10 +82,10 @@ class GraphsApplication(Graphs.Application):
             )
             self.add_action(action)
 
-        self.toggle_sidebar = Gio.SimpleAction.new_stateful(
+        toggle_sidebar_action = Gio.SimpleAction.new_stateful(
             "toggle_sidebar", None, GLib.Variant.new_boolean(True))
-        self.toggle_sidebar.connect("activate", actions.toggle_sidebar, self)
-        self.add_action(self.toggle_sidebar)
+        toggle_sidebar_action.connect("activate", actions.toggle_sidebar, self)
+        self.add_action(toggle_sidebar_action)
         self.set_accels_for_action("app.toggle_sidebar", ["F9"])
 
         for count, mode in enumerate(["pan", "zoom", "select"]):
@@ -95,6 +95,12 @@ class GraphsApplication(Graphs.Application):
             )
             self.add_action(action)
             self.set_accels_for_action(f"app.mode_{mode}", [f"F{count + 1}"])
+
+        operation_action = Gio.SimpleAction.new(
+            "app.perform_operation", GLib.VariantType.new("s"),
+        )
+        operation_action.connect("activate", actions.perform_operation, self)
+        self.add_action(operation_action)
 
         self.get_style_manager().connect(
             "notify", ui.on_figure_style_change, self,
@@ -127,6 +133,7 @@ class GraphsApplication(Graphs.Application):
             self.set_clipboard(DataClipboard(self))
             self.set_view_clipboard(ViewClipboard(self))
             ui.set_clipboard_buttons(self)
+            ui.reload_canvas(self)
             window.present()
 
     def get_settings(self, child=None):

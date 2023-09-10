@@ -174,7 +174,7 @@ def center(_item, xdata, ydata, center_maximum):
     return new_xdata, ydata, True, False
 
 
-def shift_vertically(item, xdata, ydata, left_scale, right_scale, items):
+def shift(item, xdata, ydata, left_scale, right_scale, items):
     """
     Shifts data vertically with respect to each other
     By default it scales linear data by 1.2 times the total span of the
@@ -204,12 +204,12 @@ def shift_vertically(item, xdata, ydata, left_scale, right_scale, items):
     return xdata, ydata, False, False
 
 
-def cut_selected(_item, _xdata, _ydata):
+def cut(_item, _xdata, _ydata):
     """Cut selected data over the span that is selected"""
     return [], [], False, False
 
 
-def get_derivative(_item, xdata, ydata):
+def derivative(_item, xdata, ydata):
     """Calculate derivative of all selected data"""
     x_values = numpy.array(xdata)
     y_values = numpy.array(ydata)
@@ -217,7 +217,7 @@ def get_derivative(_item, xdata, ydata):
     return xdata, dy_dx.tolist(), False, True
 
 
-def get_integral(_item, xdata, ydata):
+def integral(_item, xdata, ydata):
     """Calculate indefinite integral of all selected data"""
     x_values = numpy.array(xdata)
     y_values = numpy.array(ydata)
@@ -226,7 +226,7 @@ def get_integral(_item, xdata, ydata):
     return xdata, indefinite_integral, False, True
 
 
-def get_fourier(_item, xdata, ydata):
+def fft(_item, xdata, ydata):
     """Perform Fourier transformation on all selected data"""
     x_values = numpy.array(xdata)
     y_values = numpy.array(ydata)
@@ -236,7 +236,7 @@ def get_fourier(_item, xdata, ydata):
     return x_fourier, y_fourier, False, True
 
 
-def get_inverse_fourier(_item, xdata, ydata):
+def inverse_fft(_item, xdata, ydata):
     """Perform Inverse Fourier transformation on all selected data"""
     x_values = numpy.array(xdata)
     y_values = numpy.array(ydata)

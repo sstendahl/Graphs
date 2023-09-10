@@ -314,7 +314,7 @@ template $GraphsWindow : Adw.ApplicationWindow {
                       label: _("Shift");
                     }
                     tooltip-text: _("Shift all data vertically with respect to each other");
-                    clicked => $shift_vertically();
+                    clicked => $perform_operation();
                   }
 
                   Button {
@@ -330,7 +330,7 @@ template $GraphsWindow : Adw.ApplicationWindow {
                       label: _("Normalize");
                     }
                     tooltip-text: _("Normalize data");
-                    clicked => $normalize();
+                    clicked => $perform_operation();
                   }
 
                   Button {
@@ -346,7 +346,7 @@ template $GraphsWindow : Adw.ApplicationWindow {
                       label: _("Smoothen");
                     }
                     tooltip-text: _("Smoothen data");
-                    clicked => $smoothen();
+                    clicked => $perform_operation();
                   }
 
                   Button {
@@ -362,7 +362,7 @@ template $GraphsWindow : Adw.ApplicationWindow {
                       label: _("Center");
                     }
                     tooltip-text: _("Center data");
-                    clicked => $center();
+                    clicked => $perform_operation();
                   }
 
                   Button {
@@ -378,7 +378,7 @@ template $GraphsWindow : Adw.ApplicationWindow {
                       label: _("Combine");
                     }
                     tooltip-text: _("Combine all selected data");
-                    clicked => $combine();
+                    clicked => $perform_operation();
                   }
 
                   Button cut_button {
@@ -394,7 +394,7 @@ template $GraphsWindow : Adw.ApplicationWindow {
                       label: _("Cut");
                     }
                     tooltip-text: _("Cut selected data");
-                    clicked => $cut();
+                    clicked => $perform_operation();
                   }
                 }
                 styles ["card"]
@@ -427,7 +427,7 @@ template $GraphsWindow : Adw.ApplicationWindow {
                       label: _("Derivative");
                     }
                     tooltip-text: _("Get the derivative of the data");
-                    clicked => $derivative();
+                    clicked => $perform_operation();
                   }
 
                   Button {
@@ -443,7 +443,7 @@ template $GraphsWindow : Adw.ApplicationWindow {
                       label: _("Integral");
                     }
                     tooltip-text: _("Get the indefinite integral of the data");
-                    clicked => $integral();
+                    clicked => $perform_operation();
                   }
 
                   Button {
@@ -459,7 +459,7 @@ template $GraphsWindow : Adw.ApplicationWindow {
                       label: _("FFT");
                     }
                     tooltip-text: _("Get the Fast Fourier Transform of the data");
-                    clicked => $fourier();
+                    clicked => $perform_operation();
                   }
 
                   Button {
@@ -475,7 +475,7 @@ template $GraphsWindow : Adw.ApplicationWindow {
                       label: _("Inverse FFT");
                     }
                     tooltip-text: _("Get the Inverse Fast Fourier Transform of the data");
-                    clicked => $inverse_fourier();
+                    clicked => $perform_operation();
                   }
 
                   Button {
@@ -492,7 +492,7 @@ template $GraphsWindow : Adw.ApplicationWindow {
                       label: _("Custom Transformation");
                     }
                     tooltip-text: _("Perform custom transformations on the data");
-                    clicked => $transform();
+                    clicked => $perform_operation();
                   }
                 }
                 styles ["card"]
@@ -523,7 +523,7 @@ template $GraphsWindow : Adw.ApplicationWindow {
                   Button {
                     valign: center;
                     sensitive: bind shift_vertically_button.sensitive;
-                    clicked => $translate_x();
+                    clicked => $perform_operation();
                     width-request: 120;
                     Adw.ButtonContent {
                       icon-name: "horizontal-arrows-symbolic";
@@ -546,7 +546,7 @@ template $GraphsWindow : Adw.ApplicationWindow {
                   Button {
                     valign: center;
                     sensitive: bind shift_vertically_button.sensitive;
-                    clicked => $translate_y();
+                    clicked => $perform_operation();
                     width-request: 120;
                     Adw.ButtonContent {
                       icon-name: "vertical-arrows-symbolic";
@@ -569,7 +569,7 @@ template $GraphsWindow : Adw.ApplicationWindow {
                   Button {
                     valign: center;
                     sensitive: bind shift_vertically_button.sensitive;
-                    clicked => $multiply_x();
+                    clicked => $perform_operation();
                     width-request: 120;
                     Adw.ButtonContent {
                       icon-name: "horizontal-arrows-symbolic";
@@ -592,7 +592,7 @@ template $GraphsWindow : Adw.ApplicationWindow {
                   Button {
                     valign: center;
                     sensitive: bind shift_vertically_button.sensitive;
-                    clicked => $multiply_y();
+                    clicked => $perform_operation();
                     width-request: 120;
                     Adw.ButtonContent {
                       icon-name: "vertical-arrows-symbolic";
@@ -621,6 +621,10 @@ template $GraphsWindow : Adw.ApplicationWindow {
         focusable: true;
         height-request: 200;
         width-request: 200;
+        child: Adw.StatusPage {
+          icon-name: "dialog-error-symbolic";
+          title: _("Canvas Failed to Load");
+        };
       }
     }
   }

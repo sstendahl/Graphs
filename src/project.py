@@ -43,4 +43,4 @@ def load_project(self, file: Gio.File):
         project["view-clipboard-position"],
     )
     ui.set_clipboard_buttons(self)
-    self.get_window().reload_canvas()
+    ui.reload_canvas(self)

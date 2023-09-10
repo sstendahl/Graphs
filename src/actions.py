@@ -4,11 +4,44 @@ from gettext import gettext as _
 
 from gi.repository import Graphs
 
-from graphs import ui, utilities
+from graphs import operations, ui, utilities
 from graphs.add_equation import AddEquationWindow
 from graphs.export_figure import ExportFigureWindow
 from graphs.figure_settings import FigureSettingsWindow
 from graphs.styles import StylesWindow
+from graphs.transform_data import TransformWindow
+
+
+def perform_operation(_action, target, self):
+    operation = target.get_string()
+    if operation == "combine":
+        return operations.combine(self)
+    elif operation == "custom_transformation":
+        return TransformWindow(self)
+    elif operation == "cut" and self.get_mode() != 2:
+        return
+    args = []
+    if operation in ["center"]:
+        args = [self.get_settings("general").get_enum(operation)]
+    if operation == "shift":
+        figure_settings = self.get_figure_settings()
+        args += [
+            figure_settings.get_left_scale(),
+            figure_settings.get_right_scale(),
+            self.get_data().get_items(),
+        ]
+    elif "translate" in operation or "multiply" in operation:
+        window = self.get_window()
+        try:
+            args += [utilities.string_to_float(
+                getattr(window, operation + "_entry").get_text(),
+            )]
+        except ValueError as error:
+            window.add_toast(error)
+            return
+    operations.perform_operation(
+        self, getattr(operations, target.get_string()), *args,
+    )
 
 
 def toggle_sidebar(_action, _shortcut, self):

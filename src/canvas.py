@@ -11,7 +11,7 @@ interactive navigation in conjunction with graphs-specific structures.
 """
 from contextlib import nullcontext
 
-from gi.repository import Adw, GObject, Gtk
+from gi.repository import GObject, Graphs, Gtk
 
 from graphs import artist, misc, scales, utilities
 from graphs.figure_settings import FigureSettingsWindow
@@ -22,7 +22,7 @@ from matplotlib.backends.backend_gtk4cairo import FigureCanvas
 from matplotlib.widgets import SpanSelector
 
 
-class Canvas(FigureCanvas):
+class Canvas(FigureCanvas, Graphs.FigureProperties, Graphs.Canvas):
     """
     Custom Canvas.
 
@@ -69,7 +69,7 @@ class Canvas(FigureCanvas):
 
     __gtype_name__ = "Canvas"
 
-    application = GObject.Property(type=Adw.Application)
+    application = GObject.Property(type=Graphs.Application)
 
     min_selected = GObject.Property(type=float, default=0)
     max_selected = GObject.Property(type=float, default=0)
@@ -104,15 +104,6 @@ class Canvas(FigureCanvas):
         self._legend = True
         self._legend_position = misc.LEGEND_POSITIONS[0]
         self._handles = []
-
-        for prop in dir(self.get_application().get_figure_settings().props):
-            if prop not in ["use_custom_style", "custom_style"]:
-                self.get_application().get_figure_settings().bind_property(
-                    prop, self, prop, 1 | 2,
-                )
-        self.get_application().get_data().bind_property(
-            "items", self, "items", 2,
-        )
 
     def get_application(self):
         """Get application property."""

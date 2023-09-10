@@ -57,7 +57,7 @@ if __name__ == "__main__":
     )
     logging.getLogger("matplotlib.font_manager").disabled = True
 
-    from graphs.main import GraphsApplication
+    from graphs.application import GraphsApplication
     sys.exit(GraphsApplication(
         "@APPLICATION_ID@", version="@VERSION@", name="@NAME@",
         author="@AUTHOR@", website="@HOMEPAGE_URL@", issues="@ISSUE_URL@",
