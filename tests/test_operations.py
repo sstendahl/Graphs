@@ -56,7 +56,7 @@ def test_multiply_y():
     assert all(y_new == (y_old * 15) for y_old, y_new in zip(YDATA, ydata))
 
 
-def test_center_data():
+def test_center():
     """Test if center function centers ydata correctly."""
     xdata, ydata, _sort, _discard = operations.center(None, XDATA, YDATA, 0)
     y_max_index = YDATA.index(max(YDATA))
@@ -68,7 +68,7 @@ def test_center_data():
                                                                        xdata))
 
 
-def test_shift_vertically():
+def test_shift():
     """Test if shift_vertically function correctly shifts ydata."""
     ydata1 = [8, 12, 10, 14, 9]
     ydata2 = [204, 128, 5, 42, 13]
@@ -83,11 +83,11 @@ def test_shift_vertically():
 
     items = [item1, item2]
     new_xdata1, new_ydata1, _sort, _discard =\
-        operations.shift_vertically(item1, XDATA, ydata1, left_scale=1,
-                                    right_scale=1, items=items)
+        operations.shift(item1, XDATA, ydata1, left_scale=1,
+                         right_scale=1, items=items)
     new_xdata2, new_ydata2, _sort, _discard = \
-        operations.shift_vertically(item2, XDATA, ydata2, left_scale=1,
-                                    right_scale=1, items=items)
+        operations.shift(item2, XDATA, ydata2, left_scale=1,
+                         right_scale=1, items=items)
     np.testing.assert_array_equal(new_xdata1, XDATA)
     np.testing.assert_array_equal(new_xdata2, XDATA)
     assert len(new_ydata1) == len(ydata1)
@@ -95,22 +95,22 @@ def test_shift_vertically():
     assert all(new_y2 > old_y1 for new_y2, old_y1 in zip(new_ydata2, ydata1))
 
 
-def test_get_derivative():
+def test_derivative():
     """Test if get_derivative function correctly calculates derivative."""
     xdata = [1, 2, 3, 4, 5]
     ydata = [5, 10, 15, 10, 5]
 
-    _, y_new, _sort, _discard = operations.get_derivative(None, xdata, ydata)
+    _, y_new, _sort, _discard = operations.derivative(None, xdata, ydata)
     assert len(y_new) == len(xdata)
     assert y_new == pytest.approx([5, 5, 0, -5, -5], rel=1e-6)
 
 
-def test_get_integral():
+def test_integral():
     """Test if get_integral function correctly calculates integral."""
     xdata = [1, 2, 3, 4, 5]
     ydata = [5, 10, 15, 10, 5]
 
-    x_new, y_new, _sort, _discard = operations.get_integral(None, xdata, ydata)
+    x_new, y_new, _sort, _discard = operations.integral(None, xdata, ydata)
 
     assert len(y_new) == len(xdata)
     assert y_new == pytest.approx([0, 7.5, 20, 32.5, 40], rel=1e-6)
