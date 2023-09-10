@@ -25,23 +25,14 @@ def on_figure_style_change(_a, _b, self):
     reload_canvas(self)
 
 
-def reload_item_menu(self):
-    while self.get_window().item_list.get_last_child() is not None:
-        self.get_window().item_list.remove(
-            self.get_window().item_list.get_last_child())
+def on_items_change(data, _ignored, self):
+    item_list = self.get_window().get_item_list()
+    while item_list.get_last_child() is not None:
+        item_list.remove(item_list.get_last_child())
 
     for item in self.get_data():
-        self.get_window().item_list.append(ItemBox(self, item))
-
-
-def on_items_change(data, _ignored, self):
-    while self.get_window().item_list.get_last_child() is not None:
-        self.get_window().item_list.remove(
-            self.get_window().item_list.get_last_child())
-
-    for item in data:
-        self.get_window().item_list.append(ItemBox(self, item))
-    self.get_window().item_list.set_visible(not data.is_empty())
+        item_list.append(ItemBox(self, item))
+    item_list.set_visible(not data.is_empty())
     self.get_view_clipboard().add()
 
 
@@ -50,7 +41,7 @@ def on_items_ignored(_data, _ignored, ignored, self):
         toast = _("Items {} already exist").format(ignored)
     else:
         toast = _("Item {} already exists")
-    self.get_window().add_toast(toast)
+    self.get_window().add_toast_string(toast)
 
 
 def set_clipboard_buttons(self):
@@ -58,15 +49,15 @@ def set_clipboard_buttons(self):
     Enable and disable the buttons for the undo and redo buttons and backwards
     and forwards view.
     """
-    self.get_window().view_forward_button.set_sensitive(
+    self.get_window().get_view_forward_button().set_sensitive(
         self.get_view_clipboard().clipboard_pos < - 1)
-    self.get_window().view_back_button.set_sensitive(
+    self.get_window().get_view_back_button().set_sensitive(
         abs(self.get_view_clipboard().clipboard_pos)
         < len(self.get_view_clipboard().clipboard))
-    self.get_window().undo_button.set_sensitive(
+    self.get_window().get_undo_button().set_sensitive(
         abs(self.get_clipboard().clipboard_pos)
         < len(self.get_clipboard().clipboard))
-    self.get_window().redo_button.set_sensitive(
+    self.get_window().get_redo_button().set_sensitive(
         self.get_clipboard().clipboard_pos < - 1)
 
 
@@ -113,7 +104,7 @@ def open_project_dialog(self):
 
 def export_data_dialog(self):
     if self.get_data().is_empty():
-        self.get_window().add_toast(_("No data to export"))
+        self.get_window().add_toast_string(_("No data to export"))
         return
     multiple = len(self.get_data()) > 1
 
@@ -129,7 +120,7 @@ def export_data_dialog(self):
                 file_io.save_item(
                     dialog.save_finish(response), self.get_data()[0],
                 )
-            self.get_window().add_toast(_("Exported Data"))
+            self.get_window().add_toast_string(_("Exported Data"))
     dialog = Gtk.FileDialog()
     if multiple:
         dialog.select_folder(self.get_window(), None, on_response)
@@ -292,4 +283,6 @@ def reload_canvas(self):
     self.get_data().bind_property("items", canvas, "items", 2)
     win = self.get_window()
     win.set_canvas(canvas)
-    win.cut_button.bind_property("sensitive", canvas, "highlight_enabled", 2)
+    win.get_cut_button().bind_property(
+        "sensitive", canvas, "highlight_enabled", 2,
+    )

@@ -1,3 +1,5 @@
+using Gtk;
+
 namespace Graphs {
     public interface FigureProperties : Object {
         public abstract string title { get; set; default = ""; }
@@ -27,7 +29,7 @@ namespace Graphs {
         public abstract double max_selected { get; set; default = 0; }
     }
 
-    public interface Canvas : FigureProperties {
+    public interface Canvas : Widget, FigureProperties {
         public abstract Item[] items { set; }
         public abstract bool highlight_enabled { get; set; default = false; }
         public abstract Application application { get; construct set; }

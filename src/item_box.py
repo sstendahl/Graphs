@@ -135,7 +135,7 @@ class ItemBox(Gtk.Box):
         toast = Adw.Toast.new(_("Deleted {name}").format(name=name))
         toast.set_button_label("Undo")
         toast.set_action_name("app.undo")
-        self.get_application().get_window().toast_overlay.add_toast(toast)
+        self.get_application().get_window().add_toast(toast)
 
     def edit(self, _action, _shortcut, _widget):
         EditItemWindow(self.get_application(), self.props.item)

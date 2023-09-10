@@ -49,7 +49,7 @@ def import_from_files(self, import_settings_list: list):
         try:
             items.extend(_import_from_file(self, import_settings))
         except ParseError as error:
-            self.get_window().add_toast(error.message)
+            self.get_window().add_toast_string(error.message)
             continue
     self.get_data().add_items(items)
 
