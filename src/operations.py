@@ -200,7 +200,6 @@ def shift(item, xdata, ydata, left_scale, right_scale, items):
             else:
                 new_ydata = [value + shift_value_linear for value in ydata]
             return xdata, new_ydata, False, False
-    ydata = numpy.asarray(ydata) + 100
     return xdata, ydata, False, False
 
 
