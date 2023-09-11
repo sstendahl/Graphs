@@ -64,6 +64,7 @@ endif
 blueprints_source = [
   'ui/add_equation_window.blp',
   'ui/add_style.blp',
+  'ui/curve_fitting.blp',
   'ui/dialogs.blp',
   'ui/edit_item.blp',
   'ui/export_figure.blp',

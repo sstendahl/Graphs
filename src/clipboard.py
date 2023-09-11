@@ -179,6 +179,7 @@ class DataClipboard(BaseClipboard):
         self.get_application().get_figure_settings().set_limits(state[1])
 
     def on_item_change(self, item_, param):
+        return
         self.append((0, (
             item_.uuid, param.name,
             copy.deepcopy(self.props.data_copy[item_.uuid][param.name]),
