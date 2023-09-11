@@ -35,7 +35,7 @@ class ItemBox(Gtk.Box):
         self.drag_source.set_actions(Gdk.DragAction.COPY)
         self.drag_source.connect("prepare", self.on_dnd_prepare)
         self.drop_source = Gtk.DropTarget.new(str, Gdk.DragAction.COPY)
-        self.drop_source.key = item.key
+        self.drop_source.key = item.uuid
         self.drop_source.connect("drop", self.on_dnd_drop)
 
         self.item.connect("notify::color", self.on_color_change)
@@ -48,9 +48,9 @@ class ItemBox(Gtk.Box):
     def add_actions(self):
         data = self.get_application().get_data()
         action_list = ["edit", "delete"]
-        if data.index(self.item.key) > 0:
+        if data.index(self.item) > 0:
             action_list += ["move_up"]
-        if data.index(self.item.key) + 1 < len(data.get_items()):
+        if data.index(self.item) + 1 < len(data.get_items()):
             action_list += ["move_down"]
         action_group = Gio.SimpleActionGroup()
 
@@ -78,9 +78,7 @@ class ItemBox(Gtk.Box):
         self.do_snapshot(self, snapshot)
         paintable = snapshot.to_paintable()
         drag_source.set_icon(paintable, int(x), int(y))
-
-        data = self.props.item.key
-        return Gdk.ContentProvider.new_for_value(data)
+        return Gdk.ContentProvider.new_for_value(self.props.item.uuid)
 
     def on_color_change(self, item, _ignored):
         self.provider.load_from_data(
@@ -88,23 +86,21 @@ class ItemBox(Gtk.Box):
 
     def move_up(self, _action, _shortcut, item):
         data = self.get_application().get_data()
-        before_index = data.index(item.key)
-        top_data = data[before_index - 1]
+        before_index = data.index(item)
 
-        data.change_position(item.key, top_data.key)
+        data.change_position(item.uuid, data[before_index - 1].uuid)
         clipboard = self.get_application().get_clipboard()
-        clipboard.append((3, (before_index, data.index(item.key))))
+        clipboard.append((3, (before_index, data.index(item))))
         clipboard.add()
         self.get_application().get_view_clipboard().add()
 
     def move_down(self, _action, _shortcut, item):
         data = self.get_application().get_data()
-        before_index = data.index(item.key)
-        bottom_data = data[before_index + 1]
+        before_index = data.index(item)
 
-        data.change_position(item.key, bottom_data.key)
+        data.change_position(item.uuid, data[before_index + 1].uuid)
         clipboard = self.get_application().get_clipboard()
-        clipboard.append((3, (before_index, data.index(item.key))))
+        clipboard.append((3, (before_index, data.index(item))))
         clipboard.add()
         self.get_application().get_view_clipboard().add()
 

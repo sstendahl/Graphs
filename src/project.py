@@ -11,7 +11,7 @@ def save_project(self, file: Gio.File):
         for key in dir(figure_settings.props)
     }
     file_io.write_json(file, {
-        "version": self.version,
+        "version": self.get_version(),
         "data": self.get_data().to_list(),
         "figure-settings": figure_settings_dict,
         "data-clipboard": self.get_clipboard().get_clipboard(),

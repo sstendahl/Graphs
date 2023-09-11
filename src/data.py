@@ -64,7 +64,7 @@ class Data(GObject.Object, Graphs.Data):
 
     def to_dict(self) -> dict:
         """Get a dictionary of all items sorted by their key"""
-        return {item_.key: item_.to_dict() for item_ in self}
+        return {item_.uuid: item_.to_dict() for item_ in self}
 
     def set_from_list(self, items: list):
         """Set items from a list of items in dict form."""
@@ -96,12 +96,12 @@ class Data(GObject.Object, Graphs.Data):
         """Set all managed items."""
         for item_ in items:
             self.append(item_)
-        self._items = {item_.key: item_ for item_ in items}
+        self._items = {item_.uuid: item_ for item_ in items}
 
     def append(self, item_):
         """Append items to self."""
         self._connect_to_item(item_)
-        self._items[item_.key] = item_
+        self._items[item_.uuid] = item_
         self.notify("items")
 
     def pop(self, key):
@@ -111,9 +111,11 @@ class Data(GObject.Object, Graphs.Data):
         del item_
         self.notify("items")
 
-    def index(self, key):
-        """Get the indexs of key."""
-        return self.get_keys().index(key)
+    def index(self, getter):
+        """Get the indexs of getter as uuid or item."""
+        return self.get_keys().index(
+            getter.uuid if isinstance(getter, item.ItemBase) else getter,
+        )
 
     def get_names(self) -> list:
         """All items' names."""
@@ -188,7 +190,7 @@ class Data(GObject.Object, Graphs.Data):
                     ignored.append(new_item.name)
                     continue
                 elif handle_duplicates == 3:  # Override
-                    new_item.key = self[names.index(new_item.name)].key
+                    new_item.uuid = self[names.index(new_item.name)].uuid
 
             if new_item.xlabel:
                 original_position = new_item.xposition
@@ -232,9 +234,9 @@ class Data(GObject.Object, Graphs.Data):
         """Delete specified items."""
         for item_ in items:
             self.get_application().get_clipboard().append(
-                (2, (self.index(item_.key), item_.to_dict())),
+                (2, (self.index(item_), item_.to_dict())),
             )
-            self.pop(item_.key)
+            self.pop(item_.uuid)
         self.get_application().get_clipboard().add()
         self.notify("items_selected")
 
