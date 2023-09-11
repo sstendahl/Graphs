@@ -17,7 +17,7 @@ desktop_file = i18n.merge_file(
 desktop_file_validate = find_program('desktop-file-validate', required: false)
 if desktop_file_validate.found()
   test(
-    'validate-desktop',
+    'Validate desktop file',
     desktop_file_validate,
     args: [
       desktop_file.full_path()
@@ -42,7 +42,7 @@ appstream_file = i18n.merge_file(
 appstream_util = find_program('appstream-util', required: false)
 if appstream_util.found()
   test(
-    'validate-metainfo', appstream_util,
+    'Validate appstream file', appstream_util,
     args: [
       'validate-relax', '--nonet', appstream_file.full_path()
     ]
