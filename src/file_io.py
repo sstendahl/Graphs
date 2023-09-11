@@ -119,8 +119,10 @@ def import_from_columns(self, import_settings):
                     data_line[index] = utilities.swap(value)
             try:
                 if len(data_line) == 1:
-                    item_.xdata.append(i)
-                    item_.ydata.append(utilities.string_to_float(data_line[0]))
+                    float_value = utilities.string_to_float(data_line[0])
+                    if float_value is not None:
+                        item_.ydata.append(float_value)
+                        item_.xdata.append(i)
                 else:
                     try:
                         item_.xdata.append(utilities.string_to_float(
@@ -142,13 +144,19 @@ def import_from_columns(self, import_settings):
                 # for the data
                 try:
                     headers = re.split("\\s{2,}", line)
-                    item_.xlabel = headers[column_x]
-                    item_.ylabel = headers[column_x]
+                    if len(data_line) == 1:
+                        item_.ylabel = headers[column_x]
+                    else:
+                        item_.xlabel = headers[column_x]
+                        item_.ylabel = headers[column_y]
                 except IndexError:
                     try:
                         headers = re.split(delimiter, line)
-                        item_.xlabel = headers[column_x]
-                        item_.ylabel = headers[column_x]
+                        if len(data_line) == 1:
+                            item_.ylabel = headers[column_x]
+                        else:
+                            item_.xlabel = headers[column_x]
+                            item_.ylabel = headers[column_y]
                     # If neither heuristic works, we just skip headers
                     except IndexError:
                         pass

@@ -147,7 +147,10 @@ def create_file_filters(filters, add_all=True):
 
 
 def string_to_float(string: str):
-    return _eval(ast.parse(preprocess(string), mode="eval").body)
+    try:
+        return _eval(ast.parse(preprocess(string), mode="eval").body)
+    except SyntaxError:
+        return
 
 
 OPERATORS = {ast.Add: op.add, ast.Sub: op.sub, ast.Mult: op.mul,
