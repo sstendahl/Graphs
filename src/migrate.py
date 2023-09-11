@@ -83,6 +83,7 @@ ITEM_MIGRATION_TABLE = {
     "plot_y_position": "yposition",
     "x_anchor": "xanchor",
     "y_anchor": "yanchor",
+    "key": "uuid",
 }
 
 ITEM_VALUE_MIGRATION_TABLE = {
@@ -179,7 +180,7 @@ def _migrate_clipboard(clipboard, clipboard_pos, current_limits):
     if len(clipboard) > 100:
         clipboard = clipboard[len(clipboard) - 100:]
     states = [
-        {item.key: item.migrate() for item in state.values()}
+        {item.uuid: item.migrate() for item in state.values()}
         for state in clipboard
     ]
     new_clipboard.append(([], DEFAULT_VIEW.copy()))

@@ -1,7 +1,5 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
-import uuid
-
-from gi.repository import GObject, Graphs
+from gi.repository import GLib, GObject, Graphs
 
 from graphs import misc, utilities
 
@@ -31,13 +29,13 @@ class ItemBase(GObject.Object, Graphs.ItemRenderable, Graphs.Item):
     yposition = GObject.Property(type=int, default=0)
     alpha = GObject.Property(type=float, default=1, minimum=0, maximum=1)
 
-    key = GObject.Property(type=str, default="")
+    uuid = GObject.Property(type=str, default="")
     item_type = GObject.Property(type=str, default="")
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        if self.props.key == "":
-            self.props.key = str(uuid.uuid4())
+        if self.props.uuid == "":
+            self.props.uuid = GLib.uuid_string_random()
         if self.props.item_type == "":
             self.props.item_type = self.__gtype_name__
 

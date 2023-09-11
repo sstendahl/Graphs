@@ -145,7 +145,7 @@ class DataClipboard(BaseClipboard):
             elif change_type == 2:
                 item_ = item.new_from_dict(change[1])
                 data.append(item_)
-                data.change_position(data.get_keys()[change[0]], item_.key)
+                data.change_position(data.get_keys()[change[0]], item_.uuid)
                 items_changed = True
             elif change_type == 3:
                 data.change_position(data[change[0]].key, data[change[1]].key)
@@ -180,8 +180,8 @@ class DataClipboard(BaseClipboard):
 
     def on_item_change(self, item_, param):
         self.append((0, (
-            item_.key, param.name,
-            copy.deepcopy(self.props.data_copy[item_.key][param.name]),
+            item_.uuid, param.name,
+            copy.deepcopy(self.props.data_copy[item_.uuid][param.name]),
             copy.deepcopy(item_.get_property(param.name)),
         )))
 
