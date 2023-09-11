@@ -83,6 +83,7 @@ ITEM_MIGRATION_TABLE = {
     "plot_y_position": "yposition",
     "x_anchor": "xanchor",
     "y_anchor": "yanchor",
+    "key": "uuid",
 }
 
 ITEM_VALUE_MIGRATION_TABLE = {
