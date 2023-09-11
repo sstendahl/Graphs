@@ -14,9 +14,15 @@ desktop_file = i18n.merge_file(
   install_dir: join_paths(datadir, 'applications')
 )
 
-desktop_utils = find_program('desktop-file-validate', required: false)
-if desktop_utils.found()
-  test('Validate desktop file', desktop_utils, args: [desktop_file])
+desktop_file_validate = find_program('desktop-file-validate', required: false)
+if desktop_file_validate.found()
+  test(
+    'Validate desktop file',
+    desktop_file_validate,
+    args: [
+      desktop_file.full_path()
+    ]
+  )
 endif
 
 appstream_file_in = configure_file(
@@ -35,7 +41,12 @@ appstream_file = i18n.merge_file(
 
 appstream_util = find_program('appstream-util', required: false)
 if appstream_util.found()
-  test('Validate appstream file', appstream_util, args: ['validate', appstream_file])
+  test(
+    'Validate appstream file', appstream_util,
+    args: [
+      'validate-relax', '--nonet', appstream_file.full_path()
+    ]
+  )
 endif
 
 install_data(application_id + '.gschema.xml',

@@ -24,6 +24,7 @@
     "modules" : [
         "blueprint-compiler.json",
         "python-dependencies.json",
+        "python3-pytest.json",
         {
             "name" : "graphs",
             "buildsystem" : "meson",
