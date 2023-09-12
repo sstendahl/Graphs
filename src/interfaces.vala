@@ -1,7 +1,7 @@
 using Gtk;
 
 namespace Graphs {
-    public interface FigureProperties : Object {
+    public interface Canvas : Widget {
         public abstract string title { get; set; default = ""; }
         public abstract string bottom_label { get; set; default = ""; }
         public abstract string left_label { get; set; default = ""; }
@@ -27,9 +27,7 @@ namespace Graphs {
 
         public abstract double min_selected { get; set; default = 0; }
         public abstract double max_selected { get; set; default = 0; }
-    }
 
-    public interface Canvas : Widget, FigureProperties {
         public abstract Item[] items { set; }
         public abstract bool highlight_enabled { get; set; default = false; }
         public abstract Application application { get; construct set; }
