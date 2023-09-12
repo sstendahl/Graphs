@@ -5,7 +5,7 @@ from graphs import ui
 from graphs.item import ItemBase
 
 _IGNORELIST = [
-    "alpha", "color", "item_type", "key", "selected", "xdata", "xlabel",
+    "alpha", "color", "item_type", "uuid", "selected", "xdata", "xlabel",
     "ydata", "ylabel",
 ]
 

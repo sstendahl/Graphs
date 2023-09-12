@@ -148,7 +148,7 @@ class DataClipboard(BaseClipboard):
                 data.change_position(data.get_keys()[change[0]], item_.uuid)
                 items_changed = True
             elif change_type == 3:
-                data.change_position(data[change[0]].key, data[change[1]].key)
+                data.change_position(data[change[0]].uuid, data[change[1]].uuid)
                 items_changed = True
         if items_changed:
             data.notify("items")
@@ -171,7 +171,7 @@ class DataClipboard(BaseClipboard):
                 data.pop(change[1]["key"])
                 items_changed = True
             elif change_type == 3:
-                data.change_position(data[change[1]].key, data[change[0]].key)
+                data.change_position(data[change[1]].uuid, data[change[0]].uuid)
                 items_changed = True
         if items_changed:
             data.notify("items")
