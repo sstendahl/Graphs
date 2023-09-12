@@ -1,15 +1,19 @@
 import re
 from gettext import gettext as _
 
-from graphs import file_io, item, utilities
+from graphs import file_io, item, migrate, utilities
 from graphs.misc import ParseError
 
 import numpy
 
 
 def import_from_project(_self, file):
+    try:
+        project = file_io.parse_json(file)
+    except UnicodeDecodeError:
+        project = migrate.migrate_project(file)
     return [item.new_from_dict(dictionary)
-            for dictionary in file_io.parse_json(file)["data"]]
+            for dictionary in project["data"]]
 
 
 def import_from_xrdml(self, file):
