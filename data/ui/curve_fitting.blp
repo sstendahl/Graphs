@@ -26,9 +26,9 @@ template $CurveFittingWindow : Adw.Window {
 
       [end]
       Button confirm_button {
-        label: _("Fit curve");
+        label: _("Add fit to data");
         styles ["suggested-action"]
-        clicked => $fit_curve();
+        clicked => $add_fit();
       }
     }
 

@@ -32,6 +32,8 @@ class CurveFittingWindow(Adw.Window):
         ui.bind_values_to_settings(
             self.get_application().get_settings("export-figure"), self)
         canvas = Canvas(application)
+        self.equation_entry.connect(
+                        "notify::text", self.on_equation_change)
 
         self.item = item
         self._equation = str(self.equation_entry.get_text())
@@ -47,6 +49,7 @@ class CurveFittingWindow(Adw.Window):
         application, xdata=[], ydata=[], color="#A51D2D")
 
         self.curves.add_items([fitted_curve, data_curve])
+        self.fit_curve(None)
 
         for item_ in self.curves:
             item_.disconnect(0)
@@ -61,12 +64,13 @@ class CurveFittingWindow(Adw.Window):
         self.set_canvas(canvas)
         self.present()
 
+    def on_equation_change(self, entry, _param):
+        self.fit_curve(None)
+
     @property
     def equation(self):
 	    return preprocess(str(self.equation_entry.get_text()))
 
-
-    @Gtk.Template.Callback()
     def fit_curve(self, _widget):
 
         def create_function(equation_name):
@@ -99,8 +103,12 @@ class CurveFittingWindow(Adw.Window):
 
         self.curves[0].name = name
         self.curves[0].ydata, self.curves[0].xdata = (
-            ydata_fit, self.curves[1].xdata)
+            ydata_fit, self.curves[1].xdata[:])
 
+    @Gtk.Template.Callback()
+    def add_fit(self, _widget):
+        self.get_application().get_data().add_items([self.curves[0]])
+        self.destroy()
 
     def set_canvas(self, canvas):
         self.toast_overlay.set_child(canvas)
