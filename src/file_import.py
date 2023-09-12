@@ -2,9 +2,9 @@
 from gettext import gettext as _
 from pathlib import Path
 
-from gi.repository import Adw, GObject, Gio, Gtk
+from gi.repository import Adw, GObject, Gtk
 
-from graphs import file_io, ui, utilities
+from graphs import parse_file, ui, utilities
 from graphs.misc import ParseError
 
 
@@ -12,14 +12,6 @@ _IMPORT_MODES = {
     # name: suffix
     "project": ".graphs", "xrdml": ".xrdml", "xry": ".xry", "columns": None,
 }
-
-
-class ImportSettings(GObject.Object):
-    __gtype_name__ = "ImportSettings"
-
-    file = GObject.Property(type=Gio.File)
-    mode = GObject.Property(type=str, default="columns")
-    name = GObject.Property(type=str, default=_("Imported Data"))
 
 
 def prepare_import(self, files: list):
@@ -30,41 +22,27 @@ def prepare_import(self, files: list):
     for mode, files in import_dict.items():
         if files:
             modes.append(mode)
-    if modes:
-        ImportWindow(self, modes, import_dict)
-        return
-    prepare_import_finish(self, import_dict)
+    configurable_modes = []
+    for mode in self.get_settings("import-params").list_children():
+        if mode in modes:
+            configurable_modes.append(mode)
+    if configurable_modes:
+        ImportWindow(self, configurable_modes, import_dict)
+    else:
+        import_from_files(self, import_dict)
 
 
-def prepare_import_finish(self, import_dict: dict):
-    import_from_files(self, [
-        ImportSettings(file=file, mode=mode, name=utilities.get_filename(file))
-        for mode, files in import_dict.items() for file in files
-    ])
-
-
-def import_from_files(self, import_settings_list: list):
+def import_from_files(self, import_dict: dict):
     items = []
-    for import_settings in import_settings_list:
-        try:
-            items.extend(_import_from_file(self, import_settings))
-        except ParseError as error:
-            self.get_window().add_toast_string(error.message)
-            continue
+    for mode, files in import_dict.items():
+        callback = getattr(parse_file, "import_from_" + mode)
+        for file in files:
+            try:
+                items.extend(callback(self, file))
+            except ParseError as error:
+                self.get_window().add_toast_string(error.message)
+                continue
     self.get_data().add_items(items)
-
-
-def _import_from_file(self, import_settings: ImportSettings):
-    match import_settings.mode:
-        case "project":
-            callback = file_io.import_from_project
-        case "xrdml":
-            callback = file_io.import_from_xrdml
-        case "xry":
-            callback = file_io.import_from_xry
-        case "columns":
-            callback = file_io.import_from_columns
-    return callback(self, import_settings)
 
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/import.ui")
@@ -78,29 +56,21 @@ class ImportWindow(Adw.Window):
     columns_column_y = Gtk.Template.Child()
     columns_skip_rows = Gtk.Template.Child()
 
-    modes = GObject.Property(type=object)
     import_dict = GObject.Property(type=object)
 
     def __init__(self, application, modes: list, import_dict: dict):
         super().__init__(
             application=application, transient_for=application.get_window(),
-            modes=modes, import_dict=import_dict,
+            import_dict=import_dict,
         )
 
         import_params = \
             self.get_application().get_settings("import-params")
-        visible = False
-        for mode in import_params.list_children():
-            if mode in self.props.modes:
-                ui.bind_values_to_settings(
-                    import_params.get_child(mode), self, prefix=f"{mode}_")
-                getattr(self, f"{mode}_group").set_visible(True)
-                visible = True
-
-        if not visible:
-            prepare_import_finish(self.get_application(), self.import_dict)
-            self.destroy()
-            return
+        for mode in modes:
+            ui.bind_values_to_settings(
+                import_params.get_child(mode), self, prefix=f"{mode}_",
+            )
+            getattr(self, f"{mode}_group").set_visible(True)
         self.present()
 
     @Gtk.Template.Callback()
@@ -125,11 +95,7 @@ class ImportWindow(Adw.Window):
 
     @Gtk.Template.Callback()
     def on_accept(self, _widget):
-        import_from_files(self.get_application(), [
-            ImportSettings(
-                file=file, mode=mode, name=utilities.get_filename(file))
-            for mode in _IMPORT_MODES.keys() for file in self.import_dict[mode]
-        ])
+        import_from_files(self.get_application(), self.import_dict)
         self.destroy()
 
 
