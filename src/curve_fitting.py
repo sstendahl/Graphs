@@ -1,13 +1,12 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
-import contextlib
-import copy
-import numpy
+import re
 
 from gettext import gettext as _
 from pathlib import Path
 
 from gi.repository import Adw, GLib, GObject, Gio, Gtk
 from scipy.optimize import curve_fit
+from sympy import symbols, lambdify, sympify
 
 from graphs import ui, utilities
 from graphs.canvas import Canvas
@@ -18,24 +17,22 @@ from graphs.item import Item
 class CurveFittingWindow(Adw.Window):
     __gtype_name__ = "CurveFittingWindow"
     dpi = Gtk.Template.Child()
-    file_format = Gtk.Template.Child()
+    equation_entry = Gtk.Template.Child()
     transparent = Gtk.Template.Child()
     toast_overlay = Gtk.Template.Child()
-    file_formats = GObject.Property(type=object)
 
     def __init__(self, application, item):
         self._canvas = application.get_window().get_canvas()
         super().__init__(
             application=application, transient_for=application.get_window(),
-            file_formats=self._canvas.get_supported_filetypes_grouped(),
+
         )
-        self.file_format.set_model(
-            Gtk.StringList.new(list(self.file_formats.keys())))
         ui.bind_values_to_settings(
             self.get_application().get_settings("export-figure"), self)
         canvas = Canvas(application)
 
         self.item = item
+        self._equation = str(self.equation_entry.get_text())
 
         self.curves = Data(application)
 
@@ -62,15 +59,47 @@ class CurveFittingWindow(Adw.Window):
         self.set_canvas(canvas)
         self.present()
 
+    @property
+    def equation(self):
+	    return str(self.equation_entry.get_text())
+
+
     @Gtk.Template.Callback()
     def fit_curve(self, _widget):
-        def test(x, a, b):
-            return a * x + b
-        param, param_cov = curve_fit(test, self.item.xdata, self.item.ydata)
-        self.curves[0].name = f"{param[0]}*x + {param[1]}"
+
+        def create_function(equation_name):
+            # Extract variables from the string
+            variables = \
+                re.findall(r'\b(?!x\b|X\b|sin\b|cos\b|tan\b)[a-wy-zA-WY-Z]+\b',
+                equation_name)
+            variables = ['x'] + variables
+
+            sym_vars = symbols(variables)
+            symbolic = sympify(equation_name,
+                locals=dict(zip(variables, sym_vars)))
+            function = lambdify(sym_vars, symbolic)
+            return function
+
+        def get_equation_name(equation_name, values):
+            variables = \
+                re.findall(r'\b(?!x\b|X\b|sin\b|cos\b|tan\b)[a-wy-zA-WY-Z]+\b',
+                equation_name)
+            var_to_val = dict(zip(variables, values))
+
+            for var, val in var_to_val.items():
+                equation_name = equation_name.replace(var, str(val))
+            return equation_name
+
+
+        function = create_function(self.equation)
+        param, param_cov = curve_fit(function, self.item.xdata, self.item.ydata)
+        ydata_fit = [function(x, *param) for x in self.item.xdata]
+        name = get_equation_name(self.equation, param)
+
+        self.curves[0].name = name
         self.curves[0].ydata, self.curves[0].xdata = (
-            numpy.asarray(self.item.xdata) * param[0] + param[1],
-            self.curves[1].xdata)
+            ydata_fit, self.curves[1].xdata)
+
 
     def set_canvas(self, canvas):
         self.toast_overlay.set_child(canvas)

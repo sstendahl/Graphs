@@ -34,8 +34,9 @@ template $CurveFittingWindow : Adw.Window {
 
       Box {
         Adw.PreferencesGroup {
-        Adw.ComboRow file_format {
-          title: _("File Format");
+        Adw.EntryRow equation_entry {
+          title: _("Equation");
+          text: _("a*x+b");
         }
 
       Adw.ActionRow {
