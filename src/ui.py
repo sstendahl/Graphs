@@ -71,8 +71,9 @@ def set_clipboard_buttons(self):
 def add_data_dialog(self):
     def on_response(dialog, response):
         with contextlib.suppress(GLib.GError):
-            file_import.prepare_import(
-                self, dialog.open_multiple_finish(response))
+            file_import.import_from_files(
+                self, dialog.open_multiple_finish(response),
+            )
     dialog = Gtk.FileDialog()
     dialog.set_filters(
         utilities.create_file_filters([

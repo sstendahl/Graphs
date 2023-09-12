@@ -1,4 +1,10 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
+"""
+Module for importing data from files.
+
+    Functions:
+        import_from_files
+"""
 from gettext import gettext as _
 from pathlib import Path
 
@@ -14,10 +20,17 @@ _IMPORT_MODES = {
 }
 
 
-def prepare_import(self, files: list):
+def import_from_files(self, files: list):
+    """
+    Import from a list of files.
+
+    Automatically guesses, which mode to use. If configurable settings are
+    present at /se/sjoerd/Graphs/import-params, a Window will be shown,
+    giving the option to configure them.
+    """
     import_dict = {mode: [] for mode in _IMPORT_MODES.keys()}
     for file in files:
-        import_dict[guess_import_mode(file)].append(file)
+        import_dict[_guess_import_mode(file)].append(file)
     modes = []
     for mode, files in import_dict.items():
         if files:
@@ -27,12 +40,12 @@ def prepare_import(self, files: list):
         if mode in modes:
             configurable_modes.append(mode)
     if configurable_modes:
-        ImportWindow(self, configurable_modes, import_dict)
+        _ImportWindow(self, configurable_modes, import_dict)
     else:
-        import_from_files(self, import_dict)
+        _import_from_files(self, import_dict)
 
 
-def import_from_files(self, import_dict: dict):
+def _import_from_files(self, import_dict: dict):
     items = []
     for mode, files in import_dict.items():
         callback = getattr(parse_file, "import_from_" + mode)
@@ -46,7 +59,7 @@ def import_from_files(self, import_dict: dict):
 
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/import.ui")
-class ImportWindow(Adw.Window):
+class _ImportWindow(Adw.Window):
     __gtype_name__ = "ImportWindow"
 
     columns_group = Gtk.Template.Child()
@@ -95,11 +108,11 @@ class ImportWindow(Adw.Window):
 
     @Gtk.Template.Callback()
     def on_accept(self, _widget):
-        import_from_files(self.get_application(), self.import_dict)
+        _import_from_files(self.get_application(), self.import_dict)
         self.destroy()
 
 
-def guess_import_mode(file):
+def _guess_import_mode(file):
     try:
         filename = utilities.get_filename(file)
         file_suffix = Path(filename).suffixes[-1]
