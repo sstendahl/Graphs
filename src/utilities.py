@@ -6,8 +6,6 @@ from gettext import gettext as _
 
 from gi.repository import GLib, Gdk, Gio, Gtk
 
-from matplotlib import pyplot
-
 import numpy
 
 
@@ -243,21 +241,3 @@ def optimize_limits(self):
         figure_settings.set_property(f"min_{direction}", min_all)
         figure_settings.set_property(f"max_{direction}", max_all)
     self.get_view_clipboard().add()
-
-
-def get_next_color(items):
-    """Get the color that is to be used for the next data set"""
-    color_cycle = pyplot.rcParams["axes.prop_cycle"].by_key()["color"]
-    used_colors = []
-    for item in items:
-        used_colors.append(item.color)
-        # If we've got all colors once, remove those from used_colors so we
-        # can loop around
-        if set(used_colors) == set(color_cycle):
-            for color in color_cycle:
-                used_colors.remove(color)
-
-    for color in color_cycle:
-        if color not in used_colors:
-            return color
-    return "000000"
