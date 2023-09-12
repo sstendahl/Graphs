@@ -11,6 +11,8 @@ from gi.repository import GObject, Graphs
 
 from graphs import item, utilities
 
+from matplotlib import pyplot
+
 
 class Data(GObject.Object, Graphs.Data):
     """
@@ -170,6 +172,19 @@ class Data(GObject.Object, Graphs.Data):
         settings = self.get_application().props.settings
         handle_duplicates = \
             settings.get_child("general").get_enum("handle-duplicates")
+        color_cycle = pyplot.rcParams["axes.prop_cycle"].by_key()["color"]
+        used_colors = []
+
+        def _append_used_color(color):
+            used_colors.append(color)
+            # If we've got all colors once, remove those from used_colors so we
+            # can loop around
+            if set(used_colors) == set(color_cycle):
+                for color in color_cycle:
+                    used_colors.remove(color)
+
+        for item_ in self:
+            _append_used_color(item_.props.color)
 
         def _is_default(prop):
             return figure_settings.get_property(prop) == \
@@ -217,7 +232,11 @@ class Data(GObject.Object, Graphs.Data):
                     elif new_item.ylabel != figure_settings.get_right_label():
                         new_item.yposition = original_position
             if new_item.color == "":
-                new_item.color = utilities.get_next_color(self.get_items())
+                for color in color_cycle:
+                    if color not in used_colors:
+                        new_item.color = color
+                        _append_used_color(color)
+                        break
 
             self.append(new_item)
             self.get_application().get_clipboard().append(

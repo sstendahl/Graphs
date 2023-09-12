@@ -10,6 +10,8 @@ from graphs import file_import, file_io, project, styles, utilities
 from graphs.canvas import Canvas
 from graphs.item_box import ItemBox
 
+from matplotlib import pyplot
+
 
 def on_figure_style_change(_a, _b, self):
     if not self.get_settings(
@@ -17,11 +19,16 @@ def on_figure_style_change(_a, _b, self):
         reload_canvas(self)
         return
     styles.update(self)
+    color_cycle = pyplot.rcParams["axes.prop_cycle"].by_key()["color"]
     for item in self.get_data():
         item.reset()
+    count = 0
     for item in self.get_data():
         if item.props.item_type == "Item":
-            item.color = utilities.get_next_color(self.get_data().get_items())
+            if count > len(color_cycle):
+                count = 0
+            item.props.color = color_cycle[count]
+            count += 1
     reload_canvas(self)
 
 
