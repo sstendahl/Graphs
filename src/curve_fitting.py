@@ -1,12 +1,13 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 import re
 
+import sympy
+
 from gettext import gettext as _
 from pathlib import Path
 
 from gi.repository import Adw, GLib, GObject, Gio, Gtk
 from scipy.optimize import curve_fit
-from sympy import symbols, lambdify, sympify
 
 from graphs import ui, utilities
 from graphs.canvas import Canvas
@@ -69,17 +70,16 @@ class CurveFittingWindow(Adw.Window):
     def fit_curve(self, _widget):
 
         def create_function(equation_name):
-            # Extract variables from the string
-            variables = \
-                re.findall(r'\b(?!x\b|X\b|sin\b|cos\b|tan\b)[a-wy-zA-WY-Z]+\b',
-                equation_name)
-            variables = ['x'] + variables
+            variables = ["x"] + re.findall(
+                r"\b(?!x\b|X\b|sin\b|cos\b|tan\b)[a-wy-zA-WY-Z]+\b",
+                equation_name
+            )
 
-            sym_vars = symbols(variables)
-            symbolic = sympify(equation_name,
+            sym_vars = sympy.symbols(variables)
+            symbolic = sympy.sympify(equation_name,
                 locals=dict(zip(variables, sym_vars)))
-            function = lambdify(sym_vars, symbolic)
-            return function
+
+            return sympy.lambdify(sym_vars, symbolic)
 
         def get_equation_name(equation_name, values):
             variables = \
