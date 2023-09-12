@@ -12,6 +12,7 @@ from graphs import ui, utilities
 from graphs.canvas import Canvas
 from graphs.data import Data
 from graphs.item import Item
+from graphs.utilities import preprocess
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/curve_fitting.ui")
 class CurveFittingWindow(Adw.Window):
@@ -61,7 +62,7 @@ class CurveFittingWindow(Adw.Window):
 
     @property
     def equation(self):
-	    return str(self.equation_entry.get_text())
+	    return preprocess(str(self.equation_entry.get_text()))
 
 
     @Gtk.Template.Callback()
