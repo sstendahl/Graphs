@@ -20,7 +20,7 @@ def new_for_item(canvas, item):
     return artist
 
 
-class ArtistWrapperBase(GObject.Object, Graphs.ItemRenderable):
+class ArtistWrapperBase(GObject.Object):
     __gtype_name__ = "ArtistWrapperBase"
     legend = False
 

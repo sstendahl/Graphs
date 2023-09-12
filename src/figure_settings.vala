@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 namespace Graphs {
-    public class FigureSettings : Object, FigureProperties {
+    public class FigureSettings : Object {
 
         public string title { get; set; default = ""; }
         public string bottom_label { get; set; default = ""; }

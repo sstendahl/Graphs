@@ -22,7 +22,7 @@ from matplotlib.backends.backend_gtk4cairo import FigureCanvas
 from matplotlib.widgets import SpanSelector
 
 
-class Canvas(FigureCanvas, Graphs.FigureProperties, Graphs.Canvas):
+class Canvas(FigureCanvas, Graphs.Canvas):
     """
     Custom Canvas.
 
