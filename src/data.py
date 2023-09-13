@@ -113,11 +113,9 @@ class Data(GObject.Object, Graphs.DataInterface):
         del item_
         self.notify("items")
 
-    def index(self, getter):
-        """Get the indexs of getter as uuid or item."""
-        return self.get_keys().index(
-            getter.get_uuid() if isinstance(getter, Graphs.Item) else getter,
-        )
+    def index(self, item_):
+        """Get the index of an item."""
+        return self.get_keys().index(item_.get_uuid())
 
     def get_names(self) -> list:
         """All items' names."""
