@@ -10,6 +10,8 @@ from matplotlib import pyplot
 
 import numpy
 
+import sympy
+
 
 def get_font_weight(font_name):
     """Get the weight of the font that is used using the full font name"""
@@ -258,3 +260,18 @@ def get_next_color(items):
         if color not in used_colors:
             return color
     return "000000"
+
+
+def string_to_function(equation_name):
+    variables = ["x"] + re.findall(
+        r"\b(?!x\b|X\b|sin\b|cos\b|tan\b)[a-wy-zA-WY-Z]+\b",
+        equation_name
+    )
+
+    sym_vars = sympy.symbols(variables)
+    try:
+        symbolic = sympy.sympify(equation_name,
+                                 locals=dict(zip(variables, sym_vars)))
+        return sympy.lambdify(sym_vars, symbolic)
+    except sympy.SympifyError:
+        return
