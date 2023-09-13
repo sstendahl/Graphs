@@ -14,7 +14,7 @@ from graphs import item, utilities
 from matplotlib import pyplot
 
 
-class Data(GObject.Object, Graphs.Data):
+class Data(GObject.Object, Graphs.DataInterface):
     """
     Class for managing data.
 
@@ -44,7 +44,7 @@ class Data(GObject.Object, Graphs.Data):
         delete_items
     """
 
-    __gtype_name__ = "Data"
+    __gtype_name__ = "GraphsData"
     __gsignals__ = {
         "items-ignored": (GObject.SIGNAL_RUN_FIRST, None, (str,)),
     }
@@ -62,11 +62,11 @@ class Data(GObject.Object, Graphs.Data):
 
     def to_list(self) -> list:
         """Get a list of all items in dict form."""
-        return [item_.to_dict() for item_ in self]
+        return [item.to_dict(item_) for item_ in self]
 
     def to_dict(self) -> dict:
         """Get a dictionary of all items sorted by their key"""
-        return {item_.uuid: item_.to_dict() for item_ in self}
+        return {item_.get_uuid(): item.to_dict(item_) for item_ in self}
 
     def set_from_list(self, items: list):
         """Set items from a list of items in dict form."""
@@ -79,7 +79,7 @@ class Data(GObject.Object, Graphs.Data):
     @GObject.Property(type=bool, default=False, flags=1)
     def items_selected(self) -> bool:
         """Whether or not at least one item is selected."""
-        return any(item_.selected for item_ in self)
+        return any(item_.get_selected() for item_ in self)
 
     @GObject.Property
     def items(self) -> list:
@@ -98,12 +98,12 @@ class Data(GObject.Object, Graphs.Data):
         """Set all managed items."""
         for item_ in items:
             self.append(item_)
-        self._items = {item_.uuid: item_ for item_ in items}
+        self._items = {item_.get_uuid(): item_ for item_ in items}
 
     def append(self, item_):
         """Append items to self."""
         self._connect_to_item(item_)
-        self._items[item_.uuid] = item_
+        self._items[item_.get_uuid()] = item_
         self.notify("items")
 
     def pop(self, key):
@@ -116,12 +116,12 @@ class Data(GObject.Object, Graphs.Data):
     def index(self, getter):
         """Get the indexs of getter as uuid or item."""
         return self.get_keys().index(
-            getter.uuid if isinstance(getter, item.ItemBase) else getter,
+            getter.get_uuid() if isinstance(getter, Graphs.Item) else getter,
         )
 
     def get_names(self) -> list:
         """All items' names."""
-        return [item_.name for item_ in self]
+        return [item_.get_name() for item_ in self]
 
     def get_keys(self) -> list:
         """All item's keys."""
@@ -184,7 +184,7 @@ class Data(GObject.Object, Graphs.Data):
                     used_colors.remove(color)
 
         for item_ in self:
-            _append_used_color(item_.props.color)
+            _append_used_color(item_.get_color())
 
         def _is_default(prop):
             return figure_settings.get_property(prop) == \
@@ -192,55 +192,59 @@ class Data(GObject.Object, Graphs.Data):
 
         for new_item in items:
             names = self.get_names()
-            if new_item.name in names:
+            if new_item.get_name() in names:
                 if handle_duplicates == 0:  # Auto-add
                     i = 1
                     while True:
-                        new_name = f"{new_item.name} ({i})"
+                        new_name = f"{new_item.get_name()} ({i})"
                         if new_name not in names:
                             break
                         i += 1
-                    new_item.name = new_name
+                    new_item.set_name(new_name)
                 elif handle_duplicates == 1:  # Ignore
-                    ignored.append(new_item.name)
+                    ignored.append(new_item.get_name())
                     continue
                 elif handle_duplicates == 3:  # Override
-                    new_item.uuid = self[names.index(new_item.name)].uuid
+                    new_item.set_uuid(
+                        self[names.index(new_item.get_name())].get_uuid(),
+                    )
 
-            if new_item.xlabel:
-                original_position = new_item.xposition
-                if new_item.xposition == 0:
+            xlabel = new_item.get_xlabel()
+            if xlabel:
+                original_position = new_item.get_xposition()
+                if original_position == 0:
                     if _is_default("bottom-label"):
-                        figure_settings.set_bottom_label(new_item.xlabel)
-                    elif new_item.xlabel != figure_settings.get_bottom_label():
-                        new_item.xposition = 1
-                if new_item.xposition == 1:
+                        figure_settings.set_bottom_label(xlabel)
+                    elif xlabel != figure_settings.get_bottom_label():
+                        new_item.set_xposition(1)
+                if new_item.get_xposition() == 1:
                     if _is_default("top-label"):
-                        figure_settings.set_top_label(new_item.xlabel)
-                    elif new_item.xlabel != figure_settings.get_top_label():
-                        new_item.xposition = original_position
-            if new_item.ylabel:
-                original_position = new_item.yposition
-                if new_item.yposition == 0:
+                        figure_settings.set_top_label(xlabel)
+                    elif xlabel != figure_settings.get_top_label():
+                        new_item.set_xposition(original_position)
+            ylabel = new_item.get_ylabel()
+            if ylabel:
+                original_position = new_item.get_yposition()
+                if original_position == 0:
                     if _is_default("left-label"):
-                        figure_settings.set_left_label(new_item.ylabel)
-                    elif new_item.ylabel != figure_settings.get_left_label():
-                        new_item.yposition = 1
-                if new_item.yposition == 1:
+                        figure_settings.set_left_label(ylabel)
+                    elif ylabel != figure_settings.get_left_label():
+                        new_item.set_yposition(1)
+                if new_item.get_yposition() == 1:
                     if _is_default("right-label"):
-                        figure_settings.set_right_label(new_item.ylabel)
-                    elif new_item.ylabel != figure_settings.get_right_label():
-                        new_item.yposition = original_position
-            if new_item.color == "":
+                        figure_settings.set_right_label(ylabel)
+                    elif ylabel != figure_settings.get_right_label():
+                        new_item.set_yposition(original_position)
+            if new_item.get_color() == "":
                 for color in color_cycle:
                     if color not in used_colors:
-                        new_item.color = color
+                        new_item.set_color(color)
                         _append_used_color(color)
                         break
 
             self.append(new_item)
             self.get_application().get_clipboard().append(
-                (1, copy.deepcopy(new_item.to_dict())),
+                (1, copy.deepcopy(item.to_dict(new_item))),
             )
         utilities.optimize_limits(self.get_application())
         self.get_application().get_clipboard().add()
@@ -253,9 +257,9 @@ class Data(GObject.Object, Graphs.Data):
         """Delete specified items."""
         for item_ in items:
             self.get_application().get_clipboard().append(
-                (2, (self.index(item_), item_.to_dict())),
+                (2, (self.index(item_), item.to_dict(item_))),
             )
-            self.pop(item_.uuid)
+            self.pop(item_.get_uuid())
         self.get_application().get_clipboard().add()
         self.notify("items_selected")
 

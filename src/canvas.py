@@ -22,7 +22,7 @@ from matplotlib.backends.backend_gtk4cairo import FigureCanvas
 from matplotlib.widgets import SpanSelector
 
 
-class Canvas(FigureCanvas, Graphs.Canvas):
+class Canvas(FigureCanvas, Graphs.CanvasInterface):
     """
     Custom Canvas.
 
@@ -67,7 +67,7 @@ class Canvas(FigureCanvas, Graphs.Canvas):
         update_legend
     """
 
-    __gtype_name__ = "Canvas"
+    __gtype_name__ = "GraphsCanvas"
 
     application = GObject.Property(type=Graphs.Application)
 
@@ -149,10 +149,10 @@ class Canvas(FigureCanvas, Graphs.Canvas):
         # bottom, top, left, right
         used_axes = [False, False, False, False]
         for item in items:
-            if item.selected and not hide_unselected:
+            if item.get_selected() and not hide_unselected:
                 drawable_items.append(item)
-                used_axes[item.xposition] = True
-                used_axes[2 + item.yposition] = True
+                used_axes[item.get_xposition()] = True
+                used_axes[2 + item.get_yposition()] = True
         axes_directions = [
             ["bottom", "left"],   # axis
             ["top", "left"],      # top_left_axis

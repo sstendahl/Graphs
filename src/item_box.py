@@ -2,22 +2,21 @@
 import contextlib
 from gettext import gettext as _
 
-from gi.repository import Adw, GLib, GObject, Gdk, Gio, Gtk
+from gi.repository import Adw, GLib, GObject, Gdk, Gio, Gtk, Graphs
 
 from graphs import utilities
 from graphs.edit_item import EditItemWindow
-from graphs.item import ItemBase
 
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/item_box.ui")
 class ItemBox(Gtk.Box):
-    __gtype_name__ = "ItemBox"
+    __gtype_name__ = "GraphsItemBox"
     label = Gtk.Template.Child()
     check_button = Gtk.Template.Child()
     color_button = Gtk.Template.Child()
 
     application = GObject.Property(type=Adw.Application)
-    item = GObject.Property(type=ItemBase)
+    item = GObject.Property(type=Graphs.Item)
 
     def __init__(self, application, item):
         super().__init__(application=application, item=item)
@@ -35,7 +34,7 @@ class ItemBox(Gtk.Box):
         self.drag_source.set_actions(Gdk.DragAction.COPY)
         self.drag_source.connect("prepare", self.on_dnd_prepare)
         self.drop_source = Gtk.DropTarget.new(str, Gdk.DragAction.COPY)
-        self.drop_source.uuid = item.uuid
+        self.drop_source.uuid = item.get_uuid()
         self.drop_source.connect("drop", self.on_dnd_drop)
 
         self.item.connect("notify::color", self.on_color_change)
@@ -78,17 +77,23 @@ class ItemBox(Gtk.Box):
         self.do_snapshot(self, snapshot)
         paintable = snapshot.to_paintable()
         drag_source.set_icon(paintable, int(x), int(y))
-        return Gdk.ContentProvider.new_for_value(self.props.item.uuid)
+        return Gdk.ContentProvider.new_for_value(self.props.item.get_uuid())
 
     def on_color_change(self, item, _ignored):
         self.provider.load_from_data(
-            f"button {{ color: {item.color}; opacity: {item.alpha};}}", -1)
+            "button { "
+            f"color: {item.get_color()}; "
+            f"opacity: {item.get_alpha()}; "
+            "}", -1,
+        )
 
     def move_up(self, _action, _shortcut, item):
         data = self.get_application().get_data()
         before_index = data.index(item)
 
-        data.change_position(item.uuid, data[before_index - 1].uuid)
+        data.change_position(
+            item.get_uuid(), data[before_index - 1].get_uuid(),
+        )
         clipboard = self.get_application().get_clipboard()
         clipboard.append((3, (before_index, data.index(item))))
         clipboard.add()
@@ -98,7 +103,9 @@ class ItemBox(Gtk.Box):
         data = self.get_application().get_data()
         before_index = data.index(item)
 
-        data.change_position(item.uuid, data[before_index + 1].uuid)
+        data.change_position(
+            item.get_uuid(), data[before_index + 1].get_uuid(),
+        )
         clipboard = self.get_application().get_clipboard()
         clipboard.append((3, (before_index, data.index(item))))
         clipboard.add()
@@ -113,16 +120,19 @@ class ItemBox(Gtk.Box):
 
     @Gtk.Template.Callback()
     def choose_color(self, _):
+        rgba = utilities.hex_to_rgba(self.props.item.get_color())
+        rgba.alpha = self.props.item.get_alpha()
         dialog = Gtk.ColorDialog()
         dialog.choose_rgba(
-            self.get_application().get_window(), self.props.item.get_color(),
+            self.get_application().get_window(), rgba,
             None, self.on_color_dialog_accept)
 
     def on_color_dialog_accept(self, dialog, result):
         with contextlib.suppress(GLib.GError):
             color = dialog.choose_rgba_finish(result)
             if color is not None:
-                self.props.item.set_color(color)
+                self.props.item.set_color(utilities.rgba_to_hex(color))
+                self.props.item.set_alpha(color.alpha)
                 self.get_application().get_clipboard().add()
 
     def delete(self, _action, _shortcut, _widget):

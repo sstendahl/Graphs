@@ -7,8 +7,8 @@ from graphs import item, ui
 import numpy
 
 
-class BaseClipboard(GObject.Object, Graphs.Clipboard):
-    __gtype_name__ = "BaseClipboard"
+class Clipboard(GObject.Object, Graphs.ClipboardInterface):
+    __gtype_name__ = "GraphsClipboard"
 
     application = GObject.Property(type=Adw.Application)
     clipboard = GObject.Property(type=object)
@@ -71,8 +71,8 @@ class BaseClipboard(GObject.Object, Graphs.Clipboard):
         self.props.clipboard_pos = clipboard_pos
 
 
-class DataClipboard(BaseClipboard):
-    __gtype_name__ = "DataClipboard"
+class DataClipboard(Clipboard):
+    __gtype_name__ = "GraphsDataClipboard"
 
     current_batch = GObject.Property(type=object)
     data_copy = GObject.Property(type=object)
@@ -145,7 +145,9 @@ class DataClipboard(BaseClipboard):
             elif change_type == 2:
                 item_ = item.new_from_dict(change[1])
                 data.append(item_)
-                data.change_position(data.get_keys()[change[0]], item_.uuid)
+                data.change_position(
+                    data.get_keys()[change[0]], item_.get_uuid(),
+                )
                 items_changed = True
             elif change_type == 3:
                 data.change_position(data[change[0]].uuid,
@@ -182,8 +184,8 @@ class DataClipboard(BaseClipboard):
 
     def on_item_change(self, item_, param):
         self.append((0, (
-            item_.uuid, param.name,
-            copy.deepcopy(self.props.data_copy[item_.uuid][param.name]),
+            item_.get_uuid(), param.name,
+            copy.deepcopy(self.props.data_copy[item_.get_uuid()][param.name]),
             copy.deepcopy(item_.get_property(param.name)),
         )))
 
@@ -191,8 +193,8 @@ class DataClipboard(BaseClipboard):
         self.props.current_batch.append(change)
 
 
-class ViewClipboard(BaseClipboard):
-    __gtype_name__ = "ViewClipboard"
+class ViewClipboard(Clipboard):
+    __gtype_name__ = "GraphsViewClipboard"
 
     def __init__(self, application):
         super().__init__(

@@ -7,53 +7,25 @@ from matplotlib import pyplot
 
 
 def new_from_dict(dictionary: dict):
-    match dictionary["item_type"]:
-        case "Item":
-            cls = Item
-        case "TextItem":
+    match dictionary["type"]:
+        case "GraphsDataItem":
+            cls = DataItem
+        case "GrapsTextItem":
             cls = TextItem
         case _:
             pass
+    dictionary.pop("type")
     return cls(**dictionary)
 
 
-class ItemBase(GObject.Object, Graphs.Item):
-    __gtype_name__ = "ItemBase"
-
-    name = GObject.Property(type=str, default="")
-    color = GObject.Property(type=str, default="")
-    selected = GObject.Property(type=bool, default=True)
-    xlabel = GObject.Property(type=str, default="")
-    ylabel = GObject.Property(type=str, default="")
-    xposition = GObject.Property(type=int, default=0)
-    yposition = GObject.Property(type=int, default=0)
-    alpha = GObject.Property(type=float, default=1, minimum=0, maximum=1)
-
-    uuid = GObject.Property(type=str, default="")
-    item_type = GObject.Property(type=str, default="")
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        if self.props.uuid == "":
-            self.props.uuid = GLib.uuid_string_random()
-        if self.props.item_type == "":
-            self.props.item_type = self.__gtype_name__
-
-    def to_dict(self) -> dict:
-        return {key: self.get_property(key) for key in dir(self.props)}
-
-    def get_color(self):
-        rgba = utilities.hex_to_rgba(self.props.color)
-        rgba.alpha = self.props.alpha
-        return rgba
-
-    def set_color(self, rgba):
-        self.props.alpha = rgba.alpha
-        self.props.color = utilities.rgba_to_hex(rgba)
+def to_dict(item):
+    dictionary = {key: item.get_property(key) for key in dir(item.props)}
+    dictionary["type"] = item.__gtype_name__
+    return dictionary
 
 
-class Item(ItemBase):
-    __gtype_name__ = "Item"
+class DataItem(Graphs.Item):
+    __gtype_name__ = "GraphsDataItem"
 
     xdata = GObject.Property(type=object)
     ydata = GObject.Property(type=object)
@@ -65,7 +37,7 @@ class Item(ItemBase):
     @staticmethod
     def new(application, xdata=None, ydata=None, **kwargs):
         settings = application.get_settings("general")
-        return Item(
+        return DataItem(
             yposition=settings.get_enum("y-position"),
             xposition=settings.get_enum("x-position"),
             linestyle=misc.LINESTYLES.index(
@@ -96,8 +68,8 @@ class Item(ItemBase):
         self.color = "000000"
 
 
-class TextItem(ItemBase):
-    __gtype_name__ = "TextItem"
+class TextItem(Graphs.Item):
+    __gtype_name__ = "GraphsTextItem"
 
     xanchor = GObject.Property(type=float, default=0)
     yanchor = GObject.Property(type=float, default=0)

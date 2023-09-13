@@ -77,13 +77,13 @@ def add_equation_action(_action, _target, self):
 
 def select_all_action(_action, _target, self):
     for item in self.get_data():
-        item.selected = True
+        item.set_selected(True)
     self.get_clipboard().add()
 
 
 def select_none_action(_action, _target, self):
     for item in self.get_data():
-        item.selected = False
+        item.set_selected(False)
     self.get_clipboard().add()
 
 
@@ -139,7 +139,7 @@ def open_project_action(_action, _target, self):
 
 
 def delete_selected_action(_action, _target, self):
-    items = [item for item in self.get_data() if item.selected]
-    names = ", ".join([item.name for item in items])
+    items = [item for item in self.get_data() if item.get_selected()]
+    names = ", ".join([item.get_name() for item in items])
     self.get_data().delete_items(items)
     self.get_window().add_toast_string(_("Deleted {}").format(names))

@@ -143,7 +143,7 @@ VALUE_DICT = {
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/style_window.ui")
 class StylesWindow(Adw.Window):
-    __gtype_name__ = "StylesWindow"
+    __gtype_name__ = "GraphsStylesWindow"
 
     leaflet = Gtk.Template.Child()
     styles_box = Gtk.Template.Child()
@@ -358,7 +358,7 @@ class StylesWindow(Adw.Window):
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/style_box.ui")
 class StyleBox(Gtk.Box):
-    __gtype_name__ = "StyleBox"
+    __gtype_name__ = "GraphsStyleBox"
     label = Gtk.Template.Child()
     check_mark = Gtk.Template.Child()
 
@@ -392,7 +392,7 @@ class StyleBox(Gtk.Box):
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/style_color_box.ui")
 class StyleColorBox(Gtk.Box):
-    __gtype_name__ = "StyleColorBox"
+    __gtype_name__ = "GraphsStyleColorBox"
     label = Gtk.Template.Child()
     color_button = Gtk.Template.Child()
 
@@ -420,7 +420,7 @@ class StyleColorBox(Gtk.Box):
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/add_style.ui")
 class AddStyleWindow(Adw.Window):
-    __gtype_name__ = "AddStyleWindow"
+    __gtype_name__ = "GraphsAddStyleWindow"
     new_style_name = Gtk.Template.Child()
     style_templates = Gtk.Template.Child()
 

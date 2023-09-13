@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
 import re
 from gettext import gettext as _
 
@@ -42,7 +43,7 @@ def import_from_xrdml(self, file):
             end_pos = float(end_pos[0].firstChild.data)
             xdata = numpy.linspace(start_pos, end_pos, len(ydata))
             xdata = numpy.ndarray.tolist(xdata)
-    return [item.Item.new(
+    return [item.DataItem.new(
         self, xdata, ydata, name=utilities.get_filename(file),
         xlabel=f"{scan_axis} ({unit})", ylabel=_("Intensity (cps)"))]
 
@@ -66,7 +67,7 @@ def import_from_xry(self, file):
         name = utilities.get_filename(file)
         if item_count > 1:
             name += f" - {i + 1}"
-        items.append(item.Item.new(
+        items.append(item.DataItem.new(
             self, name=name, xlabel=_("β (°)"), ylabel=_("R (1/s)"),
         ))
     for i in range(value_count):
@@ -85,7 +86,7 @@ def import_from_xry(self, file):
 
 
 def import_from_columns(self, file):
-    item_ = item.Item.new(self, name=utilities.get_filename(file))
+    item_ = item.DataItem.new(self, name=utilities.get_filename(file))
     columns_params = self.get_settings().get_child(
         "import-params").get_child("columns")
     column_x = columns_params.get_int("column-x")

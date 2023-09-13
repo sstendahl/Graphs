@@ -5,14 +5,16 @@ from graphs import misc, utilities
 
 
 def new_for_item(canvas, item):
-    match item.props.item_type:
-        case "Item":
-            cls = ItemArtistWrapper
-        case "TextItem":
+    match item.__gtype_name__:
+        case "GraphsDataItem":
+            cls = DataItemArtistWrapper
+        case "GraphsTextItem":
             cls = TextItemArtistWrapper
         case _:
             pass
-    artist = cls(canvas.axes[item.yposition * 2 + item.xposition], item)
+    artist = cls(
+        canvas.axes[item.get_yposition() * 2 + item.get_xposition()], item,
+    )
     for prop in dir(artist.props):
         if not (prop == "label" and artist.legend):
             item.bind_property(prop, artist, prop, 0)
@@ -20,8 +22,8 @@ def new_for_item(canvas, item):
     return artist
 
 
-class ArtistWrapperBase(GObject.Object):
-    __gtype_name__ = "ArtistWrapperBase"
+class ItemArtistWrapper(GObject.Object):
+    __gtype_name__ = "GraphsItemArtistWrapper"
     legend = False
 
     def get_artist(self):
@@ -52,8 +54,8 @@ class ArtistWrapperBase(GObject.Object):
         self._artist.set_alpha(alpha)
 
 
-class ItemArtistWrapper(ArtistWrapperBase):
-    __gtype_name__ = "ItemArtistWrapper"
+class DataItemArtistWrapper(ItemArtistWrapper):
+    __gtype_name__ = "GraphsDataItemArtistWrapper"
     selected = GObject.Property(type=bool, default=True)
     linewidth = GObject.Property(type=float, default=3)
     markersize = GObject.Property(type=float, default=7)
@@ -103,8 +105,8 @@ class ItemArtistWrapper(ArtistWrapperBase):
         super().__init__()
         self._artist = axis.plot(
             item.props.xdata, item.props.ydata,
-            label=utilities.shorten_label(item.props.name, 40),
-            color=item.props.color, alpha=item.props.alpha,
+            label=utilities.shorten_label(item.get_name(), 40),
+            color=item.get_color(), alpha=item.get_alpha(),
             linestyle=misc.LINESTYLES[item.props.linestyle],
             marker=misc.MARKERSTYLES[item.props.markerstyle],
         )[0]
@@ -114,8 +116,8 @@ class ItemArtistWrapper(ArtistWrapperBase):
         self._set_properties(None, None)
 
 
-class TextItemArtistWrapper(ArtistWrapperBase):
-    __gtype_name__ = "TextItemArtistWrapper"
+class TextItemArtistWrapper(ItemArtistWrapper):
+    __gtype_name__ = "GraphsTextItemArtistWrapper"
 
     @GObject.Property(type=float, default=12)
     def size(self) -> float:
@@ -161,7 +163,7 @@ class TextItemArtistWrapper(ArtistWrapperBase):
         super().__init__()
         self._artist = axis.text(
             item.props.xanchor, item.props.yanchor, item.props.text,
-            label=utilities.shorten_label(item.props.name, 40), clip_on=True,
-            color=item.props.color, alpha=item.props.alpha,
+            label=utilities.shorten_label(item.item.get_name(), 40),
+            color=item.get_color(), alpha=item.get_alpha(), clip_on=True,
             fontsize=item.props.size, rotation=item.props.rotation,
         )

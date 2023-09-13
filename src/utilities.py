@@ -205,9 +205,9 @@ def optimize_limits(self):
         for direction in ["bottom", "left", "top", "right"]
     ]
     for item in self.get_data():
-        if item.props.item_type != "Item":
+        if item.__gtype_name__ != "GraphsDataItem":
             continue
-        for index in item.xposition * 2, 1 + item.yposition * 2:
+        for index in item.get_xposition() * 2, 1 + item.get_yposition() * 2:
             axes[index][1] = True
             data = numpy.asarray(item.ydata if index % 2 else item.xdata)
             data = data[numpy.isfinite(data)]

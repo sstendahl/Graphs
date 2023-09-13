@@ -11,7 +11,7 @@ _DIRECTIONS = ["bottom", "left", "top", "right"]
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/figure_settings.ui")
 class FigureSettingsWindow(Adw.PreferencesWindow):
-    __gtype_name__ = "FigureSettingsWindow"
+    __gtype_name__ = "GraphsFigureSettingsWindow"
 
     title = Gtk.Template.Child()
     bottom_label = Gtk.Template.Child()
@@ -70,8 +70,8 @@ class FigureSettingsWindow(Adw.PreferencesWindow):
     def set_axes_entries(self):
         used_axes = [[direction, False] for direction in _DIRECTIONS]
         for item in self.get_application().get_data():
-            for index in item.xposition * 2, 1 + item.yposition * 2:
-                used_axes[index][1] = True
+            for i in item.get_xposition() * 2, 1 + item.get_yposition() * 2:
+                used_axes[i][1] = True
         for (direction, visible) in used_axes:
             if visible:
                 for s in ["min_", "max_"]:
