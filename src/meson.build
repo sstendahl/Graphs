@@ -28,6 +28,7 @@ python.install_sources(
     'migrate.py',
     'misc.py',
     'operations.py',
+    'parse_file.py',
     'project.py',
     'scales.py',
     'styles.py',

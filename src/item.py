@@ -17,7 +17,7 @@ def new_from_dict(dictionary: dict):
     return cls(**dictionary)
 
 
-class ItemBase(GObject.Object, Graphs.ItemRenderable, Graphs.Item):
+class ItemBase(GObject.Object, Graphs.Item):
     __gtype_name__ = "ItemBase"
 
     name = GObject.Property(type=str, default="")
