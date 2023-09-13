@@ -1,9 +1,8 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
-import copy
 import re
 from gettext import gettext as _
 
-from gi.repository import Adw, Gtk
+from gi.repository import Adw, GObject, Gtk
 
 from graphs.canvas import Canvas
 from graphs.data import Data
@@ -33,9 +32,11 @@ class CurveFittingWindow(Adw.Window):
         self.param = []
         self.curves = Data(application)
         self.equation_entry.connect("notify::text", self.on_equation_change)
-        self.entries = []
-        for _var in self.get_free_variables():
-            self.entries.append(1)
+
+        self.fitting_parameters = FittingParameters(application)
+
+        for var in self.get_free_variables():
+            self.fitting_parameters.add_items([FittingParameter(var, 1)])
 
         data_curve = Item.new(
             application, xdata=item.xdata, ydata=item.ydata, name=item.name)
@@ -68,10 +69,10 @@ class CurveFittingWindow(Adw.Window):
                 self.equation))
 
     def on_equation_change(self, _entry, _param):
-        self.entries = []
-
-        for _var in self.get_free_variables():
-            self.entries.append(1)
+        for var in self.get_free_variables():
+            if var not in self.fitting_parameters.get_names():
+                self.fitting_parameters.add_items([FittingParameter(var, 1)])
+        self.fitting_parameters.remove_unused(self.get_free_variables())
         fit = self.fit_curve()
         if fit:
             self.set_entry_rows()
@@ -79,8 +80,8 @@ class CurveFittingWindow(Adw.Window):
     def on_entry_change(self, entry, _param):
         for index, row in enumerate(self.fitting_params):
             if row == entry:
-                self.entries[index] = entry.get_text()
-
+                self.fitting_parameters[index].initial = (
+                    entry.get_text() if entry.get_text().isdigit() else 1)
         self.fit_curve()
 
     def set_results(self):
@@ -88,8 +89,6 @@ class CurveFittingWindow(Adw.Window):
         buffer_string = initial_string
         for index, arg in enumerate(self.get_free_variables()):
             buffer_string += f"\n {arg}: {self.param[index]}"
-
-        self.entries = copy.deepcopy(self.param)
 
         self.text_view.get_buffer().set_text(buffer_string)
         bold_tag = Gtk.TextTag(weight=700)
@@ -119,7 +118,8 @@ class CurveFittingWindow(Adw.Window):
             return
 
         param, param_cov = curve_fit(function, self.item.xdata,
-                                     self.item.ydata, p0=self.entries)
+                                     self.item.ydata,
+                                     p0=self.fitting_parameters.get_p0())
 
         xdata = numpy.linspace(
             min(self.curves[1].xdata),
@@ -147,11 +147,11 @@ class CurveFittingWindow(Adw.Window):
         while self.fitting_params.get_last_child() is not None:
             self.fitting_params.remove(self.fitting_params.get_last_child())
 
-        for index, arg in enumerate(self.get_free_variables()):
+        for arg in self.get_free_variables():
             entryrow = Adw.EntryRow.new()
             entryrow.set_title(_(f"Initial guess {arg}:"))
             entryrow.set_css_classes(["card"])
-            entryrow.set_text(f"{self.entries[index]}")
+            entryrow.set_text(f"{self.fitting_parameters[arg].initial}")
             entryrow.connect("notify::text", self.on_entry_change)
             self.fitting_params.append(entryrow)
 
@@ -161,3 +161,46 @@ class CurveFittingWindow(Adw.Window):
     def get_canvas(self):
         widget = self.toast_overlay.get_child()
         return None if isinstance(widget, Adw.StatusPage) else widget
+
+
+class FittingParameters(Data):
+    """Class to contain the fitting parameters."""
+
+    def add_items(self, items):
+        for item in items:
+            self._items[item.name] = item
+
+    def remove_unused(self, used_list):
+
+        # First create list with items to remove
+        # to avoid dict changing size during iteration
+        remove_list = []
+        for item in self._items.values():
+            if item.name not in used_list:
+                remove_list.append(item.name)
+
+        for item_name in remove_list:
+            del self._items[item_name]
+
+        self.order_by_list(used_list)
+
+    def order_by_list(self, ordered_list):
+        self._items = {key: self._items[key] for key in ordered_list}
+
+    def get_p0(self) -> list:
+        """All items' names."""
+        return [float(item_.initial) for item_ in self]
+
+
+class FittingParameter(GObject.Object):
+    """Class for the fitting parameters."""
+
+    __gtype_name__ = "FittingParameter"
+    application = GObject.Property(type=object)
+
+    def __init__(self, name, initial=1, lower_bound=None, upper_bound=None):
+        """Init the dataclass."""
+        self.name = name
+        self.initial = initial
+        self.lower_bound = lower_bound
+        self.upper_bound = upper_bound
