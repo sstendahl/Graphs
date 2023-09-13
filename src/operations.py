@@ -191,7 +191,7 @@ def shift(item, xdata, ydata, left_scale, right_scale, items):
         previous_ydata = data_list[index - 1].ydata
         ymin = min(x for x in previous_ydata if x != 0)
         ymax = max(x for x in previous_ydata if x != 0)
-        scale = right_scale if item.yposition else left_scale
+        scale = right_scale if item.get_yposition() else left_scale
         if scale == 1:  # Use log values for log scaling
             shift_value_log += numpy.log10(ymax / ymin)
         else:
