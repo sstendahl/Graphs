@@ -85,9 +85,19 @@ class CurveFittingWindow(Adw.Window):
 
     def on_entry_change(self, entry, _param):
         for index, row in enumerate(self.fitting_params):
-            if row == entry:
+            param_entries = entry.get_parent().get_parent()
+            if row == param_entries:
+                initial = param_entries.initial.get_text()
+                lower_bound = param_entries.lower_bound.get_text()
+                upper_bound = param_entries.upper_bound.get_text()
+
                 self.fitting_parameters[index].initial = (
-                    entry.get_text() if entry.get_text().isdigit() else 1)
+                    initial if initial.isdigit() else 1)
+                self.fitting_parameters[index].lower_bound = (
+                    lower_bound if lower_bound.isdigit() else -float("inf"))
+                self.fitting_parameters[index].upper_bound = (
+                    upper_bound if upper_bound.isdigit() else float("inf"))
+
         self.fit_curve()
 
     def set_results(self):
@@ -123,23 +133,26 @@ class CurveFittingWindow(Adw.Window):
         if function is None:
             return
 
-        param, param_cov = curve_fit(function, self.item.xdata,
-                                     self.item.ydata,
-                                     p0=self.fitting_parameters.get_p0())
+        try:
+            self.param, param_cov = \
+                curve_fit(function, self.item.xdata,
+                          self.item.ydata,
+                          p0=self.fitting_parameters.get_p0(),
+                          bounds=self.fitting_parameters.get_bounds(),
+                          nan_policy="omit")
+        except ValueError:
+            return
 
         xdata = numpy.linspace(
             min(self.curves[1].xdata),
             max(self.curves[1].xdata),
             5000)
+        ydata = [function(x, *self.param) for x in xdata]
 
-        ydata_fit = [function(x, *param) for x in xdata]
-        name = _get_equation_name(str(self.equation_entry.get_text()), param)
-
-        self.param = param
+        name = _get_equation_name(
+            str(self.equation_entry.get_text()), self.param)
         self.curves[0].name = f"Y = {name}"
-        self.curves[0].ydata, self.curves[0].xdata = (
-            ydata_fit, xdata)
-
+        self.curves[0].ydata, self.curves[0].xdata = (ydata, xdata)
         self.set_results()
         return True
 
@@ -154,12 +167,7 @@ class CurveFittingWindow(Adw.Window):
             self.fitting_params.remove(self.fitting_params.get_last_child())
 
         for arg in self.get_free_variables():
-            entryrow = Adw.EntryRow.new()
-            entryrow.set_title(_(f"Initial guess {arg}:"))
-            entryrow.set_css_classes(["card"])
-            entryrow.set_text(f"{self.fitting_parameters[arg].initial}")
-            entryrow.connect("notify::text", self.on_entry_change)
-            self.fitting_params.append(entryrow)
+            self.fitting_params.append(FittingParameterEntry(self, arg))
 
     def set_canvas(self, canvas):
         self.toast_overlay.set_child(canvas)
@@ -194,8 +202,13 @@ class FittingParameters(Data):
         self._items = {key: self._items[key] for key in ordered_list}
 
     def get_p0(self) -> list:
-        """All items' names."""
+        """Get the initial values."""
         return [float(item_.initial) for item_ in self]
+
+    def get_bounds(self):
+        lower_bounds = [float(item_.lower_bound) for item_ in self]
+        upper_bounds = [float(item_.upper_bound) for item_ in self]
+        return (lower_bounds, upper_bounds)
 
 
 class FittingParameter(GObject.Object):
@@ -204,9 +217,33 @@ class FittingParameter(GObject.Object):
     __gtype_name__ = "FittingParameter"
     application = GObject.Property(type=object)
 
-    def __init__(self, name, initial=1, lower_bound=None, upper_bound=None):
+    def __init__(self, name, initial=1, lower_bound=-float("inf"),
+                 upper_bound=float("inf")):
         """Init the dataclass."""
         self.name = name
         self.initial = initial
         self.lower_bound = lower_bound
         self.upper_bound = upper_bound
+
+
+@Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/fitting_parameters.ui")
+class FittingParameterEntry(Gtk.Box):
+    __gtype_name__ = "FittingParameterEntry"
+    label = Gtk.Template.Child()
+    initial = Gtk.Template.Child()
+    upper_bound = Gtk.Template.Child()
+    lower_bound = Gtk.Template.Child()
+
+    application = GObject.Property(type=Adw.Application)
+
+    def __init__(self, parent, arg):
+        super().__init__(application=parent.get_application())
+        self.parent = parent
+        self.params = parent.fitting_parameters[arg]
+        self.label.set_markup(
+            f"<b>Fitting parameters for {self.params.name}: </b>")
+        self.initial.set_text(str(self.params.initial))
+
+        self.initial.connect("notify::text", parent.on_entry_change)
+        self.upper_bound.connect("notify::text", parent.on_entry_change)
+        self.lower_bound.connect("notify::text", parent.on_entry_change)

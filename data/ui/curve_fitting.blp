@@ -34,7 +34,7 @@ template $CurveFittingWindow : Adw.Window {
 
     Box {
         ScrolledWindow {
-          width-request: 250;
+          width-request: 350;
           hscrollbar-policy: never;
         Box {
           orientation: vertical;
@@ -67,9 +67,9 @@ template $CurveFittingWindow : Adw.Window {
           orientation: vertical;
         }
         Adw.ToastOverlay toast_overlay {
-          focusable: true;
+          hexpand: true;
           height-request: 150;
-          width-request: 300;
+          width-request: 250;
           child: Adw.StatusPage {
             icon-name: "dialog-error-symbolic";
             title: _("Canvas Failed to Load");

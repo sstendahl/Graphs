@@ -69,6 +69,7 @@ blueprints_source = [
   'ui/edit_item.blp',
   'ui/export_figure.blp',
   'ui/figure_settings.blp',
+  'ui/fitting_parameters.blp',
   'ui/import.blp',
   'ui/help_overlay.blp',
   'ui/item_box.blp',

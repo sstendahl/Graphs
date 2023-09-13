@@ -1,0 +1,34 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $FittingParameterEntry : Box {
+  orientation: vertical;
+  margin-top: 6;
+  Label label {
+    margin-bottom: 6;
+    margin-start: 3;
+    halign: start;
+    label: "<b>a</b>";
+    use-markup: true;
+  }
+  Box {
+  spacing: 6;
+  Adw.EntryRow initial {
+  title: _("Initial");
+  text: _("1");
+  styles ["card"]
+  }
+  Adw.EntryRow lower_bound {
+  title: _("Min");
+  text: _("-inf");
+  styles ["card"]
+  }
+  Adw.EntryRow upper_bound {
+  title: _("Max");
+  text: _("inf");
+  styles ["card"]
+  }
+
+  }
+
+}
