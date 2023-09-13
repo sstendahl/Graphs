@@ -141,21 +141,17 @@ class Data(GObject.Object, Graphs.DataInterface):
             return self._items[getter]
         return self.get_items()[getter]
 
-    def change_position(self, key1: str, key2: str):
-        """Change key position of key2 to that of key1."""
-        keys = self.get_keys()
+    def change_position(self, index1: int, index2: int):
+        """Change item position of index2 to that of index1."""
         items = self.get_items()
-        index1 = keys.index(key2)
-        index2 = keys.index(key1)
         # Check if target key is lower in the order, if so we can put the old
         # key below the target key. Otherwise put it above.
         if index1 < index2:
-            items[index1:index2 + 1] = items[index1 + 1:index2 + 1] + \
-                [self._items[key2]]
+            items[index1:index2 + 1] = [items[index2]] + items[index1:index2]
         else:
             items[index2:index1 + 1] = \
-                [self._items[key2]] + items[index2:index1]
-        self.items = items
+                items[index2 + 1:index1 + 1] + [items[index2]]
+        self.props.items = items
 
     def add_items(self, items: list):
         """

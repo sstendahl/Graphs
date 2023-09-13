@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
-from gi.repository import GLib, GObject, Graphs
+from gi.repository import GObject, Graphs
 
-from graphs import misc, utilities
+from graphs import misc
 
 from matplotlib import pyplot
 

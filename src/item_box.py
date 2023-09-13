@@ -2,7 +2,7 @@
 import contextlib
 from gettext import gettext as _
 
-from gi.repository import Adw, GLib, GObject, Gdk, Gio, Gtk, Graphs
+from gi.repository import Adw, GLib, GObject, Gdk, Gio, Graphs, Gtk
 
 from graphs import utilities
 from graphs.edit_item import EditItemWindow
@@ -62,15 +62,20 @@ class ItemBox(Gtk.Box):
             action_group.add_action(action)
         self.insert_action_group("item_box", action_group)
 
+    def _change_position(self, source_index, target_index):
+        application = self.get_application()
+        application.get_data().change_position(
+            target_index, source_index,
+        )
+        clipboard = application.get_clipboard()
+        clipboard.append((3, (source_index, target_index)))
+        clipboard.add()
+        application.get_view_clipboard().add()
+
     def on_dnd_drop(self, drop_target, value, _x, _y):
         # Handle the dropped data here
         data = self.get_application().get_data()
-        before_index = data.index(value)
-        data.change_position(drop_target.uuid, value)
-        clipboard = self.get_application().get_clipboard()
-        clipboard.append((3, (before_index, data.index(value))))
-        clipboard.add()
-        self.get_application().get_view_clipboard().add()
+        self._change_position(data.index(value), data.index(drop_target.uuid))
 
     def on_dnd_prepare(self, drag_source, x, y):
         snapshot = Gtk.Snapshot.new()
@@ -88,28 +93,12 @@ class ItemBox(Gtk.Box):
         )
 
     def move_up(self, _action, _shortcut, item):
-        data = self.get_application().get_data()
-        before_index = data.index(item)
-
-        data.change_position(
-            item.get_uuid(), data[before_index - 1].get_uuid(),
-        )
-        clipboard = self.get_application().get_clipboard()
-        clipboard.append((3, (before_index, data.index(item))))
-        clipboard.add()
-        self.get_application().get_view_clipboard().add()
+        before_index = self.get_application().get_data().index(item)
+        self._change_position(before_index, before_index - 1)
 
     def move_down(self, _action, _shortcut, item):
-        data = self.get_application().get_data()
-        before_index = data.index(item)
-
-        data.change_position(
-            item.get_uuid(), data[before_index + 1].get_uuid(),
-        )
-        clipboard = self.get_application().get_clipboard()
-        clipboard.append((3, (before_index, data.index(item))))
-        clipboard.add()
-        self.get_application().get_view_clipboard().add()
+        before_index = self.get_application().get_data().index(item)
+        self._change_position(before_index, before_index + 1)
 
     @Gtk.Template.Callback()
     def on_toggle(self, _a, _b):

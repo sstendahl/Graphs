@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
-from gi.repository import GObject, Graphs
+from gi.repository import GObject
 
 from graphs import misc, utilities
 
@@ -163,7 +163,7 @@ class TextItemArtistWrapper(ItemArtistWrapper):
         super().__init__()
         self._artist = axis.text(
             item.props.xanchor, item.props.yanchor, item.props.text,
-            label=utilities.shorten_label(item.item.get_name(), 40),
+            label=utilities.shorten_label(item.get_name(), 40),
             color=item.get_color(), alpha=item.get_alpha(), clip_on=True,
             fontsize=item.props.size, rotation=item.props.rotation,
         )

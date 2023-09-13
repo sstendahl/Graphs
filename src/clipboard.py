@@ -140,18 +140,15 @@ class DataClipboard(Clipboard):
             if change_type == 0:
                 data[change[0]].set_property(change[1], change[2])
             elif change_type == 1:
-                data.pop(change["key"])
+                data.pop(change["uuid"])
                 items_changed = True
             elif change_type == 2:
                 item_ = item.new_from_dict(change[1])
                 data.append(item_)
-                data.change_position(
-                    data.get_keys()[change[0]], item_.get_uuid(),
-                )
+                data.change_position(change[0], len(data))
                 items_changed = True
             elif change_type == 3:
-                data.change_position(data[change[0]].uuid,
-                                     data[change[1]].uuid)
+                data.change_position(change[0], change[1])
                 items_changed = True
         if items_changed:
             data.notify("items")
@@ -171,11 +168,10 @@ class DataClipboard(Clipboard):
                 data.append(item.new_from_dict(change))
                 items_changed = True
             elif change_type == 2:
-                data.pop(change[1]["key"])
+                data.pop(change[1]["uuid"])
                 items_changed = True
             elif change_type == 3:
-                data.change_position(data[change[1]].uuid,
-                                     data[change[0]].uuid)
+                data.change_position(change[1], change[0])
                 items_changed = True
         if items_changed:
             data.notify("items")
