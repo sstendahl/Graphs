@@ -2,7 +2,7 @@
 import re
 from gettext import gettext as _
 
-from gi.repository import Adw, GObject, Gtk
+from gi.repository import Adw, GObject, Graphs, Gtk
 
 from graphs.canvas import Canvas
 from graphs.data import Data
@@ -32,7 +32,9 @@ class CurveFittingWindow(Adw.Window):
         self.param = []
         self.curves = Data(application)
         self.equation_entry.connect("notify::text", self.on_equation_change)
-
+        figure_settings = \
+            Graphs.FigureSettings.new(
+                application.get_settings().get_child("figure"))
         self.fitting_parameters = FittingParameters(application)
 
         for var in self.get_free_variables():
@@ -53,13 +55,17 @@ class CurveFittingWindow(Adw.Window):
         for item_ in self.curves:
             item_.disconnect(0)
 
-        figure_settings = application.get_figure_settings()
         for prop in dir(figure_settings.props):
             if prop not in ["use_custom_style", "custom_style"]:
                 figure_settings.bind_property(prop, canvas, prop, 1 | 2)
 
         self.curves.bind_property("items", canvas, "items", 2)
+
+        for ax in canvas.axes:
+            ax.autoscale()
+
         self.set_canvas(canvas)
+        canvas.highlight_enabled = False
         self.present()
 
     def get_free_variables(self):
