@@ -36,7 +36,7 @@ class ItemBox(Gtk.Box):
         self.drag_source.set_actions(Gdk.DragAction.COPY)
         self.drag_source.connect("prepare", self.on_dnd_prepare)
         self.drop_source = Gtk.DropTarget.new(str, Gdk.DragAction.COPY)
-        self.drop_source.key = item.uuid
+        self.drop_source.uuid = item.uuid
         self.drop_source.connect("drop", self.on_dnd_drop)
 
         self.item.connect("notify::color", self.on_color_change)
@@ -68,7 +68,7 @@ class ItemBox(Gtk.Box):
         # Handle the dropped data here
         data = self.get_application().get_data()
         before_index = data.index(value)
-        data.change_position(drop_target.key, value)
+        data.change_position(drop_target.uuid, value)
         clipboard = self.get_application().get_clipboard()
         clipboard.append((3, (before_index, data.index(value))))
         clipboard.add()
