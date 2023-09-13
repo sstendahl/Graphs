@@ -10,9 +10,9 @@ from graphs.data import Data
 from graphs.item import Item
 from graphs.utilities import preprocess, string_to_function
 
-from scipy.optimize import curve_fit
-
 import numpy
+
+from scipy.optimize import curve_fit
 
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/curve_fitting.ui")

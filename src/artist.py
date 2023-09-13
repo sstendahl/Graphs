@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
-from gi.repository import GObject, Graphs
+from gi.repository import GObject
 
 from graphs import misc, utilities
 
