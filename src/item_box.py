@@ -86,7 +86,7 @@ class ItemBox(Gtk.Box):
             f"button {{ color: {item.color}; opacity: {item.alpha};}}", -1)
 
     def curve_fitting(self, _action, _shortcut, item):
-         CurveFittingWindow(self.get_application(), item)
+        CurveFittingWindow(self.get_application(), item)
 
     def move_up(self, _action, _shortcut, item):
         data = self.get_application().get_data()
@@ -151,4 +151,3 @@ class ItemBox(Gtk.Box):
     def get_application(self):
         """Get application property."""
         return self.props.application
-

@@ -32,48 +32,45 @@ template $CurveFittingWindow : Adw.Window {
       }
     }
 
-      Box {
-        Adw.PreferencesGroup {
-        Adw.EntryRow equation_entry {
+    Box {
+        ScrolledWindow {
+          width-request: 250;
+          hscrollbar-policy: never;
+        Box {
+          orientation: vertical;
+          margin-top: 12;
+          margin-bottom: 12;
+          margin-start: 12;
+          margin-end: 12;
+          Adw.EntryRow equation_entry {
           title: _("Equation");
           text: _("a*x+b");
+          styles ["card"]
+          }
+        Box fitting_params {
+          margin-top: 24;
+          spacing: 12;
+          orientation: vertical;
         }
-
-      Adw.ActionRow {
-        title: _("Resolution (dpi)");
-
-        SpinButton dpi {
-          valign: center;
-          numeric: true;
-          value: 100;
-          wrap: true;
-          adjustment: Adjustment {
-            step-increment: 1;
-            upper: 999;
+        TextView text_view {
+          margin-top: 24;
+          top-margin: 12;
+          left-margin: 12;
+          bottom-margin: 12;
+          editable: false;
+          styles ["card"]
+        }
+        }
+        }
+        Adw.ToastOverlay toast_overlay {
+          focusable: true;
+          height-request: 150;
+          width-request: 300;
+          child: Adw.StatusPage {
+            icon-name: "dialog-error-symbolic";
+            title: _("Canvas Failed to Load");
           };
         }
-      }
-
-        Adw.ActionRow {
-          title: _("Transparent Background");
-          activatable-widget: transparent;
-
-          Switch transparent {
-            valign: center;
-          }
-        }
-      }
-      [content]
-      Adw.ToastOverlay toast_overlay {
-        focusable: true;
-        height-request: 150;
-        width-request: 300;
-        child: Adw.StatusPage {
-          icon-name: "dialog-error-symbolic";
-          title: _("Canvas Failed to Load");
-        };
-      }
-
     }
   }
 }
