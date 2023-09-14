@@ -256,7 +256,7 @@ class FittingParameter(GObject.Object):
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/fitting_parameters.ui")
 class FittingParameterEntry(Gtk.Box):
-    __gtype_name__ = "FittingParameterEntry"
+    __gtype_name__ = "GraphsFittingParameterEntry"
     label = Gtk.Template.Child()
     initial = Gtk.Template.Child()
     upper_bound = Gtk.Template.Child()
