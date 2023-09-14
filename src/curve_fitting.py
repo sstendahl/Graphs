@@ -228,10 +228,10 @@ class FittingParameter(Graphs.FittingParameter):
     application = GObject.Property(type=object)
 
     def __init__(self, **kwargs):
-        super().__init__(name=kwargs.get('name', ""),
-                         initial=kwargs.get('initial', 1),
-                         lower_bound=kwargs.get('lower_bound', "-inf"),
-                         upper_bound=kwargs.get('upper_bound', "inf"),
+        super().__init__(name=kwargs.get("name", ""),
+                         initial=kwargs.get("initial", 1),
+                         lower_bound=kwargs.get("lower_bound", "-inf"),
+                         upper_bound=kwargs.get("upper_bound", "inf"),
                          )
 
 
