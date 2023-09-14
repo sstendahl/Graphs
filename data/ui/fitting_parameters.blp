@@ -6,12 +6,12 @@ template $GraphsFittingParameterEntry : Box {
   Adw.PreferencesGroup {
     styles ["card"]
     Grid {
-    margin-bottom: 12;
-    margin-top: 12;
-    margin-start: 12;
-    margin-end: 12;
-    row-spacing: 6;
-    column-spacing: 3;
+      margin-bottom: 12;
+      margin-top: 12;
+      margin-start: 12;
+      margin-end: 12;
+      row-spacing: 6;
+      column-spacing: 3;
       Label label {
         use-markup: true;
         margin-bottom: 3;
@@ -24,48 +24,48 @@ template $GraphsFittingParameterEntry : Box {
       Label {
         halign: start;
         label: "Initial";
-          layout {
+        layout {
           column: 0;
           row: 1;
-          }
         }
+      }
       Label {
         halign: start;
         label: "Min";
-          layout {
+        layout {
           column: 1;
           row: 1;
-          }
         }
+      }
       Label {
         halign: start;
         label: "Max";
-          layout {
+        layout {
           column: 2;
           row: 1;
-          }
         }
-        Entry initial {
+      }
+      Entry initial {
         text: _("1");
-          layout {
+        layout {
           column: 0;
           row: 2;
-          }
         }
-        Entry lower_bound {
+      }
+      Entry lower_bound {
         text: _("-inf");
-          layout {
+        layout {
           column: 1;
           row: 2;
-          }
         }
-        Entry upper_bound {
+      }
+      Entry upper_bound {
         text: _("inf");
-          layout {
+        layout {
           column: 2;
           row: 2;
-          }
         }
-     }
+      }
+    }
   }
 }
