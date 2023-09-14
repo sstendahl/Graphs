@@ -1,5 +1,6 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 import ast
+import contextlib
 import operator as op
 import re
 from gettext import gettext as _

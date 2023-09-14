@@ -2,7 +2,7 @@
 import re
 from gettext import gettext as _
 
-from gi.repository import Adw, GObject, Graphs, Gtk
+from gi.repository import Adw, GObject, Gtk
 
 from graphs import ui
 from graphs.canvas import Canvas
@@ -18,7 +18,7 @@ from scipy.optimize import curve_fit
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/curve_fitting.ui")
 class CurveFittingWindow(Adw.Window):
     __gtype_name__ = "GraphsCurveFittingWindow"
-    equation_entry = Gtk.Template.Child()
+    equation = Gtk.Template.Child()
     fitting_params = Gtk.Template.Child()
     toast_overlay = Gtk.Template.Child()
     text_view = Gtk.Template.Child()
@@ -34,7 +34,7 @@ class CurveFittingWindow(Adw.Window):
 
         # Set data item that contain the curves
         self.curves = Data(application)
-        self.equation_entry.connect("notify::text", self.on_equation_change)
+        self.equation.connect("notify::text", self.on_equation_change)
         self.fitting_parameters = FittingParameters(application)
 
         for var in self.get_free_variables():
@@ -56,14 +56,6 @@ class CurveFittingWindow(Adw.Window):
         self.fit_curve()
         self.set_entry_rows()
 
-        # Set figure settings
-        figure_settings = \
-            Graphs.FigureSettings.new(
-                application.get_settings().get_child("figure"))
-        for prop in dir(figure_settings.props):
-            if prop not in ["use_custom_style", "custom_style"]:
-                figure_settings.bind_property(prop, canvas, prop, 1 | 2)
-
         self.curves.bind_property("items", canvas, "items", 2)
 
         # Scale axis to the data to be fitted, set linear scale
@@ -80,7 +72,7 @@ class CurveFittingWindow(Adw.Window):
         return (
             re.findall(
                 r"\b(?!x\b|X\b|sin\b|cos\b|tan\b)[a-wy-zA-WY-Z]+\b",
-                self.equation))
+                self.equation_string))
 
     def on_equation_change(self, _entry, _param):
         for var in self.get_free_variables():
@@ -92,7 +84,6 @@ class CurveFittingWindow(Adw.Window):
             self.set_entry_rows()
 
     def on_entry_change(self, entry, _param):
-
         def is_float(value):
             try:
                 float(value)
@@ -143,8 +134,8 @@ class CurveFittingWindow(Adw.Window):
         self.text_view.get_buffer().apply_tag(bold_tag, start_iter, end_iter)
 
     @property
-    def equation(self):
-        return preprocess(str(self.equation_entry.get_text()))
+    def equation_string(self):
+        return preprocess(str(self.equation.get_text()))
 
     def fit_curve(self):
         def _get_equation_name(equation_name, values):
@@ -154,7 +145,7 @@ class CurveFittingWindow(Adw.Window):
                 equation_name = equation_name.replace(var, str(round(val, 3)))
             return equation_name
 
-        function = string_to_function(self.equation)
+        function = string_to_function(self.equation_string)
         if function is None:
             return
         try:
@@ -174,7 +165,7 @@ class CurveFittingWindow(Adw.Window):
         ydata = [function(x, *self.param) for x in xdata]
 
         name = _get_equation_name(
-            str(self.equation_entry.get_text()), self.param)
+            str(self.equation.get_text()), self.param)
         self.curves[0].set_name(f"Y = {name}")
         self.curves[0].ydata, self.curves[0].xdata = (ydata, xdata)
         self.set_results()

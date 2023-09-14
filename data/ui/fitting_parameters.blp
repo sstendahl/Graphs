@@ -4,70 +4,68 @@ using Adw 1;
 template $GraphsFittingParameterEntry : Box {
   orientation: vertical;
   Adw.PreferencesGroup {
-  Grid {
-  margin-bottom: 12;
-  margin-top: 12;
-  margin-start: 12;
-  margin-end: 12;
-  row-spacing: 6;
-  column-spacing: 3;
-  Label label {
-    use-markup: true;
-    margin-bottom: 3;
-    layout {
-    column: 0;
-    row: 0;
-    column-span: 3;
-    }
-    }
-  Label {
-    halign: start;
-    label: "Initial";
-    layout {
-    column: 0;
-    row: 1;
-    }
-    }
-  Label {
-    halign: start;
-    label: "Min";
-    layout {
-    column: 1;
-    row: 1;
-    }
-    }
-  Label {
-    halign: start;
-    label: "Max";
-    layout {
-    column: 2;
-    row: 1;
-    }
-    }
-    Entry initial {
-    text: _("1");
-    layout {
-    column: 0;
-    row: 2;
-    }
-    }
-    Entry lower_bound {
-    text: _("-inf");
-    layout {
-    column: 1;
-    row: 2;
-    }
-    }
-    Entry upper_bound {
-    text: _("inf");
-    layout {
-    column: 2;
-    row: 2;
-    }
-    }
-
-   }
-   styles ["card"]
+    styles ["card"]
+    Grid {
+    margin-bottom: 12;
+    margin-top: 12;
+    margin-start: 12;
+    margin-end: 12;
+    row-spacing: 6;
+    column-spacing: 3;
+      Label label {
+        use-markup: true;
+        margin-bottom: 3;
+        layout {
+        column: 0;
+        row: 0;
+        column-span: 3;
+        }
+      }
+      Label {
+        halign: start;
+        label: "Initial";
+          layout {
+          column: 0;
+          row: 1;
+          }
+        }
+      Label {
+        halign: start;
+        label: "Min";
+          layout {
+          column: 1;
+          row: 1;
+          }
+        }
+      Label {
+        halign: start;
+        label: "Max";
+          layout {
+          column: 2;
+          row: 1;
+          }
+        }
+        Entry initial {
+        text: _("1");
+          layout {
+          column: 0;
+          row: 2;
+          }
+        }
+        Entry lower_bound {
+        text: _("-inf");
+          layout {
+          column: 1;
+          row: 2;
+          }
+        }
+        Entry upper_bound {
+        text: _("inf");
+          layout {
+          column: 2;
+          row: 2;
+          }
+        }
+     }
   }
-
 }

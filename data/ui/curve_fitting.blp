@@ -37,7 +37,7 @@ template $GraphsCurveFittingWindow : Adw.Window {
         orientation: vertical;
         vexpand: false;
         width-request: 300;
-        Adw.EntryRow equation_entry {
+        Adw.EntryRow equation {
           margin-top: 12;
           margin-bottom: 12;
           margin-start: 12;
@@ -53,17 +53,17 @@ template $GraphsCurveFittingWindow : Adw.Window {
           vexpand: false;
           height-request: 370;
           hscrollbar-policy: never;
-        Box {
-          vexpand: false;
-          orientation: vertical;
-          margin-start: 12;
-          margin-end: 12;
-        Box fitting_params {
-          margin-top: 12;
-          spacing: 12;
-          orientation: vertical;
-        }
-        }
+          Box {
+            vexpand: false;
+            orientation: vertical;
+            margin-start: 12;
+            margin-end: 12;
+            Box fitting_params {
+              margin-top: 12;
+              spacing: 12;
+              orientation: vertical;
+            }
+          }
         }
         [separator]
         Separator {
@@ -75,30 +75,30 @@ template $GraphsCurveFittingWindow : Adw.Window {
           margin-bottom: 6;
           margin-start: 12;
           margin-end: 12;
-        TextView text_view {
-          valign: start;
-          top-margin: 12;
-          left-margin: 12;
-          bottom-margin: 12;
-          editable: false;
-          styles ["card"]
+          TextView text_view {
+            valign: start;
+            top-margin: 12;
+            left-margin: 12;
+            bottom-margin: 12;
+            editable: false;
+            styles ["card"]
+          }
         }
-        }
-        }
-        [separator]
-        Separator {
-          orientation: vertical;
-        }
-        Adw.ToastOverlay toast_overlay {
-          focusable: true;
-          height-request: 150;
-          width-request: 300;
-          hexpand: true;
+      }
+      [separator]
+      Separator {
+        orientation: vertical;
+      }
+      Adw.ToastOverlay toast_overlay {
+        focusable: true;
+        height-request: 150;
+        width-request: 300;
+        hexpand: true;
           child: Adw.StatusPage {
-            icon-name: "dialog-error-symbolic";
-            title: _("Canvas Failed to Load");
+          icon-name: "dialog-error-symbolic";
+          title: _("Canvas Failed to Load");
           };
-        }
+      }
     }
   }
 }

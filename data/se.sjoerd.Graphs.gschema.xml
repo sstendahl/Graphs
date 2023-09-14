@@ -157,7 +157,7 @@
   </schema>
 
   <schema id="se.sjoerd.Graphs.curve-fitting">
-    <key name="equation-entry" type="s">
+    <key name="equation" type="s">
       <default>"a*x+b"</default>
     </key>
   </schema>
