@@ -148,8 +148,6 @@ class CurveFittingWindow(Adw.Window):
             return equation_name
 
         function = string_to_function(self.equation_string)
-        print(self.fitting_parameters.get_p0())
-        print(self.fitting_parameters.get_bounds())
         if function is None:
             return
         try:
