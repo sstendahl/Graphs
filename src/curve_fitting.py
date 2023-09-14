@@ -191,7 +191,6 @@ class CurveFittingWindow(Adw.Window):
         self.destroy()
 
     def set_entry_rows(self):
-
         while self.fitting_params.get_last_child() is not None:
             self.fitting_params.remove(self.fitting_params.get_last_child())
 
