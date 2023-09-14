@@ -4,6 +4,7 @@ from gettext import gettext as _
 
 from gi.repository import Adw, GObject, Graphs, Gtk
 
+from graphs import ui
 from graphs.canvas import Canvas
 from graphs.data import Data
 from graphs.item import Item
@@ -27,45 +28,54 @@ class CurveFittingWindow(Adw.Window):
             application=application, transient_for=application.get_window(),
 
         )
+        ui.bind_values_to_settings(
+            self.get_application().get_settings("curve-fitting"), self)
         canvas = Canvas(application)
-        self.item = item
         self.param = []
+
+        # Set data item that contain the curves
         self.curves = Data(application)
         self.equation_entry.connect("notify::text", self.on_equation_change)
-        figure_settings = \
-            Graphs.FigureSettings.new(
-                application.get_settings().get_child("figure"))
         self.fitting_parameters = FittingParameters(application)
 
         for var in self.get_free_variables():
             self.fitting_parameters.add_items([FittingParameter(var, 1)])
 
+        # Generate item for the data that is fitted to
         data_curve = Item.new(
-            application, xdata=item.xdata, ydata=item.ydata, name=item.name)
+            application, xdata=item.xdata,
+            ydata=item.ydata, name=item.name,
+            color="#1A5FB4")
         data_curve.linestyle = 0
         data_curve.markerstyle = 1
         data_curve.markersize = 13
+
+        # Generate item for the fit
         fitted_curve = Item.new(
             application, xdata=[], ydata=[], color="#A51D2D")
 
-        self.curves.add_items([fitted_curve, data_curve])
+        self.curves.add_unconnected_items([fitted_curve, data_curve])
         self.fit_curve()
         self.set_entry_rows()
 
-        for item_ in self.curves:
-            item_.disconnect(0)
-
+        # Set figure settings
+        figure_settings = \
+            Graphs.FigureSettings.new(
+                application.get_settings().get_child("figure"))
         for prop in dir(figure_settings.props):
             if prop not in ["use_custom_style", "custom_style"]:
                 figure_settings.bind_property(prop, canvas, prop, 1 | 2)
 
         self.curves.bind_property("items", canvas, "items", 2)
 
+        # Scale axis to the data to be fitted, set linear scale
         for ax in canvas.axes:
             ax.autoscale()
-
-        self.set_canvas(canvas)
+            ax.yscale = "linear"
+            ax.xscale = "linear"
         canvas.highlight_enabled = False
+
+        self.toast_overlay.set_child(canvas)
         self.present()
 
     def get_free_variables(self):
@@ -84,20 +94,36 @@ class CurveFittingWindow(Adw.Window):
             self.set_entry_rows()
 
     def on_entry_change(self, entry, _param):
+
+        def is_float(value):
+            try:
+                float(value)
+                return True
+            except ValueError:
+                return False
+
         for index, row in enumerate(self.fitting_params):
-            param_entries = entry.get_parent().get_parent()
+            param_entries = entry
+
+            # Get the FittingParameterEntry class corresponding to the entry
+            while True:
+                if isinstance(param_entries, FittingParameterEntry):
+                    break
+                param_entries = param_entries.get_parent()
+
+            # Set the parameters for the row corresponding to the entry that
+            # was edited
             if row == param_entries:
                 initial = param_entries.initial.get_text()
                 lower_bound = param_entries.lower_bound.get_text()
                 upper_bound = param_entries.upper_bound.get_text()
 
                 self.fitting_parameters[index].initial = (
-                    initial if initial.isdigit() else 1)
+                    initial if is_float(initial) else 1)
                 self.fitting_parameters[index].lower_bound = (
-                    lower_bound if lower_bound.isdigit() else -float("inf"))
+                    lower_bound if is_float(lower_bound) else -float("inf"))
                 self.fitting_parameters[index].upper_bound = (
-                    upper_bound if upper_bound.isdigit() else float("inf"))
-
+                    upper_bound if is_float(upper_bound) else float("inf"))
         self.fit_curve()
 
     def set_results(self):
@@ -113,6 +139,7 @@ class CurveFittingWindow(Adw.Window):
         start_iter = self.text_view.get_buffer().get_start_iter()
         end_iter = self.text_view.get_buffer().get_start_iter()
 
+        # Highlight first word
         while not end_iter.ends_word() and not end_iter.ends_sentence():
             end_iter.forward_char()
         self.text_view.get_buffer().apply_tag(bold_tag, start_iter, end_iter)
@@ -132,17 +159,16 @@ class CurveFittingWindow(Adw.Window):
         function = string_to_function(self.equation)
         if function is None:
             return
-
         try:
             self.param, param_cov = \
-                curve_fit(function, self.item.xdata,
-                          self.item.ydata,
+                curve_fit(function, self.curves[1].xdata,
+                          self.curves[1].ydata,
                           p0=self.fitting_parameters.get_p0(),
                           bounds=self.fitting_parameters.get_bounds(),
                           nan_policy="omit")
         except ValueError:
+            # Cancel fit if not succesful
             return
-
         xdata = numpy.linspace(
             min(self.curves[1].xdata),
             max(self.curves[1].xdata),
@@ -158,6 +184,8 @@ class CurveFittingWindow(Adw.Window):
 
     @Gtk.Template.Callback()
     def add_fit(self, _widget):
+        """Add fitted data to the items in the main application"""
+        self.curves[0].color = ""  # Reset color, so it is obtained from cycle
         self.get_application().get_data().add_items([self.curves[0]])
         self.destroy()
 
@@ -169,16 +197,11 @@ class CurveFittingWindow(Adw.Window):
         for arg in self.get_free_variables():
             self.fitting_params.append(FittingParameterEntry(self, arg))
 
-    def set_canvas(self, canvas):
-        self.toast_overlay.set_child(canvas)
-
-    def get_canvas(self):
-        widget = self.toast_overlay.get_child()
-        return None if isinstance(widget, Adw.StatusPage) else widget
-
 
 class FittingParameters(Data):
     """Class to contain the fitting parameters."""
+    __gtype_name__ = "FittingParameters"
+    __gsignals__ = {}
 
     def add_items(self, items):
         for item in items:

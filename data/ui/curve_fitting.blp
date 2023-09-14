@@ -6,7 +6,7 @@ template $CurveFittingWindow : Adw.Window {
   title: _("Curve Fitting");
   focus-widget: confirm_button;
   default-width: 1000;
-  default-height: 600;
+  default-height: 650;
   ShortcutController {
     Shortcut {
       trigger: "Escape";
@@ -33,27 +33,50 @@ template $CurveFittingWindow : Adw.Window {
     }
 
     Box {
-        ScrolledWindow {
-          width-request: 350;
-          hscrollbar-policy: never;
-        Box {
-          orientation: vertical;
+      Box{
+        orientation: vertical;
+        vexpand: false;
+        width-request: 300;
+        Adw.EntryRow equation_entry {
           margin-top: 12;
           margin-bottom: 12;
           margin-start: 12;
           margin-end: 12;
-          Adw.EntryRow equation_entry {
           title: _("Equation");
           text: _("a*x+b");
           styles ["card"]
-          }
+        }
+        Separator {
+          orientation: vertical;
+        }
+        ScrolledWindow {
+          vexpand: false;
+          height-request: 370;
+          hscrollbar-policy: never;
+        Box {
+          vexpand: false;
+          orientation: vertical;
+          margin-start: 12;
+          margin-end: 12;
         Box fitting_params {
-          margin-top: 24;
+          margin-top: 12;
           spacing: 12;
           orientation: vertical;
         }
+        }
+        }
+        [separator]
+        Separator {
+          orientation: horizontal;
+        }
+        ScrolledWindow {
+          vexpand: true;
+          margin-top: 6;
+          margin-bottom: 6;
+          margin-start: 12;
+          margin-end: 12;
         TextView text_view {
-          margin-top: 24;
+          valign: start;
           top-margin: 12;
           left-margin: 12;
           bottom-margin: 12;
@@ -67,9 +90,10 @@ template $CurveFittingWindow : Adw.Window {
           orientation: vertical;
         }
         Adw.ToastOverlay toast_overlay {
-          hexpand: true;
+          focusable: true;
           height-request: 150;
-          width-request: 250;
+          width-request: 300;
+          hexpand: true;
           child: Adw.StatusPage {
             icon-name: "dialog-error-symbolic";
             title: _("Canvas Failed to Load");

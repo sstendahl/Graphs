@@ -249,6 +249,16 @@ class Data(GObject.Object, Graphs.Data):
         self.notify("items")
         self.notify("items_selected")
 
+    def add_unconnected_items(self, items: list):
+        """
+        Adds items without connecting any handles
+
+        Useful for data sets which work in complete isolation from the
+        main application, and should not be copied into a clipboard.
+        """
+        for new_item in items:
+            self._items[new_item.uuid] = new_item
+
     def delete_items(self, items: list):
         """Delete specified items."""
         for item_ in items:

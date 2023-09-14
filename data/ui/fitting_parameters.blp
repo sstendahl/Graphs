@@ -3,32 +3,71 @@ using Adw 1;
 
 template $FittingParameterEntry : Box {
   orientation: vertical;
-  margin-top: 6;
+  Adw.PreferencesGroup {
+  Grid {
+  margin-bottom: 12;
+  margin-top: 12;
+  margin-start: 12;
+  margin-end: 12;
+  row-spacing: 6;
+  column-spacing: 3;
   Label label {
-    margin-bottom: 6;
-    margin-start: 3;
-    halign: start;
-    label: "<b>a</b>";
     use-markup: true;
-  }
-  Box {
-  spacing: 6;
-  Adw.EntryRow initial {
-  title: _("Initial");
-  text: _("1");
-  styles ["card"]
-  }
-  Adw.EntryRow lower_bound {
-  title: _("Min");
-  text: _("-inf");
-  styles ["card"]
-  }
-  Adw.EntryRow upper_bound {
-  title: _("Max");
-  text: _("inf");
-  styles ["card"]
-  }
+    margin-bottom: 3;
+    layout {
+    column: 0;
+    row: 0;
+    column-span: 3;
+    }
+    }
+  Label {
+    halign: start;
+    label: "Initial";
+    layout {
+    column: 0;
+    row: 1;
+    }
+    }
+  Label {
+    halign: start;
+    label: "Min";
+    layout {
+    column: 1;
+    row: 1;
+    }
+    }
+  Label {
+    halign: start;
+    label: "Max";
+    layout {
+    column: 2;
+    row: 1;
+    }
+    }
+    Entry initial {
+    text: _("1");
+    layout {
+    column: 0;
+    row: 2;
+    }
+    }
+    Entry lower_bound {
+    text: _("-inf");
+    layout {
+    column: 1;
+    row: 2;
+    }
+    }
+    Entry upper_bound {
+    text: _("inf");
+    layout {
+    column: 2;
+    row: 2;
+    }
+    }
 
+   }
+   styles ["card"]
   }
 
 }
