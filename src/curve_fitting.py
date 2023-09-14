@@ -4,11 +4,10 @@ from gettext import gettext as _
 
 from gi.repository import Adw, GObject, Gtk
 
-from graphs import ui
+from graphs import ui, utilities
 from graphs.canvas import Canvas
 from graphs.data import Data
 from graphs.item import DataItem
-from graphs.utilities import preprocess, string_to_function
 
 import numpy
 
@@ -32,31 +31,30 @@ class CurveFittingWindow(Adw.Window):
         canvas = Canvas(application)
         self.param = []
 
-        # Set data item that contain the curves
-        self.curves = Data(application)
         self.equation.connect("notify::text", self.on_equation_change)
         self.fitting_parameters = FittingParameters(application)
 
         for var in self.get_free_variables():
             self.fitting_parameters.add_items([FittingParameter(var, 1)])
         # Generate item for the data that is fitted to
-        data_curve = DataItem.new(
+        self.data_curve = DataItem.new(
             application, xdata=item.xdata,
             ydata=item.ydata, name=item.get_name(),
-            color="#1A5FB4")
-        data_curve.linestyle = 0
-        data_curve.markerstyle = 1
-        data_curve.markersize = 13
+            color="#1A5FB4",
+        )
+        self.data_curve.linestyle = 0
+        self.data_curve.markerstyle = 1
+        self.data_curve.markersize = 13
 
         # Generate item for the fit
-        fitted_curve = DataItem.new(
-            application, xdata=[], ydata=[], color="#A51D2D")
+        self.fitted_curve = DataItem.new(
+            application, xdata=[], ydata=[], color="#A51D2D",
+        )
 
-        self.curves.add_unconnected_items([fitted_curve, data_curve])
         self.fit_curve()
         self.set_entry_rows()
 
-        self.curves.bind_property("items", canvas, "items", 2)
+        canvas.props.items = [self.fitted_curve, self.data_curve]
 
         # Scale axis to the data to be fitted, set linear scale
         for ax in canvas.axes:
@@ -69,10 +67,10 @@ class CurveFittingWindow(Adw.Window):
         self.present()
 
     def get_free_variables(self):
-        return (
-            re.findall(
-                r"\b(?!x\b|X\b|sin\b|cos\b|tan\b)[a-wy-zA-WY-Z]+\b",
-                self.equation_string))
+        return re.findall(
+            r"\b(?!x\b|X\b|sin\b|cos\b|tan\b)[a-wy-zA-WY-Z]+\b",
+            self.equation_string,
+        )
 
     def on_equation_change(self, _entry, _param):
         for var in self.get_free_variables():
@@ -135,7 +133,7 @@ class CurveFittingWindow(Adw.Window):
 
     @property
     def equation_string(self):
-        return preprocess(str(self.equation.get_text()))
+        return utilities.preprocess(str(self.equation.get_text()))
 
     def fit_curve(self):
         def _get_equation_name(equation_name, values):
@@ -145,40 +143,38 @@ class CurveFittingWindow(Adw.Window):
                 equation_name = equation_name.replace(var, str(round(val, 3)))
             return equation_name
 
-        function = string_to_function(self.equation_string)
+        function = utilities.string_to_function(self.equation_string)
         if function is None:
             return
         try:
-            self.param, param_cov = \
-                curve_fit(function, self.curves[1].xdata,
-                          self.curves[1].ydata,
-                          p0=self.fitting_parameters.get_p0(),
-                          bounds=self.fitting_parameters.get_bounds(),
-                          nan_policy="omit")
-        except ValueError:
+            self.param, param_cov = curve_fit(
+                function,
+                self.data_curve.xdata, self.data_curve.ydata,
+                p0=self.fitting_parameters.get_p0(),
+                bounds=self.fitting_parameters.get_bounds(), nan_policy="omit",
+            )
+        except (ValueError, TypeError):
             # Cancel fit if not succesfull
             return
         xdata = numpy.linspace(
-            min(self.curves[1].xdata),
-            max(self.curves[1].xdata),
-            5000)
+            min(self.data_curve.xdata), max(self.data_curve.xdata), 5000,
+        )
         ydata = [function(x, *self.param) for x in xdata]
 
         name = _get_equation_name(
             str(self.equation.get_text()), self.param)
-        self.curves[0].set_name(f"Y = {name}")
-        self.curves[0].ydata, self.curves[0].xdata = (ydata, xdata)
+        self.fitted_curve.set_name(f"Y = {name}")
+        self.fitted_curve.ydata, self.fitted_curve.xdata = (ydata, xdata)
         self.set_results()
         return True
 
     @Gtk.Template.Callback()
     def add_fit(self, _widget):
         """Add fitted data to the items in the main application"""
-        new_item = DataItem.new(self.get_application(),
-                                xdata=self.curves[0].xdata,
-                                ydata=self.curves[0].ydata,
-                                name=self.curves[0].get_name())
-        self.get_application().get_data().add_items([new_item])
+        self.get_application().get_data().add_items([DataItem.new(
+            self.get_application(), name=self.fitted_curve.get_name(),
+            xdata=self.fitted_curve.xdata, ydata=self.fitted_curve.ydata,
+        )])
         self.destroy()
 
     def set_entry_rows(self):
