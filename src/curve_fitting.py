@@ -107,12 +107,14 @@ class CurveFittingWindow(Adw.Window):
                 lower_bound = param_entries.lower_bound.get_text()
                 upper_bound = param_entries.upper_bound.get_text()
 
-                self.fitting_parameters[index].initial = (
-                    initial if is_float(initial) else 1)
-                self.fitting_parameters[index].lower_bound = (
-                    lower_bound if is_float(lower_bound) else -float("inf"))
-                self.fitting_parameters[index].upper_bound = (
-                    upper_bound if is_float(upper_bound) else float("inf"))
+                new_initial = (float(initial) if is_float(initial) else 1)
+                new_lower_bound = (
+                    lower_bound if is_float(lower_bound) else "inf")
+                new_upper_bound = (
+                    upper_bound if is_float(upper_bound) else "-inf")
+                self.fitting_parameters[index].set_initial(new_initial)
+                self.fitting_parameters[index].set_lower_bound(new_lower_bound)
+                self.fitting_parameters[index].set_upper_bound(new_upper_bound)
         self.fit_curve()
 
     def set_results(self):
@@ -146,6 +148,8 @@ class CurveFittingWindow(Adw.Window):
             return equation_name
 
         function = string_to_function(self.equation_string)
+        print(self.fitting_parameters.get_p0())
+        print(self.fitting_parameters.get_bounds())
         if function is None:
             return
         try:
@@ -232,8 +236,8 @@ class FittingParameter(Graphs.FittingParameter):
     def __init__(self, **kwargs):
         super().__init__(name=kwargs.get('name', ""),
                          initial=kwargs.get('initial', 1),
-                         lower_bound=kwargs.get('lower_bound', float("inf")),
-                         upper_bound=kwargs.get('lower_bound', float("inf")),
+                         lower_bound=kwargs.get('lower_bound', "-inf"),
+                         upper_bound=kwargs.get('upper_bound', "inf"),
                          )
 
 

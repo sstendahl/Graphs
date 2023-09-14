@@ -5,7 +5,7 @@ namespace Graphs {
     public class FittingParameter : Object {
         public string name { get; construct set; default = ""; }
         public double initial { get; construct set; default = 1; }
-        public double lower_bound { get; construct set; default = 0; }
-        public double upper_bound { get; construct set; default = 100; }
+        public string lower_bound { get; construct set; default = "-inf"; }
+        public string upper_bound { get; construct set; default = "inf"; }
     }
 }
