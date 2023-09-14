@@ -16,6 +16,7 @@ python.install_sources(
     'artist.py',
     'canvas.py',
     'clipboard.py',
+    'curve_fitting.py',
     'data.py',
     'edit_item.py',
     'export_figure.py',
