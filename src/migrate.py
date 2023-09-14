@@ -140,11 +140,11 @@ class ItemBase:
 
 
 class Item(ItemBase):
-    item_type = "Item"
+    item_type = "GraphsDataItem"
 
 
 class TextItem(ItemBase):
-    item_type = "TextItem"
+    item_type = "GraphsTextItem"
 
 
 DEFAULT_VIEW = [0, 1, 0, 10, 0, 1, 0, 10]

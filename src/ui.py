@@ -24,7 +24,7 @@ def on_figure_style_change(_a, _b, self):
         item.reset()
     count = 0
     for item in self.get_data():
-        if item.props.item_type == "Item":
+        if item.__gtype_name__ == "GraphsDataItem":
             if count > len(color_cycle):
                 count = 0
             item.props.color = color_cycle[count]
@@ -122,7 +122,7 @@ def export_data_dialog(self):
                 directory = dialog.select_folder_finish(response)
                 for item in self.get_data():
                     file = directory.get_child_for_display_name(
-                        f"{item.name}.txt")
+                        f"{item.get_name()}.txt")
                     file_io.save_item(file, item)
             else:
                 file_io.save_item(

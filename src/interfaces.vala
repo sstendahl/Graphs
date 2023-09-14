@@ -1,7 +1,8 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
 using Gtk;
 
 namespace Graphs {
-    public interface Canvas : Widget {
+    public interface CanvasInterface : Widget {
         public abstract string title { get; set; default = ""; }
         public abstract string bottom_label { get; set; default = ""; }
         public abstract string left_label { get; set; default = ""; }
