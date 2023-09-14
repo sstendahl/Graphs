@@ -3,7 +3,7 @@ import logging
 from gettext import gettext as _
 
 from graphs import utilities
-from graphs.item import Item
+from graphs.item import DataItem
 
 import numexpr
 
@@ -25,7 +25,7 @@ def get_data(self, item):
     stop_index = len(xdata)
     if self.get_mode() == 2:
         figure_settings = self.get_figure_settings()
-        if item.xposition == 0:
+        if item.get_xposition() == 0:
             xmin = figure_settings.get_min_bottom()
             xmax = figure_settings.get_max_bottom()
             scale = figure_settings.get_bottom_scale()
@@ -77,7 +77,7 @@ def perform_operation(self, callback, *args):
     data_selected = False
     old_limits = self.get_figure_settings().get_limits()
     for item in self.get_data():
-        if not item.selected or item.props.item_type != "Item":
+        if not item.get_selected() or item.__gtype_name__ != "GraphsDataItem":
             continue
         xdata, ydata, start_index, stop_index = get_data(self, item)
         if xdata is not None and len(xdata) != 0:
@@ -182,19 +182,21 @@ def shift(item, xdata, ydata, left_scale, right_scale, items):
     """
     shift_value_log = 1
     shift_value_linear = 0
-    data_list = [item for item in items
-                 if item.selected and item.props.item_type == "Item"]
+    data_list = [
+        item for item in items
+        if item.get_selected() and item.__gtype_name__ == "GraphsDataItem"
+    ]
 
     for index, item_ in enumerate(data_list):
         previous_ydata = data_list[index - 1].ydata
         ymin = min(x for x in previous_ydata if x != 0)
         ymax = max(x for x in previous_ydata if x != 0)
-        scale = right_scale if item.yposition else left_scale
+        scale = right_scale if item.get_yposition() else left_scale
         if scale == 1:  # Use log values for log scaling
             shift_value_log += numpy.log10(ymax / ymin)
         else:
             shift_value_linear += 1.2 * (ymax - ymin)
-        if item.uuid == item_.uuid:
+        if item.get_uuid() == item_.get_uuid():
             if scale == 1:  # Log scaling
                 new_ydata = [value * 10 ** shift_value_log for value in ydata]
             else:
@@ -264,7 +266,7 @@ def combine(self):
     """Combine the selected data into a new data set"""
     new_xdata, new_ydata = [], []
     for item in self.get_data():
-        if not item.selected or item.props.item_type != "Item":
+        if not item.get_selected() or item.__gtype_name__ != "GraphsDataItem":
             continue
         xdata, ydata = get_data(self, item)[:2]
         new_xdata.extend(xdata)
@@ -273,5 +275,5 @@ def combine(self):
     # Create the item itself
     new_xdata, new_ydata = sort_data(new_xdata, new_ydata)
     self.get_data().add_items(
-        [Item.new(self, new_xdata, new_ydata, name=_("Combined Data"))],
+        [DataItem.new(self, new_xdata, new_ydata, name=_("Combined Data"))],
     )

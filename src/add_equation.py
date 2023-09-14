@@ -5,7 +5,7 @@ from gettext import gettext as _
 from gi.repository import Adw, Gtk
 
 from graphs import ui, utilities
-from graphs.item import Item
+from graphs.item import DataItem
 
 import numexpr
 
@@ -14,7 +14,8 @@ import numpy
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/add_equation_window.ui")
 class AddEquationWindow(Adw.Window):
-    __gtype_name__ = "AddEquationWindow"
+    __gtype_name__ = "GraphsAddEquationWindow"
+
     equation = Gtk.Template.Child()
     x_start = Gtk.Template.Child()
     x_stop = Gtk.Template.Child()
@@ -50,9 +51,9 @@ class AddEquationWindow(Adw.Window):
             name = str(self.name.get_text())
             if name == "":
                 name = f"Y = {values['equation']}"
-            self.get_application().get_data().add_items(
-                [Item.new(self.get_application(), xdata, ydata, name=name)],
-            )
+            self.get_application().get_data().add_items([
+                DataItem.new(self.get_application(), xdata, ydata, name=name),
+            ])
             self.destroy()
         except ValueError as error:
             self.toast_overlay.add_toast(Adw.Toast(title=error))

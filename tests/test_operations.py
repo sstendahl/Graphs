@@ -1,7 +1,5 @@
-from unittest.mock import Mock
-
 from graphs import operations
-from graphs.item import Item
+from graphs.item import DataItem
 
 import numpy as np
 
@@ -76,13 +74,11 @@ def test_shift():
     ydata1 = [value / max(ydata1) for value in ydata1]
     ydata2 = [value / max(ydata2) for value in ydata2]
 
-    item1 = Mock(spec=Item, ydata=ydata1, selected=True, yposition="left",
-                 key="a", props=Mock(item_type="Item"))
-    item2 = Mock(spec=Item, ydata=ydata2, selected=True, yposition="left",
-                 key="b", props=Mock(item_type="Item"))
+    item1 = DataItem(xdata=XDATA, ydata=ydata1, uuid="a")
+    item2 = DataItem(xdata=XDATA, ydata=ydata2, uuid="b")
 
     items = [item1, item2]
-    new_xdata1, new_ydata1, _sort, _discard =\
+    new_xdata1, new_ydata1, _sort, _discard = \
         operations.shift(item1, XDATA, ydata1, left_scale=1,
                          right_scale=1, items=items)
     new_xdata2, new_ydata2, _sort, _discard = \

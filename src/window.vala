@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
 using Gtk;
 using Adw;
 
@@ -61,8 +62,8 @@ namespace Graphs {
             }
         }
 
-        public Canvas canvas {
-            get { return (Canvas) this.toast_overlay.get_child (); }
+        public CanvasInterface canvas {
+            get { return (CanvasInterface) this.toast_overlay.get_child (); }
             set { this.toast_overlay.set_child(value); }
         }
 

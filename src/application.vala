@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
 using Adw;
 
 namespace Graphs {
@@ -5,9 +6,9 @@ namespace Graphs {
         public Window window { get; set; }
         public Settings settings { get; construct set; }
         public FigureSettings figure_settings { get; construct set; }
-        public Data data { get; construct set; }
-        public Clipboard clipboard { get; construct set; }
-        public Clipboard view_clipboard { get; construct set; }
+        public DataInterface data { get; construct set; }
+        public ClipboardInterface clipboard { get; construct set; }
+        public ClipboardInterface view_clipboard { get; construct set; }
         public int mode { get; set; default = 0; }
 
         public string version { get; construct set; default = ""; }

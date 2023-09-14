@@ -9,7 +9,7 @@ from graphs import operations
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/transform_window.ui")
 class TransformWindow(Adw.Window):
-    __gtype_name__ = "TransformWindow"
+    __gtype_name__ = "GraphsTransformWindow"
     transform_x_entry = Gtk.Template.Child()
     transform_y_entry = Gtk.Template.Child()
     discard_row = Gtk.Template.Child()

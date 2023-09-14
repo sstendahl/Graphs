@@ -60,7 +60,7 @@ def _import_from_files(self, import_dict: dict):
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/import.ui")
 class _ImportWindow(Adw.Window):
-    __gtype_name__ = "ImportWindow"
+    __gtype_name__ = "GraphsImportWindow"
 
     columns_group = Gtk.Template.Child()
     columns_delimiter = Gtk.Template.Child()

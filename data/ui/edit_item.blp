@@ -1,7 +1,7 @@
 using Gtk 4.0;
 using Adw 1;
 
-template $EditItemWindow : Adw.PreferencesWindow {
+template $GraphsEditItemWindow : Adw.PreferencesWindow {
   modal: true;
   notify::item => $on_item_change();
   close-request => $on_close();

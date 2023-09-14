@@ -2,25 +2,28 @@
 import contextlib
 from gettext import gettext as _
 
-from gi.repository import Adw, GLib, GObject, Gdk, Gio, Gtk
+from gi.repository import Adw, GLib, GObject, Gdk, Gio, Graphs, Gtk
 
 from graphs import utilities
 from graphs.edit_item import EditItemWindow
-from graphs.item import ItemBase
 
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/item_box.ui")
 class ItemBox(Gtk.Box):
-    __gtype_name__ = "ItemBox"
+    __gtype_name__ = "GraphsItemBox"
     label = Gtk.Template.Child()
     check_button = Gtk.Template.Child()
     color_button = Gtk.Template.Child()
 
     application = GObject.Property(type=Adw.Application)
-    item = GObject.Property(type=ItemBase)
+    item = GObject.Property(type=Graphs.Item)
+    index = GObject.Property(type=int)
 
     def __init__(self, application, item):
-        super().__init__(application=application, item=item)
+        super().__init__(
+            application=application, item=item,
+            index=application.get_data().index(item),
+        )
         self.props.item.bind_property("name", self, "name", 2)
         self.props.item.bind_property(
             "selected", self.check_button, "active", 2,
@@ -35,7 +38,7 @@ class ItemBox(Gtk.Box):
         self.drag_source.set_actions(Gdk.DragAction.COPY)
         self.drag_source.connect("prepare", self.on_dnd_prepare)
         self.drop_source = Gtk.DropTarget.new(str, Gdk.DragAction.COPY)
-        self.drop_source.uuid = item.uuid
+        self.drop_source.index = str(self.props.index)
         self.drop_source.connect("drop", self.on_dnd_drop)
 
         self.item.connect("notify::color", self.on_color_change)
@@ -57,52 +60,42 @@ class ItemBox(Gtk.Box):
         # Set the action group for the widget
         for name in action_list:
             action = Gio.SimpleAction.new(name, None)
-            action.connect(
-                "activate", getattr(self, f"{name}"), self.item,
-            )
+            action.connect("activate", getattr(self, f"{name}"))
             action_group.add_action(action)
         self.insert_action_group("item_box", action_group)
 
+    def _change_position(self, source_index, target_index):
+        application = self.get_application()
+        application.get_data().change_position(target_index, source_index)
+        clipboard = application.get_clipboard()
+        clipboard.append((3, (source_index, target_index)))
+        clipboard.add()
+        application.get_view_clipboard().add()
+
     def on_dnd_drop(self, drop_target, value, _x, _y):
         # Handle the dropped data here
-        data = self.get_application().get_data()
-        before_index = data.index(value)
-        data.change_position(drop_target.uuid, value)
-        clipboard = self.get_application().get_clipboard()
-        clipboard.append((3, (before_index, data.index(value))))
-        clipboard.add()
-        self.get_application().get_view_clipboard().add()
+        self._change_position(int(value), int(drop_target.index))
 
     def on_dnd_prepare(self, drag_source, x, y):
         snapshot = Gtk.Snapshot.new()
         self.do_snapshot(self, snapshot)
         paintable = snapshot.to_paintable()
         drag_source.set_icon(paintable, int(x), int(y))
-        return Gdk.ContentProvider.new_for_value(self.props.item.uuid)
+        return Gdk.ContentProvider.new_for_value(str(self.props.index))
 
     def on_color_change(self, item, _ignored):
         self.provider.load_from_data(
-            f"button {{ color: {item.color}; opacity: {item.alpha};}}", -1)
+            "button { "
+            f"color: {item.get_color()}; "
+            f"opacity: {item.get_alpha()}; "
+            "}", -1,
+        )
 
-    def move_up(self, _action, _shortcut, item):
-        data = self.get_application().get_data()
-        before_index = data.index(item)
+    def move_up(self, _action, _shortcut):
+        self._change_position(self.props.index, self.props.index - 1)
 
-        data.change_position(item.uuid, data[before_index - 1].uuid)
-        clipboard = self.get_application().get_clipboard()
-        clipboard.append((3, (before_index, data.index(item))))
-        clipboard.add()
-        self.get_application().get_view_clipboard().add()
-
-    def move_down(self, _action, _shortcut, item):
-        data = self.get_application().get_data()
-        before_index = data.index(item)
-
-        data.change_position(item.uuid, data[before_index + 1].uuid)
-        clipboard = self.get_application().get_clipboard()
-        clipboard.append((3, (before_index, data.index(item))))
-        clipboard.add()
-        self.get_application().get_view_clipboard().add()
+    def move_down(self, _action, _shortcut):
+        self._change_position(self.props.index, self.props.index + 1)
 
     @Gtk.Template.Callback()
     def on_toggle(self, _a, _b):
@@ -113,19 +106,22 @@ class ItemBox(Gtk.Box):
 
     @Gtk.Template.Callback()
     def choose_color(self, _):
+        rgba = utilities.hex_to_rgba(self.props.item.get_color())
+        rgba.alpha = self.props.item.get_alpha()
         dialog = Gtk.ColorDialog()
         dialog.choose_rgba(
-            self.get_application().get_window(), self.props.item.get_color(),
+            self.get_application().get_window(), rgba,
             None, self.on_color_dialog_accept)
 
     def on_color_dialog_accept(self, dialog, result):
         with contextlib.suppress(GLib.GError):
             color = dialog.choose_rgba_finish(result)
             if color is not None:
-                self.props.item.set_color(color)
+                self.props.item.set_color(utilities.rgba_to_hex(color))
+                self.props.item.set_alpha(color.alpha)
                 self.get_application().get_clipboard().add()
 
-    def delete(self, _action, _shortcut, _widget):
+    def delete(self, _action, _shortcut):
         name = self.props.item.props.name
         self.get_application().get_data().delete_items([self.props.item])
         toast = Adw.Toast.new(_("Deleted {name}").format(name=name))
@@ -133,7 +129,7 @@ class ItemBox(Gtk.Box):
         toast.set_action_name("app.undo")
         self.get_application().get_window().add_toast(toast)
 
-    def edit(self, _action, _shortcut, _widget):
+    def edit(self, _action, _shortcut):
         EditItemWindow(self.get_application(), self.props.item)
 
     @GObject.Property(type=str, default="")

@@ -26,13 +26,14 @@ _ACTIONS = [
 ]
 
 
-class GraphsApplication(Graphs.Application):
+class PythonApplication(Graphs.Application):
     """
     The main application singleton class.
 
     Functions:
         get_settings
     """
+    __gtype_name__ = "GraphsPythonApplication"
 
     def __init__(self, application_id, **kwargs):
         """Init the application."""

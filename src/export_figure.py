@@ -10,7 +10,7 @@ from graphs import ui, utilities
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/export_figure.ui")
 class ExportFigureWindow(Adw.Window):
-    __gtype_name__ = "ExportFigureWindow"
+    __gtype_name__ = "GraphsExportFigureWindow"
     dpi = Gtk.Template.Child()
     file_format = Gtk.Template.Child()
     transparent = Gtk.Template.Child()

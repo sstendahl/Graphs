@@ -1,8 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
-from gi.repository import Adw, GObject, Gtk
+from gi.repository import Adw, GObject, Graphs, Gtk
 
 from graphs import ui
-from graphs.item import ItemBase
 
 _IGNORELIST = [
     "alpha", "color", "item_type", "uuid", "selected", "xdata", "xlabel",
@@ -12,7 +11,7 @@ _IGNORELIST = [
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/edit_item.ui")
 class EditItemWindow(Adw.PreferencesWindow):
-    __gtype_name__ = "EditItemWindow"
+    __gtype_name__ = "GraphsEditItemWindow"
     item_selector = Gtk.Template.Child()
     name = Gtk.Template.Child()
     xposition = Gtk.Template.Child()
@@ -24,7 +23,7 @@ class EditItemWindow(Adw.PreferencesWindow):
     markerstyle = Gtk.Template.Child()
     markersize = Gtk.Template.Child()
 
-    item = GObject.Property(type=ItemBase)
+    item = GObject.Property(type=Graphs.Item)
     model = GObject.Property(type=Gtk.StringList)
     bindings = GObject.Property(type=object)
 
@@ -47,7 +46,7 @@ class EditItemWindow(Adw.PreferencesWindow):
         if item != self.item:
             self.props.model.splice(
                 self.get_application().get_data().get_items().index(self.item),
-                1, [self.item.name],
+                1, [self.props.item.get_name()],
             )
             self.props.item = item
 
@@ -59,7 +58,9 @@ class EditItemWindow(Adw.PreferencesWindow):
         self.props.bindings = ui.bind_values_to_object(
             self.props.item, self, ignorelist=_IGNORELIST,
         )
-        self.item_group.set_visible(self.props.item.props.item_type == "Item")
+        self.item_group.set_visible(
+            self.props.item.__gtype_name__ == "GraphsDataItem",
+        )
 
     @Gtk.Template.Callback()
     def on_close(self, _a):
