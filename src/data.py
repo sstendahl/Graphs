@@ -38,7 +38,6 @@ class Data(GObject.Object, Graphs.DataInterface):
         pop
         index
         get_names
-        get_keys
         change_position
         add_items
         delete_items
@@ -115,15 +114,11 @@ class Data(GObject.Object, Graphs.DataInterface):
 
     def index(self, item_):
         """Get the index of an item."""
-        return self.get_keys().index(item_.get_uuid())
+        return self.get_items().index(item_)
 
     def get_names(self) -> list:
         """All items' names."""
         return [item_.get_name() for item_ in self]
-
-    def get_keys(self) -> list:
-        """All item's keys."""
-        return list(self._items.keys())
 
     def __len__(self) -> int:
         """Amount of managed items."""
