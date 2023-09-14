@@ -2,7 +2,7 @@
 import re
 from gettext import gettext as _
 
-from gi.repository import Adw, GObject, Gtk
+from gi.repository import Adw, GObject, Graphs, Gtk
 
 from graphs import ui
 from graphs.canvas import Canvas
@@ -35,10 +35,10 @@ class CurveFittingWindow(Adw.Window):
         # Set data item that contain the curves
         self.curves = Data(application)
         self.equation.connect("notify::text", self.on_equation_change)
-        self.fitting_parameters = FittingParameters(application)
+        self.fitting_parameters = FittingParameterContainer(application)
 
         for var in self.get_free_variables():
-            self.fitting_parameters.add_items([FittingParameter(var, 1)])
+            self.fitting_parameters.add_items([FittingParameter(name=var)])
         # Generate item for the data that is fitted to
         data_curve = DataItem.new(
             application, xdata=item.xdata,
@@ -77,7 +77,7 @@ class CurveFittingWindow(Adw.Window):
     def on_equation_change(self, _entry, _param):
         for var in self.get_free_variables():
             if var not in self.fitting_parameters.get_names():
-                self.fitting_parameters.add_items([FittingParameter(var, 1)])
+                self.fitting_parameters.add_items([FittingParameter(name=var)])
         self.fitting_parameters.remove_unused(self.get_free_variables())
         fit = self.fit_curve()
         if fit:
@@ -189,22 +189,22 @@ class CurveFittingWindow(Adw.Window):
             self.fitting_params.append(FittingParameterEntry(self, arg))
 
 
-class FittingParameters(Data):
+class FittingParameterContainer(Data):
     """Class to contain the fitting parameters."""
-    __gtype_name__ = "GraphsFittingParameters"
+    __gtype_name__ = "GraphsFittingParameterContainer"
     __gsignals__ = {}
 
     def add_items(self, items):
         for item in items:
-            self._items[item.name] = item
+            self._items[item.get_name()] = item
 
     def remove_unused(self, used_list):
         # First create list with items to remove
         # to avoid dict changing size during iteration
         remove_list = []
         for item in self._items.values():
-            if item.name not in used_list:
-                remove_list.append(item.name)
+            if item.get_name() not in used_list:
+                remove_list.append(item.get_name())
 
         for item_name in remove_list:
             del self._items[item_name]
@@ -216,30 +216,25 @@ class FittingParameters(Data):
 
     def get_p0(self) -> list:
         """Get the initial values."""
-        return [float(item_.initial) for item_ in self]
+        return [float(item_.get_initial()) for item_ in self]
 
     def get_bounds(self):
-        lower_bounds = [float(item_.lower_bound) for item_ in self]
-        upper_bounds = [float(item_.upper_bound) for item_ in self]
+        lower_bounds = [float(item_.get_lower_bound()) for item_ in self]
+        upper_bounds = [float(item_.get_upper_bound()) for item_ in self]
         return (lower_bounds, upper_bounds)
 
 
-class FittingParameter(GObject.Object):
+class FittingParameter(Graphs.FittingParameter):
     """Class for the fitting parameters."""
-
-    __gtype_name__ = "GraphsFittingParameter"
+    __gtype_name__ = "GraphsFittingParameterItem"
     application = GObject.Property(type=object)
 
-    def __init__(self, name, initial=1, lower_bound=-float("inf"),
-                 upper_bound=float("inf")):
-        """Init the dataclass."""
-        self.name = name
-        self.initial = initial
-        self.lower_bound = lower_bound
-        self.upper_bound = upper_bound
-
-    def get_name(self):
-        return self.name
+    def __init__(self, **kwargs):
+        super().__init__(name=kwargs.get('name', ""),
+                         initial=kwargs.get('initial', 1),
+                         lower_bound=kwargs.get('lower_bound', float("inf")),
+                         upper_bound=kwargs.get('lower_bound', float("inf")),
+                         )
 
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/fitting_parameters.ui")
@@ -257,8 +252,8 @@ class FittingParameterEntry(Gtk.Box):
         self.parent = parent
         self.params = parent.fitting_parameters[arg]
         self.label.set_markup(
-            f"<b>Fitting parameters for {self.params.name}: </b>")
-        self.initial.set_text(str(self.params.initial))
+            f"<b>Fitting parameters for {self.params.get_name()}: </b>")
+        self.initial.set_text(str(self.params.get_initial()))
 
         self.initial.connect("notify::text", parent.on_entry_change)
         self.upper_bound.connect("notify::text", parent.on_entry_change)

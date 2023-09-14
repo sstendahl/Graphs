@@ -44,6 +44,7 @@ graphs_lib = shared_library(
   files(
     'application.vala',
     'clipboard.vala',
+    'curve_fitting.vala',
     'data.vala',
     'figure_settings.vala',
     'interfaces.vala',
