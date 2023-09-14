@@ -157,8 +157,10 @@ class Data(GObject.Object, Graphs.DataInterface):
         If items are ignored, the `items-ignored` signal will be emmitted.
         """
         ignored = []
-        figure_settings = self.get_application().get_figure_settings()
-        settings = self.get_application().props.settings
+        application = self.get_application()
+        figure_settings = application.get_figure_settings()
+        settings = application.get_settings()
+        clipboard = application.get_clipboard()
         handle_duplicates = \
             settings.get_child("general").get_enum("handle-duplicates")
         color_cycle = pyplot.rcParams["axes.prop_cycle"].by_key()["color"]
@@ -194,9 +196,12 @@ class Data(GObject.Object, Graphs.DataInterface):
                     ignored.append(new_item.get_name())
                     continue
                 elif handle_duplicates == 3:  # Override
-                    new_item.set_uuid(
-                        self[names.index(new_item.get_name())].get_uuid(),
+                    index = names.index(new_item.get_name())
+                    existing_item = self[index]
+                    clipboard.append(
+                        (2, (index, existing_item.to_dict(item_))),
                     )
+                    new_item.set_uuid(existing_item.get_uuid())
 
             xlabel = new_item.get_xlabel()
             if xlabel:
@@ -232,11 +237,9 @@ class Data(GObject.Object, Graphs.DataInterface):
                         break
 
             self.append(new_item)
-            self.get_application().get_clipboard().append(
-                (1, copy.deepcopy(item.to_dict(new_item))),
-            )
-        utilities.optimize_limits(self.get_application())
-        self.get_application().get_clipboard().add()
+            clipboard.append((1, copy.deepcopy(item.to_dict(new_item))))
+        utilities.optimize_limits(application)
+        clipboard.add()
         if ignored:
             self.emit("items-ignored", ", ".join(ignored))
         self.notify("items")
