@@ -1,5 +1,6 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 import ast
+import contextlib
 import operator as op
 import re
 from gettext import gettext as _
@@ -7,6 +8,8 @@ from gettext import gettext as _
 from gi.repository import GLib, Gdk, Gio, Gtk
 
 import numpy
+
+import sympy
 
 
 def get_font_weight(font_name):
@@ -241,3 +244,16 @@ def optimize_limits(self):
         figure_settings.set_property(f"min_{direction}", min_all)
         figure_settings.set_property(f"max_{direction}", max_all)
     self.get_view_clipboard().add()
+
+
+def string_to_function(equation_name):
+    variables = ["x"] + re.findall(
+        r"\b(?!x\b|X\b|sin\b|cos\b|tan\b)[a-wy-zA-WY-Z]+\b",
+        equation_name,
+    )
+    sym_vars = sympy.symbols(variables)
+    with contextlib.suppress(sympy.SympifyError, TypeError):
+        symbolic = sympy.sympify(
+            equation_name, locals=dict(zip(variables, sym_vars)),
+        )
+        return sympy.lambdify(sym_vars, symbolic)

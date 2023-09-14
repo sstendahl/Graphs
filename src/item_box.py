@@ -5,6 +5,7 @@ from gettext import gettext as _
 from gi.repository import Adw, GLib, GObject, Gdk, Gio, Graphs, Gtk
 
 from graphs import utilities
+from graphs.curve_fitting import CurveFittingWindow
 from graphs.edit_item import EditItemWindow
 
 
@@ -50,7 +51,7 @@ class ItemBox(Gtk.Box):
 
     def add_actions(self):
         data = self.get_application().get_data()
-        action_list = ["edit", "delete"]
+        action_list = ["edit", "delete", "curve_fitting"]
         if data.index(self.item) > 0:
             action_list += ["move_up"]
         if data.index(self.item) + 1 < len(data.get_items()):
@@ -90,6 +91,9 @@ class ItemBox(Gtk.Box):
             f"opacity: {item.get_alpha()}; "
             "}", -1,
         )
+
+    def curve_fitting(self, _action, _shortcut):
+        CurveFittingWindow(self.get_application(), self.props.item)
 
     def move_up(self, _action, _shortcut):
         self._change_position(self.props.index, self.props.index - 1)
