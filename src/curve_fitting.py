@@ -210,7 +210,6 @@ class FittingParameters(Data):
             self._items[item.name] = item
 
     def remove_unused(self, used_list):
-
         # First create list with items to remove
         # to avoid dict changing size during iteration
         remove_list = []
