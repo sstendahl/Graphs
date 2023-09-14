@@ -202,7 +202,7 @@ class CurveFittingWindow(Adw.Window):
 
 class FittingParameters(Data):
     """Class to contain the fitting parameters."""
-    __gtype_name__ = "FittingParameters"
+    __gtype_name__ = "GraphsFittingParameters"
     __gsignals__ = {}
 
     def add_items(self, items):
