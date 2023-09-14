@@ -1,15 +1,29 @@
-<p>New in Graphs:</p>
-<ul>
-  <li>Graphs now includes forwards/backwards buttons to quickly navigate to the next and previous view</li>
-  <li>The used axes limits are now saved when saving/loading a project</li>
-  <li>The preferences menu has been redesigned for a more intuitive navigation</li>
-  <li>Transparent colours for the lines are now supported</li>
-  <li>Headers are now written to exported files if present in the originally imported data</li>
-  <li>Several linguistic changes were made, to get a clearer and more consistent description</li>
-  <li>Importing column data is now more robust, supporting expressions as data points</li>
-</ul>
-<p>Bugfixes and changes under the hood:</p>
-<ul>
-  <li>Number inputs are now handled safely without calling the Python eval function</li>
-  <li>The clipboard implementation has been rewritten </li>
-</ul>
+        <p>New in Graphs:</p>
+        <ul>
+          <li>Curve fitting functionality has been added to Graphs</li>
+          <li>New scaling options are available for the axes, allowing for radian, square root and inverse scaling</li>
+          <li>Graphs now includes forwards/backwards buttons to quickly navigate to the next and previous view</li>
+          <li>Transparent colours for the lines are now supported</li>
+          <li>Support has been added for cotangents, secants and cosecants</li>
+          <li>Headers are now written to exported files if present in the originally imported data</li>
+          <li>Importing column data is now more robust, supporting expressions as data points</li>
+        </ul>
+        <p>Changed behaviour:</p>
+        <ul>
+          <li>Different changes and tweaks throughout the UI</li>
+          <li>Several linguistic changes were made, to get a clearer and more consistent description</li>
+          <li>The syntax for equations have been simplified </li>
+          <li>The used axes limits are now saved when saving/loading a project</li>
+          <li>The preferences have been redesigned for a more intuitive navigation</li>
+          <li>The shortcuts have been modified to follow the rest of the GNOME ecosystem </li>
+        </ul>
+        <p>Bugfixes and changes under the hood:</p>
+        <ul>
+          <li>Number inputs are now handled safely without calling the Python eval function</li>
+          <li>The clipboard implementation has been rewritten </li>
+          <li>The scale buttons in the view menu are now properly changed when the scale has been changed from the figure settings </li>
+          <li>Automatic scaling is now handled properly even when the dataset contains infinite values </li>
+          <li>Graphs now uses unit tests, reducing the risk of regression bugs </li>
+          <li>Part of the code-base has been migrated to Vala</li>
+          <li>Graphs translations are now hosted on Weblate</li>
+        </ul>
