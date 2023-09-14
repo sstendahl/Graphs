@@ -1,6 +1,4 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-using Adw;
-
 namespace Graphs {
     public class FittingParameter : Object {
         public string name { get; construct set; default = ""; }
