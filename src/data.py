@@ -253,7 +253,7 @@ class Data(GObject.Object, Graphs.DataInterface):
         main application, and should not be copied into a clipboard.
         """
         for new_item in items:
-            self._items[new_item.uuid] = new_item
+            self._items[new_item.get_uuid()] = new_item
 
     def delete_items(self, items: list):
         """Delete specified items."""

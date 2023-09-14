@@ -92,6 +92,9 @@ class ItemBox(Gtk.Box):
             "}", -1,
         )
 
+    def curve_fitting(self, _action, _shortcut):
+        CurveFittingWindow(self.get_application(), self.props.item)
+
     def move_up(self, _action, _shortcut):
         self._change_position(self.props.index, self.props.index - 1)
 

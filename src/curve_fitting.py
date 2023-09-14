@@ -7,7 +7,7 @@ from gi.repository import Adw, GObject, Graphs, Gtk
 from graphs import ui
 from graphs.canvas import Canvas
 from graphs.data import Data
-from graphs.item import Item
+from graphs.item import DataItem
 from graphs.utilities import preprocess, string_to_function
 
 import numpy
@@ -40,18 +40,17 @@ class CurveFittingWindow(Adw.Window):
 
         for var in self.get_free_variables():
             self.fitting_parameters.add_items([FittingParameter(var, 1)])
-
         # Generate item for the data that is fitted to
-        data_curve = Item.new(
+        data_curve = DataItem.new(
             application, xdata=item.xdata,
-            ydata=item.ydata, name=item.name,
+            ydata=item.ydata, name=item.get_name(),
             color="#1A5FB4")
         data_curve.linestyle = 0
         data_curve.markerstyle = 1
         data_curve.markersize = 13
 
         # Generate item for the fit
-        fitted_curve = Item.new(
+        fitted_curve = DataItem.new(
             application, xdata=[], ydata=[], color="#A51D2D")
 
         self.curves.add_unconnected_items([fitted_curve, data_curve])
@@ -167,7 +166,7 @@ class CurveFittingWindow(Adw.Window):
                           bounds=self.fitting_parameters.get_bounds(),
                           nan_policy="omit")
         except ValueError:
-            # Cancel fit if not succesful
+            # Cancel fit if not succesfull
             return
         xdata = numpy.linspace(
             min(self.curves[1].xdata),
@@ -177,7 +176,7 @@ class CurveFittingWindow(Adw.Window):
 
         name = _get_equation_name(
             str(self.equation_entry.get_text()), self.param)
-        self.curves[0].name = f"Y = {name}"
+        self.curves[0].set_name(f"Y = {name}")
         self.curves[0].ydata, self.curves[0].xdata = (ydata, xdata)
         self.set_results()
         return True
@@ -185,8 +184,11 @@ class CurveFittingWindow(Adw.Window):
     @Gtk.Template.Callback()
     def add_fit(self, _widget):
         """Add fitted data to the items in the main application"""
-        self.curves[0].color = ""  # Reset color, so it is obtained from cycle
-        self.get_application().get_data().add_items([self.curves[0]])
+        new_item = DataItem.new(self.get_application(),
+                                xdata=self.curves[0].xdata,
+                                ydata=self.curves[0].ydata,
+                                name=self.curves[0].get_name())
+        self.get_application().get_data().add_items([new_item])
         self.destroy()
 
     def set_entry_rows(self):
@@ -247,6 +249,9 @@ class FittingParameter(GObject.Object):
         self.initial = initial
         self.lower_bound = lower_bound
         self.upper_bound = upper_bound
+
+    def get_name(self):
+        return self.name
 
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/fitting_parameters.ui")
