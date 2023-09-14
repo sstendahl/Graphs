@@ -251,9 +251,8 @@ def string_to_function(equation_name):
         equation_name,
     )
     sym_vars = sympy.symbols(variables)
-    try:
-        symbolic = sympy.sympify(equation_name,
-                                 locals=dict(zip(variables, sym_vars)))
+    with contextlib.suppress(sympy.SympifyError, TypeError):
+        symbolic = sympy.sympify(
+            equation_name, locals=dict(zip(variables, sym_vars)),
+        )
         return sympy.lambdify(sym_vars, symbolic)
-    except (sympy.SympifyError, TypeError):
-        return
