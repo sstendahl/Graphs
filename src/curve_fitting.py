@@ -17,7 +17,7 @@ from scipy.optimize import curve_fit
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/curve_fitting.ui")
 class CurveFittingWindow(Adw.Window):
-    __gtype_name__ = "CurveFittingWindow"
+    __gtype_name__ = "GraphsCurveFittingWindow"
     equation_entry = Gtk.Template.Child()
     fitting_params = Gtk.Template.Child()
     toast_overlay = Gtk.Template.Child()
