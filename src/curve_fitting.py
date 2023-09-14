@@ -239,7 +239,7 @@ class FittingParameters(Data):
 class FittingParameter(GObject.Object):
     """Class for the fitting parameters."""
 
-    __gtype_name__ = "FittingParameter"
+    __gtype_name__ = "GraphsFittingParameter"
     application = GObject.Property(type=object)
 
     def __init__(self, name, initial=1, lower_bound=-float("inf"),
