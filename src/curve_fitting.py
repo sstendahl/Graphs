@@ -26,7 +26,6 @@ class CurveFittingWindow(Adw.Window):
     def __init__(self, application, item):
         super().__init__(
             application=application, transient_for=application.get_window(),
-
         )
         ui.bind_values_to_settings(
             self.get_application().get_settings("curve-fitting"), self)
