@@ -37,17 +37,14 @@ class DataItem(Graphs.Item):
     @staticmethod
     def new(application, xdata=None, ydata=None, **kwargs):
         settings = application.get_settings("general")
+        params = pyplot.rcParams
         return DataItem(
             yposition=settings.get_enum("y-position"),
             xposition=settings.get_enum("x-position"),
-            linestyle=misc.LINESTYLES.index(
-                pyplot.rcParams["lines.linestyle"],
-            ),
-            linewidth=pyplot.rcParams["lines.linewidth"],
-            markerstyle=misc.MARKERSTYLES.index(
-                pyplot.rcParams["lines.marker"],
-            ),
-            markersize=pyplot.rcParams["lines.markersize"],
+            linestyle=misc.LINESTYLES.index(params["lines.linestyle"]),
+            linewidth=params["lines.linewidth"],
+            markerstyle=misc.MARKERSTYLES.index(params["lines.marker"]),
+            markersize=params["lines.markersize"],
             xdata=xdata, ydata=ydata, **kwargs,
         )
 
@@ -59,12 +56,12 @@ class DataItem(Graphs.Item):
             self.props.ydata = []
 
     def reset(self):
-        self.props.linestyle = \
-            misc.LINESTYLES.index(pyplot.rcParams["lines.linestyle"])
-        self.props.linewidth = pyplot.rcParams["lines.linewidth"]
+        params = pyplot.rcParams
+        self.props.linestyle = misc.LINESTYLES.index(params["lines.linestyle"])
+        self.props.linewidth = params["lines.linewidth"]
         self.props.markerstyle = \
-            misc.MARKERSTYLES.index(pyplot.rcParams["lines.marker"])
-        self.props.markersize = pyplot.rcParams["lines.markersize"]
+            misc.MARKERSTYLES.index(params["lines.marker"])
+        self.props.markersize = params["lines.markersize"]
         self.color = "000000"
 
 
@@ -80,18 +77,18 @@ class TextItem(Graphs.Item):
     @staticmethod
     def new(application, xanchor=0, yanchor=0, text="", **kwargs):
         settings = application.get_settings("general")
+        params = pyplot.rcParams
         return TextItem(
             yposition=settings.get_enum("y-position"),
             xposition=settings.get_enum("x-position"),
-            size=pyplot.rcParams["font.size"],
+            size=params["font.size"], color=params["text.color"],
             xanchor=xanchor, yanchor=yanchor, text=text, **kwargs,
         )
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        if self.props.color == "":
-            self.props.color = pyplot.rcParams["text.color"]
 
     def reset(self):
-        self.props.size = pyplot.rcParams["font.size"]
-        self.props.color = pyplot.rcParams["text.color"]
+        params = pyplot.rcParams
+        self.props.size = params["font.size"]
+        self.props.color = params["text.color"]
