@@ -162,14 +162,15 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
         if not any(used_axes):
             used_axes = [True, False, True, False]
 
-        ticks = "both" if pyplot.rcParams["xtick.minor.visible"] else "major"
+        params = pyplot.rcParams
+        ticks = "both" if params["xtick.minor.visible"] else "major"
         for count, directions in enumerate(axes_directions):
             axis = self.axes[count]
             axis.get_xaxis().set_visible(False)
             axis.get_yaxis().set_visible(False)
             # Set tick where requested, as long as that axis is not occupied
             axis.tick_params(which=ticks, **{
-                key: pyplot.rcParams[f"{'x' if i < 2 else 'y'}tick.{key}"]
+                key: params[f"{'x' if i < 2 else 'y'}tick.{key}"]
                 and (key in directions or not used_axes[i])
                 for i, key in enumerate(["bottom", "top", "left", "right"])
             })
