@@ -57,7 +57,7 @@ graphs_lib = shared_library(
       vala_gir: 'Graphs-1.gir',
   dependencies: dependencies,
        install: true,
-   install_dir: [true, true, true, true],
+   install_dir: [true],
 )
 
 custom_target('graphs typelib',
