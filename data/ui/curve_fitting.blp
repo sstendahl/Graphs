@@ -1,7 +1,7 @@
 using Gtk 4.0;
 using Adw 1;
 
-template $GraphsCurveFittingWindow : Adw.Window {
+template $GraphsCurveFittingTool : Adw.Window {
   modal: true;
   title: _("Curve Fitting");
   focus-widget: confirm_button;
@@ -28,7 +28,6 @@ template $GraphsCurveFittingWindow : Adw.Window {
       Button confirm_button {
         label: _("Add fit to data");
         styles ["suggested-action"]
-        clicked => $add_fit();
       }
     }
 
