@@ -149,7 +149,7 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
         # bottom, top, left, right
         used_axes = [False, False, False, False]
         for item in items:
-            if item.get_selected() and not hide_unselected:
+            if not (hide_unselected and not item.get_selected()):
                 drawable_items.append(item)
                 used_axes[item.get_xposition()] = True
                 used_axes[2 + item.get_yposition()] = True

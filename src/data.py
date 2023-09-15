@@ -256,9 +256,7 @@ class Data(GObject.Object, Graphs.DataInterface):
         self.notify("items_selected")
 
     def _connect_to_item(self, item_):
-        item_.connect(
-            "notify::selected", lambda _x, _y: self.notify("items_selected"),
-        )
+        item_.connect("notify::selected", self._on_item_select)
         item_.connect(
             "notify", self.get_application().get_clipboard().on_item_change,
         )
@@ -268,3 +266,9 @@ class Data(GObject.Object, Graphs.DataInterface):
     def _on_item_position_change(self, _item, _ignored):
         utilities.optimize_limits(self.get_application())
         self.notify("items")
+
+    def _on_item_select(self, _x, _y):
+        self.notify("items_selected")
+        if self.get_application().get_settings(
+                "general").get_boolean("hide-unselected"):
+            self.notify("items")
