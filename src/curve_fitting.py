@@ -30,6 +30,8 @@ class CurveFittingWindow(Adw.Window):
             self.get_application().get_settings("curve-fitting"), self)
         canvas = Canvas(application)
         self.param = []
+        self.sigma = []
+        self.r2 = 0
 
         self.equation.connect("notify::text", self.on_equation_change)
         self.fitting_parameters = FittingParameterContainer(application)
@@ -48,11 +50,8 @@ class CurveFittingWindow(Adw.Window):
 
         # Generate item for the fit
         self.fitted_curve = DataItem.new(
-            application, xdata=[], ydata=[], color="#A51D2D",
+            application, xdata=[], ydata=[], color="#A51D2D", name=" ",
         )
-
-        self.fit_curve()
-        self.set_entry_rows()
 
         canvas.props.items = [self.fitted_curve, self.data_curve]
 
@@ -62,7 +61,9 @@ class CurveFittingWindow(Adw.Window):
             ax.yscale = "linear"
             ax.xscale = "linear"
         canvas.highlight_enabled = False
-
+        self.canvas = canvas
+        self.fit_curve()
+        self.set_entry_rows()
         self.toast_overlay.set_child(canvas)
         self.present()
 
@@ -119,7 +120,11 @@ class CurveFittingWindow(Adw.Window):
         initial_string = _("Results: \n")
         buffer_string = initial_string
         for index, arg in enumerate(self.get_free_variables()):
-            buffer_string += f"\n {arg}: {self.param[index]}"
+            parameter = utilities.sig_fig_round(self.param[index], 3)
+            sigma = utilities.sig_fig_round(self.sigma[index], 3)
+            buffer_string += f"\n {arg}: {parameter}"
+            buffer_string += f" (± {sigma})"
+        buffer_string += f"\n\nSum of R²: {self.r2}"
 
         self.text_view.get_buffer().set_text(buffer_string)
         bold_tag = Gtk.TextTag(weight=700)
@@ -149,7 +154,7 @@ class CurveFittingWindow(Adw.Window):
         if function is None:
             return
         try:
-            self.param, param_cov = curve_fit(
+            self.param, self.param_cov = curve_fit(
                 function,
                 self.data_curve.xdata, self.data_curve.ydata,
                 p0=self.fitting_parameters.get_p0(),
@@ -167,8 +172,29 @@ class CurveFittingWindow(Adw.Window):
             str(self.equation.get_text()), self.param)
         self.fitted_curve.set_name(f"Y = {name}")
         self.fitted_curve.ydata, self.fitted_curve.xdata = (ydata, xdata)
+        self.get_confidence(function)
         self.set_results()
         return True
+
+    def get_confidence(self, function):
+        # Get standard deviation
+        self.sigma = numpy.sqrt(numpy.diagonal(self.param_cov))
+        fitted_y = [function(x, *self.param) for x in self.data_curve.xdata]
+        ss_res = numpy.sum((numpy.asarray(self.data_curve.ydata)
+                            - numpy.asarray(fitted_y)) ** 2)
+        ss_sum = numpy.sum((self.data_curve.ydata - numpy.mean(fitted_y)) ** 2)
+        self.r2 = 1 - (ss_res / ss_sum)
+
+        # Get confidence band
+        upper_bound = \
+            function(self.fitted_curve.xdata, *(self.param + self.sigma))
+        lower_bound = \
+            function(self.fitted_curve.xdata, *(self.param - self.sigma))
+        self.canvas.axis.fill_between(self.fitted_curve.xdata,
+                                      lower_bound,
+                                      upper_bound,
+                                      color=self.canvas.rubberband_fill_color,
+                                      alpha=0.15)
 
     @Gtk.Template.Callback()
     def add_fit(self, _widget):
