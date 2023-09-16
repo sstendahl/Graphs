@@ -5,7 +5,6 @@ using Gtk;
 namespace Graphs {
     [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/curve_fitting.ui")]
     public class CurveFittingTool : Adw.Window {
-        public FigureSettings figure_settings { get; construct set; }
         [GtkChild]
         public unowned Adw.EntryRow equation { get; }
 

@@ -9,7 +9,6 @@ from graphs.canvas import Canvas
 from graphs.data import Data
 from graphs.item import DataItem
 
-import matplotlib
 import numpy
 
 from scipy.optimize import curve_fit
@@ -24,12 +23,8 @@ class CurveFittingWindow(Graphs.CurveFittingTool):
     toast_overlay = GObject.Property(type=Adw.ToastOverlay)
 
     def __init__(self, application, item):
-        figure_settings = \
-            Graphs.FigureSettings.new(
-                application.get_settings().get_child("figure"))
         super().__init__(
             application=application, transient_for=application.get_window(),
-            figure_settings=figure_settings,
         )
         self.equation = self.get_equation()
         ui.bind_values_to_settings(
@@ -40,9 +35,6 @@ class CurveFittingWindow(Graphs.CurveFittingTool):
         self.sigma = []
         self.r2 = 0
 
-        for prop in dir(figure_settings.props):
-            if prop not in ["use_custom_style", "custom_style"]:
-                figure_settings.bind_property(prop, canvas, prop, 1 | 2)
         self.get_equation().connect("notify::text", self.on_equation_change)
         self.fitting_parameters = FittingParameterContainer(application)
 
@@ -65,42 +57,22 @@ class CurveFittingWindow(Graphs.CurveFittingTool):
 
         canvas.props.items = [self.fitted_curve, self.data_curve]
 
-        # Scale axis to the data to be fitted, set linear scale
-
+        # Set up canvas
+        self.fill = \
+            canvas.axis.fill_between(self.fitted_curve.xdata,
+                                     [0],
+                                     [1],
+                                     color=canvas.rubberband_fill_color,
+                                     alpha=0.15)
+        canvas.axis.yscale = "linear"
+        canvas.axis.xscale = "linear"
+        canvas.highlight_enabled = False
         self.canvas = canvas
+        canvas.top_right_axis.get_legend().remove()
         self.fit_curve()
         self.set_entry_rows()
         self.get_toast_overlay().set_child(canvas)
-        self.set_canvas()
         self.present()
-
-    def set_canvas(self):
-        self.canvas.axis.yscale = "linear"
-        self.canvas.axis.xscale = "linear"
-        self.canvas.highlight_enabled = False
-        figure_settings = self.get_figure_settings()
-
-        xdata = list(self.data_curve.xdata)
-        ydata = list(self.data_curve.ydata)
-        xdata_fit = list(self.fitted_curve.xdata)
-        ydata_fit = list(self.fitted_curve.ydata)
-        upper_bound = list(self.upper_bound)
-        lower_bound = list(self.lower_bound)
-
-        ymax = max(ydata + ydata_fit + upper_bound)
-        ymin = min(ydata + ydata_fit + lower_bound)
-        xmax = max(xdata + xdata_fit)
-        xmin = min(xdata + xdata_fit)
-
-        xmin -= 0.015 * (xmax - xmin)
-        xmax += 0.015 * (xmax - xmin)
-        ymin -= 0.05 * (ymax - ymin)
-        ymax += 0.05 * (ymax - ymin)
-
-        figure_settings.set_property("min_left", ymin)
-        figure_settings.set_property("max_left", ymax)
-        figure_settings.set_property("min_bottom", xmin)
-        figure_settings.set_property("max_bottom", xmax)
 
     def get_free_variables(self):
         return re.findall(
@@ -210,31 +182,48 @@ class CurveFittingWindow(Graphs.CurveFittingTool):
         self.fitted_curve.ydata, self.fitted_curve.xdata = (ydata, xdata)
         self.get_confidence(function)
         self.set_results()
-        self.set_canvas()
         return True
 
     def get_confidence(self, function):
         # Get standard deviation
+        self.canvas.axis.relim()  # Reset limits
         self.sigma = numpy.sqrt(numpy.diagonal(self.param_cov))
-        fitted_y = [function(x, *self.param) for x in self.data_curve.xdata]
+        try:
+            fitted_y = \
+                [function(x, *self.param) for x in self.data_curve.xdata]
+        except OverflowError:
+            return
         ss_res = numpy.sum((numpy.asarray(self.data_curve.ydata)
                             - numpy.asarray(fitted_y)) ** 2)
         ss_sum = numpy.sum((self.data_curve.ydata - numpy.mean(fitted_y)) ** 2)
         self.r2 = 1 - (ss_res / ss_sum)
 
         # Get confidence band
-        self.upper_bound = \
-            list(function(self.fitted_curve.xdata, *(self.param + self.sigma)))
-        self.lower_bound = \
-            list(function(self.fitted_curve.xdata, *(self.param - self.sigma)))
-        for collection in self.canvas.axis.collections:
-            if isinstance(collection, matplotlib.collections.PolyCollection):
-                collection.remove()
-        self.canvas.axis.fill_between(self.fitted_curve.xdata,
-                                      self.lower_bound,
-                                      self.upper_bound,
-                                      color=self.canvas.rubberband_fill_color,
-                                      alpha=0.15)
+        upper_bound = \
+            function(self.fitted_curve.xdata, *(self.param + self.sigma))
+        lower_bound = \
+            function(self.fitted_curve.xdata, *(self.param - self.sigma))
+
+        if (isinstance(upper_bound, numpy.float64)
+                or isinstance(lower_bound, numpy.float64)):
+            return
+
+        span = max(self.fitted_curve.ydata) - min(self.fitted_curve.ydata)
+        middle = \
+            (max(self.fitted_curve.ydata) - min(self.fitted_curve.ydata)) / 2
+
+        # Don't try to draw complicated and resource-hogging bounds when
+        # far out of range, instead set them to be far enough out of limits
+        if max(upper_bound) > middle + 100 * span:
+            upper_bound = [middle + 100 * span]
+        if min(lower_bound) < middle - 100 * span:
+            lower_bound = [middle - 100 * span]
+        dummy = self.canvas.axis.fill_between(self.fitted_curve.xdata,
+                                              lower_bound,
+                                              upper_bound)
+        dp = dummy.get_paths()[0]
+        dummy.remove()
+        self.fill.set_paths([dp.vertices])
 
     def add_fit(self, _widget):
         """Add fitted data to the items in the main application"""
