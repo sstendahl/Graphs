@@ -11,7 +11,7 @@ from graphs.item import DataItem
 
 import numpy
 
-from scipy.optimize import curve_fit
+from scipy.optimize import _minpack, curve_fit
 
 
 class CurveFittingWindow(Graphs.CurveFittingTool):
@@ -68,7 +68,6 @@ class CurveFittingWindow(Graphs.CurveFittingTool):
         canvas.axis.xscale = "linear"
         canvas.highlight_enabled = False
         self.canvas = canvas
-        canvas.top_right_axis.get_legend().remove()
         self.fit_curve()
         self.set_entry_rows()
         self.get_toast_overlay().set_child(canvas)
@@ -168,7 +167,7 @@ class CurveFittingWindow(Graphs.CurveFittingTool):
                 p0=self.fitting_parameters.get_p0(),
                 bounds=self.fitting_parameters.get_bounds(), nan_policy="omit",
             )
-        except (ValueError, TypeError):
+        except (ValueError, TypeError, _minpack.error):
             # Cancel fit if not succesfull
             return
         xdata = numpy.linspace(
@@ -191,7 +190,7 @@ class CurveFittingWindow(Graphs.CurveFittingTool):
         try:
             fitted_y = \
                 [function(x, *self.param) for x in self.data_curve.xdata]
-        except OverflowError:
+        except (OverflowError, ZeroDivisionError):
             return
         ss_res = numpy.sum((numpy.asarray(self.data_curve.ydata)
                             - numpy.asarray(fitted_y)) ** 2)
@@ -204,8 +203,12 @@ class CurveFittingWindow(Graphs.CurveFittingTool):
         lower_bound = \
             function(self.fitted_curve.xdata, *(self.param - self.sigma))
 
-        if (isinstance(upper_bound, numpy.float64)
-                or isinstance(lower_bound, numpy.float64)):
+        # Filter non-finite values from the bounds
+        lower_bound = lower_bound[numpy.isfinite(lower_bound)]
+        upper_bound = upper_bound[numpy.isfinite(upper_bound)]
+
+        # Cancel if there's no valid values left after filtering non-finite
+        if len(upper_bound) == 0 or len(lower_bound) == 0:
             return
 
         span = max(self.fitted_curve.ydata) - min(self.fitted_curve.ydata)
@@ -213,11 +216,12 @@ class CurveFittingWindow(Graphs.CurveFittingTool):
             (max(self.fitted_curve.ydata) - min(self.fitted_curve.ydata)) / 2
 
         # Don't try to draw complicated and resource-hogging bounds when
-        # far out of range, instead set them to be far enough out of limits
-        if max(upper_bound) > middle + 100 * span:
-            upper_bound = [middle + 100 * span]
-        if min(lower_bound) < middle - 100 * span:
-            lower_bound = [middle - 100 * span]
+        # far out of range, instead set them to be single-values far away
+        if max(upper_bound) > middle + 1e5 * span:
+            upper_bound = [middle + 1e5 * span]
+        if min(lower_bound) < middle - 1e5 * span:
+            lower_bound = [middle - 1e5 * span]
+
         dummy = self.canvas.axis.fill_between(self.fitted_curve.xdata,
                                               lower_bound,
                                               upper_bound)
