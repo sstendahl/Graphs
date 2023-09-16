@@ -105,6 +105,23 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
         self._legend_position = misc.LEGEND_POSITIONS[0]
         self._handles = []
 
+    def get_top_axis(self):
+        positions = []
+        used_axes = []
+        for item_ in self.get_application().get_data():
+            positions.append(item_.get_xposition())
+            positions.append(item_.get_yposition())
+        if positions == [0, 0]:
+            used_axes.append(self.axis)
+        if positions == [0, 1]:
+            used_axes.append(self.right_axis)
+        if positions == [1, 0]:
+            used_axes.append(self.top_left_axis)
+        if positions == [1, 1]:
+            used_axes.append(self.top_right_axis)
+        return used_axes[-1] if len(used_axes) != 0 else self.axis
+
+
     def get_application(self):
         """Get application property."""
         return self.props.application
@@ -226,20 +243,24 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
 
     def update_legend(self):
         """Update the legend or hide if not used."""
+        # Remove existing legends
+        for ax in self.axes:
+            if ax.get_legend() is not None:
+                ax.get_legend().remove()
+
+        axis = self.get_top_axis()
         if self._legend and self._handles:
             handles = [
                 handle.get_artist() for handle in self._handles
                 if handle.legend
             ]
             if handles:
-                self.top_right_axis.legend(
+                axis.legend(
                     handles=handles, loc=self._legend_position,
                     frameon=True, reverse=True,
                 )
                 self.queue_draw()
                 return
-        if self.top_right_axis.get_legend() is not None:
-            self.top_right_axis.get_legend().remove()
         self.queue_draw()
 
     @GObject.Property(type=bool, default=True)
