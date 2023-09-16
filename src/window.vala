@@ -49,7 +49,7 @@ namespace Graphs {
         public unowned ListBox item_list { get; }
 
         [GtkChild]
-        private unowned Adw.Flap sidebar_flap { get; }
+        private unowned Adw.OverlaySplitView split_view { get; }
 
         [GtkChild]
         private unowned Adw.ToastOverlay toast_overlay { get; }
@@ -65,13 +65,6 @@ namespace Graphs {
         public CanvasInterface canvas {
             get { return (CanvasInterface) this.toast_overlay.get_child (); }
             set { this.toast_overlay.set_child(value); }
-        }
-
-        [GtkCallback]
-        private void on_sidebar_toggle () {
-            this.application.lookup_action ("toggle_seidebar").change_state (
-                new Variant.boolean (this.sidebar_flap.get_reveal_flap ())
-            );
         }
 
         [GtkCallback]

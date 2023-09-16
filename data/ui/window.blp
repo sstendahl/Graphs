@@ -1,9 +1,12 @@
 using Gtk 4.0;
 using Adw 1;
 
-template $GraphsWindow : Adw.ApplicationWindow {
+template $GraphsWindow: Adw.ApplicationWindow {
   default-width: 1200;
   default-height: 700;
+  width-request: 292;
+  height-request: 488;
+
   ShortcutController {
     Shortcut {
       trigger: "<primary>q";
@@ -79,17 +82,27 @@ template $GraphsWindow : Adw.ApplicationWindow {
     }
   }
 
-  Box {
-    orientation: vertical;
+  Adw.Breakpoint {
+    condition ("max-width: 500sp")
+    setters {
+      split_view.collapsed: true;
+    }
+  }
+
+  content: Adw.ToolbarView {
+    top-bar-style: flat;
+    extend-content-to-top-edge: true;
+    [top]
     Adw.HeaderBar {
-      ToggleButton {
-        visible: bind sidebar_flap.folded;
-        action-name: "app.toggle_sidebar";
+
+      ToggleButton show_sidebar_button {
         icon-name: "sidebar-show-symbolic";
-        active: bind sidebar_flap.reveal-flap;
+        tooltip-text: _("Toggle Sidebar");
+        active: bind split_view.show-sidebar;
+        visible: bind split_view.collapsed;
       }
       Box {
-        visible: bind sidebar_flap.folded inverted;
+        visible: bind split_view.collapsed inverted;
         MenuButton add_button {
           icon-name: "list-add-symbolic";
           tooltip-text: _("Add new Data");
@@ -117,7 +130,7 @@ template $GraphsWindow : Adw.ApplicationWindow {
       }
       [end]
       Box {
-        visible: bind sidebar_flap.folded inverted;
+        visible: bind split_view.collapsed inverted;
         Button view_back_button {
           action-name: "app.view_back";
           icon-name: "arrow1-left-symbolic";
@@ -137,26 +150,17 @@ template $GraphsWindow : Adw.ApplicationWindow {
         Separator {styles ["spacer"]}
       }
     }
-    Adw.Flap sidebar_flap {
-      reveal-flap: true;
-      fold-policy: auto;
-      swipe-to-open: true;
-      swipe-to-close: true;
-      notify => $on_sidebar_toggle();
 
-      [flap]
-      Box {
+    content: Adw.OverlaySplitView split_view {
+      show-sidebar: bind show_sidebar_button.active;
+      sidebar: Box {
         orientation: vertical;
-        width-request: 370;
-        hexpand: false;
-        styles ["background"]
-
-        Box {
-          visible: bind sidebar_flap.folded;
-          margin-top: 6;
+      Box {
+          margin-top: 42;
           margin-bottom: 6;
           margin-start: 6;
           margin-end: 6;
+          visible: bind split_view.collapsed;
           MenuButton {
             icon-name: bind add_button.icon-name;
             tooltip-text: bind add_button.tooltip-text;
@@ -205,14 +209,10 @@ template $GraphsWindow : Adw.ApplicationWindow {
             always-show-arrow: true;
             styles ["flat"]
           }
-        }
-        Separator {
-          orientation: horizontal;
-          visible: bind sidebar_flap.folded;
-        }
-
+          }
         ScrolledWindow {
           height-request: 250;
+          margin-top: 42;
           hscrollbar-policy: never;
           Viewport {
             Box {
@@ -608,16 +608,12 @@ template $GraphsWindow : Adw.ApplicationWindow {
               }
             }
           }
+
         }
-      }
+        };
 
-      [separator]
-      Separator {
-        orientation: vertical;
-      }
-
-      [content]
-      Adw.ToastOverlay toast_overlay {
+      content: Adw.ToastOverlay toast_overlay {
+        margin-top: 48;
         focusable: true;
         height-request: 200;
         width-request: 200;
@@ -625,9 +621,9 @@ template $GraphsWindow : Adw.ApplicationWindow {
           icon-name: "dialog-error-symbolic";
           title: _("Canvas Failed to Load");
         };
-      }
-    }
-  }
+      };
+    };
+  };
 }
 
 menu primary_menu {
@@ -714,6 +710,7 @@ menu view_menu {
         action: "app.change-bottom-scale";
         target: "2";
       }
+
       item {
         label: _("Square Root");
         action: "app.change-bottom-scale";
