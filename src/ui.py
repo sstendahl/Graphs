@@ -61,11 +61,6 @@ def set_clipboard_buttons(self):
     self.get_window().get_view_back_button().set_sensitive(
         abs(self.get_view_clipboard().clipboard_pos)
         < len(self.get_view_clipboard().clipboard))
-    self.get_window().get_undo_button().set_sensitive(
-        abs(self.get_data().history_pos)
-        < len(self.get_data().history_states))
-    self.get_window().get_redo_button().set_sensitive(
-        self.get_data().history_pos < - 1)
 
 
 def add_data_dialog(self):

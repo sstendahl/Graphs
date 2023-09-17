@@ -131,6 +131,13 @@ class PythonApplication(Graphs.Application):
                 "items_selected", window.get_shift_button(), "sensitive", 2,
             )
             self.bind_property("mode", window, "mode", 2)
+            data = self.get_data()
+            data.bind_property(
+                "undo_possible", window.get_undo_button(), "sensitive", 2,
+            )
+            data.bind_property(
+                "redo_possible", window.get_redo_button(), "sensitive", 2,
+            )
             self.set_window(window)
             window.set_title(self.props.name)
             if "(Development)" in self.props.name:

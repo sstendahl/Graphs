@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 from gi.repository import Gio
 
-from graphs import file_io, migrate, ui
+from graphs import file_io, item, migrate, ui
 
 
 def save_project(self, file: Gio.File):
@@ -12,7 +12,7 @@ def save_project(self, file: Gio.File):
     }
     file_io.write_json(file, {
         "version": self.get_version(),
-        "data": self.get_data().to_list(),
+        "data": [item.to_dict(item_) for item_ in self.get_data()],
         "figure-settings": figure_settings_dict,
         "data-clipboard": self.get_clipboard().get_clipboard(),
         "data-clipboard-position": self.get_clipboard().get_clipboard_pos(),
@@ -33,7 +33,7 @@ def load_project(self, file: Gio.File):
     figure_settings = self.get_data().get_figure_settings()
     for key, value in project["figure-settings"].items():
         figure_settings.set_property(key, value)
-    self.get_data().set_from_list(project["data"])
+    self.get_data().set_items([item.new_from_dict(d) for d in project["data"]])
 
     self.get_clipboard().props.data_copy = self.get_data().to_dict()
     self.get_clipboard().set_clipboard(project["data-clipboard"])

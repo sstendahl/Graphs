@@ -28,14 +28,9 @@ class Data(GObject.Object, Graphs.DataInterface):
 
     Functions:
         get_application
-        to_list
-        to_dict
-        set_from_list
         is_empty
         get_items
         set_items
-        append
-        pop
         index
         get_names
         change_position
@@ -50,10 +45,8 @@ class Data(GObject.Object, Graphs.DataInterface):
 
     application = GObject.Property(type=object)
     figure_settings = GObject.Property(type=Graphs.FigureSettings)
-    history_states = GObject.Property(type=object)
-    history_pos = GObject.Property(type=int, default=-1)
-    current_batch = GObject.Property(type=object)
-    data_copy = GObject.Property(type=object)
+    undo_possible = GObject.Property(type=bool, default=False)
+    redo_possible = GObject.Property(type=bool, default=False)
 
     def __init__(self, application, settings):
         """Init the dataclass."""
@@ -62,10 +55,11 @@ class Data(GObject.Object, Graphs.DataInterface):
         )
         super().__init__(
             application=application, figure_settings=figure_settings,
-            current_batch=[], data_copy={},
-            history_states=[([], figure_settings.get_limits())],
         )
+        self._history_states = [([], figure_settings.get_limits())]
+        self._history_pos = -1
         self._items = {}
+        self._set_data_copy()
 
     def get_application(self):
         """Get application property."""
@@ -74,14 +68,6 @@ class Data(GObject.Object, Graphs.DataInterface):
     def get_figure_settings(self):
         """Get figure settings property."""
         return self.props.figure_settings
-
-    def to_list(self) -> list:
-        """Get a list of all items in dict form."""
-        return [item.to_dict(item_) for item_ in self]
-
-    def set_from_list(self, items: list):
-        """Set items from a list of items in dict form."""
-        self.set_items([item.new_from_dict(d) for d in items])
 
     def is_empty(self) -> bool:
         """Whether or not the class is empty."""
@@ -108,16 +94,16 @@ class Data(GObject.Object, Graphs.DataInterface):
     def set_items(self, items: list):
         """Set all managed items."""
         for item_ in items:
-            self.append(item_)
+            self._add_item(item_)
         self._items = {item_.get_uuid(): item_ for item_ in items}
 
-    def append(self, item_):
+    def _add_item(self, item_):
         """Append items to self."""
         self._connect_to_item(item_)
         self._items[item_.get_uuid()] = item_
         self.notify("items")
 
-    def pop(self, key):
+    def _delete_item(self, key):
         """Pop and delete item."""
         item_ = self._items[key]
         self._items.pop(key)
@@ -157,7 +143,7 @@ class Data(GObject.Object, Graphs.DataInterface):
             items[index2:index1 + 1] = \
                 items[index2 + 1:index1 + 1] + [items[index2]]
         self.props.items = items
-        self.props.current_batch.append((3, (index2, index1)))
+        self._current_batch.append((3, (index2, index1)))
 
     def add_items(self, items: list):
         """
@@ -210,7 +196,7 @@ class Data(GObject.Object, Graphs.DataInterface):
                 elif handle_duplicates == 3:  # Override
                     index = names.index(new_item.get_name())
                     existing_item = self[index]
-                    self.props.current_batch.append(
+                    self._current_batch.append(
                         (2, (index, existing_item.to_dict(item_))),
                     )
                     new_item.set_uuid(existing_item.get_uuid())
@@ -248,8 +234,8 @@ class Data(GObject.Object, Graphs.DataInterface):
                         _append_used_color(color)
                         break
 
-            self.append(new_item)
-            self.props.current_batch.append(
+            self._add_item(new_item)
+            self._current_batch.append(
                 (1, copy.deepcopy(item.to_dict(new_item))),
             )
         utilities.optimize_limits(application)
@@ -262,10 +248,10 @@ class Data(GObject.Object, Graphs.DataInterface):
     def delete_items(self, items: list):
         """Delete specified items."""
         for item_ in items:
-            self.props.current_batch.append(
+            self._current_batch.append(
                 (2, (self.index(item_), item.to_dict(item_))),
             )
-            self.pop(item_.get_uuid())
+            self._delete_item(item_.get_uuid())
         self.add_history_state()
         self.notify("items_selected")
 
@@ -286,54 +272,55 @@ class Data(GObject.Object, Graphs.DataInterface):
             self.notify("items")
 
     def _on_item_change(self, item_, param):
-        self.props.current_batch.append((0, (
+        self._current_batch.append((0, (
             item_.get_uuid(), param.name,
-            copy.deepcopy(self.props.data_copy[item_.get_uuid()][param.name]),
+            copy.deepcopy(self._data_copy[item_.get_uuid()][param.name]),
             copy.deepcopy(item_.get_property(param.name)),
         )))
 
     def _set_data_copy(self):
-        self.props.current_batch = []
-        self.props.data_copy = copy.deepcopy(
+        self._current_batch = []
+        self._data_copy = copy.deepcopy(
             {item_.get_uuid(): item.to_dict(item_) for item_ in self},
         )
 
     def add_history_state(self, old_limits=None):
-        if not self.props.current_batch:
+        if not self._current_batch:
             return
-        if self.props.history_pos != -1:
-            self.props.history_states = \
-                self.props.history_states[:self.props.history_pos + 1]
-        self.props.history_pos = -1
-        self.props.history_states.append((
-            self.props.current_batch,
+        if self._history_pos != -1:
+            self._history_states = self._history_states[:self._history_pos + 1]
+        self._history_pos = -1
+        self._history_states.append((
+            self._current_batch,
             self.get_figure_settings().get_limits(),
         ))
+        self.props.redo_possible = False
+        self.props.undo_possible = True
         ui.set_clipboard_buttons(self.get_application())
 
         if old_limits is not None:
             for index in range(8):
-                self.props.history_states[
-                    self.props.history_pos - 1][1][index] = old_limits[index]
+                self._history_states[self._history_pos - 1][1][index] = \
+                    old_limits[index]
         # Keep history srares length limited to 100 spots
-        if len(self.props.history_states) > 101:
-            self.props.history_states = self.props.history_states[1:]
+        if len(self._history_states) > 101:
+            self._history_states = self._history_states[1:]
         self._set_data_copy()
 
     def undo(self):
-        if abs(self.props.history_pos) < len(self.props.history_states):
-            batch = self.props.history_states[self.props.history_pos][0]
-            self.props.history_pos -= 1
+        if abs(self._history_pos) < len(self._history_states):
+            batch = self._history_states[self._history_pos][0]
+            self._history_pos -= 1
             items_changed = False
             for change_type, change in reversed(batch):
                 if change_type == 0:
                     self[change[0]].set_property(change[1], change[2])
                 elif change_type == 1:
-                    self.pop(change["uuid"])
+                    self._delete_item(change["uuid"])
                     items_changed = True
                 elif change_type == 2:
                     item_ = item.new_from_dict(change[1])
-                    self.append(item_)
+                    self._add_item(item_)
                     self.change_position(change[0], len(self))
                     items_changed = True
                 elif change_type == 3:
@@ -343,25 +330,28 @@ class Data(GObject.Object, Graphs.DataInterface):
                 self.notify("items")
             self.notify("items_selected")
             self.get_figure_settings().set_limits(
-                self.props.history_states[self.props.history_pos][1],
+                self._history_states[self._history_pos][1],
             )
+            self.props.redo_possible = True
+            self.props.undo_possible = \
+                abs(self._history_pos) < len(self._history_states)
             ui.set_clipboard_buttons(self.get_application())
             self._set_data_copy()
             self.get_application().get_view_clipboard().add()
 
     def redo(self):
-        if self.props.history_pos < -1:
-            self.props.history_pos += 1
-            state = self.props.history_states[self.props.history_pos]
+        if self._history_pos < -1:
+            self._history_pos += 1
+            state = self._history_states[self._history_pos]
             items_changed = False
             for change_type, change in state[0]:
                 if change_type == 0:
                     self[change[0]].set_property(change[1], change[3])
                 elif change_type == 1:
-                    self.append(item.new_from_dict(change))
+                    self._add_item(item.new_from_dict(change))
                     items_changed = True
                 elif change_type == 2:
-                    self.pop(change[1]["uuid"])
+                    self._delete_item(change[1]["uuid"])
                     items_changed = True
                 elif change_type == 3:
                     self.change_position(change[1], change[0])
@@ -370,6 +360,8 @@ class Data(GObject.Object, Graphs.DataInterface):
                 self.notify("items")
             self.notify("items_selected")
             self.get_figure_settings().set_limits(state[1])
+            self.props.redo_possible = self._history_pos < -1
+            self.props.undo_possible = True
             ui.set_clipboard_buttons(self.get_application())
             self._set_data_copy()
             self.get_application().get_view_clipboard().add()
