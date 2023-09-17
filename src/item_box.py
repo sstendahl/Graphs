@@ -65,8 +65,7 @@ class ItemBox(Gtk.Box):
         self.insert_action_group("item_box", action_group)
 
     def _change_position(self, source_index, target_index):
-        application = self.get_application()
-        data = application.get_data()
+        data = self.get_application().get_data()
         data.change_position(target_index, source_index)
         data.add_history_state()
         data.add_view_history_state()

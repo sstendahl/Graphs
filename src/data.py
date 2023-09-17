@@ -297,18 +297,12 @@ class Data(GObject.Object, Graphs.DataInterface):
         if self._history_pos != -1:
             self._history_states = self._history_states[:self._history_pos + 1]
         self._history_pos = -1
-        self._history_states.append((
-            self._current_batch,
-            self.get_figure_settings().get_limits(),
-        ))
+        if old_limits is None:
+            old_limits = self.get_figure_settings().get_limits()
+        self._history_states.append((self._current_batch, old_limits))
         self.props.redo_possible = False
         self.props.undo_possible = True
-
-        if old_limits is not None:
-            for index in range(8):
-                self._history_states[self._history_pos - 1][1][index] = \
-                    old_limits[index]
-        # Keep history srares length limited to 100 spots
+        # Keep history states length limited to 100 spots
         if len(self._history_states) > 101:
             self._history_states = self._history_states[1:]
         self._set_data_copy()
