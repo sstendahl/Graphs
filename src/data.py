@@ -9,7 +9,7 @@ import copy
 
 from gi.repository import GObject, Graphs
 
-from graphs import item, utilities
+from graphs import item, ui, utilities
 
 from matplotlib import pyplot
 
@@ -50,13 +50,20 @@ class Data(GObject.Object, Graphs.DataInterface):
 
     application = GObject.Property(type=object)
     figure_settings = GObject.Property(type=Graphs.FigureSettings)
+    history_states = GObject.Property(type=object)
+    history_pos = GObject.Property(type=int, default=-1)
+    current_batch = GObject.Property(type=object)
+    data_copy = GObject.Property(type=object)
 
     def __init__(self, application, settings):
         """Init the dataclass."""
+        figure_settings = Graphs.FigureSettings.new(
+            settings.get_child("figure"),
+        )
         super().__init__(
-            application=application, figure_settings=Graphs.FigureSettings.new(
-                settings.get_child("figure"),
-            ),
+            application=application, figure_settings=figure_settings,
+            current_batch=[], data_copy={},
+            history_states=[([], figure_settings.get_limits())],
         )
         self._items = {}
 
@@ -71,10 +78,6 @@ class Data(GObject.Object, Graphs.DataInterface):
     def to_list(self) -> list:
         """Get a list of all items in dict form."""
         return [item.to_dict(item_) for item_ in self]
-
-    def to_dict(self) -> dict:
-        """Get a dictionary of all items sorted by their key"""
-        return {item_.get_uuid(): item.to_dict(item_) for item_ in self}
 
     def set_from_list(self, items: list):
         """Set items from a list of items in dict form."""
@@ -154,6 +157,7 @@ class Data(GObject.Object, Graphs.DataInterface):
             items[index2:index1 + 1] = \
                 items[index2 + 1:index1 + 1] + [items[index2]]
         self.props.items = items
+        self.props.current_batch.append((3, (index2, index1)))
 
     def add_items(self, items: list):
         """
@@ -169,7 +173,6 @@ class Data(GObject.Object, Graphs.DataInterface):
         application = self.get_application()
         figure_settings = self.get_figure_settings()
         settings = application.get_settings()
-        clipboard = application.get_clipboard()
         handle_duplicates = \
             settings.get_child("general").get_enum("handle-duplicates")
         color_cycle = pyplot.rcParams["axes.prop_cycle"].by_key()["color"]
@@ -207,7 +210,7 @@ class Data(GObject.Object, Graphs.DataInterface):
                 elif handle_duplicates == 3:  # Override
                     index = names.index(new_item.get_name())
                     existing_item = self[index]
-                    clipboard.append(
+                    self.props.current_batch.append(
                         (2, (index, existing_item.to_dict(item_))),
                     )
                     new_item.set_uuid(existing_item.get_uuid())
@@ -246,9 +249,11 @@ class Data(GObject.Object, Graphs.DataInterface):
                         break
 
             self.append(new_item)
-            clipboard.append((1, copy.deepcopy(item.to_dict(new_item))))
+            self.props.current_batch.append(
+                (1, copy.deepcopy(item.to_dict(new_item))),
+            )
         utilities.optimize_limits(application)
-        clipboard.add()
+        self.add_history_state()
         if ignored:
             self.emit("items-ignored", ", ".join(ignored))
         self.notify("items")
@@ -257,18 +262,16 @@ class Data(GObject.Object, Graphs.DataInterface):
     def delete_items(self, items: list):
         """Delete specified items."""
         for item_ in items:
-            self.get_application().get_clipboard().append(
+            self.props.current_batch.append(
                 (2, (self.index(item_), item.to_dict(item_))),
             )
             self.pop(item_.get_uuid())
-        self.get_application().get_clipboard().add()
+        self.add_history_state()
         self.notify("items_selected")
 
     def _connect_to_item(self, item_):
         item_.connect("notify::selected", self._on_item_select)
-        item_.connect(
-            "notify", self.get_application().get_clipboard().on_item_change,
-        )
+        item_.connect("notify", self._on_item_change)
         for prop in ["xposition", "yposition"]:
             item_.connect(f"notify::{prop}", self._on_item_position_change)
 
@@ -281,3 +284,92 @@ class Data(GObject.Object, Graphs.DataInterface):
         if self.get_application().get_settings(
                 "general").get_boolean("hide-unselected"):
             self.notify("items")
+
+    def _on_item_change(self, item_, param):
+        self.props.current_batch.append((0, (
+            item_.get_uuid(), param.name,
+            copy.deepcopy(self.props.data_copy[item_.get_uuid()][param.name]),
+            copy.deepcopy(item_.get_property(param.name)),
+        )))
+
+    def _set_data_copy(self):
+        self.props.current_batch = []
+        self.props.data_copy = copy.deepcopy(
+            {item_.get_uuid(): item.to_dict(item_) for item_ in self},
+        )
+
+    def add_history_state(self, old_limits=None):
+        if not self.props.current_batch:
+            return
+        if self.props.history_pos != -1:
+            self.props.history_states = \
+                self.props.history_states[:self.props.history_pos + 1]
+        self.props.history_pos = -1
+        self.props.history_states.append((
+            self.props.current_batch,
+            self.get_figure_settings().get_limits(),
+        ))
+        ui.set_clipboard_buttons(self.get_application())
+
+        if old_limits is not None:
+            for index in range(8):
+                self.props.history_states[
+                    self.props.history_pos - 1][1][index] = old_limits[index]
+        # Keep history srares length limited to 100 spots
+        if len(self.props.history_states) > 101:
+            self.props.history_states = self.props.history_states[1:]
+        self._set_data_copy()
+
+    def undo(self):
+        if abs(self.props.history_pos) < len(self.props.history_states):
+            batch = self.props.history_states[self.props.history_pos][0]
+            self.props.history_pos -= 1
+            items_changed = False
+            for change_type, change in reversed(batch):
+                if change_type == 0:
+                    self[change[0]].set_property(change[1], change[2])
+                elif change_type == 1:
+                    self.pop(change["uuid"])
+                    items_changed = True
+                elif change_type == 2:
+                    item_ = item.new_from_dict(change[1])
+                    self.append(item_)
+                    self.change_position(change[0], len(self))
+                    items_changed = True
+                elif change_type == 3:
+                    self.change_position(change[0], change[1])
+                    items_changed = True
+            if items_changed:
+                self.notify("items")
+            self.notify("items_selected")
+            self.get_figure_settings().set_limits(
+                self.props.history_states[self.props.history_pos][1],
+            )
+            ui.set_clipboard_buttons(self.get_application())
+            self._set_data_copy()
+            self.get_application().get_view_clipboard().add()
+
+    def redo(self):
+        if self.props.history_pos < -1:
+            self.props.history_pos += 1
+            state = self.props.history_states[self.props.history_pos]
+            items_changed = False
+            for change_type, change in state[0]:
+                if change_type == 0:
+                    self[change[0]].set_property(change[1], change[3])
+                elif change_type == 1:
+                    self.append(item.new_from_dict(change))
+                    items_changed = True
+                elif change_type == 2:
+                    self.pop(change[1]["uuid"])
+                    items_changed = True
+                elif change_type == 3:
+                    self.change_position(change[1], change[0])
+                    items_changed = True
+            if items_changed:
+                self.notify("items")
+            self.notify("items_selected")
+            self.get_figure_settings().set_limits(state[1])
+            ui.set_clipboard_buttons(self.get_application())
+            self._set_data_copy()
+            self.get_application().get_view_clipboard().add()

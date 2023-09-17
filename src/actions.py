@@ -76,23 +76,25 @@ def add_equation_action(_action, _target, self):
 
 
 def select_all_action(_action, _target, self):
-    for item in self.get_data():
+    data = self.get_data()
+    for item in data:
         item.set_selected(True)
-    self.get_clipboard().add()
+    data.add_history_state()
 
 
 def select_none_action(_action, _target, self):
-    for item in self.get_data():
+    data = self.get_data()
+    for item in data:
         item.set_selected(False)
-    self.get_clipboard().add()
+    data.add_history_state()
 
 
 def undo_action(_action, _target, self):
-    self.get_clipboard().undo()
+    self.get_data().undo()
 
 
 def redo_action(_action, _target, self):
-    self.get_clipboard().redo()
+    self.get_data().redo()
 
 
 def optimize_limits_action(_action, _target, self):

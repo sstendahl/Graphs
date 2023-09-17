@@ -225,7 +225,8 @@ def optimize_limits(self):
             axes[index][1] = True
             xydata = numpy.asarray(item.ydata if index % 2 else item.xdata)
             xydata = xydata[numpy.isfinite(xydata)]
-            nonzero_data = numpy.array([value for value in xydata if value != 0])
+            nonzero_data = \
+                numpy.array([value for value in xydata if value != 0])
             axes[index][2].append(
                 nonzero_data.min()
                 if axes[index][4] in (1, 4) and len(nonzero_data) > 0

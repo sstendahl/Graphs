@@ -103,7 +103,7 @@ def perform_operation(self, callback, *args):
             _("No data found within the highlighted area"))
         return
     utilities.optimize_limits(self)
-    self.get_clipboard().add(old_limits)
+    data.add_history_state(old_limits)
 
 
 def translate_x(_item, xdata, ydata, offset):

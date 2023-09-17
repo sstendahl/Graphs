@@ -67,10 +67,9 @@ class ItemBox(Gtk.Box):
 
     def _change_position(self, source_index, target_index):
         application = self.get_application()
-        application.get_data().change_position(target_index, source_index)
-        clipboard = application.get_clipboard()
-        clipboard.append((3, (source_index, target_index)))
-        clipboard.add()
+        data = application.get_data()
+        data.change_position(target_index, source_index)
+        data.add_history_state()
         application.get_view_clipboard().add()
 
     def on_dnd_drop(self, drop_target, value, _x, _y):
@@ -106,7 +105,7 @@ class ItemBox(Gtk.Box):
         new_value = self.check_button.get_active()
         if self.props.item.props.selected != new_value:
             self.props.item.props.selected = new_value
-            self.get_application().get_clipboard().add()
+            self.get_application().get_data().add_history_state()
 
     @Gtk.Template.Callback()
     def choose_color(self, _):
@@ -123,7 +122,7 @@ class ItemBox(Gtk.Box):
             if color is not None:
                 self.props.item.set_color(utilities.rgba_to_hex(color))
                 self.props.item.set_alpha(color.alpha)
-                self.get_application().get_clipboard().add()
+                self.get_application().get_data().add_history_state()
 
     def delete(self, _action, _shortcut):
         name = self.props.item.props.name

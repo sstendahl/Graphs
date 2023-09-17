@@ -6,7 +6,6 @@ namespace Graphs {
         public Window window { get; set; }
         public Settings settings { get; construct set; }
         public DataInterface data { get; construct set; }
-        public ClipboardInterface clipboard { get; construct set; }
         public ClipboardInterface view_clipboard { get; construct set; }
         public int mode { get; set; default = 0; }
 

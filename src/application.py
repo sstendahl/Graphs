@@ -11,7 +11,7 @@ from gettext import gettext as _
 from gi.repository import GLib, Gio, Graphs
 
 from graphs import actions, migrate, ui
-from graphs.clipboard import DataClipboard, ViewClipboard
+from graphs.clipboard import ViewClipboard
 from graphs.data import Data
 
 from matplotlib import font_manager
@@ -135,7 +135,6 @@ class PythonApplication(Graphs.Application):
             window.set_title(self.props.name)
             if "(Development)" in self.props.name:
                 window.add_css_class("devel")
-            self.set_clipboard(DataClipboard(self))
             self.set_view_clipboard(ViewClipboard(self))
             ui.set_clipboard_buttons(self)
             ui.reload_canvas(self)
