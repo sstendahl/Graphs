@@ -132,17 +132,17 @@ class PythonApplication(Graphs.Application):
             self.bind_property("mode", window, "mode", 2)
             data = self.get_data()
             data.bind_property(
-                "undo_possible", window.get_undo_button(), "sensitive", 2,
+                "can_undo", window.get_undo_button(), "sensitive", 2,
             )
             data.bind_property(
-                "redo_possible", window.get_redo_button(), "sensitive", 2,
+                "can_redo", window.get_redo_button(), "sensitive", 2,
             )
             data.bind_property(
-                "view_back_possible", window.get_view_back_button(),
+                "can_view_back", window.get_view_back_button(),
                 "sensitive", 2,
             )
             data.bind_property(
-                "view_forward_possible", window.get_view_forward_button(),
+                "can_view_forward", window.get_view_forward_button(),
                 "sensitive", 2,
             )
             self.set_window(window)

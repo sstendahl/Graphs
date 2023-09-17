@@ -38,8 +38,8 @@ def on_items_change(data, _ignored, self):
     while item_list.get_last_child() is not None:
         item_list.remove(item_list.get_last_child())
 
-    for count, item in enumerate(data):
-        item_list.append(ItemBox(self, item, count))
+    for index, item in enumerate(data):
+        item_list.append(ItemBox(self, item, index))
     item_list.set_visible(not data.is_empty())
     data.add_view_history_state()
 

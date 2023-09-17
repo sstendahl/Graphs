@@ -98,18 +98,18 @@ def redo_action(_action, _target, self):
 
 
 def optimize_limits_action(_action, _target, self):
-    self.get_data().optimize_limits(self)
+    self.get_data().optimize_limits()
 
 
 def view_back_action(_action, _target, self):
     data = self.get_data()
-    if data.props.view_back_possible:
+    if data.props.can_view_back:
         data.view_back()
 
 
 def view_forward_action(_action, _target, self):
     data = self.get_data()
-    if data.props.view_forward_possible:
+    if data.props.can_view_forward:
         data.view_forward()
 
 

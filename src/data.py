@@ -47,10 +47,10 @@ class Data(GObject.Object, Graphs.DataInterface):
 
     application = GObject.Property(type=object)
     figure_settings = GObject.Property(type=Graphs.FigureSettings)
-    undo_possible = GObject.Property(type=bool, default=False)
-    redo_possible = GObject.Property(type=bool, default=False)
-    view_back_possible = GObject.Property(type=bool, default=False)
-    view_forward_possible = GObject.Property(type=bool, default=False)
+    can_undo = GObject.Property(type=bool, default=False)
+    can_redo = GObject.Property(type=bool, default=False)
+    can_view_back = GObject.Property(type=bool, default=False)
+    can_view_forward = GObject.Property(type=bool, default=False)
 
     def __init__(self, application, settings):
         """Init the dataclass."""
@@ -297,18 +297,22 @@ class Data(GObject.Object, Graphs.DataInterface):
         if self._history_pos != -1:
             self._history_states = self._history_states[:self._history_pos + 1]
         self._history_pos = -1
-        if old_limits is None:
-            old_limits = self.get_figure_settings().get_limits()
-        self._history_states.append((self._current_batch, old_limits))
-        self.props.redo_possible = False
-        self.props.undo_possible = True
+        self._history_states.append(
+            (self._current_batch, self.get_figure_settings().get_limits()),
+        )
+        if old_limits is not None:
+            old_state = self._history_states[-2][1]
+            for index in range(8):
+                old_state[index] = old_limits[index]
+        self.props.can_redo = False
+        self.props.can_undo = True
         # Keep history states length limited to 100 spots
         if len(self._history_states) > 101:
             self._history_states = self._history_states[1:]
         self._set_data_copy()
 
     def undo(self):
-        if abs(self._history_pos) < len(self._history_states):
+        if self.props.can_undo:
             batch = self._history_states[self._history_pos][0]
             self._history_pos -= 1
             items_changed = False
@@ -319,7 +323,7 @@ class Data(GObject.Object, Graphs.DataInterface):
                     self._delete_item(change["uuid"])
                     items_changed = True
                 elif change_type == 2:
-                    item_ = item.new_from_dict(change[1])
+                    item_ = item.new_from_dict(copy.deepcopy(change[1]))
                     self._add_item(item_)
                     self.change_position(change[0], len(self))
                     items_changed = True
@@ -332,14 +336,14 @@ class Data(GObject.Object, Graphs.DataInterface):
             self.get_figure_settings().set_limits(
                 self._history_states[self._history_pos][1],
             )
-            self.props.redo_possible = True
-            self.props.undo_possible = \
+            self.props.can_redo = True
+            self.props.can_undo = \
                 abs(self._history_pos) < len(self._history_states)
             self._set_data_copy()
             self.add_view_history_state()
 
     def redo(self):
-        if self._history_pos < -1:
+        if self.props.can_redo:
             self._history_pos += 1
             state = self._history_states[self._history_pos]
             items_changed = False
@@ -347,7 +351,7 @@ class Data(GObject.Object, Graphs.DataInterface):
                 if change_type == 0:
                     self[change[0]].set_property(change[1], change[3])
                 elif change_type == 1:
-                    self._add_item(item.new_from_dict(change))
+                    self._add_item(item.new_from_dict(copy.deepcopy(change)))
                     items_changed = True
                 elif change_type == 2:
                     self._delete_item(change[1]["uuid"])
@@ -359,8 +363,8 @@ class Data(GObject.Object, Graphs.DataInterface):
                 self.notify("items")
             self.notify("items_selected")
             self.get_figure_settings().set_limits(state[1])
-            self.props.redo_possible = self._history_pos < -1
-            self.props.undo_possible = True
+            self.props.can_redo = self._history_pos < -1
+            self.props.can_undo = True
             self._set_data_copy()
             self.add_view_history_state()
 
@@ -379,8 +383,8 @@ class Data(GObject.Object, Graphs.DataInterface):
                     self._view_history_states[:self._view_history_pos + 1]
             self._view_history_pos = -1
             self._view_history_states.append(limits)
-            self.props.view_back_possible = True
-            self.props.view_forward_possible = False
+            self.props.can_view_back = True
+            self.props.can_view_forward = False
 
     def view_back(self):
         if abs(self._view_history_pos) < len(self._view_history_states):
@@ -388,8 +392,8 @@ class Data(GObject.Object, Graphs.DataInterface):
             self.get_figure_settings().set_limits(
                 self._view_history_states[self._view_history_pos],
             )
-            self.props.view_forward_possible = True
-            self.props.view_back_possible = \
+            self.props.can_view_forward = True
+            self.props.can_view_back = \
                 abs(self._view_history_pos) < len(self._view_history_states)
 
     def view_forward(self):
@@ -398,8 +402,8 @@ class Data(GObject.Object, Graphs.DataInterface):
             self.get_figure_settings().set_limits(
                 self._view_history_states[self._view_history_pos],
             )
-            self.props.view_back_possible = True
-            self.props.view_forward_possible = self._view_history_pos < -1
+            self.props.can_view_back = True
+            self.props.can_view_forward = self._view_history_pos < -1
 
     def optimize_limits(self):
         figure_settings = self.get_figure_settings()
@@ -478,9 +482,9 @@ class Data(GObject.Object, Graphs.DataInterface):
         self._view_history_states = project_dict["view-history-states"]
         self._view_history_pos = project_dict["view-history-position"]
 
-        self.props.undo_possible = \
+        self.props.can_undo = \
             abs(self._history_pos) < len(self._history_states)
-        self.props.redo_possible = self._history_pos < -1
-        self.props.view_back_possible = \
+        self.props.can_redo = self._history_pos < -1
+        self.props.can_view_back = \
             abs(self._view_history_pos) < len(self._view_history_states)
-        self.props.view_forward_possible = self._view_history_pos < -1
+        self.props.can_view_forward = self._view_history_pos < -1
