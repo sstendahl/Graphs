@@ -102,7 +102,7 @@ def perform_operation(self, callback, *args):
         self.get_window().add_toast_string(
             _("No data found within the highlighted area"))
         return
-    utilities.optimize_limits(self)
+    data.optimize_limits()
     data.add_history_state(old_limits)
 
 

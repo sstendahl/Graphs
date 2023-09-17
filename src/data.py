@@ -9,9 +9,11 @@ import copy
 
 from gi.repository import GObject, Graphs
 
-from graphs import item, ui, utilities
+from graphs import item, ui
 
 from matplotlib import pyplot
+
+import numpy
 
 
 class Data(GObject.Object, Graphs.DataInterface):
@@ -238,7 +240,7 @@ class Data(GObject.Object, Graphs.DataInterface):
             self._current_batch.append(
                 (1, copy.deepcopy(item.to_dict(new_item))),
             )
-        utilities.optimize_limits(application)
+        self.optimize_limits()
         self.add_history_state()
         if ignored:
             self.emit("items-ignored", ", ".join(ignored))
@@ -262,7 +264,7 @@ class Data(GObject.Object, Graphs.DataInterface):
             item_.connect(f"notify::{prop}", self._on_item_position_change)
 
     def _on_item_position_change(self, _item, _ignored):
-        utilities.optimize_limits(self.get_application())
+        self.optimize_limits()
         self.notify("items")
 
     def _on_item_select(self, _x, _y):
@@ -365,3 +367,53 @@ class Data(GObject.Object, Graphs.DataInterface):
             ui.set_clipboard_buttons(self.get_application())
             self._set_data_copy()
             self.get_application().get_view_clipboard().add()
+
+    def optimize_limits(self):
+        figure_settings = self.get_figure_settings()
+        axes = [
+            [direction, False, [], [],
+             figure_settings.get_property(f"{direction}_scale")]
+            for direction in ["bottom", "left", "top", "right"]
+        ]
+        for item_ in self:
+            if item_.__gtype_name__ != "GraphsDataItem":
+                continue
+            for index in \
+                    item_.get_xposition() * 2, 1 + item_.get_yposition() * 2:
+                axes[index][1] = True
+                xydata = numpy.asarray(
+                    item_.ydata if index % 2 else item_.xdata,
+                )
+                xydata = xydata[numpy.isfinite(xydata)]
+                nonzero_data = \
+                    numpy.array([value for value in xydata if value != 0])
+                axes[index][2].append(
+                    nonzero_data.min()
+                    if axes[index][4] in (1, 4) and len(nonzero_data) > 0
+                    else xydata.min(),
+                )
+                axes[index][3].append(xydata.max())
+
+        for count, (direction, used, min_all, max_all, scale) in \
+                enumerate(axes):
+            if not used:
+                continue
+            min_all = min(min_all)
+            max_all = max(max_all)
+            if scale != 1:  # For non-logarithmic scales
+                span = max_all - min_all
+                # 0.05 padding on y-axis, 0.015 padding on x-axis
+                padding_factor = 0.05 if count % 2 else 0.015
+                max_all += padding_factor * span
+
+                # For inverse scale, calculate padding using a factor
+                min_all = (min_all - padding_factor * span if scale != 4
+                           else min_all * 0.99)
+            else:  # Use different scaling type for logarithmic scale
+                # Use padding factor of 2 for y-axis, 1.025 for x-axis
+                padding_factor = 2 if count % 2 else 1.025
+                min_all *= 1 / padding_factor
+                max_all *= padding_factor
+            figure_settings.set_property(f"min_{direction}", min_all)
+            figure_settings.set_property(f"max_{direction}", max_all)
+        self.get_application().get_view_clipboard().add()

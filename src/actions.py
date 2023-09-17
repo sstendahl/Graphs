@@ -98,7 +98,7 @@ def redo_action(_action, _target, self):
 
 
 def optimize_limits_action(_action, _target, self):
-    utilities.optimize_limits(self)
+    self.get_data().optimize_limits(self)
 
 
 def view_back_action(_action, _target, self):
