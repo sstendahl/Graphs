@@ -211,26 +211,27 @@ def get_filename(file: Gio.File):
 
 
 def optimize_limits(self):
-    figure_settings = self.get_figure_settings()
+    data = self.get_data()
+    figure_settings = data.get_figure_settings()
     axes = [
         [direction, False, [], [],
          figure_settings.get_property(f"{direction}_scale")]
         for direction in ["bottom", "left", "top", "right"]
     ]
-    for item in self.get_data():
+    for item in data:
         if item.__gtype_name__ != "GraphsDataItem":
             continue
         for index in item.get_xposition() * 2, 1 + item.get_yposition() * 2:
             axes[index][1] = True
-            data = numpy.asarray(item.ydata if index % 2 else item.xdata)
-            data = data[numpy.isfinite(data)]
-            nonzero_data = numpy.array([value for value in data if value != 0])
+            xydata = numpy.asarray(item.ydata if index % 2 else item.xdata)
+            xydata = xydata[numpy.isfinite(xydata)]
+            nonzero_data = numpy.array([value for value in xydata if value != 0])
             axes[index][2].append(
                 nonzero_data.min()
                 if axes[index][4] in (1, 4) and len(nonzero_data) > 0
-                else data.min(),
+                else xydata.min(),
             )
-            axes[index][3].append(data.max())
+            axes[index][3].append(xydata.max())
 
     for count, (direction, used, min_all, max_all, scale) in enumerate(axes):
         if not used:

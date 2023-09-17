@@ -39,13 +39,11 @@ class PythonApplication(Graphs.Application):
         """Init the application."""
         settings = Gio.Settings(application_id)
         migrate.migrate_config(settings)
-        figure_settings = \
-            Graphs.FigureSettings.new(settings.get_child("figure"))
         super().__init__(
             application_id=application_id, settings=settings,
             flags=Gio.ApplicationFlags.DEFAULT_FLAGS,
-            figure_settings=figure_settings,
-            data=Data(self), **kwargs,
+            data=Data(self, settings),
+            **kwargs,
         )
         font_list = font_manager.findSystemFonts(fontpaths=None, fontext="ttf")
         for font in font_list:
@@ -61,6 +59,7 @@ class PythonApplication(Graphs.Application):
             )
             self.add_action(action)
 
+        figure_settings = self.get_data().get_figure_settings()
         for val in ["left-scale", "right-scale", "top-scale", "bottom-scale"]:
             action = Gio.SimpleAction.new_stateful(
                 f"change-{val}", GLib.VariantType.new("s"),

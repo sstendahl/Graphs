@@ -24,7 +24,7 @@ def perform_operation(_action, target, self):
     if operation in ["center"]:
         args = [self.get_settings("general").get_enum(operation)]
     if operation == "shift":
-        figure_settings = self.get_figure_settings()
+        figure_settings = self.get_data().get_figure_settings()
         args += [
             figure_settings.get_left_scale(),
             figure_settings.get_right_scale(),

@@ -5,7 +5,6 @@ namespace Graphs {
     public class Application : Adw.Application {
         public Window window { get; set; }
         public Settings settings { get; construct set; }
-        public FigureSettings figure_settings { get; construct set; }
         public DataInterface data { get; construct set; }
         public ClipboardInterface clipboard { get; construct set; }
         public ClipboardInterface view_clipboard { get; construct set; }

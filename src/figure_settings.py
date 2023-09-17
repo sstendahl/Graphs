@@ -42,7 +42,7 @@ class FigureSettingsWindow(Adw.PreferencesWindow):
     def __init__(self, application, highlighted=None):
         super().__init__(
             application=application, transient_for=application.get_window(),
-            figure_settings=application.get_figure_settings(),
+            figure_settings=application.get_data().get_figure_settings(),
         )
 
         ignorelist = ["custom_style", "min_selected", "max_selected"]

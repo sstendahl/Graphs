@@ -5,7 +5,7 @@ from graphs import file_io, migrate, ui
 
 
 def save_project(self, file: Gio.File):
-    figure_settings = self.get_figure_settings()
+    figure_settings = self.get_data().get_figure_settings()
     figure_settings_dict = {
         key: figure_settings.get_property(key)
         for key in dir(figure_settings.props)
@@ -30,7 +30,7 @@ def load_project(self, file: Gio.File):
 
     self.get_clipboard().clear()
     self.get_view_clipboard().clear()
-    figure_settings = self.get_figure_settings()
+    figure_settings = self.get_data().get_figure_settings()
     for key, value in project["figure-settings"].items():
         figure_settings.set_property(key, value)
     self.get_data().set_from_list(project["data"])

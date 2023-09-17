@@ -284,11 +284,12 @@ def reload_canvas(self):
     """Reloads the canvas of the main window"""
     styles.update(self)
     canvas = Canvas(self)
-    figure_settings = self.get_figure_settings()
+    data = self.get_data()
+    figure_settings = data.get_figure_settings()
     for prop in dir(figure_settings.props):
         if prop not in ["use_custom_style", "custom_style"]:
             figure_settings.bind_property(prop, canvas, prop, 1 | 2)
-    self.get_data().bind_property("items", canvas, "items", 2)
+    data.bind_property("items", canvas, "items", 2)
     win = self.get_window()
     win.set_canvas(canvas)
     win.get_cut_button().bind_property(

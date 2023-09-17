@@ -24,7 +24,7 @@ def get_data(self, item):
     start_index = 0
     stop_index = len(xdata)
     if self.get_mode() == 2:
-        figure_settings = self.get_figure_settings()
+        figure_settings = self.get_data().get_figure_settings()
         if item.get_xposition() == 0:
             xmin = figure_settings.get_min_bottom()
             xmax = figure_settings.get_max_bottom()
@@ -75,8 +75,9 @@ def sort_data(xdata, ydata):
 
 def perform_operation(self, callback, *args):
     data_selected = False
-    old_limits = self.get_figure_settings().get_limits()
-    for item in self.get_data():
+    data = self.get_data()
+    old_limits = data.get_figure_settings().get_limits()
+    for item in data:
         if not item.get_selected() or item.__gtype_name__ != "GraphsDataItem":
             continue
         xdata, ydata, start_index, stop_index = get_data(self, item)

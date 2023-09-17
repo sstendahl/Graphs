@@ -80,7 +80,7 @@ class DataClipboard(Clipboard):
     def __init__(self, application):
         super().__init__(
             application=application, current_batch=[], data_copy={},
-            clipboard=[([], application.get_figure_settings().get_limits())],
+            clipboard=[([], application.get_data().get_figure_settings().get_limits())],
         )
 
     def add(self, old_limits=None):
@@ -92,7 +92,7 @@ class DataClipboard(Clipboard):
             return
         super().add((
             self.props.current_batch,
-            self.get_application().get_figure_settings().get_limits(),
+            self.get_application().get_data().get_figure_settings().get_limits(),
         ))
 
         if old_limits is not None:
@@ -153,7 +153,7 @@ class DataClipboard(Clipboard):
         if items_changed:
             data.notify("items")
         data.notify("items_selected")
-        self.get_application().get_figure_settings().set_limits(
+        data.get_figure_settings().set_limits(
             self.get_clipboard()[self.get_clipboard_pos()][1],
         )
 
@@ -176,7 +176,7 @@ class DataClipboard(Clipboard):
         if items_changed:
             data.notify("items")
         data.notify("items_selected")
-        self.get_application().get_figure_settings().set_limits(state[1])
+        data.get_figure_settings().set_limits(state[1])
 
     def on_item_change(self, item_, param):
         self.append((0, (
@@ -195,7 +195,7 @@ class ViewClipboard(Clipboard):
     def __init__(self, application):
         super().__init__(
             application=application,
-            clipboard=[application.get_figure_settings().get_limits()],
+            clipboard=[application.get_data().get_figure_settings().get_limits()],
         )
 
     def add(self):
@@ -203,7 +203,7 @@ class ViewClipboard(Clipboard):
         Add the latest view to the clipboard, skip in case the new view is
         the same as previous one (e.g. if an action does not change the limits)
         """
-        limits = self.get_application().get_figure_settings().get_limits()
+        limits = self.get_application().get_data().get_figure_settings().get_limits()
         view_changed = any(
             not numpy.isclose(value, limits[count])
             for count, value in enumerate(self.get_clipboard()[-1])
@@ -218,6 +218,6 @@ class ViewClipboard(Clipboard):
         self._set_clipboard_state()
 
     def _set_clipboard_state(self):
-        self.get_application().get_figure_settings().set_limits(
+        self.get_application().get_data().get_figure_settings().set_limits(
             self.get_clipboard()[self.get_clipboard_pos()],
         )

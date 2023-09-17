@@ -49,15 +49,24 @@ class Data(GObject.Object, Graphs.DataInterface):
     }
 
     application = GObject.Property(type=object)
+    figure_settings = GObject.Property(type=Graphs.FigureSettings)
 
-    def __init__(self, application):
+    def __init__(self, application, settings):
         """Init the dataclass."""
-        super().__init__(application=application)
+        super().__init__(
+            application=application, figure_settings=Graphs.FigureSettings.new(
+                settings.get_child("figure"),
+            ),
+        )
         self._items = {}
 
     def get_application(self):
         """Get application property."""
         return self.props.application
+
+    def get_figure_settings(self):
+        """Get figure settings property."""
+        return self.props.figure_settings
 
     def to_list(self) -> list:
         """Get a list of all items in dict form."""
@@ -158,7 +167,7 @@ class Data(GObject.Object, Graphs.DataInterface):
         """
         ignored = []
         application = self.get_application()
-        figure_settings = application.get_figure_settings()
+        figure_settings = self.get_figure_settings()
         settings = application.get_settings()
         clipboard = application.get_clipboard()
         handle_duplicates = \
