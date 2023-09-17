@@ -20,10 +20,9 @@ class ItemBox(Gtk.Box):
     item = GObject.Property(type=Graphs.Item)
     index = GObject.Property(type=int)
 
-    def __init__(self, application, item):
+    def __init__(self, application, item, index):
         super().__init__(
-            application=application, item=item,
-            index=application.get_data().index(item),
+            application=application, item=item, index=index,
         )
         self.props.item.bind_property("name", self, "name", 2)
         self.props.item.bind_property(
