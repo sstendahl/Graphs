@@ -167,7 +167,7 @@ def migrate_project(file):
         "data": [item.migrate() for item in project["data"].values()],
         "figure-settings": figure_settings,
         "history-states": history_states,
-        "history-position": clipboard_pos,
+        "history-position": history_pos,
         "view-history-states": [DEFAULT_VIEW.copy(), current_limits],
         "view-history-position": -1,
     }
