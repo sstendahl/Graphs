@@ -39,6 +39,16 @@ def hex_to_rgba(hex_str):
     return rgba
 
 
+def sig_fig_round(number, digits):
+    """Round a number to the specified number of significant digits."""
+    try:
+        # Convert to scientific notation, and get power
+        power = "{:e}".format(float(number)).split("e")[1]
+    except IndexError:
+        return None
+    return round(float(number), -(int(power) - digits + 1))
+
+
 def rgba_to_hex(rgba):
     return "#{:02x}{:02x}{:02x}".format(
         round(rgba.red * 255),
@@ -252,7 +262,7 @@ def string_to_function(equation_name):
         equation_name,
     )
     sym_vars = sympy.symbols(variables)
-    with contextlib.suppress(sympy.SympifyError, TypeError):
+    with contextlib.suppress(sympy.SympifyError, TypeError, SyntaxError):
         symbolic = sympy.sympify(
             equation_name, locals=dict(zip(variables, sym_vars)),
         )
