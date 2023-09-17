@@ -466,10 +466,10 @@ class Data(GObject.Object, Graphs.DataInterface):
                 key: figure_settings.get_property(key)
                 for key in dir(figure_settings.props)
             },
-            "data-clipboard": self._history_states,
-            "data-clipboard-position": self._history_pos,
-            "view-clipboard": self._view_history_states,
-            "view-clipboard-position": self._view_history_pos,
+            "history-states": self._history_states,
+            "history-position": self._history_pos,
+            "view-history-states": self._view_history_states,
+            "view-history-position": self._view_history_pos,
         }
 
     def load_from_project_dict(self, project_dict: dict):
@@ -479,10 +479,10 @@ class Data(GObject.Object, Graphs.DataInterface):
         self.set_items([item.new_from_dict(d) for d in project_dict["data"]])
 
         self._set_data_copy()
-        self._history_states = project_dict["data-clipboard"]
-        self._history_pos = project_dict["data-clipboard-position"]
-        self._view_history_states = project_dict["view-clipboard"]
-        self._view_history_pos = project_dict["view-clipboard-position"]
+        self._history_states = project_dict["history-states"]
+        self._history_pos = project_dict["history-position"]
+        self._view_history_states = project_dict["view-history-states"]
+        self._view_history_pos = project_dict["view-history-position"]
 
         self.props.undo_possible = \
             abs(self._history_pos) < len(self._history_states)

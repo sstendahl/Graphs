@@ -157,19 +157,19 @@ def migrate_project(file):
 
     figure_settings = project["plot_settings"].migrate()
     current_limits = [figure_settings[key] for key in misc.LIMITS]
-    clipboard_pos = project["clipboard_pos"]
-    clipboard = _migrate_clipboard(
-        project["datadict_clipboard"], clipboard_pos, current_limits,
+    history_pos = project["clipboard_pos"]
+    history_states = _migrate_clipboard(
+        project["datadict_clipboard"], history_pos, current_limits,
     )
 
     return {
         "version": project["version"],
         "data": [item.migrate() for item in project["data"].values()],
         "figure-settings": figure_settings,
-        "data-clipboard": clipboard,
-        "data-clipboard-position": clipboard_pos,
-        "view-clipboard": [DEFAULT_VIEW.copy(), current_limits],
-        "view-clipboard-position": -1,
+        "history-states": history_states,
+        "history-position": clipboard_pos,
+        "view-history-states": [DEFAULT_VIEW.copy(), current_limits],
+        "view-history-position": -1,
     }
 
 
