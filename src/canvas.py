@@ -109,15 +109,14 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
         positions = []
         used_axes = []
         for item_ in self.get_application().get_data():
-            positions.append(item_.get_xposition())
-            positions.append(item_.get_yposition())
-        if positions == [0, 0]:
+            positions.append([item_.get_xposition(), item_.get_yposition()])
+        if [0, 0] in positions:
             used_axes.append(self.axis)
-        if positions == [0, 1]:
+        if [0, 1] in positions:
             used_axes.append(self.right_axis)
-        if positions == [1, 0]:
+        if [1, 0] in positions:
             used_axes.append(self.top_left_axis)
-        if positions == [1, 1]:
+        if [1, 1] in positions:
             used_axes.append(self.top_right_axis)
         return used_axes[-1] if len(used_axes) != 0 else self.axis
 
