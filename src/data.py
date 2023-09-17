@@ -456,3 +456,37 @@ class Data(GObject.Object, Graphs.DataInterface):
             figure_settings.set_property(f"min_{direction}", min_all)
             figure_settings.set_property(f"max_{direction}", max_all)
         self.add_view_history_state()
+
+    def to_project_dict(self) -> dict:
+        figure_settings = self.get_figure_settings()
+        return {
+            "version": self.get_application().get_version(),
+            "data": [item.to_dict(item_) for item_ in self],
+            "figure-settings": {
+                key: figure_settings.get_property(key)
+                for key in dir(figure_settings.props)
+            },
+            "data-clipboard": self._history_states,
+            "data-clipboard-position": self._history_pos,
+            "view-clipboard": self._view_history_states,
+            "view-clipboard-position": self._view_history_pos,
+        }
+
+    def load_from_project_dict(self, project_dict: dict):
+        figure_settings = self.get_figure_settings()
+        for key, value in project_dict["figure-settings"].items():
+            figure_settings.set_property(key, value)
+        self.set_items([item.new_from_dict(d) for d in project_dict["data"]])
+
+        self._set_data_copy()
+        self._history_states = project_dict["data-clipboard"]
+        self._history_pos = project_dict["data-clipboard-position"]
+        self._view_history_states = project_dict["view-clipboard"]
+        self._view_history_pos = project_dict["view-clipboard-position"]
+
+        self.props.undo_possible = \
+            abs(self._history_pos) < len(self._history_states)
+        self.props.redo_possible = self._history_pos < -1
+        self.props.view_back_possible = \
+            abs(self._view_history_pos) < len(self._view_history_states)
+        self.props.view_forward_possible = self._view_history_pos < -1

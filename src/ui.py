@@ -6,7 +6,7 @@ from gettext import gettext as _
 
 from gi.repository import Adw, GLib, Gio, Gtk
 
-from graphs import file_import, file_io, project, styles, utilities
+from graphs import file_import, file_io, migrate, styles, utilities
 from graphs.canvas import Canvas
 from graphs.item_box import ItemBox
 
@@ -73,7 +73,7 @@ def save_project_dialog(self):
     def on_response(dialog, response):
         with contextlib.suppress(GLib.GError):
             file = dialog.save_finish(response)
-            project.save_project(self, file)
+            file_io.write_json(file, self.get_data().to_project_dict(), False)
     dialog = Gtk.FileDialog()
     dialog.set_filters(
         utilities.create_file_filters([(_("Graphs Project File"),
@@ -86,7 +86,11 @@ def open_project_dialog(self):
     def on_response(dialog, response):
         with contextlib.suppress(GLib.GError):
             file = dialog.open_finish(response)
-            project.load_project(self, file)
+            try:
+                project_dict = file_io.parse_json(file)
+            except UnicodeDecodeError:
+                project_dict = migrate.migrate_project(file)
+            self.get_data().load_from_project_dict(project_dict)
     dialog = Gtk.FileDialog()
     dialog.set_filters(
         utilities.create_file_filters([(_("Graphs Project File"),

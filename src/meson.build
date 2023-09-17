@@ -28,7 +28,6 @@ python.install_sources(
     'misc.py',
     'operations.py',
     'parse_file.py',
-    'project.py',
     'scales.py',
     'styles.py',
     'transform_data.py',
