@@ -102,13 +102,15 @@ def optimize_limits_action(_action, _target, self):
 
 
 def view_back_action(_action, _target, self):
-    if self.get_window().get_view_back_button().get_sensitive():
-        self.get_view_clipboard().undo()
+    data = self.get_data()
+    if data.props.view_back_possible:
+        data.view_back()
 
 
 def view_forward_action(_action, _target, self):
-    if self.get_window().get_view_forward_button().get_sensitive():
-        self.get_view_clipboard().redo()
+    data = self.get_data()
+    if data.props.view_forward_possible:
+        data.view_forward()
 
 
 def export_data_action(_action, _target, self):

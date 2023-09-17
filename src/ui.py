@@ -33,14 +33,15 @@ def on_figure_style_change(_a, _b, self):
 
 
 def on_items_change(data, _ignored, self):
+    data = self.get_data()
     item_list = self.get_window().get_item_list()
     while item_list.get_last_child() is not None:
         item_list.remove(item_list.get_last_child())
 
-    for item in self.get_data():
+    for item in data:
         item_list.append(ItemBox(self, item))
     item_list.set_visible(not data.is_empty())
-    self.get_view_clipboard().add()
+    data.add_view_history_state()
 
 
 def on_items_ignored(_data, _ignored, ignored, self):
@@ -49,18 +50,6 @@ def on_items_ignored(_data, _ignored, ignored, self):
     else:
         toast = _("Item {} already exists")
     self.get_window().add_toast_string(toast)
-
-
-def set_clipboard_buttons(self):
-    """
-    Enable and disable the buttons for the undo and redo buttons and backwards
-    and forwards view.
-    """
-    self.get_window().get_view_forward_button().set_sensitive(
-        self.get_view_clipboard().clipboard_pos < - 1)
-    self.get_window().get_view_back_button().set_sensitive(
-        abs(self.get_view_clipboard().clipboard_pos)
-        < len(self.get_view_clipboard().clipboard))
 
 
 def add_data_dialog(self):

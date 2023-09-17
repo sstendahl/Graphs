@@ -15,7 +15,6 @@ python.install_sources(
     'application.py',
     'artist.py',
     'canvas.py',
-    'clipboard.py',
     'curve_fitting.py',
     'data.py',
     'edit_item.py',
@@ -43,7 +42,6 @@ graphs_lib = shared_library(
   'graphs',
   files(
     'application.vala',
-    'clipboard.vala',
     'curve_fitting.vala',
     'data.vala',
     'figure_settings.vala',

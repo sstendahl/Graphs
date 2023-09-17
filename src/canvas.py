@@ -558,7 +558,7 @@ class _DummyToolbar(NavigationToolbar2):
         for direction in ["bottom", "left", "top", "right"]:
             self.canvas.notify(f"min-{direction}")
             self.canvas.notify(f"max-{direction}")
-        self.canvas.application.get_view_clipboard().add()
+        self.canvas.application.get_data().add_view_history_state()
 
     # Overwritten function - do not change name
     def save_figure(self):

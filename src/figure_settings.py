@@ -92,7 +92,7 @@ class FigureSettingsWindow(Adw.PreferencesWindow):
 
     @Gtk.Template.Callback()
     def on_close(self, *_args):
-        self.get_application().get_view_clipboard().add()
+        self.get_application().get_data().add_view_history_state()
         self.destroy()
 
     @Gtk.Template.Callback()

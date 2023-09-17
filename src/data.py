@@ -9,7 +9,7 @@ import copy
 
 from gi.repository import GObject, Graphs
 
-from graphs import item, ui
+from graphs import item
 
 from matplotlib import pyplot
 
@@ -49,6 +49,8 @@ class Data(GObject.Object, Graphs.DataInterface):
     figure_settings = GObject.Property(type=Graphs.FigureSettings)
     undo_possible = GObject.Property(type=bool, default=False)
     redo_possible = GObject.Property(type=bool, default=False)
+    view_back_possible = GObject.Property(type=bool, default=False)
+    view_forward_possible = GObject.Property(type=bool, default=False)
 
     def __init__(self, application, settings):
         """Init the dataclass."""
@@ -58,8 +60,11 @@ class Data(GObject.Object, Graphs.DataInterface):
         super().__init__(
             application=application, figure_settings=figure_settings,
         )
-        self._history_states = [([], figure_settings.get_limits())]
+        limits = figure_settings.get_limits()
+        self._history_states = [([], limits)]
         self._history_pos = -1
+        self._view_history_states = [limits]
+        self._view_history_pos = -1
         self._items = {}
         self._set_data_copy()
 
@@ -298,7 +303,6 @@ class Data(GObject.Object, Graphs.DataInterface):
         ))
         self.props.redo_possible = False
         self.props.undo_possible = True
-        ui.set_clipboard_buttons(self.get_application())
 
         if old_limits is not None:
             for index in range(8):
@@ -337,9 +341,8 @@ class Data(GObject.Object, Graphs.DataInterface):
             self.props.redo_possible = True
             self.props.undo_possible = \
                 abs(self._history_pos) < len(self._history_states)
-            ui.set_clipboard_buttons(self.get_application())
             self._set_data_copy()
-            self.get_application().get_view_clipboard().add()
+            self.add_view_history_state()
 
     def redo(self):
         if self._history_pos < -1:
@@ -364,9 +367,45 @@ class Data(GObject.Object, Graphs.DataInterface):
             self.get_figure_settings().set_limits(state[1])
             self.props.redo_possible = self._history_pos < -1
             self.props.undo_possible = True
-            ui.set_clipboard_buttons(self.get_application())
             self._set_data_copy()
-            self.get_application().get_view_clipboard().add()
+            self.add_view_history_state()
+
+    def add_view_history_state(self):
+        limits = self.get_figure_settings().get_limits()
+        view_changed = any(
+            not numpy.isclose(value, limits[count])
+            for count, value in enumerate(self._view_history_states[-1])
+        )
+        if view_changed:
+            # If a couple of redo's were performed previously, it deletes the
+            # clipboard data that is located after the current clipboard
+            # position and disables the redo button
+            if self._view_history_pos != -1:
+                self._view_history_states = \
+                    self._view_history_states[:self._view_history_pos + 1]
+            self._view_history_pos = -1
+            self._view_history_states.append(limits)
+            self.props.view_back_possible = True
+            self.props.view_forward_possible = False
+
+    def view_back(self):
+        if abs(self._view_history_pos) < len(self._view_history_states):
+            self._view_history_pos -= 1
+            self.get_figure_settings().set_limits(
+                self._view_history_states[self._view_history_pos],
+            )
+            self.props.view_forward_possible = True
+            self.props.view_back_possible = \
+                abs(self._view_history_pos) < len(self._view_history_states)
+
+    def view_forward(self):
+        if self._view_history_pos < -1:
+            self._view_history_pos += 1
+            self.get_figure_settings().set_limits(
+                self._view_history_states[self._view_history_pos],
+            )
+            self.props.view_back_possible = True
+            self.props.view_forward_possible = self._view_history_pos < -1
 
     def optimize_limits(self):
         figure_settings = self.get_figure_settings()
@@ -416,4 +455,4 @@ class Data(GObject.Object, Graphs.DataInterface):
                 max_all *= padding_factor
             figure_settings.set_property(f"min_{direction}", min_all)
             figure_settings.set_property(f"max_{direction}", max_all)
-        self.get_application().get_view_clipboard().add()
+        self.add_view_history_state()
