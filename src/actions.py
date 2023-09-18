@@ -24,7 +24,7 @@ def perform_operation(_action, target, self):
     if operation in ["center"]:
         args = [self.get_settings("general").get_enum(operation)]
     if operation == "shift":
-        figure_settings = self.get_figure_settings()
+        figure_settings = self.get_data().get_figure_settings()
         args += [
             figure_settings.get_left_scale(),
             figure_settings.get_right_scale(),
@@ -76,37 +76,41 @@ def add_equation_action(_action, _target, self):
 
 
 def select_all_action(_action, _target, self):
-    for item in self.get_data():
+    data = self.get_data()
+    for item in data:
         item.set_selected(True)
-    self.get_clipboard().add()
+    data.add_history_state()
 
 
 def select_none_action(_action, _target, self):
-    for item in self.get_data():
+    data = self.get_data()
+    for item in data:
         item.set_selected(False)
-    self.get_clipboard().add()
+    data.add_history_state()
 
 
 def undo_action(_action, _target, self):
-    self.get_clipboard().undo()
+    self.get_data().undo()
 
 
 def redo_action(_action, _target, self):
-    self.get_clipboard().redo()
+    self.get_data().redo()
 
 
 def optimize_limits_action(_action, _target, self):
-    utilities.optimize_limits(self)
+    self.get_data().optimize_limits()
 
 
 def view_back_action(_action, _target, self):
-    if self.get_window().get_view_back_button().get_sensitive():
-        self.get_view_clipboard().undo()
+    data = self.get_data()
+    if data.props.can_view_back:
+        data.view_back()
 
 
 def view_forward_action(_action, _target, self):
-    if self.get_window().get_view_forward_button().get_sensitive():
-        self.get_view_clipboard().redo()
+    data = self.get_data()
+    if data.props.can_view_forward:
+        data.view_forward()
 
 
 def export_data_action(_action, _target, self):

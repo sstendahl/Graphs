@@ -11,7 +11,6 @@ from gettext import gettext as _
 from gi.repository import GLib, Gio, Graphs
 
 from graphs import actions, migrate, ui
-from graphs.clipboard import DataClipboard, ViewClipboard
 from graphs.data import Data
 
 from matplotlib import font_manager
@@ -39,13 +38,11 @@ class PythonApplication(Graphs.Application):
         """Init the application."""
         settings = Gio.Settings(application_id)
         migrate.migrate_config(settings)
-        figure_settings = \
-            Graphs.FigureSettings.new(settings.get_child("figure"))
         super().__init__(
             application_id=application_id, settings=settings,
             flags=Gio.ApplicationFlags.DEFAULT_FLAGS,
-            figure_settings=figure_settings,
-            data=Data(self), **kwargs,
+            data=Data(self, settings),
+            **kwargs,
         )
         font_list = font_manager.findSystemFonts(fontpaths=None, fontext="ttf")
         for font in font_list:
@@ -61,6 +58,7 @@ class PythonApplication(Graphs.Application):
             )
             self.add_action(action)
 
+        figure_settings = self.get_data().get_figure_settings()
         for val in ["left-scale", "right-scale", "top-scale", "bottom-scale"]:
             action = Gio.SimpleAction.new_stateful(
                 f"change-{val}", GLib.VariantType.new("s"),
@@ -132,13 +130,25 @@ class PythonApplication(Graphs.Application):
                 "items_selected", window.get_shift_button(), "sensitive", 2,
             )
             self.bind_property("mode", window, "mode", 2)
+            data = self.get_data()
+            data.bind_property(
+                "can_undo", window.get_undo_button(), "sensitive", 2,
+            )
+            data.bind_property(
+                "can_redo", window.get_redo_button(), "sensitive", 2,
+            )
+            data.bind_property(
+                "can_view_back", window.get_view_back_button(),
+                "sensitive", 2,
+            )
+            data.bind_property(
+                "can_view_forward", window.get_view_forward_button(),
+                "sensitive", 2,
+            )
             self.set_window(window)
             window.set_title(self.props.name)
             if "(Development)" in self.props.name:
                 window.add_css_class("devel")
-            self.set_clipboard(DataClipboard(self))
-            self.set_view_clipboard(ViewClipboard(self))
-            ui.set_clipboard_buttons(self)
             ui.reload_canvas(self)
             window.present()
 

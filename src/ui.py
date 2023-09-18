@@ -6,7 +6,7 @@ from gettext import gettext as _
 
 from gi.repository import Adw, GLib, Gio, Gtk
 
-from graphs import file_import, file_io, project, styles, utilities
+from graphs import file_import, file_io, migrate, styles, utilities
 from graphs.canvas import Canvas
 from graphs.item_box import ItemBox
 
@@ -33,14 +33,15 @@ def on_figure_style_change(_a, _b, self):
 
 
 def on_items_change(data, _ignored, self):
+    data = self.get_data()
     item_list = self.get_window().get_item_list()
     while item_list.get_last_child() is not None:
         item_list.remove(item_list.get_last_child())
 
-    for item in self.get_data():
-        item_list.append(ItemBox(self, item))
+    for index, item in enumerate(data):
+        item_list.append(ItemBox(self, item, index))
     item_list.set_visible(not data.is_empty())
-    self.get_view_clipboard().add()
+    data.add_view_history_state()
 
 
 def on_items_ignored(_data, _ignored, ignored, self):
@@ -49,23 +50,6 @@ def on_items_ignored(_data, _ignored, ignored, self):
     else:
         toast = _("Item {} already exists")
     self.get_window().add_toast_string(toast)
-
-
-def set_clipboard_buttons(self):
-    """
-    Enable and disable the buttons for the undo and redo buttons and backwards
-    and forwards view.
-    """
-    self.get_window().get_view_forward_button().set_sensitive(
-        self.get_view_clipboard().clipboard_pos < - 1)
-    self.get_window().get_view_back_button().set_sensitive(
-        abs(self.get_view_clipboard().clipboard_pos)
-        < len(self.get_view_clipboard().clipboard))
-    self.get_window().get_undo_button().set_sensitive(
-        abs(self.get_clipboard().clipboard_pos)
-        < len(self.get_clipboard().clipboard))
-    self.get_window().get_redo_button().set_sensitive(
-        self.get_clipboard().clipboard_pos < - 1)
 
 
 def add_data_dialog(self):
@@ -89,7 +73,7 @@ def save_project_dialog(self):
     def on_response(dialog, response):
         with contextlib.suppress(GLib.GError):
             file = dialog.save_finish(response)
-            project.save_project(self, file)
+            file_io.write_json(file, self.get_data().to_project_dict(), False)
     dialog = Gtk.FileDialog()
     dialog.set_filters(
         utilities.create_file_filters([(_("Graphs Project File"),
@@ -102,7 +86,11 @@ def open_project_dialog(self):
     def on_response(dialog, response):
         with contextlib.suppress(GLib.GError):
             file = dialog.open_finish(response)
-            project.load_project(self, file)
+            try:
+                project_dict = file_io.parse_json(file)
+            except UnicodeDecodeError:
+                project_dict = migrate.migrate_project(file)
+            self.get_data().load_from_project_dict(project_dict)
     dialog = Gtk.FileDialog()
     dialog.set_filters(
         utilities.create_file_filters([(_("Graphs Project File"),
@@ -284,11 +272,12 @@ def reload_canvas(self):
     """Reloads the canvas of the main window"""
     styles.update(self)
     canvas = Canvas(self)
-    figure_settings = self.get_figure_settings()
+    data = self.get_data()
+    figure_settings = data.get_figure_settings()
     for prop in dir(figure_settings.props):
         if prop not in ["use_custom_style", "custom_style"]:
             figure_settings.bind_property(prop, canvas, prop, 1 | 2)
-    self.get_data().bind_property("items", canvas, "items", 2)
+    data.bind_property("items", canvas, "items", 2)
     win = self.get_window()
     win.set_canvas(canvas)
     win.get_cut_button().bind_property(
