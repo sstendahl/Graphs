@@ -4,7 +4,7 @@ using Adw 1;
 template $GraphsWindow: Adw.ApplicationWindow {
   default-width: 1200;
   default-height: 700;
-  width-request: 292;
+  width-request: 350;
   height-request: 488;
 
   ShortcutController {
@@ -83,7 +83,7 @@ template $GraphsWindow: Adw.ApplicationWindow {
   }
 
   Adw.Breakpoint {
-    condition ("max-width: 500sp")
+    condition ("max-width: 600sp")
     setters {
       split_view.collapsed: true;
     }
@@ -155,6 +155,7 @@ template $GraphsWindow: Adw.ApplicationWindow {
       show-sidebar: bind show_sidebar_button.active;
       sidebar: Box {
         orientation: vertical;
+        width-request: 350;
       Box {
           margin-top: 42;
           margin-bottom: 6;
