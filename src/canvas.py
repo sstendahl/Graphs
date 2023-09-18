@@ -112,7 +112,7 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
         zoom_gesture.connect("scale-changed", self.on_zoom_gesture)
         self.add_controller(zoom_gesture)
 
-    def on_zoom_gesture(self, gesture, scale):
+    def on_zoom_gesture(self, _gesture, scale):
         scale = 1 + 0.15 * (scale - 1)
         if scale > 5 or scale < 0.2:
             # Don't scale if ridiculous values are registered
@@ -132,7 +132,7 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
             self.yfrac = (event.ydata - ylim[0]) / (ylim[1] - ylim[0])
 
     def on_zoom_event(self, event, scaling=1.6, touch=False):
-        if touch is False and self.get_application().ctrl is False:
+        if touch is False and self.get_application().get_ctrl() is False:
             return
         for ax in self.axes:
             zoom_factor = scaling
@@ -140,7 +140,8 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
             ylim = ax.get_ylim()
             xdata = (self.xfrac * (xlim[1] - xlim[0])) + xlim[0]
             ydata = (self.yfrac * (ylim[1] - ylim[0])) + ylim[0]
-            if event is not None and event.button == 'up':
+            if event is not None and event.button == "up":
+                # Note that the event buttons seem to be reversed
                 zoom_factor = 1 / zoom_factor
 
             x_min = xdata - (xdata - xlim[0]) / zoom_factor

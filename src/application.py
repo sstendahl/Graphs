@@ -44,7 +44,6 @@ class PythonApplication(Graphs.Application):
             data=Data(self, settings),
             **kwargs,
         )
-        self.ctrl = False
         font_list = font_manager.findSystemFonts(fontpaths=None, fontext="ttf")
         for font in font_list:
             try:
@@ -157,12 +156,12 @@ class PythonApplication(Graphs.Application):
             ui.reload_canvas(self)
             window.present()
 
-    def on_key_press_event(self, controller, keyval, keycode, state):
+    def on_key_press_event(self, _controller, keyval, _keycode, _state):
         if keyval == 65507 or keyval == 65508:  # Control_L or Control_R
-            self.ctrl = True
+            self.set_ctrl(True)
 
-    def on_key_release_event(self, controller, keyval, keycode, state):
-        self.ctrl = False
+    def on_key_release_event(self, _controller, _keyval, _keycode, _state):
+        self.set_ctrl(False)
 
     def get_settings(self, child=None):
         """
