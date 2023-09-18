@@ -83,7 +83,7 @@ template $GraphsWindow: Adw.ApplicationWindow {
   }
 
   Adw.Breakpoint {
-    condition ("max-width: 600sp")
+    condition ("max-width: 725sp")
     setters {
       split_view.collapsed: true;
     }
@@ -97,13 +97,13 @@ template $GraphsWindow: Adw.ApplicationWindow {
         orientation: vertical;
         width-request: 350;
       Box {
-          margin-start: 6;
-          margin-end: 6;
+      hexpand: true;
     Adw.HeaderBar {
+      width-request: 350;
       styles ["flat"]
       show-title: false;
+      hexpand: true;
       Box {
-        visible: bind split_view.collapsed inverted;
         MenuButton add_button {
           icon-name: "list-add-symbolic";
           tooltip-text: _("Add new Data");
@@ -111,7 +111,49 @@ template $GraphsWindow: Adw.ApplicationWindow {
           menu-model: add_data_menu;
           }
         }
-      }
+        Box {
+          visible: bind split_view.collapsed;
+          Button {
+            action-name: bind undo_button.action-name;
+            icon-name: bind undo_button.icon-name;
+            tooltip-text: bind undo_button.tooltip-text;
+            sensitive: bind undo_button.sensitive;
+            styles ["flat"]
+            }
+          Button {
+            action-name: bind redo_button.action-name;
+            icon-name: bind redo_button.icon-name;
+            tooltip-text: bind redo_button.tooltip-text;
+            sensitive: bind redo_button.sensitive;
+            styles ["flat"]
+            }
+          }
+          [end]
+          Box {
+            visible: bind split_view.collapsed;
+            Button {
+              action-name: bind view_back_button.action-name;
+              icon-name: bind view_back_button.icon-name;
+              tooltip-text: bind view_back_button.tooltip-text;
+              sensitive: bind view_back_button.sensitive;
+              styles ["flat"]
+            }
+            Button {
+              action-name: bind view_forward_button.action-name;
+              icon-name: bind view_forward_button.icon-name;
+              tooltip-text: bind view_forward_button.tooltip-text;
+              sensitive: bind view_forward_button.sensitive;
+              styles ["flat"]
+            }
+            MenuButton {
+              icon-name: bind view_menu_button.icon-name;
+              tooltip-text: bind view_menu_button.tooltip-text;
+              menu-model: bind view_menu_button.menu-model;
+              always-show-arrow: true;
+              styles ["flat"]
+            }
+          }
+        }
       }
         ScrolledWindow {
           height-request: 250;
@@ -526,7 +568,7 @@ template $GraphsWindow: Adw.ApplicationWindow {
         visible: bind split_view.collapsed;
       }
       Box {
-        Separator {styles ["spacer"]}
+        visible: bind split_view.collapsed inverted;
         Button undo_button {
           action-name: "app.undo";
           icon-name: "edit-undo-symbolic";
