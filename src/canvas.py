@@ -149,7 +149,7 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
         # bottom, top, left, right
         used_axes = [False, False, False, False]
         for item in items:
-            if item.get_selected() and not hide_unselected:
+            if not (hide_unselected and not item.get_selected()):
                 drawable_items.append(item)
                 used_axes[item.get_xposition()] = True
                 used_axes[2 + item.get_yposition()] = True
@@ -162,14 +162,15 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
         if not any(used_axes):
             used_axes = [True, False, True, False]
 
-        ticks = "both" if pyplot.rcParams["xtick.minor.visible"] else "major"
+        params = pyplot.rcParams
+        ticks = "both" if params["xtick.minor.visible"] else "major"
         for count, directions in enumerate(axes_directions):
             axis = self.axes[count]
             axis.get_xaxis().set_visible(False)
             axis.get_yaxis().set_visible(False)
             # Set tick where requested, as long as that axis is not occupied
             axis.tick_params(which=ticks, **{
-                key: pyplot.rcParams[f"{'x' if i < 2 else 'y'}tick.{key}"]
+                key: params[f"{'x' if i < 2 else 'y'}tick.{key}"]
                 and (key in directions or not used_axes[i])
                 for i, key in enumerate(["bottom", "top", "left", "right"])
             })
@@ -557,7 +558,7 @@ class _DummyToolbar(NavigationToolbar2):
         for direction in ["bottom", "left", "top", "right"]:
             self.canvas.notify(f"min-{direction}")
             self.canvas.notify(f"max-{direction}")
-        self.canvas.application.get_view_clipboard().add()
+        self.canvas.application.get_data().add_view_history_state()
 
     # Overwritten function - do not change name
     def save_figure(self):

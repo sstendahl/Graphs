@@ -42,7 +42,7 @@ class FigureSettingsWindow(Adw.PreferencesWindow):
     def __init__(self, application, highlighted=None):
         super().__init__(
             application=application, transient_for=application.get_window(),
-            figure_settings=application.get_figure_settings(),
+            figure_settings=application.get_data().get_figure_settings(),
         )
 
         ignorelist = ["custom_style", "min_selected", "max_selected"]
@@ -92,7 +92,7 @@ class FigureSettingsWindow(Adw.PreferencesWindow):
 
     @Gtk.Template.Callback()
     def on_close(self, *_args):
-        self.get_application().get_view_clipboard().add()
+        self.get_application().get_data().add_view_history_state()
         self.destroy()
 
     @Gtk.Template.Callback()

@@ -64,5 +64,5 @@ class EditItemWindow(Adw.PreferencesWindow):
 
     @Gtk.Template.Callback()
     def on_close(self, _a):
-        self.get_application().get_clipboard().add()
+        self.get_application().get_data().add_history_state()
         self.destroy()

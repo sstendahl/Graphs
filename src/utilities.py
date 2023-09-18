@@ -39,6 +39,16 @@ def hex_to_rgba(hex_str):
     return rgba
 
 
+def sig_fig_round(number, digits):
+    """Round a number to the specified number of significant digits."""
+    try:
+        # Convert to scientific notation, and get power
+        power = "{:e}".format(float(number)).split("e")[1]
+    except IndexError:
+        return None
+    return round(float(number), -(int(power) - digits + 1))
+
+
 def rgba_to_hex(rgba):
     return "#{:02x}{:02x}{:02x}".format(
         round(rgba.red * 255),
@@ -200,59 +210,13 @@ def get_filename(file: Gio.File):
     return file.query_info("standard::*", 0, None).get_display_name()
 
 
-def optimize_limits(self):
-    figure_settings = self.get_figure_settings()
-    axes = [
-        [direction, False, [], [],
-         figure_settings.get_property(f"{direction}_scale")]
-        for direction in ["bottom", "left", "top", "right"]
-    ]
-    for item in self.get_data():
-        if item.__gtype_name__ != "GraphsDataItem":
-            continue
-        for index in item.get_xposition() * 2, 1 + item.get_yposition() * 2:
-            axes[index][1] = True
-            data = numpy.asarray(item.ydata if index % 2 else item.xdata)
-            data = data[numpy.isfinite(data)]
-            nonzero_data = numpy.array([value for value in data if value != 0])
-            axes[index][2].append(
-                nonzero_data.min()
-                if axes[index][4] in (1, 4) and len(nonzero_data) > 0
-                else data.min(),
-            )
-            axes[index][3].append(data.max())
-
-    for count, (direction, used, min_all, max_all, scale) in enumerate(axes):
-        if not used:
-            continue
-        min_all = min(min_all)
-        max_all = max(max_all)
-        if scale != 1:  # For non-logarithmic scales
-            span = max_all - min_all
-            # 0.05 padding on y-axis, 0.015 padding on x-axis
-            padding_factor = 0.05 if count % 2 else 0.015
-            max_all += padding_factor * span
-
-            # For inverse scale, calculate padding using a factor
-            min_all = (min_all - padding_factor * span if scale != 4
-                       else min_all * 0.99)
-        else:  # Use different scaling type for logarithmic scale
-            # Use padding factor of 2 for y-axis, 1.025 for x-axis
-            padding_factor = 2 if count % 2 else 1.025
-            min_all *= 1 / padding_factor
-            max_all *= padding_factor
-        figure_settings.set_property(f"min_{direction}", min_all)
-        figure_settings.set_property(f"max_{direction}", max_all)
-    self.get_view_clipboard().add()
-
-
 def string_to_function(equation_name):
     variables = ["x"] + re.findall(
         r"\b(?!x\b|X\b|sin\b|cos\b|tan\b)[a-wy-zA-WY-Z]+\b",
         equation_name,
     )
     sym_vars = sympy.symbols(variables)
-    with contextlib.suppress(sympy.SympifyError, TypeError):
+    with contextlib.suppress(sympy.SympifyError, TypeError, SyntaxError):
         symbolic = sympy.sympify(
             equation_name, locals=dict(zip(variables, sym_vars)),
         )
