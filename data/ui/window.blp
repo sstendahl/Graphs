@@ -102,7 +102,6 @@ template $GraphsWindow: Adw.ApplicationWindow {
       width-request: 350;
       styles ["flat"]
       show-title: false;
-      hexpand: true;
       Box {
         MenuButton add_button {
           icon-name: "list-add-symbolic";
@@ -153,6 +152,13 @@ template $GraphsWindow: Adw.ApplicationWindow {
               styles ["flat"]
             }
           }
+            [end]
+            MenuButton {
+              icon-name: "open-menu-symbolic";
+              menu-model: primary_menu;
+              tooltip-text: _("Open Application Menu");
+              primary: true;
+            }
         }
       }
         ScrolledWindow {
@@ -561,12 +567,6 @@ template $GraphsWindow: Adw.ApplicationWindow {
       orientation: vertical;
     Adw.HeaderBar {
       styles ["flat"]
-      ToggleButton show_sidebar_button {
-        icon-name: "sidebar-show-symbolic";
-        tooltip-text: _("Toggle Sidebar");
-        active: bind split_view.show-sidebar;
-        visible: bind split_view.collapsed;
-      }
       Box {
         visible: bind split_view.collapsed inverted;
         Button undo_button {
@@ -580,12 +580,11 @@ template $GraphsWindow: Adw.ApplicationWindow {
           tooltip-text: _("Redo");
         }
       }
-      [end]
-      MenuButton {
-        icon-name: "open-menu-symbolic";
-        menu-model: primary_menu;
-        tooltip-text: _("Open Application Menu");
-        primary: true;
+      ToggleButton show_sidebar_button {
+        icon-name: "sidebar-show-symbolic";
+        tooltip-text: _("Toggle Sidebar");
+        active: bind split_view.show-sidebar;
+        visible: bind split_view.collapsed;
       }
       [end]
       Box {
@@ -606,7 +605,6 @@ template $GraphsWindow: Adw.ApplicationWindow {
           always-show-arrow: true;
           menu-model: view_menu;
         }
-        Separator {styles ["spacer"]}
       }
     }
         Adw.ToastOverlay toast_overlay {
