@@ -146,7 +146,10 @@ class StylesWindow(Adw.Window):
     __gtype_name__ = "GraphsStylesWindow"
 
     leaflet = Gtk.Template.Child()
+    edit_page = Gtk.Template.Child()
     styles_box = Gtk.Template.Child()
+    style_color_box = Gtk.Template.Child()
+    style_overview = Gtk.Template.Child()
     line_colors_box = Gtk.Template.Child()
 
     style_name = Gtk.Template.Child()
@@ -203,27 +206,13 @@ class StylesWindow(Adw.Window):
 
         # line colors
         self.color_boxes = {}
-
         self.present()
 
     @Gtk.Template.Callback()
-    def back(self, _button):
-        self.save_style()
-        self.reload_styles()
-        self.style = None
-        self.leaflet.navigate(0)
-        self.set_title(_("Styles"))
-
-    @Gtk.Template.Callback()
     def edit_line_colors(self, _button):
-        self.leaflet.navigate(1)
-        self.set_title(
+        self.leaflet.push(self.style_color_box)
+        self.style_color_box.set_title(
             _("{name} - line colors").format(name=self.style.name))
-
-    @Gtk.Template.Callback()
-    def back_line_colors(self, _):
-        self.leaflet.navigate(0)
-        self.set_title(self.style.name)
 
     def load_style(self):
         self.style_name.set_text(self.style.name)
@@ -361,8 +350,8 @@ class StylesWindow(Adw.Window):
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/style_box.ui")
 class StyleBox(Gtk.Box):
     __gtype_name__ = "GraphsStyleBox"
-    label = Gtk.Template.Child()
     check_mark = Gtk.Template.Child()
+    label = Gtk.Template.Child()
 
     def __init__(self, parent, style, file):
         super().__init__()
@@ -373,8 +362,8 @@ class StyleBox(Gtk.Box):
     def on_edit(self, _button):
         self.parent.style = get_style(self.file)
         self.parent.load_style()
-        self.parent.leaflet.navigate(1)
-        self.parent.set_title(self.style)
+        self.parent.edit_page.set_title(self.style)
+        self.parent.leaflet.push(self.parent.edit_page)
 
     @Gtk.Template.Callback()
     def on_delete(self, _button):
