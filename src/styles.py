@@ -85,7 +85,7 @@ def update(self):
     system_stylename = self.get_settings().get_string("system-style")
     if Adw.StyleManager.get_default().get_dark():
         system_stylename += "-dark"
-    figure_settings = self.get_figure_settings()
+    figure_settings = self.get_data().get_figure_settings()
     if figure_settings.get_use_custom_style():
         stylename = figure_settings.get_custom_style()
         try:
@@ -288,7 +288,8 @@ class StylesWindow(Adw.Window):
             directory.get_child_for_display_name(f"{self.style.name}.mplstyle")
         file_io.write_style(file, self.style)
 
-        figure_settings = self.get_application().get_figure_settings()
+        figure_settings = \
+            self.get_application().get_data().get_figure_settings()
         if figure_settings.get_use_custom_style() \
                 and figure_settings.get_custom_style() == self.style.name:
             ui.reload_canvas(self.get_application())
@@ -323,7 +324,8 @@ class StylesWindow(Adw.Window):
         for style, file in \
                 sorted(get_user_styles(self.get_application()).items()):
             box = StyleBox(self, style, file)
-            figure_settings = self.get_application().get_figure_settings()
+            figure_settings = \
+                self.get_application().get_data().get_figure_settings()
             if not (figure_settings.get_use_custom_style()
                     and figure_settings.get_custom_style() == self.style):
                 box.check_mark.hide()

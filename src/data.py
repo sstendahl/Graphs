@@ -9,9 +9,11 @@ import copy
 
 from gi.repository import GObject, Graphs
 
-from graphs import item, utilities
+from graphs import item
 
 from matplotlib import pyplot
+
+import numpy
 
 
 class Data(GObject.Object, Graphs.DataInterface):
@@ -28,14 +30,9 @@ class Data(GObject.Object, Graphs.DataInterface):
 
     Functions:
         get_application
-        to_list
-        to_dict
-        set_from_list
         is_empty
         get_items
         set_items
-        append
-        pop
         index
         get_names
         change_position
@@ -49,27 +46,35 @@ class Data(GObject.Object, Graphs.DataInterface):
     }
 
     application = GObject.Property(type=object)
+    figure_settings = GObject.Property(type=Graphs.FigureSettings)
+    can_undo = GObject.Property(type=bool, default=False)
+    can_redo = GObject.Property(type=bool, default=False)
+    can_view_back = GObject.Property(type=bool, default=False)
+    can_view_forward = GObject.Property(type=bool, default=False)
 
-    def __init__(self, application):
+    def __init__(self, application, settings):
         """Init the dataclass."""
-        super().__init__(application=application)
+        figure_settings = Graphs.FigureSettings.new(
+            settings.get_child("figure"),
+        )
+        super().__init__(
+            application=application, figure_settings=figure_settings,
+        )
+        limits = figure_settings.get_limits()
+        self._history_states = [([], limits)]
+        self._history_pos = -1
+        self._view_history_states = [limits]
+        self._view_history_pos = -1
         self._items = {}
+        self._set_data_copy()
 
     def get_application(self):
         """Get application property."""
         return self.props.application
 
-    def to_list(self) -> list:
-        """Get a list of all items in dict form."""
-        return [item.to_dict(item_) for item_ in self]
-
-    def to_dict(self) -> dict:
-        """Get a dictionary of all items sorted by their key"""
-        return {item_.get_uuid(): item.to_dict(item_) for item_ in self}
-
-    def set_from_list(self, items: list):
-        """Set items from a list of items in dict form."""
-        self.set_items([item.new_from_dict(d) for d in items])
+    def get_figure_settings(self):
+        """Get figure settings property."""
+        return self.props.figure_settings
 
     def is_empty(self) -> bool:
         """Whether or not the class is empty."""
@@ -96,16 +101,16 @@ class Data(GObject.Object, Graphs.DataInterface):
     def set_items(self, items: list):
         """Set all managed items."""
         for item_ in items:
-            self.append(item_)
+            self._add_item(item_)
         self._items = {item_.get_uuid(): item_ for item_ in items}
 
-    def append(self, item_):
+    def _add_item(self, item_):
         """Append items to self."""
         self._connect_to_item(item_)
         self._items[item_.get_uuid()] = item_
         self.notify("items")
 
-    def pop(self, key):
+    def _delete_item(self, key):
         """Pop and delete item."""
         item_ = self._items[key]
         self._items.pop(key)
@@ -145,6 +150,7 @@ class Data(GObject.Object, Graphs.DataInterface):
             items[index2:index1 + 1] = \
                 items[index2 + 1:index1 + 1] + [items[index2]]
         self.props.items = items
+        self._current_batch.append((3, (index2, index1)))
 
     def add_items(self, items: list):
         """
@@ -158,9 +164,8 @@ class Data(GObject.Object, Graphs.DataInterface):
         """
         ignored = []
         application = self.get_application()
-        figure_settings = application.get_figure_settings()
+        figure_settings = self.get_figure_settings()
         settings = application.get_settings()
-        clipboard = application.get_clipboard()
         handle_duplicates = \
             settings.get_child("general").get_enum("handle-duplicates")
         color_cycle = pyplot.rcParams["axes.prop_cycle"].by_key()["color"]
@@ -198,7 +203,7 @@ class Data(GObject.Object, Graphs.DataInterface):
                 elif handle_duplicates == 3:  # Override
                     index = names.index(new_item.get_name())
                     existing_item = self[index]
-                    clipboard.append(
+                    self._current_batch.append(
                         (2, (index, existing_item.to_dict(item_))),
                     )
                     new_item.set_uuid(existing_item.get_uuid())
@@ -236,10 +241,12 @@ class Data(GObject.Object, Graphs.DataInterface):
                         _append_used_color(color)
                         break
 
-            self.append(new_item)
-            clipboard.append((1, copy.deepcopy(item.to_dict(new_item))))
-        utilities.optimize_limits(application)
-        clipboard.add()
+            self._add_item(new_item)
+            self._current_batch.append(
+                (1, copy.deepcopy(item.to_dict(new_item))),
+            )
+        self.optimize_limits()
+        self.add_history_state()
         if ignored:
             self.emit("items-ignored", ", ".join(ignored))
         self.notify("items")
@@ -248,23 +255,236 @@ class Data(GObject.Object, Graphs.DataInterface):
     def delete_items(self, items: list):
         """Delete specified items."""
         for item_ in items:
-            self.get_application().get_clipboard().append(
+            self._current_batch.append(
                 (2, (self.index(item_), item.to_dict(item_))),
             )
-            self.pop(item_.get_uuid())
-        self.get_application().get_clipboard().add()
+            self._delete_item(item_.get_uuid())
+        self.add_history_state()
         self.notify("items_selected")
 
     def _connect_to_item(self, item_):
-        item_.connect(
-            "notify::selected", lambda _x, _y: self.notify("items_selected"),
-        )
-        item_.connect(
-            "notify", self.get_application().get_clipboard().on_item_change,
-        )
+        item_.connect("notify::selected", self._on_item_select)
+        item_.connect("notify", self._on_item_change)
         for prop in ["xposition", "yposition"]:
             item_.connect(f"notify::{prop}", self._on_item_position_change)
 
     def _on_item_position_change(self, _item, _ignored):
-        utilities.optimize_limits(self.get_application())
+        self.optimize_limits()
         self.notify("items")
+
+    def _on_item_select(self, _x, _y):
+        self.notify("items_selected")
+        if self.get_application().get_settings(
+                "general").get_boolean("hide-unselected"):
+            self.notify("items")
+
+    def _on_item_change(self, item_, param):
+        self._current_batch.append((0, (
+            item_.get_uuid(), param.name,
+            copy.deepcopy(self._data_copy[item_.get_uuid()][param.name]),
+            copy.deepcopy(item_.get_property(param.name)),
+        )))
+
+    def _set_data_copy(self):
+        self._current_batch = []
+        self._data_copy = copy.deepcopy(
+            {item_.get_uuid(): item.to_dict(item_) for item_ in self},
+        )
+
+    def add_history_state(self, old_limits=None):
+        if not self._current_batch:
+            return
+        if self._history_pos != -1:
+            self._history_states = self._history_states[:self._history_pos + 1]
+        self._history_pos = -1
+        self._history_states.append(
+            (self._current_batch, self.get_figure_settings().get_limits()),
+        )
+        if old_limits is not None:
+            old_state = self._history_states[-2][1]
+            for index in range(8):
+                old_state[index] = old_limits[index]
+        self.props.can_redo = False
+        self.props.can_undo = True
+        # Keep history states length limited to 100 spots
+        if len(self._history_states) > 101:
+            self._history_states = self._history_states[1:]
+        self._set_data_copy()
+
+    def undo(self):
+        if self.props.can_undo:
+            batch = self._history_states[self._history_pos][0]
+            self._history_pos -= 1
+            items_changed = False
+            for change_type, change in reversed(batch):
+                if change_type == 0:
+                    self[change[0]].set_property(change[1], change[2])
+                elif change_type == 1:
+                    self._delete_item(change["uuid"])
+                    items_changed = True
+                elif change_type == 2:
+                    item_ = item.new_from_dict(copy.deepcopy(change[1]))
+                    self._add_item(item_)
+                    self.change_position(change[0], len(self))
+                    items_changed = True
+                elif change_type == 3:
+                    self.change_position(change[0], change[1])
+                    items_changed = True
+            if items_changed:
+                self.notify("items")
+            self.notify("items_selected")
+            self.get_figure_settings().set_limits(
+                self._history_states[self._history_pos][1],
+            )
+            self.props.can_redo = True
+            self.props.can_undo = \
+                abs(self._history_pos) < len(self._history_states)
+            self._set_data_copy()
+            self.add_view_history_state()
+
+    def redo(self):
+        if self.props.can_redo:
+            self._history_pos += 1
+            state = self._history_states[self._history_pos]
+            items_changed = False
+            for change_type, change in state[0]:
+                if change_type == 0:
+                    self[change[0]].set_property(change[1], change[3])
+                elif change_type == 1:
+                    self._add_item(item.new_from_dict(copy.deepcopy(change)))
+                    items_changed = True
+                elif change_type == 2:
+                    self._delete_item(change[1]["uuid"])
+                    items_changed = True
+                elif change_type == 3:
+                    self.change_position(change[1], change[0])
+                    items_changed = True
+            if items_changed:
+                self.notify("items")
+            self.notify("items_selected")
+            self.get_figure_settings().set_limits(state[1])
+            self.props.can_redo = self._history_pos < -1
+            self.props.can_undo = True
+            self._set_data_copy()
+            self.add_view_history_state()
+
+    def add_view_history_state(self):
+        limits = self.get_figure_settings().get_limits()
+        view_changed = any(
+            not numpy.isclose(value, limits[count])
+            for count, value in enumerate(self._view_history_states[-1])
+        )
+        if view_changed:
+            # If a couple of redo's were performed previously, it deletes the
+            # clipboard data that is located after the current clipboard
+            # position and disables the redo button
+            if self._view_history_pos != -1:
+                self._view_history_states = \
+                    self._view_history_states[:self._view_history_pos + 1]
+            self._view_history_pos = -1
+            self._view_history_states.append(limits)
+            self.props.can_view_back = True
+            self.props.can_view_forward = False
+
+    def view_back(self):
+        if abs(self._view_history_pos) < len(self._view_history_states):
+            self._view_history_pos -= 1
+            self.get_figure_settings().set_limits(
+                self._view_history_states[self._view_history_pos],
+            )
+            self.props.can_view_forward = True
+            self.props.can_view_back = \
+                abs(self._view_history_pos) < len(self._view_history_states)
+
+    def view_forward(self):
+        if self._view_history_pos < -1:
+            self._view_history_pos += 1
+            self.get_figure_settings().set_limits(
+                self._view_history_states[self._view_history_pos],
+            )
+            self.props.can_view_back = True
+            self.props.can_view_forward = self._view_history_pos < -1
+
+    def optimize_limits(self):
+        figure_settings = self.get_figure_settings()
+        axes = [
+            [direction, False, [], [],
+             figure_settings.get_property(f"{direction}_scale")]
+            for direction in ["bottom", "left", "top", "right"]
+        ]
+        for item_ in self:
+            if item_.__gtype_name__ != "GraphsDataItem":
+                continue
+            for index in \
+                    item_.get_xposition() * 2, 1 + item_.get_yposition() * 2:
+                axes[index][1] = True
+                xydata = numpy.asarray(
+                    item_.ydata if index % 2 else item_.xdata,
+                )
+                xydata = xydata[numpy.isfinite(xydata)]
+                nonzero_data = \
+                    numpy.array([value for value in xydata if value != 0])
+                axes[index][2].append(
+                    nonzero_data.min()
+                    if axes[index][4] in (1, 4) and len(nonzero_data) > 0
+                    else xydata.min(),
+                )
+                axes[index][3].append(xydata.max())
+
+        for count, (direction, used, min_all, max_all, scale) in \
+                enumerate(axes):
+            if not used:
+                continue
+            min_all = min(min_all)
+            max_all = max(max_all)
+            if scale != 1:  # For non-logarithmic scales
+                span = max_all - min_all
+                # 0.05 padding on y-axis, 0.015 padding on x-axis
+                padding_factor = 0.05 if count % 2 else 0.015
+                max_all += padding_factor * span
+
+                # For inverse scale, calculate padding using a factor
+                min_all = (min_all - padding_factor * span if scale != 4
+                           else min_all * 0.99)
+            else:  # Use different scaling type for logarithmic scale
+                # Use padding factor of 2 for y-axis, 1.025 for x-axis
+                padding_factor = 2 if count % 2 else 1.025
+                min_all *= 1 / padding_factor
+                max_all *= padding_factor
+            figure_settings.set_property(f"min_{direction}", min_all)
+            figure_settings.set_property(f"max_{direction}", max_all)
+        self.add_view_history_state()
+
+    def to_project_dict(self) -> dict:
+        figure_settings = self.get_figure_settings()
+        return {
+            "version": self.get_application().get_version(),
+            "data": [item.to_dict(item_) for item_ in self],
+            "figure-settings": {
+                key: figure_settings.get_property(key)
+                for key in dir(figure_settings.props)
+            },
+            "history-states": self._history_states,
+            "history-position": self._history_pos,
+            "view-history-states": self._view_history_states,
+            "view-history-position": self._view_history_pos,
+        }
+
+    def load_from_project_dict(self, project_dict: dict):
+        figure_settings = self.get_figure_settings()
+        for key, value in project_dict["figure-settings"].items():
+            figure_settings.set_property(key, value)
+        self.set_items([item.new_from_dict(d) for d in project_dict["data"]])
+
+        self._set_data_copy()
+        self._history_states = project_dict["history-states"]
+        self._history_pos = project_dict["history-position"]
+        self._view_history_states = project_dict["view-history-states"]
+        self._view_history_pos = project_dict["view-history-position"]
+
+        self.props.can_undo = \
+            abs(self._history_pos) < len(self._history_states)
+        self.props.can_redo = self._history_pos < -1
+        self.props.can_view_back = \
+            abs(self._view_history_pos) < len(self._view_history_states)
+        self.props.can_view_forward = self._view_history_pos < -1
