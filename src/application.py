@@ -8,7 +8,7 @@ Classes:
 import logging
 from gettext import gettext as _
 
-from gi.repository import GLib, Gio, Graphs
+from gi.repository import GLib, Gio, Graphs, Gtk
 
 from graphs import actions, migrate, ui
 from graphs.data import Data
@@ -44,6 +44,7 @@ class PythonApplication(Graphs.Application):
             data=Data(self, settings),
             **kwargs,
         )
+        self.ctrl = False
         font_list = font_manager.findSystemFonts(fontpaths=None, fontext="ttf")
         for font in font_list:
             try:
@@ -147,10 +148,21 @@ class PythonApplication(Graphs.Application):
             )
             self.set_window(window)
             window.set_title(self.props.name)
+            controller = Gtk.EventControllerKey.new()
+            controller.connect("key-pressed", self.on_key_press_event)
+            controller.connect("key-released", self.on_key_release_event)
+            window.add_controller(controller)
             if "(Development)" in self.props.name:
                 window.add_css_class("devel")
             ui.reload_canvas(self)
             window.present()
+
+    def on_key_press_event(self, controller, keyval, keycode, state):
+        if keyval == 65507 or keyval == 65508:  # Control_L or Control_R
+            self.ctrl = True
+
+    def on_key_release_event(self, controller, keyval, keycode, state):
+        self.ctrl = False
 
     def get_settings(self, child=None):
         """

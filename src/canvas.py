@@ -104,10 +104,52 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
         self._legend = True
         self._legend_position = misc.LEGEND_POSITIONS[0]
         self._handles = []
+        self.mpl_connect("scroll_event", self.on_zoom_event)
+        self.mpl_connect("motion_notify_event", self.get_coord_fraction)
+        self.xfrac = 0
+        self.yfrac = 0
+        zoom_gesture = Gtk.GestureZoom.new()
+        zoom_gesture.connect("scale-changed", self.on_zoom_gesture)
+        self.add_controller(zoom_gesture)
+
+    def on_zoom_gesture(self, gesture, scale):
+        scale = 1 + 0.15 * (scale - 1)
+        if scale > 5 or scale < 0.2:
+            # Don't scale if ridiculous values are registered
+            scale = 1
+        self.on_zoom_event(None, scale, touch=True)
 
     def get_application(self):
         """Get application property."""
         return self.props.application
+
+    def get_coord_fraction(self, event):
+        xlim = self.top_right_axis.get_xlim()
+        ylim = self.top_right_axis.get_ylim()
+
+        if event.inaxes is not None:
+            self.xfrac = (event.xdata - xlim[0]) / (xlim[1] - xlim[0])
+            self.yfrac = (event.ydata - ylim[0]) / (ylim[1] - ylim[0])
+
+    def on_zoom_event(self, event, scaling=1.6, touch=False):
+        if touch is False and self.get_application().ctrl is False:
+            return
+        for ax in self.axes:
+            zoom_factor = scaling
+            xlim = ax.get_xlim()
+            ylim = ax.get_ylim()
+            xdata = (self.xfrac * (xlim[1] - xlim[0])) + xlim[0]
+            ydata = (self.yfrac * (ylim[1] - ylim[0])) + ylim[0]
+            if event is not None and event.button == 'up':
+                zoom_factor = 1 / zoom_factor
+
+            x_min = xdata - (xdata - xlim[0]) / zoom_factor
+            x_max = xdata + (xlim[1] - xdata) / zoom_factor
+            y_min = ydata - (ydata - ylim[0]) / zoom_factor
+            y_max = ydata + (ylim[1] - ydata) / zoom_factor
+            ax.set_xlim(x_min, x_max)
+            ax.set_ylim(y_min, y_max)
+        ax.figure.canvas.draw_idle()
 
     def on_draw_event(self, _widget, ctx):
         """
