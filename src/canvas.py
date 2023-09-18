@@ -87,13 +87,14 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
         self.figure.set_tight_layout(True)
         self.mpl_connect("pick_event", self._on_pick)
         self.axis = self.figure.add_subplot(111)
-        self.right_axis = self.axis.twinx()
         self.top_left_axis = self.axis.twiny()
+        self.right_axis = self.axis.twinx()
         self.top_right_axis = self.top_left_axis.twinx()
         self.axes = [
             self.axis, self.top_left_axis,
             self.right_axis, self.top_right_axis,
         ]
+        self._legend_axis = self.axis
         color_rgba = self.get_style_context().lookup_color("accent_color")[1]
         self.rubberband_edge_color = utilities.rgba_to_tuple(color_rgba, True)
         color_rgba.alpha = 0.3
@@ -147,20 +148,24 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
             "general").get_boolean("hide-unselected")
         drawable_items = []
         # bottom, top, left, right
+        visible_axes = [False, False, False, False]
         used_axes = [False, False, False, False]
         for item in items:
             if not (hide_unselected and not item.get_selected()):
                 drawable_items.append(item)
-                used_axes[item.get_xposition()] = True
-                used_axes[2 + item.get_yposition()] = True
+                xposition = item.get_xposition()
+                yposition = item.get_yposition()
+                visible_axes[xposition] = True
+                visible_axes[2 + yposition] = True
+                used_axes[xposition + 2 * yposition] = True
         axes_directions = [
             ["bottom", "left"],   # axis
             ["top", "left"],      # top_left_axis
             ["bottom", "right"],  # right_axis
             ["top", "right"],     # top_right_axis
         ]
-        if not any(used_axes):
-            used_axes = [True, False, True, False]
+        if not any(visible_axes):
+            visible_axes = [True, False, True, False]
 
         params = pyplot.rcParams
         ticks = "both" if params["xtick.minor.visible"] else "major"
@@ -171,15 +176,20 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
             # Set tick where requested, as long as that axis is not occupied
             axis.tick_params(which=ticks, **{
                 key: params[f"{'x' if i < 2 else 'y'}tick.{key}"]
-                and (key in directions or not used_axes[i])
+                and (key in directions or not visible_axes[i])
                 for i, key in enumerate(["bottom", "top", "left", "right"])
             })
             for handle in axis.lines + axis.texts:
                 handle.remove()
-        self.axis.get_xaxis().set_visible(used_axes[0])
-        self.top_left_axis.get_xaxis().set_visible(used_axes[1])
-        self.axis.get_yaxis().set_visible(used_axes[2])
-        self.right_axis.get_yaxis().set_visible(used_axes[3])
+            axis_legend = axis.get_legend()
+            if axis_legend is not None:
+                axis_legend.remove()
+            if used_axes[count]:
+                self._legend_axis = axis
+        self.axis.get_xaxis().set_visible(visible_axes[0])
+        self.top_left_axis.get_xaxis().set_visible(visible_axes[1])
+        self.axis.get_yaxis().set_visible(visible_axes[2])
+        self.right_axis.get_yaxis().set_visible(visible_axes[3])
 
         self._handles = [
             artist.new_for_item(self, item)
@@ -232,14 +242,15 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
                 if handle.legend
             ]
             if handles:
-                self.top_right_axis.legend(
+                self._legend_axis.legend(
                     handles=handles, loc=self._legend_position,
                     frameon=True, reverse=True,
                 )
                 self.queue_draw()
                 return
-        if self.top_right_axis.get_legend() is not None:
-            self.top_right_axis.get_legend().remove()
+        legend = self._legend_axis.get_legend()
+        if legend is not None:
+            legend.remove()
         self.queue_draw()
 
     @GObject.Property(type=bool, default=True)
