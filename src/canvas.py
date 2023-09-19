@@ -131,7 +131,7 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
             self.xfrac, self.yfrac = None, None
 
     def on_zoom_gesture(self, _gesture, scale):
-        scale = 1 + 0.06 * (scale - 1)
+        scale = 1 + 0.05 * (scale - 1)
         if scale > 5 or scale < 0.2:
             # Don't scale if ridiculous values are registered
             scale = 1
@@ -139,7 +139,7 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
             self.on_zoom_event(scale)
 
     def on_scroll_event(self, event):
-        scale = 1.15
+        scale = 1.06
         if event.button == "up":
             scale = 1 / scale
         if self.xfrac is not None and self.yfrac is not None:
