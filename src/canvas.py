@@ -141,7 +141,7 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
             scale = 1 / scale
         self.on_zoom_event(scale)
 
-    def on_zoom_event(self, scaling=1.6):
+    def on_zoom_event(self, scaling=1.15):
         for ax in self.axes:
             zoom_factor = scaling
             xscale = scales.to_int(ax.get_xscale())
@@ -182,9 +182,9 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
                          / zoom_factor) ** 2)
             case 4:
                 return (1 / (1 / value - (1 / value - 1 / limit[0])
-                         / zoom_factor),
+                             / zoom_factor),
                         1 / (1 / value + (1 / limit[1] - 1 / value)
-                         / zoom_factor))
+                             / zoom_factor))
 
     def on_draw_event(self, _widget, ctx):
         """
