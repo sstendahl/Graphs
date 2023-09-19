@@ -166,7 +166,7 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
     @staticmethod
     def _calculate_zoomed_values(value, scale, limit, zoom_factor):
         match scale:
-            case 0:
+            case 0 | 2:
                 return (value - (value - limit[0]) / zoom_factor,
                         value + (limit[1] - value) / zoom_factor)
             case 1:
@@ -181,10 +181,10 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
                         (sqrt_value + (numpy.sqrt(limit[1]) - sqrt_value)
                          / zoom_factor) ** 2)
             case 4:
-                return ((1 / (1 / value - (1 / value - 1 / limit[0])
-                         / zoom_factor)),
-                        (1 / (1 / value + (1 / limit[1] - 1 / value)
-                         / zoom_factor)))
+                return (1 / (1 / value - (1 / value - 1 / limit[0])
+                         / zoom_factor),
+                        1 / (1 / value + (1 / limit[1] - 1 / value)
+                         / zoom_factor))
 
     def on_draw_event(self, _widget, ctx):
         """
