@@ -21,6 +21,8 @@ from matplotlib.backend_bases import NavigationToolbar2
 from matplotlib.backends.backend_gtk4cairo import FigureCanvas
 from matplotlib.widgets import SpanSelector
 
+import numpy
+
 
 class Canvas(FigureCanvas, Graphs.CanvasInterface):
     """
@@ -105,10 +107,89 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
         self._legend = True
         self._legend_position = misc.LEGEND_POSITIONS[0]
         self._handles = []
+        self.mpl_connect("scroll_event", self.on_scroll_event)
+        self.mpl_connect("motion_notify_event", self.get_coord_fraction)
+        self.xfrac = None
+        self.yfrac = None
+        zoom_gesture = Gtk.GestureZoom.new()
+        zoom_gesture.connect("scale-changed", self.on_zoom_gesture)
+        self.add_controller(zoom_gesture)
 
     def get_application(self):
         """Get application property."""
         return self.props.application
+
+    def get_coord_fraction(self, event):
+        xlim = self.top_right_axis.get_xlim()
+        ylim = self.top_right_axis.get_ylim()
+
+        if event.inaxes is not None:
+            self.xfrac = utilities.get_fraction_at_value(
+                event.xdata, xlim[0], xlim[1], self.top_scale)
+            self.yfrac = utilities.get_fraction_at_value(
+                event.ydata, ylim[0], ylim[1], self.right_scale)
+        else:
+            self.xfrac, self.yfrac = None, None
+
+    def on_zoom_gesture(self, _gesture, scale):
+        scale = 1 + 0.05 * (scale - 1)
+        if scale > 5 or scale < 0.2:
+            # Don't scale if ridiculous values are registered
+            scale = 1
+        if self.xfrac is not None and self.yfrac is not None:
+            self.on_zoom_event(scale)
+
+    def on_scroll_event(self, event):
+        scale = 1.06
+        if event.button == "up":
+            scale = 1 / scale
+        if self.xfrac is not None and self.yfrac is not None:
+            self.on_zoom_event(scale)
+
+    def on_zoom_event(self, scaling=1.15):
+        for ax in self.axes:
+            zoom_factor = scaling
+            xscale = scales.to_int(ax.get_xscale())
+            yscale = scales.to_int(ax.get_yscale())
+
+            xlim = ax.get_xlim()
+            ylim = ax.get_ylim()
+
+            xdata = utilities.get_value_at_fraction(
+                self.xfrac, xlim[0], xlim[1], xscale)
+            ydata = utilities.get_value_at_fraction(
+                self.yfrac, ylim[0], ylim[1], yscale)
+
+            x_min, x_max = \
+                self._calculate_zoomed_values(xdata, xscale, xlim, zoom_factor)
+            y_min, y_max = \
+                self._calculate_zoomed_values(ydata, yscale, ylim, zoom_factor)
+            ax.set_xlim(x_min, x_max)
+            ax.set_ylim(y_min, y_max)
+        ax.figure.canvas.draw_idle()
+
+    @staticmethod
+    def _calculate_zoomed_values(value, scale, limit, zoom_factor):
+        match scale:
+            case 0 | 2:
+                return (value - (value - limit[0]) / zoom_factor,
+                        value + (limit[1] - value) / zoom_factor)
+            case 1:
+                return (10 ** (numpy.log10(value) - (numpy.log10(value)
+                               - numpy.log10(limit[0])) / zoom_factor),
+                        10 ** (numpy.log10(value) + (numpy.log10(limit[1])
+                               - numpy.log10(value)) / zoom_factor))
+            case 3:
+                sqrt_value = numpy.sqrt(value)
+                return ((sqrt_value - (sqrt_value - numpy.sqrt(limit[0]))
+                         / zoom_factor) ** 2,
+                        (sqrt_value + (numpy.sqrt(limit[1]) - sqrt_value)
+                         / zoom_factor) ** 2)
+            case 4:
+                return (1 / (1 / value - (1 / value - 1 / limit[0])
+                             / zoom_factor),
+                        1 / (1 / value + (1 / limit[1] - 1 / value)
+                             / zoom_factor))
 
     def on_draw_event(self, _widget, ctx):
         """

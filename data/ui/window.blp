@@ -74,8 +74,40 @@ template $GraphsWindow : Adw.ApplicationWindow {
       action: "action(app.open_project)";
     }
     Shortcut {
+      trigger: "<primary>KP_0";
+      action: "action(app.open_project)";
+    }
+    Shortcut {
       trigger: "Delete";
       action: "action(app.delete_selected)";
+    }
+    Shortcut {
+      trigger: "<primary>plus";
+      action: "action(app.zoom_in)";
+    }
+    Shortcut {
+      trigger: "<primary>KP_Add";
+      action: "action(app.zoom_in)";
+    }
+    Shortcut {
+      trigger: "<primary>equal";
+      action: "action(app.zoom_in)";
+    }
+    Shortcut {
+      trigger: "ZoomIn";
+      action: "action(app.zoom_in)";
+    }
+    Shortcut {
+      trigger: "<primary>minus";
+      action: "action(app.zoom_out)";
+    }
+    Shortcut {
+      trigger: "<primary>KP_Subtract";
+      action: "action(app.zoom_out)";
+    }
+    Shortcut {
+      trigger: "<primary>ZoomOut";
+      action: "action(app.zoom_out)";
     }
   }
 
