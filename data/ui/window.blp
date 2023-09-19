@@ -99,7 +99,6 @@ template $GraphsWindow: Adw.ApplicationWindow {
         width-request: 350;
         Adw.HeaderBar {
           width-request: 350;
-          show-title: false;
           styles ["flat"]
           [start]
           MenuButton add_button {
@@ -199,13 +198,9 @@ template $GraphsWindow: Adw.ApplicationWindow {
                 styles ["heading"]
               }
               Adw.PreferencesGroup {
-                styles ["card"]
                 Grid {
                   column-spacing: 10;
                   row-spacing: 10;
-                  margin-start: 12;
-                  margin-end: 12;
-                  margin-top: 12;
                   margin-bottom:12;
                   Button shift_button {
                     hexpand: true;
@@ -311,13 +306,9 @@ template $GraphsWindow: Adw.ApplicationWindow {
                 styles ["heading"]
               }
               Adw.PreferencesGroup {
-                styles ["card"]
                 Grid {
                   column-spacing: 10;
                   row-spacing: 10;
-                  margin-start: 12;
-                  margin-end: 12;
-                  margin-top: 12;
                   margin-bottom:12;
                   Button {
                     hexpand: true;
@@ -409,13 +400,9 @@ template $GraphsWindow: Adw.ApplicationWindow {
                 styles ["heading"]
               }
               Adw.PreferencesGroup {
-                styles ["card"]
                 Grid {
                   column-spacing: 10;
                   row-spacing: 10;
-                  margin-start: 12;
-                  margin-end: 12;
-                  margin-top: 12;
                   margin-bottom:12;
                   Entry translate_x_entry {
                     max-width-chars: 6;
@@ -520,6 +507,7 @@ template $GraphsWindow: Adw.ApplicationWindow {
       orientation: vertical;
         Adw.HeaderBar {
           styles ["flat"]
+          show-title: false;
           ToggleButton show_sidebar_button {
             icon-name: "sidebar-show-symbolic";
             tooltip-text: _("Toggle Sidebar");
