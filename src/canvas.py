@@ -108,8 +108,8 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
         self._handles = []
         self.mpl_connect("scroll_event", self.on_scroll_event)
         self.mpl_connect("motion_notify_event", self.get_coord_fraction)
-        self.xfrac = 0
-        self.yfrac = 0
+        self.xfrac = None
+        self.yfrac = None
         zoom_gesture = Gtk.GestureZoom.new()
         zoom_gesture.connect("scale-changed", self.on_zoom_gesture)
         self.add_controller(zoom_gesture)
@@ -127,19 +127,23 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
                 event.xdata, xlim[0], xlim[1], self.top_scale)
             self.yfrac = utilities.get_fraction_at_value(
                 event.ydata, ylim[0], ylim[1], self.right_scale)
+        else:
+            self.xfrac, self.yfrac = None, None
 
     def on_zoom_gesture(self, _gesture, scale):
         scale = 1 + 0.06 * (scale - 1)
         if scale > 5 or scale < 0.2:
             # Don't scale if ridiculous values are registered
             scale = 1
-        self.on_zoom_event(scale)
+        if self.xfrac is not None and self.yfrac is not None:
+            self.on_zoom_event(scale)
 
     def on_scroll_event(self, event):
         scale = 1.15
         if event.button == "up":
             scale = 1 / scale
-        self.on_zoom_event(scale)
+        if self.xfrac is not None and self.yfrac is not None:
+            self.on_zoom_event(scale)
 
     def on_zoom_event(self, scaling=1.15):
         for ax in self.axes:
