@@ -118,6 +118,8 @@ template $GraphsWindow: Adw.ApplicationWindow {
     condition ("max-width: 725sp")
     setters {
       split_view.collapsed: true;
+      content_headerbar.show-title: true;
+      sidebar_headerbar.show-title: false;
     }
   }
 
@@ -129,7 +131,7 @@ template $GraphsWindow: Adw.ApplicationWindow {
       sidebar: Box {
         orientation: vertical;
         width-request: 350;
-        Adw.HeaderBar {
+        Adw.HeaderBar sidebar_headerbar {
           width-request: 350;
           styles ["flat"]
           [start]
@@ -537,7 +539,7 @@ template $GraphsWindow: Adw.ApplicationWindow {
       content:
       Box {
       orientation: vertical;
-        Adw.HeaderBar {
+        Adw.HeaderBar content_headerbar {
           styles ["flat"]
           show-title: false;
           ToggleButton show_sidebar_button {
