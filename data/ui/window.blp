@@ -128,6 +128,13 @@ template $GraphsWindow: Adw.ApplicationWindow {
             }
           }
           [end]
+          MenuButton {
+            icon-name: "open-menu-symbolic";
+            menu-model: primary_menu;
+            tooltip-text: _("Open Application Menu");
+            primary: true;
+          }
+          [end]
           Box {
             visible: bind split_view.collapsed;
             Button {
@@ -152,13 +159,6 @@ template $GraphsWindow: Adw.ApplicationWindow {
               styles ["flat"]
             }
           }
-            [end]
-            MenuButton {
-              icon-name: "open-menu-symbolic";
-              menu-model: primary_menu;
-              tooltip-text: _("Open Application Menu");
-              primary: true;
-            }
         }
       }
         ScrolledWindow {
