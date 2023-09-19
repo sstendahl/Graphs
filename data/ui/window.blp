@@ -49,6 +49,10 @@ template $GraphsWindow: Adw.ApplicationWindow {
       action: "action(app.optimize_limits)";
     }
     Shortcut {
+      trigger: "<primary>KP_0";
+      action: "action(app.optimize_limits)";
+    }
+    Shortcut {
       trigger: "<alt>Z";
       action: "action(app.view_back)";
     }
@@ -74,10 +78,6 @@ template $GraphsWindow: Adw.ApplicationWindow {
     }
     Shortcut {
       trigger: "<primary>O";
-      action: "action(app.open_project)";
-    }
-    Shortcut {
-      trigger: "<primary>KP_0";
       action: "action(app.open_project)";
     }
     Shortcut {
