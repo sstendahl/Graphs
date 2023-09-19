@@ -129,6 +129,18 @@ def save_project_action(_action, _target, self):
     ui.save_project_dialog(self)
 
 
+def zoom_in_action(_action, _target, self):
+    canvas = self.get_window().get_canvas()
+    canvas.xfrac, canvas.yfrac = 0.5, 0.5
+    canvas.on_zoom_event(1.15)
+
+
+def zoom_out_action(_action, _target, self):
+    canvas = self.get_window().get_canvas()
+    canvas.xfrac, canvas.yfrac = 0.5, 0.5
+    canvas.on_zoom_event(1 / 1.15)
+
+
 def open_project_action(_action, _target, self):
     if not self.get_data().is_empty():
         def on_response(_dialog, response):
