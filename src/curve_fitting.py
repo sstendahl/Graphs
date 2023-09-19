@@ -36,7 +36,8 @@ class CurveFittingWindow(Graphs.CurveFittingTool):
         self.r2 = 0
 
         self.get_equation().connect("notify::text", self.on_equation_change)
-        self.fitting_parameters = FittingParameterContainer(application)
+        self.fitting_parameters = \
+            FittingParameterContainer(application, application.get_settings())
 
         for var in self.get_free_variables():
             self.fitting_parameters.add_items([FittingParameter(name=var)])
