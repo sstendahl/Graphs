@@ -103,13 +103,11 @@ template $GraphsWindow: Adw.ApplicationWindow {
             width-request: 350;
             styles ["flat"]
             show-title: false;
-            Box {
-              MenuButton add_button {
-                icon-name: "list-add-symbolic";
-                tooltip-text: _("Add new Data");
-                always-show-arrow: true;
-                menu-model: add_data_menu;
-              }
+            MenuButton add_button {
+              icon-name: "list-add-symbolic";
+              tooltip-text: _("Add new Data");
+              always-show-arrow: true;
+              menu-model: add_data_menu;
             }
             [end]
             MenuButton {
@@ -150,7 +148,6 @@ template $GraphsWindow: Adw.ApplicationWindow {
             }
           }
         }
-
         Separator {
           orientation: horizontal;
         }
@@ -204,6 +201,7 @@ template $GraphsWindow: Adw.ApplicationWindow {
                 styles ["heading"]
               }
               Adw.PreferencesGroup {
+                styles ["card"]
                 Grid {
                   column-spacing: 10;
                   row-spacing: 10;
@@ -306,7 +304,6 @@ template $GraphsWindow: Adw.ApplicationWindow {
                     clicked => $perform_operation();
                   }
                 }
-                styles ["card"]
               }
               Label {
                 margin-top: 6;
@@ -316,6 +313,7 @@ template $GraphsWindow: Adw.ApplicationWindow {
                 styles ["heading"]
               }
               Adw.PreferencesGroup {
+                styles ["card"]
                 Grid {
                   column-spacing: 10;
                   row-spacing: 10;
@@ -404,7 +402,6 @@ template $GraphsWindow: Adw.ApplicationWindow {
                     clicked => $perform_operation();
                   }
                 }
-                styles ["card"]
               }
               Label {
                 halign: start;
@@ -414,6 +411,7 @@ template $GraphsWindow: Adw.ApplicationWindow {
                 styles ["heading"]
               }
               Adw.PreferencesGroup {
+                styles ["card"]
                 Grid {
                   column-spacing: 10;
                   row-spacing: 10;
@@ -513,55 +511,51 @@ template $GraphsWindow: Adw.ApplicationWindow {
                     }
                   }
                 }
-                styles ["card"]
               }
             }
           }
-
         }
-        };
+      };
 
       content:
       Box {
       orientation: vertical;
         Adw.HeaderBar {
           styles ["flat"]
-          Box {
-            ToggleButton show_sidebar_button {
-              icon-name: "sidebar-show-symbolic";
-              tooltip-text: _("Toggle Sidebar");
-              active: bind split_view.show-sidebar;
-              visible: bind split_view.collapsed;
-            }
-            Button undo_button {
-              action-name: "app.undo";
-              icon-name: "edit-undo-symbolic";
-              tooltip-text: _("Undo");
-            }
-            Button redo_button {
-              action-name: "app.redo";
-              icon-name: "edit-redo-symbolic";
-              tooltip-text: _("Redo");
-            }
+          ToggleButton show_sidebar_button {
+            icon-name: "sidebar-show-symbolic";
+            tooltip-text: _("Toggle Sidebar");
+            active: bind split_view.show-sidebar;
+            visible: bind split_view.collapsed;
+          }
+          Button undo_button {
+            action-name: "app.undo";
+            icon-name: "edit-undo-symbolic";
+            tooltip-text: _("Undo");
+          }
+          Button redo_button {
+            action-name: "app.redo";
+            icon-name: "edit-redo-symbolic";
+            tooltip-text: _("Redo");
           }
           [end]
-          Box {
-            Button view_back_button {
-              action-name: "app.view_back";
-              icon-name: "arrow1-left-symbolic";
-              tooltip-text: _("Previous View");
-            }
-            Button view_forward_button {
-              action-name: "app.view_forward";
-              icon-name: "arrow1-right-symbolic";
-              tooltip-text: _("Next View");
-            }
-            MenuButton view_menu_button {
-              icon-name: "view-reveal-symbolic";
-              tooltip-text: _("View Menu");
-              always-show-arrow: true;
-              menu-model: view_menu;
-            }
+          MenuButton view_menu_button {
+            icon-name: "view-reveal-symbolic";
+            tooltip-text: _("View Menu");
+            always-show-arrow: true;
+            menu-model: view_menu;
+          }
+          [end]
+          Button view_forward_button {
+            action-name: "app.view_forward";
+            icon-name: "arrow1-right-symbolic";
+            tooltip-text: _("Next View");
+          }
+          [end]
+          Button view_back_button {
+            action-name: "app.view_back";
+            icon-name: "arrow1-left-symbolic";
+            tooltip-text: _("Previous View");
           }
         }
         Adw.ToastOverlay toast_overlay {
