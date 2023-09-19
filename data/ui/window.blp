@@ -93,74 +93,75 @@ template $GraphsWindow: Adw.ApplicationWindow {
     top-bar-style: flat;
     content: Adw.OverlaySplitView split_view {
       show-sidebar: bind show_sidebar_button.active;
+      notify => $on_sidebar_toggle();
       sidebar: Box {
         orientation: vertical;
         width-request: 350;
-      Box {
-      hexpand: true;
-    Adw.HeaderBar {
-      width-request: 350;
-      styles ["flat"]
-      show-title: false;
-      Box {
-        MenuButton add_button {
-          icon-name: "list-add-symbolic";
-          tooltip-text: _("Add new Data");
-          always-show-arrow: true;
-          menu-model: add_data_menu;
-          }
-        }
         Box {
-          visible: bind split_view.collapsed;
-          Button {
-            action-name: bind undo_button.action-name;
-            icon-name: bind undo_button.icon-name;
-            tooltip-text: bind undo_button.tooltip-text;
-            sensitive: bind undo_button.sensitive;
+          hexpand: true;
+          Adw.HeaderBar {
+            width-request: 350;
             styles ["flat"]
+            show-title: false;
+            Box {
+              MenuButton add_button {
+                icon-name: "list-add-symbolic";
+                tooltip-text: _("Add new Data");
+                always-show-arrow: true;
+                menu-model: add_data_menu;
+              }
             }
-          Button {
-            action-name: bind redo_button.action-name;
-            icon-name: bind redo_button.icon-name;
-            tooltip-text: bind redo_button.tooltip-text;
-            sensitive: bind redo_button.sensitive;
-            styles ["flat"]
+            Box {
+              visible: bind split_view.collapsed;
+              Button {
+                action-name: bind undo_button.action-name;
+                icon-name: bind undo_button.icon-name;
+                tooltip-text: bind undo_button.tooltip-text;
+                sensitive: bind undo_button.sensitive;
+                styles ["flat"]
+              }
+              Button {
+                action-name: bind redo_button.action-name;
+                icon-name: bind redo_button.icon-name;
+                tooltip-text: bind redo_button.tooltip-text;
+                sensitive: bind redo_button.sensitive;
+                styles ["flat"]
+              }
             }
-          }
-          [end]
-          MenuButton {
-            icon-name: "open-menu-symbolic";
-            menu-model: primary_menu;
-            tooltip-text: _("Open Application Menu");
-            primary: true;
-          }
-          [end]
-          Box {
-            visible: bind split_view.collapsed;
-            Button {
-              action-name: bind view_back_button.action-name;
-              icon-name: bind view_back_button.icon-name;
-              tooltip-text: bind view_back_button.tooltip-text;
-              sensitive: bind view_back_button.sensitive;
-              styles ["flat"]
-            }
-            Button {
-              action-name: bind view_forward_button.action-name;
-              icon-name: bind view_forward_button.icon-name;
-              tooltip-text: bind view_forward_button.tooltip-text;
-              sensitive: bind view_forward_button.sensitive;
-              styles ["flat"]
-            }
+            [end]
             MenuButton {
-              icon-name: bind view_menu_button.icon-name;
-              tooltip-text: bind view_menu_button.tooltip-text;
-              menu-model: bind view_menu_button.menu-model;
-              always-show-arrow: true;
-              styles ["flat"]
+              icon-name: "open-menu-symbolic";
+              menu-model: primary_menu;
+              tooltip-text: _("Open Application Menu");
+              primary: true;
+            }
+            [end]
+            Box {
+              visible: bind split_view.collapsed;
+              Button {
+                action-name: bind view_back_button.action-name;
+                icon-name: bind view_back_button.icon-name;
+                tooltip-text: bind view_back_button.tooltip-text;
+                sensitive: bind view_back_button.sensitive;
+                styles ["flat"]
+              }
+              Button {
+                action-name: bind view_forward_button.action-name;
+                icon-name: bind view_forward_button.icon-name;
+                tooltip-text: bind view_forward_button.tooltip-text;
+                sensitive: bind view_forward_button.sensitive;
+                styles ["flat"]
+              }
+              MenuButton {
+                icon-name: bind view_menu_button.icon-name;
+                tooltip-text: bind view_menu_button.tooltip-text;
+                menu-model: bind view_menu_button.menu-model;
+                always-show-arrow: true;
+                styles ["flat"]
+              }
             }
           }
         }
-      }
         ScrolledWindow {
           height-request: 250;
           hscrollbar-policy: never;
@@ -565,48 +566,48 @@ template $GraphsWindow: Adw.ApplicationWindow {
       content:
       Box {
       orientation: vertical;
-    Adw.HeaderBar {
-      styles ["flat"]
-      Box {
-        visible: bind split_view.collapsed inverted;
-        Button undo_button {
-          action-name: "app.undo";
-          icon-name: "edit-undo-symbolic";
-          tooltip-text: _("Undo");
+        Adw.HeaderBar {
+          styles ["flat"]
+          Box {
+            visible: bind split_view.collapsed inverted;
+            Button undo_button {
+              action-name: "app.undo";
+              icon-name: "edit-undo-symbolic";
+              tooltip-text: _("Undo");
+            }
+            Button redo_button {
+              action-name: "app.redo";
+              icon-name: "edit-redo-symbolic";
+              tooltip-text: _("Redo");
+            }
+          }
+          ToggleButton show_sidebar_button {
+            icon-name: "sidebar-show-symbolic";
+            tooltip-text: _("Toggle Sidebar");
+            active: bind split_view.show-sidebar;
+            visible: bind split_view.collapsed;
+          }
+          [end]
+          Box {
+            visible: bind split_view.collapsed inverted;
+            Button view_back_button {
+              action-name: "app.view_back";
+              icon-name: "arrow1-left-symbolic";
+              tooltip-text: _("Previous View");
+            }
+            Button view_forward_button {
+              action-name: "app.view_forward";
+              icon-name: "arrow1-right-symbolic";
+              tooltip-text: _("Next View");
+            }
+            MenuButton view_menu_button {
+              icon-name: "view-reveal-symbolic";
+              tooltip-text: _("View Menu");
+              always-show-arrow: true;
+              menu-model: view_menu;
+            }
+          }
         }
-        Button redo_button {
-          action-name: "app.redo";
-          icon-name: "edit-redo-symbolic";
-          tooltip-text: _("Redo");
-        }
-      }
-      ToggleButton show_sidebar_button {
-        icon-name: "sidebar-show-symbolic";
-        tooltip-text: _("Toggle Sidebar");
-        active: bind split_view.show-sidebar;
-        visible: bind split_view.collapsed;
-      }
-      [end]
-      Box {
-        visible: bind split_view.collapsed inverted;
-        Button view_back_button {
-          action-name: "app.view_back";
-          icon-name: "arrow1-left-symbolic";
-          tooltip-text: _("Previous View");
-        }
-        Button view_forward_button {
-          action-name: "app.view_forward";
-          icon-name: "arrow1-right-symbolic";
-          tooltip-text: _("Next View");
-        }
-        MenuButton view_menu_button {
-          icon-name: "view-reveal-symbolic";
-          tooltip-text: _("View Menu");
-          always-show-arrow: true;
-          menu-model: view_menu;
-        }
-      }
-    }
         Adw.ToastOverlay toast_overlay {
           focusable: true;
           height-request: 200;

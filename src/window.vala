@@ -49,7 +49,7 @@ namespace Graphs {
         public unowned ListBox item_list { get; }
 
         [GtkChild]
-        private unowned Adw.OverlaySplitView split_view { get; }
+        public unowned Adw.OverlaySplitView split_view { get; }
 
         [GtkChild]
         private unowned Adw.ToastOverlay toast_overlay { get; }
@@ -78,6 +78,13 @@ namespace Graphs {
 
         public void add_toast (Adw.Toast toast) {
             this.toast_overlay.add_toast (toast);
+        }
+
+        [GtkCallback]
+        private void on_sidebar_toggle () {
+            this.application.lookup_action ("toggle_sidebar").change_state (
+                new Variant.boolean (this.split_view.get_collapsed ())
+            );
         }
 
         public void add_toast_string (string title) {

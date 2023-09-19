@@ -43,8 +43,8 @@ def perform_operation(_action, target, self):
 
 
 def toggle_sidebar(_action, _shortcut, self):
-    flap = self.get_window().get_sidebar_flap()
-    flap.set_reveal_flap(not flap.get_reveal_flap())
+    sidebar = self.get_window().get_split_view()
+    sidebar.set_collapsed(not sidebar.get_collapsed())
 
 
 def set_mode(_action, _target, self, mode):
@@ -147,3 +147,4 @@ def delete_selected_action(_action, _target, self):
     names = ", ".join([item.get_name() for item in items])
     self.get_data().delete_items(items)
     self.get_window().add_toast_string(_("Deleted {}").format(names))
+
