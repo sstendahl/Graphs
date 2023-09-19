@@ -147,4 +147,3 @@ def delete_selected_action(_action, _target, self):
     names = ", ".join([item.get_name() for item in items])
     self.get_data().delete_items(items)
     self.get_window().add_toast_string(_("Deleted {}").format(names))
-
