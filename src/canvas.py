@@ -121,16 +121,12 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
     def get_coord_fraction(self, event):
         xlim = self.top_right_axis.get_xlim()
         ylim = self.top_right_axis.get_ylim()
-        figure_settings = \
-            self.get_application().get_data().get_figure_settings()
-        xscale = figure_settings.get_top_scale()
-        yscale = figure_settings.get_right_scale()
 
         if event.inaxes is not None:
             self.xfrac = utilities.get_fraction_at_value(
-                event.xdata, xlim[0], xlim[1], xscale)
+                event.xdata, xlim[0], xlim[1], self.top_scale)
             self.yfrac = utilities.get_fraction_at_value(
-                event.ydata, ylim[0], ylim[1], yscale)
+                event.ydata, ylim[0], ylim[1], self.right_scale)
 
     def on_zoom_gesture(self, _gesture, scale):
         scale = 1 + 0.06 * (scale - 1)
@@ -146,18 +142,10 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
         self.on_zoom_event(scale)
 
     def on_zoom_event(self, scaling=1.6):
-        for ax in [self.axis]:
+        for ax in self.axes:
             zoom_factor = scaling
-            scale_mapping = {
-                "linear": 0,
-                "log": 1,
-                "radian": 2,
-                "squareroot": 3,
-                "inverse": 4,
-            }
-
-            yscale = scale_mapping.get(ax.get_yscale(), -1)
-            xscale = scale_mapping.get(ax.get_xscale(), -1)
+            xscale = scales.to_int(ax.get_xscale())
+            yscale = scales.to_int(ax.get_yscale())
 
             xlim = ax.get_xlim()
             ylim = ax.get_ylim()
