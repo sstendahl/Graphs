@@ -27,13 +27,8 @@ template $GraphsPreferencesWindow : Adw.PreferencesWindow {
     Adw.PreferencesGroup {
       title: _("Figure");
 
-      Adw.ActionRow {
+      Adw.SwitchRow hide_unselected {
         title: _("Hide Unselected Items");
-        activatable-widget: hide_unselected;
-
-        Switch hide_unselected {
-          valign: center;
-        }
       }
 
       Adw.ComboRow x_position {
@@ -52,12 +47,8 @@ template $GraphsPreferencesWindow : Adw.PreferencesWindow {
         };
       }
 
-      Adw.ActionRow {
+      Adw.SwitchRow override_item_properties {
         title: _("Override Item Properties on Style Change");
-        activatable-widget: override_item_properties;
-        Switch override_item_properties {
-          valign: center;
-        }
       }
     }
   }

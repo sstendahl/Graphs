@@ -12,7 +12,6 @@ class TransformWindow(Adw.Window):
     __gtype_name__ = "GraphsTransformWindow"
     transform_x_entry = Gtk.Template.Child()
     transform_y_entry = Gtk.Template.Child()
-    discard_row = Gtk.Template.Child()
     discard = Gtk.Template.Child()
     help_button = Gtk.Template.Child()
     help_popover = Gtk.Template.Child()
@@ -22,7 +21,7 @@ class TransformWindow(Adw.Window):
                          transient_for=application.get_window())
         self.transform_x_entry.set_text("X")
         self.transform_y_entry.set_text("Y")
-        self.discard_row.set_visible(self.get_application().get_mode() == 2)
+        self.discard.set_visible(self.get_application().get_mode() == 2)
         self.present()
         self.help_button.connect(
             "clicked", lambda _x: self.help_popover.popup())

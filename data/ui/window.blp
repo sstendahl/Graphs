@@ -4,8 +4,8 @@ using Adw 1;
 template $GraphsWindow: Adw.ApplicationWindow {
   default-width: 1200;
   default-height: 700;
-  width-request: 450;
-  height-request: 488;
+  width-request: 420;
+  height-request: 300;
 
   ShortcutController {
     Shortcut {
@@ -45,11 +45,11 @@ template $GraphsWindow: Adw.ApplicationWindow {
       action: "action(app.redo)";
     }
     Shortcut {
-      trigger: "<primary>0";
+      trigger: "<primary>KP_0";
       action: "action(app.optimize_limits)";
     }
     Shortcut {
-      trigger: "<primary>KP_0";
+      trigger: "<primary>0";
       action: "action(app.optimize_limits)";
     }
     Shortcut {
@@ -114,15 +114,34 @@ template $GraphsWindow: Adw.ApplicationWindow {
     }
   }
 
+  // If both width and height are limited
   Adw.Breakpoint {
-    condition ("max-width: 725sp")
+    condition ("max-width: 725sp and max-height: 640sp")
     setters {
+      scrollwindow_itemlist.height-request: 60;
+      scrollwindow_itemlist.vexpand: true;
       split_view.collapsed: true;
-      content_headerbar.show-title: true;
-      sidebar_headerbar.show-title: false;
     }
   }
 
+  // If only height is limited
+  Adw.Breakpoint {
+    condition ("min-width: 725sp and max-height: 640sp")
+    setters {
+      scrollwindow_itemlist.height-request: 60;
+      scrollwindow_itemlist.vexpand: true;
+    }
+  }
+
+  // If only width is limited
+  Adw.Breakpoint {
+    condition ("max-width: 725sp and min-height: 640sp")
+    setters {
+      scrollwindow_itemlist.height-request: 250;
+      scrollwindow_itemlist.vexpand: false;
+      split_view.collapsed: true;
+    }
+  }
   content: Adw.ToolbarView {
     top-bar-style: flat;
     content: Adw.OverlaySplitView split_view {
@@ -149,7 +168,7 @@ template $GraphsWindow: Adw.ApplicationWindow {
             primary: true;
           }
           }
-        ScrolledWindow {
+        ScrolledWindow  scrollwindow_itemlist {
           height-request: 250;
           hscrollbar-policy: never;
           Viewport {
@@ -215,6 +234,7 @@ template $GraphsWindow: Adw.ApplicationWindow {
 
         ScrolledWindow {
           hscrollbar-policy: never;
+          height-request: 100;
           Viewport {
             Box {
               orientation: vertical;

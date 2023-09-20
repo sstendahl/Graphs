@@ -154,13 +154,8 @@ template $GraphsStylesWindow : Adw.Window {
                   };
                 }
 
-                Adw.ActionRow {
+                Adw.SwitchRow minor_ticks {
                   title: _("Minor Ticks");
-                  activatable-widget: minor_ticks;
-
-                  Switch minor_ticks {
-                    valign: center;
-                  }
                 }
 
                 Adw.ActionRow {
@@ -217,40 +212,20 @@ template $GraphsStylesWindow : Adw.Window {
                   }
                 }
 
-                Adw.ActionRow {
+                Adw.SwitchRow tick_bottom {
                   title: _("Ticks on Bottom Axis");
-                  activatable-widget: tick_bottom;
-
-                  Switch tick_bottom {
-                    valign: center;
-                  }
                 }
 
-                Adw.ActionRow {
+                Adw.SwitchRow tick_left {
                   title: _("Ticks on Left Axis");
-                  activatable-widget: tick_left;
-
-                  Switch tick_left {
-                    valign: center;
-                  }
                 }
 
-                Adw.ActionRow {
+                Adw.SwitchRow tick_right {
                   title: _("Ticks on Right Axis");
-                  activatable-widget: tick_right;
-
-                  Switch tick_right {
-                    valign: center;
-                  }
                 }
 
-                Adw.ActionRow {
+                Adw.SwitchRow tick_top {
                   title: _("Ticks on Top Axis");
-                  activatable-widget: tick_top;
-
-                  Switch tick_top {
-                    valign: center;
-                  }
                 }
               }
 
@@ -258,13 +233,8 @@ template $GraphsStylesWindow : Adw.Window {
                 title: _("Grid");
                 description: _("Settings for the grid");
 
-                Adw.ActionRow {
+                Adw.SwitchRow show_grid {
                   title: _("Show Grid");
-                  activatable-widget: show_grid;
-
-                  Switch show_grid {
-                    valign: center;
-                  }
                 }
 
                 Adw.ActionRow {
