@@ -85,7 +85,7 @@ class Data(GObject.Object, Graphs.DataInterface):
         """Whether or not at least one item is selected."""
         return any(item_.get_selected() for item_ in self)
 
-    @GObject.Property
+    @GObject.Property(type=object, flags=3 | 1073741824)  # explicit notify
     def items(self) -> list:
         """All managed items."""
         return self.get_items()
@@ -100,22 +100,21 @@ class Data(GObject.Object, Graphs.DataInterface):
 
     def set_items(self, items: list):
         """Set all managed items."""
+        self._items = {}
         for item_ in items:
             self._add_item(item_)
-        self._items = {item_.get_uuid(): item_ for item_ in items}
+        self.notify("items")
 
     def _add_item(self, item_):
         """Append items to self."""
         self._connect_to_item(item_)
         self._items[item_.get_uuid()] = item_
-        self.notify("items")
 
     def _delete_item(self, key):
         """Pop and delete item."""
         item_ = self._items[key]
         self._items.pop(key)
         del item_
-        self.notify("items")
 
     def index(self, item_):
         """Get the index of an item."""
@@ -149,7 +148,7 @@ class Data(GObject.Object, Graphs.DataInterface):
         else:
             items[index2:index1 + 1] = \
                 items[index2 + 1:index1 + 1] + [items[index2]]
-        self.props.items = items
+        self.set_items(items)
         self._current_batch.append((3, (index2, index1)))
 
     def add_items(self, items: list):
@@ -259,6 +258,7 @@ class Data(GObject.Object, Graphs.DataInterface):
                 (2, (self.index(item_), item.to_dict(item_))),
             )
             self._delete_item(item_.get_uuid())
+        self.notify("items")
         self.add_history_state()
         self.notify("items_selected")
 
@@ -312,61 +312,63 @@ class Data(GObject.Object, Graphs.DataInterface):
         self._set_data_copy()
 
     def undo(self):
-        if self.props.can_undo:
-            batch = self._history_states[self._history_pos][0]
-            self._history_pos -= 1
-            items_changed = False
-            for change_type, change in reversed(batch):
-                if change_type == 0:
-                    self[change[0]].set_property(change[1], change[2])
-                elif change_type == 1:
-                    self._delete_item(change["uuid"])
-                    items_changed = True
-                elif change_type == 2:
-                    item_ = item.new_from_dict(copy.deepcopy(change[1]))
-                    self._add_item(item_)
-                    self.change_position(change[0], len(self))
-                    items_changed = True
-                elif change_type == 3:
-                    self.change_position(change[0], change[1])
-                    items_changed = True
-            if items_changed:
-                self.notify("items")
-            self.notify("items_selected")
-            self.get_figure_settings().set_limits(
-                self._history_states[self._history_pos][1],
-            )
-            self.props.can_redo = True
-            self.props.can_undo = \
-                abs(self._history_pos) < len(self._history_states)
-            self._set_data_copy()
-            self.add_view_history_state()
+        if not self.props.can_undo:
+            return
+        batch = self._history_states[self._history_pos][0]
+        self._history_pos -= 1
+        items_changed = False
+        for change_type, change in reversed(batch):
+            if change_type == 0:
+                self[change[0]].set_property(change[1], change[2])
+            elif change_type == 1:
+                self._delete_item(change["uuid"])
+                items_changed = True
+            elif change_type == 2:
+                item_ = item.new_from_dict(copy.deepcopy(change[1]))
+                self._add_item(item_)
+                self.change_position(change[0], len(self))
+                items_changed = True
+            elif change_type == 3:
+                self.change_position(change[0], change[1])
+                items_changed = True
+        if items_changed:
+            self.notify("items")
+        self.notify("items_selected")
+        self.get_figure_settings().set_limits(
+            self._history_states[self._history_pos][1],
+        )
+        self.props.can_redo = True
+        self.props.can_undo = \
+            abs(self._history_pos) < len(self._history_states)
+        self._set_data_copy()
+        self.add_view_history_state()
 
     def redo(self):
-        if self.props.can_redo:
-            self._history_pos += 1
-            state = self._history_states[self._history_pos]
-            items_changed = False
-            for change_type, change in state[0]:
-                if change_type == 0:
-                    self[change[0]].set_property(change[1], change[3])
-                elif change_type == 1:
-                    self._add_item(item.new_from_dict(copy.deepcopy(change)))
-                    items_changed = True
-                elif change_type == 2:
-                    self._delete_item(change[1]["uuid"])
-                    items_changed = True
-                elif change_type == 3:
-                    self.change_position(change[1], change[0])
-                    items_changed = True
-            if items_changed:
-                self.notify("items")
-            self.notify("items_selected")
-            self.get_figure_settings().set_limits(state[1])
-            self.props.can_redo = self._history_pos < -1
-            self.props.can_undo = True
-            self._set_data_copy()
-            self.add_view_history_state()
+        if not self.props.can_redo:
+            return
+        self._history_pos += 1
+        state = self._history_states[self._history_pos]
+        items_changed = False
+        for change_type, change in state[0]:
+            if change_type == 0:
+                self[change[0]].set_property(change[1], change[3])
+            elif change_type == 1:
+                self._add_item(item.new_from_dict(copy.deepcopy(change)))
+                items_changed = True
+            elif change_type == 2:
+                self._delete_item(change[1]["uuid"])
+                items_changed = True
+            elif change_type == 3:
+                self.change_position(change[1], change[0])
+                items_changed = True
+        if items_changed:
+            self.notify("items")
+        self.notify("items_selected")
+        self.get_figure_settings().set_limits(state[1])
+        self.props.can_redo = self._history_pos < -1
+        self.props.can_undo = True
+        self._set_data_copy()
+        self.add_view_history_state()
 
     def add_view_history_state(self):
         limits = self.get_figure_settings().get_limits()
@@ -387,23 +389,25 @@ class Data(GObject.Object, Graphs.DataInterface):
             self.props.can_view_forward = False
 
     def view_back(self):
-        if abs(self._view_history_pos) < len(self._view_history_states):
-            self._view_history_pos -= 1
-            self.get_figure_settings().set_limits(
-                self._view_history_states[self._view_history_pos],
-            )
-            self.props.can_view_forward = True
-            self.props.can_view_back = \
-                abs(self._view_history_pos) < len(self._view_history_states)
+        if not self.props.can_view_back:
+            return
+        self._view_history_pos -= 1
+        self.get_figure_settings().set_limits(
+            self._view_history_states[self._view_history_pos],
+        )
+        self.props.can_view_forward = True
+        self.props.can_view_back = \
+            abs(self._view_history_pos) < len(self._view_history_states)
 
     def view_forward(self):
-        if self._view_history_pos < -1:
-            self._view_history_pos += 1
-            self.get_figure_settings().set_limits(
-                self._view_history_states[self._view_history_pos],
-            )
-            self.props.can_view_back = True
-            self.props.can_view_forward = self._view_history_pos < -1
+        if not self.props.can_view_forward:
+            return
+        self._view_history_pos += 1
+        self.get_figure_settings().set_limits(
+            self._view_history_states[self._view_history_pos],
+        )
+        self.props.can_view_back = True
+        self.props.can_view_forward = self._view_history_pos < -1
 
     def optimize_limits(self):
         figure_settings = self.get_figure_settings()
@@ -473,7 +477,8 @@ class Data(GObject.Object, Graphs.DataInterface):
     def load_from_project_dict(self, project_dict: dict):
         figure_settings = self.get_figure_settings()
         for key, value in project_dict["figure-settings"].items():
-            figure_settings.set_property(key, value)
+            if figure_settings.get_property(key) != value:
+                figure_settings.set_property(key, value)
         self.set_items([item.new_from_dict(d) for d in project_dict["data"]])
 
         self._set_data_copy()
