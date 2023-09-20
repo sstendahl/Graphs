@@ -100,6 +100,7 @@ class Data(GObject.Object, Graphs.DataInterface):
 
     def set_items(self, items: list):
         """Set all managed items."""
+        self._items = {}
         for item_ in items:
             self._add_item(item_)
         self.notify("items")
@@ -147,7 +148,7 @@ class Data(GObject.Object, Graphs.DataInterface):
         else:
             items[index2:index1 + 1] = \
                 items[index2 + 1:index1 + 1] + [items[index2]]
-        self.props.items = items
+        self.set_items(items)
         self._current_batch.append((3, (index2, index1)))
 
     def add_items(self, items: list):
