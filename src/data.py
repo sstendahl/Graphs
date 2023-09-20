@@ -85,7 +85,7 @@ class Data(GObject.Object, Graphs.DataInterface):
         """Whether or not at least one item is selected."""
         return any(item_.get_selected() for item_ in self)
 
-    @GObject.Property(type=object, flags=3 | 1073741824) # explicit notify
+    @GObject.Property(type=object, flags=3 | 1073741824)  # explicit notify
     def items(self) -> list:
         """All managed items."""
         return self.get_items()
