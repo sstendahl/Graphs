@@ -145,8 +145,8 @@ VALUE_DICT = {
 class StylesWindow(Adw.Window):
     __gtype_name__ = "GraphsStylesWindow"
 
-    leaflet = Gtk.Template.Child()
     edit_page = Gtk.Template.Child()
+    navigation_view = Gtk.Template.Child()
     styles_box = Gtk.Template.Child()
     style_color_box = Gtk.Template.Child()
     style_overview = Gtk.Template.Child()
@@ -210,7 +210,7 @@ class StylesWindow(Adw.Window):
 
     @Gtk.Template.Callback()
     def edit_line_colors(self, _button):
-        self.leaflet.push(self.style_color_box)
+        self.navigation_view.push(self.style_color_box)
         self.style_color_box.set_title(
             _("{name} - line colors").format(name=self.style.name))
 
@@ -363,7 +363,7 @@ class StyleBox(Gtk.Box):
         self.parent.style = get_style(self.file)
         self.parent.load_style()
         self.parent.edit_page.set_title(self.style)
-        self.parent.leaflet.push(self.parent.edit_page)
+        self.parent.navigation_view.push(self.parent.edit_page)
 
     @Gtk.Template.Callback()
     def on_delete(self, _button):
