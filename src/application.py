@@ -145,8 +145,13 @@ class PythonApplication(Graphs.Application):
                 "can_view_forward", window.get_view_forward_button(),
                 "sensitive", 2,
             )
-            self.set_window(window)
+            stack_switcher = \
+                Graphs.InlineStackSwitcher(stack=window.get_stack())
+            stack_switcher.add_css_class("compact")
+            stack_switcher.set_hexpand("true")
+            window.get_stack_switcher_box().prepend(stack_switcher)
             window.set_title(self.props.name)
+            self.set_window(window)
             if "(Development)" in self.props.name:
                 window.add_css_class("devel")
             ui.reload_canvas(self)

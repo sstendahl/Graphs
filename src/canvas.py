@@ -107,23 +107,22 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
         self._legend = True
         self._legend_position = misc.LEGEND_POSITIONS[0]
         self._handles = []
-        self.mpl_connect("scroll_event", self.on_scroll_event)
-        self.mpl_connect("motion_notify_event", self.get_coord_fraction)
+        self.mpl_connect("scroll_event", self._on_scroll_event)
+        self.mpl_connect("motion_notify_event", self._set_mouse_fraction)
         self.xfrac = None
         self.yfrac = None
         zoom_gesture = Gtk.GestureZoom.new()
-        zoom_gesture.connect("scale-changed", self.on_zoom_gesture)
+        zoom_gesture.connect("scale-changed", self._on_zoom_gesture)
         self.add_controller(zoom_gesture)
 
     def get_application(self):
         """Get application property."""
         return self.props.application
 
-    def get_coord_fraction(self, event):
-        xlim = self.top_right_axis.get_xlim()
-        ylim = self.top_right_axis.get_ylim()
-
+    def _set_mouse_fraction(self, event):
         if event.inaxes is not None:
+            xlim = self.top_right_axis.get_xlim()
+            ylim = self.top_right_axis.get_ylim()
             self.xfrac = utilities.get_fraction_at_value(
                 event.xdata, xlim[0], xlim[1], self.top_scale)
             self.yfrac = utilities.get_fraction_at_value(
@@ -131,45 +130,41 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
         else:
             self.xfrac, self.yfrac = None, None
 
-    def on_zoom_gesture(self, _gesture, scale):
+    def _on_zoom_gesture(self, _gesture, scale):
         scale = 1 + 0.05 * (scale - 1)
         if scale > 5 or scale < 0.2:
             # Don't scale if ridiculous values are registered
             scale = 1
-        if self.xfrac is not None and self.yfrac is not None:
-            self.on_zoom_event(scale)
+        self.zoom(scale)
 
-    def on_scroll_event(self, event):
+    def _on_scroll_event(self, event):
         scale = 1.06
-        if event.button == "up":
-            scale = 1 / scale
-        if self.xfrac is not None and self.yfrac is not None:
-            self.on_zoom_event(scale)
+        self.zoom(1 / scale if event.button == "up" else scale)
 
-    def on_zoom_event(self, scaling=1.15):
+    def zoom(self, scaling=1.15):
+        """
+        Zoom with given scaling.
+
+        Update all axes' limits in respect to the current mouse position.
+        """
+        if self.xfrac is None or self.yfrac is None:
+            return
         for ax in self.axes:
-            zoom_factor = scaling
-            xscale = scales.to_int(ax.get_xscale())
-            yscale = scales.to_int(ax.get_yscale())
-
-            xlim = ax.get_xlim()
-            ylim = ax.get_ylim()
-
-            xdata = utilities.get_value_at_fraction(
-                self.xfrac, xlim[0], xlim[1], xscale)
-            ydata = utilities.get_value_at_fraction(
-                self.yfrac, ylim[0], ylim[1], yscale)
-
-            x_min, x_max = \
-                self._calculate_zoomed_values(xdata, xscale, xlim, zoom_factor)
-            y_min, y_max = \
-                self._calculate_zoomed_values(ydata, yscale, ylim, zoom_factor)
-            ax.set_xlim(x_min, x_max)
-            ax.set_ylim(y_min, y_max)
+            ax.set_xlim(self._calculate_zoomed_values(
+                self.xfrac, scales.to_int(ax.get_xscale()),
+                ax.get_xlim(), scaling,
+            ))
+            ax.set_ylim(self._calculate_zoomed_values(
+                self.yfrac, scales.to_int(ax.get_yscale()),
+                ax.get_ylim(), scaling,
+            ))
         ax.figure.canvas.draw_idle()
 
     @staticmethod
-    def _calculate_zoomed_values(value, scale, limit, zoom_factor):
+    def _calculate_zoomed_values(fraction, scale, limit, zoom_factor):
+        value = utilities.get_value_at_fraction(
+            fraction, limit[0], limit[1], scale,
+        )
         match scale:
             case 0 | 2:
                 return (value - (value - limit[0]) / zoom_factor,
