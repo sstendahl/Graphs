@@ -1,6 +1,4 @@
-// This file is part of Elastic. License: GPL-3.0+.
-
-// For the most part a direct port of gtkstackswitcher.c
+// SPDX-License-Identifier: GPL-3.0-or-later
 
 public class Graphs.InlineStackSwitcher : Gtk.Widget {
     private const int TIMEOUT_EXPAND = 500;
