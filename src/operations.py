@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
+import contextlib
 import logging
 from gettext import gettext as _
 
@@ -46,8 +47,9 @@ def get_data(self, item):
                 startx > max(xdata))):
             new_x, new_y = sort_data(xdata, ydata)
             numpy_x = numpy.asarray(new_x)
-            start_index = numpy.where(numpy_x > startx)[0][0]
-            stop_index = numpy.where(numpy_x > stopx)[0][0]
+            with contextlib.suppress(IndexError):
+                start_index = numpy.where(numpy_x > startx)[0][0]
+                stop_index = numpy.where(numpy_x > stopx)[0][0]
             new_xdata = new_x[start_index:stop_index]
             new_ydata = new_y[start_index:stop_index]
         else:
@@ -181,9 +183,16 @@ def shift(item, xdata, ydata, left_scale, right_scale, items):
     ]
 
     for index, item_ in enumerate(data_list):
-        previous_ydata = data_list[index - 1].ydata
-        ymin = min(x for x in previous_ydata if x != 0)
-        ymax = max(x for x in previous_ydata if x != 0)
+        previous_item = data_list[index - 1]
+        numpy_xdata = numpy.asarray(previous_item.xdata)
+        start = 0
+        stop = len(previous_item.ydata)
+        with contextlib.suppress(IndexError):
+            start = numpy.where(numpy_xdata >= xdata[0])[0][0]
+            stop = numpy.where(numpy_xdata >= xdata[-1])[0][0]
+
+        ymin = min(x for x in previous_item.ydata[start:stop] if x != 0)
+        ymax = max(x for x in previous_item.ydata[start:stop] if x != 0)
         scale = right_scale if item.get_yposition() else left_scale
         if scale == 1:  # Use log values for log scaling
             shift_value_log += numpy.log10(ymax / ymin)
