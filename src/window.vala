@@ -28,6 +28,12 @@ namespace Graphs {
         private unowned ToggleButton select_button { get; }
 
         [GtkChild]
+        public unowned Box stack_switcher_box { get; }
+
+        [GtkChild]
+        public unowned Stack stack { get; }
+
+        [GtkChild]
         public unowned Button shift_button { get; }
 
         [GtkChild]
