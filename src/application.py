@@ -147,6 +147,8 @@ class PythonApplication(Graphs.Application):
             )
             stack_switcher = \
                 Graphs.InlineStackSwitcher(stack=window.get_stack())
+            stack_switcher.add_css_class("compact")
+            stack_switcher.set_hexpand("true")
             window.get_stack_switcher_box().prepend(stack_switcher)
             window.set_title(self.props.name)
             self.set_window(window)
