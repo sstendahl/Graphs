@@ -42,8 +42,8 @@ parts:
       patch -p1 < $CRAFT_PROJECT_DIR/snap/graphs.patch
     override-build: |
       craftctl default
-      pip install --prefix=$CRAFT_PART_INSTALL/usr matplotlib==3.7.1
-      pip install --prefix=$CRAFT_PART_INSTALL/usr scipy==1.10.1
+      pip install --prefix=$CRAFT_PART_INSTALL/usr matplotlib==3.8.0
+      pip install --prefix=$CRAFT_PART_INSTALL/usr scipy==1.11.2
       sed -e '1c#!/usr/bin/env python3' -i ${CRAFT_PART_INSTALL}/snap/graphs/current/usr/bin/graphs
       sed -e '1c#!/usr/bin/python3' -i $CRAFT_PART_INSTALL/usr/local/bin/*
       mkdir -p $CRAFT_PART_INSTALL/meta/gui

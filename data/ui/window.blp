@@ -1,9 +1,12 @@
 using Gtk 4.0;
 using Adw 1;
 
-template $GraphsWindow : Adw.ApplicationWindow {
+template $GraphsWindow: Adw.ApplicationWindow {
   default-width: 1200;
   default-height: 700;
+  width-request: 420;
+  height-request: 300;
+
   ShortcutController {
     Shortcut {
       trigger: "<primary>q";
@@ -42,6 +45,10 @@ template $GraphsWindow : Adw.ApplicationWindow {
       action: "action(app.redo)";
     }
     Shortcut {
+      trigger: "<primary>KP_0";
+      action: "action(app.optimize_limits)";
+    }
+    Shortcut {
       trigger: "<primary>0";
       action: "action(app.optimize_limits)";
     }
@@ -71,10 +78,6 @@ template $GraphsWindow : Adw.ApplicationWindow {
     }
     Shortcut {
       trigger: "<primary>O";
-      action: "action(app.open_project)";
-    }
-    Shortcut {
-      trigger: "<primary>KP_0";
       action: "action(app.open_project)";
     }
     Shortcut {
@@ -111,146 +114,68 @@ template $GraphsWindow : Adw.ApplicationWindow {
     }
   }
 
-  Box {
-    orientation: vertical;
-    Adw.HeaderBar {
-      ToggleButton {
-        visible: bind sidebar_flap.folded;
-        action-name: "app.toggle_sidebar";
-        icon-name: "sidebar-show-symbolic";
-        active: bind sidebar_flap.reveal-flap;
-      }
-      Box {
-        visible: bind sidebar_flap.folded inverted;
-        MenuButton add_button {
-          icon-name: "list-add-symbolic";
-          tooltip-text: _("Add new Data");
-          always-show-arrow: true;
-          menu-model: add_data_menu;
-        }
-        Separator {styles ["spacer"]}
-        Button undo_button {
-          action-name: "app.undo";
-          icon-name: "edit-undo-symbolic";
-          tooltip-text: _("Undo");
-        }
-        Button redo_button {
-          action-name: "app.redo";
-          icon-name: "edit-redo-symbolic";
-          tooltip-text: _("Redo");
-        }
-      }
-      [end]
-      MenuButton {
-        icon-name: "open-menu-symbolic";
-        menu-model: primary_menu;
-        tooltip-text: _("Open Application Menu");
-        primary: true;
-      }
-      [end]
-      Box {
-        visible: bind sidebar_flap.folded inverted;
-        Button view_back_button {
-          action-name: "app.view_back";
-          icon-name: "arrow1-left-symbolic";
-          tooltip-text: _("Previous View");
-        }
-        Button view_forward_button {
-          action-name: "app.view_forward";
-          icon-name: "arrow1-right-symbolic";
-          tooltip-text: _("Next View");
-        }
-        MenuButton view_menu_button {
-          icon-name: "view-reveal-symbolic";
-          tooltip-text: _("View Menu");
-          always-show-arrow: true;
-          menu-model: view_menu;
-        }
-        Separator {styles ["spacer"]}
-      }
+  // If both width and height are limited
+  Adw.Breakpoint {
+    condition ("max-width: 725sp and max-height: 640sp")
+    setters {
+      scrollwindow_itemlist.height-request: 60;
+      scrollwindow_itemlist.vexpand: true;
+      split_view.collapsed: true;
     }
-    Adw.Flap sidebar_flap {
-      reveal-flap: true;
-      fold-policy: auto;
-      swipe-to-open: true;
-      swipe-to-close: true;
+  }
+
+  // If only height is limited
+  Adw.Breakpoint {
+    condition ("min-width: 725sp and max-height: 640sp")
+    setters {
+      scrollwindow_itemlist.height-request: 60;
+      scrollwindow_itemlist.vexpand: true;
+    }
+  }
+
+  // If only width is limited
+  Adw.Breakpoint {
+    condition ("max-width: 725sp and min-height: 640sp")
+    setters {
+      scrollwindow_itemlist.height-request: 250;
+      scrollwindow_itemlist.vexpand: false;
+      split_view.collapsed: true;
+    }
+  }
+  content: Adw.ToolbarView {
+    top-bar-style: flat;
+    content: Adw.OverlaySplitView split_view {
+      show-sidebar: bind show_sidebar_button.active;
       notify => $on_sidebar_toggle();
-
-      [flap]
-      Box {
+      sidebar: Box {
         orientation: vertical;
-        width-request: 370;
-        hexpand: false;
-        styles ["background"]
-
-        Box {
-          visible: bind sidebar_flap.folded;
-          margin-top: 6;
-          margin-bottom: 6;
-          margin-start: 6;
-          margin-end: 6;
-          MenuButton {
-            icon-name: bind add_button.icon-name;
-            tooltip-text: bind add_button.tooltip-text;
-            menu-model: bind add_button.menu-model;
+        width-request: 350;
+        Adw.HeaderBar sidebar_headerbar {
+          width-request: 350;
+          styles ["flat"]
+          [start]
+          MenuButton add_button {
+            icon-name: "list-add-symbolic";
+            tooltip-text: _("Add new Data");
             always-show-arrow: true;
-            styles ["flat"]
+            menu-model: add_data_menu;
           }
-          Separator {styles ["spacer"]}
-          Button {
-            action-name: bind undo_button.action-name;
-            icon-name: bind undo_button.icon-name;
-            tooltip-text: bind undo_button.tooltip-text;
-            sensitive: bind undo_button.sensitive;
-            styles ["flat"]
-          }
-          Button {
-            action-name: bind redo_button.action-name;
-            icon-name: bind redo_button.icon-name;
-            tooltip-text: bind redo_button.tooltip-text;
-            sensitive: bind redo_button.sensitive;
-            styles ["flat"]
-          }
-          Separator {
-            hexpand: true;
-            styles ["spacer"]
-          }
-          Button {
-            action-name: bind view_back_button.action-name;
-            icon-name: bind view_back_button.icon-name;
-            tooltip-text: bind view_back_button.tooltip-text;
-            sensitive: bind view_back_button.sensitive;
-            styles ["flat"]
-          }
-          Button {
-            action-name: bind view_forward_button.action-name;
-            icon-name: bind view_forward_button.icon-name;
-            tooltip-text: bind view_forward_button.tooltip-text;
-            sensitive: bind view_forward_button.sensitive;
-            styles ["flat"]
-          }
-          Separator {styles ["spacer"]}
+          [end]
           MenuButton {
-            icon-name: bind view_menu_button.icon-name;
-            tooltip-text: bind view_menu_button.tooltip-text;
-            menu-model: bind view_menu_button.menu-model;
-            always-show-arrow: true;
-            styles ["flat"]
+            icon-name: "open-menu-symbolic";
+            menu-model: primary_menu;
+            tooltip-text: _("Open Application Menu");
+            primary: true;
           }
-        }
-        Separator {
-          orientation: horizontal;
-          visible: bind sidebar_flap.folded;
-        }
-
-        ScrolledWindow {
+          }
+        ScrolledWindow  scrollwindow_itemlist {
           height-request: 250;
           hscrollbar-policy: never;
           Viewport {
             Box {
               ListBox item_list {
                 margin-bottom: 12;
-                margin-top: 12;
+                margin-top: 6;
                 margin-start: 12;
                 margin-end: 12;
                 vexpand: false;
@@ -273,7 +198,6 @@ template $GraphsWindow : Adw.ApplicationWindow {
             }
           }
         }
-
         Separator {
           orientation: horizontal;
         }
@@ -310,6 +234,7 @@ template $GraphsWindow : Adw.ApplicationWindow {
 
         ScrolledWindow {
           hscrollbar-policy: never;
+          height-request: 100;
           Viewport {
             Box {
               orientation: vertical;
@@ -330,9 +255,6 @@ template $GraphsWindow : Adw.ApplicationWindow {
                 Grid {
                   column-spacing: 10;
                   row-spacing: 10;
-                  margin-start: 12;
-                  margin-end: 12;
-                  margin-top: 12;
                   margin-bottom:12;
                   Button shift_button {
                     hexpand: true;
@@ -429,7 +351,6 @@ template $GraphsWindow : Adw.ApplicationWindow {
                     clicked => $perform_operation();
                   }
                 }
-                styles ["card"]
               }
               Label {
                 margin-top: 6;
@@ -442,9 +363,6 @@ template $GraphsWindow : Adw.ApplicationWindow {
                 Grid {
                   column-spacing: 10;
                   row-spacing: 10;
-                  margin-start: 12;
-                  margin-end: 12;
-                  margin-top: 12;
                   margin-bottom:12;
                   Button {
                     hexpand: true;
@@ -527,7 +445,6 @@ template $GraphsWindow : Adw.ApplicationWindow {
                     clicked => $perform_operation();
                   }
                 }
-                styles ["card"]
               }
               Label {
                 halign: start;
@@ -540,9 +457,6 @@ template $GraphsWindow : Adw.ApplicationWindow {
                 Grid {
                   column-spacing: 10;
                   row-spacing: 10;
-                  margin-start: 12;
-                  margin-end: 12;
-                  margin-top: 12;
                   margin-bottom:12;
                   Entry translate_x_entry {
                     max-width-chars: 6;
@@ -636,30 +550,66 @@ template $GraphsWindow : Adw.ApplicationWindow {
                     }
                   }
                 }
-                styles ["card"]
               }
             }
           }
         }
-      }
+      };
 
-      [separator]
-      Separator {
-        orientation: vertical;
-      }
-
-      [content]
-      Adw.ToastOverlay toast_overlay {
-        focusable: true;
-        height-request: 200;
-        width-request: 200;
-        child: Adw.StatusPage {
-          icon-name: "dialog-error-symbolic";
-          title: _("Canvas Failed to Load");
-        };
-      }
-    }
-  }
+      content:
+      Box {
+      orientation: vertical;
+        Adw.HeaderBar content_headerbar {
+          styles ["flat"]
+          show-title: false;
+          ToggleButton show_sidebar_button {
+            icon-name: "sidebar-show-symbolic";
+            tooltip-text: _("Toggle Sidebar");
+            active: bind split_view.show-sidebar;
+            visible: bind split_view.collapsed;
+          }
+          Button undo_button {
+            action-name: "app.undo";
+            icon-name: "edit-undo-symbolic";
+            tooltip-text: _("Undo");
+          }
+          Button redo_button {
+            action-name: "app.redo";
+            icon-name: "edit-redo-symbolic";
+            tooltip-text: _("Redo");
+          }
+          [end]
+          MenuButton view_menu_button {
+            icon-name: "view-reveal-symbolic";
+            tooltip-text: _("View Menu");
+            always-show-arrow: true;
+            menu-model: view_menu;
+          }
+          [end]
+          Button view_forward_button {
+            action-name: "app.view_forward";
+            icon-name: "arrow1-right-symbolic";
+            tooltip-text: _("Next View");
+          }
+          [end]
+          Button view_back_button {
+            action-name: "app.view_back";
+            icon-name: "arrow1-left-symbolic";
+            tooltip-text: _("Previous View");
+          }
+        }
+        Adw.ToastOverlay toast_overlay {
+          focusable: true;
+          height-request: 200;
+          width-request: 200;
+          child: Adw.StatusPage {
+            icon-name: "dialog-error-symbolic";
+            title: _("Canvas Failed to Load");
+          };
+        }
+      };
+    };
+  };
 }
 
 menu primary_menu {
@@ -746,6 +696,7 @@ menu view_menu {
         action: "app.change-bottom-scale";
         target: "2";
       }
+
       item {
         label: _("Square Root");
         action: "app.change-bottom-scale";

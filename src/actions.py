@@ -43,8 +43,8 @@ def perform_operation(_action, target, self):
 
 
 def toggle_sidebar(_action, _shortcut, self):
-    flap = self.get_window().get_sidebar_flap()
-    flap.set_reveal_flap(not flap.get_reveal_flap())
+    split_view = self.get_window().get_split_view()
+    split_view.set_collapsed(not split_view.get_collapsed())
 
 
 def set_mode(_action, _target, self, mode):

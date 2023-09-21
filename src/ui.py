@@ -160,8 +160,6 @@ def load_values_from_dict(window, values: dict, ignorelist=None):
                 widget.set_text(str(value))
             elif isinstance(widget, Adw.ComboRow):
                 widget.set_selected(int(value))
-            elif isinstance(widget, Gtk.SpinButton):
-                widget.set_value(value)
             elif isinstance(widget, Gtk.Switch):
                 widget.set_active(bool(value))
             elif isinstance(widget, Adw.ExpanderRow):
@@ -171,6 +169,10 @@ def load_values_from_dict(window, values: dict, ignorelist=None):
                 widget.set_value(value)
             elif isinstance(widget, Gtk.Button):
                 widget.color = value
+            elif isinstance(widget, Adw.SwitchRow):
+                widget.set_active(bool(value))
+            elif isinstance(widget, Adw.SpinRow):
+                widget.set_value(value)
             else:
                 logging.warn(_("Unsupported Widget {}").format(type(widget)))
         except AttributeError:
@@ -188,8 +190,6 @@ def save_values_to_dict(window, keys: list, ignorelist=None):
                 values[key] = str(widget.get_text())
             elif isinstance(widget, Adw.ComboRow):
                 values[key] = widget.get_selected()
-            elif isinstance(widget, Gtk.SpinButton):
-                values[key] = widget.get_value()
             elif isinstance(widget, Gtk.Switch):
                 values[key] = bool(widget.get_active())
             elif isinstance(widget, Adw.ExpanderRow):
@@ -198,6 +198,10 @@ def save_values_to_dict(window, keys: list, ignorelist=None):
                 values[key] = widget.get_value()
             elif isinstance(widget, Gtk.Button):
                 values[key] = widget.color
+            elif isinstance(widget, Adw.SwitchRow):
+                values[key] = bool(widget.get_active())
+            elif isinstance(widget, Adw.SpinRow):
+                values[key] = widget.get_value()
     return values
 
 
@@ -224,13 +228,15 @@ def bind_values_to_settings(settings, window, prefix="", ignorelist=None):
                     f"changed::{key}", _on_settings_update, widget)
                 widget.connect(
                     "notify::selected", _on_settings_select, settings, key)
-            elif isinstance(widget, Gtk.SpinButton):
-                settings.bind(key, widget, "value", 0)
             elif isinstance(widget, Gtk.Switch):
                 settings.bind(key, widget, "active", 0)
             elif isinstance(widget, Adw.ExpanderRow):
                 settings.bind(key, widget, "enable-expansion", 0)
                 widget.set_expanded(True)
+            elif isinstance(widget, Adw.SwitchRow):
+                settings.bind(key, widget, "active", 0)
+            elif isinstance(widget, Adw.SpinRow):
+                settings.bind(key, widget, "value", 0)
             else:
                 logging.warn(_("Unsupported Widget {}").format(type(widget)))
         except AttributeError:

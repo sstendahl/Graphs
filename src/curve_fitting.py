@@ -168,7 +168,7 @@ class CurveFittingWindow(Graphs.CurveFittingTool):
                 p0=self.fitting_parameters.get_p0(),
                 bounds=self.fitting_parameters.get_bounds(), nan_policy="omit",
             )
-        except (ValueError, TypeError, _minpack.error):
+        except (ValueError, TypeError, _minpack.error, RuntimeError):
             # Cancel fit if not succesfull
             return
         xdata = numpy.linspace(

@@ -63,49 +63,34 @@ template $GraphsImportWindow : Adw.Window {
             };
           }
 
-          Adw.ActionRow {
+          Adw.SpinRow columns_column_x {
             title: _("Column X");
             subtitle: _("X-data column index");
-            SpinButton columns_column_x {
-              valign: center;
-              numeric: true;
+            adjustment: Adjustment {
+              step-increment: 1;
+              upper: 100;
               value: 0;
-              wrap: true;
-              adjustment: Adjustment {
-                step-increment: 1;
-                upper: 100;
-              };
-            }
+            };
           }
 
-          Adw.ActionRow {
+          Adw.SpinRow columns_column_y {
             title: _("Column Y");
+            selectable: false;
             subtitle: _("Y-data column index");
-            SpinButton columns_column_y {
-              valign: center;
-              numeric: true;
-              value: 0;
-              wrap: true;
-              adjustment: Adjustment {
-                step-increment: 1;
-                upper: 100;
-              };
-            }
+            adjustment: Adjustment {
+              step-increment: 1;
+              upper: 100;
+
+            };
           }
 
-          Adw.ActionRow {
+          Adw.SpinRow columns_skip_rows {
             title: _("Skip Rows");
             subtitle: _("Ignored row indices");
-            SpinButton columns_skip_rows {
-              valign: center;
-              numeric: true;
-              value: 0;
-              wrap: true;
-              adjustment: Adjustment {
-                step-increment: 1;
-                upper: 999;
-              };
-            }
+            adjustment: Adjustment {
+              step-increment: 1;
+              upper: 9999;
+            };
           }
         }
       }

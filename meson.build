@@ -10,7 +10,7 @@ dependencies = [
   dependency('gobject-2.0'),
   dependency('gio-2.0'),
   dependency('gtk4'),
-  dependency('libadwaita-1', version: '>= 1.2'),
+  dependency('libadwaita-1', version: '>= 1.4'),
 ]
 
 application_id = 'se.sjoerd.Graphs'
