@@ -45,17 +45,9 @@ def get_data(self, item):
         if not ((startx < min(xdata) and stopx < min(xdata)) or (
                 startx > max(xdata))):
             new_x, new_y = sort_data(xdata, ydata)
-            found_start = False
-            found_stop = False
-            for index, value in enumerate(xdata):
-                if value > startx and not found_start:
-                    start_index = index
-                    found_start = True
-                if value > stopx and not found_stop:
-                    stop_index = index
-                    found_stop = True
-            start_index, stop_index = min([start_index, stop_index]), \
-                max([start_index, stop_index])
+            numpy_x = numpy.asarray(new_x)
+            start_index = numpy.where(numpy_x > startx)[0][0]
+            stop_index = numpy.where(numpy_x > stopx)[0][0]
             new_xdata = new_x[start_index:stop_index]
             new_ydata = new_y[start_index:stop_index]
         else:

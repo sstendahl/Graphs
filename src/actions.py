@@ -43,8 +43,8 @@ def perform_operation(_action, target, self):
 
 
 def toggle_sidebar(_action, _shortcut, self):
-    sidebar = self.get_window().get_split_view()
-    sidebar.set_collapsed(not sidebar.get_collapsed())
+    split_view = self.get_window().get_split_view()
+    split_view.set_collapsed(not split_view.get_collapsed())
 
 
 def set_mode(_action, _target, self, mode):
