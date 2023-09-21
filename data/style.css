@@ -1,0 +1,125 @@
+@define-color card_border @card_shade_color;
+
+.card-separator {
+  background: @card_border;
+}
+
+.circular-large {
+  min-width: 50px;
+  min-height: 50px;
+  padding: 0;
+  border-radius: 100px;
+  -gtk-icon-size: 24px;
+}
+
+inline-stack-switcher {
+  background: alpha(currentColor, .1);
+  border-radius: 9px;
+  padding: 3px;
+}
+
+inline-stack-switcher button {
+  padding: 2px 15px;
+  transition: 200ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transition-property: outline-color, outline-width, outline-offset, background, box-shadow;
+}
+
+inline-stack-switcher:not(.compact) button {
+  min-width: 100px;
+}
+
+inline-stack-switcher button:checked {
+  background: alpha(@card_bg_color, 2);
+  color: @card_fg_color;
+  box-shadow: 0 1px 3px 1px alpha(black, .07),
+              0 2px 6px 2px alpha(black, .03);
+}
+
+inline-stack-switcher separator {
+  margin: 3px 1px;
+  transition: opacity 200ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+inline-stack-switcher separator.hidden {
+  opacity: 0;
+}
+
+transforms-view {
+  padding: 20px 0;
+}
+
+transforms-view transform-bin {
+  min-width: 120px;
+  min-height: 120px;
+  filter: drop-shadow(0 2px 2px alpha(black, .2));
+}
+
+transforms-view .htranslate,
+transforms-view .vtranslate,
+transforms-view .scale {
+  min-width: 30px;
+  min-height: 30px;
+  border-radius: 24px;
+  background: #33d17a;
+}
+
+transforms-view .scale {
+  background: linear-gradient(to bottom, @blue_2, @blue_4);
+}
+
+transforms-view .htranslate {
+  background: linear-gradient(to bottom, @green_2, @green_5);
+}
+
+transforms-view .vtranslate {
+  background: linear-gradient(to bottom, @yellow_2, @yellow_5);
+}
+
+transforms-view .rotate {
+  min-width: 54px;
+  min-height: 90px;
+  border-radius: 12px;
+  background: linear-gradient(to bottom, @red_1, @red_3);
+}
+
+interactive-view .handle {
+  min-width: 96px;
+  min-height: 96px;
+  border-radius: 48px;
+  background: linear-gradient(to bottom, @red_1, @red_3);
+  box-shadow: 0 3px 3px alpha(black, .2);
+  color: white;
+}
+
+graph-view {
+  border-bottom: 1px solid @card_border;
+}
+
+properties-view > property-row {
+  /* The shadow from both widgets overlaps each other */
+  box-shadow: 0 0 0 1px alpha(@card_border, .5);
+  border-radius: 0;
+  padding: 0;
+}
+
+export-view textview.compact {
+  font-size: 10pt;
+}
+
+export-view textview.inline,
+export-view textview.inline text {
+  background: none;
+}
+
+export-view .copy-button {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+  padding: 9px;
+  outline-offset: 5px;
+}
+
+export-view .copy-button:focus:focus-visible {
+  outline-offset: -1px;
+}

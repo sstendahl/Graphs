@@ -8,7 +8,7 @@ Classes:
 import logging
 from gettext import gettext as _
 
-from gi.repository import GLib, Gio, Graphs
+from gi.repository import Gtk, GLib, Gio, Graphs
 
 from graphs import actions, migrate, ui
 from graphs.data import Data
@@ -145,8 +145,11 @@ class PythonApplication(Graphs.Application):
                 "can_view_forward", window.get_view_forward_button(),
                 "sensitive", 2,
             )
-            self.set_window(window)
+            stack_switcher = \
+                Graphs.InlineStackSwitcher(stack=window.get_stack())
+            window.get_stack_switcher_box().prepend(stack_switcher)
             window.set_title(self.props.name)
+            self.set_window(window)
             if "(Development)" in self.props.name:
                 window.add_css_class("devel")
             ui.reload_canvas(self)

@@ -46,6 +46,7 @@ graphs_lib = shared_library(
     'figure_settings.vala',
     'interfaces.vala',
     'item.vala',
+    'inline-stack-switcher.vala',
     'misc.vala',
     'preferences.vala',
     'utilities.vala',

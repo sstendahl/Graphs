@@ -45,6 +45,9 @@
     <file preprocess="xml-stripblanks">ui/transform_window.ui</file>
     <file preprocess="xml-stripblanks">ui/window.ui</file>
     <file compressed="True">whats_new</file>
+    <file>style.css</file>
+    <file>style-hc.css</file>
+
   </gresource>
   <gresource prefix="/se/sjoerd/Graphs/icons/scalable/actions/">
     <file preprocess="xml-stripblanks" alias="arrow1-left-symbolic.svg">icons/arrow1-left-symbolic.svg</file>
