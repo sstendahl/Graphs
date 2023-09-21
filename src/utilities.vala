@@ -31,10 +31,10 @@ namespace Graphs {
                         comborow.set_selected (settings.get_enum (key));
                     });
                 }
-                else if (widget is Gtk.SpinButton) {
-                    settings.bind (key, widget, "value", 0);
-                }
                 else if (widget is Gtk.Switch) {
+                    settings.bind (key, widget, "active", 0);
+                }
+                else if (widget is Adw.SwitchRow) {
                     settings.bind (key, widget, "active", 0);
                 }
                 else if (widget is Adw.ExpanderRow) {

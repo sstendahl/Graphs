@@ -23,7 +23,6 @@ class ExportFigureWindow(Adw.Window):
             application=application, transient_for=application.get_window(),
             file_formats=self._canvas.get_supported_filetypes_grouped(),
         )
-
         self.file_format.set_model(
             Gtk.StringList.new(list(self.file_formats.keys())))
         ui.bind_values_to_settings(

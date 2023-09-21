@@ -39,32 +39,19 @@ template $GraphsExportFigureWindow : Adw.Window {
       margin-top: 12;
       margin-bottom: 12;
       Adw.PreferencesGroup {
+        focus-on-click: false;
         Adw.ComboRow file_format {
           title: _("File Format");
         }
-
-      Adw.ActionRow {
-        title: _("Resolution (dpi)");
-
-        SpinButton dpi {
-          valign: center;
-          numeric: true;
-          value: 100;
-          wrap: true;
+        Adw.SpinRow dpi {
+          title: _("Resolution (dpi)");
           adjustment: Adjustment {
-            step-increment: 1;
-            upper: 999;
+              step-increment: 1;
+              upper: 9999;
           };
         }
-      }
-
-        Adw.ActionRow {
+        Adw.SwitchRow transparent {
           title: _("Transparent Background");
-          activatable-widget: transparent;
-
-          Switch transparent {
-            valign: center;
-          }
         }
       }
     }
