@@ -2,6 +2,8 @@
 <schemalist gettext-domain="graphs">
   <enum id="se.sjoerd.Graphs.system-styles">
     <value nick="adwaita" value="0"/>
+    <value nick="seaborn" value="1"/>
+    <value nick="yaru" value="2"/>
   </enum>
 
   <enum id="se.sjoerd.Graphs.general.center-values">
