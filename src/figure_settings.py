@@ -58,7 +58,8 @@ class FigureSettingsWindow(Adw.PreferencesWindow):
             self.props.figure_settings.get_custom_style())
         self.custom_style.set_model(Gtk.StringList.new(styles_))
         self.custom_style.set_selected(style_index)
-
+        self.custom_style.connect(
+            "notify::selected", self.on_custom_style_select)
         self.set_axes_entries()
         self.no_data_message.set_visible(
             self.get_application().get_data().is_empty(),
@@ -95,7 +96,6 @@ class FigureSettingsWindow(Adw.PreferencesWindow):
         self.get_application().get_data().add_view_history_state()
         self.destroy()
 
-    @Gtk.Template.Callback()
     def on_custom_style_select(self, comborow, _ignored):
         selected_style = comborow.get_selected_item().get_string()
         if selected_style != self.props.figure_settings.get_custom_style():
