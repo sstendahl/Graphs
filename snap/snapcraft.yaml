@@ -29,7 +29,7 @@ parts:
     after: [ blueprint-compiler ]
     # See 'snapcraft plugins'
     plugin: meson
-    source: https://github.com/Sjoerd1993/Graphs.git
+    source: .
     #source-tag: 'v1.5.2'
     meson-parameters:
       - --prefix=/snap/graphs/current/usr
