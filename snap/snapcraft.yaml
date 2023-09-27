@@ -1,8 +1,8 @@
-name: graphs # you probably want to 'snapcraft register <name>'
-base: core22 # the base snap is the execution environment for this snap
+name: graphs
+base: core22
 adopt-info: graphs
-grade: stable # must be 'stable' to release into candidate/stable channels
-confinement: strict # use 'strict' once you have the right plugs and slots
+grade: stable 
+confinement: strict
 compression: lzo
 license: GPL-3.0
 architectures:
@@ -27,10 +27,8 @@ parts:
       echo 'Skip'
   graphs:
     after: [ blueprint-compiler ]
-    # See 'snapcraft plugins'
     plugin: meson
     source: .
-    #source-tag: 'v1.5.2'
     meson-parameters:
       - --prefix=/snap/graphs/current/usr
       - --buildtype=release
@@ -56,14 +54,7 @@ parts:
       usr/local: usr
       usr/lib/python3: usr/lib/python3.10
     parse-info: [usr/share/appdata/se.sjoerd.Graphs.appdata.xml]
-    prime:
-      - meta/*
-      - usr/bin/graphs
-      - usr/lib/python3.10/
-      - usr/share/app*
-      - usr/share/i*
-      - usr/share/l*
-      - usr/share/g*
+    
     
 apps:
   graphs:
@@ -72,5 +63,5 @@ apps:
     common-id: se.sjoerd.Graphs
     environment:
       PYTHONPATH: $SNAP/usr/lib/python3.10/dist-packages:$PYTHONPATH
-      GI_TYPELIB_PATH: $SNAP/usr/share/gir-1.0:$GI_TYPELIB_PATH
+      GI_TYPELIB_PATH: $SNAP/usr/lib/$CRAFT_ARCH_TRIPLET/girepository-1.0:$GI_TYPELIB_PATH
     extensions: [gnome]
