@@ -29,7 +29,7 @@ parts:
     after: [ blueprint-compiler ]
     # See 'snapcraft plugins'
     plugin: meson
-    source: https://github.com/Sjoerd1993/Graphs.git
+    source: .
     #source-tag: 'v1.5.2'
     meson-parameters:
       - --prefix=/snap/graphs/current/usr
@@ -72,4 +72,5 @@ apps:
     common-id: se.sjoerd.Graphs
     environment:
       PYTHONPATH: $SNAP/usr/lib/python3.10/dist-packages:$PYTHONPATH
+      GI_TYPELIB_PATH: $SNAP/usr/share/gir-1.0:$GI_TYPELIB_PATH
     extensions: [gnome]
