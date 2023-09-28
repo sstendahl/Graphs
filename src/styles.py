@@ -16,7 +16,7 @@ def get_user_styles(self):
     config_dir = utilities.get_config_directory()
     directory = config_dir.get_child_for_display_name("styles")
     if not directory.query_exists(None):
-        reset_user_styles(self)
+        directory.make_directory_with_parents(None)
     styles = {}
     enumerator = directory.enumerate_children("default::*", 0, None)
     while 1:
@@ -26,37 +26,7 @@ def get_user_styles(self):
         file = enumerator.get_child(file_info)
         styles[Path(utilities.get_filename(file)).stem] = file
     enumerator.close(None)
-    if not styles:
-        reset_user_styles(self)
-        styles = get_user_styles(self)
     return styles
-
-
-def reset_user_styles(self):
-    config_dir = utilities.get_config_directory()
-    directory = config_dir.get_child_for_display_name("styles")
-    if not directory.query_exists(None):
-        directory.make_directory_with_parents(None)
-    enumerator = directory.enumerate_children("default::*", 0, None)
-    while 1:
-        file_info = enumerator.next_file(None)
-        if file_info is None:
-            break
-        file = enumerator.get_child(file_info)
-        file.trash(None)
-    enumerator.close(None)
-    enumerator = Gio.File.new_for_uri(
-        "resource:///se/sjoerd/Graphs/styles",
-    ).enumerate_children("default::*", 0, None)
-    while 1:
-        file_info = enumerator.next_file(None)
-        if file_info is None:
-            break
-        enumerator.get_child(file_info).copy(
-            directory.get_child_for_display_name(file_info.get_display_name()),
-            0, None,
-        )
-    enumerator.close(None)
 
 
 def get_style(file):
@@ -292,19 +262,6 @@ class StylesWindow(Adw.Window):
     @Gtk.Template.Callback()
     def add_style(self, _button):
         AddStyleWindow(self.get_application(), self)
-
-    @Gtk.Template.Callback()
-    def reset_styles(self, _button):
-        def on_accept(_dialog, response):
-            if response == "reset":
-                reset_user_styles(self.get_application())
-                self.reload_styles()
-        body = _("Are you sure you want to reset to the default styles?")
-        dialog = ui.build_dialog("reset_to_defaults")
-        dialog.set_body(body)
-        dialog.set_transient_for(self)
-        dialog.connect("response", on_accept)
-        dialog.present()
 
     def reload_styles(self):
         for box in self.styles.copy():
