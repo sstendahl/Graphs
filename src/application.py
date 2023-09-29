@@ -9,7 +9,7 @@ import logging
 
 from gettext import gettext as _
 
-from gi.repository import GLib, Gio, Graphs
+from gi.repository import GLib, Gio, Graphs, Gtk
 
 from graphs import actions, migrate, ui
 from graphs.data import Data
@@ -38,11 +38,13 @@ class PythonApplication(Graphs.Application):
     def __init__(self, application_id, **kwargs):
         """Init the application."""
         settings = Gio.Settings(application_id)
+        gtk_theme = Gtk.Settings.get_default().get_property("gtk-theme-name")
         migrate.migrate_config(settings)
         super().__init__(
             application_id=application_id, settings=settings,
             flags=Gio.ApplicationFlags.DEFAULT_FLAGS,
             data=Data(self, settings),
+            gtk_theme=gtk_theme,
             **kwargs,
         )
         font_list = font_manager.findSystemFonts(fontpaths=None, fontext="ttf")
@@ -58,7 +60,6 @@ class PythonApplication(Graphs.Application):
                 "activate", getattr(actions, f"{name}_action"), self,
             )
             self.add_action(action)
-
         figure_settings = self.get_data().get_figure_settings()
         for val in ["left-scale", "right-scale", "top-scale", "bottom-scale"]:
             action = Gio.SimpleAction.new_stateful(

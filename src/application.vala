@@ -13,5 +13,6 @@ namespace Graphs {
         public string issues { get; construct set; default = ""; }
         public string author { get; construct set; default = ""; }
         public string pkgdatadir { get; construct set; default = ""; }
+        public string gtk_theme { get; construct set; default = "adwaita"; }
     }
 }

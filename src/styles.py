@@ -83,13 +83,10 @@ def get_style(file):
 
 
 def update(self):
-    if "SNAP" in os.environ:
-        current_theme = \
-            Gtk.Settings.get_default().get_property("gtk-theme-name")
-        if current_theme.lower().startswith("yaru"):
+    system_stylename = "adwaita"
+    if "SNAP" not in os.environ:
+        if self.get_gtk_theme().lower().startswith("yaru"):
             system_stylename = "yaru"
-    else:
-        system_stylename = "adwaita"
 
     if Adw.StyleManager.get_default().get_dark():
         system_stylename += "-dark"
