@@ -308,10 +308,7 @@ class StylesWindow(Adw.Window):
                 box.label.set_hexpand(True)
             self.styles.append(box)
             self.styles_box.append(box)
-        if len(self.styles) == 0:
-            self.styles_box.set_visible(False)
-        else:
-            self.styles_box.set_visible(True)
+        self.styles_box.set_visible(len(self.styles) != 0)
 
     @Gtk.Template.Callback()
     def on_close(self, _button):
