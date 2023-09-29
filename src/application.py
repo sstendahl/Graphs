@@ -6,9 +6,11 @@ Classes:
     GraphsApplication
 """
 import logging
+import os
+
 from gettext import gettext as _
 
-from gi.repository import GLib, Gio, Graphs
+from gi.repository import GLib, Gio, Graphs, Gtk
 
 from graphs import actions, migrate, ui
 from graphs.data import Data
@@ -102,6 +104,13 @@ class PythonApplication(Graphs.Application):
         operation_action.connect("activate", actions.perform_operation, self)
         self.add_action(operation_action)
 
+        if "SNAP" in os.environ:
+            current_theme = \
+                Gtk.Settings.get_default().get_property("gtk-theme-name")
+            if current_theme.lower().startswith("yaru"):
+                self.get_settings().set_string("system-style", "yaru")
+            else:
+                self.get_settings().set_string("system-style", "adwaita")
         self.get_style_manager().connect(
             "notify", ui.on_figure_style_change, self,
         )
