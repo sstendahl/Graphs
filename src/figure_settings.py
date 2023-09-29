@@ -58,8 +58,8 @@ class FigureSettingsWindow(Adw.PreferencesWindow):
             style_index = styles_.index(
                 self.props.figure_settings.get_custom_style())
         except ValueError:
-            style_index = 0
-            self.props.figure_settings.set_custom_style(styles_[0])
+            style_index = styles_.index("adwaita")
+            self.props.figure_settings.set_custom_style("adwaita")
         self.custom_style.set_model(Gtk.StringList.new(styles_))
         self.custom_style.set_selected(style_index)
         self.custom_style.connect(
