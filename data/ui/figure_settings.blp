@@ -172,7 +172,6 @@ template $GraphsFigureSettingsWindow : Adw.PreferencesWindow {
         show-enable-switch: true;
         Adw.ComboRow custom_style {
           title: _("Style");
-          notify::selected => $on_custom_style_select();
         }
       }
     }

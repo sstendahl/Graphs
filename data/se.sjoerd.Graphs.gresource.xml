@@ -28,6 +28,8 @@
     <file compressed="True">styles/solarized-light.mplstyle</file>
     <file compressed="True">styles/tableau-colorblind10.mplstyle</file>
     <file compressed="True">styles/thesis.mplstyle</file>
+    <file compressed="True">styles/yaru.mplstyle</file>
+    <file compressed="True">styles/yaru-dark.mplstyle</file>
     <file preprocess="xml-stripblanks">ui/add_equation_window.ui</file>
     <file preprocess="xml-stripblanks">ui/add_style.ui</file>
     <file preprocess="xml-stripblanks">ui/curve_fitting.ui</file>
@@ -62,6 +64,7 @@
     <file preprocess="xml-stripblanks" alias="history-undo-symbolic.svg">icons/history-undo-symbolic.svg</file>
     <file preprocess="xml-stripblanks" alias="horizontal-arrows-symbolic.svg">icons/horizontal-arrows-symbolic.svg</file>
     <file preprocess="xml-stripblanks" alias="info-symbolic.svg">icons/info-symbolic.svg</file>
+    <file preprocess="xml-stripblanks" alias="image-print-symbolic.svg">icons/image-print-symbolic.svg</file>
     <file preprocess="xml-stripblanks" alias="integral-symbolic.svg">icons/integral-symbolic.svg</file>
     <file preprocess="xml-stripblanks" alias="inverse-fast-fourier-transform-symbolic.svg">icons/inverse-fast-fourier-transform-symbolic.svg</file>
     <file preprocess="xml-stripblanks" alias="left-symbolic.svg">icons/left-symbolic.svg</file>
@@ -79,4 +82,3 @@
     <file preprocess="xml-stripblanks" alias="down-symbolic.svg">icons/down-symbolic.svg</file>
   </gresource>
 </gresources>
-
