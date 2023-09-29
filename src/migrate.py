@@ -3,7 +3,9 @@ import contextlib
 import pickle
 import sys
 
-from graphs import file_io, misc, utilities
+from gi.repository import GLib, Gio
+
+from graphs import file_io, misc, styles, utilities
 
 
 CONFIG_MIGRATION_TABLE = {
@@ -37,15 +39,21 @@ CONFIG_MIGRATION_TABLE = {
 
 def migrate_config(settings):
     """Migrate old file-based user config to dconf"""
-    config_dir = utilities.get_config_directory()
-    if not config_dir.query_exists(None):
+    main_dir = Gio.File.new_for_path(GLib.get_user_config_dir())
+    old_config_dir = main_dir.get_child_for_display_name("Graphs")
+    if not old_config_dir.query_exists(None):
         return
-    config_file = config_dir.get_child_for_display_name("config.json")
-    import_file = config_dir.get_child_for_display_name("import.json")
+    new_config_dir = utilities.get_config_directory()
+    config_file = old_config_dir.get_child_for_display_name("config.json")
+    import_file = old_config_dir.get_child_for_display_name("import.json")
+    old_styles_dir = old_config_dir.get_child_for_display_name("styles")
     if config_file.query_exists(None):
         _migrate_config(settings, config_file)
-    if config_file.query_exists(None):
+    if import_file.query_exists(None):
         _migrate_import_params(settings, import_file)
+    if old_styles_dir.query_exists(None):
+        _migrate_styles(old_styles_dir, new_config_dir)
+    old_config_dir.delete(None)
 
 
 def _migrate_config(settings_, config_file):
@@ -74,8 +82,32 @@ def _migrate_import_params(settings_, import_file):
             elif isinstance(value, str):
                 settings.set_string(key, value)
             elif isinstance(value, int):
-                settings.set_int(key, value)
+                settings.set_int(key.replace("_", "-"), value)
     import_file.delete(None)
+
+
+def _migrate_styles(old_styles_dir, new_config_dir):
+    new_styles_dir = new_config_dir.get_child_for_display_name("styles")
+    if not new_styles_dir.query_exists(None):
+        new_styles_dir.make_directory_with_parents()
+    system_styles = styles.get_system_styles()
+    enumerator = old_styles_dir.enumerate_children("default::*", 0, None)
+    while 1:
+        file_info = enumerator.next_file(None)
+        if file_info is None:
+            break
+        file = enumerator.get_child(file_info)
+        style = file_io.parse_style(file)
+        with contextlib.suppress(KeyError):
+            template = file_io.parse_style(system_styles[style.name])
+            if template == style:
+                file.delete(None)
+                continue
+        file.move(new_styles_dir.get_child_for_display_name(
+            f"{style.name}.mplstyle",
+        ), 0, None, None)
+    enumerator.close(None)
+    old_styles_dir.delete(None)
 
 
 ITEM_MIGRATION_TABLE = {

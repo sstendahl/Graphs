@@ -138,7 +138,7 @@ def shorten_label(label, max_length=19):
 
 def get_config_directory():
     main_directory = Gio.File.new_for_path(GLib.get_user_config_dir())
-    return main_directory.get_child_for_display_name("Graphs")
+    return main_directory.get_child_for_display_name("graphs")
 
 
 def create_file_filters(filters, add_all=True):
