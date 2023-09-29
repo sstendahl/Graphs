@@ -53,7 +53,7 @@ class FigureSettingsWindow(Adw.PreferencesWindow):
         ui.bind_values_to_object(
             self.props.figure_settings, self, ignorelist=ignorelist,
         )
-        styles_ = sorted(styles.get_user_styles(application).keys())
+        styles_ = styles.get_available_stylenames()
         try:
             style_index = styles_.index(
                 self.props.figure_settings.get_custom_style())
