@@ -10,7 +10,7 @@ from gettext import gettext as _
 
 from gi.repository import GLib, Gio, Graphs, Gtk
 
-from graphs import actions, migrate, ui
+from graphs import actions, migrate, styles, ui, utilities
 from graphs.data import Data
 
 from matplotlib import font_manager
@@ -116,6 +116,10 @@ class PythonApplication(Graphs.Application):
         self.get_data().connect(
             "items-ignored", ui.on_items_ignored, self,
         )
+        config_dir = utilities.get_config_directory()
+        style_dir = config_dir.get_child_for_display_name("styles")
+        self._style_monitor = style_dir.monitor_directory(0, None)
+        self._style_monitor.connect("changed", styles.on_file_change, self)
 
     def do_activate(self):
         """

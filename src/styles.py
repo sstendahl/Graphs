@@ -102,6 +102,16 @@ def update(self):
     pyplot.rcParams.update(file_io.parse_style(file))
 
 
+def on_file_change(_monitor, file, _other_file, event_type, self):
+    if event_type != 2:  # deleted
+        return
+    stylename = Path(file.peek_path()).stem
+    figure_settings = self.get_data().get_figure_settings()
+    if figure_settings.get_use_custom_style() \
+            and figure_settings.get_custom_style() == stylename:
+        ui.reload_canvas(self)
+
+
 STYLE_DICT = {
     "linestyle": ["lines.linestyle"],
     "linewidth": ["lines.linewidth"],
