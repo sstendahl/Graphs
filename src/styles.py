@@ -307,6 +307,7 @@ class StylesWindow(Adw.Window):
                 box.label.set_hexpand(True)
             self.styles.append(box)
             self.styles_box.append(box)
+        self.styles_box.set_visible(len(self.styles) != 0)
 
     @Gtk.Template.Callback()
     def on_close(self, _button):
@@ -357,6 +358,7 @@ class StyleBox(Gtk.Box):
             if response == "delete":
                 self.file.trash(None)
                 self.parent.reload_styles()
+                update(self.parent.get_application())
         body = _(
             "Are you sure you want to delete the {stylename} style?",
         ).format(stylename=self.style)
