@@ -103,7 +103,7 @@ def update(self):
 
 
 def on_file_change(_monitor, file, _other_file, event_type, self):
-    if event_type != 2:  # deleted
+    if event_type not in (0, 2):  # changed or deleted
         return
     stylename = Path(file.peek_path()).stem
     figure_settings = self.get_data().get_figure_settings()
