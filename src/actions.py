@@ -28,7 +28,7 @@ def perform_operation(_action, target, self):
         right_range = (figure_settings.get_max_right()
                        - figure_settings.get_min_right())
         left_range = (figure_settings.get_max_left()
-                       - figure_settings.get_min_left())
+                      - figure_settings.get_min_left())
         args += [
             figure_settings.get_left_scale(),
             figure_settings.get_right_scale(),

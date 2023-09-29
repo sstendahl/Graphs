@@ -80,10 +80,10 @@ def test_shift():
     items = [item1, item2]
     new_xdata1, new_ydata1, _sort, _discard = \
         operations.shift(item1, XDATA, ydata1, left_scale=1,
-                         right_scale=1, items=items)
+                         right_scale=1, items=items, ranges=[200, 200])
     new_xdata2, new_ydata2, _sort, _discard = \
         operations.shift(item2, XDATA, ydata2, left_scale=1,
-                         right_scale=1, items=items)
+                         right_scale=1, items=items, ranges=[200, 200])
     np.testing.assert_array_equal(new_xdata1, XDATA)
     np.testing.assert_array_equal(new_xdata2, XDATA)
     assert len(new_ydata1) == len(ydata1)
