@@ -1,5 +1,6 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 import contextlib
+import os
 from gettext import gettext as _
 from pathlib import Path
 
@@ -82,7 +83,14 @@ def get_style(file):
 
 
 def update(self):
-    system_stylename = self.get_settings().get_string("system-style")
+    if "SNAP" in os.environ:
+        current_theme = \
+            Gtk.Settings.get_default().get_property("gtk-theme-name")
+        if current_theme.lower().startswith("yaru"):
+            system_stylename = "yaru"
+    else:
+        system_stylename = "adwaita"
+
     if Adw.StyleManager.get_default().get_dark():
         system_stylename += "-dark"
     figure_settings = self.get_data().get_figure_settings()
