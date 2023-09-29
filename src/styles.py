@@ -91,7 +91,14 @@ def update(self):
         if stylename in system_styles:
             file = system_styles[stylename]
         elif stylename in user_styles:
-            pyplot.rcParams.update(get_style(user_styles[stylename]))
+            try:
+                pyplot.rcParams.update(get_style(user_styles[stylename]))
+            except (ValueError, KeyError, SyntaxError, AttributeError):
+                figure_settings.set_custom_style(system_style)
+                figure_settings.set_use_custom_style(False)
+                self.get_window().add_toast_string(
+                    _(f"Could not parse {stylename}, loading "
+                      "system preferred style"))
             return
         else:
             self.get_window().add_toast_string(
