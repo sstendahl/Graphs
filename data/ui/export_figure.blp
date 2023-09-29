@@ -15,8 +15,8 @@ template $GraphsExportFigureWindow : Adw.Window {
     }
   }
 
-  Box {
-    orientation: vertical;
+  Adw.ToolbarView {
+    [top]
     Adw.HeaderBar {
       show-end-title-buttons: false;
       [start]
@@ -33,7 +33,7 @@ template $GraphsExportFigureWindow : Adw.Window {
       }
     }
 
-    Adw.Clamp {
+    content: Adw.Clamp {
       margin-start: 12;
       margin-end: 12;
       margin-top: 12;
@@ -54,6 +54,6 @@ template $GraphsExportFigureWindow : Adw.Window {
           title: _("Transparent Background");
         }
       }
-    }
+    };
   }
 }

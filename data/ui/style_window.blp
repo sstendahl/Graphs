@@ -18,8 +18,8 @@ template $GraphsStylesWindow : Adw.Window {
   Adw.NavigationView navigation_view {
     Adw.NavigationPage style_overview {
       title: _("Styles");
-      Box {
-        orientation: vertical;
+      Adw.ToolbarView {
+        [top]
         Adw.HeaderBar {
           Button {
             icon-name: "list-add-symbolic";
@@ -28,7 +28,7 @@ template $GraphsStylesWindow : Adw.Window {
           }
           styles ["flat"]
         }
-        ScrolledWindow {
+        content: ScrolledWindow {
           hscrollbar-policy: never;
           vexpand: true;
           Adw.Clamp {
@@ -55,17 +55,17 @@ template $GraphsStylesWindow : Adw.Window {
               }
             }
           }
-        }
+        };
       }
     }
     Adw.NavigationPage edit_page {
-      Box {
-        orientation: vertical;
+      Adw.ToolbarView {
+        [top]
         Adw.HeaderBar {
           styles ["flat"]
         }
 
-        ScrolledWindow {
+        content: ScrolledWindow {
           hscrollbar-policy: never;
           vexpand: true;
           Adw.Clamp {
@@ -500,17 +500,17 @@ template $GraphsStylesWindow : Adw.Window {
               }
             }
           }
-        }
+        };
       }
     }
     Adw.NavigationPage style_color_box {
-      Box {
-        orientation: vertical;
+      Adw.ToolbarView {
+        [top]
         Adw.HeaderBar {
           show-title: true;
           styles ["flat"]
         }
-        ScrolledWindow {
+        content: ScrolledWindow {
           hscrollbar-policy: never;
           vexpand: true;
           Adw.Clamp {
@@ -538,7 +538,7 @@ template $GraphsStylesWindow : Adw.Window {
               }
             }
           }
-        }
+        };
       }
     }
   }
