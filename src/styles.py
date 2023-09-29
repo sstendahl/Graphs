@@ -13,11 +13,8 @@ from graphs import file_io, ui, utilities
 from matplotlib import pyplot
 
 
-def get_user_styles(self):
-    config_dir = utilities.get_config_directory()
-    directory = config_dir.get_child_for_display_name("styles")
-    if not directory.query_exists(None):
-        reset_user_styles(self)
+def get_system_styles():
+    directory = Gio.File.new_for_uri("resource:///se/sjoerd/Graphs/styles")
     styles = {}
     enumerator = directory.enumerate_children("default::*", 0, None)
     while 1:
@@ -27,37 +24,39 @@ def get_user_styles(self):
         file = enumerator.get_child(file_info)
         styles[Path(utilities.get_filename(file)).stem] = file
     enumerator.close(None)
-    if not styles:
-        reset_user_styles(self)
-        styles = get_user_styles(self)
     return styles
 
 
-def reset_user_styles(self):
+def get_user_styles():
     config_dir = utilities.get_config_directory()
     directory = config_dir.get_child_for_display_name("styles")
     if not directory.query_exists(None):
         directory.make_directory_with_parents(None)
+    system_stylenames = get_system_styles().keys()
+    styles = {}
     enumerator = directory.enumerate_children("default::*", 0, None)
     while 1:
         file_info = enumerator.next_file(None)
         if file_info is None:
             break
         file = enumerator.get_child(file_info)
-        file.trash(None)
+        stylename = Path(utilities.get_filename(file)).stem
+        if stylename in system_stylenames:
+            stylename = utilities.get_duplicate_string(
+                stylename, system_stylenames,
+            )
+            filename = f"{stylename}.mplstyle"
+            file.set_display_name(filename, None)
+            file = directory.get_child_for_display_name(filename)
+        styles[stylename] = file
     enumerator.close(None)
-    enumerator = Gio.File.new_for_uri(
-        "resource:///se/sjoerd/Graphs/styles",
-    ).enumerate_children("default::*", 0, None)
-    while 1:
-        file_info = enumerator.next_file(None)
-        if file_info is None:
-            break
-        enumerator.get_child(file_info).copy(
-            directory.get_child_for_display_name(file_info.get_display_name()),
-            0, None,
-        )
-    enumerator.close(None)
+    return styles
+
+
+def get_available_stylenames():
+    return sorted(
+        list(get_user_styles().keys()) + list(get_system_styles().keys()),
+    )
 
 
 def get_style(file):
@@ -65,46 +64,42 @@ def get_style(file):
     Get the style based on the file.
 
     Returns a dictionary that has always valid keys. This is ensured through
-    checking against the styles base (if available) and copying missing params
-    as needed.
+    checking against adwaita and copying missing params as needed.
     """
     style = file_io.parse_style(file)
-    file = Gio.File.new_for_uri(
-        f"resource:///se/sjoerd/Graphs/styles/{style.name}.mplstyle",
+    adwaita = Gio.File.new_for_uri(
+        "resource:///se/sjoerd/Graphs/styles/adwaita.mplstyle",
     )
-    if not file.query_exists():
-        file = Gio.File.new_for_uri(
-            "resource:///se/sjoerd/Graphs/styles/adwaita.mplstyle",
-        )
-    for key, value in file_io.parse_style(file).items():
+    for key, value in file_io.parse_style(adwaita).items():
         if key not in style:
             style[key] = value
     return style
 
 
 def update(self):
-    system_stylename = "adwaita"
-    if "SNAP" not in os.environ:
-        if self.get_gtk_theme().lower().startswith("yaru"):
-            system_stylename = "yaru"
-
+    # Check for Ubuntu
+    system_style = "yaru" if "SNAP" in os.environ \
+        and self.get_gtk_theme().lower().startswith("yaru") else "adwaita"
     if Adw.StyleManager.get_default().get_dark():
-        system_stylename += "-dark"
+        system_style += "-dark"
     figure_settings = self.get_data().get_figure_settings()
+    user_styles = get_user_styles()
+    system_styles = get_system_styles()
+    file = system_styles[system_style]
     if figure_settings.get_use_custom_style():
         stylename = figure_settings.get_custom_style()
-        try:
-            pyplot.rcParams.update(get_style(get_user_styles(self)[stylename]))
+        if stylename in system_styles:
+            file = system_styles[stylename]
+        elif stylename in user_styles:
+            pyplot.rcParams.update(get_style(user_styles[stylename]))
             return
-        except KeyError:
+        else:
             self.get_window().add_toast_string(
                 _(f"Plot style {stylename} does not exist "
                   "loading system preferred"))
-            figure_settings.set_custom_style(system_stylename)
+            figure_settings.set_custom_style(system_style)
             figure_settings.set_use_custom_style(False)
-    pyplot.rcParams.update(file_io.parse_style(Gio.File.new_for_uri(
-        f"resource:///se/sjoerd/Graphs/styles/{system_stylename}.mplstyle",
-    )))
+    pyplot.rcParams.update(file_io.parse_style(file))
 
 
 STYLE_DICT = {
@@ -298,25 +293,11 @@ class StylesWindow(Adw.Window):
     def add_style(self, _button):
         AddStyleWindow(self.get_application(), self)
 
-    @Gtk.Template.Callback()
-    def reset_styles(self, _button):
-        def on_accept(_dialog, response):
-            if response == "reset":
-                reset_user_styles(self.get_application())
-                self.reload_styles()
-        body = _("Are you sure you want to reset to the default styles?")
-        dialog = ui.build_dialog("reset_to_defaults")
-        dialog.set_body(body)
-        dialog.set_transient_for(self)
-        dialog.connect("response", on_accept)
-        dialog.present()
-
     def reload_styles(self):
         for box in self.styles.copy():
             self.styles.remove(box)
             self.styles_box.remove(self.styles_box.get_row_at_index(0))
-        for style, file in \
-                sorted(get_user_styles(self.get_application()).items()):
+        for style, file in sorted(get_user_styles().items()):
             box = StyleBox(self, style, file)
             figure_settings = \
                 self.get_application().get_data().get_figure_settings()
@@ -423,35 +404,33 @@ class AddStyleWindow(Adw.Window):
     def __init__(self, application, parent):
         super().__init__(application=application,
                          transient_for=parent)
-        self.styles = get_user_styles(parent)
         self.style_templates.set_model(Gtk.StringList.new(
-            sorted(self.styles.keys()),
+            get_available_stylenames(),
         ))
         self.present()
 
     @Gtk.Template.Callback()
     def on_template_changed(self, _a, _b):
-        self.new_style_name.set_text(_("{name} (copy)").format(
-            name=self.style_templates.get_selected_item().get_string(),
+        self.new_style_name.set_text(utilities.get_duplicate_string(
+            self.style_templates.get_selected_item().get_string(),
+            get_available_stylenames(),
         ))
 
     @Gtk.Template.Callback()
     def on_accept(self, _button):
-        new_style = self.new_style_name.get_text()
-        i = 0
-        for style_1 in self.styles.keys():
-            if new_style == style_1:
-                while True:
-                    i += 1
-                    if f"{new_style} ({i})" not in self.styles.keys():
-                        new_style = f"{new_style} ({i})"
-                        break
+        user_styles = get_user_styles()
+        system_styles = get_system_styles()
+        new_stylename = utilities.get_duplicate_string(
+            self.new_style_name.get_text(),
+            list(user_styles.keys()) + list(system_styles.keys()),
+        )
         config_dir = utilities.get_config_directory()
         directory = config_dir.get_child_for_display_name("styles")
         destination = directory.get_child_for_display_name(
-            f"{new_style}.mplstyle")
-        self.styles[
-            self.style_templates.get_selected_item().get_string()
-        ].copy(destination, 0, None)
+            f"{new_stylename}.mplstyle")
+        template = self.style_templates.get_selected_item().get_string()
+        source = user_styles[template] if template in user_styles \
+            else system_styles[template]
+        source.copy(destination, 0, None)
         self.get_transient_for().reload_styles()
         self.close()

@@ -6,7 +6,6 @@ Classes:
     GraphsApplication
 """
 import logging
-
 from gettext import gettext as _
 
 from gi.repository import GLib, Gio, Graphs, Gtk

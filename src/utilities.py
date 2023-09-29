@@ -221,3 +221,17 @@ def string_to_function(equation_name):
             equation_name, locals=dict(zip(variables, sym_vars)),
         )
         return sympy.lambdify(sym_vars, symbolic)
+
+
+def get_duplicate_string(original_string: str, used_strings) -> str:
+    if original_string not in used_strings:
+        return original_string
+    m = re.compile(r"(?P<string>.+) \(\d+\)").match(original_string)
+    if m:
+        original_string = m.group("string")
+    i = 1
+    while True:
+        new_string = f"{original_string} ({i})"
+        if new_string not in used_strings:
+            return new_string
+        i += 1
