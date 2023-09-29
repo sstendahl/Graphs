@@ -24,11 +24,17 @@ def perform_operation(_action, target, self):
     if operation in ["center"]:
         args = [self.get_settings("general").get_enum(operation)]
     if operation == "shift":
+        canvas = self.get_window().get_canvas()
+        right_range = (canvas.top_right_axis.get_ylim()[1]
+                       - canvas.top_right_axis.get_ylim()[0])
+        left_range = (canvas.axis.get_ylim()[1]
+                      - canvas.axis.get_ylim()[0])
         figure_settings = self.get_data().get_figure_settings()
         args += [
             figure_settings.get_left_scale(),
             figure_settings.get_right_scale(),
             self.get_data().get_items(),
+            [left_range, right_range],
         ]
     elif "translate" in operation or "multiply" in operation:
         window = self.get_window()
