@@ -36,12 +36,23 @@ template $GraphsStylesWindow : Adw.Window {
             margin-top: 12;
             margin-start: 12;
             margin-end: 12;
-            ListBox styles_box {
-              vexpand: false;
-              valign: start;
-              hexpand: true;
-              selection-mode: none;
-              styles ["boxed-list"]
+            Box{
+              orientation: horizontal;
+              ListBox styles_box {
+                vexpand: false;
+                valign: start;
+                hexpand: true;
+                selection-mode: none;
+                styles ["boxed-list"]
+              }
+              Adw.StatusPage {
+                icon-name: "image-print";
+                vexpand: false;
+                hexpand: true;
+                visible: bind styles_box.visible inverted;
+                title: _("No custom styles");
+                description: _("Create a new custom style to start editing your own stylesheets");
+              }
             }
           }
         }
