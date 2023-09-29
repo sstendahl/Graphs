@@ -287,12 +287,6 @@ class StylesWindow(Adw.Window):
             directory.get_child_for_display_name(f"{self.style.name}.mplstyle")
         file_io.write_style(file, self.style)
 
-        figure_settings = \
-            self.get_application().get_data().get_figure_settings()
-        if figure_settings.get_use_custom_style() \
-                and figure_settings.get_custom_style() == self.style.name:
-            ui.reload_canvas(self.get_application())
-
     @Gtk.Template.Callback()
     def add_color(self, _button):
         box = StyleColorBox(self, "#000000")
