@@ -226,6 +226,9 @@ def string_to_function(equation_name):
 def get_duplicate_string(original_string: str, used_strings) -> str:
     if original_string not in used_strings:
         return original_string
+    m = re.compile(r"(?P<string>.+) \(\d+\)").match(original_string)
+    if m:
+        original_string = m.group("string")
     i = 1
     while True:
         new_string = f"{original_string} ({i})"

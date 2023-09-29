@@ -78,8 +78,7 @@ def get_style(file):
 
 def update(self):
     # Check for Ubuntu
-    current_theme = \
-        Gtk.Settings.get_default().get_property("gtk-theme-name")
+    current_theme = Gtk.Settings.get_default().get_property("gtk-theme-name")
     system_style = "yaru" if "SNAP" in os.environ \
         and current_theme.lower().startswith("yaru") else "adwaita"
     if Adw.StyleManager.get_default().get_dark():
