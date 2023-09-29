@@ -109,6 +109,16 @@ def update(self):
     pyplot.rcParams.update(file_io.parse_style(file))
 
 
+def on_file_change(_monitor, file, _other_file, event_type, self):
+    if event_type not in (1, 2):  # changed or deleted
+        return
+    stylename = Path(file.peek_path()).stem
+    figure_settings = self.get_data().get_figure_settings()
+    if figure_settings.get_use_custom_style() \
+            and figure_settings.get_custom_style() == stylename:
+        ui.reload_canvas(self)
+
+
 STYLE_DICT = {
     "linestyle": ["lines.linestyle"],
     "linewidth": ["lines.linewidth"],
@@ -283,12 +293,6 @@ class StylesWindow(Adw.Window):
         file = \
             directory.get_child_for_display_name(f"{self.style.name}.mplstyle")
         file_io.write_style(file, self.style)
-
-        figure_settings = \
-            self.get_application().get_data().get_figure_settings()
-        if figure_settings.get_use_custom_style() \
-                and figure_settings.get_custom_style() == self.style.name:
-            ui.reload_canvas(self.get_application())
 
     @Gtk.Template.Callback()
     def add_color(self, _button):
