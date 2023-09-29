@@ -26,12 +26,6 @@ template $GraphsStylesWindow : Adw.Window {
             tooltip-text: _("Add new style");
             clicked => $add_style();
           }
-          [end]
-          Button {
-            icon-name: "history-undo-symbolic";
-            tooltip-text: _("Reset to default styles");
-            clicked => $reset_styles();
-          }
           styles ["flat"]
         }
         ScrolledWindow {

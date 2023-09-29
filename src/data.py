@@ -9,7 +9,7 @@ import copy
 
 from gi.repository import GObject, Graphs
 
-from graphs import item
+from graphs import item, utilities
 
 from matplotlib import pyplot
 
@@ -189,13 +189,9 @@ class Data(GObject.Object, Graphs.DataInterface):
             names = self.get_names()
             if new_item.get_name() in names:
                 if handle_duplicates == 0:  # Auto-add
-                    i = 1
-                    while True:
-                        new_name = f"{new_item.get_name()} ({i})"
-                        if new_name not in names:
-                            break
-                        i += 1
-                    new_item.set_name(new_name)
+                    new_item.set_name(utilities.get_duplicate_string(
+                        new_item.get_name(), names,
+                    ))
                 elif handle_duplicates == 1:  # Ignore
                     ignored.append(new_item.get_name())
                     continue
