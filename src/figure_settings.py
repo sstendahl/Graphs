@@ -2,7 +2,7 @@
 import contextlib
 from gettext import gettext as _
 
-from gi.repository import Adw, GObject, Graphs, Gtk
+from gi.repository import Adw, GObject, Graphs, Gtk, Gio
 
 from graphs import misc, ui, utilities
 
@@ -10,7 +10,7 @@ _DIRECTIONS = ["bottom", "left", "top", "right"]
 
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/figure_settings.ui")
-class FigureSettingsWindow(Adw.PreferencesWindow):
+class FigureSettingsWindow(Adw.Window):
     __gtype_name__ = "GraphsFigureSettingsWindow"
 
     title = Gtk.Template.Child()
@@ -24,8 +24,6 @@ class FigureSettingsWindow(Adw.PreferencesWindow):
     right_scale = Gtk.Template.Child()
     legend = Gtk.Template.Child()
     legend_position = Gtk.Template.Child()
-    use_custom_style = Gtk.Template.Child()
-    custom_style = Gtk.Template.Child()
     min_left = Gtk.Template.Child()
     max_left = Gtk.Template.Child()
     min_bottom = Gtk.Template.Child()
@@ -36,6 +34,9 @@ class FigureSettingsWindow(Adw.PreferencesWindow):
     max_top = Gtk.Template.Child()
 
     no_data_message = Gtk.Template.Child()
+    style_overview = Gtk.Template.Child()
+    navigation_view = Gtk.Template.Child()
+    grid_view = Gtk.Template.Child()
 
     figure_settings = GObject.Property(type=Graphs.FigureSettings)
 
@@ -45,7 +46,9 @@ class FigureSettingsWindow(Adw.PreferencesWindow):
             figure_settings=application.get_data().get_figure_settings(),
         )
 
-        ignorelist = ["custom_style", "min_selected", "max_selected"]
+        ignorelist = [
+            "custom_style", "min_selected", "max_selected", "use_custom_style",
+        ]
         for direction in _DIRECTIONS:
             ignorelist.append(f"min_{direction}")
             ignorelist.append(f"max_{direction}")
@@ -53,14 +56,6 @@ class FigureSettingsWindow(Adw.PreferencesWindow):
         ui.bind_values_to_object(
             self.props.figure_settings, self, ignorelist=ignorelist,
         )
-        styles_ = \
-            application.get_figure_style_manager().get_available_stylenames()
-        style_index = styles_.index(
-            self.props.figure_settings.get_custom_style())
-        self.custom_style.set_model(Gtk.StringList.new(styles_))
-        self.custom_style.set_selected(style_index)
-        self.custom_style.connect(
-            "notify::selected", self.on_custom_style_select)
         self.set_axes_entries()
         self.no_data_message.set_visible(
             self.get_application().get_data().is_empty(),
@@ -68,6 +63,20 @@ class FigureSettingsWindow(Adw.PreferencesWindow):
         if highlighted is not None:
             getattr(self, highlighted).grab_focus()
         self.present()
+
+        factory = Gtk.SignalListItemFactory.new()
+        def on_setup(_factory, item):
+            item.set_child(Gtk.Label())
+        def on_bind(_factoy, item):
+            item.get_child().set_text(item.get_item().get_string())
+        factory.connect("setup", on_setup)
+        factory.connect("bind", on_bind)
+
+        model = Gtk.StringList.new()
+        for style in application.get_figure_style_manager().get_available_stylenames():
+            model.append(style)
+        self.grid_view.set_factory(factory)
+        self.grid_view.get_model().set_model(model)
 
     def set_axes_entries(self):
         used_axes = [[direction, False] for direction in _DIRECTIONS]
@@ -93,14 +102,17 @@ class FigureSettingsWindow(Adw.PreferencesWindow):
             )
 
     @Gtk.Template.Callback()
+    def choose_style(self, _button):
+        self.navigation_view.push(self.style_overview)
+
+    @Gtk.Template.Callback()
+    def add_style(self, _button):
+        pass
+
+    @Gtk.Template.Callback()
     def on_close(self, *_args):
         self.get_application().get_data().add_view_history_state()
         self.destroy()
-
-    def on_custom_style_select(self, comborow, _ignored):
-        selected_style = comborow.get_selected_item().get_string()
-        if selected_style != self.props.figure_settings.get_custom_style():
-            self.props.figure_settings.set_custom_style(selected_style)
 
     @Gtk.Template.Callback()
     def on_set_as_default(self, _button):

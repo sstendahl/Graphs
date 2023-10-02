@@ -121,10 +121,6 @@ def export_figure_action(_action, _target, self):
     ExportFigureWindow(self)
 
 
-def styles_action(_action, _target, self):
-    StylesWindow(self)
-
-
 def save_project_action(_action, _target, self):
     ui.save_project_dialog(self)
 
