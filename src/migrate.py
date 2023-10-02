@@ -91,16 +91,15 @@ def _migrate_styles(old_styles_dir, new_config_dir):
     new_styles_dir = new_config_dir.get_child_for_display_name("styles")
     if not new_styles_dir.query_exists(None):
         new_styles_dir.make_directory_with_parents()
-    system_styles = []
+    system_styles = {}
     directory = Gio.File.new_for_uri("resource:///se/sjoerd/Graphs/styles")
     enumerator = directory.enumerate_children("default::*", 0, None)
     while True:
         file_info = enumerator.next_file(None)
         if file_info is None:
             break
-        system_styles.append(
-            Path(utilities.get_filename(enumerator.get_child(file_info)).stem),
-        )
+        file = enumerator.get_child(file_info)
+        system_styles[Path(utilities.get_filename(file)).stem] = file
     enumerator.close(None)
     enumerator = old_styles_dir.enumerate_children("default::*", 0, None)
     while True:
