@@ -8,9 +8,9 @@ Classes:
 import logging
 from gettext import gettext as _
 
-from gi.repository import GLib, Gio, Graphs, Gtk
+from gi.repository import GLib, Gio, Graphs
 
-from graphs import actions, migrate, styles, ui, utilities
+from graphs import actions, migrate, styles, ui
 from graphs.data import Data
 
 from matplotlib import font_manager
@@ -37,14 +37,11 @@ class PythonApplication(Graphs.Application):
     def __init__(self, application_id, **kwargs):
         """Init the application."""
         settings = Gio.Settings(application_id)
-        gtk_theme = Gtk.Settings.get_default().get_property("gtk-theme-name")
         migrate.migrate_config(settings)
         super().__init__(
             application_id=application_id, settings=settings,
             flags=Gio.ApplicationFlags.DEFAULT_FLAGS,
-            data=Data(self, settings),
-            gtk_theme=gtk_theme,
-            **kwargs,
+            data=Data(self, settings), **kwargs,
         )
         font_list = font_manager.findSystemFonts(fontpaths=None, fontext="ttf")
         for font in font_list:
@@ -103,23 +100,12 @@ class PythonApplication(Graphs.Application):
         operation_action.connect("activate", actions.perform_operation, self)
         self.add_action(operation_action)
 
-        self.get_style_manager().connect(
-            "notify", ui.on_figure_style_change, self,
-        )
-        for prop in ["use-custom-style", "custom-style"]:
-            figure_settings.connect(
-                f"notify::{prop}", ui.on_figure_style_change, self,
-            )
         self.get_data().connect(
             "notify::items", ui.on_items_change, self,
         )
         self.get_data().connect(
             "items-ignored", ui.on_items_ignored, self,
         )
-        config_dir = utilities.get_config_directory()
-        style_dir = config_dir.get_child_for_display_name("styles")
-        self._style_monitor = style_dir.monitor_directory(0, None)
-        self._style_monitor.connect("changed", styles.on_file_change, self)
 
     def do_activate(self):
         """
@@ -159,7 +145,7 @@ class PythonApplication(Graphs.Application):
             self.set_window(window)
             if "(Development)" in self.props.name:
                 window.add_css_class("devel")
-            ui.reload_canvas(self)
+            self.set_figure_style_manager(styles.StyleManager(self))
             window.present()
 
     def get_settings(self, child=None):

@@ -6,6 +6,7 @@ namespace Graphs {
         public Window window { get; set; }
         public Settings settings { get; construct set; }
         public DataInterface data { get; construct set; }
+        public StyleManagerInterface figure_style_manager { get; set; }
         public int mode { get; set; default = 0; }
         public string version { get; construct set; default = ""; }
         public string name { get; construct set; default = ""; }
@@ -13,6 +14,5 @@ namespace Graphs {
         public string issues { get; construct set; default = ""; }
         public string author { get; construct set; default = ""; }
         public string pkgdatadir { get; construct set; default = ""; }
-        public string gtk_theme { get; construct set; default = "adwaita"; }
     }
 }
