@@ -14,8 +14,8 @@ template $GraphsTransformWindow : Adw.Window {
     }
   }
 
-  Box {
-    orientation: vertical;
+  Adw.ToolbarView {
+    [top]
     Adw.HeaderBar {
       show-end-title-buttons: false;
       [start]
@@ -48,7 +48,7 @@ template $GraphsTransformWindow : Adw.Window {
         styles ["flat"]
       }
     }
-    Adw.Clamp {
+    content: Adw.Clamp {
       margin-start: 12;
       margin-end: 12;
       margin-top: 12;
@@ -66,6 +66,6 @@ template $GraphsTransformWindow : Adw.Window {
           title: _("Discard Unselected Data");
         }
       }
-    }
+    };
   }
 }
