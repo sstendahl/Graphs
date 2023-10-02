@@ -22,11 +22,10 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
     custom_style = GObject.Property(type=str, default="adwaita")
     gtk_theme = GObject.Property(type=str, default="")
 
-    def __init__(self, application):
+    def __init__(self, application: Graphs.Application):
         gtk_theme = Gtk.Settings.get_default().get_property("gtk-theme-name")
         super().__init__(
-            application=application,
-            gtk_theme=gtk_theme.lower(),
+            application=application, gtk_theme=gtk_theme.lower(),
         )
         self._system_styles, self._user_styles = {}, {}
         directory = Gio.File.new_for_uri("resource:///se/sjoerd/Graphs/styles")
@@ -40,27 +39,17 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
         enumerator.close(None)
 
         config_dir = utilities.get_config_directory()
-        directory = config_dir.get_child_for_display_name("styles")
-        if not directory.query_exists(None):
-            directory.make_directory_with_parents(None)
-        system_stylenames = self._system_styles.keys()
-        enumerator = directory.enumerate_children("default::*", 0, None)
+        self._style_dir = config_dir.get_child_for_display_name("styles")
+        if not self._style_dir.query_exists(None):
+            self._style_dir.make_directory_with_parents(None)
+        enumerator = self._style_dir.enumerate_children("default::*", 0, None)
         while True:
             file_info = enumerator.next_file(None)
             if file_info is None:
                 break
-            file = enumerator.get_child(file_info)
-            stylename = Path(utilities.get_filename(file)).stem
-            if stylename in system_stylenames:
-                stylename = utilities.get_duplicate_string(
-                    stylename, system_stylenames,
-                )
-                filename = f"{stylename}.mplstyle"
-                file.set_display_name(filename, None)
-                file = directory.get_child_for_display_name(filename)
-            self._user_styles[stylename] = file
+            self._add_user_style(enumerator.get_child(file_info))
         enumerator.close(None)
-        self._style_monitor = directory.monitor_directory(0, None)
+        self._style_monitor = self._style_dir.monitor_directory(0, None)
         self._style_monitor.connect("changed", self._on_file_change)
         figure_settings = application.get_data().get_figure_settings()
         figure_settings.bind_property(
@@ -78,6 +67,22 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
             )
         self._on_style_change()
 
+    def _add_user_style(self, file: Gio.File):
+        if file.query_file_type(0, None) != 1:
+            return
+        path = Path(utilities.get_filename(file))
+        if path.suffix != ".mplstyle":
+            return
+        stylename = path.stem
+        if stylename in self._system_styles:
+            stylename = utilities.get_duplicate_string(
+                stylename, self._system_styles.keys(),
+            )
+            filename = f"{stylename}.mplstyle"
+            file.set_display_name(filename, None)
+            file = self._style_dir.get_child_for_display_name(filename)
+        self._user_styles[stylename] = file
+
     def get_available_stylenames(self) -> list:
         return sorted(
             list(self._user_styles.keys()) + list(self._system_styles.keys()),
@@ -94,7 +99,7 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
         if event_type == 2:
             self._user_styles.pop(stylename)
         elif event_type == 3:
-            self._user_styles[stylename] = file
+            self._add_user_style(file)
         if event_type in (1, 2) \
                 and self.props.use_custom_style \
                 and self.props.custom_style == stylename:
@@ -161,7 +166,7 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
         )
 
 
-def get_style(file):
+def get_style(file: Gio.File):
     """
     Get the style based on the file.
 
