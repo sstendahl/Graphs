@@ -591,13 +591,13 @@ template $GraphsWindow: Adw.ApplicationWindow {
           [end]
           Button view_forward_button {
             action-name: "app.view_forward";
-            icon-name: "arrow1-right-symbolic";
+            icon-name: "go-next-symbolic";
             tooltip-text: _("Next View");
           }
           [end]
           Button view_back_button {
             action-name: "app.view_back";
-            icon-name: "arrow1-left-symbolic";
+            icon-name: "go-previous-symbolic";
             tooltip-text: _("Previous View");
           }
         }
@@ -640,9 +640,7 @@ menu primary_menu {
 menu add_data_menu {
   section {
     item (_("Add Data from File…"), "app.add_data")
-  }
-  section {
-    item (_("Add Data from Equation…"), "app.add_equation")
+    item (_("Add Equation…"), "app.add_equation")
   }
 }
 
