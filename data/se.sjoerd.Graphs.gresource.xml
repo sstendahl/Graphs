@@ -52,8 +52,6 @@
 
   </gresource>
   <gresource prefix="/se/sjoerd/Graphs/icons/scalable/actions/">
-    <file preprocess="xml-stripblanks" alias="arrow1-left-symbolic.svg">icons/arrow1-left-symbolic.svg</file>
-    <file preprocess="xml-stripblanks" alias="arrow1-right-symbolic.svg">icons/arrow1-right-symbolic.svg</file>
     <file preprocess="xml-stripblanks" alias="axes-one-quadrant-symbolic.svg">icons/axes-one-quadrant-symbolic.svg</file>
     <file preprocess="xml-stripblanks" alias="center-symbolic.svg">icons/center-symbolic.svg</file>
     <file preprocess="xml-stripblanks" alias="color-picker-symbolic.svg">icons/color-picker-symbolic.svg</file>
