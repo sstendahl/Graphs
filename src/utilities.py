@@ -141,6 +141,11 @@ def get_config_directory():
     return main_directory.get_child_for_display_name("graphs")
 
 
+def get_cache_directory():
+    main_directory = Gio.File.new_for_path(GLib.get_user_cache_dir())
+    return main_directory.get_child_for_display_name("graphs")
+
+
 def create_file_filters(filters, add_all=True):
     list_store = Gio.ListStore()
     for name, suffix_list in filters:

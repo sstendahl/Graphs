@@ -38,6 +38,7 @@ parts:
       - numexpr==2.8.6
       - mpmath==1.3.0
       - sympy==1.12
+      - svgutils==0.3.4
     prime:
       - -usr/bin/activate
       - -usr/bin/activate.csh
