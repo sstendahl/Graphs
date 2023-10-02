@@ -4,7 +4,7 @@ from gettext import gettext as _
 
 from gi.repository import Adw, GObject, Graphs, Gtk
 
-from graphs import misc, styles, ui, utilities
+from graphs import misc, ui, utilities
 
 _DIRECTIONS = ["bottom", "left", "top", "right"]
 
@@ -53,7 +53,8 @@ class FigureSettingsWindow(Adw.PreferencesWindow):
         ui.bind_values_to_object(
             self.props.figure_settings, self, ignorelist=ignorelist,
         )
-        styles_ = styles.get_available_stylenames()
+        styles_ = \
+            application.get_figure_style_manager().get_available_stylenames()
         style_index = styles_.index(
             self.props.figure_settings.get_custom_style())
         self.custom_style.set_model(Gtk.StringList.new(styles_))

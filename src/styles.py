@@ -6,57 +6,159 @@ from pathlib import Path
 
 from cycler import cycler
 
-from gi.repository import Adw, GLib, Gio, Gtk
+from gi.repository import Adw, GLib, GObject, Gio, Graphs, Gtk
 
 from graphs import file_io, ui, utilities
+from graphs.canvas import Canvas
 
 from matplotlib import pyplot
 
 
-def get_system_styles():
-    directory = Gio.File.new_for_uri("resource:///se/sjoerd/Graphs/styles")
-    styles = {}
-    enumerator = directory.enumerate_children("default::*", 0, None)
-    while 1:
-        file_info = enumerator.next_file(None)
-        if file_info is None:
-            break
-        file = enumerator.get_child(file_info)
-        styles[Path(utilities.get_filename(file)).stem] = file
-    enumerator.close(None)
-    return styles
+class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
+    __gtype_name__ = "GraphsStyleManager"
 
+    application = GObject.Property(type=Graphs.Application)
+    use_custom_style = GObject.Property(type=bool, default=False)
+    custom_style = GObject.Property(type=str, default="adwaita")
+    gtk_theme = GObject.Property(type=str, default="")
 
-def get_user_styles():
-    config_dir = utilities.get_config_directory()
-    directory = config_dir.get_child_for_display_name("styles")
-    if not directory.query_exists(None):
-        directory.make_directory_with_parents(None)
-    system_stylenames = get_system_styles().keys()
-    styles = {}
-    enumerator = directory.enumerate_children("default::*", 0, None)
-    while 1:
-        file_info = enumerator.next_file(None)
-        if file_info is None:
-            break
-        file = enumerator.get_child(file_info)
-        stylename = Path(utilities.get_filename(file)).stem
-        if stylename in system_stylenames:
-            stylename = utilities.get_duplicate_string(
-                stylename, system_stylenames,
+    def __init__(self, application):
+        gtk_theme = Gtk.Settings.get_default().get_property("gtk-theme-name")
+        super().__init__(
+            application=application,
+            gtk_theme=gtk_theme.lower(),
+        )
+        self._system_styles, self._user_styles = {}, {}
+        directory = Gio.File.new_for_uri("resource:///se/sjoerd/Graphs/styles")
+        enumerator = directory.enumerate_children("default::*", 0, None)
+        while True:
+            file_info = enumerator.next_file(None)
+            if file_info is None:
+                break
+            file = enumerator.get_child(file_info)
+            self._system_styles[Path(utilities.get_filename(file)).stem] = file
+        enumerator.close(None)
+
+        config_dir = utilities.get_config_directory()
+        directory = config_dir.get_child_for_display_name("styles")
+        if not directory.query_exists(None):
+            directory.make_directory_with_parents(None)
+        system_stylenames = self._system_styles.keys()
+        enumerator = directory.enumerate_children("default::*", 0, None)
+        while True:
+            file_info = enumerator.next_file(None)
+            if file_info is None:
+                break
+            file = enumerator.get_child(file_info)
+            stylename = Path(utilities.get_filename(file)).stem
+            if stylename in system_stylenames:
+                stylename = utilities.get_duplicate_string(
+                    stylename, system_stylenames,
+                )
+                filename = f"{stylename}.mplstyle"
+                file.set_display_name(filename, None)
+                file = directory.get_child_for_display_name(filename)
+            self._user_styles[stylename] = file
+        enumerator.close(None)
+        self._style_monitor = directory.monitor_directory(0, None)
+        self._style_monitor.connect("changed", self._on_file_change)
+        figure_settings = application.get_data().get_figure_settings()
+        figure_settings.bind_property(
+            "use_custom_style", self, "use_custom_style", 1 | 2,
+        )
+        figure_settings.bind_property(
+            "custom_style", self, "custom_style", 1 | 2,
+        )
+        application.get_style_manager().connect(
+            "notify", self._on_style_select,
+        )
+        for prop in ["use-custom-style", "custom-style"]:
+            figure_settings.connect(
+                f"notify::{prop}", self._on_style_select,
             )
-            filename = f"{stylename}.mplstyle"
-            file.set_display_name(filename, None)
-            file = directory.get_child_for_display_name(filename)
-        styles[stylename] = file
-    enumerator.close(None)
-    return styles
+        self._on_style_change()
 
+    def get_available_stylenames(self) -> list:
+        return sorted(
+            list(self._user_styles.keys()) + list(self._system_styles.keys()),
+        )
 
-def get_available_stylenames():
-    return sorted(
-        list(get_user_styles().keys()) + list(get_system_styles().keys()),
-    )
+    def get_user_styles(self) -> dict:
+        return self._user_styles
+
+    def get_system_styles(self) -> dict:
+        return self._system_styles
+
+    def _on_file_change(self, _monitor, file, _other_file, event_type):
+        stylename = Path(file.peek_path()).stem
+        if event_type == 2:
+            self._user_styles.pop(stylename)
+        elif event_type == 3:
+            self._user_styles[stylename] = file
+        if event_type in (1, 2) \
+                and self.props.use_custom_style \
+                and self.props.custom_style == stylename:
+            self._on_style_change()
+
+    def _on_style_select(self, _a, _b):
+        settings = self.props.application.get_settings("general")
+        self._on_style_change(settings.get_boolean("override-item-properties"))
+
+    def _on_style_change(self, override=False):
+        # Check for Ubuntu
+        system_style = "yaru" if "SNAP" in os.environ \
+            and self.props.get_gtk_theme.startswith("yaru") else "adwaita"
+        if Adw.StyleManager.get_default().get_dark():
+            system_style += "-dark"
+        file = self._system_styles[system_style]
+        window = self.props.application.get_window()
+        if self.props.use_custom_style:
+            stylename = self.props.custom_style
+            if stylename in self._system_styles:
+                file = self._system_styles[stylename]
+            elif stylename in self._user_styles:
+                try:
+                    pyplot.rcParams.update(
+                        get_style(self._user_styles[stylename]),
+                    )
+                except (ValueError, KeyError, SyntaxError, AttributeError):
+                    self.props.custom_style = system_style
+                    self.props.use_custom_style = False
+                    window.add_toast_string(
+                        _(f"Could not parse {stylename}, loading "
+                          "system preferred style"))
+                return
+            else:
+                window.add_toast_string(
+                    _(f"Plot style {stylename} does not exist "
+                      "loading system preferred"))
+                self.props.custom_style = system_style
+                self.props.use_custom_style = False
+        pyplot.rcParams.update(file_io.parse_style(file))
+
+        data = self.props.application.get_data()
+        if override:
+            color_cycle = pyplot.rcParams["axes.prop_cycle"].by_key()["color"]
+            for item in data:
+                item.reset()
+            count = 0
+            for item in data:
+                if item.__gtype_name__ == "GraphsDataItem":
+                    if count > len(color_cycle):
+                        count = 0
+                    item.props.color = color_cycle[count]
+                    count += 1
+
+        canvas = Canvas(self.props.application)
+        figure_settings = data.get_figure_settings()
+        for prop in dir(figure_settings.props):
+            if prop not in ["use_custom_style", "custom_style"]:
+                figure_settings.bind_property(prop, canvas, prop, 1 | 2)
+        data.bind_property("items", canvas, "items", 2)
+        window.set_canvas(canvas)
+        window.get_cut_button().bind_property(
+            "sensitive", canvas, "highlight_enabled", 2,
+        )
 
 
 def get_style(file):
@@ -74,49 +176,6 @@ def get_style(file):
         if key not in style:
             style[key] = value
     return style
-
-
-def update(self):
-    # Check for Ubuntu
-    system_style = "yaru" if "SNAP" in os.environ \
-        and self.get_gtk_theme().lower().startswith("yaru") else "adwaita"
-    if Adw.StyleManager.get_default().get_dark():
-        system_style += "-dark"
-    figure_settings = self.get_data().get_figure_settings()
-    user_styles = get_user_styles()
-    system_styles = get_system_styles()
-    file = system_styles[system_style]
-    if figure_settings.get_use_custom_style():
-        stylename = figure_settings.get_custom_style()
-        if stylename in system_styles:
-            file = system_styles[stylename]
-        elif stylename in user_styles:
-            try:
-                pyplot.rcParams.update(get_style(user_styles[stylename]))
-            except (ValueError, KeyError, SyntaxError, AttributeError):
-                figure_settings.set_custom_style(system_style)
-                figure_settings.set_use_custom_style(False)
-                self.get_window().add_toast_string(
-                    _(f"Could not parse {stylename}, loading "
-                      "system preferred style"))
-            return
-        else:
-            self.get_window().add_toast_string(
-                _(f"Plot style {stylename} does not exist "
-                  "loading system preferred"))
-            figure_settings.set_custom_style(system_style)
-            figure_settings.set_use_custom_style(False)
-    pyplot.rcParams.update(file_io.parse_style(file))
-
-
-def on_file_change(_monitor, file, _other_file, event_type, self):
-    if event_type not in (1, 2):  # changed or deleted
-        return
-    stylename = Path(file.peek_path()).stem
-    figure_settings = self.get_data().get_figure_settings()
-    if figure_settings.get_use_custom_style() \
-            and figure_settings.get_custom_style() == stylename:
-        ui.reload_canvas(self)
 
 
 STYLE_DICT = {
@@ -202,6 +261,7 @@ class StylesWindow(Adw.Window):
     def __init__(self, application):
         super().__init__(application=application,
                          transient_for=application.get_window())
+        self.style_manager = application.get_figure_style_manager()
         self.styles = []
         self.style = None
         self.reload_styles()
@@ -308,7 +368,8 @@ class StylesWindow(Adw.Window):
         for box in self.styles.copy():
             self.styles.remove(box)
             self.styles_box.remove(self.styles_box.get_row_at_index(0))
-        for style, file in sorted(get_user_styles().items()):
+        user_styles = self.style_manager.get_user_styles()
+        for style, file in sorted(user_styles.items()):
             box = StyleBox(self, style, file)
             figure_settings = \
                 self.get_application().get_data().get_figure_settings()
@@ -369,7 +430,6 @@ class StyleBox(Gtk.Box):
             if response == "delete":
                 self.file.trash(None)
                 self.parent.reload_styles()
-                update(self.parent.get_application())
         body = _(
             "Are you sure you want to delete the {stylename} style?",
         ).format(stylename=self.style)
@@ -418,7 +478,7 @@ class AddStyleWindow(Adw.Window):
         super().__init__(application=application,
                          transient_for=parent)
         self.style_templates.set_model(Gtk.StringList.new(
-            get_available_stylenames(),
+            parent.style_manager.get_available_stylenames(),
         ))
         self.present()
 
@@ -426,13 +486,15 @@ class AddStyleWindow(Adw.Window):
     def on_template_changed(self, _a, _b):
         self.new_style_name.set_text(utilities.get_duplicate_string(
             self.style_templates.get_selected_item().get_string(),
-            get_available_stylenames(),
+            self.props.application.get_figure_style_manager(
+            ).get_available_stylenames(),
         ))
 
     @Gtk.Template.Callback()
     def on_accept(self, _button):
-        user_styles = get_user_styles()
-        system_styles = get_system_styles()
+        style_manager = self.props.application.get_figure_style_manager()
+        user_styles = style_manager.get_user_styles()
+        system_styles = style_manager.get_system_styles()
         new_stylename = utilities.get_duplicate_string(
             self.new_style_name.get_text(),
             list(user_styles.keys()) + list(system_styles.keys()),

@@ -33,4 +33,7 @@ namespace Graphs {
         public abstract bool highlight_enabled { get; set; default = false; }
         public abstract Application application { get; construct set; }
     }
+
+    public interface StyleManagerInterface : Object {
+    }
 }
