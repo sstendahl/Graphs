@@ -11,7 +11,19 @@ from gi.repository import Adw, GLib, GObject, Gio, Graphs, Gtk
 from graphs import file_io, ui, utilities
 from graphs.canvas import Canvas
 
-from matplotlib import pyplot
+from lxml import etree
+
+from matplotlib import pyplot, rc_context
+from matplotlib.figure import Figure
+
+import numpy
+
+import svgutils
+
+
+PREVIEW_XDATA = numpy.linspace(0, 10, 1000)
+PREVIEW_YDATA1 = numpy.sin(PREVIEW_XDATA)
+PREVIEW_YDATA2 = numpy.cos(PREVIEW_XDATA)
 
 
 class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
@@ -28,6 +40,9 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
             application=application, gtk_theme=gtk_theme.lower(),
         )
         self._system_styles, self._user_styles = {}, {}
+        self._cache_dir = utilities.get_cache_directory()
+        if not self._cache_dir.query_exists(None):
+            self._cache_dir.make_directory_with_parents(None)
         directory = Gio.File.new_for_uri("resource:///se/sjoerd/Graphs/styles")
         enumerator = directory.enumerate_children("default::*", 0, None)
         while True:
@@ -70,10 +85,10 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
     def _add_user_style(self, file: Gio.File):
         if file.query_file_type(0, None) != 1:
             return
-        path = Path(utilities.get_filename(file))
-        if path.suffix != ".mplstyle":
+        if Path(utilities.get_filename(file)).suffix != ".mplstyle":
             return
-        stylename = path.stem
+        style = get_style(file)
+        stylename = style.name
         if stylename in self._system_styles:
             stylename = utilities.get_duplicate_string(
                 stylename, self._system_styles.keys(),
@@ -81,7 +96,7 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
             filename = f"{stylename}.mplstyle"
             file.set_display_name(filename, None)
             file = self._style_dir.get_child_for_display_name(filename)
-        self._user_styles[stylename] = file
+        self._user_styles[stylename] = (file, self._generate_preview(style))
 
     def get_available_stylenames(self) -> list:
         return sorted(
@@ -164,6 +179,28 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
         window.get_cut_button().bind_property(
             "sensitive", canvas, "highlight_enabled", 2,
         )
+
+    def _generate_preview(self, style: dict) -> Gio.File:
+        with rc_context(style):
+            # set render size in inch
+            figure = Figure(figsize=(6, 3), dpi=300)
+            axis = figure.add_subplot()
+            axis.plot(PREVIEW_XDATA, PREVIEW_YDATA1)
+            axis.plot(PREVIEW_XDATA, PREVIEW_YDATA2)
+            axis.set_xlabel(_("X Label"))
+            axis.set_xlabel(_("Y Label"))
+            svgfig = svgutils.transform.from_mpl(figure)
+        # set image size in px
+        svgfig.set_size(("200", "100"))
+        file = \
+            self._cache_dir.get_child_for_display_name(f"{style.name}.svg")
+        stream = file_io.get_write_stream(file)
+        stream.write(etree.tostring(
+            svgfig.root, xml_declaration=True, standalone=True,
+            pretty_print=False,
+        ))
+        stream.close()
+        return file
 
 
 def get_style(file: Gio.File):
@@ -374,7 +411,7 @@ class StylesWindow(Adw.Window):
             self.styles.remove(box)
             self.styles_box.remove(self.styles_box.get_row_at_index(0))
         user_styles = self.style_manager.get_user_styles()
-        for style, file in sorted(user_styles.items()):
+        for style, (file, _preview) in sorted(user_styles.items()):
             box = StyleBox(self, style, file)
             figure_settings = \
                 self.get_application().get_data().get_figure_settings()
@@ -509,7 +546,7 @@ class AddStyleWindow(Adw.Window):
         destination = directory.get_child_for_display_name(
             f"{new_stylename}.mplstyle")
         template = self.style_templates.get_selected_item().get_string()
-        source = user_styles[template] if template in user_styles \
+        source = user_styles[template][0] if template in user_styles \
             else system_styles[template]
         source.copy(destination, 0, None)
         self.get_transient_for().reload_styles()

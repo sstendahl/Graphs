@@ -18,7 +18,7 @@ import numpy
 def save_item(file, item_):
     delimiter = "\t"
     fmt = delimiter.join(["%.12e"] * 2)
-    stream = _get_write_stream(file)
+    stream = get_write_stream(file)
     if item_.xlabel != "" and item_.ylabel != "":
         _write_string(stream, item_.xlabel + delimiter + item_.ylabel + "\n")
     for row in numpy.stack([item_.xdata, item_.ydata], axis=1):
@@ -79,7 +79,7 @@ WRITE_IGNORELIST = [
 
 
 def write_style(file, style):
-    stream = _get_write_stream(file)
+    stream = get_write_stream(file)
     _write_string(stream, f"# {style.name}\n")
     _write_string(
         stream,
@@ -100,7 +100,7 @@ def parse_json(file):
 
 
 def write_json(file, json_object, pretty_print=True):
-    stream = _get_write_stream(file)
+    stream = get_write_stream(file)
     _write_string(stream, json.dumps(
         json_object, indent=4 if pretty_print else None, sort_keys=True,
     ))
@@ -111,7 +111,7 @@ def parse_xml(file):
     return minidom.parseString(read_file(file))
 
 
-def _get_write_stream(file):
+def get_write_stream(file):
     if file.query_exists(None):
         return file.replace(None, False, 0, None)
     return file.create(0, None)
