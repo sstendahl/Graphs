@@ -31,3 +31,15 @@ inline-stack-switcher separator {
 inline-stack-switcher separator.hidden {
   opacity: 0;
 }
+
+gridview#style-grid {
+  background: @window_bg_color;
+}
+
+gridview#style-grid child {
+  margin: 6px 6px 6px 6px;
+}
+
+gridview#style-grid picture {
+  border-radius: 25px;
+}

@@ -1,41 +1,42 @@
 using Gtk 4.0;
 using Adw 1;
 
-template $GraphsStyleBox : Box {
-  margin-start: 6;
-  margin-end: 6;
-  margin-bottom: 9;
-  margin-top: 9;
-  styles ["boxed-list"]
+template $GraphsStyleBox : AspectFrame {
+  child: Box {
+    orientation: vertical;
+    Overlay overlay {
+      height-request: 100;
+      width-request: 200;
+      [overlay]
+      Box modify_box {
+        margin-end: 8;
+        margin-top: 8;
+        halign: end;
+        valign: start;
+        orientation: vertical;
+        Button {
+          tooltip-text: _("Remove");
+          clicked => $on_delete();
+          styles ["flat"]
+          Image {
+            hexpand: false;
+            icon-name: "edit-delete-symbolic";
+          }
+        }
 
-  Label label {
-    margin-end: 6;
-    halign: start;
-  }
-
-  Image check_mark {
-    icon-name: "emblem-ok-symbolic";
-    halign: start;
-    hexpand: true;
+        Button {
+          tooltip-text: _("Edit");
+          clicked => $on_edit();
+          styles ["flat"]
+          Image {
+            hexpand: false;
+            icon-name: "settings-symbolic";
+          }
+        }
+      }
     }
-
-  Button {
-    tooltip-text: _("Edit");
-    clicked => $on_edit();
-    styles ["flat"]
-    Image {
-      hexpand: false;
-      icon-name: "settings-symbolic";
+    Label label {
+      margin-top: 12;
     }
-  }
-
-  Button {
-    tooltip-text: _("Remove");
-    clicked => $on_delete();
-    styles ["flat"]
-    Image {
-      hexpand: false;
-      icon-name: "edit-delete-symbolic";
-    }
-  }
+  };
 }

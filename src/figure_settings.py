@@ -2,9 +2,9 @@
 import contextlib
 from gettext import gettext as _
 
-from gi.repository import Adw, GObject, Graphs, Gtk, Gio
+from gi.repository import Adw, GObject, Graphs, Gtk, Gio, GdkPixbuf, Gdk
 
-from graphs import misc, ui, utilities
+from graphs import misc, ui, utilities, styles
 
 _DIRECTIONS = ["bottom", "left", "top", "right"]
 
@@ -64,11 +64,18 @@ class FigureSettingsWindow(Adw.Window):
             getattr(self, highlighted).grab_focus()
         self.present()
 
+        cache_dir = utilities.get_cache_directory()
+        file = cache_dir.get_child_for_display_name("bmh (copy).svg")
         factory = Gtk.SignalListItemFactory.new()
         def on_setup(_factory, item):
-            item.set_child(Gtk.Label())
+            item.set_child(styles.StyleBox())
         def on_bind(_factoy, item):
-            item.get_child().set_text(item.get_item().get_string())
+            widget = item.get_child()
+            widget.label.set_text(item.get_item().get_string())
+            image = Gtk.Picture.new_for_file(file)
+            #image.set_content_fit(0)
+            image.set_name("style-preview")
+            widget.overlay.set_child(image)
         factory.connect("setup", on_setup)
         factory.connect("bind", on_bind)
 

@@ -225,13 +225,14 @@ template $GraphsFigureSettingsWindow : Adw.Window {
         }
         content: ScrolledWindow {
           hscrollbar-policy: never;
-          propagate-natural-height: true;
           Adw.Clamp {
             margin-bottom: 12;
             margin-top: 12;
             margin-start: 12;
             margin-end: 12;
             GridView grid_view {
+              name: "style-grid";
+              vexpand: false;
               max-columns: 2;
               model: SingleSelection {
               };

@@ -8,8 +8,8 @@ from cycler import cycler
 
 from gi.repository import Adw, GLib, GObject, Gio, Graphs, Gtk
 
+import graphs
 from graphs import file_io, ui, utilities
-from graphs.canvas import Canvas
 
 from lxml import etree
 
@@ -169,7 +169,7 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
                     item.props.color = color_cycle[count]
                     count += 1
 
-        canvas = Canvas(self.props.application)
+        canvas = graphs.canvas.Canvas(self.props.application)
         figure_settings = data.get_figure_settings()
         for prop in dir(figure_settings.props):
             if prop not in ["use_custom_style", "custom_style"]:
@@ -190,8 +190,6 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
             axis.set_xlabel(_("X Label"))
             axis.set_xlabel(_("Y Label"))
             svgfig = svgutils.transform.from_mpl(figure)
-        # set image size in px
-        svgfig.set_size(("200", "100"))
         file = \
             self._cache_dir.get_child_for_display_name(f"{style.name}.svg")
         stream = file_io.get_write_stream(file)
@@ -449,15 +447,16 @@ class StylesWindow(Adw.Window):
 
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/style_box.ui")
-class StyleBox(Gtk.Box):
+class StyleBox(Gtk.AspectFrame):
     __gtype_name__ = "GraphsStyleBox"
-    check_mark = Gtk.Template.Child()
     label = Gtk.Template.Child()
+    overlay = Gtk.Template.Child()
+    modify_box = Gtk.Template.Child()
 
-    def __init__(self, parent, style, file):
+    def __init__(self):
         super().__init__()
-        self.parent, self.style, self.file = parent, style, file
-        self.label.set_label(utilities.shorten_label(self.style, 50))
+        #self.parent, self.style, self.file = parent, style, file
+        #self.label.set_label(utilities.shorten_label(self.style, 50))
 
     @Gtk.Template.Callback()
     def on_edit(self, _button):
