@@ -804,7 +804,7 @@ msgstr "Op de maximale Y-waarde"
 
 #: data/ui/preferences.blp:15
 msgid "Center at middle coordinate"
-msgstr "Op het middelste coordinaat"
+msgstr "Op het midden"
 
 #: data/ui/preferences.blp:20
 msgid "Handle Duplicate Items"

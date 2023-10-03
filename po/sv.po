@@ -158,7 +158,7 @@ msgstr "Namn"
 
 #: data/ui/curve_fitting.blp:6
 msgid "Curve Fitting"
-msgstr "Anpassning"
+msgstr "Anpassa"
 
 #: data/ui/curve_fitting.blp:29
 msgid "Add fit to data"
@@ -282,11 +282,11 @@ msgstr "Triangel upåt"
 
 #: data/ui/edit_item.blp:75 data/ui/style_window.blp:127
 msgid "Triangle left"
-msgstr "Triangle vänster"
+msgstr "Triangel vänster"
 
 #: data/ui/edit_item.blp:76 data/ui/style_window.blp:128
 msgid "Triangle right"
-msgstr "Triangle höger"
+msgstr "Triangel höger"
 
 #: data/ui/edit_item.blp:76 data/ui/style_window.blp:128
 msgid "Octagon"
@@ -676,7 +676,7 @@ msgstr "Nästa vy"
 #: data/ui/help_overlay.blp:112
 msgctxt "shortcut window"
 msgid "Optimize limits"
-msgstr "Optimera axelgränser"
+msgstr "Optimera gränserna"
 
 #: data/ui/help_overlay.blp:117
 msgctxt "shortcut window"
@@ -796,11 +796,11 @@ msgstr "Centrera data beteende"
 
 #: data/ui/preferences.blp:15
 msgid "Center at maximum Y value"
-msgstr "Centrera vid maximalt Y-värde"
+msgstr "Centrera på Y-maximum"
 
 #: data/ui/preferences.blp:15
 msgid "Center at middle coordinate"
-msgstr "Centrera vid mittenkoordinat"
+msgstr "Centrera på mitten"
 
 #: data/ui/preferences.blp:20
 msgid "Handle Duplicate Items"
@@ -1295,7 +1295,7 @@ msgstr "Lägg till ekvation…"
 
 #: data/ui/window.blp:652
 msgid "Optimize Limits"
-msgstr "Optimera axelgränser"
+msgstr "Optimera gränserna"
 
 #: data/ui/window.blp:656
 msgid "Top X Scale"
