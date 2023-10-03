@@ -87,35 +87,32 @@ def _migrate_import_params(settings_, import_file):
     import_file.delete(None)
 
 
+SYSTEM_STYLES = [
+    "adwaita", "adwaita-dark", "bmh", "classic", "dark-background",
+    "fivethirtyeight", "ggplot", "grayscale", "seaborn", "seaborn-bright",
+    "seaborn-colorblind", "seaborn-dark", "seaborn-darkgrid",
+    "seaborn-dark-pallete", "seaborn-deep", "seaborn-muted",
+    "seaborn-notebook", "seaborn-paper", "seaborn-pastel", "seaborn-poster",
+    "seaborn-talk", "seaborn-ticks", "seaborn-white", "seaborn-whitegrid",
+    "solarized-light", "tableu-colorblind10", "thesis", "yaru", "yaru-dark",
+]
+
+
 def _migrate_styles(old_styles_dir, new_config_dir):
     new_styles_dir = new_config_dir.get_child_for_display_name("styles")
     if not new_styles_dir.query_exists(None):
         new_styles_dir.make_directory_with_parents()
-    system_styles = {}
-    directory = Gio.File.new_for_uri("resource:///se/sjoerd/Graphs/styles")
-    enumerator = directory.enumerate_children("default::*", 0, None)
-    while True:
-        file_info = enumerator.next_file(None)
-        if file_info is None:
-            break
-        file = enumerator.get_child(file_info)
-        system_styles[Path(utilities.get_filename(file)).stem] = file
-    enumerator.close(None)
     enumerator = old_styles_dir.enumerate_children("default::*", 0, None)
     while True:
         file_info = enumerator.next_file(None)
         if file_info is None:
             break
         file = enumerator.get_child(file_info)
-        style = file_io.parse_style(file)
-        with contextlib.suppress(KeyError):
-            template = file_io.parse_style(system_styles[style.name])
-            if template == style:
-                file.delete(None)
-                continue
-        file.move(new_styles_dir.get_child_for_display_name(
-            f"{style.name}.mplstyle",
-        ), 0, None, None)
+        stylename = Path(utilities.get_filename(file)).stem
+        if stylename not in SYSTEM_STYLES:
+            file.move(new_styles_dir.get_child_for_display_name(
+                f"{stylename.lower().replace(' ', '-')}.mplstyle",
+            ), 0, None, None)
     enumerator.close(None)
     old_styles_dir.delete(None)
 

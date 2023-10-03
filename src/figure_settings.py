@@ -23,10 +23,10 @@ def _on_setup(_factory, item):
 
 def _on_bind(_factoy, item, style_manager):
     widget = item.get_child()
-    name = item.get_item().get_string()
-    widget.label.set_text(name)
-    widget.picture.set_file(style_manager.previews[name])
-    if name in style_manager.get_user_styles():
+    style = item.get_item()
+    style.bind_property("name", widget.label, "label", 2)
+    style.bind_property("preview", widget.picture, "file", 2)
+    if style.name in style_manager.get_user_styles():
         widget.edit_button.set_visible(True)
         # TODO: setup editor
 
@@ -121,7 +121,7 @@ class FigureSettingsWindow(Adw.Window):
 
     @Gtk.Template.Callback()
     def add_style(self, _button):
-        pass
+        styles.AddStyleWindow(self)
 
     @Gtk.Template.Callback()
     def on_close(self, *_args):

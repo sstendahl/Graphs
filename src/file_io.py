@@ -2,7 +2,6 @@
 import json
 import logging
 from gettext import gettext as _
-from pathlib import Path
 from xml.dom import minidom
 
 from gi.repository import GLib
@@ -38,6 +37,8 @@ def parse_style(file):
     filename = utilities.get_filename(file)
     try:
         for line_number, line in enumerate(read_file(file).splitlines(), 1):
+            if line_number == 2:
+                style.name = line.strip()[2:]
             stripped_line = cbook._strip_comment(line)
             if not stripped_line:
                 continue
@@ -67,7 +68,6 @@ def parse_style(file):
                         message.format(filename, line_number))
     except UnicodeDecodeError:
         logging.exception(_("Could not parse {}").format(filename))
-    style.name = Path(filename).stem
     return style
 
 
@@ -80,6 +80,7 @@ WRITE_IGNORELIST = [
 
 def write_style(file, style):
     stream = get_write_stream(file)
+    _write_string(stream, "# Generated via Graphs\n")
     _write_string(stream, f"# {style.name}\n")
     _write_string(
         stream,
