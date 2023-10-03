@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: graphs\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-08-25 18:33+0200\n"
-"PO-Revision-Date: 2023-10-03 08:10+0000\n"
+"PO-Revision-Date: 2023-10-03 08:19+0000\n"
 "Last-Translator: Sjoerd Stendahl <sjoerd1993@gmail.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/graphs/graphs/nl/>"
 "\n"
@@ -714,7 +714,7 @@ msgstr "Standaard X-as positie"
 
 #: data/ui/preferences.blp:94 data/ui/preferences.blp:102
 msgid "Which axis should a new item be displayed on"
-msgstr "Op welke as zou een nieuw item moeten worden vertoond"
+msgstr "Op welke as nieuwe items vertoond worden"
 
 #: data/ui/preferences.blp:96
 msgid "bottom"
