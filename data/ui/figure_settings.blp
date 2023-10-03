@@ -15,6 +15,7 @@ template $GraphsFigureSettingsWindow : Adw.Window {
   }
 
   Adw.NavigationView navigation_view {
+    popped => $on_pop();
     Adw.NavigationPage {
       title: _("Figure Settings");
       Adw.ToolbarView {

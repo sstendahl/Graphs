@@ -42,8 +42,8 @@
     <file preprocess="xml-stripblanks">ui/item_box.ui</file>
     <file preprocess="xml-stripblanks">ui/preferences.ui</file>
     <file preprocess="xml-stripblanks">ui/style_color_box.ui</file>
+    <file preprocess="xml-stripblanks">ui/style_editor.ui</file>
     <file preprocess="xml-stripblanks">ui/style_preview.ui</file>
-    <file preprocess="xml-stripblanks">ui/style_window.ui</file>
     <file preprocess="xml-stripblanks">ui/transform_window.ui</file>
     <file preprocess="xml-stripblanks">ui/window.ui</file>
     <file compressed="True">whats_new</file>

@@ -9,10 +9,10 @@ from graphs import misc, styles, ui, utilities
 _DIRECTIONS = ["bottom", "left", "top", "right"]
 
 
-def _get_widget_factory(style_manager):
+def _get_widget_factory(window):
     factory = Gtk.SignalListItemFactory.new()
     factory.connect("setup", _on_setup)
-    factory.connect("bind", _on_bind, style_manager)
+    factory.connect("bind", _on_bind, window)
     return factory
 
 
@@ -21,14 +21,15 @@ def _on_setup(_factory, item):
     item.set_child(widget)
 
 
-def _on_bind(_factoy, item, style_manager):
+def _on_bind(_factoy, item, window):
     widget = item.get_child()
     style = item.get_item()
     style.bind_property("name", widget.label, "label", 2)
     style.bind_property("preview", widget.picture, "file", 2)
+    style_manager = window.get_application().get_figure_style_manager()
     if style.name in style_manager.get_user_styles():
         widget.edit_button.set_visible(True)
-        # TODO: setup editor
+        widget.edit_button.connect("clicked", window.edit_style, style)
 
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/figure_settings.ui")
@@ -86,8 +87,10 @@ class FigureSettingsWindow(Adw.Window):
             getattr(self, highlighted).grab_focus()
         self.present()
 
+        self.style_editor = styles.StyleEditor(self)
+        #self.navigation_view.add(self.style_editor)
+        self.grid_view.set_factory(_get_widget_factory(self))
         style_manager = application.get_figure_style_manager()
-        self.grid_view.set_factory(_get_widget_factory(style_manager))
         self.grid_view.get_model().set_model(
             style_manager.get_available_stylenames(),
         )
@@ -115,6 +118,15 @@ class FigureSettingsWindow(Adw.Window):
                 prop, utilities.string_to_float(entry.get_text()),
             )
 
+    def edit_style(self, _button, style):
+        self.style_editor.load_style(style)
+        self.navigation_view.push(self.style_editor)
+
+    @Gtk.Template.Callback()
+    def on_pop(self, _view, page):
+        if page == self.style_editor:
+            self.style_editor.save_style()
+
     @Gtk.Template.Callback()
     def choose_style(self, _button):
         self.navigation_view.push(self.style_overview)
@@ -125,6 +137,7 @@ class FigureSettingsWindow(Adw.Window):
 
     @Gtk.Template.Callback()
     def on_close(self, *_args):
+        self.style_editor.save_style()
         self.get_application().get_data().add_view_history_state()
         self.destroy()
 

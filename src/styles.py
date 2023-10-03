@@ -129,7 +129,12 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
     def get_system_styles(self) -> dict:
         return self._system_styles
 
+    def get_style_dir(self) -> Gio.File:
+        return self._style_dir
+
     def _on_file_change(self, _monitor, file, _other_file, event_type):
+        if Path(file.peek_path()).stem.startswith("."):
+            return
         possible_visual_impact = False
         if event_type == 2:
             for index, (stylename, file) \
@@ -356,16 +361,9 @@ VALUE_DICT = {
 }
 
 
-@Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/style_window.ui")
-class StylesWindow(Adw.Window):
-    __gtype_name__ = "GraphsStylesWindow"
-
-    edit_page = Gtk.Template.Child()
-    navigation_view = Gtk.Template.Child()
-    styles_box = Gtk.Template.Child()
-    style_color_box = Gtk.Template.Child()
-    style_overview = Gtk.Template.Child()
-    line_colors_box = Gtk.Template.Child()
+@Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/style_editor.ui")
+class StyleEditor(Adw.NavigationPage):
+    __gtype_name__ = "GraphsStyleEditor"
 
     style_name = Gtk.Template.Child()
     font_chooser = Gtk.Template.Child()
@@ -397,15 +395,12 @@ class StylesWindow(Adw.Window):
     background_color = Gtk.Template.Child()
     outline_color = Gtk.Template.Child()
 
-    def __init__(self, application):
-        super().__init__(application=application,
-                         transient_for=application.get_window())
-        self.style_manager = application.get_figure_style_manager()
-        self.styles = []
+    def __init__(self, parent):
+        super().__init__()
         self.style = None
-        self.reload_styles()
+        self.parent = parent
 
-        # color actions
+        # color buttons
         self.color_buttons = [
             self.text_color,
             self.tick_color,
@@ -420,64 +415,69 @@ class StylesWindow(Adw.Window):
             button.get_style_context().add_provider(
                 button.provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION)
 
-        # line colors
-        self.color_boxes = {}
-        self.present()
-
-    @Gtk.Template.Callback()
-    def edit_line_colors(self, _button):
-        self.navigation_view.push(self.style_color_box)
-        self.style_color_box.set_title(
-            _("{name} - line colors").format(name=self.style.name))
-
-    def load_style(self):
+    def load_style(self, style):
+        self.style = style
+        self.style_params = _get_style(self.style.file)
+        self.set_title(self.style.name)
         self.style_name.set_text(self.style.name)
         ui.load_values_from_dict(self, {
-            key: VALUE_DICT[key].index(self.style[value[0]])
-            if key in VALUE_DICT else self.style[value[0]]
+            key: VALUE_DICT[key].index(self.style_params[value[0]])
+            if key in VALUE_DICT else self.style_params[value[0]]
             for key, value in STYLE_DICT.items()
         })
 
         # font
+        # borked
+        """"
+        a = self.style_params['font.sans-serif']
+        b = self.style_params['font.size']
         font_description = self.font_chooser.get_font_desc().from_string(
-            f"{self.style['font.sans-serif']} {self.style['font.size']}")
+            f"{a} {b}")
         self.font_chooser.set_font_desc(font_description)
+        """
 
         for button in self.color_buttons:
             button.provider.load_from_data(
                 f"button {{ color: {button.color}; }}", -1)
 
         # line colors
+        """"
         for color in self.style["axes.prop_cycle"].by_key()["color"]:
             box = StyleColorBox(self, color)
             self.line_colors_box.append(box)
             self.color_boxes[box] = self.line_colors_box.get_last_child()
+        """
 
     def save_style(self):
+        if self.style is None:
+            return
         new_values = ui.save_values_to_dict(self, STYLE_DICT.keys())
         for key, value in new_values.items():
             if value is not None:
                 with contextlib.suppress(KeyError):
                     value = VALUE_DICT[key][value]
                 for item in STYLE_DICT[key]:
-                    self.style[item] = value
+                    self.style_params[item] = value
 
         # font
+        """"
         font_description = self.font_chooser.get_font_desc()
-        self.style["font.sans-serif"] = font_description.get_family()
+        self.style_params["font.sans-serif"] = font_description.get_family()
         font_name = font_description.to_string().lower().split(" ")
-        self.style["font.style"] = utilities.get_font_style(font_name)
+        self.style_params["font.style"] = utilities.get_font_style(font_name)
         font_weight = utilities.get_font_weight(font_name)
         for key in ["font.weight", "axes.titleweight", "axes.labelweight",
                     "figure.titleweight", "figure.labelweight"]:
-            self.style[key] = font_weight
+            self.style_params[key] = font_weight
         font_size = font_name[-1]
         for key in ["font.size", "axes.labelsize", "xtick.labelsize",
                     "ytick.labelsize", "axes.titlesize", "legend.fontsize",
                     "figure.titlesize", "figure.labelsize"]:
-            self.style[key] = font_size
+            self.style_params[key] = font_size
+        """
 
         # line colors
+        """"
         line_colors = []
         for color_box, list_box in self.color_boxes.copy().items():
             line_colors.append(color_box.color_button.color)
@@ -485,64 +485,35 @@ class StylesWindow(Adw.Window):
             del self.color_boxes[color_box]
         self.style["axes.prop_cycle"] = cycler(color=line_colors)
         self.style["patch.facecolor"] = line_colors[0]
+        """
 
         # name & save
-        config_dir = utilities.get_config_directory()
-        directory = config_dir.get_child_for_display_name("styles")
-        file = \
-            directory.get_child_for_display_name(f"{self.style.name}.mplstyle")
-        file_io.write_style(file, self.style)
-
-    @Gtk.Template.Callback()
-    def add_color(self, _button):
-        box = StyleColorBox(self, "#000000")
-        self.line_colors_box.append(box)
-        self.color_boxes[box] = self.line_colors_box.get_last_child()
-
-    @Gtk.Template.Callback()
-    def add_style(self, _button):
-        AddStyleWindow(self.get_application(), self)
-
-    def reload_styles(self):
-        for box in self.styles.copy():
-            self.styles.remove(box)
-            self.styles_box.remove(self.styles_box.get_row_at_index(0))
-        user_styles = self.style_manager.get_user_styles()
-        for style, (file, _preview) in sorted(user_styles.items()):
-            box = StyleBox(self, style, file)
-            figure_settings = \
-                self.get_application().get_data().get_figure_settings()
-            if not (figure_settings.get_use_custom_style()
-                    and figure_settings.get_custom_style() == self.style):
-                box.check_mark.hide()
-                box.label.set_hexpand(True)
-            self.styles.append(box)
-            self.styles_box.append(box)
-        self.styles_box.set_visible(len(self.styles) != 0)
-
-    @Gtk.Template.Callback()
-    def on_close(self, _button):
-        if self.style is not None:
-            self.save_style()
-        self.destroy()
+        new_name = self.style_name.get_text()
+        self.style_params.name = new_name
+        file_io.write_style(self.style.file, self.style_params)
+        application = self.parent.get_application()
+        figure_settings = application.get_data().get_figure_settings()
+        if self.style.name != new_name:
+            print(changed)
+            if figure_settings.get_use_custom_style() \
+                    and figure_settings.get_custom_style() == self.style.name:
+                figure_settings.set_custom_style(new_name)
+            self.style.file.set_display_name(_generate_filename(new_name))
+        self.style = None
 
     def on_color_change(self, button):
+        def on_accept(dialog, result):
+            with contextlib.suppress(GLib.GError):
+                color = dialog.choose_rgba_finish(result)
+                if color is not None:
+                    button.color = utilities.rgba_to_hex(color)
+                    button.provider.load_from_data(
+                        f"button {{ color: {button.color}; }}", -1,
+                    )
         color = utilities.hex_to_rgba(f"{button.color}")
         dialog = Gtk.ColorDialog()
         dialog.set_with_alpha(False)
-        dialog.choose_rgba(
-            self.get_application().get_window(), color, None,
-            self.on_color_change_accept, button)
-
-    def on_color_change_accept(self, dialog, result, button):
-        try:
-            color = dialog.choose_rgba_finish(result)
-            if color is not None:
-                button.color = utilities.rgba_to_hex(color)
-                button.provider.load_from_data(
-                    f"button {{ color: {button.color}; }}", -1)
-        except GLib.GError:
-            pass
+        dialog.choose_rgba(self.parent, color, None, on_accept)
 
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/style_color_box.ui")
@@ -564,10 +535,3 @@ class StyleColorBox(Gtk.Box):
         self.color_button.provider.load_from_data(
             f"button {{ color: {color}; }}", -1)
         self.color_button.connect("clicked", self.parent.on_color_change)
-
-    @Gtk.Template.Callback()
-    def on_delete(self, _button):
-        self.parent.line_colors_box.remove(self.parent.color_boxes[self])
-        del self.parent.color_boxes[self]
-        if not self.parent.color_boxes:
-            self.parent.add_color(None)
