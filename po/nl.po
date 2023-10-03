@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: graphs\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-10-02 17:46+0200\n"
-"PO-Revision-Date: 2023-10-03 11:29+0000\n"
+"PO-Revision-Date: 2023-10-03 13:53+0000\n"
 "Last-Translator: Sjoerd Stendahl <sjoerd1993@gmail.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/graphs/graphs/nl/>"
 "\n"
@@ -700,7 +700,7 @@ msgstr "Niets selecteren"
 #: data/ui/help_overlay.blp:133
 msgctxt "shortcut window"
 msgid "Toggle Sidebar"
-msgstr "Zijbalk schakelen"
+msgstr "Zijbalk Schakelen"
 
 #: data/ui/help_overlay.blp:139
 msgctxt "shortcut window"
@@ -1271,11 +1271,11 @@ msgstr "Open Project…"
 
 #: data/ui/window.blp:624
 msgid "Export Data…"
-msgstr "Data exporteren"
+msgstr "Data Exporteren"
 
 #: data/ui/window.blp:625
 msgid "Export Figure…"
-msgstr "Figuur exporteren…"
+msgstr "Figuur Exporteren…"
 
 #: data/ui/window.blp:632
 msgid "Preferences"
@@ -1295,11 +1295,11 @@ msgstr "Voeg gegevens toe van een bestand…"
 
 #: data/ui/window.blp:643
 msgid "Add Equation…"
-msgstr "Vergelijking toevoegen…"
+msgstr "Vergelijking Toevoegen…"
 
 #: data/ui/window.blp:652
 msgid "Optimize Limits"
-msgstr "Optimaliseer asgrenzen"
+msgstr "Optimaliseer Asgrenzen"
 
 #: data/ui/window.blp:656
 msgid "Top X Scale"
