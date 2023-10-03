@@ -54,6 +54,7 @@
   <gresource prefix="/se/sjoerd/Graphs/icons/scalable/actions/">
     <file preprocess="xml-stripblanks" alias="axes-one-quadrant-symbolic.svg">icons/axes-one-quadrant-symbolic.svg</file>
     <file preprocess="xml-stripblanks" alias="center-symbolic.svg">icons/center-symbolic.svg</file>
+    <file preprocess="xml-stripblanks" alias="check-round-outline-whole-symbolic.svg">icons/check-round-outline-whole-symbolic.svg</file>
     <file preprocess="xml-stripblanks" alias="color-picker-symbolic.svg">icons/color-picker-symbolic.svg</file>
     <file preprocess="xml-stripblanks" alias="derivative2-symbolic.svg">icons/derivative2-symbolic.svg</file>
     <file preprocess="xml-stripblanks" alias="fast-fourier-transform-symbolic.svg">icons/fast-fourier-transform-symbolic.svg</file>

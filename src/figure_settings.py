@@ -2,11 +2,34 @@
 import contextlib
 from gettext import gettext as _
 
-from gi.repository import Adw, GObject, Graphs, Gtk, Gio, GdkPixbuf, Gdk
+from gi.repository import Adw, GObject, Graphs, Gtk
 
-from graphs import misc, ui, utilities, styles
+from graphs import misc, styles, ui, utilities
 
 _DIRECTIONS = ["bottom", "left", "top", "right"]
+
+
+def _get_widget_factory(style_manager):
+    factory = Gtk.SignalListItemFactory.new()
+    factory.connect("setup", _on_setup)
+    factory.connect("bind", _on_bind, style_manager)
+    return factory
+
+
+def _on_setup(_factory, item):
+    widget = styles.StyleBox()
+    item.bind_property("selected", widget.indicator, "visible", 2)
+    item.set_child(widget)
+
+
+def _on_bind(_factoy, item, style_manager):
+    widget = item.get_child()
+    name = item.get_item().get_string()
+    widget.label.set_text(name)
+    image = Gtk.Picture.new_for_file(style_manager.previews[name])
+    # image.set_content_fit(0)
+    image.set_name("style-preview")
+    widget.overlay.set_child(image)
 
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/figure_settings.ui")
@@ -65,21 +88,7 @@ class FigureSettingsWindow(Adw.Window):
         self.present()
 
         style_manager = application.get_figure_style_manager()
-        factory = Gtk.SignalListItemFactory.new()
-        def on_setup(_factory, item):
-            item.set_child(styles.StyleBox())
-        def on_bind(_factoy, item):
-            widget = item.get_child()
-            name = item.get_item().get_string()
-            widget.label.set_text(name)
-            image = Gtk.Picture.new_for_file(style_manager.previews[name])
-            #image.set_content_fit(0)
-            image.set_name("style-preview")
-            widget.overlay.set_child(image)
-        factory.connect("setup", on_setup)
-        factory.connect("bind", on_bind)
-
-        self.grid_view.set_factory(factory)
+        self.grid_view.set_factory(_get_widget_factory(style_manager))
         self.grid_view.get_model().set_model(
             style_manager.get_available_stylenames(),
         )

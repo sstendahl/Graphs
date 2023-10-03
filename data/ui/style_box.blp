@@ -5,8 +5,17 @@ template $GraphsStyleBox : AspectFrame {
   child: Box {
     orientation: vertical;
     Overlay overlay {
-      height-request: 100;
-      width-request: 200;
+      height-request: 80;
+      width-request: 160;
+      [overlay]
+      Image indicator {
+        halign: start;
+        valign: start;
+        margin-start: 8;
+        margin-top: 8;
+        icon-name: "check-round-outline-whole-symbolic";
+        name: "indicator";
+      }
       [overlay]
       Box modify_box {
         margin-end: 8;

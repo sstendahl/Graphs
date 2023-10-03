@@ -40,6 +40,23 @@ gridview#style-grid child {
   margin: 6px 6px 6px 6px;
 }
 
-gridview#style-grid picture {
+gridview#style-grid child:selected {
+  background: @window_bg_color;
+}
+
+gridview#style-grid child:hover {
+  background: @window_bg_color;
+}
+
+gridview#style-grid child picture {
   border-radius: 12px;
+  box-shadow: 0 0 0 1px @borders;
+}
+
+gridview#style-grid child:selected picture {
+  box-shadow: 0 0 0 3px @theme_selected_bg_color;
+}
+
+gridview#style-grid child image#indicator {
+  color: @theme_selected_bg_color;
 }
