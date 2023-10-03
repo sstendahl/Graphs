@@ -88,7 +88,6 @@ class FigureSettingsWindow(Adw.Window):
         self.present()
 
         self.style_editor = styles.StyleEditor(self)
-        #self.navigation_view.add(self.style_editor)
         self.grid_view.set_factory(_get_widget_factory(self))
         style_manager = application.get_figure_style_manager()
         self.grid_view.get_model().set_model(

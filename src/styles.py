@@ -184,11 +184,13 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
                     self.props.use_custom_style = False
                     window.add_toast_string(
                         _(f"Could not parse {stylename}, loading "
-                          "system preferred style"))
+                          "system preferred style").format(
+                            stylename=stylename),
+                    )
             else:
                 window.add_toast_string(
                     _(f"Plot style {stylename} does not exist "
-                      "loading system preferred"))
+                      "loading system preferred").format(stylename=stylename))
                 self.props.custom_style = system_style
                 self.props.use_custom_style = False
         if style is None:
@@ -494,7 +496,6 @@ class StyleEditor(Adw.NavigationPage):
         application = self.parent.get_application()
         figure_settings = application.get_data().get_figure_settings()
         if self.style.name != new_name:
-            print(changed)
             if figure_settings.get_use_custom_style() \
                     and figure_settings.get_custom_style() == self.style.name:
                 figure_settings.set_custom_style(new_name)

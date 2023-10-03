@@ -23,7 +23,7 @@ template $GraphsFittingParameterEntry : Box {
       }
       Label {
         halign: start;
-        label: "Initial";
+        label: _("Initial");
         layout {
           column: 0;
           row: 1;
@@ -31,7 +31,7 @@ template $GraphsFittingParameterEntry : Box {
       }
       Label {
         halign: start;
-        label: "Min";
+        label: _("Min");
         layout {
           column: 1;
           row: 1;
@@ -39,28 +39,28 @@ template $GraphsFittingParameterEntry : Box {
       }
       Label {
         halign: start;
-        label: "Max";
+        label: _("Max");
         layout {
           column: 2;
           row: 1;
         }
       }
       Entry initial {
-        text: _("1");
+        text: "1";
         layout {
           column: 0;
           row: 2;
         }
       }
       Entry lower_bound {
-        text: _("-inf");
+        text: "-inf";
         layout {
           column: 1;
           row: 2;
         }
       }
       Entry upper_bound {
-        text: _("inf");
+        text: "inf";
         layout {
           column: 2;
           row: 2;
