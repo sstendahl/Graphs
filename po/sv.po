@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: graphs\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-10-02 17:46+0200\n"
-"PO-Revision-Date: 2023-10-03 11:29+0000\n"
+"PO-Revision-Date: 2023-10-03 14:10+0000\n"
 "Last-Translator: Sjoerd Stendahl <sjoerd1993@gmail.com>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/graphs/graphs/sv/"
 ">\n"
@@ -696,7 +696,7 @@ msgstr "Välj inga"
 #: data/ui/help_overlay.blp:133
 msgctxt "shortcut window"
 msgid "Toggle Sidebar"
-msgstr "Växla sidofält"
+msgstr "Växla Sidofält"
 
 #: data/ui/help_overlay.blp:139
 msgctxt "shortcut window"
@@ -1259,19 +1259,19 @@ msgstr "Förra vy"
 
 #: data/ui/window.blp:620
 msgid "Save Project…"
-msgstr "Spara projekt…"
+msgstr "Spara Projekt…"
 
 #: data/ui/window.blp:621
 msgid "Open Project…"
-msgstr "Öppna projekt…"
+msgstr "Öppna Projekt…"
 
 #: data/ui/window.blp:624
 msgid "Export Data…"
-msgstr "Exportera data…"
+msgstr "Exportera Data…"
 
 #: data/ui/window.blp:625
 msgid "Export Figure…"
-msgstr "Exportera figur"
+msgstr "Exportera Figur…"
 
 #: data/ui/window.blp:632
 msgid "Preferences"
@@ -1279,7 +1279,7 @@ msgstr "Inställningar"
 
 #: data/ui/window.blp:635
 msgid "Keyboard Shortcuts"
-msgstr "Tangenbordsgenvegar"
+msgstr "Tangentbordsgenvägar"
 
 #: data/ui/window.blp:636
 msgid "About Graphs"
@@ -1295,7 +1295,7 @@ msgstr "Lägg till ekvation…"
 
 #: data/ui/window.blp:652
 msgid "Optimize Limits"
-msgstr "Optimera gränserna"
+msgstr "Optimera Gränserna"
 
 #: data/ui/window.blp:656
 msgid "Top X Scale"
@@ -1333,7 +1333,7 @@ msgstr "Kunda inte ladda %s"
 msgid "Results:"
 msgstr "Resultat:"
 
-#: src/curve_fitting.py:134
+#: src/curve_fitting.py:135
 #, python-brace-format
 msgid "Sum of R²: {R2}"
 msgstr "Summa av R²: {R2}"
