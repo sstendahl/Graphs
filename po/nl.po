@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: graphs\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-08-25 18:33+0200\n"
-"PO-Revision-Date: 2023-08-29 10:57+0000\n"
+"PO-Revision-Date: 2023-10-03 08:10+0000\n"
 "Last-Translator: Sjoerd Stendahl <sjoerd1993@gmail.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/graphs/graphs/nl/>"
 "\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.0.1-dev\n"
+"X-Generator: Weblate 5.1-dev\n"
 
 #: data/ui/add_equation_window.blp:7
 msgid "Add Equation"
@@ -40,7 +40,7 @@ msgstr "Y = "
 
 #: data/ui/add_equation_window.blp:54
 msgid "Enter a mathematical expression to generate data from"
-msgstr "Voer een wiskundige uitdrukking in om data te genereren"
+msgstr "Voer een wiskundige uitdrukking in om gegevens van te genereren"
 
 #: data/ui/add_equation_window.blp:57
 msgid "Name (optional)"
@@ -597,7 +597,7 @@ msgstr "Kolom X"
 
 #: data/ui/import.blp:68
 msgid "X-data column index"
-msgstr "X-data kolumnindex"
+msgstr "X-data kolomindex"
 
 #: data/ui/import.blp:82
 msgid "Column Y"
@@ -714,7 +714,7 @@ msgstr "Standaard X-as positie"
 
 #: data/ui/preferences.blp:94 data/ui/preferences.blp:102
 msgid "Which axis should a new item be displayed on"
-msgstr "Op welke as nieuwe gegevens vertoond worden"
+msgstr "Op welke as zou een nieuw item moeten worden vertoond"
 
 #: data/ui/preferences.blp:96
 msgid "bottom"
@@ -794,11 +794,11 @@ msgstr "Maatstreepjes richting"
 
 #: data/ui/style_window.blp:157
 msgid "Inwards"
-msgstr "Naar binnen"
+msgstr "Inwaarts"
 
 #: data/ui/style_window.blp:157
 msgid "Outwards"
-msgstr "Naar buiten"
+msgstr "Uitwaarts"
 
 #: data/ui/style_window.blp:162
 msgid "Minor Ticks"
@@ -2212,7 +2212,7 @@ msgstr "Intensiteit (cps)"
 
 #: src/file_io.py:72
 msgid "Invalid .xry format"
-msgstr "Ongeldig .xry formaat"
+msgstr "Ongeldig .xry bestand"
 
 #: src/file_io.py:89
 msgid "β (°)"
@@ -2253,7 +2253,7 @@ msgstr "Kon {} niet laden"
 #: src/item_box.py:85
 #, python-brace-format
 msgid "Deleted {name}"
-msgstr "{name} is verwijdert"
+msgstr "{name} is verwijderd"
 
 #: src/main.py:96
 #, python-format
