@@ -1301,13 +1301,13 @@ msgstr ""
 msgid "Results:"
 msgstr ""
 
-#: src/curve_fitting.py:134
+#: src/curve_fitting.py:135
 #, python-brace-format
-msgid "Sum of R²: {self.r2}"
+msgid "Sum of R²: {R2}"
 msgstr ""
 
 #: src/curve_fitting.py:313
-msgid "Fitting parameters for {self.params.get_name()}:"
+msgid "Fitting parameters for {param_name}"
 msgstr ""
 
 #: src/export_figure.py:50

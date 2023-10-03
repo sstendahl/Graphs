@@ -145,13 +145,13 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
                     self.props.custom_style = system_style
                     self.props.use_custom_style = False
                     window.add_toast_string(
-                        _(f"Could not parse {stylename}, loading "
-                          "system preferred style"))
+                        _("Could not parse {stylename}, loading "
+                          "system preferred style").format(stylename=stylename))
                 return
             else:
                 window.add_toast_string(
-                    _(f"Plot style {stylename} does not exist "
-                      "loading system preferred"))
+                    _("Plot style {stylename} does not exist "
+                      "loading system preferred").format(stylename=stylename))
                 self.props.custom_style = system_style
                 self.props.use_custom_style = False
         pyplot.rcParams.update(file_io.parse_style(file))
