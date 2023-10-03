@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: graphs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-10-02 16:40+0200\n"
+"POT-Creation-Date: 2023-10-02 17:46+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1298,26 +1298,16 @@ msgid "Could not load %s"
 msgstr ""
 
 #: src/curve_fitting.py:127
-msgid "Results: \n"
-msgstr ""
-
-#: src/curve_fitting.py:132
-#, python-brace-format
-msgid ""
-"\n"
-" {arg}: {parameter}"
+msgid "Results:"
 msgstr ""
 
 #: src/curve_fitting.py:134
 #, python-brace-format
-msgid ""
-"\n"
-"\n"
-"Sum of R²: {self.r2}"
+msgid "Sum of R²: {self.r2}"
 msgstr ""
 
 #: src/curve_fitting.py:313
-msgid "<b>Fitting parameters for {self.params.get_name()}: </b>"
+msgid "Fitting parameters for {self.params.get_name()}:"
 msgstr ""
 
 #: src/export_figure.py:50
