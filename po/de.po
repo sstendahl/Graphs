@@ -149,7 +149,6 @@ msgstr ""
 
 #: data/ui/curve_fitting.blp:44
 #, fuzzy
-#| msgid "Add Equation"
 msgid "Equation"
 msgstr "Füge eine Gleichung hinzu"
 
@@ -467,7 +466,6 @@ msgstr ""
 #: data/ui/window.blp:678 data/ui/window.blp:707 data/ui/window.blp:735
 #: data/ui/window.blp:763
 #, fuzzy
-#| msgid "Inverse FFT"
 msgid "Inverse"
 msgstr "Inverses FFT"
 
@@ -573,7 +571,6 @@ msgstr ""
 
 #: data/ui/help_overlay.blp:29
 #, fuzzy
-#| msgid "Styles"
 msgctxt "shortcut window"
 msgid "Open Styles"
 msgstr "Stile"
@@ -615,7 +612,6 @@ msgstr "Füge Daten aus einer Gleichung hinzu"
 
 #: data/ui/help_overlay.blp:67
 #, fuzzy
-#| msgid "Add Data from File…"
 msgctxt "shortcut window"
 msgid "Add Data from File"
 msgstr "Füge Daten aus einer Datei hinzu…"
@@ -667,7 +663,6 @@ msgstr ""
 
 #: data/ui/help_overlay.blp:112
 #, fuzzy
-#| msgid "Optimize Limits"
 msgctxt "shortcut window"
 msgid "Optimize limits"
 msgstr "Optimiere Begrenzungen"
@@ -835,7 +830,6 @@ msgstr ""
 
 #: data/ui/preferences.blp:38
 #, fuzzy
-#| msgid "bottom"
 msgid "Bottom"
 msgstr "unten"
 
@@ -1122,7 +1116,6 @@ msgstr "Auswahlmodus. Klicke und Ziehe um eine Auswahl an Daten zu machen"
 
 #: data/ui/window.blp:262
 #, fuzzy
-#| msgid "Adjust Data"
 msgid "Adjust"
 msgstr "Daten Anpassen"
 
@@ -1288,7 +1281,6 @@ msgstr "Füge Daten aus einer Datei hinzu…"
 
 #: data/ui/window.blp:643
 #, fuzzy
-#| msgid "Add Equation"
 msgid "Add Equation…"
 msgstr "Füge eine Gleichung hinzu"
 
@@ -1330,13 +1322,13 @@ msgstr "Konnte %s nicht laden"
 msgid "Results:"
 msgstr ""
 
-#: src/curve_fitting.py:134
+#: src/curve_fitting.py:135
 #, python-brace-format
-msgid "Sum of R²: {self.r2}"
+msgid "Sum of R²: {R2}"
 msgstr ""
 
 #: src/curve_fitting.py:313
-msgid "Fitting parameters for {self.params.get_name()}:"
+msgid "Fitting parameters for {param_name}"
 msgstr ""
 
 #: src/export_figure.py:50
@@ -1419,7 +1411,6 @@ msgstr "Kann nicht aus Datei importieren"
 
 #: src/styles.py:148
 #, fuzzy, python-brace-format
-#| msgid "Plot style {stylename} does not exist loading system preferred"
 msgid "Could not parse {stylename}, loading system preferred style"
 msgstr "Stil {stylename} existiert nicht, lade Systembevorzugten"
 
@@ -1443,7 +1434,6 @@ msgstr "{name} - Linienfarben"
 
 #: src/styles.py:476
 #, fuzzy, python-brace-format
-#| msgid "Are you sure you want to delete the {} style?"
 msgid "Are you sure you want to delete the {stylename} style?"
 msgstr "Bist du sicher, dass du den Stil {} löschen möchtest?"
 
@@ -1492,7 +1482,6 @@ msgstr ""
 
 #: src/ui.py:97
 #, fuzzy
-#| msgid "Imported Data"
 msgid "Exported Data"
 msgstr "Importierte Daten"
 
