@@ -129,9 +129,9 @@ class CurveFittingWindow(Graphs.CurveFittingTool):
         for index, arg in enumerate(self.get_free_variables()):
             parameter = utilities.sig_fig_round(self.param[index], 3)
             sigma = utilities.sig_fig_round(self.sigma[index], 3)
-            buffer_string += f"\n {arg}: {parameter}"
-            buffer_string += f" (± {sigma})"
-        buffer_string += f"\n\nSum of R²: {self.r2}"
+            buffer_string += _(f"\n {arg}: {parameter}")
+            buffer_string += _(f" (± {sigma})")
+        buffer_string += _(f"\n\nSum of R²: {self.r2}")
 
         self.get_text_view().get_buffer().set_text(buffer_string)
         bold_tag = Gtk.TextTag(weight=700)
@@ -310,7 +310,7 @@ class FittingParameterEntry(Gtk.Box):
         self.parent = parent
         self.params = parent.fitting_parameters[arg]
         self.label.set_markup(
-            f"<b>Fitting parameters for {self.params.get_name()}: </b>")
+            _(f"<b>Fitting parameters for {self.params.get_name()}: </b>"))
         self.initial.set_text(str(self.params.get_initial()))
 
         self.initial.connect("notify::text", parent.on_entry_change)
