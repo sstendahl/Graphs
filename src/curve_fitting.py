@@ -124,14 +124,14 @@ class CurveFittingWindow(Graphs.CurveFittingTool):
         self.fit_curve()
 
     def set_results(self):
-        initial_string = _("Results: \n")
+        initial_string = f"_("Results:") \n")
         buffer_string = initial_string
         for index, arg in enumerate(self.get_free_variables()):
             parameter = utilities.sig_fig_round(self.param[index], 3)
             sigma = utilities.sig_fig_round(self.sigma[index], 3)
-            buffer_string += _(f"\n {arg}: {parameter}")
-            buffer_string += f" (± {sigma})"
-        buffer_string += _(f"\n\nSum of R²: {self.r2}")
+            buffer_string += f"\n {arg}: {parameter}"
+            buffer_string += f" (± {sigma})")
+        buffer_string += f"\n\n{_("Sum of R²")}: {self.r2}"
 
         self.get_text_view().get_buffer().set_text(buffer_string)
         bold_tag = Gtk.TextTag(weight=700)
