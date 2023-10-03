@@ -146,8 +146,8 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
                     self.props.use_custom_style = False
                     window.add_toast_string(
                         _(f"Could not parse {stylename}, loading "
-                          "system preferred style").format(stylename=stylename)
-                    )
+                          "system preferred style").format(
+                            stylename=stylename))
                 return
             else:
                 window.add_toast_string(
