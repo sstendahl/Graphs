@@ -1308,11 +1308,6 @@ msgid ""
 " {arg}: {parameter}"
 msgstr ""
 
-#: src/curve_fitting.py:133
-#, python-brace-format
-msgid " (± {sigma})"
-msgstr ""
-
 #: src/curve_fitting.py:134
 #, python-brace-format
 msgid ""

@@ -130,7 +130,7 @@ class CurveFittingWindow(Graphs.CurveFittingTool):
             parameter = utilities.sig_fig_round(self.param[index], 3)
             sigma = utilities.sig_fig_round(self.sigma[index], 3)
             buffer_string += _(f"\n {arg}: {parameter}")
-            buffer_string += _(f" (± {sigma})")
+            buffer_string += f" (± {sigma})"
         buffer_string += _(f"\n\nSum of R²: {self.r2}")
 
         self.get_text_view().get_buffer().set_text(buffer_string)
