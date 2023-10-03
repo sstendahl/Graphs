@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: graphs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-10-03 00:11+0300\n"
+"POT-Creation-Date: 2023-10-02 16:40+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -530,16 +530,16 @@ msgstr ""
 msgid "Use Custom Style"
 msgstr ""
 
-#: data/ui/fitting_parameters.blp:49
-msgid "1"
+#: data/ui/fitting_parameters.blp:26
+msgid "Initial"
 msgstr ""
 
-#: data/ui/fitting_parameters.blp:56
-msgid "-inf"
+#: data/ui/fitting_parameters.blp:34
+msgid "Min"
 msgstr ""
 
-#: data/ui/fitting_parameters.blp:63
-msgid "inf"
+#: data/ui/fitting_parameters.blp:42
+msgid "Max"
 msgstr ""
 
 #: data/ui/help_overlay.blp:11
@@ -1299,6 +1299,30 @@ msgstr ""
 
 #: src/curve_fitting.py:127
 msgid "Results: \n"
+msgstr ""
+
+#: src/curve_fitting.py:132
+#, python-brace-format
+msgid ""
+"\n"
+" {arg}: {parameter}"
+msgstr ""
+
+#: src/curve_fitting.py:133
+#, python-brace-format
+msgid " (± {sigma})"
+msgstr ""
+
+#: src/curve_fitting.py:134
+#, python-brace-format
+msgid ""
+"\n"
+"\n"
+"Sum of R²: {self.r2}"
+msgstr ""
+
+#: src/curve_fitting.py:313
+msgid "<b>Fitting parameters for {self.params.get_name()}: </b>"
 msgstr ""
 
 #: src/export_figure.py:50
