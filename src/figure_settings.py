@@ -11,25 +11,21 @@ _DIRECTIONS = ["bottom", "left", "top", "right"]
 
 def _get_widget_factory(window):
     factory = Gtk.SignalListItemFactory.new()
-    factory.connect("setup", _on_setup)
-    factory.connect("bind", _on_bind, window)
+    factory.window = window
+    factory.connect("setup", lambda _f, i: i.set_child(styles.StylePreview()))
+    factory.connect("bind", _on_bind)
     return factory
 
 
-def _on_setup(_factory, item):
-    widget = styles.StylePreview()
-    item.set_child(widget)
-
-
-def _on_bind(_factoy, item, window):
+def _on_bind(factory, item):
     widget = item.get_child()
     style = item.get_item()
     style.bind_property("name", widget.label, "label", 2)
     style.bind_property("preview", widget.picture, "file", 2)
-    style_manager = window.get_application().get_figure_style_manager()
+    style_manager = factory.window.get_application().get_figure_style_manager()
     if style.name in style_manager.get_user_styles():
         widget.edit_button.set_visible(True)
-        widget.edit_button.connect("clicked", window.edit_style, style)
+        widget.edit_button.connect("clicked", factory.window.edit_style, style)
 
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/figure_settings.ui")
@@ -90,9 +86,7 @@ class FigureSettingsWindow(Adw.Window):
         self.style_editor = styles.StyleEditor(self)
         self.grid_view.set_factory(_get_widget_factory(self))
         style_manager = application.get_figure_style_manager()
-        self.grid_view.get_model().set_model(
-            style_manager.get_available_stylenames(),
-        )
+        self.grid_view.get_model().set_model(style_manager.get_style_model())
 
     def set_axes_entries(self):
         used_axes = [[direction, False] for direction in _DIRECTIONS]

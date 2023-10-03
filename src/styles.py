@@ -120,7 +120,7 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
             Style.new(style.name, file, preview), compare_styles,
         )
 
-    def get_available_stylenames(self):
+    def get_style_model(self):
         return self._style_model
 
     def get_user_styles(self) -> dict:
@@ -136,20 +136,24 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
         if Path(file.peek_path()).stem.startswith("."):
             return
         possible_visual_impact = False
+        stylename = None
         if event_type == 2:
-            for index, (stylename, file) \
-                    in enumerate(self._user_styles.items()):
+            for index, (name, file) in enumerate(self._user_styles.items()):
                 if not file.query_exists(None):
-                    self._user_styles.pop(stylename)
+                    self._user_styles.pop(name)
                     self._style_model.remove(index)
+                    stylename = name
                     break
+            if stylename is None:
+                return
             possible_visual_impact = True
         else:
             style = _get_style(file)
+            stylename = style.name
         if event_type == 1:
             for index in range(self._style_model.get_n_items()):
                 obj = self._style_model.get_item(index)
-                if obj.name == style.name:
+                if obj.name == stylename:
                     obj.preview = self._generate_preview(style)
                     break
             possible_visual_impact = False
@@ -157,7 +161,7 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
             self._add_user_style(file, style)
         if possible_visual_impact \
                 and self.props.use_custom_style \
-                and self.props.custom_style == style.name:
+                and self.props.custom_style == stylename:
             self._on_style_change()
 
     def _on_style_select(self, _a, _b):
@@ -300,24 +304,24 @@ class AddStyleWindow(Adw.Window):
     def __init__(self, parent):
         application = parent.get_application()
         super().__init__(application=application, transient_for=parent)
-        self.style_templates.set_model(
-            application.get_figure_style_manager().get_available_stylenames(),
+        style_manager = application.get_figure_style_manager()
+        self._styles = sorted(
+            list(style_manager.get_user_styles().keys())
+            + list(style_manager.get_system_styles().keys()),
         )
+        self.style_templates.set_model(Gtk.StringList.new(self._styles))
         self.present()
 
     @Gtk.Template.Callback()
     def on_template_changed(self, _a, _b):
-        style_manager = self.get_application().get_figure_style_manager()
         self.new_style_name.set_text(utilities.get_duplicate_string(
             self.style_templates.get_selected_item().get_string(),
-            list(style_manager.get_user_styles().keys())
-            + list(style_manager.get_system_styles().keys()),
+            self._styles,
         ))
 
     @Gtk.Template.Callback()
     def on_accept(self, _button):
-        style_manager = self.get_application().get_figure_style_manager()
-        style_manager.copy_style(
+        self.get_application().get_figure_style_manager().copy_style(
             self.style_templates.get_selected_item().get_string(),
             self.new_style_name.get_text(),
         )
@@ -493,13 +497,19 @@ class StyleEditor(Adw.NavigationPage):
         new_name = self.style_name.get_text()
         self.style_params.name = new_name
         file_io.write_style(self.style.file, self.style_params)
-        application = self.parent.get_application()
-        figure_settings = application.get_data().get_figure_settings()
         if self.style.name != new_name:
+            application = self.parent.get_application()
+            figure_settings = application.get_data().get_figure_settings()
+            style_manager = application.get_figure_style_manager()
+            new_name = utilities.get_duplicate_string(
+                new_name,
+                list(style_manager.get_user_styles().keys())
+                + list(style_manager.get_system_styles().keys()),
+            )
             if figure_settings.get_use_custom_style() \
                     and figure_settings.get_custom_style() == self.style.name:
                 figure_settings.set_custom_style(new_name)
-            self.style.file.set_display_name(_generate_filename(new_name))
+            self.style.file.set_display_name(new_name)
         self.style = None
 
     def on_color_change(self, button):
