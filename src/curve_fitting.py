@@ -124,14 +124,14 @@ class CurveFittingWindow(Graphs.CurveFittingTool):
         self.fit_curve()
 
     def set_results(self):
-        initial_string = _("Results: \n")
+        initial_string = _("Results:") + "\n"
         buffer_string = initial_string
         for index, arg in enumerate(self.get_free_variables()):
             parameter = utilities.sig_fig_round(self.param[index], 3)
             sigma = utilities.sig_fig_round(self.sigma[index], 3)
             buffer_string += f"\n {arg}: {parameter}"
             buffer_string += f" (± {sigma})"
-        buffer_string += f"\n\nSum of R²: {self.r2}"
+        buffer_string += "\n\n" + _(f"Sum of R²: {self.r2}")
 
         self.get_text_view().get_buffer().set_text(buffer_string)
         bold_tag = Gtk.TextTag(weight=700)
@@ -169,7 +169,7 @@ class CurveFittingWindow(Graphs.CurveFittingTool):
                 bounds=self.fitting_parameters.get_bounds(), nan_policy="omit",
             )
         except (ValueError, TypeError, _minpack.error, RuntimeError):
-            # Cancel fit if not succesfull
+            # Cancel fit if not successful
             return
         xdata = numpy.linspace(
             min(self.data_curve.xdata), max(self.data_curve.xdata), 5000,
@@ -309,8 +309,9 @@ class FittingParameterEntry(Gtk.Box):
         super().__init__(application=parent.get_application())
         self.parent = parent
         self.params = parent.fitting_parameters[arg]
-        self.label.set_markup(
-            f"<b>Fitting parameters for {self.params.get_name()}: </b>")
+        fitting_param_label = \
+            _(f"Fitting parameters for {self.params.get_name()}:")
+        self.label.set_markup(f"<b> {fitting_param_label} </b>")
         self.initial.set_text(str(self.params.get_initial()))
 
         self.initial.connect("notify::text", parent.on_entry_change)
