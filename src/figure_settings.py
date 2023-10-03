@@ -17,20 +17,18 @@ def _get_widget_factory(style_manager):
 
 
 def _on_setup(_factory, item):
-    widget = styles.StyleBox()
-    item.bind_property("selected", widget.indicator, "visible", 2)
+    widget = styles.StylePreview()
     item.set_child(widget)
 
 
 def _on_bind(_factoy, item, style_manager):
     widget = item.get_child()
     name = item.get_item().get_string()
-    widget.modify_box.set_visible(name in style_manager.get_user_styles())
     widget.label.set_text(name)
-    image = Gtk.Picture.new_for_file(style_manager.previews[name])
-    # image.set_content_fit(0)
-    image.set_name("style-preview")
-    widget.overlay.set_child(image)
+    widget.picture.set_file(style_manager.previews[name])
+    if name in style_manager.get_user_styles():
+        widget.edit_button.set_visible(True)
+        # TODO: setup editor
 
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/figure_settings.ui")

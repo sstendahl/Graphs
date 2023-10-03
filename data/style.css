@@ -58,5 +58,10 @@ gridview#style-grid child:selected picture {
 }
 
 gridview#style-grid child image#indicator {
+  opacity: 0;
+}
+
+gridview#style-grid child:selected image#indicator {
   color: @theme_selected_bg_color;
+  opacity: 1;
 }

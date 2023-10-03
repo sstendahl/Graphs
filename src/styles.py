@@ -232,44 +232,12 @@ def get_style(file: Gio.File):
     return style
 
 
-@Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/style_box.ui")
-class StyleBox(Gtk.AspectFrame):
-    __gtype_name__ = "GraphsStyleBox"
+@Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/style_preview.ui")
+class StylePreview(Gtk.AspectFrame):
+    __gtype_name__ = "GraphsStylePreview"
     label = Gtk.Template.Child()
-    overlay = Gtk.Template.Child()
-    modify_box = Gtk.Template.Child()
-    indicator = Gtk.Template.Child()
-
-    def __init__(self):
-        super().__init__()
-        # self.parent, self.style, self.file = parent, style, file
-        # self.label.set_label(utilities.shorten_label(self.style, 50))
-
-    @Gtk.Template.Callback()
-    def on_edit(self, _button):
-        """
-        self.parent.style = get_style(self.file)
-        self.parent.load_style()
-        self.parent.edit_page.set_title(self.style)
-        self.parent.navigation_view.push(self.parent.edit_page)
-        """
-
-    @Gtk.Template.Callback()
-    def on_delete(self, _button):
-        """A
-        def remove_style(_dialog, response):
-            if response == "delete":
-                self.file.trash(None)
-                self.parent.reload_styles()
-        body = _(
-            "Are you sure you want to delete the {stylename} style?",
-        ).format(stylename=self.style)
-        dialog = ui.build_dialog("delete_style")
-        dialog.set_body(body)
-        dialog.set_transient_for(self.parent)
-        dialog.connect("response", remove_style)
-        dialog.present()
-        """
+    picture = Gtk.Template.Child()
+    edit_button = Gtk.Template.Child()
 
 
 STYLE_DICT = {
