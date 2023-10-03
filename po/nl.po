@@ -8,10 +8,10 @@ msgstr ""
 "Project-Id-Version: graphs\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-10-02 17:46+0200\n"
-"PO-Revision-Date: 2023-10-03 10:53+0000\n"
-"Last-Translator: Anonymous <noreply@weblate.org>\n"
-"Language-Team: Dutch <https://hosted.weblate.org/projects/graphs/graphs/nl/"
-">\n"
+"PO-Revision-Date: 2023-10-03 11:29+0000\n"
+"Last-Translator: Sjoerd Stendahl <sjoerd1993@gmail.com>\n"
+"Language-Team: Dutch <https://hosted.weblate.org/projects/graphs/graphs/nl/>"
+"\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -33,14 +33,6 @@ msgid "@AUTHOR@"
 msgstr "@AUTHOR@"
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:10
-#, fuzzy
-#| msgid ""
-#| "Graphs is a simple, yet powerful tool that allows you to plot and "
-#| "manipulate your data with ease. You can import data from two-column files "
-#| "or generate it via an equation. All data can be manipulated using a "
-#| "variety of operations such as the ability to select, cut, translate, "
-#| "multiply, center and smooth data, as well as apply any custom "
-#| "transformations using numpy notation."
 msgid ""
 "Graphs is a simple, yet powerful tool that allows you to plot and manipulate "
 "your data with ease. New data can be imported from a wide variety of "
@@ -50,13 +42,12 @@ msgid ""
 "transformations on the data."
 msgstr ""
 "Graphs is een eenvoudig maar krachtig hulpmiddel waarmee je je gegevens "
-"gemakkelijk kunt plotten en manipuleren. Je kunt gegevens importeren uit "
-"bestanden met kolommen, of nieuwe gegevens genereren met behulp van een "
-"wiskundige vergelijking. Alle gegevens kunnen worden gemanipuleerd met "
+"gemakkelijk kunt plotten en manipuleren. Je kunt gegevens importeren vanuit "
+"verschillende bestandsformaten, of nieuwe gegevens genereren met behulp van "
+"een wiskundige vergelijking. Alle gegevens kunnen worden gemanipuleerd met "
 "behulp van verschillende bewerkingen, zoals selecteren, knippen, "
 "verplaatsen, vermenigvuldigen, centreren en gladstrijken van gegevens, "
-"evenals het toepassen van handmatige transformaties met behulp van numpy-"
-"notatie.\""
+"evenals het toepassen van handmatige transformaties."
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:14
 msgid ""
@@ -64,18 +55,11 @@ msgid ""
 "extensive customization options for the style of the plots. You can fine-"
 "tune and personalize stylesheets to your liking."
 msgstr ""
+"Bovendien ondersteunt Graphs ook trendanalyses op geïmporteerde gegevens en "
+"biedt het uitgebreide aanpassingsopties voor de stijl van de grafieken. Je "
+"kan persoonlijke stylesheets volledig naar eigen wens creëren en aanpassen."
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:17
-#, fuzzy
-#| msgid ""
-#| "Graphs is an excellent fit for both plotting and data manipulation. The "
-#| "plots created with Graphs can be saved in a variety of formats suitable "
-#| "for sharing and presenting to a wide audience, such as in a scientific "
-#| "publication or presentations. It is also possible to save the plots as "
-#| "vector images, which can be easily edited in programs like Inkscape for "
-#| "further customization and refinement. Graphs is written with the GNOME "
-#| "environment in mind, but should be suitable for any other desktop "
-#| "environment as well."
 msgid ""
 "Graphs is an excellent fit for both plotting and data manipulation. The "
 "plots created with Graphs can be saved in a variety of formats suitable for "
@@ -85,7 +69,7 @@ msgid ""
 "refinement. Graphs is written with the GNOME environment in mind, but should "
 "be suitable for any other desktop environment as well."
 msgstr ""
-" Graphs is een uitstekende keuze voor zowel het plotten als voor het "
+"Graphs is een uitstekende keuze voor zowel het plotten als voor het "
 "manipuleren van gegevens. De grafieken die met Graphs worden gemaakt, kunnen "
 "in verschillende formaten worden opgeslagen, geschikt voor het delen en "
 "presenteren aan een breed publiek, zoals in een wetenschappelijke publicatie "
@@ -93,7 +77,7 @@ msgstr ""
 "vectorafbeeldingen, die gemakkelijk kunnen worden bewerkt in programma's "
 "zoals Inkscape voor verdere aanpassing en verfijning. Graphs is ontwikkeld "
 "met de GNOME-omgeving in gedachten, maar werkt in principe met elke andere "
-"desktopomgeving. "
+"desktopomgeving."
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:21
 msgid ""
@@ -177,24 +161,20 @@ msgid "Name"
 msgstr "Naam"
 
 #: data/ui/curve_fitting.blp:6
-#, fuzzy
-#| msgid "Figure Settings"
 msgid "Curve Fitting"
-msgstr "Figuurinstellingen"
+msgstr "Trendanalyse"
 
 #: data/ui/curve_fitting.blp:29
 msgid "Add fit to data"
-msgstr ""
+msgstr "Trend toevoegen als item"
 
 #: data/ui/curve_fitting.blp:44
-#, fuzzy
-#| msgid "Add Equation"
 msgid "Equation"
-msgstr "Vergelijking toevoegen"
+msgstr "Vergelijking"
 
 #: data/ui/curve_fitting.blp:97 data/ui/window.blp:610
 msgid "Canvas Failed to Load"
-msgstr ""
+msgstr "Canvas laden mislukt"
 
 #: data/ui/dialogs.blp:5
 msgid "Discard Data?"
@@ -491,25 +471,21 @@ msgstr "Logaritmisch"
 #: data/ui/window.blp:668 data/ui/window.blp:696 data/ui/window.blp:725
 #: data/ui/window.blp:753
 msgid "Radians"
-msgstr ""
+msgstr "Radialen"
 
 #: data/ui/figure_settings.blp:127 data/ui/figure_settings.blp:134
 #: data/ui/figure_settings.blp:141 data/ui/figure_settings.blp:148
 #: data/ui/window.blp:673 data/ui/window.blp:702 data/ui/window.blp:730
 #: data/ui/window.blp:758
-#, fuzzy
-#| msgid "Square"
 msgid "Square Root"
-msgstr "Vierkant"
+msgstr "Wortel"
 
 #: data/ui/figure_settings.blp:127 data/ui/figure_settings.blp:134
 #: data/ui/figure_settings.blp:141 data/ui/figure_settings.blp:148
 #: data/ui/window.blp:678 data/ui/window.blp:707 data/ui/window.blp:735
 #: data/ui/window.blp:763
-#, fuzzy
-#| msgid "Inverse FFT"
 msgid "Inverse"
-msgstr "Omgekeerde FFT"
+msgstr "Invers"
 
 #: data/ui/figure_settings.blp:132
 msgid "Left Axis Scale"
@@ -581,17 +557,15 @@ msgstr "Gebruik eigen stijl"
 
 #: data/ui/fitting_parameters.blp:26
 msgid "Initial"
-msgstr ""
+msgstr "Eerste schatting"
 
 #: data/ui/fitting_parameters.blp:34
-#, fuzzy
-#| msgid "in"
 msgid "Min"
-msgstr "Naar binnen"
+msgstr "Min."
 
 #: data/ui/fitting_parameters.blp:42
 msgid "Max"
-msgstr ""
+msgstr "Max."
 
 #: data/ui/help_overlay.blp:11
 msgctxt "shortcut window"
@@ -609,19 +583,14 @@ msgid "Open Preferences"
 msgstr "Open voorkeuren"
 
 #: data/ui/help_overlay.blp:24
-#, fuzzy
-#| msgid "Figure Settings"
 msgctxt "shortcut window"
 msgid "Open Figure Settings"
-msgstr "Figuurinstellingen"
+msgstr "Open Figuurinstellingen"
 
 #: data/ui/help_overlay.blp:29
-#, fuzzy
-#| msgctxt "shortcut window"
-#| msgid "Open Plot Styles"
 msgctxt "shortcut window"
 msgid "Open Styles"
-msgstr "Open plotstijl"
+msgstr "Open stijlen"
 
 #: data/ui/help_overlay.blp:34
 msgctxt "shortcut window"
@@ -659,11 +628,9 @@ msgid "Add Data from Equation"
 msgstr "Voeg gegevens toe met een vergelijking"
 
 #: data/ui/help_overlay.blp:67
-#, fuzzy
-#| msgid "Add Data from File…"
 msgctxt "shortcut window"
 msgid "Add Data from File"
-msgstr "Voeg gegevens toe van een bestand…"
+msgstr "Voeg gegevens toe van een bestand"
 
 #: data/ui/help_overlay.blp:72
 msgctxt "shortcut window"
@@ -711,28 +678,19 @@ msgid "Next View"
 msgstr "Volgende weergave"
 
 #: data/ui/help_overlay.blp:112
-#, fuzzy
-#| msgctxt "shortcut window"
-#| msgid "Optimize Limits"
 msgctxt "shortcut window"
 msgid "Optimize limits"
 msgstr "Optimaliseer asgrenzen"
 
 #: data/ui/help_overlay.blp:117
-#, fuzzy
-#| msgctxt "shortcut window"
-#| msgid "Zoom Mode"
 msgctxt "shortcut window"
 msgid "Zoom in"
-msgstr "Zoom-modus"
+msgstr "Inzoomen"
 
 #: data/ui/help_overlay.blp:122
-#, fuzzy
-#| msgctxt "shortcut window"
-#| msgid "Zoom Mode"
 msgctxt "shortcut window"
 msgid "Zoom out"
-msgstr "Zoom-modus"
+msgstr "Uitzoomen"
 
 #: data/ui/help_overlay.blp:127 data/ui/help_overlay.blp:147
 msgctxt "shortcut window"
@@ -782,11 +740,11 @@ msgstr "Decimaalscheidingsteken"
 
 #: data/ui/import.blp:62
 msgid "Decimal comma (,)"
-msgstr ""
+msgstr "Komma als decimaalteken (,)"
 
 #: data/ui/import.blp:62
 msgid "Decimal point (.)"
-msgstr ""
+msgstr "Punt als decimaalteken (.)"
 
 #: data/ui/import.blp:67
 msgid "Column X"
@@ -818,25 +776,19 @@ msgstr "Kies een kleur"
 
 #: data/ui/item_box.blp:52
 msgid "Move item "
-msgstr ""
+msgstr "Verplaats item "
 
 #: data/ui/item_box.blp:65
-#, fuzzy
-#| msgid "Figure Settings"
 msgid "Curve fitting"
-msgstr "Figuurinstellingen"
+msgstr "Trendanalyse"
 
 #: data/ui/item_box.blp:69
-#, fuzzy
-#| msgid "Edit Item"
 msgid "Edit item"
 msgstr "Item bewerken"
 
 #: data/ui/item_box.blp:73
-#, fuzzy
-#| msgid "Remove"
 msgid "Remove item"
-msgstr "Verwijderen"
+msgstr "Item Verwijderen"
 
 #: data/ui/preferences.blp:10
 msgid "General"
@@ -875,10 +827,8 @@ msgid "Override existing items"
 msgstr "Overschrijven"
 
 #: data/ui/preferences.blp:28
-#, fuzzy
-#| msgid "Export Figure"
 msgid "Figure"
-msgstr "Figuur exporteren"
+msgstr "Figuur"
 
 #: data/ui/preferences.blp:31
 msgid "Hide Unselected Items"
@@ -893,14 +843,10 @@ msgid "Which axis should a new item be displayed on"
 msgstr "Op welke as nieuwe items vertoond worden"
 
 #: data/ui/preferences.blp:38
-#, fuzzy
-#| msgid "bottom"
 msgid "Bottom"
 msgstr "Onderaan"
 
 #: data/ui/preferences.blp:38
-#, fuzzy
-#| msgid "top"
 msgid "Top"
 msgstr "Bovenaan"
 
@@ -910,17 +856,13 @@ msgstr "Standaard Y-as positie"
 
 #: data/ui/preferences.blp:46
 msgid "Left"
-msgstr ""
+msgstr "Links"
 
 #: data/ui/preferences.blp:46
-#, fuzzy
-#| msgid "right"
 msgid "Right"
 msgstr "Rechts"
 
 #: data/ui/preferences.blp:51
-#, fuzzy
-#| msgid "Override item properties on style change"
 msgid "Override Item Properties on Style Change"
 msgstr "Overschrijf de lijnstijl wanneer de stijl is gewijzigd"
 
@@ -938,14 +880,12 @@ msgid "Styles"
 msgstr "Stijlen"
 
 #: data/ui/style_window.blp:53
-#, fuzzy
-#| msgid "Use Custom Style"
 msgid "No custom styles"
-msgstr "Gebruik eigen stijl"
+msgstr "Geen handmatige stijlen"
 
 #: data/ui/style_window.blp:54
 msgid "Create a new custom style to start editing your own stylesheets"
-msgstr ""
+msgstr "Creëer een nieuwe stijl om je eigen stijlen te kunnen bewerken"
 
 #: data/ui/style_window.blp:83
 msgid "Style Name"
@@ -1190,10 +1130,8 @@ msgstr ""
 "markeren"
 
 #: data/ui/window.blp:262
-#, fuzzy
-#| msgid "Adjust Data"
 msgid "Adjust"
-msgstr "Gegevens aanpassen"
+msgstr "Aanpassen"
 
 #: data/ui/window.blp:277
 msgid "Shift"
@@ -1281,7 +1219,7 @@ msgstr "Voer aangepaste transformaties uit op de gegevens"
 
 #: data/ui/window.blp:456
 msgid "Modify"
-msgstr ""
+msgstr "Aanpassen"
 
 #: data/ui/window.blp:477
 msgid "Translate X"
@@ -1356,10 +1294,8 @@ msgid "Add Data from File…"
 msgstr "Voeg gegevens toe van een bestand…"
 
 #: data/ui/window.blp:643
-#, fuzzy
-#| msgid "Add Equation"
 msgid "Add Equation…"
-msgstr "Vergelijking toevoegen"
+msgstr "Vergelijking toevoegen…"
 
 #: data/ui/window.blp:652
 msgid "Optimize Limits"
@@ -1398,26 +1334,24 @@ msgstr "Kon %s niet laden"
 
 #: src/curve_fitting.py:127
 msgid "Results:"
-msgstr ""
+msgstr "Resultaten:"
 
 #: src/curve_fitting.py:134
 #, python-brace-format
 msgid "Sum of R²: {self.r2}"
-msgstr ""
+msgstr "Som van R²: {self.r2}"
 
 #: src/curve_fitting.py:313
 msgid "Fitting parameters for {self.params.get_name()}:"
-msgstr ""
+msgstr "Parameters voor {self.params.get_name()}:"
 
 #: src/export_figure.py:50
 msgid "Exported Figure"
 msgstr "Gexporteerde figuur"
 
 #: src/figure_settings.py:120
-#, fuzzy
-#| msgid "Default Title"
 msgid "Defaults Updated"
-msgstr "Standaardtitel"
+msgstr "Standaardinstellingen geüpdate"
 
 #: src/file_import.py:94
 msgid "Are you sure you want to reset the import settings?"
@@ -1489,8 +1423,7 @@ msgid "Unable to import from file"
 msgstr "Kan het bestand niet importeren"
 
 #: src/styles.py:148
-#, fuzzy, python-brace-format
-#| msgid "Plot style {stylename} does not exist loading system preferred"
+#, python-brace-format
 msgid "Could not parse {stylename}, loading system preferred style"
 msgstr "Plotstijl {stylename} bestaat niet, systeemstijl wordt geladen"
 
@@ -1500,16 +1433,12 @@ msgid "Plot style {stylename} does not exist loading system preferred"
 msgstr "Plotstijl {stylename} bestaat niet, systeemstijl wordt geladen"
 
 #: src/styles.py:190
-#, fuzzy
-#| msgid "Labels"
 msgid "X Label"
-msgstr "Labels"
+msgstr "X Label"
 
 #: src/styles.py:191
-#, fuzzy
-#| msgid "Labels"
 msgid "Y Label"
-msgstr "Labels"
+msgstr "Y Label"
 
 #: src/styles.py:334
 #, python-brace-format
@@ -1517,10 +1446,9 @@ msgid "{name} - line colors"
 msgstr "{name} - Lijnkleuren"
 
 #: src/styles.py:476
-#, fuzzy, python-brace-format
-#| msgid "Are you sure you want to delete the {} style?"
+#, python-brace-format
 msgid "Are you sure you want to delete the {stylename} style?"
-msgstr "Weet u zeker dat u {} wilt verwijderen?"
+msgstr "Weet u zeker dat u de {}-stijl wilt verwijderen?"
 
 #: src/styles.py:495
 msgid "Color {}"
@@ -1563,14 +1491,11 @@ msgstr "Graphs Projectbestand"
 
 #: src/ui.py:81
 msgid "No data to export"
-msgstr ""
+msgstr "Geen gegevens om te exporteren"
 
 #: src/ui.py:97
-#, fuzzy
-#| msgctxt "shortcut window"
-#| msgid "Export Data"
 msgid "Exported Data"
-msgstr "Gegevens exporteren"
+msgstr "Gegevens zijn geëxporteerd"
 
 #: src/ui.py:105
 msgid "Text Files"
