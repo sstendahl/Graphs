@@ -26,6 +26,10 @@ PREVIEW_YDATA1 = numpy.sin(PREVIEW_XDATA)
 PREVIEW_YDATA2 = numpy.cos(PREVIEW_XDATA)
 
 
+def _strcmp(a, b):
+    return GLib.strcmp0(a.get_string(), b.get_string())
+
+
 class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
     __gtype_name__ = "GraphsStyleManager"
 
@@ -40,6 +44,8 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
             application=application, gtk_theme=gtk_theme.lower(),
         )
         self._system_styles, self._user_styles = {}, {}
+        self.previews = {}
+        self._style_model = Gio.ListStore.new(Gtk.StringObject)
         self._cache_dir = utilities.get_cache_directory()
         if not self._cache_dir.query_exists(None):
             self._cache_dir.make_directory_with_parents(None)
@@ -50,7 +56,13 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
             if file_info is None:
                 break
             file = enumerator.get_child(file_info)
-            self._system_styles[Path(utilities.get_filename(file)).stem] = file
+            style = file_io.parse_style(file)
+            # TODO: bundle in distribution
+            self.previews[style.name] = self._generate_preview(style)
+            self._system_styles[style.name] = file
+            self._style_model.insert_sorted(
+                Gtk.StringObject.new(style.name), _strcmp,
+            )
         enumerator.close(None)
 
         config_dir = utilities.get_config_directory()
@@ -96,12 +108,14 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
             filename = f"{stylename}.mplstyle"
             file.set_display_name(filename, None)
             file = self._style_dir.get_child_for_display_name(filename)
-        self._user_styles[stylename] = (file, self._generate_preview(style))
-
-    def get_available_stylenames(self) -> list:
-        return sorted(
-            list(self._user_styles.keys()) + list(self._system_styles.keys()),
+        self.previews[stylename] = self._generate_preview(style)
+        self._user_styles[stylename] = file
+        self._style_model.insert_sorted(
+            Gtk.StringObject.new(stylename), _strcmp,
         )
+
+    def get_available_stylenames(self):
+        return self._style_model
 
     def get_user_styles(self) -> dict:
         return self._user_styles

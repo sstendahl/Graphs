@@ -64,26 +64,25 @@ class FigureSettingsWindow(Adw.Window):
             getattr(self, highlighted).grab_focus()
         self.present()
 
-        cache_dir = utilities.get_cache_directory()
-        file = cache_dir.get_child_for_display_name("bmh (copy).svg")
+        style_manager = application.get_figure_style_manager()
         factory = Gtk.SignalListItemFactory.new()
         def on_setup(_factory, item):
             item.set_child(styles.StyleBox())
         def on_bind(_factoy, item):
             widget = item.get_child()
-            widget.label.set_text(item.get_item().get_string())
-            image = Gtk.Picture.new_for_file(file)
+            name = item.get_item().get_string()
+            widget.label.set_text(name)
+            image = Gtk.Picture.new_for_file(style_manager.previews[name])
             #image.set_content_fit(0)
             image.set_name("style-preview")
             widget.overlay.set_child(image)
         factory.connect("setup", on_setup)
         factory.connect("bind", on_bind)
 
-        model = Gtk.StringList.new()
-        for style in application.get_figure_style_manager().get_available_stylenames():
-            model.append(style)
         self.grid_view.set_factory(factory)
-        self.grid_view.get_model().set_model(model)
+        self.grid_view.get_model().set_model(
+            style_manager.get_available_stylenames(),
+        )
 
     def set_axes_entries(self):
         used_axes = [[direction, False] for direction in _DIRECTIONS]
