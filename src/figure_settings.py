@@ -20,8 +20,7 @@ def _get_widget_factory(window):
 def _on_bind(factory, item):
     widget = item.get_child()
     style = item.get_item()
-    style.bind_property("name", widget.label, "label", 2)
-    style.bind_property("preview", widget.picture, "file", 2)
+    widget.style = style
     style_manager = factory.window.get_application().get_figure_style_manager()
     if style.name in style_manager.get_user_styles():
         widget.edit_button.set_visible(True)

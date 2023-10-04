@@ -138,8 +138,8 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
         possible_visual_impact = False
         stylename = None
         if event_type == 2:
-            for index, (name, file) in enumerate(self._user_styles.items()):
-                if not file.query_exists(None):
+            for index, (name, loop_file) in enumerate(self._user_styles.items()):
+                if file.equal(loop_file):
                     self._user_styles.pop(name)
                     self._style_model.remove(index)
                     stylename = name
@@ -294,6 +294,14 @@ class StylePreview(Gtk.AspectFrame):
     picture = Gtk.Template.Child()
     edit_button = Gtk.Template.Child()
 
+    @GObject.Property(type=Style)
+    def style(self):
+        pass
+
+    @style.setter
+    def style(self, style):
+        style.bind_property("name", self.label, "label", 2)
+        style.bind_property("preview", self.picture, "file", 2)
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/add_style.ui")
 class AddStyleWindow(Adw.Window):
@@ -488,16 +496,17 @@ class StyleEditor(Adw.NavigationPage):
         # name & save
         new_name = self.style_name.get_text()
         self.style_params.name = new_name
+        self.style.file.delete(None)
         file_io.write_style(self.style.file, self.style_params)
         if self.style.name != new_name:
             application = self.parent.get_application()
-            figure_settings = application.get_data().get_figure_settings()
             style_manager = application.get_figure_style_manager()
             new_name = utilities.get_duplicate_string(
                 new_name,
                 list(style_manager.get_user_styles().keys())
                 + list(style_manager.get_system_styles().keys()),
             )
+            figure_settings = application.get_data().get_figure_settings()
             if figure_settings.get_use_custom_style() \
                     and figure_settings.get_custom_style() == self.style.name:
                 figure_settings.set_custom_style(new_name)
