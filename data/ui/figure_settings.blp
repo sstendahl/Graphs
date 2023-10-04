@@ -52,11 +52,11 @@ template $GraphsFigureSettingsWindow : Adw.PreferencesWindow {
         spacing: 12;
         visible: bind no_data_message.visible inverted;
         Box left_limits {
-        	orientation: horizontal;
-        	spacing: 6;
+          orientation: horizontal;
+          spacing: 6;
           visible: false;
-        	Adw.PreferencesGroup {
-        	  Adw.EntryRow min_left {
+          Adw.PreferencesGroup {
+            Adw.EntryRow min_left {
               title: _("Minimum Left-Hand Y-Axis");
             }
           }
@@ -67,46 +67,46 @@ template $GraphsFigureSettingsWindow : Adw.PreferencesWindow {
           }
         }
         Box bottom_limits {
-        	orientation: horizontal;
-        	spacing: 6;
+          orientation: horizontal;
+          spacing: 6;
           visible: false;
-        	Adw.PreferencesGroup {
-        	  Adw.EntryRow min_bottom {
+          Adw.PreferencesGroup {
+            Adw.EntryRow min_bottom {
               title: _("Minimum Bottom X-Axis");
             }
           }
           Adw.PreferencesGroup {
-        	  Adw.EntryRow max_bottom {
+            Adw.EntryRow max_bottom {
               title: _("Maximum Bottom X-Axis");
             }
           }
         }
         Box right_limits {
-        	orientation: horizontal;
-        	spacing: 6;
+          orientation: horizontal;
+          spacing: 6;
           visible: false;
-      	  Adw.PreferencesGroup {
-        	  Adw.EntryRow min_right {
+          Adw.PreferencesGroup {
+            Adw.EntryRow min_right {
               title: _("Minimum Right-Hand Y-Axis");
             }
           }
           Adw.PreferencesGroup {
-        	  Adw.EntryRow max_right {
+            Adw.EntryRow max_right {
               title: _("Maximum Right-Hand Y-Axis");
             }
           }
         }
         Box top_limits {
           spacing: 6;
-        	orientation: horizontal;
+          orientation: horizontal;
           visible: false;
-      	  Adw.PreferencesGroup {
-        	  Adw.EntryRow min_top {
+          Adw.PreferencesGroup {
+            Adw.EntryRow min_top {
               title: _("Minimum Top X-Axis");
             }
           }
           Adw.PreferencesGroup {
-        	  Adw.EntryRow max_top {
+            Adw.EntryRow max_top {
               title: _("Maximum Top Y-Axis");
             }
           }
