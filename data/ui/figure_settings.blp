@@ -41,86 +41,81 @@ template $GraphsFigureSettingsWindow : Adw.PreferencesWindow {
 
     Adw.PreferencesGroup {
       title: _("Axis Limits");
-      Adw.ActionRow no_data_message {
-        title: _("No Data");
-        subtitle: _("Add data to the figure to set axis limits");
+    	Adw.PreferencesGroup no_data_message {
+        Adw.ActionRow {
+          title: _("No Data");
+          subtitle: _("Add data to the figure to set axis limits");
+        }
       }
       Box {
-      	orientation: horizontal;
-      	margin-bottom: 12;
-      	Adw.PreferencesGroup {
-      	  margin-end: 3;
-      	  Adw.EntryRow min_left {
-	          title: _("Minimum Left-Hand Y-Axis");
-	          visible: false;
-	        }
+        orientation: vertical;
+        spacing: 12;
+        visible: bind no_data_message.visible inverted;
+        Box left_limits {
+        	orientation: horizontal;
+        	spacing: 6;
+          visible: false;
+        	Adw.PreferencesGroup {
+        	  Adw.EntryRow min_left {
+              title: _("Minimum Left-Hand Y-Axis");
+            }
+          }
+          Adw.PreferencesGroup {
+      	    Adw.EntryRow max_left {
+              title: _("Maximum Left-Hand Y-Axis");
+            }
+          }
         }
-	      Adw.PreferencesGroup {
-    	    margin-start: 3;
-    	    Adw.EntryRow max_left {
-	          title: _("Maximum Left-Hand Y-Axis");
-	          visible: false;
-	        }
-	      }
-	    }
-      Box {
-      	orientation: horizontal;
-      	margin-bottom: 12;
-      	Adw.PreferencesGroup {
-      	  margin-end: 3;
-      	  Adw.EntryRow min_bottom {
-	          title: _("Minimum Bottom X-Axis");
-	          visible: false;
-	        }
-	      }
-	      Adw.PreferencesGroup {
-      	  margin-start: 3;
-      	  Adw.EntryRow max_bottom {
-	          title: _("Maximum Bottom X-Axis");
-	          visible: false;
-	        }
-	      }
-	    }
-      Box {
-      	orientation: horizontal;
-      	margin-bottom: 12;
-    	  Adw.PreferencesGroup {
-      	  margin-end: 3;
-      	  Adw.EntryRow min_right {
-	          title: _("Minimum Right-Hand Y-Axis");
-	          visible: false;
-	        }
+        Box bottom_limits {
+        	orientation: horizontal;
+        	spacing: 6;
+          visible: false;
+        	Adw.PreferencesGroup {
+        	  Adw.EntryRow min_bottom {
+              title: _("Minimum Bottom X-Axis");
+            }
+          }
+          Adw.PreferencesGroup {
+        	  Adw.EntryRow max_bottom {
+              title: _("Maximum Bottom X-Axis");
+            }
+          }
         }
-	      Adw.PreferencesGroup {
-      	  margin-start: 3;
-      	  Adw.EntryRow max_right {
-	          title: _("Maximum Right-Hand Y-Axis");
-	          visible: false;
-	        }
-	      }
-	    }
-      Box {
-      	orientation: horizontal;
-    	  Adw.PreferencesGroup {
-      	  margin-end: 3;
-      	  Adw.EntryRow min_top {
-	          title: _("Minimum Top X-Axis");
-	          visible: false;
-	        }
-	      }
-	      Adw.PreferencesGroup {
-      	  margin-start: 3;
-      	  Adw.EntryRow max_top {
-	          title: _("Maximum Top Y-Axis");
-	          visible: false;
-	        }
-	      }
-	    }
+        Box right_limits {
+        	orientation: horizontal;
+        	spacing: 6;
+          visible: false;
+      	  Adw.PreferencesGroup {
+        	  Adw.EntryRow min_right {
+              title: _("Minimum Right-Hand Y-Axis");
+            }
+          }
+          Adw.PreferencesGroup {
+        	  Adw.EntryRow max_right {
+              title: _("Maximum Right-Hand Y-Axis");
+            }
+          }
+        }
+        Box top_limits {
+          spacing: 6;
+        	orientation: horizontal;
+          visible: false;
+      	  Adw.PreferencesGroup {
+        	  Adw.EntryRow min_top {
+              title: _("Minimum Top X-Axis");
+            }
+          }
+          Adw.PreferencesGroup {
+        	  Adw.EntryRow max_top {
+              title: _("Maximum Top Y-Axis");
+            }
+          }
+        }
+      }
     }
 
     Adw.PreferencesGroup {
       title: _("Scaling");
-
       Adw.ComboRow bottom_scale {
         title: _("Bottom Axis Scale");
         model: StringList{
