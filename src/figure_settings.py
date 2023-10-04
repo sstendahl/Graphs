@@ -26,6 +26,10 @@ class FigureSettingsWindow(Adw.PreferencesWindow):
     legend_position = Gtk.Template.Child()
     use_custom_style = Gtk.Template.Child()
     custom_style = Gtk.Template.Child()
+    left_limits = Gtk.Template.Child()
+    right_limits = Gtk.Template.Child()
+    bottom_limits = Gtk.Template.Child()
+    top_limits = Gtk.Template.Child()
     min_left = Gtk.Template.Child()
     max_left = Gtk.Template.Child()
     min_bottom = Gtk.Template.Child()
@@ -78,13 +82,13 @@ class FigureSettingsWindow(Adw.PreferencesWindow):
             if visible:
                 for s in ["min_", "max_"]:
                     entry = getattr(self, s + direction)
-                    entry.set_visible(True)
                     entry.set_text(str(self.props.figure_settings.get_property(
                         s + direction,
                     )))
                     entry.connect(
                         "notify::text", self.on_entry_change, s + direction,
                     )
+                getattr(self, direction + "_limits").set_visible(True)
 
     def on_entry_change(self, entry, _param, prop):
         with contextlib.suppress(SyntaxError):
