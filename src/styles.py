@@ -509,11 +509,11 @@ class StyleEditor(Adw.NavigationPage):
         while list_box.get_last_child() is not None:
             list_box.remove(list_box.get_last_child())
         if self.line_colors:
-            for index, color in enumerate(self.line_colors):
-                list_box.append(StyleColorBox(self, color, index))
+            for index in range(len(self.line_colors)):
+                list_box.append(StyleColorBox(self, index))
         else:
             self.line_colors.append("#000000")
-            list_box.append(StyleColorBox(self, "#000000", 0))
+            list_box.append(StyleColorBox(self, 0))
 
     def on_color_change(self, button):
         def on_accept(dialog, result):
@@ -544,17 +544,37 @@ class StyleColorBox(Gtk.Box):
     parent = GObject.Property(type=StyleEditor)
     index = GObject.Property(type=int, default=0)
 
-    def __init__(self, parent, color, index):
+    def __init__(self, parent, index):
         super().__init__(parent=parent, index=index)
         self.label.set_label(_("Color {}").format(index + 1))
-        self.color_button.color = color
         self.color_button.provider = Gtk.CssProvider()
         self.color_button.get_style_context().add_provider(
             self.color_button.provider,
-            Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION)
+            Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION,
+        )
+        self._reload_color()
+
+    def _reload_color(self):
+        color = self.props.parent.line_colors[self.props.index]
         self.color_button.provider.load_from_data(
-            f"button {{ color: {color}; }}", -1)
-        self.color_button.connect("clicked", self.parent.on_color_change)
+            f"button {{ color: {color}; }}", -1,
+        )
+
+    @Gtk.Template.Callback()
+    def on_color_choose(self, _button):
+        def on_accept(dialog, result):
+            with contextlib.suppress(GLib.GError):
+                color = dialog.choose_rgba_finish(result)
+                if color is not None:
+                    self.props.parent.line_colors[self.props.index] = \
+                        utilities.rgba_to_hex(color)
+        dialog = Gtk.ColorDialog()
+        dialog.set_with_alpha(False)
+        dialog.choose_rgba(
+            self.props.parent.parent, utilities.hex_to_rgba(
+                self.props.parent.line_colors[self.props.index],
+            ), None, on_accept,
+        )
 
     @Gtk.Template.Callback()
     def on_delete(self, _button):
