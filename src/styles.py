@@ -401,6 +401,8 @@ class StyleEditor(Adw.NavigationPage):
     background_color = Gtk.Template.Child()
     outline_color = Gtk.Template.Child()
 
+    line_colors_box = Gtk.Template.Child()
+
     def __init__(self, parent):
         super().__init__()
         self.style = None
@@ -447,12 +449,9 @@ class StyleEditor(Adw.NavigationPage):
                 f"button {{ color: {button.color}; }}", -1)
 
         # line colors
-        """"
-        for color in self.style["axes.prop_cycle"].by_key()["color"]:
-            box = StyleColorBox(self, color)
-            self.line_colors_box.append(box)
-            self.color_boxes[box] = self.line_colors_box.get_last_child()
-        """
+        self.line_colors = \
+            self.style_params["axes.prop_cycle"].by_key()["color"]
+        self.reload_line_colors()
 
     def save_style(self):
         if self.style is None:
@@ -483,15 +482,8 @@ class StyleEditor(Adw.NavigationPage):
         """
 
         # line colors
-        """"
-        line_colors = []
-        for color_box, list_box in self.color_boxes.copy().items():
-            line_colors.append(color_box.color_button.color)
-            self.line_colors_box.remove(list_box)
-            del self.color_boxes[color_box]
-        self.style["axes.prop_cycle"] = cycler(color=line_colors)
-        self.style["patch.facecolor"] = line_colors[0]
-        """
+        self.style_params["axes.prop_cycle"] = cycler(color=self.line_colors)
+        self.style_params["patch.facecolor"] = self.line_colors[0]
 
         # name & save
         new_name = self.style_name.get_text()
@@ -512,6 +504,17 @@ class StyleEditor(Adw.NavigationPage):
             self.style.file.set_display_name(new_name)
         self.style = None
 
+    def reload_line_colors(self):
+        list_box = self.line_colors_box
+        while list_box.get_last_child() is not None:
+            list_box.remove(list_box.get_last_child())
+        if self.line_colors:
+            for index, color in enumerate(self.line_colors):
+                list_box.append(StyleColorBox(self, color, index))
+        else:
+            self.line_colors.append("#000000")
+            list_box.append(StyleColorBox(self, "#000000", 0))
+
     def on_color_change(self, button):
         def on_accept(dialog, result):
             with contextlib.suppress(GLib.GError):
@@ -526,6 +529,11 @@ class StyleEditor(Adw.NavigationPage):
         dialog.set_with_alpha(False)
         dialog.choose_rgba(self.parent, color, None, on_accept)
 
+    @Gtk.Template.Callback()
+    def add_color(self, _button):
+        self.line_colors.append("000000")
+        self.reload_line_colors()
+
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/style_color_box.ui")
 class StyleColorBox(Gtk.Box):
@@ -533,11 +541,12 @@ class StyleColorBox(Gtk.Box):
     label = Gtk.Template.Child()
     color_button = Gtk.Template.Child()
 
-    def __init__(self, parent, color):
-        super().__init__()
-        self.parent = parent
-        self.label.set_label(
-            _("Color {}").format(len(self.parent.color_boxes) + 1))
+    parent = GObject.Property(type=StyleEditor)
+    index = GObject.Property(type=int, default=0)
+
+    def __init__(self, parent, color, index):
+        super().__init__(parent=parent, index=index)
+        self.label.set_label(_("Color {}").format(index + 1))
         self.color_button.color = color
         self.color_button.provider = Gtk.CssProvider()
         self.color_button.get_style_context().add_provider(
@@ -546,3 +555,8 @@ class StyleColorBox(Gtk.Box):
         self.color_button.provider.load_from_data(
             f"button {{ color: {color}; }}", -1)
         self.color_button.connect("clicked", self.parent.on_color_change)
+
+    @Gtk.Template.Callback()
+    def on_delete(self, _button):
+        self.props.parent.line_colors.pop(self.props.index)
+        self.props.parent.reload_line_colors()
