@@ -26,7 +26,11 @@ PREVIEW_YDATA1 = numpy.sin(PREVIEW_XDATA)
 PREVIEW_YDATA2 = numpy.cos(PREVIEW_XDATA)
 
 
-def compare_styles(a, b) -> int:
+def _compare_styles(a, b) -> int:
+    if a.file is None:
+        return -1
+    elif b.file is None:
+        return 1
     return GLib.strcmp0(a.name.lower(), b.name.lower())
 
 
@@ -69,7 +73,7 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
             # TODO: bundle in distribution
             preview = self._generate_preview(style)
             self._style_model.insert_sorted(
-                Style.new(style.name, file, preview, False), compare_styles,
+                Style.new(style.name, file, preview, False), _compare_styles,
             )
         enumerator.close(None)
         self._system_style = Style.new(_("System"), None, None, False)
@@ -125,11 +129,9 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
                 file_io.write_style(style, file)
                 break
         preview = self._generate_preview(style_params)
-        self._style_model.remove(0)
         self._style_model.insert_sorted(
-            Style.new(style_params.name, file, preview, True), compare_styles,
+            Style.new(style_params.name, file, preview, True), _compare_styles,
         )
-        self._style_model.insert(0, self._system_style)
 
     def get_style_model(self):
         return self._style_model

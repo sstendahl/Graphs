@@ -16,7 +16,7 @@ def _get_widget_factory(window):
     return factory
 
 
-def _on_bind(factory, item, window):
+def _on_bind(_factory, item, window):
     widget = item.get_child()
     style = item.get_item()
     widget.style = style
@@ -82,12 +82,37 @@ class FigureSettingsWindow(Adw.Window):
         )
         if highlighted is not None:
             getattr(self, highlighted).grab_focus()
-        self.present()
 
         self.style_editor = styles.StyleEditor(self)
         self.grid_view.set_factory(_get_widget_factory(self))
-        style_manager = application.get_figure_style_manager()
-        self.grid_view.get_model().set_model(style_manager.get_style_model())
+        style_model = application.get_figure_style_manager().get_style_model()
+        selection_model = self.grid_view.get_model()
+        selection_model.set_model(style_model)
+        if self.props.figure_settings.get_use_custom_style():
+            stylename = self.props.figure_settings.get_custom_style()
+            for index in range(style_model.get_n_items()):
+                style = style_model.get_item(index)
+                if index > 0 and style.name == stylename:
+                    selection_model.set_selected(index)
+                    break
+        else:
+            selection_model.set_selected(0)
+
+        self.present()
+
+    @Gtk.Template.Callback()
+    def on_select(self, model, _pos, _n_items):
+        figure_settings = self.props.figure_settings
+        selected_item = model.get_selected_item()
+        # Don't trigger unneccesary reloads
+        if selected_item.file is None:  # System style
+            if figure_settings.get_use_custom_style():
+                figure_settings.set_use_custom_style(False)
+        else:
+            if not figure_settings.get_use_custom_style():
+                figure_settings.set_use_custom_style(True)
+            if selected_item.name != figure_settings.get_custom_style():
+                figure_settings.set_custom_style(selected_item.name)
 
     def set_axes_entries(self):
         used_axes = [[direction, False] for direction in _DIRECTIONS]
