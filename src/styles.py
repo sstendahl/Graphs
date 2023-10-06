@@ -1,24 +1,23 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 import contextlib
 import os
+import io
 from gettext import gettext as _
 from pathlib import Path
 
 from cycler import cycler
 
-from gi.repository import Adw, GLib, GObject, Gio, Graphs, Gtk
+from gi.repository import Adw, GLib, GObject, Gio, Graphs, Gtk, Gdk
 
 import graphs
 from graphs import file_io, ui, utilities
-
-from lxml import etree
 
 from matplotlib import pyplot, rc_context
 from matplotlib.figure import Figure
 
 import numpy
 
-import svgutils
+from PIL import Image, ImageStat
 
 
 PREVIEW_XDATA = numpy.linspace(0, 10, 1000)
@@ -254,14 +253,13 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
             axis.plot(PREVIEW_XDATA, PREVIEW_YDATA2)
             axis.set_xlabel(_("X Label"))
             axis.set_xlabel(_("Y Label"))
-            svgfig = svgutils.transform.from_mpl(figure)
+            buffer = io.BytesIO()
+            figure.savefig(buffer, format="svg")
         file = \
             self._cache_dir.get_child_for_display_name(f"{style.name}.svg")
         stream = file_io.get_write_stream(file)
-        stream.write(etree.tostring(
-            svgfig.root, xml_declaration=True, standalone=True,
-            pretty_print=False,
-        ))
+        stream.write(buffer.getvalue())
+        buffer.close()
         stream.close()
         return file
 
@@ -317,14 +315,41 @@ class StylePreview(Gtk.AspectFrame):
     picture = Gtk.Template.Child()
     edit_button = Gtk.Template.Child()
 
+    def __init__(self, **kwargs):
+        super().__init__(*kwargs)
+        self.provider = Gtk.CssProvider()
+        self.edit_button.get_style_context().add_provider(
+            self.provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION,
+        )
+
     @GObject.Property(type=Style)
     def style(self):
-        pass
+        return self._style
 
     @style.setter
     def style(self, style):
-        style.bind_property("name", self.label, "label", 2)
-        style.bind_property("preview", self.picture, "file", 2)
+        self._style = style
+        self._style.bind_property("name", self.label, "label", 2)
+        self._style.bind_property("preview", self, "preview", 2)
+
+    @GObject.Property(type=Gio.File)
+    def preview(self):
+        pass
+
+    @preview.setter
+    def preview(self, file):
+        if file is None:
+            return
+        texture = Gdk.Texture.new_from_file(file)
+        self.picture.set_paintable(texture)
+        if self._style.mutable:
+            buffer = io.BytesIO(texture.save_to_png_bytes().get_data())
+            mean = ImageStat.Stat(Image.open(buffer).convert('L')).mean[0]
+            buffer.close()
+            color = "000000" if mean > 200 else "FFFFFF"
+            self.provider.load_from_data(
+                f"button {{ color: #{color}; }}", -1,
+            )
 
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/add_style.ui")
@@ -575,16 +600,15 @@ class StyleColorBox(Gtk.Box):
     def __init__(self, parent, index):
         super().__init__(parent=parent, index=index)
         self.label.set_label(_("Color {}").format(index + 1))
-        self.color_button.provider = Gtk.CssProvider()
+        self.provider = Gtk.CssProvider()
         self.color_button.get_style_context().add_provider(
-            self.color_button.provider,
-            Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION,
+            self.provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION,
         )
         self._reload_color()
 
     def _reload_color(self):
         color = self.props.parent.line_colors[self.props.index]
-        self.color_button.provider.load_from_data(
+        self.provider.load_from_data(
             f"button {{ color: {color}; }}", -1,
         )
 
