@@ -52,6 +52,12 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
         self._cache_dir = utilities.get_cache_directory()
         if not self._cache_dir.query_exists(None):
             self._cache_dir.make_directory_with_parents(None)
+        enumerator = self._cache_dir.enumerate_children("default::*", 0, None)
+        while True:
+            file_info = enumerator.next_file(None)
+            if file_info is None:
+                break
+            enumerator.get_child(file_info).delete(None)
         directory = Gio.File.new_for_uri("resource:///se/sjoerd/Graphs/styles")
         enumerator = directory.enumerate_children("default::*", 0, None)
         while True:
@@ -66,6 +72,8 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
                 Style.new(style.name, file, preview, False), compare_styles,
             )
         enumerator.close(None)
+        self._system_style = Style.new(_("System"), None, None, False)
+        self._style_model.insert(0, self._system_style)
 
         config_dir = utilities.get_config_directory()
         self._style_dir = config_dir.get_child_for_display_name("styles")
@@ -108,7 +116,7 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
             style = self._style_model.get_item(index)
             if style.name == style_params.name:
                 style_params.name = utilities.get_duplicate_string(
-                    style_params.name, self.get_style_names(),
+                    style_params.name, self.get_stylenames(),
                 )
                 file.delete(None)
                 file = self._style_dir.get_child_for_display_name(
@@ -117,9 +125,11 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
                 file_io.write_style(style, file)
                 break
         preview = self._generate_preview(style_params)
+        self._style_model.remove(0)
         self._style_model.insert_sorted(
             Style.new(style_params.name, file, preview, True), compare_styles,
         )
+        self._style_model.insert(0, self._system_style)
 
     def get_style_model(self):
         return self._style_model
@@ -141,7 +151,7 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
         if event_type == 2:
             for index in range(self._style_model.get_n_items()):
                 style = self._style_model.get_item(index)
-                if file.equal(style.file):
+                if style.file is not None and file.equal(style.file):
                     self._style_model.remove(index)
                     stylename = style.name
                     break
