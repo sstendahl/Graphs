@@ -11,20 +11,18 @@ _DIRECTIONS = ["bottom", "left", "top", "right"]
 
 def _get_widget_factory(window):
     factory = Gtk.SignalListItemFactory.new()
-    factory.window = window
     factory.connect("setup", lambda _f, i: i.set_child(styles.StylePreview()))
-    factory.connect("bind", _on_bind)
+    factory.connect("bind", _on_bind, window)
     return factory
 
 
-def _on_bind(factory, item):
+def _on_bind(factory, item, window):
     widget = item.get_child()
     style = item.get_item()
     widget.style = style
-    style_manager = factory.window.get_application().get_figure_style_manager()
-    if style.name in style_manager.get_user_styles():
+    if style.mutable:
         widget.edit_button.set_visible(True)
-        widget.edit_button.connect("clicked", factory.window.edit_style, style)
+        widget.edit_button.connect("clicked", window.edit_style, style)
 
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/figure_settings.ui")

@@ -48,7 +48,6 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
         super().__init__(
             application=application, gtk_theme=gtk_theme.lower(),
         )
-        self._system_styles, self._user_styles = {}, {}
         self._style_model = Gio.ListStore.new(Style)
         self._cache_dir = utilities.get_cache_directory()
         if not self._cache_dir.query_exists(None):
@@ -63,7 +62,6 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
             style = file_io.parse_style(file)
             # TODO: bundle in distribution
             preview = self._generate_preview(style)
-            self._system_styles[style.name] = file
             self._style_model.insert_sorted(
                 Style.new(style.name, file, preview, False), compare_styles,
             )
@@ -103,32 +101,28 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
             )
         self._on_style_change()
 
-    def _add_user_style(self, file: Gio.File, style=None):
-        if style is None:
-            style = _get_style(file)
-        if style.name in self._system_styles:
-            style.name = utilities.get_duplicate_string(
-                style.name, self.get_style_names(),
-            )
-            file.delete(None)
-            file = self._style_dir.get_child_for_display_name(
-                _generate_filename(style.name),
-            )
-            file_io.write_style(style, file)
-        preview = self._generate_preview(style)
-        self._user_styles[style.name] = file
+    def _add_user_style(self, file: Gio.File, style_params=None):
+        if style_params is None:
+            style_params = _get_style(file)
+        for index in range(self._style_model.get_n_items()):
+            style = self._style_model.get_item(index)
+            if style.name == style_params.name:
+                style_params.name = utilities.get_duplicate_string(
+                    style_params.name, self.get_style_names(),
+                )
+                file.delete(None)
+                file = self._style_dir.get_child_for_display_name(
+                    _generate_filename(style_params.name),
+                )
+                file_io.write_style(style, file)
+                break
+        preview = self._generate_preview(style_params)
         self._style_model.insert_sorted(
-            Style.new(style.name, file, preview, True), compare_styles,
+            Style.new(style_params.name, file, preview, True), compare_styles,
         )
 
     def get_style_model(self):
         return self._style_model
-
-    def get_user_styles(self) -> dict:
-        return self._user_styles
-
-    def get_system_styles(self) -> dict:
-        return self._system_styles
 
     def get_stylenames(self) -> list:
         return [
@@ -148,7 +142,6 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
             for index in range(self._style_model.get_n_items()):
                 style = self._style_model.get_item(index)
                 if file.equal(style.file):
-                    self._user_styles.pop(style.name)
                     self._style_model.remove(index)
                     stylename = style.name
                     break
@@ -182,32 +175,39 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
             and self.props.get_gtk_theme.startswith("yaru") else "Adwaita"
         if Adw.StyleManager.get_default().get_dark():
             system_style += " Dark"
-        style = None
+        style_params = None
         window = self.props.application.get_window()
         if self.props.use_custom_style:
             stylename = self.props.custom_style
-            if stylename in self._system_styles:
-                style = file_io.parse_style(self._system_styles[stylename])
-            elif stylename in self._user_styles:
-                try:
-                    style = _get_style(self._user_styles[stylename])
-                except (ValueError, KeyError, SyntaxError, AttributeError):
-                    self.props.custom_style = system_style
-                    self.props.use_custom_style = False
-                    window.add_toast_string(
-                        _(f"Could not parse {stylename}, loading "
-                          "system preferred style").format(
-                            stylename=stylename),
-                    )
-            else:
+            for index in range(self._style_model.get_n_items()):
+                style = self._style_model.get_item(index)
+                if stylename == style.name:
+                    if style.mutable:
+                        try:
+                            style_params = _get_style(style.file)
+                        except (ValueError, SyntaxError, AttributeError):
+                            self.props.custom_style = system_style
+                            self.props.use_custom_style = False
+                            window.add_toast_string(
+                                _(f"Could not parse {stylename}, loading "
+                                  "system preferred style").format(
+                                    stylename=stylename),
+                            )
+                    else:
+                        style_params = file_io.parse_style(style.file)
+                    break
+            if style_params is None:
                 window.add_toast_string(
                     _(f"Plot style {stylename} does not exist "
                       "loading system preferred").format(stylename=stylename))
                 self.props.custom_style = system_style
                 self.props.use_custom_style = False
-        if style is None:
-            style = file_io.parse_style(self._system_styles[system_style])
-        pyplot.rcParams.update(style)
+        if style_params is None:
+            filename = _generate_filename(system_style)
+            style_params = file_io.parse_style(Gio.File.new_for_uri(
+                "resource:///se/sjoerd/Graphs/styles/" + filename,
+            ))
+        pyplot.rcParams.update(style_params)
 
         data = self.props.application.get_data()
         if override:
@@ -260,9 +260,12 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
         destination = self._style_dir.get_child_for_display_name(
             _generate_filename(new_name),
         )
-        source = _get_style(self._user_styles[template]) \
-            if template in self._user_styles \
-            else file_io.parse_style(self._system_styles[template])
+        for index in range(self._style_model.get_n_items()):
+            style = self._style_model.get_item(index)
+            if template == style.name:
+                source = _get_style(style.file) \
+                    if style.mutable else file_io.parse_style(style.file)
+                break
         source.name = new_name
         file_io.write_style(destination, source)
 
@@ -310,6 +313,7 @@ class StylePreview(Gtk.AspectFrame):
     def style(self, style):
         style.bind_property("name", self.label, "label", 2)
         style.bind_property("preview", self.picture, "file", 2)
+
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/add_style.ui")
 class AddStyleWindow(Adw.Window):
