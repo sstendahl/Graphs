@@ -51,6 +51,7 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
         super().__init__(
             application=application, gtk_theme=gtk_theme.lower(),
         )
+        self._stylenames = []
         self._style_model = Gio.ListStore.new(Style)
         self._cache_dir = utilities.get_cache_directory()
         if not self._cache_dir.query_exists(None):
@@ -71,6 +72,7 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
             style = file_io.parse_style(file)
             # TODO: bundle in distribution
             preview = self._generate_preview(style)
+            self._stylenames.append(style.name)
             self._style_model.insert_sorted(
                 Style.new(style.name, file, preview, False), _compare_styles,
             )
@@ -115,19 +117,17 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
     def _add_user_style(self, file: Gio.File, style_params=None):
         if style_params is None:
             style_params = _get_style(file)
-        for index in range(self._style_model.get_n_items()):
-            style = self._style_model.get_item(index)
-            if style.name == style_params.name:
-                style_params.name = utilities.get_duplicate_string(
-                    style_params.name, self.get_stylenames(),
-                )
-                file.delete(None)
-                file = self._style_dir.get_child_for_display_name(
-                    _generate_filename(style_params.name),
-                )
-                file_io.write_style(style, file)
-                break
+        if style_params.name in self._stylenames:
+            style_params.name = utilities.get_duplicate_string(
+                style_params.name, self._stylenames,
+            )
+            file.delete(None)
+            file = self._style_dir.get_child_for_display_name(
+                _generate_filename(style_params.name),
+            )
+            file_io.write_style(style_params, file)
         preview = self._generate_preview(style_params)
+        self._stylenames.append(style_params.name)
         self._style_model.insert_sorted(
             Style.new(style_params.name, file, preview, True), _compare_styles,
         )
@@ -136,10 +136,7 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
         return self._style_model
 
     def get_stylenames(self) -> list:
-        return [
-            self._style_model.get_item(index).name
-            for index in range(self._style_model.get_n_items())
-        ]
+        return self._stylenames
 
     def get_style_dir(self) -> Gio.File:
         return self._style_dir
@@ -153,6 +150,7 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
             for index in range(self._style_model.get_n_items()):
                 style = self._style_model.get_item(index)
                 if style.file is not None and file.equal(style.file):
+                    self._stylenames.pop(index - 1)
                     self._style_model.remove(index)
                     stylename = style.name
                     break
@@ -265,7 +263,7 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
 
     def copy_style(self, template: str, new_name: str):
         new_name = utilities.get_duplicate_string(
-            new_name, self.get_stylenames(),
+            new_name, self._stylenames,
         )
         destination = self._style_dir.get_child_for_display_name(
             _generate_filename(new_name),
@@ -346,10 +344,8 @@ class StylePreview(Gtk.AspectFrame):
             buffer = io.BytesIO(texture.save_to_png_bytes().get_data())
             mean = ImageStat.Stat(Image.open(buffer).convert("L")).mean[0]
             buffer.close()
-            color = "000000" if mean > 200 else "FFFFFF"
-            self.provider.load_from_data(
-                f"button {{ color: #{color}; }}", -1,
-            )
+            color = "@dark_5" if mean > 200 else "@light_1"
+            self.provider.load_from_data(f"button {{ color: {color}; }}", -1)
 
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/add_style.ui")

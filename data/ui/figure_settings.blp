@@ -6,6 +6,7 @@ template $GraphsFigureSettingsWindow : Adw.Window {
   close-request => $on_close();
   default-width: 640;
   default-height: 576;
+  styles ["preferences"]
 
   ShortcutController {
     Shortcut {
@@ -20,9 +21,7 @@ template $GraphsFigureSettingsWindow : Adw.Window {
       title: _("Figure Settings");
       Adw.ToolbarView {
         [top]
-        Adw.HeaderBar {
-          styles ["flat"]
-        }
+        Adw.HeaderBar {}
         content: ScrolledWindow {
           hscrollbar-policy: never;
           propagate-natural-height: true;
@@ -186,7 +185,7 @@ template $GraphsFigureSettingsWindow : Adw.Window {
                   hexpand: true;
 
                   Button styles {
-                    tooltip-text: _("Edit Colors");
+                    tooltip-text: _("Choose Style");
                     valign: center;
                     clicked => $choose_style();
                     styles ["flat"]
@@ -210,7 +209,7 @@ template $GraphsFigureSettingsWindow : Adw.Window {
       }
     }
     Adw.NavigationPage style_overview {
-      title: _("Styles");
+      title: _("Style");
       Adw.ToolbarView {
         [top]
         Adw.HeaderBar {
@@ -220,15 +219,14 @@ template $GraphsFigureSettingsWindow : Adw.Window {
             tooltip-text: _("Add new style");
             clicked => $add_style();
           }
-          styles ["flat"]
         }
         content: ScrolledWindow {
           hscrollbar-policy: never;
           Adw.Clamp {
-            margin-bottom: 12;
-            margin-top: 12;
-            margin-start: 12;
-            margin-end: 12;
+            margin-bottom: 6;
+            margin-top: 6;
+            margin-start: 6;
+            margin-end: 6;
             GridView grid_view {
               name: "style-grid";
               vexpand: false;
