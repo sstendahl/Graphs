@@ -1,13 +1,15 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 import contextlib
-import os
 import io
+import os
 from gettext import gettext as _
 from pathlib import Path
 
+from PIL import Image, ImageStat
+
 from cycler import cycler
 
-from gi.repository import Adw, GLib, GObject, Gio, Graphs, Gtk, Gdk
+from gi.repository import Adw, GLib, GObject, Gdk, Gio, Graphs, Gtk
 
 import graphs
 from graphs import file_io, ui, utilities
@@ -16,8 +18,6 @@ from matplotlib import pyplot, rc_context
 from matplotlib.figure import Figure
 
 import numpy
-
-from PIL import Image, ImageStat
 
 
 PREVIEW_XDATA = numpy.linspace(0, 10, 1000)
@@ -247,7 +247,7 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
     def _generate_preview(self, style: dict) -> Gio.File:
         with rc_context(style):
             # set render size in inch
-            figure = Figure(figsize=(5, 3), dpi=300)
+            figure = Figure(figsize=(5, 3))
             axis = figure.add_subplot()
             axis.plot(PREVIEW_XDATA, PREVIEW_YDATA1)
             axis.plot(PREVIEW_XDATA, PREVIEW_YDATA2)
@@ -344,7 +344,7 @@ class StylePreview(Gtk.AspectFrame):
         self.picture.set_paintable(texture)
         if self._style.mutable:
             buffer = io.BytesIO(texture.save_to_png_bytes().get_data())
-            mean = ImageStat.Stat(Image.open(buffer).convert('L')).mean[0]
+            mean = ImageStat.Stat(Image.open(buffer).convert("L")).mean[0]
             buffer.close()
             color = "000000" if mean > 200 else "FFFFFF"
             self.provider.load_from_data(

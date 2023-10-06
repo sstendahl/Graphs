@@ -1,11 +1,12 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 import contextlib
+import io
 from gettext import gettext as _
 from pathlib import Path
 
-from gi.repository import Adw, GLib, GObject, Gio, Gtk
+from gi.repository import Adw, GLib, GObject, Gtk
 
-from graphs import ui, utilities
+from graphs import file_io, ui, utilities
 
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/export_figure.ui")
@@ -38,14 +39,17 @@ class ExportFigureWindow(Adw.Window):
 
         def on_response(dialog, response):
             with contextlib.suppress(GLib.GError):
-                destination = dialog.save_finish(response)
-                file, stream = Gio.File.new_tmp("graphs-XXXXXX")
-                stream.close()
+                file = dialog.save_finish(response)
+                buffer = io.BytesIO()
                 self._canvas.figure.savefig(
-                    file.peek_path(), format=file_suffixes[0],
+                    buffer, format=file_suffixes[0],
                     dpi=int(self.dpi.get_value()),
-                    transparent=self.transparent.get_active())
-                file.move(destination, Gio.FileCopyFlags(1), None)
+                    transparent=self.transparent.get_active(),
+                )
+                stream = file_io.get_write_stream(file)
+                stream.write(buffer.getvalue())
+                buffer.close()
+                stream.close()
                 self.get_application().get_window().add_toast_string(
                     _("Exported Figure"))
                 self.destroy()
