@@ -229,7 +229,6 @@ template $GraphsFigureSettingsWindow : Adw.Window {
             margin-end: 6;
             GridView grid_view {
               name: "style-grid";
-              vexpand: false;
               max-columns: 3;
               model: SingleSelection {
                 selection-changed => $on_select();

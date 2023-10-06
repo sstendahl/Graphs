@@ -150,7 +150,7 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
             for index in range(self._style_model.get_n_items()):
                 style = self._style_model.get_item(index)
                 if style.file is not None and file.equal(style.file):
-                    self._stylenames.pop(index - 1)
+                    self._stylenames.remove(style.name)
                     self._style_model.remove(index)
                     stylename = style.name
                     break
