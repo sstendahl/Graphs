@@ -114,7 +114,7 @@ def parse_xml(file):
 
 def get_write_stream(file):
     if file.query_exists(None):
-        return file.replace(None, False, 0, None)
+        file.delete(None)
     return file.create(0, None)
 
 

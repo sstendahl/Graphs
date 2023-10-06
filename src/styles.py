@@ -26,11 +26,12 @@ PREVIEW_YDATA1 = numpy.sin(PREVIEW_XDATA)
 PREVIEW_YDATA2 = numpy.cos(PREVIEW_XDATA)
 
 
-def compare_styles(a, b) -> bool:
+def compare_styles(a, b) -> int:
     return GLib.strcmp0(a.name.lower(), b.name.lower())
 
 
 def _generate_filename(name: str) -> str:
+    name = name.replace("(", "").replace(")", "")
     return f"{name.lower().replace(' ', '-')}.mplstyle"
 
 
@@ -64,7 +65,7 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
             preview = self._generate_preview(style)
             self._system_styles[style.name] = file
             self._style_model.insert_sorted(
-                Style.new(style.name, file, preview), compare_styles,
+                Style.new(style.name, file, preview, False), compare_styles,
             )
         enumerator.close(None)
 
@@ -107,7 +108,7 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
             style = _get_style(file)
         if style.name in self._system_styles:
             style.name = utilities.get_duplicate_string(
-                style.name, self._system_styles.keys(),
+                style.name, self.get_style_names(),
             )
             file.delete(None)
             file = self._style_dir.get_child_for_display_name(
@@ -117,7 +118,7 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
         preview = self._generate_preview(style)
         self._user_styles[style.name] = file
         self._style_model.insert_sorted(
-            Style.new(style.name, file, preview), compare_styles,
+            Style.new(style.name, file, preview, True), compare_styles,
         )
 
     def get_style_model(self):
@@ -129,6 +130,12 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
     def get_system_styles(self) -> dict:
         return self._system_styles
 
+    def get_stylenames(self) -> list:
+        return [
+            self._style_model.get_item(index).name
+            for index in range(self._style_model.get_n_items())
+        ]
+
     def get_style_dir(self) -> Gio.File:
         return self._style_dir
 
@@ -138,11 +145,12 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
         possible_visual_impact = False
         stylename = None
         if event_type == 2:
-            for index, (name, loop_file) in enumerate(self._user_styles.items()):
-                if file.equal(loop_file):
-                    self._user_styles.pop(name)
+            for index in range(self._style_model.get_n_items()):
+                style = self._style_model.get_item(index)
+                if file.equal(style.file):
+                    self._user_styles.pop(style.name)
                     self._style_model.remove(index)
-                    stylename = name
+                    stylename = style.name
                     break
             if stylename is None:
                 return
@@ -247,8 +255,7 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
 
     def copy_style(self, template: str, new_name: str):
         new_name = utilities.get_duplicate_string(
-            new_name,
-            list(self._user_styles.keys()) + list(self._system_styles.keys()),
+            new_name, self.get_stylenames(),
         )
         destination = self._style_dir.get_child_for_display_name(
             _generate_filename(new_name),
@@ -281,10 +288,11 @@ class Style(GObject.Object):
     name = GObject.Property(type=str, default="")
     preview = GObject.Property(type=Gio.File)
     file = GObject.Property(type=Gio.File)
+    mutable = GObject.Property(type=bool, default=False)
 
     @staticmethod
-    def new(name, file, preview):
-        return Style(name=name, file=file, preview=preview)
+    def new(name, file, preview, mutable):
+        return Style(name=name, file=file, preview=preview, mutable=mutable)
 
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/style_preview.ui")
@@ -313,10 +321,7 @@ class AddStyleWindow(Adw.Window):
         application = parent.get_application()
         super().__init__(application=application, transient_for=parent)
         style_manager = application.get_figure_style_manager()
-        self._styles = sorted(
-            list(style_manager.get_user_styles().keys())
-            + list(style_manager.get_system_styles().keys()),
-        )
+        self._styles = sorted(style_manager.get_stylenames())
         self.style_templates.set_model(Gtk.StringList.new(self._styles))
         self.present()
 
@@ -496,15 +501,12 @@ class StyleEditor(Adw.NavigationPage):
         # name & save
         new_name = self.style_name.get_text()
         self.style_params.name = new_name
-        self.style.file.delete(None)
         file_io.write_style(self.style.file, self.style_params)
         if self.style.name != new_name:
             application = self.parent.get_application()
             style_manager = application.get_figure_style_manager()
             new_name = utilities.get_duplicate_string(
-                new_name,
-                list(style_manager.get_user_styles().keys())
-                + list(style_manager.get_system_styles().keys()),
+                new_name, style_manager.get_stylenames(),
             )
             figure_settings = application.get_data().get_figure_settings()
             if figure_settings.get_use_custom_style() \
