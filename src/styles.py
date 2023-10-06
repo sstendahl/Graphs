@@ -453,6 +453,8 @@ class StyleEditor(Adw.NavigationPage):
                 button.provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION)
 
     def load_style(self, style):
+        if not style.mutable:
+            return
         self.style = style
         self.style_params = _get_style(self.style.file)
         self.set_title(self.style.name)
@@ -518,17 +520,16 @@ class StyleEditor(Adw.NavigationPage):
         new_name = self.style_name.get_text()
         self.style_params.name = new_name
         file_io.write_style(self.style.file, self.style_params)
+        application = self.parent.get_application()
         if self.style.name != new_name:
-            application = self.parent.get_application()
             style_manager = application.get_figure_style_manager()
             new_name = utilities.get_duplicate_string(
                 new_name, style_manager.get_stylenames(),
             )
-            figure_settings = application.get_data().get_figure_settings()
-            if figure_settings.get_use_custom_style() \
-                    and figure_settings.get_custom_style() == self.style.name:
-                figure_settings.set_custom_style(new_name)
-            self.style.file.set_display_name(new_name)
+        figure_settings = application.get_data().get_figure_settings()
+        if figure_settings.get_use_custom_style() \
+                and figure_settings.get_custom_style() == self.style.name:
+            figure_settings.set_custom_style(new_name)
         self.style = None
 
     def reload_line_colors(self):

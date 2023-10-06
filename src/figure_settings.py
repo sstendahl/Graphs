@@ -109,10 +109,10 @@ class FigureSettingsWindow(Adw.Window):
             if figure_settings.get_use_custom_style():
                 figure_settings.set_use_custom_style(False)
         else:
-            if not figure_settings.get_use_custom_style():
-                figure_settings.set_use_custom_style(True)
             if selected_item.name != figure_settings.get_custom_style():
                 figure_settings.set_custom_style(selected_item.name)
+            if not figure_settings.get_use_custom_style():
+                figure_settings.set_use_custom_style(True)
 
     def set_axes_entries(self):
         used_axes = [[direction, False] for direction in _DIRECTIONS]

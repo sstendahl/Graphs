@@ -37,13 +37,14 @@ def parse_style(file):
     filename = utilities.get_filename(file)
     try:
         for line_number, line in enumerate(read_file(file).splitlines(), 1):
+            line = line.strip()
             if line_number == 2:
-                style.name = line.strip()[2:]
-            stripped_line = cbook._strip_comment(line)
-            if not stripped_line:
+                style.name = line[2:]
+            line = cbook._strip_comment(line)
+            if not line:
                 continue
             try:
-                key, value = stripped_line.split(":", 1)
+                key, value = line.split(":", 1)
             except ValueError:
                 logging.warning(
                     _("Missing colon in file {}, line {}").format(

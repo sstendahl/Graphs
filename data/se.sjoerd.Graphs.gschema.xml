@@ -99,7 +99,7 @@
       <default>"Linear"</default>
     </key>
     <key name="custom-style" type="s">
-      <default>"adwaita"</default>
+      <default>"Adwaita"</default>
     </key>
     <key name="left-label" type="s">
       <default>"Y Value"</default>
