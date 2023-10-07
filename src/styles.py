@@ -9,7 +9,7 @@ from PIL import Image, ImageStat
 
 from cycler import cycler
 
-from gi.repository import Adw, GLib, GObject, Gdk, Gio, Graphs, Gtk
+from gi.repository import Adw, GLib, GObject, Gdk, Gio, Graphs, Gtk, Pango
 
 import graphs
 from graphs import file_io, ui, utilities
@@ -491,14 +491,10 @@ class StyleEditor(Adw.NavigationPage):
         })
 
         # font
-        # borked
-        """"
-        a = self.style_params['font.sans-serif']
-        b = self.style_params['font.size']
-        font_description = self.font_chooser.get_font_desc().from_string(
-            f"{a} {b}")
+        font_description = Pango.FontDescription.new()
+        font_description.set_size(self.style_params["font.size"] * Pango.SCALE)
+        font_description.set_family(self.style_params["font.sans-serif"][0])
         self.font_chooser.set_font_desc(font_description)
-        """
 
         for button in self.color_buttons:
             button.provider.load_from_data(
@@ -521,21 +517,13 @@ class StyleEditor(Adw.NavigationPage):
                     self.style_params[item] = value
 
         # font
-        """"
         font_description = self.font_chooser.get_font_desc()
-        self.style_params["font.sans-serif"] = font_description.get_family()
-        font_name = font_description.to_string().lower().split(" ")
-        self.style_params["font.style"] = utilities.get_font_style(font_name)
-        font_weight = utilities.get_font_weight(font_name)
-        for key in ["font.weight", "axes.titleweight", "axes.labelweight",
-                    "figure.titleweight", "figure.labelweight"]:
-            self.style_params[key] = font_weight
-        font_size = font_name[-1]
+        self.style_params["font.sans-serif"] = [font_description.get_family()]
+        font_size = font_description.get_size() / Pango.SCALE
         for key in ["font.size", "axes.labelsize", "xtick.labelsize",
                     "ytick.labelsize", "axes.titlesize", "legend.fontsize",
                     "figure.titlesize", "figure.labelsize"]:
             self.style_params[key] = font_size
-        """
 
         # line colors
         self.style_params["axes.prop_cycle"] = cycler(color=self.line_colors)

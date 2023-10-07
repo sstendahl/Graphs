@@ -12,27 +12,6 @@ import numpy
 import sympy
 
 
-def get_font_weight(font_name):
-    """Get the weight of the font that is used using the full font name"""
-    valid_weights = ["normal", "bold", "heavy",
-                     "light", "ultrabold", "ultralight"]
-    if font_name[-2] != "italic":
-        new_weight = font_name[-2]
-    else:
-        new_weight = font_name[-3]
-    if new_weight not in valid_weights:
-        new_weight = "normal"
-    return new_weight
-
-
-def get_font_style(font_name):
-    """Get the style of the font that is used using the full font name"""
-    new_style = "normal"
-    if font_name[-2] == ("italic" or "oblique" or "normal"):
-        new_style = font_name[-2]
-    return new_style
-
-
 def hex_to_rgba(hex_str):
     rgba = Gdk.RGBA()
     rgba.parse(str(hex_str))
