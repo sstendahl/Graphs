@@ -23,6 +23,9 @@ def _on_bind(_factory, item, window):
     if style.mutable:
         widget.edit_button.set_visible(True)
         widget.edit_button.connect("clicked", window.edit_style, style)
+        widget.delete_button.connect(
+            "clicked", lambda _a: style.file.trash(None),
+        )
 
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/figure_settings.ui")

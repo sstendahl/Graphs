@@ -17,21 +17,33 @@ template $GraphsStylePreview : AspectFrame {
         name: "indicator";
       }
       [overlay]
-      Button edit_button {
-        visible: false;
+      Box {
+        orientation: vertical;
         halign: end;
         valign: start;
         margin-end: 8;
         margin-top: 8;
-        tooltip-text: _("Edit");
-        styles ["flat"]
-        Image {
-          hexpand: false;
-          icon-name: "settings-symbolic";
+        spacing: 2;
+        Button edit_button {
+          visible: false;
+          tooltip-text: _("Edit");
+          styles ["flat"]
+          Image {
+            hexpand: false;
+            icon-name: "document-edit-symbolic";
+          }
+        }
+        Button delete_button {
+          visible: bind edit_button.visible;
+          tooltip-text: _("Delete");
+          styles ["flat"]
+          Image {
+            hexpand: false;
+            icon-name: "user-trash-symbolic";
+          }
         }
       }
-      child: Picture picture {
-      };
+      child: Picture picture {};
     }
     Label label {
       margin-top: 12;

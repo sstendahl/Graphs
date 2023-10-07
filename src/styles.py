@@ -312,11 +312,15 @@ class StylePreview(Gtk.AspectFrame):
     label = Gtk.Template.Child()
     picture = Gtk.Template.Child()
     edit_button = Gtk.Template.Child()
+    delete_button = Gtk.Template.Child()
 
     def __init__(self, **kwargs):
         super().__init__(*kwargs)
         self.provider = Gtk.CssProvider()
         self.edit_button.get_style_context().add_provider(
+            self.provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION,
+        )
+        self.delete_button.get_style_context().add_provider(
             self.provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION,
         )
 
