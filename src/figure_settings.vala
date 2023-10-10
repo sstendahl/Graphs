@@ -30,6 +30,9 @@ namespace Graphs {
         public double min_selected { get; set; default = 0; }
         public double max_selected { get; set; default = 0; }
 
+        public int x_position { get; set; default = 0; }
+        public int y_position { get; set; default = 0; }
+
         public FigureSettings (Settings settings) {
             Object (
                 bottom_scale: settings.get_enum("bottom-scale"),

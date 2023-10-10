@@ -233,8 +233,11 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
 
         canvas = graphs.canvas.Canvas(self.props.application)
         figure_settings = data.get_figure_settings()
+        ignorelist = [
+            "use_custom_style", "custom_style", "x_position", "y_position",
+        ]
         for prop in dir(figure_settings.props):
-            if prop not in ["use_custom_style", "custom_style"]:
+            if prop not in ignorelist:
                 figure_settings.bind_property(prop, canvas, prop, 1 | 2)
         data.bind_property("items", canvas, "items", 2)
         window.set_canvas(canvas)

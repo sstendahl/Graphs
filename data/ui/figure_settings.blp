@@ -58,6 +58,23 @@ template $GraphsFigureSettingsWindow : Adw.Window {
               }
 
               Adw.PreferencesGroup {
+                title: _("Default Item Positions");
+                Adw.ComboRow x_position {
+                  title: _("Default X-Axis Position");
+                  model: StringList{
+                    strings [_("Bottom"), _("Top")]
+                  };
+                }
+
+                Adw.ComboRow y_position {
+                  title: _("Default Y-Axis Position");
+                  model: StringList{
+                    strings [_("Left"), _("Right")]
+                  };
+                }
+              }
+
+              Adw.PreferencesGroup {
                 title: _("Axis Limits");
                 Adw.ActionRow no_data_message {
                   title: _("No Data");

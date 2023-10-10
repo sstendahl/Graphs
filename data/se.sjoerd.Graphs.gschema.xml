@@ -46,12 +46,12 @@
     <value nick="Inverse" value="4"/>
   </enum>
 
-  <enum id="se.sjoerd.Graphs.x-positions">
+  <enum id="se.sjoerd.Graphs.figure.x-positions">
     <value nick="bottom" value="0"/>
     <value nick="top" value="1"/>
   </enum>
 
-  <enum id="se.sjoerd.Graphs.y-positions">
+  <enum id="se.sjoerd.Graphs.figure.y-positions">
     <value nick="left" value="0"/>
     <value nick="right" value="1"/>
   </enum>
@@ -82,12 +82,6 @@
     </key>
     <key name="override-item-properties" type="b">
       <default>true</default>
-    </key>
-    <key name="x-position" enum="se.sjoerd.Graphs.x-positions">
-      <default>"bottom"</default>
-    </key>
-    <key name="y-position" enum="se.sjoerd.Graphs.y-positions">
-      <default>"left"</default>
     </key>
   </schema>
 
@@ -127,6 +121,12 @@
     </key>
     <key name="top-scale" enum="se.sjoerd.Graphs.figure.scales">
       <default>"Linear"</default>
+    </key>
+    <key name="x-position" enum="se.sjoerd.Graphs.figure.x-positions">
+      <default>"bottom"</default>
+    </key>
+    <key name="y-position" enum="se.sjoerd.Graphs.figure.y-positions">
+      <default>"left"</default>
     </key>
     <key name="use-custom-style" type="b">
       <default>false</default>

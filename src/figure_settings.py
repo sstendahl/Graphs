@@ -55,6 +55,8 @@ class FigureSettingsWindow(Adw.Window):
     max_right = Gtk.Template.Child()
     min_top = Gtk.Template.Child()
     max_top = Gtk.Template.Child()
+    x_position = Gtk.Template.Child()
+    y_position = Gtk.Template.Child()
 
     no_data_message = Gtk.Template.Child()
     style_overview = Gtk.Template.Child()

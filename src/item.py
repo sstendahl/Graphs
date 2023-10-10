@@ -36,11 +36,11 @@ class DataItem(Graphs.Item):
 
     @staticmethod
     def new(application, xdata=None, ydata=None, **kwargs):
-        settings = application.get_settings("general")
         params = pyplot.rcParams
+        figure_settings = application.get_data().get_figure_settings()
         return DataItem(
-            yposition=settings.get_enum("y-position"),
-            xposition=settings.get_enum("x-position"),
+            xposition=figure_settings.get_x_position(),
+            yposition=figure_settings.get_y_position(),
             linestyle=misc.LINESTYLES.index(params["lines.linestyle"]),
             linewidth=params["lines.linewidth"],
             markerstyle=misc.MARKERSTYLES.index(params["lines.marker"]),
@@ -76,11 +76,11 @@ class TextItem(Graphs.Item):
 
     @staticmethod
     def new(application, xanchor=0, yanchor=0, text="", **kwargs):
-        settings = application.get_settings("general")
         params = pyplot.rcParams
+        figure_settings = application.get_data().get_figure_settings()
         return TextItem(
-            yposition=settings.get_enum("y-position"),
-            xposition=settings.get_enum("x-position"),
+            xposition=figure_settings.get_x_position(),
+            yposition=figure_settings.get_y_position(),
             size=params["font.size"], color=params["text.color"],
             xanchor=xanchor, yanchor=yanchor, text=text, **kwargs,
         )
