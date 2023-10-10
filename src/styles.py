@@ -419,6 +419,15 @@ VALUE_DICT = {
                 "h", "H", "+", "x", "D", "d", "|", "_", "P", "X"],
     "tick_direction": ["in", "out"],
 }
+FONT_STYLE_DICT = {
+    0: "normal",
+    1: "oblique",
+    2: "italic",
+}
+FONT_VARIANT_DICT = {
+    0: "normal",
+    1: "small-caps",
+}
 
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/style_editor.ui")
@@ -494,6 +503,15 @@ class StyleEditor(Adw.NavigationPage):
         font_description = Pango.FontDescription.new()
         font_description.set_size(self.style_params["font.size"] * Pango.SCALE)
         font_description.set_family(self.style_params["font.sans-serif"][0])
+        font_description.set_weight(self.style_params["font.weight"])
+        inverted_style_dict = {b: a for a, b in FONT_STYLE_DICT.items()}
+        font_description.set_style(
+            inverted_style_dict[self.style_params["font.style"]],
+        )
+        inverted_variant_dict = {b: a for a, b in FONT_VARIANT_DICT.items()}
+        font_description.set_variant(
+            inverted_variant_dict[self.style_params["font.variant"]],
+        )
         self.font_chooser.set_font_desc(font_description)
 
         for button in self.color_buttons:
@@ -524,6 +542,16 @@ class StyleEditor(Adw.NavigationPage):
                     "ytick.labelsize", "axes.titlesize", "legend.fontsize",
                     "figure.titlesize", "figure.labelsize"]:
             self.style_params[key] = font_size
+        font_weight = font_description.get_weight()
+        for key in ["font.weight", "axes.titleweight", "axes.labelweight",
+                    "figure.titleweight", "figure.labelweight"]:
+            self.style_params[key] = font_weight
+        self.style_params["font.style"] = FONT_STYLE_DICT[
+            font_description.get_style()
+        ]
+        self.style_params["font.variant"] = FONT_VARIANT_DICT[
+            font_description.get_variant()
+        ]
 
         # line colors
         self.style_params["axes.prop_cycle"] = cycler(color=self.line_colors)
