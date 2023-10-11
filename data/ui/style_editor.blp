@@ -37,6 +37,20 @@ template $GraphsStyleEditor : Adw.NavigationPage {
                 use-font: true;
               }
             }
+
+            Adw.ActionRow {
+              title: _("Title Size");
+              subtitle: _("Title size in relation to Text Size");
+
+              Scale titlesize {
+                draw-value: true;
+                width-request: 200;
+                adjustment: Adjustment {
+                  lower: 1;
+                  upper: 2;
+                };
+              }
+            }
           }
 
           Adw.PreferencesGroup {
