@@ -43,8 +43,7 @@ class CurveFittingWindow(Graphs.CurveFittingTool):
             self.fitting_parameters.add_items([FittingParameter(name=var)])
         # Generate item for the data that is fitted to
         self.data_curve = DataItem.new(
-            application, xdata=item.xdata,
-            ydata=item.ydata, name=item.get_name(),
+            xdata=item.xdata, ydata=item.ydata, name=item.get_name(),
             color="#1A5FB4",
         )
         self.data_curve.linestyle = 0
@@ -52,9 +51,7 @@ class CurveFittingWindow(Graphs.CurveFittingTool):
         self.data_curve.markersize = 13
 
         # Generate item for the fit
-        self.fitted_curve = DataItem.new(
-            application, xdata=[], ydata=[], color="#A51D2D", name=" ",
-        )
+        self.fitted_curve = DataItem.new(color="#A51D2D")
 
         canvas.props.items = [self.fitted_curve, self.data_curve]
 
@@ -233,7 +230,7 @@ class CurveFittingWindow(Graphs.CurveFittingTool):
     def add_fit(self, _widget):
         """Add fitted data to the items in the main application"""
         self.get_application().get_data().add_items([DataItem.new(
-            self.get_application(), name=self.fitted_curve.get_name(),
+            name=self.fitted_curve.get_name(),
             xdata=self.fitted_curve.xdata, ydata=self.fitted_curve.ydata,
         )])
         self.destroy()

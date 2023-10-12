@@ -30,10 +30,8 @@ CONFIG_MIGRATION_TABLE = {
     "plot_top_scale": ("figure", "top-scale"),
     "plot_use_custom_style": ("figure", "use-custom-style"),
     "plot_x_label": ("figure", "bottom-label"),
-    "plot_x_position": ("general", "x-position"),
     "plot_x_scale": ("figure", "bottom-scale"),
     "plot_y_label": ("figure", "left-label"),
-    "plot_y_position": ("general", "y-position"),
     "plot_y_scale": ("figure", "left-scale"),
 }
 

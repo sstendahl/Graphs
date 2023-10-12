@@ -268,5 +268,5 @@ def combine(self):
     # Create the item itself
     new_xdata, new_ydata = sort_data(new_xdata, new_ydata)
     self.get_data().add_items(
-        [DataItem.new(self, new_xdata, new_ydata, name=_("Combined Data"))],
+        [DataItem.new(new_xdata, new_ydata, name=_("Combined Data"))],
     )

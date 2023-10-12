@@ -44,8 +44,9 @@ def import_from_xrdml(self, file):
             xdata = numpy.linspace(start_pos, end_pos, len(ydata))
             xdata = numpy.ndarray.tolist(xdata)
     return [item.DataItem.new(
-        self, xdata, ydata, name=utilities.get_filename(file),
-        xlabel=f"{scan_axis} ({unit})", ylabel=_("Intensity (cps)"))]
+        xdata, ydata, name=utilities.get_filename(file),
+        xlabel=f"{scan_axis} ({unit})", ylabel=_("Intensity (cps)"),
+    )]
 
 
 def import_from_xry(self, file):
@@ -62,31 +63,30 @@ def import_from_xry(self, file):
     value_count = int(info[1])
     item_count = int(info[0])
 
-    items = []
-    for i in range(item_count):
-        name = utilities.get_filename(file)
-        if item_count > 1:
-            name += f" - {i + 1}"
-        items.append(item.DataItem.new(
-            self, name=name, xlabel=_("β (°)"), ylabel=_("R (1/s)"),
-        ))
-    for i in range(value_count):
-        values = lines[18 + i].strip().split()
-        for j in range(item_count):
-            value = values[j]
+    name = utilities.get_filename(file)
+    items = [
+        item.DataItem.new(
+            name=f"{name} - {i + 1}" if item_count > 1 else name,
+            xlabel=_("β (°)"), ylabel=_("R (1/s)"),
+        ) for i in range(item_count)
+    ]
+    for i, row in enumerate(lines[18:18 + value_count]):
+        x_value = b_step * i + b_min
+        for j, value in enumerate(row.strip().split()):
             if value != "NaN":
-                items[j].xdata.append(b_step * i + b_min)
+                items[j].xdata.append(x_value)
                 items[j].ydata.append(float(value))
     for row in lines[28 + value_count + item_count:]:
         values = row.strip().split()
         text = " ".join(values[7:])
         items.append(item.TextItem.new(
-            self, float(values[5]), float(values[6]), text, name=text))
+            float(values[5]), float(values[6]), text, name=text,
+        ))
     return items
 
 
 def import_from_columns(self, file):
-    item_ = item.DataItem.new(self, name=utilities.get_filename(file))
+    item_ = item.DataItem.new(name=utilities.get_filename(file))
     columns_params = self.get_settings().get_child(
         "import-params").get_child("columns")
     column_x = columns_params.get_int("column-x")

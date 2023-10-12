@@ -52,7 +52,7 @@ class AddEquationWindow(Adw.Window):
             if name == "":
                 name = f"Y = {values['equation']}"
             self.get_application().get_data().add_items([
-                DataItem.new(self.get_application(), xdata, ydata, name=name),
+                DataItem.new(xdata, ydata, name=name),
             ])
             self.destroy()
         except ValueError as error:
