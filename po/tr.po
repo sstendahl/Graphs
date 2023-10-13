@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: se.sjoerd.Graphs\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-10-02 17:46+0200\n"
-"PO-Revision-Date: 2023-10-03 10:53+0000\n"
+"PO-Revision-Date: 2023-10-05 02:10+0000\n"
 "Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/graphs/graphs/tr/"
 ">\n"
@@ -35,7 +35,6 @@ msgid "@AUTHOR@"
 msgstr "@AUTHOR@"
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:10
-#, fuzzy
 msgid ""
 "Graphs is a simple, yet powerful tool that allows you to plot and manipulate "
 "your data with ease. New data can be imported from a wide variety of "
@@ -44,12 +43,12 @@ msgid ""
 "multiply, center and smoothen data, as well as apply any custom "
 "transformations on the data."
 msgstr ""
-"Grafikler, verilerinizi kolaylıkla çizmenize ve düzenlemenize olanak "
-"sağlayan basit ancak güçlü bir araçtır. İki sütunlu dosyalardan veri içe "
-"aktarabilir veya bir denklem aracılığıyla veri oluşturabilirsiniz. Tüm "
-"veriler, seçme, kesme, çeviri, çarpma, ortalama ve düzleştirme gibi çeşitli "
-"işlemler kullanılarak düzenlenebilir. Ayrıca, numpy gösterimi kullanarak "
-"özel dönüşümler uygulanabilir."
+"Graphs, verilerinizi kolayca çizmenize ve düzenlemenize olanak tanıyan basit "
+"ve güçlü bir araçtır. Yeni verileri çok çeşitli dosya türlerinden içe "
+"aktarılabilir veya denklemle oluşturulabilir. Tüm veriler, verileri seçme, "
+"kesme, çevirme, çarpma, ortalama ve yumuşatma gibi çeşitli işlemler "
+"kullanılarak düzenlenebilir; ayrıca veriler üzerinde herhangi bir özel "
+"dönüşüm uygulanabilir."
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:14
 msgid ""
@@ -57,9 +56,11 @@ msgid ""
 "extensive customization options for the style of the plots. You can fine-"
 "tune and personalize stylesheets to your liking."
 msgstr ""
+"Ayrıca, Graphs içe aktarılan veriler üzerinde eğri sığdırmayı destekler ve "
+"grafiklerin biçemi için kapsamlı özelleştirme seçenekleri sunar. Biçem "
+"sayfalarını beğeninize göre ayarlayabilir ve kişiselleştirebilirsiniz."
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:17
-#, fuzzy
 msgid ""
 "Graphs is an excellent fit for both plotting and data manipulation. The "
 "plots created with Graphs can be saved in a variety of formats suitable for "
@@ -69,14 +70,13 @@ msgid ""
 "refinement. Graphs is written with the GNOME environment in mind, but should "
 "be suitable for any other desktop environment as well."
 msgstr ""
-"Grafikler, hem çizim yapmak hem de veri düzenlemesi için mükemmel bir "
-"seçimdir. Grafikler ile oluşturulan çizimler, bilimsel yayınlarda veya "
-"sunumlarda paylaşmak ve geniş bir kitleye sunmak için uygun birçok biçimde "
-"kaydedilebilir. Ayrıca, çizimleri vektör görüntüler olarak kaydetmek de "
-"mümkündür. Bu görüntüler, Inkscape gibi programlarla kolayca düzenlenebilir, "
-"özelleştirilebilir ve iyileştirilebilir. Grafikler, GNOME ortamı göz önünde "
-"bulundurularak yazılmış olsa da, diğer masaüstü ortamlarında da "
-"kullanılabilmektedir."
+"Graphs hem çizim hem de veri düzenlemek için mükemmel seçimdir. Graphs ile "
+"oluşturulan grafikler, bilimsel bir yayın veya sunum gibi geniş kitleyle "
+"paylaşmaya ve sunmaya uygun çeşitli biçimlerde kaydedilebilir. Ayrıca, "
+"grafikleri vektör görüntüleri olarak kaydetme seçeneği, daha fazla "
+"iyileştirme için Inkscape gibi yazılımlarla kolayca düzenlenebilmesini de "
+"sağlar Graphs, GNOME ortamı düşünülerek yazılmıştır, ancak diğer masaüstü "
+"ortamları için de uygundur."
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:21
 msgid ""
@@ -160,22 +160,20 @@ msgid "Name"
 msgstr "Ad"
 
 #: data/ui/curve_fitting.blp:6
-#, fuzzy
 msgid "Curve Fitting"
-msgstr "Şekil Ayarları"
+msgstr "Eğri Sığdırma"
 
 #: data/ui/curve_fitting.blp:29
 msgid "Add fit to data"
-msgstr ""
+msgstr "Verilere uyum ekle"
 
 #: data/ui/curve_fitting.blp:44
-#, fuzzy
 msgid "Equation"
-msgstr "Denklem Ekle"
+msgstr "Denklem"
 
 #: data/ui/curve_fitting.blp:97 data/ui/window.blp:610
 msgid "Canvas Failed to Load"
-msgstr ""
+msgstr "Tuval Yüklenemedi"
 
 #: data/ui/dialogs.blp:5
 msgid "Discard Data?"
@@ -472,23 +470,21 @@ msgstr "Logaritmik"
 #: data/ui/window.blp:668 data/ui/window.blp:696 data/ui/window.blp:725
 #: data/ui/window.blp:753
 msgid "Radians"
-msgstr ""
+msgstr "Radyan"
 
 #: data/ui/figure_settings.blp:127 data/ui/figure_settings.blp:134
 #: data/ui/figure_settings.blp:141 data/ui/figure_settings.blp:148
 #: data/ui/window.blp:673 data/ui/window.blp:702 data/ui/window.blp:730
 #: data/ui/window.blp:758
-#, fuzzy
 msgid "Square Root"
-msgstr "Kare"
+msgstr "Kare Kök"
 
 #: data/ui/figure_settings.blp:127 data/ui/figure_settings.blp:134
 #: data/ui/figure_settings.blp:141 data/ui/figure_settings.blp:148
 #: data/ui/window.blp:678 data/ui/window.blp:707 data/ui/window.blp:735
 #: data/ui/window.blp:763
-#, fuzzy
 msgid "Inverse"
-msgstr "Ters FFT"
+msgstr "Ters"
 
 #: data/ui/figure_settings.blp:132
 msgid "Left Axis Scale"
@@ -560,16 +556,15 @@ msgstr "Özel Biçem Kullan"
 
 #: data/ui/fitting_parameters.blp:26
 msgid "Initial"
-msgstr ""
+msgstr "Başlangıç"
 
 #: data/ui/fitting_parameters.blp:34
-#, fuzzy
 msgid "Min"
-msgstr "girdi"
+msgstr "Asgari"
 
 #: data/ui/fitting_parameters.blp:42
 msgid "Max"
-msgstr ""
+msgstr "Azami"
 
 #: data/ui/help_overlay.blp:11
 msgctxt "shortcut window"
@@ -587,16 +582,14 @@ msgid "Open Preferences"
 msgstr "Tercihleri Aç"
 
 #: data/ui/help_overlay.blp:24
-#, fuzzy
 msgctxt "shortcut window"
 msgid "Open Figure Settings"
-msgstr "Şekil Ayarları"
+msgstr "Şekil Ayarlarını Aç"
 
 #: data/ui/help_overlay.blp:29
-#, fuzzy
 msgctxt "shortcut window"
 msgid "Open Styles"
-msgstr "Çizim Biçemlerini Aç"
+msgstr "Biçemleri Aç"
 
 #: data/ui/help_overlay.blp:34
 msgctxt "shortcut window"
@@ -634,10 +627,9 @@ msgid "Add Data from Equation"
 msgstr "Denklemden Veri Ekle"
 
 #: data/ui/help_overlay.blp:67
-#, fuzzy
 msgctxt "shortcut window"
 msgid "Add Data from File"
-msgstr "Dosyadan Veri Ekle…"
+msgstr "Dosyadan Veri Ekle"
 
 #: data/ui/help_overlay.blp:72
 msgctxt "shortcut window"
@@ -685,22 +677,19 @@ msgid "Next View"
 msgstr "Sonraki Görünüm"
 
 #: data/ui/help_overlay.blp:112
-#, fuzzy
 msgctxt "shortcut window"
 msgid "Optimize limits"
-msgstr "Sınırları Eniyile"
+msgstr "Sınırları eniyile"
 
 #: data/ui/help_overlay.blp:117
-#, fuzzy
 msgctxt "shortcut window"
 msgid "Zoom in"
-msgstr "Yakınlaştırma Kipi"
+msgstr "Yakınlaştır"
 
 #: data/ui/help_overlay.blp:122
-#, fuzzy
 msgctxt "shortcut window"
 msgid "Zoom out"
-msgstr "Yakınlaştırma Kipi"
+msgstr "Uzaklaştır"
 
 #: data/ui/help_overlay.blp:127 data/ui/help_overlay.blp:147
 msgctxt "shortcut window"
@@ -750,11 +739,11 @@ msgstr "Ondalık Ayraç"
 
 #: data/ui/import.blp:62
 msgid "Decimal comma (,)"
-msgstr ""
+msgstr "Ondalık virgülü (,)"
 
 #: data/ui/import.blp:62
 msgid "Decimal point (.)"
-msgstr ""
+msgstr "Ondalık nokta (.)"
 
 #: data/ui/import.blp:67
 msgid "Column X"
@@ -786,22 +775,19 @@ msgstr "Renk Seç"
 
 #: data/ui/item_box.blp:52
 msgid "Move item "
-msgstr ""
+msgstr "Ogeyi taşı "
 
 #: data/ui/item_box.blp:65
-#, fuzzy
 msgid "Curve fitting"
-msgstr "Şekil Ayarları"
+msgstr "Eğri sığdırma"
 
 #: data/ui/item_box.blp:69
-#, fuzzy
 msgid "Edit item"
-msgstr "Ögeyi Düzenle"
+msgstr "Ögeyi düzenle"
 
 #: data/ui/item_box.blp:73
-#, fuzzy
 msgid "Remove item"
-msgstr "Kaldır"
+msgstr "Ögeyi Kaldır"
 
 #: data/ui/preferences.blp:10
 msgid "General"
@@ -840,9 +826,8 @@ msgid "Override existing items"
 msgstr "Var olan ögelerin üzerine yaz"
 
 #: data/ui/preferences.blp:28
-#, fuzzy
 msgid "Figure"
-msgstr "Şekli Dışa Aktar"
+msgstr "Şekil"
 
 #: data/ui/preferences.blp:31
 msgid "Hide Unselected Items"
@@ -857,14 +842,12 @@ msgid "Which axis should a new item be displayed on"
 msgstr "Yeni ögenin hangi eksende gösterileceği"
 
 #: data/ui/preferences.blp:38
-#, fuzzy
 msgid "Bottom"
-msgstr "alt"
+msgstr "Alt"
 
 #: data/ui/preferences.blp:38
-#, fuzzy
 msgid "Top"
-msgstr "üst"
+msgstr "Üst"
 
 #: data/ui/preferences.blp:43
 msgid "Default Y-Axis Position"
@@ -872,17 +855,15 @@ msgstr "Öntanımlı Y Eksen Konumu"
 
 #: data/ui/preferences.blp:46
 msgid "Left"
-msgstr ""
+msgstr "Sol"
 
 #: data/ui/preferences.blp:46
-#, fuzzy
 msgid "Right"
-msgstr "sağ"
+msgstr "Sağ"
 
 #: data/ui/preferences.blp:51
-#, fuzzy
 msgid "Override Item Properties on Style Change"
-msgstr "Biçem değişikliğinde öge özelliklerinin üzerine yaz"
+msgstr "Biçem Değiştiğinde Öge Özelliklerinin Üzerine Yaz"
 
 #: data/ui/style_box.blp:23 data/ui/style_color_box.blp:18
 msgid "Edit"
@@ -898,13 +879,12 @@ msgid "Styles"
 msgstr "Biçemler"
 
 #: data/ui/style_window.blp:53
-#, fuzzy
 msgid "No custom styles"
-msgstr "Özel Biçem Kullan"
+msgstr "Özel biçem yok"
 
 #: data/ui/style_window.blp:54
 msgid "Create a new custom style to start editing your own stylesheets"
-msgstr ""
+msgstr "Biçem sayfalarınızı düzenlemeye başlamak için yeni özel biçem oluşturun"
 
 #: data/ui/style_window.blp:83
 msgid "Style Name"
@@ -1147,9 +1127,8 @@ msgid "Highlight mode. Click and drag to make a selection of data"
 msgstr "Vurgu kipi. Veri seçimi yapmak için tıklayın ve sürükleyin"
 
 #: data/ui/window.blp:262
-#, fuzzy
 msgid "Adjust"
-msgstr "Veri Ayarla"
+msgstr "Ayarla"
 
 #: data/ui/window.blp:277
 msgid "Shift"
@@ -1237,7 +1216,7 @@ msgstr "Veriler üzerinde özel dönüşümler gerçekleştir"
 
 #: data/ui/window.blp:456
 msgid "Modify"
-msgstr ""
+msgstr "Değiştir"
 
 #: data/ui/window.blp:477
 msgid "Translate X"
@@ -1305,16 +1284,15 @@ msgstr "Klavye Kısayolları"
 
 #: data/ui/window.blp:636
 msgid "About Graphs"
-msgstr "Grafikler Hakkında"
+msgstr "Graphs Hakkında"
 
 #: data/ui/window.blp:642
 msgid "Add Data from File…"
 msgstr "Dosyadan Veri Ekle…"
 
 #: data/ui/window.blp:643
-#, fuzzy
 msgid "Add Equation…"
-msgstr "Denklem Ekle"
+msgstr "Denklem Ekle…"
 
 #: data/ui/window.blp:652
 msgid "Optimize Limits"
@@ -1352,25 +1330,24 @@ msgstr "%s yüklenemedi"
 
 #: src/curve_fitting.py:127
 msgid "Results:"
-msgstr ""
+msgstr "Sonuçlar:"
 
 #: src/curve_fitting.py:135
 #, python-brace-format
 msgid "Sum of R²: {R2}"
-msgstr ""
+msgstr "R² toplamı: {R2}"
 
 #: src/curve_fitting.py:313
 msgid "Fitting parameters for {param_name}"
-msgstr ""
+msgstr "{param_name} için sığdırma parametreleri"
 
 #: src/export_figure.py:50
 msgid "Exported Figure"
 msgstr "Şekil Dışa Aktarıldı"
 
 #: src/figure_settings.py:120
-#, fuzzy
 msgid "Defaults Updated"
-msgstr "Öntanımlı Başlık"
+msgstr "Öntanımlılar Güncellendi"
 
 #: src/file_import.py:94
 msgid "Are you sure you want to reset the import settings?"
@@ -1442,9 +1419,9 @@ msgid "Unable to import from file"
 msgstr "Dosyadan içe aktarılamadı"
 
 #: src/styles.py:148
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "Could not parse {stylename}, loading system preferred style"
-msgstr "Çizim biçemi {stylename} yok, yükleme sistemi tercih edildi"
+msgstr "{stylename} ayrıştırılamadı, yükleme yeğlediği biçem yükleniyor"
 
 #: src/styles.py:153
 #, python-brace-format
@@ -1452,14 +1429,12 @@ msgid "Plot style {stylename} does not exist loading system preferred"
 msgstr "Çizim biçemi {stylename} yok, yükleme sistemi tercih edildi"
 
 #: src/styles.py:190
-#, fuzzy
 msgid "X Label"
-msgstr "Etiketler"
+msgstr "X Etiketi"
 
 #: src/styles.py:191
-#, fuzzy
 msgid "Y Label"
-msgstr "Etiketler"
+msgstr "Y Etiketi"
 
 #: src/styles.py:334
 #, python-brace-format
@@ -1467,9 +1442,9 @@ msgid "{name} - line colors"
 msgstr "{name} - çizgi renkleri"
 
 #: src/styles.py:476
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "Are you sure you want to delete the {stylename} style?"
-msgstr "{} biçemini silmek istediğinize emin misiniz?"
+msgstr "{stylename} biçemini silmek istediğinize emin misiniz?"
 
 #: src/styles.py:495
 msgid "Color {}"
@@ -1506,16 +1481,15 @@ msgstr "Leybold xry"
 
 #: src/ui.py:57 src/ui.py:74
 msgid "Graphs Project File"
-msgstr "Grafik Proje Dosyası"
+msgstr "Graphs Proje Dosyası"
 
 #: src/ui.py:81
 msgid "No data to export"
-msgstr ""
+msgstr "Dışa aktarılacak veri yok"
 
 #: src/ui.py:97
-#, fuzzy
 msgid "Exported Data"
-msgstr "Verileri Dışa Aktar"
+msgstr "Dışa Aktarılan Veriler"
 
 #: src/ui.py:105
 msgid "Text Files"
