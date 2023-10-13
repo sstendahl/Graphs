@@ -331,10 +331,18 @@ class StylePreview(Gtk.AspectFrame):
     @style.setter
     def style(self, style):
         self._style = style
-        self._style.bind_property("name", self.label, "label", 2)
+        self._style.bind_property("name", self, "name", 2)
         self._style.bind_property("preview", self, "preview", 2)
 
-    @GObject.Property(type=Gio.File)
+    @GObject.Property(type=str, default="", flags=2)
+    def name(self):
+        pass
+
+    @name.setter
+    def name(self, name):
+        self.label.set_label(utilities.shorten_label(name))
+
+    @GObject.Property(type=Gio.File, flags=2)
     def preview(self):
         pass
 
@@ -558,19 +566,15 @@ class StyleEditor(Adw.NavigationPage):
         self.style_params["patch.facecolor"] = self.line_colors[0]
 
         # name & save
-        new_name = self.style_name.get_text()
-        self.style_params.name = new_name
-        file_io.write_style(self.style.file, self.style_params)
         application = self.parent.get_application()
+        new_name = self.style_name.get_text()
         if self.style.name != new_name:
             style_manager = application.get_figure_style_manager()
             new_name = utilities.get_duplicate_string(
                 new_name, style_manager.get_stylenames(),
             )
-        figure_settings = application.get_data().get_figure_settings()
-        if figure_settings.get_use_custom_style() \
-                and figure_settings.get_custom_style() == self.style.name:
-            figure_settings.set_custom_style(new_name)
+        self.style_params.name = new_name
+        file_io.write_style(self.style.file, self.style_params)
         self.style = None
 
     def reload_line_colors(self):

@@ -88,19 +88,19 @@ class FigureSettingsWindow(Adw.Window):
 
         self.style_editor = styles.StyleEditor(self)
         self.grid_view.set_factory(_get_widget_factory(self))
-        style_model = application.get_figure_style_manager().get_style_model()
         selection_model = self.grid_view.get_model()
-        selection_model.set_model(style_model)
+        selection_model.set_model(
+            application.get_figure_style_manager().get_style_model(),
+        )
         if self.props.figure_settings.get_use_custom_style():
             stylename = self.props.figure_settings.get_custom_style()
-            for index in range(style_model.get_n_items()):
-                style = style_model.get_item(index)
+            for index in range(selection_model.get_n_items()):
+                style = selection_model.get_item(index)
                 if index > 0 and style.name == stylename:
                     selection_model.set_selected(index)
                     break
         else:
             selection_model.set_selected(0)
-
         self.present()
 
     @Gtk.Template.Callback()
@@ -141,6 +141,11 @@ class FigureSettingsWindow(Adw.Window):
             )
 
     def edit_style(self, _button, style):
+        figure_settings = \
+            self.props.application.get_data().get_figure_settings()
+        if figure_settings.get_use_custom_style() \
+                and figure_settings.get_custom_style() == style.name:
+            self.grid_view.get_model().set_selected(0)
         self.style_editor.load_style(style)
         self.navigation_view.push(self.style_editor)
 

@@ -109,10 +109,8 @@ def get_fraction_at_value(value, start, end, scale):
         return (scaled_data_point - 1 / end) / scaled_range
 
 
-def shorten_label(label, max_length=19):
-    if len(label) > max_length:
-        label = f"{label[:max_length]}…"
-    return label
+def shorten_label(label, max_length=20):
+    return f"{label[:max_length - 1]}…" if len(label) > max_length else label
 
 
 def get_config_directory():
