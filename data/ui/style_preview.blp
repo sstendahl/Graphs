@@ -17,30 +17,17 @@ template $GraphsStylePreview : AspectFrame {
         name: "indicator";
       }
       [overlay]
-      Box {
-        orientation: vertical;
+      Button edit_button {
         halign: end;
         valign: start;
         margin-end: 6;
         margin-top: 6;
-        spacing: 2;
-        Button edit_button {
-          visible: false;
-          tooltip-text: _("Edit");
-          styles ["flat"]
-          Image {
-            hexpand: false;
-            icon-name: "document-edit-symbolic";
-          }
-        }
-        Button delete_button {
-          visible: bind edit_button.visible;
-          tooltip-text: _("Delete");
-          styles ["flat"]
-          Image {
-            hexpand: false;
-            icon-name: "user-trash-symbolic";
-          }
+        visible: false;
+        tooltip-text: _("Edit");
+        styles ["flat"]
+        Image {
+          hexpand: false;
+          icon-name: "document-edit-symbolic";
         }
       }
       child: Picture picture {};

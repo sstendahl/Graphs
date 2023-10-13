@@ -312,15 +312,11 @@ class StylePreview(Gtk.AspectFrame):
     label = Gtk.Template.Child()
     picture = Gtk.Template.Child()
     edit_button = Gtk.Template.Child()
-    delete_button = Gtk.Template.Child()
 
     def __init__(self, **kwargs):
         super().__init__(*kwargs)
         self.provider = Gtk.CssProvider()
         self.edit_button.get_style_context().add_provider(
-            self.provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION,
-        )
-        self.delete_button.get_style_context().add_provider(
             self.provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION,
         )
 
@@ -606,6 +602,12 @@ class StyleEditor(Adw.NavigationPage):
     def add_color(self, _button):
         self.line_colors.append("000000")
         self.reload_line_colors()
+
+    @Gtk.Template.Callback()
+    def on_delete(self, _button):
+        self.style.file.trash(None)
+        self.style = None
+        self.parent.navigation_view.pop()
 
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/style_color_box.ui")

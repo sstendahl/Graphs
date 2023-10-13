@@ -7,6 +7,16 @@ template $GraphsStyleEditor : Adw.NavigationPage {
     [top]
     Adw.HeaderBar {
       styles ["flat"]
+      [end]
+      Button delete_button {
+        tooltip-text: _("Delete");
+        styles ["flat"]
+        Image {
+          hexpand: false;
+          icon-name: "user-trash-symbolic";
+        }
+        clicked => $on_delete();
+      }
     }
 
     content: ScrolledWindow {
