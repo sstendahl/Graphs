@@ -9,10 +9,10 @@ template $GraphsStylePreview : AspectFrame {
       width-request: 160;
       [overlay]
       Image {
-        halign: start;
-        valign: start;
-        margin-start: 8;
-        margin-top: 8;
+        halign: end;
+        valign: end;
+        margin-end: 6;
+        margin-bottom: 6;
         icon-name: "check-round-outline-whole-symbolic";
         name: "indicator";
       }
@@ -21,8 +21,8 @@ template $GraphsStylePreview : AspectFrame {
         orientation: vertical;
         halign: end;
         valign: start;
-        margin-end: 8;
-        margin-top: 8;
+        margin-end: 6;
+        margin-top: 6;
         spacing: 2;
         Button edit_button {
           visible: false;
@@ -46,7 +46,7 @@ template $GraphsStylePreview : AspectFrame {
       child: Picture picture {};
     }
     Label label {
-      margin-top: 12;
+      margin-top: 8;
     }
   };
 }
