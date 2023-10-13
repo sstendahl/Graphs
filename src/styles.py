@@ -640,6 +640,7 @@ class StyleColorBox(Gtk.Box):
                 if color is not None:
                     self.props.parent.line_colors[self.props.index] = \
                         utilities.rgba_to_hex(color)
+                    self._reload_color()
         dialog = Gtk.ColorDialog()
         dialog.set_with_alpha(False)
         dialog.choose_rgba(
