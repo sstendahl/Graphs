@@ -245,8 +245,8 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
 
         params = pyplot.rcParams
         ticks = "both" if params["xtick.minor.visible"] else "major"
-        for count, directions in enumerate(axes_directions):
-            axis = self.axes[count]
+        for directions, axis, used \
+                in zip(axes_directions, self.axes, used_axes):
             axis.get_xaxis().set_visible(False)
             axis.get_yaxis().set_visible(False)
             # Set tick where requested, as long as that axis is not occupied
@@ -260,7 +260,7 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
             axis_legend = axis.get_legend()
             if axis_legend is not None:
                 axis_legend.remove()
-            if used_axes[count]:
+            if used:
                 self._legend_axis = axis
         self.axis.get_xaxis().set_visible(visible_axes[0])
         self.top_left_axis.get_xaxis().set_visible(visible_axes[1])
@@ -689,8 +689,8 @@ class _Highlight(SpanSelector):
         self.extents = extents
 
         scale = scales.to_int(canvas.top_left_axis.get_xscale())
-        for i, prefix in enumerate(["min_", "max_"]):
+        for prefix, value in zip(["min_", "max_"], extents):
             canvas.set_property(
                 prefix + "selected",
-                utilities.get_fraction_at_value(extents[i], xmin, xmax, scale),
+                utilities.get_fraction_at_value(value, xmin, xmax, scale),
             )
