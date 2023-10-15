@@ -30,21 +30,14 @@ def sig_fig_round(number, digits):
 
 def rgba_to_hex(rgba):
     return "#{:02x}{:02x}{:02x}".format(
-        round(rgba.red * 255),
-        round(rgba.green * 255),
-        round(rgba.blue * 255))
+        round(rgba.red * 255), round(rgba.green * 255), round(rgba.blue * 255),
+    )
 
 
 def rgba_to_tuple(rgba, alpha=False):
     if alpha:
         return (rgba.red, rgba.green, rgba.blue, rgba.alpha)
     return (rgba.red, rgba.green, rgba.blue)
-
-
-def swap(str1):
-    str1 = str1.replace(",", "third")
-    str1 = str1.replace(".", ", ")
-    return str1.replace("third", ".")
 
 
 def get_value_at_fraction(fraction, start, end, scale):

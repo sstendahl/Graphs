@@ -369,8 +369,8 @@ class Data(GObject.Object, Graphs.DataInterface):
     def add_view_history_state(self):
         limits = self.get_figure_settings().get_limits()
         view_changed = any(
-            not numpy.isclose(value, limit)
-            for limit, value in zip(limits, self._view_history_states[-1])
+            not numpy.isclose(old, new)
+            for old, new in zip(self._view_history_states[-1], limits)
         )
         if view_changed:
             # If a couple of redo's were performed previously, it deletes the
