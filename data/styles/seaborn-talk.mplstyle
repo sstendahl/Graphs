@@ -15,10 +15,10 @@ font.size: 13
 axes.labelsize: 13
 xtick.labelsize: 13
 ytick.labelsize: 13
-axes.titlesize: 13
 legend.fontsize: 13
-figure.titlesize: 13
 figure.labelsize: 13
+figure.titlesize: 16
+axes.titlesize: 16
 
 # lines
 lines.linewidth: 2.275
