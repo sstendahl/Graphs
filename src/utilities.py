@@ -12,27 +12,6 @@ import numpy
 import sympy
 
 
-def get_font_weight(font_name):
-    """Get the weight of the font that is used using the full font name"""
-    valid_weights = ["normal", "bold", "heavy",
-                     "light", "ultrabold", "ultralight"]
-    if font_name[-2] != "italic":
-        new_weight = font_name[-2]
-    else:
-        new_weight = font_name[-3]
-    if new_weight not in valid_weights:
-        new_weight = "normal"
-    return new_weight
-
-
-def get_font_style(font_name):
-    """Get the style of the font that is used using the full font name"""
-    new_style = "normal"
-    if font_name[-2] == ("italic" or "oblique" or "normal"):
-        new_style = font_name[-2]
-    return new_style
-
-
 def hex_to_rgba(hex_str):
     rgba = Gdk.RGBA()
     rgba.parse(str(hex_str))
@@ -130,10 +109,8 @@ def get_fraction_at_value(value, start, end, scale):
         return (scaled_data_point - 1 / end) / scaled_range
 
 
-def shorten_label(label, max_length=19):
-    if len(label) > max_length:
-        label = f"{label[:max_length]}…"
-    return label
+def shorten_label(label, max_length=20):
+    return f"{label[:max_length - 1]}…" if len(label) > max_length else label
 
 
 def get_config_directory():

@@ -1,11 +1,12 @@
 using Gtk 4.0;
 using Adw 1;
 
-template $GraphsFigureSettingsWindow : Adw.PreferencesWindow {
+template $GraphsFigureSettingsWindow : Adw.Window {
   modal: true;
-  can-navigate-back: true;
-  title: _("Figure Settings");
   close-request => $on_close();
+  default-width: 640;
+  default-height: 576;
+  styles ["preferences"]
 
   ShortcutController {
     Shortcut {
@@ -14,168 +15,227 @@ template $GraphsFigureSettingsWindow : Adw.PreferencesWindow {
     }
   }
 
-  Adw.PreferencesPage {
-    Adw.PreferencesGroup {
-      title: _("Labels");
+  Adw.NavigationView navigation_view {
+    popped => $on_pop();
+    Adw.NavigationPage {
+      title: _("Figure Settings");
+      Adw.ToolbarView {
+        [top]
+        Adw.HeaderBar {}
+        content: ScrolledWindow {
+          hscrollbar-policy: never;
+          propagate-natural-height: true;
+          Adw.Clamp {
+            margin-bottom: 12;
+            margin-top: 12;
+            margin-start: 12;
+            margin-end: 12;
+            Box {
+              orientation: vertical;
+              spacing: 16;
+              Adw.PreferencesGroup {
+                title: _("Labels");
 
-      Adw.EntryRow title {
-        title: _("Title");
-      }
+                Adw.EntryRow title {
+                  title: _("Title");
+                }
 
-      Adw.EntryRow bottom_label {
-        title: _("Bottom Axis Label");
-      }
+                Adw.EntryRow bottom_label {
+                  title: _("Bottom Axis Label");
+                }
 
-      Adw.EntryRow left_label {
-        title: _("Left Axis Label");
-      }
+                Adw.EntryRow left_label {
+                  title: _("Left Axis Label");
+                }
 
-      Adw.EntryRow top_label {
-        title: _("Top Axis Label");
-      }
+                Adw.EntryRow top_label {
+                  title: _("Top Axis Label");
+                }
 
-      Adw.EntryRow right_label {
-        title: _("Right Axis Label");
+                Adw.EntryRow right_label {
+                  title: _("Right Axis Label");
+                }
+              }
+
+              Adw.PreferencesGroup {
+                title: _("Axis Limits");
+                Adw.ActionRow no_data_message {
+                  title: _("No Data");
+                  subtitle: _("Add data to the figure to set axis limits");
+                }
+                Box {
+                  orientation: vertical;
+                  spacing: 12;
+                  visible: bind no_data_message.visible inverted;
+                  Box left_limits {
+                    orientation: horizontal;
+                    spacing: 6;
+                    visible: false;
+                    Adw.PreferencesGroup {
+                      Adw.EntryRow min_left {
+                        title: _("Minimum Left-Hand Y-Axis");
+                      }
+                    }
+                    Adw.PreferencesGroup {
+                	    Adw.EntryRow max_left {
+                        title: _("Maximum Left-Hand Y-Axis");
+                      }
+                    }
+                  }
+                  Box bottom_limits {
+                    orientation: horizontal;
+                    spacing: 6;
+                    visible: false;
+                    Adw.PreferencesGroup {
+                      Adw.EntryRow min_bottom {
+                        title: _("Minimum Bottom X-Axis");
+                      }
+                    }
+                    Adw.PreferencesGroup {
+                      Adw.EntryRow max_bottom {
+                        title: _("Maximum Bottom X-Axis");
+                      }
+                    }
+                  }
+                  Box right_limits {
+                    orientation: horizontal;
+                    spacing: 6;
+                    visible: false;
+                    Adw.PreferencesGroup {
+                      Adw.EntryRow min_right {
+                        title: _("Minimum Right-Hand Y-Axis");
+                      }
+                    }
+                    Adw.PreferencesGroup {
+                      Adw.EntryRow max_right {
+                        title: _("Maximum Right-Hand Y-Axis");
+                      }
+                    }
+                  }
+                  Box top_limits {
+                    spacing: 6;
+                    orientation: horizontal;
+                    visible: false;
+                    Adw.PreferencesGroup {
+                      Adw.EntryRow min_top {
+                        title: _("Minimum Top X-Axis");
+                      }
+                    }
+                    Adw.PreferencesGroup {
+                      Adw.EntryRow max_top {
+                        title: _("Maximum Top Y-Axis");
+                      }
+                    }
+                  }
+                }
+              }
+
+              Adw.PreferencesGroup {
+                title: _("Scaling");
+
+                Adw.ComboRow bottom_scale {
+                  title: _("Bottom Axis Scale");
+                  model: StringList{
+                    strings [_("Linear"), _("Logarithmic"), _("Radians"), _("Square Root"), _("Inverse")]
+                  };
+                }
+
+                Adw.ComboRow left_scale {
+                  title: _("Left Axis Scale");
+                  model: StringList{
+                    strings [_("Linear"), _("Logarithmic"), _("Radians"), _("Square Root"), _("Inverse")]
+                  };
+                }
+
+                Adw.ComboRow top_scale {
+                  title: _("Top Axis Scale");
+                  model: StringList{
+                    strings [_("Linear"), _("Logarithmic"), _("Radians"), _("Square Root"), _("Inverse")]
+                  };
+                }
+
+                Adw.ComboRow right_scale {
+                  title: _("Right Axis Scale");
+                  model: StringList{
+                    strings [_("Linear"), _("Logarithmic"), _("Radians"), _("Square Root"), _("Inverse")]
+                  };
+                }
+              }
+
+              Adw.PreferencesGroup {
+                title: _("Appearance");
+                Adw.ExpanderRow legend {
+                  title: _("Legend");
+                  show-enable-switch: true;
+                  Adw.ComboRow legend_position {
+                    title: _("Legend Position");
+                    model: StringList{
+                      strings [
+                        _("Best"), _("Upper right"), _("Upper left"), _("Lower left"),
+                        _("Lower right"), _("Center left"), _("Center right"),
+                        _("Lower center"), _("Upper center"), _("Center"),
+                      ]
+                    };
+                  }
+                }
+
+                Adw.ActionRow style_row {
+                  title: _("Style");
+                  activatable-widget: styles;
+                  hexpand: true;
+
+                  Button styles {
+                    tooltip-text: _("Choose Style");
+                    valign: center;
+                    clicked => $choose_style();
+                    styles ["flat"]
+                    Image {
+                      icon-name: "right-symbolic";
+                    }
+                  }
+                }
+              }
+
+              Adw.PreferencesGroup {
+                Button {
+                  label: "Set as Default";
+                  styles ["pill"]
+                  clicked => $on_set_as_default();
+                }
+              }
+            }
+          }
+        };
       }
     }
-
-    Adw.PreferencesGroup {
-      title: _("Axis Limits");
-    	Adw.PreferencesGroup no_data_message {
-        Adw.ActionRow {
-          title: _("No Data");
-          subtitle: _("Add data to the figure to set axis limits");
-        }
-      }
-      Box {
-        orientation: vertical;
-        spacing: 12;
-        visible: bind no_data_message.visible inverted;
-        Box left_limits {
-          orientation: horizontal;
-          spacing: 6;
-          visible: false;
-          Adw.PreferencesGroup {
-            Adw.EntryRow min_left {
-              title: _("Minimum Left-Hand Y-Axis");
-            }
-          }
-          Adw.PreferencesGroup {
-      	    Adw.EntryRow max_left {
-              title: _("Maximum Left-Hand Y-Axis");
-            }
-          }
-        }
-        Box bottom_limits {
-          orientation: horizontal;
-          spacing: 6;
-          visible: false;
-          Adw.PreferencesGroup {
-            Adw.EntryRow min_bottom {
-              title: _("Minimum Bottom X-Axis");
-            }
-          }
-          Adw.PreferencesGroup {
-            Adw.EntryRow max_bottom {
-              title: _("Maximum Bottom X-Axis");
-            }
-          }
-        }
-        Box right_limits {
-          orientation: horizontal;
-          spacing: 6;
-          visible: false;
-          Adw.PreferencesGroup {
-            Adw.EntryRow min_right {
-              title: _("Minimum Right-Hand Y-Axis");
-            }
-          }
-          Adw.PreferencesGroup {
-            Adw.EntryRow max_right {
-              title: _("Maximum Right-Hand Y-Axis");
-            }
-          }
-        }
-        Box top_limits {
-          spacing: 6;
-          orientation: horizontal;
-          visible: false;
-          Adw.PreferencesGroup {
-            Adw.EntryRow min_top {
-              title: _("Minimum Top X-Axis");
-            }
-          }
-          Adw.PreferencesGroup {
-            Adw.EntryRow max_top {
-              title: _("Maximum Top Y-Axis");
-            }
-          }
-        }
-      }
-    }
-
-    Adw.PreferencesGroup {
-      title: _("Scaling");
-      Adw.ComboRow bottom_scale {
-        title: _("Bottom Axis Scale");
-        model: StringList{
-          strings [_("Linear"), _("Logarithmic"), _("Radians"), _("Square Root"), _("Inverse")]
-        };
-      }
-
-      Adw.ComboRow left_scale {
-        title: _("Left Axis Scale");
-        model: StringList{
-          strings [_("Linear"), _("Logarithmic"), _("Radians"), _("Square Root"), _("Inverse")]
-        };
-      }
-
-      Adw.ComboRow top_scale {
-        title: _("Top Axis Scale");
-        model: StringList{
-          strings [_("Linear"), _("Logarithmic"), _("Radians"), _("Square Root"), _("Inverse")]
-        };
-      }
-
-      Adw.ComboRow right_scale {
-        title: _("Right Axis Scale");
-        model: StringList{
-          strings [_("Linear"), _("Logarithmic"), _("Radians"), _("Square Root"), _("Inverse")]
-        };
-      }
-    }
-
-    Adw.PreferencesGroup {
+    Adw.NavigationPage style_overview {
       title: _("Style");
-      Adw.ExpanderRow legend {
-        title: _("Legend");
-        show-enable-switch: true;
-        Adw.ComboRow legend_position {
-          title: _("Legend Position");
-          model: StringList{
-            strings [
-              _("Best"), _("Upper right"), _("Upper left"), _("Lower left"),
-              _("Lower right"), _("Center left"), _("Center right"),
-              _("Lower center"), _("Upper center"), _("Center"),
-            ]
-          };
+      Adw.ToolbarView {
+        [top]
+        Adw.HeaderBar {
+          [end]
+          Button {
+            icon-name: "list-add-symbolic";
+            tooltip-text: _("Add new style");
+            clicked => $add_style();
+          }
         }
-      }
-
-      Adw.ExpanderRow use_custom_style {
-        title: _("Use Custom Style");
-        show-enable-switch: true;
-        Adw.ComboRow custom_style {
-          title: _("Style");
-        }
-      }
-    }
-
-    Adw.PreferencesGroup {
-      Button {
-        label: "Set as Default";
-        styles ["suggested-action"]
-        clicked => $on_set_as_default();
+        content: ScrolledWindow {
+          hscrollbar-policy: never;
+          Adw.Clamp {
+            margin-bottom: 6;
+            margin-top: 6;
+            margin-start: 6;
+            margin-end: 6;
+            GridView grid_view {
+              name: "style-grid";
+              max-columns: 3;
+              model: SingleSelection {
+                selection-changed => $on_select();
+              };
+            }
+          }
+        };
       }
     }
   }

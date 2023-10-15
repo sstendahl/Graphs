@@ -1,15 +1,16 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
-# seaborn
+# Seaborn
 
 # font
 font.family: sans-serif
 font.sans-serif: DejaVu Sans
 font.style: normal
-font.weight: normal
-axes.titleweight: normal
-axes.labelweight: normal
-figure.titleweight: normal
-figure.labelweight: normal
+font.weight: 400
+axes.titleweight: 400
+axes.labelweight: 400
+figure.titleweight: 400
+figure.labelweight: 400
+font.variant: normal
 font.size: 12
 axes.labelsize: 12
 xtick.labelsize: 12

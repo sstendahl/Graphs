@@ -2,7 +2,7 @@
     "name": "python-dependencies",
     "buildsystem": "simple",
     "build-commands": [
-        "pip3 install --verbose --exists-action=i --no-index --find-links=\"file://${PWD}\" --prefix=${FLATPAK_DEST} \"numpy\" \"scipy\" \"matplotlib\" \"numexpr\" \"sympy\" \"svgutils\""
+        "pip3 install --verbose --exists-action=i --no-index --find-links=\"file://${PWD}\" --prefix=${FLATPAK_DEST} \"numpy\" \"scipy\" \"matplotlib\" \"numexpr\" \"sympy\""
     ],
     "build-options": {
         "env": {
@@ -133,11 +133,6 @@
             "type": "file",
             "url": "https://files.pythonhosted.org/packages/d2/05/e6600db80270777c4a64238a98d442f0fd07cc8915be2a1c16da7f2b9e74/sympy-1.12-py3-none-any.whl",
             "sha256": "c3588cd4295d0c0f603d0f2ae780587e64e2efeedb3521e46b9bb1d08d184fa5"
-        },
-        {
-            "type": "file",
-            "url": "https://files.pythonhosted.org/packages/44/79/0367ebd8a2edfdc46332b90bce1fd183e25078ed1b0d446c6bf42ea7ba7a/svgutils-0.3.4-py3-none-any.whl",
-            "sha256": "4d08524a08126553c1a9bf2639616cf31290adea6fd235a3eb67d77c748abc00"
         }
     ],
     "cleanup": [

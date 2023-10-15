@@ -2,7 +2,6 @@
 import json
 import logging
 from gettext import gettext as _
-from pathlib import Path
 from xml.dom import minidom
 
 from gi.repository import GLib
@@ -38,11 +37,14 @@ def parse_style(file):
     filename = utilities.get_filename(file)
     try:
         for line_number, line in enumerate(read_file(file).splitlines(), 1):
-            stripped_line = cbook._strip_comment(line)
-            if not stripped_line:
+            line = line.strip()
+            if line_number == 2:
+                style.name = line[2:]
+            line = cbook._strip_comment(line)
+            if not line:
                 continue
             try:
-                key, value = stripped_line.split(":", 1)
+                key, value = line.split(":", 1)
             except ValueError:
                 logging.warning(
                     _("Missing colon in file {}, line {}").format(
@@ -67,7 +69,6 @@ def parse_style(file):
                         message.format(filename, line_number))
     except UnicodeDecodeError:
         logging.exception(_("Could not parse {}").format(filename))
-    style.name = Path(filename).stem
     return style
 
 
@@ -80,6 +81,7 @@ WRITE_IGNORELIST = [
 
 def write_style(file, style):
     stream = get_write_stream(file)
+    _write_string(stream, "# Generated via Graphs\n")
     _write_string(stream, f"# {style.name}\n")
     _write_string(
         stream,
@@ -113,7 +115,7 @@ def parse_xml(file):
 
 def get_write_stream(file):
     if file.query_exists(None):
-        return file.replace(None, False, 0, None)
+        file.delete(None)
     return file.create(0, None)
 
 

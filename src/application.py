@@ -20,8 +20,8 @@ _ACTIONS = [
     "quit", "about", "preferences", "figure_settings", "add_data",
     "add_equation", "select_all", "select_none", "undo", "redo",
     "optimize_limits", "view_back", "view_forward", "export_data",
-    "export_figure", "styles", "save_project", "open_project",
-    "delete_selected", "zoom_in", "zoom_out",
+    "export_figure", "save_project", "open_project", "delete_selected",
+    "zoom_in", "zoom_out",
 ]
 
 
