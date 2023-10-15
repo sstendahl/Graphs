@@ -94,7 +94,8 @@ class CurveFittingWindow(Graphs.CurveFittingTool):
             except ValueError:
                 return False
 
-        for index, row in enumerate(self.get_fitting_params()):
+        for row, params \
+                in zip(self.get_fitting_params(), self.fitting_parameters):
             param_entries = entry
 
             # Get the FittingParameterEntry class corresponding to the entry
@@ -115,9 +116,9 @@ class CurveFittingWindow(Graphs.CurveFittingTool):
                     lower_bound if is_float(lower_bound) else "inf")
                 new_upper_bound = (
                     upper_bound if is_float(upper_bound) else "-inf")
-                self.fitting_parameters[index].set_initial(new_initial)
-                self.fitting_parameters[index].set_lower_bound(new_lower_bound)
-                self.fitting_parameters[index].set_upper_bound(new_upper_bound)
+                params.set_initial(new_initial)
+                params.set_lower_bound(new_lower_bound)
+                params.set_upper_bound(new_upper_bound)
         self.fit_curve()
 
     def set_results(self):
