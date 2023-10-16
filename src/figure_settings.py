@@ -57,6 +57,7 @@ class FigureSettingsWindow(Adw.Window):
     style_overview = Gtk.Template.Child()
     navigation_view = Gtk.Template.Child()
     grid_view = Gtk.Template.Child()
+    toast_overlay = Gtk.Template.Child()
 
     figure_settings = GObject.Property(type=Graphs.FigureSettings)
 
@@ -180,4 +181,4 @@ class FigureSettingsWindow(Adw.Window):
                     settings.set_boolean(prop, value)
                 elif isinstance(value, int):
                     settings.set_enum(prop, value)
-        self.add_toast(Adw.Toast(title=_("Defaults Updated")))
+        self.toast_overlay.add_toast(Adw.Toast(title=_("Defaults Updated")))
