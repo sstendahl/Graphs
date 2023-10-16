@@ -6,6 +6,7 @@ Classes:
     Data
 """
 import copy
+import math
 
 from gi.repository import GObject, Graphs
 
@@ -368,7 +369,10 @@ class Data(GObject.Object, Graphs.DataInterface):
 
     def add_view_history_state(self):
         limits = self.get_figure_settings().get_limits()
-        if numpy.allclose(self._view_history_states[-1], limits):
+        if all(
+            math.isclose(old, new) for old, new
+            in zip(self._view_history_states[-1], limits)
+        ):
             return
         # If a couple of redo's were performed previously, it deletes the
         # clipboard data that is located after the current clipboard
