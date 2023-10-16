@@ -6,7 +6,7 @@ from pathlib import Path
 
 from gi.repository import GLib, Gio
 
-from graphs import file_io, misc, utilities
+from graphs import file_io, misc, style_io, utilities
 
 
 CONFIG_MIGRATION_TABLE = {
@@ -101,22 +101,18 @@ def _migrate_styles(old_styles_dir, new_config_dir):
     if not new_styles_dir.query_exists(None):
         new_styles_dir.make_directory_with_parents()
     enumerator = old_styles_dir.enumerate_children("default::*", 0, None)
-    while True:
-        file_info = enumerator.next_file(None)
-        if file_info is None:
-            break
-        file = enumerator.get_child(file_info)
+    for file in map(enumerator.get_child, enumerator):
         stylename = Path(utilities.get_filename(file)).stem
         if stylename not in SYSTEM_STYLES:
-            params = file_io.parse_style(file)
+            params = style_io.parse_style(file)
             adwaita = Gio.File.new_for_uri(
                 "resource:///se/sjoerd/Graphs/styles/adwaita.mplstyle",
             )
-            for key, value in file_io.parse_style(adwaita).items():
+            for key, value in style_io.parse_style(adwaita).items():
                 if key not in params:
                     params[key] = value
             params.name = stylename
-            file_io.write_style(new_styles_dir.get_child_for_display_name(
+            style_io.write_style(new_styles_dir.get_child_for_display_name(
                 f"{stylename.lower().replace(' ', '-')}.mplstyle",
             ), params)
         file.delete(None)

@@ -92,8 +92,7 @@ class FigureSettingsWindow(Adw.Window):
         )
         if self.props.figure_settings.get_use_custom_style():
             stylename = self.props.figure_settings.get_custom_style()
-            for index in range(selection_model.get_n_items()):
-                style = selection_model.get_item(index)
+            for index, style in enumerate(selection_model):
                 if index > 0 and style.name == stylename:
                     selection_model.set_selected(index)
                     break
