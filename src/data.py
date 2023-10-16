@@ -6,6 +6,7 @@ Classes:
     Data
 """
 import copy
+import math
 
 from gi.repository import GObject, Graphs
 
@@ -368,21 +369,21 @@ class Data(GObject.Object, Graphs.DataInterface):
 
     def add_view_history_state(self):
         limits = self.get_figure_settings().get_limits()
-        view_changed = any(
-            not numpy.isclose(value, limit)
-            for limit, value in zip(limits, self._view_history_states[-1])
-        )
-        if view_changed:
-            # If a couple of redo's were performed previously, it deletes the
-            # clipboard data that is located after the current clipboard
-            # position and disables the redo button
-            if self._view_history_pos != -1:
-                self._view_history_states = \
-                    self._view_history_states[:self._view_history_pos + 1]
-            self._view_history_pos = -1
-            self._view_history_states.append(limits)
-            self.props.can_view_back = True
-            self.props.can_view_forward = False
+        if all(
+            math.isclose(old, new) for old, new
+            in zip(self._view_history_states[-1], limits)
+        ):
+            return
+        # If a couple of redo's were performed previously, it deletes the
+        # clipboard data that is located after the current clipboard
+        # position and disables the redo button
+        if self._view_history_pos != -1:
+            self._view_history_states = \
+                self._view_history_states[:self._view_history_pos + 1]
+        self._view_history_pos = -1
+        self._view_history_states.append(limits)
+        self.props.can_view_back = True
+        self.props.can_view_forward = False
 
     def view_back(self):
         if not self.props.can_view_back:

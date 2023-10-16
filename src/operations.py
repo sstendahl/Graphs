@@ -59,10 +59,9 @@ def get_data(self, item):
 
 
 def sort_data(xdata, ydata):
-    sorted_lists = sorted(
-        zip(xdata, ydata), key=lambda x_values: x_values[0])
-    sorted_x, sorted_y = zip(*sorted_lists)
-    return list(sorted_x), list(sorted_y)
+    return map(list, zip(*sorted(
+        zip(xdata, ydata), key=lambda x_values: x_values[0],
+    )))
 
 
 def perform_operation(self, callback, *args):

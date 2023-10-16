@@ -56,14 +56,15 @@ class CurveFittingWindow(Graphs.CurveFittingTool):
         canvas.props.items = [self.fitted_curve, self.data_curve]
 
         # Set up canvas
-        self.fill = \
-            canvas.axis.fill_between(self.fitted_curve.xdata,
-                                     [0],
-                                     [1],
-                                     color=canvas.rubberband_fill_color,
-                                     alpha=0.15)
-        canvas.axis.yscale = "linear"
-        canvas.axis.xscale = "linear"
+        axis = canvas.axes[0]
+        self.fill = axis.fill_between(
+            self.fitted_curve.xdata,
+            [0], [1],
+            color=canvas.rubberband_fill_color,
+            alpha=0.15,
+        )
+        axis.yscale = "linear"
+        axis.xscale = "linear"
         canvas.highlight_enabled = False
         self.canvas = canvas
         self.fit_curve()
@@ -184,7 +185,7 @@ class CurveFittingWindow(Graphs.CurveFittingTool):
 
     def get_confidence(self, function):
         # Get standard deviation
-        self.canvas.axis.relim()  # Reset limits
+        self.canvas.axes[0].relim()  # Reset limits
         self.sigma = numpy.sqrt(numpy.diagonal(self.param_cov))
         try:
             fitted_y = \
@@ -221,9 +222,9 @@ class CurveFittingWindow(Graphs.CurveFittingTool):
         if min(lower_bound) < middle - 1e5 * span:
             lower_bound = [middle - 1e5 * span]
 
-        dummy = self.canvas.axis.fill_between(self.fitted_curve.xdata,
-                                              lower_bound,
-                                              upper_bound)
+        dummy = self.canvas.axes[0].fill_between(
+            self.fitted_curve.xdata, lower_bound, upper_bound,
+        )
         dp = dummy.get_paths()[0]
         dummy.remove()
         self.fill.set_paths([dp.vertices])

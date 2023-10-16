@@ -272,22 +272,16 @@ def _get_limits(items):
         if item["item_type"] != "Item":
             continue
         for count, x_or_y in enumerate(["x", "y"]):
+            index = item[f"{x_or_y}position"] * 2 + 4 * count
+            data = item[f"{x_or_y}data"]
             try:
-                limits[item[f"{x_or_y}position"] * 2 + 4 * count] = min(
-                    limits[item[f"{x_or_y}position"] * 2 + 4 * count],
-                    min(item[f"{x_or_y}data"]),
-                )
+                limits[index] = min(limits[index], min(data))
             except TypeError:
-                limits[item[f"{x_or_y}position"] * 2 + 4 * count] = \
-                    min(item[f"{x_or_y}data"])
+                limits[index] = min(data)
             try:
-                limits[item[f"{x_or_y}position"] * 2 + 4 * count + 1] = max(
-                    limits[item[f"{x_or_y}position"] * 2 + 4 * count + 1],
-                    max(item[f"{x_or_y}data"]),
-                )
+                limits[index + 1] = max(limits[index + 1], max(data))
             except TypeError:
-                limits[item[f"{x_or_y}position"] * 2 + 4 * count + 1] = \
-                    max(item[f"{x_or_y}data"])
+                limits[index + 1] = max(data)
     for count in range(8):
         if limits[count] is None:
             limits[count] = DEFAULT_VIEW.copy()[count]

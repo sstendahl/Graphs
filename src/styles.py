@@ -45,14 +45,15 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
     use_custom_style = GObject.Property(type=bool, default=False)
     custom_style = GObject.Property(type=str, default="adwaita")
     gtk_theme = GObject.Property(type=str, default="")
+    style_model = GObject.Property(type=Gio.ListStore)
 
     def __init__(self, application: Graphs.Application):
         gtk_theme = Gtk.Settings.get_default().get_property("gtk-theme-name")
         super().__init__(
             application=application, gtk_theme=gtk_theme.lower(),
+            style_model=Gio.ListStore.new(Style),
         )
         self._stylenames = []
-        self._style_model = Gio.ListStore.new(Style)
         self._cache_dir = utilities.get_cache_directory()
         if not self._cache_dir.query_exists(None):
             self._cache_dir.make_directory_with_parents(None)
@@ -73,12 +74,12 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
             # TODO: bundle in distribution
             preview = self._generate_preview(style)
             self._stylenames.append(style.name)
-            self._style_model.insert_sorted(
+            self.props.style_model.insert_sorted(
                 Style.new(style.name, file, preview, False), _compare_styles,
             )
         enumerator.close(None)
         self._system_style = Style.new(_("System"), None, None, False)
-        self._style_model.insert(0, self._system_style)
+        self.props.style_model.insert(0, self._system_style)
 
         config_dir = utilities.get_config_directory()
         self._style_dir = config_dir.get_child_for_display_name("styles")
@@ -128,12 +129,12 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
             file_io.write_style(style_params, file)
         preview = self._generate_preview(style_params)
         self._stylenames.append(style_params.name)
-        self._style_model.insert_sorted(
+        self.props.style_model.insert_sorted(
             Style.new(style_params.name, file, preview, True), _compare_styles,
         )
 
     def get_style_model(self):
-        return self._style_model
+        return self.props.style_model
 
     def get_stylenames(self) -> list:
         return self._stylenames
@@ -146,12 +147,13 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
             return
         possible_visual_impact = False
         stylename = None
+        style_model = self.get_style_model()
         if event_type == 2:
-            for index in range(self._style_model.get_n_items()):
-                style = self._style_model.get_item(index)
+            for index in range(style_model.get_n_items()):
+                style = style_model.get_item(index)
                 if style.file is not None and file.equal(style.file):
                     self._stylenames.remove(style.name)
-                    self._style_model.remove(index)
+                    style_model.remove(index)
                     stylename = style.name
                     break
             if stylename is None:
@@ -161,8 +163,8 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
             style = _get_style(file)
             stylename = style.name
         if event_type == 1:
-            for index in range(self._style_model.get_n_items()):
-                obj = self._style_model.get_item(index)
+            for index in range(style_model.get_n_items()):
+                obj = style_model.get_item(index)
                 if obj.name == stylename:
                     obj.preview = self._generate_preview(style)
                     break
@@ -188,8 +190,8 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
         window = self.props.application.get_window()
         if self.props.use_custom_style:
             stylename = self.props.custom_style
-            for index in range(self._style_model.get_n_items()):
-                style = self._style_model.get_item(index)
+            for index in range(self.props.style_model.get_n_items()):
+                style = self.props.style_model.get_item(index)
                 if stylename == style.name:
                     if style.mutable:
                         try:
@@ -268,8 +270,8 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
         destination = self._style_dir.get_child_for_display_name(
             _generate_filename(new_name),
         )
-        for index in range(self._style_model.get_n_items()):
-            style = self._style_model.get_item(index)
+        for index in range(self.props.style_model.get_n_items()):
+            style = self.props.style_model.get_item(index)
             if template == style.name:
                 source = _get_style(style.file) \
                     if style.mutable else file_io.parse_style(style.file)

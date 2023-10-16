@@ -13,8 +13,7 @@ def import_from_project(_self, file):
         project = file_io.parse_json(file)
     except UnicodeDecodeError:
         project = migrate.migrate_project(file)
-    return [item.new_from_dict(dictionary)
-            for dictionary in project["data"]]
+    return list(map(item.new_from_dict, project["data"]))
 
 
 def import_from_xrdml(self, file):
@@ -85,6 +84,12 @@ def import_from_xry(self, file):
     return items
 
 
+def _swap(string):
+    string = string.replace(",", "third")
+    string = string.replace(".", ", ")
+    return string.replace("third", ".")
+
+
 def import_from_columns(self, file):
     item_ = item.DataItem.new(name=utilities.get_filename(file))
     columns_params = self.get_settings().get_child(
@@ -98,7 +103,7 @@ def import_from_columns(self, file):
     for index, line in enumerate(lines):
         values = re.split(delimiter, line.strip())
         if separator == ",":
-            values = [utilities.swap(value) for value in values]
+            values = list(map(_swap, values))
         try:
             if len(values) == 1:
                 float_value = utilities.string_to_float(values[0])
