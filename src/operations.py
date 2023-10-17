@@ -189,12 +189,14 @@ def shift(item, xdata, ydata, left_scale, right_scale, items, ranges):
         index = 1 if index == 0 else index
 
         previous_item = data_list[index - 1]
-        numpy_xdata = numpy.asarray(previous_item.xdata)
+
+        # Only use selected span when obtaining values to determine shift value
+        full_xdata = numpy.asarray(data_list[index].xdata)
         start = 0
-        stop = len(previous_item.ydata)
+        stop = len(data_list[index].ydata)
         with contextlib.suppress(IndexError):
-            start = numpy.where(numpy_xdata >= xdata[0])[0][0]
-            stop = numpy.where(numpy_xdata >= xdata[-1])[0][0]
+            start = numpy.where(full_xdata >= xdata[0])[0][0]
+            stop = numpy.where(full_xdata >= xdata[-1])[0][0]
 
         ymin = min(x for x in previous_item.ydata[start:stop] if x != 0)
         ymax = max(x for x in previous_item.ydata[start:stop] if x != 0)

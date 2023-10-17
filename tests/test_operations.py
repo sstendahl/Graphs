@@ -65,12 +65,10 @@ def test_center():
     assert all(x_new == (x_old - middle_value) for x_old, x_new in zip(XDATA,
                                                                        xdata))
 
-@pytest.mark.parametrize(
-    'yscale', (0, 1, 2, 3)
-)
+
+@pytest.mark.parametrize("yscale", (0, 1, 2, 3))
 def test_shift(yscale):
     """Test if shift_vertically function correctly shifts ydata."""
-
     ydata1 = [1.0, 1.8, 1.9, 1.1, 0.2, 0.1, 0.7, 1.7, 2.0, 1.4, 0.5]
     ydata2 = [2.0, 1.5, 0.6, 0.1, 0.3, 1.3, 2.0, 1.8, 0.9, 0.1, 0.2]
     xdata = np.linspace(0, 10, len(ydata1))
@@ -87,9 +85,19 @@ def test_shift(yscale):
                          right_scale=yscale, items=items, ranges=[2.2, 2.2])
     np.testing.assert_array_equal(new_xdata1, xdata)
     np.testing.assert_array_equal(new_xdata2, xdata)
+
+    diff_y1 = [y_new - y_old for y_new, y_old in zip(new_ydata1, ydata1)]
+    diff_y2 = [y_new - y_old for y_new, y_old in zip(new_ydata2, ydata2)]
+
+    # Check that data is not removed
     assert len(new_ydata1) == len(ydata1)
     assert len(new_ydata2) == len(ydata2)
-    assert all(new_y2 > new_y1 for new_y2, new_y1 in zip(new_ydata2, new_ydata1))
+    # Check that distance increases with each shift
+    assert all(
+        diff_y2 > diff_y1 for new_y2, new_y1 in zip(new_ydata2, new_ydata1))
+    # Check that shift is large enough for chosen coordinates
+    assert all(
+        new_y2 > new_y1 for new_y2, new_y1 in zip(new_ydata2, new_ydata1))
 
 
 def test_derivative():
