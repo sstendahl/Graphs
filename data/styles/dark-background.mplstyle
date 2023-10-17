@@ -103,8 +103,6 @@ legend.frameon: True
 
 # custom
 patch.edgecolor: white
-savefig.facecolor: black
-savefig.edgecolor: black
 boxplot.boxprops.color: white
 boxplot.capprops.color: white
 boxplot.flierprops.color: white

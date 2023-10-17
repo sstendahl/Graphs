@@ -99,7 +99,7 @@ def export_data_dialog(self):
     if multiple:
         dialog.select_folder(self.get_window(), None, on_response)
     else:
-        filename = f"{self.get_data()[0].name}.txt"
+        filename = f"{self.get_data()[0].get_name()}.txt"
         dialog.set_initial_name(filename)
         dialog.set_filters(
             utilities.create_file_filters([(_("Text Files"), ["txt"])]))

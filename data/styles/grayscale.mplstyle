@@ -104,5 +104,3 @@ legend.frameon: True
 # custom
 patch.edgecolor: black
 image.cmap: gray
-savefig.facecolor: white
-savefig.edgecolor: white

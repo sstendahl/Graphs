@@ -246,15 +246,6 @@ path.simplify_threshold: 0.1111111111111111
 path.snap: True
 path.sketch: None
 
-savefig.dpi: 100
-savefig.facecolor: w
-savefig.edgecolor: w
-savefig.format: png
-savefig.bbox: standard
-savefig.pad_inches: 0.1
-savefig.transparent: False
-savefig.orientation: portrait
-
 ps.papersize: letter
 ps.useafm: False
 ps.usedistiller: False

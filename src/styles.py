@@ -12,7 +12,7 @@ from cycler import cycler
 from gi.repository import Adw, GLib, GObject, Gdk, Gio, Graphs, Gtk, Pango
 
 import graphs
-from graphs import file_io, ui, utilities
+from graphs import file_io, style_io, ui, utilities
 
 from matplotlib import pyplot, rc_context
 from matplotlib.figure import Figure
@@ -58,19 +58,13 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
         if not self._cache_dir.query_exists(None):
             self._cache_dir.make_directory_with_parents(None)
         enumerator = self._cache_dir.enumerate_children("default::*", 0, None)
-        while True:
-            file_info = enumerator.next_file(None)
-            if file_info is None:
-                break
+        for file_info in enumerator:
             enumerator.get_child(file_info).delete(None)
+        enumerator.close(None)
         directory = Gio.File.new_for_uri("resource:///se/sjoerd/Graphs/styles")
         enumerator = directory.enumerate_children("default::*", 0, None)
-        while True:
-            file_info = enumerator.next_file(None)
-            if file_info is None:
-                break
-            file = enumerator.get_child(file_info)
-            style = file_io.parse_style(file)
+        for file in map(enumerator.get_child, enumerator):
+            style = style_io.parse_style(file)
             # TODO: bundle in distribution
             preview = self._generate_preview(style)
             self._stylenames.append(style.name)
@@ -86,11 +80,7 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
         if not self._style_dir.query_exists(None):
             self._style_dir.make_directory_with_parents(None)
         enumerator = self._style_dir.enumerate_children("default::*", 0, None)
-        while True:
-            file_info = enumerator.next_file(None)
-            if file_info is None:
-                break
-            file = enumerator.get_child(file_info)
+        for file in map(enumerator.get_child, enumerator):
             if file.query_file_type(0, None) != 1:
                 continue
             if Path(utilities.get_filename(file)).suffix != ".mplstyle":
@@ -126,7 +116,7 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
             file = self._style_dir.get_child_for_display_name(
                 _generate_filename(style_params.name),
             )
-            file_io.write_style(style_params, file)
+            style_io.write_style(style_params, file)
         preview = self._generate_preview(style_params)
         self._stylenames.append(style_params.name)
         self.props.style_model.insert_sorted(
@@ -149,8 +139,7 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
         stylename = None
         style_model = self.get_style_model()
         if event_type == 2:
-            for index in range(style_model.get_n_items()):
-                style = style_model.get_item(index)
+            for index, style in enumerate(style_model):
                 if style.file is not None and file.equal(style.file):
                     self._stylenames.remove(style.name)
                     style_model.remove(index)
@@ -163,8 +152,7 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
             style = _get_style(file)
             stylename = style.name
         if event_type == 1:
-            for index in range(style_model.get_n_items()):
-                obj = style_model.get_item(index)
+            for obj in style_model:
                 if obj.name == stylename:
                     obj.preview = self._generate_preview(style)
                     break
@@ -190,8 +178,7 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
         window = self.props.application.get_window()
         if self.props.use_custom_style:
             stylename = self.props.custom_style
-            for index in range(self.props.style_model.get_n_items()):
-                style = self.props.style_model.get_item(index)
+            for style in self.props.style_model:
                 if stylename == style.name:
                     if style.mutable:
                         try:
@@ -205,7 +192,7 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
                                     stylename=stylename),
                             )
                     else:
-                        style_params = file_io.parse_style(style.file)
+                        style_params = style_io.parse_style(style.file)
                     break
             if style_params is None:
                 window.add_toast_string(
@@ -215,7 +202,7 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
                 self.props.use_custom_style = False
         if style_params is None:
             filename = _generate_filename(system_style)
-            style_params = file_io.parse_style(Gio.File.new_for_uri(
+            style_params = style_io.parse_style(Gio.File.new_for_uri(
                 "resource:///se/sjoerd/Graphs/styles/" + filename,
             ))
         pyplot.rcParams.update(style_params)
@@ -270,14 +257,13 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
         destination = self._style_dir.get_child_for_display_name(
             _generate_filename(new_name),
         )
-        for index in range(self.props.style_model.get_n_items()):
-            style = self.props.style_model.get_item(index)
+        for style in self.props.style_model:
             if template == style.name:
                 source = _get_style(style.file) \
-                    if style.mutable else file_io.parse_style(style.file)
+                    if style.mutable else style_io.parse_style(style.file)
                 break
         source.name = new_name
-        file_io.write_style(destination, source)
+        style_io.write_style(destination, source)
 
 
 def _get_style(file: Gio.File):
@@ -287,11 +273,11 @@ def _get_style(file: Gio.File):
     Returns a dictionary that has always valid keys. This is ensured through
     checking against adwaita and copying missing params as needed.
     """
-    style = file_io.parse_style(file)
+    style = style_io.parse_style(file)
     adwaita = Gio.File.new_for_uri(
         "resource:///se/sjoerd/Graphs/styles/adwaita.mplstyle",
     )
-    for key, value in file_io.parse_style(adwaita).items():
+    for key, value in style_io.parse_style(adwaita).items():
         if key not in style:
             style[key] = value
     return style
@@ -585,7 +571,7 @@ class StyleEditor(Adw.NavigationPage):
                 new_name, style_manager.get_stylenames(),
             )
         self.style_params.name = new_name
-        file_io.write_style(self.style.file, self.style_params)
+        style_io.write_style(self.style.file, self.style_params)
         self.style = None
 
     def reload_line_colors(self):

@@ -29,6 +29,7 @@ python.install_sources(
     'operations.py',
     'parse_file.py',
     'scales.py',
+    'style_io.py',
     'styles.py',
     'transform_data.py',
     'ui.py',
