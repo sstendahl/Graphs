@@ -1,0 +1,39 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $GraphsStylePreview : AspectFrame {
+  child: Box {
+    orientation: vertical;
+    Overlay {
+      height-request: 96;
+      width-request: 160;
+      [overlay]
+      Image {
+        halign: end;
+        valign: end;
+        margin-end: 6;
+        margin-bottom: 6;
+        icon-name: "check-round-outline-whole-symbolic";
+        name: "indicator";
+      }
+      [overlay]
+      Button edit_button {
+        halign: end;
+        valign: start;
+        margin-end: 6;
+        margin-top: 6;
+        visible: false;
+        tooltip-text: _("Edit");
+        styles ["flat"]
+        Image {
+          hexpand: false;
+          icon-name: "document-edit-symbolic";
+        }
+      }
+      child: Picture picture {};
+    }
+    Label label {
+      margin-top: 8;
+    }
+  };
+}

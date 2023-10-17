@@ -1,15 +1,16 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
-# fivethirtyeight
+# FiveThirtyEight
 
 # font
 font.family: sans-serif
 font.sans-serif: DejaVu Sans
 font.style: normal
-font.weight: normal
-axes.titleweight: normal
-axes.labelweight: normal
-figure.titleweight: normal
-figure.labelweight: normal
+font.weight: 400
+axes.titleweight: 400
+axes.labelweight: 400
+figure.titleweight: 400
+figure.labelweight: 400
+font.variant: normal
 font.size: 14
 axes.labelsize: 14
 xtick.labelsize: 14
@@ -101,12 +102,9 @@ legend.fancybox: True
 legend.frameon: True
 
 # custom
-axes.labelsize: large
 patch.edgecolor: f0f0f0
 patch.linewidth: 0.5
 svg.fonttype: path
-savefig.edgecolor: f0f0f0
-savefig.facecolor: f0f0f0
 figure.subplot.left: 0.08
 figure.subplot.right: 0.95
 figure.subplot.bottom: 0.07

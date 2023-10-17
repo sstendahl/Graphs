@@ -17,12 +17,6 @@ namespace Graphs {
         public unowned Adw.SwitchRow hide_unselected { get; }
 
         [GtkChild]
-        public unowned Adw.ComboRow x_position { get; }
-
-        [GtkChild]
-        public unowned Adw.ComboRow y_position { get; }
-
-        [GtkChild]
         public unowned Adw.SwitchRow override_item_properties { get; }
 
         public PreferencesWindow (Application application) {

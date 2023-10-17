@@ -6,30 +6,8 @@ from gettext import gettext as _
 
 from gi.repository import Adw, GLib, Gio, Gtk
 
-from graphs import file_import, file_io, migrate, styles, utilities
-from graphs.canvas import Canvas
+from graphs import file_import, file_io, migrate, utilities
 from graphs.item_box import ItemBox
-
-from matplotlib import pyplot
-
-
-def on_figure_style_change(_a, _b, self):
-    if not self.get_settings(
-            "general").get_boolean("override-item-properties"):
-        reload_canvas(self)
-        return
-    styles.update(self)
-    color_cycle = pyplot.rcParams["axes.prop_cycle"].by_key()["color"]
-    for item in self.get_data():
-        item.reset()
-    count = 0
-    for item in self.get_data():
-        if item.__gtype_name__ == "GraphsDataItem":
-            if count > len(color_cycle):
-                count = 0
-            item.props.color = color_cycle[count]
-            count += 1
-    reload_canvas(self)
 
 
 def on_items_change(data, _ignored, self):
@@ -121,7 +99,7 @@ def export_data_dialog(self):
     if multiple:
         dialog.select_folder(self.get_window(), None, on_response)
     else:
-        filename = f"{self.get_data()[0].name}.txt"
+        filename = f"{self.get_data()[0].get_name()}.txt"
         dialog.set_initial_name(filename)
         dialog.set_filters(
             utilities.create_file_filters([(_("Text Files"), ["txt"])]))
@@ -272,20 +250,3 @@ def bind_values_to_object(source, window, ignorelist=None):
         except AttributeError:
             logging.warn(_("No way to apply “{}”").format(key))
     return bindings
-
-
-def reload_canvas(self):
-    """Reloads the canvas of the main window"""
-    styles.update(self)
-    canvas = Canvas(self)
-    data = self.get_data()
-    figure_settings = data.get_figure_settings()
-    for prop in dir(figure_settings.props):
-        if prop not in ["use_custom_style", "custom_style"]:
-            figure_settings.bind_property(prop, canvas, prop, 1 | 2)
-    data.bind_property("items", canvas, "items", 2)
-    win = self.get_window()
-    win.set_canvas(canvas)
-    win.get_cut_button().bind_property(
-        "sensitive", canvas, "highlight_enabled", 2,
-    )

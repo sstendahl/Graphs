@@ -24,6 +24,9 @@ from matplotlib.widgets import SpanSelector
 import numpy
 
 
+_SCROLL_SCALE = 1.06
+
+
 class Canvas(FigureCanvas, Graphs.CanvasInterface):
     """
     Custom Canvas.
@@ -88,15 +91,15 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
         super().__init__()
         self.figure.set_tight_layout(True)
         self.mpl_connect("pick_event", self._on_pick)
-        self.axis = self.figure.add_subplot(111)
-        self.top_left_axis = self.axis.twiny()
-        self.right_axis = self.axis.twinx()
-        self.top_right_axis = self.top_left_axis.twinx()
+        self._axis = self.figure.add_subplot(111)
+        self._top_left_axis = self._axis.twiny()
+        self._right_axis = self._axis.twinx()
+        self._top_right_axis = self._top_left_axis.twinx()
         self.axes = [
-            self.axis, self.top_left_axis,
-            self.right_axis, self.top_right_axis,
+            self._axis, self._top_left_axis,
+            self._right_axis, self._top_right_axis,
         ]
-        self._legend_axis = self.axis
+        self._legend_axis = self._axis
         color_rgba = self.get_style_context().lookup_color("accent_color")[1]
         self.rubberband_edge_color = utilities.rgba_to_tuple(color_rgba, True)
         color_rgba.alpha = 0.3
@@ -109,8 +112,7 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
         self._handles = []
         self.mpl_connect("scroll_event", self._on_scroll_event)
         self.mpl_connect("motion_notify_event", self._set_mouse_fraction)
-        self.xfrac = None
-        self.yfrac = None
+        self._xfrac, self._yfrac = None, None
         zoom_gesture = Gtk.GestureZoom.new()
         zoom_gesture.connect("scale-changed", self._on_zoom_gesture)
         self.add_controller(zoom_gesture)
@@ -121,44 +123,45 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
 
     def _set_mouse_fraction(self, event):
         if event.inaxes is not None:
-            xlim = self.top_right_axis.get_xlim()
-            ylim = self.top_right_axis.get_ylim()
-            self.xfrac = utilities.get_fraction_at_value(
+            xlim = self._top_right_axis.get_xlim()
+            ylim = self._top_right_axis.get_ylim()
+            self._xfrac = utilities.get_fraction_at_value(
                 event.xdata, xlim[0], xlim[1], self.top_scale)
-            self.yfrac = utilities.get_fraction_at_value(
+            self._yfrac = utilities.get_fraction_at_value(
                 event.ydata, ylim[0], ylim[1], self.right_scale)
         else:
-            self.xfrac, self.yfrac = None, None
+            self._xfrac, self._yfrac = None, None
 
     def _on_zoom_gesture(self, _gesture, scale):
         scale = 1 + 0.05 * (scale - 1)
         if scale > 5 or scale < 0.2:
             # Don't scale if ridiculous values are registered
-            scale = 1
+            return
         self.zoom(scale)
 
     def _on_scroll_event(self, event):
-        scale = 1.06
-        self.zoom(1 / scale if event.button == "up" else scale)
+        self.zoom(1 / _SCROLL_SCALE if event.button == "up" else _SCROLL_SCALE)
 
-    def zoom(self, scaling=1.15):
+    def zoom(self, scaling=1.15, respect_mouse=True):
         """
         Zoom with given scaling.
 
         Update all axes' limits in respect to the current mouse position.
         """
-        if self.xfrac is None or self.yfrac is None:
+        if not respect_mouse:
+            self._xfrac, self._yfrac = 0.5, 0.5
+        if self._xfrac is None or self._yfrac is None:
             return
         for ax in self.axes:
             ax.set_xlim(self._calculate_zoomed_values(
-                self.xfrac, scales.to_int(ax.get_xscale()),
+                self._xfrac, scales.to_int(ax.get_xscale()),
                 ax.get_xlim(), scaling,
             ))
             ax.set_ylim(self._calculate_zoomed_values(
-                self.yfrac, scales.to_int(ax.get_yscale()),
+                self._yfrac, scales.to_int(ax.get_yscale()),
                 ax.get_ylim(), scaling,
             ))
-        ax.figure.canvas.draw_idle()
+        self.queue_draw()
 
     @staticmethod
     def _calculate_zoomed_values(fraction, scale, limit, zoom_factor):
@@ -242,11 +245,12 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
         ]
         if not any(visible_axes):
             visible_axes = [True, False, True, False]
+            self._legend_axis = self._axis
 
         params = pyplot.rcParams
         ticks = "both" if params["xtick.minor.visible"] else "major"
-        for count, directions in enumerate(axes_directions):
-            axis = self.axes[count]
+        for directions, axis, used \
+                in zip(axes_directions, self.axes, used_axes):
             axis.get_xaxis().set_visible(False)
             axis.get_yaxis().set_visible(False)
             # Set tick where requested, as long as that axis is not occupied
@@ -260,12 +264,12 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
             axis_legend = axis.get_legend()
             if axis_legend is not None:
                 axis_legend.remove()
-            if used_axes[count]:
+            if used:
                 self._legend_axis = axis
-        self.axis.get_xaxis().set_visible(visible_axes[0])
-        self.top_left_axis.get_xaxis().set_visible(visible_axes[1])
-        self.axis.get_yaxis().set_visible(visible_axes[2])
-        self.right_axis.get_yaxis().set_visible(visible_axes[3])
+        self._axis.get_xaxis().set_visible(visible_axes[0])
+        self._top_left_axis.get_xaxis().set_visible(visible_axes[1])
+        self._axis.get_yaxis().set_visible(visible_axes[2])
+        self._right_axis.get_yaxis().set_visible(visible_axes[3])
 
         self._handles = [
             artist.new_for_item(self, item)
@@ -352,62 +356,62 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
     @GObject.Property(type=str)
     def title(self) -> str:
         """Figure title."""
-        return self.axis.get_title()
+        return self._axis.get_title()
 
     @title.setter
     def title(self, title: str):
-        self.axis.set_title(title, picker=True).id = "title"
+        self._axis.set_title(title, picker=True).id = "title"
         self.queue_draw()
 
     @GObject.Property(type=str)
     def bottom_label(self) -> str:
         """Label of the bottom axis."""
-        return self.axis.get_xlabel()
+        return self._axis.get_xlabel()
 
     @bottom_label.setter
     def bottom_label(self, label: str):
-        self.axis.set_xlabel(label, picker=True).id = "bottom_label"
+        self._axis.set_xlabel(label, picker=True).id = "bottom_label"
         self.queue_draw()
 
     @GObject.Property(type=str)
     def left_label(self) -> str:
         """Label of the left axis."""
-        return self.axis.get_ylabel()
+        return self._axis.get_ylabel()
 
     @left_label.setter
     def left_label(self, label: str):
-        self.axis.set_ylabel(label, picker=True).id = "left_label"
+        self._axis.set_ylabel(label, picker=True).id = "left_label"
         self.queue_draw()
 
     @GObject.Property(type=str)
     def top_label(self) -> str:
         """Label of the top axis."""
-        return self.top_left_axis.get_xlabel()
+        return self._top_left_axis.get_xlabel()
 
     @top_label.setter
     def top_label(self, label: str):
-        self.top_left_axis.set_xlabel(label, picker=True).id = "top_label"
+        self._top_left_axis.set_xlabel(label, picker=True).id = "top_label"
         self.queue_draw()
 
     @GObject.Property(type=str)
     def right_label(self) -> str:
         """Label of the right axis."""
-        return self.right_axis.get_ylabel()
+        return self._right_axis.get_ylabel()
 
     @right_label.setter
     def right_label(self, label: str):
-        self.right_axis.set_ylabel(label, picker=True).id = "right_label"
+        self._right_axis.set_ylabel(label, picker=True).id = "right_label"
         self.queue_draw()
 
     @GObject.Property(type=int)
     def bottom_scale(self) -> int:
         """Scale of the bottom axis."""
-        return scales.to_int(self.axis.get_xscale())
+        return scales.to_int(self._axis.get_xscale())
 
     @bottom_scale.setter
     def bottom_scale(self, scale: int):
         scale = scales.to_string(scale)
-        for axis in [self.axis, self.right_axis]:
+        for axis in [self._axis, self._right_axis]:
             axis.set_xscale(scale)
             axis.set_xlim(None, None)
         self.queue_draw()
@@ -415,12 +419,12 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
     @GObject.Property(type=int)
     def left_scale(self) -> int:
         """Scale of the left axis."""
-        return scales.to_int(self.axis.get_yscale())
+        return scales.to_int(self._axis.get_yscale())
 
     @left_scale.setter
     def left_scale(self, scale: int):
         scale = scales.to_string(scale)
-        for axis in [self.axis, self.top_left_axis]:
+        for axis in [self._axis, self._top_left_axis]:
             axis.set_yscale(scale)
             axis.set_ylim(None, None)
         self.queue_draw()
@@ -428,12 +432,12 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
     @GObject.Property(type=int)
     def top_scale(self) -> int:
         """Scale of the top axis."""
-        return scales.to_int(self.top_left_axis.get_xscale())
+        return scales.to_int(self._top_left_axis.get_xscale())
 
     @top_scale.setter
     def top_scale(self, scale: int):
         scale = scales.to_string(scale)
-        for axis in [self.top_right_axis, self.top_left_axis]:
+        for axis in [self._top_right_axis, self._top_left_axis]:
             axis.set_xscale(scale)
             axis.set_xlim(None, None)
         self.queue_draw()
@@ -441,12 +445,12 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
     @GObject.Property(type=int)
     def right_scale(self) -> int:
         """Scale of the right axis."""
-        return scales.to_int(self.right_axis.get_yscale())
+        return scales.to_int(self._right_axis.get_yscale())
 
     @right_scale.setter
     def right_scale(self, scale: int):
         scale = scales.to_string(scale)
-        for axis in [self.top_right_axis, self.right_axis]:
+        for axis in [self._top_right_axis, self._right_axis]:
             axis.set_yscale(scale)
             axis.set_ylim(None, None)
         self.queue_draw()
@@ -454,55 +458,55 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
     @GObject.Property(type=float)
     def min_bottom(self) -> float:
         """Lower limit for the bottom axis."""
-        return self.axis.get_xlim()[0]
+        return self._axis.get_xlim()[0]
 
     @min_bottom.setter
     def min_bottom(self, value: float):
-        for axis in [self.axis, self.right_axis]:
+        for axis in [self._axis, self._right_axis]:
             axis.set_xlim(value, None)
         self.queue_draw()
 
     @GObject.Property(type=float)
     def max_bottom(self) -> float:
         """Upper limit for the bottom axis."""
-        return self.axis.get_xlim()[1]
+        return self._axis.get_xlim()[1]
 
     @max_bottom.setter
     def max_bottom(self, value: float):
-        for axis in [self.axis, self.right_axis]:
+        for axis in [self._axis, self._right_axis]:
             axis.set_xlim(None, value)
         self.queue_draw()
 
     @GObject.Property(type=float)
     def min_left(self) -> float:
         """Lower limit for the left axis."""
-        return self.axis.get_ylim()[0]
+        return self._axis.get_ylim()[0]
 
     @min_left.setter
     def min_left(self, value: float):
-        for axis in [self.axis, self.top_left_axis]:
+        for axis in [self._axis, self._top_left_axis]:
             axis.set_ylim(value, None)
         self.queue_draw()
 
     @GObject.Property(type=float)
     def max_left(self) -> float:
         """Upper limit for the left axis."""
-        return self.axis.get_ylim()[1]
+        return self._axis.get_ylim()[1]
 
     @max_left.setter
     def max_left(self, value: float):
-        for axis in [self.axis, self.top_left_axis]:
+        for axis in [self._axis, self._top_left_axis]:
             axis.set_ylim(None, value)
         self.queue_draw()
 
     @GObject.Property(type=float)
     def min_top(self) -> float:
         """Lower limit for the top axis."""
-        return self.top_left_axis.get_xlim()[0]
+        return self._top_left_axis.get_xlim()[0]
 
     @min_top.setter
     def min_top(self, value: float):
-        for axis in [self.top_left_axis, self.top_right_axis]:
+        for axis in [self._top_left_axis, self._top_right_axis]:
             axis.set_xlim(value, None)
         self.highlight.load(self)
         self.queue_draw()
@@ -510,11 +514,11 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
     @GObject.Property(type=float)
     def max_top(self) -> float:
         """Upper limit for the top axis."""
-        return self.top_left_axis.get_xlim()[1]
+        return self._top_left_axis.get_xlim()[1]
 
     @max_top.setter
     def max_top(self, value: float):
-        for axis in [self.top_left_axis, self.top_right_axis]:
+        for axis in [self._top_left_axis, self._top_right_axis]:
             axis.set_xlim(None, value)
         self.highlight.load(self)
         self.queue_draw()
@@ -522,22 +526,22 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
     @GObject.Property(type=float)
     def min_right(self) -> float:
         """Lower limit for the right axis."""
-        return self.right_axis.get_ylim()[0]
+        return self._right_axis.get_ylim()[0]
 
     @min_right.setter
     def min_right(self, value: float):
-        for axis in [self.right_axis, self.top_right_axis]:
+        for axis in [self._right_axis, self._top_right_axis]:
             axis.set_ylim(value, None)
         self.queue_draw()
 
     @GObject.Property(type=float)
     def max_right(self) -> float:
         """Upper limit for the right axis."""
-        return self.right_axis.get_ylim()[1]
+        return self._right_axis.get_ylim()[1]
 
     @max_right.setter
     def max_right(self, value: float):
-        for axis in [self.right_axis, self.top_right_axis]:
+        for axis in [self._right_axis, self._top_right_axis]:
             axis.set_ylim(None, value)
         self.queue_draw()
 
@@ -655,7 +659,7 @@ class _DummyToolbar(NavigationToolbar2):
 class _Highlight(SpanSelector):
     def __init__(self, canvas):
         super().__init__(
-            canvas.top_right_axis,
+            canvas.axes[3],
             lambda _x, _y: self.apply(canvas),
             "horizontal",
             useblit=True,
@@ -671,8 +675,8 @@ class _Highlight(SpanSelector):
         self.load(canvas)
 
     def load(self, canvas):
-        xmin, xmax = canvas.top_right_axis.get_xlim()
-        scale = scales.to_int(canvas.top_left_axis.get_xscale())
+        xmin, xmax = canvas.axes[1].get_xlim()
+        scale = canvas.props.top_scale
         self.extents = (
             utilities.get_value_at_fraction(
                 canvas.min_selected, xmin, xmax, scale,
@@ -683,14 +687,15 @@ class _Highlight(SpanSelector):
         )
 
     def apply(self, canvas):
-        xmin, xmax = canvas.top_right_axis.get_xlim()
+        xmin, xmax = canvas.axes[1].get_xlim()
         extents = self.extents
         extents = max(xmin, extents[0]), min(xmax, extents[1])
         self.extents = extents
 
-        scale = scales.to_int(canvas.top_left_axis.get_xscale())
-        for i, prefix in enumerate(["min_", "max_"]):
+        for prefix, value in zip(["min_", "max_"], extents):
             canvas.set_property(
                 prefix + "selected",
-                utilities.get_fraction_at_value(extents[i], xmin, xmax, scale),
+                utilities.get_fraction_at_value(
+                    value, xmin, xmax, canvas.props.top_scale,
+                ),
             )

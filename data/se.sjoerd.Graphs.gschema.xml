@@ -46,16 +46,6 @@
     <value nick="Inverse" value="4"/>
   </enum>
 
-  <enum id="se.sjoerd.Graphs.x-positions">
-    <value nick="bottom" value="0"/>
-    <value nick="top" value="1"/>
-  </enum>
-
-  <enum id="se.sjoerd.Graphs.y-positions">
-    <value nick="left" value="0"/>
-    <value nick="right" value="1"/>
-  </enum>
-
   <enum id="se.sjoerd.Graphs.import-params.colums.separators">
     <value nick=", " value="0"/>
     <value nick=". " value="1"/>
@@ -83,12 +73,6 @@
     <key name="override-item-properties" type="b">
       <default>true</default>
     </key>
-    <key name="x-position" enum="se.sjoerd.Graphs.x-positions">
-      <default>"bottom"</default>
-    </key>
-    <key name="y-position" enum="se.sjoerd.Graphs.y-positions">
-      <default>"left"</default>
-    </key>
   </schema>
 
   <schema id="se.sjoerd.Graphs.figure">
@@ -99,7 +83,7 @@
       <default>"Linear"</default>
     </key>
     <key name="custom-style" type="s">
-      <default>"adwaita"</default>
+      <default>"Adwaita"</default>
     </key>
     <key name="left-label" type="s">
       <default>"Y Value"</default>

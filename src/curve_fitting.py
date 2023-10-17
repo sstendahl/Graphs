@@ -43,8 +43,7 @@ class CurveFittingWindow(Graphs.CurveFittingTool):
             self.fitting_parameters.add_items([FittingParameter(name=var)])
         # Generate item for the data that is fitted to
         self.data_curve = DataItem.new(
-            application, xdata=item.xdata,
-            ydata=item.ydata, name=item.get_name(),
+            xdata=item.xdata, ydata=item.ydata, name=item.get_name(),
             color="#1A5FB4",
         )
         self.data_curve.linestyle = 0
@@ -52,21 +51,20 @@ class CurveFittingWindow(Graphs.CurveFittingTool):
         self.data_curve.markersize = 13
 
         # Generate item for the fit
-        self.fitted_curve = DataItem.new(
-            application, xdata=[], ydata=[], color="#A51D2D", name=" ",
-        )
+        self.fitted_curve = DataItem.new(color="#A51D2D")
 
         canvas.props.items = [self.fitted_curve, self.data_curve]
 
         # Set up canvas
-        self.fill = \
-            canvas.axis.fill_between(self.fitted_curve.xdata,
-                                     [0],
-                                     [1],
-                                     color=canvas.rubberband_fill_color,
-                                     alpha=0.15)
-        canvas.axis.yscale = "linear"
-        canvas.axis.xscale = "linear"
+        axis = canvas.axes[0]
+        self.fill = axis.fill_between(
+            self.fitted_curve.xdata,
+            [0], [1],
+            color=canvas.rubberband_fill_color,
+            alpha=0.15,
+        )
+        axis.yscale = "linear"
+        axis.xscale = "linear"
         canvas.highlight_enabled = False
         self.canvas = canvas
         self.fit_curve()
@@ -97,7 +95,8 @@ class CurveFittingWindow(Graphs.CurveFittingTool):
             except ValueError:
                 return False
 
-        for index, row in enumerate(self.get_fitting_params()):
+        for row, params \
+                in zip(self.get_fitting_params(), self.fitting_parameters):
             param_entries = entry
 
             # Get the FittingParameterEntry class corresponding to the entry
@@ -118,20 +117,20 @@ class CurveFittingWindow(Graphs.CurveFittingTool):
                     lower_bound if is_float(lower_bound) else "inf")
                 new_upper_bound = (
                     upper_bound if is_float(upper_bound) else "-inf")
-                self.fitting_parameters[index].set_initial(new_initial)
-                self.fitting_parameters[index].set_lower_bound(new_lower_bound)
-                self.fitting_parameters[index].set_upper_bound(new_upper_bound)
+                params.set_initial(new_initial)
+                params.set_lower_bound(new_lower_bound)
+                params.set_upper_bound(new_upper_bound)
         self.fit_curve()
 
     def set_results(self):
-        initial_string = _("Results: \n")
+        initial_string = _("Results:") + "\n"
         buffer_string = initial_string
         for index, arg in enumerate(self.get_free_variables()):
             parameter = utilities.sig_fig_round(self.param[index], 3)
             sigma = utilities.sig_fig_round(self.sigma[index], 3)
             buffer_string += f"\n {arg}: {parameter}"
             buffer_string += f" (± {sigma})"
-        buffer_string += f"\n\nSum of R²: {self.r2}"
+        buffer_string += "\n\n" + _("Sum of R²: {R2}").format(R2=self.r2)
 
         self.get_text_view().get_buffer().set_text(buffer_string)
         bold_tag = Gtk.TextTag(weight=700)
@@ -169,7 +168,7 @@ class CurveFittingWindow(Graphs.CurveFittingTool):
                 bounds=self.fitting_parameters.get_bounds(), nan_policy="omit",
             )
         except (ValueError, TypeError, _minpack.error, RuntimeError):
-            # Cancel fit if not succesfull
+            # Cancel fit if not successful
             return
         xdata = numpy.linspace(
             min(self.data_curve.xdata), max(self.data_curve.xdata), 5000,
@@ -186,7 +185,7 @@ class CurveFittingWindow(Graphs.CurveFittingTool):
 
     def get_confidence(self, function):
         # Get standard deviation
-        self.canvas.axis.relim()  # Reset limits
+        self.canvas.axes[0].relim()  # Reset limits
         self.sigma = numpy.sqrt(numpy.diagonal(self.param_cov))
         try:
             fitted_y = \
@@ -223,9 +222,9 @@ class CurveFittingWindow(Graphs.CurveFittingTool):
         if min(lower_bound) < middle - 1e5 * span:
             lower_bound = [middle - 1e5 * span]
 
-        dummy = self.canvas.axis.fill_between(self.fitted_curve.xdata,
-                                              lower_bound,
-                                              upper_bound)
+        dummy = self.canvas.axes[0].fill_between(
+            self.fitted_curve.xdata, lower_bound, upper_bound,
+        )
         dp = dummy.get_paths()[0]
         dummy.remove()
         self.fill.set_paths([dp.vertices])
@@ -233,7 +232,7 @@ class CurveFittingWindow(Graphs.CurveFittingTool):
     def add_fit(self, _widget):
         """Add fitted data to the items in the main application"""
         self.get_application().get_data().add_items([DataItem.new(
-            self.get_application(), name=self.fitted_curve.get_name(),
+            name=self.fitted_curve.get_name(),
             xdata=self.fitted_curve.xdata, ydata=self.fitted_curve.ydata,
         )])
         self.destroy()
@@ -309,8 +308,10 @@ class FittingParameterEntry(Gtk.Box):
         super().__init__(application=parent.get_application())
         self.parent = parent
         self.params = parent.fitting_parameters[arg]
+        fitting_param_string = _("Fitting parameters for {param_name}").format(
+            param_name=self.params.get_name())
         self.label.set_markup(
-            f"<b>Fitting parameters for {self.params.get_name()}: </b>")
+            f"<b> {fitting_param_string}: </b>")
         self.initial.set_text(str(self.params.get_initial()))
 
         self.initial.connect("notify::text", parent.on_entry_change)

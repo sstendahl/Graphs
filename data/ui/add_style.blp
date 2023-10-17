@@ -14,8 +14,8 @@ template $GraphsAddStyleWindow : Adw.Window {
     }
   }
 
-  Box {
-    orientation: vertical;
+  Adw.ToolbarView {
+    [top]
     Adw.HeaderBar {
       show-end-title-buttons: false;
       [start]
@@ -31,7 +31,7 @@ template $GraphsAddStyleWindow : Adw.Window {
         clicked => $on_accept();
       }
     }
-    Adw.Clamp {
+    content: Adw.Clamp {
       margin-start: 12;
       margin-end: 12;
       margin-top: 12;
@@ -46,6 +46,6 @@ template $GraphsAddStyleWindow : Adw.Window {
           title: _("Name");
         }
       }
-    }
+    };
   }
 }

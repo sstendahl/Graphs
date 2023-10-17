@@ -14,8 +14,8 @@ template $GraphsAddEquationWindow : Adw.Window {
     }
   }
 
-  Box {
-    orientation: vertical;
+  Adw.ToolbarView {
+    [top]
     Adw.HeaderBar {
       show-end-title-buttons: false;
       [start]
@@ -32,7 +32,7 @@ template $GraphsAddEquationWindow : Adw.Window {
       }
     }
 
-    Adw.ToastOverlay toast_overlay {
+    content: Adw.ToastOverlay toast_overlay {
       child: Adw.Clamp {
         margin-start: 12;
         margin-end: 12;
@@ -90,6 +90,6 @@ template $GraphsAddEquationWindow : Adw.Window {
           }
         }
       };
-    }
+    };
   }
 }

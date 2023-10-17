@@ -35,17 +35,15 @@ class DataItem(Graphs.Item):
     markersize = GObject.Property(type=float, default=7)
 
     @staticmethod
-    def new(application, xdata=None, ydata=None, **kwargs):
-        settings = application.get_settings("general")
+    def new(xdata=None, ydata=None, **kwargs):
         params = pyplot.rcParams
         return DataItem(
-            yposition=settings.get_enum("y-position"),
-            xposition=settings.get_enum("x-position"),
             linestyle=misc.LINESTYLES.index(params["lines.linestyle"]),
             linewidth=params["lines.linewidth"],
             markerstyle=misc.MARKERSTYLES.index(params["lines.marker"]),
             markersize=params["lines.markersize"],
-            xdata=xdata, ydata=ydata, **kwargs,
+            xdata=[] if xdata is None else xdata,
+            ydata=[] if ydata is None else ydata, **kwargs,
         )
 
     def __init__(self, **kwargs):
@@ -75,12 +73,9 @@ class TextItem(Graphs.Item):
     rotation = GObject.Property(type=int, default=0, minimum=0, maximum=360)
 
     @staticmethod
-    def new(application, xanchor=0, yanchor=0, text="", **kwargs):
-        settings = application.get_settings("general")
+    def new(xanchor=0, yanchor=0, text="", **kwargs):
         params = pyplot.rcParams
         return TextItem(
-            yposition=settings.get_enum("y-position"),
-            xposition=settings.get_enum("x-position"),
             size=params["font.size"], color=params["text.color"],
             xanchor=xanchor, yanchor=yanchor, text=text, **kwargs,
         )

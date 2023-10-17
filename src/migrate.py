@@ -2,8 +2,11 @@
 import contextlib
 import pickle
 import sys
+from pathlib import Path
 
-from graphs import file_io, misc, utilities
+from gi.repository import GLib, Gio
+
+from graphs import file_io, misc, style_io, utilities
 
 
 CONFIG_MIGRATION_TABLE = {
@@ -27,25 +30,29 @@ CONFIG_MIGRATION_TABLE = {
     "plot_top_scale": ("figure", "top-scale"),
     "plot_use_custom_style": ("figure", "use-custom-style"),
     "plot_x_label": ("figure", "bottom-label"),
-    "plot_x_position": ("general", "x-position"),
     "plot_x_scale": ("figure", "bottom-scale"),
     "plot_y_label": ("figure", "left-label"),
-    "plot_y_position": ("general", "y-position"),
     "plot_y_scale": ("figure", "left-scale"),
 }
 
 
 def migrate_config(settings):
     """Migrate old file-based user config to dconf"""
-    config_dir = utilities.get_config_directory()
-    if not config_dir.query_exists(None):
+    main_dir = Gio.File.new_for_path(GLib.get_user_config_dir())
+    old_config_dir = main_dir.get_child_for_display_name("Graphs")
+    if not old_config_dir.query_exists(None):
         return
-    config_file = config_dir.get_child_for_display_name("config.json")
-    import_file = config_dir.get_child_for_display_name("import.json")
+    new_config_dir = utilities.get_config_directory()
+    config_file = old_config_dir.get_child_for_display_name("config.json")
+    import_file = old_config_dir.get_child_for_display_name("import.json")
+    old_styles_dir = old_config_dir.get_child_for_display_name("styles")
     if config_file.query_exists(None):
         _migrate_config(settings, config_file)
-    if config_file.query_exists(None):
+    if import_file.query_exists(None):
         _migrate_import_params(settings, import_file)
+    if old_styles_dir.query_exists(None):
+        _migrate_styles(old_styles_dir, new_config_dir)
+    old_config_dir.delete(None)
 
 
 def _migrate_config(settings_, config_file):
@@ -74,8 +81,43 @@ def _migrate_import_params(settings_, import_file):
             elif isinstance(value, str):
                 settings.set_string(key, value)
             elif isinstance(value, int):
-                settings.set_int(key, value)
+                settings.set_int(key.replace("_", "-"), value)
     import_file.delete(None)
+
+
+SYSTEM_STYLES = [
+    "adwaita", "adwaita-dark", "bmh", "classic", "dark-background",
+    "fivethirtyeight", "ggplot", "grayscale", "seaborn", "seaborn-bright",
+    "seaborn-colorblind", "seaborn-dark", "seaborn-darkgrid",
+    "seaborn-dark-pallete", "seaborn-deep", "seaborn-muted",
+    "seaborn-notebook", "seaborn-paper", "seaborn-pastel", "seaborn-poster",
+    "seaborn-talk", "seaborn-ticks", "seaborn-white", "seaborn-whitegrid",
+    "solarized-light", "tableu-colorblind10", "thesis", "yaru", "yaru-dark",
+]
+
+
+def _migrate_styles(old_styles_dir, new_config_dir):
+    new_styles_dir = new_config_dir.get_child_for_display_name("styles")
+    if not new_styles_dir.query_exists(None):
+        new_styles_dir.make_directory_with_parents()
+    enumerator = old_styles_dir.enumerate_children("default::*", 0, None)
+    for file in map(enumerator.get_child, enumerator):
+        stylename = Path(utilities.get_filename(file)).stem
+        if stylename not in SYSTEM_STYLES:
+            params = style_io.parse_style(file)
+            adwaita = Gio.File.new_for_uri(
+                "resource:///se/sjoerd/Graphs/styles/adwaita.mplstyle",
+            )
+            for key, value in style_io.parse_style(adwaita).items():
+                if key not in params:
+                    params[key] = value
+            params.name = stylename
+            style_io.write_style(new_styles_dir.get_child_for_display_name(
+                f"{stylename.lower().replace(' ', '-')}.mplstyle",
+            ), params)
+        file.delete(None)
+    enumerator.close(None)
+    old_styles_dir.delete(None)
 
 
 ITEM_MIGRATION_TABLE = {
@@ -226,22 +268,16 @@ def _get_limits(items):
         if item["item_type"] != "Item":
             continue
         for count, x_or_y in enumerate(["x", "y"]):
+            index = item[f"{x_or_y}position"] * 2 + 4 * count
+            data = item[f"{x_or_y}data"]
             try:
-                limits[item[f"{x_or_y}position"] * 2 + 4 * count] = min(
-                    limits[item[f"{x_or_y}position"] * 2 + 4 * count],
-                    min(item[f"{x_or_y}data"]),
-                )
+                limits[index] = min(limits[index], min(data))
             except TypeError:
-                limits[item[f"{x_or_y}position"] * 2 + 4 * count] = \
-                    min(item[f"{x_or_y}data"])
+                limits[index] = min(data)
             try:
-                limits[item[f"{x_or_y}position"] * 2 + 4 * count + 1] = max(
-                    limits[item[f"{x_or_y}position"] * 2 + 4 * count + 1],
-                    max(item[f"{x_or_y}data"]),
-                )
+                limits[index + 1] = max(limits[index + 1], max(data))
             except TypeError:
-                limits[item[f"{x_or_y}position"] * 2 + 4 * count + 1] = \
-                    max(item[f"{x_or_y}data"])
+                limits[index + 1] = max(data)
     for count in range(8):
         if limits[count] is None:
             limits[count] = DEFAULT_VIEW.copy()[count]

@@ -8,12 +8,11 @@ from graphs import operations, ui, utilities
 from graphs.add_equation import AddEquationWindow
 from graphs.export_figure import ExportFigureWindow
 from graphs.figure_settings import FigureSettingsWindow
-from graphs.styles import StylesWindow
 from graphs.transform_data import TransformWindow
 
 
 def perform_operation(_action, target, self):
-    operation = target.get_string().lower().replace(" ", "_")
+    operation = target.get_string().removesuffix("_button")
     if operation == "combine":
         return operations.combine(self)
     elif operation == "custom_transformation":
@@ -126,31 +125,27 @@ def export_figure_action(_action, _target, self):
     ExportFigureWindow(self)
 
 
-def styles_action(_action, _target, self):
-    StylesWindow(self)
-
-
 def save_project_action(_action, _target, self):
     ui.save_project_dialog(self)
 
 
 def zoom_in_action(_action, _target, self):
     canvas = self.get_window().get_canvas()
-    canvas.xfrac, canvas.yfrac = 0.5, 0.5
-    canvas.zoom(1.15)
+    canvas.zoom(1.15, respect_mouse=False)
 
 
 def zoom_out_action(_action, _target, self):
     canvas = self.get_window().get_canvas()
-    canvas.xfrac, canvas.yfrac = 0.5, 0.5
-    canvas.zoom(1 / 1.15)
+    canvas.zoom(1 / 1.15, respect_mouse=False)
 
 
 def open_project_action(_action, _target, self):
     if not self.get_data().is_empty():
+
         def on_response(_dialog, response):
             if response == "discard":
                 ui.open_project_dialog(self)
+
         dialog = ui.build_dialog("discard_data")
         dialog.set_transient_for(self.get_window())
         dialog.connect("response", on_response)

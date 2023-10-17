@@ -1,23 +1,24 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
-# seaborn-talk
+# Seaborn Talk
 
 # font
 font.family: sans-serif
 font.sans-serif: DejaVu Sans
 font.style: normal
-font.weight: normal
-axes.titleweight: normal
-axes.labelweight: normal
-figure.titleweight: normal
-figure.labelweight: normal
+font.weight: 400
+axes.titleweight: 400
+axes.labelweight: 400
+figure.titleweight: 400
+figure.labelweight: 400
+font.variant: normal
 font.size: 13
 axes.labelsize: 13
 xtick.labelsize: 13
 ytick.labelsize: 13
-axes.titlesize: 13
 legend.fontsize: 13
-figure.titlesize: 13
 figure.labelsize: 13
+figure.titlesize: 16
+axes.titlesize: 16
 
 # lines
 lines.linewidth: 2.275

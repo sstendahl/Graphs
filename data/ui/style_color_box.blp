@@ -16,6 +16,7 @@ template $GraphsStyleColorBox : Box {
 
   Button color_button {
     tooltip-text: _("Edit");
+    clicked => $on_color_choose();
     styles ["flat"]
     Image {
       hexpand: false;

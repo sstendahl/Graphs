@@ -4,6 +4,7 @@ using Adw 1;
 template $GraphsPreferencesWindow : Adw.PreferencesWindow {
   can-navigate-back: true;
   modal: true;
+  search-enabled: false;
 
   Adw.PreferencesPage {
     Adw.PreferencesGroup {
@@ -29,22 +30,6 @@ template $GraphsPreferencesWindow : Adw.PreferencesWindow {
 
       Adw.SwitchRow hide_unselected {
         title: _("Hide Unselected Items");
-      }
-
-      Adw.ComboRow x_position {
-        title: _("Default X-Axis Position");
-        subtitle: _("Which axis should a new item be displayed on");
-        model: StringList{
-          strings [_("Bottom"), _("Top")]
-        };
-      }
-
-      Adw.ComboRow y_position {
-        title: _("Default Y-Axis Position");
-        subtitle: _("Which axis should a new item be displayed on");
-        model: StringList{
-          strings [_("Left"), _("Right")]
-        };
       }
 
       Adw.SwitchRow override_item_properties {

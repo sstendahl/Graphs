@@ -74,9 +74,9 @@ blueprints_source = [
   'ui/help_overlay.blp',
   'ui/item_box.blp',
   'ui/preferences.blp',
-  'ui/style_box.blp',
   'ui/style_color_box.blp',
-  'ui/style_window.blp',
+  'ui/style_editor.blp',
+  'ui/style_preview.blp',
   'ui/transform_window.blp',
   'ui/window.blp'
 ]
