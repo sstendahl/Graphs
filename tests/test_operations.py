@@ -65,30 +65,31 @@ def test_center():
     assert all(x_new == (x_old - middle_value) for x_old, x_new in zip(XDATA,
                                                                        xdata))
 
-
-def test_shift():
+@pytest.mark.parametrize(
+    'yscale', (0, 1, 2, 3)
+)
+def test_shift(yscale):
     """Test if shift_vertically function correctly shifts ydata."""
-    ydata1 = [8, 12, 10, 14, 9]
-    ydata2 = [204, 128, 5, 42, 13]
 
-    ydata1 = [value / max(ydata1) for value in ydata1]
-    ydata2 = [value / max(ydata2) for value in ydata2]
+    ydata1 = [1.0, 1.8, 1.9, 1.1, 0.2, 0.1, 0.7, 1.7, 2.0, 1.4, 0.5]
+    ydata2 = [2.0, 1.5, 0.6, 0.1, 0.3, 1.3, 2.0, 1.8, 0.9, 0.1, 0.2]
+    xdata = np.linspace(0, 10, len(ydata1))
 
-    item1 = DataItem(xdata=XDATA, ydata=ydata1, uuid="a")
-    item2 = DataItem(xdata=XDATA, ydata=ydata2, uuid="b")
+    item1 = DataItem(xdata=xdata, ydata=ydata1, uuid="a")
+    item2 = DataItem(xdata=xdata, ydata=ydata2, uuid="b")
 
     items = [item1, item2]
     new_xdata1, new_ydata1, _sort, _discard = \
-        operations.shift(item1, XDATA, ydata1, left_scale=1,
-                         right_scale=1, items=items, ranges=[200, 200])
+        operations.shift(item1, xdata, ydata1, left_scale=yscale,
+                         right_scale=yscale, items=items, ranges=[2.2, 2.2])
     new_xdata2, new_ydata2, _sort, _discard = \
-        operations.shift(item2, XDATA, ydata2, left_scale=1,
-                         right_scale=1, items=items, ranges=[200, 200])
-    np.testing.assert_array_equal(new_xdata1, XDATA)
-    np.testing.assert_array_equal(new_xdata2, XDATA)
+        operations.shift(item2, xdata, ydata2, left_scale=yscale,
+                         right_scale=yscale, items=items, ranges=[2.2, 2.2])
+    np.testing.assert_array_equal(new_xdata1, xdata)
+    np.testing.assert_array_equal(new_xdata2, xdata)
     assert len(new_ydata1) == len(ydata1)
     assert len(new_ydata2) == len(ydata2)
-    assert all(new_y2 > old_y1 for new_y2, old_y1 in zip(new_ydata2, ydata1))
+    assert all(new_y2 > new_y1 for new_y2, new_y1 in zip(new_ydata2, new_ydata1))
 
 
 def test_derivative():

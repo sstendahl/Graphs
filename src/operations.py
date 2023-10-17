@@ -201,7 +201,7 @@ def shift(item, xdata, ydata, left_scale, right_scale, items, ranges):
         scale = right_scale if item.get_yposition() else left_scale
         if scale == 1:  # Use log values for log scaling
             shift_value_log += \
-                numpy.log10(ymax / ymin) + 0.1 * numpy.log10(y_range)
+                numpy.log10(abs(ymax / ymin)) + 0.1 * numpy.log10(y_range)
         else:
             shift_value_linear += (ymax - ymin) + 0.1 * y_range
         if item.get_uuid() == item_.get_uuid():
