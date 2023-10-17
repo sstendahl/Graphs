@@ -24,10 +24,15 @@ def perform_operation(_action, target, self):
         args = [self.get_settings("general").get_enum(operation)]
     if operation == "shift":
         figure_settings = self.get_data().get_figure_settings()
+        right_range = (figure_settings.get_max_right()
+                       - figure_settings.get_min_right())
+        left_range = (figure_settings.get_max_left()
+                      - figure_settings.get_min_left())
         args += [
             figure_settings.get_left_scale(),
             figure_settings.get_right_scale(),
             self.get_data().get_items(),
+            [left_range, right_range],
         ]
     elif "translate" in operation or "multiply" in operation:
         window = self.get_window()

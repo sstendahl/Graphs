@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
+import contextlib
 import logging
 from gettext import gettext as _
 
@@ -46,8 +47,9 @@ def get_data(self, item):
                 startx > max(xdata))):
             new_x, new_y = sort_data(xdata, ydata)
             numpy_x = numpy.asarray(new_x)
-            start_index = numpy.where(numpy_x > startx)[0][0]
-            stop_index = numpy.where(numpy_x > stopx)[0][0]
+            with contextlib.suppress(IndexError):
+                start_index = numpy.where(numpy_x > startx)[0][0]
+                stop_index = numpy.where(numpy_x > stopx)[0][0]
             new_xdata = new_x[start_index:stop_index]
             new_ydata = new_y[start_index:stop_index]
         else:
@@ -166,28 +168,44 @@ def center(_item, xdata, ydata, center_maximum):
     return new_xdata, ydata, True, False
 
 
-def shift(item, xdata, ydata, left_scale, right_scale, items):
+def shift(item, xdata, ydata, left_scale, right_scale, items, ranges):
     """
     Shifts data vertically with respect to each other
     By default it scales linear data by 1.2 times the total span of the
     ydata, and log data 10 to the power of the yspan.
     """
-    shift_value_log = 1
-    shift_value_linear = 0
     data_list = [
         item for item in items
         if item.get_selected() and item.__gtype_name__ == "GraphsDataItem"
     ]
 
+    y_range = ranges[1] if item.get_yposition() else ranges[0]
+
+    shift_value_log = 0
+    shift_value_linear = 0
+
     for index, item_ in enumerate(data_list):
-        previous_ydata = data_list[index - 1].ydata
-        ymin = min(x for x in previous_ydata if x != 0)
-        ymax = max(x for x in previous_ydata if x != 0)
+        # Compare first element with itself, not "previous" item
+        index = 1 if index == 0 else index
+
+        previous_item = data_list[index - 1]
+
+        # Only use selected span when obtaining values to determine shift value
+        full_xdata = numpy.asarray(data_list[index].xdata)
+        start = 0
+        stop = len(data_list[index].ydata)
+        with contextlib.suppress(IndexError):
+            start = numpy.where(full_xdata >= xdata[0])[0][0]
+            stop = numpy.where(full_xdata >= xdata[-1])[0][0]
+
+        ymin = min(x for x in previous_item.ydata[start:stop] if x != 0)
+        ymax = max(x for x in previous_item.ydata[start:stop] if x != 0)
         scale = right_scale if item.get_yposition() else left_scale
         if scale == 1:  # Use log values for log scaling
-            shift_value_log += numpy.log10(ymax / ymin)
+            shift_value_log += \
+                numpy.log10(abs(ymax / ymin)) + 0.1 * numpy.log10(y_range)
         else:
-            shift_value_linear += 1.2 * (ymax - ymin)
+            shift_value_linear += (ymax - ymin) + 0.1 * y_range
         if item.get_uuid() == item_.get_uuid():
             if scale == 1:  # Log scaling
                 new_ydata = [value * 10 ** shift_value_log for value in ydata]
