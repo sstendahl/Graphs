@@ -12,7 +12,7 @@ from graphs.transform_data import TransformWindow
 
 
 def perform_operation(_action, target, self):
-    operation = target.get_string().lower().replace(" ", "_")
+    operation = target.get_string().removesuffix("_button")
     if operation == "combine":
         return operations.combine(self)
     elif operation == "custom_transformation":

@@ -78,8 +78,7 @@ namespace Graphs {
             var action = this.application.lookup_action (
                 "app.perform_operation"
             );
-            var content = (Adw.ButtonContent) button.get_child ();
-            action.activate (new Variant.string (content.get_label ()));
+            action.activate (new Variant.string (button.get_buildable_id ()));
         }
 
         public void add_toast (Adw.Toast toast) {

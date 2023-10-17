@@ -280,7 +280,7 @@ template $GraphsWindow: Adw.ApplicationWindow {
                         clicked => $perform_operation();
                       }
 
-                      Button {
+                      Button normalize_button {
                         hexpand: true;
                         sensitive: bind shift_button.sensitive;
                         layout {
@@ -296,7 +296,7 @@ template $GraphsWindow: Adw.ApplicationWindow {
                         clicked => $perform_operation();
                       }
 
-                      Button {
+                      Button smoothen_button {
                         hexpand: true;
                         sensitive: bind shift_button.sensitive;
                         layout {
@@ -312,7 +312,7 @@ template $GraphsWindow: Adw.ApplicationWindow {
                         clicked => $perform_operation();
                       }
 
-                      Button {
+                      Button center_button {
                         hexpand: true;
                         sensitive: bind shift_button.sensitive;
                         layout {
@@ -328,7 +328,7 @@ template $GraphsWindow: Adw.ApplicationWindow {
                         clicked => $perform_operation();
                       }
 
-                      Button {
+                      Button combine_button {
                         hexpand: true;
                         sensitive: bind shift_button.sensitive;
                         layout {
@@ -369,7 +369,7 @@ template $GraphsWindow: Adw.ApplicationWindow {
                       column-spacing: 12;
                       row-spacing: 12;
                       margin-bottom:12;
-                      Button {
+                      Button derivative_button {
                         hexpand: true;
                         sensitive: bind shift_button.sensitive;
                         layout {
@@ -385,7 +385,7 @@ template $GraphsWindow: Adw.ApplicationWindow {
                         clicked => $perform_operation();
                       }
 
-                      Button {
+                      Button integral_button {
                         hexpand: true;
                         sensitive: bind shift_button.sensitive;
                         layout {
@@ -401,7 +401,7 @@ template $GraphsWindow: Adw.ApplicationWindow {
                           clicked => $perform_operation();
                         }
 
-                      Button {
+                      Button fft_button {
                         hexpand: true;
                         sensitive: bind shift_button.sensitive;
                         layout {
@@ -417,7 +417,7 @@ template $GraphsWindow: Adw.ApplicationWindow {
                         clicked => $perform_operation();
                       }
 
-                      Button {
+                      Button inverse_fft_button {
                         hexpand: true;
                         sensitive: bind shift_button.sensitive;
                         layout {
@@ -433,7 +433,7 @@ template $GraphsWindow: Adw.ApplicationWindow {
                         clicked => $perform_operation();
                       }
 
-                      Button {
+                      Button custom_transformation_button {
                         hexpand: true;
                         sensitive: bind shift_button.sensitive;
                         layout {
@@ -467,7 +467,7 @@ template $GraphsWindow: Adw.ApplicationWindow {
                           row: 0;
                         }
                       }
-                      Button {
+                      Button translate_x_button {
                         valign: center;
                         sensitive: bind shift_button.sensitive;
                         clicked => $perform_operation();
@@ -490,7 +490,7 @@ template $GraphsWindow: Adw.ApplicationWindow {
                           row: 1;
                         }
                       }
-                      Button {
+                      Button translate_y_button {
                         valign: center;
                         sensitive: bind shift_button.sensitive;
                         clicked => $perform_operation();
@@ -513,7 +513,7 @@ template $GraphsWindow: Adw.ApplicationWindow {
                           row: 2;
                         }
                       }
-                      Button {
+                      Button multiply_x_button {
                         valign: center;
                         sensitive: bind shift_button.sensitive;
                         clicked => $perform_operation();
@@ -536,7 +536,7 @@ template $GraphsWindow: Adw.ApplicationWindow {
                           row: 3;
                         }
                       }
-                      Button {
+                      Button multiply_y_button {
                         valign: center;
                         sensitive: bind shift_button.sensitive;
                         clicked => $perform_operation();
