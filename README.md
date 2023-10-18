@@ -63,10 +63,10 @@ We are always looking for feedback, so feel free to report any issues or suggest
 
 ## How to build from source
 This project is developed in [GNOME Builder](https://developer.gnome.org/documentation/introduction/builder.html). After cloning and opening the project, you can press run to verify you have all correct dependencies installed.
-You might need to install meson, if it is not already availabe on your system.
-When the project successfully ran, you can create a flatpak-bundle on the buildchain menu, which you then can install on your system.
+You might need to install meson, if it is not already available on your system.
+When the project successfully ran, you can create a Flatpak-bundle on the buildchain menu, which you then can install on your system.
 
-If you want to try the latest development, we urge you to try the flathub beta branch instead of building yourself.
+If you want to try the latest development, we urge you to try the Flathub beta branch instead of building yourself.
 
 ### Build without flatpak
 This project targets the GNOME Platform on Flathub. Manually building Graphs for any other platform is currently **not supported**.
@@ -75,9 +75,9 @@ If you want to build without Flatpak anyway these instructions might help:
 
 build-time dependencies: `meson, blueprint-compiler, gettext`
 
-runtime dependencies: `matplotlib, python3-matplotlib-gtk4, scipy, numpy`
+runtime dependencies: `matplotlib, python3-matplotlib-gtk4, scipy, numpy, numexpr, sympy`
 
-The actual package names might vary depending on your distribution.
+This actual package names might vary depending on your distribution, and depending on your distribution additional packages may be required.
 
 building:
 ```
@@ -92,7 +92,7 @@ Uninstall could then be done with the following:
 ninja -C build/ uninstall
 ```
 
-Please note, that this install might have issues, that the flatpak version does not.
+Please note, that this install might have issues that the Flatpak version does not.
 
 ## How to contribute
 ### Translations
