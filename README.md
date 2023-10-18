@@ -77,7 +77,7 @@ build-time dependencies: `meson, blueprint-compiler, gettext`
 
 runtime dependencies: `matplotlib, python3-matplotlib-gtk4, scipy, numpy, numexpr, sympy`
 
-This actual package names might vary depending on your distribution, and depending on your distribution additional packages may be required.
+The actual package names might vary depending on your distribution, and depending on your distribution additional packages may be required.
 
 building:
 ```
