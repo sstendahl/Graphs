@@ -30,15 +30,15 @@
   <url type="translate">https://hosted.weblate.org/engage/graphs/</url>
   <screenshots>
     <screenshot type="default">
-      <caption>1 - Plot and manipulate any data set inserted by equation or from file</caption>
+      <caption>1 - Plot and manipulate any data of choice</caption>
       <image>https://raw.githubusercontent.com/Sjoerd1993/Graphs/main/data/screenshots/sin_cos.png</image>
     </screenshot>
     <screenshot type="default">
-      <caption>2 - Both light and dark mode is supported</caption>
+      <caption>2 - Full support for light and dark mode</caption>
       <image>https://raw.githubusercontent.com/Sjoerd1993/Graphs/main/data/screenshots/sines_dark.png</image>
     </screenshot>
     <screenshot type="default">
-      <caption>3 - Add data from an equation</caption>
+      <caption>3 - Generate data from an equation</caption>
       <image>https://raw.githubusercontent.com/Sjoerd1993/Graphs/main/data/screenshots/add_equation.png</image>
     </screenshot>
     <screenshot type="default">
@@ -46,7 +46,7 @@
       <image>https://raw.githubusercontent.com/Sjoerd1993/Graphs/main/data/screenshots/style_editor.png</image>
     </screenshot>
     <screenshot>
-      <caption>5 - Manipulate data using a wide range of operations</caption>
+      <caption>5 - Manipulate imported data with ease</caption>
       <image>https://raw.githubusercontent.com/Sjoerd1993/Graphs/main/data/screenshots/manipulate_data.png</image>
     </screenshot>
   </screenshots>
@@ -303,6 +303,7 @@
     </release>
     <release version="1.3.2" date="2023-01-02">
       <description translatable="no">
+        <p>Minor update:</p>
         <ul>
           <li>Made all pop-up windows modal</li>
           <li>Added the ability to change axes labels and the title of the plot by double clicking</li>
@@ -362,6 +363,7 @@
     </release>
     <release version="1.1.2" date="2022-12-19">
       <description translatable="no">
+        <p>Minor update:</p>
         <ul>
           <li>Added a "Plot settings" option to control the individual line settings</li>
           <li>Added a pop-up button to show the graph in a separate window</li>
@@ -384,6 +386,7 @@
     </release>
     <release version="1.1.0" date="2022-12-17">
       <description translatable="no">
+        <p>Major update:</p>
         <ul>
           <li>Improved the UI for the "Add equation" and "Transform data" windows</li>
           <li>Added import settings</li>
@@ -408,6 +411,7 @@
     </release>
     <release version="1.0.2" date="2022-12-15">
       <description translatable="no">
+        <p>Name change and more bugfixes</p>
         <ul>
           <li>Changed the name of the application to be more in line with the GNOME HIG</li>
           <li>Transformation window can be closed with the escape button</li>
@@ -418,6 +422,7 @@
     </release>
     <release version="1.0.1" date="2022-12-15">
       <description translatable="no">
+        <p>Minor update with some bugfixes</p>
         <ul>
           <li>Add equation window can now be closed with the escape button</li>
           <li>File chooser dialog and preference dialogs are modal (stick to parent window)</li>
@@ -431,9 +436,7 @@
     </release>
     <release version="1.0.0" date="2022-12-14">
       <description translatable="no">
-        <ul>
-          <li>Initial release</li>
-        </ul>
+        <p>Initial release</p>
       </description>
     </release>
   </releases>
