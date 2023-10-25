@@ -43,7 +43,7 @@ appstream_util = find_program('appstream-util', required: false)
 if appstream_util.found()
   test(
     'Validate appstream file', appstream_util,
-    args: ['validate', appstream_file.full_path()]
+    args: ['validate', '--nonet', appstream_file.full_path()]
   )
 endif
 
