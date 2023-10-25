@@ -3,8 +3,6 @@ from gi.repository import GObject, Graphs
 
 from graphs import misc
 
-from matplotlib import pyplot
-
 
 def new_from_dict(dictionary: dict):
     match dictionary["type"]:
@@ -37,8 +35,7 @@ class DataItem(Graphs.Item):
     markersize = GObject.Property(type=float, default=7)
 
     @staticmethod
-    def new(xdata=None, ydata=None, **kwargs):
-        params = pyplot.rcParams
+    def new(params, xdata=None, ydata=None, **kwargs):
         return DataItem(
             linestyle=misc.LINESTYLES.index(params["lines.linestyle"]),
             linewidth=params["lines.linewidth"],
@@ -53,8 +50,7 @@ class DataItem(Graphs.Item):
             if self.get_property(prop) is None:
                 self.set_property(prop, [])
 
-    def reset(self):
-        params = pyplot.rcParams
+    def reset(self, params):
         self.props.linestyle = misc.LINESTYLES.index(params["lines.linestyle"])
         self.props.linewidth = params["lines.linewidth"]
         self.props.markerstyle = \
@@ -73,15 +69,13 @@ class TextItem(Graphs.Item):
     rotation = GObject.Property(type=int, default=0, minimum=0, maximum=360)
 
     @staticmethod
-    def new(xanchor=0, yanchor=0, text="", **kwargs):
-        params = pyplot.rcParams
+    def new(params, xanchor=0, yanchor=0, text="", **kwargs):
         return TextItem(
             size=params["font.size"], color=params["text.color"],
             xanchor=xanchor, yanchor=yanchor, text=text, **kwargs,
         )
 
-    def reset(self):
-        params = pyplot.rcParams
+    def reset(self, params):
         self.props.size = params["font.size"]
         self.props.color = params["text.color"]
 
@@ -92,10 +86,13 @@ class FillItem(Graphs.Item):
     data = GObject.Property(type=object)
 
     @staticmethod
-    def new(data, **kwargs):
+    def new(_params, data, **kwargs):
         return FillItem(data=data, **kwargs)
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         if self.props.data is None:
             self.props.data = (None, None, None)
+
+    def reset(self):
+        pass

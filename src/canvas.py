@@ -79,7 +79,7 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
     min_selected = GObject.Property(type=float, default=0)
     max_selected = GObject.Property(type=float, default=0)
 
-    def __init__(self, application):
+    def __init__(self, application, style_params):
         """
         Create the canvas.
 
@@ -87,6 +87,9 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
         style context. Bind `items` to `data.items` and all figure settings
         attributes to their respective values.
         """
+        orig_params = dict(pyplot.rcParams.copy())
+        self._style_params = style_params
+        pyplot.rcParams.update(self._style_params)  # apply style_params
         GObject.Object.__init__(self, application=application, can_focus=False)
         super().__init__()
         self.figure.set_tight_layout(True)
@@ -116,6 +119,7 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
         zoom_gesture = Gtk.GestureZoom.new()
         zoom_gesture.connect("scale-changed", self._on_zoom_gesture)
         self.add_controller(zoom_gesture)
+        dict.update(pyplot.rcParams, orig_params)  # revert rcParams
 
     def get_application(self):
         """Get application property."""
@@ -247,7 +251,7 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
             visible_axes = [True, False, True, False]
             self._legend_axis = self._axis
 
-        params = pyplot.rcParams
+        params = self._style_params
         ticks = "both" if params["xtick.minor.visible"] else "major"
         for directions, axis, used \
                 in zip(axes_directions, self.axes, used_axes):

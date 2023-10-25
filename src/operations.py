@@ -284,6 +284,7 @@ def combine(self):
 
     # Create the item itself
     new_xdata, new_ydata = sort_data(new_xdata, new_ydata)
+    style = self.get_figure_style_manager().get_selected_style_params()
     self.get_data().add_items(
-        [DataItem.new(new_xdata, new_ydata, name=_("Combined Data"))],
+        [DataItem.new(style, new_xdata, new_ydata, name=_("Combined Data"))],
     )
