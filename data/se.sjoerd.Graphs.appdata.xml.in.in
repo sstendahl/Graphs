@@ -26,6 +26,8 @@
   <url type="bugtracker">@ISSUE_URL@</url>
   <url type="help">@GITHUB_URL@</url>
   <url type="homepage">@HOMEPAGE_URL@</url>
+  <url type="vcs-browser">@GITHUB_URL@</url>
+  <url type="translate">https://hosted.weblate.org/engage/graphs/</url>
   <screenshots>
     <screenshot type="default">
       <caption>1 - Plot and manipulate any data set inserted by equation or from file</caption>
@@ -92,16 +94,18 @@
       </description>
     </release>
     <release version="1.6.1" date="2023-06-14">
-      <p>Minor patch with some bug fixes:</p>
-      <ul>
-        <li>Fixed a bug where "Export Figure" and "Preferences" could not be loaded</li>
-        <li>The "Add data from file" dialog now has filters to make it easier to find the required files.</li>
-        <li>Fixes a bug where the first data point would not be loaded</li>
-        <li>Fixed a bug all styles in the style manager had a check-mark if the system preferred style was used.</li>
-        <li>Fixed a bug where the legend would not be removed from the graph when toggled off, until it was completely reloaded.</li>
-        <li>Automatic axes limits are no longer rounded, which used to lead to problems with the scaling when using data span with a large amount of significant digits.</li>
-        <li>Removed some shortcuts that were overlapping with typing a capital character, making it difficult to write a capital for the respective characters in titles and labels.</li>
-      </ul>
+      <description translatable="no">
+        <p>Minor patch with some bug fixes:</p>
+        <ul>
+          <li>Fixed a bug where "Export Figure" and "Preferences" could not be loaded</li>
+          <li>The "Add data from file" dialog now has filters to make it easier to find the required files.</li>
+          <li>Fixes a bug where the first data point would not be loaded</li>
+          <li>Fixed a bug all styles in the style manager had a check-mark if the system preferred style was used.</li>
+          <li>Fixed a bug where the legend would not be removed from the graph when toggled off, until it was completely reloaded.</li>
+          <li>Automatic axes limits are no longer rounded, which used to lead to problems with the scaling when using data span with a large amount of significant digits.</li>
+          <li>Removed some shortcuts that were overlapping with typing a capital character, making it difficult to write a capital for the respective characters in titles and labels.</li>
+        </ul>
+      </description>
     </release>
     <release version="1.6.0" date="2023-06-13">
       <description translatable="no">
