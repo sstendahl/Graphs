@@ -262,7 +262,7 @@ class Data(GObject.Object, Graphs.DataInterface):
     def _connect_to_item(self, item_):
         item_.connect("notify::selected", self._on_item_select)
         item_.connect("notify", self._on_item_change)
-        for prop in ["xposition", "yposition"]:
+        for prop in ("xposition", "yposition"):
             item_.connect(f"notify::{prop}", self._on_item_position_change)
 
     def _on_item_position_change(self, _item, _ignored):
@@ -411,7 +411,7 @@ class Data(GObject.Object, Graphs.DataInterface):
         axes = [
             [direction, False, [], [],
              figure_settings.get_property(f"{direction}_scale")]
-            for direction in ["bottom", "left", "top", "right"]
+            for direction in ("bottom", "left", "top", "right")
         ]
         for item_ in self:
             if item_.__gtype_name__ != "GraphsDataItem":

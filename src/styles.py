@@ -99,7 +99,7 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
         application.get_style_manager().connect(
             "notify", self._on_style_select,
         )
-        for prop in ["use-custom-style", "custom-style"]:
+        for prop in ("use-custom-style", "custom-style"):
             figure_settings.connect(
                 f"notify::{prop}", self._on_style_select,
             )
@@ -223,7 +223,7 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
         canvas = graphs.canvas.Canvas(self.props.application)
         figure_settings = data.get_figure_settings()
         for prop in dir(figure_settings.props):
-            if prop not in ["use_custom_style", "custom_style"]:
+            if prop not in ("use_custom_style", "custom_style"):
                 figure_settings.bind_property(prop, canvas, prop, 1 | 2)
         data.bind_property("items", canvas, "items", 2)
         window.set_canvas(canvas)
@@ -541,15 +541,15 @@ class StyleEditor(Adw.NavigationPage):
         font_description = self.font_chooser.get_font_desc()
         self.style_params["font.sans-serif"] = [font_description.get_family()]
         font_size = font_description.get_size() / Pango.SCALE
-        for key in ["font.size", "axes.labelsize", "xtick.labelsize",
-                    "ytick.labelsize", "legend.fontsize", "figure.labelsize"]:
+        for key in ("font.size", "axes.labelsize", "xtick.labelsize",
+                    "ytick.labelsize", "legend.fontsize", "figure.labelsize"):
             self.style_params[key] = font_size
         titlesize = round(self.titlesize.get_value() * font_size, 1)
         self.style_params["figure.titlesize"] = titlesize
         self.style_params["axes.titlesize"] = titlesize
         font_weight = font_description.get_weight()
-        for key in ["font.weight", "axes.titleweight", "axes.labelweight",
-                    "figure.titleweight", "figure.labelweight"]:
+        for key in ("font.weight", "axes.titleweight", "axes.labelweight",
+                    "figure.titleweight", "figure.labelweight"):
             self.style_params[key] = font_weight
         self.style_params["font.style"] = FONT_STYLE_DICT[
             font_description.get_style()

@@ -20,7 +20,7 @@ def perform_operation(_action, target, self):
     elif operation == "cut" and self.get_mode() != 2:
         return
     args = []
-    if operation in ["center"]:
+    if operation in ("center"):
         args = [self.get_settings("general").get_enum(operation)]
     if operation == "shift":
         figure_settings = self.get_data().get_figure_settings()

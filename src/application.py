@@ -57,7 +57,7 @@ class PythonApplication(Graphs.Application):
             )
             self.add_action(action)
         figure_settings = self.get_data().get_figure_settings()
-        for val in ["left-scale", "right-scale", "top-scale", "bottom-scale"]:
+        for val in ("left-scale", "right-scale", "top-scale", "bottom-scale"):
             action = Gio.SimpleAction.new_stateful(
                 f"change-{val}", GLib.VariantType.new("s"),
                 GLib.Variant.new_string(

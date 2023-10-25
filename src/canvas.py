@@ -411,7 +411,7 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
     @bottom_scale.setter
     def bottom_scale(self, scale: int):
         scale = scales.to_string(scale)
-        for axis in [self._axis, self._right_axis]:
+        for axis in (self._axis, self._right_axis):
             axis.set_xscale(scale)
             axis.set_xlim(None, None)
         self.queue_draw()
@@ -424,7 +424,7 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
     @left_scale.setter
     def left_scale(self, scale: int):
         scale = scales.to_string(scale)
-        for axis in [self._axis, self._top_left_axis]:
+        for axis in (self._axis, self._top_left_axis):
             axis.set_yscale(scale)
             axis.set_ylim(None, None)
         self.queue_draw()
@@ -437,7 +437,7 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
     @top_scale.setter
     def top_scale(self, scale: int):
         scale = scales.to_string(scale)
-        for axis in [self._top_right_axis, self._top_left_axis]:
+        for axis in (self._top_right_axis, self._top_left_axis):
             axis.set_xscale(scale)
             axis.set_xlim(None, None)
         self.queue_draw()
@@ -450,7 +450,7 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
     @right_scale.setter
     def right_scale(self, scale: int):
         scale = scales.to_string(scale)
-        for axis in [self._top_right_axis, self._right_axis]:
+        for axis in (self._top_right_axis, self._right_axis):
             axis.set_yscale(scale)
             axis.set_ylim(None, None)
         self.queue_draw()
@@ -462,7 +462,7 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
 
     @min_bottom.setter
     def min_bottom(self, value: float):
-        for axis in [self._axis, self._right_axis]:
+        for axis in (self._axis, self._right_axis):
             axis.set_xlim(value, None)
         self.queue_draw()
 
@@ -473,7 +473,7 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
 
     @max_bottom.setter
     def max_bottom(self, value: float):
-        for axis in [self._axis, self._right_axis]:
+        for axis in (self._axis, self._right_axis):
             axis.set_xlim(None, value)
         self.queue_draw()
 
@@ -484,7 +484,7 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
 
     @min_left.setter
     def min_left(self, value: float):
-        for axis in [self._axis, self._top_left_axis]:
+        for axis in (self._axis, self._top_left_axis):
             axis.set_ylim(value, None)
         self.queue_draw()
 
@@ -495,7 +495,7 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
 
     @max_left.setter
     def max_left(self, value: float):
-        for axis in [self._axis, self._top_left_axis]:
+        for axis in (self._axis, self._top_left_axis):
             axis.set_ylim(None, value)
         self.queue_draw()
 
@@ -506,7 +506,7 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
 
     @min_top.setter
     def min_top(self, value: float):
-        for axis in [self._top_left_axis, self._top_right_axis]:
+        for axis in (self._top_left_axis, self._top_right_axis):
             axis.set_xlim(value, None)
         self.highlight.load(self)
         self.queue_draw()
@@ -518,7 +518,7 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
 
     @max_top.setter
     def max_top(self, value: float):
-        for axis in [self._top_left_axis, self._top_right_axis]:
+        for axis in (self._top_left_axis, self._top_right_axis):
             axis.set_xlim(None, value)
         self.highlight.load(self)
         self.queue_draw()
@@ -530,7 +530,7 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
 
     @min_right.setter
     def min_right(self, value: float):
-        for axis in [self._right_axis, self._top_right_axis]:
+        for axis in (self._right_axis, self._top_right_axis):
             axis.set_ylim(value, None)
         self.queue_draw()
 
@@ -541,7 +541,7 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
 
     @max_right.setter
     def max_right(self, value: float):
-        for axis in [self._right_axis, self._top_right_axis]:
+        for axis in (self._right_axis, self._top_right_axis):
             axis.set_ylim(None, value)
         self.queue_draw()
 
@@ -646,7 +646,7 @@ class _DummyToolbar(NavigationToolbar2):
     def push_current(self):
         """Use custom functionality for the view clipboard."""
         self.canvas.highlight.load(self.canvas)
-        for direction in ["bottom", "left", "top", "right"]:
+        for direction in ("bottom", "left", "top", "right"):
             self.canvas.notify(f"min-{direction}")
             self.canvas.notify(f"max-{direction}")
         self.canvas.application.get_data().add_view_history_state()
