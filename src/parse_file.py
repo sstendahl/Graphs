@@ -42,8 +42,9 @@ def import_from_xrdml(self, file):
             end_pos = float(end_pos[0].firstChild.data)
             xdata = numpy.linspace(start_pos, end_pos, len(ydata))
             xdata = numpy.ndarray.tolist(xdata)
+    style = self.get_figure_style_manager().get_selected_style_params()
     return [item.DataItem.new(
-        xdata, ydata, name=utilities.get_filename(file),
+        style, xdata, ydata, name=utilities.get_filename(file),
         xlabel=f"{scan_axis} ({unit})", ylabel=_("Intensity (cps)"),
     )]
 
@@ -61,9 +62,10 @@ def import_from_xry(self, file):
     item_count = int(info[0])
 
     name = utilities.get_filename(file)
+    style = self.get_figure_style_manager().get_selected_style_params()
     items = [
         item.DataItem.new(
-            name=f"{name} - {i + 1}" if item_count > 1 else name,
+            style, name=f"{name} - {i + 1}" if item_count > 1 else name,
             xlabel=_("β (°)"), ylabel=_("R (1/s)"),
         ) for i in range(item_count)
     ]
@@ -79,7 +81,7 @@ def import_from_xry(self, file):
         values = row.strip().split()
         text = " ".join(values[7:])
         items.append(item.TextItem.new(
-            float(values[5]), float(values[6]), text, name=text,
+            style, float(values[5]), float(values[6]), text, name=text,
         ))
     return items
 
@@ -91,7 +93,8 @@ def _swap(string):
 
 
 def import_from_columns(self, file):
-    item_ = item.DataItem.new(name=utilities.get_filename(file))
+    style = self.get_figure_style_manager().get_selected_style_params()
+    item_ = item.DataItem.new(style, name=utilities.get_filename(file))
     columns_params = self.get_settings().get_child(
         "import-params").get_child("columns")
     column_x = columns_params.get_int("column-x")

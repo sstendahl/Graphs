@@ -101,18 +101,18 @@ def _migrate_styles(old_styles_dir, new_config_dir):
     if not new_styles_dir.query_exists(None):
         new_styles_dir.make_directory_with_parents()
     enumerator = old_styles_dir.enumerate_children("default::*", 0, None)
+    adwaita = style_io.parse(Gio.File.new_for_uri(
+        "resource:///se/sjoerd/Graphs/styles/adwaita.mplstyle",
+    ))
     for file in map(enumerator.get_child, enumerator):
         stylename = Path(utilities.get_filename(file)).stem
         if stylename not in SYSTEM_STYLES:
-            params = style_io.parse_style(file)
-            adwaita = Gio.File.new_for_uri(
-                "resource:///se/sjoerd/Graphs/styles/adwaita.mplstyle",
-            )
-            for key, value in style_io.parse_style(adwaita).items():
+            params = style_io.parse(file)
+            for key, value in adwaita.items():
                 if key not in params:
                     params[key] = value
             params.name = stylename
-            style_io.write_style(new_styles_dir.get_child_for_display_name(
+            style_io.write(new_styles_dir.get_child_for_display_name(
                 f"{stylename.lower().replace(' ', '-')}.mplstyle",
             ), params)
         file.delete(None)

@@ -12,8 +12,6 @@ from gi.repository import GObject, Graphs
 
 from graphs import item, utilities
 
-from matplotlib import pyplot
-
 import numpy
 
 
@@ -168,7 +166,9 @@ class Data(GObject.Object, Graphs.DataInterface):
         settings = application.get_settings()
         handle_duplicates = \
             settings.get_child("general").get_enum("handle-duplicates")
-        color_cycle = pyplot.rcParams["axes.prop_cycle"].by_key()["color"]
+        style_manager = self.get_application().get_figure_style_manager()
+        selected_style = style_manager.get_selected_style_params()
+        color_cycle = selected_style["axes.prop_cycle"].by_key()["color"]
         used_colors = []
 
         def _append_used_color(color):

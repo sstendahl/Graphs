@@ -21,7 +21,7 @@ FONT_SIZE_KEYS = [
 ]
 
 
-def parse_style(file):
+def parse(file):
     """
     Parse a style to RcParams.
 
@@ -90,7 +90,7 @@ WRITE_IGNORELIST = STYLE_IGNORELIST + [
 ]
 
 
-def write_style(file, style):
+def write(file, style):
     stream = file_io.get_write_stream(file)
     file_io.write_string(stream, "# Generated via Graphs\n")
     file_io.write_string(stream, f"# {style.name}\n")

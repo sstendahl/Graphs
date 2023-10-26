@@ -28,9 +28,11 @@ class CurveFittingWindow(Graphs.CurveFittingTool):
         )
         self.equation = self.get_equation()
         ui.bind_values_to_settings(
-            self.get_application().get_settings("curve-fitting"), self)
+            application.get_settings("curve-fitting"), self)
         self.get_confirm_button().connect("clicked", self.add_fit)
-        canvas = Canvas(application)
+        style = application.get_figure_style_manager(
+        ).get_system_style_params()
+        canvas = Canvas(application, style)
         self.param = []
         self.sigma = []
         self.r2 = 0
@@ -43,17 +45,18 @@ class CurveFittingWindow(Graphs.CurveFittingTool):
             self.fitting_parameters.add_items([FittingParameter(name=var)])
         # Generate item for the data that is fitted to
         self.data_curve = DataItem.new(
-            xdata=item.xdata, ydata=item.ydata, name=item.get_name(),
-            color="#1A5FB4",
+            style, xdata=item.xdata, ydata=item.ydata,
+            name=item.get_name(), color="#1A5FB4",
         )
         self.data_curve.linestyle = 0
         self.data_curve.markerstyle = 1
         self.data_curve.markersize = 13
 
         # Generate item for the fit
-        self.fitted_curve = DataItem.new(color="#A51D2D")
+        self.fitted_curve = DataItem.new(style, color="#A51D2D")
 
         self.fill = FillItem.new(
+            style,
             (self.fitted_curve.xdata,
              self.fitted_curve.ydata, self.fitted_curve.ydata),
             color="#1A5FB4",
@@ -229,7 +232,10 @@ class CurveFittingWindow(Graphs.CurveFittingTool):
 
     def add_fit(self, _widget):
         """Add fitted data to the items in the main application"""
-        self.get_application().get_data().add_items([DataItem.new(
+        application = self.get_application()
+        style_manager = application.get_figure_style_manager()
+        application.get_data().add_items([DataItem.new(
+            style_manager.get_selected_style_params(),
             name=self.fitted_curve.get_name(),
             xdata=self.fitted_curve.xdata, ydata=self.fitted_curve.ydata,
         )])

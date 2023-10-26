@@ -51,9 +51,12 @@ class AddEquationWindow(Adw.Window):
             name = str(self.name.get_text())
             if name == "":
                 name = f"Y = {values['equation']}"
-            self.get_application().get_data().add_items([
-                DataItem.new(xdata, ydata, name=name),
-            ])
+            application = self.get_application()
+            style_manager = application.get_figure_style_manager()
+            application.get_data().add_items([DataItem.new(
+                style_manager.get_selected_style_params(),
+                xdata, ydata, name=name,
+            )])
             self.destroy()
         except ValueError as error:
             self.toast_overlay.add_toast(Adw.Toast(title=error))
