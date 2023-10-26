@@ -13,14 +13,14 @@ from graphs.transform_data import TransformWindow
 
 def perform_operation(_action, target, self):
     operation = target.get_string().removesuffix("_button")
-    if operation == "combine":
-        return operations.combine(self)
+    if operation in ("combine", ):
+        return getattr(operations, operation)(self)
     elif operation == "custom_transformation":
         return TransformWindow(self)
     elif operation == "cut" and self.get_mode() != 2:
         return
     args = []
-    if operation in ["center"]:
+    if operation in ("center", ):
         args = [self.get_settings("general").get_enum(operation)]
     if operation == "shift":
         figure_settings = self.get_data().get_figure_settings()

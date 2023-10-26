@@ -12,6 +12,8 @@ def new_from_dict(dictionary: dict):
             cls = DataItem
         case "GrapsTextItem":
             cls = TextItem
+        case "GrapsFillItem":
+            cls = FillItem
         case _:
             pass
     dictionary.pop("type")
@@ -42,16 +44,14 @@ class DataItem(Graphs.Item):
             linewidth=params["lines.linewidth"],
             markerstyle=misc.MARKERSTYLES.index(params["lines.marker"]),
             markersize=params["lines.markersize"],
-            xdata=[] if xdata is None else xdata,
-            ydata=[] if ydata is None else ydata, **kwargs,
+            xdata=xdata, ydata=ydata, **kwargs,
         )
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        if self.props.xdata is None:
-            self.props.xdata = []
-        if self.props.ydata is None:
-            self.props.ydata = []
+        for prop in ("xdata", "ydata"):
+            if self.get_property(prop) is None:
+                self.set_property(prop, [])
 
     def reset(self):
         params = pyplot.rcParams
@@ -80,10 +80,22 @@ class TextItem(Graphs.Item):
             xanchor=xanchor, yanchor=yanchor, text=text, **kwargs,
         )
 
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-
     def reset(self):
         params = pyplot.rcParams
         self.props.size = params["font.size"]
         self.props.color = params["text.color"]
+
+
+class FillItem(Graphs.Item):
+    __gtype_name__ = "GraphsFillItem"
+
+    data = GObject.Property(type=object)
+
+    @staticmethod
+    def new(data, **kwargs):
+        return FillItem(data=data, **kwargs)
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        if self.props.data is None:
+            self.props.data = (None, None, None)

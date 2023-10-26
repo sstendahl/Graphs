@@ -121,7 +121,7 @@ class FigureSettingsWindow(Adw.Window):
                 used_axes[i][1] = True
         for (direction, visible) in used_axes:
             if visible:
-                for s in ["min_", "max_"]:
+                for s in ("min_", "max_"):
                     entry = getattr(self, s + direction)
                     entry.set_text(str(self.props.figure_settings.get_property(
                         s + direction,

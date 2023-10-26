@@ -7,7 +7,7 @@ from gi.repository import Adw, GObject, Graphs, Gtk
 from graphs import ui, utilities
 from graphs.canvas import Canvas
 from graphs.data import Data
-from graphs.item import DataItem
+from graphs.item import DataItem, FillItem
 
 import numpy
 
@@ -53,16 +53,17 @@ class CurveFittingWindow(Graphs.CurveFittingTool):
         # Generate item for the fit
         self.fitted_curve = DataItem.new(color="#A51D2D")
 
-        canvas.props.items = [self.fitted_curve, self.data_curve]
-
-        # Set up canvas
-        axis = canvas.axes[0]
-        self.fill = axis.fill_between(
-            self.fitted_curve.xdata,
-            [0], [1],
-            color=canvas.rubberband_fill_color,
+        self.fill = FillItem.new(
+            (self.fitted_curve.xdata,
+             self.fitted_curve.ydata, self.fitted_curve.ydata),
+            color="#1A5FB4",
             alpha=0.15,
         )
+
+        # Set up canvas
+        canvas.props.items = [self.fitted_curve, self.data_curve, self.fill]
+
+        axis = canvas.axes[0]
         axis.yscale = "linear"
         axis.xscale = "linear"
         canvas.highlight_enabled = False
@@ -222,12 +223,9 @@ class CurveFittingWindow(Graphs.CurveFittingTool):
         if min(lower_bound) < middle - 1e5 * span:
             lower_bound = [middle - 1e5 * span]
 
-        dummy = self.canvas.axes[0].fill_between(
-            self.fitted_curve.xdata, lower_bound, upper_bound,
+        self.fill.props.data = (
+            self.fitted_curve.props.xdata, lower_bound, upper_bound,
         )
-        dp = dummy.get_paths()[0]
-        dummy.remove()
-        self.fill.set_paths([dp.vertices])
 
     def add_fit(self, _widget):
         """Add fitted data to the items in the main application"""

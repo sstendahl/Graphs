@@ -3,6 +3,8 @@ from gi.repository import GObject
 
 from graphs import misc, utilities
 
+from matplotlib.figure import Figure
+
 
 def new_for_item(canvas, item):
     match item.__gtype_name__:
@@ -10,6 +12,8 @@ def new_for_item(canvas, item):
             cls = DataItemArtistWrapper
         case "GraphsTextItem":
             cls = TextItemArtistWrapper
+        case "GraphsFillItem":
+            cls = FillItemArtistWrapper
         case _:
             pass
     artist = cls(
@@ -110,7 +114,7 @@ class DataItemArtistWrapper(ItemArtistWrapper):
             linestyle=misc.LINESTYLES[item.props.linestyle],
             marker=misc.MARKERSTYLES[item.props.markerstyle],
         )[0]
-        for prop in ["selected", "linewidth", "markersize"]:
+        for prop in ("selected", "linewidth", "markersize"):
             self.set_property(prop, item.get_property(prop))
             self.connect(f"notify::{prop}", self._set_properties)
         self._set_properties(None, None)
@@ -166,4 +170,25 @@ class TextItemArtistWrapper(ItemArtistWrapper):
             label=utilities.shorten_label(item.get_name(), 40),
             color=item.get_color(), alpha=item.get_alpha(), clip_on=True,
             fontsize=item.props.size, rotation=item.props.rotation,
+        )
+
+
+class FillItemArtistWrapper(ItemArtistWrapper):
+    __gtype_name__ = "GraphsFillItemArtistWrapper"
+
+    @GObject.Property(type=object, flags=2)
+    def data(self):
+        pass
+
+    @data.setter
+    def data(self, data):
+        dummy = Figure().add_subplot().fill_between(*data)
+        self._artist.set_paths([dummy.get_paths()[0].vertices])
+
+    def __init__(self, axis, item):
+        super().__init__()
+        self._artist = axis.fill_between(
+            *item.props.data,
+            label=utilities.shorten_label(item.get_name(), 40),
+            color=item.get_color(), alpha=item.get_alpha(),
         )
