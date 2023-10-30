@@ -2,7 +2,7 @@
 <schemalist gettext-domain="graphs">
   <enum id="se.sjoerd.Graphs.general.center-values">
     <value nick="Center at maximum Y value" value="0"/>
-    <value nick="Center at middle coordinate" value="1"/>
+    <value nick="Center at middle X value" value="1"/>
   </enum>
 
   <enum id="se.sjoerd.Graphs.general.handle-duplicates-values">
@@ -62,7 +62,7 @@
 
   <schema id="se.sjoerd.Graphs.general">
     <key name="center" enum="se.sjoerd.Graphs.general.center-values">
-      <default>"Center at middle coordinate"</default>
+      <default>"Center at middle X value"</default>
     </key>
     <key name="handle-duplicates" enum="se.sjoerd.Graphs.general.handle-duplicates-values">
       <default>"Auto-rename duplicates"</default>
