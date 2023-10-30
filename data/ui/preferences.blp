@@ -12,13 +12,15 @@ template $GraphsPreferencesWindow : Adw.PreferencesWindow {
 
       Adw.ComboRow center {
         title: _("Center Action Behaviour");
+        subtitle: _("Which value to center on when performing a center action");
         model: StringList{
-          strings [_("Center at maximum Y value"), _("Center at middle coordinate")]
+          strings [_("Center at maximum Y value"), _("Center at middle X value")]
         };
       }
 
       Adw.ComboRow handle_duplicates {
         title: _("Handle Duplicate Items");
+        subtitle: _("How to treat imported files with identical filenames");
         model: StringList{
           strings [_("Auto-rename duplicates"), _("Ignore duplicates"), _("Add duplicates"), _("Override existing items")]
         };
