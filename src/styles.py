@@ -225,7 +225,7 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
                 if stylename == style.name:
                     try:
                         style_params = style_io.parse(style.file)
-                        if not style.mutable:
+                        if style.mutable:
                             style_params = self.complete_style(style_params)
                         self._selected_style_params = style_params
                         return
