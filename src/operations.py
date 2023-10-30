@@ -186,7 +186,7 @@ def shift(item, xdata, ydata, left_scale, right_scale, items, ranges):
 
     for index, item_ in enumerate(data_list):
         # Compare first element with itself, not "previous" item
-        index = 1 if index == 0 else index
+        index = 1 if index == 0 and len(data_list) > 1 else index
 
         previous_item = data_list[index - 1]
 
