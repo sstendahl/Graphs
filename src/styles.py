@@ -280,7 +280,7 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
         style_io.write(destination, source)
 
     def complete_style(self, params):
-        for key, value in self.get_system_style_params().items():
+        for key, value in self._system_style_params.items():
             if key not in params:
                 params[key] = value
         return params
