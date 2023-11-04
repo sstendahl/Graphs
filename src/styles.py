@@ -12,17 +12,9 @@ from cycler import cycler
 from gi.repository import Adw, GLib, GObject, Gdk, Gio, Graphs, Gtk, Pango
 
 import graphs
-from graphs import file_io, style_io, ui, utilities
+from graphs import style_io, ui, utilities
 
-from matplotlib import RcParams, rc_context
-from matplotlib.figure import Figure
-
-import numpy
-
-
-_PREVIEW_XDATA = numpy.linspace(0, 10, 1000)
-_PREVIEW_YDATA1 = numpy.sin(_PREVIEW_XDATA)
-_PREVIEW_YDATA2 = numpy.cos(_PREVIEW_XDATA)
+from matplotlib import RcParams
 
 
 def _compare_styles(a: Graphs.Style, b: Graphs.Style) -> int:
@@ -57,25 +49,19 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
             style_model=Gio.ListStore.new(Graphs.Style),
         )
         self._stylenames = []
-        self._cache_dir = utilities.get_cache_directory()
-        if not self._cache_dir.query_exists(None):
-            self._cache_dir.make_directory_with_parents(None)
-        enumerator = self._cache_dir.enumerate_children("default::*", 0, None)
-        for file in map(enumerator.get_child, enumerator):
-            file.delete(None)
-        enumerator.close(None)
         directory = Gio.File.new_for_uri("resource:///se/sjoerd/Graphs/styles")
         enumerator = directory.enumerate_children("default::*", 0, None)
         for file in map(enumerator.get_child, enumerator):
             style_params, name = style_io.parse(file)
             # TODO: bundle in distribution
-            preview = self._generate_preview(style_params, name)
+            preview = style_io.generate_preview(style_params)
             self._stylenames.append(name)
             self.props.style_model.insert_sorted(
                 Graphs.Style.new(name, file, preview, False),
                 _compare_styles,
             )
         enumerator.close(None)
+        # TODO: add System style preview
         self._system_style = Graphs.Style.new(_("System"), None, None, False)
         self._update_system_style()
         self.props.style_model.insert(0, self._system_style)
@@ -123,7 +109,7 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
                 _generate_filename(new_name),
             )
             style_io.write(style_params, new_name, file)
-        preview = self._generate_preview(style_params, name)
+        preview = style_io.generate_preview(style_params)
         self._stylenames.append(name)
         self.props.style_model.insert_sorted(
             Graphs.Style.new(name, file, preview, True), _compare_styles,
@@ -169,9 +155,7 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
         if event_type == 1:
             for obj in style_model:
                 if obj.get_name() == stylename:
-                    obj.set_preview(
-                        self._generate_preview(style_params, stylename),
-                    )
+                    obj.set_preview(style_io.generate_preview(style_params))
                     break
             possible_visual_impact = False
         elif event_type == 3:
@@ -255,25 +239,6 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
         self.props.use_custom_style = False
         self.props.custom_style = self._system_style_name
         self.props.application.get_window().add_toast_string(message)
-
-    def _generate_preview(self, style: RcParams, name: str) -> Gio.File:
-        with rc_context(style):
-            # set render size in inch
-            figure = Figure(figsize=(5, 3))
-            axis = figure.add_subplot()
-            axis.plot(_PREVIEW_XDATA, _PREVIEW_YDATA1)
-            axis.plot(_PREVIEW_XDATA, _PREVIEW_YDATA2)
-            axis.set_xlabel(_("X Label"))
-            axis.set_xlabel(_("Y Label"))
-            buffer = io.BytesIO()
-            figure.savefig(buffer, format="svg")
-        file = \
-            self._cache_dir.get_child_for_display_name(f"{name}.svg")
-        stream = file_io.get_write_stream(file)
-        stream.write(buffer.getvalue())
-        buffer.close()
-        stream.close()
-        return file
 
     def copy_style(self, template: str, new_name: str) -> None:
         new_name = utilities.get_duplicate_string(

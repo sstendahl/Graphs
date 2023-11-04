@@ -8,14 +8,15 @@ namespace Graphs {
 
     public class Style : Object {
         public string name { get; construct set; default = ""; }
+        // TODO: make non-nullable
         public File? preview { get; set; }
         public File? file { get; construct set; }
         public bool mutable { get; construct set; }
 
         public Style (string name, File? file, File? preview, bool mutable) {
-         Object (
-           name: name, file: file, preview: preview, mutable: mutable
-         );
+            Object (
+                name: name, file: file, preview: preview, mutable: mutable
+            );
         }
     }
 }

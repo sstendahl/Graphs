@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
+import io
 import logging
 from gettext import gettext as _
 
@@ -6,9 +7,12 @@ from gi.repository import Gio
 
 from graphs import file_io, utilities
 
-from matplotlib import RcParams, cbook
+from matplotlib import RcParams, cbook, rc_context
+from matplotlib.figure import Figure
 from matplotlib.font_manager import font_scalings, weight_dict
 from matplotlib.style.core import STYLE_BLACKLIST
+
+import numpy
 
 
 STYLE_IGNORELIST = [
@@ -106,3 +110,26 @@ def write(file: Gio.File, name: str, style: RcParams):
             line = f"{key}: {value}\n"
             file_io.write_string(stream, line)
     stream.close()
+
+
+_PREVIEW_XDATA = numpy.linspace(0, 10, 1000)
+_PREVIEW_YDATA1 = numpy.sin(_PREVIEW_XDATA)
+_PREVIEW_YDATA2 = numpy.cos(_PREVIEW_XDATA)
+
+
+def generate_preview(style: RcParams) -> Gio.File:
+    buffer = io.BytesIO()
+    with rc_context(style):
+        # set render size in inch
+        figure = Figure(figsize=(5, 3))
+        axis = figure.add_subplot()
+        axis.plot(_PREVIEW_XDATA, _PREVIEW_YDATA1)
+        axis.plot(_PREVIEW_XDATA, _PREVIEW_YDATA2)
+        axis.set_xlabel(_("X Label"))
+        axis.set_xlabel(_("Y Label"))
+        figure.savefig(buffer, format="svg")
+    file, stream = Gio.File.new_tmp(None)
+    stream.get_output_stream().write(buffer.getvalue())
+    buffer.close()
+    stream.close()
+    return file
