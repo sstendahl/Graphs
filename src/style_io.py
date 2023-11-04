@@ -2,6 +2,8 @@
 import logging
 from gettext import gettext as _
 
+from gi.repository import Gio
+
 from graphs import file_io, utilities
 
 from matplotlib import RcParams, cbook
@@ -21,7 +23,7 @@ FONT_SIZE_KEYS = [
 ]
 
 
-def parse(file):
+def parse(file: Gio.File) -> (RcParams, str):
     """
     Parse a style to RcParams.
 
@@ -36,7 +38,7 @@ def parse(file):
         for line_number, line in enumerate(lines, 1):
             line = line.strip()
             if line_number == 2:
-                style.name = line[2:]
+                name = line[2:]
             line = cbook._strip_comment(line)
             if not line:
                 continue
@@ -80,7 +82,7 @@ def parse(file):
                         message.format(filename, line_number))
     except UnicodeDecodeError:
         logging.exception(_("Could not parse {}").format(filename))
-    return style
+    return style, name
 
 
 WRITE_IGNORELIST = STYLE_IGNORELIST + [
@@ -90,10 +92,10 @@ WRITE_IGNORELIST = STYLE_IGNORELIST + [
 ]
 
 
-def write(file, style):
+def write(file: Gio.File, name: str, style: RcParams):
     stream = file_io.get_write_stream(file)
     file_io.write_string(stream, "# Generated via Graphs\n")
-    file_io.write_string(stream, f"# {style.name}\n")
+    file_io.write_string(stream, f"# {name}\n")
     for key, value in style.items():
         if key not in STYLE_BLACKLIST and key not in WRITE_IGNORELIST:
             value = str(value).replace("#", "")

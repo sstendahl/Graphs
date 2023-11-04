@@ -103,18 +103,17 @@ def _migrate_styles(old_styles_dir, new_config_dir):
     enumerator = old_styles_dir.enumerate_children("default::*", 0, None)
     adwaita = style_io.parse(Gio.File.new_for_uri(
         "resource:///se/sjoerd/Graphs/styles/adwaita.mplstyle",
-    ))
+    ))[0]
     for file in map(enumerator.get_child, enumerator):
         stylename = Path(utilities.get_filename(file)).stem
         if stylename not in SYSTEM_STYLES:
-            params = style_io.parse(file)
+            params = style_io.parse(file)[0]
             for key, value in adwaita.items():
                 if key not in params:
                     params[key] = value
-            params.name = stylename
             style_io.write(new_styles_dir.get_child_for_display_name(
                 f"{stylename.lower().replace(' ', '-')}.mplstyle",
-            ), params)
+            ), stylename, params)
         file.delete(None)
     enumerator.close(None)
     old_styles_dir.delete(None)

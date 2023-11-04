@@ -179,19 +179,16 @@ template $GraphsFigureSettingsWindow : Adw.Window {
                     }
                   }
 
-                  Adw.ActionRow style_row {
+                  Adw.ActionRow {
                     title: _("Style");
-                    activatable-widget: styles;
                     hexpand: true;
-
-                    Button styles {
-                      tooltip-text: _("Choose Style");
-                      valign: center;
-                      clicked => $choose_style();
-                      styles ["flat"]
-                      Image {
-                        icon-name: "right-symbolic";
-                      }
+                    activatable: true;
+                    activated => $choose_style();
+                    [suffix]
+                    Label style_name {}
+                    [suffix]
+                    Image {
+                      icon-name: "go-next-symbolic";
                     }
                   }
                 }

@@ -20,7 +20,7 @@ def _on_bind(_factory, item, window):
     widget = item.get_child()
     style = item.get_item()
     widget.style = style
-    if style.mutable:
+    if style.get_mutable():
         widget.edit_button.set_visible(True)
         widget.edit_button.connect("clicked", window.edit_style, style)
 
@@ -58,6 +58,7 @@ class FigureSettingsWindow(Adw.Window):
     navigation_view = Gtk.Template.Child()
     grid_view = Gtk.Template.Child()
     toast_overlay = Gtk.Template.Child()
+    style_name = Gtk.Template.Child()
 
     figure_settings = GObject.Property(type=Graphs.FigureSettings)
 
@@ -92,11 +93,13 @@ class FigureSettingsWindow(Adw.Window):
         )
         if self.props.figure_settings.get_use_custom_style():
             stylename = self.props.figure_settings.get_custom_style()
+            self.style_name.set_text(stylename)
             for index, style in enumerate(selection_model):
-                if index > 0 and style.name == stylename:
+                if index > 0 and style.get_name() == stylename:
                     selection_model.set_selected(index)
                     break
         else:
+            self.style_name.set_text(_("System"))
             selection_model.set_selected(0)
         self.present()
 
@@ -105,12 +108,15 @@ class FigureSettingsWindow(Adw.Window):
         figure_settings = self.props.figure_settings
         selected_item = model.get_selected_item()
         # Don't trigger unneccesary reloads
-        if selected_item.file is None:  # System style
+        if selected_item.get_file() is None:  # System style
             if figure_settings.get_use_custom_style():
                 figure_settings.set_use_custom_style(False)
+                self.style_name.set_text(_("System"))
         else:
-            if selected_item.name != figure_settings.get_custom_style():
-                figure_settings.set_custom_style(selected_item.name)
+            stylename = selected_item.get_name()
+            if stylename != figure_settings.get_custom_style():
+                figure_settings.set_custom_style(stylename)
+                self.style_name.set_text(stylename)
             if not figure_settings.get_use_custom_style():
                 figure_settings.set_use_custom_style(True)
 
@@ -141,7 +147,7 @@ class FigureSettingsWindow(Adw.Window):
         figure_settings = \
             self.props.application.get_data().get_figure_settings()
         if figure_settings.get_use_custom_style() \
-                and figure_settings.get_custom_style() == style.name:
+                and figure_settings.get_custom_style() == style.get_name():
             self.grid_view.get_model().set_selected(0)
         self.style_editor.load_style(style)
         self.navigation_view.push(self.style_editor)
