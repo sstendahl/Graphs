@@ -1,5 +1,4 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
-import io
 import logging
 from gettext import gettext as _
 
@@ -118,7 +117,8 @@ _PREVIEW_YDATA2 = numpy.cos(_PREVIEW_XDATA)
 
 
 def generate_preview(style: RcParams) -> Gio.File:
-    buffer = io.BytesIO()
+    file, stream = Gio.File.new_tmp(None)
+    wrapper = file_io.FileLikeWrapper.new_for_io_stream(stream)
     with rc_context(style):
         # set render size in inch
         figure = Figure(figsize=(5, 3))
@@ -127,9 +127,6 @@ def generate_preview(style: RcParams) -> Gio.File:
         axis.plot(_PREVIEW_XDATA, _PREVIEW_YDATA2)
         axis.set_xlabel(_("X Label"))
         axis.set_xlabel(_("Y Label"))
-        figure.savefig(buffer, format="svg")
-    file, stream = Gio.File.new_tmp(None)
-    stream.get_output_stream().write(buffer.getvalue())
-    buffer.close()
-    stream.close()
+        figure.savefig(wrapper, format="svg")
+    wrapper.close()
     return file
