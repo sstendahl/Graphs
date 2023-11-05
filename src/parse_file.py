@@ -51,7 +51,9 @@ def import_from_xrdml(self, file):
 
 def import_from_xry(self, file):
     """Import data from .xry files used by Leybold X-ray apparatus."""
-    lines = file_io.read_file(file, encoding="ISO-8859-1").splitlines()
+    wrapper = file_io.FileLikeWrapper.new_for_file_readonly(file)
+    lines = wrapper.wrap_text(encoding="ISO-8859-1").readlines()
+    wrapper.close()
     if lines[0].strip() != "XR01":
         raise ParseError(_("Invalid .xry format"))
 
@@ -102,8 +104,10 @@ def import_from_columns(self, file):
     delimiter = columns_params.get_string("delimiter")
     separator = columns_params.get_string("separator").replace(" ", "")
     skip_rows = columns_params.get_int("skip-rows")
-    lines = file_io.read_file(file).splitlines()[skip_rows:]
-    for index, line in enumerate(lines):
+    wrapper = file_io.FileLikeWrapper.new_for_file_readonly(file)
+    for index, line in enumerate(wrapper.wrap_text()):
+        if index <= skip_rows:
+            continue
         values = re.split(delimiter, line.strip())
         if separator == ",":
             values = list(map(_swap, values))
@@ -112,7 +116,7 @@ def import_from_columns(self, file):
                 float_value = utilities.string_to_float(values[0])
                 if float_value is not None:
                     item_.ydata.append(float_value)
-                    item_.xdata.append(index)
+                    item_.xdata.append(index - skip_rows)
             else:
                 try:
                     item_.xdata.append(utilities.string_to_float(
@@ -150,6 +154,7 @@ def import_from_columns(self, file):
                 # If neither heuristic works, we just skip headers
                 except IndexError:
                     pass
+    wrapper.close()
     if not item_.xdata:
         raise ParseError(_("Unable to import from file"))
     return [item_]

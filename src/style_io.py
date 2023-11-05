@@ -37,8 +37,8 @@ def parse(file: Gio.File) -> (RcParams, str):
     style = RcParams()
     filename = utilities.get_filename(file)
     try:
-        lines = file_io.read_file(file).splitlines()
-        for line_number, line in enumerate(lines, 1):
+        wrapper = file_io.FileLikeWrapper.new_for_file_readonly(file)
+        for line_number, line in enumerate(wrapper.wrap_text(), 1):
             line = line.strip()
             if line_number == 2:
                 name = line[2:]
@@ -83,6 +83,7 @@ def parse(file: Gio.File) -> (RcParams, str):
                     message = _("Bad value in file {} on line {}")
                     logging.exception(
                         message.format(filename, line_number))
+        wrapper.close()
     except UnicodeDecodeError:
         logging.exception(_("Could not parse {}").format(filename))
     return style, name

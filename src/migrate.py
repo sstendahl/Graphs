@@ -167,7 +167,7 @@ class PlotSettings:
 
 class ItemBase:
     def migrate(self) -> dict:
-        dictionary = {"item_type": self.item_type}
+        dictionary = {"type": self.item_type}
         for key, value in self.__dict__.items():
             with contextlib.suppress(KeyError):
                 key = ITEM_MIGRATION_TABLE[key]
@@ -194,7 +194,9 @@ DEFAULT_VIEW = [0, 1, 0, 10, 0, 1, 0, 10]
 def migrate_project(file):
     sys.modules["graphs.misc"] = sys.modules[__name__]
     sys.modules["graphs.item"] = sys.modules[__name__]
-    project = pickle.loads(file_io.read_file(file, None))
+    wrapper = file_io.FileLikeWrapper.new_for_file_readonly(file)
+    project = pickle.load(wrapper)
+    wrapper.close()
 
     figure_settings = project["plot_settings"].migrate()
     current_limits = [figure_settings[key] for key in misc.LIMITS]
@@ -221,7 +223,7 @@ def _migrate_clipboard(clipboard, clipboard_pos, current_limits):
     if len(clipboard) > 100:
         clipboard = clipboard[len(clipboard) - 100:]
     states = [
-        {item.uuid: item.migrate() for item in state.values()}
+        {item.key: item.migrate() for item in state.values()}
         for state in clipboard
     ]
     new_clipboard.append(([], DEFAULT_VIEW.copy()))
@@ -264,7 +266,7 @@ def _migrate_clipboard(clipboard, clipboard_pos, current_limits):
 def _get_limits(items):
     limits = [None] * 8
     for item in items:
-        if item["item_type"] != "Item":
+        if item["type"] != "Item":
             continue
         for count, x_or_y in enumerate(["x", "y"]):
             index = item[f"{x_or_y}position"] * 2 + 4 * count

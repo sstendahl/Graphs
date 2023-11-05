@@ -62,15 +62,19 @@ class FileLikeWrapper(io.BufferedIOBase):
         elif size == 0:
             return b""
         elif size > 0:
-            return self._read_stream.read_bytes(size, None)
-        else:
-            buffer = io.BytesIO()
-            while True:
-                chunk = self._read_stream.read_bytes(4096, None)
-                if chunk.get_size() == 0:
-                    break
-                buffer.write(chunk.get_data())
-            return buffer.getvalue()
+            return self._read_stream.read_bytes(size, None).get_data()
+        buffer = io.BytesIO()
+        while True:
+            chunk = self._read_stream.read_bytes(4096, None)
+            if chunk.get_size() == 0:
+                break
+            buffer.write(chunk.get_data())
+        return buffer.getvalue()
+
+    read1 = read
+
+    def wrap_text(self, **kwargs) -> io.TextIOWrapper:
+        return io.TextIOWrapper(self, **kwargs)
 
 
 def save_item(file, item_):
@@ -100,7 +104,7 @@ def write_json(file, json_object, pretty_print=True):
 
 
 def parse_xml(file):
-    return minidom.parseString(read_file(file))
+    return minidom.parse(FileLikeWrapper.new_for_file_readonly(file))
 
 
 def get_write_stream(file):
@@ -111,8 +115,3 @@ def get_write_stream(file):
 
 def write_string(stream, line, encoding="utf-8"):
     stream.write_bytes(GLib.Bytes(line.encode(encoding)), None)
-
-
-def read_file(file, encoding="utf-8"):
-    content = file.load_bytes(None)[0].get_data()
-    return content if encoding is None else content.decode(encoding)
