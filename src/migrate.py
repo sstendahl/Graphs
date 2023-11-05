@@ -58,17 +58,11 @@ def migrate_config(settings):
 def _migrate_config(settings_, config_file):
     config = file_io.parse_json(config_file)
     for old_key, (category, key) in CONFIG_MIGRATION_TABLE.items():
-        with contextlib.suppress(KeyError):
-            settings = settings_.get_child(category)
+        with contextlib.suppress(KeyError, ValueError):
             value = config[old_key]
             if "scale" in key:
                 value = value.capitalize()
-            if isinstance(value, str):
-                settings.set_string(key, value)
-            elif isinstance(value, bool):
-                settings.set_boolean(key, value)
-            elif isinstance(value, int):
-                settings.set_int(key, value)
+            settings_.get_child(category)[key] = value
     config_file.delete(None)
 
 
@@ -78,10 +72,10 @@ def _migrate_import_params(settings_, import_file):
         for key, value in params.items():
             if key == "separator":
                 settings.set_string(key, f"{value} ")
-            elif isinstance(value, str):
-                settings.set_string(key, value)
+                continue
             elif isinstance(value, int):
-                settings.set_int(key.replace("_", "-"), value)
+                key = key.replace("_", "-")
+            settings[key] = value
     import_file.delete(None)
 
 
