@@ -98,19 +98,17 @@ WRITE_IGNORELIST = STYLE_IGNORELIST + [
 
 
 def write(file: Gio.File, name: str, style: RcParams):
-    stream = file_io.get_write_stream(file)
-    file_io.write_string(stream, "# Generated via Graphs\n")
-    file_io.write_string(stream, f"# {name}\n")
-    for key, value in style.items():
-        if key not in STYLE_BLACKLIST and key not in WRITE_IGNORELIST:
-            value = str(value).replace("#", "")
-            if key != "axes.prop_cycle":
-                value = value.replace("[", "").replace("]", "")
-                value = value.replace("'", "").replace("'", "")
-                value = value.replace('"', "").replace('"', "")
-            line = f"{key}: {value}\n"
-            file_io.write_string(stream, line)
-    stream.close()
+    with file_io.open_wrapped(file, "wt") as wrapper:
+        wrapper.write("# Generated via Graphs\n")
+        wrapper.write(f"# {name}\n")
+        for key, value in style.items():
+            if key not in STYLE_BLACKLIST and key not in WRITE_IGNORELIST:
+                value = str(value).replace("#", "")
+                if key != "axes.prop_cycle":
+                    value = value.replace("[", "").replace("]", "")
+                    value = value.replace("'", "").replace("'", "")
+                    value = value.replace('"', "").replace('"', "")
+                wrapper.write(f"{key}: {value}\n")
 
 
 _PREVIEW_XDATA = numpy.linspace(0, 10, 1000)
