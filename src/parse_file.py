@@ -104,8 +104,8 @@ def import_from_columns(self, file):
     separator = columns_params.get_string("separator").replace(" ", "")
     skip_rows = columns_params.get_int("skip-rows")
     with file_io.FileLikeWrapper.new_for_file_readonly(file) as wrapper:
-        for index, line in enumerate(wrapper.wrap_text()):
-            if index <= skip_rows:
+        for index, line in enumerate(wrapper.wrap_text(), -skip_rows):
+            if index < 0:
                 continue
             values = re.split(delimiter, line.strip())
             if separator == ",":
@@ -115,7 +115,7 @@ def import_from_columns(self, file):
                     float_value = utilities.string_to_float(values[0])
                     if float_value is not None:
                         item_.ydata.append(float_value)
-                        item_.xdata.append(index - skip_rows)
+                        item_.xdata.append(index)
                 else:
                     try:
                         item_.xdata.append(utilities.string_to_float(
