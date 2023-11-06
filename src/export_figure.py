@@ -39,16 +39,15 @@ class ExportFigureWindow(Adw.Window):
         def on_response(dialog, response):
             with contextlib.suppress(GLib.GError):
                 file = dialog.save_finish(response)
-                wrapper = file_io.FileLikeWrapper.new_for_file_replace(file)
-                self._canvas.figure.savefig(
-                    wrapper, format=file_suffixes[0],
-                    dpi=int(self.dpi.get_value()),
-                    transparent=self.transparent.get_active(),
-                )
-                wrapper.close()
-                self.get_application().get_window().add_toast_string(
-                    _("Exported Figure"))
-                self.destroy()
+                with file_io.FileLikeWrapper.new_for_file_replace(file) as w:
+                    self._canvas.figure.savefig(
+                        w, format=file_suffixes[0],
+                        dpi=int(self.dpi.get_value()),
+                        transparent=self.transparent.get_active(),
+                    )
+                    self.get_application().get_window().add_toast_string(
+                        _("Exported Figure"))
+                    self.destroy()
 
         dialog = Gtk.FileDialog()
         dialog.set_initial_name(f"{filename}.{file_suffixes[0]}")

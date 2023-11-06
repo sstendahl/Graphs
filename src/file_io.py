@@ -90,9 +90,8 @@ def save_item(file, item_):
 
 
 def parse_json(file):
-    wrapper = FileLikeWrapper.new_for_file_readonly(file)
-    return json.load(wrapper)
-    wrapper.close()
+    with FileLikeWrapper.new_for_file_readonly(file) as wrapper:
+        return json.load(wrapper)
 
 
 def write_json(file, json_object, pretty_print=True):
@@ -104,7 +103,8 @@ def write_json(file, json_object, pretty_print=True):
 
 
 def parse_xml(file):
-    return minidom.parse(FileLikeWrapper.new_for_file_readonly(file))
+    with FileLikeWrapper.new_for_file_readonly(file) as wrapper:
+        return minidom.parse(wrapper)
 
 
 def get_write_stream(file):

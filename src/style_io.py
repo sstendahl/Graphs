@@ -83,9 +83,10 @@ def parse(file: Gio.File) -> (RcParams, str):
                     message = _("Bad value in file {} on line {}")
                     logging.exception(
                         message.format(filename, line_number))
-        wrapper.close()
     except UnicodeDecodeError:
         logging.exception(_("Could not parse {}").format(filename))
+    finally:
+        wrapper.close()
     return style, name
 
 
@@ -119,8 +120,8 @@ _PREVIEW_YDATA2 = numpy.cos(_PREVIEW_XDATA)
 
 def generate_preview(style: RcParams) -> Gio.File:
     file, stream = Gio.File.new_tmp(None)
-    wrapper = file_io.FileLikeWrapper.new_for_io_stream(stream)
-    with rc_context(style):
+    with file_io.FileLikeWrapper.new_for_io_stream(stream) as wrapper, \
+            rc_context(style):
         # set render size in inch
         figure = Figure(figsize=(5, 3))
         axis = figure.add_subplot()
@@ -129,5 +130,4 @@ def generate_preview(style: RcParams) -> Gio.File:
         axis.set_xlabel(_("X Label"))
         axis.set_xlabel(_("Y Label"))
         figure.savefig(wrapper, format="svg")
-    wrapper.close()
     return file

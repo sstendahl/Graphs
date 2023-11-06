@@ -188,9 +188,8 @@ DEFAULT_VIEW = [0, 1, 0, 10, 0, 1, 0, 10]
 def migrate_project(file):
     sys.modules["graphs.misc"] = sys.modules[__name__]
     sys.modules["graphs.item"] = sys.modules[__name__]
-    wrapper = file_io.FileLikeWrapper.new_for_file_readonly(file)
-    project = pickle.load(wrapper)
-    wrapper.close()
+    with file_io.FileLikeWrapper.new_for_file_readonly(file) as wrapper:
+        project = pickle.load(wrapper)
 
     figure_settings = project["plot_settings"].migrate()
     current_limits = [figure_settings[key] for key in misc.LIMITS]
