@@ -2,11 +2,16 @@
 import logging
 from gettext import gettext as _
 
+from gi.repository import Gio
+
 from graphs import file_io, utilities
 
-from matplotlib import RcParams, cbook
+from matplotlib import RcParams, cbook, rc_context
+from matplotlib.figure import Figure
 from matplotlib.font_manager import font_scalings, weight_dict
 from matplotlib.style.core import STYLE_BLACKLIST
+
+import numpy
 
 
 STYLE_IGNORELIST = [
@@ -21,7 +26,7 @@ FONT_SIZE_KEYS = [
 ]
 
 
-def parse(file):
+def parse(file: Gio.File) -> (RcParams, str):
     """
     Parse a style to RcParams.
 
@@ -32,11 +37,11 @@ def parse(file):
     style = RcParams()
     filename = utilities.get_filename(file)
     try:
-        lines = file_io.read_file(file).splitlines()
-        for line_number, line in enumerate(lines, 1):
+        wrapper = file_io.open_wrapped(file, "rt")
+        for line_number, line in enumerate(wrapper, 1):
             line = line.strip()
             if line_number == 2:
-                style.name = line[2:]
+                name = line[2:]
             line = cbook._strip_comment(line)
             if not line:
                 continue
@@ -80,7 +85,9 @@ def parse(file):
                         message.format(filename, line_number))
     except UnicodeDecodeError:
         logging.exception(_("Could not parse {}").format(filename))
-    return style
+    finally:
+        wrapper.close()
+    return style, name
 
 
 WRITE_IGNORELIST = STYLE_IGNORELIST + [
@@ -90,17 +97,35 @@ WRITE_IGNORELIST = STYLE_IGNORELIST + [
 ]
 
 
-def write(file, style):
-    stream = file_io.get_write_stream(file)
-    file_io.write_string(stream, "# Generated via Graphs\n")
-    file_io.write_string(stream, f"# {style.name}\n")
-    for key, value in style.items():
-        if key not in STYLE_BLACKLIST and key not in WRITE_IGNORELIST:
-            value = str(value).replace("#", "")
-            if key != "axes.prop_cycle":
-                value = value.replace("[", "").replace("]", "")
-                value = value.replace("'", "").replace("'", "")
-                value = value.replace('"', "").replace('"', "")
-            line = f"{key}: {value}\n"
-            file_io.write_string(stream, line)
-    stream.close()
+def write(file: Gio.File, name: str, style: RcParams):
+    with file_io.open_wrapped(file, "wt") as wrapper:
+        wrapper.write("# Generated via Graphs\n")
+        wrapper.write(f"# {name}\n")
+        for key, value in style.items():
+            if key not in STYLE_BLACKLIST and key not in WRITE_IGNORELIST:
+                value = str(value).replace("#", "")
+                if key != "axes.prop_cycle":
+                    value = value.replace("[", "").replace("]", "")
+                    value = value.replace("'", "").replace("'", "")
+                    value = value.replace('"', "").replace('"', "")
+                wrapper.write(f"{key}: {value}\n")
+
+
+_PREVIEW_XDATA = numpy.linspace(0, 10, 1000)
+_PREVIEW_YDATA1 = numpy.sin(_PREVIEW_XDATA)
+_PREVIEW_YDATA2 = numpy.cos(_PREVIEW_XDATA)
+
+
+def generate_preview(style: RcParams) -> Gio.File:
+    file, stream = Gio.File.new_tmp(None)
+    with file_io.FileLikeWrapper.new_for_io_stream(stream) as wrapper, \
+            rc_context(style):
+        # set render size in inch
+        figure = Figure(figsize=(5, 3))
+        axis = figure.add_subplot()
+        axis.plot(_PREVIEW_XDATA, _PREVIEW_YDATA1)
+        axis.plot(_PREVIEW_XDATA, _PREVIEW_YDATA2)
+        axis.set_xlabel(_("X Label"))
+        axis.set_xlabel(_("Y Label"))
+        figure.savefig(wrapper, format="svg")
+    return file

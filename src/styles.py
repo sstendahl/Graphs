@@ -12,25 +12,17 @@ from cycler import cycler
 from gi.repository import Adw, GLib, GObject, Gdk, Gio, Graphs, Gtk, Pango
 
 import graphs
-from graphs import file_io, style_io, ui, utilities
+from graphs import style_io, ui, utilities
 
-from matplotlib import rc_context
-from matplotlib.figure import Figure
-
-import numpy
+from matplotlib import RcParams
 
 
-PREVIEW_XDATA = numpy.linspace(0, 10, 1000)
-PREVIEW_YDATA1 = numpy.sin(PREVIEW_XDATA)
-PREVIEW_YDATA2 = numpy.cos(PREVIEW_XDATA)
-
-
-def _compare_styles(a, b) -> int:
-    if a.file is None:
+def _compare_styles(a: Graphs.Style, b: Graphs.Style) -> int:
+    if a.get_file() is None:
         return -1
-    elif b.file is None:
+    elif b.get_file() is None:
         return 1
-    return GLib.strcmp0(a.name.lower(), b.name.lower())
+    return GLib.strcmp0(a.get_name().lower(), b.get_name().lower())
 
 
 def _generate_filename(name: str) -> str:
@@ -44,37 +36,34 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
     application = GObject.Property(type=Graphs.Application)
     use_custom_style = GObject.Property(type=bool, default=False)
     custom_style = GObject.Property(type=str, default="adwaita")
-    gtk_theme = GObject.Property(type=str, default="")
     style_model = GObject.Property(type=Gio.ListStore)
 
     def __init__(self, application: Graphs.Application):
+        # Check for Ubuntu
         gtk_theme = Gtk.Settings.get_default().get_property("gtk-theme-name")
+        self._system_style_name = "Yaru" \
+            if "SNAP" in os.environ and gtk_theme.lower().startswith("yaru") \
+            else "Adwaita"
         super().__init__(
-            application=application, gtk_theme=gtk_theme.lower(),
-            style_model=Gio.ListStore.new(Style),
+            application=application,
+            style_model=Gio.ListStore.new(Graphs.Style),
         )
-        self._update_styles()
         self._stylenames = []
-        self._cache_dir = utilities.get_cache_directory()
-        if not self._cache_dir.query_exists(None):
-            self._cache_dir.make_directory_with_parents(None)
-        enumerator = self._cache_dir.enumerate_children("default::*", 0, None)
-        for file_info in enumerator:
-            enumerator.get_child(file_info).delete(None)
-        enumerator.close(None)
         directory = Gio.File.new_for_uri("resource:///se/sjoerd/Graphs/styles")
         enumerator = directory.enumerate_children("default::*", 0, None)
         for file in map(enumerator.get_child, enumerator):
-            style_params = style_io.parse(file)
+            style_params, name = style_io.parse(file)
             # TODO: bundle in distribution
-            preview = self._generate_preview(style_params)
-            self._stylenames.append(style_params.name)
+            preview = style_io.generate_preview(style_params)
+            self._stylenames.append(name)
             self.props.style_model.insert_sorted(
-                Style.new(style_params.name, file, preview, False),
+                Graphs.Style.new(name, file, preview, False),
                 _compare_styles,
             )
         enumerator.close(None)
-        self._system_style = Style.new(_("System"), None, None, False)
+        # TODO: add System style preview
+        self._system_style = Graphs.Style.new(_("System"), None, None, False)
+        self._update_system_style()
         self.props.style_model.insert(0, self._system_style)
 
         config_dir = utilities.get_config_directory()
@@ -107,25 +96,26 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
             )
         self._on_style_change()
 
-    def _add_user_style(self, file: Gio.File, style_params=None):
+    def _add_user_style(
+        self, file: Gio.File, style_params: RcParams = None, name: str = None,
+    ) -> None:
         if style_params is None:
-            style_params = self.complete_style(style_io.parse(file))
-        if style_params.name in self._stylenames:
-            style_params.name = utilities.get_duplicate_string(
-                style_params.name, self._stylenames,
-            )
+            tmp_style_params, name = style_io.parse(file)
+            style_params = self.complete_style(tmp_style_params)
+        if name in self._stylenames:
+            new_name = utilities.get_duplicate_string(name, self._stylenames)
             file.delete(None)
             file = self._style_dir.get_child_for_display_name(
-                _generate_filename(style_params.name),
+                _generate_filename(new_name),
             )
-            style_io.write(style_params, file)
-        preview = self._generate_preview(style_params)
-        self._stylenames.append(style_params.name)
+            style_io.write(style_params, new_name, file)
+        preview = style_io.generate_preview(style_params)
+        self._stylenames.append(name)
         self.props.style_model.insert_sorted(
-            Style.new(style_params.name, file, preview, True), _compare_styles,
+            Graphs.Style.new(name, file, preview, True), _compare_styles,
         )
 
-    def get_style_model(self):
+    def get_style_model(self) -> Gio.ListStore:
         return self.props.style_model
 
     def get_stylenames(self) -> list:
@@ -134,13 +124,15 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
     def get_style_dir(self) -> Gio.File:
         return self._style_dir
 
-    def get_selected_style_params(self):
+    def get_selected_style_params(self) -> RcParams:
         return self._selected_style_params
 
-    def get_system_style_params(self):
+    def get_system_style_params(self) -> RcParams:
         return self._system_style_params
 
-    def _on_file_change(self, _monitor, file, _other_file, event_type):
+    def _on_file_change(
+        self, _monitor, file: Gio.File, _other_file, event_type: int,
+    ) -> None:
         if Path(file.peek_path()).stem.startswith("."):
             return
         possible_visual_impact = False
@@ -148,36 +140,38 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
         style_model = self.get_style_model()
         if event_type == 2:
             for index, style in enumerate(style_model):
-                if style.file is not None and file.equal(style.file):
-                    self._stylenames.remove(style.name)
+                file2 = style.get_file()
+                if file2 is not None and file.equal(file2):
+                    stylename = style.get_name()
+                    self._stylenames.remove(stylename)
                     style_model.remove(index)
-                    stylename = style.name
                     break
             if stylename is None:
                 return
             possible_visual_impact = True
         else:
-            style_params = self.complete_style(style_io.parse(file))
-            stylename = style_params.name
+            tmp_style_params, stylename = style_io.parse(file)
+            style_params = self.complete_style(tmp_style_params)
         if event_type == 1:
             for obj in style_model:
-                if obj.name == stylename:
-                    obj.preview = self._generate_preview(style_params)
+                if obj.get_name() == stylename:
+                    obj.set_preview(style_io.generate_preview(style_params))
                     break
             possible_visual_impact = False
         elif event_type == 3:
-            self._add_user_style(file, style_params)
+            self._add_user_style(file, style_params, stylename)
         if possible_visual_impact \
                 and self.props.use_custom_style \
                 and self.props.custom_style == stylename:
             self._on_style_change()
 
-    def _on_style_select(self, _a, _b):
+    def _on_style_select(self, _a, _b) -> None:
         settings = self.props.application.get_settings("general")
         self._on_style_change(settings.get_boolean("override-item-properties"))
 
-    def _on_style_change(self, override=False):
-        self._update_styles()
+    def _on_style_change(self, override: bool = False) -> None:
+        self._update_system_style()
+        self._update_selected_style()
         data = self.props.application.get_data()
         if override:
             color_cycle = self._selected_style_params[
@@ -206,65 +200,47 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
             "sensitive", canvas, "highlight_enabled", 2,
         )
 
-    def _update_styles(self):
-        # Check for Ubuntu
-        system_style = "Yaru" if "SNAP" in os.environ \
-            and self.props.get_gtk_theme.startswith("yaru") else "Adwaita"
+    def _update_system_style(self) -> None:
+        system_style = self._system_style_name
         if Adw.StyleManager.get_default().get_dark():
             system_style += " Dark"
         filename = _generate_filename(system_style)
         self._system_style_params = style_io.parse(Gio.File.new_for_uri(
             "resource:///se/sjoerd/Graphs/styles/" + filename,
-        ))
+        ))[0]
 
+    def _update_selected_style(self) -> None:
         self._selected_style_params = None
-        window = self.props.application.get_window()
         if self.props.use_custom_style:
             stylename = self.props.custom_style
             for style in self.props.style_model:
-                if stylename == style.name:
+                if stylename == style.get_name():
                     try:
-                        style_params = style_io.parse(style.file)
-                        if style.mutable:
+                        style_params = style_io.parse(style.get_file())[0]
+                        if style.get_mutable():
                             style_params = self.complete_style(style_params)
                         self._selected_style_params = style_params
                         return
                     except (ValueError, SyntaxError, AttributeError):
-                        self.props.custom_style = system_style
-                        self.props.use_custom_style = False
-                        window.add_toast_string(
+                        self._reset_selected_style(
                             _(f"Could not parse {stylename}, loading "
                               "system preferred style").format(
                                 stylename=stylename),
                         )
                     break
-            window.add_toast_string(
-                _(f"Plot style {stylename} does not exist "
-                  "loading system preferred").format(stylename=stylename))
-            self.props.custom_style = system_style
-            self.props.use_custom_style = False
+            if self._selected_style_params is None:
+                self._reset_selected_style(
+                    _(f"Plot style {stylename} does not exist "
+                      "loading system preferred").format(stylename=stylename),
+                )
         self._selected_style_params = self._system_style_params
 
-    def _generate_preview(self, style: dict) -> Gio.File:
-        with rc_context(style):
-            # set render size in inch
-            figure = Figure(figsize=(5, 3))
-            axis = figure.add_subplot()
-            axis.plot(PREVIEW_XDATA, PREVIEW_YDATA1)
-            axis.plot(PREVIEW_XDATA, PREVIEW_YDATA2)
-            axis.set_xlabel(_("X Label"))
-            axis.set_xlabel(_("Y Label"))
-            buffer = io.BytesIO()
-            figure.savefig(buffer, format="svg")
-        file = \
-            self._cache_dir.get_child_for_display_name(f"{style.name}.svg")
-        stream = file_io.get_write_stream(file)
-        stream.write(buffer.getvalue())
-        buffer.close()
-        stream.close()
-        return file
+    def _reset_selected_style(self, message: str) -> None:
+        self.props.use_custom_style = False
+        self.props.custom_style = self._system_style_name
+        self.props.application.get_window().add_toast_string(message)
 
-    def copy_style(self, template: str, new_name: str):
+    def copy_style(self, template: str, new_name: str) -> None:
         new_name = utilities.get_duplicate_string(
             new_name, self._stylenames,
         )
@@ -272,29 +248,18 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
             _generate_filename(new_name),
         )
         for style in self.props.style_model:
-            if template == style.name:
-                source = self.complete_style(style_io.parse(style.file)) \
-                    if style.mutable else style_io.parse(style.file)
+            if template == style.get_name():
+                style_params = style_io.parse(style.get_file())[0]
+                source = self.complete_style(style_params) \
+                    if style.get_mutable() else style_params
                 break
-        source.name = new_name
-        style_io.write(destination, source)
+        style_io.write(destination, new_name, source)
 
-    def complete_style(self, params):
+    def complete_style(self, params: RcParams) -> RcParams:
         for key, value in self._system_style_params.items():
             if key not in params:
                 params[key] = value
         return params
-
-
-class Style(GObject.Object):
-    name = GObject.Property(type=str, default="")
-    preview = GObject.Property(type=Gio.File)
-    file = GObject.Property(type=Gio.File)
-    mutable = GObject.Property(type=bool, default=False)
-
-    @staticmethod
-    def new(name, file, preview, mutable):
-        return Style(name=name, file=file, preview=preview, mutable=mutable)
 
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/style_preview.ui")
@@ -311,7 +276,7 @@ class StylePreview(Gtk.AspectFrame):
             self.provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION,
         )
 
-    @GObject.Property(type=Style)
+    @GObject.Property(type=Graphs.Style)
     def style(self):
         return self._style
 
@@ -339,7 +304,7 @@ class StylePreview(Gtk.AspectFrame):
             return
         texture = Gdk.Texture.new_from_file(file)
         self.picture.set_paintable(texture)
-        if self._style.mutable:
+        if self._style.get_mutable():
             buffer = io.BytesIO(texture.save_to_png_bytes().get_data())
             mean = ImageStat.Stat(Image.open(buffer).convert("L")).mean[0]
             buffer.close()
@@ -491,14 +456,15 @@ class StyleEditor(Adw.NavigationPage):
                 button.provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION)
 
     def load_style(self, style):
-        if not style.mutable:
+        if not style.get_mutable():
             return
         self.style = style
         self.style_params = self._style_manager.complete_style(
-            style_io.parse(self.style.file),
+            style_io.parse(self.style.get_file())[0],
         )
-        self.set_title(self.style.name)
-        self.style_name.set_text(self.style.name)
+        stylename = self.style.get_name()
+        self.set_title(stylename)
+        self.style_name.set_text(stylename)
         ui.load_values_from_dict(self, {
             key: VALUE_DICT[key].index(self.style_params[value[0]])
             if key in VALUE_DICT else self.style_params[value[0]]
@@ -572,13 +538,12 @@ class StyleEditor(Adw.NavigationPage):
         # name & save
         application = self.parent.get_application()
         new_name = self.style_name.get_text()
-        if self.style.name != new_name:
+        if self.style.get_name() != new_name:
             style_manager = application.get_figure_style_manager()
             new_name = utilities.get_duplicate_string(
                 new_name, style_manager.get_stylenames(),
             )
-        self.style_params.name = new_name
-        style_io.write(self.style.file, self.style_params)
+        style_io.write(self.style.get_file(), new_name, self.style_params)
         self.style = None
 
     def reload_line_colors(self):
@@ -613,7 +578,7 @@ class StyleEditor(Adw.NavigationPage):
 
     @Gtk.Template.Callback()
     def on_delete(self, _button):
-        self.style.file.trash(None)
+        self.style.get_file().trash(None)
         self.style = None
         self.parent.navigation_view.pop()
 

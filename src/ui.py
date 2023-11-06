@@ -112,6 +112,7 @@ def build_dialog(name):
 
 
 def show_about_window(self):
+    file = Gio.File.new_for_uri("resource:///se/sjoerd/Graphs/whats_new")
     Adw.AboutWindow(
         transient_for=self.get_window(), application_name=self.get_name(),
         application_icon=self.get_application_id(), website=self.get_website(),
@@ -123,8 +124,7 @@ def show_about_window(self):
         copyright=f"© 2022 – {datetime.date.today().year} {self.get_author()}",
         license_type="GTK_LICENSE_GPL_3_0",
         translator_credits=_("translator-credits"),
-        release_notes=file_io.read_file(
-            Gio.File.new_for_uri("resource:///se/sjoerd/Graphs/whats_new")),
+        release_notes=file.load_bytes(None)[0].get_data().decode("utf-8"),
     ).present()
 
 

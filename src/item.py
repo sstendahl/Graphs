@@ -34,9 +34,9 @@ class DataItem(Graphs.Item):
     markerstyle = GObject.Property(type=int, default=0)
     markersize = GObject.Property(type=float, default=7)
 
-    @staticmethod
-    def new(params, xdata=None, ydata=None, **kwargs):
-        return DataItem(
+    @classmethod
+    def new(cls, params, xdata=None, ydata=None, **kwargs):
+        return cls(
             linestyle=misc.LINESTYLES.index(params["lines.linestyle"]),
             linewidth=params["lines.linewidth"],
             markerstyle=misc.MARKERSTYLES.index(params["lines.marker"]),
@@ -68,9 +68,9 @@ class TextItem(Graphs.Item):
     size = GObject.Property(type=float, default=12)
     rotation = GObject.Property(type=int, default=0, minimum=0, maximum=360)
 
-    @staticmethod
-    def new(params, xanchor=0, yanchor=0, text="", **kwargs):
-        return TextItem(
+    @classmethod
+    def new(cls, params, xanchor=0, yanchor=0, text="", **kwargs):
+        return cls(
             size=params["font.size"], color=params["text.color"],
             xanchor=xanchor, yanchor=yanchor, text=text, **kwargs,
         )
@@ -85,9 +85,9 @@ class FillItem(Graphs.Item):
 
     data = GObject.Property(type=object)
 
-    @staticmethod
-    def new(_params, data, **kwargs):
-        return FillItem(data=data, **kwargs)
+    @classmethod
+    def new(cls, _params, data, **kwargs):
+        return cls(data=data, **kwargs)
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)

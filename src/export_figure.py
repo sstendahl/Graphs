@@ -1,6 +1,5 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 import contextlib
-import io
 from gettext import gettext as _
 from pathlib import Path
 
@@ -40,19 +39,15 @@ class ExportFigureWindow(Adw.Window):
         def on_response(dialog, response):
             with contextlib.suppress(GLib.GError):
                 file = dialog.save_finish(response)
-                buffer = io.BytesIO()
-                self._canvas.figure.savefig(
-                    buffer, format=file_suffixes[0],
-                    dpi=int(self.dpi.get_value()),
-                    transparent=self.transparent.get_active(),
-                )
-                stream = file_io.get_write_stream(file)
-                stream.write(buffer.getvalue())
-                buffer.close()
-                stream.close()
-                self.get_application().get_window().add_toast_string(
-                    _("Exported Figure"))
-                self.destroy()
+                with file_io.open_wrapped(file, "wb") as wrapper:
+                    self._canvas.figure.savefig(
+                        wrapper, format=file_suffixes[0],
+                        dpi=int(self.dpi.get_value()),
+                        transparent=self.transparent.get_active(),
+                    )
+                    self.get_application().get_window().add_toast_string(
+                        _("Exported Figure"))
+                    self.destroy()
 
         dialog = Gtk.FileDialog()
         dialog.set_initial_name(f"{filename}.{file_suffixes[0]}")

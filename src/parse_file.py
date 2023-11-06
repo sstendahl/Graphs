@@ -51,7 +51,8 @@ def import_from_xrdml(self, file):
 
 def import_from_xry(self, file):
     """Import data from .xry files used by Leybold X-ray apparatus."""
-    lines = file_io.read_file(file, encoding="ISO-8859-1").splitlines()
+    with file_io.open_wrapped(file, "rt", encoding="ISO-8859-1") as wrapper:
+        lines = wrapper.readlines()
     if lines[0].strip() != "XR01":
         raise ParseError(_("Invalid .xry format"))
 
@@ -102,54 +103,56 @@ def import_from_columns(self, file):
     delimiter = columns_params.get_string("delimiter")
     separator = columns_params.get_string("separator").replace(" ", "")
     skip_rows = columns_params.get_int("skip-rows")
-    lines = file_io.read_file(file).splitlines()[skip_rows:]
-    for index, line in enumerate(lines):
-        values = re.split(delimiter, line.strip())
-        if separator == ",":
-            values = list(map(_swap, values))
-        try:
-            if len(values) == 1:
-                float_value = utilities.string_to_float(values[0])
-                if float_value is not None:
-                    item_.ydata.append(float_value)
-                    item_.xdata.append(index)
-            else:
-                try:
-                    item_.xdata.append(utilities.string_to_float(
-                        values[column_x]))
-                    item_.ydata.append(utilities.string_to_float(
-                        values[column_y]))
-                except IndexError as error:
-                    raise ParseError(
-                        _("Import failed, column index out of range"),
-                    ) from error
-        # If not all values in the line are floats, start looking for
-        # headers instead
-        except ValueError:
-            # By default it will check for headers using at least
-            # two whitespaces as delimiter (often tabs), but if
-            # that doesn"t work it will try the same delimiter as
-            # used for the data import itself The reasoning is that
-            # some people use tabs for the headers, but e.g. commas
-            # for the data
+    with file_io.open_wrapped(file, "rt") as wrapper:
+        for index, line in enumerate(wrapper, -skip_rows):
+            if index < 0:
+                continue
+            values = re.split(delimiter, line.strip())
+            if separator == ",":
+                values = list(map(_swap, values))
             try:
-                headers = re.split("\\s{2,}", line)
                 if len(values) == 1:
-                    item_.ylabel = headers[column_x]
+                    float_value = utilities.string_to_float(values[0])
+                    if float_value is not None:
+                        item_.ydata.append(float_value)
+                        item_.xdata.append(index)
                 else:
-                    item_.xlabel = headers[column_x]
-                    item_.ylabel = headers[column_y]
-            except IndexError:
+                    try:
+                        item_.xdata.append(utilities.string_to_float(
+                            values[column_x]))
+                        item_.ydata.append(utilities.string_to_float(
+                            values[column_y]))
+                    except IndexError as error:
+                        raise ParseError(
+                            _("Import failed, column index out of range"),
+                        ) from error
+            # If not all values in the line are floats, start looking for
+            # headers instead
+            except ValueError:
+                # By default it will check for headers using at least
+                # two whitespaces as delimiter (often tabs), but if
+                # that doesn"t work it will try the same delimiter as
+                # used for the data import itself The reasoning is that
+                # some people use tabs for the headers, but e.g. commas
+                # for the data
                 try:
-                    headers = re.split(delimiter, line)
+                    headers = re.split("\\s{2,}", line)
                     if len(values) == 1:
                         item_.ylabel = headers[column_x]
                     else:
                         item_.xlabel = headers[column_x]
                         item_.ylabel = headers[column_y]
-                # If neither heuristic works, we just skip headers
                 except IndexError:
-                    pass
+                    try:
+                        headers = re.split(delimiter, line)
+                        if len(values) == 1:
+                            item_.ylabel = headers[column_x]
+                        else:
+                            item_.xlabel = headers[column_x]
+                            item_.ylabel = headers[column_y]
+                    # If neither heuristic works, we just skip headers
+                    except IndexError:
+                        pass
     if not item_.xdata:
         raise ParseError(_("Unable to import from file"))
     return [item_]

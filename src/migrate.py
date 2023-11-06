@@ -58,17 +58,11 @@ def migrate_config(settings):
 def _migrate_config(settings_, config_file):
     config = file_io.parse_json(config_file)
     for old_key, (category, key) in CONFIG_MIGRATION_TABLE.items():
-        with contextlib.suppress(KeyError):
-            settings = settings_.get_child(category)
+        with contextlib.suppress(KeyError, ValueError):
             value = config[old_key]
             if "scale" in key:
                 value = value.capitalize()
-            if isinstance(value, str):
-                settings.set_string(key, value)
-            elif isinstance(value, bool):
-                settings.set_boolean(key, value)
-            elif isinstance(value, int):
-                settings.set_int(key, value)
+            settings_.get_child(category)[key] = value
     config_file.delete(None)
 
 
@@ -78,10 +72,10 @@ def _migrate_import_params(settings_, import_file):
         for key, value in params.items():
             if key == "separator":
                 settings.set_string(key, f"{value} ")
-            elif isinstance(value, str):
-                settings.set_string(key, value)
+                continue
             elif isinstance(value, int):
-                settings.set_int(key.replace("_", "-"), value)
+                key = key.replace("_", "-")
+            settings[key] = value
     import_file.delete(None)
 
 
@@ -103,18 +97,17 @@ def _migrate_styles(old_styles_dir, new_config_dir):
     enumerator = old_styles_dir.enumerate_children("default::*", 0, None)
     adwaita = style_io.parse(Gio.File.new_for_uri(
         "resource:///se/sjoerd/Graphs/styles/adwaita.mplstyle",
-    ))
+    ))[0]
     for file in map(enumerator.get_child, enumerator):
         stylename = Path(utilities.get_filename(file)).stem
         if stylename not in SYSTEM_STYLES:
-            params = style_io.parse(file)
+            params = style_io.parse(file)[0]
             for key, value in adwaita.items():
                 if key not in params:
                     params[key] = value
-            params.name = stylename
             style_io.write(new_styles_dir.get_child_for_display_name(
                 f"{stylename.lower().replace(' ', '-')}.mplstyle",
-            ), params)
+            ), stylename, params)
         file.delete(None)
     enumerator.close(None)
     old_styles_dir.delete(None)
@@ -168,7 +161,7 @@ class PlotSettings:
 
 class ItemBase:
     def migrate(self) -> dict:
-        dictionary = {"item_type": self.item_type}
+        dictionary = {"type": self.item_type}
         for key, value in self.__dict__.items():
             with contextlib.suppress(KeyError):
                 key = ITEM_MIGRATION_TABLE[key]
@@ -195,7 +188,8 @@ DEFAULT_VIEW = [0, 1, 0, 10, 0, 1, 0, 10]
 def migrate_project(file):
     sys.modules["graphs.misc"] = sys.modules[__name__]
     sys.modules["graphs.item"] = sys.modules[__name__]
-    project = pickle.loads(file_io.read_file(file, None))
+    with file_io.open_wrapped(file, "rb") as wrapper:
+        project = pickle.load(wrapper)
 
     figure_settings = project["plot_settings"].migrate()
     current_limits = [figure_settings[key] for key in misc.LIMITS]
@@ -222,7 +216,7 @@ def _migrate_clipboard(clipboard, clipboard_pos, current_limits):
     if len(clipboard) > 100:
         clipboard = clipboard[len(clipboard) - 100:]
     states = [
-        {item.uuid: item.migrate() for item in state.values()}
+        {item.key: item.migrate() for item in state.values()}
         for state in clipboard
     ]
     new_clipboard.append(([], DEFAULT_VIEW.copy()))
@@ -265,7 +259,7 @@ def _migrate_clipboard(clipboard, clipboard_pos, current_limits):
 def _get_limits(items):
     limits = [None] * 8
     for item in items:
-        if item["item_type"] != "Item":
+        if item["type"] != "Item":
             continue
         for count, x_or_y in enumerate(["x", "y"]):
             index = item[f"{x_or_y}position"] * 2 + 4 * count

@@ -20,7 +20,7 @@ def _on_bind(_factory, item, window):
     widget = item.get_child()
     style = item.get_item()
     widget.style = style
-    if style.mutable:
+    if style.get_mutable():
         widget.edit_button.set_visible(True)
         widget.edit_button.connect("clicked", window.edit_style, style)
 
@@ -58,25 +58,30 @@ class FigureSettingsWindow(Adw.Window):
     navigation_view = Gtk.Template.Child()
     grid_view = Gtk.Template.Child()
     toast_overlay = Gtk.Template.Child()
+    style_name = Gtk.Template.Child()
 
     figure_settings = GObject.Property(type=Graphs.FigureSettings)
 
     def __init__(self, application, highlighted=None):
+        figure_settings = application.get_data().get_figure_settings()
         super().__init__(
             application=application, transient_for=application.get_window(),
-            figure_settings=application.get_data().get_figure_settings(),
+            figure_settings=figure_settings,
         )
 
-        ignorelist = [
-            "custom_style", "min_selected", "max_selected", "use_custom_style",
-        ]
+        notifiers = ("custom_style", "use_custom_style")
+        for prop in notifiers:
+            figure_settings.connect(
+                "notify::" + prop.replace("_", "-"),
+                getattr(self, "_on_" + prop),
+            )
+
+        ignorelist = list(notifiers) + ["min_selected", "max_selected"]
         for direction in _DIRECTIONS:
             ignorelist.append(f"min_{direction}")
             ignorelist.append(f"max_{direction}")
 
-        ui.bind_values_to_object(
-            self.props.figure_settings, self, ignorelist=ignorelist,
-        )
+        ui.bind_values_to_object(figure_settings, self, ignorelist=ignorelist)
         self.set_axes_entries()
         self.no_data_message.set_visible(
             self.get_application().get_data().is_empty(),
@@ -86,31 +91,43 @@ class FigureSettingsWindow(Adw.Window):
 
         self.style_editor = styles.StyleEditor(self)
         self.grid_view.set_factory(_get_widget_factory(self))
-        selection_model = self.grid_view.get_model()
-        selection_model.set_model(
+        self.grid_view.get_model().set_model(
             application.get_figure_style_manager().get_style_model(),
         )
-        if self.props.figure_settings.get_use_custom_style():
-            stylename = self.props.figure_settings.get_custom_style()
+        self._on_use_custom_style(figure_settings, None)
+        self.present()
+
+    def _on_use_custom_style(self, figure_settings, _a) -> None:
+        if figure_settings.get_use_custom_style():
+            self._on_custom_style(figure_settings, None)
+        else:
+            self.style_name.set_text(_("System"))
+            self.grid_view.get_model().set_selected(0)
+
+    def _on_custom_style(self, figure_settings, _a) -> None:
+        if figure_settings.get_use_custom_style():
+            selection_model = self.grid_view.get_model()
+            stylename = figure_settings.get_custom_style()
+            self.style_name.set_text(stylename)
             for index, style in enumerate(selection_model):
-                if index > 0 and style.name == stylename:
+                if index > 0 and style.get_name() == stylename:
                     selection_model.set_selected(index)
                     break
-        else:
-            selection_model.set_selected(0)
-        self.present()
 
     @Gtk.Template.Callback()
     def on_select(self, model, _pos, _n_items):
         figure_settings = self.props.figure_settings
         selected_item = model.get_selected_item()
         # Don't trigger unneccesary reloads
-        if selected_item.file is None:  # System style
+        if selected_item.get_file() is None:  # System style
             if figure_settings.get_use_custom_style():
                 figure_settings.set_use_custom_style(False)
+                self.style_name.set_text(_("System"))
         else:
-            if selected_item.name != figure_settings.get_custom_style():
-                figure_settings.set_custom_style(selected_item.name)
+            stylename = selected_item.get_name()
+            if stylename != figure_settings.get_custom_style():
+                figure_settings.set_custom_style(stylename)
+                self.style_name.set_text(stylename)
             if not figure_settings.get_use_custom_style():
                 figure_settings.set_use_custom_style(True)
 
@@ -141,7 +158,7 @@ class FigureSettingsWindow(Adw.Window):
         figure_settings = \
             self.props.application.get_data().get_figure_settings()
         if figure_settings.get_use_custom_style() \
-                and figure_settings.get_custom_style() == style.name:
+                and figure_settings.get_custom_style() == style.get_name():
             self.grid_view.get_model().set_selected(0)
         self.style_editor.load_style(style)
         self.navigation_view.push(self.style_editor)
