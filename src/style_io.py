@@ -37,8 +37,8 @@ def parse(file: Gio.File) -> (RcParams, str):
     style = RcParams()
     filename = utilities.get_filename(file)
     try:
-        wrapper = file_io.FileLikeWrapper.new_for_file_readonly(file)
-        for line_number, line in enumerate(wrapper.wrap_text(), 1):
+        wrapper = file_io.open_wrapped(file, "rt")
+        for line_number, line in enumerate(wrapper, 1):
             line = line.strip()
             if line_number == 2:
                 name = line[2:]

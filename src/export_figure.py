@@ -39,9 +39,9 @@ class ExportFigureWindow(Adw.Window):
         def on_response(dialog, response):
             with contextlib.suppress(GLib.GError):
                 file = dialog.save_finish(response)
-                with file_io.FileLikeWrapper.new_for_file_replace(file) as w:
+                with file_io.open_wrapped(file, "wb") as wrapper:
                     self._canvas.figure.savefig(
-                        w, format=file_suffixes[0],
+                        wrapper, format=file_suffixes[0],
                         dpi=int(self.dpi.get_value()),
                         transparent=self.transparent.get_active(),
                     )

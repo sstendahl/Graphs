@@ -51,8 +51,8 @@ def import_from_xrdml(self, file):
 
 def import_from_xry(self, file):
     """Import data from .xry files used by Leybold X-ray apparatus."""
-    with file_io.FileLikeWrapper.new_for_file_readonly(file) as wrapper:
-        lines = wrapper.wrap_text(encoding="ISO-8859-1").readlines()
+    with file_io.open_wrapped(file, "rt", encoding="ISO-8859-1") as wrapper:
+        lines = wrapper.readlines()
     if lines[0].strip() != "XR01":
         raise ParseError(_("Invalid .xry format"))
 
@@ -103,8 +103,8 @@ def import_from_columns(self, file):
     delimiter = columns_params.get_string("delimiter")
     separator = columns_params.get_string("separator").replace(" ", "")
     skip_rows = columns_params.get_int("skip-rows")
-    with file_io.FileLikeWrapper.new_for_file_readonly(file) as wrapper:
-        for index, line in enumerate(wrapper.wrap_text(), -skip_rows):
+    with file_io.open_wrapped(file, "rt") as wrapper:
+        for index, line in enumerate(wrapper, -skip_rows):
             if index < 0:
                 continue
             values = re.split(delimiter, line.strip())

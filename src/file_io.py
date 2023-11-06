@@ -11,20 +11,6 @@ class FileLikeWrapper(io.BufferedIOBase):
         self._read_stream, self._write_stream = read_stream, write_stream
 
     @classmethod
-    def new_for_file_replace(cls, file: Gio.File):
-        if file.query_exists(None):
-            file.delete(None)
-        return cls(write_stream=file.create(0, None))
-
-    @classmethod
-    def new_for_file(cls, file: Gio.File):
-        return cls.new_for_io_stream(file.open_readwrite(None))
-
-    @classmethod
-    def new_for_file_readonly(cls, file: Gio.File):
-        return cls(read_stream=file.read(None))
-
-    @classmethod
     def new_for_io_stream(cls, io_stream: Gio.IOStream):
         return cls(
             read_stream=io_stream.get_input_stream(),
@@ -73,8 +59,41 @@ class FileLikeWrapper(io.BufferedIOBase):
 
     read1 = read
 
-    def wrap_text(self, **kwargs) -> io.TextIOWrapper:
-        return io.TextIOWrapper(self, **kwargs)
+
+def open_wrapped(file: Gio.File, mode: str = "rt", encoding: str = "utf-8"):
+    read = "r" in mode
+    append = "a" in mode
+    replace = "w" in mode
+
+    def _create_stream():
+        if file.query_exists(None):
+            file.delete(None)
+        return file.create(0, None)
+
+    def _io_stream():
+        return FileLikeWrapper.new_for_io_stream(file.open_readwrite(None))
+
+    if "x" in mode:
+        if file.query_exists():
+            return OSError()
+        stream = _create_stream()
+        stream.close()
+    if read and append:
+        obj = _io_stream()
+    elif read and replace:
+        stream = _create_stream()
+        stream.close()
+        obj = _io_stream()
+    elif read:
+        obj = FileLikeWrapper(read_stream=file.read(None))
+    elif replace:
+        obj = FileLikeWrapper(write_stream=_create_stream())
+    elif append:
+        obj = FileLikeWrapper(write_stream=file.append(None))
+
+    if "b" not in mode:
+        obj = io.TextIOWrapper(obj, encoding=encoding)
+    return obj
 
 
 def save_item(file, item_):
@@ -90,7 +109,7 @@ def save_item(file, item_):
 
 
 def parse_json(file):
-    with FileLikeWrapper.new_for_file_readonly(file) as wrapper:
+    with open_wrapped(file, "rb") as wrapper:
         return json.load(wrapper)
 
 
@@ -103,7 +122,7 @@ def write_json(file, json_object, pretty_print=True):
 
 
 def parse_xml(file):
-    with FileLikeWrapper.new_for_file_readonly(file) as wrapper:
+    with open_wrapped(file, "rb") as wrapper:
         return minidom.parse(wrapper)
 
 
