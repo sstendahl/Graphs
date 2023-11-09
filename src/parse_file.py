@@ -52,39 +52,43 @@ def import_from_xrdml(self, file):
 def import_from_xry(self, file):
     """Import data from .xry files used by Leybold X-ray apparatus."""
     with file_io.open_wrapped(file, "rt", encoding="ISO-8859-1") as wrapper:
-        lines = wrapper.readlines()
-    if lines[0].strip() != "XR01":
-        raise ParseError(_("Invalid .xry format"))
+        def skip(lines: int):
+            for _count in range(lines):
+                next(wrapper)
 
-    b_params = lines[4].strip().split()
+        if wrapper.readline().strip() != "XR01":
+            raise ParseError(_("Invalid .xry format"))
+        skip(3)
+        b_params = wrapper.readline().strip().split()
+        x_step = float(b_params[3])
+        x_value = float(b_params[0])
 
-    info = lines[17].strip().split()
-    value_count = int(info[1])
-    item_count = int(info[0])
+        skip(12)
+        info = wrapper.readline().strip().split()
+        item_count = int(info[0])
 
-    name = utilities.get_filename(file)
-    style = self.get_figure_style_manager().get_selected_style_params()
-    items = [
-        item.DataItem.new(
-            style, name=f"{name} - {i + 1}" if item_count > 1 else name,
-            xlabel=_("β (°)"), ylabel=_("R (1/s)"),
-        ) for i in range(item_count)
-    ]
-    x_step = float(b_params[3])
-    x_value = float(b_params[0])
-    for row in lines[18:18 + value_count]:
-        for value, item_ in zip(row.strip().split(), items):
-            if value != "NaN":
-                item_.xdata.append(x_value)
-                item_.ydata.append(float(value))
-        x_value += x_step
-    for row in lines[28 + value_count + item_count:]:
-        values = row.strip().split()
-        text = " ".join(values[7:])
-        items.append(item.TextItem.new(
-            style, float(values[5]), float(values[6]), text, name=text,
-        ))
-    return items
+        name = utilities.get_filename(file)
+        style = self.get_figure_style_manager().get_selected_style_params()
+        items = [
+            item.DataItem.new(
+                style, name=f"{name} - {i + 1}" if item_count > 1 else name,
+                xlabel=_("β (°)"), ylabel=_("R (1/s)"),
+            ) for i in range(item_count)
+        ]
+        for _count in range(int(info[1])):
+            for value, item_ in zip(wrapper.readline().strip().split(), items):
+                if value != "NaN":
+                    item_.xdata.append(x_value)
+                    item_.ydata.append(float(value))
+            x_value += x_step
+        skip(9 + item_count)
+        for _count in range(int(wrapper.readline().strip())):
+            values = wrapper.readline().strip().split()
+            text = " ".join(values[7:])
+            items.append(item.TextItem.new(
+                style, float(values[5]), float(values[6]), text, name=text,
+            ))
+        return items
 
 
 def _swap(string):
