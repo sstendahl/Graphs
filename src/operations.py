@@ -18,8 +18,8 @@ def get_data(self, item):
     Retrieve item from datadict with start and stop index.
     If interaction_mode is set to "SELECT"
     """
-    xdata = item.xdata
-    ydata = item.ydata
+    xdata = item.props.xdata
+    ydata = item.props.ydata
     new_xdata = xdata.copy()
     new_ydata = ydata.copy()
     start_index = 0
@@ -71,7 +71,7 @@ def perform_operation(self, callback, *args):
     data = self.get_data()
     old_limits = data.get_figure_settings().get_limits()
     for item in data:
-        if not item.get_selected() or item.__gtype_name__ != "GraphsDataItem":
+        if not (item.get_selected() and isinstance(item, DataItem)):
             continue
         xdata, ydata, start_index, stop_index = get_data(self, item)
         if xdata is not None and len(xdata) != 0:
@@ -80,12 +80,12 @@ def perform_operation(self, callback, *args):
                 item, xdata, ydata, *args)
             if discard:
                 logging.debug("Discard is true")
-                item.xdata = new_xdata
-                item.ydata = new_ydata
+                item.props.xdata = new_xdata
+                item.props.ydata = new_ydata
             else:
                 logging.debug("Discard is false")
-                item.xdata[start_index:stop_index] = new_xdata
-                item.ydata[start_index:stop_index] = new_ydata
+                item.props.xdata[start_index:stop_index] = new_xdata
+                item.props.ydata[start_index:stop_index] = new_ydata
             if sort:
                 logging.debug("Sorting data")
                 item.xdata, item.ydata = sort_data(item.xdata, item.ydata)
@@ -176,7 +176,7 @@ def shift(item, xdata, ydata, left_scale, right_scale, items, ranges):
     """
     data_list = [
         item for item in items
-        if item.get_selected() and item.__gtype_name__ == "GraphsDataItem"
+        if item.get_selected() and isinstance(item, DataItem)
     ]
 
     y_range = ranges[1] if item.get_yposition() else ranges[0]
@@ -191,7 +191,7 @@ def shift(item, xdata, ydata, left_scale, right_scale, items, ranges):
         previous_item = data_list[index - 1]
 
         # Only use selected span when obtaining values to determine shift value
-        full_xdata = numpy.asarray(data_list[index].xdata)
+        full_xdata = numpy.asarray(data_list[index].props.xdata)
         start = 0
         stop = len(data_list[index].ydata)
         with contextlib.suppress(IndexError):
@@ -276,7 +276,7 @@ def combine(self):
     """Combine the selected data into a new data set"""
     new_xdata, new_ydata = [], []
     for item in self.get_data():
-        if not item.get_selected() or item.__gtype_name__ != "GraphsDataItem":
+        if not (item.get_selected() and isinstance(item, DataItem)):
             continue
         xdata, ydata = get_data(self, item)[:2]
         new_xdata.extend(xdata)

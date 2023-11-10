@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 from gi.repository import Adw, GObject, Graphs, Gtk
 
-from graphs import ui
+from graphs import item, ui
 
 _IGNORELIST = [
     "alpha", "color", "item_type", "uuid", "selected", "xdata", "xlabel",
@@ -58,9 +58,7 @@ class EditItemWindow(Adw.PreferencesWindow):
         self.props.bindings = ui.bind_values_to_object(
             self.props.item, self, ignorelist=_IGNORELIST,
         )
-        self.item_group.set_visible(
-            self.props.item.__gtype_name__ == "GraphsDataItem",
-        )
+        self.item_group.set_visible(isinstance(self.props.item, item.DataItem))
 
     @Gtk.Template.Callback()
     def on_close(self, _a):

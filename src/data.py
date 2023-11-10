@@ -414,7 +414,7 @@ class Data(GObject.Object, Graphs.DataInterface):
             for direction in ("bottom", "left", "top", "right")
         ]
         for item_ in self:
-            if item_.__gtype_name__ != "GraphsDataItem":
+            if not isinstance(item_, item.DataItem):
                 continue
             for index in \
                     item_.get_xposition() * 2, 1 + item_.get_yposition() * 2:

@@ -12,7 +12,7 @@ from cycler import cycler
 from gi.repository import Adw, GLib, GObject, Gdk, Gio, Graphs, Gtk, Pango
 
 import graphs
-from graphs import style_io, ui, utilities
+from graphs import item, style_io, ui, utilities
 
 from matplotlib import RcParams
 
@@ -174,15 +174,15 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
             old_colors = old_style["axes.prop_cycle"].by_key()["color"]
             color_cycle = self._selected_style_params[
                 "axes.prop_cycle"].by_key()["color"]
-            for item in data:
-                item.reset(old_style, self._selected_style_params)
+            for item_ in data:
+                item_.reset(old_style, self._selected_style_params)
             count = 0
-            for item in data:
-                if item.__gtype_name__ == "GraphsDataItem" \
-                        and item.get_color() in old_colors:
+            for item_ in data:
+                if isinstance(item_, item.DataItem) \
+                        and item_.get_color() in old_colors:
                     if count > len(color_cycle):
                         count = 0
-                    item.set_color(color_cycle[count])
+                    item_.set_color(color_cycle[count])
                     count += 1
 
         canvas = graphs.canvas.Canvas(
@@ -506,8 +506,8 @@ class StyleEditor(Adw.NavigationPage):
             if value is not None:
                 with contextlib.suppress(KeyError):
                     value = VALUE_DICT[key][value]
-                for item in STYLE_DICT[key]:
-                    self.style_params[item] = value
+                for item_ in STYLE_DICT[key]:
+                    self.style_params[item_] = value
 
         # font
         font_description = self.font_chooser.get_font_desc()
