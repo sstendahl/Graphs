@@ -179,10 +179,10 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
             count = 0
             for item in data:
                 if item.__gtype_name__ == "GraphsDataItem" \
-                        and item.props.color in old_colors:
+                        and item.get_color() in old_colors:
                     if count > len(color_cycle):
                         count = 0
-                    item.props.color = color_cycle[count]
+                    item.set_color(color_cycle[count])
                     count += 1
 
         canvas = graphs.canvas.Canvas(

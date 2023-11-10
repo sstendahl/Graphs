@@ -52,7 +52,7 @@ class EditItemWindow(Adw.PreferencesWindow):
 
     @Gtk.Template.Callback()
     def on_item_change(self, _a, _b):
-        self.set_title(self.props.item.props.name)
+        self.set_title(self.props.item.get_name())
         for binding in self.props.bindings:
             binding.unbind()
         self.props.bindings = ui.bind_values_to_object(
