@@ -48,7 +48,7 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
             application=application,
             style_model=Gio.ListStore.new(Graphs.Style),
         )
-        self._stylenames = []
+        self._stylenames, self._selected_style_params = [], None
         directory = Gio.File.new_for_uri("resource:///se/sjoerd/Graphs/styles")
         enumerator = directory.enumerate_children("default::*", 0, None)
         for file in map(enumerator.get_child, enumerator):
@@ -87,13 +87,13 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
         figure_settings.bind_property(
             "custom_style", self, "custom_style", 1 | 2,
         )
-        application.get_style_manager().connect(
-            "notify", self._on_style_select,
-        )
+
+        def on_style_select(_a, _b):
+            self._on_style_change(True)
+
+        application.get_style_manager().connect("notify", on_style_select)
         for prop in ("use-custom-style", "custom-style"):
-            figure_settings.connect(
-                f"notify::{prop}", self._on_style_select,
-            )
+            figure_settings.connect(f"notify::{prop}", on_style_select)
         self._on_style_change()
 
     def _add_user_style(
@@ -165,22 +165,21 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
                 and self.props.custom_style == stylename:
             self._on_style_change()
 
-    def _on_style_select(self, _a, _b) -> None:
-        settings = self.props.application.get_settings("general")
-        self._on_style_change(settings.get_boolean("override-item-properties"))
-
     def _on_style_change(self, override: bool = False) -> None:
+        old_style = self._selected_style_params
         self._update_system_style()
         self._update_selected_style()
         data = self.props.application.get_data()
-        if override:
+        if old_style is not None and override:
+            old_colors = old_style["axes.prop_cycle"].by_key()["color"]
             color_cycle = self._selected_style_params[
                 "axes.prop_cycle"].by_key()["color"]
             for item in data:
-                item.reset(self._selected_style_params)
+                item.reset(old_style, self._selected_style_params)
             count = 0
             for item in data:
-                if item.__gtype_name__ == "GraphsDataItem":
+                if item.__gtype_name__ == "GraphsDataItem" \
+                        and item.props.color in old_colors:
                     if count > len(color_cycle):
                         count = 0
                     item.props.color = color_cycle[count]
