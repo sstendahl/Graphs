@@ -24,7 +24,25 @@ def to_dict(item):
     return dictionary
 
 
-class DataItem(Graphs.Item):
+class _ItemMixin():
+    def reset(self, old_style, new_style):
+        for prop, (key, function) in self._style_properties.items():
+            old_value = old_style[key]
+            new_value = new_style[key]
+            if function is not None:
+                old_value = function(old_value)
+                new_value = function(new_value)
+            if self.get_property(prop) == old_value:
+                self.set_property(prop, new_value)
+
+    def _extract_params(self, style):
+        return {
+            prop: style[key] if function is None else function(style[key])
+            for prop, (key, function) in self._style_properties.items()
+        }
+
+
+class DataItem(Graphs.Item, _ItemMixin):
     __gtype_name__ = "GraphsDataItem"
 
     xdata = GObject.Property(type=object)
@@ -34,14 +52,18 @@ class DataItem(Graphs.Item):
     markerstyle = GObject.Property(type=int, default=0)
     markersize = GObject.Property(type=float, default=7)
 
+    _style_properties = {
+        "linestyle": ("lines.linestyle", misc.LINESTYLES.index),
+        "linewidth": ("lines.linewidth", None),
+        "markerstyle": ("lines.marker", misc.MARKERSTYLES.index),
+        "markersize": ("lines.markersize", None),
+    }
+
     @classmethod
-    def new(cls, params, xdata=None, ydata=None, **kwargs):
+    def new(cls, style, xdata=None, ydata=None, **kwargs):
         return cls(
-            linestyle=misc.LINESTYLES.index(params["lines.linestyle"]),
-            linewidth=params["lines.linewidth"],
-            markerstyle=misc.MARKERSTYLES.index(params["lines.marker"]),
-            markersize=params["lines.markersize"],
-            xdata=xdata, ydata=ydata, **kwargs,
+            xdata=xdata, ydata=ydata,
+            **cls._extract_params(cls, style), **kwargs,
         )
 
     def __init__(self, **kwargs):
@@ -50,16 +72,8 @@ class DataItem(Graphs.Item):
             if self.get_property(prop) is None:
                 self.set_property(prop, [])
 
-    def reset(self, params):
-        self.props.linestyle = misc.LINESTYLES.index(params["lines.linestyle"])
-        self.props.linewidth = params["lines.linewidth"]
-        self.props.markerstyle = \
-            misc.MARKERSTYLES.index(params["lines.marker"])
-        self.props.markersize = params["lines.markersize"]
-        self.color = "000000"
 
-
-class TextItem(Graphs.Item):
+class TextItem(Graphs.Item, _ItemMixin):
     __gtype_name__ = "GraphsTextItem"
 
     xanchor = GObject.Property(type=float, default=0)
@@ -68,16 +82,17 @@ class TextItem(Graphs.Item):
     size = GObject.Property(type=float, default=12)
     rotation = GObject.Property(type=int, default=0, minimum=0, maximum=360)
 
-    @classmethod
-    def new(cls, params, xanchor=0, yanchor=0, text="", **kwargs):
-        return cls(
-            size=params["font.size"], color=params["text.color"],
-            xanchor=xanchor, yanchor=yanchor, text=text, **kwargs,
-        )
+    _style_properties = {
+        "size": ("font.size", None),
+        "color": ("text.color", None),
+    }
 
-    def reset(self, params):
-        self.props.size = params["font.size"]
-        self.props.color = params["text.color"]
+    @classmethod
+    def new(cls, style, xanchor=0, yanchor=0, text="", **kwargs):
+        return cls(
+            xanchor=xanchor, yanchor=yanchor, text=text,
+            **cls._extract_params(cls, style), **kwargs,
+        )
 
 
 class FillItem(Graphs.Item):

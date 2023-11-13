@@ -8,8 +8,6 @@ template $GraphsPreferencesWindow : Adw.PreferencesWindow {
 
   Adw.PreferencesPage {
     Adw.PreferencesGroup {
-      title: _("General");
-
       Adw.ComboRow center {
         title: _("Center Action Behaviour");
         subtitle: _("Which value to center on when performing a center action");
@@ -25,17 +23,9 @@ template $GraphsPreferencesWindow : Adw.PreferencesWindow {
           strings [_("Auto-rename duplicates"), _("Ignore duplicates"), _("Add duplicates"), _("Override existing items")]
         };
       }
-    }
-
-    Adw.PreferencesGroup {
-      title: _("Figure");
 
       Adw.SwitchRow hide_unselected {
         title: _("Hide Unselected Items");
-      }
-
-      Adw.SwitchRow override_item_properties {
-        title: _("Override Item Properties on Style Change");
       }
     }
   }

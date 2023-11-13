@@ -101,8 +101,8 @@ class ItemBox(Gtk.Box):
     @Gtk.Template.Callback()
     def on_toggle(self, _a, _b):
         new_value = self.check_button.get_active()
-        if self.props.item.props.selected != new_value:
-            self.props.item.props.selected = new_value
+        if self.props.item.get_selected() != new_value:
+            self.props.item.set_selected(new_value)
             self.get_application().get_data().add_history_state()
 
     @Gtk.Template.Callback()
@@ -123,7 +123,7 @@ class ItemBox(Gtk.Box):
                 self.get_application().get_data().add_history_state()
 
     def delete(self, _action, _shortcut):
-        name = self.props.item.props.name
+        name = self.props.item.get_name()
         self.get_application().get_data().delete_items([self.props.item])
         toast = Adw.Toast.new(_("Deleted {name}").format(name=name))
         toast.set_button_label("Undo")

@@ -20,7 +20,6 @@ CONFIG_MIGRATION_TABLE = {
     "export_figure_transparent": ("export-figure", "transparent"),
     "handle_duplicates": ("general", "handle-duplicates"),
     "hide_unselected": ("general", "hide-unselected"),
-    "override_style_change": ("general", "override-item-properties"),
     "plot_custom_style": ("figure", "custom-style"),
     "plot_legend": ("figure", "legend"),
     "plot_right_label": ("figure", "right-label"),

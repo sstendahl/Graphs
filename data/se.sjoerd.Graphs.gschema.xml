@@ -70,9 +70,6 @@
     <key name="hide-unselected" type="b">
       <default>false</default>
     </key>
-    <key name="override-item-properties" type="b">
-      <default>true</default>
-    </key>
   </schema>
 
   <schema id="se.sjoerd.Graphs.figure">
