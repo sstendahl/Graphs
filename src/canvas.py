@@ -87,7 +87,6 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
         style context. Bind `items` to `data.items` and all figure settings
         attributes to their respective values.
         """
-        orig_params = dict(pyplot.rcParams.copy())
         self._style_params = style_params
         pyplot.rcParams.update(self._style_params)  # apply style_params
         GObject.Object.__init__(self, application=application, can_focus=False)
@@ -119,7 +118,6 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
         zoom_gesture = Gtk.GestureZoom.new()
         zoom_gesture.connect("scale-changed", self._on_zoom_gesture)
         self.add_controller(zoom_gesture)
-        dict.update(pyplot.rcParams, orig_params)  # revert rcParams
 
     def get_application(self):
         """Get application property."""
