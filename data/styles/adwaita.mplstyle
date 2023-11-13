@@ -82,10 +82,10 @@ text.color: 000000
 axes.labelcolor: 000000
 xtick.labelcolor: 000000
 ytick.labelcolor: 000000
-xtick.color: 000000
-ytick.color: 000000
-axes.edgecolor: 000000
-grid.color: 646464
+xtick.color: 5E5C64
+ytick.color: 5E5C64
+axes.edgecolor: 5E5C64
+grid.color: 9A9996
 axes.facecolor: FFFFFF
 figure.facecolor: FAFAFA
 figure.edgecolor: FAFAFA
