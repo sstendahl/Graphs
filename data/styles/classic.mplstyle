@@ -39,6 +39,12 @@ lines.dotted_pattern: 1, 3
 lines.scale_dashes: False
 markers.fillstyle: full
 
+# axes
+axes.spines.bottom: True
+axes.spines.left: True
+axes.spines.top: True
+axes.spines.right: True
+
 # ticks
 xtick.direction: in
 xtick.minor.visible: False
@@ -144,10 +150,6 @@ axes.unicode_minus: True
 axes.autolimit_mode: round_numbers
 axes.xmargin: 0
 axes.ymargin: 0
-axes.spines.bottom: True
-axes.spines.left: True
-axes.spines.right: True
-axes.spines.top: True
 polaraxes.grid: True
 axes3d.grid: True
 
