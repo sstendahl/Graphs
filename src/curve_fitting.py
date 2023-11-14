@@ -20,12 +20,14 @@ class CurveFittingWindow(Graphs.CurveFittingTool):
     equation = GObject.Property(type=Adw.EntryRow)
     fitting_params = GObject.Property(type=Gtk.Box)
     text_view = GObject.Property(type=Gtk.TextView)
+    title_widget = GObject.Property(type=Adw.WindowTitle)
     toast_overlay = GObject.Property(type=Adw.ToastOverlay)
 
     def __init__(self, application, item):
         super().__init__(
             application=application, transient_for=application.get_window(),
         )
+        self.get_title_widget().set_title(application.props.name)
         self.equation = self.get_equation()
         ui.bind_values_to_settings(
             application.get_settings("curve-fitting"), self)
