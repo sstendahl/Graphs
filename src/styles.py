@@ -346,6 +346,8 @@ STYLE_DICT = {
     "linewidth": ["lines.linewidth"],
     "markers": ["lines.marker"],
     "markersize": ["lines.markersize"],
+    "draw_frame": ["axes.spines.bottom", "axes.spines.left",
+                   "axes.spines.top", "axes.spines.right"],
     "tick_direction": ["xtick.direction", "ytick.direction"],
     "minor_ticks": ["xtick.minor.visible", "ytick.minor.visible"],
     "major_tick_width": ["xtick.major.width", "ytick.major.width"],
@@ -404,6 +406,7 @@ class StyleEditor(Adw.NavigationPage):
     linewidth = Gtk.Template.Child()
     markers = Gtk.Template.Child()
     markersize = Gtk.Template.Child()
+    draw_frame = Gtk.Template.Child()
     tick_direction = Gtk.Template.Child()
     minor_ticks = Gtk.Template.Child()
     major_tick_width = Gtk.Template.Child()
