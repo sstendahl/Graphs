@@ -246,8 +246,8 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
             ["top", "right"],     # top_right_axis
         ]
         if not any(visible_axes):
-            visible_axes = [True, False, True, False] # Left and bottom
-            used_axes = [True, False, False, False] # self.axis visible
+            visible_axes = [True, False, True, False]  # Left and bottom
+            used_axes = [True, False, False, False]  # self.axis visible
             self._legend_axis = self._axis
 
         params = self._style_params
@@ -258,12 +258,11 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
             axis.get_xaxis().set_visible(False)
             axis.get_yaxis().set_visible(False)
             # Set tick where requested, as long as that axis is not occupied
-            if used: # (Or if frame)
-                axis.tick_params(which=ticks, **{
-                    key: params[f"{'x' if i < 2 else 'y'}tick.{key}"]
-                    and (key in directions or not visible_axes[i])
-                    for i, key in enumerate(["bottom", "top", "left", "right"])
-                })
+            axis.tick_params(which=ticks, **{
+                key: params[f"{'x' if i < 2 else 'y'}tick.{key}"]
+                and (key in directions or not visible_axes[i])
+                for i, key in enumerate(["bottom", "top", "left", "right"])
+            })
             for handle in axis.lines + axis.texts:
                 handle.remove()
             axis_legend = axis.get_legend()
@@ -273,12 +272,14 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
                 self._legend_axis = axis
                 used_directions += directions
 
+        used_directions = list(set(used_directions))  # Remove duplicates
         for direction in ["bottom", "left", "top", "right"]:
             for axis in self.axes:
                 axis.spines[direction].set_visible(
                     direction in used_directions)
-                axis.tick_params(which="both",
-                    **{direction: direction in used_directions})
+                # No ticks on unused axes, skip these lines if frame is on
+                if direction not in used_directions:
+                    axis.tick_params(which=ticks, **{direction: False})
 
         self._axis.get_xaxis().set_visible(visible_axes[0])
         self._top_left_axis.get_xaxis().set_visible(visible_axes[1])
