@@ -86,7 +86,7 @@ xtick.color: 5E5C64
 ytick.color: 5E5C64
 axes.edgecolor: 5E5C64
 grid.color: 9A9996
-axes.facecolor: FFFFFF
+axes.facecolor: FAFAFA
 figure.facecolor: FAFAFA
 figure.edgecolor: FAFAFA
 

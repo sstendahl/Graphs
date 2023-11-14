@@ -246,21 +246,24 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
             ["top", "right"],     # top_right_axis
         ]
         if not any(visible_axes):
-            visible_axes = [True, False, True, False]
+            visible_axes = [True, False, True, False] # Left and bottom
+            used_axes = [True, False, False, False] # self.axis visible
             self._legend_axis = self._axis
 
         params = self._style_params
         ticks = "both" if params["xtick.minor.visible"] else "major"
+        used_directions = []
         for directions, axis, used \
                 in zip(axes_directions, self.axes, used_axes):
             axis.get_xaxis().set_visible(False)
             axis.get_yaxis().set_visible(False)
             # Set tick where requested, as long as that axis is not occupied
-            axis.tick_params(which=ticks, **{
-                key: params[f"{'x' if i < 2 else 'y'}tick.{key}"]
-                and (key in directions or not visible_axes[i])
-                for i, key in enumerate(["bottom", "top", "left", "right"])
-            })
+            if used: # (Or if frame)
+                axis.tick_params(which=ticks, **{
+                    key: params[f"{'x' if i < 2 else 'y'}tick.{key}"]
+                    and (key in directions or not visible_axes[i])
+                    for i, key in enumerate(["bottom", "top", "left", "right"])
+                })
             for handle in axis.lines + axis.texts:
                 handle.remove()
             axis_legend = axis.get_legend()
@@ -268,6 +271,15 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
                 axis_legend.remove()
             if used:
                 self._legend_axis = axis
+                used_directions += directions
+
+        for direction in ["bottom", "left", "top", "right"]:
+            for axis in self.axes:
+                axis.spines[direction].set_visible(
+                    direction in used_directions)
+                axis.tick_params(which="both",
+                    **{direction: direction in used_directions})
+
         self._axis.get_xaxis().set_visible(visible_axes[0])
         self._top_left_axis.get_xaxis().set_visible(visible_axes[1])
         self._axis.get_yaxis().set_visible(visible_axes[2])
