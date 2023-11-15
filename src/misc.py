@@ -3,7 +3,7 @@ from gi.repository import Graphs
 
 # Type hints
 ItemList = list[Graphs.Item]
-Limits = tuple(float, float, float, float)
+Limits = tuple[float, float, float, float]
 
 
 class ParseError(Exception):
