@@ -261,8 +261,8 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
             # Set tick where requested, as long as that axis is not occupied
             # and visible
             axis.tick_params(which=ticks, **{
-                direction: draw_frame and not visible_axes[i]
-                or direction in directions
+                direction: (draw_frame and not visible_axes[i]
+                            or direction in directions)
                 and params[f"{'x' if i < 2 else 'y'}tick.{direction}"]
                 for i, direction in enumerate(possible_directions)
             })
