@@ -39,6 +39,12 @@ lines.dotted_pattern: 1, 3
 lines.scale_dashes: False
 markers.fillstyle: full
 
+# axes
+axes.spines.bottom: True
+axes.spines.left: True
+axes.spines.top: True
+axes.spines.right: True
+
 # ticks
 xtick.direction: out
 xtick.minor.visible: False
