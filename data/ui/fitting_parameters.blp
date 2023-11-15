@@ -4,67 +4,50 @@ using Adw 1;
 template $GraphsFittingParameterEntry : Box {
   orientation: vertical;
   Adw.PreferencesGroup {
-    styles ["card"]
     Grid {
-      margin-bottom: 12;
-      margin-top: 12;
-      margin-start: 12;
-      margin-end: 12;
-      row-spacing: 6;
-      column-spacing: 3;
+      margin-bottom: 4;
+      margin-top: 4;
+      column-spacing: 4;
+      row-spacing: 4;
       Label label {
+        justify: left;
         use-markup: true;
-        margin-bottom: 3;
-        layout {
-        column: 0;
-        row: 0;
-        column-span: 3;
-        }
-      }
-      Label {
+        margin-bottom: 4;
+        hexpand: false;
         halign: start;
-        label: _("Initial");
         layout {
           column: 0;
-          row: 1;
+          row: 0;
+          column-span: 2;
         }
       }
-      Label {
-        halign: start;
-        label: _("Min");
-        layout {
-          column: 1;
-          row: 1;
-        }
-      }
-      Label {
-        halign: start;
-        label: _("Max");
-        layout {
-          column: 2;
-          row: 1;
-        }
-      }
-      Entry initial {
+      Adw.EntryRow initial {
+        title: _("Initial guess");
         text: "1";
         layout {
           column: 0;
+          row: 1;
+          column-span: 2;
+        }
+        styles ["card"]
+      }
+      Adw.EntryRow lower_bound {
+        title: _("Minimum");
+        text: "-inf";
+        layout {
+          column: 0;
           row: 2;
         }
+        styles ["card"]
       }
-      Entry lower_bound {
-        text: "-inf";
+      Adw.EntryRow upper_bound {
+        title: _("Maximum");
+        text: "inf";
         layout {
           column: 1;
           row: 2;
         }
-      }
-      Entry upper_bound {
-        text: "inf";
-        layout {
-          column: 2;
-          row: 2;
-        }
+        styles ["card"]
       }
     }
   }

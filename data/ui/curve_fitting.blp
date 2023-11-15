@@ -26,36 +26,33 @@ template $GraphsCurveFittingTool : Adw.Window {
 
       [end]
       Button confirm_button {
-        label: _("Add fit to data");
+        label: _("Add Fit to Data");
         styles ["suggested-action"]
       }
     }
 
-    content: Box {
+    Box {
       Box{
         orientation: vertical;
-        vexpand: false;
-        width-request: 300;
+        vexpand: true;
+        width-request: 285;
         Adw.EntryRow equation {
           margin-top: 12;
           margin-bottom: 12;
           margin-start: 12;
-          margin-end: 12;
+          margin-end: 3;
           title: _("Equation");
           styles ["card"]
         }
-        Separator {
-          orientation: vertical;
-        }
         ScrolledWindow {
-          vexpand: false;
-          height-request: 370;
+          vexpand: true;
+          height-request: 100;
           hscrollbar-policy: never;
           Box {
-            vexpand: false;
+            vexpand: true;
             orientation: vertical;
             margin-start: 12;
-            margin-end: 12;
+            margin-end: 3;
             Box fitting_params {
               margin-top: 12;
               spacing: 12;
@@ -63,18 +60,15 @@ template $GraphsCurveFittingTool : Adw.Window {
             }
           }
         }
-        [separator]
-        Separator {
-          orientation: horizontal;
-        }
+        [end]
         ScrolledWindow {
-          vexpand: true;
           margin-top: 6;
-          margin-bottom: 6;
+          height-request: 150;
+          margin-bottom: 12;
           margin-start: 12;
-          margin-end: 12;
+          margin-end: 3;
           TextView text_view {
-            valign: start;
+            vexpand: false;
             top-margin: 12;
             left-margin: 12;
             bottom-margin: 12;
@@ -82,10 +76,6 @@ template $GraphsCurveFittingTool : Adw.Window {
             styles ["card"]
           }
         }
-      }
-      [separator]
-      Separator {
-        orientation: vertical;
       }
       Adw.ToastOverlay toast_overlay {
         focusable: true;
@@ -97,6 +87,6 @@ template $GraphsCurveFittingTool : Adw.Window {
           title: _("Canvas Failed to Load");
         };
       }
-    };
+    }
   }
 }

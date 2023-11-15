@@ -20,6 +20,7 @@ class CurveFittingWindow(Graphs.CurveFittingTool):
     equation = GObject.Property(type=Adw.EntryRow)
     fitting_params = GObject.Property(type=Gtk.Box)
     text_view = GObject.Property(type=Gtk.TextView)
+    title_widget = GObject.Property(type=Adw.WindowTitle)
     toast_overlay = GObject.Property(type=Adw.ToastOverlay)
 
     def __init__(self, application, item):
@@ -33,6 +34,10 @@ class CurveFittingWindow(Graphs.CurveFittingTool):
         style = application.get_figure_style_manager(
         ).get_system_style_params()
         canvas = Canvas(application, style)
+
+        figure_settings_main = application.get_data().get_figure_settings()
+        canvas.left_label = figure_settings_main.get_property("left_label")
+        canvas.bottom_label = figure_settings_main.get_property("bottom_label")
         self.param = []
         self.sigma = []
         self.r2 = 0
@@ -70,6 +75,8 @@ class CurveFittingWindow(Graphs.CurveFittingTool):
         axis.yscale = "linear"
         axis.xscale = "linear"
         canvas.highlight_enabled = False
+        canvas.toolbar = None
+        canvas._on_pick = None
         self.canvas = canvas
         self.fit_curve()
         self.set_entry_rows()
