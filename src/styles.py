@@ -574,6 +574,14 @@ class StyleEditor(Adw.NavigationPage):
         dialog.choose_rgba(self.parent, color, None, on_accept)
 
     @Gtk.Template.Callback()
+    def on_linestyle(self, comborow, _b):
+        self.linewidth.set_sensitive(comborow.get_selected() != 0)
+
+    @Gtk.Template.Callback()
+    def on_markers(self, comborow, _b):
+        self.markersize.set_sensitive(comborow.get_selected() != 0)
+
+    @Gtk.Template.Callback()
     def add_color(self, _button):
         self.line_colors.append("000000")
         self.reload_line_colors()
