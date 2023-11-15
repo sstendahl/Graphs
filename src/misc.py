@@ -1,4 +1,11 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
+from gi.repository import Graphs
+
+# Type hints
+ItemList = list[Graphs.Item]
+Limits = tuple(float, float, float, float)
+
+
 class ParseError(Exception):
     def __init__(self, message):
         self.message = message

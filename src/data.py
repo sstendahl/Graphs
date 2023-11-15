@@ -7,10 +7,11 @@ Classes:
 """
 import copy
 import math
+from typing import Any
 
 from gi.repository import GObject, Graphs
 
-from graphs import item, utilities
+from graphs import item, misc, utilities
 
 import numpy
 
@@ -67,11 +68,11 @@ class Data(GObject.Object, Graphs.DataInterface):
         self._items = {}
         self._set_data_copy()
 
-    def get_application(self):
+    def get_application(self) -> Graphs.Application:
         """Get application property."""
         return self.props.application
 
-    def get_figure_settings(self):
+    def get_figure_settings(self) -> Graphs.FigureSettings:
         """Get figure settings property."""
         return self.props.figure_settings
 
@@ -85,41 +86,41 @@ class Data(GObject.Object, Graphs.DataInterface):
         return any(item_.get_selected() for item_ in self)
 
     @GObject.Property(type=object, flags=3 | 1073741824)  # explicit notify
-    def items(self) -> list:
+    def items(self) -> misc.ItemList:
         """All managed items."""
         return self.get_items()
 
     @items.setter
-    def items(self, items: list):
+    def items(self, items: misc.ItemList) -> None:
         self.set_items(items)
 
-    def get_items(self) -> list:
+    def get_items(self) -> misc.ItemList:
         """Get all managed items."""
         return list(self._items.values())
 
-    def set_items(self, items: list):
+    def set_items(self, items: misc.ItemList) -> None:
         """Set all managed items."""
         self._items = {}
         for item_ in items:
             self._add_item(item_)
         self.notify("items")
 
-    def _add_item(self, item_):
+    def _add_item(self, item_: Graphs.Item) -> None:
         """Append items to self."""
         self._connect_to_item(item_)
         self._items[item_.get_uuid()] = item_
 
-    def _delete_item(self, key):
+    def _delete_item(self, uuid: str) -> None:
         """Pop and delete item."""
-        item_ = self._items[key]
-        self._items.pop(key)
+        item_ = self._items[uuid]
+        self._items.pop(uuid)
         del item_
 
-    def index(self, item_):
+    def index(self, item_: Graphs.Item) -> int:
         """Get the index of an item."""
-        return self.get_items().index(item_)
+        return list(self._items.keys()).index(item_.get_uuid())
 
-    def get_names(self) -> list:
+    def get_names(self) -> list[str]:
         """All items' names."""
         return [item_.get_name() for item_ in self]
 
@@ -129,15 +130,15 @@ class Data(GObject.Object, Graphs.DataInterface):
 
     def __iter__(self):
         """Iterate over items."""
-        return iter(self.get_items())
+        return iter(self._items.values())
 
-    def __getitem__(self, getter):
+    def __getitem__(self, getter: str | int):
         """Get item by index or key."""
         if isinstance(getter, str):
             return self._items[getter]
         return self.get_items()[getter]
 
-    def change_position(self, index1: int, index2: int):
+    def change_position(self, index1: int, index2: int) -> None:
         """Change item position of index2 to that of index1."""
         items = self.get_items()
         # Check if target key is lower in the order, if so we can put the old
@@ -150,7 +151,7 @@ class Data(GObject.Object, Graphs.DataInterface):
         self.set_items(items)
         self._current_batch.append((3, (index2, index1)))
 
-    def add_items(self, items: list):
+    def add_items(self, items: misc.ItemList) -> None:
         """
         Add items to be managed.
 
@@ -248,7 +249,7 @@ class Data(GObject.Object, Graphs.DataInterface):
         self.notify("items")
         self.notify("items_selected")
 
-    def delete_items(self, items: list):
+    def delete_items(self, items: misc.ItemList):
         """Delete specified items."""
         for item_ in items:
             self._current_batch.append(
@@ -259,36 +260,36 @@ class Data(GObject.Object, Graphs.DataInterface):
         self.add_history_state()
         self.notify("items_selected")
 
-    def _connect_to_item(self, item_):
+    def _connect_to_item(self, item_: Graphs.Item):
         item_.connect("notify::selected", self._on_item_select)
         item_.connect("notify", self._on_item_change)
         for prop in ("xposition", "yposition"):
             item_.connect(f"notify::{prop}", self._on_item_position_change)
 
-    def _on_item_position_change(self, _item, _ignored):
+    def _on_item_position_change(self, _item, _ignored) -> None:
         self.optimize_limits()
         self.notify("items")
 
-    def _on_item_select(self, _x, _y):
+    def _on_item_select(self, _x, _y) -> None:
         self.notify("items_selected")
         if self.get_application().get_settings(
                 "general").get_boolean("hide-unselected"):
             self.notify("items")
 
-    def _on_item_change(self, item_, param):
+    def _on_item_change(self, item_, param) -> None:
         self._current_batch.append((0, (
             item_.get_uuid(), param.name,
             copy.deepcopy(self._data_copy[item_.get_uuid()][param.name]),
             copy.deepcopy(item_.get_property(param.name)),
         )))
 
-    def _set_data_copy(self):
-        self._current_batch = []
+    def _set_data_copy(self) -> None:
+        self._current_batch: list = []
         self._data_copy = copy.deepcopy(
             {item_.get_uuid(): item.to_dict(item_) for item_ in self},
         )
 
-    def add_history_state(self, old_limits=None):
+    def add_history_state(self, old_limits: misc.Limits = None) -> None:
         if not self._current_batch:
             return
         if self._history_pos != -1:
@@ -308,7 +309,7 @@ class Data(GObject.Object, Graphs.DataInterface):
             self._history_states = self._history_states[1:]
         self._set_data_copy()
 
-    def undo(self):
+    def undo(self) -> None:
         if not self.props.can_undo:
             return
         batch = self._history_states[self._history_pos][0]
@@ -340,7 +341,7 @@ class Data(GObject.Object, Graphs.DataInterface):
         self._set_data_copy()
         self.add_view_history_state()
 
-    def redo(self):
+    def redo(self) -> None:
         if not self.props.can_redo:
             return
         self._history_pos += 1
@@ -367,7 +368,7 @@ class Data(GObject.Object, Graphs.DataInterface):
         self._set_data_copy()
         self.add_view_history_state()
 
-    def add_view_history_state(self):
+    def add_view_history_state(self) -> None:
         limits = self.get_figure_settings().get_limits()
         if all(
             math.isclose(old, new) for old, new
@@ -385,7 +386,7 @@ class Data(GObject.Object, Graphs.DataInterface):
         self.props.can_view_back = True
         self.props.can_view_forward = False
 
-    def view_back(self):
+    def view_back(self) -> None:
         if not self.props.can_view_back:
             return
         self._view_history_pos -= 1
@@ -396,7 +397,7 @@ class Data(GObject.Object, Graphs.DataInterface):
         self.props.can_view_back = \
             abs(self._view_history_pos) < len(self._view_history_states)
 
-    def view_forward(self):
+    def view_forward(self) -> None:
         if not self.props.can_view_forward:
             return
         self._view_history_pos += 1
@@ -406,7 +407,7 @@ class Data(GObject.Object, Graphs.DataInterface):
         self.props.can_view_back = True
         self.props.can_view_forward = self._view_history_pos < -1
 
-    def optimize_limits(self):
+    def optimize_limits(self) -> None:
         figure_settings = self.get_figure_settings()
         axes = [
             [direction, False, [], [],
@@ -456,7 +457,7 @@ class Data(GObject.Object, Graphs.DataInterface):
             figure_settings.set_property(f"max_{direction}", max_all)
         self.add_view_history_state()
 
-    def to_project_dict(self) -> dict:
+    def to_project_dict(self) -> dict[str, Any]:
         figure_settings = self.get_figure_settings()
         return {
             "version": self.get_application().get_version(),
@@ -471,7 +472,7 @@ class Data(GObject.Object, Graphs.DataInterface):
             "view-history-position": self._view_history_pos,
         }
 
-    def load_from_project_dict(self, project_dict: dict):
+    def load_from_project_dict(self, project_dict: dict[str, Any]) -> None:
         figure_settings = self.get_figure_settings()
         for key, value in project_dict["figure-settings"].items():
             if figure_settings.get_property(key) != value:
