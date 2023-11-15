@@ -35,26 +35,26 @@ template $GraphsCurveFittingTool : Adw.Window {
       Box{
         orientation: vertical;
         vexpand: true;
-        width-request: 275;
+        width-request: 285;
         Adw.EntryRow equation {
           margin-top: 12;
-          margin-bottom: 6;
+          margin-bottom: 12;
           margin-start: 12;
-          margin-end: 12;
+          margin-end: 3;
           title: _("Equation");
           styles ["card"]
         }
         ScrolledWindow {
           vexpand: true;
-          height-request: 125;
+          height-request: 100;
           hscrollbar-policy: never;
           Box {
             vexpand: true;
             orientation: vertical;
             margin-start: 12;
-            margin-end: 12;
+            margin-end: 3;
             Box fitting_params {
-              margin-top: 6;
+              margin-top: 12;
               spacing: 12;
               orientation: vertical;
             }
@@ -64,9 +64,9 @@ template $GraphsCurveFittingTool : Adw.Window {
         ScrolledWindow {
           margin-top: 6;
           height-request: 150;
-          margin-bottom: 6;
+          margin-bottom: 12;
           margin-start: 12;
-          margin-end: 12;
+          margin-end: 3;
           TextView text_view {
             vexpand: false;
             top-margin: 12;
@@ -87,6 +87,6 @@ template $GraphsCurveFittingTool : Adw.Window {
           title: _("Canvas Failed to Load");
         };
       }
-    }
+    };
   }
 }
