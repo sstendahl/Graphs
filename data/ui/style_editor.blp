@@ -65,17 +65,18 @@ template $GraphsStyleEditor : Adw.NavigationPage {
 
           Adw.PreferencesGroup {
             title: _("Lines");
-            description: _("Change properties of the line and markers");
 
             Adw.ComboRow linestyle {
               title: _("Linestyle");
               model: StringList {
                 strings [_("None"), _("Solid"), _("Dotted"), _("Dashed"), _("Dashdot")]
               };
+              notify::selected => $on_linestyle();
             }
 
             Adw.ActionRow {
               title: _("Linewidth");
+              visible: bind linewidth.sensitive;
 
               Scale linewidth {
                 draw-value: true;
@@ -84,6 +85,7 @@ template $GraphsStyleEditor : Adw.NavigationPage {
                   lower: 0;
                   upper: 10;
                 };
+                sensitive: false;
               }
             }
 
@@ -100,10 +102,12 @@ template $GraphsStyleEditor : Adw.NavigationPage {
                   _("Filled plus"), _("Filled x"),
                 ]
               };
+              notify::selected => $on_markers();
             }
 
             Adw.ActionRow {
               title: _("Marker Size");
+              visible: bind markersize.sensitive;
 
               Scale markersize {
                 draw-value: true;
@@ -112,13 +116,34 @@ template $GraphsStyleEditor : Adw.NavigationPage {
                   lower: 0;
                   upper: 10;
                 };
+                sensitive: false;
               }
             }
           }
 
           Adw.PreferencesGroup {
+            title: _("Axes");
+
+            Adw.ActionRow {
+              title: _("Axis Width");
+
+              Scale axis_width {
+                draw-value: true;
+                width-request: 200;
+                adjustment: Adjustment {
+                  lower: 0;
+                  upper: 4;
+                };
+              }
+            }
+
+            Adw.SwitchRow draw_frame {
+              title: _("Draw Frame");
+            }
+          }
+
+          Adw.PreferencesGroup {
             title: _("Ticks");
-            description: _("Settings for the ticks that are used on axes");
 
             Adw.ComboRow tick_direction {
               title: _("Tick Directions");
@@ -204,7 +229,6 @@ template $GraphsStyleEditor : Adw.NavigationPage {
 
           Adw.PreferencesGroup {
             title: _("Grid");
-            description: _("Settings for the grid");
 
             Adw.SwitchRow show_grid {
               title: _("Show Grid");
@@ -449,27 +473,6 @@ template $GraphsStyleEditor : Adw.NavigationPage {
                   styles ["boxed-list"]
                 }
               }
-            }
-          }
-
-          Adw.PreferencesGroup {
-            title: _("Other");
-
-            Adw.ActionRow {
-              title: _("Axis Width");
-
-              Scale axis_width {
-                draw-value: true;
-                width-request: 200;
-                adjustment: Adjustment {
-                  lower: 0;
-                  upper: 4;
-                };
-              }
-            }
-
-            Adw.SwitchRow draw_frame {
-              title: _("Draw Frame");
             }
           }
         }
