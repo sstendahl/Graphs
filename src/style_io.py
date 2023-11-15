@@ -111,7 +111,7 @@ def write(file: Gio.File, name: str, style: RcParams):
                 wrapper.write(f"{key}: {value}\n")
 
 
-_PREVIEW_XDATA = numpy.linspace(0, 10, 1000)
+_PREVIEW_XDATA = numpy.linspace(0, 10, 30)
 _PREVIEW_YDATA1 = numpy.sin(_PREVIEW_XDATA)
 _PREVIEW_YDATA2 = numpy.cos(_PREVIEW_XDATA)
 
@@ -123,6 +123,10 @@ def generate_preview(style: RcParams) -> Gio.File:
         # set render size in inch
         figure = Figure(figsize=(5, 3))
         axis = figure.add_subplot()
+        axis.spines.bottom.set_visible(True)
+        axis.spines.left.set_visible(True)
+        if not style["axes.spines.top"]:
+            axis.tick_params(which="both", **{"top": False, "right": False})
         axis.plot(_PREVIEW_XDATA, _PREVIEW_YDATA1)
         axis.plot(_PREVIEW_XDATA, _PREVIEW_YDATA2)
         axis.set_xlabel(_("X Label"))
