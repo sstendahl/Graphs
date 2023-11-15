@@ -124,19 +124,31 @@ class Data(GObject.Object, Graphs.DataInterface):
         """All items' names."""
         return [item_.get_name() for item_ in self]
 
-    def __len__(self) -> int:
+    def get_n_items(self) -> int:
         """Amount of managed items."""
         return len(self._items)
+
+    def get_at_pos(self, position: int) -> Graphs.Item:
+        """Get item at position."""
+        return self.get_items()[position]
+
+    def get_for_uuid(self, uuid: str) -> Graphs.Item:
+        """Get item for key."""
+        return self._items[uuid]
+
+    def __len__(self) -> int:
+        """Magic alias for `get_n_items()`"""
+        return self.get_n_items()
 
     def __iter__(self):
         """Iterate over items."""
         return iter(self._items.values())
 
     def __getitem__(self, getter: str | int):
-        """Get item by index or key."""
+        """Magic alias for retrieving items."""
         if isinstance(getter, str):
-            return self._items[getter]
-        return self.get_items()[getter]
+            return self.get_for_uuid(getter)
+        return self.get_at_pos(getter)
 
     def change_position(self, index1: int, index2: int) -> None:
         """Change item position of index2 to that of index1."""
