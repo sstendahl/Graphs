@@ -244,7 +244,8 @@ class CurveFittingWindow(Graphs.CurveFittingTool):
         application.get_data().add_items([DataItem.new(
             style_manager.get_selected_style_params(),
             name=self.fitted_curve.get_name(),
-            xdata=self.fitted_curve.xdata, ydata=self.fitted_curve.ydata,
+            xdata=list(self.fitted_curve.xdata),
+            ydata=list(self.fitted_curve.ydata),
         )])
         self.destroy()
 
