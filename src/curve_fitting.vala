@@ -12,9 +12,6 @@ namespace Graphs {
         public unowned Gtk.Box fitting_params { get; }
 
         [GtkChild]
-        public unowned Adw.OverlaySplitView split_view { get; }
-
-        [GtkChild]
         public unowned Adw.ToastOverlay toast_overlay { get; }
 
         [GtkChild]
@@ -22,16 +19,6 @@ namespace Graphs {
 
         [GtkChild]
         public unowned Gtk.Button confirm_button { get; }
-
-        [GtkChild]
-        public unowned Adw.WindowTitle title_widget { get; }
-
-        [GtkCallback]
-        private void on_sidebar_toggle () {
-            this.application.lookup_action ("toggle_sidebar").change_state (
-                new Variant.boolean (this.split_view.get_collapsed ())
-            );
-        }
         }
 
     public class FittingParameter : Object {

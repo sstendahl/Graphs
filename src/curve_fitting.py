@@ -27,7 +27,6 @@ class CurveFittingWindow(Graphs.CurveFittingTool):
         super().__init__(
             application=application, transient_for=application.get_window(),
         )
-        self.get_title_widget().set_title(application.props.name)
         self.equation = self.get_equation()
         ui.bind_values_to_settings(
             application.get_settings("curve-fitting"), self)
