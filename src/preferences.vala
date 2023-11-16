@@ -11,9 +11,6 @@ namespace Graphs {
         public unowned Adw.ComboRow center { get; }
 
         [GtkChild]
-        public unowned Adw.ComboRow handle_duplicates { get; }
-
-        [GtkChild]
         public unowned Adw.SwitchRow hide_unselected { get; }
 
         public PreferencesWindow (Application application) {

@@ -176,9 +176,7 @@ class Data(GObject.Object, Graphs.DataInterface):
         ignored = []
         application = self.get_application()
         figure_settings = self.get_figure_settings()
-        settings = application.get_settings()
-        handle_duplicates = \
-            settings.get_child("general").get_enum("handle-duplicates")
+        settings = application.get_settings("figure")
         style_manager = self.get_application().get_figure_style_manager()
         selected_style = style_manager.get_selected_style_params()
         color_cycle = selected_style["axes.prop_cycle"].by_key()["color"]
@@ -188,33 +186,24 @@ class Data(GObject.Object, Graphs.DataInterface):
             if len(set(used_colors)) == len(color_cycle):
                 for color in color_cycle:
                     used_colors.remove(color)
+            used_colors.append(color)
 
         def _is_default(prop):
             return figure_settings.get_property(prop) == \
-                settings.get_child("figure").get_string(prop)
+                settings.get_string(prop)
 
         for item_ in self:
             color = item_.get_color()
             if color in color_cycle:
                 _append_used_color(color)
+        used_names = set(self.get_names())
         for new_item in items:
-            names = self.get_names()
-            if new_item.get_name() in names:
-                if handle_duplicates == 0:  # Auto-add
-                    new_item.set_name(utilities.get_duplicate_string(
-                        new_item.get_name(), names,
-                    ))
-                elif handle_duplicates == 1:  # Ignore
-                    ignored.append(new_item.get_name())
-                    continue
-                elif handle_duplicates == 3:  # Override
-                    index = names.index(new_item.get_name())
-                    existing_item = self[index]
-                    self._current_batch.append(
-                        (2, (index, existing_item.to_dict())),
-                    )
-                    new_item.set_uuid(existing_item.get_uuid())
-
+            item_name = new_item.get_name()
+            if item_name in used_names:
+                new_item.set_name(utilities.get_duplicate_string(
+                    item_name, used_names,
+                ))
+            used_names.add(new_item.get_name())
             xlabel = new_item.get_xlabel()
             if xlabel:
                 original_position = new_item.get_xposition()

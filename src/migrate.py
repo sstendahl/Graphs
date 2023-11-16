@@ -18,7 +18,6 @@ CONFIG_MIGRATION_TABLE = {
     "addequation_x_stop": ("add-equation", "x-stop"),
     "export_figure_dpi": ("export-figure", "dpi"),
     "export_figure_transparent": ("export-figure", "transparent"),
-    "handle_duplicates": ("general", "handle-duplicates"),
     "hide_unselected": ("general", "hide-unselected"),
     "plot_custom_style": ("figure", "custom-style"),
     "plot_legend": ("figure", "legend"),
