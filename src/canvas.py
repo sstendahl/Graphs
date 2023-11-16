@@ -75,6 +75,7 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
     __gtype_name__ = "GraphsCanvas"
 
     application = GObject.Property(type=Graphs.Application)
+    hide_unselected = GObject.Property(type=bool, default=False)
 
     min_selected = GObject.Property(type=float, default=0)
     max_selected = GObject.Property(type=float, default=0)
@@ -87,7 +88,7 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
         style context. Bind `items` to `data.items` and all figure settings
         attributes to their respective values.
         """
-        self._style_params = style_params
+        self._style_params, self._items = style_params, []
         pyplot.rcParams.update(self._style_params)  # apply style_params
         GObject.Object.__init__(self, application=application, can_focus=False)
         super().__init__()
@@ -118,6 +119,8 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
         zoom_gesture = Gtk.GestureZoom.new()
         zoom_gesture.connect("scale-changed", self._on_zoom_gesture)
         self.add_controller(zoom_gesture)
+
+        self.connect("notify::hide_unselected", self._redraw)
 
     def get_application(self):
         """Get application property."""
@@ -214,9 +217,10 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
             self._renderer.dpi = self.figure.dpi
             self.figure.draw(self._renderer)
 
-    @GObject.Property(flags=2)
+    @GObject.Property
     def items(self):
-        """ignored, property is write-only."""
+        """Getter for items property."""
+        return self._items
 
     @items.setter
     def items(self, items: list):
@@ -225,14 +229,16 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
 
         Automatically hide unused axes and refresh legend.
         """
-        hide_unselected = self.get_application().get_settings(
-            "general").get_boolean("hide-unselected")
+        self._items = items
+        self._redraw()
+
+    def _redraw(self, *_args):
         drawable_items = []
         # bottom, top, left, right
         visible_axes = [False, False, False, False]
         used_axes = [False, False, False, False]
-        for item in items:
-            if not (hide_unselected and not item.get_selected()):
+        for item in self._items:
+            if not (self.props.hide_unselected and not item.get_selected()):
                 drawable_items.append(item)
                 xposition = item.get_xposition()
                 yposition = item.get_yposition()

@@ -271,9 +271,6 @@ class Data(GObject.Object, Graphs.DataInterface):
 
     def _on_item_select(self, _x, _y) -> None:
         self.notify("items_selected")
-        if self.get_application().get_settings(
-                "general").get_boolean("hide-unselected"):
-            self.notify("items")
 
     def _on_item_change(self, item_, param) -> None:
         self._current_batch.append((0, (

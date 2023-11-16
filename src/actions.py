@@ -2,8 +2,6 @@
 """Main actions."""
 from gettext import gettext as _
 
-from gi.repository import Graphs
-
 from graphs import operations, ui, utilities
 from graphs.add_equation import AddEquationWindow
 from graphs.export_figure import ExportFigureWindow
@@ -21,7 +19,7 @@ def perform_operation(_action, target, self):
         return
     args = []
     if operation in ("center", ):
-        args = [self.get_settings("general").get_enum(operation)]
+        args = [self.get_settings("actions").get_enum(operation)]
     if operation == "shift":
         figure_settings = self.get_data().get_figure_settings()
         right_range = (figure_settings.get_max_right()
@@ -61,10 +59,6 @@ def quit_action(_action, _target, self):
 
 def about_action(_action, _target, self):
     ui.show_about_window(self)
-
-
-def preferences_action(_action, _target, self):
-    Graphs.PreferencesWindow.new(self)
 
 
 def figure_settings_action(_action, _target, self):

@@ -49,7 +49,6 @@ graphs_lib = shared_library(
     'item.vala',
     'inline-stack-switcher.vala',
     'misc.vala',
-    'preferences.vala',
     'utilities.vala',
     'window.vala',
   ), blueprints_hack, gresource_bundle,
