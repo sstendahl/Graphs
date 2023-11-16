@@ -222,27 +222,32 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
             self.figure.draw(self._renderer)
 
     def _redraw(self, *_args):
-        drawable_items = []
         # bottom, top, left, right
         visible_axes = [False, False, False, False]
         used_axes = [False, False, False, False]
-        for item in self.props.items:
-            if not (self.props.hide_unselected and not item.get_selected()):
-                drawable_items.append(item)
-                xposition = item.get_xposition()
-                yposition = item.get_yposition()
-                visible_axes[xposition] = True
-                visible_axes[2 + yposition] = True
-                used_axes[xposition + 2 * yposition] = True
+        if self.props.hide_unselected:
+            drawable_items = []
+            for item in self.props.items:
+                item.connect("notify::selected", self._redraw)
+                if item.get_selected():
+                    drawable_items.append(item)
+        else:
+            drawable_items = self.props.items
+        for item in drawable_items:
+            xposition = item.get_xposition()
+            yposition = item.get_yposition()
+            visible_axes[xposition] = True
+            visible_axes[2 + yposition] = True
+            used_axes[xposition + 2 * yposition] = True
         axes_directions = [
-            ["bottom", "left"],   # axis
-            ["top", "left"],      # top_left_axis
-            ["bottom", "right"],  # right_axis
-            ["top", "right"],     # top_right_axis
+            ("bottom", "left"),   # axis
+            ("top", "left"),      # top_left_axis
+            ("bottom", "right"),  # right_axis
+            ("top", "right"),     # top_right_axis
         ]
         if not any(visible_axes):
-            visible_axes = [True, False, True, False]  # Left and bottom
-            used_axes = [True, False, False, False]  # self.axis visible
+            visible_axes = (True, False, True, False)  # Left and bottom
+            used_axes = (True, False, False, False)  # self.axis visible
             self._legend_axis = self._axis
 
         params = self._style_params
