@@ -141,8 +141,7 @@ def multiply_y(_item, xdata, ydata, multiplier):
 
 def normalize(_item, xdata, ydata):
     """Normalize all selected data"""
-    new_ydata = [value / max(ydata) for value in ydata]
-    return xdata, new_ydata, False, False
+    return xdata, [value / max(ydata) for value in ydata], False, False
 
 
 def smoothen(_item, xdata, ydata):

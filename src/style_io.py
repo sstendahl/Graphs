@@ -126,7 +126,7 @@ def generate_preview(style: RcParams) -> Gio.File:
         axis.spines.bottom.set_visible(True)
         axis.spines.left.set_visible(True)
         if not style["axes.spines.top"]:
-            axis.tick_params(which="both", **{"top": False, "right": False})
+            axis.tick_params(which="both", top=False, right=False)
         axis.plot(_PREVIEW_XDATA, _PREVIEW_YDATA1)
         axis.plot(_PREVIEW_XDATA, _PREVIEW_YDATA2)
         axis.set_xlabel(_("X Label"))

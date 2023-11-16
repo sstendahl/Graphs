@@ -185,20 +185,18 @@ class Data(GObject.Object, Graphs.DataInterface):
         used_colors = []
 
         def _append_used_color(color):
-            used_colors.append(color)
-            # If we've got all colors once, remove those from used_colors so we
-            # can loop around
-            if set(used_colors) == set(color_cycle):
+            if len(set(used_colors)) == len(color_cycle):
                 for color in color_cycle:
                     used_colors.remove(color)
-
-        for item_ in self:
-            _append_used_color(item_.get_color())
 
         def _is_default(prop):
             return figure_settings.get_property(prop) == \
                 settings.get_child("figure").get_string(prop)
 
+        for item_ in self:
+            color = item_.get_color()
+            if color in color_cycle:
+                _append_used_color(color)
         for new_item in items:
             names = self.get_names()
             if new_item.get_name() in names:
@@ -213,7 +211,7 @@ class Data(GObject.Object, Graphs.DataInterface):
                     index = names.index(new_item.get_name())
                     existing_item = self[index]
                     self._current_batch.append(
-                        (2, (index, existing_item.to_dict(item_))),
+                        (2, (index, item.to_dict(existing_item))),
                     )
                     new_item.set_uuid(existing_item.get_uuid())
 
@@ -246,8 +244,8 @@ class Data(GObject.Object, Graphs.DataInterface):
             if new_item.get_color() == "":
                 for color in color_cycle:
                     if color not in used_colors:
-                        new_item.set_color(color)
                         _append_used_color(color)
+                        new_item.set_color(color)
                         break
 
             self._add_item(new_item)
@@ -489,7 +487,7 @@ class Data(GObject.Object, Graphs.DataInterface):
         for key, value in project_dict["figure-settings"].items():
             if figure_settings.get_property(key) != value:
                 figure_settings.set_property(key, value)
-        self.set_items([item.new_from_dict(d) for d in project_dict["data"]])
+        self.set_items(item.new_from_dict(d) for d in project_dict["data"])
 
         self._set_data_copy()
         self._history_states = project_dict["history-states"]
