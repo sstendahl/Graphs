@@ -59,14 +59,9 @@ template $GraphsFigureSettingsWindow : Adw.Window {
 
                 Adw.PreferencesGroup {
                   title: _("Axis Limits");
-                  Adw.ActionRow no_data_message {
-                    title: _("No Data");
-                    subtitle: _("Add data to the figure to set axis limits");
-                  }
                   Box {
                     orientation: vertical;
                     spacing: 12;
-                    visible: bind no_data_message.visible inverted;
                     Box left_limits {
                       orientation: horizontal;
                       spacing: 6;

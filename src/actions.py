@@ -156,6 +156,6 @@ def open_project_action(_action, _target, self):
 
 def delete_selected_action(_action, _target, self):
     items = [item for item in self.get_data() if item.get_selected()]
-    names = ", ".join([item.get_name() for item in items])
+    names = ", ".join(item.get_name() for item in items)
     self.get_data().delete_items(items)
     self.get_window().add_toast_string(_("Deleted {}").format(names))

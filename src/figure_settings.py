@@ -53,7 +53,6 @@ class FigureSettingsWindow(Adw.Window):
     min_top = Gtk.Template.Child()
     max_top = Gtk.Template.Child()
 
-    no_data_message = Gtk.Template.Child()
     style_overview = Gtk.Template.Child()
     navigation_view = Gtk.Template.Child()
     grid_view = Gtk.Template.Child()
@@ -83,9 +82,6 @@ class FigureSettingsWindow(Adw.Window):
 
         ui.bind_values_to_object(figure_settings, self, ignorelist=ignorelist)
         self.set_axes_entries()
-        self.no_data_message.set_visible(
-            self.get_application().get_data().is_empty(),
-        )
         if highlighted is not None:
             getattr(self, highlighted).grab_focus()
 
@@ -132,11 +128,13 @@ class FigureSettingsWindow(Adw.Window):
                 figure_settings.set_use_custom_style(True)
 
     def set_axes_entries(self):
-        used_axes = [[direction, False] for direction in _DIRECTIONS]
+        used_axes = [False, False, False, False]
         for item in self.get_application().get_data():
             for i in item.get_xposition() * 2, 1 + item.get_yposition() * 2:
-                used_axes[i][1] = True
-        for (direction, visible) in used_axes:
+                used_axes[i] = True
+        if not any(used_axes):
+            used_axes = [True, True, False, False]
+        for (direction, visible) in zip(_DIRECTIONS, used_axes):
             if visible:
                 for s in ("min_", "max_"):
                     entry = getattr(self, s + direction)
