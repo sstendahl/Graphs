@@ -94,7 +94,7 @@ class TextItem(Graphs.Item, _ItemMixin):
         )
 
 
-class FillItem(Graphs.Item):
+class FillItem(Graphs.Item, _ItemMixin):
     __gtype_name__ = "GraphsFillItem"
 
     data = GObject.Property(type=object)
