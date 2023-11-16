@@ -187,7 +187,12 @@ class Data(GObject.Object, Graphs.DataInterface):
             return figure_settings.get_property(prop) == \
                 settings.get_child("figure").get_string(prop)
 
-        used_colors = set(item_.get_color() for item_ in self)
+        used_colors = [
+            item_.get_color() for item_ in self
+            if item_.get_color() in color_cycle
+        ]
+        used_colors = set(used_colors[len(color_cycle):]) \
+            if len(used_colors) > len(color_cycle) else set(used_colors)
         for new_item in items:
             names = self.get_names()
             if new_item.get_name() in names:
@@ -233,7 +238,7 @@ class Data(GObject.Object, Graphs.DataInterface):
                     elif ylabel != figure_settings.get_right_label():
                         new_item.set_yposition(original_position)
             if new_item.get_color() == "":
-                if used_colors == set(color_cycle):
+                if len(used_colors) == len(color_cycle):
                     used_colors = set()
                 for color in color_cycle:
                     if color not in used_colors:
