@@ -312,7 +312,7 @@ template $GraphsWindow: Adw.ApplicationWindow {
                         clicked => $perform_operation();
                       }
 
-                      Button center_button {
+                      Adw.SplitButton center_button {
                         hexpand: true;
                         sensitive: bind shift_button.sensitive;
                         layout {
@@ -325,6 +325,7 @@ template $GraphsWindow: Adw.ApplicationWindow {
                           label: _("Center");
                         }
                         tooltip-text: _("Center data");
+                        menu-model: center_menu;
                         clicked => $perform_operation();
                       }
 
@@ -626,7 +627,6 @@ menu primary_menu {
   }
   section {
     item (_("Figure Settings"), "app.figure_settings")
-    item (_("Preferences"), "app.preferences")
   }
   section {
     item (_("Keyboard Shortcuts"), "win.show-help-overlay")
@@ -762,5 +762,18 @@ menu view_menu {
         target: "4";
       }
     }
+  }
+}
+
+menu center_menu {
+  item {
+    label: _("At maximum Y value");
+    action: "app.center";
+    target: "max-y";
+  }
+  item {
+    label: _("At middle X value");
+    action: "app.center";
+    target: "middle-x";
   }
 }

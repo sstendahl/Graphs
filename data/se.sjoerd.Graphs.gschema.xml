@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schemalist gettext-domain="graphs">
-  <enum id="se.sjoerd.Graphs.general.center-values">
-    <value nick="Center at maximum Y value" value="0"/>
-    <value nick="Center at middle X value" value="1"/>
+  <enum id="se.sjoerd.Graphs.actions.center-values">
+    <value nick="max-y" value="0"/>
+    <value nick="middle-x" value="1"/>
   </enum>
 
   <enum id="se.sjoerd.Graphs.export-figure.file-formats">
@@ -45,7 +45,7 @@
   </enum>
 
   <schema id="se.sjoerd.Graphs" path="/se/sjoerd/Graphs/">
-    <child name="general" schema="se.sjoerd.Graphs.general"/>
+    <child name="actions" schema="se.sjoerd.Graphs.actions"/>
     <child name="add-equation" schema="se.sjoerd.Graphs.add-equation"/>
     <child name="curve-fitting" schema="se.sjoerd.Graphs.curve-fitting"/>
     <child name="export-figure" schema="se.sjoerd.Graphs.export-figure"/>
@@ -53,12 +53,9 @@
     <child name="import-params" schema="se.sjoerd.Graphs.import-params"/>
   </schema>
 
-  <schema id="se.sjoerd.Graphs.general">
-    <key name="center" enum="se.sjoerd.Graphs.general.center-values">
-      <default>"Center at middle X value"</default>
-    </key>
-    <key name="hide-unselected" type="b">
-      <default>false</default>
+  <schema id="se.sjoerd.Graphs.actions">
+    <key name="center" enum="se.sjoerd.Graphs.actions.center-values">
+      <default>"middle-x"</default>
     </key>
   </schema>
 
@@ -100,6 +97,9 @@
       <default>"Linear"</default>
     </key>
     <key name="use-custom-style" type="b">
+      <default>false</default>
+    </key>
+    <key name="hide-unselected" type="b">
       <default>false</default>
     </key>
   </schema>

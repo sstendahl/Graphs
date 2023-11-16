@@ -17,6 +17,7 @@ namespace Graphs {
         public int legend_position { get; set; default = 0; }
         public bool use_custom_style { get; set; default = false; }
         public string custom_style { get; set; default = "adwaita"; }
+        public bool hide_unselected { get; set; default = false; }
 
         public double min_bottom { get; set; default = 0; }
         public double max_bottom { get; set; default = 1; }

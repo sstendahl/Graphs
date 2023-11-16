@@ -17,11 +17,10 @@ from matplotlib import font_manager
 
 
 _ACTIONS = [
-    "quit", "about", "preferences", "figure_settings", "add_data",
-    "add_equation", "select_all", "select_none", "undo", "redo",
-    "optimize_limits", "view_back", "view_forward", "export_data",
-    "export_figure", "save_project", "open_project", "delete_selected",
-    "zoom_in", "zoom_out",
+    "quit", "about", "figure_settings", "add_data", "add_equation",
+    "select_all", "select_none", "undo", "redo", "optimize_limits",
+    "view_back", "view_forward", "export_data", "export_figure",
+    "save_project", "open_project", "delete_selected", "zoom_in", "zoom_out",
 ]
 
 
@@ -99,6 +98,9 @@ class PythonApplication(Graphs.Application):
         )
         operation_action.connect("activate", actions.perform_operation, self)
         self.add_action(operation_action)
+
+        center_action = settings.get_child("actions").create_action("center")
+        self.add_action(center_action)
 
         self.get_data().connect(
             "notify::items", ui.on_items_change, self,

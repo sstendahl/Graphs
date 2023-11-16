@@ -11,14 +11,14 @@ from graphs import file_io, misc, style_io, utilities
 
 CONFIG_MIGRATION_TABLE = {
     # old-key: (category, key)
-    "action_center_data": ("general", "center"),
+    "action_center_data": ("actions", "center"),
     "addequation_equation": ("add-equation", "equation"),
     "addequation_step_size": ("add-equation", "step-size"),
     "addequation_x_start": ("add-equation", "x-start"),
     "addequation_x_stop": ("add-equation", "x-stop"),
     "export_figure_dpi": ("export-figure", "dpi"),
     "export_figure_transparent": ("export-figure", "transparent"),
-    "hide_unselected": ("general", "hide-unselected"),
+    "hide_unselected": ("figure", "hide-unselected"),
     "plot_custom_style": ("figure", "custom-style"),
     "plot_legend": ("figure", "legend"),
     "plot_right_label": ("figure", "right-label"),
@@ -31,6 +31,11 @@ CONFIG_MIGRATION_TABLE = {
     "plot_x_scale": ("figure", "bottom-scale"),
     "plot_y_label": ("figure", "left-label"),
     "plot_y_scale": ("figure", "left-scale"),
+}
+
+CENTER_ACTION_MIGRATION_TABLE = {
+    "Center at middle coordinate": "middle-x",
+    "Center at middle X value": "max-y",
 }
 
 
@@ -58,7 +63,9 @@ def _migrate_config(settings_, config_file):
     for old_key, (category, key) in CONFIG_MIGRATION_TABLE.items():
         with contextlib.suppress(KeyError, ValueError):
             value = config[old_key]
-            if "scale" in key:
+            if old_key == "action_center_data":
+                value = CENTER_ACTION_MIGRATION_TABLE[value]
+            elif "scale" in key:
                 value = value.capitalize()
             settings_.get_child(category)[key] = value
     config_file.delete(None)

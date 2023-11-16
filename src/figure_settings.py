@@ -40,6 +40,7 @@ class FigureSettingsWindow(Adw.Window):
     right_scale = Gtk.Template.Child()
     legend = Gtk.Template.Child()
     legend_position = Gtk.Template.Child()
+    hide_unselected = Gtk.Template.Child()
     left_limits = Gtk.Template.Child()
     right_limits = Gtk.Template.Child()
     bottom_limits = Gtk.Template.Child()
