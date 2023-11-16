@@ -245,6 +245,10 @@ def bind_values_to_object(source, window, ignorelist=None):
                 bindings.append(source.bind_property(
                     key, widget.get_adjustment(), "value", 1 | 2,
                 ))
+            elif isinstance(widget, Adw.SwitchRow):
+                bindings.append(source.bind_property(
+                    key, widget, "active", 1 | 2,
+                ))
             else:
                 logging.warn(_("Unsupported Widget {}").format(type(widget)))
         except AttributeError:
