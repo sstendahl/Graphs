@@ -18,12 +18,6 @@ def new_from_dict(dictionary: dict):
     return cls(**dictionary)
 
 
-def to_dict(item):
-    dictionary = {key: item.get_property(key) for key in dir(item.props)}
-    dictionary["type"] = item.__gtype_name__
-    return dictionary
-
-
 class _ItemMixin():
     def reset(self, old_style, new_style):
         for prop, (key, function) in self._style_properties.items():
@@ -40,6 +34,11 @@ class _ItemMixin():
             prop: style[key] if function is None else function(style[key])
             for prop, (key, function) in self._style_properties.items()
         }
+
+    def to_dict(self):
+        dictionary = {key: self.get_property(key) for key in dir(self.props)}
+        dictionary["type"] = self.__gtype_name__
+        return dictionary
 
 
 class DataItem(Graphs.Item, _ItemMixin):
@@ -95,7 +94,7 @@ class TextItem(Graphs.Item, _ItemMixin):
         )
 
 
-class FillItem(Graphs.Item):
+class FillItem(Graphs.Item, _ItemMixin):
     __gtype_name__ = "GraphsFillItem"
 
     data = GObject.Property(type=object)

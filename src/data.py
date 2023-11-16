@@ -211,7 +211,7 @@ class Data(GObject.Object, Graphs.DataInterface):
                     index = names.index(new_item.get_name())
                     existing_item = self[index]
                     self._current_batch.append(
-                        (2, (index, item.to_dict(existing_item))),
+                        (2, (index, existing_item.to_dict())),
                     )
                     new_item.set_uuid(existing_item.get_uuid())
 
@@ -250,7 +250,7 @@ class Data(GObject.Object, Graphs.DataInterface):
 
             self._add_item(new_item)
             self._current_batch.append(
-                (1, copy.deepcopy(item.to_dict(new_item))),
+                (1, copy.deepcopy(new_item.to_dict())),
             )
         self.optimize_limits()
         self.add_history_state()
@@ -263,7 +263,7 @@ class Data(GObject.Object, Graphs.DataInterface):
         """Delete specified items."""
         for item_ in items:
             self._current_batch.append(
-                (2, (self.index(item_), item.to_dict(item_))),
+                (2, (self.index(item_), item_.to_dict())),
             )
             self._delete_item(item_.get_uuid())
         self.notify("items")
@@ -296,7 +296,7 @@ class Data(GObject.Object, Graphs.DataInterface):
     def _set_data_copy(self) -> None:
         self._current_batch: list = []
         self._data_copy = copy.deepcopy(
-            {item_.get_uuid(): item.to_dict(item_) for item_ in self},
+            {item_.get_uuid(): item_.to_dict() for item_ in self},
         )
 
     def add_history_state(self, old_limits: misc.Limits = None) -> None:
@@ -471,7 +471,7 @@ class Data(GObject.Object, Graphs.DataInterface):
         figure_settings = self.get_figure_settings()
         return {
             "version": self.get_application().get_version(),
-            "data": [item.to_dict(item_) for item_ in self],
+            "data": [item_.to_dict() for item_ in self],
             "figure-settings": {
                 key: figure_settings.get_property(key)
                 for key in dir(figure_settings.props)
