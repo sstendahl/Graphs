@@ -5,13 +5,6 @@
     <value nick="Center at middle X value" value="1"/>
   </enum>
 
-  <enum id="se.sjoerd.Graphs.general.handle-duplicates-values">
-    <value nick="Auto-rename duplicates" value="0"/>
-    <value nick="Ignore duplicates" value="1"/>
-    <value nick="Add duplicates" value="2"/>
-    <value nick="Override existing items" value="3"/>
-  </enum>
-
   <enum id="se.sjoerd.Graphs.export-figure.file-formats">
     <value nick="Encapsulated Postscript" value="0"/>
     <value nick="Joint Photographic Experts Group" value="1"/>
@@ -63,9 +56,6 @@
   <schema id="se.sjoerd.Graphs.general">
     <key name="center" enum="se.sjoerd.Graphs.general.center-values">
       <default>"Center at middle X value"</default>
-    </key>
-    <key name="handle-duplicates" enum="se.sjoerd.Graphs.general.handle-duplicates-values">
-      <default>"Auto-rename duplicates"</default>
     </key>
     <key name="hide-unselected" type="b">
       <default>false</default>

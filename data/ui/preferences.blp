@@ -16,14 +16,6 @@ template $GraphsPreferencesWindow : Adw.PreferencesWindow {
         };
       }
 
-      Adw.ComboRow handle_duplicates {
-        title: _("Handle Duplicate Items");
-        subtitle: _("How to treat imported files with identical filenames");
-        model: StringList{
-          strings [_("Auto-rename duplicates"), _("Ignore duplicates"), _("Add duplicates"), _("Override existing items")]
-        };
-      }
-
       Adw.SwitchRow hide_unselected {
         title: _("Hide Unselected Items");
       }
