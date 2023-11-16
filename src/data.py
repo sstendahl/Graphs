@@ -182,18 +182,21 @@ class Data(GObject.Object, Graphs.DataInterface):
         style_manager = self.get_application().get_figure_style_manager()
         selected_style = style_manager.get_selected_style_params()
         color_cycle = selected_style["axes.prop_cycle"].by_key()["color"]
+        used_colors = []
+
+        def _append_used_color(color):
+            if len(set(used_colors)) == len(color_cycle):
+                for color in color_cycle:
+                    used_colors.remove(color)
 
         def _is_default(prop):
             return figure_settings.get_property(prop) == \
                 settings.get_child("figure").get_string(prop)
 
-        used_colors = [
-            item_.get_color() for item_ in self
-            if item_.get_color() in color_cycle
-        ]
-        while len(set(used_colors)) == len(color_cycle):
-            for color in color_cycle:
-                used_colors.remove(color)
+        for item_ in self:
+            color = item_.get_color()
+            if color in color_cycle:
+                _append_used_color(color)
         for new_item in items:
             names = self.get_names()
             if new_item.get_name() in names:
@@ -239,13 +242,10 @@ class Data(GObject.Object, Graphs.DataInterface):
                     elif ylabel != figure_settings.get_right_label():
                         new_item.set_yposition(original_position)
             if new_item.get_color() == "":
-                if len(set(used_colors)) == len(color_cycle):
-                    for color in color_cycle:
-                        used_colors.remove(color)
                 for color in color_cycle:
                     if color not in used_colors:
+                        _append_used_color(color)
                         new_item.set_color(color)
-                        used_colors.append(color)
                         break
 
             self._add_item(new_item)
