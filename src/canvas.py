@@ -239,12 +239,12 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
             visible_axes[xposition] = True
             visible_axes[2 + yposition] = True
             used_axes[xposition + 2 * yposition] = True
-        axes_directions = [
+        axes_directions = (
             ("bottom", "left"),   # axis
             ("top", "left"),      # top_left_axis
             ("bottom", "right"),  # right_axis
             ("top", "right"),     # top_right_axis
-        ]
+        )
         if not any(visible_axes):
             visible_axes = (True, False, True, False)  # Left and bottom
             used_axes = (True, False, False, False)  # self.axis visible
@@ -253,7 +253,7 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
         params = self._style_params
         draw_frame = params["axes.spines.bottom"]
         ticks = "both" if params["xtick.minor.visible"] else "major"
-        possible_directions = ["bottom", "top", "left", "right"]
+        possible_directions = ("bottom", "top", "left", "right")
         for directions, axis, used \
                 in zip(axes_directions, self.axes, used_axes):
             axis.get_xaxis().set_visible(False)
