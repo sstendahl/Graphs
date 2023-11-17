@@ -28,7 +28,7 @@ def perform_operation(_action, target, self):
         for setting in settings:
             params[setting] = int(settings.get_int(setting))
         args += [params]
-    if operation == "shift":
+    elif operation == "shift":
         figure_settings = self.get_data().get_figure_settings()
         right_range = (figure_settings.get_max_right()
                        - figure_settings.get_min_right())
