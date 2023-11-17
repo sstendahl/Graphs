@@ -51,7 +51,6 @@
 
   <schema id="se.sjoerd.Graphs" path="/se/sjoerd/Graphs/">
     <child name="actions" schema="se.sjoerd.Graphs.actions"/>
-    <child name="smoothen" schema="se.sjoerd.Graphs.smoothen"/>
     <child name="add-equation" schema="se.sjoerd.Graphs.add-equation"/>
     <child name="curve-fitting" schema="se.sjoerd.Graphs.curve-fitting"/>
     <child name="export-figure" schema="se.sjoerd.Graphs.export-figure"/>
