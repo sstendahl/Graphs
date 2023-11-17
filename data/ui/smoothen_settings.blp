@@ -3,10 +3,9 @@ using Adw 1;
 
 template $GraphsSmoothenWindow : Adw.Window {
   modal: true;
-  default-width: 650;
   default-height: 125;
   title: _("Smoothen settings");
-  focus-widget: confirm_button;
+  focus-widget: reset_button;
 
   ShortcutController {
     Shortcut {
@@ -18,17 +17,10 @@ template $GraphsSmoothenWindow : Adw.Window {
   Adw.ToolbarView {
     [top]
     Adw.HeaderBar {
-      show-end-title-buttons: false;
       [start]
-      Button {
+      Button reset_button {
         icon-name: "history-undo-symbolic";
         clicked => $on_reset();
-      }
-      [end]
-      Button confirm_button {
-        label: _("Apply");
-        styles ["suggested-action"]
-        clicked => $on_accept();
       }
     }
 

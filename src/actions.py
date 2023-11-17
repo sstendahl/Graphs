@@ -199,7 +199,3 @@ class SmoothenWindow(Adw.Window):
             self.get_application().get_settings("smoothen")
         for key in params.list_keys():
             params.reset(key)
-
-    @Gtk.Template.Callback()
-    def on_accept(self, _widget):
-        self.destroy()
