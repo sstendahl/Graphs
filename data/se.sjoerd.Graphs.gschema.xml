@@ -60,6 +60,7 @@
   </schema>
 
   <schema id="se.sjoerd.Graphs.actions">
+    <child name="smoothen" schema="se.sjoerd.Graphs.actions.smoothen"/>
     <key name="center" enum="se.sjoerd.Graphs.actions.center-values">
       <default>"middle-x"</default>
     </key>
@@ -68,7 +69,7 @@
     </key>
   </schema>
 
-  <schema id="se.sjoerd.Graphs.smoothen">
+  <schema id="se.sjoerd.Graphs.actions.smoothen">
     <key name="savgol-window" type="i">
       <default>10</default>
     </key>

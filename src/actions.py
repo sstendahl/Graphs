@@ -24,7 +24,7 @@ def perform_operation(_action, target, self):
         args = [self.get_settings("actions").get_enum(operation)]
     if operation == "smoothen":
         params = {}
-        settings = self.get_settings("smoothen")
+        settings = self.get_settings("actions").get_child("smoothen")
         for setting in settings:
             params[setting] = int(settings.get_int(setting))
         args += [params]
@@ -178,8 +178,9 @@ class SmoothenWindow(Adw.Window):
         super().__init__(
             application=application, transient_for=application.get_window(),
         )
-        ui.bind_values_to_settings(
-            self.get_application().get_settings("smoothen"), self)
+        settings = self.get_application().get_settings("actions").get_child(
+            "smoothen")
+        ui.bind_values_to_settings(settings, self)
         self.present()
 
     @Gtk.Template.Callback()
