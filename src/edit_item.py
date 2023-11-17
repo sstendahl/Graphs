@@ -64,3 +64,11 @@ class EditItemWindow(Adw.PreferencesWindow):
     def on_close(self, _a):
         self.get_application().get_data().add_history_state()
         self.destroy()
+
+    @Gtk.Template.Callback()
+    def on_linestyle(self, comborow, _b):
+        self.linewidth.set_sensitive(comborow.get_selected() != 0)
+
+    @Gtk.Template.Callback()
+    def on_markers(self, comborow, _b):
+        self.markersize.set_sensitive(comborow.get_selected() != 0)
