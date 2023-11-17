@@ -2,6 +2,8 @@
 """Main actions."""
 from gettext import gettext as _
 
+from gi.repository import Graphs
+
 from graphs import operations, ui, utilities
 from graphs.add_equation import AddEquationWindow
 from graphs.export_figure import ExportFigureWindow
@@ -18,9 +20,15 @@ def perform_operation(_action, target, self):
     elif operation == "cut" and self.get_mode() != 2:
         return
     args = []
-    if operation in ("center", ):
+    if operation in ("center", "smoothen"):
         args = [self.get_settings("actions").get_enum(operation)]
-    if operation == "shift":
+    if operation == "smoothen":
+        params = {}
+        settings = self.get_settings("actions").get_child("smoothen")
+        for setting in settings:
+            params[setting] = int(settings.get_int(setting))
+        args += [params]
+    elif operation == "shift":
         figure_settings = self.get_data().get_figure_settings()
         right_range = (figure_settings.get_max_right()
                        - figure_settings.get_min_right())
@@ -121,6 +129,16 @@ def export_figure_action(_action, _target, self):
 
 def save_project_action(_action, _target, self):
     ui.save_project_dialog(self)
+
+
+def smoothen_settings_action(_action, _target, self):
+    def _on_reset(_button, self):
+        params = self.get_settings("actions").get_child("smoothen")
+        for key in params.list_keys():
+            params.reset(key)
+
+    window = Graphs.SmoothenWindow.new(self)
+    window.get_reset_button().connect("clicked", _on_reset, self)
 
 
 def zoom_in_action(_action, _target, self):

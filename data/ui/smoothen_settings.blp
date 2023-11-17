@@ -1,0 +1,67 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $GraphsSmoothenWindow : Adw.Window {
+  modal: true;
+  default-height: 125;
+  title: _("Smoothen settings");
+  focus-widget: reset_button;
+
+  ShortcutController {
+    Shortcut {
+      trigger: "Escape";
+      action: "action(window.close)";
+    }
+  }
+
+  Adw.ToolbarView {
+    [top]
+    Adw.HeaderBar {
+      [start]
+      Button reset_button {
+        icon-name: "history-undo-symbolic";
+      }
+    }
+
+    content: Adw.Clamp {
+      margin-start: 12;
+      margin-end: 12;
+      margin-top: 12;
+      margin-bottom: 12;
+
+      Box {
+        orientation: vertical;
+        spacing: 10;
+        Adw.PreferencesGroup {
+          title: _("Savitzky–Golay filter");
+          Adw.SpinRow savgol_window {
+            title: _("Span percentage");
+            subtitle: _("What percentage of the data span to use for the filter window");
+            adjustment: Adjustment {
+              step-increment: 1;
+              upper: 99;
+            };
+          }
+          Adw.SpinRow savgol_polynomial {
+            title: _("Polynomial degree");
+            adjustment: Adjustment {
+              step-increment: 1;
+              upper: 20;
+            };
+          }
+        }
+        Adw.PreferencesGroup {
+          title: _("Moving Average");
+          Adw.SpinRow moving_average_box {
+            title: _("Box points");
+            subtitle: _("Amount of points to use when calculating a moving average");
+            adjustment: Adjustment {
+              step-increment: 1;
+              upper: 9999;
+            };
+          }
+        }
+      }
+    };
+  }
+}

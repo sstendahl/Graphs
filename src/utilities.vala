@@ -41,6 +41,9 @@ namespace Graphs {
                     settings.bind (key, widget, "enable-expansion", 0);
                     widget.set_expanded (true);
                 }
+                else if (widget is Adw.SpinRow) {
+                    settings.bind (key, widget, "value", 0);
+                }
             }
         }
     }

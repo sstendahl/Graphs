@@ -40,6 +40,7 @@
     <file preprocess="xml-stripblanks">ui/fitting_parameters.ui</file>
     <file preprocess="xml-stripblanks">ui/import.ui</file>
     <file preprocess="xml-stripblanks">ui/item_box.ui</file>
+    <file preprocess="xml-stripblanks">ui/smoothen_settings.ui</file>
     <file preprocess="xml-stripblanks">ui/style_color_box.ui</file>
     <file preprocess="xml-stripblanks">ui/style_editor.ui</file>
     <file preprocess="xml-stripblanks">ui/style_preview.ui</file>
