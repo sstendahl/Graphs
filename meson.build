@@ -20,7 +20,7 @@ homepage_url = 'https://graphs.sjoerd.se/'
 github_url = 'https://github.com/sjoerd1993/Graphs'
 issue_url = github_url + '/issues'
 author = 'Sjoerd Stendahl'
-description_short = 'Plot and manipulate data in a breeze'
+description_short = 'Plot and manipulate data'
 
 i18n = import('i18n')
 gnome = import('gnome')
