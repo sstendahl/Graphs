@@ -3,7 +3,7 @@
 ![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue)
 
 # Graphs
-Plot and manipulate data in a breeze with Graphs!
+Plot and manipulate data with Graphs!
 
 ![image](https://raw.githubusercontent.com/Sjoerd1993/Graphs/main/data/screenshots/sin_cos.png)
 
