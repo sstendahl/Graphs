@@ -30,7 +30,6 @@ class Data(GObject.Object, Graphs.DataInterface):
 
     Functions:
         get_application
-        is_empty
         get_items
         set_items
         index
@@ -76,7 +75,8 @@ class Data(GObject.Object, Graphs.DataInterface):
         """Get figure settings property."""
         return self.props.figure_settings
 
-    def is_empty(self) -> bool:
+    @GObject.Property(type=bool, default=True, flags=1 | 1073741824)
+    def empty(self) -> bool:
         """Whether or not the class is empty."""
         return not self._items
 
@@ -104,6 +104,7 @@ class Data(GObject.Object, Graphs.DataInterface):
         for item_ in items:
             self._add_item(item_)
         self.notify("items")
+        self.notify("empty")
 
     def _add_item(self, item_: Graphs.Item) -> None:
         """Append items to self."""
@@ -247,6 +248,7 @@ class Data(GObject.Object, Graphs.DataInterface):
             self.emit("items-ignored", ", ".join(ignored))
         self.notify("items")
         self.notify("items_selected")
+        self.notify("empty")
 
     def delete_items(self, items: misc.ItemList):
         """Delete specified items."""
@@ -258,6 +260,7 @@ class Data(GObject.Object, Graphs.DataInterface):
         self.notify("items")
         self.add_history_state()
         self.notify("items_selected")
+        self.notify("empty")
 
     def _connect_to_item(self, item_: Graphs.Item):
         item_.connect("notify::selected", self._on_item_select)
@@ -327,6 +330,7 @@ class Data(GObject.Object, Graphs.DataInterface):
                 items_changed = True
         if items_changed:
             self.notify("items")
+            self.notify("empty")
         self.notify("items_selected")
         self.get_figure_settings().set_limits(
             self._history_states[self._history_pos][1],
@@ -357,6 +361,7 @@ class Data(GObject.Object, Graphs.DataInterface):
                 items_changed = True
         if items_changed:
             self.notify("items")
+            self.notify("empty")
         self.notify("items_selected")
         self.get_figure_settings().set_limits(state[1])
         self.props.can_redo = self._history_pos < -1

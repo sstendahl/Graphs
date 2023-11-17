@@ -18,7 +18,6 @@ def on_items_change(data, _ignored, self):
 
     for index, item in enumerate(data):
         item_list.append(ItemBox(self, item, index))
-    item_list.set_visible(not data.is_empty())
     data.add_view_history_state()
 
 
@@ -77,7 +76,7 @@ def open_project_dialog(self):
 
 
 def export_data_dialog(self):
-    if self.get_data().is_empty():
+    if self.get_data().props.empty:
         self.get_window().add_toast_string(_("No data to export"))
         return
     multiple = len(self.get_data()) > 1

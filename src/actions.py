@@ -134,7 +134,7 @@ def zoom_out_action(_action, _target, self):
 
 
 def open_project_action(_action, _target, self):
-    if not self.get_data().is_empty():
+    if not self.get_data().props.empty:
 
         def on_response(_dialog, response):
             if response == "discard":
