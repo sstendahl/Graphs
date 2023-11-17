@@ -138,6 +138,7 @@ class PythonApplication(Graphs.Application):
                 "can_view_forward", window.get_view_forward_button(),
                 "sensitive", 2,
             )
+            data.bind_property("empty", window.get_item_list(), "visible", 4)
             stack_switcher = \
                 Graphs.InlineStackSwitcher(stack=window.get_stack())
             stack_switcher.add_css_class("compact")

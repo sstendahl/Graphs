@@ -7,10 +7,10 @@ namespace Graphs {
         public abstract bool can_view_back { get; }
         public abstract bool can_view_forward { get; }
         public abstract bool items_selected { get; }
+        public abstract bool empty { get; }
 
         public abstract Item[] items { get; set; }
 
-        public abstract bool is_empty ();
         public abstract int index (Item item);
         public abstract string[] get_names ();
         public abstract int get_n_items ();
