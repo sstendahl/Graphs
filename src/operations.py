@@ -51,16 +51,14 @@ def get_data(self, item):
 
 
 def filter_data(xdata, ydata, condition, value):
-    """
-    Filter coordinates based on the given condition.
-    """
+    """Filter coordinates based on the given condition."""
     xdata = numpy.array(xdata)
     ydata = numpy.array(ydata)
 
     conditions = {
         "<=": numpy.less_equal,
         ">=": numpy.greater_equal,
-        "==": numpy.equal
+        "==": numpy.equal,
     }
 
     mask = conditions[condition](xdata, value)
@@ -116,7 +114,7 @@ def perform_operation(self, callback, *args):
                                         ydata,
                                         )
 
-                if new_xdata == []: # If cut action was performed
+                if new_xdata == []:  # If cut action was performed
                     remove_list = \
                         [index for index, masked in enumerate(mask) if masked]
                     for index in sorted(remove_list, reverse=True):
