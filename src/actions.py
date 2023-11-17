@@ -2,6 +2,8 @@
 """Main actions."""
 from gettext import gettext as _
 
+from gi.repository import Adw, GObject, Gtk
+
 from graphs import operations, ui, utilities
 from graphs.add_equation import AddEquationWindow
 from graphs.export_figure import ExportFigureWindow
@@ -18,8 +20,14 @@ def perform_operation(_action, target, self):
     elif operation == "cut" and self.get_mode() != 2:
         return
     args = []
-    if operation in ("center", ):
+    if operation in ("center", "smoothen"):
         args = [self.get_settings("actions").get_enum(operation)]
+    if operation == "smoothen":
+        params = {}
+        settings = self.get_settings("smoothen")
+        for setting in settings:
+            params[setting] = int(settings.get_int(setting))
+        args += [params]
     if operation == "shift":
         figure_settings = self.get_data().get_figure_settings()
         right_range = (figure_settings.get_max_right()
@@ -122,6 +130,9 @@ def export_figure_action(_action, _target, self):
 def save_project_action(_action, _target, self):
     ui.save_project_dialog(self)
 
+def smoothen_settings_action(_action, _target, self):
+    SmoothenWindow(self)
+
 
 def zoom_in_action(_action, _target, self):
     canvas = self.get_window().get_canvas()
@@ -153,3 +164,40 @@ def delete_selected_action(_action, _target, self):
     names = ", ".join(item.get_name() for item in items)
     self.get_data().delete_items(items)
     self.get_window().add_toast_string(_("Deleted {}").format(names))
+
+@Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/smoothen_settings.ui")
+class SmoothenWindow(Adw.Window):
+    __gtype_name__ = "GraphsSmoothenWindow"
+    savgol_window = Gtk.Template.Child()
+    savgol_polynomial = Gtk.Template.Child()
+    moving_average_box = Gtk.Template.Child()
+
+    def __init__(self, application):
+        super().__init__(
+            application=application, transient_for=application.get_window(),
+        )
+        ui.bind_values_to_settings(
+            self.get_application().get_settings("smoothen"), self)
+        self.present()
+
+    @Gtk.Template.Callback()
+    def on_reset(self, _widget):
+        def on_accept(_dialog, response):
+            if response == "reset":
+                self.reset_smoothen()
+        body = _("Are you sure you want to reset to defaults?")
+        dialog = ui.build_dialog("reset_to_defaults")
+        dialog.set_body(body)
+        dialog.set_transient_for(self)
+        dialog.connect("response", on_accept)
+        dialog.present()
+
+    def reset_smoothen(self):
+        params = \
+            self.get_application().get_settings("smoothen")
+        for key in params.list_keys():
+            params.reset(key)
+
+    @Gtk.Template.Callback()
+    def on_accept(self, _widget):
+        self.destroy()

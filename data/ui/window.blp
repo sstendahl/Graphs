@@ -147,7 +147,6 @@ template $GraphsWindow: Adw.ApplicationWindow {
         orientation: vertical;
         width-request: 350;
         Adw.HeaderBar sidebar_headerbar {
-          width-request: 350;
           styles ["flat"]
           [start]
           MenuButton add_button {
@@ -279,6 +278,7 @@ template $GraphsWindow: Adw.ApplicationWindow {
                       Button normalize_button {
                         hexpand: true;
                         sensitive: bind shift_button.sensitive;
+                        width-request: 130;
                         layout {
                           column: 1;
                           row: 0;
@@ -292,8 +292,9 @@ template $GraphsWindow: Adw.ApplicationWindow {
                         clicked => $perform_operation();
                       }
 
-                      Button smoothen_button {
-                        hexpand: true;
+                      Adw.SplitButton smoothen_button {
+                        hexpand: false;
+                        can-shrink: true;
                         sensitive: bind shift_button.sensitive;
                         layout {
                           column: 0;
@@ -301,10 +302,12 @@ template $GraphsWindow: Adw.ApplicationWindow {
                         }
                         Adw.ButtonContent {
                           halign: center;
+                          can-shrink: true;
                           icon-name: "smoothen-symbolic";
                           label: _("Smoothen");
                         }
                         tooltip-text: _("Smoothen data");
+                        menu-model: smoothen_menu;
                         clicked => $perform_operation();
                       }
 
@@ -771,5 +774,26 @@ menu center_menu {
     label: _("At middle X value");
     action: "app.center";
     target: "middle-x";
+  }
+}
+
+menu smoothen_menu {
+  section {
+    item {
+      label: _("Savitzky–Golay filter");
+      action: "app.smoothen";
+      target: "savgol";
+    }
+    item {
+      label: _("Moving average");
+      action: "app.smoothen";
+      target: "moving-average";
+    }
+  }
+  section {
+    item {
+      label: _("Advanced settings");
+      action: "app.smoothen_settings";
+    }
   }
 }

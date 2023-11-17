@@ -5,6 +5,11 @@
     <value nick="middle-x" value="1"/>
   </enum>
 
+  <enum id="se.sjoerd.Graphs.actions.smoothen-types">
+    <value nick="savgol" value="0"/>
+    <value nick="moving-average" value="1"/>
+  </enum>
+
   <enum id="se.sjoerd.Graphs.export-figure.file-formats">
     <value nick="Encapsulated Postscript" value="0"/>
     <value nick="Joint Photographic Experts Group" value="1"/>
@@ -46,6 +51,7 @@
 
   <schema id="se.sjoerd.Graphs" path="/se/sjoerd/Graphs/">
     <child name="actions" schema="se.sjoerd.Graphs.actions"/>
+    <child name="smoothen" schema="se.sjoerd.Graphs.smoothen"/>
     <child name="add-equation" schema="se.sjoerd.Graphs.add-equation"/>
     <child name="curve-fitting" schema="se.sjoerd.Graphs.curve-fitting"/>
     <child name="export-figure" schema="se.sjoerd.Graphs.export-figure"/>
@@ -56,6 +62,21 @@
   <schema id="se.sjoerd.Graphs.actions">
     <key name="center" enum="se.sjoerd.Graphs.actions.center-values">
       <default>"middle-x"</default>
+    </key>
+    <key name="smoothen" enum="se.sjoerd.Graphs.actions.smoothen-types">
+      <default>"savgol"</default>
+    </key>
+  </schema>
+
+  <schema id="se.sjoerd.Graphs.smoothen">
+    <key name="savgol-window" type="i">
+      <default>10</default>
+    </key>
+    <key name="savgol-polynomial" type="i">
+      <default>3</default>
+    </key>
+    <key name="moving-average-box" type="i">
+      <default>4</default>
     </key>
   </schema>
 

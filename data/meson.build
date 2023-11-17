@@ -71,6 +71,7 @@ blueprints_source = [
   'ui/import.blp',
   'ui/help_overlay.blp',
   'ui/item_box.blp',
+  'ui/smoothen_settings.blp',
   'ui/style_color_box.blp',
   'ui/style_editor.blp',
   'ui/style_preview.blp',

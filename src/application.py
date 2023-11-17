@@ -20,7 +20,8 @@ _ACTIONS = [
     "quit", "about", "figure_settings", "add_data", "add_equation",
     "select_all", "select_none", "undo", "redo", "optimize_limits",
     "view_back", "view_forward", "export_data", "export_figure",
-    "save_project", "open_project", "delete_selected", "zoom_in", "zoom_out",
+    "save_project", "smoothen_settings", "open_project", "delete_selected",
+    "zoom_in", "zoom_out",
 ]
 
 
@@ -101,6 +102,10 @@ class PythonApplication(Graphs.Application):
 
         center_action = settings.get_child("actions").create_action("center")
         self.add_action(center_action)
+
+        smoothen_action = \
+            settings.get_child("actions").create_action("smoothen")
+        self.add_action(smoothen_action)
 
         self.get_data().connect(
             "notify::items", ui.on_items_change, self,

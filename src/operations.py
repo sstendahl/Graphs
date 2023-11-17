@@ -144,11 +144,21 @@ def normalize(_item, xdata, ydata):
     return xdata, [value / max(ydata) for value in ydata], False, False
 
 
-def smoothen(_item, xdata, ydata):
+def smoothen(_item, xdata, ydata, smooth_type, params):
     """Smoothen y-data."""
-    box_points = 4
-    box = numpy.ones(box_points) / box_points
-    new_ydata = numpy.convolve(ydata, box, mode="same")
+    if smooth_type == 0:
+        minimum = params["savgol-polynomial"] + 1
+        window_percentage = params["savgol-window"]/100
+        window = max(minimum, int(len(xdata)*window_percentage)) # At least 2 data points
+        print(window)
+        print(window_percentage)
+        print(len(xdata))
+        new_ydata = scipy.signal.savgol_filter(ydata,
+            window, params["savgol-polynomial"])
+    elif smooth_type == 1:
+        box_points = params["moving-average-box"]
+        box = numpy.ones(box_points) / box_points
+        new_ydata = numpy.convolve(ydata, box, mode="same")
     return xdata, new_ydata, False, False
 
 
