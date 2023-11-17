@@ -1,5 +1,4 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
-import contextlib
 import logging
 from gettext import gettext as _
 
@@ -18,12 +17,9 @@ def get_data(self, item):
     Retrieve item from datadict with start and stop index.
     If interaction_mode is set to "SELECT"
     """
-    xdata = item.props.xdata
-    ydata = item.props.ydata
-    new_xdata = xdata.copy()
-    new_ydata = ydata.copy()
-    start_index = 0
-    stop_index = len(xdata)
+    new_xdata = item.props.xdata
+    new_ydata = item.props.ydata
+
     if self.get_mode() == 2:
         figure_settings = self.get_data().get_figure_settings()
         if item.get_xposition() == 0:
@@ -40,24 +36,51 @@ def get_data(self, item):
         stopx = utilities.get_value_at_fraction(
             figure_settings.get_max_selected(), xmin, xmax, scale,
         )
-
         # If startx and stopx are not out of range, that is,
         # if the item data is within the highlight
-        if not ((startx < min(xdata) and stopx < min(xdata)) or (
-                startx > max(xdata))):
-            new_x, new_y = sort_data(xdata, ydata)
-            numpy_x = numpy.asarray(new_x)
-            with contextlib.suppress(IndexError):
-                start_index = numpy.where(numpy_x > startx)[0][0]
-                stop_index = numpy.where(numpy_x > stopx)[0][0]
-            new_xdata = new_x[start_index:stop_index]
-            new_ydata = new_y[start_index:stop_index]
+        if not ((startx < min(new_xdata) and stopx < min(new_xdata)) or (
+                startx > max(new_xdata))):
+            new_xdata, new_ydata = \
+                filter_data(new_xdata, new_ydata, ">=", startx)
+            new_xdata, new_ydata = \
+                filter_data(new_xdata, new_ydata, "<=", stopx)
         else:
             new_xdata = None
             new_ydata = None
-            start_index = None
-            stop_index = None
-    return new_xdata, new_ydata, start_index, stop_index
+    return new_xdata, new_ydata
+
+
+def filter_data(xdata, ydata, condition, value):
+    """Filter coordinates based on the given condition."""
+    xdata = numpy.array(xdata)
+    ydata = numpy.array(ydata)
+
+    conditions = {
+        "<=": numpy.less_equal,
+        ">=": numpy.greater_equal,
+        "==": numpy.equal,
+    }
+
+    mask = conditions[condition](xdata, value)
+
+    xdata_filtered = xdata[mask]
+    ydata_filtered = ydata[mask]
+
+    return list(xdata_filtered), list(ydata_filtered)
+
+
+def create_data_mask(xdata1, ydata1, xdata2, ydata2):
+    """
+    Create a mask for matching pairs of coordinates.
+
+    Returns:
+    - Boolean mask indicating where pairs of coordinates match.
+    """
+    xdata1, ydata1, xdata2, ydata2 = \
+        map(numpy.array, [xdata1, ydata1, xdata2, ydata2])
+    mask = numpy.any(
+        (xdata1[:, None] == xdata2) & (ydata1[:, None] == ydata2), axis=1)
+    return mask
 
 
 def sort_data(xdata, ydata):
@@ -73,19 +96,38 @@ def perform_operation(self, callback, *args):
     for item in data:
         if not (item.get_selected() and isinstance(item, DataItem)):
             continue
-        xdata, ydata, start_index, stop_index = get_data(self, item)
+        xdata, ydata = get_data(self, item)
         if xdata is not None and len(xdata) != 0:
             data_selected = True
             new_xdata, new_ydata, sort, discard = callback(
                 item, xdata, ydata, *args)
+            new_xdata, new_ydata = list(new_xdata), list(new_ydata)
             if discard:
                 logging.debug("Discard is true")
                 item.props.xdata = new_xdata
                 item.props.ydata = new_ydata
             else:
                 logging.debug("Discard is false")
-                item.props.xdata[start_index:stop_index] = new_xdata
-                item.props.ydata[start_index:stop_index] = new_ydata
+                mask = create_data_mask(item.props.xdata,
+                                        item.props.ydata,
+                                        xdata,
+                                        ydata,
+                                        )
+
+                if new_xdata == []:  # If cut action was performed
+                    remove_list = \
+                        [index for index, masked in enumerate(mask) if masked]
+                    for index in sorted(remove_list, reverse=True):
+                        item.props.xdata.pop(index)
+                        item.props.ydata.pop(index)
+                else:
+                    i = 0
+                    for index, masked in enumerate(mask):
+                        # Change coordinates that were within span
+                        if masked:
+                            item.props.xdata[index] = new_xdata[i]
+                            item.props.ydata[index] = new_ydata[i]
+                            i += 1
             if sort:
                 logging.debug("Sorting data")
                 item.xdata, item.ydata = sort_data(item.xdata, item.ydata)
@@ -190,15 +232,13 @@ def shift(item, xdata, ydata, left_scale, right_scale, items, ranges):
         previous_item = data_list[index - 1]
 
         # Only use selected span when obtaining values to determine shift value
-        full_xdata = numpy.asarray(data_list[index].props.xdata)
-        start = 0
-        stop = len(data_list[index].ydata)
-        with contextlib.suppress(IndexError):
-            start = numpy.where(full_xdata >= xdata[0])[0][0]
-            stop = numpy.where(full_xdata >= xdata[-1])[0][0]
+        new_xdata, new_ydata = filter_data(
+            previous_item.xdata, previous_item.ydata, ">=", min(xdata))
+        new_xdata, new_ydata = filter_data(
+            new_xdata, new_ydata, "<=", max(xdata))
+        ymin = min(x for x in new_ydata if x != 0)
+        ymax = max(x for x in new_ydata if x != 0)
 
-        ymin = min(x for x in previous_item.ydata[start:stop] if x != 0)
-        ymax = max(x for x in previous_item.ydata[start:stop] if x != 0)
         scale = right_scale if item.get_yposition() else left_scale
         if scale == 1:  # Use log values for log scaling
             shift_value_log += \
