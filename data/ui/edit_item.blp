@@ -53,10 +53,12 @@ template $GraphsEditItemWindow : Adw.PreferencesWindow {
         model: StringList {
           strings [_("None"), _("Solid"), _("Dotted"), _("Dashed"), _("Dashdot")]
         };
+        notify::selected => $on_linestyle();
       }
 
       Adw.ActionRow {
         title: _("Linewidth");
+        visible: bind linewidth.sensitive;
         Scale linewidth {
           draw-value: true;
           width-request: 200;
@@ -64,6 +66,7 @@ template $GraphsEditItemWindow : Adw.PreferencesWindow {
             lower: 0;
             upper: 10;
           };
+        sensitive: false;
         }
       }
 
@@ -80,10 +83,12 @@ template $GraphsEditItemWindow : Adw.PreferencesWindow {
             _("Filled plus"), _("Filled x"),
           ]
         };
+        notify::selected => $on_markers();
       }
 
       Adw.ActionRow {
         title: _("Marker Size");
+        visible: bind markersize.sensitive;
         Scale markersize {
           draw-value: true;
           width-request: 200;
@@ -91,6 +96,7 @@ template $GraphsEditItemWindow : Adw.PreferencesWindow {
             lower: 0;
             upper: 10;
           };
+        sensitive: false;
         }
       }
     }
