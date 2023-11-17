@@ -148,13 +148,11 @@ def smoothen(_item, xdata, ydata, smooth_type, params):
     """Smoothen y-data."""
     if smooth_type == 0:
         minimum = params["savgol-polynomial"] + 1
-        window_percentage = params["savgol-window"]/100
-        window = max(minimum, int(len(xdata)*window_percentage)) # At least 2 data points
-        print(window)
-        print(window_percentage)
-        print(len(xdata))
+        window_percentage = params["savgol-window"] / 100
+        window = max(minimum, int(len(xdata) * window_percentage))
         new_ydata = scipy.signal.savgol_filter(ydata,
-            window, params["savgol-polynomial"])
+                                               window,
+                                               params["savgol-polynomial"])
     elif smooth_type == 1:
         box_points = params["moving-average-box"]
         box = numpy.ones(box_points) / box_points

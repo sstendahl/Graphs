@@ -2,7 +2,7 @@
 """Main actions."""
 from gettext import gettext as _
 
-from gi.repository import Adw, GObject, Gtk
+from gi.repository import Adw, Gtk
 
 from graphs import operations, ui, utilities
 from graphs.add_equation import AddEquationWindow
@@ -130,6 +130,7 @@ def export_figure_action(_action, _target, self):
 def save_project_action(_action, _target, self):
     ui.save_project_dialog(self)
 
+
 def smoothen_settings_action(_action, _target, self):
     SmoothenWindow(self)
 
@@ -164,6 +165,7 @@ def delete_selected_action(_action, _target, self):
     names = ", ".join(item.get_name() for item in items)
     self.get_data().delete_items(items)
     self.get_window().add_toast_string(_("Deleted {}").format(names))
+
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/smoothen_settings.ui")
 class SmoothenWindow(Adw.Window):
