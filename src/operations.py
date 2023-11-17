@@ -115,21 +115,21 @@ def perform_operation(self, callback, *args):
                                         xdata,
                                         ydata,
                                         )
-                remove_list = \
-                    [index for index, masked in enumerate(mask) if masked]
 
-                if new_xdata == []:
+                if new_xdata == []: # If cut action was performed
+                    remove_list = \
+                        [index for index, masked in enumerate(mask) if masked]
                     for index in sorted(remove_list, reverse=True):
                         item.props.xdata.pop(index)
                         item.props.ydata.pop(index)
                 else:
                     i = 0
                     for index, masked in enumerate(mask):
+                        # Change coordinates that were within span
                         if masked:
                             item.props.xdata[index] = new_xdata[i]
                             item.props.ydata[index] = new_ydata[i]
                             i += 1
-
             if sort:
                 logging.debug("Sorting data")
                 item.xdata, item.ydata = sort_data(item.xdata, item.ydata)
