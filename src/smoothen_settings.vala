@@ -20,7 +20,7 @@ namespace Graphs {
                 transient_for: application.window
             );
             Tools.bind_settings_to_widgets (
-                application.settings.get_child ("actions").get_child ("smoothen"), this
+                application.get_settings_child ("actions/smoothen"), this
             );
             present ();
         }
