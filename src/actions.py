@@ -20,11 +20,12 @@ def perform_operation(_action, target, self):
     elif operation == "cut" and self.get_mode() != 2:
         return
     args = []
+    actions_settings = self.get_settings_child("actions")
     if operation in ("center", "smoothen"):
-        args = [self.get_settings("actions").get_enum(operation)]
+        args = [actions_settings.get_enum(operation)]
     if operation == "smoothen":
         params = {}
-        settings = self.get_settings("actions").get_child("smoothen")
+        settings = actions_settings.get_child("smoothen")
         for setting in settings:
             params[setting] = int(settings.get_int(setting))
         args += [params]
@@ -132,13 +133,7 @@ def save_project_action(_action, _target, self):
 
 
 def smoothen_settings_action(_action, _target, self):
-    def _on_reset(_button, self):
-        params = self.get_settings("actions").get_child("smoothen")
-        for key in params.list_keys():
-            params.reset(key)
-
-    window = Graphs.SmoothenWindow.new(self)
-    window.get_reset_button().connect("clicked", _on_reset, self)
+    Graphs.SmoothenWindow.new(self)
 
 
 def zoom_in_action(_action, _target, self):

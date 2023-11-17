@@ -27,7 +27,7 @@ class AddEquationWindow(Adw.Window):
         super().__init__(application=application,
                          transient_for=application.get_window())
         ui.bind_values_to_settings(
-            self.get_application().get_settings("add-equation"), self)
+            self.get_application().get_settings_child("add-equation"), self)
         self.present()
 
     @Gtk.Template.Callback()

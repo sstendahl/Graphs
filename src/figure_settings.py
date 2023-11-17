@@ -184,7 +184,7 @@ class FigureSettingsWindow(Adw.Window):
     @Gtk.Template.Callback()
     def on_set_as_default(self, _button):
         figure_settings = self.props.figure_settings
-        settings = self.get_application().get_settings("figure")
+        settings = self.get_application().get_settings_child("figure")
         ignorelist = ["min_selected", "max_selected"] + misc.LIMITS
         for prop in dir(figure_settings.props):
             if prop not in ignorelist:
