@@ -100,12 +100,9 @@ class PythonApplication(Graphs.Application):
         operation_action.connect("activate", actions.perform_operation, self)
         self.add_action(operation_action)
 
-        center_action = settings.get_child("actions").create_action("center")
-        self.add_action(center_action)
-
-        smoothen_action = \
-            settings.get_child("actions").create_action("smoothen")
-        self.add_action(smoothen_action)
+        for action_key in ["center", "smoothen"]:
+            action = settings.get_child("actions").create_action(action_key)
+            self.add_action(action)
 
         self.get_data().connect(
             "notify::items", ui.on_items_change, self,
