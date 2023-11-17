@@ -46,5 +46,11 @@ namespace Graphs {
                 }
             }
         }
+
+        public void reset_settings (GLib.Settings settings) {
+            foreach (string key in settings.settings_schema.list_keys ()) {
+                settings.reset (key);
+            }
+        }
     }
 }

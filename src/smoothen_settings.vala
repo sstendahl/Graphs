@@ -14,9 +14,6 @@ namespace Graphs {
         [GtkChild]
         public unowned Adw.SpinRow moving_average_box { get; }
 
-        [GtkChild]
-        public unowned Button reset_button { get; }
-
         public SmoothenWindow (Application application) {
             Object (
                 application: application,
@@ -26,6 +23,13 @@ namespace Graphs {
                 application.settings.get_child ("actions").get_child ("smoothen"), this
             );
             present ();
+        }
+
+        [GtkCallback]
+        private void on_reset () {
+            Application app = (Application) this.application;
+            GLib.Settings settings = app.get_settings_child ("actions/smoothen");
+            Tools.reset_settings (settings);
         }
     }
 }

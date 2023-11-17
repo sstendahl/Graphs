@@ -8,7 +8,7 @@ Module for importing data from files.
 from gettext import gettext as _
 from pathlib import Path
 
-from gi.repository import Adw, GObject, Gtk
+from gi.repository import Adw, GObject, Graphs, Gtk
 
 from graphs import parse_file, ui, utilities
 from graphs.misc import ParseError
@@ -36,7 +36,7 @@ def import_from_files(self, files: list):
         if files:
             modes.append(mode)
     configurable_modes = []
-    for mode in self.get_settings("import-params").list_children():
+    for mode in self.get_settings_child("import-params").list_children():
         if mode in modes:
             configurable_modes.append(mode)
     if configurable_modes:
@@ -78,7 +78,7 @@ class _ImportWindow(Adw.Window):
         )
 
         import_params = \
-            self.get_application().get_settings("import-params")
+            self.get_application().get_settings_child("import-params")
         for mode in modes:
             ui.bind_values_to_settings(
                 import_params.get_child(mode), self, prefix=f"{mode}_",
@@ -100,11 +100,9 @@ class _ImportWindow(Adw.Window):
 
     def reset_import(self):
         import_params = \
-            self.get_application().get_settings("import-params")
+            self.get_application().get_settings_child("import-params")
         for mode in import_params.list_children():
-            settings = import_params.get_child(mode)
-            for key in settings.props.settings_schema.list_keys():
-                settings.reset(key)
+            Graphs.Tools.reset_settings(import_params.get_child(mode))
 
     @Gtk.Template.Callback()
     def on_accept(self, _widget):

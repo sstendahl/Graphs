@@ -78,9 +78,8 @@ def create_data_mask(xdata1, ydata1, xdata2, ydata2):
     """
     xdata1, ydata1, xdata2, ydata2 = \
         map(numpy.array, [xdata1, ydata1, xdata2, ydata2])
-    mask = numpy.any(
+    return numpy.any(
         (xdata1[:, None] == xdata2) & (ydata1[:, None] == ydata2), axis=1)
-    return mask
 
 
 def sort_data(xdata, ydata):

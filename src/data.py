@@ -177,7 +177,7 @@ class Data(GObject.Object, Graphs.DataInterface):
         ignored = []
         application = self.get_application()
         figure_settings = self.get_figure_settings()
-        settings = application.get_settings("figure")
+        settings = application.get_settings_child("figure")
         style_manager = self.get_application().get_figure_style_manager()
         selected_style = style_manager.get_selected_style_params()
         color_cycle = selected_style["axes.prop_cycle"].by_key()["color"]

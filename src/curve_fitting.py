@@ -29,7 +29,7 @@ class CurveFittingWindow(Graphs.CurveFittingTool):
         )
         self.equation = self.get_equation()
         ui.bind_values_to_settings(
-            application.get_settings("curve-fitting"), self)
+            application.get_settings_child("curve-fitting"), self)
         self.get_confirm_button().connect("clicked", self.add_fit)
         style = application.get_figure_style_manager(
         ).get_system_style_params()

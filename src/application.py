@@ -26,12 +26,7 @@ _ACTIONS = [
 
 
 class PythonApplication(Graphs.Application):
-    """
-    The main application singleton class.
-
-    Functions:
-        get_settings
-    """
+    """The main application singleton class."""
     __gtype_name__ = "GraphsPythonApplication"
 
     def __init__(self, application_id, **kwargs):
@@ -100,9 +95,9 @@ class PythonApplication(Graphs.Application):
         operation_action.connect("activate", actions.perform_operation, self)
         self.add_action(operation_action)
 
+        actions_settings = settings.get_child("actions")
         for action_key in ["center", "smoothen"]:
-            action = settings.get_child("actions").create_action(action_key)
-            self.add_action(action)
+            self.add_action(actions_settings.create_action(action_key))
 
         self.get_data().connect(
             "notify::items", ui.on_items_change, self,
@@ -152,12 +147,3 @@ class PythonApplication(Graphs.Application):
                 window.add_css_class("devel")
             self.set_figure_style_manager(styles.StyleManager(self))
             window.present()
-
-    def get_settings(self, child=None):
-        """
-        Get the applications settings.
-
-        If child is not specified the main node is returned.
-        """
-        return self.props.settings if child is None \
-            else self.props.settings.get_child(child)
