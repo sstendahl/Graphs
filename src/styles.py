@@ -194,6 +194,19 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
                 figure_settings.bind_property(prop, canvas, prop, 1 | 2)
         data.bind_property("items", canvas, "items", 2)
         window = self.props.application.get_window()
+        headerbar = window.get_content_headerbar()
+        headerbar.provider = Gtk.CssProvider()
+
+        # Set headerbar color and contrast
+        contrast = utilities.get_luminance(bg_color)
+        bg_color = self._selected_style_params["figure.facecolor"]
+        color = "@dark_5" if contrast > 150 else "@light_1"
+        css = f"headerbar {{ background-color: {bg_color}; color: {color}; }}"
+        context = headerbar.get_style_context()
+        headerbar.provider.load_from_data(css.encode())
+        context.add_provider(headerbar.provider,
+                             Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION)
+
         window.set_canvas(canvas)
         window.get_cut_button().bind_property(
             "sensitive", canvas, "highlight_enabled", 2,

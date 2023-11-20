@@ -60,6 +60,9 @@ namespace Graphs {
         [GtkChild]
         private unowned Adw.ToastOverlay toast_overlay { get; }
 
+        [GtkChild]
+        public unowned Adw.HeaderBar content_headerbar { get; }
+
         public int mode {
             set {
                 this.pan_button.set_active (value == 0);
