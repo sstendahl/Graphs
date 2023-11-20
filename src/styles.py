@@ -166,8 +166,8 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
             self._on_style_change()
 
     def _on_style_change(self, override: bool = False) -> None:
-        old_style = self._selected_style_params
         rcParams.update(rcParamsDefault)
+        old_style = self._selected_style_params
         self._update_system_style()
         self._update_selected_style()
         data = self.props.application.get_data()
