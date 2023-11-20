@@ -318,10 +318,10 @@ class StylePreview(Gtk.AspectFrame):
         texture = Gdk.Texture.new_from_file(file)
         self.picture.set_paintable(texture)
         if self._style.get_mutable():
-            buffer = io.BytesIO(texture.save_to_png_bytes().get_data())
-            mean = ImageStat.Stat(Image.open(buffer).convert("L")).mean[0]
-            buffer.close()
-            color = "@dark_5" if mean > 200 else "@light_1"
+            params = style_io.parse(self.style.get_file())[0]
+            bg_color = params["axes.facecolor"]
+            contrast = utilities.get_luminance(bg_color)
+            color = "@dark_5" if contrast > 150 else "@light_1"
             self.provider.load_from_data(f"button {{ color: {color}; }}", -1)
 
 
