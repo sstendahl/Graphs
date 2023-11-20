@@ -198,8 +198,8 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
         headerbar.provider = Gtk.CssProvider()
 
         # Set headerbar color and contrast
-        contrast = utilities.get_luminance(bg_color)
         bg_color = self._selected_style_params["figure.facecolor"]
+        contrast = utilities.get_luminance(bg_color)
         color = "@dark_5" if contrast > 150 else "@light_1"
         css = f"headerbar {{ background-color: {bg_color}; color: {color}; }}"
         context = headerbar.get_style_context()
