@@ -76,10 +76,10 @@ grid.alpha: 1.0
 grid.linestyle: -
 
 # padding
-xtick.major.pad: 0
-xtick.minor.pad: 0
-ytick.major.pad: 0
-ytick.minor.pad: 0
+xtick.major.pad: 7
+xtick.minor.pad: 7
+ytick.major.pad: 7
+ytick.minor.pad: 7
 axes.labelpad: 5
 axes.titlepad: 15
 

@@ -14,7 +14,7 @@ from gi.repository import Adw, GLib, GObject, Gdk, Gio, Graphs, Gtk, Pango
 import graphs
 from graphs import item, style_io, ui, utilities
 
-from matplotlib import RcParams
+from matplotlib import RcParams, rcParams, rcParamsDefault
 
 
 def _compare_styles(a: Graphs.Style, b: Graphs.Style) -> int:
@@ -166,6 +166,7 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
             self._on_style_change()
 
     def _on_style_change(self, override: bool = False) -> None:
+        rcParams.update(rcParamsDefault)
         old_style = self._selected_style_params
         self._update_system_style()
         self._update_selected_style()
