@@ -14,7 +14,7 @@ from gi.repository import Adw, GLib, GObject, Gdk, Gio, Graphs, Gtk, Pango
 import graphs
 from graphs import item, style_io, ui, utilities
 
-from matplotlib import rcParams, RcParams, rcParamsDefault
+from matplotlib import RcParams, rcParams, rcParamsDefault
 
 
 def _compare_styles(a: Graphs.Style, b: Graphs.Style) -> int:
