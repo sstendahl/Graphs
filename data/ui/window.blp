@@ -143,9 +143,9 @@ template $GraphsWindow: Adw.ApplicationWindow {
     content: Adw.OverlaySplitView split_view {
       show-sidebar: bind show_sidebar_button.active;
       notify => $on_sidebar_toggle();
-      sidebar: Box {
-        orientation: vertical;
+      sidebar: Adw.ToolbarView {
         width-request: 350;
+        [top]
         Adw.HeaderBar sidebar_headerbar {
           styles ["flat"]
           [start]
@@ -163,6 +163,8 @@ template $GraphsWindow: Adw.ApplicationWindow {
             primary: true;
           }
           }
+        Box {
+          orientation: vertical;
         ScrolledWindow  scrollwindow_itemlist {
           height-request: 250;
           hscrollbar-policy: never;
@@ -552,6 +554,7 @@ template $GraphsWindow: Adw.ApplicationWindow {
                       }
                     }
                   };
+                }
                 }
               }
             }
