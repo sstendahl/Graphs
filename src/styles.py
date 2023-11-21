@@ -31,7 +31,7 @@ def _generate_filename(name: str) -> str:
 
 
 def _is_style_bright(params: RcParams):
-    return utilities.get_luminance(params["figure.facecolor"]) < 150
+    return utilities.get_luminance(params["axes.facecolor"]) < 150
 
 
 class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
