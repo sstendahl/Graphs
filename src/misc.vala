@@ -12,6 +12,7 @@ namespace Graphs {
         public File? preview { get; set; }
         public File? file { get; construct set; }
         public bool mutable { get; construct set; }
+        public bool light { get; set; default = true; }
 
         public Style (string name, File? file, File? preview, bool mutable) {
             Object (

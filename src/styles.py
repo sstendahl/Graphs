@@ -30,6 +30,10 @@ def _generate_filename(name: str) -> str:
     return f"{name.lower().replace(' ', '-')}.mplstyle"
 
 
+def _is_style_bright(params: RcParams):
+    return utilities.get_luminance(params["axes.facecolor"]) < 150
+
+
 class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
     __gtype_name__ = "GraphsStyleManager"
 
@@ -109,10 +113,14 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
                 _generate_filename(new_name),
             )
             style_io.write(style_params, new_name, file)
-        preview = style_io.generate_preview(style_params)
         self._stylenames.append(name)
         self.props.style_model.insert_sorted(
-            Graphs.Style.new(name, file, preview, True), _compare_styles,
+            Graphs.Style(
+                name=name, file=file, mutable=True,
+                preview=style_io.generate_preview(style_params),
+                light=_is_style_bright(style_params),
+            ),
+            _compare_styles,
         )
 
     def get_style_model(self) -> Gio.ListStore:
@@ -156,6 +164,7 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
             for obj in style_model:
                 if obj.get_name() == stylename:
                     obj.set_preview(style_io.generate_preview(style_params))
+                    obj.set_light(_is_style_bright(style_params))
                     break
             possible_visual_impact = False
         elif event_type == 3:
@@ -318,10 +327,7 @@ class StylePreview(Gtk.AspectFrame):
         texture = Gdk.Texture.new_from_file(file)
         self.picture.set_paintable(texture)
         if self._style.get_mutable():
-            params = style_io.parse(self.style.get_file())[0]
-            bg_color = params["axes.facecolor"]
-            contrast = utilities.get_luminance(bg_color)
-            color = "@dark_5" if contrast > 150 else "@light_1"
+            color = "@light_1" if self._style.get_light() else "@dark_5"
             self.provider.load_from_data(f"button {{ color: {color}; }}", -1)
 
 
