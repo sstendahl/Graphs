@@ -24,7 +24,7 @@ class ItemBox(Gtk.Box):
         super().__init__(
             application=application, item=item, index=index,
         )
-        self.props.item.bind_property("name", self, "name", 2)
+        self.props.item.bind_property("name", self.label, "label", 2)
         self.props.item.bind_property(
             "selected", self.check_button, "active", 2,
         )
@@ -140,14 +140,6 @@ class ItemBox(Gtk.Box):
         unwanted scrolling when hovering the mouse to different options.
         """
         self.set_can_focus(not widget.get_visible())
-
-    @GObject.Property(type=str, default="")
-    def name(self) -> str:
-        return self.label.get_label()
-
-    @name.setter
-    def name(self, name: str):
-        self.label.set_label(name)
 
     def get_application(self):
         """Get application property."""
