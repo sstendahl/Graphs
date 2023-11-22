@@ -257,4 +257,3 @@ def bind_values_to_object(source, window, ignorelist=None):
         except AttributeError:
             logging.warn(_("No way to apply “{}”").format(key))
     return bindings
-
