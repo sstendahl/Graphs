@@ -17,7 +17,11 @@ def on_items_change(data, _ignored, self):
         item_list.remove(item_list.get_last_child())
 
     for index, item in enumerate(data):
-        item_list.append(ItemBox(self, item, index))
+        itembox = ItemBox(self, item, index)
+        item_list.append(itembox)
+        row = item_list.get_row_at_index(index)
+        row.add_controller(itembox.drag_source)
+        row.add_controller(itembox.drop_source)
     data.add_view_history_state()
 
 

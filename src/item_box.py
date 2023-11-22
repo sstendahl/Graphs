@@ -43,9 +43,6 @@ class ItemBox(Gtk.Box):
 
         self.item.connect("notify::color", self.on_color_change)
         self.on_color_change(self.props.item, None)
-
-        self.add_controller(self.drag_source)
-        self.add_controller(self.drop_source)
         self.add_actions()
 
     def add_actions(self):
@@ -75,9 +72,9 @@ class ItemBox(Gtk.Box):
         self._change_position(int(value), int(drop_target.index))
 
     def on_dnd_prepare(self, drag_source, x, y):
-        snapshot = Gtk.Snapshot.new()
-        self.do_snapshot(self, snapshot)
-        paintable = snapshot.to_paintable()
+        widget = self.get_parent()
+        widget.add_css_class("card")
+        paintable = Gtk.WidgetPaintable(widget=widget)
         drag_source.set_icon(paintable, int(x), int(y))
         return Gdk.ContentProvider.new_for_value(str(self.props.index))
 
