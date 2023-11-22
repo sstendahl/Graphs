@@ -147,7 +147,7 @@ class ItemBox(Gtk.Box):
 
     @name.setter
     def name(self, name: str):
-        self.label.set_label(utilities.shorten_label(name))
+        self.label.set_label(name)
 
     def get_application(self):
         """Get application property."""
