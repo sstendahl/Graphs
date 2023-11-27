@@ -61,16 +61,9 @@ parts:
     organize: 
       bin: usr/bin
       lib/python3.10/site-packages: usr/lib/python3/dist-packages
-
-  blueprint-compiler:
-    source: https://gitlab.gnome.org/jwestman/blueprint-compiler.git
-    source-tag: 'v0.10.0'
-    plugin: meson
-    meson-parameters:
-      - --prefix=/usr
-    override-prime: ''
+      
   graphs:
-    after: [ blueprint-compiler, numpy ]
+    after: [ numpy ]
     plugin: meson
     source: .
     meson-parameters:
@@ -79,6 +72,8 @@ parts:
     build-environment:
       - PYTHONPATH: $CRAFT_STAGE/usr/lib/python3/dist-packages:$PYTHONPATH
       - GI_TYPELIB_PATH: /snap/gnome-42-2204-sdk/current/usr/lib/$CRAFT_ARCH_TRIPLET/girepository-1.0:/snap/gnome-42-2204-sdk/current/usr/lib/girepository-1.0
+    build-snaps:
+      - blueprint-compiler/latest/beta
     override-pull: |
       craftctl default
       patch -p1 < $CRAFT_PROJECT_DIR/snap/graphs.patch
