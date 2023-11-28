@@ -6,5 +6,5 @@ Terminal=false
 Type=Application
 Categories=Education;Science
 StartupNotify=true
-MimeType=application/se.sjoerd.Graphs;text/plain;text/xy;text/dat;text/csv;text/xrdml;text/xry;text/txt
+MimeType=application/graphs;text/plain;text/xy;text/dat;text/csv;text/xrdml;text/xry;text/txt
 Keywords=Plotting;Graph;Graphing;Science;Mathematics;Math;Equations;Data;Plot;Visualisation;Visualization;Fitting;xrdml;
