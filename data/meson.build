@@ -52,6 +52,12 @@ install_data(application_id + '.gschema.xml',
  install_mode: 'rwxrwxrwx'
 )
 
+
+install_data(
+    application_id + '.mime.xml',
+    install_dir: get_option('datadir') / 'mime/packages',
+)
+
 compile_schemas = find_program('glib-compile-schemas', required: false)
 if compile_schemas.found()
   test('Validate schema file',
