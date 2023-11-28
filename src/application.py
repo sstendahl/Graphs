@@ -6,7 +6,6 @@ Classes:
     GraphsApplication
 """
 import logging
-import subprocess
 from gettext import gettext as _
 
 from gi.repository import GLib, Gio, Graphs
@@ -107,7 +106,6 @@ class PythonApplication(Graphs.Application):
             "items-ignored", ui.on_items_ignored, self,
         )
 
-
     def do_open(self, files, nfiles, _hint):
         self.do_activate()
         if nfiles == 1 and files[0].get_uri().endswith(".graphs"):
@@ -118,7 +116,6 @@ class PythonApplication(Graphs.Application):
             self.get_data().load_from_project_dict(project_dict)
         else:
             file_import.import_from_files(self, files)
-
 
     def do_activate(self):
         """
