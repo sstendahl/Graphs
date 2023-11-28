@@ -5,6 +5,6 @@
         <acronym>Graphs</acronym>
         <expanded-acronym>Graph Project File</expanded-acronym>
         <glob pattern="*.graphs"/>
-        <generic-icon name="icons/hicolor/scalable/apps/se.sjoerd.Graphs.svg"/>
+        <generic-icon name="application-se.sjoerd.Graphs">
     </mime-type>
 </mime-info>
