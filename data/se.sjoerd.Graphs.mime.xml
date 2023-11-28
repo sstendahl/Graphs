@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
-    <mime-type type="application/graphs">
-        <comment>Graphs Project</comment>
+    <mime-type type="application/se.sjoerd.Graphs">
+        <comment>Graphs Project File</comment>
+        <acronym>Graphs</acronym>
+        <expanded-acronym>Graph Project File</expanded-acronym>
         <glob pattern="*.graphs"/>
-        <icon name="graphs"/>
+        <generic-icon name="icons/hicolor/scalable/apps/se.sjoerd.Graphs.svg"/>
     </mime-type>
 </mime-info>

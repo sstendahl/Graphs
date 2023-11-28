@@ -11,7 +11,7 @@ from gettext import gettext as _
 
 from gi.repository import GLib, Gio, Graphs
 
-from graphs import actions, file_io, migrate, styles, ui
+from graphs import actions, file_import, file_io, migrate, styles, ui
 from graphs.data import Data
 
 from matplotlib import font_manager
@@ -108,14 +108,16 @@ class PythonApplication(Graphs.Application):
         )
 
 
-    def do_open(self, file, _nfiles, _hint):
+    def do_open(self, files, nfiles, _hint):
         self.do_activate()
-        file = file[0]
-        try:
-            project_dict = file_io.parse_json(file)
-        except UnicodeDecodeError:
-            project_dict = migrate.migrate_project(file)
-        self.get_data().load_from_project_dict(project_dict)
+        if nfiles == 1 and files[0].get_uri().endswith(".graphs"):
+            try:
+                project_dict = file_io.parse_json(files[0])
+            except UnicodeDecodeError:
+                project_dict = migrate.migrate_project(files[0])
+            self.get_data().load_from_project_dict(project_dict)
+        else:
+            file_import.import_from_files(self, files)
 
 
     def do_activate(self):
