@@ -48,12 +48,21 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       - name: Setup snapcraft
+        env:
+          LP_BUILD_SECRET: ${{ secrets.LP_BUILD_SECRET }}
         run: |
           sudo snap install snapcraft --classic
+
+          # Setup Launchpad credentials
+          mkdir -p ~/.local/share/snapcraft/provider/launchpad
+          echo "$LP_BUILD_SECRET" > ~/.local/share/snapcraft/provider/launchpad/credentials
+          git config --global user.email "github-actions@github.com"
+          git config --global user.name "Github Actions"
       - name: Build
         id: build
         env:
           ARCHITECTURE: ${{ matrix.architecture }}
+
         run: |
           snapcraft remote-build --launchpad-accept-public-upload
 
