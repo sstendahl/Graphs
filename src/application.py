@@ -113,7 +113,18 @@ class PythonApplication(Graphs.Application):
                 project_dict = file_io.parse_json(files[0])
             except UnicodeDecodeError:
                 project_dict = migrate.migrate_project(files[0])
-            self.get_data().load_from_project_dict(project_dict)
+
+            if self.get_data().props.empty:
+                self.get_data().load_from_project_dict(project_dict)
+            else:
+                def on_response(_dialog, response):
+                    if response == "discard":
+                        self.get_data().load_from_project_dict(project_dict)
+                dialog = ui.build_dialog("discard_data")
+                dialog.set_transient_for(self.get_window())
+                dialog.connect("response", on_response)
+                dialog.present()
+                return
         else:
             file_import.import_from_files(self, files)
 
