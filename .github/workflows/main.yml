@@ -58,13 +58,21 @@ jobs:
           echo "$LP_BUILD_SECRET" > ~/.local/share/snapcraft/provider/launchpad/credentials
           git config --global user.email "github-actions@github.com"
           git config --global user.name "Github Actions"
+          sudo apt-get update; sudo apt-get install -y moreutils
+
       - name: Build
         id: build
         env:
           ARCHITECTURE: ${{ matrix.architecture }}
 
         run: |
-          snapcraft remote-build --launchpad-accept-public-upload
+          # Remove the architecture definition from the snapcraft.yaml due to:
+          # https://bugs.launchpad.net/snapcraft/+bug/1885150
+          cat snap/snapcraft.yaml | yq 'del(.architectures)' | sponge snap/snapcraft.yaml
+
+          snapcraft remote-build --launchpad-accept-public-upload --build-for=${ARCHITECTURE}
+          echo "snap=Graphs_${ARCHITECTURE}.snap" >> "$GITHUB_OUTPUT"
+
 
   flake8-lint:
     name: flake8
