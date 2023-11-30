@@ -58,6 +58,15 @@ def toggle_sidebar(_action, _shortcut, self):
     split_view.set_collapsed(not split_view.get_collapsed())
 
 
+def change_scale(action, target, self):
+    data = self.get_data()
+    data.get_figure_settings().set_property(
+        action.get_name()[7:], int(target.get_string()),
+    )
+    self.get_window().get_canvas().get_parent().grab_focus()
+    data.add_history_state()
+
+
 def set_mode(_action, _target, self, mode):
     self.set_mode(mode)
 

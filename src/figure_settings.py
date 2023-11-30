@@ -178,7 +178,9 @@ class FigureSettingsWindow(Adw.Window):
     @Gtk.Template.Callback()
     def on_close(self, *_args):
         self.style_editor.save_style()
-        self.get_application().get_data().add_view_history_state()
+        data = self.get_application().get_data()
+        data.add_view_history_state()
+        data.add_history_state()
         self.destroy()
 
     @Gtk.Template.Callback()

@@ -16,6 +16,11 @@ from graphs import item, misc, utilities
 import numpy
 
 
+_FIGURE_SETTINGS_HISTORY_IGNORELIST = misc.LIMITS + [
+    "min_selected", "max_selected",
+]
+
+
 class Data(GObject.Object, Graphs.DataInterface):
     """
     Class for managing data.
@@ -66,6 +71,7 @@ class Data(GObject.Object, Graphs.DataInterface):
         self._view_history_pos = -1
         self._items = {}
         self._set_data_copy()
+        figure_settings.connect("notify", self._on_figure_settings_change)
 
     def get_application(self) -> Graphs.Application:
         """Get application property."""
@@ -282,11 +288,25 @@ class Data(GObject.Object, Graphs.DataInterface):
             copy.deepcopy(item_.get_property(param.name)),
         )))
 
+    def _on_figure_settings_change(self, figure_settings, param) -> None:
+        if param.name in _FIGURE_SETTINGS_HISTORY_IGNORELIST:
+            return
+        self._current_batch.append((4, (
+            param.name,
+            copy.deepcopy(self._figure_settings_copy[param.name]),
+            copy.deepcopy(figure_settings.get_property(param.name)),
+        )))
+
     def _set_data_copy(self) -> None:
         self._current_batch: list = []
         self._data_copy = copy.deepcopy(
             {item_.get_uuid(): item_.to_dict() for item_ in self},
         )
+        self._figure_settings_copy = copy.deepcopy({
+            prop.replace("_", "-"):
+            self.props.figure_settings.get_property(prop)
+            for prop in dir(self.props.figure_settings.props)
+        })
 
     def add_history_state(self, old_limits: misc.Limits = None) -> None:
         if not self._current_batch:
@@ -328,6 +348,10 @@ class Data(GObject.Object, Graphs.DataInterface):
             elif change_type == 3:
                 self.change_position(change[0], change[1])
                 items_changed = True
+            elif change_type == 4:
+                self.props.figure_settings.set_property(
+                    change[0], change[1],
+                )
         if items_changed:
             self.notify("items")
             self.notify("empty")
@@ -359,6 +383,10 @@ class Data(GObject.Object, Graphs.DataInterface):
             elif change_type == 3:
                 self.change_position(change[1], change[0])
                 items_changed = True
+            elif change_type == 4:
+                self.props.figure_settings.set_property(
+                    change[0], change[2],
+                )
         if items_changed:
             self.notify("items")
             self.notify("empty")

@@ -1,11 +1,8 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 import contextlib
-import io
 import os
 from gettext import gettext as _
 from pathlib import Path
-
-from PIL import Image, ImageStat
 
 from cycler import cycler
 
