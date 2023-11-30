@@ -72,7 +72,7 @@ parts:
       - PYTHONPATH: $CRAFT_STAGE/usr/lib/python3/dist-packages:$PYTHONPATH
       - GI_TYPELIB_PATH: /snap/gnome-42-2204-sdk/current/usr/lib/$CRAFT_ARCH_TRIPLET/girepository-1.0:/snap/gnome-42-2204-sdk/current/usr/lib/girepository-1.0
     build-snaps:
-      - blueprint-compiler/latest/edge
+      - blueprint-compiler/latest/stable
     override-build: |
       craftctl default
       sed -e '1c#!/usr/bin/env python3' -i ${CRAFT_PART_INSTALL}/snap/graphs/current/usr/bin/graphs
