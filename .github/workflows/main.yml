@@ -44,15 +44,53 @@ jobs:
         architecture:
         - amd64
         - arm64
+      fail-fast: false
     steps:
-    - uses: actions/checkout@v3
-    - uses: docker/setup-qemu-action@v2
-      with:
-        image: tonistiigi/binfmt@sha256:df15403e06a03c2f461c1f7938b171fda34a5849eb63a70e2a2109ed5a778bde
-    - uses: diddlesnaps/snapcraft-multiarch-action@v1
-      id: build
-      with:
-        architecture: ${{ matrix.architecture }}
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Setup snapcraft
+        env:
+          LP_BUILD_SECRET: ${{ secrets.LP_BUILD_SECRET }}
+        run: |
+          sudo snap install snapcraft --classic
+
+          # Setup Launchpad credentials
+          mkdir -p ~/.local/share/snapcraft/provider/launchpad
+          echo "$LP_BUILD_SECRET" > ~/.local/share/snapcraft/provider/launchpad/credentials
+          git config --global user.email "github-actions@github.com"
+          git config --global user.name "Github Actions"
+          sudo apt-get update; sudo apt-get install -y moreutils
+
+      - name: Build
+        id: build
+        env:
+          ARCHITECTURE: ${{ matrix.architecture }}
+
+        run: |
+          # Remove the architecture definition from the snapcraft.yaml due to:
+          # https://bugs.launchpad.net/snapcraft/+bug/1885150
+          cat snap/snapcraft.yaml | yq 'del(.architectures)' | sponge snap/snapcraft.yaml
+
+          snapcraft remote-build --launchpad-accept-public-upload --build-for=${ARCHITECTURE}
+          release_line=$(grep -m 1 '<release version=' "data/se.sjoerd.Graphs.appdata.xml.in.in")
+          version=$(echo "$release_line" | sed -n 's/.*version="\([^"]*\)".*/\1/p')
+          if [ ! -f "graphs_${version}_${ARCHITECTURE}.snap" ]; then
+            echo "Snap file not found, check the build log below to find error"
+            cat graphs_${ARCHITECTURE}.txt
+            exit 1
+          fi
+          cat "graphs_${ARCHITECTURE}.txt"
+          echo "snap=graphs_${version}_${ARCHITECTURE}.snap" >> "$GITHUB_OUTPUT"
+
+
+      - name: Publish to edge channel
+        uses: snapcore/action-publish@v1
+        env:
+          SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.STORE_LOGIN }}
+        if: ${{ github.event_name == 'push' && github.event.ref == 'refs/heads/main' }}
+        with:
+          snap: ${{ steps.build.outputs.snap }}
+          release: edge
 
   flake8-lint:
     name: flake8
