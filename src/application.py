@@ -10,7 +10,7 @@ from gettext import gettext as _
 
 from gi.repository import GLib, Gio, Graphs
 
-from graphs import actions, migrate, styles, ui
+from graphs import actions, file_import, file_io, migrate, styles, ui
 from graphs.data import Data
 
 from matplotlib import font_manager
@@ -35,7 +35,7 @@ class PythonApplication(Graphs.Application):
         migrate.migrate_config(settings)
         super().__init__(
             application_id=application_id, settings=settings,
-            flags=Gio.ApplicationFlags.DEFAULT_FLAGS,
+            flags=Gio.ApplicationFlags.HANDLES_OPEN,
             data=Data(self, settings), **kwargs,
         )
         font_list = font_manager.findSystemFonts(fontpaths=None, fontext="ttf")
@@ -100,6 +100,28 @@ class PythonApplication(Graphs.Application):
         self.get_data().connect(
             "items-ignored", ui.on_items_ignored, self,
         )
+
+    def do_open(self, files, nfiles, _hint):
+        self.do_activate()
+        if nfiles == 1 and files[0].get_uri().endswith(".graphs"):
+            try:
+                project_dict = file_io.parse_json(files[0])
+            except UnicodeDecodeError:
+                project_dict = migrate.migrate_project(files[0])
+
+            if self.get_data().props.empty:
+                self.get_data().load_from_project_dict(project_dict)
+            else:
+                def on_response(_dialog, response):
+                    if response == "discard":
+                        self.get_data().load_from_project_dict(project_dict)
+                dialog = ui.build_dialog("discard_data")
+                dialog.set_transient_for(self.get_window())
+                dialog.connect("response", on_response)
+                dialog.present()
+                return
+        else:
+            file_import.import_from_files(self, files)
 
     def do_activate(self):
         """

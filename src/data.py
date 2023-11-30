@@ -452,7 +452,10 @@ class Data(GObject.Object, Graphs.DataInterface):
                 xydata = numpy.asarray(
                     item_.ydata if index % 2 else item_.xdata,
                 )
-                xydata = xydata[numpy.isfinite(xydata)]
+                try:
+                    xydata = xydata[numpy.isfinite(xydata)]
+                except TypeError:
+                    return
                 nonzero_data = \
                     numpy.array([value for value in xydata if value != 0])
                 axes[index][2].append(

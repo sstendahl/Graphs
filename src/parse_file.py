@@ -27,9 +27,9 @@ def import_from_xrdml(self, file):
     scan_type = content.getElementsByTagName("scan")
     scan_axis = scan_type[0].attributes["scanAxis"].value
     if scan_axis.startswith("2Theta"):
-        scan_axis = _("2Theta")
+        scan_axis = "2Theta"
     if scan_axis.startswith("Omega"):
-        scan_axis = _("Omega")
+        scan_axis = "Omega"
 
     data_points = content.getElementsByTagName("positions")
     for position in data_points:
