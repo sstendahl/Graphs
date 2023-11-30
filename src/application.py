@@ -59,12 +59,7 @@ class PythonApplication(Graphs.Application):
                     str(settings.get_child("figure").get_enum(val)),
                 ),
             )
-            action.connect(
-                "activate", lambda action_, target:
-                (figure_settings.set_property(
-                 action_.get_name()[7:], int(target.get_string())),
-                 self.get_window().get_canvas().get_parent().grab_focus()),
-            )
+            action.connect("activate", actions.change_scale, self)
             figure_settings.connect(
                 f"notify::{val}",
                 lambda _x, param, action_: action_.change_state(
