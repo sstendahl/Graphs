@@ -71,11 +71,15 @@ jobs:
           cat snap/snapcraft.yaml | yq 'del(.architectures)' | sponge snap/snapcraft.yaml
 
           snapcraft remote-build --launchpad-accept-public-upload --build-for=${ARCHITECTURE}
+          release_line=$(grep -m 1 '<release version=' "data/se.sjoerd.Graphs.appdata.xml.in.in")
+          echo version=$(echo "$release_line" | sed -n 's/.*version="\([^"]*\)".*/\1/p')
+          echo "snap=graphs_${version}_${ARCHITECTURE}.snap" >> "$GITHUB_OUTPUT"
+
       - name: Upload artifact
         uses: actions/upload-artifact@v3
         with:
           name: Graphs-${{ matrix.architecture }}
-          path: *.snap
+          path: ${{ steps.build.outputs.snap }}
 
 
   flake8-lint:
