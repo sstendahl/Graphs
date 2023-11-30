@@ -34,9 +34,9 @@ class RadiansScale(scale.LinearScale):
     def set_default_locators_and_formatters(self, axis):
         super().set_default_locators_and_formatters(axis)
         axis.set_major_formatter(
-            ticker.FuncFormatter(lambda x, _pos=None: f"{x / numpy.pi:.0f}π"),
+            ticker.FuncFormatter(lambda x, _pos=None: f"{x / numpy.pi:g}π"),
         )
-        axis.set_major_locator(ticker.MultipleLocator(base=numpy.pi))
+        axis.set_major_locator(RadianLocator(axis))
 
 
 class SquareRootScale(scale.ScaleBase):
@@ -124,6 +124,7 @@ class CustomScaleLocator(ticker.MaxNLocator):
     """Dynamically find tick positions on custom scales."""
     def __init__(self, is_minor=False):
         self.is_minor = is_minor
+        print(self.axis)
 
     @property
     def numticks(self):
@@ -158,6 +159,50 @@ class CustomScaleLocator(ticker.MaxNLocator):
         tick_pos = tick_pos * ((vmax - vmin) / (max(tick_pos) - min(tick_pos)))
         tick_pos *= 2 if self.axis.get_scale() == "squareroot" else 1
         return tick_pos
+
+class RadianLocator(ticker.MultipleLocator):
+    """Dynamically place tick positions on radian scale."""
+    def __init__(self, is_minor=False):
+        super().__init__(base=self.base)
+
+    def tick_values(self, vmin, vmax):
+        if vmax < vmin:
+            vmin, vmax = vmax, vmin
+
+        self._edge = ticker._Edge_integer(self.base, 0)
+        step = self._edge.step
+        vmin -= self._offset
+        vmax -= self._offset
+        vmin = self._edge.ge(vmin) * step
+        n = (vmax - vmin + 0.001 * step) // step
+        locs = vmin - step + numpy.arange(n + 3) * step + self._offset
+        return self.raise_if_exceeds(locs)
+
+    @property
+    def base(self):
+        if self.axis is None:
+            return numpy.pi
+
+        distance = numpy.pi
+        vmin, vmax = self.axis.get_view_interval()
+        num_ticks = int((vmax-vmin) / distance)
+
+        while num_ticks < 4:
+            distance /= 2
+            num_ticks = int((vmax-vmin) / distance)
+        if num_ticks > 20:
+            distance += (5*numpy.pi) * (int(num_ticks/50)) - numpy.pi
+            num_ticks = int((vmax-vmin) / distance)
+
+        while num_ticks > 9:
+            if distance == numpy.pi:
+                distance *= 2
+            elif distance == 2*numpy.pi:
+                distance = 5*numpy.pi
+            else:
+                distance += 5*numpy.pi
+            num_ticks = int((vmax-vmin) / distance)
+        return distance
 
 
 scale.register_scale(RadiansScale)
