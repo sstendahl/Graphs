@@ -75,7 +75,7 @@ jobs:
           version=$(echo "$release_line" | sed -n 's/.*version="\([^"]*\)".*/\1/p')
           if [ ! -f "graphs_${version}_${ARCHITECTURE}.snap" ]; then
             echo "Snap file not found, check the build log below to find error"
-            cat 'graphs_${ARCHITECTURE}.txt'
+            cat graphs_${ARCHITECTURE}.txt
             exit 1
           fi
           cat "graphs_${ARCHITECTURE}.txt"
