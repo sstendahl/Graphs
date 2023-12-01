@@ -209,8 +209,7 @@ class RadianLocator(ticker.MultipleLocator):
             exponent = int(numpy.log2(abs(ratio)))
             result = 2 ** exponent  # Return distance as a power of 2
             return distance * result
-        else:
-            return distance
+        return distance
 
 
 scale.register_scale(RadiansScale)
