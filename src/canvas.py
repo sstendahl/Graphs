@@ -111,7 +111,7 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
         color_rgba.alpha = 0.3
         self.rubberband_fill_color = utilities.rgba_to_tuple(color_rgba, True)
         # Reference is created by the toolbar itself
-        _DummyToolbar(self)
+        self.toolbar = _DummyToolbar(self)
         self.highlight = _Highlight(self)
         self._legend = True
         self._legend_position = misc.LEGEND_POSITIONS[0]
@@ -120,8 +120,19 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
         self.mpl_connect("motion_notify_event", self._set_mouse_fraction)
         self._xfrac, self._yfrac = None, None
         zoom_gesture = Gtk.GestureZoom.new()
+        horizontal_scroll =  \
+            Gtk.EventControllerScroll.new(
+                Gtk.EventControllerScrollFlags.HORIZONTAL)
+        vertical_scroll =  \
+            Gtk.EventControllerScroll.new(
+                Gtk.EventControllerScrollFlags.VERTICAL)
+
         zoom_gesture.connect("scale-changed", self._on_zoom_gesture)
+        horizontal_scroll.connect("scroll", self._on_pan_gesture)
+        vertical_scroll.connect("scroll", self._on_pan_gesture)
         self.add_controller(zoom_gesture)
+        self.add_controller(horizontal_scroll)
+        self.add_controller(vertical_scroll)
 
         self.connect("notify::hide-unselected", self._redraw)
         self.connect("notify::items", self._redraw)
@@ -142,14 +153,24 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
             self._xfrac, self._yfrac = None, None
 
     def _on_zoom_gesture(self, _gesture, scale):
-        scale = 1 + 0.05 * (scale - 1)
+        scale = 1 + 0.02 * (scale - 1)
         if scale > 5 or scale < 0.2:
             # Don't scale if ridiculous values are registered
             return
         self.zoom(scale)
 
+    def _on_pan_gesture(self, event_controller, x, y):
+        if self.get_application().get_ctrl() is False:
+            for ax in self.axes:
+                xmin, xmax, ymin, ymax = \
+                    self._calculate_pan_values(ax, x, y)
+                ax.set_xlim(xmin, xmax)
+                ax.set_ylim(ymin, ymax)
+            self.queue_draw()
+
     def _on_scroll_event(self, event):
-        self.zoom(1 / _SCROLL_SCALE if event.button == "up" else _SCROLL_SCALE)
+        if self.get_application().get_ctrl() is True:
+            self.zoom(1 / _SCROLL_SCALE if event.button == "up" else _SCROLL_SCALE)
 
     def zoom(self, scaling=1.15, respect_mouse=True):
         """
@@ -171,6 +192,37 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
                 ax.get_ylim(), scaling,
             ))
         self.queue_draw()
+
+    def _calculate_pan_values(self, ax, x_panspeed, y_panspeed):
+        xmin, xmax = min(ax.get_xlim()), max(ax.get_xlim())
+        ymin, ymax = min(ax.get_ylim()), max(ax.get_ylim())
+        xspan = xmax - xmin
+        yspan = ymax - ymin
+        pan_factor = 0.002
+        scale = scales.to_int(ax.get_yscale()) if x_panspeed == 0 else scales.to_int(ax.get_xscale())
+        match scale:
+            case 0 | 2: # linear scale
+                return (xmin + xspan * x_panspeed * pan_factor, xmax + xspan * x_panspeed * pan_factor,
+                        ymin + yspan * y_panspeed * pan_factor, ymax + yspan * y_panspeed * pan_factor)
+            case 1: #log scale
+                xmin *= 10**(x_panspeed * pan_factor * 0.1)
+                xmax *= 10**(x_panspeed * pan_factor * 0.1)
+                ymin *= 10**(y_panspeed * pan_factor * 0.1)
+                ymax *= 10**(y_panspeed * pan_factor * 0.1)
+                return xmin, xmax, ymin, ymax
+            case 3: # square root scale
+                sqrt_xmin = xmin + numpy.sqrt(abs(xmin)) * x_panspeed * pan_factor
+                sqrt_xmax = xmax + numpy.sqrt(abs(xmax)) * x_panspeed * pan_factor
+                sqrt_ymin = ymin + numpy.sqrt(abs(ymin)) * y_panspeed * pan_factor
+                sqrt_ymax = ymax + numpy.sqrt(abs(ymax)) * y_panspeed * pan_factor
+
+                return sqrt_xmin, sqrt_xmax, sqrt_ymin, sqrt_ymax
+            case 4: # inverted scale
+                inv_xmin = xmax + xspan * x_panspeed * pan_factor
+                inv_xmax = xmin + xspan * x_panspeed * pan_factor
+                inv_ymin = ymax + yspan * y_panspeed * pan_factor
+                inv_ymax = ymin + yspan * y_panspeed * pan_factor
+                return inv_xmin, inv_xmax, inv_ymin, inv_ymax
 
     @staticmethod
     def _calculate_zoomed_values(fraction, scale, limit, zoom_factor):
