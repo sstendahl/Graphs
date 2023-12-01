@@ -160,6 +160,7 @@ class CustomScaleLocator(ticker.MaxNLocator):
         tick_pos *= 2 if self.axis.get_scale() == "squareroot" else 1
         return tick_pos
 
+
 class RadianLocator(ticker.MultipleLocator):
     """
     Dynamically place tick positions on radian scale.
@@ -190,22 +191,24 @@ class RadianLocator(ticker.MultipleLocator):
         if self.axis is None:
             return numpy.pi
 
-        distance = numpy.pi
         vmin, vmax = self.axis.get_view_interval()
-        num_ticks = (vmax-vmin) / distance
+        distance = numpy.pi
+        # Amount of ticks if we use a multiple of pi
+        num_ticks = (vmax - vmin) / distance
+        # Desired amount of ticks, should be between 3 and 9
         numticks_goal = max(1, self.axis.get_tick_space() - 4)
         numticks_goal = numpy.clip(numticks_goal, 3, 9)
-        ratio = (num_ticks/numticks_goal)
+        ratio = (num_ticks / numticks_goal)
         if num_ticks > 12:
-            if ratio < 2: # Use a distance of 2pi if reasonable
+            if ratio < 2:  # Use a distance of 2pi if reasonable
                 return distance * 2
             # Make sure ratio is never rounded to 0:
-            ratio = 5 if round(ratio/5) == 0 else ratio
-            return distance*round(ratio / 5) * 5
+            ratio = 5 if round(ratio / 5) == 0 else ratio
+            return distance * round(ratio / 5) * 5
         elif num_ticks < 4:
-            ratio = (num_ticks/numticks_goal)
+            ratio = (num_ticks / numticks_goal)
             exponent = int(numpy.log2(abs(ratio)))
-            result = 2 ** exponent # Return distance as a power of 2
+            result = 2 ** exponent  # Return distance as a power of 2
             return distance * result
         else:
             return distance
