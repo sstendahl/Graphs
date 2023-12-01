@@ -34,7 +34,7 @@ class RadiansScale(scale.LinearScale):
     def set_default_locators_and_formatters(self, axis):
         super().set_default_locators_and_formatters(axis)
         axis.set_major_formatter(
-            ticker.FuncFormatter(lambda x, _pos=None: f"{x / numpy.pi:g}π"),
+            ticker.FuncFormatter(lambda x, _pos=None: f"{x / numpy.pi:.3g}π"),
         )
         axis.set_major_locator(RadianLocator())
 
@@ -163,9 +163,9 @@ class CustomScaleLocator(ticker.MaxNLocator):
 class RadianLocator(ticker.MultipleLocator):
     """
     Dynamically place tick positions on radian scale.
-    Places ticks at a distance of pi if there's between 4 and 12 ticks
+    Places ticks at a distance of pi if there's between 4 and 8 ticks
     Otherwise it places ticks at a distance of 2pi if reasonable, or with
-    a multiple of 5 pi such that a number between 3 and 9 ticks are placed
+    a multiple of 5 pi such that a number between 3 and 8 ticks are placed
     At smaller values, the distances between the ticks are a power of 2,
     multiplied by pi. e.g. (1/2)pi, (1/4)pi, (1/8)pi etc..
     """
@@ -194,11 +194,11 @@ class RadianLocator(ticker.MultipleLocator):
         distance = numpy.pi
         # Amount of ticks if we use a multiple of pi
         num_ticks = (vmax - vmin) / distance
-        # Desired amount of ticks, should be between 3 and 9
+        # Desired amount of ticks, should be between 3 and 8
         numticks_goal = max(1, self.axis.get_tick_space() - 4)
-        numticks_goal = numpy.clip(numticks_goal, 3, 9)
+        numticks_goal = numpy.clip(numticks_goal, 3, 7)
         ratio = (num_ticks / numticks_goal)
-        if num_ticks > 12:
+        if num_ticks > 8:
             if ratio < 2:  # Use a distance of 2pi if reasonable
                 return distance * 2
             # Make sure ratio is never rounded to 0:
