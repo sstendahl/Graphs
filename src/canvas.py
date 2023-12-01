@@ -198,30 +198,30 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
         ymin, ymax = min(ax.get_ylim()), max(ax.get_ylim())
         xspan = xmax - xmin
         yspan = ymax - ymin
-        pan_factor = 0.002
+        pan_factor = 0.00125
         scale = scales.to_int(ax.get_yscale()) if x_panspeed == 0 else scales.to_int(ax.get_xscale())
         match scale:
             case 0 | 2: # linear scale
                 return (xmin + xspan * x_panspeed * pan_factor, xmax + xspan * x_panspeed * pan_factor,
-                        ymin + yspan * y_panspeed * pan_factor, ymax + yspan * y_panspeed * pan_factor)
+                        ymin - yspan * y_panspeed * pan_factor, ymax - yspan * y_panspeed * pan_factor)
             case 1: #log scale
-                xmin *= 10**(x_panspeed * pan_factor * 0.1)
-                xmax *= 10**(x_panspeed * pan_factor * 0.1)
-                ymin *= 10**(y_panspeed * pan_factor * 0.1)
-                ymax *= 10**(y_panspeed * pan_factor * 0.1)
+                xmin *= 10**(x_panspeed * pan_factor * 0.3)
+                xmax *= 10**(x_panspeed * pan_factor * 0.3)
+                ymin /= 10**(y_panspeed * pan_factor * 0.3)
+                ymax /= 10**(y_panspeed * pan_factor * 0.3)
                 return xmin, xmax, ymin, ymax
             case 3: # square root scale
                 sqrt_xmin = xmin + numpy.sqrt(abs(xmin)) * x_panspeed * pan_factor
                 sqrt_xmax = xmax + numpy.sqrt(abs(xmax)) * x_panspeed * pan_factor
-                sqrt_ymin = ymin + numpy.sqrt(abs(ymin)) * y_panspeed * pan_factor
-                sqrt_ymax = ymax + numpy.sqrt(abs(ymax)) * y_panspeed * pan_factor
+                sqrt_ymin = ymin - numpy.sqrt(abs(ymin)) * y_panspeed * pan_factor
+                sqrt_ymax = ymax - numpy.sqrt(abs(ymax)) * y_panspeed * pan_factor
 
                 return sqrt_xmin, sqrt_xmax, sqrt_ymin, sqrt_ymax
             case 4: # inverted scale
                 inv_xmin = xmax + xspan * x_panspeed * pan_factor
                 inv_xmax = xmin + xspan * x_panspeed * pan_factor
-                inv_ymin = ymax + yspan * y_panspeed * pan_factor
-                inv_ymax = ymin + yspan * y_panspeed * pan_factor
+                inv_ymin = ymax - yspan * y_panspeed * pan_factor
+                inv_ymax = ymin - yspan * y_panspeed * pan_factor
                 return inv_xmin, inv_xmax, inv_ymin, inv_ymax
 
     @staticmethod
