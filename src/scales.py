@@ -161,7 +161,14 @@ class CustomScaleLocator(ticker.MaxNLocator):
         return tick_pos
 
 class RadianLocator(ticker.MultipleLocator):
-    """Dynamically place tick positions on radian scale."""
+    """
+    Dynamically place tick positions on radian scale.
+    Places ticks at a distance of pi if there's between 4 and 12 ticks
+    Otherwise it places ticks at a distance of 2pi if reasonable, or with
+    a multiple of 5 pi such that a number between 3 and 9 ticks are placed
+    At smaller values, the distances between the ticks are a power of 2,
+    multiplied by pi. e.g. (1/2)pi, (1/4)pi, (1/8)pi etc..
+    """
     def __init__(self, is_minor=False):
         super().__init__(base=self.base)
 
@@ -185,24 +192,23 @@ class RadianLocator(ticker.MultipleLocator):
 
         distance = numpy.pi
         vmin, vmax = self.axis.get_view_interval()
-        num_ticks = int((vmax-vmin) / distance)
-
-        while num_ticks < 4:
-            distance /= 2
-            num_ticks = int((vmax-vmin) / distance)
-        if num_ticks > 20:
-            distance += (5*numpy.pi) * (int(num_ticks/50)) - numpy.pi
-            num_ticks = int((vmax-vmin) / distance)
-
-        while num_ticks > 9:
-            if distance == numpy.pi:
-                distance *= 2
-            elif distance == 2*numpy.pi:
-                distance = 5*numpy.pi
-            else:
-                distance += 5*numpy.pi
-            num_ticks = int((vmax-vmin) / distance)
-        return distance
+        num_ticks = (vmax-vmin) / distance
+        numticks_goal = max(1, self.axis.get_tick_space() - 4)
+        numticks_goal = numpy.clip(numticks_goal, 3, 9)
+        ratio = (num_ticks/numticks_goal)
+        if num_ticks > 12:
+            if ratio < 2: # Use a distance of 2pi if reasonable
+                return distance * 2
+            # Make sure ratio is never rounded to 0:
+            ratio = 5 if round(ratio/5) == 0 else ratio
+            return distance*round(ratio / 5) * 5
+        elif num_ticks < 4:
+            ratio = (num_ticks/numticks_goal)
+            exponent = int(numpy.log2(abs(ratio)))
+            result = 2 ** exponent # Return distance as a power of 2
+            return distance * result
+        else:
+            return distance
 
 
 scale.register_scale(RadiansScale)
