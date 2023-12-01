@@ -343,7 +343,7 @@ class Data(GObject.Object, Graphs.DataInterface):
             elif change_type == 2:
                 item_ = item.new_from_dict(copy.deepcopy(change[1]))
                 self._add_item(item_)
-                self.change_position(change[0], len(self))
+                self.change_position(change[0], len(self) - 1)
                 items_changed = True
             elif change_type == 3:
                 self.change_position(change[0], change[1])
