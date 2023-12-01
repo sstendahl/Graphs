@@ -36,7 +36,7 @@ class RadiansScale(scale.LinearScale):
         axis.set_major_formatter(
             ticker.FuncFormatter(lambda x, _pos=None: f"{x / numpy.pi:g}π"),
         )
-        axis.set_major_locator(RadianLocator(axis))
+        axis.set_major_locator(RadianLocator())
 
 
 class SquareRootScale(scale.ScaleBase):
@@ -124,7 +124,6 @@ class CustomScaleLocator(ticker.MaxNLocator):
     """Dynamically find tick positions on custom scales."""
     def __init__(self, is_minor=False):
         self.is_minor = is_minor
-        print(self.axis)
 
     @property
     def numticks(self):
@@ -170,7 +169,7 @@ class RadianLocator(ticker.MultipleLocator):
     At smaller values, the distances between the ticks are a power of 2,
     multiplied by pi. e.g. (1/2)pi, (1/4)pi, (1/8)pi etc..
     """
-    def __init__(self, is_minor=False):
+    def __init__(self):
         super().__init__(base=self.base)
 
     def tick_values(self, vmin, vmax):
