@@ -170,7 +170,8 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
 
     def _on_scroll_event(self, event):
         if self.get_application().get_ctrl() is True:
-            self.zoom(1 / _SCROLL_SCALE if event.button == "up" else _SCROLL_SCALE)
+            self.zoom(1 / _SCROLL_SCALE
+                      if event.button == "up" else _SCROLL_SCALE)
 
     def zoom(self, scaling=1.15, respect_mouse=True):
         """
@@ -196,33 +197,26 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
     def _calculate_pan_values(self, ax, x_panspeed, y_panspeed):
         xmin, xmax = min(ax.get_xlim()), max(ax.get_xlim())
         ymin, ymax = min(ax.get_ylim()), max(ax.get_ylim())
-        xspan = xmax - xmin
-        yspan = ymax - ymin
-        pan_factor = 0.00125
-        scale = scales.to_int(ax.get_yscale()) if x_panspeed == 0 else scales.to_int(ax.get_xscale())
-        match scale:
-            case 0 | 2: # linear scale
-                return (xmin + xspan * x_panspeed * pan_factor, xmax + xspan * x_panspeed * pan_factor,
-                        ymin - yspan * y_panspeed * pan_factor, ymax - yspan * y_panspeed * pan_factor)
-            case 1: #log scale
-                xmin *= 10**(x_panspeed * pan_factor * 0.3)
-                xmax *= 10**(x_panspeed * pan_factor * 0.3)
-                ymin /= 10**(y_panspeed * pan_factor * 0.3)
-                ymax /= 10**(y_panspeed * pan_factor * 0.3)
-                return xmin, xmax, ymin, ymax
-            case 3: # square root scale
-                sqrt_xmin = xmin + numpy.sqrt(abs(xmin)) * x_panspeed * pan_factor
-                sqrt_xmax = xmax + numpy.sqrt(abs(xmax)) * x_panspeed * pan_factor
-                sqrt_ymin = ymin - numpy.sqrt(abs(ymin)) * y_panspeed * pan_factor
-                sqrt_ymax = ymax - numpy.sqrt(abs(ymax)) * y_panspeed * pan_factor
-
-                return sqrt_xmin, sqrt_xmax, sqrt_ymin, sqrt_ymax
-            case 4: # inverted scale
-                inv_xmin = xmax + xspan * x_panspeed * pan_factor
-                inv_xmax = xmin + xspan * x_panspeed * pan_factor
-                inv_ymin = ymax - yspan * y_panspeed * pan_factor
-                inv_ymax = ymin - yspan * y_panspeed * pan_factor
-                return inv_xmin, inv_xmax, inv_ymin, inv_ymax
+        x_scale = scales.to_int(ax.get_xscale())
+        y_scale = scales.to_int(ax.get_yscale())
+        pan_factor = 0.002
+        xvalue1 = utilities.get_value_at_fraction(
+            x_panspeed * pan_factor, xmin, xmax, x_scale,
+        )
+        xvalue2 = utilities.get_value_at_fraction(
+            1 + x_panspeed * pan_factor, xmin, xmax, x_scale,
+        )
+        yvalue1 = utilities.get_value_at_fraction(
+            -y_panspeed * pan_factor, ymin, ymax, y_scale,
+        )
+        yvalue2 = utilities.get_value_at_fraction(
+            1 - y_panspeed * pan_factor, ymin, ymax, y_scale,
+        )
+        if x_scale == 4:
+            xvalue1, xvalue2 = xvalue2, xvalue1
+        if y_scale == 4:
+            yvalue1, yvalue2 = yvalue2, yvalue1
+        return xvalue1, xvalue2, yvalue1, yvalue2
 
     @staticmethod
     def _calculate_zoomed_values(fraction, scale, limit, zoom_factor):
