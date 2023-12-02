@@ -8,7 +8,7 @@ Classes:
 import logging
 from gettext import gettext as _
 
-from gi.repository import GLib, Gio, Gtk, Graphs
+from gi.repository import GLib, Gio, Graphs, Gtk
 
 from graphs import actions, file_import, file_io, migrate, styles, ui
 from graphs.data import Data
@@ -131,7 +131,6 @@ class PythonApplication(Graphs.Application):
 
     def on_key_release_event(self, _controller, _keyval, _keycode, _state):
         self.set_ctrl(False)
-
 
     def do_activate(self):
         """

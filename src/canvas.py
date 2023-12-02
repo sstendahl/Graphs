@@ -21,9 +21,6 @@ from matplotlib.backend_bases import NavigationToolbar2
 from matplotlib.backends.backend_gtk4cairo import FigureCanvas
 from matplotlib.widgets import SpanSelector
 
-import numpy
-
-
 _SCROLL_SCALE = 1.06
 
 
@@ -120,19 +117,13 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
         self.mpl_connect("motion_notify_event", self._set_mouse_fraction)
         self._xfrac, self._yfrac = None, None
         zoom_gesture = Gtk.GestureZoom.new()
-        horizontal_scroll =  \
-            Gtk.EventControllerScroll.new(
-                Gtk.EventControllerScrollFlags.HORIZONTAL)
-        vertical_scroll =  \
-            Gtk.EventControllerScroll.new(
-                Gtk.EventControllerScrollFlags.VERTICAL)
-
         zoom_gesture.connect("scale-changed", self._on_zoom_gesture)
-        horizontal_scroll.connect("scroll", self._on_pan_gesture)
-        vertical_scroll.connect("scroll", self._on_pan_gesture)
+        scroll_gesture =  \
+            Gtk.EventControllerScroll.new(
+                Gtk.EventControllerScrollFlags.BOTH_AXES)
+        scroll_gesture.connect("scroll", self._on_pan_gesture)
         self.add_controller(zoom_gesture)
-        self.add_controller(horizontal_scroll)
-        self.add_controller(vertical_scroll)
+        self.add_controller(scroll_gesture)
 
         self.connect("notify::hide-unselected", self._redraw)
         self.connect("notify::items", self._redraw)
@@ -159,7 +150,7 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
             return
         self.zoom(scale)
 
-    def _on_pan_gesture(self, event_controller, x, y):
+    def _on_pan_gesture(self, _event_controller, x, y):
         if self.get_application().get_ctrl() is False:
             for ax in self.axes:
                 xmin, xmax, ymin, ymax = \
@@ -194,23 +185,24 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
             ))
         self.queue_draw()
 
-    def _calculate_pan_values(self, ax, x_panspeed, y_panspeed):
+    @staticmethod
+    def _calculate_pan_values(ax, x_panspeed, y_panspeed):
         xmin, xmax = min(ax.get_xlim()), max(ax.get_xlim())
         ymin, ymax = min(ax.get_ylim()), max(ax.get_ylim())
         x_scale = scales.to_int(ax.get_xscale())
         y_scale = scales.to_int(ax.get_yscale())
-        pan_factor = 0.002
+        pan_scale = 0.002
         xvalue1 = utilities.get_value_at_fraction(
-            x_panspeed * pan_factor, xmin, xmax, x_scale,
+            x_panspeed * pan_scale, xmin, xmax, x_scale,
         )
         xvalue2 = utilities.get_value_at_fraction(
-            1 + x_panspeed * pan_factor, xmin, xmax, x_scale,
+            1 + x_panspeed * pan_scale, xmin, xmax, x_scale,
         )
         yvalue1 = utilities.get_value_at_fraction(
-            -y_panspeed * pan_factor, ymin, ymax, y_scale,
+            -y_panspeed * pan_scale, ymin, ymax, y_scale,
         )
         yvalue2 = utilities.get_value_at_fraction(
-            1 - y_panspeed * pan_factor, ymin, ymax, y_scale,
+            1 - y_panspeed * pan_scale, ymin, ymax, y_scale,
         )
         if x_scale == 4:
             xvalue1, xvalue2 = xvalue2, xvalue1
@@ -220,29 +212,15 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
 
     @staticmethod
     def _calculate_zoomed_values(fraction, scale, limit, zoom_factor):
-        value = utilities.get_value_at_fraction(
-            fraction, limit[0], limit[1], scale,
+        value1 = utilities.get_value_at_fraction(
+            fraction - fraction / zoom_factor, limit[0], limit[1], scale,
         )
-        match scale:
-            case 0 | 2:
-                return (value - (value - limit[0]) / zoom_factor,
-                        value + (limit[1] - value) / zoom_factor)
-            case 1:
-                return (10 ** (numpy.log10(value) - (numpy.log10(value)
-                               - numpy.log10(limit[0])) / zoom_factor),
-                        10 ** (numpy.log10(value) + (numpy.log10(limit[1])
-                               - numpy.log10(value)) / zoom_factor))
-            case 3:
-                sqrt_value = numpy.sqrt(value)
-                return ((sqrt_value - (sqrt_value - numpy.sqrt(limit[0]))
-                         / zoom_factor) ** 2,
-                        (sqrt_value + (numpy.sqrt(limit[1]) - sqrt_value)
-                         / zoom_factor) ** 2)
-            case 4:
-                return (1 / (1 / value - (1 / value - 1 / limit[0])
-                             / zoom_factor),
-                        1 / (1 / value + (1 / limit[1] - 1 / value)
-                             / zoom_factor))
+        value2 = utilities.get_value_at_fraction(
+            fraction + (1 - fraction) / zoom_factor, limit[0], limit[1], scale,
+        )
+        if scale == 4:
+            value1, value2 = value2, value1
+        return value1, value2
 
     def on_draw_event(self, _widget, ctx):
         """
