@@ -108,7 +108,7 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
         color_rgba.alpha = 0.3
         self.rubberband_fill_color = utilities.rgba_to_tuple(color_rgba, True)
         # Reference is created by the toolbar itself
-        self.toolbar = _DummyToolbar(self)
+        _DummyToolbar(self)
         self.highlight = _Highlight(self)
         self._legend = True
         self._legend_position = misc.LEGEND_POSITIONS[0]
@@ -118,10 +118,13 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
         self._xfrac, self._yfrac = None, None
         zoom_gesture = Gtk.GestureZoom.new()
         zoom_gesture.connect("scale-changed", self._on_zoom_gesture)
+        zoom_gesture.connect("end", self.figure.canvas.toolbar.push_current)
         scroll_gesture =  \
             Gtk.EventControllerScroll.new(
                 Gtk.EventControllerScrollFlags.BOTH_AXES)
         scroll_gesture.connect("scroll", self._on_pan_gesture)
+        scroll_gesture.connect("scroll-end",
+                               self.figure.canvas.toolbar.push_current)
         self.add_controller(zoom_gesture)
         self.add_controller(scroll_gesture)
 
@@ -133,6 +136,7 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
         return self.props.application
 
     def _set_mouse_fraction(self, event):
+        """Sets the mouse coordinate in terms of fraction of the canvas"""
         if event.inaxes is not None:
             xlim = self._top_right_axis.get_xlim()
             ylim = self._top_right_axis.get_ylim()
@@ -151,6 +155,10 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
         self.zoom(scale)
 
     def _on_pan_gesture(self, _event_controller, x, y):
+        """
+        Determines what to do when a panning gesture is detected, pans the
+        canvas in the gesture direction.
+        """
         if self.get_application().get_ctrl() is False:
             for ax in self.axes:
                 xmin, xmax, ymin, ymax = \
@@ -160,6 +168,10 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
             self.queue_draw()
 
     def _on_scroll_event(self, event):
+        """
+        Determines what to do when a scroll signal is detected, scrolls the
+        canvas if ctrl is selected.
+        """
         if self.get_application().get_ctrl() is True:
             self.zoom(1 / _SCROLL_SCALE
                       if event.button == "up" else _SCROLL_SCALE)
@@ -187,8 +199,12 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
 
     @staticmethod
     def _calculate_pan_values(ax, x_panspeed, y_panspeed):
-        xmin, xmax = min(ax.get_xlim()), max(ax.get_xlim())
-        ymin, ymax = min(ax.get_ylim()), max(ax.get_ylim())
+        """
+        Calculates the coordinates of the canvas after a panning gesture has
+        been emitted.
+        """
+        xmin, xmax = ax.get_xlim()
+        ymin, ymax = ax.get_ylim()
         x_scale = scales.to_int(ax.get_xscale())
         y_scale = scales.to_int(ax.get_yscale())
         pan_scale = 0.002
@@ -212,11 +228,16 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
 
     @staticmethod
     def _calculate_zoomed_values(fraction, scale, limit, zoom_factor):
+        """
+        Calculates the coordinates of the canvas after a zoom gesture
+        has  been ezoomed.
+        """
+        min_, max_ = limit[0], limit[1]
         value1 = utilities.get_value_at_fraction(
-            fraction - fraction / zoom_factor, limit[0], limit[1], scale,
+            fraction - fraction / zoom_factor, min_, max_, scale,
         )
         value2 = utilities.get_value_at_fraction(
-            fraction + (1 - fraction) / zoom_factor, limit[0], limit[1], scale,
+            fraction + (1 - fraction) / zoom_factor, min_, max_, scale,
         )
         if scale == 4:
             value1, value2 = value2, value1
@@ -679,7 +700,7 @@ class _DummyToolbar(NavigationToolbar2):
         self.canvas.queue_draw()
 
     # Overwritten function - do not change name
-    def push_current(self):
+    def push_current(self, *args):
         """Use custom functionality for the view clipboard."""
         self.canvas.highlight.load(self.canvas)
         for direction in ("bottom", "left", "top", "right"):
