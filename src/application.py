@@ -8,7 +8,7 @@ Classes:
 import logging
 from gettext import gettext as _
 
-from gi.repository import GLib, Gio, Graphs
+from gi.repository import GLib, Gio, Graphs, Gtk
 
 from graphs import actions, file_import, file_io, migrate, styles, ui
 from graphs.data import Data
@@ -123,6 +123,15 @@ class PythonApplication(Graphs.Application):
         else:
             file_import.import_from_files(self, files)
 
+    def on_key_press_event(self, _controller, keyval, _keycode, _state):
+        if keyval == 65507 or keyval == 65508:  # Control_L or Control_R
+            self.set_ctrl(True)
+        else:  # Prevent Ctrl from being true with key combos
+            self.set_ctrl(False)
+
+    def on_key_release_event(self, _controller, _keyval, _keycode, _state):
+        self.set_ctrl(False)
+
     def do_activate(self):
         """
         Activate the application.
@@ -160,6 +169,10 @@ class PythonApplication(Graphs.Application):
             window.get_stack_switcher_box().prepend(stack_switcher)
             window.set_title(self.props.name)
             self.set_window(window)
+            controller = Gtk.EventControllerKey.new()
+            controller.connect("key-pressed", self.on_key_press_event)
+            controller.connect("key-released", self.on_key_release_event)
+            window.add_controller(controller)
             if "(Development)" in self.props.name:
                 window.add_css_class("devel")
             self.set_figure_style_manager(styles.StyleManager(self))

@@ -14,6 +14,7 @@ namespace Graphs {
         public string issues { get; construct set; default = ""; }
         public string author { get; construct set; default = ""; }
         public string pkgdatadir { get; construct set; default = ""; }
+        public bool ctrl { get; construct set; default = false; }
 
         public Settings get_settings_child (string path) {
             Settings settings = this.settings;
@@ -24,3 +25,4 @@ namespace Graphs {
         }
     }
 }
+
