@@ -700,7 +700,7 @@ class _DummyToolbar(NavigationToolbar2):
         self.canvas.queue_draw()
 
     # Overwritten function - do not change name
-    def push_current(self, *args):
+    def push_current(self, *_args):
         """Use custom functionality for the view clipboard."""
         self.canvas.highlight.load(self.canvas)
         for direction in ("bottom", "left", "top", "right"):
