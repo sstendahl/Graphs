@@ -11,7 +11,7 @@ interactive navigation in conjunction with graphs-specific structures.
 """
 from contextlib import nullcontext
 
-from gi.repository import GObject, Graphs, Gtk
+from gi.repository import GObject, Gdk, Graphs, Gtk
 
 from graphs import artist, misc, scales, utilities
 from graphs.figure_settings import FigureSettingsWindow
@@ -154,11 +154,14 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
             return
         self.zoom(scale)
 
-    def _on_pan_gesture(self, _event_controller, x, y):
+    def _on_pan_gesture(self, event_controller, x, y):
         """
         Determines what to do when a panning gesture is detected, pans the
         canvas in the gesture direction.
         """
+        if event_controller.get_unit() == Gdk.ScrollUnit.WHEEL:
+            x *= 10
+            y *= 10
         if self.get_application().get_ctrl() is False:
             for ax in self.axes:
                 xmin, xmax, ymin, ymax = \
@@ -619,9 +622,12 @@ class _DummyToolbar(NavigationToolbar2):
 
     # Overwritten function - do not change name
     def _zoom_pan_handler(self, event):
-        if event.button != 1:
-            return
         mode = self.canvas.get_application().get_mode()
+        if event.button == 2:
+            event.button = 1
+            mode = 0
+        elif event.button != 1:
+            return
         if mode == 0:
             if event.name == "button_press_event":
                 self.press_pan(event)
