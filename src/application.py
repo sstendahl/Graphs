@@ -125,7 +125,7 @@ class PythonApplication(Graphs.Application):
         else:
             file_import.import_from_files(self, files)
 
-    def quit(self, *_arg):
+    def close_application(self, *_arg):
         if not self.get_data().props.empty:
 
             def on_response(_dialog, response):
@@ -192,7 +192,7 @@ class PythonApplication(Graphs.Application):
             controller.connect("key-pressed", self.on_key_press_event)
             controller.connect("key-released", self.on_key_release_event)
             window.add_controller(controller)
-            window.connect("close-request", self.quit)
+            window.connect("close-request", self.close_application)
             if "(Development)" in self.props.name:
                 window.add_css_class("devel")
             self.set_figure_style_manager(styles.StyleManager(self))

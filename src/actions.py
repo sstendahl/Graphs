@@ -72,7 +72,7 @@ def set_mode(_action, _target, self, mode):
 
 
 def quit_action(_action, _target, self):
-    self.quit()
+    self.close_application()
 
 
 def about_action(_action, _target, self):
