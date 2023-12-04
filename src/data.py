@@ -510,6 +510,7 @@ class Data(GObject.Object, Graphs.DataInterface):
             if figure_settings.get_property(key) != value:
                 figure_settings.set_property(key, value)
         self.set_items(item.new_from_dict(d) for d in project_dict["data"])
+        self.notify("items_selected")
 
         self._set_data_copy()
         self._history_states = project_dict["history-states"]
