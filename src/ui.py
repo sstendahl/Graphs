@@ -13,6 +13,7 @@ from graphs.item_box import ItemBox
 
 def on_items_change(data, _ignored, self):
     data = self.get_data()
+    data.set_unsaved(True)
     item_list = self.get_window().get_item_list()
     while item_list.get_last_child() is not None:
         item_list.remove(item_list.get_last_child())
@@ -58,6 +59,8 @@ def save_project_dialog(self, close=False):
             file_io.write_json(file, self.get_data().to_project_dict(), False)
             file_name = Path(file.get_basename()).stem
             self.get_window().get_content_title().set_title(file_name)
+            self.get_data().unsaved = False
+            self.get_data().notify("unsaved")
             if close:
                 self.get_window().destroy()
     dialog = Gtk.FileDialog()
@@ -86,7 +89,7 @@ def open_project_dialog(self):
 
 
 def export_data_dialog(self):
-    if self.get_data().props.empty:
+    if self.get_data().props.unsaved:
         self.get_window().add_toast_string(_("No data to export"))
         return
     multiple = len(self.get_data()) > 1

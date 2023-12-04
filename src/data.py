@@ -70,6 +70,7 @@ class Data(GObject.Object, Graphs.DataInterface):
         self._view_history_states = [limits]
         self._view_history_pos = -1
         self._items = {}
+        self._unsaved = False
         self._set_data_copy()
         figure_settings.connect("notify", self._on_figure_settings_change)
 
@@ -95,6 +96,15 @@ class Data(GObject.Object, Graphs.DataInterface):
     def items(self) -> misc.ItemList:
         """All managed items."""
         return self.get_items()
+
+
+    @GObject.Property(type=bool, default=True, flags=3 | 1073741824)
+    def unsaved(self) -> bool:
+        return self._unsaved
+
+    @unsaved.setter
+    def unsaved(self, unsaved):
+        self._unsaved = unsaved
 
     @items.setter
     def items(self, items: misc.ItemList) -> None:
@@ -287,6 +297,8 @@ class Data(GObject.Object, Graphs.DataInterface):
             copy.deepcopy(self._data_copy[item_.get_uuid()][param.name]),
             copy.deepcopy(item_.get_property(param.name)),
         )))
+        self.unsaved = True
+        self.notify("unsaved")
 
     def _on_figure_settings_change(self, figure_settings, param) -> None:
         if param.name in _FIGURE_SETTINGS_HISTORY_IGNORELIST:
@@ -414,6 +426,8 @@ class Data(GObject.Object, Graphs.DataInterface):
         self._view_history_states.append(limits)
         self.props.can_view_back = True
         self.props.can_view_forward = False
+        self.unsaved = True
+        self.notify("unsaved")
 
     def view_back(self) -> None:
         if not self.props.can_view_back:
@@ -504,6 +518,22 @@ class Data(GObject.Object, Graphs.DataInterface):
             "view-history-position": self._view_history_pos,
         }
 
+    def on_unsaved_change(self, a1, a2):
+        """Proof of concept placeholder"""
+
+        title = \
+            self.get_application().get_window().get_content_title().get_title()
+        if title.startswith("• "):
+            title = title.split("• ")[-1]
+
+        if self.unsaved:
+            prefix = "• "
+            self.get_application().get_window().get_content_title().set_title(
+                prefix + title)
+        else:
+            self.get_application().get_window().get_content_title().set_title(
+                title)
+
     def load_from_project_dict(self,
                                project_dict: dict[str, Any],
                                file_name: str) -> None:
@@ -526,4 +556,4 @@ class Data(GObject.Object, Graphs.DataInterface):
             abs(self._view_history_pos) < len(self._view_history_states)
         self.props.can_view_forward = self._view_history_pos < -1
         self.get_application().get_window().get_content_title().set_title(
-            file_name)
+            f"•  {file_name}")

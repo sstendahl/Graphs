@@ -98,6 +98,9 @@ class PythonApplication(Graphs.Application):
             "notify::items", ui.on_items_change, self,
         )
         self.get_data().connect(
+            "notify::unsaved", self.get_data().on_unsaved_change,
+        )
+        self.get_data().connect(
             "items-ignored", ui.on_items_ignored, self,
         )
 
@@ -126,8 +129,7 @@ class PythonApplication(Graphs.Application):
             file_import.import_from_files(self, files)
 
     def close_application(self, *_arg):
-        if not self.get_data().props.empty:
-
+        if self.get_data().props.unsaved:
             def on_response(_dialog, response):
                 if response == "discard_close":
                     self.get_window().destroy()
