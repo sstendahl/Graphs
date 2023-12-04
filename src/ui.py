@@ -3,6 +3,7 @@ import contextlib
 import datetime
 import logging
 from gettext import gettext as _
+from pathlib import Path
 
 from gi.repository import Adw, GLib, Gio, Gtk
 
@@ -50,11 +51,15 @@ def add_data_dialog(self):
     dialog.open_multiple(self.get_window(), None, on_response)
 
 
-def save_project_dialog(self):
+def save_project_dialog(self, close=False):
     def on_response(dialog, response):
         with contextlib.suppress(GLib.GError):
             file = dialog.save_finish(response)
             file_io.write_json(file, self.get_data().to_project_dict(), False)
+            file_name = Path(file.get_basename()).stem
+            self.get_window().get_content_title().set_title(file_name)
+            if close:
+                self.get_window().destroy()
     dialog = Gtk.FileDialog()
     dialog.set_filters(
         utilities.create_file_filters([(_("Graphs Project File"),
@@ -71,7 +76,8 @@ def open_project_dialog(self):
                 project_dict = file_io.parse_json(file)
             except UnicodeDecodeError:
                 project_dict = migrate.migrate_project(file)
-            self.get_data().load_from_project_dict(project_dict)
+            file_name = Path(file.get_basename()).stem
+            self.get_data().load_from_project_dict(project_dict, file_name)
     dialog = Gtk.FileDialog()
     dialog.set_filters(
         utilities.create_file_filters([(_("Graphs Project File"),

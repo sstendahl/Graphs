@@ -12,6 +12,18 @@ Adw.MessageDialog discard_data {
   default-response: "discard";
 }
 
+Adw.MessageDialog close_application {
+  heading: _("Discard Data?");
+  body: _("All unsaved changes will be lost.");
+  responses [
+    cancel_close: _("Cancel"),
+    discard_close: _("Discard") destructive,
+    save_close: _("Save") suggested,
+  ]
+  close-response: "cancel_close";
+  default-response: "discard";
+}
+
 Adw.MessageDialog delete_style {
   heading: _("Delete style?");
   responses [

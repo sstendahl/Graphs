@@ -504,7 +504,9 @@ class Data(GObject.Object, Graphs.DataInterface):
             "view-history-position": self._view_history_pos,
         }
 
-    def load_from_project_dict(self, project_dict: dict[str, Any]) -> None:
+    def load_from_project_dict(self,
+                               project_dict: dict[str, Any],
+                               file_name: str) -> None:
         figure_settings = self.get_figure_settings()
         for key, value in project_dict["figure-settings"].items():
             if figure_settings.get_property(key) != value:
@@ -523,3 +525,5 @@ class Data(GObject.Object, Graphs.DataInterface):
         self.props.can_view_back = \
             abs(self._view_history_pos) < len(self._view_history_states)
         self.props.can_view_forward = self._view_history_pos < -1
+        self.get_application().get_window().get_content_title().set_title(
+            file_name)

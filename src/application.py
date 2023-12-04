@@ -7,7 +7,7 @@ Classes:
 """
 import logging
 from gettext import gettext as _
-
+from pathlib import Path
 from gi.repository import GLib, Gio, Graphs, Gtk
 
 from graphs import actions, file_import, file_io, migrate, styles, ui
@@ -104,17 +104,19 @@ class PythonApplication(Graphs.Application):
     def do_open(self, files, nfiles, _hint):
         self.do_activate()
         if nfiles == 1 and files[0].get_uri().endswith(".graphs"):
+            file_name = Path(files[0].get_basename()).stem
             try:
                 project_dict = file_io.parse_json(files[0])
             except UnicodeDecodeError:
                 project_dict = migrate.migrate_project(files[0])
 
             if self.get_data().props.empty:
-                self.get_data().load_from_project_dict(project_dict)
+                self.get_data().load_from_project_dict(project_dict, file_name)
             else:
                 def on_response(_dialog, response):
                     if response == "discard":
-                        self.get_data().load_from_project_dict(project_dict)
+                        self.get_data().load_from_project_dict(project_dict,
+                                                               file_name)
                 dialog = ui.build_dialog("discard_data")
                 dialog.set_transient_for(self.get_window())
                 dialog.connect("response", on_response)
@@ -122,6 +124,22 @@ class PythonApplication(Graphs.Application):
                 return
         else:
             file_import.import_from_files(self, files)
+
+    def quit(self, *_arg):
+        if not self.get_data().props.empty:
+
+            def on_response(_dialog, response):
+                if response == "discard_close":
+                    self.get_window().destroy()
+                if response == "save_close":
+                    ui.save_project_dialog(self, close=True)
+
+            dialog = ui.build_dialog("close_application")
+            dialog.set_transient_for(self.get_window())
+            dialog.connect("response", on_response)
+            dialog.present()
+            return True
+        self.get_window().destroy()
 
     def on_key_press_event(self, _controller, keyval, _keycode, _state):
         if keyval == 65507 or keyval == 65508:  # Control_L or Control_R
@@ -168,11 +186,13 @@ class PythonApplication(Graphs.Application):
             stack_switcher.set_hexpand("true")
             window.get_stack_switcher_box().prepend(stack_switcher)
             window.set_title(self.props.name)
+            window.get_content_title().set_title(_("Untitled Project"))
             self.set_window(window)
             controller = Gtk.EventControllerKey.new()
             controller.connect("key-pressed", self.on_key_press_event)
             controller.connect("key-released", self.on_key_release_event)
             window.add_controller(controller)
+            window.connect("close-request", self.quit)
             if "(Development)" in self.props.name:
                 window.add_css_class("devel")
             self.set_figure_style_manager(styles.StyleManager(self))
