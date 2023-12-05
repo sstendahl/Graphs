@@ -58,6 +58,7 @@ class Data(GObject.Object, Graphs.DataInterface):
     can_redo = GObject.Property(type=bool, default=False)
     can_view_back = GObject.Property(type=bool, default=False)
     can_view_forward = GObject.Property(type=bool, default=False)
+    project_uri = GObject.Property(type=str, default="")
 
     def __init__(self, application, settings):
         """Init the dataclass."""
@@ -79,7 +80,6 @@ class Data(GObject.Object, Graphs.DataInterface):
         self._items = {}
         self._set_data_copy()
         self._unsaved = False
-        self._project_uri = ""
         figure_settings.connect("notify", self._on_figure_settings_change)
 
     def get_application(self) -> Graphs.Application:
@@ -103,37 +103,25 @@ class Data(GObject.Object, Graphs.DataInterface):
     @unsaved.setter
     def unsaved(self, unsaved):
         self._unsaved = unsaved
-        title = \
-            self.get_application().get_window().get_content_title().get_title()
+        content_header = \
+            self.get_application().get_window().get_content_title()
+        title = content_header.get_title()
         if title.startswith("• "):
             title = title.split("• ")[-1]
 
         if unsaved:
             prefix = "• "
-            self.get_application().get_window().get_content_title().set_title(
-                prefix + title)
-            if self.props.project_uri == "":
-                self.get_application().get_window().get_content_title(
-                ).set_subtitle("Draft")
+            content_header.set_title(prefix + title)
+            if self.project_uri == "":
+                content_header.set_subtitle("Draft")
             else:
-                uri_parse = urlparse(self.props.project_uri)
+                uri_parse = urlparse(self.project_uri)
                 filepath = os.path.abspath(
                     os.path.join(uri_parse.netloc, uri_parse.path))
                 filepath = filepath.replace(os.path.expanduser("~"), "~")
-                self.get_application().get_window().get_content_title(
-                ).set_subtitle(filepath)
+                content_header.set_subtitle(filepath)
         else:
-            self.get_application().get_window().get_content_title().set_title(
-                title)
-
-    @GObject.Property(type=str, default="")
-    def project_uri(self) -> str:
-        """Whether or not the class is empty."""
-        return self._project_uri
-
-    @project_uri.setter
-    def project_uri(self, project_uri):
-        self._project_uri = project_uri
+            content_header.set_title(title)
 
     @GObject.Property(type=bool, default=False, flags=1)
     def items_selected(self) -> bool:
@@ -553,12 +541,13 @@ class Data(GObject.Object, Graphs.DataInterface):
             "history-position": self._history_pos,
             "view-history-states": self._view_history_states,
             "view-history-position": self._view_history_pos,
-            "project-uri": self.props.project_uri,
+            "project-uri": self.get_project_uri(),
         }
 
     def load_from_project_dict(self,
                                project_dict: dict[str, Any],
                                project_uri: str) -> None:
+        # Load data
         figure_settings = self.get_figure_settings()
         for key, value in project_dict["figure-settings"].items():
             if figure_settings.get_property(key) != value:
@@ -566,19 +555,24 @@ class Data(GObject.Object, Graphs.DataInterface):
         self.set_items(item.new_from_dict(d) for d in project_dict["data"])
         self.notify("items_selected")
 
+        # Set clipboard
         self._set_data_copy()
         self.project_uri = project_uri
         self._history_states = project_dict["history-states"]
         self._history_pos = project_dict["history-position"]
         self._view_history_states = project_dict["view-history-states"]
         self._view_history_pos = project_dict["view-history-position"]
+        self.unsaved = False
 
+        # Set clipboard/view buttons
         self.props.can_undo = \
             abs(self._history_pos) < len(self._history_states)
         self.props.can_redo = self._history_pos < -1
         self.props.can_view_back = \
             abs(self._view_history_pos) < len(self._view_history_states)
         self.props.can_view_forward = self._view_history_pos < -1
+
+        # Set content header title
         filename = Path(project_uri).stem
         uri_parse = urlparse(project_uri)
         filepath = os.path.abspath(

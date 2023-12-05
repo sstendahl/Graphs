@@ -575,10 +575,9 @@ template $GraphsWindow: Adw.ApplicationWindow {
       orientation: vertical;
         Adw.HeaderBar content_headerbar {
           styles ["flat"]
-          title-widget:
-          Adw.WindowTitle content_title {
+          title-widget: Adw.WindowTitle content_title {
             title: "Unsaved Project*";
-            };
+          };
           ToggleButton show_sidebar_button {
             icon-name: "sidebar-show-symbolic";
             tooltip-text: _("Toggle Sidebar");

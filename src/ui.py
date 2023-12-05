@@ -59,12 +59,13 @@ def save_project_dialog(self, close=False):
     def on_response(dialog, response):
         with contextlib.suppress(GLib.GError):
             file = dialog.save_finish(response)
+            file_uri = file.get_uri()
+            file_name = Path(file.get_basename()).stem
             file_io.write_json(file, self.get_data().to_project_dict(), False)
 
             self.get_data().props.unsaved = False
-            self.get_data().props.project_uri = file.get_uri()
-            file_name = Path(file.get_basename()).stem
-            uri_parse = urlparse(self.get_data().props.project_uri)
+            self.get_data().set_project_uri(file_uri)
+            uri_parse = urlparse(file_uri)
             filepath = os.path.abspath(
                 os.path.join(uri_parse.netloc, uri_parse.path))
             filepath = filepath.replace(os.path.expanduser("~"), "~")
