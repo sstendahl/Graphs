@@ -19,7 +19,7 @@ from matplotlib import font_manager
 _ACTIONS = [
     "quit", "about", "figure_settings", "add_data", "add_equation",
     "select_all", "select_none", "undo", "redo", "optimize_limits",
-    "view_back", "view_forward", "export_data", "export_figure",
+    "view_back", "view_forward", "export_data", "export_figure", "new_project",
     "save_project", "save_project_as", "smoothen_settings", "open_project",
     "delete_selected", "zoom_in", "zoom_out",
 ]
@@ -38,6 +38,9 @@ class PythonApplication(Graphs.Application):
             flags=Gio.ApplicationFlags.HANDLES_OPEN,
             data=Data(self, settings), **kwargs,
         )
+        self.initialize(settings)
+
+    def initialize(self, settings):
         font_list = font_manager.findSystemFonts(fontpaths=None, fontext="ttf")
         for font in font_list:
             try:

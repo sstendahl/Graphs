@@ -68,6 +68,10 @@ class Data(GObject.Object, Graphs.DataInterface):
         super().__init__(
             application=application, figure_settings=figure_settings,
         )
+        self.initialize()
+
+    def initialize(self):
+        figure_settings = self.get_figure_settings()
         limits = figure_settings.get_limits()
         self._history_states = [([], limits)]
         self._history_pos = -1
@@ -311,7 +315,6 @@ class Data(GObject.Object, Graphs.DataInterface):
             copy.deepcopy(self._data_copy[item_.get_uuid()][param.name]),
             copy.deepcopy(item_.get_property(param.name)),
         )))
-        self.change_unsaved(True)
 
     def _on_figure_settings_change(self, figure_settings, param) -> None:
         if param.name in _FIGURE_SETTINGS_HISTORY_IGNORELIST:
@@ -334,6 +337,7 @@ class Data(GObject.Object, Graphs.DataInterface):
         })
 
     def add_history_state(self, old_limits: misc.Limits = None) -> None:
+        self.change_unsaved(True)
         if not self._current_batch:
             return
         if self._history_pos != -1:

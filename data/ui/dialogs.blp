@@ -13,8 +13,8 @@ Adw.MessageDialog discard_data {
 }
 
 Adw.MessageDialog close_application {
-  heading: _("Discard Data?");
-  body: _("All unsaved changes will be lost.");
+  heading: _("Save changes?");
+  body: _("Current project contains unsaved changes, changes that are not saved will be permanently lost.");
   responses [
     cancel_close: _("Cancel"),
     discard_close: _("Discard") destructive,

@@ -2,11 +2,12 @@
 """Main actions."""
 from gettext import gettext as _
 
-from gi.repository import Graphs
+from gi.repository import Gio, Graphs
 
 from graphs import operations, ui, utilities
 from graphs.add_equation import AddEquationWindow
 from graphs.export_figure import ExportFigureWindow
+from graphs.data import Data
 from graphs.figure_settings import FigureSettingsWindow
 from graphs.transform_data import TransformWindow
 
@@ -140,7 +141,35 @@ def export_figure_action(_action, _target, self):
 def new_project_action(_action, _target, self):
     # Load default figure settings, close all data, reset clipboard
     # Basical
-    pass
+    if self.get_data().props.unsaved:
+        def on_response(_dialog, response):
+            if response == "discard_close":
+                reset(self)
+            if response == "save_close":
+                ui.save_project_dialog(self)
+                reset(self)
+
+
+        dialog = ui.build_dialog("close_application")
+        dialog.set_transient_for(self.get_window())
+        dialog.connect("response", on_response)
+        dialog.present()
+
+    def reset(self):
+        items = [item for item in self.get_data()]
+        names = ", ".join(item.get_name() for item in items)
+        self.get_data().delete_items(items)
+        settings = self.get_settings()
+        figure_settings = Graphs.FigureSettings.new(
+            settings.get_child("figure"),
+        )
+        self.get_data().set_figure_settings(figure_settings)
+        self.get_data().props.can_redo = False
+        self.get_data().props.can_undo = False
+        self.get_data().props.can_view_forward = False
+        self.get_data().props.can_view_back = False
+        self.get_data().initialize()
+        self.get_window().get_content_title().set_title(_("Untitled Project"))
 
 
 def save_project_action(_action, _target, self):

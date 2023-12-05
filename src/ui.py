@@ -70,7 +70,6 @@ def save_project_dialog(self, require_dialog=False, close=False):
             self.get_data().change_unsaved(False)
             self.get_data().props.project_uri = file.get_uri()
             file_name = Path(file.get_basename()).stem
-            print(file_name)
             uri_parse  = urlparse(self.get_data().props.project_uri)
             filepath = os.path.abspath(os.path.join(uri_parse.netloc, uri_parse.path))
             filepath = filepath.replace(os.path.expanduser("~"), "~")

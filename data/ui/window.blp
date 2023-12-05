@@ -108,6 +108,14 @@ template $GraphsWindow: Adw.ApplicationWindow {
       trigger: "<primary>ZoomOut";
       action: "action(app.zoom_out)";
     }
+    Shortcut {
+      trigger: "<primary><shift>S";
+      action: "action(app.save_project_as)";
+    }
+    Shortcut {
+      trigger: "<primary><shift>N";
+      action: "action(app.new_project)";
+    }
   }
 
   // If both width and height are limited
@@ -623,7 +631,7 @@ template $GraphsWindow: Adw.ApplicationWindow {
 
 menu primary_menu {
   section{
-    item (_("New Project"), "app.save_project")
+    item (_("New Project"), "app.new_project")
   }
   section{
     item (_("Save Project…"), "app.save_project")
