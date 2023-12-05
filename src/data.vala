@@ -8,7 +8,8 @@ namespace Graphs {
         public abstract bool can_view_forward { get; }
         public abstract bool items_selected { get; }
         public abstract bool empty { get; }
-        public abstract bool unsaved { get; set; default=true; }
+        public abstract bool unsaved { get; set; }
+        public abstract string project_uri { get; set; }
 
         public abstract Item[] items { get; set; }
 

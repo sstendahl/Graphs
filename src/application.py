@@ -20,8 +20,8 @@ _ACTIONS = [
     "quit", "about", "figure_settings", "add_data", "add_equation",
     "select_all", "select_none", "undo", "redo", "optimize_limits",
     "view_back", "view_forward", "export_data", "export_figure",
-    "save_project", "smoothen_settings", "open_project", "delete_selected",
-    "zoom_in", "zoom_out",
+    "save_project", "save_project_as", "smoothen_settings", "open_project",
+    "delete_selected", "zoom_in", "zoom_out",
 ]
 
 
@@ -98,9 +98,6 @@ class PythonApplication(Graphs.Application):
             "notify::items", ui.on_items_change, self,
         )
         self.get_data().connect(
-            "notify::unsaved", self.get_data().on_unsaved_change,
-        )
-        self.get_data().connect(
             "items-ignored", ui.on_items_ignored, self,
         )
 
@@ -113,7 +110,7 @@ class PythonApplication(Graphs.Application):
             except UnicodeDecodeError:
                 project_dict = migrate.migrate_project(files[0])
 
-            if self.get_data().props.empty:
+            if self.get_data().props.unsaved:
                 self.get_data().load_from_project_dict(project_dict, file_name)
             else:
                 def on_response(_dialog, response):

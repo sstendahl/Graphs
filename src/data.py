@@ -7,7 +7,11 @@ Classes:
 """
 import copy
 import math
+import os
+
 from typing import Any
+from pathlib import Path
+from urllib.parse import urlparse
 
 from gi.repository import GObject, Graphs
 
@@ -70,8 +74,9 @@ class Data(GObject.Object, Graphs.DataInterface):
         self._view_history_states = [limits]
         self._view_history_pos = -1
         self._items = {}
-        self._unsaved = False
         self._set_data_copy()
+        self._unsaved = False
+        self._project_uri = ""
         figure_settings.connect("notify", self._on_figure_settings_change)
 
     def get_application(self) -> Graphs.Application:
@@ -87,6 +92,24 @@ class Data(GObject.Object, Graphs.DataInterface):
         """Whether or not the class is empty."""
         return not self._items
 
+    @GObject.Property(type=bool, default=True)
+    def unsaved(self) -> bool:
+        """Whether or not the class is empty."""
+        return self._unsaved
+
+    @unsaved.setter
+    def unsaved(self, unsaved):
+        self._unsaved = unsaved
+
+    @GObject.Property(type=str, default="")
+    def project_uri(self) -> str:
+        """Whether or not the class is empty."""
+        return self._project_uri
+
+    @project_uri.setter
+    def project_uri(self, project_uri):
+        self._project_uri = project_uri
+
     @GObject.Property(type=bool, default=False, flags=1)
     def items_selected(self) -> bool:
         """Whether or not at least one item is selected."""
@@ -96,15 +119,6 @@ class Data(GObject.Object, Graphs.DataInterface):
     def items(self) -> misc.ItemList:
         """All managed items."""
         return self.get_items()
-
-
-    @GObject.Property(type=bool, default=True, flags=3 | 1073741824)
-    def unsaved(self) -> bool:
-        return self._unsaved
-
-    @unsaved.setter
-    def unsaved(self, unsaved):
-        self._unsaved = unsaved
 
     @items.setter
     def items(self, items: misc.ItemList) -> None:
@@ -297,8 +311,7 @@ class Data(GObject.Object, Graphs.DataInterface):
             copy.deepcopy(self._data_copy[item_.get_uuid()][param.name]),
             copy.deepcopy(item_.get_property(param.name)),
         )))
-        self.unsaved = True
-        self.notify("unsaved")
+        self.change_unsaved(True)
 
     def _on_figure_settings_change(self, figure_settings, param) -> None:
         if param.name in _FIGURE_SETTINGS_HISTORY_IGNORELIST:
@@ -426,8 +439,7 @@ class Data(GObject.Object, Graphs.DataInterface):
         self._view_history_states.append(limits)
         self.props.can_view_back = True
         self.props.can_view_forward = False
-        self.unsaved = True
-        self.notify("unsaved")
+        self.change_unsaved(True)
 
     def view_back(self) -> None:
         if not self.props.can_view_back:
@@ -516,34 +528,42 @@ class Data(GObject.Object, Graphs.DataInterface):
             "history-position": self._history_pos,
             "view-history-states": self._view_history_states,
             "view-history-position": self._view_history_pos,
+            "project-uri": self.props.project_uri
         }
 
-    def on_unsaved_change(self, a1, a2):
+    def change_unsaved(self, unsaved):
         """Proof of concept placeholder"""
-
+        self.props.unsaved = unsaved
         title = \
             self.get_application().get_window().get_content_title().get_title()
         if title.startswith("• "):
             title = title.split("• ")[-1]
 
-        if self.unsaved:
+        if unsaved:
             prefix = "• "
             self.get_application().get_window().get_content_title().set_title(
                 prefix + title)
+            if self.props.project_uri == "":
+                self.get_application().get_window().get_content_title().set_subtitle("Draft")
+            else:
+                uri_parse  = urlparse(self.props.project_uri)
+                filepath = os.path.abspath(os.path.join(uri_parse.netloc, uri_parse.path))
+                filepath = filepath.replace(os.path.expanduser("~"), "~")
+                self.get_application().get_window().get_content_title().set_subtitle(filepath)
         else:
             self.get_application().get_window().get_content_title().set_title(
                 title)
 
     def load_from_project_dict(self,
                                project_dict: dict[str, Any],
-                               file_name: str) -> None:
+                               project_uri: str) -> None:
         figure_settings = self.get_figure_settings()
         for key, value in project_dict["figure-settings"].items():
             if figure_settings.get_property(key) != value:
                 figure_settings.set_property(key, value)
         self.set_items(item.new_from_dict(d) for d in project_dict["data"])
-
         self._set_data_copy()
+        self.project_uri = project_uri
         self._history_states = project_dict["history-states"]
         self._history_pos = project_dict["history-position"]
         self._view_history_states = project_dict["view-history-states"]
@@ -555,5 +575,11 @@ class Data(GObject.Object, Graphs.DataInterface):
         self.props.can_view_back = \
             abs(self._view_history_pos) < len(self._view_history_states)
         self.props.can_view_forward = self._view_history_pos < -1
+        filename = Path(project_uri).stem
+        uri_parse  = urlparse(project_uri)
+        filepath = os.path.abspath(os.path.join(uri_parse.netloc, uri_parse.path))
+        filepath = filepath.replace(os.path.expanduser("~"), "~")
         self.get_application().get_window().get_content_title().set_title(
-            f"•  {file_name}")
+            filename)
+        self.get_application().get_window().get_content_title().set_subtitle(
+            filepath)

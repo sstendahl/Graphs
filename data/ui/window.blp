@@ -623,7 +623,11 @@ template $GraphsWindow: Adw.ApplicationWindow {
 
 menu primary_menu {
   section{
+    item (_("New Project"), "app.save_project")
+  }
+  section{
     item (_("Save Project…"), "app.save_project")
+    item (_("Save Project as…"), "app.save_project_as")
     item (_("Open Project…"), "app.open_project")
   }
   section {

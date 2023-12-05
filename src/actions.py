@@ -137,8 +137,18 @@ def export_figure_action(_action, _target, self):
     ExportFigureWindow(self)
 
 
+def new_project_action(_action, _target, self):
+    # Load default figure settings, close all data, reset clipboard
+    # Basical
+    pass
+
+
 def save_project_action(_action, _target, self):
     ui.save_project_dialog(self)
+
+
+def save_project_as_action(_action, _target, self):
+    ui.save_project_dialog(self, require_dialog=True)
 
 
 def smoothen_settings_action(_action, _target, self):
