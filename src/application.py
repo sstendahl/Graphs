@@ -39,9 +39,6 @@ class PythonApplication(Graphs.Application):
             flags=Gio.ApplicationFlags.HANDLES_OPEN,
             data=Data(self, settings), **kwargs,
         )
-        self.initialize(settings)
-
-    def initialize(self, settings):
         font_list = font_manager.findSystemFonts(fontpaths=None, fontext="ttf")
         for font in font_list:
             try:
@@ -105,7 +102,8 @@ class PythonApplication(Graphs.Application):
             "items-ignored", ui.on_items_ignored, self,
         )
 
-    def do_open(self, files, nfiles, _hint):
+    def do_open(self, files: list, nfiles: int, _hint: str):
+        """Gets called when Graph is opened from a file."""
         self.do_activate()
         if nfiles == 1 and files[0].get_uri().endswith(".graphs"):
             file_name = Path(files[0].get_basename()).stem
@@ -130,12 +128,16 @@ class PythonApplication(Graphs.Application):
             file_import.import_from_files(self, files)
 
     def close_application(self, *_arg):
+        """
+        Gets called when closing the application, will ask the user to confirm
+        and save/discard open data if any unsaved changes are present
+        """
         if self.get_data().props.unsaved:
             def on_response(_dialog, response):
                 if response == "discard_close":
-                    self.get_window().destroy()
+                    self.quit()
                 if response == "save_close":
-                    actions.save_project(self, close=True)
+                    file_io.save_project(self, close=True)
 
             dialog = ui.build_dialog("save_changes")
             dialog.set_transient_for(self.get_window())
@@ -145,12 +147,20 @@ class PythonApplication(Graphs.Application):
         self.quit()
 
     def on_key_press_event(self, _controller, keyval, _keycode, _state):
+        """
+        Checks if control is pressed, needed to allow ctrl+scroll behaviour
+        as the key press event from matplotlib is not working properly atm.
+        """
         if keyval == 65507 or keyval == 65508:  # Control_L or Control_R
             self.set_ctrl(True)
         else:  # Prevent Ctrl from being true with key combos
             self.set_ctrl(False)
 
     def on_key_release_event(self, _controller, _keyval, _keycode, _state):
+        """
+        Checks if control is released, needed to allow ctrl+scroll behaviour
+        as the key press event from matplotlib is not working properly atm.
+        """
         self.set_ctrl(False)
 
     def do_activate(self):

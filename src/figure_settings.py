@@ -181,8 +181,6 @@ class FigureSettingsWindow(Adw.Window):
         data = self.get_application().get_data()
         data.add_view_history_state()
         data.add_history_state()
-        data.set_unsaved = True
-        data.notify("unsaved")
         self.destroy()
 
     @Gtk.Template.Callback()

@@ -5,6 +5,8 @@ from xml.dom import minidom
 
 from gi.repository import GLib, Gio
 
+from graphs import ui
+
 
 class FileLikeWrapper(io.BufferedIOBase):
     def __init__(self, read_stream=None, write_stream=None):
@@ -105,6 +107,18 @@ def save_item(file, item_):
             wrapper.write(xlabel + delimiter + ylabel + "\n")
         for values in zip(item_.xdata, item_.ydata):
             wrapper.write(fmt % values + "\n")
+
+
+def save_project(self, require_dialog=False, close=False):
+    if self.get_data().project_uri != "" and not require_dialog:
+        file_uri = self.get_data().project_uri
+        file = Gio.File.new_for_uri(file_uri)
+        write_json(file, self.get_data().to_project_dict(), False)
+        self.get_data().props.unsaved = False
+        if close:
+            self.quit()
+        return
+    ui.save_project_dialog(self, close)
 
 
 def parse_json(file):

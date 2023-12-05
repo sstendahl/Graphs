@@ -2,7 +2,7 @@
 """Main actions."""
 from gettext import gettext as _
 
-from gi.repository import Gio, Graphs
+from gi.repository import Graphs
 
 from graphs import file_io, operations, ui, utilities
 from graphs.add_equation import AddEquationWindow
@@ -138,25 +138,24 @@ def export_figure_action(_action, _target, self):
 
 
 def new_project_action(_action, _target, self):
-    # Load default figure settings, close all data, reset clipboard
-    # Basical
+    """Clear the current project and reset Graphs to the initial state"""
+
     def reset_project(self):
         data = self.get_data()
-        items = [item for item in data]
-        data.delete_items(items)
-        settings = self.get_settings()
+        # Reset figure settings
         default_figure_settings = Graphs.FigureSettings.new(
-            settings.get_child("figure"),
+            self.get_settings().get_child("figure"),
         )
         figure_settings = data.get_figure_settings()
-        for prop in dir(figure_settings.props):
+        for prop in dir(default_figure_settings.props):
             new_value = default_figure_settings.get_property(prop)
             figure_settings.set_property(prop, new_value)
-        for prop in [data.props.can_redo, data.props.can_undo,
-                     data.props.can_view_forward, data.props.can_view_back]:
-            prop = False
+
+        # Reset items
+        items = [item for item in data]
+        data.delete_items(items)
         data.initialize()
-        self.get_window().get_content_title().set_title(_("Untitled Project"))
+        data.props.unsaved = False
         self.get_window().get_content_title().set_subtitle("")
 
     if self.get_data().props.unsaved:
@@ -164,7 +163,7 @@ def new_project_action(_action, _target, self):
             if response == "discard_close":
                 reset_project(self)
             if response == "save_close":
-                save_project(self)
+                file_io.save_project(self)
                 reset_project(self)
 
         dialog = ui.build_dialog("save_changes")
@@ -176,21 +175,11 @@ def new_project_action(_action, _target, self):
 
 
 def save_project_action(_action, _target, self):
-    save_project(self)
-
-
-def save_project(self, require_dialog=False, close=False):
-    if self.get_data().project_uri != "" and not require_dialog:
-        file_uri = self.get_data().project_uri
-        file = Gio.File.new_for_uri(file_uri)
-        file_io.write_json(file, self.get_data().to_project_dict(), False)
-        self.get_data().props.unsaved = False
-        return
-    ui.save_project_dialog(self, close)
+    file_io.save_project(self)
 
 
 def save_project_as_action(_action, _target, self):
-    save_project(self, require_dialog=True)
+    file_io.save_project(self, require_dialog=True)
 
 
 def smoothen_settings_action(_action, _target, self):
@@ -213,8 +202,10 @@ def open_project_action(_action, _target, self):
             if response == "discard_close":
                 ui.open_project_dialog(self)
             if response == "save_close":
-                save_project(self, close=True)
+                # Retrieving open dialog first means that save dialog will be
+                # on top. Thus user will be presented with save dialog first.
                 ui.open_project_dialog(self)
+                file_io.save_project(self)
 
         dialog = ui.build_dialog("save_changes")
         dialog.set_transient_for(self.get_window())
