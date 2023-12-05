@@ -16,7 +16,6 @@ from graphs.item_box import ItemBox
 
 def on_items_change(data, _ignored, self):
     data = self.get_data()
-    data.set_unsaved(True)
     item_list = self.get_window().get_item_list()
     while item_list.get_last_child() is not None:
         item_list.remove(item_list.get_last_child())
@@ -55,28 +54,25 @@ def add_data_dialog(self):
     dialog.open_multiple(self.get_window(), None, on_response)
 
 
-def save_project_dialog(self, require_dialog=False, close=False):
-    if self.get_data().props.project_uri != "" and not require_dialog:
-        file_uri = self.get_data().props.project_uri
-        file = Gio.File.new_for_uri(file_uri)
-        file_io.write_json(file, self.get_data().to_project_dict(), False)
-        self.get_data().change_unsaved(False)
-        return
+def save_project_dialog(self, close=False):
 
     def on_response(dialog, response):
         with contextlib.suppress(GLib.GError):
             file = dialog.save_finish(response)
             file_io.write_json(file, self.get_data().to_project_dict(), False)
-            self.get_data().change_unsaved(False)
+
+            self.get_data().props.unsaved = False
             self.get_data().props.project_uri = file.get_uri()
             file_name = Path(file.get_basename()).stem
-            uri_parse  = urlparse(self.get_data().props.project_uri)
-            filepath = os.path.abspath(os.path.join(uri_parse.netloc, uri_parse.path))
+            uri_parse = urlparse(self.get_data().props.project_uri)
+            filepath = os.path.abspath(
+                os.path.join(uri_parse.netloc, uri_parse.path))
             filepath = filepath.replace(os.path.expanduser("~"), "~")
             self.get_window().get_content_title().set_subtitle(filepath)
             self.get_window().get_content_title().set_title(file_name)
+
             if close:
-                self.get_window().destroy()
+                self.quit()
     dialog = Gtk.FileDialog()
     dialog.set_filters(
         utilities.create_file_filters([(_("Graphs Project File"),

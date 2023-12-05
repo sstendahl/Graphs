@@ -33,7 +33,7 @@ version = meson.project_version()
 project_name = meson.project_name()
 pkgdatadir = join_paths(prefix, datadir, meson.project_name())
 localedir = join_paths(prefix, get_option('localedir'))
-debug = get_option('buildtype') == 'deburg'
+debug = get_option('buildtype') == 'debug'
 
 if debug
   version += '-' + run_command('git', 'rev-parse', '--short', 'HEAD', check: true).stdout().strip()

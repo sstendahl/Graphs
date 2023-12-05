@@ -8,9 +8,8 @@ Classes:
 import copy
 import math
 import os
-
-from typing import Any
 from pathlib import Path
+from typing import Any
 from urllib.parse import urlparse
 
 from gi.repository import GObject, Graphs
@@ -104,6 +103,28 @@ class Data(GObject.Object, Graphs.DataInterface):
     @unsaved.setter
     def unsaved(self, unsaved):
         self._unsaved = unsaved
+        title = \
+            self.get_application().get_window().get_content_title().get_title()
+        if title.startswith("• "):
+            title = title.split("• ")[-1]
+
+        if unsaved:
+            prefix = "• "
+            self.get_application().get_window().get_content_title().set_title(
+                prefix + title)
+            if self.props.project_uri == "":
+                self.get_application().get_window().get_content_title(
+                ).set_subtitle("Draft")
+            else:
+                uri_parse = urlparse(self.props.project_uri)
+                filepath = os.path.abspath(
+                    os.path.join(uri_parse.netloc, uri_parse.path))
+                filepath = filepath.replace(os.path.expanduser("~"), "~")
+                self.get_application().get_window().get_content_title(
+                ).set_subtitle(filepath)
+        else:
+            self.get_application().get_window().get_content_title().set_title(
+                title)
 
     @GObject.Property(type=str, default="")
     def project_uri(self) -> str:
@@ -337,7 +358,6 @@ class Data(GObject.Object, Graphs.DataInterface):
         })
 
     def add_history_state(self, old_limits: misc.Limits = None) -> None:
-        self.change_unsaved(True)
         if not self._current_batch:
             return
         if self._history_pos != -1:
@@ -356,6 +376,7 @@ class Data(GObject.Object, Graphs.DataInterface):
         if len(self._history_states) > 101:
             self._history_states = self._history_states[1:]
         self._set_data_copy()
+        self.props.unsaved = True
 
     def undo(self) -> None:
         if not self.props.can_undo:
@@ -443,7 +464,7 @@ class Data(GObject.Object, Graphs.DataInterface):
         self._view_history_states.append(limits)
         self.props.can_view_back = True
         self.props.can_view_forward = False
-        self.change_unsaved(True)
+        self.props.unsaved = True
 
     def view_back(self) -> None:
         if not self.props.can_view_back:
@@ -532,31 +553,8 @@ class Data(GObject.Object, Graphs.DataInterface):
             "history-position": self._history_pos,
             "view-history-states": self._view_history_states,
             "view-history-position": self._view_history_pos,
-            "project-uri": self.props.project_uri
+            "project-uri": self.props.project_uri,
         }
-
-    def change_unsaved(self, unsaved):
-        """Proof of concept placeholder"""
-        self.props.unsaved = unsaved
-        title = \
-            self.get_application().get_window().get_content_title().get_title()
-        if title.startswith("• "):
-            title = title.split("• ")[-1]
-
-        if unsaved:
-            prefix = "• "
-            self.get_application().get_window().get_content_title().set_title(
-                prefix + title)
-            if self.props.project_uri == "":
-                self.get_application().get_window().get_content_title().set_subtitle("Draft")
-            else:
-                uri_parse  = urlparse(self.props.project_uri)
-                filepath = os.path.abspath(os.path.join(uri_parse.netloc, uri_parse.path))
-                filepath = filepath.replace(os.path.expanduser("~"), "~")
-                self.get_application().get_window().get_content_title().set_subtitle(filepath)
-        else:
-            self.get_application().get_window().get_content_title().set_title(
-                title)
 
     def load_from_project_dict(self,
                                project_dict: dict[str, Any],
@@ -582,8 +580,9 @@ class Data(GObject.Object, Graphs.DataInterface):
             abs(self._view_history_pos) < len(self._view_history_states)
         self.props.can_view_forward = self._view_history_pos < -1
         filename = Path(project_uri).stem
-        uri_parse  = urlparse(project_uri)
-        filepath = os.path.abspath(os.path.join(uri_parse.netloc, uri_parse.path))
+        uri_parse = urlparse(project_uri)
+        filepath = os.path.abspath(
+            os.path.join(uri_parse.netloc, uri_parse.path))
         filepath = filepath.replace(os.path.expanduser("~"), "~")
         self.get_application().get_window().get_content_title().set_title(
             filename)

@@ -1,18 +1,7 @@
 using Gtk 4.0;
 using Adw 1;
 
-Adw.MessageDialog discard_data {
-  heading: _("Discard Data?");
-  body: _("Opening a project will discard all open data.");
-  responses [
-    cancel_open_project: _("Cancel"),
-    discard: _("Discard") destructive,
-  ]
-  close-response: "cancel_open_project";
-  default-response: "discard";
-}
-
-Adw.MessageDialog close_application {
+Adw.MessageDialog save_changes {
   heading: _("Save changes?");
   body: _("Current project contains unsaved changes, changes that are not saved will be permanently lost.");
   responses [

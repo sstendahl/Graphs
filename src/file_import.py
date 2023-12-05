@@ -102,7 +102,7 @@ class _ImportWindow(Adw.Window):
         import_params = \
             self.get_application().get_settings_child("import-params")
         for mode in import_params.list_children():
-            Graphs.Tools.reset_settings(import_params.get_child(mode))
+            Graphs.tools_reset_settings(import_params.get_child(mode))
 
     @Gtk.Template.Callback()
     def on_accept(self, _widget):

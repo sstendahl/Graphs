@@ -239,10 +239,14 @@ def shift(item, xdata, ydata, left_scale, right_scale, items, ranges):
         previous_item = data_list[index - 1]
 
         # Only use selected span when obtaining values to determine shift value
-        new_xdata, new_ydata = filter_data(
-            previous_item.xdata, previous_item.ydata, ">=", min(xdata))
-        new_xdata, new_ydata = filter_data(
-            new_xdata, new_ydata, "<=", max(xdata))
+        new_xdata, new_ydata = xdata, ydata
+        if (min(xdata) >= min(previous_item.xdata)
+                and max(xdata) <= max(previous_item.xdata)):
+            new_xdata, new_ydata = filter_data(
+                previous_item.xdata, previous_item.ydata, ">=", min(xdata))
+            new_xdata, new_ydata = filter_data(
+                new_xdata, new_ydata, "<=", max(xdata))
+
         ymin = min(x for x in new_ydata if x != 0)
         ymax = max(x for x in new_ydata if x != 0)
 

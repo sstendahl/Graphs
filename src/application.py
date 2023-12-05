@@ -8,6 +8,7 @@ Classes:
 import logging
 from gettext import gettext as _
 from pathlib import Path
+
 from gi.repository import GLib, Gio, Graphs, Gtk
 
 from graphs import actions, file_import, file_io, migrate, styles, ui
@@ -120,7 +121,7 @@ class PythonApplication(Graphs.Application):
                     if response == "discard":
                         self.get_data().load_from_project_dict(project_dict,
                                                                file_name)
-                dialog = ui.build_dialog("discard_data")
+                dialog = ui.build_dialog("save_changes")
                 dialog.set_transient_for(self.get_window())
                 dialog.connect("response", on_response)
                 dialog.present()
@@ -134,14 +135,14 @@ class PythonApplication(Graphs.Application):
                 if response == "discard_close":
                     self.get_window().destroy()
                 if response == "save_close":
-                    ui.save_project_dialog(self, close=True)
+                    actions.save_project(self, close=True)
 
-            dialog = ui.build_dialog("close_application")
+            dialog = ui.build_dialog("save_changes")
             dialog.set_transient_for(self.get_window())
             dialog.connect("response", on_response)
             dialog.present()
             return True
-        self.get_window().destroy()
+        self.quit()
 
     def on_key_press_event(self, _controller, keyval, _keycode, _state):
         if keyval == 65507 or keyval == 65508:  # Control_L or Control_R
