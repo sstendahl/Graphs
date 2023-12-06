@@ -190,10 +190,10 @@ class Data(GObject.Object, Graphs.DataInterface):
         used_colors = []
 
         def _append_used_color(color):
+            used_colors.append(color)
             if len(set(used_colors)) == len(color_cycle):
                 for color in color_cycle:
                     used_colors.remove(color)
-            used_colors.append(color)
 
         def _is_default(prop):
             return figure_settings.get_property(prop) == \
