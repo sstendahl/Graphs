@@ -109,16 +109,15 @@ def save_item(file, item_):
             wrapper.write(fmt % values + "\n")
 
 
-def save_project(self, require_dialog=False, close=False):
+def save_project(self, require_dialog=False):
     if self.get_data().project_uri != "" and not require_dialog:
         file_uri = self.get_data().project_uri
         file = Gio.File.new_for_uri(file_uri)
         write_json(file, self.get_data().to_project_dict(), False)
         self.get_data().props.unsaved = False
-        if close:
-            self.quit()
+        self.emit("project-saved")
         return
-    ui.save_project_dialog(self, close)
+    ui.save_project_dialog(self)
 
 
 def parse_json(file):

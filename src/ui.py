@@ -50,7 +50,7 @@ def add_data_dialog(self):
     dialog.open_multiple(self.get_window(), None, on_response)
 
 
-def save_project_dialog(self, close=False):
+def save_project_dialog(self):
 
     def on_response(dialog, response):
         with contextlib.suppress(GLib.GError):
@@ -60,9 +60,7 @@ def save_project_dialog(self, close=False):
 
             self.get_data().project_uri = file_uri
             self.get_data().props.unsaved = False
-
-            if close:
-                self.quit()
+            self.emit("project-saved")
     dialog = Gtk.FileDialog()
     dialog.set_filters(
         utilities.create_file_filters([(_("Graphs Project File"),

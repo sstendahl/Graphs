@@ -139,39 +139,22 @@ def export_figure_action(_action, _target, self):
 
 def new_project_action(_action, _target, self):
     """Clear the current project and reset Graphs to the initial state"""
-
-    def reset_project(self):
-        data = self.get_data()
-        # Reset figure settings
-        default_figure_settings = Graphs.FigureSettings.new(
-            self.get_settings().get_child("figure"),
-        )
-        figure_settings = data.get_figure_settings()
-        for prop in dir(default_figure_settings.props):
-            new_value = default_figure_settings.get_property(prop)
-            figure_settings.set_property(prop, new_value)
-
-        # Reset items
-        items = [item for item in data]
-        data.delete_items(items)
-        data.initialize()
-        data.props.unsaved = False
-        self.get_window().get_content_title().set_subtitle("")
-
     if self.get_data().props.unsaved:
         def on_response(_dialog, response):
+            self.save_handler = self.connect("project-saved",
+                                             self.on_project_saved,
+                                             "project_saved")
             if response == "discard_close":
-                reset_project(self)
+                self.get_data().reset_project()
             if response == "save_close":
                 file_io.save_project(self)
-                reset_project(self)
 
         dialog = ui.build_dialog("save_changes")
         dialog.set_transient_for(self.get_window())
         dialog.connect("response", on_response)
         dialog.present()
         return
-    reset_project(self)
+    self.get_data.reset_project()
 
 
 def save_project_action(_action, _target, self):

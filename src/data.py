@@ -59,7 +59,6 @@ class Data(GObject.Object, Graphs.DataInterface):
     can_redo = GObject.Property(type=bool, default=False)
     can_view_back = GObject.Property(type=bool, default=False)
     can_view_forward = GObject.Property(type=bool, default=False)
-    project_uri = GObject.Property(type=str, default="")
 
     def __init__(self, application, settings):
         """Init the dataclass."""
@@ -114,6 +113,8 @@ class Data(GObject.Object, Graphs.DataInterface):
         headerbar accordingly
         """
         self._unsaved = unsaved
+        if not unsaved:
+            self.get_application().emit("project-saved")
         content_header = \
             self.get_application().get_window().get_content_title()
         no_uri = self.project_uri == ""
@@ -135,6 +136,9 @@ class Data(GObject.Object, Graphs.DataInterface):
         uri_parse = urlparse(self.project_uri)
         filepath = os.path.abspath(
             os.path.join(uri_parse.netloc, unquote(uri_parse.path)))
+        if filepath.startswith("/var"):
+            # Fix for rpm-ostree distros, where home is placed in /var/home
+            filepath = filepath.replace("/var", "", 1)
         return filepath.replace(os.path.expanduser("~"), "~")
 
     @GObject.Property(type=bool, default=False, flags=1)
@@ -564,7 +568,6 @@ class Data(GObject.Object, Graphs.DataInterface):
             "history-position": self._history_pos,
             "view-history-states": self._view_history_states,
             "view-history-position": self._view_history_pos,
-            "project-uri": self.get_project_uri(),
         }
 
     def load_from_project_dict(self,
@@ -603,3 +606,21 @@ class Data(GObject.Object, Graphs.DataInterface):
             filename)
         self.get_application().get_window().get_content_title().set_subtitle(
             filepath)
+
+    def reset_project(self):
+        # Reset figure settings
+        default_figure_settings = Graphs.FigureSettings.new(
+            self.get_application().get_settings().get_child("figure"),
+        )
+        figure_settings = self.get_figure_settings()
+        for prop in dir(default_figure_settings.props):
+            new_value = default_figure_settings.get_property(prop)
+            figure_settings.set_property(prop, new_value)
+
+        # Reset items
+        items = [item for item in self]
+        self.delete_items(items)
+        self.initialize()
+        self.props.unsaved = False
+        self.get_application().get_window().get_content_title().set_subtitle(
+            "")

@@ -7,9 +7,8 @@ Classes:
 """
 import logging
 from gettext import gettext as _
-from pathlib import Path
 
-from gi.repository import GLib, Gio, Graphs, Gtk
+from gi.repository import GLib, GObject, Gio, Graphs, Gtk
 
 from graphs import actions, file_import, file_io, migrate, styles, ui
 from graphs.data import Data
@@ -29,6 +28,9 @@ _ACTIONS = [
 class PythonApplication(Graphs.Application):
     """The main application singleton class."""
     __gtype_name__ = "GraphsPythonApplication"
+    __gsignals__ = {
+        "project-saved": (GObject.SIGNAL_RUN_FIRST, None, ()),
+    }
 
     def __init__(self, application_id, **kwargs):
         """Init the application."""
@@ -102,28 +104,46 @@ class PythonApplication(Graphs.Application):
             "items-ignored", ui.on_items_ignored, self,
         )
 
+    def on_project_saved(self, _application, handler=None, *args):
+        self.disconnect(self.save_handler)
+        if handler == "close":
+            self.quit()
+        if handler == "open_project":
+            project_dict, project_uri = args[0], args[1]
+            self.get_data().load_from_project_dict(project_dict, project_uri)
+        if handler == "reset_project":
+            self.get_data().reset_project()
+
     def do_open(self, files: list, nfiles: int, _hint: str):
         """Gets called when Graph is opened from a file."""
         self.do_activate()
+        data = self.get_data()
         if nfiles == 1 and files[0].get_uri().endswith(".graphs"):
-            file_name = Path(files[0].get_basename()).stem
+            project_uri = files[0].get_uri()
             try:
                 project_dict = file_io.parse_json(files[0])
             except UnicodeDecodeError:
                 project_dict = migrate.migrate_project(files[0])
 
-            if self.get_data().props.unsaved:
-                self.get_data().load_from_project_dict(project_dict, file_name)
-            else:
+            if data.props.unsaved:
                 def on_response(_dialog, response):
-                    if response == "discard":
-                        self.get_data().load_from_project_dict(project_dict,
-                                                               file_name)
+                    if response == "discard_close":
+                        data.load_from_project_dict(project_dict, project_uri)
+                    if response == "save_close":
+                        self.save_handler = self.connect("project-saved",
+                                                         self.on_project_saved,
+                                                         "open_project",
+                                                         project_dict,
+                                                         project_uri)
+                        file_io.save_project(self)
+
                 dialog = ui.build_dialog("save_changes")
                 dialog.set_transient_for(self.get_window())
                 dialog.connect("response", on_response)
                 dialog.present()
-                return
+
+            else:
+                data.load_from_project_dict(project_dict, project_uri)
         else:
             file_import.import_from_files(self, files)
 
@@ -137,8 +157,11 @@ class PythonApplication(Graphs.Application):
                 if response == "discard_close":
                     self.quit()
                 if response == "save_close":
-                    file_io.save_project(self, close=True)
-
+                    self.save_handler = \
+                        self.connect("project-saved",
+                                     self.on_project_saved,
+                                     "close")
+                    file_io.save_project(self)
             dialog = ui.build_dialog("save_changes")
             dialog.set_transient_for(self.get_window())
             dialog.connect("response", on_response)
