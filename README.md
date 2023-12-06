@@ -43,20 +43,21 @@ An official build is also available on the Snap store:
 The latest testing version of Graphs is available in the Flathub beta channel. To install the beta, first the Flatpak remote needs to be configured:
 
 ```sh
-flatpak remote-add --user --if-not-exists flathub-beta https://flathub.org/beta-repo/flathub-beta.flatpakrepo
+flatpak remote-add --if-not-exists flathub-beta https://flathub.org/beta-repo/flathub-beta.flatpakrepo
 ```
 
 Then, install the application:
 
 ```sh
-flatpak install --user flathub-beta se.sjoerd.Graphs
+flatpak install flathub-beta se.sjoerd.Graphs
 ```
 To run the beta version by default, the following command can be used:
 
 ```sh
-flatpak make-current se.sjoerd.Graphs beta
+sudo flatpak make-current se.sjoerd.Graphs beta
 ```
-To switch back to the stable version simply run the same command replacing `beta` with `stable`. A beta version is also available in the beta channel of the Snap Store.
+Note that the `sudo` is neccesary here, as it sets the current branch on the system level. To install this on a per-user basis, the flag `--user` can be used in the  previous commands. 
+To switch back to the stable version simply run the above command replacing `beta` with `stable`. A beta version is also available in the beta channel of the Snap Store.
 We are always looking for feedback, so feel free to report any issues or suggestions on the Github [issue tracker](https://github.com/Sjoerd1993/Graphs/issues).
 
 
