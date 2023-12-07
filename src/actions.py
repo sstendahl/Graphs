@@ -143,7 +143,7 @@ def new_project_action(_action, _target, self):
         def on_response(_dialog, response):
             self.save_handler = self.connect("project-saved",
                                              self.on_project_saved,
-                                             "project_saved")
+                                             "reset_project")
             if response == "discard_close":
                 self.get_data().reset_project()
             if response == "save_close":
@@ -154,7 +154,7 @@ def new_project_action(_action, _target, self):
         dialog.connect("response", on_response)
         dialog.present()
         return
-    self.get_data.reset_project()
+    self.get_data().reset_project()
 
 
 def save_project_action(_action, _target, self):
