@@ -77,6 +77,8 @@ def _migrate_import_params(settings_, import_file):
         for key, value in params.items():
             if key == "separator":
                 settings.set_string(key, f"{value} ")
+            if key == "delimiter":
+                settings.set_string("custom-delimiter", value)
                 continue
             elif isinstance(value, int):
                 key = key.replace("_", "-")

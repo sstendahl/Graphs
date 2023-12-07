@@ -51,9 +51,18 @@ template $GraphsImportWindow : Adw.Window {
         spacing: 10;
         Adw.PreferencesGroup columns_group {
           visible: false;
-          Adw.EntryRow columns_delimiter {
+          Adw.ComboRow columns_delimiter {
+            title: _("Delimiter");
+            notify::selected => $on_delimiter_change();
+            model: StringList{
+              strings [_("Whitespace"), _("Tab"), _("Decimal comma (,)"),
+                       _("Semicolon (;)"), _("Decimal point (.)"), _("Custom")]
+            };
+          }
+          Adw.EntryRow columns_custom_delimiter {
+            visible: false;
             max-width-chars: 10;
-            title: _("Delimiter (\s+ for whitespace)");
+            title: _("Custom Delimiter");
           }
 
           Adw.ComboRow columns_separator {
