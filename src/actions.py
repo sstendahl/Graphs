@@ -4,7 +4,7 @@ from gettext import gettext as _
 
 from gi.repository import Graphs
 
-from graphs import operations, ui, utilities
+from graphs import file_io, operations, ui, utilities
 from graphs.add_equation import AddEquationWindow
 from graphs.export_figure import ExportFigureWindow
 from graphs.figure_settings import FigureSettingsWindow
@@ -72,7 +72,7 @@ def set_mode(_action, _target, self, mode):
 
 
 def quit_action(_action, _target, self):
-    self.quit()
+    self.close_application()
 
 
 def about_action(_action, _target, self):
@@ -137,8 +137,32 @@ def export_figure_action(_action, _target, self):
     ExportFigureWindow(self)
 
 
+def new_project_action(_action, _target, self):
+    """Clear the current project and reset Graphs to the initial state"""
+    if self.get_data().props.unsaved:
+        def on_response(_dialog, response):
+            self.save_handler = self.connect("project-saved",
+                                             self.on_project_saved,
+                                             "reset_project")
+            if response == "discard_close":
+                self.get_data().reset_project()
+            if response == "save_close":
+                file_io.save_project(self)
+
+        dialog = ui.build_dialog("save_changes")
+        dialog.set_transient_for(self.get_window())
+        dialog.connect("response", on_response)
+        dialog.present()
+        return
+    self.get_data().reset_project()
+
+
 def save_project_action(_action, _target, self):
-    ui.save_project_dialog(self)
+    file_io.save_project(self)
+
+
+def save_project_as_action(_action, _target, self):
+    file_io.save_project(self, require_dialog=True)
 
 
 def smoothen_settings_action(_action, _target, self):
@@ -156,13 +180,17 @@ def zoom_out_action(_action, _target, self):
 
 
 def open_project_action(_action, _target, self):
-    if not self.get_data().props.empty:
-
+    if self.get_data().props.unsaved:
         def on_response(_dialog, response):
-            if response == "discard":
+            if response == "discard_close":
                 ui.open_project_dialog(self)
+            if response == "save_close":
+                # Retrieving open dialog first means that save dialog will be
+                # on top. Thus user will be presented with save dialog first.
+                ui.open_project_dialog(self)
+                file_io.save_project(self)
 
-        dialog = ui.build_dialog("discard_data")
+        dialog = ui.build_dialog("save_changes")
         dialog.set_transient_for(self.get_window())
         dialog.connect("response", on_response)
         dialog.present()

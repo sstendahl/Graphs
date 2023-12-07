@@ -8,7 +8,7 @@ Classes:
 import logging
 from gettext import gettext as _
 
-from gi.repository import GLib, Gio, Graphs, Gtk
+from gi.repository import GLib, GObject, Gio, Graphs, Gtk
 
 from graphs import actions, file_import, file_io, migrate, styles, ui
 from graphs.data import Data
@@ -19,15 +19,18 @@ from matplotlib import font_manager
 _ACTIONS = [
     "quit", "about", "figure_settings", "add_data", "add_equation",
     "select_all", "select_none", "undo", "redo", "optimize_limits",
-    "view_back", "view_forward", "export_data", "export_figure",
-    "save_project", "smoothen_settings", "open_project", "delete_selected",
-    "zoom_in", "zoom_out",
+    "view_back", "view_forward", "export_data", "export_figure", "new_project",
+    "save_project", "save_project_as", "smoothen_settings", "open_project",
+    "delete_selected", "zoom_in", "zoom_out",
 ]
 
 
 class PythonApplication(Graphs.Application):
     """The main application singleton class."""
     __gtype_name__ = "GraphsPythonApplication"
+    __gsignals__ = {
+        "project-saved": (GObject.SIGNAL_RUN_FIRST, None, ()),
+    }
 
     def __init__(self, application_id, **kwargs):
         """Init the application."""
@@ -101,35 +104,85 @@ class PythonApplication(Graphs.Application):
             "items-ignored", ui.on_items_ignored, self,
         )
 
-    def do_open(self, files, nfiles, _hint):
-        self.do_activate()
-        if nfiles == 1 and files[0].get_uri().endswith(".graphs"):
-            try:
-                project_dict = file_io.parse_json(files[0])
-            except UnicodeDecodeError:
-                project_dict = migrate.migrate_project(files[0])
+    def on_project_saved(self, _application, handler=None, *args):
+        self.disconnect(self.save_handler)
+        if handler == "close":
+            self.quit()
+        if handler == "open_project":
+            self.get_data().props.project_file = args[0]
+            self.get_data().load()
+        if handler == "reset_project":
+            self.get_data().reset_project()
 
-            if self.get_data().props.empty:
-                self.get_data().load_from_project_dict(project_dict)
-            else:
+    def do_open(self, files: list, nfiles: int, _hint: str):
+        """Gets called when Graph is opened from a file."""
+        self.do_activate()
+        data = self.get_data()
+        if nfiles == 1 and files[0].get_uri().endswith(".graphs"):
+            project_file = files[0]
+
+            def load():
+                data.props.project_file = project_file
+                data.load()
+
+            if data.props.unsaved:
                 def on_response(_dialog, response):
-                    if response == "discard":
-                        self.get_data().load_from_project_dict(project_dict)
-                dialog = ui.build_dialog("discard_data")
+                    if response == "discard_close":
+                        load()
+                    if response == "save_close":
+                        self.save_handler = self.connect(
+                            "project-saved", self.on_project_saved,
+                            "open_project", project_file,
+                        )
+                        file_io.save_project(self)
+
+                dialog = ui.build_dialog("save_changes")
                 dialog.set_transient_for(self.get_window())
                 dialog.connect("response", on_response)
                 dialog.present()
-                return
+
+            else:
+                load()
         else:
             file_import.import_from_files(self, files)
 
+    def close_application(self, *_arg):
+        """
+        Gets called when closing the application, will ask the user to confirm
+        and save/discard open data if any unsaved changes are present
+        """
+        if self.get_data().props.unsaved:
+            def on_response(_dialog, response):
+                if response == "discard_close":
+                    self.quit()
+                if response == "save_close":
+                    self.save_handler = \
+                        self.connect("project-saved",
+                                     self.on_project_saved,
+                                     "close")
+                    file_io.save_project(self)
+            dialog = ui.build_dialog("save_changes")
+            dialog.set_transient_for(self.get_window())
+            dialog.connect("response", on_response)
+            dialog.present()
+            return True
+        self.quit()
+
     def on_key_press_event(self, _controller, keyval, _keycode, _state):
+        """
+        Checks if control is pressed, needed to allow ctrl+scroll behaviour
+        as the key press event from matplotlib is not working properly atm.
+        """
         if keyval == 65507 or keyval == 65508:  # Control_L or Control_R
             self.set_ctrl(True)
         else:  # Prevent Ctrl from being true with key combos
             self.set_ctrl(False)
 
     def on_key_release_event(self, _controller, _keyval, _keycode, _state):
+        """
+        Checks if control is released, needed to allow ctrl+scroll behaviour
+        as the key press event from matplotlib is not working properly atm.
+        """
         self.set_ctrl(False)
 
     def do_activate(self):
@@ -147,20 +200,17 @@ class PythonApplication(Graphs.Application):
             )
             self.bind_property("mode", window, "mode", 2)
             data = self.get_data()
-            data.bind_property(
-                "can_undo", window.get_undo_button(), "sensitive", 2,
-            )
-            data.bind_property(
-                "can_redo", window.get_redo_button(), "sensitive", 2,
-            )
-            data.bind_property(
-                "can_view_back", window.get_view_back_button(),
-                "sensitive", 2,
-            )
-            data.bind_property(
-                "can_view_forward", window.get_view_forward_button(),
-                "sensitive", 2,
-            )
+            binding_table = [
+                ("can_undo", window.get_undo_button(), "sensitive"),
+                ("can_redo", window.get_redo_button(), "sensitive"),
+                ("can_view_back", window.get_view_back_button(), "sensitive"),
+                ("can_view_forward", window.get_view_forward_button(),
+                 "sensitive"),
+                ("project_name", window.get_content_title(), "title"),
+                ("project_path", window.get_content_title(), "subtitle"),
+            ]
+            for prop1, obj, prop2 in binding_table:
+                data.bind_property(prop1, obj, prop2, 2)
             data.bind_property("empty", window.get_item_list(), "visible", 4)
             stack_switcher = \
                 Graphs.InlineStackSwitcher(stack=window.get_stack())
@@ -173,6 +223,7 @@ class PythonApplication(Graphs.Application):
             controller.connect("key-pressed", self.on_key_press_event)
             controller.connect("key-released", self.on_key_release_event)
             window.add_controller(controller)
+            window.connect("close-request", self.close_application)
             if "(Development)" in self.props.name:
                 window.add_css_class("devel")
             self.set_figure_style_manager(styles.StyleManager(self))

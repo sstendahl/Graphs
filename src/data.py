@@ -7,11 +7,13 @@ Classes:
 """
 import copy
 import math
-from typing import Any
+import os
+from gettext import gettext as _
+from urllib.parse import unquote, urlparse
 
-from gi.repository import GObject, Graphs
+from gi.repository import GObject, Gio, Graphs
 
-from graphs import item, misc, utilities
+from graphs import file_io, item, migrate, misc, utilities
 
 import numpy
 
@@ -55,6 +57,8 @@ class Data(GObject.Object, Graphs.DataInterface):
     can_redo = GObject.Property(type=bool, default=False)
     can_view_back = GObject.Property(type=bool, default=False)
     can_view_forward = GObject.Property(type=bool, default=False)
+    project_file = GObject.Property(type=Gio.File)
+    unsaved = GObject.Property(type=bool, default=False)
 
     def __init__(self, application, settings):
         """Init the dataclass."""
@@ -64,14 +68,24 @@ class Data(GObject.Object, Graphs.DataInterface):
         super().__init__(
             application=application, figure_settings=figure_settings,
         )
+        self.initialize()
+        figure_settings.connect("notify", self._on_figure_settings_change)
+        self.connect("notify::unsaved", self._on_unsaved_change)
+
+    def initialize(self):
+        """Initializes the data class and sets the default values"""
+        figure_settings = self.get_figure_settings()
         limits = figure_settings.get_limits()
+        self.props.can_undo = False
+        self.props.can_redo = False
+        self.props.can_view_back = False
+        self.props.can_view_forward = False
         self._history_states = [([], limits)]
         self._history_pos = -1
         self._view_history_states = [limits]
         self._view_history_pos = -1
         self._items = {}
         self._set_data_copy()
-        figure_settings.connect("notify", self._on_figure_settings_change)
 
     def get_application(self) -> Graphs.Application:
         """Get application property."""
@@ -85,6 +99,38 @@ class Data(GObject.Object, Graphs.DataInterface):
     def empty(self) -> bool:
         """Whether or not the class is empty."""
         return not self._items
+
+    def _on_unsaved_change(self, _a, _b) -> None:
+        if not self.props.unsaved:
+            self.get_application().emit("project-saved")
+        self.notify("project-name")
+        self.notify("project-path")
+
+    @GObject.Property(type=str, default="", flags=1)
+    def project_name(self) -> str:
+        if self.project_file is None:
+            title = _("Untitled Project")
+        else:
+            title = utilities.get_filename(self.props.project_file)
+        if self.props.unsaved:
+            title = "• " + title
+        return title
+
+    @GObject.Property(type=str, default="", flags=1)
+    def project_path(self) -> str:
+        """
+        Retrieve the subtitle to be used for the headerbar given the uri of
+        the project.
+        """
+        if self.project_file is None:
+            return _("Draft")
+        uri_parse = urlparse(self.project_file.get_uri())
+        filepath = os.path.realpath(
+            os.path.join(uri_parse.netloc, unquote(uri_parse.path)))
+        if filepath.startswith("/var"):
+            # Fix for rpm-ostree distros, where home is placed in /var/home
+            filepath = filepath.replace("/var", "", 1)
+        return filepath.replace(os.path.expanduser("~"), "~")
 
     @GObject.Property(type=bool, default=False, flags=1)
     def items_selected(self) -> bool:
@@ -298,6 +344,7 @@ class Data(GObject.Object, Graphs.DataInterface):
         )))
 
     def _set_data_copy(self) -> None:
+        """Set a deep copy for the data"""
         self._current_batch: list = []
         self._data_copy = copy.deepcopy(
             {item_.get_uuid(): item_.to_dict() for item_ in self},
@@ -309,6 +356,7 @@ class Data(GObject.Object, Graphs.DataInterface):
         })
 
     def add_history_state(self, old_limits: misc.Limits = None) -> None:
+        """Add a state to the clipboard"""
         if not self._current_batch:
             return
         if self._history_pos != -1:
@@ -327,8 +375,10 @@ class Data(GObject.Object, Graphs.DataInterface):
         if len(self._history_states) > 101:
             self._history_states = self._history_states[1:]
         self._set_data_copy()
+        self.props.unsaved = True
 
     def undo(self) -> None:
+        """Undo the latest change that was added to the clipboard"""
         if not self.props.can_undo:
             return
         batch = self._history_states[self._history_pos][0]
@@ -366,6 +416,7 @@ class Data(GObject.Object, Graphs.DataInterface):
         self.add_view_history_state()
 
     def redo(self) -> None:
+        """Redo the latest change that was added to the clipboard"""
         if not self.props.can_redo:
             return
         self._history_pos += 1
@@ -398,6 +449,7 @@ class Data(GObject.Object, Graphs.DataInterface):
         self.add_view_history_state()
 
     def add_view_history_state(self) -> None:
+        """Add the view to the view history"""
         limits = self.get_figure_settings().get_limits()
         if all(
             math.isclose(old, new) for old, new
@@ -414,8 +466,10 @@ class Data(GObject.Object, Graphs.DataInterface):
         self._view_history_states.append(limits)
         self.props.can_view_back = True
         self.props.can_view_forward = False
+        self.props.unsaved = True
 
     def view_back(self) -> None:
+        """Move the view to the previous value in the view history"""
         if not self.props.can_view_back:
             return
         self._view_history_pos -= 1
@@ -427,6 +481,7 @@ class Data(GObject.Object, Graphs.DataInterface):
             abs(self._view_history_pos) < len(self._view_history_states)
 
     def view_forward(self) -> None:
+        """Move the view to the next value in the view history"""
         if not self.props.can_view_forward:
             return
         self._view_history_pos += 1
@@ -437,6 +492,7 @@ class Data(GObject.Object, Graphs.DataInterface):
         self.props.can_view_forward = self._view_history_pos < -1
 
     def optimize_limits(self) -> None:
+        """Optimize the limits of the canvas to the data class"""
         figure_settings = self.get_figure_settings()
         axes = [
             [direction, False, [], [],
@@ -489,9 +545,10 @@ class Data(GObject.Object, Graphs.DataInterface):
             figure_settings.set_property(f"max_{direction}", max_all)
         self.add_view_history_state()
 
-    def to_project_dict(self) -> dict[str, Any]:
+    def save(self) -> None:
+        """Save the data class to project_file dictionary"""
         figure_settings = self.get_figure_settings()
-        return {
+        file_io.write_json(self.props.project_file, {
             "version": self.get_application().get_version(),
             "data": [item_.to_dict() for item_ in self],
             "figure-settings": {
@@ -502,9 +559,15 @@ class Data(GObject.Object, Graphs.DataInterface):
             "history-position": self._history_pos,
             "view-history-states": self._view_history_states,
             "view-history-position": self._view_history_pos,
-        }
+        })
 
-    def load_from_project_dict(self, project_dict: dict[str, Any]) -> None:
+    def load(self) -> None:
+        """Load a project into the data given a file"""
+        try:
+            project_dict = file_io.parse_json(self.props.project_file)
+        except UnicodeDecodeError:
+            project_dict = migrate.migrate_project(self.props.project_file)
+        # Load data
         figure_settings = self.get_figure_settings()
         for key, value in project_dict["figure-settings"].items():
             if figure_settings.get_property(key) != value:
@@ -512,15 +575,35 @@ class Data(GObject.Object, Graphs.DataInterface):
         self.set_items(item.new_from_dict(d) for d in project_dict["data"])
         self.notify("items_selected")
 
+        # Set clipboard
         self._set_data_copy()
         self._history_states = project_dict["history-states"]
         self._history_pos = project_dict["history-position"]
         self._view_history_states = project_dict["view-history-states"]
         self._view_history_pos = project_dict["view-history-position"]
+        self.unsaved = False
 
+        # Set clipboard/view buttons
         self.props.can_undo = \
             abs(self._history_pos) < len(self._history_states)
         self.props.can_redo = self._history_pos < -1
         self.props.can_view_back = \
             abs(self._view_history_pos) < len(self._view_history_states)
         self.props.can_view_forward = self._view_history_pos < -1
+
+    def reset_project(self):
+        # Reset figure settings
+        default_figure_settings = Graphs.FigureSettings.new(
+            self.get_application().get_settings().get_child("figure"),
+        )
+        figure_settings = self.get_figure_settings()
+        for prop in dir(default_figure_settings.props):
+            new_value = default_figure_settings.get_property(prop)
+            figure_settings.set_property(prop, new_value)
+
+        # Reset items
+        items = [item for item in self]
+        self.delete_items(items)
+        self.initialize()
+        self.props.project_file = None
+        self.props.unsaved = False

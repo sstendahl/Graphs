@@ -63,6 +63,9 @@ namespace Graphs {
         [GtkChild]
         public unowned Adw.HeaderBar content_headerbar { get; }
 
+        [GtkChild]
+        public unowned Adw.WindowTitle content_title { get; }
+
         public int mode {
             set {
                 this.pan_button.set_active (value == 0);

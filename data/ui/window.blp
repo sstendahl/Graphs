@@ -108,6 +108,14 @@ template $GraphsWindow: Adw.ApplicationWindow {
       trigger: "<primary>ZoomOut";
       action: "action(app.zoom_out)";
     }
+    Shortcut {
+      trigger: "<primary><shift>S";
+      action: "action(app.save_project_as)";
+    }
+    Shortcut {
+      trigger: "<primary><shift>N";
+      action: "action(app.new_project)";
+    }
   }
 
   // If both width and height are limited
@@ -567,7 +575,8 @@ template $GraphsWindow: Adw.ApplicationWindow {
       orientation: vertical;
         Adw.HeaderBar content_headerbar {
           styles ["flat"]
-          show-title: false;
+          title-widget: Adw.WindowTitle content_title {
+          };
           ToggleButton show_sidebar_button {
             icon-name: "sidebar-show-symbolic";
             tooltip-text: _("Toggle Sidebar");
@@ -620,7 +629,11 @@ template $GraphsWindow: Adw.ApplicationWindow {
 
 menu primary_menu {
   section{
+    item (_("New Project"), "app.new_project")
+  }
+  section{
     item (_("Save Project…"), "app.save_project")
+    item (_("Save Project as…"), "app.save_project_as")
     item (_("Open Project…"), "app.open_project")
   }
   section {
