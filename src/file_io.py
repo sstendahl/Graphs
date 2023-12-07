@@ -110,10 +110,9 @@ def save_item(file, item_):
 
 
 def save_project(self, require_dialog=False):
-    if self.get_data().project_uri != "" and not require_dialog:
-        file_uri = self.get_data().project_uri
-        file = Gio.File.new_for_uri(file_uri)
-        write_json(file, self.get_data().to_project_dict(), False)
+    project_file = self.get_data().project_file
+    if project_file is not None and not require_dialog:
+        self.get_data().save()
         self.get_data().props.unsaved = False
         self.emit("project-saved")
         return

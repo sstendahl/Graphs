@@ -109,8 +109,8 @@ class PythonApplication(Graphs.Application):
         if handler == "close":
             self.quit()
         if handler == "open_project":
-            project_dict, project_uri = args[0], args[1]
-            self.get_data().load_from_project_dict(project_dict, project_uri)
+            self.get_data().props.project_file = args[0]
+            self.get_data().load()
         if handler == "reset_project":
             self.get_data().reset_project()
 
@@ -119,22 +119,21 @@ class PythonApplication(Graphs.Application):
         self.do_activate()
         data = self.get_data()
         if nfiles == 1 and files[0].get_uri().endswith(".graphs"):
-            project_uri = files[0].get_uri()
-            try:
-                project_dict = file_io.parse_json(files[0])
-            except UnicodeDecodeError:
-                project_dict = migrate.migrate_project(files[0])
+            project_file = files[0]
+
+            def load():
+                data.props.project_file = project_file
+                data.load()
 
             if data.props.unsaved:
                 def on_response(_dialog, response):
                     if response == "discard_close":
-                        data.load_from_project_dict(project_dict, project_uri)
+                        load()
                     if response == "save_close":
-                        self.save_handler = self.connect("project-saved",
-                                                         self.on_project_saved,
-                                                         "open_project",
-                                                         project_dict,
-                                                         project_uri)
+                        self.save_handler = self.connect(
+                            "project-saved", self.on_project_saved,
+                            "open_project", project_file,
+                        )
                         file_io.save_project(self)
 
                 dialog = ui.build_dialog("save_changes")
@@ -143,7 +142,7 @@ class PythonApplication(Graphs.Application):
                 dialog.present()
 
             else:
-                data.load_from_project_dict(project_dict, project_uri)
+                load()
         else:
             file_import.import_from_files(self, files)
 
@@ -201,20 +200,17 @@ class PythonApplication(Graphs.Application):
             )
             self.bind_property("mode", window, "mode", 2)
             data = self.get_data()
-            data.bind_property(
-                "can_undo", window.get_undo_button(), "sensitive", 2,
-            )
-            data.bind_property(
-                "can_redo", window.get_redo_button(), "sensitive", 2,
-            )
-            data.bind_property(
-                "can_view_back", window.get_view_back_button(),
-                "sensitive", 2,
-            )
-            data.bind_property(
-                "can_view_forward", window.get_view_forward_button(),
-                "sensitive", 2,
-            )
+            binding_table = [
+                ("can_undo", window.get_undo_button(), "sensitive"),
+                ("can_redo", window.get_redo_button(), "sensitive"),
+                ("can_view_back", window.get_view_back_button(), "sensitive"),
+                ("can_view_forward", window.get_view_forward_button(),
+                 "sensitive"),
+                ("project_name", window.get_content_title(), "title"),
+                ("project_path", window.get_content_title(), "subtitle"),
+            ]
+            for prop1, obj, prop2 in binding_table:
+                data.bind_property(prop1, obj, prop2, 2)
             data.bind_property("empty", window.get_item_list(), "visible", 4)
             stack_switcher = \
                 Graphs.InlineStackSwitcher(stack=window.get_stack())
@@ -222,7 +218,6 @@ class PythonApplication(Graphs.Application):
             stack_switcher.set_hexpand("true")
             window.get_stack_switcher_box().prepend(stack_switcher)
             window.set_title(self.props.name)
-            window.get_content_title().set_title(_("Untitled Project"))
             self.set_window(window)
             controller = Gtk.EventControllerKey.new()
             controller.connect("key-pressed", self.on_key_press_event)

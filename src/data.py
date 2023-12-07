@@ -9,13 +9,11 @@ import copy
 import math
 import os
 from gettext import gettext as _
-from pathlib import Path
-from typing import Any
 from urllib.parse import unquote, urlparse
 
-from gi.repository import GObject, Graphs
+from gi.repository import GObject, Gio, Graphs
 
-from graphs import item, misc, utilities
+from graphs import file_io, item, migrate, misc, utilities
 
 import numpy
 
@@ -59,6 +57,8 @@ class Data(GObject.Object, Graphs.DataInterface):
     can_redo = GObject.Property(type=bool, default=False)
     can_view_back = GObject.Property(type=bool, default=False)
     can_view_forward = GObject.Property(type=bool, default=False)
+    project_file = GObject.Property(type=Gio.File)
+    unsaved = GObject.Property(type=bool, default=False)
 
     def __init__(self, application, settings):
         """Init the dataclass."""
@@ -69,6 +69,8 @@ class Data(GObject.Object, Graphs.DataInterface):
             application=application, figure_settings=figure_settings,
         )
         self.initialize()
+        figure_settings.connect("notify", self._on_figure_settings_change)
+        self.connect("notify::unsaved", self._on_unsaved_change)
 
     def initialize(self):
         """Initializes the data class and sets the default values"""
@@ -84,9 +86,6 @@ class Data(GObject.Object, Graphs.DataInterface):
         self._view_history_pos = -1
         self._items = {}
         self._set_data_copy()
-        self.project_uri = ""
-        self._unsaved = False
-        figure_settings.connect("notify", self._on_figure_settings_change)
 
     def get_application(self) -> Graphs.Application:
         """Get application property."""
@@ -101,40 +100,32 @@ class Data(GObject.Object, Graphs.DataInterface):
         """Whether or not the class is empty."""
         return not self._items
 
-    @GObject.Property(type=bool, default=False)
-    def unsaved(self) -> bool:
-        """Whether there's unsaved changes in the active project."""
-        return self._unsaved
-
-    @unsaved.setter
-    def unsaved(self, unsaved: bool) -> None:
-        """
-        Sets the unsaved attribute, and changes the titles of the content
-        headerbar accordingly
-        """
-        self._unsaved = unsaved
-        if not unsaved:
+    def _on_unsaved_change(self, _a, _b) -> None:
+        if not self.props.unsaved:
             self.get_application().emit("project-saved")
-        content_header = \
-            self.get_application().get_window().get_content_title()
-        no_uri = self.project_uri == ""
-        title = \
-            _("Untitled Project") if no_uri else Path(self.project_uri).stem
-        subtitle = _("Draft") if no_uri else self._get_subtitle_from_uri()
+        self.notify("project-name")
+        self.notify("project-path")
 
-        if unsaved:
-            content_header.set_title("• " + title)
+    @GObject.Property(type=str, default="", flags=1)
+    def project_name(self) -> str:
+        if self.project_file is None:
+            title = _("Untitled Project")
         else:
-            content_header.set_title(title)
-        content_header.set_subtitle(subtitle)
+            title = utilities.get_filename(self.props.project_file)
+        if self.props.unsaved:
+            title = "• " + title
+        return title
 
-    def _get_subtitle_from_uri(self) -> str:
+    @GObject.Property(type=str, default="", flags=1)
+    def project_path(self) -> str:
         """
         Retrieve the subtitle to be used for the headerbar given the uri of
         the project.
         """
-        uri_parse = urlparse(self.project_uri)
-        filepath = os.path.abspath(
+        if self.project_file is None:
+            return _("Draft")
+        uri_parse = urlparse(self.project_file.get_uri())
+        filepath = os.path.realpath(
             os.path.join(uri_parse.netloc, unquote(uri_parse.path)))
         if filepath.startswith("/var"):
             # Fix for rpm-ostree distros, where home is placed in /var/home
@@ -554,10 +545,10 @@ class Data(GObject.Object, Graphs.DataInterface):
             figure_settings.set_property(f"max_{direction}", max_all)
         self.add_view_history_state()
 
-    def to_project_dict(self) -> dict[str, Any]:
-        """Save the data class into a project dictionary"""
+    def save(self) -> None:
+        """Save the data class to project_file dictionary"""
         figure_settings = self.get_figure_settings()
-        return {
+        file_io.write_json(self.props.project_file, {
             "version": self.get_application().get_version(),
             "data": [item_.to_dict() for item_ in self],
             "figure-settings": {
@@ -568,12 +559,14 @@ class Data(GObject.Object, Graphs.DataInterface):
             "history-position": self._history_pos,
             "view-history-states": self._view_history_states,
             "view-history-position": self._view_history_pos,
-        }
+        })
 
-    def load_from_project_dict(self,
-                               project_dict: dict[str, Any],
-                               project_uri: str = "") -> None:
-        """Load a project into the data given a dictionary"""
+    def load(self) -> None:
+        """Load a project into the data given a file"""
+        try:
+            project_dict = file_io.parse_json(self.props.project_file)
+        except UnicodeDecodeError:
+            project_dict = migrate.migrate_project(self.props.project_file)
         # Load data
         figure_settings = self.get_figure_settings()
         for key, value in project_dict["figure-settings"].items():
@@ -584,7 +577,6 @@ class Data(GObject.Object, Graphs.DataInterface):
 
         # Set clipboard
         self._set_data_copy()
-        self.project_uri = project_uri
         self._history_states = project_dict["history-states"]
         self._history_pos = project_dict["history-position"]
         self._view_history_states = project_dict["view-history-states"]
@@ -598,14 +590,6 @@ class Data(GObject.Object, Graphs.DataInterface):
         self.props.can_view_back = \
             abs(self._view_history_pos) < len(self._view_history_states)
         self.props.can_view_forward = self._view_history_pos < -1
-
-        # Set content header title
-        filename = Path(project_uri).stem
-        filepath = self._get_subtitle_from_uri()
-        self.get_application().get_window().get_content_title().set_title(
-            filename)
-        self.get_application().get_window().get_content_title().set_subtitle(
-            filepath)
 
     def reset_project(self):
         # Reset figure settings
@@ -621,6 +605,5 @@ class Data(GObject.Object, Graphs.DataInterface):
         items = [item for item in self]
         self.delete_items(items)
         self.initialize()
+        self.props.project_file = None
         self.props.unsaved = False
-        self.get_application().get_window().get_content_title().set_subtitle(
-            "")
