@@ -52,10 +52,11 @@
   <enum id="se.sjoerd.Graphs.import-params.colums.delimiters">
     <value nick="whitespace" value="0"/>
     <value nick="tabs" value="1"/>
-    <value nick="comma" value="2"/>
+    <value nick="colon" value="2"/>
     <value nick="semicolon" value="3"/>
-    <value nick="period" value="4"/>
-    <value nick="custom" value="5"/>
+    <value nick="comma" value="4"/>
+    <value nick="period" value="5"/>
+    <value nick="custom" value="6"/>
   </enum>
 
   <schema id="se.sjoerd.Graphs" path="/se/sjoerd/Graphs/">

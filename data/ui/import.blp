@@ -55,8 +55,8 @@ template $GraphsImportWindow : Adw.Window {
             title: _("Delimiter");
             notify::selected => $on_delimiter_change();
             model: StringList{
-              strings [_("Whitespace"), _("Tab"), _("Decimal comma (,)"),
-                       _("Semicolon (;)"), _("Decimal point (.)"), _("Custom")]
+              strings [_("Whitespace"), _("Tab"), _("Colon (:)"), _("Semicolon (;)"),
+                       _("Decimal comma (,)"), _("Decimal point (.)"), _("Custom")]
             };
           }
           Adw.EntryRow columns_custom_delimiter {

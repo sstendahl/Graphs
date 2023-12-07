@@ -17,8 +17,8 @@ LEGEND_POSITIONS = [
     "center left", "center right", "lower center", "upper center", "center",
 ]
 DELIMITERS = {
-    "whitespace": "\\s+", "tabs": "\\t+", "comma": ",", "semicolon": ";",
-    "period": ".", "custom": "custom",
+    "whitespace": "\\s+", "tabs": "\\t+", "colon": ":", "semicolon": ";",
+    "comma": ",", "period": ".", "custom": "custom",
 }
 LINESTYLES = ["none", "solid", "dotted", "dashed", "dashdot"]
 MARKERSTYLES = [

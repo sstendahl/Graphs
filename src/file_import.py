@@ -90,7 +90,7 @@ class _ImportWindow(Adw.Window):
     @Gtk.Template.Callback()
     def on_delimiter_change(self, _action, _target):
         delimiter_choice = self.columns_delimiter.get_selected()
-        self.columns_custom_delimiter.set_visible(delimiter_choice == 5)
+        self.columns_custom_delimiter.set_visible(delimiter_choice == 6)
 
     @Gtk.Template.Callback()
     def on_reset(self, _widget):
