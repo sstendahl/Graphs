@@ -79,7 +79,7 @@ def _migrate_import_params(settings_, import_file):
                 settings.set_string(key, f"{value} ")
             if key == "delimiter":
                 settings.set_string("custom-delimiter",
-                    misc.delimiter(settings))
+                                    misc.get_delimiter(settings))
                 continue
             elif isinstance(value, int):
                 key = key.replace("_", "-")
