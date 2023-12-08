@@ -54,8 +54,8 @@ install_data(application_id + '.gschema.xml',
 
 
 install_data(
-    application_id + '.mime.xml',
-    install_dir: get_option('datadir') / 'mime/packages',
+  application_id + '.mime.xml',
+  install_dir: get_option('datadir') / 'mime/packages',
 )
 
 compile_schemas = find_program('glib-compile-schemas', required: false)
@@ -88,8 +88,8 @@ blueprints_source = [
 blueprints_ui = []
 blueprints_vala = []
 foreach b : blueprints_source
-	blueprints_ui += b.replace('.blp', '.ui')
-	blueprints_vala += b.replace('ui/', '') + '.vala'
+  blueprints_ui += b.replace('.blp', '.ui')
+  blueprints_vala += b.replace('ui/', '') + '.vala'
 endforeach
 
 blueprints = custom_target('blueprints',
@@ -99,19 +99,65 @@ blueprints = custom_target('blueprints',
 )
 
 blueprints_hack = custom_target('blueprints_hack',
-	input: blueprints,
-	output: blueprints_vala,
-	command: [find_program('touch'), '@OUTPUT@'],
+  input: blueprints,
+  output: blueprints_vala,
+  command: [find_program('touch'), '@OUTPUT@'],
 )
 
-gresource_name = application_id + '.gresource.xml'
-gresource_file = join_paths(meson.current_build_dir(), gresource_name)
+styles = [
+  'adwaita',
+  'adwaita-dark',
+  'bmh',
+  'classic',
+  'dark-background',
+  'fivethirtyeight',
+  'ggplot',
+  'grayscale',
+  'seaborn',
+  'seaborn-bright',
+  'seaborn-colorblind',
+  'seaborn-dark',
+  'seaborn-darkgrid',
+  'seaborn-dark-palette',
+  'seaborn-deep',
+  'seaborn-muted',
+  'seaborn-notebook',
+  'seaborn-paper',
+  'seaborn-pastel',
+  'seaborn-poster',
+  'seaborn-talk',
+  'seaborn-ticks',
+  'seaborn-white',
+  'seaborn-whitegrid',
+  'solarized-light',
+  'tableau-colorblind10',
+  'thesis',
+  'yaru',
+  'yaru-dark'
+]
 
-gresource = custom_target('gresource',
-  input: gresource_name,
-  output: gresource_name,
-  command: ['cp', '@INPUT@', '@OUTPUT@'],
-  depends: blueprints,
+gresource_conf = configuration_data()
+style_conf = ''
+preview_conf = ''
+foreach style : styles
+  style_conf += '    <file compressed="True">styles/' + style + '.mplstyle</file>\n'
+  preview_conf += '    <file compressed="True">previews/' + style + '.svg</file>\n'
+endforeach
+gresource_conf.set('STYLES', style_conf)
+gresource_conf.set('PREVIEWS', preview_conf)
+ui_conf = ''
+foreach b : blueprints_ui
+  if b != 'ui/help_overlay.ui'
+    ui_conf += '    <file preprocess="xml-stripblanks">' + b + '</file>\n'
+  endif
+endforeach
+gresource_conf.set('UI', ui_conf)
+
+gresource_name = application_id + '.gresource.xml'
+gresource = configure_file(
+        input: gresource_name + '.in',
+       output: gresource_name,
+configuration: gresource_conf
 )
 
 gresource_bundle = gnome.compile_resources(

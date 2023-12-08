@@ -3,53 +3,11 @@
 <gresources>
   <gresource prefix="/se/sjoerd/Graphs">
     <file alias="gtk/help-overlay.ui" preprocess="xml-stripblanks">ui/help_overlay.ui</file>
-    <file compressed="True">styles/adwaita.mplstyle</file>
-    <file compressed="True">styles/adwaita-dark.mplstyle</file>
-    <file compressed="True">styles/bmh.mplstyle</file>
-    <file compressed="True">styles/classic.mplstyle</file>
-    <file compressed="True">styles/dark-background.mplstyle</file>
-    <file compressed="True">styles/fivethirtyeight.mplstyle</file>
-    <file compressed="True">styles/ggplot.mplstyle</file>
-    <file compressed="True">styles/grayscale.mplstyle</file>
-    <file compressed="True">styles/seaborn.mplstyle</file>
-    <file compressed="True">styles/seaborn-bright.mplstyle</file>
-    <file compressed="True">styles/seaborn-colorblind.mplstyle</file>
-    <file compressed="True">styles/seaborn-dark.mplstyle</file>
-    <file compressed="True">styles/seaborn-darkgrid.mplstyle</file>
-    <file compressed="True">styles/seaborn-dark-palette.mplstyle</file>
-    <file compressed="True">styles/seaborn-deep.mplstyle</file>
-    <file compressed="True">styles/seaborn-muted.mplstyle</file>
-    <file compressed="True">styles/seaborn-notebook.mplstyle</file>
-    <file compressed="True">styles/seaborn-paper.mplstyle</file>
-    <file compressed="True">styles/seaborn-talk.mplstyle</file>
-    <file compressed="True">styles/seaborn-ticks.mplstyle</file>
-    <file compressed="True">styles/seaborn-white.mplstyle</file>
-    <file compressed="True">styles/seaborn-whitegrid.mplstyle</file>
-    <file compressed="True">styles/solarized-light.mplstyle</file>
-    <file compressed="True">styles/tableau-colorblind10.mplstyle</file>
-    <file compressed="True">styles/thesis.mplstyle</file>
-    <file compressed="True">styles/yaru.mplstyle</file>
-    <file compressed="True">styles/yaru-dark.mplstyle</file>
-    <file preprocess="xml-stripblanks">ui/add_equation_window.ui</file>
-    <file preprocess="xml-stripblanks">ui/add_style.ui</file>
-    <file preprocess="xml-stripblanks">ui/curve_fitting.ui</file>
-    <file preprocess="xml-stripblanks">ui/dialogs.ui</file>
-    <file preprocess="xml-stripblanks">ui/edit_item.ui</file>
-    <file preprocess="xml-stripblanks">ui/export_figure.ui</file>
-    <file preprocess="xml-stripblanks">ui/figure_settings.ui</file>
-    <file preprocess="xml-stripblanks">ui/fitting_parameters.ui</file>
-    <file preprocess="xml-stripblanks">ui/import.ui</file>
-    <file preprocess="xml-stripblanks">ui/item_box.ui</file>
-    <file preprocess="xml-stripblanks">ui/smoothen_settings.ui</file>
-    <file preprocess="xml-stripblanks">ui/style_color_box.ui</file>
-    <file preprocess="xml-stripblanks">ui/style_editor.ui</file>
-    <file preprocess="xml-stripblanks">ui/style_preview.ui</file>
-    <file preprocess="xml-stripblanks">ui/transform_window.ui</file>
-    <file preprocess="xml-stripblanks">ui/window.ui</file>
+@STYLES@
+@UI@
     <file compressed="True">whats_new</file>
     <file>style.css</file>
     <file>style-hc.css</file>
-
   </gresource>
   <gresource prefix="/se/sjoerd/Graphs/icons/scalable/actions/">
     <file preprocess="xml-stripblanks" alias="axes-one-quadrant-symbolic.svg">icons/axes-one-quadrant-symbolic.svg</file>
