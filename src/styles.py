@@ -36,7 +36,7 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
 
     application = GObject.Property(type=Graphs.Application)
     use_custom_style = GObject.Property(type=bool, default=False)
-    custom_style = GObject.Property(type=str, default="adwaita")
+    custom_style = GObject.Property(type=str, default="Adwaita")
     style_model = GObject.Property(type=Gio.ListStore)
 
     def __init__(self, application: Graphs.Application):
