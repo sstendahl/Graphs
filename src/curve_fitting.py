@@ -99,38 +99,52 @@ class CurveFittingWindow(Graphs.CurveFittingTool):
             self.set_entry_rows()
 
     def on_entry_change(self, entry, _param):
-        def is_float(value):
+        """
+        Triggered whenever an entry changes. Update the parameters of the
+        curve and perform a new subsequent fit.
+        """
+        def _is_float(value):
+            """
+            Checks if a value can be converted to a float. If not, it adds a
+            CSS class "error" to the entry.
+            """
             try:
                 float(value)
                 return True
             except ValueError:
+                entry.get_child().add_css_class("error")
                 return False
 
+        entries = entry.get_ancestor(FittingParameterEntry)
+        # Set the parameters for the row corresponding to the entry that
+        # was edited
         for row, params \
                 in zip(self.get_fitting_params(), self.fitting_parameters):
-            param_entries = entry
+            if row == entries:
+                initial = entries.initial.get_text()
+                lower_bound = entries.lower_bound.get_text()
+                upper_bound = entries.upper_bound.get_text()
+                entries.initial.get_child().remove_css_class("error")
+                entries.lower_bound.get_child().remove_css_class("error")
+                entries.upper_bound.get_child().remove_css_class("error")
 
-            # Get the FittingParameterEntry class corresponding to the entry
-            while True:
-                if isinstance(param_entries, FittingParameterEntry):
-                    break
-                param_entries = param_entries.get_parent()
+                new_initial = float(initial) if _is_float(initial) else 1
+                new_lower_bound = float(lower_bound) \
+                    if _is_float(lower_bound) else float("inf")
+                new_upper_bound = float(upper_bound) \
+                    if _is_float(upper_bound) else float("-inf")
 
-            # Set the parameters for the row corresponding to the entry that
-            # was edited
-            if row == param_entries:
-                initial = param_entries.initial.get_text()
-                lower_bound = param_entries.lower_bound.get_text()
-                upper_bound = param_entries.upper_bound.get_text()
+                if (new_initial < new_lower_bound
+                        or new_initial > new_upper_bound):
+                    entries.initial.get_child().add_css_class("error")
+                if not new_lower_bound < new_upper_bound:
+                    entries.lower_bound.get_child().add_css_class("error")
+                    entries.upper_bound.get_child().add_css_class("error")
 
-                new_initial = (float(initial) if is_float(initial) else 1)
-                new_lower_bound = (
-                    lower_bound if is_float(lower_bound) else "inf")
-                new_upper_bound = (
-                    upper_bound if is_float(upper_bound) else "-inf")
                 params.set_initial(new_initial)
-                params.set_lower_bound(new_lower_bound)
-                params.set_upper_bound(new_upper_bound)
+                params.set_lower_bound(str(new_lower_bound))
+                params.set_upper_bound(str(new_upper_bound))
+
         self.fit_curve()
 
     def set_results(self):
@@ -178,8 +192,10 @@ class CurveFittingWindow(Graphs.CurveFittingTool):
                 p0=self.fitting_parameters.get_p0(),
                 bounds=self.fitting_parameters.get_bounds(), nan_policy="omit",
             )
+            self.get_equation().get_child().remove_css_class("error")
         except (ValueError, TypeError, _minpack.error, RuntimeError):
             # Cancel fit if not successful
+            self.get_equation().get_child().add_css_class("error")
             return
         xdata = numpy.linspace(
             min(self.data_curve.xdata), max(self.data_curve.xdata), 5000,
