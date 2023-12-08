@@ -37,7 +37,8 @@ gridview#style-grid {
 }
 
 gridview#style-grid child {
-  margin: 6px 6px 6px 6px;
+  margin: 9px 9px 9px 9px;
+  border-radius: 15px;
 }
 
 gridview#style-grid child:selected {
