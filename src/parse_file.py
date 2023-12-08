@@ -106,7 +106,9 @@ def import_from_columns(self, file):
     column_y = columns_params.get_int("column-y")
     separator = columns_params.get_string("separator").replace(" ", "")
     skip_rows = columns_params.get_int("skip-rows")
-    delimiter = misc.get_delimiter(self.get_settings())
+    delimiter = misc.DELIMITERS[columns_params.get_string("delimiter")]
+    if delimiter == "custom":
+        delimiter = columns_params.get_string("custom-delimiter")
     with file_io.open_wrapped(file, "rt") as wrapper:
         for index, line in enumerate(wrapper, -skip_rows):
             if index < 0:

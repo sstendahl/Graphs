@@ -72,25 +72,20 @@ def _migrate_config(settings_, config_file):
 
 
 def _migrate_import_params(settings_, import_file):
-    for mode, params in file_io.parse_json(import_file).items():
-        settings = settings_.get_child("import-params").get_child(mode)
-        for key, value in params.items():
-            if key == "separator":
-                settings.set_string(key, f"{value} ")
-                continue
-            if key == "delimiter":
-                if value in misc.DELIMITERS.values():
-                    value = \
-                        next((key for key, delimiter in misc.DELIMITERS.items()
-                             if delimiter == value),
-                             misc.get_delimiter(settings))
-                    settings.set_string("delimiter", f"{value}")
-                else:
-                    settings.set_string("delimiter", "custom")
-                    settings.set_string("custom-delimiter", value)
-                continue
-            elif isinstance(value, int):
-                key = key.replace("_", "-")
+    params = file_io.parse_json(import_file)["columns"]
+    settings = settings_.get_child("import-params").get_child("columns")
+    settings.set_string("separator", params["separator"] + " ")
+
+    old_delimiter = params["delimiter"]
+    if old_delimiter in misc.DELIMITERS.values():
+        inverted_dict = {value: key for key, value in misc.DELIMITERS.items()}
+        settings.set_string("delimiter", inverted_dict[old_delimiter])
+    else:
+        settings.set_string("delimiter", "custom")
+        settings.set_string("custom-delimiter", old_delimiter)
+
+    for key in ("column_x", "column_y", "skip_rows"):
+        settings.set_int(key.replace("_", "-"), params[key])
     import_file.delete(None)
 
 

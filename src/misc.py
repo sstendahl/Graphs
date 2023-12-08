@@ -29,11 +29,3 @@ LIMITS = [
     "min_bottom", "max_bottom", "min_top", "max_top",
     "min_left", "max_left", "min_right", "max_right",
 ]
-
-
-def get_delimiter(settings):
-    columns_params = settings.get_child("import-params").get_child("columns")
-    delimiter_value = DELIMITERS[columns_params.get_string("delimiter")]
-    delimiter_value = columns_params.get_string("custom-delimiter") \
-        if delimiter_value == "custom" else delimiter_value
-    return delimiter_value
