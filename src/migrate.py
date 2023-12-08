@@ -77,13 +77,20 @@ def _migrate_import_params(settings_, import_file):
         for key, value in params.items():
             if key == "separator":
                 settings.set_string(key, f"{value} ")
+                continue
             if key == "delimiter":
-                settings.set_string("custom-delimiter",
-                                    misc.get_delimiter(settings))
+                if value in misc.DELIMITERS.values():
+                    value = \
+                        next((key for key, delimiter in misc.DELIMITERS.items()
+                             if delimiter == value),
+                             misc.get_delimiter(settings))
+                    settings.set_string("delimiter", f"{value}")
+                else:
+                    settings.set_string("delimiter", "custom")
+                    settings.set_string("custom-delimiter", value)
                 continue
             elif isinstance(value, int):
                 key = key.replace("_", "-")
-            settings[key] = value
     import_file.delete(None)
 
 
@@ -145,6 +152,7 @@ PLOT_SETTINGS_MIGRATION_TABLE = {
     "yscale": "left_scale",
     "use_custom_plot_style": "use_custom_style",
     "custom_plot_style": "custom_style",
+    "mix_right": "min_right",
 }
 
 LEGEND_POSITIONS = [
