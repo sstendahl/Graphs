@@ -49,6 +49,16 @@
     <value nick=". " value="1"/>
   </enum>
 
+  <enum id="se.sjoerd.Graphs.import-params.colums.delimiters">
+    <value nick="whitespace" value="0"/>
+    <value nick="tabs" value="1"/>
+    <value nick="colon" value="2"/>
+    <value nick="semicolon" value="3"/>
+    <value nick="comma" value="4"/>
+    <value nick="period" value="5"/>
+    <value nick="custom" value="6"/>
+  </enum>
+
   <schema id="se.sjoerd.Graphs" path="/se/sjoerd/Graphs/">
     <child name="actions" schema="se.sjoerd.Graphs.actions"/>
     <child name="add-equation" schema="se.sjoerd.Graphs.add-equation"/>
@@ -169,12 +179,19 @@
     <key name="column-y" type="i">
       <default>1</default>
     </key>
-    <key name="delimiter" type="s">
-      <default>"\\s+"</default>
+
+    <key name="delimiter" enum="se.sjoerd.Graphs.import-params.colums.delimiters">
+      <default>"whitespace"</default>
     </key>
+
+    <key name="custom-delimiter" type="s">
+      <default>""</default>
+    </key>
+
     <key name="separator" enum="se.sjoerd.Graphs.import-params.colums.separators">
       <default>". "</default>
     </key>
+
     <key name="skip-rows" type="i">
       <default>0</default>
     </key>

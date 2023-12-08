@@ -64,6 +64,7 @@ class _ImportWindow(Adw.Window):
 
     columns_group = Gtk.Template.Child()
     columns_delimiter = Gtk.Template.Child()
+    columns_custom_delimiter = Gtk.Template.Child()
     columns_separator = Gtk.Template.Child()
     columns_column_x = Gtk.Template.Child()
     columns_column_y = Gtk.Template.Child()
@@ -85,6 +86,11 @@ class _ImportWindow(Adw.Window):
             )
             getattr(self, f"{mode}_group").set_visible(True)
         self.present()
+
+    @Gtk.Template.Callback()
+    def on_delimiter_change(self, _action, _target):
+        delimiter_choice = self.columns_delimiter.get_selected()
+        self.columns_custom_delimiter.set_visible(delimiter_choice == 6)
 
     @Gtk.Template.Callback()
     def on_reset(self, _widget):

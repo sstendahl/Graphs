@@ -72,15 +72,20 @@ def _migrate_config(settings_, config_file):
 
 
 def _migrate_import_params(settings_, import_file):
-    for mode, params in file_io.parse_json(import_file).items():
-        settings = settings_.get_child("import-params").get_child(mode)
-        for key, value in params.items():
-            if key == "separator":
-                settings.set_string(key, f"{value} ")
-                continue
-            elif isinstance(value, int):
-                key = key.replace("_", "-")
-            settings[key] = value
+    params = file_io.parse_json(import_file)["columns"]
+    settings = settings_.get_child("import-params").get_child("columns")
+    settings.set_string("separator", params["separator"] + " ")
+
+    old_delimiter = params["delimiter"]
+    if old_delimiter in misc.DELIMITERS.values():
+        inverted_dict = {value: key for key, value in misc.DELIMITERS.items()}
+        settings.set_string("delimiter", inverted_dict[old_delimiter])
+    else:
+        settings.set_string("delimiter", "custom")
+        settings.set_string("custom-delimiter", old_delimiter)
+
+    for key in ("column_x", "column_y", "skip_rows"):
+        settings.set_int(key.replace("_", "-"), params[key])
     import_file.delete(None)
 
 
@@ -142,6 +147,7 @@ PLOT_SETTINGS_MIGRATION_TABLE = {
     "yscale": "left_scale",
     "use_custom_plot_style": "use_custom_style",
     "custom_plot_style": "custom_style",
+    "mix_right": "min_right",
 }
 
 LEGEND_POSITIONS = [

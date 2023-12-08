@@ -2,7 +2,7 @@
 import re
 from gettext import gettext as _
 
-from graphs import file_io, item, migrate, utilities
+from graphs import file_io, item, migrate, misc, utilities
 from graphs.misc import ParseError
 
 import numpy
@@ -104,9 +104,11 @@ def import_from_columns(self, file):
         "import-params").get_child("columns")
     column_x = columns_params.get_int("column-x")
     column_y = columns_params.get_int("column-y")
-    delimiter = columns_params.get_string("delimiter")
     separator = columns_params.get_string("separator").replace(" ", "")
     skip_rows = columns_params.get_int("skip-rows")
+    delimiter = misc.DELIMITERS[columns_params.get_string("delimiter")]
+    if delimiter == "custom":
+        delimiter = columns_params.get_string("custom-delimiter")
     with file_io.open_wrapped(file, "rt") as wrapper:
         for index, line in enumerate(wrapper, -skip_rows):
             if index < 0:
