@@ -1,0 +1,110 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+# Matplotlib
+
+# font
+font.family: sans-serif
+font.sans-serif: DejaVu Sans, Bitstream Vera Sans, Computer Modern Sans Serif, Lucida Grande, Verdana, Geneva, Lucid, Arial, Helvetica, Avant Garde, sans-serif
+font.style: normal
+font.weight: 400
+axes.titleweight: 400
+axes.labelweight: 400
+figure.titleweight: 400
+figure.labelweight: 400
+font.variant: normal
+font.size: 10
+axes.labelsize: 10
+xtick.labelsize: 10
+ytick.labelsize: 10
+axes.titlesize: 10
+legend.fontsize: 10
+figure.titlesize: 10
+figure.labelsize: 10
+
+# lines
+lines.linewidth: 1.5
+lines.linestyle: solid
+lines.marker: none
+lines.markersize: 6.0
+lines.markerfacecolor: auto
+lines.markeredgecolor: auto
+lines.markeredgewidth: 1.0
+lines.antialiased: True
+lines.scale_dashes: True
+markers.fillstyle: full
+
+#axes
+axes.spines.bottom: True
+axes.spines.left: True
+axes.spines.right: True
+axes.spines.top: True
+
+#ticks
+xtick.direction: out
+xtick.minor.visible: False
+xtick.major.width: 0.8
+xtick.minor.width: 0.6
+xtick.major.size: 3.5
+xtick.minor.size: 2.0
+xtick.alignment: center
+
+ytick.direction: out
+ytick.minor.visible: False
+ytick.major.width: 0.8
+ytick.minor.width: 0.6
+ytick.major.size: 3.5
+ytick.minor.size: 2.0
+ytick.alignment: center_baseline
+
+xtick.bottom: True
+ytick.left: True
+xtick.top: False
+ytick.right: False
+
+# grid
+axes.grid: False
+axes.grid.which: major
+axes.grid.axis: both
+grid.linewidth: 0.8
+grid.alpha: 1.0
+grid.linestyle: -
+
+# padding
+xtick.major.pad: 3.5
+xtick.minor.pad: 3.5
+ytick.major.pad: 3.5
+ytick.minor.pad: 3.5
+axes.labelpad: 4.0
+axes.titlepad: 6.0
+
+# colors
+text.color: 000000
+axes.labelcolor: 000000
+xtick.labelcolor: 000000
+ytick.labelcolor: 000000
+xtick.color: 000000
+ytick.color: 000000
+axes.edgecolor: 000000
+grid.color: b0b0b0
+axes.facecolor: FFFFFF
+figure.facecolor: FFFFFF
+figure.edgecolor: FFFFFF
+
+axes.prop_cycle: cycler('color', ['1f77b4', 'ff7f0e', '2ca02c', 'd62728', '9467bd', '8c564b', 'e377c2', '7f7f7f', 'bcbd22', '17becf'])
+patch.facecolor: 1f77b4
+
+# other
+axes.linewidth: 0.8
+patch.antialiased: True
+patch.edgecolor: 000000
+
+mathtext.default: regular
+axes.axisbelow: line
+legend.fancybox: True
+legend.frameon: True
+
+# custom
+patch.linewidth: 1.0
+figure.figsize: 6.4, 4.8
+image.cmap: viridis
+legend.numpoints: 1
+legend.scatterpoints: 1

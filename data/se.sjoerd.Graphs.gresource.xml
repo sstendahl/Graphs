@@ -11,6 +11,7 @@
     <file compressed="True">styles/fivethirtyeight.mplstyle</file>
     <file compressed="True">styles/ggplot.mplstyle</file>
     <file compressed="True">styles/grayscale.mplstyle</file>
+    <file compressed="True">styles/matplotlib.mplstyle</file>
     <file compressed="True">styles/seaborn.mplstyle</file>
     <file compressed="True">styles/seaborn-bright.mplstyle</file>
     <file compressed="True">styles/seaborn-colorblind.mplstyle</file>
