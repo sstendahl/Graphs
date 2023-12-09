@@ -276,7 +276,9 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
         if self.props.hide_unselected:
             drawable_items = []
             for item in self.props.items:
-                item.connect("notify::selected", self._redraw)
+                if hasattr(item, "handler"):
+                    item.disconnect(item.handler)
+                item.handler = item.connect("notify::selected", self._redraw)
                 if item.get_selected():
                     drawable_items.append(item)
         else:
