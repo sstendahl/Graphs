@@ -147,9 +147,7 @@ gresource_conf.set('STYLES', style_conf)
 gresource_conf.set('PREVIEWS', preview_conf)
 ui_conf = ''
 foreach b : blueprints_ui
-  if b != 'ui/help_overlay.ui'
-    ui_conf += '    <file preprocess="xml-stripblanks">' + b + '</file>\n'
-  endif
+  ui_conf += '    <file preprocess="xml-stripblanks">' + b + '</file>\n'
 endforeach
 gresource_conf.set('UI', ui_conf)
 
