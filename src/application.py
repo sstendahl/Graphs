@@ -175,7 +175,9 @@ class PythonApplication(Graphs.Application):
         """
         if keyval == 65507 or keyval == 65508:  # Control_L or Control_R
             self.set_ctrl(True)
-        else:  # Prevent Ctrl from being true with key combos
+        if keyval == 65505 or keyval == 65506:  # Left or right Shift
+            self.set_shift(True)
+        else:  # Prevent keys from being true with key combos
             self.set_ctrl(False)
 
     def on_key_release_event(self, _controller, _keyval, _keycode, _state):
@@ -184,6 +186,7 @@ class PythonApplication(Graphs.Application):
         as the key press event from matplotlib is not working properly atm.
         """
         self.set_ctrl(False)
+        self.set_shift(False)
 
     def do_activate(self):
         """
