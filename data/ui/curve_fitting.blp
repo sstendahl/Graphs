@@ -7,6 +7,9 @@ template $GraphsCurveFittingTool : Adw.Window {
   focus-widget: confirm_button;
   default-width: 1000;
   default-height: 650;
+  width-request: 305;
+  height-request: 410;
+
   ShortcutController {
     Shortcut {
       trigger: "Escape";
@@ -14,79 +17,96 @@ template $GraphsCurveFittingTool : Adw.Window {
     }
   }
 
-  Adw.ToolbarView {
-    [top]
-    Adw.HeaderBar {
-      show-end-title-buttons: false;
-      [start]
-      Button {
-        label: _("Cancel");
-        action-name: "window.close";
-      }
-
-      [end]
-      Button confirm_button {
-        label: _("Add Fit to Data");
-        styles ["suggested-action"]
-      }
+  Adw.Breakpoint {
+    condition ("max-width: 725sp")
+    setters {
+      split_view.collapsed: true;
     }
+  }
 
-    Box {
-      Box{
+  content: Adw.ToolbarView {
+    top-bar-style: flat;
+    content: Adw.OverlaySplitView split_view {
+      show-sidebar: bind show_sidebar_button.active;
+      notify => $on_sidebar_toggle();
+      sidebar: Box {
         orientation: vertical;
-        vexpand: true;
-        width-request: 285;
-        Adw.EntryRow equation {
-          margin-top: 12;
-          margin-bottom: 12;
-          margin-start: 12;
-          margin-end: 3;
-          title: _("Equation");
-          styles ["card"]
+        Adw.HeaderBar {
+          styles ["flat"]
+          title-widget: Adw.WindowTitle title_widget {
+            title: "Graphs";
+          };
         }
-        ScrolledWindow {
+        ScrolledWindow fitting_param_entries {
           vexpand: true;
-          height-request: 100;
+          width-request: 275;
           hscrollbar-policy: never;
           Box {
             vexpand: true;
             orientation: vertical;
             margin-start: 12;
-            margin-end: 3;
-            Box fitting_params {
-              margin-top: 12;
-              spacing: 12;
-              orientation: vertical;
+            margin-end: 12;
+            margin-bottom: 12;
+            margin-top: 12;
+            Adw.PreferencesGroup {
+              Adw.EntryRow equation {
+                title: _("Equation");
+              }
+              Box fitting_params {
+                margin-top: 12;
+                margin-bottom: 12;
+                spacing: 12;
+                orientation: vertical;
+              }
+              ScrolledWindow {
+                vexpand: false;
+                hexpand: false;
+                hscrollbar-policy: automatic;
+                vscrollbar-policy: never;
+                TextView text_view {
+                  halign: fill;
+                  top-margin: 12;
+                  left-margin: 12;
+                  bottom-margin: 12;
+                  editable: false;
+                  styles ["card"]
+                }
+              }
+              Button confirm_button {
+                margin-start: 12;
+                margin-end: 12;
+                margin-bottom: 12;
+                margin-top: 12;
+                label: _("Add Fit to Data");
+                styles ["pill"]
+              }
             }
           }
         }
-        [end]
-        ScrolledWindow {
-          margin-top: 6;
-          height-request: 150;
-          margin-bottom: 12;
-          margin-start: 12;
-          margin-end: 3;
-          TextView text_view {
-            vexpand: false;
-            top-margin: 12;
-            left-margin: 12;
-            bottom-margin: 12;
-            editable: false;
-            styles ["card"]
+      };
+      content:
+      Box {
+      orientation: vertical;
+        Adw.HeaderBar {
+          styles ["flat"]
+          ToggleButton show_sidebar_button {
+            icon-name: "sidebar-show-symbolic";
+            tooltip-text: _("Toggle Sidebar");
+            active: bind split_view.show-sidebar;
+            visible: bind split_view.collapsed;
           }
         }
-      }
-      Adw.ToastOverlay toast_overlay {
-        focusable: true;
-        height-request: 150;
-        width-request: 300;
-        hexpand: true;
-        child: Adw.StatusPage {
-          icon-name: "dialog-error-symbolic";
-          title: _("Canvas Failed to Load");
-        };
-      }
-    }
-  }
+        Adw.ToastOverlay toast_overlay {
+          focusable: true;
+          height-request: 150;
+          width-request: 300;
+          hexpand: true;
+          child: Adw.StatusPage {
+            icon-name: "dialog-error-symbolic";
+            title: _("Canvas Failed to Load");
+          };
+        }
+      };
+    };
+  };
 }
