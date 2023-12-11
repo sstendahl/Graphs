@@ -75,7 +75,7 @@ class CurveFittingWindow(Graphs.CurveFittingTool):
         ).get_figure_settings()
         style = self.get_application().get_figure_style_manager(
         ).get_system_style_params()
-        canvas = Canvas(self.get_application(), style)
+        canvas = Canvas(self.get_application(), style, interactive=False)
         canvas.props.items = [self.fitted_curve, self.data_curve, self.fill]
         axis = canvas.axes[0]
         axis.yscale = "linear"

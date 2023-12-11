@@ -78,7 +78,7 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
     min_selected = GObject.Property(type=float, default=0)
     max_selected = GObject.Property(type=float, default=0)
 
-    def __init__(self, application, style_params):
+    def __init__(self, application, style_params, interactive=True):
         """
         Create the canvas.
 
@@ -107,26 +107,29 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
         self.rubberband_edge_color = utilities.rgba_to_tuple(color_rgba, True)
         color_rgba.alpha = 0.3
         self.rubberband_fill_color = utilities.rgba_to_tuple(color_rgba, True)
-        # Reference is created by the toolbar itself
-        _DummyToolbar(self)
+
         self.highlight = _Highlight(self)
         self._legend = True
         self._legend_position = misc.LEGEND_POSITIONS[0]
         self._handles = []
-        self.mpl_connect("scroll_event", self._on_scroll_event)
-        self.mpl_connect("motion_notify_event", self._set_mouse_fraction)
-        self._xfrac, self._yfrac = None, None
-        zoom_gesture = Gtk.GestureZoom.new()
-        zoom_gesture.connect("scale-changed", self._on_zoom_gesture)
-        zoom_gesture.connect("end", self.figure.canvas.toolbar.push_current)
-        scroll_gesture =  \
-            Gtk.EventControllerScroll.new(
-                Gtk.EventControllerScrollFlags.BOTH_AXES)
-        scroll_gesture.connect("scroll", self._on_pan_gesture)
-        scroll_gesture.connect("scroll-end",
-                               self.figure.canvas.toolbar.push_current)
-        self.add_controller(zoom_gesture)
-        self.add_controller(scroll_gesture)
+        if interactive:
+            # Reference is created by the toolbar itself
+            _DummyToolbar(self)
+            self.mpl_connect("scroll_event", self._on_scroll_event)
+            self.mpl_connect("motion_notify_event", self._set_mouse_fraction)
+            self._xfrac, self._yfrac = None, None
+            zoom_gesture = Gtk.GestureZoom.new()
+            zoom_gesture.connect("scale-changed", self._on_zoom_gesture)
+            zoom_gesture.connect("end",
+                                 self.figure.canvas.toolbar.push_current)
+            scroll_gesture =  \
+                Gtk.EventControllerScroll.new(
+                    Gtk.EventControllerScrollFlags.BOTH_AXES)
+            scroll_gesture.connect("scroll", self._on_pan_gesture)
+            scroll_gesture.connect("scroll-end",
+                                   self.figure.canvas.toolbar.push_current)
+            self.add_controller(zoom_gesture)
+            self.add_controller(scroll_gesture)
 
         self.connect("notify::hide-unselected", self._redraw)
         self.connect("notify::items", self._redraw)
