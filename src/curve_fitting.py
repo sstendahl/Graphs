@@ -27,17 +27,14 @@ class CurveFittingWindow(Graphs.CurveFittingTool):
         super().__init__(
             application=application, transient_for=application.get_window(),
         )
+        Adw.StyleManager.get_default().connect("notify", self.reload_canvas)
         self.equation = self.get_equation()
         ui.bind_values_to_settings(
             application.get_settings_child("curve-fitting"), self)
         self.get_confirm_button().connect("clicked", self.add_fit)
         style = application.get_figure_style_manager(
         ).get_system_style_params()
-        canvas = Canvas(application, style)
 
-        figure_settings_main = application.get_data().get_figure_settings()
-        canvas.left_label = figure_settings_main.get_property("left_label")
-        canvas.bottom_label = figure_settings_main.get_property("bottom_label")
         self.param = []
         self.sigma = []
         self.r2 = 0
@@ -48,7 +45,8 @@ class CurveFittingWindow(Graphs.CurveFittingTool):
 
         for var in self.get_free_variables():
             self.fitting_parameters.add_items([FittingParameter(name=var)])
-        # Generate item for the data that is fitted to
+
+        # Generate items for the canvas
         self.data_curve = DataItem.new(
             style, xdata=item.xdata, ydata=item.ydata,
             name=item.get_name(), color="#1A5FB4",
@@ -56,10 +54,7 @@ class CurveFittingWindow(Graphs.CurveFittingTool):
         self.data_curve.linestyle = 0
         self.data_curve.markerstyle = 1
         self.data_curve.markersize = 13
-
-        # Generate item for the fit
         self.fitted_curve = DataItem.new(style, color="#A51D2D")
-
         self.fill = FillItem.new(
             style,
             (self.fitted_curve.xdata,
@@ -69,19 +64,32 @@ class CurveFittingWindow(Graphs.CurveFittingTool):
         )
 
         # Set up canvas
-        canvas.props.items = [self.fitted_curve, self.data_curve, self.fill]
+        self.reload_canvas()
+        self.fit_curve()
+        self.set_entry_rows()
+        self.present()
 
+    def reload_canvas(self, *_args):
+        self.get_toast_overlay().set_child(None)
+        figure_settings = self.get_application().get_data(
+        ).get_figure_settings()
+        style = self.get_application().get_figure_style_manager(
+        ).get_system_style_params()
+        canvas = Canvas(self.get_application(), style, interactive=False)
+        canvas.props.items = [self.fitted_curve, self.data_curve, self.fill]
         axis = canvas.axes[0]
         axis.yscale = "linear"
         axis.xscale = "linear"
+        axis.xlabel = "X Value"
+        canvas.left_label = figure_settings.get_property("left_label")
+        canvas.bottom_label = figure_settings.get_property("bottom_label")
         canvas.highlight_enabled = False
-        canvas.toolbar = None
+        canvas = canvas
+        canvas._on_pan_gesture = None
         canvas._on_pick = None
+        canvas.toolbar = None
         self.canvas = canvas
-        self.fit_curve()
-        self.set_entry_rows()
-        self.get_toast_overlay().set_child(canvas)
-        self.present()
+        self.get_toast_overlay().set_child(self.canvas)
 
     def get_free_variables(self):
         return re.findall(
@@ -103,6 +111,8 @@ class CurveFittingWindow(Graphs.CurveFittingTool):
         Triggered whenever an entry changes. Update the parameters of the
         curve and perform a new subsequent fit.
         """
+        error = False
+
         def _is_float(value):
             """
             Checks if a value can be converted to a float. If not, it adds a
@@ -128,35 +138,52 @@ class CurveFittingWindow(Graphs.CurveFittingTool):
                 entries.lower_bound.get_child().remove_css_class("error")
                 entries.upper_bound.get_child().remove_css_class("error")
 
-                new_initial = float(initial) if _is_float(initial) else 1
-                new_lower_bound = float(lower_bound) \
-                    if _is_float(lower_bound) else float("inf")
-                new_upper_bound = float(upper_bound) \
-                    if _is_float(upper_bound) else float("-inf")
+                for bound in [initial, lower_bound, upper_bound]:
+                    if not _is_float(bound):
+                        self.set_results(error="value")
+                        return
 
-                if (new_initial < new_lower_bound
-                        or new_initial > new_upper_bound):
+                initial = float(initial)
+                lower_bound = float(lower_bound)
+                upper_bound = float(upper_bound)
+
+                if (initial < lower_bound
+                        or initial > upper_bound):
                     entries.initial.get_child().add_css_class("error")
-                if not new_lower_bound < new_upper_bound:
+                    self.set_results(error="bounds")
+                    error = True
+                if not lower_bound < upper_bound:
                     entries.lower_bound.get_child().add_css_class("error")
                     entries.upper_bound.get_child().add_css_class("error")
+                    error = True
+                    self.set_results(error="bounds")
 
-                params.set_initial(new_initial)
-                params.set_lower_bound(str(new_lower_bound))
-                params.set_upper_bound(str(new_upper_bound))
+                params.set_initial(initial)
+                params.set_lower_bound(str(lower_bound))
+                params.set_upper_bound(str(upper_bound))
 
-        self.fit_curve()
+        if not error:
+            self.fit_curve()
 
-    def set_results(self):
+    def set_results(self, error=""):
         initial_string = _("Results:") + "\n"
         buffer_string = initial_string
-        for index, arg in enumerate(self.get_free_variables()):
-            parameter = utilities.sig_fig_round(self.param[index], 3)
-            sigma = utilities.sig_fig_round(self.sigma[index], 3)
-            buffer_string += f"\n {arg}: {parameter}"
-            buffer_string += f" (± {sigma})"
-        buffer_string += "\n\n" + _("Sum of R²: {R2}").format(R2=self.r2)
-
+        if error == "value":
+            buffer_string += \
+                _("Please enter valid fitting \nparameters to start the fit")
+        elif error == "equation":
+            buffer_string += \
+                _("Please enter a valid equation \nto start the fit")
+        elif error == "bounds":
+            buffer_string += \
+                _("Please enter valid fitting bounds \nto start the fit")
+        else:
+            for index, arg in enumerate(self.get_free_variables()):
+                parameter = utilities.sig_fig_round(self.param[index], 3)
+                sigma = utilities.sig_fig_round(self.sigma[index], 3)
+                buffer_string += f"{arg}: {parameter}"
+                buffer_string += f" (± {sigma})\n"
+            buffer_string += "\n" + _("Sum of R²: {R2}").format(R2=self.r2)
         self.get_text_view().get_buffer().set_text(buffer_string)
         bold_tag = Gtk.TextTag(weight=700)
         self.get_text_view().get_buffer().get_tag_table().add(bold_tag)
@@ -196,6 +223,7 @@ class CurveFittingWindow(Graphs.CurveFittingTool):
         except (ValueError, TypeError, _minpack.error, RuntimeError):
             # Cancel fit if not successful
             self.get_equation().get_child().add_css_class("error")
+            self.set_results(error="equation")
             return
         xdata = numpy.linspace(
             min(self.data_curve.xdata), max(self.data_curve.xdata), 5000,
@@ -336,7 +364,7 @@ class FittingParameterEntry(Gtk.Box):
         super().__init__(application=parent.get_application())
         self.parent = parent
         self.params = parent.fitting_parameters[arg]
-        fitting_param_string = _("Fitting parameters for {param_name}").format(
+        fitting_param_string = _("Fitting Parameters for {param_name}").format(
             param_name=self.params.get_name())
         self.label.set_markup(
             f"<b> {fitting_param_string}: </b>")
