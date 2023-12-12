@@ -165,8 +165,14 @@ class FigureSettingsWindow(Adw.Window):
             style_manager = self.get_application().get_figure_style_manager()
             style_manager._on_style_change()
 
-    def set_index(self, _style_manager, name):
-        self.props.figure_settings.set_custom_style(name)
+    def set_index(self, style_manager, name):
+        if not self.props.figure_settings.get_use_custom_style():
+            return
+
+        old_style = self.props.figure_settings.get_custom_style()
+        if old_style not in style_manager.get_stylenames():
+            self.props.figure_settings.set_custom_style(name)
+
         selection_model = self.grid_view.get_model()
         stylename = self.props.figure_settings.get_custom_style()
         for index, style in enumerate(selection_model):
