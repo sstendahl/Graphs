@@ -175,7 +175,7 @@ class PythonApplication(Graphs.Application):
         """
         if keyval == 65507 or keyval == 65508:  # Control_L or Control_R
             self.set_ctrl(True)
-        if keyval == 65505 or keyval == 65506:  # Left or right Shift
+        elif keyval == 65505 or keyval == 65506:  # Left or right Shift
             self.set_shift(True)
         else:  # Prevent keys from being true with key combos
             self.set_ctrl(False)
