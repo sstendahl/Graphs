@@ -20,7 +20,7 @@ def _on_bind(_factory, item, window):
     widget = item.get_child()
     style = item.get_item()
     widget.style = style
-    if style.get_mutable():
+    if style.get_mutable() and not widget.edit_button.get_visible():
         widget.edit_button.set_visible(True)
         widget.edit_button.connect("clicked", window.edit_style, style)
 
@@ -85,11 +85,12 @@ class FigureSettingsWindow(Adw.Window):
         self.set_axes_entries()
         if highlighted is not None:
             getattr(self, highlighted).grab_focus()
-
+        style_manager = application.get_figure_style_manager()
+        style_manager.connect("add-style", self.set_index)
         self.style_editor = styles.StyleEditor(self)
         self.grid_view.set_factory(_get_widget_factory(self))
         self.grid_view.get_model().set_model(
-            application.get_figure_style_manager().get_style_model(),
+            style_manager.get_style_model(),
         )
         self._on_use_custom_style(figure_settings, None)
         self.present()
@@ -154,11 +155,6 @@ class FigureSettingsWindow(Adw.Window):
             )
 
     def edit_style(self, _button, style):
-        figure_settings = \
-            self.props.application.get_data().get_figure_settings()
-        if figure_settings.get_use_custom_style() \
-                and figure_settings.get_custom_style() == style.get_name():
-            self.grid_view.get_model().set_selected(0)
         self.style_editor.load_style(style)
         self.navigation_view.push(self.style_editor)
 
@@ -166,6 +162,17 @@ class FigureSettingsWindow(Adw.Window):
     def on_pop(self, _view, page):
         if page == self.style_editor:
             self.style_editor.save_style()
+            style_manager = self.get_application().get_figure_style_manager()
+            style_manager._on_style_change()
+
+    def set_index(self, _style_manager, name):
+        self.props.figure_settings.set_custom_style(name)
+        selection_model = self.grid_view.get_model()
+        stylename = self.props.figure_settings.get_custom_style()
+        for index, style in enumerate(selection_model):
+            if index > 0 and style.get_name() == stylename:
+                selection_model.set_selected(index)
+                break
 
     @Gtk.Template.Callback()
     def choose_style(self, _button):
