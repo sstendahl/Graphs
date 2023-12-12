@@ -33,6 +33,9 @@ def _is_style_bright(params: RcParams):
 
 class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
     __gtype_name__ = "GraphsStyleManager"
+    __gsignals__ = {
+        "add-style": (GObject.SIGNAL_RUN_FIRST, None, (str,)),
+    }
 
     application = GObject.Property(type=Graphs.Application)
     use_custom_style = GObject.Property(type=bool, default=False)
@@ -119,6 +122,7 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
             ),
             _compare_styles,
         )
+        self.emit("add-style", name)
 
     def get_style_model(self) -> Gio.ListStore:
         return self.props.style_model
@@ -168,7 +172,8 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
             self._add_user_style(file, style_params, stylename)
         if possible_visual_impact \
                 and self.props.use_custom_style \
-                and self.props.custom_style == stylename:
+                and self.props.custom_style == stylename \
+                and event_type != 2:
             self._on_style_change()
 
     def _on_style_change(self, override: bool = False) -> None:
@@ -340,6 +345,10 @@ class AddStyleWindow(Adw.Window):
         style_manager = application.get_figure_style_manager()
         self._styles = sorted(style_manager.get_stylenames())
         self.style_templates.set_model(Gtk.StringList.new(self._styles))
+        if style_manager.props.use_custom_style:
+            new_style = style_manager.props.custom_style
+            index = self._styles.index(new_style)
+            self.style_templates.set_selected(index)
         self.present()
 
     @Gtk.Template.Callback()
@@ -605,6 +614,19 @@ class StyleEditor(Adw.NavigationPage):
 
     @Gtk.Template.Callback()
     def on_delete(self, _button):
+        style_manager = self._style_manager
+        style_model = style_manager.props.style_model
+        file = self.style.get_file()
+        for index, style in enumerate(style_model):
+            if style is not None:
+                file2 = style.get_file()
+                if file2 is not None and file.equal(file2):
+                    stylename = style.get_name()
+                    style_model.remove(index)
+                    style_manager._stylenames.remove(stylename)
+                    style_manager.props.use_custom_style = False
+                    style_manager.props.custom_style = \
+                        style_manager._system_style_name
         self.style.get_file().trash(None)
         self.style = None
         self.parent.navigation_view.pop()
