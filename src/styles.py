@@ -285,6 +285,18 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
                 params[key] = value
         return params
 
+    def delete_style(self, file: Gio.File) -> None:
+        style_model = self.props.style_model
+        for index, style in enumerate(style_model):
+            if style is not None:
+                file2 = style.get_file()
+                if file2 is not None and file.equal(file2):
+                    stylename = style.get_name()
+                    style_model.remove(index)
+                    self._stylenames.remove(stylename)
+                    self.props.use_custom_style = False
+                    self.props.custom_style = self._system_style_name
+
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/style_preview.ui")
 class StylePreview(Gtk.AspectFrame):
@@ -615,19 +627,9 @@ class StyleEditor(Adw.NavigationPage):
     @Gtk.Template.Callback()
     def on_delete(self, _button):
         style_manager = self._style_manager
-        style_model = style_manager.props.style_model
         file = self.style.get_file()
-        for index, style in enumerate(style_model):
-            if style is not None:
-                file2 = style.get_file()
-                if file2 is not None and file.equal(file2):
-                    stylename = style.get_name()
-                    style_model.remove(index)
-                    style_manager._stylenames.remove(stylename)
-                    style_manager.props.use_custom_style = False
-                    style_manager.props.custom_style = \
-                        style_manager._system_style_name
-        self.style.get_file().trash(None)
+        style_manager.delete_style(file)
+        file.trash(None)
         self.style = None
         self.parent.navigation_view.pop()
 
