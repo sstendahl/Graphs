@@ -129,8 +129,7 @@ class FigureSettingsWindow(Adw.Window):
                 figure_settings.set_use_custom_style(True)
 
     def set_axes_entries(self):
-        canvas = self.get_application().get_window().get_canvas()
-        visible_axes = canvas.visible_axes
+        visible_axes = self.get_application().get_data().get_used_positions()
         for (direction, visible) in zip(_DIRECTIONS, visible_axes):
             if visible:
                 for s in ("min_", "max_"):

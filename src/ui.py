@@ -26,8 +26,7 @@ def on_items_change(data, _ignored, self):
 
 
 def enable_axes_actions(self, _callback, application):
-    canvas = application.get_window().get_canvas()
-    visible_axes = canvas.visible_axes
+    visible_axes = application.get_data().get_used_positions()
     directions = ["bottom", "top", "left", "right"]
     for index, direction in enumerate(directions):
         action = application.lookup_action(f"change-{direction}-scale")

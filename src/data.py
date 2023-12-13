@@ -150,6 +150,25 @@ class Data(GObject.Object, Graphs.DataInterface):
         """Get all managed items."""
         return list(self._items.values())
 
+    def get_used_positions(self) -> list:
+        """
+        Get the axes positions that the items are bound to
+        Returns an array in the form of [bool, bool, bool, bool], where
+        each element corresponds to the [bottom, top, left, right] positions.
+        """
+        # bottom, top, left, right
+        figure_settings = self.get_figure_settings()
+        used_positions = [False, False, False, False]
+
+        for item_ in self.items:
+            if (figure_settings.get_hide_unselected() and not item_.selected):
+                continue
+            used_positions[item_.get_xposition()] = True
+            used_positions[item_.get_yposition() + 2] = True
+        if not any(used_positions):
+            return [True, False, True, False]
+        return used_positions
+
     def set_items(self, items: misc.ItemList) -> None:
         """Set all managed items."""
         self._items = {}
