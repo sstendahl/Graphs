@@ -175,12 +175,32 @@ def preprocess(string: str):
         expression = match.group(1)  # Get the content inside the brackets
         return f"1/(sin({expression}))"
 
+    def convert_superscript(match):
+        superscript_mapping = {
+            "⁰": "0",
+            "¹": "1",
+            "²": "2",
+            "³": "3",
+            "⁴": "4",
+            "⁵": "5",
+            "⁶": "6",
+            "⁷": "7",
+            "⁸": "8",
+            "⁹": "9"
+        }
+        sequence = match.group(1)  # Get the content inside the superscript
+        sequence = "".join(superscript_mapping.get(char, char)
+                           for char in sequence)
+        return f"**{sequence}"
+
     string = string.replace("pi", f"({float(numpy.pi)})")
     string = string.replace("^", "**")
     string = re.sub(r"cot\((.*?)\)", convert_cot, string)
     string = re.sub(r"sec\((.*?)\)", convert_sec, string)
     string = re.sub(r"csc\((.*?)\)", convert_csc, string)
     string = re.sub(r"d\((.*?)\)", convert_degrees, string)
+    string = re.sub(r"([\u2070-\u209f\u00b0-\u00be]+)",
+                    convert_superscript, string)
     return string.lower()
 
 
@@ -193,6 +213,7 @@ def string_to_function(equation_name):
         r"\b(?!x\b|X\b|sin\b|cos\b|tan\b)[a-wy-zA-WY-Z]+\b",
         equation_name,
     )
+    print(variables)
     sym_vars = sympy.symbols(variables)
     with contextlib.suppress(sympy.SympifyError, TypeError, SyntaxError):
         symbolic = sympy.sympify(
