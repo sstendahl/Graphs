@@ -6,7 +6,7 @@ from gi.repository import Adw, GObject, Graphs, Gtk
 
 from graphs import misc, styles, ui, utilities
 
-_DIRECTIONS = ["bottom", "left", "top", "right"]
+_DIRECTIONS = ["bottom", "top", "left", "right"]
 
 
 def _get_widget_factory(window):
@@ -68,7 +68,6 @@ class FigureSettingsWindow(Adw.Window):
             application=application, transient_for=application.get_window(),
             figure_settings=figure_settings,
         )
-
         notifiers = ("custom_style", "use_custom_style")
         for prop in notifiers:
             figure_settings.connect(
@@ -130,13 +129,9 @@ class FigureSettingsWindow(Adw.Window):
                 figure_settings.set_use_custom_style(True)
 
     def set_axes_entries(self):
-        used_axes = [False, False, False, False]
-        for item in self.get_application().get_data():
-            for i in item.get_xposition() * 2, 1 + item.get_yposition() * 2:
-                used_axes[i] = True
-        if not any(used_axes):
-            used_axes = [True, True, False, False]
-        for (direction, visible) in zip(_DIRECTIONS, used_axes):
+        canvas = self.get_application().get_window().get_canvas()
+        visible_axes = canvas.visible_axes
+        for (direction, visible) in zip(_DIRECTIONS, visible_axes):
             if visible:
                 for s in ("min_", "max_"):
                     entry = getattr(self, s + direction)
@@ -146,7 +141,9 @@ class FigureSettingsWindow(Adw.Window):
                     entry.connect(
                         "notify::text", self.on_entry_change, s + direction,
                     )
-                getattr(self, direction + "_limits").set_visible(True)
+            getattr(self, direction + "_limits").set_visible(visible)
+            getattr(self, direction + "_scale").set_visible(visible)
+            getattr(self, direction + "_label").set_visible(visible)
 
     def on_entry_change(self, entry, _param, prop):
         with contextlib.suppress(SyntaxError):

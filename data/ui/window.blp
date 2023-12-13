@@ -666,6 +666,9 @@ menu view_menu {
   section {
     submenu {
       label: _("Top X Scale");
+      hidden-when: "action-disabled";
+      action: "app.change-top-scale";
+      target: "0";
       item {
         label: _("Linear");
         action: "app.change-top-scale";
@@ -694,6 +697,9 @@ menu view_menu {
     }
     submenu {
       label: _("Bottom X Scale");
+      hidden-when: "action-disabled";
+      action: "app.change-bottom-scale";
+      target: "0";
       item {
         label: _("Linear");
         action: "app.change-bottom-scale";
@@ -723,6 +729,9 @@ menu view_menu {
     }
     submenu {
       label: _("Left Y Scale");
+      hidden-when: "action-disabled";
+      action: "app.change-left-scale";
+      target: "0";
       item {
         label: _("Linear");
         action: "app.change-left-scale";
@@ -751,6 +760,9 @@ menu view_menu {
     }
     submenu {
       label: _("Right Y Scale");
+      hidden-when: "action-disabled";
+      action: "app.change-right-scale";
+      target: "0";
       item {
         label: _("Linear");
         action: "app.change-right-scale";

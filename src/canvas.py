@@ -110,6 +110,7 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
 
         self.highlight = _Highlight(self)
         self._legend = True
+        self._visible_axes = (False, False, False, False)
         self._legend_position = misc.LEGEND_POSITIONS[0]
         self._handles = []
         if interactive:
@@ -274,10 +275,18 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
             self._renderer.dpi = self.figure.dpi
             self.figure.draw(self._renderer)
 
+    @property
+    def visible_axes(self):
+        return self._visible_axes
+
+    @visible_axes.setter
+    def visible_axes(self, visible_axes):
+        self._visible_axes = visible_axes
+
     def _redraw(self, *_args):
         # bottom, top, left, right
-        visible_axes = [False, False, False, False]
         used_axes = [False, False, False, False]
+        visible_axes = [False, False, False, False]
         if self.props.hide_unselected:
             drawable_items = []
             for item in self.props.items:
@@ -294,14 +303,16 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
             visible_axes[xposition] = True
             visible_axes[2 + yposition] = True
             used_axes[xposition + 2 * yposition] = True
+        self.visible_axes = visible_axes
         axes_directions = (
             ("bottom", "left"),   # axis
             ("top", "left"),      # top_left_axis
             ("bottom", "right"),  # right_axis
             ("top", "right"),     # top_right_axis
         )
-        if not any(visible_axes):
-            visible_axes = (True, False, True, False)  # Left and bottom
+
+        if not any(self.visible_axes):
+            self.visible_axes = (True, False, True, False)  # Left and bottom
             used_axes = (True, False, False, False)  # self.axis visible
             self._legend_axis = self._axis
 
@@ -316,7 +327,7 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
             # Set tick where requested, as long as that axis is not occupied
             # and visible
             axis.tick_params(which=ticks, **{
-                direction: (draw_frame and not visible_axes[i]
+                direction: (draw_frame and not self.visible_axes[i]
                             or direction in directions)
                 and params[f"{'x' if i < 2 else 'y'}tick.{direction}"]
                 for i, direction in enumerate(possible_directions)
@@ -333,10 +344,10 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
             if used:
                 self._legend_axis = axis
 
-        self._axis.get_xaxis().set_visible(visible_axes[0])
-        self._top_left_axis.get_xaxis().set_visible(visible_axes[1])
-        self._axis.get_yaxis().set_visible(visible_axes[2])
-        self._right_axis.get_yaxis().set_visible(visible_axes[3])
+        self._axis.get_xaxis().set_visible(self.visible_axes[0])
+        self._top_left_axis.get_xaxis().set_visible(self.visible_axes[1])
+        self._axis.get_yaxis().set_visible(self.visible_axes[2])
+        self._right_axis.get_yaxis().set_visible(self.visible_axes[3])
 
         self._handles = [
             artist.new_for_item(self, item)

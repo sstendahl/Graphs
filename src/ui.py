@@ -25,6 +25,15 @@ def on_items_change(data, _ignored, self):
     data.add_view_history_state()
 
 
+def enable_axes_actions(self, _callback, application):
+    canvas = application.get_window().get_canvas()
+    visible_axes = canvas.visible_axes
+    directions = ["bottom", "top", "left", "right"]
+    for index, direction in enumerate(directions):
+        action = application.lookup_action(f"change-{direction}-scale")
+        action.set_enabled(visible_axes[index])
+
+
 def on_items_ignored(_data, _ignored, ignored, self):
     if len(ignored) > 1:
         toast = _("Items {} already exist").format(ignored)
@@ -83,7 +92,7 @@ def open_project_dialog(self):
 
 
 def export_data_dialog(self):
-    if self.get_data().props.unsaved:
+    if self.get_data().get_empty():
         self.get_window().add_toast_string(_("No data to export"))
         return
     multiple = len(self.get_data()) > 1
