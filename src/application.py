@@ -79,7 +79,7 @@ class PythonApplication(Graphs.Application):
         self.add_action(toggle_sidebar_action)
         self.set_accels_for_action("app.toggle_sidebar", ["F9"])
 
-        for count, mode in enumerate(["pan", "zoom", "select"]):
+        for count, mode in enumerate(["pan", "select"]):
             action = Gio.SimpleAction.new(f"mode_{mode}", None)
             action.connect(
                 "activate", actions.set_mode, self, count,

@@ -22,9 +22,6 @@ namespace Graphs {
         public unowned ToggleButton pan_button { get; }
 
         [GtkChild]
-        private unowned ToggleButton zoom_button { get; }
-
-        [GtkChild]
         private unowned ToggleButton select_button { get; }
 
         [GtkChild]
@@ -69,8 +66,7 @@ namespace Graphs {
         public int mode {
             set {
                 this.pan_button.set_active (value == 0);
-                this.zoom_button.set_active (value == 1);
-                this.select_button.set_active (value == 2);
+                this.select_button.set_active (value == 1);
             }
         }
 

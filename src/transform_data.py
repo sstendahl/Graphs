@@ -21,7 +21,7 @@ class TransformWindow(Adw.Window):
                          transient_for=application.get_window())
         self.transform_x_entry.set_text("X")
         self.transform_y_entry.set_text("Y")
-        self.discard.set_visible(self.get_application().get_mode() == 2)
+        self.discard.set_visible(self.get_application().get_mode() == 1)
         self.present()
         self.help_button.connect(
             "clicked", lambda _x: self.help_popover.popup())

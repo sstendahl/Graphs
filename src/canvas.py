@@ -103,10 +103,6 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
             self._right_axis, self._top_right_axis,
         ]
         self._legend_axis = self._axis
-        color_rgba = self.get_style_context().lookup_color("accent_color")[1]
-        self.rubberband_edge_color = utilities.rgba_to_tuple(color_rgba, True)
-        color_rgba.alpha = 0.3
-        self.rubberband_fill_color = utilities.rgba_to_tuple(color_rgba, True)
 
         self.highlight = _Highlight(self)
         self._legend = True
@@ -347,39 +343,6 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
     def _on_pick(self, event):
         """Invoke FigureSettingsWindow for picked label/title."""
         FigureSettingsWindow(self.get_application(), event.artist.id)
-
-    # Overwritten function - do not change name
-    def _post_draw(self, _widget, context):
-        """Allow custom rendering extensions."""
-        if self._rubberband_rect is not None:
-            self._draw_rubberband(context)
-
-    def _draw_rubberband(self, context):
-        """
-        Implement custom rubberband.
-
-        Draw a rubberband matching libadwaitas style, where `_rubberband_rect`
-        is set.
-        """
-        line_width = 1
-        if not self._context_is_scaled:
-            x_0, y_0, width, height = (
-                dim / self.device_pixel_ratio for dim in self._rubberband_rect
-            )
-        else:
-            x_0, y_0, width, height = self._rubberband_rect
-            line_width *= self.device_pixel_ratio
-
-        context.set_antialias(1)
-        context.set_line_width(line_width)
-        context.rectangle(x_0, y_0, width, height)
-        color = self.rubberband_fill_color
-        context.set_source_rgba(color[0], color[1], color[2], color[3])
-        context.fill()
-        context.rectangle(x_0, y_0, width, height)
-        color = self.rubberband_edge_color
-        context.set_source_rgba(color[0], color[1], color[2], color[3])
-        context.stroke()
 
     def update_legend(self):
         """Update the legend or hide if not used."""
@@ -633,29 +596,20 @@ class _DummyToolbar(NavigationToolbar2):
         if event.button == 2:
             event.button = 1
             mode = 0
-        elif event.button != 1:
+        elif event.button != 1 or mode == 1:
             return
-        if mode == 0:
-            if event.name == "button_press_event":
-                self.press_pan(event)
-            elif event.name == "button_release_event":
-                self.release_pan(event)
-        elif mode == 1:
-            if event.name == "button_press_event":
-                self.press_zoom(event)
-            elif event.name == "button_release_event":
-                self.release_zoom(event)
+        if event.name == "button_press_event":
+            self.press_pan(event)
+        elif event.name == "button_release_event":
+            self.release_pan(event)
 
     # Overwritten function - do not change name
     def _update_cursor(self, event):
         mode = self.canvas.get_application().get_mode()
-        if event.inaxes and event.inaxes.get_navigate():
-            if mode == 1 and self._last_cursor != tools.Cursors.SELECT_REGION:
-                self.canvas.set_cursor(tools.Cursors.SELECT_REGION)
-                self._last_cursor = tools.Cursors.SELECT_REGION
-            elif mode == 0 and self._last_cursor != tools.Cursors.MOVE:
-                self.canvas.set_cursor(tools.Cursors.MOVE)
-                self._last_cursor = tools.Cursors.MOVE
+        if event.inaxes and event.inaxes.get_navigate() \
+                and mode == 0 and self._last_cursor != tools.Cursors.MOVE:
+            self.canvas.set_cursor(tools.Cursors.MOVE)
+            self._last_cursor = tools.Cursors.MOVE
         elif self._last_cursor != tools.Cursors.POINTER:
             self.canvas.set_cursor(tools.Cursors.POINTER)
             self._last_cursor = tools.Cursors.POINTER
@@ -700,19 +654,6 @@ class _DummyToolbar(NavigationToolbar2):
             self.set_ylim(min(ylim), max(ylim))
 
     # Overwritten function - do not change name
-    def draw_rubberband(self, _event, x0, y0, x1, y1):
-        self.canvas._rubberband_rect = [
-            int(val) for val
-            in (x0, self.canvas.figure.bbox.height - y0, x1 - x0, y0 - y1)
-        ]
-        self.canvas.queue_draw()
-
-    # Overwritten function - do not change name
-    def remove_rubberband(self):
-        self.canvas._rubberband_rect = None
-        self.canvas.queue_draw()
-
-    # Overwritten function - do not change name
     def push_current(self, *_args):
         """Use custom functionality for the view clipboard."""
         self.canvas.highlight.load(self.canvas)
@@ -728,14 +669,17 @@ class _DummyToolbar(NavigationToolbar2):
 
 class _Highlight(SpanSelector):
     def __init__(self, canvas):
+        color_rgba = canvas.get_style_context().lookup_color("accent_color")[1]
+        edge_color = utilities.rgba_to_tuple(color_rgba, True)
+        color_rgba.alpha = 0.3
         super().__init__(
             canvas.axes[3],
             lambda _x, _y: self.apply(canvas),
             "horizontal",
             useblit=True,
             props={
-                "facecolor": canvas.rubberband_fill_color,
-                "edgecolor": canvas.rubberband_edge_color,
+                "facecolor": utilities.rgba_to_tuple(color_rgba, True),
+                "edgecolor": edge_color,
                 "linewidth": 1,
             },
             handle_props={"linewidth": 0},

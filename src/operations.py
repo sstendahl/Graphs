@@ -20,7 +20,7 @@ def get_data(self, item):
     new_xdata = item.props.xdata
     new_ydata = item.props.ydata
 
-    if self.get_mode() == 2:
+    if self.get_mode() == 1:
         figure_settings = self.get_data().get_figure_settings()
         if item.get_xposition() == 0:
             xmin = figure_settings.get_min_bottom()

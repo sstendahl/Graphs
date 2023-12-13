@@ -17,7 +17,7 @@ def perform_operation(_action, target, self):
         return getattr(operations, operation)(self)
     elif operation == "custom_transformation":
         return TransformWindow(self)
-    elif operation == "cut" and self.get_mode() != 2:
+    elif operation == "cut" and self.get_mode() != 1:
         return
     args = []
     actions_settings = self.get_settings_child("actions")
