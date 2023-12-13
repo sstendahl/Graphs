@@ -186,7 +186,7 @@ def preprocess(string: str):
             "⁶": "6",
             "⁷": "7",
             "⁸": "8",
-            "⁹": "9"
+            "⁹": "9",
         }
         sequence = match.group(1)  # Get the content inside the superscript
         sequence = "".join(superscript_mapping.get(char, char)
@@ -213,7 +213,6 @@ def string_to_function(equation_name):
         r"\b(?!x\b|X\b|sin\b|cos\b|tan\b)[a-wy-zA-WY-Z]+\b",
         equation_name,
     )
-    print(variables)
     sym_vars = sympy.symbols(variables)
     with contextlib.suppress(sympy.SympifyError, TypeError, SyntaxError):
         symbolic = sympy.sympify(
