@@ -276,8 +276,8 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
 
     def _redraw(self, *_args):
         # bottom, top, left, right
-        visible_axes = [False, False, False, False]
         used_axes = [False, False, False, False]
+        visible_axes = [False, False, False, False]
         if self.props.hide_unselected:
             drawable_items = []
             for item in self.props.items:
@@ -300,6 +300,7 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
             ("bottom", "right"),  # right_axis
             ("top", "right"),     # top_right_axis
         )
+
         if not any(visible_axes):
             visible_axes = (True, False, True, False)  # Left and bottom
             used_axes = (True, False, False, False)  # self.axis visible

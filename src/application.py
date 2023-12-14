@@ -230,4 +230,7 @@ class PythonApplication(Graphs.Application):
             if "(Development)" in self.props.name:
                 window.add_css_class("devel")
             self.set_figure_style_manager(styles.StyleManager(self))
+            self.get_window().get_canvas().connect_after(
+                "notify::items", ui.enable_axes_actions, self)
+            ui.enable_axes_actions(self, None, self)
             window.present()
