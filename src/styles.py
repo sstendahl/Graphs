@@ -430,6 +430,7 @@ FONT_VARIANT_DICT = {
 
 
 def _title_format_function(_scale, value: float) -> str:
+    """Format a float value as percentage string"""
     return str(value * 100)[:3] + "%"
 
 
@@ -440,6 +441,7 @@ class StyleEditor(Adw.NavigationPage):
     style_name = Gtk.Template.Child()
     font_chooser = Gtk.Template.Child()
     titlesize = Gtk.Template.Child()
+    labelsize = Gtk.Template.Child()
     linestyle = Gtk.Template.Child()
     linewidth = Gtk.Template.Child()
     markers = Gtk.Template.Child()
@@ -479,6 +481,7 @@ class StyleEditor(Adw.NavigationPage):
         self._style_manager = application.get_figure_style_manager()
 
         self.titlesize.set_format_value_func(_title_format_function)
+        self.labelsize.set_format_value_func(_title_format_function)
 
         # color buttons
         self.color_buttons = [
@@ -518,6 +521,9 @@ class StyleEditor(Adw.NavigationPage):
         self.titlesize.set_value(
             round(self.style_params["figure.titlesize"] / font_size, 1),
         )
+        self.labelsize.set_value(
+            round(self.style_params["axes.labelsize"] / font_size, 1),
+        )
         font_description.set_family(self.style_params["font.sans-serif"][0])
         font_description.set_weight(self.style_params["font.weight"])
         inverted_style_dict = {b: a for a, b in FONT_STYLE_DICT.items()}
@@ -554,12 +560,14 @@ class StyleEditor(Adw.NavigationPage):
         font_description = self.font_chooser.get_font_desc()
         self.style_params["font.sans-serif"] = [font_description.get_family()]
         font_size = font_description.get_size() / Pango.SCALE
-        for key in ("font.size", "axes.labelsize", "xtick.labelsize",
-                    "ytick.labelsize", "legend.fontsize", "figure.labelsize"):
+        for key in ("font.size", "xtick.labelsize", "ytick.labelsize",
+                    "legend.fontsize", "figure.labelsize"):
             self.style_params[key] = font_size
         titlesize = round(self.titlesize.get_value() * font_size, 1)
+        labelsize = round(self.labelsize.get_value() * font_size, 1)
         self.style_params["figure.titlesize"] = titlesize
         self.style_params["axes.titlesize"] = titlesize
+        self.style_params["axes.labelsize"] = labelsize
         font_weight = font_description.get_weight()
         for key in ("font.weight", "axes.titleweight", "axes.labelweight",
                     "figure.titleweight", "figure.labelweight"):

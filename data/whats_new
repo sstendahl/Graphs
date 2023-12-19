@@ -19,6 +19,7 @@
           <li>Support has been added for cotangents, secants and cosecants for equations and transformations</li>
           <li>Headers are now written to exported files if present in the originally imported data</li>
           <li>Style sheets now allow you to choose whether a frame should be drawn around the axes</li>
+          <li>The size of the title and labels can now be set seperately in the style editor</li>
           <li>Importing column data is now more robust, supporting expressions as data points</li>
           <li>Pinch and ctrl+scroll to zoom gestures are now supported on the canvas</li>
           <li>The canvas can now be panned using two fingers on a touch screen, as well as with the middle mouse button</li>

@@ -50,9 +50,22 @@ template $GraphsStyleEditor : Adw.NavigationPage {
 
             Adw.ActionRow {
               title: _("Title Size");
-              subtitle: _("Title size in relation to Text Size");
+              subtitle: _("Title size in relation to text Size");
 
               Scale titlesize {
+                draw-value: true;
+                width-request: 200;
+                adjustment: Adjustment {
+                  lower: 1;
+                  upper: 2;
+                };
+              }
+            }
+            Adw.ActionRow {
+              title: _("Label Size");
+              subtitle: _("Label size in relation to text Size");
+
+              Scale labelsize {
                 draw-value: true;
                 width-request: 200;
                 adjustment: Adjustment {
