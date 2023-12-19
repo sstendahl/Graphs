@@ -129,10 +129,11 @@ class CurveFittingWindow(Graphs.CurveFittingTool):
 
     def get_free_variables(self) -> str:
         """Get a list of free variables in the equation entry"""
-        return re.findall(
-            r"\b(?!x\b|X\b|sin\b|cos\b|tan\b)[a-wy-zA-WY-Z]+\b",
-            self.equation_string,
+        pattern = (
+            r"\b(?!x\b|X\b|csc\b|cot\b|sec\b|sin\b|cos\b|log\b|tan\b)"
+            r"[a-wy-zA-WY-Z]+\b"
         )
+        return re.findall(pattern, self.equation_string)
 
     def on_equation_change(self, _entry, _param):
         """
@@ -272,7 +273,7 @@ class CurveFittingWindow(Graphs.CurveFittingTool):
                 method=self.settings.get_string("optimization"),
             )
             self.get_custom_equation().get_child().remove_css_class("error")
-        except (ValueError, TypeError, _minpack.error, RuntimeError):
+        except (_minpack.error):
             # Cancel fit if not successful
             self.get_custom_equation().get_child().add_css_class("error")
             self.set_results(error="equation")

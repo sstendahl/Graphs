@@ -209,10 +209,11 @@ def get_filename(file: Gio.File):
 
 
 def string_to_function(equation_name):
-    variables = ["x"] + re.findall(
-        r"\b(?!x\b|X\b|sin\b|cos\b|tan\b)[a-wy-zA-WY-Z]+\b",
-        equation_name,
+    pattern = (
+        r"\b(?!x\b|X\b|csc\b|cot\b|sec\b|sin\b|cos\b|log\b|tan\b)"
+        r"[a-wy-zA-WY-Z]+\b"
     )
+    variables = ["x"] + re.findall(pattern, equation_name)
     sym_vars = sympy.symbols(variables)
     with contextlib.suppress(sympy.SympifyError, TypeError, SyntaxError):
         symbolic = sympy.sympify(
