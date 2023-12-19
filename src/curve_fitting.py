@@ -273,7 +273,7 @@ class CurveFittingWindow(Graphs.CurveFittingTool):
                 method=self.settings.get_string("optimization"),
             )
             self.get_custom_equation().get_child().remove_css_class("error")
-        except (_minpack.error):
+        except (ValueError, TypeError, _minpack.error, RuntimeError):
             # Cancel fit if not successful
             self.get_custom_equation().get_child().add_css_class("error")
             self.set_results(error="equation")
