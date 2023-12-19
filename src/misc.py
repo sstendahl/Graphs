@@ -29,3 +29,11 @@ LIMITS = [
     "min_bottom", "max_bottom", "min_top", "max_top",
     "min_left", "max_left", "min_right", "max_right",
 ]
+
+EQUATIONS = {
+    "linear": "a*x+b", "quadratic": "a*x²+b*x+c", "exponential": "a*exp(b*x)",
+    "power": "a*x^b", "log": "a*log(x)+b",
+    "sigmoid": "L / (1 + exp(-k * (x - b)))",
+    "gaussian": "a*exp(-(x-mu)²/(2*s²))",
+    "custom": "custom",
+}

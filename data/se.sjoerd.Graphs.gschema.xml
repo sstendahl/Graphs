@@ -10,6 +10,30 @@
     <value nick="moving-average" value="1"/>
   </enum>
 
+  <enum id="se.sjoerd.Graphs.curve-fitting.equation">
+    <value nick="linear" value="0"/>
+    <value nick="quadratic" value="1"/>
+    <value nick="exponential" value="2"/>
+    <value nick="power" value="3"/>
+    <value nick="log" value="4"/>
+    <value nick="sigmoid" value="5"/>
+    <value nick="gaussian" value="6"/>
+    <value nick="custom" value="7"/>
+  </enum>
+
+  <enum id="se.sjoerd.Graphs.curve-fitting.confidence">
+    <value nick="none" value="0"/>
+    <value nick="1std" value="1"/>
+    <value nick="2std" value="2"/>
+    <value nick="3std" value="3"/>
+  </enum>
+
+  <enum id="se.sjoerd.Graphs.curve-fitting.optimization">
+    <value nick="lm" value="0"/>
+    <value nick="trf" value="1"/>
+    <value nick="dogbox" value="2"/>
+  </enum>
+
   <enum id="se.sjoerd.Graphs.export-figure.file-formats">
     <value nick="Encapsulated Postscript" value="0"/>
     <value nick="Joint Photographic Experts Group" value="1"/>
@@ -75,6 +99,21 @@
     </key>
     <key name="smoothen" enum="se.sjoerd.Graphs.actions.smoothen-types">
       <default>"savgol"</default>
+    </key>
+  </schema>
+
+  <schema id="se.sjoerd.Graphs.curve-fitting">
+    <key name="equation" enum="se.sjoerd.Graphs.curve-fitting.equation">
+      <default>"linear"</default>
+    </key>
+    <key name="optimization" enum="se.sjoerd.Graphs.curve-fitting.optimization">
+      <default>"lm"</default>
+    </key>
+    <key name="confidence" enum="se.sjoerd.Graphs.curve-fitting.confidence">
+      <default>"1std"</default>
+    </key>
+    <key name="custom-equation" type="s">
+      <default>"a*x+b"</default>
     </key>
   </schema>
 
@@ -147,12 +186,6 @@
     </key>
     <key name="x-stop" type="s">
       <default>"10"</default>
-    </key>
-  </schema>
-
-  <schema id="se.sjoerd.Graphs.curve-fitting">
-    <key name="equation" type="s">
-      <default>"a*x+b"</default>
     </key>
   </schema>
 

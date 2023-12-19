@@ -2,12 +2,13 @@
 import re
 from gettext import gettext as _
 
-from gi.repository import Adw, GObject, Graphs, Gtk
+from gi.repository import Adw, GObject, Gio, Graphs, Gtk
 
-from graphs import ui, utilities
+from graphs import utilities
 from graphs.canvas import Canvas
 from graphs.data import Data
 from graphs.item import DataItem, FillItem
+from graphs.misc import EQUATIONS
 
 import numpy
 
@@ -17,7 +18,7 @@ from scipy.optimize import _minpack, curve_fit
 class CurveFittingWindow(Graphs.CurveFittingTool):
     __gtype_name__ = "GraphsCurveFittingWindow"
     confirm_button = GObject.Property(type=Gtk.Button)
-    equation = GObject.Property(type=Adw.EntryRow)
+    custom_equation = GObject.Property(type=Adw.EntryRow)
     fitting_params = GObject.Property(type=Gtk.Box)
     text_view = GObject.Property(type=Gtk.TextView)
     title_widget = GObject.Property(type=Adw.WindowTitle)
@@ -28,9 +29,11 @@ class CurveFittingWindow(Graphs.CurveFittingTool):
             application=application, transient_for=application.get_window(),
         )
         Adw.StyleManager.get_default().connect("notify", self.reload_canvas)
-        self.equation = self.get_equation()
-        ui.bind_values_to_settings(
-            application.get_settings_child("curve-fitting"), self)
+        self.settings = \
+            self.get_application().get_settings_child("curve-fitting")
+        self.custom_equation = self.get_custom_equation()
+        self.set_equation()
+        self.connect_actions()
         self.get_confirm_button().connect("clicked", self.add_fit)
         style = application.get_figure_style_manager(
         ).get_system_style_params()
@@ -39,7 +42,8 @@ class CurveFittingWindow(Graphs.CurveFittingTool):
         self.sigma = []
         self.r2 = 0
 
-        self.get_equation().connect("notify::text", self.on_equation_change)
+        self.get_custom_equation().connect(
+            "notify::text", self.on_equation_change)
         self.fitting_parameters = \
             FittingParameterContainer(application, application.get_settings())
 
@@ -68,6 +72,27 @@ class CurveFittingWindow(Graphs.CurveFittingTool):
         self.fit_curve()
         self.set_entry_rows()
         self.present()
+
+    def connect_actions(self):
+        action_map = Gio.SimpleActionGroup.new()
+        self.insert_action_group("win", action_map)
+        for key in ["confidence", "optimization"]:
+            action = self.settings.create_action(key)
+            action.connect("notify", self.fit_curve)
+            action_map.add_action(action)
+        equation_action = self.settings.create_action("equation")
+        equation_action.connect("notify", self.set_equation)
+        action_map.add_action(equation_action)
+
+    def set_equation(self, *_args):
+        equation = EQUATIONS[self.settings.get_string("equation")]
+        custom_equation = self.settings.get_string("custom-equation")
+        if equation != "custom":
+            self.get_custom_equation().set_text(equation)
+            self.get_custom_equation().set_sensitive(False)
+        else:
+            self.get_custom_equation().set_text(custom_equation)
+            self.get_custom_equation().set_sensitive(True)
 
     def reload_canvas(self, *_args):
         self.get_toast_overlay().set_child(None)
@@ -98,6 +123,10 @@ class CurveFittingWindow(Graphs.CurveFittingTool):
         )
 
     def on_equation_change(self, _entry, _param):
+        """
+        Set the free variables and corresponding entry rows when the equation
+        has been changed.
+        """
         for var in self.get_free_variables():
             if var not in self.fitting_parameters.get_names():
                 self.fitting_parameters.add_items([FittingParameter(name=var)])
@@ -105,6 +134,9 @@ class CurveFittingWindow(Graphs.CurveFittingTool):
         fit = self.fit_curve()
         if fit:
             self.set_entry_rows()
+            if self.settings.get_string("equation") == "custom":
+                self.settings.set_string("custom-equation",
+                                         self.equation_string)
 
     def on_entry_change(self, entry, _param):
         """
@@ -182,7 +214,9 @@ class CurveFittingWindow(Graphs.CurveFittingTool):
                 parameter = utilities.sig_fig_round(self.param[index], 3)
                 sigma = utilities.sig_fig_round(self.sigma[index], 3)
                 buffer_string += f"{arg}: {parameter}"
-                buffer_string += f" (± {sigma})\n"
+                if self.settings.get_enum("confidence") != 0:
+                    buffer_string += f" (± {sigma})"
+                buffer_string += "\n"
             buffer_string += "\n" + _("Sum of R²: {R2}").format(R2=self.r2)
         self.get_text_view().get_buffer().set_text(buffer_string)
         bold_tag = Gtk.TextTag(weight=700)
@@ -199,9 +233,9 @@ class CurveFittingWindow(Graphs.CurveFittingTool):
 
     @property
     def equation_string(self):
-        return utilities.preprocess(str(self.get_equation().get_text()))
+        return utilities.preprocess(str(self.get_custom_equation().get_text()))
 
-    def fit_curve(self):
+    def fit_curve(self, *_args):
         def _get_equation_name(equation_name, values):
             var_to_val = dict(zip(self.get_free_variables(), values))
 
@@ -218,11 +252,12 @@ class CurveFittingWindow(Graphs.CurveFittingTool):
                 self.data_curve.xdata, self.data_curve.ydata,
                 p0=self.fitting_parameters.get_p0(),
                 bounds=self.fitting_parameters.get_bounds(), nan_policy="omit",
+                method=self.settings.get_string("optimization"),
             )
-            self.get_equation().get_child().remove_css_class("error")
+            self.get_custom_equation().get_child().remove_css_class("error")
         except (ValueError, TypeError, _minpack.error, RuntimeError):
             # Cancel fit if not successful
-            self.get_equation().get_child().add_css_class("error")
+            self.get_custom_equation().get_child().add_css_class("error")
             self.set_results(error="equation")
             return
         xdata = numpy.linspace(
@@ -231,7 +266,7 @@ class CurveFittingWindow(Graphs.CurveFittingTool):
         ydata = [function(x, *self.param) for x in xdata]
 
         name = _get_equation_name(
-            str(self.get_equation().get_text()), self.param)
+            str(self.get_custom_equation().get_text()), self.param)
         self.fitted_curve.set_name(f"Y = {name}")
         self.fitted_curve.ydata, self.fitted_curve.xdata = (ydata, xdata)
         self.get_confidence(function)
@@ -242,6 +277,7 @@ class CurveFittingWindow(Graphs.CurveFittingTool):
         # Get standard deviation
         self.canvas.axes[0].relim()  # Reset limits
         self.sigma = numpy.sqrt(numpy.diagonal(self.param_cov))
+        self.sigma *= self.settings.get_enum("confidence")
         try:
             fitted_y = \
                 [function(x, *self.param) for x in self.data_curve.xdata]
@@ -294,6 +330,10 @@ class CurveFittingWindow(Graphs.CurveFittingTool):
         self.destroy()
 
     def set_entry_rows(self):
+        """
+        Remove the old entry rows and replace them with new ones corresponding
+        to the free variables in the equation
+        """
         while self.get_fitting_params().get_last_child() is not None:
             self.get_fitting_params().remove(
                 self.get_fitting_params().get_last_child())

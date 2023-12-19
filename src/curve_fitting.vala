@@ -6,7 +6,7 @@ namespace Graphs {
     [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/curve_fitting.ui")]
     public class CurveFittingTool : Adw.Window {
         [GtkChild]
-        public unowned Adw.EntryRow equation { get; }
+        public unowned Adw.EntryRow custom_equation { get; }
 
         [GtkChild]
         public unowned Gtk.Box fitting_params { get; }
@@ -41,4 +41,5 @@ namespace Graphs {
         public string upper_bound { get; construct set; default = "inf"; }
     }
 }
+
 
