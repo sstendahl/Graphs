@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: se.sjoerd.Graphs\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-12-14 14:08+0100\n"
-"PO-Revision-Date: 2023-10-05 02:10+0000\n"
+"PO-Revision-Date: 2023-12-18 00:11+0000\n"
 "Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/graphs/graphs/tr/"
 ">\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.1-dev\n"
+"X-Generator: Weblate 5.3\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:6
@@ -528,7 +528,7 @@ msgstr "Sağ Eksen Ölçeği"
 
 #: data/ui/figure_settings.blp:161
 msgid "Appearance"
-msgstr ""
+msgstr "Görünüm"
 
 #: data/ui/figure_settings.blp:163
 msgid "Legend"
@@ -1320,9 +1320,8 @@ msgid "Right Y Scale"
 msgstr "Sağ Y Ölçeği"
 
 #: data/ui/window.blp:797
-#, fuzzy
 msgid "At maximum Y value"
-msgstr "En büyük Y değerinde ortala"
+msgstr "En büyük Y değerinde"
 
 #: data/ui/window.blp:802
 msgid "At middle X value"
@@ -1334,7 +1333,7 @@ msgstr ""
 
 #: data/ui/window.blp:823
 msgid "Advanced settings"
-msgstr ""
+msgstr "Gelişmiş ayarlar"
 
 #: src/actions.py:205
 msgid "Deleted {}"
