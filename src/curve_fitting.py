@@ -4,7 +4,7 @@ from gettext import gettext as _
 
 from gi.repository import Adw, GObject, Gio, Graphs, Gtk
 
-from graphs import utilities
+from graphs import ui, utilities
 from graphs.canvas import Canvas
 from graphs.data import Data
 from graphs.item import DataItem, FillItem
@@ -19,6 +19,7 @@ class CurveFittingWindow(Graphs.CurveFittingTool):
     __gtype_name__ = "GraphsCurveFittingWindow"
     confirm_button = GObject.Property(type=Gtk.Button)
     custom_equation = GObject.Property(type=Adw.EntryRow)
+    equation = GObject.Property(type=Adw.ComboRow)
     fitting_params = GObject.Property(type=Gtk.Box)
     text_view = GObject.Property(type=Gtk.TextView)
     title_widget = GObject.Property(type=Adw.WindowTitle)
@@ -32,6 +33,10 @@ class CurveFittingWindow(Graphs.CurveFittingTool):
         Adw.StyleManager.get_default().connect("notify", self.reload_canvas)
         self.settings = \
             self.get_application().get_settings_child("curve-fitting")
+        self.custom_equation = self.get_custom_equation()
+        self.equation = self.get_equation()
+        ignorelist = ["optimization", "confidence", "custom-equation"]
+        ui.bind_values_to_settings(self.settings, self, ignorelist=ignorelist)
         self.custom_equation = self.get_custom_equation()
         self.set_equation()
         self.connect_actions()
@@ -91,11 +96,13 @@ class CurveFittingWindow(Graphs.CurveFittingTool):
         equation = EQUATIONS[self.settings.get_string("equation")]
         custom_equation = self.settings.get_string("custom-equation")
         if equation != "custom":
+            self.equation.set_subtitle(equation)
             self.get_custom_equation().set_text(equation)
-            self.get_custom_equation().set_sensitive(False)
+            self.get_custom_equation().set_visible(False)
         else:
+            self.equation.set_subtitle("")
             self.get_custom_equation().set_text(custom_equation)
-            self.get_custom_equation().set_sensitive(True)
+            self.get_custom_equation().set_visible(True)
 
     def reload_canvas(self, *_args):
         """Reinitialise the currently used canvas"""

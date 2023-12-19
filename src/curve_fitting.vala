@@ -9,6 +9,9 @@ namespace Graphs {
         public unowned Adw.EntryRow custom_equation { get; }
 
         [GtkChild]
+        public unowned Adw.ComboRow equation { get; }
+
+        [GtkChild]
         public unowned Gtk.Box fitting_params { get; }
 
         [GtkChild]
@@ -27,11 +30,10 @@ namespace Graphs {
         public unowned Adw.WindowTitle title_widget { get; }
 
         [GtkCallback]
-        private void on_sidebar_toggle () {
-            this.application.lookup_action ("toggle_sidebar").change_state (
-                new Variant.boolean (this.split_view.get_collapsed ())
-            );
+        private void on_select () {
+            this.application.lookup_action ("win.equation").activate;
         }
+
         }
 
     public class FittingParameter : Object {

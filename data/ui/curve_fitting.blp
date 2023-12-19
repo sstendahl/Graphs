@@ -5,7 +5,7 @@ template $GraphsCurveFittingTool : Adw.Window {
   modal: true;
   focus-widget: confirm_button;
   default-width: 1000;
-  default-height: 650;
+  default-height: 660;
   width-request: 305;
   height-request: 410;
 
@@ -27,7 +27,6 @@ template $GraphsCurveFittingTool : Adw.Window {
     top-bar-style: flat;
     content: Adw.OverlaySplitView split_view {
       show-sidebar: bind show_sidebar_button.active;
-      notify => $on_sidebar_toggle();
       sidebar: Adw.ToolbarView {
         [top]
         Adw.HeaderBar {
@@ -55,8 +54,17 @@ template $GraphsCurveFittingTool : Adw.Window {
             margin-bottom: 12;
             margin-top: 12;
             Adw.PreferencesGroup {
-              Adw.EntryRow custom_equation {
+              Adw.ComboRow equation {
+                notify => $on_select();
                 title: _("Equation");
+                model: StringList{
+                  strings [_("Linear"), _("Quadratic"), _("Exponential"), _("Power Law"),
+                  _("Logarithmic"), _("Sigmoid Logistic"), _("Gaussian"), _("Custom")]
+                };
+              }
+              Adw.EntryRow custom_equation {
+                visible: false;
+                title: _("Y = ");
               }
               Box fitting_params {
                 margin-top: 12;
@@ -120,49 +128,9 @@ template $GraphsCurveFittingTool : Adw.Window {
 
 menu curve_fitting_menu {
   section {
-    submenu {
-      label: _("Equation");
-      item {
-        label: _("Linear");
-        action: "win.equation";
-        target: "linear";
-      }
-      item {
-        label: _("Quadratic");
-        action: "win.equation";
-        target: "quadratic";
-      }
-      item {
-        label: _("Exponential");
-        action: "win.equation";
-        target: "exponential";
-      }
-      item {
-        label: _("Power law");
-        action: "win.equation";
-        target: "power";
-      }
-      item {
-        label: _("Logarithmic");
-        action: "win.equation";
-        target: "log";
-      }
-      item {
-        label: _("Sigmoid Logistic");
-        action: "win.equation";
-        target: "sigmoid";
-      }
-      item {
-        label: _("Gaussian");
-        action: "win.equation";
-        target: "gaussian";
-      }
-      item {
-        label: _("Custom");
-        action: "win.equation";
-        target: "custom";
-      }
-    }
+    item (_("Toggle Sidebar"), "win.toggle_sidebar")
+  }
+  section {
     submenu {
       label: _("Optimization method");
       item {
