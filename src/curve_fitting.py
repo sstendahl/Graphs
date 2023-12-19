@@ -266,7 +266,7 @@ class CurveFittingWindow(Graphs.CurveFittingTool):
         ydata = [function(x, *self.param) for x in xdata]
 
         name = _get_equation_name(
-            str(self.get_custom_equation().get_text()), self.param)
+            str(self.get_custom_equation().get_text()).lower(), self.param)
         self.fitted_curve.set_name(f"Y = {name}")
         self.fitted_curve.ydata, self.fitted_curve.xdata = (ydata, xdata)
         self.get_confidence(function)
