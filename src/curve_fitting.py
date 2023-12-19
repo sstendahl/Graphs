@@ -25,6 +25,7 @@ class CurveFittingWindow(Graphs.CurveFittingTool):
     toast_overlay = GObject.Property(type=Adw.ToastOverlay)
 
     def __init__(self, application, item):
+        """Initialize the curve fitting dialog"""
         super().__init__(
             application=application, transient_for=application.get_window(),
         )
@@ -73,7 +74,8 @@ class CurveFittingWindow(Graphs.CurveFittingTool):
         self.set_entry_rows()
         self.present()
 
-    def connect_actions(self):
+    def connect_actions(self) -> None:
+        """Connect the actions in the dialog to the action map"""
         action_map = Gio.SimpleActionGroup.new()
         self.insert_action_group("win", action_map)
         for key in ["confidence", "optimization"]:
@@ -84,7 +86,8 @@ class CurveFittingWindow(Graphs.CurveFittingTool):
         equation_action.connect("notify", self.set_equation)
         action_map.add_action(equation_action)
 
-    def set_equation(self, *_args):
+    def set_equation(self, *_args) -> None:
+        """Set the equation entry based on the current settings"""
         equation = EQUATIONS[self.settings.get_string("equation")]
         custom_equation = self.settings.get_string("custom-equation")
         if equation != "custom":
@@ -95,6 +98,7 @@ class CurveFittingWindow(Graphs.CurveFittingTool):
             self.get_custom_equation().set_sensitive(True)
 
     def reload_canvas(self, *_args):
+        """Reinitialise the currently used canvas"""
         self.get_toast_overlay().set_child(None)
         figure_settings = self.get_application().get_data(
         ).get_figure_settings()
@@ -116,7 +120,8 @@ class CurveFittingWindow(Graphs.CurveFittingTool):
         self.canvas = canvas
         self.get_toast_overlay().set_child(self.canvas)
 
-    def get_free_variables(self):
+    def get_free_variables(self) -> str:
+        """Get a list of free variables in the equation entry"""
         return re.findall(
             r"\b(?!x\b|X\b|sin\b|cos\b|tan\b)[a-wy-zA-WY-Z]+\b",
             self.equation_string,
@@ -197,7 +202,8 @@ class CurveFittingWindow(Graphs.CurveFittingTool):
         if not error:
             self.fit_curve()
 
-    def set_results(self, error=""):
+    def set_results(self, error="") -> None:
+        """Set the results dialog based on the fit"""
         initial_string = _("Results:") + "\n"
         buffer_string = initial_string
         if error == "value":
@@ -235,7 +241,11 @@ class CurveFittingWindow(Graphs.CurveFittingTool):
     def equation_string(self):
         return utilities.preprocess(str(self.get_custom_equation().get_text()))
 
-    def fit_curve(self, *_args):
+    def fit_curve(self, *_args) -> bool:
+        """
+        Fit the data to the equation in the entry, returns a boolean indicating
+        whether the fit was succesfull or not.
+        """
         def _get_equation_name(equation_name, values):
             var_to_val = dict(zip(self.get_free_variables(), values))
 
@@ -273,7 +283,13 @@ class CurveFittingWindow(Graphs.CurveFittingTool):
         self.set_results()
         return True
 
-    def get_confidence(self, function):
+    def get_confidence(self, function: str) -> None:
+        """
+        Get the confidence intervall in terms of the standard deviation
+        resulting from the covariance in the plot. The bounds are navively
+        calculated by using the extremes on each parameter for both sides
+        of the bounds.
+        """
         # Get standard deviation
         self.canvas.axes[0].relim()  # Reset limits
         self.sigma = numpy.sqrt(numpy.diagonal(self.param_cov))
