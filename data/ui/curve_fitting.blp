@@ -55,7 +55,6 @@ template $GraphsCurveFittingTool : Adw.Window {
             margin-top: 12;
             Adw.PreferencesGroup {
               Adw.ComboRow equation {
-                notify => $on_select();
                 title: _("Equation");
                 model: StringList{
                   strings [_("Linear"), _("Quadratic"), _("Exponential"), _("Power Law"),

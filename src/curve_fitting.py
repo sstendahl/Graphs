@@ -50,6 +50,8 @@ class CurveFittingWindow(Graphs.CurveFittingTool):
 
         self.get_custom_equation().connect(
             "notify::text", self.on_equation_change)
+        self.get_equation().connect(
+            "notify::selected", self.set_equation)
         self.fitting_parameters = \
             FittingParameterContainer(application, application.get_settings())
 
@@ -82,14 +84,12 @@ class CurveFittingWindow(Graphs.CurveFittingTool):
     def connect_actions(self) -> None:
         """Connect the actions in the dialog to the action map"""
         action_map = Gio.SimpleActionGroup.new()
+        self.insert_action_group("win", None)
         self.insert_action_group("win", action_map)
         for key in ["confidence", "optimization"]:
             action = self.settings.create_action(key)
             action.connect("notify", self.fit_curve)
             action_map.add_action(action)
-        equation_action = self.settings.create_action("equation")
-        equation_action.connect("notify", self.set_equation)
-        action_map.add_action(equation_action)
 
     def set_equation(self, *_args) -> None:
         """Set the equation entry based on the current settings"""

@@ -29,11 +29,6 @@ namespace Graphs {
         [GtkChild]
         public unowned Adw.WindowTitle title_widget { get; }
 
-        [GtkCallback]
-        private void on_select () {
-            this.application.lookup_action ("win.equation").activate;
-        }
-
         }
 
     public class FittingParameter : Object {
