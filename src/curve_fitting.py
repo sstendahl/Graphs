@@ -310,7 +310,7 @@ class CurveFittingWindow(Graphs.CurveFittingTool):
         ss_res = numpy.sum((numpy.asarray(self.data_curve.ydata)
                             - numpy.asarray(fitted_y)) ** 2)
         ss_sum = numpy.sum((self.data_curve.ydata - numpy.mean(fitted_y)) ** 2)
-        self.r2 = 1 - (ss_res / ss_sum)
+        self.r2 = utilities.sig_fig_round(1 - (ss_res / ss_sum), 3)
 
         # Get confidence band
         upper_bound = \
