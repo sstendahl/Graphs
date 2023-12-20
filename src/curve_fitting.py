@@ -89,6 +89,8 @@ class CurveFittingWindow(Graphs.CurveFittingTool):
         for key in ["confidence", "optimization"]:
             action = self.settings.create_action(key)
             action.connect("notify", self.fit_curve)
+            if key == "optimization":
+                action.connect("notify", self._set_fitting_bounds_visibility)
             action_map.add_action(action)
 
     def set_equation(self, *_args) -> None:
@@ -103,6 +105,11 @@ class CurveFittingWindow(Graphs.CurveFittingTool):
             self.equation.set_subtitle("")
             self.get_custom_equation().set_text(custom_equation)
             self.get_custom_equation().set_visible(True)
+
+    def _set_fitting_bounds_visibility(self, *_args):
+        """Set the visibility of the fitting bounds"""
+        for entry in self.get_fitting_params():
+            entry.set_bounds_visibility()
 
     def reload_canvas(self, *_args):
         """Reinitialise the currently used canvas"""
@@ -421,6 +428,8 @@ class FittingParameterEntry(Gtk.Box):
     initial = Gtk.Template.Child()
     upper_bound = Gtk.Template.Child()
     lower_bound = Gtk.Template.Child()
+    lower_bound_group = Gtk.Template.Child()
+    upper_bound_group = Gtk.Template.Child()
 
     application = GObject.Property(type=Adw.Application)
 
@@ -433,7 +442,12 @@ class FittingParameterEntry(Gtk.Box):
         self.label.set_markup(
             f"<b> {fitting_param_string}: </b>")
         self.initial.set_text(str(self.params.get_initial()))
-
         self.initial.connect("notify::text", parent.on_entry_change)
         self.upper_bound.connect("notify::text", parent.on_entry_change)
         self.lower_bound.connect("notify::text", parent.on_entry_change)
+        self.set_bounds_visibility()
+
+    def set_bounds_visibility(self):
+        method = self.parent.settings.get_string("optimization")
+        self.upper_bound_group.set_visible(method != "lm")
+        self.lower_bound_group.set_visible(method != "lm")

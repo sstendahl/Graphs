@@ -107,7 +107,7 @@
       <default>"linear"</default>
     </key>
     <key name="optimization" enum="se.sjoerd.Graphs.curve-fitting.optimization">
-      <default>"lm"</default>
+      <default>"trf"</default>
     </key>
     <key name="confidence" enum="se.sjoerd.Graphs.curve-fitting.confidence">
       <default>"1std"</default>
