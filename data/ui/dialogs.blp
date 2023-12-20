@@ -13,11 +13,11 @@ Adw.MessageDialog save_changes {
   default-response: "discard";
 }
 
-Adw.MessageDialog delete_style {
+Adw.MessageDialog delete_style_dialog {
   heading: _("Delete style?");
   responses [
     cancel_delete_style: _("Cancel"),
-    delete: _("Delete") destructive,
+    delete_style: _("Delete") destructive,
   ]
   close-response: "cancel_delete_style";
   default-response: "delete";
