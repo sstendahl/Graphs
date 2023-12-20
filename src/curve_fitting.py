@@ -96,7 +96,7 @@ class CurveFittingWindow(Graphs.CurveFittingTool):
         equation = EQUATIONS[self.settings.get_string("equation")]
         custom_equation = self.settings.get_string("custom-equation")
         if equation != "custom":
-            self.equation.set_subtitle(equation)
+            self.equation.set_subtitle(f"Y={equation}")
             self.get_custom_equation().set_text(equation)
             self.get_custom_equation().set_visible(False)
         else:
