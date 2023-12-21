@@ -65,9 +65,20 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
                 _compare_styles,
             )
         enumerator.close(None)
-        # TODO: add System style preview
-        self._system_style = Graphs.Style.new(_("System"), None, None, False)
         self._update_system_style()
+        system_style = self._system_style_name
+        light_file = _generate_filename(system_style)
+        light_style = style_io.parse(Gio.File.new_for_uri(
+            "resource:///se/sjoerd/Graphs/styles/" + light_file,
+        ))[0]
+        dark_file = _generate_filename(system_style + " Dark")
+        dark_style = style_io.parse(Gio.File.new_for_uri(
+            "resource:///se/sjoerd/Graphs/styles/" + dark_file,
+        ))[0]
+
+        preview = style_io.generate_system_preview(light_style, dark_style)
+        self._system_style = \
+            Graphs.Style.new(_("System"), None, preview, False)
         self.props.style_model.insert(0, self._system_style)
 
         config_dir = utilities.get_config_directory()

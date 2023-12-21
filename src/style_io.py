@@ -1,17 +1,21 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
+import io
 import logging
 from gettext import gettext as _
+
+from PIL import Image
+
+import numpy
 
 from gi.repository import Gio
 
 from graphs import file_io, utilities
 
 from matplotlib import RcParams, cbook, rc_context
+from matplotlib.backends.backend_gtk4cairo import FigureCanvas
 from matplotlib.figure import Figure
 from matplotlib.font_manager import font_scalings, weight_dict
 from matplotlib.style.core import STYLE_BLACKLIST
-
-import numpy
 
 
 STYLE_IGNORELIST = [
@@ -133,3 +137,69 @@ def generate_preview(style: RcParams) -> Gio.File:
         axis.set_xlabel(_("Y Label"))
         figure.savefig(wrapper, format="svg")
     return file
+
+
+def generate_system_preview(light_style: RcParams,
+                            dark_style: RcParams) -> Gio.File:
+    # Generate light variant
+    with rc_context(light_style):
+        figure = Figure(figsize=(5, 3))
+        axis = figure.add_subplot()
+        axis.spines.bottom.set_visible(True)
+        axis.spines.left.set_visible(True)
+        if not light_style["axes.spines.top"]:
+            axis.tick_params(which="both", top=False, right=False)
+        axis.plot(_PREVIEW_XDATA, _PREVIEW_YDATA1)
+        axis.plot(_PREVIEW_XDATA, _PREVIEW_YDATA2)
+        axis.set_xlabel(_("X Label"))
+        axis.set_ylabel(_("Y Label"))
+        canvas = FigureCanvas(figure)
+        buf = io.BytesIO()
+        canvas.print_figure(buf, format="png")
+        buf.seek(0)
+        light_img = Image.open(buf)
+
+    # Generate dark variant
+    with rc_context(dark_style):
+        figure = Figure(figsize=(5, 3))
+        axis = figure.add_subplot()
+        axis.spines.bottom.set_visible(True)
+        axis.spines.left.set_visible(True)
+        if not dark_style["axes.spines.top"]:
+            axis.tick_params(which="both", top=False, right=False)
+        axis.plot(_PREVIEW_XDATA, _PREVIEW_YDATA1)
+        axis.plot(_PREVIEW_XDATA, _PREVIEW_YDATA2)
+        axis.set_xlabel(_("X Label"))
+        axis.set_ylabel(_("Y Label"))
+        canvas = FigureCanvas(figure)
+        buf = io.BytesIO()
+        canvas.print_figure(buf, format="png")
+        buf.seek(0)
+        dark_img = Image.open(buf)
+
+    # Stitch the images
+    stitched_image = stitch_images(light_img, dark_img)
+
+    # Save the stitched image to a Gio.File
+    file, stream = Gio.File.new_tmp(None)
+    with file_io.FileLikeWrapper.new_for_io_stream(stream) as wrapper:
+        stitched_image.save(wrapper, format="png")
+
+    return file
+
+
+def stitch_images(light_image: Image, dark_image: Image) -> Image:
+    # Convert the images to numpy arrays
+    light_image = numpy.array(light_image)
+    dark_image = numpy.array(dark_image)
+
+    # Cut the images in half
+    light_image_half = light_image[:, :light_image.shape[1] // 2]
+    dark_image_half = dark_image[:, dark_image.shape[1] // 2:]
+
+    # Concatenate the image halves
+    stitched_image = numpy.concatenate(
+        (light_image_half, dark_image_half), axis=1)
+
+    # Convert the result back to an image
+    return Image.fromarray(stitched_image)
