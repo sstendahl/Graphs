@@ -27,7 +27,14 @@ class ExportFigureWindow(Adw.Window):
             Gtk.StringList.new(list(self.file_formats.keys())))
         ui.bind_values_to_settings(
             self.get_application().get_settings_child("export-figure"), self)
+        self.dpi.set_visible(self.file_format.get_selected()
+                             not in [0, 2, 3, 7])
+        self.file_format.connect("notify::selected", self.on_file_format)
         self.present()
+
+    def on_file_format(self, _widget, _state):
+        self.dpi.set_visible(self.file_format.get_selected()
+                             not in [0, 2, 3, 7])
 
     @Gtk.Template.Callback()
     def on_accept(self, _button):
