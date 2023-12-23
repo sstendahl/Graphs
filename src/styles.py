@@ -76,7 +76,8 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
             "resource:///se/sjoerd/Graphs/styles/" + dark_file,
         ))[0]
 
-        system_preview = style_io.generate_system_preview(light_style, dark_style)
+        system_preview = style_io.generate_system_preview(
+            light_style, dark_style)
         self._system_style = \
             Graphs.Style.new(_("System"), None, system_preview, False)
         self.props.style_model.insert(0, self._system_style)
