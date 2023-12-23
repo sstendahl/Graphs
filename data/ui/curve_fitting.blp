@@ -5,7 +5,7 @@ template $GraphsCurveFittingTool : Adw.Window {
   modal: true;
   focus-widget: confirm_button;
   default-width: 1000;
-  default-height: 650;
+  default-height: 660;
   width-request: 305;
   height-request: 410;
 
@@ -27,7 +27,6 @@ template $GraphsCurveFittingTool : Adw.Window {
     top-bar-style: flat;
     content: Adw.OverlaySplitView split_view {
       show-sidebar: bind show_sidebar_button.active;
-      notify => $on_sidebar_toggle();
       sidebar: Adw.ToolbarView {
         [top]
         Adw.HeaderBar {
@@ -35,10 +34,17 @@ template $GraphsCurveFittingTool : Adw.Window {
           title-widget: Adw.WindowTitle title_widget {
             title: _("Curve Fitting");
           };
+          [end]
+          MenuButton {
+            icon-name: "open-menu-symbolic";
+            menu-model: curve_fitting_menu;
+            tooltip-text: _("Open Curve Fitting Menu");
+            primary: true;
+          }
         }
         ScrolledWindow fitting_param_entries {
           vexpand: true;
-          width-request: 275;
+          width-request: 280;
           hscrollbar-policy: never;
           Box {
             vexpand: true;
@@ -48,8 +54,16 @@ template $GraphsCurveFittingTool : Adw.Window {
             margin-bottom: 12;
             margin-top: 12;
             Adw.PreferencesGroup {
-              Adw.EntryRow equation {
+              Adw.ComboRow equation {
                 title: _("Equation");
+                model: StringList{
+                  strings [_("Linear"), _("Quadratic"), _("Exponential"), _("Power Law"),
+                  _("Logarithmic"), _("Sigmoid Logistic"), _("Gaussian"), _("Custom")]
+                };
+              }
+              Adw.EntryRow custom_equation {
+                visible: false;
+                title: _("Y = ");
               }
               Box fitting_params {
                 margin-top: 12;
@@ -109,4 +123,50 @@ template $GraphsCurveFittingTool : Adw.Window {
       };
     };
   };
+}
+
+menu curve_fitting_menu {
+  section {
+    submenu {
+      label: _("Optimization method");
+      item {
+        label: _("Levenberg-Marquardt");
+        action: "win.optimization";
+        target: "lm";
+      }
+      item {
+        label: _("Trust Region Reflective");
+        action: "win.optimization";
+        target: "trf";
+      }
+      item {
+        label: _("Dogbox");
+        action: "win.optimization";
+        target: "dogbox";
+      }
+    }
+    submenu {
+      label: _("Confidence bounds");
+      item {
+        label: _("None");
+        action: "win.confidence";
+        target: "none";
+      }
+      item {
+        label: _("1σ: 68% confidence");
+        action: "win.confidence";
+        target: "1std";
+      }
+      item {
+        label: _("2σ: 95% confidence");
+        action: "win.confidence";
+        target: "2std";
+      }
+      item {
+        label: _("3σ: 99.7% confidence");
+        action: "win.confidence";
+        target: "3std";
+      }
+    }
+  }
 }

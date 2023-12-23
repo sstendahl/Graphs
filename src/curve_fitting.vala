@@ -6,7 +6,10 @@ namespace Graphs {
     [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/curve_fitting.ui")]
     public class CurveFittingTool : Adw.Window {
         [GtkChild]
-        public unowned Adw.EntryRow equation { get; }
+        public unowned Adw.EntryRow custom_equation { get; }
+
+        [GtkChild]
+        public unowned Adw.ComboRow equation { get; }
 
         [GtkChild]
         public unowned Gtk.Box fitting_params { get; }
@@ -26,12 +29,6 @@ namespace Graphs {
         [GtkChild]
         public unowned Adw.WindowTitle title_widget { get; }
 
-        [GtkCallback]
-        private void on_sidebar_toggle () {
-            this.application.lookup_action ("toggle_sidebar").change_state (
-                new Variant.boolean (this.split_view.get_collapsed ())
-            );
-        }
         }
 
     public class FittingParameter : Object {
@@ -41,4 +38,5 @@ namespace Graphs {
         public string upper_bound { get; construct set; default = "inf"; }
     }
 }
+
 
