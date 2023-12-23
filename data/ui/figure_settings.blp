@@ -68,12 +68,12 @@ template $GraphsFigureSettingsWindow : Adw.Window {
                       spacing: 6;
                       Adw.PreferencesGroup {
                         Adw.EntryRow min_left {
-                          title: _("Minimum Left-Hand Y-Axis");
+                          title: _("Minimum Left Axis");
                         }
                       }
                       Adw.PreferencesGroup {
                   	    Adw.EntryRow max_left {
-                          title: _("Maximum Left-Hand Y-Axis");
+                          title: _("Maximum Left Axis");
                         }
                       }
                     }
@@ -83,12 +83,12 @@ template $GraphsFigureSettingsWindow : Adw.Window {
                       spacing: 6;
                       Adw.PreferencesGroup {
                         Adw.EntryRow min_bottom {
-                          title: _("Minimum Bottom X-Axis");
+                          title: _("Minimum Bottom Axis");
                         }
                       }
                       Adw.PreferencesGroup {
                         Adw.EntryRow max_bottom {
-                          title: _("Maximum Bottom X-Axis");
+                          title: _("Maximum Bottom Axis");
                         }
                       }
                     }
@@ -98,12 +98,12 @@ template $GraphsFigureSettingsWindow : Adw.Window {
                       spacing: 6;
                       Adw.PreferencesGroup {
                         Adw.EntryRow min_right {
-                          title: _("Minimum Right-Hand Y-Axis");
+                          title: _("Minimum Right Axis");
                         }
                       }
                       Adw.PreferencesGroup {
                         Adw.EntryRow max_right {
-                          title: _("Maximum Right-Hand Y-Axis");
+                          title: _("Maximum Right Axis");
                         }
                       }
                     }
@@ -113,12 +113,12 @@ template $GraphsFigureSettingsWindow : Adw.Window {
                       orientation: horizontal;
                       Adw.PreferencesGroup {
                         Adw.EntryRow min_top {
-                          title: _("Minimum Top X-Axis");
+                          title: _("Minimum Top Axis");
                         }
                       }
                       Adw.PreferencesGroup {
                         Adw.EntryRow max_top {
-                          title: _("Maximum Top Y-Axis");
+                          title: _("Maximum Top Axis");
                         }
                       }
                     }
@@ -166,7 +166,7 @@ template $GraphsFigureSettingsWindow : Adw.Window {
                       title: _("Legend Position");
                       model: StringList{
                         strings [
-                          _("Best"), _("Upper right"), _("Upper left"), _("Lower left"),
+                          _("Auto"), _("Upper right"), _("Upper left"), _("Lower left"),
                           _("Lower right"), _("Center left"), _("Center right"),
                           _("Lower center"), _("Upper center"), _("Center"),
                         ]
