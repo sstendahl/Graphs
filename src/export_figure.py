@@ -19,15 +19,25 @@ class ExportFigureWindow(Adw.Window):
 
     def __init__(self, application):
         self._canvas = application.get_window().get_canvas()
+        valid_formats = self._canvas.get_supported_filetypes_grouped()
+        valid_formats.pop("Tagged Image File Format")
+        valid_formats.pop("Raw RGBA bitmap")
+        valid_formats.pop("PGF code for LaTeX")
         super().__init__(
             application=application, transient_for=application.get_window(),
-            file_formats=self._canvas.get_supported_filetypes_grouped(),
+            file_formats=valid_formats,
         )
         self.file_format.set_model(
             Gtk.StringList.new(list(self.file_formats.keys())))
         ui.bind_values_to_settings(
             self.get_application().get_settings_child("export-figure"), self)
+        self.on_file_format(None, None)
+        self.file_format.connect("notify::selected", self.on_file_format)
         self.present()
+
+    def on_file_format(self, _widget, _state):
+        self.dpi.set_visible(self.file_format.get_selected()
+                             not in [0, 2, 4, 5])
 
     @Gtk.Template.Callback()
     def on_accept(self, _button):
