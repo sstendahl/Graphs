@@ -635,12 +635,23 @@ class StyleEditor(Adw.NavigationPage):
 
     @Gtk.Template.Callback()
     def on_delete(self, _button):
-        style_manager = self._style_manager
-        file = self.style.get_file()
-        style_manager.delete_style(file)
-        file.trash(None)
-        self.style = None
-        self.parent.navigation_view.pop()
+
+        def on_response(_dialog, response):
+            if response == "cancel_delete_style":
+                return
+            if response == "delete_style":
+                style_manager = self._style_manager
+                file = self.style.get_file()
+                style_manager.delete_style(file)
+                file.trash(None)
+                self.style = None
+                self.parent.navigation_view.pop()
+        dialog = ui.build_dialog("delete_style_dialog")
+        dialog.set_body(
+            _(f"Are you sure you want to delete {self.style.get_name()}?"))
+        dialog.set_transient_for(self.parent)
+        dialog.connect("response", on_response)
+        dialog.present()
 
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/style_color_box.ui")
