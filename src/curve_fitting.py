@@ -127,7 +127,6 @@ class CurveFittingWindow(Graphs.CurveFittingTool):
         canvas.left_label = figure_settings.get_property("left_label")
         canvas.bottom_label = figure_settings.get_property("bottom_label")
         canvas.highlight_enabled = False
-        canvas = canvas
         canvas._on_pan_gesture = None
         canvas._on_pick = None
         canvas.toolbar = None
