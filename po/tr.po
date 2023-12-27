@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: se.sjoerd.Graphs\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-12-14 14:08+0100\n"
-"PO-Revision-Date: 2023-12-18 00:11+0000\n"
+"PO-Revision-Date: 2023-12-27 04:32+0000\n"
 "Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/graphs/graphs/tr/"
 ">\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.3\n"
+"X-Generator: Weblate 5.4-dev\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:6
@@ -94,14 +94,12 @@ msgstr ""
 "düzenleyin"
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:37
-#, fuzzy
 msgid "2 - Full support for light and dark mode"
-msgstr "2 - Açık ve koyu kip desteklenmektedir"
+msgstr "2 - Açık ve koyu kip tamamen desteklenmektedir"
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:41
-#, fuzzy
 msgid "3 - Generate data from an equation"
-msgstr "3 - Denklemden veri ekle"
+msgstr "3 - Denklemden veri oluştur"
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:45
 msgid "4 - Edit plot stylesheets"
@@ -177,9 +175,8 @@ msgid "Equation"
 msgstr "Denklem"
 
 #: data/ui/curve_fitting.blp:79
-#, fuzzy
 msgid "Add Fit to Data"
-msgstr "Verilere uyum ekle"
+msgstr "Verilere Uy Eklendi"
 
 #: data/ui/curve_fitting.blp:94 data/ui/window.blp:582 data/ui/window.blp:661
 msgid "Toggle Sidebar"
@@ -191,7 +188,7 @@ msgstr "Tuval Yüklenemedi"
 
 #: data/ui/dialogs.blp:5
 msgid "Save changes?"
-msgstr ""
+msgstr "Değişiklikler kaydedilsin mi?"
 
 #: data/ui/dialogs.blp:6
 msgid ""
