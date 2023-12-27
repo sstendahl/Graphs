@@ -5,8 +5,6 @@ from gettext import gettext as _
 
 from PIL import Image
 
-import numpy
-
 from gi.repository import Gio
 
 from graphs import file_io, utilities
@@ -15,6 +13,8 @@ from matplotlib import RcParams, cbook, rc_context
 from matplotlib.figure import Figure
 from matplotlib.font_manager import font_scalings, weight_dict
 from matplotlib.style.core import STYLE_BLACKLIST
+
+import numpy
 
 
 STYLE_IGNORELIST = [
@@ -119,10 +119,8 @@ _PREVIEW_YDATA1 = numpy.sin(_PREVIEW_XDATA)
 _PREVIEW_YDATA2 = numpy.cos(_PREVIEW_XDATA)
 
 
-def generate_preview(style: RcParams) -> Gio.File:
-    file, stream = Gio.File.new_tmp(None)
-    with file_io.FileLikeWrapper.new_for_io_stream(stream) as wrapper, \
-            rc_context(style):
+def _create_preview(style: RcParams, file_like, file_format: str = "svg"):
+    with rc_context(style):
         # set render size in inch
         figure = Figure(figsize=(5, 3))
         axis = figure.add_subplot()
@@ -134,53 +132,24 @@ def generate_preview(style: RcParams) -> Gio.File:
         axis.plot(_PREVIEW_XDATA, _PREVIEW_YDATA2)
         axis.set_xlabel(_("X Label"))
         axis.set_xlabel(_("Y Label"))
-        figure.savefig(wrapper, format="svg")
-    return file
+        figure.savefig(file_like, format=file_format)
+    return file_like
 
 
-def generate_system_preview(light_style: RcParams,
-                            dark_style: RcParams) -> Gio.File:
-
-    def _generate_preview(style):
-        with rc_context(style):
-            figure = Figure(figsize=(5, 3))
-            axis = figure.add_subplot()
-            axis.spines.bottom.set_visible(True)
-            axis.spines.left.set_visible(True)
-            if not style["axes.spines.top"]:
-                axis.tick_params(which="both", top=False, right=False)
-            axis.plot(_PREVIEW_XDATA, _PREVIEW_YDATA1)
-            axis.plot(_PREVIEW_XDATA, _PREVIEW_YDATA2)
-            axis.set_xlabel(_("X Label"))
-            axis.set_ylabel(_("Y Label"))
-            buf = io.BytesIO()
-            figure.savefig(buf, format="png")
-            buf.seek(0)
-            return Image.open(buf)
-
-    stitched_image = stitch_images(_generate_preview(light_style),
-                                   _generate_preview(dark_style))
-
-    # Save the stitched image to a Gio.File
+def generate_preview(style: RcParams) -> Gio.File:
     file, stream = Gio.File.new_tmp(None)
     with file_io.FileLikeWrapper.new_for_io_stream(stream) as wrapper:
-        stitched_image.save(wrapper, format="png")
-
+        _create_preview(style, file_like=wrapper)
     return file
 
 
-def stitch_images(light_image: Image, dark_image: Image) -> Image:
-    # Convert the images to numpy arrays
-    light_image = numpy.array(light_image)
-    dark_image = numpy.array(dark_image)
-
-    # Cut the images in half
-    light_image_half = light_image[:, :light_image.shape[1] // 2]
-    dark_image_half = dark_image[:, dark_image.shape[1] // 2:]
-
-    # Concatenate the image halves
-    stitched_image = numpy.concatenate(
-        (light_image_half, dark_image_half), axis=1)
-
-    # Convert the result back to an image
-    return Image.fromarray(stitched_image)
+def generate_system_preview(
+    light_style: RcParams, dark_style: RcParams,
+) -> Gio.File:
+    file, stream = Gio.File.new_tmp(None)
+    with file_io.FileLikeWrapper.new_for_io_stream(stream) as wrapper:
+        utilities.stitch_images(*(
+            Image.open(_create_preview(style, io.BytesIO(), file_format="png"))
+            for style in (light_style, dark_style)
+        )).save(wrapper, format="png")
+    return file
