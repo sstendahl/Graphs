@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: se.sjoerd.Graphs\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-12-14 14:08+0100\n"
-"PO-Revision-Date: 2023-12-27 04:32+0000\n"
+"PO-Revision-Date: 2023-12-28 05:10+0000\n"
 "Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/graphs/graphs/tr/"
 ">\n"
@@ -87,11 +87,8 @@ msgstr ""
 "sayfasından hata bildiriminde bulunun."
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:33
-#, fuzzy
 msgid "1 - Plot and manipulate any data of choice"
-msgstr ""
-"1 - Denklemle veya dosyadan eklenen herhangi bir veri kümesini çizin ve "
-"düzenleyin"
+msgstr "1 - İstediğiniz verileri çizin ve değiştirin"
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:37
 msgid "2 - Full support for light and dark mode"
@@ -107,13 +104,15 @@ msgstr "4 - Çizim stil sayfalarını düzenleyin"
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:49
 msgid "5 - Manipulate imported data with ease"
-msgstr ""
+msgstr "5 - İçe aktarılan verileri kolaylıkla değiştirin"
 
 #: data/se.sjoerd.Graphs.desktop.in.in:10
 msgid ""
 "Plotting;Graph;Graphing;Science;Mathematics;Math;Equations;Data;Plot;"
 "Visualisation;Visualization;Fitting;xrdml;"
 msgstr ""
+"Çizim;Grafik;Grafikleme;Bilim;Matematik;Mat;Denklemler;Veri;Görselleştirme;Uy"
+"um;Sığdırma;xrdml;"
 
 #: data/ui/add_equation_window.blp:7
 msgid "Add Equation"
@@ -195,6 +194,8 @@ msgid ""
 "Current project contains unsaved changes, changes that are not saved will be "
 "permanently lost."
 msgstr ""
+"Geçerli projede kaydedilmemiş değişiklikler var. Kaydedilmeyen değişiklikler "
+"kalıcı olarak kaybolacak."
 
 #: data/ui/dialogs.blp:9
 msgid "Discard"
@@ -202,7 +203,7 @@ msgstr "Gözden Çıkar"
 
 #: data/ui/dialogs.blp:10
 msgid "Save"
-msgstr ""
+msgstr "Kaydet"
 
 #: data/ui/dialogs.blp:17
 msgid "Delete style?"
@@ -584,17 +585,16 @@ msgid "Style"
 msgstr "Biçem"
 
 #: data/ui/fitting_parameters.blp:26
-#, fuzzy
 msgid "Initial Guess"
-msgstr "Başlangıç"
+msgstr "İlk Tahmin"
 
 #: data/ui/fitting_parameters.blp:37
 msgid "Minimum"
-msgstr ""
+msgstr "Asgari"
 
 #: data/ui/fitting_parameters.blp:47
 msgid "Maximum"
-msgstr ""
+msgstr "Azami"
 
 #: data/ui/help_overlay.blp:11
 msgctxt "shortcut window"
@@ -652,10 +652,9 @@ msgid "Add Data from File"
 msgstr "Dosyadan Veri Ekle"
 
 #: data/ui/help_overlay.blp:62
-#, fuzzy
 msgctxt "shortcut window"
 msgid "New Project"
-msgstr "Proje Aç"
+msgstr "Yeni Proje"
 
 #: data/ui/help_overlay.blp:67
 msgctxt "shortcut window"
@@ -688,10 +687,9 @@ msgid "Save Project"
 msgstr "Projeyi Kaydet"
 
 #: data/ui/help_overlay.blp:92
-#, fuzzy
 msgctxt "shortcut window"
 msgid "Save Project As"
-msgstr "Projeyi Kaydet"
+msgstr "Projeyi Farklı Kaydet"
 
 #: data/ui/help_overlay.blp:98
 msgctxt "shortcut window"
@@ -763,23 +761,23 @@ msgstr "İçe Aktar"
 
 #: data/ui/import.blp:55
 msgid "Delimiter"
-msgstr ""
+msgstr "Ayraç"
 
 #: data/ui/import.blp:58
 msgid "Whitespace"
-msgstr ""
+msgstr "Beyaz boşluk"
 
 #: data/ui/import.blp:58
 msgid "Tab"
-msgstr ""
+msgstr "Sekme"
 
 #: data/ui/import.blp:58
 msgid "Colon (:)"
-msgstr ""
+msgstr "İki nokta üst üste (:)"
 
 #: data/ui/import.blp:58
 msgid "Semicolon (;)"
-msgstr ""
+msgstr "Noktalı virgül (;)"
 
 #: data/ui/import.blp:59 data/ui/import.blp:71
 msgid "Decimal comma (,)"
@@ -791,11 +789,11 @@ msgstr "Ondalık nokta (.)"
 
 #: data/ui/import.blp:59
 msgid "Custom"
-msgstr ""
+msgstr "Özel"
 
 #: data/ui/import.blp:65
 msgid "Custom Delimiter"
-msgstr ""
+msgstr "Özel Ayraç"
 
 #: data/ui/import.blp:69
 msgid "Decimal Separator"
@@ -834,48 +832,44 @@ msgid "Move item "
 msgstr "Ogeyi taşı "
 
 #: data/ui/item_box.blp:70
-#, fuzzy
 msgid "Edit Item"
-msgstr "Ögeyi düzenle"
+msgstr "Ögeyi Düzenle"
 
 #: data/ui/item_box.blp:74
-#, fuzzy
 msgid "Remove Item"
-msgstr "Ögeyi Kaldır"
+msgstr "Ögeyi kaldır"
 
 #: data/ui/smoothen_settings.blp:7
-#, fuzzy
 msgid "Smoothen settings"
-msgstr "Verileri düzleştir"
+msgstr "Ayarları yumuşat"
 
 #: data/ui/smoothen_settings.blp:37 data/ui/window.blp:811
 msgid "Savitzky–Golay filter"
-msgstr ""
+msgstr "Savitzky-Golay filtresi"
 
 #: data/ui/smoothen_settings.blp:39
-#, fuzzy
 msgid "Span percentage"
-msgstr "Üst orta"
+msgstr "Açıklık yüzdesi"
 
 #: data/ui/smoothen_settings.blp:40
 msgid "What percentage of the data span to use for the filter window"
-msgstr ""
+msgstr "Süzgeç penceresi için veri aralığının yüzde kaçının kullanılacağı"
 
 #: data/ui/smoothen_settings.blp:47
 msgid "Polynomial degree"
-msgstr ""
+msgstr "Polinom derecesi"
 
 #: data/ui/smoothen_settings.blp:55
 msgid "Moving Average"
-msgstr ""
+msgstr "Hareketli Ortalama"
 
 #: data/ui/smoothen_settings.blp:57
 msgid "Box points"
-msgstr ""
+msgstr "Kutu puanları"
 
 #: data/ui/smoothen_settings.blp:58
 msgid "Amount of points to use when calculating a moving average"
-msgstr ""
+msgstr "Hareketli ortalama hesaplanırken kullanılacak nokta miktarı"
 
 #: data/ui/style_color_box.blp:18
 msgid "Edit"
@@ -894,13 +888,12 @@ msgid "Font"
 msgstr "Yazı tipi"
 
 #: data/ui/style_editor.blp:52
-#, fuzzy
 msgid "Title Size"
-msgstr "Adım Sayısı"
+msgstr "Başlık Boyutu"
 
 #: data/ui/style_editor.blp:53
 msgid "Title size in relation to Text Size"
-msgstr ""
+msgstr "Metin Boyutuna göre başlık boyutu"
 
 #: data/ui/style_editor.blp:67
 msgid "Lines"
@@ -908,7 +901,7 @@ msgstr "Çizgiler"
 
 #: data/ui/style_editor.blp:125
 msgid "Axes"
-msgstr ""
+msgstr "Eksenler"
 
 #: data/ui/style_editor.blp:128
 msgid "Axis Width"
@@ -916,7 +909,7 @@ msgstr "Eksen Genişliği"
 
 #: data/ui/style_editor.blp:141
 msgid "Draw Frame"
-msgstr ""
+msgstr "Çerçeve Çiz"
 
 #: data/ui/style_editor.blp:146
 msgid "Ticks"
@@ -1255,18 +1248,16 @@ msgid "Previous View"
 msgstr "Önceki Görünüm"
 
 #: data/ui/window.blp:632
-#, fuzzy
 msgid "New Project"
-msgstr "Proje Aç"
+msgstr "Yeni Proje"
 
 #: data/ui/window.blp:635
 msgid "Save Project…"
 msgstr "Projeyi Kaydet…"
 
 #: data/ui/window.blp:636
-#, fuzzy
 msgid "Save Project as…"
-msgstr "Projeyi Kaydet…"
+msgstr "Projeyi Farklı Kaydet…"
 
 #: data/ui/window.blp:637
 msgid "Open Project…"
@@ -1322,11 +1313,11 @@ msgstr "En büyük Y değerinde"
 
 #: data/ui/window.blp:802
 msgid "At middle X value"
-msgstr ""
+msgstr "Orta X değerinde"
 
 #: data/ui/window.blp:816
 msgid "Moving average"
-msgstr ""
+msgstr "Hareketli ortalama"
 
 #: data/ui/window.blp:823
 msgid "Advanced settings"
@@ -1355,18 +1346,24 @@ msgid ""
 "Please enter valid fitting \n"
 "parameters to start the fit"
 msgstr ""
+"Sığdırmayı başlatmak için \n"
+"geçerli sığdırma parametrelerini girin"
 
 #: src/curve_fitting.py:176
 msgid ""
 "Please enter a valid equation \n"
 "to start the fit"
 msgstr ""
+"Sığdırmayı başlatmak için \n"
+"geçerli bir denklem girin"
 
 #: src/curve_fitting.py:179
 msgid ""
 "Please enter valid fitting bounds \n"
 "to start the fit"
 msgstr ""
+"Sığdırmayı başlatmak için \n"
+"geçerli sığdırma sınırlarını girin"
 
 #: src/curve_fitting.py:186
 #, python-brace-format
@@ -1374,9 +1371,9 @@ msgid "Sum of R²: {R2}"
 msgstr "R² toplamı: {R2}"
 
 #: src/curve_fitting.py:367
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "Fitting Parameters for {param_name}"
-msgstr "{param_name} için sığdırma parametreleri"
+msgstr "{param_name} için Sığdırma Parametreleri"
 
 #: src/export_figure.py:49
 msgid "Exported Figure"
@@ -1385,7 +1382,7 @@ msgstr "Şekil Dışa Aktarıldı"
 #. TODO: add System style preview
 #: src/figure_settings.py:101 src/figure_settings.py:122 src/styles.py:69
 msgid "System"
-msgstr ""
+msgstr "Sistem"
 
 #: src/figure_settings.py:210
 msgid "Defaults Updated"
@@ -1464,9 +1461,8 @@ msgid "Item {} already exists"
 msgstr "{} ögesi zaten var"
 
 #: src/ui.py:53
-#, fuzzy
 msgid "Supported files"
-msgstr "Desteklenmeyen Parçacık {}"
+msgstr "Desteklenen dosyalar"
 
 #: src/ui.py:55
 msgid "ASCII files"
