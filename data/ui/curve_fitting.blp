@@ -36,7 +36,7 @@ template $GraphsCurveFittingTool : Adw.Window {
           };
           [end]
           MenuButton {
-            icon-name: "open-menu-symbolic";
+            icon-name: "view-more-symbolic";
             menu-model: curve_fitting_menu;
             tooltip-text: _("Open Curve Fitting Menu");
             primary: true;
@@ -127,8 +127,7 @@ template $GraphsCurveFittingTool : Adw.Window {
 
 menu curve_fitting_menu {
   section {
-    submenu {
-      label: _("Optimization method");
+      label: _("Optimization Method");
       item {
         label: _("Levenberg-Marquardt");
         action: "win.optimization";
@@ -145,28 +144,27 @@ menu curve_fitting_menu {
         target: "dogbox";
       }
     }
-    submenu {
-      label: _("Confidence bounds");
+    section {
+      label: _("Confidence Bounds");
       item {
         label: _("None");
         action: "win.confidence";
         target: "none";
       }
       item {
-        label: _("1σ: 68% confidence");
+        label: _("1σ: 68% Confidence");
         action: "win.confidence";
         target: "1std";
       }
       item {
-        label: _("2σ: 95% confidence");
+        label: _("2σ: 95% Confidence");
         action: "win.confidence";
         target: "2std";
       }
       item {
-        label: _("3σ: 99.7% confidence");
+        label: _("3σ: 99.7% Confidence");
         action: "win.confidence";
         target: "3std";
       }
     }
-  }
 }
