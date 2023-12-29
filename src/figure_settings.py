@@ -143,6 +143,38 @@ class FigureSettingsWindow(Adw.Window):
             getattr(self, direction + "_limits").set_visible(visible)
             getattr(self, direction + "_scale").set_visible(visible)
             getattr(self, direction + "_label").set_visible(visible)
+            min_limit_label = _("X Axis Minimum") \
+                if direction in {"top", "bottom"} else _("Y Axis Minimum")
+            max_limit_label = _("X Axis Maximum") \
+                if direction in {"top", "bottom"} else _("Y Axis Maximum")
+            scale_label = _("X Axis Scale") if direction in {"top", "bottom"} \
+                else _("Y Axis Scale")
+            label_label = _("X Axis Label") if direction in {"top", "bottom"} \
+                else _("Y Axis Label")
+            if direction == "top" and visible_axes[0] and visible_axes[1]:
+                min_limit_label = _("Top X Axis Minimum")
+                max_limit_label = _("Top X Axis Maximum")
+                scale_label = _("Top X Axis Scale")
+                label_label = _("Top X Axis Label")
+            elif direction == "bottom" and visible_axes[0] and visible_axes[1]:
+                min_limit_label = _("Bottom X Axis Minimum")
+                max_limit_label = _("Bottom X Axis Maximum")
+                scale_label = _("Bottom X Axis Scale")
+                label_label = _("Bottom X Axis Label")
+            elif direction == "left" and visible_axes[2] and visible_axes[3]:
+                min_limit_label = _("Left Y Axis Minimum")
+                max_limit_label = _("Left Y Axis Maximum")
+                scale_label = _("Left Y Axis Scale")
+                label_label = _("Left Y Axis Label")
+            elif direction == "right" and visible_axes[2] and visible_axes[3]:
+                min_limit_label = _("Right Y Axis Minimum")
+                max_limit_label = _("Right Y Axis Maximum")
+                scale_label = _("Right Y Axis Scale")
+                label_label = _("Right Y Axis Label")
+            getattr(self, "min_" + direction).set_title(min_limit_label)
+            getattr(self, "max_" + direction).set_title(max_limit_label)
+            getattr(self, direction + "_scale").set_title(scale_label)
+            getattr(self, direction + "_label").set_title(label_label)
 
     def on_entry_change(self, entry, _param, prop):
         with contextlib.suppress(SyntaxError):

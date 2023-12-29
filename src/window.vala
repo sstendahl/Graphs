@@ -19,6 +19,9 @@ namespace Graphs {
         public unowned Button view_forward_button { get; }
 
         [GtkChild]
+        public unowned MenuButton view_menu_button { get; }
+
+        [GtkChild]
         public unowned ToggleButton pan_button { get; }
 
         [GtkChild]
