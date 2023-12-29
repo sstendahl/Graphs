@@ -40,10 +40,11 @@ class ItemBox(Gtk.Box):
         self.drop_source = Gtk.DropTarget.new(str, Gdk.DragAction.COPY)
         self.drop_source.index = str(self.props.index)
         self.drop_source.connect("drop", self.on_dnd_drop)
-
         self.item.connect("notify::color", self.on_color_change)
         self.on_color_change(self.props.item, None)
         self.add_actions()
+        self.click_gesture = Gtk.GestureClick.new()
+        self.click_gesture.connect("released", self.on_click)
 
     def add_actions(self):
         data = self.get_application().get_data()
@@ -94,6 +95,10 @@ class ItemBox(Gtk.Box):
 
     def move_down(self, _action, _shortcut):
         self._change_position(self.props.index, self.props.index + 1)
+
+    def on_click(self, *_args):
+        self.check_button.set_active(not self.check_button.get_active())
+        self.on_toggle(None, None)
 
     @Gtk.Template.Callback()
     def on_toggle(self, _a, _b):
