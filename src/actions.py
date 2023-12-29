@@ -62,16 +62,12 @@ def change_scale(action, target, self):
     data = self.get_data()
     visible_axes = data.get_used_positions()
     direction = action.get_name()[7:-6]
-    if direction == "top" and visible_axes[0] ^ visible_axes[1]:
+    directions = [direction]
+    # Also set opposite axis if opposite axis not in use
+    if direction in ["top", "bottom"] and visible_axes[0] ^ visible_axes[1]:
         directions = ["top", "bottom"]
-    elif direction == "bottom" and visible_axes[0] ^ visible_axes[1]:
-        directions = ["top", "bottom"]
-    elif direction == "left" and visible_axes[2] ^ visible_axes[3]:
+    elif direction in ["left", "right"] and visible_axes[2] ^ visible_axes[3]:
         directions = ["left", "right"]
-    elif direction == "right" and visible_axes[2] ^ visible_axes[3]:
-        directions = ["left", "right"]
-    else:
-        directions = [direction]
     for direction in directions:
         data.get_figure_settings().set_property(
             f"{direction}-scale", int(target.get_string()),

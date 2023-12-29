@@ -37,3 +37,5 @@ EQUATIONS = {
     "gaussian": "a*exp(-(x-mu)²/(2*s²))",
     "custom": "custom",
 }
+
+DIRECTIONS = ["bottom", "top", "left", "right"]

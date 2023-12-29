@@ -6,8 +6,6 @@ from gi.repository import Adw, GObject, Graphs, Gtk
 
 from graphs import misc, styles, ui, utilities
 
-_DIRECTIONS = ["bottom", "top", "left", "right"]
-
 
 def _get_widget_factory(window):
     factory = Gtk.SignalListItemFactory.new()
@@ -76,7 +74,7 @@ class FigureSettingsWindow(Adw.Window):
             )
 
         ignorelist = list(notifiers) + ["min_selected", "max_selected"]
-        for direction in _DIRECTIONS:
+        for direction in misc.DIRECTIONS:
             ignorelist.append(f"min_{direction}")
             ignorelist.append(f"max_{direction}")
 
@@ -130,7 +128,7 @@ class FigureSettingsWindow(Adw.Window):
 
     def set_axes_entries(self):
         visible_axes = self.get_application().get_data().get_used_positions()
-        for (direction, visible) in zip(_DIRECTIONS, visible_axes):
+        for (direction, visible) in zip(misc.DIRECTIONS, visible_axes):
             if visible:
                 for s in ("min_", "max_"):
                     entry = getattr(self, s + direction)
@@ -140,41 +138,62 @@ class FigureSettingsWindow(Adw.Window):
                     entry.connect(
                         "notify::text", self.on_entry_change, s + direction,
                     )
+            # Get the label for each direction, use directional prefix if
+            # two opposite X/Y axes are used simultaniously.
+            labels = {
+                "top": {
+                    "min": _("Top X Axis Minimum") if visible_axes[0]
+                    and visible_axes[1] else _("X Axis Minimum"),
+                    "max": _("Top X Axis Maximum") if visible_axes[0]
+                    and visible_axes[1] else _("X Axis Maximum"),
+                    "scale": _("Top X Axis Scale") if visible_axes[0]
+                    and visible_axes[1] else _("X Axis Scale"),
+                    "label": _("Top X Axis Label") if visible_axes[0]
+                    and visible_axes[1] else _("X Axis Label"),
+                },
+                "bottom": {
+                    "min": _("Bottom X Axis Minimum") if visible_axes[0]
+                    and visible_axes[1] else _("X Axis Minimum"),
+                    "max": _("Bottom X Axis Maximum") if visible_axes[0]
+                    and visible_axes[1] else _("X Axis Maximum"),
+                    "scale": _("Bottom X Axis Scale") if visible_axes[0]
+                    and visible_axes[1] else _("X Axis Scale"),
+                    "label": _("Bottom X Axis Label") if visible_axes[0]
+                    and visible_axes[1] else _("X Axis Label"),
+                },
+                "left": {
+                    "min": _("Left Y Axis Minimum") if visible_axes[2]
+                    and visible_axes[3] else _("Y Axis Minimum"),
+                    "max": _("Left Y Axis Maximum") if visible_axes[2]
+                    and visible_axes[3] else _("Y Axis Maximum"),
+                    "scale": _("Left Y Axis Scale") if visible_axes[2]
+                    and visible_axes[3] else _("Y Axis Scale"),
+                    "label": _("Left Y Axis Label") if visible_axes[2]
+                    and visible_axes[3] else _("Y Axis Label"),
+                },
+                "right": {
+                    "min": _("Right Y Axis Minimum") if visible_axes[2]
+                    and visible_axes[3] else _("Y Axis Minimum"),
+                    "max": _("Right Y Axis Maximum") if visible_axes[2]
+                    and visible_axes[3] else _("Y Axis Maximum"),
+                    "scale": _("Right Y Axis Scale") if visible_axes[2]
+                    and visible_axes[3] else _("Y Axis Scale"),
+                    "label": _("Right Y Axis Label") if visible_axes[2]
+                    and visible_axes[3] else _("Y Axis Label"),
+                },
+            }
+
+            getattr(self, f"min_{direction}").set_title(
+                labels[direction]["min"])
+            getattr(self, f"max_{direction}").set_title(
+                labels[direction]["max"])
+            getattr(self, f"{direction}_scale").set_title(
+                labels[direction]["scale"])
+            getattr(self, f"{direction}_label").set_title(
+                labels[direction]["label"])
             getattr(self, direction + "_limits").set_visible(visible)
             getattr(self, direction + "_scale").set_visible(visible)
             getattr(self, direction + "_label").set_visible(visible)
-            min_limit_label = _("X Axis Minimum") \
-                if direction in {"top", "bottom"} else _("Y Axis Minimum")
-            max_limit_label = _("X Axis Maximum") \
-                if direction in {"top", "bottom"} else _("Y Axis Maximum")
-            scale_label = _("X Axis Scale") if direction in {"top", "bottom"} \
-                else _("Y Axis Scale")
-            label_label = _("X Axis Label") if direction in {"top", "bottom"} \
-                else _("Y Axis Label")
-            if direction == "top" and visible_axes[0] and visible_axes[1]:
-                min_limit_label = _("Top X Axis Minimum")
-                max_limit_label = _("Top X Axis Maximum")
-                scale_label = _("Top X Axis Scale")
-                label_label = _("Top X Axis Label")
-            elif direction == "bottom" and visible_axes[0] and visible_axes[1]:
-                min_limit_label = _("Bottom X Axis Minimum")
-                max_limit_label = _("Bottom X Axis Maximum")
-                scale_label = _("Bottom X Axis Scale")
-                label_label = _("Bottom X Axis Label")
-            elif direction == "left" and visible_axes[2] and visible_axes[3]:
-                min_limit_label = _("Left Y Axis Minimum")
-                max_limit_label = _("Left Y Axis Maximum")
-                scale_label = _("Left Y Axis Scale")
-                label_label = _("Left Y Axis Label")
-            elif direction == "right" and visible_axes[2] and visible_axes[3]:
-                min_limit_label = _("Right Y Axis Minimum")
-                max_limit_label = _("Right Y Axis Maximum")
-                scale_label = _("Right Y Axis Scale")
-                label_label = _("Right Y Axis Label")
-            getattr(self, "min_" + direction).set_title(min_limit_label)
-            getattr(self, "max_" + direction).set_title(max_limit_label)
-            getattr(self, direction + "_scale").set_title(scale_label)
-            getattr(self, direction + "_label").set_title(label_label)
 
     def on_entry_change(self, entry, _param, prop):
         with contextlib.suppress(SyntaxError):

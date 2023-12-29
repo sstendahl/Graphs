@@ -6,7 +6,7 @@ from gettext import gettext as _
 
 from gi.repository import Adw, GLib, Gio, Gtk
 
-from graphs import file_import, file_io, utilities
+from graphs import file_import, file_io, misc, utilities
 from graphs.item_box import ItemBox
 
 
@@ -33,12 +33,13 @@ def enable_axes_actions(self, _callback, application):
     toggle_item = Gio.MenuItem.new(_("Toggle Sidebar"), "app.toggle_sidebar")
     toggle_section.append_item(toggle_item)
     optimize_section = Gio.Menu.new()
-    optimize_item = Gio.MenuItem.new(_("Optimize Limits"), "app.optimize_limits")
+    optimize_item = Gio.MenuItem.new(
+        _("Optimize Limits"), "app.optimize_limits")
     optimize_section.append_item(optimize_item)
     menu.append_section(None, toggle_section)
     menu.append_section(None, optimize_section)
 
-    directions = ["bottom", "top", "left", "right"]
+    directions = misc.DIRECTIONS
     section = Gio.Menu.new()
     for index, direction in enumerate(directions):
         if not visible_axes[index]:
@@ -66,8 +67,6 @@ def enable_axes_actions(self, _callback, application):
         section.append_submenu(label, scale_section)
     menu.append_section(None, section)
     application.get_window().get_view_menu_button().set_menu_model(menu)
-
-
 
 
 def on_items_ignored(_data, _ignored, ignored, self):
