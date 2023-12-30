@@ -13,10 +13,10 @@ data/ui/fitting_parameters.blp
 data/ui/help_overlay.blp
 data/ui/import.blp
 data/ui/item_box.blp
-data/ui/preferences.blp
-data/ui/style_box.blp
+data/ui/smoothen_settings.blp
 data/ui/style_color_box.blp
-data/ui/style_window.blp
+data/ui/style_editor.blp
+data/ui/style_preview.blp
 data/ui/transform_window.blp
 data/ui/window.blp
 src/actions.py
