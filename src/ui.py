@@ -39,9 +39,8 @@ def enable_axes_actions(self, _callback, application):
     menu.append_section(None, toggle_section)
     menu.append_section(None, optimize_section)
 
-    directions = misc.DIRECTIONS
     section = Gio.Menu.new()
-    for index, direction in enumerate(directions):
+    for index, direction in enumerate(misc.DIRECTIONS):
         if not visible_axes[index]:
             continue
         scale_section = Gio.Menu.new()

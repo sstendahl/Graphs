@@ -7,14 +7,20 @@ from gi.repository import Adw, GObject, Graphs, Gtk
 from graphs import misc, styles, ui, utilities
 
 
-def _get_widget_factory(window):
+def _get_widget_factory(window) -> Gtk.SignalListItemFactory:
+    """
+    Creates a new Gtk.SignalListItemFactory instance and connects the
+    `setup and `bind` signals to the appropriate handlers. Returns the factory
+    instance.
+    """
     factory = Gtk.SignalListItemFactory.new()
     factory.connect("setup", lambda _f, i: i.set_child(styles.StylePreview()))
     factory.connect("bind", _on_bind, window)
     return factory
 
 
-def _on_bind(_factory, item, window):
+def _on_bind(_factory, item, window) -> None:
+    """Adds an edit button to the style previews of custom styles"""
     widget = item.get_child()
     style = item.get_item()
     widget.style = style
@@ -61,6 +67,7 @@ class FigureSettingsWindow(Adw.Window):
     figure_settings = GObject.Property(type=Graphs.FigureSettings)
 
     def __init__(self, application, highlighted=None):
+        """Initialize the Figure Settings window and set the widget entries"""
         figure_settings = application.get_data().get_figure_settings()
         super().__init__(
             application=application, transient_for=application.get_window(),
@@ -93,6 +100,10 @@ class FigureSettingsWindow(Adw.Window):
         self.present()
 
     def _on_use_custom_style(self, figure_settings, _a) -> None:
+        """
+        Checks if custom style is used, and sets the current style in the
+        style overview
+        """
         if figure_settings.get_use_custom_style():
             self._on_custom_style(figure_settings, None)
         else:
@@ -100,6 +111,10 @@ class FigureSettingsWindow(Adw.Window):
             self.grid_view.get_model().set_selected(0)
 
     def _on_custom_style(self, figure_settings, _a) -> None:
+        """
+        Sets the current style in the style overview when a custom style has
+        been used
+        """
         if figure_settings.get_use_custom_style():
             selection_model = self.grid_view.get_model()
             stylename = figure_settings.get_custom_style()
@@ -110,7 +125,8 @@ class FigureSettingsWindow(Adw.Window):
                     break
 
     @Gtk.Template.Callback()
-    def on_select(self, model, _pos, _n_items):
+    def on_select(self, model, _pos, _n_items) -> None:
+        """Sets the style upon selection"""
         figure_settings = self.props.figure_settings
         selected_item = model.get_selected_item()
         # Don't trigger unneccesary reloads
@@ -126,8 +142,57 @@ class FigureSettingsWindow(Adw.Window):
             if not figure_settings.get_use_custom_style():
                 figure_settings.set_use_custom_style(True)
 
-    def set_axes_entries(self):
+    def set_axes_entries(self) -> None:
+        """
+        Sets the labels and visibility of all entries that are related to the
+        axes: scale, limits and label. Whenever two opposite axes are used
+        simultaniously, the title of the entry will get a directional prefix.
+        """
         visible_axes = self.get_application().get_data().get_used_positions()
+        # Get the label for each direction, use directional prefix if
+        # two opposite X/Y axes are used simultaniously.
+        labels = {
+            "top": {
+                "min": _("Top X Axis Minimum") if visible_axes[0]
+                and visible_axes[1] else _("X Axis Minimum"),
+                "max": _("Top X Axis Maximum") if visible_axes[0]
+                and visible_axes[1] else _("X Axis Maximum"),
+                "scale": _("Top X Axis Scale") if visible_axes[0]
+                and visible_axes[1] else _("X Axis Scale"),
+                "label": _("Top X Axis Label") if visible_axes[0]
+                and visible_axes[1] else _("X Axis Label"),
+            },
+            "bottom": {
+                "min": _("Bottom X Axis Minimum") if visible_axes[0]
+                and visible_axes[1] else _("X Axis Minimum"),
+                "max": _("Bottom X Axis Maximum") if visible_axes[0]
+                and visible_axes[1] else _("X Axis Maximum"),
+                "scale": _("Bottom X Axis Scale") if visible_axes[0]
+                and visible_axes[1] else _("X Axis Scale"),
+                "label": _("Bottom X Axis Label") if visible_axes[0]
+                and visible_axes[1] else _("X Axis Label"),
+            },
+            "left": {
+                "min": _("Left Y Axis Minimum") if visible_axes[2]
+                and visible_axes[3] else _("Y Axis Minimum"),
+                "max": _("Left Y Axis Maximum") if visible_axes[2]
+                and visible_axes[3] else _("Y Axis Maximum"),
+                "scale": _("Left Y Axis Scale") if visible_axes[2]
+                and visible_axes[3] else _("Y Axis Scale"),
+                "label": _("Left Y Axis Label") if visible_axes[2]
+                and visible_axes[3] else _("Y Axis Label"),
+            },
+            "right": {
+                "min": _("Right Y Axis Minimum") if visible_axes[2]
+                and visible_axes[3] else _("Y Axis Minimum"),
+                "max": _("Right Y Axis Maximum") if visible_axes[2]
+                and visible_axes[3] else _("Y Axis Maximum"),
+                "scale": _("Right Y Axis Scale") if visible_axes[2]
+                and visible_axes[3] else _("Y Axis Scale"),
+                "label": _("Right Y Axis Label") if visible_axes[2]
+                and visible_axes[3] else _("Y Axis Label"),
+            },
+        }
         for (direction, visible) in zip(misc.DIRECTIONS, visible_axes):
             if visible:
                 for s in ("min_", "max_"):
@@ -138,50 +203,6 @@ class FigureSettingsWindow(Adw.Window):
                     entry.connect(
                         "notify::text", self.on_entry_change, s + direction,
                     )
-            # Get the label for each direction, use directional prefix if
-            # two opposite X/Y axes are used simultaniously.
-            labels = {
-                "top": {
-                    "min": _("Top X Axis Minimum") if visible_axes[0]
-                    and visible_axes[1] else _("X Axis Minimum"),
-                    "max": _("Top X Axis Maximum") if visible_axes[0]
-                    and visible_axes[1] else _("X Axis Maximum"),
-                    "scale": _("Top X Axis Scale") if visible_axes[0]
-                    and visible_axes[1] else _("X Axis Scale"),
-                    "label": _("Top X Axis Label") if visible_axes[0]
-                    and visible_axes[1] else _("X Axis Label"),
-                },
-                "bottom": {
-                    "min": _("Bottom X Axis Minimum") if visible_axes[0]
-                    and visible_axes[1] else _("X Axis Minimum"),
-                    "max": _("Bottom X Axis Maximum") if visible_axes[0]
-                    and visible_axes[1] else _("X Axis Maximum"),
-                    "scale": _("Bottom X Axis Scale") if visible_axes[0]
-                    and visible_axes[1] else _("X Axis Scale"),
-                    "label": _("Bottom X Axis Label") if visible_axes[0]
-                    and visible_axes[1] else _("X Axis Label"),
-                },
-                "left": {
-                    "min": _("Left Y Axis Minimum") if visible_axes[2]
-                    and visible_axes[3] else _("Y Axis Minimum"),
-                    "max": _("Left Y Axis Maximum") if visible_axes[2]
-                    and visible_axes[3] else _("Y Axis Maximum"),
-                    "scale": _("Left Y Axis Scale") if visible_axes[2]
-                    and visible_axes[3] else _("Y Axis Scale"),
-                    "label": _("Left Y Axis Label") if visible_axes[2]
-                    and visible_axes[3] else _("Y Axis Label"),
-                },
-                "right": {
-                    "min": _("Right Y Axis Minimum") if visible_axes[2]
-                    and visible_axes[3] else _("Y Axis Minimum"),
-                    "max": _("Right Y Axis Maximum") if visible_axes[2]
-                    and visible_axes[3] else _("Y Axis Maximum"),
-                    "scale": _("Right Y Axis Scale") if visible_axes[2]
-                    and visible_axes[3] else _("Y Axis Scale"),
-                    "label": _("Right Y Axis Label") if visible_axes[2]
-                    and visible_axes[3] else _("Y Axis Label"),
-                },
-            }
 
             getattr(self, f"min_{direction}").set_title(
                 labels[direction]["min"])
@@ -195,24 +216,31 @@ class FigureSettingsWindow(Adw.Window):
             getattr(self, direction + "_scale").set_visible(visible)
             getattr(self, direction + "_label").set_visible(visible)
 
-    def on_entry_change(self, entry, _param, prop):
+    def on_entry_change(self, entry, _param, prop) -> None:
+        """Bind the entry upon change"""
         with contextlib.suppress(SyntaxError):
             self.props.figure_settings.set_property(
                 prop, utilities.string_to_float(entry.get_text()),
             )
 
-    def edit_style(self, _button, style):
+    def edit_style(self, _button, style) -> None:
+        """Load the style editor for the selected style"""
         self.style_editor.load_style(style)
         self.navigation_view.push(self.style_editor)
 
     @Gtk.Template.Callback()
-    def on_pop(self, _view, page):
+    def on_pop(self, _view, page) -> None:
+        """
+        Callback when removing the current stack in the NavigationOverview.
+        Saves the changes to the style if the stack was a style editor page.
+        """
         if page == self.style_editor:
             self.style_editor.save_style()
             style_manager = self.get_application().get_figure_style_manager()
             style_manager._on_style_change()
 
-    def set_index(self, style_manager, name):
+    def set_index(self, style_manager, name) -> None:
+        """Sets the index of the style when a custom style is used"""
         if not self.props.figure_settings.get_use_custom_style():
             return
 
@@ -228,15 +256,21 @@ class FigureSettingsWindow(Adw.Window):
                 break
 
     @Gtk.Template.Callback()
-    def choose_style(self, _button):
+    def choose_style(self, _button) -> None:
+        """Loads the style overview"""
         self.navigation_view.push(self.style_overview)
 
     @Gtk.Template.Callback()
-    def add_style(self, _button):
+    def add_style(self, _button) -> None:
+        """Opens the new style window"""
         styles.AddStyleWindow(self)
 
     @Gtk.Template.Callback()
-    def on_close(self, *_args):
+    def on_close(self, *_args) -> None:
+        """
+        Closes the figure settings, saves the current style and adds the
+        new state to the clipboard
+        """
         self.style_editor.save_style()
         data = self.get_application().get_data()
         data.add_view_history_state()
@@ -244,7 +278,8 @@ class FigureSettingsWindow(Adw.Window):
         self.destroy()
 
     @Gtk.Template.Callback()
-    def on_set_as_default(self, _button):
+    def on_set_as_default(self, _button) -> None:
+        """Sets the current figure settings as the new default"""
         figure_settings = self.props.figure_settings
         settings = self.get_application().get_settings_child("figure")
         ignorelist = ["min_selected", "max_selected"] + misc.LIMITS
