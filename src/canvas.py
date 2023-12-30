@@ -162,12 +162,12 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
         Determines what to do when a panning gesture is detected, pans the
         canvas in the gesture direction.
         """
-        if self.get_application().get_shift():
-            x, y = y, x
-        if event_controller.get_unit() == Gdk.ScrollUnit.WHEEL:
-            x *= 10
-            y *= 10
         if self.get_application().get_ctrl() is False:
+            if self.get_application().get_shift():
+                x, y = y, x
+            if event_controller.get_unit() == Gdk.ScrollUnit.WHEEL:
+                x *= 10
+                y *= 10
             for ax in self.axes:
                 xmin, xmax, ymin, ymax = \
                     self._calculate_pan_values(ax, x, y)
