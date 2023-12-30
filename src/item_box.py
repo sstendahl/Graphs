@@ -135,14 +135,6 @@ class ItemBox(Gtk.Box):
     def edit(self, _action, _shortcut):
         EditItemWindow(self.get_application(), self.props.item)
 
-    @Gtk.Template.Callback()
-    def set_focus(self, widget):
-        """
-        Disable widget focus whenever the popover menu is shown to prevent
-        unwanted scrolling when hovering the mouse to different options.
-        """
-        self.set_can_focus(not widget.get_visible())
-
     def get_application(self):
         """Get application property."""
         return self.props.application
