@@ -8,11 +8,7 @@ msgstr ""
 "Project-Id-Version: graphs\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-12-30 21:29+0100\n"
-<<<<<<< HEAD
-"PO-Revision-Date: 2023-12-31 04:55+0000\n"
-=======
 "PO-Revision-Date: 2023-12-31 06:02+0000\n"
->>>>>>> ed6bdd9 (Translated using Weblate (German))
 "Last-Translator: Leo <leomerh96@outlook.com>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/graphs/graphs/de/>"
 "\n"
@@ -239,11 +235,7 @@ msgstr "Seitenleiste umschalten"
 
 #: data/ui/curve_fitting.blp:120 data/ui/window.blp:622
 msgid "Canvas Failed to Load"
-<<<<<<< HEAD
-msgstr "Canvas laden fehlgeschlagen"
-=======
 msgstr "Canvas konnte nicht geladen werden"
->>>>>>> ed6bdd9 (Translated using Weblate (German))
 
 #: data/ui/curve_fitting.blp:130
 msgid "Optimization Method"
@@ -255,37 +247,6 @@ msgstr "Levenberg-Marquardt"
 
 #: data/ui/curve_fitting.blp:137
 msgid "Trust Region Reflective"
-<<<<<<< HEAD
-msgstr ""
-
-#: data/ui/curve_fitting.blp:142
-msgid "Dogbox"
-msgstr ""
-
-#: data/ui/curve_fitting.blp:148
-msgid "Confidence Bounds"
-msgstr ""
-
-#: data/ui/curve_fitting.blp:150 data/ui/edit_item.blp:54
-#: data/ui/style_editor.blp:85
-msgid "None"
-msgstr "Nichts"
-
-#: data/ui/curve_fitting.blp:155
-#, c-format
-msgid "1σ: 68% Confidence"
-msgstr ""
-
-#: data/ui/curve_fitting.blp:160
-#, c-format
-msgid "2σ: 95% Confidence"
-msgstr ""
-
-#: data/ui/curve_fitting.blp:165
-#, c-format
-msgid "3σ: 99.7% Confidence"
-=======
->>>>>>> ed6bdd9 (Translated using Weblate (German))
 msgstr ""
 
 #: data/ui/curve_fitting.blp:142
@@ -565,65 +526,49 @@ msgid "Axis Limits"
 msgstr "Achsenbegrenzungen"
 
 #: data/ui/figure_settings.blp:71
-<<<<<<< HEAD
-#, fuzzy
-=======
+
 >>>>>>> ed6bdd9 (Translated using Weblate (German))
 msgid "Minimum Left Axis"
 msgstr "Minimum linke Y-Achse"
 
 #: data/ui/figure_settings.blp:76
-<<<<<<< HEAD
-#, fuzzy
-=======
+
 >>>>>>> ed6bdd9 (Translated using Weblate (German))
 msgid "Maximum Left Axis"
 msgstr "Maximum linke Y-Achse"
 
 #: data/ui/figure_settings.blp:86
-<<<<<<< HEAD
-#, fuzzy
-=======
+
 >>>>>>> ed6bdd9 (Translated using Weblate (German))
 msgid "Minimum Bottom Axis"
 msgstr "Minimum untere X-Achse"
 
 #: data/ui/figure_settings.blp:91
-<<<<<<< HEAD
-#, fuzzy
-=======
+
 >>>>>>> ed6bdd9 (Translated using Weblate (German))
 msgid "Maximum Bottom Axis"
 msgstr "Maximum untere X-Achse"
 
 #: data/ui/figure_settings.blp:101
-<<<<<<< HEAD
-#, fuzzy
-=======
+
 >>>>>>> ed6bdd9 (Translated using Weblate (German))
 msgid "Minimum Right Axis"
 msgstr "Minimum rechte Y-Achse"
 
 #: data/ui/figure_settings.blp:106
-<<<<<<< HEAD
-#, fuzzy
-=======
+
 >>>>>>> ed6bdd9 (Translated using Weblate (German))
 msgid "Maximum Right Axis"
 msgstr "Maximum rechte Y-Achse"
 
 #: data/ui/figure_settings.blp:116
-<<<<<<< HEAD
-#, fuzzy
-=======
+
 >>>>>>> ed6bdd9 (Translated using Weblate (German))
 msgid "Minimum Top Axis"
 msgstr "Minimum obere Y-Achse"
 
 #: data/ui/figure_settings.blp:121
-<<<<<<< HEAD
-#, fuzzy
-=======
+
 >>>>>>> ed6bdd9 (Translated using Weblate (German))
 msgid "Maximum Top Axis"
 msgstr "Maximum Obere Y-Achse"
@@ -682,14 +627,8 @@ msgid "Legend Position"
 msgstr "Legende Position"
 
 #: data/ui/figure_settings.blp:169
-<<<<<<< HEAD
-msgid "Auto"
-msgstr ""
-=======
-#, fuzzy
 msgid "Auto"
 msgstr "Automatisch"
->>>>>>> ed6bdd9 (Translated using Weblate (German))
 
 #: data/ui/figure_settings.blp:169
 msgid "Upper right"
@@ -975,15 +914,8 @@ msgstr "Ignorierte Reihenindizes"
 msgid "Pick Color"
 msgstr "Farbe auswählen"
 
-#: data/ui/item_box.blp:53
-<<<<<<< HEAD
-#, fuzzy
-msgid "Move Item "
-msgstr "Verschiebe Item "
-=======
 msgid "Move Item "
 msgstr "Verschiebe Objekt "
->>>>>>> ed6bdd9 (Translated using Weblate (German))
 
 #: data/ui/item_box.blp:70
 msgid "Edit Item"
@@ -1051,21 +983,6 @@ msgid "Title Size"
 msgstr "Titelgröße"
 
 #: data/ui/style_editor.blp:53
-<<<<<<< HEAD
-#, fuzzy
-msgid "Title size in relation to text size"
-msgstr "Titelgröße in Bezug auf Textgröße"
-
-#: data/ui/style_editor.blp:65
-#, fuzzy
-msgid "Label Size"
-msgstr "Markierungsgrösse"
-
-#: data/ui/style_editor.blp:66
-#, fuzzy
-msgid "Label size in relation to text size"
-msgstr "Titelgröße in Bezug auf Textgröße"
-=======
 msgid "Title size in relation to text size"
 msgstr "Titelgröße in Verhältnis zur Textgröße"
 
@@ -1076,7 +993,6 @@ msgstr "Beschriftungsgröße"
 #: data/ui/style_editor.blp:66
 msgid "Label size in relation to text size"
 msgstr "Beschriftungsgröße im Verhältnis zur Textgröße"
->>>>>>> ed6bdd9 (Translated using Weblate (German))
 
 #: data/ui/style_editor.blp:80
 msgid "Lines"
@@ -1111,64 +1027,32 @@ msgid "Outwards"
 msgstr "Nach außen"
 
 #: data/ui/style_editor.blp:169
-<<<<<<< HEAD
-msgid "Minor Ticks"
-msgstr ""
-
-#: data/ui/style_editor.blp:173
-msgid "Major Tick Width"
-msgstr ""
-
-#: data/ui/style_editor.blp:186
-msgid "Minor Tick Width"
-msgstr ""
-
-=======
 #, fuzzy
 msgid "Minor Ticks"
-msgstr "Kleine Markierungen"
+msgstr "Kleine Häkchen"
 
 #: data/ui/style_editor.blp:173
 #, fuzzy
 msgid "Major Tick Width"
-msgstr "Breite großer Markierungen"
+msgstr "Breite großer Häkchen"
 
 #: data/ui/style_editor.blp:186
 #, fuzzy
 msgid "Minor Tick Width"
-msgstr "Breite kleiner Markierungen"
+msgstr "Breite kleiner Häkchen"
 
->>>>>>> ed6bdd9 (Translated using Weblate (German))
 #: data/ui/style_editor.blp:200
 msgid "Major Tick Length"
 msgstr "Haupthäkchenlänge"
 
 #: data/ui/style_editor.blp:213
-<<<<<<< HEAD
-=======
-#, fuzzy
->>>>>>> ed6bdd9 (Translated using Weblate (German))
+
 msgid "Minor Tick Length"
 msgstr "Länge kleiner Markierungen"
 
 #: data/ui/style_editor.blp:227
 msgid "Ticks on Bottom Axis"
 msgstr "Häkchen auf unterer Achsen"
-<<<<<<< HEAD
-
-#: data/ui/style_editor.blp:231
-msgid "Ticks on Left Axis"
-msgstr "Häkchen auf linker Achse"
-
-#: data/ui/style_editor.blp:235
-msgid "Ticks on Right Axis"
-msgstr "Häkchen auf rechter Achse"
-
-#: data/ui/style_editor.blp:239
-msgid "Ticks on Top Axis"
-msgstr ""
-
-=======
 
 #: data/ui/style_editor.blp:231
 msgid "Ticks on Left Axis"
@@ -1181,9 +1065,8 @@ msgstr "Häkchen auf rechter Achse"
 #: data/ui/style_editor.blp:239
 #, fuzzy
 msgid "Ticks on Top Axis"
-msgstr "Markierungen auf oberer X-Achse"
+msgstr "Häkchen auf oberer X-Achse"
 
->>>>>>> ed6bdd9 (Translated using Weblate (German))
 #: data/ui/style_editor.blp:244
 msgid "Grid"
 msgstr "Gitter"
@@ -1201,31 +1084,16 @@ msgid "Grid Opacity"
 msgstr "Gitterdeckkraft"
 
 #: data/ui/style_editor.blp:280
-<<<<<<< HEAD
-=======
-#, fuzzy
->>>>>>> ed6bdd9 (Translated using Weblate (German))
+
 msgid "Padding"
 msgstr "Padding"
 
 #: data/ui/style_editor.blp:281
-<<<<<<< HEAD
-=======
-#, fuzzy
->>>>>>> ed6bdd9 (Translated using Weblate (German))
+
 msgid "Padding for different parts of the figure"
 msgstr "Padding für verschiedene Teile des Graphen"
 
 #: data/ui/style_editor.blp:284
-<<<<<<< HEAD
-msgid "Value Padding"
-msgstr ""
-
-#: data/ui/style_editor.blp:285
-msgid "Padding between axes and values"
-msgstr ""
-
-=======
 #, fuzzy
 msgid "Value Padding"
 msgstr "Wertepadding"
@@ -1235,7 +1103,6 @@ msgstr "Wertepadding"
 msgid "Padding between axes and values"
 msgstr "Padding zwischen Achsen und Werten"
 
->>>>>>> ed6bdd9 (Translated using Weblate (German))
 #: data/ui/style_editor.blp:298
 msgid "Label Padding"
 msgstr "Beschriftungsabstand"
@@ -1267,10 +1134,7 @@ msgid "Change Color"
 msgstr "Farbe Ändern"
 
 #: data/ui/style_editor.blp:361
-<<<<<<< HEAD
-=======
-#, fuzzy
->>>>>>> ed6bdd9 (Translated using Weblate (German))
+
 msgid "Tick Color"
 msgstr "Markierungsfarbe"
 
@@ -1592,10 +1456,7 @@ msgid "Results:"
 msgstr "Resultate:"
 
 #: src/curve_fitting.py:225
-<<<<<<< HEAD
-=======
-#, fuzzy
->>>>>>> ed6bdd9 (Translated using Weblate (German))
+
 msgid ""
 "Please enter valid fitting \n"
 "parameters to start the fit"
@@ -1604,10 +1465,7 @@ msgstr ""
 "einfügen, um die Passung zu starten"
 
 #: src/curve_fitting.py:228
-<<<<<<< HEAD
-=======
-#, fuzzy
->>>>>>> ed6bdd9 (Translated using Weblate (German))
+
 msgid ""
 "Please enter a valid equation \n"
 "to start the fit"
@@ -1688,10 +1546,7 @@ msgid "Unable to import from file"
 msgstr "Kann nicht aus Datei importieren"
 
 #: src/styles.py:262
-<<<<<<< HEAD
-#, fuzzy, python-brace-format
-=======
-#, python-brace-format
+
 >>>>>>> ed6bdd9 (Translated using Weblate (German))
 msgid "Could not parse {stylename}, loading system preferred style"
 msgstr ""
@@ -1703,15 +1558,9 @@ msgid "Plot style {stylename} does not exist loading system preferred"
 msgstr "Stil {stylename} existiert nicht, lade Systembevorzugten"
 
 #: src/styles.py:663
-<<<<<<< HEAD
-#, fuzzy
-msgid "Are you sure you want to delete {self.style.get_name()}?"
-msgstr "Bist du sicher, dass du den Stil {} löschen möchtest?"
-=======
 msgid "Are you sure you want to delete {self.style.get_name()}?"
 msgstr ""
 "Bist du sicher, dass du den Stil {self.style.get_name()} löschen möchtest?"
->>>>>>> ed6bdd9 (Translated using Weblate (German))
 
 #: src/styles.py:680
 msgid "Color {}"
@@ -1737,10 +1586,6 @@ msgid "Item {} already exists"
 msgstr "Datensatz {} existiert schon"
 
 #: src/ui.py:54
-<<<<<<< HEAD
-#, fuzzy
-=======
->>>>>>> ed6bdd9 (Translated using Weblate (German))
 msgid "Supported files"
 msgstr "Unterstützte Formate"
 
@@ -1765,10 +1610,6 @@ msgid "No data to export"
 msgstr "Keine Daten zu exportieren"
 
 #: src/ui.py:112
-<<<<<<< HEAD
-#, fuzzy
-=======
->>>>>>> ed6bdd9 (Translated using Weblate (German))
 msgid "Exported Data"
 msgstr "Exportierte Daten"
 
