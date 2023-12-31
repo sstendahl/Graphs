@@ -323,10 +323,29 @@ class Data(GObject.Object, Graphs.DataInterface):
 
     def delete_items(self, items: misc.ItemList):
         """Delete specified items."""
+        settings = self.get_figure_settings()
+        default = self.get_application().get_settings_child("figure")
         for item_ in items:
             self._current_batch.append(
                 (2, (self.index(item_), item_.to_dict())),
             )
+            x_position = item_.get_xposition()
+            y_position = item_.get_yposition()
+
+            if (x_position == 0
+                    and item_.get_xlabel() == settings.get_bottom_label()):
+                settings.set_bottom_label(default.get_string("bottom-label"))
+            elif (x_position == 1
+                  and item_.get_xlabel() == settings.get_top_label()):
+                settings.set_top_label(default.get_string("top-label"))
+
+            if (y_position == 0
+                    and item_.get_ylabel() == settings.get_left_label()):
+                settings.set_left_label(default.get_string("left-label"))
+            elif (y_position == 1
+                  and item_.get_ylabel() == settings.get_right_label()):
+                settings.set_right_label(default.get_string("right-label"))
+
             self._delete_item(item_.get_uuid())
         self.notify("items")
         self.add_history_state()
