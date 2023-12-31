@@ -7,11 +7,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: graphs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-12-14 14:08+0100\n"
+"POT-Creation-Date: 2023-12-30 21:29+0100\n"
 "PO-Revision-Date: 2023-12-14 15:40+0000\n"
 "Last-Translator: Sjoerd Stendahl <sjoerd1993@gmail.com>\n"
-"Language-Team: Dutch <https://hosted.weblate.org/projects/graphs/graphs/nl/>"
-"\n"
+"Language-Team: Dutch <https://hosted.weblate.org/projects/graphs/graphs/nl/"
+">\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -112,8 +112,8 @@ msgid ""
 "Plotting;Graph;Graphing;Science;Mathematics;Math;Equations;Data;Plot;"
 "Visualisation;Visualization;Fitting;xrdml;"
 msgstr ""
-"Plotten;Grafiek;Wetenschap;Wiskunde;Vergelijking;Data:Visualisatie:Trendanaly"
-"se;xrdml"
+"Plotten;Grafiek;Wetenschap;Wiskunde;Vergelijking;Data:Visualisatie:"
+"Trendanalyse;xrdml"
 
 #: data/ui/add_equation_window.blp:7
 msgid "Add Equation"
@@ -166,25 +166,112 @@ msgstr "Sjabloon"
 msgid "Name"
 msgstr "Naam"
 
-#: data/ui/curve_fitting.blp:36 data/ui/item_box.blp:66
+#: data/ui/curve_fitting.blp:35 data/ui/item_box.blp:66
 msgid "Curve Fitting"
 msgstr "Trendanalyse"
 
-#: data/ui/curve_fitting.blp:52
+#: data/ui/curve_fitting.blp:41
+#, fuzzy
+msgid "Open Curve Fitting Menu"
+msgstr "Trendanalyse"
+
+#: data/ui/curve_fitting.blp:58
 msgid "Equation"
 msgstr "Vergelijking"
 
-#: data/ui/curve_fitting.blp:79
+#: data/ui/curve_fitting.blp:60 data/ui/figure_settings.blp:134
+#: data/ui/figure_settings.blp:141 data/ui/figure_settings.blp:148
+#: data/ui/figure_settings.blp:155 data/ui/window.blp:673
+#: data/ui/window.blp:704 data/ui/window.blp:736 data/ui/window.blp:767
+msgid "Linear"
+msgstr "Lineair"
+
+#: data/ui/curve_fitting.blp:60
+msgid "Quadratic"
+msgstr ""
+
+#: data/ui/curve_fitting.blp:60
+msgid "Exponential"
+msgstr ""
+
+#: data/ui/curve_fitting.blp:60
+msgid "Power Law"
+msgstr ""
+
+#: data/ui/curve_fitting.blp:61 data/ui/figure_settings.blp:134
+#: data/ui/figure_settings.blp:141 data/ui/figure_settings.blp:148
+#: data/ui/figure_settings.blp:155 data/ui/window.blp:678
+#: data/ui/window.blp:709 data/ui/window.blp:741 data/ui/window.blp:772
+msgid "Logarithmic"
+msgstr "Logaritmisch"
+
+#: data/ui/curve_fitting.blp:61
+msgid "Sigmoid Logistic"
+msgstr ""
+
+#: data/ui/curve_fitting.blp:61
+msgid "Gaussian"
+msgstr ""
+
+#: data/ui/curve_fitting.blp:61 data/ui/import.blp:59
+msgid "Custom"
+msgstr "Handmatig"
+
+#: data/ui/curve_fitting.blp:66
+msgid "Y = "
+msgstr ""
+
+#: data/ui/curve_fitting.blp:93
 msgid "Add Fit to Data"
 msgstr "Trend toevoegen als item"
 
-#: data/ui/curve_fitting.blp:94 data/ui/window.blp:582 data/ui/window.blp:661
+#: data/ui/curve_fitting.blp:108 data/ui/window.blp:582 data/ui/window.blp:661
 msgid "Toggle Sidebar"
 msgstr "Schakel de zijbalk"
 
-#: data/ui/curve_fitting.blp:106 data/ui/window.blp:622
+#: data/ui/curve_fitting.blp:120 data/ui/window.blp:622
 msgid "Canvas Failed to Load"
 msgstr "Canvas laden mislukt"
+
+#: data/ui/curve_fitting.blp:130
+msgid "Optimization Method"
+msgstr ""
+
+#: data/ui/curve_fitting.blp:132
+msgid "Levenberg-Marquardt"
+msgstr ""
+
+#: data/ui/curve_fitting.blp:137
+msgid "Trust Region Reflective"
+msgstr ""
+
+#: data/ui/curve_fitting.blp:142
+msgid "Dogbox"
+msgstr ""
+
+#: data/ui/curve_fitting.blp:148
+msgid "Confidence Bounds"
+msgstr ""
+
+#: data/ui/curve_fitting.blp:150 data/ui/edit_item.blp:54
+#: data/ui/style_editor.blp:85
+msgid "None"
+msgstr "Niets"
+
+#: data/ui/curve_fitting.blp:155
+#, c-format
+msgid "1σ: 68% Confidence"
+msgstr ""
+
+#: data/ui/curve_fitting.blp:160
+#, c-format
+msgid "2σ: 95% Confidence"
+msgstr ""
+
+#: data/ui/curve_fitting.blp:165
+#, c-format
+msgid "3σ: 99.7% Confidence"
+msgstr ""
 
 #: data/ui/dialogs.blp:5
 msgid "Save changes?"
@@ -262,127 +349,123 @@ msgstr "Rechts"
 msgid "Line Properties"
 msgstr "Lijneigenschappen"
 
-#: data/ui/edit_item.blp:52 data/ui/style_editor.blp:70
+#: data/ui/edit_item.blp:52 data/ui/style_editor.blp:83
 msgid "Linestyle"
 msgstr "Lijnstijl"
 
-#: data/ui/edit_item.blp:54 data/ui/style_editor.blp:72
-msgid "None"
-msgstr "Niets"
-
-#: data/ui/edit_item.blp:54 data/ui/style_editor.blp:72
+#: data/ui/edit_item.blp:54 data/ui/style_editor.blp:85
 msgid "Solid"
 msgstr "Vast"
 
-#: data/ui/edit_item.blp:54 data/ui/style_editor.blp:72
+#: data/ui/edit_item.blp:54 data/ui/style_editor.blp:85
 msgid "Dotted"
 msgstr "Gestippeld"
 
-#: data/ui/edit_item.blp:54 data/ui/style_editor.blp:72
+#: data/ui/edit_item.blp:54 data/ui/style_editor.blp:85
 msgid "Dashed"
 msgstr "Gestreept"
 
-#: data/ui/edit_item.blp:54 data/ui/style_editor.blp:72
+#: data/ui/edit_item.blp:54 data/ui/style_editor.blp:85
 msgid "Dashdot"
 msgstr "Streep-stippel"
 
-#: data/ui/edit_item.blp:60 data/ui/style_editor.blp:78
+#: data/ui/edit_item.blp:60 data/ui/style_editor.blp:91
 msgid "Linewidth"
 msgstr "Lijnbreedte"
 
-#: data/ui/edit_item.blp:74 data/ui/style_editor.blp:93
+#: data/ui/edit_item.blp:74 data/ui/style_editor.blp:106
 msgid "Markers"
 msgstr "Markeringen"
 
-#: data/ui/edit_item.blp:77 data/ui/style_editor.blp:96
+#: data/ui/edit_item.blp:77 data/ui/style_editor.blp:109
 msgid "Nothing"
 msgstr "Niets"
 
-#: data/ui/edit_item.blp:77 data/ui/style_editor.blp:96
+#: data/ui/edit_item.blp:77 data/ui/style_editor.blp:109
 msgid "Point"
 msgstr "Punt"
 
-#: data/ui/edit_item.blp:77 data/ui/style_editor.blp:96
+#: data/ui/edit_item.blp:77 data/ui/style_editor.blp:109
 msgid "Pixel"
 msgstr "Pixel"
 
-#: data/ui/edit_item.blp:77 data/ui/style_editor.blp:96
+#: data/ui/edit_item.blp:77 data/ui/style_editor.blp:109
 msgid "Circle"
 msgstr "Cirkel"
 
-#: data/ui/edit_item.blp:78 data/ui/style_editor.blp:97
+#: data/ui/edit_item.blp:78 data/ui/style_editor.blp:110
 msgid "Triangle down"
 msgstr "Driehoek naar beneden"
 
-#: data/ui/edit_item.blp:78 data/ui/style_editor.blp:97
+#: data/ui/edit_item.blp:78 data/ui/style_editor.blp:110
 msgid "Triangle up"
 msgstr "Driehoek naar boven"
 
-#: data/ui/edit_item.blp:78 data/ui/style_editor.blp:97
+#: data/ui/edit_item.blp:78 data/ui/style_editor.blp:110
 msgid "Triangle left"
 msgstr "Driehoek naar links"
 
-#: data/ui/edit_item.blp:79 data/ui/style_editor.blp:98
+#: data/ui/edit_item.blp:79 data/ui/style_editor.blp:111
 msgid "Triangle right"
 msgstr "Driehoek naar rechts"
 
-#: data/ui/edit_item.blp:79 data/ui/style_editor.blp:98
+#: data/ui/edit_item.blp:79 data/ui/style_editor.blp:111
 msgid "Octagon"
 msgstr "Achthoek"
 
-#: data/ui/edit_item.blp:79 data/ui/style_editor.blp:98
+#: data/ui/edit_item.blp:79 data/ui/style_editor.blp:111
 msgid "Square"
 msgstr "Vierkant"
 
-#: data/ui/edit_item.blp:80 data/ui/style_editor.blp:99
+#: data/ui/edit_item.blp:80 data/ui/style_editor.blp:112
 msgid "Pentagon"
 msgstr "Vijfhoek"
 
-#: data/ui/edit_item.blp:80 data/ui/style_editor.blp:99
+#: data/ui/edit_item.blp:80 data/ui/style_editor.blp:112
 msgid "Star"
 msgstr "Ster"
 
-#: data/ui/edit_item.blp:80 data/ui/style_editor.blp:99
+#: data/ui/edit_item.blp:80 data/ui/style_editor.blp:112
 msgid "Hexagon 1"
 msgstr "Hexagon 1"
 
-#: data/ui/edit_item.blp:81 data/ui/style_editor.blp:100
+#: data/ui/edit_item.blp:81 data/ui/style_editor.blp:113
 msgid "Hexagon 2"
 msgstr "Hexagon 2"
 
-#: data/ui/edit_item.blp:81 data/ui/style_editor.blp:100
+#: data/ui/edit_item.blp:81 data/ui/style_editor.blp:113
 msgid "Plus"
 msgstr "Plus"
 
-#: data/ui/edit_item.blp:81 data/ui/style_editor.blp:100
+#: data/ui/edit_item.blp:81 data/ui/style_editor.blp:113
 msgid "x"
 msgstr "Kruis"
 
-#: data/ui/edit_item.blp:81 data/ui/style_editor.blp:100
+#: data/ui/edit_item.blp:81 data/ui/style_editor.blp:113
 msgid "Diamond"
 msgstr "Ruit"
 
-#: data/ui/edit_item.blp:82 data/ui/style_editor.blp:101
+#: data/ui/edit_item.blp:82 data/ui/style_editor.blp:114
 msgid "Thin diamond"
 msgstr "Dunne ruit"
 
-#: data/ui/edit_item.blp:82 data/ui/style_editor.blp:101
+#: data/ui/edit_item.blp:82 data/ui/style_editor.blp:114
 msgid "Vertical line"
 msgstr "Verticale lijn"
 
-#: data/ui/edit_item.blp:82 data/ui/style_editor.blp:101
+#: data/ui/edit_item.blp:82 data/ui/style_editor.blp:114
 msgid "Horizontal line"
 msgstr "Horizontale lijn"
 
-#: data/ui/edit_item.blp:83 data/ui/style_editor.blp:102
+#: data/ui/edit_item.blp:83 data/ui/style_editor.blp:115
 msgid "Filled plus"
 msgstr "Gevulde plus"
 
-#: data/ui/edit_item.blp:83 data/ui/style_editor.blp:102
+#: data/ui/edit_item.blp:83 data/ui/style_editor.blp:115
 msgid "Filled x"
 msgstr "Gevuld kruis"
 
-#: data/ui/edit_item.blp:90 data/ui/style_editor.blp:109
+#: data/ui/edit_item.blp:90 data/ui/style_editor.blp:122
 msgid "Marker Size"
 msgstr "Markeringsgrootte"
 
@@ -390,7 +473,7 @@ msgstr "Markeringsgrootte"
 msgid "Export Figure"
 msgstr "Figuur exporteren"
 
-#: data/ui/export_figure.blp:30 src/export_figure.py:54
+#: data/ui/export_figure.blp:30 src/export_figure.py:64
 msgid "Export"
 msgstr "Exporteer"
 
@@ -439,35 +522,43 @@ msgid "Axis Limits"
 msgstr "Asgrenzen"
 
 #: data/ui/figure_settings.blp:71
-msgid "Minimum Left-Hand Y-Axis"
+#, fuzzy
+msgid "Minimum Left Axis"
 msgstr "Minimum linker Y-as"
 
 #: data/ui/figure_settings.blp:76
-msgid "Maximum Left-Hand Y-Axis"
+#, fuzzy
+msgid "Maximum Left Axis"
 msgstr "Maximum linker Y-as"
 
 #: data/ui/figure_settings.blp:86
-msgid "Minimum Bottom X-Axis"
+#, fuzzy
+msgid "Minimum Bottom Axis"
 msgstr "Minimum onderste X-as"
 
 #: data/ui/figure_settings.blp:91
-msgid "Maximum Bottom X-Axis"
+#, fuzzy
+msgid "Maximum Bottom Axis"
 msgstr "Maximum onderste X-as"
 
 #: data/ui/figure_settings.blp:101
-msgid "Minimum Right-Hand Y-Axis"
+#, fuzzy
+msgid "Minimum Right Axis"
 msgstr "Minimum rechter Y-as"
 
 #: data/ui/figure_settings.blp:106
-msgid "Maximum Right-Hand Y-Axis"
+#, fuzzy
+msgid "Maximum Right Axis"
 msgstr "Maximum rechter Y-as"
 
 #: data/ui/figure_settings.blp:116
-msgid "Minimum Top X-Axis"
+#, fuzzy
+msgid "Minimum Top Axis"
 msgstr "Minimum bovenste X-as"
 
 #: data/ui/figure_settings.blp:121
-msgid "Maximum Top Y-Axis"
+#, fuzzy
+msgid "Maximum Top Axis"
 msgstr "Maximum bovenste Y-as"
 
 #: data/ui/figure_settings.blp:129
@@ -477,20 +568,6 @@ msgstr "Schaal"
 #: data/ui/figure_settings.blp:132
 msgid "Bottom Axis Scale"
 msgstr "Schaal onderste as"
-
-#: data/ui/figure_settings.blp:134 data/ui/figure_settings.blp:141
-#: data/ui/figure_settings.blp:148 data/ui/figure_settings.blp:155
-#: data/ui/window.blp:673 data/ui/window.blp:704 data/ui/window.blp:736
-#: data/ui/window.blp:767
-msgid "Linear"
-msgstr "Lineair"
-
-#: data/ui/figure_settings.blp:134 data/ui/figure_settings.blp:141
-#: data/ui/figure_settings.blp:148 data/ui/figure_settings.blp:155
-#: data/ui/window.blp:678 data/ui/window.blp:709 data/ui/window.blp:741
-#: data/ui/window.blp:772
-msgid "Logarithmic"
-msgstr "Logaritmisch"
 
 #: data/ui/figure_settings.blp:134 data/ui/figure_settings.blp:141
 #: data/ui/figure_settings.blp:148 data/ui/figure_settings.blp:155
@@ -538,8 +615,8 @@ msgid "Legend Position"
 msgstr "Legendapositie"
 
 #: data/ui/figure_settings.blp:169
-msgid "Best"
-msgstr "Beste"
+msgid "Auto"
+msgstr ""
 
 #: data/ui/figure_settings.blp:169
 msgid "Upper right"
@@ -788,10 +865,6 @@ msgstr "Komma als decimaalteken (,)"
 msgid "Decimal point (.)"
 msgstr "Punt als decimaalteken (.)"
 
-#: data/ui/import.blp:59
-msgid "Custom"
-msgstr "Handmatig"
-
 #: data/ui/import.blp:65
 msgid "Custom Delimiter"
 msgstr "Handmatige scheidingsteken"
@@ -829,7 +902,8 @@ msgid "Pick Color"
 msgstr "Kies een kleur"
 
 #: data/ui/item_box.blp:53
-msgid "Move item "
+#, fuzzy
+msgid "Move Item "
 msgstr "Verplaats item "
 
 #: data/ui/item_box.blp:70
@@ -873,7 +947,7 @@ msgid "Amount of points to use when calculating a moving average"
 msgstr ""
 "Aantal punten dat gebruikt wordt om een bewegend gemiddelde uit te rekenen"
 
-#: data/ui/style_color_box.blp:18
+#: data/ui/style_color_box.blp:18 data/ui/style_preview.blp:26
 msgid "Edit"
 msgstr "Aanpassen"
 
@@ -894,164 +968,175 @@ msgid "Title Size"
 msgstr "Titelgrootte"
 
 #: data/ui/style_editor.blp:53
-msgid "Title size in relation to Text Size"
+#, fuzzy
+msgid "Title size in relation to text size"
 msgstr "Titelgrootte in verhouding to de tekstgrootte"
 
-#: data/ui/style_editor.blp:67
+#: data/ui/style_editor.blp:65
+#, fuzzy
+msgid "Label Size"
+msgstr "Markeringsgrootte"
+
+#: data/ui/style_editor.blp:66
+#, fuzzy
+msgid "Label size in relation to text size"
+msgstr "Titelgrootte in verhouding to de tekstgrootte"
+
+#: data/ui/style_editor.blp:80
 msgid "Lines"
 msgstr "Lijnen"
 
-#: data/ui/style_editor.blp:125
+#: data/ui/style_editor.blp:138
 msgid "Axes"
 msgstr "Assen"
 
-#: data/ui/style_editor.blp:128
+#: data/ui/style_editor.blp:141
 msgid "Axis Width"
 msgstr "Asbreedte"
 
-#: data/ui/style_editor.blp:141
+#: data/ui/style_editor.blp:154
 msgid "Draw Frame"
 msgstr "Kader om de as"
 
-#: data/ui/style_editor.blp:146
+#: data/ui/style_editor.blp:159
 msgid "Ticks"
 msgstr "Maatstreepjes"
 
-#: data/ui/style_editor.blp:149
+#: data/ui/style_editor.blp:162
 msgid "Tick Directions"
 msgstr "Maatstreepjes richting"
 
-#: data/ui/style_editor.blp:151
+#: data/ui/style_editor.blp:164
 msgid "Inwards"
 msgstr "Inwaarts"
 
-#: data/ui/style_editor.blp:151
+#: data/ui/style_editor.blp:164
 msgid "Outwards"
 msgstr "Uitwaarts"
 
-#: data/ui/style_editor.blp:156
+#: data/ui/style_editor.blp:169
 msgid "Minor Ticks"
 msgstr "Kleine maatstreepjes"
 
-#: data/ui/style_editor.blp:160
+#: data/ui/style_editor.blp:173
 msgid "Major Tick Width"
 msgstr "Grote maatstreepjesbreedte"
 
-#: data/ui/style_editor.blp:173
+#: data/ui/style_editor.blp:186
 msgid "Minor Tick Width"
 msgstr "Kleine maatstreepjesbreedte"
 
-#: data/ui/style_editor.blp:187
+#: data/ui/style_editor.blp:200
 msgid "Major Tick Length"
 msgstr "Grote maatstreepjeslengte"
 
-#: data/ui/style_editor.blp:200
+#: data/ui/style_editor.blp:213
 msgid "Minor Tick Length"
 msgstr "Kleine maatstreepjeslengte"
 
-#: data/ui/style_editor.blp:214
+#: data/ui/style_editor.blp:227
 msgid "Ticks on Bottom Axis"
 msgstr "Maatstreepjes op de onderste as "
 
-#: data/ui/style_editor.blp:218
+#: data/ui/style_editor.blp:231
 msgid "Ticks on Left Axis"
 msgstr "Maatstreepjes op de linkeras"
 
-#: data/ui/style_editor.blp:222
+#: data/ui/style_editor.blp:235
 msgid "Ticks on Right Axis"
 msgstr "Maatstreepjes rechteras"
 
-#: data/ui/style_editor.blp:226
+#: data/ui/style_editor.blp:239
 msgid "Ticks on Top Axis"
 msgstr "Maatstreepjes bovenste as"
 
-#: data/ui/style_editor.blp:231
+#: data/ui/style_editor.blp:244
 msgid "Grid"
 msgstr "Rooster"
 
-#: data/ui/style_editor.blp:234
+#: data/ui/style_editor.blp:247
 msgid "Show Grid"
 msgstr "Toon rooster"
 
-#: data/ui/style_editor.blp:238
+#: data/ui/style_editor.blp:251
 msgid "Grid Width"
 msgstr "Roosterbreedte"
 
-#: data/ui/style_editor.blp:252
+#: data/ui/style_editor.blp:265
 msgid "Grid Opacity"
 msgstr "Roostertransparantie"
 
-#: data/ui/style_editor.blp:267
+#: data/ui/style_editor.blp:280
 msgid "Padding"
 msgstr "Opvulling"
 
-#: data/ui/style_editor.blp:268
+#: data/ui/style_editor.blp:281
 msgid "Padding for different parts of the figure"
 msgstr "Opvulling tussen verschillende delen in de grafiek"
 
-#: data/ui/style_editor.blp:271
+#: data/ui/style_editor.blp:284
 msgid "Value Padding"
 msgstr "Waardenopvulling"
 
-#: data/ui/style_editor.blp:272
+#: data/ui/style_editor.blp:285
 msgid "Padding between axes and values"
 msgstr "De opvulling tussen de assen en de waarden"
 
-#: data/ui/style_editor.blp:285
+#: data/ui/style_editor.blp:298
 msgid "Label Padding"
 msgstr "Labelopvulling"
 
-#: data/ui/style_editor.blp:286
+#: data/ui/style_editor.blp:299
 msgid "Padding between axes and labels"
 msgstr "De opvulling tussen de as en de labels"
 
-#: data/ui/style_editor.blp:299
+#: data/ui/style_editor.blp:312
 msgid "Title Padding"
 msgstr "Titelopvulling"
 
-#: data/ui/style_editor.blp:300
+#: data/ui/style_editor.blp:313
 msgid "Padding between axes and the title"
 msgstr "De opvulling tussen de as en de titel"
 
-#: data/ui/style_editor.blp:314
+#: data/ui/style_editor.blp:327
 msgid "Colors"
 msgstr "Kleuren"
 
-#: data/ui/style_editor.blp:326
+#: data/ui/style_editor.blp:339
 msgid "Text Color"
 msgstr "Textkleur"
 
-#: data/ui/style_editor.blp:331 data/ui/style_editor.blp:353
-#: data/ui/style_editor.blp:375 data/ui/style_editor.blp:397
-#: data/ui/style_editor.blp:419 data/ui/style_editor.blp:441
+#: data/ui/style_editor.blp:344 data/ui/style_editor.blp:366
+#: data/ui/style_editor.blp:388 data/ui/style_editor.blp:410
+#: data/ui/style_editor.blp:432 data/ui/style_editor.blp:454
 msgid "Change Color"
 msgstr "Verander kleur"
 
-#: data/ui/style_editor.blp:348
+#: data/ui/style_editor.blp:361
 msgid "Tick Color"
 msgstr "Maatstreepjeskleur"
 
-#: data/ui/style_editor.blp:370
+#: data/ui/style_editor.blp:383
 msgid "Axis Color"
 msgstr "Assenkleur"
 
-#: data/ui/style_editor.blp:392
+#: data/ui/style_editor.blp:405
 msgid "Grid Color"
 msgstr "Roosterkleur"
 
-#: data/ui/style_editor.blp:414
+#: data/ui/style_editor.blp:427
 msgid "Background Color"
 msgstr "Achtergrondkleur"
 
-#: data/ui/style_editor.blp:436
+#: data/ui/style_editor.blp:449
 msgid "Outline Color"
 msgstr "Omlijningskleur"
 
-#: data/ui/style_editor.blp:453
+#: data/ui/style_editor.blp:466
 msgid "Line Colors"
 msgstr "Lijnkleuren"
 
-#: data/ui/style_editor.blp:464
+#: data/ui/style_editor.blp:477
 msgid "Add Color"
 msgstr "Kleur toevoegen"
 
@@ -1296,19 +1381,23 @@ msgid "Optimize Limits"
 msgstr "Optimaliseer Asgrenzen"
 
 #: data/ui/window.blp:668
-msgid "Top X Scale"
+#, fuzzy
+msgid "Top Scale"
 msgstr "Bovenste X-schaal"
 
 #: data/ui/window.blp:699
-msgid "Bottom X Scale"
+#, fuzzy
+msgid "Bottom Scale"
 msgstr "Onderste X-schaal"
 
 #: data/ui/window.blp:731
-msgid "Left Y Scale"
+#, fuzzy
+msgid "Left Scale"
 msgstr "Linker Y-schaal"
 
 #: data/ui/window.blp:762
-msgid "Right Y Scale"
+#, fuzzy
+msgid "Right Scale"
 msgstr "Rechter Y-schaal"
 
 #: data/ui/window.blp:797
@@ -1342,11 +1431,11 @@ msgstr ""
 msgid "Could not load %s"
 msgstr "Kon %s niet laden"
 
-#: src/curve_fitting.py:169
+#: src/curve_fitting.py:221
 msgid "Results:"
 msgstr "Resultaten:"
 
-#: src/curve_fitting.py:173
+#: src/curve_fitting.py:225
 msgid ""
 "Please enter valid fitting \n"
 "parameters to start the fit"
@@ -1354,7 +1443,7 @@ msgstr ""
 "Voer valide parameters in\n"
 "in om de trendanalyse te starten"
 
-#: src/curve_fitting.py:176
+#: src/curve_fitting.py:228
 msgid ""
 "Please enter a valid equation \n"
 "to start the fit"
@@ -1362,7 +1451,7 @@ msgstr ""
 "Voer een valide vergelijking\n"
 "in om de trendanalyse te starten"
 
-#: src/curve_fitting.py:179
+#: src/curve_fitting.py:231
 msgid ""
 "Please enter valid fitting bounds \n"
 "to start the fit"
@@ -1370,22 +1459,21 @@ msgstr ""
 "Voer een valide grenzen in\n"
 "in om de trendanalyse te starten"
 
-#: src/curve_fitting.py:186
+#: src/curve_fitting.py:240
 #, python-brace-format
 msgid "Sum of R²: {R2}"
 msgstr "Som van R²: {R2}"
 
-#: src/curve_fitting.py:367
+#: src/curve_fitting.py:439
 #, python-brace-format
 msgid "Fitting Parameters for {param_name}"
 msgstr "Parameters voor {param_name}"
 
-#: src/export_figure.py:49
+#: src/export_figure.py:59
 msgid "Exported Figure"
 msgstr "Gexporteerde figuur"
 
-#. TODO: add System style preview
-#: src/figure_settings.py:101 src/figure_settings.py:122 src/styles.py:69
+#: src/figure_settings.py:101 src/figure_settings.py:122 src/styles.py:82
 msgid "System"
 msgstr "Systeem"
 
@@ -1397,7 +1485,7 @@ msgstr "Standaardinstellingen geüpdatet"
 msgid "Are you sure you want to reset the import settings?"
 msgstr "Weet u zeker dat u de standaardstijlen wilt herstellen?"
 
-#: src/item_box.py:125
+#: src/item_box.py:130
 #, python-brace-format
 msgid "Deleted {name}"
 msgstr "{name} is verwijderd"
@@ -1434,17 +1522,22 @@ msgstr "Kan gegevens niet openen, de kolomindex is buiten bereik"
 msgid "Unable to import from file"
 msgstr "Kan het bestand niet importeren"
 
-#: src/styles.py:250
+#: src/styles.py:262
 #, python-brace-format
 msgid "Could not parse {stylename}, loading system preferred style"
 msgstr "Plotstijl {stylename} bestaat niet, systeemstijl wordt geladen"
 
-#: src/styles.py:257
+#: src/styles.py:269
 #, python-brace-format
 msgid "Plot style {stylename} does not exist loading system preferred"
 msgstr "Plotstijl {stylename} bestaat niet, systeemstijl wordt geladen"
 
-#: src/styles.py:649
+#: src/styles.py:663
+#, fuzzy
+msgid "Are you sure you want to delete {self.style.get_name()}?"
+msgstr "Weet u zeker dat u de {}-stijl wilt verwijderen?"
+
+#: src/styles.py:680
 msgid "Color {}"
 msgstr "Kleur {}"
 
@@ -1459,61 +1552,64 @@ msgstr ""
 msgid "Unable to do transformation"
 msgstr "Kan de transformatie niet uitvoeren"
 
-#: src/ui.py:38
+#: src/ui.py:39
 msgid "Items {} already exist"
 msgstr "{} bestaan al"
 
-#: src/ui.py:40
+#: src/ui.py:41
 msgid "Item {} already exists"
 msgstr "{} bestaat al"
 
-#: src/ui.py:53
+#: src/ui.py:54
 msgid "Supported files"
 msgstr "Ondersteunde bestandstypen"
 
-#: src/ui.py:55
+#: src/ui.py:56
 msgid "ASCII files"
 msgstr "ASCII-bestanden"
 
-#: src/ui.py:56
+#: src/ui.py:57
 msgid "PANalytical XRDML"
 msgstr "PANalytical XRDML"
 
-#: src/ui.py:57
+#: src/ui.py:58
 msgid "Leybold xry"
 msgstr "Leybold xry"
 
-#: src/ui.py:58 src/ui.py:75 src/ui.py:88
+#: src/ui.py:59 src/ui.py:76 src/ui.py:89
 msgid "Graphs Project File"
 msgstr "Graphs Projectbestand"
 
-#: src/ui.py:95
+#: src/ui.py:96
 msgid "No data to export"
 msgstr "Geen gegevens om te exporteren"
 
-#: src/ui.py:111
+#: src/ui.py:112
 msgid "Exported Data"
 msgstr "Gegevens zijn geëxporteerd"
 
-#: src/ui.py:119
+#: src/ui.py:120
 msgid "Text Files"
 msgstr "Tekstbestanden"
 
-#: src/ui.py:140
+#: src/ui.py:141
 msgid "translator-credits"
 msgstr "Sjoerd Stendahl <contact@sjoerd.se>"
 
-#: src/ui.py:169 src/ui.py:233 src/ui.py:267
+#: src/ui.py:170 src/ui.py:234 src/ui.py:268
 msgid "Unsupported Widget {}"
 msgstr "Widget {} niet ondersteund"
 
-#: src/ui.py:171 src/ui.py:235 src/ui.py:269
+#: src/ui.py:172 src/ui.py:236 src/ui.py:270
 msgid "No way to apply “{}”"
 msgstr "Geen manier om “{}” toe te passen"
 
-#: src/utilities.py:158
+#: src/utilities.py:160
 msgid "No valid number specified"
 msgstr "Geen geldig nummer"
+
+#~ msgid "Best"
+#~ msgstr "Beste"
 
 #~ msgid "5 - Manipulate data using a wide range of operations"
 #~ msgstr "5 - Manipuleer gegevens met een breed aantal operaties"
@@ -1647,7 +1743,3 @@ msgstr "Geen geldig nummer"
 #, python-brace-format
 #~ msgid "{name} - line colors"
 #~ msgstr "{name} - Lijnkleuren"
-
-#, python-brace-format
-#~ msgid "Are you sure you want to delete the {stylename} style?"
-#~ msgstr "Weet u zeker dat u de {}-stijl wilt verwijderen?"
