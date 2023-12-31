@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: graphs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-12-14 14:08+0100\n"
-"PO-Revision-Date: 2023-12-15 09:40+0000\n"
-"Last-Translator: LibreTranslate <noreply-mt-libretranslate@weblate.org>\n"
+"POT-Creation-Date: 2023-12-30 21:29+0100\n"
+"PO-Revision-Date: 2023-12-30 20:34+0000\n"
+"Last-Translator: Juan Andres Olmedo <olmedo.juanandres5@gmail.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/graphs/graphs/es/"
 ">\n"
 "Language: es\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.3\n"
+"X-Generator: Weblate 5.4-dev\n"
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:6
 #: data/se.sjoerd.Graphs.desktop.in.in:3
@@ -59,12 +59,21 @@ msgid ""
 "refinement. Graphs is written with the GNOME environment in mind, but should "
 "be suitable for any other desktop environment as well."
 msgstr ""
+"Graphs es perfecto tanto para graficar como para manipular datos. Los "
+"gráficos creados por Graphs pueden ser guardado en diferentes formatos para "
+"ser presentados a una audiencia amplia, como en una publicación científica o "
+"en una presentación. Además, la opción de guardar las gráficas como imágenes "
+"vectoriales permite ser editadas fácilmente en programas como Inkscape. "
+"Graphs está hecho con la comunidad de GNOME en mente, pero debería ser "
+"adecuado para cualquier otro entorno."
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:21
 msgid ""
 "For any feedback, questions or general issues, please file an issue on the "
 "GitHub page."
 msgstr ""
+"Por comentarios, preguntas o problemas en general, por favor registrar un "
+"problema en la página de GitHub."
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:33
 msgid "1 - Plot and manipulate any data of choice"
@@ -91,9 +100,9 @@ msgid ""
 "Plotting;Graph;Graphing;Science;Mathematics;Math;Equations;Data;Plot;"
 "Visualisation;Visualization;Fitting;xrdml;"
 msgstr ""
-"Plotting;Graph;Graphing;Science;Mathematics;Math;Equations;Data;Plot;Visualis"
-"ation;Visualization;Fitting;xrdml;Trazado;Gráfico;Gráficos;Ciencia;Matemática"
-"s;Mates;Ecuaciones;Datos;Gráfica;Visualización;"
+"Plotting;Graph;Graphing;Science;Mathematics;Math;Equations;Data;Plot;"
+"Visualisation;Visualization;Fitting;xrdml;Trazado;Gráfico;Gráficos;Ciencia;"
+"Matemáticas;Mates;Ecuaciones;Datos;Gráfica;Visualización;"
 
 #: data/ui/add_equation_window.blp:7
 msgid "Add Equation"
@@ -146,24 +155,111 @@ msgstr ""
 msgid "Name"
 msgstr "Nombre"
 
-#: data/ui/curve_fitting.blp:36 data/ui/item_box.blp:66
+#: data/ui/curve_fitting.blp:35 data/ui/item_box.blp:66
 msgid "Curve Fitting"
 msgstr "Ajuste de curvas"
 
-#: data/ui/curve_fitting.blp:52
+#: data/ui/curve_fitting.blp:41
+#, fuzzy
+msgid "Open Curve Fitting Menu"
+msgstr "Ajuste de curvas"
+
+#: data/ui/curve_fitting.blp:58
 msgid "Equation"
 msgstr "Ecuación"
 
-#: data/ui/curve_fitting.blp:79
+#: data/ui/curve_fitting.blp:60 data/ui/figure_settings.blp:134
+#: data/ui/figure_settings.blp:141 data/ui/figure_settings.blp:148
+#: data/ui/figure_settings.blp:155 data/ui/window.blp:673
+#: data/ui/window.blp:704 data/ui/window.blp:736 data/ui/window.blp:767
+msgid "Linear"
+msgstr "Lineal"
+
+#: data/ui/curve_fitting.blp:60
+msgid "Quadratic"
+msgstr ""
+
+#: data/ui/curve_fitting.blp:60
+msgid "Exponential"
+msgstr ""
+
+#: data/ui/curve_fitting.blp:60
+msgid "Power Law"
+msgstr ""
+
+#: data/ui/curve_fitting.blp:61 data/ui/figure_settings.blp:134
+#: data/ui/figure_settings.blp:141 data/ui/figure_settings.blp:148
+#: data/ui/figure_settings.blp:155 data/ui/window.blp:678
+#: data/ui/window.blp:709 data/ui/window.blp:741 data/ui/window.blp:772
+msgid "Logarithmic"
+msgstr "Logarítmica"
+
+#: data/ui/curve_fitting.blp:61
+msgid "Sigmoid Logistic"
+msgstr ""
+
+#: data/ui/curve_fitting.blp:61
+msgid "Gaussian"
+msgstr ""
+
+#: data/ui/curve_fitting.blp:61 data/ui/import.blp:59
+msgid "Custom"
+msgstr "Personalizar"
+
+#: data/ui/curve_fitting.blp:66
+msgid "Y = "
+msgstr ""
+
+#: data/ui/curve_fitting.blp:93
 msgid "Add Fit to Data"
 msgstr "Añadir ajuste a los datos"
 
-#: data/ui/curve_fitting.blp:94 data/ui/window.blp:582 data/ui/window.blp:661
+#: data/ui/curve_fitting.blp:108 data/ui/window.blp:582 data/ui/window.blp:661
 msgid "Toggle Sidebar"
 msgstr ""
 
-#: data/ui/curve_fitting.blp:106 data/ui/window.blp:622
+#: data/ui/curve_fitting.blp:120 data/ui/window.blp:622
 msgid "Canvas Failed to Load"
+msgstr ""
+
+#: data/ui/curve_fitting.blp:130
+msgid "Optimization Method"
+msgstr ""
+
+#: data/ui/curve_fitting.blp:132
+msgid "Levenberg-Marquardt"
+msgstr ""
+
+#: data/ui/curve_fitting.blp:137
+msgid "Trust Region Reflective"
+msgstr ""
+
+#: data/ui/curve_fitting.blp:142
+msgid "Dogbox"
+msgstr ""
+
+#: data/ui/curve_fitting.blp:148
+msgid "Confidence Bounds"
+msgstr ""
+
+#: data/ui/curve_fitting.blp:150 data/ui/edit_item.blp:54
+#: data/ui/style_editor.blp:85
+msgid "None"
+msgstr "Ninguno"
+
+#: data/ui/curve_fitting.blp:155
+#, c-format
+msgid "1σ: 68% Confidence"
+msgstr ""
+
+#: data/ui/curve_fitting.blp:160
+#, c-format
+msgid "2σ: 95% Confidence"
+msgstr ""
+
+#: data/ui/curve_fitting.blp:165
+#, c-format
+msgid "3σ: 99.7% Confidence"
 msgstr ""
 
 #: data/ui/dialogs.blp:5
@@ -242,127 +338,123 @@ msgstr "Derecha"
 msgid "Line Properties"
 msgstr "Propiedades de la línea"
 
-#: data/ui/edit_item.blp:52 data/ui/style_editor.blp:70
+#: data/ui/edit_item.blp:52 data/ui/style_editor.blp:83
 msgid "Linestyle"
 msgstr "Estilo de la línea"
 
-#: data/ui/edit_item.blp:54 data/ui/style_editor.blp:72
-msgid "None"
-msgstr "Ninguno"
-
-#: data/ui/edit_item.blp:54 data/ui/style_editor.blp:72
+#: data/ui/edit_item.blp:54 data/ui/style_editor.blp:85
 msgid "Solid"
 msgstr ""
 
-#: data/ui/edit_item.blp:54 data/ui/style_editor.blp:72
+#: data/ui/edit_item.blp:54 data/ui/style_editor.blp:85
 msgid "Dotted"
 msgstr ""
 
-#: data/ui/edit_item.blp:54 data/ui/style_editor.blp:72
+#: data/ui/edit_item.blp:54 data/ui/style_editor.blp:85
 msgid "Dashed"
 msgstr ""
 
-#: data/ui/edit_item.blp:54 data/ui/style_editor.blp:72
+#: data/ui/edit_item.blp:54 data/ui/style_editor.blp:85
 msgid "Dashdot"
 msgstr ""
 
-#: data/ui/edit_item.blp:60 data/ui/style_editor.blp:78
+#: data/ui/edit_item.blp:60 data/ui/style_editor.blp:91
 msgid "Linewidth"
 msgstr "Ancho de la línea"
 
-#: data/ui/edit_item.blp:74 data/ui/style_editor.blp:93
+#: data/ui/edit_item.blp:74 data/ui/style_editor.blp:106
 msgid "Markers"
 msgstr "Marcadores"
 
-#: data/ui/edit_item.blp:77 data/ui/style_editor.blp:96
+#: data/ui/edit_item.blp:77 data/ui/style_editor.blp:109
 msgid "Nothing"
 msgstr "Nada"
 
-#: data/ui/edit_item.blp:77 data/ui/style_editor.blp:96
+#: data/ui/edit_item.blp:77 data/ui/style_editor.blp:109
 msgid "Point"
 msgstr "Punto"
 
-#: data/ui/edit_item.blp:77 data/ui/style_editor.blp:96
+#: data/ui/edit_item.blp:77 data/ui/style_editor.blp:109
 msgid "Pixel"
 msgstr "Pixel"
 
-#: data/ui/edit_item.blp:77 data/ui/style_editor.blp:96
+#: data/ui/edit_item.blp:77 data/ui/style_editor.blp:109
 msgid "Circle"
 msgstr "Círculo"
 
-#: data/ui/edit_item.blp:78 data/ui/style_editor.blp:97
+#: data/ui/edit_item.blp:78 data/ui/style_editor.blp:110
 msgid "Triangle down"
 msgstr ""
 
-#: data/ui/edit_item.blp:78 data/ui/style_editor.blp:97
+#: data/ui/edit_item.blp:78 data/ui/style_editor.blp:110
 msgid "Triangle up"
 msgstr ""
 
-#: data/ui/edit_item.blp:78 data/ui/style_editor.blp:97
+#: data/ui/edit_item.blp:78 data/ui/style_editor.blp:110
 msgid "Triangle left"
 msgstr ""
 
-#: data/ui/edit_item.blp:79 data/ui/style_editor.blp:98
+#: data/ui/edit_item.blp:79 data/ui/style_editor.blp:111
 msgid "Triangle right"
 msgstr ""
 
-#: data/ui/edit_item.blp:79 data/ui/style_editor.blp:98
+#: data/ui/edit_item.blp:79 data/ui/style_editor.blp:111
 msgid "Octagon"
 msgstr "Octógono"
 
-#: data/ui/edit_item.blp:79 data/ui/style_editor.blp:98
+#: data/ui/edit_item.blp:79 data/ui/style_editor.blp:111
 msgid "Square"
 msgstr ""
 
-#: data/ui/edit_item.blp:80 data/ui/style_editor.blp:99
+#: data/ui/edit_item.blp:80 data/ui/style_editor.blp:112
 msgid "Pentagon"
 msgstr "Pentágono"
 
-#: data/ui/edit_item.blp:80 data/ui/style_editor.blp:99
+#: data/ui/edit_item.blp:80 data/ui/style_editor.blp:112
 msgid "Star"
 msgstr ""
 
-#: data/ui/edit_item.blp:80 data/ui/style_editor.blp:99
+#: data/ui/edit_item.blp:80 data/ui/style_editor.blp:112
 msgid "Hexagon 1"
 msgstr "Hexágono 1"
 
-#: data/ui/edit_item.blp:81 data/ui/style_editor.blp:100
+#: data/ui/edit_item.blp:81 data/ui/style_editor.blp:113
 msgid "Hexagon 2"
 msgstr "Hexágono 2"
 
-#: data/ui/edit_item.blp:81 data/ui/style_editor.blp:100
+#: data/ui/edit_item.blp:81 data/ui/style_editor.blp:113
 msgid "Plus"
 msgstr ""
 
-#: data/ui/edit_item.blp:81 data/ui/style_editor.blp:100
+#: data/ui/edit_item.blp:81 data/ui/style_editor.blp:113
 msgid "x"
 msgstr "x"
 
-#: data/ui/edit_item.blp:81 data/ui/style_editor.blp:100
+#: data/ui/edit_item.blp:81 data/ui/style_editor.blp:113
 msgid "Diamond"
 msgstr "Diamante"
 
-#: data/ui/edit_item.blp:82 data/ui/style_editor.blp:101
+#: data/ui/edit_item.blp:82 data/ui/style_editor.blp:114
 msgid "Thin diamond"
 msgstr ""
 
-#: data/ui/edit_item.blp:82 data/ui/style_editor.blp:101
+#: data/ui/edit_item.blp:82 data/ui/style_editor.blp:114
 msgid "Vertical line"
 msgstr "Línea vertical"
 
-#: data/ui/edit_item.blp:82 data/ui/style_editor.blp:101
+#: data/ui/edit_item.blp:82 data/ui/style_editor.blp:114
 msgid "Horizontal line"
 msgstr "Línea horizontal"
 
-#: data/ui/edit_item.blp:83 data/ui/style_editor.blp:102
+#: data/ui/edit_item.blp:83 data/ui/style_editor.blp:115
 msgid "Filled plus"
 msgstr ""
 
-#: data/ui/edit_item.blp:83 data/ui/style_editor.blp:102
+#: data/ui/edit_item.blp:83 data/ui/style_editor.blp:115
 msgid "Filled x"
 msgstr ""
 
-#: data/ui/edit_item.blp:90 data/ui/style_editor.blp:109
+#: data/ui/edit_item.blp:90 data/ui/style_editor.blp:122
 msgid "Marker Size"
 msgstr "Tamaño del marcador"
 
@@ -370,7 +462,7 @@ msgstr "Tamaño del marcador"
 msgid "Export Figure"
 msgstr "Exportar figura"
 
-#: data/ui/export_figure.blp:30 src/export_figure.py:54
+#: data/ui/export_figure.blp:30 src/export_figure.py:64
 msgid "Export"
 msgstr "Exportar"
 
@@ -419,36 +511,40 @@ msgid "Axis Limits"
 msgstr "Límites del eje"
 
 #: data/ui/figure_settings.blp:71
-msgid "Minimum Left-Hand Y-Axis"
+msgid "Minimum Left Axis"
 msgstr ""
 
 #: data/ui/figure_settings.blp:76
-msgid "Maximum Left-Hand Y-Axis"
+msgid "Maximum Left Axis"
 msgstr ""
 
 #: data/ui/figure_settings.blp:86
-msgid "Minimum Bottom X-Axis"
-msgstr ""
+#, fuzzy
+msgid "Minimum Bottom Axis"
+msgstr "Etiqueta del eje inferior"
 
 #: data/ui/figure_settings.blp:91
-msgid "Maximum Bottom X-Axis"
-msgstr ""
+#, fuzzy
+msgid "Maximum Bottom Axis"
+msgstr "Etiqueta del eje inferior"
 
 #: data/ui/figure_settings.blp:101
-msgid "Minimum Right-Hand Y-Axis"
+msgid "Minimum Right Axis"
 msgstr ""
 
 #: data/ui/figure_settings.blp:106
-msgid "Maximum Right-Hand Y-Axis"
+msgid "Maximum Right Axis"
 msgstr ""
 
 #: data/ui/figure_settings.blp:116
-msgid "Minimum Top X-Axis"
-msgstr ""
+#, fuzzy
+msgid "Minimum Top Axis"
+msgstr "Mínimo"
 
 #: data/ui/figure_settings.blp:121
-msgid "Maximum Top Y-Axis"
-msgstr ""
+#, fuzzy
+msgid "Maximum Top Axis"
+msgstr "Máximo"
 
 #: data/ui/figure_settings.blp:129
 msgid "Scaling"
@@ -457,20 +553,6 @@ msgstr "Escalado"
 #: data/ui/figure_settings.blp:132
 msgid "Bottom Axis Scale"
 msgstr "Escala del eje inferior"
-
-#: data/ui/figure_settings.blp:134 data/ui/figure_settings.blp:141
-#: data/ui/figure_settings.blp:148 data/ui/figure_settings.blp:155
-#: data/ui/window.blp:673 data/ui/window.blp:704 data/ui/window.blp:736
-#: data/ui/window.blp:767
-msgid "Linear"
-msgstr "Lineal"
-
-#: data/ui/figure_settings.blp:134 data/ui/figure_settings.blp:141
-#: data/ui/figure_settings.blp:148 data/ui/figure_settings.blp:155
-#: data/ui/window.blp:678 data/ui/window.blp:709 data/ui/window.blp:741
-#: data/ui/window.blp:772
-msgid "Logarithmic"
-msgstr "Logarítmica"
 
 #: data/ui/figure_settings.blp:134 data/ui/figure_settings.blp:141
 #: data/ui/figure_settings.blp:148 data/ui/figure_settings.blp:155
@@ -518,8 +600,8 @@ msgid "Legend Position"
 msgstr "Posición de la leyenda"
 
 #: data/ui/figure_settings.blp:169
-msgid "Best"
-msgstr "Mejor"
+msgid "Auto"
+msgstr ""
 
 #: data/ui/figure_settings.blp:169
 msgid "Upper right"
@@ -768,10 +850,6 @@ msgstr "Coma decimal (,)"
 msgid "Decimal point (.)"
 msgstr "Punto decimal (.)"
 
-#: data/ui/import.blp:59
-msgid "Custom"
-msgstr "Personalizar"
-
 #: data/ui/import.blp:65
 msgid "Custom Delimiter"
 msgstr "Delimitador personalizado"
@@ -809,7 +887,8 @@ msgid "Pick Color"
 msgstr "Elija color"
 
 #: data/ui/item_box.blp:53
-msgid "Move item "
+#, fuzzy
+msgid "Move Item "
 msgstr "Mover elemento "
 
 #: data/ui/item_box.blp:70
@@ -852,7 +931,7 @@ msgstr ""
 msgid "Amount of points to use when calculating a moving average"
 msgstr "Cantidad de puntos a usar al calcular una media móvil"
 
-#: data/ui/style_color_box.blp:18
+#: data/ui/style_color_box.blp:18 data/ui/style_preview.blp:26
 msgid "Edit"
 msgstr "Editar"
 
@@ -873,164 +952,173 @@ msgid "Title Size"
 msgstr ""
 
 #: data/ui/style_editor.blp:53
-msgid "Title size in relation to Text Size"
+msgid "Title size in relation to text size"
 msgstr ""
 
-#: data/ui/style_editor.blp:67
+#: data/ui/style_editor.blp:65
+#, fuzzy
+msgid "Label Size"
+msgstr "Tamaño del marcador"
+
+#: data/ui/style_editor.blp:66
+msgid "Label size in relation to text size"
+msgstr ""
+
+#: data/ui/style_editor.blp:80
 msgid "Lines"
 msgstr "Líneas"
 
-#: data/ui/style_editor.blp:125
+#: data/ui/style_editor.blp:138
 msgid "Axes"
 msgstr "Ejes"
 
-#: data/ui/style_editor.blp:128
+#: data/ui/style_editor.blp:141
 msgid "Axis Width"
 msgstr "Anchura del eje"
 
-#: data/ui/style_editor.blp:141
+#: data/ui/style_editor.blp:154
 msgid "Draw Frame"
 msgstr ""
 
-#: data/ui/style_editor.blp:146
+#: data/ui/style_editor.blp:159
 msgid "Ticks"
 msgstr ""
 
-#: data/ui/style_editor.blp:149
+#: data/ui/style_editor.blp:162
 msgid "Tick Directions"
 msgstr ""
 
-#: data/ui/style_editor.blp:151
+#: data/ui/style_editor.blp:164
 msgid "Inwards"
 msgstr ""
 
-#: data/ui/style_editor.blp:151
+#: data/ui/style_editor.blp:164
 msgid "Outwards"
 msgstr ""
 
-#: data/ui/style_editor.blp:156
+#: data/ui/style_editor.blp:169
 msgid "Minor Ticks"
 msgstr ""
 
-#: data/ui/style_editor.blp:160
+#: data/ui/style_editor.blp:173
 msgid "Major Tick Width"
 msgstr ""
 
-#: data/ui/style_editor.blp:173
+#: data/ui/style_editor.blp:186
 msgid "Minor Tick Width"
 msgstr ""
 
-#: data/ui/style_editor.blp:187
+#: data/ui/style_editor.blp:200
 msgid "Major Tick Length"
 msgstr ""
 
-#: data/ui/style_editor.blp:200
+#: data/ui/style_editor.blp:213
 msgid "Minor Tick Length"
 msgstr ""
 
-#: data/ui/style_editor.blp:214
+#: data/ui/style_editor.blp:227
 msgid "Ticks on Bottom Axis"
 msgstr ""
 
-#: data/ui/style_editor.blp:218
+#: data/ui/style_editor.blp:231
 msgid "Ticks on Left Axis"
 msgstr ""
 
-#: data/ui/style_editor.blp:222
+#: data/ui/style_editor.blp:235
 msgid "Ticks on Right Axis"
 msgstr ""
 
-#: data/ui/style_editor.blp:226
+#: data/ui/style_editor.blp:239
 msgid "Ticks on Top Axis"
 msgstr ""
 
-#: data/ui/style_editor.blp:231
+#: data/ui/style_editor.blp:244
 msgid "Grid"
 msgstr "Rejilla"
 
-#: data/ui/style_editor.blp:234
+#: data/ui/style_editor.blp:247
 msgid "Show Grid"
 msgstr "Mostrar rejilla"
 
-#: data/ui/style_editor.blp:238
+#: data/ui/style_editor.blp:251
 msgid "Grid Width"
 msgstr "Anchura de la rejilla"
 
-#: data/ui/style_editor.blp:252
+#: data/ui/style_editor.blp:265
 msgid "Grid Opacity"
 msgstr "Opacidad de la rejilla"
 
-#: data/ui/style_editor.blp:267
+#: data/ui/style_editor.blp:280
 msgid "Padding"
 msgstr ""
 
-#: data/ui/style_editor.blp:268
+#: data/ui/style_editor.blp:281
 msgid "Padding for different parts of the figure"
 msgstr ""
 
-#: data/ui/style_editor.blp:271
+#: data/ui/style_editor.blp:284
 msgid "Value Padding"
 msgstr ""
 
-#: data/ui/style_editor.blp:272
+#: data/ui/style_editor.blp:285
 msgid "Padding between axes and values"
 msgstr ""
 
-#: data/ui/style_editor.blp:285
+#: data/ui/style_editor.blp:298
 msgid "Label Padding"
 msgstr ""
 
-#: data/ui/style_editor.blp:286
+#: data/ui/style_editor.blp:299
 msgid "Padding between axes and labels"
 msgstr ""
 
-#: data/ui/style_editor.blp:299
+#: data/ui/style_editor.blp:312
 msgid "Title Padding"
 msgstr ""
 
-#: data/ui/style_editor.blp:300
+#: data/ui/style_editor.blp:313
 msgid "Padding between axes and the title"
 msgstr ""
 
-#: data/ui/style_editor.blp:314
+#: data/ui/style_editor.blp:327
 msgid "Colors"
 msgstr "Colores"
 
-#: data/ui/style_editor.blp:326
+#: data/ui/style_editor.blp:339
 msgid "Text Color"
 msgstr ""
 
-#: data/ui/style_editor.blp:331 data/ui/style_editor.blp:353
-#: data/ui/style_editor.blp:375 data/ui/style_editor.blp:397
-#: data/ui/style_editor.blp:419 data/ui/style_editor.blp:441
+#: data/ui/style_editor.blp:344 data/ui/style_editor.blp:366
+#: data/ui/style_editor.blp:388 data/ui/style_editor.blp:410
+#: data/ui/style_editor.blp:432 data/ui/style_editor.blp:454
 msgid "Change Color"
 msgstr "Cambiar color"
 
-#: data/ui/style_editor.blp:348
+#: data/ui/style_editor.blp:361
 msgid "Tick Color"
 msgstr ""
 
-#: data/ui/style_editor.blp:370
+#: data/ui/style_editor.blp:383
 msgid "Axis Color"
 msgstr "Color del eje"
 
-#: data/ui/style_editor.blp:392
+#: data/ui/style_editor.blp:405
 msgid "Grid Color"
 msgstr "Color de la rejilla"
 
-#: data/ui/style_editor.blp:414
+#: data/ui/style_editor.blp:427
 msgid "Background Color"
 msgstr "Color de fondo"
 
-#: data/ui/style_editor.blp:436
+#: data/ui/style_editor.blp:449
 msgid "Outline Color"
 msgstr ""
 
-#: data/ui/style_editor.blp:453
+#: data/ui/style_editor.blp:466
 msgid "Line Colors"
 msgstr "Colores de la línea"
 
-#: data/ui/style_editor.blp:464
+#: data/ui/style_editor.blp:477
 msgid "Add Color"
 msgstr "Añadir color"
 
@@ -1273,20 +1361,23 @@ msgid "Optimize Limits"
 msgstr "Optimizar límites"
 
 #: data/ui/window.blp:668
-msgid "Top X Scale"
-msgstr ""
+#, fuzzy
+msgid "Top Scale"
+msgstr "Escala X inferior"
 
 #: data/ui/window.blp:699
-msgid "Bottom X Scale"
+#, fuzzy
+msgid "Bottom Scale"
 msgstr "Escala X inferior"
 
 #: data/ui/window.blp:731
-msgid "Left Y Scale"
+msgid "Left Scale"
 msgstr ""
 
 #: data/ui/window.blp:762
-msgid "Right Y Scale"
-msgstr ""
+#, fuzzy
+msgid "Right Scale"
+msgstr "Derecha"
 
 #: data/ui/window.blp:797
 msgid "At maximum Y value"
@@ -1318,17 +1409,17 @@ msgstr ""
 msgid "Could not load %s"
 msgstr "No se ha podido cargar %s"
 
-#: src/curve_fitting.py:169
+#: src/curve_fitting.py:221
 msgid "Results:"
 msgstr "Resultados:"
 
-#: src/curve_fitting.py:173
+#: src/curve_fitting.py:225
 msgid ""
 "Please enter valid fitting \n"
 "parameters to start the fit"
 msgstr ""
 
-#: src/curve_fitting.py:176
+#: src/curve_fitting.py:228
 msgid ""
 "Please enter a valid equation \n"
 "to start the fit"
@@ -1336,28 +1427,27 @@ msgstr ""
 "Por favor, introduzca una ecuación válida\n"
 "para iniciar el ajuste"
 
-#: src/curve_fitting.py:179
+#: src/curve_fitting.py:231
 msgid ""
 "Please enter valid fitting bounds \n"
 "to start the fit"
 msgstr ""
 
-#: src/curve_fitting.py:186
+#: src/curve_fitting.py:240
 #, python-brace-format
 msgid "Sum of R²: {R2}"
 msgstr ""
 
-#: src/curve_fitting.py:367
+#: src/curve_fitting.py:439
 #, python-brace-format
 msgid "Fitting Parameters for {param_name}"
 msgstr ""
 
-#: src/export_figure.py:49
+#: src/export_figure.py:59
 msgid "Exported Figure"
 msgstr "Figura exportada"
 
-#. TODO: add System style preview
-#: src/figure_settings.py:101 src/figure_settings.py:122 src/styles.py:69
+#: src/figure_settings.py:101 src/figure_settings.py:122 src/styles.py:82
 msgid "System"
 msgstr ""
 
@@ -1367,9 +1457,10 @@ msgstr "Predeterminados actualizados"
 
 #: src/file_import.py:100
 msgid "Are you sure you want to reset the import settings?"
-msgstr "¿Está seguro de que quiere restablecer la configuración de importación?"
+msgstr ""
+"¿Está seguro de que quiere restablecer la configuración de importación?"
 
-#: src/item_box.py:125
+#: src/item_box.py:130
 #, python-brace-format
 msgid "Deleted {name}"
 msgstr "Eliminado {name}"
@@ -1406,19 +1497,25 @@ msgstr ""
 msgid "Unable to import from file"
 msgstr ""
 
-#: src/styles.py:250
+#: src/styles.py:262
 #, python-brace-format
 msgid "Could not parse {stylename}, loading system preferred style"
 msgstr ""
 "No se ha podido procesar {stylename}, cargando el estilo preferido por el "
 "sistema."
 
-#: src/styles.py:257
+#: src/styles.py:269
 #, python-brace-format
 msgid "Plot style {stylename} does not exist loading system preferred"
 msgstr ""
 
-#: src/styles.py:649
+#: src/styles.py:663
+#, fuzzy
+msgid "Are you sure you want to delete {self.style.get_name()}?"
+msgstr ""
+"¿Está seguro de que quiere restablecer la configuración de importación?"
+
+#: src/styles.py:680
 msgid "Color {}"
 msgstr "Color {}"
 
@@ -1431,58 +1528,61 @@ msgstr ""
 msgid "Unable to do transformation"
 msgstr ""
 
-#: src/ui.py:38
+#: src/ui.py:39
 msgid "Items {} already exist"
 msgstr "Los elementos {} ya existen"
 
-#: src/ui.py:40
+#: src/ui.py:41
 msgid "Item {} already exists"
 msgstr "El elemento {} ya existe"
 
-#: src/ui.py:53
+#: src/ui.py:54
 msgid "Supported files"
 msgstr ""
 
-#: src/ui.py:55
+#: src/ui.py:56
 msgid "ASCII files"
 msgstr "Archivos ASCII"
 
-#: src/ui.py:56
+#: src/ui.py:57
 msgid "PANalytical XRDML"
 msgstr ""
 
-#: src/ui.py:57
+#: src/ui.py:58
 msgid "Leybold xry"
 msgstr ""
 
-#: src/ui.py:58 src/ui.py:75 src/ui.py:88
+#: src/ui.py:59 src/ui.py:76 src/ui.py:89
 msgid "Graphs Project File"
 msgstr "Archivo de proyecto de Gráficos"
 
-#: src/ui.py:95
+#: src/ui.py:96
 msgid "No data to export"
 msgstr "No hay datos para exportar"
 
-#: src/ui.py:111
+#: src/ui.py:112
 msgid "Exported Data"
 msgstr "Datos exportados"
 
-#: src/ui.py:119
+#: src/ui.py:120
 msgid "Text Files"
 msgstr ""
 
-#: src/ui.py:140
+#: src/ui.py:141
 msgid "translator-credits"
 msgstr "Óscar Fernández Díaz <oscfdezdz@tuta.io>"
 
-#: src/ui.py:169 src/ui.py:233 src/ui.py:267
+#: src/ui.py:170 src/ui.py:234 src/ui.py:268
 msgid "Unsupported Widget {}"
 msgstr ""
 
-#: src/ui.py:171 src/ui.py:235 src/ui.py:269
+#: src/ui.py:172 src/ui.py:236 src/ui.py:270
 msgid "No way to apply “{}”"
 msgstr ""
 
-#: src/utilities.py:158
+#: src/utilities.py:160
 msgid "No valid number specified"
 msgstr ""
+
+#~ msgid "Best"
+#~ msgstr "Mejor"

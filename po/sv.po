@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: graphs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-12-14 14:08+0100\n"
-"PO-Revision-Date: 2023-12-14 15:40+0000\n"
-"Last-Translator: Sjoerd Stendahl <sjoerd1993@gmail.com>\n"
+"POT-Creation-Date: 2023-12-30 21:29+0100\n"
+"PO-Revision-Date: 2023-12-31 04:55+0000\n"
+"Last-Translator: bittin1ddc447d824349b2 <bittin@reimu.nl>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/graphs/graphs/sv/"
 ">\n"
 "Language: sv\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n>1);\n"
-"X-Generator: Weblate 5.3\n"
+"X-Generator: Weblate 5.4-dev\n"
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:6
 #: data/se.sjoerd.Graphs.desktop.in.in:3
@@ -110,8 +110,8 @@ msgid ""
 "Plotting;Graph;Graphing;Science;Mathematics;Math;Equations;Data;Plot;"
 "Visualisation;Visualization;Fitting;xrdml;"
 msgstr ""
-"Plotta;Graf;Grafer;Vetenskap;Matte;Mattematik;Ekvation;Data;Plot;Visualiserin"
-"g;Anpassning;xrdml"
+"Plotta;Graf;Grafer;Vetenskap;Matte;Mattematik;Ekvation;Data;Plot;"
+"Visualisering;Anpassning;xrdml"
 
 #: data/ui/add_equation_window.blp:7
 msgid "Add Equation"
@@ -164,25 +164,111 @@ msgstr "Mall"
 msgid "Name"
 msgstr "Namn"
 
-#: data/ui/curve_fitting.blp:36 data/ui/item_box.blp:66
+#: data/ui/curve_fitting.blp:35 data/ui/item_box.blp:66
 msgid "Curve Fitting"
 msgstr "Anpassa"
 
-#: data/ui/curve_fitting.blp:52
+#: data/ui/curve_fitting.blp:41
+msgid "Open Curve Fitting Menu"
+msgstr "Öppna kurvanpassningsmeny"
+
+#: data/ui/curve_fitting.blp:58
 msgid "Equation"
 msgstr "Ekvation"
 
-#: data/ui/curve_fitting.blp:79
+#: data/ui/curve_fitting.blp:60 data/ui/figure_settings.blp:134
+#: data/ui/figure_settings.blp:141 data/ui/figure_settings.blp:148
+#: data/ui/figure_settings.blp:155 data/ui/window.blp:673
+#: data/ui/window.blp:704 data/ui/window.blp:736 data/ui/window.blp:767
+msgid "Linear"
+msgstr "Linjär"
+
+#: data/ui/curve_fitting.blp:60
+msgid "Quadratic"
+msgstr "Kvadratisk"
+
+#: data/ui/curve_fitting.blp:60
+msgid "Exponential"
+msgstr "Exponentiell"
+
+#: data/ui/curve_fitting.blp:60
+msgid "Power Law"
+msgstr "Makt lag"
+
+#: data/ui/curve_fitting.blp:61 data/ui/figure_settings.blp:134
+#: data/ui/figure_settings.blp:141 data/ui/figure_settings.blp:148
+#: data/ui/figure_settings.blp:155 data/ui/window.blp:678
+#: data/ui/window.blp:709 data/ui/window.blp:741 data/ui/window.blp:772
+msgid "Logarithmic"
+msgstr "Logaritmisk"
+
+#: data/ui/curve_fitting.blp:61
+msgid "Sigmoid Logistic"
+msgstr "Sigmoid logistisk"
+
+#: data/ui/curve_fitting.blp:61
+msgid "Gaussian"
+msgstr "Gaussisk"
+
+#: data/ui/curve_fitting.blp:61 data/ui/import.blp:59
+msgid "Custom"
+msgstr "Anpassad"
+
+#: data/ui/curve_fitting.blp:66
+msgid "Y = "
+msgstr "Y = "
+
+#: data/ui/curve_fitting.blp:93
 msgid "Add Fit to Data"
 msgstr "Lägg till som data"
 
-#: data/ui/curve_fitting.blp:94 data/ui/window.blp:582 data/ui/window.blp:661
+#: data/ui/curve_fitting.blp:108 data/ui/window.blp:582 data/ui/window.blp:661
 msgid "Toggle Sidebar"
 msgstr "Växla sidofält"
 
-#: data/ui/curve_fitting.blp:106 data/ui/window.blp:622
+#: data/ui/curve_fitting.blp:120 data/ui/window.blp:622
 msgid "Canvas Failed to Load"
 msgstr "Kanvasen kunde inte laddas"
+
+#: data/ui/curve_fitting.blp:130
+msgid "Optimization Method"
+msgstr "Optimeringsmetod"
+
+#: data/ui/curve_fitting.blp:132
+msgid "Levenberg-Marquardt"
+msgstr "Levenberg-Marquardt"
+
+#: data/ui/curve_fitting.blp:137
+msgid "Trust Region Reflective"
+msgstr "Lita på reflekterande region"
+
+#: data/ui/curve_fitting.blp:142
+msgid "Dogbox"
+msgstr "Dogbox"
+
+#: data/ui/curve_fitting.blp:148
+msgid "Confidence Bounds"
+msgstr "Förtroendegränser"
+
+#: data/ui/curve_fitting.blp:150 data/ui/edit_item.blp:54
+#: data/ui/style_editor.blp:85
+msgid "None"
+msgstr "Ingen"
+
+#: data/ui/curve_fitting.blp:155
+#, c-format
+msgid "1σ: 68% Confidence"
+msgstr "1σ: 68% förtroende"
+
+#: data/ui/curve_fitting.blp:160
+#, c-format
+msgid "2σ: 95% Confidence"
+msgstr "2σ: 95% förtroende"
+
+#: data/ui/curve_fitting.blp:165
+#, c-format
+msgid "3σ: 99.7% Confidence"
+msgstr "3σ: 99.7% förtroende"
 
 #: data/ui/dialogs.blp:5
 msgid "Save changes?"
@@ -260,127 +346,123 @@ msgstr "Höger"
 msgid "Line Properties"
 msgstr "Linjeegenskaper"
 
-#: data/ui/edit_item.blp:52 data/ui/style_editor.blp:70
+#: data/ui/edit_item.blp:52 data/ui/style_editor.blp:83
 msgid "Linestyle"
 msgstr "Linjestil"
 
-#: data/ui/edit_item.blp:54 data/ui/style_editor.blp:72
-msgid "None"
-msgstr "Ingen"
-
-#: data/ui/edit_item.blp:54 data/ui/style_editor.blp:72
+#: data/ui/edit_item.blp:54 data/ui/style_editor.blp:85
 msgid "Solid"
 msgstr "Hel"
 
-#: data/ui/edit_item.blp:54 data/ui/style_editor.blp:72
+#: data/ui/edit_item.blp:54 data/ui/style_editor.blp:85
 msgid "Dotted"
 msgstr "Prickad"
 
-#: data/ui/edit_item.blp:54 data/ui/style_editor.blp:72
+#: data/ui/edit_item.blp:54 data/ui/style_editor.blp:85
 msgid "Dashed"
 msgstr "Streckad"
 
-#: data/ui/edit_item.blp:54 data/ui/style_editor.blp:72
+#: data/ui/edit_item.blp:54 data/ui/style_editor.blp:85
 msgid "Dashdot"
 msgstr "Streck-punkt"
 
-#: data/ui/edit_item.blp:60 data/ui/style_editor.blp:78
+#: data/ui/edit_item.blp:60 data/ui/style_editor.blp:91
 msgid "Linewidth"
 msgstr "Linjebredd"
 
-#: data/ui/edit_item.blp:74 data/ui/style_editor.blp:93
+#: data/ui/edit_item.blp:74 data/ui/style_editor.blp:106
 msgid "Markers"
 msgstr "Markörer"
 
-#: data/ui/edit_item.blp:77 data/ui/style_editor.blp:96
+#: data/ui/edit_item.blp:77 data/ui/style_editor.blp:109
 msgid "Nothing"
 msgstr "Ingenting"
 
-#: data/ui/edit_item.blp:77 data/ui/style_editor.blp:96
+#: data/ui/edit_item.blp:77 data/ui/style_editor.blp:109
 msgid "Point"
 msgstr "Punkt"
 
-#: data/ui/edit_item.blp:77 data/ui/style_editor.blp:96
+#: data/ui/edit_item.blp:77 data/ui/style_editor.blp:109
 msgid "Pixel"
 msgstr "Pixel"
 
-#: data/ui/edit_item.blp:77 data/ui/style_editor.blp:96
+#: data/ui/edit_item.blp:77 data/ui/style_editor.blp:109
 msgid "Circle"
 msgstr "Cirkel"
 
-#: data/ui/edit_item.blp:78 data/ui/style_editor.blp:97
+#: data/ui/edit_item.blp:78 data/ui/style_editor.blp:110
 msgid "Triangle down"
 msgstr "Triangel nedåt"
 
-#: data/ui/edit_item.blp:78 data/ui/style_editor.blp:97
+#: data/ui/edit_item.blp:78 data/ui/style_editor.blp:110
 msgid "Triangle up"
 msgstr "Triangel upåt"
 
-#: data/ui/edit_item.blp:78 data/ui/style_editor.blp:97
+#: data/ui/edit_item.blp:78 data/ui/style_editor.blp:110
 msgid "Triangle left"
 msgstr "Triangel vänster"
 
-#: data/ui/edit_item.blp:79 data/ui/style_editor.blp:98
+#: data/ui/edit_item.blp:79 data/ui/style_editor.blp:111
 msgid "Triangle right"
 msgstr "Triangel höger"
 
-#: data/ui/edit_item.blp:79 data/ui/style_editor.blp:98
+#: data/ui/edit_item.blp:79 data/ui/style_editor.blp:111
 msgid "Octagon"
 msgstr "Oktagon"
 
-#: data/ui/edit_item.blp:79 data/ui/style_editor.blp:98
+#: data/ui/edit_item.blp:79 data/ui/style_editor.blp:111
 msgid "Square"
 msgstr "Fyrkant"
 
-#: data/ui/edit_item.blp:80 data/ui/style_editor.blp:99
+#: data/ui/edit_item.blp:80 data/ui/style_editor.blp:112
 msgid "Pentagon"
 msgstr "Pentagon"
 
-#: data/ui/edit_item.blp:80 data/ui/style_editor.blp:99
+#: data/ui/edit_item.blp:80 data/ui/style_editor.blp:112
 msgid "Star"
 msgstr "Stjärna"
 
-#: data/ui/edit_item.blp:80 data/ui/style_editor.blp:99
+#: data/ui/edit_item.blp:80 data/ui/style_editor.blp:112
 msgid "Hexagon 1"
 msgstr "Hexagon 1"
 
-#: data/ui/edit_item.blp:81 data/ui/style_editor.blp:100
+#: data/ui/edit_item.blp:81 data/ui/style_editor.blp:113
 msgid "Hexagon 2"
 msgstr "Hexagon 2"
 
-#: data/ui/edit_item.blp:81 data/ui/style_editor.blp:100
+#: data/ui/edit_item.blp:81 data/ui/style_editor.blp:113
 msgid "Plus"
 msgstr "Plus"
 
-#: data/ui/edit_item.blp:81 data/ui/style_editor.blp:100
+#: data/ui/edit_item.blp:81 data/ui/style_editor.blp:113
 msgid "x"
 msgstr "X"
 
-#: data/ui/edit_item.blp:81 data/ui/style_editor.blp:100
+#: data/ui/edit_item.blp:81 data/ui/style_editor.blp:113
 msgid "Diamond"
 msgstr "Diamant"
 
-#: data/ui/edit_item.blp:82 data/ui/style_editor.blp:101
+#: data/ui/edit_item.blp:82 data/ui/style_editor.blp:114
 msgid "Thin diamond"
 msgstr "Tunn diamant"
 
-#: data/ui/edit_item.blp:82 data/ui/style_editor.blp:101
+#: data/ui/edit_item.blp:82 data/ui/style_editor.blp:114
 msgid "Vertical line"
 msgstr "Vertikal linje"
 
-#: data/ui/edit_item.blp:82 data/ui/style_editor.blp:101
+#: data/ui/edit_item.blp:82 data/ui/style_editor.blp:114
 msgid "Horizontal line"
 msgstr "Horisontell linje"
 
-#: data/ui/edit_item.blp:83 data/ui/style_editor.blp:102
+#: data/ui/edit_item.blp:83 data/ui/style_editor.blp:115
 msgid "Filled plus"
 msgstr "Fylld plus"
 
-#: data/ui/edit_item.blp:83 data/ui/style_editor.blp:102
+#: data/ui/edit_item.blp:83 data/ui/style_editor.blp:115
 msgid "Filled x"
 msgstr "Fylld x"
 
-#: data/ui/edit_item.blp:90 data/ui/style_editor.blp:109
+#: data/ui/edit_item.blp:90 data/ui/style_editor.blp:122
 msgid "Marker Size"
 msgstr "Markörstorlek"
 
@@ -388,7 +470,7 @@ msgstr "Markörstorlek"
 msgid "Export Figure"
 msgstr "Exportera figur"
 
-#: data/ui/export_figure.blp:30 src/export_figure.py:54
+#: data/ui/export_figure.blp:30 src/export_figure.py:64
 msgid "Export"
 msgstr "Exportera"
 
@@ -437,36 +519,36 @@ msgid "Axis Limits"
 msgstr "Axelgränser"
 
 #: data/ui/figure_settings.blp:71
-msgid "Minimum Left-Hand Y-Axis"
-msgstr "Minimumvärde för vänster Y-axel"
+msgid "Minimum Left Axis"
+msgstr "Minsta vänsteraxel"
 
 #: data/ui/figure_settings.blp:76
-msgid "Maximum Left-Hand Y-Axis"
-msgstr "Maximumvärde för vänster Y-axel"
+msgid "Maximum Left Axis"
+msgstr "Maximal vänsteraxel"
 
 #: data/ui/figure_settings.blp:86
-msgid "Minimum Bottom X-Axis"
-msgstr "Minimumvärde för nedre X-axel"
+msgid "Minimum Bottom Axis"
+msgstr "Minsta bottenaxel"
 
 #: data/ui/figure_settings.blp:91
-msgid "Maximum Bottom X-Axis"
-msgstr "Maximumvärde för nedre X-axel"
+msgid "Maximum Bottom Axis"
+msgstr "Maximal bottenaxel"
 
 #: data/ui/figure_settings.blp:101
-msgid "Minimum Right-Hand Y-Axis"
-msgstr "Minimumvärde för höger Y-axel"
+msgid "Minimum Right Axis"
+msgstr "Minsta högeraxel"
 
 #: data/ui/figure_settings.blp:106
-msgid "Maximum Right-Hand Y-Axis"
-msgstr "Maximumvärde för höger Y-axel"
+msgid "Maximum Right Axis"
+msgstr "Maximal högeraxel"
 
 #: data/ui/figure_settings.blp:116
-msgid "Minimum Top X-Axis"
-msgstr "Minimumvärde för övre X-axel"
+msgid "Minimum Top Axis"
+msgstr "Minsta övre axel"
 
 #: data/ui/figure_settings.blp:121
-msgid "Maximum Top Y-Axis"
-msgstr "Maximumvärde för övre X-axel"
+msgid "Maximum Top Axis"
+msgstr "Maximal övre axel"
 
 #: data/ui/figure_settings.blp:129
 msgid "Scaling"
@@ -475,20 +557,6 @@ msgstr "Skalning"
 #: data/ui/figure_settings.blp:132
 msgid "Bottom Axis Scale"
 msgstr "Skala för nedre axeln"
-
-#: data/ui/figure_settings.blp:134 data/ui/figure_settings.blp:141
-#: data/ui/figure_settings.blp:148 data/ui/figure_settings.blp:155
-#: data/ui/window.blp:673 data/ui/window.blp:704 data/ui/window.blp:736
-#: data/ui/window.blp:767
-msgid "Linear"
-msgstr "Linjär"
-
-#: data/ui/figure_settings.blp:134 data/ui/figure_settings.blp:141
-#: data/ui/figure_settings.blp:148 data/ui/figure_settings.blp:155
-#: data/ui/window.blp:678 data/ui/window.blp:709 data/ui/window.blp:741
-#: data/ui/window.blp:772
-msgid "Logarithmic"
-msgstr "Logaritmisk"
 
 #: data/ui/figure_settings.blp:134 data/ui/figure_settings.blp:141
 #: data/ui/figure_settings.blp:148 data/ui/figure_settings.blp:155
@@ -536,8 +604,8 @@ msgid "Legend Position"
 msgstr "Legendens position"
 
 #: data/ui/figure_settings.blp:169
-msgid "Best"
-msgstr "Bäst"
+msgid "Auto"
+msgstr "Automatisk"
 
 #: data/ui/figure_settings.blp:169
 msgid "Upper right"
@@ -786,10 +854,6 @@ msgstr "Decimalkomma (,)"
 msgid "Decimal point (.)"
 msgstr "Decimalpunkt (.)"
 
-#: data/ui/import.blp:59
-msgid "Custom"
-msgstr "Anpassad"
-
 #: data/ui/import.blp:65
 msgid "Custom Delimiter"
 msgstr "Anpassad avgränsare"
@@ -827,8 +891,8 @@ msgid "Pick Color"
 msgstr "Välj en färg"
 
 #: data/ui/item_box.blp:53
-msgid "Move item "
-msgstr "Flytta item "
+msgid "Move Item "
+msgstr "Flytta objekt "
 
 #: data/ui/item_box.blp:70
 msgid "Edit Item"
@@ -870,7 +934,7 @@ msgstr "Antal punkter"
 msgid "Amount of points to use when calculating a moving average"
 msgstr "Antal punkter att använda vid beräkning av glidande medelvärde"
 
-#: data/ui/style_color_box.blp:18
+#: data/ui/style_color_box.blp:18 data/ui/style_preview.blp:26
 msgid "Edit"
 msgstr "Ändra"
 
@@ -891,164 +955,172 @@ msgid "Title Size"
 msgstr "Titelstorlek"
 
 #: data/ui/style_editor.blp:53
-msgid "Title size in relation to Text Size"
-msgstr "Titelstorlek i förhållande till Textstorlek"
+msgid "Title size in relation to text size"
+msgstr "Titelstorlek i förhållande till textstorlek"
 
-#: data/ui/style_editor.blp:67
+#: data/ui/style_editor.blp:65
+msgid "Label Size"
+msgstr "Etikettstorlek"
+
+#: data/ui/style_editor.blp:66
+msgid "Label size in relation to text size"
+msgstr "Etikettstorlek i förhållande till textstorlek"
+
+#: data/ui/style_editor.blp:80
 msgid "Lines"
 msgstr "Linjer"
 
-#: data/ui/style_editor.blp:125
+#: data/ui/style_editor.blp:138
 msgid "Axes"
 msgstr "Axlar"
 
-#: data/ui/style_editor.blp:128
+#: data/ui/style_editor.blp:141
 msgid "Axis Width"
 msgstr "Axelbredd"
 
-#: data/ui/style_editor.blp:141
+#: data/ui/style_editor.blp:154
 msgid "Draw Frame"
 msgstr "Använd ram"
 
-#: data/ui/style_editor.blp:146
+#: data/ui/style_editor.blp:159
 msgid "Ticks"
 msgstr "Tickar"
 
-#: data/ui/style_editor.blp:149
+#: data/ui/style_editor.blp:162
 msgid "Tick Directions"
 msgstr "Tickriktning"
 
-#: data/ui/style_editor.blp:151
+#: data/ui/style_editor.blp:164
 msgid "Inwards"
 msgstr "Inåt"
 
-#: data/ui/style_editor.blp:151
+#: data/ui/style_editor.blp:164
 msgid "Outwards"
 msgstr "Utåt"
 
-#: data/ui/style_editor.blp:156
+#: data/ui/style_editor.blp:169
 msgid "Minor Ticks"
 msgstr "Mindre tickar"
 
-#: data/ui/style_editor.blp:160
+#: data/ui/style_editor.blp:173
 msgid "Major Tick Width"
 msgstr "Bredd på stora tickar"
 
-#: data/ui/style_editor.blp:173
+#: data/ui/style_editor.blp:186
 msgid "Minor Tick Width"
 msgstr "Bredd på mindre tickar"
 
-#: data/ui/style_editor.blp:187
+#: data/ui/style_editor.blp:200
 msgid "Major Tick Length"
 msgstr "Bredd på stora tickar"
 
-#: data/ui/style_editor.blp:200
+#: data/ui/style_editor.blp:213
 msgid "Minor Tick Length"
 msgstr "Längden på de mindre tickarna"
 
-#: data/ui/style_editor.blp:214
+#: data/ui/style_editor.blp:227
 msgid "Ticks on Bottom Axis"
 msgstr "Tickar på botten"
 
-#: data/ui/style_editor.blp:218
+#: data/ui/style_editor.blp:231
 msgid "Ticks on Left Axis"
 msgstr "Tickar på vänstern"
 
-#: data/ui/style_editor.blp:222
+#: data/ui/style_editor.blp:235
 msgid "Ticks on Right Axis"
 msgstr "Tickar på höger"
 
-#: data/ui/style_editor.blp:226
+#: data/ui/style_editor.blp:239
 msgid "Ticks on Top Axis"
 msgstr "Tickar på toppen"
 
-#: data/ui/style_editor.blp:231
+#: data/ui/style_editor.blp:244
 msgid "Grid"
 msgstr "Rutnät"
 
-#: data/ui/style_editor.blp:234
+#: data/ui/style_editor.blp:247
 msgid "Show Grid"
 msgstr "Visa rutnät"
 
-#: data/ui/style_editor.blp:238
+#: data/ui/style_editor.blp:251
 msgid "Grid Width"
 msgstr "Rutnätbredd"
 
-#: data/ui/style_editor.blp:252
+#: data/ui/style_editor.blp:265
 msgid "Grid Opacity"
 msgstr "Rutnätsopacitet"
 
-#: data/ui/style_editor.blp:267
+#: data/ui/style_editor.blp:280
 msgid "Padding"
 msgstr "Padding"
 
-#: data/ui/style_editor.blp:268
+#: data/ui/style_editor.blp:281
 msgid "Padding for different parts of the figure"
 msgstr "Padding mellan de olika delar i grafen"
 
-#: data/ui/style_editor.blp:271
+#: data/ui/style_editor.blp:284
 msgid "Value Padding"
 msgstr "Värdenpadding"
 
-#: data/ui/style_editor.blp:272
+#: data/ui/style_editor.blp:285
 msgid "Padding between axes and values"
 msgstr "Padding mellan axel och värden"
 
-#: data/ui/style_editor.blp:285
+#: data/ui/style_editor.blp:298
 msgid "Label Padding"
 msgstr "Etikettpadding"
 
-#: data/ui/style_editor.blp:286
+#: data/ui/style_editor.blp:299
 msgid "Padding between axes and labels"
 msgstr "Padding mellan axeln och etiketterna"
 
-#: data/ui/style_editor.blp:299
+#: data/ui/style_editor.blp:312
 msgid "Title Padding"
 msgstr "Titelpadding"
 
-#: data/ui/style_editor.blp:300
+#: data/ui/style_editor.blp:313
 msgid "Padding between axes and the title"
 msgstr "Padding mellan axeln och titeln"
 
-#: data/ui/style_editor.blp:314
+#: data/ui/style_editor.blp:327
 msgid "Colors"
 msgstr "Färger"
 
-#: data/ui/style_editor.blp:326
+#: data/ui/style_editor.blp:339
 msgid "Text Color"
 msgstr "Textfärgen"
 
-#: data/ui/style_editor.blp:331 data/ui/style_editor.blp:353
-#: data/ui/style_editor.blp:375 data/ui/style_editor.blp:397
-#: data/ui/style_editor.blp:419 data/ui/style_editor.blp:441
+#: data/ui/style_editor.blp:344 data/ui/style_editor.blp:366
+#: data/ui/style_editor.blp:388 data/ui/style_editor.blp:410
+#: data/ui/style_editor.blp:432 data/ui/style_editor.blp:454
 msgid "Change Color"
 msgstr "Bytt färg"
 
-#: data/ui/style_editor.blp:348
+#: data/ui/style_editor.blp:361
 msgid "Tick Color"
 msgstr "Tickfärg"
 
-#: data/ui/style_editor.blp:370
+#: data/ui/style_editor.blp:383
 msgid "Axis Color"
 msgstr "Axelfärgen"
 
-#: data/ui/style_editor.blp:392
+#: data/ui/style_editor.blp:405
 msgid "Grid Color"
 msgstr "Rutnättfärg"
 
-#: data/ui/style_editor.blp:414
+#: data/ui/style_editor.blp:427
 msgid "Background Color"
 msgstr "Bakgrundsfärg"
 
-#: data/ui/style_editor.blp:436
+#: data/ui/style_editor.blp:449
 msgid "Outline Color"
 msgstr "Konturfärg"
 
-#: data/ui/style_editor.blp:453
+#: data/ui/style_editor.blp:466
 msgid "Line Colors"
 msgstr "Linjefärger"
 
-#: data/ui/style_editor.blp:464
+#: data/ui/style_editor.blp:477
 msgid "Add Color"
 msgstr "Lägg till färg"
 
@@ -1293,20 +1365,20 @@ msgid "Optimize Limits"
 msgstr "Optimera Gränserna"
 
 #: data/ui/window.blp:668
-msgid "Top X Scale"
-msgstr "Övre X-skala"
+msgid "Top Scale"
+msgstr "Övre skala"
 
 #: data/ui/window.blp:699
-msgid "Bottom X Scale"
-msgstr "Nedre X-skala"
+msgid "Bottom Scale"
+msgstr "Nedre skala"
 
 #: data/ui/window.blp:731
-msgid "Left Y Scale"
-msgstr "Vänster Y-skala"
+msgid "Left Scale"
+msgstr "Vänster skala"
 
 #: data/ui/window.blp:762
-msgid "Right Y Scale"
-msgstr "Höger Y-skala"
+msgid "Right Scale"
+msgstr "Höger skala"
 
 #: data/ui/window.blp:797
 msgid "At maximum Y value"
@@ -1340,11 +1412,11 @@ msgstr ""
 msgid "Could not load %s"
 msgstr "Kunda inte ladda %s"
 
-#: src/curve_fitting.py:169
+#: src/curve_fitting.py:221
 msgid "Results:"
 msgstr "Resultat:"
 
-#: src/curve_fitting.py:173
+#: src/curve_fitting.py:225
 msgid ""
 "Please enter valid fitting \n"
 "parameters to start the fit"
@@ -1352,7 +1424,7 @@ msgstr ""
 "Vänligen ange giltiga parametrar\n"
 " för att starta passningen"
 
-#: src/curve_fitting.py:176
+#: src/curve_fitting.py:228
 msgid ""
 "Please enter a valid equation \n"
 "to start the fit"
@@ -1360,7 +1432,7 @@ msgstr ""
 "Vänligen ange en giltig ekvation\n"
 " för att starta passningen"
 
-#: src/curve_fitting.py:179
+#: src/curve_fitting.py:231
 msgid ""
 "Please enter valid fitting bounds \n"
 "to start the fit"
@@ -1368,22 +1440,21 @@ msgstr ""
 "Vänligen ange giltiga gränsvärden\n"
 " för att starta passningen"
 
-#: src/curve_fitting.py:186
+#: src/curve_fitting.py:240
 #, python-brace-format
 msgid "Sum of R²: {R2}"
 msgstr "Summa av R²: {R2}"
 
-#: src/curve_fitting.py:367
+#: src/curve_fitting.py:439
 #, python-brace-format
 msgid "Fitting Parameters for {param_name}"
 msgstr "Anpassningsparametrar för {param_name}:"
 
-#: src/export_figure.py:49
+#: src/export_figure.py:59
 msgid "Exported Figure"
 msgstr "Figur är exporterad"
 
-#. TODO: add System style preview
-#: src/figure_settings.py:101 src/figure_settings.py:122 src/styles.py:69
+#: src/figure_settings.py:101 src/figure_settings.py:122 src/styles.py:82
 msgid "System"
 msgstr "System"
 
@@ -1395,7 +1466,7 @@ msgstr "Standardinställningar har uppdaterats"
 msgid "Are you sure you want to reset the import settings?"
 msgstr "Är du säker på att du vill återställa importinställingarna?"
 
-#: src/item_box.py:125
+#: src/item_box.py:130
 #, python-brace-format
 msgid "Deleted {name}"
 msgstr "Raderad {name}"
@@ -1432,17 +1503,21 @@ msgstr "Importfel, kolumnindex är för högt"
 msgid "Unable to import from file"
 msgstr "Kan inte importera filen"
 
-#: src/styles.py:250
+#: src/styles.py:262
 #, python-brace-format
 msgid "Could not parse {stylename}, loading system preferred style"
 msgstr "Plotstil {stylename} finns inte, laddar systemstil istället"
 
-#: src/styles.py:257
+#: src/styles.py:269
 #, python-brace-format
 msgid "Plot style {stylename} does not exist loading system preferred"
 msgstr "Plotstil {stylename} finns inte, laddar systemstil istället"
 
-#: src/styles.py:649
+#: src/styles.py:663
+msgid "Are you sure you want to delete {self.style.get_name()}?"
+msgstr "Är du säker på att du vill ta bort {self.style.get_name()}?"
+
+#: src/styles.py:680
 msgid "Color {}"
 msgstr "Färg {}"
 
@@ -1456,61 +1531,64 @@ msgstr ""
 msgid "Unable to do transformation"
 msgstr "Kan inte utföra transformationen"
 
-#: src/ui.py:38
+#: src/ui.py:39
 msgid "Items {} already exist"
 msgstr "Objekten {} finns redan"
 
-#: src/ui.py:40
+#: src/ui.py:41
 msgid "Item {} already exists"
 msgstr "Objektet {} finns redan"
 
-#: src/ui.py:53
+#: src/ui.py:54
 msgid "Supported files"
 msgstr "Stödda filtyper"
 
-#: src/ui.py:55
+#: src/ui.py:56
 msgid "ASCII files"
 msgstr "ASCII-filer"
 
-#: src/ui.py:56
+#: src/ui.py:57
 msgid "PANalytical XRDML"
 msgstr "PANalytical XRDML"
 
-#: src/ui.py:57
+#: src/ui.py:58
 msgid "Leybold xry"
 msgstr "Leybold xry"
 
-#: src/ui.py:58 src/ui.py:75 src/ui.py:88
+#: src/ui.py:59 src/ui.py:76 src/ui.py:89
 msgid "Graphs Project File"
 msgstr "Graphs projektfil"
 
-#: src/ui.py:95
+#: src/ui.py:96
 msgid "No data to export"
 msgstr "Inga data att exportera"
 
-#: src/ui.py:111
+#: src/ui.py:112
 msgid "Exported Data"
 msgstr "Data har exporterats"
 
-#: src/ui.py:119
+#: src/ui.py:120
 msgid "Text Files"
 msgstr "Tekstfiler"
 
-#: src/ui.py:140
+#: src/ui.py:141
 msgid "translator-credits"
 msgstr "Sjoerd Stendahl <contact@sjoerd.se>"
 
-#: src/ui.py:169 src/ui.py:233 src/ui.py:267
+#: src/ui.py:170 src/ui.py:234 src/ui.py:268
 msgid "Unsupported Widget {}"
 msgstr "Widget {} stöds inte"
 
-#: src/ui.py:171 src/ui.py:235 src/ui.py:269
+#: src/ui.py:172 src/ui.py:236 src/ui.py:270
 msgid "No way to apply “{}”"
 msgstr "Kan inte applicera “{}”"
 
-#: src/utilities.py:158
+#: src/utilities.py:160
 msgid "No valid number specified"
 msgstr "Inget giltigt nummer angivet"
+
+#~ msgid "Best"
+#~ msgstr "Bäst"
 
 #~ msgid "5 - Manipulate data using a wide range of operations"
 #~ msgstr "5 - Manipulera data med hjälp av ett brett utbud av operationer"
@@ -1645,7 +1723,3 @@ msgstr "Inget giltigt nummer angivet"
 #, python-brace-format
 #~ msgid "{name} - line colors"
 #~ msgstr "{name} - Linjefärger"
-
-#, python-brace-format
-#~ msgid "Are you sure you want to delete the {stylename} style?"
-#~ msgstr "Är du säker på att du vill ta bort stilen {}?"
