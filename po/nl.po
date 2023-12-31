@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: graphs\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-12-30 21:29+0100\n"
-"PO-Revision-Date: 2023-12-14 15:40+0000\n"
+"PO-Revision-Date: 2023-12-31 07:18+0000\n"
 "Last-Translator: Sjoerd Stendahl <sjoerd1993@gmail.com>\n"
-"Language-Team: Dutch <https://hosted.weblate.org/projects/graphs/graphs/nl/"
-">\n"
+"Language-Team: Dutch <https://hosted.weblate.org/projects/graphs/graphs/nl/>"
+"\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.3\n"
+"X-Generator: Weblate 5.4-dev\n"
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:6
 #: data/se.sjoerd.Graphs.desktop.in.in:3
@@ -171,9 +171,8 @@ msgid "Curve Fitting"
 msgstr "Trendanalyse"
 
 #: data/ui/curve_fitting.blp:41
-#, fuzzy
 msgid "Open Curve Fitting Menu"
-msgstr "Trendanalyse"
+msgstr "Open Trendanalysemenu"
 
 #: data/ui/curve_fitting.blp:58
 msgid "Equation"
@@ -188,15 +187,15 @@ msgstr "Lineair"
 
 #: data/ui/curve_fitting.blp:60
 msgid "Quadratic"
-msgstr ""
+msgstr "Kwadratisch"
 
 #: data/ui/curve_fitting.blp:60
 msgid "Exponential"
-msgstr ""
+msgstr "Exponentieel"
 
 #: data/ui/curve_fitting.blp:60
 msgid "Power Law"
-msgstr ""
+msgstr "Potentiefunctie"
 
 #: data/ui/curve_fitting.blp:61 data/ui/figure_settings.blp:134
 #: data/ui/figure_settings.blp:141 data/ui/figure_settings.blp:148
@@ -207,11 +206,11 @@ msgstr "Logaritmisch"
 
 #: data/ui/curve_fitting.blp:61
 msgid "Sigmoid Logistic"
-msgstr ""
+msgstr "Sigmoïde Logistiek"
 
 #: data/ui/curve_fitting.blp:61
 msgid "Gaussian"
-msgstr ""
+msgstr "Gaussisch"
 
 #: data/ui/curve_fitting.blp:61 data/ui/import.blp:59
 msgid "Custom"
@@ -219,7 +218,7 @@ msgstr "Handmatig"
 
 #: data/ui/curve_fitting.blp:66
 msgid "Y = "
-msgstr ""
+msgstr "Y = "
 
 #: data/ui/curve_fitting.blp:93
 msgid "Add Fit to Data"
@@ -235,23 +234,23 @@ msgstr "Canvas laden mislukt"
 
 #: data/ui/curve_fitting.blp:130
 msgid "Optimization Method"
-msgstr ""
+msgstr "Optimalisatiemethode"
 
 #: data/ui/curve_fitting.blp:132
 msgid "Levenberg-Marquardt"
-msgstr ""
+msgstr "Levenberg-Marquardt"
 
 #: data/ui/curve_fitting.blp:137
 msgid "Trust Region Reflective"
-msgstr ""
+msgstr "Reflectieve Trust-Regio"
 
 #: data/ui/curve_fitting.blp:142
 msgid "Dogbox"
-msgstr ""
+msgstr "Dogboxmethode"
 
 #: data/ui/curve_fitting.blp:148
 msgid "Confidence Bounds"
-msgstr ""
+msgstr "Betrouwbaarheidsinterval"
 
 #: data/ui/curve_fitting.blp:150 data/ui/edit_item.blp:54
 #: data/ui/style_editor.blp:85
@@ -261,17 +260,17 @@ msgstr "Niets"
 #: data/ui/curve_fitting.blp:155
 #, c-format
 msgid "1σ: 68% Confidence"
-msgstr ""
+msgstr "1σ: 68% Zekerheid"
 
 #: data/ui/curve_fitting.blp:160
 #, c-format
 msgid "2σ: 95% Confidence"
-msgstr ""
+msgstr "2σ: 95% Zekerheid"
 
 #: data/ui/curve_fitting.blp:165
 #, c-format
 msgid "3σ: 99.7% Confidence"
-msgstr ""
+msgstr "3σ: 99.7% Zekerheid"
 
 #: data/ui/dialogs.blp:5
 msgid "Save changes?"
@@ -522,44 +521,36 @@ msgid "Axis Limits"
 msgstr "Asgrenzen"
 
 #: data/ui/figure_settings.blp:71
-#, fuzzy
 msgid "Minimum Left Axis"
-msgstr "Minimum linker Y-as"
+msgstr "Minimum Linker Y-as"
 
 #: data/ui/figure_settings.blp:76
-#, fuzzy
 msgid "Maximum Left Axis"
-msgstr "Maximum linker Y-as"
+msgstr "Maximum Linker Y-as"
 
 #: data/ui/figure_settings.blp:86
-#, fuzzy
 msgid "Minimum Bottom Axis"
-msgstr "Minimum onderste X-as"
+msgstr "Minimum Onderste X-as"
 
 #: data/ui/figure_settings.blp:91
-#, fuzzy
 msgid "Maximum Bottom Axis"
-msgstr "Maximum onderste X-as"
+msgstr "Maximum Onderste X-as"
 
 #: data/ui/figure_settings.blp:101
-#, fuzzy
 msgid "Minimum Right Axis"
-msgstr "Minimum rechter Y-as"
+msgstr "Minimum Rechter Y-as"
 
 #: data/ui/figure_settings.blp:106
-#, fuzzy
 msgid "Maximum Right Axis"
-msgstr "Maximum rechter Y-as"
+msgstr "Maximum Rechter Y-as"
 
 #: data/ui/figure_settings.blp:116
-#, fuzzy
 msgid "Minimum Top Axis"
-msgstr "Minimum bovenste X-as"
+msgstr "Minimum Bovenste X-as"
 
 #: data/ui/figure_settings.blp:121
-#, fuzzy
 msgid "Maximum Top Axis"
-msgstr "Maximum bovenste Y-as"
+msgstr "Maximum Bovenste Y-as"
 
 #: data/ui/figure_settings.blp:129
 msgid "Scaling"
@@ -616,7 +607,7 @@ msgstr "Legendapositie"
 
 #: data/ui/figure_settings.blp:169
 msgid "Auto"
-msgstr ""
+msgstr "Automatisch"
 
 #: data/ui/figure_settings.blp:169
 msgid "Upper right"
@@ -902,9 +893,8 @@ msgid "Pick Color"
 msgstr "Kies een kleur"
 
 #: data/ui/item_box.blp:53
-#, fuzzy
 msgid "Move Item "
-msgstr "Verplaats item "
+msgstr "Verplaats Item "
 
 #: data/ui/item_box.blp:70
 msgid "Edit Item"
@@ -968,19 +958,16 @@ msgid "Title Size"
 msgstr "Titelgrootte"
 
 #: data/ui/style_editor.blp:53
-#, fuzzy
 msgid "Title size in relation to text size"
 msgstr "Titelgrootte in verhouding to de tekstgrootte"
 
 #: data/ui/style_editor.blp:65
-#, fuzzy
 msgid "Label Size"
-msgstr "Markeringsgrootte"
+msgstr "Labelgrootte"
 
 #: data/ui/style_editor.blp:66
-#, fuzzy
 msgid "Label size in relation to text size"
-msgstr "Titelgrootte in verhouding to de tekstgrootte"
+msgstr "Etiketgrootte in verhouding to de tekstgrootte"
 
 #: data/ui/style_editor.blp:80
 msgid "Lines"
@@ -1381,22 +1368,18 @@ msgid "Optimize Limits"
 msgstr "Optimaliseer Asgrenzen"
 
 #: data/ui/window.blp:668
-#, fuzzy
 msgid "Top Scale"
 msgstr "Bovenste X-schaal"
 
 #: data/ui/window.blp:699
-#, fuzzy
 msgid "Bottom Scale"
 msgstr "Onderste X-schaal"
 
 #: data/ui/window.blp:731
-#, fuzzy
 msgid "Left Scale"
 msgstr "Linker Y-schaal"
 
 #: data/ui/window.blp:762
-#, fuzzy
 msgid "Right Scale"
 msgstr "Rechter Y-schaal"
 
@@ -1533,9 +1516,8 @@ msgid "Plot style {stylename} does not exist loading system preferred"
 msgstr "Plotstijl {stylename} bestaat niet, systeemstijl wordt geladen"
 
 #: src/styles.py:663
-#, fuzzy
 msgid "Are you sure you want to delete {self.style.get_name()}?"
-msgstr "Weet u zeker dat u de {}-stijl wilt verwijderen?"
+msgstr "Weet u zeker dat u de {self.style.get_name()}-stijl wilt verwijderen?"
 
 #: src/styles.py:680
 msgid "Color {}"
