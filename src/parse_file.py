@@ -135,30 +135,16 @@ def import_from_columns(self, file):
             # If not all values in the line are floats, start looking for
             # headers instead
             except ValueError:
-                # By default it will check for headers using at least
-                # two whitespaces as delimiter (often tabs), but if
-                # that doesn"t work it will try the same delimiter as
-                # used for the data import itself The reasoning is that
-                # some people use tabs for the headers, but e.g. commas
-                # for the data
                 try:
-                    headers = re.split("\\s{2,}", line)
+                    headers = re.split(delimiter, line)
                     if len(values) == 1:
-                        item_.ylabel = headers[column_x]
+                        item_.set_ylabel(headers[column_x])
                     else:
-                        item_.xlabel = headers[column_x]
-                        item_.ylabel = headers[column_y]
+                        item_.set_xlabel(headers[column_x])
+                        item_.set_ylabel(headers[column_y])
+                # If no label could be found at the index, skip.
                 except IndexError:
-                    try:
-                        headers = re.split(delimiter, line)
-                        if len(values) == 1:
-                            item_.ylabel = headers[column_x]
-                        else:
-                            item_.xlabel = headers[column_x]
-                            item_.ylabel = headers[column_y]
-                    # If neither heuristic works, we just skip headers
-                    except IndexError:
-                        pass
+                    pass
     if not item_.xdata:
         raise ParseError(_("Unable to import from file"))
     return [item_]
