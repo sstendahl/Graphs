@@ -526,50 +526,23 @@ msgid "Axis Limits"
 msgstr "Achsenbegrenzungen"
 
 #: data/ui/figure_settings.blp:71
-
->>>>>>> ed6bdd9 (Translated using Weblate (German))
-msgid "Minimum Left Axis"
-msgstr "Minimum linke Y-Achse"
-
-#: data/ui/figure_settings.blp:76
-
->>>>>>> ed6bdd9 (Translated using Weblate (German))
 msgid "Maximum Left Axis"
 msgstr "Maximum linke Y-Achse"
 
 #: data/ui/figure_settings.blp:86
 
->>>>>>> ed6bdd9 (Translated using Weblate (German))
-msgid "Minimum Bottom Axis"
-msgstr "Minimum untere X-Achse"
-
-#: data/ui/figure_settings.blp:91
-
->>>>>>> ed6bdd9 (Translated using Weblate (German))
 msgid "Maximum Bottom Axis"
-msgstr "Maximum untere X-Achse"
+msgstr "Maximum Untere X-Achse"
 
 #: data/ui/figure_settings.blp:101
-
->>>>>>> ed6bdd9 (Translated using Weblate (German))
 msgid "Minimum Right Axis"
-msgstr "Minimum rechte Y-Achse"
+msgstr "Minimum Rechte Y-Achse"
 
 #: data/ui/figure_settings.blp:106
-
->>>>>>> ed6bdd9 (Translated using Weblate (German))
 msgid "Maximum Right Axis"
-msgstr "Maximum rechte Y-Achse"
+msgstr "Maximum Rechte Y-Achse"
 
 #: data/ui/figure_settings.blp:116
-
->>>>>>> ed6bdd9 (Translated using Weblate (German))
-msgid "Minimum Top Axis"
-msgstr "Minimum obere Y-Achse"
-
-#: data/ui/figure_settings.blp:121
-
->>>>>>> ed6bdd9 (Translated using Weblate (German))
 msgid "Maximum Top Axis"
 msgstr "Maximum Obere Y-Achse"
 
@@ -1547,7 +1520,6 @@ msgstr "Kann nicht aus Datei importieren"
 
 #: src/styles.py:262
 
->>>>>>> ed6bdd9 (Translated using Weblate (German))
 msgid "Could not parse {stylename}, loading system preferred style"
 msgstr ""
 "Stil {stylename} konnte nicht geladen werden, lade Systembevorzugten Stil"
