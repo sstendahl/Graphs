@@ -110,6 +110,7 @@ def import_from_columns(self, file):
     if delimiter == "custom":
         delimiter = columns_params.get_string("custom-delimiter")
     with file_io.open_wrapped(file, "rt") as wrapper:
+        start_values = False
         for index, line in enumerate(wrapper, -skip_rows):
             if index < 0:
                 continue
@@ -122,12 +123,18 @@ def import_from_columns(self, file):
                     if float_value is not None:
                         item_.ydata.append(float_value)
                         item_.xdata.append(index)
+                        start_values = True
                 else:
                     try:
-                        item_.xdata.append(utilities.string_to_float(
-                            values[column_x]))
-                        item_.ydata.append(utilities.string_to_float(
-                            values[column_y]))
+                        x_value = utilities.string_to_float(
+                            values[column_x])
+                        y_value = utilities.string_to_float(
+                            values[column_y])
+                        if x_value is None or y_value is None:
+                            continue
+                        item_.xdata.append(x_value)
+                        item_.ydata.append(y_value)
+                        start_values = True
                     except IndexError as error:
                         raise ParseError(
                             _("Import failed, column index out of range"),
@@ -135,16 +142,18 @@ def import_from_columns(self, file):
             # If not all values in the line are floats, start looking for
             # headers instead
             except ValueError:
-                try:
-                    headers = re.split(delimiter, line)
-                    if len(values) == 1:
-                        item_.set_ylabel(headers[column_x])
-                    else:
-                        item_.set_xlabel(headers[column_x])
-                        item_.set_ylabel(headers[column_y])
-                # If no label could be found at the index, skip.
-                except IndexError:
-                    pass
+                # Don't try to add headers when started adding values
+                if not start_values:
+                    try:
+                        headers = re.split(delimiter, line)
+                        if len(values) == 1:
+                            item_.set_ylabel(headers[column_x])
+                        else:
+                            item_.set_xlabel(headers[column_x])
+                            item_.set_ylabel(headers[column_y])
+                    # If no label could be found at the index, skip.
+                    except IndexError:
+                        pass
     if not item_.xdata:
         raise ParseError(_("Unable to import from file"))
     return [item_]
