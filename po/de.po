@@ -8,10 +8,10 @@ msgstr ""
 "Project-Id-Version: graphs\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-01-01 13:50+0100\n"
-"PO-Revision-Date: 2023-12-31 06:02+0000\n"
+"PO-Revision-Date: 2024-01-01 13:26+0000\n"
 "Last-Translator: Leo <leomerh96@outlook.com>\n"
-"Language-Team: German <https://hosted.weblate.org/projects/graphs/graphs/de/"
-">\n"
+"Language-Team: German <https://hosted.weblate.org/projects/graphs/graphs/de/>"
+"\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -94,7 +94,6 @@ msgid "2 - Full support for light and dark mode"
 msgstr "2 - Volle Unterstützung für helle und dunkle Darstellung"
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:41
-#, fuzzy
 msgid "3 - Generate data from an equation"
 msgstr "3 - Füge Daten aus einer Gleichung hinzu"
 
@@ -134,11 +133,8 @@ msgid "Y ="
 msgstr "Y ="
 
 #: data/ui/add_equation_window.blp:55
-#, fuzzy
 msgid "Enter a mathematical expression to generate data from"
-msgstr ""
-"Gib einen mathematischen Ausdruck an, aus welchem Daten generiert werden "
-"sollen"
+msgstr "Gebe eine Gleichung ein um Daten zu generieren"
 
 #: data/ui/add_equation_window.blp:63
 msgid "Name (optional)"
@@ -173,7 +169,6 @@ msgid "Curve Fitting"
 msgstr "Parameterschätzung"
 
 #: data/ui/curve_fitting.blp:41
-#, fuzzy
 msgid "Open Curve Fitting Menu"
 msgstr "Parameterschätzung"
 
@@ -206,7 +201,6 @@ msgid "Logarithmic"
 msgstr "Logarithmisch"
 
 #: data/ui/curve_fitting.blp:61
-#, fuzzy
 msgid "Sigmoid Logistic"
 msgstr "Logistisches Sigmoid"
 
@@ -219,7 +213,6 @@ msgid "Custom"
 msgstr "Benutzerdefiniert"
 
 #: data/ui/curve_fitting.blp:66
-#, fuzzy
 msgid "Y = "
 msgstr "Y = "
 
@@ -614,16 +607,14 @@ msgid "Open Figure Settings"
 msgstr "Öffne Grafikeinstellungen"
 
 #: data/ui/help_overlay.blp:24
-#, fuzzy
 msgctxt "shortcut window"
 msgid "Close Application"
-msgstr "Öffne Anwendungsmenü"
+msgstr "Anwendung schließen"
 
 #: data/ui/help_overlay.blp:28
-#, fuzzy
 msgctxt "shortcut window"
 msgid "Close Application Window"
-msgstr "Öffne Anwendungsmenü"
+msgstr "Anwendungsfenster schließen"
 
 #: data/ui/help_overlay.blp:34
 msgctxt "shortcut window"
@@ -716,10 +707,9 @@ msgid "Next View"
 msgstr "Nächste Ansicht"
 
 #: data/ui/help_overlay.blp:115
-#, fuzzy
 msgctxt "shortcut window"
 msgid "Optimize limits"
-msgstr "Begrenzungen anpassen"
+msgstr "Begrenzungen optimieren"
 
 #: data/ui/help_overlay.blp:120
 msgctxt "shortcut window"
@@ -775,7 +765,7 @@ msgstr "Trennzeichen"
 
 #: data/ui/import.blp:56
 msgid "Character sequence used to split values"
-msgstr ""
+msgstr "Zeichenfolge verwendet, um Werte zu trennen"
 
 #: data/ui/import.blp:59
 msgid "Whitespace"
@@ -858,12 +848,10 @@ msgid "Savitzky–Golay filter"
 msgstr "Savitzky–Golay Filter"
 
 #: data/ui/smoothen_settings.blp:39
-#, fuzzy
 msgid "Span percentage"
-msgstr "Datenprozentteil"
+msgstr "Prozentuale Spannweite"
 
 #: data/ui/smoothen_settings.blp:40
-#, fuzzy
 msgid "What percentage of the data span to use for the filter window"
 msgstr ""
 "Prozentteil der Daten, welcher für das Filterfenster genutzt werden soll"
@@ -951,17 +939,14 @@ msgid "Outwards"
 msgstr "Nach außen"
 
 #: data/ui/style_editor.blp:169
-#, fuzzy
 msgid "Minor Ticks"
 msgstr "Kleine Häkchen"
 
 #: data/ui/style_editor.blp:173
-#, fuzzy
 msgid "Major Tick Width"
 msgstr "Breite großer Häkchen"
 
 #: data/ui/style_editor.blp:186
-#, fuzzy
 msgid "Minor Tick Width"
 msgstr "Breite kleiner Häkchen"
 
@@ -986,9 +971,8 @@ msgid "Ticks on Right Axis"
 msgstr "Häkchen auf rechter Achse"
 
 #: data/ui/style_editor.blp:239
-#, fuzzy
 msgid "Ticks on Top Axis"
-msgstr "Häkchen auf oberer X-Achse"
+msgstr "Häkchen auf oberer Achse"
 
 #: data/ui/style_editor.blp:244
 msgid "Grid"
@@ -1015,12 +999,10 @@ msgid "Padding for different parts of the figure"
 msgstr "Padding für verschiedene Teile des Graphen"
 
 #: data/ui/style_editor.blp:284
-#, fuzzy
 msgid "Value Padding"
 msgstr "Wertepadding"
 
 #: data/ui/style_editor.blp:285
-#, fuzzy
 msgid "Padding between axes and values"
 msgstr "Padding zwischen Achsen und Werten"
 
@@ -1149,9 +1131,8 @@ msgid "Highlight mode. Click and drag to make a selection of data"
 msgstr "Auswahlmodus. Klicke und Ziehe um eine Auswahl an Daten zu machen"
 
 #: data/ui/window.blp:271
-#, fuzzy
 msgid "Adjust"
-msgstr "Daten Anpassen"
+msgstr "Pass an"
 
 #: data/ui/window.blp:286
 msgid "Shift"
@@ -1318,22 +1299,18 @@ msgid "Add Equation…"
 msgstr "Gleichung hinzufügen…"
 
 #: data/ui/window.blp:668
-#, fuzzy
 msgid "At Maximum Y Value"
-msgstr "Am maximalen Hochachsenwert zentrieren"
+msgstr "Am maximalen Y-Wert"
 
 #: data/ui/window.blp:673
-#, fuzzy
 msgid "At Middle X Value"
-msgstr "Am mittleren Breitenachsenvert zwntrieren"
+msgstr "Am mittleren X-Wert"
 
 #: data/ui/window.blp:682
-#, fuzzy
 msgid "Savitzky–Golay Filter"
 msgstr "Savitzky–Golay Filter"
 
 #: data/ui/window.blp:694
-#, fuzzy
 msgid "Advanced Settings"
 msgstr "Erweiterte Einstellungen"
 
@@ -1387,7 +1364,7 @@ msgstr "Betrag von R²: {R2}"
 #: src/curve_fitting.py:439
 #, python-brace-format
 msgid "Fitting Parameters for {param_name}"
-msgstr ""
+msgstr "Schätzparameter für {param_name}"
 
 #: src/export_figure.py:59
 msgid "Exported Figure"
