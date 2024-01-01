@@ -7,11 +7,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: graphs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-12-30 21:29+0100\n"
+"POT-Creation-Date: 2024-01-01 13:50+0100\n"
 "PO-Revision-Date: 2023-12-31 07:18+0000\n"
 "Last-Translator: Sjoerd Stendahl <sjoerd1993@gmail.com>\n"
-"Language-Team: Dutch <https://hosted.weblate.org/projects/graphs/graphs/nl/>"
-"\n"
+"Language-Team: Dutch <https://hosted.weblate.org/projects/graphs/graphs/nl/"
+">\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -154,7 +154,7 @@ msgstr "X-stop"
 msgid "Step Size"
 msgstr "Stapgrootte"
 
-#: data/ui/add_style.blp:7 data/ui/figure_settings.blp:219
+#: data/ui/add_style.blp:7 data/ui/figure_settings.blp:203
 msgid "Add new style"
 msgstr "Voeg nieuwe stijl toe"
 
@@ -166,7 +166,7 @@ msgstr "Sjabloon"
 msgid "Name"
 msgstr "Naam"
 
-#: data/ui/curve_fitting.blp:35 data/ui/item_box.blp:66
+#: data/ui/curve_fitting.blp:35 data/ui/item_box.blp:64
 msgid "Curve Fitting"
 msgstr "Trendanalyse"
 
@@ -178,10 +178,9 @@ msgstr "Open Trendanalysemenu"
 msgid "Equation"
 msgstr "Vergelijking"
 
-#: data/ui/curve_fitting.blp:60 data/ui/figure_settings.blp:134
-#: data/ui/figure_settings.blp:141 data/ui/figure_settings.blp:148
-#: data/ui/figure_settings.blp:155 data/ui/window.blp:673
-#: data/ui/window.blp:704 data/ui/window.blp:736 data/ui/window.blp:767
+#: data/ui/curve_fitting.blp:60 data/ui/figure_settings.blp:121
+#: data/ui/figure_settings.blp:127 data/ui/figure_settings.blp:133
+#: data/ui/figure_settings.blp:139
 msgid "Linear"
 msgstr "Lineair"
 
@@ -197,10 +196,9 @@ msgstr "Exponentieel"
 msgid "Power Law"
 msgstr "Potentiefunctie"
 
-#: data/ui/curve_fitting.blp:61 data/ui/figure_settings.blp:134
-#: data/ui/figure_settings.blp:141 data/ui/figure_settings.blp:148
-#: data/ui/figure_settings.blp:155 data/ui/window.blp:678
-#: data/ui/window.blp:709 data/ui/window.blp:741 data/ui/window.blp:772
+#: data/ui/curve_fitting.blp:61 data/ui/figure_settings.blp:121
+#: data/ui/figure_settings.blp:127 data/ui/figure_settings.blp:133
+#: data/ui/figure_settings.blp:139
 msgid "Logarithmic"
 msgstr "Logaritmisch"
 
@@ -212,7 +210,7 @@ msgstr "Sigmoïde Logistiek"
 msgid "Gaussian"
 msgstr "Gaussisch"
 
-#: data/ui/curve_fitting.blp:61 data/ui/import.blp:59
+#: data/ui/curve_fitting.blp:61 data/ui/import.blp:60
 msgid "Custom"
 msgstr "Handmatig"
 
@@ -224,11 +222,11 @@ msgstr "Y = "
 msgid "Add Fit to Data"
 msgstr "Trend toevoegen als item"
 
-#: data/ui/curve_fitting.blp:108 data/ui/window.blp:582 data/ui/window.blp:661
+#: data/ui/curve_fitting.blp:108 data/ui/window.blp:586 src/ui.py:33
 msgid "Toggle Sidebar"
 msgstr "Schakel de zijbalk"
 
-#: data/ui/curve_fitting.blp:120 data/ui/window.blp:622
+#: data/ui/curve_fitting.blp:120 data/ui/window.blp:626
 msgid "Canvas Failed to Load"
 msgstr "Canvas laden mislukt"
 
@@ -488,7 +486,7 @@ msgstr "Resolutie (dpi)"
 msgid "Transparent Background"
 msgstr "Doorzichtige achtergrond"
 
-#: data/ui/figure_settings.blp:21 data/ui/window.blp:644
+#: data/ui/figure_settings.blp:21 data/ui/window.blp:648
 msgid "Figure Settings"
 msgstr "Figuurinstellingen"
 
@@ -500,156 +498,86 @@ msgstr "Labels"
 msgid "Title"
 msgstr "Grafiektitel"
 
-#: data/ui/figure_settings.blp:44
-msgid "Bottom Axis Label"
-msgstr "Label onderaan"
-
-#: data/ui/figure_settings.blp:48
-msgid "Left Axis Label"
-msgstr "Label links"
-
-#: data/ui/figure_settings.blp:52
-msgid "Top Axis Label"
-msgstr "Label bovenaan"
-
-#: data/ui/figure_settings.blp:56
-msgid "Right Axis Label"
-msgstr "Label rechts"
-
-#: data/ui/figure_settings.blp:61
+#: data/ui/figure_settings.blp:57
 msgid "Axis Limits"
 msgstr "Asgrenzen"
 
-#: data/ui/figure_settings.blp:71
-msgid "Minimum Left Axis"
-msgstr "Minimum Linker Y-as"
-
-#: data/ui/figure_settings.blp:76
-msgid "Maximum Left Axis"
-msgstr "Maximum Linker Y-as"
-
-#: data/ui/figure_settings.blp:86
-msgid "Minimum Bottom Axis"
-msgstr "Minimum Onderste X-as"
-
-#: data/ui/figure_settings.blp:91
-msgid "Maximum Bottom Axis"
-msgstr "Maximum Onderste X-as"
-
-#: data/ui/figure_settings.blp:101
-msgid "Minimum Right Axis"
-msgstr "Minimum Rechter Y-as"
-
-#: data/ui/figure_settings.blp:106
-msgid "Maximum Right Axis"
-msgstr "Maximum Rechter Y-as"
-
-#: data/ui/figure_settings.blp:116
-msgid "Minimum Top Axis"
-msgstr "Minimum Bovenste X-as"
-
-#: data/ui/figure_settings.blp:121
-msgid "Maximum Top Axis"
-msgstr "Maximum Bovenste Y-as"
-
-#: data/ui/figure_settings.blp:129
+#: data/ui/figure_settings.blp:117
 msgid "Scaling"
 msgstr "Schaal"
 
-#: data/ui/figure_settings.blp:132
-msgid "Bottom Axis Scale"
-msgstr "Schaal onderste as"
-
-#: data/ui/figure_settings.blp:134 data/ui/figure_settings.blp:141
-#: data/ui/figure_settings.blp:148 data/ui/figure_settings.blp:155
-#: data/ui/window.blp:683 data/ui/window.blp:714 data/ui/window.blp:746
-#: data/ui/window.blp:777
+#: data/ui/figure_settings.blp:121 data/ui/figure_settings.blp:127
+#: data/ui/figure_settings.blp:133 data/ui/figure_settings.blp:139
 msgid "Radians"
 msgstr "Radialen"
 
-#: data/ui/figure_settings.blp:134 data/ui/figure_settings.blp:141
-#: data/ui/figure_settings.blp:148 data/ui/figure_settings.blp:155
-#: data/ui/window.blp:688 data/ui/window.blp:720 data/ui/window.blp:751
-#: data/ui/window.blp:782
+#: data/ui/figure_settings.blp:121 data/ui/figure_settings.blp:127
+#: data/ui/figure_settings.blp:133 data/ui/figure_settings.blp:139
 msgid "Square Root"
 msgstr "Wortel"
 
-#: data/ui/figure_settings.blp:134 data/ui/figure_settings.blp:141
-#: data/ui/figure_settings.blp:148 data/ui/figure_settings.blp:155
-#: data/ui/window.blp:693 data/ui/window.blp:725 data/ui/window.blp:756
-#: data/ui/window.blp:787
+#: data/ui/figure_settings.blp:121 data/ui/figure_settings.blp:127
+#: data/ui/figure_settings.blp:133 data/ui/figure_settings.blp:139
 msgid "Inverse"
 msgstr "Invers"
 
-#: data/ui/figure_settings.blp:139
-msgid "Left Axis Scale"
-msgstr "Schaal linkeras"
-
-#: data/ui/figure_settings.blp:146
-msgid "Top Axis Scale"
-msgstr "Schaal voor de  bovenste as"
-
-#: data/ui/figure_settings.blp:153
-msgid "Right Axis Scale"
-msgstr "Schaal voor de rechteras"
-
-#: data/ui/figure_settings.blp:161
+#: data/ui/figure_settings.blp:145
 msgid "Appearance"
 msgstr "Uiterlijk"
 
-#: data/ui/figure_settings.blp:163
+#: data/ui/figure_settings.blp:147
 msgid "Legend"
 msgstr "Legenda"
 
-#: data/ui/figure_settings.blp:166
+#: data/ui/figure_settings.blp:150
 msgid "Legend Position"
 msgstr "Legendapositie"
 
-#: data/ui/figure_settings.blp:169
+#: data/ui/figure_settings.blp:153
 msgid "Auto"
 msgstr "Automatisch"
 
-#: data/ui/figure_settings.blp:169
+#: data/ui/figure_settings.blp:153
 msgid "Upper right"
 msgstr "Rechtsboven"
 
-#: data/ui/figure_settings.blp:169
+#: data/ui/figure_settings.blp:153
 msgid "Upper left"
 msgstr "Linksboven"
 
-#: data/ui/figure_settings.blp:169
+#: data/ui/figure_settings.blp:153
 msgid "Lower left"
 msgstr "Linksonder"
 
-#: data/ui/figure_settings.blp:170
+#: data/ui/figure_settings.blp:154
 msgid "Lower right"
 msgstr "Rechtsonder"
 
-#: data/ui/figure_settings.blp:170
+#: data/ui/figure_settings.blp:154
 msgid "Center left"
 msgstr "Linksmidden"
 
-#: data/ui/figure_settings.blp:170
+#: data/ui/figure_settings.blp:154
 msgid "Center right"
 msgstr "Rechtsmidden"
 
-#: data/ui/figure_settings.blp:171
+#: data/ui/figure_settings.blp:155
 msgid "Lower center"
 msgstr "Onderaan in het midden"
 
-#: data/ui/figure_settings.blp:171
+#: data/ui/figure_settings.blp:155
 msgid "Upper center"
 msgstr "Bovenaan in het midden"
 
-#: data/ui/figure_settings.blp:171 data/ui/window.blp:334
+#: data/ui/figure_settings.blp:155 data/ui/window.blp:338
 msgid "Center"
 msgstr "Centreer"
 
-#: data/ui/figure_settings.blp:178
+#: data/ui/figure_settings.blp:162
 msgid "Hide Unselected Items"
 msgstr "Verberg niet-geselecteerde gegevens"
 
-#: data/ui/figure_settings.blp:182 data/ui/figure_settings.blp:212
+#: data/ui/figure_settings.blp:166 data/ui/figure_settings.blp:196
 msgid "Style"
 msgstr "Stijl"
 
@@ -681,141 +609,148 @@ msgid "Open Figure Settings"
 msgstr "Open Figuurinstellingen"
 
 #: data/ui/help_overlay.blp:24
+#, fuzzy
 msgctxt "shortcut window"
-msgid "Quit"
-msgstr "Afsluiten"
+msgid "Close Application"
+msgstr "Open toepassingmenu"
 
-#: data/ui/help_overlay.blp:30
+#: data/ui/help_overlay.blp:28
+#, fuzzy
+msgctxt "shortcut window"
+msgid "Close Application Window"
+msgstr "Open toepassingmenu"
+
+#: data/ui/help_overlay.blp:34
 msgctxt "shortcut window"
 msgid "Mode Switching"
 msgstr "Verander modus"
 
-#: data/ui/help_overlay.blp:33
+#: data/ui/help_overlay.blp:37
 msgctxt "shortcut window"
 msgid "Pan Mode"
 msgstr "Pan-modus"
 
-#: data/ui/help_overlay.blp:38
+#: data/ui/help_overlay.blp:42
 msgctxt "shortcut window"
 msgid "Zoom Mode"
 msgstr "Zoommodus"
 
-#: data/ui/help_overlay.blp:43
+#: data/ui/help_overlay.blp:47
 msgctxt "shortcut window"
 msgid "Select Mode"
 msgstr "Selectiemodus"
 
-#: data/ui/help_overlay.blp:49
+#: data/ui/help_overlay.blp:53
 msgctxt "shortcut window"
 msgid "New Data"
 msgstr "Nieuwe gegevens"
 
-#: data/ui/help_overlay.blp:52
+#: data/ui/help_overlay.blp:56
 msgctxt "shortcut window"
 msgid "Add Data from Equation"
 msgstr "Voeg gegevens toe met een vergelijking"
 
-#: data/ui/help_overlay.blp:57
+#: data/ui/help_overlay.blp:61
 msgctxt "shortcut window"
 msgid "Add Data from File"
 msgstr "Gegevens toevoegen vanuit een bestand"
 
-#: data/ui/help_overlay.blp:62
+#: data/ui/help_overlay.blp:66
 msgctxt "shortcut window"
 msgid "New Project"
 msgstr "Nieuw project"
 
-#: data/ui/help_overlay.blp:67
+#: data/ui/help_overlay.blp:71
 msgctxt "shortcut window"
 msgid "Open Project"
 msgstr "Open project"
 
-#: data/ui/help_overlay.blp:72
+#: data/ui/help_overlay.blp:76
 msgctxt "shortcut window"
 msgid "Delete Selected Data"
 msgstr "Verwijder geselecteerde gegevens"
 
-#: data/ui/help_overlay.blp:78
+#: data/ui/help_overlay.blp:82
 msgctxt "shortcut window"
 msgid "Save and Export"
 msgstr "Opslaan en exporteren"
 
-#: data/ui/help_overlay.blp:80
+#: data/ui/help_overlay.blp:84
 msgctxt "shortcut window"
 msgid "Export Data"
 msgstr "Gegevens exporteren"
 
-#: data/ui/help_overlay.blp:84
+#: data/ui/help_overlay.blp:88
 msgctxt "shortcut window"
 msgid "Export Figure"
 msgstr "Figuur exporteren"
 
-#: data/ui/help_overlay.blp:88
+#: data/ui/help_overlay.blp:92
 msgctxt "shortcut window"
 msgid "Save Project"
 msgstr "Project opslaan"
 
-#: data/ui/help_overlay.blp:92
+#: data/ui/help_overlay.blp:96
 msgctxt "shortcut window"
 msgid "Save Project As"
 msgstr "Project opslaan"
 
-#: data/ui/help_overlay.blp:98
+#: data/ui/help_overlay.blp:102
 msgctxt "shortcut window"
 msgid "View"
 msgstr "Weergave"
 
-#: data/ui/help_overlay.blp:101
+#: data/ui/help_overlay.blp:105
 msgctxt "shortcut window"
 msgid "Previous View"
 msgstr "Vorige weergave"
 
-#: data/ui/help_overlay.blp:106
+#: data/ui/help_overlay.blp:110
 msgctxt "shortcut window"
 msgid "Next View"
 msgstr "Volgende weergave"
 
-#: data/ui/help_overlay.blp:111
+#: data/ui/help_overlay.blp:115
 msgctxt "shortcut window"
 msgid "Optimize limits"
 msgstr "Optimaliseer asgrenzen"
 
-#: data/ui/help_overlay.blp:116
+#: data/ui/help_overlay.blp:120
 msgctxt "shortcut window"
 msgid "Zoom in"
 msgstr "Inzoomen"
 
-#: data/ui/help_overlay.blp:121
+#: data/ui/help_overlay.blp:125
 msgctxt "shortcut window"
 msgid "Zoom out"
 msgstr "Uitzoomen"
 
-#: data/ui/help_overlay.blp:126 data/ui/help_overlay.blp:146
+#: data/ui/help_overlay.blp:130 data/ui/help_overlay.blp:150
 msgctxt "shortcut window"
 msgid "Select None"
 msgstr "Niets selecteren"
 
-#: data/ui/help_overlay.blp:132
+#: data/ui/help_overlay.blp:136
 msgctxt "shortcut window"
 msgid "Toggle Sidebar"
 msgstr "Zijbalk Schakelen"
 
-#: data/ui/help_overlay.blp:138
+#: data/ui/help_overlay.blp:142
 msgctxt "shortcut window"
 msgid "Actions"
 msgstr "Acties"
 
-#: data/ui/help_overlay.blp:141
+#: data/ui/help_overlay.blp:145
 msgctxt "shortcut window"
 msgid "Select All"
 msgstr "Alles selecteren"
 
-#: data/ui/help_overlay.blp:151
+#: data/ui/help_overlay.blp:155
 msgctxt "shortcut window"
 msgid "Undo Action"
 msgstr "Actie ongedaan maken"
 
-#: data/ui/help_overlay.blp:156
+#: data/ui/help_overlay.blp:160
 msgctxt "shortcut window"
 msgid "Redo Action"
 msgstr "Actie opnieuw uitvoeren"
@@ -832,59 +767,63 @@ msgstr "Importeer"
 msgid "Delimiter"
 msgstr "Scheidingsteken"
 
-#: data/ui/import.blp:58
+#: data/ui/import.blp:56
+msgid "Character sequence used to split values"
+msgstr ""
+
+#: data/ui/import.blp:59
 msgid "Whitespace"
 msgstr "Witruimte"
 
-#: data/ui/import.blp:58
+#: data/ui/import.blp:59
 msgid "Tab"
 msgstr "Tab"
 
-#: data/ui/import.blp:58
+#: data/ui/import.blp:59
 msgid "Colon (:)"
 msgstr "Dubbele punt (:)"
 
-#: data/ui/import.blp:58
+#: data/ui/import.blp:59
 msgid "Semicolon (;)"
 msgstr "Puntkomma (;)"
 
-#: data/ui/import.blp:59 data/ui/import.blp:71
+#: data/ui/import.blp:60 data/ui/import.blp:72
 msgid "Decimal comma (,)"
 msgstr "Komma als decimaalteken (,)"
 
-#: data/ui/import.blp:59 data/ui/import.blp:71
+#: data/ui/import.blp:60 data/ui/import.blp:72
 msgid "Decimal point (.)"
 msgstr "Punt als decimaalteken (.)"
 
-#: data/ui/import.blp:65
+#: data/ui/import.blp:66
 msgid "Custom Delimiter"
 msgstr "Handmatige scheidingsteken"
 
-#: data/ui/import.blp:69
+#: data/ui/import.blp:70
 msgid "Decimal Separator"
 msgstr "Decimaalscheidingsteken"
 
-#: data/ui/import.blp:76
+#: data/ui/import.blp:77
 msgid "Column X"
 msgstr "Kolom X"
 
-#: data/ui/import.blp:77
+#: data/ui/import.blp:78
 msgid "X-data column index"
 msgstr "Kolomindex X-data"
 
-#: data/ui/import.blp:86
+#: data/ui/import.blp:87
 msgid "Column Y"
 msgstr "Kolom Y"
 
-#: data/ui/import.blp:88
+#: data/ui/import.blp:89
 msgid "Y-data column index"
 msgstr "Kolumnindex Y-data"
 
-#: data/ui/import.blp:97
+#: data/ui/import.blp:98
 msgid "Skip Rows"
 msgstr "Rijen overslaan"
 
-#: data/ui/import.blp:98
+#: data/ui/import.blp:99
 msgid "Ignored row indices"
 msgstr "Genegeerde rijen"
 
@@ -892,15 +831,15 @@ msgstr "Genegeerde rijen"
 msgid "Pick Color"
 msgstr "Kies een kleur"
 
-#: data/ui/item_box.blp:53
+#: data/ui/item_box.blp:51
 msgid "Move Item "
 msgstr "Verplaats Item "
 
-#: data/ui/item_box.blp:70
+#: data/ui/item_box.blp:68
 msgid "Edit Item"
 msgstr "Item aanpassen"
 
-#: data/ui/item_box.blp:74
+#: data/ui/item_box.blp:72
 msgid "Remove Item"
 msgstr "Item verwijderen"
 
@@ -908,7 +847,7 @@ msgstr "Item verwijderen"
 msgid "Smoothen settings"
 msgstr "Gegevens gladstrijken"
 
-#: data/ui/smoothen_settings.blp:37 data/ui/window.blp:811
+#: data/ui/smoothen_settings.blp:37
 msgid "Savitzky–Golay filter"
 msgstr "Savitzky–Golay filter"
 
@@ -924,7 +863,7 @@ msgstr "Welk percentage van de totale data gebruikt moet worden voor de filter"
 msgid "Polynomial degree"
 msgstr "Polynoomgraad"
 
-#: data/ui/smoothen_settings.blp:55
+#: data/ui/smoothen_settings.blp:55 data/ui/window.blp:687
 msgid "Moving Average"
 msgstr "Bewegend gemiddelde"
 
@@ -1131,7 +1070,7 @@ msgstr "Kleur toevoegen"
 msgid "Transform Data"
 msgstr "Transformeer gegevens"
 
-#: data/ui/transform_window.blp:29 data/ui/window.blp:376
+#: data/ui/transform_window.blp:29 data/ui/window.blp:380
 msgid "Transform"
 msgstr "Transformeer"
 
@@ -1165,241 +1104,225 @@ msgstr "X = "
 msgid "Discard Unselected Data"
 msgstr "Gooi niet-geselecteerde gegevens weg"
 
-#: data/ui/window.blp:162
+#: data/ui/window.blp:166
 msgid "Add new Data"
 msgstr "Voeg nieuwe gegevens toe"
 
-#: data/ui/window.blp:170
+#: data/ui/window.blp:174
 msgid "Open Application Menu"
 msgstr "Open toepassingmenu"
 
-#: data/ui/window.blp:199
+#: data/ui/window.blp:203
 msgid "No Data"
 msgstr "Geen gegevens"
 
-#: data/ui/window.blp:200
+#: data/ui/window.blp:204
 msgid "Add data from a file or manually as an equation"
 msgstr "Voeg gegevens toe vanuit een bestand, of met een vergelijking"
 
-#: data/ui/window.blp:220
+#: data/ui/window.blp:224
 msgid "Panning mode. Click and drag to pan"
 msgstr "Panningmodus. Klik en sleep"
 
-#: data/ui/window.blp:226
+#: data/ui/window.blp:230
 msgid "Zoom mode. Select an area on the figure to zoom in"
 msgstr "Zoommodus. Selecteer een gebied op de grafiek om in te zoomen."
 
-#: data/ui/window.blp:232
+#: data/ui/window.blp:236
 msgid "Highlight mode. Click and drag to make a selection of data"
 msgstr ""
 "Markeermodus, klik en sleep over de grafiek om het werkbare gebied te "
 "markeren"
 
-#: data/ui/window.blp:267
+#: data/ui/window.blp:271
 msgid "Adjust"
 msgstr "Pas aan"
 
-#: data/ui/window.blp:282
+#: data/ui/window.blp:286
 msgid "Shift"
 msgstr "Verschuif"
 
-#: data/ui/window.blp:284
+#: data/ui/window.blp:288
 msgid "Shift all data vertically with respect to each other"
 msgstr "Verschuif alle gegevens verticaal ten opzichte van elkaar"
 
-#: data/ui/window.blp:299
+#: data/ui/window.blp:303
 msgid "Normalize"
 msgstr "Normaliseer"
 
-#: data/ui/window.blp:301
+#: data/ui/window.blp:305
 msgid "Normalize data"
 msgstr "Normaliseer de gegevens"
 
-#: data/ui/window.blp:317
+#: data/ui/window.blp:321
 msgid "Smoothen"
 msgstr "Gladstrijken"
 
-#: data/ui/window.blp:319
+#: data/ui/window.blp:323
 msgid "Smoothen data"
 msgstr "Gegevens gladstrijken"
 
-#: data/ui/window.blp:336
+#: data/ui/window.blp:340
 msgid "Center data"
 msgstr "Gegevens centreren"
 
-#: data/ui/window.blp:351
+#: data/ui/window.blp:355
 msgid "Combine"
 msgstr "Combineer"
 
-#: data/ui/window.blp:353
+#: data/ui/window.blp:357
 msgid "Combine all selected data"
 msgstr "Combineer de geselecteerde gegevens"
 
-#: data/ui/window.blp:367
+#: data/ui/window.blp:371
 msgid "Cut"
 msgstr "Knippen"
 
-#: data/ui/window.blp:369
+#: data/ui/window.blp:373
 msgid "Cut selected data"
 msgstr "Knip de geselecteerde gegevens"
 
-#: data/ui/window.blp:392
+#: data/ui/window.blp:396
 msgid "Derivative"
 msgstr "Afgeleide"
 
-#: data/ui/window.blp:394
+#: data/ui/window.blp:398
 msgid "Get the derivative of the data"
 msgstr "Bereken de afgeleide van de gegevens"
 
-#: data/ui/window.blp:408
+#: data/ui/window.blp:412
 msgid "Integral"
 msgstr "Integraal"
 
-#: data/ui/window.blp:410
+#: data/ui/window.blp:414
 msgid "Get the indefinite integral of the data"
 msgstr "Bereken de integraal van de gegevens"
 
-#: data/ui/window.blp:424
+#: data/ui/window.blp:428
 msgid "FFT"
 msgstr "FFT"
 
-#: data/ui/window.blp:426
+#: data/ui/window.blp:430
 msgid "Get the Fast Fourier Transform of the data"
 msgstr "Bereken de Fast Fourier Transform (FFT) van de gegevens"
 
-#: data/ui/window.blp:440
+#: data/ui/window.blp:444
 msgid "Inverse FFT"
 msgstr "Omgekeerde FFT"
 
-#: data/ui/window.blp:442
+#: data/ui/window.blp:446
 msgid "Get the Inverse Fast Fourier Transform of the data"
 msgstr "Bereken de omgekeerde Fast Fourier Transform van de gegevens"
 
-#: data/ui/window.blp:457
+#: data/ui/window.blp:461
 msgid "Custom Transformation"
 msgstr "Handmatige transformatie"
 
-#: data/ui/window.blp:459
+#: data/ui/window.blp:463
 msgid "Perform custom transformations on the data"
 msgstr "Voer aangepaste transformaties uit op de gegevens"
 
-#: data/ui/window.blp:466
+#: data/ui/window.blp:470
 msgid "Modify"
 msgstr "Verplaats"
 
-#: data/ui/window.blp:487
+#: data/ui/window.blp:491
 msgid "Translate X"
 msgstr "Verplaats X"
 
-#: data/ui/window.blp:510
+#: data/ui/window.blp:514
 msgid "Translate Y"
 msgstr "Verplaats Y"
 
-#: data/ui/window.blp:533
+#: data/ui/window.blp:537
 msgid "Multiply X"
 msgstr "Vermenigvuldig X"
 
-#: data/ui/window.blp:556
+#: data/ui/window.blp:560
 msgid "Multiply Y"
 msgstr "Vermenigvuldig Y"
 
-#: data/ui/window.blp:589
+#: data/ui/window.blp:593
 msgid "Undo"
 msgstr "Ongedaan maken"
 
-#: data/ui/window.blp:594
+#: data/ui/window.blp:598
 msgid "Redo"
 msgstr "Opnieuw uitvoeren"
 
-#: data/ui/window.blp:599
+#: data/ui/window.blp:603
 msgid "View Menu"
 msgstr "Weergavemenu"
 
-#: data/ui/window.blp:607
+#: data/ui/window.blp:611
 msgid "Next View"
 msgstr "Volgende weergave"
 
-#: data/ui/window.blp:613
+#: data/ui/window.blp:617
 msgid "Previous View"
 msgstr "Vorige weergave"
 
-#: data/ui/window.blp:632
+#: data/ui/window.blp:636
 msgid "New Project"
 msgstr "Nieuw project"
 
-#: data/ui/window.blp:635
+#: data/ui/window.blp:639
 msgid "Save Project…"
 msgstr "Project opslaan…"
 
-#: data/ui/window.blp:636
+#: data/ui/window.blp:640
 msgid "Save Project as…"
 msgstr "Project opslaan als…"
 
-#: data/ui/window.blp:637
+#: data/ui/window.blp:641
 msgid "Open Project…"
 msgstr "Open Project…"
 
-#: data/ui/window.blp:640
+#: data/ui/window.blp:644
 msgid "Export Data…"
 msgstr "Data Exporteren…"
 
-#: data/ui/window.blp:641
+#: data/ui/window.blp:645
 msgid "Export Figure…"
 msgstr "Figuur Exporteren…"
 
-#: data/ui/window.blp:647
+#: data/ui/window.blp:651
 msgid "Keyboard Shortcuts"
 msgstr "Sneltoetsen"
 
-#: data/ui/window.blp:648
+#: data/ui/window.blp:652
 msgid "About Graphs"
 msgstr "Over Graphs"
 
-#: data/ui/window.blp:654
+#: data/ui/window.blp:658
 msgid "Add Data from File…"
 msgstr "Voeg gegevens toe vanuit een bestand…"
 
-#: data/ui/window.blp:655
+#: data/ui/window.blp:659
 msgid "Add Equation…"
 msgstr "Vergelijking Toevoegen…"
 
-#: data/ui/window.blp:664
-msgid "Optimize Limits"
-msgstr "Optimaliseer Asgrenzen"
-
 #: data/ui/window.blp:668
-msgid "Top Scale"
-msgstr "Bovenste X-schaal"
-
-#: data/ui/window.blp:699
-msgid "Bottom Scale"
-msgstr "Onderste X-schaal"
-
-#: data/ui/window.blp:731
-msgid "Left Scale"
-msgstr "Linker Y-schaal"
-
-#: data/ui/window.blp:762
-msgid "Right Scale"
-msgstr "Rechter Y-schaal"
-
-#: data/ui/window.blp:797
-msgid "At maximum Y value"
+#, fuzzy
+msgid "At Maximum Y Value"
 msgstr "Op de maximale Y-waarde"
 
-#: data/ui/window.blp:802
-msgid "At middle X value"
+#: data/ui/window.blp:673
+#, fuzzy
+msgid "At Middle X Value"
 msgstr "Op de middelste X-waarde"
 
-#: data/ui/window.blp:816
-msgid "Moving average"
-msgstr "Bewegend gemiddelde"
+#: data/ui/window.blp:682
+#, fuzzy
+msgid "Savitzky–Golay Filter"
+msgstr "Savitzky–Golay filter"
 
-#: data/ui/window.blp:823
-msgid "Advanced settings"
+#: data/ui/window.blp:694
+#, fuzzy
+msgid "Advanced Settings"
 msgstr "Geadvanceerde instellingen"
 
-#: src/actions.py:205
+#: src/actions.py:214
 msgid "Deleted {}"
 msgstr "{name} is verwijderd"
 
@@ -1456,11 +1379,129 @@ msgstr "Parameters voor {param_name}"
 msgid "Exported Figure"
 msgstr "Gexporteerde figuur"
 
-#: src/figure_settings.py:101 src/figure_settings.py:122 src/styles.py:82
+#: src/figure_settings.py:110 src/figure_settings.py:136 src/styles.py:82
 msgid "System"
 msgstr "Systeem"
 
-#: src/figure_settings.py:210
+#: src/figure_settings.py:156
+msgid "Top X Axis Minimum"
+msgstr ""
+
+#: src/figure_settings.py:157 src/figure_settings.py:167
+#, fuzzy
+msgid "X Axis Minimum"
+msgstr "Minimum"
+
+#: src/figure_settings.py:158
+#, fuzzy
+msgid "Top X Axis Maximum"
+msgstr "Label bovenaan"
+
+#: src/figure_settings.py:159 src/figure_settings.py:169
+#, fuzzy
+msgid "X Axis Maximum"
+msgstr "Maximum"
+
+#: src/figure_settings.py:160 src/ui.py:58
+#, fuzzy
+msgid "Top X Axis Scale"
+msgstr "Schaal voor de  bovenste as"
+
+#: src/figure_settings.py:161 src/figure_settings.py:171 src/ui.py:55
+#, fuzzy
+msgid "X Axis Scale"
+msgstr "Schaal voor de  bovenste as"
+
+#: src/figure_settings.py:162
+#, fuzzy
+msgid "Top X Axis Label"
+msgstr "Label bovenaan"
+
+#: src/figure_settings.py:163 src/figure_settings.py:173
+#, fuzzy
+msgid "X Axis Label"
+msgstr "Label bovenaan"
+
+#: src/figure_settings.py:166
+#, fuzzy
+msgid "Bottom X Axis Minimum"
+msgstr "Label onderaan"
+
+#: src/figure_settings.py:168
+#, fuzzy
+msgid "Bottom X Axis Maximum"
+msgstr "Label onderaan"
+
+#: src/figure_settings.py:170 src/ui.py:60
+#, fuzzy
+msgid "Bottom X Axis Scale"
+msgstr "Schaal onderste as"
+
+#: src/figure_settings.py:172
+#, fuzzy
+msgid "Bottom X Axis Label"
+msgstr "Label onderaan"
+
+#: src/figure_settings.py:176
+msgid "Left Y Axis Minimum"
+msgstr ""
+
+#: src/figure_settings.py:177 src/figure_settings.py:187
+#, fuzzy
+msgid "Y Axis Minimum"
+msgstr "Minimum"
+
+#: src/figure_settings.py:178
+#, fuzzy
+msgid "Left Y Axis Maximum"
+msgstr "Label links"
+
+#: src/figure_settings.py:179 src/figure_settings.py:189
+#, fuzzy
+msgid "Y Axis Maximum"
+msgstr "Maximum"
+
+#: src/figure_settings.py:180 src/ui.py:62
+#, fuzzy
+msgid "Left Y Axis Scale"
+msgstr "Schaal linkeras"
+
+#: src/figure_settings.py:181 src/figure_settings.py:191 src/ui.py:56
+#, fuzzy
+msgid "Y Axis Scale"
+msgstr "Schaal voor de  bovenste as"
+
+#: src/figure_settings.py:182
+#, fuzzy
+msgid "Left Y Axis Label"
+msgstr "Label links"
+
+#: src/figure_settings.py:183 src/figure_settings.py:193
+#, fuzzy
+msgid "Y Axis Label"
+msgstr "Label bovenaan"
+
+#: src/figure_settings.py:186
+#, fuzzy
+msgid "Right Y Axis Minimum"
+msgstr "Label rechts"
+
+#: src/figure_settings.py:188
+#, fuzzy
+msgid "Right Y Axis Maximum"
+msgstr "Label rechts"
+
+#: src/figure_settings.py:190 src/ui.py:64
+#, fuzzy
+msgid "Right Y Axis Scale"
+msgstr "Schaal voor de rechteras"
+
+#: src/figure_settings.py:192
+#, fuzzy
+msgid "Right Y Axis Label"
+msgstr "Label rechts"
+
+#: src/figure_settings.py:296
 msgid "Defaults Updated"
 msgstr "Standaardinstellingen geüpdatet"
 
@@ -1497,11 +1538,11 @@ msgstr "β (°)"
 msgid "R (1/s)"
 msgstr "R (1/s)"
 
-#: src/parse_file.py:133
+#: src/parse_file.py:140
 msgid "Import failed, column index out of range"
 msgstr "Kan gegevens niet openen, de kolomindex is buiten bereik"
 
-#: src/parse_file.py:163
+#: src/parse_file.py:158
 msgid "Unable to import from file"
 msgstr "Kan het bestand niet importeren"
 
@@ -1534,61 +1575,108 @@ msgstr ""
 msgid "Unable to do transformation"
 msgstr "Kan de transformatie niet uitvoeren"
 
-#: src/ui.py:39
+#: src/ui.py:37
+msgid "Optimize Limits"
+msgstr "Optimaliseer Asgrenzen"
+
+#: src/ui.py:73
 msgid "Items {} already exist"
 msgstr "{} bestaan al"
 
-#: src/ui.py:41
+#: src/ui.py:75
 msgid "Item {} already exists"
 msgstr "{} bestaat al"
 
-#: src/ui.py:54
+#: src/ui.py:88
 msgid "Supported files"
 msgstr "Ondersteunde bestandstypen"
 
-#: src/ui.py:56
+#: src/ui.py:90
 msgid "ASCII files"
 msgstr "ASCII-bestanden"
 
-#: src/ui.py:57
+#: src/ui.py:91
 msgid "PANalytical XRDML"
 msgstr "PANalytical XRDML"
 
-#: src/ui.py:58
+#: src/ui.py:92
 msgid "Leybold xry"
 msgstr "Leybold xry"
 
-#: src/ui.py:59 src/ui.py:76 src/ui.py:89
+#: src/ui.py:93 src/ui.py:110 src/ui.py:123
 msgid "Graphs Project File"
 msgstr "Graphs Projectbestand"
 
-#: src/ui.py:96
+#: src/ui.py:130
 msgid "No data to export"
 msgstr "Geen gegevens om te exporteren"
 
-#: src/ui.py:112
+#: src/ui.py:146
 msgid "Exported Data"
 msgstr "Gegevens zijn geëxporteerd"
 
-#: src/ui.py:120
+#: src/ui.py:154
 msgid "Text Files"
 msgstr "Tekstbestanden"
 
-#: src/ui.py:141
+#: src/ui.py:175
 msgid "translator-credits"
 msgstr "Sjoerd Stendahl <contact@sjoerd.se>"
 
-#: src/ui.py:170 src/ui.py:234 src/ui.py:268
+#: src/ui.py:204 src/ui.py:268 src/ui.py:302
 msgid "Unsupported Widget {}"
 msgstr "Widget {} niet ondersteund"
 
-#: src/ui.py:172 src/ui.py:236 src/ui.py:270
+#: src/ui.py:206 src/ui.py:270 src/ui.py:304
 msgid "No way to apply “{}”"
 msgstr "Geen manier om “{}” toe te passen"
 
 #: src/utilities.py:160
 msgid "No valid number specified"
 msgstr "Geen geldig nummer"
+
+#~ msgid "Minimum Left Axis"
+#~ msgstr "Minimum Linker Y-as"
+
+#~ msgid "Maximum Left Axis"
+#~ msgstr "Maximum Linker Y-as"
+
+#~ msgid "Minimum Bottom Axis"
+#~ msgstr "Minimum Onderste X-as"
+
+#~ msgid "Maximum Bottom Axis"
+#~ msgstr "Maximum Onderste X-as"
+
+#~ msgid "Minimum Right Axis"
+#~ msgstr "Minimum Rechter Y-as"
+
+#~ msgid "Maximum Right Axis"
+#~ msgstr "Maximum Rechter Y-as"
+
+#~ msgid "Minimum Top Axis"
+#~ msgstr "Minimum Bovenste X-as"
+
+#~ msgid "Maximum Top Axis"
+#~ msgstr "Maximum Bovenste Y-as"
+
+#~ msgctxt "shortcut window"
+#~ msgid "Quit"
+#~ msgstr "Afsluiten"
+
+#~ msgid "Top Scale"
+#~ msgstr "Bovenste X-schaal"
+
+#~ msgid "Bottom Scale"
+#~ msgstr "Onderste X-schaal"
+
+#~ msgid "Left Scale"
+#~ msgstr "Linker Y-schaal"
+
+#~ msgid "Right Scale"
+#~ msgstr "Rechter Y-schaal"
+
+#~ msgid "Moving average"
+#~ msgstr "Bewegend gemiddelde"
 
 #~ msgid "Best"
 #~ msgstr "Beste"
