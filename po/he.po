@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-12-30 21:28+0100\n"
+"POT-Creation-Date: 2024-01-01 13:50+0100\n"
 "PO-Revision-Date: 2023-12-30 21:29+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -129,7 +129,7 @@ msgstr ""
 msgid "Step Size"
 msgstr ""
 
-#: data/ui/add_style.blp:7 data/ui/figure_settings.blp:219
+#: data/ui/add_style.blp:7 data/ui/figure_settings.blp:203
 msgid "Add new style"
 msgstr ""
 
@@ -141,7 +141,7 @@ msgstr ""
 msgid "Name"
 msgstr ""
 
-#: data/ui/curve_fitting.blp:35 data/ui/item_box.blp:66
+#: data/ui/curve_fitting.blp:35 data/ui/item_box.blp:64
 msgid "Curve Fitting"
 msgstr ""
 
@@ -153,10 +153,9 @@ msgstr ""
 msgid "Equation"
 msgstr ""
 
-#: data/ui/curve_fitting.blp:60 data/ui/figure_settings.blp:134
-#: data/ui/figure_settings.blp:141 data/ui/figure_settings.blp:148
-#: data/ui/figure_settings.blp:155 data/ui/window.blp:673
-#: data/ui/window.blp:704 data/ui/window.blp:736 data/ui/window.blp:767
+#: data/ui/curve_fitting.blp:60 data/ui/figure_settings.blp:121
+#: data/ui/figure_settings.blp:127 data/ui/figure_settings.blp:133
+#: data/ui/figure_settings.blp:139
 msgid "Linear"
 msgstr ""
 
@@ -172,10 +171,9 @@ msgstr ""
 msgid "Power Law"
 msgstr ""
 
-#: data/ui/curve_fitting.blp:61 data/ui/figure_settings.blp:134
-#: data/ui/figure_settings.blp:141 data/ui/figure_settings.blp:148
-#: data/ui/figure_settings.blp:155 data/ui/window.blp:678
-#: data/ui/window.blp:709 data/ui/window.blp:741 data/ui/window.blp:772
+#: data/ui/curve_fitting.blp:61 data/ui/figure_settings.blp:121
+#: data/ui/figure_settings.blp:127 data/ui/figure_settings.blp:133
+#: data/ui/figure_settings.blp:139
 msgid "Logarithmic"
 msgstr ""
 
@@ -187,7 +185,7 @@ msgstr ""
 msgid "Gaussian"
 msgstr ""
 
-#: data/ui/curve_fitting.blp:61 data/ui/import.blp:59
+#: data/ui/curve_fitting.blp:61 data/ui/import.blp:60
 msgid "Custom"
 msgstr ""
 
@@ -199,11 +197,11 @@ msgstr ""
 msgid "Add Fit to Data"
 msgstr ""
 
-#: data/ui/curve_fitting.blp:108 data/ui/window.blp:582 data/ui/window.blp:661
+#: data/ui/curve_fitting.blp:108 data/ui/window.blp:586 src/ui.py:33
 msgid "Toggle Sidebar"
 msgstr ""
 
-#: data/ui/curve_fitting.blp:120 data/ui/window.blp:622
+#: data/ui/curve_fitting.blp:120 data/ui/window.blp:626
 msgid "Canvas Failed to Load"
 msgstr ""
 
@@ -461,7 +459,7 @@ msgstr ""
 msgid "Transparent Background"
 msgstr ""
 
-#: data/ui/figure_settings.blp:21 data/ui/window.blp:644
+#: data/ui/figure_settings.blp:21 data/ui/window.blp:648
 msgid "Figure Settings"
 msgstr ""
 
@@ -473,156 +471,86 @@ msgstr ""
 msgid "Title"
 msgstr ""
 
-#: data/ui/figure_settings.blp:44
-msgid "Bottom Axis Label"
-msgstr ""
-
-#: data/ui/figure_settings.blp:48
-msgid "Left Axis Label"
-msgstr ""
-
-#: data/ui/figure_settings.blp:52
-msgid "Top Axis Label"
-msgstr ""
-
-#: data/ui/figure_settings.blp:56
-msgid "Right Axis Label"
-msgstr ""
-
-#: data/ui/figure_settings.blp:61
+#: data/ui/figure_settings.blp:57
 msgid "Axis Limits"
 msgstr ""
 
-#: data/ui/figure_settings.blp:71
-msgid "Minimum Left Axis"
-msgstr ""
-
-#: data/ui/figure_settings.blp:76
-msgid "Maximum Left Axis"
-msgstr ""
-
-#: data/ui/figure_settings.blp:86
-msgid "Minimum Bottom Axis"
-msgstr ""
-
-#: data/ui/figure_settings.blp:91
-msgid "Maximum Bottom Axis"
-msgstr ""
-
-#: data/ui/figure_settings.blp:101
-msgid "Minimum Right Axis"
-msgstr ""
-
-#: data/ui/figure_settings.blp:106
-msgid "Maximum Right Axis"
-msgstr ""
-
-#: data/ui/figure_settings.blp:116
-msgid "Minimum Top Axis"
-msgstr ""
-
-#: data/ui/figure_settings.blp:121
-msgid "Maximum Top Axis"
-msgstr ""
-
-#: data/ui/figure_settings.blp:129
+#: data/ui/figure_settings.blp:117
 msgid "Scaling"
 msgstr ""
 
-#: data/ui/figure_settings.blp:132
-msgid "Bottom Axis Scale"
-msgstr ""
-
-#: data/ui/figure_settings.blp:134 data/ui/figure_settings.blp:141
-#: data/ui/figure_settings.blp:148 data/ui/figure_settings.blp:155
-#: data/ui/window.blp:683 data/ui/window.blp:714 data/ui/window.blp:746
-#: data/ui/window.blp:777
+#: data/ui/figure_settings.blp:121 data/ui/figure_settings.blp:127
+#: data/ui/figure_settings.blp:133 data/ui/figure_settings.blp:139
 msgid "Radians"
 msgstr ""
 
-#: data/ui/figure_settings.blp:134 data/ui/figure_settings.blp:141
-#: data/ui/figure_settings.blp:148 data/ui/figure_settings.blp:155
-#: data/ui/window.blp:688 data/ui/window.blp:720 data/ui/window.blp:751
-#: data/ui/window.blp:782
+#: data/ui/figure_settings.blp:121 data/ui/figure_settings.blp:127
+#: data/ui/figure_settings.blp:133 data/ui/figure_settings.blp:139
 msgid "Square Root"
 msgstr ""
 
-#: data/ui/figure_settings.blp:134 data/ui/figure_settings.blp:141
-#: data/ui/figure_settings.blp:148 data/ui/figure_settings.blp:155
-#: data/ui/window.blp:693 data/ui/window.blp:725 data/ui/window.blp:756
-#: data/ui/window.blp:787
+#: data/ui/figure_settings.blp:121 data/ui/figure_settings.blp:127
+#: data/ui/figure_settings.blp:133 data/ui/figure_settings.blp:139
 msgid "Inverse"
 msgstr ""
 
-#: data/ui/figure_settings.blp:139
-msgid "Left Axis Scale"
-msgstr ""
-
-#: data/ui/figure_settings.blp:146
-msgid "Top Axis Scale"
-msgstr ""
-
-#: data/ui/figure_settings.blp:153
-msgid "Right Axis Scale"
-msgstr ""
-
-#: data/ui/figure_settings.blp:161
+#: data/ui/figure_settings.blp:145
 msgid "Appearance"
 msgstr ""
 
-#: data/ui/figure_settings.blp:163
+#: data/ui/figure_settings.blp:147
 msgid "Legend"
 msgstr ""
 
-#: data/ui/figure_settings.blp:166
+#: data/ui/figure_settings.blp:150
 msgid "Legend Position"
 msgstr ""
 
-#: data/ui/figure_settings.blp:169
+#: data/ui/figure_settings.blp:153
 msgid "Auto"
 msgstr ""
 
-#: data/ui/figure_settings.blp:169
+#: data/ui/figure_settings.blp:153
 msgid "Upper right"
 msgstr ""
 
-#: data/ui/figure_settings.blp:169
+#: data/ui/figure_settings.blp:153
 msgid "Upper left"
 msgstr ""
 
-#: data/ui/figure_settings.blp:169
+#: data/ui/figure_settings.blp:153
 msgid "Lower left"
 msgstr ""
 
-#: data/ui/figure_settings.blp:170
+#: data/ui/figure_settings.blp:154
 msgid "Lower right"
 msgstr ""
 
-#: data/ui/figure_settings.blp:170
+#: data/ui/figure_settings.blp:154
 msgid "Center left"
 msgstr ""
 
-#: data/ui/figure_settings.blp:170
+#: data/ui/figure_settings.blp:154
 msgid "Center right"
 msgstr ""
 
-#: data/ui/figure_settings.blp:171
+#: data/ui/figure_settings.blp:155
 msgid "Lower center"
 msgstr ""
 
-#: data/ui/figure_settings.blp:171
+#: data/ui/figure_settings.blp:155
 msgid "Upper center"
 msgstr ""
 
-#: data/ui/figure_settings.blp:171 data/ui/window.blp:334
+#: data/ui/figure_settings.blp:155 data/ui/window.blp:338
 msgid "Center"
 msgstr ""
 
-#: data/ui/figure_settings.blp:178
+#: data/ui/figure_settings.blp:162
 msgid "Hide Unselected Items"
 msgstr ""
 
-#: data/ui/figure_settings.blp:182 data/ui/figure_settings.blp:212
+#: data/ui/figure_settings.blp:166 data/ui/figure_settings.blp:196
 msgid "Style"
 msgstr ""
 
@@ -655,140 +583,145 @@ msgstr ""
 
 #: data/ui/help_overlay.blp:24
 msgctxt "shortcut window"
-msgid "Quit"
+msgid "Close Application"
 msgstr ""
 
-#: data/ui/help_overlay.blp:30
+#: data/ui/help_overlay.blp:28
+msgctxt "shortcut window"
+msgid "Close Application Window"
+msgstr ""
+
+#: data/ui/help_overlay.blp:34
 msgctxt "shortcut window"
 msgid "Mode Switching"
 msgstr ""
 
-#: data/ui/help_overlay.blp:33
+#: data/ui/help_overlay.blp:37
 msgctxt "shortcut window"
 msgid "Pan Mode"
 msgstr ""
 
-#: data/ui/help_overlay.blp:38
+#: data/ui/help_overlay.blp:42
 msgctxt "shortcut window"
 msgid "Zoom Mode"
 msgstr ""
 
-#: data/ui/help_overlay.blp:43
+#: data/ui/help_overlay.blp:47
 msgctxt "shortcut window"
 msgid "Select Mode"
 msgstr ""
 
-#: data/ui/help_overlay.blp:49
+#: data/ui/help_overlay.blp:53
 msgctxt "shortcut window"
 msgid "New Data"
 msgstr ""
 
-#: data/ui/help_overlay.blp:52
+#: data/ui/help_overlay.blp:56
 msgctxt "shortcut window"
 msgid "Add Data from Equation"
 msgstr ""
 
-#: data/ui/help_overlay.blp:57
+#: data/ui/help_overlay.blp:61
 msgctxt "shortcut window"
 msgid "Add Data from File"
 msgstr ""
 
-#: data/ui/help_overlay.blp:62
+#: data/ui/help_overlay.blp:66
 msgctxt "shortcut window"
 msgid "New Project"
 msgstr ""
 
-#: data/ui/help_overlay.blp:67
+#: data/ui/help_overlay.blp:71
 msgctxt "shortcut window"
 msgid "Open Project"
 msgstr ""
 
-#: data/ui/help_overlay.blp:72
+#: data/ui/help_overlay.blp:76
 msgctxt "shortcut window"
 msgid "Delete Selected Data"
 msgstr ""
 
-#: data/ui/help_overlay.blp:78
+#: data/ui/help_overlay.blp:82
 msgctxt "shortcut window"
 msgid "Save and Export"
 msgstr ""
 
-#: data/ui/help_overlay.blp:80
+#: data/ui/help_overlay.blp:84
 msgctxt "shortcut window"
 msgid "Export Data"
 msgstr ""
 
-#: data/ui/help_overlay.blp:84
+#: data/ui/help_overlay.blp:88
 msgctxt "shortcut window"
 msgid "Export Figure"
 msgstr ""
 
-#: data/ui/help_overlay.blp:88
+#: data/ui/help_overlay.blp:92
 msgctxt "shortcut window"
 msgid "Save Project"
 msgstr ""
 
-#: data/ui/help_overlay.blp:92
+#: data/ui/help_overlay.blp:96
 msgctxt "shortcut window"
 msgid "Save Project As"
 msgstr ""
 
-#: data/ui/help_overlay.blp:98
+#: data/ui/help_overlay.blp:102
 msgctxt "shortcut window"
 msgid "View"
 msgstr ""
 
-#: data/ui/help_overlay.blp:101
+#: data/ui/help_overlay.blp:105
 msgctxt "shortcut window"
 msgid "Previous View"
 msgstr ""
 
-#: data/ui/help_overlay.blp:106
+#: data/ui/help_overlay.blp:110
 msgctxt "shortcut window"
 msgid "Next View"
 msgstr ""
 
-#: data/ui/help_overlay.blp:111
+#: data/ui/help_overlay.blp:115
 msgctxt "shortcut window"
 msgid "Optimize limits"
 msgstr ""
 
-#: data/ui/help_overlay.blp:116
+#: data/ui/help_overlay.blp:120
 msgctxt "shortcut window"
 msgid "Zoom in"
 msgstr ""
 
-#: data/ui/help_overlay.blp:121
+#: data/ui/help_overlay.blp:125
 msgctxt "shortcut window"
 msgid "Zoom out"
 msgstr ""
 
-#: data/ui/help_overlay.blp:126 data/ui/help_overlay.blp:146
+#: data/ui/help_overlay.blp:130 data/ui/help_overlay.blp:150
 msgctxt "shortcut window"
 msgid "Select None"
 msgstr ""
 
-#: data/ui/help_overlay.blp:132
+#: data/ui/help_overlay.blp:136
 msgctxt "shortcut window"
 msgid "Toggle Sidebar"
 msgstr ""
 
-#: data/ui/help_overlay.blp:138
+#: data/ui/help_overlay.blp:142
 msgctxt "shortcut window"
 msgid "Actions"
 msgstr ""
 
-#: data/ui/help_overlay.blp:141
+#: data/ui/help_overlay.blp:145
 msgctxt "shortcut window"
 msgid "Select All"
 msgstr ""
 
-#: data/ui/help_overlay.blp:151
+#: data/ui/help_overlay.blp:155
 msgctxt "shortcut window"
 msgid "Undo Action"
 msgstr ""
 
-#: data/ui/help_overlay.blp:156
+#: data/ui/help_overlay.blp:160
 msgctxt "shortcut window"
 msgid "Redo Action"
 msgstr ""
@@ -805,59 +738,63 @@ msgstr ""
 msgid "Delimiter"
 msgstr ""
 
-#: data/ui/import.blp:58
+#: data/ui/import.blp:56
+msgid "Character sequence used to split values"
+msgstr ""
+
+#: data/ui/import.blp:59
 msgid "Whitespace"
 msgstr ""
 
-#: data/ui/import.blp:58
+#: data/ui/import.blp:59
 msgid "Tab"
 msgstr ""
 
-#: data/ui/import.blp:58
+#: data/ui/import.blp:59
 msgid "Colon (:)"
 msgstr ""
 
-#: data/ui/import.blp:58
+#: data/ui/import.blp:59
 msgid "Semicolon (;)"
 msgstr ""
 
-#: data/ui/import.blp:59 data/ui/import.blp:71
+#: data/ui/import.blp:60 data/ui/import.blp:72
 msgid "Decimal comma (,)"
 msgstr ""
 
-#: data/ui/import.blp:59 data/ui/import.blp:71
+#: data/ui/import.blp:60 data/ui/import.blp:72
 msgid "Decimal point (.)"
 msgstr ""
 
-#: data/ui/import.blp:65
+#: data/ui/import.blp:66
 msgid "Custom Delimiter"
 msgstr ""
 
-#: data/ui/import.blp:69
+#: data/ui/import.blp:70
 msgid "Decimal Separator"
 msgstr ""
 
-#: data/ui/import.blp:76
+#: data/ui/import.blp:77
 msgid "Column X"
 msgstr ""
 
-#: data/ui/import.blp:77
+#: data/ui/import.blp:78
 msgid "X-data column index"
 msgstr ""
 
-#: data/ui/import.blp:86
+#: data/ui/import.blp:87
 msgid "Column Y"
 msgstr ""
 
-#: data/ui/import.blp:88
+#: data/ui/import.blp:89
 msgid "Y-data column index"
 msgstr ""
 
-#: data/ui/import.blp:97
+#: data/ui/import.blp:98
 msgid "Skip Rows"
 msgstr ""
 
-#: data/ui/import.blp:98
+#: data/ui/import.blp:99
 msgid "Ignored row indices"
 msgstr ""
 
@@ -865,15 +802,15 @@ msgstr ""
 msgid "Pick Color"
 msgstr ""
 
-#: data/ui/item_box.blp:53
+#: data/ui/item_box.blp:51
 msgid "Move Item "
 msgstr ""
 
-#: data/ui/item_box.blp:70
+#: data/ui/item_box.blp:68
 msgid "Edit Item"
 msgstr ""
 
-#: data/ui/item_box.blp:74
+#: data/ui/item_box.blp:72
 msgid "Remove Item"
 msgstr ""
 
@@ -881,7 +818,7 @@ msgstr ""
 msgid "Smoothen settings"
 msgstr ""
 
-#: data/ui/smoothen_settings.blp:37 data/ui/window.blp:811
+#: data/ui/smoothen_settings.blp:37
 msgid "Savitzky–Golay filter"
 msgstr ""
 
@@ -897,7 +834,7 @@ msgstr ""
 msgid "Polynomial degree"
 msgstr ""
 
-#: data/ui/smoothen_settings.blp:55
+#: data/ui/smoothen_settings.blp:55 data/ui/window.blp:687
 msgid "Moving Average"
 msgstr ""
 
@@ -1103,7 +1040,7 @@ msgstr ""
 msgid "Transform Data"
 msgstr ""
 
-#: data/ui/transform_window.blp:29 data/ui/window.blp:376
+#: data/ui/transform_window.blp:29 data/ui/window.blp:380
 msgid "Transform"
 msgstr ""
 
@@ -1130,239 +1067,219 @@ msgstr ""
 msgid "Discard Unselected Data"
 msgstr ""
 
-#: data/ui/window.blp:162
+#: data/ui/window.blp:166
 msgid "Add new Data"
 msgstr ""
 
-#: data/ui/window.blp:170
+#: data/ui/window.blp:174
 msgid "Open Application Menu"
 msgstr ""
 
-#: data/ui/window.blp:199
+#: data/ui/window.blp:203
 msgid "No Data"
 msgstr ""
 
-#: data/ui/window.blp:200
+#: data/ui/window.blp:204
 msgid "Add data from a file or manually as an equation"
 msgstr ""
 
-#: data/ui/window.blp:220
+#: data/ui/window.blp:224
 msgid "Panning mode. Click and drag to pan"
 msgstr ""
 
-#: data/ui/window.blp:226
+#: data/ui/window.blp:230
 msgid "Zoom mode. Select an area on the figure to zoom in"
 msgstr ""
 
-#: data/ui/window.blp:232
+#: data/ui/window.blp:236
 msgid "Highlight mode. Click and drag to make a selection of data"
 msgstr ""
 
-#: data/ui/window.blp:267
+#: data/ui/window.blp:271
 msgid "Adjust"
 msgstr ""
 
-#: data/ui/window.blp:282
+#: data/ui/window.blp:286
 msgid "Shift"
 msgstr ""
 
-#: data/ui/window.blp:284
+#: data/ui/window.blp:288
 msgid "Shift all data vertically with respect to each other"
 msgstr ""
 
-#: data/ui/window.blp:299
+#: data/ui/window.blp:303
 msgid "Normalize"
 msgstr ""
 
-#: data/ui/window.blp:301
+#: data/ui/window.blp:305
 msgid "Normalize data"
 msgstr ""
 
-#: data/ui/window.blp:317
+#: data/ui/window.blp:321
 msgid "Smoothen"
 msgstr ""
 
-#: data/ui/window.blp:319
+#: data/ui/window.blp:323
 msgid "Smoothen data"
 msgstr ""
 
-#: data/ui/window.blp:336
+#: data/ui/window.blp:340
 msgid "Center data"
 msgstr ""
 
-#: data/ui/window.blp:351
+#: data/ui/window.blp:355
 msgid "Combine"
 msgstr ""
 
-#: data/ui/window.blp:353
+#: data/ui/window.blp:357
 msgid "Combine all selected data"
 msgstr ""
 
-#: data/ui/window.blp:367
+#: data/ui/window.blp:371
 msgid "Cut"
 msgstr ""
 
-#: data/ui/window.blp:369
+#: data/ui/window.blp:373
 msgid "Cut selected data"
 msgstr ""
 
-#: data/ui/window.blp:392
+#: data/ui/window.blp:396
 msgid "Derivative"
 msgstr ""
 
-#: data/ui/window.blp:394
+#: data/ui/window.blp:398
 msgid "Get the derivative of the data"
 msgstr ""
 
-#: data/ui/window.blp:408
+#: data/ui/window.blp:412
 msgid "Integral"
 msgstr ""
 
-#: data/ui/window.blp:410
+#: data/ui/window.blp:414
 msgid "Get the indefinite integral of the data"
 msgstr ""
 
-#: data/ui/window.blp:424
+#: data/ui/window.blp:428
 msgid "FFT"
 msgstr ""
 
-#: data/ui/window.blp:426
+#: data/ui/window.blp:430
 msgid "Get the Fast Fourier Transform of the data"
 msgstr ""
 
-#: data/ui/window.blp:440
+#: data/ui/window.blp:444
 msgid "Inverse FFT"
 msgstr ""
 
-#: data/ui/window.blp:442
+#: data/ui/window.blp:446
 msgid "Get the Inverse Fast Fourier Transform of the data"
 msgstr ""
 
-#: data/ui/window.blp:457
+#: data/ui/window.blp:461
 msgid "Custom Transformation"
 msgstr ""
 
-#: data/ui/window.blp:459
+#: data/ui/window.blp:463
 msgid "Perform custom transformations on the data"
 msgstr ""
 
-#: data/ui/window.blp:466
+#: data/ui/window.blp:470
 msgid "Modify"
 msgstr ""
 
-#: data/ui/window.blp:487
+#: data/ui/window.blp:491
 msgid "Translate X"
 msgstr ""
 
-#: data/ui/window.blp:510
+#: data/ui/window.blp:514
 msgid "Translate Y"
 msgstr ""
 
-#: data/ui/window.blp:533
+#: data/ui/window.blp:537
 msgid "Multiply X"
 msgstr ""
 
-#: data/ui/window.blp:556
+#: data/ui/window.blp:560
 msgid "Multiply Y"
 msgstr ""
 
-#: data/ui/window.blp:589
+#: data/ui/window.blp:593
 msgid "Undo"
 msgstr ""
 
-#: data/ui/window.blp:594
+#: data/ui/window.blp:598
 msgid "Redo"
 msgstr ""
 
-#: data/ui/window.blp:599
+#: data/ui/window.blp:603
 msgid "View Menu"
 msgstr ""
 
-#: data/ui/window.blp:607
+#: data/ui/window.blp:611
 msgid "Next View"
 msgstr ""
 
-#: data/ui/window.blp:613
+#: data/ui/window.blp:617
 msgid "Previous View"
 msgstr ""
 
-#: data/ui/window.blp:632
+#: data/ui/window.blp:636
 msgid "New Project"
 msgstr ""
 
-#: data/ui/window.blp:635
+#: data/ui/window.blp:639
 msgid "Save Project…"
 msgstr ""
 
-#: data/ui/window.blp:636
+#: data/ui/window.blp:640
 msgid "Save Project as…"
 msgstr ""
 
-#: data/ui/window.blp:637
+#: data/ui/window.blp:641
 msgid "Open Project…"
 msgstr ""
 
-#: data/ui/window.blp:640
+#: data/ui/window.blp:644
 msgid "Export Data…"
 msgstr ""
 
-#: data/ui/window.blp:641
+#: data/ui/window.blp:645
 msgid "Export Figure…"
 msgstr ""
 
-#: data/ui/window.blp:647
+#: data/ui/window.blp:651
 msgid "Keyboard Shortcuts"
 msgstr ""
 
-#: data/ui/window.blp:648
+#: data/ui/window.blp:652
 msgid "About Graphs"
 msgstr ""
 
-#: data/ui/window.blp:654
+#: data/ui/window.blp:658
 msgid "Add Data from File…"
 msgstr ""
 
-#: data/ui/window.blp:655
+#: data/ui/window.blp:659
 msgid "Add Equation…"
 msgstr ""
 
-#: data/ui/window.blp:664
-msgid "Optimize Limits"
-msgstr ""
-
 #: data/ui/window.blp:668
-msgid "Top Scale"
+msgid "At Maximum Y Value"
 msgstr ""
 
-#: data/ui/window.blp:699
-msgid "Bottom Scale"
+#: data/ui/window.blp:673
+msgid "At Middle X Value"
 msgstr ""
 
-#: data/ui/window.blp:731
-msgid "Left Scale"
+#: data/ui/window.blp:682
+msgid "Savitzky–Golay Filter"
 msgstr ""
 
-#: data/ui/window.blp:762
-msgid "Right Scale"
+#: data/ui/window.blp:694
+msgid "Advanced Settings"
 msgstr ""
 
-#: data/ui/window.blp:797
-msgid "At maximum Y value"
-msgstr ""
-
-#: data/ui/window.blp:802
-msgid "At middle X value"
-msgstr ""
-
-#: data/ui/window.blp:816
-msgid "Moving average"
-msgstr ""
-
-#: data/ui/window.blp:823
-msgid "Advanced settings"
-msgstr ""
-
-#: src/actions.py:205
+#: src/actions.py:214
 msgid "Deleted {}"
 msgstr ""
 
@@ -1412,11 +1329,107 @@ msgstr ""
 msgid "Exported Figure"
 msgstr ""
 
-#: src/figure_settings.py:101 src/figure_settings.py:122 src/styles.py:82
+#: src/figure_settings.py:110 src/figure_settings.py:136 src/styles.py:82
 msgid "System"
 msgstr ""
 
-#: src/figure_settings.py:210
+#: src/figure_settings.py:156
+msgid "Top X Axis Minimum"
+msgstr ""
+
+#: src/figure_settings.py:157 src/figure_settings.py:167
+msgid "X Axis Minimum"
+msgstr ""
+
+#: src/figure_settings.py:158
+msgid "Top X Axis Maximum"
+msgstr ""
+
+#: src/figure_settings.py:159 src/figure_settings.py:169
+msgid "X Axis Maximum"
+msgstr ""
+
+#: src/figure_settings.py:160 src/ui.py:58
+msgid "Top X Axis Scale"
+msgstr ""
+
+#: src/figure_settings.py:161 src/figure_settings.py:171 src/ui.py:55
+msgid "X Axis Scale"
+msgstr ""
+
+#: src/figure_settings.py:162
+msgid "Top X Axis Label"
+msgstr ""
+
+#: src/figure_settings.py:163 src/figure_settings.py:173
+msgid "X Axis Label"
+msgstr ""
+
+#: src/figure_settings.py:166
+msgid "Bottom X Axis Minimum"
+msgstr ""
+
+#: src/figure_settings.py:168
+msgid "Bottom X Axis Maximum"
+msgstr ""
+
+#: src/figure_settings.py:170 src/ui.py:60
+msgid "Bottom X Axis Scale"
+msgstr ""
+
+#: src/figure_settings.py:172
+msgid "Bottom X Axis Label"
+msgstr ""
+
+#: src/figure_settings.py:176
+msgid "Left Y Axis Minimum"
+msgstr ""
+
+#: src/figure_settings.py:177 src/figure_settings.py:187
+msgid "Y Axis Minimum"
+msgstr ""
+
+#: src/figure_settings.py:178
+msgid "Left Y Axis Maximum"
+msgstr ""
+
+#: src/figure_settings.py:179 src/figure_settings.py:189
+msgid "Y Axis Maximum"
+msgstr ""
+
+#: src/figure_settings.py:180 src/ui.py:62
+msgid "Left Y Axis Scale"
+msgstr ""
+
+#: src/figure_settings.py:181 src/figure_settings.py:191 src/ui.py:56
+msgid "Y Axis Scale"
+msgstr ""
+
+#: src/figure_settings.py:182
+msgid "Left Y Axis Label"
+msgstr ""
+
+#: src/figure_settings.py:183 src/figure_settings.py:193
+msgid "Y Axis Label"
+msgstr ""
+
+#: src/figure_settings.py:186
+msgid "Right Y Axis Minimum"
+msgstr ""
+
+#: src/figure_settings.py:188
+msgid "Right Y Axis Maximum"
+msgstr ""
+
+#: src/figure_settings.py:190 src/ui.py:64
+msgid "Right Y Axis Scale"
+msgstr ""
+
+#: src/figure_settings.py:192
+msgid "Right Y Axis Label"
+msgstr ""
+
+#: src/figure_settings.py:296
 msgid "Defaults Updated"
 msgstr ""
 
@@ -1453,11 +1466,11 @@ msgstr ""
 msgid "R (1/s)"
 msgstr ""
 
-#: src/parse_file.py:133
+#: src/parse_file.py:140
 msgid "Import failed, column index out of range"
 msgstr ""
 
-#: src/parse_file.py:163
+#: src/parse_file.py:158
 msgid "Unable to import from file"
 msgstr ""
 
@@ -1488,55 +1501,59 @@ msgstr ""
 msgid "Unable to do transformation"
 msgstr ""
 
-#: src/ui.py:39
+#: src/ui.py:37
+msgid "Optimize Limits"
+msgstr ""
+
+#: src/ui.py:73
 msgid "Items {} already exist"
 msgstr ""
 
-#: src/ui.py:41
+#: src/ui.py:75
 msgid "Item {} already exists"
 msgstr ""
 
-#: src/ui.py:54
+#: src/ui.py:88
 msgid "Supported files"
 msgstr ""
 
-#: src/ui.py:56
+#: src/ui.py:90
 msgid "ASCII files"
 msgstr ""
 
-#: src/ui.py:57
+#: src/ui.py:91
 msgid "PANalytical XRDML"
 msgstr ""
 
-#: src/ui.py:58
+#: src/ui.py:92
 msgid "Leybold xry"
 msgstr ""
 
-#: src/ui.py:59 src/ui.py:76 src/ui.py:89
+#: src/ui.py:93 src/ui.py:110 src/ui.py:123
 msgid "Graphs Project File"
 msgstr ""
 
-#: src/ui.py:96
+#: src/ui.py:130
 msgid "No data to export"
 msgstr ""
 
-#: src/ui.py:112
+#: src/ui.py:146
 msgid "Exported Data"
 msgstr ""
 
-#: src/ui.py:120
+#: src/ui.py:154
 msgid "Text Files"
 msgstr ""
 
-#: src/ui.py:141
+#: src/ui.py:175
 msgid "translator-credits"
 msgstr ""
 
-#: src/ui.py:170 src/ui.py:234 src/ui.py:268
+#: src/ui.py:204 src/ui.py:268 src/ui.py:302
 msgid "Unsupported Widget {}"
 msgstr ""
 
-#: src/ui.py:172 src/ui.py:236 src/ui.py:270
+#: src/ui.py:206 src/ui.py:270 src/ui.py:304
 msgid "No way to apply “{}”"
 msgstr ""
 
