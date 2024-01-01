@@ -280,7 +280,7 @@ class Data(GObject.Object, Graphs.DataInterface):
             if xlabel:
                 original_position = new_item.get_xposition()
                 if original_position == 0:
-                    if _is_default("bottom-label") or not self.items:
+                    if _is_default("bottom-label") or self.props.empty:
                         figure_settings.set_bottom_label(xlabel)
                     elif xlabel != figure_settings.get_bottom_label():
                         new_item.set_xposition(1)
