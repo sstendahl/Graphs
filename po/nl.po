@@ -8,10 +8,10 @@ msgstr ""
 "Project-Id-Version: graphs\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-01-01 13:50+0100\n"
-"PO-Revision-Date: 2023-12-31 07:18+0000\n"
+"PO-Revision-Date: 2024-01-01 13:26+0000\n"
 "Last-Translator: Sjoerd Stendahl <sjoerd1993@gmail.com>\n"
-"Language-Team: Dutch <https://hosted.weblate.org/projects/graphs/graphs/nl/"
-">\n"
+"Language-Team: Dutch <https://hosted.weblate.org/projects/graphs/graphs/nl/>"
+"\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -609,16 +609,14 @@ msgid "Open Figure Settings"
 msgstr "Open Figuurinstellingen"
 
 #: data/ui/help_overlay.blp:24
-#, fuzzy
 msgctxt "shortcut window"
 msgid "Close Application"
-msgstr "Open toepassingmenu"
+msgstr "Sluit Toepassing"
 
 #: data/ui/help_overlay.blp:28
-#, fuzzy
 msgctxt "shortcut window"
 msgid "Close Application Window"
-msgstr "Open toepassingmenu"
+msgstr "Sluit Toepassingsvenster"
 
 #: data/ui/help_overlay.blp:34
 msgctxt "shortcut window"
@@ -769,7 +767,7 @@ msgstr "Scheidingsteken"
 
 #: data/ui/import.blp:56
 msgid "Character sequence used to split values"
-msgstr ""
+msgstr "Tekens die gebruikt worden om waarden te scheiden"
 
 #: data/ui/import.blp:59
 msgid "Whitespace"
@@ -1303,24 +1301,20 @@ msgid "Add Equation…"
 msgstr "Vergelijking Toevoegen…"
 
 #: data/ui/window.blp:668
-#, fuzzy
 msgid "At Maximum Y Value"
-msgstr "Op de maximale Y-waarde"
+msgstr "Op de Maximale Y-waarde"
 
 #: data/ui/window.blp:673
-#, fuzzy
 msgid "At Middle X Value"
-msgstr "Op de middelste X-waarde"
+msgstr "Op de Middelste X-waarde"
 
 #: data/ui/window.blp:682
-#, fuzzy
 msgid "Savitzky–Golay Filter"
-msgstr "Savitzky–Golay filter"
+msgstr "Savitzky–Golay Filter"
 
 #: data/ui/window.blp:694
-#, fuzzy
 msgid "Advanced Settings"
-msgstr "Geadvanceerde instellingen"
+msgstr "Geadvanceerde Instellingen"
 
 #: src/actions.py:214
 msgid "Deleted {}"
@@ -1385,125 +1379,103 @@ msgstr "Systeem"
 
 #: src/figure_settings.py:156
 msgid "Top X Axis Minimum"
-msgstr ""
+msgstr "Bovenste X-As Minimum"
 
 #: src/figure_settings.py:157 src/figure_settings.py:167
-#, fuzzy
 msgid "X Axis Minimum"
-msgstr "Minimum"
+msgstr "X-As Minimum"
 
 #: src/figure_settings.py:158
-#, fuzzy
 msgid "Top X Axis Maximum"
-msgstr "Label bovenaan"
+msgstr "Bovenste X-As Maximum"
 
 #: src/figure_settings.py:159 src/figure_settings.py:169
-#, fuzzy
 msgid "X Axis Maximum"
-msgstr "Maximum"
+msgstr "X-As Maximum"
 
 #: src/figure_settings.py:160 src/ui.py:58
-#, fuzzy
 msgid "Top X Axis Scale"
-msgstr "Schaal voor de  bovenste as"
+msgstr "Bovenste X-As Schaal"
 
 #: src/figure_settings.py:161 src/figure_settings.py:171 src/ui.py:55
-#, fuzzy
 msgid "X Axis Scale"
-msgstr "Schaal voor de  bovenste as"
+msgstr "X-As Schaal"
 
 #: src/figure_settings.py:162
-#, fuzzy
 msgid "Top X Axis Label"
-msgstr "Label bovenaan"
+msgstr "Bovenste X-As Label"
 
 #: src/figure_settings.py:163 src/figure_settings.py:173
-#, fuzzy
 msgid "X Axis Label"
-msgstr "Label bovenaan"
+msgstr "X-As Label"
 
 #: src/figure_settings.py:166
-#, fuzzy
 msgid "Bottom X Axis Minimum"
-msgstr "Label onderaan"
+msgstr "Onderste X-As Minimum"
 
 #: src/figure_settings.py:168
-#, fuzzy
 msgid "Bottom X Axis Maximum"
-msgstr "Label onderaan"
+msgstr "Onderste X-As Maximum"
 
 #: src/figure_settings.py:170 src/ui.py:60
-#, fuzzy
 msgid "Bottom X Axis Scale"
-msgstr "Schaal onderste as"
+msgstr "Ondeste X-As Schaal"
 
 #: src/figure_settings.py:172
-#, fuzzy
 msgid "Bottom X Axis Label"
-msgstr "Label onderaan"
+msgstr "Onderste X-As Label"
 
 #: src/figure_settings.py:176
 msgid "Left Y Axis Minimum"
-msgstr ""
+msgstr "Linker Y-As Minimum"
 
 #: src/figure_settings.py:177 src/figure_settings.py:187
-#, fuzzy
 msgid "Y Axis Minimum"
-msgstr "Minimum"
+msgstr "Y-As Minimum"
 
 #: src/figure_settings.py:178
-#, fuzzy
 msgid "Left Y Axis Maximum"
-msgstr "Label links"
+msgstr "Linker Y-As Maximum"
 
 #: src/figure_settings.py:179 src/figure_settings.py:189
-#, fuzzy
 msgid "Y Axis Maximum"
-msgstr "Maximum"
+msgstr "Y-As Maximum"
 
 #: src/figure_settings.py:180 src/ui.py:62
-#, fuzzy
 msgid "Left Y Axis Scale"
-msgstr "Schaal linkeras"
+msgstr "Linker Y-As Schaal"
 
 #: src/figure_settings.py:181 src/figure_settings.py:191 src/ui.py:56
-#, fuzzy
 msgid "Y Axis Scale"
-msgstr "Schaal voor de  bovenste as"
+msgstr "Y-As Schaal"
 
 #: src/figure_settings.py:182
-#, fuzzy
 msgid "Left Y Axis Label"
-msgstr "Label links"
+msgstr "Linker Y-As Label"
 
 #: src/figure_settings.py:183 src/figure_settings.py:193
-#, fuzzy
 msgid "Y Axis Label"
-msgstr "Label bovenaan"
+msgstr "Y-As Label"
 
 #: src/figure_settings.py:186
-#, fuzzy
 msgid "Right Y Axis Minimum"
-msgstr "Label rechts"
+msgstr "Rechter Y-As Minimum"
 
 #: src/figure_settings.py:188
-#, fuzzy
 msgid "Right Y Axis Maximum"
-msgstr "Label rechts"
+msgstr "Rechter Y-As Maximum"
 
 #: src/figure_settings.py:190 src/ui.py:64
-#, fuzzy
 msgid "Right Y Axis Scale"
-msgstr "Schaal voor de rechteras"
+msgstr "Rechter Y-As Schaal"
 
 #: src/figure_settings.py:192
-#, fuzzy
 msgid "Right Y Axis Label"
-msgstr "Label rechts"
+msgstr "Rechter Y-As Label"
 
 #: src/figure_settings.py:296
 msgid "Defaults Updated"
-msgstr "Standaardinstellingen geüpdatet"
+msgstr "Standaardinstellingen Geüpdatet"
 
 #: src/file_import.py:100
 msgid "Are you sure you want to reset the import settings?"
