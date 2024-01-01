@@ -280,7 +280,7 @@ class Data(GObject.Object, Graphs.DataInterface):
             if xlabel:
                 original_position = new_item.get_xposition()
                 if original_position == 0:
-                    if _is_default("bottom-label"):
+                    if _is_default("bottom-label") or not self.items:
                         figure_settings.set_bottom_label(xlabel)
                     elif xlabel != figure_settings.get_bottom_label():
                         new_item.set_xposition(1)
@@ -293,7 +293,7 @@ class Data(GObject.Object, Graphs.DataInterface):
             if ylabel:
                 original_position = new_item.get_yposition()
                 if original_position == 0:
-                    if _is_default("left-label"):
+                    if _is_default("left-label") or not self.items:
                         figure_settings.set_left_label(ylabel)
                     elif ylabel != figure_settings.get_left_label():
                         new_item.set_yposition(1)
@@ -330,23 +330,19 @@ class Data(GObject.Object, Graphs.DataInterface):
                 (2, (self.index(item_), item_.to_dict())),
             )
             x_position = item_.get_xposition()
-            y_position = item_.get_yposition()
-
-            if (x_position == 0
-                    and item_.get_xlabel() == settings.get_bottom_label()):
-                settings.set_bottom_label(default.get_string("bottom-label"))
-            elif (x_position == 1
-                  and item_.get_xlabel() == settings.get_top_label()):
-                settings.set_top_label(default.get_string("top-label"))
-
-            if (y_position == 0
-                    and item_.get_ylabel() == settings.get_left_label()):
-                settings.set_left_label(default.get_string("left-label"))
-            elif (y_position == 1
-                  and item_.get_ylabel() == settings.get_right_label()):
-                settings.set_right_label(default.get_string("right-label"))
-
+            y_position = item_.get_yposition() + 2
+            xlabel = item_.get_xlabel()
+            ylabel = item_.get_ylabel()
             self._delete_item(item_.get_uuid())
+            used = [False] * 4 if not self.items else self.get_used_positions()
+            for position in [x_position, y_position]:
+                direction = misc.DIRECTIONS[position]
+                item_label = xlabel if position < 2 else ylabel
+                axis_label = getattr(settings, f"get_{direction}_label")()
+                if not used[position] and item_label == axis_label:
+                    set_label = getattr(settings, f"set_{direction}_label")
+                    set_label(default.get_string(f"{direction}-label"))
+
         self.notify("items")
         self.add_history_state()
         self.notify("items_selected")
