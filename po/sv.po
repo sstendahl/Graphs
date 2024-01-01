@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: graphs\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-01-01 13:50+0100\n"
-"PO-Revision-Date: 2023-12-31 07:06+0000\n"
+"PO-Revision-Date: 2024-01-01 13:26+0000\n"
 "Last-Translator: Sjoerd Stendahl <sjoerd1993@gmail.com>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/graphs/graphs/sv/"
 ">\n"
@@ -607,16 +607,14 @@ msgid "Open Figure Settings"
 msgstr "Öppna Figurinställningar"
 
 #: data/ui/help_overlay.blp:24
-#, fuzzy
 msgctxt "shortcut window"
 msgid "Close Application"
-msgstr "Öppna Programmenyn"
+msgstr "Stäng Applikation"
 
 #: data/ui/help_overlay.blp:28
-#, fuzzy
 msgctxt "shortcut window"
 msgid "Close Application Window"
-msgstr "Öppna Programmenyn"
+msgstr "Stäng Applikationsfönster"
 
 #: data/ui/help_overlay.blp:34
 msgctxt "shortcut window"
@@ -767,7 +765,7 @@ msgstr "Avgränsare"
 
 #: data/ui/import.blp:56
 msgid "Character sequence used to split values"
-msgstr ""
+msgstr "Tecken som används för att dela upp värden"
 
 #: data/ui/import.blp:59
 msgid "Whitespace"
@@ -1300,24 +1298,20 @@ msgid "Add Equation…"
 msgstr "Lägg till ekvation…"
 
 #: data/ui/window.blp:668
-#, fuzzy
 msgid "At Maximum Y Value"
-msgstr "Centrera på Y-maximum"
+msgstr "Vid Maximala Y-värde"
 
 #: data/ui/window.blp:673
-#, fuzzy
 msgid "At Middle X Value"
-msgstr "Vid mitten X-värde"
+msgstr "Vid Mitten X-värde"
 
 #: data/ui/window.blp:682
-#, fuzzy
 msgid "Savitzky–Golay Filter"
 msgstr "Savitzky–Golay Filter"
 
 #: data/ui/window.blp:694
-#, fuzzy
 msgid "Advanced Settings"
-msgstr "Avancerade inställningar"
+msgstr "Avancerade Inställningar"
 
 #: src/actions.py:214
 msgid "Deleted {}"
@@ -1383,121 +1377,99 @@ msgstr "System"
 
 #: src/figure_settings.py:156
 msgid "Top X Axis Minimum"
-msgstr ""
+msgstr "Övre X-Axel Minimum"
 
 #: src/figure_settings.py:157 src/figure_settings.py:167
-#, fuzzy
 msgid "X Axis Minimum"
-msgstr "Minimum"
+msgstr "X-Axel Minimum"
 
 #: src/figure_settings.py:158
-#, fuzzy
 msgid "Top X Axis Maximum"
-msgstr "Etikett för Övre Axeln"
+msgstr "Övre X-Axel Maximum"
 
 #: src/figure_settings.py:159 src/figure_settings.py:169
-#, fuzzy
 msgid "X Axis Maximum"
-msgstr "Maximum"
+msgstr "X-Axel Maximum"
 
 #: src/figure_settings.py:160 src/ui.py:58
-#, fuzzy
 msgid "Top X Axis Scale"
-msgstr "Övre Axelskala"
+msgstr "Övre X-Axelskala"
 
 #: src/figure_settings.py:161 src/figure_settings.py:171 src/ui.py:55
-#, fuzzy
 msgid "X Axis Scale"
-msgstr "Övre Axelskala"
+msgstr "X-Axelskala"
 
 #: src/figure_settings.py:162
-#, fuzzy
 msgid "Top X Axis Label"
-msgstr "Etikett för Övre Axeln"
+msgstr "Övre X-Axeletikett"
 
 #: src/figure_settings.py:163 src/figure_settings.py:173
-#, fuzzy
 msgid "X Axis Label"
-msgstr "Etikett för Övre Axeln"
+msgstr "X-Axel Etikett"
 
 #: src/figure_settings.py:166
-#, fuzzy
 msgid "Bottom X Axis Minimum"
-msgstr "Etikett för Nedre Axeln"
+msgstr "Nedre X-Axel Minimum"
 
 #: src/figure_settings.py:168
-#, fuzzy
 msgid "Bottom X Axis Maximum"
-msgstr "Etikett för Nedre Axeln"
+msgstr "Nedre X-Axel Maximum"
 
 #: src/figure_settings.py:170 src/ui.py:60
-#, fuzzy
 msgid "Bottom X Axis Scale"
-msgstr "Nedre Axelskala"
+msgstr "Nedre X-Axelskala"
 
 #: src/figure_settings.py:172
-#, fuzzy
 msgid "Bottom X Axis Label"
-msgstr "Etikett för Nedre Axeln"
+msgstr "Nedre X-Axeletikett"
 
 #: src/figure_settings.py:176
 msgid "Left Y Axis Minimum"
-msgstr ""
+msgstr "Vänster Y-Axel Minimum"
 
 #: src/figure_settings.py:177 src/figure_settings.py:187
-#, fuzzy
 msgid "Y Axis Minimum"
-msgstr "Minimum"
+msgstr "Y-Axel Minimum"
 
 #: src/figure_settings.py:178
-#, fuzzy
 msgid "Left Y Axis Maximum"
-msgstr "Etikett för Vänsteraxeln"
+msgstr "Vänster Y-Axel Maximum"
 
 #: src/figure_settings.py:179 src/figure_settings.py:189
-#, fuzzy
 msgid "Y Axis Maximum"
-msgstr "Maximum"
+msgstr "Y-Axel Maximum"
 
 #: src/figure_settings.py:180 src/ui.py:62
-#, fuzzy
 msgid "Left Y Axis Scale"
-msgstr "Vänster Axelskala"
+msgstr "Vänster Y-Axelskala"
 
 #: src/figure_settings.py:181 src/figure_settings.py:191 src/ui.py:56
-#, fuzzy
 msgid "Y Axis Scale"
-msgstr "Övre Axelskala"
+msgstr "Y-Axelskala"
 
 #: src/figure_settings.py:182
-#, fuzzy
 msgid "Left Y Axis Label"
-msgstr "Etikett för Vänsteraxeln"
+msgstr "Vänster Y-Axeletikett"
 
 #: src/figure_settings.py:183 src/figure_settings.py:193
-#, fuzzy
 msgid "Y Axis Label"
-msgstr "Etikett för Övre Axeln"
+msgstr "Y-Axeletikett"
 
 #: src/figure_settings.py:186
-#, fuzzy
 msgid "Right Y Axis Minimum"
-msgstr "Etikett för Högeraxeln"
+msgstr "Höger Y-Axel Minimum"
 
 #: src/figure_settings.py:188
-#, fuzzy
 msgid "Right Y Axis Maximum"
-msgstr "Etikett för Högeraxeln"
+msgstr "Höger Y-Axel Maximum"
 
 #: src/figure_settings.py:190 src/ui.py:64
-#, fuzzy
 msgid "Right Y Axis Scale"
-msgstr "Höger Axelskala"
+msgstr "Höger Y-Axelskala"
 
 #: src/figure_settings.py:192
-#, fuzzy
 msgid "Right Y Axis Label"
-msgstr "Etikett för Högeraxeln"
+msgstr "Höger Y-Axeletikett"
 
 #: src/figure_settings.py:296
 msgid "Defaults Updated"
