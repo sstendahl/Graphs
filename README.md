@@ -74,7 +74,7 @@ This project targets the GNOME Platform on Flathub. Manually building Graphs for
 
 If you want to build without Flatpak anyway these instructions might help:
 
-build-time dependencies: `meson, blueprint-compiler, gettext`
+build-time dependencies: `meson, blueprint-compiler, gettext`, `vala`, `gtk4-devel`, `libadwaita-devel`
 
 runtime dependencies: `matplotlib, python3-matplotlib-gtk4, scipy, numpy, numexpr, sympy`
 
