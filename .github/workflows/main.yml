@@ -109,3 +109,42 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           fail_on_error: true
+
+name: Update POT on PR
+
+on:
+  pull_request:
+    paths:
+      - '**/*.py'  # Adjust the path to match your project's structure
+
+jobs:
+  update-pot:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          # Add any additional dependencies needed for your project
+
+      - name: Update POT file
+        run: |
+          # Add the command to update the POT file
+          xgettext --output=your_project.pot your_source_code/*.py
+
+      - name: Commit and push changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+
+          git add your_project.pot
+          git commit -m "Update POT file" || true  # Ignore if there are no changes
+          git push
