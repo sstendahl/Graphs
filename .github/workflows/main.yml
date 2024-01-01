@@ -110,15 +110,9 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           fail_on_error: true
 
-name: Update POT on PR
 
-on:
-  pull_request:
-    paths:
-      - '**/*.py'  # Adjust the path to match your project's structure
-
-jobs:
   update-pot:
+    name: Update POT
     runs-on: ubuntu-latest
 
     steps:
