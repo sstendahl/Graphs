@@ -53,6 +53,7 @@ template $GraphsImportWindow : Adw.Window {
           visible: false;
           Adw.ComboRow columns_delimiter {
             title: _("Delimiter");
+            subtitle: _("Character sequence used to split values");
             notify::selected => $on_delimiter_change();
             model: StringList{
               strings [_("Whitespace"), _("Tab"), _("Colon (:)"), _("Semicolon (;)"),
