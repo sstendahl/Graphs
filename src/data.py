@@ -293,7 +293,7 @@ class Data(GObject.Object, Graphs.DataInterface):
             if ylabel:
                 original_position = new_item.get_yposition()
                 if original_position == 0:
-                    if _is_default("left-label") or not self.items:
+                    if _is_default("left-label") or self.props.empty:
                         figure_settings.set_left_label(ylabel)
                     elif ylabel != figure_settings.get_left_label():
                         new_item.set_yposition(1)
