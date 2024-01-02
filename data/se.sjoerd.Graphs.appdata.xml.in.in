@@ -35,7 +35,7 @@
     </screenshot>
     <screenshot type="default">
       <caption>2 - Full support for light and dark mode</caption>
-      <image>https://raw.githubusercontent.com/Sjoerd1993/Graphs/main/data/screenshots/sines_dark.png</image>
+      <image>https://raw.githubusercontent.com/Sjoerd1993/Graphs/main/data/screenshots/sin_cos_dark.png</image>
     </screenshot>
     <screenshot type="default">
       <caption>3 - Generate data from an equation</caption>
@@ -43,11 +43,11 @@
     </screenshot>
     <screenshot type="default">
       <caption>4 - Edit plot stylesheets</caption>
-      <image>https://raw.githubusercontent.com/Sjoerd1993/Graphs/main/data/screenshots/style_editor.png</image>
+      <image>https://raw.githubusercontent.com/Sjoerd1993/Graphs/main/data/screenshots/previews.png</image>
     </screenshot>
     <screenshot>
       <caption>5 - Manipulate imported data with ease</caption>
-      <image>https://raw.githubusercontent.com/Sjoerd1993/Graphs/main/data/screenshots/manipulate_data.png</image>
+      <image>https://raw.githubusercontent.com/Sjoerd1993/Graphs/main/data/screenshots/curve_fitting.png</image>
     </screenshot>
   </screenshots>
   <releases>
