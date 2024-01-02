@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: se.sjoerd.Graphs\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-01-01 13:50+0100\n"
-"PO-Revision-Date: 2024-01-01 13:04+0000\n"
-"Last-Translator: LibreTranslate <noreply-mt-libretranslate@weblate.org>\n"
+"PO-Revision-Date: 2024-01-02 06:32+0000\n"
+"Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/graphs/graphs/tr/"
 ">\n"
 "Language: tr\n"
@@ -239,7 +239,7 @@ msgstr "Levenberg-Marquardt"
 
 #: data/ui/curve_fitting.blp:137
 msgid "Trust Region Reflective"
-msgstr ""
+msgstr "Güven Bölgesi Yansıtıcı"
 
 #: data/ui/curve_fitting.blp:142
 msgid "Dogbox"
@@ -257,7 +257,7 @@ msgstr "Hiçbiri"
 #: data/ui/curve_fitting.blp:155
 #, c-format
 msgid "1σ: 68% Confidence"
-msgstr "1σ: %%68% Güven"
+msgstr "1σ: %%68 Güven"
 
 #: data/ui/curve_fitting.blp:160
 #, c-format
@@ -608,16 +608,14 @@ msgid "Open Figure Settings"
 msgstr "Şekil Ayarlarını Aç"
 
 #: data/ui/help_overlay.blp:24
-#, fuzzy
 msgctxt "shortcut window"
 msgid "Close Application"
-msgstr "Uygulama Menüsünü Aç"
+msgstr "Uygulamayı Kapat"
 
 #: data/ui/help_overlay.blp:28
-#, fuzzy
 msgctxt "shortcut window"
 msgid "Close Application Window"
-msgstr "Uygulama Menüsünü Aç"
+msgstr "Uygulama Menüsünü Kapat"
 
 #: data/ui/help_overlay.blp:34
 msgctxt "shortcut window"
@@ -768,7 +766,7 @@ msgstr "Ayraç"
 
 #: data/ui/import.blp:56
 msgid "Character sequence used to split values"
-msgstr ""
+msgstr "Değerleri bölmek için kullanılan karakter dizisi"
 
 #: data/ui/import.blp:59
 msgid "Whitespace"
@@ -1299,24 +1297,20 @@ msgid "Add Equation…"
 msgstr "Denklem Ekle…"
 
 #: data/ui/window.blp:668
-#, fuzzy
 msgid "At Maximum Y Value"
-msgstr "En büyük Y değerinde"
+msgstr "Azami Y Değerinde"
 
 #: data/ui/window.blp:673
-#, fuzzy
 msgid "At Middle X Value"
-msgstr "Orta X değerinde"
+msgstr "Orta X Değerinde"
 
 #: data/ui/window.blp:682
-#, fuzzy
 msgid "Savitzky–Golay Filter"
-msgstr "Savitzky-Golay filtresi"
+msgstr "Savitzky-Golay Süzgeci"
 
 #: data/ui/window.blp:694
-#, fuzzy
 msgid "Advanced Settings"
-msgstr "Gelişmiş ayarlar"
+msgstr "Gelişmiş Ayarlar"
 
 #: src/actions.py:214
 msgid "Deleted {}"
@@ -1380,121 +1374,99 @@ msgstr "Sistem"
 
 #: src/figure_settings.py:156
 msgid "Top X Axis Minimum"
-msgstr ""
+msgstr "Üst X Ekseni Asgari"
 
 #: src/figure_settings.py:157 src/figure_settings.py:167
-#, fuzzy
 msgid "X Axis Minimum"
-msgstr "Asgari"
+msgstr "X Ekseni Asgari"
 
 #: src/figure_settings.py:158
-#, fuzzy
 msgid "Top X Axis Maximum"
-msgstr "Üst Eksen Etiketi"
+msgstr "Üst X Ekseni Azami"
 
 #: src/figure_settings.py:159 src/figure_settings.py:169
-#, fuzzy
 msgid "X Axis Maximum"
-msgstr "Azami"
+msgstr "X Ekseni Azami"
 
 #: src/figure_settings.py:160 src/ui.py:58
-#, fuzzy
 msgid "Top X Axis Scale"
-msgstr "Üst Eksen Ölçeği"
+msgstr "Üst X Ekseni Ölçeği"
 
 #: src/figure_settings.py:161 src/figure_settings.py:171 src/ui.py:55
-#, fuzzy
 msgid "X Axis Scale"
-msgstr "Üst Eksen Ölçeği"
+msgstr "X Ekseni Ölçeği"
 
 #: src/figure_settings.py:162
-#, fuzzy
 msgid "Top X Axis Label"
-msgstr "Üst Eksen Etiketi"
+msgstr "Üst X Ekseni Etiketi"
 
 #: src/figure_settings.py:163 src/figure_settings.py:173
-#, fuzzy
 msgid "X Axis Label"
-msgstr "Üst Eksen Etiketi"
+msgstr "X Ekseni Etiketi"
 
 #: src/figure_settings.py:166
-#, fuzzy
 msgid "Bottom X Axis Minimum"
-msgstr "Alt Eksen Etiketi"
+msgstr "Alt X Ekseni Asgari"
 
 #: src/figure_settings.py:168
-#, fuzzy
 msgid "Bottom X Axis Maximum"
-msgstr "Alt Eksen Etiketi"
+msgstr "Alt X Ekseni Azami"
 
 #: src/figure_settings.py:170 src/ui.py:60
-#, fuzzy
 msgid "Bottom X Axis Scale"
-msgstr "Alt Eksen Ölçeği"
+msgstr "Alt X Ekseni Ölçeği"
 
 #: src/figure_settings.py:172
-#, fuzzy
 msgid "Bottom X Axis Label"
-msgstr "Alt Eksen Etiketi"
+msgstr "Alt X Ekseni Etiketi"
 
 #: src/figure_settings.py:176
 msgid "Left Y Axis Minimum"
-msgstr ""
+msgstr "Sol Y Ekseni Asgari"
 
 #: src/figure_settings.py:177 src/figure_settings.py:187
-#, fuzzy
 msgid "Y Axis Minimum"
-msgstr "Asgari"
+msgstr "Y Ekseni Asgari"
 
 #: src/figure_settings.py:178
-#, fuzzy
 msgid "Left Y Axis Maximum"
-msgstr "Sol Eksen Etiketi"
+msgstr "Sol X Ekseni Azami"
 
 #: src/figure_settings.py:179 src/figure_settings.py:189
-#, fuzzy
 msgid "Y Axis Maximum"
-msgstr "Azami"
+msgstr "Y Ekseni Azami"
 
 #: src/figure_settings.py:180 src/ui.py:62
-#, fuzzy
 msgid "Left Y Axis Scale"
-msgstr "Sol Eksen Ölçeği"
+msgstr "Sol Y Ekseni Ölçeği"
 
 #: src/figure_settings.py:181 src/figure_settings.py:191 src/ui.py:56
-#, fuzzy
 msgid "Y Axis Scale"
-msgstr "Üst Eksen Ölçeği"
+msgstr "Y Ekseni Ölçeği"
 
 #: src/figure_settings.py:182
-#, fuzzy
 msgid "Left Y Axis Label"
-msgstr "Sol Eksen Etiketi"
+msgstr "Sol Y Ekseni Etiketi"
 
 #: src/figure_settings.py:183 src/figure_settings.py:193
-#, fuzzy
 msgid "Y Axis Label"
-msgstr "Üst Eksen Etiketi"
+msgstr "Y Ekseni Etiketi"
 
 #: src/figure_settings.py:186
-#, fuzzy
 msgid "Right Y Axis Minimum"
-msgstr "Sağ Eksen Etiketi"
+msgstr "Sağ Y Ekseni Etiketi"
 
 #: src/figure_settings.py:188
-#, fuzzy
 msgid "Right Y Axis Maximum"
-msgstr "Sağ Eksen Etiketi"
+msgstr "Sağ Y Ekseni Azami"
 
 #: src/figure_settings.py:190 src/ui.py:64
-#, fuzzy
 msgid "Right Y Axis Scale"
-msgstr "Sağ Eksen Ölçeği"
+msgstr "Sağ Y Ekseni Ölçeği"
 
 #: src/figure_settings.py:192
-#, fuzzy
 msgid "Right Y Axis Label"
-msgstr "Sağ Eksen Etiketi"
+msgstr "Sağ Y Ekseni Etiketi"
 
 #: src/figure_settings.py:296
 msgid "Defaults Updated"
