@@ -161,7 +161,8 @@ class Data(GObject.Object, Graphs.DataInterface):
         used_positions = [False, False, False, False]
 
         for item_ in self.items:
-            if (figure_settings.get_hide_unselected() and not item_.selected):
+            if (figure_settings.get_hide_unselected()
+                    and not item_.get_selected()):
                 continue
             used_positions[item_.get_xposition()] = True
             used_positions[item_.get_yposition() + 2] = True
