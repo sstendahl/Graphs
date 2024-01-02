@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: graphs\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-01-01 13:50+0100\n"
-"PO-Revision-Date: 2024-01-01 13:26+0000\n"
+"PO-Revision-Date: 2024-01-02 06:32+0000\n"
 "Last-Translator: Sjoerd Stendahl <sjoerd1993@gmail.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/graphs/graphs/nl/>"
 "\n"
@@ -132,7 +132,7 @@ msgstr "Toevoegen"
 
 #: data/ui/add_equation_window.blp:48 data/ui/transform_window.blp:62
 msgid "Y ="
-msgstr "Y = "
+msgstr "Y ="
 
 #: data/ui/add_equation_window.blp:55
 msgid "Enter a mathematical expression to generate data from"
@@ -376,7 +376,7 @@ msgstr "Markeringen"
 
 #: data/ui/edit_item.blp:77 data/ui/style_editor.blp:109
 msgid "Nothing"
-msgstr "Niets"
+msgstr "Geen"
 
 #: data/ui/edit_item.blp:77 data/ui/style_editor.blp:109
 msgid "Point"
@@ -691,7 +691,7 @@ msgstr "Project opslaan"
 #: data/ui/help_overlay.blp:96
 msgctxt "shortcut window"
 msgid "Save Project As"
-msgstr "Project opslaan"
+msgstr "Project Opslaan Als"
 
 #: data/ui/help_overlay.blp:102
 msgctxt "shortcut window"
@@ -843,7 +843,7 @@ msgstr "Item verwijderen"
 
 #: data/ui/smoothen_settings.blp:7
 msgid "Smoothen settings"
-msgstr "Gegevens gladstrijken"
+msgstr "Instellingen voor Gladstrijken"
 
 #: data/ui/smoothen_settings.blp:37
 msgid "Savitzky–Golay filter"
@@ -1318,7 +1318,7 @@ msgstr "Geadvanceerde Instellingen"
 
 #: src/actions.py:214
 msgid "Deleted {}"
-msgstr "{name} is verwijderd"
+msgstr "{} is verwijderd"
 
 #: src/add_equation.py:64
 #, python-brace-format
@@ -1521,7 +1521,7 @@ msgstr "Kan het bestand niet importeren"
 #: src/styles.py:262
 #, python-brace-format
 msgid "Could not parse {stylename}, loading system preferred style"
-msgstr "Plotstijl {stylename} bestaat niet, systeemstijl wordt geladen"
+msgstr "Kon plotstijl {stylename} niet laden, systeemstijl wordt geladen"
 
 #: src/styles.py:269
 #, python-brace-format
