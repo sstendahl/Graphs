@@ -126,7 +126,7 @@ def open_project_dialog(self):
 
 
 def export_data_dialog(self):
-    if self.get_data().get_empty():
+    if self.get_data().props.empty:
         self.get_window().add_toast_string(_("No data to export"))
         return
     multiple = len(self.get_data()) > 1
