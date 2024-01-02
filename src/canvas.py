@@ -295,12 +295,11 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
             visible_axes[2 + yposition] = True
             used_axes[xposition + 2 * yposition] = True
         axes_directions = (
-            ("left", "bottom"),   # axis
+            ("bottom", "left"),   # axis
             ("top", "left"),      # top_left_axis
             ("bottom", "right"),  # right_axis
-            ("right", "top"),     # top_right_axis
+            ("top", "right"),     # top_right_axis
         )
-        axes_ticks = ("ytick.left", "xtick.top", "xtick.bottom", "ytick.right")
 
         if not any(visible_axes):
             visible_axes = (True, False, True, False)  # Left and bottom
@@ -310,26 +309,26 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
         params = self._style_params
         draw_frame = params["axes.spines.bottom"]
         ticks = "both" if params["xtick.minor.visible"] else "major"
-        possible_directions = ("bottom", "top", "left", "right")
-        for directions, axis, used, axis_ticks \
-                in zip(axes_directions, self.axes, used_axes, axes_ticks):
+        for directions, axis, used \
+                in zip(axes_directions, self.axes, used_axes):
             axis.get_xaxis().set_visible(False)
             axis.get_yaxis().set_visible(False)
             # Set tick where requested, as long as that axis is not occupied
             # and visible
-            if params[axis_ticks]:
+            if (params[f"xtick.{directions[0]}"]
+                    or params[f"ytick.{directions[1]}"]) :
                 axis.tick_params(which=ticks, **{
                     direction: (draw_frame and not visible_axes[i]
                                 or direction in directions)
                     and params[f"{'x' if i < 2 else 'y'}tick.{direction}"]
-                    for i, direction in enumerate(possible_directions)
+                    for i, direction in enumerate(misc.DIRECTIONS)
                 })
             for handle in axis.lines + axis.texts:
                 handle.remove()
             axis_legend = axis.get_legend()
             if axis_legend is not None:
                 axis_legend.remove()
-            for direction in possible_directions:
+            for direction in misc.DIRECTIONS:
                 axis.spines[direction].set_visible(
                     direction in directions and used or draw_frame,
                 )
