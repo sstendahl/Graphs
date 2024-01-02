@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: graphs\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-01-01 13:50+0100\n"
-"PO-Revision-Date: 2024-01-01 13:26+0000\n"
+"PO-Revision-Date: 2024-01-02 06:32+0000\n"
 "Last-Translator: Sjoerd Stendahl <sjoerd1993@gmail.com>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/graphs/graphs/sv/"
 ">\n"
@@ -689,7 +689,7 @@ msgstr "Spara Projekt"
 #: data/ui/help_overlay.blp:96
 msgctxt "shortcut window"
 msgid "Save Project As"
-msgstr "Spara Projekt Som…"
+msgstr "Spara Projekt Som"
 
 #: data/ui/help_overlay.blp:102
 msgctxt "shortcut window"
@@ -1315,7 +1315,7 @@ msgstr "Avancerade Inställningar"
 
 #: src/actions.py:214
 msgid "Deleted {}"
-msgstr "Raderad {name}"
+msgstr "Raderad {}"
 
 #: src/add_equation.py:64
 #, python-brace-format
@@ -1519,7 +1519,7 @@ msgstr "Kan inte importera filen"
 #: src/styles.py:262
 #, python-brace-format
 msgid "Could not parse {stylename}, loading system preferred style"
-msgstr "Plotstil {stylename} finns inte, laddar systemstil istället"
+msgstr "Kunde inte ladda {stylename}, laddar systemstil istället"
 
 #: src/styles.py:269
 #, python-brace-format
