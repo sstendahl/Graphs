@@ -48,7 +48,7 @@ def perform_operation(_action, target, self):
                 window.get_property(operation + "_entry").get_text(),
             )]
         except ValueError as error:
-            window.add_toast_string(error)
+            window.add_toast_string(str(error))
             return
     operations.perform_operation(self, getattr(operations, operation), *args)
 
