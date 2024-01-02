@@ -5,7 +5,7 @@ template $GraphsTransformWindow : Adw.Window {
   modal: true;
   default-width: 450;
   title: _("Transform Data");
-  focus-widget: confirm_button;
+  default-widget: confirm_button;
 
   ShortcutController {
     Shortcut {
@@ -56,10 +56,12 @@ template $GraphsTransformWindow : Adw.Window {
       Adw.PreferencesGroup {
         Adw.EntryRow transform_x_entry {
           title: _("X =");
+          activates-default: true;
         }
 
         Adw.EntryRow transform_y_entry {
           title: _("Y =");
+          activates-default: true;
         }
 
         Adw.SwitchRow discard {
