@@ -103,6 +103,9 @@ def perform_operation(self, callback, *args):
             new_xdata, new_ydata = list(new_xdata), list(new_ydata)
             if discard:
                 logging.debug("Discard is true")
+                self.get_window().add_toast_string(
+                    _("Data that was outside of the highlighted area has been"
+                      " discarded"))
                 item.props.xdata = new_xdata
                 item.props.ydata = new_ydata
             else:
