@@ -6,7 +6,7 @@ from gettext import gettext as _
 
 from gi.repository import Adw, GLib, Gio, Gtk
 
-from graphs import file_import, file_io, misc, utilities
+from graphs import actions, file_import, file_io, misc, utilities
 from graphs.item_box import ItemBox
 
 
@@ -140,10 +140,17 @@ def export_data_dialog(self):
                         f"{item.get_name()}.txt")
                     file_io.save_item(file, item)
             else:
-                file_io.save_item(
-                    dialog.save_finish(response), self.get_data()[0],
-                )
-            self.get_window().add_toast_string(_("Exported Data"))
+                file = dialog.save_finish(response)
+                file_io.save_item(file, self.get_data()[0])
+            action = Gio.SimpleAction.new(
+                "open-file-location", None,
+            )
+            action.connect("activate", actions.open_file_location, file)
+            self.add_action(action)
+            toast = Adw.Toast.new(_("Exported Data"))
+            toast.set_button_label(_("Open Location"))
+            toast.set_action_name("app.open-file-location")
+            self.get_window().add_toast(toast)
     dialog = Gtk.FileDialog()
     if multiple:
         dialog.select_folder(self.get_window(), None, on_response)

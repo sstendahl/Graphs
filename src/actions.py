@@ -2,7 +2,7 @@
 """Main actions."""
 from gettext import gettext as _
 
-from gi.repository import Graphs
+from gi.repository import Adw, Gio, Graphs, Gtk
 
 from graphs import file_io, operations, ui, utilities
 from graphs.add_equation import AddEquationWindow
@@ -211,4 +211,13 @@ def delete_selected_action(_action, _target, self):
     items = [item for item in self.get_data() if item.get_selected()]
     names = ", ".join(item.get_name() for item in items)
     self.get_data().delete_items(items)
-    self.get_window().add_toast_string(_("Deleted {}").format(names))
+    toast = Adw.Toast.new(_("Deleted {name}").format(name=names))
+    toast.set_button_label("Undo")
+    toast.set_action_name("app.undo")
+    self.get_window().add_toast(toast)
+
+
+def open_file_location(_action, _target, file: Gio.File) -> None:
+    """Open and select `file` in the file manager"""
+    file_launcher = Gtk.FileLauncher.new(file)
+    file_launcher.open_containing_folder()

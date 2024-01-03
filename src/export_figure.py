@@ -3,9 +3,9 @@ import contextlib
 from gettext import gettext as _
 from pathlib import Path
 
-from gi.repository import Adw, GLib, GObject, Gtk
+from gi.repository import Adw, GLib, GObject, Gio, Gtk
 
-from graphs import file_io, ui, utilities
+from graphs import actions, file_io, ui, utilities
 
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/export_figure.ui")
@@ -55,8 +55,16 @@ class ExportFigureWindow(Adw.Window):
                         dpi=int(self.dpi.get_value()),
                         transparent=self.transparent.get_active(),
                     )
-                    self.get_application().get_window().add_toast_string(
-                        _("Exported Figure"))
+                    action = Gio.SimpleAction.new(
+                        "open-file-location", None,
+                    )
+                    action.connect("activate",
+                                   actions.open_file_location, file)
+                    self.get_application().add_action(action)
+                    toast = Adw.Toast.new(_("Exported Figure"))
+                    toast.set_button_label(_("Open Location"))
+                    toast.set_action_name("app.open-file-location")
+                    self.get_application().get_window().add_toast(toast)
                     self.destroy()
 
         dialog = Gtk.FileDialog()
