@@ -476,6 +476,7 @@ template $GraphsWindow: Adw.ApplicationWindow {
                       Entry translate_x_entry {
                         max-width-chars: 6;
                         hexpand: true;
+                        text: "10";
                         layout {
                           column: 0;
                           row: 0;
@@ -483,7 +484,6 @@ template $GraphsWindow: Adw.ApplicationWindow {
                       }
                       Button translate_x_button {
                         valign: center;
-                        sensitive: bind shift_button.sensitive;
                         clicked => $perform_operation();
                         width-request: 120;
                         Adw.ButtonContent {
@@ -499,6 +499,7 @@ template $GraphsWindow: Adw.ApplicationWindow {
                       Entry translate_y_entry {
                         max-width-chars: 6;
                         hexpand: true;
+                        text: "10";
                         layout {
                           column: 0;
                           row: 1;
@@ -506,7 +507,6 @@ template $GraphsWindow: Adw.ApplicationWindow {
                       }
                       Button translate_y_button {
                         valign: center;
-                        sensitive: bind shift_button.sensitive;
                         clicked => $perform_operation();
                         width-request: 120;
                         Adw.ButtonContent {
@@ -522,6 +522,7 @@ template $GraphsWindow: Adw.ApplicationWindow {
                       Entry multiply_x_entry {
                         max-width-chars: 6;
                         hexpand: true;
+                        text: "10";
                         layout {
                           column: 0;
                           row: 2;
@@ -529,7 +530,6 @@ template $GraphsWindow: Adw.ApplicationWindow {
                       }
                       Button multiply_x_button {
                         valign: center;
-                        sensitive: bind shift_button.sensitive;
                         clicked => $perform_operation();
                         width-request: 120;
                         Adw.ButtonContent {
@@ -545,6 +545,7 @@ template $GraphsWindow: Adw.ApplicationWindow {
                       Entry multiply_y_entry {
                         max-width-chars: 6;
                         hexpand: true;
+                        text: "10";
                         layout {
                           column: 0;
                           row: 3;
@@ -552,7 +553,6 @@ template $GraphsWindow: Adw.ApplicationWindow {
                       }
                       Button multiply_y_button {
                         valign: center;
-                        sensitive: bind shift_button.sensitive;
                         clicked => $perform_operation();
                         width-request: 120;
                         Adw.ButtonContent {
