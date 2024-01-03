@@ -61,8 +61,8 @@ class ExportFigureWindow(Adw.Window):
                     action.connect("activate",
                                    actions.open_file_location, file)
                     self.get_application().add_action(action)
-                    toast = Adw.Toast.new("Exported Figure")
-                    toast.set_button_label("Open Location")
+                    toast = Adw.Toast.new(_("Exported Figure"))
+                    toast.set_button_label(_("Open Location"))
                     toast.set_action_name("app.open-file-location")
                     self.get_application().get_window().add_toast(toast)
                     self.destroy()

@@ -601,8 +601,8 @@ class Data(GObject.Object, Graphs.DataInterface):
         action.connect("activate",
                        actions.open_file_location, self.props.project_file)
         self.get_application().add_action(action)
-        toast = Adw.Toast.new("Saved Project")
-        toast.set_button_label("Open Location")
+        toast = Adw.Toast.new(_("Saved Project"))
+        toast.set_button_label(_("Open Location"))
         toast.set_action_name("app.open-file-location")
         self.get_application().get_window().add_toast(toast)
 
