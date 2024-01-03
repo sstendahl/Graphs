@@ -23,6 +23,8 @@
           <li>Importing column data is now more robust, supporting expressions as data points</li>
           <li>Pinch and ctrl+scroll to zoom gestures are now supported on the canvas</li>
           <li>The canvas can now be panned using two fingers on a touch screen, as well as with the middle mouse button</li>
+          <li>Toasts now show an "Open Location" button when saving data, bringing you to the saved file location</li>
+          <li>Translate/multiply entries now get a red CSS when input value is invalid, while the corresponding button is disabled</li>
         </ul>
         <p>Changed behaviour:</p>
         <ul>
