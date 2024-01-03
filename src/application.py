@@ -10,7 +10,8 @@ from gettext import gettext as _
 
 from gi.repository import GLib, GObject, Gio, Graphs, Gtk
 
-from graphs import actions, file_import, file_io, migrate, styles, ui
+from graphs import (actions, file_import, file_io, migrate, styles, ui,
+                    utilities)
 from graphs.data import Data
 
 from matplotlib import font_manager
@@ -221,6 +222,14 @@ class PythonApplication(Graphs.Application):
             stack_switcher.set_hexpand("true")
             window.get_stack_switcher_box().prepend(stack_switcher)
             window.set_title(self.props.name)
+            actions = ["multiply_x", "multiply_y", "translate_x",
+                       "translate_y"]
+            entries = [getattr(window, f"get_{action}_entry")()
+                       for action in actions]
+            buttons = [getattr(window, f"get_{action}_button")()
+                       for action in actions]
+            for entry, button in zip(entries, buttons):
+                entry.connect("notify::text", self.set_entry_css, button)
             self.set_window(window)
             controller = Gtk.EventControllerKey.new()
             controller.connect("key-pressed", self.on_key_press_event)
@@ -234,3 +243,16 @@ class PythonApplication(Graphs.Application):
                 "notify::items", ui.enable_axes_actions, self)
             ui.enable_axes_actions(self, None, self)
             window.present()
+
+    def set_entry_css(self, entry, _string, button):
+        try:
+            value = utilities.string_to_float(entry.get_text())
+            if value is None and entry.get_text() != "":
+                entry.add_css_class("error")
+                button.set_sensitive(False)
+                return
+            entry.remove_css_class("error")
+            button.set_sensitive(True)
+        except (ValueError, TypeError):
+            entry.add_css_class("error")
+            button.set_sensitive(False)

@@ -55,6 +55,18 @@ namespace Graphs {
         public unowned Entry multiply_y_entry { get; }
 
         [GtkChild]
+        public unowned Button translate_x_button { get; }
+
+        [GtkChild]
+        public unowned Button translate_y_button { get; }
+
+        [GtkChild]
+        public unowned Button multiply_x_button { get; }
+
+        [GtkChild]
+        public unowned Button multiply_y_button { get; }
+
+        [GtkChild]
         public unowned ListBox item_list { get; }
 
         [GtkChild]
