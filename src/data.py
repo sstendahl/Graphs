@@ -11,9 +11,9 @@ import os
 from gettext import gettext as _
 from urllib.parse import unquote, urlparse
 
-from gi.repository import GObject, Gio, Graphs
+from gi.repository import Adw, GObject, Gio, Graphs
 
-from graphs import file_io, item, migrate, misc, utilities
+from graphs import actions, file_io, item, migrate, misc, utilities
 
 import numpy
 
@@ -595,6 +595,16 @@ class Data(GObject.Object, Graphs.DataInterface):
             "view-history-states": self._view_history_states,
             "view-history-position": self._view_history_pos,
         })
+        action = Gio.SimpleAction.new(
+            "open-file-location", None,
+        )
+        action.connect("activate",
+                       actions.open_file_location, self.props.project_file)
+        self.get_application().add_action(action)
+        toast = Adw.Toast.new("Saved Project")
+        toast.set_button_label("Open Location")
+        toast.set_action_name("app.open-file-location")
+        self.get_application().get_window().add_toast(toast)
 
     def load(self) -> None:
         """Load a project into the data given a file"""
