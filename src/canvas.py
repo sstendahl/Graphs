@@ -316,7 +316,7 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
             # Set tick where requested, as long as that axis is not occupied
             # and visible
             if (params[f"xtick.{directions[0]}"]
-                    or params[f"ytick.{directions[1]}"]) :
+                    or params[f"ytick.{directions[1]}"]):
                 axis.tick_params(which=ticks, **{
                     direction: (draw_frame and not visible_axes[i]
                                 or direction in directions)
@@ -693,11 +693,11 @@ class _DummyToolbar(NavigationToolbar2):
         This is intended to be overridden by new projection types.
         """
         points = self._get_pan_points(button, key, x, y)
-        ylim = points[:, 1]
-        xlim = points[:, 0]
         if points is not None:
             # Max and min needs to be defined at correct position for this to
             # work with inverted scaling
+            ylim = points[:, 1]
+            xlim = points[:, 0]
             self.set_xlim(min(xlim), max(xlim))
             self.set_ylim(min(ylim), max(ylim))
 
