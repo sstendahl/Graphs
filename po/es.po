@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: graphs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-08 14:18+0100\n"
-"PO-Revision-Date: 2023-12-30 20:34+0000\n"
-"Last-Translator: Juan Andres Olmedo <olmedo.juanandres5@gmail.com>\n"
+"POT-Creation-Date: 2024-01-09 13:42+0100\n"
+"PO-Revision-Date: 2024-01-09 12:40+0000\n"
+"Last-Translator: LibreTranslate <noreply-mt-libretranslate@weblate.org>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/graphs/graphs/es/"
 ">\n"
 "Language: es\n"
@@ -839,8 +839,9 @@ msgstr "Eliminar elemento"
 msgid "Smoothen Settings"
 msgstr "Configuración de la figura"
 
-#: data/ui/smoothen_settings.blp:37
-msgid "Savitzky–Golay filter"
+#: data/ui/smoothen_settings.blp:37 data/ui/window.blp:682
+#, fuzzy
+msgid "Savitzky–Golay Filter"
 msgstr "Filtro Savitzky–Golay"
 
 #: data/ui/smoothen_settings.blp:39
@@ -1302,11 +1303,6 @@ msgstr "Al valor máximo Y"
 msgid "At Middle X Value"
 msgstr "Al valor medio X"
 
-#: data/ui/window.blp:682
-#, fuzzy
-msgid "Savitzky–Golay Filter"
-msgstr "Filtro Savitzky–Golay"
-
 #: data/ui/window.blp:694
 #, fuzzy
 msgid "Advanced Settings"
@@ -1623,6 +1619,9 @@ msgstr ""
 #: src/utilities.py:160
 msgid "No valid number specified"
 msgstr ""
+
+#~ msgid "Savitzky–Golay filter"
+#~ msgstr "Filtro Savitzky–Golay"
 
 #~ msgid "Deleted {}"
 #~ msgstr "Eliminado {}"
