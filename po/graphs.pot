@@ -819,7 +819,7 @@ msgid "Smoothen Settings"
 msgstr ""
 
 #: data/ui/smoothen_settings.blp:37
-msgid "Savitzky–Golay filter"
+msgid "Savitzky–Golay Filter"
 msgstr ""
 
 #: data/ui/smoothen_settings.blp:39
