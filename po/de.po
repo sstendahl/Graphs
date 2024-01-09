@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: graphs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-08 14:18+0100\n"
-"PO-Revision-Date: 2024-01-02 06:32+0000\n"
-"Last-Translator: LibreTranslate <noreply-mt-libretranslate@weblate.org>\n"
+"POT-Creation-Date: 2024-01-09 13:42+0100\n"
+"PO-Revision-Date: 2024-01-09 12:40+0000\n"
+"Last-Translator: Ted Zards <tedzards509@gmail.com>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/graphs/graphs/de/"
 ">\n"
 "Language: de\n"
@@ -844,8 +844,8 @@ msgstr "Item löschen"
 msgid "Smoothen Settings"
 msgstr "Glättungseinstellungen"
 
-#: data/ui/smoothen_settings.blp:37
-msgid "Savitzky–Golay filter"
+#: data/ui/smoothen_settings.blp:37 data/ui/window.blp:682
+msgid "Savitzky–Golay Filter"
 msgstr "Savitzky–Golay Filter"
 
 #: data/ui/smoothen_settings.blp:39
@@ -1307,10 +1307,6 @@ msgstr "Am maximalen Y-Wert"
 msgid "At Middle X Value"
 msgstr "Am mittleren X-Wert"
 
-#: data/ui/window.blp:682
-msgid "Savitzky–Golay Filter"
-msgstr "Savitzky–Golay Filter"
-
 #: data/ui/window.blp:694
 msgid "Advanced Settings"
 msgstr "Erweiterte Einstellungen"
@@ -1612,6 +1608,9 @@ msgstr "Keine Möglichkeit „{}“ anzuwenden"
 #: src/utilities.py:160
 msgid "No valid number specified"
 msgstr "Keine gültige Nummer präzisiert"
+
+#~ msgid "Savitzky–Golay filter"
+#~ msgstr "Savitzky–Golay Filter"
 
 #~ msgid "Deleted {}"
 #~ msgstr "{} Gelöscht"

@@ -8,9 +8,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: se.sjoerd.Graphs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-08 14:18+0100\n"
-"PO-Revision-Date: 2024-01-02 06:32+0000\n"
-"Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
+"POT-Creation-Date: 2024-01-09 13:42+0100\n"
+"PO-Revision-Date: 2024-01-09 12:40+0000\n"
+"Last-Translator: Anonymous <noreply@weblate.org>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/graphs/graphs/tr/"
 ">\n"
 "Language: tr\n"
@@ -845,9 +845,9 @@ msgstr "Ögeyi kaldır"
 msgid "Smoothen Settings"
 msgstr "Ayarları yumuşat"
 
-#: data/ui/smoothen_settings.blp:37
-msgid "Savitzky–Golay filter"
-msgstr "Savitzky-Golay filtresi"
+#: data/ui/smoothen_settings.blp:37 data/ui/window.blp:682
+msgid "Savitzky–Golay Filter"
+msgstr "Savitzky-Golay Süzgeci"
 
 #: data/ui/smoothen_settings.blp:39
 msgid "Span percentage"
@@ -1305,10 +1305,6 @@ msgstr "Azami Y Değerinde"
 msgid "At Middle X Value"
 msgstr "Orta X Değerinde"
 
-#: data/ui/window.blp:682
-msgid "Savitzky–Golay Filter"
-msgstr "Savitzky-Golay Süzgeci"
-
 #: data/ui/window.blp:694
 msgid "Advanced Settings"
 msgstr "Gelişmiş Ayarlar"
@@ -1605,6 +1601,9 @@ msgstr "“{}” uygulamanın yolu yok"
 #: src/utilities.py:160
 msgid "No valid number specified"
 msgstr "Geçerli bir sayı belirtilmedi"
+
+#~ msgid "Savitzky–Golay filter"
+#~ msgstr "Savitzky-Golay filtresi"
 
 #~ msgid "Deleted {}"
 #~ msgstr "{} silindi"
