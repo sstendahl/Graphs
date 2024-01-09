@@ -172,7 +172,8 @@ def show_about_window(self):
     Adw.AboutWindow(
         transient_for=self.get_window(), application_name=self.get_name(),
         application_icon=self.get_application_id(), website=self.get_website(),
-        developer_name=self.get_author(), issue_url=self.get_issues(),
+        developer_name=self.get_author() + ", et al.",
+        issue_url=self.get_issues(),
         version=self.get_version(), developers=[
             "Sjoerd Stendahl <contact@sjoerd.se>",
             "Christoph Kohnen <christoph.kohnen@disroot.org>",
