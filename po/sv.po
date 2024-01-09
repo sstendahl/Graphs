@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: graphs\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-01-08 14:18+0100\n"
-"PO-Revision-Date: 2024-01-02 06:32+0000\n"
+"PO-Revision-Date: 2024-01-09 12:37+0000\n"
 "Last-Translator: Sjoerd Stendahl <sjoerd1993@gmail.com>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/graphs/graphs/sv/"
 ">\n"
@@ -840,7 +840,6 @@ msgid "Remove Item"
 msgstr "Ta Bort"
 
 #: data/ui/smoothen_settings.blp:7
-#, fuzzy
 msgid "Smoothen Settings"
 msgstr "Utjämningsinställningar"
 
@@ -1374,9 +1373,8 @@ msgid "Exported Figure"
 msgstr "Figur är exporterad"
 
 #: src/export_figure.py:65 src/ui.py:151
-#, fuzzy
 msgid "Open Location"
-msgstr "Öppna Programmenyn"
+msgstr "Öppna Plats"
 
 #: src/figure_settings.py:110 src/figure_settings.py:136 src/styles.py:82
 msgid "System"
@@ -1488,7 +1486,7 @@ msgstr "Är du säker på att du vill återställa importinställingarna?"
 
 #: src/operations.py:107
 msgid "Data that was outside of the highlighted area has been discarded"
-msgstr ""
+msgstr "Data som var utanför det markerade området har kasserats"
 
 #: src/operations.py:140
 msgid "No data found within the highlighted area"
