@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: graphs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-08 14:18+0100\n"
+"POT-Creation-Date: 2024-01-09 13:42+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -818,7 +818,7 @@ msgstr ""
 msgid "Smoothen Settings"
 msgstr ""
 
-#: data/ui/smoothen_settings.blp:37
+#: data/ui/smoothen_settings.blp:37 data/ui/window.blp:682
 msgid "Savitzky–Golay Filter"
 msgstr ""
 
@@ -1269,10 +1269,6 @@ msgstr ""
 
 #: data/ui/window.blp:673
 msgid "At Middle X Value"
-msgstr ""
-
-#: data/ui/window.blp:682
-msgid "Savitzky–Golay Filter"
 msgstr ""
 
 #: data/ui/window.blp:694
