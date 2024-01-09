@@ -252,7 +252,7 @@ class PythonApplication(Graphs.Application):
     def set_entry_css(self, _object, _param, entry, button):
         try:
             value = utilities.string_to_float(entry.get_text())
-            if value is not None and entry.get_text() != "":
+            if value is not None:
                 entry.remove_css_class("error")
                 button.set_sensitive(self.get_data().props.items_selected)
                 return
