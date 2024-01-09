@@ -178,6 +178,11 @@ def show_about_window(self):
             "Sjoerd Stendahl <contact@sjoerd.se>",
             "Christoph Kohnen <christoph.kohnen@disroot.org>",
         ],
+        designers=[
+            "Sjoerd Stendahl <contact@sjoerd.se>",
+            "Christoph Kohnen <christoph.kohnen@disroot.org>",
+            "Tobias Bernard",
+        ],
         copyright=f"© 2022 – {datetime.date.today().year} {self.get_author()}",
         license_type="GTK_LICENSE_GPL_3_0",
         translator_credits=_("translator-credits"),
