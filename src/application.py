@@ -222,14 +222,19 @@ class PythonApplication(Graphs.Application):
             stack_switcher.set_hexpand("true")
             window.get_stack_switcher_box().prepend(stack_switcher)
             window.set_title(self.props.name)
-            actions = ["multiply_x", "multiply_y", "translate_x",
-                       "translate_y"]
-            entries = [getattr(window, f"get_{action}_entry")()
-                       for action in actions]
-            buttons = [getattr(window, f"get_{action}_button")()
-                       for action in actions]
-            for entry, button in zip(entries, buttons):
-                entry.connect("notify::text", self.set_entry_css, button)
+            actions = ("multiply_x", "multiply_y", "translate_x",
+                       "translate_y")
+            for action in actions:
+                entry = window.get_property(action + "_entry")
+                button = window.get_property(action + "_button")
+                entry.connect(
+                    "notify::text", self.set_entry_css, entry, button,
+                )
+                data.connect(
+                    "notify::items-selected",
+                    self.set_entry_css, entry, button,
+                )
+                self.set_entry_css(None, None, entry, button)
             self.set_window(window)
             controller = Gtk.EventControllerKey.new()
             controller.connect("key-pressed", self.on_key_press_event)
@@ -244,15 +249,14 @@ class PythonApplication(Graphs.Application):
             ui.enable_axes_actions(self, None, self)
             window.present()
 
-    def set_entry_css(self, entry, _string, button):
+    def set_entry_css(self, _object, _param, entry, button):
         try:
             value = utilities.string_to_float(entry.get_text())
-            if value is None and entry.get_text() != "":
-                entry.add_css_class("error")
-                button.set_sensitive(False)
+            if value is not None:
+                entry.remove_css_class("error")
+                button.set_sensitive(self.get_data().props.items_selected)
                 return
-            entry.remove_css_class("error")
-            button.set_sensitive(True)
         except (ValueError, TypeError):
-            entry.add_css_class("error")
-            button.set_sensitive(False)
+            pass
+        entry.add_css_class("error")
+        button.set_sensitive(False)
