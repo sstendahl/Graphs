@@ -181,7 +181,7 @@ def show_about_window(self):
         designers=[
             "Sjoerd Stendahl <contact@sjoerd.se>",
             "Christoph Kohnen <christoph.kohnen@disroot.org>",
-            "Tobias Bernard",
+            "Tobias Bernard <tbernard@gnome.org>",
         ],
         copyright=f"© 2022 – {datetime.date.today().year} {self.get_author()}",
         license_type="GTK_LICENSE_GPL_3_0",
