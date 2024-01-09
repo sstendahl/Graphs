@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: graphs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-01 13:50+0100\n"
+"POT-Creation-Date: 2024-01-08 14:18+0100\n"
 "PO-Revision-Date: 2023-12-30 20:34+0000\n"
 "Last-Translator: Juan Andres Olmedo <olmedo.juanandres5@gmail.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/graphs/graphs/es/"
@@ -119,27 +119,27 @@ msgstr "Cancelar"
 msgid "Add"
 msgstr "Añadir"
 
-#: data/ui/add_equation_window.blp:48 data/ui/transform_window.blp:62
+#: data/ui/add_equation_window.blp:48 data/ui/transform_window.blp:63
 msgid "Y ="
 msgstr "Y ="
 
-#: data/ui/add_equation_window.blp:55
+#: data/ui/add_equation_window.blp:56
 msgid "Enter a mathematical expression to generate data from"
 msgstr "Introduzca una expresión matemática para generar datos"
 
-#: data/ui/add_equation_window.blp:63
+#: data/ui/add_equation_window.blp:64
 msgid "Name (optional)"
 msgstr "Nombre (opcional)"
 
-#: data/ui/add_equation_window.blp:75
+#: data/ui/add_equation_window.blp:77
 msgid "X Start"
 msgstr ""
 
-#: data/ui/add_equation_window.blp:81
+#: data/ui/add_equation_window.blp:84
 msgid "X Stop"
 msgstr ""
 
-#: data/ui/add_equation_window.blp:87
+#: data/ui/add_equation_window.blp:91
 msgid "Step Size"
 msgstr ""
 
@@ -460,7 +460,7 @@ msgstr "Tamaño del marcador"
 msgid "Export Figure"
 msgstr "Exportar figura"
 
-#: data/ui/export_figure.blp:30 src/export_figure.py:64
+#: data/ui/export_figure.blp:30 src/export_figure.py:72
 msgid "Export"
 msgstr "Exportar"
 
@@ -835,8 +835,9 @@ msgid "Remove Item"
 msgstr "Eliminar elemento"
 
 #: data/ui/smoothen_settings.blp:7
-msgid "Smoothen settings"
-msgstr ""
+#, fuzzy
+msgid "Smoothen Settings"
+msgstr "Configuración de la figura"
 
 #: data/ui/smoothen_settings.blp:37
 msgid "Savitzky–Golay filter"
@@ -1091,7 +1092,7 @@ msgstr "Más información"
 msgid "X ="
 msgstr "X ="
 
-#: data/ui/transform_window.blp:66
+#: data/ui/transform_window.blp:68
 msgid "Discard Unselected Data"
 msgstr "Descartar datos no seleccionados"
 
@@ -1311,16 +1312,17 @@ msgstr "Filtro Savitzky–Golay"
 msgid "Advanced Settings"
 msgstr "Configuración avanzada"
 
-#: src/actions.py:214
-msgid "Deleted {}"
-msgstr "Eliminado {}"
+#: src/actions.py:214 src/item_box.py:130
+#, python-brace-format
+msgid "Deleted {name}"
+msgstr "Eliminado {name}"
 
 #: src/add_equation.py:64
 #, python-brace-format
 msgid "{error} - Unable to add data from equation"
 msgstr ""
 
-#: src/application.py:49
+#: src/application.py:50
 #, python-format
 msgid "Could not load %s"
 msgstr "No se ha podido cargar %s"
@@ -1359,9 +1361,14 @@ msgstr ""
 msgid "Fitting Parameters for {param_name}"
 msgstr ""
 
-#: src/export_figure.py:59
+#: src/export_figure.py:64
 msgid "Exported Figure"
 msgstr "Figura exportada"
+
+#: src/export_figure.py:65 src/ui.py:151
+#, fuzzy
+msgid "Open Location"
+msgstr "Abrir menú de la aplicación"
 
 #: src/figure_settings.py:110 src/figure_settings.py:136 src/styles.py:82
 msgid "System"
@@ -1490,16 +1497,15 @@ msgid "Are you sure you want to reset the import settings?"
 msgstr ""
 "¿Está seguro de que quiere restablecer la configuración de importación?"
 
-#: src/item_box.py:130
-#, python-brace-format
-msgid "Deleted {name}"
-msgstr "Eliminado {name}"
+#: src/operations.py:107
+msgid "Data that was outside of the highlighted area has been discarded"
+msgstr ""
 
-#: src/operations.py:137
+#: src/operations.py:140
 msgid "No data found within the highlighted area"
 msgstr ""
 
-#: src/operations.py:339
+#: src/operations.py:342
 msgid "Combined Data"
 msgstr "Datos combinados"
 
@@ -1594,29 +1600,32 @@ msgstr "Archivo de proyecto de Gráficos"
 msgid "No data to export"
 msgstr "No hay datos para exportar"
 
-#: src/ui.py:146
+#: src/ui.py:150
 msgid "Exported Data"
 msgstr "Datos exportados"
 
-#: src/ui.py:154
+#: src/ui.py:161
 msgid "Text Files"
 msgstr ""
 
-#: src/ui.py:175
+#: src/ui.py:182
 msgid "translator-credits"
 msgstr "Óscar Fernández Díaz <oscfdezdz@tuta.io>"
 
-#: src/ui.py:204 src/ui.py:268 src/ui.py:302
+#: src/ui.py:211 src/ui.py:275 src/ui.py:309
 msgid "Unsupported Widget {}"
 msgstr ""
 
-#: src/ui.py:206 src/ui.py:270 src/ui.py:304
+#: src/ui.py:213 src/ui.py:277 src/ui.py:311
 msgid "No way to apply “{}”"
 msgstr ""
 
 #: src/utilities.py:160
 msgid "No valid number specified"
 msgstr ""
+
+#~ msgid "Deleted {}"
+#~ msgstr "Eliminado {}"
 
 #, fuzzy
 #~ msgid "Minimum Bottom Axis"
