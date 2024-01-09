@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: se.sjoerd.Graphs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-01 13:50+0100\n"
+"POT-Creation-Date: 2024-01-08 14:18+0100\n"
 "PO-Revision-Date: 2024-01-02 06:32+0000\n"
 "Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/graphs/graphs/tr/"
@@ -129,27 +129,27 @@ msgstr "İptal"
 msgid "Add"
 msgstr "Ekle"
 
-#: data/ui/add_equation_window.blp:48 data/ui/transform_window.blp:62
+#: data/ui/add_equation_window.blp:48 data/ui/transform_window.blp:63
 msgid "Y ="
 msgstr "Y ="
 
-#: data/ui/add_equation_window.blp:55
+#: data/ui/add_equation_window.blp:56
 msgid "Enter a mathematical expression to generate data from"
 msgstr "Veri oluşturmak için matematiksel bir ifade girin"
 
-#: data/ui/add_equation_window.blp:63
+#: data/ui/add_equation_window.blp:64
 msgid "Name (optional)"
 msgstr "Ad (isteğe bağlı)"
 
-#: data/ui/add_equation_window.blp:75
+#: data/ui/add_equation_window.blp:77
 msgid "X Start"
 msgstr "X Başlangıç"
 
-#: data/ui/add_equation_window.blp:81
+#: data/ui/add_equation_window.blp:84
 msgid "X Stop"
 msgstr "X Bitiş"
 
-#: data/ui/add_equation_window.blp:87
+#: data/ui/add_equation_window.blp:91
 msgid "Step Size"
 msgstr "Adım Sayısı"
 
@@ -469,7 +469,7 @@ msgstr "İmleyici Boyutu"
 msgid "Export Figure"
 msgstr "Şekli Dışa Aktar"
 
-#: data/ui/export_figure.blp:30 src/export_figure.py:64
+#: data/ui/export_figure.blp:30 src/export_figure.py:72
 msgid "Export"
 msgstr "Dışa Aktar"
 
@@ -841,7 +841,8 @@ msgid "Remove Item"
 msgstr "Ögeyi kaldır"
 
 #: data/ui/smoothen_settings.blp:7
-msgid "Smoothen settings"
+#, fuzzy
+msgid "Smoothen Settings"
 msgstr "Ayarları yumuşat"
 
 #: data/ui/smoothen_settings.blp:37
@@ -1096,7 +1097,7 @@ msgstr "Daha fazla bilgi"
 msgid "X ="
 msgstr "X ="
 
-#: data/ui/transform_window.blp:66
+#: data/ui/transform_window.blp:68
 msgid "Discard Unselected Data"
 msgstr "Seçilmemiş Veriyi Gözden Çıkar"
 
@@ -1312,16 +1313,17 @@ msgstr "Savitzky-Golay Süzgeci"
 msgid "Advanced Settings"
 msgstr "Gelişmiş Ayarlar"
 
-#: src/actions.py:214
-msgid "Deleted {}"
-msgstr "{} silindi"
+#: src/actions.py:214 src/item_box.py:130
+#, python-brace-format
+msgid "Deleted {name}"
+msgstr "Silinmiş {name}"
 
 #: src/add_equation.py:64
 #, python-brace-format
 msgid "{error} - Unable to add data from equation"
 msgstr "{error} - Denklemden veri eklenemedi"
 
-#: src/application.py:49
+#: src/application.py:50
 #, python-format
 msgid "Could not load %s"
 msgstr "%s yüklenemedi"
@@ -1364,9 +1366,14 @@ msgstr "R² toplamı: {R2}"
 msgid "Fitting Parameters for {param_name}"
 msgstr "{param_name} için Sığdırma Parametreleri"
 
-#: src/export_figure.py:59
+#: src/export_figure.py:64
 msgid "Exported Figure"
 msgstr "Şekil Dışa Aktarıldı"
+
+#: src/export_figure.py:65 src/ui.py:151
+#, fuzzy
+msgid "Open Location"
+msgstr "Uygulama Menüsünü Aç"
 
 #: src/figure_settings.py:110 src/figure_settings.py:136 src/styles.py:82
 msgid "System"
@@ -1476,16 +1483,15 @@ msgstr "Öntanımlılar Güncellendi"
 msgid "Are you sure you want to reset the import settings?"
 msgstr "İçe aktarma ayarlarını sıfırlamak istediğinize emin misiniz?"
 
-#: src/item_box.py:130
-#, python-brace-format
-msgid "Deleted {name}"
-msgstr "Silinmiş {name}"
+#: src/operations.py:107
+msgid "Data that was outside of the highlighted area has been discarded"
+msgstr ""
 
-#: src/operations.py:137
+#: src/operations.py:140
 msgid "No data found within the highlighted area"
 msgstr "Vurgulanan alanda veri bulunamadı"
 
-#: src/operations.py:339
+#: src/operations.py:342
 msgid "Combined Data"
 msgstr "Birleştirilmiş Veri"
 
@@ -1576,29 +1582,32 @@ msgstr "Graphs Proje Dosyası"
 msgid "No data to export"
 msgstr "Dışa aktarılacak veri yok"
 
-#: src/ui.py:146
+#: src/ui.py:150
 msgid "Exported Data"
 msgstr "Dışa Aktarılan Veriler"
 
-#: src/ui.py:154
+#: src/ui.py:161
 msgid "Text Files"
 msgstr "Metin Dosyaları"
 
-#: src/ui.py:175
+#: src/ui.py:182
 msgid "translator-credits"
 msgstr "Sabri Ünal <libreajans@gmail.com>"
 
-#: src/ui.py:204 src/ui.py:268 src/ui.py:302
+#: src/ui.py:211 src/ui.py:275 src/ui.py:309
 msgid "Unsupported Widget {}"
 msgstr "Desteklenmeyen Parçacık {}"
 
-#: src/ui.py:206 src/ui.py:270 src/ui.py:304
+#: src/ui.py:213 src/ui.py:277 src/ui.py:311
 msgid "No way to apply “{}”"
 msgstr "“{}” uygulamanın yolu yok"
 
 #: src/utilities.py:160
 msgid "No valid number specified"
 msgstr "Geçerli bir sayı belirtilmedi"
+
+#~ msgid "Deleted {}"
+#~ msgstr "{} silindi"
 
 #~ msgid "Minimum Left Axis"
 #~ msgstr "En Düşük Sol Ekseni"

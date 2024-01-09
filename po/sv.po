@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: graphs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-01 13:50+0100\n"
+"POT-Creation-Date: 2024-01-08 14:18+0100\n"
 "PO-Revision-Date: 2024-01-02 06:32+0000\n"
 "Last-Translator: Sjoerd Stendahl <sjoerd1993@gmail.com>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/graphs/graphs/sv/"
@@ -128,27 +128,27 @@ msgstr "Avbryt"
 msgid "Add"
 msgstr "Lägg till"
 
-#: data/ui/add_equation_window.blp:48 data/ui/transform_window.blp:62
+#: data/ui/add_equation_window.blp:48 data/ui/transform_window.blp:63
 msgid "Y ="
 msgstr "Y ="
 
-#: data/ui/add_equation_window.blp:55
+#: data/ui/add_equation_window.blp:56
 msgid "Enter a mathematical expression to generate data from"
 msgstr "Skriv in ett matematiskt uttryck att generera data från"
 
-#: data/ui/add_equation_window.blp:63
+#: data/ui/add_equation_window.blp:64
 msgid "Name (optional)"
 msgstr "Namn (valfritt)"
 
-#: data/ui/add_equation_window.blp:75
+#: data/ui/add_equation_window.blp:77
 msgid "X Start"
 msgstr "X Start"
 
-#: data/ui/add_equation_window.blp:81
+#: data/ui/add_equation_window.blp:84
 msgid "X Stop"
 msgstr "X Stop"
 
-#: data/ui/add_equation_window.blp:87
+#: data/ui/add_equation_window.blp:91
 msgid "Step Size"
 msgstr "Stegstorlek"
 
@@ -468,7 +468,7 @@ msgstr "Markörstorlek"
 msgid "Export Figure"
 msgstr "Exportera figur"
 
-#: data/ui/export_figure.blp:30 src/export_figure.py:64
+#: data/ui/export_figure.blp:30 src/export_figure.py:72
 msgid "Export"
 msgstr "Exportera"
 
@@ -840,7 +840,8 @@ msgid "Remove Item"
 msgstr "Ta Bort"
 
 #: data/ui/smoothen_settings.blp:7
-msgid "Smoothen settings"
+#, fuzzy
+msgid "Smoothen Settings"
 msgstr "Utjämningsinställningar"
 
 #: data/ui/smoothen_settings.blp:37
@@ -1095,7 +1096,7 @@ msgstr "Mer info"
 msgid "X ="
 msgstr "X = "
 
-#: data/ui/transform_window.blp:66
+#: data/ui/transform_window.blp:68
 msgid "Discard Unselected Data"
 msgstr "Radera Omarkerade Data"
 
@@ -1313,9 +1314,10 @@ msgstr "Savitzky–Golay Filter"
 msgid "Advanced Settings"
 msgstr "Avancerade Inställningar"
 
-#: src/actions.py:214
-msgid "Deleted {}"
-msgstr "Raderad {}"
+#: src/actions.py:214 src/item_box.py:130
+#, python-brace-format
+msgid "Deleted {name}"
+msgstr "Raderad {name}"
 
 #: src/add_equation.py:64
 #, python-brace-format
@@ -1324,7 +1326,7 @@ msgstr ""
 "{error}: Det går inte att utföra förskjutning, se till att ange ett giltigt "
 "nummer"
 
-#: src/application.py:49
+#: src/application.py:50
 #, python-format
 msgid "Could not load %s"
 msgstr "Kunda inte ladda %s"
@@ -1367,9 +1369,14 @@ msgstr "Summa av R²: {R2}"
 msgid "Fitting Parameters for {param_name}"
 msgstr "Anpassningsparametrar för {param_name}:"
 
-#: src/export_figure.py:59
+#: src/export_figure.py:64
 msgid "Exported Figure"
 msgstr "Figur är exporterad"
+
+#: src/export_figure.py:65 src/ui.py:151
+#, fuzzy
+msgid "Open Location"
+msgstr "Öppna Programmenyn"
 
 #: src/figure_settings.py:110 src/figure_settings.py:136 src/styles.py:82
 msgid "System"
@@ -1479,16 +1486,15 @@ msgstr "Standardinställningar har uppdaterats"
 msgid "Are you sure you want to reset the import settings?"
 msgstr "Är du säker på att du vill återställa importinställingarna?"
 
-#: src/item_box.py:130
-#, python-brace-format
-msgid "Deleted {name}"
-msgstr "Raderad {name}"
+#: src/operations.py:107
+msgid "Data that was outside of the highlighted area has been discarded"
+msgstr ""
 
-#: src/operations.py:137
+#: src/operations.py:140
 msgid "No data found within the highlighted area"
 msgstr "Ingen data hittades inom det markerade området"
 
-#: src/operations.py:339
+#: src/operations.py:342
 msgid "Combined Data"
 msgstr "Kombinerad data"
 
@@ -1580,29 +1586,32 @@ msgstr "Graphs projektfil"
 msgid "No data to export"
 msgstr "Inga data att exportera"
 
-#: src/ui.py:146
+#: src/ui.py:150
 msgid "Exported Data"
 msgstr "Data har exporterats"
 
-#: src/ui.py:154
+#: src/ui.py:161
 msgid "Text Files"
 msgstr "Tekstfiler"
 
-#: src/ui.py:175
+#: src/ui.py:182
 msgid "translator-credits"
 msgstr "Sjoerd Stendahl <contact@sjoerd.se>"
 
-#: src/ui.py:204 src/ui.py:268 src/ui.py:302
+#: src/ui.py:211 src/ui.py:275 src/ui.py:309
 msgid "Unsupported Widget {}"
 msgstr "Widget {} stöds inte"
 
-#: src/ui.py:206 src/ui.py:270 src/ui.py:304
+#: src/ui.py:213 src/ui.py:277 src/ui.py:311
 msgid "No way to apply “{}”"
 msgstr "Kan inte applicera “{}”"
 
 #: src/utilities.py:160
 msgid "No valid number specified"
 msgstr "Inget giltigt nummer angivet"
+
+#~ msgid "Deleted {}"
+#~ msgstr "Raderad {}"
 
 #~ msgid "Minimum Left Axis"
 #~ msgstr "Vänsteraxel Minimum"

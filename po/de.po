@@ -7,11 +7,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: graphs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-01 13:50+0100\n"
+"POT-Creation-Date: 2024-01-08 14:18+0100\n"
 "PO-Revision-Date: 2024-01-02 06:32+0000\n"
 "Last-Translator: LibreTranslate <noreply-mt-libretranslate@weblate.org>\n"
-"Language-Team: German <https://hosted.weblate.org/projects/graphs/graphs/de/>"
-"\n"
+"Language-Team: German <https://hosted.weblate.org/projects/graphs/graphs/de/"
+">\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -128,27 +128,27 @@ msgstr "Abbrechen"
 msgid "Add"
 msgstr "Hinzufügen"
 
-#: data/ui/add_equation_window.blp:48 data/ui/transform_window.blp:62
+#: data/ui/add_equation_window.blp:48 data/ui/transform_window.blp:63
 msgid "Y ="
 msgstr "Y ="
 
-#: data/ui/add_equation_window.blp:55
+#: data/ui/add_equation_window.blp:56
 msgid "Enter a mathematical expression to generate data from"
 msgstr "Gebe eine Gleichung ein um Daten zu generieren"
 
-#: data/ui/add_equation_window.blp:63
+#: data/ui/add_equation_window.blp:64
 msgid "Name (optional)"
 msgstr "Name (optional)"
 
-#: data/ui/add_equation_window.blp:75
+#: data/ui/add_equation_window.blp:77
 msgid "X Start"
 msgstr "X Start"
 
-#: data/ui/add_equation_window.blp:81
+#: data/ui/add_equation_window.blp:84
 msgid "X Stop"
 msgstr "X Stopp"
 
-#: data/ui/add_equation_window.blp:87
+#: data/ui/add_equation_window.blp:91
 msgid "Step Size"
 msgstr "Stufen Größe"
 
@@ -468,7 +468,7 @@ msgstr "Markierungsgrösse"
 msgid "Export Figure"
 msgstr "Abbildung exportieren"
 
-#: data/ui/export_figure.blp:30 src/export_figure.py:64
+#: data/ui/export_figure.blp:30 src/export_figure.py:72
 msgid "Export"
 msgstr "Exportieren"
 
@@ -840,7 +840,8 @@ msgid "Remove Item"
 msgstr "Item löschen"
 
 #: data/ui/smoothen_settings.blp:7
-msgid "Smoothen settings"
+#, fuzzy
+msgid "Smoothen Settings"
 msgstr "Glättungseinstellungen"
 
 #: data/ui/smoothen_settings.blp:37
@@ -1098,7 +1099,7 @@ msgstr "Mehr Info"
 msgid "X ="
 msgstr "X ="
 
-#: data/ui/transform_window.blp:66
+#: data/ui/transform_window.blp:68
 msgid "Discard Unselected Data"
 msgstr "Nicht ausgewählte Daten verwerfen"
 
@@ -1314,16 +1315,17 @@ msgstr "Savitzky–Golay Filter"
 msgid "Advanced Settings"
 msgstr "Erweiterte Einstellungen"
 
-#: src/actions.py:214
-msgid "Deleted {}"
-msgstr "{} Gelöscht"
+#: src/actions.py:214 src/item_box.py:130
+#, python-brace-format
+msgid "Deleted {name}"
+msgstr "{name} gelöscht"
 
 #: src/add_equation.py:64
 #, python-brace-format
 msgid "{error} - Unable to add data from equation"
 msgstr "{error} - Konnte Daten nicht aus Gleichung hinzufügen"
 
-#: src/application.py:49
+#: src/application.py:50
 #, python-format
 msgid "Could not load %s"
 msgstr "Konnte %s nicht laden"
@@ -1366,9 +1368,14 @@ msgstr "Betrag von R²: {R2}"
 msgid "Fitting Parameters for {param_name}"
 msgstr "Schätzparameter für {param_name}"
 
-#: src/export_figure.py:59
+#: src/export_figure.py:64
 msgid "Exported Figure"
 msgstr "Graph exportiert"
+
+#: src/export_figure.py:65 src/ui.py:151
+#, fuzzy
+msgid "Open Location"
+msgstr "Öffne Anwendungsmenü"
 
 #: src/figure_settings.py:110 src/figure_settings.py:136 src/styles.py:82
 msgid "System"
@@ -1479,16 +1486,15 @@ msgid "Are you sure you want to reset the import settings?"
 msgstr ""
 "Bist du sicher, dass du die Import-Einstellungen zurücksetzen möchtest?"
 
-#: src/item_box.py:130
-#, python-brace-format
-msgid "Deleted {name}"
-msgstr "{name} gelöscht"
+#: src/operations.py:107
+msgid "Data that was outside of the highlighted area has been discarded"
+msgstr ""
 
-#: src/operations.py:137
+#: src/operations.py:140
 msgid "No data found within the highlighted area"
 msgstr "Keine Daten innerhalb des markierten Bereichs gefunden"
 
-#: src/operations.py:339
+#: src/operations.py:342
 msgid "Combined Data"
 msgstr "Zusammengefügte Daten"
 
@@ -1583,29 +1589,32 @@ msgstr "Graphs Projekt-Datei"
 msgid "No data to export"
 msgstr "Keine Daten zu exportieren"
 
-#: src/ui.py:146
+#: src/ui.py:150
 msgid "Exported Data"
 msgstr "Exportierte Daten"
 
-#: src/ui.py:154
+#: src/ui.py:161
 msgid "Text Files"
 msgstr "Text Dateien"
 
-#: src/ui.py:175
+#: src/ui.py:182
 msgid "translator-credits"
 msgstr "translator-credits"
 
-#: src/ui.py:204 src/ui.py:268 src/ui.py:302
+#: src/ui.py:211 src/ui.py:275 src/ui.py:309
 msgid "Unsupported Widget {}"
 msgstr "Nicht unterstütztes Widget {}"
 
-#: src/ui.py:206 src/ui.py:270 src/ui.py:304
+#: src/ui.py:213 src/ui.py:277 src/ui.py:311
 msgid "No way to apply “{}”"
 msgstr "Keine Möglichkeit „{}“ anzuwenden"
 
 #: src/utilities.py:160
 msgid "No valid number specified"
 msgstr "Keine gültige Nummer präzisiert"
+
+#~ msgid "Deleted {}"
+#~ msgstr "{} Gelöscht"
 
 #~ msgid "Maximum Left Axis"
 #~ msgstr "Maximum linke Y-Achse"
