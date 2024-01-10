@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: graphs\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-01-09 13:42+0100\n"
-"PO-Revision-Date: 2024-01-09 12:40+0000\n"
+"PO-Revision-Date: 2024-01-10 16:04+0000\n"
 "Last-Translator: LibreTranslate <noreply-mt-libretranslate@weblate.org>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/graphs/graphs/es/"
 ">\n"
@@ -41,6 +41,13 @@ msgid ""
 "multiply, center and smoothen data, as well as apply any custom "
 "transformations on the data."
 msgstr ""
+"Graphs es una herramienta sencilla pero potente que le permite trazar y "
+"manipular sus datos con facilidad. Los datos nuevos pueden importarse desde "
+"una amplia variedad de tipos de archivo, o generarse por ecuación. Todos los "
+"datos pueden manipularse usando una variedad de operaciones como la "
+"capacidad de seleccionar, cortar, trasladar, multiplicar, centrar y suavizar "
+"datos, así como aplicar cualquier transformación personalizada sobre los "
+"datos."
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:14
 msgid ""
@@ -48,6 +55,9 @@ msgid ""
 "extensive customization options for the style of the plots. You can fine-"
 "tune and personalize stylesheets to your liking."
 msgstr ""
+"Además, Graphs soporta el ajuste de curvas en los datos importados y ofrece "
+"amplias opciones de personalización para el estilo de las gráficas. Puede "
+"ajustar y personalizar las hojas de estilo a su gusto."
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:17
 msgid ""
@@ -59,50 +69,51 @@ msgid ""
 "refinement. Graphs is written with the GNOME environment in mind, but should "
 "be suitable for any other desktop environment as well."
 msgstr ""
-"Graphs es perfecto tanto para graficar como para manipular datos. Los "
-"gráficos creados por Graphs pueden ser guardado en diferentes formatos para "
-"ser presentados a una audiencia amplia, como en una publicación científica o "
-"en una presentación. Además, la opción de guardar las gráficas como imágenes "
-"vectoriales permite ser editadas fácilmente en programas como Inkscape. "
-"Graphs está hecho con la comunidad de GNOME en mente, pero debería ser "
-"adecuado para cualquier otro entorno."
+"Graphs es una herramienta excelente tanto para el trazado como para la "
+"manipulación de datos. Las gráficas creadas con Graphs pueden guardarse en "
+"diversos formatos adecuados para compartirlas y presentarlas a un público "
+"amplio, como en una publicación científica o en presentaciones. Además, la "
+"opción de guardar los gráficos como imágenes vectoriales permite editarlos "
+"fácilmente en programas como Inkscape para perfeccionarlos. Graphs se ha "
+"escrito pensando en el entorno GNOME, pero también debería ser adecuado para "
+"cualquier otro entorno de escritorio."
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:21
 msgid ""
 "For any feedback, questions or general issues, please file an issue on the "
 "GitHub page."
 msgstr ""
-"Por comentarios, preguntas o problemas en general, por favor registrar un "
-"problema en la página de GitHub."
+"Para cualquier comentario, pregunta o problema general, por favor cree una "
+"incidencia en la página de GitHub."
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:33
 msgid "1 - Plot and manipulate any data of choice"
-msgstr "1 - Trazar y manipular los datos de elección"
+msgstr "1 - Trazar y manipular los datos deseados"
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:37
 msgid "2 - Full support for light and dark mode"
-msgstr "2 - Soporte completo para modo claro y oscuro"
+msgstr "2 - Soporte completo para los modos claro y oscuro"
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:41
 msgid "3 - Generate data from an equation"
-msgstr "3 - Generar datos de una ecuación"
+msgstr "3 - Generar datos a partir de una ecuación"
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:45
 msgid "4 - Edit plot stylesheets"
-msgstr "4 - Editar hojas de ruta gráfica"
+msgstr "4 - Editar hojas de estilo de la gráfica"
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:49
 msgid "5 - Manipulate imported data with ease"
-msgstr "5 - Manipular datos importados con facilidad"
+msgstr "5 - Manipular los datos importados con facilidad"
 
 #: data/se.sjoerd.Graphs.desktop.in.in:10
 msgid ""
 "Plotting;Graph;Graphing;Science;Mathematics;Math;Equations;Data;Plot;"
 "Visualisation;Visualization;Fitting;xrdml;"
 msgstr ""
-"Plotting;Graph;Graphing;Science;Mathematics;Math;Equations;Data;Plot;"
-"Visualisation;Visualization;Fitting;xrdml;Trazado;Gráfico;Gráficos;Ciencia;"
-"Matemáticas;Mates;Ecuaciones;Datos;Gráfica;Visualización;"
+"Plotting;Graph;Graphing;Science;Mathematics;Math;Equations;Data;Plot;Visualis"
+"ation;Visualization;Fitting;xrdml;Trazado;Gráfico;Gráfica;Ciencia;Matemáticas"
+";Mates;Ecuaciones;Datos;Visualización;"
 
 #: data/ui/add_equation_window.blp:7
 msgid "Add Equation"
@@ -133,15 +144,15 @@ msgstr "Nombre (opcional)"
 
 #: data/ui/add_equation_window.blp:77
 msgid "X Start"
-msgstr ""
+msgstr "Inicio X"
 
 #: data/ui/add_equation_window.blp:84
 msgid "X Stop"
-msgstr ""
+msgstr "Final X"
 
 #: data/ui/add_equation_window.blp:91
 msgid "Step Size"
-msgstr ""
+msgstr "Tamaño del paso"
 
 #: data/ui/add_style.blp:7 data/ui/figure_settings.blp:203
 msgid "Add new style"
@@ -149,7 +160,7 @@ msgstr "Añadir estilo nuevo"
 
 #: data/ui/add_style.blp:41
 msgid "Template"
-msgstr ""
+msgstr "Plantilla"
 
 #: data/ui/add_style.blp:46 data/ui/edit_item.blp:28
 msgid "Name"
@@ -160,9 +171,8 @@ msgid "Curve Fitting"
 msgstr "Ajuste de curvas"
 
 #: data/ui/curve_fitting.blp:41
-#, fuzzy
 msgid "Open Curve Fitting Menu"
-msgstr "Ajuste de curvas"
+msgstr "Abrir el menú de ajuste de curvas"
 
 #: data/ui/curve_fitting.blp:58
 msgid "Equation"
@@ -176,15 +186,15 @@ msgstr "Lineal"
 
 #: data/ui/curve_fitting.blp:60
 msgid "Quadratic"
-msgstr ""
+msgstr "Cuadrática"
 
 #: data/ui/curve_fitting.blp:60
 msgid "Exponential"
-msgstr ""
+msgstr "Exponencial"
 
 #: data/ui/curve_fitting.blp:60
 msgid "Power Law"
-msgstr ""
+msgstr "Ley potencial"
 
 #: data/ui/curve_fitting.blp:61 data/ui/figure_settings.blp:121
 #: data/ui/figure_settings.blp:127 data/ui/figure_settings.blp:133
@@ -194,19 +204,19 @@ msgstr "Logarítmica"
 
 #: data/ui/curve_fitting.blp:61
 msgid "Sigmoid Logistic"
-msgstr ""
+msgstr "Logística sigmoidal"
 
 #: data/ui/curve_fitting.blp:61
 msgid "Gaussian"
-msgstr ""
+msgstr "Gaussiana"
 
 #: data/ui/curve_fitting.blp:61 data/ui/import.blp:60
 msgid "Custom"
-msgstr "Personalizar"
+msgstr "Personalizada"
 
 #: data/ui/curve_fitting.blp:66
 msgid "Y = "
-msgstr ""
+msgstr "Y = "
 
 #: data/ui/curve_fitting.blp:93
 msgid "Add Fit to Data"
@@ -214,31 +224,31 @@ msgstr "Añadir ajuste a los datos"
 
 #: data/ui/curve_fitting.blp:108 data/ui/window.blp:586 src/ui.py:33
 msgid "Toggle Sidebar"
-msgstr ""
+msgstr "Conmutar barra lateral"
 
 #: data/ui/curve_fitting.blp:120 data/ui/window.blp:626
 msgid "Canvas Failed to Load"
-msgstr ""
+msgstr "Error al cargar el lienzo"
 
 #: data/ui/curve_fitting.blp:130
 msgid "Optimization Method"
-msgstr ""
+msgstr "Método de optimización"
 
 #: data/ui/curve_fitting.blp:132
 msgid "Levenberg-Marquardt"
-msgstr ""
+msgstr "Levenberg-Marquardt"
 
 #: data/ui/curve_fitting.blp:137
 msgid "Trust Region Reflective"
-msgstr ""
+msgstr "Región de confianza reflectiva"
 
 #: data/ui/curve_fitting.blp:142
 msgid "Dogbox"
-msgstr ""
+msgstr "Dogbox"
 
 #: data/ui/curve_fitting.blp:148
 msgid "Confidence Bounds"
-msgstr ""
+msgstr "Límites de confianza"
 
 #: data/ui/curve_fitting.blp:150 data/ui/edit_item.blp:54
 #: data/ui/style_editor.blp:85
@@ -248,17 +258,17 @@ msgstr "Ninguno"
 #: data/ui/curve_fitting.blp:155
 #, c-format
 msgid "1σ: 68% Confidence"
-msgstr ""
+msgstr "1σ: 68% de confianza"
 
 #: data/ui/curve_fitting.blp:160
 #, c-format
 msgid "2σ: 95% Confidence"
-msgstr ""
+msgstr "2σ: 95% de confianza"
 
 #: data/ui/curve_fitting.blp:165
 #, c-format
 msgid "3σ: 99.7% Confidence"
-msgstr ""
+msgstr "3σ: 99,7% de confianza"
 
 #: data/ui/dialogs.blp:5
 msgid "Save changes?"
@@ -302,7 +312,7 @@ msgstr "Elemento seleccionado"
 
 #: data/ui/edit_item.blp:19
 msgid "Choose which item to edit"
-msgstr "Elija el elemento que desea editar"
+msgstr "Elija el elemento que desee editar"
 
 #: data/ui/edit_item.blp:25
 msgid "Data"
@@ -310,7 +320,7 @@ msgstr "Datos"
 
 #: data/ui/edit_item.blp:33
 msgid "X-Axis Position"
-msgstr ""
+msgstr "Posición del eje X"
 
 #: data/ui/edit_item.blp:35
 msgid "Bottom"
@@ -318,11 +328,11 @@ msgstr "Inferior"
 
 #: data/ui/edit_item.blp:35
 msgid "Top"
-msgstr ""
+msgstr "Superior"
 
 #: data/ui/edit_item.blp:40
 msgid "Y-Axis Position"
-msgstr ""
+msgstr "Posición del eje Y"
 
 #: data/ui/edit_item.blp:42
 msgid "Left"
@@ -342,19 +352,19 @@ msgstr "Estilo de la línea"
 
 #: data/ui/edit_item.blp:54 data/ui/style_editor.blp:85
 msgid "Solid"
-msgstr ""
+msgstr "Sólida"
 
 #: data/ui/edit_item.blp:54 data/ui/style_editor.blp:85
 msgid "Dotted"
-msgstr ""
+msgstr "Puntos"
 
 #: data/ui/edit_item.blp:54 data/ui/style_editor.blp:85
 msgid "Dashed"
-msgstr ""
+msgstr "Guiones"
 
 #: data/ui/edit_item.blp:54 data/ui/style_editor.blp:85
 msgid "Dashdot"
-msgstr ""
+msgstr "Punto y guión"
 
 #: data/ui/edit_item.blp:60 data/ui/style_editor.blp:91
 msgid "Linewidth"
@@ -382,19 +392,19 @@ msgstr "Círculo"
 
 #: data/ui/edit_item.blp:78 data/ui/style_editor.blp:110
 msgid "Triangle down"
-msgstr ""
+msgstr "Triángulo abajo"
 
 #: data/ui/edit_item.blp:78 data/ui/style_editor.blp:110
 msgid "Triangle up"
-msgstr ""
+msgstr "Triángulo arriba"
 
 #: data/ui/edit_item.blp:78 data/ui/style_editor.blp:110
 msgid "Triangle left"
-msgstr ""
+msgstr "Triángulo izquierdo"
 
 #: data/ui/edit_item.blp:79 data/ui/style_editor.blp:111
 msgid "Triangle right"
-msgstr ""
+msgstr "Triángulo derecho"
 
 #: data/ui/edit_item.blp:79 data/ui/style_editor.blp:111
 msgid "Octagon"
@@ -402,7 +412,7 @@ msgstr "Octógono"
 
 #: data/ui/edit_item.blp:79 data/ui/style_editor.blp:111
 msgid "Square"
-msgstr ""
+msgstr "Cuadrado"
 
 #: data/ui/edit_item.blp:80 data/ui/style_editor.blp:112
 msgid "Pentagon"
@@ -410,7 +420,7 @@ msgstr "Pentágono"
 
 #: data/ui/edit_item.blp:80 data/ui/style_editor.blp:112
 msgid "Star"
-msgstr ""
+msgstr "Estrella"
 
 #: data/ui/edit_item.blp:80 data/ui/style_editor.blp:112
 msgid "Hexagon 1"
@@ -422,7 +432,7 @@ msgstr "Hexágono 2"
 
 #: data/ui/edit_item.blp:81 data/ui/style_editor.blp:113
 msgid "Plus"
-msgstr ""
+msgstr "Más"
 
 #: data/ui/edit_item.blp:81 data/ui/style_editor.blp:113
 msgid "x"
@@ -434,7 +444,7 @@ msgstr "Diamante"
 
 #: data/ui/edit_item.blp:82 data/ui/style_editor.blp:114
 msgid "Thin diamond"
-msgstr ""
+msgstr "Diamante fino"
 
 #: data/ui/edit_item.blp:82 data/ui/style_editor.blp:114
 msgid "Vertical line"
@@ -446,11 +456,11 @@ msgstr "Línea horizontal"
 
 #: data/ui/edit_item.blp:83 data/ui/style_editor.blp:115
 msgid "Filled plus"
-msgstr ""
+msgstr "Más relleno"
 
 #: data/ui/edit_item.blp:83 data/ui/style_editor.blp:115
 msgid "Filled x"
-msgstr ""
+msgstr "x relleno"
 
 #: data/ui/edit_item.blp:90 data/ui/style_editor.blp:122
 msgid "Marker Size"
@@ -466,15 +476,15 @@ msgstr "Exportar"
 
 #: data/ui/export_figure.blp:44
 msgid "File Format"
-msgstr "Formato de archivo"
+msgstr "Formato del archivo"
 
 #: data/ui/export_figure.blp:47
 msgid "Resolution (dpi)"
-msgstr "Resolución (dpi)"
+msgstr "Resolución (ppp)"
 
 #: data/ui/export_figure.blp:54
 msgid "Transparent Background"
-msgstr ""
+msgstr "Fondo transparente"
 
 #: data/ui/figure_settings.blp:21 data/ui/window.blp:648
 msgid "Figure Settings"
@@ -486,7 +496,7 @@ msgstr "Etiquetas"
 
 #: data/ui/figure_settings.blp:40
 msgid "Title"
-msgstr ""
+msgstr "Título"
 
 #: data/ui/figure_settings.blp:57
 msgid "Axis Limits"
@@ -504,7 +514,7 @@ msgstr "Radianes"
 #: data/ui/figure_settings.blp:121 data/ui/figure_settings.blp:127
 #: data/ui/figure_settings.blp:133 data/ui/figure_settings.blp:139
 msgid "Square Root"
-msgstr ""
+msgstr "Raíz cuadrada"
 
 #: data/ui/figure_settings.blp:121 data/ui/figure_settings.blp:127
 #: data/ui/figure_settings.blp:133 data/ui/figure_settings.blp:139
@@ -525,23 +535,23 @@ msgstr "Posición de la leyenda"
 
 #: data/ui/figure_settings.blp:153
 msgid "Auto"
-msgstr ""
+msgstr "Auto"
 
 #: data/ui/figure_settings.blp:153
 msgid "Upper right"
-msgstr ""
+msgstr "Superior derecha"
 
 #: data/ui/figure_settings.blp:153
 msgid "Upper left"
-msgstr ""
+msgstr "Superior izquierda"
 
 #: data/ui/figure_settings.blp:153
 msgid "Lower left"
-msgstr "Izquierda inferior"
+msgstr "Inferior izquierda"
 
 #: data/ui/figure_settings.blp:154
 msgid "Lower right"
-msgstr "Derecha inferior"
+msgstr "Inferior derecha"
 
 #: data/ui/figure_settings.blp:154
 msgid "Center left"
@@ -557,7 +567,7 @@ msgstr "Centro inferior"
 
 #: data/ui/figure_settings.blp:155
 msgid "Upper center"
-msgstr ""
+msgstr "Centro superior"
 
 #: data/ui/figure_settings.blp:155 data/ui/window.blp:338
 msgid "Center"
@@ -569,11 +579,11 @@ msgstr "Ocultar elementos no seleccionados"
 
 #: data/ui/figure_settings.blp:166 data/ui/figure_settings.blp:196
 msgid "Style"
-msgstr ""
+msgstr "Estilo"
 
 #: data/ui/fitting_parameters.blp:26
 msgid "Initial Guess"
-msgstr ""
+msgstr "Suposición inicial"
 
 #: data/ui/fitting_parameters.blp:37
 msgid "Minimum"
@@ -599,31 +609,29 @@ msgid "Open Figure Settings"
 msgstr "Abrir configuración de la figura"
 
 #: data/ui/help_overlay.blp:24
-#, fuzzy
 msgctxt "shortcut window"
 msgid "Close Application"
-msgstr "Abrir menú de la aplicación"
+msgstr "Cerrar aplicación"
 
 #: data/ui/help_overlay.blp:28
-#, fuzzy
 msgctxt "shortcut window"
 msgid "Close Application Window"
-msgstr "Abrir menú de la aplicación"
+msgstr "Cerrar ventana de la aplicación"
 
 #: data/ui/help_overlay.blp:34
 msgctxt "shortcut window"
 msgid "Mode Switching"
-msgstr ""
+msgstr "Cambio de modo"
 
 #: data/ui/help_overlay.blp:37
 msgctxt "shortcut window"
 msgid "Pan Mode"
-msgstr ""
+msgstr "Modo panorámico"
 
 #: data/ui/help_overlay.blp:42
 msgctxt "shortcut window"
 msgid "Zoom Mode"
-msgstr ""
+msgstr "Modo de zum"
 
 #: data/ui/help_overlay.blp:47
 msgctxt "shortcut window"
@@ -708,7 +716,7 @@ msgstr "Optimizar límites"
 #: data/ui/help_overlay.blp:120
 msgctxt "shortcut window"
 msgid "Zoom in"
-msgstr ""
+msgstr "Ampliar"
 
 #: data/ui/help_overlay.blp:125
 msgctxt "shortcut window"
@@ -718,12 +726,12 @@ msgstr "Reducir"
 #: data/ui/help_overlay.blp:130 data/ui/help_overlay.blp:150
 msgctxt "shortcut window"
 msgid "Select None"
-msgstr ""
+msgstr "Seleccionar ninguna"
 
 #: data/ui/help_overlay.blp:136
 msgctxt "shortcut window"
 msgid "Toggle Sidebar"
-msgstr ""
+msgstr "Conmutar barra lateral"
 
 #: data/ui/help_overlay.blp:142
 msgctxt "shortcut window"
@@ -759,7 +767,7 @@ msgstr "Delimitador"
 
 #: data/ui/import.blp:56
 msgid "Character sequence used to split values"
-msgstr ""
+msgstr "Secuencia de caracteres usada para dividir valores"
 
 #: data/ui/import.blp:59
 msgid "Whitespace"
@@ -767,7 +775,7 @@ msgstr "Espacio en blanco"
 
 #: data/ui/import.blp:59
 msgid "Tab"
-msgstr ""
+msgstr "Tabulador"
 
 #: data/ui/import.blp:59
 msgid "Colon (:)"
@@ -799,7 +807,7 @@ msgstr "Columna X"
 
 #: data/ui/import.blp:78
 msgid "X-data column index"
-msgstr ""
+msgstr "Índice de columna de datos X"
 
 #: data/ui/import.blp:87
 msgid "Column Y"
@@ -807,11 +815,11 @@ msgstr "Columna Y"
 
 #: data/ui/import.blp:89
 msgid "Y-data column index"
-msgstr ""
+msgstr "Índice de columna de datos Y"
 
 #: data/ui/import.blp:98
 msgid "Skip Rows"
-msgstr ""
+msgstr "Omitir filas"
 
 #: data/ui/import.blp:99
 msgid "Ignored row indices"
@@ -822,7 +830,6 @@ msgid "Pick Color"
 msgstr "Elija color"
 
 #: data/ui/item_box.blp:51
-#, fuzzy
 msgid "Move Item "
 msgstr "Mover elemento "
 
@@ -835,18 +842,16 @@ msgid "Remove Item"
 msgstr "Eliminar elemento"
 
 #: data/ui/smoothen_settings.blp:7
-#, fuzzy
 msgid "Smoothen Settings"
-msgstr "Configuración de la figura"
+msgstr "Ajustes de suavizado"
 
 #: data/ui/smoothen_settings.blp:37 data/ui/window.blp:682
-#, fuzzy
 msgid "Savitzky–Golay Filter"
 msgstr "Filtro Savitzky–Golay"
 
 #: data/ui/smoothen_settings.blp:39
 msgid "Span percentage"
-msgstr ""
+msgstr "Porcentaje de extensión"
 
 #: data/ui/smoothen_settings.blp:40
 msgid "What percentage of the data span to use for the filter window"
@@ -858,11 +863,11 @@ msgstr "Grado del polinomio"
 
 #: data/ui/smoothen_settings.blp:55 data/ui/window.blp:687
 msgid "Moving Average"
-msgstr ""
+msgstr "Media móvil"
 
 #: data/ui/smoothen_settings.blp:57
 msgid "Box points"
-msgstr ""
+msgstr "Puntos de la caja"
 
 #: data/ui/smoothen_settings.blp:58
 msgid "Amount of points to use when calculating a moving average"
@@ -878,7 +883,7 @@ msgstr "Eliminar"
 
 #: data/ui/style_editor.blp:37
 msgid "Style Name"
-msgstr ""
+msgstr "Nombre del estilo"
 
 #: data/ui/style_editor.blp:41
 msgid "Font"
@@ -886,20 +891,19 @@ msgstr "Tipografía"
 
 #: data/ui/style_editor.blp:52
 msgid "Title Size"
-msgstr ""
+msgstr "Tamaño del título"
 
 #: data/ui/style_editor.blp:53
 msgid "Title size in relation to text size"
-msgstr ""
+msgstr "Tamaño del título en relación con el tamaño del texto"
 
 #: data/ui/style_editor.blp:65
-#, fuzzy
 msgid "Label Size"
-msgstr "Tamaño del marcador"
+msgstr "Tamaño de la etiqueta"
 
 #: data/ui/style_editor.blp:66
 msgid "Label size in relation to text size"
-msgstr ""
+msgstr "Tamaño de la etiqueta en relación con el tamaño del texto"
 
 #: data/ui/style_editor.blp:80
 msgid "Lines"
@@ -915,7 +919,7 @@ msgstr "Anchura del eje"
 
 #: data/ui/style_editor.blp:154
 msgid "Draw Frame"
-msgstr ""
+msgstr "Marco de dibujo"
 
 #: data/ui/style_editor.blp:159
 msgid "Ticks"
@@ -927,11 +931,11 @@ msgstr ""
 
 #: data/ui/style_editor.blp:164
 msgid "Inwards"
-msgstr ""
+msgstr "Hacia dentro"
 
 #: data/ui/style_editor.blp:164
 msgid "Outwards"
-msgstr ""
+msgstr "Hacia fuera"
 
 #: data/ui/style_editor.blp:169
 msgid "Minor Ticks"
@@ -1049,7 +1053,7 @@ msgstr "Color de fondo"
 
 #: data/ui/style_editor.blp:449
 msgid "Outline Color"
-msgstr ""
+msgstr "Color del contorno"
 
 #: data/ui/style_editor.blp:466
 msgid "Line Colors"
@@ -1061,11 +1065,11 @@ msgstr "Añadir color"
 
 #: data/ui/transform_window.blp:7
 msgid "Transform Data"
-msgstr ""
+msgstr "Transformar datos"
 
 #: data/ui/transform_window.blp:29 data/ui/window.blp:380
 msgid "Transform"
-msgstr ""
+msgstr "Transformar"
 
 #: data/ui/transform_window.blp:42
 msgid ""
@@ -1124,6 +1128,7 @@ msgstr "Modo zoom. Seleccione un área en la figura para ampliar"
 #: data/ui/window.blp:236
 msgid "Highlight mode. Click and drag to make a selection of data"
 msgstr ""
+"Modo de resaltado. Haga clic y arrastre para hacer una selección de datos"
 
 #: data/ui/window.blp:271
 msgid "Adjust"
@@ -1131,11 +1136,11 @@ msgstr "Ajuste"
 
 #: data/ui/window.blp:286
 msgid "Shift"
-msgstr ""
+msgstr "Desplazamiento"
 
 #: data/ui/window.blp:288
 msgid "Shift all data vertically with respect to each other"
-msgstr ""
+msgstr "Desplazar todos los datos verticalmente entre sí"
 
 #: data/ui/window.blp:303
 msgid "Normalize"
@@ -1147,11 +1152,11 @@ msgstr "Normalizar datos"
 
 #: data/ui/window.blp:321
 msgid "Smoothen"
-msgstr ""
+msgstr "Suavizado"
 
 #: data/ui/window.blp:323
 msgid "Smoothen data"
-msgstr ""
+msgstr "Suavizar datos"
 
 #: data/ui/window.blp:340
 msgid "Center data"
@@ -1179,7 +1184,7 @@ msgstr "Derivado"
 
 #: data/ui/window.blp:398
 msgid "Get the derivative of the data"
-msgstr ""
+msgstr "Obtener la derivada de los datos"
 
 #: data/ui/window.blp:412
 msgid "Integral"
@@ -1187,23 +1192,23 @@ msgstr "Integral"
 
 #: data/ui/window.blp:414
 msgid "Get the indefinite integral of the data"
-msgstr ""
+msgstr "Obtener la integral indefinida de los datos"
 
 #: data/ui/window.blp:428
 msgid "FFT"
-msgstr ""
+msgstr "FFT"
 
 #: data/ui/window.blp:430
 msgid "Get the Fast Fourier Transform of the data"
-msgstr ""
+msgstr "Obtener la transformada rápida de Fourier de los datos"
 
 #: data/ui/window.blp:444
 msgid "Inverse FFT"
-msgstr ""
+msgstr "FFT inversa"
 
 #: data/ui/window.blp:446
 msgid "Get the Inverse Fast Fourier Transform of the data"
-msgstr ""
+msgstr "Obtener la inversa de la transformada rápida de Fourier de los datos"
 
 #: data/ui/window.blp:461
 msgid "Custom Transformation"
@@ -1219,19 +1224,19 @@ msgstr "Modificar"
 
 #: data/ui/window.blp:491
 msgid "Translate X"
-msgstr ""
+msgstr "Traducir X"
 
 #: data/ui/window.blp:514
 msgid "Translate Y"
-msgstr ""
+msgstr "Traducir Y"
 
 #: data/ui/window.blp:537
 msgid "Multiply X"
-msgstr ""
+msgstr "Multiplicar X"
 
 #: data/ui/window.blp:560
 msgid "Multiply Y"
-msgstr ""
+msgstr "Multiplicar Y"
 
 #: data/ui/window.blp:593
 msgid "Undo"
@@ -1294,17 +1299,14 @@ msgid "Add Equation…"
 msgstr "Añadir ecuación…"
 
 #: data/ui/window.blp:668
-#, fuzzy
 msgid "At Maximum Y Value"
 msgstr "Al valor máximo Y"
 
 #: data/ui/window.blp:673
-#, fuzzy
 msgid "At Middle X Value"
 msgstr "Al valor medio X"
 
 #: data/ui/window.blp:694
-#, fuzzy
 msgid "Advanced Settings"
 msgstr "Configuración avanzada"
 
@@ -1316,7 +1318,7 @@ msgstr "Eliminado {name}"
 #: src/add_equation.py:64
 #, python-brace-format
 msgid "{error} - Unable to add data from equation"
-msgstr ""
+msgstr "{error} - No se pueden añadir datos de la ecuación"
 
 #: src/application.py:50
 #, python-format
@@ -1332,6 +1334,8 @@ msgid ""
 "Please enter valid fitting \n"
 "parameters to start the fit"
 msgstr ""
+"Por favor, introduzca parámetros \n"
+"válidos para iniciar el ajuste"
 
 #: src/curve_fitting.py:228
 msgid ""
@@ -1346,29 +1350,30 @@ msgid ""
 "Please enter valid fitting bounds \n"
 "to start the fit"
 msgstr ""
+"Introduzca límites de ajuste válidos \n"
+"para iniciar el ajuste"
 
 #: src/curve_fitting.py:240
 #, python-brace-format
 msgid "Sum of R²: {R2}"
-msgstr ""
+msgstr "Suma de R²: {R2}"
 
 #: src/curve_fitting.py:439
 #, python-brace-format
 msgid "Fitting Parameters for {param_name}"
-msgstr ""
+msgstr "Parámetros de ajuste para {param_name}"
 
 #: src/export_figure.py:64
 msgid "Exported Figure"
 msgstr "Figura exportada"
 
 #: src/export_figure.py:65 src/ui.py:151
-#, fuzzy
 msgid "Open Location"
-msgstr "Abrir menú de la aplicación"
+msgstr "Abrir ubicación"
 
 #: src/figure_settings.py:110 src/figure_settings.py:136 src/styles.py:82
 msgid "System"
-msgstr ""
+msgstr "Sistema"
 
 #: src/figure_settings.py:156
 msgid "Top X Axis Minimum"
@@ -1495,11 +1500,11 @@ msgstr ""
 
 #: src/operations.py:107
 msgid "Data that was outside of the highlighted area has been discarded"
-msgstr ""
+msgstr "Se han descartado los datos que estaban fuera de la zona resaltada"
 
 #: src/operations.py:140
 msgid "No data found within the highlighted area"
-msgstr ""
+msgstr "No se han encontrado datos en la zona resaltada"
 
 #: src/operations.py:342
 msgid "Combined Data"
@@ -1511,7 +1516,7 @@ msgstr "Intensidad (cps)"
 
 #: src/parse_file.py:60
 msgid "Invalid .xry format"
-msgstr ""
+msgstr "Formato .xry no válido"
 
 #: src/parse_file.py:75
 msgid "β (°)"
@@ -1523,11 +1528,11 @@ msgstr "R (1/s)"
 
 #: src/parse_file.py:140
 msgid "Import failed, column index out of range"
-msgstr ""
+msgstr "Error de importación, índice de columna fuera de rango"
 
 #: src/parse_file.py:158
 msgid "Unable to import from file"
-msgstr ""
+msgstr "No se puede importar desde el archivo"
 
 #: src/styles.py:262
 #, python-brace-format
@@ -1542,10 +1547,8 @@ msgid "Plot style {stylename} does not exist loading system preferred"
 msgstr ""
 
 #: src/styles.py:663
-#, fuzzy
 msgid "Are you sure you want to delete {self.style.get_name()}?"
-msgstr ""
-"¿Está seguro de que quiere restablecer la configuración de importación?"
+msgstr "¿Está seguro de que desea eliminar {self.style.get_name()}?"
 
 #: src/styles.py:680
 msgid "Color {}"
@@ -1555,6 +1558,8 @@ msgstr "Color {}"
 #, python-brace-format
 msgid "{name}: Unable to do transformation, make sure the syntax is correct"
 msgstr ""
+"{name}: No se puede hacer la transformación, asegúrese de que la sintaxis es "
+"correcta"
 
 #: src/transform_data.py:42
 msgid "Unable to do transformation"
@@ -1574,7 +1579,7 @@ msgstr "El elemento {} ya existe"
 
 #: src/ui.py:88
 msgid "Supported files"
-msgstr ""
+msgstr "Archivos compatibles"
 
 #: src/ui.py:90
 msgid "ASCII files"
@@ -1602,7 +1607,7 @@ msgstr "Datos exportados"
 
 #: src/ui.py:161
 msgid "Text Files"
-msgstr ""
+msgstr "Archivos de texto"
 
 #: src/ui.py:182
 msgid "translator-credits"
@@ -1614,11 +1619,11 @@ msgstr ""
 
 #: src/ui.py:213 src/ui.py:277 src/ui.py:311
 msgid "No way to apply “{}”"
-msgstr ""
+msgstr "No hay manera de aplicar “{}”"
 
 #: src/utilities.py:160
 msgid "No valid number specified"
-msgstr ""
+msgstr "No se ha especificado ningún número válido"
 
 #~ msgid "Savitzky–Golay filter"
 #~ msgstr "Filtro Savitzky–Golay"
