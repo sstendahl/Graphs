@@ -51,10 +51,11 @@
     </screenshot>
   </screenshots>
   <releases>
-    <release version="1.7.0" date="2023-12-14">
+    <release version="1.7.0" date="2024-01-10">
       <description translatable="no">
         <p>Version 1.7 marks our biggest release yet. With a migration to GNOME 45 and a new UI overhaul with a revamped style editor.
-           Other major highlights include a new curve fitting functionality, the ability to open projects directly, and support for gestures in the canvas.
+           Other major highlights include a new curve fitting functionality, the ability to open projects directly and support for gestures in the canvas. A full changelog
+           can be found below:
         </p>
         <p>New in Graphs:</p>
         <ul>
