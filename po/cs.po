@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: graphs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-09 13:42+0100\n"
+"POT-Creation-Date: 2024-01-11 15:54+0100\n"
 "PO-Revision-Date: 2024-01-09 12:40+0000\n"
 "Last-Translator: Anonymous <noreply@weblate.org>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/graphs/graphs/cs/"
@@ -366,19 +366,19 @@ msgid "Circle"
 msgstr ""
 
 #: data/ui/edit_item.blp:78 data/ui/style_editor.blp:110
-msgid "Triangle down"
+msgid "Triangle Down"
 msgstr ""
 
 #: data/ui/edit_item.blp:78 data/ui/style_editor.blp:110
-msgid "Triangle up"
+msgid "Triangle Up"
 msgstr ""
 
 #: data/ui/edit_item.blp:78 data/ui/style_editor.blp:110
-msgid "Triangle left"
+msgid "Triangle Left"
 msgstr ""
 
 #: data/ui/edit_item.blp:79 data/ui/style_editor.blp:111
-msgid "Triangle right"
+msgid "Triangle Right"
 msgstr ""
 
 #: data/ui/edit_item.blp:79 data/ui/style_editor.blp:111
@@ -410,7 +410,7 @@ msgid "Plus"
 msgstr ""
 
 #: data/ui/edit_item.blp:81 data/ui/style_editor.blp:113
-msgid "x"
+msgid "X"
 msgstr ""
 
 #: data/ui/edit_item.blp:81 data/ui/style_editor.blp:113
@@ -418,23 +418,23 @@ msgid "Diamond"
 msgstr ""
 
 #: data/ui/edit_item.blp:82 data/ui/style_editor.blp:114
-msgid "Thin diamond"
+msgid "Thin Diamond"
 msgstr ""
 
 #: data/ui/edit_item.blp:82 data/ui/style_editor.blp:114
-msgid "Vertical line"
+msgid "Vertical Line"
 msgstr ""
 
 #: data/ui/edit_item.blp:82 data/ui/style_editor.blp:114
-msgid "Horizontal line"
+msgid "Horizontal Line"
 msgstr ""
 
 #: data/ui/edit_item.blp:83 data/ui/style_editor.blp:115
-msgid "Filled plus"
+msgid "Filled Plus"
 msgstr ""
 
 #: data/ui/edit_item.blp:83 data/ui/style_editor.blp:115
-msgid "Filled x"
+msgid "Filled X"
 msgstr ""
 
 #: data/ui/edit_item.blp:90 data/ui/style_editor.blp:122
@@ -513,35 +513,35 @@ msgid "Auto"
 msgstr ""
 
 #: data/ui/figure_settings.blp:153
-msgid "Upper right"
+msgid "Upper Right"
 msgstr ""
 
 #: data/ui/figure_settings.blp:153
-msgid "Upper left"
+msgid "Upper Left"
 msgstr ""
 
 #: data/ui/figure_settings.blp:153
-msgid "Lower left"
+msgid "Lower Left"
 msgstr ""
 
 #: data/ui/figure_settings.blp:154
-msgid "Lower right"
+msgid "Lower Right"
 msgstr ""
 
 #: data/ui/figure_settings.blp:154
-msgid "Center left"
+msgid "Center Left"
 msgstr ""
 
 #: data/ui/figure_settings.blp:154
-msgid "Center right"
+msgid "Center Right"
 msgstr ""
 
 #: data/ui/figure_settings.blp:155
-msgid "Lower center"
+msgid "Lower Center"
 msgstr ""
 
 #: data/ui/figure_settings.blp:155
-msgid "Upper center"
+msgid "Upper Center"
 msgstr ""
 
 #: data/ui/figure_settings.blp:155 data/ui/window.blp:338
@@ -1547,15 +1547,15 @@ msgstr ""
 msgid "Text Files"
 msgstr ""
 
-#: src/ui.py:182
+#: src/ui.py:188
 msgid "translator-credits"
 msgstr ""
 
-#: src/ui.py:211 src/ui.py:275 src/ui.py:309
+#: src/ui.py:217 src/ui.py:281 src/ui.py:315
 msgid "Unsupported Widget {}"
 msgstr ""
 
-#: src/ui.py:213 src/ui.py:277 src/ui.py:311
+#: src/ui.py:219 src/ui.py:283 src/ui.py:317
 msgid "No way to apply “{}”"
 msgstr ""
 
