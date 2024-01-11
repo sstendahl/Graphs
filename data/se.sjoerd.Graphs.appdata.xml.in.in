@@ -51,9 +51,15 @@
     </screenshot>
   </screenshots>
   <releases>
-    <release version="1.7.1" date="2024-01-11">
+    <release version="1.7.1" date="2024-01-12">
       <description translatable="no">
-        <p>Minor patch that sets the legend position strings to title case, and updates the locals to the latest version on Weblate.</p>
+        <p>Minor patch with a few tweaks.</p>
+        <ul>
+          <li>Some strings were updated to use Title Case</li>
+          <li>Local translations have been updated to the latest version at Weblate</li>
+          <li>The highlighted area now deactivates after performing an operation </li>
+          <li>The subtitle now just shows the location without the filename</li>
+        </ul>
       </description>
     </release>
     <release version="1.7.0" date="2024-01-10">
