@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: graphs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-09 13:42+0100\n"
+"POT-Creation-Date: 2024-01-11 15:54+0100\n"
 "PO-Revision-Date: 2024-01-10 16:04+0000\n"
 "Last-Translator: LibreTranslate <noreply-mt-libretranslate@weblate.org>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/graphs/graphs/es/"
@@ -111,9 +111,9 @@ msgid ""
 "Plotting;Graph;Graphing;Science;Mathematics;Math;Equations;Data;Plot;"
 "Visualisation;Visualization;Fitting;xrdml;"
 msgstr ""
-"Plotting;Graph;Graphing;Science;Mathematics;Math;Equations;Data;Plot;Visualis"
-"ation;Visualization;Fitting;xrdml;Trazado;Gráfico;Gráfica;Ciencia;Matemáticas"
-";Mates;Ecuaciones;Datos;Visualización;"
+"Plotting;Graph;Graphing;Science;Mathematics;Math;Equations;Data;Plot;"
+"Visualisation;Visualization;Fitting;xrdml;Trazado;Gráfico;Gráfica;Ciencia;"
+"Matemáticas;Mates;Ecuaciones;Datos;Visualización;"
 
 #: data/ui/add_equation_window.blp:7
 msgid "Add Equation"
@@ -391,19 +391,23 @@ msgid "Circle"
 msgstr "Círculo"
 
 #: data/ui/edit_item.blp:78 data/ui/style_editor.blp:110
-msgid "Triangle down"
+#, fuzzy
+msgid "Triangle Down"
 msgstr "Triángulo abajo"
 
 #: data/ui/edit_item.blp:78 data/ui/style_editor.blp:110
-msgid "Triangle up"
+#, fuzzy
+msgid "Triangle Up"
 msgstr "Triángulo arriba"
 
 #: data/ui/edit_item.blp:78 data/ui/style_editor.blp:110
-msgid "Triangle left"
+#, fuzzy
+msgid "Triangle Left"
 msgstr "Triángulo izquierdo"
 
 #: data/ui/edit_item.blp:79 data/ui/style_editor.blp:111
-msgid "Triangle right"
+#, fuzzy
+msgid "Triangle Right"
 msgstr "Triángulo derecho"
 
 #: data/ui/edit_item.blp:79 data/ui/style_editor.blp:111
@@ -435,31 +439,36 @@ msgid "Plus"
 msgstr "Más"
 
 #: data/ui/edit_item.blp:81 data/ui/style_editor.blp:113
-msgid "x"
-msgstr "x"
+msgid "X"
+msgstr ""
 
 #: data/ui/edit_item.blp:81 data/ui/style_editor.blp:113
 msgid "Diamond"
 msgstr "Diamante"
 
 #: data/ui/edit_item.blp:82 data/ui/style_editor.blp:114
-msgid "Thin diamond"
+#, fuzzy
+msgid "Thin Diamond"
 msgstr "Diamante fino"
 
 #: data/ui/edit_item.blp:82 data/ui/style_editor.blp:114
-msgid "Vertical line"
+#, fuzzy
+msgid "Vertical Line"
 msgstr "Línea vertical"
 
 #: data/ui/edit_item.blp:82 data/ui/style_editor.blp:114
-msgid "Horizontal line"
+#, fuzzy
+msgid "Horizontal Line"
 msgstr "Línea horizontal"
 
 #: data/ui/edit_item.blp:83 data/ui/style_editor.blp:115
-msgid "Filled plus"
+#, fuzzy
+msgid "Filled Plus"
 msgstr "Más relleno"
 
 #: data/ui/edit_item.blp:83 data/ui/style_editor.blp:115
-msgid "Filled x"
+#, fuzzy
+msgid "Filled X"
 msgstr "x relleno"
 
 #: data/ui/edit_item.blp:90 data/ui/style_editor.blp:122
@@ -538,35 +547,43 @@ msgid "Auto"
 msgstr "Auto"
 
 #: data/ui/figure_settings.blp:153
-msgid "Upper right"
+#, fuzzy
+msgid "Upper Right"
 msgstr "Superior derecha"
 
 #: data/ui/figure_settings.blp:153
-msgid "Upper left"
+#, fuzzy
+msgid "Upper Left"
 msgstr "Superior izquierda"
 
 #: data/ui/figure_settings.blp:153
-msgid "Lower left"
+#, fuzzy
+msgid "Lower Left"
 msgstr "Inferior izquierda"
 
 #: data/ui/figure_settings.blp:154
-msgid "Lower right"
+#, fuzzy
+msgid "Lower Right"
 msgstr "Inferior derecha"
 
 #: data/ui/figure_settings.blp:154
-msgid "Center left"
+#, fuzzy
+msgid "Center Left"
 msgstr "Centro izquierdo"
 
 #: data/ui/figure_settings.blp:154
-msgid "Center right"
+#, fuzzy
+msgid "Center Right"
 msgstr "Centro derecho"
 
 #: data/ui/figure_settings.blp:155
-msgid "Lower center"
+#, fuzzy
+msgid "Lower Center"
 msgstr "Centro inferior"
 
 #: data/ui/figure_settings.blp:155
-msgid "Upper center"
+#, fuzzy
+msgid "Upper Center"
 msgstr "Centro superior"
 
 #: data/ui/figure_settings.blp:155 data/ui/window.blp:338
@@ -1609,21 +1626,24 @@ msgstr "Datos exportados"
 msgid "Text Files"
 msgstr "Archivos de texto"
 
-#: src/ui.py:182
+#: src/ui.py:188
 msgid "translator-credits"
 msgstr "Óscar Fernández Díaz <oscfdezdz@tuta.io>"
 
-#: src/ui.py:211 src/ui.py:275 src/ui.py:309
+#: src/ui.py:217 src/ui.py:281 src/ui.py:315
 msgid "Unsupported Widget {}"
 msgstr ""
 
-#: src/ui.py:213 src/ui.py:277 src/ui.py:311
+#: src/ui.py:219 src/ui.py:283 src/ui.py:317
 msgid "No way to apply “{}”"
 msgstr "No hay manera de aplicar “{}”"
 
 #: src/utilities.py:160
 msgid "No valid number specified"
 msgstr "No se ha especificado ningún número válido"
+
+#~ msgid "x"
+#~ msgstr "x"
 
 #~ msgid "Savitzky–Golay filter"
 #~ msgstr "Filtro Savitzky–Golay"
