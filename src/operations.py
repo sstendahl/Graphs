@@ -135,6 +135,7 @@ def perform_operation(self, callback, *args):
                 item.xdata, item.ydata = sort_data(item.xdata, item.ydata)
         item.notify("xdata")
         item.notify("ydata")
+        self.get_window().get_canvas().highlight.extents = (0, 0)
     if not data_selected:
         self.get_window().add_toast_string(
             _("No data found within the highlighted area"))
