@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: graphs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-09 13:42+0100\n"
+"POT-Creation-Date: 2024-01-11 13:49+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -511,35 +511,35 @@ msgid "Auto"
 msgstr ""
 
 #: data/ui/figure_settings.blp:153
-msgid "Upper right"
+msgid "Upper Right"
 msgstr ""
 
 #: data/ui/figure_settings.blp:153
-msgid "Upper left"
+msgid "Upper Left"
 msgstr ""
 
 #: data/ui/figure_settings.blp:153
-msgid "Lower left"
+msgid "Lower Left"
 msgstr ""
 
 #: data/ui/figure_settings.blp:154
-msgid "Lower right"
+msgid "Lower Right"
 msgstr ""
 
 #: data/ui/figure_settings.blp:154
-msgid "Center left"
+msgid "Center Left"
 msgstr ""
 
 #: data/ui/figure_settings.blp:154
-msgid "Center right"
+msgid "Center Right"
 msgstr ""
 
 #: data/ui/figure_settings.blp:155
-msgid "Lower center"
+msgid "Lower Center"
 msgstr ""
 
 #: data/ui/figure_settings.blp:155
-msgid "Upper center"
+msgid "Upper Center"
 msgstr ""
 
 #: data/ui/figure_settings.blp:155 data/ui/window.blp:338
@@ -1545,15 +1545,15 @@ msgstr ""
 msgid "Text Files"
 msgstr ""
 
-#: src/ui.py:182
+#: src/ui.py:188
 msgid "translator-credits"
 msgstr ""
 
-#: src/ui.py:211 src/ui.py:275 src/ui.py:309
+#: src/ui.py:217 src/ui.py:281 src/ui.py:315
 msgid "Unsupported Widget {}"
 msgstr ""
 
-#: src/ui.py:213 src/ui.py:277 src/ui.py:311
+#: src/ui.py:219 src/ui.py:283 src/ui.py:317
 msgid "No way to apply “{}”"
 msgstr ""
 
