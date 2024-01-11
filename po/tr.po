@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: se.sjoerd.Graphs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-09 13:42+0100\n"
-"PO-Revision-Date: 2024-01-11 13:58+0000\n"
+"POT-Creation-Date: 2024-01-11 15:54+0100\n"
+"PO-Revision-Date: 2024-01-11 19:09+0000\n"
 "Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/graphs/graphs/tr/"
 ">\n"
@@ -390,20 +390,20 @@ msgid "Circle"
 msgstr "Daire"
 
 #: data/ui/edit_item.blp:78 data/ui/style_editor.blp:110
-msgid "Triangle down"
-msgstr "Üçgen aşağı"
+msgid "Triangle Down"
+msgstr "Üçgen Aşağı"
 
 #: data/ui/edit_item.blp:78 data/ui/style_editor.blp:110
-msgid "Triangle up"
-msgstr "Üçgen yukarı"
+msgid "Triangle Up"
+msgstr "Üçgen Yukarı"
 
 #: data/ui/edit_item.blp:78 data/ui/style_editor.blp:110
-msgid "Triangle left"
-msgstr "Üçgen sol"
+msgid "Triangle Left"
+msgstr "Üçgen Sol"
 
 #: data/ui/edit_item.blp:79 data/ui/style_editor.blp:111
-msgid "Triangle right"
-msgstr "Üçgen sağ"
+msgid "Triangle Right"
+msgstr "Üçgen Sağ"
 
 #: data/ui/edit_item.blp:79 data/ui/style_editor.blp:111
 msgid "Octagon"
@@ -434,32 +434,32 @@ msgid "Plus"
 msgstr "Artı"
 
 #: data/ui/edit_item.blp:81 data/ui/style_editor.blp:113
-msgid "x"
-msgstr "x"
+msgid "X"
+msgstr "X"
 
 #: data/ui/edit_item.blp:81 data/ui/style_editor.blp:113
 msgid "Diamond"
 msgstr "Karo"
 
 #: data/ui/edit_item.blp:82 data/ui/style_editor.blp:114
-msgid "Thin diamond"
-msgstr "İnce karo"
+msgid "Thin Diamond"
+msgstr "İnce Karo"
 
 #: data/ui/edit_item.blp:82 data/ui/style_editor.blp:114
-msgid "Vertical line"
-msgstr "Dikey çizgi"
+msgid "Vertical Line"
+msgstr "Dikey Çizgi"
 
 #: data/ui/edit_item.blp:82 data/ui/style_editor.blp:114
-msgid "Horizontal line"
-msgstr "Yatay çizgi"
+msgid "Horizontal Line"
+msgstr "Yatay Çizgi"
 
 #: data/ui/edit_item.blp:83 data/ui/style_editor.blp:115
-msgid "Filled plus"
-msgstr "Doldurulmuş artı"
+msgid "Filled Plus"
+msgstr "Doldurulmuş Artı"
 
 #: data/ui/edit_item.blp:83 data/ui/style_editor.blp:115
-msgid "Filled x"
-msgstr "Doldurulmuş x"
+msgid "Filled X"
+msgstr "Doldurulmuş X"
 
 #: data/ui/edit_item.blp:90 data/ui/style_editor.blp:122
 msgid "Marker Size"
@@ -537,36 +537,36 @@ msgid "Auto"
 msgstr "Kendiliğinden"
 
 #: data/ui/figure_settings.blp:153
-msgid "Upper right"
-msgstr "Üst sağ"
+msgid "Upper Right"
+msgstr "Üst Sağ"
 
 #: data/ui/figure_settings.blp:153
-msgid "Upper left"
-msgstr "Üst sol"
+msgid "Upper Left"
+msgstr "Üst Sol"
 
 #: data/ui/figure_settings.blp:153
-msgid "Lower left"
-msgstr "Alt sol"
+msgid "Lower Left"
+msgstr "Alt Sol"
 
 #: data/ui/figure_settings.blp:154
-msgid "Lower right"
-msgstr "Alt sağ"
+msgid "Lower Right"
+msgstr "Alt Sağ"
 
 #: data/ui/figure_settings.blp:154
-msgid "Center left"
-msgstr "Orta sol"
+msgid "Center Left"
+msgstr "Orta Sol"
 
 #: data/ui/figure_settings.blp:154
-msgid "Center right"
-msgstr "Orta sağ"
+msgid "Center Right"
+msgstr "Orta Sağ"
 
 #: data/ui/figure_settings.blp:155
-msgid "Lower center"
-msgstr "Alt orta"
+msgid "Lower Center"
+msgstr "Alt Orta"
 
 #: data/ui/figure_settings.blp:155
-msgid "Upper center"
-msgstr "Üst orta"
+msgid "Upper Center"
+msgstr "Üst Orta"
 
 #: data/ui/figure_settings.blp:155 data/ui/window.blp:338
 msgid "Center"
@@ -1584,21 +1584,24 @@ msgstr "Dışa Aktarılan Veriler"
 msgid "Text Files"
 msgstr "Metin Dosyaları"
 
-#: src/ui.py:182
+#: src/ui.py:188
 msgid "translator-credits"
 msgstr "Sabri Ünal <libreajans@gmail.com>"
 
-#: src/ui.py:211 src/ui.py:275 src/ui.py:309
+#: src/ui.py:217 src/ui.py:281 src/ui.py:315
 msgid "Unsupported Widget {}"
 msgstr "Desteklenmeyen Parçacık {}"
 
-#: src/ui.py:213 src/ui.py:277 src/ui.py:311
+#: src/ui.py:219 src/ui.py:283 src/ui.py:317
 msgid "No way to apply “{}”"
 msgstr "“{}” uygulamanın yolu yok"
 
 #: src/utilities.py:160
 msgid "No valid number specified"
 msgstr "Geçerli bir sayı belirtilmedi"
+
+#~ msgid "x"
+#~ msgstr "x"
 
 #~ msgid "Savitzky–Golay filter"
 #~ msgstr "Savitzky-Golay filtresi"
