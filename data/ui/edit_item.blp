@@ -75,12 +75,12 @@ template $GraphsEditItemWindow : Adw.PreferencesWindow {
         model: StringList {
           strings [
             _("Nothing"), _("Point"), _("Pixel"), _("Circle"),
-            _("Triangle down"), _("Triangle up"), _("Triangle left"),
-            _("Triangle right"), _("Octagon"), _("Square"),
+            _("Triangle Down"), _("Triangle Up"), _("Triangle Left"),
+            _("Triangle Right"), _("Octagon"), _("Square"),
             _("Pentagon"), _("Star"), _("Hexagon 1"),
-            _("Hexagon 2"), _("Plus"), _("x"), _("Diamond"),
-            _("Thin diamond"), _("Vertical line"), _("Horizontal line"),
-            _("Filled plus"), _("Filled x"),
+            _("Hexagon 2"), _("Plus"), _("X"), _("Diamond"),
+            _("Thin Diamond"), _("Vertical Line"), _("Horizontal Line"),
+            _("Filled Plus"), _("Filled X"),
           ]
         };
         notify::selected => $on_markers();
