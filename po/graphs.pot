@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: graphs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-11 13:59+0100\n"
+"POT-Creation-Date: 2024-01-11 15:54+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -363,19 +363,19 @@ msgstr ""
 msgid "Circle"
 msgstr ""
 
-#: data/ui/edit_item.blp:78
+#: data/ui/edit_item.blp:78 data/ui/style_editor.blp:110
 msgid "Triangle Down"
 msgstr ""
 
-#: data/ui/edit_item.blp:78
+#: data/ui/edit_item.blp:78 data/ui/style_editor.blp:110
 msgid "Triangle Up"
 msgstr ""
 
-#: data/ui/edit_item.blp:78
+#: data/ui/edit_item.blp:78 data/ui/style_editor.blp:110
 msgid "Triangle Left"
 msgstr ""
 
-#: data/ui/edit_item.blp:79
+#: data/ui/edit_item.blp:79 data/ui/style_editor.blp:111
 msgid "Triangle Right"
 msgstr ""
 
@@ -407,7 +407,7 @@ msgstr ""
 msgid "Plus"
 msgstr ""
 
-#: data/ui/edit_item.blp:81
+#: data/ui/edit_item.blp:81 data/ui/style_editor.blp:113
 msgid "X"
 msgstr ""
 
@@ -415,23 +415,23 @@ msgstr ""
 msgid "Diamond"
 msgstr ""
 
-#: data/ui/edit_item.blp:82
+#: data/ui/edit_item.blp:82 data/ui/style_editor.blp:114
 msgid "Thin Diamond"
 msgstr ""
 
-#: data/ui/edit_item.blp:82
+#: data/ui/edit_item.blp:82 data/ui/style_editor.blp:114
 msgid "Vertical Line"
 msgstr ""
 
-#: data/ui/edit_item.blp:82
+#: data/ui/edit_item.blp:82 data/ui/style_editor.blp:114
 msgid "Horizontal Line"
 msgstr ""
 
-#: data/ui/edit_item.blp:83
+#: data/ui/edit_item.blp:83 data/ui/style_editor.blp:115
 msgid "Filled Plus"
 msgstr ""
 
-#: data/ui/edit_item.blp:83
+#: data/ui/edit_item.blp:83 data/ui/style_editor.blp:115
 msgid "Filled X"
 msgstr ""
 
@@ -880,46 +880,6 @@ msgstr ""
 
 #: data/ui/style_editor.blp:80
 msgid "Lines"
-msgstr ""
-
-#: data/ui/style_editor.blp:110
-msgid "Triangle down"
-msgstr ""
-
-#: data/ui/style_editor.blp:110
-msgid "Triangle up"
-msgstr ""
-
-#: data/ui/style_editor.blp:110
-msgid "Triangle left"
-msgstr ""
-
-#: data/ui/style_editor.blp:111
-msgid "Triangle right"
-msgstr ""
-
-#: data/ui/style_editor.blp:113
-msgid "x"
-msgstr ""
-
-#: data/ui/style_editor.blp:114
-msgid "Thin diamond"
-msgstr ""
-
-#: data/ui/style_editor.blp:114
-msgid "Vertical line"
-msgstr ""
-
-#: data/ui/style_editor.blp:114
-msgid "Horizontal line"
-msgstr ""
-
-#: data/ui/style_editor.blp:115
-msgid "Filled plus"
-msgstr ""
-
-#: data/ui/style_editor.blp:115
-msgid "Filled x"
 msgstr ""
 
 #: data/ui/style_editor.blp:138
