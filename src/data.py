@@ -125,7 +125,7 @@ class Data(GObject.Object, Graphs.DataInterface):
         if self.project_file is None:
             return _("Draft")
         uri_parse = urlparse(self.project_file.get_uri())
-        filepath = os.path.realpath(
+        filepath = os.path.dirname(
             os.path.join(uri_parse.netloc, unquote(uri_parse.path)))
         if filepath.startswith("/var"):
             # Fix for rpm-ostree distros, where home is placed in /var/home
