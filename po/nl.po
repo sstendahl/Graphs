@@ -7,11 +7,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: graphs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-09 13:42+0100\n"
-"PO-Revision-Date: 2024-01-09 12:40+0000\n"
-"Last-Translator: Matthijs van der Wild <primarius@gmail.com>\n"
-"Language-Team: Dutch <https://hosted.weblate.org/projects/graphs/graphs/nl/"
-">\n"
+"POT-Creation-Date: 2024-01-11 15:54+0100\n"
+"PO-Revision-Date: 2024-01-11 18:13+0000\n"
+"Last-Translator: Sjoerd Stendahl <sjoerd1993@gmail.com>\n"
+"Language-Team: Dutch <https://hosted.weblate.org/projects/graphs/graphs/nl/>"
+"\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -391,20 +391,20 @@ msgid "Circle"
 msgstr "Cirkel"
 
 #: data/ui/edit_item.blp:78 data/ui/style_editor.blp:110
-msgid "Triangle down"
-msgstr "Driehoek naar beneden"
+msgid "Triangle Down"
+msgstr "Driehoek Omlaag"
 
 #: data/ui/edit_item.blp:78 data/ui/style_editor.blp:110
-msgid "Triangle up"
-msgstr "Driehoek naar boven"
+msgid "Triangle Up"
+msgstr "Driehoek Omhoog"
 
 #: data/ui/edit_item.blp:78 data/ui/style_editor.blp:110
-msgid "Triangle left"
-msgstr "Driehoek naar links"
+msgid "Triangle Left"
+msgstr "Driehoek Links"
 
 #: data/ui/edit_item.blp:79 data/ui/style_editor.blp:111
-msgid "Triangle right"
-msgstr "Driehoek naar rechts"
+msgid "Triangle Right"
+msgstr "Driehoek Rechts"
 
 #: data/ui/edit_item.blp:79 data/ui/style_editor.blp:111
 msgid "Octagon"
@@ -435,32 +435,32 @@ msgid "Plus"
 msgstr "Plus"
 
 #: data/ui/edit_item.blp:81 data/ui/style_editor.blp:113
-msgid "x"
-msgstr "Kruis"
+msgid "X"
+msgstr "X"
 
 #: data/ui/edit_item.blp:81 data/ui/style_editor.blp:113
 msgid "Diamond"
 msgstr "Ruit"
 
 #: data/ui/edit_item.blp:82 data/ui/style_editor.blp:114
-msgid "Thin diamond"
-msgstr "Dunne ruit"
+msgid "Thin Diamond"
+msgstr "Dunne Ruit"
 
 #: data/ui/edit_item.blp:82 data/ui/style_editor.blp:114
-msgid "Vertical line"
-msgstr "Verticale lijn"
+msgid "Vertical Line"
+msgstr "Verticale Lijn"
 
 #: data/ui/edit_item.blp:82 data/ui/style_editor.blp:114
-msgid "Horizontal line"
-msgstr "Horizontale lijn"
+msgid "Horizontal Line"
+msgstr "Horizontale Lijn"
 
 #: data/ui/edit_item.blp:83 data/ui/style_editor.blp:115
-msgid "Filled plus"
-msgstr "Gevulde plus"
+msgid "Filled Plus"
+msgstr "Gevulde Plus"
 
 #: data/ui/edit_item.blp:83 data/ui/style_editor.blp:115
-msgid "Filled x"
-msgstr "Gevuld kruis"
+msgid "Filled X"
+msgstr "Gevuld Kruis"
 
 #: data/ui/edit_item.blp:90 data/ui/style_editor.blp:122
 msgid "Marker Size"
@@ -538,36 +538,36 @@ msgid "Auto"
 msgstr "Automatisch"
 
 #: data/ui/figure_settings.blp:153
-msgid "Upper right"
+msgid "Upper Right"
 msgstr "Rechtsboven"
 
 #: data/ui/figure_settings.blp:153
-msgid "Upper left"
+msgid "Upper Left"
 msgstr "Linksboven"
 
 #: data/ui/figure_settings.blp:153
-msgid "Lower left"
+msgid "Lower Left"
 msgstr "Linksonder"
 
 #: data/ui/figure_settings.blp:154
-msgid "Lower right"
+msgid "Lower Right"
 msgstr "Rechtsonder"
 
 #: data/ui/figure_settings.blp:154
-msgid "Center left"
+msgid "Center Left"
 msgstr "Linksmidden"
 
 #: data/ui/figure_settings.blp:154
-msgid "Center right"
+msgid "Center Right"
 msgstr "Rechtsmidden"
 
 #: data/ui/figure_settings.blp:155
-msgid "Lower center"
-msgstr "Onderaan in het midden"
+msgid "Lower Center"
+msgstr "Onderaan Midden"
 
 #: data/ui/figure_settings.blp:155
-msgid "Upper center"
-msgstr "Bovenaan in het midden"
+msgid "Upper Center"
+msgstr "Bovenaan Midden"
 
 #: data/ui/figure_settings.blp:155 data/ui/window.blp:338
 msgid "Center"
@@ -1591,21 +1591,24 @@ msgstr "Gegevens zijn geëxporteerd"
 msgid "Text Files"
 msgstr "Tekstbestanden"
 
-#: src/ui.py:182
+#: src/ui.py:188
 msgid "translator-credits"
 msgstr "Sjoerd Stendahl <contact@sjoerd.se>"
 
-#: src/ui.py:211 src/ui.py:275 src/ui.py:309
+#: src/ui.py:217 src/ui.py:281 src/ui.py:315
 msgid "Unsupported Widget {}"
 msgstr "Widget {} niet ondersteund"
 
-#: src/ui.py:213 src/ui.py:277 src/ui.py:311
+#: src/ui.py:219 src/ui.py:283 src/ui.py:317
 msgid "No way to apply “{}”"
 msgstr "Geen manier om “{}” toe te passen"
 
 #: src/utilities.py:160
 msgid "No valid number specified"
 msgstr "Geen geldig nummer"
+
+#~ msgid "x"
+#~ msgstr "Kruis"
 
 #~ msgid "Savitzky–Golay filter"
 #~ msgstr "Savitzky–Golay filter"

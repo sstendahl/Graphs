@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: graphs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-09 13:42+0100\n"
-"PO-Revision-Date: 2024-01-09 12:40+0000\n"
-"Last-Translator: Anonymous <noreply@weblate.org>\n"
+"POT-Creation-Date: 2024-01-11 15:54+0100\n"
+"PO-Revision-Date: 2024-01-11 18:13+0000\n"
+"Last-Translator: Sjoerd Stendahl <sjoerd1993@gmail.com>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/graphs/graphs/sv/"
 ">\n"
 "Language: sv\n"
@@ -389,20 +389,20 @@ msgid "Circle"
 msgstr "Cirkel"
 
 #: data/ui/edit_item.blp:78 data/ui/style_editor.blp:110
-msgid "Triangle down"
-msgstr "Triangel nedåt"
+msgid "Triangle Down"
+msgstr "Triangel Nedåt"
 
 #: data/ui/edit_item.blp:78 data/ui/style_editor.blp:110
-msgid "Triangle up"
-msgstr "Triangel upåt"
+msgid "Triangle Up"
+msgstr "Triangel Uppåt"
 
 #: data/ui/edit_item.blp:78 data/ui/style_editor.blp:110
-msgid "Triangle left"
-msgstr "Triangel vänster"
+msgid "Triangle Left"
+msgstr "Triangel Vänster"
 
 #: data/ui/edit_item.blp:79 data/ui/style_editor.blp:111
-msgid "Triangle right"
-msgstr "Triangel höger"
+msgid "Triangle Right"
+msgstr "Triangel Höger"
 
 #: data/ui/edit_item.blp:79 data/ui/style_editor.blp:111
 msgid "Octagon"
@@ -433,7 +433,7 @@ msgid "Plus"
 msgstr "Plus"
 
 #: data/ui/edit_item.blp:81 data/ui/style_editor.blp:113
-msgid "x"
+msgid "X"
 msgstr "X"
 
 #: data/ui/edit_item.blp:81 data/ui/style_editor.blp:113
@@ -441,24 +441,24 @@ msgid "Diamond"
 msgstr "Diamant"
 
 #: data/ui/edit_item.blp:82 data/ui/style_editor.blp:114
-msgid "Thin diamond"
-msgstr "Tunn diamant"
+msgid "Thin Diamond"
+msgstr "Tunn Diamant"
 
 #: data/ui/edit_item.blp:82 data/ui/style_editor.blp:114
-msgid "Vertical line"
-msgstr "Vertikal linje"
+msgid "Vertical Line"
+msgstr "Vertikal Linje"
 
 #: data/ui/edit_item.blp:82 data/ui/style_editor.blp:114
-msgid "Horizontal line"
-msgstr "Horisontell linje"
+msgid "Horizontal Line"
+msgstr "Horisontell Linje"
 
 #: data/ui/edit_item.blp:83 data/ui/style_editor.blp:115
-msgid "Filled plus"
-msgstr "Fylld plus"
+msgid "Filled Plus"
+msgstr "Fylld Plus"
 
 #: data/ui/edit_item.blp:83 data/ui/style_editor.blp:115
-msgid "Filled x"
-msgstr "Fylld x"
+msgid "Filled X"
+msgstr "Fylld X"
 
 #: data/ui/edit_item.blp:90 data/ui/style_editor.blp:122
 msgid "Marker Size"
@@ -536,36 +536,36 @@ msgid "Auto"
 msgstr "Automatisk"
 
 #: data/ui/figure_settings.blp:153
-msgid "Upper right"
-msgstr "Övre höger"
+msgid "Upper Right"
+msgstr "Övre Höger"
 
 #: data/ui/figure_settings.blp:153
-msgid "Upper left"
-msgstr "Övre vänster"
+msgid "Upper Left"
+msgstr "Övre Vänster"
 
 #: data/ui/figure_settings.blp:153
-msgid "Lower left"
-msgstr "Nedre vänster"
+msgid "Lower Left"
+msgstr "Nedre Vänster"
 
 #: data/ui/figure_settings.blp:154
-msgid "Lower right"
-msgstr "Nedre höger"
+msgid "Lower Right"
+msgstr "Nedre Höger"
 
 #: data/ui/figure_settings.blp:154
-msgid "Center left"
-msgstr "Mitten vänster"
+msgid "Center Left"
+msgstr "Mitten Vänster"
 
 #: data/ui/figure_settings.blp:154
-msgid "Center right"
-msgstr "Mitten höger"
+msgid "Center Right"
+msgstr "Mitten Höger"
 
 #: data/ui/figure_settings.blp:155
-msgid "Lower center"
-msgstr "Nedre mitten"
+msgid "Lower Center"
+msgstr "Nedre Mitten"
 
 #: data/ui/figure_settings.blp:155
-msgid "Upper center"
-msgstr "Övre mitten"
+msgid "Upper Center"
+msgstr "Övre Mitten"
 
 #: data/ui/figure_settings.blp:155 data/ui/window.blp:338
 msgid "Center"
@@ -1588,21 +1588,24 @@ msgstr "Data har exporterats"
 msgid "Text Files"
 msgstr "Tekstfiler"
 
-#: src/ui.py:182
+#: src/ui.py:188
 msgid "translator-credits"
 msgstr "Sjoerd Stendahl <contact@sjoerd.se>"
 
-#: src/ui.py:211 src/ui.py:275 src/ui.py:309
+#: src/ui.py:217 src/ui.py:281 src/ui.py:315
 msgid "Unsupported Widget {}"
 msgstr "Widget {} stöds inte"
 
-#: src/ui.py:213 src/ui.py:277 src/ui.py:311
+#: src/ui.py:219 src/ui.py:283 src/ui.py:317
 msgid "No way to apply “{}”"
 msgstr "Kan inte applicera “{}”"
 
 #: src/utilities.py:160
 msgid "No valid number specified"
 msgstr "Inget giltigt nummer angivet"
+
+#~ msgid "x"
+#~ msgstr "X"
 
 #~ msgid "Savitzky–Golay filter"
 #~ msgstr "Savitzky–Golay Filter"
