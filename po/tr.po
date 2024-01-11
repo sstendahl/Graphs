@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: se.sjoerd.Graphs\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-01-09 13:42+0100\n"
-"PO-Revision-Date: 2024-01-09 12:40+0000\n"
-"Last-Translator: Anonymous <noreply@weblate.org>\n"
+"PO-Revision-Date: 2024-01-11 13:58+0000\n"
+"Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/graphs/graphs/tr/"
 ">\n"
 "Language: tr\n"
@@ -841,9 +841,8 @@ msgid "Remove Item"
 msgstr "Ögeyi kaldır"
 
 #: data/ui/smoothen_settings.blp:7
-#, fuzzy
 msgid "Smoothen Settings"
-msgstr "Ayarları yumuşat"
+msgstr "Yumuşatma Ayarları"
 
 #: data/ui/smoothen_settings.blp:37 data/ui/window.blp:682
 msgid "Savitzky–Golay Filter"
@@ -1367,9 +1366,8 @@ msgid "Exported Figure"
 msgstr "Şekil Dışa Aktarıldı"
 
 #: src/export_figure.py:65 src/ui.py:151
-#, fuzzy
 msgid "Open Location"
-msgstr "Uygulama Menüsünü Aç"
+msgstr "Konumu Aç"
 
 #: src/figure_settings.py:110 src/figure_settings.py:136 src/styles.py:82
 msgid "System"
@@ -1481,7 +1479,7 @@ msgstr "İçe aktarma ayarlarını sıfırlamak istediğinize emin misiniz?"
 
 #: src/operations.py:107
 msgid "Data that was outside of the highlighted area has been discarded"
-msgstr ""
+msgstr "Vurgulanan alanın dışındaki veriler gözden çıkarıldı"
 
 #: src/operations.py:140
 msgid "No data found within the highlighted area"
