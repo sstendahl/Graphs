@@ -135,10 +135,10 @@ def perform_operation(self, callback, *args):
                 item.xdata, item.ydata = sort_data(item.xdata, item.ydata)
         item.notify("xdata")
         item.notify("ydata")
-        canvas = self.get_window().get_canvas()
-        canvas.highlight.extents = (0, 0)
-        canvas.set_property("min_selected", 0)
-        canvas.set_property("max_selected", 0)
+    canvas = self.get_window().get_canvas()
+    canvas.highlight.extents = (0, 0)
+    canvas.set_property("min_selected", 0)
+    canvas.set_property("max_selected", 0)
     if not data_selected:
         self.get_window().add_toast_string(
             _("No data found within the highlighted area"))
