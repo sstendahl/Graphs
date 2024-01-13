@@ -131,10 +131,11 @@ def import_from_columns(self, file):
                         y_value = utilities.string_to_float(
                             values[column_y])
                         if x_value is None or y_value is None:
-                            continue
-                        item_.xdata.append(x_value)
-                        item_.ydata.append(y_value)
-                        start_values = True
+                            raise ValueError
+                        else:
+                            item_.xdata.append(x_value)
+                            item_.ydata.append(y_value)
+                            start_values = True
                     except IndexError as error:
                         raise ParseError(
                             _("Import failed, column index out of range"),
