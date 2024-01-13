@@ -17,8 +17,8 @@
     "sources": [
         {
             "type": "file",
-            "url": "https://files.pythonhosted.org/packages/b6/ab/5b893944b1602a366893559bfb227fdfb3ad7c7629b2a80d039bb5924367/numpy-1.26.2-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
-            "sha256": "96ca5482c3dbdd051bcd1fce8034603d6ebfc125a7bd59f55b40d8f5d246832b",
+            "url": "https://files.pythonhosted.org/packages/5a/62/007b63f916aca1d27f5fede933fda3315d931ff9b2c28b9c2cf388cd8edb/numpy-1.26.3-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+            "sha256": "f25e2811a9c932e43943a2615e65fc487a0b6b49218899e62e426e7f0a57eeda",
             "only-arches": "x86_64",
             "x-checker-data": {
                 "type": "pypi",
@@ -27,8 +27,8 @@
         },
         {
             "type": "file",
-            "url": "https://files.pythonhosted.org/packages/f1/97/51eb4aa087e95138477e2140b17cd795fb379b1669432413dfad68f535c1/numpy-1.26.2-cp311-cp311-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
-            "sha256": "06fa1ed84aa60ea6ef9f91ba57b5ed963c3729534e6e54055fc151fad0423f0a",
+            "url": "https://files.pythonhosted.org/packages/24/2b/dc80804801369b38681f3a61b48c8c5f1cc1e2651d2d504b9a1f6040bdb1/numpy-1.26.3-cp311-cp311-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
+            "sha256": "8c66d6fec467e8c0f975818c1796d25c53521124b7cfb760114be0abad53a0a2",
             "only-arches": "aarch64",
             "x-checker-data": {
                 "type": "pypi",
@@ -147,8 +147,8 @@
         },
         {
             "type": "file",
-            "url": "https://files.pythonhosted.org/packages/cf/c3/8a23d9dc7c414c69869cf230b0e09149884e9efa6ee1440cc7d95e50012f/fonttools-4.47.0-py3-none-any.whl",
-            "sha256": "d6477ba902dd2d7adda7f0fd3bfaeb92885d45993c9e1928c9f28fc3961415f7",
+            "url": "https://files.pythonhosted.org/packages/af/2f/c34b0f99d46766cf49566d1ee2ee3606e4c9880b5a7d734257dc61c804e9/fonttools-4.47.2-py3-none-any.whl",
+            "sha256": "7eb7ad665258fba68fd22228a09f347469d95a97fb88198e133595947a20a184",
             "x-checker-data": {
                 "type": "pypi",
                 "name": "fonttools",
