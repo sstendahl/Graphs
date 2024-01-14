@@ -23,6 +23,7 @@
     </p>
   </description>
   <launchable type="desktop-id">@APPLICATION_ID@.desktop</launchable>
+  <translation type="gettext">graphs</translation>
   <url type="bugtracker">@ISSUE_URL@</url>
   <url type="help">@GITHUB_URL@</url>
   <url type="homepage">@HOMEPAGE_URL@</url>
