@@ -535,7 +535,9 @@ class Data(GObject.Object, Graphs.DataInterface):
             for direction in ("bottom", "left", "top", "right")
         ]
         for item_ in self:
-            if not isinstance(item_, item.DataItem):
+            if not isinstance(item_, item.DataItem) or (
+                    not item_.get_selected()
+                    and figure_settings.get_property("hide-unselected")):
                 continue
             for index in \
                     item_.get_xposition() * 2, 1 + item_.get_yposition() * 2:
