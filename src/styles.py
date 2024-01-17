@@ -443,7 +443,7 @@ FONT_VARIANT_DICT = {
 
 def _title_format_function(_scale, value: float) -> str:
     """Format a float value as percentage string"""
-    return str(value * 100)[:3] + "%"
+    return str(value / 2 * 100).split(".")[0] + "%"
 
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/style_editor.ui")
@@ -531,10 +531,10 @@ class StyleEditor(Adw.NavigationPage):
         font_size = self.style_params["font.size"]
         font_description.set_size(font_size * Pango.SCALE)
         self.titlesize.set_value(
-            round(self.style_params["figure.titlesize"] / font_size, 1),
+            round(self.style_params["figure.titlesize"] * 2 / font_size, 1),
         )
         self.labelsize.set_value(
-            round(self.style_params["axes.labelsize"] / font_size, 1),
+            round(self.style_params["axes.labelsize"] * 2 / font_size, 1),
         )
         font_description.set_family(self.style_params["font.sans-serif"][0])
         font_description.set_weight(self.style_params["font.weight"])
@@ -575,8 +575,8 @@ class StyleEditor(Adw.NavigationPage):
         for key in ("font.size", "xtick.labelsize", "ytick.labelsize",
                     "legend.fontsize", "figure.labelsize"):
             self.style_params[key] = font_size
-        titlesize = round(self.titlesize.get_value() * font_size, 1)
-        labelsize = round(self.labelsize.get_value() * font_size, 1)
+        titlesize = round(self.titlesize.get_value() / 2 * font_size, 1)
+        labelsize = round(self.labelsize.get_value() / 2 * font_size, 1)
         self.style_params["figure.titlesize"] = titlesize
         self.style_params["axes.titlesize"] = titlesize
         self.style_params["axes.labelsize"] = labelsize
