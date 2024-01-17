@@ -537,7 +537,7 @@ class Data(GObject.Object, Graphs.DataInterface):
         for item_ in self:
             if not isinstance(item_, item.DataItem) or (
                     not item_.get_selected()
-                    and figure_settings.get_property("hide-unselected")):
+                    and figure_settings.get_hide_unselected()):
                 continue
             for index in \
                     item_.get_xposition() * 2, 1 + item_.get_yposition() * 2:
