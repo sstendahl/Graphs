@@ -1,8 +1,3 @@
-[![Please do not theme this app](https://stopthemingmy.app/badge.svg)](https://stopthemingmy.app) 
-[![GNOME Circle Member](https://circle.gnome.org/assets/button/badge.svg)](https://circle.gnome.org) 
-[![Available on Flathub](https://img.shields.io/flathub/downloads/se.sjoerd.Graphs?logo=flathub&labelColor=77767b&color=4a90d9)](https://flathub.org/apps/se.sjoerd.Graphs)
-![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue)
-
 # Graphs
 Plot and manipulate data with Graphs!
 
