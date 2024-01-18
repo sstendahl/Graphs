@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: graphs\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-01-11 15:54+0100\n"
-"PO-Revision-Date: 2024-01-11 18:13+0000\n"
-"Last-Translator: Christoph Matthias Kohnen <christoph.kohnen@disroot.org>\n"
+"PO-Revision-Date: 2024-01-17 07:20+0000\n"
+"Last-Translator: Sjoerd Stendahl <sjoerd1993@gmail.com>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/graphs/graphs/de/>"
 "\n"
 "Language: de\n"
@@ -192,7 +192,7 @@ msgstr "Exponentiell"
 
 #: data/ui/curve_fitting.blp:60
 msgid "Power Law"
-msgstr ""
+msgstr "Potenzgesetz"
 
 #: data/ui/curve_fitting.blp:61 data/ui/figure_settings.blp:121
 #: data/ui/figure_settings.blp:127 data/ui/figure_settings.blp:133
