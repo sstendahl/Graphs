@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: graphs\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-01-11 15:54+0100\n"
-"PO-Revision-Date: 2024-01-10 16:04+0000\n"
-"Last-Translator: LibreTranslate <noreply-mt-libretranslate@weblate.org>\n"
+"PO-Revision-Date: 2024-01-17 21:01+0000\n"
+"Last-Translator: gallegonovato <fran-carro@hotmail.es>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/graphs/graphs/es/"
 ">\n"
 "Language: es\n"
@@ -391,24 +391,20 @@ msgid "Circle"
 msgstr "Círculo"
 
 #: data/ui/edit_item.blp:78 data/ui/style_editor.blp:110
-#, fuzzy
 msgid "Triangle Down"
-msgstr "Triángulo abajo"
+msgstr "Triángulo hacia abajo"
 
 #: data/ui/edit_item.blp:78 data/ui/style_editor.blp:110
-#, fuzzy
 msgid "Triangle Up"
-msgstr "Triángulo arriba"
+msgstr "Triángulo hacia arriba"
 
 #: data/ui/edit_item.blp:78 data/ui/style_editor.blp:110
-#, fuzzy
 msgid "Triangle Left"
-msgstr "Triángulo izquierdo"
+msgstr "Triángulo a la izquierda"
 
 #: data/ui/edit_item.blp:79 data/ui/style_editor.blp:111
-#, fuzzy
 msgid "Triangle Right"
-msgstr "Triángulo derecho"
+msgstr "Triángulo a la derecha"
 
 #: data/ui/edit_item.blp:79 data/ui/style_editor.blp:111
 msgid "Octagon"
@@ -440,7 +436,7 @@ msgstr "Más"
 
 #: data/ui/edit_item.blp:81 data/ui/style_editor.blp:113
 msgid "X"
-msgstr ""
+msgstr "X"
 
 #: data/ui/edit_item.blp:81 data/ui/style_editor.blp:113
 msgid "Diamond"
@@ -452,9 +448,8 @@ msgid "Thin Diamond"
 msgstr "Diamante fino"
 
 #: data/ui/edit_item.blp:82 data/ui/style_editor.blp:114
-#, fuzzy
 msgid "Vertical Line"
-msgstr "Línea vertical"
+msgstr "Linea vertical"
 
 #: data/ui/edit_item.blp:82 data/ui/style_editor.blp:114
 #, fuzzy
