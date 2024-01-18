@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: graphs\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-01-11 15:54+0100\n"
-"PO-Revision-Date: 2024-01-11 18:13+0000\n"
+"PO-Revision-Date: 2024-01-18 08:23+0000\n"
 "Last-Translator: Sjoerd Stendahl <sjoerd1993@gmail.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/graphs/graphs/nl/>"
 "\n"
@@ -112,8 +112,8 @@ msgid ""
 "Plotting;Graph;Graphing;Science;Mathematics;Math;Equations;Data;Plot;"
 "Visualisation;Visualization;Fitting;xrdml;"
 msgstr ""
-"Plotten;Grafiek;Wetenschap;Wiskunde;Vergelijking;Data:Visualisatie:"
-"Trendanalyse;xrdml"
+"Plotten;Grafiek;Wetenschap;Wiskunde;Vergelijking;Data:Visualisatie:Trendanaly"
+"se;xrdml;"
 
 #: data/ui/add_equation_window.blp:7
 msgid "Add Equation"
@@ -960,7 +960,7 @@ msgstr "Kleine maatstreepjeslengte"
 
 #: data/ui/style_editor.blp:227
 msgid "Ticks on Bottom Axis"
-msgstr "Maatstreepjes op de onderste as "
+msgstr "Maatstreepjes op de onderste as"
 
 #: data/ui/style_editor.blp:231
 msgid "Ticks on Left Axis"
@@ -1096,7 +1096,7 @@ msgstr "Meer informatie"
 
 #: data/ui/transform_window.blp:58
 msgid "X ="
-msgstr "X = "
+msgstr "X ="
 
 #: data/ui/transform_window.blp:68
 msgid "Discard Unselected Data"
@@ -1124,7 +1124,7 @@ msgstr "Panningmodus. Klik en sleep"
 
 #: data/ui/window.blp:230
 msgid "Zoom mode. Select an area on the figure to zoom in"
-msgstr "Zoommodus. Selecteer een gebied op de grafiek om in te zoomen."
+msgstr "Zoommodus. Selecteer een gebied op de grafiek om in te zoomen"
 
 #: data/ui/window.blp:236
 msgid "Highlight mode. Click and drag to make a selection of data"
@@ -1338,7 +1338,7 @@ msgid ""
 "parameters to start the fit"
 msgstr ""
 "Voer valide parameters in\n"
-"in om de trendanalyse te starten"
+"om de trendanalyse te starten"
 
 #: src/curve_fitting.py:228
 msgid ""
@@ -1353,8 +1353,8 @@ msgid ""
 "Please enter valid fitting bounds \n"
 "to start the fit"
 msgstr ""
-"Voer een valide grenzen in\n"
-"in om de trendanalyse te starten"
+"Voer valide grenzen in\n"
+"om de trendanalyse te starten"
 
 #: src/curve_fitting.py:240
 #, python-brace-format
