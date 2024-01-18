@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: graphs\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-01-11 15:54+0100\n"
-"PO-Revision-Date: 2024-01-11 18:13+0000\n"
+"PO-Revision-Date: 2024-01-18 08:23+0000\n"
 "Last-Translator: Sjoerd Stendahl <sjoerd1993@gmail.com>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/graphs/graphs/sv/"
 ">\n"
@@ -110,8 +110,8 @@ msgid ""
 "Plotting;Graph;Graphing;Science;Mathematics;Math;Equations;Data;Plot;"
 "Visualisation;Visualization;Fitting;xrdml;"
 msgstr ""
-"Plotta;Graf;Grafer;Vetenskap;Matte;Mattematik;Ekvation;Data;Plot;"
-"Visualisering;Anpassning;xrdml"
+"Plotta;Graf;Grafer;Vetenskap;Matte;Mattematik;Ekvation;Data;Plot;Visualiserin"
+"g;Anpassning;xrdml;"
 
 #: data/ui/add_equation_window.blp:7
 msgid "Add Equation"
@@ -278,7 +278,7 @@ msgid ""
 "permanently lost."
 msgstr ""
 "Aktuellt projekt innehåller osparade ändringar, ändringar som inte sparas "
-"kommer att gå förlorade permanent"
+"kommer att gå förlorade permanent."
 
 #: data/ui/dialogs.blp:9
 msgid "Discard"
@@ -525,7 +525,7 @@ msgstr "Utseende"
 
 #: data/ui/figure_settings.blp:147
 msgid "Legend"
-msgstr "Legend"
+msgstr "Förklaring"
 
 #: data/ui/figure_settings.blp:150
 msgid "Legend Position"
@@ -989,7 +989,7 @@ msgstr "Rutnätsopacitet"
 
 #: data/ui/style_editor.blp:280
 msgid "Padding"
-msgstr "Padding"
+msgstr "Marginal"
 
 #: data/ui/style_editor.blp:281
 msgid "Padding for different parts of the figure"
@@ -1093,7 +1093,7 @@ msgstr "Mer info"
 
 #: data/ui/transform_window.blp:58
 msgid "X ="
-msgstr "X = "
+msgstr "X ="
 
 #: data/ui/transform_window.blp:68
 msgid "Discard Unselected Data"
@@ -1121,13 +1121,13 @@ msgstr "Pannningsläge. Klicka och dra för att flytta innehållet"
 
 #: data/ui/window.blp:230
 msgid "Zoom mode. Select an area on the figure to zoom in"
-msgstr "Zoomläge. Välj ett område på diagrammet för att zooma in."
+msgstr "Zoomläge. Välj ett område på diagrammet för att zooma in"
 
 #: data/ui/window.blp:236
 msgid "Highlight mode. Click and drag to make a selection of data"
 msgstr ""
 "Markeringsläge. Klicka och dra över diagrammet för att markera det "
-"arbetsbara området."
+"arbetsbara området"
 
 #: data/ui/window.blp:271
 msgid "Adjust"
@@ -1199,15 +1199,15 @@ msgstr "FFT"
 
 #: data/ui/window.blp:430
 msgid "Get the Fast Fourier Transform of the data"
-msgstr "Få snabb Fourier-transform (FFT) av datan."
+msgstr "Få den snabba Fourier-transformen (FFT) av datan"
 
 #: data/ui/window.blp:444
 msgid "Inverse FFT"
-msgstr "Inverse FFT"
+msgstr "Inverterad FFT"
 
 #: data/ui/window.blp:446
 msgid "Get the Inverse Fast Fourier Transform of the data"
-msgstr "Få den inversa snabb Fourier-transform (FFT) av datan."
+msgstr "Få den inversa snabba Fourier-transformen (FFT) av datan"
 
 #: data/ui/window.blp:461
 msgid "Custom Transformation"
@@ -1362,7 +1362,7 @@ msgstr "Summa av R²: {R2}"
 #: src/curve_fitting.py:439
 #, python-brace-format
 msgid "Fitting Parameters for {param_name}"
-msgstr "Anpassningsparametrar för {param_name}:"
+msgstr "Anpassningsparametrar för {param_name}"
 
 #: src/export_figure.py:64
 msgid "Exported Figure"
