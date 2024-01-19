@@ -15,10 +15,10 @@ dependencies = [
 
 application_id = 'se.sjoerd.Graphs'
 name = 'Graphs'
-copyright = '2022 - 2023'
+copyright = '2022 - 2024'
 homepage_url = 'https://graphs.sjoerd.se/'
-github_url = 'https://github.com/sjoerd1993/Graphs'
-issue_url = github_url + '/issues'
+vcs_url = 'https://gitlab.gnome.org/World/Graphs'
+issue_url = vcs_url + '/issues'
 author = 'Sjoerd Stendahl'
 description_short = 'Plot and manipulate data'
 
@@ -45,7 +45,7 @@ conf.set('APPLICATION_ID', application_id)
 conf.set('AUTHOR', author)
 conf.set('COPYRIGHT', copyright)
 conf.set('DESCRIPTION_SHORT', description_short)
-conf.set('GITHUB_URL', github_url)
+conf.set('VCS_URL', vcs_url)
 conf.set('ISSUE_URL', issue_url)
 conf.set('LOCALEDIR', localedir)
 conf.set('NAME', name)
