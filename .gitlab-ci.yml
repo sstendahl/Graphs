@@ -1,0 +1,35 @@
+image: python:3.11.1
+
+include:
+  - project: "GNOME/citemplates"
+    file: "flatpak/flatpak_ci_initiative.yml"
+
+.vars:
+  image: 'quay.io/gnome_infrastructure/gnome-runtime-images:gnome-45'
+  variables:
+    MANIFEST_PATH: se.sjoerd.Graphs.json
+    FLATPAK_MODULE: graphs
+    APP_ID: se.sjoerd.Graphs
+    RUNTIME_REPO: "https://nightly.gnome.org/gnome-nightly.flatpakrepo"
+    CI_IMAGE_X86_64: "quay.io/gnome_infrastructure/gnome-runtime-images:gnome-master"
+    BUNDLE: "se.sjoerd.Graphs.flatpak"
+
+# Build Flatpak for x86_64
+flatpak@x86_64:
+  stage: build
+  extends:
+    - .flatpak@x86_64
+    - .vars
+
+# Build Flatpak for aarch64
+flatpak@aarch64:
+  stage: build
+  extends:
+    - .flatpak@aarch64
+    - .vars
+
+flake8:
+  stage: .pre
+  script:
+    - pip install flake8 flake8-docstrings flake8-simplify flake8-unused-arguments flake8-quotes flake8-bugbear flake8-pie flake8-print flake8-warnings flake8-commas flake8-builtins flake8-import-order pep8-naming
+    - flake8
