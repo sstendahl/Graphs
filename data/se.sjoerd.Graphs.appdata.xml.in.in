@@ -25,9 +25,9 @@
   <launchable type="desktop-id">@APPLICATION_ID@.desktop</launchable>
   <translation type="gettext">graphs</translation>
   <url type="bugtracker">@ISSUE_URL@</url>
-  <url type="help">@GITLAB_URL@</url>
+  <url type="help">@VCS_URL@</url>
   <url type="homepage">@HOMEPAGE_URL@</url>
-  <url type="vcs-browser">@GITLAB_URL@</url>
+  <url type="vcs-browser">@VCS_URL@</url>
   <url type="translate">https://hosted.weblate.org/engage/graphs/</url>
   <screenshots>
     <screenshot type="default">
