@@ -256,7 +256,7 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
         Overwrite super function.
 
         Fixes a UI scaling bug, see
-        https://github.com/Sjoerd1993/Graphs/issues/259
+        https://gitlab.gnome.org/World/Graphs/-/issues/259
         """
         with (self.toolbar._wait_cursor_for_draw_cm() if self.toolbar
               else nullcontext()):

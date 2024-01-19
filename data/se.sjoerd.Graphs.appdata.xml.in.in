@@ -19,36 +19,36 @@
       Additionally, the option to save plots as vector images allows for easy editing in software like Inkscape for further refinement. Graphs is written with the GNOME environment in mind, but should be suitable for any other desktop environment as well.
     </p>
     <p>
-      For any feedback, questions or general issues, please file an issue on the GitHub page.
+      For any feedback, questions or general issues, please file an issue on the GitLab page.
     </p>
   </description>
   <launchable type="desktop-id">@APPLICATION_ID@.desktop</launchable>
   <translation type="gettext">graphs</translation>
   <url type="bugtracker">@ISSUE_URL@</url>
-  <url type="help">@GITHUB_URL@</url>
+  <url type="help">@GITLAB_URL@</url>
   <url type="homepage">@HOMEPAGE_URL@</url>
-  <url type="vcs-browser">@GITHUB_URL@</url>
+  <url type="vcs-browser">@GITLAB_URL@</url>
   <url type="translate">https://hosted.weblate.org/engage/graphs/</url>
   <screenshots>
     <screenshot type="default">
       <caption>1 - Plot and manipulate any data of choice</caption>
-      <image>https://raw.githubusercontent.com/Sjoerd1993/Graphs/main/data/screenshots/sin_cos.png</image>
+      <image>https://gitlab.gnome.org/World/Graphs/-/raw/main/data/screenshots/sin_cos.png</image>
     </screenshot>
     <screenshot type="default">
       <caption>2 - Full support for light and dark mode</caption>
-      <image>https://raw.githubusercontent.com/Sjoerd1993/Graphs/main/data/screenshots/sin_cos_dark.png</image>
+      <image>https://gitlab.gnome.org/World/Graphs/-/raw/main/data/screenshots/sin_cos_dark.png</image>
     </screenshot>
     <screenshot type="default">
       <caption>3 - Generate data from an equation</caption>
-      <image>https://raw.githubusercontent.com/Sjoerd1993/Graphs/main/data/screenshots/add_equation.png</image>
+      <image>https://gitlab.gnome.org/World/Graphs/-/raw/main/data/screenshots/add_equation.png</image>
     </screenshot>
     <screenshot type="default">
       <caption>4 - Edit plot stylesheets</caption>
-      <image>https://raw.githubusercontent.com/Sjoerd1993/Graphs/main/data/screenshots/previews.png</image>
+      <image>https://gitlab.gnome.org/World/Graphs/-/raw/main/data/screenshots/previews.png</image>
     </screenshot>
     <screenshot>
       <caption>5 - Manipulate imported data with ease</caption>
-      <image>https://raw.githubusercontent.com/Sjoerd1993/Graphs/main/data/screenshots/curve_fitting.png</image>
+      <image>https://gitlab.gnome.org/World/Graphs/-/raw/main/data/screenshots/curve_fitting.png</image>
     </screenshot>
   </screenshots>
   <releases>
