@@ -24,7 +24,7 @@
     </p>
   </description>
 
-  <homepage rdf:resource="https://graphs.sjoerd.se" />
+  <homepage rdf:resource="https://apps.gnome.org/Graphs/" />
   <download-page rdf:resource="https://flathub.org/apps/details/se.sjoerd.Graphs" />
   <bug-database rdf:resource="https://gitlab.gnome.org/World/graphs/-/issues" />
 
@@ -58,6 +58,10 @@
       <foaf:account>
         <foaf:OnlineAccount>
           <foaf:accountServiceHomepage rdf:resource="https://github.com"/>
+          <foaf:accountName>cmkohnen</foaf:accountName>
+        </foaf:OnlineAccount>
+        <foaf:OnlineAccount>
+          <foaf:accountServiceHomepage rdf:resource="https://gitlab.gnome.org"/>
           <foaf:accountName>cmkohnen</foaf:accountName>
         </foaf:OnlineAccount>
       </foaf:account>
