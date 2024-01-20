@@ -1,4 +1,4 @@
-on: [pull_request, issue]
+on: [pull_request, issues]
 
 name: Repo Lockdown
 uses: dessant/repo-lockdown@v4.0.0
