@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: graphs\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-01-11 15:54+0100\n"
-"PO-Revision-Date: 2024-01-18 08:23+0000\n"
-"Last-Translator: Sjoerd Stendahl <sjoerd1993@gmail.com>\n"
+"PO-Revision-Date: 2024-01-20 15:55+0000\n"
+"Last-Translator: Philip Goto <philip.goto@gmail.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/graphs/graphs/nl/>"
 "\n"
 "Language: nl\n"
@@ -124,7 +124,7 @@ msgstr "Vergelijking toevoegen"
 #: data/ui/export_figure.blp:24 data/ui/import.blp:24
 #: data/ui/transform_window.blp:23
 msgid "Cancel"
-msgstr "Annuleer"
+msgstr "Annuleren"
 
 #: data/ui/add_equation_window.blp:29 data/ui/add_style.blp:29
 msgid "Add"
@@ -152,7 +152,7 @@ msgstr "X-stop"
 
 #: data/ui/add_equation_window.blp:91
 msgid "Step Size"
-msgstr "Stapgrootte"
+msgstr "Stap­grootte"
 
 #: data/ui/add_style.blp:7 data/ui/figure_settings.blp:203
 msgid "Add new style"
@@ -168,11 +168,11 @@ msgstr "Naam"
 
 #: data/ui/curve_fitting.blp:35 data/ui/item_box.blp:64
 msgid "Curve Fitting"
-msgstr "Trendanalyse"
+msgstr "Kromme­berekening"
 
 #: data/ui/curve_fitting.blp:41
 msgid "Open Curve Fitting Menu"
-msgstr "Open Trendanalysemenu"
+msgstr "Kromme­berekenings­menu openen"
 
 #: data/ui/curve_fitting.blp:58
 msgid "Equation"
@@ -224,7 +224,7 @@ msgstr "Trend toevoegen als item"
 
 #: data/ui/curve_fitting.blp:108 data/ui/window.blp:586 src/ui.py:33
 msgid "Toggle Sidebar"
-msgstr "Schakel de zijbalk"
+msgstr "Zijbalk omschakelen"
 
 #: data/ui/curve_fitting.blp:120 data/ui/window.blp:626
 msgid "Canvas Failed to Load"
@@ -232,7 +232,7 @@ msgstr "Canvas laden mislukt"
 
 #: data/ui/curve_fitting.blp:130
 msgid "Optimization Method"
-msgstr "Optimalisatiemethode"
+msgstr "Optimalisatie­methode"
 
 #: data/ui/curve_fitting.blp:132
 msgid "Levenberg-Marquardt"
@@ -300,7 +300,7 @@ msgstr "Verwijderen"
 
 #: data/ui/dialogs.blp:27
 msgid "Reset to Defaults?"
-msgstr "Herstel standaardinstellingen?"
+msgstr "Standaard­instellingen herstellen?"
 
 #: data/ui/dialogs.blp:30
 msgid "Reset"
@@ -344,15 +344,15 @@ msgstr "Rechts"
 
 #: data/ui/edit_item.blp:49
 msgid "Line Properties"
-msgstr "Lijneigenschappen"
+msgstr "Lijn­eigenschappen"
 
 #: data/ui/edit_item.blp:52 data/ui/style_editor.blp:83
 msgid "Linestyle"
-msgstr "Lijnstijl"
+msgstr "Lijn­stijl"
 
 #: data/ui/edit_item.blp:54 data/ui/style_editor.blp:85
 msgid "Solid"
-msgstr "Vast"
+msgstr "On­onderbroken"
 
 #: data/ui/edit_item.blp:54 data/ui/style_editor.blp:85
 msgid "Dotted"
@@ -368,7 +368,7 @@ msgstr "Streep-stippel"
 
 #: data/ui/edit_item.blp:60 data/ui/style_editor.blp:91
 msgid "Linewidth"
-msgstr "Lijnbreedte"
+msgstr "Lijn­breedte"
 
 #: data/ui/edit_item.blp:74 data/ui/style_editor.blp:106
 msgid "Markers"
@@ -392,19 +392,19 @@ msgstr "Cirkel"
 
 #: data/ui/edit_item.blp:78 data/ui/style_editor.blp:110
 msgid "Triangle Down"
-msgstr "Driehoek Omlaag"
+msgstr "Driehoek omlaag"
 
 #: data/ui/edit_item.blp:78 data/ui/style_editor.blp:110
 msgid "Triangle Up"
-msgstr "Driehoek Omhoog"
+msgstr "Driehoek omhoog"
 
 #: data/ui/edit_item.blp:78 data/ui/style_editor.blp:110
 msgid "Triangle Left"
-msgstr "Driehoek Links"
+msgstr "Driehoek links"
 
 #: data/ui/edit_item.blp:79 data/ui/style_editor.blp:111
 msgid "Triangle Right"
-msgstr "Driehoek Rechts"
+msgstr "Driehoek rechts"
 
 #: data/ui/edit_item.blp:79 data/ui/style_editor.blp:111
 msgid "Octagon"
@@ -444,27 +444,27 @@ msgstr "Ruit"
 
 #: data/ui/edit_item.blp:82 data/ui/style_editor.blp:114
 msgid "Thin Diamond"
-msgstr "Dunne Ruit"
+msgstr "Dunne ruit"
 
 #: data/ui/edit_item.blp:82 data/ui/style_editor.blp:114
 msgid "Vertical Line"
-msgstr "Verticale Lijn"
+msgstr "Verticale lijn"
 
 #: data/ui/edit_item.blp:82 data/ui/style_editor.blp:114
 msgid "Horizontal Line"
-msgstr "Horizontale Lijn"
+msgstr "Horizontale lijn"
 
 #: data/ui/edit_item.blp:83 data/ui/style_editor.blp:115
 msgid "Filled Plus"
-msgstr "Gevulde Plus"
+msgstr "Gevulde plus"
 
 #: data/ui/edit_item.blp:83 data/ui/style_editor.blp:115
 msgid "Filled X"
-msgstr "Gevuld Kruis"
+msgstr "Gevuld kruis"
 
 #: data/ui/edit_item.blp:90 data/ui/style_editor.blp:122
 msgid "Marker Size"
-msgstr "Markeringsgrootte"
+msgstr "Markerings­grootte"
 
 #: data/ui/export_figure.blp:6
 msgid "Export Figure"
@@ -472,11 +472,11 @@ msgstr "Figuur exporteren"
 
 #: data/ui/export_figure.blp:30 src/export_figure.py:72
 msgid "Export"
-msgstr "Exporteer"
+msgstr "Exporteren"
 
 #: data/ui/export_figure.blp:44
 msgid "File Format"
-msgstr "Bestandsformaat"
+msgstr "Bestands­formaat"
 
 #: data/ui/export_figure.blp:47
 msgid "Resolution (dpi)"
@@ -488,7 +488,7 @@ msgstr "Doorzichtige achtergrond"
 
 #: data/ui/figure_settings.blp:21 data/ui/window.blp:648
 msgid "Figure Settings"
-msgstr "Figuurinstellingen"
+msgstr "Figuur­instellingen"
 
 #: data/ui/figure_settings.blp:37
 msgid "Labels"
@@ -531,7 +531,7 @@ msgstr "Legenda"
 
 #: data/ui/figure_settings.blp:150
 msgid "Legend Position"
-msgstr "Legendapositie"
+msgstr "Legenda­positie"
 
 #: data/ui/figure_settings.blp:153
 msgid "Auto"
@@ -555,27 +555,27 @@ msgstr "Rechtsonder"
 
 #: data/ui/figure_settings.blp:154
 msgid "Center Left"
-msgstr "Linksmidden"
+msgstr "Links"
 
 #: data/ui/figure_settings.blp:154
 msgid "Center Right"
-msgstr "Rechtsmidden"
+msgstr "Rechts"
 
 #: data/ui/figure_settings.blp:155
 msgid "Lower Center"
-msgstr "Onderaan Midden"
+msgstr "Onder"
 
 #: data/ui/figure_settings.blp:155
 msgid "Upper Center"
-msgstr "Bovenaan Midden"
+msgstr "Boven"
 
 #: data/ui/figure_settings.blp:155 data/ui/window.blp:338
 msgid "Center"
-msgstr "Centreer"
+msgstr "Midden"
 
 #: data/ui/figure_settings.blp:162
 msgid "Hide Unselected Items"
-msgstr "Verberg niet-geselecteerde gegevens"
+msgstr "Niet-geselecteerde gegevens verbergen"
 
 #: data/ui/figure_settings.blp:166 data/ui/figure_settings.blp:196
 msgid "Style"
@@ -601,27 +601,27 @@ msgstr "Algemeen"
 #: data/ui/help_overlay.blp:14
 msgctxt "shortcut window"
 msgid "Show Shortcuts"
-msgstr "Toon snelkoppelingen"
+msgstr "Snel­toetsen tonen"
 
 #: data/ui/help_overlay.blp:19
 msgctxt "shortcut window"
 msgid "Open Figure Settings"
-msgstr "Open Figuurinstellingen"
+msgstr "Figuur­instellingen openen"
 
 #: data/ui/help_overlay.blp:24
 msgctxt "shortcut window"
 msgid "Close Application"
-msgstr "Sluit Toepassing"
+msgstr "App sluiten"
 
 #: data/ui/help_overlay.blp:28
 msgctxt "shortcut window"
 msgid "Close Application Window"
-msgstr "Sluit Toepassingsvenster"
+msgstr "App-venster sluiten"
 
 #: data/ui/help_overlay.blp:34
 msgctxt "shortcut window"
 msgid "Mode Switching"
-msgstr "Verander modus"
+msgstr "Modus wisselen"
 
 #: data/ui/help_overlay.blp:37
 msgctxt "shortcut window"
@@ -646,12 +646,12 @@ msgstr "Nieuwe gegevens"
 #: data/ui/help_overlay.blp:56
 msgctxt "shortcut window"
 msgid "Add Data from Equation"
-msgstr "Voeg gegevens toe met een vergelijking"
+msgstr "Gegevens toevoegen vanuit vergelijking"
 
 #: data/ui/help_overlay.blp:61
 msgctxt "shortcut window"
 msgid "Add Data from File"
-msgstr "Gegevens toevoegen vanuit een bestand"
+msgstr "Gegevens toevoegen vanuit bestand"
 
 #: data/ui/help_overlay.blp:66
 msgctxt "shortcut window"
@@ -661,12 +661,12 @@ msgstr "Nieuw project"
 #: data/ui/help_overlay.blp:71
 msgctxt "shortcut window"
 msgid "Open Project"
-msgstr "Open project"
+msgstr "Project openen"
 
 #: data/ui/help_overlay.blp:76
 msgctxt "shortcut window"
 msgid "Delete Selected Data"
-msgstr "Verwijder geselecteerde gegevens"
+msgstr "Geselecteerde gegevens verwijderen"
 
 #: data/ui/help_overlay.blp:82
 msgctxt "shortcut window"
@@ -691,7 +691,7 @@ msgstr "Project opslaan"
 #: data/ui/help_overlay.blp:96
 msgctxt "shortcut window"
 msgid "Save Project As"
-msgstr "Project Opslaan Als"
+msgstr "Project opslaan als"
 
 #: data/ui/help_overlay.blp:102
 msgctxt "shortcut window"
@@ -827,7 +827,7 @@ msgstr "Genegeerde rijen"
 
 #: data/ui/item_box.blp:26
 msgid "Pick Color"
-msgstr "Kies een kleur"
+msgstr "Kleur kiezen"
 
 #: data/ui/item_box.blp:51
 msgid "Move Item "
@@ -988,7 +988,7 @@ msgstr "Roosterbreedte"
 
 #: data/ui/style_editor.blp:265
 msgid "Grid Opacity"
-msgstr "Roostertransparantie"
+msgstr "Rooster­ondoorzichtigheid"
 
 #: data/ui/style_editor.blp:280
 msgid "Padding"
@@ -1108,7 +1108,7 @@ msgstr "Voeg nieuwe gegevens toe"
 
 #: data/ui/window.blp:174
 msgid "Open Application Menu"
-msgstr "Open toepassingmenu"
+msgstr "App-menu openen"
 
 #: data/ui/window.blp:203
 msgid "No Data"
@@ -1150,7 +1150,7 @@ msgstr "Normaliseer"
 
 #: data/ui/window.blp:305
 msgid "Normalize data"
-msgstr "Normaliseer de gegevens"
+msgstr "Gegevens normaliseren"
 
 #: data/ui/window.blp:321
 msgid "Smoothen"
@@ -1166,7 +1166,7 @@ msgstr "Gegevens centreren"
 
 #: data/ui/window.blp:355
 msgid "Combine"
-msgstr "Combineer"
+msgstr "Combineren"
 
 #: data/ui/window.blp:357
 msgid "Combine all selected data"
@@ -1222,23 +1222,23 @@ msgstr "Voer aangepaste transformaties uit op de gegevens"
 
 #: data/ui/window.blp:470
 msgid "Modify"
-msgstr "Verplaats"
+msgstr "Bewerken"
 
 #: data/ui/window.blp:491
 msgid "Translate X"
-msgstr "Verplaats X"
+msgstr "X-translatie"
 
 #: data/ui/window.blp:514
 msgid "Translate Y"
-msgstr "Verplaats Y"
+msgstr "Y-translatie"
 
 #: data/ui/window.blp:537
 msgid "Multiply X"
-msgstr "Vermenigvuldig X"
+msgstr "X-vermenigvuldiging"
 
 #: data/ui/window.blp:560
 msgid "Multiply Y"
-msgstr "Vermenigvuldig Y"
+msgstr "Y-vermenigvuldiging"
 
 #: data/ui/window.blp:593
 msgid "Undo"
@@ -1250,7 +1250,7 @@ msgstr "Opnieuw uitvoeren"
 
 #: data/ui/window.blp:603
 msgid "View Menu"
-msgstr "Weergavemenu"
+msgstr "Weergave­menu"
 
 #: data/ui/window.blp:611
 msgid "Next View"
@@ -1274,15 +1274,15 @@ msgstr "Project opslaan als…"
 
 #: data/ui/window.blp:641
 msgid "Open Project…"
-msgstr "Open Project…"
+msgstr "Project openen…"
 
 #: data/ui/window.blp:644
 msgid "Export Data…"
-msgstr "Data Exporteren…"
+msgstr "Gegevens exporteren…"
 
 #: data/ui/window.blp:645
 msgid "Export Figure…"
-msgstr "Figuur Exporteren…"
+msgstr "Figuur exporteren…"
 
 #: data/ui/window.blp:651
 msgid "Keyboard Shortcuts"
@@ -1302,11 +1302,11 @@ msgstr "Vergelijking Toevoegen…"
 
 #: data/ui/window.blp:668
 msgid "At Maximum Y Value"
-msgstr "Op de Maximale Y-waarde"
+msgstr "Op de maximale Y-waarde"
 
 #: data/ui/window.blp:673
 msgid "At Middle X Value"
-msgstr "Op de Middelste X-waarde"
+msgstr "Op de middelste X-waarde"
 
 #: data/ui/window.blp:694
 msgid "Advanced Settings"
@@ -1380,7 +1380,7 @@ msgstr "Systeem"
 
 #: src/figure_settings.py:156
 msgid "Top X Axis Minimum"
-msgstr "Bovenste X-As Minimum"
+msgstr "Minimum van bovenste X-as"
 
 #: src/figure_settings.py:157 src/figure_settings.py:167
 msgid "X Axis Minimum"
@@ -1388,7 +1388,7 @@ msgstr "X-As Minimum"
 
 #: src/figure_settings.py:158
 msgid "Top X Axis Maximum"
-msgstr "Bovenste X-As Maximum"
+msgstr "Maximum van bovenste X-as"
 
 #: src/figure_settings.py:159 src/figure_settings.py:169
 msgid "X Axis Maximum"
