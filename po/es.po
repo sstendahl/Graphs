@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: graphs\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-01-11 15:54+0100\n"
-"PO-Revision-Date: 2024-01-17 21:01+0000\n"
+"PO-Revision-Date: 2024-01-20 15:55+0000\n"
 "Last-Translator: gallegonovato <fran-carro@hotmail.es>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/graphs/graphs/es/"
 ">\n"
@@ -443,7 +443,6 @@ msgid "Diamond"
 msgstr "Diamante"
 
 #: data/ui/edit_item.blp:82 data/ui/style_editor.blp:114
-#, fuzzy
 msgid "Thin Diamond"
 msgstr "Diamante fino"
 
@@ -452,7 +451,6 @@ msgid "Vertical Line"
 msgstr "Linea vertical"
 
 #: data/ui/edit_item.blp:82 data/ui/style_editor.blp:114
-#, fuzzy
 msgid "Horizontal Line"
 msgstr "Línea horizontal"
 
