@@ -133,6 +133,11 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
 
         self.connect("notify::hide-unselected", self._redraw)
         self.connect("notify::items", self._redraw)
+        for item in ("min", "max"):
+            self.connect(
+                f"notify::{item}-selected",
+                lambda _a, _b: self.highlight.load(self),
+            )
 
     def get_application(self):
         """Get application property."""
