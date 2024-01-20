@@ -91,7 +91,8 @@ def sort_data(xdata, ydata):
 def perform_operation(self, callback, *args):
     data_selected = False
     data = self.get_data()
-    old_limits = data.get_figure_settings().get_limits()
+    figure_settings = data.get_figure_settings()
+    old_limits = figure_settings.get_limits()
     for item in data:
         if not (item.get_selected() and isinstance(item, DataItem)):
             continue
@@ -135,10 +136,7 @@ def perform_operation(self, callback, *args):
                 item.xdata, item.ydata = sort_data(item.xdata, item.ydata)
         item.notify("xdata")
         item.notify("ydata")
-    canvas = self.get_window().get_canvas()
-    canvas.highlight.extents = (0, 0)
-    canvas.set_property("min_selected", 0)
-    canvas.set_property("max_selected", 0)
+    figure_settings.set_selection_range(0, 0)
     if not data_selected:
         self.get_window().add_toast_string(
             _("No data found within the highlighted area"))

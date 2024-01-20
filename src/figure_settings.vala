@@ -66,5 +66,14 @@ namespace Graphs {
                 set (limit_names[i], limits[i]);
             }
         }
+
+        public void set_selection_range (double minimum, double maximum)
+                requires (0 <= minimum <= 1)
+                requires (0 <= maximum <= 1)
+                requires (minimum <= maximum)
+        {
+            this.min_selected = minimum;
+            this.max_selected = maximum;
+        }
     }
 }
