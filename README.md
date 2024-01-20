@@ -95,7 +95,7 @@ Please note, that this install might have issues that the Flatpak version does n
 ### Translations
 
 Graphs is translated on the GNOME translation platform [Damned Lies](https://l10n.gnome.org/module/Graphs). 
-If you wish to contribute to translating Graphs, you can join a language team, more information on that can be found on the [GNOME Translation Project Wiki.](https://wiki.gnome.org/TranslationProject)
+If you wish to contribute by translating Graphs, you can join a language team. More information on that can be found on the [GNOME Translation Project Wiki](https://wiki.gnome.org/TranslationProject).
 
 ### Code 
 
