@@ -1,9 +1,20 @@
-on: [pull_request, issues]
+name: 'Repo Lockdown'
 
-name: Repo Lockdown
+on:
+  issues:
+    types: opened
+  pull_request_target:
+    types: opened
+
+permissions:
+  issues: write
+  pull-requests: write
+
 jobs:
-  Repo-lock:
-    name: Lock issues and pull requests
-    uses: dessant/repo-lockdown@v4.0.0
-    issue-comment: 'Thank you for contributing to Graphs by opening this issue. The repository has been moved to the GNOME GitLab, please file your issue at https://gitlab.gnome.org/World/Graphs/ instead.'
-    pr-comment: 'Thank you for contributing to Graphs by opening this pull request. The repository has been moved to the GNOME Gitlab, please open a merge request at https://gitlab.gnome.org/World/Graphs/-/merge_requests instead.'
+  action:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: dessant/repo-lockdown@v4
+        with:
+          issue-comment: 'Thank you for contributing to Graphs by opening this issue. The repository has been moved to the GNOME GitLab, please file your issue at https://gitlab.gnome.org/World/Graphs/ instead.'
+          pr-comment: 'Thank you for contributing to Graphs by opening this pull request. The repository has been moved to the GNOME Gitlab, please open a merge request at https://gitlab.gnome.org/World/Graphs/-/merge_requests instead.'
