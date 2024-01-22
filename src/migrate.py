@@ -10,27 +10,27 @@ from graphs import file_io, misc, style_io, utilities
 
 
 CONFIG_MIGRATION_TABLE = {
-    # old-key: (category, key)
-    "action_center_data": ("actions", "center"),
-    "addequation_equation": ("add-equation", "equation"),
-    "addequation_step_size": ("add-equation", "step-size"),
-    "addequation_x_start": ("add-equation", "x-start"),
-    "addequation_x_stop": ("add-equation", "x-stop"),
-    "export_figure_dpi": ("export-figure", "dpi"),
-    "export_figure_transparent": ("export-figure", "transparent"),
-    "hide_unselected": ("figure", "hide-unselected"),
-    "plot_custom_style": ("figure", "custom-style"),
-    "plot_legend": ("figure", "legend"),
-    "plot_right_label": ("figure", "right-label"),
-    "plot_right_scale": ("figure", "right-scale"),
-    "plot_title": ("figure", "title"),
-    "plot_top_label": ("figure", "top-label"),
-    "plot_top_scale": ("figure", "top-scale"),
-    "plot_use_custom_style": ("figure", "use-custom-style"),
-    "plot_x_label": ("figure", "bottom-label"),
-    "plot_x_scale": ("figure", "bottom-scale"),
-    "plot_y_label": ("figure", "left-label"),
-    "plot_y_scale": ("figure", "left-scale"),
+    # old-key: (category, key, old-default)
+    "action_center_data": ("actions", "center", "Center at middle coordinate"),
+    "addequation_equation": ("add-equation", "equation", "X"),
+    "addequation_step_size": ("add-equation", "step-size", "0.01"),
+    "addequation_x_start": ("add-equation", "x-start", "0"),
+    "addequation_x_stop": ("add-equation", "x-stop", "10"),
+    "export_figure_dpi": ("export-figure", "dpi", 100),
+    "export_figure_transparent": ("export-figure", "transparent", True),
+    "hide_unselected": ("figure", "hide-unselected", False),
+    "plot_custom_style": ("figure", "custom-style", "adwaita"),
+    "plot_legend": ("figure", "legend", True),
+    "plot_right_label": ("figure", "right-label", "Y Value 2"),
+    "plot_right_scale": ("figure", "right-scale", "linear"),
+    "plot_title": ("figure", "title", ""),
+    "plot_top_label": ("figure", "top-label", "X Value 2"),
+    "plot_top_scale": ("figure", "top-scale", "linear"),
+    "plot_use_custom_style": ("figure", "use-custom-style", False),
+    "plot_x_label": ("figure", "bottom-label", "X Value"),
+    "plot_x_scale": ("figure", "bottom-scale", "linear"),
+    "plot_y_label": ("figure", "left-label", "Y Value"),
+    "plot_y_scale": ("figure", "left-scale", "linear"),
 }
 
 CENTER_ACTION_MIGRATION_TABLE = {
@@ -60,14 +60,16 @@ def migrate_config(settings):
 
 def _migrate_config(settings_, config_file):
     config = file_io.parse_json(config_file)
-    for old_key, (category, key) in CONFIG_MIGRATION_TABLE.items():
+    for old_key, (category, key, old_default) \
+            in CONFIG_MIGRATION_TABLE.items():
         with contextlib.suppress(KeyError, ValueError):
             value = config[old_key]
             if old_key == "action_center_data":
                 value = CENTER_ACTION_MIGRATION_TABLE[value]
             elif "scale" in key:
                 value = value.capitalize()
-            settings_.get_child(category)[key] = value
+            if old_default != value:
+                settings_.get_child(category)[key] = value
     config_file.delete(None)
 
 
