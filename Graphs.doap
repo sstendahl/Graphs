@@ -37,15 +37,16 @@
   <maintainer>
     <foaf:Person>
       <foaf:name>Sjoerd Stendahl</foaf:name>
+      <gnome:userid>sstendahl</gnome:userid>
       <foaf:mbox rdf:resource="mailto:sstendahl@gnome.org" />
       <foaf:account>
         <foaf:OnlineAccount>
           <foaf:accountServiceHomepage rdf:resource="https://github.com"/>
-          <foaf:accountName>Sjoerd1993</foaf:accountName>
+          <foaf:accountName>sstendahl</foaf:accountName>
         </foaf:OnlineAccount>
         <foaf:OnlineAccount>
           <foaf:accountServiceHomepage rdf:resource="https://gitlab.gnome.org"/>
-          <foaf:accountName>Sjoerd1993</foaf:accountName>
+          <foaf:accountName>sstendahl</foaf:accountName>
         </foaf:OnlineAccount>
       </foaf:account>
     </foaf:Person>
@@ -54,6 +55,7 @@
   <maintainer>
     <foaf:Person>
       <foaf:name>Christoph Kohnen</foaf:name>
+      <gnome:userid>cmkohnen</gnome:userid>
       <foaf:mbox rdf:resource="mailto:christoph.kohnen@disroot.org" />
       <foaf:account>
         <foaf:OnlineAccount>
