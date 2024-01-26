@@ -19,6 +19,7 @@ copyright = '2022 - 2024'
 homepage_url = 'https://apps.gnome.org/Graphs/'
 vcs_url = 'https://gitlab.gnome.org/World/Graphs'
 issue_url = vcs_url + '/issues'
+help_url = 'https://gitlab.gnome.org/World/Graphs/-/wikis/home'
 author = 'Sjoerd Stendahl'
 description_short = 'Plot and manipulate data'
 
@@ -47,6 +48,7 @@ conf.set('COPYRIGHT', copyright)
 conf.set('DESCRIPTION_SHORT', description_short)
 conf.set('VCS_URL', vcs_url)
 conf.set('ISSUE_URL', issue_url)
+conf.set('HELP_URL', help_url)
 conf.set('LOCALEDIR', localedir)
 conf.set('NAME', name)
 conf.set('PKGDATADIR', pkgdatadir)
