@@ -65,7 +65,7 @@ When the project successfully ran, you can create a Flatpak-bundle on the buildc
 
 If you want to try the latest development, we urge you to try the Flathub beta branch instead of building yourself.
 
-### Build without flatpak
+### Build without Flatpak
 This project targets the GNOME Platform on Flathub. Manually building Graphs for any other platform is currently **not supported**.
 
 If you want to build without Flatpak anyway these instructions might help:
@@ -94,14 +94,8 @@ Please note, that this install might have issues that the Flatpak version does n
 ## How to contribute
 ### Translations
 
-
-Graphs is translated using Weblate.
-If you wish to contribute to the translation of Graphs, in other languages please check out the project page on [Weblate](https://hosted.weblate.org/engage/graphs/).
-We are incredibly grateful to anyone helping to make Graphs available in different languages!
-
-<a href="https://hosted.weblate.org/engage/graphs/">
-<img src="https://hosted.weblate.org/widget/graphs/multi-auto.svg" alt="Translation status" />
-</a>
+Graphs is translated on the GNOME translation platform [Damned Lies](https://l10n.gnome.org/module/Graphs). 
+If you wish to contribute by translating Graphs, you can join a language team. More information on that can be found on the [GNOME Translation Project Wiki](https://wiki.gnome.org/TranslationProject).
 
 ### Code 
 
