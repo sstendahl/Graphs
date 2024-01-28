@@ -148,26 +148,23 @@ def generate_system_preview(
 ) -> Gdk.Texture:
 
     def _style_to_array(style):
-        return numpy.array(
-            Image.open(_create_preview(style, file_format="png")),
-        )
+        image = Image.open(_create_preview(style, file_format="png"))
+        return numpy.array(image.convert("RGB"))
 
     light_image = _style_to_array(light_style)
     dark_image = _style_to_array(dark_style)
-    assert light_image.shape == dark_image.shape
 
     height, width = light_image.shape[0:2]
-    stitched_image = Image.fromarray(numpy.concatenate((
-        light_image[:, :width // 2],
-        dark_image[:, width // 2:],
-    ), axis=1))
+    stitched_image = numpy.concatenate(
+        (light_image[:, :width // 2], dark_image[:, width // 2:]), axis=1,
+    )
 
     return Gdk.Texture.new_for_pixbuf(GdkPixbuf.Pixbuf.new_from_bytes(
         GLib.Bytes.new(stitched_image.tobytes()),
         0,
-        True,
+        False,
         8,
         width,
         height,
-        width * 4,
+        width * 3,
     ))

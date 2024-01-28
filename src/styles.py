@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
+import time
 import contextlib
 import os
 from gettext import gettext as _
