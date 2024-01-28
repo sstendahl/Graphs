@@ -5,7 +5,7 @@ from gettext import gettext as _
 
 from PIL import Image
 
-from gi.repository import GLib, Gdk, Gio
+from gi.repository import GLib, Gdk, GdkPixbuf, Gio
 
 from graphs import file_io, utilities
 
@@ -146,9 +146,28 @@ def generate_preview(style: RcParams) -> Gdk.Texture:
 def generate_system_preview(
     light_style: RcParams, dark_style: RcParams,
 ) -> Gdk.Texture:
-    buffer = io.BytesIO()
-    utilities.stitch_images(*(
-        Image.open(_create_preview(style, file_format="png"))
-        for style in (light_style, dark_style)
-    )).save(buffer, format="png")
-    return Gdk.Texture.new_from_bytes(GLib.Bytes.new(buffer.getvalue()))
+
+    def _style_to_array(style):
+        return numpy.array(
+            Image.open(_create_preview(style, file_format="png")),
+        )
+
+    light_image = _style_to_array(light_style)
+    dark_image = _style_to_array(dark_style)
+    assert light_image.shape == dark_image.shape
+
+    height, width = light_image.shape[0:2]
+    stitched_image = Image.fromarray(numpy.concatenate((
+        light_image[:, :width // 2],
+        dark_image[:, width // 2:],
+    ), axis=1))
+
+    return Gdk.Texture.new_for_pixbuf(GdkPixbuf.Pixbuf.new_from_bytes(
+        GLib.Bytes.new(stitched_image.tobytes()),
+        0,
+        True,
+        8,
+        width,
+        height,
+        width * 4,
+    ))
