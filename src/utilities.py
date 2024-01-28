@@ -5,8 +5,6 @@ import operator as op
 import re
 from gettext import gettext as _
 
-from PIL import Image
-
 from gi.repository import GLib, Gdk, Gio, Gtk
 
 import numpy
