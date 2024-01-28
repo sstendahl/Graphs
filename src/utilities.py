@@ -5,8 +5,6 @@ import operator as op
 import re
 from gettext import gettext as _
 
-from PIL import Image
-
 from gi.repository import GLib, Gdk, Gio, Gtk
 
 import numpy
@@ -236,20 +234,3 @@ def get_duplicate_string(original_string: str, used_strings) -> str:
         if new_string not in used_strings:
             return new_string
         i += 1
-
-
-def stitch_images(light_image: Image, dark_image: Image) -> Image:
-    # Convert the images to numpy arrays
-    light_image = numpy.array(light_image)
-    dark_image = numpy.array(dark_image)
-
-    # Cut the images in half
-    light_image_half = light_image[:, :light_image.shape[1] // 2]
-    dark_image_half = dark_image[:, dark_image.shape[1] // 2:]
-
-    # Concatenate the image halves
-    stitched_image = numpy.concatenate(
-        (light_image_half, dark_image_half), axis=1)
-
-    # Convert the result back to an image
-    return Image.fromarray(stitched_image)
