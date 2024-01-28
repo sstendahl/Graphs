@@ -342,15 +342,12 @@ class StylePreview(Gtk.AspectFrame):
     def name(self, name):
         self.label.set_label(utilities.shorten_label(name))
 
-    @GObject.Property(type=Gio.File, flags=2)
+    @GObject.Property(type=Gdk.Texture, flags=2)
     def preview(self):
         pass
 
     @preview.setter
-    def preview(self, file):
-        if file is None:
-            return
-        texture = Gdk.Texture.new_from_file(file)
+    def preview(self, texture):
         self.picture.set_paintable(texture)
         if self._style.get_mutable():
             color = "@light_1" if self._style.get_light() else "@dark_5"

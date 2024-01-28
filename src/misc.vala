@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+using Gdk;
+
 namespace Graphs {
 
     public const string[] limit_names = {
@@ -8,13 +10,12 @@ namespace Graphs {
 
     public class Style : Object {
         public string name { get; construct set; default = ""; }
-        // TODO: make non-nullable
-        public File? preview { get; set; }
+        public Texture preview { get; set; }
         public File? file { get; construct set; }
         public bool mutable { get; construct set; }
         public bool light { get; set; default = true; }
 
-        public Style (string name, File? file, File? preview, bool mutable) {
+        public Style (string name, File? file, Texture preview, bool mutable) {
             Object (
                 name: name, file: file, preview: preview, mutable: mutable
             );
