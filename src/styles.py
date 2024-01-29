@@ -1,17 +1,24 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 import contextlib
+import io
 import os
 from gettext import gettext as _
 from pathlib import Path
 
+from PIL import Image
+
 from cycler import cycler
 
-from gi.repository import Adw, GLib, GObject, Gdk, Gio, Graphs, Gtk, Pango
+from gi.repository import (Adw, GLib, GObject, Gdk, GdkPixbuf, Gio, Graphs,
+                           Gtk, Pango)
 
 import graphs
 from graphs import item, style_io, ui, utilities
 
-from matplotlib import RcParams, rcParams, rcParamsDefault
+from matplotlib import RcParams, rcParams, rcParamsDefault, rc_context
+from matplotlib.figure import Figure
+
+import numpy
 
 
 def _compare_styles(a: Graphs.Style, b: Graphs.Style) -> int:
@@ -29,6 +36,34 @@ def _generate_filename(name: str) -> str:
 
 def _is_style_bright(params: RcParams):
     return utilities.get_luminance(params["axes.facecolor"]) < 150
+
+
+_PREVIEW_XDATA = numpy.linspace(0, 10, 30)
+_PREVIEW_YDATA1 = numpy.sin(_PREVIEW_XDATA)
+_PREVIEW_YDATA2 = numpy.cos(_PREVIEW_XDATA)
+
+
+def _create_preview(style: RcParams, file_format: str = "svg"):
+    buffer = io.BytesIO()
+    with rc_context(style):
+        # set render size in inch
+        figure = Figure(figsize=(5, 3))
+        axis = figure.add_subplot()
+        axis.spines.bottom.set_visible(True)
+        axis.spines.left.set_visible(True)
+        if not style["axes.spines.top"]:
+            axis.tick_params(which="both", top=False, right=False)
+        axis.plot(_PREVIEW_XDATA, _PREVIEW_YDATA1)
+        axis.plot(_PREVIEW_XDATA, _PREVIEW_YDATA2)
+        axis.set_xlabel(_("X Label"))
+        axis.set_xlabel(_("Y Label"))
+        figure.savefig(buffer, format=file_format)
+    return buffer
+
+
+def _generate_preview(style: RcParams) -> Gdk.Texture:
+    buffer = _create_preview(style)
+    return Gdk.Texture.new_from_bytes(GLib.Bytes.new(buffer.getvalue()))
 
 
 class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
@@ -57,8 +92,7 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
         enumerator = directory.enumerate_children("default::*", 0, None)
         for file in map(enumerator.get_child, enumerator):
             style_params, name = style_io.parse(file)
-            # TODO: bundle in distribution
-            preview = style_io.generate_preview(style_params)
+            preview = _generate_preview(style_params)
             self._stylenames.append(name)
             self.props.style_model.insert_sorted(
                 Graphs.Style.new(name, file, preview, False),
@@ -66,21 +100,37 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
             )
         enumerator.close(None)
         self._update_system_style()
-        system_style = self._system_style_name
-        light_file = _generate_filename(system_style)
-        light_style = style_io.parse(Gio.File.new_for_uri(
-            "resource:///se/sjoerd/Graphs/styles/" + light_file,
-        ))[0]
-        dark_file = _generate_filename(system_style + " Dark")
-        dark_style = style_io.parse(Gio.File.new_for_uri(
-            "resource:///se/sjoerd/Graphs/styles/" + dark_file,
-        ))[0]
 
-        system_preview = style_io.generate_system_preview(
-            light_style, dark_style)
-        self._system_style = \
-            Graphs.Style.new(_("System"), None, system_preview, False)
-        self.props.style_model.insert(0, self._system_style)
+        # generate system style preview
+        def _stylename_to_array(stylename):
+            style = style_io.parse(Gio.File.new_for_uri(
+                "resource:///se/sjoerd/Graphs/styles/"
+                + _generate_filename(stylename),
+            ))[0]
+            buffer = _create_preview(style, file_format="png")
+            return numpy.array(Image.open(buffer).convert("RGB"))
+
+        light_array = _stylename_to_array(self._system_style_name)
+        dark_array = _stylename_to_array(self._system_style_name + " Dark")
+        height, width = light_array.shape[0:2]
+        # create combined image
+        stitched_array = numpy.concatenate(
+            (light_array[:, :width // 2], dark_array[:, width // 2:]), axis=1,
+        )
+        self.props.style_model.insert(0, Graphs.Style.new(
+            _("System"),
+            None,
+            Gdk.Texture.new_for_pixbuf(GdkPixbuf.Pixbuf.new_from_bytes(
+                GLib.Bytes.new(stitched_array.tobytes()),
+                0,
+                False,
+                8,
+                width,
+                height,
+                width * 3,
+            )),
+            False,
+        ))
 
         config_dir = utilities.get_config_directory()
         self._style_dir = config_dir.get_child_for_display_name("styles")
@@ -129,7 +179,7 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
         self.props.style_model.insert_sorted(
             Graphs.Style(
                 name=name, file=file, mutable=True,
-                preview=style_io.generate_preview(style_params),
+                preview=_generate_preview(style_params),
                 light=_is_style_bright(style_params),
             ),
             _compare_styles,
@@ -176,7 +226,7 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
         if event_type == 1:
             for obj in style_model:
                 if obj.get_name() == stylename:
-                    obj.set_preview(style_io.generate_preview(style_params))
+                    obj.set_preview(_generate_preview(style_params))
                     obj.set_light(_is_style_bright(style_params))
                     break
             possible_visual_impact = False
