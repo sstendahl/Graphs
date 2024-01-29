@@ -1,20 +1,14 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
-import io
 import logging
 from gettext import gettext as _
 
-from PIL import Image
-
-from gi.repository import GLib, Gdk, GdkPixbuf, Gio
+from gi.repository import Gio
 
 from graphs import file_io, utilities
 
-from matplotlib import RcParams, cbook, rc_context
-from matplotlib.figure import Figure
+from matplotlib import RcParams, cbook
 from matplotlib.font_manager import font_scalings, weight_dict
 from matplotlib.style.core import STYLE_BLACKLIST
-
-import numpy
 
 
 STYLE_IGNORELIST = [
@@ -112,62 +106,3 @@ def write(file: Gio.File, name: str, style: RcParams):
                     value = value.replace("'", "").replace("'", "")
                     value = value.replace('"', "").replace('"', "")
                 wrapper.write(f"{key}: {value}\n")
-
-
-_PREVIEW_XDATA = numpy.linspace(0, 10, 30)
-_PREVIEW_YDATA1 = numpy.sin(_PREVIEW_XDATA)
-_PREVIEW_YDATA2 = numpy.cos(_PREVIEW_XDATA)
-
-
-def _create_preview(style: RcParams, file_format: str = "svg"):
-    buffer = io.BytesIO()
-    with rc_context(style):
-        # set render size in inch
-        figure = Figure(figsize=(5, 3))
-        axis = figure.add_subplot()
-        axis.spines.bottom.set_visible(True)
-        axis.spines.left.set_visible(True)
-        if not style["axes.spines.top"]:
-            axis.tick_params(which="both", top=False, right=False)
-        axis.plot(_PREVIEW_XDATA, _PREVIEW_YDATA1)
-        axis.plot(_PREVIEW_XDATA, _PREVIEW_YDATA2)
-        axis.set_xlabel(_("X Label"))
-        axis.set_xlabel(_("Y Label"))
-        figure.savefig(buffer, format=file_format)
-    return buffer
-
-
-def generate_preview(style: RcParams) -> Gdk.Texture:
-    return Gdk.Texture.new_from_bytes(
-        GLib.Bytes.new(_create_preview(style).getvalue()),
-    )
-
-
-def generate_system_preview(
-    light_style: RcParams, dark_style: RcParams,
-) -> Gdk.Texture:
-
-    def _style_to_array(style):
-        return numpy.array(
-            Image.open(_create_preview(style, file_format="png")),
-        )
-
-    light_image = _style_to_array(light_style)
-    dark_image = _style_to_array(dark_style)
-    assert light_image.shape == dark_image.shape
-
-    height, width = light_image.shape[0:2]
-    stitched_image = Image.fromarray(numpy.concatenate((
-        light_image[:, :width // 2],
-        dark_image[:, width // 2:],
-    ), axis=1))
-
-    return Gdk.Texture.new_for_pixbuf(GdkPixbuf.Pixbuf.new_from_bytes(
-        GLib.Bytes.new(stitched_image.tobytes()),
-        0,
-        True,
-        8,
-        width,
-        height,
-        width * 4,
-    ))
