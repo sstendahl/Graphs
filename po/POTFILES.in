@@ -23,6 +23,7 @@ src/actions.py
 src/add_equation.py
 src/application.py
 src/curve_fitting.py
+src/data.py
 src/export_figure.py
 src/figure_settings.py
 src/file_import.py
@@ -31,6 +32,7 @@ src/item_box.py
 src/operations.py
 src/parse_file.py
 src/styles.py
+src/style_io.py
 src/transform_data.py
 src/ui.py
 src/utilities.py
