@@ -1,3 +1,6 @@
+## We have moved
+The project source code is now hosted over on [GNOME Gitlab](https://gitlab.gnome.org/World/Graphs).
+
 # Graphs
 Plot and manipulate data with Graphs!
 
