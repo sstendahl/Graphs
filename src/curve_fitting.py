@@ -79,7 +79,41 @@ class CurveFittingWindow(Graphs.CurveFittingTool):
         self.reload_canvas()
         self.fit_curve()
         self.set_entry_rows()
+        self.set_menu_model()
         self.present()
+
+    def set_menu_model(self):
+        """Create and set the menu model for the curve fitting settings"""
+        menu = Gio.Menu.new()
+
+        # Create optimization section
+        optimization_section = Gio.Menu.new()
+        levenberg = Gio.MenuItem.new(
+            _("Levenberg-Marquardt"), ("win.optimization::lm"))
+        trust_region = Gio.MenuItem.new(
+            _("Trust Region Reflective"), ("win.optimization::trf"))
+        dogbox = Gio.MenuItem.new(_("Dogbox"), ("win.optimization::dogbox"))
+        optimization_section.append_item(levenberg)
+        optimization_section.append_item(trust_region)
+        optimization_section.append_item(dogbox)
+
+        # Create confidence bound section
+        confidence_section = Gio.Menu.new()
+        no_confidence = Gio.MenuItem.new(_("None"), ("win.confidence::none"))
+        one_std_confidence = Gio.MenuItem.new(
+            _("1σ: 68% Confidence"), ("win.confidence::1std"))
+        two_std_confidence = Gio.MenuItem.new(
+            _("2σ: 95% Confidence"), ("win.confidence::2std"))
+        three_std_confidence = Gio.MenuItem.new(
+            _("3σ: 99.7% Confidence"), ("win.confidence::3std"))
+        confidence_section.append_item(no_confidence)
+        confidence_section.append_item(one_std_confidence)
+        confidence_section.append_item(two_std_confidence)
+        confidence_section.append_item(three_std_confidence)
+
+        menu.append_section(_("Optimization Method"), optimization_section)
+        menu.append_section(_("Confidence Bounds"), confidence_section)
+        self.get_menu_button().set_menu_model(menu)
 
     def connect_actions(self) -> None:
         """Connect the actions in the dialog to the action map"""
