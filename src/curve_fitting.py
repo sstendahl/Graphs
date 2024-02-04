@@ -79,6 +79,19 @@ class CurveFittingWindow(Graphs.CurveFittingTool):
         self.reload_canvas()
         self.fit_curve()
         self.set_entry_rows()
+        self.get_menu_button().set_menu_model(utilities.create_menu_model({
+            "optimization": (_("Optimization Method"), [
+                (_("Levenberg-Marquardt"), "lm"),
+                (_("Trust Region Reflective"), "trf"),
+                (_("Dogbox"), "dogbox"),
+            ]),
+            "confidence": (_("Confidence Bounds"), [
+                (_("None"), "none"),
+                (_("1σ: 68% Confidence"), "1std"),
+                (_("2σ: 95% Confidence"), "2std"),
+                (_("3σ: 99.7% Confidence"), "3std"),
+            ]),
+        }))
         self.present()
 
     def connect_actions(self) -> None:

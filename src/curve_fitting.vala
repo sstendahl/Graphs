@@ -12,6 +12,9 @@ namespace Graphs {
         public unowned Adw.ComboRow equation { get; }
 
         [GtkChild]
+        public unowned Gtk.MenuButton menu_button { get; }
+
+        [GtkChild]
         public unowned Gtk.Box fitting_params { get; }
 
         [GtkChild]
@@ -38,5 +41,4 @@ namespace Graphs {
         public string upper_bound { get; construct set; default = "inf"; }
     }
 }
-
 
