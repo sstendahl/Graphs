@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: graphs\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-11 15:54+0100\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
+"POT-Creation-Date: 2024-02-05 12:24+0000\n"
 "PO-Revision-Date: 2024-01-17 07:20+0000\n"
 "Last-Translator: Sjoerd Stendahl <sjoerd1993@gmail.com>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/graphs/graphs/de/"
@@ -78,30 +78,34 @@ msgstr ""
 "ist aber auch für andere Desktopumgebungen geeignet."
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:21
+#, fuzzy
+#| msgid ""
+#| "For any feedback, questions or general issues, please file an issue on "
+#| "the GitHub page."
 msgid ""
 "For any feedback, questions or general issues, please file an issue on the "
-"GitHub page."
+"GitLab page."
 msgstr ""
 "Für Feedback, Fragen oder generelle Probleme eröffnen Sie bitte einen Issue "
 "auf GitHub."
 
-#: data/se.sjoerd.Graphs.appdata.xml.in.in:33
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:34
 msgid "1 - Plot and manipulate any data of choice"
 msgstr "1 - Plotten und manipulieren Sie jegliche Daten"
 
-#: data/se.sjoerd.Graphs.appdata.xml.in.in:37
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:38
 msgid "2 - Full support for light and dark mode"
 msgstr "2 - Volle Unterstützung für helle und dunkle Darstellung"
 
-#: data/se.sjoerd.Graphs.appdata.xml.in.in:41
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:42
 msgid "3 - Generate data from an equation"
 msgstr "3 - Daten aus einer Gleichung generieren"
 
-#: data/se.sjoerd.Graphs.appdata.xml.in.in:45
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:46
 msgid "4 - Edit plot stylesheets"
 msgstr "4 - Bearbeite Graphstile"
 
-#: data/se.sjoerd.Graphs.appdata.xml.in.in:49
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:50
 msgid "5 - Manipulate imported data with ease"
 msgstr "5 - Importierte Daten mit Leichtigkeit manipulieren"
 
@@ -168,105 +172,65 @@ msgstr "Name"
 msgid "Curve Fitting"
 msgstr "Parameterschätzung"
 
-#: data/ui/curve_fitting.blp:41
+#: data/ui/curve_fitting.blp:40
 msgid "Open Curve Fitting Menu"
 msgstr "Parameterschätzung"
 
-#: data/ui/curve_fitting.blp:58
+#: data/ui/curve_fitting.blp:57
 msgid "Equation"
 msgstr "Gleichung"
 
-#: data/ui/curve_fitting.blp:60 data/ui/figure_settings.blp:121
+#: data/ui/curve_fitting.blp:59 data/ui/figure_settings.blp:121
 #: data/ui/figure_settings.blp:127 data/ui/figure_settings.blp:133
 #: data/ui/figure_settings.blp:139
 msgid "Linear"
 msgstr "Linear"
 
-#: data/ui/curve_fitting.blp:60
+#: data/ui/curve_fitting.blp:59
 msgid "Quadratic"
 msgstr "Quadratisch"
 
-#: data/ui/curve_fitting.blp:60
+#: data/ui/curve_fitting.blp:59
 msgid "Exponential"
 msgstr "Exponentiell"
 
-#: data/ui/curve_fitting.blp:60
+#: data/ui/curve_fitting.blp:59
 msgid "Power Law"
 msgstr "Potenzgesetz"
 
-#: data/ui/curve_fitting.blp:61 data/ui/figure_settings.blp:121
+#: data/ui/curve_fitting.blp:60 data/ui/figure_settings.blp:121
 #: data/ui/figure_settings.blp:127 data/ui/figure_settings.blp:133
 #: data/ui/figure_settings.blp:139
 msgid "Logarithmic"
 msgstr "Logarithmisch"
 
-#: data/ui/curve_fitting.blp:61
+#: data/ui/curve_fitting.blp:60
 msgid "Sigmoid Logistic"
 msgstr "Logistisches Sigmoid"
 
-#: data/ui/curve_fitting.blp:61
+#: data/ui/curve_fitting.blp:60
 msgid "Gaussian"
 msgstr "Gausssche"
 
-#: data/ui/curve_fitting.blp:61 data/ui/import.blp:60
+#: data/ui/curve_fitting.blp:60 data/ui/import.blp:60
 msgid "Custom"
 msgstr "Benutzerdefiniert"
 
-#: data/ui/curve_fitting.blp:66
+#: data/ui/curve_fitting.blp:65
 msgid "Y = "
 msgstr "Y = "
 
-#: data/ui/curve_fitting.blp:93
+#: data/ui/curve_fitting.blp:92
 msgid "Add Fit to Data"
 msgstr "Passend zu Daten hinzufügen"
 
-#: data/ui/curve_fitting.blp:108 data/ui/window.blp:586 src/ui.py:33
+#: data/ui/curve_fitting.blp:107 data/ui/window.blp:586 src/ui.py:33
 msgid "Toggle Sidebar"
 msgstr "Seitenleiste umschalten"
 
-#: data/ui/curve_fitting.blp:120 data/ui/window.blp:626
+#: data/ui/curve_fitting.blp:119 data/ui/window.blp:626
 msgid "Canvas Failed to Load"
 msgstr "Canvas konnte nicht geladen werden"
-
-#: data/ui/curve_fitting.blp:130
-msgid "Optimization Method"
-msgstr "Optimierungsmethode"
-
-#: data/ui/curve_fitting.blp:132
-msgid "Levenberg-Marquardt"
-msgstr "Levenberg-Marquardt"
-
-#: data/ui/curve_fitting.blp:137
-msgid "Trust Region Reflective"
-msgstr "Trust-Region-Verfahren"
-
-#: data/ui/curve_fitting.blp:142
-msgid "Dogbox"
-msgstr "Dogbox"
-
-#: data/ui/curve_fitting.blp:148
-msgid "Confidence Bounds"
-msgstr "Konfidenzintervall"
-
-#: data/ui/curve_fitting.blp:150 data/ui/edit_item.blp:54
-#: data/ui/style_editor.blp:85
-msgid "None"
-msgstr "Nichts"
-
-#: data/ui/curve_fitting.blp:155
-#, c-format
-msgid "1σ: 68% Confidence"
-msgstr "1σ: 68% Sicherheit"
-
-#: data/ui/curve_fitting.blp:160
-#, c-format
-msgid "2σ: 95% Confidence"
-msgstr "2σ: 95% Sicherheit"
-
-#: data/ui/curve_fitting.blp:165
-#, c-format
-msgid "3σ: 99.7% Confidence"
-msgstr "3σ: 99.7% Sicherheit"
 
 #: data/ui/dialogs.blp:5
 msgid "Save changes?"
@@ -347,6 +311,10 @@ msgstr "Linieneigenschaften"
 #: data/ui/edit_item.blp:52 data/ui/style_editor.blp:83
 msgid "Linestyle"
 msgstr "Linienaussehen"
+
+#: data/ui/edit_item.blp:54 data/ui/style_editor.blp:85 src/curve_fitting.py:89
+msgid "None"
+msgstr "Nichts"
 
 #: data/ui/edit_item.blp:54 data/ui/style_editor.blp:85
 msgid "Solid"
@@ -1325,11 +1293,43 @@ msgstr "{error} - Konnte Daten nicht aus Gleichung hinzufügen"
 msgid "Could not load %s"
 msgstr "Konnte %s nicht laden"
 
-#: src/curve_fitting.py:221
+#: src/curve_fitting.py:83
+msgid "Optimization Method"
+msgstr "Optimierungsmethode"
+
+#: src/curve_fitting.py:84
+msgid "Levenberg-Marquardt"
+msgstr "Levenberg-Marquardt"
+
+#: src/curve_fitting.py:85
+msgid "Trust Region Reflective"
+msgstr "Trust-Region-Verfahren"
+
+#: src/curve_fitting.py:86
+msgid "Dogbox"
+msgstr "Dogbox"
+
+#: src/curve_fitting.py:88
+msgid "Confidence Bounds"
+msgstr "Konfidenzintervall"
+
+#: src/curve_fitting.py:90
+msgid "1σ: 68% Confidence"
+msgstr "1σ: 68% Sicherheit"
+
+#: src/curve_fitting.py:91
+msgid "2σ: 95% Confidence"
+msgstr "2σ: 95% Sicherheit"
+
+#: src/curve_fitting.py:92
+msgid "3σ: 99.7% Confidence"
+msgstr "3σ: 99.7% Sicherheit"
+
+#: src/curve_fitting.py:234
 msgid "Results:"
 msgstr "Resultate:"
 
-#: src/curve_fitting.py:225
+#: src/curve_fitting.py:238
 msgid ""
 "Please enter valid fitting \n"
 "parameters to start the fit"
@@ -1337,7 +1337,7 @@ msgstr ""
 "Bitte gültige Passungsparameter\n"
 "einfügen, um die Passung zu starten"
 
-#: src/curve_fitting.py:228
+#: src/curve_fitting.py:241
 msgid ""
 "Please enter a valid equation \n"
 "to start the fit"
@@ -1345,7 +1345,7 @@ msgstr ""
 "Bitte eine gültige Gleichung ein-\n"
 "geben, um die Passung zu starten"
 
-#: src/curve_fitting.py:231
+#: src/curve_fitting.py:244
 msgid ""
 "Please enter valid fitting bounds \n"
 "to start the fit"
@@ -1353,25 +1353,42 @@ msgstr ""
 "Bitte geben Sie gültige Fitting Grenzen ein\n"
 "zum Starten der Anpassung"
 
-#: src/curve_fitting.py:240
+#: src/curve_fitting.py:253
 #, python-brace-format
 msgid "Sum of R²: {R2}"
 msgstr "Betrag von R²: {R2}"
 
-#: src/curve_fitting.py:439
+#: src/curve_fitting.py:452
 #, python-brace-format
 msgid "Fitting Parameters for {param_name}"
 msgstr "Schätzparameter für {param_name}"
+
+#: src/data.py:112
+#, fuzzy
+#| msgid "New Project"
+msgid "Untitled Project"
+msgstr "Neues Projekt"
+
+#: src/data.py:126
+msgid "Draft"
+msgstr ""
+
+#: src/data.py:606
+#, fuzzy
+#| msgctxt "shortcut window"
+#| msgid "Save Project"
+msgid "Saved Project"
+msgstr "Projekt speichern"
+
+#: src/data.py:607 src/export_figure.py:65 src/ui.py:151
+msgid "Open Location"
+msgstr "Öffne Anwendungsmenü"
 
 #: src/export_figure.py:64
 msgid "Exported Figure"
 msgstr "Graph exportiert"
 
-#: src/export_figure.py:65 src/ui.py:151
-msgid "Open Location"
-msgstr "Öffne Anwendungsmenü"
-
-#: src/figure_settings.py:110 src/figure_settings.py:136 src/styles.py:82
+#: src/figure_settings.py:110 src/figure_settings.py:136 src/styles.py:121
 msgid "System"
 msgstr "System"
 
@@ -1480,15 +1497,15 @@ msgid "Are you sure you want to reset the import settings?"
 msgstr ""
 "Bist du sicher, dass du die Import-Einstellungen zurücksetzen möchtest?"
 
-#: src/operations.py:107
+#: src/operations.py:108
 msgid "Data that was outside of the highlighted area has been discarded"
 msgstr "Daten außerhalb des hervorgehobenen Bereichs wurden verworfen"
 
-#: src/operations.py:140
+#: src/operations.py:142
 msgid "No data found within the highlighted area"
 msgstr "Keine Daten innerhalb des markierten Bereichs gefunden"
 
-#: src/operations.py:342
+#: src/operations.py:344
 msgid "Combined Data"
 msgstr "Zusammengefügte Daten"
 
@@ -1508,33 +1525,71 @@ msgstr "β (°)"
 msgid "R (1/s)"
 msgstr "R (1/s)"
 
-#: src/parse_file.py:140
+#: src/parse_file.py:141
 msgid "Import failed, column index out of range"
 msgstr "Import fehlgeschlagen, Spaltenindex invalide"
 
-#: src/parse_file.py:158
+#: src/parse_file.py:159
 msgid "Unable to import from file"
 msgstr "Kann nicht aus Datei importieren"
 
-#: src/styles.py:262
+#: src/styles.py:58
+#, fuzzy
+#| msgid "Labels"
+msgid "X Label"
+msgstr "Beschriftungen"
+
+#: src/styles.py:59
+#, fuzzy
+#| msgid "Labels"
+msgid "Y Label"
+msgstr "Beschriftungen"
+
+#: src/styles.py:312
 #, python-brace-format
 msgid "Could not parse {stylename}, loading system preferred style"
 msgstr ""
 "Stil {stylename} konnte nicht geladen werden, lade Systembevorzugten Stil"
 
-#: src/styles.py:269
+#: src/styles.py:319
 #, python-brace-format
 msgid "Plot style {stylename} does not exist loading system preferred"
 msgstr "Stil {stylename} existiert nicht, lade Systembevorzugten"
 
-#: src/styles.py:663
+#: src/styles.py:710
 msgid "Are you sure you want to delete {self.style.get_name()}?"
 msgstr ""
 "Bist du sicher, dass du den Stil {self.style.get_name()} löschen möchtest?"
 
-#: src/styles.py:680
+#: src/styles.py:727
 msgid "Color {}"
 msgstr "Farbe {}"
+
+#: src/style_io.py:49
+msgid "Missing colon in file {}, line {}"
+msgstr "Fehlender Doppelpunkt in Datei {}, Linie {}"
+
+#: src/style_io.py:57
+#, fuzzy
+#| msgid "Style includes a non-style related parameter, {}"
+msgid "Non-style related parameter {} in file {}"
+msgstr "Stil enthält nicht Stil-bezogenen Parameter {}"
+
+#: src/style_io.py:60
+msgid "Ignoring parameter {} in file {}"
+msgstr ""
+
+#: src/style_io.py:63
+msgid "Duplicate key in file {}, on line {}"
+msgstr "Doppelter Schlüssel in Datei {}, in Zeile {}"
+
+#: src/style_io.py:80
+msgid "Bad value in file {} on line {}"
+msgstr "Fehlerhafter Wert in Datei {} in Zeile {}"
+
+#: src/style_io.py:84
+msgid "Could not parse {}"
+msgstr "Konnte {} nicht einlesen"
 
 #: src/transform_data.py:39
 #, python-brace-format
@@ -1603,7 +1658,7 @@ msgstr "Nicht unterstütztes Widget {}"
 msgid "No way to apply “{}”"
 msgstr "Keine Möglichkeit „{}“ anzuwenden"
 
-#: src/utilities.py:160
+#: src/utilities.py:158
 msgid "No valid number specified"
 msgstr "Keine gültige Nummer präzisiert"
 
@@ -1695,21 +1750,6 @@ msgstr "Keine gültige Nummer präzisiert"
 
 #~ msgid "Preferences"
 #~ msgstr "Einstellungen"
-
-#~ msgid "Missing colon in file {}, line {}"
-#~ msgstr "Fehlender Doppelpunkt in Datei {}, Linie {}"
-
-#~ msgid "Style includes a non-style related parameter, {}"
-#~ msgstr "Stil enthält nicht Stil-bezogenen Parameter {}"
-
-#~ msgid "Duplicate key in file {}, on line {}"
-#~ msgstr "Doppelter Schlüssel in Datei {}, in Zeile {}"
-
-#~ msgid "Bad value in file {} on line {}"
-#~ msgstr "Fehlerhafter Wert in Datei {} in Zeile {}"
-
-#~ msgid "Could not parse {}"
-#~ msgstr "Konnte {} nicht einlesen"
 
 #~ msgid "2Theta"
 #~ msgstr "2Theta"
