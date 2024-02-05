@@ -52,6 +52,19 @@
     </screenshot>
   </screenshots>
   <releases>
+    <release version="1.7.2" date="2024-02-05">
+      <description translatable="no">
+        <p>Graphs is now part of GNOME Circle, the codebase has been moved to the GNOME GitLab. This patch changes updates 
+        the metadata to reflect this, and adds some small quality-of-life changes.</p>
+        <p>Full changelist:</p>
+        <ul>
+          <li>The label and title size can now be set within finer increments</li>
+          <li>Data that has been hidden is no longer used when setting the limits automatically</li>
+          <li>Slight performance increasements with regard to preview generation </li>
+          <li>Updated the metadata to reflect the move to GNOME GitLab</li>
+        </ul>
+      </description>
+    </release>
     <release version="1.7.1" date="2024-01-12">
       <description translatable="no">
         <p>Minor patch with a few tweaks.</p>
