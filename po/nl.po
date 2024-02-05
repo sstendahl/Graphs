@@ -6,12 +6,12 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: graphs\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-11 15:54+0100\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
+"POT-Creation-Date: 2024-02-05 12:24+0000\n"
 "PO-Revision-Date: 2024-01-20 15:55+0000\n"
 "Last-Translator: Philip Goto <philip.goto@gmail.com>\n"
-"Language-Team: Dutch <https://hosted.weblate.org/projects/graphs/graphs/nl/>"
-"\n"
+"Language-Team: Dutch <https://hosted.weblate.org/projects/graphs/graphs/nl/"
+">\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -80,30 +80,34 @@ msgstr ""
 "desktopomgeving."
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:21
+#, fuzzy
+#| msgid ""
+#| "For any feedback, questions or general issues, please file an issue on "
+#| "the GitHub page."
 msgid ""
 "For any feedback, questions or general issues, please file an issue on the "
-"GitHub page."
+"GitLab page."
 msgstr ""
 "Voor feedback, vragen of algemene problemen, kunt u een issue indienen op de "
 "GitHubpagina."
 
-#: data/se.sjoerd.Graphs.appdata.xml.in.in:33
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:34
 msgid "1 - Plot and manipulate any data of choice"
 msgstr "1- Plot en manipuleer alle data naar keuze"
 
-#: data/se.sjoerd.Graphs.appdata.xml.in.in:37
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:38
 msgid "2 - Full support for light and dark mode"
 msgstr "2 - Zowel de lichte als de donkere modus worden ondersteund"
 
-#: data/se.sjoerd.Graphs.appdata.xml.in.in:41
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:42
 msgid "3 - Generate data from an equation"
 msgstr "3 - Voeg gegevens toe vanuit een vergelijking"
 
-#: data/se.sjoerd.Graphs.appdata.xml.in.in:45
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:46
 msgid "4 - Edit plot stylesheets"
 msgstr "4 - Pas stijlsjablonen aan"
 
-#: data/se.sjoerd.Graphs.appdata.xml.in.in:49
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:50
 msgid "5 - Manipulate imported data with ease"
 msgstr "5- Manipuleer geimporteerde gegevens"
 
@@ -112,8 +116,8 @@ msgid ""
 "Plotting;Graph;Graphing;Science;Mathematics;Math;Equations;Data;Plot;"
 "Visualisation;Visualization;Fitting;xrdml;"
 msgstr ""
-"Plotten;Grafiek;Wetenschap;Wiskunde;Vergelijking;Data:Visualisatie:Trendanaly"
-"se;xrdml;"
+"Plotten;Grafiek;Wetenschap;Wiskunde;Vergelijking;Data:Visualisatie:"
+"Trendanalyse;xrdml;"
 
 #: data/ui/add_equation_window.blp:7
 msgid "Add Equation"
@@ -170,105 +174,65 @@ msgstr "Naam"
 msgid "Curve Fitting"
 msgstr "Kromme­berekening"
 
-#: data/ui/curve_fitting.blp:41
+#: data/ui/curve_fitting.blp:40
 msgid "Open Curve Fitting Menu"
 msgstr "Kromme­berekenings­menu openen"
 
-#: data/ui/curve_fitting.blp:58
+#: data/ui/curve_fitting.blp:57
 msgid "Equation"
 msgstr "Vergelijking"
 
-#: data/ui/curve_fitting.blp:60 data/ui/figure_settings.blp:121
+#: data/ui/curve_fitting.blp:59 data/ui/figure_settings.blp:121
 #: data/ui/figure_settings.blp:127 data/ui/figure_settings.blp:133
 #: data/ui/figure_settings.blp:139
 msgid "Linear"
 msgstr "Lineair"
 
-#: data/ui/curve_fitting.blp:60
+#: data/ui/curve_fitting.blp:59
 msgid "Quadratic"
 msgstr "Kwadratisch"
 
-#: data/ui/curve_fitting.blp:60
+#: data/ui/curve_fitting.blp:59
 msgid "Exponential"
 msgstr "Exponentieel"
 
-#: data/ui/curve_fitting.blp:60
+#: data/ui/curve_fitting.blp:59
 msgid "Power Law"
 msgstr "Potentiefunctie"
 
-#: data/ui/curve_fitting.blp:61 data/ui/figure_settings.blp:121
+#: data/ui/curve_fitting.blp:60 data/ui/figure_settings.blp:121
 #: data/ui/figure_settings.blp:127 data/ui/figure_settings.blp:133
 #: data/ui/figure_settings.blp:139
 msgid "Logarithmic"
 msgstr "Logaritmisch"
 
-#: data/ui/curve_fitting.blp:61
+#: data/ui/curve_fitting.blp:60
 msgid "Sigmoid Logistic"
 msgstr "Sigmoïde Logistiek"
 
-#: data/ui/curve_fitting.blp:61
+#: data/ui/curve_fitting.blp:60
 msgid "Gaussian"
 msgstr "Gaussisch"
 
-#: data/ui/curve_fitting.blp:61 data/ui/import.blp:60
+#: data/ui/curve_fitting.blp:60 data/ui/import.blp:60
 msgid "Custom"
 msgstr "Handmatig"
 
-#: data/ui/curve_fitting.blp:66
+#: data/ui/curve_fitting.blp:65
 msgid "Y = "
 msgstr "Y = "
 
-#: data/ui/curve_fitting.blp:93
+#: data/ui/curve_fitting.blp:92
 msgid "Add Fit to Data"
 msgstr "Trend toevoegen als item"
 
-#: data/ui/curve_fitting.blp:108 data/ui/window.blp:586 src/ui.py:33
+#: data/ui/curve_fitting.blp:107 data/ui/window.blp:586 src/ui.py:33
 msgid "Toggle Sidebar"
 msgstr "Zijbalk omschakelen"
 
-#: data/ui/curve_fitting.blp:120 data/ui/window.blp:626
+#: data/ui/curve_fitting.blp:119 data/ui/window.blp:626
 msgid "Canvas Failed to Load"
 msgstr "Canvas laden mislukt"
-
-#: data/ui/curve_fitting.blp:130
-msgid "Optimization Method"
-msgstr "Optimalisatie­methode"
-
-#: data/ui/curve_fitting.blp:132
-msgid "Levenberg-Marquardt"
-msgstr "Levenberg-Marquardt"
-
-#: data/ui/curve_fitting.blp:137
-msgid "Trust Region Reflective"
-msgstr "Reflectieve Trust-Regio"
-
-#: data/ui/curve_fitting.blp:142
-msgid "Dogbox"
-msgstr "Dogboxmethode"
-
-#: data/ui/curve_fitting.blp:148
-msgid "Confidence Bounds"
-msgstr "Betrouwbaarheidsinterval"
-
-#: data/ui/curve_fitting.blp:150 data/ui/edit_item.blp:54
-#: data/ui/style_editor.blp:85
-msgid "None"
-msgstr "Niets"
-
-#: data/ui/curve_fitting.blp:155
-#, c-format
-msgid "1σ: 68% Confidence"
-msgstr "1σ: 68% Zekerheid"
-
-#: data/ui/curve_fitting.blp:160
-#, c-format
-msgid "2σ: 95% Confidence"
-msgstr "2σ: 95% Zekerheid"
-
-#: data/ui/curve_fitting.blp:165
-#, c-format
-msgid "3σ: 99.7% Confidence"
-msgstr "3σ: 99.7% Zekerheid"
 
 #: data/ui/dialogs.blp:5
 msgid "Save changes?"
@@ -349,6 +313,10 @@ msgstr "Lijn­eigenschappen"
 #: data/ui/edit_item.blp:52 data/ui/style_editor.blp:83
 msgid "Linestyle"
 msgstr "Lijn­stijl"
+
+#: data/ui/edit_item.blp:54 data/ui/style_editor.blp:85 src/curve_fitting.py:89
+msgid "None"
+msgstr "Niets"
 
 #: data/ui/edit_item.blp:54 data/ui/style_editor.blp:85
 msgid "Solid"
@@ -1328,11 +1296,43 @@ msgstr ""
 msgid "Could not load %s"
 msgstr "Kon %s niet laden"
 
-#: src/curve_fitting.py:221
+#: src/curve_fitting.py:83
+msgid "Optimization Method"
+msgstr "Optimalisatie­methode"
+
+#: src/curve_fitting.py:84
+msgid "Levenberg-Marquardt"
+msgstr "Levenberg-Marquardt"
+
+#: src/curve_fitting.py:85
+msgid "Trust Region Reflective"
+msgstr "Reflectieve Trust-Regio"
+
+#: src/curve_fitting.py:86
+msgid "Dogbox"
+msgstr "Dogboxmethode"
+
+#: src/curve_fitting.py:88
+msgid "Confidence Bounds"
+msgstr "Betrouwbaarheidsinterval"
+
+#: src/curve_fitting.py:90
+msgid "1σ: 68% Confidence"
+msgstr "1σ: 68% Zekerheid"
+
+#: src/curve_fitting.py:91
+msgid "2σ: 95% Confidence"
+msgstr "2σ: 95% Zekerheid"
+
+#: src/curve_fitting.py:92
+msgid "3σ: 99.7% Confidence"
+msgstr "3σ: 99.7% Zekerheid"
+
+#: src/curve_fitting.py:234
 msgid "Results:"
 msgstr "Resultaten:"
 
-#: src/curve_fitting.py:225
+#: src/curve_fitting.py:238
 msgid ""
 "Please enter valid fitting \n"
 "parameters to start the fit"
@@ -1340,7 +1340,7 @@ msgstr ""
 "Voer valide parameters in\n"
 "om de trendanalyse te starten"
 
-#: src/curve_fitting.py:228
+#: src/curve_fitting.py:241
 msgid ""
 "Please enter a valid equation \n"
 "to start the fit"
@@ -1348,7 +1348,7 @@ msgstr ""
 "Voer een valide vergelijking\n"
 "in om de trendanalyse te starten"
 
-#: src/curve_fitting.py:231
+#: src/curve_fitting.py:244
 msgid ""
 "Please enter valid fitting bounds \n"
 "to start the fit"
@@ -1356,25 +1356,42 @@ msgstr ""
 "Voer valide grenzen in\n"
 "om de trendanalyse te starten"
 
-#: src/curve_fitting.py:240
+#: src/curve_fitting.py:253
 #, python-brace-format
 msgid "Sum of R²: {R2}"
 msgstr "Som van R²: {R2}"
 
-#: src/curve_fitting.py:439
+#: src/curve_fitting.py:452
 #, python-brace-format
 msgid "Fitting Parameters for {param_name}"
 msgstr "Parameters voor {param_name}"
+
+#: src/data.py:112
+#, fuzzy
+#| msgid "New Project"
+msgid "Untitled Project"
+msgstr "Nieuw project"
+
+#: src/data.py:126
+msgid "Draft"
+msgstr ""
+
+#: src/data.py:606
+#, fuzzy
+#| msgctxt "shortcut window"
+#| msgid "Save Project"
+msgid "Saved Project"
+msgstr "Project opslaan"
+
+#: src/data.py:607 src/export_figure.py:65 src/ui.py:151
+msgid "Open Location"
+msgstr "Open Locatie"
 
 #: src/export_figure.py:64
 msgid "Exported Figure"
 msgstr "Gexporteerde figuur"
 
-#: src/export_figure.py:65 src/ui.py:151
-msgid "Open Location"
-msgstr "Open Locatie"
-
-#: src/figure_settings.py:110 src/figure_settings.py:136 src/styles.py:82
+#: src/figure_settings.py:110 src/figure_settings.py:136 src/styles.py:121
 msgid "System"
 msgstr "Systeem"
 
@@ -1482,15 +1499,15 @@ msgstr "Standaardinstellingen Geüpdatet"
 msgid "Are you sure you want to reset the import settings?"
 msgstr "Weet u zeker dat u de standaardstijlen wilt herstellen?"
 
-#: src/operations.py:107
+#: src/operations.py:108
 msgid "Data that was outside of the highlighted area has been discarded"
 msgstr "Data buiten het geselecteerde gebied is verworpen"
 
-#: src/operations.py:140
+#: src/operations.py:142
 msgid "No data found within the highlighted area"
 msgstr "Geen gegevens gevonden in het geselecteerde gebied"
 
-#: src/operations.py:342
+#: src/operations.py:344
 msgid "Combined Data"
 msgstr "Gecombineerde gegevens"
 
@@ -1510,31 +1527,65 @@ msgstr "β (°)"
 msgid "R (1/s)"
 msgstr "R (1/s)"
 
-#: src/parse_file.py:140
+#: src/parse_file.py:141
 msgid "Import failed, column index out of range"
 msgstr "Kan gegevens niet openen, de kolomindex is buiten bereik"
 
-#: src/parse_file.py:158
+#: src/parse_file.py:159
 msgid "Unable to import from file"
 msgstr "Kan het bestand niet importeren"
 
-#: src/styles.py:262
+#: src/styles.py:58
+msgid "X Label"
+msgstr "X-Label"
+
+#: src/styles.py:59
+msgid "Y Label"
+msgstr "Y-Label"
+
+#: src/styles.py:312
 #, python-brace-format
 msgid "Could not parse {stylename}, loading system preferred style"
 msgstr "Kon plotstijl {stylename} niet laden, systeemstijl wordt geladen"
 
-#: src/styles.py:269
+#: src/styles.py:319
 #, python-brace-format
 msgid "Plot style {stylename} does not exist loading system preferred"
 msgstr "Plotstijl {stylename} bestaat niet, systeemstijl wordt geladen"
 
-#: src/styles.py:663
+#: src/styles.py:710
 msgid "Are you sure you want to delete {self.style.get_name()}?"
 msgstr "Weet u zeker dat u de {self.style.get_name()}-stijl wilt verwijderen?"
 
-#: src/styles.py:680
+#: src/styles.py:727
 msgid "Color {}"
 msgstr "Kleur {}"
+
+#: src/style_io.py:49
+msgid "Missing colon in file {}, line {}"
+msgstr "Een missende dubbele punt in bestand {}, lijn {}"
+
+#: src/style_io.py:57
+#, fuzzy
+#| msgid "Style includes a non-style related parameter, {}"
+msgid "Non-style related parameter {} in file {}"
+msgstr "Stijl bevat een verkeerde parameter, {}"
+
+#: src/style_io.py:60
+msgid "Ignoring parameter {} in file {}"
+msgstr ""
+
+#: src/style_io.py:63
+msgid "Duplicate key in file {}, on line {}"
+msgstr "Dubbele waarde in bestand {} op lijn {}"
+
+#: src/style_io.py:80
+msgid "Bad value in file {} on line {}"
+msgstr "Verkeerde waarde in het bestand {} op lijn {}"
+
+#: src/style_io.py:84
+msgid "Could not parse {}"
+msgstr "Kon {} niet laden"
 
 #: src/transform_data.py:39
 #, python-brace-format
@@ -1603,7 +1654,7 @@ msgstr "Widget {} niet ondersteund"
 msgid "No way to apply “{}”"
 msgstr "Geen manier om “{}” toe te passen"
 
-#: src/utilities.py:160
+#: src/utilities.py:158
 msgid "No valid number specified"
 msgstr "Geen geldig nummer"
 
@@ -1764,32 +1815,11 @@ msgstr "Geen geldig nummer"
 #~ msgid "Preferences"
 #~ msgstr "Instellingen"
 
-#~ msgid "Missing colon in file {}, line {}"
-#~ msgstr "Een missende dubbele punt in bestand {}, lijn {}"
-
-#~ msgid "Style includes a non-style related parameter, {}"
-#~ msgstr "Stijl bevat een verkeerde parameter, {}"
-
-#~ msgid "Duplicate key in file {}, on line {}"
-#~ msgstr "Dubbele waarde in bestand {} op lijn {}"
-
-#~ msgid "Bad value in file {} on line {}"
-#~ msgstr "Verkeerde waarde in het bestand {} op lijn {}"
-
-#~ msgid "Could not parse {}"
-#~ msgstr "Kon {} niet laden"
-
 #~ msgid "2Theta"
 #~ msgstr "2Theta"
 
 #~ msgid "Omega"
 #~ msgstr "Omega"
-
-#~ msgid "X Label"
-#~ msgstr "X-Label"
-
-#~ msgid "Y Label"
-#~ msgstr "Y-Label"
 
 #, python-brace-format
 #~ msgid "{name} - line colors"
