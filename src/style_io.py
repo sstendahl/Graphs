@@ -46,7 +46,7 @@ def parse(file: Gio.File) -> (RcParams, str):
                 key, value = line.split(":", 1)
             except ValueError:
                 logging.warning(
-                    _("Missing colon in file {}, line {}").format(
+                    _("Missing colon in file {0}, line {1}").format(
                         filename, line_number))
                 continue
             key = key.strip()
@@ -54,13 +54,13 @@ def parse(file: Gio.File) -> (RcParams, str):
             if value.startswith('"') and value.endswith('"'):
                 value = value[1:-1]  # strip double quotes
             if key in STYLE_BLACKLIST:
-                message = _("Non-style related parameter {} in file {}")
+                message = _("Non-style related parameter {0} in file {1}")
                 logging.warning(message.format(key, filename))
             elif key in STYLE_IGNORELIST:
-                message = _("Ignoring parameter {} in file {}")
+                message = _("Ignoring parameter {0} in file {1}")
                 logging.warning(message.format(key, filename))
             elif key in style:
-                message = _("Duplicate key in file {}, on line {}")
+                message = _("Duplicate key in file {0}, on line {1}")
                 logging.warning(message.format(filename, line_number))
             else:
                 if key in FONT_SIZE_KEYS \
@@ -77,7 +77,7 @@ def parse(file: Gio.File) -> (RcParams, str):
                 try:
                     style[key] = value
                 except (KeyError, ValueError):
-                    message = _("Bad value in file {} on line {}")
+                    message = _("Bad value in file {0} on line {1}")
                     logging.exception(
                         message.format(filename, line_number))
     except UnicodeDecodeError:
