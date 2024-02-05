@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: se.sjoerd.Graphs\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-11 15:54+0100\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
+"POT-Creation-Date: 2024-02-05 12:24+0000\n"
 "PO-Revision-Date: 2024-01-11 19:09+0000\n"
 "Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/graphs/graphs/tr/"
@@ -79,30 +79,34 @@ msgstr ""
 "ortamları için de uygundur."
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:21
+#, fuzzy
+#| msgid ""
+#| "For any feedback, questions or general issues, please file an issue on "
+#| "the GitHub page."
 msgid ""
 "For any feedback, questions or general issues, please file an issue on the "
-"GitHub page."
+"GitLab page."
 msgstr ""
 "Herhangi bir geri bildirim, soru veya genel sorun için lütfen GitHub "
 "sayfasından hata bildiriminde bulunun."
 
-#: data/se.sjoerd.Graphs.appdata.xml.in.in:33
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:34
 msgid "1 - Plot and manipulate any data of choice"
 msgstr "1 - İstediğiniz verileri çizin ve değiştirin"
 
-#: data/se.sjoerd.Graphs.appdata.xml.in.in:37
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:38
 msgid "2 - Full support for light and dark mode"
 msgstr "2 - Açık ve koyu kip tamamen desteklenmektedir"
 
-#: data/se.sjoerd.Graphs.appdata.xml.in.in:41
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:42
 msgid "3 - Generate data from an equation"
 msgstr "3 - Denklemden veri oluştur"
 
-#: data/se.sjoerd.Graphs.appdata.xml.in.in:45
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:46
 msgid "4 - Edit plot stylesheets"
 msgstr "4 - Çizim stil sayfalarını düzenleyin"
 
-#: data/se.sjoerd.Graphs.appdata.xml.in.in:49
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:50
 msgid "5 - Manipulate imported data with ease"
 msgstr "5 - İçe aktarılan verileri kolaylıkla değiştirin"
 
@@ -169,105 +173,65 @@ msgstr "Ad"
 msgid "Curve Fitting"
 msgstr "Eğri Sığdırma"
 
-#: data/ui/curve_fitting.blp:41
+#: data/ui/curve_fitting.blp:40
 msgid "Open Curve Fitting Menu"
 msgstr "Eğri Sığdırma Menüsünü Aç"
 
-#: data/ui/curve_fitting.blp:58
+#: data/ui/curve_fitting.blp:57
 msgid "Equation"
 msgstr "Denklem"
 
-#: data/ui/curve_fitting.blp:60 data/ui/figure_settings.blp:121
+#: data/ui/curve_fitting.blp:59 data/ui/figure_settings.blp:121
 #: data/ui/figure_settings.blp:127 data/ui/figure_settings.blp:133
 #: data/ui/figure_settings.blp:139
 msgid "Linear"
 msgstr "Doğrusal"
 
-#: data/ui/curve_fitting.blp:60
+#: data/ui/curve_fitting.blp:59
 msgid "Quadratic"
 msgstr "Karesel"
 
-#: data/ui/curve_fitting.blp:60
+#: data/ui/curve_fitting.blp:59
 msgid "Exponential"
 msgstr "Üstsel"
 
-#: data/ui/curve_fitting.blp:60
+#: data/ui/curve_fitting.blp:59
 msgid "Power Law"
 msgstr "Güç Yasası"
 
-#: data/ui/curve_fitting.blp:61 data/ui/figure_settings.blp:121
+#: data/ui/curve_fitting.blp:60 data/ui/figure_settings.blp:121
 #: data/ui/figure_settings.blp:127 data/ui/figure_settings.blp:133
 #: data/ui/figure_settings.blp:139
 msgid "Logarithmic"
 msgstr "Logaritmik"
 
-#: data/ui/curve_fitting.blp:61
+#: data/ui/curve_fitting.blp:60
 msgid "Sigmoid Logistic"
 msgstr "Sigmoid Fonksiyonu"
 
-#: data/ui/curve_fitting.blp:61
+#: data/ui/curve_fitting.blp:60
 msgid "Gaussian"
 msgstr "Gaussian"
 
-#: data/ui/curve_fitting.blp:61 data/ui/import.blp:60
+#: data/ui/curve_fitting.blp:60 data/ui/import.blp:60
 msgid "Custom"
 msgstr "Özel"
 
-#: data/ui/curve_fitting.blp:66
+#: data/ui/curve_fitting.blp:65
 msgid "Y = "
 msgstr "Y = "
 
-#: data/ui/curve_fitting.blp:93
+#: data/ui/curve_fitting.blp:92
 msgid "Add Fit to Data"
 msgstr "Verilere Uy Eklendi"
 
-#: data/ui/curve_fitting.blp:108 data/ui/window.blp:586 src/ui.py:33
+#: data/ui/curve_fitting.blp:107 data/ui/window.blp:586 src/ui.py:33
 msgid "Toggle Sidebar"
 msgstr "Kenar Çubuğunu Aç/Kapa"
 
-#: data/ui/curve_fitting.blp:120 data/ui/window.blp:626
+#: data/ui/curve_fitting.blp:119 data/ui/window.blp:626
 msgid "Canvas Failed to Load"
 msgstr "Tuval Yüklenemedi"
-
-#: data/ui/curve_fitting.blp:130
-msgid "Optimization Method"
-msgstr "Optimizasyon Yöntemi"
-
-#: data/ui/curve_fitting.blp:132
-msgid "Levenberg-Marquardt"
-msgstr "Levenberg-Marquardt"
-
-#: data/ui/curve_fitting.blp:137
-msgid "Trust Region Reflective"
-msgstr "Güven Bölgesi Yansıtıcı"
-
-#: data/ui/curve_fitting.blp:142
-msgid "Dogbox"
-msgstr "Dogbox"
-
-#: data/ui/curve_fitting.blp:148
-msgid "Confidence Bounds"
-msgstr "Güven Sınırları"
-
-#: data/ui/curve_fitting.blp:150 data/ui/edit_item.blp:54
-#: data/ui/style_editor.blp:85
-msgid "None"
-msgstr "Hiçbiri"
-
-#: data/ui/curve_fitting.blp:155
-#, c-format
-msgid "1σ: 68% Confidence"
-msgstr "1σ: %%68 Güven"
-
-#: data/ui/curve_fitting.blp:160
-#, c-format
-msgid "2σ: 95% Confidence"
-msgstr "2σ: %%95 Güven"
-
-#: data/ui/curve_fitting.blp:165
-#, c-format
-msgid "3σ: 99.7% Confidence"
-msgstr "3σ: %%99.7 Güven"
 
 #: data/ui/dialogs.blp:5
 msgid "Save changes?"
@@ -348,6 +312,10 @@ msgstr "Çizgi Özellikleri"
 #: data/ui/edit_item.blp:52 data/ui/style_editor.blp:83
 msgid "Linestyle"
 msgstr "Çizgi Biçemi"
+
+#: data/ui/edit_item.blp:54 data/ui/style_editor.blp:85 src/curve_fitting.py:89
+msgid "None"
+msgstr "Hiçbiri"
 
 #: data/ui/edit_item.blp:54 data/ui/style_editor.blp:85
 msgid "Solid"
@@ -1323,11 +1291,43 @@ msgstr "{error} - Denklemden veri eklenemedi"
 msgid "Could not load %s"
 msgstr "%s yüklenemedi"
 
-#: src/curve_fitting.py:221
+#: src/curve_fitting.py:83
+msgid "Optimization Method"
+msgstr "Optimizasyon Yöntemi"
+
+#: src/curve_fitting.py:84
+msgid "Levenberg-Marquardt"
+msgstr "Levenberg-Marquardt"
+
+#: src/curve_fitting.py:85
+msgid "Trust Region Reflective"
+msgstr "Güven Bölgesi Yansıtıcı"
+
+#: src/curve_fitting.py:86
+msgid "Dogbox"
+msgstr "Dogbox"
+
+#: src/curve_fitting.py:88
+msgid "Confidence Bounds"
+msgstr "Güven Sınırları"
+
+#: src/curve_fitting.py:90
+msgid "1σ: 68% Confidence"
+msgstr "1σ: %%68 Güven"
+
+#: src/curve_fitting.py:91
+msgid "2σ: 95% Confidence"
+msgstr "2σ: %%95 Güven"
+
+#: src/curve_fitting.py:92
+msgid "3σ: 99.7% Confidence"
+msgstr "3σ: %%99.7 Güven"
+
+#: src/curve_fitting.py:234
 msgid "Results:"
 msgstr "Sonuçlar:"
 
-#: src/curve_fitting.py:225
+#: src/curve_fitting.py:238
 msgid ""
 "Please enter valid fitting \n"
 "parameters to start the fit"
@@ -1335,7 +1335,7 @@ msgstr ""
 "Sığdırmayı başlatmak için \n"
 "geçerli sığdırma parametrelerini girin"
 
-#: src/curve_fitting.py:228
+#: src/curve_fitting.py:241
 msgid ""
 "Please enter a valid equation \n"
 "to start the fit"
@@ -1343,7 +1343,7 @@ msgstr ""
 "Sığdırmayı başlatmak için \n"
 "geçerli bir denklem girin"
 
-#: src/curve_fitting.py:231
+#: src/curve_fitting.py:244
 msgid ""
 "Please enter valid fitting bounds \n"
 "to start the fit"
@@ -1351,25 +1351,42 @@ msgstr ""
 "Sığdırmayı başlatmak için \n"
 "geçerli sığdırma sınırlarını girin"
 
-#: src/curve_fitting.py:240
+#: src/curve_fitting.py:253
 #, python-brace-format
 msgid "Sum of R²: {R2}"
 msgstr "R² toplamı: {R2}"
 
-#: src/curve_fitting.py:439
+#: src/curve_fitting.py:452
 #, python-brace-format
 msgid "Fitting Parameters for {param_name}"
 msgstr "{param_name} için Sığdırma Parametreleri"
+
+#: src/data.py:112
+#, fuzzy
+#| msgid "New Project"
+msgid "Untitled Project"
+msgstr "Yeni Proje"
+
+#: src/data.py:126
+msgid "Draft"
+msgstr ""
+
+#: src/data.py:606
+#, fuzzy
+#| msgctxt "shortcut window"
+#| msgid "Save Project"
+msgid "Saved Project"
+msgstr "Projeyi Kaydet"
+
+#: src/data.py:607 src/export_figure.py:65 src/ui.py:151
+msgid "Open Location"
+msgstr "Konumu Aç"
 
 #: src/export_figure.py:64
 msgid "Exported Figure"
 msgstr "Şekil Dışa Aktarıldı"
 
-#: src/export_figure.py:65 src/ui.py:151
-msgid "Open Location"
-msgstr "Konumu Aç"
-
-#: src/figure_settings.py:110 src/figure_settings.py:136 src/styles.py:82
+#: src/figure_settings.py:110 src/figure_settings.py:136 src/styles.py:121
 msgid "System"
 msgstr "Sistem"
 
@@ -1477,15 +1494,15 @@ msgstr "Öntanımlılar Güncellendi"
 msgid "Are you sure you want to reset the import settings?"
 msgstr "İçe aktarma ayarlarını sıfırlamak istediğinize emin misiniz?"
 
-#: src/operations.py:107
+#: src/operations.py:108
 msgid "Data that was outside of the highlighted area has been discarded"
 msgstr "Vurgulanan alanın dışındaki veriler gözden çıkarıldı"
 
-#: src/operations.py:140
+#: src/operations.py:142
 msgid "No data found within the highlighted area"
 msgstr "Vurgulanan alanda veri bulunamadı"
 
-#: src/operations.py:342
+#: src/operations.py:344
 msgid "Combined Data"
 msgstr "Birleştirilmiş Veri"
 
@@ -1505,31 +1522,65 @@ msgstr "β (°)"
 msgid "R (1/s)"
 msgstr "R (1/s)"
 
-#: src/parse_file.py:140
+#: src/parse_file.py:141
 msgid "Import failed, column index out of range"
 msgstr "İçe aktarılamadı, sütun indeksi erim dışı"
 
-#: src/parse_file.py:158
+#: src/parse_file.py:159
 msgid "Unable to import from file"
 msgstr "Dosyadan içe aktarılamadı"
 
-#: src/styles.py:262
+#: src/styles.py:58
+msgid "X Label"
+msgstr "X Etiketi"
+
+#: src/styles.py:59
+msgid "Y Label"
+msgstr "Y Etiketi"
+
+#: src/styles.py:312
 #, python-brace-format
 msgid "Could not parse {stylename}, loading system preferred style"
 msgstr "{stylename} ayrıştırılamadı, yükleme yeğlediği biçem yükleniyor"
 
-#: src/styles.py:269
+#: src/styles.py:319
 #, python-brace-format
 msgid "Plot style {stylename} does not exist loading system preferred"
 msgstr "Çizim biçemi {stylename} yok, yükleme sistemi tercih edildi"
 
-#: src/styles.py:663
+#: src/styles.py:710
 msgid "Are you sure you want to delete {self.style.get_name()}?"
 msgstr "{self.style.get_name()} biçemini silmek istediğinize emin misiniz?"
 
-#: src/styles.py:680
+#: src/styles.py:727
 msgid "Color {}"
 msgstr "Renk {}"
+
+#: src/style_io.py:49
+msgid "Missing colon in file {}, line {}"
+msgstr "{} dosyasının {}. satırında kayıp sütun"
+
+#: src/style_io.py:57
+#, fuzzy
+#| msgid "Style includes a non-style related parameter, {}"
+msgid "Non-style related parameter {} in file {}"
+msgstr "Biçem, biçemle ilgili olmayan bir parametre içeriyor, {}"
+
+#: src/style_io.py:60
+msgid "Ignoring parameter {} in file {}"
+msgstr ""
+
+#: src/style_io.py:63
+msgid "Duplicate key in file {}, on line {}"
+msgstr "{} dosyasının {}. satırında ikiz anahtar"
+
+#: src/style_io.py:80
+msgid "Bad value in file {} on line {}"
+msgstr "{} dosyasının {}. satırında kötü değer"
+
+#: src/style_io.py:84
+msgid "Could not parse {}"
+msgstr "{} ayrıştırılamadı"
 
 #: src/transform_data.py:39
 #, python-brace-format
@@ -1596,7 +1647,7 @@ msgstr "Desteklenmeyen Parçacık {}"
 msgid "No way to apply “{}”"
 msgstr "“{}” uygulamanın yolu yok"
 
-#: src/utilities.py:160
+#: src/utilities.py:158
 msgid "No valid number specified"
 msgstr "Geçerli bir sayı belirtilmedi"
 
@@ -1757,32 +1808,11 @@ msgstr "Geçerli bir sayı belirtilmedi"
 #~ msgid "Preferences"
 #~ msgstr "Tercihler"
 
-#~ msgid "Missing colon in file {}, line {}"
-#~ msgstr "{} dosyasının {}. satırında kayıp sütun"
-
-#~ msgid "Style includes a non-style related parameter, {}"
-#~ msgstr "Biçem, biçemle ilgili olmayan bir parametre içeriyor, {}"
-
-#~ msgid "Duplicate key in file {}, on line {}"
-#~ msgstr "{} dosyasının {}. satırında ikiz anahtar"
-
-#~ msgid "Bad value in file {} on line {}"
-#~ msgstr "{} dosyasının {}. satırında kötü değer"
-
-#~ msgid "Could not parse {}"
-#~ msgstr "{} ayrıştırılamadı"
-
 #~ msgid "2Theta"
 #~ msgstr "2Theta"
 
 #~ msgid "Omega"
 #~ msgstr "Omega"
-
-#~ msgid "X Label"
-#~ msgstr "X Etiketi"
-
-#~ msgid "Y Label"
-#~ msgstr "Y Etiketi"
 
 #, python-brace-format
 #~ msgid "{name} - line colors"
