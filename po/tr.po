@@ -2,15 +2,16 @@
 # Copyright (C) 2023 se.sjoerd.Graphs' COPYRIGHT HOLDER
 # This file is distributed under the same license as the se.sjoerd.Graphs package.
 #
-# Sabri Ünal <libreajans@gmail.com>, 2023.
+# Sabri Ünal <libreajans@gmail.com>, 2023-2024.
+# Emin Tufan Çetin <etcetin@gmail.com>, 2024.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: se.sjoerd.Graphs\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2024-02-05 12:24+0000\n"
-"PO-Revision-Date: 2024-01-11 19:09+0000\n"
-"Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
+"POT-Creation-Date: 2024-02-05 22:21+0000\n"
+"PO-Revision-Date: 2024-02-06 22:25+0300\n"
+"Last-Translator: Emin Tufan Çetin <etcetin@gmail.com>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/graphs/graphs/tr/"
 ">\n"
 "Language: tr\n"
@@ -18,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.4-dev\n"
+"X-Generator: Poedit 3.4.2\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:6
@@ -79,15 +80,11 @@ msgstr ""
 "ortamları için de uygundur."
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:21
-#, fuzzy
-#| msgid ""
-#| "For any feedback, questions or general issues, please file an issue on "
-#| "the GitHub page."
 msgid ""
 "For any feedback, questions or general issues, please file an issue on the "
 "GitLab page."
 msgstr ""
-"Herhangi bir geri bildirim, soru veya genel sorun için lütfen GitHub "
+"Herhangi bir geri bildirim, soru ya da genel sorun için lütfen GitLab "
 "sayfasından hata bildiriminde bulunun."
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:34
@@ -243,7 +240,7 @@ msgid ""
 "permanently lost."
 msgstr ""
 "Geçerli projede kaydedilmemiş değişiklikler var. Kaydedilmeyen değişiklikler "
-"kalıcı olarak kaybolacak."
+"kalıcı olarak yitecek."
 
 #: data/ui/dialogs.blp:9
 msgid "Discard"
@@ -343,7 +340,7 @@ msgstr "İmleyiciler"
 
 #: data/ui/edit_item.blp:77 data/ui/style_editor.blp:109
 msgid "Nothing"
-msgstr "Hiçbir şey"
+msgstr "Hiçbir Şey"
 
 #: data/ui/edit_item.blp:77 data/ui/style_editor.blp:109
 msgid "Point"
@@ -790,7 +787,7 @@ msgstr "Satırları Atla"
 
 #: data/ui/import.blp:99
 msgid "Ignored row indices"
-msgstr "YYoksayılan satır endeksleri"
+msgstr "Yok sayılan satır endeksleri"
 
 #: data/ui/item_box.blp:26
 msgid "Pick Color"
@@ -1362,21 +1359,16 @@ msgid "Fitting Parameters for {param_name}"
 msgstr "{param_name} için Sığdırma Parametreleri"
 
 #: src/data.py:112
-#, fuzzy
-#| msgid "New Project"
 msgid "Untitled Project"
-msgstr "Yeni Proje"
+msgstr "Adsız Proje"
 
 #: src/data.py:126
 msgid "Draft"
-msgstr ""
+msgstr "Taslak"
 
 #: src/data.py:606
-#, fuzzy
-#| msgctxt "shortcut window"
-#| msgid "Save Project"
 msgid "Saved Project"
-msgstr "Projeyi Kaydet"
+msgstr "Kayıtlı Proje"
 
 #: src/data.py:607 src/export_figure.py:65 src/ui.py:151
 msgid "Open Location"
@@ -1557,26 +1549,29 @@ msgid "Color {}"
 msgstr "Renk {}"
 
 #: src/style_io.py:49
-msgid "Missing colon in file {}, line {}"
-msgstr "{} dosyasının {}. satırında kayıp sütun"
+#, python-brace-format
+msgid "Missing colon in file {0}, line {1}"
+msgstr "{0} dosyasının {1}. satırında eksik sütun"
 
 #: src/style_io.py:57
-#, fuzzy
-#| msgid "Style includes a non-style related parameter, {}"
-msgid "Non-style related parameter {} in file {}"
-msgstr "Biçem, biçemle ilgili olmayan bir parametre içeriyor, {}"
+#, python-brace-format
+msgid "Non-style related parameter {0} in file {1}"
+msgstr "{1} dosyasında biçemle alakasız parametre {0}"
 
 #: src/style_io.py:60
-msgid "Ignoring parameter {} in file {}"
-msgstr ""
+#, python-brace-format
+msgid "Ignoring parameter {0} in file {1}"
+msgstr "{1} dosyasındaki {0} parametresi yok sayılıyor"
 
 #: src/style_io.py:63
-msgid "Duplicate key in file {}, on line {}"
-msgstr "{} dosyasının {}. satırında ikiz anahtar"
+#, python-brace-format
+msgid "Duplicate key in file {0}, on line {1}"
+msgstr "{0} dosyasının {1}. satırında ikiz anahtar"
 
 #: src/style_io.py:80
-msgid "Bad value in file {} on line {}"
-msgstr "{} dosyasının {}. satırında kötü değer"
+#, python-brace-format
+msgid "Bad value in file {0} on line {1}"
+msgstr "{0} dosyasının {1}. satırında kötü değer"
 
 #: src/style_io.py:84
 msgid "Could not parse {}"
@@ -1814,6 +1809,5 @@ msgstr "Geçerli bir sayı belirtilmedi"
 #~ msgid "Omega"
 #~ msgstr "Omega"
 
-#, python-brace-format
 #~ msgid "{name} - line colors"
 #~ msgstr "{name} - çizgi renkleri"
