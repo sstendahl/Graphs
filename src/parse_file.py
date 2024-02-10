@@ -2,13 +2,15 @@
 import re
 from gettext import gettext as _
 
+from gi.repository import Gio
+
 from graphs import file_io, item, migrate, misc, utilities
 from graphs.misc import ParseError
 
 import numpy
 
 
-def import_from_project(_self, file):
+def import_from_project(_self, file: Gio.File) -> misc.ItemList:
     try:
         project = file_io.parse_json(file)
     except UnicodeDecodeError:
@@ -16,7 +18,7 @@ def import_from_project(_self, file):
     return list(map(item.new_from_dict, project["data"]))
 
 
-def import_from_xrdml(self, file):
+def import_from_xrdml(self, file: Gio.File) -> misc.ItemList:
     content = file_io.parse_xml(file)
     intensities = content.getElementsByTagName("intensities")
     counting_time = content.getElementsByTagName("commonCountingTime")
@@ -49,7 +51,7 @@ def import_from_xrdml(self, file):
     )]
 
 
-def import_from_xry(self, file):
+def import_from_xry(self, file: Gio.File) -> misc.ItemList:
     """Import data from .xry files used by Leybold X-ray apparatus."""
     with file_io.open_wrapped(file, "rt", encoding="ISO-8859-1") as wrapper:
         def skip(lines: int):
@@ -97,7 +99,7 @@ def _swap(string):
     return string.replace("third", ".")
 
 
-def import_from_columns(self, file):
+def import_from_columns(self, file: Gio.File) -> misc.ItemList:
     style = self.get_figure_style_manager().get_selected_style_params()
     item_ = item.DataItem.new(style, name=utilities.get_filename(file))
     columns_params = self.get_settings().get_child(
@@ -109,52 +111,54 @@ def import_from_columns(self, file):
     delimiter = misc.DELIMITERS[columns_params.get_string("delimiter")]
     if delimiter == "custom":
         delimiter = columns_params.get_string("custom-delimiter")
-    with file_io.open_wrapped(file, "rt") as wrapper:
-        start_values = False
-        for index, line in enumerate(wrapper, -skip_rows):
-            if index < 0:
-                continue
-            values = re.split(delimiter, line.strip())
-            if separator == ",":
-                values = list(map(_swap, values))
-            try:
-                if len(values) == 1:
-                    float_value = utilities.string_to_float(values[0])
-                    if float_value is not None:
-                        item_.ydata.append(float_value)
-                        item_.xdata.append(index)
+    stream = Gio.DataInputStream.new(file.read(None))
+    start_values = False
+    for index, line in \
+            enumerate(file_io.iter_data_stream(stream), -skip_rows):
+        if index < 0:
+            continue
+        values = re.split(delimiter, line)
+        if separator == ",":
+            values = list(map(_swap, values))
+        try:
+            if len(values) == 1:
+                float_value = utilities.string_to_float(values[0])
+                if float_value is not None:
+                    item_.ydata.append(float_value)
+                    item_.xdata.append(index)
+                    start_values = True
+            else:
+                try:
+                    x_value = utilities.string_to_float(
+                        values[column_x])
+                    y_value = utilities.string_to_float(
+                        values[column_y])
+                    if x_value is None or y_value is None:
+                        raise ValueError
+                    else:
+                        item_.xdata.append(x_value)
+                        item_.ydata.append(y_value)
                         start_values = True
-                else:
-                    try:
-                        x_value = utilities.string_to_float(
-                            values[column_x])
-                        y_value = utilities.string_to_float(
-                            values[column_y])
-                        if x_value is None or y_value is None:
-                            raise ValueError
-                        else:
-                            item_.xdata.append(x_value)
-                            item_.ydata.append(y_value)
-                            start_values = True
-                    except IndexError as error:
-                        raise ParseError(
-                            _("Import failed, column index out of range"),
-                        ) from error
-            # If not all values in the line are floats, start looking for
-            # headers instead
-            except ValueError:
-                # Don't try to add headers when started adding values
-                if not start_values:
-                    try:
-                        headers = re.split(delimiter, line)
-                        if len(values) == 1:
-                            item_.set_ylabel(headers[column_x])
-                        else:
-                            item_.set_xlabel(headers[column_x])
-                            item_.set_ylabel(headers[column_y])
-                    # If no label could be found at the index, skip.
-                    except IndexError:
-                        pass
+                except IndexError as error:
+                    raise ParseError(
+                        _("Import failed, column index out of range"),
+                    ) from error
+        # If not all values in the line are floats, start looking for
+        # headers instead
+        except ValueError:
+            # Don't try to add headers when started adding values
+            if not start_values:
+                try:
+                    headers = re.split(delimiter, line)
+                    if len(values) == 1:
+                        item_.set_ylabel(headers[column_x])
+                    else:
+                        item_.set_xlabel(headers[column_x])
+                        item_.set_ylabel(headers[column_y])
+                # If no label could be found at the index, skip.
+                except IndexError:
+                    pass
+    stream.close()
     if not item_.xdata:
         raise ParseError(_("Unable to import from file"))
     return [item_]
