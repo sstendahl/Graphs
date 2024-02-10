@@ -34,9 +34,9 @@ def parse(file: Gio.File) -> (RcParams, str):
     style = RcParams()
     filename = utilities.get_filename(file)
     try:
-        wrapper = file_io.open_wrapped(file, "rt")
-        for line_number, line in enumerate(wrapper, 1):
-            line = line.strip()
+        stream = Gio.DataInputStream.new(file.read(None))
+        for line_number, line in \
+                enumerate(file_io.iter_data_stream(stream), 1):
             if line_number == 2:
                 name = line[2:]
             line = cbook._strip_comment(line)
@@ -83,7 +83,7 @@ def parse(file: Gio.File) -> (RcParams, str):
     except UnicodeDecodeError:
         logging.exception(_("Could not parse {}").format(filename))
     finally:
-        wrapper.close()
+        stream.close()
     return style, name
 
 
@@ -94,15 +94,16 @@ WRITE_IGNORELIST = STYLE_IGNORELIST + [
 ]
 
 
-def write(file: Gio.File, name: str, style: RcParams):
-    with file_io.open_wrapped(file, "wt") as wrapper:
-        wrapper.write("# Generated via Graphs\n")
-        wrapper.write(f"# {name}\n")
-        for key, value in style.items():
-            if key not in STYLE_BLACKLIST and key not in WRITE_IGNORELIST:
-                value = str(value).replace("#", "")
-                if key != "axes.prop_cycle":
-                    value = value.replace("[", "").replace("]", "")
-                    value = value.replace("'", "").replace("'", "")
-                    value = value.replace('"', "").replace('"', "")
-                wrapper.write(f"{key}: {value}\n")
+def write(file: Gio.File, name: str, style: RcParams) -> None:
+    stream = Gio.DataOutputStream.new(file_io.create_write_stream(file))
+    stream.put_string("# Generated via Graphs\n")
+    stream.put_string(f"# {name}\n")
+    for key, value in style.items():
+        if key not in STYLE_BLACKLIST and key not in WRITE_IGNORELIST:
+            value = str(value).replace("#", "")
+            if key != "axes.prop_cycle":
+                value = value.replace("[", "").replace("]", "")
+                value = value.replace("'", "").replace("'", "")
+                value = value.replace('"', "").replace('"', "")
+            stream.put_string(f"{key}: {value}\n")
+    stream.close()

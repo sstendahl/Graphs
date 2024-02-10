@@ -5,7 +5,7 @@ from xml.dom import minidom
 
 from gi.repository import GLib, Gio
 
-from graphs import ui
+from graphs import item, ui
 
 
 class FileLikeWrapper(io.BufferedIOBase):
@@ -62,15 +62,16 @@ class FileLikeWrapper(io.BufferedIOBase):
     read1 = read
 
 
+def create_write_stream(file: Gio.File) -> Gio.OutputStream:
+    if file.query_exists(None):
+        file.delete(None)
+    return file.create(0, None)
+
+
 def open_wrapped(file: Gio.File, mode: str = "rt", encoding: str = "utf-8"):
     read = "r" in mode
     append = "a" in mode
     replace = "w" in mode
-
-    def _create_stream():
-        if file.query_exists(None):
-            file.delete(None)
-        return file.create(0, None)
 
     def _io_stream():
         return FileLikeWrapper.new_for_io_stream(file.open_readwrite(None))
@@ -78,18 +79,18 @@ def open_wrapped(file: Gio.File, mode: str = "rt", encoding: str = "utf-8"):
     if "x" in mode:
         if file.query_exists():
             return OSError()
-        stream = _create_stream()
+        stream = create_write_stream(file)
         stream.close()
     if read and append:
         obj = _io_stream()
     elif read and replace:
-        stream = _create_stream()
+        stream = create_write_stream(file)
         stream.close()
         obj = _io_stream()
     elif read:
         obj = FileLikeWrapper(read_stream=file.read(None))
     elif replace:
-        obj = FileLikeWrapper(write_stream=_create_stream())
+        obj = FileLikeWrapper(write_stream=create_write_stream(file))
     elif append:
         obj = FileLikeWrapper(write_stream=file.append(None))
 
@@ -98,18 +99,26 @@ def open_wrapped(file: Gio.File, mode: str = "rt", encoding: str = "utf-8"):
     return obj
 
 
-def save_item(file, item_):
+def iter_data_stream(stream: Gio.DataInputStream):
+    line = stream.read_line_utf8(None)[0]
+    while line is not None:
+        yield line
+        line = stream.read_line_utf8(None)[0]
+
+
+def save_item(file: Gio.File, item_: item.DataItem):
     delimiter = "\t"
     fmt = delimiter.join(["%.12e"] * 2)
     xlabel, ylabel = item_.get_xlabel(), item_.get_ylabel()
-    with open_wrapped(file, "wt") as wrapper:
-        if xlabel != "" and ylabel != "":
-            wrapper.write(xlabel + delimiter + ylabel + "\n")
-        for values in zip(item_.xdata, item_.ydata):
-            wrapper.write(fmt % values + "\n")
+    stream = Gio.DataOutputStream.new(create_write_stream(file))
+    if xlabel != "" and ylabel != "":
+        stream.stream(xlabel + delimiter + ylabel + "\n")
+    for values in zip(item_.xdata, item_.ydata):
+        stream.put_string(fmt % values + "\n")
+    stream.close()
 
 
-def save_project(self, require_dialog=False):
+def save_project(self, require_dialog: bool = False):
     project_file = self.get_data().project_file
     if project_file is not None and not require_dialog:
         self.get_data().save()
@@ -119,12 +128,12 @@ def save_project(self, require_dialog=False):
     ui.save_project_dialog(self)
 
 
-def parse_json(file):
+def parse_json(file: Gio.File) -> dict:
     with open_wrapped(file, "rb") as wrapper:
         return json.load(wrapper)
 
 
-def write_json(file, json_object, pretty_print=True):
+def write_json(file: Gio.File, json_object: dict, pretty_print=True) -> None:
     with open_wrapped(file, "wt") as wrapper:
         json.dump(
             json_object, wrapper,
@@ -132,6 +141,6 @@ def write_json(file, json_object, pretty_print=True):
         )
 
 
-def parse_xml(file):
+def parse_xml(file: Gio.File) -> dict:
     with open_wrapped(file, "rb") as wrapper:
         return minidom.parse(wrapper)
