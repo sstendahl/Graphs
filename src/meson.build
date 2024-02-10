@@ -65,3 +65,4 @@ custom_target('graphs typelib',
        depends: graphs_lib,
        install: true,
    install_dir: get_option('libdir') / 'girepository-1.0')
+devenv.set('GI_TYPELIB_PATH', meson.current_build_dir())

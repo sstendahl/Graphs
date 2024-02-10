@@ -39,17 +39,24 @@ if __name__ == "__main__":
     gi.require_version("Gtk", "4.0")
     gi.require_version("Graphs", "1")
 
-    sys.path.insert(1, "@PKGDATADIR@")
+    graph_path_dir = "@PKGDATADIR@"
+    if os.environ.get("GRAPHS_DEVEL_PATH"):
+        graph_path_dir = os.environ.get("GRAPHS_DEVEL_PATH")
+    sys.path.insert(1, graph_path_dir)
     signal.signal(signal.SIGINT, signal.SIG_DFL)
-    locale.bindtextdomain("@PROJECT_NAME@", "@LOCALEDIR@")
+    localedir = "@LOCALEDIR@"
+    if os.environ.get('GRAPHS_OVERRIDE_LOCALEDIR'):
+        localedir = os.environ.get('GRAPHS_OVERRIDE_LOCALEDIR')
+    locale.bindtextdomain("@PROJECT_NAME@", localedir)
     locale.textdomain("@PROJECT_NAME@")
-    gettext.bindtextdomain("@PROJECT_NAME@", "@LOCALEDIR@")
+    gettext.bindtextdomain("@PROJECT_NAME@", localedir)
     gettext.textdomain("@PROJECT_NAME@")
 
     from gi.repository import Gio
-    resource = Gio.Resource.load(
-        os.path.join("@PKGDATADIR@", "@APPLICATION_ID@.gresource"),
-    )
+    gresource_location = os.path.join("@PKGDATADIR@", "@APPLICATION_ID@.gresource")
+    if os.environ.get("GRAPHS_OVERRIDE_RESOURCES"):
+        gresource_location = os.environ.get('GRAPHS_OVERRIDE_RESOURCES')
+    resource = Gio.Resource.load(gresource_location)
     resource._register()
 
     logging.basicConfig(

@@ -1,3 +1,7 @@
 # GNOME Builder
 .flatpak-builder/
+# Meson
 _build/
+data/gschemas.compiled
+# Python
+__pycache__/
