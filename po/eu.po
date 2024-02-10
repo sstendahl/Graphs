@@ -7,7 +7,7 @@ msgid ""
 msgstr "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
 "POT-Creation-Date: 2024-02-07 18:43+0000\n"
-"PO-Revision-Date: 2024-02-08 18:43+0000\n"
+"PO-Revision-Date: 2024-02-10 10:00+0000\n"
 "Last-Translator: Asier Sarasua Garmendia <asiersarasua@ni.eus>\n"
 "Language-Team: Basque <eu@li.org>\n"
 "Language: eu\n"
@@ -36,14 +36,14 @@ msgid ""
 "variety of operations such as the ability to select, cut, translate, "
 "multiply, center and smoothen data, as well as apply any custom "
 "transformations on the data."
-msgstr ""
+msgstr "Grafikoak aplikazioa datuak modu errazean marraztu eta manipulatzeko tresna boteretsua da. Datu berriak inportatu ditzake fitxategi mota askotatik, edo ekuazioen bidez sortu ditzake. Eragiketa anitz ditu datu guztiak manipulatzeko: datuak hautatu, moztu, itzuli, biderkatu, zentratu eta leuntzeko aukera eskaintzen du, bai eta haiei transformazio pertsonalizatuak aplikatzeko ere."
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:14
 msgid ""
 "Moreover, Graphs supports curve fitting on imported data and offers "
 "extensive customization options for the style of the plots. You can fine-"
 "tune and personalize stylesheets to your liking."
-msgstr ""
+msgstr "Horrez gain, Grafikoak aplikazioari buruz datuak inportatu eta haiekin kurbak doitzea onartzen du, eta pertsonalizazio-aukera asko eskaintzen ditu diagramen estilorako. Estilo-orriak aukeran doitu eta pertsonalizatu daitezke."
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:17
 msgid ""
@@ -54,39 +54,39 @@ msgid ""
 "vector images allows for easy editing in software like Inkscape for further "
 "refinement. Graphs is written with the GNOME environment in mind, but should "
 "be suitable for any other desktop environment as well."
-msgstr ""
+msgstr "Grafikoak aukera bikaina da diagramak marrazteko eta datuak manipulatzeko. Sortutako diagramak formatu anitzetan gorde daitezke eta, gero, argitalpen zientifikoetan partekatu eta aurkezpenak prestatu daitezke haiekin. Diagramak irudi bektorial gisa gorde daitezke eta Inkscape moduko aplikazioetan editatu daitezke itxura hobea emateko. Grafikoak aplikazioa GNOME ingurunerako garatu da, baina beste mahaigain batzuetan ere erabili daiteke."
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:21
 msgid ""
 "For any feedback, questions or general issues, please file an issue on the "
 "GitLab page."
-msgstr ""
+msgstr "Aplikazioari buruzko laguntza, galdera edo arazoetarako, bete akats-jakinarazpen bat GitLab orrian."
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:34
 msgid "1 - Plot and manipulate any data of choice"
-msgstr ""
+msgstr "1 - Marraztu eta manipulatu edozein datu"
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:38
 msgid "2 - Full support for light and dark mode"
-msgstr ""
+msgstr "2 - Modu argia zein iluna onartzen ditu"
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:42
 msgid "3 - Generate data from an equation"
-msgstr ""
+msgstr "3 - Sortu datuek ekuazio batetik abiatuz"
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:46
 msgid "4 - Edit plot stylesheets"
-msgstr ""
+msgstr "4 - Editatu diagrametarako estilo-orriak"
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:50
 msgid "5 - Manipulate imported data with ease"
-msgstr ""
+msgstr "5 - Inportatu eta manipulatu datuak erraz"
 
 #: data/se.sjoerd.Graphs.desktop.in.in:10
 msgid ""
 "Plotting;Graph;Graphing;Science;Mathematics;Math;Equations;Data;Plot;"
 "Visualisation;Visualization;Fitting;xrdml;"
-msgstr ""
+msgstr "Marraztea;Grafikoa;Grafikoak;Zientzia;Matematikak;Mateak;Ekuazioak;Datuak;Diagrama;Bisualizazioa;Bistaratzea;Doitzea;xrdml;"
 
 #: data/ui/add_equation_window.blp:7
 msgid "Add Equation"
@@ -141,11 +141,11 @@ msgstr "Izena"
 
 #: data/ui/curve_fitting.blp:35 data/ui/item_box.blp:64
 msgid "Curve Fitting"
-msgstr ""
+msgstr "Kurba doitzea"
 
 #: data/ui/curve_fitting.blp:40
 msgid "Open Curve Fitting Menu"
-msgstr ""
+msgstr "Ireki kurba doitzeko menua"
 
 #: data/ui/curve_fitting.blp:57
 msgid "Equation"
@@ -193,7 +193,7 @@ msgstr "Y = "
 
 #: data/ui/curve_fitting.blp:92
 msgid "Add Fit to Data"
-msgstr ""
+msgstr "Gehitu doitzea datuei"
 
 #: data/ui/curve_fitting.blp:107 data/ui/window.blp:586 src/ui.py:33
 msgid "Toggle Sidebar"
@@ -211,7 +211,7 @@ msgstr "Gorde aldaketak?"
 msgid ""
 "Current project contains unsaved changes, changes that are not saved will be "
 "permanently lost."
-msgstr ""
+msgstr "Uneko proiektuak gorde gabeko aldaketak ditu, gorde ez diren aldaketa horiek betiko galduko dira."
 
 #: data/ui/dialogs.blp:9
 msgid "Discard"
@@ -518,7 +518,7 @@ msgstr "Estiloa"
 
 #: data/ui/fitting_parameters.blp:26
 msgid "Initial Guess"
-msgstr ""
+msgstr "Hasierako ustea"
 
 #: data/ui/fitting_parameters.blp:37
 msgid "Minimum"
@@ -698,11 +698,11 @@ msgstr "Inportatu"
 
 #: data/ui/import.blp:55
 msgid "Delimiter"
-msgstr ""
+msgstr "Mugatzailea"
 
 #: data/ui/import.blp:56
 msgid "Character sequence used to split values"
-msgstr ""
+msgstr "Balioak banatzeko karaktere-sekuentzia"
 
 #: data/ui/import.blp:59
 msgid "Whitespace"
@@ -730,11 +730,11 @@ msgstr "Puntu dezimala (.)"
 
 #: data/ui/import.blp:66
 msgid "Custom Delimiter"
-msgstr ""
+msgstr "Mugatzaile pertsonalizatua"
 
 #: data/ui/import.blp:70
 msgid "Decimal Separator"
-msgstr ""
+msgstr "Dezimalen bereizlea"
 
 #: data/ui/import.blp:77
 msgid "Column X"
@@ -742,7 +742,7 @@ msgstr "X zutabea"
 
 #: data/ui/import.blp:78
 msgid "X-data column index"
-msgstr ""
+msgstr "X datuen zutabe-indizea"
 
 #: data/ui/import.blp:87
 msgid "Column Y"
@@ -750,7 +750,7 @@ msgstr "Y zutabea"
 
 #: data/ui/import.blp:89
 msgid "Y-data column index"
-msgstr ""
+msgstr "Y datuen zutabe-indizea"
 
 #: data/ui/import.blp:98
 msgid "Skip Rows"
@@ -758,7 +758,7 @@ msgstr "Saltatu errenkadak"
 
 #: data/ui/import.blp:99
 msgid "Ignored row indices"
-msgstr ""
+msgstr "Ez ikusitako errenkada-indizeak"
 
 #: data/ui/item_box.blp:26
 msgid "Pick Color"
@@ -766,245 +766,245 @@ msgstr "Aukeratu kolorea"
 
 #: data/ui/item_box.blp:51
 msgid "Move Item "
-msgstr ""
+msgstr "Aldatu lekuz elementua "
 
 #: data/ui/item_box.blp:68
 msgid "Edit Item"
-msgstr ""
+msgstr "Editatu elementua"
 
 #: data/ui/item_box.blp:72
 msgid "Remove Item"
-msgstr ""
+msgstr "Kendu elementua"
 
 #: data/ui/smoothen_settings.blp:7
 msgid "Smoothen Settings"
-msgstr ""
+msgstr "Leuntze-ezarpenak"
 
 #: data/ui/smoothen_settings.blp:37 data/ui/window.blp:682
 msgid "Savitzky–Golay Filter"
-msgstr ""
+msgstr "Savitzky–Golay iragazkia"
 
 #: data/ui/smoothen_settings.blp:39
 msgid "Span percentage"
-msgstr ""
+msgstr "Hedadura-ehunekoa"
 
 #: data/ui/smoothen_settings.blp:40
 msgid "What percentage of the data span to use for the filter window"
-msgstr ""
+msgstr "Datuen zein ehunekotan hedatuko den iragazkiaren leihoa"
 
 #: data/ui/smoothen_settings.blp:47
 msgid "Polynomial degree"
-msgstr ""
+msgstr "Gradu polinomiala"
 
 #: data/ui/smoothen_settings.blp:55 data/ui/window.blp:687
 msgid "Moving Average"
-msgstr ""
+msgstr "Batezbesteko mugikorra"
 
 #: data/ui/smoothen_settings.blp:57
 msgid "Box points"
-msgstr ""
+msgstr "Koadro-puntuak"
 
 #: data/ui/smoothen_settings.blp:58
 msgid "Amount of points to use when calculating a moving average"
-msgstr ""
+msgstr "Batezbesteko mugikorra kalkulatzeko erabiliko den puntu kopurua"
 
 #: data/ui/style_color_box.blp:18 data/ui/style_preview.blp:26
 msgid "Edit"
-msgstr ""
+msgstr "Editatu"
 
 #: data/ui/style_color_box.blp:29
 msgid "Remove"
-msgstr ""
+msgstr "Kendu"
 
 #: data/ui/style_editor.blp:37
 msgid "Style Name"
-msgstr ""
+msgstr "Estilo-izena"
 
 #: data/ui/style_editor.blp:41
 msgid "Font"
-msgstr ""
+msgstr "Letra-tipoa"
 
 #: data/ui/style_editor.blp:52
 msgid "Title Size"
-msgstr ""
+msgstr "Titulu-tamaina"
 
 #: data/ui/style_editor.blp:53
 msgid "Title size in relation to text size"
-msgstr ""
+msgstr "Titulu-tamaina testu-tamainarekiko"
 
 #: data/ui/style_editor.blp:65
 msgid "Label Size"
-msgstr ""
+msgstr "Etiketa-tamaina"
 
 #: data/ui/style_editor.blp:66
 msgid "Label size in relation to text size"
-msgstr ""
+msgstr "Etiketa-tamaina testu-tamainarekiko"
 
 #: data/ui/style_editor.blp:80
 msgid "Lines"
-msgstr ""
+msgstr "Marrak"
 
 #: data/ui/style_editor.blp:138
 msgid "Axes"
-msgstr ""
+msgstr "Ardatzak"
 
 #: data/ui/style_editor.blp:141
 msgid "Axis Width"
-msgstr ""
+msgstr "Ardatz-zabalera"
 
 #: data/ui/style_editor.blp:154
 msgid "Draw Frame"
-msgstr ""
+msgstr "Marraztu markoa"
 
 #: data/ui/style_editor.blp:159
 msgid "Ticks"
-msgstr ""
+msgstr "Markak"
 
 #: data/ui/style_editor.blp:162
 msgid "Tick Directions"
-msgstr ""
+msgstr "Marken norabidea"
 
 #: data/ui/style_editor.blp:164
 msgid "Inwards"
-msgstr ""
+msgstr "Barrurantz"
 
 #: data/ui/style_editor.blp:164
 msgid "Outwards"
-msgstr ""
+msgstr "Kanporantz"
 
 #: data/ui/style_editor.blp:169
 msgid "Minor Ticks"
-msgstr ""
+msgstr "Bigarren mailako markak"
 
 #: data/ui/style_editor.blp:173
 msgid "Major Tick Width"
-msgstr ""
+msgstr "Marka nagusien zabalera"
 
 #: data/ui/style_editor.blp:186
 msgid "Minor Tick Width"
-msgstr ""
+msgstr "Bigarren mailako marken zabalera"
 
 #: data/ui/style_editor.blp:200
 msgid "Major Tick Length"
-msgstr ""
+msgstr "Marka nagusien luzera"
 
 #: data/ui/style_editor.blp:213
 msgid "Minor Tick Length"
-msgstr ""
+msgstr "Bigarren mailako marken luzera"
 
 #: data/ui/style_editor.blp:227
 msgid "Ticks on Bottom Axis"
-msgstr ""
+msgstr "Markak beheko ardatzean"
 
 #: data/ui/style_editor.blp:231
 msgid "Ticks on Left Axis"
-msgstr ""
+msgstr "Markak ezkerreko ardatzean"
 
 #: data/ui/style_editor.blp:235
 msgid "Ticks on Right Axis"
-msgstr ""
+msgstr "Markak eskuineko ardatzean"
 
 #: data/ui/style_editor.blp:239
 msgid "Ticks on Top Axis"
-msgstr ""
+msgstr "Markak goiko ardatzean"
 
 #: data/ui/style_editor.blp:244
 msgid "Grid"
-msgstr ""
+msgstr "Sareta"
 
 #: data/ui/style_editor.blp:247
 msgid "Show Grid"
-msgstr ""
+msgstr "Erakutsi sareta"
 
 #: data/ui/style_editor.blp:251
 msgid "Grid Width"
-msgstr ""
+msgstr "Saretaren zabalera"
 
 #: data/ui/style_editor.blp:265
 msgid "Grid Opacity"
-msgstr ""
+msgstr "Saretaren opakutasuna"
 
 #: data/ui/style_editor.blp:280
 msgid "Padding"
-msgstr ""
+msgstr "Betegarria"
 
 #: data/ui/style_editor.blp:281
 msgid "Padding for different parts of the figure"
-msgstr ""
+msgstr "Irudiaren atal bakoitzaren betegarriak"
 
 #: data/ui/style_editor.blp:284
 msgid "Value Padding"
-msgstr ""
+msgstr "Balioen betegarria"
 
 #: data/ui/style_editor.blp:285
 msgid "Padding between axes and values"
-msgstr ""
+msgstr "Ardatzen eta balioen arteko betegarria"
 
 #: data/ui/style_editor.blp:298
 msgid "Label Padding"
-msgstr ""
+msgstr "Etiketen betegarria"
 
 #: data/ui/style_editor.blp:299
 msgid "Padding between axes and labels"
-msgstr ""
+msgstr "Ardatzen eta etiketen arteko betegarria"
 
 #: data/ui/style_editor.blp:312
 msgid "Title Padding"
-msgstr ""
+msgstr "Tituluaren betegarria"
 
 #: data/ui/style_editor.blp:313
 msgid "Padding between axes and the title"
-msgstr ""
+msgstr "Ardatzen eta tituluaren arteko betegarria"
 
 #: data/ui/style_editor.blp:327
 msgid "Colors"
-msgstr ""
+msgstr "Koloreak"
 
 #: data/ui/style_editor.blp:339
 msgid "Text Color"
-msgstr ""
+msgstr "Testu-kolorea"
 
 #: data/ui/style_editor.blp:344 data/ui/style_editor.blp:366
 #: data/ui/style_editor.blp:388 data/ui/style_editor.blp:410
 #: data/ui/style_editor.blp:432 data/ui/style_editor.blp:454
 msgid "Change Color"
-msgstr ""
+msgstr "Aldatu kolorea"
 
 #: data/ui/style_editor.blp:361
 msgid "Tick Color"
-msgstr ""
+msgstr "Marken kolorea"
 
 #: data/ui/style_editor.blp:383
 msgid "Axis Color"
-msgstr ""
+msgstr "Ardatzen kolorea"
 
 #: data/ui/style_editor.blp:405
 msgid "Grid Color"
-msgstr ""
+msgstr "Saretaren kolorea"
 
 #: data/ui/style_editor.blp:427
 msgid "Background Color"
-msgstr ""
+msgstr "Atzeko planoaren kolorea"
 
 #: data/ui/style_editor.blp:449
 msgid "Outline Color"
-msgstr ""
+msgstr "Ingeradaren kolorea"
 
 #: data/ui/style_editor.blp:466
 msgid "Line Colors"
-msgstr ""
+msgstr "Marren kolorea"
 
 #: data/ui/style_editor.blp:477
 msgid "Add Color"
-msgstr ""
+msgstr "Gehitu kolorea"
 
 #: data/ui/transform_window.blp:7
 msgid "Transform Data"
-msgstr ""
+msgstr "Transformatu datuak"
 
 #: data/ui/transform_window.blp:29 data/ui/window.blp:380
 msgid "Transform"
-msgstr ""
+msgstr "Transformatu"
 
 #: data/ui/transform_window.blp:42
 msgid ""
@@ -1015,254 +1015,261 @@ msgid ""
 "Trigonometric functions use radians\n"
 "by default, append d to the function\n"
 "to use degrees, e.g. sind(x) or cosd(x)."
-msgstr ""
+msgstr "Aldagai gehigarriak:\n"
+"x_min, y_min\n"
+"x_max, y_max \n"
+"\n"
+"Funtzio trigonometrikoek radianak\n"
+"erabiltzen dituzte lehenespenez, erantsi\n"
+"d balioa funtzioari graduak erabiltzeko,\n"
+"adibidez sind(x) edo cosd(x)."
 
 #: data/ui/transform_window.blp:47
 msgid "More info"
-msgstr ""
+msgstr "Informazio gehiago"
 
 #: data/ui/transform_window.blp:58
 msgid "X ="
-msgstr ""
+msgstr "X ="
 
 #: data/ui/transform_window.blp:68
 msgid "Discard Unselected Data"
-msgstr ""
+msgstr "Baztertu hautatu gabeko datuak"
 
 #: data/ui/window.blp:166
 msgid "Add new Data"
-msgstr ""
+msgstr "Gehitu datu berriak"
 
 #: data/ui/window.blp:174
 msgid "Open Application Menu"
-msgstr ""
+msgstr "Ireki aplikazioaren menua"
 
 #: data/ui/window.blp:203
 msgid "No Data"
-msgstr ""
+msgstr "Daturik ez"
 
 #: data/ui/window.blp:204
 msgid "Add data from a file or manually as an equation"
-msgstr ""
+msgstr "Gehitu datuak fitxategi batetik edo eskuz ekuazio gisa"
 
 #: data/ui/window.blp:224
 msgid "Panning mode. Click and drag to pan"
-msgstr ""
+msgstr "Desplazamendu-modua. Klik eta arrastatu mugitzeko"
 
 #: data/ui/window.blp:230
 msgid "Zoom mode. Select an area on the figure to zoom in"
-msgstr ""
+msgstr "Zoom-modua. Hautatu irudiko area bat zoom egiteko"
 
 #: data/ui/window.blp:236
 msgid "Highlight mode. Click and drag to make a selection of data"
-msgstr ""
+msgstr "Nabarmentze-modua. Klik eta arrastatu datuen hautapen bat egiteko"
 
 #: data/ui/window.blp:271
 msgid "Adjust"
-msgstr ""
+msgstr "Doitu"
 
 #: data/ui/window.blp:286
 msgid "Shift"
-msgstr ""
+msgstr "Desplazatu"
 
 #: data/ui/window.blp:288
 msgid "Shift all data vertically with respect to each other"
-msgstr ""
+msgstr "Desplazatu datu guztiak bertikalean elkarrekiko"
 
 #: data/ui/window.blp:303
 msgid "Normalize"
-msgstr ""
+msgstr "Normalizatu"
 
 #: data/ui/window.blp:305
 msgid "Normalize data"
-msgstr ""
+msgstr "Normalizatu datuak"
 
 #: data/ui/window.blp:321
 msgid "Smoothen"
-msgstr ""
+msgstr "Leundu"
 
 #: data/ui/window.blp:323
 msgid "Smoothen data"
-msgstr ""
+msgstr "Leundu datuak"
 
 #: data/ui/window.blp:340
 msgid "Center data"
-msgstr ""
+msgstr "Zentratu datuak"
 
 #: data/ui/window.blp:355
 msgid "Combine"
-msgstr ""
+msgstr "Konbinatu"
 
 #: data/ui/window.blp:357
 msgid "Combine all selected data"
-msgstr ""
+msgstr "Konbinatu hautatutako datu guztiak"
 
 #: data/ui/window.blp:371
 msgid "Cut"
-msgstr ""
+msgstr "Ebaki"
 
 #: data/ui/window.blp:373
 msgid "Cut selected data"
-msgstr ""
+msgstr "Ebaki hautatutako datuak"
 
 #: data/ui/window.blp:396
 msgid "Derivative"
-msgstr ""
+msgstr "Deribatua"
 
 #: data/ui/window.blp:398
 msgid "Get the derivative of the data"
-msgstr ""
+msgstr "Eskuratu datuen deribatua"
 
 #: data/ui/window.blp:412
 msgid "Integral"
-msgstr ""
+msgstr "Integrala"
 
 #: data/ui/window.blp:414
 msgid "Get the indefinite integral of the data"
-msgstr ""
+msgstr "Ezkuratu datuen integral mugagabea"
 
 #: data/ui/window.blp:428
 msgid "FFT"
-msgstr ""
+msgstr "FTA"
 
 #: data/ui/window.blp:430
 msgid "Get the Fast Fourier Transform of the data"
-msgstr ""
+msgstr "Eskuratu datuen Fourierren Transformatu Azkarra"
 
 #: data/ui/window.blp:444
 msgid "Inverse FFT"
-msgstr ""
+msgstr "Alderantzizko FTA"
 
 #: data/ui/window.blp:446
 msgid "Get the Inverse Fast Fourier Transform of the data"
-msgstr ""
+msgstr "Eskuratu datuen Fourierren Transformatu Azkarraren alderantzizkoa"
 
 #: data/ui/window.blp:461
 msgid "Custom Transformation"
-msgstr ""
+msgstr "Transformazio pertsonalizatua"
 
 #: data/ui/window.blp:463
 msgid "Perform custom transformations on the data"
-msgstr ""
+msgstr "Egin datuen transformatu pertsonalizatua"
 
 #: data/ui/window.blp:470
 msgid "Modify"
-msgstr ""
+msgstr "Aldatu"
 
 #: data/ui/window.blp:491
 msgid "Translate X"
-msgstr ""
+msgstr "Desplazatu X"
 
 #: data/ui/window.blp:514
 msgid "Translate Y"
-msgstr ""
+msgstr "Desplazatu Y"
 
 #: data/ui/window.blp:537
 msgid "Multiply X"
-msgstr ""
+msgstr "Biderkatu X"
 
 #: data/ui/window.blp:560
 msgid "Multiply Y"
-msgstr ""
+msgstr "Biderkatu Y"
 
 #: data/ui/window.blp:593
 msgid "Undo"
-msgstr ""
+msgstr "Desegin"
 
 #: data/ui/window.blp:598
 msgid "Redo"
-msgstr ""
+msgstr "Berregin"
 
 #: data/ui/window.blp:603
 msgid "View Menu"
-msgstr ""
+msgstr "Ikuspegien menua"
 
 #: data/ui/window.blp:611
 msgid "Next View"
-msgstr ""
+msgstr "Hurrengo ikuspegia"
 
 #: data/ui/window.blp:617
 msgid "Previous View"
-msgstr ""
+msgstr "Aurreko ikuspegia"
 
 #: data/ui/window.blp:636
 msgid "New Project"
-msgstr ""
+msgstr "Proiektu berria"
 
 #: data/ui/window.blp:639
 msgid "Save Project…"
-msgstr ""
+msgstr "Gorde proiektua…"
 
 #: data/ui/window.blp:640
 msgid "Save Project as…"
-msgstr ""
+msgstr "Gorde proiektua honela…"
 
 #: data/ui/window.blp:641
 msgid "Open Project…"
-msgstr ""
+msgstr "Ireki proiektua…"
 
 #: data/ui/window.blp:644
 msgid "Export Data…"
-msgstr ""
+msgstr "Esportatu datuak…"
 
 #: data/ui/window.blp:645
 msgid "Export Figure…"
-msgstr ""
+msgstr "Esportatu irudia…"
 
 #: data/ui/window.blp:651
 msgid "Keyboard Shortcuts"
-msgstr ""
+msgstr "Laster-teklak"
 
 #: data/ui/window.blp:652
 msgid "About Graphs"
-msgstr ""
+msgstr "Grafikoak aplikazioari buruz"
 
 #: data/ui/window.blp:658
 msgid "Add Data from File…"
-msgstr ""
+msgstr "Gehitu datuak fitxategitik…"
 
 #: data/ui/window.blp:659
 msgid "Add Equation…"
-msgstr ""
+msgstr "Gehitu ekuazioa…"
 
 #: data/ui/window.blp:668
 msgid "At Maximum Y Value"
-msgstr ""
+msgstr "Gehieneko Y balioan"
 
 #: data/ui/window.blp:673
 msgid "At Middle X Value"
-msgstr ""
+msgstr "Erdiko X balioan"
 
 #: data/ui/window.blp:694
 msgid "Advanced Settings"
-msgstr ""
+msgstr "Ezarpen aurreratuak"
 
 #: src/actions.py:214 src/item_box.py:130
 #, python-brace-format
 msgid "Deleted {name}"
-msgstr ""
+msgstr "{name} ezabatu da"
 
 #: src/add_equation.py:64
 #, python-brace-format
 msgid "{error} - Unable to add data from equation"
-msgstr ""
+msgstr "{error} - Ezin dira datuak gehitu ekuaziotik"
 
 #: src/application.py:50
 #, python-format
 msgid "Could not load %s"
-msgstr ""
+msgstr "Ezin da %s kargatu"
 
 #: src/curve_fitting.py:83
 msgid "Optimization Method"
-msgstr ""
+msgstr "Optimizazio-metodoa"
 
 #: src/curve_fitting.py:84
 msgid "Levenberg-Marquardt"
-msgstr ""
+msgstr "Levenberg-Marquardt"
 
 #: src/curve_fitting.py:85
 msgid "Trust Region Reflective"
-msgstr ""
+msgstr "Kofiantza-eskualde islatzailea"
 
 #: src/curve_fitting.py:86
 msgid "Dogbox"
@@ -1270,336 +1277,339 @@ msgstr ""
 
 #: src/curve_fitting.py:88
 msgid "Confidence Bounds"
-msgstr ""
+msgstr "Konfiantza-mugak"
 
 #: src/curve_fitting.py:90
 msgid "1σ: 68% Confidence"
-msgstr ""
+msgstr "1σ: %68ko konfiantza"
 
 #: src/curve_fitting.py:91
 msgid "2σ: 95% Confidence"
-msgstr ""
+msgstr "2σ: %95eko konfiantza"
 
 #: src/curve_fitting.py:92
 msgid "3σ: 99.7% Confidence"
-msgstr ""
+msgstr "3σ: %99,7ko konfiantza"
 
 #: src/curve_fitting.py:234
 msgid "Results:"
-msgstr ""
+msgstr "Emaitzak:"
 
 #: src/curve_fitting.py:238
 msgid ""
 "Please enter valid fitting \n"
 "parameters to start the fit"
-msgstr ""
+msgstr "Sartu baliozko doitze-parametroak\n"
+"doitzeari ekiteko"
 
 #: src/curve_fitting.py:241
 msgid ""
 "Please enter a valid equation \n"
 "to start the fit"
-msgstr ""
+msgstr "Sartu baliozko ekuazioa\n"
+"doitzeari ekiteko"
 
 #: src/curve_fitting.py:244
 msgid ""
 "Please enter valid fitting bounds \n"
 "to start the fit"
-msgstr ""
+msgstr "Sartu baliozko doitze-mugak\n"
+"doitzeari ekiteko"
 
 #: src/curve_fitting.py:253
 #, python-brace-format
 msgid "Sum of R²: {R2}"
-msgstr ""
+msgstr "R² batuketa: {R2}"
 
 #: src/curve_fitting.py:452
 #, python-brace-format
 msgid "Fitting Parameters for {param_name}"
-msgstr ""
+msgstr "Doitze-parametroak {param_name} parametrorako"
 
 #: src/data.py:112
 msgid "Untitled Project"
-msgstr ""
+msgstr "Izenik gabeko proiektua"
 
 #: src/data.py:126
 msgid "Draft"
-msgstr ""
+msgstr "Zirriborroa"
 
 #: src/data.py:606
 msgid "Saved Project"
-msgstr ""
+msgstr "Gordetako proiektua"
 
 #: src/data.py:607 src/export_figure.py:65 src/ui.py:151
 msgid "Open Location"
-msgstr ""
+msgstr "Ireki kokalekua"
 
 #: src/export_figure.py:64
 msgid "Exported Figure"
-msgstr ""
+msgstr "Esportatutako irudia"
 
 #: src/figure_settings.py:110 src/figure_settings.py:136 src/styles.py:121
 msgid "System"
-msgstr ""
+msgstr "Sistema"
 
 #: src/figure_settings.py:156
 msgid "Top X Axis Minimum"
-msgstr ""
+msgstr "Goiko X ardatzaren gutxienekoa"
 
 #: src/figure_settings.py:157 src/figure_settings.py:167
 msgid "X Axis Minimum"
-msgstr ""
+msgstr "X ardatzaren gutxienekoa"
 
 #: src/figure_settings.py:158
 msgid "Top X Axis Maximum"
-msgstr ""
+msgstr "Goiko X ardatzaren gehienekoa"
 
 #: src/figure_settings.py:159 src/figure_settings.py:169
 msgid "X Axis Maximum"
-msgstr ""
+msgstr "X ardatzaren gehienekoa"
 
 #: src/figure_settings.py:160 src/ui.py:58
 msgid "Top X Axis Scale"
-msgstr ""
+msgstr "Goiko X ardatzaren eskala"
 
 #: src/figure_settings.py:161 src/figure_settings.py:171 src/ui.py:55
 msgid "X Axis Scale"
-msgstr ""
+msgstr "X ardatzaren eskala"
 
 #: src/figure_settings.py:162
 msgid "Top X Axis Label"
-msgstr ""
+msgstr "Goiko X ardatzaren etiketa"
 
 #: src/figure_settings.py:163 src/figure_settings.py:173
 msgid "X Axis Label"
-msgstr ""
+msgstr "X ardatzaren etiketa"
 
 #: src/figure_settings.py:166
 msgid "Bottom X Axis Minimum"
-msgstr ""
+msgstr "Beheko X ardatzaren gutxienekoa"
 
 #: src/figure_settings.py:168
 msgid "Bottom X Axis Maximum"
-msgstr ""
+msgstr "Beheko X ardatzaren gehienekoa"
 
 #: src/figure_settings.py:170 src/ui.py:60
 msgid "Bottom X Axis Scale"
-msgstr ""
+msgstr "Beheko X ardatzaren eskala"
 
 #: src/figure_settings.py:172
 msgid "Bottom X Axis Label"
-msgstr ""
+msgstr "Beheko X ardatzaren etiketa"
 
 #: src/figure_settings.py:176
 msgid "Left Y Axis Minimum"
-msgstr ""
+msgstr "Ezkerreko Y ardatzaren gutxienekoa"
 
 #: src/figure_settings.py:177 src/figure_settings.py:187
 msgid "Y Axis Minimum"
-msgstr ""
+msgstr "Y ardatzaren gutxienekoa"
 
 #: src/figure_settings.py:178
 msgid "Left Y Axis Maximum"
-msgstr ""
+msgstr "Ezkerreko Y ardatzaren gehienekoa"
 
 #: src/figure_settings.py:179 src/figure_settings.py:189
 msgid "Y Axis Maximum"
-msgstr ""
+msgstr "Y ardatzaren gehienekoa"
 
 #: src/figure_settings.py:180 src/ui.py:62
 msgid "Left Y Axis Scale"
-msgstr ""
+msgstr "Ezkerreko Y ardatzaren eskala"
 
 #: src/figure_settings.py:181 src/figure_settings.py:191 src/ui.py:56
 msgid "Y Axis Scale"
-msgstr ""
+msgstr "Y ardatzaren eskala"
 
 #: src/figure_settings.py:182
 msgid "Left Y Axis Label"
-msgstr ""
+msgstr "Ezkerreko Y ardatzaren etiketa"
 
 #: src/figure_settings.py:183 src/figure_settings.py:193
 msgid "Y Axis Label"
-msgstr ""
+msgstr "Y ardatzaren etiketa"
 
 #: src/figure_settings.py:186
 msgid "Right Y Axis Minimum"
-msgstr ""
+msgstr "Eskuineko Y ardatzaren gutxienekoa"
 
 #: src/figure_settings.py:188
 msgid "Right Y Axis Maximum"
-msgstr ""
+msgstr "Eskuineko Y ardatzaren gehienekoa"
 
 #: src/figure_settings.py:190 src/ui.py:64
 msgid "Right Y Axis Scale"
-msgstr ""
+msgstr "Eskuineko Y ardatzaren eskala"
 
 #: src/figure_settings.py:192
 msgid "Right Y Axis Label"
-msgstr ""
+msgstr "Eskuineko Y ardatzaren etiketa"
 
 #: src/figure_settings.py:296
 msgid "Defaults Updated"
-msgstr ""
+msgstr "Lehenespenak eguneratu dira"
 
 #: src/file_import.py:100
 msgid "Are you sure you want to reset the import settings?"
-msgstr ""
+msgstr "Ziur zaude inportazio-ezarpenak berrezarri nahi dituzula?"
 
 #: src/operations.py:108
 msgid "Data that was outside of the highlighted area has been discarded"
-msgstr ""
+msgstr "Nabarmendutako areatik kanpo dauden datuak baztertu dira"
 
 #: src/operations.py:142
 msgid "No data found within the highlighted area"
-msgstr ""
+msgstr "Ez da daturik aurkitu nabarmendutako arean"
 
 #: src/operations.py:344
 msgid "Combined Data"
-msgstr ""
+msgstr "Konbinatutako datuak"
 
 #: src/parse_file.py:48
 msgid "Intensity (cps)"
-msgstr ""
+msgstr "Intentsitatea (cps)"
 
 #: src/parse_file.py:60
 msgid "Invalid .xry format"
-msgstr ""
+msgstr ".xry formatu baliogabea"
 
 #: src/parse_file.py:75
 msgid "β (°)"
-msgstr ""
+msgstr "β (°)"
 
 #: src/parse_file.py:75
 msgid "R (1/s)"
-msgstr ""
+msgstr "R (1/s)"
 
 #: src/parse_file.py:141
 msgid "Import failed, column index out of range"
-msgstr ""
+msgstr "Inportazioak huts egin du, zutabe-indizea barrutitik kanpo dago"
 
 #: src/parse_file.py:159
 msgid "Unable to import from file"
-msgstr ""
+msgstr "Ezin da fitxategitik inportatu"
 
 #: src/styles.py:58
 msgid "X Label"
-msgstr ""
+msgstr "X etiketa"
 
 #: src/styles.py:59
 msgid "Y Label"
-msgstr ""
+msgstr "Y etiketa"
 
 #: src/styles.py:312
 #, python-brace-format
 msgid "Could not parse {stylename}, loading system preferred style"
-msgstr ""
+msgstr "Ezin da {stylename} analizatu, sistemaren estilo lehenetsia kargatuko da"
 
 #: src/styles.py:319
 #, python-brace-format
 msgid "Plot style {stylename} does not exist loading system preferred"
-msgstr ""
+msgstr "{stylename} diagrama-estiloa ez da existitzen, sistemaren lehenetsia kargatuko da"
 
 #: src/styles.py:710
 msgid "Are you sure you want to delete {self.style.get_name()}?"
-msgstr ""
+msgstr "Ziur zaude {self.style.get_name()} estiloa ezabatu nahi duzula?"
 
 #: src/styles.py:727
 msgid "Color {}"
-msgstr ""
+msgstr "{} kolorea"
 
 #: src/style_io.py:49
 #, python-brace-format
 msgid "Missing colon in file {0}, line {1}"
-msgstr ""
+msgstr "Bi puntu falta dira {0} fitxategiko {1} lerroan"
 
 #: src/style_io.py:57
 #, python-brace-format
 msgid "Non-style related parameter {0} in file {1}"
-msgstr ""
+msgstr "{1} fitxategiko {0} parametroak ez du zerikusirik estiloarekin"
 
 #: src/style_io.py:60
 #, python-brace-format
 msgid "Ignoring parameter {0} in file {1}"
-msgstr ""
+msgstr "{1} fitxategiko {0} parametroari ez ikusiarena egingo zaio"
 
 #: src/style_io.py:63
 #, python-brace-format
 msgid "Duplicate key in file {0}, on line {1}"
-msgstr ""
+msgstr "Gako bikoiztua {0} fitxategiko {1} lerroan"
 
 #: src/style_io.py:80
 #, python-brace-format
 msgid "Bad value in file {0} on line {1}"
-msgstr ""
+msgstr "Balio okerra {0} fitxategiko {1} lerroan"
 
 #: src/style_io.py:84
 msgid "Could not parse {}"
-msgstr ""
+msgstr "Ezin da {} analizatu"
 
 #: src/transform_data.py:39
 #, python-brace-format
 msgid "{name}: Unable to do transformation, make sure the syntax is correct"
-msgstr ""
+msgstr "{name}: Ezin da transformatu, ziurtatu sintaxia zuzena dela"
 
 #: src/transform_data.py:42
 msgid "Unable to do transformation"
-msgstr ""
+msgstr "Ezin da transformatu"
 
 #: src/ui.py:37
 msgid "Optimize Limits"
-msgstr ""
+msgstr "Optimizatu mugak"
 
 #: src/ui.py:73
 msgid "Items {} already exist"
-msgstr ""
+msgstr "{} elementuak badaude lehendik"
 
 #: src/ui.py:75
 msgid "Item {} already exists"
-msgstr ""
+msgstr "{} elementua badago lehendik"
 
 #: src/ui.py:88
 msgid "Supported files"
-msgstr ""
+msgstr "Onartutako fitxategiak"
 
 #: src/ui.py:90
 msgid "ASCII files"
-msgstr ""
+msgstr "ASCII fitxategiak"
 
 #: src/ui.py:91
 msgid "PANalytical XRDML"
-msgstr ""
+msgstr "PANalytical XRDML"
 
 #: src/ui.py:92
 msgid "Leybold xry"
-msgstr ""
+msgstr "Leybold xry"
 
 #: src/ui.py:93 src/ui.py:110 src/ui.py:123
 msgid "Graphs Project File"
-msgstr ""
+msgstr "Grafikoen proiektu-fitxategia"
 
 #: src/ui.py:130
 msgid "No data to export"
-msgstr ""
+msgstr "Ez dago daturik esportatzeko"
 
 #: src/ui.py:150
 msgid "Exported Data"
-msgstr ""
+msgstr "Esportatutako datuak"
 
 #: src/ui.py:161
 msgid "Text Files"
-msgstr ""
+msgstr "Testu-fitxategiak"
 
 #: src/ui.py:188
 msgid "translator-credits"
-msgstr ""
+msgstr "translator-credits"
 
 #: src/ui.py:217 src/ui.py:281 src/ui.py:315
 msgid "Unsupported Widget {}"
-msgstr ""
+msgstr "{} trepeta ez da onartzen"
 
 #: src/ui.py:219 src/ui.py:283 src/ui.py:317
 msgid "No way to apply “{}”"
-msgstr ""
+msgstr "“{}” ezin da aplikatu"
 
 #: src/utilities.py:158
 msgid "No valid number specified"
-msgstr ""
+msgstr "Ez da baliozko zenbakirik zehaztu"
