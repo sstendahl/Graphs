@@ -44,6 +44,8 @@
           <foaf:accountServiceHomepage rdf:resource="https://github.com"/>
           <foaf:accountName>sstendahl</foaf:accountName>
         </foaf:OnlineAccount>
+      </foaf:account>
+      <foaf:account>
         <foaf:OnlineAccount>
           <foaf:accountServiceHomepage rdf:resource="https://gitlab.gnome.org"/>
           <foaf:accountName>sstendahl</foaf:accountName>
@@ -62,6 +64,8 @@
           <foaf:accountServiceHomepage rdf:resource="https://github.com"/>
           <foaf:accountName>cmkohnen</foaf:accountName>
         </foaf:OnlineAccount>
+      </foaf:account>
+      <foaf:account>
         <foaf:OnlineAccount>
           <foaf:accountServiceHomepage rdf:resource="https://gitlab.gnome.org"/>
           <foaf:accountName>cmkohnen</foaf:accountName>
