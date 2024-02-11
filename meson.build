@@ -67,7 +67,7 @@ else
 endif
 
 subdir('data')
-subdir('src')
+subdir('graphs')
 subdir('po')
 subdir('tests')
 
