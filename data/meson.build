@@ -53,7 +53,11 @@ install_data(application_id + '.gschema.xml',
   install_dir: join_paths(datadir, 'glib-2.0/schemas'),
  install_mode: 'rwxrwxrwx'
 )
-
+gnome.compile_schemas(
+  depend_files: [
+    application_id + '.gschema.xml'
+  ]
+)
 
 install_data(
     application_id + '.mime.xml',
@@ -125,6 +129,8 @@ gresource_bundle: true,
      install_dir: pkgdatadir,
           c_name: project_name,
 )
+
+devenv.set('GRAPHS_OVERRIDE_RESOURCES', gresource_bundle.full_path())
 
 scalable_dir = join_paths('icons', 'hicolor', 'scalable', 'apps')
 icon_name = ('@0@.svg').format(application_id)

@@ -13,6 +13,9 @@ dependencies = [
   dependency('libadwaita-1', version: '>= 1.4'),
 ]
 
+devenv = environment()
+devenv.set('GRAPHS_DEVEL_PATH', meson.current_source_dir())
+
 application_id = 'se.sjoerd.Graphs'
 name = 'Graphs'
 copyright = '2022 - 2024'
@@ -64,9 +67,11 @@ else
 endif
 
 subdir('data')
-subdir('src')
+subdir('graphs')
 subdir('po')
 subdir('tests')
+
+meson.add_devenv(devenv)
 
 gnome.post_install(
      glib_compile_schemas: true,
