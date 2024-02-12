@@ -205,7 +205,12 @@ def preprocess(string: str):
 
 
 def get_filename(file: Gio.File):
-    return file.query_info("standard::*", 0, None).get_display_name()
+    info = file.query_info(
+        "standard::display-name", Gio.FileQueryInfoFlags.NONE, None,
+    )
+    if info:
+        return info.get_display_name()
+    return file.get_basename()
 
 
 def string_to_function(equation_name):
