@@ -118,14 +118,14 @@ def save_item(file: Gio.File, item_: item.DataItem):
     stream.close()
 
 
-def save_project(self, require_dialog: bool = False):
-    project_file = self.get_data().project_file
+def save_project(application, require_dialog: bool = False):
+    project_file = application.get_data().project_file
     if project_file is not None and not require_dialog:
-        self.get_data().save()
-        self.get_data().props.unsaved = False
-        self.emit("project-saved")
+        application.get_data().save()
+        application.get_data().props.unsaved = False
+        application.emit("project-saved")
         return
-    ui.save_project_dialog(self)
+    ui.save_project_dialog(application)
 
 
 def parse_json(file: Gio.File) -> dict:

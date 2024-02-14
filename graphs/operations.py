@@ -12,7 +12,7 @@ import numpy
 import scipy
 
 
-def get_data(self, item):
+def get_data(application, item):
     """
     Retrieve item from datadict with start and stop index.
     If interaction_mode is set to "SELECT"
@@ -20,8 +20,8 @@ def get_data(self, item):
     new_xdata = item.props.xdata
     new_ydata = item.props.ydata
 
-    if self.get_mode() == 2:
-        figure_settings = self.get_data().get_figure_settings()
+    if application.get_mode() == 2:
+        figure_settings = application.get_data().get_figure_settings()
         if item.get_xposition() == 0:
             xmin = figure_settings.get_min_bottom()
             xmax = figure_settings.get_max_bottom()
@@ -88,23 +88,24 @@ def sort_data(xdata, ydata):
     )))
 
 
-def perform_operation(self, callback, *args):
+def perform_operation(application, callback, *args):
     data_selected = False
-    data = self.get_data()
+    data = application.get_data()
     figure_settings = data.get_figure_settings()
     old_limits = figure_settings.get_limits()
     for item in data:
         if not (item.get_selected() and isinstance(item, DataItem)):
             continue
-        xdata, ydata = get_data(self, item)
+        xdata, ydata = get_data(application, item)
         if xdata is not None and len(xdata) != 0:
             data_selected = True
             new_xdata, new_ydata, sort, discard = callback(
-                item, xdata, ydata, *args)
+                item, xdata, ydata, *args,
+            )
             new_xdata, new_ydata = list(new_xdata), list(new_ydata)
             if discard:
                 logging.debug("Discard is true")
-                self.get_window().add_toast_string(
+                application.get_window().add_toast_string(
                     _("Data that was outside of the highlighted area has been"
                       " discarded"))
                 item.props.xdata = new_xdata
@@ -138,8 +139,9 @@ def perform_operation(self, callback, *args):
         item.notify("ydata")
     figure_settings.set_selection_range(0, 0)
     if not data_selected:
-        self.get_window().add_toast_string(
-            _("No data found within the highlighted area"))
+        application.get_window().add_toast_string(
+            _("No data found within the highlighted area"),
+        )
         return
     data.optimize_limits()
     data.add_history_state(old_limits)
@@ -327,19 +329,19 @@ def transform(_item, xdata, ydata, input_x, input_y, discard=False):
     )
 
 
-def combine(self):
+def combine(application):
     """Combine the selected data into a new data set"""
     new_xdata, new_ydata = [], []
-    for item in self.get_data():
+    for item in application.get_data():
         if not (item.get_selected() and isinstance(item, DataItem)):
             continue
-        xdata, ydata = get_data(self, item)[:2]
+        xdata, ydata = get_data(application, item)[:2]
         new_xdata.extend(xdata)
         new_ydata.extend(ydata)
 
     # Create the item itself
     new_xdata, new_ydata = sort_data(new_xdata, new_ydata)
-    style = self.get_figure_style_manager().get_selected_style_params()
-    self.get_data().add_items(
+    style = application.get_figure_style_manager().get_selected_style_params()
+    application.get_data().add_items(
         [DataItem.new(style, new_xdata, new_ydata, name=_("Combined Data"))],
     )

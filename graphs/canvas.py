@@ -78,7 +78,10 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
     min_selected = GObject.Property(type=float, default=0)
     max_selected = GObject.Property(type=float, default=0)
 
-    def __init__(self, application, style_params, interactive=True):
+    def __init__(
+        self, application: Graphs.Application, style_params: dict,
+        interactive: bool = True,
+    ):
         """
         Create the canvas.
 
@@ -139,11 +142,11 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
                 lambda _a, _b: self.highlight.load(self),
             )
 
-    def get_application(self):
+    def get_application(self) -> Graphs.Application:
         """Get application property."""
         return self.props.application
 
-    def _set_mouse_fraction(self, event):
+    def _set_mouse_fraction(self, event) -> None:
         """Sets the mouse coordinate in terms of fraction of the canvas"""
         if event.inaxes is not None:
             xlim = self._top_right_axis.get_xlim()
@@ -155,14 +158,14 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
         else:
             self._xfrac, self._yfrac = None, None
 
-    def _on_zoom_gesture(self, _gesture, scale):
+    def _on_zoom_gesture(self, _gesture, scale: float) -> None:
         scale = 1 + 0.02 * (scale - 1)
         if scale > 5 or scale < 0.2:
             # Don't scale if ridiculous values are registered
             return
         self.zoom(scale)
 
-    def _on_pan_gesture(self, event_controller, x, y):
+    def _on_pan_gesture(self, event_controller, x: float, y: float) -> None:
         """
         Determines what to do when a panning gesture is detected, pans the
         canvas in the gesture direction.
@@ -180,7 +183,7 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
                 ax.set_ylim(ymin, ymax)
             self.queue_draw()
 
-    def _on_scroll_event(self, event):
+    def _on_scroll_event(self, event) -> None:
         """
         Determines what to do when a scroll signal is detected, scrolls the
         canvas if ctrl is selected.
@@ -189,7 +192,7 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
             self.zoom(1 / _SCROLL_SCALE
                       if event.button == "up" else _SCROLL_SCALE)
 
-    def zoom(self, scaling=1.15, respect_mouse=True):
+    def zoom(self, scaling: float = 1.15, respect_mouse: bool = True) -> None:
         """
         Zoom with given scaling.
 
@@ -211,7 +214,9 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
         self.queue_draw()
 
     @staticmethod
-    def _calculate_pan_values(ax, x_panspeed, y_panspeed):
+    def _calculate_pan_values(
+        ax: pyplot.axis, x_panspeed: float, y_panspeed: float,
+    ) -> None:
         """
         Calculates the coordinates of the canvas after a panning gesture has
         been emitted.
@@ -240,7 +245,9 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
         return xvalue1, xvalue2, yvalue1, yvalue2
 
     @staticmethod
-    def _calculate_zoomed_values(fraction, scale, limit, zoom_factor):
+    def _calculate_zoomed_values(
+        fraction: float, scale: float, limit: float, zoom_factor: float,
+    ) -> tuple[float, float]:
         """
         Calculates the coordinates of the canvas after a zoom gesture
         has  been ezoomed.
@@ -256,7 +263,7 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
             value1, value2 = value2, value1
         return value1, value2
 
-    def on_draw_event(self, _widget, ctx):
+    def on_draw_event(self, _widget, ctx) -> None:
         """
         Overwrite super function.
 
@@ -279,7 +286,7 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
             self._renderer.dpi = self.figure.dpi
             self.figure.draw(self._renderer)
 
-    def _redraw(self, *_args):
+    def _redraw(self, *_args) -> None:
         # bottom, top, left, right
         used_axes = [False, False, False, False]
         visible_axes = [False, False, False, False]
@@ -351,17 +358,17 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
         ]
         self.update_legend()
 
-    def _on_pick(self, event):
+    def _on_pick(self, event) -> None:
         """Invoke FigureSettingsWindow for picked label/title."""
         FigureSettingsWindow(self.get_application(), event.artist.id)
 
     # Overwritten function - do not change name
-    def _post_draw(self, _widget, context):
+    def _post_draw(self, _widget, context) -> None:
         """Allow custom rendering extensions."""
         if self._rubberband_rect is not None:
             self._draw_rubberband(context)
 
-    def _draw_rubberband(self, context):
+    def _draw_rubberband(self, context) -> None:
         """
         Implement custom rubberband.
 
@@ -388,7 +395,7 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
         context.set_source_rgba(color[0], color[1], color[2], color[3])
         context.stroke()
 
-    def update_legend(self):
+    def update_legend(self) -> None:
         """Update the legend or hide if not used."""
         if self._legend and self._handles:
             handles = [
@@ -413,7 +420,7 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
         return self._legend
 
     @legend.setter
-    def legend(self, legend: bool):
+    def legend(self, legend: bool) -> None:
         self._legend = legend
         self.update_legend()
 
@@ -423,7 +430,7 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
         return misc.LEGEND_POSITIONS.index(self._legend_position)
 
     @legend_position.setter
-    def legend_position(self, legend_position: int):
+    def legend_position(self, legend_position: int) -> None:
         self._legend_position = misc.LEGEND_POSITIONS[legend_position]
         self.update_legend()
 
@@ -433,7 +440,7 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
         return self._axis.get_title()
 
     @title.setter
-    def title(self, title: str):
+    def title(self, title: str) -> None:
         self._axis.set_title(title, picker=True).id = "title"
         self.queue_draw()
 
@@ -443,7 +450,7 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
         return self._axis.get_xlabel()
 
     @bottom_label.setter
-    def bottom_label(self, label: str):
+    def bottom_label(self, label: str) -> None:
         self._axis.set_xlabel(label, picker=True).id = "bottom_label"
         self.queue_draw()
 
@@ -453,7 +460,7 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
         return self._axis.get_ylabel()
 
     @left_label.setter
-    def left_label(self, label: str):
+    def left_label(self, label: str) -> None:
         self._axis.set_ylabel(label, picker=True).id = "left_label"
         self.queue_draw()
 
@@ -463,7 +470,7 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
         return self._top_left_axis.get_xlabel()
 
     @top_label.setter
-    def top_label(self, label: str):
+    def top_label(self, label: str) -> None:
         self._top_left_axis.set_xlabel(label, picker=True).id = "top_label"
         self.queue_draw()
 
@@ -473,7 +480,7 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
         return self._right_axis.get_ylabel()
 
     @right_label.setter
-    def right_label(self, label: str):
+    def right_label(self, label: str) -> None:
         self._right_axis.set_ylabel(label, picker=True).id = "right_label"
         self.queue_draw()
 
@@ -483,7 +490,7 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
         return scales.to_int(self._axis.get_xscale())
 
     @bottom_scale.setter
-    def bottom_scale(self, scale: int):
+    def bottom_scale(self, scale: int) -> None:
         scale = scales.to_string(scale)
         for axis in (self._axis, self._right_axis):
             axis.set_xscale(scale)
@@ -496,7 +503,7 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
         return scales.to_int(self._axis.get_yscale())
 
     @left_scale.setter
-    def left_scale(self, scale: int):
+    def left_scale(self, scale: int) -> None:
         scale = scales.to_string(scale)
         for axis in (self._axis, self._top_left_axis):
             axis.set_yscale(scale)
@@ -509,7 +516,7 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
         return scales.to_int(self._top_left_axis.get_xscale())
 
     @top_scale.setter
-    def top_scale(self, scale: int):
+    def top_scale(self, scale: int) -> None:
         scale = scales.to_string(scale)
         for axis in (self._top_right_axis, self._top_left_axis):
             axis.set_xscale(scale)
@@ -522,7 +529,7 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
         return scales.to_int(self._right_axis.get_yscale())
 
     @right_scale.setter
-    def right_scale(self, scale: int):
+    def right_scale(self, scale: int) -> None:
         scale = scales.to_string(scale)
         for axis in (self._top_right_axis, self._right_axis):
             axis.set_yscale(scale)
@@ -535,7 +542,7 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
         return self._axis.get_xlim()[0]
 
     @min_bottom.setter
-    def min_bottom(self, value: float):
+    def min_bottom(self, value: float) -> None:
         for axis in (self._axis, self._right_axis):
             axis.set_xlim(value, None)
         self.queue_draw()
@@ -546,7 +553,7 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
         return self._axis.get_xlim()[1]
 
     @max_bottom.setter
-    def max_bottom(self, value: float):
+    def max_bottom(self, value: float) -> None:
         for axis in (self._axis, self._right_axis):
             axis.set_xlim(None, value)
         self.queue_draw()
@@ -557,7 +564,7 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
         return self._axis.get_ylim()[0]
 
     @min_left.setter
-    def min_left(self, value: float):
+    def min_left(self, value: float) -> None:
         for axis in (self._axis, self._top_left_axis):
             axis.set_ylim(value, None)
         self.queue_draw()
@@ -568,7 +575,7 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
         return self._axis.get_ylim()[1]
 
     @max_left.setter
-    def max_left(self, value: float):
+    def max_left(self, value: float) -> None:
         for axis in (self._axis, self._top_left_axis):
             axis.set_ylim(None, value)
         self.queue_draw()
@@ -579,7 +586,7 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
         return self._top_left_axis.get_xlim()[0]
 
     @min_top.setter
-    def min_top(self, value: float):
+    def min_top(self, value: float) -> None:
         for axis in (self._top_left_axis, self._top_right_axis):
             axis.set_xlim(value, None)
         self.highlight.load(self)
@@ -591,7 +598,7 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
         return self._top_left_axis.get_xlim()[1]
 
     @max_top.setter
-    def max_top(self, value: float):
+    def max_top(self, value: float) -> None:
         for axis in (self._top_left_axis, self._top_right_axis):
             axis.set_xlim(None, value)
         self.highlight.load(self)
@@ -603,7 +610,7 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
         return self._right_axis.get_ylim()[0]
 
     @min_right.setter
-    def min_right(self, value: float):
+    def min_right(self, value: float) -> None:
         for axis in (self._right_axis, self._top_right_axis):
             axis.set_ylim(value, None)
         self.queue_draw()
@@ -614,7 +621,7 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
         return self._right_axis.get_ylim()[1]
 
     @max_right.setter
-    def max_right(self, value: float):
+    def max_right(self, value: float) -> None:
         for axis in (self._right_axis, self._top_right_axis):
             axis.set_ylim(None, value)
         self.queue_draw()
@@ -625,7 +632,7 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
         return self.highlight.get_active()
 
     @highlight_enabled.setter
-    def highlight_enabled(self, enabled: bool):
+    def highlight_enabled(self, enabled: bool) -> None:
         self.highlight.set_active(enabled)
         self.highlight.set_visible(enabled)
         self.queue_draw()
@@ -635,7 +642,7 @@ class _DummyToolbar(NavigationToolbar2):
     """Custom Toolbar implementation."""
 
     # Overwritten function - do not change name
-    def _zoom_pan_handler(self, event):
+    def _zoom_pan_handler(self, event) -> None:
         mode = self.canvas.get_application().get_mode()
         if event.button == 2:
             event.button = 1
@@ -654,7 +661,7 @@ class _DummyToolbar(NavigationToolbar2):
                 self.release_zoom(event)
 
     # Overwritten function - do not change name
-    def _update_cursor(self, event):
+    def _update_cursor(self, event) -> None:
         mode = self.canvas.get_application().get_mode()
         if event.inaxes and event.inaxes.get_navigate():
             if mode == 1 and self._last_cursor != tools.Cursors.SELECT_REGION:
@@ -680,7 +687,7 @@ class _DummyToolbar(NavigationToolbar2):
         self.canvas.draw_idle()
 
     @staticmethod
-    def ax_drag_pan(self, button, key, x, y):
+    def ax_drag_pan(self, button, key: str, x: float, y: float) -> None:
         """
         Called when the mouse moves during a pan operation.
 
@@ -707,7 +714,7 @@ class _DummyToolbar(NavigationToolbar2):
             self.set_ylim(min(ylim), max(ylim))
 
     # Overwritten function - do not change name
-    def draw_rubberband(self, _event, x0, y0, x1, y1):
+    def draw_rubberband(self, _event, x0, y0, x1, y1) -> None:
         self.canvas._rubberband_rect = [
             int(val) for val
             in (x0, self.canvas.figure.bbox.height - y0, x1 - x0, y0 - y1)
@@ -715,12 +722,12 @@ class _DummyToolbar(NavigationToolbar2):
         self.canvas.queue_draw()
 
     # Overwritten function - do not change name
-    def remove_rubberband(self):
+    def remove_rubberband(self) -> None:
         self.canvas._rubberband_rect = None
         self.canvas.queue_draw()
 
     # Overwritten function - do not change name
-    def push_current(self, *_args):
+    def push_current(self, *_args) -> None:
         """Use custom functionality for the view clipboard."""
         self.canvas.highlight.load(self.canvas)
         for direction in ("bottom", "left", "top", "right"):
@@ -729,12 +736,12 @@ class _DummyToolbar(NavigationToolbar2):
         self.canvas.application.get_data().add_view_history_state()
 
     # Overwritten function - do not change name
-    def save_figure(self):
+    def save_figure(self) -> None:
         pass
 
 
 class _Highlight(SpanSelector):
-    def __init__(self, canvas):
+    def __init__(self, canvas: Canvas):
         super().__init__(
             canvas.axes[3],
             lambda _x, _y: self.apply(canvas),
@@ -751,7 +758,7 @@ class _Highlight(SpanSelector):
         )
         self.load(canvas)
 
-    def load(self, canvas):
+    def load(self, canvas: Canvas) -> None:
         xmin, xmax = canvas.axes[1].get_xlim()
         scale = canvas.props.top_scale
         self.extents = (
@@ -763,7 +770,7 @@ class _Highlight(SpanSelector):
             ),
         )
 
-    def apply(self, canvas):
+    def apply(self, canvas: Canvas) -> None:
         xmin, xmax = canvas.axes[1].get_xlim()
         extents = self.extents
         extents = max(xmin, extents[0]), min(xmax, extents[1])
