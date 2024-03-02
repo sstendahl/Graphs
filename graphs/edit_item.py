@@ -40,7 +40,7 @@ class EditItemWindow(Adw.PreferencesWindow):
         self.present()
 
     @Gtk.Template.Callback()
-    def on_select(self, _action, _target):
+    def on_select(self, _action, _target) -> None:
         item = self.get_application().get_data()[
             self.item_selector.get_selected()]
         if item != self.item:
@@ -51,7 +51,7 @@ class EditItemWindow(Adw.PreferencesWindow):
             self.props.item = item
 
     @Gtk.Template.Callback()
-    def on_item_change(self, _a, _b):
+    def on_item_change(self, _a, _b) -> None:
         self.set_title(self.props.item.get_name())
         for binding in self.props.bindings:
             binding.unbind()
@@ -61,14 +61,14 @@ class EditItemWindow(Adw.PreferencesWindow):
         self.item_group.set_visible(isinstance(self.props.item, item.DataItem))
 
     @Gtk.Template.Callback()
-    def on_close(self, _a):
+    def on_close(self, _a) -> None:
         self.get_application().get_data().add_history_state()
         self.destroy()
 
     @Gtk.Template.Callback()
-    def on_linestyle(self, comborow, _b):
+    def on_linestyle(self, comborow, _b) -> None:
         self.linewidth.set_sensitive(comborow.get_selected() != 0)
 
     @Gtk.Template.Callback()
-    def on_markers(self, comborow, _b):
+    def on_markers(self, comborow, _b) -> None:
         self.markersize.set_sensitive(comborow.get_selected() != 0)

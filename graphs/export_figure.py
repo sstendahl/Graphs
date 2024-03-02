@@ -3,7 +3,7 @@ import contextlib
 from gettext import gettext as _
 from pathlib import Path
 
-from gi.repository import Adw, GLib, GObject, Gio, Gtk
+from gi.repository import Adw, GLib, GObject, Gio, Graphs, Gtk
 
 from graphs import actions, file_io, ui, utilities
 
@@ -17,7 +17,7 @@ class ExportFigureWindow(Adw.Window):
 
     file_formats = GObject.Property(type=object)
 
-    def __init__(self, application):
+    def __init__(self, application: Graphs.Application):
         self._canvas = application.get_window().get_canvas()
         valid_formats = self._canvas.get_supported_filetypes_grouped()
         valid_formats.pop("Tagged Image File Format")
@@ -35,12 +35,12 @@ class ExportFigureWindow(Adw.Window):
         self.file_format.connect("notify::selected", self.on_file_format)
         self.present()
 
-    def on_file_format(self, _widget, _state):
+    def on_file_format(self, _widget, _state) -> None:
         self.dpi.set_visible(self.file_format.get_selected()
                              not in [0, 2, 4, 5])
 
     @Gtk.Template.Callback()
-    def on_accept(self, _button):
+    def on_accept(self, _button) -> None:
         file_format = self.file_format.get_selected_item().get_string()
         file_suffixes = self.props.file_formats[file_format]
         filename = \

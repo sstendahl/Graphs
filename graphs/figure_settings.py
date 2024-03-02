@@ -66,7 +66,9 @@ class FigureSettingsWindow(Adw.Window):
 
     figure_settings = GObject.Property(type=Graphs.FigureSettings)
 
-    def __init__(self, application, highlighted=None):
+    def __init__(
+        self, application: Graphs.Application, highlighted: bool = None,
+    ):
         """Initialize the Figure Settings window and set the widget entries"""
         figure_settings = application.get_data().get_figure_settings()
         super().__init__(
@@ -99,7 +101,9 @@ class FigureSettingsWindow(Adw.Window):
         self._on_use_custom_style(figure_settings, None)
         self.present()
 
-    def _on_use_custom_style(self, figure_settings, _a) -> None:
+    def _on_use_custom_style(
+        self, figure_settings: Graphs.FigureSettings, _a,
+    ) -> None:
         """
         Checks if custom style is used, and sets the current style in the
         style overview
@@ -110,7 +114,9 @@ class FigureSettingsWindow(Adw.Window):
             self.style_name.set_text(_("System"))
             self.grid_view.get_model().set_selected(0)
 
-    def _on_custom_style(self, figure_settings, _a) -> None:
+    def _on_custom_style(
+        self, figure_settings: Graphs.FigureSettings, _a,
+    ) -> None:
         """
         Sets the current style in the style overview when a custom style has
         been used
@@ -239,7 +245,7 @@ class FigureSettingsWindow(Adw.Window):
             style_manager = self.get_application().get_figure_style_manager()
             style_manager._on_style_change()
 
-    def set_index(self, style_manager, name) -> None:
+    def set_index(self, style_manager, name: str) -> None:
         """Sets the index of the style when a custom style is used"""
         if not self.props.figure_settings.get_use_custom_style():
             return
