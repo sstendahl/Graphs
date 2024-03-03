@@ -91,10 +91,7 @@ def import_from_xry(_params, style, file: Gio.File) -> misc.ItemList:
         return items
 
 
-def _swap(string):
-    string = string.replace(",", "third")
-    string = string.replace(".", ", ")
-    return string.replace("third", ".")
+_PH = "dVldZaXqENhuPLPw"
 
 
 def import_from_columns(params, style, file: Gio.File) -> misc.ItemList:
@@ -114,7 +111,10 @@ def import_from_columns(params, style, file: Gio.File) -> misc.ItemList:
             continue
         values = re.split(delimiter, line)
         if separator == ",":
-            values = list(map(_swap, values))
+            values = (
+                string.replace(",", _PH).replace(".", ", ").replace(_PH, ".")
+                for string in values
+            )
         try:
             if len(values) == 1:
                 float_value = utilities.string_to_float(values[0])
