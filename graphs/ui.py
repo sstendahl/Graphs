@@ -4,13 +4,15 @@ import datetime
 import logging
 from gettext import gettext as _
 
-from gi.repository import Adw, GLib, Gio, Gtk
+from gi.repository import Adw, GLib, Gio, Graphs, Gtk
 
 from graphs import actions, file_import, file_io, misc, utilities
 from graphs.item_box import ItemBox
 
 
-def on_items_change(data, _ignored, application):
+def on_items_change(
+    data, _ignored, application: Graphs.Application,
+) -> None:
     data = application.get_data()
     item_list = application.get_window().get_item_list()
     while item_list.get_last_child() is not None:
@@ -26,7 +28,9 @@ def on_items_change(data, _ignored, application):
     data.add_view_history_state()
 
 
-def enable_axes_actions(_object, _callback, application):
+def enable_axes_actions(
+    _object, _callback, application: Graphs.Application,
+) -> None:
     visible_axes = application.get_data().get_used_positions()
     menu = Gio.Menu.new()
     toggle_section = Gio.Menu.new()
@@ -68,7 +72,9 @@ def enable_axes_actions(_object, _callback, application):
     application.get_window().get_view_menu_button().set_menu_model(menu)
 
 
-def on_items_ignored(_data, _ignored, ignored, application):
+def on_items_ignored(
+    _data, _ignored, ignored: str, application: Graphs.Application,
+) -> str:
     if len(ignored) > 1:
         toast = _("Items {} already exist").format(ignored)
     else:
@@ -76,7 +82,7 @@ def on_items_ignored(_data, _ignored, ignored, application):
     application.get_window().add_toast_string(toast)
 
 
-def add_data_dialog(application):
+def add_data_dialog(application: Graphs.Application) -> None:
     def on_response(dialog, response):
         with contextlib.suppress(GLib.GError):
             file_import.import_from_files(
@@ -96,7 +102,7 @@ def add_data_dialog(application):
     dialog.open_multiple(application.get_window(), None, on_response)
 
 
-def save_project_dialog(application):
+def save_project_dialog(application: Graphs.Application) -> None:
 
     def on_response(dialog, response):
         with contextlib.suppress(GLib.GError):
@@ -113,7 +119,7 @@ def save_project_dialog(application):
     dialog.save(application.get_window(), None, on_response)
 
 
-def open_project_dialog(application):
+def open_project_dialog(application: Graphs.Application) -> None:
     def on_response(dialog, response):
         with contextlib.suppress(GLib.GError):
             application.get_data().props.project_file = \
@@ -126,7 +132,7 @@ def open_project_dialog(application):
     dialog.open(application.get_window(), None, on_response)
 
 
-def export_data_dialog(application):
+def export_data_dialog(application: Graphs.Application) -> None:
     data = application.get_data()
     window = application.get_window()
     if data.props.empty:
@@ -165,13 +171,13 @@ def export_data_dialog(application):
         dialog.save(window, None, on_response)
 
 
-def build_dialog(name):
+def build_dialog(name: str):
     return Gtk.Builder.new_from_resource(
         "/se/sjoerd/Graphs/ui/dialogs.ui",
     ).get_object(name)
 
 
-def show_about_window(application):
+def show_about_window(application: Graphs.Application) -> str:
     file = Gio.File.new_for_uri("resource:///se/sjoerd/Graphs/whats_new")
     copyright_text = \
         f"© 2022 – {datetime.date.today().year} {application.get_author()}"
@@ -198,7 +204,7 @@ def show_about_window(application):
     ).present()
 
 
-def load_values_from_dict(window, values: dict, ignorelist=None):
+def load_values_from_dict(window, values: dict, ignorelist=None) -> None:
     for key, value in values.items():
         if ignorelist is not None and key in ignorelist:
             continue
@@ -227,7 +233,7 @@ def load_values_from_dict(window, values: dict, ignorelist=None):
             logging.warn(_("No way to apply “{}”").format(key))
 
 
-def save_values_to_dict(window, keys: list, ignorelist=None):
+def save_values_to_dict(window, keys: list, ignorelist=None) -> None:
     values = {}
     for key in keys:
         if ignorelist is not None and key in ignorelist:
@@ -262,7 +268,9 @@ def _on_settings_update(settings, key, chooser):
     chooser.set_selected(settings.get_enum(key))
 
 
-def bind_values_to_settings(settings, window, prefix="", ignorelist=None):
+def bind_values_to_settings(
+    settings, window, prefix="", ignorelist=None,
+) -> None:
     for key in settings.props.settings_schema.list_keys():
         if ignorelist is not None and key in ignorelist:
             continue
@@ -291,7 +299,7 @@ def bind_values_to_settings(settings, window, prefix="", ignorelist=None):
             logging.warn(_("No way to apply “{}”").format(key))
 
 
-def bind_values_to_object(source, window, ignorelist=None):
+def bind_values_to_object(source, window, ignorelist=None) -> None:
     bindings = []
     for key in dir(source.props):
         if ignorelist is not None and key in ignorelist:

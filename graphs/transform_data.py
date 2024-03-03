@@ -27,7 +27,7 @@ class TransformWindow(Adw.Window):
             "clicked", lambda _x: self.help_popover.popup())
 
     @Gtk.Template.Callback()
-    def on_accept(self, _widget):
+    def on_accept(self, _widget) -> None:
         try:
             input_x = str(self.transform_x_entry.get_text())
             input_y = str(self.transform_y_entry.get_text())
