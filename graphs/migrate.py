@@ -39,7 +39,7 @@ CENTER_ACTION_MIGRATION_TABLE = {
 }
 
 
-def migrate_config(settings):
+def migrate_config(settings: Gio.Settings) -> None:
     """Migrate old file-based user config to dconf"""
     main_dir = Gio.File.new_for_path(GLib.get_user_config_dir())
     old_config_dir = main_dir.get_child_for_display_name("Graphs")
@@ -198,7 +198,7 @@ class TextItem(ItemBase):
 DEFAULT_VIEW = [0, 1, 0, 10, 0, 1, 0, 10]
 
 
-def migrate_project(file):
+def migrate_project(file: Gio.File) -> dict:
     sys.modules["graphs.misc"] = sys.modules[__name__]
     sys.modules["graphs.item"] = sys.modules[__name__]
     with file_io.open_wrapped(file, "rb") as wrapper:
