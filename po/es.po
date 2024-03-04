@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: graphs\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2024-02-26 17:58+0000\n"
-"PO-Revision-Date: 2024-02-29 20:43+0100\n"
+"POT-Creation-Date: 2024-03-02 07:25+0000\n"
+"PO-Revision-Date: 2024-03-02 21:49+0100\n"
 "Last-Translator: Julián Villodre <jvillodrede@gmail.com>\n"
 "Language-Team: Spanish - Spain <gnome-es-list@gnome.org>\n"
 "Language: es\n"
@@ -1387,117 +1387,99 @@ msgstr "Sistema"
 
 #: graphs/figure_settings.py:156
 msgid "Top X Axis Minimum"
-msgstr ""
+msgstr "Mínimo del eje X superior"
 
 #: graphs/figure_settings.py:157 graphs/figure_settings.py:167
-#, fuzzy
 msgid "X Axis Minimum"
-msgstr "Mínimo"
+msgstr "Mínimo del eje X"
 
 #: graphs/figure_settings.py:158
 msgid "Top X Axis Maximum"
-msgstr ""
+msgstr "Máximo del eje X superior"
 
 #: graphs/figure_settings.py:159 graphs/figure_settings.py:169
-#, fuzzy
 msgid "X Axis Maximum"
-msgstr "Máximo"
+msgstr "Máximo del eje X"
 
 #: graphs/figure_settings.py:160 graphs/ui.py:58
-#, fuzzy
 msgid "Top X Axis Scale"
-msgstr "Escala del eje inferior"
+msgstr "Escala del eje X superior"
 
 #: graphs/figure_settings.py:161 graphs/figure_settings.py:171 graphs/ui.py:55
-#, fuzzy
 msgid "X Axis Scale"
-msgstr "Escala del eje inferior"
+msgstr "Escala del eje X"
 
 #: graphs/figure_settings.py:162
-#, fuzzy
 msgid "Top X Axis Label"
-msgstr "Etiqueta del eje inferior"
+msgstr "Etiqueta del eje X superior"
 
 #: graphs/figure_settings.py:163 graphs/figure_settings.py:173
-#, fuzzy
 msgid "X Axis Label"
-msgstr "Etiqueta del eje inferior"
+msgstr "Etiqueta del eje X"
 
 #: graphs/figure_settings.py:166
-#, fuzzy
 msgid "Bottom X Axis Minimum"
-msgstr "Etiqueta del eje inferior"
+msgstr "Mínimo del eje X inferior"
 
 #: graphs/figure_settings.py:168
-#, fuzzy
 msgid "Bottom X Axis Maximum"
-msgstr "Etiqueta del eje inferior"
+msgstr "Máximo del eje X inferior"
 
 #: graphs/figure_settings.py:170 graphs/ui.py:60
-#, fuzzy
 msgid "Bottom X Axis Scale"
-msgstr "Escala del eje inferior"
+msgstr "Escala del eje X inferior"
 
 #: graphs/figure_settings.py:172
-#, fuzzy
 msgid "Bottom X Axis Label"
-msgstr "Etiqueta del eje inferior"
+msgstr "Etiqueta del eje X inferior"
 
 #: graphs/figure_settings.py:176
 msgid "Left Y Axis Minimum"
-msgstr ""
+msgstr "Mínimo del eje Y izquierdo"
 
 #: graphs/figure_settings.py:177 graphs/figure_settings.py:187
-#, fuzzy
 msgid "Y Axis Minimum"
-msgstr "Mínimo"
+msgstr "Mínimo del eje Y"
 
 #: graphs/figure_settings.py:178
 msgid "Left Y Axis Maximum"
-msgstr ""
+msgstr "Máximo del eje Y izquierdo"
 
 #: graphs/figure_settings.py:179 graphs/figure_settings.py:189
-#, fuzzy
 msgid "Y Axis Maximum"
-msgstr "Máximo"
+msgstr "Máximo del eje Y"
 
 #: graphs/figure_settings.py:180 graphs/ui.py:62
-#, fuzzy
 msgid "Left Y Axis Scale"
-msgstr "Escala del eje inferior"
+msgstr "Escala del eje Y izquierdo"
 
 #: graphs/figure_settings.py:181 graphs/figure_settings.py:191 graphs/ui.py:56
-#, fuzzy
 msgid "Y Axis Scale"
-msgstr "Escala del eje inferior"
+msgstr "Escala del eje Y"
 
 #: graphs/figure_settings.py:182
-#, fuzzy
 msgid "Left Y Axis Label"
-msgstr "Etiqueta del eje inferior"
+msgstr "Etiqueta del eje Y izquierdo"
 
 #: graphs/figure_settings.py:183 graphs/figure_settings.py:193
-#, fuzzy
 msgid "Y Axis Label"
-msgstr "Etiqueta del eje inferior"
+msgstr "Etiqueta del eje Y"
 
 #: graphs/figure_settings.py:186
 msgid "Right Y Axis Minimum"
-msgstr ""
+msgstr "Mínimo del eje Y derecho"
 
 #: graphs/figure_settings.py:188
 msgid "Right Y Axis Maximum"
-msgstr ""
+msgstr "Máximo del eje Y derecho"
 
 #: graphs/figure_settings.py:190 graphs/ui.py:64
-#, fuzzy
 msgid "Right Y Axis Scale"
-msgstr "Derecha"
+msgstr "Escala del eje Y derecho"
 
 #: graphs/figure_settings.py:192
-#, fuzzy
 msgid "Right Y Axis Label"
-msgstr "Etiqueta del eje inferior"
+msgstr "Etiqueta del eje Y derecho"
 
 #: graphs/figure_settings.py:296
 msgid "Defaults Updated"
@@ -1545,16 +1527,12 @@ msgid "Unable to import from file"
 msgstr "No se puede importar desde el archivo"
 
 #: graphs/styles.py:58
-#, fuzzy
-#| msgid "Labels"
 msgid "X Label"
-msgstr "Etiquetas"
+msgstr "Etiqueta X"
 
 #: graphs/styles.py:59
-#, fuzzy
-#| msgid "Labels"
 msgid "Y Label"
-msgstr "Etiquetas"
+msgstr "Etiqueta Y"
 
 #: graphs/styles.py:312
 #, python-brace-format
@@ -1567,6 +1545,8 @@ msgstr ""
 #, python-brace-format
 msgid "Plot style {stylename} does not exist loading system preferred"
 msgstr ""
+"El estilo de trazado {stylename} no existe, cargando el estilo preferido por "
+"el sistema"
 
 #: graphs/styles.py:710
 msgid "Are you sure you want to delete {self.style.get_name()}?"
@@ -1579,33 +1559,31 @@ msgstr "Color {}"
 #: graphs/style_io.py:49
 #, python-brace-format
 msgid "Missing colon in file {0}, line {1}"
-msgstr ""
+msgstr "Faltan dos puntos en el archivo {0}, línea {1}"
 
 #: graphs/style_io.py:57
 #, python-brace-format
 msgid "Non-style related parameter {0} in file {1}"
-msgstr ""
+msgstr "Parámetro no relacionado con el estilo {0} en el archivo {1}"
 
 #: graphs/style_io.py:60
 #, python-brace-format
 msgid "Ignoring parameter {0} in file {1}"
-msgstr ""
+msgstr "Ignorando parámetro {0} en la línea {1}"
 
 #: graphs/style_io.py:63
 #, python-brace-format
 msgid "Duplicate key in file {0}, on line {1}"
-msgstr ""
+msgstr "Clave duplicada en el archivo {0}, en la línea {1}"
 
 #: graphs/style_io.py:80
 #, python-brace-format
 msgid "Bad value in file {0} on line {1}"
-msgstr ""
+msgstr "Valor incorrecto en el archivo {0} en la línea {1}"
 
 #: graphs/style_io.py:84
-#, fuzzy
-#| msgid "Could not load %s"
 msgid "Could not parse {}"
-msgstr "No se ha podido cargar %s"
+msgstr "No se ha podido analizar {}"
 
 #: graphs/transform_data.py:39
 #, python-brace-format
@@ -1616,7 +1594,7 @@ msgstr ""
 
 #: graphs/transform_data.py:42
 msgid "Unable to do transformation"
-msgstr ""
+msgstr "No se puede hacer la transformación"
 
 #: graphs/ui.py:37
 msgid "Optimize Limits"
@@ -1640,11 +1618,11 @@ msgstr "Archivos ASCII"
 
 #: graphs/ui.py:91
 msgid "PANalytical XRDML"
-msgstr ""
+msgstr "PANalytical XRDML"
 
 #: graphs/ui.py:92
 msgid "Leybold xry"
-msgstr ""
+msgstr "Leybold xry"
 
 #: graphs/ui.py:93 graphs/ui.py:110 graphs/ui.py:123
 msgid "Graphs Project File"
@@ -1664,11 +1642,13 @@ msgstr "Archivos de texto"
 
 #: graphs/ui.py:188
 msgid "translator-credits"
-msgstr "Óscar Fernández Díaz <oscfdezdz@tuta.io>"
+msgstr ""
+"Julián Villodre <jvillodrede@gmail.com> 2024\n"
+"Óscar Fernández Díaz <oscfdezdz@tuta.io>"
 
 #: graphs/ui.py:217 graphs/ui.py:281 graphs/ui.py:315
 msgid "Unsupported Widget {}"
-msgstr ""
+msgstr "Widget no soportado {}"
 
 #: graphs/ui.py:219 graphs/ui.py:283 graphs/ui.py:317
 msgid "No way to apply “{}”"
