@@ -162,7 +162,7 @@ def _eval(node):
         raise ValueError(_("No valid number specified"))
 
 
-def preprocess(string: str) -> str:
+def _preprocess(string: str) -> str:
     """Preprocesses an equation to be compatible with numexpr syntax"""
 
     def convert_degrees(match):
