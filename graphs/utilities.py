@@ -162,24 +162,31 @@ def _eval(node):
         raise ValueError(_("No valid number specified"))
 
 
-def _preprocess(string: str) -> str:
+def preprocess(string: str) -> str:
+    """Preprocesses an equation to be compatible with numexpr syntax"""
+
     def convert_degrees(match):
+        """Converts degree expressions to radian expressions"""
         expression = match.group(1)  # Get the content inside the brackets
         return f"(({expression})*{float(numpy.pi)}/180)"
 
     def convert_cot(match):
+        """Converts cotangent expressions to reciprocal tangent expressions."""
         expression = match.group(1)  # Get the content inside the brackets
         return f"1/(tan({expression}))"
 
     def convert_sec(match):
+        """Converts secant expressions to reciprocal cosine expressions."""
         expression = match.group(1)  # Get the content inside the brackets
         return f"1/(cos({expression}))"
 
     def convert_csc(match):
+        """Converts cosecant expressions to reciprocal sine expressions."""
         expression = match.group(1)  # Get the content inside the brackets
         return f"1/(sin({expression}))"
 
     def convert_superscript(match):
+        """Converts superscript expressions to Python's power operator."""
         superscript_mapping = {
             "⁰": "0",
             "¹": "1",
@@ -197,6 +204,18 @@ def _preprocess(string: str) -> str:
                            for char in sequence)
         return f"**{sequence}"
 
+    def add_asterix(match):
+        """
+        Adds asterix in equation when missing in case a number is followed
+        by an alphabetical character, and adds parantheses around.
+
+        Pattern is to check for least one digit, followed by at least one
+        alphabetical character. e.g y = 24*x + 3sigma -> y = (24*x) + (3*sigma)
+        """
+        exp1, exp2 = match.group(1), match.group(2)
+        return f"({exp1}*{exp2})"
+
+    string = re.sub(r"(\d+)([a-zA-Z]+)", add_asterix, string)
     string = string.replace("pi", f"({float(numpy.pi)})")
     string = string.replace("^", "**")
     string = re.sub(r"cot\((.*?)\)", convert_cot, string)
@@ -219,8 +238,8 @@ def get_filename(file: Gio.File) -> str:
 
 def string_to_function(equation_name: str):
     pattern = (
-        r"\b(?!x\b|X\b|csc\b|cot\b|sec\b|sin\b|cos\b|log\b|tan\b)"
-        r"[a-wy-zA-WY-Z]+\b"
+        r"\b(?!x\b|X\b|csc\b|cot\b|sec\b|sin\b|cos\b|log\b|tan\b|exp\b)"
+        r"[a-zA-Z]+\b"
     )
     variables = ["x"] + re.findall(pattern, equation_name)
     sym_vars = sympy.symbols(variables)

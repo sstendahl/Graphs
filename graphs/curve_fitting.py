@@ -149,8 +149,8 @@ class CurveFittingWindow(Graphs.CurveFittingTool):
     def get_free_variables(self) -> str:
         """Get a list of free variables in the equation entry"""
         pattern = (
-            r"\b(?!x\b|X\b|csc\b|cot\b|sec\b|sin\b|cos\b|log\b|tan\b)"
-            r"[a-wy-zA-WY-Z]+\b"
+            r"\b(?!x\b|X\b|csc\b|cot\b|sec\b|sin\b|cos\b|log\b|tan\b|exp\b)"
+            r"[a-zA-Z]+\b"
         )
         return re.findall(pattern, self.equation_string)
 
@@ -275,8 +275,9 @@ class CurveFittingWindow(Graphs.CurveFittingTool):
         """
         def _get_equation_name(equation_name, values):
             var_to_val = dict(zip(self.get_free_variables(), values))
-
             for var, val in var_to_val.items():
+                equation_name = \
+                    re.sub(r"(\d+)([a-zA-Z]+)", r"(\1*\2)", equation_name)
                 equation_name = equation_name.replace(var, str(round(val, 3)))
             return equation_name
 
@@ -390,11 +391,11 @@ class FittingParameterContainer(Data):
     __gtype_name__ = "GraphsFittingParameterContainer"
     __gsignals__ = {}
 
-    def add_items(self, items) -> None:
+    def add_items(self, items: list) -> None:
         for item in items:
             self._items[item.get_name()] = item
 
-    def remove_unused(self, used_list) -> None:
+    def remove_unused(self, used_list: list) -> None:
         # First create list with items to remove
         # to avoid dict changing size during iteration
         remove_list = []
@@ -407,7 +408,7 @@ class FittingParameterContainer(Data):
 
         self.order_by_list(used_list)
 
-    def order_by_list(self, ordered_list) -> None:
+    def order_by_list(self, ordered_list: list) -> None:
         self._items = {key: self._items[key] for key in ordered_list}
 
     def get_p0(self) -> list:

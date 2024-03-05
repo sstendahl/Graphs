@@ -6,8 +6,8 @@
 msgid ""
 msgstr "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2024-02-07 18:43+0000\n"
-"PO-Revision-Date: 2024-02-10 10:00+0000\n"
+"POT-Creation-Date: 2024-02-10 10:29+0000\n"
+"PO-Revision-Date: 2024-03-02 10:00+0000\n"
 "Last-Translator: Asier Sarasua Garmendia <asiersarasua@ni.eus>\n"
 "Language-Team: Basque <eu@li.org>\n"
 "Language: eu\n"
@@ -167,7 +167,7 @@ msgstr "Esponentziala"
 
 #: data/ui/curve_fitting.blp:59
 msgid "Power Law"
-msgstr ""
+msgstr "Potentziaren legea"
 
 #: data/ui/curve_fitting.blp:60 data/ui/figure_settings.blp:121
 #: data/ui/figure_settings.blp:127 data/ui/figure_settings.blp:133
@@ -1273,7 +1273,7 @@ msgstr "Kofiantza-eskualde islatzailea"
 
 #: src/curve_fitting.py:86
 msgid "Dogbox"
-msgstr ""
+msgstr "Txakur-kutxa"
 
 #: src/curve_fitting.py:88
 msgid "Confidence Bounds"
@@ -1517,29 +1517,24 @@ msgid "Color {}"
 msgstr "{} kolorea"
 
 #: src/style_io.py:49
-#, python-brace-format
-msgid "Missing colon in file {0}, line {1}"
-msgstr "Bi puntu falta dira {0} fitxategiko {1} lerroan"
+msgid "Missing colon in file {}, line {}"
+msgstr "Bi puntu falta dira {} fitxategiko {} lerroan"
 
 #: src/style_io.py:57
-#, python-brace-format
-msgid "Non-style related parameter {0} in file {1}"
-msgstr "{1} fitxategiko {0} parametroak ez du zerikusirik estiloarekin"
+msgid "Non-style related parameter {} in file {}"
+msgstr "{} parametroak ({} fitxategian) ez du zerikusirik estiloarekin"
 
 #: src/style_io.py:60
-#, python-brace-format
-msgid "Ignoring parameter {0} in file {1}"
-msgstr "{1} fitxategiko {0} parametroari ez ikusiarena egingo zaio"
+msgid "Ignoring parameter {} in file {}"
+msgstr "{} parametroari ({} fitxategia) ez ikusiarena egingo zaio"
 
 #: src/style_io.py:63
-#, python-brace-format
-msgid "Duplicate key in file {0}, on line {1}"
-msgstr "Gako bikoiztua {0} fitxategiko {1} lerroan"
+msgid "Duplicate key in file {}, on line {}"
+msgstr "Gako bikoiztua {} fitxategiko {} lerroan"
 
 #: src/style_io.py:80
-#, python-brace-format
-msgid "Bad value in file {0} on line {1}"
-msgstr "Balio okerra {0} fitxategiko {1} lerroan"
+msgid "Bad value in file {} on line {}"
+msgstr "Balio okerra {} fitxategiko {} lerroan"
 
 #: src/style_io.py:84
 msgid "Could not parse {}"
