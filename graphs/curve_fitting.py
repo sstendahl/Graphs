@@ -25,7 +25,7 @@ class CurveFittingWindow(Graphs.CurveFittingTool):
     title_widget = GObject.Property(type=Adw.WindowTitle)
     toast_overlay = GObject.Property(type=Adw.ToastOverlay)
 
-    def __init__(self, application, item):
+    def __init__(self, application: Graphs.Application, item: Graphs.Item):
         """Initialize the curve fitting dialog"""
         super().__init__(
             application=application, transient_for=application.get_window(),
@@ -119,12 +119,12 @@ class CurveFittingWindow(Graphs.CurveFittingTool):
             self.get_custom_equation().set_text(custom_equation)
             self.get_custom_equation().set_visible(True)
 
-    def _set_fitting_bounds_visibility(self, *_args):
+    def _set_fitting_bounds_visibility(self, *_args) -> None:
         """Set the visibility of the fitting bounds"""
         for entry in self.get_fitting_params():
             entry.set_bounds_visibility()
 
-    def reload_canvas(self, *_args):
+    def reload_canvas(self, *_args) -> None:
         """Reinitialise the currently used canvas"""
         self.get_toast_overlay().set_child(None)
         figure_settings = self.get_application().get_data(
@@ -149,12 +149,12 @@ class CurveFittingWindow(Graphs.CurveFittingTool):
     def get_free_variables(self) -> str:
         """Get a list of free variables in the equation entry"""
         pattern = (
-            r"\b(?!x\b|X\b|csc\b|cot\b|sec\b|sin\b|cos\b|log\b|tan\b)"
-            r"[a-wy-zA-WY-Z]+\b"
+            r"\b(?!x\b|X\b|csc\b|cot\b|sec\b|sin\b|cos\b|log\b|tan\b|exp\b)"
+            r"[a-zA-Z]+\b"
         )
         return re.findall(pattern, self.equation_string)
 
-    def on_equation_change(self, _entry, _param):
+    def on_equation_change(self, _entry, _param) -> None:
         """
         Set the free variables and corresponding entry rows when the equation
         has been changed.
@@ -170,7 +170,7 @@ class CurveFittingWindow(Graphs.CurveFittingTool):
                 self.settings.set_string("custom-equation",
                                          self.equation_string)
 
-    def on_entry_change(self, entry, _param):
+    def on_entry_change(self, entry, _param) -> None:
         """
         Triggered whenever an entry changes. Update the parameters of the
         curve and perform a new subsequent fit.
@@ -265,7 +265,7 @@ class CurveFittingWindow(Graphs.CurveFittingTool):
             bold_tag, start_iter, end_iter)
 
     @property
-    def equation_string(self):
+    def equation_string(self) -> str:
         return utilities.preprocess(str(self.get_custom_equation().get_text()))
 
     def fit_curve(self, *_args) -> bool:
@@ -275,8 +275,9 @@ class CurveFittingWindow(Graphs.CurveFittingTool):
         """
         def _get_equation_name(equation_name, values):
             var_to_val = dict(zip(self.get_free_variables(), values))
-
             for var, val in var_to_val.items():
+                equation_name = \
+                    re.sub(r"(\d+)([a-zA-Z]+)", r"(\1*\2)", equation_name)
                 equation_name = equation_name.replace(var, str(round(val, 3)))
             return equation_name
 
@@ -360,7 +361,7 @@ class CurveFittingWindow(Graphs.CurveFittingTool):
             self.fitted_curve.props.xdata, lower_bound, upper_bound,
         )
 
-    def add_fit(self, _widget):
+    def add_fit(self, _widget) -> None:
         """Add fitted data to the items in the main application"""
         application = self.get_application()
         style_manager = application.get_figure_style_manager()
@@ -372,17 +373,17 @@ class CurveFittingWindow(Graphs.CurveFittingTool):
         )])
         self.destroy()
 
-    def set_entry_rows(self):
+    def set_entry_rows(self) -> None:
         """
         Remove the old entry rows and replace them with new ones corresponding
         to the free variables in the equation
         """
-        while self.get_fitting_params().get_last_child() is not None:
-            self.get_fitting_params().remove(
-                self.get_fitting_params().get_last_child())
+        params = self.get_fitting_params()
+        while params.get_last_child() is not None:
+            params.remove(params.get_last_child())
 
         for arg in self.get_free_variables():
-            self.get_fitting_params().append(FittingParameterEntry(self, arg))
+            params.append(FittingParameterEntry(self, arg))
 
 
 class FittingParameterContainer(Data):
@@ -390,11 +391,11 @@ class FittingParameterContainer(Data):
     __gtype_name__ = "GraphsFittingParameterContainer"
     __gsignals__ = {}
 
-    def add_items(self, items):
+    def add_items(self, items: list) -> None:
         for item in items:
             self._items[item.get_name()] = item
 
-    def remove_unused(self, used_list):
+    def remove_unused(self, used_list: list) -> None:
         # First create list with items to remove
         # to avoid dict changing size during iteration
         remove_list = []
@@ -407,7 +408,7 @@ class FittingParameterContainer(Data):
 
         self.order_by_list(used_list)
 
-    def order_by_list(self, ordered_list):
+    def order_by_list(self, ordered_list: list) -> None:
         self._items = {key: self._items[key] for key in ordered_list}
 
     def get_p0(self) -> list:
@@ -459,7 +460,7 @@ class FittingParameterEntry(Gtk.Box):
         self.lower_bound.connect("notify::text", parent.on_entry_change)
         self.set_bounds_visibility()
 
-    def set_bounds_visibility(self):
+    def set_bounds_visibility(self) -> None:
         method = self.parent.settings.get_string("optimization")
         self.upper_bound_group.set_visible(method != "lm")
         self.lower_bound_group.set_visible(method != "lm")
