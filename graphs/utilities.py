@@ -12,13 +12,13 @@ import numpy
 import sympy
 
 
-def hex_to_rgba(hex_str):
+def hex_to_rgba(hex_str: str) -> Gdk.RGBA:
     rgba = Gdk.RGBA()
     rgba.parse(str(hex_str))
     return rgba
 
 
-def get_luminance(hex_color):
+def get_luminance(hex_color: str) -> float:
     color = hex_color[1:]
     hex_red = int(color[0:2], base=16)
     hex_green = int(color[2:4], base=16)
@@ -26,7 +26,7 @@ def get_luminance(hex_color):
     return hex_red * 0.2126 + hex_green * 0.7152 + hex_blue * 0.0722
 
 
-def sig_fig_round(number, digits):
+def sig_fig_round(number: float, digits: int) -> float:
     """Round a number to the specified number of significant digits."""
     try:
         # Convert to scientific notation, and get power
@@ -36,19 +36,21 @@ def sig_fig_round(number, digits):
     return round(float(number), -(int(power) - digits + 1))
 
 
-def rgba_to_hex(rgba):
+def rgba_to_hex(rgba: Gdk.RGBA) -> str:
     return "#{:02x}{:02x}{:02x}".format(
         round(rgba.red * 255), round(rgba.green * 255), round(rgba.blue * 255),
     )
 
 
-def rgba_to_tuple(rgba, alpha=False):
+def rgba_to_tuple(rgba: Gdk.RGBA, alpha: bool = False) -> [int, int, int]:
     if alpha:
         return (rgba.red, rgba.green, rgba.blue, rgba.alpha)
     return (rgba.red, rgba.green, rgba.blue)
 
 
-def get_value_at_fraction(fraction, start, end, scale):
+def get_value_at_fraction(
+    fraction: float, start: float, end: float, scale: int,
+) -> float:
     """
     Obtain the selected value of an axis given at which percentage (in terms of
     fraction) of the length this axis is selected given the start and end range
@@ -79,7 +81,9 @@ def get_value_at_fraction(fraction, start, end, scale):
         return 1 / (1 / end + fraction * scaled_range)
 
 
-def get_fraction_at_value(value, start, end, scale):
+def get_fraction_at_value(
+    value: float, start: float, end: float, scale: int,
+) -> float:
     """
     Obtain the fraction of the total length of the selected axis a specific
     value corresponds to given the start and end range of the axis.
@@ -110,16 +114,16 @@ def get_fraction_at_value(value, start, end, scale):
         return (scaled_data_point - 1 / end) / scaled_range
 
 
-def shorten_label(label, max_length=20):
+def shorten_label(label: str, max_length: bool = 20) -> str:
     return f"{label[:max_length - 1]}…" if len(label) > max_length else label
 
 
-def get_config_directory():
+def get_config_directory() -> Gio.File:
     main_directory = Gio.File.new_for_path(GLib.get_user_config_dir())
     return main_directory.get_child_for_display_name("graphs")
 
 
-def create_file_filters(filters, add_all=True):
+def create_file_filters(filters, add_all: bool = True) -> Gio.ListStore:
     list_store = Gio.ListStore()
     for name, suffix_list in filters:
         file_filter = Gtk.FileFilter()
@@ -135,9 +139,9 @@ def create_file_filters(filters, add_all=True):
     return list_store
 
 
-def string_to_float(string: str):
+def string_to_float(string: str) -> float:
     try:
-        return _eval(ast.parse(preprocess(string), mode="eval").body)
+        return _eval(ast.parse(_preprocess(string), mode="eval").body)
     except SyntaxError:
         return
 
@@ -158,7 +162,7 @@ def _eval(node):
         raise ValueError(_("No valid number specified"))
 
 
-def preprocess(string: str) -> str:
+def _preprocess(string: str) -> str:
     """Preprocesses an equation to be compatible with numexpr syntax"""
 
     def convert_degrees(match):
@@ -223,7 +227,7 @@ def preprocess(string: str) -> str:
     return string.lower()
 
 
-def get_filename(file: Gio.File):
+def get_filename(file: Gio.File) -> str:
     info = file.query_info(
         "standard::display-name", Gio.FileQueryInfoFlags.NONE, None,
     )
@@ -232,7 +236,7 @@ def get_filename(file: Gio.File):
     return file.get_basename()
 
 
-def string_to_function(equation_name):
+def string_to_function(equation_name: str):
     pattern = (
         r"\b(?!x\b|X\b|csc\b|cot\b|sec\b|sin\b|cos\b|log\b|tan\b|exp\b)"
         r"[a-zA-Z]+\b"
@@ -246,7 +250,7 @@ def string_to_function(equation_name):
         return sympy.lambdify(sym_vars, symbolic)
 
 
-def get_duplicate_string(original_string: str, used_strings) -> str:
+def get_duplicate_string(original_string: str, used_strings: list[str]) -> str:
     if original_string not in used_strings:
         return original_string
     m = re.compile(r"(?P<string>.+) \(\d+\)").match(original_string)

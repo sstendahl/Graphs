@@ -8,7 +8,7 @@ Classes:
 import logging
 from gettext import gettext as _
 
-from gi.repository import GLib, GObject, Gio, Graphs, Gtk
+from gi.repository import Adw, GLib, GObject, Gio, Graphs, Gtk
 
 from graphs import (actions, file_import, file_io, migrate, styles, ui,
                     utilities)
@@ -105,7 +105,7 @@ class PythonApplication(Graphs.Application):
             "items-ignored", ui.on_items_ignored, self,
         )
 
-    def on_project_saved(self, _application, handler=None, *args):
+    def on_project_saved(self, _application, handler=None, *args) -> None:
         self.disconnect(self.save_handler)
         if handler == "close":
             self.quit()
@@ -115,7 +115,7 @@ class PythonApplication(Graphs.Application):
         if handler == "reset_project":
             self.get_data().reset_project()
 
-    def do_open(self, files: list, nfiles: int, _hint: str):
+    def do_open(self, files: list, nfiles: int, _hint: str) -> None:
         """Gets called when Graph is opened from a file."""
         self.do_activate()
         data = self.get_data()
@@ -147,7 +147,7 @@ class PythonApplication(Graphs.Application):
         else:
             file_import.import_from_files(self, files)
 
-    def close_application(self, *_arg):
+    def close_application(self, *_args) -> None:
         """
         Gets called when closing the application, will ask the user to confirm
         and save/discard open data if any unsaved changes are present
@@ -169,7 +169,9 @@ class PythonApplication(Graphs.Application):
             return True
         self.quit()
 
-    def on_key_press_event(self, _controller, keyval, _keycode, _state):
+    def on_key_press_event(
+        self, _controller, keyval: int, _keycode, _state,
+    ) -> None:
         """
         Checks if control is pressed, needed to allow ctrl+scroll behaviour
         as the key press event from matplotlib is not working properly atm.
@@ -181,7 +183,9 @@ class PythonApplication(Graphs.Application):
         else:  # Prevent keys from being true with key combos
             self.set_ctrl(False)
 
-    def on_key_release_event(self, _controller, _keyval, _keycode, _state):
+    def on_key_release_event(
+        self, _controller, _keyval, _keycode, _state,
+    ) -> None:
         """
         Checks if control is released, needed to allow ctrl+scroll behaviour
         as the key press event from matplotlib is not working properly atm.
@@ -189,7 +193,7 @@ class PythonApplication(Graphs.Application):
         self.set_ctrl(False)
         self.set_shift(False)
 
-    def do_activate(self):
+    def do_activate(self) -> None:
         """
         Activate the application.
 
@@ -246,10 +250,12 @@ class PythonApplication(Graphs.Application):
             self.set_figure_style_manager(styles.StyleManager(self))
             self.get_window().get_canvas().connect_after(
                 "notify::items", ui.enable_axes_actions, self)
-            ui.enable_axes_actions(self, None, self)
+            ui.enable_axes_actions(None, None, self)
             window.present()
 
-    def set_entry_css(self, _object, _param, entry, button):
+    def set_entry_css(
+        self, _object, _param, entry: Adw.EntryRow, button: Gtk.Button,
+    ) -> None:
         try:
             value = utilities.string_to_float(entry.get_text())
             if value is not None:

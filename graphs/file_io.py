@@ -3,7 +3,7 @@ import io
 import json
 from xml.dom import minidom
 
-from gi.repository import GLib, Gio
+from gi.repository import GLib, Gio, Graphs
 
 from graphs import item, ui
 
@@ -106,7 +106,7 @@ def iter_data_stream(stream: Gio.DataInputStream):
         line = stream.read_line_utf8(None)[0]
 
 
-def save_item(file: Gio.File, item_: item.DataItem):
+def save_item(file: Gio.File, item_: item.DataItem) -> None:
     delimiter = "\t"
     fmt = delimiter.join(["%.12e"] * 2)
     xlabel, ylabel = item_.get_xlabel(), item_.get_ylabel()
@@ -118,14 +118,16 @@ def save_item(file: Gio.File, item_: item.DataItem):
     stream.close()
 
 
-def save_project(self, require_dialog: bool = False):
-    project_file = self.get_data().project_file
+def save_project(
+    application: Graphs.Application, require_dialog: bool = False,
+) -> None:
+    project_file = application.get_data().project_file
     if project_file is not None and not require_dialog:
-        self.get_data().save()
-        self.get_data().props.unsaved = False
-        self.emit("project-saved")
+        application.get_data().save()
+        application.get_data().props.unsaved = False
+        application.emit("project-saved")
         return
-    ui.save_project_dialog(self)
+    ui.save_project_dialog(application)
 
 
 def parse_json(file: Gio.File) -> dict:

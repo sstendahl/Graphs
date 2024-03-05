@@ -10,7 +10,7 @@ from graphs.misc import ParseError
 import numpy
 
 
-def import_from_project(_self, file: Gio.File) -> misc.ItemList:
+def import_from_project(_params, _style, file: Gio.File) -> misc.ItemList:
     try:
         project = file_io.parse_json(file)
     except UnicodeDecodeError:
@@ -18,7 +18,7 @@ def import_from_project(_self, file: Gio.File) -> misc.ItemList:
     return list(map(item.new_from_dict, project["data"]))
 
 
-def import_from_xrdml(self, file: Gio.File) -> misc.ItemList:
+def import_from_xrdml(_params, style, file: Gio.File) -> misc.ItemList:
     content = file_io.parse_xml(file)
     intensities = content.getElementsByTagName("intensities")
     counting_time = content.getElementsByTagName("commonCountingTime")
@@ -44,14 +44,13 @@ def import_from_xrdml(self, file: Gio.File) -> misc.ItemList:
             end_pos = float(end_pos[0].firstChild.data)
             xdata = numpy.linspace(start_pos, end_pos, len(ydata))
             xdata = numpy.ndarray.tolist(xdata)
-    style = self.get_figure_style_manager().get_selected_style_params()
     return [item.DataItem.new(
         style, xdata, ydata, name=utilities.get_filename(file),
         xlabel=f"{scan_axis} ({unit})", ylabel=_("Intensity (cps)"),
     )]
 
 
-def import_from_xry(self, file: Gio.File) -> misc.ItemList:
+def import_from_xry(_params, style, file: Gio.File) -> misc.ItemList:
     """Import data from .xry files used by Leybold X-ray apparatus."""
     with file_io.open_wrapped(file, "rt", encoding="ISO-8859-1") as wrapper:
         def skip(lines: int):
@@ -70,7 +69,6 @@ def import_from_xry(self, file: Gio.File) -> misc.ItemList:
         item_count = int(info[0])
 
         name = utilities.get_filename(file)
-        style = self.get_figure_style_manager().get_selected_style_params()
         items = [
             item.DataItem.new(
                 style, name=f"{name} - {i + 1}" if item_count > 1 else name,
@@ -93,24 +91,18 @@ def import_from_xry(self, file: Gio.File) -> misc.ItemList:
         return items
 
 
-def _swap(string):
-    string = string.replace(",", "third")
-    string = string.replace(".", ", ")
-    return string.replace("third", ".")
+_PH = "dVldZaXqENhuPLPw"
 
 
-def import_from_columns(self, file: Gio.File) -> misc.ItemList:
-    style = self.get_figure_style_manager().get_selected_style_params()
+def import_from_columns(params, style, file: Gio.File) -> misc.ItemList:
     item_ = item.DataItem.new(style, name=utilities.get_filename(file))
-    columns_params = self.get_settings().get_child(
-        "import-params").get_child("columns")
-    column_x = columns_params.get_int("column-x")
-    column_y = columns_params.get_int("column-y")
-    separator = columns_params.get_string("separator").replace(" ", "")
-    skip_rows = columns_params.get_int("skip-rows")
-    delimiter = misc.DELIMITERS[columns_params.get_string("delimiter")]
+    column_x = params.get_int("column-x")
+    column_y = params.get_int("column-y")
+    separator = params.get_string("separator").replace(" ", "")
+    skip_rows = params.get_int("skip-rows")
+    delimiter = misc.DELIMITERS[params.get_string("delimiter")]
     if delimiter == "custom":
-        delimiter = columns_params.get_string("custom-delimiter")
+        delimiter = params.get_string("custom-delimiter")
     stream = Gio.DataInputStream.new(file.read(None))
     start_values = False
     for index, line in \
@@ -119,7 +111,10 @@ def import_from_columns(self, file: Gio.File) -> misc.ItemList:
             continue
         values = re.split(delimiter, line)
         if separator == ",":
-            values = list(map(_swap, values))
+            values = (
+                string.replace(",", _PH).replace(".", ", ").replace(_PH, ".")
+                for string in values
+            )
         try:
             if len(values) == 1:
                 float_value = utilities.string_to_float(values[0])

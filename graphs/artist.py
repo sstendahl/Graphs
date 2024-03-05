@@ -1,12 +1,13 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
-from gi.repository import GObject
+from gi.repository import GObject, Graphs
 
 from graphs import misc, utilities
 
+from matplotlib import artist, pyplot
 from matplotlib.figure import Figure
 
 
-def new_for_item(canvas, item):
+def new_for_item(canvas: Graphs.CanvasInterface, item: Graphs.Item):
     match item.__gtype_name__:
         case "GraphsDataItem":
             cls = DataItemArtistWrapper
@@ -16,21 +17,21 @@ def new_for_item(canvas, item):
             cls = FillItemArtistWrapper
         case _:
             pass
-    artist = cls(
+    artist_wrapper = cls(
         canvas.axes[item.get_yposition() * 2 + item.get_xposition()], item,
     )
-    for prop in dir(artist.props):
-        if not (prop == "label" and artist.legend):
-            item.bind_property(prop, artist, prop, 0)
-    artist.connect("notify", lambda _x, _y: canvas.update_legend())
-    return artist
+    for prop in dir(artist_wrapper.props):
+        if not (prop == "label" and artist_wrapper.legend):
+            item.bind_property(prop, artist_wrapper, prop, 0)
+    artist_wrapper.connect("notify", lambda _x, _y: canvas.update_legend())
+    return artist_wrapper
 
 
 class ItemArtistWrapper(GObject.Object):
     __gtype_name__ = "GraphsItemArtistWrapper"
     legend = False
 
-    def get_artist(self):
+    def get_artist(self) -> artist:
         return self._artist
 
     @GObject.Property(type=str, default="")
@@ -38,7 +39,7 @@ class ItemArtistWrapper(GObject.Object):
         return self._artist.get_label()
 
     @name.setter
-    def name(self, name: str):
+    def name(self, name: str) -> None:
         self._artist.set_label(utilities.shorten_label(name, 40))
 
     @GObject.Property(type=str, default="000000")
@@ -46,7 +47,7 @@ class ItemArtistWrapper(GObject.Object):
         return self._artist.get_color()
 
     @color.setter
-    def color(self, color: str):
+    def color(self, color: str) -> None:
         self._artist.set_color(color)
 
     @GObject.Property(type=float, default=1)
@@ -54,7 +55,7 @@ class ItemArtistWrapper(GObject.Object):
         return self._artist.get_alpha()
 
     @alpha.setter
-    def alpha(self, alpha: float):
+    def alpha(self, alpha: float) -> None:
         self._artist.set_alpha(alpha)
 
 
@@ -70,7 +71,7 @@ class DataItemArtistWrapper(ItemArtistWrapper):
         return self._artist.get_xdata()
 
     @xdata.setter
-    def xdata(self, xdata: list):
+    def xdata(self, xdata: list) -> None:
         self._artist.set_xdata(xdata)
 
     @GObject.Property
@@ -78,7 +79,7 @@ class DataItemArtistWrapper(ItemArtistWrapper):
         return self._artist.get_ydata()
 
     @ydata.setter
-    def ydata(self, ydata: list):
+    def ydata(self, ydata: list) -> None:
         self._artist.set_ydata(ydata)
 
     @GObject.Property(type=int, default=1)
@@ -86,7 +87,7 @@ class DataItemArtistWrapper(ItemArtistWrapper):
         return misc.LINESTYLES.index(self._artist.get_linestyle())
 
     @linestyle.setter
-    def linestyle(self, linestyle: int):
+    def linestyle(self, linestyle: int) -> None:
         self._artist.set_linestyle(misc.LINESTYLES[linestyle])
 
     @GObject.Property(type=int, default=1)
@@ -94,10 +95,10 @@ class DataItemArtistWrapper(ItemArtistWrapper):
         return misc.MARKERSTYLES.index(self._artist.get_marker())
 
     @markerstyle.setter
-    def markerstyle(self, markerstyle: int):
+    def markerstyle(self, markerstyle: int) -> None:
         self._artist.set_marker(misc.MARKERSTYLES[markerstyle])
 
-    def _set_properties(self, _x, _y):
+    def _set_properties(self, _x, _y) -> None:
         linewidth, markersize = self.props.linewidth, self.props.markersize
         if not self.props.selected:
             linewidth *= 0.35
@@ -105,7 +106,7 @@ class DataItemArtistWrapper(ItemArtistWrapper):
         self._artist.set_linewidth(linewidth)
         self._artist.set_markersize(markersize)
 
-    def __init__(self, axis, item):
+    def __init__(self, axis: pyplot.axis, item: Graphs.Item):
         super().__init__()
         self._artist = axis.plot(
             item.props.xdata, item.props.ydata,
@@ -128,7 +129,7 @@ class TextItemArtistWrapper(ItemArtistWrapper):
         return self._artist.get_fontsize()
 
     @size.setter
-    def size(self, size: float):
+    def size(self, size: float) -> None:
         self._artist.set_fontsize(size)
 
     @GObject.Property(type=int, default=0, minimum=0, maximum=360)
@@ -136,7 +137,7 @@ class TextItemArtistWrapper(ItemArtistWrapper):
         return self._artist.get_rotation()
 
     @rotation.setter
-    def rotation(self, rotation: int):
+    def rotation(self, rotation: int) -> None:
         self._artist.set_rotation(rotation)
 
     @GObject.Property(type=str, default="")
@@ -144,7 +145,7 @@ class TextItemArtistWrapper(ItemArtistWrapper):
         return self._artist.get_text()
 
     @text.setter
-    def text(self, text: str):
+    def text(self, text: str) -> None:
         self._artist.set_text(text)
 
     @GObject.Property(type=float, default=0)
@@ -152,7 +153,7 @@ class TextItemArtistWrapper(ItemArtistWrapper):
         return self._artist.get_position()[0]
 
     @xanchor.setter
-    def xanchor(self, xanchor: float):
+    def xanchor(self, xanchor: float) -> None:
         self._artist.set_position((xanchor, self.props.yanchor))
 
     @GObject.Property(type=float, default=0)
@@ -160,10 +161,10 @@ class TextItemArtistWrapper(ItemArtistWrapper):
         return self._artist.get_position()[1]
 
     @yanchor.setter
-    def yanchor(self, yanchor: float):
+    def yanchor(self, yanchor: float) -> None:
         self._artist.set_position((self.props.xanchor, yanchor))
 
-    def __init__(self, axis, item):
+    def __init__(self, axis: pyplot.axis, item: Graphs.Item):
         super().__init__()
         self._artist = axis.text(
             item.props.xanchor, item.props.yanchor, item.props.text,
@@ -177,15 +178,15 @@ class FillItemArtistWrapper(ItemArtistWrapper):
     __gtype_name__ = "GraphsFillItemArtistWrapper"
 
     @GObject.Property(type=object, flags=2)
-    def data(self):
+    def data(self) -> None:
         pass
 
     @data.setter
-    def data(self, data):
+    def data(self, data) -> None:
         dummy = Figure().add_subplot().fill_between(*data)
         self._artist.set_paths([dummy.get_paths()[0].vertices])
 
-    def __init__(self, axis, item):
+    def __init__(self, axis: pyplot.axis, item: Graphs.Item):
         super().__init__()
         self._artist = axis.fill_between(
             *item.props.data,

@@ -4,20 +4,22 @@ import datetime
 import logging
 from gettext import gettext as _
 
-from gi.repository import Adw, GLib, Gio, Gtk
+from gi.repository import Adw, GLib, Gio, Graphs, Gtk
 
 from graphs import actions, file_import, file_io, misc, utilities
 from graphs.item_box import ItemBox
 
 
-def on_items_change(data, _ignored, self):
-    data = self.get_data()
-    item_list = self.get_window().get_item_list()
+def on_items_change(
+    data, _ignored, application: Graphs.Application,
+) -> None:
+    data = application.get_data()
+    item_list = application.get_window().get_item_list()
     while item_list.get_last_child() is not None:
         item_list.remove(item_list.get_last_child())
 
     for index, item in enumerate(data):
-        itembox = ItemBox(self, item, index)
+        itembox = ItemBox(application, item, index)
         item_list.append(itembox)
         row = item_list.get_row_at_index(index)
         row.add_controller(itembox.drag_source)
@@ -26,7 +28,9 @@ def on_items_change(data, _ignored, self):
     data.add_view_history_state()
 
 
-def enable_axes_actions(self, _callback, application):
+def enable_axes_actions(
+    _object, _callback, application: Graphs.Application,
+) -> None:
     visible_axes = application.get_data().get_used_positions()
     menu = Gio.Menu.new()
     toggle_section = Gio.Menu.new()
@@ -68,19 +72,21 @@ def enable_axes_actions(self, _callback, application):
     application.get_window().get_view_menu_button().set_menu_model(menu)
 
 
-def on_items_ignored(_data, _ignored, ignored, self):
+def on_items_ignored(
+    _data, _ignored, ignored: str, application: Graphs.Application,
+) -> str:
     if len(ignored) > 1:
         toast = _("Items {} already exist").format(ignored)
     else:
         toast = _("Item {} already exists")
-    self.get_window().add_toast_string(toast)
+    application.get_window().add_toast_string(toast)
 
 
-def add_data_dialog(self):
+def add_data_dialog(application: Graphs.Application) -> None:
     def on_response(dialog, response):
         with contextlib.suppress(GLib.GError):
             file_import.import_from_files(
-                self, dialog.open_multiple_finish(response),
+                application, dialog.open_multiple_finish(response),
             )
     dialog = Gtk.FileDialog()
     dialog.set_filters(
@@ -93,88 +99,96 @@ def add_data_dialog(self):
             (_("Graphs Project File"), ["graphs"]),
         ]),
     )
-    dialog.open_multiple(self.get_window(), None, on_response)
+    dialog.open_multiple(application.get_window(), None, on_response)
 
 
-def save_project_dialog(self):
+def save_project_dialog(application: Graphs.Application) -> None:
 
     def on_response(dialog, response):
         with contextlib.suppress(GLib.GError):
-            data = self.get_data()
+            data = application.get_data()
             data.props.project_file = dialog.save_finish(response)
             data.save()
             data.props.unsaved = False
-            self.emit("project-saved")
+            application.emit("project-saved")
     dialog = Gtk.FileDialog()
     dialog.set_filters(
         utilities.create_file_filters([(_("Graphs Project File"),
                                       ["graphs"])]))
     dialog.set_initial_name("project.graphs")
-    dialog.save(self.get_window(), None, on_response)
+    dialog.save(application.get_window(), None, on_response)
 
 
-def open_project_dialog(self):
+def open_project_dialog(application: Graphs.Application) -> None:
     def on_response(dialog, response):
         with contextlib.suppress(GLib.GError):
-            self.get_data().props.project_file = dialog.open_finish(response)
-            self.get_data().load()
+            application.get_data().props.project_file = \
+                dialog.open_finish(response)
+            application.get_data().load()
     dialog = Gtk.FileDialog()
     dialog.set_filters(
         utilities.create_file_filters([(_("Graphs Project File"),
                                       ["graphs"])]))
-    dialog.open(self.get_window(), None, on_response)
+    dialog.open(application.get_window(), None, on_response)
 
 
-def export_data_dialog(self):
-    if self.get_data().props.empty:
-        self.get_window().add_toast_string(_("No data to export"))
+def export_data_dialog(application: Graphs.Application) -> None:
+    data = application.get_data()
+    window = application.get_window()
+    if data.props.empty:
+        window.add_toast_string(_("No data to export"))
         return
-    multiple = len(self.get_data()) > 1
+    multiple = len(data) > 1
 
     def on_response(dialog, response):
         with contextlib.suppress(GLib.GError):
             if multiple:
                 directory = dialog.select_folder_finish(response)
-                for item in self.get_data():
+                for item in data:
                     file = directory.get_child_for_display_name(
                         f"{item.get_name()}.txt")
                     file_io.save_item(file, item)
             else:
                 file = dialog.save_finish(response)
-                file_io.save_item(file, self.get_data()[0])
+                file_io.save_item(file, data[0])
             action = Gio.SimpleAction.new(
                 "open-file-location", None,
             )
             action.connect("activate", actions.open_file_location, file)
-            self.add_action(action)
+            application.add_action(action)
             toast = Adw.Toast.new(_("Exported Data"))
             toast.set_button_label(_("Open Location"))
             toast.set_action_name("app.open-file-location")
-            self.get_window().add_toast(toast)
+            window.add_toast(toast)
     dialog = Gtk.FileDialog()
     if multiple:
-        dialog.select_folder(self.get_window(), None, on_response)
+        dialog.select_folder(window, None, on_response)
     else:
-        filename = f"{self.get_data()[0].get_name()}.txt"
+        filename = f"{data[0].get_name()}.txt"
         dialog.set_initial_name(filename)
         dialog.set_filters(
             utilities.create_file_filters([(_("Text Files"), ["txt"])]))
-        dialog.save(self.get_window(), None, on_response)
+        dialog.save(window, None, on_response)
 
 
-def build_dialog(name):
+def build_dialog(name: str):
     return Gtk.Builder.new_from_resource(
-        "/se/sjoerd/Graphs/ui/dialogs.ui").get_object(name)
+        "/se/sjoerd/Graphs/ui/dialogs.ui",
+    ).get_object(name)
 
 
-def show_about_window(self):
+def show_about_window(application: Graphs.Application) -> str:
     file = Gio.File.new_for_uri("resource:///se/sjoerd/Graphs/whats_new")
+    copyright_text = \
+        f"© 2022 – {datetime.date.today().year} {application.get_author()}"
     Adw.AboutWindow(
-        transient_for=self.get_window(), application_name=self.get_name(),
-        application_icon=self.get_application_id(), website=self.get_website(),
-        developer_name=self.get_author() + " et al.",
-        issue_url=self.get_issues(),
-        version=self.get_version(), developers=[
+        transient_for=application.get_window(),
+        application_name=application.get_name(),
+        application_icon=application.get_application_id(),
+        website=application.get_website(),
+        developer_name=application.get_author() + " et al.",
+        issue_url=application.get_issues(),
+        version=application.get_version(), developers=[
             "Sjoerd Stendahl <contact@sjoerd.se>",
             "Christoph Kohnen <christoph.kohnen@disroot.org>",
         ],
@@ -183,14 +197,14 @@ def show_about_window(self):
             "Christoph Kohnen <christoph.kohnen@disroot.org>",
             "Tobias Bernard <tbernard@gnome.org>",
         ],
-        copyright=f"© 2022 – {datetime.date.today().year} {self.get_author()}",
+        copyright=copyright_text,
         license_type="GTK_LICENSE_GPL_3_0",
         translator_credits=_("translator-credits"),
         release_notes=file.load_bytes(None)[0].get_data().decode("utf-8"),
     ).present()
 
 
-def load_values_from_dict(window, values: dict, ignorelist=None):
+def load_values_from_dict(window, values: dict, ignorelist=None) -> None:
     for key, value in values.items():
         if ignorelist is not None and key in ignorelist:
             continue
@@ -219,7 +233,7 @@ def load_values_from_dict(window, values: dict, ignorelist=None):
             logging.warn(_("No way to apply “{}”").format(key))
 
 
-def save_values_to_dict(window, keys: list, ignorelist=None):
+def save_values_to_dict(window, keys: list, ignorelist=None) -> None:
     values = {}
     for key in keys:
         if ignorelist is not None and key in ignorelist:
@@ -254,7 +268,9 @@ def _on_settings_update(settings, key, chooser):
     chooser.set_selected(settings.get_enum(key))
 
 
-def bind_values_to_settings(settings, window, prefix="", ignorelist=None):
+def bind_values_to_settings(
+    settings, window, prefix="", ignorelist=None,
+) -> None:
     for key in settings.props.settings_schema.list_keys():
         if ignorelist is not None and key in ignorelist:
             continue
@@ -283,7 +299,7 @@ def bind_values_to_settings(settings, window, prefix="", ignorelist=None):
             logging.warn(_("No way to apply “{}”").format(key))
 
 
-def bind_values_to_object(source, window, ignorelist=None):
+def bind_values_to_object(source, window, ignorelist=None) -> None:
     bindings = []
     for key in dir(source.props):
         if ignorelist is not None and key in ignorelist:
