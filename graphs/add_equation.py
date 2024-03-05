@@ -31,7 +31,7 @@ class AddEquationWindow(Adw.Window):
         self.present()
 
     @Gtk.Template.Callback()
-    def on_accept(self, _widget):
+    def on_accept(self, _widget) -> None:
         """Launched when the accept button is pressed on the equation window"""
         values = ui.save_values_to_dict(
             self, ["equation", "step-size", "x-start", "x-stop"],

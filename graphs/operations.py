@@ -2,7 +2,9 @@
 import logging
 from gettext import gettext as _
 
-from graphs import utilities
+from gi.repository import Graphs
+
+from graphs import misc, utilities
 from graphs.item import DataItem
 
 import numexpr
@@ -12,7 +14,7 @@ import numpy
 import scipy
 
 
-def get_data(self, item):
+def get_data(application: Graphs.Application, item: DataItem):
     """
     Retrieve item from datadict with start and stop index.
     If interaction_mode is set to "SELECT"
@@ -20,8 +22,8 @@ def get_data(self, item):
     new_xdata = item.props.xdata
     new_ydata = item.props.ydata
 
-    if self.get_mode() == 2:
-        figure_settings = self.get_data().get_figure_settings()
+    if application.get_mode() == 2:
+        figure_settings = application.get_data().get_figure_settings()
         if item.get_xposition() == 0:
             xmin = figure_settings.get_min_bottom()
             xmax = figure_settings.get_max_bottom()
@@ -50,7 +52,9 @@ def get_data(self, item):
     return new_xdata, new_ydata
 
 
-def filter_data(xdata, ydata, condition, value):
+def filter_data(
+    xdata: list, ydata: list, condition: str, value: float,
+) -> list:
     """Filter coordinates based on the given condition."""
     xdata = numpy.array(xdata)
     ydata = numpy.array(ydata)
@@ -69,7 +73,7 @@ def filter_data(xdata, ydata, condition, value):
     return list(xdata_filtered), list(ydata_filtered)
 
 
-def create_data_mask(xdata1, ydata1, xdata2, ydata2):
+def create_data_mask(xdata1: list, ydata1: list, xdata2: list, ydata2: list):
     """
     Create a mask for matching pairs of coordinates.
 
@@ -82,29 +86,32 @@ def create_data_mask(xdata1, ydata1, xdata2, ydata2):
         (xdata1[:, None] == xdata2) & (ydata1[:, None] == ydata2), axis=1)
 
 
-def sort_data(xdata, ydata):
+def sort_data(xdata: list, ydata: list) -> (list, list):
     return map(list, zip(*sorted(
         zip(xdata, ydata), key=lambda x_values: x_values[0],
     )))
 
 
-def perform_operation(self, callback, *args):
+def perform_operation(
+    application: Graphs.Application, callback, *args,
+) -> None:
     data_selected = False
-    data = self.get_data()
+    data = application.get_data()
     figure_settings = data.get_figure_settings()
     old_limits = figure_settings.get_limits()
     for item in data:
         if not (item.get_selected() and isinstance(item, DataItem)):
             continue
-        xdata, ydata = get_data(self, item)
+        xdata, ydata = get_data(application, item)
         if xdata is not None and len(xdata) != 0:
             data_selected = True
             new_xdata, new_ydata, sort, discard = callback(
-                item, xdata, ydata, *args)
+                item, xdata, ydata, *args,
+            )
             new_xdata, new_ydata = list(new_xdata), list(new_ydata)
             if discard:
                 logging.debug("Discard is true")
-                self.get_window().add_toast_string(
+                application.get_window().add_toast_string(
                     _("Data that was outside of the highlighted area has been"
                       " discarded"))
                 item.props.xdata = new_xdata
@@ -138,14 +145,18 @@ def perform_operation(self, callback, *args):
         item.notify("ydata")
     figure_settings.set_selection_range(0, 0)
     if not data_selected:
-        self.get_window().add_toast_string(
-            _("No data found within the highlighted area"))
+        application.get_window().add_toast_string(
+            _("No data found within the highlighted area"),
+        )
         return
     data.optimize_limits()
     data.add_history_state(old_limits)
 
 
-def translate_x(_item, xdata, ydata, offset):
+_return = (list[float], list[float], bool, bool)
+
+
+def translate_x(_item, xdata: list, ydata: list, offset: float) -> _return:
     """
     Translate all selected data on the x-axis
     Amount to be shifted is equal to the value in the translate_x entry widget
@@ -155,7 +166,7 @@ def translate_x(_item, xdata, ydata, offset):
     return [value + offset for value in xdata], ydata, True, False
 
 
-def translate_y(_item, xdata, ydata, offset):
+def translate_y(_item, xdata: list, ydata: list, offset: float) -> _return:
     """
     Translate all selected data on the y-axis
     Amount to be shifted is equal to the value in the translate_y entry widget
@@ -165,7 +176,7 @@ def translate_y(_item, xdata, ydata, offset):
     return xdata, [value + offset for value in ydata], False, False
 
 
-def multiply_x(_item, xdata, ydata, multiplier):
+def multiply_x(_item, xdata: list, ydata: list, multiplier: float) -> _return:
     """
     Multiply all selected data on the x-axis
     Amount to be shifted is equal to the value in the multiply_x entry widget
@@ -175,7 +186,7 @@ def multiply_x(_item, xdata, ydata, multiplier):
     return [value * multiplier for value in xdata], ydata, True, False
 
 
-def multiply_y(_item, xdata, ydata, multiplier):
+def multiply_y(_item, xdata: list, ydata: list, multiplier: float) -> _return:
     """
     Multiply all selected data on the y-axis
     Amount to be shifted is equal to the value in the multiply_y entry widget
@@ -185,12 +196,14 @@ def multiply_y(_item, xdata, ydata, multiplier):
     return xdata, [value * multiplier for value in ydata], False, False
 
 
-def normalize(_item, xdata, ydata):
+def normalize(_item, xdata: list, ydata: list) -> _return:
     """Normalize all selected data"""
     return xdata, [value / max(ydata) for value in ydata], False, False
 
 
-def smoothen(_item, xdata, ydata, smooth_type, params):
+def smoothen(
+    _item, xdata: list, ydata: list, smooth_type: int, params: dict,
+) -> None:
     """Smoothen y-data."""
     if smooth_type == 0:
         minimum = params["savgol-polynomial"] + 1
@@ -206,7 +219,7 @@ def smoothen(_item, xdata, ydata, smooth_type, params):
     return xdata, new_ydata, False, False
 
 
-def center(_item, xdata, ydata, center_maximum):
+def center(_item, xdata: list, ydata: list, center_maximum: int) -> _return:
     """
     Center all selected data
     Depending on the key, will center either on the middle coordinate, or on
@@ -221,7 +234,10 @@ def center(_item, xdata, ydata, center_maximum):
     return new_xdata, ydata, True, False
 
 
-def shift(item, xdata, ydata, left_scale, right_scale, items, ranges):
+def shift(
+    item, xdata: list, ydata: list, left_scale: int, right_scale: int,
+    items: misc.ItemList, ranges: tuple[float, float],
+) -> _return:
     """
     Shifts data vertically with respect to each other
     By default it scales linear data by 1.2 times the total span of the
@@ -270,12 +286,12 @@ def shift(item, xdata, ydata, left_scale, right_scale, items, ranges):
     return xdata, ydata, False, False
 
 
-def cut(_item, _xdata, _ydata):
+def cut(_item, _xdata, _ydata) -> _return:
     """Cut selected data over the span that is selected"""
     return [], [], False, False
 
 
-def derivative(_item, xdata, ydata):
+def derivative(_item, xdata: list, ydata: list) -> _return:
     """Calculate derivative of all selected data"""
     x_values = numpy.array(xdata)
     y_values = numpy.array(ydata)
@@ -283,7 +299,7 @@ def derivative(_item, xdata, ydata):
     return xdata, dy_dx.tolist(), False, True
 
 
-def integral(_item, xdata, ydata):
+def integral(_item, xdata: list, ydata: list) -> _return:
     """Calculate indefinite integral of all selected data"""
     x_values = numpy.array(xdata)
     y_values = numpy.array(ydata)
@@ -292,7 +308,7 @@ def integral(_item, xdata, ydata):
     return xdata, indefinite_integral, False, True
 
 
-def fft(_item, xdata, ydata):
+def fft(_item, xdata: list, ydata: list) -> _return:
     """Perform Fourier transformation on all selected data"""
     x_values = numpy.array(xdata)
     y_values = numpy.array(ydata)
@@ -302,7 +318,7 @@ def fft(_item, xdata, ydata):
     return x_fourier, y_fourier, False, True
 
 
-def inverse_fft(_item, xdata, ydata):
+def inverse_fft(_item, xdata: list, ydata: list) -> _return:
     """Perform Inverse Fourier transformation on all selected data"""
     x_values = numpy.array(xdata)
     y_values = numpy.array(ydata)
@@ -312,7 +328,10 @@ def inverse_fft(_item, xdata, ydata):
     return x_fourier, y_fourier, False, True
 
 
-def transform(_item, xdata, ydata, input_x, input_y, discard=False):
+def transform(
+    _item, xdata: list, ydata: list, input_x: str, input_y: str,
+    discard: bool = False,
+) -> _return:
     local_dict = {
         "x": xdata, "y": ydata,
         "x_min": min(xdata), "x_max": max(xdata),
@@ -327,19 +346,19 @@ def transform(_item, xdata, ydata, input_x, input_y, discard=False):
     )
 
 
-def combine(self):
+def combine(application: Graphs.Application) -> None:
     """Combine the selected data into a new data set"""
     new_xdata, new_ydata = [], []
-    for item in self.get_data():
+    for item in application.get_data():
         if not (item.get_selected() and isinstance(item, DataItem)):
             continue
-        xdata, ydata = get_data(self, item)[:2]
+        xdata, ydata = get_data(application, item)[:2]
         new_xdata.extend(xdata)
         new_ydata.extend(ydata)
 
     # Create the item itself
     new_xdata, new_ydata = sort_data(new_xdata, new_ydata)
-    style = self.get_figure_style_manager().get_selected_style_params()
-    self.get_data().add_items(
+    style = application.get_figure_style_manager().get_selected_style_params()
+    application.get_data().add_items(
         [DataItem.new(style, new_xdata, new_ydata, name=_("Combined Data"))],
     )
