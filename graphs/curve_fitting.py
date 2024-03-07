@@ -55,7 +55,7 @@ class CurveFittingWindow(Graphs.CurveFittingTool):
         self.fitting_parameters = \
             FittingParameterContainer(application, application.get_settings())
 
-        for var in self.get_free_variables():
+        for var in utilities.get_free_variables(self.equation_string):
             self.fitting_parameters.add_items([FittingParameter(name=var)])
 
         # Generate items for the canvas
@@ -149,9 +149,12 @@ class CurveFittingWindow(Graphs.CurveFittingTool):
     def get_free_variables(self) -> str:
         """Get a list of free variables in the equation entry"""
         pattern = (
-            r"\b(?!x\b|X\b|csc\b|cot\b|sec\b|sin\b|cos\b|log\b|tan\b|exp\b)"
-            r"[a-zA-Z]+\b"
+            r"\b(?!x\b|X\b"  # Exclude 'x' and 'X'
+            r"|sec\b|sin\b|cos\b|log\b|tan\b|csc\b|cot\b"  # Exclude trig func.
+            r"|exp\b|sqrt\b|abs\b)"  # Exclude 'exp', 'sqrt', 'abs'
+            r"[a-zA-Z]+\b"  # Match any character sequence that is not excluded
         )
+        print(type(re.findall(pattern, self.equation_string)))
         return re.findall(pattern, self.equation_string)
 
     def on_equation_change(self, _entry, _param) -> None:
@@ -159,10 +162,11 @@ class CurveFittingWindow(Graphs.CurveFittingTool):
         Set the free variables and corresponding entry rows when the equation
         has been changed.
         """
-        for var in self.get_free_variables():
+        for var in utilities.get_free_variables(self.equation_string):
             if var not in self.fitting_parameters.get_names():
                 self.fitting_parameters.add_items([FittingParameter(name=var)])
-        self.fitting_parameters.remove_unused(self.get_free_variables())
+        self.fitting_parameters.remove_unused(
+            utilities.get_free_variables(self.equation_string))
         fit = self.fit_curve()
         if fit:
             self.set_entry_rows()
@@ -243,7 +247,8 @@ class CurveFittingWindow(Graphs.CurveFittingTool):
             buffer_string += \
                 _("Please enter valid fitting bounds \nto start the fit")
         else:
-            for index, arg in enumerate(self.get_free_variables()):
+            free_variables = utilities.get_free_variables(self.equation_string)
+            for index, arg in enumerate(free_variables):
                 parameter = utilities.sig_fig_round(self.param[index], 3)
                 sigma = utilities.sig_fig_round(self.sigma[index], 3)
                 buffer_string += f"{arg}: {parameter}"
@@ -266,7 +271,7 @@ class CurveFittingWindow(Graphs.CurveFittingTool):
 
     @property
     def equation_string(self) -> str:
-        return utilities.preprocess(str(self.get_custom_equation().get_text()))
+        return utilities._preprocess(str(self.get_custom_equation().get_text()))
 
     def fit_curve(self, *_args) -> bool:
         """
@@ -274,7 +279,8 @@ class CurveFittingWindow(Graphs.CurveFittingTool):
         whether the fit was succesfull or not.
         """
         def _get_equation_name(equation_name, values):
-            var_to_val = dict(zip(self.get_free_variables(), values))
+            free_variables = utilities.get_free_variables(self.equation_string)
+            var_to_val = dict(zip(free_variables, values))
             for var, val in var_to_val.items():
                 equation_name = \
                     re.sub(r"(\d+)([a-zA-Z]+)", r"(\1*\2)", equation_name)
@@ -382,7 +388,7 @@ class CurveFittingWindow(Graphs.CurveFittingTool):
         while params.get_last_child() is not None:
             params.remove(params.get_last_child())
 
-        for arg in self.get_free_variables():
+        for arg in utilities.get_free_variables(self.equation_string):
             params.append(FittingParameterEntry(self, arg))
 
 
@@ -464,3 +470,4 @@ class FittingParameterEntry(Gtk.Box):
         method = self.parent.settings.get_string("optimization")
         self.upper_bound_group.set_visible(method != "lm")
         self.lower_bound_group.set_visible(method != "lm")
+    

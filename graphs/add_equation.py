@@ -44,7 +44,7 @@ class AddEquationWindow(Adw.Window):
             xdata = numpy.ndarray.tolist(
                 numpy.linspace(x_start, x_stop, datapoints),
             )
-            equation = utilities.preprocess(values["equation"])
+            equation = utilities._preprocess(values["equation"])
             ydata = numpy.ndarray.tolist(
                 numexpr.evaluate(equation + " + x*0", local_dict={"x": xdata}),
             )
@@ -65,3 +65,4 @@ class AddEquationWindow(Adw.Window):
                 error=exception.__class__.__name__)
             self.toast_overlay.add_toast(Adw.Toast(title=toast))
             logging.exception(toast)
+        
