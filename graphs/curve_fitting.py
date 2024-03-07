@@ -146,17 +146,6 @@ class CurveFittingWindow(Graphs.CurveFittingTool):
         self.canvas = canvas
         self.get_toast_overlay().set_child(self.canvas)
 
-    def get_free_variables(self) -> str:
-        """Get a list of free variables in the equation entry"""
-        pattern = (
-            r"\b(?!x\b|X\b"  # Exclude 'x' and 'X'
-            r"|sec\b|sin\b|cos\b|log\b|tan\b|csc\b|cot\b"  # Exclude trig func.
-            r"|exp\b|sqrt\b|abs\b)"  # Exclude 'exp', 'sqrt', 'abs'
-            r"[a-zA-Z]+\b"  # Match any character sequence that is not excluded
-        )
-        print(type(re.findall(pattern, self.equation_string)))
-        return re.findall(pattern, self.equation_string)
-
     def on_equation_change(self, _entry, _param) -> None:
         """
         Set the free variables and corresponding entry rows when the equation
@@ -471,4 +460,3 @@ class FittingParameterEntry(Gtk.Box):
         method = self.parent.settings.get_string("optimization")
         self.upper_bound_group.set_visible(method != "lm")
         self.lower_bound_group.set_visible(method != "lm")
-    
