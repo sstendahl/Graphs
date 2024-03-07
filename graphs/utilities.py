@@ -253,6 +253,7 @@ def string_to_function(equation_name: str) -> sympy.FunctionClass:
         )
         return sympy.lambdify(sym_vars, symbolic)
 
+
 def get_free_variables(equation_name: str) -> list:
     """Get the free variables (non-x) from an equation in the form of a list"""
     pattern = (
@@ -299,4 +300,3 @@ def create_menu_model(data: dict) -> Gio.Menu:
             ))
         menu.append_section(section_data[0], section)
     return menu
-    

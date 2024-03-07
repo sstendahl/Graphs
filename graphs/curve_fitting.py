@@ -271,7 +271,8 @@ class CurveFittingWindow(Graphs.CurveFittingTool):
 
     @property
     def equation_string(self) -> str:
-        return utilities._preprocess(str(self.get_custom_equation().get_text()))
+        return utilities._preprocess(
+            str(self.get_custom_equation().get_text()))
 
     def fit_curve(self, *_args) -> bool:
         """
