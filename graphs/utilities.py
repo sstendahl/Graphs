@@ -212,13 +212,13 @@ def _preprocess(string: str) -> str:
         Pattern is to check for least one digit, followed by at least one
         alphabetical character. e.g y = 24*x + 3sigma -> y = (24*x) + (3*sigma)
         """
-        exp1, exp2 = match.group(1), match.group(2)
+        var, exp2 = match.group(1), match.group(2)
         functions = ["sin", "cos", "tan", "cot", "sec", "csc", "sqrt", "exp",
                      "abs"]
         if exp2 in functions:
-            return f"{exp1}*{exp2}"
+            return f"{var}*{exp2}"
 
-        return f"({exp1}*{exp2})"
+        return f"({var}*{exp2})"
 
     string = string.replace(",", ".")
     string = re.sub(r"(\d+)([a-zA-Z]+)", add_asterix, string)
