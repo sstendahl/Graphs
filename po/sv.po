@@ -1,23 +1,23 @@
-# French translations for graphs package.
-# Copyright (C) 2023 THE graphs'S COPYRIGHT HOLDER
+# Swedish translations for graphs package.
+# Copyright © 2023, 2024 graphs's COPYRIGHT HOLDER
 # This file is distributed under the same license as the graphs package.
 # Automatically generated, 2023.
+# Anders Jonsson <anders.jonsson@norsjovallen.se>, 2024.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: graphs\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2024-02-05 12:24+0000\n"
-"PO-Revision-Date: 2024-01-18 08:23+0000\n"
-"Last-Translator: Sjoerd Stendahl <sjoerd1993@gmail.com>\n"
-"Language-Team: Swedish <https://hosted.weblate.org/projects/graphs/graphs/sv/"
-">\n"
+"POT-Creation-Date: 2024-02-26 17:58+0000\n"
+"PO-Revision-Date: 2024-03-11 13:45+0100\n"
+"Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
+"Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n>1);\n"
-"X-Generator: Weblate 5.4-dev\n"
+"X-Generator: Poedit 3.4.2\n"
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:6
 #: data/se.sjoerd.Graphs.desktop.in.in:3
@@ -41,11 +41,11 @@ msgid ""
 "multiply, center and smoothen data, as well as apply any custom "
 "transformations on the data."
 msgstr ""
-"Graphs är ett enkelt men kraftfullt verktyg som för att enkelt plotta och "
+"Graphs är ett enkelt men kraftfullt verktyg för att enkelt plotta och "
 "manipulera dina data. Du kan importera data från filer eller generera det "
 "med en ekvation. Alla data kan manipuleras med hjälp av olika operationer "
-"som att välja, klippa ut, översätta, multiplicera, centrera och jämna ut "
-"data, samt tillämpa anpassade transformationer."
+"som att markera, klippa ut, förskjuta, multiplicera, centrera och jämna ut "
+"data, samt att tillämpa anpassade transformationer."
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:14
 msgid ""
@@ -53,9 +53,9 @@ msgid ""
 "extensive customization options for the style of the plots. You can fine-"
 "tune and personalize stylesheets to your liking."
 msgstr ""
-"Dessutom stöttar Graphs också att anpassa din importerade data, och är det "
-"möjligt att ändra stilen på dina plots. Det går att skapa och ändra dina "
-"mallar helt enligt din egen önskan."
+"Dessutom stöder Graphs också att anpassa dina importerade data, och gör det "
+"möjligt att ändra stilen på dina plottar. Det går att skapa och ändra dina "
+"mallar helt enligt dina önskemål."
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:17
 msgid ""
@@ -76,16 +76,12 @@ msgstr ""
 "i åtanke, men bör vara lämpligt för andra skrivbordsmiljöer också."
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:21
-#, fuzzy
-#| msgid ""
-#| "For any feedback, questions or general issues, please file an issue on "
-#| "the GitHub page."
 msgid ""
 "For any feedback, questions or general issues, please file an issue on the "
 "GitLab page."
 msgstr ""
-"För eventuell feedback, frågor eller allmänna problem, vänligen lämna in en "
-"fråga på GitHub-sidan."
+"För eventuell feedback, frågor eller allmänna problem, skicka in ett ärende "
+"på GitLab-sidan."
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:34
 msgid "1 - Plot and manipulate any data of choice"
@@ -95,7 +91,7 @@ msgstr ""
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:38
 msgid "2 - Full support for light and dark mode"
-msgstr "2 - Både ljust- och mörkt läge stöds"
+msgstr "2 - Både ljust och mörkt läge stöds"
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:42
 msgid "3 - Generate data from an equation"
@@ -114,7 +110,7 @@ msgid ""
 "Plotting;Graph;Graphing;Science;Mathematics;Math;Equations;Data;Plot;"
 "Visualisation;Visualization;Fitting;xrdml;"
 msgstr ""
-"Plotta;Graf;Grafer;Vetenskap;Matte;Mattematik;Ekvation;Data;Plot;"
+"Plotta;Graf;Grafer;Vetenskap;Matte;Matematik;Ekvation;Data;Plot;"
 "Visualisering;Anpassning;xrdml;"
 
 #: data/ui/add_equation_window.blp:7
@@ -146,11 +142,11 @@ msgstr "Namn (valfritt)"
 
 #: data/ui/add_equation_window.blp:77
 msgid "X Start"
-msgstr "X Start"
+msgstr "X-start"
 
 #: data/ui/add_equation_window.blp:84
 msgid "X Stop"
-msgstr "X Stop"
+msgstr "X-stopp"
 
 #: data/ui/add_equation_window.blp:91
 msgid "Step Size"
@@ -174,7 +170,7 @@ msgstr "Anpassa"
 
 #: data/ui/curve_fitting.blp:40
 msgid "Open Curve Fitting Menu"
-msgstr "Öppna Kurvanpassningsmeny"
+msgstr "Öppna kurvanpassningsmeny"
 
 #: data/ui/curve_fitting.blp:57
 msgid "Equation"
@@ -196,7 +192,7 @@ msgstr "Exponentiell"
 
 #: data/ui/curve_fitting.blp:59
 msgid "Power Law"
-msgstr "Makt lag"
+msgstr "Potenslag"
 
 #: data/ui/curve_fitting.blp:60 data/ui/figure_settings.blp:121
 #: data/ui/figure_settings.blp:127 data/ui/figure_settings.blp:133
@@ -206,7 +202,7 @@ msgstr "Logaritmisk"
 
 #: data/ui/curve_fitting.blp:60
 msgid "Sigmoid Logistic"
-msgstr "Sigmoid Logistisk"
+msgstr "Sigmoid logistisk"
 
 #: data/ui/curve_fitting.blp:60
 msgid "Gaussian"
@@ -222,7 +218,7 @@ msgstr "Y = "
 
 #: data/ui/curve_fitting.blp:92
 msgid "Add Fit to Data"
-msgstr "Lägg till som Data"
+msgstr "Lägg till som data"
 
 #: data/ui/curve_fitting.blp:107 data/ui/window.blp:586 src/ui.py:33
 msgid "Toggle Sidebar"
@@ -262,7 +258,7 @@ msgstr "Ta bort"
 
 #: data/ui/dialogs.blp:27
 msgid "Reset to Defaults?"
-msgstr "Återställ till Standardvärden?"
+msgstr "Återställ till standardvärden?"
 
 #: data/ui/dialogs.blp:30
 msgid "Reset"
@@ -286,7 +282,7 @@ msgstr "X-axelposition"
 
 #: data/ui/edit_item.blp:35
 msgid "Bottom"
-msgstr "Ner"
+msgstr "Under"
 
 #: data/ui/edit_item.blp:35
 msgid "Top"
@@ -312,6 +308,7 @@ msgstr "Linjeegenskaper"
 msgid "Linestyle"
 msgstr "Linjestil"
 
+# TODO: "Inga" för fallet Gränser
 #: data/ui/edit_item.blp:54 data/ui/style_editor.blp:85 src/curve_fitting.py:89
 msgid "None"
 msgstr "Ingen"
@@ -358,19 +355,19 @@ msgstr "Cirkel"
 
 #: data/ui/edit_item.blp:78 data/ui/style_editor.blp:110
 msgid "Triangle Down"
-msgstr "Triangel Nedåt"
+msgstr "Triangel nedåt"
 
 #: data/ui/edit_item.blp:78 data/ui/style_editor.blp:110
 msgid "Triangle Up"
-msgstr "Triangel Uppåt"
+msgstr "Triangel uppåt"
 
 #: data/ui/edit_item.blp:78 data/ui/style_editor.blp:110
 msgid "Triangle Left"
-msgstr "Triangel Vänster"
+msgstr "Triangel till vänster"
 
 #: data/ui/edit_item.blp:79 data/ui/style_editor.blp:111
 msgid "Triangle Right"
-msgstr "Triangel Höger"
+msgstr "Triangel till höger"
 
 #: data/ui/edit_item.blp:79 data/ui/style_editor.blp:111
 msgid "Octagon"
@@ -410,23 +407,23 @@ msgstr "Diamant"
 
 #: data/ui/edit_item.blp:82 data/ui/style_editor.blp:114
 msgid "Thin Diamond"
-msgstr "Tunn Diamant"
+msgstr "Tunn diamant"
 
 #: data/ui/edit_item.blp:82 data/ui/style_editor.blp:114
 msgid "Vertical Line"
-msgstr "Vertikal Linje"
+msgstr "Vertikal linje"
 
 #: data/ui/edit_item.blp:82 data/ui/style_editor.blp:114
 msgid "Horizontal Line"
-msgstr "Horisontell Linje"
+msgstr "Horisontell linje"
 
 #: data/ui/edit_item.blp:83 data/ui/style_editor.blp:115
 msgid "Filled Plus"
-msgstr "Fylld Plus"
+msgstr "Fyllt plus"
 
 #: data/ui/edit_item.blp:83 data/ui/style_editor.blp:115
 msgid "Filled X"
-msgstr "Fylld X"
+msgstr "Fyllt X"
 
 #: data/ui/edit_item.blp:90 data/ui/style_editor.blp:122
 msgid "Marker Size"
@@ -450,7 +447,7 @@ msgstr "Upplösning (dpi)"
 
 #: data/ui/export_figure.blp:54
 msgid "Transparent Background"
-msgstr "Transparent Bakgrund"
+msgstr "Transparent bakgrund"
 
 #: data/ui/figure_settings.blp:21 data/ui/window.blp:648
 msgid "Figure Settings"
@@ -497,7 +494,7 @@ msgstr "Förklaring"
 
 #: data/ui/figure_settings.blp:150
 msgid "Legend Position"
-msgstr "Legendens position"
+msgstr "Förklaringens position"
 
 #: data/ui/figure_settings.blp:153
 msgid "Auto"
@@ -505,35 +502,35 @@ msgstr "Automatisk"
 
 #: data/ui/figure_settings.blp:153
 msgid "Upper Right"
-msgstr "Övre Höger"
+msgstr "Övre höger"
 
 #: data/ui/figure_settings.blp:153
 msgid "Upper Left"
-msgstr "Övre Vänster"
+msgstr "Övre vänster"
 
 #: data/ui/figure_settings.blp:153
 msgid "Lower Left"
-msgstr "Nedre Vänster"
+msgstr "Nedre vänster"
 
 #: data/ui/figure_settings.blp:154
 msgid "Lower Right"
-msgstr "Nedre Höger"
+msgstr "Nedre höger"
 
 #: data/ui/figure_settings.blp:154
 msgid "Center Left"
-msgstr "Mitten Vänster"
+msgstr "Mitten till vänster"
 
 #: data/ui/figure_settings.blp:154
 msgid "Center Right"
-msgstr "Mitten Höger"
+msgstr "Mitten till höger"
 
 #: data/ui/figure_settings.blp:155
 msgid "Lower Center"
-msgstr "Nedre Mitten"
+msgstr "Nedre mitten"
 
 #: data/ui/figure_settings.blp:155
 msgid "Upper Center"
-msgstr "Övre Mitten"
+msgstr "Övre mitten"
 
 #: data/ui/figure_settings.blp:155 data/ui/window.blp:338
 msgid "Center"
@@ -549,7 +546,7 @@ msgstr "Stil"
 
 #: data/ui/fitting_parameters.blp:26
 msgid "Initial Guess"
-msgstr "Första Gissning"
+msgstr "Första gissning"
 
 #: data/ui/fitting_parameters.blp:37
 msgid "Minimum"
@@ -572,22 +569,22 @@ msgstr "Visa genvägar"
 #: data/ui/help_overlay.blp:19
 msgctxt "shortcut window"
 msgid "Open Figure Settings"
-msgstr "Öppna Figurinställningar"
+msgstr "Öppna figurinställningar"
 
 #: data/ui/help_overlay.blp:24
 msgctxt "shortcut window"
 msgid "Close Application"
-msgstr "Stäng Applikation"
+msgstr "Stäng program"
 
 #: data/ui/help_overlay.blp:28
 msgctxt "shortcut window"
 msgid "Close Application Window"
-msgstr "Stäng Applikationsfönster"
+msgstr "Stäng programfönster"
 
 #: data/ui/help_overlay.blp:34
 msgctxt "shortcut window"
 msgid "Mode Switching"
-msgstr "Ändra Läge"
+msgstr "Ändra läge"
 
 #: data/ui/help_overlay.blp:37
 msgctxt "shortcut window"
@@ -602,7 +599,7 @@ msgstr "Zoomläge"
 #: data/ui/help_overlay.blp:47
 msgctxt "shortcut window"
 msgid "Select Mode"
-msgstr "Selekterläge"
+msgstr "Markeringsläge"
 
 #: data/ui/help_overlay.blp:53
 msgctxt "shortcut window"
@@ -622,42 +619,42 @@ msgstr "Lägg till data från fil"
 #: data/ui/help_overlay.blp:66
 msgctxt "shortcut window"
 msgid "New Project"
-msgstr "Nytt Projekt"
+msgstr "Nytt projekt"
 
 #: data/ui/help_overlay.blp:71
 msgctxt "shortcut window"
 msgid "Open Project"
-msgstr "Öppna Projekt"
+msgstr "Öppna projekt"
 
 #: data/ui/help_overlay.blp:76
 msgctxt "shortcut window"
 msgid "Delete Selected Data"
-msgstr "Radera Markerade Data"
+msgstr "Radera markerade data"
 
 #: data/ui/help_overlay.blp:82
 msgctxt "shortcut window"
 msgid "Save and Export"
-msgstr "Spara och Exportera"
+msgstr "Spara och exportera"
 
 #: data/ui/help_overlay.blp:84
 msgctxt "shortcut window"
 msgid "Export Data"
-msgstr "Exportera Data"
+msgstr "Exportera data"
 
 #: data/ui/help_overlay.blp:88
 msgctxt "shortcut window"
 msgid "Export Figure"
-msgstr "Exportera Figur"
+msgstr "Exportera figur"
 
 #: data/ui/help_overlay.blp:92
 msgctxt "shortcut window"
 msgid "Save Project"
-msgstr "Spara Projekt"
+msgstr "Spara projekt"
 
 #: data/ui/help_overlay.blp:96
 msgctxt "shortcut window"
 msgid "Save Project As"
-msgstr "Spara Projekt Som"
+msgstr "Spara projekt som"
 
 #: data/ui/help_overlay.blp:102
 msgctxt "shortcut window"
@@ -667,37 +664,37 @@ msgstr "Vy"
 #: data/ui/help_overlay.blp:105
 msgctxt "shortcut window"
 msgid "Previous View"
-msgstr "Förra Vy"
+msgstr "Föregående vy"
 
 #: data/ui/help_overlay.blp:110
 msgctxt "shortcut window"
 msgid "Next View"
-msgstr "Nästa Vy"
+msgstr "Nästa vy"
 
 #: data/ui/help_overlay.blp:115
 msgctxt "shortcut window"
 msgid "Optimize limits"
-msgstr "Optimera Gränserna"
+msgstr "Optimera gränserna"
 
 #: data/ui/help_overlay.blp:120
 msgctxt "shortcut window"
 msgid "Zoom in"
-msgstr "Zooma In"
+msgstr "Zooma in"
 
 #: data/ui/help_overlay.blp:125
 msgctxt "shortcut window"
 msgid "Zoom out"
-msgstr "Zooma Ut"
+msgstr "Zooma ut"
 
 #: data/ui/help_overlay.blp:130 data/ui/help_overlay.blp:150
 msgctxt "shortcut window"
 msgid "Select None"
-msgstr "Välj Inga"
+msgstr "Välj inga"
 
 #: data/ui/help_overlay.blp:136
 msgctxt "shortcut window"
 msgid "Toggle Sidebar"
-msgstr "Växla Sidofält"
+msgstr "Växla sidopanel"
 
 #: data/ui/help_overlay.blp:142
 msgctxt "shortcut window"
@@ -712,16 +709,16 @@ msgstr "Välj alla"
 #: data/ui/help_overlay.blp:155
 msgctxt "shortcut window"
 msgid "Undo Action"
-msgstr "Ångra Åtgärd"
+msgstr "Ångra åtgärd"
 
 #: data/ui/help_overlay.blp:160
 msgctxt "shortcut window"
 msgid "Redo Action"
-msgstr "Gör om Åtgärd"
+msgstr "Gör om åtgärd"
 
 #: data/ui/import.blp:8
 msgid "Modify Import Parameters"
-msgstr "Ändra Importparametrar"
+msgstr "Ändra importparametrar"
 
 #: data/ui/import.blp:36
 msgid "Import"
@@ -761,7 +758,7 @@ msgstr "Decimalpunkt (.)"
 
 #: data/ui/import.blp:66
 msgid "Custom Delimiter"
-msgstr "Anpassad Avgränsare"
+msgstr "Anpassad avgränsare"
 
 #: data/ui/import.blp:70
 msgid "Decimal Separator"
@@ -785,27 +782,27 @@ msgstr "Index för Y-datakolumnen"
 
 #: data/ui/import.blp:98
 msgid "Skip Rows"
-msgstr "Hoppa över Rader"
+msgstr "Hoppa över rader"
 
 #: data/ui/import.blp:99
 msgid "Ignored row indices"
-msgstr "Ignorerade Rader"
+msgstr "Ignorerade rader"
 
 #: data/ui/item_box.blp:26
 msgid "Pick Color"
-msgstr "Välj en Färg"
+msgstr "Välj en färg"
 
 #: data/ui/item_box.blp:51
 msgid "Move Item "
-msgstr "Flytta Objekt "
+msgstr "Flytta objekt "
 
 #: data/ui/item_box.blp:68
 msgid "Edit Item"
-msgstr "Redigera"
+msgstr "Redigera objekt"
 
 #: data/ui/item_box.blp:72
 msgid "Remove Item"
-msgstr "Ta Bort"
+msgstr "Ta bort objekt"
 
 #: data/ui/smoothen_settings.blp:7
 msgid "Smoothen Settings"
@@ -813,11 +810,11 @@ msgstr "Utjämningsinställningar"
 
 #: data/ui/smoothen_settings.blp:37 data/ui/window.blp:682
 msgid "Savitzky–Golay Filter"
-msgstr "Savitzky–Golay Filter"
+msgstr "Savitzky–Golay-filter"
 
 #: data/ui/smoothen_settings.blp:39
 msgid "Span percentage"
-msgstr "Spanprocent"
+msgstr "Spännviddsprocent"
 
 #: data/ui/smoothen_settings.blp:40
 msgid "What percentage of the data span to use for the filter window"
@@ -829,7 +826,7 @@ msgstr "Polynomgrad"
 
 #: data/ui/smoothen_settings.blp:55 data/ui/window.blp:687
 msgid "Moving Average"
-msgstr "Glidande Medelvärde"
+msgstr "Glidande medelvärde"
 
 #: data/ui/smoothen_settings.blp:57
 msgid "Box points"
@@ -885,15 +882,15 @@ msgstr "Axelbredd"
 
 #: data/ui/style_editor.blp:154
 msgid "Draw Frame"
-msgstr "Använd Ram"
+msgstr "Använd ram"
 
 #: data/ui/style_editor.blp:159
 msgid "Ticks"
-msgstr "Tickar"
+msgstr "Skalstreck"
 
 #: data/ui/style_editor.blp:162
 msgid "Tick Directions"
-msgstr "Tickriktning"
+msgstr "Skalstrecksriktning"
 
 #: data/ui/style_editor.blp:164
 msgid "Inwards"
@@ -905,39 +902,39 @@ msgstr "Utåt"
 
 #: data/ui/style_editor.blp:169
 msgid "Minor Ticks"
-msgstr "Små Tickar"
+msgstr "Små skalstreck"
 
 #: data/ui/style_editor.blp:173
 msgid "Major Tick Width"
-msgstr "Bredd på Stora Tickar"
+msgstr "Bredd på stora skalstreck"
 
 #: data/ui/style_editor.blp:186
 msgid "Minor Tick Width"
-msgstr "Bred på Små Tickar"
+msgstr "Bredd på små skalstreck"
 
 #: data/ui/style_editor.blp:200
 msgid "Major Tick Length"
-msgstr "Längd på Stora Tickar"
+msgstr "Längd på stora skalstreck"
 
 #: data/ui/style_editor.blp:213
 msgid "Minor Tick Length"
-msgstr "Längd på Små Tickar"
+msgstr "Längd på små skalstreck"
 
 #: data/ui/style_editor.blp:227
 msgid "Ticks on Bottom Axis"
-msgstr "Tickar på Botten"
+msgstr "Skalstreck på nedre axel"
 
 #: data/ui/style_editor.blp:231
 msgid "Ticks on Left Axis"
-msgstr "Tickar på Vänstern"
+msgstr "Skalstreck på vänsteraxel"
 
 #: data/ui/style_editor.blp:235
 msgid "Ticks on Right Axis"
-msgstr "Tickar på Högern"
+msgstr "Skalstreck på högeraxel"
 
 #: data/ui/style_editor.blp:239
 msgid "Ticks on Top Axis"
-msgstr "Tickar på Toppen"
+msgstr "Skalstreck på övre axel"
 
 #: data/ui/style_editor.blp:244
 msgid "Grid"
@@ -945,7 +942,7 @@ msgstr "Rutnät"
 
 #: data/ui/style_editor.blp:247
 msgid "Show Grid"
-msgstr "Visa Rutnät"
+msgstr "Visa rutnät"
 
 #: data/ui/style_editor.blp:251
 msgid "Grid Width"
@@ -961,31 +958,31 @@ msgstr "Marginal"
 
 #: data/ui/style_editor.blp:281
 msgid "Padding for different parts of the figure"
-msgstr "Padding mellan de olika delar i grafen"
+msgstr "Marginal mellan olika delar i grafen"
 
 #: data/ui/style_editor.blp:284
 msgid "Value Padding"
-msgstr "Värdenpadding"
+msgstr "Värdemarginal"
 
 #: data/ui/style_editor.blp:285
 msgid "Padding between axes and values"
-msgstr "Padding mellan axel och värden"
+msgstr "Marginal mellan axlar och värden"
 
 #: data/ui/style_editor.blp:298
 msgid "Label Padding"
-msgstr "Etikettpadding"
+msgstr "Etikettmarginal"
 
 #: data/ui/style_editor.blp:299
 msgid "Padding between axes and labels"
-msgstr "Padding mellan axeln och etiketterna"
+msgstr "Marginal mellan axlar och etiketter"
 
 #: data/ui/style_editor.blp:312
 msgid "Title Padding"
-msgstr "Titelpadding"
+msgstr "Titelmarginal"
 
 #: data/ui/style_editor.blp:313
 msgid "Padding between axes and the title"
-msgstr "Padding mellan axeln och titeln"
+msgstr "Marginal mellan axlar och titeln"
 
 #: data/ui/style_editor.blp:327
 msgid "Colors"
@@ -993,25 +990,25 @@ msgstr "Färger"
 
 #: data/ui/style_editor.blp:339
 msgid "Text Color"
-msgstr "Textfärgen"
+msgstr "Textfärg"
 
 #: data/ui/style_editor.blp:344 data/ui/style_editor.blp:366
 #: data/ui/style_editor.blp:388 data/ui/style_editor.blp:410
 #: data/ui/style_editor.blp:432 data/ui/style_editor.blp:454
 msgid "Change Color"
-msgstr "Bytt Färg"
+msgstr "Byt färg"
 
 #: data/ui/style_editor.blp:361
 msgid "Tick Color"
-msgstr "Tickfärg"
+msgstr "Skalstrecksfärg"
 
 #: data/ui/style_editor.blp:383
 msgid "Axis Color"
-msgstr "Axelfärgen"
+msgstr "Axelfärg"
 
 #: data/ui/style_editor.blp:405
 msgid "Grid Color"
-msgstr "Rutnättfärg"
+msgstr "Rutnätsfärg"
 
 #: data/ui/style_editor.blp:427
 msgid "Background Color"
@@ -1052,7 +1049,7 @@ msgstr ""
 "x_max, y_max\n"
 "\n"
 "Trigonometriska funktioner använder som\n"
-" standard radianer. Lägg till 'd' i funktionen\n"
+"standard radianer. Lägg till ”d” i funktionen\n"
 "för att använda grader, t.ex. sind(x) eller cosd(x)."
 
 #: data/ui/transform_window.blp:47
@@ -1065,19 +1062,19 @@ msgstr "X ="
 
 #: data/ui/transform_window.blp:68
 msgid "Discard Unselected Data"
-msgstr "Radera Omarkerade Data"
+msgstr "Radera omarkerade data"
 
 #: data/ui/window.blp:166
 msgid "Add new Data"
-msgstr "Lägg till ny Data"
+msgstr "Lägg till nya data"
 
 #: data/ui/window.blp:174
 msgid "Open Application Menu"
-msgstr "Öppna Programmenyn"
+msgstr "Öppna programmenyn"
 
 #: data/ui/window.blp:203
 msgid "No Data"
-msgstr "Ingen Data"
+msgstr "Inga data"
 
 #: data/ui/window.blp:204
 msgid "Add data from a file or manually as an equation"
@@ -1085,7 +1082,7 @@ msgstr "Lägg till data från en fil eller manuellt som en ekvation"
 
 #: data/ui/window.blp:224
 msgid "Panning mode. Click and drag to pan"
-msgstr "Pannningsläge. Klicka och dra för att flytta innehållet"
+msgstr "Panoreringsläge. Klicka och dra för att flytta innehållet"
 
 #: data/ui/window.blp:230
 msgid "Zoom mode. Select an area on the figure to zoom in"
@@ -1123,7 +1120,7 @@ msgstr "Jämna ut"
 
 #: data/ui/window.blp:323
 msgid "Smoothen data"
-msgstr "Jämna ut datan"
+msgstr "Jämna ut data"
 
 #: data/ui/window.blp:340
 msgid "Center data"
@@ -1135,15 +1132,15 @@ msgstr "Kombinera"
 
 #: data/ui/window.blp:357
 msgid "Combine all selected data"
-msgstr "Kombinera all selekterad data"
+msgstr "Kombinera alla markerade data"
 
 #: data/ui/window.blp:371
 msgid "Cut"
-msgstr "Klippa"
+msgstr "Klipp"
 
 #: data/ui/window.blp:373
 msgid "Cut selected data"
-msgstr "Klippa ut markerade datan"
+msgstr "Klipp ut markerade data"
 
 #: data/ui/window.blp:396
 msgid "Derivative"
@@ -1179,7 +1176,7 @@ msgstr "Få den inversa snabba Fourier-transformen (FFT) av datan"
 
 #: data/ui/window.blp:461
 msgid "Custom Transformation"
-msgstr "Anpassade transformation"
+msgstr "Anpassad transformation"
 
 #: data/ui/window.blp:463
 msgid "Perform custom transformations on the data"
@@ -1223,7 +1220,7 @@ msgstr "Nästa vy"
 
 #: data/ui/window.blp:617
 msgid "Previous View"
-msgstr "Förra vy"
+msgstr "Föregående vy"
 
 #: data/ui/window.blp:636
 msgid "New Project"
@@ -1231,23 +1228,23 @@ msgstr "Nytt projekt"
 
 #: data/ui/window.blp:639
 msgid "Save Project…"
-msgstr "Spara Projekt…"
+msgstr "Spara projekt…"
 
 #: data/ui/window.blp:640
 msgid "Save Project as…"
-msgstr "Spara Projekt som…"
+msgstr "Spara projekt som…"
 
 #: data/ui/window.blp:641
 msgid "Open Project…"
-msgstr "Öppna Projekt…"
+msgstr "Öppna projekt…"
 
 #: data/ui/window.blp:644
 msgid "Export Data…"
-msgstr "Exportera Data…"
+msgstr "Exportera data…"
 
 #: data/ui/window.blp:645
 msgid "Export Figure…"
-msgstr "Exportera Figur…"
+msgstr "Exportera figur…"
 
 #: data/ui/window.blp:651
 msgid "Keyboard Shortcuts"
@@ -1267,32 +1264,30 @@ msgstr "Lägg till ekvation…"
 
 #: data/ui/window.blp:668
 msgid "At Maximum Y Value"
-msgstr "Vid Maximala Y-värde"
+msgstr "Vid maximalt Y-värde"
 
 #: data/ui/window.blp:673
 msgid "At Middle X Value"
-msgstr "Vid Mitten X-värde"
+msgstr "Vid X-mittenvärde"
 
 #: data/ui/window.blp:694
 msgid "Advanced Settings"
-msgstr "Avancerade Inställningar"
+msgstr "Avancerade inställningar"
 
 #: src/actions.py:214 src/item_box.py:130
 #, python-brace-format
 msgid "Deleted {name}"
-msgstr "Raderad {name}"
+msgstr "Raderade {name}"
 
 #: src/add_equation.py:64
 #, python-brace-format
 msgid "{error} - Unable to add data from equation"
-msgstr ""
-"{error}: Det går inte att utföra förskjutning, se till att ange ett giltigt "
-"nummer"
+msgstr "{error} - Kan inte lägga till data från ekvation"
 
 #: src/application.py:50
 #, python-format
 msgid "Could not load %s"
-msgstr "Kunda inte ladda %s"
+msgstr "Kunde inte ladda %s"
 
 #: src/curve_fitting.py:83
 msgid "Optimization Method"
@@ -1316,15 +1311,15 @@ msgstr "Förtroendegränser"
 
 #: src/curve_fitting.py:90
 msgid "1σ: 68% Confidence"
-msgstr "1σ: 68% Konfidens"
+msgstr "1σ: 68% konfidens"
 
 #: src/curve_fitting.py:91
 msgid "2σ: 95% Confidence"
-msgstr "2σ: 95% Konfidens"
+msgstr "2σ: 95% konfidens"
 
 #: src/curve_fitting.py:92
 msgid "3σ: 99.7% Confidence"
-msgstr "3σ: 99.7% Konfidens"
+msgstr "3σ: 99,7% konfidens"
 
 #: src/curve_fitting.py:234
 msgid "Results:"
@@ -1365,25 +1360,20 @@ msgid "Fitting Parameters for {param_name}"
 msgstr "Anpassningsparametrar för {param_name}"
 
 #: src/data.py:112
-#, fuzzy
-#| msgid "New Project"
 msgid "Untitled Project"
-msgstr "Nytt projekt"
+msgstr "Namnlöst projekt"
 
 #: src/data.py:126
 msgid "Draft"
-msgstr ""
+msgstr "Utkast"
 
 #: src/data.py:606
-#, fuzzy
-#| msgctxt "shortcut window"
-#| msgid "Save Project"
 msgid "Saved Project"
-msgstr "Spara Projekt"
+msgstr "Sparat projekt"
 
 #: src/data.py:607 src/export_figure.py:65 src/ui.py:151
 msgid "Open Location"
-msgstr "Öppna Plats"
+msgstr "Öppna plats"
 
 #: src/export_figure.py:64
 msgid "Exported Figure"
@@ -1395,99 +1385,99 @@ msgstr "System"
 
 #: src/figure_settings.py:156
 msgid "Top X Axis Minimum"
-msgstr "Övre X-Axel Minimum"
+msgstr "Övre X-axelminimum"
 
 #: src/figure_settings.py:157 src/figure_settings.py:167
 msgid "X Axis Minimum"
-msgstr "X-Axel Minimum"
+msgstr "X-axelminimum"
 
 #: src/figure_settings.py:158
 msgid "Top X Axis Maximum"
-msgstr "Övre X-Axel Maximum"
+msgstr "Övre X-axelmaximum"
 
 #: src/figure_settings.py:159 src/figure_settings.py:169
 msgid "X Axis Maximum"
-msgstr "X-Axel Maximum"
+msgstr "X-axelmaximum"
 
 #: src/figure_settings.py:160 src/ui.py:58
 msgid "Top X Axis Scale"
-msgstr "Övre X-Axelskala"
+msgstr "Övre X-axelskala"
 
 #: src/figure_settings.py:161 src/figure_settings.py:171 src/ui.py:55
 msgid "X Axis Scale"
-msgstr "X-Axelskala"
+msgstr "X-axelskala"
 
 #: src/figure_settings.py:162
 msgid "Top X Axis Label"
-msgstr "Övre X-Axeletikett"
+msgstr "Övre X-axeletikett"
 
 #: src/figure_settings.py:163 src/figure_settings.py:173
 msgid "X Axis Label"
-msgstr "X-Axel Etikett"
+msgstr "X-axeletikett"
 
 #: src/figure_settings.py:166
 msgid "Bottom X Axis Minimum"
-msgstr "Nedre X-Axel Minimum"
+msgstr "Nedre X-axelminimum"
 
 #: src/figure_settings.py:168
 msgid "Bottom X Axis Maximum"
-msgstr "Nedre X-Axel Maximum"
+msgstr "Nedre X-axelmaximum"
 
 #: src/figure_settings.py:170 src/ui.py:60
 msgid "Bottom X Axis Scale"
-msgstr "Nedre X-Axelskala"
+msgstr "Nedre X-axelskala"
 
 #: src/figure_settings.py:172
 msgid "Bottom X Axis Label"
-msgstr "Nedre X-Axeletikett"
+msgstr "Nedre X-axeletikett"
 
 #: src/figure_settings.py:176
 msgid "Left Y Axis Minimum"
-msgstr "Vänster Y-Axel Minimum"
+msgstr "Vänster Y-axelminimum"
 
 #: src/figure_settings.py:177 src/figure_settings.py:187
 msgid "Y Axis Minimum"
-msgstr "Y-Axel Minimum"
+msgstr "Y-axelminimum"
 
 #: src/figure_settings.py:178
 msgid "Left Y Axis Maximum"
-msgstr "Vänster Y-Axel Maximum"
+msgstr "Vänster Y-axelmaximum"
 
 #: src/figure_settings.py:179 src/figure_settings.py:189
 msgid "Y Axis Maximum"
-msgstr "Y-Axel Maximum"
+msgstr "Y-axelmaximum"
 
 #: src/figure_settings.py:180 src/ui.py:62
 msgid "Left Y Axis Scale"
-msgstr "Vänster Y-Axelskala"
+msgstr "Vänster Y-axelskala"
 
 #: src/figure_settings.py:181 src/figure_settings.py:191 src/ui.py:56
 msgid "Y Axis Scale"
-msgstr "Y-Axelskala"
+msgstr "Y-axelskala"
 
 #: src/figure_settings.py:182
 msgid "Left Y Axis Label"
-msgstr "Vänster Y-Axeletikett"
+msgstr "Vänster Y-axeletikett"
 
 #: src/figure_settings.py:183 src/figure_settings.py:193
 msgid "Y Axis Label"
-msgstr "Y-Axeletikett"
+msgstr "Y-axeletikett"
 
 #: src/figure_settings.py:186
 msgid "Right Y Axis Minimum"
-msgstr "Höger Y-Axel Minimum"
+msgstr "Höger Y-axelminimum"
 
 #: src/figure_settings.py:188
 msgid "Right Y Axis Maximum"
-msgstr "Höger Y-Axel Maximum"
+msgstr "Höger Y-axelmaximum"
 
 #: src/figure_settings.py:190 src/ui.py:64
 msgid "Right Y Axis Scale"
-msgstr "Höger Y-Axelskala"
+msgstr "Höger Y-axelskala"
 
 #: src/figure_settings.py:192
 msgid "Right Y Axis Label"
-msgstr "Höger Y-Axeletikett"
+msgstr "Höger Y-axeletikett"
 
 #: src/figure_settings.py:296
 msgid "Defaults Updated"
@@ -1495,7 +1485,7 @@ msgstr "Standardinställningar har uppdaterats"
 
 #: src/file_import.py:100
 msgid "Are you sure you want to reset the import settings?"
-msgstr "Är du säker på att du vill återställa importinställingarna?"
+msgstr "Är du säker på att du vill återställa importinställningarna?"
 
 #: src/operations.py:108
 msgid "Data that was outside of the highlighted area has been discarded"
@@ -1535,16 +1525,16 @@ msgstr "Kan inte importera filen"
 
 #: src/styles.py:58
 msgid "X Label"
-msgstr "X Etikett"
+msgstr "X-etikett"
 
 #: src/styles.py:59
 msgid "Y Label"
-msgstr "Y etikett"
+msgstr "Y-etikett"
 
 #: src/styles.py:312
 #, python-brace-format
 msgid "Could not parse {stylename}, loading system preferred style"
-msgstr "Kunde inte ladda {stylename}, laddar systemstil istället"
+msgstr "Kunde inte tolka {stylename}, laddar systemstil istället"
 
 #: src/styles.py:319
 #, python-brace-format
@@ -1561,17 +1551,15 @@ msgstr "Färg {}"
 
 #: src/style_io.py:49
 msgid "Missing colon in file {}, line {}"
-msgstr "Saknad kolon i filen {}, rad {}"
+msgstr "Saknat kolon i filen {}, rad {}"
 
 #: src/style_io.py:57
-#, fuzzy
-#| msgid "Style includes a non-style related parameter, {}"
 msgid "Non-style related parameter {} in file {}"
-msgstr "Stilen inkluderar en parameter som inte är relaterad till stilen, {}"
+msgstr "Parameter {} som inte är relaterad till stilen i filen {}"
 
 #: src/style_io.py:60
 msgid "Ignoring parameter {} in file {}"
-msgstr ""
+msgstr "Ignorerar parametern {} i filen {}"
 
 #: src/style_io.py:63
 msgid "Duplicate key in file {}, on line {}"
@@ -1597,7 +1585,7 @@ msgstr "Kan inte utföra transformationen"
 
 #: src/ui.py:37
 msgid "Optimize Limits"
-msgstr "Optimera Gränserna"
+msgstr "Optimera gränser"
 
 #: src/ui.py:73
 msgid "Items {} already exist"
@@ -1609,7 +1597,7 @@ msgstr "Objektet {} finns redan"
 
 #: src/ui.py:88
 msgid "Supported files"
-msgstr "Stödda filtyper"
+msgstr "Filer som stöds"
 
 #: src/ui.py:90
 msgid "ASCII files"
@@ -1625,7 +1613,7 @@ msgstr "Leybold xry"
 
 #: src/ui.py:93 src/ui.py:110 src/ui.py:123
 msgid "Graphs Project File"
-msgstr "Graphs projektfil"
+msgstr "Graphs-projektfil"
 
 #: src/ui.py:130
 msgid "No data to export"
@@ -1637,11 +1625,13 @@ msgstr "Data har exporterats"
 
 #: src/ui.py:161
 msgid "Text Files"
-msgstr "Tekstfiler"
+msgstr "Textfiler"
 
 #: src/ui.py:188
 msgid "translator-credits"
-msgstr "Sjoerd Stendahl <contact@sjoerd.se>"
+msgstr ""
+"Sjoerd Stendahl <contact@sjoerd.se>\n"
+"Anders Jonsson <anders.jonsson@norsjovallen.se>"
 
 #: src/ui.py:217 src/ui.py:281 src/ui.py:315
 msgid "Unsupported Widget {}"
@@ -1758,13 +1748,13 @@ msgstr "Inget giltigt nummer angivet"
 #~ msgstr "Hantera dubbletter"
 
 #~ msgid "Auto-rename duplicates"
-#~ msgstr "Bytt namn på dubletter"
+#~ msgstr "Bytt namn på dubbletter"
 
 #~ msgid "Ignore duplicates"
 #~ msgstr "Ignorera dubbletter"
 
 #~ msgid "Add duplicates"
-#~ msgstr "Lägg till dubletter"
+#~ msgstr "Lägg till dubbletter"
 
 #~ msgid "Override existing items"
 #~ msgstr "Åsidosätt befintliga objekt"
@@ -1788,7 +1778,7 @@ msgstr "Inget giltigt nummer angivet"
 #~ msgstr "Stilar"
 
 #~ msgid "No custom styles"
-#~ msgstr "Inga egna stillmallar"
+#~ msgstr "Inga egna stilmallar"
 
 #~ msgid "Create a new custom style to start editing your own stylesheets"
 #~ msgstr ""
@@ -1796,9 +1786,6 @@ msgstr "Inget giltigt nummer angivet"
 
 #~ msgid "Change properties of the line and markers"
 #~ msgstr "Ändra egenskaper för linjen och markörerna"
-
-#~ msgid "Settings for the ticks that are used on axes"
-#~ msgstr "Inställningar för tickarna som används i diagrammen"
 
 #~ msgid "Settings for the grid"
 #~ msgstr "Inställningar för rutnätet"
@@ -1811,9 +1798,6 @@ msgstr "Inget giltigt nummer angivet"
 
 #~ msgid "Preferences"
 #~ msgstr "Inställningar"
-
-#~ msgid "2Theta"
-#~ msgstr "Exportera figur"
 
 #~ msgid "Omega"
 #~ msgstr "Omega"
