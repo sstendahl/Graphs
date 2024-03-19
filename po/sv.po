@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: graphs\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2024-02-26 17:58+0000\n"
-"PO-Revision-Date: 2024-03-11 13:45+0100\n"
+"POT-Creation-Date: 2024-03-05 14:57+0000\n"
+"PO-Revision-Date: 2024-03-19 22:31+0100\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -95,11 +95,11 @@ msgstr "2 - Både ljust och mörkt läge stöds"
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:42
 msgid "3 - Generate data from an equation"
-msgstr "3 - Lägg till data via en ekvation"
+msgstr "3 - Generera data från en ekvation"
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:46
 msgid "4 - Edit plot stylesheets"
-msgstr "4 - Redigera plottmallar"
+msgstr "4 - Redigera plottstilmallar"
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:50
 msgid "5 - Manipulate imported data with ease"
@@ -220,7 +220,7 @@ msgstr "Y = "
 msgid "Add Fit to Data"
 msgstr "Lägg till som data"
 
-#: data/ui/curve_fitting.blp:107 data/ui/window.blp:586 src/ui.py:33
+#: data/ui/curve_fitting.blp:107 data/ui/window.blp:586 graphs/ui.py:37
 msgid "Toggle Sidebar"
 msgstr "Växla sidofält"
 
@@ -309,7 +309,8 @@ msgid "Linestyle"
 msgstr "Linjestil"
 
 # TODO: "Inga" för fallet Gränser
-#: data/ui/edit_item.blp:54 data/ui/style_editor.blp:85 src/curve_fitting.py:89
+#: data/ui/edit_item.blp:54 data/ui/style_editor.blp:85
+#: graphs/curve_fitting.py:89
 msgid "None"
 msgstr "Ingen"
 
@@ -433,7 +434,7 @@ msgstr "Markörstorlek"
 msgid "Export Figure"
 msgstr "Exportera figur"
 
-#: data/ui/export_figure.blp:30 src/export_figure.py:72
+#: data/ui/export_figure.blp:30 graphs/export_figure.py:72
 msgid "Export"
 msgstr "Exportera"
 
@@ -1148,7 +1149,7 @@ msgstr "Derivata"
 
 #: data/ui/window.blp:398
 msgid "Get the derivative of the data"
-msgstr "Få derivatan av datan"
+msgstr "Få derivatan av data"
 
 #: data/ui/window.blp:412
 msgid "Integral"
@@ -1156,7 +1157,7 @@ msgstr "Integral"
 
 #: data/ui/window.blp:414
 msgid "Get the indefinite integral of the data"
-msgstr "Få den obestämda integralen av datan"
+msgstr "Få den obestämda integralen av data"
 
 #: data/ui/window.blp:428
 msgid "FFT"
@@ -1164,7 +1165,7 @@ msgstr "FFT"
 
 #: data/ui/window.blp:430
 msgid "Get the Fast Fourier Transform of the data"
-msgstr "Få den snabba Fourier-transformen (FFT) av datan"
+msgstr "Få den snabba Fourier-transformen (FFT) av data"
 
 #: data/ui/window.blp:444
 msgid "Inverse FFT"
@@ -1172,7 +1173,7 @@ msgstr "Inverterad FFT"
 
 #: data/ui/window.blp:446
 msgid "Get the Inverse Fast Fourier Transform of the data"
-msgstr "Få den inversa snabba Fourier-transformen (FFT) av datan"
+msgstr "Få den inversa snabba Fourier-transformen (FFT) av data"
 
 #: data/ui/window.blp:461
 msgid "Custom Transformation"
@@ -1180,7 +1181,7 @@ msgstr "Anpassad transformation"
 
 #: data/ui/window.blp:463
 msgid "Perform custom transformations on the data"
-msgstr "Utför anpassade transformationer på datan"
+msgstr "Utför anpassade transformationer på data"
 
 #: data/ui/window.blp:470
 msgid "Modify"
@@ -1274,58 +1275,58 @@ msgstr "Vid X-mittenvärde"
 msgid "Advanced Settings"
 msgstr "Avancerade inställningar"
 
-#: src/actions.py:214 src/item_box.py:130
+#: graphs/actions.py:258 graphs/item_box.py:130
 #, python-brace-format
 msgid "Deleted {name}"
 msgstr "Raderade {name}"
 
-#: src/add_equation.py:64
+#: graphs/add_equation.py:64
 #, python-brace-format
 msgid "{error} - Unable to add data from equation"
 msgstr "{error} - Kan inte lägga till data från ekvation"
 
-#: src/application.py:50
+#: graphs/application.py:50
 #, python-format
 msgid "Could not load %s"
 msgstr "Kunde inte ladda %s"
 
-#: src/curve_fitting.py:83
+#: graphs/curve_fitting.py:83
 msgid "Optimization Method"
 msgstr "Optimeringsmetod"
 
-#: src/curve_fitting.py:84
+#: graphs/curve_fitting.py:84
 msgid "Levenberg-Marquardt"
 msgstr "Levenberg-Marquardt"
 
-#: src/curve_fitting.py:85
+#: graphs/curve_fitting.py:85
 msgid "Trust Region Reflective"
 msgstr "Lita på reflekterande region"
 
-#: src/curve_fitting.py:86
+#: graphs/curve_fitting.py:86
 msgid "Dogbox"
 msgstr "Dogbox"
 
-#: src/curve_fitting.py:88
+#: graphs/curve_fitting.py:88
 msgid "Confidence Bounds"
 msgstr "Förtroendegränser"
 
-#: src/curve_fitting.py:90
+#: graphs/curve_fitting.py:90
 msgid "1σ: 68% Confidence"
 msgstr "1σ: 68% konfidens"
 
-#: src/curve_fitting.py:91
+#: graphs/curve_fitting.py:91
 msgid "2σ: 95% Confidence"
 msgstr "2σ: 95% konfidens"
 
-#: src/curve_fitting.py:92
+#: graphs/curve_fitting.py:92
 msgid "3σ: 99.7% Confidence"
 msgstr "3σ: 99,7% konfidens"
 
-#: src/curve_fitting.py:234
+#: graphs/curve_fitting.py:234
 msgid "Results:"
 msgstr "Resultat:"
 
-#: src/curve_fitting.py:238
+#: graphs/curve_fitting.py:238
 msgid ""
 "Please enter valid fitting \n"
 "parameters to start the fit"
@@ -1333,7 +1334,7 @@ msgstr ""
 "Vänligen ange giltiga parametrar\n"
 " för att starta passningen"
 
-#: src/curve_fitting.py:241
+#: graphs/curve_fitting.py:241
 msgid ""
 "Please enter a valid equation \n"
 "to start the fit"
@@ -1341,7 +1342,7 @@ msgstr ""
 "Vänligen ange en giltig ekvation\n"
 " för att starta passningen"
 
-#: src/curve_fitting.py:244
+#: graphs/curve_fitting.py:244
 msgid ""
 "Please enter valid fitting bounds \n"
 "to start the fit"
@@ -1349,299 +1350,305 @@ msgstr ""
 "Vänligen ange giltiga gränsvärden\n"
 " för att starta passningen"
 
-#: src/curve_fitting.py:253
+#: graphs/curve_fitting.py:253
 #, python-brace-format
 msgid "Sum of R²: {R2}"
 msgstr "Summa av R²: {R2}"
 
-#: src/curve_fitting.py:452
+#: graphs/curve_fitting.py:453
 #, python-brace-format
 msgid "Fitting Parameters for {param_name}"
 msgstr "Anpassningsparametrar för {param_name}"
 
-#: src/data.py:112
+#: graphs/data.py:112
 msgid "Untitled Project"
 msgstr "Namnlöst projekt"
 
-#: src/data.py:126
+#: graphs/data.py:126
 msgid "Draft"
 msgstr "Utkast"
 
-#: src/data.py:606
+#: graphs/data.py:606
 msgid "Saved Project"
 msgstr "Sparat projekt"
 
-#: src/data.py:607 src/export_figure.py:65 src/ui.py:151
+#: graphs/data.py:607 graphs/export_figure.py:65 graphs/ui.py:160
 msgid "Open Location"
 msgstr "Öppna plats"
 
-#: src/export_figure.py:64
+#: graphs/export_figure.py:64
 msgid "Exported Figure"
 msgstr "Figur är exporterad"
 
-#: src/figure_settings.py:110 src/figure_settings.py:136 src/styles.py:121
+#: graphs/figure_settings.py:114 graphs/figure_settings.py:142
+#: graphs/styles.py:121
 msgid "System"
 msgstr "System"
 
-#: src/figure_settings.py:156
+#: graphs/figure_settings.py:162
 msgid "Top X Axis Minimum"
 msgstr "Övre X-axelminimum"
 
-#: src/figure_settings.py:157 src/figure_settings.py:167
+#: graphs/figure_settings.py:163 graphs/figure_settings.py:173
 msgid "X Axis Minimum"
 msgstr "X-axelminimum"
 
-#: src/figure_settings.py:158
+#: graphs/figure_settings.py:164
 msgid "Top X Axis Maximum"
 msgstr "Övre X-axelmaximum"
 
-#: src/figure_settings.py:159 src/figure_settings.py:169
+#: graphs/figure_settings.py:165 graphs/figure_settings.py:175
 msgid "X Axis Maximum"
 msgstr "X-axelmaximum"
 
-#: src/figure_settings.py:160 src/ui.py:58
+#: graphs/figure_settings.py:166 graphs/ui.py:62
 msgid "Top X Axis Scale"
 msgstr "Övre X-axelskala"
 
-#: src/figure_settings.py:161 src/figure_settings.py:171 src/ui.py:55
+#: graphs/figure_settings.py:167 graphs/figure_settings.py:177 graphs/ui.py:59
 msgid "X Axis Scale"
 msgstr "X-axelskala"
 
-#: src/figure_settings.py:162
+#: graphs/figure_settings.py:168
 msgid "Top X Axis Label"
 msgstr "Övre X-axeletikett"
 
-#: src/figure_settings.py:163 src/figure_settings.py:173
+#: graphs/figure_settings.py:169 graphs/figure_settings.py:179
 msgid "X Axis Label"
 msgstr "X-axeletikett"
 
-#: src/figure_settings.py:166
+#: graphs/figure_settings.py:172
 msgid "Bottom X Axis Minimum"
 msgstr "Nedre X-axelminimum"
 
-#: src/figure_settings.py:168
+#: graphs/figure_settings.py:174
 msgid "Bottom X Axis Maximum"
 msgstr "Nedre X-axelmaximum"
 
-#: src/figure_settings.py:170 src/ui.py:60
+#: graphs/figure_settings.py:176 graphs/ui.py:64
 msgid "Bottom X Axis Scale"
 msgstr "Nedre X-axelskala"
 
-#: src/figure_settings.py:172
+#: graphs/figure_settings.py:178
 msgid "Bottom X Axis Label"
 msgstr "Nedre X-axeletikett"
 
-#: src/figure_settings.py:176
+#: graphs/figure_settings.py:182
 msgid "Left Y Axis Minimum"
 msgstr "Vänster Y-axelminimum"
 
-#: src/figure_settings.py:177 src/figure_settings.py:187
+#: graphs/figure_settings.py:183 graphs/figure_settings.py:193
 msgid "Y Axis Minimum"
 msgstr "Y-axelminimum"
 
-#: src/figure_settings.py:178
+#: graphs/figure_settings.py:184
 msgid "Left Y Axis Maximum"
 msgstr "Vänster Y-axelmaximum"
 
-#: src/figure_settings.py:179 src/figure_settings.py:189
+#: graphs/figure_settings.py:185 graphs/figure_settings.py:195
 msgid "Y Axis Maximum"
 msgstr "Y-axelmaximum"
 
-#: src/figure_settings.py:180 src/ui.py:62
+#: graphs/figure_settings.py:186 graphs/ui.py:66
 msgid "Left Y Axis Scale"
 msgstr "Vänster Y-axelskala"
 
-#: src/figure_settings.py:181 src/figure_settings.py:191 src/ui.py:56
+#: graphs/figure_settings.py:187 graphs/figure_settings.py:197 graphs/ui.py:60
 msgid "Y Axis Scale"
 msgstr "Y-axelskala"
 
-#: src/figure_settings.py:182
+#: graphs/figure_settings.py:188
 msgid "Left Y Axis Label"
 msgstr "Vänster Y-axeletikett"
 
-#: src/figure_settings.py:183 src/figure_settings.py:193
+#: graphs/figure_settings.py:189 graphs/figure_settings.py:199
 msgid "Y Axis Label"
 msgstr "Y-axeletikett"
 
-#: src/figure_settings.py:186
+#: graphs/figure_settings.py:192
 msgid "Right Y Axis Minimum"
 msgstr "Höger Y-axelminimum"
 
-#: src/figure_settings.py:188
+#: graphs/figure_settings.py:194
 msgid "Right Y Axis Maximum"
 msgstr "Höger Y-axelmaximum"
 
-#: src/figure_settings.py:190 src/ui.py:64
+#: graphs/figure_settings.py:196 graphs/ui.py:68
 msgid "Right Y Axis Scale"
 msgstr "Höger Y-axelskala"
 
-#: src/figure_settings.py:192
+#: graphs/figure_settings.py:198
 msgid "Right Y Axis Label"
 msgstr "Höger Y-axeletikett"
 
-#: src/figure_settings.py:296
+#: graphs/figure_settings.py:302
 msgid "Defaults Updated"
 msgstr "Standardinställningar har uppdaterats"
 
-#: src/file_import.py:100
+#: graphs/file_import.py:114
 msgid "Are you sure you want to reset the import settings?"
 msgstr "Är du säker på att du vill återställa importinställningarna?"
 
-#: src/operations.py:108
+#: graphs/operations.py:115
 msgid "Data that was outside of the highlighted area has been discarded"
 msgstr "Data som var utanför det markerade området har kasserats"
 
-#: src/operations.py:142
+#: graphs/operations.py:149
 msgid "No data found within the highlighted area"
 msgstr "Ingen data hittades inom det markerade området"
 
-#: src/operations.py:344
+#: graphs/operations.py:363
 msgid "Combined Data"
 msgstr "Kombinerad data"
 
-#: src/parse_file.py:48
+#: graphs/parse_file.py:49
 msgid "Intensity (cps)"
 msgstr "Intensitet (cps)"
 
-#: src/parse_file.py:60
+#: graphs/parse_file.py:61
 msgid "Invalid .xry format"
 msgstr "Ogiltigt .xry format"
 
-#: src/parse_file.py:75
+#: graphs/parse_file.py:75
 msgid "β (°)"
 msgstr "β (°)"
 
-#: src/parse_file.py:75
+#: graphs/parse_file.py:75
 msgid "R (1/s)"
 msgstr "R (1/s)"
 
-#: src/parse_file.py:141
+#: graphs/parse_file.py:139
 msgid "Import failed, column index out of range"
 msgstr "Importfel, kolumnindex är för högt"
 
-#: src/parse_file.py:159
+#: graphs/parse_file.py:158
 msgid "Unable to import from file"
 msgstr "Kan inte importera filen"
 
-#: src/styles.py:58
+#: graphs/styles.py:58
 msgid "X Label"
 msgstr "X-etikett"
 
-#: src/styles.py:59
+#: graphs/styles.py:59
 msgid "Y Label"
 msgstr "Y-etikett"
 
-#: src/styles.py:312
+#: graphs/styles.py:312
 #, python-brace-format
 msgid "Could not parse {stylename}, loading system preferred style"
 msgstr "Kunde inte tolka {stylename}, laddar systemstil istället"
 
-#: src/styles.py:319
+#: graphs/styles.py:319
 #, python-brace-format
 msgid "Plot style {stylename} does not exist loading system preferred"
 msgstr "Plotstil {stylename} finns inte, laddar systemstil istället"
 
-#: src/styles.py:710
+#: graphs/styles.py:710
 msgid "Are you sure you want to delete {self.style.get_name()}?"
 msgstr "Är du säker på att du vill ta bort {self.style.get_name()}?"
 
-#: src/styles.py:727
+#: graphs/styles.py:727
 msgid "Color {}"
 msgstr "Färg {}"
 
-#: src/style_io.py:49
-msgid "Missing colon in file {}, line {}"
-msgstr "Saknat kolon i filen {}, rad {}"
+#: graphs/style_io.py:49
+#, python-brace-format
+msgid "Missing colon in file {0}, line {1}"
+msgstr "Saknat kolon i filen {0}, rad {1}"
 
-#: src/style_io.py:57
-msgid "Non-style related parameter {} in file {}"
-msgstr "Parameter {} som inte är relaterad till stilen i filen {}"
+#: graphs/style_io.py:57
+#, python-brace-format
+msgid "Non-style related parameter {0} in file {1}"
+msgstr "Parameter {0} som inte är relaterad till stilen i filen {1}"
 
-#: src/style_io.py:60
-msgid "Ignoring parameter {} in file {}"
-msgstr "Ignorerar parametern {} i filen {}"
+#: graphs/style_io.py:60
+#, python-brace-format
+msgid "Ignoring parameter {0} in file {1}"
+msgstr "Ignorerar parametern {0} i filen {1}"
 
-#: src/style_io.py:63
-msgid "Duplicate key in file {}, on line {}"
-msgstr "Duplicerad nyckel i filen {}, på raden {}"
+#: graphs/style_io.py:63
+#, python-brace-format
+msgid "Duplicate key in file {0}, on line {1}"
+msgstr "Duplicerad nyckel i filen {0}, på raden {1}"
 
-#: src/style_io.py:80
-msgid "Bad value in file {} on line {}"
-msgstr "Felaktigt värde i filen {} på raden {}"
+#: graphs/style_io.py:80
+#, python-brace-format
+msgid "Bad value in file {0} on line {1}"
+msgstr "Felaktigt värde i filen {0} på raden {1}"
 
-#: src/style_io.py:84
+#: graphs/style_io.py:84
 msgid "Could not parse {}"
 msgstr "Kunde inte tolka {}"
 
-#: src/transform_data.py:39
+#: graphs/transform_data.py:39
 #, python-brace-format
 msgid "{name}: Unable to do transformation, make sure the syntax is correct"
 msgstr ""
 "{name}: Kan inte utföra transformationen, se till att syntaxen är korrekt"
 
-#: src/transform_data.py:42
+#: graphs/transform_data.py:42
 msgid "Unable to do transformation"
 msgstr "Kan inte utföra transformationen"
 
-#: src/ui.py:37
+#: graphs/ui.py:41
 msgid "Optimize Limits"
 msgstr "Optimera gränser"
 
-#: src/ui.py:73
+#: graphs/ui.py:79
 msgid "Items {} already exist"
 msgstr "Objekten {} finns redan"
 
-#: src/ui.py:75
+#: graphs/ui.py:81
 msgid "Item {} already exists"
 msgstr "Objektet {} finns redan"
 
-#: src/ui.py:88
+#: graphs/ui.py:94
 msgid "Supported files"
 msgstr "Filer som stöds"
 
-#: src/ui.py:90
+#: graphs/ui.py:96
 msgid "ASCII files"
 msgstr "ASCII-filer"
 
-#: src/ui.py:91
+#: graphs/ui.py:97
 msgid "PANalytical XRDML"
 msgstr "PANalytical XRDML"
 
-#: src/ui.py:92
+#: graphs/ui.py:98
 msgid "Leybold xry"
 msgstr "Leybold xry"
 
-#: src/ui.py:93 src/ui.py:110 src/ui.py:123
+#: graphs/ui.py:99 graphs/ui.py:116 graphs/ui.py:130
 msgid "Graphs Project File"
 msgstr "Graphs-projektfil"
 
-#: src/ui.py:130
+#: graphs/ui.py:139
 msgid "No data to export"
 msgstr "Inga data att exportera"
 
-#: src/ui.py:150
+#: graphs/ui.py:159
 msgid "Exported Data"
 msgstr "Data har exporterats"
 
-#: src/ui.py:161
+#: graphs/ui.py:170
 msgid "Text Files"
 msgstr "Textfiler"
 
-#: src/ui.py:188
+#: graphs/ui.py:202
 msgid "translator-credits"
 msgstr ""
 "Sjoerd Stendahl <contact@sjoerd.se>\n"
 "Anders Jonsson <anders.jonsson@norsjovallen.se>"
 
-#: src/ui.py:217 src/ui.py:281 src/ui.py:315
+#: graphs/ui.py:231 graphs/ui.py:297 graphs/ui.py:331
 msgid "Unsupported Widget {}"
 msgstr "Widget {} stöds inte"
 
-#: src/ui.py:219 src/ui.py:283 src/ui.py:317
+#: graphs/ui.py:233 graphs/ui.py:299 graphs/ui.py:333
 msgid "No way to apply “{}”"
 msgstr "Kan inte applicera “{}”"
 
-#: src/utilities.py:158
+#: graphs/utilities.py:162
 msgid "No valid number specified"
 msgstr "Inget giltigt nummer angivet"
 
