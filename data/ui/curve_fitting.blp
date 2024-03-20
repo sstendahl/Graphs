@@ -1,20 +1,12 @@
 using Gtk 4.0;
 using Adw 1;
 
-template $GraphsCurveFittingTool : Adw.Window {
-  modal: true;
+template $GraphsCurveFittingDialog : Adw.Dialog {
   focus-widget: confirm_button;
-  default-width: 1000;
-  default-height: 660;
+  content-width: 1000;
+  content-height: 660;
   width-request: 305;
   height-request: 410;
-
-  ShortcutController {
-    Shortcut {
-      trigger: "Escape";
-      action: "action(window.close)";
-    }
-  }
 
   Adw.Breakpoint {
     condition ("max-width: 725sp")
@@ -23,7 +15,7 @@ template $GraphsCurveFittingTool : Adw.Window {
     }
   }
 
-  content: Adw.ToolbarView {
+  child: Adw.ToolbarView {
     top-bar-style: flat;
     content: Adw.OverlaySplitView split_view {
       show-sidebar: bind show_sidebar_button.active;
@@ -91,6 +83,7 @@ template $GraphsCurveFittingTool : Adw.Window {
                 margin-top: 12;
                 label: _("Add Fit to Data");
                 styles ["pill", "suggested-action"]
+                clicked => $add_fit();
               }
             }
           }

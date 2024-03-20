@@ -6,7 +6,7 @@ from gi.repository import Adw, GLib, Gio, Graphs, Gtk
 
 from graphs import file_io, operations, ui, utilities
 from graphs.add_equation import AddEquationDialog
-from graphs.export_figure import ExportFigureWindow
+from graphs.export_figure import ExportFigureDialog
 from graphs.figure_settings import FigureSettingsDialog
 from graphs.transform_data import TransformDialog
 
@@ -173,7 +173,7 @@ def export_data_action(
 def export_figure_action(
     _action, _target, application: Graphs.Application,
 ) -> None:
-    ExportFigureWindow(application)
+    ExportFigureDialog(application)
 
 
 def new_project_action(
@@ -265,3 +265,4 @@ def open_file_location(_action, _target, file: Gio.File) -> None:
     """Open and select `file` in the file manager"""
     file_launcher = Gtk.FileLauncher.new(file)
     file_launcher.open_containing_folder()
+
