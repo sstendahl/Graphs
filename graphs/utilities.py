@@ -141,7 +141,7 @@ def create_file_filters(filters, add_all: bool = True) -> Gio.ListStore:
 
 def string_to_float(string: str) -> float:
     try:
-        return _eval(ast.parse(_preprocess(string), mode="eval").body)
+        return _eval(ast.parse(preprocess(string), mode="eval").body)
     except SyntaxError:
         return
 
@@ -162,7 +162,7 @@ def _eval(node):
         raise ValueError(_("No valid number specified"))
 
 
-def _preprocess(string: str) -> str:
+def preprocess(string: str) -> str:
     """Preprocesses an equation to be compatible with numexpr syntax"""
 
     def convert_degrees(match):
@@ -212,12 +212,19 @@ def _preprocess(string: str) -> str:
         Pattern is to check for least one digit, followed by at least one
         alphabetical character. e.g y = 24*x + 3sigma -> y = (24*x) + (3*sigma)
         """
-        exp1, exp2 = match.group(1), match.group(2)
-        return f"({exp1}*{exp2})"
+        var, exp2 = match.group(1), match.group(2)
+        functions = ["sin", "cos", "tan", "cot", "sec", "csc", "sqrt", "exp",
+                     "abs"]
+        if exp2 in functions:
+            return f"{var}*{exp2}"
 
+        return f"({var}*{exp2})"
+
+    string = string.replace(",", ".")
     string = re.sub(r"(\d+)([a-zA-Z]+)", add_asterix, string)
     string = string.replace("pi", f"({float(numpy.pi)})")
     string = string.replace("^", "**")
+    string = string.replace(")(", ")*(")
     string = re.sub(r"cot\((.*?)\)", convert_cot, string)
     string = re.sub(r"sec\((.*?)\)", convert_sec, string)
     string = re.sub(r"csc\((.*?)\)", convert_csc, string)
@@ -236,18 +243,26 @@ def get_filename(file: Gio.File) -> str:
     return file.get_basename()
 
 
-def string_to_function(equation_name: str):
-    pattern = (
-        r"\b(?!x\b|X\b|csc\b|cot\b|sec\b|sin\b|cos\b|log\b|tan\b|exp\b)"
-        r"[a-zA-Z]+\b"
-    )
-    variables = ["x"] + re.findall(pattern, equation_name)
+def string_to_function(equation_name: str) -> sympy.FunctionClass:
+    """Convert a string into a sympy function"""
+    variables = ["x"] + get_free_variables(equation_name)
     sym_vars = sympy.symbols(variables)
     with contextlib.suppress(sympy.SympifyError, TypeError, SyntaxError):
         symbolic = sympy.sympify(
             equation_name, locals=dict(zip(variables, sym_vars)),
         )
         return sympy.lambdify(sym_vars, symbolic)
+
+
+def get_free_variables(equation_name: str) -> list:
+    """Get the free variables (non-x) from an equation in the form of a list"""
+    pattern = (
+        r"\b(?!x\b|X\b"  # Exclude 'x' and 'X'
+        r"|sec\b|sin\b|cos\b|log\b|tan\b|csc\b|cot\b"  # Exclude trig func.
+        r"|exp\b|sqrt\b|abs\b)"  # Exclude 'exp', 'sqrt', 'abs'
+        r"[a-zA-Z]+\b"  # Match any character sequence that is not excluded
+    )
+    return re.findall(pattern, equation_name)
 
 
 def get_duplicate_string(original_string: str, used_strings: list[str]) -> str:
