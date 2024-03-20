@@ -4,7 +4,7 @@ using Gtk;
 namespace Graphs {
     namespace Tools {
         public void bind_settings_to_widgets (
-            GLib.Settings settings, Gtk.Window window, string prefix = "",
+            GLib.Settings settings, Gtk.Widget parent, string prefix = "",
             string[] ignorelist = {}
         ) {
             foreach (string key in settings.settings_schema.list_keys ()) {
@@ -12,7 +12,7 @@ namespace Graphs {
                     continue;
                 }
                 Gtk.Widget widget;
-                window.get (prefix + key, out widget);
+                parent.get (prefix + key, out widget);
                 if (widget is Adw.EntryRow) {
                     settings.bind (key, widget, "text", 0);
                 }

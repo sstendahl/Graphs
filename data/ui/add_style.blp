@@ -6,7 +6,7 @@ template $GraphsAddStyleDialog : Adw.Dialog {
   title: _("Add new style");
   focus-widget: confirm_button;
 
-  Adw.ToolbarView {
+  child: Adw.ToolbarView {
     [top]
     Adw.HeaderBar {
       show-end-title-buttons: false;
@@ -39,5 +39,5 @@ template $GraphsAddStyleDialog : Adw.Dialog {
         }
       }
     };
-  }
+  };
 }

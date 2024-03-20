@@ -95,7 +95,7 @@ def quit_action(_action, _target, application: Graphs.Application) -> None:
 
 
 def about_action(_action, _target, application: Graphs.Application) -> None:
-    ui.show_about_window(application)
+    ui.show_about_dialog(application)
 
 
 def figure_settings_action(
@@ -215,7 +215,7 @@ def save_project_as_action(
 def smoothen_settings_action(
     _action, _target, application: Graphs.Application,
 ) -> None:
-    Graphs.SmoothenWindow.new(application)
+    Graphs.SmoothenDialog.new(application)
 
 
 def zoom_in_action(_action, _target, application: Graphs.Application) -> None:

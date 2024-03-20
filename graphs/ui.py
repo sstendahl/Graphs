@@ -177,7 +177,7 @@ def build_dialog(name: str):
     ).get_object(name)
 
 
-def show_about_window(application: Graphs.Application) -> str:
+def show_about_dialog(application: Graphs.Application) -> str:
     file = Gio.File.new_for_uri("resource:///se/sjoerd/Graphs/whats_new")
     copyright_text = \
         f"© 2022 – {datetime.date.today().year} {application.get_author()}"

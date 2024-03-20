@@ -1,20 +1,12 @@
 using Gtk 4.0;
 using Adw 1;
 
-template $GraphsSmoothenWindow : Adw.Window {
-  modal: true;
-  default-height: 125;
+template $GraphsSmoothenDialog : Adw.Dialog {
+  content-height: 125;
   title: _("Smoothen Settings");
   focus-widget: reset_button;
 
-  ShortcutController {
-    Shortcut {
-      trigger: "Escape";
-      action: "action(window.close)";
-    }
-  }
-
-  Adw.ToolbarView {
+  child: Adw.ToolbarView {
     [top]
     Adw.HeaderBar {
       [start]
@@ -64,5 +56,5 @@ template $GraphsSmoothenWindow : Adw.Window {
         }
       }
     };
-  }
+  };
 }

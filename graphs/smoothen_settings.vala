@@ -4,7 +4,7 @@ using Gtk;
 
 namespace Graphs {
     [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/smoothen_settings.ui")]
-    public class SmoothenWindow : Adw.Window {
+    public class SmoothenDialog : Adw.Dialog {
         [GtkChild]
         public unowned Adw.SpinRow savgol_window { get; }
 
@@ -14,21 +14,20 @@ namespace Graphs {
         [GtkChild]
         public unowned Adw.SpinRow moving_average_box { get; }
 
-        public SmoothenWindow (Application application) {
-            Object (
-                application: application,
-                transient_for: application.window
-            );
+        private Application application { get; set; }
+
+        public SmoothenDialog (Application application) {
+            Object ();
+            this.application = application;
             Tools.bind_settings_to_widgets (
                 application.get_settings_child ("actions/smoothen"), this
             );
-            present ();
+            present (application.window);
         }
 
         [GtkCallback]
         private void on_reset () {
-            Application app = (Application) this.application;
-            GLib.Settings settings = app.get_settings_child ("actions/smoothen");
+            GLib.Settings settings = this.application.get_settings_child ("actions/smoothen");
             Tools.reset_settings (settings);
         }
     }

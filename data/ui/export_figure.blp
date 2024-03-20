@@ -7,7 +7,7 @@ template $GraphsExportFigureDialog : Adw.Dialog {
   content-height: 125;
   focus-widget: confirm_button;
 
-  Adw.ToolbarView {
+  child: Adw.ToolbarView {
     [top]
     Adw.HeaderBar {
       show-end-title-buttons: false;
@@ -47,5 +47,5 @@ template $GraphsExportFigureDialog : Adw.Dialog {
         }
       }
     };
-  }
+  };
 }

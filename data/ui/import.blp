@@ -7,7 +7,7 @@ template $GraphsImportDialog : Adw.Dialog {
   title: _("Modify Import Parameters");
   focus-widget: confirm_button;
 
-  Adw.ToolbarView {
+  child: Adw.ToolbarView {
     [top]
     Adw.HeaderBar {
       show-end-title-buttons: false;
@@ -97,5 +97,5 @@ template $GraphsImportDialog : Adw.Dialog {
         }
       }
     };
-  }
+  };
 }

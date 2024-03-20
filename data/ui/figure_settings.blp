@@ -7,13 +7,7 @@ template $GraphsFigureSettingsDialog : Adw.Dialog {
   content-height: 576;
   styles ["preferences"]
 
-  ShortcutController {
-    Shortcut {
-      trigger: "Escape";
-      action: "action(window.close)";
-    }
-  }
-  Adw.ToastOverlay toast_overlay {
+  child: Adw.ToastOverlay toast_overlay {
     Adw.NavigationView navigation_view {
       popped => $on_pop();
       Adw.NavigationPage {
@@ -223,5 +217,5 @@ template $GraphsFigureSettingsDialog : Adw.Dialog {
         }
       }
     }
-  }
+  };
 }
