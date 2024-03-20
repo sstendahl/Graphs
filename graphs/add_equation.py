@@ -44,7 +44,7 @@ class AddEquationWindow(Adw.Window):
             xdata = numpy.ndarray.tolist(
                 numpy.linspace(x_start, x_stop, datapoints),
             )
-            equation = utilities._preprocess(values["equation"])
+            equation = utilities.preprocess(values["equation"])
             ydata = numpy.ndarray.tolist(
                 numexpr.evaluate(equation + " + x*0", local_dict={"x": xdata}),
             )

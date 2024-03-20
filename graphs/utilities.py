@@ -141,7 +141,7 @@ def create_file_filters(filters, add_all: bool = True) -> Gio.ListStore:
 
 def string_to_float(string: str) -> float:
     try:
-        return _eval(ast.parse(_preprocess(string), mode="eval").body)
+        return _eval(ast.parse(preprocess(string), mode="eval").body)
     except SyntaxError:
         return
 
@@ -162,7 +162,7 @@ def _eval(node):
         raise ValueError(_("No valid number specified"))
 
 
-def _preprocess(string: str) -> str:
+def preprocess(string: str) -> str:
     """Preprocesses an equation to be compatible with numexpr syntax"""
 
     def convert_degrees(match):
