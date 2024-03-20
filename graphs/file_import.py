@@ -142,4 +142,3 @@ def _guess_import_mode(file: Gio.File) -> str:
         if suffix is not None and file_suffix == suffix:
             return mode
     return "columns"
-

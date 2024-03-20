@@ -138,4 +138,3 @@ class ItemBox(Gtk.Box):
     def get_application(self) -> None:
         """Get application property."""
         return self.props.application
-

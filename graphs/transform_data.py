@@ -2,7 +2,7 @@
 import logging
 from gettext import gettext as _
 
-from gi.repository import Adw, Gtk, GObject, Graphs
+from gi.repository import Adw, GObject, Graphs, Gtk
 
 from graphs import operations
 

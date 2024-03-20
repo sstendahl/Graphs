@@ -265,4 +265,3 @@ def open_file_location(_action, _target, file: Gio.File) -> None:
     """Open and select `file` in the file manager"""
     file_launcher = Gtk.FileLauncher.new(file)
     file_launcher.open_containing_folder()
-
