@@ -1,20 +1,12 @@
 using Gtk 4.0;
 using Adw 1;
 
-template $GraphsTransformWindow : Adw.Window {
-  modal: true;
-  default-width: 450;
+template $GraphsTransformDialog : Adw.Dialog {
+  content-width: 450;
   title: _("Transform Data");
   default-widget: confirm_button;
 
-  ShortcutController {
-    Shortcut {
-      trigger: "Escape";
-      action: "action(window.close)";
-    }
-  }
-
-  Adw.ToolbarView {
+  child: Adw.ToolbarView {
     [top]
     Adw.HeaderBar {
       show-end-title-buttons: false;
@@ -69,5 +61,5 @@ template $GraphsTransformWindow : Adw.Window {
         }
       }
     };
-  }
+  };
 }

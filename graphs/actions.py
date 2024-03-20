@@ -5,10 +5,10 @@ from gettext import gettext as _
 from gi.repository import Adw, GLib, Gio, Graphs, Gtk
 
 from graphs import file_io, operations, ui, utilities
-from graphs.add_equation import AddEquationWindow
+from graphs.add_equation import AddEquationDialog
 from graphs.export_figure import ExportFigureWindow
-from graphs.figure_settings import FigureSettingsWindow
-from graphs.transform_data import TransformWindow
+from graphs.figure_settings import FigureSettingsDialog
+from graphs.transform_data import TransformDialog
 
 
 def perform_operation(
@@ -18,7 +18,7 @@ def perform_operation(
     if operation in ("combine", ):
         return getattr(operations, operation)(application)
     elif operation == "custom_transformation":
-        return TransformWindow(application)
+        return TransformDialog(application)
     elif operation == "cut" and application.get_mode() != 2:
         return
     args = []
@@ -101,7 +101,7 @@ def about_action(_action, _target, application: Graphs.Application) -> None:
 def figure_settings_action(
     _action, _target, application: Graphs.Application,
 ) -> None:
-    FigureSettingsWindow(application)
+    FigureSettingsDialog(application)
 
 
 def add_data_action(
@@ -113,7 +113,7 @@ def add_data_action(
 def add_equation_action(
     _action, _target, application: Graphs.Application,
 ) -> None:
-    AddEquationWindow(application)
+    AddEquationDialog(application)
 
 
 def select_all_action(

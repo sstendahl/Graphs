@@ -72,7 +72,7 @@ if compile_schemas.found()
 endif
 
 blueprints_source = [
-  'ui/add_equation_window.blp',
+  'ui/add_equation.blp',
   'ui/add_style.blp',
   'ui/curve_fitting.blp',
   'ui/dialogs.blp',
@@ -87,7 +87,7 @@ blueprints_source = [
   'ui/style_color_box.blp',
   'ui/style_editor.blp',
   'ui/style_preview.blp',
-  'ui/transform_window.blp',
+  'ui/transform.blp',
   'ui/window.blp'
 ]
 

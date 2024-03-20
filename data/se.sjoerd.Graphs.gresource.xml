@@ -31,7 +31,7 @@
     <file compressed="True">styles/thesis.mplstyle</file>
     <file compressed="True">styles/yaru.mplstyle</file>
     <file compressed="True">styles/yaru-dark.mplstyle</file>
-    <file preprocess="xml-stripblanks">ui/add_equation_window.ui</file>
+    <file preprocess="xml-stripblanks">ui/add_equation.ui</file>
     <file preprocess="xml-stripblanks">ui/add_style.ui</file>
     <file preprocess="xml-stripblanks">ui/curve_fitting.ui</file>
     <file preprocess="xml-stripblanks">ui/dialogs.ui</file>
@@ -45,7 +45,7 @@
     <file preprocess="xml-stripblanks">ui/style_color_box.ui</file>
     <file preprocess="xml-stripblanks">ui/style_editor.ui</file>
     <file preprocess="xml-stripblanks">ui/style_preview.ui</file>
-    <file preprocess="xml-stripblanks">ui/transform_window.ui</file>
+    <file preprocess="xml-stripblanks">ui/transform.ui</file>
     <file preprocess="xml-stripblanks">ui/window.ui</file>
     <file compressed="True">whats_new</file>
     <file>style.css</file>

@@ -14,7 +14,7 @@ from contextlib import nullcontext
 from gi.repository import GObject, Gdk, Graphs, Gtk
 
 from graphs import artist, misc, scales, utilities
-from graphs.figure_settings import FigureSettingsWindow
+from graphs.figure_settings import FigureSettingsDialog
 
 from matplotlib import backend_tools as tools, pyplot
 from matplotlib.backend_bases import NavigationToolbar2
@@ -359,8 +359,8 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
         self.update_legend()
 
     def _on_pick(self, event) -> None:
-        """Invoke FigureSettingsWindow for picked label/title."""
-        FigureSettingsWindow(self.get_application(), event.artist.id)
+        """Invoke FigureSettingsDialog for picked label/title."""
+        FigureSettingsDialog(self.get_application(), event.artist.id)
 
     # Overwritten function - do not change name
     def _post_draw(self, _widget, context) -> None:
