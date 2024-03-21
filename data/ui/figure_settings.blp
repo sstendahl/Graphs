@@ -111,25 +111,49 @@ template $GraphsFigureSettingsDialog : Adw.Dialog {
 
                   Adw.ComboRow bottom_scale {
                     model: StringList{
-                      strings [_("Linear"), _("Logarithmic"), _("Radians"), _("Square Root"), _("Inverse")]
+                      strings [
+                        C_("scale", "Linear"),
+                        C_("scale", "Logarithmic"),
+                        C_("scale", "Radians"),
+                        C_("scale", "Square Root"),
+                        C_("scale", "Inverse"),
+                      ]
                     };
                   }
 
                   Adw.ComboRow top_scale {
                     model: StringList{
-                      strings [_("Linear"), _("Logarithmic"), _("Radians"), _("Square Root"), _("Inverse")]
+                      strings [
+                        C_("scale", "Linear"),
+                        C_("scale", "Logarithmic"),
+                        C_("scale", "Radians"),
+                        C_("scale", "Square Root"),
+                        C_("scale", "Inverse"),
+                      ]
                     };
                   }
 
                   Adw.ComboRow left_scale {
                     model: StringList{
-                      strings [_("Linear"), _("Logarithmic"), _("Radians"), _("Square Root"), _("Inverse")]
+                      strings [
+                        C_("scale", "Linear"),
+                        C_("scale", "Logarithmic"),
+                        C_("scale", "Radians"),
+                        C_("scale", "Square Root"),
+                        C_("scale", "Inverse"),
+                      ]
                     };
                   }
 
                   Adw.ComboRow right_scale {
                     model: StringList{
-                      strings [_("Linear"), _("Logarithmic"), _("Radians"), _("Square Root"), _("Inverse")]
+                      strings [
+                        C_("scale", "Linear"),
+                        C_("scale", "Logarithmic"),
+                        C_("scale", "Radians"),
+                        C_("scale", "Square Root"),
+                        C_("scale", "Inverse"),
+                      ]
                     };
                   }
                 }
@@ -143,9 +167,16 @@ template $GraphsFigureSettingsDialog : Adw.Dialog {
                       title: _("Legend Position");
                       model: StringList{
                         strings [
-                          _("Auto"), _("Upper Right"), _("Upper Left"), _("Lower Left"),
-                          _("Lower Right"), _("Center Left"), _("Center Right"),
-                          _("Lower Center"), _("Upper Center"), _("Center"),
+                          C_("legend-position", "Auto"),
+                          C_("legend-position", "Upper Right"),
+                          C_("legend-position", "Upper Left"),
+                          C_("legend-position", "Lower Left"),
+                          C_("legend-position", "Lower Right"),
+                          C_("legend-position", "Center Left"),
+                          C_("legend-position", "Center Right"),
+                          C_("legend-position", "Lower Center"),
+                          C_("legend-position", "Upper Center"),
+                          C_("legend-position", "Center"),
                         ]
                       };
                     }

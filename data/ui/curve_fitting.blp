@@ -48,8 +48,16 @@ template $GraphsCurveFittingDialog : Adw.Dialog {
               Adw.ComboRow equation {
                 title: _("Equation");
                 model: StringList{
-                  strings [_("Linear"), _("Quadratic"), _("Exponential"), _("Power Law"),
-                  _("Logarithmic"), _("Sigmoid Logistic"), _("Gaussian"), _("Custom")]
+                  strings [
+                    C_("regression-type", "Linear"),
+                    C_("regression-type", "Quadratic"),
+                    C_("regression-type", "Exponential"),
+                    C_("regression-type", "Power Law"),
+                    C_("regression-type", "Logarithmic"),
+                    C_("regression-type", "Sigmoid Logistic"),
+                    C_("regression-type", "Gaussian"),
+                    C_("regression-type", "Custom"),
+                  ]
                 };
               }
               Adw.EntryRow custom_equation {
