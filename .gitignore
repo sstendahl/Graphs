@@ -1,5 +1,7 @@
 # GNOME Builder
 .flatpak-builder/
+#VSCode
+.vscode
 # Meson
 _build/
 data/gschemas.compiled
