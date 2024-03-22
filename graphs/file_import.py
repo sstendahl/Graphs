@@ -115,9 +115,8 @@ class _ImportDialog(Adw.Dialog):
         body = _("Are you sure you want to reset the import settings?")
         dialog = ui.build_dialog("reset_to_defaults")
         dialog.set_body(body)
-        dialog.set_transient_for(self)
         dialog.connect("response", on_accept)
-        dialog.present()
+        dialog.present(self)
 
     def reset_import(self) -> None:
         for mode in self.props.modes:

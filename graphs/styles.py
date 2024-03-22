@@ -709,9 +709,8 @@ class StyleEditor(Adw.NavigationPage):
         dialog = ui.build_dialog("delete_style_dialog")
         dialog.set_body(
             _(f"Are you sure you want to delete {self.style.get_name()}?"))
-        dialog.set_transient_for(self.parent)
         dialog.connect("response", on_response)
-        dialog.present()
+        dialog.present(self.parent)
 
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/style_color_box.ui")
