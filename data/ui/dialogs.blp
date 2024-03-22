@@ -1,7 +1,7 @@
 using Gtk 4.0;
 using Adw 1;
 
-Adw.MessageDialog save_changes {
+Adw.AlertDialog save_changes {
   heading: _("Save changes?");
   body: _("Current project contains unsaved changes, changes that are not saved will be permanently lost.");
   responses [
@@ -13,7 +13,7 @@ Adw.MessageDialog save_changes {
   default-response: "discard";
 }
 
-Adw.MessageDialog delete_style_dialog {
+Adw.AlertDialog delete_style_dialog {
   heading: _("Delete style?");
   responses [
     cancel_delete_style: _("Cancel"),
@@ -23,7 +23,7 @@ Adw.MessageDialog delete_style_dialog {
   default-response: "delete";
 }
 
-Adw.MessageDialog reset_to_defaults {
+Adw.AlertDialog reset_to_defaults {
   heading: _("Reset to Defaults?");
   responses [
     cancel_reset: _("Cancel"),
