@@ -62,7 +62,7 @@ class AddEquationDialog(Adw.Dialog):
         except ValueError as error:
             self.toast_overlay.add_toast(Adw.Toast(title=error))
         except (NameError, SyntaxError, TypeError) as exception:
-            toast = _("{error} - Unable to add data from equation").format(
-                error=exception.__class__.__name__)
+            message = _("{error} - Unable to add data from equation")
+            toast = message.format(error=exception.__class__.__name__)
             self.toast_overlay.add_toast(Adw.Toast(title=toast))
             logging.exception(toast)

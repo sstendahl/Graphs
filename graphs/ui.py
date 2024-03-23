@@ -227,9 +227,12 @@ def load_values_from_dict(window, values: dict, ignorelist=None) -> None:
             elif isinstance(widget, Adw.SpinRow):
                 widget.set_value(value)
             else:
-                logging.warn(_("Unsupported Widget {}").format(type(widget)))
+                logging.warn(
+                    _("Unsupported Widget {widget}")
+                    .format(widget=type(widget)),
+                )
         except AttributeError:
-            logging.warn(_("No way to apply “{}”").format(key))
+            logging.warn(_("No way to apply “{key}”").format(key=key))
 
 
 def save_values_to_dict(window, keys: list, ignorelist=None) -> None:
@@ -293,9 +296,12 @@ def bind_values_to_settings(
             elif isinstance(widget, Adw.SpinRow):
                 settings.bind(key, widget, "value", 0)
             else:
-                logging.warn(_("Unsupported Widget {}").format(type(widget)))
+                logging.warn(
+                    _("Unsupported Widget {widget}")
+                    .format(widget=type(widget)),
+                )
         except AttributeError:
-            logging.warn(_("No way to apply “{}”").format(key))
+            logging.warn(_("No way to apply “{key}”").format(key=key))
 
 
 def bind_values_to_object(source, window, ignorelist=None) -> None:
@@ -327,7 +333,10 @@ def bind_values_to_object(source, window, ignorelist=None) -> None:
                     key, widget, "active", 1 | 2,
                 ))
             else:
-                logging.warn(_("Unsupported Widget {}").format(type(widget)))
+                logging.warn(
+                    _("Unsupported Widget {widget}")
+                    .format(widget=type(widget))
+                )
         except AttributeError:
-            logging.warn(_("No way to apply “{}”").format(key))
+            logging.warn(_("No way to apply “{key}”").format(key=key))
     return bindings

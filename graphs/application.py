@@ -47,7 +47,7 @@ class PythonApplication(Graphs.Application):
             try:
                 font_manager.fontManager.addfont(font)
             except RuntimeError:
-                logging.warning(_("Could not load %s"), font)
+                logging.warning(_("Could not load {font}").format(font=font))
 
         for name in _ACTIONS:
             action = Gio.SimpleAction.new(name, None)
