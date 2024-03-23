@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 import contextlib
 import datetime
+import gettext
 import logging
 from gettext import gettext as _, pgettext as C_
 
@@ -75,11 +76,13 @@ def enable_axes_actions(
 def on_items_ignored(
     _data, _ignored, ignored: str, application: Graphs.Application,
 ) -> str:
-    if len(ignored) > 1:
-        toast = _("Items {} already exist").format(ignored)
-    else:
-        toast = _("Item {} already exists")
-    application.get_window().add_toast_string(toast)
+    application.get_window().add_toast_string(
+        gettext.dgettext(
+            "Items {items} already exist",
+            "Item {items} already exists",
+            len(ignored),
+        ).format(items=ignored),
+    )
 
 
 _GRAPHS_PROJECT_FILE_FILTER_TEMPLATE = \

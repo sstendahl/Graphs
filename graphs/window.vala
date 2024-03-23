@@ -67,7 +67,7 @@ namespace Graphs {
         public unowned Button multiply_y_button { get; }
 
         [GtkChild]
-        private unowned ListBox item_list { get; }
+        public unowned ListBox item_list { get; }
 
         [GtkChild]
         public unowned Adw.OverlaySplitView split_view { get; }
