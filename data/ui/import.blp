@@ -1,21 +1,13 @@
 using Gtk 4.0;
 using Adw 1;
 
-template $GraphsImportWindow : Adw.Window {
-  modal: true;
-  default-width: 650;
-  default-height: 125;
+template $GraphsImportDialog : Adw.Dialog {
+  content-width: 650;
+  content-height: 125;
   title: _("Modify Import Parameters");
   focus-widget: confirm_button;
 
-  ShortcutController {
-    Shortcut {
-      trigger: "Escape";
-      action: "action(window.close)";
-    }
-  }
-
-  Adw.ToolbarView {
+  child: Adw.ToolbarView {
     [top]
     Adw.HeaderBar {
       show-end-title-buttons: false;
@@ -105,5 +97,5 @@ template $GraphsImportWindow : Adw.Window {
         }
       }
     };
-  }
+  };
 }

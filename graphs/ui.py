@@ -177,16 +177,15 @@ def build_dialog(name: str):
     ).get_object(name)
 
 
-def show_about_window(application: Graphs.Application) -> str:
+def show_about_dialog(application: Graphs.Application) -> str:
     file = Gio.File.new_for_uri("resource:///se/sjoerd/Graphs/whats_new")
     copyright_text = \
         f"© 2022 – {datetime.date.today().year} {application.get_author()}"
-    Adw.AboutWindow(
-        transient_for=application.get_window(),
+    Adw.AboutDialog(
         application_name=application.get_name(),
         application_icon=application.get_application_id(),
         website=application.get_website(),
-        developer_name=application.get_author() + " et al.",
+        developer_name=application.get_author(),
         issue_url=application.get_issues(),
         version=application.get_version(), developers=[
             "Sjoerd Stendahl <contact@sjoerd.se>",
@@ -201,7 +200,7 @@ def show_about_window(application: Graphs.Application) -> str:
         license_type="GTK_LICENSE_GPL_3_0",
         translator_credits=_("translator-credits"),
         release_notes=file.load_bytes(None)[0].get_data().decode("utf-8"),
-    ).present()
+    ).present(application.get_window())
 
 
 def load_values_from_dict(window, values: dict, ignorelist=None) -> None:

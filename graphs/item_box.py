@@ -5,8 +5,8 @@ from gettext import gettext as _
 from gi.repository import Adw, GLib, GObject, Gdk, Gio, Graphs, Gtk
 
 from graphs import utilities
-from graphs.curve_fitting import CurveFittingWindow
-from graphs.edit_item import EditItemWindow
+from graphs.curve_fitting import CurveFittingDialog
+from graphs.edit_item import EditItemDialog
 
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/item_box.ui")
@@ -88,7 +88,7 @@ class ItemBox(Gtk.Box):
         )
 
     def curve_fitting(self, _action, _shortcut) -> None:
-        CurveFittingWindow(self.get_application(), self.props.item)
+        CurveFittingDialog(self.get_application(), self.props.item)
 
     def move_up(self, _action, _shortcut) -> None:
         self._change_position(self.props.index, self.props.index - 1)
@@ -133,7 +133,7 @@ class ItemBox(Gtk.Box):
         self.get_application().get_window().add_toast(toast)
 
     def edit(self, _action, _shortcut) -> None:
-        EditItemWindow(self.get_application(), self.props.item)
+        EditItemDialog(self.get_application(), self.props.item)
 
     def get_application(self) -> None:
         """Get application property."""

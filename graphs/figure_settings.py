@@ -30,8 +30,8 @@ def _on_bind(_factory, item, window) -> None:
 
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/figure_settings.ui")
-class FigureSettingsWindow(Adw.Window):
-    __gtype_name__ = "GraphsFigureSettingsWindow"
+class FigureSettingsDialog(Adw.Dialog):
+    __gtype_name__ = "GraphsFigureSettingsDialog"
 
     title = Gtk.Template.Child()
     bottom_label = Gtk.Template.Child()
@@ -65,6 +65,7 @@ class FigureSettingsWindow(Adw.Window):
     style_name = Gtk.Template.Child()
 
     figure_settings = GObject.Property(type=Graphs.FigureSettings)
+    application = GObject.Property(type=Graphs.Application)
 
     def __init__(
         self, application: Graphs.Application, highlighted: bool = None,
@@ -72,7 +73,7 @@ class FigureSettingsWindow(Adw.Window):
         """Initialize the Figure Settings window and set the widget entries"""
         figure_settings = application.get_data().get_figure_settings()
         super().__init__(
-            application=application, transient_for=application.get_window(),
+            application=application,
             figure_settings=figure_settings,
         )
         notifiers = ("custom_style", "use_custom_style")
@@ -99,7 +100,7 @@ class FigureSettingsWindow(Adw.Window):
             style_manager.get_style_model(),
         )
         self._on_use_custom_style(figure_settings, None)
-        self.present()
+        self.present(application.get_window())
 
     def _on_use_custom_style(
         self, figure_settings: Graphs.FigureSettings, _a,
@@ -154,7 +155,7 @@ class FigureSettingsWindow(Adw.Window):
         axes: scale, limits and label. Whenever two opposite axes are used
         simultaniously, the title of the entry will get a directional prefix.
         """
-        visible_axes = self.get_application().get_data().get_used_positions()
+        visible_axes = self.props.application.get_data().get_used_positions()
         # Get the label for each direction, use directional prefix if
         # two opposite X/Y axes are used simultaniously.
         labels = {
@@ -242,7 +243,7 @@ class FigureSettingsWindow(Adw.Window):
         """
         if page == self.style_editor:
             self.style_editor.save_style()
-            style_manager = self.get_application().get_figure_style_manager()
+            style_manager = self.props.application.get_figure_style_manager()
             style_manager._on_style_change()
 
     def set_index(self, style_manager, name: str) -> None:
@@ -269,7 +270,7 @@ class FigureSettingsWindow(Adw.Window):
     @Gtk.Template.Callback()
     def add_style(self, _button) -> None:
         """Opens the new style window"""
-        styles.AddStyleWindow(self)
+        styles.AddStyleDialog(self)
 
     @Gtk.Template.Callback()
     def on_close(self, *_args) -> None:
@@ -278,16 +279,15 @@ class FigureSettingsWindow(Adw.Window):
         new state to the clipboard
         """
         self.style_editor.save_style()
-        data = self.get_application().get_data()
+        data = self.props.application.get_data()
         data.add_view_history_state()
         data.add_history_state()
-        self.destroy()
 
     @Gtk.Template.Callback()
     def on_set_as_default(self, _button) -> None:
         """Sets the current figure settings as the new default"""
         figure_settings = self.props.figure_settings
-        settings = self.get_application().get_settings_child("figure")
+        settings = self.props.application.get_settings_child("figure")
         ignorelist = ["min_selected", "max_selected"] + misc.LIMITS
         for prop in dir(figure_settings.props):
             if prop not in ignorelist:

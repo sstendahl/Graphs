@@ -1,20 +1,12 @@
 using Gtk 4.0;
 using Adw 1;
 
-template $GraphsAddStyleWindow : Adw.Window {
-  modal: true;
-  default-width: 450;
+template $GraphsAddStyleDialog : Adw.Dialog {
+  content-width: 450;
   title: _("Add new style");
   focus-widget: confirm_button;
 
-  ShortcutController {
-    Shortcut {
-      trigger: "Escape";
-      action: "action(window.close)";
-    }
-  }
-
-  Adw.ToolbarView {
+  child: Adw.ToolbarView {
     [top]
     Adw.HeaderBar {
       show-end-title-buttons: false;
@@ -47,5 +39,5 @@ template $GraphsAddStyleWindow : Adw.Window {
         }
       }
     };
-  }
+  };
 }
