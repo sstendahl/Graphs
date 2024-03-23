@@ -2,7 +2,7 @@
 data/se.sjoerd.Graphs.appdata.xml.in.in
 data/se.sjoerd.Graphs.desktop.in.in
 data/se.sjoerd.Graphs.gschema.xml
-data/ui/add_equation_window.blp
+data/ui/add_equation.blp
 data/ui/add_style.blp
 data/ui/curve_fitting.blp
 data/ui/dialogs.blp
@@ -17,7 +17,7 @@ data/ui/smoothen_settings.blp
 data/ui/style_color_box.blp
 data/ui/style_editor.blp
 data/ui/style_preview.blp
-data/ui/transform_window.blp
+data/ui/transform.blp
 data/ui/window.blp
 graphs/actions.py
 graphs/add_equation.py
