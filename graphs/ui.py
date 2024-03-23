@@ -185,7 +185,7 @@ def show_about_dialog(application: Graphs.Application) -> str:
         application_name=application.get_name(),
         application_icon=application.get_application_id(),
         website=application.get_website(),
-        developer_name=application.get_author() + " et al.",
+        developer_name=application.get_author(),
         issue_url=application.get_issues(),
         version=application.get_version(), developers=[
             "Sjoerd Stendahl <contact@sjoerd.se>",
