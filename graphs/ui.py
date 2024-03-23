@@ -1,9 +1,8 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 import contextlib
 import datetime
-import gettext
 import logging
-from gettext import gettext as _, pgettext as C_
+from gettext import dgettext as N_, gettext as _, pgettext as C_
 
 from gi.repository import Adw, GLib, Gio, Graphs, Gtk
 
@@ -77,7 +76,7 @@ def on_items_ignored(
     _data, _ignored, ignored: str, application: Graphs.Application,
 ) -> str:
     application.get_window().add_toast_string(
-        gettext.dgettext(
+        N_(
             "Items {items} already exist",
             "Item {items} already exists",
             len(ignored),
