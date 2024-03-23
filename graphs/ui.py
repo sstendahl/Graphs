@@ -190,7 +190,7 @@ def show_about_dialog(application: Graphs.Application) -> str:
     copyright_text = \
         f"© 2022 – {datetime.date.today().year} {application.get_author()}"
     Adw.AboutDialog(
-        application_name=application.get_name(),
+        application_name=_("Graphs"),
         application_icon=application.get_application_id(),
         website=application.get_website(),
         developer_name=application.get_author(),

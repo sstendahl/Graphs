@@ -1,7 +1,7 @@
 #!@PYTHON@
 
-# @NAME@
-# @DESCRIPTION_SHORT@
+# Graphs
+# Plot and manipulate data
 #
 # @HOMEPAGE_URL@
 # @VCS_URL@
@@ -59,14 +59,15 @@ if __name__ == "__main__":
     resource = Gio.Resource.load(gresource_location)
     resource._register()
 
-    logging.basicConfig(
-        format="%(levelname)s: %(message)s", level=logging.@LOG_LEVEL@,
-    )
+    debug = @DEBUG@
+
+    loglevel = logging.DEBUG if debug else logging.INFO
+    logging.basicConfig(format="%(levelname)s: %(message)s", level=loglevel)
     logging.getLogger("matplotlib.font_manager").disabled = True
 
     from graphs.application import PythonApplication
     sys.exit(PythonApplication(
-        "@APPLICATION_ID@", version="@VERSION@", name="@NAME@",
+        "@APPLICATION_ID@", version="@VERSION@", debug=debug,
         author="@AUTHOR@", website="@HOMEPAGE_URL@", issues="@ISSUE_URL@",
         pkgdatadir="@PKGDATADIR@",
     ).run(sys.argv))
