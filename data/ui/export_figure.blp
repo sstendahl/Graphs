@@ -1,21 +1,13 @@
 using Gtk 4.0;
 using Adw 1;
 
-template $GraphsExportFigureWindow : Adw.Window {
-  modal: true;
+template $GraphsExportFigureDialog : Adw.Dialog {
   title: _("Export Figure");
-  default-width: 575;
-  default-height: 125;
+  content-width: 575;
+  content-height: 125;
   focus-widget: confirm_button;
 
-  ShortcutController {
-    Shortcut {
-      trigger: "Escape";
-      action: "action(window.close)";
-    }
-  }
-
-  Adw.ToolbarView {
+  child: Adw.ToolbarView {
     [top]
     Adw.HeaderBar {
       show-end-title-buttons: false;
@@ -55,5 +47,5 @@ template $GraphsExportFigureWindow : Adw.Window {
         }
       }
     };
-  }
+  };
 }

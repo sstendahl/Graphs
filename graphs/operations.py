@@ -303,8 +303,9 @@ def integral(_item, xdata: list, ydata: list) -> _return:
     """Calculate indefinite integral of all selected data"""
     x_values = numpy.array(xdata)
     y_values = numpy.array(ydata)
-    indefinite_integral = \
-        scipy.integrate.cumtrapz(y_values, x_values, initial=0).tolist()
+    indefinite_integral = scipy.integrate.cumulative_trapezoid(
+        y_values, x_values, initial=0,
+    ).tolist()
     return xdata, indefinite_integral, False, True
 
 

@@ -23,7 +23,7 @@ homepage_url = 'https://apps.gnome.org/Graphs/'
 vcs_url = 'https://gitlab.gnome.org/World/Graphs'
 issue_url = vcs_url + '/issues'
 help_url = 'https://gitlab.gnome.org/World/Graphs/-/wikis/home'
-author = 'Sjoerd Stendahl'
+author = 'Sjoerd Stendahl et al.'
 description_short = 'Plot and manipulate data'
 
 i18n = import('i18n')

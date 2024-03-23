@@ -405,22 +405,23 @@ class StylePreview(Gtk.AspectFrame):
 
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/add_style.ui")
-class AddStyleWindow(Adw.Window):
-    __gtype_name__ = "GraphsAddStyleWindow"
+class AddStyleDialog(Adw.Dialog):
+    __gtype_name__ = "GraphsAddStyleDialog"
     new_style_name = Gtk.Template.Child()
     style_templates = Gtk.Template.Child()
 
+    style_manager = GObject.Property(type=StyleManager)
+
     def __init__(self, parent):
-        application = parent.get_application()
-        super().__init__(application=application, transient_for=parent)
-        style_manager = application.get_figure_style_manager()
+        style_manager = parent.props.application.get_figure_style_manager()
+        super().__init__(style_manager=style_manager)
         self._styles = sorted(style_manager.get_stylenames())
         self.style_templates.set_model(Gtk.StringList.new(self._styles))
         if style_manager.props.use_custom_style:
             new_style = style_manager.props.custom_style
             index = self._styles.index(new_style)
             self.style_templates.set_selected(index)
-        self.present()
+        self.present(parent)
 
     @Gtk.Template.Callback()
     def on_template_changed(self, _a, _b):
@@ -431,7 +432,7 @@ class AddStyleWindow(Adw.Window):
 
     @Gtk.Template.Callback()
     def on_accept(self, _button):
-        self.get_application().get_figure_style_manager().copy_style(
+        self.props.style_manager.copy_style(
             self.style_templates.get_selected_item().get_string(),
             self.new_style_name.get_text(),
         )
@@ -536,7 +537,7 @@ class StyleEditor(Adw.NavigationPage):
         super().__init__()
         self.style = None
         self.parent = parent
-        application = self.parent.get_application()
+        application = self.parent.props.application
         self._style_manager = application.get_figure_style_manager()
 
         self.titlesize.set_format_value_func(_title_format_function)
@@ -643,7 +644,7 @@ class StyleEditor(Adw.NavigationPage):
         self.style_params["patch.facecolor"] = self.line_colors[0]
 
         # name & save
-        application = self.parent.get_application()
+        application = self.parent.props.application
         new_name = self.style_name.get_text()
         if self.style.get_name() != new_name:
             style_manager = application.get_figure_style_manager()
@@ -708,9 +709,8 @@ class StyleEditor(Adw.NavigationPage):
         dialog = ui.build_dialog("delete_style_dialog")
         dialog.set_body(
             _(f"Are you sure you want to delete {self.style.get_name()}?"))
-        dialog.set_transient_for(self.parent)
         dialog.connect("response", on_response)
-        dialog.present()
+        dialog.present(self.parent)
 
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/style_color_box.ui")

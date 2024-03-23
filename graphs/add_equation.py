@@ -2,7 +2,7 @@
 import logging
 from gettext import gettext as _
 
-from gi.repository import Adw, Gtk
+from gi.repository import Adw, GObject, Graphs, Gtk
 
 from graphs import ui, utilities
 from graphs.item import DataItem
@@ -12,9 +12,9 @@ import numexpr
 import numpy
 
 
-@Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/add_equation_window.ui")
-class AddEquationWindow(Adw.Window):
-    __gtype_name__ = "GraphsAddEquationWindow"
+@Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/add_equation.ui")
+class AddEquationDialog(Adw.Dialog):
+    __gtype_name__ = "GraphsAddEquationDialog"
 
     equation = Gtk.Template.Child()
     x_start = Gtk.Template.Child()
@@ -23,12 +23,14 @@ class AddEquationWindow(Adw.Window):
     name = Gtk.Template.Child()
     toast_overlay = Gtk.Template.Child()
 
+    application = GObject.Property(type=Graphs.Application)
+
     def __init__(self, application):
-        super().__init__(application=application,
-                         transient_for=application.get_window())
+        super().__init__(application=application)
         ui.bind_values_to_settings(
-            self.get_application().get_settings_child("add-equation"), self)
-        self.present()
+            application.get_settings_child("add-equation"), self,
+        )
+        self.present(application.get_window())
 
     @Gtk.Template.Callback()
     def on_accept(self, _widget) -> None:
@@ -51,13 +53,12 @@ class AddEquationWindow(Adw.Window):
             name = str(self.name.get_text())
             if name == "":
                 name = f"Y = {values['equation']}"
-            application = self.get_application()
-            style_manager = application.get_figure_style_manager()
-            application.get_data().add_items([DataItem.new(
+            style_manager = self.props.application.get_figure_style_manager()
+            self.props.application.get_data().add_items([DataItem.new(
                 style_manager.get_selected_style_params(),
                 xdata, ydata, name=name,
             )])
-            self.destroy()
+            self.close()
         except ValueError as error:
             self.toast_overlay.add_toast(Adw.Toast(title=error))
         except (NameError, SyntaxError, TypeError) as exception:

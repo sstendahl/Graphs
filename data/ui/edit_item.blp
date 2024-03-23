@@ -1,16 +1,9 @@
 using Gtk 4.0;
 using Adw 1;
 
-template $GraphsEditItemWindow : Adw.PreferencesWindow {
-  modal: true;
+template $GraphsEditItemDialog : Adw.PreferencesDialog {
   notify::item => $on_item_change();
-  close-request => $on_close();
-  ShortcutController {
-    Shortcut {
-      trigger: "Escape";
-      action: "action(window.close)";
-    }
-  }
+  closed => $on_close();
 
   Adw.PreferencesPage {
     Adw.PreferencesGroup {

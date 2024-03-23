@@ -1,20 +1,13 @@
 using Gtk 4.0;
 using Adw 1;
 
-template $GraphsFigureSettingsWindow : Adw.Window {
-  modal: true;
-  close-request => $on_close();
-  default-width: 640;
-  default-height: 576;
+template $GraphsFigureSettingsDialog : Adw.Dialog {
+  closed => $on_close();
+  content-width: 640;
+  content-height: 576;
   styles ["preferences"]
 
-  ShortcutController {
-    Shortcut {
-      trigger: "Escape";
-      action: "action(window.close)";
-    }
-  }
-  Adw.ToastOverlay toast_overlay {
+  child: Adw.ToastOverlay toast_overlay {
     Adw.NavigationView navigation_view {
       popped => $on_pop();
       Adw.NavigationPage {
@@ -224,5 +217,5 @@ template $GraphsFigureSettingsWindow : Adw.Window {
         }
       }
     }
-  }
+  };
 }

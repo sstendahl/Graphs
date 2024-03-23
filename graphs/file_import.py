@@ -43,7 +43,7 @@ def import_from_files(
         if mode in modes:
             configurable_modes.append(mode)
     if configurable_modes:
-        _ImportWindow(application, settings, configurable_modes, import_dict)
+        _ImportDialog(application, settings, configurable_modes, import_dict)
     else:
         _import_from_files(
             application, settings, configurable_modes, import_dict,
@@ -70,8 +70,8 @@ def _import_from_files(
 
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/import.ui")
-class _ImportWindow(Adw.Window):
-    __gtype_name__ = "GraphsImportWindow"
+class _ImportDialog(Adw.Dialog):
+    __gtype_name__ = "GraphsImportDialog"
 
     columns_group = Gtk.Template.Child()
     columns_delimiter = Gtk.Template.Child()
@@ -84,13 +84,14 @@ class _ImportWindow(Adw.Window):
     import_dict = GObject.Property(type=object)
     modes = GObject.Property(type=object)
     settings = GObject.Property(type=Gio.Settings)
+    application = GObject.Property(type=Graphs.Application)
 
     def __init__(
         self, application: Graphs.Application, settings: Gio.Settings,
         modes: list[str], import_dict: dict,
     ):
         super().__init__(
-            application=application, transient_for=application.get_window(),
+            application=application,
             import_dict=import_dict, modes=modes, settings=settings,
         )
 
@@ -99,7 +100,7 @@ class _ImportWindow(Adw.Window):
                 settings.get_child(mode), self, prefix=f"{mode}_",
             )
             getattr(self, f"{mode}_group").set_visible(True)
-        self.present()
+        self.present(application.get_window())
 
     @Gtk.Template.Callback()
     def on_delimiter_change(self, _action, _target) -> None:
@@ -114,9 +115,8 @@ class _ImportWindow(Adw.Window):
         body = _("Are you sure you want to reset the import settings?")
         dialog = ui.build_dialog("reset_to_defaults")
         dialog.set_body(body)
-        dialog.set_transient_for(self)
         dialog.connect("response", on_accept)
-        dialog.present()
+        dialog.present(self)
 
     def reset_import(self) -> None:
         for mode in self.props.modes:
@@ -125,10 +125,10 @@ class _ImportWindow(Adw.Window):
     @Gtk.Template.Callback()
     def on_accept(self, _widget) -> None:
         _import_from_files(
-            self.get_application(), self.props.settings,
+            self.props.application, self.props.settings,
             self.props.modes, self.props.import_dict,
         )
-        self.destroy()
+        self.close()
 
 
 def _guess_import_mode(file: Gio.File) -> str:
