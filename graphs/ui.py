@@ -2,7 +2,7 @@
 import contextlib
 import datetime
 import logging
-from gettext import gettext as _
+from gettext import gettext as _, pgettext as C_
 
 from gi.repository import Adw, GLib, Gio, Graphs, Gtk
 
@@ -82,6 +82,13 @@ def on_items_ignored(
     application.get_window().add_toast_string(toast)
 
 
+_GRAPHS_PROJECT_FILE_FILTER_TEMPLATE = \
+    (C_("file-filter", "Graphs Project File"), ["graphs"])
+_GRAPHS_PROJECT_FILE_ONLY_FILE_FILTER = utilities.create_file_filters((
+    _GRAPHS_PROJECT_FILE_FILTER_TEMPLATE,
+))
+
+
 def add_data_dialog(application: Graphs.Application) -> None:
     def on_response(dialog, response):
         with contextlib.suppress(GLib.GError):
@@ -90,14 +97,16 @@ def add_data_dialog(application: Graphs.Application) -> None:
             )
     dialog = Gtk.FileDialog()
     dialog.set_filters(
-        utilities.create_file_filters([
-            (_("Supported files"), ["xy", "dat", "txt", "csv", "xrdml",
-                                    "xry", "graphs"]),
-            (_("ASCII files"), ["xy", "dat", "txt", "csv"]),
-            (_("PANalytical XRDML"), ["xrdml"]),
-            (_("Leybold xry"), ["xry"]),
-            (_("Graphs Project File"), ["graphs"]),
-        ]),
+        utilities.create_file_filters((
+            (
+                C_("file-filter", "Supported files"),
+                ["xy", "dat", "txt", "csv", "xrdml", "xry", "graphs"],
+            ),
+            (C_("file-filter", "ASCII files"), ["xy", "dat", "txt", "csv"]),
+            (C_("file-filter", "PANalytical XRDML"), ["xrdml"]),
+            (C_("file-filter", "Leybold xry"), ["xry"]),
+            _GRAPHS_PROJECT_FILE_FILTER_TEMPLATE,
+        )),
     )
     dialog.open_multiple(application.get_window(), None, on_response)
 
@@ -112,9 +121,7 @@ def save_project_dialog(application: Graphs.Application) -> None:
             data.props.unsaved = False
             application.emit("project-saved")
     dialog = Gtk.FileDialog()
-    dialog.set_filters(
-        utilities.create_file_filters([(_("Graphs Project File"),
-                                      ["graphs"])]))
+    dialog.set_filters(_GRAPHS_PROJECT_FILE_ONLY_FILE_FILTER)
     dialog.set_initial_name("project.graphs")
     dialog.save(application.get_window(), None, on_response)
 
@@ -126,9 +133,7 @@ def open_project_dialog(application: Graphs.Application) -> None:
                 dialog.open_finish(response)
             application.get_data().load()
     dialog = Gtk.FileDialog()
-    dialog.set_filters(
-        utilities.create_file_filters([(_("Graphs Project File"),
-                                      ["graphs"])]))
+    dialog.set_filters(_GRAPHS_PROJECT_FILE_ONLY_FILE_FILTER)
     dialog.open(application.get_window(), None, on_response)
 
 
@@ -167,7 +172,10 @@ def export_data_dialog(application: Graphs.Application) -> None:
         filename = f"{data[0].get_name()}.txt"
         dialog.set_initial_name(filename)
         dialog.set_filters(
-            utilities.create_file_filters([(_("Text Files"), ["txt"])]))
+            utilities.create_file_filters((
+                (C_("file-filter", "Text Files"), ["txt"]),
+            )),
+        )
         dialog.save(window, None, on_response)
 
 
@@ -335,7 +343,7 @@ def bind_values_to_object(source, window, ignorelist=None) -> None:
             else:
                 logging.warn(
                     _("Unsupported Widget {widget}")
-                    .format(widget=type(widget))
+                    .format(widget=type(widget)),
                 )
         except AttributeError:
             logging.warn(_("No way to apply “{key}”").format(key=key))
