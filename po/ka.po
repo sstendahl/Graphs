@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Graphs v1.7.x\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
 "POT-Creation-Date: 2024-03-19 21:24+0000\n"
-"PO-Revision-Date: 2024-03-22 01:16+0100\n"
+"PO-Revision-Date: 2024-03-24 14:47+0100\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <ka@li.org>\n"
 "Language: ka\n"
@@ -39,6 +39,12 @@ msgid ""
 "multiply, center and smoothen data, as well as apply any custom "
 "transformations on the data."
 msgstr ""
+"Graphs მარტივი, მაგრამ მძლავრი პროგრამაა, რომელიც თქვენი მონაცემების ადვილად "
+"დახატვაში დაგეხმარებათ. ახლა მონაცემები მრავალი ტიპის ფაილიდან შეგიძლიათ, "
+"შემოიტანოთ, ან შექმნათ ის განტოლების სახით. მონაცემების მანიპულაცია "
+"შესაძლებელია მრავალგვარი ოპერაციებით, როგორიცაა მონაცემების მონიშვნა, "
+"ამოჭრა, გადატანა, გამრავლება, დაცენტრება და მოგლუვება. ასევე, ამ მონაცემებზე "
+"ნებისმიერი თქვენთვის სასურველი ტრანსფორმაცია შეგიძლიათ, შეასრულოთ."
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:14
 msgid ""
@@ -68,23 +74,23 @@ msgstr ""
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:34
 msgid "1 - Plot and manipulate any data of choice"
-msgstr ""
+msgstr "1 - დახატეთ და შეცვალეთ მონაცემები, რომლებიც გნებავთ"
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:38
 msgid "2 - Full support for light and dark mode"
-msgstr ""
+msgstr "2 - ღია და მუქი რეჟიმის სრული მხარდაჭერა"
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:42
 msgid "3 - Generate data from an equation"
-msgstr ""
+msgstr "3 - მონაცემების გენერაცია განტოლებიდან"
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:46
 msgid "4 - Edit plot stylesheets"
-msgstr ""
+msgstr "4 - ნახაზის სტილის ცხრილების ჩასწორება"
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:50
 msgid "5 - Manipulate imported data with ease"
-msgstr ""
+msgstr "5 - ადვილად შეცვალეთ შემოტანილ მონაცემები"
 
 #: data/se.sjoerd.Graphs.desktop.in.in:10
 msgid ""
@@ -1025,6 +1031,13 @@ msgid ""
 "by default, append d to the function\n"
 "to use degrees, e.g. sind(x) or cosd(x)."
 msgstr ""
+"დამატებითი ცვლადები:\n"
+"x_min, y_min\n"
+"x_max, y_max\n"
+"\n"
+"ტრიგონომეტრიული ფუნქციები ნაგულისხმევად\n"
+"რადიანებს იყენებენ. გრადუსების გამოსაყენებლად მიაწერეთ\n"
+"ბოლოში d. მაგალითად sind(x) ან cosd(x)."
 
 #: data/ui/transform_window.blp:47
 msgid "More info"
@@ -1036,7 +1049,7 @@ msgstr "X ="
 
 #: data/ui/transform_window.blp:68
 msgid "Discard Unselected Data"
-msgstr ""
+msgstr "მოუნიშნავი მონაცემების მოცილება"
 
 #: data/ui/window.blp:166
 msgid "Add new Data"
@@ -1048,11 +1061,11 @@ msgstr "აპლიკაციის მენიუს გახსნა"
 
 #: data/ui/window.blp:203
 msgid "No Data"
-msgstr ""
+msgstr "მონაცემების გარეშე"
 
 #: data/ui/window.blp:204
 msgid "Add data from a file or manually as an equation"
-msgstr ""
+msgstr "მონაცემების დამატება ფაილიდან ან ხელით, განტოლების სახით"
 
 #: data/ui/window.blp:224
 msgid "Panning mode. Click and drag to pan"
@@ -1120,7 +1133,7 @@ msgstr "წარმოებული"
 
 #: data/ui/window.blp:398
 msgid "Get the derivative of the data"
-msgstr ""
+msgstr "მონაცემის წარმოებულის მიღება"
 
 #: data/ui/window.blp:412
 msgid "Integral"
@@ -1128,7 +1141,7 @@ msgstr "ინტეგრალი"
 
 #: data/ui/window.blp:414
 msgid "Get the indefinite integral of the data"
-msgstr ""
+msgstr "მონაცემის უსასრულო ინტეგრალის მიღება"
 
 #: data/ui/window.blp:428
 msgid "FFT"
@@ -1136,7 +1149,7 @@ msgstr "FFT"
 
 #: data/ui/window.blp:430
 msgid "Get the Fast Fourier Transform of the data"
-msgstr ""
+msgstr "მონაცემების სწრაფი ფურიეს გარდაქმნის მიღება"
 
 #: data/ui/window.blp:444
 msgid "Inverse FFT"
@@ -1144,7 +1157,7 @@ msgstr ""
 
 #: data/ui/window.blp:446
 msgid "Get the Inverse Fast Fourier Transform of the data"
-msgstr ""
+msgstr "მონაცემების ინვერსიული სწრაფი ფურიეს გარდაქმნის მიღება"
 
 #: data/ui/window.blp:461
 msgid "Custom Transformation"
@@ -1152,7 +1165,7 @@ msgstr "მომხმარებლის გარდაქმნა"
 
 #: data/ui/window.blp:463
 msgid "Perform custom transformations on the data"
-msgstr ""
+msgstr "მონაცემებზე თქვენი ტრანსფორმაციების გადატარება"
 
 #: data/ui/window.blp:470
 msgid "Modify"
@@ -1236,7 +1249,7 @@ msgstr "ტოლობის დამატება…"
 
 #: data/ui/window.blp:668
 msgid "At Maximum Y Value"
-msgstr ""
+msgstr "Y-ის მაქსიმალურ მნიშვნელობასთან"
 
 #: data/ui/window.blp:673
 msgid "At Middle X Value"
@@ -1254,7 +1267,7 @@ msgstr "{name} წაიშალა"
 #: src/add_equation.py:64
 #, python-brace-format
 msgid "{error} - Unable to add data from equation"
-msgstr ""
+msgstr "{error} - განტოლებიდან მონაცემების დამატება შეუძლებელია"
 
 #: src/application.py:50
 #, python-format
@@ -1455,11 +1468,11 @@ msgstr "მართლა გნებავთ შემოტანის პ
 
 #: src/operations.py:108
 msgid "Data that was outside of the highlighted area has been discarded"
-msgstr ""
+msgstr "მონაცემები, რომლებიც მონიშნული ადგილის გარეთ იყო, მოცილებულია"
 
 #: src/operations.py:142
 msgid "No data found within the highlighted area"
-msgstr ""
+msgstr "მონიშნულ ადგილში მონაცემები აღმოჩენილი არაა"
 
 #: src/operations.py:344
 msgid "Combined Data"
@@ -1509,7 +1522,7 @@ msgstr ""
 
 #: src/styles.py:710
 msgid "Are you sure you want to delete {self.style.get_name()}?"
-msgstr ""
+msgstr "მართლა გნებავთ, წაშალოთ {self.style.get_name()}?"
 
 #: src/styles.py:727
 msgid "Color {}"
