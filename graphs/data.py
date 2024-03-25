@@ -17,9 +17,9 @@ from graphs import actions, file_io, item, migrate, misc, utilities
 
 import numpy
 
-
 _FIGURE_SETTINGS_HISTORY_IGNORELIST = misc.LIMITS + [
-    "min_selected", "max_selected",
+    "min_selected",
+    "max_selected",
 ]
 
 
@@ -48,7 +48,7 @@ class Data(GObject.Object, Graphs.DataInterface):
 
     __gtype_name__ = "GraphsData"
     __gsignals__ = {
-        "items-ignored": (GObject.SIGNAL_RUN_FIRST, None, (str,)),
+        "items-ignored": (GObject.SIGNAL_RUN_FIRST, None, (str, )),
     }
 
     application = GObject.Property(type=object)
@@ -66,7 +66,8 @@ class Data(GObject.Object, Graphs.DataInterface):
             settings.get_child("figure"),
         )
         super().__init__(
-            application=application, figure_settings=figure_settings,
+            application=application,
+            figure_settings=figure_settings,
         )
         self.initialize()
         figure_settings.connect("notify", self._on_figure_settings_change)
@@ -126,7 +127,8 @@ class Data(GObject.Object, Graphs.DataInterface):
             return _("Draft")
         uri_parse = urlparse(self.project_file.get_uri())
         filepath = os.path.dirname(
-            os.path.join(uri_parse.netloc, unquote(uri_parse.path)))
+            os.path.join(uri_parse.netloc, unquote(uri_parse.path)),
+        )
         if filepath.startswith("/var"):
             # Fix for rpm-ostree distros, where home is placed in /var/home
             filepath = filepath.replace("/var", "", 1)
@@ -161,8 +163,10 @@ class Data(GObject.Object, Graphs.DataInterface):
         used_positions = [False, False, False, False]
 
         for item_ in self.items:
-            if (figure_settings.get_hide_unselected()
-                    and not item_.get_selected()):
+            if (
+                figure_settings.get_hide_unselected()
+                and not item_.get_selected()
+            ):
                 continue
             used_positions[item_.get_xposition()] = True
             used_positions[item_.get_yposition() + 2] = True
@@ -273,9 +277,12 @@ class Data(GObject.Object, Graphs.DataInterface):
         for new_item in items:
             item_name = new_item.get_name()
             if item_name in used_names:
-                new_item.set_name(utilities.get_duplicate_string(
-                    item_name, used_names,
-                ))
+                new_item.set_name(
+                    utilities.get_duplicate_string(
+                        item_name,
+                        used_names,
+                    ),
+                )
             used_names.add(new_item.get_name())
             xlabel = new_item.get_xlabel()
             if xlabel:
@@ -311,9 +318,8 @@ class Data(GObject.Object, Graphs.DataInterface):
                         break
 
             self._add_item(new_item)
-            self._current_batch.append(
-                (1, copy.deepcopy(new_item.to_dict())),
-            )
+            change = (1, copy.deepcopy(new_item.to_dict()))
+            self._current_batch.append(change)
         self.optimize_limits()
         self.add_history_state()
         if ignored:
@@ -363,27 +369,35 @@ class Data(GObject.Object, Graphs.DataInterface):
         self.notify("items_selected")
 
     def _on_item_change(self, item_, param) -> None:
-        self._current_batch.append((0, (
-            item_.get_uuid(), param.name,
-            copy.deepcopy(self._data_copy[item_.get_uuid()][param.name]),
-            copy.deepcopy(item_.get_property(param.name)),
-        )))
+        self._current_batch.append((
+            0,
+            (
+                item_.get_uuid(),
+                param.name,
+                copy.deepcopy(self._data_copy[item_.get_uuid()][param.name]),
+                copy.deepcopy(item_.get_property(param.name)),
+            ),
+        ))
 
     def _on_figure_settings_change(self, figure_settings, param) -> None:
         if param.name in _FIGURE_SETTINGS_HISTORY_IGNORELIST:
             return
-        self._current_batch.append((4, (
-            param.name,
-            copy.deepcopy(self._figure_settings_copy[param.name]),
-            copy.deepcopy(figure_settings.get_property(param.name)),
-        )))
+        self._current_batch.append((
+            4,
+            (
+                param.name,
+                copy.deepcopy(self._figure_settings_copy[param.name]),
+                copy.deepcopy(figure_settings.get_property(param.name)),
+            ),
+        ))
 
     def _set_data_copy(self) -> None:
         """Set a deep copy for the data"""
         self._current_batch: list = []
-        self._data_copy = copy.deepcopy(
-            {item_.get_uuid(): item_.to_dict() for item_ in self},
-        )
+        self._data_copy = copy.deepcopy({
+            item_.get_uuid(): item_.to_dict()
+            for item_ in self
+        })
         self._figure_settings_copy = copy.deepcopy({
             prop.replace("_", "-"):
             self.props.figure_settings.get_property(prop)
@@ -435,7 +449,8 @@ class Data(GObject.Object, Graphs.DataInterface):
                 items_changed = True
             elif change_type == 4:
                 self.props.figure_settings.set_property(
-                    change[0], change[1],
+                    change[0],
+                    change[1],
                 )
         if items_changed:
             self.notify("items")
@@ -471,7 +486,8 @@ class Data(GObject.Object, Graphs.DataInterface):
                 items_changed = True
             elif change_type == 4:
                 self.props.figure_settings.set_property(
-                    change[0], change[2],
+                    change[0],
+                    change[2],
                 )
         if items_changed:
             self.notify("items")
@@ -487,8 +503,8 @@ class Data(GObject.Object, Graphs.DataInterface):
         """Add the view to the view history"""
         limits = self.get_figure_settings().get_limits()
         if all(
-            math.isclose(old, new) for old, new
-            in zip(self._view_history_states[-1], limits)
+            math.isclose(old, new) for old,
+            new in zip(self._view_history_states[-1], limits)
         ):
             return
         # If a couple of redo's were performed previously, it deletes the
@@ -529,15 +545,18 @@ class Data(GObject.Object, Graphs.DataInterface):
     def optimize_limits(self) -> None:
         """Optimize the limits of the canvas to the data class"""
         figure_settings = self.get_figure_settings()
-        axes = [
-            [direction, False, [], [],
-             figure_settings.get_property(f"{direction}_scale")]
-            for direction in ("bottom", "left", "top", "right")
-        ]
+        axes = [[
+            direction,
+            False,
+            [],
+            [],
+            figure_settings.get_property(f"{direction}_scale"),
+        ] for direction in ("bottom", "left", "top", "right")]
         for item_ in self:
             if not isinstance(item_, item.DataItem) or (
-                    not item_.get_selected()
-                    and figure_settings.get_hide_unselected()):
+                not item_.get_selected()
+                and figure_settings.get_hide_unselected()
+            ):
                 continue
             for index in \
                     item_.get_xposition() * 2, 1 + item_.get_yposition() * 2:
@@ -552,9 +571,8 @@ class Data(GObject.Object, Graphs.DataInterface):
                 nonzero_data = \
                     numpy.array([value for value in xydata if value != 0])
                 axes[index][2].append(
-                    nonzero_data.min()
-                    if axes[index][4] in (1, 4) and len(nonzero_data) > 0
-                    else xydata.min(),
+                    nonzero_data.min() if axes[index][4] in (1, 4)
+                    and len(nonzero_data) > 0 else xydata.min(),
                 )
                 axes[index][3].append(xydata.max())
 
@@ -571,8 +589,10 @@ class Data(GObject.Object, Graphs.DataInterface):
                 max_all += padding_factor * span
 
                 # For inverse scale, calculate padding using a factor
-                min_all = (min_all - padding_factor * span if scale != 4
-                           else min_all * 0.99)
+                min_all = (
+                    min_all - padding_factor * span if scale != 4 else min_all
+                    * 0.99
+                )
             else:  # Use different scaling type for logarithmic scale
                 # Use padding factor of 2 for y-axis, 1.025 for x-axis
                 padding_factor = 2 if count % 2 else 1.025
@@ -585,23 +605,30 @@ class Data(GObject.Object, Graphs.DataInterface):
     def save(self) -> None:
         """Save the data class to project_file dictionary"""
         figure_settings = self.get_figure_settings()
-        file_io.write_json(self.props.project_file, {
-            "version": self.get_application().get_version(),
-            "data": [item_.to_dict() for item_ in self],
-            "figure-settings": {
-                key: figure_settings.get_property(key)
-                for key in dir(figure_settings.props)
+        file_io.write_json(
+            self.props.project_file,
+            {
+                "version": self.get_application().get_version(),
+                "data": [item_.to_dict() for item_ in self],
+                "figure-settings": {
+                    key: figure_settings.get_property(key)
+                    for key in dir(figure_settings.props)
+                },
+                "history-states": self._history_states,
+                "history-position": self._history_pos,
+                "view-history-states": self._view_history_states,
+                "view-history-position": self._view_history_pos,
             },
-            "history-states": self._history_states,
-            "history-position": self._history_pos,
-            "view-history-states": self._view_history_states,
-            "view-history-position": self._view_history_pos,
-        })
-        action = Gio.SimpleAction.new(
-            "open-file-location", None,
         )
-        action.connect("activate",
-                       actions.open_file_location, self.props.project_file)
+        action = Gio.SimpleAction.new(
+            "open-file-location",
+            None,
+        )
+        action.connect(
+            "activate",
+            actions.open_file_location,
+            self.props.project_file,
+        )
         self.get_application().add_action(action)
         toast = Adw.Toast.new(_("Saved Project"))
         toast.set_button_label(_("Open Location"))

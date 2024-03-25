@@ -12,7 +12,9 @@ from graphs.transform_data import TransformDialog
 
 
 def perform_operation(
-    _action, target: GLib.Variant, application: Graphs.Application,
+    _action,
+    target: GLib.Variant,
+    application: Graphs.Application,
 ):
     operation = target.get_string().removesuffix("_button")
     if operation in ("combine", ):
@@ -33,10 +35,12 @@ def perform_operation(
         args += [params]
     elif operation == "shift":
         figure_settings = application.get_data().get_figure_settings()
-        right_range = (figure_settings.get_max_right()
-                       - figure_settings.get_min_right())
-        left_range = (figure_settings.get_max_left()
-                      - figure_settings.get_min_left())
+        right_range = (
+            figure_settings.get_max_right() - figure_settings.get_min_right()
+        )
+        left_range = (
+            figure_settings.get_max_left() - figure_settings.get_min_left()
+        )
         args += [
             figure_settings.get_left_scale(),
             figure_settings.get_right_scale(),
@@ -46,26 +50,34 @@ def perform_operation(
     elif "translate" in operation or "multiply" in operation:
         window = application.get_window()
         try:
-            args += [utilities.string_to_float(
-                window.get_property(operation + "_entry").get_text(),
-            )]
+            args += [
+                utilities.string_to_float(
+                    window.get_property(operation + "_entry").get_text(),
+                ),
+            ]
         except ValueError as error:
             window.add_toast_string(str(error))
             return
     operations.perform_operation(
-        application, getattr(operations, operation), *args,
+        application,
+        getattr(operations, operation),
+        *args,
     )
 
 
 def toggle_sidebar(
-    _action, _shortcut, application: Graphs.Application,
+    _action,
+    _shortcut,
+    application: Graphs.Application,
 ) -> None:
     split_view = application.get_window().get_split_view()
     split_view.set_collapsed(not split_view.get_collapsed())
 
 
 def change_scale(
-    action: Gio.Action, target: GLib.Variant, application: Graphs.Application,
+    action: Gio.Action,
+    target: GLib.Variant,
+    application: Graphs.Application,
 ) -> None:
     data = application.get_data()
     visible_axes = data.get_used_positions()
@@ -78,14 +90,18 @@ def change_scale(
         directions = ["left", "right"]
     for direction in directions:
         data.get_figure_settings().set_property(
-            f"{direction}-scale", int(target.get_string()),
+            f"{direction}-scale",
+            int(target.get_string()),
         )
     application.get_window().get_canvas().get_parent().grab_focus()
     data.add_history_state()
 
 
 def set_mode(
-    _action, _target, application: Graphs.Application, mode: str,
+    _action,
+    _target,
+    application: Graphs.Application,
+    mode: str,
 ) -> None:
     application.set_mode(mode)
 
@@ -99,25 +115,33 @@ def about_action(_action, _target, application: Graphs.Application) -> None:
 
 
 def figure_settings_action(
-    _action, _target, application: Graphs.Application,
+    _action,
+    _target,
+    application: Graphs.Application,
 ) -> None:
     FigureSettingsDialog(application)
 
 
 def add_data_action(
-    _action, _target, application: Graphs.Application,
+    _action,
+    _target,
+    application: Graphs.Application,
 ) -> None:
     ui.add_data_dialog(application)
 
 
 def add_equation_action(
-    _action, _target, application: Graphs.Application,
+    _action,
+    _target,
+    application: Graphs.Application,
 ) -> None:
     AddEquationDialog(application)
 
 
 def select_all_action(
-    _action, _target, application: Graphs.Application,
+    _action,
+    _target,
+    application: Graphs.Application,
 ) -> None:
     data = application.get_data()
     for item in data:
@@ -126,7 +150,9 @@ def select_all_action(
 
 
 def select_none_action(
-    _action, _target, application: Graphs.Application,
+    _action,
+    _target,
+    application: Graphs.Application,
 ) -> None:
     data = application.get_data()
     for item in data:
@@ -143,13 +169,17 @@ def redo_action(_action, _target, application: Graphs.Application) -> None:
 
 
 def optimize_limits_action(
-    _action, _target, application: Graphs.Application,
+    _action,
+    _target,
+    application: Graphs.Application,
 ) -> None:
     application.get_data().optimize_limits()
 
 
 def view_back_action(
-    _action, _target, application: Graphs.Application,
+    _action,
+    _target,
+    application: Graphs.Application,
 ) -> None:
     data = application.get_data()
     if data.props.can_view_back:
@@ -157,7 +187,9 @@ def view_back_action(
 
 
 def view_forward_action(
-    _action, _target, application: Graphs.Application,
+    _action,
+    _target,
+    application: Graphs.Application,
 ) -> None:
     data = application.get_data()
     if data.props.can_view_forward:
@@ -165,22 +197,29 @@ def view_forward_action(
 
 
 def export_data_action(
-    _action, _target, application: Graphs.Application,
+    _action,
+    _target,
+    application: Graphs.Application,
 ) -> None:
     ui.export_data_dialog(application)
 
 
 def export_figure_action(
-    _action, _target, application: Graphs.Application,
+    _action,
+    _target,
+    application: Graphs.Application,
 ) -> None:
     ExportFigureDialog(application)
 
 
 def new_project_action(
-    _action, _target, application: Graphs.Application,
+    _action,
+    _target,
+    application: Graphs.Application,
 ) -> None:
     """Clear the current project and reset Graphs to the initial state"""
     if application.get_data().props.unsaved:
+
         def on_response(_dialog, response):
             application.save_handler = application.connect(
                 "project-saved",
@@ -201,19 +240,25 @@ def new_project_action(
 
 
 def save_project_action(
-    _action, _target, application: Graphs.Application,
+    _action,
+    _target,
+    application: Graphs.Application,
 ) -> None:
     file_io.save_project(application)
 
 
 def save_project_as_action(
-    _action, _target, application: Graphs.Application,
+    _action,
+    _target,
+    application: Graphs.Application,
 ) -> None:
     file_io.save_project(application, require_dialog=True)
 
 
 def smoothen_settings_action(
-    _action, _target, application: Graphs.Application,
+    _action,
+    _target,
+    application: Graphs.Application,
 ) -> None:
     Graphs.SmoothenDialog.new(application)
 
@@ -229,9 +274,12 @@ def zoom_out_action(_action, _target, application: Graphs.Application) -> None:
 
 
 def open_project_action(
-    _action, _target, application: Graphs.Application,
+    _action,
+    _target,
+    application: Graphs.Application,
 ) -> None:
     if application.get_data().props.unsaved:
+
         def on_response(_dialog, response):
             if response == "discard_close":
                 ui.open_project_dialog(application)
@@ -250,7 +298,9 @@ def open_project_action(
 
 
 def delete_selected_action(
-    _action, _target, application: Graphs.Application,
+    _action,
+    _target,
+    application: Graphs.Application,
 ) -> None:
     items = [item for item in application.get_data() if item.get_selected()]
     names = ", ".join(item.get_name() for item in items)

@@ -10,15 +10,24 @@ from matplotlib import RcParams, cbook
 from matplotlib.font_manager import font_scalings, weight_dict
 from matplotlib.style.core import STYLE_BLACKLIST
 
-
 STYLE_IGNORELIST = [
-    "savefig.dpi", "savefig.facecolor", "savefig.edgecolor", "savefig.format",
-    "savefix.bbox", "savefig.pad_inches", "savefig.transparent",
+    "savefig.dpi",
+    "savefig.facecolor",
+    "savefig.edgecolor",
+    "savefig.format",
+    "savefix.bbox",
+    "savefig.pad_inches",
+    "savefig.transparent",
     "savefig.orientation",
 ]
 FONT_SIZE_KEYS = [
-    "font.size", "axes.labelsize", "xtick.labelsize", "ytick.labelsize",
-    "legend.fontsize", "figure.labelsize", "figure.titlesize",
+    "font.size",
+    "axes.labelsize",
+    "xtick.labelsize",
+    "ytick.labelsize",
+    "legend.fontsize",
+    "figure.labelsize",
+    "figure.titlesize",
     "axes.titlesize",
 ]
 
@@ -90,9 +99,13 @@ def parse(file: Gio.File) -> (RcParams, str):
 
 
 WRITE_IGNORELIST = STYLE_IGNORELIST + [
-    "lines.dashdot_pattern", "lines.dashed_pattern",
-    "lines.dotted_pattern", "lines.dash_capstyle", "lines.dash_joinstyle",
-    "lines.solid_capstyle", "lines.solid_joinstyle",
+    "lines.dashdot_pattern",
+    "lines.dashed_pattern",
+    "lines.dotted_pattern",
+    "lines.dash_capstyle",
+    "lines.dash_joinstyle",
+    "lines.solid_capstyle",
+    "lines.solid_joinstyle",
 ]
 
 

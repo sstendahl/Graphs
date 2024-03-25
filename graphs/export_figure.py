@@ -25,12 +25,15 @@ class ExportFigureDialog(Adw.Dialog):
         valid_formats.pop("Raw RGBA bitmap")
         valid_formats.pop("PGF code for LaTeX")
         super().__init__(
-            application=application, file_formats=valid_formats,
+            application=application,
+            file_formats=valid_formats,
         )
         self.file_format.set_model(
-            Gtk.StringList.new(list(self.file_formats.keys())))
+            Gtk.StringList.new(list(self.file_formats.keys())),
+        )
         ui.bind_values_to_settings(
-            application.get_settings_child("export-figure"), self,
+            application.get_settings_child("export-figure"),
+            self,
         )
         self.on_file_format(None, None)
         self.file_format.connect("notify::selected", self.on_file_format)
@@ -53,15 +56,20 @@ class ExportFigureDialog(Adw.Dialog):
                 file = dialog.save_finish(response)
                 with file_io.open_wrapped(file, "wb") as wrapper:
                     self._canvas.figure.savefig(
-                        wrapper, format=file_suffixes[0],
+                        wrapper,
+                        format=file_suffixes[0],
                         dpi=int(self.dpi.get_value()),
                         transparent=self.transparent.get_active(),
                     )
                     action = Gio.SimpleAction.new(
-                        "open-file-location", None,
+                        "open-file-location",
+                        None,
                     )
-                    action.connect("activate",
-                                   actions.open_file_location, file)
+                    action.connect(
+                        "activate",
+                        actions.open_file_location,
+                        file,
+                    )
                     self.props.application.add_action(action)
                     toast = Adw.Toast.new(_("Exported Figure"))
                     toast.set_button_label(_("Open Location"))
@@ -72,6 +80,7 @@ class ExportFigureDialog(Adw.Dialog):
         dialog = Gtk.FileDialog()
         dialog.set_initial_name(f"{filename}.{file_suffixes[0]}")
         dialog.set_accept_label(_("Export"))
-        dialog.set_filters(utilities.create_file_filters(
-            [(file_format, file_suffixes)]))
+        dialog.set_filters(
+            utilities.create_file_filters([(file_format, file_suffixes)]),
+        )
         dialog.save(self.props.application.get_window(), None, on_response)

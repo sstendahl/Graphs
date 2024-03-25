@@ -13,15 +13,18 @@ from gi.repository import Adw, GObject, Gio, Graphs, Gtk
 from graphs import parse_file, ui, utilities
 from graphs.misc import ParseError
 
-
 _IMPORT_MODES = {
     # name: suffix
-    "project": ".graphs", "xrdml": ".xrdml", "xry": ".xry", "columns": None,
+    "project": ".graphs",
+    "xrdml": ".xrdml",
+    "xry": ".xry",
+    "columns": None,
 }
 
 
 def import_from_files(
-    application: Graphs.Application, files: list[Gio.File],
+    application: Graphs.Application,
+    files: list[Gio.File],
 ) -> None:
     """
     Import from a list of files.
@@ -46,13 +49,18 @@ def import_from_files(
         _ImportDialog(application, settings, configurable_modes, import_dict)
     else:
         _import_from_files(
-            application, settings, configurable_modes, import_dict,
+            application,
+            settings,
+            configurable_modes,
+            import_dict,
         )
 
 
 def _import_from_files(
-    application: Graphs.Application, settings: Gio.Settings,
-    configurable_modes: list[str], import_dict: dict,
+    application: Graphs.Application,
+    settings: Gio.Settings,
+    configurable_modes: list[str],
+    import_dict: dict,
 ):
     items = []
     style = application.get_figure_style_manager().get_selected_style_params()
@@ -87,17 +95,24 @@ class _ImportDialog(Adw.Dialog):
     application = GObject.Property(type=Graphs.Application)
 
     def __init__(
-        self, application: Graphs.Application, settings: Gio.Settings,
-        modes: list[str], import_dict: dict,
+        self,
+        application: Graphs.Application,
+        settings: Gio.Settings,
+        modes: list[str],
+        import_dict: dict,
     ):
         super().__init__(
             application=application,
-            import_dict=import_dict, modes=modes, settings=settings,
+            import_dict=import_dict,
+            modes=modes,
+            settings=settings,
         )
 
         for mode in modes:
             ui.bind_values_to_settings(
-                settings.get_child(mode), self, prefix=f"{mode}_",
+                settings.get_child(mode),
+                self,
+                prefix=f"{mode}_",
             )
             getattr(self, f"{mode}_group").set_visible(True)
         self.present(application.get_window())
@@ -109,9 +124,11 @@ class _ImportDialog(Adw.Dialog):
 
     @Gtk.Template.Callback()
     def on_reset(self, _widget) -> None:
+
         def on_accept(_dialog, response):
             if response == "reset":
                 self.reset_import()
+
         body = _("Are you sure you want to reset the import settings?")
         dialog = ui.build_dialog("reset_to_defaults")
         dialog.set_body(body)
@@ -125,8 +142,10 @@ class _ImportDialog(Adw.Dialog):
     @Gtk.Template.Callback()
     def on_accept(self, _widget) -> None:
         _import_from_files(
-            self.props.application, self.props.settings,
-            self.props.modes, self.props.import_dict,
+            self.props.application,
+            self.props.settings,
+            self.props.modes,
+            self.props.import_dict,
         )
         self.close()
 

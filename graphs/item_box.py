@@ -22,18 +22,25 @@ class ItemBox(Gtk.Box):
 
     def __init__(self, application, item, index):
         super().__init__(
-            application=application, item=item, index=index,
+            application=application,
+            item=item,
+            index=index,
         )
         self.props.item.bind_property("name", self.label, "label", 2)
         self.props.item.bind_property(
-            "selected", self.check_button, "active", 2,
+            "selected",
+            self.check_button,
+            "active",
+            2,
         )
         self.gesture = Gtk.GestureClick()
         self.gesture.set_button(0)
         self.add_controller(self.gesture)
         self.provider = Gtk.CssProvider()
         self.color_button.get_style_context().add_provider(
-            self.provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION)
+            self.provider,
+            Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION,
+        )
         self.drag_source = Gtk.DragSource.new()
         self.drag_source.set_actions(Gdk.DragAction.COPY)
         self.drag_source.connect("prepare", self.on_dnd_prepare)
@@ -84,7 +91,8 @@ class ItemBox(Gtk.Box):
             "button { "
             f"color: {item.get_color()}; "
             f"opacity: {item.get_alpha()}; "
-            "}", -1,
+            "}",
+            -1,
         )
 
     def curve_fitting(self, _action, _shortcut) -> None:
@@ -113,8 +121,11 @@ class ItemBox(Gtk.Box):
         rgba.alpha = self.props.item.get_alpha()
         dialog = Gtk.ColorDialog()
         dialog.choose_rgba(
-            self.get_application().get_window(), rgba,
-            None, self.on_color_dialog_accept)
+            self.get_application().get_window(),
+            rgba,
+            None,
+            self.on_color_dialog_accept,
+        )
 
     def on_color_dialog_accept(self, dialog, result) -> None:
         with contextlib.suppress(GLib.GError):

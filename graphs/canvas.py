@@ -79,7 +79,9 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
     max_selected = GObject.Property(type=float, default=0)
 
     def __init__(
-        self, application: Graphs.Application, style_params: dict,
+        self,
+        application: Graphs.Application,
+        style_params: dict,
         interactive: bool = True,
     ):
         """
@@ -92,7 +94,10 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
         self._style_params = style_params
         pyplot.rcParams.update(self._style_params)  # apply style_params
         GObject.Object.__init__(
-            self, application=application, can_focus=False, items=[],
+            self,
+            application=application,
+            can_focus=False,
+            items=[],
         )
         super().__init__()
         self.figure.set_tight_layout(True)
@@ -102,8 +107,10 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
         self._right_axis = self._axis.twinx()
         self._top_right_axis = self._top_left_axis.twinx()
         self.axes = [
-            self._axis, self._top_left_axis,
-            self._right_axis, self._top_right_axis,
+            self._axis,
+            self._top_left_axis,
+            self._right_axis,
+            self._top_right_axis,
         ]
         self._legend_axis = self._axis
         color_rgba = self.get_style_context().lookup_color("accent_color")[1]
@@ -123,14 +130,18 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
             self._xfrac, self._yfrac = None, None
             zoom_gesture = Gtk.GestureZoom.new()
             zoom_gesture.connect("scale-changed", self._on_zoom_gesture)
-            zoom_gesture.connect("end",
-                                 self.figure.canvas.toolbar.push_current)
+            zoom_gesture.connect(
+                "end",
+                self.figure.canvas.toolbar.push_current,
+            )
             scroll_gesture =  \
                 Gtk.EventControllerScroll.new(
                     Gtk.EventControllerScrollFlags.BOTH_AXES)
             scroll_gesture.connect("scroll", self._on_pan_gesture)
-            scroll_gesture.connect("scroll-end",
-                                   self.figure.canvas.toolbar.push_current)
+            scroll_gesture.connect(
+                "scroll-end",
+                self.figure.canvas.toolbar.push_current,
+            )
             self.add_controller(zoom_gesture)
             self.add_controller(scroll_gesture)
 
@@ -139,7 +150,8 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
         for item in ("min", "max"):
             self.connect(
                 f"notify::{item}-selected",
-                lambda _a, _b: self.highlight.load(self),
+                lambda _a,
+                _b: self.highlight.load(self),
             )
 
     def get_application(self) -> Graphs.Application:
@@ -152,9 +164,17 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
             xlim = self._top_right_axis.get_xlim()
             ylim = self._top_right_axis.get_ylim()
             self._xfrac = utilities.get_fraction_at_value(
-                event.xdata, xlim[0], xlim[1], self.top_scale)
+                event.xdata,
+                xlim[0],
+                xlim[1],
+                self.top_scale,
+            )
             self._yfrac = utilities.get_fraction_at_value(
-                event.ydata, ylim[0], ylim[1], self.right_scale)
+                event.ydata,
+                ylim[0],
+                ylim[1],
+                self.right_scale,
+            )
         else:
             self._xfrac, self._yfrac = None, None
 
@@ -189,8 +209,9 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
         canvas if ctrl is selected.
         """
         if self.get_application().get_ctrl() is True:
-            self.zoom(1 / _SCROLL_SCALE
-                      if event.button == "up" else _SCROLL_SCALE)
+            self.zoom(
+                1 / _SCROLL_SCALE if event.button == "up" else _SCROLL_SCALE,
+            )
 
     def zoom(self, scaling: float = 1.15, respect_mouse: bool = True) -> None:
         """
@@ -203,19 +224,29 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
         if self._xfrac is None or self._yfrac is None:
             return
         for ax in self.axes:
-            ax.set_xlim(self._calculate_zoomed_values(
-                self._xfrac, scales.to_int(ax.get_xscale()),
-                ax.get_xlim(), scaling,
-            ))
-            ax.set_ylim(self._calculate_zoomed_values(
-                self._yfrac, scales.to_int(ax.get_yscale()),
-                ax.get_ylim(), scaling,
-            ))
+            ax.set_xlim(
+                self._calculate_zoomed_values(
+                    self._xfrac,
+                    scales.to_int(ax.get_xscale()),
+                    ax.get_xlim(),
+                    scaling,
+                ),
+            )
+            ax.set_ylim(
+                self._calculate_zoomed_values(
+                    self._yfrac,
+                    scales.to_int(ax.get_yscale()),
+                    ax.get_ylim(),
+                    scaling,
+                ),
+            )
         self.queue_draw()
 
     @staticmethod
     def _calculate_pan_values(
-        ax: pyplot.axis, x_panspeed: float, y_panspeed: float,
+        ax: pyplot.axis,
+        x_panspeed: float,
+        y_panspeed: float,
     ) -> None:
         """
         Calculates the coordinates of the canvas after a panning gesture has
@@ -227,16 +258,28 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
         y_scale = scales.to_int(ax.get_yscale())
         pan_scale = 0.002
         xvalue1 = utilities.get_value_at_fraction(
-            x_panspeed * pan_scale, xmin, xmax, x_scale,
+            x_panspeed * pan_scale,
+            xmin,
+            xmax,
+            x_scale,
         )
         xvalue2 = utilities.get_value_at_fraction(
-            1 + x_panspeed * pan_scale, xmin, xmax, x_scale,
+            1 + x_panspeed * pan_scale,
+            xmin,
+            xmax,
+            x_scale,
         )
         yvalue1 = utilities.get_value_at_fraction(
-            -y_panspeed * pan_scale, ymin, ymax, y_scale,
+            -y_panspeed * pan_scale,
+            ymin,
+            ymax,
+            y_scale,
         )
         yvalue2 = utilities.get_value_at_fraction(
-            1 - y_panspeed * pan_scale, ymin, ymax, y_scale,
+            1 - y_panspeed * pan_scale,
+            ymin,
+            ymax,
+            y_scale,
         )
         if x_scale == 4:
             xvalue1, xvalue2 = xvalue2, xvalue1
@@ -246,7 +289,10 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
 
     @staticmethod
     def _calculate_zoomed_values(
-        fraction: float, scale: float, limit: float, zoom_factor: float,
+        fraction: float,
+        scale: float,
+        limit: float,
+        zoom_factor: float,
     ) -> tuple[float, float]:
         """
         Calculates the coordinates of the canvas after a zoom gesture
@@ -254,10 +300,16 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
         """
         min_, max_ = limit[0], limit[1]
         value1 = utilities.get_value_at_fraction(
-            fraction - fraction / zoom_factor, min_, max_, scale,
+            fraction - fraction / zoom_factor,
+            min_,
+            max_,
+            scale,
         )
         value2 = utilities.get_value_at_fraction(
-            fraction + (1 - fraction) / zoom_factor, min_, max_, scale,
+            fraction + (1 - fraction) / zoom_factor,
+            min_,
+            max_,
+            scale,
         )
         if scale == 4:
             value1, value2 = value2, value1
@@ -270,17 +322,23 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
         Fixes a UI scaling bug, see
         https://gitlab.gnome.org/World/Graphs/-/issues/259
         """
-        with (self.toolbar._wait_cursor_for_draw_cm() if self.toolbar
-              else nullcontext()):
+        with (
+            self.toolbar._wait_cursor_for_draw_cm()
+            if self.toolbar else nullcontext()
+        ):
             self._renderer.set_context(ctx)
             scale = self.device_pixel_ratio
             # Scale physical drawing to logical size.
             ctx.scale(1 / scale, 1 / scale)
             allocation = self.get_allocation()
             Gtk.render_background(
-                self.get_style_context(), ctx,
-                allocation.x, allocation.y,
-                allocation.width, allocation.height)
+                self.get_style_context(),
+                ctx,
+                allocation.x,
+                allocation.y,
+                allocation.width,
+                allocation.height,
+            )
             self._renderer.width = allocation.width * scale
             self._renderer.height = allocation.height * scale
             self._renderer.dpi = self.figure.dpi
@@ -307,10 +365,10 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
             visible_axes[2 + yposition] = True
             used_axes[xposition + 2 * yposition] = True
         axes_directions = (
-            ("bottom", "left"),   # axis
-            ("top", "left"),      # top_left_axis
+            ("bottom", "left"),  # axis
+            ("top", "left"),  # top_left_axis
             ("bottom", "right"),  # right_axis
-            ("top", "right"),     # top_right_axis
+            ("top", "right"),  # top_right_axis
         )
 
         if not any(visible_axes):
@@ -327,14 +385,22 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
             axis.get_yaxis().set_visible(False)
             # Set tick where requested, as long as that axis is not occupied
             # and visible
-            if (params[f"xtick.{directions[0]}"]
-                    or params[f"ytick.{directions[1]}"]):
-                axis.tick_params(which=ticks, **{
-                    direction: (draw_frame and not visible_axes[i]
-                                or direction in directions)
-                    and params[f"{'x' if i < 2 else 'y'}tick.{direction}"]
-                    for i, direction in enumerate(misc.DIRECTIONS)
-                })
+            if (
+                params[f"xtick.{directions[0]}"]
+                or params[f"ytick.{directions[1]}"]
+            ):
+                axis.tick_params(
+                    which=ticks,
+                    **{
+                        direction: (
+                            draw_frame and not visible_axes[i]
+                            or direction in directions
+                        )
+                        and params[f"{'x' if i < 2 else 'y'}tick.{direction}"]
+                        for i,
+                        direction in enumerate(misc.DIRECTIONS)
+                    },
+                )
             for handle in axis.lines + axis.texts:
                 handle.remove()
             axis_legend = axis.get_legend()
@@ -404,8 +470,10 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
             ]
             if handles:
                 self._legend_axis.legend(
-                    handles=handles, loc=self._legend_position,
-                    frameon=True, reverse=True,
+                    handles=handles,
+                    loc=self._legend_position,
+                    frameon=True,
+                    reverse=True,
                 )
                 self.queue_draw()
                 return
@@ -682,8 +750,13 @@ class _DummyToolbar(NavigationToolbar2):
             # button, as multiple buttons can get pressed during motion.
             # Use custom drag_pan that maxes sure limits are set in right order
             # even on inverted scale
-            self.ax_drag_pan(ax, self._pan_info.button, event.key, event.x,
-                             event.y)
+            self.ax_drag_pan(
+                ax,
+                self._pan_info.button,
+                event.key,
+                event.x,
+                event.y,
+            )
         self.canvas.draw_idle()
 
     @staticmethod
@@ -716,8 +789,8 @@ class _DummyToolbar(NavigationToolbar2):
     # Overwritten function - do not change name
     def draw_rubberband(self, _event, x0, y0, x1, y1) -> None:
         self.canvas._rubberband_rect = [
-            int(val) for val
-            in (x0, self.canvas.figure.bbox.height - y0, x1 - x0, y0 - y1)
+            int(val) for val in
+            (x0, self.canvas.figure.bbox.height - y0, x1 - x0, y0 - y1)
         ]
         self.canvas.queue_draw()
 
@@ -741,10 +814,12 @@ class _DummyToolbar(NavigationToolbar2):
 
 
 class _Highlight(SpanSelector):
+
     def __init__(self, canvas: Canvas):
         super().__init__(
             canvas.axes[3],
-            lambda _x, _y: self.apply(canvas),
+            lambda _x,
+            _y: self.apply(canvas),
             "horizontal",
             useblit=True,
             props={
@@ -763,10 +838,16 @@ class _Highlight(SpanSelector):
         scale = canvas.props.top_scale
         self.extents = (
             utilities.get_value_at_fraction(
-                canvas.min_selected, xmin, xmax, scale,
+                canvas.min_selected,
+                xmin,
+                xmax,
+                scale,
             ),
             utilities.get_value_at_fraction(
-                canvas.max_selected, xmin, xmax, scale,
+                canvas.max_selected,
+                xmin,
+                xmax,
+                scale,
             ),
         )
 
@@ -780,6 +861,9 @@ class _Highlight(SpanSelector):
             canvas.set_property(
                 prefix + "selected",
                 utilities.get_fraction_at_value(
-                    value, xmin, xmax, canvas.props.top_scale,
+                    value,
+                    xmin,
+                    xmax,
+                    canvas.props.top_scale,
                 ),
             )

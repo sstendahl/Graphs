@@ -25,7 +25,9 @@ class TransformDialog(Adw.Dialog):
         self.discard.set_visible(application.get_mode() == 2)
         self.present(application.get_window())
         self.help_button.connect(
-            "clicked", lambda _x: self.help_popover.popup())
+            "clicked",
+            lambda _x: self.help_popover.popup(),
+        )
 
     @Gtk.Template.Callback()
     def on_accept(self, _widget) -> None:
@@ -34,11 +36,17 @@ class TransformDialog(Adw.Dialog):
             input_y = str(self.transform_y_entry.get_text())
             discard = self.discard.get_active()
             operations.perform_operation(
-                self.props.application, operations.transform,
-                input_x, input_y, discard)
+                self.props.application,
+                operations.transform,
+                input_x,
+                input_y,
+                discard,
+            )
         except (RuntimeError, KeyError) as exception:
-            toast = _("{name}: Unable to do transformation, \
-make sure the syntax is correct").format(name=exception.__class__.__name__)
+            toast = _(
+                "{name}: Unable to do transformation, \
+make sure the syntax is correct",
+            ).format(name=exception.__class__.__name__)
             self.props.application.get_window().add_toast_string(toast)
             logging.exception(_("Unable to do transformation"))
         self.close()

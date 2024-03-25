@@ -33,19 +33,28 @@ def get_data(application: Graphs.Application, item: DataItem):
             xmax = figure_settings.get_max_top()
             scale = figure_settings.get_top_scale()
         startx = utilities.get_value_at_fraction(
-            figure_settings.get_min_selected(), xmin, xmax, scale,
+            figure_settings.get_min_selected(),
+            xmin,
+            xmax,
+            scale,
         )
         stopx = utilities.get_value_at_fraction(
-            figure_settings.get_max_selected(), xmin, xmax, scale,
+            figure_settings.get_max_selected(),
+            xmin,
+            xmax,
+            scale,
         )
         # If startx and stopx are not out of range, that is,
         # if the item data is within the highlight
-        if not ((startx < min(new_xdata) and stopx < min(new_xdata)) or (
-                startx > max(new_xdata))):
-            new_xdata, new_ydata = \
-                filter_data(new_xdata, new_ydata, ">=", startx)
-            new_xdata, new_ydata = \
-                filter_data(new_xdata, new_ydata, "<=", stopx)
+        new_min = min(new_xdata)
+        a = startx < new_min and stopx < new_min
+        if not (a or (startx > max(new_xdata))):
+            new_xdata, new_ydata = filter_data(
+                new_xdata, new_ydata, ">=", startx,
+            )
+            new_xdata, new_ydata = filter_data(
+                new_xdata, new_ydata, "<=", stopx,
+            )
         else:
             new_xdata = None
             new_ydata = None
@@ -53,7 +62,10 @@ def get_data(application: Graphs.Application, item: DataItem):
 
 
 def filter_data(
-    xdata: list, ydata: list, condition: str, value: float,
+    xdata: list,
+    ydata: list,
+    condition: str,
+    value: float,
 ) -> list:
     """Filter coordinates based on the given condition."""
     xdata = numpy.array(xdata)
@@ -82,18 +94,24 @@ def create_data_mask(xdata1: list, ydata1: list, xdata2: list, ydata2: list):
     """
     xdata1, ydata1, xdata2, ydata2 = \
         map(numpy.array, [xdata1, ydata1, xdata2, ydata2])
-    return numpy.any(
-        (xdata1[:, None] == xdata2) & (ydata1[:, None] == ydata2), axis=1)
+    return numpy.any((xdata1[:, None] == xdata2) & (ydata1[:, None] == ydata2),
+                     axis=1)
 
 
 def sort_data(xdata: list, ydata: list) -> (list, list):
-    return map(list, zip(*sorted(
-        zip(xdata, ydata), key=lambda x_values: x_values[0],
-    )))
+    return map(
+        list,
+        zip(*sorted(
+            zip(xdata, ydata),
+            key=lambda x_values: x_values[0],
+        )),
+    )
 
 
 def perform_operation(
-    application: Graphs.Application, callback, *args,
+    application: Graphs.Application,
+    callback,
+    *args,
 ) -> None:
     data_selected = False
     data = application.get_data()
@@ -112,17 +130,21 @@ def perform_operation(
             if discard:
                 logging.debug("Discard is true")
                 application.get_window().add_toast_string(
-                    _("Data that was outside of the highlighted area has been"
-                      " discarded"))
+                    _(
+                        "Data that was outside of the highlighted area has"
+                        " been discarded",
+                    ),
+                )
                 item.props.xdata = new_xdata
                 item.props.ydata = new_ydata
             else:
                 logging.debug("Discard is false")
-                mask = create_data_mask(item.props.xdata,
-                                        item.props.ydata,
-                                        xdata,
-                                        ydata,
-                                        )
+                mask = create_data_mask(
+                    item.props.xdata,
+                    item.props.ydata,
+                    xdata,
+                    ydata,
+                )
 
                 if new_xdata == []:  # If cut action was performed
                     remove_list = \
@@ -202,16 +224,22 @@ def normalize(_item, xdata: list, ydata: list) -> _return:
 
 
 def smoothen(
-    _item, xdata: list, ydata: list, smooth_type: int, params: dict,
+    _item,
+    xdata: list,
+    ydata: list,
+    smooth_type: int,
+    params: dict,
 ) -> None:
     """Smoothen y-data."""
     if smooth_type == 0:
         minimum = params["savgol-polynomial"] + 1
         window_percentage = params["savgol-window"] / 100
         window = max(minimum, int(len(xdata) * window_percentage))
-        new_ydata = scipy.signal.savgol_filter(ydata,
-                                               window,
-                                               params["savgol-polynomial"])
+        new_ydata = scipy.signal.savgol_filter(
+            ydata,
+            window,
+            params["savgol-polynomial"],
+        )
     elif smooth_type == 1:
         box_points = params["moving-average-box"]
         box = numpy.ones(box_points) / box_points
@@ -235,8 +263,13 @@ def center(_item, xdata: list, ydata: list, center_maximum: int) -> _return:
 
 
 def shift(
-    item, xdata: list, ydata: list, left_scale: int, right_scale: int,
-    items: misc.ItemList, ranges: tuple[float, float],
+    item,
+    xdata: list,
+    ydata: list,
+    left_scale: int,
+    right_scale: int,
+    items: misc.ItemList,
+    ranges: tuple[float, float],
 ) -> _return:
     """
     Shifts data vertically with respect to each other
@@ -261,8 +294,10 @@ def shift(
 
         # Only use selected span when obtaining values to determine shift value
         new_xdata, new_ydata = xdata, ydata
-        if (min(xdata) >= min(previous_item.xdata)
-                and max(xdata) <= max(previous_item.xdata)):
+        if (
+            min(xdata) >= min(previous_item.xdata)
+            and max(xdata) <= max(previous_item.xdata)
+        ):
             new_xdata, new_ydata = filter_data(
                 previous_item.xdata, previous_item.ydata, ">=", min(xdata))
             new_xdata, new_ydata = filter_data(
@@ -279,7 +314,7 @@ def shift(
             shift_value_linear += (ymax - ymin) + 0.1 * y_range
         if item.get_uuid() == item_.get_uuid():
             if scale == 1:  # Log scaling
-                new_ydata = [value * 10 ** shift_value_log for value in ydata]
+                new_ydata = [value * 10**shift_value_log for value in ydata]
             else:
                 new_ydata = [value + shift_value_linear for value in ydata]
             return xdata, new_ydata, False, False
@@ -304,7 +339,9 @@ def integral(_item, xdata: list, ydata: list) -> _return:
     x_values = numpy.array(xdata)
     y_values = numpy.array(ydata)
     indefinite_integral = scipy.integrate.cumulative_trapezoid(
-        y_values, x_values, initial=0,
+        y_values,
+        x_values,
+        initial=0,
     ).tolist()
     return xdata, indefinite_integral, False, True
 
@@ -330,20 +367,28 @@ def inverse_fft(_item, xdata: list, ydata: list) -> _return:
 
 
 def transform(
-    _item, xdata: list, ydata: list, input_x: str, input_y: str,
+    _item,
+    xdata: list,
+    ydata: list,
+    input_x: str,
+    input_y: str,
     discard: bool = False,
 ) -> _return:
     local_dict = {
-        "x": xdata, "y": ydata,
-        "x_min": min(xdata), "x_max": max(xdata),
-        "y_min": min(ydata), "y_max": max(ydata),
+        "x": xdata,
+        "y": ydata,
+        "x_min": min(xdata),
+        "x_max": max(xdata),
+        "y_min": min(ydata),
+        "y_max": max(ydata),
     }
     # Add array of zeros to return values, such that output remains a list
     # of the correct size, even when a float is given as input.
     return (
         numexpr.evaluate(utilities.preprocess(input_x) + "+ 0*x", local_dict),
         numexpr.evaluate(utilities.preprocess(input_y) + "+ 0*y", local_dict),
-        True, discard,
+        True,
+        discard,
     )
 
 
@@ -360,6 +405,6 @@ def combine(application: Graphs.Application) -> None:
     # Create the item itself
     new_xdata, new_ydata = sort_data(new_xdata, new_ydata)
     style = application.get_figure_style_manager().get_selected_style_params()
-    application.get_data().add_items(
-        [DataItem.new(style, new_xdata, new_ydata, name=_("Combined Data"))],
-    )
+    application.get_data().add_items([
+        DataItem.new(style, new_xdata, new_ydata, name=_("Combined Data")),
+    ])

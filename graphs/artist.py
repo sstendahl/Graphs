@@ -18,7 +18,8 @@ def new_for_item(canvas: Graphs.CanvasInterface, item: Graphs.Item):
         case _:
             pass
     artist_wrapper = cls(
-        canvas.axes[item.get_yposition() * 2 + item.get_xposition()], item,
+        canvas.axes[item.get_yposition() * 2 + item.get_xposition()],
+        item,
     )
     for prop in dir(artist_wrapper.props):
         if not (prop == "label" and artist_wrapper.legend):
@@ -109,9 +110,11 @@ class DataItemArtistWrapper(ItemArtistWrapper):
     def __init__(self, axis: pyplot.axis, item: Graphs.Item):
         super().__init__()
         self._artist = axis.plot(
-            item.props.xdata, item.props.ydata,
+            item.props.xdata,
+            item.props.ydata,
             label=utilities.shorten_label(item.get_name(), 40),
-            color=item.get_color(), alpha=item.get_alpha(),
+            color=item.get_color(),
+            alpha=item.get_alpha(),
             linestyle=misc.LINESTYLES[item.props.linestyle],
             marker=misc.MARKERSTYLES[item.props.markerstyle],
         )[0]
@@ -167,10 +170,15 @@ class TextItemArtistWrapper(ItemArtistWrapper):
     def __init__(self, axis: pyplot.axis, item: Graphs.Item):
         super().__init__()
         self._artist = axis.text(
-            item.props.xanchor, item.props.yanchor, item.props.text,
+            item.props.xanchor,
+            item.props.yanchor,
+            item.props.text,
             label=utilities.shorten_label(item.get_name(), 40),
-            color=item.get_color(), alpha=item.get_alpha(), clip_on=True,
-            fontsize=item.props.size, rotation=item.props.rotation,
+            color=item.get_color(),
+            alpha=item.get_alpha(),
+            clip_on=True,
+            fontsize=item.props.size,
+            rotation=item.props.rotation,
         )
 
 
@@ -191,5 +199,6 @@ class FillItemArtistWrapper(ItemArtistWrapper):
         self._artist = axis.fill_between(
             *item.props.data,
             label=utilities.shorten_label(item.get_name(), 40),
-            color=item.get_color(), alpha=item.get_alpha(),
+            color=item.get_color(),
+            alpha=item.get_alpha(),
         )

@@ -9,6 +9,7 @@ from graphs import item, ui
 
 
 class FileLikeWrapper(io.BufferedIOBase):
+
     def __init__(self, read_stream=None, write_stream=None):
         self._read_stream, self._write_stream = read_stream, write_stream
 
@@ -119,7 +120,8 @@ def save_item(file: Gio.File, item_: item.DataItem) -> None:
 
 
 def save_project(
-    application: Graphs.Application, require_dialog: bool = False,
+    application: Graphs.Application,
+    require_dialog: bool = False,
 ) -> None:
     project_file = application.get_data().project_file
     if project_file is not None and not require_dialog:
@@ -138,8 +140,10 @@ def parse_json(file: Gio.File) -> dict:
 def write_json(file: Gio.File, json_object: dict, pretty_print=True) -> None:
     with open_wrapped(file, "wt") as wrapper:
         json.dump(
-            json_object, wrapper,
-            indent=4 if pretty_print else None, sort_keys=True,
+            json_object,
+            wrapper,
+            indent=4 if pretty_print else None,
+            sort_keys=True,
         )
 
 

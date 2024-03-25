@@ -11,7 +11,9 @@ from graphs.item_box import ItemBox
 
 
 def on_items_change(
-    data, _ignored, application: Graphs.Application,
+    data,
+    _ignored,
+    application: Graphs.Application,
 ) -> None:
     data = application.get_data()
     item_list = application.get_window().get_item_list()
@@ -29,7 +31,9 @@ def on_items_change(
 
 
 def enable_axes_actions(
-    _object, _callback, application: Graphs.Application,
+    _object,
+    _callback,
+    application: Graphs.Application,
 ) -> None:
     visible_axes = application.get_data().get_used_positions()
     menu = Gio.Menu.new()
@@ -38,7 +42,9 @@ def enable_axes_actions(
     toggle_section.append_item(toggle_item)
     optimize_section = Gio.Menu.new()
     optimize_item = Gio.MenuItem.new(
-        _("Optimize Limits"), "app.optimize_limits")
+        _("Optimize Limits"),
+        "app.optimize_limits",
+    )
     optimize_section.append_item(optimize_item)
     menu.append_section(None, toggle_section)
     menu.append_section(None, optimize_section)
@@ -54,7 +60,9 @@ def enable_axes_actions(
             scale_item = \
                 Gio.MenuItem.new(_(scale), f"app.change-{direction}-scale")
             scale_item.set_attribute_value(
-                "target", GLib.Variant.new_string(str(i)))
+                "target",
+                GLib.Variant.new_string(str(i)),
+            )
             scale_section.append_item(scale_item)
         label = _("X Axis Scale") if direction in {"top", "bottom"} \
             else _("Y Axis Scale")
@@ -73,7 +81,10 @@ def enable_axes_actions(
 
 
 def on_items_ignored(
-    _data, _ignored, ignored: str, application: Graphs.Application,
+    _data,
+    _ignored,
+    ignored: str,
+    application: Graphs.Application,
 ) -> str:
     application.get_window().add_toast_string(
         N_(
@@ -86,17 +97,20 @@ def on_items_ignored(
 
 _GRAPHS_PROJECT_FILE_FILTER_TEMPLATE = \
     (C_("file-filter", "Graphs Project File"), ["graphs"])
-_GRAPHS_PROJECT_FILE_ONLY_FILE_FILTER = utilities.create_file_filters((
-    _GRAPHS_PROJECT_FILE_FILTER_TEMPLATE,
-))
+_GRAPHS_PROJECT_FILE_ONLY_FILE_FILTER = utilities.create_file_filters(
+    (_GRAPHS_PROJECT_FILE_FILTER_TEMPLATE, ),
+)
 
 
 def add_data_dialog(application: Graphs.Application) -> None:
+
     def on_response(dialog, response):
         with contextlib.suppress(GLib.GError):
             file_import.import_from_files(
-                application, dialog.open_multiple_finish(response),
+                application,
+                dialog.open_multiple_finish(response),
             )
+
     dialog = Gtk.FileDialog()
     dialog.set_filters(
         utilities.create_file_filters((
@@ -122,6 +136,7 @@ def save_project_dialog(application: Graphs.Application) -> None:
             data.save()
             data.props.unsaved = False
             application.emit("project-saved")
+
     dialog = Gtk.FileDialog()
     dialog.set_filters(_GRAPHS_PROJECT_FILE_ONLY_FILE_FILTER)
     dialog.set_initial_name("project.graphs")
@@ -129,11 +144,13 @@ def save_project_dialog(application: Graphs.Application) -> None:
 
 
 def open_project_dialog(application: Graphs.Application) -> None:
+
     def on_response(dialog, response):
         with contextlib.suppress(GLib.GError):
             application.get_data().props.project_file = \
                 dialog.open_finish(response)
             application.get_data().load()
+
     dialog = Gtk.FileDialog()
     dialog.set_filters(_GRAPHS_PROJECT_FILE_ONLY_FILE_FILTER)
     dialog.open(application.get_window(), None, on_response)
@@ -153,13 +170,15 @@ def export_data_dialog(application: Graphs.Application) -> None:
                 directory = dialog.select_folder_finish(response)
                 for item in data:
                     file = directory.get_child_for_display_name(
-                        f"{item.get_name()}.txt")
+                        f"{item.get_name()}.txt",
+                    )
                     file_io.save_item(file, item)
             else:
                 file = dialog.save_finish(response)
                 file_io.save_item(file, data[0])
             action = Gio.SimpleAction.new(
-                "open-file-location", None,
+                "open-file-location",
+                None,
             )
             action.connect("activate", actions.open_file_location, file)
             application.add_action(action)
@@ -167,6 +186,7 @@ def export_data_dialog(application: Graphs.Application) -> None:
             toast.set_button_label(_("Open Location"))
             toast.set_action_name("app.open-file-location")
             window.add_toast(toast)
+
     dialog = Gtk.FileDialog()
     if multiple:
         dialog.select_folder(window, None, on_response)
@@ -174,17 +194,16 @@ def export_data_dialog(application: Graphs.Application) -> None:
         filename = f"{data[0].get_name()}.txt"
         dialog.set_initial_name(filename)
         dialog.set_filters(
-            utilities.create_file_filters((
-                (C_("file-filter", "Text Files"), ["txt"]),
-            )),
+            utilities.create_file_filters(
+                ((C_("file-filter", "Text Files"), ["txt"]), ),
+            ),
         )
         dialog.save(window, None, on_response)
 
 
 def build_dialog(name: str):
-    return Gtk.Builder.new_from_resource(
-        "/se/sjoerd/Graphs/ui/dialogs.ui",
-    ).get_object(name)
+    return Gtk.Builder.new_from_resource("/se/sjoerd/Graphs/ui/dialogs.ui",
+                                         ).get_object(name)
 
 
 def show_about_dialog(application: Graphs.Application) -> str:
@@ -197,7 +216,8 @@ def show_about_dialog(application: Graphs.Application) -> str:
         website=application.get_website(),
         developer_name=application.get_author(),
         issue_url=application.get_issues(),
-        version=application.get_version(), developers=[
+        version=application.get_version(),
+        developers=[
             "Sjoerd Stendahl <contact@sjoerd.se>",
             "Christoph Kohnen <christoph.kohnen@disroot.org>",
         ],
@@ -237,10 +257,8 @@ def load_values_from_dict(window, values: dict, ignorelist=None) -> None:
             elif isinstance(widget, Adw.SpinRow):
                 widget.set_value(value)
             else:
-                logging.warn(
-                    _("Unsupported Widget {widget}")
-                    .format(widget=type(widget)),
-                )
+                msg = _("Unsupported Widget {widget}")
+                logging.warn(msg.format(widget=type(widget)))
         except AttributeError:
             logging.warn(_("No way to apply “{key}”").format(key=key))
 
@@ -281,7 +299,10 @@ def _on_settings_update(settings, key, chooser):
 
 
 def bind_values_to_settings(
-    settings, window, prefix="", ignorelist=None,
+    settings,
+    window,
+    prefix="",
+    ignorelist=None,
 ) -> None:
     for key in settings.props.settings_schema.list_keys():
         if ignorelist is not None and key in ignorelist:
@@ -293,9 +314,16 @@ def bind_values_to_settings(
             elif isinstance(widget, Adw.ComboRow):
                 widget.set_selected(settings.get_enum(key))
                 settings.connect(
-                    f"changed::{key}", _on_settings_update, widget)
+                    f"changed::{key}",
+                    _on_settings_update,
+                    widget,
+                )
                 widget.connect(
-                    "notify::selected", _on_settings_select, settings, key)
+                    "notify::selected",
+                    _on_settings_select,
+                    settings,
+                    key,
+                )
             elif isinstance(widget, Gtk.Switch):
                 settings.bind(key, widget, "active", 0)
             elif isinstance(widget, Adw.ExpanderRow):
@@ -306,10 +334,8 @@ def bind_values_to_settings(
             elif isinstance(widget, Adw.SpinRow):
                 settings.bind(key, widget, "value", 0)
             else:
-                logging.warn(
-                    _("Unsupported Widget {widget}")
-                    .format(widget=type(widget)),
-                )
+                msg = _("Unsupported Widget {widget}")
+                logging.warn(msg.format(widget=type(widget)))
         except AttributeError:
             logging.warn(_("No way to apply “{key}”").format(key=key))
 
@@ -322,31 +348,54 @@ def bind_values_to_object(source, window, ignorelist=None) -> None:
         try:
             widget = getattr(window, key)
             if isinstance(widget, Adw.EntryRow):
-                bindings.append(source.bind_property(
-                    key, widget, "text", 1 | 2,
-                ))
+                bindings.append(
+                    source.bind_property(
+                        key,
+                        widget,
+                        "text",
+                        1 | 2,
+                    ),
+                )
             elif isinstance(widget, Adw.ComboRow):
-                bindings.append(source.bind_property(
-                    key, widget, "selected", 1 | 2,
-                ))
+                bindings.append(
+                    source.bind_property(
+                        key,
+                        widget,
+                        "selected",
+                        1 | 2,
+                    ),
+                )
             elif isinstance(widget, Adw.ExpanderRow):
-                bindings.append(source.bind_property(
-                    key, widget, "enable-expansion", 1 | 2,
-                ))
+                bindings.append(
+                    source.bind_property(
+                        key,
+                        widget,
+                        "enable-expansion",
+                        1 | 2,
+                    ),
+                )
                 widget.set_expanded(True)
             elif isinstance(widget, Gtk.Scale):
-                bindings.append(source.bind_property(
-                    key, widget.get_adjustment(), "value", 1 | 2,
-                ))
-            elif isinstance(widget, Adw.SwitchRow):
-                bindings.append(source.bind_property(
-                    key, widget, "active", 1 | 2,
-                ))
-            else:
-                logging.warn(
-                    _("Unsupported Widget {widget}")
-                    .format(widget=type(widget)),
+                bindings.append(
+                    source.bind_property(
+                        key,
+                        widget.get_adjustment(),
+                        "value",
+                        1 | 2,
+                    ),
                 )
+            elif isinstance(widget, Adw.SwitchRow):
+                bindings.append(
+                    source.bind_property(
+                        key,
+                        widget,
+                        "active",
+                        1 | 2,
+                    ),
+                )
+            else:
+                msg = _("Unsupported Widget {widget}")
+                logging.warn(msg.format(widget=type(widget)))
         except AttributeError:
             logging.warn(_("No way to apply “{key}”").format(key=key))
     return bindings
