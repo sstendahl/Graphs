@@ -19,6 +19,7 @@ def new_from_dict(dictionary: dict):
 
 
 class _ItemMixin():
+
     def reset(self, old_style, new_style):
         for prop, (key, function) in self._style_properties.items():
             old_value = old_style[key]
@@ -61,8 +62,10 @@ class DataItem(Graphs.Item, _ItemMixin):
     @classmethod
     def new(cls, style, xdata=None, ydata=None, **kwargs):
         return cls(
-            xdata=xdata, ydata=ydata,
-            **cls._extract_params(cls, style), **kwargs,
+            xdata=xdata,
+            ydata=ydata,
+            **cls._extract_params(cls, style),
+            **kwargs,
         )
 
     def __init__(self, **kwargs):
@@ -89,8 +92,11 @@ class TextItem(Graphs.Item, _ItemMixin):
     @classmethod
     def new(cls, style, xanchor=0, yanchor=0, text="", **kwargs):
         return cls(
-            xanchor=xanchor, yanchor=yanchor, text=text,
-            **cls._extract_params(cls, style), **kwargs,
+            xanchor=xanchor,
+            yanchor=yanchor,
+            text=text,
+            **cls._extract_params(cls, style),
+            **kwargs,
         )
 
 

@@ -28,7 +28,8 @@ class AddEquationDialog(Adw.Dialog):
     def __init__(self, application):
         super().__init__(application=application)
         ui.bind_values_to_settings(
-            application.get_settings_child("add-equation"), self,
+            application.get_settings_child("add-equation"),
+            self,
         )
         self.present(application.get_window())
 
@@ -36,7 +37,8 @@ class AddEquationDialog(Adw.Dialog):
     def on_accept(self, _widget) -> None:
         """Launched when the accept button is pressed on the equation window"""
         values = ui.save_values_to_dict(
-            self, ["equation", "step-size", "x-start", "x-stop"],
+            self,
+            ["equation", "step-size", "x-start", "x-stop"],
         )
         try:
             x_start = utilities.string_to_float(values["x-start"])
@@ -54,10 +56,14 @@ class AddEquationDialog(Adw.Dialog):
             if name == "":
                 name = f"Y = {values['equation']}"
             style_manager = self.props.application.get_figure_style_manager()
-            self.props.application.get_data().add_items([DataItem.new(
-                style_manager.get_selected_style_params(),
-                xdata, ydata, name=name,
-            )])
+            self.props.application.get_data().add_items([
+                DataItem.new(
+                    style_manager.get_selected_style_params(),
+                    xdata,
+                    ydata,
+                    name=name,
+                ),
+            ])
             self.close()
         except ValueError as error:
             self.toast_overlay.add_toast(Adw.Toast(title=error))

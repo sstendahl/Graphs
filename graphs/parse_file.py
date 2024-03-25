@@ -44,15 +44,22 @@ def import_from_xrdml(_params, style, file: Gio.File) -> misc.ItemList:
             end_pos = float(end_pos[0].firstChild.data)
             xdata = numpy.linspace(start_pos, end_pos, len(ydata))
             xdata = numpy.ndarray.tolist(xdata)
-    return [item.DataItem.new(
-        style, xdata, ydata, name=utilities.get_filename(file),
-        xlabel=f"{scan_axis} ({unit})", ylabel=_("Intensity (cps)"),
-    )]
+    return [
+        item.DataItem.new(
+            style,
+            xdata,
+            ydata,
+            name=utilities.get_filename(file),
+            xlabel=f"{scan_axis} ({unit})",
+            ylabel=_("Intensity (cps)"),
+        ),
+    ]
 
 
 def import_from_xry(_params, style, file: Gio.File) -> misc.ItemList:
     """Import data from .xry files used by Leybold X-ray apparatus."""
     with file_io.open_wrapped(file, "rt", encoding="ISO-8859-1") as wrapper:
+
         def skip(lines: int):
             for _count in range(lines):
                 next(wrapper)
@@ -71,8 +78,10 @@ def import_from_xry(_params, style, file: Gio.File) -> misc.ItemList:
         name = utilities.get_filename(file)
         items = [
             item.DataItem.new(
-                style, name=f"{name} - {i + 1}" if item_count > 1 else name,
-                xlabel=_("β (°)"), ylabel=_("R (1/s)"),
+                style,
+                name=f"{name} - {i + 1}" if item_count > 1 else name,
+                xlabel=_("β (°)"),
+                ylabel=_("R (1/s)"),
             ) for i in range(item_count)
         ]
         for _count in range(int(info[1])):
@@ -85,9 +94,15 @@ def import_from_xry(_params, style, file: Gio.File) -> misc.ItemList:
         for _count in range(int(wrapper.readline().strip())):
             values = wrapper.readline().strip().split()
             text = " ".join(values[7:])
-            items.append(item.TextItem.new(
-                style, float(values[5]), float(values[6]), text, name=text,
-            ))
+            items.append(
+                item.TextItem.new(
+                    style,
+                    float(values[5]),
+                    float(values[6]),
+                    text,
+                    name=text,
+                ),
+            )
         return items
 
 
@@ -124,10 +139,8 @@ def import_from_columns(params, style, file: Gio.File) -> misc.ItemList:
                     start_values = True
             else:
                 try:
-                    x_value = utilities.string_to_float(
-                        values[column_x])
-                    y_value = utilities.string_to_float(
-                        values[column_y])
+                    x_value = utilities.string_to_float(values[column_x])
+                    y_value = utilities.string_to_float(values[column_y])
                     if x_value is None or y_value is None:
                         raise ValueError
                     else:

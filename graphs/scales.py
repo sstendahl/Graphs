@@ -122,6 +122,7 @@ class InverseScale(scale.ScaleBase):
 
 class CustomScaleLocator(ticker.MaxNLocator):
     """Dynamically find tick positions on custom scales."""
+
     def __init__(self, is_minor=False):
         self.is_minor = is_minor
 
@@ -150,7 +151,7 @@ class CustomScaleLocator(ticker.MaxNLocator):
         lin_tick_pos = numpy.linspace(vmin, vmax, self.numticks)
         lin_tick_pos = lin_tick_pos[lin_tick_pos != 0]  # Remove zeroes
         if self.axis.get_scale() == "squareroot":
-            tick_pos = lin_tick_pos ** 2
+            tick_pos = lin_tick_pos**2
         elif self.axis.get_scale() == "inverse":
             tick_pos = 1 / lin_tick_pos
         else:
@@ -169,6 +170,7 @@ class RadianLocator(ticker.MultipleLocator):
     At smaller values, the distances between the ticks are a power of 2,
     multiplied by pi. e.g. (1/2)pi, (1/4)pi, (1/8)pi etc..
     """
+
     def __init__(self):
         super().__init__(base=self.base)
 
@@ -207,7 +209,7 @@ class RadianLocator(ticker.MultipleLocator):
         elif num_ticks < 4:
             ratio = (num_ticks / numticks_goal)
             exponent = int(numpy.log2(abs(ratio)))
-            result = 2 ** exponent  # Return distance as a power of 2
+            result = 2**exponent  # Return distance as a power of 2
             return distance * result
         return distance
 

@@ -38,7 +38,9 @@ def sig_fig_round(number: float, digits: int) -> float:
 
 def rgba_to_hex(rgba: Gdk.RGBA) -> str:
     return "#{:02x}{:02x}{:02x}".format(
-        round(rgba.red * 255), round(rgba.green * 255), round(rgba.blue * 255),
+        round(rgba.red * 255),
+        round(rgba.green * 255),
+        round(rgba.blue * 255),
     )
 
 
@@ -49,7 +51,10 @@ def rgba_to_tuple(rgba: Gdk.RGBA, alpha: bool = False) -> [int, int, int]:
 
 
 def get_value_at_fraction(
-    fraction: float, start: float, end: float, scale: int,
+    fraction: float,
+    start: float,
+    end: float,
+    scale: int,
 ) -> float:
     """
     Obtain the selected value of an axis given at which percentage (in terms of
@@ -82,7 +87,10 @@ def get_value_at_fraction(
 
 
 def get_fraction_at_value(
-    value: float, start: float, end: float, scale: int,
+    value: float,
+    start: float,
+    end: float,
+    scale: int,
 ) -> float:
     """
     Obtain the fraction of the total length of the selected axis a specific
@@ -146,9 +154,15 @@ def string_to_float(string: str) -> float:
         return
 
 
-OPERATORS = {ast.Add: op.add, ast.Sub: op.sub, ast.Mult: op.mul,
-             ast.Div: op.truediv, ast.Pow: op.pow, ast.BitXor: op.xor,
-             ast.USub: op.neg}
+OPERATORS = {
+    ast.Add: op.add,
+    ast.Sub: op.sub,
+    ast.Mult: op.mul,
+    ast.Div: op.truediv,
+    ast.Pow: op.pow,
+    ast.BitXor: op.xor,
+    ast.USub: op.neg,
+}
 
 
 def _eval(node):
@@ -200,8 +214,9 @@ def preprocess(string: str) -> str:
             "⁹": "9",
         }
         sequence = match.group(1)  # Get the content inside the superscript
-        sequence = "".join(superscript_mapping.get(char, char)
-                           for char in sequence)
+        sequence = "".join(
+            superscript_mapping.get(char, char) for char in sequence
+        )
         return f"**{sequence}"
 
     def add_asterix(match):
@@ -213,8 +228,17 @@ def preprocess(string: str) -> str:
         alphabetical character. e.g y = 24*x + 3sigma -> y = (24*x) + (3*sigma)
         """
         var, exp2 = match.group(1), match.group(2)
-        functions = ["sin", "cos", "tan", "cot", "sec", "csc", "sqrt", "exp",
-                     "abs"]
+        functions = [
+            "sin",
+            "cos",
+            "tan",
+            "cot",
+            "sec",
+            "csc",
+            "sqrt",
+            "exp",
+            "abs",
+        ]
         if exp2 in functions:
             return f"{var}*{exp2}"
 
@@ -229,14 +253,19 @@ def preprocess(string: str) -> str:
     string = re.sub(r"sec\((.*?)\)", convert_sec, string)
     string = re.sub(r"csc\((.*?)\)", convert_csc, string)
     string = re.sub(r"d\((.*?)\)", convert_degrees, string)
-    string = re.sub(r"([\u2070-\u209f\u00b0-\u00be]+)",
-                    convert_superscript, string)
+    string = re.sub(
+        r"([\u2070-\u209f\u00b0-\u00be]+)",
+        convert_superscript,
+        string,
+    )
     return string.lower()
 
 
 def get_filename(file: Gio.File) -> str:
     info = file.query_info(
-        "standard::display-name", Gio.FileQueryInfoFlags.NONE, None,
+        "standard::display-name",
+        Gio.FileQueryInfoFlags.NONE,
+        None,
     )
     if info:
         return info.get_display_name()
@@ -249,7 +278,8 @@ def string_to_function(equation_name: str) -> sympy.FunctionClass:
     sym_vars = sympy.symbols(variables)
     with contextlib.suppress(sympy.SympifyError, TypeError, SyntaxError):
         symbolic = sympy.sympify(
-            equation_name, locals=dict(zip(variables, sym_vars)),
+            equation_name,
+            locals=dict(zip(variables, sym_vars)),
         )
         return sympy.lambdify(sym_vars, symbolic)
 
@@ -295,8 +325,11 @@ def create_menu_model(data: dict) -> Gio.Menu:
     for section_name, section_data in data.items():
         section = Gio.Menu.new()
         for entry in section_data[1]:
-            section.append_item(Gio.MenuItem.new(
-                entry[0], f"win.{section_name}::{entry[1]}",
-            ))
+            section.append_item(
+                Gio.MenuItem.new(
+                    entry[0],
+                    f"win.{section_name}::{entry[1]}",
+                ),
+            )
         menu.append_section(section_data[0], section)
     return menu

@@ -8,7 +8,6 @@ from gi.repository import GLib, Gio
 
 from graphs import file_io, misc, style_io, utilities
 
-
 CONFIG_MIGRATION_TABLE = {
     # old-key: (category, key, old-default)
     "action_center_data": ("actions", "center", "Center at middle coordinate"),
@@ -92,13 +91,35 @@ def _migrate_import_params(settings_, import_file):
 
 
 SYSTEM_STYLES = [
-    "adwaita", "adwaita-dark", "bmh", "classic", "dark-background",
-    "fivethirtyeight", "ggplot", "grayscale", "seaborn", "seaborn-bright",
-    "seaborn-colorblind", "seaborn-dark", "seaborn-darkgrid",
-    "seaborn-dark-pallete", "seaborn-deep", "seaborn-muted",
-    "seaborn-notebook", "seaborn-paper", "seaborn-pastel", "seaborn-poster",
-    "seaborn-talk", "seaborn-ticks", "seaborn-white", "seaborn-whitegrid",
-    "solarized-light", "tableu-colorblind10", "thesis", "yaru", "yaru-dark",
+    "adwaita",
+    "adwaita-dark",
+    "bmh",
+    "classic",
+    "dark-background",
+    "fivethirtyeight",
+    "ggplot",
+    "grayscale",
+    "seaborn",
+    "seaborn-bright",
+    "seaborn-colorblind",
+    "seaborn-dark",
+    "seaborn-darkgrid",
+    "seaborn-dark-pallete",
+    "seaborn-deep",
+    "seaborn-muted",
+    "seaborn-notebook",
+    "seaborn-paper",
+    "seaborn-pastel",
+    "seaborn-poster",
+    "seaborn-talk",
+    "seaborn-ticks",
+    "seaborn-white",
+    "seaborn-whitegrid",
+    "solarized-light",
+    "tableu-colorblind10",
+    "thesis",
+    "yaru",
+    "yaru-dark",
 ]
 
 
@@ -107,9 +128,11 @@ def _migrate_styles(old_styles_dir, new_config_dir):
     if not new_styles_dir.query_exists(None):
         new_styles_dir.make_directory_with_parents()
     enumerator = old_styles_dir.enumerate_children("default::*", 0, None)
-    adwaita = style_io.parse(Gio.File.new_for_uri(
-        "resource:///se/sjoerd/Graphs/styles/adwaita.mplstyle",
-    ))[0]
+    adwaita = style_io.parse(
+        Gio.File.new_for_uri(
+            "resource:///se/sjoerd/Graphs/styles/adwaita.mplstyle",
+        ),
+    )[0]
     for file in map(enumerator.get_child, enumerator):
         stylename = Path(utilities.get_filename(file)).stem
         if stylename not in SYSTEM_STYLES:
@@ -117,9 +140,13 @@ def _migrate_styles(old_styles_dir, new_config_dir):
             for key, value in adwaita.items():
                 if key not in params:
                     params[key] = value
-            style_io.write(new_styles_dir.get_child_for_display_name(
-                f"{stylename.lower().replace(' ', '-')}.mplstyle",
-            ), stylename, params)
+            style_io.write(
+                new_styles_dir.get_child_for_display_name(
+                    f"{stylename.lower().replace(' ', '-')}.mplstyle",
+                ),
+                stylename,
+                params,
+            )
         file.delete(None)
     enumerator.close(None)
     old_styles_dir.delete(None)
@@ -135,12 +162,33 @@ ITEM_MIGRATION_TABLE = {
 
 ITEM_VALUE_MIGRATION_TABLE = {
     "linestyle": ["none", "solid", "dotted", "dashed", "dashdot"],
-    "markerstyle": ["none", ".", ",", "o", "v", "^", "<", ">", "8", "s", "p",
-                    "*", "h", "H", "+", "x", "D", "d", "|", "_", "P", "X"],
+    "markerstyle": [
+        "none",
+        ".",
+        ",",
+        "o",
+        "v",
+        "^",
+        "<",
+        ">",
+        "8",
+        "s",
+        "p",
+        "*",
+        "h",
+        "H",
+        "+",
+        "x",
+        "D",
+        "d",
+        "|",
+        "_",
+        "P",
+        "X",
+    ],
     "xposition": ["bottom", "top"],
     "yposition": ["left", "right"],
 }
-
 
 PLOT_SETTINGS_MIGRATION_TABLE = {
     "xlabel": "bottom_label",
@@ -153,12 +201,21 @@ PLOT_SETTINGS_MIGRATION_TABLE = {
 }
 
 LEGEND_POSITIONS = [
-    "best", "upper right", "upper left", "lower left", "lower right",
-    "center left", "center right", "lower center", "upper center", "center",
+    "best",
+    "upper right",
+    "upper left",
+    "lower left",
+    "lower right",
+    "center left",
+    "center right",
+    "lower center",
+    "upper center",
+    "center",
 ]
 
 
 class PlotSettings:
+
     def migrate(self) -> dict:
         dictionary = {}
         for key, value in self.__dict__.items():
@@ -173,6 +230,7 @@ class PlotSettings:
 
 
 class ItemBase:
+
     def migrate(self) -> dict:
         dictionary = {"type": self.item_type}
         for key, value in self.__dict__.items():
@@ -208,7 +266,9 @@ def migrate_project(file: Gio.File) -> dict:
     current_limits = [figure_settings[key] for key in misc.LIMITS]
     history_pos = project["clipboard_pos"]
     history_states = _migrate_clipboard(
-        project["datadict_clipboard"], history_pos, current_limits,
+        project["datadict_clipboard"],
+        history_pos,
+        current_limits,
     )
 
     return {
@@ -228,15 +288,16 @@ def _migrate_clipboard(clipboard, clipboard_pos, current_limits):
     new_clipboard = []
     if len(clipboard) > 100:
         clipboard = clipboard[len(clipboard) - 100:]
-    states = [
-        {item.key: item.migrate() for item in state.values()}
-        for state in clipboard
-    ]
+    states = [{
+        item.key: item.migrate()
+        for item in state.values()
+    } for state in clipboard]
     new_clipboard.append(([], DEFAULT_VIEW.copy()))
     initial_items = states[1].values()
-    new_clipboard.append(
-        ([(1, item) for item in initial_items], _get_limits(initial_items)),
-    )
+    new_clipboard.append((
+        [(1, item) for item in initial_items],
+        _get_limits(initial_items),
+    ))
     if len(states) > 2:
         for count in range(len(states) - 2):
             batch = []

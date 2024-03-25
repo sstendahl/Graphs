@@ -68,7 +68,9 @@ class FigureSettingsDialog(Adw.Dialog):
     application = GObject.Property(type=Graphs.Application)
 
     def __init__(
-        self, application: Graphs.Application, highlighted: bool = None,
+        self,
+        application: Graphs.Application,
+        highlighted: bool = None,
     ):
         """Initialize the Figure Settings window and set the widget entries"""
         figure_settings = application.get_data().get_figure_settings()
@@ -96,14 +98,14 @@ class FigureSettingsDialog(Adw.Dialog):
         style_manager.connect("add-style", self.set_index)
         self.style_editor = styles.StyleEditor(self)
         self.grid_view.set_factory(_get_widget_factory(self))
-        self.grid_view.get_model().set_model(
-            style_manager.get_style_model(),
-        )
+        self.grid_view.get_model().set_model(style_manager.get_style_model())
         self._on_use_custom_style(figure_settings, None)
         self.present(application.get_window())
 
     def _on_use_custom_style(
-        self, figure_settings: Graphs.FigureSettings, _a,
+        self,
+        figure_settings: Graphs.FigureSettings,
+        _a,
     ) -> None:
         """
         Checks if custom style is used, and sets the current style in the
@@ -116,7 +118,9 @@ class FigureSettingsDialog(Adw.Dialog):
             self.grid_view.get_model().set_selected(0)
 
     def _on_custom_style(
-        self, figure_settings: Graphs.FigureSettings, _a,
+        self,
+        figure_settings: Graphs.FigureSettings,
+        _a,
     ) -> None:
         """
         Sets the current style in the style overview when a custom style has
@@ -160,65 +164,87 @@ class FigureSettingsDialog(Adw.Dialog):
         # two opposite X/Y axes are used simultaniously.
         labels = {
             "top": {
-                "min": _("Top X Axis Minimum") if visible_axes[0]
-                and visible_axes[1] else _("X Axis Minimum"),
-                "max": _("Top X Axis Maximum") if visible_axes[0]
-                and visible_axes[1] else _("X Axis Maximum"),
-                "scale": _("Top X Axis Scale") if visible_axes[0]
-                and visible_axes[1] else _("X Axis Scale"),
-                "label": _("Top X Axis Label") if visible_axes[0]
-                and visible_axes[1] else _("X Axis Label"),
+                "min":
+                _("Top X Axis Minimum") if visible_axes[0] and visible_axes[1]
+                else _("X Axis Minimum"),
+                "max":
+                _("Top X Axis Maximum") if visible_axes[0] and visible_axes[1]
+                else _("X Axis Maximum"),
+                "scale":
+                _("Top X Axis Scale")
+                if visible_axes[0] and visible_axes[1] else _("X Axis Scale"),
+                "label":
+                _("Top X Axis Label")
+                if visible_axes[0] and visible_axes[1] else _("X Axis Label"),
             },
             "bottom": {
-                "min": _("Bottom X Axis Minimum") if visible_axes[0]
+                "min":
+                _("Bottom X Axis Minimum") if visible_axes[0]
                 and visible_axes[1] else _("X Axis Minimum"),
-                "max": _("Bottom X Axis Maximum") if visible_axes[0]
+                "max":
+                _("Bottom X Axis Maximum") if visible_axes[0]
                 and visible_axes[1] else _("X Axis Maximum"),
-                "scale": _("Bottom X Axis Scale") if visible_axes[0]
-                and visible_axes[1] else _("X Axis Scale"),
-                "label": _("Bottom X Axis Label") if visible_axes[0]
-                and visible_axes[1] else _("X Axis Label"),
+                "scale":
+                _("Bottom X Axis Scale")
+                if visible_axes[0] and visible_axes[1] else _("X Axis Scale"),
+                "label":
+                _("Bottom X Axis Label")
+                if visible_axes[0] and visible_axes[1] else _("X Axis Label"),
             },
             "left": {
-                "min": _("Left Y Axis Minimum") if visible_axes[2]
-                and visible_axes[3] else _("Y Axis Minimum"),
-                "max": _("Left Y Axis Maximum") if visible_axes[2]
-                and visible_axes[3] else _("Y Axis Maximum"),
-                "scale": _("Left Y Axis Scale") if visible_axes[2]
-                and visible_axes[3] else _("Y Axis Scale"),
-                "label": _("Left Y Axis Label") if visible_axes[2]
-                and visible_axes[3] else _("Y Axis Label"),
+                "min":
+                _("Left Y Axis Minimum") if visible_axes[2] and visible_axes[3]
+                else _("Y Axis Minimum"),
+                "max":
+                _("Left Y Axis Maximum") if visible_axes[2] and visible_axes[3]
+                else _("Y Axis Maximum"),
+                "scale":
+                _("Left Y Axis Scale")
+                if visible_axes[2] and visible_axes[3] else _("Y Axis Scale"),
+                "label":
+                _("Left Y Axis Label")
+                if visible_axes[2] and visible_axes[3] else _("Y Axis Label"),
             },
             "right": {
-                "min": _("Right Y Axis Minimum") if visible_axes[2]
+                "min":
+                _("Right Y Axis Minimum") if visible_axes[2]
                 and visible_axes[3] else _("Y Axis Minimum"),
-                "max": _("Right Y Axis Maximum") if visible_axes[2]
+                "max":
+                _("Right Y Axis Maximum") if visible_axes[2]
                 and visible_axes[3] else _("Y Axis Maximum"),
-                "scale": _("Right Y Axis Scale") if visible_axes[2]
-                and visible_axes[3] else _("Y Axis Scale"),
-                "label": _("Right Y Axis Label") if visible_axes[2]
-                and visible_axes[3] else _("Y Axis Label"),
+                "scale":
+                _("Right Y Axis Scale")
+                if visible_axes[2] and visible_axes[3] else _("Y Axis Scale"),
+                "label":
+                _("Right Y Axis Label")
+                if visible_axes[2] and visible_axes[3] else _("Y Axis Label"),
             },
         }
         for (direction, visible) in zip(misc.DIRECTIONS, visible_axes):
             if visible:
                 for s in ("min_", "max_"):
                     entry = getattr(self, s + direction)
-                    entry.set_text(str(self.props.figure_settings.get_property(
-                        s + direction,
-                    )))
+                    entry.set_text(
+                        str(
+                            self.props.figure_settings.get_property(
+                                s + direction,
+                            ),
+                        ),
+                    )
                     entry.connect(
-                        "notify::text", self.on_entry_change, s + direction,
+                        "notify::text",
+                        self.on_entry_change,
+                        s + direction,
                     )
 
-            getattr(self, f"min_{direction}").set_title(
-                labels[direction]["min"])
-            getattr(self, f"max_{direction}").set_title(
-                labels[direction]["max"])
-            getattr(self, f"{direction}_scale").set_title(
-                labels[direction]["scale"])
-            getattr(self, f"{direction}_label").set_title(
-                labels[direction]["label"])
+            min_dir = getattr(self, f"min_{direction}")
+            min_dir.set_title(labels[direction]["min"])
+            max_dir = getattr(self, f"max_{direction}")
+            max_dir.set_title(labels[direction]["max"])
+            scale = getattr(self, f"{direction}_scale")
+            scale.set_title(labels[direction]["scale"])
+            label = getattr(self, f"{direction}_label")
+            label.set_title(labels[direction]["label"])
             getattr(self, direction + "_limits").set_visible(visible)
             getattr(self, direction + "_scale").set_visible(visible)
             getattr(self, direction + "_label").set_visible(visible)
@@ -227,7 +253,8 @@ class FigureSettingsDialog(Adw.Dialog):
         """Bind the entry upon change"""
         with contextlib.suppress(SyntaxError):
             self.props.figure_settings.set_property(
-                prop, utilities.string_to_float(entry.get_text()),
+                prop,
+                utilities.string_to_float(entry.get_text()),
             )
 
     def edit_style(self, _button, style) -> None:

@@ -55,8 +55,11 @@ class CurveFittingDialog(Adw.Dialog):
 
         # Generate items for the canvas
         self.data_curve = DataItem.new(
-            style, xdata=item.xdata, ydata=item.ydata,
-            name=item.get_name(), color="#1A5FB4",
+            style,
+            xdata=item.xdata,
+            ydata=item.ydata,
+            name=item.get_name(),
+            color="#1A5FB4",
         )
         self.data_curve.linestyle = 0
         self.data_curve.markerstyle = 1
@@ -64,8 +67,11 @@ class CurveFittingDialog(Adw.Dialog):
         self.fitted_curve = DataItem.new(style, color="#A51D2D")
         self.fill = FillItem.new(
             style,
-            (self.fitted_curve.xdata,
-             self.fitted_curve.ydata, self.fitted_curve.ydata),
+            (
+                self.fitted_curve.xdata,
+                self.fitted_curve.ydata,
+                self.fitted_curve.ydata,
+            ),
             color="#1A5FB4",
             alpha=0.15,
         )
@@ -74,19 +80,27 @@ class CurveFittingDialog(Adw.Dialog):
         self.reload_canvas()
         self.fit_curve()
         self.set_entry_rows()
-        self.menu_button.set_menu_model(utilities.create_menu_model({
-            "optimization": (_("Optimization Method"), [
-                (C_("optimization", "Levenberg-Marquardt"), "lm"),
-                (C_("optimization", "Trust Region Reflective"), "trf"),
-                (C_("optimization", "Dogbox"), "dogbox"),
-            ]),
-            "confidence": (_("Confidence Bounds"), [
-                (C_("confidence", "None"), "none"),
-                (C_("confidence", "1σ: 68% Confidence"), "1std"),
-                (C_("confidence", "2σ: 95% Confidence"), "2std"),
-                (C_("confidence", "3σ: 99.7% Confidence"), "3std"),
-            ]),
-        }))
+        self.menu_button.set_menu_model(
+            utilities.create_menu_model({
+                "optimization": (
+                    _("Optimization Method"),
+                    [
+                        (C_("optimization", "Levenberg-Marquardt"), "lm"),
+                        (C_("optimization", "Trust Region Reflective"), "trf"),
+                        (C_("optimization", "Dogbox"), "dogbox"),
+                    ],
+                ),
+                "confidence": (
+                    _("Confidence Bounds"),
+                    [
+                        (C_("confidence", "None"), "none"),
+                        (C_("confidence", "1σ: 68% Confidence"), "1std"),
+                        (C_("confidence", "2σ: 95% Confidence"), "2std"),
+                        (C_("confidence", "3σ: 99.7% Confidence"), "3std"),
+                    ],
+                ),
+            }),
+        )
         self.present(application.get_window())
 
     def connect_actions(self) -> None:
@@ -150,13 +164,16 @@ class CurveFittingDialog(Adw.Dialog):
             if var not in self.fitting_parameters.get_names():
                 self.fitting_parameters.add_items([FittingParameter(name=var)])
         self.fitting_parameters.remove_unused(
-            utilities.get_free_variables(self.equation_string))
+            utilities.get_free_variables(self.equation_string),
+        )
         fit = self.fit_curve()
         if fit:
             self.set_entry_rows()
             if self.settings.get_string("equation") == "custom":
-                self.settings.set_string("custom-equation",
-                                         self.equation_string)
+                self.settings.set_string(
+                    "custom-equation",
+                    self.equation_string,
+                )
 
     def on_entry_change(self, entry, _param) -> None:
         """
@@ -198,8 +215,7 @@ class CurveFittingDialog(Adw.Dialog):
                 lower_bound = float(lower_bound)
                 upper_bound = float(upper_bound)
 
-                if (initial < lower_bound
-                        or initial > upper_bound):
+                if (initial < lower_bound or initial > upper_bound):
                     entries.initial.get_child().add_css_class("error")
                     self.set_results(error="bounds")
                     error = True
@@ -249,8 +265,7 @@ class CurveFittingDialog(Adw.Dialog):
         # Highlight first word
         while not end_iter.ends_word() and not end_iter.ends_sentence():
             end_iter.forward_char()
-        self.text_view.get_buffer().apply_tag(
-            bold_tag, start_iter, end_iter)
+        self.text_view.get_buffer().apply_tag(bold_tag, start_iter, end_iter)
 
     @property
     def equation_string(self) -> str:
@@ -261,6 +276,7 @@ class CurveFittingDialog(Adw.Dialog):
         Fit the data to the equation in the entry, returns a boolean indicating
         whether the fit was succesfull or not.
         """
+
         def _get_equation_name(equation_name, values):
             free_variables = utilities.get_free_variables(self.equation_string)
             var_to_val = dict(zip(free_variables, values))
@@ -288,12 +304,16 @@ class CurveFittingDialog(Adw.Dialog):
             self.set_results(error="equation")
             return
         xdata = numpy.linspace(
-            min(self.data_curve.xdata), max(self.data_curve.xdata), 5000,
+            min(self.data_curve.xdata),
+            max(self.data_curve.xdata),
+            5000,
         )
         ydata = [function(x, *self.param) for x in xdata]
 
         name = _get_equation_name(
-            str(self.custom_equation.get_text()).lower(), self.param)
+            str(self.custom_equation.get_text()).lower(),
+            self.param,
+        )
         self.fitted_curve.set_name(f"Y = {name}")
         self.fitted_curve.ydata, self.fitted_curve.xdata = (ydata, xdata)
         self.get_confidence(function)
@@ -316,9 +336,11 @@ class CurveFittingDialog(Adw.Dialog):
                 [function(x, *self.param) for x in self.data_curve.xdata]
         except (OverflowError, ZeroDivisionError):
             return
-        ss_res = numpy.sum((numpy.asarray(self.data_curve.ydata)
-                            - numpy.asarray(fitted_y)) ** 2)
-        ss_sum = numpy.sum((self.data_curve.ydata - numpy.mean(fitted_y)) ** 2)
+        ss_res = numpy.sum(
+            (numpy.asarray(self.data_curve.ydata)
+             - numpy.asarray(fitted_y))**2,
+        )
+        ss_sum = numpy.sum((self.data_curve.ydata - numpy.mean(fitted_y))**2)
         self.r2 = utilities.sig_fig_round(1 - (ss_res / ss_sum), 3)
 
         # Get confidence band
@@ -347,7 +369,9 @@ class CurveFittingDialog(Adw.Dialog):
             lower_bound = [middle - 1e5 * span]
 
         self.fill.props.data = (
-            self.fitted_curve.props.xdata, lower_bound, upper_bound,
+            self.fitted_curve.props.xdata,
+            lower_bound,
+            upper_bound,
         )
 
     @Gtk.Template.Callback()
@@ -355,12 +379,14 @@ class CurveFittingDialog(Adw.Dialog):
         """Add fitted data to the items in the main application"""
         application = self.props.application
         style_manager = application.get_figure_style_manager()
-        application.get_data().add_items([DataItem.new(
-            style_manager.get_selected_style_params(),
-            name=self.fitted_curve.get_name(),
-            xdata=list(self.fitted_curve.xdata),
-            ydata=list(self.fitted_curve.ydata),
-        )])
+        application.get_data().add_items([
+            DataItem.new(
+                style_manager.get_selected_style_params(),
+                name=self.fitted_curve.get_name(),
+                xdata=list(self.fitted_curve.xdata),
+                ydata=list(self.fitted_curve.ydata),
+            ),
+        ])
         self.close()
 
     def set_entry_rows(self) -> None:
@@ -416,11 +442,12 @@ class FittingParameter(Graphs.FittingParameter):
     application = GObject.Property(type=Graphs.Application)
 
     def __init__(self, **kwargs):
-        super().__init__(name=kwargs.get("name", ""),
-                         initial=kwargs.get("initial", 1),
-                         lower_bound=kwargs.get("lower_bound", "-inf"),
-                         upper_bound=kwargs.get("upper_bound", "inf"),
-                         )
+        super().__init__(
+            name=kwargs.get("name", ""),
+            initial=kwargs.get("initial", 1),
+            lower_bound=kwargs.get("lower_bound", "-inf"),
+            upper_bound=kwargs.get("upper_bound", "inf"),
+        )
 
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/fitting_parameters.ui")
@@ -439,10 +466,10 @@ class FittingParameterEntry(Gtk.Box):
         super().__init__(application=parent.props.application)
         self.parent = parent
         self.params = parent.fitting_parameters[arg]
-        fitting_param_string = _("Fitting Parameters for {param_name}").format(
-            param_name=self.params.get_name())
+        msg = ("Fitting Parameters for {param_name}")
         self.label.set_markup(
-            f"<b> {fitting_param_string}: </b>")
+            f"<b> {msg.format(param_name=self.params.get_name())}: </b>",
+        )
         self.initial.set_text(str(self.params.get_initial()))
         self.initial.connect("notify::text", parent.on_entry_change)
         self.upper_bound.connect("notify::text", parent.on_entry_change)

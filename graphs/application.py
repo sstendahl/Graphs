@@ -10,19 +10,42 @@ from gettext import gettext as _
 
 from gi.repository import Adw, GLib, GObject, Gio, Graphs, Gtk
 
-from graphs import (actions, file_import, file_io, migrate, styles, ui,
-                    utilities)
+from graphs import (
+    actions,
+    file_import,
+    file_io,
+    migrate,
+    styles,
+    ui,
+    utilities,
+)
 from graphs.data import Data
 
 from matplotlib import font_manager
 
-
 _ACTIONS = [
-    "quit", "about", "figure_settings", "add_data", "add_equation",
-    "select_all", "select_none", "undo", "redo", "optimize_limits",
-    "view_back", "view_forward", "export_data", "export_figure", "new_project",
-    "save_project", "save_project_as", "smoothen_settings", "open_project",
-    "delete_selected", "zoom_in", "zoom_out",
+    "quit",
+    "about",
+    "figure_settings",
+    "add_data",
+    "add_equation",
+    "select_all",
+    "select_none",
+    "undo",
+    "redo",
+    "optimize_limits",
+    "view_back",
+    "view_forward",
+    "export_data",
+    "export_figure",
+    "new_project",
+    "save_project",
+    "save_project_as",
+    "smoothen_settings",
+    "open_project",
+    "delete_selected",
+    "zoom_in",
+    "zoom_out",
 ]
 
 
@@ -38,9 +61,11 @@ class PythonApplication(Graphs.Application):
         settings = Gio.Settings(application_id)
         migrate.migrate_config(settings)
         super().__init__(
-            application_id=application_id, settings=settings,
+            application_id=application_id,
+            settings=settings,
             flags=Gio.ApplicationFlags.HANDLES_OPEN,
-            data=Data(self, settings), **kwargs,
+            data=Data(self, settings),
+            **kwargs,
         )
         font_list = font_manager.findSystemFonts(fontpaths=None, fontext="ttf")
         for font in font_list:
@@ -52,13 +77,16 @@ class PythonApplication(Graphs.Application):
         for name in _ACTIONS:
             action = Gio.SimpleAction.new(name, None)
             action.connect(
-                "activate", getattr(actions, f"{name}_action"), self,
+                "activate",
+                getattr(actions, f"{name}_action"),
+                self,
             )
             self.add_action(action)
         figure_settings = self.get_data().get_figure_settings()
         for val in ("left-scale", "right-scale", "top-scale", "bottom-scale"):
             action = Gio.SimpleAction.new_stateful(
-                f"change-{val}", GLib.VariantType.new("s"),
+                f"change-{val}",
+                GLib.VariantType.new("s"),
                 GLib.Variant.new_string(
                     str(settings.get_child("figure").get_enum(val)),
                 ),
@@ -66,16 +94,22 @@ class PythonApplication(Graphs.Application):
             action.connect("activate", actions.change_scale, self)
             figure_settings.connect(
                 f"notify::{val}",
-                lambda _x, param, action_: action_.change_state(
+                lambda _x,
+                param,
+                action_: action_.change_state(
                     GLib.Variant.new_string(
                         str(figure_settings.get_property(param.name)),
                     ),
-                ), action,
+                ),
+                action,
             )
             self.add_action(action)
 
         toggle_sidebar_action = Gio.SimpleAction.new_stateful(
-            "toggle_sidebar", None, GLib.Variant.new_boolean(True))
+            "toggle_sidebar",
+            None,
+            GLib.Variant.new_boolean(True),
+        )
         toggle_sidebar_action.connect("activate", actions.toggle_sidebar, self)
         self.add_action(toggle_sidebar_action)
         self.set_accels_for_action("app.toggle_sidebar", ["F9"])
@@ -83,13 +117,17 @@ class PythonApplication(Graphs.Application):
         for count, mode in enumerate(["pan", "zoom", "select"]):
             action = Gio.SimpleAction.new(f"mode_{mode}", None)
             action.connect(
-                "activate", actions.set_mode, self, count,
+                "activate",
+                actions.set_mode,
+                self,
+                count,
             )
             self.add_action(action)
             self.set_accels_for_action(f"app.mode_{mode}", [f"F{count + 1}"])
 
         operation_action = Gio.SimpleAction.new(
-            "app.perform_operation", GLib.VariantType.new("s"),
+            "app.perform_operation",
+            GLib.VariantType.new("s"),
         )
         operation_action.connect("activate", actions.perform_operation, self)
         self.add_action(operation_action)
@@ -99,10 +137,14 @@ class PythonApplication(Graphs.Application):
             self.add_action(actions_settings.create_action(action_key))
 
         self.get_data().connect(
-            "notify::items", ui.on_items_change, self,
+            "notify::items",
+            ui.on_items_change,
+            self,
         )
         self.get_data().connect(
-            "items-ignored", ui.on_items_ignored, self,
+            "items-ignored",
+            ui.on_items_ignored,
+            self,
         )
 
     def on_project_saved(self, _application, handler=None, *args) -> None:
@@ -127,13 +169,16 @@ class PythonApplication(Graphs.Application):
                 data.load()
 
             if data.props.unsaved:
+
                 def on_response(_dialog, response):
                     if response == "discard_close":
                         load()
                     if response == "save_close":
                         self.save_handler = self.connect(
-                            "project-saved", self.on_project_saved,
-                            "open_project", project_file,
+                            "project-saved",
+                            self.on_project_saved,
+                            "open_project",
+                            project_file,
                         )
                         file_io.save_project(self)
 
@@ -153,6 +198,7 @@ class PythonApplication(Graphs.Application):
         and save/discard open data if any unsaved changes are present
         """
         if self.get_data().props.unsaved:
+
             def on_response(_dialog, response):
                 if response == "discard_close":
                     self.quit()
@@ -162,6 +208,7 @@ class PythonApplication(Graphs.Application):
                                      self.on_project_saved,
                                      "close")
                     file_io.save_project(self)
+
             dialog = ui.build_dialog("save_changes")
             dialog.connect("response", on_response)
             dialog.present(self.get_window())
@@ -169,7 +216,11 @@ class PythonApplication(Graphs.Application):
         self.quit()
 
     def on_key_press_event(
-        self, _controller, keyval: int, _keycode, _state,
+        self,
+        _controller,
+        keyval: int,
+        _keycode,
+        _state,
     ) -> None:
         """
         Checks if control is pressed, needed to allow ctrl+scroll behaviour
@@ -183,7 +234,11 @@ class PythonApplication(Graphs.Application):
             self.set_ctrl(False)
 
     def on_key_release_event(
-        self, _controller, _keyval, _keycode, _state,
+        self,
+        _controller,
+        _keyval,
+        _keycode,
+        _state,
     ) -> None:
         """
         Checks if control is released, needed to allow ctrl+scroll behaviour
@@ -207,24 +262,36 @@ class PythonApplication(Graphs.Application):
                 ("can_undo", window.get_undo_button(), "sensitive"),
                 ("can_redo", window.get_redo_button(), "sensitive"),
                 ("can_view_back", window.get_view_back_button(), "sensitive"),
-                ("can_view_forward", window.get_view_forward_button(),
-                 "sensitive"),
+                (
+                    "can_view_forward",
+                    window.get_view_forward_button(),
+                    "sensitive",
+                ),
                 ("project_name", window.get_content_title(), "title"),
                 ("project_path", window.get_content_title(), "subtitle"),
             ]
             for prop1, obj, prop2 in binding_table:
                 data.bind_property(prop1, obj, prop2, 2)
-            actions = ("multiply_x", "multiply_y", "translate_x",
-                       "translate_y")
+            actions = (
+                "multiply_x",
+                "multiply_y",
+                "translate_x",
+                "translate_y",
+            )
             for action in actions:
                 entry = window.get_property(action + "_entry")
                 button = window.get_property(action + "_button")
                 entry.connect(
-                    "notify::text", self.set_entry_css, entry, button,
+                    "notify::text",
+                    self.set_entry_css,
+                    entry,
+                    button,
                 )
                 data.connect(
                     "notify::items-selected",
-                    self.set_entry_css, entry, button,
+                    self.set_entry_css,
+                    entry,
+                    button,
                 )
                 self.set_entry_css(None, None, entry, button)
             self.set_window(window)
@@ -238,12 +305,19 @@ class PythonApplication(Graphs.Application):
                 window.set_title(_("Graphs (Development)"))
             self.set_figure_style_manager(styles.StyleManager(self))
             self.get_window().get_canvas().connect_after(
-                "notify::items", ui.enable_axes_actions, self)
+                "notify::items",
+                ui.enable_axes_actions,
+                self,
+            )
             ui.enable_axes_actions(None, None, self)
             window.present()
 
     def set_entry_css(
-        self, _object, _param, entry: Adw.EntryRow, button: Gtk.Button,
+        self,
+        _object,
+        _param,
+        entry: Adw.EntryRow,
+        button: Gtk.Button,
     ) -> None:
         try:
             value = utilities.string_to_float(entry.get_text())
