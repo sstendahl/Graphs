@@ -3,10 +3,10 @@
   <id>@APPLICATION_ID@</id>
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPL-3.0-or-later</project_license>
-  <name>@NAME@</name>
-  <summary>@DESCRIPTION_SHORT@</summary>
+  <name>Graphs</name>
+  <summary>Plot and manipulate data</summary>
   <developer>
-    <name>@AUTHOR@</name>
+    <name translatable="no">@AUTHOR@</name>
     <id>se.sjoerd</id>
   </developer>
   <description>

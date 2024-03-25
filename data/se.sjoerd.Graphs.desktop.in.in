@@ -1,5 +1,5 @@
 [Desktop Entry]
-Name=@NAME@
+Name=Graphs
 Exec=@PROJECT_NAME@ %U
 Icon=@APPLICATION_ID@
 Terminal=false

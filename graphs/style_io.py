@@ -45,23 +45,22 @@ def parse(file: Gio.File) -> (RcParams, str):
             try:
                 key, value = line.split(":", 1)
             except ValueError:
-                logging.warning(
-                    _("Missing colon in file {0}, line {1}").format(
-                        filename, line_number))
+                msg = _("Missing colon in file {file}, line {line}")
+                logging.warning(msg.format(file=filename, line=line_number))
                 continue
             key = key.strip()
             value = value.strip()
             if value.startswith('"') and value.endswith('"'):
                 value = value[1:-1]  # strip double quotes
             if key in STYLE_BLACKLIST:
-                message = _("Non-style related parameter {0} in file {1}")
-                logging.warning(message.format(key, filename))
+                msg = _("Non-style related parameter {param} in file {file}")
+                logging.warning(msg.format(param=key, file=filename))
             elif key in STYLE_IGNORELIST:
-                message = _("Ignoring parameter {0} in file {1}")
-                logging.warning(message.format(key, filename))
+                msg = _("Ignoring parameter {param} in file {file}")
+                logging.warning(msg.format(param=key, file=filename))
             elif key in style:
-                message = _("Duplicate key in file {0}, on line {1}")
-                logging.warning(message.format(filename, line_number))
+                msg = _("Duplicate key in file {param}, on line {line}")
+                logging.warning(msg.format(param=filename, line=line_number))
             else:
                 if key in FONT_SIZE_KEYS \
                         and not value.replace(".", "", 1).isdigit():
@@ -77,11 +76,14 @@ def parse(file: Gio.File) -> (RcParams, str):
                 try:
                     style[key] = value
                 except (KeyError, ValueError):
-                    message = _("Bad value in file {0} on line {1}")
+                    msg = _("Bad value in file {file} on line {line}")
                     logging.exception(
-                        message.format(filename, line_number))
+                        msg.format(file=filename, line=line_number),
+                    )
     except UnicodeDecodeError:
-        logging.exception(_("Could not parse {}").format(filename))
+        logging.exception(
+            _("Could not parse {filename}").format(filename=filename),
+        )
     finally:
         stream.close()
     return style, name

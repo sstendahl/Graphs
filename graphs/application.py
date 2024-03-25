@@ -47,7 +47,7 @@ class PythonApplication(Graphs.Application):
             try:
                 font_manager.fontManager.addfont(font)
             except RuntimeError:
-                logging.warning(_("Could not load %s"), font)
+                logging.warning(_("Could not load {font}").format(font=font))
 
         for name in _ACTIONS:
             action = Gio.SimpleAction.new(name, None)
@@ -201,11 +201,7 @@ class PythonApplication(Graphs.Application):
         """
         window = self.props.active_window
         if not window:
-            window = Graphs.Window(application=self)
-            self.get_data().bind_property(
-                "items_selected", window.get_shift_button(), "sensitive", 2,
-            )
-            self.bind_property("mode", window, "mode", 2)
+            window = Graphs.Window.new(self)
             data = self.get_data()
             binding_table = [
                 ("can_undo", window.get_undo_button(), "sensitive"),
@@ -218,13 +214,6 @@ class PythonApplication(Graphs.Application):
             ]
             for prop1, obj, prop2 in binding_table:
                 data.bind_property(prop1, obj, prop2, 2)
-            data.bind_property("empty", window.get_item_list(), "visible", 4)
-            stack_switcher = \
-                Graphs.InlineStackSwitcher(stack=window.get_stack())
-            stack_switcher.add_css_class("compact")
-            stack_switcher.set_hexpand("true")
-            window.get_stack_switcher_box().prepend(stack_switcher)
-            window.set_title(self.props.name)
             actions = ("multiply_x", "multiply_y", "translate_x",
                        "translate_y")
             for action in actions:
@@ -244,8 +233,9 @@ class PythonApplication(Graphs.Application):
             controller.connect("key-released", self.on_key_release_event)
             window.add_controller(controller)
             window.connect("close-request", self.close_application)
-            if "(Development)" in self.props.name:
-                window.add_css_class("devel")
+            if self.get_debug():
+                # TODO: implement in Vala and figure out gettext
+                window.set_title(_("Graphs (Development)"))
             self.set_figure_style_manager(styles.StyleManager(self))
             self.get_window().get_canvas().connect_after(
                 "notify::items", ui.enable_axes_actions, self)

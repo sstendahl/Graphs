@@ -17,14 +17,12 @@ devenv = environment()
 devenv.set('GRAPHS_DEVEL_PATH', meson.current_source_dir())
 
 application_id = 'se.sjoerd.Graphs'
-name = 'Graphs'
 copyright = '2022 - 2024'
 homepage_url = 'https://apps.gnome.org/Graphs/'
 vcs_url = 'https://gitlab.gnome.org/World/Graphs'
 issue_url = vcs_url + '/issues'
 help_url = 'https://gitlab.gnome.org/World/Graphs/-/wikis/home'
 author = 'Sjoerd Stendahl et al.'
-description_short = 'Plot and manipulate data'
 
 i18n = import('i18n')
 gnome = import('gnome')
@@ -41,30 +39,22 @@ debug = get_option('buildtype') == 'debug'
 
 if debug
   version += '-' + run_command('git', 'rev-parse', '--short', 'HEAD', check: true).stdout().strip()
-  name += ' (Development)'
 endif
 
 conf = configuration_data()
 conf.set('APPLICATION_ID', application_id)
 conf.set('AUTHOR', author)
 conf.set('COPYRIGHT', copyright)
-conf.set('DESCRIPTION_SHORT', description_short)
 conf.set('VCS_URL', vcs_url)
 conf.set('ISSUE_URL', issue_url)
 conf.set('HELP_URL', help_url)
 conf.set('LOCALEDIR', localedir)
-conf.set('NAME', name)
 conf.set('PKGDATADIR', pkgdatadir)
 conf.set('PROJECT_NAME', project_name)
 conf.set('PYTHON', python.full_path())
 conf.set('VERSION', version)
 conf.set('HOMEPAGE_URL', homepage_url)
-
-if debug
-  conf.set('LOG_LEVEL', 'DEBUG')
-else
-  conf.set('LOG_LEVEL', 'INFO')
-endif
+conf.set('DEBUG', debug)
 
 subdir('data')
 subdir('graphs')

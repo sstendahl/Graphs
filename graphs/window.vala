@@ -31,10 +31,10 @@ namespace Graphs {
         private unowned ToggleButton select_button { get; }
 
         [GtkChild]
-        public unowned Box stack_switcher_box { get; }
+        private unowned Box stack_switcher_box { get; }
 
         [GtkChild]
-        public unowned Stack stack { get; }
+        private unowned Stack stack { get; }
 
         [GtkChild]
         public unowned Button shift_button { get; }
@@ -94,6 +94,26 @@ namespace Graphs {
             set { this.toast_overlay.set_child(value); }
         }
 
+        public Window (Application application) {
+            Object (application: application);
+            DataInterface data = application.data;
+            data.bind_property (
+                "items_selected", this.shift_button, "sensitive", 2
+            );
+            data.bind_property ("empty", this.item_list, "visible", 4);
+            application.bind_property ("mode", this, "mode", 2);
+
+            InlineStackSwitcher stack_switcher = new InlineStackSwitcher ();
+            stack_switcher.stack = this.stack;
+            stack_switcher.add_css_class ("compact");
+            stack_switcher.set_hexpand (true);
+            this.stack_switcher_box.prepend (stack_switcher);
+
+            if (application.debug) {
+                this.add_css_class ("devel");
+            }
+        }
+
         [GtkCallback]
         private void perform_operation (Button button) {
             var action = this.application.lookup_action (
@@ -106,15 +126,15 @@ namespace Graphs {
             this.toast_overlay.add_toast (toast);
         }
 
+        public void add_toast_string (string title) {
+            this.add_toast (new Adw.Toast (title));
+        }
+
         [GtkCallback]
         private void on_sidebar_toggle () {
             this.application.lookup_action ("toggle_sidebar").change_state (
                 new Variant.boolean (this.split_view.get_collapsed ())
             );
-        }
-
-        public void add_toast_string (string title) {
-            this.add_toast (new Adw.Toast (title));
         }
     }
 }

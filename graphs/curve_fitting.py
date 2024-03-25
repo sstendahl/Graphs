@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 import re
-from gettext import gettext as _
+from gettext import gettext as _, pgettext as C_
 
 from gi.repository import Adw, GObject, Gio, Graphs, Gtk
 
@@ -76,15 +76,15 @@ class CurveFittingDialog(Adw.Dialog):
         self.set_entry_rows()
         self.menu_button.set_menu_model(utilities.create_menu_model({
             "optimization": (_("Optimization Method"), [
-                (_("Levenberg-Marquardt"), "lm"),
-                (_("Trust Region Reflective"), "trf"),
-                (_("Dogbox"), "dogbox"),
+                (C_("optimization", "Levenberg-Marquardt"), "lm"),
+                (C_("optimization", "Trust Region Reflective"), "trf"),
+                (C_("optimization", "Dogbox"), "dogbox"),
             ]),
             "confidence": (_("Confidence Bounds"), [
-                (_("None"), "none"),
-                (_("1σ: 68% Confidence"), "1std"),
-                (_("2σ: 95% Confidence"), "2std"),
-                (_("3σ: 99.7% Confidence"), "3std"),
+                (C_("confidence", "None"), "none"),
+                (C_("confidence", "1σ: 68% Confidence"), "1std"),
+                (C_("confidence", "2σ: 95% Confidence"), "2std"),
+                (C_("confidence", "3σ: 99.7% Confidence"), "3std"),
             ]),
         }))
         self.present(application.get_window())
