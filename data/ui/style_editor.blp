@@ -82,7 +82,13 @@ template $GraphsStyleEditor : Adw.NavigationPage {
             Adw.ComboRow linestyle {
               title: _("Linestyle");
               model: StringList {
-                strings [_("None"), _("Solid"), _("Dotted"), _("Dashed"), _("Dashdot")]
+                strings [
+                  C_("linestyle", "None"),
+                  C_("linestyle", "Solid"),
+                  C_("linestyle", "Dotted"),
+                  C_("linestyle", "Dashed"),
+                  C_("linestyle", "Dashdot"),
+                ]
               };
               notify::selected => $on_linestyle();
             }
@@ -106,13 +112,30 @@ template $GraphsStyleEditor : Adw.NavigationPage {
               title: _("Markers");
               model: StringList {
                 strings [
-                  _("Nothing"), _("Point"), _("Pixel"), _("Circle"),
-                  _("Triangle Down"), _("Triangle Up"), _("Triangle Left"),
-                  _("Triangle Right"), _("Octagon"), _("Square"),
-                  _("Pentagon"), _("Star"), _("Hexagon 1"),
-                  _("Hexagon 2"), _("Plus"), _("X"), _("Diamond"),
-                  _("Thin Diamond"), _("Vertical Line"), _("Horizontal Line"),
-                  _("Filled Plus"), _("Filled X"),
+                  C_("markerstyle", "Nothing"),
+                  C_("markerstyle", "Point"),
+                  C_("markerstyle", "Pixel"),
+                  C_("markerstyle", "Circle"),
+                  C_("markerstyle", "Triangle Down"),
+                  C_("markerstyle", "Triangle Up"),
+                  C_("markerstyle", "Triangle Left"),
+                  C_("markerstyle", "Triangle Right"),
+                  C_("markerstyle", "Octagon"),
+                  C_("markerstyle", "Square"),
+                  C_("markerstyle", "Pentagon"),
+                  C_("markerstyle", "Star"),
+                  C_("markerstyle", "Hexagon 1"),
+                  C_("markerstyle", "Hexagon 2"),
+                  C_("markerstyle", "Plus"),
+                  C_("markerstyle", "X"),
+                  // Translators: Diamond as in Cards Symbol
+                  C_("markerstyle", "Diamond"),
+                  // Translators: Diamond as in Cards Symbol
+                  C_("markerstyle", "Thin Diamond"),
+                  C_("markerstyle", "Vertical Line"),
+                  C_("markerstyle", "Horizontal Line"),
+                  C_("markerstyle", "Filled Plus"),
+                  C_("markerstyle", "Filled X"),
                 ]
               };
               notify::selected => $on_markers();

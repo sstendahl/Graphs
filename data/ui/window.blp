@@ -6,6 +6,7 @@ template $GraphsWindow: Adw.ApplicationWindow {
   default-height: 700;
   width-request: 420;
   height-request: 300;
+  title: _("Graphs");
 
   ShortcutController {
     Shortcut {
@@ -221,19 +222,19 @@ template $GraphsWindow: Adw.ApplicationWindow {
             icon-name: "move-tool-symbolic";
             action-name: "app.mode_pan";
             hexpand: true;
-            tooltip-text: _("Panning mode. Click and drag to pan");
+            tooltip-text: _("Pan Mode. Click and drag to pan");
           }
           ToggleButton zoom_button {
             icon-name: "loupe-symbolic";
             action-name: "app.mode_zoom";
             hexpand: true;
-            tooltip-text: _("Zoom mode. Select an area on the figure to zoom in");
+            tooltip-text: _("Zoom Mode. Select an area on the figure to zoom in");
           }
           ToggleButton select_button {
             icon-name: "edit-select-all-symbolic";
             action-name: "app.mode_select";
             hexpand: true;
-            tooltip-text: _("Highlight mode. Click and drag to make a selection of data");
+            tooltip-text: _("Select Mode. Click and drag to make a selection of data");
           }
         }
 

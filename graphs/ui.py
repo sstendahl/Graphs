@@ -2,7 +2,7 @@
 import contextlib
 import datetime
 import logging
-from gettext import gettext as _
+from gettext import dgettext as N_, gettext as _, pgettext as C_
 
 from gi.repository import Adw, GLib, Gio, Graphs, Gtk
 
@@ -75,11 +75,20 @@ def enable_axes_actions(
 def on_items_ignored(
     _data, _ignored, ignored: str, application: Graphs.Application,
 ) -> str:
-    if len(ignored) > 1:
-        toast = _("Items {} already exist").format(ignored)
-    else:
-        toast = _("Item {} already exists")
-    application.get_window().add_toast_string(toast)
+    application.get_window().add_toast_string(
+        N_(
+            "Items {items} already exist",
+            "Item {items} already exists",
+            len(ignored),
+        ).format(items=ignored),
+    )
+
+
+_GRAPHS_PROJECT_FILE_FILTER_TEMPLATE = \
+    (C_("file-filter", "Graphs Project File"), ["graphs"])
+_GRAPHS_PROJECT_FILE_ONLY_FILE_FILTER = utilities.create_file_filters((
+    _GRAPHS_PROJECT_FILE_FILTER_TEMPLATE,
+))
 
 
 def add_data_dialog(application: Graphs.Application) -> None:
@@ -90,14 +99,16 @@ def add_data_dialog(application: Graphs.Application) -> None:
             )
     dialog = Gtk.FileDialog()
     dialog.set_filters(
-        utilities.create_file_filters([
-            (_("Supported files"), ["xy", "dat", "txt", "csv", "xrdml",
-                                    "xry", "graphs"]),
-            (_("ASCII files"), ["xy", "dat", "txt", "csv"]),
-            (_("PANalytical XRDML"), ["xrdml"]),
-            (_("Leybold xry"), ["xry"]),
-            (_("Graphs Project File"), ["graphs"]),
-        ]),
+        utilities.create_file_filters((
+            (
+                C_("file-filter", "Supported files"),
+                ["xy", "dat", "txt", "csv", "xrdml", "xry", "graphs"],
+            ),
+            (C_("file-filter", "ASCII files"), ["xy", "dat", "txt", "csv"]),
+            (C_("file-filter", "PANalytical XRDML"), ["xrdml"]),
+            (C_("file-filter", "Leybold xry"), ["xry"]),
+            _GRAPHS_PROJECT_FILE_FILTER_TEMPLATE,
+        )),
     )
     dialog.open_multiple(application.get_window(), None, on_response)
 
@@ -112,9 +123,7 @@ def save_project_dialog(application: Graphs.Application) -> None:
             data.props.unsaved = False
             application.emit("project-saved")
     dialog = Gtk.FileDialog()
-    dialog.set_filters(
-        utilities.create_file_filters([(_("Graphs Project File"),
-                                      ["graphs"])]))
+    dialog.set_filters(_GRAPHS_PROJECT_FILE_ONLY_FILE_FILTER)
     dialog.set_initial_name("project.graphs")
     dialog.save(application.get_window(), None, on_response)
 
@@ -126,9 +135,7 @@ def open_project_dialog(application: Graphs.Application) -> None:
                 dialog.open_finish(response)
             application.get_data().load()
     dialog = Gtk.FileDialog()
-    dialog.set_filters(
-        utilities.create_file_filters([(_("Graphs Project File"),
-                                      ["graphs"])]))
+    dialog.set_filters(_GRAPHS_PROJECT_FILE_ONLY_FILE_FILTER)
     dialog.open(application.get_window(), None, on_response)
 
 
@@ -167,7 +174,10 @@ def export_data_dialog(application: Graphs.Application) -> None:
         filename = f"{data[0].get_name()}.txt"
         dialog.set_initial_name(filename)
         dialog.set_filters(
-            utilities.create_file_filters([(_("Text Files"), ["txt"])]))
+            utilities.create_file_filters((
+                (C_("file-filter", "Text Files"), ["txt"]),
+            )),
+        )
         dialog.save(window, None, on_response)
 
 
@@ -182,7 +192,7 @@ def show_about_dialog(application: Graphs.Application) -> str:
     copyright_text = \
         f"© 2022 – {datetime.date.today().year} {application.get_author()}"
     Adw.AboutDialog(
-        application_name=application.get_name(),
+        application_name=_("Graphs"),
         application_icon=application.get_application_id(),
         website=application.get_website(),
         developer_name=application.get_author(),
@@ -227,9 +237,12 @@ def load_values_from_dict(window, values: dict, ignorelist=None) -> None:
             elif isinstance(widget, Adw.SpinRow):
                 widget.set_value(value)
             else:
-                logging.warn(_("Unsupported Widget {}").format(type(widget)))
+                logging.warn(
+                    _("Unsupported Widget {widget}")
+                    .format(widget=type(widget)),
+                )
         except AttributeError:
-            logging.warn(_("No way to apply “{}”").format(key))
+            logging.warn(_("No way to apply “{key}”").format(key=key))
 
 
 def save_values_to_dict(window, keys: list, ignorelist=None) -> None:
@@ -293,9 +306,12 @@ def bind_values_to_settings(
             elif isinstance(widget, Adw.SpinRow):
                 settings.bind(key, widget, "value", 0)
             else:
-                logging.warn(_("Unsupported Widget {}").format(type(widget)))
+                logging.warn(
+                    _("Unsupported Widget {widget}")
+                    .format(widget=type(widget)),
+                )
         except AttributeError:
-            logging.warn(_("No way to apply “{}”").format(key))
+            logging.warn(_("No way to apply “{key}”").format(key=key))
 
 
 def bind_values_to_object(source, window, ignorelist=None) -> None:
@@ -327,7 +343,10 @@ def bind_values_to_object(source, window, ignorelist=None) -> None:
                     key, widget, "active", 1 | 2,
                 ))
             else:
-                logging.warn(_("Unsupported Widget {}").format(type(widget)))
+                logging.warn(
+                    _("Unsupported Widget {widget}")
+                    .format(widget=type(widget)),
+                )
         except AttributeError:
-            logging.warn(_("No way to apply “{}”").format(key))
+            logging.warn(_("No way to apply “{key}”").format(key=key))
     return bindings

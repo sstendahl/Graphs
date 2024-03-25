@@ -48,8 +48,15 @@ template $GraphsImportDialog : Adw.Dialog {
             subtitle: _("Character sequence used to split values");
             notify::selected => $on_delimiter_change();
             model: StringList{
-              strings [_("Whitespace"), _("Tab"), _("Colon (:)"), _("Semicolon (;)"),
-                       _("Decimal comma (,)"), _("Decimal point (.)"), _("Custom")]
+              strings [
+                C_("delimiter", "Whitespace"),
+                C_("delimiter", "Tab"),
+                C_("delimiter", "Colon (:)"),
+                C_("delimiter", "Semicolon (;)"),
+                C_("delimiter", "Decimal comma (,)"),
+                C_("delimiter", "Decimal point (.)"),
+                C_("delimiter", "Custom"),
+              ]
             };
           }
           Adw.EntryRow columns_custom_delimiter {
@@ -61,7 +68,10 @@ template $GraphsImportDialog : Adw.Dialog {
           Adw.ComboRow columns_separator {
             title: _("Decimal Separator");
             model: StringList{
-              strings [_("Decimal comma (,)"), _("Decimal point (.)")]
+              strings [
+                C_("separator", "Decimal comma (,)"),
+                C_("separator", "Decimal point (.)"),
+              ]
             };
           }
 
