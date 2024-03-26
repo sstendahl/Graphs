@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
+"""Module for Editing an Item."""
 from gi.repository import Adw, GObject, Graphs, Gtk
 
 from graphs import item, ui
@@ -18,6 +19,8 @@ _IGNORELIST = [
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/edit_item.ui")
 class EditItemDialog(Adw.PreferencesDialog):
+    """Class for editing an Item."""
+
     __gtype_name__ = "GraphsEditItemDialog"
     item_selector = Gtk.Template.Child()
     name = Gtk.Template.Child()
@@ -49,6 +52,7 @@ class EditItemDialog(Adw.PreferencesDialog):
 
     @Gtk.Template.Callback()
     def on_select(self, _action, _target) -> None:
+        """Handle Item selection."""
         item = self.props.data[self.item_selector.get_selected()]
         if item != self.item:
             self.props.model.splice(
@@ -60,6 +64,7 @@ class EditItemDialog(Adw.PreferencesDialog):
 
     @Gtk.Template.Callback()
     def on_item_change(self, _a, _b) -> None:
+        """Handle Item change."""
         self.set_title(self.props.item.get_name())
         for binding in self.props.bindings:
             binding.unbind()
@@ -72,12 +77,15 @@ class EditItemDialog(Adw.PreferencesDialog):
 
     @Gtk.Template.Callback()
     def on_close(self, _a) -> None:
+        """Handle dialog closing."""
         self.props.data.add_history_state()
 
     @Gtk.Template.Callback()
     def on_linestyle(self, comborow, _b) -> None:
+        """Handle linestyle selection."""
         self.linewidth.set_sensitive(comborow.get_selected() != 0)
 
     @Gtk.Template.Callback()
     def on_markers(self, comborow, _b) -> None:
+        """Handle marker selection."""
         self.markersize.set_sensitive(comborow.get_selected() != 0)

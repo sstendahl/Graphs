@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
+"""Module for migrating old data to new structures."""
 import contextlib
 import pickle
 import sys
@@ -8,7 +9,7 @@ from gi.repository import GLib, Gio
 
 from graphs import file_io, misc, style_io, utilities
 
-CONFIG_MIGRATION_TABLE = {
+_CONFIG_MIGRATION_TABLE = {
     # old-key: (category, key, old-default)
     "action_center_data": ("actions", "center", "Center at middle coordinate"),
     "addequation_equation": ("add-equation", "equation", "X"),
@@ -32,14 +33,14 @@ CONFIG_MIGRATION_TABLE = {
     "plot_y_scale": ("figure", "left-scale", "linear"),
 }
 
-CENTER_ACTION_MIGRATION_TABLE = {
+_CENTER_ACTION_MIGRATION_TABLE = {
     "Center at middle coordinate": "middle-x",
     "Center at middle X value": "max-y",
 }
 
 
 def migrate_config(settings: Gio.Settings) -> None:
-    """Migrate old file-based user config to dconf"""
+    """Migrate old file-based user config to dconf."""
     main_dir = Gio.File.new_for_path(GLib.get_user_config_dir())
     old_config_dir = main_dir.get_child_for_display_name("Graphs")
     if not old_config_dir.query_exists(None):
@@ -60,11 +61,11 @@ def migrate_config(settings: Gio.Settings) -> None:
 def _migrate_config(settings_, config_file):
     config = file_io.parse_json(config_file)
     for old_key, (category, key, old_default) \
-            in CONFIG_MIGRATION_TABLE.items():
+            in _CONFIG_MIGRATION_TABLE.items():
         with contextlib.suppress(KeyError, ValueError):
             value = config[old_key]
             if old_key == "action_center_data":
-                value = CENTER_ACTION_MIGRATION_TABLE[value]
+                value = _CENTER_ACTION_MIGRATION_TABLE[value]
             elif "scale" in key:
                 value = value.capitalize()
             if old_default != value:
@@ -215,8 +216,10 @@ LEGEND_POSITIONS = [
 
 
 class PlotSettings:
+    """Old PlotSettings standin."""
 
     def migrate(self) -> dict:
+        """Migrate class to dict."""
         dictionary = {}
         for key, value in self.__dict__.items():
             with contextlib.suppress(KeyError):
@@ -230,8 +233,10 @@ class PlotSettings:
 
 
 class ItemBase:
+    """Old ItemBase standin."""
 
     def migrate(self) -> dict:
+        """Migrate class to dict."""
         dictionary = {"type": self.item_type}
         for key, value in self.__dict__.items():
             with contextlib.suppress(KeyError):
@@ -246,17 +251,22 @@ class ItemBase:
 
 
 class Item(ItemBase):
+    """Old Item standin."""
+
     item_type = "GraphsDataItem"
 
 
 class TextItem(ItemBase):
+    """Old TextItem standin."""
+
     item_type = "GraphsTextItem"
 
 
-DEFAULT_VIEW = [0, 1, 0, 10, 0, 1, 0, 10]
+_DEFAULT_VIEW = [0, 1, 0, 10, 0, 1, 0, 10]
 
 
 def migrate_project(file: Gio.File) -> dict:
+    """Migrate pickle-based project."""
     sys.modules["graphs.misc"] = sys.modules[__name__]
     sys.modules["graphs.item"] = sys.modules[__name__]
     with file_io.open_wrapped(file, "rb") as wrapper:
@@ -277,7 +287,7 @@ def migrate_project(file: Gio.File) -> dict:
         "figure-settings": figure_settings,
         "history-states": history_states,
         "history-position": history_pos,
-        "view-history-states": [DEFAULT_VIEW.copy(), current_limits],
+        "view-history-states": [_DEFAULT_VIEW.copy(), current_limits],
         "view-history-position": -1,
     }
 
@@ -292,7 +302,7 @@ def _migrate_clipboard(clipboard, clipboard_pos, current_limits):
         item.key: item.migrate()
         for item in state.values()
     } for state in clipboard]
-    new_clipboard.append(([], DEFAULT_VIEW.copy()))
+    new_clipboard.append(([], _DEFAULT_VIEW.copy()))
     initial_items = states[1].values()
     new_clipboard.append((
         [(1, item) for item in initial_items],
@@ -347,6 +357,7 @@ def _get_limits(items):
             except TypeError:
                 limits[index + 1] = max(data)
     for count in range(8):
+        default_view_copy = _DEFAULT_VIEW.copy()
         if limits[count] is None:
-            limits[count] = DEFAULT_VIEW.copy()[count]
+            limits[count] = default_view_copy[count]
     return limits

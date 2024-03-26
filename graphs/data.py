@@ -1,10 +1,5 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
-"""
-Data management module.
-
-Classes:
-    Data
-"""
+"""Data management module."""
 import copy
 import math
 import os
@@ -24,27 +19,7 @@ _FIGURE_SETTINGS_HISTORY_IGNORELIST = misc.LIMITS + [
 
 
 class Data(GObject.Object, Graphs.DataInterface):
-    """
-    Class for managing data.
-
-    Properties:
-        application
-        items-selected
-        items
-
-    Signals:
-        items-ignored: Items are ignored during addition
-
-    Functions:
-        get_application
-        get_items
-        set_items
-        index
-        get_names
-        change_position
-        add_items
-        delete_items
-    """
+    """Class for managing data."""
 
     __gtype_name__ = "GraphsData"
     __gsignals__ = {
@@ -57,11 +32,10 @@ class Data(GObject.Object, Graphs.DataInterface):
     can_redo = GObject.Property(type=bool, default=False)
     can_view_back = GObject.Property(type=bool, default=False)
     can_view_forward = GObject.Property(type=bool, default=False)
-    project_file = GObject.Property(type=Gio.File)
+    file = GObject.Property(type=Gio.File)
     unsaved = GObject.Property(type=bool, default=False)
 
     def __init__(self, application, settings):
-        """Init the dataclass."""
         figure_settings = Graphs.FigureSettings.new(
             settings.get_child("figure"),
         )
@@ -69,12 +43,29 @@ class Data(GObject.Object, Graphs.DataInterface):
             application=application,
             figure_settings=figure_settings,
         )
-        self.initialize()
+        self._initialize()
         figure_settings.connect("notify", self._on_figure_settings_change)
         self.connect("notify::unsaved", self._on_unsaved_change)
 
-    def initialize(self):
-        """Initializes the data class and sets the default values"""
+    def reset(self):
+        """Reset data."""
+        # Reset figure settings
+        default_figure_settings = Graphs.FigureSettings.new(
+            self.get_application().get_settings().get_child("figure"),
+        )
+        figure_settings = self.get_figure_settings()
+        for prop in dir(default_figure_settings.props):
+            new_value = default_figure_settings.get_property(prop)
+            figure_settings.set_property(prop, new_value)
+
+        # Reset items
+        self.delete_items([item for item in self])
+        self._initialize()
+        self.props.file = None
+        self.props.unsaved = False
+
+    def _initialize(self):
+        """Initialize the data class and set default values."""
         figure_settings = self.get_figure_settings()
         limits = figure_settings.get_limits()
         self.props.can_undo = False
@@ -109,23 +100,21 @@ class Data(GObject.Object, Graphs.DataInterface):
 
     @GObject.Property(type=str, default="", flags=1)
     def project_name(self) -> str:
-        if self.project_file is None:
+        """Get project_name property."""
+        if self.props.file is None:
             title = _("Untitled Project")
         else:
-            title = utilities.get_filename(self.props.project_file)
+            title = utilities.get_filename(self.props.file)
         if self.props.unsaved:
             title = "• " + title
         return title
 
     @GObject.Property(type=str, default="", flags=1)
     def project_path(self) -> str:
-        """
-        Retrieve the subtitle to be used for the headerbar given the uri of
-        the project.
-        """
-        if self.project_file is None:
+        """Retrieve the path of the associated file."""
+        if self.props.file is None:
             return _("Draft")
-        uri_parse = urlparse(self.project_file.get_uri())
+        uri_parse = urlparse(self.props.file.get_uri())
         filepath = os.path.dirname(
             os.path.join(uri_parse.netloc, unquote(uri_parse.path)),
         )
@@ -146,14 +135,17 @@ class Data(GObject.Object, Graphs.DataInterface):
 
     @items.setter
     def items(self, items: misc.ItemList) -> None:
+        """Set items property."""
         self.set_items(items)
 
     def get_items(self) -> misc.ItemList:
         """Get all managed items."""
         return list(self._items.values())
 
-    def get_used_positions(self) -> list:
+    def get_used_positions(self) -> tuple[bool, bool, bool, bool]:
         """
+        Get used positions.
+
         Get the axes positions that the items are bound to
         Returns an array in the form of [bool, bool, bool, bool], where
         each element corresponds to the [bottom, top, left, right] positions.
@@ -214,7 +206,7 @@ class Data(GObject.Object, Graphs.DataInterface):
         return self._items[uuid]
 
     def __len__(self) -> int:
-        """Magic alias for `get_n_items()`"""
+        """Magic alias for `get_n_items()`."""
         return self.get_n_items()
 
     def __iter__(self):
@@ -392,7 +384,7 @@ class Data(GObject.Object, Graphs.DataInterface):
         ))
 
     def _set_data_copy(self) -> None:
-        """Set a deep copy for the data"""
+        """Set a deep copy for the data."""
         self._current_batch: list = []
         self._data_copy = copy.deepcopy({
             item_.get_uuid(): item_.to_dict()
@@ -405,7 +397,7 @@ class Data(GObject.Object, Graphs.DataInterface):
         })
 
     def add_history_state(self, old_limits: misc.Limits = None) -> None:
-        """Add a state to the clipboard"""
+        """Add a state to the clipboard."""
         if not self._current_batch:
             return
         if self._history_pos != -1:
@@ -427,7 +419,7 @@ class Data(GObject.Object, Graphs.DataInterface):
         self.props.unsaved = True
 
     def undo(self) -> None:
-        """Undo the latest change that was added to the clipboard"""
+        """Undo the latest change that was added to the clipboard."""
         if not self.props.can_undo:
             return
         batch = self._history_states[self._history_pos][0]
@@ -466,7 +458,7 @@ class Data(GObject.Object, Graphs.DataInterface):
         self.add_view_history_state()
 
     def redo(self) -> None:
-        """Redo the latest change that was added to the clipboard"""
+        """Redo the latest change that was added to the clipboard."""
         if not self.props.can_redo:
             return
         self._history_pos += 1
@@ -500,7 +492,7 @@ class Data(GObject.Object, Graphs.DataInterface):
         self.add_view_history_state()
 
     def add_view_history_state(self) -> None:
-        """Add the view to the view history"""
+        """Add the view to the view history."""
         limits = self.get_figure_settings().get_limits()
         if all(
             math.isclose(old, new) for old,
@@ -520,7 +512,7 @@ class Data(GObject.Object, Graphs.DataInterface):
         self.props.unsaved = True
 
     def view_back(self) -> None:
-        """Move the view to the previous value in the view history"""
+        """Move the view to the previous value in the view history."""
         if not self.props.can_view_back:
             return
         self._view_history_pos -= 1
@@ -532,7 +524,7 @@ class Data(GObject.Object, Graphs.DataInterface):
             abs(self._view_history_pos) < len(self._view_history_states)
 
     def view_forward(self) -> None:
-        """Move the view to the next value in the view history"""
+        """Move the view to the next value in the view history."""
         if not self.props.can_view_forward:
             return
         self._view_history_pos += 1
@@ -543,7 +535,7 @@ class Data(GObject.Object, Graphs.DataInterface):
         self.props.can_view_forward = self._view_history_pos < -1
 
     def optimize_limits(self) -> None:
-        """Optimize the limits of the canvas to the data class"""
+        """Optimize the limits of the canvas to the data class."""
         figure_settings = self.get_figure_settings()
         axes = [[
             direction,
@@ -603,10 +595,10 @@ class Data(GObject.Object, Graphs.DataInterface):
         self.add_view_history_state()
 
     def save(self) -> None:
-        """Save the data class to project_file dictionary"""
+        """Save current data to the file."""
         figure_settings = self.get_figure_settings()
         file_io.write_json(
-            self.props.project_file,
+            self.props.file,
             {
                 "version": self.get_application().get_version(),
                 "data": [item_.to_dict() for item_ in self],
@@ -627,7 +619,7 @@ class Data(GObject.Object, Graphs.DataInterface):
         action.connect(
             "activate",
             actions.open_file_location,
-            self.props.project_file,
+            self.props.file,
         )
         self.get_application().add_action(action)
         toast = Adw.Toast.new(_("Saved Project"))
@@ -636,11 +628,11 @@ class Data(GObject.Object, Graphs.DataInterface):
         self.get_application().get_window().add_toast(toast)
 
     def load(self) -> None:
-        """Load a project into the data given a file"""
+        """Load data from file."""
         try:
-            project_dict = file_io.parse_json(self.props.project_file)
+            project_dict = file_io.parse_json(self.props.file)
         except UnicodeDecodeError:
-            project_dict = migrate.migrate_project(self.props.project_file)
+            project_dict = migrate.migrate_project(self.props.file)
         # Load data
         figure_settings = self.get_figure_settings()
         for key, value in project_dict["figure-settings"].items():
@@ -664,20 +656,3 @@ class Data(GObject.Object, Graphs.DataInterface):
         self.props.can_view_back = \
             abs(self._view_history_pos) < len(self._view_history_states)
         self.props.can_view_forward = self._view_history_pos < -1
-
-    def reset_project(self):
-        # Reset figure settings
-        default_figure_settings = Graphs.FigureSettings.new(
-            self.get_application().get_settings().get_child("figure"),
-        )
-        figure_settings = self.get_figure_settings()
-        for prop in dir(default_figure_settings.props):
-            new_value = default_figure_settings.get_property(prop)
-            figure_settings.set_property(prop, new_value)
-
-        # Reset items
-        items = [item for item in self]
-        self.delete_items(items)
-        self.initialize()
-        self.props.project_file = None
-        self.props.unsaved = False

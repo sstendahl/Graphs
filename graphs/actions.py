@@ -245,7 +245,7 @@ def new_project_action(
                 "reset_project",
             )
             if response == "discard_close":
-                application.get_data().reset_project()
+                application.get_data().reset()
             if response == "save_close":
                 file_io.save_project(application)
 
@@ -254,7 +254,7 @@ def new_project_action(
         dialog.connect("response", on_response)
         dialog.present()
         return
-    application.get_data().reset_project()
+    application.get_data().reset()
 
 
 def save_project_action(

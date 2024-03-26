@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
+"""Module for exporting the figure."""
 import contextlib
 from gettext import gettext as _
 from pathlib import Path
@@ -10,6 +11,8 @@ from graphs import actions, file_io, ui, utilities
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/export_figure.ui")
 class ExportFigureDialog(Adw.Dialog):
+    """Dialog for exporting the figure."""
+
     __gtype_name__ = "GraphsExportFigureDialog"
     dpi = Gtk.Template.Child()
     file_format = Gtk.Template.Child()
@@ -40,12 +43,14 @@ class ExportFigureDialog(Adw.Dialog):
         self.present(application.get_window())
 
     def on_file_format(self, _widget, _state) -> None:
+        """Handle file format change."""
         self.dpi.set_visible(
             self.file_format.get_selected() not in [0, 2, 4, 5],
         )
 
     @Gtk.Template.Callback()
     def on_accept(self, _button) -> None:
+        """Export the figure."""
         file_format = self.file_format.get_selected_item().get_string()
         file_suffixes = self.props.file_formats[file_format]
         filename = \

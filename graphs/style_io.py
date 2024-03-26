@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
+"""Module for parsing and writing styles."""
 import logging
 from gettext import gettext as _
 
@@ -110,6 +111,7 @@ WRITE_IGNORELIST = STYLE_IGNORELIST + [
 
 
 def write(file: Gio.File, name: str, style: RcParams) -> None:
+    """Write a style to a file."""
     stream = Gio.DataOutputStream.new(file_io.create_write_stream(file))
     stream.put_string("# Generated via Graphs\n")
     stream.put_string(f"# {name}\n")

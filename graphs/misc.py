@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
+"""Miscallaneous constants."""
 from gi.repository import Graphs
 
 # Type hints
@@ -7,6 +8,7 @@ Limits = tuple[float, float, float, float]
 
 
 class ParseError(Exception):
+    """Custom Error for parsing files."""
 
     def __init__(self, message):
         self.message = message

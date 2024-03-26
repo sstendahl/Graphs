@@ -1,4 +1,9 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
+"""
+Wrapper classes for mpl artists.
+
+Provides GObject based wrappers for mpl artists.
+"""
 from gi.repository import GObject, Graphs
 
 from graphs import misc, utilities
@@ -8,6 +13,12 @@ from matplotlib.figure import Figure
 
 
 def new_for_item(canvas: Graphs.CanvasInterface, item: Graphs.Item):
+    """
+    Create a new artist for an item.
+
+    Creates bindings between item and artist properties so changes are handled
+    automatically.
+    """
     match item.__gtype_name__:
         case "GraphsDataItem":
             cls = DataItemArtistWrapper
@@ -29,38 +40,49 @@ def new_for_item(canvas: Graphs.CanvasInterface, item: Graphs.Item):
 
 
 class ItemArtistWrapper(GObject.Object):
+    """Wrapper for base Item."""
+
     __gtype_name__ = "GraphsItemArtistWrapper"
     legend = False
 
     def get_artist(self) -> artist:
+        """Get underlying mpl artist."""
         return self._artist
 
     @GObject.Property(type=str, default="")
     def name(self) -> str:
+        """Get name/label property."""
         return self._artist.get_label()
 
     @name.setter
     def name(self, name: str) -> None:
+        """Set name/label property."""
         self._artist.set_label(utilities.shorten_label(name, 40))
 
     @GObject.Property(type=str, default="000000")
     def color(self) -> str:
+        """Get color property."""
         return self._artist.get_color()
 
     @color.setter
     def color(self, color: str) -> None:
+        """Set color property."""
         self._artist.set_color(color)
 
     @GObject.Property(type=float, default=1)
     def alpha(self) -> float:
+        """Get alpha property."""
         return self._artist.get_alpha()
 
     @alpha.setter
     def alpha(self, alpha: float) -> None:
+        """Set alpha property."""
         self._artist.set_alpha(alpha)
 
 
 class DataItemArtistWrapper(ItemArtistWrapper):
+    """Wrapper for DataItem."""
+
     __gtype_name__ = "GraphsDataItemArtistWrapper"
     selected = GObject.Property(type=bool, default=True)
     linewidth = GObject.Property(type=float, default=3)
@@ -69,34 +91,42 @@ class DataItemArtistWrapper(ItemArtistWrapper):
 
     @GObject.Property
     def xdata(self) -> list:
+        """Get xdata property."""
         return self._artist.get_xdata()
 
     @xdata.setter
     def xdata(self, xdata: list) -> None:
+        """Set xdata property."""
         self._artist.set_xdata(xdata)
 
     @GObject.Property
     def ydata(self) -> list:
+        """Get ydata property."""
         return self._artist.get_ydata()
 
     @ydata.setter
     def ydata(self, ydata: list) -> None:
+        """Set ydata property."""
         self._artist.set_ydata(ydata)
 
     @GObject.Property(type=int, default=1)
     def linestyle(self) -> int:
+        """Get linestyle property."""
         return misc.LINESTYLES.index(self._artist.get_linestyle())
 
     @linestyle.setter
     def linestyle(self, linestyle: int) -> None:
+        """Set linestyle property."""
         self._artist.set_linestyle(misc.LINESTYLES[linestyle])
 
     @GObject.Property(type=int, default=1)
     def markerstyle(self) -> int:
+        """Get markerstyle property."""
         return misc.MARKERSTYLES.index(self._artist.get_marker())
 
     @markerstyle.setter
     def markerstyle(self, markerstyle: int) -> None:
+        """Set markerstyle property."""
         self._artist.set_marker(misc.MARKERSTYLES[markerstyle])
 
     def _set_properties(self, _x, _y) -> None:
@@ -125,46 +155,58 @@ class DataItemArtistWrapper(ItemArtistWrapper):
 
 
 class TextItemArtistWrapper(ItemArtistWrapper):
+    """Wrapper for TextItem."""
+
     __gtype_name__ = "GraphsTextItemArtistWrapper"
 
     @GObject.Property(type=float, default=12)
     def size(self) -> float:
+        """Get size property."""
         return self._artist.get_fontsize()
 
     @size.setter
     def size(self, size: float) -> None:
+        """Set size property."""
         self._artist.set_fontsize(size)
 
     @GObject.Property(type=int, default=0, minimum=0, maximum=360)
     def rotation(self) -> int:
+        """Get rotation property."""
         return self._artist.get_rotation()
 
     @rotation.setter
     def rotation(self, rotation: int) -> None:
+        """Set rotation property."""
         self._artist.set_rotation(rotation)
 
     @GObject.Property(type=str, default="")
     def text(self) -> str:
+        """Get text property."""
         return self._artist.get_text()
 
     @text.setter
     def text(self, text: str) -> None:
+        """Set text property."""
         self._artist.set_text(text)
 
     @GObject.Property(type=float, default=0)
     def xanchor(self) -> float:
+        """Get xanchor property."""
         return self._artist.get_position()[0]
 
     @xanchor.setter
     def xanchor(self, xanchor: float) -> None:
+        """Set xanchor property."""
         self._artist.set_position((xanchor, self.props.yanchor))
 
     @GObject.Property(type=float, default=0)
     def yanchor(self) -> float:
+        """Get yanchor property."""
         return self._artist.get_position()[1]
 
     @yanchor.setter
     def yanchor(self, yanchor: float) -> None:
+        """Set yanchor property."""
         self._artist.set_position((self.props.xanchor, yanchor))
 
     def __init__(self, axis: pyplot.axis, item: Graphs.Item):
@@ -183,11 +225,13 @@ class TextItemArtistWrapper(ItemArtistWrapper):
 
 
 class FillItemArtistWrapper(ItemArtistWrapper):
+    """Wrapper for FillItem."""
+
     __gtype_name__ = "GraphsFillItemArtistWrapper"
 
     @GObject.Property(type=object, flags=2)
     def data(self) -> None:
-        pass
+        """Write-only property, ignored."""
 
     @data.setter
     def data(self, data) -> None:

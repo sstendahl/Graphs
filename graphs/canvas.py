@@ -159,7 +159,7 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
         return self.props.application
 
     def _set_mouse_fraction(self, event) -> None:
-        """Sets the mouse coordinate in terms of fraction of the canvas"""
+        """Set the mouse coordinate in terms of fraction of the canvas."""
         if event.inaxes is not None:
             xlim = self._top_right_axis.get_xlim()
             ylim = self._top_right_axis.get_ylim()
@@ -187,6 +187,8 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
 
     def _on_pan_gesture(self, event_controller, x: float, y: float) -> None:
         """
+        Handle pan gesture.
+
         Determines what to do when a panning gesture is detected, pans the
         canvas in the gesture direction.
         """
@@ -205,6 +207,8 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
 
     def _on_scroll_event(self, event) -> None:
         """
+        Handle mouse scrolling.
+
         Determines what to do when a scroll signal is detected, scrolls the
         canvas if ctrl is selected.
         """
@@ -249,6 +253,8 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
         y_panspeed: float,
     ) -> None:
         """
+        Calculate values required for panning.
+
         Calculates the coordinates of the canvas after a panning gesture has
         been emitted.
         """
@@ -295,6 +301,8 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
         zoom_factor: float,
     ) -> tuple[float, float]:
         """
+        Calculate zoomed values.
+
         Calculates the coordinates of the canvas after a zoom gesture
         has  been ezoomed.
         """
@@ -744,7 +752,7 @@ class _DummyToolbar(NavigationToolbar2):
 
     # Overwritten function - do not change name
     def drag_pan(self, event):
-        """Callback for dragging in pan/zoom mode."""
+        """Handle dragging in pan/zoom mode."""
         for ax in self._pan_info.axes:
             # Using the recorded button at the press is safer than the current
             # button, as multiple buttons can get pressed during motion.
@@ -762,16 +770,7 @@ class _DummyToolbar(NavigationToolbar2):
     @staticmethod
     def ax_drag_pan(self, button, key: str, x: float, y: float) -> None:
         """
-        Called when the mouse moves during a pan operation.
-
-        Parameters
-        ----------
-        button : `.MouseButton`
-            The pressed mouse button.
-        key : str or None
-            The pressed key, if any.
-        x, y : float
-            The mouse coordinates in display coords.
+        Handle mouse events during a pan operation.
 
         Notes
         -----
