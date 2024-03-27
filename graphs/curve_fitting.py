@@ -17,6 +17,7 @@ from scipy.optimize import _minpack, curve_fit
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/curve_fitting.ui")
 class CurveFittingDialog(Adw.Dialog):
+    """Class for displaying the Curve Fitting dialog."""
     __gtype_name__ = "GraphsCurveFittingDialog"
 
     custom_equation = Gtk.Template.Child()
@@ -269,6 +270,7 @@ class CurveFittingDialog(Adw.Dialog):
 
     @property
     def equation_string(self) -> str:
+        """The processed equation to be used for the fitted curve """
         return utilities.preprocess(str(self.custom_equation.get_text()))
 
     def fit_curve(self, *_args) -> bool:
@@ -278,6 +280,7 @@ class CurveFittingDialog(Adw.Dialog):
         """
 
         def _get_equation_name(equation_name, values):
+            """Obtain the equation name with the fitted parameters filled in"""
             free_variables = utilities.get_free_variables(self.equation_string)
             var_to_val = dict(zip(free_variables, values))
             for var, val in var_to_val.items():
@@ -402,15 +405,24 @@ class CurveFittingDialog(Adw.Dialog):
 
 
 class FittingParameterContainer(Data):
-    """Class to contain the fitting parameters."""
+    """
+    Container class for the Fitting Parameters. Each item in the container
+    represents one fitting parameter.
+    """
     __gtype_name__ = "GraphsFittingParameterContainer"
     __gsignals__ = {}
 
     def add_items(self, items: list) -> None:
+        """Add new fitting parameters to the container"""
         for item in items:
             self._items[item.get_name()] = item
 
     def remove_unused(self, used_list: list) -> None:
+        """
+        Remove unused fitting parameters given a list of currently used
+        fitting parameters. This ensures that the fitting parameters are
+        kept up-to-date with the actual equation.
+        """
         # First create list with items to remove
         # to avoid dict changing size during iteration
         remove_list = []
@@ -424,24 +436,30 @@ class FittingParameterContainer(Data):
         self.order_by_list(used_list)
 
     def order_by_list(self, ordered_list: list) -> None:
+        """
+        Reorder the items given a list, this is to make sure the order
+        of fitting parameters doesn't change when updating the equation.
+        """
         self._items = {key: self._items[key] for key in ordered_list}
 
     def get_p0(self) -> list:
-        """Get the initial values."""
+        """Get the initial values of the fitting."""
         return [float(item_.get_initial()) for item_ in self]
 
-    def get_bounds(self):
+    def get_bounds(self) -> tuple:
+        """Get the bounds of the fitting parameters"""
         lower_bounds = [float(item_.get_lower_bound()) for item_ in self]
         upper_bounds = [float(item_.get_upper_bound()) for item_ in self]
         return (lower_bounds, upper_bounds)
 
 
 class FittingParameter(Graphs.FittingParameter):
-    """Class for the fitting parameters."""
+    """Class for the fitting parameters itself."""
     __gtype_name__ = "GraphsFittingParameterItem"
     application = GObject.Property(type=Graphs.Application)
 
     def __init__(self, **kwargs):
+        """Initialize a fitting parameter object"""
         super().__init__(
             name=kwargs.get("name", ""),
             initial=kwargs.get("initial", 1),
@@ -452,6 +470,7 @@ class FittingParameter(Graphs.FittingParameter):
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/fitting_parameters.ui")
 class FittingParameterEntry(Gtk.Box):
+    """Class for the fitting parameter entries."""
     __gtype_name__ = "GraphsFittingParameterEntry"
     label = Gtk.Template.Child()
     initial = Gtk.Template.Child()
@@ -463,6 +482,7 @@ class FittingParameterEntry(Gtk.Box):
     application = GObject.Property(type=Adw.Application)
 
     def __init__(self, parent, arg):
+        """Initialize the fitting parameter entry"""
         super().__init__(application=parent.props.application)
         self.parent = parent
         self.params = parent.fitting_parameters[arg]
@@ -477,6 +497,10 @@ class FittingParameterEntry(Gtk.Box):
         self.set_bounds_visibility()
 
     def set_bounds_visibility(self) -> None:
+        """
+        Set the bounds visibility, ensures that the bounds are not visible when
+        using the Levenberg-Marquardt method is used.
+        """
         method = self.parent.settings.get_string("optimization")
         self.upper_bound_group.set_visible(method != "lm")
         self.lower_bound_group.set_visible(method != "lm")
