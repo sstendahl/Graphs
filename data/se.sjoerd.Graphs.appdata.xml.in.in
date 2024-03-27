@@ -491,5 +491,9 @@
     <control>keyboard</control>
     <control>pointing</control>
   </recommends>
+  <branding>
+    <color type="primary" scheme_preference="light">#99c1f1</color>
+    <color type="primary" scheme_preference="dark">#09356d</color>
+  </branding>
   <content_rating type="oars-1.1" />
 </component>
