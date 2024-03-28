@@ -34,6 +34,17 @@ template $GraphsExportFigureDialog : Adw.Dialog {
         focus-on-click: false;
         Adw.ComboRow file_format {
           title: _("File Format");
+          model: StringList {
+            strings [
+              _("Encapsulated Postscript"),
+              _("Joint Photographic Experts Group"),
+              _("Portable Document Format"),
+              _("Portable Network Graphics"),
+              _("Postscript"),
+              _("Scalable Vector Graphics"),
+              _("WebP Image Format"),
+            ]
+          };
         }
         Adw.SpinRow dpi {
           title: _("Resolution (dpi)");

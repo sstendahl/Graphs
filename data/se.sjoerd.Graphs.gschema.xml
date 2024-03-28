@@ -38,13 +38,10 @@
     <value nick="Encapsulated Postscript" value="0"/>
     <value nick="Joint Photographic Experts Group" value="1"/>
     <value nick="Portable Document Format" value="2"/>
-    <value nick="PGF code for LaTeX" value="3"/>
-    <value nick="Portable Network Graphics" value="4"/>
-    <value nick="Postscript" value="5"/>
-    <value nick="Raw RGBA bitmap" value="6"/>
-    <value nick="Scalable Vector Graphics" value="7"/>
-    <value nick="Tagged Image File Format" value="8"/>
-    <value nick="WebP Image Format" value="9"/>
+    <value nick="Portable Network Graphics" value="3"/>
+    <value nick="Postscript" value="4"/>
+    <value nick="Scalable Vector Graphics" value="5"/>
+    <value nick="WebP Image Format" value="6"/>
   </enum>
 
   <enum id="se.sjoerd.Graphs.figure.legend-positions">
