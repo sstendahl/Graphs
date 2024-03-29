@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2024-03-25 13:08+0000\n"
-"PO-Revision-Date: 2024-03-25 22:28+0200\n"
+"POT-Creation-Date: 2024-03-28 22:34+0000\n"
+"PO-Revision-Date: 2024-03-29 15:48+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -21,12 +21,10 @@ msgstr ""
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:6
 #: data/se.sjoerd.Graphs.desktop.in.in:3 data/ui/window.blp:9 graphs/ui.py:214
-#| msgid "About Graphs"
 msgid "Graphs"
 msgstr "Графіки"
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:7
-#| msgid "1 - Plot and manipulate any data of choice"
 msgid "Plot and manipulate data"
 msgstr "Креслення і робота з даними"
 
@@ -153,7 +151,8 @@ msgid "Step Size"
 msgstr "Розмір кроку"
 
 #: data/ui/add_style.blp:6 data/ui/figure_settings.blp:227
-msgid "Add new style"
+#| msgid "Add new style"
+msgid "Add New Style"
 msgstr "Додати новий стиль"
 
 #: data/ui/add_style.blp:33
@@ -177,49 +176,41 @@ msgid "Equation"
 msgstr "Рівняння"
 
 #: data/ui/curve_fitting.blp:52
-#| msgid "Linear"
 msgctxt "regression-type"
 msgid "Linear"
 msgstr "Лінійна"
 
 #: data/ui/curve_fitting.blp:53
-#| msgid "Quadratic"
 msgctxt "regression-type"
 msgid "Quadratic"
 msgstr "Квадратична"
 
 #: data/ui/curve_fitting.blp:54
-#| msgid "Exponential"
 msgctxt "regression-type"
 msgid "Exponential"
 msgstr "Показникова"
 
 #: data/ui/curve_fitting.blp:55
-#| msgid "Power Law"
 msgctxt "regression-type"
 msgid "Power Law"
 msgstr "Степенева"
 
 #: data/ui/curve_fitting.blp:56
-#| msgid "Logarithmic"
 msgctxt "regression-type"
 msgid "Logarithmic"
 msgstr "Логарифмічна"
 
 #: data/ui/curve_fitting.blp:57
-#| msgid "Sigmoid Logistic"
 msgctxt "regression-type"
 msgid "Sigmoid Logistic"
 msgstr "Логістична сигмоїда"
 
 #: data/ui/curve_fitting.blp:58
-#| msgid "Gaussian"
 msgctxt "regression-type"
 msgid "Gaussian"
 msgstr "Гаусова"
 
 #: data/ui/curve_fitting.blp:59
-#| msgid "Custom"
 msgctxt "regression-type"
 msgid "Custom"
 msgstr "Нетипова"
@@ -241,7 +232,8 @@ msgid "Canvas Failed to Load"
 msgstr "Не вдалося завантажити полотно"
 
 #: data/ui/dialogs.blp:5
-msgid "Save changes?"
+#| msgid "Save changes?"
+msgid "Save Changes?"
 msgstr "Зберегти зміни?"
 
 #: data/ui/dialogs.blp:6
@@ -261,7 +253,8 @@ msgid "Save"
 msgstr "Зберегти"
 
 #: data/ui/dialogs.blp:17
-msgid "Delete style?"
+#| msgid "Delete style?"
+msgid "Delete Style?"
 msgstr "Вилучити стиль?"
 
 #: data/ui/dialogs.blp:20 data/ui/style_editor.blp:12
@@ -321,31 +314,26 @@ msgid "Linestyle"
 msgstr "Стиль лінії"
 
 #: data/ui/edit_item.blp:48 data/ui/style_editor.blp:86
-#| msgid "None"
 msgctxt "linestyle"
 msgid "None"
 msgstr "Немає"
 
 #: data/ui/edit_item.blp:49 data/ui/style_editor.blp:87
-#| msgid "Solid"
 msgctxt "linestyle"
 msgid "Solid"
 msgstr "Суцільна"
 
 #: data/ui/edit_item.blp:50 data/ui/style_editor.blp:88
-#| msgid "Dotted"
 msgctxt "linestyle"
 msgid "Dotted"
 msgstr "Пунктирна"
 
 #: data/ui/edit_item.blp:51 data/ui/style_editor.blp:89
-#| msgid "Dashed"
 msgctxt "linestyle"
 msgid "Dashed"
 msgstr "Штрихова"
 
 #: data/ui/edit_item.blp:52 data/ui/style_editor.blp:90
-#| msgid "Dashdot"
 msgctxt "linestyle"
 msgid "Dashdot"
 msgstr "Штрих-пунктирна"
@@ -359,135 +347,113 @@ msgid "Markers"
 msgstr "Позначки"
 
 #: data/ui/edit_item.blp:76 data/ui/style_editor.blp:115
-#| msgid "Nothing"
 msgctxt "markerstyle"
 msgid "Nothing"
 msgstr "Нічого"
 
 #: data/ui/edit_item.blp:77 data/ui/style_editor.blp:116
-#| msgid "Point"
 msgctxt "markerstyle"
 msgid "Point"
 msgstr "Крапка"
 
 #: data/ui/edit_item.blp:78 data/ui/style_editor.blp:117
-#| msgid "Pixel"
 msgctxt "markerstyle"
 msgid "Pixel"
 msgstr "Піксель"
 
 #: data/ui/edit_item.blp:79 data/ui/style_editor.blp:118
-#| msgid "Circle"
 msgctxt "markerstyle"
 msgid "Circle"
 msgstr "Коло"
 
 #: data/ui/edit_item.blp:80 data/ui/style_editor.blp:119
-#| msgid "Triangle Down"
 msgctxt "markerstyle"
 msgid "Triangle Down"
 msgstr "Трикутник вниз"
 
 #: data/ui/edit_item.blp:81 data/ui/style_editor.blp:120
-#| msgid "Triangle Up"
 msgctxt "markerstyle"
 msgid "Triangle Up"
 msgstr "Трикутник вгору"
 
 #: data/ui/edit_item.blp:82 data/ui/style_editor.blp:121
-#| msgid "Triangle Left"
 msgctxt "markerstyle"
 msgid "Triangle Left"
 msgstr "Трикутник ліворуч"
 
 #: data/ui/edit_item.blp:83 data/ui/style_editor.blp:122
-#| msgid "Triangle Right"
 msgctxt "markerstyle"
 msgid "Triangle Right"
 msgstr "Трикутник праворуч"
 
 #: data/ui/edit_item.blp:84 data/ui/style_editor.blp:123
-#| msgid "Octagon"
 msgctxt "markerstyle"
 msgid "Octagon"
 msgstr "Восьмикутник"
 
 #: data/ui/edit_item.blp:85 data/ui/style_editor.blp:124
-#| msgid "Square"
 msgctxt "markerstyle"
 msgid "Square"
 msgstr "Квадрат"
 
 #: data/ui/edit_item.blp:86 data/ui/style_editor.blp:125
-#| msgid "Pentagon"
 msgctxt "markerstyle"
 msgid "Pentagon"
 msgstr "П'ятикутник"
 
 #: data/ui/edit_item.blp:87 data/ui/style_editor.blp:126
-#| msgid "Star"
 msgctxt "markerstyle"
 msgid "Star"
 msgstr "Зірка"
 
 #: data/ui/edit_item.blp:88 data/ui/style_editor.blp:127
-#| msgid "Hexagon 1"
 msgctxt "markerstyle"
 msgid "Hexagon 1"
 msgstr "Шестикутник 1"
 
 #: data/ui/edit_item.blp:89 data/ui/style_editor.blp:128
-#| msgid "Hexagon 2"
 msgctxt "markerstyle"
 msgid "Hexagon 2"
 msgstr "Шестикутник 2"
 
 #: data/ui/edit_item.blp:90 data/ui/style_editor.blp:129
-#| msgid "Plus"
 msgctxt "markerstyle"
 msgid "Plus"
 msgstr "Плюс"
 
 #: data/ui/edit_item.blp:91 data/ui/style_editor.blp:130
-#| msgid "X"
 msgctxt "markerstyle"
 msgid "X"
 msgstr "X"
 
 #. Translators: Diamond as in Cards Symbol
 #: data/ui/edit_item.blp:93 data/ui/style_editor.blp:132
-#| msgid "Diamond"
 msgctxt "markerstyle"
 msgid "Diamond"
 msgstr "Ромб"
 
 #. Translators: Diamond as in Cards Symbol
 #: data/ui/edit_item.blp:95 data/ui/style_editor.blp:134
-#| msgid "Thin Diamond"
 msgctxt "markerstyle"
 msgid "Thin Diamond"
 msgstr "Тонкий ромб"
 
 #: data/ui/edit_item.blp:96 data/ui/style_editor.blp:135
-#| msgid "Vertical Line"
 msgctxt "markerstyle"
 msgid "Vertical Line"
 msgstr "Вертикальна лінія"
 
 #: data/ui/edit_item.blp:97 data/ui/style_editor.blp:136
-#| msgid "Horizontal Line"
 msgctxt "markerstyle"
 msgid "Horizontal Line"
 msgstr "Горизонтальна лінія"
 
 #: data/ui/edit_item.blp:98 data/ui/style_editor.blp:137
-#| msgid "Filled Plus"
 msgctxt "markerstyle"
 msgid "Filled Plus"
 msgstr "Заповнений плюс"
 
 #: data/ui/edit_item.blp:99 data/ui/style_editor.blp:138
-#| msgid "Filled X"
 msgctxt "markerstyle"
 msgid "Filled X"
 msgstr "Заповнений X"
@@ -538,35 +504,30 @@ msgstr "Масштабування"
 
 #: data/ui/figure_settings.blp:115 data/ui/figure_settings.blp:127
 #: data/ui/figure_settings.blp:139 data/ui/figure_settings.blp:151
-#| msgid "Linear"
 msgctxt "scale"
 msgid "Linear"
 msgstr "Лінійна"
 
 #: data/ui/figure_settings.blp:116 data/ui/figure_settings.blp:128
 #: data/ui/figure_settings.blp:140 data/ui/figure_settings.blp:152
-#| msgid "Logarithmic"
 msgctxt "scale"
 msgid "Logarithmic"
 msgstr "Логарифмічна"
 
 #: data/ui/figure_settings.blp:117 data/ui/figure_settings.blp:129
 #: data/ui/figure_settings.blp:141 data/ui/figure_settings.blp:153
-#| msgid "Radians"
 msgctxt "scale"
 msgid "Radians"
 msgstr "Радіани"
 
 #: data/ui/figure_settings.blp:118 data/ui/figure_settings.blp:130
 #: data/ui/figure_settings.blp:142 data/ui/figure_settings.blp:154
-#| msgid "Square Root"
 msgctxt "scale"
 msgid "Square Root"
 msgstr "Квадратний корінь"
 
 #: data/ui/figure_settings.blp:119 data/ui/figure_settings.blp:131
 #: data/ui/figure_settings.blp:143 data/ui/figure_settings.blp:155
-#| msgid "Inverse"
 msgctxt "scale"
 msgid "Inverse"
 msgstr "Обернена"
@@ -584,61 +545,51 @@ msgid "Legend Position"
 msgstr "Розташування панелі умовних позначень"
 
 #: data/ui/figure_settings.blp:170
-#| msgid "Auto"
 msgctxt "legend-position"
 msgid "Auto"
 msgstr "Авто"
 
 #: data/ui/figure_settings.blp:171
-#| msgid "Upper Right"
 msgctxt "legend-position"
 msgid "Upper Right"
 msgstr "Вгорі праворуч"
 
 #: data/ui/figure_settings.blp:172
-#| msgid "Upper Left"
 msgctxt "legend-position"
 msgid "Upper Left"
 msgstr "Вгорі ліворуч"
 
 #: data/ui/figure_settings.blp:173
-#| msgid "Lower Left"
 msgctxt "legend-position"
 msgid "Lower Left"
 msgstr "Знизу ліворуч"
 
 #: data/ui/figure_settings.blp:174
-#| msgid "Lower Right"
 msgctxt "legend-position"
 msgid "Lower Right"
 msgstr "Знизу праворуч"
 
 #: data/ui/figure_settings.blp:175
-#| msgid "Center Left"
 msgctxt "legend-position"
 msgid "Center Left"
 msgstr "За центром ліворуч"
 
 #: data/ui/figure_settings.blp:176
-#| msgid "Center Right"
 msgctxt "legend-position"
 msgid "Center Right"
 msgstr "За центром праворуч"
 
 #: data/ui/figure_settings.blp:177
-#| msgid "Lower Center"
 msgctxt "legend-position"
 msgid "Lower Center"
 msgstr "За центром внизу"
 
 #: data/ui/figure_settings.blp:178
-#| msgid "Upper Center"
 msgctxt "legend-position"
 msgid "Upper Center"
 msgstr "За центром вгорі"
 
 #: data/ui/figure_settings.blp:179
-#| msgid "Center"
 msgctxt "legend-position"
 msgid "Center"
 msgstr "За центром"
@@ -650,6 +601,11 @@ msgstr "Приховати непозначені елементи"
 #: data/ui/figure_settings.blp:190 data/ui/figure_settings.blp:220
 msgid "Style"
 msgstr "Стиль"
+
+#: data/ui/figure_settings.blp:209
+#| msgid "Reset to Defaults?"
+msgid "Set as Default"
+msgstr "Зробити типовим"
 
 #: data/ui/fitting_parameters.blp:26
 msgid "Initial Guess"
@@ -840,43 +796,36 @@ msgid "Character sequence used to split values"
 msgstr "Послідовність символів для поділу значень"
 
 #: data/ui/import.blp:52
-#| msgid "Whitespace"
 msgctxt "delimiter"
 msgid "Whitespace"
 msgstr "Пробіл"
 
 #: data/ui/import.blp:53
-#| msgid "Tab"
 msgctxt "delimiter"
 msgid "Tab"
 msgstr "Табуляція"
 
 #: data/ui/import.blp:54
-#| msgid "Colon (:)"
 msgctxt "delimiter"
 msgid "Colon (:)"
 msgstr "Двокрапка (:)"
 
 #: data/ui/import.blp:55
-#| msgid "Semicolon (;)"
 msgctxt "delimiter"
 msgid "Semicolon (;)"
 msgstr "Крапка з комою (;)"
 
 #: data/ui/import.blp:56
-#| msgid "Decimal comma (,)"
 msgctxt "delimiter"
 msgid "Decimal comma (,)"
 msgstr "Десяткова кома (,)"
 
 #: data/ui/import.blp:57
-#| msgid "Decimal point (.)"
 msgctxt "delimiter"
 msgid "Decimal point (.)"
 msgstr "Десяткова крапка (.)"
 
 #: data/ui/import.blp:58
-#| msgid "Custom"
 msgctxt "delimiter"
 msgid "Custom"
 msgstr "Нетипова"
@@ -890,13 +839,11 @@ msgid "Decimal Separator"
 msgstr "Десятковий роздільник"
 
 #: data/ui/import.blp:72
-#| msgid "Decimal comma (,)"
 msgctxt "separator"
 msgid "Decimal comma (,)"
 msgstr "Десяткова кома (,)"
 
 #: data/ui/import.blp:73
-#| msgid "Decimal point (.)"
 msgctxt "separator"
 msgid "Decimal point (.)"
 msgstr "Десяткова крапка (.)"
@@ -981,6 +928,10 @@ msgstr "Змінити"
 #: data/ui/style_color_box.blp:29
 msgid "Remove"
 msgstr "Вилучити"
+
+#: data/ui/style_editor.blp:5
+msgid "Error - No Style selected"
+msgstr "Помилка — не вибрано стилю"
 
 #: data/ui/style_editor.blp:37
 msgid "Style Name"
@@ -1203,7 +1154,8 @@ msgid "Discard Unselected Data"
 msgstr "Відкинути непозначені дані"
 
 #: data/ui/window.blp:167
-msgid "Add new Data"
+#| msgid "Add new Data"
+msgid "Add New Data"
 msgstr "Додати нові дані"
 
 #: data/ui/window.blp:175
@@ -1219,23 +1171,20 @@ msgid "Add data from a file or manually as an equation"
 msgstr "Додати дані з файла або вручну як рівняння"
 
 #: data/ui/window.blp:225
-#| msgid "Panning mode. Click and drag to pan"
 msgid "Pan Mode. Click and drag to pan"
 msgstr ""
 "Режим панорамування. Натисніть кнопку миші і перетягніть вказівник для "
 "панорамування"
 
 #: data/ui/window.blp:231
-#| msgid "Zoom mode. Select an area on the figure to zoom in"
 msgid "Zoom Mode. Select an area on the figure to zoom in"
 msgstr "Режим масштабування. Позначте область на рисунку для збільшення"
 
 #: data/ui/window.blp:237
-#| msgid "Highlight mode. Click and drag to make a selection of data"
 msgid "Select Mode. Click and drag to make a selection of data"
 msgstr ""
-"Режим вибору. Натисніть кнопку миші і перетягніть вказівник для "
-"позначення даних"
+"Режим вибору. Натисніть кнопку миші і перетягніть вказівник для позначення "
+"даних"
 
 #: data/ui/window.blp:272
 msgid "Adjust"
@@ -1433,7 +1382,6 @@ msgstr "{error} — не вдалося додати дані з рівнянн�
 
 #: graphs/application.py:75
 #, python-brace-format
-#| msgid "Could not load %s"
 msgid "Could not load {font}"
 msgstr "Не вдалося завантажити {font}"
 
@@ -1447,19 +1395,16 @@ msgid "Optimization Method"
 msgstr "Метод оптимізації"
 
 #: graphs/curve_fitting.py:88
-#| msgid "Levenberg-Marquardt"
 msgctxt "optimization"
 msgid "Levenberg-Marquardt"
 msgstr "Левенберга-Марквардта"
 
 #: graphs/curve_fitting.py:89
-#| msgid "Trust Region Reflective"
 msgctxt "optimization"
 msgid "Trust Region Reflective"
 msgstr "Відбита довірча область"
 
 #: graphs/curve_fitting.py:90
-#| msgid "Dogbox"
 msgctxt "optimization"
 msgid "Dogbox"
 msgstr "Конура"
@@ -1469,25 +1414,21 @@ msgid "Confidence Bounds"
 msgstr "Межі довіри"
 
 #: graphs/curve_fitting.py:96
-#| msgid "None"
 msgctxt "confidence"
 msgid "None"
 msgstr "Немає"
 
 #: graphs/curve_fitting.py:97
-#| msgid "1σ: 68% Confidence"
 msgctxt "confidence"
 msgid "1σ: 68% Confidence"
 msgstr "1σ: довірчий інтервал 68%"
 
 #: graphs/curve_fitting.py:98
-#| msgid "2σ: 95% Confidence"
 msgctxt "confidence"
 msgid "2σ: 95% Confidence"
 msgstr "2σ: довірчий інтервал 95%"
 
 #: graphs/curve_fitting.py:99
-#| msgid "3σ: 99.7% Confidence"
 msgctxt "confidence"
 msgid "3σ: 99.7% Confidence"
 msgstr "3σ: довірчий інтервал 99.7%"
@@ -1716,43 +1657,36 @@ msgstr "Ви справді хочете вилучити {self.style.get_name()
 
 #: graphs/styles.py:827
 #, python-brace-format
-#| msgid "Color {}"
 msgid "Color {number}"
 msgstr "Колір {number}"
 
 #: graphs/style_io.py:57
 #, python-brace-format
-#| msgid "Missing colon in file {0}, line {1}"
 msgid "Missing colon in file {file}, line {line}"
 msgstr "Пропущено двокрапку у файлі {file}, рядок {line}"
 
 #: graphs/style_io.py:65
 #, python-brace-format
-#| msgid "Non-style related parameter {0} in file {1}"
 msgid "Non-style related parameter {param} in file {file}"
 msgstr "Непов'язаний із стилем параметр {param} у файлі {file}"
 
 #: graphs/style_io.py:68
 #, python-brace-format
-#| msgid "Ignoring parameter {0} in file {1}"
 msgid "Ignoring parameter {param} in file {file}"
 msgstr "Ігноруємо параметр {param} у файлі {file}"
 
 #: graphs/style_io.py:71
 #, python-brace-format
-#| msgid "Duplicate key in file {0}, on line {1}"
 msgid "Duplicate key in file {param}, on line {line}"
 msgstr "Дублювання ключа у файлі {param}, рядок {line}"
 
 #: graphs/style_io.py:88
 #, python-brace-format
-#| msgid "Bad value in file {0} on line {1}"
 msgid "Bad value in file {file} on line {line}"
 msgstr "Помилкове значення у файлі {file}, рядок {line}"
 
 #: graphs/style_io.py:94
 #, python-brace-format
-#| msgid "Could not parse {}"
 msgid "Could not parse {filename}"
 msgstr "Не вдалося обробити {filename}"
 
@@ -1773,36 +1707,30 @@ msgstr "Оптимізувати межі"
 
 #: graphs/ui.py:91
 #, python-brace-format
-#| msgid "Items {} already exist"
 msgid "Items {items} already exist"
 msgstr "Записи {items} вже існують"
 
 #: graphs/ui.py:99
-#| msgid "Graphs Project File"
 msgctxt "file-filter"
 msgid "Graphs Project File"
 msgstr "файл проєкту «Графіків»"
 
 #: graphs/ui.py:118
-#| msgid "Supported files"
 msgctxt "file-filter"
 msgid "Supported files"
 msgstr "підтримувані файли"
 
 #: graphs/ui.py:121
-#| msgid "ASCII files"
 msgctxt "file-filter"
 msgid "ASCII files"
 msgstr "файли ASCII"
 
 #: graphs/ui.py:122
-#| msgid "PANalytical XRDML"
 msgctxt "file-filter"
 msgid "PANalytical XRDML"
 msgstr "XRDML PANalytical"
 
 #: graphs/ui.py:123
-#| msgid "Leybold xry"
 msgctxt "file-filter"
 msgid "Leybold xry"
 msgstr "xry Leybold"
@@ -1816,7 +1744,6 @@ msgid "Exported Data"
 msgstr "Експортовані дані"
 
 #: graphs/ui.py:198
-#| msgid "Text Files"
 msgctxt "file-filter"
 msgid "Text Files"
 msgstr "текстові файли"
@@ -1827,13 +1754,11 @@ msgstr "Юрій Чорноіван <yurchor@ukr.net>, 2024"
 
 #: graphs/ui.py:260 graphs/ui.py:337 graphs/ui.py:397
 #, python-brace-format
-#| msgid "Unsupported Widget {}"
 msgid "Unsupported Widget {widget}"
 msgstr "Непідтримуваний віджет {widget}"
 
 #: graphs/ui.py:263 graphs/ui.py:340 graphs/ui.py:400
 #, python-brace-format
-#| msgid "No way to apply “{}”"
 msgid "No way to apply “{key}”"
 msgstr "Неможливо застосувати «{key}»"
 
