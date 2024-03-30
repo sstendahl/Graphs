@@ -2,21 +2,22 @@
 # Copyright (C) 2024 Graphs's COPYRIGHT HOLDER
 # This file is distributed under the same license as the Graphs package.
 # Leônidas Araújo <leorusvellt@hotmail.com>, 2024.
+# Rafael Fontenelle <rafaelff@gnome.org>, 2024.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2024-03-25 13:08+0000\n"
-"PO-Revision-Date: 2024-03-25 11:39-0300\n"
-"Last-Translator: Leônidas Araújo <leorusvellt@hotmail.com>\n"
-"Language-Team: Brazilian Portuguese <pt_BR@li.org>\n"
+"POT-Creation-Date: 2024-03-29 13:40+0000\n"
+"PO-Revision-Date: 2024-03-30 00:10-0300\n"
+"Last-Translator: Rafael Fontenelle <rafaelff@gnome.org>\n"
+"Language-Team: Brazilian Portuguese <https://br.gnome.org/traducao>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 3.3.1\n"
+"Plural-Forms: nplurals=2; plural=(n > 1)\n"
+"X-Generator: Gtranslator 46.0\n"
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:6
 #: data/se.sjoerd.Graphs.desktop.in.in:3 data/ui/window.blp:9 graphs/ui.py:214
@@ -149,7 +150,7 @@ msgid "Step Size"
 msgstr "Taxa de variação"
 
 #: data/ui/add_style.blp:6 data/ui/figure_settings.blp:227
-msgid "Add new style"
+msgid "Add New Style"
 msgstr "Adicionar novo estilo"
 
 #: data/ui/add_style.blp:33
@@ -229,7 +230,7 @@ msgid "Canvas Failed to Load"
 msgstr "Falha ao carregar a tela"
 
 #: data/ui/dialogs.blp:5
-msgid "Save changes?"
+msgid "Save Changes?"
 msgstr "Salvar alterações?"
 
 #: data/ui/dialogs.blp:6
@@ -249,7 +250,7 @@ msgid "Save"
 msgstr "Salvar"
 
 #: data/ui/dialogs.blp:17
-msgid "Delete style?"
+msgid "Delete Style?"
 msgstr "Excluir estilo?"
 
 #: data/ui/dialogs.blp:20 data/ui/style_editor.blp:12
@@ -344,7 +345,7 @@ msgstr "Marcadores"
 #: data/ui/edit_item.blp:76 data/ui/style_editor.blp:115
 msgctxt "markerstyle"
 msgid "Nothing"
-msgstr "Nada"
+msgstr "Nenhum"
 
 #: data/ui/edit_item.blp:77 data/ui/style_editor.blp:116
 msgctxt "markerstyle"
@@ -597,6 +598,10 @@ msgstr "Ocultar itens não selecionados"
 msgid "Style"
 msgstr "Estilo"
 
+#: data/ui/figure_settings.blp:209
+msgid "Set as Default"
+msgstr "Redefinir para os padrões?"
+
 #: data/ui/fitting_parameters.blp:26
 msgid "Initial Guess"
 msgstr "Suposição inicial"
@@ -642,17 +647,17 @@ msgstr "Troca de modos"
 #: data/ui/help_overlay.blp:37
 msgctxt "shortcut window"
 msgid "Pan Mode"
-msgstr "Modo panorâmico"
+msgstr "Modo Panorâmico"
 
 #: data/ui/help_overlay.blp:42
 msgctxt "shortcut window"
 msgid "Zoom Mode"
-msgstr "Modo de ampliação"
+msgstr "Modo de Zoom"
 
 #: data/ui/help_overlay.blp:47
 msgctxt "shortcut window"
 msgid "Select Mode"
-msgstr "Modo de seleção"
+msgstr "Modo de Seleção"
 
 #: data/ui/help_overlay.blp:53
 msgctxt "shortcut window"
@@ -737,7 +742,7 @@ msgstr "Aproxima"
 #: data/ui/help_overlay.blp:125
 msgctxt "shortcut window"
 msgid "Zoom out"
-msgstr "Afasta"
+msgstr "Diminui"
 
 #: data/ui/help_overlay.blp:130 data/ui/help_overlay.blp:150
 msgctxt "shortcut window"
@@ -917,6 +922,10 @@ msgstr "Editar"
 #: data/ui/style_color_box.blp:29
 msgid "Remove"
 msgstr "Remover"
+
+#: data/ui/style_editor.blp:5
+msgid "Error - No Style selected"
+msgstr "Erro - Nenhum estilo selecionado"
 
 #: data/ui/style_editor.blp:37
 msgid "Style Name"
@@ -1139,7 +1148,7 @@ msgid "Discard Unselected Data"
 msgstr "Descartar dados não selecionados"
 
 #: data/ui/window.blp:167
-msgid "Add new Data"
+msgid "Add New Data"
 msgstr "Adicionar novo dados"
 
 #: data/ui/window.blp:175
@@ -1160,7 +1169,7 @@ msgstr "Modo panorâmico. Clique e arraste para deslocar"
 
 #: data/ui/window.blp:231
 msgid "Zoom Mode. Select an area on the figure to zoom in"
-msgstr "Modo ampliação. Selecione uma área na figura para ampliar"
+msgstr "Modo de ampliação. Selecione uma área na figura para ampliar"
 
 #: data/ui/window.blp:237
 msgid "Select Mode. Click and drag to make a selection of data"
