@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2024-03-25 13:08+0000\n"
-"PO-Revision-Date: 2024-03-26 12:13+0100\n"
+"POT-Creation-Date: 2024-03-28 22:34+0000\n"
+"PO-Revision-Date: 2024-03-30 04:26+0100\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <ka@li.org>\n"
 "Language: ka\n"
@@ -137,7 +137,7 @@ msgid "Step Size"
 msgstr "ბიჯის ზომა"
 
 #: data/ui/add_style.blp:6 data/ui/figure_settings.blp:227
-msgid "Add new style"
+msgid "Add New Style"
 msgstr "ახალი სტილის დამატება"
 
 #: data/ui/add_style.blp:33
@@ -176,7 +176,6 @@ msgid "Exponential"
 msgstr "ექსპოტენციალური"
 
 #: data/ui/curve_fitting.blp:55
-#| msgid "Lower Left"
 msgctxt "regression-type"
 msgid "Power Law"
 msgstr ""
@@ -218,7 +217,7 @@ msgid "Canvas Failed to Load"
 msgstr "ტილოს ჩატვირთვა ჩავარდა"
 
 #: data/ui/dialogs.blp:5
-msgid "Save changes?"
+msgid "Save Changes?"
 msgstr "შევინახო ცვლილებები?"
 
 #: data/ui/dialogs.blp:6
@@ -238,7 +237,7 @@ msgid "Save"
 msgstr "შენახვა"
 
 #: data/ui/dialogs.blp:17
-msgid "Delete style?"
+msgid "Delete Style?"
 msgstr "წავშალო სტილი?"
 
 #: data/ui/dialogs.blp:20 data/ui/style_editor.blp:12
@@ -586,6 +585,10 @@ msgstr "მოუნიშნავი ელემენტების და�
 msgid "Style"
 msgstr "სტილი"
 
+#: data/ui/figure_settings.blp:209
+msgid "Set as Default"
+msgstr "ნაგულისხმევად დაყენება"
+
 #: data/ui/fitting_parameters.blp:26
 msgid "Initial Guess"
 msgstr "საწყისი მიხვედრა"
@@ -833,7 +836,7 @@ msgstr "სვეტი X"
 
 #: data/ui/import.blp:80
 msgid "X-data column index"
-msgstr ""
+msgstr "X-მონაცემების სვეტის ინდექსი"
 
 #: data/ui/import.blp:89
 msgid "Column Y"
@@ -841,7 +844,7 @@ msgstr "სვეტი Y"
 
 #: data/ui/import.blp:91
 msgid "Y-data column index"
-msgstr ""
+msgstr "Y-მონაცემების სვეტის ინდექსი"
 
 #: data/ui/import.blp:100
 msgid "Skip Rows"
@@ -906,6 +909,10 @@ msgstr "ჩასწორება"
 #: data/ui/style_color_box.blp:29
 msgid "Remove"
 msgstr "წაშლა"
+
+#: data/ui/style_editor.blp:5
+msgid "Error - No Style selected"
+msgstr "შეცდომა - სტილი აღმოჩენილი არაა"
 
 #: data/ui/style_editor.blp:37
 msgid "Style Name"
@@ -1128,7 +1135,7 @@ msgid "Discard Unselected Data"
 msgstr "მოუნიშნავი მონაცემების მოცილება"
 
 #: data/ui/window.blp:167
-msgid "Add new Data"
+msgid "Add New Data"
 msgstr "ახალი მონაცემების დამატება"
 
 #: data/ui/window.blp:175
@@ -1357,7 +1364,7 @@ msgstr "{font}-ის ჩატვირთვა შეუძლებელი
 #. TODO: implement in Vala and figure out gettext
 #: graphs/application.py:305
 msgid "Graphs (Development)"
-msgstr ""
+msgstr "Graphs (Development)"
 
 #: graphs/curve_fitting.py:86
 msgid "Optimization Method"
@@ -1606,11 +1613,14 @@ msgstr "Y ჭდე"
 #, python-brace-format
 msgid "Could not parse {stylename}, loading system preferred style"
 msgstr ""
+"ხაზვის სტილის {stylename} დამუშავება შეუძლებელია. იტვირთება სისტემის "
+"ნაგულისხმევი სტილი"
 
 #: graphs/styles.py:361
 #, python-brace-format
 msgid "Plot style {stylename} does not exist loading system preferred"
 msgstr ""
+"დახაზვის სტილი {stylename} არ არსებობს. იტვირთება სისტემის ნაგულისხმევი"
 
 #: graphs/styles.py:810
 msgid "Are you sure you want to delete {self.style.get_name()}?"
