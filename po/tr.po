@@ -1,16 +1,16 @@
 # Turkish translation for se.sjoerd.Graphs
-# Copyright (C) 2023 se.sjoerd.Graphs' COPYRIGHT HOLDER
+# Copyright (C) 2023-2024 se.sjoerd.Graphs' COPYRIGHT HOLDER
 # This file is distributed under the same license as the se.sjoerd.Graphs package.
 #
-# Sabri Ünal <libreajans@gmail.com>, 2023-2024.
+# Sabri Ünal <yakushabb@gmail.com>, 2023-2024.
 # Emin Tufan Çetin <etcetin@gmail.com>, 2024.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: se.sjoerd.Graphs\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2024-03-25 13:08+0000\n"
-"PO-Revision-Date: 2024-03-25 16:50+0300\n"
+"POT-Creation-Date: 2024-03-28 22:34+0000\n"
+"PO-Revision-Date: 2024-03-29 01:51+0300\n"
 "Last-Translator: Sabri Ünal <yakushabb@gmail.com>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/graphs/graphs/tr/"
 ">\n"
@@ -150,8 +150,8 @@ msgid "Step Size"
 msgstr "Adım Sayısı"
 
 #: data/ui/add_style.blp:6 data/ui/figure_settings.blp:227
-msgid "Add new style"
-msgstr "Yeni biçem ekle"
+msgid "Add New Style"
+msgstr "Yeni Biçem Ekle"
 
 #: data/ui/add_style.blp:33
 msgid "Template"
@@ -219,7 +219,7 @@ msgstr "Y = "
 
 #: data/ui/curve_fitting.blp:92
 msgid "Add Fit to Data"
-msgstr "Verilere Uy Eklendi"
+msgstr "Verilere Uy Ekle"
 
 #: data/ui/curve_fitting.blp:108 data/ui/window.blp:587 graphs/ui.py:41
 msgid "Toggle Sidebar"
@@ -230,8 +230,8 @@ msgid "Canvas Failed to Load"
 msgstr "Tuval Yüklenemedi"
 
 #: data/ui/dialogs.blp:5
-msgid "Save changes?"
-msgstr "Değişiklikler kaydedilsin mi?"
+msgid "Save Changes?"
+msgstr "Değişiklikler Kaydedilsin Mi?"
 
 #: data/ui/dialogs.blp:6
 msgid ""
@@ -250,8 +250,8 @@ msgid "Save"
 msgstr "Kaydet"
 
 #: data/ui/dialogs.blp:17
-msgid "Delete style?"
-msgstr "Biçem silinsin mi?"
+msgid "Delete Style?"
+msgstr "Biçem Silinsin Mi?"
 
 #: data/ui/dialogs.blp:20 data/ui/style_editor.blp:12
 msgid "Delete"
@@ -598,6 +598,10 @@ msgstr "Seçilmemiş Ögeleri Gizle"
 msgid "Style"
 msgstr "Biçem"
 
+#: data/ui/figure_settings.blp:209
+msgid "Set as Default"
+msgstr "Öntanımlı Olarak Ayarla"
+
 #: data/ui/fitting_parameters.blp:26
 msgid "Initial Guess"
 msgstr "İlk Tahmin"
@@ -877,7 +881,7 @@ msgstr "Ögeyi Düzenle"
 
 #: data/ui/item_box.blp:72
 msgid "Remove Item"
-msgstr "Ögeyi kaldır"
+msgstr "Ögeyi Kaldır"
 
 #: data/ui/smoothen_settings.blp:6
 msgid "Smoothen Settings"
@@ -918,6 +922,10 @@ msgstr "Düzenle"
 #: data/ui/style_color_box.blp:29
 msgid "Remove"
 msgstr "Kaldır"
+
+#: data/ui/style_editor.blp:5
+msgid "Error - No Style selected"
+msgstr "Hata - Biçem seçilmedi"
 
 #: data/ui/style_editor.blp:37
 msgid "Style Name"
@@ -1140,7 +1148,7 @@ msgid "Discard Unselected Data"
 msgstr "Seçilmemiş Veriyi Gözden Çıkar"
 
 #: data/ui/window.blp:167
-msgid "Add new Data"
+msgid "Add New Data"
 msgstr "Yeni Veri Ekle"
 
 #: data/ui/window.blp:175
@@ -1287,6 +1295,7 @@ msgstr "Geri Al"
 msgid "Redo"
 msgstr "Yinele"
 
+# Uygulamanın sağında göz simgesi gibi görünen menü için araç ipucu. Menüyü Görüntüle diye çevirmeyin.
 #: data/ui/window.blp:604
 msgid "View Menu"
 msgstr "Görünüm Menüsü"
@@ -1402,17 +1411,17 @@ msgstr "Hiçbiri"
 #: graphs/curve_fitting.py:97
 msgctxt "confidence"
 msgid "1σ: 68% Confidence"
-msgstr "1σ: %%68 Güven"
+msgstr "1σ: %68 Güven"
 
 #: graphs/curve_fitting.py:98
 msgctxt "confidence"
 msgid "2σ: 95% Confidence"
-msgstr "2σ: %%95 Güven"
+msgstr "2σ: %95 Güven"
 
 #: graphs/curve_fitting.py:99
 msgctxt "confidence"
 msgid "3σ: 99.7% Confidence"
-msgstr "3σ: %%99.7 Güven"
+msgstr "3σ: %99.7 Güven"
 
 #: graphs/curve_fitting.py:237
 msgid "Results:"
@@ -1727,7 +1736,9 @@ msgstr "Metin Dosyaları"
 
 #: graphs/ui.py:231
 msgid "translator-credits"
-msgstr "Sabri Ünal <libreajans@gmail.com>"
+msgstr ""
+"Sabri Ünal <yakushabb@gmail.com>\n"
+"Emin Tufan Çetin <etcetin@gmail.com>"
 
 #: graphs/ui.py:260 graphs/ui.py:337 graphs/ui.py:397
 #, python-brace-format
@@ -1742,184 +1753,3 @@ msgstr "“{key}” uygulamanın yolu yok"
 #: graphs/utilities.py:176
 msgid "No valid number specified"
 msgstr "Geçerli bir sayı belirtilmedi"
-
-#~ msgid "@NAME@"
-#~ msgstr "@NAME@"
-
-#~ msgid "@DESCRIPTION_SHORT@"
-#~ msgstr "@DESCRIPTION_SHORT@"
-
-#~ msgid "@AUTHOR@"
-#~ msgstr "@AUTHOR@"
-
-#~ msgid "Fitting Parameters for {param_name}"
-#~ msgstr "{param_name} için Sığdırma Parametreleri"
-
-#~ msgid "Item {} already exists"
-#~ msgstr "{} ögesi zaten var"
-
-#~ msgid "x"
-#~ msgstr "x"
-
-#~ msgid "Savitzky–Golay filter"
-#~ msgstr "Savitzky-Golay filtresi"
-
-#~ msgid "Deleted {}"
-#~ msgstr "{} silindi"
-
-#~ msgid "Minimum Left Axis"
-#~ msgstr "En Düşük Sol Ekseni"
-
-#~ msgid "Maximum Left Axis"
-#~ msgstr "En Yüksek Sol Ekseni"
-
-#~ msgid "Minimum Bottom Axis"
-#~ msgstr "En Düşük Alt Ekseni"
-
-#~ msgid "Maximum Bottom Axis"
-#~ msgstr "En Yüksek Alt Ekseni"
-
-#~ msgid "Minimum Right Axis"
-#~ msgstr "En Düşük Sağ Ekseni"
-
-#~ msgid "Maximum Right Axis"
-#~ msgstr "En Yüksek Sağ Ekseni"
-
-#~ msgid "Minimum Top Axis"
-#~ msgstr "En Düşük Üst Ekseni"
-
-#~ msgid "Maximum Top Axis"
-#~ msgstr "En Yüksek Üst Ekseni"
-
-#~ msgctxt "shortcut window"
-#~ msgid "Quit"
-#~ msgstr "Çık"
-
-#~ msgid "Top Scale"
-#~ msgstr "Üst Ölçeği"
-
-#~ msgid "Bottom Scale"
-#~ msgstr "Alt Ölçeği"
-
-#~ msgid "Left Scale"
-#~ msgstr "Sol Ölçeği"
-
-#~ msgid "Right Scale"
-#~ msgstr "Sağ Ölçeği"
-
-#~ msgid "Moving average"
-#~ msgstr "Hareketli ortalama"
-
-#~ msgid "Best"
-#~ msgstr "En iyi"
-
-#~ msgid "5 - Manipulate data using a wide range of operations"
-#~ msgstr "5 - Çeşitli işlemleri kullanarak verileri işleyin"
-
-#~ msgid "Discard Data?"
-#~ msgstr "Veri Gözden Çıkarılsın Mı?"
-
-#~ msgid "Opening a project will discard all open data."
-#~ msgstr "Bir projeyi açmak, tüm açık verileri gözden çıkarır."
-
-#~ msgid "Add data to the figure to set axis limits"
-#~ msgstr "Eksen sınırlarını ayarlamak için şekle veri ekleyin"
-
-#~ msgid "Use Custom Style"
-#~ msgstr "Özel Biçem Kullan"
-
-#~ msgid "Min"
-#~ msgstr "Asgari"
-
-#~ msgid "Max"
-#~ msgstr "Azami"
-
-#~ msgctxt "shortcut window"
-#~ msgid "Open Preferences"
-#~ msgstr "Tercihleri Aç"
-
-#~ msgctxt "shortcut window"
-#~ msgid "Open Styles"
-#~ msgstr "Biçemleri Aç"
-
-#~ msgid "Delimiter (s+ for whitespace)"
-#~ msgstr "Ayraç (boşluklar için s+)"
-
-#~ msgid "Curve fitting"
-#~ msgstr "Eğri sığdırma"
-
-#~ msgid "General"
-#~ msgstr "Genel"
-
-#~ msgid "Center Action Behaviour"
-#~ msgstr "Ortala Eylemi Davranışı"
-
-#~ msgid "Center at middle coordinate"
-#~ msgstr "Orta koordinatta ortala"
-
-#~ msgid "Handle Duplicate Items"
-#~ msgstr "İkiz Ögeleri İşle"
-
-#~ msgid "Auto-rename duplicates"
-#~ msgstr "İkizleri kendiliğinden yeniden adlandır"
-
-#~ msgid "Ignore duplicates"
-#~ msgstr "İkizleri görmezden gel"
-
-#~ msgid "Add duplicates"
-#~ msgstr "İkizler ekle"
-
-#~ msgid "Override existing items"
-#~ msgstr "Var olan ögelerin üzerine yaz"
-
-#~ msgid "Figure"
-#~ msgstr "Şekil"
-
-#~ msgid "Default X-Axis Position"
-#~ msgstr "Öntanımlı X Eksen Konumu"
-
-#~ msgid "Which axis should a new item be displayed on"
-#~ msgstr "Yeni ögenin hangi eksende gösterileceği"
-
-#~ msgid "Default Y-Axis Position"
-#~ msgstr "Öntanımlı Y Eksen Konumu"
-
-#~ msgid "Override Item Properties on Style Change"
-#~ msgstr "Biçem Değiştiğinde Öge Özelliklerinin Üzerine Yaz"
-
-#~ msgid "Styles"
-#~ msgstr "Biçemler"
-
-#~ msgid "No custom styles"
-#~ msgstr "Özel biçem yok"
-
-#~ msgid "Create a new custom style to start editing your own stylesheets"
-#~ msgstr ""
-#~ "Biçem sayfalarınızı düzenlemeye başlamak için yeni özel biçem oluşturun"
-
-#~ msgid "Change properties of the line and markers"
-#~ msgstr "Çizginin ve imleyicinin özelliklerini değiştir"
-
-#~ msgid "Settings for the ticks that are used on axes"
-#~ msgstr "Eksenlerde kullanılan onay işaretleri için ayarlar"
-
-#~ msgid "Settings for the grid"
-#~ msgstr "Izgara ayarları"
-
-#~ msgid "Edit Colors"
-#~ msgstr "Renkleri Düzenle"
-
-#~ msgid "Other"
-#~ msgstr "Diğer"
-
-#~ msgid "Preferences"
-#~ msgstr "Tercihler"
-
-#~ msgid "2Theta"
-#~ msgstr "2Theta"
-
-#~ msgid "Omega"
-#~ msgstr "Omega"
-
-#~ msgid "{name} - line colors"
-#~ msgstr "{name} - çizgi renkleri"
