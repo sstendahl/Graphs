@@ -7,8 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2024-03-31 16:21+0000\n"
-"PO-Revision-Date: 2024-03-31 23:25+0200\n"
+"POT-Creation-Date: 2024-03-31 21:29+0000\n"
+"PO-Revision-Date: 2024-03-31 23:35+0200\n"
+"Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian <gnome-si@googlegroups.com>\n"
 "Language: sl\n"
 "MIME-Version: 1.0\n"
@@ -16,7 +17,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100>=3 && n"
 "%100<=4 ? 2 : 3);\n"
-"Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "X-Generator: Poedit 2.2.1\n"
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:6
@@ -469,7 +469,7 @@ msgstr "Velikost oznake"
 msgid "Export Figure"
 msgstr "Izvozi sliko"
 
-#: data/ui/export_figure.blp:21 graphs/export_figure.py:87
+#: data/ui/export_figure.blp:21 graphs/export_figure.py:83
 msgid "Export"
 msgstr "Izvozi"
 
@@ -478,10 +478,38 @@ msgid "File Format"
 msgstr "Vrsta datoteke"
 
 #: data/ui/export_figure.blp:38
+msgid "Encapsulated Postscript"
+msgstr "EPS (Encapsulated PostScript)"
+
+#: data/ui/export_figure.blp:39
+msgid "Joint Photographic Experts Group"
+msgstr "JPG (Joint Photographic Experts Group)"
+
+#: data/ui/export_figure.blp:40
+msgid "Portable Document Format"
+msgstr "PDF (Portable Document Format)"
+
+#: data/ui/export_figure.blp:41
+msgid "Portable Network Graphics"
+msgstr "PNG (Portable Network Graphics)"
+
+#: data/ui/export_figure.blp:42
+msgid "Postscript"
+msgstr "PostScript"
+
+#: data/ui/export_figure.blp:43
+msgid "Scalable Vector Graphics"
+msgstr "SVG (Scalable Vector Graphics)"
+
+#: data/ui/export_figure.blp:44
+msgid "WebP Image Format"
+msgstr "WebP"
+
+#: data/ui/export_figure.blp:49
 msgid "Resolution (dpi)"
 msgstr "Ločljivost (dpi)"
 
-#: data/ui/export_figure.blp:45
+#: data/ui/export_figure.blp:56
 msgid "Transparent Background"
 msgstr "Prosojno ozadje"
 
@@ -1434,7 +1462,7 @@ msgid "Could not load {font}"
 msgstr "Ni bilo mogoče naložiti {font}"
 
 #. TODO: implement in Vala and figure out gettext
-#: graphs/application.py:262
+#: graphs/application.py:263
 msgid "Graphs (Development)"
 msgstr "Grafikoni (razvojni)"
 
@@ -1524,12 +1552,18 @@ msgstr "Neimenovan projekt"
 msgid "Draft"
 msgstr "Osnutek"
 
-#: graphs/export_figure.py:79
+#: graphs/export_figure.py:53
+#, fuzzy
+msgctxt "filename"
+msgid "Exported Figure"
+msgstr "Izvožena številka"
+
+#: graphs/export_figure.py:75
 #, fuzzy
 msgid "Exported Figure"
 msgstr "Izvožena številka"
 
-#: graphs/export_figure.py:80 graphs/project.py:49 graphs/ui.py:162
+#: graphs/export_figure.py:76 graphs/project.py:49 graphs/ui.py:162
 msgid "Open Location"
 msgstr "Odpri mesto"
 
