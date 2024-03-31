@@ -210,8 +210,9 @@ class PythonApplication(Graphs.Application):
                     file_io.save_project(self)
 
             dialog = ui.build_dialog("save_changes")
+            dialog.set_transient_for(self.get_window())
             dialog.connect("response", on_response)
-            dialog.present(self.get_window())
+            dialog.present()
             return True
         self.quit()
 
