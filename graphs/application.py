@@ -1,10 +1,5 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
-"""
-Main application.
-
-Classes:
-    GraphsApplication
-"""
+"""Main application."""
 import logging
 from gettext import gettext as _
 
@@ -51,13 +46,13 @@ _ACTIONS = [
 
 class PythonApplication(Graphs.Application):
     """The main application singleton class."""
+
     __gtype_name__ = "GraphsPythonApplication"
     __gsignals__ = {
         "project-saved": (GObject.SIGNAL_RUN_FIRST, None, ()),
     }
 
     def __init__(self, application_id, **kwargs):
-        """Init the application."""
         settings = Gio.Settings(application_id)
         migrate.migrate_config(settings)
         super().__init__(
@@ -148,6 +143,7 @@ class PythonApplication(Graphs.Application):
         )
 
     def on_project_saved(self, _application, handler=None, *args) -> None:
+        """Change unsaved state."""
         self.disconnect(self.save_handler)
         if handler == "close":
             self.quit()
@@ -155,10 +151,10 @@ class PythonApplication(Graphs.Application):
             self.get_data().props.project_file = args[0]
             self.get_data().load()
         if handler == "reset_project":
-            self.get_data().reset_project()
+            self.get_data().reset()
 
     def do_open(self, files: list, nfiles: int, _hint: str) -> None:
-        """Gets called when Graph is opened from a file."""
+        """Open Graphs with a File as argument."""
         self.do_activate()
         data = self.get_data()
         if nfiles == 1 and files[0].get_uri().endswith(".graphs"):
@@ -194,8 +190,10 @@ class PythonApplication(Graphs.Application):
 
     def close_application(self, *_args) -> None:
         """
-        Gets called when closing the application, will ask the user to confirm
-        and save/discard open data if any unsaved changes are present
+        Intercept when closing the application.
+
+        Will ask the user to confirm
+        and save/discard open data if any unsaved changes are present.
         """
         if self.get_data().props.unsaved:
 
@@ -223,6 +221,8 @@ class PythonApplication(Graphs.Application):
         _state,
     ) -> None:
         """
+        Handle keyboard inputs.
+
         Checks if control is pressed, needed to allow ctrl+scroll behaviour
         as the key press event from matplotlib is not working properly atm.
         """
@@ -241,6 +241,8 @@ class PythonApplication(Graphs.Application):
         _state,
     ) -> None:
         """
+        Handle keyboard inputs.
+
         Checks if control is released, needed to allow ctrl+scroll behaviour
         as the key press event from matplotlib is not working properly atm.
         """
@@ -319,6 +321,7 @@ class PythonApplication(Graphs.Application):
         entry: Adw.EntryRow,
         button: Gtk.Button,
     ) -> None:
+        """Validate text field input."""
         try:
             value = utilities.string_to_float(entry.get_text())
             if value is not None:

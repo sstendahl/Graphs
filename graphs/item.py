@@ -1,10 +1,12 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
+"""Module for data Items."""
 from gi.repository import GObject, Graphs
 
 from graphs import misc
 
 
 def new_from_dict(dictionary: dict):
+    """Instanciate item from dict."""
     match dictionary["type"]:
         case "GraphsDataItem":
             cls = DataItem
@@ -21,6 +23,7 @@ def new_from_dict(dictionary: dict):
 class _ItemMixin():
 
     def reset(self, old_style, new_style):
+        """Reset all properties."""
         for prop, (key, function) in self._style_properties.items():
             old_value = old_style[key]
             new_value = new_style[key]
@@ -37,12 +40,15 @@ class _ItemMixin():
         }
 
     def to_dict(self):
+        """Convert item to dict."""
         dictionary = {key: self.get_property(key) for key in dir(self.props)}
         dictionary["type"] = self.__gtype_name__
         return dictionary
 
 
 class DataItem(Graphs.Item, _ItemMixin):
+    """DataItem."""
+
     __gtype_name__ = "GraphsDataItem"
 
     xdata = GObject.Property(type=object)
@@ -61,6 +67,7 @@ class DataItem(Graphs.Item, _ItemMixin):
 
     @classmethod
     def new(cls, style, xdata=None, ydata=None, **kwargs):
+        """Create new DataItem."""
         return cls(
             xdata=xdata,
             ydata=ydata,
@@ -76,6 +83,8 @@ class DataItem(Graphs.Item, _ItemMixin):
 
 
 class TextItem(Graphs.Item, _ItemMixin):
+    """TextItem."""
+
     __gtype_name__ = "GraphsTextItem"
 
     xanchor = GObject.Property(type=float, default=0)
@@ -91,6 +100,7 @@ class TextItem(Graphs.Item, _ItemMixin):
 
     @classmethod
     def new(cls, style, xanchor=0, yanchor=0, text="", **kwargs):
+        """Create new textItem."""
         return cls(
             xanchor=xanchor,
             yanchor=yanchor,
@@ -101,12 +111,15 @@ class TextItem(Graphs.Item, _ItemMixin):
 
 
 class FillItem(Graphs.Item, _ItemMixin):
+    """FillItem."""
+
     __gtype_name__ = "GraphsFillItem"
 
     data = GObject.Property(type=object)
 
     @classmethod
     def new(cls, _params, data, **kwargs):
+        """Create new FillItem."""
         return cls(data=data, **kwargs)
 
     def __init__(self, **kwargs):
@@ -115,4 +128,5 @@ class FillItem(Graphs.Item, _ItemMixin):
             self.props.data = (None, None, None)
 
     def reset(self):
-        pass
+        """Not yet implemented."""
+        raise NotImplementedError

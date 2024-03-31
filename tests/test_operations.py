@@ -1,3 +1,4 @@
+"""Tests for operations."""
 from graphs import operations
 from graphs.item import DataItem
 

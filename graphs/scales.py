@@ -32,6 +32,7 @@ class RadiansScale(scale.LinearScale):
     name = "radians"
 
     def set_default_locators_and_formatters(self, axis):
+        """Handle locators and formatters."""
         super().set_default_locators_and_formatters(axis)
         axis.set_major_formatter(
             ticker.FuncFormatter(lambda x, _pos=None: f"{x / numpy.pi:.3g}π"),
@@ -41,59 +42,73 @@ class RadiansScale(scale.LinearScale):
 
 class SquareRootScale(scale.ScaleBase):
     """Class for generating custom square root scale."""
+
     name = "squareroot"
 
     def set_default_locators_and_formatters(self, axis):
+        """Handle locators and formatters."""
         axis.set_major_locator(CustomScaleLocator())
         axis.set_minor_locator(CustomScaleLocator(is_minor=True))
         axis.set_major_formatter(ticker.ScalarFormatter())
         axis.set_minor_formatter(ticker.NullFormatter())
 
     def limit_range_for_scale(self, vmin, vmax, _minpos):
+        """Limit scale range."""
         return max(0, vmin), vmax
 
     class SquareRootTransform(transforms.Transform):
-        """The transform to convert from linear to square root scale"""
+        """The transform to convert from linear to square root scale."""
+
         input_dims = 1  # Amount of input params in transform
         output_dims = 1  # Amount of output params in transform
         is_separable = True  # Seperable in X and Y dimension
 
         def transform_non_affine(self, a):
+            """Transform data."""
             # Don't spam about invalid divide by zero errors
             with numpy.errstate(divide="ignore", invalid="ignore"):
                 return numpy.array(a)**0.5
 
         def inverted(self):
+            """Get the inverse transform."""
             return SquareRootScale.InvertedSquareRootTransform()
 
     class InvertedSquareRootTransform(transforms.Transform):
-        """The inverse transform to convert from square root to linear scale"""
+        """Inverse transform to convert from square root to linear scale."""
+
         input_dims = 1  # Amount of input params in transform
         output_dims = 1  # Amount of output params in transform
         is_separable = True  # Seperable in X and Y dimension
 
         def transform_non_affine(self, a):
+            """Transform data."""
             # Don't spam about invalid divide by zero errors
             with numpy.errstate(divide="ignore", invalid="ignore"):
                 return numpy.array(a)**2
 
         def inverted(self):
+            """Get the inverse transform."""
             return SquareRootScale.SquareRootTransform()
 
     def get_transform(self):
+        """Get the transform."""
         return self.SquareRootTransform()
 
 
 class InverseScale(scale.ScaleBase):
+    """Inverse scale."""
+
     name = "inverse"
 
     def set_default_locators_and_formatters(self, axis):
+        """Handle locators and formatters."""
         axis.set_major_locator(CustomScaleLocator())
         axis.set_minor_locator(CustomScaleLocator(is_minor=True))
         axis.set_major_formatter(ticker.ScalarFormatter())
         axis.set_minor_formatter(ticker.NullFormatter())
 
     def limit_range_for_scale(self, vmin, vmax, minpos):
+        """Limit scale range."""
         if not numpy.isfinite(minpos):
             minpos = 1e-300
         return (
@@ -102,19 +117,23 @@ class InverseScale(scale.ScaleBase):
         )
 
     def get_transform(self):
+        """Get the transform."""
         return InverseScale.InverseTransform()
 
     class InverseTransform(transforms.Transform):
-        """The transform to invert the scaling on the axis"""
+        """The transform to invert the scaling on the axis."""
+
         input_dims = 1
         output_dims = 1
         is_separable = True
         has_inverse = True
 
         def inverted(self):
+            """Get the inverse transform."""
             return InverseScale.InverseTransform()
 
         def transform_non_affine(self, a):
+            """Transform data."""
             # Don't spam about invalid divide by zero errors
             with numpy.errstate(divide="ignore", invalid="ignore"):
                 return 1 / numpy.array(a)
@@ -128,6 +147,7 @@ class CustomScaleLocator(ticker.MaxNLocator):
 
     @property
     def numticks(self):
+        """Get number of ticks."""
         if self.axis is not None:
             numticks = max(1, self.axis.get_tick_space() - 4)
             # Amount of ticks is set between 3 and 9
@@ -143,9 +163,11 @@ class CustomScaleLocator(ticker.MaxNLocator):
 
     @numticks.setter
     def numticks(self, numticks):
+        """Set number of ticks."""
         self._numticks = numticks
 
     def tick_values(self, vmin, vmax):
+        """Get tick values."""
         vmin, vmax = transforms.nonsingular(vmin, vmax, expander=0.05)
         vmin, vmax = min(vmin, vmax), max(vmin, vmax)  # Swap values if needed
         lin_tick_pos = numpy.linspace(vmin, vmax, self.numticks)
@@ -164,6 +186,7 @@ class CustomScaleLocator(ticker.MaxNLocator):
 class RadianLocator(ticker.MultipleLocator):
     """
     Dynamically place tick positions on radian scale.
+
     Places ticks at a distance of pi if there's between 4 and 8 ticks
     Otherwise it places ticks at a distance of 2pi if reasonable, or with
     a multiple of 5 pi such that a number between 3 and 8 ticks are placed
@@ -175,6 +198,7 @@ class RadianLocator(ticker.MultipleLocator):
         super().__init__(base=self.base)
 
     def tick_values(self, vmin, vmax):
+        """Get tick values."""
         if vmax < vmin:
             vmin, vmax = vmax, vmin
 
@@ -189,6 +213,7 @@ class RadianLocator(ticker.MultipleLocator):
 
     @property
     def base(self):
+        """Get base."""
         if self.axis is None:
             return numpy.pi
 

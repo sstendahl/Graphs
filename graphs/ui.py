@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
+"""Some UI utilities."""
 import contextlib
 import datetime
 import logging
@@ -15,7 +16,7 @@ def on_items_change(
     _ignored,
     application: Graphs.Application,
 ) -> None:
-    data = application.get_data()
+    """Handle UI representation of items."""
     item_list = application.get_window().get_item_list()
     while item_list.get_last_child() is not None:
         item_list.remove(item_list.get_last_child())
@@ -35,6 +36,7 @@ def enable_axes_actions(
     _callback,
     application: Graphs.Application,
 ) -> None:
+    """Repopulate the scale menu."""
     visible_axes = application.get_data().get_used_positions()
     menu = Gio.Menu.new()
     toggle_section = Gio.Menu.new()
@@ -54,11 +56,18 @@ def enable_axes_actions(
         if not visible_axes[index]:
             continue
         scale_section = Gio.Menu.new()
-        scales = \
-            ["Linear", "Logarithmic", "Radians", "Square Root", "Inverse Root"]
+        scales = [
+            C_("scale", "Linear"),
+            C_("scale", "Logarithmic"),
+            C_("scale", "Radians"),
+            C_("scale", "Square Root"),
+            C_("scale", "Inverse Root"),
+        ]
         for i, scale in enumerate(scales):
-            scale_item = \
-                Gio.MenuItem.new(_(scale), f"app.change-{direction}-scale")
+            scale_item = Gio.MenuItem.new(
+                scale,
+                f"app.change-{direction}-scale",
+            )
             scale_item.set_attribute_value(
                 "target",
                 GLib.Variant.new_string(str(i)),
@@ -86,6 +95,7 @@ def on_items_ignored(
     ignored: str,
     application: Graphs.Application,
 ) -> str:
+    """Add a notice if Items were skipped during import."""
     application.get_window().add_toast_string(
         N_(
             "Items {items} already exist",
@@ -103,6 +113,7 @@ _GRAPHS_PROJECT_FILE_ONLY_FILE_FILTER = utilities.create_file_filters(
 
 
 def add_data_dialog(application: Graphs.Application) -> None:
+    """Show add data dialog."""
 
     def on_response(dialog, response):
         with contextlib.suppress(GLib.GError):
@@ -128,6 +139,7 @@ def add_data_dialog(application: Graphs.Application) -> None:
 
 
 def save_project_dialog(application: Graphs.Application) -> None:
+    """Show save project dialog."""
 
     def on_response(dialog, response):
         with contextlib.suppress(GLib.GError):
@@ -144,6 +156,7 @@ def save_project_dialog(application: Graphs.Application) -> None:
 
 
 def open_project_dialog(application: Graphs.Application) -> None:
+    """Show open project dialog."""
 
     def on_response(dialog, response):
         with contextlib.suppress(GLib.GError):
@@ -157,6 +170,7 @@ def open_project_dialog(application: Graphs.Application) -> None:
 
 
 def export_data_dialog(application: Graphs.Application) -> None:
+    """Show export data dialog."""
     data = application.get_data()
     window = application.get_window()
     if data.props.empty:
@@ -202,11 +216,13 @@ def export_data_dialog(application: Graphs.Application) -> None:
 
 
 def build_dialog(name: str):
+    """Build a dialog from `dialogs.ui`."""
     return Gtk.Builder.new_from_resource("/se/sjoerd/Graphs/ui/dialogs.ui",
                                          ).get_object(name)
 
 
 def show_about_dialog(application: Graphs.Application) -> str:
+    """Show about dialog."""
     file = Gio.File.new_for_uri("resource:///se/sjoerd/Graphs/whats_new")
     copyright_text = \
         f"© 2022 – {datetime.date.today().year} {application.get_author()}"
@@ -234,6 +250,7 @@ def show_about_dialog(application: Graphs.Application) -> str:
 
 
 def load_values_from_dict(window, values: dict, ignorelist=None) -> None:
+    """Apply widget values from a dict."""
     for key, value in values.items():
         if ignorelist is not None and key in ignorelist:
             continue
@@ -264,6 +281,7 @@ def load_values_from_dict(window, values: dict, ignorelist=None) -> None:
 
 
 def save_values_to_dict(window, keys: list, ignorelist=None) -> None:
+    """Save widget values to dict."""
     values = {}
     for key in keys:
         if ignorelist is not None and key in ignorelist:
@@ -304,6 +322,7 @@ def bind_values_to_settings(
     prefix="",
     ignorelist=None,
 ) -> None:
+    """Bind widget values to settings."""
     for key in settings.props.settings_schema.list_keys():
         if ignorelist is not None and key in ignorelist:
             continue
@@ -341,6 +360,7 @@ def bind_values_to_settings(
 
 
 def bind_values_to_object(source, window, ignorelist=None) -> None:
+    """Bind widget values to an object."""
     bindings = []
     for key in dir(source.props):
         if ignorelist is not None and key in ignorelist:
