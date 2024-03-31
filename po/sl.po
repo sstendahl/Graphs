@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2024-03-31 21:29+0000\n"
-"PO-Revision-Date: 2024-03-31 23:35+0200\n"
+"POT-Creation-Date: 2024-03-31 21:36+0000\n"
+"PO-Revision-Date: 2024-03-31 23:47+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian <gnome-si@googlegroups.com>\n"
 "Language: sl\n"
@@ -20,15 +20,19 @@ msgstr ""
 "X-Generator: Poedit 2.2.1\n"
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:6
-#: data/se.sjoerd.Graphs.desktop.in.in:3 data/ui/window.blp:9 graphs/ui.py:192
-msgid "Graphs"
-msgstr "Grafikoni"
+#: data/se.sjoerd.Graphs.desktop.in.in:3
+msgid "@NAME@"
+msgstr ""
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:7
-msgid "Plot and manipulate data"
-msgstr "Rišite grafe in manipulirajte s podatki"
+msgid "@DESCRIPTION_SHORT@"
+msgstr ""
 
-#: data/se.sjoerd.Graphs.appdata.xml.in.in:13
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:8
+msgid "@AUTHOR@"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:10
 #, fuzzy
 msgid ""
 "Graphs is a simple, yet powerful tool that allows you to plot and manipulate "
@@ -45,7 +49,7 @@ msgstr ""
 "prevajanja, množenja, centriranja in glajenja podatkov ter uporaba kakršnih "
 "koli transformacij po meri podatkov."
 
-#: data/se.sjoerd.Graphs.appdata.xml.in.in:17
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:14
 msgid ""
 "Moreover, Graphs supports curve fitting on imported data and offers "
 "extensive customization options for the style of the plots. You can fine-"
@@ -55,7 +59,7 @@ msgstr ""
 "obsežne možnosti prilagajanja sloga grafa. Slogovne predloge lahko natančno "
 "prilagodite po svojih željah."
 
-#: data/se.sjoerd.Graphs.appdata.xml.in.in:20
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:17
 msgid ""
 "Graphs is an excellent fit for both plotting and data manipulation. The "
 "plots created with Graphs can be saved in a variety of formats suitable for "
@@ -74,7 +78,7 @@ msgstr ""
 "mislijo na okolje GNOME, vendar bi morali biti primerni tudi za poljubno "
 "drugo namizno okolje."
 
-#: data/se.sjoerd.Graphs.appdata.xml.in.in:24
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:21
 msgid ""
 "For any feedback, questions or general issues, please file an issue on the "
 "GitLab page."
@@ -82,27 +86,27 @@ msgstr ""
 "Za vse povratne informacije, vprašanja ali splošne težave vnesite težavo na "
 "strani GitLab."
 
-#: data/se.sjoerd.Graphs.appdata.xml.in.in:37
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:34
 #, fuzzy
 msgid "1 - Plot and manipulate any data of choice"
 msgstr "1 - Narišite in manipulirajte z vsemi izbranimi podatki"
 
-#: data/se.sjoerd.Graphs.appdata.xml.in.in:41
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:38
 #, fuzzy
 msgid "2 - Full support for light and dark mode"
 msgstr "2 - Popolna podpora za svetel in temen način"
 
-#: data/se.sjoerd.Graphs.appdata.xml.in.in:45
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:42
 #, fuzzy
 msgid "3 - Generate data from an equation"
 msgstr "3 - Generirajte podatke iz enačbe"
 
-#: data/se.sjoerd.Graphs.appdata.xml.in.in:49
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:46
 #, fuzzy
 msgid "4 - Edit plot stylesheets"
 msgstr "4 - Urejanje slogov ploskve"
 
-#: data/se.sjoerd.Graphs.appdata.xml.in.in:53
+#: data/se.sjoerd.Graphs.appdata.xml.in.in:50
 #, fuzzy
 msgid "5 - Manipulate imported data with ease"
 msgstr "5 - Enostavno manipulirajte z uvoženimi podatki"
@@ -116,128 +120,125 @@ msgstr ""
 "Ubral; Graf; Grafov; Znanost; Matematika; Matematike; Enačbe; Podatki; "
 "Parcela; Vizualizacija; Vizualizacijo; Vgradnjo; XRDML;"
 
-#: data/ui/add_equation.blp:6
+#: data/ui/add_equation_window.blp:7
 msgid "Add Equation"
 msgstr "Dodaj enačbo"
 
-#: data/ui/add_equation.blp:15 data/ui/add_style.blp:15 data/ui/dialogs.blp:8
-#: data/ui/dialogs.blp:19 data/ui/dialogs.blp:29 data/ui/export_figure.blp:15
-#: data/ui/import.blp:15 data/ui/transform.blp:15
+#: data/ui/add_equation_window.blp:23 data/ui/add_style.blp:23
+#: data/ui/dialogs.blp:8 data/ui/dialogs.blp:19 data/ui/dialogs.blp:29
+#: data/ui/export_figure.blp:24 data/ui/import.blp:24
+#: data/ui/transform_window.blp:23
 msgid "Cancel"
 msgstr "Prekliči"
 
-#: data/ui/add_equation.blp:21 data/ui/add_style.blp:21
+#: data/ui/add_equation_window.blp:29 data/ui/add_style.blp:29
 msgid "Add"
 msgstr "Dodaj"
 
-#: data/ui/add_equation.blp:40 data/ui/transform.blp:55
+#: data/ui/add_equation_window.blp:48 data/ui/transform_window.blp:63
 msgid "Y ="
 msgstr "Y ="
 
-#: data/ui/add_equation.blp:48
+#: data/ui/add_equation_window.blp:56
 msgid "Enter a mathematical expression to generate data from"
 msgstr "Vnesite matematični izraz za generiranje podatkov"
 
-#: data/ui/add_equation.blp:56
+#: data/ui/add_equation_window.blp:64
 msgid "Name (optional)"
 msgstr "Ime (neobvezno)"
 
-#: data/ui/add_equation.blp:69
+#: data/ui/add_equation_window.blp:77
 msgid "X Start"
 msgstr "Začetek X"
 
-#: data/ui/add_equation.blp:76
+#: data/ui/add_equation_window.blp:84
 msgid "X Stop"
 msgstr "Konec X"
 
-#: data/ui/add_equation.blp:83
+#: data/ui/add_equation_window.blp:91
 msgid "Step Size"
 msgstr "Velikost koraka"
 
-#: data/ui/add_style.blp:6 data/ui/figure_settings.blp:235
-msgid "Add New Style"
+#: data/ui/add_style.blp:7 data/ui/figure_settings.blp:203
+msgid "Add new style"
 msgstr "Dodaj nov slog"
 
-#: data/ui/add_style.blp:33
+#: data/ui/add_style.blp:41
 msgid "Template"
 msgstr "Predloga"
 
-#: data/ui/add_style.blp:38 data/ui/edit_item.blp:21
+#: data/ui/add_style.blp:46 data/ui/edit_item.blp:28
 msgid "Name"
 msgstr "Ime"
 
-#: data/ui/curve_fitting.blp:25 data/ui/item_box.blp:64
+#: data/ui/curve_fitting.blp:35 data/ui/item_box.blp:64
 msgid "Curve Fitting"
 msgstr "Prileganje krivulj"
 
-#: data/ui/curve_fitting.blp:30
+#: data/ui/curve_fitting.blp:40
 msgid "Open Curve Fitting Menu"
 msgstr "Odprite meni za prileganje krivulje"
 
-#: data/ui/curve_fitting.blp:47
+#: data/ui/curve_fitting.blp:57
 msgid "Equation"
 msgstr "Enačba"
 
-#: data/ui/curve_fitting.blp:50
-msgctxt "regression-type"
+#: data/ui/curve_fitting.blp:59 data/ui/figure_settings.blp:121
+#: data/ui/figure_settings.blp:127 data/ui/figure_settings.blp:133
+#: data/ui/figure_settings.blp:139
 msgid "Linear"
 msgstr "linearna"
 
-#: data/ui/curve_fitting.blp:51
-msgctxt "regression-type"
+#: data/ui/curve_fitting.blp:59
 msgid "Quadratic"
 msgstr "kvadratna"
 
-#: data/ui/curve_fitting.blp:52
-msgctxt "regression-type"
+#: data/ui/curve_fitting.blp:59
 msgid "Exponential"
 msgstr "eksponentna"
 
-#: data/ui/curve_fitting.blp:53
+#: data/ui/curve_fitting.blp:59
 #, fuzzy
-msgctxt "regression-type"
 msgid "Power Law"
 msgstr "Zakon o moči"
 
-#: data/ui/curve_fitting.blp:54
-msgctxt "regression-type"
+#: data/ui/curve_fitting.blp:60 data/ui/figure_settings.blp:121
+#: data/ui/figure_settings.blp:127 data/ui/figure_settings.blp:133
+#: data/ui/figure_settings.blp:139
 msgid "Logarithmic"
 msgstr "logaritemska"
 
-#: data/ui/curve_fitting.blp:55
+#: data/ui/curve_fitting.blp:60
 #, fuzzy
-msgctxt "regression-type"
 msgid "Sigmoid Logistic"
 msgstr "Sigmoid Logistic"
 
-#: data/ui/curve_fitting.blp:56
-msgctxt "regression-type"
+#: data/ui/curve_fitting.blp:60
 msgid "Gaussian"
 msgstr "po Gaussu"
 
-#: data/ui/curve_fitting.blp:57
-msgctxt "regression-type"
+#: data/ui/curve_fitting.blp:60 data/ui/import.blp:60
 msgid "Custom"
 msgstr "po meri"
 
-#: data/ui/curve_fitting.blp:63
+#: data/ui/curve_fitting.blp:65
 msgid "Y = "
 msgstr "Y = "
 
-#: data/ui/curve_fitting.blp:90
+#: data/ui/curve_fitting.blp:92
 msgid "Add Fit to Data"
 msgstr "Dodaj Prilagodi podatkom"
 
-#: data/ui/curve_fitting.blp:106 data/ui/window.blp:584 graphs/ui.py:43
+#: data/ui/curve_fitting.blp:107 data/ui/window.blp:586 src/ui.py:33
 msgid "Toggle Sidebar"
 msgstr "Preklopi stransko okno"
 
-#: data/ui/curve_fitting.blp:118 data/ui/window.blp:624
+#: data/ui/curve_fitting.blp:119 data/ui/window.blp:626
 msgid "Canvas Failed to Load"
 msgstr "Platno se ni naložilo"
 
 #: data/ui/dialogs.blp:5
-msgid "Save Changes?"
+msgid "Save changes?"
 msgstr "Ali želite shraniti spremembe?"
 
 #: data/ui/dialogs.blp:6
@@ -257,7 +258,7 @@ msgid "Save"
 msgstr "Shrani"
 
 #: data/ui/dialogs.blp:17
-msgid "Delete Style?"
+msgid "Delete style?"
 msgstr "Ali želite izbrisati slog?"
 
 #: data/ui/dialogs.blp:20 data/ui/style_editor.blp:12
@@ -272,196 +273,167 @@ msgstr "Ali želite ponastaviti na privzete vrednosti?"
 msgid "Reset"
 msgstr "Ponastavi"
 
-#: data/ui/edit_item.blp:11
+#: data/ui/edit_item.blp:18
 msgid "Selected Item"
 msgstr "Izbrani predmet"
 
-#: data/ui/edit_item.blp:12
+#: data/ui/edit_item.blp:19
 msgid "Choose which item to edit"
 msgstr "Izberite element, ki ga želite urediti"
 
-#: data/ui/edit_item.blp:18
+#: data/ui/edit_item.blp:25
 msgid "Data"
 msgstr "Podatek"
 
-#: data/ui/edit_item.blp:26
+#: data/ui/edit_item.blp:33
 msgid "X-Axis Position"
 msgstr "Položaj osi X"
 
-#: data/ui/edit_item.blp:28
+#: data/ui/edit_item.blp:35
 msgid "Bottom"
 msgstr "Na dno"
 
-#: data/ui/edit_item.blp:28
+#: data/ui/edit_item.blp:35
 msgid "Top"
 msgstr "Na vrh"
 
-#: data/ui/edit_item.blp:33
+#: data/ui/edit_item.blp:40
 msgid "Y-Axis Position"
 msgstr "Položaj osi Y"
 
-#: data/ui/edit_item.blp:35
+#: data/ui/edit_item.blp:42
 msgid "Left"
 msgstr "Levo"
 
-#: data/ui/edit_item.blp:35
+#: data/ui/edit_item.blp:42
 msgid "Right"
 msgstr "Desno"
 
-#: data/ui/edit_item.blp:42
+#: data/ui/edit_item.blp:49
 msgid "Line Properties"
 msgstr "Lastnosti črte"
 
-#: data/ui/edit_item.blp:45 data/ui/style_editor.blp:83
+#: data/ui/edit_item.blp:52 data/ui/style_editor.blp:83
 msgid "Linestyle"
 msgstr "Slog črte"
 
-#: data/ui/edit_item.blp:48 data/ui/style_editor.blp:86
-msgctxt "linestyle"
+#: data/ui/edit_item.blp:54 data/ui/style_editor.blp:85 src/curve_fitting.py:89
 msgid "None"
-msgstr "Brez"
+msgstr "brez"
 
-#: data/ui/edit_item.blp:49 data/ui/style_editor.blp:87
-msgctxt "linestyle"
+#: data/ui/edit_item.blp:54 data/ui/style_editor.blp:85
 msgid "Solid"
-msgstr "Enakomerno"
+msgstr "enakomerno"
 
-#: data/ui/edit_item.blp:50 data/ui/style_editor.blp:88
-msgctxt "linestyle"
+#: data/ui/edit_item.blp:54 data/ui/style_editor.blp:85
 msgid "Dotted"
 msgstr "pikasto"
 
-#: data/ui/edit_item.blp:51 data/ui/style_editor.blp:89
-msgctxt "linestyle"
+#: data/ui/edit_item.blp:54 data/ui/style_editor.blp:85
 msgid "Dashed"
-msgstr "Črtkano"
+msgstr "črtkano"
 
-#: data/ui/edit_item.blp:52 data/ui/style_editor.blp:90
-msgctxt "linestyle"
+#: data/ui/edit_item.blp:54 data/ui/style_editor.blp:85
 msgid "Dashdot"
 msgstr "črtica pika"
 
-#: data/ui/edit_item.blp:59 data/ui/style_editor.blp:97
+#: data/ui/edit_item.blp:60 data/ui/style_editor.blp:91
 msgid "Linewidth"
 msgstr "Širina črte"
 
-#: data/ui/edit_item.blp:73 data/ui/style_editor.blp:112
+#: data/ui/edit_item.blp:74 data/ui/style_editor.blp:106
 msgid "Markers"
 msgstr "Označevalniki"
 
-#: data/ui/edit_item.blp:76 data/ui/style_editor.blp:115
-msgctxt "markerstyle"
+#: data/ui/edit_item.blp:77 data/ui/style_editor.blp:109
 msgid "Nothing"
-msgstr "Brez"
+msgstr "brez"
 
-#: data/ui/edit_item.blp:77 data/ui/style_editor.blp:116
-msgctxt "markerstyle"
+#: data/ui/edit_item.blp:77 data/ui/style_editor.blp:109
 msgid "Point"
-msgstr "Točka"
+msgstr "pika"
 
-#: data/ui/edit_item.blp:78 data/ui/style_editor.blp:117
-msgctxt "markerstyle"
+#: data/ui/edit_item.blp:77 data/ui/style_editor.blp:109
 msgid "Pixel"
-msgstr "Slikovna točka"
+msgstr "slik. točka"
 
-#: data/ui/edit_item.blp:79 data/ui/style_editor.blp:118
-msgctxt "markerstyle"
+#: data/ui/edit_item.blp:77 data/ui/style_editor.blp:109
 msgid "Circle"
-msgstr "Krog"
+msgstr "krog"
 
-#: data/ui/edit_item.blp:80 data/ui/style_editor.blp:119
-msgctxt "markerstyle"
+#: data/ui/edit_item.blp:78 data/ui/style_editor.blp:110
 msgid "Triangle Down"
 msgstr "trikotnik navzdol"
 
-#: data/ui/edit_item.blp:81 data/ui/style_editor.blp:120
-msgctxt "markerstyle"
+#: data/ui/edit_item.blp:78 data/ui/style_editor.blp:110
 msgid "Triangle Up"
 msgstr "trikotnik navzgor"
 
-#: data/ui/edit_item.blp:82 data/ui/style_editor.blp:121
-msgctxt "markerstyle"
+#: data/ui/edit_item.blp:78 data/ui/style_editor.blp:110
 msgid "Triangle Left"
 msgstr "trikotnik levo"
 
-#: data/ui/edit_item.blp:83 data/ui/style_editor.blp:122
-msgctxt "markerstyle"
+#: data/ui/edit_item.blp:79 data/ui/style_editor.blp:111
 msgid "Triangle Right"
 msgstr "trikotnik desno"
 
-#: data/ui/edit_item.blp:84 data/ui/style_editor.blp:123
-msgctxt "markerstyle"
+#: data/ui/edit_item.blp:79 data/ui/style_editor.blp:111
 msgid "Octagon"
-msgstr "Osemkotnik"
+msgstr "osemkotnik"
 
-#: data/ui/edit_item.blp:85 data/ui/style_editor.blp:124
-msgctxt "markerstyle"
+#: data/ui/edit_item.blp:79 data/ui/style_editor.blp:111
 msgid "Square"
-msgstr "Pravokotno"
+msgstr "kvadrat"
 
-#: data/ui/edit_item.blp:86 data/ui/style_editor.blp:125
-msgctxt "markerstyle"
+#: data/ui/edit_item.blp:80 data/ui/style_editor.blp:112
 msgid "Pentagon"
-msgstr "Peterokotnik"
+msgstr "petkotnik"
 
-#: data/ui/edit_item.blp:87 data/ui/style_editor.blp:126
-msgctxt "markerstyle"
+#: data/ui/edit_item.blp:80 data/ui/style_editor.blp:112
 msgid "Star"
-msgstr "Zvezdica"
+msgstr "zvezdica"
 
-#: data/ui/edit_item.blp:88 data/ui/style_editor.blp:127
-msgctxt "markerstyle"
+#: data/ui/edit_item.blp:80 data/ui/style_editor.blp:112
 msgid "Hexagon 1"
 msgstr "šesterokotnik 1"
 
-#: data/ui/edit_item.blp:89 data/ui/style_editor.blp:128
-msgctxt "markerstyle"
+#: data/ui/edit_item.blp:81 data/ui/style_editor.blp:113
 msgid "Hexagon 2"
 msgstr "šesterokotnik 2"
 
-#: data/ui/edit_item.blp:90 data/ui/style_editor.blp:129
-msgctxt "markerstyle"
+#: data/ui/edit_item.blp:81 data/ui/style_editor.blp:113
 msgid "Plus"
-msgstr "Plus"
+msgstr "plus"
 
-#: data/ui/edit_item.blp:91 data/ui/style_editor.blp:130
-msgctxt "markerstyle"
+#: data/ui/edit_item.blp:81 data/ui/style_editor.blp:113
 msgid "X"
 msgstr "X"
 
-#. Translators: Diamond as in Cards Symbol
-#: data/ui/edit_item.blp:93 data/ui/style_editor.blp:132
-msgctxt "markerstyle"
+#: data/ui/edit_item.blp:81 data/ui/style_editor.blp:113
 msgid "Diamond"
-msgstr "Karo"
+msgstr "romb"
 
-#. Translators: Diamond as in Cards Symbol
-#: data/ui/edit_item.blp:95 data/ui/style_editor.blp:134
-msgctxt "markerstyle"
+#: data/ui/edit_item.blp:82 data/ui/style_editor.blp:114
 msgid "Thin Diamond"
 msgstr "tanek romb"
 
-#: data/ui/edit_item.blp:96 data/ui/style_editor.blp:135
-msgctxt "markerstyle"
+#: data/ui/edit_item.blp:82 data/ui/style_editor.blp:114
 msgid "Vertical Line"
-msgstr "Navpična črta"
+msgstr "navpična črta"
 
-#: data/ui/edit_item.blp:97 data/ui/style_editor.blp:136
-msgctxt "markerstyle"
+#: data/ui/edit_item.blp:82 data/ui/style_editor.blp:114
 msgid "Horizontal Line"
 msgstr "vodoravna črta"
 
-#: data/ui/edit_item.blp:98 data/ui/style_editor.blp:137
-msgctxt "markerstyle"
+#: data/ui/edit_item.blp:83 data/ui/style_editor.blp:115
 msgid "Filled Plus"
 msgstr "zapolnjeni plus"
 
-#: data/ui/edit_item.blp:99 data/ui/style_editor.blp:138
-msgctxt "markerstyle"
+#: data/ui/edit_item.blp:83 data/ui/style_editor.blp:115
 msgid "Filled X"
 msgstr "zapolnjeni X"
 
-#: data/ui/edit_item.blp:106 data/ui/style_editor.blp:145
+#: data/ui/edit_item.blp:90 data/ui/style_editor.blp:122
 msgid "Marker Size"
 msgstr "Velikost oznake"
 
@@ -469,178 +441,117 @@ msgstr "Velikost oznake"
 msgid "Export Figure"
 msgstr "Izvozi sliko"
 
-#: data/ui/export_figure.blp:21 graphs/export_figure.py:83
+#: data/ui/export_figure.blp:30 src/export_figure.py:72
 msgid "Export"
 msgstr "Izvozi"
 
-#: data/ui/export_figure.blp:35
+#: data/ui/export_figure.blp:44
 msgid "File Format"
 msgstr "Vrsta datoteke"
 
-#: data/ui/export_figure.blp:38
-msgid "Encapsulated Postscript"
-msgstr "EPS (Encapsulated PostScript)"
-
-#: data/ui/export_figure.blp:39
-msgid "Joint Photographic Experts Group"
-msgstr "JPG (Joint Photographic Experts Group)"
-
-#: data/ui/export_figure.blp:40
-msgid "Portable Document Format"
-msgstr "PDF (Portable Document Format)"
-
-#: data/ui/export_figure.blp:41
-msgid "Portable Network Graphics"
-msgstr "PNG (Portable Network Graphics)"
-
-#: data/ui/export_figure.blp:42
-msgid "Postscript"
-msgstr "PostScript"
-
-#: data/ui/export_figure.blp:43
-msgid "Scalable Vector Graphics"
-msgstr "SVG (Scalable Vector Graphics)"
-
-#: data/ui/export_figure.blp:44
-msgid "WebP Image Format"
-msgstr "WebP"
-
-#: data/ui/export_figure.blp:49
+#: data/ui/export_figure.blp:47
 msgid "Resolution (dpi)"
 msgstr "Ločljivost (dpi)"
 
-#: data/ui/export_figure.blp:56
+#: data/ui/export_figure.blp:54
 msgid "Transparent Background"
 msgstr "Prosojno ozadje"
 
-#: data/ui/figure_settings.blp:22 data/ui/window.blp:645
+#: data/ui/figure_settings.blp:21 data/ui/window.blp:648
 #, fuzzy
 msgid "Figure Settings"
 msgstr "Nastavitve slike"
 
-#: data/ui/figure_settings.blp:38
+#: data/ui/figure_settings.blp:37
 msgid "Labels"
 msgstr "Oznake"
 
-#: data/ui/figure_settings.blp:41
+#: data/ui/figure_settings.blp:40
 msgid "Title"
 msgstr "Naziv"
 
-#: data/ui/figure_settings.blp:58
+#: data/ui/figure_settings.blp:57
 msgid "Axis Limits"
 msgstr "Omejitve osi"
 
-#: data/ui/figure_settings.blp:118
+#: data/ui/figure_settings.blp:117
 msgid "Scaling"
 msgstr "Spreminjanje merila"
 
-#: data/ui/figure_settings.blp:123 data/ui/figure_settings.blp:135
-#: data/ui/figure_settings.blp:147 data/ui/figure_settings.blp:159
-#: graphs/ui.py:60
-msgctxt "scale"
-msgid "Linear"
-msgstr "linearna"
-
-#: data/ui/figure_settings.blp:124 data/ui/figure_settings.blp:136
-#: data/ui/figure_settings.blp:148 data/ui/figure_settings.blp:160
-#: graphs/ui.py:61
-msgctxt "scale"
-msgid "Logarithmic"
-msgstr "logaritemska"
-
-#: data/ui/figure_settings.blp:125 data/ui/figure_settings.blp:137
-#: data/ui/figure_settings.blp:149 data/ui/figure_settings.blp:161
-#: graphs/ui.py:62
-msgctxt "scale"
+#: data/ui/figure_settings.blp:121 data/ui/figure_settings.blp:127
+#: data/ui/figure_settings.blp:133 data/ui/figure_settings.blp:139
 msgid "Radians"
 msgstr "radianska"
 
-#: data/ui/figure_settings.blp:126 data/ui/figure_settings.blp:138
-#: data/ui/figure_settings.blp:150 data/ui/figure_settings.blp:162
-#: graphs/ui.py:63
-msgctxt "scale"
+#: data/ui/figure_settings.blp:121 data/ui/figure_settings.blp:127
+#: data/ui/figure_settings.blp:133 data/ui/figure_settings.blp:139
 msgid "Square Root"
 msgstr "kvadratni koren"
 
-#: data/ui/figure_settings.blp:127 data/ui/figure_settings.blp:139
-#: data/ui/figure_settings.blp:151 data/ui/figure_settings.blp:163
-msgctxt "scale"
+#: data/ui/figure_settings.blp:121 data/ui/figure_settings.blp:127
+#: data/ui/figure_settings.blp:133 data/ui/figure_settings.blp:139
 msgid "Inverse"
 msgstr "preobrnjena"
 
-#: data/ui/figure_settings.blp:170
+#: data/ui/figure_settings.blp:145
 msgid "Appearance"
 msgstr "Videz"
 
-#: data/ui/figure_settings.blp:172
+#: data/ui/figure_settings.blp:147
 msgid "Legend"
 msgstr "Legenda"
 
-#: data/ui/figure_settings.blp:175
+#: data/ui/figure_settings.blp:150
 msgid "Legend Position"
 msgstr "Položaj legende"
 
-#: data/ui/figure_settings.blp:178
-msgctxt "legend-position"
+#: data/ui/figure_settings.blp:153
 msgid "Auto"
-msgstr "Samodejno"
+msgstr "samodejno"
 
-#: data/ui/figure_settings.blp:179
-msgctxt "legend-position"
+#: data/ui/figure_settings.blp:153
 msgid "Upper Right"
 msgstr "desno zgoraj"
 
-#: data/ui/figure_settings.blp:180
-msgctxt "legend-position"
+#: data/ui/figure_settings.blp:153
 msgid "Upper Left"
 msgstr "levo zgoraj"
 
-#: data/ui/figure_settings.blp:181
-msgctxt "legend-position"
+#: data/ui/figure_settings.blp:153
 msgid "Lower Left"
 msgstr "levo spodaj"
 
-#: data/ui/figure_settings.blp:182
-msgctxt "legend-position"
+#: data/ui/figure_settings.blp:154
 msgid "Lower Right"
 msgstr "desno spodaj"
 
-#: data/ui/figure_settings.blp:183
-msgctxt "legend-position"
+#: data/ui/figure_settings.blp:154
 msgid "Center Left"
-msgstr "Levo na sredini"
+msgstr "levo na sredini"
 
-#: data/ui/figure_settings.blp:184
-msgctxt "legend-position"
+#: data/ui/figure_settings.blp:154
 msgid "Center Right"
-msgstr "Desno na sredini"
+msgstr "desno na sredini"
 
-#: data/ui/figure_settings.blp:185
-msgctxt "legend-position"
+#: data/ui/figure_settings.blp:155
 msgid "Lower Center"
 msgstr "na sredini spodaj"
 
-#: data/ui/figure_settings.blp:186
-msgctxt "legend-position"
+#: data/ui/figure_settings.blp:155
 msgid "Upper Center"
 msgstr "na sredini zgoraj"
 
-#: data/ui/figure_settings.blp:187
-msgctxt "legend-position"
+#: data/ui/figure_settings.blp:155 data/ui/window.blp:338
 msgid "Center"
 msgstr "Sredina"
 
-#: data/ui/figure_settings.blp:194
+#: data/ui/figure_settings.blp:162
 msgid "Hide Unselected Items"
 msgstr "Skrij neizbrane elemente"
 
-#: data/ui/figure_settings.blp:198 data/ui/figure_settings.blp:228
+#: data/ui/figure_settings.blp:166 data/ui/figure_settings.blp:196
 msgid "Style"
 msgstr "Slog"
-
-#: data/ui/figure_settings.blp:217
-msgid "Set as Default"
-msgstr "Nastavi kot privzeto"
 
 #: data/ui/fitting_parameters.blp:26
 msgid "Initial Guess"
@@ -814,100 +725,77 @@ msgctxt "shortcut window"
 msgid "Redo Action"
 msgstr "Ponovi dejanje"
 
-#: data/ui/import.blp:6
+#: data/ui/import.blp:8
 #, fuzzy
 msgid "Modify Import Parameters"
 msgstr "Spreminjanje parametrov uvoza"
 
-#: data/ui/import.blp:27
+#: data/ui/import.blp:36
 msgid "Import"
 msgstr "Uvozi"
 
-#: data/ui/import.blp:46
+#: data/ui/import.blp:55
 msgid "Delimiter"
 msgstr "Ločilo"
 
-#: data/ui/import.blp:47
+#: data/ui/import.blp:56
 #, fuzzy
 msgid "Character sequence used to split values"
 msgstr "Zaporedje znakov, ki se uporablja za razdelitev vrednosti"
 
-#: data/ui/import.blp:51
-msgctxt "delimiter"
+#: data/ui/import.blp:59
 msgid "Whitespace"
 msgstr "Presledek"
 
-#: data/ui/import.blp:52
-msgctxt "delimiter"
+#: data/ui/import.blp:59
 msgid "Tab"
 msgstr "Tabulator"
 
-#: data/ui/import.blp:53
-msgctxt "delimiter"
+#: data/ui/import.blp:59
 msgid "Colon (:)"
 msgstr "Dvopičje (:)"
 
-#: data/ui/import.blp:54
-msgctxt "delimiter"
+#: data/ui/import.blp:59
 msgid "Semicolon (;)"
 msgstr "Podpičje (;)"
 
-#: data/ui/import.blp:55
-msgctxt "delimiter"
+#: data/ui/import.blp:60 data/ui/import.blp:72
 msgid "Decimal comma (,)"
 msgstr "Decimalna vejica (,)"
 
-#: data/ui/import.blp:56
-msgctxt "delimiter"
+#: data/ui/import.blp:60 data/ui/import.blp:72
 msgid "Decimal point (.)"
 msgstr "Decimalna pika (.) "
 
-#: data/ui/import.blp:57
-msgctxt "delimiter"
-msgid "Custom"
-msgstr "Po meri"
-
-#: data/ui/import.blp:64
+#: data/ui/import.blp:66
 msgid "Custom Delimiter"
 msgstr "Ločilo po meri"
 
-#: data/ui/import.blp:68
+#: data/ui/import.blp:70
 msgid "Decimal Separator"
 msgstr "Decimalno ločilo"
 
-#: data/ui/import.blp:71
-msgctxt "separator"
-msgid "Decimal comma (,)"
-msgstr "Decimalna vejica (,)"
-
-#: data/ui/import.blp:72
-msgctxt "separator"
-msgid "Decimal point (.)"
-msgstr "Decimalna pika (.) "
-
-#: data/ui/import.blp:78
+#: data/ui/import.blp:77
 msgid "Column X"
 msgstr "Stolpec X"
 
-#: data/ui/import.blp:79
-#, fuzzy
+#: data/ui/import.blp:78
 msgid "X-data column index"
-msgstr "Indeks stolpcev s podatki X"
+msgstr "Indeks stolpca s podatki X"
 
-#: data/ui/import.blp:88
+#: data/ui/import.blp:87
 msgid "Column Y"
 msgstr "Stolpec Y"
 
-#: data/ui/import.blp:90
-#, fuzzy
+#: data/ui/import.blp:89
 msgid "Y-data column index"
-msgstr "Indeks stolpca podatkov Y"
+msgstr "Indeks stolpca s podatki Y"
 
-#: data/ui/import.blp:99
+#: data/ui/import.blp:98
 msgid "Skip Rows"
 msgstr "Preskoči vrstice"
 
-#: data/ui/import.blp:100
+#: data/ui/import.blp:99
 msgid "Ignored row indices"
 msgstr "Prezrti indeksi vrstic"
 
@@ -931,33 +819,33 @@ msgstr "Odstrani element"
 msgid "Smoothen Settings"
 msgstr "Nastavitve glajenja"
 
-#: data/ui/smoothen_settings.blp:30 data/ui/window.blp:679
+#: data/ui/smoothen_settings.blp:37 data/ui/window.blp:682
 #, fuzzy
 msgid "Savitzky–Golay Filter"
 msgstr "Savitzky-Golay filter"
 
-#: data/ui/smoothen_settings.blp:32
+#: data/ui/smoothen_settings.blp:39
 msgid "Span percentage"
 msgstr "Odstotek razpona"
 
-#: data/ui/smoothen_settings.blp:33
+#: data/ui/smoothen_settings.blp:40
 msgid "What percentage of the data span to use for the filter window"
 msgstr "Kolikšen odstotek podatkovnega razpona uporabiti za okno filtra"
 
-#: data/ui/smoothen_settings.blp:40
+#: data/ui/smoothen_settings.blp:47
 msgid "Polynomial degree"
 msgstr "Stopnja polinoma"
 
-#: data/ui/smoothen_settings.blp:48 data/ui/window.blp:684
+#: data/ui/smoothen_settings.blp:55 data/ui/window.blp:687
 msgid "Moving Average"
 msgstr "Drseče povprečje"
 
-#: data/ui/smoothen_settings.blp:50
+#: data/ui/smoothen_settings.blp:57
 #, fuzzy
 msgid "Box points"
 msgstr "Točke okvirjev"
 
-#: data/ui/smoothen_settings.blp:51
+#: data/ui/smoothen_settings.blp:58
 #, fuzzy
 msgid "Amount of points to use when calculating a moving average"
 msgstr ""
@@ -970,11 +858,6 @@ msgstr "Uredi"
 #: data/ui/style_color_box.blp:29
 msgid "Remove"
 msgstr "Odstrani"
-
-#: data/ui/style_editor.blp:5
-#, fuzzy
-msgid "Error - No Style selected"
-msgstr "Napaka – ni izbran slog"
 
 #: data/ui/style_editor.blp:37
 msgid "Style Name"
@@ -989,7 +872,6 @@ msgid "Title Size"
 msgstr "Velikost naslova"
 
 #: data/ui/style_editor.blp:53
-#, fuzzy
 msgid "Title size in relation to text size"
 msgstr "Velikost naslova glede na velikost besedila"
 
@@ -998,7 +880,6 @@ msgid "Label Size"
 msgstr "Velikost oznake"
 
 #: data/ui/style_editor.blp:66
-#, fuzzy
 msgid "Label size in relation to text size"
 msgstr "Velikost oznake glede na velikost besedila"
 
@@ -1006,187 +887,187 @@ msgstr "Velikost oznake glede na velikost besedila"
 msgid "Lines"
 msgstr "Črte"
 
-#: data/ui/style_editor.blp:161
+#: data/ui/style_editor.blp:138
 msgid "Axes"
 msgstr "Osi"
 
-#: data/ui/style_editor.blp:164
+#: data/ui/style_editor.blp:141
 msgid "Axis Width"
 msgstr "Širina osi"
 
-#: data/ui/style_editor.blp:177
+#: data/ui/style_editor.blp:154
 msgid "Draw Frame"
 msgstr "Nariši okvir"
 
-#: data/ui/style_editor.blp:182
+#: data/ui/style_editor.blp:159
 msgid "Ticks"
 msgstr "Kljukice"
 
-#: data/ui/style_editor.blp:185
+#: data/ui/style_editor.blp:162
 #, fuzzy
 msgid "Tick Directions"
 msgstr "Smer označb"
 
-#: data/ui/style_editor.blp:187
+#: data/ui/style_editor.blp:164
 msgid "Inwards"
 msgstr "Navznoter"
 
-#: data/ui/style_editor.blp:187
+#: data/ui/style_editor.blp:164
 msgid "Outwards"
 msgstr "Navzven"
 
-#: data/ui/style_editor.blp:192
+#: data/ui/style_editor.blp:169
 msgid "Minor Ticks"
 msgstr "Drugotne črtice"
 
-#: data/ui/style_editor.blp:196
+#: data/ui/style_editor.blp:173
 #, fuzzy
 msgid "Major Tick Width"
 msgstr "Večja širina kljukic"
 
-#: data/ui/style_editor.blp:209
+#: data/ui/style_editor.blp:186
 #, fuzzy
 msgid "Minor Tick Width"
 msgstr "Manjša širina kljukice"
 
-#: data/ui/style_editor.blp:223
+#: data/ui/style_editor.blp:200
 #, fuzzy
 msgid "Major Tick Length"
 msgstr "Glavna dolžina klopov"
 
-#: data/ui/style_editor.blp:236
+#: data/ui/style_editor.blp:213
 #, fuzzy
 msgid "Minor Tick Length"
 msgstr "Manjša dolžina klopov"
 
-#: data/ui/style_editor.blp:250
+#: data/ui/style_editor.blp:227
 #, fuzzy
 msgid "Ticks on Bottom Axis"
 msgstr "Klopi na spodnji osi"
 
-#: data/ui/style_editor.blp:254
+#: data/ui/style_editor.blp:231
 #, fuzzy
 msgid "Ticks on Left Axis"
 msgstr "Klopi na levi osi"
 
-#: data/ui/style_editor.blp:258
+#: data/ui/style_editor.blp:235
 #, fuzzy
 msgid "Ticks on Right Axis"
 msgstr "Kljukice na desni osi"
 
-#: data/ui/style_editor.blp:262
+#: data/ui/style_editor.blp:239
 #, fuzzy
 msgid "Ticks on Top Axis"
 msgstr "Kljukice na zgornji osi"
 
-#: data/ui/style_editor.blp:267
+#: data/ui/style_editor.blp:244
 msgid "Grid"
 msgstr "Mreža"
 
-#: data/ui/style_editor.blp:270
+#: data/ui/style_editor.blp:247
 msgid "Show Grid"
 msgstr "Pokaži mrežo"
 
-#: data/ui/style_editor.blp:274
+#: data/ui/style_editor.blp:251
 msgid "Grid Width"
 msgstr "Širina mreže"
 
-#: data/ui/style_editor.blp:288
+#: data/ui/style_editor.blp:265
 msgid "Grid Opacity"
 msgstr "Prekrivnost mreže"
 
-#: data/ui/style_editor.blp:303
+#: data/ui/style_editor.blp:280
 msgid "Padding"
 msgstr "Blazinjenje"
 
-#: data/ui/style_editor.blp:304
+#: data/ui/style_editor.blp:281
 #, fuzzy
 msgid "Padding for different parts of the figure"
 msgstr "Oblazinjenje za različne dele slike"
 
-#: data/ui/style_editor.blp:307
+#: data/ui/style_editor.blp:284
 #, fuzzy
 msgid "Value Padding"
 msgstr "Oblazinjenje vrednosti"
 
-#: data/ui/style_editor.blp:308
+#: data/ui/style_editor.blp:285
 #, fuzzy
 msgid "Padding between axes and values"
 msgstr "Oblazinjenje med osmi in vrednostmi"
 
-#: data/ui/style_editor.blp:321
+#: data/ui/style_editor.blp:298
 #, fuzzy
 msgid "Label Padding"
 msgstr "Oblazinjenje etiket"
 
-#: data/ui/style_editor.blp:322
+#: data/ui/style_editor.blp:299
 #, fuzzy
 msgid "Padding between axes and labels"
 msgstr "Oblazinjenje med osmi in nalepkami"
 
-#: data/ui/style_editor.blp:335
+#: data/ui/style_editor.blp:312
 #, fuzzy
 msgid "Title Padding"
 msgstr "Oblazinjenje naslova"
 
-#: data/ui/style_editor.blp:336
+#: data/ui/style_editor.blp:313
 #, fuzzy
 msgid "Padding between axes and the title"
 msgstr "Oblazinjenje med osmi in naslovom"
 
-#: data/ui/style_editor.blp:350
+#: data/ui/style_editor.blp:327
 msgid "Colors"
 msgstr "Barve"
 
-#: data/ui/style_editor.blp:362
+#: data/ui/style_editor.blp:339
 msgid "Text Color"
 msgstr "Barva besedila"
 
-#: data/ui/style_editor.blp:367 data/ui/style_editor.blp:389
-#: data/ui/style_editor.blp:411 data/ui/style_editor.blp:433
-#: data/ui/style_editor.blp:455 data/ui/style_editor.blp:477
+#: data/ui/style_editor.blp:344 data/ui/style_editor.blp:366
+#: data/ui/style_editor.blp:388 data/ui/style_editor.blp:410
+#: data/ui/style_editor.blp:432 data/ui/style_editor.blp:454
 msgid "Change Color"
 msgstr "Spremeni barvo"
 
-#: data/ui/style_editor.blp:384
+#: data/ui/style_editor.blp:361
 #, fuzzy
 msgid "Tick Color"
 msgstr "Označi barvo"
 
-#: data/ui/style_editor.blp:406
+#: data/ui/style_editor.blp:383
 msgid "Axis Color"
 msgstr "Barva osi"
 
-#: data/ui/style_editor.blp:428
+#: data/ui/style_editor.blp:405
 msgid "Grid Color"
 msgstr "Barva mreže"
 
-#: data/ui/style_editor.blp:450
+#: data/ui/style_editor.blp:427
 msgid "Background Color"
 msgstr "Barva ozadja"
 
-#: data/ui/style_editor.blp:472
+#: data/ui/style_editor.blp:449
 msgid "Outline Color"
 msgstr "Barva orisa"
 
-#: data/ui/style_editor.blp:489
+#: data/ui/style_editor.blp:466
 msgid "Line Colors"
 msgstr "Barve črt"
 
-#: data/ui/style_editor.blp:500
+#: data/ui/style_editor.blp:477
 msgid "Add Color"
 msgstr "Dodaj barvo"
 
-#: data/ui/transform.blp:6
+#: data/ui/transform_window.blp:7
 #, fuzzy
 msgid "Transform Data"
 msgstr "Pretvori podatke"
 
-#: data/ui/transform.blp:21 data/ui/window.blp:380
+#: data/ui/transform_window.blp:29 data/ui/window.blp:380
 msgid "Transform"
 msgstr "Preoblikuj"
 
-#: data/ui/transform.blp:34
+#: data/ui/transform_window.blp:42
 #, fuzzy
 msgid ""
 "Additional variables:\n"
@@ -1205,103 +1086,98 @@ msgstr ""
 "Funkciji privzeto dodajte D\n"
 "za uporabo stopenj, npr. sind(x) ali cosd(x)."
 
-#: data/ui/transform.blp:39
+#: data/ui/transform_window.blp:47
 msgid "More info"
 msgstr "Več podrobnosti"
 
-#: data/ui/transform.blp:50
+#: data/ui/transform_window.blp:58
 msgid "X ="
 msgstr "X ="
 
-#: data/ui/transform.blp:60
+#: data/ui/transform_window.blp:68
 msgid "Discard Unselected Data"
 msgstr "Zavrzi neizbrane podatke"
 
-#: data/ui/window.blp:168
-msgid "Add New Data"
+#: data/ui/window.blp:166
+msgid "Add new Data"
 msgstr "Dodaj nove podatke"
 
-#: data/ui/window.blp:176
+#: data/ui/window.blp:174
 msgid "Open Application Menu"
 msgstr "Odpri meni programa"
 
-#: data/ui/window.blp:205
+#: data/ui/window.blp:203
 msgid "No Data"
 msgstr "Ni podatkov"
 
-#: data/ui/window.blp:206
-#, fuzzy
+#: data/ui/window.blp:204
 msgid "Add data from a file or manually as an equation"
 msgstr "Dodajanje podatkov iz datoteke ali ročno kot enačbo"
 
-#: data/ui/window.blp:227
+#: data/ui/window.blp:224
 #, fuzzy
-msgid "Pan Mode. Click and drag to pan"
+msgid "Panning mode. Click and drag to pan"
 msgstr "Način panoram. Kliknite in povlecite v pomikanje"
 
-#: data/ui/window.blp:233
+#: data/ui/window.blp:230
 #, fuzzy
-msgid "Zoom Mode. Select an area on the figure to zoom in"
+msgid "Zoom mode. Select an area on the figure to zoom in"
 msgstr "Način povečave. Izberite območje na sliki, ki ga želite povečati"
 
-#: data/ui/window.blp:239
+#: data/ui/window.blp:236
 #, fuzzy
-msgid "Select Mode. Click and drag to make a selection of data"
+msgid "Highlight mode. Click and drag to make a selection of data"
 msgstr "Izberite Način. Klikni in povleci, da narediš izbor podatkov"
 
-#: data/ui/window.blp:270
+#: data/ui/window.blp:271
 msgid "Adjust"
 msgstr "Prilagodi"
 
-#: data/ui/window.blp:285
+#: data/ui/window.blp:286
 msgid "Shift"
 msgstr "Odmik"
 
-#: data/ui/window.blp:287
+#: data/ui/window.blp:288
 #, fuzzy
 msgid "Shift all data vertically with respect to each other"
 msgstr "Premaknite vse podatke navpično glede na drugega"
 
-#: data/ui/window.blp:302
+#: data/ui/window.blp:303
 msgid "Normalize"
 msgstr "Normaliziraj"
 
-#: data/ui/window.blp:304
+#: data/ui/window.blp:305
 msgid "Normalize data"
 msgstr "Normaliziraj podatke"
 
-#: data/ui/window.blp:320
+#: data/ui/window.blp:321
 #, fuzzy
 msgid "Smoothen"
 msgstr "Gladilec"
 
-#: data/ui/window.blp:322
+#: data/ui/window.blp:323
 #, fuzzy
 msgid "Smoothen data"
 msgstr "Glajenje podatkov"
 
-#: data/ui/window.blp:337
-msgid "Center"
-msgstr "Sredina"
-
-#: data/ui/window.blp:339
+#: data/ui/window.blp:340
 #, fuzzy
 msgid "Center data"
 msgstr "Podatki na sredino"
 
-#: data/ui/window.blp:354
+#: data/ui/window.blp:355
 msgid "Combine"
 msgstr "Združi"
 
-#: data/ui/window.blp:356
+#: data/ui/window.blp:357
 msgid "Combine all selected data"
 msgstr "Združi vse izbrane podatke"
 
-#: data/ui/window.blp:370
+#: data/ui/window.blp:371
 msgid "Cut"
 msgstr "Izreži"
 
-#: data/ui/window.blp:372
+#: data/ui/window.blp:373
 msgid "Cut selected data"
 msgstr "Izreži izbrane podatke"
 
@@ -1351,171 +1227,155 @@ msgstr "Preoblikovanje po meri"
 msgid "Perform custom transformations on the data"
 msgstr "Izvajanje pretvorb podatkov po meri"
 
-#: data/ui/window.blp:471
+#: data/ui/window.blp:470
 msgid "Modify"
 msgstr "Spremeni"
 
-#: data/ui/window.blp:492
+#: data/ui/window.blp:491
 msgid "Translate X"
 msgstr "Translacija X"
 
-#: data/ui/window.blp:515
+#: data/ui/window.blp:514
 msgid "Translate Y"
 msgstr "Translacija Y"
 
-#: data/ui/window.blp:538
+#: data/ui/window.blp:537
 #, fuzzy
 msgid "Multiply X"
 msgstr "Množenje X"
 
-#: data/ui/window.blp:561
+#: data/ui/window.blp:560
 #, fuzzy
 msgid "Multiply Y"
 msgstr "Množenje Y"
 
-#: data/ui/window.blp:591
+#: data/ui/window.blp:593
 msgid "Undo"
 msgstr "Razveljavi"
 
-#: data/ui/window.blp:596
+#: data/ui/window.blp:598
 msgid "Redo"
 msgstr "Ponovno uveljavi"
 
-#: data/ui/window.blp:601
+#: data/ui/window.blp:603
 #, fuzzy
 msgid "View Menu"
 msgstr "meni pogleda"
 
-#: data/ui/window.blp:609
+#: data/ui/window.blp:611
 msgid "Next View"
 msgstr "Naslednji pogled"
 
-#: data/ui/window.blp:615
+#: data/ui/window.blp:617
 msgid "Previous View"
 msgstr "Prejšnji pogled"
 
-#: data/ui/window.blp:633
+#: data/ui/window.blp:636
 msgid "New Project"
 msgstr "Nov projekt"
 
-#: data/ui/window.blp:636
+#: data/ui/window.blp:639
 msgid "Save Project…"
 msgstr "Shrani projekt …"
 
-#: data/ui/window.blp:637
+#: data/ui/window.blp:640
 msgid "Save Project as…"
 msgstr "Shrani projekt kot …"
 
-#: data/ui/window.blp:638
+#: data/ui/window.blp:641
 msgid "Open Project…"
 msgstr "Odpri projekt …"
 
-#: data/ui/window.blp:641
+#: data/ui/window.blp:644
 msgid "Export Data…"
 msgstr "Izvozi podatke …"
 
-#: data/ui/window.blp:642
+#: data/ui/window.blp:645
 msgid "Export Figure…"
 msgstr "Izvozi sliko ..."
 
-#: data/ui/window.blp:648
+#: data/ui/window.blp:651
 msgid "Keyboard Shortcuts"
 msgstr "Tipkovne bližnjice"
 
-#: data/ui/window.blp:649
+#: data/ui/window.blp:652
 msgid "About Graphs"
 msgstr "O programu Grafikoni"
 
-#: data/ui/window.blp:655
+#: data/ui/window.blp:658
 msgid "Add Data from File…"
 msgstr "Dodaj podatke iz datoteke ..."
 
-#: data/ui/window.blp:656
+#: data/ui/window.blp:659
 msgid "Add Equation…"
 msgstr "Dodaj enačbo ..."
 
-#: data/ui/window.blp:665
+#: data/ui/window.blp:668
 msgid "At Maximum Y Value"
 msgstr "Pri največji vrednosti Y"
 
-#: data/ui/window.blp:670
+#: data/ui/window.blp:673
 msgid "At Middle X Value"
 msgstr "Pri srednji vrednosti X"
 
-#: data/ui/window.blp:691
+#: data/ui/window.blp:694
 msgid "Advanced Settings"
 msgstr "Napredne nastavitve"
 
-#: graphs/actions.py:317 graphs/item_box.py:151
+#: src/actions.py:214 src/item_box.py:130
 #, python-brace-format
 msgid "Deleted {name}"
 msgstr "Izbrisano: {name}"
 
-#: graphs/add_equation.py:74
+#: src/add_equation.py:64
 #, python-brace-format
 msgid "{error} - Unable to add data from equation"
 msgstr "{error} - Dodajanje podatkov iz enačbe ni mogoče"
 
-#: graphs/application.py:70
-#, python-brace-format
-msgid "Could not load {font}"
-msgstr "Ni bilo mogoče naložiti {font}"
+#: src/application.py:50
+#, python-format
+msgid "Could not load %s"
+msgstr "Ni bilo mogoče naložiti %s"
 
-#. TODO: implement in Vala and figure out gettext
-#: graphs/application.py:263
-msgid "Graphs (Development)"
-msgstr "Grafikoni (razvojni)"
-
-#: graphs/curve_fitting.py:89
+#: src/curve_fitting.py:83
 msgid "Optimization Method"
 msgstr "Metoda optimizacije"
 
-#: graphs/curve_fitting.py:91
-msgctxt "optimization"
+#: src/curve_fitting.py:84
 msgid "Levenberg-Marquardt"
 msgstr "Levenberg-Marquardt"
 
-#: graphs/curve_fitting.py:92
+#: src/curve_fitting.py:85
 #, fuzzy
-msgctxt "optimization"
 msgid "Trust Region Reflective"
 msgstr "Regija zaupanja Refleksivna"
 
-#: graphs/curve_fitting.py:93
+#: src/curve_fitting.py:86
 #, fuzzy
-msgctxt "optimization"
 msgid "Dogbox"
 msgstr "Dogbox"
 
-#: graphs/curve_fitting.py:97
+#: src/curve_fitting.py:88
 msgid "Confidence Bounds"
 msgstr "Meje zaupanja"
 
-#: graphs/curve_fitting.py:99
-msgctxt "confidence"
-msgid "None"
-msgstr "brez"
-
-#: graphs/curve_fitting.py:100
-msgctxt "confidence"
+#: src/curve_fitting.py:90
 msgid "1σ: 68% Confidence"
 msgstr "1σ: 68 % zaupanje"
 
-#: graphs/curve_fitting.py:101
-msgctxt "confidence"
+#: src/curve_fitting.py:91
 msgid "2σ: 95% Confidence"
 msgstr "2σ: 95 % zaupanje"
 
-#: graphs/curve_fitting.py:102
-msgctxt "confidence"
+#: src/curve_fitting.py:92
 msgid "3σ: 99.7% Confidence"
 msgstr "3σ: 99,7 % zaupanje"
 
-#: graphs/curve_fitting.py:245
+#: src/curve_fitting.py:234
 msgid "Results:"
 msgstr "Rezultati:"
 
-#: graphs/curve_fitting.py:249
+#: src/curve_fitting.py:238
 msgid ""
 "Please enter valid fitting \n"
 "parameters to start the fit"
@@ -1523,7 +1383,7 @@ msgstr ""
 "Prosimo, vnesite veljavne \n"
 "parametre za začetek prileganja"
 
-#: graphs/curve_fitting.py:252
+#: src/curve_fitting.py:241
 msgid ""
 "Please enter a valid equation \n"
 "to start the fit"
@@ -1531,7 +1391,7 @@ msgstr ""
 "Vnesite veljavno enačbo \n"
 "za začetek prileganja"
 
-#: graphs/curve_fitting.py:255
+#: src/curve_fitting.py:244
 msgid ""
 "Please enter valid fitting bounds \n"
 "to start the fit"
@@ -1539,335 +1399,320 @@ msgstr ""
 "Prosimo, vnesite veljavne meje \n"
 "za začetek prileganja"
 
-#: graphs/curve_fitting.py:265
+#: src/curve_fitting.py:253
 #, python-brace-format
 msgid "Sum of R²: {R2}"
 msgstr "Vsota R²: {R2}"
 
-#: graphs/data.py:105
+#: src/curve_fitting.py:452
+#, python-brace-format
+msgid "Fitting Parameters for {param_name}"
+msgstr ""
+
+#: src/data.py:112
 msgid "Untitled Project"
 msgstr "Neimenovan projekt"
 
-#: graphs/data.py:116
+#: src/data.py:126
 msgid "Draft"
 msgstr "Osnutek"
 
-#: graphs/export_figure.py:53
-#, fuzzy
-msgctxt "filename"
-msgid "Exported Figure"
-msgstr "Izvožena številka"
+#: src/data.py:606
+msgid "Saved Project"
+msgstr "Shranjeni projekt"
 
-#: graphs/export_figure.py:75
-#, fuzzy
-msgid "Exported Figure"
-msgstr "Izvožena številka"
-
-#: graphs/export_figure.py:76 graphs/project.py:49 graphs/ui.py:162
+#: src/data.py:607 src/export_figure.py:65 src/ui.py:151
 msgid "Open Location"
 msgstr "Odpri mesto"
 
-#: graphs/figure_settings.py:122 graphs/figure_settings.py:149
-#: graphs/styles.py:143
+#: src/export_figure.py:64
+#, fuzzy
+msgid "Exported Figure"
+msgstr "Izvožena številka"
+
+#: src/figure_settings.py:110 src/figure_settings.py:136 src/styles.py:121
 msgid "System"
 msgstr "Sistem"
 
-#: graphs/figure_settings.py:172
+#: src/figure_settings.py:156
 #, fuzzy
 msgid "Top X Axis Minimum"
 msgstr "Najmanjša os X"
 
-#: graphs/figure_settings.py:173 graphs/figure_settings.py:187
+#: src/figure_settings.py:157 src/figure_settings.py:167
 #, fuzzy
 msgid "X Axis Minimum"
 msgstr "Najmanjša vrednost na osi X"
 
-#: graphs/figure_settings.py:175
+#: src/figure_settings.py:158
 #, fuzzy
 msgid "Top X Axis Maximum"
 msgstr "Najvišja os X"
 
-#: graphs/figure_settings.py:176 graphs/figure_settings.py:190
+#: src/figure_settings.py:159 src/figure_settings.py:169
 #, fuzzy
 msgid "X Axis Maximum"
 msgstr "Največja vrednost na osi X"
 
-#: graphs/figure_settings.py:178 graphs/ui.py:79
+#: src/figure_settings.py:160 src/ui.py:58
 #, fuzzy
 msgid "Top X Axis Scale"
 msgstr "Lestvica zgornje osi x"
 
-#: graphs/figure_settings.py:179 graphs/figure_settings.py:193 graphs/ui.py:76
+#: src/figure_settings.py:161 src/figure_settings.py:171 src/ui.py:55
 #, fuzzy
 msgid "X Axis Scale"
 msgstr "Merilo osi X:"
 
-#: graphs/figure_settings.py:181
+#: src/figure_settings.py:162
 #, fuzzy
 msgid "Top X Axis Label"
 msgstr "Zgornja oznaka osi x"
 
-#: graphs/figure_settings.py:182 graphs/figure_settings.py:196
+#: src/figure_settings.py:163 src/figure_settings.py:173
 #, fuzzy
 msgid "X Axis Label"
 msgstr "Oznaka osi X"
 
-#: graphs/figure_settings.py:186
+#: src/figure_settings.py:166
 #, fuzzy
 msgid "Bottom X Axis Minimum"
 msgstr "Najmanjša spodnja os x"
 
-#: graphs/figure_settings.py:189
+#: src/figure_settings.py:168
 #, fuzzy
 msgid "Bottom X Axis Maximum"
 msgstr "Največ spodnje x osi"
 
-#: graphs/figure_settings.py:192 graphs/ui.py:81
+#: src/figure_settings.py:170 src/ui.py:60
 #, fuzzy
 msgid "Bottom X Axis Scale"
 msgstr "Lestvica spodnje x osi"
 
-#: graphs/figure_settings.py:195
+#: src/figure_settings.py:172
 #, fuzzy
 msgid "Bottom X Axis Label"
 msgstr "Oznaka spodnje osi x"
 
-#: graphs/figure_settings.py:200
+#: src/figure_settings.py:176
 #, fuzzy
 msgid "Left Y Axis Minimum"
 msgstr "Najmanjša leva os Y"
 
-#: graphs/figure_settings.py:201 graphs/figure_settings.py:215
+#: src/figure_settings.py:177 src/figure_settings.py:187
 msgid "Y Axis Minimum"
 msgstr "Najmanjša vrednost na osi Y"
 
-#: graphs/figure_settings.py:203
+#: src/figure_settings.py:178
 #, fuzzy
 msgid "Left Y Axis Maximum"
 msgstr "Največja leva os Y"
 
-#: graphs/figure_settings.py:204 graphs/figure_settings.py:218
+#: src/figure_settings.py:179 src/figure_settings.py:189
 msgid "Y Axis Maximum"
 msgstr "Največja vrednost na osi Y"
 
-#: graphs/figure_settings.py:206 graphs/ui.py:83
+#: src/figure_settings.py:180 src/ui.py:62
 #, fuzzy
 msgid "Left Y Axis Scale"
 msgstr "Lestvica leve osi Y"
 
-#: graphs/figure_settings.py:207 graphs/figure_settings.py:221 graphs/ui.py:77
+#: src/figure_settings.py:181 src/figure_settings.py:191 src/ui.py:56
 #, fuzzy
 msgid "Y Axis Scale"
 msgstr "Lestvica osi Y"
 
-#: graphs/figure_settings.py:209
+#: src/figure_settings.py:182
 #, fuzzy
 msgid "Left Y Axis Label"
 msgstr "Oznaka leve osi Y"
 
-#: graphs/figure_settings.py:210 graphs/figure_settings.py:224
+#: src/figure_settings.py:183 src/figure_settings.py:193
 #, fuzzy
 msgid "Y Axis Label"
 msgstr "Oznaka osi Y"
 
-#: graphs/figure_settings.py:214
+#: src/figure_settings.py:186
 #, fuzzy
 msgid "Right Y Axis Minimum"
 msgstr "Najmanjša os Y na desni ravni"
 
-#: graphs/figure_settings.py:217
+#: src/figure_settings.py:188
 #, fuzzy
 msgid "Right Y Axis Maximum"
 msgstr "Največ desna os Y"
 
-#: graphs/figure_settings.py:220 graphs/ui.py:85
+#: src/figure_settings.py:190 src/ui.py:64
 #, fuzzy
 msgid "Right Y Axis Scale"
 msgstr "Lestvica osi Y na desni ravni Y"
 
-#: graphs/figure_settings.py:223
+#: src/figure_settings.py:192
 #, fuzzy
 msgid "Right Y Axis Label"
 msgstr "Oznaka osi Y na desni"
 
-#: graphs/figure_settings.py:337
+#: src/figure_settings.py:296
 msgid "Defaults Updated"
 msgstr "Privzete nastavitve so posodobljene"
 
-#: graphs/file_import.py:132
+#: src/file_import.py:100
 msgid "Are you sure you want to reset the import settings?"
 msgstr "Ali ste prepričani, da želite ponastaviti nastavitve uvoza?"
 
-#: graphs/operations.py:138
-#, fuzzy
+#: src/operations.py:108
 msgid "Data that was outside of the highlighted area has been discarded"
-msgstr "Podatki, ki so bili zunaj označenega območja, so bili zavrženi"
+msgstr "Podatki, ki so bili zunaj poudarjenega območja, so bili zavrženi"
 
-#: graphs/operations.py:175
-#, fuzzy
+#: src/operations.py:142
 msgid "No data found within the highlighted area"
-msgstr "Znotraj označenega območja ni najdenih podatkov"
+msgstr "Znotraj poudarjenega območja ni najdenih podatkov"
 
-#: graphs/operations.py:420
+#: src/operations.py:344
 msgid "Combined Data"
 msgstr "Združeni podatki"
 
-#: graphs/parse_file.py:54
+#: src/parse_file.py:48
 msgid "Intensity (cps)"
 msgstr "Intenzivnost (cps)"
 
-#: graphs/parse_file.py:68
+#: src/parse_file.py:60
 msgid "Invalid .xry format"
 msgstr "Neveljavna oblika zapisa .xry"
 
-#: graphs/parse_file.py:83
+#: src/parse_file.py:75
 msgid "β (°)"
 msgstr "β (°)"
 
-#: graphs/parse_file.py:84
+#: src/parse_file.py:75
 msgid "R (1/s)"
 msgstr "R (1/s)"
 
-#: graphs/parse_file.py:153
+#: src/parse_file.py:141
 msgid "Import failed, column index out of range"
 msgstr "Uvoz ni uspel, indeks stolpca ni v obsegu"
 
-#: graphs/parse_file.py:172
+#: src/parse_file.py:159
 msgid "Unable to import from file"
 msgstr "Uvoz iz datoteke ni mogoč"
 
-#: graphs/project.py:48
-msgid "Saved Project"
-msgstr "Shranjeni projekt"
-
-#: graphs/styles.py:68
+#: src/styles.py:58
 msgid "X Label"
 msgstr "Oznaka X"
 
-#: graphs/styles.py:69
+#: src/styles.py:59
 msgid "Y Label"
 msgstr "Oznaka Y"
 
-#: graphs/styles.py:372
+#: src/styles.py:312
 #, fuzzy, python-brace-format
 msgid "Could not parse {stylename}, loading system preferred style"
 msgstr "Ni bilo mogoče razčleniti {stylename}, želeni slog nalagalnega sistema"
 
-#: graphs/styles.py:380
+#: src/styles.py:319
 #, fuzzy, python-brace-format
 msgid "Plot style {stylename} does not exist loading system preferred"
 msgstr "Slog risbe {stylename} ne obstaja želeni sistem nalaganja"
 
-#: graphs/styles.py:850
+#: src/styles.py:710
 msgid "Are you sure you want to delete {self.style.get_name()}?"
 msgstr "Ali ste prepričani, da želite izbrisati {self.style.get_name()}?"
 
-#: graphs/styles.py:867
-#, python-brace-format
-msgid "Color {number}"
-msgstr "Barva {number}"
+#: src/styles.py:727
+msgid "Color {}"
+msgstr "Barva {}"
 
-#: graphs/style_io.py:58
-#, python-brace-format
-msgid "Missing colon in file {file}, line {line}"
-msgstr "Manjkajoče dvopičje v datoteki {file}, vrstica {line}"
+#: src/style_io.py:49
+msgid "Missing colon in file {}, line {}"
+msgstr "Manjkajoče dvopičje v datoteki {}, vrstica {}"
 
-#: graphs/style_io.py:66
-#, python-brace-format
-msgid "Non-style related parameter {param} in file {file}"
-msgstr "Parameter, ki ni povezan s slogom {param} v datoteki {file}"
+#: src/style_io.py:57
+msgid "Non-style related parameter {} in file {}"
+msgstr "Parameter, ki ni povezan s slogom {} v datoteki {}"
 
-#: graphs/style_io.py:69
-#, python-brace-format
-msgid "Ignoring parameter {param} in file {file}"
-msgstr "Prezrt parameter {param} v datoteki {file}"
+#: src/style_io.py:60
+msgid "Ignoring parameter {} in file {}"
+msgstr "Prezrt parameter {} v datoteki {}"
 
-#: graphs/style_io.py:72
-#, python-brace-format
-msgid "Duplicate key in file {param}, on line {line}"
-msgstr "Podvojen ključ v datoteki {param}, v vrstici {line}"
+#: src/style_io.py:63
+msgid "Duplicate key in file {}, on line {}"
+msgstr "Podvojen ključ v datoteki {}, v vrstici {}"
 
-#: graphs/style_io.py:89
-#, python-brace-format
-msgid "Bad value in file {file} on line {line}"
-msgstr "Napačna vrednost v datoteki {file} v vrstici {line}"
+#: src/style_io.py:80
+msgid "Bad value in file {} on line {}"
+msgstr "Napačna vrednost v datoteki {} v vrstici {}"
 
-#: graphs/style_io.py:95
-#, python-brace-format
-msgid "Could not parse {filename}"
-msgstr "Ni mogoče razčleniti {filename}"
+#: src/style_io.py:84
+msgid "Could not parse {}"
+msgstr "Ni mogoče razčleniti {}"
 
-#: graphs/transform_data.py:52
+#: src/transform_data.py:39
 #, python-brace-format
 msgid "{name}: Unable to do transformation, make sure the syntax is correct"
 msgstr ""
 "{name}: Pretvorbe ni mogoče izvesti, preverite, ali je skladnja pravilna"
 
-#: graphs/transform_data.py:56
+#: src/transform_data.py:42
 msgid "Unable to do transformation"
 msgstr "Preoblikovanje ni mogoče izvesti"
 
-#: graphs/ui.py:47
+#: src/ui.py:37
 msgid "Optimize Limits"
 msgstr "Optimiziraj omejitve"
 
-#: graphs/ui.py:64
-msgctxt "scale"
-msgid "Inverse Root"
-msgstr "Inverzni koren"
+#: src/ui.py:73
+msgid "Items {} already exist"
+msgstr "Elementi {} že obstajajo"
 
-#: graphs/ui.py:101
-#, python-brace-format
-msgid "Items {items} already exist"
-msgstr "Elementi {items} že obstajajo"
+#: src/ui.py:75
+msgid "Item {} already exists"
+msgstr "Element {} že obstaja"
 
-#: graphs/ui.py:122
-msgctxt "file-filter"
+#: src/ui.py:88
 msgid "Supported files"
 msgstr "Vse podprte datoteke"
 
-#: graphs/ui.py:125
-msgctxt "file-filter"
+#: src/ui.py:90
 msgid "ASCII files"
 msgstr "Datoteke ASCII"
 
-#: graphs/ui.py:126
-msgctxt "file-filter"
+#: src/ui.py:91
 msgid "PANalytical XRDML"
 msgstr "PANalitični XRDML"
 
-#: graphs/ui.py:127
-msgctxt "file-filter"
+#: src/ui.py:92
 msgid "Leybold xry"
 msgstr "Leybold xry"
 
-#: graphs/ui.py:139
+#: src/ui.py:93 src/ui.py:110 src/ui.py:123
+msgid "Graphs Project File"
+msgstr ""
+
+#: src/ui.py:130
 msgid "No data to export"
 msgstr "Ni podatkov za izvoz"
 
-#: graphs/ui.py:161
+#: src/ui.py:150
 msgid "Exported Data"
 msgstr "Izvoženi podatki"
 
-#: graphs/ui.py:174
-msgctxt "file-filter"
+#: src/ui.py:161
 msgid "Text Files"
 msgstr "Besedilne datoteke"
 
-#: graphs/ui.py:209
+#: src/ui.py:188
 msgid "translator-credits"
 msgstr "Martin Srebotnjak <miles@filmsi.net>"
 
-#: graphs/ui.py:239 graphs/ui.py:318 graphs/ui.py:379
-#, python-brace-format
-msgid "Unsupported Widget {widget}"
+#: src/ui.py:217 src/ui.py:281 src/ui.py:315
+msgid "Unsupported Widget {}"
 msgstr "Nepodprt gradnik {widget}"
 
-#: graphs/ui.py:242 graphs/ui.py:321 graphs/ui.py:382
-#, fuzzy, python-brace-format
-msgid "No way to apply “{key}”"
+#: src/ui.py:219 src/ui.py:283 src/ui.py:317
+#, fuzzy
+msgid "No way to apply “{}”"
 msgstr "Ni mogoče uporabiti besede »{key}«"
 
-#: graphs/utilities.py:164
+#: src/utilities.py:158
 msgid "No valid number specified"
 msgstr "Veljavna številka ni navedena"
