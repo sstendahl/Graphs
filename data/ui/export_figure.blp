@@ -2,9 +2,8 @@ using Gtk 4.0;
 using Adw 1;
 
 template $GraphsExportFigureDialog : Adw.Dialog {
+  content-width: 450;
   title: _("Export Figure");
-  content-width: 575;
-  content-height: 125;
   focus-widget: confirm_button;
 
   child: Adw.ToolbarView {

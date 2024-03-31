@@ -14,7 +14,6 @@ from contextlib import nullcontext
 from gi.repository import GObject, Gdk, Graphs, Gtk
 
 from graphs import artist, misc, scales, utilities
-from graphs.figure_settings import FigureSettingsDialog
 
 from matplotlib import backend_tools as tools, pyplot
 from matplotlib.backend_bases import NavigationToolbar2
@@ -32,7 +31,7 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
     to `FigureSettings` and `Data.items` during init.
 
     Properties:
-        application
+        mode: int
 
         items: list (write-only)
 
@@ -64,25 +63,32 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
         min_selected: float (fraction)
         max_selected: float (fraction)
 
+    Signals:
+        edit-request
+        view-changed
+
     Functions:
-        get_application
         update_legend
     """
 
     __gtype_name__ = "GraphsCanvas"
+    __gsignals__ = {
+        "edit-request": (GObject.SIGNAL_RUN_FIRST, None, (str, )),
+        "view-changed": (GObject.SIGNAL_RUN_FIRST, None, ()),
+    }
 
-    application = GObject.Property(type=Graphs.Application)
     hide_unselected = GObject.Property(type=bool, default=False)
     items = GObject.Property(type=object)
+    mode = GObject.Property(type=int, default=0)
 
     min_selected = GObject.Property(type=float, default=0)
     max_selected = GObject.Property(type=float, default=0)
 
     def __init__(
         self,
-        application: Graphs.Application,
         style_params: dict,
         interactive: bool = True,
+        key_controller: Gtk.EventControllerKey = None,
     ):
         """
         Create the canvas.
@@ -93,15 +99,9 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
         """
         self._style_params = style_params
         pyplot.rcParams.update(self._style_params)  # apply style_params
-        GObject.Object.__init__(
-            self,
-            application=application,
-            can_focus=False,
-            items=[],
-        )
+        GObject.Object.__init__(self, can_focus=False, items=[])
         super().__init__()
         self.figure.set_tight_layout(True)
-        self.mpl_connect("pick_event", self._on_pick)
         self._axis = self.figure.add_subplot(111)
         self._top_left_axis = self._axis.twiny()
         self._right_axis = self._axis.twinx()
@@ -113,16 +113,23 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
             self._top_right_axis,
         ]
         self._legend_axis = self._axis
-        color_rgba = self.get_style_context().lookup_color("accent_color")[1]
-        self.rubberband_edge_color = utilities.rgba_to_tuple(color_rgba, True)
-        color_rgba.alpha = 0.3
-        self.rubberband_fill_color = utilities.rgba_to_tuple(color_rgba, True)
-
-        self.highlight = _Highlight(self)
         self._legend = True
         self._legend_position = misc.LEGEND_POSITIONS[0]
         self._handles = []
+
+        # Handle stuff only used if the canvas is interactive
         if interactive:
+            self.mpl_connect("pick_event", self._on_pick)
+
+            def rgba_to_tuple(rgba):
+                return (rgba.red, rgba.green, rgba.blue, rgba.alpha)
+
+            rgba = self.get_style_context().lookup_color("accent_color")[1]
+            self.rubberband_edge_color = rgba_to_tuple(rgba)
+            rgba.alpha = 0.3
+            self.rubberband_fill_color = rgba_to_tuple(rgba)
+
+            self.highlight = _Highlight(self)
             # Reference is created by the toolbar itself
             _DummyToolbar(self)
             self.mpl_connect("scroll_event", self._on_scroll_event)
@@ -142,21 +149,27 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
                 "scroll-end",
                 self.figure.canvas.toolbar.push_current,
             )
+            self._ctrl_held = False
+            self._shift_held = False
             self.add_controller(zoom_gesture)
             self.add_controller(scroll_gesture)
 
+            if key_controller is not None:
+                key_controller.connect("key-pressed", self._on_key_press_event)
+                key_controller.connect(
+                    "key-released",
+                    self._on_key_release_event,
+                )
+
+            for item in ("min", "max"):
+                self.connect(
+                    f"notify::{item}-selected",
+                    lambda _a,
+                    _b: self.highlight.load(self),
+                )
+
         self.connect("notify::hide-unselected", self._redraw)
         self.connect("notify::items", self._redraw)
-        for item in ("min", "max"):
-            self.connect(
-                f"notify::{item}-selected",
-                lambda _a,
-                _b: self.highlight.load(self),
-            )
-
-    def get_application(self) -> Graphs.Application:
-        """Get application property."""
-        return self.props.application
 
     def _set_mouse_fraction(self, event) -> None:
         """Set the mouse coordinate in terms of fraction of the canvas."""
@@ -192,8 +205,8 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
         Determines what to do when a panning gesture is detected, pans the
         canvas in the gesture direction.
         """
-        if self.get_application().get_ctrl() is False:
-            if self.get_application().get_shift():
+        if self._ctrl_held is False:
+            if self._shift_held:
                 x, y = y, x
             if event_controller.get_unit() == Gdk.ScrollUnit.WHEEL:
                 x *= 10
@@ -212,10 +225,46 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
         Determines what to do when a scroll signal is detected, scrolls the
         canvas if ctrl is selected.
         """
-        if self.get_application().get_ctrl() is True:
+        if self._ctrl_held is True:
             self.zoom(
                 1 / _SCROLL_SCALE if event.button == "up" else _SCROLL_SCALE,
             )
+
+    def _on_key_press_event(
+        self,
+        _controller,
+        keyval: int,
+        _keycode,
+        _state,
+    ) -> None:
+        """
+        Handle keyboard inputs.
+
+        Checks if control is pressed, needed to allow ctrl+scroll behaviour
+        as the key press event from matplotlib is not working properly atm.
+        """
+        if keyval == 65507 or keyval == 65508:  # Control_L or Control_R
+            self._ctrl_held = True
+        elif keyval == 65505 or keyval == 65506:  # Left or right Shift
+            self._shift_held = True
+        else:  # Prevent keys from being true with key combos
+            self._ctrl_held = False
+
+    def _on_key_release_event(
+        self,
+        _controller,
+        _keyval,
+        _keycode,
+        _state,
+    ) -> None:
+        """
+        Handle keyboard inputs.
+
+        Checks if control is released, needed to allow ctrl+scroll behaviour
+        as the key press event from matplotlib is not working properly atm.
+        """
+        self._ctrl_held = False
+        self._shift_held = False
 
     def zoom(self, scaling: float = 1.15, respect_mouse: bool = True) -> None:
         """
@@ -433,8 +482,8 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
         self.update_legend()
 
     def _on_pick(self, event) -> None:
-        """Invoke FigureSettingsDialog for picked label/title."""
-        FigureSettingsDialog(self.get_application(), event.artist.id)
+        """Emit edit-request signal for picked label/title."""
+        self.emit("edit-request", event.artist.id)
 
     # Overwritten function - do not change name
     def _post_draw(self, _widget, context) -> None:
@@ -705,13 +754,14 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
     @GObject.Property(type=bool, default=False)
     def highlight_enabled(self) -> bool:
         """Whether or not the highlight is enabled."""
-        return self.highlight.get_active()
+        return hasattr(self, "highlight") and self.highlight.get_active()
 
     @highlight_enabled.setter
     def highlight_enabled(self, enabled: bool) -> None:
-        self.highlight.set_active(enabled)
-        self.highlight.set_visible(enabled)
-        self.queue_draw()
+        if hasattr(self, "highlight"):
+            self.highlight.set_active(enabled)
+            self.highlight.set_visible(enabled)
+            self.queue_draw()
 
 
 class _DummyToolbar(NavigationToolbar2):
@@ -719,7 +769,7 @@ class _DummyToolbar(NavigationToolbar2):
 
     # Overwritten function - do not change name
     def _zoom_pan_handler(self, event) -> None:
-        mode = self.canvas.get_application().get_mode()
+        mode = self.canvas.props.mode
         if event.button == 2:
             event.button = 1
             mode = 0
@@ -738,7 +788,7 @@ class _DummyToolbar(NavigationToolbar2):
 
     # Overwritten function - do not change name
     def _update_cursor(self, event) -> None:
-        mode = self.canvas.get_application().get_mode()
+        mode = self.canvas.props.mode
         if event.inaxes and event.inaxes.get_navigate():
             if mode == 1 and self._last_cursor != tools.Cursors.SELECT_REGION:
                 self.canvas.set_cursor(tools.Cursors.SELECT_REGION)
@@ -805,7 +855,7 @@ class _DummyToolbar(NavigationToolbar2):
         for direction in ("bottom", "left", "top", "right"):
             self.canvas.notify(f"min-{direction}")
             self.canvas.notify(f"max-{direction}")
-        self.canvas.application.get_data().add_view_history_state()
+        self.canvas.emit("view-changed")
 
     # Overwritten function - do not change name
     def save_figure(self) -> None:

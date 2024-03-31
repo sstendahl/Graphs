@@ -4,7 +4,7 @@ from gettext import gettext as _
 
 from gi.repository import Adw, GLib, Gio, Graphs, Gtk
 
-from graphs import file_io, operations, ui, utilities
+from graphs import operations, project, ui, utilities
 from graphs.add_equation import AddEquationDialog
 from graphs.export_figure import ExportFigureDialog
 from graphs.figure_settings import FigureSettingsDialog
@@ -247,7 +247,7 @@ def new_project_action(
             if response == "discard_close":
                 application.get_data().reset()
             if response == "save_close":
-                file_io.save_project(application)
+                project.save_project(application)
 
         dialog = ui.build_dialog("save_changes")
         dialog.set_transient_for(application.get_window())
@@ -263,7 +263,7 @@ def save_project_action(
     application: Graphs.Application,
 ) -> None:
     """Save the current project."""
-    file_io.save_project(application)
+    project.save_project(application)
 
 
 def save_project_as_action(
@@ -272,7 +272,7 @@ def save_project_as_action(
     application: Graphs.Application,
 ) -> None:
     """Save the current project and ask for save location."""
-    file_io.save_project(application, require_dialog=True)
+    project.save_project(application, require_dialog=True)
 
 
 def smoothen_settings_action(
@@ -302,23 +302,7 @@ def open_project_action(
     application: Graphs.Application,
 ) -> None:
     """Open a project."""
-    if application.get_data().props.unsaved:
-
-        def on_response(_dialog, response):
-            if response == "discard_close":
-                ui.open_project_dialog(application)
-            if response == "save_close":
-                # Retrieving open dialog first means that save dialog will be
-                # on top. Thus user will be presented with save dialog first.
-                ui.open_project_dialog(application)
-                file_io.save_project(application)
-
-        dialog = ui.build_dialog("save_changes")
-        dialog.set_transient_for(application.get_window())
-        dialog.connect("response", on_response)
-        dialog.present()
-        return
-    ui.open_project_dialog(application)
+    project.open_project(application)
 
 
 def delete_selected_action(

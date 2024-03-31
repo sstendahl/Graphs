@@ -143,7 +143,7 @@ class CurveFittingDialog(Adw.Dialog):
         figure_settings = application.get_data().get_figure_settings()
         style = \
             application.get_figure_style_manager().get_system_style_params()
-        canvas = Canvas(application, style, interactive=False)
+        canvas = Canvas(style, interactive=False)
         canvas.props.items = [self.fitted_curve, self.data_curve, self.fill]
         axis = canvas.axes[0]
         axis.yscale = "linear"
@@ -424,7 +424,6 @@ class FittingParameterContainer(Data):
     """
 
     __gtype_name__ = "GraphsFittingParameterContainer"
-    __gsignals__ = {}
 
     def add_items(self, items: list) -> None:
         """Add new fitting parameters to the container."""

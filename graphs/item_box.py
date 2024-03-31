@@ -92,12 +92,11 @@ class ItemBox(Gtk.Box):
 
     def on_color_change(self, item, _ignored) -> None:
         """Handle color change."""
-        self.provider.load_from_data(
+        self.provider.load_from_string(
             "button { "
             f"color: {item.get_color()}; "
             f"opacity: {item.get_alpha()}; "
             "}",
-            -1,
         )
 
     def curve_fitting(self, _action, _shortcut) -> None:

@@ -76,10 +76,13 @@ namespace Graphs {
         private unowned Adw.ToastOverlay toast_overlay { get; }
 
         [GtkChild]
-        public unowned Adw.HeaderBar content_headerbar { get; }
+        private unowned Adw.HeaderBar content_headerbar { get; }
 
         [GtkChild]
         public unowned Adw.WindowTitle content_title { get; }
+
+        [GtkChild]
+        public unowned EventControllerKey key_controller { get; }
 
         public int mode {
             set {
@@ -93,6 +96,8 @@ namespace Graphs {
             get { return (CanvasInterface) this.toast_overlay.get_child (); }
             set { this.toast_overlay.set_child(value); }
         }
+
+        public CssProvider headerbar_provider { get; private set; }
 
         public Window (Application application) {
             Object (application: application);
@@ -108,6 +113,12 @@ namespace Graphs {
             stack_switcher.add_css_class ("compact");
             stack_switcher.set_hexpand (true);
             this.stack_switcher_box.prepend (stack_switcher);
+
+            this.headerbar_provider = new CssProvider ();
+            StyleContext context = this.content_headerbar.get_style_context ();
+            context.add_provider (
+                headerbar_provider, STYLE_PROVIDER_PRIORITY_APPLICATION
+            );
 
             if (application.debug) {
                 this.add_css_class ("devel");

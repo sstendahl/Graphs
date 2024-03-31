@@ -6,18 +6,11 @@ import operator as op
 import re
 from gettext import gettext as _
 
-from gi.repository import GLib, Gdk, Gio, Gtk
+from gi.repository import GLib, Gio, Gtk
 
 import numpy
 
 import sympy
-
-
-def rgba_to_tuple(rgba: Gdk.RGBA, alpha: bool = False) -> [int, int, int]:
-    """Break a RGBA color into a tuple."""
-    if alpha:
-        return (rgba.red, rgba.green, rgba.blue, rgba.alpha)
-    return (rgba.red, rgba.green, rgba.blue)
 
 
 def sig_fig_round(number: float, digits: int) -> float:

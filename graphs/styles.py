@@ -304,29 +304,35 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
                     item_.set_color(color_cycle[count])
                     count += 1
 
+        window = self.props.application.get_window()
         canvas = graphs.canvas.Canvas(
-            self.props.application,
             self._selected_style_params,
+            key_controller=window.get_key_controller(),
         )
         figure_settings = data.get_figure_settings()
         for prop in dir(figure_settings.props):
             if prop not in ("use_custom_style", "custom_style"):
                 figure_settings.bind_property(prop, canvas, prop, 1 | 2)
         data.bind_property("items", canvas, "items", 2)
-        window = self.props.application.get_window()
-        headerbar = window.get_content_headerbar()
-        headerbar.provider = Gtk.CssProvider()
+        self.props.application.bind_property("mode", canvas, "mode", 2)
+        from graphs.figure_settings import FigureSettingsDialog
+
+        def on_edit_request(_canvas, label_id):
+            FigureSettingsDialog(self.props.application, label_id)
+
+        def on_view_changed(_canvas):
+            data.add_view_history_state()
+
+        canvas.connect("edit-request", on_edit_request)
+        canvas.connect("view-changed", on_view_changed)
 
         # Set headerbar color and contrast
         bg_color = self._selected_style_params["figure.facecolor"]
-        contrast = Graphs.tools_get_luminance_from_hex(bg_color)
-        color = "@dark_5" if contrast > 150 else "@light_1"
-        css = f"headerbar {{ background-color: {bg_color}; color: {color}; }}"
-        context = headerbar.get_style_context()
-        headerbar.provider.load_from_data(css.encode())
-        context.add_provider(
-            headerbar.provider,
-            Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION,
+        luminance = Graphs.tools_get_luminance_from_hex(bg_color)
+        color = "@dark_5" if luminance > 150 else "@light_1"
+        css_provider = window.get_headerbar_provider()
+        css_provider.load_from_string(
+            f"headerbar {{ background-color: {bg_color}; color: {color}; }}",
         )
 
         window.set_canvas(canvas)
@@ -469,7 +475,7 @@ class StylePreview(Gtk.AspectFrame):
         self.picture.set_paintable(texture)
         if self._style.get_mutable():
             color = "@light_1" if self._style.get_light() else "@dark_5"
-            self.provider.load_from_data(f"button {{ color: {color}; }}", -1)
+            self.provider.load_from_string(f"button {{ color: {color}; }}")
 
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/add_style.ui")
@@ -711,9 +717,8 @@ class StyleEditor(Adw.NavigationPage):
         self.font_chooser.set_font_desc(font_description)
 
         for button in self.color_buttons:
-            button.provider.load_from_data(
+            button.provider.load_from_string(
                 f"button {{ color: {button.color}; }}",
-                -1,
             )
 
         # line colors
@@ -800,9 +805,8 @@ class StyleEditor(Adw.NavigationPage):
                 color = dialog.choose_rgba_finish(result)
                 if color is not None:
                     button.color = Graphs.tools_rgba_to_hex(color)
-                    button.provider.load_from_data(
+                    button.provider.load_from_string(
                         f"button {{ color: {button.color}; }}",
-                        -1,
                     )
 
         color = Graphs.tools_hex_to_rgba(f"{button.color}")
@@ -870,10 +874,7 @@ class _StyleColorBox(Gtk.Box):
 
     def _reload_color(self):
         color = self.props.parent.line_colors[self.props.index]
-        self.provider.load_from_data(
-            f"button {{ color: {color}; }}",
-            -1,
-        )
+        self.provider.load_from_string(f"button {{ color: {color}; }}")
 
     @Gtk.Template.Callback()
     def on_color_choose(self, _button):

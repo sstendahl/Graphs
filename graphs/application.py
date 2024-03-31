@@ -8,8 +8,8 @@ from gi.repository import Adw, GLib, GObject, Gio, Graphs, Gtk
 from graphs import (
     actions,
     file_import,
-    file_io,
     migrate,
+    project,
     styles,
     ui,
     utilities,
@@ -159,16 +159,11 @@ class PythonApplication(Graphs.Application):
         data = self.get_data()
         if nfiles == 1 and files[0].get_uri().endswith(".graphs"):
             project_file = files[0]
-
-            def load():
-                data.props.project_file = project_file
-                data.load()
-
             if data.props.unsaved:
 
                 def on_response(_dialog, response):
                     if response == "discard_close":
-                        load()
+                        project.load(data, project_file)
                     if response == "save_close":
                         self.save_handler = self.connect(
                             "project-saved",
@@ -176,7 +171,7 @@ class PythonApplication(Graphs.Application):
                             "open_project",
                             project_file,
                         )
-                        file_io.save_project(self)
+                        project.save_project(self)
 
                 dialog = ui.build_dialog("save_changes")
                 dialog.set_transient_for(self.get_window())
@@ -184,7 +179,7 @@ class PythonApplication(Graphs.Application):
                 dialog.present()
 
             else:
-                load()
+                project.load(data, project_file)
         else:
             file_import.import_from_files(self, files)
 
@@ -205,49 +200,13 @@ class PythonApplication(Graphs.Application):
                         self.connect("project-saved",
                                      self.on_project_saved,
                                      "close")
-                    file_io.save_project(self)
+                    project.save_project(self)
 
             dialog = ui.build_dialog("save_changes")
             dialog.connect("response", on_response)
             dialog.present(self.get_window())
             return True
         self.quit()
-
-    def on_key_press_event(
-        self,
-        _controller,
-        keyval: int,
-        _keycode,
-        _state,
-    ) -> None:
-        """
-        Handle keyboard inputs.
-
-        Checks if control is pressed, needed to allow ctrl+scroll behaviour
-        as the key press event from matplotlib is not working properly atm.
-        """
-        if keyval == 65507 or keyval == 65508:  # Control_L or Control_R
-            self.set_ctrl(True)
-        elif keyval == 65505 or keyval == 65506:  # Left or right Shift
-            self.set_shift(True)
-        else:  # Prevent keys from being true with key combos
-            self.set_ctrl(False)
-
-    def on_key_release_event(
-        self,
-        _controller,
-        _keyval,
-        _keycode,
-        _state,
-    ) -> None:
-        """
-        Handle keyboard inputs.
-
-        Checks if control is released, needed to allow ctrl+scroll behaviour
-        as the key press event from matplotlib is not working properly atm.
-        """
-        self.set_ctrl(False)
-        self.set_shift(False)
 
     def do_activate(self) -> None:
         """
@@ -297,10 +256,6 @@ class PythonApplication(Graphs.Application):
                 )
                 self.set_entry_css(None, None, entry, button)
             self.set_window(window)
-            controller = Gtk.EventControllerKey.new()
-            controller.connect("key-pressed", self.on_key_press_event)
-            controller.connect("key-released", self.on_key_release_event)
-            window.add_controller(controller)
             window.connect("close-request", self.close_application)
             if self.get_debug():
                 # TODO: implement in Vala and figure out gettext
