@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
+"""Figure Settings Dialog."""
 import contextlib
 from gettext import gettext as _
 
@@ -9,9 +10,10 @@ from graphs import misc, styles, ui, utilities
 
 def _get_widget_factory(window) -> Gtk.SignalListItemFactory:
     """
-    Creates a new Gtk.SignalListItemFactory instance and connects the
-    `setup and `bind` signals to the appropriate handlers. Returns the factory
-    instance.
+    Create a new Gtk.SignalListItemFactory instance.
+
+    Also connects the `setup and `bind` signals to the appropriate handlers.
+    Returns the factory instance.
     """
     factory = Gtk.SignalListItemFactory.new()
     factory.connect("setup", lambda _f, i: i.set_child(styles.StylePreview()))
@@ -20,7 +22,7 @@ def _get_widget_factory(window) -> Gtk.SignalListItemFactory:
 
 
 def _on_bind(_factory, item, window) -> None:
-    """Adds an edit button to the style previews of custom styles"""
+    """Add an edit button to the style previews of custom styles."""
     widget = item.get_child()
     style = item.get_item()
     widget.style = style
@@ -31,6 +33,8 @@ def _on_bind(_factory, item, window) -> None:
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/figure_settings.ui")
 class FigureSettingsDialog(Adw.Dialog):
+    """Figure Settings Dialog."""
+
     __gtype_name__ = "GraphsFigureSettingsDialog"
 
     title = Gtk.Template.Child()
@@ -72,7 +76,7 @@ class FigureSettingsDialog(Adw.Dialog):
         application: Graphs.Application,
         highlighted: bool = None,
     ):
-        """Initialize the Figure Settings window and set the widget entries"""
+        """Initialize the Figure Settings window and set the widget entries."""
         figure_settings = application.get_data().get_figure_settings()
         super().__init__(
             application=application,
@@ -108,8 +112,9 @@ class FigureSettingsDialog(Adw.Dialog):
         _a,
     ) -> None:
         """
-        Checks if custom style is used, and sets the current style in the
-        style overview
+        Check if custom style is used.
+
+        Set the current style in the style overview.
         """
         if figure_settings.get_use_custom_style():
             self._on_custom_style(figure_settings, None)
@@ -122,10 +127,7 @@ class FigureSettingsDialog(Adw.Dialog):
         figure_settings: Graphs.FigureSettings,
         _a,
     ) -> None:
-        """
-        Sets the current style in the style overview when a custom style has
-        been used
-        """
+        """Set the current style in the style overview."""
         if figure_settings.get_use_custom_style():
             selection_model = self.grid_view.get_model()
             stylename = figure_settings.get_custom_style()
@@ -137,7 +139,7 @@ class FigureSettingsDialog(Adw.Dialog):
 
     @Gtk.Template.Callback()
     def on_select(self, model, _pos, _n_items) -> None:
-        """Sets the style upon selection"""
+        """Set the style upon selection."""
         figure_settings = self.props.figure_settings
         selected_item = model.get_selected_item()
         # Don't trigger unneccesary reloads
@@ -155,7 +157,9 @@ class FigureSettingsDialog(Adw.Dialog):
 
     def set_axes_entries(self) -> None:
         """
-        Sets the labels and visibility of all entries that are related to the
+        Handle axis entries.
+
+        Set the labels and visibility of all entries that are related to the
         axes: scale, limits and label. Whenever two opposite axes are used
         simultaniously, the title of the entry will get a directional prefix.
         """
@@ -250,7 +254,7 @@ class FigureSettingsDialog(Adw.Dialog):
             getattr(self, direction + "_label").set_visible(visible)
 
     def on_entry_change(self, entry, _param, prop) -> None:
-        """Bind the entry upon change"""
+        """Bind the entry upon change."""
         with contextlib.suppress(SyntaxError):
             self.props.figure_settings.set_property(
                 prop,
@@ -258,13 +262,15 @@ class FigureSettingsDialog(Adw.Dialog):
             )
 
     def edit_style(self, _button, style) -> None:
-        """Load the style editor for the selected style"""
+        """Load the style editor for the selected style."""
         self.style_editor.load_style(style)
         self.navigation_view.push(self.style_editor)
 
     @Gtk.Template.Callback()
     def on_pop(self, _view, page) -> None:
         """
+        Handle style editor removal.
+
         Callback when removing the current stack in the NavigationOverview.
         Saves the changes to the style if the stack was a style editor page.
         """
@@ -274,7 +280,7 @@ class FigureSettingsDialog(Adw.Dialog):
             style_manager._on_style_change()
 
     def set_index(self, style_manager, name: str) -> None:
-        """Sets the index of the style when a custom style is used"""
+        """Set the index of the style when a custom style is used."""
         if not self.props.figure_settings.get_use_custom_style():
             return
 
@@ -291,17 +297,19 @@ class FigureSettingsDialog(Adw.Dialog):
 
     @Gtk.Template.Callback()
     def choose_style(self, _button) -> None:
-        """Loads the style overview"""
+        """Load the style overview."""
         self.navigation_view.push(self.style_overview)
 
     @Gtk.Template.Callback()
     def add_style(self, _button) -> None:
-        """Opens the new style window"""
+        """Open the new style window."""
         styles.AddStyleDialog(self)
 
     @Gtk.Template.Callback()
     def on_close(self, *_args) -> None:
         """
+        Handle closing.
+
         Closes the figure settings, saves the current style and adds the
         new state to the clipboard
         """
@@ -312,7 +320,7 @@ class FigureSettingsDialog(Adw.Dialog):
 
     @Gtk.Template.Callback()
     def on_set_as_default(self, _button) -> None:
-        """Sets the current figure settings as the new default"""
+        """Set the current figure settings as the new default."""
         figure_settings = self.props.figure_settings
         settings = self.props.application.get_settings_child("figure")
         ignorelist = ["min_selected", "max_selected"] + misc.LIMITS

@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
+"""Module for parsing files to usable data."""
 import re
 from gettext import gettext as _
 
@@ -11,6 +12,7 @@ import numpy
 
 
 def import_from_project(_params, _style, file: Gio.File) -> misc.ItemList:
+    """Import data from project file."""
     try:
         project = file_io.parse_json(file)
     except UnicodeDecodeError:
@@ -19,6 +21,7 @@ def import_from_project(_params, _style, file: Gio.File) -> misc.ItemList:
 
 
 def import_from_xrdml(_params, style, file: Gio.File) -> misc.ItemList:
+    """Import data from xrdml file."""
     content = file_io.parse_xml(file)
     intensities = content.getElementsByTagName("intensities")
     counting_time = content.getElementsByTagName("commonCountingTime")
@@ -110,6 +113,7 @@ _PH = "dVldZaXqENhuPLPw"
 
 
 def import_from_columns(params, style, file: Gio.File) -> misc.ItemList:
+    """Import data from columns file."""
     item_ = item.DataItem.new(style, name=utilities.get_filename(file))
     column_x = params.get_int("column-x")
     column_y = params.get_int("column-y")

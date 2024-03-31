@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
+"""Curve fitting module."""
 import re
 from gettext import gettext as _, pgettext as C_
 
@@ -17,6 +18,8 @@ from scipy.optimize import _minpack, curve_fit
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/curve_fitting.ui")
 class CurveFittingDialog(Adw.Dialog):
+    """Class for displaying the Curve Fitting dialog."""
+
     __gtype_name__ = "GraphsCurveFittingDialog"
 
     custom_equation = Gtk.Template.Child()
@@ -30,7 +33,7 @@ class CurveFittingDialog(Adw.Dialog):
     application = GObject.Property(type=Graphs.Application)
 
     def __init__(self, application: Graphs.Application, item: Graphs.Item):
-        """Initialize the curve fitting dialog"""
+        """Initialize the curve fitting dialog."""
         super().__init__(application=application)
         Adw.StyleManager.get_default().connect("notify", self.reload_canvas)
         self.settings = application.get_settings_child("curve-fitting")
@@ -104,7 +107,7 @@ class CurveFittingDialog(Adw.Dialog):
         self.present(application.get_window())
 
     def connect_actions(self) -> None:
-        """Connect the actions in the dialog to the action map"""
+        """Connect the actions in the dialog to the action map."""
         action_map = Gio.SimpleActionGroup.new()
         self.insert_action_group("win", None)
         self.insert_action_group("win", action_map)
@@ -116,7 +119,7 @@ class CurveFittingDialog(Adw.Dialog):
             action_map.add_action(action)
 
     def set_equation(self, *_args) -> None:
-        """Set the equation entry based on the current settings"""
+        """Set the equation entry based on the current settings."""
         equation = EQUATIONS[self.settings.get_string("equation")]
         custom_equation = self.settings.get_string("custom-equation")
         if equation != "custom":
@@ -129,12 +132,12 @@ class CurveFittingDialog(Adw.Dialog):
             self.custom_equation.set_visible(True)
 
     def _set_fitting_bounds_visibility(self, *_args) -> None:
-        """Set the visibility of the fitting bounds"""
+        """Set the visibility of the fitting bounds."""
         for entry in self.fitting_params:
             entry.set_bounds_visibility()
 
     def reload_canvas(self, *_args) -> None:
-        """Reinitialise the currently used canvas"""
+        """Reinitialise the currently used canvas."""
         self.toast_overlay.set_child(None)
         application = self.props.application
         figure_settings = application.get_data().get_figure_settings()
@@ -157,6 +160,8 @@ class CurveFittingDialog(Adw.Dialog):
 
     def on_equation_change(self, _entry, _param) -> None:
         """
+        Logic to execute whenever the equation is changed.
+
         Set the free variables and corresponding entry rows when the equation
         has been changed.
         """
@@ -177,15 +182,18 @@ class CurveFittingDialog(Adw.Dialog):
 
     def on_entry_change(self, entry, _param) -> None:
         """
-        Triggered whenever an entry changes. Update the parameters of the
-        curve and perform a new subsequent fit.
+        Triggered whenever an entry changes.
+
+        Update the parameters of the curve and perform a new subsequent fit.
         """
         error = False
 
         def _is_float(value):
             """
-            Checks if a value can be converted to a float. If not, it adds a
-            CSS class "error" to the entry.
+            Check if a value can be converted to a float.
+
+            If value cannot be parsed as a float, the CSS class "error" to
+            is added to the entry.
             """
             try:
                 float(value)
@@ -233,7 +241,7 @@ class CurveFittingDialog(Adw.Dialog):
             self.fit_curve()
 
     def set_results(self, error="") -> None:
-        """Set the results dialog based on the fit"""
+        """Set the results dialog based on the fit."""
         initial_string = _("Results:") + "\n"
         buffer_string = initial_string
         if error == "value":
@@ -269,15 +277,18 @@ class CurveFittingDialog(Adw.Dialog):
 
     @property
     def equation_string(self) -> str:
+        """The processed equation to be used for the fitted curve."""
         return utilities.preprocess(str(self.custom_equation.get_text()))
 
     def fit_curve(self, *_args) -> bool:
         """
-        Fit the data to the equation in the entry, returns a boolean indicating
-        whether the fit was succesfull or not.
+        Fit the data to the equation in the entry.
+
+        Returns a boolean indicating whether the fit was succesfull or not.
         """
 
         def _get_equation_name(equation_name, values):
+            """Obtain the equation name with the fitted parameter values."""
             free_variables = utilities.get_free_variables(self.equation_string)
             var_to_val = dict(zip(free_variables, values))
             for var, val in var_to_val.items():
@@ -322,7 +333,9 @@ class CurveFittingDialog(Adw.Dialog):
 
     def get_confidence(self, function: str) -> None:
         """
-        Get the confidence intervall in terms of the standard deviation
+        Obtain the confidence interval from the fit.
+
+        Get the confidence interval in terms of the standard deviation
         resulting from the covariance in the plot. The bounds are navively
         calculated by using the extremes on each parameter for both sides
         of the bounds.
@@ -376,7 +389,7 @@ class CurveFittingDialog(Adw.Dialog):
 
     @Gtk.Template.Callback()
     def add_fit(self, _widget) -> None:
-        """Add fitted data to the items in the main application"""
+        """Add fitted data to the items in the main application."""
         application = self.props.application
         style_manager = application.get_figure_style_manager()
         application.get_data().add_items([
@@ -391,6 +404,8 @@ class CurveFittingDialog(Adw.Dialog):
 
     def set_entry_rows(self) -> None:
         """
+        Set the entry rows for the fitting parameters.
+
         Remove the old entry rows and replace them with new ones corresponding
         to the free variables in the equation
         """
@@ -402,15 +417,28 @@ class CurveFittingDialog(Adw.Dialog):
 
 
 class FittingParameterContainer(Data):
-    """Class to contain the fitting parameters."""
+    """
+    Container class for the Fitting Parameters.
+
+    Each item in the container represents one fitting parameter.
+    """
+
     __gtype_name__ = "GraphsFittingParameterContainer"
     __gsignals__ = {}
 
     def add_items(self, items: list) -> None:
+        """Add new fitting parameters to the container."""
         for item in items:
             self._items[item.get_name()] = item
 
     def remove_unused(self, used_list: list) -> None:
+        """
+        Remove unused fitting parameters.
+
+        Removes the used parameters `used_list` from the container, this
+        ensures that the fitting parameters are kept up-to-date with the
+        actual equation.
+        """
         # First create list with items to remove
         # to avoid dict changing size during iteration
         remove_list = []
@@ -424,24 +452,33 @@ class FittingParameterContainer(Data):
         self.order_by_list(used_list)
 
     def order_by_list(self, ordered_list: list) -> None:
+        """
+        Reorder the items given a list.
+
+        This is to make sure the order of fitting parameters
+        doesn't change when updating the equation.
+        """
         self._items = {key: self._items[key] for key in ordered_list}
 
     def get_p0(self) -> list:
-        """Get the initial values."""
+        """Get the initial values of the fitting."""
         return [float(item_.get_initial()) for item_ in self]
 
-    def get_bounds(self):
+    def get_bounds(self) -> tuple:
+        """Get the bounds of the fitting parameters."""
         lower_bounds = [float(item_.get_lower_bound()) for item_ in self]
         upper_bounds = [float(item_.get_upper_bound()) for item_ in self]
         return (lower_bounds, upper_bounds)
 
 
 class FittingParameter(Graphs.FittingParameter):
-    """Class for the fitting parameters."""
+    """Class for the fitting parameters itself."""
+
     __gtype_name__ = "GraphsFittingParameterItem"
     application = GObject.Property(type=Graphs.Application)
 
     def __init__(self, **kwargs):
+        """Initialize a fitting parameter object."""
         super().__init__(
             name=kwargs.get("name", ""),
             initial=kwargs.get("initial", 1),
@@ -452,6 +489,8 @@ class FittingParameter(Graphs.FittingParameter):
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/fitting_parameters.ui")
 class FittingParameterEntry(Gtk.Box):
+    """Class for the fitting parameter entries."""
+
     __gtype_name__ = "GraphsFittingParameterEntry"
     label = Gtk.Template.Child()
     initial = Gtk.Template.Child()
@@ -463,6 +502,7 @@ class FittingParameterEntry(Gtk.Box):
     application = GObject.Property(type=Adw.Application)
 
     def __init__(self, parent, arg):
+        """Initialize the fitting parameter entry."""
         super().__init__(application=parent.props.application)
         self.parent = parent
         self.params = parent.fitting_parameters[arg]
@@ -477,6 +517,12 @@ class FittingParameterEntry(Gtk.Box):
         self.set_bounds_visibility()
 
     def set_bounds_visibility(self) -> None:
+        """
+        Set the bounds visibility.
+
+        Ensures that the bounds are not visible when
+        using the Levenberg-Marquardt method is used.
+        """
         method = self.parent.settings.get_string("optimization")
         self.upper_bound_group.set_visible(method != "lm")
         self.lower_bound_group.set_visible(method != "lm")

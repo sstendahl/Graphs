@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
+"""Module for style utilities."""
 import contextlib
 import io
 import os
@@ -44,7 +45,7 @@ def _generate_filename(name: str) -> str:
 
 
 def _is_style_bright(params: RcParams):
-    return utilities.get_luminance(params["axes.facecolor"]) < 150
+    return Graphs.tools_get_luminance_from_hex(params["axes.facecolor"]) < 150
 
 
 _PREVIEW_XDATA = numpy.linspace(0, 10, 30)
@@ -76,6 +77,13 @@ def _generate_preview(style: RcParams) -> Gdk.Texture:
 
 
 class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
+    """
+    Main Style Manager.
+
+    Keeps track of all files in the style dir and represents them in
+    the `style_model` property.
+    """
+
     __gtype_name__ = "GraphsStyleManager"
     __gsignals__ = {
         "add-style": (GObject.SIGNAL_RUN_FIRST, None, (str, )),
@@ -193,7 +201,7 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
     ) -> None:
         if style_params is None:
             tmp_style_params, name = style_io.parse(file)
-            style_params = self.complete_style(tmp_style_params)
+            style_params = self._complete_style(tmp_style_params)
         if name in self._stylenames:
             new_name = utilities.get_duplicate_string(name, self._stylenames)
             file.delete(None)
@@ -215,18 +223,23 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
         self.emit("add-style", name)
 
     def get_style_model(self) -> Gio.ListStore:
+        """Get the style model property."""
         return self.props.style_model
 
     def get_stylenames(self) -> list:
+        """Return all stylenames."""
         return self._stylenames
 
     def get_style_dir(self) -> Gio.File:
+        """Get the style directory."""
         return self._style_dir
 
     def get_selected_style_params(self) -> RcParams:
+        """Get the selected style properties."""
         return self._selected_style_params
 
     def get_system_style_params(self) -> RcParams:
+        """Get the system style properties."""
         return self._system_style_params
 
     def _on_file_change(
@@ -254,7 +267,7 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
             possible_visual_impact = True
         else:
             tmp_style_params, stylename = style_io.parse(file)
-            style_params = self.complete_style(tmp_style_params)
+            style_params = self._complete_style(tmp_style_params)
         if event_type == 1:
             for obj in style_model:
                 if obj.get_name() == stylename:
@@ -306,7 +319,7 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
 
         # Set headerbar color and contrast
         bg_color = self._selected_style_params["figure.facecolor"]
-        contrast = utilities.get_luminance(bg_color)
+        contrast = Graphs.tools_get_luminance_from_hex(bg_color)
         color = "@dark_5" if contrast > 150 else "@light_1"
         css = f"headerbar {{ background-color: {bg_color}; color: {color}; }}"
         context = headerbar.get_style_context()
@@ -344,7 +357,7 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
                     try:
                         style_params = style_io.parse(style.get_file())[0]
                         if style.get_mutable():
-                            style_params = self.complete_style(style_params)
+                            style_params = self._complete_style(style_params)
                         self._selected_style_params = style_params
                         return
                     except (ValueError, SyntaxError, AttributeError):
@@ -370,6 +383,7 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
         self.props.application.get_window().add_toast_string(message)
 
     def copy_style(self, template: str, new_name: str) -> None:
+        """Copy a style."""
         new_name = utilities.get_duplicate_string(
             new_name,
             self._stylenames,
@@ -380,18 +394,19 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
         for style in self.props.style_model:
             if template == style.get_name():
                 style_params = style_io.parse(style.get_file())[0]
-                source = self.complete_style(style_params) \
+                source = self._complete_style(style_params) \
                     if style.get_mutable() else style_params
                 break
         style_io.write(destination, new_name, source)
 
-    def complete_style(self, params: RcParams) -> RcParams:
+    def _complete_style(self, params: RcParams) -> RcParams:
         for key, value in self._system_style_params.items():
             if key not in params:
                 params[key] = value
         return params
 
     def delete_style(self, file: Gio.File) -> None:
+        """Delete a style."""
         style_model = self.props.style_model
         for index, style in enumerate(style_model):
             if style is not None:
@@ -406,6 +421,8 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/style_preview.ui")
 class StylePreview(Gtk.AspectFrame):
+    """Style preview widget."""
+
     __gtype_name__ = "GraphsStylePreview"
     label = Gtk.Template.Child()
     picture = Gtk.Template.Child()
@@ -421,28 +438,34 @@ class StylePreview(Gtk.AspectFrame):
 
     @GObject.Property(type=Graphs.Style)
     def style(self):
+        """Get style property."""
         return self._style
 
     @style.setter
     def style(self, style):
+        """Set style property."""
         self._style = style
         self._style.bind_property("name", self, "name", 2)
         self._style.bind_property("preview", self, "preview", 2)
 
     @GObject.Property(type=str, default="", flags=2)
     def name(self):
-        pass
+        """Not Implemented."""
+        raise NotImplementedError
 
     @name.setter
     def name(self, name):
+        """Set name property."""
         self.label.set_label(utilities.shorten_label(name))
 
     @GObject.Property(type=Gdk.Texture, flags=2)
     def preview(self):
-        pass
+        """Get preview property."""
+        return self.picture.get_paintable()
 
     @preview.setter
     def preview(self, texture):
+        """Set preview property."""
         self.picture.set_paintable(texture)
         if self._style.get_mutable():
             color = "@light_1" if self._style.get_light() else "@dark_5"
@@ -451,6 +474,8 @@ class StylePreview(Gtk.AspectFrame):
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/add_style.ui")
 class AddStyleDialog(Adw.Dialog):
+    """Add Style dialog."""
+
     __gtype_name__ = "GraphsAddStyleDialog"
     new_style_name = Gtk.Template.Child()
     style_templates = Gtk.Template.Child()
@@ -470,6 +495,7 @@ class AddStyleDialog(Adw.Dialog):
 
     @Gtk.Template.Callback()
     def on_template_changed(self, _a, _b):
+        """Handle template selection."""
         self.new_style_name.set_text(
             utilities.get_duplicate_string(
                 self.style_templates.get_selected_item().get_string(),
@@ -479,6 +505,7 @@ class AddStyleDialog(Adw.Dialog):
 
     @Gtk.Template.Callback()
     def on_accept(self, _button):
+        """Create new style."""
         self.props.style_manager.copy_style(
             self.style_templates.get_selected_item().get_string(),
             self.new_style_name.get_text(),
@@ -567,12 +594,14 @@ FONT_VARIANT_DICT = {
 
 
 def _title_format_function(_scale, value: float) -> str:
-    """Format a float value as percentage string"""
+    """Format a float value as percentage string."""
     return str(value / 2 * 100).split(".")[0] + "%"
 
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/style_editor.ui")
 class StyleEditor(Adw.NavigationPage):
+    """Style editor widget."""
+
     __gtype_name__ = "GraphsStyleEditor"
 
     style_name = Gtk.Template.Child()
@@ -638,10 +667,11 @@ class StyleEditor(Adw.NavigationPage):
             )
 
     def load_style(self, style):
+        """Load a style."""
         if not style.get_mutable():
             return
         self.style = style
-        self.style_params = self._style_manager.complete_style(
+        self.style_params = self._style_manager._complete_style(
             style_io.parse(self.style.get_file())[0],
         )
         stylename = self.style.get_name()
@@ -689,9 +719,10 @@ class StyleEditor(Adw.NavigationPage):
         # line colors
         self.line_colors = \
             self.style_params["axes.prop_cycle"].by_key()["color"]
-        self.reload_line_colors()
+        self._reload_line_colors()
 
     def save_style(self):
+        """Save the style."""
         if self.style is None:
             return
         new_values = ui.save_values_to_dict(self, STYLE_DICT.keys())
@@ -750,49 +781,54 @@ class StyleEditor(Adw.NavigationPage):
         self._style_manager._on_style_change(True)
         self.style = None
 
-    def reload_line_colors(self):
+    def _reload_line_colors(self):
         list_box = self.line_colors_box
         while list_box.get_last_child() is not None:
             list_box.remove(list_box.get_last_child())
         if self.line_colors:
             for index in range(len(self.line_colors)):
-                list_box.append(StyleColorBox(self, index))
+                list_box.append(_StyleColorBox(self, index))
         else:
             self.line_colors.append("#000000")
-            list_box.append(StyleColorBox(self, 0))
+            list_box.append(_StyleColorBox(self, 0))
 
     def on_color_change(self, button):
+        """Handle color change."""
 
         def on_accept(dialog, result):
             with contextlib.suppress(GLib.GError):
                 color = dialog.choose_rgba_finish(result)
                 if color is not None:
-                    button.color = utilities.rgba_to_hex(color)
+                    button.color = Graphs.tools_rgba_to_hex(color)
                     button.provider.load_from_data(
                         f"button {{ color: {button.color}; }}",
                         -1,
                     )
 
-        color = utilities.hex_to_rgba(f"{button.color}")
+        color = Graphs.tools_hex_to_rgba(f"{button.color}")
         dialog = Gtk.ColorDialog()
         dialog.set_with_alpha(False)
         dialog.choose_rgba(self.parent, color, None, on_accept)
 
     @Gtk.Template.Callback()
     def on_linestyle(self, comborow, _b):
+        """Handle linestyle selection."""
         self.linewidth.set_sensitive(comborow.get_selected() != 0)
 
     @Gtk.Template.Callback()
     def on_markers(self, comborow, _b):
+        """Handle marker selection."""
         self.markersize.set_sensitive(comborow.get_selected() != 0)
 
     @Gtk.Template.Callback()
     def add_color(self, _button):
+        """Add a color."""
         self.line_colors.append("000000")
-        self.reload_line_colors()
+        self._reload_line_colors()
 
     @Gtk.Template.Callback()
     def on_delete(self, _button):
+        """Handle style deletion."""
 
         def on_response(_dialog, response):
             if response == "cancel_delete_style":
@@ -814,7 +850,7 @@ class StyleEditor(Adw.NavigationPage):
 
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/style_color_box.ui")
-class StyleColorBox(Gtk.Box):
+class _StyleColorBox(Gtk.Box):
     __gtype_name__ = "GraphsStyleColorBox"
     label = Gtk.Template.Child()
     color_button = Gtk.Template.Child()
@@ -847,14 +883,14 @@ class StyleColorBox(Gtk.Box):
                 color = dialog.choose_rgba_finish(result)
                 if color is not None:
                     self.props.parent.line_colors[self.props.index] = \
-                        utilities.rgba_to_hex(color)
+                        Graphs.tools_rgba_to_hex(color)
                     self._reload_color()
 
         dialog = Gtk.ColorDialog()
         dialog.set_with_alpha(False)
         dialog.choose_rgba(
             self.props.parent.parent,
-            utilities.hex_to_rgba(
+            Graphs.tools_hex_to_rgba(
                 self.props.parent.line_colors[self.props.index],
             ),
             None,
@@ -864,4 +900,4 @@ class StyleColorBox(Gtk.Box):
     @Gtk.Template.Callback()
     def on_delete(self, _button):
         self.props.parent.line_colors.pop(self.props.index)
-        self.props.parent.reload_line_colors()
+        self.props.parent._reload_line_colors()

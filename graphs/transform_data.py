@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
+"""Module for custom transformations."""
 import logging
 from gettext import gettext as _
 
@@ -9,7 +10,10 @@ from graphs import operations
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/transform.ui")
 class TransformDialog(Adw.Dialog):
+    """Class for custom transformations."""
+
     __gtype_name__ = "GraphsTransformDialog"
+
     transform_x_entry = Gtk.Template.Child()
     transform_y_entry = Gtk.Template.Child()
     discard = Gtk.Template.Child()
@@ -31,6 +35,7 @@ class TransformDialog(Adw.Dialog):
 
     @Gtk.Template.Callback()
     def on_accept(self, _widget) -> None:
+        """Apply transformation."""
         try:
             input_x = str(self.transform_x_entry.get_text())
             input_y = str(self.transform_y_entry.get_text())

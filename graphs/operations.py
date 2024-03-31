@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
+"""Module for data transformations."""
 import logging
 from gettext import gettext as _
 
@@ -17,6 +18,7 @@ import scipy
 def get_data(application: Graphs.Application, item: DataItem):
     """
     Retrieve item from datadict with start and stop index.
+
     If interaction_mode is set to "SELECT"
     """
     new_xdata = item.props.xdata
@@ -99,6 +101,7 @@ def create_data_mask(xdata1: list, ydata1: list, xdata2: list, ydata2: list):
 
 
 def sort_data(xdata: list, ydata: list) -> (list, list):
+    """Sort data."""
     return map(
         list,
         zip(*sorted(
@@ -113,6 +116,7 @@ def perform_operation(
     callback,
     *args,
 ) -> None:
+    """Perform an operation."""
     data_selected = False
     data = application.get_data()
     figure_settings = data.get_figure_settings()
@@ -180,7 +184,8 @@ _return = (list[float], list[float], bool, bool)
 
 def translate_x(_item, xdata: list, ydata: list, offset: float) -> _return:
     """
-    Translate all selected data on the x-axis
+    Translate all selected data on the x-axis.
+
     Amount to be shifted is equal to the value in the translate_x entry widget
     Will show a toast if a ValueError is raised, typically when a user entered
     an invalid number (e.g. comma instead of point separators)
@@ -190,7 +195,8 @@ def translate_x(_item, xdata: list, ydata: list, offset: float) -> _return:
 
 def translate_y(_item, xdata: list, ydata: list, offset: float) -> _return:
     """
-    Translate all selected data on the y-axis
+    Translate all selected data on the y-axis.
+
     Amount to be shifted is equal to the value in the translate_y entry widget
     Will show a toast if a ValueError is raised, typically when a user entered
     an invalid number (e.g. comma instead of point separators)
@@ -200,7 +206,8 @@ def translate_y(_item, xdata: list, ydata: list, offset: float) -> _return:
 
 def multiply_x(_item, xdata: list, ydata: list, multiplier: float) -> _return:
     """
-    Multiply all selected data on the x-axis
+    Multiply all selected data on the x-axis.
+
     Amount to be shifted is equal to the value in the multiply_x entry widget
     Will show a toast if a ValueError is raised, typically when a user entered
     an invalid number (e.g. comma instead of point separators)
@@ -210,7 +217,8 @@ def multiply_x(_item, xdata: list, ydata: list, multiplier: float) -> _return:
 
 def multiply_y(_item, xdata: list, ydata: list, multiplier: float) -> _return:
     """
-    Multiply all selected data on the y-axis
+    Multiply all selected data on the y-axis.
+
     Amount to be shifted is equal to the value in the multiply_y entry widget
     Will show a toast if a ValueError is raised, typically when a user entered
     an invalid number (e.g. comma instead of point separators)
@@ -219,7 +227,7 @@ def multiply_y(_item, xdata: list, ydata: list, multiplier: float) -> _return:
 
 
 def normalize(_item, xdata: list, ydata: list) -> _return:
-    """Normalize all selected data"""
+    """Normalize all selected data."""
     return xdata, [value / max(ydata) for value in ydata], False, False
 
 
@@ -249,7 +257,8 @@ def smoothen(
 
 def center(_item, xdata: list, ydata: list, center_maximum: int) -> _return:
     """
-    Center all selected data
+    Center all selected data.
+
     Depending on the key, will center either on the middle coordinate, or on
     the maximum value of the data
     """
@@ -272,7 +281,8 @@ def shift(
     ranges: tuple[float, float],
 ) -> _return:
     """
-    Shifts data vertically with respect to each other
+    Shifts data vertically with respect to each other.
+
     By default it scales linear data by 1.2 times the total span of the
     ydata, and log data 10 to the power of the yspan.
     """
@@ -322,12 +332,12 @@ def shift(
 
 
 def cut(_item, _xdata, _ydata) -> _return:
-    """Cut selected data over the span that is selected"""
+    """Cut selected data over the span that is selected."""
     return [], [], False, False
 
 
 def derivative(_item, xdata: list, ydata: list) -> _return:
-    """Calculate derivative of all selected data"""
+    """Calculate derivative of all selected data."""
     x_values = numpy.array(xdata)
     y_values = numpy.array(ydata)
     dy_dx = numpy.gradient(y_values, x_values)
@@ -335,7 +345,7 @@ def derivative(_item, xdata: list, ydata: list) -> _return:
 
 
 def integral(_item, xdata: list, ydata: list) -> _return:
-    """Calculate indefinite integral of all selected data"""
+    """Calculate indefinite integral of all selected data."""
     x_values = numpy.array(xdata)
     y_values = numpy.array(ydata)
     indefinite_integral = scipy.integrate.cumulative_trapezoid(
@@ -347,7 +357,7 @@ def integral(_item, xdata: list, ydata: list) -> _return:
 
 
 def fft(_item, xdata: list, ydata: list) -> _return:
-    """Perform Fourier transformation on all selected data"""
+    """Perform Fourier transformation on all selected data."""
     x_values = numpy.array(xdata)
     y_values = numpy.array(ydata)
     y_fourier = numpy.fft.fft(y_values)
@@ -357,7 +367,7 @@ def fft(_item, xdata: list, ydata: list) -> _return:
 
 
 def inverse_fft(_item, xdata: list, ydata: list) -> _return:
-    """Perform Inverse Fourier transformation on all selected data"""
+    """Perform Inverse Fourier transformation on all selected data."""
     x_values = numpy.array(xdata)
     y_values = numpy.array(ydata)
     y_fourier = numpy.fft.ifft(y_values)
@@ -374,6 +384,7 @@ def transform(
     input_y: str,
     discard: bool = False,
 ) -> _return:
+    """Perform custom transformation."""
     local_dict = {
         "x": xdata,
         "y": ydata,
@@ -393,7 +404,7 @@ def transform(
 
 
 def combine(application: Graphs.Application) -> None:
-    """Combine the selected data into a new data set"""
+    """Combine the selected data into a new data set."""
     new_xdata, new_ydata = [], []
     for item in application.get_data():
         if not (item.get_selected() and isinstance(item, DataItem)):

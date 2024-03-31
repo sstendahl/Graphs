@@ -1,4 +1,4 @@
-"""Initialize testing module, specify used module versions"""
+"""Initialize testing module, specify used module versions."""
 import gi
 
 gi.require_version("Adw", "1")

@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
+"""Module for creating data from an equation."""
 import logging
 from gettext import gettext as _
 
@@ -14,6 +15,8 @@ import numpy
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/add_equation.ui")
 class AddEquationDialog(Adw.Dialog):
+    """Class for displaying the Add Equation dialog."""
+
     __gtype_name__ = "GraphsAddEquationDialog"
 
     equation = Gtk.Template.Child()
@@ -35,7 +38,7 @@ class AddEquationDialog(Adw.Dialog):
 
     @Gtk.Template.Callback()
     def on_accept(self, _widget) -> None:
-        """Launched when the accept button is pressed on the equation window"""
+        """Try generating data and add it to the project."""
         values = ui.save_values_to_dict(
             self,
             ["equation", "step-size", "x-start", "x-stop"],

@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
+"""Various utility functions."""
 import ast
 import contextlib
 import operator as op
@@ -12,18 +13,11 @@ import numpy
 import sympy
 
 
-def hex_to_rgba(hex_str: str) -> Gdk.RGBA:
-    rgba = Gdk.RGBA()
-    rgba.parse(str(hex_str))
-    return rgba
-
-
-def get_luminance(hex_color: str) -> float:
-    color = hex_color[1:]
-    hex_red = int(color[0:2], base=16)
-    hex_green = int(color[2:4], base=16)
-    hex_blue = int(color[4:6], base=16)
-    return hex_red * 0.2126 + hex_green * 0.7152 + hex_blue * 0.0722
+def rgba_to_tuple(rgba: Gdk.RGBA, alpha: bool = False) -> [int, int, int]:
+    """Break a RGBA color into a tuple."""
+    if alpha:
+        return (rgba.red, rgba.green, rgba.blue, rgba.alpha)
+    return (rgba.red, rgba.green, rgba.blue)
 
 
 def sig_fig_round(number: float, digits: int) -> float:
@@ -36,20 +30,6 @@ def sig_fig_round(number: float, digits: int) -> float:
     return round(float(number), -(int(power) - digits + 1))
 
 
-def rgba_to_hex(rgba: Gdk.RGBA) -> str:
-    return "#{:02x}{:02x}{:02x}".format(
-        round(rgba.red * 255),
-        round(rgba.green * 255),
-        round(rgba.blue * 255),
-    )
-
-
-def rgba_to_tuple(rgba: Gdk.RGBA, alpha: bool = False) -> [int, int, int]:
-    if alpha:
-        return (rgba.red, rgba.green, rgba.blue, rgba.alpha)
-    return (rgba.red, rgba.green, rgba.blue)
-
-
 def get_value_at_fraction(
     fraction: float,
     start: float,
@@ -57,6 +37,8 @@ def get_value_at_fraction(
     scale: int,
 ) -> float:
     """
+    Get value at axis fraction.
+
     Obtain the selected value of an axis given at which percentage (in terms of
     fraction) of the length this axis is selected given the start and end range
     of this axis.
@@ -93,6 +75,8 @@ def get_fraction_at_value(
     scale: int,
 ) -> float:
     """
+    Get fraction of axis at absolute value.
+
     Obtain the fraction of the total length of the selected axis a specific
     value corresponds to given the start and end range of the axis.
     """
@@ -122,16 +106,26 @@ def get_fraction_at_value(
         return (scaled_data_point - 1 / end) / scaled_range
 
 
-def shorten_label(label: str, max_length: bool = 20) -> str:
+def shorten_label(label: str, max_length: int = 20) -> str:
+    """Shorten a label to a maximum length."""
     return f"{label[:max_length - 1]}…" if len(label) > max_length else label
 
 
 def get_config_directory() -> Gio.File:
+    """Get the config directory."""
     main_directory = Gio.File.new_for_path(GLib.get_user_config_dir())
     return main_directory.get_child_for_display_name("graphs")
 
 
 def create_file_filters(filters, add_all: bool = True) -> Gio.ListStore:
+    """
+    Create file filters.
+
+    filters should be in the format:
+    [
+        (name, (suffix_a, suffix_b),
+    ]
+    """
     list_store = Gio.ListStore()
     for name, suffix_list in filters:
         file_filter = Gtk.FileFilter()
@@ -148,6 +142,7 @@ def create_file_filters(filters, add_all: bool = True) -> Gio.ListStore:
 
 
 def string_to_float(string: str) -> float:
+    """Evaluate a string represantation of a number."""
     try:
         return _eval(ast.parse(preprocess(string), mode="eval").body)
     except SyntaxError:
@@ -177,30 +172,30 @@ def _eval(node):
 
 
 def preprocess(string: str) -> str:
-    """Preprocesses an equation to be compatible with numexpr syntax"""
+    """Preprocess an equation to be compatible with numexpr syntax."""
 
     def convert_degrees(match):
-        """Converts degree expressions to radian expressions"""
+        """Convert degree expressions to radian expressions."""
         expression = match.group(1)  # Get the content inside the brackets
         return f"(({expression})*{float(numpy.pi)}/180)"
 
     def convert_cot(match):
-        """Converts cotangent expressions to reciprocal tangent expressions."""
+        """Convert cotangent expressions to reciprocal tangent expressions."""
         expression = match.group(1)  # Get the content inside the brackets
         return f"1/(tan({expression}))"
 
     def convert_sec(match):
-        """Converts secant expressions to reciprocal cosine expressions."""
+        """Convert secant expressions to reciprocal cosine expressions."""
         expression = match.group(1)  # Get the content inside the brackets
         return f"1/(cos({expression}))"
 
     def convert_csc(match):
-        """Converts cosecant expressions to reciprocal sine expressions."""
+        """Convert cosecant expressions to reciprocal sine expressions."""
         expression = match.group(1)  # Get the content inside the brackets
         return f"1/(sin({expression}))"
 
     def convert_superscript(match):
-        """Converts superscript expressions to Python's power operator."""
+        """Convert superscript expressions to Python's power operator."""
         superscript_mapping = {
             "⁰": "0",
             "¹": "1",
@@ -221,6 +216,8 @@ def preprocess(string: str) -> str:
 
     def add_asterix(match):
         """
+        Add asterix to an equation.
+
         Adds asterix in equation when missing in case a number is followed
         by an alphabetical character, and adds parantheses around.
 
@@ -262,6 +259,7 @@ def preprocess(string: str) -> str:
 
 
 def get_filename(file: Gio.File) -> str:
+    """Query the filename of a file."""
     info = file.query_info(
         "standard::display-name",
         Gio.FileQueryInfoFlags.NONE,
@@ -273,7 +271,7 @@ def get_filename(file: Gio.File) -> str:
 
 
 def string_to_function(equation_name: str) -> sympy.FunctionClass:
-    """Convert a string into a sympy function"""
+    """Convert a string into a sympy function."""
     variables = ["x"] + get_free_variables(equation_name)
     sym_vars = sympy.symbols(variables)
     with contextlib.suppress(sympy.SympifyError, TypeError, SyntaxError):
@@ -285,7 +283,7 @@ def string_to_function(equation_name: str) -> sympy.FunctionClass:
 
 
 def get_free_variables(equation_name: str) -> list:
-    """Get the free variables (non-x) from an equation in the form of a list"""
+    """Get the free variables (non-x) from an equation."""
     pattern = (
         r"\b(?!x\b|X\b"  # Exclude 'x' and 'X'
         r"|sec\b|sin\b|cos\b|log\b|tan\b|csc\b|cot\b"  # Exclude trig func.
@@ -296,6 +294,7 @@ def get_free_variables(equation_name: str) -> list:
 
 
 def get_duplicate_string(original_string: str, used_strings: list[str]) -> str:
+    """Get a unique string given a list of used strings."""
     if original_string not in used_strings:
         return original_string
     m = re.compile(r"(?P<string>.+) \(\d+\)").match(original_string)
