@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2024-03-31 14:17+0000\n"
-"PO-Revision-Date: 2024-03-31 19:20+0300\n"
+"POT-Creation-Date: 2024-03-31 18:15+0000\n"
+"PO-Revision-Date: 2024-03-31 21:47+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian\n"
 "Language: uk\n"
@@ -463,7 +463,7 @@ msgstr "Розмір позначки"
 msgid "Export Figure"
 msgstr "Експортувати рисунок"
 
-#: data/ui/export_figure.blp:21 graphs/export_figure.py:87
+#: data/ui/export_figure.blp:21 graphs/export_figure.py:83
 msgid "Export"
 msgstr "Експортувати"
 
@@ -472,10 +472,38 @@ msgid "File Format"
 msgstr "Формат файлів"
 
 #: data/ui/export_figure.blp:38
+msgid "Encapsulated Postscript"
+msgstr "Інкапсульований PostScript"
+
+#: data/ui/export_figure.blp:39
+msgid "Joint Photographic Experts Group"
+msgstr "Об'єднана група експертів з фотографії (JPEG)"
+
+#: data/ui/export_figure.blp:40
+msgid "Portable Document Format"
+msgstr "Формат портативних документів (PDF)"
+
+#: data/ui/export_figure.blp:41
+msgid "Portable Network Graphics"
+msgstr "Портативна мережева графіка (PNG)"
+
+#: data/ui/export_figure.blp:42
+msgid "Postscript"
+msgstr "Postscript"
+
+#: data/ui/export_figure.blp:43
+msgid "Scalable Vector Graphics"
+msgstr "Масштабована векторна графіка (SVG)"
+
+#: data/ui/export_figure.blp:44
+msgid "WebP Image Format"
+msgstr "Формат зображень WebP"
+
+#: data/ui/export_figure.blp:49
 msgid "Resolution (dpi)"
 msgstr "Роздільність (т/дюйм)"
 
-#: data/ui/export_figure.blp:45
+#: data/ui/export_figure.blp:56
 msgid "Transparent Background"
 msgstr "Прозоре тло"
 
@@ -1473,11 +1501,17 @@ msgstr "Проєкт без назви"
 msgid "Draft"
 msgstr "Чернетка"
 
-#: graphs/export_figure.py:79
+#: graphs/export_figure.py:53
+#| msgid "Exported Figure"
+msgctxt "filename"
 msgid "Exported Figure"
 msgstr "Експортований рисунок"
 
-#: graphs/export_figure.py:80 graphs/project.py:49 graphs/ui.py:162
+#: graphs/export_figure.py:75
+msgid "Exported Figure"
+msgstr "Експортований рисунок"
+
+#: graphs/export_figure.py:76 graphs/project.py:49 graphs/ui.py:162
 msgid "Open Location"
 msgstr "Відкрити адресу"
 
@@ -1705,8 +1739,6 @@ msgid "Optimize Limits"
 msgstr "Оптимізувати межі"
 
 #: graphs/ui.py:64
-#| msgctxt "scale"
-#| msgid "Inverse"
 msgctxt "scale"
 msgid "Inverse Root"
 msgstr "Обернена коренева"
