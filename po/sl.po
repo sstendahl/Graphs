@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
 "POT-Creation-Date: 2024-03-31 16:21+0000\n"
-"PO-Revision-Date: 2024-03-31 23:01+0200\n"
+"PO-Revision-Date: 2024-03-31 23:25+0200\n"
 "Language-Team: Slovenian <gnome-si@googlegroups.com>\n"
 "Language: sl\n"
 "MIME-Version: 1.0\n"
@@ -38,26 +38,24 @@ msgid ""
 "multiply, center and smoothen data, as well as apply any custom "
 "transformations on the data."
 msgstr ""
-"Graphs je preprosto, a zmogljivo orodje, ki vam omogoča enostavno risanje in "
-"manipulacijo podatkov. Nove podatke je mogoče uvoziti iz najrazličnejših "
-"vrst datotek ali ustvariti z enačbo. Vse podatke je mogoče manipulirati z "
-"različnimi operacijami, kot so možnost izbire, rezanja, prevajanja, "
-"množenja, centriranja in glajenja podatkov ter uporaba kakršnih koli "
-"transformacij po meri podatkov."
+"Grafikoni je preprosto, a zmogljivo orodje, ki vam omogoča enostavno risanje "
+"grafov in ravnanje s podatki. Nove podatke je mogoče uvoziti iz "
+"najrazličnejših vrst datotek ali ustvariti z enačbo. Vse podatke je mogoče "
+"upravljati z različnimi operacijami, kot so možnost izbire, izrezovanja, "
+"prevajanja, množenja, centriranja in glajenja podatkov ter uporaba kakršnih "
+"koli transformacij po meri podatkov."
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:17
-#, fuzzy
 msgid ""
 "Moreover, Graphs supports curve fitting on imported data and offers "
 "extensive customization options for the style of the plots. You can fine-"
 "tune and personalize stylesheets to your liking."
 msgstr ""
-"Poleg tega Graphs podpira prileganje krivulj na uvožene podatke in ponuja "
-"obsežne možnosti prilagajanja slogu ploskev. Slogovne predloge lahko "
-"natančno prilagodite in prilagodite po svojih željah."
+"Poleg tega Grafikoni podpira prileganje krivulj na uvožene podatke in ponuja "
+"obsežne možnosti prilagajanja sloga grafa. Slogovne predloge lahko natančno "
+"prilagodite po svojih željah."
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:20
-#, fuzzy
 msgid ""
 "Graphs is an excellent fit for both plotting and data manipulation. The "
 "plots created with Graphs can be saved in a variety of formats suitable for "
@@ -67,23 +65,22 @@ msgid ""
 "refinement. Graphs is written with the GNOME environment in mind, but should "
 "be suitable for any other desktop environment as well."
 msgstr ""
-"Grafi so odlično primerni za risanje in manipulacijo podatkov. Ploskve, "
-"ustvarjene z grafi, je mogoče shraniti v različnih oblikah, primernih za "
-"skupno rabo in predstavitev širokemu občinstvu, na primer v znanstveni "
-"publikaciji ali predstavitvah. Poleg tega možnost shranjevanja ploskev kot "
-"vektorskih slik omogoča enostavno urejanje v programski opremi, kot je "
-"Inkscape, za nadaljnje izpopolnjevanje. Grafi so napisani z mislijo na "
-"okolje GNOME, vendar morajo biti primerni tudi za katero koli drugo namizno "
-"okolje."
+"Grafikoni so še posebej primerni za risanje grafov in upravljanje podatkov. "
+"Grafi, ustvarjeni z Grafikoni, je mogoče shraniti v različnih oblikah, "
+"primernih za skupno rabo in predstavitev širokemu občinstvu, npr. v "
+"znanstveni publikaciji ali na predstavitvah. Poleg tega možnost shranjevanja "
+"grafov kot vektorskih slik omogoča enostavno urejanje s programsko opremo, "
+"kot je Inkscape, za nadaljnje izpopolnjevanje. Grafikoni so napisani z "
+"mislijo na okolje GNOME, vendar bi morali biti primerni tudi za poljubno "
+"drugo namizno okolje."
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:24
-#, fuzzy
 msgid ""
 "For any feedback, questions or general issues, please file an issue on the "
 "GitLab page."
 msgstr ""
-"Za vse povratne informacije, vprašanja ali splošna vprašanja pošljite težavo "
-"na strani GitLab."
+"Za vse povratne informacije, vprašanja ali splošne težave vnesite težavo na "
+"strani GitLab."
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:37
 #, fuzzy
@@ -228,7 +225,6 @@ msgid "Y = "
 msgstr "Y = "
 
 #: data/ui/curve_fitting.blp:90
-#, fuzzy
 msgid "Add Fit to Data"
 msgstr "Dodaj Prilagodi podatkom"
 
@@ -237,7 +233,6 @@ msgid "Toggle Sidebar"
 msgstr "Preklopi stransko okno"
 
 #: data/ui/curve_fitting.blp:118 data/ui/window.blp:624
-#, fuzzy
 msgid "Canvas Failed to Load"
 msgstr "Platno se ni naložilo"
 
@@ -246,12 +241,11 @@ msgid "Save Changes?"
 msgstr "Ali želite shraniti spremembe?"
 
 #: data/ui/dialogs.blp:6
-#, fuzzy
 msgid ""
 "Current project contains unsaved changes, changes that are not saved will be "
 "permanently lost."
 msgstr ""
-"Trenutni projekt vsebuje neshranjene spremembe, spremembe, ki niso "
+"Trenutni projekt vsebuje ne shranjene spremembe; spremembe, ki niso "
 "shranjene, bodo trajno izgubljene."
 
 #: data/ui/dialogs.blp:9
@@ -263,9 +257,8 @@ msgid "Save"
 msgstr "Shrani"
 
 #: data/ui/dialogs.blp:17
-#, fuzzy
 msgid "Delete Style?"
-msgstr "Izbrišite slog?"
+msgstr "Ali želite izbrisati slog?"
 
 #: data/ui/dialogs.blp:20 data/ui/style_editor.blp:12
 msgid "Delete"
@@ -334,10 +327,9 @@ msgid "Solid"
 msgstr "Enakomerno"
 
 #: data/ui/edit_item.blp:50 data/ui/style_editor.blp:88
-#, fuzzy
 msgctxt "linestyle"
 msgid "Dotted"
-msgstr "Črtasta puščica"
+msgstr "pikasto"
 
 #: data/ui/edit_item.blp:51 data/ui/style_editor.blp:89
 msgctxt "linestyle"
@@ -345,10 +337,9 @@ msgid "Dashed"
 msgstr "Črtkano"
 
 #: data/ui/edit_item.blp:52 data/ui/style_editor.blp:90
-#, fuzzy
 msgctxt "linestyle"
 msgid "Dashdot"
-msgstr "Dashdot"
+msgstr "črtica pika"
 
 #: data/ui/edit_item.blp:59 data/ui/style_editor.blp:97
 msgid "Linewidth"
@@ -379,25 +370,21 @@ msgid "Circle"
 msgstr "Krog"
 
 #: data/ui/edit_item.blp:80 data/ui/style_editor.blp:119
-#, fuzzy
 msgctxt "markerstyle"
 msgid "Triangle Down"
 msgstr "trikotnik navzdol"
 
 #: data/ui/edit_item.blp:81 data/ui/style_editor.blp:120
-#, fuzzy
 msgctxt "markerstyle"
 msgid "Triangle Up"
 msgstr "trikotnik navzgor"
 
 #: data/ui/edit_item.blp:82 data/ui/style_editor.blp:121
-#, fuzzy
 msgctxt "markerstyle"
 msgid "Triangle Left"
 msgstr "trikotnik levo"
 
 #: data/ui/edit_item.blp:83 data/ui/style_editor.blp:122
-#, fuzzy
 msgctxt "markerstyle"
 msgid "Triangle Right"
 msgstr "trikotnik desno"
@@ -423,16 +410,14 @@ msgid "Star"
 msgstr "Zvezdica"
 
 #: data/ui/edit_item.blp:88 data/ui/style_editor.blp:127
-#, fuzzy
 msgctxt "markerstyle"
 msgid "Hexagon 1"
-msgstr "Šesterokotnik 1"
+msgstr "šesterokotnik 1"
 
 #: data/ui/edit_item.blp:89 data/ui/style_editor.blp:128
-#, fuzzy
 msgctxt "markerstyle"
 msgid "Hexagon 2"
-msgstr "Šesterokotnik 2"
+msgstr "šesterokotnik 2"
 
 #: data/ui/edit_item.blp:90 data/ui/style_editor.blp:129
 msgctxt "markerstyle"
@@ -440,10 +425,9 @@ msgid "Plus"
 msgstr "Plus"
 
 #: data/ui/edit_item.blp:91 data/ui/style_editor.blp:130
-#, fuzzy
 msgctxt "markerstyle"
 msgid "X"
-msgstr "x"
+msgstr "X"
 
 #. Translators: Diamond as in Cards Symbol
 #: data/ui/edit_item.blp:93 data/ui/style_editor.blp:132
@@ -453,10 +437,9 @@ msgstr "Karo"
 
 #. Translators: Diamond as in Cards Symbol
 #: data/ui/edit_item.blp:95 data/ui/style_editor.blp:134
-#, fuzzy
 msgctxt "markerstyle"
 msgid "Thin Diamond"
-msgstr "Tanek diamant"
+msgstr "tanek romb"
 
 #: data/ui/edit_item.blp:96 data/ui/style_editor.blp:135
 msgctxt "markerstyle"
@@ -464,22 +447,19 @@ msgid "Vertical Line"
 msgstr "Navpična črta"
 
 #: data/ui/edit_item.blp:97 data/ui/style_editor.blp:136
-#, fuzzy
 msgctxt "markerstyle"
 msgid "Horizontal Line"
-msgstr "Vodoravna črta"
+msgstr "vodoravna črta"
 
 #: data/ui/edit_item.blp:98 data/ui/style_editor.blp:137
-#, fuzzy
 msgctxt "markerstyle"
 msgid "Filled Plus"
-msgstr "Izpolnjeno plus"
+msgstr "zapolnjeni plus"
 
 #: data/ui/edit_item.blp:99 data/ui/style_editor.blp:138
-#, fuzzy
 msgctxt "markerstyle"
 msgid "Filled X"
-msgstr "Polnilo X"
+msgstr "zapolnjeni X"
 
 #: data/ui/edit_item.blp:106 data/ui/style_editor.blp:145
 msgid "Marker Size"
@@ -519,7 +499,6 @@ msgid "Title"
 msgstr "Naziv"
 
 #: data/ui/figure_settings.blp:58
-#, fuzzy
 msgid "Axis Limits"
 msgstr "Omejitve osi"
 
@@ -636,7 +615,6 @@ msgid "Set as Default"
 msgstr "Nastavi kot privzeto"
 
 #: data/ui/fitting_parameters.blp:26
-#, fuzzy
 msgid "Initial Guess"
 msgstr "Začetno ugibanje"
 
@@ -659,7 +637,6 @@ msgid "Show Shortcuts"
 msgstr "Pokaže tipkovne bližnjice‫"
 
 #: data/ui/help_overlay.blp:19
-#, fuzzy
 msgctxt "shortcut window"
 msgid "Open Figure Settings"
 msgstr "Odpri nastavitve slike"
@@ -690,7 +667,6 @@ msgid "Zoom Mode"
 msgstr "Način povečave"
 
 #: data/ui/help_overlay.blp:47
-#, fuzzy
 msgctxt "shortcut window"
 msgid "Select Mode"
 msgstr "Izberite način"
@@ -736,7 +712,6 @@ msgid "Export Data"
 msgstr "Izvozi podatke"
 
 #: data/ui/help_overlay.blp:88
-#, fuzzy
 msgctxt "shortcut window"
 msgid "Export Figure"
 msgstr "Izvozi sliko"
@@ -757,25 +732,21 @@ msgid "View"
 msgstr "Pogled"
 
 #: data/ui/help_overlay.blp:105
-#, fuzzy
 msgctxt "shortcut window"
 msgid "Previous View"
 msgstr "Prejšnji pogled"
 
 #: data/ui/help_overlay.blp:110
-#, fuzzy
 msgctxt "shortcut window"
 msgid "Next View"
 msgstr "Naslednji pogled"
 
 #: data/ui/help_overlay.blp:115
-#, fuzzy
 msgctxt "shortcut window"
 msgid "Optimize limits"
-msgstr "Optimiziranje omejitev"
+msgstr "Optimizira omejitve"
 
 #: data/ui/help_overlay.blp:120
-#, fuzzy
 msgctxt "shortcut window"
 msgid "Zoom in"
 msgstr "Povečaj"
@@ -806,16 +777,14 @@ msgid "Select All"
 msgstr "Izbere vse"
 
 #: data/ui/help_overlay.blp:155
-#, fuzzy
 msgctxt "shortcut window"
 msgid "Undo Action"
-msgstr "Prekliči zadnje dejanje"
+msgstr "Razveljavi dejanje"
 
 #: data/ui/help_overlay.blp:160
-#, fuzzy
 msgctxt "shortcut window"
 msgid "Redo Action"
-msgstr "Uveljavi dejanje"
+msgstr "Ponovi dejanje"
 
 #: data/ui/import.blp:6
 #, fuzzy
@@ -919,24 +888,20 @@ msgid "Pick Color"
 msgstr "Izberite barvo"
 
 #: data/ui/item_box.blp:51
-#, fuzzy
 msgid "Move Item "
-msgstr "Premakni predmet"
+msgstr "Premakni element"
 
 #: data/ui/item_box.blp:68
-#, fuzzy
 msgid "Edit Item"
-msgstr "Uredi predmet"
+msgstr "Uredi element"
 
 #: data/ui/item_box.blp:72
-#, fuzzy
 msgid "Remove Item"
 msgstr "Odstrani element"
 
 #: data/ui/smoothen_settings.blp:7
-#, fuzzy
 msgid "Smoothen Settings"
-msgstr "Gladke nastavitve"
+msgstr "Nastavitve glajenja"
 
 #: data/ui/smoothen_settings.blp:30 data/ui/window.blp:679
 #, fuzzy
@@ -944,17 +909,14 @@ msgid "Savitzky–Golay Filter"
 msgstr "Savitzky-Golay filter"
 
 #: data/ui/smoothen_settings.blp:32
-#, fuzzy
 msgid "Span percentage"
 msgstr "Odstotek razpona"
 
 #: data/ui/smoothen_settings.blp:33
-#, fuzzy
 msgid "What percentage of the data span to use for the filter window"
 msgstr "Kolikšen odstotek podatkovnega razpona uporabiti za okno filtra"
 
 #: data/ui/smoothen_settings.blp:40
-#, fuzzy
 msgid "Polynomial degree"
 msgstr "Stopnja polinoma"
 
@@ -1025,9 +987,8 @@ msgid "Axis Width"
 msgstr "Širina osi"
 
 #: data/ui/style_editor.blp:177
-#, fuzzy
 msgid "Draw Frame"
-msgstr "Narišite okvir"
+msgstr "Nariši okvir"
 
 #: data/ui/style_editor.blp:182
 msgid "Ticks"
@@ -1278,9 +1239,8 @@ msgid "Normalize"
 msgstr "Normaliziraj"
 
 #: data/ui/window.blp:304
-#, fuzzy
 msgid "Normalize data"
-msgstr "Normalizacija podatkov"
+msgstr "Normaliziraj podatke"
 
 #: data/ui/window.blp:320
 #, fuzzy
@@ -1302,23 +1262,20 @@ msgid "Center data"
 msgstr "Podatki na sredino"
 
 #: data/ui/window.blp:354
-#, fuzzy
 msgid "Combine"
 msgstr "Združi"
 
 #: data/ui/window.blp:356
-#, fuzzy
 msgid "Combine all selected data"
-msgstr "Združevanje vseh izbranih podatkov"
+msgstr "Združi vse izbrane podatke"
 
 #: data/ui/window.blp:370
 msgid "Cut"
 msgstr "Izreži"
 
 #: data/ui/window.blp:372
-#, fuzzy
 msgid "Cut selected data"
-msgstr "Izrezovanje izbranih podatkov"
+msgstr "Izreži izbrane podatke"
 
 #: data/ui/window.blp:396
 msgid "Derivative"
@@ -1430,7 +1387,6 @@ msgid "Export Data…"
 msgstr "Izvozi podatke …"
 
 #: data/ui/window.blp:642
-#, fuzzy
 msgid "Export Figure…"
 msgstr "Izvozi sliko ..."
 
@@ -1504,74 +1460,65 @@ msgid "Dogbox"
 msgstr "Dogbox"
 
 #: graphs/curve_fitting.py:97
-#, fuzzy
 msgid "Confidence Bounds"
 msgstr "Meje zaupanja"
 
 #: graphs/curve_fitting.py:99
-#, fuzzy
 msgctxt "confidence"
 msgid "None"
-msgstr "neopredeljeno"
+msgstr "brez"
 
 #: graphs/curve_fitting.py:100
-#, fuzzy
 msgctxt "confidence"
 msgid "1σ: 68% Confidence"
-msgstr "1σ: 68% zaupanje"
+msgstr "1σ: 68 % zaupanje"
 
 #: graphs/curve_fitting.py:101
-#, fuzzy
 msgctxt "confidence"
 msgid "2σ: 95% Confidence"
-msgstr "2σ: 95% zaupanje"
+msgstr "2σ: 95 % zaupanje"
 
 #: graphs/curve_fitting.py:102
-#, fuzzy
 msgctxt "confidence"
 msgid "3σ: 99.7% Confidence"
-msgstr "3σ: 99.7% Zaupanje"
+msgstr "3σ: 99,7 % zaupanje"
 
 #: graphs/curve_fitting.py:245
 msgid "Results:"
 msgstr "Rezultati:"
 
 #: graphs/curve_fitting.py:249
-#, fuzzy
 msgid ""
 "Please enter valid fitting \n"
 "parameters to start the fit"
 msgstr ""
-"Prosimo, vnesite veljavno vgradnjo \n"
-"Parametri za začetek prileganja"
+"Prosimo, vnesite veljavne \n"
+"parametre za začetek prileganja"
 
 #: graphs/curve_fitting.py:252
-#, fuzzy
 msgid ""
 "Please enter a valid equation \n"
 "to start the fit"
 msgstr ""
 "Vnesite veljavno enačbo \n"
-"Za začetek prileganja"
+"za začetek prileganja"
 
 #: graphs/curve_fitting.py:255
-#, fuzzy
 msgid ""
 "Please enter valid fitting bounds \n"
 "to start the fit"
 msgstr ""
-"Prosimo, vnesite veljavne meje opremljanja \n"
-"Za začetek prileganja"
+"Prosimo, vnesite veljavne meje \n"
+"za začetek prileganja"
 
 #: graphs/curve_fitting.py:265
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "Sum of R²: {R2}"
 msgstr "Vsota R²: {R2}"
 
 #: graphs/data.py:105
-#, fuzzy
 msgid "Untitled Project"
-msgstr "Projekt brez naslova"
+msgstr "Neimenovan projekt"
 
 #: graphs/data.py:116
 msgid "Draft"
@@ -1657,7 +1604,6 @@ msgid "Left Y Axis Minimum"
 msgstr "Najmanjša leva os Y"
 
 #: graphs/figure_settings.py:201 graphs/figure_settings.py:215
-#, fuzzy
 msgid "Y Axis Minimum"
 msgstr "Najmanjša vrednost na osi Y"
 
@@ -1667,7 +1613,6 @@ msgid "Left Y Axis Maximum"
 msgstr "Največja leva os Y"
 
 #: graphs/figure_settings.py:204 graphs/figure_settings.py:218
-#, fuzzy
 msgid "Y Axis Maximum"
 msgstr "Največja vrednost na osi Y"
 
@@ -1712,12 +1657,10 @@ msgid "Right Y Axis Label"
 msgstr "Oznaka osi Y na desni"
 
 #: graphs/figure_settings.py:337
-#, fuzzy
 msgid "Defaults Updated"
 msgstr "Privzete nastavitve so posodobljene"
 
 #: graphs/file_import.py:132
-#, fuzzy
 msgid "Are you sure you want to reset the import settings?"
 msgstr "Ali ste prepričani, da želite ponastaviti nastavitve uvoza?"
 
@@ -1732,7 +1675,6 @@ msgid "No data found within the highlighted area"
 msgstr "Znotraj označenega območja ni najdenih podatkov"
 
 #: graphs/operations.py:420
-#, fuzzy
 msgid "Combined Data"
 msgstr "Združeni podatki"
 
@@ -1783,7 +1725,6 @@ msgid "Plot style {stylename} does not exist loading system preferred"
 msgstr "Slog risbe {stylename} ne obstaja želeni sistem nalaganja"
 
 #: graphs/styles.py:850
-#, fuzzy
 msgid "Are you sure you want to delete {self.style.get_name()}?"
 msgstr "Ali ste prepričani, da želite izbrisati {self.style.get_name()}?"
 
@@ -1829,14 +1770,12 @@ msgstr ""
 "{name}: Pretvorbe ni mogoče izvesti, preverite, ali je skladnja pravilna"
 
 #: graphs/transform_data.py:56
-#, fuzzy
 msgid "Unable to do transformation"
 msgstr "Preoblikovanje ni mogoče izvesti"
 
 #: graphs/ui.py:47
-#, fuzzy
 msgid "Optimize Limits"
-msgstr "Optimiziranje omejitev"
+msgstr "Optimiziraj omejitve"
 
 #: graphs/ui.py:64
 msgctxt "scale"
@@ -1844,7 +1783,7 @@ msgid "Inverse Root"
 msgstr "Inverzni koren"
 
 #: graphs/ui.py:101
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "Items {items} already exist"
 msgstr "Elementi {items} že obstajajo"
 
