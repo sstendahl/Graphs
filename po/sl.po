@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
 "POT-Creation-Date: 2024-03-31 16:21+0000\n"
-"PO-Revision-Date: 2024-03-31 23:15+0200\n"
+"PO-Revision-Date: 2024-03-31 23:25+0200\n"
 "Language-Team: Slovenian <gnome-si@googlegroups.com>\n"
 "Language: sl\n"
 "MIME-Version: 1.0\n"
@@ -327,10 +327,9 @@ msgid "Solid"
 msgstr "Enakomerno"
 
 #: data/ui/edit_item.blp:50 data/ui/style_editor.blp:88
-#, fuzzy
 msgctxt "linestyle"
 msgid "Dotted"
-msgstr "Črtasta puščica"
+msgstr "pikasto"
 
 #: data/ui/edit_item.blp:51 data/ui/style_editor.blp:89
 msgctxt "linestyle"
@@ -338,10 +337,9 @@ msgid "Dashed"
 msgstr "Črtkano"
 
 #: data/ui/edit_item.blp:52 data/ui/style_editor.blp:90
-#, fuzzy
 msgctxt "linestyle"
 msgid "Dashdot"
-msgstr "Dashdot"
+msgstr "črtica pika"
 
 #: data/ui/edit_item.blp:59 data/ui/style_editor.blp:97
 msgid "Linewidth"
@@ -639,7 +637,6 @@ msgid "Show Shortcuts"
 msgstr "Pokaže tipkovne bližnjice‫"
 
 #: data/ui/help_overlay.blp:19
-#, fuzzy
 msgctxt "shortcut window"
 msgid "Open Figure Settings"
 msgstr "Odpri nastavitve slike"
@@ -670,7 +667,6 @@ msgid "Zoom Mode"
 msgstr "Način povečave"
 
 #: data/ui/help_overlay.blp:47
-#, fuzzy
 msgctxt "shortcut window"
 msgid "Select Mode"
 msgstr "Izberite način"
@@ -716,7 +712,6 @@ msgid "Export Data"
 msgstr "Izvozi podatke"
 
 #: data/ui/help_overlay.blp:88
-#, fuzzy
 msgctxt "shortcut window"
 msgid "Export Figure"
 msgstr "Izvozi sliko"
@@ -752,7 +747,6 @@ msgid "Optimize limits"
 msgstr "Optimizira omejitve"
 
 #: data/ui/help_overlay.blp:120
-#, fuzzy
 msgctxt "shortcut window"
 msgid "Zoom in"
 msgstr "Povečaj"
@@ -894,24 +888,20 @@ msgid "Pick Color"
 msgstr "Izberite barvo"
 
 #: data/ui/item_box.blp:51
-#, fuzzy
 msgid "Move Item "
-msgstr "Premakni predmet"
+msgstr "Premakni element"
 
 #: data/ui/item_box.blp:68
-#, fuzzy
 msgid "Edit Item"
-msgstr "Uredi predmet"
+msgstr "Uredi element"
 
 #: data/ui/item_box.blp:72
-#, fuzzy
 msgid "Remove Item"
 msgstr "Odstrani element"
 
 #: data/ui/smoothen_settings.blp:7
-#, fuzzy
 msgid "Smoothen Settings"
-msgstr "Gladke nastavitve"
+msgstr "Nastavitve glajenja"
 
 #: data/ui/smoothen_settings.blp:30 data/ui/window.blp:679
 #, fuzzy
@@ -919,17 +909,14 @@ msgid "Savitzky–Golay Filter"
 msgstr "Savitzky-Golay filter"
 
 #: data/ui/smoothen_settings.blp:32
-#, fuzzy
 msgid "Span percentage"
 msgstr "Odstotek razpona"
 
 #: data/ui/smoothen_settings.blp:33
-#, fuzzy
 msgid "What percentage of the data span to use for the filter window"
 msgstr "Kolikšen odstotek podatkovnega razpona uporabiti za okno filtra"
 
 #: data/ui/smoothen_settings.blp:40
-#, fuzzy
 msgid "Polynomial degree"
 msgstr "Stopnja polinoma"
 
@@ -1252,9 +1239,8 @@ msgid "Normalize"
 msgstr "Normaliziraj"
 
 #: data/ui/window.blp:304
-#, fuzzy
 msgid "Normalize data"
-msgstr "Normalizacija podatkov"
+msgstr "Normaliziraj podatke"
 
 #: data/ui/window.blp:320
 #, fuzzy
@@ -1276,23 +1262,20 @@ msgid "Center data"
 msgstr "Podatki na sredino"
 
 #: data/ui/window.blp:354
-#, fuzzy
 msgid "Combine"
 msgstr "Združi"
 
 #: data/ui/window.blp:356
-#, fuzzy
 msgid "Combine all selected data"
-msgstr "Združevanje vseh izbranih podatkov"
+msgstr "Združi vse izbrane podatke"
 
 #: data/ui/window.blp:370
 msgid "Cut"
 msgstr "Izreži"
 
 #: data/ui/window.blp:372
-#, fuzzy
 msgid "Cut selected data"
-msgstr "Izrezovanje izbranih podatkov"
+msgstr "Izreži izbrane podatke"
 
 #: data/ui/window.blp:396
 msgid "Derivative"
@@ -1404,7 +1387,6 @@ msgid "Export Data…"
 msgstr "Izvozi podatke …"
 
 #: data/ui/window.blp:642
-#, fuzzy
 msgid "Export Figure…"
 msgstr "Izvozi sliko ..."
 
@@ -1478,74 +1460,65 @@ msgid "Dogbox"
 msgstr "Dogbox"
 
 #: graphs/curve_fitting.py:97
-#, fuzzy
 msgid "Confidence Bounds"
 msgstr "Meje zaupanja"
 
 #: graphs/curve_fitting.py:99
-#, fuzzy
 msgctxt "confidence"
 msgid "None"
-msgstr "neopredeljeno"
+msgstr "brez"
 
 #: graphs/curve_fitting.py:100
-#, fuzzy
 msgctxt "confidence"
 msgid "1σ: 68% Confidence"
-msgstr "1σ: 68% zaupanje"
+msgstr "1σ: 68 % zaupanje"
 
 #: graphs/curve_fitting.py:101
-#, fuzzy
 msgctxt "confidence"
 msgid "2σ: 95% Confidence"
-msgstr "2σ: 95% zaupanje"
+msgstr "2σ: 95 % zaupanje"
 
 #: graphs/curve_fitting.py:102
-#, fuzzy
 msgctxt "confidence"
 msgid "3σ: 99.7% Confidence"
-msgstr "3σ: 99.7% Zaupanje"
+msgstr "3σ: 99,7 % zaupanje"
 
 #: graphs/curve_fitting.py:245
 msgid "Results:"
 msgstr "Rezultati:"
 
 #: graphs/curve_fitting.py:249
-#, fuzzy
 msgid ""
 "Please enter valid fitting \n"
 "parameters to start the fit"
 msgstr ""
-"Prosimo, vnesite veljavno vgradnjo \n"
-"Parametri za začetek prileganja"
+"Prosimo, vnesite veljavne \n"
+"parametre za začetek prileganja"
 
 #: graphs/curve_fitting.py:252
-#, fuzzy
 msgid ""
 "Please enter a valid equation \n"
 "to start the fit"
 msgstr ""
 "Vnesite veljavno enačbo \n"
-"Za začetek prileganja"
+"za začetek prileganja"
 
 #: graphs/curve_fitting.py:255
-#, fuzzy
 msgid ""
 "Please enter valid fitting bounds \n"
 "to start the fit"
 msgstr ""
-"Prosimo, vnesite veljavne meje opremljanja \n"
-"Za začetek prileganja"
+"Prosimo, vnesite veljavne meje \n"
+"za začetek prileganja"
 
 #: graphs/curve_fitting.py:265
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "Sum of R²: {R2}"
 msgstr "Vsota R²: {R2}"
 
 #: graphs/data.py:105
-#, fuzzy
 msgid "Untitled Project"
-msgstr "Projekt brez naslova"
+msgstr "Neimenovan projekt"
 
 #: graphs/data.py:116
 msgid "Draft"
@@ -1631,7 +1604,6 @@ msgid "Left Y Axis Minimum"
 msgstr "Najmanjša leva os Y"
 
 #: graphs/figure_settings.py:201 graphs/figure_settings.py:215
-#, fuzzy
 msgid "Y Axis Minimum"
 msgstr "Najmanjša vrednost na osi Y"
 
@@ -1641,7 +1613,6 @@ msgid "Left Y Axis Maximum"
 msgstr "Največja leva os Y"
 
 #: graphs/figure_settings.py:204 graphs/figure_settings.py:218
-#, fuzzy
 msgid "Y Axis Maximum"
 msgstr "Največja vrednost na osi Y"
 
@@ -1686,12 +1657,10 @@ msgid "Right Y Axis Label"
 msgstr "Oznaka osi Y na desni"
 
 #: graphs/figure_settings.py:337
-#, fuzzy
 msgid "Defaults Updated"
 msgstr "Privzete nastavitve so posodobljene"
 
 #: graphs/file_import.py:132
-#, fuzzy
 msgid "Are you sure you want to reset the import settings?"
 msgstr "Ali ste prepričani, da želite ponastaviti nastavitve uvoza?"
 
@@ -1706,7 +1675,6 @@ msgid "No data found within the highlighted area"
 msgstr "Znotraj označenega območja ni najdenih podatkov"
 
 #: graphs/operations.py:420
-#, fuzzy
 msgid "Combined Data"
 msgstr "Združeni podatki"
 
@@ -1757,7 +1725,6 @@ msgid "Plot style {stylename} does not exist loading system preferred"
 msgstr "Slog risbe {stylename} ne obstaja želeni sistem nalaganja"
 
 #: graphs/styles.py:850
-#, fuzzy
 msgid "Are you sure you want to delete {self.style.get_name()}?"
 msgstr "Ali ste prepričani, da želite izbrisati {self.style.get_name()}?"
 
@@ -1803,14 +1770,12 @@ msgstr ""
 "{name}: Pretvorbe ni mogoče izvesti, preverite, ali je skladnja pravilna"
 
 #: graphs/transform_data.py:56
-#, fuzzy
 msgid "Unable to do transformation"
 msgstr "Preoblikovanje ni mogoče izvesti"
 
 #: graphs/ui.py:47
-#, fuzzy
 msgid "Optimize Limits"
-msgstr "Optimiziranje omejitev"
+msgstr "Optimiziraj omejitve"
 
 #: graphs/ui.py:64
 msgctxt "scale"
@@ -1818,7 +1783,7 @@ msgid "Inverse Root"
 msgstr "Inverzni koren"
 
 #: graphs/ui.py:101
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "Items {items} already exist"
 msgstr "Elementi {items} že obstajajo"
 
