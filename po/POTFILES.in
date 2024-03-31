@@ -31,6 +31,7 @@ graphs/file_io.py
 graphs/item_box.py
 graphs/operations.py
 graphs/parse_file.py
+graphs/project.py
 graphs/styles.py
 graphs/style_io.py
 graphs/transform_data.py

@@ -2,11 +2,9 @@ using Gtk 4.0;
 using Adw 1;
 
 template $GraphsCurveFittingDialog : Adw.Dialog {
-  focus-widget: confirm_button;
   content-width: 1000;
-  content-height: 660;
-  width-request: 305;
-  height-request: 410;
+  content-height: 600;
+  focus-widget: confirm_button;
 
   Adw.Breakpoint {
     condition ("max-width: 725sp")

@@ -4,9 +4,9 @@ import io
 import json
 from xml.dom import minidom
 
-from gi.repository import GLib, Gio, Graphs
+from gi.repository import GLib, Gio
 
-from graphs import item, ui
+from graphs import item
 
 
 class FileLikeWrapper(io.BufferedIOBase):
@@ -134,20 +134,6 @@ def save_item(file: Gio.File, item_: item.DataItem) -> None:
     for values in zip(item_.xdata, item_.ydata):
         stream.put_string(fmt % values + "\n")
     stream.close()
-
-
-def save_project(
-    application: Graphs.Application,
-    require_dialog: bool = False,
-) -> None:
-    """Save the current data to disk."""
-    project_file = application.get_data().project_file
-    if project_file is not None and not require_dialog:
-        application.get_data().save()
-        application.get_data().props.unsaved = False
-        application.emit("project-saved")
-        return
-    ui.save_project_dialog(application)
 
 
 def parse_json(file: Gio.File) -> dict:

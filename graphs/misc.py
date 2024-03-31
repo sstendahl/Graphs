@@ -1,5 +1,8 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Miscallaneous constants."""
+
+from gettext import pgettext as C_
+
 from gi.repository import Graphs
 
 # Type hints
@@ -84,3 +87,6 @@ EQUATIONS = {
 }
 
 DIRECTIONS = ["bottom", "top", "left", "right"]
+
+GRAPHS_PROJECT_FILE_FILTER_TEMPLATE = \
+    (C_("file-filter", "Graphs Project File"), ["graphs"])

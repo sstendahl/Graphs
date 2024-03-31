@@ -105,13 +105,6 @@ def on_items_ignored(
     )
 
 
-_GRAPHS_PROJECT_FILE_FILTER_TEMPLATE = \
-    (C_("file-filter", "Graphs Project File"), ["graphs"])
-_GRAPHS_PROJECT_FILE_ONLY_FILE_FILTER = utilities.create_file_filters(
-    (_GRAPHS_PROJECT_FILE_FILTER_TEMPLATE, ),
-)
-
-
 def add_data_dialog(application: Graphs.Application) -> None:
     """Show add data dialog."""
 
@@ -132,41 +125,10 @@ def add_data_dialog(application: Graphs.Application) -> None:
             (C_("file-filter", "ASCII files"), ["xy", "dat", "txt", "csv"]),
             (C_("file-filter", "PANalytical XRDML"), ["xrdml"]),
             (C_("file-filter", "Leybold xry"), ["xry"]),
-            _GRAPHS_PROJECT_FILE_FILTER_TEMPLATE,
+            misc.GRAPHS_PROJECT_FILE_FILTER_TEMPLATE,
         )),
     )
     dialog.open_multiple(application.get_window(), None, on_response)
-
-
-def save_project_dialog(application: Graphs.Application) -> None:
-    """Show save project dialog."""
-
-    def on_response(dialog, response):
-        with contextlib.suppress(GLib.GError):
-            data = application.get_data()
-            data.props.project_file = dialog.save_finish(response)
-            data.save()
-            data.props.unsaved = False
-            application.emit("project-saved")
-
-    dialog = Gtk.FileDialog()
-    dialog.set_filters(_GRAPHS_PROJECT_FILE_ONLY_FILE_FILTER)
-    dialog.set_initial_name("project.graphs")
-    dialog.save(application.get_window(), None, on_response)
-
-
-def open_project_dialog(application: Graphs.Application) -> None:
-    """Show open project dialog."""
-
-    def on_response(dialog, response):
-        with contextlib.suppress(GLib.GError):
-            application.get_data().props.project_file = \
-                dialog.open_finish(response)
-            application.get_data().load()
-
-    dialog = Gtk.FileDialog()
-    dialog.set_filters(_GRAPHS_PROJECT_FILE_ONLY_FILE_FILTER)
-    dialog.open(application.get_window(), None, on_response)
 
 
 def export_data_dialog(application: Graphs.Application) -> None:

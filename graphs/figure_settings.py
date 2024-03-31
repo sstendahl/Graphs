@@ -74,7 +74,7 @@ class FigureSettingsDialog(Adw.Dialog):
     def __init__(
         self,
         application: Graphs.Application,
-        highlighted: bool = None,
+        highlighted: str = None,
     ):
         """Initialize the Figure Settings window and set the widget entries."""
         figure_settings = application.get_data().get_figure_settings()

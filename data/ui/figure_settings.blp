@@ -2,10 +2,18 @@ using Gtk 4.0;
 using Adw 1;
 
 template $GraphsFigureSettingsDialog : Adw.Dialog {
-  closed => $on_close();
   content-width: 640;
   content-height: 576;
+  closed => $on_close();
   styles ["preferences"]
+
+  Adw.Breakpoint {
+    condition ("max-width: 600sp")
+    setters {
+      grid_view.max-columns: 2;
+      grid_view.min-columns: 2;
+    }
+  }
 
   child: Adw.ToastOverlay toast_overlay {
     Adw.NavigationView navigation_view {

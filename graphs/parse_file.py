@@ -5,7 +5,7 @@ from gettext import gettext as _
 
 from gi.repository import Gio
 
-from graphs import file_io, item, migrate, misc, utilities
+from graphs import file_io, item, misc, project, utilities
 from graphs.misc import ParseError
 
 import numpy
@@ -13,11 +13,8 @@ import numpy
 
 def import_from_project(_params, _style, file: Gio.File) -> misc.ItemList:
     """Import data from project file."""
-    try:
-        project = file_io.parse_json(file)
-    except UnicodeDecodeError:
-        project = migrate.migrate_project(file)
-    return list(map(item.new_from_dict, project["data"]))
+    project_dict = project.read_project_file(file)
+    return list(map(item.new_from_dict, project_dict["data"]))
 
 
 def import_from_xrdml(_params, style, file: Gio.File) -> misc.ItemList:

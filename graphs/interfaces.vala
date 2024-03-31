@@ -31,7 +31,7 @@ namespace Graphs {
 
         public abstract Item[] items { set; }
         public abstract bool highlight_enabled { get; set; default = false; }
-        public abstract Application application { get; construct set; }
+        public abstract int mode { get; set; default = 0; }
     }
 
     public interface StyleManagerInterface : Object {
