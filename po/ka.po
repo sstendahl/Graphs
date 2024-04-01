@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs v1.7.x\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2024-03-19 21:24+0000\n"
-"PO-Revision-Date: 2024-03-24 14:47+0100\n"
+"POT-Creation-Date: 2024-03-31 21:36+0000\n"
+"PO-Revision-Date: 2024-04-01 05:23+0200\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <ka@li.org>\n"
 "Language: ka\n"
@@ -757,7 +757,7 @@ msgstr "სვეტი X"
 
 #: data/ui/import.blp:78
 msgid "X-data column index"
-msgstr ""
+msgstr "X-მონაცემების სვეტის ინდექსი"
 
 #: data/ui/import.blp:87
 msgid "Column Y"
@@ -765,7 +765,7 @@ msgstr "სვეტი Y"
 
 #: data/ui/import.blp:89
 msgid "Y-data column index"
-msgstr ""
+msgstr "Y-მონაცემების სვეტის ინდექსი"
 
 #: data/ui/import.blp:98
 msgid "Skip Rows"
@@ -822,6 +822,7 @@ msgstr "ჩარჩოს წერტილები"
 #: data/ui/smoothen_settings.blp:58
 msgid "Amount of points to use when calculating a moving average"
 msgstr ""
+"წერტილების რაოდენობა, რომელიც გადაადგილების საშუალოს გამოთვლისას გამოიყენება"
 
 #: data/ui/style_color_box.blp:18 data/ui/style_preview.blp:26
 msgid "Edit"
@@ -845,7 +846,7 @@ msgstr "სათაურის ზომა"
 
 #: data/ui/style_editor.blp:53
 msgid "Title size in relation to text size"
-msgstr ""
+msgstr "სათაურის ზომა ტექსტის ზომასთან შედარებით"
 
 #: data/ui/style_editor.blp:65
 msgid "Label Size"
@@ -853,7 +854,7 @@ msgstr "ჭდის ზომა"
 
 #: data/ui/style_editor.blp:66
 msgid "Label size in relation to text size"
-msgstr ""
+msgstr "ჭდის ზომა ტექსტის ზომასთან შედარებით"
 
 #: data/ui/style_editor.blp:80
 msgid "Lines"
@@ -1153,7 +1154,7 @@ msgstr "მონაცემების სწრაფი ფურიეს 
 
 #: data/ui/window.blp:444
 msgid "Inverse FFT"
-msgstr ""
+msgstr "ინვერსიული FFT"
 
 #: data/ui/window.blp:446
 msgid "Get the Inverse Fast Fourier Transform of the data"
@@ -1514,11 +1515,14 @@ msgstr "Y ჭდე"
 #, python-brace-format
 msgid "Could not parse {stylename}, loading system preferred style"
 msgstr ""
+"ხაზვის სტილის {stylename} დამუშავება შეუძლებელია. იტვირთება სისტემის "
+"ნაგულისხმევი სტილი"
 
 #: src/styles.py:319
 #, python-brace-format
 msgid "Plot style {stylename} does not exist loading system preferred"
 msgstr ""
+"დახაზვის სტილი {stylename} არ არსებობს. იტვირთება სისტემის ნაგულისხმევი"
 
 #: src/styles.py:710
 msgid "Are you sure you want to delete {self.style.get_name()}?"
@@ -1588,7 +1592,7 @@ msgstr "PANalytical XRDML"
 
 #: src/ui.py:92
 msgid "Leybold xry"
-msgstr ""
+msgstr "Leybold xry"
 
 #: src/ui.py:93 src/ui.py:110 src/ui.py:123
 msgid "Graphs Project File"
