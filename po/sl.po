@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
 "POT-Creation-Date: 2024-04-01 03:26+0000\n"
-"PO-Revision-Date: 2024-04-01 11:37+0200\n"
+"PO-Revision-Date: 2024-04-01 13:25+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian <gnome-si@googlegroups.com>\n"
 "Language: sl\n"
@@ -41,7 +41,7 @@ msgid ""
 "multiply, center and smoothen data, as well as apply any custom "
 "transformations on the data."
 msgstr ""
-"Grafikoni so preprosto, a zmogljivo orodje, ki vam omogoča enostavno risanje "
+"Grafi so preprosto, a zmogljivo orodje, ki vam omogoča enostavno risanje "
 "grafov in ravnanje s podatki. Nove podatke je mogoče uvoziti iz "
 "najrazličnejših vrst datotek ali ustvariti z enačbo. Vse podatke je mogoče "
 "upravljati z različnimi operacijami, kot so možnost izbire, izrezovanja, "
@@ -54,9 +54,9 @@ msgid ""
 "extensive customization options for the style of the plots. You can fine-"
 "tune and personalize stylesheets to your liking."
 msgstr ""
-"Poleg tega Grafikoni podpira prileganje krivulj na uvožene podatke in ponuja "
-"obsežne možnosti prilagajanja sloga grafa. Slogovne predloge lahko natančno "
-"prilagodite po svojih željah."
+"Poleg tega program Grafi podpira prileganje krivulj na uvožene podatke in "
+"ponuja obsežne možnosti prilagajanja sloga grafa. Slogovne predloge lahko "
+"natančno prilagodite po svojih željah."
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:17
 msgid ""
@@ -68,14 +68,14 @@ msgid ""
 "refinement. Graphs is written with the GNOME environment in mind, but should "
 "be suitable for any other desktop environment as well."
 msgstr ""
-"Grafikoni so še posebej primerni za risanje grafov in upravljanje podatkov. "
-"Grafi, ustvarjeni z Grafikoni, je mogoče shraniti v različnih oblikah, "
-"primernih za skupno rabo in predstavitev širokemu občinstvu, npr. v "
-"znanstveni publikaciji ali na predstavitvah. Poleg tega možnost shranjevanja "
-"grafov kot vektorskih slik omogoča enostavno urejanje s programsko opremo, "
-"kot je Inkscape, za nadaljnje izpopolnjevanje. Grafikoni so napisani z "
-"mislijo na okolje GNOME, vendar bi morali biti primerni tudi za poljubno "
-"drugo namizno okolje."
+"Grafi so še posebej primerni za risanje grafov in upravljanje podatkov. "
+"Grafe, ustvarjene z Grafi, je mogoče shraniti v različnih oblikah, primernih "
+"za skupno rabo in predstavitev širokemu občinstvu, npr. v znanstveni "
+"publikaciji ali na predstavitvah. Poleg tega možnost shranjevanja grafov kot "
+"vektorskih slik omogoča enostavno urejanje s programsko opremo, kot je "
+"Inkscape, za nadaljnje izpopolnjevanje. Grafi so napisani z mislijo na "
+"okolje GNOME, vendar bi morali biti primerni tudi za poljubno drugo namizno "
+"okolje."
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:21
 msgid ""
@@ -106,13 +106,12 @@ msgid "5 - Manipulate imported data with ease"
 msgstr "5 - Enostavno ravnajte z uvoženimi podatki"
 
 #: data/se.sjoerd.Graphs.desktop.in.in:10
-#, fuzzy
 msgid ""
 "Plotting;Graph;Graphing;Science;Mathematics;Math;Equations;Data;Plot;"
 "Visualisation;Visualization;Fitting;xrdml;"
 msgstr ""
-"Ubral; Graf; Grafov; Znanost; Matematika; Matematike; Enačbe; Podatki; "
-"Parcela; Vizualizacija; Vizualizacijo; Vgradnjo; XRDML;"
+"risanje;graf;grafi;znanost;matematika;matematike;enačbe;podatki;grafikon;"
+"vizualizacija;vizualizacijo;prileganje;xrdml;"
 
 #: data/ui/add_equation_window.blp:7
 msgid "Add Equation"
@@ -192,9 +191,8 @@ msgid "Exponential"
 msgstr "eksponentna"
 
 #: data/ui/curve_fitting.blp:59
-#, fuzzy
 msgid "Power Law"
-msgstr "Zakon o moči"
+msgstr "potenčni zakon"
 
 #: data/ui/curve_fitting.blp:60 data/ui/figure_settings.blp:121
 #: data/ui/figure_settings.blp:127 data/ui/figure_settings.blp:133
@@ -203,9 +201,8 @@ msgid "Logarithmic"
 msgstr "logaritemska"
 
 #: data/ui/curve_fitting.blp:60
-#, fuzzy
 msgid "Sigmoid Logistic"
-msgstr "Sigmoid Logistic"
+msgstr "sigmoidna logistična"
 
 #: data/ui/curve_fitting.blp:60
 msgid "Gaussian"
@@ -831,9 +828,8 @@ msgid "Moving Average"
 msgstr "Drseče povprečje"
 
 #: data/ui/smoothen_settings.blp:57
-#, fuzzy
 msgid "Box points"
-msgstr "Točke okvirjev"
+msgstr "Točke okvirja"
 
 #: data/ui/smoothen_settings.blp:58
 msgid "Amount of points to use when calculating a moving average"
@@ -893,9 +889,8 @@ msgid "Ticks"
 msgstr "Kljukice"
 
 #: data/ui/style_editor.blp:162
-#, fuzzy
 msgid "Tick Directions"
-msgstr "Smer označb"
+msgstr "Smeri kljukic"
 
 #: data/ui/style_editor.blp:164
 msgid "Inwards"
@@ -910,42 +905,34 @@ msgid "Minor Ticks"
 msgstr "Drugotne črtice"
 
 #: data/ui/style_editor.blp:173
-#, fuzzy
 msgid "Major Tick Width"
-msgstr "Večja širina kljukic"
+msgstr "Širina glavnih kljukic"
 
 #: data/ui/style_editor.blp:186
-#, fuzzy
 msgid "Minor Tick Width"
-msgstr "Manjša širina kljukice"
+msgstr "Širina drugotnih kljukic"
 
 #: data/ui/style_editor.blp:200
-#, fuzzy
 msgid "Major Tick Length"
-msgstr "Glavna dolžina klopov"
+msgstr "Dolžina glavnih kljukic"
 
 #: data/ui/style_editor.blp:213
-#, fuzzy
 msgid "Minor Tick Length"
-msgstr "Manjša dolžina klopov"
+msgstr "Dolžina drugotnih kljukic"
 
 #: data/ui/style_editor.blp:227
-#, fuzzy
 msgid "Ticks on Bottom Axis"
-msgstr "Klopi na spodnji osi"
+msgstr "Kljukice na spodnji osi"
 
 #: data/ui/style_editor.blp:231
-#, fuzzy
 msgid "Ticks on Left Axis"
-msgstr "Klopi na levi osi"
+msgstr "Kljukice na levi osi"
 
 #: data/ui/style_editor.blp:235
-#, fuzzy
 msgid "Ticks on Right Axis"
 msgstr "Kljukice na desni osi"
 
 #: data/ui/style_editor.blp:239
-#, fuzzy
 msgid "Ticks on Top Axis"
 msgstr "Kljukice na zgornji osi"
 
@@ -1012,9 +999,8 @@ msgid "Change Color"
 msgstr "Spremeni barvo"
 
 #: data/ui/style_editor.blp:361
-#, fuzzy
 msgid "Tick Color"
-msgstr "Označi barvo"
+msgstr "Barva kljukic"
 
 #: data/ui/style_editor.blp:383
 msgid "Axis Color"
@@ -1041,7 +1027,6 @@ msgid "Add Color"
 msgstr "Dodaj barvo"
 
 #: data/ui/transform_window.blp:7
-#, fuzzy
 msgid "Transform Data"
 msgstr "Pretvori podatke"
 
@@ -1050,7 +1035,6 @@ msgid "Transform"
 msgstr "Preoblikuj"
 
 #: data/ui/transform_window.blp:42
-#, fuzzy
 msgid ""
 "Additional variables:\n"
 "x_min, y_min\n"
@@ -1064,9 +1048,9 @@ msgstr ""
 "x_min, y_min\n"
 "x_max, y_max \n"
 "\n"
-"Trigonometrične funkcije uporabljajo radiane\n"
-"Funkciji privzeto dodajte D\n"
-"za uporabo stopenj, npr. sind(x) ali cosd(x)."
+"Trigonometrične funkcije uporabljajo\n"
+"privzeto radiane, funkciji privzeto dodajte d\n"
+"za uporabo stopinj, npr. sind(x) ali cosd(x)."
 
 #: data/ui/transform_window.blp:47
 msgid "More info"
@@ -1097,19 +1081,16 @@ msgid "Add data from a file or manually as an equation"
 msgstr "Dodajanje podatkov iz datoteke ali ročno kot enačbo"
 
 #: data/ui/window.blp:224
-#, fuzzy
 msgid "Panning mode. Click and drag to pan"
-msgstr "Način panoram. Kliknite in povlecite v pomikanje"
+msgstr "Način zasuka. Kliknite in povlecite za zasuk"
 
 #: data/ui/window.blp:230
-#, fuzzy
 msgid "Zoom mode. Select an area on the figure to zoom in"
-msgstr "Način povečave. Izberite območje na sliki, ki ga želite povečati"
+msgstr "Način povečave. Izberite območje na sliki, ki ga želite približati"
 
 #: data/ui/window.blp:236
-#, fuzzy
 msgid "Highlight mode. Click and drag to make a selection of data"
-msgstr "Izberite Način. Klikni in povleci, da narediš izbor podatkov"
+msgstr "Način poudarjanja. Kliknite in povlecite, da opravite izbor podatkov"
 
 #: data/ui/window.blp:271
 msgid "Adjust"
@@ -1120,9 +1101,8 @@ msgid "Shift"
 msgstr "Odmik"
 
 #: data/ui/window.blp:288
-#, fuzzy
 msgid "Shift all data vertically with respect to each other"
-msgstr "Premaknite vse podatke navpično glede na drugega"
+msgstr "Zamaknite vse podatke navpično glede na druge"
 
 #: data/ui/window.blp:303
 msgid "Normalize"
@@ -1181,7 +1161,6 @@ msgid "FFT"
 msgstr "FFT"
 
 #: data/ui/window.blp:430
-#, fuzzy
 msgid "Get the Fast Fourier Transform of the data"
 msgstr "Pridobite hitro Fourierevo transformacijo podatkov"
 
@@ -1190,19 +1169,16 @@ msgid "Inverse FFT"
 msgstr "Inverzna FFT"
 
 #: data/ui/window.blp:446
-#, fuzzy
 msgid "Get the Inverse Fast Fourier Transform of the data"
 msgstr "Pridobite inverzno hitro Fourierevo transformacijo podatkov"
 
 #: data/ui/window.blp:461
-#, fuzzy
 msgid "Custom Transformation"
 msgstr "Preoblikovanje po meri"
 
 #: data/ui/window.blp:463
-#, fuzzy
 msgid "Perform custom transformations on the data"
-msgstr "Izvajanje pretvorb podatkov po meri"
+msgstr "Izvedite pretvorbe podatkov po meri"
 
 #: data/ui/window.blp:470
 msgid "Modify"
@@ -1217,12 +1193,10 @@ msgid "Translate Y"
 msgstr "Translacija Y"
 
 #: data/ui/window.blp:537
-#, fuzzy
 msgid "Multiply X"
 msgstr "Množenje X"
 
 #: data/ui/window.blp:560
-#, fuzzy
 msgid "Multiply Y"
 msgstr "Množenje Y"
 
@@ -1235,9 +1209,8 @@ msgid "Redo"
 msgstr "Ponovno uveljavi"
 
 #: data/ui/window.blp:603
-#, fuzzy
 msgid "View Menu"
-msgstr "meni pogleda"
+msgstr "Meni Pogled"
 
 #: data/ui/window.blp:611
 msgid "Next View"
@@ -1323,12 +1296,10 @@ msgid "Levenberg-Marquardt"
 msgstr "Levenberg-Marquardt"
 
 #: src/curve_fitting.py:85
-#, fuzzy
 msgid "Trust Region Reflective"
-msgstr "Regija zaupanja Refleksivna"
+msgstr "Odsevno področje zaupanja"
 
 #: src/curve_fitting.py:86
-#, fuzzy
 msgid "Dogbox"
 msgstr "Dogbox"
 
@@ -1411,114 +1382,98 @@ msgid "System"
 msgstr "Sistem"
 
 #: src/figure_settings.py:156
-#, fuzzy
 msgid "Top X Axis Minimum"
-msgstr "Najmanjša os X"
+msgstr "Najmanjše vrhnje osi X"
 
 #: src/figure_settings.py:157 src/figure_settings.py:167
 msgid "X Axis Minimum"
 msgstr "Najmanjša vrednost na osi X"
 
 #: src/figure_settings.py:158
-#, fuzzy
 msgid "Top X Axis Maximum"
-msgstr "Najvišja os X"
+msgstr "Največje vrhnje osi X"
 
 #: src/figure_settings.py:159 src/figure_settings.py:169
 msgid "X Axis Maximum"
 msgstr "Največja vrednost na osi X"
 
 #: src/figure_settings.py:160 src/ui.py:58
-#, fuzzy
 msgid "Top X Axis Scale"
-msgstr "Lestvica zgornje osi x"
+msgstr "Merilo vrhnje osi X"
 
 #: src/figure_settings.py:161 src/figure_settings.py:171 src/ui.py:55
 msgid "X Axis Scale"
 msgstr "Merilo osi X"
 
 #: src/figure_settings.py:162
-#, fuzzy
 msgid "Top X Axis Label"
-msgstr "Zgornja oznaka osi x"
+msgstr "Oznaka vrhnje osi X"
 
 #: src/figure_settings.py:163 src/figure_settings.py:173
 msgid "X Axis Label"
 msgstr "Oznaka osi X"
 
 #: src/figure_settings.py:166
-#, fuzzy
 msgid "Bottom X Axis Minimum"
-msgstr "Najmanjša spodnja os x"
+msgstr "Najmanjše spodnje osi X"
 
 #: src/figure_settings.py:168
-#, fuzzy
 msgid "Bottom X Axis Maximum"
-msgstr "Največ spodnje x osi"
+msgstr "Največje spodnje osi X"
 
 #: src/figure_settings.py:170 src/ui.py:60
-#, fuzzy
 msgid "Bottom X Axis Scale"
-msgstr "Lestvica spodnje x osi"
+msgstr "Merilo spodnje osi X"
 
 #: src/figure_settings.py:172
-#, fuzzy
 msgid "Bottom X Axis Label"
-msgstr "Oznaka spodnje osi x"
+msgstr "Oznaka spodnje osi X"
 
 #: src/figure_settings.py:176
-#, fuzzy
 msgid "Left Y Axis Minimum"
-msgstr "Najmanjša leva os Y"
+msgstr "Najmanjše leve osi Y"
 
 #: src/figure_settings.py:177 src/figure_settings.py:187
 msgid "Y Axis Minimum"
 msgstr "Najmanjša vrednost na osi Y"
 
 #: src/figure_settings.py:178
-#, fuzzy
 msgid "Left Y Axis Maximum"
-msgstr "Največja leva os Y"
+msgstr "Največja leve osi Y"
 
 #: src/figure_settings.py:179 src/figure_settings.py:189
 msgid "Y Axis Maximum"
 msgstr "Največja vrednost na osi Y"
 
 #: src/figure_settings.py:180 src/ui.py:62
-#, fuzzy
 msgid "Left Y Axis Scale"
-msgstr "Lestvica leve osi Y"
+msgstr "Merilo leve osi Y"
 
 #: src/figure_settings.py:181 src/figure_settings.py:191 src/ui.py:56
 msgid "Y Axis Scale"
 msgstr "Merilo osi Y"
 
 #: src/figure_settings.py:182
-#, fuzzy
 msgid "Left Y Axis Label"
-msgstr "Oznaka leve osi Y"
+msgstr "Oznaka osi Y na desni"
 
 #: src/figure_settings.py:183 src/figure_settings.py:193
 msgid "Y Axis Label"
 msgstr "Oznaka osi Y"
 
 #: src/figure_settings.py:186
-#, fuzzy
 msgid "Right Y Axis Minimum"
-msgstr "Najmanjša os Y na desni ravni"
+msgstr "Najmanjše desne osi Y"
 
 #: src/figure_settings.py:188
-#, fuzzy
 msgid "Right Y Axis Maximum"
-msgstr "Največ desna os Y"
+msgstr "Največje desne osi Y"
 
 #: src/figure_settings.py:190 src/ui.py:64
-#, fuzzy
 msgid "Right Y Axis Scale"
-msgstr "Lestvica osi Y na desni ravni Y"
+msgstr "Merilo desne osi Y"
 
 #: src/figure_settings.py:192
-#, fuzzy
 msgid "Right Y Axis Label"
 msgstr "Oznaka osi Y na desni"
 
