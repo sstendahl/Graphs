@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2024-04-01 08:46+0000\n"
-"PO-Revision-Date: 2024-04-01 13:23+0200\n"
+"POT-Creation-Date: 2024-04-02 14:49+0000\n"
+"PO-Revision-Date: 2024-04-02 21:55+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian <gnome-si@googlegroups.com>\n"
 "Language: sl\n"
@@ -1406,7 +1406,7 @@ msgid "Could not load {font}"
 msgstr "Ni bilo mogoče naložiti {font}"
 
 #. TODO: implement in Vala and figure out gettext
-#: graphs/application.py:263
+#: graphs/application.py:262
 msgid "Graphs (Development)"
 msgstr "Grafikoni (razvojni)"
 
@@ -1655,6 +1655,10 @@ msgstr "Uvoz iz datoteke ni mogoč"
 #: graphs/project.py:48
 msgid "Saved Project"
 msgstr "Shranjeni projekt"
+
+#: graphs/project.py:71
+msgid "Project"
+msgstr "Projekt"
 
 #: graphs/styles.py:68
 msgid "X Label"
