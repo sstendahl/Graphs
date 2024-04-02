@@ -68,7 +68,7 @@ def save_project(
 
     dialog = Gtk.FileDialog()
     dialog.set_filters(_GRAPHS_PROJECT_FILE_ONLY_FILE_FILTER)
-    dialog.set_initial_name("project.graphs")
+    dialog.set_initial_name(_("Project") + ".graphs")
     dialog.save(application.get_window(), None, on_response)
 
 
