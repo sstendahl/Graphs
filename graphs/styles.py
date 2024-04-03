@@ -172,7 +172,7 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
 
         application.get_style_manager().connect(
             "notify",
-            lambda _a, _b: self._on_style_change(),
+            self._on_system_style_change,
         )
         notifiers = ("custom_style", "use_custom_style")
         for prop in notifiers:
@@ -201,6 +201,10 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
         )
 
         self._on_style_change()
+
+    def _on_system_style_change(self, _a, _b):
+        if not self.props.use_custom_style:
+            self._on_style_change()
 
     def _add_user_style(
         self,
