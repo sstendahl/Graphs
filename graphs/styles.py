@@ -45,7 +45,7 @@ def _generate_filename(name: str) -> str:
 
 
 def _is_style_bright(params: RcParams):
-    return Graphs.tools_get_luminance_from_hex(params["axes.facecolor"]) < 150
+    return Graphs.tools_get_luminance_from_hex(params["axes.facecolor"]) < 0.4
 
 
 _PREVIEW_XDATA = numpy.linspace(0, 10, 30)
@@ -328,8 +328,7 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
 
         # Set headerbar color and contrast
         bg_color = self._selected_style_params["figure.facecolor"]
-        luminance = Graphs.tools_get_luminance_from_hex(bg_color)
-        color = "@dark_5" if luminance > 150 else "@light_1"
+        color = self._selected_style_params["text.color"]
         css_provider = window.get_headerbar_provider()
         css_provider.load_from_string(
             f"headerbar {{ background-color: {bg_color}; color: {color}; }}",
@@ -551,8 +550,12 @@ STYLE_DICT = {
     "label_padding": ["axes.labelpad"],
     "title_padding": ["axes.titlepad"],
     "axis_width": ["axes.linewidth"],
-    "text_color":
-    ["text.color", "axes.labelcolor", "xtick.labelcolor", "ytick.labelcolor"],
+    "text_color": [
+        "text.color",
+        "axes.labelcolor",
+        "xtick.labelcolor",
+        "ytick.labelcolor",
+    ],
     "tick_color": ["xtick.color", "ytick.color"],
     "axis_color": ["axes.edgecolor"],
     "grid_color": ["grid.color"],
@@ -644,6 +647,7 @@ class StyleEditor(Adw.NavigationPage):
     outline_color = Gtk.Template.Child()
 
     line_colors_box = Gtk.Template.Child()
+    poor_contrast_warning = Gtk.Template.Child()
 
     def __init__(self, parent):
         super().__init__()
@@ -717,9 +721,11 @@ class StyleEditor(Adw.NavigationPage):
         self.font_chooser.set_font_desc(font_description)
 
         for button in self.color_buttons:
+            hex_color = Graphs.tools_rgba_to_hex(button.color)
             button.provider.load_from_string(
-                f"button {{ color: {button.color}; }}",
+                f"button {{ color: {hex_color}; }}",
             )
+        self._check_contrast()
 
         # line colors
         self.line_colors = \
@@ -804,15 +810,28 @@ class StyleEditor(Adw.NavigationPage):
             with contextlib.suppress(GLib.GError):
                 color = dialog.choose_rgba_finish(result)
                 if color is not None:
-                    button.color = Graphs.tools_rgba_to_hex(color)
+                    button.color = color
+                    self._check_contrast()
+                    hex_color = Graphs.tools_rgba_to_hex(button.color)
                     button.provider.load_from_string(
-                        f"button {{ color: {button.color}; }}",
+                        f"button {{ color: {hex_color}; }}",
                     )
 
-        color = Graphs.tools_hex_to_rgba(f"{button.color}")
         dialog = Gtk.ColorDialog()
         dialog.set_with_alpha(False)
-        dialog.choose_rgba(self.parent, color, None, on_accept)
+        dialog.choose_rgba(
+            self.parent.props.application.get_window(),
+            button.color,
+            None,
+            on_accept,
+        )
+
+    def _check_contrast(self):
+        contrast = Graphs.tools_get_contrast(
+            self.outline_color.color,
+            self.text_color.color,
+        )
+        self.poor_contrast_warning.set_visible(contrast < 4.5)
 
     @Gtk.Template.Callback()
     def on_linestyle(self, comborow, _b):

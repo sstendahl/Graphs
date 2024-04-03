@@ -61,6 +61,7 @@ template $GraphsStyleEditor : Adw.NavigationPage {
                 };
               }
             }
+
             Adw.ActionRow {
               title: _("Label Size");
               subtitle: _("Label size in relation to text size");
@@ -349,9 +350,17 @@ template $GraphsStyleEditor : Adw.NavigationPage {
           Adw.PreferencesGroup {
             title: _("Colors");
 
+            header-suffix: Adw.ButtonContent poor_contrast_warning {
+              styles ["warning", "flat"]
+              icon-name: "dialog-warning-symbolic";
+              label: _("Poor Contrast");
+              tooltip-text: _("Label text might be hard to read");
+            };
+
             Grid {
               row-spacing: 20;
               column-spacing: 20;
+
               Adw.PreferencesGroup {
                 layout {
                   column: 0;
@@ -484,31 +493,26 @@ template $GraphsStyleEditor : Adw.NavigationPage {
                   }
                 }
               }
+            }
+          }
 
-              Adw.PreferencesGroup {
-                title: _("Line Colors");
-                layout {
-                  column: 0;
-                  row: 3;
-                  column-span: 2;
-                }
-                header-suffix: Button {
-                  clicked => $add_color();
-                  Adw.ButtonContent {
-                    halign: center;
-                    icon-name: "list-add-symbolic";
-                    label: _("Add Color");
-                  }
-                  styles ["flat"]
-                };
-                ListBox line_colors_box {
-                  vexpand: false;
-                  valign: start;
-                  hexpand: true;
-                  selection-mode: none;
-                  styles ["boxed-list"]
-                }
+          Adw.PreferencesGroup {
+            title: _("Line Colors");
+            header-suffix: Button {
+              clicked => $add_color();
+              Adw.ButtonContent {
+                halign: center;
+                icon-name: "list-add-symbolic";
+                label: _("Add Color");
               }
+              styles ["flat"]
+            };
+            ListBox line_colors_box {
+              vexpand: false;
+              valign: start;
+              hexpand: true;
+              selection-mode: none;
+              styles ["boxed-list"]
             }
           }
         }

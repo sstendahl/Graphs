@@ -3,6 +3,18 @@ using Gtk;
 using Gdk;
 
 namespace Graphs {
+    public double min (double a, double b) {
+        if (a >= b) {
+            return b;
+        } else return a;
+    }
+
+    public double max (double a, double b) {
+        if (a >= b) {
+            return a;
+        } else return b;
+    }
+
     namespace Tools {
         public void bind_settings_to_widgets (
             GLib.Settings settings, Gtk.Widget parent, string prefix = "",
@@ -72,11 +84,27 @@ namespace Graphs {
             return get_luminance_from_rgba (hex_to_rgba (hex));
         }
 
+        private double get_srgb (double color) {
+            if (color <= 0.03928) {
+                return color / 12.92;
+            } else return Math.pow((color + 0.055) / 1.055, 2.4);
+        }
+
+
         public double get_luminance_from_rgba (Gdk.RGBA rgba) {
-            double red_factor = rgba.red * 255 * 0.2126;
-            double green_factor = rgba.green * 255 * 0.7152;
-            double blue_factor = rgba.blue * 255 * 0.0722;
-            return red_factor + green_factor + blue_factor;
+            double R = get_srgb (rgba.red);
+            double G = get_srgb (rgba.green);
+            double B = get_srgb (rgba.blue);
+
+            return 0.2126 * R + 0.7152 * G + 0.0722 * B;
+        }
+
+        public double get_contrast (Gdk.RGBA bg_color, Gdk.RGBA fg_color) {
+            double bg_luminance = get_luminance_from_rgba (bg_color);
+            double fg_luminance = get_luminance_from_rgba (fg_color);
+            double min_value = min (bg_luminance, fg_luminance) + 0.05;
+            double max_value = max (bg_luminance, fg_luminance) + 0.05;
+            return max_value / min_value;
         }
     }
 }
