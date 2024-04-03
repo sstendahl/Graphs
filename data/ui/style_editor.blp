@@ -350,11 +350,16 @@ template $GraphsStyleEditor : Adw.NavigationPage {
           Adw.PreferencesGroup {
             title: _("Colors");
 
-            header-suffix: Adw.ButtonContent poor_contrast_warning {
+            header-suffix: Box poor_contrast_warning {
               styles ["warning", "flat"]
-              icon-name: "dialog-warning-symbolic";
-              label: _("Poor Contrast");
+              spacing: 6;
               tooltip-text: _("Label text might be hard to read");
+              Image {
+                icon-name: "dialog-warning-symbolic";
+              }
+              Label {
+                label: _("Poor Contrast");
+              }
             };
 
             Grid {
