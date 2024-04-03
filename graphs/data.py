@@ -560,8 +560,9 @@ class Data(GObject.Object, Graphs.DataInterface):
                     xydata = xydata[numpy.isfinite(xydata)]
                 except TypeError:
                     return
-                nonzero_data = \
-                    numpy.array([value for value in xydata if value != 0])
+                nonzero_data = numpy.array([
+                    value for value in xydata if value != 0
+                ])
                 axes[index][2].append(
                     nonzero_data.min() if axes[index][4] in (1, 4)
                     and len(nonzero_data) > 0 else xydata.min(),

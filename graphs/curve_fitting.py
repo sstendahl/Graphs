@@ -245,14 +245,17 @@ class CurveFittingDialog(Adw.Dialog):
         initial_string = _("Results:") + "\n"
         buffer_string = initial_string
         if error == "value":
-            buffer_string += \
-                _("Please enter valid fitting \nparameters to start the fit")
+            buffer_string += _(
+                "Please enter valid fitting \nparameters to start the fit",
+            )
         elif error == "equation":
-            buffer_string += \
-                _("Please enter a valid equation \nto start the fit")
+            buffer_string += _(
+                "Please enter a valid equation \nto start the fit",
+            )
         elif error == "bounds":
-            buffer_string += \
-                _("Please enter valid fitting bounds \nto start the fit")
+            buffer_string += _(
+                "Please enter valid fitting bounds \nto start the fit",
+            )
         else:
             free_variables = utilities.get_free_variables(self.equation_string)
             for index, arg in enumerate(free_variables):
@@ -292,8 +295,11 @@ class CurveFittingDialog(Adw.Dialog):
             free_variables = utilities.get_free_variables(self.equation_string)
             var_to_val = dict(zip(free_variables, values))
             for var, val in var_to_val.items():
-                equation_name = \
-                    re.sub(r"(\d+)([a-zA-Z]+)", r"(\1*\2)", equation_name)
+                equation_name = re.sub(
+                    r"(\d+)([a-zA-Z]+)",
+                    r"(\1*\2)",
+                    equation_name,
+                )
                 equation_name = equation_name.replace(var, str(round(val, 3)))
             return equation_name
 
@@ -305,7 +311,8 @@ class CurveFittingDialog(Adw.Dialog):
                 function,
                 self.data_curve.xdata, self.data_curve.ydata,
                 p0=self.fitting_parameters.get_p0(),
-                bounds=self.fitting_parameters.get_bounds(), nan_policy="omit",
+                bounds=self.fitting_parameters.get_bounds(),
+                nan_policy="omit",
                 method=self.settings.get_string("optimization"),
             )
             self.custom_equation.get_child().remove_css_class("error")
@@ -345,8 +352,9 @@ class CurveFittingDialog(Adw.Dialog):
         self.sigma = numpy.sqrt(numpy.diagonal(self.param_cov))
         self.sigma *= self.settings.get_enum("confidence")
         try:
-            fitted_y = \
-                [function(x, *self.param) for x in self.data_curve.xdata]
+            fitted_y = [
+                function(x, *self.param) for x in self.data_curve.xdata
+            ]
         except (OverflowError, ZeroDivisionError):
             return
         ss_res = numpy.sum(
@@ -357,10 +365,14 @@ class CurveFittingDialog(Adw.Dialog):
         self.r2 = utilities.sig_fig_round(1 - (ss_res / ss_sum), 3)
 
         # Get confidence band
-        upper_bound = \
-            function(self.fitted_curve.xdata, *(self.param + self.sigma))
-        lower_bound = \
-            function(self.fitted_curve.xdata, *(self.param - self.sigma))
+        upper_bound = function(
+            self.fitted_curve.xdata,
+            *(self.param + self.sigma),
+        )
+        lower_bound = function(
+            self.fitted_curve.xdata,
+            *(self.param - self.sigma),
+        )
 
         # Filter non-finite values from the bounds
         lower_bound = lower_bound[numpy.isfinite(lower_bound)]

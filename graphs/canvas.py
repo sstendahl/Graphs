@@ -141,9 +141,9 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
                 "end",
                 self.figure.canvas.toolbar.push_current,
             )
-            scroll_gesture =  \
-                Gtk.EventControllerScroll.new(
-                    Gtk.EventControllerScrollFlags.BOTH_AXES)
+            scroll_gesture = Gtk.EventControllerScroll.new(
+                Gtk.EventControllerScrollFlags.BOTH_AXES,
+            )
             scroll_gesture.connect("scroll", self._on_pan_gesture)
             scroll_gesture.connect(
                 "scroll-end",
