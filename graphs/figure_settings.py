@@ -82,15 +82,14 @@ class FigureSettingsDialog(Adw.Dialog):
             application=application,
             figure_settings=figure_settings,
         )
-        notifiers = ("custom_style", "use_custom_style")
-        for prop in notifiers:
+
+        ignorelist = ["custom_style", "use_custom_style"]
+        for prop in ignorelist:
             figure_settings.connect(
                 "notify::" + prop.replace("_", "-"),
-                getattr(self, "_on_" + prop),
+                self._update_stylename,
             )
-
-        ignorelist = list(notifiers) + ["min_selected", "max_selected"]
-        for direction in misc.DIRECTIONS:
+        for direction in misc.DIRECTIONS + ["selected"]:
             ignorelist.append(f"min_{direction}")
             ignorelist.append(f"max_{direction}")
 
@@ -98,62 +97,17 @@ class FigureSettingsDialog(Adw.Dialog):
         self.set_axes_entries()
         if highlighted is not None:
             getattr(self, highlighted).grab_focus()
-        style_manager = application.get_figure_style_manager()
-        style_manager.connect("add-style", self.set_index)
         self.style_editor = styles.StyleEditor(self)
         self.grid_view.set_factory(_get_widget_factory(self))
-        self.grid_view.get_model().set_model(style_manager.get_style_model())
-        self._on_use_custom_style(figure_settings, None)
+        self.grid_view.set_model(
+            application.get_figure_style_manager().get_selection_model(),
+        )
+        self._update_stylename()
         self.present(application.get_window())
 
-    def _on_use_custom_style(
-        self,
-        figure_settings: Graphs.FigureSettings,
-        _a,
-    ) -> None:
-        """
-        Check if custom style is used.
-
-        Set the current style in the style overview.
-        """
-        if figure_settings.get_use_custom_style():
-            self._on_custom_style(figure_settings, None)
-        else:
-            self.style_name.set_text(_("System"))
-            self.grid_view.get_model().set_selected(0)
-
-    def _on_custom_style(
-        self,
-        figure_settings: Graphs.FigureSettings,
-        _a,
-    ) -> None:
-        """Set the current style in the style overview."""
-        if figure_settings.get_use_custom_style():
-            selection_model = self.grid_view.get_model()
-            stylename = figure_settings.get_custom_style()
-            self.style_name.set_text(stylename)
-            for index, style in enumerate(selection_model):
-                if index > 0 and style.get_name() == stylename:
-                    selection_model.set_selected(index)
-                    break
-
-    @Gtk.Template.Callback()
-    def on_select(self, model, _pos, _n_items) -> None:
-        """Set the style upon selection."""
-        figure_settings = self.props.figure_settings
-        selected_item = model.get_selected_item()
-        # Don't trigger unneccesary reloads
-        if selected_item.get_file() is None:  # System style
-            if figure_settings.get_use_custom_style():
-                figure_settings.set_use_custom_style(False)
-                self.style_name.set_text(_("System"))
-        else:
-            stylename = selected_item.get_name()
-            if stylename != figure_settings.get_custom_style():
-                figure_settings.set_custom_style(stylename)
-                self.style_name.set_text(stylename)
-            if not figure_settings.get_use_custom_style():
-                figure_settings.set_use_custom_style(True)
+    def _update_stylename(self, *_args):
+        style_manager = self.props.application.get_figure_style_manager()
+        self.style_name.set_text(style_manager.get_selected_stylename())
 
     def set_axes_entries(self) -> None:
         """
@@ -278,22 +232,6 @@ class FigureSettingsDialog(Adw.Dialog):
             self.style_editor.save_style()
             style_manager = self.props.application.get_figure_style_manager()
             style_manager._on_style_change()
-
-    def set_index(self, style_manager, name: str) -> None:
-        """Set the index of the style when a custom style is used."""
-        if not self.props.figure_settings.get_use_custom_style():
-            return
-
-        old_style = self.props.figure_settings.get_custom_style()
-        if old_style not in style_manager.get_stylenames():
-            self.props.figure_settings.set_custom_style(name)
-
-        selection_model = self.grid_view.get_model()
-        stylename = self.props.figure_settings.get_custom_style()
-        for index, style in enumerate(selection_model):
-            if index > 0 and style.get_name() == stylename:
-                selection_model.set_selected(index)
-                break
 
     @Gtk.Template.Callback()
     def choose_style(self, _button) -> None:
