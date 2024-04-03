@@ -230,7 +230,7 @@ def load_values_from_dict(window, values: dict, ignorelist=None) -> None:
             elif isinstance(widget, Gtk.Scale):
                 widget.set_value(value)
             elif isinstance(widget, Gtk.Button):
-                widget.color = value
+                widget.color = Graphs.tools_hex_to_rgba(value)
             elif isinstance(widget, Adw.SwitchRow):
                 widget.set_active(bool(value))
             elif isinstance(widget, Adw.SpinRow):
@@ -261,7 +261,7 @@ def save_values_to_dict(window, keys: list, ignorelist=None) -> None:
             elif isinstance(widget, Gtk.Scale):
                 values[key] = widget.get_value()
             elif isinstance(widget, Gtk.Button):
-                values[key] = widget.color
+                values[key] = Graphs.tools_rgba_to_hex(widget.color)
             elif isinstance(widget, Adw.SwitchRow):
                 values[key] = bool(widget.get_active())
             elif isinstance(widget, Adw.SpinRow):

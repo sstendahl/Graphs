@@ -56,6 +56,7 @@ graphs_lib = shared_library(
   ), blueprints_hack, gresource_bundle,
       vala_gir: 'Graphs-1.gir',
   dependencies: dependencies,
+    link_args : ['-lm',],
        install: true,
    install_dir: [true],
 )
