@@ -16,7 +16,7 @@ def _get_widget_factory(window) -> Gtk.SignalListItemFactory:
     Returns the factory instance.
     """
     factory = Gtk.SignalListItemFactory.new()
-    factory.connect("setup", lambda _f, i: i.set_child(styles.StylePreview()))
+    factory.connect("setup", lambda _f, i: i.set_child(Graphs.StylePreview()))
     factory.connect("bind", _on_bind, window)
     return factory
 
@@ -25,10 +25,11 @@ def _on_bind(_factory, item, window) -> None:
     """Add an edit button to the style previews of custom styles."""
     widget = item.get_child()
     style = item.get_item()
-    widget.style = style
-    if style.get_mutable() and not widget.edit_button.get_visible():
-        widget.edit_button.set_visible(True)
-        widget.edit_button.connect("clicked", window.edit_style, style)
+    widget.set_style(style)
+    edit_button = widget.get_edit_button()
+    if style.get_mutable() and not edit_button.get_visible():
+        edit_button.set_visible(True)
+        edit_button.connect("clicked", window.edit_style, style)
 
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/figure_settings.ui")

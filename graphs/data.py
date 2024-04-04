@@ -8,7 +8,7 @@ from urllib.parse import unquote, urlparse
 
 from gi.repository import GObject, Gio, Graphs
 
-from graphs import item, misc, utilities
+from graphs import item, misc
 
 import numpy
 
@@ -104,7 +104,7 @@ class Data(GObject.Object, Graphs.DataInterface):
         if self.props.file is None:
             title = _("Untitled Project")
         else:
-            title = utilities.get_filename(self.props.file)
+            title = Graphs.tools_get_filename(self.props.file)
         if self.props.unsaved:
             title = "• " + title
         return title
@@ -270,9 +270,9 @@ class Data(GObject.Object, Graphs.DataInterface):
             item_name = new_item.get_name()
             if item_name in used_names:
                 new_item.set_name(
-                    utilities.get_duplicate_string(
+                    Graphs.tools_get_duplicate_string(
                         item_name,
-                        used_names,
+                        list(used_names),
                     ),
                 )
             used_names.add(new_item.get_name())

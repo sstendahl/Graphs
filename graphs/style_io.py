@@ -3,9 +3,9 @@
 import logging
 from gettext import gettext as _
 
-from gi.repository import Gio
+from gi.repository import Gio, Graphs
 
-from graphs import file_io, utilities
+from graphs import file_io
 
 from matplotlib import RcParams, cbook
 from matplotlib.font_manager import font_scalings, weight_dict
@@ -42,7 +42,7 @@ def parse(file: Gio.File) -> (RcParams, str):
     functions.
     """
     style = RcParams()
-    filename = utilities.get_filename(file)
+    filename = Graphs.tools_get_filename(file)
     try:
         stream = Gio.DataInputStream.new(file.read(None))
         for line_number, line in \

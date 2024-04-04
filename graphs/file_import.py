@@ -10,7 +10,7 @@ from pathlib import Path
 
 from gi.repository import Adw, GObject, Gio, Graphs, Gtk
 
-from graphs import parse_file, ui, utilities
+from graphs import parse_file, ui
 from graphs.misc import ParseError
 
 _IMPORT_MODES = {
@@ -130,7 +130,7 @@ class _ImportDialog(Adw.Dialog):
                 self.reset_import()
 
         body = _("Are you sure you want to reset the import settings?")
-        dialog = ui.build_dialog("reset_to_defaults")
+        dialog = Graphs.tools_build_dialog("reset_to_defaults")
         dialog.set_body(body)
         dialog.connect("response", on_accept)
         dialog.present(self)
@@ -152,7 +152,7 @@ class _ImportDialog(Adw.Dialog):
 
 def _guess_import_mode(file: Gio.File) -> str:
     try:
-        filename = utilities.get_filename(file)
+        filename = Graphs.tools_get_filename(file)
         file_suffix = Path(filename).suffixes[-1]
     except IndexError:
         file_suffix = None

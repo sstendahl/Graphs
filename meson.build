@@ -65,7 +65,6 @@ vala_conf.set_quoted('VERSION', version)
 vala_conf.set_quoted('AUTHOR', author)
 vala_conf.set_quoted('HOMEPAGE_URL', homepage_url)
 vala_conf.set_quoted('ISSUE_URL', issue_url)
-vala_conf.set_quoted('PKGDATADIR', pkgdatadir)
 
 add_project_arguments (
   '-DGETTEXT_PACKAGE="' + meson.project_name () + '"',

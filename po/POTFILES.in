@@ -19,6 +19,7 @@ data/ui/style_editor.blp
 data/ui/style_preview.blp
 data/ui/transform.blp
 data/ui/window.blp
+graphs/about.vala
 graphs/actions.py
 graphs/add_equation.py
 graphs/application.py
@@ -50,6 +51,7 @@ graphs/scales.py
 graphs/smoothen_settings.vala
 graphs/style_io.py
 graphs/styles.py
+graphs/styles.vala
 graphs/transform_data.py
 graphs/ui.py
 graphs/utilities.py

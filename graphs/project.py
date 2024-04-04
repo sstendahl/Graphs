@@ -5,7 +5,7 @@ from gettext import gettext as _
 
 from gi.repository import Adw, GLib, Gio, Graphs, Gtk
 
-from graphs import actions, file_io, migrate, misc, ui, utilities
+from graphs import actions, file_io, migrate, misc, utilities
 
 
 def read_project_file(file: Gio.File) -> dict:
@@ -98,7 +98,7 @@ def open_project(application: Graphs.Application) -> None:
             pick_file()
             save_project(application)
 
-    dialog = ui.build_dialog("save_changes")
+    dialog = Graphs.tools_build_dialog("save_changes")
     dialog.connect("response", on_save_response)
     dialog.present(application.get_window())
 

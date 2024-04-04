@@ -8,6 +8,5 @@ namespace Config {
     public const string AUTHOR;
     public const string HOMEPAGE_URL;
     public const string ISSUE_URL;
-    public const string PKGDATADIR;
 }
 
