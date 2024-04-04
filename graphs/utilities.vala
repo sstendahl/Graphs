@@ -106,5 +106,51 @@ namespace Graphs {
             double max_value = max (bg_luminance, fg_luminance) + 0.05;
             return max_value / min_value;
         }
+
+        public string shorten_label (string label, uint max_length = 20) {
+            if (label.length > max_length) {
+                return label.substring (0, max_length - 1);
+            } else return label;
+        }
+
+        public string get_duplicate_string (string original, string[] used) {
+            if (!(original in used)) return original;
+            string old_str = original;
+            try {
+                Regex regex = new Regex ("(?P<string>.+) \\(\\d+\\)");
+                MatchInfo info;
+                if (regex.match (original, 0, out info)) {
+                    old_str = info.fetch_named("string");
+                }
+            } catch {}
+            uint i = 1;
+            while (true) {
+                string new_str = @"$old_str ($i)";
+                if (!(new_str in used)) return new_str;
+                i++;
+            }
+        }
+
+        public File get_config_directory () throws Error {
+            File main_directory = File.new_for_path (Environment.get_user_config_dir ());
+            return main_directory.get_child_for_display_name ("graphs");
+        }
+
+        public string get_filename (File file) {
+            try {
+                FileInfo info = file.query_info (
+                    "standard::display-name",
+                    FileQueryInfoFlags.NONE
+                );
+                return info.get_display_name ();
+            } catch {
+                return file.get_basename();
+            }
+        }
+
+        public Object build_dialog (string name) {
+            Builder builder = new Builder.from_resource ("/se/sjoerd/Graphs/ui/dialogs.ui");
+            return builder.get_object (name);
+        }
     }
 }

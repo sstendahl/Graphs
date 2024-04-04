@@ -44,6 +44,7 @@ config_dep = valac.find_library ('config', dirs: meson.project_source_root () / 
 graphs_lib = shared_library(
   'graphs',
   files(
+    'about.vala',
     'application.vala',
     'curve_fitting.vala',
     'data.vala',
@@ -53,6 +54,7 @@ graphs_lib = shared_library(
     'inline-stack-switcher.vala',
     'misc.vala',
     'smoothen_settings.vala',
+    'styles.vala',
     'utilities.vala',
     'window.vala',
   ), blueprints_hack, gresource_bundle,

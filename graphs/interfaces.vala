@@ -33,7 +33,4 @@ namespace Graphs {
         public abstract bool highlight_enabled { get; set; default = false; }
         public abstract int mode { get; set; default = 0; }
     }
-
-    public interface StyleManagerInterface : Object {
-    }
 }

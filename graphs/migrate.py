@@ -5,9 +5,9 @@ import pickle
 import sys
 from pathlib import Path
 
-from gi.repository import GLib, Gio
+from gi.repository import GLib, Gio, Graphs
 
-from graphs import file_io, misc, style_io, utilities
+from graphs import file_io, misc, style_io
 
 _CONFIG_MIGRATION_TABLE = {
     # old-key: (category, key, old-default)
@@ -45,7 +45,7 @@ def migrate_config(settings: Gio.Settings) -> None:
     old_config_dir = main_dir.get_child_for_display_name("Graphs")
     if not old_config_dir.query_exists(None):
         return
-    new_config_dir = utilities.get_config_directory()
+    new_config_dir = Graphs.tools_get_config_directory()
     config_file = old_config_dir.get_child_for_display_name("config.json")
     import_file = old_config_dir.get_child_for_display_name("import.json")
     old_styles_dir = old_config_dir.get_child_for_display_name("styles")
@@ -135,7 +135,7 @@ def _migrate_styles(old_styles_dir, new_config_dir):
         ),
     )[0]
     for file in map(enumerator.get_child, enumerator):
-        stylename = Path(utilities.get_filename(file)).stem
+        stylename = Path(Graphs.tools_get_filename(file)).stem
         if stylename not in SYSTEM_STYLES:
             params = style_io.parse(file)[0]
             for key, value in adwaita.items():

@@ -117,7 +117,7 @@ def quit_action(_action, _target, application: Graphs.Application) -> None:
 
 def about_action(_action, _target, application: Graphs.Application) -> None:
     """Display about dialog."""
-    ui.show_about_dialog(application)
+    Graphs.show_about_dialog(application)
 
 
 def figure_settings_action(
@@ -249,7 +249,7 @@ def new_project_action(
             if response == "save_close":
                 project.save_project(application)
 
-        dialog = ui.build_dialog("save_changes")
+        dialog = Graphs.tools_build_dialog("save_changes")
         dialog.set_transient_for(application.get_window())
         dialog.connect("response", on_response)
         dialog.present()

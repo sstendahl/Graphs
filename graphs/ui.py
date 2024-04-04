@@ -1,7 +1,6 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Some UI utilities."""
 import contextlib
-import datetime
 import logging
 from gettext import dgettext as N_, gettext as _, pgettext as C_
 
@@ -175,40 +174,6 @@ def export_data_dialog(application: Graphs.Application) -> None:
             ),
         )
         dialog.save(window, None, on_response)
-
-
-def build_dialog(name: str):
-    """Build a dialog from `dialogs.ui`."""
-    return Gtk.Builder.new_from_resource("/se/sjoerd/Graphs/ui/dialogs.ui",
-                                         ).get_object(name)
-
-
-def show_about_dialog(application: Graphs.Application) -> str:
-    """Show about dialog."""
-    file = Gio.File.new_for_uri("resource:///se/sjoerd/Graphs/whats_new")
-    copyright_text = \
-        f"© 2022 – {datetime.date.today().year} {application.get_author()}"
-    Adw.AboutDialog(
-        application_name=_("Graphs"),
-        application_icon=application.get_application_id(),
-        website=application.get_website(),
-        developer_name=application.get_author(),
-        issue_url=application.get_issues(),
-        version=application.get_version(),
-        developers=[
-            "Sjoerd Stendahl <contact@sjoerd.se>",
-            "Christoph Kohnen <christoph.kohnen@disroot.org>",
-        ],
-        designers=[
-            "Sjoerd Stendahl <contact@sjoerd.se>",
-            "Christoph Kohnen <christoph.kohnen@disroot.org>",
-            "Tobias Bernard <tbernard@gnome.org>",
-        ],
-        copyright=copyright_text,
-        license_type="GTK_LICENSE_GPL_3_0",
-        translator_credits=_("translator-credits"),
-        release_notes=file.load_bytes(None)[0].get_data().decode("utf-8"),
-    ).present(application.get_window())
 
 
 def load_values_from_dict(window, values: dict, ignorelist=None) -> None:

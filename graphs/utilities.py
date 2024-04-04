@@ -6,7 +6,7 @@ import operator as op
 import re
 from gettext import gettext as _
 
-from gi.repository import GLib, Gio, Gtk
+from gi.repository import Gio, Gtk
 
 import numpy
 
@@ -97,17 +97,6 @@ def get_fraction_at_value(
         # Calculate the scaled percentage corresponding to the data point
         scaled_data_point = 1 / value
         return (scaled_data_point - 1 / end) / scaled_range
-
-
-def shorten_label(label: str, max_length: int = 20) -> str:
-    """Shorten a label to a maximum length."""
-    return f"{label[:max_length - 1]}…" if len(label) > max_length else label
-
-
-def get_config_directory() -> Gio.File:
-    """Get the config directory."""
-    main_directory = Gio.File.new_for_path(GLib.get_user_config_dir())
-    return main_directory.get_child_for_display_name("graphs")
 
 
 def create_file_filters(filters, add_all: bool = True) -> Gio.ListStore:
@@ -251,18 +240,6 @@ def preprocess(string: str) -> str:
     return string.lower()
 
 
-def get_filename(file: Gio.File) -> str:
-    """Query the filename of a file."""
-    info = file.query_info(
-        "standard::display-name",
-        Gio.FileQueryInfoFlags.NONE,
-        None,
-    )
-    if info:
-        return info.get_display_name()
-    return file.get_basename()
-
-
 def string_to_function(equation_name: str) -> sympy.FunctionClass:
     """Convert a string into a sympy function."""
     variables = ["x"] + get_free_variables(equation_name)
@@ -284,21 +261,6 @@ def get_free_variables(equation_name: str) -> list:
         r"[a-zA-Z]+\b"  # Match any character sequence that is not excluded
     )
     return re.findall(pattern, equation_name)
-
-
-def get_duplicate_string(original_string: str, used_strings: list[str]) -> str:
-    """Get a unique string given a list of used strings."""
-    if original_string not in used_strings:
-        return original_string
-    m = re.compile(r"(?P<string>.+) \(\d+\)").match(original_string)
-    if m:
-        original_string = m.group("string")
-    i = 1
-    while True:
-        new_string = f"{original_string} ({i})"
-        if new_string not in used_strings:
-            return new_string
-        i += 1
 
 
 def create_menu_model(data: dict) -> Gio.Menu:

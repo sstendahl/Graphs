@@ -23,7 +23,7 @@ from gi.repository import (
 )
 
 import graphs
-from graphs import item, style_io, ui, utilities
+from graphs import item, style_io, ui
 
 from matplotlib import RcParams, rcParams, rcParamsDefault, rc_context
 from matplotlib.figure import Figure
@@ -156,7 +156,7 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
             ),
         )
 
-        config_dir = utilities.get_config_directory()
+        config_dir = Graphs.tools_get_config_directory()
         self._style_dir = config_dir.get_child_for_display_name("styles")
         if not self._style_dir.query_exists(None):
             self._style_dir.make_directory_with_parents(None)
@@ -164,7 +164,7 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
         for file in map(enumerator.get_child, enumerator):
             if file.query_file_type(0, None) != 1:
                 continue
-            if Path(utilities.get_filename(file)).suffix != ".mplstyle":
+            if Path(Graphs.tools_get_filename(file)).suffix != ".mplstyle":
                 continue
             self._add_user_style(file)
         enumerator.close(None)
@@ -217,7 +217,10 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
             tmp_style_params, name = style_io.parse(file)
             style_params = self._complete_style(tmp_style_params)
         if name in self._stylenames:
-            new_name = utilities.get_duplicate_string(name, self._stylenames)
+            new_name = Graphs.tools_get_duplicate_string(
+                name,
+                self._stylenames,
+            )
             file.delete(None)
             file = self._style_dir.get_child_for_display_name(
                 _generate_filename(new_name),
@@ -450,7 +453,7 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
 
     def copy_style(self, template: str, new_name: str) -> None:
         """Copy a style."""
-        new_name = utilities.get_duplicate_string(
+        new_name = Graphs.tools_get_duplicate_string(
             new_name,
             self._stylenames,
         )
@@ -485,59 +488,6 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
                     self.props.custom_style = self._system_style_name
 
 
-@Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/style_preview.ui")
-class StylePreview(Gtk.AspectFrame):
-    """Style preview widget."""
-
-    __gtype_name__ = "GraphsStylePreview"
-    label = Gtk.Template.Child()
-    picture = Gtk.Template.Child()
-    edit_button = Gtk.Template.Child()
-
-    def __init__(self, **kwargs):
-        super().__init__(*kwargs)
-        self.provider = Gtk.CssProvider()
-        self.edit_button.get_style_context().add_provider(
-            self.provider,
-            Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION,
-        )
-
-    @GObject.Property(type=Graphs.Style)
-    def style(self):
-        """Get style property."""
-        return self._style
-
-    @style.setter
-    def style(self, style):
-        """Set style property."""
-        self._style = style
-        self._style.bind_property("name", self, "name", 2)
-        self._style.bind_property("preview", self, "preview", 2)
-
-    @GObject.Property(type=str, default="", flags=2)
-    def name(self):
-        """Not Implemented."""
-        raise NotImplementedError
-
-    @name.setter
-    def name(self, name):
-        """Set name property."""
-        self.label.set_label(utilities.shorten_label(name))
-
-    @GObject.Property(type=Gdk.Texture, flags=2)
-    def preview(self):
-        """Get preview property."""
-        return self.picture.get_paintable()
-
-    @preview.setter
-    def preview(self, texture):
-        """Set preview property."""
-        self.picture.set_paintable(texture)
-        if self._style.get_mutable():
-            color = "@light_1" if self._style.get_light() else "@dark_5"
-            self.provider.load_from_string(f"button {{ color: {color}; }}")
-
-
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/add_style.ui")
 class AddStyleDialog(Adw.Dialog):
     """Add Style dialog."""
@@ -563,7 +513,7 @@ class AddStyleDialog(Adw.Dialog):
     def on_template_changed(self, _a, _b):
         """Handle template selection."""
         self.new_style_name.set_text(
-            utilities.get_duplicate_string(
+            Graphs.tools_get_duplicate_string(
                 self.style_templates.get_selected_item().get_string(),
                 self._styles,
             ),
@@ -845,7 +795,7 @@ class StyleEditor(Adw.NavigationPage):
         new_name = self.style_name.get_text()
         if self.style.get_name() != new_name:
             style_manager = application.get_figure_style_manager()
-            new_name = utilities.get_duplicate_string(
+            new_name = Graphs.tools_get_duplicate_string(
                 new_name,
                 style_manager.get_stylenames(),
             )
@@ -925,7 +875,7 @@ class StyleEditor(Adw.NavigationPage):
                 self.style = None
                 self.parent.navigation_view.pop()
 
-        dialog = ui.build_dialog("delete_style_dialog")
+        dialog = Graphs.tools_build_dialog("delete_style_dialog")
         dialog.set_body(
             _(f"Are you sure you want to delete {self.style.get_name()}?"),
         )

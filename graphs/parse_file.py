@@ -3,7 +3,7 @@
 import re
 from gettext import gettext as _
 
-from gi.repository import Gio
+from gi.repository import Gio, Graphs
 
 from graphs import file_io, item, misc, project, utilities
 from graphs.misc import ParseError
@@ -49,7 +49,7 @@ def import_from_xrdml(_params, style, file: Gio.File) -> misc.ItemList:
             style,
             xdata,
             ydata,
-            name=utilities.get_filename(file),
+            name=Graphs.tools_get_filename(file),
             xlabel=f"{scan_axis} ({unit})",
             ylabel=_("Intensity (cps)"),
         ),
@@ -75,7 +75,7 @@ def import_from_xry(_params, style, file: Gio.File) -> misc.ItemList:
         info = wrapper.readline().strip().split()
         item_count = int(info[0])
 
-        name = utilities.get_filename(file)
+        name = Graphs.tools_get_filename(file)
         items = [
             item.DataItem.new(
                 style,
@@ -111,7 +111,7 @@ _PH = "dVldZaXqENhuPLPw"
 
 def import_from_columns(params, style, file: Gio.File) -> misc.ItemList:
     """Import data from columns file."""
-    item_ = item.DataItem.new(style, name=utilities.get_filename(file))
+    item_ = item.DataItem.new(style, name=Graphs.tools_get_filename(file))
     column_x = params.get_int("column-x")
     column_y = params.get_int("column-y")
     separator = params.get_string("separator").replace(" ", "")
