@@ -81,18 +81,15 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
     Main Style Manager.
 
     Keeps track of all files in the style dir and represents them in
-    the `style_model` property.
+    the `selection_model` property.
     """
 
     __gtype_name__ = "GraphsStyleManager"
-    __gsignals__ = {
-        "add-style": (GObject.SIGNAL_RUN_FIRST, None, (str, )),
-    }
 
     application = GObject.Property(type=Graphs.Application)
     use_custom_style = GObject.Property(type=bool, default=False)
     custom_style = GObject.Property(type=str, default="Adwaita")
-    style_model = GObject.Property(type=Gio.ListStore)
+    selection_model = GObject.Property(type=Gtk.SingleSelection)
 
     def __init__(self, application: Graphs.Application):
         # Check for Ubuntu
@@ -101,9 +98,10 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
             if "SNAP" in os.environ \
             and gtk_theme.lower().startswith("yaru") \
             else "Adwaita"
+        style_model = Gio.ListStore.new(Graphs.Style)
         super().__init__(
             application=application,
-            style_model=Gio.ListStore.new(Graphs.Style),
+            selection_model=Gtk.SingleSelection.new(style_model),
         )
         self._stylenames, self._selected_style_params = [], None
         directory = Gio.File.new_for_uri("resource:///se/sjoerd/Graphs/styles")
@@ -112,7 +110,7 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
             style_params, name = style_io.parse(file)
             preview = _generate_preview(style_params)
             self._stylenames.append(name)
-            self.props.style_model.insert_sorted(
+            style_model.insert_sorted(
                 Graphs.Style.new(name, file, preview, False),
                 _compare_styles,
             )
@@ -138,7 +136,7 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
             (light_array[:, :width // 2], dark_array[:, width // 2:]),
             axis=1,
         )
-        self.props.style_model.insert(
+        style_model.insert(
             0,
             Graphs.Style.new(
                 _("System"),
@@ -172,6 +170,18 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
         enumerator.close(None)
         self._style_monitor = self._style_dir.monitor_directory(0, None)
         self._style_monitor.connect("changed", self._on_file_change)
+
+        application.get_style_manager().connect(
+            "notify",
+            self._on_system_style_change,
+        )
+        notifiers = ("custom_style", "use_custom_style")
+        for prop in notifiers:
+            self.connect(
+                "notify::" + prop.replace("_", "-"),
+                getattr(self, "_on_" + prop),
+            )
+
         figure_settings = application.get_data().get_figure_settings()
         figure_settings.bind_property(
             "use_custom_style",
@@ -186,13 +196,16 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
             1 | 2,
         )
 
-        def on_style_select(_a, _b):
-            self._on_style_change(True)
+        self.props.selection_model.connect(
+            "selection-changed",
+            self._on_style_select,
+        )
 
-        application.get_style_manager().connect("notify", on_style_select)
-        for prop in ("use-custom-style", "custom-style"):
-            figure_settings.connect(f"notify::{prop}", on_style_select)
         self._on_style_change()
+
+    def _on_system_style_change(self, _a, _b):
+        if not self.props.use_custom_style:
+            self._on_style_change()
 
     def _add_user_style(
         self,
@@ -211,7 +224,7 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
             )
             style_io.write(style_params, new_name, file)
         self._stylenames.append(name)
-        self.props.style_model.insert_sorted(
+        self.props.selection_model.get_model().insert_sorted(
             Graphs.Style(
                 name=name,
                 file=file,
@@ -221,11 +234,21 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
             ),
             _compare_styles,
         )
-        self.emit("add-style", name)
+        if not self.props.use_custom_style:
+            return
 
-    def get_style_model(self) -> Gio.ListStore:
-        """Get the style model property."""
-        return self.props.style_model
+        old_style = self.props.custom_style
+        if old_style not in self._stylenames:
+            self.props.custom_style = name
+
+        for index, style in enumerate(self.props.selection_model):
+            if index > 0 and style.get_name() == self.props.custom_style:
+                self.props.selection_model.set_selected(index)
+                break
+
+    def get_selection_model(self) -> Gtk.SingleSelection:
+        """Get the selection model property."""
+        return self.props.selection_model
 
     def get_stylenames(self) -> list:
         """Return all stylenames."""
@@ -243,6 +266,10 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
         """Get the system style properties."""
         return self._system_style_params
 
+    def get_selected_stylename(self) -> str:
+        """Get the name of the currently selected style."""
+        return self.props.selection_model.get_selected_item().get_name()
+
     def _on_file_change(
         self,
         _monitor,
@@ -254,7 +281,7 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
             return
         possible_visual_impact = False
         stylename = None
-        style_model = self.get_style_model()
+        style_model = self.props.selection_model.get_model()
         if event_type == 2:
             for index, style in enumerate(style_model):
                 file2 = style.get_file()
@@ -283,6 +310,39 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
                 and self.props.custom_style == stylename \
                 and event_type != 2:
             self._on_style_change()
+
+    def _on_style_select(self, style_model, _pos, _n_items):
+        """Set the style upon selection."""
+        selected_item = style_model.get_selected_item()
+        # Don't trigger unneccesary reloads
+        if selected_item.get_file() is None:  # System style
+            if self.props.use_custom_style:
+                self.props.use_custom_style = False
+        else:
+            stylename = selected_item.get_name()
+            if stylename != self.props.custom_style:
+                self.props.custom_style = stylename
+            if not self.props.use_custom_style:
+                self.props.use_custom_style = True
+
+    @staticmethod
+    def _on_use_custom_style(self, _a) -> None:
+        """Handle `use_custom_style` property change."""
+        if self.props.use_custom_style:
+            self._on_custom_style(self, None)
+        else:
+            self.props.selection_model.set_selected(0)
+        self._on_style_change(True)
+
+    @staticmethod
+    def _on_custom_style(self, _a) -> None:
+        """Handle `custom_style` property change."""
+        if self.props.use_custom_style:
+            for index, style in enumerate(self.props.selection_model):
+                if index > 0 and style.get_name() == self.props.custom_style:
+                    self.props.selection_model.set_selected(index)
+                    break
+            self._on_style_change(True)
 
     def _on_style_change(self, override: bool = False) -> None:
         rcParams.update(rcParamsDefault)
@@ -358,7 +418,7 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
         self._selected_style_params = None
         if self.props.use_custom_style:
             stylename = self.props.custom_style
-            for style in self.props.style_model:
+            for style in self.props.selection_model.get_model():
                 if stylename == style.get_name():
                     try:
                         style_params = style_io.parse(style.get_file())[0]
@@ -397,7 +457,7 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
         destination = self._style_dir.get_child_for_display_name(
             _generate_filename(new_name),
         )
-        for style in self.props.style_model:
+        for style in self.props.selection_model.get_model():
             if template == style.get_name():
                 style_params = style_io.parse(style.get_file())[0]
                 source = self._complete_style(style_params) \
@@ -413,7 +473,7 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
 
     def delete_style(self, file: Gio.File) -> None:
         """Delete a style."""
-        style_model = self.props.style_model
+        style_model = self.props.selection_model.get_model()
         for index, style in enumerate(style_model):
             if style is not None:
                 file2 = style.get_file()
