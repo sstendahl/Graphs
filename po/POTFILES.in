@@ -36,7 +36,7 @@ graphs/figure_settings.py
 graphs/figure_settings.vala
 graphs/file_import.py
 graphs/file_io.py
-graphs/file_io.inline-stack-switcher.vala
+graphs/inline-stack-switcher.vala
 graphs/interfaces.vala
 graphs/item.py
 graphs/item.vala
