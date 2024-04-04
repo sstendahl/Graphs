@@ -39,6 +39,8 @@ python.install_sources(
   subdir: project_name
 )
 
+configure_file (output: 'config.h', configuration: vala_conf)
+config_dep = valac.find_library ('config', dirs: meson.project_source_root () / 'graphs')
 graphs_lib = shared_library(
   'graphs',
   files(
@@ -54,11 +56,12 @@ graphs_lib = shared_library(
     'utilities.vala',
     'window.vala',
   ), blueprints_hack, gresource_bundle,
-      vala_gir: 'Graphs-1.gir',
-  dependencies: dependencies,
-    link_args : ['-lm',],
-       install: true,
-   install_dir: [true],
+           vala_gir: 'Graphs-1.gir',
+       dependencies: dependencies + config_dep,
+include_directories: include_directories('.'),
+         link_args : ['-lm',],
+            install: true,
+        install_dir: [true],
 )
 
 custom_target('graphs typelib',

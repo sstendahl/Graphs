@@ -13,6 +13,8 @@ dependencies = [
   dependency('libadwaita-1', version: '>= 1.4'),
 ]
 
+valac = meson.get_compiler('vala')
+
 devenv = environment()
 devenv.set('GRAPHS_DEVEL_PATH', meson.current_source_dir())
 
@@ -43,6 +45,7 @@ endif
 
 conf = configuration_data()
 conf.set('APPLICATION_ID', application_id)
+conf.set('GETTEXT_PACKAGE', project_name)
 conf.set('AUTHOR', author)
 conf.set('COPYRIGHT', copyright)
 conf.set('VCS_URL', vcs_url)
@@ -52,9 +55,22 @@ conf.set('LOCALEDIR', localedir)
 conf.set('PKGDATADIR', pkgdatadir)
 conf.set('PROJECT_NAME', project_name)
 conf.set('PYTHON', python.full_path())
-conf.set('VERSION', version)
 conf.set('HOMEPAGE_URL', homepage_url)
 conf.set('DEBUG', debug)
+
+vala_conf = configuration_data()
+vala_conf.set_quoted('GETTEXT_PACKAGE', project_name)
+vala_conf.set_quoted('LOCALEDIR', localedir)
+vala_conf.set_quoted('VERSION', version)
+vala_conf.set_quoted('AUTHOR', author)
+vala_conf.set_quoted('HOMEPAGE_URL', homepage_url)
+vala_conf.set_quoted('ISSUE_URL', issue_url)
+vala_conf.set_quoted('PKGDATADIR', pkgdatadir)
+
+add_project_arguments (
+  '-DGETTEXT_PACKAGE="' + meson.project_name () + '"',
+  language: 'c'
+)
 
 subdir('data')
 subdir('graphs')

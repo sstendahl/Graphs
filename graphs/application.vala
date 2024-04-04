@@ -14,6 +14,18 @@ namespace Graphs {
         public string pkgdatadir { get; construct set; default = ""; }
         public bool debug { get; construct set; default = false; }
 
+        construct {
+            Intl.bindtextdomain (Config.GETTEXT_PACKAGE, Config.LOCALEDIR);
+            Intl.bind_textdomain_codeset (Config.GETTEXT_PACKAGE, "UTF-8");
+            Intl.textdomain (Config.GETTEXT_PACKAGE);
+
+            this.version = Config.VERSION;
+            this.author = Config.AUTHOR;
+            this.website = Config.HOMEPAGE_URL;
+            this.issues = Config.ISSUE_URL;
+            this.pkgdatadir = Config.PKGDATADIR;
+        }
+
         public Settings get_settings_child (string path) {
             Settings settings = this.settings;
             foreach (string child_name in path.split ("/")) {
