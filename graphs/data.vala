@@ -18,7 +18,7 @@ namespace Graphs {
         public abstract Item get_for_uuid (string uuid);
 
         public abstract void change_position (int index1, int index2);
-        public abstract void add_items (Item[] items);
+        public abstract void add_items (Item[] items, StyleManagerInterface style_manager);
         public abstract void delete_items (Item[] items);
 
         public abstract void add_history_state (double[]? old_limits=null);

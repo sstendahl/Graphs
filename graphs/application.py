@@ -3,7 +3,7 @@
 import logging
 from gettext import gettext as _
 
-from gi.repository import Adw, GLib, GObject, Gio, Graphs, Gtk
+from gi.repository import Adw, GLib, Gio, Graphs, Gtk
 
 from graphs import (
     actions,
@@ -48,14 +48,11 @@ class PythonApplication(Graphs.Application):
     """The main application singleton class."""
 
     __gtype_name__ = "GraphsPythonApplication"
-    __gsignals__ = {
-        "project-saved": (GObject.SIGNAL_RUN_FIRST, None, ()),
-    }
 
     def __init__(self, application_id, **kwargs):
         settings = Gio.Settings(application_id)
         migrate.migrate_config(settings)
-        data = Data(self, settings)
+        data = Data(settings.get_child("figure"))
         super().__init__(
             application_id=application_id,
             settings=settings,
@@ -137,11 +134,6 @@ class PythonApplication(Graphs.Application):
             ui.on_items_change,
             self,
         )
-        data.connect(
-            "items-ignored",
-            ui.on_items_ignored,
-            self,
-        )
 
     def on_project_saved(self, _application, handler=None, *args) -> None:
         """Change unsaved state."""
@@ -167,8 +159,8 @@ class PythonApplication(Graphs.Application):
                     if response == "discard_close":
                         project.load(data, project_file)
                     if response == "save_close":
-                        self.save_handler = self.connect(
-                            "project-saved",
+                        self.save_handler = data.connect(
+                            "saved",
                             self.on_project_saved,
                             "open_project",
                             project_file,
@@ -198,8 +190,8 @@ class PythonApplication(Graphs.Application):
                 if response == "discard_close":
                     self.quit()
                 if response == "save_close":
-                    self.save_handler = self.connect(
-                        "project-saved",
+                    self.save_handler = self.get_data().connect(
+                        "saved",
                         self.on_project_saved,
                         "close",
                     )

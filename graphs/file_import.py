@@ -74,7 +74,10 @@ def _import_from_files(
             except ParseError as error:
                 application.get_window().add_toast_string(error.message)
                 continue
-    application.get_data().add_items(items)
+    application.get_data().add_items(
+        items,
+        application.get_figure_style_manager(),
+    )
 
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/import.ui")

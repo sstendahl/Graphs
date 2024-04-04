@@ -30,10 +30,10 @@ _GRAPHS_PROJECT_FILE_ONLY_FILE_FILTER = utilities.create_file_filters(
 def _save(application: Graphs.Application) -> None:
     data = application.get_data()
     project_file = data.props.file
-    project_dict = data.get_project_dict()
+    project_dict = data.get_project_dict(application.get_version())
     save_project_dict(project_file, project_dict)
     data.props.unsaved = False
-    application.emit("project-saved")
+    data.emit("saved")
 
     action = Gio.SimpleAction.new(
         "open-file-location",
