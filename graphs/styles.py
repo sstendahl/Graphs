@@ -98,7 +98,8 @@ class StyleManager(GObject.Object, Graphs.StyleManagerInterface):
         # Check for Ubuntu
         gtk_theme = Gtk.Settings.get_default().get_property("gtk-theme-name")
         self._system_style_name = "Yaru" \
-            if "SNAP" in os.environ and gtk_theme.lower().startswith("yaru") \
+            if "SNAP" in os.environ \
+            and gtk_theme.lower().startswith("yaru") \
             else "Adwaita"
         super().__init__(
             application=application,
@@ -770,10 +771,10 @@ class StyleEditor(Adw.NavigationPage):
             "figure.labelweight",
         ):
             self.style_params[key] = font_weight
-        self.style_params["font.style"] = FONT_STYLE_DICT[
-            font_description.get_style()]
-        self.style_params["font.variant"] = FONT_VARIANT_DICT[
-            font_description.get_variant()]
+        self.style_params["font.style"] = \
+            FONT_STYLE_DICT[font_description.get_style()]
+        self.style_params["font.variant"] = \
+            FONT_VARIANT_DICT[font_description.get_variant()]
 
         # line colors
         self.style_params["axes.prop_cycle"] = cycler(color=self.line_colors)

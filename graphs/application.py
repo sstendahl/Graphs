@@ -55,11 +55,12 @@ class PythonApplication(Graphs.Application):
     def __init__(self, application_id, **kwargs):
         settings = Gio.Settings(application_id)
         migrate.migrate_config(settings)
+        data = Data(self, settings)
         super().__init__(
             application_id=application_id,
             settings=settings,
             flags=Gio.ApplicationFlags.HANDLES_OPEN,
-            data=Data(self, settings),
+            data=data,
             **kwargs,
         )
         font_list = font_manager.findSystemFonts(fontpaths=None, fontext="ttf")
@@ -77,7 +78,7 @@ class PythonApplication(Graphs.Application):
                 self,
             )
             self.add_action(action)
-        figure_settings = self.get_data().get_figure_settings()
+        figure_settings = data.get_figure_settings()
         for val in ("left-scale", "right-scale", "top-scale", "bottom-scale"):
             action = Gio.SimpleAction.new_stateful(
                 f"change-{val}",
@@ -131,12 +132,12 @@ class PythonApplication(Graphs.Application):
         for action_key in ["center", "smoothen"]:
             self.add_action(actions_settings.create_action(action_key))
 
-        self.get_data().connect(
+        data.connect(
             "notify::items",
             ui.on_items_change,
             self,
         )
-        self.get_data().connect(
+        data.connect(
             "items-ignored",
             ui.on_items_ignored,
             self,
@@ -147,11 +148,12 @@ class PythonApplication(Graphs.Application):
         self.disconnect(self.save_handler)
         if handler == "close":
             self.quit()
+        data = self.get_data()
         if handler == "open_project":
-            self.get_data().props.project_file = args[0]
-            self.get_data().load()
+            data.props.project_file = args[0]
+            data.load()
         if handler == "reset_project":
-            self.get_data().reset()
+            data.reset()
 
     def do_open(self, files: list, nfiles: int, _hint: str) -> None:
         """Open Graphs with a File as argument."""
@@ -196,10 +198,11 @@ class PythonApplication(Graphs.Application):
                 if response == "discard_close":
                     self.quit()
                 if response == "save_close":
-                    self.save_handler = \
-                        self.connect("project-saved",
-                                     self.on_project_saved,
-                                     "close")
+                    self.save_handler = self.connect(
+                        "project-saved",
+                        self.on_project_saved,
+                        "close",
+                    )
                     project.save_project(self)
 
             dialog = ui.build_dialog("save_changes")
