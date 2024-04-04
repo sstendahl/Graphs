@@ -252,9 +252,6 @@ class PythonApplication(Graphs.Application):
                 self.set_entry_css(None, None, entry, button)
             self.set_window(window)
             window.connect("close-request", self.close_application)
-            if self.get_debug():
-                # TODO: implement in Vala and figure out gettext
-                window.set_title(_("Graphs (Development)"))
             self.set_figure_style_manager(styles.StyleManager(self))
             self.get_window().get_canvas().connect_after(
                 "notify::items",

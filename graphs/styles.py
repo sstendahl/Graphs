@@ -876,9 +876,8 @@ class StyleEditor(Adw.NavigationPage):
                 self.parent.navigation_view.pop()
 
         dialog = Graphs.tools_build_dialog("delete_style_dialog")
-        dialog.set_body(
-            _(f"Are you sure you want to delete {self.style.get_name()}?"),
-        )
+        msg = _("Are you sure you want to delete {stylename}?")
+        dialog.set_body(msg.format(stylename=self.style.get_name()))
         dialog.connect("response", on_response)
         dialog.present(self.parent)
 

@@ -122,6 +122,7 @@ namespace Graphs {
 
             if (application.debug) {
                 this.add_css_class ("devel");
+                this.set_title (_("Graphs (Development)"));
             }
         }
 
