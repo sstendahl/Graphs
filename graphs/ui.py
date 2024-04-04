@@ -2,7 +2,7 @@
 """Some UI utilities."""
 import contextlib
 import logging
-from gettext import dgettext as N_, gettext as _, pgettext as C_
+from gettext import gettext as _, pgettext as C_
 
 from gi.repository import Adw, GLib, Gio, Graphs, Gtk
 
@@ -86,22 +86,6 @@ def enable_axes_actions(
         section.append_submenu(label, scale_section)
     menu.append_section(None, section)
     application.get_window().get_view_menu_button().set_menu_model(menu)
-
-
-def on_items_ignored(
-    _data,
-    _ignored,
-    ignored: str,
-    application: Graphs.Application,
-) -> str:
-    """Add a notice if Items were skipped during import."""
-    application.get_window().add_toast_string(
-        N_(
-            "Items {items} already exist",
-            "Item {items} already exists",
-            len(ignored),
-        ).format(items=ignored),
-    )
 
 
 def add_data_dialog(application: Graphs.Application) -> None:

@@ -236,16 +236,17 @@ def new_project_action(
     application: Graphs.Application,
 ) -> None:
     """Clear the current project and reset Graphs to the initial state."""
-    if application.get_data().props.unsaved:
+    data = application.get_data()
+    if data.props.unsaved:
 
         def on_response(_dialog, response):
-            application.save_handler = application.connect(
-                "project-saved",
+            application.save_handler = data.connect(
+                "saved",
                 application.on_project_saved,
                 "reset_project",
             )
             if response == "discard_close":
-                application.get_data().reset()
+                data.reset()
             if response == "save_close":
                 project.save_project(application)
 
@@ -254,7 +255,7 @@ def new_project_action(
         dialog.connect("response", on_response)
         dialog.present()
         return
-    application.get_data().reset()
+    data.reset()
 
 
 def save_project_action(

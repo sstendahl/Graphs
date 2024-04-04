@@ -8,30 +8,6 @@ from gi.repository import Adw, GObject, Graphs, Gtk
 from graphs import misc, styles, ui, utilities
 
 
-def _get_widget_factory(window) -> Gtk.SignalListItemFactory:
-    """
-    Create a new Gtk.SignalListItemFactory instance.
-
-    Also connects the `setup and `bind` signals to the appropriate handlers.
-    Returns the factory instance.
-    """
-    factory = Gtk.SignalListItemFactory.new()
-    factory.connect("setup", lambda _f, i: i.set_child(Graphs.StylePreview()))
-    factory.connect("bind", _on_bind, window)
-    return factory
-
-
-def _on_bind(_factory, item, window) -> None:
-    """Add an edit button to the style previews of custom styles."""
-    widget = item.get_child()
-    style = item.get_item()
-    widget.set_style(style)
-    edit_button = widget.get_edit_button()
-    if style.get_mutable() and not edit_button.get_visible():
-        edit_button.set_visible(True)
-        edit_button.connect("clicked", window.edit_style, style)
-
-
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/figure_settings.ui")
 class FigureSettingsDialog(Adw.Dialog):
     """Figure Settings Dialog."""
@@ -99,7 +75,9 @@ class FigureSettingsDialog(Adw.Dialog):
         if highlighted is not None:
             getattr(self, highlighted).grab_focus()
         self.style_editor = styles.StyleEditor(self)
-        self.grid_view.set_factory(_get_widget_factory(self))
+        preview_handler = Graphs.PreviewWidgetHandler()
+        preview_handler.connect("edit-request", self.edit_style)
+        self.grid_view.set_factory(preview_handler.get_factory())
         self.grid_view.set_model(
             application.get_figure_style_manager().get_selection_model(),
         )
@@ -216,7 +194,7 @@ class FigureSettingsDialog(Adw.Dialog):
                 utilities.string_to_float(entry.get_text()),
             )
 
-    def edit_style(self, _button, style) -> None:
+    def edit_style(self, _handler, style) -> None:
         """Load the style editor for the selected style."""
         self.style_editor.load_style(style)
         self.navigation_view.push(self.style_editor)

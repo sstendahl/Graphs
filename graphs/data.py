@@ -23,10 +23,10 @@ class Data(GObject.Object, Graphs.DataInterface):
 
     __gtype_name__ = "GraphsData"
     __gsignals__ = {
-        "items-ignored": (GObject.SIGNAL_RUN_FIRST, None, (str, )),
+        "saved": (GObject.SIGNAL_RUN_FIRST, None, ()),
     }
 
-    application = GObject.Property(type=object)
+    settings = GObject.Property(type=Gio.Settings)
     figure_settings = GObject.Property(type=Graphs.FigureSettings)
     can_undo = GObject.Property(type=bool, default=False)
     can_redo = GObject.Property(type=bool, default=False)
@@ -35,12 +35,10 @@ class Data(GObject.Object, Graphs.DataInterface):
     file = GObject.Property(type=Gio.File)
     unsaved = GObject.Property(type=bool, default=False)
 
-    def __init__(self, application, settings):
-        figure_settings = Graphs.FigureSettings.new(
-            settings.get_child("figure"),
-        )
+    def __init__(self, settings: Gio.Settings):
+        figure_settings = Graphs.FigureSettings.new(settings)
         super().__init__(
-            application=application,
+            settings=settings,
             figure_settings=figure_settings,
         )
         self._initialize()
@@ -51,7 +49,7 @@ class Data(GObject.Object, Graphs.DataInterface):
         """Reset data."""
         # Reset figure settings
         default_figure_settings = Graphs.FigureSettings.new(
-            self.get_application().get_settings().get_child("figure"),
+            self.props.settings,
         )
         figure_settings = self.get_figure_settings()
         for prop in dir(default_figure_settings.props):
@@ -79,10 +77,6 @@ class Data(GObject.Object, Graphs.DataInterface):
         self._items = {}
         self._set_data_copy()
 
-    def get_application(self) -> Graphs.Application:
-        """Get application property."""
-        return self.props.application
-
     def get_figure_settings(self) -> Graphs.FigureSettings:
         """Get figure settings property."""
         return self.props.figure_settings
@@ -94,7 +88,7 @@ class Data(GObject.Object, Graphs.DataInterface):
 
     def _on_unsaved_change(self, _a, _b) -> None:
         if not self.props.unsaved:
-            self.get_application().emit("project-saved")
+            self.emit("saved")
         self.notify("project-name")
         self.notify("project-path")
 
@@ -232,7 +226,11 @@ class Data(GObject.Object, Graphs.DataInterface):
         self.set_items(items)
         self._current_batch.append((3, (index2, index1)))
 
-    def add_items(self, items: misc.ItemList) -> None:
+    def add_items(
+        self,
+        items: misc.ItemList,
+        style_manager: Graphs.StyleManagerInterface,
+    ) -> None:
         """
         Add items to be managed.
 
@@ -240,13 +238,8 @@ class Data(GObject.Object, Graphs.DataInterface):
         New Items with a x- or y-label change the figures current labels if
         they are still the default. If they are already modified and do not
         match the items label, they get moved to another axis.
-        If items are ignored, the `items-ignored` signal will be emmitted.
         """
-        ignored = []
-        application = self.get_application()
         figure_settings = self.get_figure_settings()
-        settings = application.get_settings_child("figure")
-        style_manager = self.get_application().get_figure_style_manager()
         selected_style = style_manager.get_selected_style_params()
         color_cycle = selected_style["axes.prop_cycle"].by_key()["color"]
         used_colors = []
@@ -259,7 +252,7 @@ class Data(GObject.Object, Graphs.DataInterface):
 
         def _is_default(prop):
             return figure_settings.get_property(prop) == \
-                settings.get_string(prop)
+                self.props.settings.get_string(prop)
 
         for item_ in self:
             color = item_.get_color()
@@ -314,8 +307,6 @@ class Data(GObject.Object, Graphs.DataInterface):
             self._current_batch.append(change)
         self.optimize_limits()
         self.add_history_state()
-        if ignored:
-            self.emit("items-ignored", ", ".join(ignored))
         self.notify("items")
         self.notify("items_selected")
         self.notify("empty")
@@ -323,7 +314,6 @@ class Data(GObject.Object, Graphs.DataInterface):
     def delete_items(self, items: misc.ItemList):
         """Delete specified items."""
         settings = self.get_figure_settings()
-        default = self.get_application().get_settings_child("figure")
         for item_ in items:
             self._current_batch.append(
                 (2, (self.index(item_), item_.to_dict())),
@@ -340,7 +330,9 @@ class Data(GObject.Object, Graphs.DataInterface):
                 axis_label = getattr(settings, f"get_{direction}_label")()
                 if not used[position] and item_label == axis_label:
                     set_label = getattr(settings, f"set_{direction}_label")
-                    set_label(default.get_string(f"{direction}-label"))
+                    set_label(
+                        self.props.settings.get_string(f"{direction}-label"),
+                    )
 
         self.notify("items")
         self.add_history_state()
@@ -595,11 +587,11 @@ class Data(GObject.Object, Graphs.DataInterface):
             figure_settings.set_property(f"max_{direction}", max_all)
         self.add_view_history_state()
 
-    def get_project_dict(self) -> dict:
+    def get_project_dict(self, version: str) -> dict:
         """Convert data to dict."""
         figure_settings = self.get_figure_settings()
         return {
-            "version": self.get_application().get_version(),
+            "version": version,
             "data": [item_.to_dict() for item_ in self],
             "figure-settings": {
                 key: figure_settings.get_property(key)

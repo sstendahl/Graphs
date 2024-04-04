@@ -21,7 +21,7 @@ namespace Graphs {
     }
 
     [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/style_preview.ui")]
-    public class StylePreview : Box {
+    private class StylePreview : Box {
 
         [GtkChild]
         private unowned Label label { get; }
@@ -67,6 +67,35 @@ namespace Graphs {
             this.edit_button.get_style_context ().add_provider (
                 this.provider, STYLE_PROVIDER_PRIORITY_APPLICATION
             );
+        }
+    }
+
+    public class PreviewWidgetHandler : Object {
+        public SignalListItemFactory factory { get; construct set; }
+        public signal void edit_request (Style style);
+
+        construct {
+            this.factory = new SignalListItemFactory ();
+            this.factory.setup.connect (on_setup);
+            this.factory.bind.connect (on_bind);
+        }
+
+        private void on_setup (Object object) {
+            ListItem item = (ListItem) object;
+            item.set_child (new StylePreview ());
+        }
+
+        private void on_bind (Object object) {
+            ListItem item = (ListItem) object;
+            StylePreview preview = (StylePreview) item.get_child ();
+            Style style = (Style) item.get_item ();
+            preview.style = style;
+            if (style.mutable && !preview.edit_button.get_visible ()) {
+                preview.edit_button.set_visible (true);
+                preview.edit_button.clicked.connect (() => {
+                    this.edit_request (style);
+                });
+            }
         }
     }
 }

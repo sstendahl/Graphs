@@ -59,14 +59,17 @@ class AddEquationDialog(Adw.Dialog):
             if name == "":
                 name = f"Y = {values['equation']}"
             style_manager = self.props.application.get_figure_style_manager()
-            self.props.application.get_data().add_items([
-                DataItem.new(
-                    style_manager.get_selected_style_params(),
-                    xdata,
-                    ydata,
-                    name=name,
-                ),
-            ])
+            self.props.application.get_data().add_items(
+                [
+                    DataItem.new(
+                        style_manager.get_selected_style_params(),
+                        xdata,
+                        ydata,
+                        name=name,
+                    ),
+                ],
+                self.props.application.get_figure_style_manager(),
+            )
             self.close()
         except ValueError as error:
             self.toast_overlay.add_toast(Adw.Toast(title=error))

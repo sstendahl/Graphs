@@ -7,7 +7,6 @@ from gi.repository import Adw, GObject, Gio, Graphs, Gtk
 
 from graphs import ui, utilities
 from graphs.canvas import Canvas
-from graphs.data import Data
 from graphs.item import DataItem, FillItem
 from graphs.misc import EQUATIONS
 
@@ -50,11 +49,10 @@ class CurveFittingDialog(Adw.Dialog):
 
         self.custom_equation.connect("notify::text", self.on_equation_change)
         self.equation.connect("notify::selected", self.set_equation)
-        self.fitting_parameters = \
-            FittingParameterContainer(application, application.get_settings())
+        self.fitting_parameters = FittingParameterContainer()
 
         for var in utilities.get_free_variables(self.equation_string):
-            self.fitting_parameters.add_items([FittingParameter(name=var)])
+            self.fitting_parameters.add(FittingParameter(name=var))
 
         # Generate items for the canvas
         self.data_curve = DataItem.new(
@@ -165,9 +163,10 @@ class CurveFittingDialog(Adw.Dialog):
         Set the free variables and corresponding entry rows when the equation
         has been changed.
         """
+        names = [item.get_name() for item in self.fitting_parameters]
         for var in utilities.get_free_variables(self.equation_string):
-            if var not in self.fitting_parameters.get_names():
-                self.fitting_parameters.add_items([FittingParameter(name=var)])
+            if var not in names:
+                self.fitting_parameters.add(FittingParameter(name=var))
         self.fitting_parameters.remove_unused(
             utilities.get_free_variables(self.equation_string),
         )
@@ -404,14 +403,17 @@ class CurveFittingDialog(Adw.Dialog):
         """Add fitted data to the items in the main application."""
         application = self.props.application
         style_manager = application.get_figure_style_manager()
-        application.get_data().add_items([
-            DataItem.new(
-                style_manager.get_selected_style_params(),
-                name=self.fitted_curve.get_name(),
-                xdata=list(self.fitted_curve.xdata),
-                ydata=list(self.fitted_curve.ydata),
-            ),
-        ])
+        application.get_data().add_items(
+            [
+                DataItem.new(
+                    style_manager.get_selected_style_params(),
+                    name=self.fitted_curve.get_name(),
+                    xdata=list(self.fitted_curve.xdata),
+                    ydata=list(self.fitted_curve.ydata),
+                ),
+            ],
+            application.get_figure_style_manager(),
+        )
         self.close()
 
     def set_entry_rows(self) -> None:
@@ -428,19 +430,27 @@ class CurveFittingDialog(Adw.Dialog):
             self.fitting_params.append(FittingParameterEntry(self, arg))
 
 
-class FittingParameterContainer(Data):
+class FittingParameterContainer():
     """
     Container class for the Fitting Parameters.
 
     Each item in the container represents one fitting parameter.
     """
 
-    __gtype_name__ = "GraphsFittingParameterContainer"
+    def __init__(self):
+        self._items = {}
 
-    def add_items(self, items: list) -> None:
+    def __iter__(self):
+        """Iterate over items."""
+        return iter(self._items.values())
+
+    def add(self, item) -> None:
         """Add new fitting parameters to the container."""
-        for item in items:
-            self._items[item.get_name()] = item
+        self._items[item.get_name()] = item
+
+    def get(self, arg):
+        """Retrieve an item."""
+        return self._items[arg]
 
     def remove_unused(self, used_list: list) -> None:
         """
@@ -516,7 +526,7 @@ class FittingParameterEntry(Gtk.Box):
         """Initialize the fitting parameter entry."""
         super().__init__(application=parent.props.application)
         self.parent = parent
-        self.params = parent.fitting_parameters[arg]
+        self.params = parent.fitting_parameters.get(arg)
         msg = ("Fitting Parameters for {param_name}")
         self.label.set_markup(
             f"<b> {msg.format(param_name=self.params.get_name())}: </b>",

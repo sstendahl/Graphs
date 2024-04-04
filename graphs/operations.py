@@ -416,6 +416,7 @@ def combine(application: Graphs.Application) -> None:
     # Create the item itself
     new_xdata, new_ydata = sort_data(new_xdata, new_ydata)
     style = application.get_figure_style_manager().get_selected_style_params()
-    application.get_data().add_items([
-        DataItem.new(style, new_xdata, new_ydata, name=_("Combined Data")),
-    ])
+    application.get_data().add_items(
+        [DataItem.new(style, new_xdata, new_ydata, name=_("Combined Data"))],
+        application.get_figure_style_manager(),
+    )
