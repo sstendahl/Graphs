@@ -16,6 +16,11 @@ ShortcutsWindow help_overlay {
       }
 
       ShortcutsShortcut {
+        title: C_("shortcut window", "Open Help");
+        action-name: "app.help";
+      }
+
+      ShortcutsShortcut {
         title: C_("shortcut window", "Open Figure Settings");
         accelerator: "<primary>comma";
       }
@@ -35,17 +40,17 @@ ShortcutsWindow help_overlay {
 
       ShortcutsShortcut {
         title: C_("shortcut window", "Pan Mode");
-        action-name: "app.mode_pan";
+        accelerator: "<primary>1";
       }
 
       ShortcutsShortcut {
         title: C_("shortcut window", "Zoom Mode");
-        action-name: "app.mode_zoom";
+        accelerator: "<primary>2";
       }
 
       ShortcutsShortcut {
         title: C_("shortcut window", "Select Mode");
-        action-name: "app.mode_select";
+        accelerator: "<primary>3";
       }
     }
 
@@ -134,7 +139,7 @@ ShortcutsWindow help_overlay {
 
       ShortcutsShortcut {
         title: C_("shortcut window", "Toggle Sidebar");
-        action-name: "app.toggle_sidebar";
+        accelerator: "F9";
       }
     }
 
