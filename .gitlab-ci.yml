@@ -39,7 +39,7 @@ pages:
   extends:
     - .vars
   script:
-    - flatpak-builder --user --disable-rofiles-fuse --keep-build-dirs --stop-at=${FLATPAK_MODULE} flatpak_app ${MANIFEST_PATH}
+    - flatpak-builder --user --disable-rofiles-fuse --stop-at=${FLATPAK_MODULE} flatpak_app ${MANIFEST_PATH}
     - flatpak build-finish --socket=x11 --share=network flatpak_app
     - echo "../build-aux/build-help-html.sh" | flatpak-builder --user --disable-rofiles-fuse --build-shell=${FLATPAK_MODULE} flatpak_app ${MANIFEST_PATH}
     - mkdir -p public/help
