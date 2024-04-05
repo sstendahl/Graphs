@@ -23,7 +23,7 @@ copyright = '2022 - 2024'
 homepage_url = 'https://apps.gnome.org/Graphs/'
 vcs_url = 'https://gitlab.gnome.org/World/Graphs'
 issue_url = vcs_url + '/issues'
-help_url = 'https://gitlab.gnome.org/World/Graphs/-/wikis/home'
+help_url = 'https://world.pages.gitlab.gnome.org/Graphs/help/'
 author = 'Sjoerd Stendahl et al.'
 
 i18n = import('i18n')
