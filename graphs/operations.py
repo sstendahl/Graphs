@@ -132,7 +132,7 @@ def perform_operation(
             )
             new_xdata, new_ydata = list(new_xdata), list(new_ydata)
             if discard and application.get_mode() == 2:
-                 logging.debug("Discard is true")
+                logging.debug("Discard is true")
                 application.get_window().add_toast_string(
                     _(
                         "Data that was outside of the highlighted area has"
