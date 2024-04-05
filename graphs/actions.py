@@ -66,16 +66,6 @@ def perform_operation(
     )
 
 
-def toggle_sidebar(
-    _action,
-    _shortcut,
-    application: Graphs.Application,
-) -> None:
-    """Toggle the main Sidebar."""
-    split_view = application.get_window().get_split_view()
-    split_view.set_collapsed(not split_view.get_collapsed())
-
-
 def change_scale(
     action: Gio.Action,
     target: GLib.Variant,
@@ -98,16 +88,6 @@ def change_scale(
         )
     application.get_window().get_canvas().get_parent().grab_focus()
     data.add_history_state()
-
-
-def set_mode(
-    _action,
-    _target,
-    application: Graphs.Application,
-    mode: str,
-) -> None:
-    """Set interaction mode."""
-    application.set_mode(mode)
 
 
 def quit_action(_action, _target, application: Graphs.Application) -> None:
