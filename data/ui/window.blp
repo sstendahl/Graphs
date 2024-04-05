@@ -121,6 +121,22 @@ template $GraphsWindow: Adw.ApplicationWindow {
       trigger: "<primary><shift>N";
       action: "action(app.new_project)";
     }
+    Shortcut {
+      trigger: "F9";
+      action: "action(app.toggle_sidebar)";
+    }
+    Shortcut {
+      trigger: "<primary>1";
+      action: "action(app.mode_pan)";
+    }
+    Shortcut {
+      trigger: "<primary>2";
+      action: "action(app.mode_zoom)";
+    }
+    Shortcut {
+      trigger: "<primary>3";
+      action: "action(app.mode_select)";
+    }
   }
 
   EventControllerKey key_controller {}

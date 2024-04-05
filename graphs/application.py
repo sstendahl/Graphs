@@ -76,6 +76,7 @@ class PythonApplication(Graphs.Application):
                 self,
             )
             self.add_action(action)
+        self.set_accels_for_action("app.help", ["F1"])
         figure_settings = data.get_figure_settings()
         for val in ("left-scale", "right-scale", "top-scale", "bottom-scale"):
             action = Gio.SimpleAction.new_stateful(
@@ -106,7 +107,6 @@ class PythonApplication(Graphs.Application):
         )
         toggle_sidebar_action.connect("activate", actions.toggle_sidebar, self)
         self.add_action(toggle_sidebar_action)
-        self.set_accels_for_action("app.toggle_sidebar", ["F9"])
 
         for count, mode in enumerate(["pan", "zoom", "select"]):
             action = Gio.SimpleAction.new(f"mode_{mode}", None)
@@ -117,7 +117,6 @@ class PythonApplication(Graphs.Application):
                 count,
             )
             self.add_action(action)
-            self.set_accels_for_action(f"app.mode_{mode}", [f"F{count + 1}"])
 
         operation_action = Gio.SimpleAction.new(
             "app.perform_operation",
