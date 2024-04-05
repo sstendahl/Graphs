@@ -131,8 +131,8 @@ def perform_operation(
                 item, xdata, ydata, *args,
             )
             new_xdata, new_ydata = list(new_xdata), list(new_ydata)
-            if discard:
-                logging.debug("Discard is true")
+            if discard and application.get_mode() == 2:
+                 logging.debug("Discard is true")
                 application.get_window().add_toast_string(
                     _(
                         "Data that was outside of the highlighted area has"
