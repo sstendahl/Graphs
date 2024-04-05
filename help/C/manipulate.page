@@ -1,0 +1,44 @@
+<page xmlns="http://projectmallard.org/1.0/"
+      type="topic"
+      id="manipulate">
+<info>
+  <include href="legal.xml" xmlns="http://www.w3.org/2001/XInclude"/>
+  <link type="guide" xref="index#howto"/>
+</info>
+<title>Manipulating Data</title>
+
+<p>
+There are many different ways to manipulate data using Graphs. All data is
+treated the same using Graphs, independent what file it is imported from, or if
+it's a generated equation. When selecting a part of the canvas using the
+Highlight tool, only the highlight area will be manipulated.
+</p>
+
+<section>
+<title>Smoothening</title>
+<p>
+The smoothening action has two different modes, a rolling average or the
+Savitzky-Galov filter. The moving average simply works iterating through the
+data set, and replacing each point by the average of the last few data points
+that were encountered, this way sharp outliers are ignored but details may be
+lost. Sudden actual changes in the data may also be detected later when a
+smoothening has been applied. Another way to smoothen the data is the
+Savitzky-Galov. The difference with the moving average, is that not a simple
+average is used for the last data points, but instead a polynomial function is
+fitted between the data points. This makes it possible to filter the
+underlaying signal still quite nicely out of very noisy data.
+</p>
+</section>
+
+<section>
+<title>Custom Transformations</title>
+<p>
+Another way to manipulate the data is by using custom transformations. This
+field transforms both X and Y coordinate piece by piece according to an
+equation of choice. For instance, to take the square of all Y-coordinates,
+simply set <code>Y = Y²</code> on the y-data field, and <code>X = X</code> on
+the x-data field. Note that the input coordinates are not case-sensitive.
+</p>
+<media type="image" src="media/custom_transform_light.png"/>
+</section>
+</page>

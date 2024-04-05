@@ -20,6 +20,7 @@ from matplotlib import font_manager
 
 _ACTIONS = [
     "quit",
+    "help",
     "about",
     "figure_settings",
     "add_data",

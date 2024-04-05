@@ -72,6 +72,7 @@ add_project_arguments (
 )
 
 subdir('data')
+subdir('help')
 subdir('graphs')
 subdir('po')
 subdir('tests')
