@@ -5,7 +5,8 @@ yelp-build html help/C/* -o public/help/C
 
 while read lang; do
     mkdir -p public/help/$lang
-    yelp-build html help/$lang -o public/help/$lang/*
+    yelp-build html help/$lang/* -o public/help/$lang
 done < help/LINGUAS
 
 cp help/LINGUAS public/help
+cp build-aux/help-index.html public/help/index.html
