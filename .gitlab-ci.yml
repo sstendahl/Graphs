@@ -5,7 +5,7 @@ include:
     file: "flatpak/flatpak_ci_initiative.yml"
 
 .vars:
-  image: 'quay.io/gnome_infrastructure/gnome-runtime-images:gnome-46'
+  image: quay.io/gnome_infrastructure/gnome-runtime-images:gnome-$RUNTIME
   variables:
     MANIFEST_PATH: se.sjoerd.Graphs.json
     FLATPAK_MODULE: graphs
@@ -13,6 +13,7 @@ include:
     RUNTIME_REPO: "https://nightly.gnome.org/gnome-nightly.flatpakrepo"
     CI_IMAGE_X86_64: "quay.io/gnome_infrastructure/gnome-runtime-images:gnome-master"
     BUNDLE: "se.sjoerd.Graphs.flatpak"
+  interruptible: true
 
 # Build Flatpak for x86_64
 flatpak@x86_64:
@@ -33,3 +34,21 @@ flake8:
   script:
     - pip install flake8 flake8-docstrings flake8-simplify flake8-unused-arguments flake8-quotes flake8-bugbear flake8-pie flake8-print flake8-warnings flake8-commas flake8-builtins flake8-import-order pep8-naming
     - flake8
+
+pages:
+  extends:
+    - .vars
+  script:
+    - flatpak-builder --user --disable-rofiles-fuse --keep-build-dirs --stop-at=${FLATPAK_MODULE} flatpak_app ${MANIFEST_PATH}
+    - flatpak build-finish --socket=x11 --share=network flatpak_app
+    - echo "../build-aux/build-help-html.sh" | flatpak-builder --user --disable-rofiles-fuse --build-shell=${FLATPAK_MODULE} flatpak_app ${MANIFEST_PATH}
+    - mkdir -p public/help
+    - cp -r .flatpak-builder/build/${FLATPAK_MODULE}/_flatpak_build/help-out public/help
+    - cp help/LINGUAS public/help/
+    - chmod -R a=rwx public
+  artifacts:
+    paths:
+      - "public"
+  rules:
+    - if: $CI_COMMIT_BRANCH == "main"
+  stage: deploy
