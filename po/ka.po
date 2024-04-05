@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2024-03-31 21:36+0000\n"
-"PO-Revision-Date: 2024-04-01 05:22+0200\n"
+"POT-Creation-Date: 2024-04-04 20:54+0000\n"
+"PO-Revision-Date: 2024-04-05 04:54+0200\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <ka@li.org>\n"
 "Language: ka\n"
@@ -19,7 +19,8 @@ msgstr ""
 "X-Generator: Poedit 3.3.2\n"
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:6
-#: data/se.sjoerd.Graphs.desktop.in.in:3 data/ui/window.blp:9 graphs/ui.py:192
+#: data/se.sjoerd.Graphs.desktop.in.in:3 data/ui/window.blp:9
+#: graphs/about.vala:16
 msgid "Graphs"
 msgstr "Graphs"
 
@@ -136,7 +137,7 @@ msgstr "X დასასრული"
 msgid "Step Size"
 msgstr "ბიჯის ზომა"
 
-#: data/ui/add_style.blp:6 data/ui/figure_settings.blp:235
+#: data/ui/add_style.blp:6 data/ui/figure_settings.blp:237
 msgid "Add New Style"
 msgstr "ახალი სტილის დამატება"
 
@@ -148,71 +149,71 @@ msgstr "ნიმუში"
 msgid "Name"
 msgstr "სახელი"
 
-#: data/ui/curve_fitting.blp:25 data/ui/item_box.blp:64
+#: data/ui/curve_fitting.blp:27 data/ui/item_box.blp:64
 msgid "Curve Fitting"
 msgstr "მრუდის ჩატევა"
 
-#: data/ui/curve_fitting.blp:30
+#: data/ui/curve_fitting.blp:32
 msgid "Open Curve Fitting Menu"
 msgstr "მრუდის ჩატევის მენიუს გახსნა"
 
-#: data/ui/curve_fitting.blp:47
+#: data/ui/curve_fitting.blp:49
 msgid "Equation"
 msgstr "განტოლებიდან"
 
-#: data/ui/curve_fitting.blp:50
+#: data/ui/curve_fitting.blp:52
 msgctxt "regression-type"
 msgid "Linear"
 msgstr "ხაზოვანი"
 
-#: data/ui/curve_fitting.blp:51
+#: data/ui/curve_fitting.blp:53
 msgctxt "regression-type"
 msgid "Quadratic"
 msgstr "კვადრატული"
 
-#: data/ui/curve_fitting.blp:52
+#: data/ui/curve_fitting.blp:54
 msgctxt "regression-type"
 msgid "Exponential"
 msgstr "ექსპოტენციალური"
 
-#: data/ui/curve_fitting.blp:53
+#: data/ui/curve_fitting.blp:55
 msgctxt "regression-type"
 msgid "Power Law"
 msgstr ""
 
-#: data/ui/curve_fitting.blp:54
+#: data/ui/curve_fitting.blp:56
 msgctxt "regression-type"
 msgid "Logarithmic"
 msgstr "ლოგარითმული"
 
-#: data/ui/curve_fitting.blp:55
+#: data/ui/curve_fitting.blp:57
 msgctxt "regression-type"
 msgid "Sigmoid Logistic"
 msgstr "ლოგისტიკური სიგმოიდი"
 
-#: data/ui/curve_fitting.blp:56
+#: data/ui/curve_fitting.blp:58
 msgctxt "regression-type"
 msgid "Gaussian"
 msgstr "გაუსის"
 
-#: data/ui/curve_fitting.blp:57
+#: data/ui/curve_fitting.blp:59
 msgctxt "regression-type"
 msgid "Custom"
 msgstr "ხელით მითითებული"
 
-#: data/ui/curve_fitting.blp:63
+#: data/ui/curve_fitting.blp:65
 msgid "Y = "
 msgstr "Y = "
 
-#: data/ui/curve_fitting.blp:90
+#: data/ui/curve_fitting.blp:92
 msgid "Add Fit to Data"
 msgstr ""
 
-#: data/ui/curve_fitting.blp:106 data/ui/window.blp:584 graphs/ui.py:43
+#: data/ui/curve_fitting.blp:108 data/ui/window.blp:584 graphs/ui.py:42
 msgid "Toggle Sidebar"
 msgstr "გვერდითი პანელი ჩვენების ჩართ/გამორთ"
 
-#: data/ui/curve_fitting.blp:118 data/ui/window.blp:624
+#: data/ui/curve_fitting.blp:120 data/ui/window.blp:624
 msgid "Canvas Failed to Load"
 msgstr "ტილოს ჩატვირთვა ჩავარდა"
 
@@ -292,156 +293,156 @@ msgstr "მარჯვენა"
 msgid "Line Properties"
 msgstr "ხაზის თვისებები"
 
-#: data/ui/edit_item.blp:45 data/ui/style_editor.blp:83
+#: data/ui/edit_item.blp:45 data/ui/style_editor.blp:84
 msgid "Linestyle"
 msgstr "ხაზის სტილი"
 
-#: data/ui/edit_item.blp:48 data/ui/style_editor.blp:86
+#: data/ui/edit_item.blp:48 data/ui/style_editor.blp:87
 msgctxt "linestyle"
 msgid "None"
 msgstr "არაფერი"
 
-#: data/ui/edit_item.blp:49 data/ui/style_editor.blp:87
+#: data/ui/edit_item.blp:49 data/ui/style_editor.blp:88
 msgctxt "linestyle"
 msgid "Solid"
 msgstr "მყარი"
 
-#: data/ui/edit_item.blp:50 data/ui/style_editor.blp:88
+#: data/ui/edit_item.blp:50 data/ui/style_editor.blp:89
 msgctxt "linestyle"
 msgid "Dotted"
 msgstr "წერტილოვანი"
 
-#: data/ui/edit_item.blp:51 data/ui/style_editor.blp:89
+#: data/ui/edit_item.blp:51 data/ui/style_editor.blp:90
 msgctxt "linestyle"
 msgid "Dashed"
 msgstr "ტირეებით"
 
-#: data/ui/edit_item.blp:52 data/ui/style_editor.blp:90
+#: data/ui/edit_item.blp:52 data/ui/style_editor.blp:91
 msgctxt "linestyle"
 msgid "Dashdot"
 msgstr "ტირეწერტილი"
 
-#: data/ui/edit_item.blp:59 data/ui/style_editor.blp:97
+#: data/ui/edit_item.blp:59 data/ui/style_editor.blp:98
 msgid "Linewidth"
 msgstr "ხაზისსიგანე"
 
-#: data/ui/edit_item.blp:73 data/ui/style_editor.blp:112
+#: data/ui/edit_item.blp:73 data/ui/style_editor.blp:113
 msgid "Markers"
 msgstr "სანიშნები"
 
-#: data/ui/edit_item.blp:76 data/ui/style_editor.blp:115
+#: data/ui/edit_item.blp:76 data/ui/style_editor.blp:116
 msgctxt "markerstyle"
 msgid "Nothing"
 msgstr "არაფერი"
 
-#: data/ui/edit_item.blp:77 data/ui/style_editor.blp:116
+#: data/ui/edit_item.blp:77 data/ui/style_editor.blp:117
 msgctxt "markerstyle"
 msgid "Point"
 msgstr "წერტილი"
 
-#: data/ui/edit_item.blp:78 data/ui/style_editor.blp:117
+#: data/ui/edit_item.blp:78 data/ui/style_editor.blp:118
 msgctxt "markerstyle"
 msgid "Pixel"
 msgstr "პიქსელი"
 
-#: data/ui/edit_item.blp:79 data/ui/style_editor.blp:118
+#: data/ui/edit_item.blp:79 data/ui/style_editor.blp:119
 msgctxt "markerstyle"
 msgid "Circle"
 msgstr "წრე"
 
-#: data/ui/edit_item.blp:80 data/ui/style_editor.blp:119
+#: data/ui/edit_item.blp:80 data/ui/style_editor.blp:120
 msgctxt "markerstyle"
 msgid "Triangle Down"
 msgstr "სამკუთხედი დაბლა"
 
-#: data/ui/edit_item.blp:81 data/ui/style_editor.blp:120
+#: data/ui/edit_item.blp:81 data/ui/style_editor.blp:121
 msgctxt "markerstyle"
 msgid "Triangle Up"
 msgstr "სამკუთხედი მაღლა"
 
-#: data/ui/edit_item.blp:82 data/ui/style_editor.blp:121
+#: data/ui/edit_item.blp:82 data/ui/style_editor.blp:122
 msgctxt "markerstyle"
 msgid "Triangle Left"
 msgstr "სამკუთხედი მარცხნივ"
 
-#: data/ui/edit_item.blp:83 data/ui/style_editor.blp:122
+#: data/ui/edit_item.blp:83 data/ui/style_editor.blp:123
 msgctxt "markerstyle"
 msgid "Triangle Right"
 msgstr "სამკუთხედი მარჯვნივ"
 
-#: data/ui/edit_item.blp:84 data/ui/style_editor.blp:123
+#: data/ui/edit_item.blp:84 data/ui/style_editor.blp:124
 msgctxt "markerstyle"
 msgid "Octagon"
 msgstr "რვაკუთხედი"
 
-#: data/ui/edit_item.blp:85 data/ui/style_editor.blp:124
+#: data/ui/edit_item.blp:85 data/ui/style_editor.blp:125
 msgctxt "markerstyle"
 msgid "Square"
 msgstr "კვადრატი"
 
-#: data/ui/edit_item.blp:86 data/ui/style_editor.blp:125
+#: data/ui/edit_item.blp:86 data/ui/style_editor.blp:126
 msgctxt "markerstyle"
 msgid "Pentagon"
 msgstr "ხუთკუთხედი"
 
-#: data/ui/edit_item.blp:87 data/ui/style_editor.blp:126
+#: data/ui/edit_item.blp:87 data/ui/style_editor.blp:127
 msgctxt "markerstyle"
 msgid "Star"
 msgstr "ვარსკვლავი"
 
-#: data/ui/edit_item.blp:88 data/ui/style_editor.blp:127
+#: data/ui/edit_item.blp:88 data/ui/style_editor.blp:128
 msgctxt "markerstyle"
 msgid "Hexagon 1"
 msgstr "ექვსკუთხედი 1"
 
-#: data/ui/edit_item.blp:89 data/ui/style_editor.blp:128
+#: data/ui/edit_item.blp:89 data/ui/style_editor.blp:129
 msgctxt "markerstyle"
 msgid "Hexagon 2"
 msgstr "ექვსკუთხედი 2"
 
-#: data/ui/edit_item.blp:90 data/ui/style_editor.blp:129
+#: data/ui/edit_item.blp:90 data/ui/style_editor.blp:130
 msgctxt "markerstyle"
 msgid "Plus"
 msgstr "პლუსი"
 
-#: data/ui/edit_item.blp:91 data/ui/style_editor.blp:130
+#: data/ui/edit_item.blp:91 data/ui/style_editor.blp:131
 msgctxt "markerstyle"
 msgid "X"
 msgstr "X"
 
 #. Translators: Diamond as in Cards Symbol
-#: data/ui/edit_item.blp:93 data/ui/style_editor.blp:132
+#: data/ui/edit_item.blp:93 data/ui/style_editor.blp:133
 msgctxt "markerstyle"
 msgid "Diamond"
 msgstr "პრიზმა"
 
 #. Translators: Diamond as in Cards Symbol
-#: data/ui/edit_item.blp:95 data/ui/style_editor.blp:134
+#: data/ui/edit_item.blp:95 data/ui/style_editor.blp:135
 msgctxt "markerstyle"
 msgid "Thin Diamond"
 msgstr "თხელი პრიზმა"
 
-#: data/ui/edit_item.blp:96 data/ui/style_editor.blp:135
+#: data/ui/edit_item.blp:96 data/ui/style_editor.blp:136
 msgctxt "markerstyle"
 msgid "Vertical Line"
 msgstr "ვერტიკალური ხაზი"
 
-#: data/ui/edit_item.blp:97 data/ui/style_editor.blp:136
+#: data/ui/edit_item.blp:97 data/ui/style_editor.blp:137
 msgctxt "markerstyle"
 msgid "Horizontal Line"
 msgstr "ჰორიზონტალური ხაზი"
 
-#: data/ui/edit_item.blp:98 data/ui/style_editor.blp:137
+#: data/ui/edit_item.blp:98 data/ui/style_editor.blp:138
 msgctxt "markerstyle"
 msgid "Filled Plus"
 msgstr "შევსებული პლუს"
 
-#: data/ui/edit_item.blp:99 data/ui/style_editor.blp:138
+#: data/ui/edit_item.blp:99 data/ui/style_editor.blp:139
 msgctxt "markerstyle"
 msgid "Filled X"
 msgstr "შევსებული X"
 
-#: data/ui/edit_item.blp:106 data/ui/style_editor.blp:145
+#: data/ui/edit_item.blp:106 data/ui/style_editor.blp:146
 msgid "Marker Size"
 msgstr "მარკერის ზომა"
 
@@ -458,32 +459,39 @@ msgid "File Format"
 msgstr "ფაილის ფორმატი"
 
 #: data/ui/export_figure.blp:38
+msgctxt "file-format"
 msgid "Encapsulated Postscript"
 msgstr "ჩასმული PostScript"
 
 #: data/ui/export_figure.blp:39
+msgctxt "file-format"
 msgid "Joint Photographic Experts Group"
-msgstr "JPEG (Joint Photographic Experts Group)"
+msgstr "ფოტოგრაფების ექსპერტების გაერთიანებული ჯგუფი"
 
 #: data/ui/export_figure.blp:40
+msgctxt "file-format"
 msgid "Portable Document Format"
-msgstr "PDF"
+msgstr "გადატანადი დოკუმენტის ფორმატი"
 
 #: data/ui/export_figure.blp:41
+msgctxt "file-format"
 msgid "Portable Network Graphics"
-msgstr "PNG (Portable Network Graphics)"
+msgstr "პორტატული ქსელური გრაფიკა"
 
 #: data/ui/export_figure.blp:42
+msgctxt "file-format"
 msgid "Postscript"
 msgstr "PostScript"
 
 #: data/ui/export_figure.blp:43
+msgctxt "file-format"
 msgid "Scalable Vector Graphics"
 msgstr "გადიდებადი ვექტორული გრაფიკა"
 
 #: data/ui/export_figure.blp:44
+msgctxt "file-format"
 msgid "WebP Image Format"
-msgstr "WebP გამოსახულება"
+msgstr "WebP გამოსახულების ფორმატი"
 
 #: data/ui/export_figure.blp:49
 msgid "Resolution (dpi)"
@@ -493,131 +501,131 @@ msgstr "გარჩევადობა (DPI)"
 msgid "Transparent Background"
 msgstr "გამჭვირვალე ფონი"
 
-#: data/ui/figure_settings.blp:22 data/ui/window.blp:645
+#: data/ui/figure_settings.blp:24 data/ui/window.blp:645
 msgid "Figure Settings"
 msgstr "ფიგურის პარამეტრები"
 
-#: data/ui/figure_settings.blp:38
+#: data/ui/figure_settings.blp:40
 msgid "Labels"
 msgstr "ჭდეები"
 
-#: data/ui/figure_settings.blp:41
+#: data/ui/figure_settings.blp:43
 msgid "Title"
 msgstr "სათაური"
 
-#: data/ui/figure_settings.blp:58
+#: data/ui/figure_settings.blp:60
 msgid "Axis Limits"
 msgstr "ღერძის ლიმიტები"
 
-#: data/ui/figure_settings.blp:118
+#: data/ui/figure_settings.blp:120
 msgid "Scaling"
 msgstr "მასშტაბირება"
 
-#: data/ui/figure_settings.blp:123 data/ui/figure_settings.blp:135
-#: data/ui/figure_settings.blp:147 data/ui/figure_settings.blp:159
-#: graphs/ui.py:60
+#: data/ui/figure_settings.blp:125 data/ui/figure_settings.blp:137
+#: data/ui/figure_settings.blp:149 data/ui/figure_settings.blp:161
+#: graphs/ui.py:59
 msgctxt "scale"
 msgid "Linear"
 msgstr "ხაზოვანი"
 
-#: data/ui/figure_settings.blp:124 data/ui/figure_settings.blp:136
-#: data/ui/figure_settings.blp:148 data/ui/figure_settings.blp:160
-#: graphs/ui.py:61
+#: data/ui/figure_settings.blp:126 data/ui/figure_settings.blp:138
+#: data/ui/figure_settings.blp:150 data/ui/figure_settings.blp:162
+#: graphs/ui.py:60
 msgctxt "scale"
 msgid "Logarithmic"
 msgstr "ლოგარითმული"
 
-#: data/ui/figure_settings.blp:125 data/ui/figure_settings.blp:137
-#: data/ui/figure_settings.blp:149 data/ui/figure_settings.blp:161
-#: graphs/ui.py:62
+#: data/ui/figure_settings.blp:127 data/ui/figure_settings.blp:139
+#: data/ui/figure_settings.blp:151 data/ui/figure_settings.blp:163
+#: graphs/ui.py:61
 msgctxt "scale"
 msgid "Radians"
 msgstr "რადიანები"
 
-#: data/ui/figure_settings.blp:126 data/ui/figure_settings.blp:138
-#: data/ui/figure_settings.blp:150 data/ui/figure_settings.blp:162
-#: graphs/ui.py:63
+#: data/ui/figure_settings.blp:128 data/ui/figure_settings.blp:140
+#: data/ui/figure_settings.blp:152 data/ui/figure_settings.blp:164
+#: graphs/ui.py:62
 msgctxt "scale"
 msgid "Square Root"
 msgstr "კვადრატული ფესვი"
 
-#: data/ui/figure_settings.blp:127 data/ui/figure_settings.blp:139
-#: data/ui/figure_settings.blp:151 data/ui/figure_settings.blp:163
+#: data/ui/figure_settings.blp:129 data/ui/figure_settings.blp:141
+#: data/ui/figure_settings.blp:153 data/ui/figure_settings.blp:165
 msgctxt "scale"
 msgid "Inverse"
 msgstr "ინვერსია"
 
-#: data/ui/figure_settings.blp:170
+#: data/ui/figure_settings.blp:172
 msgid "Appearance"
 msgstr "გარეგნობა"
 
-#: data/ui/figure_settings.blp:172
+#: data/ui/figure_settings.blp:174
 msgid "Legend"
 msgstr "შინაარსი"
 
-#: data/ui/figure_settings.blp:175
+#: data/ui/figure_settings.blp:177
 msgid "Legend Position"
 msgstr "ლეგენდის მდებარეობა"
 
-#: data/ui/figure_settings.blp:178
+#: data/ui/figure_settings.blp:180
 msgctxt "legend-position"
 msgid "Auto"
 msgstr "ავტო"
 
-#: data/ui/figure_settings.blp:179
+#: data/ui/figure_settings.blp:181
 msgctxt "legend-position"
 msgid "Upper Right"
 msgstr "ზედა მარჯვენა"
 
-#: data/ui/figure_settings.blp:180
+#: data/ui/figure_settings.blp:182
 msgctxt "legend-position"
 msgid "Upper Left"
 msgstr "ზედა მარცხენა"
 
-#: data/ui/figure_settings.blp:181
+#: data/ui/figure_settings.blp:183
 msgctxt "legend-position"
 msgid "Lower Left"
 msgstr "ქვედა მარცხენა"
 
-#: data/ui/figure_settings.blp:182
+#: data/ui/figure_settings.blp:184
 msgctxt "legend-position"
 msgid "Lower Right"
 msgstr "ქვედა მარჯვენა"
 
-#: data/ui/figure_settings.blp:183
+#: data/ui/figure_settings.blp:185
 msgctxt "legend-position"
 msgid "Center Left"
 msgstr "მარცხენა ცენტრი"
 
-#: data/ui/figure_settings.blp:184
+#: data/ui/figure_settings.blp:186
 msgctxt "legend-position"
 msgid "Center Right"
 msgstr "მარჯვენა ცენტრი"
 
-#: data/ui/figure_settings.blp:185
+#: data/ui/figure_settings.blp:187
 msgctxt "legend-position"
 msgid "Lower Center"
 msgstr "ქვედა ცენტრი"
 
-#: data/ui/figure_settings.blp:186
+#: data/ui/figure_settings.blp:188
 msgctxt "legend-position"
 msgid "Upper Center"
 msgstr "ზედა ცენტრი"
 
-#: data/ui/figure_settings.blp:187
+#: data/ui/figure_settings.blp:189
 msgctxt "legend-position"
 msgid "Center"
 msgstr "ცენტრი"
 
-#: data/ui/figure_settings.blp:194
+#: data/ui/figure_settings.blp:196
 msgid "Hide Unselected Items"
 msgstr "მოუნიშნავი ელემენტების დამალვა"
 
-#: data/ui/figure_settings.blp:198 data/ui/figure_settings.blp:228
+#: data/ui/figure_settings.blp:200 data/ui/figure_settings.blp:230
 msgid "Style"
 msgstr "სტილი"
 
-#: data/ui/figure_settings.blp:217
+#: data/ui/figure_settings.blp:219
 msgid "Set as Default"
 msgstr "ნაგულისხმევად დაყენება"
 
@@ -935,7 +943,7 @@ msgid "Amount of points to use when calculating a moving average"
 msgstr ""
 "წერტილების რაოდენობა, რომელიც გადაადგილების საშუალოს გამოთვლისას გამოიყენება"
 
-#: data/ui/style_color_box.blp:18 data/ui/style_preview.blp:26
+#: data/ui/style_color_box.blp:18 data/ui/style_preview.blp:27
 msgid "Edit"
 msgstr "ჩასწორება"
 
@@ -963,169 +971,177 @@ msgstr "სათაურის ზომა"
 msgid "Title size in relation to text size"
 msgstr "სათაურის ზომა ტექსტის ზომასთან შედარებით"
 
-#: data/ui/style_editor.blp:65
+#: data/ui/style_editor.blp:66
 msgid "Label Size"
 msgstr "ჭდის ზომა"
 
-#: data/ui/style_editor.blp:66
+#: data/ui/style_editor.blp:67
 msgid "Label size in relation to text size"
 msgstr "ჭდის ზომა ტექსტის ზომასთან შედარებით"
 
-#: data/ui/style_editor.blp:80
+#: data/ui/style_editor.blp:81
 msgid "Lines"
 msgstr "ხაზები"
 
-#: data/ui/style_editor.blp:161
+#: data/ui/style_editor.blp:162
 msgid "Axes"
 msgstr "ღერძები"
 
-#: data/ui/style_editor.blp:164
+#: data/ui/style_editor.blp:165
 msgid "Axis Width"
 msgstr "ღერძის სიგანე"
 
-#: data/ui/style_editor.blp:177
+#: data/ui/style_editor.blp:178
 msgid "Draw Frame"
 msgstr "ჩარჩოს დახატვა"
 
-#: data/ui/style_editor.blp:182
+#: data/ui/style_editor.blp:183
 msgid "Ticks"
 msgstr "ტიკები"
 
-#: data/ui/style_editor.blp:185
+#: data/ui/style_editor.blp:186
 msgid "Tick Directions"
 msgstr "თოლიის მიმართულებები"
 
-#: data/ui/style_editor.blp:187
+#: data/ui/style_editor.blp:188
 msgid "Inwards"
 msgstr "შიგნითკენ"
 
-#: data/ui/style_editor.blp:187
+#: data/ui/style_editor.blp:188
 msgid "Outwards"
 msgstr "გარეთკენ"
 
-#: data/ui/style_editor.blp:192
+#: data/ui/style_editor.blp:193
 msgid "Minor Ticks"
 msgstr "დამხმარე ტიკები"
 
-#: data/ui/style_editor.blp:196
+#: data/ui/style_editor.blp:197
 msgid "Major Tick Width"
 msgstr "ძირითადი თოლიის სიგანე"
 
-#: data/ui/style_editor.blp:209
+#: data/ui/style_editor.blp:210
 msgid "Minor Tick Width"
 msgstr "დამხმარე თოლიის სიგანე"
 
-#: data/ui/style_editor.blp:223
+#: data/ui/style_editor.blp:224
 msgid "Major Tick Length"
 msgstr "ძირითადი თოლიის სიგრძე"
 
-#: data/ui/style_editor.blp:236
+#: data/ui/style_editor.blp:237
 msgid "Minor Tick Length"
 msgstr "დამხმარე თოლიის სიგრძე"
 
-#: data/ui/style_editor.blp:250
+#: data/ui/style_editor.blp:251
 msgid "Ticks on Bottom Axis"
 msgstr "თოლიები ქვედა ღერძე"
 
-#: data/ui/style_editor.blp:254
+#: data/ui/style_editor.blp:255
 msgid "Ticks on Left Axis"
 msgstr "თოლიები მარცხენა ღერძზე"
 
-#: data/ui/style_editor.blp:258
+#: data/ui/style_editor.blp:259
 msgid "Ticks on Right Axis"
 msgstr "თოლიები მრჯვენა ღერძზე"
 
-#: data/ui/style_editor.blp:262
+#: data/ui/style_editor.blp:263
 msgid "Ticks on Top Axis"
 msgstr "თოლიები ზედა ღერძზე"
 
-#: data/ui/style_editor.blp:267
+#: data/ui/style_editor.blp:268
 msgid "Grid"
 msgstr "ბადე"
 
-#: data/ui/style_editor.blp:270
+#: data/ui/style_editor.blp:271
 msgid "Show Grid"
 msgstr "ბადის ჩვენება"
 
-#: data/ui/style_editor.blp:274
+#: data/ui/style_editor.blp:275
 msgid "Grid Width"
 msgstr "ბადის სიგანე"
 
-#: data/ui/style_editor.blp:288
+#: data/ui/style_editor.blp:289
 msgid "Grid Opacity"
 msgstr "ბადის გაუმჭვირვალობა"
 
-#: data/ui/style_editor.blp:303
+#: data/ui/style_editor.blp:304
 msgid "Padding"
 msgstr "შევსება"
 
-#: data/ui/style_editor.blp:304
+#: data/ui/style_editor.blp:305
 msgid "Padding for different parts of the figure"
 msgstr ""
 
-#: data/ui/style_editor.blp:307
+#: data/ui/style_editor.blp:308
 msgid "Value Padding"
 msgstr ""
 
-#: data/ui/style_editor.blp:308
+#: data/ui/style_editor.blp:309
 msgid "Padding between axes and values"
 msgstr ""
 
-#: data/ui/style_editor.blp:321
+#: data/ui/style_editor.blp:322
 msgid "Label Padding"
 msgstr ""
 
-#: data/ui/style_editor.blp:322
+#: data/ui/style_editor.blp:323
 msgid "Padding between axes and labels"
 msgstr ""
 
-#: data/ui/style_editor.blp:335
+#: data/ui/style_editor.blp:336
 msgid "Title Padding"
 msgstr ""
 
-#: data/ui/style_editor.blp:336
+#: data/ui/style_editor.blp:337
 msgid "Padding between axes and the title"
 msgstr ""
 
-#: data/ui/style_editor.blp:350
+#: data/ui/style_editor.blp:351
 msgid "Colors"
 msgstr "ფერები"
 
-#: data/ui/style_editor.blp:362
+#: data/ui/style_editor.blp:356
+msgid "Label text might be hard to read"
+msgstr "ჭდის ტექსტი შეიძლება ძნელი წასაკითხი იყოს"
+
+#: data/ui/style_editor.blp:361
+msgid "Poor Contrast"
+msgstr "ცუდი კონტრასტი"
+
+#: data/ui/style_editor.blp:376
 msgid "Text Color"
 msgstr "ტექსტის ფერი"
 
-#: data/ui/style_editor.blp:367 data/ui/style_editor.blp:389
-#: data/ui/style_editor.blp:411 data/ui/style_editor.blp:433
-#: data/ui/style_editor.blp:455 data/ui/style_editor.blp:477
+#: data/ui/style_editor.blp:381 data/ui/style_editor.blp:403
+#: data/ui/style_editor.blp:425 data/ui/style_editor.blp:447
+#: data/ui/style_editor.blp:469 data/ui/style_editor.blp:491
 msgid "Change Color"
 msgstr "ფერის შეცვლა"
 
-#: data/ui/style_editor.blp:384
+#: data/ui/style_editor.blp:398
 msgid "Tick Color"
 msgstr "თოლიის ფერი"
 
-#: data/ui/style_editor.blp:406
+#: data/ui/style_editor.blp:420
 msgid "Axis Color"
 msgstr "ღერძის ფერი"
 
-#: data/ui/style_editor.blp:428
+#: data/ui/style_editor.blp:442
 msgid "Grid Color"
 msgstr "ბადის ფერი"
 
-#: data/ui/style_editor.blp:450
+#: data/ui/style_editor.blp:464
 msgid "Background Color"
 msgstr "ფონის ფერი"
 
-#: data/ui/style_editor.blp:472
+#: data/ui/style_editor.blp:486
 msgid "Outline Color"
 msgstr "კიდის ფერი"
 
-#: data/ui/style_editor.blp:489
+#: data/ui/style_editor.blp:505
 msgid "Line Colors"
 msgstr "ხაზის ფერები"
 
-#: data/ui/style_editor.blp:500
+#: data/ui/style_editor.blp:511
 msgid "Add Color"
 msgstr "ფერის დამატება"
 
@@ -1205,7 +1221,7 @@ msgstr "Shift"
 
 #: data/ui/window.blp:287
 msgid "Shift all data vertically with respect to each other"
-msgstr ""
+msgstr "მონაცემების წანაცვლება ვერტიკალურად ერთმანეთის გათვალისწინებით"
 
 #: data/ui/window.blp:302
 msgid "Normalize"
@@ -1379,74 +1395,73 @@ msgstr "X-ის საშუალო მნიშვნელობისა�
 msgid "Advanced Settings"
 msgstr "დამატებითი პარამეტრები"
 
-#: graphs/actions.py:317 graphs/item_box.py:151
+#: graphs/about.vala:33
+msgid "translator-credits"
+msgstr "ეკატერინე პაპავა"
+
+#: graphs/actions.py:318 graphs/item_box.py:151
 #, python-brace-format
 msgid "Deleted {name}"
 msgstr "{name} წაიშალა"
 
-#: graphs/add_equation.py:74
+#: graphs/add_equation.py:77
 #, python-brace-format
 msgid "{error} - Unable to add data from equation"
 msgstr "{error} - განტოლებიდან მონაცემების დამატება შეუძლებელია"
 
-#: graphs/application.py:70
+#: graphs/application.py:68
 #, python-brace-format
 msgid "Could not load {font}"
 msgstr "{font}-ის ჩატვირთვა შეუძლებელია"
 
-#. TODO: implement in Vala and figure out gettext
-#: graphs/application.py:263
-msgid "Graphs (Development)"
-msgstr "Graphs (Development)"
-
-#: graphs/curve_fitting.py:89
+#: graphs/curve_fitting.py:87
 msgid "Optimization Method"
 msgstr "ოპტიმიზაციის მეთოდი"
 
-#: graphs/curve_fitting.py:91
+#: graphs/curve_fitting.py:89
 msgctxt "optimization"
 msgid "Levenberg-Marquardt"
 msgstr "ლევენბერგ-მარკვარდტი"
 
-#: graphs/curve_fitting.py:92
+#: graphs/curve_fitting.py:90
 msgctxt "optimization"
 msgid "Trust Region Reflective"
-msgstr ""
+msgstr "ნდობის რეგიონი ამრეკლავია"
 
-#: graphs/curve_fitting.py:93
+#: graphs/curve_fitting.py:91
 msgctxt "optimization"
 msgid "Dogbox"
 msgstr "Dogbox"
 
-#: graphs/curve_fitting.py:97
+#: graphs/curve_fitting.py:95
 msgid "Confidence Bounds"
 msgstr "სანდოობის საზღვრები"
 
-#: graphs/curve_fitting.py:99
+#: graphs/curve_fitting.py:97
 msgctxt "confidence"
 msgid "None"
 msgstr "არაფერი"
 
-#: graphs/curve_fitting.py:100
+#: graphs/curve_fitting.py:98
 msgctxt "confidence"
 msgid "1σ: 68% Confidence"
 msgstr "1σ: 68% სანდოობა"
 
-#: graphs/curve_fitting.py:101
+#: graphs/curve_fitting.py:99
 msgctxt "confidence"
 msgid "2σ: 95% Confidence"
 msgstr "2σ: 95% სანდოობა"
 
-#: graphs/curve_fitting.py:102
+#: graphs/curve_fitting.py:100
 msgctxt "confidence"
 msgid "3σ: 99.7% Confidence"
 msgstr "3σ: 99.7% სანდოობა"
 
-#: graphs/curve_fitting.py:245
+#: graphs/curve_fitting.py:244
 msgid "Results:"
 msgstr "შედეგები:"
 
-#: graphs/curve_fitting.py:249
+#: graphs/curve_fitting.py:248
 msgid ""
 "Please enter valid fitting \n"
 "parameters to start the fit"
@@ -1458,22 +1473,22 @@ msgid ""
 "to start the fit"
 msgstr ""
 
-#: graphs/curve_fitting.py:255
+#: graphs/curve_fitting.py:256
 msgid ""
 "Please enter valid fitting bounds \n"
 "to start the fit"
 msgstr ""
 
-#: graphs/curve_fitting.py:265
+#: graphs/curve_fitting.py:267
 #, python-brace-format
 msgid "Sum of R²: {R2}"
 msgstr "R²-ის ჯამი: {R2}"
 
-#: graphs/data.py:105
+#: graphs/data.py:99
 msgid "Untitled Project"
 msgstr "უსახელო პროექტი"
 
-#: graphs/data.py:116
+#: graphs/data.py:110
 msgid "Draft"
 msgstr "მონახაზი"
 
@@ -1486,118 +1501,118 @@ msgstr "გატანილი ილუსტრაცია"
 msgid "Exported Figure"
 msgstr "გატანილი ილუსტრაცია"
 
-#: graphs/export_figure.py:76 graphs/project.py:49 graphs/ui.py:162
+#: graphs/export_figure.py:76 graphs/project.py:49 graphs/ui.py:145
 msgid "Open Location"
 msgstr "მდებარეობის გახსნა"
 
-#: graphs/figure_settings.py:122 graphs/figure_settings.py:149
-#: graphs/styles.py:143
-msgid "System"
-msgstr "სისტემური"
-
-#: graphs/figure_settings.py:172
+#: graphs/figure_settings.py:105
 msgid "Top X Axis Minimum"
 msgstr "ზედა X ღერძის მინიმუმი"
 
-#: graphs/figure_settings.py:173 graphs/figure_settings.py:187
+#: graphs/figure_settings.py:106 graphs/figure_settings.py:120
 msgid "X Axis Minimum"
 msgstr "X ღერძის მინიმუმი"
 
-#: graphs/figure_settings.py:175
+#: graphs/figure_settings.py:108
 msgid "Top X Axis Maximum"
 msgstr "ზედა X ღერძის მაქსიმუმი"
 
-#: graphs/figure_settings.py:176 graphs/figure_settings.py:190
+#: graphs/figure_settings.py:109 graphs/figure_settings.py:123
 msgid "X Axis Maximum"
 msgstr "X ღერძის მაქსიმუმი"
 
-#: graphs/figure_settings.py:178 graphs/ui.py:79
+#: graphs/figure_settings.py:111 graphs/ui.py:78
 msgid "Top X Axis Scale"
 msgstr "ზედა X-ღერძის მასშტაბის ფაქტორი"
 
-#: graphs/figure_settings.py:179 graphs/figure_settings.py:193 graphs/ui.py:76
+#: graphs/figure_settings.py:112 graphs/figure_settings.py:126 graphs/ui.py:75
 msgid "X Axis Scale"
 msgstr "X-ღერძის მასშტაბი"
 
-#: graphs/figure_settings.py:181
+#: graphs/figure_settings.py:114
 msgid "Top X Axis Label"
 msgstr "ზედა X ღერძის ჭდე"
 
-#: graphs/figure_settings.py:182 graphs/figure_settings.py:196
+#: graphs/figure_settings.py:115 graphs/figure_settings.py:129
 msgid "X Axis Label"
 msgstr "X-ღერძის ჭდე"
 
-#: graphs/figure_settings.py:186
+#: graphs/figure_settings.py:119
 msgid "Bottom X Axis Minimum"
 msgstr "ქვედა X ღერძის მინიმუმი"
 
-#: graphs/figure_settings.py:189
+#: graphs/figure_settings.py:122
 msgid "Bottom X Axis Maximum"
 msgstr "ქვედა X ღერძის მაქსიმუმი"
 
-#: graphs/figure_settings.py:192 graphs/ui.py:81
+#: graphs/figure_settings.py:125 graphs/ui.py:80
 msgid "Bottom X Axis Scale"
 msgstr "ქვედა X-ღერძის მასშტაბის ფაქტორი"
 
-#: graphs/figure_settings.py:195
+#: graphs/figure_settings.py:128
 msgid "Bottom X Axis Label"
 msgstr "ქვედა X ღერძის ჭდე"
 
-#: graphs/figure_settings.py:200
+#: graphs/figure_settings.py:133
 msgid "Left Y Axis Minimum"
 msgstr "მარჯვენა Y ღერძის მინიმუმი"
 
-#: graphs/figure_settings.py:201 graphs/figure_settings.py:215
+#: graphs/figure_settings.py:134 graphs/figure_settings.py:148
 msgid "Y Axis Minimum"
 msgstr "Y ღერძის მინიმუმი"
 
-#: graphs/figure_settings.py:203
+#: graphs/figure_settings.py:136
 msgid "Left Y Axis Maximum"
 msgstr "მარცხენა Y-ღერძის მაქსიმუმი"
 
-#: graphs/figure_settings.py:204 graphs/figure_settings.py:218
+#: graphs/figure_settings.py:137 graphs/figure_settings.py:151
 msgid "Y Axis Maximum"
 msgstr "Y ღერძის მაქსიმუმი"
 
-#: graphs/figure_settings.py:206 graphs/ui.py:83
+#: graphs/figure_settings.py:139 graphs/ui.py:82
 msgid "Left Y Axis Scale"
 msgstr "მარცხენა Y-ღერძზე მასშტაბის ფაქტორი"
 
-#: graphs/figure_settings.py:207 graphs/figure_settings.py:221 graphs/ui.py:77
+#: graphs/figure_settings.py:140 graphs/figure_settings.py:154 graphs/ui.py:76
 msgid "Y Axis Scale"
 msgstr "Y-ღერძის მასშტაბის ფაქტორი"
 
-#: graphs/figure_settings.py:209
+#: graphs/figure_settings.py:142
 msgid "Left Y Axis Label"
 msgstr "მარცხენა Y-ღერძის ჭდე"
 
-#: graphs/figure_settings.py:210 graphs/figure_settings.py:224
+#: graphs/figure_settings.py:143 graphs/figure_settings.py:157
 msgid "Y Axis Label"
 msgstr "Y-ღერძის ჭდე"
 
-#: graphs/figure_settings.py:214
+#: graphs/figure_settings.py:147
 msgid "Right Y Axis Minimum"
 msgstr "მარჯვენა Y ღერძის მინიმუმი"
 
-#: graphs/figure_settings.py:217
+#: graphs/figure_settings.py:150
 msgid "Right Y Axis Maximum"
 msgstr "მარჯვენა Y ღერძის მაქსიმუმი"
 
-#: graphs/figure_settings.py:220 graphs/ui.py:85
+#: graphs/figure_settings.py:153 graphs/ui.py:84
 msgid "Right Y Axis Scale"
 msgstr "მარჯვენა Y ღერძის მასშტაბის ფაქტორი"
 
-#: graphs/figure_settings.py:223
+#: graphs/figure_settings.py:156
 msgid "Right Y Axis Label"
 msgstr "მარჯვენა Y ღერძის ჭდე"
 
-#: graphs/figure_settings.py:337
+#: graphs/figure_settings.py:254
 msgid "Defaults Updated"
 msgstr "ნაგულისხმევები განახლდა"
 
-#: graphs/file_import.py:132
+#: graphs/file_import.py:135
 msgid "Are you sure you want to reset the import settings?"
 msgstr "მართლა გნებავთ შემოტანის პარამეტრების ჩამოყრა?"
+
+#: graphs/misc.py:92
+msgctxt "file-filter"
+msgid "Graphs Project File"
+msgstr "Graphs-ის პროექტის ფაილი"
 
 #: graphs/operations.py:138
 msgid "Data that was outside of the highlighted area has been discarded"
@@ -1639,35 +1654,9 @@ msgstr "ფაილიდან შემოტანა შეუძლებ�
 msgid "Saved Project"
 msgstr "შენახული პროექტი"
 
-#: graphs/styles.py:68
-msgid "X Label"
-msgstr "X ჭდე"
-
-#: graphs/styles.py:69
-msgid "Y Label"
-msgstr "Y ჭდე"
-
-#: graphs/styles.py:372
-#, python-brace-format
-msgid "Could not parse {stylename}, loading system preferred style"
-msgstr ""
-"ხაზვის სტილის {stylename} დამუშავება შეუძლებელია. იტვირთება სისტემის "
-"ნაგულისხმევი სტილი"
-
-#: graphs/styles.py:380
-#, python-brace-format
-msgid "Plot style {stylename} does not exist loading system preferred"
-msgstr ""
-"დახაზვის სტილი {stylename} არ არსებობს. იტვირთება სისტემის ნაგულისხმევი"
-
-#: graphs/styles.py:850
-msgid "Are you sure you want to delete {self.style.get_name()}?"
-msgstr "მართლა გნებავთ, წაშალოთ {self.style.get_name()}?"
-
-#: graphs/styles.py:867
-#, python-brace-format
-msgid "Color {number}"
-msgstr "ფერი {number}"
+#: graphs/project.py:71
+msgid "Project"
+msgstr "პროექტი"
 
 #: graphs/style_io.py:58
 #, python-brace-format
@@ -1699,6 +1688,41 @@ msgstr "არასწორი მნიშვნელობა ფაილ�
 msgid "Could not parse {filename}"
 msgstr "{filename}-ის დამუშავება შეუძლებელია"
 
+#: graphs/styles.py:68
+msgid "X Label"
+msgstr "X ჭდე"
+
+#: graphs/styles.py:69
+msgid "Y Label"
+msgstr "Y ჭდე"
+
+#: graphs/styles.py:142
+msgid "System"
+msgstr "სისტემური"
+
+#: graphs/styles.py:435
+#, python-brace-format
+msgid "Could not parse {stylename}, loading system preferred style"
+msgstr ""
+"ხაზვის სტილის {stylename} დამუშავება შეუძლებელია. იტვირთება სისტემის "
+"ნაგულისხმევი სტილი"
+
+#: graphs/styles.py:443
+#, python-brace-format
+msgid "Plot style {stylename} does not exist loading system preferred"
+msgstr ""
+"დახაზვის სტილი {stylename} არ არსებობს. იტვირთება სისტემის ნაგულისხმევი"
+
+#: graphs/styles.py:879
+#, python-brace-format
+msgid "Are you sure you want to delete {stylename}?"
+msgstr "მართლა გნებავთ, წაშალოთ {stylename}?"
+
+#: graphs/styles.py:896
+#, python-brace-format
+msgid "Color {number}"
+msgstr "ფერი {number}"
+
 #: graphs/transform_data.py:52
 #, python-brace-format
 msgid "{name}: Unable to do transformation, make sure the syntax is correct"
@@ -1709,74 +1733,69 @@ msgstr ""
 msgid "Unable to do transformation"
 msgstr "გარდაქმნის შესრულება შეუძლებელია"
 
-#: graphs/ui.py:47
+#: graphs/ui.py:46
 msgid "Optimize Limits"
 msgstr "ლიმიტების ოპტიმიზაცია"
 
-#: graphs/ui.py:64
+#: graphs/ui.py:63
 msgctxt "scale"
 msgid "Inverse Root"
 msgstr "ინვერსიული ფესვი"
 
-#: graphs/ui.py:101
-#, python-brace-format
-msgid "Items {items} already exist"
-msgstr "ელემენტები {items} უკვე არსებობს"
-
-#: graphs/ui.py:122
+#: graphs/ui.py:105
 msgctxt "file-filter"
 msgid "Supported files"
 msgstr "მხარდაჭერილი ფაილები"
 
-#: graphs/ui.py:125
+#: graphs/ui.py:108
 msgctxt "file-filter"
 msgid "ASCII files"
 msgstr "ASCII ფაილები"
 
-#: graphs/ui.py:126
+#: graphs/ui.py:109
 msgctxt "file-filter"
 msgid "PANalytical XRDML"
 msgstr "PANalytical XRDML"
 
-#: graphs/ui.py:127
+#: graphs/ui.py:110
 msgctxt "file-filter"
 msgid "Leybold xry"
 msgstr "Leybold xry"
 
-#: graphs/ui.py:139
+#: graphs/ui.py:122
 msgid "No data to export"
 msgstr "შემოსატანი მონაცემების გარეშე"
 
-#: graphs/ui.py:161
+#: graphs/ui.py:144
 msgid "Exported Data"
 msgstr "გატანილი მონაცემები"
 
-#: graphs/ui.py:174
+#: graphs/ui.py:157
 msgctxt "file-filter"
 msgid "Text Files"
 msgstr "ტექსტური ფაილები"
 
-#: graphs/ui.py:209
-msgid "translator-credits"
-msgstr "ეკატერინე პაპავა"
-
-#: graphs/ui.py:239 graphs/ui.py:318 graphs/ui.py:379
+#: graphs/ui.py:188 graphs/ui.py:267 graphs/ui.py:328
 #, python-brace-format
 msgid "Unsupported Widget {widget}"
 msgstr "მხარდაუჭერელი ვიჯეტი {widget}"
 
-#: graphs/ui.py:242 graphs/ui.py:321 graphs/ui.py:382
+#: graphs/ui.py:191 graphs/ui.py:270 graphs/ui.py:331
 #, python-brace-format
 msgid "No way to apply “{key}”"
 msgstr "\"{key}\"-ის გადატარება შეუძლებელია"
 
-#: graphs/utilities.py:164
+#: graphs/utilities.py:153
 msgid "No valid number specified"
 msgstr "სწორი რიცხვი მითითებული არაა"
 
-#~ msgctxt "file-filter"
-#~ msgid "Graphs Project File"
-#~ msgstr "Graphs-ის პროექტის ფაილი"
+#: graphs/window.vala:125
+msgid "Graphs (Development)"
+msgstr "Graphs (Development)"
+
+#, python-brace-format
+#~ msgid "Items {items} already exist"
+#~ msgstr "ელემენტები {items} უკვე არსებობს"
 
 #~ msgid "@NAME@"
 #~ msgstr "graphs"
