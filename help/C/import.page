@@ -1,0 +1,50 @@
+<page xmlns="http://projectmallard.org/1.0/"
+      type="topic"
+      id="import">
+<info>
+  <include href="legal.xml" xmlns="http://www.w3.org/2001/XInclude"/>
+  <link type="guide" xref="index#howto"/>
+</info>
+<title>Importing Data</title>
+<p>
+There are two primary ways to import new data in Graphs, importing data directly
+by file or generating new data using an equation.
+</p>
+
+<media type="image" src="media/add_data_light.png"/>
+
+<p>
+A wide array of filetypes are supported when importing data by file. Graphs
+currently supports Panalytical .xrdml files, Leybold .xry files as well as
+files that are saved in a column format such as most .csv files, .dat files,
+.xy files or plain text. Finally, data from other Graphs projects can be
+imported into the current project as well, simply by adding new data as usual,
+but by selecting a project file instead.
+</p>
+
+<p>
+When using a custom delimiter during the import, an extra field will be visible
+to enter the delimiter of choice. This field recognizes regular expressions.
+For example, to choose a delimiter that looks for whitespace, one could enter
+<code>\s+</code> as delimiter. In this example, <code>\s</code> denotes that
+the delimiter is a whitespace character, and the <code>+</code> denotes that at
+least one or more whitespace is required. Thus this input looks for any amount
+of whitespaces including tabs. Note that this particular input is equivalent to
+the default Whitespace option.
+</p>
+
+<media type="image" src="media/add_equation_light.png"/>
+
+<p>
+The other way to import data is to generate data directly using an equation.
+This can be done using the "Add data by Equation" button found in the top-left
+corner, or by pressing <cmd>Ctrl+Shift+N</cmd>. Most commonly used syntax is
+accepted, with an <code>x</code> denoting the x-coordinate. A simple quadratic
+equation could for instance be created using <code>x²+5</code> as input. Be
+aware that trigonometric functions are using radians by default. If you want to
+use radians, simply add a <code>d</code> to the trigonometric function. For
+instance <code>cosd(x)</code> generates a cosine where the x coordinate is
+given in degrees while <code>cos(x)</code> generates a cosine with the
+x-coordinate in radians.
+</p>
+</page>

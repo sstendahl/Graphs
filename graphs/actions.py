@@ -320,6 +320,18 @@ def delete_selected_action(
     application.get_window().add_toast(toast)
 
 
+def help_action(
+    _action,
+    _target,
+    application: Graphs.Application,
+) -> None:
+    """Open Help page for Graphs."""
+    Gio.AppInfo.launch_default_for_uri(
+        "help:graphs",
+        application.get_window().get_display().get_app_launch_context(),
+    )
+
+
 def open_file_location(_action, _target, file: Gio.File) -> None:
     """Open and select `file` in the file manager."""
     file_launcher = Gtk.FileLauncher.new(file)

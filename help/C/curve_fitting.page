@@ -1,0 +1,77 @@
+<page xmlns="http://projectmallard.org/1.0/"
+      type="topic"
+      id="curve_fitting">
+<info>
+  <include href="legal.xml" xmlns="http://www.w3.org/2001/XInclude"/>
+  <link type="guide" xref="index#howto"/>
+</info>
+<title>Curve Fitting</title>
+<section>
+<title>Fitting data</title>
+<p>
+Curve fitting allows for a powerful analysis method for your imported data. To
+start curve fitting on a data set, press the three vertical dots on the item
+you want to fit to, and choose "Curve Fitting". This brings up the Curve
+Fitting dialog for the selected data set. An extensive list of predefined
+equations can be chosen from the dropdown. The corresponding mathematical
+formula is shown in the same card.
+</p>
+<media type="image" src="media/curve_fitting_light.png"/>
+</section>
+
+<section>
+<title>Bounds</title>
+<p>
+Each detected parameter in the formula will be shown in the sidebar. Here an
+initial guess can be set for the fit, as well as the minimum and maximum value
+for this parameter. Make sure that the initial guess is in between the bounds,
+and that the minimum bound is smaller than the maximum bound. If you don't want
+to use any bounds for the parameter, you can set the bounds to infinite using
+<code>-inf</code> and <code>inf</code> for the minimum and maximum bound
+respectively.
+</p>
+</section>
+
+<section>
+<title>Results</title>
+<p>
+Below the fitting parameters, a box is shown with the resulting parameters of
+the fit. Apart of the final results, a margin is shown as well for each
+parameter as well as the sum of R² indicating the goodness of the fit. The
+margin can be set using the primary menu in the Curve Fitting dialog as a
+multiple of the standard deviation, corresponding to an uncertainty margin of
+65, 95 or 99.7% for a standard deviation of 1σ, 2σ or 3σ respectively.
+</p>
+<p>
+Please note that like all fits, that this standard deviation is mostly a
+measure of how well the data agrees with the corresponding model. Factors such
+as whether this model is actually physically correct, if there's any systemic
+errors in the measurements, and if the parameters are correlated to each other
+is not taken into account when fitting data. This is an inherent property of
+all curve fitting, and a common point of confusion, leading to misleading error
+bars on data points even in scientifically published data.
+</p>
+</section>
+
+<section>
+<title>Fitting algorithms</title>
+<p>
+When performing a fit, there are three different fitting algorithms to choose
+from, these can be set from the primary menu.
+</p>
+<terms>
+  <item>
+    <title>Levenberg-Marquardt</title>
+    <p>The Levenberg-Marquardt algorithm is a traditionally relatively popular algorithm that performs very efficiently. However, it does not handle bounds for the fitting parameters.</p>
+  </item>
+  <item>
+    <title>Trust Region</title>
+    <p>The Trust Region Reflective algorithm is well-suited for solving large problems with bounds. This method generally performs well for most cases and should probably be used for most cases.</p>
+  </item>
+  <item>
+    <title>Dogbox</title>
+    <p>The Dogbox algorithm uses rectangular trust regions and typically works well with small problems involving bounds.</p>
+  </item>
+</terms>
+</section>
+</page>
