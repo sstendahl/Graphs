@@ -36,19 +36,12 @@ flake8:
     - flake8
 
 pages:
-  extends:
-    - .vars
   script:
-    - flatpak-builder --user --disable-rofiles-fuse --stop-at=${FLATPAK_MODULE} flatpak_app ${MANIFEST_PATH}
-    - flatpak build-finish --socket=x11 --share=network flatpak_app
-    - echo "../build-aux/build-help-html.sh" | flatpak-builder --user --disable-rofiles-fuse --build-shell=${FLATPAK_MODULE} flatpak_app ${MANIFEST_PATH}
-    - mkdir -p public/help
-    - cp -r .flatpak-builder/build/${FLATPAK_MODULE}/_flatpak_build/help-out public/help
-    - cp help/LINGUAS public/help/
+    - sh "build-aux/build-help-html.sh"
     - chmod -R a=rwx public
   artifacts:
     paths:
       - "public"
   rules:
     - if: $CI_COMMIT_BRANCH == "main"
-  stage: deploy
+  stage: .pre
