@@ -44,6 +44,7 @@ template $GraphsExportFigureDialog : Adw.Dialog {
               C_("file-format", "WebP Image Format"),
             ]
           };
+          notify::selected => $on_file_format();
         }
         Adw.SpinRow dpi {
           title: _("Resolution (dpi)");

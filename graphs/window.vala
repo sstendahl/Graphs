@@ -19,7 +19,7 @@ namespace Graphs {
         public unowned Button view_forward_button { get; }
 
         [GtkChild]
-        public unowned MenuButton view_menu_button { get; }
+        private unowned MenuButton view_menu_button { get; }
 
         [GtkChild]
         public unowned ToggleButton pan_button { get; }
@@ -92,8 +92,8 @@ namespace Graphs {
             }
         }
 
-        public CanvasInterface canvas {
-            get { return (CanvasInterface) this.toast_overlay.get_child (); }
+        public Canvas canvas {
+            get { return (Canvas) this.toast_overlay.get_child (); }
             set { this.toast_overlay.set_child(value); }
         }
 
@@ -101,7 +101,7 @@ namespace Graphs {
 
         public Window (Application application) {
             Object (application: application);
-            DataInterface data = application.data;
+            Data data = application.data;
             data.bind_property (
                 "items_selected", this.shift_button, "sensitive", 2
             );
@@ -131,7 +131,8 @@ namespace Graphs {
             var action = this.application.lookup_action (
                 "app.perform_operation"
             );
-            action.activate (new Variant.string (button.get_buildable_id ()));
+            string name = button.get_buildable_id ()[0:-7];
+            action.activate (new Variant.string (name));
         }
 
         public void add_toast (Adw.Toast toast) {
@@ -142,11 +143,82 @@ namespace Graphs {
             this.add_toast (new Adw.Toast (title));
         }
 
+        public void add_toast_string_with_file (string title, File file) {
+            SimpleAction action = new SimpleAction ("open-file-location", null);
+            action.activate.connect (() => {
+                Tools.open_file_location (file);
+            });
+            this.application.add_action (action);
+            Adw.Toast toast = new Adw.Toast (title);
+            toast.set_button_label (_("Open Location"));
+            toast.set_action_name ("app.open-file-location");
+            this.add_toast (toast);
+        }
+
         [GtkCallback]
         private void on_sidebar_toggle () {
             this.application.lookup_action ("toggle_sidebar").change_state (
                 new Variant.boolean (this.split_view.get_collapsed ())
             );
+        }
+
+        public void update_view_menu () {
+            Menu view_menu = new Menu ();
+            Menu toggle_section = new Menu ();
+            toggle_section.append_item (
+                new MenuItem (_("Toggle Sidebar"), "app.toggle_sidebar")
+            );
+            view_menu.append_section (null, toggle_section);
+            Menu optimize_section = new Menu ();
+            optimize_section.append_item (
+                new MenuItem (_("Optimize Limits"), "app.optimize_limits")
+            );
+            view_menu.append_section (null, optimize_section);
+
+            string[] scale_names = {
+                C_("scale", "Linear"),
+                C_("scale", "Logarithmic"),
+                C_("scale", "Radians"),
+                C_("scale", "Square Root"),
+                C_("scale", "Inverse Root")
+            };
+
+            Menu scales_section = new Menu ();
+            Application application = (Application) this.application;
+            bool[] visible_axes = application.data.get_used_positions ();
+            bool both_x = visible_axes[0] && visible_axes[1];
+            bool both_y = visible_axes[2] && visible_axes[3];
+            for (int i = 0; i < DIRECTION_NAMES.length; i++) {
+                if (!visible_axes[i]) continue;
+                string direction = DIRECTION_NAMES[i];
+                Menu scale_section = new Menu ();
+                for (int j = 0; j < scale_names.length; j++) {
+                    string scale = scale_names[j];
+                    MenuItem scale_item = new MenuItem (
+                        scale, @"app.change-$direction-scale"
+                    );
+                    scale_item.set_attribute_value (
+                        "target",
+                        new Variant.string (j.to_string ())
+                    );
+                    scale_section.append_item (scale_item);
+                }
+                string label;
+                if (i < 2) {
+                    if (both_x) {
+                        if (i == 0) label = _("Bottom X Axis Scale");
+                        else label = _("Top X Axis Scale");
+                    } else label = _("X Axis Scale");
+                } else {
+                    if (both_y) {
+                        if (i == 3) label = _("Right Y Axis Scale");
+                        else label = _("Left Y Axis Scale");
+                    } else label = _("Y Axis Scale");
+                }
+                scales_section.append_submenu (label, scale_section);
+            }
+            view_menu.append_section (null, scales_section);
+            this.view_menu_button.set_menu_model (view_menu);
         }
     }
 }

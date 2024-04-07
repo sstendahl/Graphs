@@ -51,7 +51,7 @@ namespace Graphs {
 
         public double[] get_limits () {
             double[] limits = {};
-            foreach (string limit_name in limit_names) {
+            foreach (string limit_name in LIMIT_NAMES) {
                 double limit;
                 get (limit_name, out limit);
                 limits += limit;
@@ -62,8 +62,8 @@ namespace Graphs {
         public void set_limits (double[] limits)
                 requires (limits.length == 8)
         {
-            for (int i = 0; i < limit_names.length; i++) {
-                set (limit_names[i], limits[i]);
+            for (int i = 0; i < LIMIT_NAMES.length; i++) {
+                set (LIMIT_NAMES[i], limits[i]);
             }
         }
 

@@ -3,9 +3,9 @@
 import contextlib
 from gettext import gettext as _
 
-from gi.repository import Adw, GLib, Gio, Graphs, Gtk
+from gi.repository import GLib, Gio, Graphs, Gtk
 
-from graphs import actions, file_io, migrate, misc, utilities
+from graphs import file_io, migrate, misc, utilities
 
 
 def read_project_file(file: Gio.File) -> dict:
@@ -32,23 +32,13 @@ def _save(application: Graphs.Application) -> None:
     project_file = data.props.file
     project_dict = data.get_project_dict(application.get_version())
     save_project_dict(project_file, project_dict)
-    data.props.unsaved = False
+    data.set_unsaved(False)
     data.emit("saved")
 
-    action = Gio.SimpleAction.new(
-        "open-file-location",
-        None,
-    )
-    action.connect(
-        "activate",
-        actions.open_file_location,
+    application.get_window().add_toast_string_with_file(
+        _("Saved Project"),
         project_file,
     )
-    application.add_action(action)
-    toast = Adw.Toast.new(_("Saved Project"))
-    toast.set_button_label(_("Open Location"))
-    toast.set_action_name("app.open-file-location")
-    application.get_window().add_toast(toast)
 
 
 def save_project(
@@ -85,7 +75,7 @@ def open_project(application: Graphs.Application) -> None:
         dialog.set_filters(_GRAPHS_PROJECT_FILE_ONLY_FILE_FILTER)
         dialog.open(application.get_window(), None, on_pick_response)
 
-    if not application.get_data().props.unsaved:
+    if not application.get_data().get_unsaved():
         pick_file()
         return
 
@@ -103,7 +93,7 @@ def open_project(application: Graphs.Application) -> None:
     dialog.present(application.get_window())
 
 
-def load(data: Graphs.DataInterface, file: Gio.File) -> None:
+def load(data: Graphs.Data, file: Gio.File) -> None:
     """Load a project from file into data."""
     data.props.file = file
     data.load_from_project_dict(read_project_file(file))

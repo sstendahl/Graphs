@@ -152,5 +152,10 @@ namespace Graphs {
             Builder builder = new Builder.from_resource ("/se/sjoerd/Graphs/ui/dialogs.ui");
             return builder.get_object (name);
         }
+
+        public void open_file_location (File file) {
+            FileLauncher file_launcher = new FileLauncher (file);
+            file_launcher.open_containing_folder.begin (null, null);
+        }
     }
 }

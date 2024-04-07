@@ -4,9 +4,9 @@ import contextlib
 import logging
 from gettext import gettext as _, pgettext as C_
 
-from gi.repository import Adw, GLib, Gio, Graphs, Gtk
+from gi.repository import Adw, GLib, Graphs, Gtk
 
-from graphs import actions, file_import, file_io, misc, utilities
+from graphs import file_import, file_io, misc, utilities
 from graphs.item_box import ItemBox
 
 
@@ -28,64 +28,6 @@ def on_items_change(
         row.add_controller(itembox.drop_source)
         row.add_controller(itembox.click_gesture)
     data.add_view_history_state()
-
-
-def enable_axes_actions(
-    _object,
-    _callback,
-    application: Graphs.Application,
-) -> None:
-    """Repopulate the scale menu."""
-    visible_axes = application.get_data().get_used_positions()
-    menu = Gio.Menu.new()
-    toggle_section = Gio.Menu.new()
-    toggle_item = Gio.MenuItem.new(_("Toggle Sidebar"), "app.toggle_sidebar")
-    toggle_section.append_item(toggle_item)
-    optimize_section = Gio.Menu.new()
-    optimize_item = Gio.MenuItem.new(
-        _("Optimize Limits"),
-        "app.optimize_limits",
-    )
-    optimize_section.append_item(optimize_item)
-    menu.append_section(None, toggle_section)
-    menu.append_section(None, optimize_section)
-
-    section = Gio.Menu.new()
-    for index, direction in enumerate(misc.DIRECTIONS):
-        if not visible_axes[index]:
-            continue
-        scale_section = Gio.Menu.new()
-        scales = [
-            C_("scale", "Linear"),
-            C_("scale", "Logarithmic"),
-            C_("scale", "Radians"),
-            C_("scale", "Square Root"),
-            C_("scale", "Inverse Root"),
-        ]
-        for i, scale in enumerate(scales):
-            scale_item = Gio.MenuItem.new(
-                scale,
-                f"app.change-{direction}-scale",
-            )
-            scale_item.set_attribute_value(
-                "target",
-                GLib.Variant.new_string(str(i)),
-            )
-            scale_section.append_item(scale_item)
-        label = _("X Axis Scale") if direction in {"top", "bottom"} \
-            else _("Y Axis Scale")
-        if direction == "top" and visible_axes[0] and visible_axes[1]:
-            label = _("Top X Axis Scale")
-        elif direction == "bottom" and visible_axes[0] and visible_axes[1]:
-            label = _("Bottom X Axis Scale")
-        elif direction == "left" and visible_axes[2] and visible_axes[3]:
-            label = _("Left Y Axis Scale")
-        elif direction == "right" and visible_axes[2] and visible_axes[3]:
-            label = _("Right Y Axis Scale")
-
-        section.append_submenu(label, scale_section)
-    menu.append_section(None, section)
-    application.get_window().get_view_menu_button().set_menu_model(menu)
 
 
 def add_data_dialog(application: Graphs.Application) -> None:
@@ -135,16 +77,10 @@ def export_data_dialog(application: Graphs.Application) -> None:
             else:
                 file = dialog.save_finish(response)
                 file_io.save_item(file, data[0])
-            action = Gio.SimpleAction.new(
-                "open-file-location",
-                None,
+            window.add_toast_string_with_file(
+                _("Exported Data"),
+                file,
             )
-            action.connect("activate", actions.open_file_location, file)
-            application.add_action(action)
-            toast = Adw.Toast.new(_("Exported Data"))
-            toast.set_button_label(_("Open Location"))
-            toast.set_action_name("app.open-file-location")
-            window.add_toast(toast)
 
     dialog = Gtk.FileDialog()
     if multiple:

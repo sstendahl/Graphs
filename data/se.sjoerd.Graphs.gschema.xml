@@ -35,13 +35,13 @@
   </enum>
 
   <enum id="se.sjoerd.Graphs.export-figure.file-formats">
-    <value nick="Encapsulated Postscript" value="0"/>
-    <value nick="Joint Photographic Experts Group" value="1"/>
-    <value nick="Portable Document Format" value="2"/>
-    <value nick="Portable Network Graphics" value="3"/>
-    <value nick="Postscript" value="4"/>
-    <value nick="Scalable Vector Graphics" value="5"/>
-    <value nick="WebP Image Format" value="6"/>
+    <value nick="eps" value="0"/> <!--Encapsulated Postscript-->
+    <value nick="jpeg" value="1"/> <!--Joint Photographic Experts Group-->
+    <value nick="pdf" value="2"/> <!--Portable Document Format-->
+    <value nick="png" value="3"/> <!--Portable Network Graphics-->
+    <value nick="ps" value="4"/> <!--Postscript-->
+    <value nick="svg" value="5"/> <!--Scalable Vector Graphics-->
+    <value nick="webp" value="6"/> <!--WebP Image Format-->
   </enum>
 
   <enum id="se.sjoerd.Graphs.figure.legend-positions">
@@ -191,7 +191,7 @@
       <default>100</default>
     </key>
     <key name="file-format" enum="se.sjoerd.Graphs.export-figure.file-formats">
-      <default>"Portable Network Graphics"</default>
+      <default>"png"</default>
     </key>
     <key name="transparent" type="b">
       <default>true</default>

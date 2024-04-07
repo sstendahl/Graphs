@@ -23,7 +23,7 @@ from matplotlib.widgets import SpanSelector
 _SCROLL_SCALE = 1.06
 
 
-class Canvas(FigureCanvas, Graphs.CanvasInterface):
+class Canvas(Graphs.Canvas, FigureCanvas):
     """
     Custom Canvas.
 
@@ -64,25 +64,16 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
         max_selected: float (fraction)
 
     Signals:
-        edit-request
-        view-changed
+        edit_request
+        view_changed
 
     Functions:
         update_legend
     """
 
-    __gtype_name__ = "GraphsCanvas"
-    __gsignals__ = {
-        "edit-request": (GObject.SIGNAL_RUN_FIRST, None, (str, )),
-        "view-changed": (GObject.SIGNAL_RUN_FIRST, None, ()),
-    }
+    __gtype_name__ = "GraphsPythonCanvas"
 
-    hide_unselected = GObject.Property(type=bool, default=False)
     items = GObject.Property(type=object)
-    mode = GObject.Property(type=int, default=0)
-
-    min_selected = GObject.Property(type=float, default=0)
-    max_selected = GObject.Property(type=float, default=0)
 
     def __init__(
         self,
@@ -99,8 +90,8 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
         """
         self._style_params = style_params
         pyplot.rcParams.update(self._style_params)  # apply style_params
-        GObject.Object.__init__(self, can_focus=False, items=[])
-        super().__init__()
+        Graphs.Canvas.__init__(self, can_focus=False, items=[])
+        FigureCanvas.__init__(self)
         self.figure.set_tight_layout(True)
         self._axis = self.figure.add_subplot(111)
         self._top_left_axis = self._axis.twiny()
@@ -483,7 +474,7 @@ class Canvas(FigureCanvas, Graphs.CanvasInterface):
 
     def _on_pick(self, event) -> None:
         """Emit edit-request signal for picked label/title."""
-        self.emit("edit-request", event.artist.id)
+        self.emit("edit_request", event.artist.id)
 
     # Overwritten function - do not change name
     def _post_draw(self, _widget, context) -> None:
@@ -855,7 +846,7 @@ class _DummyToolbar(NavigationToolbar2):
         for direction in ("bottom", "left", "top", "right"):
             self.canvas.notify(f"min-{direction}")
             self.canvas.notify(f"max-{direction}")
-        self.canvas.emit("view-changed")
+        self.canvas.emit("view_changed")
 
     # Overwritten function - do not change name
     def save_figure(self) -> None:
@@ -887,13 +878,13 @@ class _Highlight(SpanSelector):
         scale = canvas.props.top_scale
         self.extents = (
             utilities.get_value_at_fraction(
-                canvas.min_selected,
+                canvas.get_min_selected(),
                 xmin,
                 xmax,
                 scale,
             ),
             utilities.get_value_at_fraction(
-                canvas.max_selected,
+                canvas.get_max_selected(),
                 xmin,
                 xmax,
                 scale,
