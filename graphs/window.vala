@@ -94,7 +94,7 @@ namespace Graphs {
 
         public Canvas canvas {
             get { return (Canvas) this.toast_overlay.get_child (); }
-            set { this.toast_overlay.set_child(value); }
+            set { this.toast_overlay.set_child (value); }
         }
 
         public CssProvider headerbar_provider { get; private set; }

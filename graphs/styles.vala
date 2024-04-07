@@ -25,7 +25,7 @@ namespace Graphs {
             try {
                 File config_dir = Tools.get_config_directory ();
                 this.style_dir = config_dir.get_child_for_display_name ("styles");
-                if (!this.style_dir.query_exists()) {
+                if (!this.style_dir.query_exists ()) {
                     this.style_dir.make_directory_with_parents ();
                 }
             } catch {
@@ -178,14 +178,14 @@ namespace Graphs {
         [GtkCallback]
         private void on_template_changed () {
             this.new_style_name.set_text (
-                Tools.get_duplicate_string(get_selected (), this.stylenames)
+                Tools.get_duplicate_string (get_selected (), this.stylenames)
             );
         }
 
         [GtkCallback]
         private void on_accept () {
             this.accept.emit (get_selected (), this.new_style_name.get_text ());
-            close();
+            close ();
         }
     }
 

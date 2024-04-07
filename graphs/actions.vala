@@ -31,12 +31,12 @@ namespace Graphs {
         foreach (string mode in modes) {
             SimpleAction action = new SimpleAction (@"mode_$mode", null);
             action.activate.connect (() => {
-                application.mode = modes.index_of(mode);
+                application.mode = modes.index_of (mode);
             });
             application.add_action (action);
         }
 
-        Settings settings = application.get_settings_child("figure");
+        Settings settings = application.get_settings_child ("figure");
         FigureSettings figure_settings = application.data.figure_settings;
         foreach (string dir in DIRECTION_NAMES) {
             string val = @"$dir-scale";
