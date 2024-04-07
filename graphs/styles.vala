@@ -3,7 +3,77 @@ using Gdk;
 using Gtk;
 
 namespace Graphs {
-    public interface StyleManagerInterface : Object {
+    public int style_cmp (Style a, Style b) {
+        if (a.file == null) return -1;
+        else if (b.file == null) return 1;
+        return strcmp (a.name.down (), b.name.down ());
+    }
+
+
+    public class StyleManager : Object {
+        public Application application { get; construct set; }
+        public bool use_custom_style { get; set; default = false; }
+        public string custom_style { get; set; default = "Adwaita"; }
+        public SingleSelection selection_model { get; set; }
+        public File style_dir { get; construct set; }
+
+        private GLib.ListStore style_model;
+
+        construct {
+            this.style_model = new GLib.ListStore (typeof (Style));
+            this.selection_model = new SingleSelection (this.style_model);
+            try {
+                File config_dir = Tools.get_config_directory ();
+                this.style_dir = config_dir.get_child_for_display_name ("styles");
+                if (!this.style_dir.query_exists()) {
+                    this.style_dir.make_directory_with_parents ();
+                }
+            } catch {
+                assert_not_reached ();
+            }
+        }
+
+        private Style get_selected_style () {
+            return (Style) this.selection_model.get_selected_item ();
+        }
+
+        protected void setup_bindings (FigureSettings figure_settings) {
+            figure_settings.bind_property (
+                "use_custom_style",
+                this,
+                "use_custom_style",
+                1 | 2
+            );
+            figure_settings.bind_property (
+                "custom_style",
+                this,
+                "custom_style",
+                1 | 2
+            );
+            this.selection_model.selection_changed.connect (() => {
+                Style style = get_selected_style ();
+                // Don't trigger unnecessary reloads
+                if (style.file == null) { // System Style
+                    if (this.use_custom_style) this.use_custom_style = false;
+                } else {
+                    if (style.name != this.custom_style) this.custom_style = style.name;
+                    if (!this.use_custom_style) this.use_custom_style = true;
+                }
+            });
+        }
+
+        public string get_selected_stylename () {
+            return get_selected_style ().name;
+        }
+
+        public string[] list_stylenames () {
+            string[] stylenames = {};
+            for (uint i = 1; i < this.style_model.get_n_items (); i++) {
+                Style style = (Style) this.style_model.get_item (i);
+                stylenames += style.name;
+            }
+            return stylenames;
+        }
     }
 
     public class Style : Object {
@@ -67,6 +137,55 @@ namespace Graphs {
             this.edit_button.get_style_context ().add_provider (
                 this.provider, STYLE_PROVIDER_PRIORITY_APPLICATION
             );
+        }
+    }
+
+    [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/add_style.ui")]
+    public class AddStyleDialog : Adw.Dialog {
+
+        [GtkChild]
+        private unowned Adw.EntryRow new_style_name { get; }
+
+        [GtkChild]
+        private unowned Adw.ComboRow style_templates { get; }
+
+        private StyleManager style_manager;
+        private string[] stylenames;
+
+        public signal void accept (string template, string name);
+
+        public AddStyleDialog (StyleManager style_manager, Widget parent) {
+            this.style_manager = style_manager;
+            this.stylenames = style_manager.list_stylenames ();
+            this.style_templates.set_model (new StringList (this.stylenames));
+            if (style_manager.use_custom_style) {
+                string template = style_manager.custom_style;
+                for (uint i = 0; i < this.stylenames.length; i++) {
+                    if (this.stylenames[i] == template) {
+                        this.style_templates.set_selected (i);
+                        break;
+                    }
+                }
+            }
+            present (parent);
+        }
+
+        private string get_selected () {
+            StringObject item = (StringObject) this.style_templates.get_selected_item ();
+            return item.get_string ();
+        }
+
+        [GtkCallback]
+        private void on_template_changed () {
+            this.new_style_name.set_text (
+                Tools.get_duplicate_string(get_selected (), this.stylenames)
+            );
+        }
+
+        [GtkCallback]
+        private void on_accept () {
+            this.accept.emit (get_selected (), this.new_style_name.get_text ());
+            close();
         }
     }
 

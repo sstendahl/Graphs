@@ -33,7 +33,7 @@ class EditItemDialog(Adw.PreferencesDialog):
     markerstyle = Gtk.Template.Child()
     markersize = Gtk.Template.Child()
 
-    data = GObject.Property(type=Graphs.DataInterface)
+    data = GObject.Property(type=Graphs.Data)
     item = GObject.Property(type=Graphs.Item)
     model = GObject.Property(type=Gtk.StringList)
     bindings = GObject.Property(type=object)

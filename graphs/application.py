@@ -3,12 +3,13 @@
 import logging
 from gettext import gettext as _
 
-from gi.repository import Adw, GLib, Gio, Graphs, Gtk
+from gi.repository import Adw, Gio, Graphs, Gtk
 
 from graphs import (
     actions,
     file_import,
     migrate,
+    operations,
     project,
     styles,
     ui,
@@ -17,32 +18,6 @@ from graphs import (
 from graphs.data import Data
 
 from matplotlib import font_manager
-
-_ACTIONS = [
-    "quit",
-    "help",
-    "about",
-    "figure_settings",
-    "add_data",
-    "add_equation",
-    "select_all",
-    "select_none",
-    "undo",
-    "redo",
-    "optimize_limits",
-    "view_back",
-    "view_forward",
-    "export_data",
-    "export_figure",
-    "new_project",
-    "save_project",
-    "save_project_as",
-    "smoothen_settings",
-    "open_project",
-    "delete_selected",
-    "zoom_in",
-    "zoom_out",
-]
 
 
 class PythonApplication(Graphs.Application):
@@ -68,47 +43,9 @@ class PythonApplication(Graphs.Application):
             except RuntimeError:
                 logging.warning(_("Could not load {font}").format(font=font))
 
-        for name in _ACTIONS:
-            action = Gio.SimpleAction.new(name, None)
-            action.connect(
-                "activate",
-                getattr(actions, f"{name}_action"),
-                self,
-            )
-            self.add_action(action)
-        self.set_accels_for_action("app.help", ["F1"])
-
-        self.setup_actions()
-
-        figure_settings = data.get_figure_settings()
-        for val in ("left-scale", "right-scale", "top-scale", "bottom-scale"):
-            action = Gio.SimpleAction.new_stateful(
-                f"change-{val}",
-                GLib.VariantType.new("s"),
-                GLib.Variant.new_string(
-                    str(settings.get_child("figure").get_enum(val)),
-                ),
-            )
-            action.connect("activate", actions.change_scale, self)
-            figure_settings.connect(
-                f"notify::{val}",
-                lambda _x,
-                param,
-                action_: action_.change_state(
-                    GLib.Variant.new_string(
-                        str(figure_settings.get_property(param.name)),
-                    ),
-                ),
-                action,
-            )
-            self.add_action(action)
-
-        operation_action = Gio.SimpleAction.new(
-            "app.perform_operation",
-            GLib.VariantType.new("s"),
-        )
-        operation_action.connect("activate", actions.perform_operation, self)
-        self.add_action(operation_action)
+        Graphs.setup_actions(self)
+        self.connect("action_invoked", actions.on_action_invoked)
+        self.connect("operation_invoked", operations.perform_operation)
 
         data.connect(
             "notify::items",
@@ -134,7 +71,7 @@ class PythonApplication(Graphs.Application):
         data = self.get_data()
         if nfiles == 1 and files[0].get_uri().endswith(".graphs"):
             project_file = files[0]
-            if data.props.unsaved:
+            if data.get_unsaved():
 
                 def on_response(_dialog, response):
                     if response == "discard_close":
@@ -165,7 +102,7 @@ class PythonApplication(Graphs.Application):
         Will ask the user to confirm
         and save/discard open data if any unsaved changes are present.
         """
-        if self.get_data().props.unsaved:
+        if self.get_data().get_unsaved():
 
             def on_response(_dialog, response):
                 if response == "discard_close":
@@ -234,12 +171,12 @@ class PythonApplication(Graphs.Application):
             self.set_window(window)
             window.connect("close-request", self.close_application)
             self.set_figure_style_manager(styles.StyleManager(self))
-            self.get_window().get_canvas().connect_after(
+            data.connect_after(
                 "notify::items",
-                ui.enable_axes_actions,
-                self,
+                lambda _data,
+                _param: window.update_view_menu(),
             )
-            ui.enable_axes_actions(None, None, self)
+            window.update_view_menu()
             window.present()
 
     def set_entry_css(

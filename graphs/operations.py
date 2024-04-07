@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Module for data transformations."""
 import logging
+import sys
 from gettext import gettext as _
 
 from gi.repository import Graphs
@@ -111,15 +112,71 @@ def sort_data(xdata: list, ydata: list) -> (list, list):
     )
 
 
-def perform_operation(
-    application: Graphs.Application,
-    callback,
-    *args,
-) -> None:
+def perform_operation(application: Graphs.Application, name: str) -> None:
     """Perform an operation."""
-    data_selected = False
+    this = sys.modules[__name__]
+    window = application.get_window()
+    if name in ("combine", ):
+        return getattr(this, name)(application)
+    elif name == "custom_transformation":
+
+        def on_accept(_dialog, input_x, input_y, discard):
+            try:
+                _apply(application, transform, input_x, input_y, discard)
+            except (RuntimeError, KeyError) as exception:
+                toast = _(
+                    "{name}: Unable to do transformation, \
+make sure the syntax is correct",
+                ).format(name=exception.__class__.__name__)
+                window.add_toast_string(toast)
+                logging.exception(_("Unable to do transformation"))
+
+        dialog = Graphs.TransformDialog.new(application)
+        dialog.connect("accept", on_accept)
+        return
+    elif name == "cut" and application.get_mode() != 2:
+        return
+    args = []
+    actions_settings = application.get_settings_child("actions")
+    if name in ("center", "smoothen"):
+        args = [actions_settings.get_enum(name)]
+    if name == "smoothen":
+        params = {}
+        settings = actions_settings.get_child("smoothen")
+        for setting in settings:
+            params[setting] = int(settings.get_int(setting))
+        args += [params]
+    elif name == "shift":
+        figure_settings = application.get_data().get_figure_settings()
+        right_range = (
+            figure_settings.get_max_right() - figure_settings.get_min_right()
+        )
+        left_range = (
+            figure_settings.get_max_left() - figure_settings.get_min_left()
+        )
+        args += [
+            figure_settings.get_left_scale(),
+            figure_settings.get_right_scale(),
+            application.get_data().get_items(),
+            [left_range, right_range],
+        ]
+    elif "translate" in name or "multiply" in name:
+        try:
+            args += [
+                utilities.string_to_float(
+                    window.get_property(name + "_entry").get_text(),
+                ),
+            ]
+        except ValueError as error:
+            window.add_toast_string(str(error))
+            return
+    _apply(application, getattr(this, name), *args)
+
+
+def _apply(application, callback, *args):
     data = application.get_data()
     figure_settings = data.get_figure_settings()
+    data_selected = False
     old_limits = figure_settings.get_limits()
     for item in data:
         if not (item.get_selected() and isinstance(item, DataItem)):

@@ -18,22 +18,10 @@ _FIGURE_SETTINGS_HISTORY_IGNORELIST = misc.LIMITS + [
 ]
 
 
-class Data(GObject.Object, Graphs.DataInterface):
+class Data(Graphs.Data):
     """Class for managing data."""
 
-    __gtype_name__ = "GraphsData"
-    __gsignals__ = {
-        "saved": (GObject.SIGNAL_RUN_FIRST, None, ()),
-    }
-
-    settings = GObject.Property(type=Gio.Settings)
-    figure_settings = GObject.Property(type=Graphs.FigureSettings)
-    can_undo = GObject.Property(type=bool, default=False)
-    can_redo = GObject.Property(type=bool, default=False)
-    can_view_back = GObject.Property(type=bool, default=False)
-    can_view_forward = GObject.Property(type=bool, default=False)
-    file = GObject.Property(type=Gio.File)
-    unsaved = GObject.Property(type=bool, default=False)
+    __gtype_name__ = "GraphsPythonData"
 
     def __init__(self, settings: Gio.Settings):
         figure_settings = Graphs.FigureSettings.new(settings)
@@ -44,6 +32,11 @@ class Data(GObject.Object, Graphs.DataInterface):
         self._initialize()
         figure_settings.connect("notify", self._on_figure_settings_change)
         self.connect("notify::unsaved", self._on_unsaved_change)
+        self._update_used_positions()
+        self.connect(
+            "add_history_state_request",
+            lambda _s: self.add_history_state(),
+        )
 
     def reset(self):
         """Reset data."""
@@ -76,10 +69,6 @@ class Data(GObject.Object, Graphs.DataInterface):
         self._view_history_pos = -1
         self._items = {}
         self._set_data_copy()
-
-    def get_figure_settings(self) -> Graphs.FigureSettings:
-        """Get figure settings property."""
-        return self.props.figure_settings
 
     @GObject.Property(type=bool, default=True, flags=1 | 1073741824)
     def empty(self) -> bool:
@@ -136,35 +125,12 @@ class Data(GObject.Object, Graphs.DataInterface):
         """Get all managed items."""
         return list(self._items.values())
 
-    def get_used_positions(self) -> tuple[bool, bool, bool, bool]:
-        """
-        Get used positions.
-
-        Get the axes positions that the items are bound to
-        Returns an array in the form of [bool, bool, bool, bool], where
-        each element corresponds to the [bottom, top, left, right] positions.
-        """
-        # bottom, top, left, right
-        figure_settings = self.get_figure_settings()
-        used_positions = [False, False, False, False]
-
-        for item_ in self.items:
-            if (
-                figure_settings.get_hide_unselected()
-                and not item_.get_selected()
-            ):
-                continue
-            used_positions[item_.get_xposition()] = True
-            used_positions[item_.get_yposition() + 2] = True
-        if not any(used_positions):
-            return [True, False, True, False]
-        return used_positions
-
     def set_items(self, items: misc.ItemList) -> None:
         """Set all managed items."""
         self._items = {}
         for item_ in items:
             self._add_item(item_)
+        self._update_used_positions()
         self.notify("items")
         self.notify("empty")
 
@@ -229,7 +195,7 @@ class Data(GObject.Object, Graphs.DataInterface):
     def add_items(
         self,
         items: misc.ItemList,
-        style_manager: Graphs.StyleManagerInterface,
+        style_manager: Graphs.StyleManager,
     ) -> None:
         """
         Add items to be managed.
@@ -307,9 +273,10 @@ class Data(GObject.Object, Graphs.DataInterface):
             self._current_batch.append(change)
         self.optimize_limits()
         self.add_history_state()
+        self._update_used_positions()
         self.notify("items")
-        self.notify("items_selected")
         self.notify("empty")
+        self.notify("items_selected")
 
     def delete_items(self, items: misc.ItemList):
         """Delete specified items."""
@@ -323,21 +290,22 @@ class Data(GObject.Object, Graphs.DataInterface):
             xlabel = item_.get_xlabel()
             ylabel = item_.get_ylabel()
             self._delete_item(item_.get_uuid())
-            used = [False] * 4 if not self.items else self.get_used_positions()
-            for position in [x_position, y_position]:
-                direction = misc.DIRECTIONS[position]
-                item_label = xlabel if position < 2 else ylabel
-                axis_label = getattr(settings, f"get_{direction}_label")()
-                if not used[position] and item_label == axis_label:
-                    set_label = getattr(settings, f"set_{direction}_label")
-                    set_label(
-                        self.props.settings.get_string(f"{direction}-label"),
-                    )
+        used = self.get_used_positions()
+        for position in [x_position, y_position]:
+            direction = misc.DIRECTIONS[position]
+            item_label = xlabel if position < 2 else ylabel
+            axis_label = getattr(settings, f"get_{direction}_label")()
+            if not used[position] and item_label == axis_label:
+                set_label = getattr(settings, f"set_{direction}_label")
+                set_label(
+                    self.props.settings.get_string(f"{direction}-label"),
+                )
 
+        self._update_used_positions()
         self.notify("items")
+        self.notify("empty")
         self.add_history_state()
         self.notify("items_selected")
-        self.notify("empty")
 
     def _connect_to_item(self, item_: Graphs.Item):
         item_.connect("notify::selected", self._on_item_select)
@@ -347,7 +315,7 @@ class Data(GObject.Object, Graphs.DataInterface):
 
     def _on_item_position_change(self, _item, _ignored) -> None:
         self.optimize_limits()
-        self.notify("items")
+        self._update_used_positions()
 
     def _on_item_select(self, _x, _y) -> None:
         self.notify("items_selected")
@@ -362,6 +330,24 @@ class Data(GObject.Object, Graphs.DataInterface):
                 copy.deepcopy(item_.get_property(param.name)),
             ),
         ))
+
+    def _update_used_positions(self) -> None:
+        # bottom, top, left, right
+        figure_settings = self.get_figure_settings()
+        used_positions = [False, False, False, False]
+
+        for item_ in self.items:
+            if (
+                figure_settings.get_hide_unselected()
+                and not item_.get_selected()
+            ):
+                continue
+            used_positions[item_.get_xposition()] = True
+            used_positions[item_.get_yposition() + 2] = True
+        if not any(used_positions):
+            self.set_used_positions(True, False, True, False)
+            return
+        self.set_used_positions(*used_positions)
 
     def _on_figure_settings_change(self, figure_settings, param) -> None:
         if param.name in _FIGURE_SETTINGS_HISTORY_IGNORELIST:
@@ -437,6 +423,7 @@ class Data(GObject.Object, Graphs.DataInterface):
                     change[1],
                 )
         if items_changed:
+            self._update_used_positions()
             self.notify("items")
             self.notify("empty")
         self.notify("items_selected")
@@ -474,6 +461,7 @@ class Data(GObject.Object, Graphs.DataInterface):
                     change[2],
                 )
         if items_changed:
+            self._update_used_positions()
             self.notify("items")
             self.notify("empty")
         self.notify("items_selected")

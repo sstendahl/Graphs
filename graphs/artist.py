@@ -12,7 +12,7 @@ from matplotlib import artist, pyplot
 from matplotlib.figure import Figure
 
 
-def new_for_item(canvas: Graphs.CanvasInterface, item: Graphs.Item):
+def new_for_item(canvas: Graphs.Canvas, item: Graphs.Item):
     """
     Create a new artist for an item.
 

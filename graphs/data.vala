@@ -1,34 +1,27 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 namespace Graphs {
-    public interface DataInterface : Object {
-        public abstract FigureSettings figure_settings { get; construct set; }
-        public abstract bool can_undo { get; }
-        public abstract bool can_redo { get; }
-        public abstract bool can_view_back { get; }
-        public abstract bool can_view_forward { get; }
-        public abstract bool items_selected { get; }
-        public abstract bool empty { get; }
+    public class Data : Object {
+        protected Settings settings { get; set; }
+        public FigureSettings figure_settings { get; construct set; }
+        public bool can_undo { get; protected set; default = false; }
+        public bool can_redo { get; protected set; default = false; }
+        public bool can_view_back { get; protected set; default = false; }
+        public bool can_view_forward { get; protected set; default = false; }
+        public File file { get; set; }
+        public bool unsaved { get; set; default = false; }
 
-        public abstract Item[] items { get; set; }
+        private bool[] _used_positions;
 
-        public abstract int index (Item item);
-        public abstract string[] get_names ();
-        public abstract int get_n_items ();
-        public abstract Item get_at_pos (int position);
-        public abstract Item get_for_uuid (string uuid);
+        public signal void add_history_state_request ();
 
-        public abstract void change_position (int index1, int index2);
-        public abstract void add_items (Item[] items, StyleManagerInterface style_manager);
-        public abstract void delete_items (Item[] items);
+        public bool[] get_used_positions () {
+            return this._used_positions;
+        }
 
-        public abstract void add_history_state (double[]? old_limits=null);
-        public abstract void undo ();
-        public abstract void redo ();
+        public void set_used_positions (bool a, bool b, bool c, bool d) {
+            this._used_positions = { a, b, c, d };
+        }
 
-        public abstract void add_view_history_state ();
-        public abstract void view_back ();
-        public abstract void view_forward ();
-
-        public abstract void optimize_limits ();
+        public signal void saved ();
     }
 }

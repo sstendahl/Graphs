@@ -220,7 +220,13 @@ class FigureSettingsDialog(Adw.Dialog):
     @Gtk.Template.Callback()
     def add_style(self, _button) -> None:
         """Open the new style window."""
-        styles.AddStyleDialog(self)
+        style_manager = self.props.application.get_figure_style_manager()
+
+        def on_accept(_dialog, template, name):
+            style_manager.copy_style(template, name)
+
+        dialog = Graphs.AddStyleDialog.new(style_manager, self)
+        dialog.connect("accept", on_accept)
 
     @Gtk.Template.Callback()
     def on_close(self, *_args) -> None:
