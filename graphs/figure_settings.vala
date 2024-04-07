@@ -33,19 +33,19 @@ namespace Graphs {
 
         public FigureSettings (Settings settings) {
             Object (
-                bottom_scale: settings.get_enum("bottom-scale"),
-                left_scale: settings.get_enum("left-scale"),
-                right_scale: settings.get_enum("right-scale"),
-                top_scale: settings.get_enum("top-scale"),
-                title: settings.get_string("title"),
-                bottom_label: settings.get_string("bottom-label"),
-                left_label: settings.get_string("left-label"),
-                top_label: settings.get_string("top-label"),
-                right_label: settings.get_string("right-label"),
-                legend: settings.get_boolean("legend"),
-                use_custom_style: settings.get_boolean("use-custom-style"),
-                legend_position: settings.get_enum("legend-position"),
-                custom_style: settings.get_string("custom-style")
+                bottom_scale: settings.get_enum ("bottom-scale"),
+                left_scale: settings.get_enum ("left-scale"),
+                right_scale: settings.get_enum ("right-scale"),
+                top_scale: settings.get_enum ("top-scale"),
+                title: settings.get_string ("title"),
+                bottom_label: settings.get_string ("bottom-label"),
+                left_label: settings.get_string ("left-label"),
+                top_label: settings.get_string ("top-label"),
+                right_label: settings.get_string ("right-label"),
+                legend: settings.get_boolean ("legend"),
+                use_custom_style: settings.get_boolean ("use-custom-style"),
+                legend_position: settings.get_enum ("legend-position"),
+                custom_style: settings.get_string ("custom-style")
             );
         }
 
@@ -60,18 +60,16 @@ namespace Graphs {
         }
 
         public void set_limits (double[] limits)
-                requires (limits.length == 8)
-        {
+        requires (limits.length == 8) {
             for (int i = 0; i < LIMIT_NAMES.length; i++) {
                 set (LIMIT_NAMES[i], limits[i]);
             }
         }
 
         public void set_selection_range (double minimum, double maximum)
-                requires (0 <= minimum <= 1)
-                requires (0 <= maximum <= 1)
-                requires (minimum <= maximum)
-        {
+        requires (0 <= minimum <= 1)
+        requires (0 <= maximum <= 1)
+        requires (minimum <= maximum) {
             this.min_selected = minimum;
             this.max_selected = maximum;
         }

@@ -10,4 +10,3 @@ namespace Graphs {
         public string upper_bound { get; construct set; default = "inf"; }
     }
 }
-

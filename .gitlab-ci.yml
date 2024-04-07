@@ -27,12 +27,18 @@ flatpak@aarch64:
     - .flatpak@aarch64
     - .vars
 
-flake8:
+python-lint:
   image: python:3.11.1
   stage: .pre
   script:
     - pip install flake8 flake8-docstrings flake8-simplify flake8-unused-arguments flake8-quotes flake8-bugbear flake8-pie flake8-print flake8-warnings flake8-commas flake8-builtins flake8-import-order pep8-naming
     - flake8
+
+vala-lint:
+  image: "valalang/lint:latest"
+  stage: .pre
+  script:
+    - io.elementary.vala-lint graphs
 
 pages:
   image: debian:latest

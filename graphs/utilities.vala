@@ -87,16 +87,16 @@ namespace Graphs {
         private double get_srgb (double color) {
             if (color <= 0.03928) {
                 return color / 12.92;
-            } else return Math.pow((color + 0.055) / 1.055, 2.4);
+            } else return Math.pow ((color + 0.055) / 1.055, 2.4);
         }
 
 
         public double get_luminance_from_rgba (Gdk.RGBA rgba) {
-            double R = get_srgb (rgba.red);
-            double G = get_srgb (rgba.green);
-            double B = get_srgb (rgba.blue);
+            double r = get_srgb (rgba.red);
+            double g = get_srgb (rgba.green);
+            double b = get_srgb (rgba.blue);
 
-            return 0.2126 * R + 0.7152 * G + 0.0722 * B;
+            return 0.2126 * r + 0.7152 * g + 0.0722 * b;
         }
 
         public double get_contrast (Gdk.RGBA bg_color, Gdk.RGBA fg_color) {
@@ -120,7 +120,7 @@ namespace Graphs {
                 Regex regex = new Regex ("(?P<string>.+) \\(\\d+\\)");
                 MatchInfo info;
                 if (regex.match (original, 0, out info)) {
-                    old_str = info.fetch_named("string");
+                    old_str = info.fetch_named ("string");
                 }
             } catch {}
             uint i = 1;
@@ -144,7 +144,7 @@ namespace Graphs {
                 );
                 return info.get_display_name ();
             } catch {
-                return file.get_basename();
+                return file.get_basename ();
             }
         }
 
