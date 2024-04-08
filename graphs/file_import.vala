@@ -53,6 +53,7 @@ namespace Graphs {
         [GtkCallback]
         private void on_accept () {
             this.accept.emit ();
+            close ();
         }
 
         [GtkCallback]
