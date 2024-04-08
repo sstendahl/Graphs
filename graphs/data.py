@@ -316,6 +316,7 @@ class Data(Graphs.Data):
     def _on_item_position_change(self, _item, _ignored) -> None:
         self.optimize_limits()
         self._update_used_positions()
+        self.notify("items")
 
     def _on_item_select(self, _x, _y) -> None:
         self.notify("items_selected")
