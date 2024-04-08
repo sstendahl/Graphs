@@ -8,7 +8,8 @@ data/ui/curve-fitting.blp
 data/ui/dialogs.blp
 data/ui/edit-item.blp
 data/ui/export-figure.blp
-data/ui/figure-settings.blp
+data/ui/figure-settings-dialog.blp
+data/ui/figure-settings-page.blp
 data/ui/fitting-parameters.blp
 data/ui/import.blp
 data/ui/item-box.blp
