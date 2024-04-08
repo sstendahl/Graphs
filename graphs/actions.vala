@@ -65,7 +65,7 @@ namespace Graphs {
             figure_settings.notify[val].connect (() => {
                 int scale;
                 figure_settings.get (val, out scale);
-                action.change_state (new Variant.string (scale.to_string ()));
+                action.set_state (new Variant.string (scale.to_string ()));
             });
             application.add_action (action);
         }
