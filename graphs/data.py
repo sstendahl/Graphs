@@ -316,6 +316,7 @@ class Data(Graphs.Data):
     def _on_item_position_change(self, _item, _ignored) -> None:
         self.optimize_limits()
         self._update_used_positions()
+        self.notify("items")        
 
     def _on_item_select(self, _x, _y) -> None:
         self.notify("items_selected")
@@ -348,7 +349,6 @@ class Data(Graphs.Data):
             self.set_used_positions(True, False, True, False)
             return
         self.set_used_positions(*used_positions)
-        self.notify("items")
 
     def _on_figure_settings_change(self, figure_settings, param) -> None:
         if param.name in _FIGURE_SETTINGS_HISTORY_IGNORELIST:
