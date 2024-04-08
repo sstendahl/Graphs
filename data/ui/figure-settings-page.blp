@@ -1,0 +1,235 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.NavigationPage settings_page {
+  title: _("Figure Settings");
+  Adw.ToolbarView {
+    [top]
+    Adw.HeaderBar {}
+    content: ScrolledWindow {
+      hscrollbar-policy: never;
+      propagate-natural-height: true;
+      Adw.Clamp {
+        margin-bottom: 12;
+        margin-top: 12;
+        margin-start: 12;
+        margin-end: 12;
+        Box {
+          orientation: vertical;
+          spacing: 16;
+          Adw.PreferencesGroup {
+            title: _("Labels");
+
+            Adw.EntryRow title {
+              title: _("Title");
+            }
+
+            Adw.EntryRow bottom_label {
+              visible: false;
+              title: _("Bottom X Axis Label");
+            }
+
+            Adw.EntryRow top_label {
+              visible: false;
+              title: _("Top X Axis Label");
+            }
+
+            Adw.EntryRow left_label {
+              visible: false;
+              title: _("Left Y Axis Label");
+            }
+
+            Adw.EntryRow right_label {
+              visible: false;
+              title: _("Right Y Axis Label");
+            }
+          }
+
+          Adw.PreferencesGroup {
+            title: _("Axis Limits");
+            Box {
+              orientation: vertical;
+              spacing: 12;
+              Box bottom_limits {
+                visible: false;
+                orientation: horizontal;
+                homogeneous: true;
+                spacing: 6;
+                Adw.PreferencesGroup {
+                  Adw.EntryRow min_bottom {
+                    title: _("Bottom X Axis Minimum");
+                  }
+                }
+                Adw.PreferencesGroup {
+                  Adw.EntryRow max_bottom {
+                    title: _("Bottom X Axis Maximum");
+                  }
+                }
+              }
+              Box top_limits {
+                visible: false;
+                spacing: 6;
+                homogeneous: true;
+                orientation: horizontal;
+                Adw.PreferencesGroup {
+                  Adw.EntryRow min_top {
+                    title: _("Top X Axis Minimum");
+                  }
+                }
+                Adw.PreferencesGroup {
+                  Adw.EntryRow max_top {
+                    title: _("Top X Axis Maximum");
+                  }
+                }
+              }
+              Box left_limits {
+                visible: false;
+                orientation: horizontal;
+                homogeneous: true;
+                spacing: 6;
+                Adw.PreferencesGroup {
+                  Adw.EntryRow min_left {
+                    title: _("Left Y Axis Minimum");
+                  }
+                }
+                Adw.PreferencesGroup {
+            	    Adw.EntryRow max_left {
+            	      title: _("Left Y Axis Maximum");
+                  }
+                }
+              }
+              Box right_limits {
+                visible: false;
+                homogeneous: true;
+                orientation: horizontal;
+                spacing: 6;
+                Adw.PreferencesGroup {
+                  Adw.EntryRow min_right {
+                    title: _("Right Y Axis Minimum");
+                  }
+                }
+                Adw.PreferencesGroup {
+                  Adw.EntryRow max_right {
+                    title: _("Right Y Axis Maximum");
+                  }
+                }
+              }
+            }
+          }
+
+          Adw.PreferencesGroup {
+            title: _("Scaling");
+
+            Adw.ComboRow bottom_scale {
+              visible: false;
+              title: _("Bottom X Axis Scale");
+              model: StringList{
+                strings [
+                  C_("scale", "Linear"),
+                  C_("scale", "Logarithmic"),
+                  C_("scale", "Radians"),
+                  C_("scale", "Square Root"),
+                  C_("scale", "Inverse"),
+                ]
+              };
+            }
+
+            Adw.ComboRow top_scale {
+              visible: false;
+              title: _("Top X Axis Scale");
+              model: StringList{
+                strings [
+                  C_("scale", "Linear"),
+                  C_("scale", "Logarithmic"),
+                  C_("scale", "Radians"),
+                  C_("scale", "Square Root"),
+                  C_("scale", "Inverse"),
+                ]
+              };
+            }
+
+            Adw.ComboRow left_scale {
+              visible: false;
+              title: _("Left Y Axis Scale");
+              model: StringList{
+                strings [
+                  C_("scale", "Linear"),
+                  C_("scale", "Logarithmic"),
+                  C_("scale", "Radians"),
+                  C_("scale", "Square Root"),
+                  C_("scale", "Inverse"),
+                ]
+              };
+            }
+
+            Adw.ComboRow right_scale {
+              visible: false;
+              title: _("Right Y Axis Scale");
+              model: StringList{
+                strings [
+                  C_("scale", "Linear"),
+                  C_("scale", "Logarithmic"),
+                  C_("scale", "Radians"),
+                  C_("scale", "Square Root"),
+                  C_("scale", "Inverse"),
+                ]
+              };
+            }
+          }
+
+          Adw.PreferencesGroup {
+            title: _("Appearance");
+            Adw.ExpanderRow legend {
+              title: _("Legend");
+              show-enable-switch: true;
+              Adw.ComboRow legend_position {
+                title: _("Legend Position");
+                model: StringList{
+                  strings [
+                    C_("legend-position", "Auto"),
+                    C_("legend-position", "Upper Right"),
+                    C_("legend-position", "Upper Left"),
+                    C_("legend-position", "Lower Left"),
+                    C_("legend-position", "Lower Right"),
+                    C_("legend-position", "Center Left"),
+                    C_("legend-position", "Center Right"),
+                    C_("legend-position", "Lower Center"),
+                    C_("legend-position", "Upper Center"),
+                    C_("legend-position", "Center"),
+                  ]
+                };
+              }
+            }
+
+            Adw.SwitchRow hide_unselected {
+              title: _("Hide Unselected Items");
+            }
+
+            Adw.ActionRow style_row {
+              title: _("Style");
+              hexpand: true;
+              activatable: true;
+              [suffix]
+              Label style_name {}
+              [suffix]
+              Image {
+                icon-name: "go-next-symbolic";
+              }
+            }
+          }
+
+          Adw.PreferencesGroup {
+            margin-top: 12;
+            hexpand: false;
+            halign: center;
+            margin-bottom: 12;
+            Button set_as_default {
+              label: _("Set as Default");
+              styles ["pill"]
+            }
+          }
+        }
+      }
+    };
+  }
+}

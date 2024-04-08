@@ -9,7 +9,7 @@ from graphs.curve_fitting import CurveFittingDialog
 from graphs.edit_item import EditItemDialog
 
 
-@Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/item_box.ui")
+@Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/item-box.ui")
 class ItemBox(Gtk.Box):
     """UI representation of an Item."""
 

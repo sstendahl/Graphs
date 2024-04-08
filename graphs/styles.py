@@ -23,7 +23,7 @@ from gi.repository import (
 )
 
 import graphs
-from graphs import item, style_io, ui
+from graphs import item, style_io
 
 from matplotlib import RcParams, rcParams, rcParamsDefault, rc_context
 from matplotlib.figure import Figure
@@ -299,6 +299,7 @@ class StyleManager(Graphs.StyleManager):
 
     def _on_style_change(self, override: bool = False) -> None:
         rcParams.update(rcParamsDefault)
+        self.props.selected_stylename = self.get_selected_style().get_name()
         old_style = self._selected_style_params
         self._update_system_style()
         self._update_selected_style()
@@ -527,7 +528,7 @@ def _title_format_function(_scale, value: float) -> str:
     return str(value / 2 * 100).split(".")[0] + "%"
 
 
-@Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/style_editor.ui")
+@Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/style-editor.ui")
 class StyleEditor(Adw.NavigationPage):
     """Style editor widget."""
 
@@ -573,8 +574,8 @@ class StyleEditor(Adw.NavigationPage):
         super().__init__()
         self.style = None
         self.parent = parent
-        application = self.parent.props.application
-        self._style_manager = application.get_figure_style_manager()
+        self._style_manager = \
+            parent.get_application().get_figure_style_manager()
 
         self.titlesize.set_format_value_func(_title_format_function)
         self.labelsize.set_format_value_func(_title_format_function)
@@ -596,7 +597,10 @@ class StyleEditor(Adw.NavigationPage):
                 Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION,
             )
 
-    def load_style(self, style):
+        parent.connect("load-style-request", self._load_style)
+        parent.connect("save-style-request", self._save_style)
+
+    def _load_style(self, _parent, style):
         """Load a style."""
         if not style.get_mutable():
             return
@@ -607,16 +611,23 @@ class StyleEditor(Adw.NavigationPage):
         stylename = self.style.get_name()
         self.set_title(stylename)
         self.style_name.set_text(stylename)
-        ui.load_values_from_dict(
-            self,
-            {
-                key:
-                VALUE_DICT[key].index(self.style_params[value[0]])
-                if key in VALUE_DICT else self.style_params[value[0]]
-                for key,
-                value in STYLE_DICT.items()
-            },
-        )
+        for key, value in STYLE_DICT.items():
+            value = self.style_params[value[0]]
+            with contextlib.suppress(KeyError):
+                value = VALUE_DICT[key].index(value)
+            widget = getattr(self, key.replace("-", "_"))
+            if isinstance(widget, Adw.EntryRow):
+                widget.set_text(str(value))
+            elif isinstance(widget, Adw.ComboRow):
+                widget.set_selected(int(value))
+            elif isinstance(widget, Gtk.Scale):
+                widget.set_value(value)
+            elif isinstance(widget, Gtk.Button):
+                widget.color = Graphs.tools_hex_to_rgba(value)
+            elif isinstance(widget, Adw.SwitchRow):
+                widget.set_active(bool(value))
+            else:
+                raise ValueError
 
         # font
         font_description = Pango.FontDescription.new()
@@ -652,17 +663,28 @@ class StyleEditor(Adw.NavigationPage):
             self.style_params["axes.prop_cycle"].by_key()["color"]
         self._reload_line_colors()
 
-    def save_style(self):
+    def _save_style(self, _parent):
         """Save the style."""
         if self.style is None:
             return
-        new_values = ui.save_values_to_dict(self, STYLE_DICT.keys())
-        for key, value in new_values.items():
-            if value is not None:
-                with contextlib.suppress(KeyError):
-                    value = VALUE_DICT[key][value]
-                for item_ in STYLE_DICT[key]:
-                    self.style_params[item_] = value
+        for key in STYLE_DICT.keys():
+            widget = getattr(self, key.replace("-", "_"))
+            if isinstance(widget, Adw.EntryRow):
+                value = str(widget.get_text())
+            elif isinstance(widget, Adw.ComboRow):
+                value = widget.get_selected()
+            elif isinstance(widget, Gtk.Scale):
+                value = widget.get_value()
+            elif isinstance(widget, Gtk.Button):
+                value = Graphs.tools_rgba_to_hex(widget.color)
+            elif isinstance(widget, Adw.SwitchRow):
+                value = bool(widget.get_active())
+            else:
+                raise ValueError
+            with contextlib.suppress(KeyError):
+                value = VALUE_DICT[key][value]
+            for item_ in STYLE_DICT[key]:
+                self.style_params[item_] = value
 
         # font
         font_description = self.font_chooser.get_font_desc()
@@ -700,13 +722,11 @@ class StyleEditor(Adw.NavigationPage):
         self.style_params["patch.facecolor"] = self.line_colors[0]
 
         # name & save
-        application = self.parent.props.application
         new_name = self.style_name.get_text()
         if self.style.get_name() != new_name:
-            style_manager = application.get_figure_style_manager()
             new_name = Graphs.tools_get_duplicate_string(
                 new_name,
-                style_manager.list_stylenames(),
+                self._style_manager.list_stylenames(),
             )
         style_io.write(self.style.get_file(), new_name, self.style_params)
         self._style_manager._on_style_change(True)
@@ -740,7 +760,7 @@ class StyleEditor(Adw.NavigationPage):
         dialog = Gtk.ColorDialog()
         dialog.set_with_alpha(False)
         dialog.choose_rgba(
-            self.parent.props.application.get_window(),
+            self.parent.get_application().get_window(),
             button.color,
             None,
             on_accept,
@@ -777,12 +797,11 @@ class StyleEditor(Adw.NavigationPage):
             if response == "cancel_delete_style":
                 return
             if response == "delete_style":
-                style_manager = self._style_manager
                 file = self.style.get_file()
-                style_manager.delete_style(file)
+                self._style_manager.delete_style(file)
                 file.trash(None)
                 self.style = None
-                self.parent.navigation_view.pop()
+                self.parent.get_navigation_view().pop()
 
         dialog = Graphs.tools_build_dialog("delete_style_dialog")
         msg = _("Are you sure you want to delete {stylename}?")
@@ -791,7 +810,7 @@ class StyleEditor(Adw.NavigationPage):
         dialog.present(self.parent)
 
 
-@Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/style_color_box.ui")
+@Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/style-color-box.ui")
 class _StyleColorBox(Gtk.Box):
     __gtype_name__ = "GraphsStyleColorBox"
     label = Gtk.Template.Child()

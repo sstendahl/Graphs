@@ -2,7 +2,7 @@
 """Module for Editing an Item."""
 from gi.repository import Adw, GObject, Graphs, Gtk
 
-from graphs import item, ui
+from graphs.item import DataItem
 
 _IGNORELIST = [
     "alpha",
@@ -17,7 +17,7 @@ _IGNORELIST = [
 ]
 
 
-@Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/edit_item.ui")
+@Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/edit-item.ui")
 class EditItemDialog(Adw.PreferencesDialog):
     """Class for editing an Item."""
 
@@ -65,15 +65,34 @@ class EditItemDialog(Adw.PreferencesDialog):
     @Gtk.Template.Callback()
     def on_item_change(self, _a, _b) -> None:
         """Handle Item change."""
-        self.set_title(self.props.item.get_name())
+        item = self.props.item
+        self.set_title(item.get_name())
         for binding in self.props.bindings:
             binding.unbind()
-        self.props.bindings = ui.bind_values_to_object(
-            self.props.item,
-            self,
-            ignorelist=_IGNORELIST,
-        )
-        self.item_group.set_visible(isinstance(self.props.item, item.DataItem))
+        bindings = []
+        for key in dir(item.props):
+            if key in _IGNORELIST:
+                continue
+            widget = getattr(self, key)
+            if isinstance(widget, Adw.EntryRow):
+                bindings.append(
+                    item.bind_property(key, widget, "text", 1 | 2),
+                )
+            elif isinstance(widget, Adw.ComboRow):
+                bindings.append(
+                    item.bind_property(key, widget, "selected", 1 | 2),
+                )
+            elif isinstance(widget, Gtk.Scale):
+                bindings.append(
+                    item.bind_property(
+                        key,
+                        widget.get_adjustment(),
+                        "value",
+                        1 | 2,
+                    ),
+                )
+        self.props.bindings = bindings
+        self.item_group.set_visible(isinstance(item, DataItem))
 
     @Gtk.Template.Callback()
     def on_close(self, _a) -> None:

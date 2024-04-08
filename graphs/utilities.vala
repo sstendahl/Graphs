@@ -17,15 +17,11 @@ namespace Graphs {
 
     namespace Tools {
         public void bind_settings_to_widgets (
-            GLib.Settings settings, Gtk.Widget parent, string prefix = "",
-            string[] ignorelist = {}
+            GLib.Settings settings, Gtk.Widget parent
         ) {
             foreach (string key in settings.settings_schema.list_keys ()) {
-                if (key in ignorelist) {
-                    continue;
-                }
                 Gtk.Widget widget;
-                parent.get (prefix + key, out widget);
+                parent.get (key, out widget);
                 if (widget is Adw.EntryRow) {
                     settings.bind (key, widget, "text", 0);
                 }

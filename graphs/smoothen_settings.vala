@@ -3,7 +3,7 @@ using Adw;
 using Gtk;
 
 namespace Graphs {
-    [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/smoothen_settings.ui")]
+    [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/smoothen-settings.ui")]
     public class SmoothenDialog : Adw.Dialog {
         [GtkChild]
         public unowned Adw.SpinRow savgol_window { get; }

@@ -16,6 +16,7 @@ namespace Graphs {
         public string custom_style { get; set; default = "Adwaita"; }
         public SingleSelection selection_model { get; set; }
         public File style_dir { get; construct set; }
+        public string selected_stylename { get; protected set; }
 
         private GLib.ListStore style_model;
 
@@ -33,7 +34,7 @@ namespace Graphs {
             }
         }
 
-        private Style get_selected_style () {
+        protected Style get_selected_style () {
             return (Style) this.selection_model.get_selected_item ();
         }
 
@@ -62,10 +63,6 @@ namespace Graphs {
             });
         }
 
-        public string get_selected_stylename () {
-            return get_selected_style ().name;
-        }
-
         public string[] list_stylenames () {
             string[] stylenames = {};
             for (uint i = 1; i < this.style_model.get_n_items (); i++) {
@@ -90,7 +87,7 @@ namespace Graphs {
         }
     }
 
-    [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/style_preview.ui")]
+    [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/style-preview.ui")]
     private class StylePreview : Box {
 
         [GtkChild]
@@ -140,7 +137,7 @@ namespace Graphs {
         }
     }
 
-    [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/add_style.ui")]
+    [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/add-style.ui")]
     public class AddStyleDialog : Adw.Dialog {
 
         [GtkChild]
@@ -186,35 +183,6 @@ namespace Graphs {
         private void on_accept () {
             this.accept.emit (get_selected (), this.new_style_name.get_text ());
             close ();
-        }
-    }
-
-    public class PreviewWidgetHandler : Object {
-        public SignalListItemFactory factory { get; construct set; }
-        public signal void edit_request (Style style);
-
-        construct {
-            this.factory = new SignalListItemFactory ();
-            this.factory.setup.connect (on_setup);
-            this.factory.bind.connect (on_bind);
-        }
-
-        private void on_setup (Object object) {
-            ListItem item = (ListItem) object;
-            item.set_child (new StylePreview ());
-        }
-
-        private void on_bind (Object object) {
-            ListItem item = (ListItem) object;
-            StylePreview preview = (StylePreview) item.get_child ();
-            Style style = (Style) item.get_item ();
-            preview.style = style;
-            if (style.mutable && !preview.edit_button.get_visible ()) {
-                preview.edit_button.set_visible (true);
-                preview.edit_button.clicked.connect (() => {
-                    this.edit_request (style);
-                });
-            }
         }
     }
 }
