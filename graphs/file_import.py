@@ -5,12 +5,11 @@ Module for importing data from files.
     Functions:
         import_from_files
 """
-from gettext import gettext as _
 from pathlib import Path
 
-from gi.repository import Adw, GObject, Gio, Graphs, Gtk
+from gi.repository import Gio, Graphs
 
-from graphs import parse_file, ui
+from graphs import parse_file
 from graphs.misc import ParseError
 
 _IMPORT_MODES = {
@@ -46,7 +45,17 @@ def import_from_files(
         if mode in modes:
             configurable_modes.append(mode)
     if configurable_modes:
-        _ImportDialog(application, settings, configurable_modes, import_dict)
+
+        def on_accept(_dialog):
+            _import_from_files(
+                application,
+                settings,
+                configurable_modes,
+                import_dict,
+            )
+
+        dialog = Graphs.ImportDialog.new(application, configurable_modes)
+        dialog.connect("accept", on_accept)
     else:
         _import_from_files(
             application,
@@ -78,79 +87,6 @@ def _import_from_files(
         items,
         application.get_figure_style_manager(),
     )
-
-
-@Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/import.ui")
-class _ImportDialog(Adw.Dialog):
-    __gtype_name__ = "GraphsImportDialog"
-
-    columns_group = Gtk.Template.Child()
-    columns_delimiter = Gtk.Template.Child()
-    columns_custom_delimiter = Gtk.Template.Child()
-    columns_separator = Gtk.Template.Child()
-    columns_column_x = Gtk.Template.Child()
-    columns_column_y = Gtk.Template.Child()
-    columns_skip_rows = Gtk.Template.Child()
-
-    import_dict = GObject.Property(type=object)
-    modes = GObject.Property(type=object)
-    settings = GObject.Property(type=Gio.Settings)
-    application = GObject.Property(type=Graphs.Application)
-
-    def __init__(
-        self,
-        application: Graphs.Application,
-        settings: Gio.Settings,
-        modes: list[str],
-        import_dict: dict,
-    ):
-        super().__init__(
-            application=application,
-            import_dict=import_dict,
-            modes=modes,
-            settings=settings,
-        )
-
-        for mode in modes:
-            ui.bind_values_to_settings(
-                settings.get_child(mode),
-                self,
-                prefix=f"{mode}_",
-            )
-            getattr(self, f"{mode}_group").set_visible(True)
-        self.present(application.get_window())
-
-    @Gtk.Template.Callback()
-    def on_delimiter_change(self, _action, _target) -> None:
-        delimiter_choice = self.columns_delimiter.get_selected()
-        self.columns_custom_delimiter.set_visible(delimiter_choice == 6)
-
-    @Gtk.Template.Callback()
-    def on_reset(self, _widget) -> None:
-
-        def on_accept(_dialog, response):
-            if response == "reset":
-                self.reset_import()
-
-        body = _("Are you sure you want to reset the import settings?")
-        dialog = Graphs.tools_build_dialog("reset_to_defaults")
-        dialog.set_body(body)
-        dialog.connect("response", on_accept)
-        dialog.present(self)
-
-    def reset_import(self) -> None:
-        for mode in self.props.modes:
-            Graphs.tools_reset_settings(self.props.settings.get_child(mode))
-
-    @Gtk.Template.Callback()
-    def on_accept(self, _widget) -> None:
-        _import_from_files(
-            self.props.application,
-            self.props.settings,
-            self.props.modes,
-            self.props.import_dict,
-        )
-        self.close()
 
 
 def _guess_import_mode(file: Gio.File) -> str:

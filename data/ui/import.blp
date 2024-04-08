@@ -37,73 +37,9 @@ template $GraphsImportDialog : Adw.Dialog {
       margin-top: 12;
       margin-bottom: 12;
 
-      Box {
+      Box mode_box {
         orientation: vertical;
         spacing: 10;
-        Adw.PreferencesGroup columns_group {
-          visible: false;
-          Adw.ComboRow columns_delimiter {
-            title: _("Delimiter");
-            subtitle: _("Character sequence used to split values");
-            notify::selected => $on_delimiter_change();
-            model: StringList{
-              strings [
-                C_("delimiter", "Whitespace"),
-                C_("delimiter", "Tab"),
-                C_("delimiter", "Colon (:)"),
-                C_("delimiter", "Semicolon (;)"),
-                C_("delimiter", "Decimal comma (,)"),
-                C_("delimiter", "Decimal point (.)"),
-                C_("delimiter", "Custom"),
-              ]
-            };
-          }
-          Adw.EntryRow columns_custom_delimiter {
-            visible: false;
-            max-width-chars: 10;
-            title: _("Custom Delimiter");
-          }
-
-          Adw.ComboRow columns_separator {
-            title: _("Decimal Separator");
-            model: StringList{
-              strings [
-                C_("separator", "Decimal comma (,)"),
-                C_("separator", "Decimal point (.)"),
-              ]
-            };
-          }
-
-          Adw.SpinRow columns_column_x {
-            title: _("Column X");
-            subtitle: _("X-data column index");
-            adjustment: Adjustment {
-              step-increment: 1;
-              upper: 100;
-              value: 0;
-            };
-          }
-
-          Adw.SpinRow columns_column_y {
-            title: _("Column Y");
-            selectable: false;
-            subtitle: _("Y-data column index");
-            adjustment: Adjustment {
-              step-increment: 1;
-              upper: 100;
-
-            };
-          }
-
-          Adw.SpinRow columns_skip_rows {
-            title: _("Skip Rows");
-            subtitle: _("Ignored row indices");
-            adjustment: Adjustment {
-              step-increment: 1;
-              upper: 9999;
-            };
-          }
-        }
       }
     };
   };

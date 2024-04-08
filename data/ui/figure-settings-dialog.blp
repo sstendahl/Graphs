@@ -1,0 +1,53 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $GraphsFigureSettingsDialog : Adw.Dialog {
+  content-width: 640;
+  content-height: 576;
+  width-request: 400;
+  height-request: 400;
+  styles ["preferences"]
+
+  Adw.Breakpoint {
+    condition ("max-width: 600sp")
+    setters {
+      grid_view.max-columns: 2;
+      grid_view.min-columns: 2;
+    }
+  }
+
+  child: Adw.ToastOverlay toast_overlay {
+    Adw.NavigationView navigation_view {
+      popped => $on_pop();
+    }
+  };
+}
+
+Adw.NavigationPage style_overview {
+  title: _("Style");
+  Adw.ToolbarView {
+    [top]
+    Adw.HeaderBar {
+      [end]
+      Button {
+        icon-name: "list-add-symbolic";
+        tooltip-text: _("Add New Style");
+        clicked => $add_style();
+      }
+    }
+    content: ScrolledWindow {
+      hscrollbar-policy: never;
+      Adw.Clamp {
+        margin-bottom: 6;
+        margin-top: 6;
+        margin-start: 6;
+        margin-end: 6;
+        GridView grid_view {
+          name: "style-grid";
+          max-columns: 3;
+          min-columns: 3;
+        }
+      }
+    };
+  }
+}

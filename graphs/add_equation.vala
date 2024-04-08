@@ -3,7 +3,7 @@ using Adw;
 using Gtk;
 
 namespace Graphs {
-    [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/add_equation.ui")]
+    [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/add-equation.ui")]
     public class AddEquationDialog : Adw.Dialog {
 
         [GtkChild]

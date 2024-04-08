@@ -5,7 +5,7 @@ using Gtk;
 namespace Graphs {
     private const uint[] FORMATS_WITH_DPI = {1, 3, 6};
 
-    [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/export_figure.ui")]
+    [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/export-figure.ui")]
     public class ExportFigureDialog : Adw.Dialog {
 
         [GtkChild]

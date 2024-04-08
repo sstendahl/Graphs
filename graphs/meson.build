@@ -50,6 +50,7 @@ graphs_lib = shared_library(
     'data.vala',
     'export_figure.vala',
     'figure_settings.vala',
+    'file_import.vala',
     'item.vala',
     'inline-stack-switcher.vala',
     'misc.vala',

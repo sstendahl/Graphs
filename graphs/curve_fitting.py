@@ -5,7 +5,7 @@ from gettext import gettext as _, pgettext as C_
 
 from gi.repository import Adw, GObject, Gio, Graphs, Gtk
 
-from graphs import ui, utilities
+from graphs import utilities
 from graphs.canvas import Canvas
 from graphs.item import DataItem, FillItem
 from graphs.misc import EQUATIONS
@@ -15,7 +15,7 @@ import numpy
 from scipy.optimize import _minpack, curve_fit
 
 
-@Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/curve_fitting.ui")
+@Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/curve-fitting.ui")
 class CurveFittingDialog(Adw.Dialog):
     """Class for displaying the Curve Fitting dialog."""
 
@@ -36,8 +36,7 @@ class CurveFittingDialog(Adw.Dialog):
         super().__init__(application=application)
         Adw.StyleManager.get_default().connect("notify", self.reload_canvas)
         self.settings = application.get_settings_child("curve-fitting")
-        ignorelist = ["optimization", "confidence", "custom-equation"]
-        ui.bind_values_to_settings(self.settings, self, ignorelist=ignorelist)
+        self.equation.set_selected(self.settings.get_enum("equation"))
         self.set_equation()
         self.connect_actions()
         style = \
@@ -118,6 +117,8 @@ class CurveFittingDialog(Adw.Dialog):
 
     def set_equation(self, *_args) -> None:
         """Set the equation entry based on the current settings."""
+        if self.settings.get_enum("equation") != self.equation.get_selected():
+            self.settings.set_enum("equation", self.equation.get_selected())
         equation = EQUATIONS[self.settings.get_string("equation")]
         custom_equation = self.settings.get_string("custom-equation")
         if equation != "custom":
@@ -508,7 +509,7 @@ class FittingParameter(Graphs.FittingParameter):
         )
 
 
-@Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/fitting_parameters.ui")
+@Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/fitting-parameters.ui")
 class FittingParameterEntry(Gtk.Box):
     """Class for the fitting parameter entries."""
 

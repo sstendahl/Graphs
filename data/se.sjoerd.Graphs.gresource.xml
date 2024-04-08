@@ -2,7 +2,7 @@
 <!--SPDX-License-Identifier: GPL-3.0-or-later-->
 <gresources>
   <gresource prefix="/se/sjoerd/Graphs">
-    <file alias="gtk/help-overlay.ui" preprocess="xml-stripblanks">ui/help_overlay.ui</file>
+    <file alias="gtk/help-overlay.ui" preprocess="xml-stripblanks">ui/shortcuts.ui</file>
     <file compressed="True">styles/adwaita.mplstyle</file>
     <file compressed="True">styles/adwaita-dark.mplstyle</file>
     <file compressed="True">styles/bmh.mplstyle</file>
@@ -31,20 +31,22 @@
     <file compressed="True">styles/thesis.mplstyle</file>
     <file compressed="True">styles/yaru.mplstyle</file>
     <file compressed="True">styles/yaru-dark.mplstyle</file>
-    <file preprocess="xml-stripblanks">ui/add_equation.ui</file>
-    <file preprocess="xml-stripblanks">ui/add_style.ui</file>
-    <file preprocess="xml-stripblanks">ui/curve_fitting.ui</file>
+    <file preprocess="xml-stripblanks">ui/add-equation.ui</file>
+    <file preprocess="xml-stripblanks">ui/add-style.ui</file>
+    <file preprocess="xml-stripblanks">ui/curve-fitting.ui</file>
     <file preprocess="xml-stripblanks">ui/dialogs.ui</file>
-    <file preprocess="xml-stripblanks">ui/edit_item.ui</file>
-    <file preprocess="xml-stripblanks">ui/export_figure.ui</file>
-    <file preprocess="xml-stripblanks">ui/figure_settings.ui</file>
-    <file preprocess="xml-stripblanks">ui/fitting_parameters.ui</file>
+    <file preprocess="xml-stripblanks">ui/edit-item.ui</file>
+    <file preprocess="xml-stripblanks">ui/export-figure.ui</file>
+    <file preprocess="xml-stripblanks">ui/figure-settings-dialog.ui</file>
+    <file preprocess="xml-stripblanks">ui/figure-settings-page.ui</file>
+    <file preprocess="xml-stripblanks">ui/fitting-parameters.ui</file>
     <file preprocess="xml-stripblanks">ui/import.ui</file>
-    <file preprocess="xml-stripblanks">ui/item_box.ui</file>
-    <file preprocess="xml-stripblanks">ui/smoothen_settings.ui</file>
-    <file preprocess="xml-stripblanks">ui/style_color_box.ui</file>
-    <file preprocess="xml-stripblanks">ui/style_editor.ui</file>
-    <file preprocess="xml-stripblanks">ui/style_preview.ui</file>
+    <file preprocess="xml-stripblanks">ui/import-columns.ui</file>
+    <file preprocess="xml-stripblanks">ui/item-box.ui</file>
+    <file preprocess="xml-stripblanks">ui/smoothen-settings.ui</file>
+    <file preprocess="xml-stripblanks">ui/style-color-box.ui</file>
+    <file preprocess="xml-stripblanks">ui/style-editor.ui</file>
+    <file preprocess="xml-stripblanks">ui/style-preview.ui</file>
     <file preprocess="xml-stripblanks">ui/transform.ui</file>
     <file preprocess="xml-stripblanks">ui/window.ui</file>
     <file compressed="True">whats_new</file>
