@@ -223,7 +223,7 @@ def preprocess(string: str) -> str:
         return f"({var}*{exp2})"
 
     string = string.replace(",", ".")
-    string = re.sub(r"(\d+)(?![Ee][-+]?\d)([a-zA-Z]+)", add_asterix, string)
+    string = re.sub(r"(\d+)(?![Ee]?[-+]?\d)([a-zA-Z]+)", add_asterix, string)
     string = re.sub(r"(\d+)(\()", r"\1*\2", string)
     string = string.replace("pi", f"({float(numpy.pi)})")
     string = string.replace("^", "**")
