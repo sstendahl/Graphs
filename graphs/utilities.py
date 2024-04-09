@@ -4,7 +4,6 @@ import ast
 import contextlib
 import operator as op
 import re
-from gettext import gettext as _
 
 from gi.repository import Gio, Gtk
 
@@ -127,8 +126,8 @@ def string_to_float(string: str) -> float:
     """Evaluate a string represantation of a number."""
     try:
         return _eval(ast.parse(preprocess(string), mode="eval").body)
-    except SyntaxError:
-        return
+    except (SyntaxError, ValueError):
+        return None
 
 
 OPERATORS = {
@@ -150,7 +149,7 @@ def _eval(node):
     elif isinstance(node, ast.UnaryOp):  # <operator> <operand> e.g., -1
         return OPERATORS[type(node.op)](_eval(node.operand))
     else:
-        raise ValueError(_("No valid number specified"))
+        raise ValueError
 
 
 def preprocess(string: str) -> str:

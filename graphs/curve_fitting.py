@@ -132,8 +132,9 @@ class CurveFittingDialog(Adw.Dialog):
 
     def _set_fitting_bounds_visibility(self, *_args) -> None:
         """Set the visibility of the fitting bounds."""
+        visible = self.settings.get_string("optimization") != "lm"
         for entry in self.fitting_params:
-            entry.set_bounds_visibility()
+            entry.set_bounds_visible(visible)
 
     def reload_canvas(self, *_args) -> None:
         """Reinitialise the currently used canvas."""
@@ -199,20 +200,20 @@ class CurveFittingDialog(Adw.Dialog):
                 float(value)
                 return True
             except ValueError:
-                entry.get_child().add_css_class("error")
+                entry.add_css_class("error")
                 return False
 
-        entries = entry.get_ancestor(FittingParameterEntry)
+        entries = entry.get_ancestor(Graphs.FittingParameterBox)
         # Set the parameters for the row corresponding to the entry that
         # was edited
         for row, params in zip(self.fitting_params, self.fitting_parameters):
             if row == entries:
-                initial = entries.initial.get_text()
-                lower_bound = entries.lower_bound.get_text()
-                upper_bound = entries.upper_bound.get_text()
-                entries.initial.get_child().remove_css_class("error")
-                entries.lower_bound.get_child().remove_css_class("error")
-                entries.upper_bound.get_child().remove_css_class("error")
+                initial = entries.get_initial().get_text()
+                lower_bound = entries.get_lower_bound().get_text()
+                upper_bound = entries.get_upper_bound().get_text()
+                entries.get_initial().remove_css_class("error")
+                entries.get_lower_bound().remove_css_class("error")
+                entries.get_upper_bound().remove_css_class("error")
 
                 for bound in [initial, lower_bound, upper_bound]:
                     if not _is_float(bound):
@@ -224,12 +225,12 @@ class CurveFittingDialog(Adw.Dialog):
                 upper_bound = float(upper_bound)
 
                 if (initial < lower_bound or initial > upper_bound):
-                    entries.initial.get_child().add_css_class("error")
+                    entries.get_initial().add_css_class("error")
                     self.set_results(error="bounds")
                     error = True
                 if not lower_bound < upper_bound:
-                    entries.lower_bound.get_child().add_css_class("error")
-                    entries.upper_bound.get_child().add_css_class("error")
+                    entries.get_lower_bound().add_css_class("error")
+                    entries.get_upper_bound().add_css_class("error")
                     error = True
                     self.set_results(error="bounds")
 
@@ -426,7 +427,15 @@ class CurveFittingDialog(Adw.Dialog):
             self.fitting_params.remove(self.fitting_params.get_last_child())
 
         for arg in utilities.get_free_variables(self.equation_string):
-            self.fitting_params.append(FittingParameterEntry(self, arg))
+            param = self.fitting_parameters.get(arg)
+            box = Graphs.FittingParameterBox.new(param)
+            box.set_bounds_visible(
+                self.settings.get_string("optimization") != "lm",
+            )
+            for prop in ("initial", "upper_bound", "lower_bound"):
+                entry = box.get_property(prop)
+                entry.connect("notify::text", self.on_entry_change)
+            self.fitting_params.append(box)
 
 
 class FittingParameterContainer():
@@ -505,45 +514,3 @@ class FittingParameter(Graphs.FittingParameter):
             lower_bound=kwargs.get("lower_bound", "-inf"),
             upper_bound=kwargs.get("upper_bound", "inf"),
         )
-
-
-@Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/fitting-parameters.ui")
-class FittingParameterEntry(Gtk.Box):
-    """Class for the fitting parameter entries."""
-
-    __gtype_name__ = "GraphsFittingParameterEntry"
-    label = Gtk.Template.Child()
-    initial = Gtk.Template.Child()
-    upper_bound = Gtk.Template.Child()
-    lower_bound = Gtk.Template.Child()
-    lower_bound_group = Gtk.Template.Child()
-    upper_bound_group = Gtk.Template.Child()
-
-    application = GObject.Property(type=Adw.Application)
-
-    def __init__(self, parent, arg):
-        """Initialize the fitting parameter entry."""
-        super().__init__(application=parent.props.application)
-        self.parent = parent
-        self.params = parent.fitting_parameters.get(arg)
-        msg = ("Fitting Parameters for {param_name}")
-        self.label.set_markup(
-            f"<b> {msg.format(param_name=self.params.get_name())}: </b>",
-        )
-        self.initial.set_text(str(self.params.get_initial()))
-        self.initial.connect("notify::text", parent.on_entry_change)
-        self.upper_bound.connect("notify::text", parent.on_entry_change)
-        self.lower_bound.connect("notify::text", parent.on_entry_change)
-        self.set_bounds_visibility()
-
-    def set_bounds_visibility(self) -> None:
-        """
-        Set the bounds visibility.
-
-        Ensures that the bounds are not visible when
-        using the Levenberg-Marquardt method is used.
-        """
-        method = self.parent.settings.get_string("optimization")
-        self.upper_bound_group.set_visible(method != "lm")
-        self.lower_bound_group.set_visible(method != "lm")
-    

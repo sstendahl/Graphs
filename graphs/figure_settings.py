@@ -1,11 +1,10 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Figure Settings Dialog."""
-import contextlib
 from gettext import gettext as _
 
 from gi.repository import Graphs
 
-from graphs import misc, styles, utilities
+from graphs import misc, styles, ui
 
 
 class FigureSettingsDialog(Graphs.FigureSettingsDialog):
@@ -33,11 +32,9 @@ class FigureSettingsDialog(Graphs.FigureSettingsDialog):
     @staticmethod
     def on_entry_change(self, entry, prop) -> None:
         """Bind the entry upon change."""
-        with contextlib.suppress(SyntaxError, ValueError):
-            self.props.figure_settings.set_property(
-                prop,
-                utilities.string_to_float(entry.get_text()),
-            )
+        is_valid, value = ui.validate_entry(entry)
+        if is_valid:
+            self.props.figure_settings.set_property(prop, value)
 
     @staticmethod
     def copy_style(self, template, name) -> None:
