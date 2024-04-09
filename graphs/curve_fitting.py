@@ -297,7 +297,7 @@ class CurveFittingDialog(Adw.Dialog):
             var_to_val = dict(zip(free_variables, values))
             for var, val in var_to_val.items():
                 if var.lower() == "e":
-                    pattern = "(?<!\d)[Ee]|(?!\d)[Ee](?![-+]?\d)"
+                    pattern = r"(?<!\d)[Ee]|(?!\d)[Ee](?![-+]?\d)"
                 else:
                     pattern = var
                 value = utilities.sig_fig_round(val, 3)
