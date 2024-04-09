@@ -149,7 +149,7 @@ namespace Graphs {
                 Tools.open_file_location (file);
             });
             this.application.add_action (action);
-            Adw.Toast toast = new Adw.Toast (title);
+            var toast = new Adw.Toast (title);
             toast.set_button_label (_("Open Location"));
             toast.set_action_name ("app.open-file-location");
             this.add_toast (toast);
@@ -163,8 +163,8 @@ namespace Graphs {
         }
 
         public void update_view_menu () {
-            Menu view_menu = new Menu ();
-            Menu toggle_section = new Menu ();
+            var view_menu = new Menu ();
+            var toggle_section = new Menu ();
             toggle_section.append_item (
                 new MenuItem (_("Toggle Sidebar"), "app.toggle_sidebar")
             );

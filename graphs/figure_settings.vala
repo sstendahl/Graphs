@@ -111,7 +111,7 @@ namespace Graphs {
         protected void setup (string highlighted) {
             FigureSettings figure_settings = this.figure_settings;
             GLib.Settings settings = this.application.get_settings_child ("figure");
-            Builder builder = new Builder.from_resource (PAGE_RESOURCE);
+            var builder = new Builder.from_resource (PAGE_RESOURCE);
             this.settings_page = (Adw.NavigationPage) builder.get_object ("settings_page");
             this.navigation_view.push (this.settings_page);
             foreach (string key in settings.settings_schema.list_keys ()) {
@@ -185,7 +185,7 @@ namespace Graphs {
                 widget.grab_focus ();
             }
 
-            SignalListItemFactory factory = new SignalListItemFactory ();
+            var factory = new SignalListItemFactory ();
             factory.setup.connect (on_factory_setup);
             factory.bind.connect (on_factory_bind);
             this.grid_view.set_factory (factory);
@@ -213,7 +213,7 @@ namespace Graphs {
         [GtkCallback]
         private void add_style () {
             StyleManager style_manager = this.application.figure_style_manager;
-            AddStyleDialog dialog = new AddStyleDialog (style_manager, this);
+            var dialog = new AddStyleDialog (style_manager, this);
             dialog.accept.connect ((d, template, name) => {
                 this.copy_request.emit (template, name);
             });

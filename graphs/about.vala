@@ -4,15 +4,15 @@ using Gtk;
 
 namespace Graphs {
     public void show_about_dialog (Application application) {
-        File file = File.new_for_uri ("resource:///se/sjoerd/Graphs/whats_new");
+        var file = File.new_for_uri ("resource:///se/sjoerd/Graphs/whats_new");
         string release_notes;
         try {
-            release_notes = (string)file.load_bytes ().get_data ();
+            release_notes = (string) file.load_bytes ().get_data ();
         } catch {
             release_notes = "";
         }
 
-        Adw.AboutDialog dialog = new Adw.AboutDialog () {
+        var dialog = new Adw.AboutDialog () {
             application_name = _("Graphs"),
             application_icon = application.application_id,
             website = Config.HOMEPAGE_URL,

@@ -18,14 +18,14 @@ namespace Graphs {
             this.settings = application.get_settings_child ("import-params");
             this.modes = modes;
 
-            Builder builder = new Builder ();
+            var builder = new Builder ();
             foreach (string mode in modes) {
                 try {
                     builder.add_from_resource (@"/se/sjoerd/Graphs/ui/import-$mode.ui");
                 } catch {
                     assert_not_reached ();
                 }
-                PreferencesGroup group = (PreferencesGroup) builder.get_object (mode + "_group");
+                var group = (PreferencesGroup) builder.get_object (mode + "_group");
                 GLib.Settings mode_settings = this.settings.get_child (mode);
                 foreach (string key in mode_settings.settings_schema.list_keys ()) {
                     Object object = builder.get_object (mode + "_" + key.replace ("-", "_"));
@@ -58,7 +58,7 @@ namespace Graphs {
 
         [GtkCallback]
         private void on_reset () {
-            Adw.AlertDialog dialog = (Adw.AlertDialog) Tools.build_dialog ("reset_to_defaults");
+            var dialog = (Adw.AlertDialog) Tools.build_dialog ("reset_to_defaults");
             dialog.set_body (_("Are you sure you want to reset the import settings?"));
             dialog.response.connect ((d, response) => {
                 if (response == "reset") {
@@ -75,7 +75,7 @@ namespace Graphs {
                 settings.bind (key, object, "text", 0);
             }
             else if (object is Adw.ComboRow) {
-                Adw.ComboRow comborow = (Adw.ComboRow) object;
+                var comborow = (Adw.ComboRow) object;
                 comborow.set_selected (settings.get_enum (key));
                 comborow.notify["selected"].connect (() => {
                     if (settings.get_enum (key) != comborow.get_selected ()) {

@@ -44,6 +44,7 @@ graphs/inline-stack-switcher.vala
 graphs/item.py
 graphs/item.vala
 graphs/item_box.py
+graphs/item_box.vala
 graphs/migrate.py
 graphs/misc.py
 graphs/misc.vala
