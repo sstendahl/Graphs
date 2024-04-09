@@ -43,11 +43,11 @@ namespace Graphs {
             GLib.Settings settings = application.get_settings_child ("export-figure");
             string suffix = settings.get_string ("file-format");
 
-            FileDialog dialog = new FileDialog ();
+            var dialog = new FileDialog ();
             dialog.set_initial_name (@"$filename.$suffix");
             dialog.set_accept_label (_("Export"));
             GLib.ListStore filter_store = new GLib.ListStore (typeof (FileFilter));
-            FileFilter filter = new FileFilter ();
+            var filter = new FileFilter ();
             StringObject selected = (StringObject) this.file_format.get_selected_item ();
             filter.name = selected.get_string ();
             filter.add_suffix (suffix);

@@ -26,7 +26,7 @@ namespace Graphs {
                     settings.bind (key, widget, "text", 0);
                 }
                 else if (widget is Adw.ComboRow) {
-                    Adw.ComboRow comborow = (Adw.ComboRow) widget;
+                    var comborow = (Adw.ComboRow) widget;
                     comborow.set_selected (settings.get_enum (key));
                     comborow.notify["selected"].connect (() => {
                         if (settings.get_enum (key)
@@ -63,13 +63,13 @@ namespace Graphs {
         }
 
         public Gdk.RGBA hex_to_rgba (string hex) {
-            Gdk.RGBA rgba = Gdk.RGBA ();
+            var rgba = Gdk.RGBA ();
             rgba.parse (hex);
             return rgba;
         }
 
         public string rgba_to_hex (Gdk.RGBA rgba) {
-            StringBuilder builder = new StringBuilder ("#");
+            var builder = new StringBuilder ("#");
             builder.append ("%02x".printf ((uint)(rgba.red * 255)));
             builder.append ("%02x".printf ((uint)(rgba.green * 255)));
             builder.append ("%02x".printf ((uint)(rgba.blue * 255)));
@@ -113,7 +113,7 @@ namespace Graphs {
             if (!(original in used)) return original;
             string old_str = original;
             try {
-                Regex regex = new Regex ("(?P<string>.+) \\(\\d+\\)");
+                var regex = new Regex ("(?P<string>.+) \\(\\d+\\)");
                 MatchInfo info;
                 if (regex.match (original, 0, out info)) {
                     old_str = info.fetch_named ("string");
@@ -128,7 +128,7 @@ namespace Graphs {
         }
 
         public File get_config_directory () throws Error {
-            File main_directory = File.new_for_path (Environment.get_user_config_dir ());
+            var main_directory = File.new_for_path (Environment.get_user_config_dir ());
             return main_directory.get_child_for_display_name ("graphs");
         }
 
@@ -145,12 +145,12 @@ namespace Graphs {
         }
 
         public Object build_dialog (string name) {
-            Builder builder = new Builder.from_resource ("/se/sjoerd/Graphs/ui/dialogs.ui");
+            var builder = new Builder.from_resource ("/se/sjoerd/Graphs/ui/dialogs.ui");
             return builder.get_object (name);
         }
 
         public void open_file_location (File file) {
-            FileLauncher file_launcher = new FileLauncher (file);
+            var file_launcher = new FileLauncher (file);
             file_launcher.open_containing_folder.begin (null, null);
         }
     }

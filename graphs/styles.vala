@@ -168,7 +168,7 @@ namespace Graphs {
         }
 
         private string get_selected () {
-            StringObject item = (StringObject) this.style_templates.get_selected_item ();
+            var item = (StringObject) this.style_templates.get_selected_item ();
             return item.get_string ();
         }
 

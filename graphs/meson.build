@@ -53,6 +53,7 @@ graphs_lib = shared_library(
     'file_import.vala',
     'item.vala',
     'inline-stack-switcher.vala',
+    'item_box.vala',
     'misc.vala',
     'smoothen_settings.vala',
     'styles.vala',

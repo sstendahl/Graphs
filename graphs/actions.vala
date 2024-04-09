@@ -8,7 +8,7 @@ namespace Graphs {
 
     public void setup_actions (Application application) {
         foreach (string name in ACTION_NAMES) {
-            SimpleAction action = new SimpleAction (name, null);
+            var action = new SimpleAction (name, null);
             action.activate.connect (() => {
                 application.action_invoked.emit (name);
             });
@@ -16,7 +16,7 @@ namespace Graphs {
         }
         application.set_accels_for_action ("app.help", {"F1"});
 
-        SimpleAction toggle_sidebar_action = new SimpleAction.stateful (
+        var toggle_sidebar_action = new SimpleAction.stateful (
             "toggle_sidebar",
             null,
             new Variant.boolean (true)
@@ -27,9 +27,9 @@ namespace Graphs {
         });
         application.add_action (toggle_sidebar_action);
 
-        Gee.List<string> modes = new ArrayList<string>.wrap ({"pan", "zoom", "select"});
+        var modes = new ArrayList<string>.wrap ({"pan", "zoom", "select"});
         foreach (string mode in modes) {
-            SimpleAction action = new SimpleAction (@"mode_$mode", null);
+            var action = new SimpleAction (@"mode_$mode", null);
             action.activate.connect (() => {
                 application.mode = modes.index_of (mode);
             });
@@ -40,7 +40,7 @@ namespace Graphs {
         FigureSettings figure_settings = application.data.figure_settings;
         foreach (string dir in DIRECTION_NAMES) {
             string val = @"$dir-scale";
-            SimpleAction action = new SimpleAction.stateful (
+            var action = new SimpleAction.stateful (
                 @"change-$val",
                 new VariantType ("s"),
                 new Variant.string (settings.get_enum (val).to_string ())
@@ -76,7 +76,7 @@ namespace Graphs {
             application.add_action (actions_settings.create_action (settings_action));
         }
 
-        SimpleAction operation_action = new SimpleAction (
+        var operation_action = new SimpleAction (
             "app.perform_operation", new VariantType ("s")
         );
         operation_action.activate.connect ((a, target) => {
