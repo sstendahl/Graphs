@@ -13,7 +13,6 @@ from graphs import (
     project,
     styles,
     ui,
-    utilities,
 )
 from graphs.data import Data
 
@@ -187,13 +186,7 @@ class PythonApplication(Graphs.Application):
         button: Gtk.Button,
     ) -> None:
         """Validate text field input."""
-        try:
-            value = utilities.string_to_float(entry.get_text())
-            if value is not None:
-                entry.remove_css_class("error")
-                button.set_sensitive(self.get_data().props.items_selected)
-                return
-        except (ValueError, TypeError):
-            pass
-        entry.add_css_class("error")
-        button.set_sensitive(False)
+        button.set_sensitive(
+            ui.validate_entry(entry)[1]
+            and self.get_data().props.items_selected,
+        )
