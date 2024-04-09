@@ -295,12 +295,10 @@ class CurveFittingDialog(Adw.Dialog):
             free_variables = utilities.get_free_variables(self.equation_string)
             var_to_val = dict(zip(free_variables, values))
             for var, val in var_to_val.items():
-                equation_name = re.sub(
-                    r"(\d+)([a-zA-Z]+)",
-                    r"(\1*\2)",
-                    equation_name,
-                )
-                equation_name = equation_name.replace(var, str(round(val, 3)))
+                pattern = var + r"(?![eE]?\d)"
+                value = str(round(val, 3))
+                equation_name = \
+                    re.sub(pattern, f"({value})", equation_name)
             return equation_name
 
         function = utilities.string_to_function(self.equation_string)
