@@ -546,3 +546,4 @@ class FittingParameterEntry(Gtk.Box):
         method = self.parent.settings.get_string("optimization")
         self.upper_bound_group.set_visible(method != "lm")
         self.lower_bound_group.set_visible(method != "lm")
+    
