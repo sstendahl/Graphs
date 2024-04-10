@@ -261,29 +261,3 @@ def get_free_variables(equation_name: str) -> list:
         r"[a-zA-Z]+\b"  # Match any character sequence that is not excluded
     )
     return re.findall(pattern, equation_name)
-
-
-def create_menu_model(data: dict) -> Gio.Menu:
-    """
-    Create a menu model based on a dict.
-
-    The format should be:
-    {
-        *section*: (*name*, [
-            (*entry*, *value*),
-        ]),
-    }
-    Actions will be in the form of `win.*section*::*value*`.
-    """
-    menu = Gio.Menu.new()
-    for section_name, section_data in data.items():
-        section = Gio.Menu.new()
-        for entry in section_data[1]:
-            section.append_item(
-                Gio.MenuItem.new(
-                    entry[0],
-                    f"win.{section_name}::{entry[1]}",
-                ),
-            )
-        menu.append_section(section_data[0], section)
-    return menu

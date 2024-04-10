@@ -23,7 +23,7 @@ template $GraphsCurveFittingDialog : Adw.Dialog {
         [top]
         Adw.HeaderBar {
           styles ["flat"]
-          title-widget: Adw.WindowTitle title_widget {
+          title-widget: Adw.WindowTitle {
             title: _("Curve Fitting");
           };
           [end]
@@ -31,9 +31,10 @@ template $GraphsCurveFittingDialog : Adw.Dialog {
             icon-name: "view-more-symbolic";
             tooltip-text: _("Open Curve Fitting Menu");
             primary: true;
+            menu-model: menu;
           }
         }
-        ScrolledWindow fitting_param_entries {
+        ScrolledWindow {
           vexpand: true;
           width-request: 280;
           hscrollbar-policy: never;
@@ -64,7 +65,7 @@ template $GraphsCurveFittingDialog : Adw.Dialog {
                 visible: false;
                 title: _("Y = ");
               }
-              Box fitting_params {
+              Box fitting_params_box {
                 margin-top: 12;
                 margin-bottom: 12;
                 spacing: 12;
@@ -91,7 +92,7 @@ template $GraphsCurveFittingDialog : Adw.Dialog {
                 margin-top: 12;
                 label: _("Add Fit to Data");
                 styles ["pill", "suggested-action"]
-                clicked => $add_fit();
+                clicked => $emit_add_fit_request();
               }
             }
           }
@@ -123,4 +124,25 @@ template $GraphsCurveFittingDialog : Adw.Dialog {
       };
     };
   };
+}
+
+menu menu {
+  section {
+    label: _("Optimization Method");
+    item {
+      label: C_("optimization", "Levenberg-Marquardt");
+      action: "win.optimization";
+      target: "lm";
+    }
+    item {
+      label: C_("optimization", "Trust Region Reflective");
+      action: "win.optimization";
+      target: "trf";
+    }
+    item {
+      label: C_("optimization", "Dogbox");
+      action: "win.optimization";
+      target: "dogbox";
+    }
+  }
 }

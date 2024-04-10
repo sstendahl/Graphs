@@ -1,57 +1,38 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Curve fitting module."""
 import re
-from gettext import gettext as _, pgettext as C_
+from gettext import gettext as _
 
-from gi.repository import Adw, GObject, Gio, Graphs, Gtk
+from gi.repository import Adw, Graphs, Gtk
 
 from graphs import utilities
 from graphs.canvas import Canvas
 from graphs.item import DataItem, FillItem
-from graphs.misc import EQUATIONS
 
 import numpy
 
 from scipy.optimize import _minpack, curve_fit
 
 
-@Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/curve-fitting.ui")
-class CurveFittingDialog(Adw.Dialog):
+class CurveFittingDialog(Graphs.CurveFittingDialog):
     """Class for displaying the Curve Fitting dialog."""
 
-    __gtype_name__ = "GraphsCurveFittingDialog"
-
-    custom_equation = Gtk.Template.Child()
-    equation = Gtk.Template.Child()
-    fitting_params = Gtk.Template.Child()
-    text_view = Gtk.Template.Child()
-    title_widget = Gtk.Template.Child()
-    toast_overlay = Gtk.Template.Child()
-    menu_button = Gtk.Template.Child()
-
-    application = GObject.Property(type=Graphs.Application)
+    __gtype_name__ = "GraphsPythonCurveFittingDialog"
 
     def __init__(self, application: Graphs.Application, item: Graphs.Item):
         """Initialize the curve fitting dialog."""
         super().__init__(application=application)
         Adw.StyleManager.get_default().connect("notify", self.reload_canvas)
-        self.settings = application.get_settings_child("curve-fitting")
-        self.equation.set_selected(self.settings.get_enum("equation"))
-        self.set_equation()
-        self.connect_actions()
+        self.connect("equation_change", self.on_equation_change)
+        self.connect("fit_curve_request", self.fit_curve)
+        self.connect("add_fit_request", self.add_fit)
+        self.fitting_parameters = FittingParameterContainer()
         style = \
             application.get_figure_style_manager().get_system_style_params()
 
         self.param = []
         self.sigma = []
         self.r2 = 0
-
-        self.custom_equation.connect("notify::text", self.on_equation_change)
-        self.equation.connect("notify::selected", self.set_equation)
-        self.fitting_parameters = FittingParameterContainer()
-
-        for var in utilities.get_free_variables(self.equation_string):
-            self.fitting_parameters.add(FittingParameter(name=var))
 
         # Generate items for the canvas
         self.data_curve = DataItem.new(
@@ -76,69 +57,12 @@ class CurveFittingDialog(Adw.Dialog):
             alpha=0.15,
         )
 
-        # Set up canvas
         self.reload_canvas()
-        self.fit_curve()
-        self.set_entry_rows()
-        self.menu_button.set_menu_model(
-            utilities.create_menu_model({
-                "optimization": (
-                    _("Optimization Method"),
-                    [
-                        (C_("optimization", "Levenberg-Marquardt"), "lm"),
-                        (C_("optimization", "Trust Region Reflective"), "trf"),
-                        (C_("optimization", "Dogbox"), "dogbox"),
-                    ],
-                ),
-                "confidence": (
-                    _("Confidence Bounds"),
-                    [
-                        (C_("confidence", "None"), "none"),
-                        (C_("confidence", "1σ: 68% Confidence"), "1std"),
-                        (C_("confidence", "2σ: 95% Confidence"), "2std"),
-                        (C_("confidence", "3σ: 99.7% Confidence"), "3std"),
-                    ],
-                ),
-            }),
-        )
+        self.setup()
         self.present(application.get_window())
-
-    def connect_actions(self) -> None:
-        """Connect the actions in the dialog to the action map."""
-        action_map = Gio.SimpleActionGroup.new()
-        self.insert_action_group("win", None)
-        self.insert_action_group("win", action_map)
-        for key in ["confidence", "optimization"]:
-            action = self.settings.create_action(key)
-            action.connect("notify", self.fit_curve)
-            if key == "optimization":
-                action.connect("notify", self._set_fitting_bounds_visibility)
-            action_map.add_action(action)
-
-    def set_equation(self, *_args) -> None:
-        """Set the equation entry based on the current settings."""
-        if self.settings.get_enum("equation") != self.equation.get_selected():
-            self.settings.set_enum("equation", self.equation.get_selected())
-        equation = EQUATIONS[self.settings.get_string("equation")]
-        custom_equation = self.settings.get_string("custom-equation")
-        if equation != "custom":
-            self.equation.set_subtitle(f"Y={equation}")
-            self.custom_equation.set_text(equation)
-            self.custom_equation.set_visible(False)
-        else:
-            self.equation.set_subtitle("")
-            self.custom_equation.set_text(custom_equation)
-            self.custom_equation.set_visible(True)
-
-    def _set_fitting_bounds_visibility(self, *_args) -> None:
-        """Set the visibility of the fitting bounds."""
-        visible = self.settings.get_string("optimization") != "lm"
-        for entry in self.fitting_params:
-            entry.set_bounds_visible(visible)
 
     def reload_canvas(self, *_args) -> None:
         """Reinitialise the currently used canvas."""
-        self.toast_overlay.set_child(None)
         application = self.props.application
         figure_settings = application.get_data().get_figure_settings()
         style = \
@@ -151,35 +75,37 @@ class CurveFittingDialog(Adw.Dialog):
         axis.xlabel = "X Value"
         canvas.left_label = figure_settings.get_property("left_label")
         canvas.bottom_label = figure_settings.get_property("bottom_label")
-        canvas.highlight_enabled = False
-        canvas._on_pan_gesture = None
-        canvas._on_pick = None
-        canvas.toolbar = None
-        self.canvas = canvas
-        self.toast_overlay.set_child(self.canvas)
+        self.set_canvas(canvas)
 
-    def on_equation_change(self, _entry, _param) -> None:
+    @staticmethod
+    def on_equation_change(self, equation: str) -> None:
         """
         Logic to execute whenever the equation is changed.
 
         Set the free variables and corresponding entry rows when the equation
         has been changed.
         """
-        names = [item.get_name() for item in self.fitting_parameters]
-        for var in utilities.get_free_variables(self.equation_string):
-            if var not in names:
-                self.fitting_parameters.add(FittingParameter(name=var))
-        self.fitting_parameters.remove_unused(
-            utilities.get_free_variables(self.equation_string),
-        )
+        processed_equation = utilities.preprocess(equation)
+        self.set_equation_string(processed_equation)
+        free_variables = utilities.get_free_variables(processed_equation)
+        self.fitting_parameters.update(free_variables)
         fit = self.fit_curve()
-        if fit:
-            self.set_entry_rows()
-            if self.settings.get_string("equation") == "custom":
-                self.settings.set_string(
-                    "custom-equation",
-                    self.equation_string,
-                )
+        if not fit:
+            return False
+        box = self.get_fitting_params_box()
+        while box.get_last_child() is not None:
+            box.remove(box.get_last_child())
+
+        for param in self.fitting_parameters:
+            parameter_box = Graphs.FittingParameterBox.new(param)
+            parameter_box.set_bounds_visible(
+                self.get_settings().get_string("optimization") != "lm",
+            )
+            for prop in ("initial", "upper_bound", "lower_bound"):
+                entry = parameter_box.get_property(prop)
+                entry.connect("notify::text", self.on_entry_change)
+            box.append(parameter_box)
+        return True
 
     def on_entry_change(self, entry, _param) -> None:
         """
@@ -206,7 +132,8 @@ class CurveFittingDialog(Adw.Dialog):
         entries = entry.get_ancestor(Graphs.FittingParameterBox)
         # Set the parameters for the row corresponding to the entry that
         # was edited
-        for row, params in zip(self.fitting_params, self.fitting_parameters):
+        for row, params in \
+                zip(self.get_fitting_params_box(), self.fitting_parameters):
             if row == entries:
                 initial = entries.get_initial().get_text()
                 lower_bound = entries.get_lower_bound().get_text()
@@ -258,31 +185,30 @@ class CurveFittingDialog(Adw.Dialog):
                 "Please enter valid fitting bounds \nto start the fit",
             )
         else:
-            free_variables = utilities.get_free_variables(self.equation_string)
+            free_variables = utilities.get_free_variables(
+                self.get_equation_string(),
+            )
             for index, arg in enumerate(free_variables):
                 parameter = utilities.sig_fig_round(self.param[index], 3)
                 sigma = utilities.sig_fig_round(self.sigma[index], 3)
                 buffer_string += f"{arg}: {parameter}"
-                if self.settings.get_enum("confidence") != 0:
+                if self.get_settings().get_enum("confidence") != 0:
                     buffer_string += f" (± {sigma})"
                 buffer_string += "\n"
             buffer_string += "\n" + _("Sum of R²: {R2}").format(R2=self.r2)
-        self.text_view.get_buffer().set_text(buffer_string)
+        self.get_text_view().get_buffer().set_text(buffer_string)
         bold_tag = Gtk.TextTag(weight=700)
-        self.text_view.get_buffer().get_tag_table().add(bold_tag)
+        self.get_text_view().get_buffer().get_tag_table().add(bold_tag)
 
-        start_iter = self.text_view.get_buffer().get_start_iter()
-        end_iter = self.text_view.get_buffer().get_start_iter()
+        start_iter = self.get_text_view().get_buffer().get_start_iter()
+        end_iter = self.get_text_view().get_buffer().get_start_iter()
 
         # Highlight first word
         while not end_iter.ends_word() and not end_iter.ends_sentence():
             end_iter.forward_char()
-        self.text_view.get_buffer().apply_tag(bold_tag, start_iter, end_iter)
-
-    @property
-    def equation_string(self) -> str:
-        """The processed equation to be used for the fitted curve."""
-        return utilities.preprocess(str(self.custom_equation.get_text()))
+        self.get_text_view().get_buffer().apply_tag(
+            bold_tag, start_iter, end_iter,
+        )
 
     def fit_curve(self, *_args) -> bool:
         """
@@ -293,7 +219,9 @@ class CurveFittingDialog(Adw.Dialog):
 
         def _get_equation_name(equation_name, values):
             """Obtain the equation name with the fitted parameter values."""
-            free_variables = utilities.get_free_variables(self.equation_string)
+            free_variables = utilities.get_free_variables(
+                self.get_equation_string(),
+            )
             var_to_val = dict(zip(free_variables, values))
             for var, val in var_to_val.items():
                 if var.lower() == "e":
@@ -305,7 +233,7 @@ class CurveFittingDialog(Adw.Dialog):
                     re.sub(pattern, f"({value})", equation_name)
             return equation_name
 
-        function = utilities.string_to_function(self.equation_string)
+        function = utilities.string_to_function(self.get_equation_string())
         if function is None:
             return
         try:
@@ -315,12 +243,10 @@ class CurveFittingDialog(Adw.Dialog):
                 p0=self.fitting_parameters.get_p0(),
                 bounds=self.fitting_parameters.get_bounds(),
                 nan_policy="omit",
-                method=self.settings.get_string("optimization"),
+                method=self.get_settings().get_string("optimization"),
             )
-            self.custom_equation.get_child().remove_css_class("error")
         except (ValueError, TypeError, _minpack.error, RuntimeError):
             # Cancel fit if not successful
-            self.custom_equation.get_child().add_css_class("error")
             self.set_results(error="equation")
             return
         xdata = numpy.linspace(
@@ -331,7 +257,7 @@ class CurveFittingDialog(Adw.Dialog):
         ydata = [function(x, *self.param) for x in xdata]
 
         name = _get_equation_name(
-            str(self.custom_equation.get_text()).lower(),
+            str(self.get_custom_equation().get_text()).lower(),
             self.param,
         )
         self.fitted_curve.set_name(f"Y = {name}")
@@ -350,9 +276,9 @@ class CurveFittingDialog(Adw.Dialog):
         of the bounds.
         """
         # Get standard deviation
-        self.canvas.axes[0].relim()  # Reset limits
+        self.get_canvas().axes[0].relim()  # Reset limits
         self.sigma = numpy.sqrt(numpy.diagonal(self.param_cov))
-        self.sigma *= self.settings.get_enum("confidence")
+        self.sigma *= self.get_settings().get_enum("confidence")
         try:
             fitted_y = [
                 function(x, *self.param) for x in self.data_curve.xdata
@@ -401,8 +327,8 @@ class CurveFittingDialog(Adw.Dialog):
             upper_bound,
         )
 
-    @Gtk.Template.Callback()
-    def add_fit(self, _widget) -> None:
+    @staticmethod
+    def add_fit(self) -> None:
         """Add fitted data to the items in the main application."""
         application = self.props.application
         style_manager = application.get_figure_style_manager()
@@ -415,30 +341,9 @@ class CurveFittingDialog(Adw.Dialog):
                     ydata=list(self.fitted_curve.ydata),
                 ),
             ],
-            application.get_figure_style_manager(),
+            style_manager,
         )
         self.close()
-
-    def set_entry_rows(self) -> None:
-        """
-        Set the entry rows for the fitting parameters.
-
-        Remove the old entry rows and replace them with new ones corresponding
-        to the free variables in the equation
-        """
-        while self.fitting_params.get_last_child() is not None:
-            self.fitting_params.remove(self.fitting_params.get_last_child())
-
-        for arg in utilities.get_free_variables(self.equation_string):
-            param = self.fitting_parameters.get(arg)
-            box = Graphs.FittingParameterBox.new(param)
-            box.set_bounds_visible(
-                self.settings.get_string("optimization") != "lm",
-            )
-            for prop in ("initial", "upper_bound", "lower_bound"):
-                entry = box.get_property(prop)
-                entry.connect("notify::text", self.on_entry_change)
-            self.fitting_params.append(box)
 
 
 class FittingParameterContainer():
@@ -455,15 +360,11 @@ class FittingParameterContainer():
         """Iterate over items."""
         return iter(self._items.values())
 
-    def add(self, item) -> None:
-        """Add new fitting parameters to the container."""
-        self._items[item.get_name()] = item
-
     def get(self, arg):
         """Retrieve an item."""
         return self._items[arg]
 
-    def remove_unused(self, used_list: list) -> None:
+    def update(self, parameters: list) -> None:
         """
         Remove unused fitting parameters.
 
@@ -471,26 +372,26 @@ class FittingParameterContainer():
         ensures that the fitting parameters are kept up-to-date with the
         actual equation.
         """
+        names = [item.get_name() for item in self]
+        for var in parameters:
+            if var not in names:
+                self._items[var] = Graphs.FittingParameter(
+                    name=var,
+                    initial=1,
+                    lower_bound="-inf",
+                    upper_bound="inf",
+                )
         # First create list with items to remove
         # to avoid dict changing size during iteration
         remove_list = []
         for item in self._items.values():
-            if item.get_name() not in used_list:
+            if item.get_name() not in parameters:
                 remove_list.append(item.get_name())
 
         for item_name in remove_list:
             del self._items[item_name]
 
-        self.order_by_list(used_list)
-
-    def order_by_list(self, ordered_list: list) -> None:
-        """
-        Reorder the items given a list.
-
-        This is to make sure the order of fitting parameters
-        doesn't change when updating the equation.
-        """
-        self._items = {key: self._items[key] for key in ordered_list}
+        self._items = {key: self._items[key] for key in parameters}
 
     def get_p0(self) -> list:
         """Get the initial values of the fitting."""
@@ -501,19 +402,3 @@ class FittingParameterContainer():
         lower_bounds = [float(item_.get_lower_bound()) for item_ in self]
         upper_bounds = [float(item_.get_upper_bound()) for item_ in self]
         return (lower_bounds, upper_bounds)
-
-
-class FittingParameter(Graphs.FittingParameter):
-    """Class for the fitting parameters itself."""
-
-    __gtype_name__ = "GraphsFittingParameterItem"
-    application = GObject.Property(type=Graphs.Application)
-
-    def __init__(self, **kwargs):
-        """Initialize a fitting parameter object."""
-        super().__init__(
-            name=kwargs.get("name", ""),
-            initial=kwargs.get("initial", 1),
-            lower_bound=kwargs.get("lower_bound", "-inf"),
-            upper_bound=kwargs.get("upper_bound", "inf"),
-        )
