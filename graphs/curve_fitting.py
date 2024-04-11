@@ -230,7 +230,7 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
                     pattern = (
                         r"((?<=[\d\)])|\b)"
                         + var
-                       + r"((?=[\u2070-\u209f\u00b0-\u00be])|\b)"
+                        + r"((?=[\u2070-\u209f\u00b0-\u00be])|\b)"
                     )
                 value = utilities.sig_fig_round(val, 3)
                 equation_name = \

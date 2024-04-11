@@ -101,7 +101,7 @@ FUNCTIONS = {
     "abs",
     "log",
     "log10",
-        }
+}
 
 GRAPHS_PROJECT_FILE_FILTER_TEMPLATE = \
     (C_("file-filter", "Graphs Project File"), ["graphs"])
