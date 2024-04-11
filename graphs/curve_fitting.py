@@ -227,7 +227,11 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
                 if var.lower() == "e":
                     pattern = r"(?<!\d)[Ee]|(?!\d)[Ee](?![-+]?\d)"
                 else:
-                    pattern = var
+                    pattern = (
+                        r"((?<=[\d\)])|\b)"
+                        + var
+                       + r"((?=[\u2070-\u209f\u00b0-\u00be])|\b)"
+                    )
                 value = utilities.sig_fig_round(val, 3)
                 equation_name = \
                     re.sub(pattern, f"({value})", equation_name)

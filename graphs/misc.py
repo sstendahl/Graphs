@@ -77,5 +77,31 @@ LIMITS = [
 
 DIRECTIONS = ["bottom", "top", "left", "right"]
 
+FUNCTIONS = {
+    "sin",
+    "cos",
+    "tan",
+    "sinh",
+    "cosh",
+    "tanh",
+    "arcsin",
+    "arccos",
+    "arctan",
+    "arcsinh",
+    "arccosh",
+    "arctanh",
+    "cot",
+    "sec",
+    "csc",
+    "arccot",
+    "arcsec",
+    "arccsc",
+    "sqrt",
+    "exp",
+    "abs",
+    "log",
+    "log10",
+        }
+
 GRAPHS_PROJECT_FILE_FILTER_TEMPLATE = \
     (C_("file-filter", "Graphs Project File"), ["graphs"])

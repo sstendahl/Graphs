@@ -7,6 +7,8 @@ import re
 
 from gi.repository import Gio, Gtk
 
+from graphs.misc import FUNCTIONS
+
 import numpy
 
 import sympy
@@ -157,8 +159,11 @@ def preprocess(string: str) -> str:
 
     def convert_degrees(match):
         """Convert degree expressions to radian expressions."""
-        expression = match.group(1)  # Get the content inside the brackets
-        return f"(({expression})*{float(numpy.pi)}/180)"
+        function = match.group(1)
+        if function in FUNCTIONS:
+            expression = match.group(2)  # Get the content inside the brackets
+            return f"{function}({expression}*{float(numpy.pi)}/180)"
+        return f"{function}{expression}"
 
     def convert_cot(match):
         """Convert cotangent expressions to reciprocal tangent expressions."""
@@ -174,6 +179,21 @@ def preprocess(string: str) -> str:
         """Convert cosecant expressions to reciprocal sine expressions."""
         expression = match.group(1)  # Get the content inside the brackets
         return f"1/(sin({expression}))"
+
+    def convert_arccot(match):
+        """Convert arccotangent to reciprocal arcsine expressions."""
+        expression = match.group(1)  # Get the content inside the brackets
+        return f"arcsin(1/sqrt(1+{expression}**2))"
+
+    def convert_arcsec(match):
+        """Convert arcsecant to reciprocal cosine expressions."""
+        expression = match.group(1)  # Get the content inside the brackets
+        return f"(arccos(1/({expression})))"
+
+    def convert_arccsc(match):
+        """Convert arccosecant to reciprocal arcsine expressions."""
+        expression = match.group(1)  # Get the content inside the brackets
+        return f"(arcsin(1/({expression})))"
 
     def convert_superscript(match):
         """Convert superscript expressions to Python's power operator."""
@@ -205,33 +225,26 @@ def preprocess(string: str) -> str:
         Pattern is to check for least one digit, followed by at least one
         alphabetical character. e.g y = 24*x + 3sigma -> y = (24*x) + (3*sigma)
         """
-        var, exp2 = match.group(1), match.group(2)
-        functions = [
-            "sin",
-            "cos",
-            "tan",
-            "cot",
-            "sec",
-            "csc",
-            "sqrt",
-            "exp",
-            "abs",
-        ]
-        if exp2 in functions:
+        var, exp2 = match.group(1), match.group(2).lower()
+        if var in FUNCTIONS:
+            return f"{var}{exp2}"
+        if exp2 in FUNCTIONS:
             return f"{var}*{exp2}"
-
         return f"({var}*{exp2})"
 
     string = string.replace(",", ".")
-    string = re.sub(r"(\d+)(?![Ee]?[-+]?\d)([a-zA-Z]+)", add_asterix, string)
-    string = re.sub(r"(\d+)(\()", r"\1*\2", string)
+    string = re.sub(r"(\w+)d\((.*?)\)", convert_degrees, string)
+    string = re.sub(r"(\d+)(?![Ee]?[-+]?\d)(\w+)", add_asterix, string)
+    string = re.sub(r"(\w+)(\([\w\(]+)", add_asterix, string)
     string = string.replace("pi", f"({float(numpy.pi)})")
     string = string.replace("^", "**")
     string = string.replace(")(", ")*(")
+    string = re.sub(r"arccot\((.*?)\)", convert_arccot, string)
+    string = re.sub(r"arcsec\((.*?)\)", convert_arcsec, string)
+    string = re.sub(r"arccsc\((.*?)\)", convert_arccsc, string)
     string = re.sub(r"cot\((.*?)\)", convert_cot, string)
     string = re.sub(r"sec\((.*?)\)", convert_sec, string)
     string = re.sub(r"csc\((.*?)\)", convert_csc, string)
-    string = re.sub(r"d\((.*?)\)", convert_degrees, string)
     string = re.sub(
         r"([\u2070-\u209f\u00b0-\u00be]+)",
         convert_superscript,
@@ -257,7 +270,11 @@ def get_free_variables(equation_name: str) -> list:
     pattern = (
         r"\b(?!x\b|X\b"  # Exclude 'x' and 'X'
         r"|sec\b|sin\b|cos\b|log\b|tan\b|csc\b|cot\b"  # Exclude trig func.
-        r"|exp\b|sqrt\b|abs\b)"  # Exclude 'exp', 'sqrt', 'abs'
+        r"|arcsin\b|arccos\b|arctan\b"  # Exclude arctrig func.
+        r"|arccot\b|arcsec\b|arccsc\b"  # Exclude arctrig func.
+        r"|sinh\b|cosh\b|tanh\b"  # Exclude hyperbolicus argtrig func.
+        r"|arcsinh\b|arccosh\b|arctanh\b"  # Exclude hyperb. arctrig func.
+        r"|exp\b|sqrt\b|abs\b|log10\b)"  # Exclude 'exp', 'sqrt', 'abs'
         r"[a-zA-Z]+\b"  # Match any character sequence that is not excluded
     )
-    return re.findall(pattern, equation_name)
+    return list(set(re.findall(pattern, equation_name)))
