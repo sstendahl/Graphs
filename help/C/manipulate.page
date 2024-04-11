@@ -14,7 +14,7 @@ it's a generated equation. When selecting a part of the canvas using the
 Highlight tool, only the highlight area will be manipulated.
 </p>
 
-<section>
+<section id="smoothening">
 <title>Smoothening</title>
 <p>
 The smoothening action has two different modes, a rolling average or the
@@ -30,7 +30,7 @@ underlaying signal still quite nicely out of very noisy data.
 </p>
 </section>
 
-<section>
+<section id="custom">
 <title>Custom Transformations</title>
 <p>
 Another way to manipulate the data is by using custom transformations. This

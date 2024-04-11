@@ -6,7 +6,7 @@
   <link type="guide" xref="index#howto"/>
 </info>
 <title>Curve Fitting</title>
-<section>
+<section id="fitting">
 <title>Fitting data</title>
 <p>
 Curve fitting allows for a powerful analysis method for your imported data. To
@@ -19,7 +19,7 @@ formula is shown in the same card.
 <media type="image" src="media/curve_fitting_light.png"/>
 </section>
 
-<section>
+<section id="bounds">
 <title>Bounds</title>
 <p>
 Each detected parameter in the formula will be shown in the sidebar. Here an
@@ -32,7 +32,7 @@ respectively.
 </p>
 </section>
 
-<section>
+<section id="results">
 <title>Results</title>
 <p>
 Below the fitting parameters, a box is shown with the resulting parameters of
@@ -53,7 +53,7 @@ bars on data points even in scientifically published data.
 </p>
 </section>
 
-<section>
+<section id="algorithms">
 <title>Fitting algorithms</title>
 <p>
 When performing a fit, there are three different fitting algorithms to choose
