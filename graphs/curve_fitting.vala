@@ -38,9 +38,6 @@ namespace Graphs {
         [GtkChild]
         private unowned Adw.ToastOverlay toast_overlay { get; }
 
-        [GtkChild]
-        private unowned MenuButton menu_button { get; }
-
         public Application application { get; construct set; }
         protected GLib.Settings settings { get; private set; }
         protected string equation_string { get; protected set; }
@@ -72,25 +69,6 @@ namespace Graphs {
             action_map.add_action (confidence_action);
             action_map.add_action (optimization_action);
             this.insert_action_group ("win", action_map);
-            var confidence_section = new Menu ();
-            string[] confidence_labels = {
-                C_("confidence", "None"),
-                /* xgettext: no-c-format */
-                C_("confidence", "1σ: 68% Confidence"),
-                /* xgettext: no-c-format */
-                C_("confidence", "2σ: 95% Confidence"),
-                /* xgettext: no-c-format */
-                C_("confidence", "3σ: 99.7% Confidence")
-            };
-            string[] confidence_targets = {"1std", "2std", "3std"};
-            for (int i = 0; i < 4; i++) {
-                string target = confidence_targets[i];
-                confidence_section.append_item (new MenuItem (
-                    confidence_labels[i], @"win.confidence::$target"
-                ));
-            }
-            var menu = (Menu) this.menu_button.get_menu_model ();
-            menu.append_section (_("Confidence Bounds"), confidence_section);
 
             this.equation.set_selected (this.settings.get_enum ("equation"));
             this.equation.notify["selected"].connect (set_equation);
