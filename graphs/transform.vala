@@ -26,7 +26,7 @@ namespace Graphs {
         public TransformDialog (Application application) {
             this.transform_x.set_text ("X");
             this.transform_y.set_text ("Y");
-            this.discard.set_visible (application.mode == 2);
+            this.discard.set_visible (application.window.canvas.mode == 2);
             this.help_button.clicked.connect (() => {
                 this.help_popover.popup ();
             });

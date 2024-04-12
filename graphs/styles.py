@@ -329,7 +329,6 @@ class StyleManager(Graphs.StyleManager):
             if prop not in ("use_custom_style", "custom_style"):
                 figure_settings.bind_property(prop, canvas, prop, 1 | 2)
         data.bind_property("items", canvas, "items", 2)
-        self.props.application.bind_property("mode", canvas, "mode", 2)
         from graphs.figure_settings import FigureSettingsDialog
 
         def on_edit_request(_canvas, label_id):

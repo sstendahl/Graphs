@@ -31,7 +31,7 @@ namespace Graphs {
         foreach (string mode in modes) {
             var action = new SimpleAction (@"mode_$mode", null);
             action.activate.connect (() => {
-                application.mode = modes.index_of (mode);
+                application.window.canvas.mode = modes.index_of (mode);
             });
             application.add_action (action);
         }

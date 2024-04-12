@@ -7,7 +7,6 @@ namespace Graphs {
         public Settings settings { get; construct set; }
         public Data data { get; construct set; }
         public StyleManager figure_style_manager { get; set; }
-        public int mode { get; set; default = 0; }
         public bool debug { get; construct set; default = false; }
 
         public signal void action_invoked (string name);
