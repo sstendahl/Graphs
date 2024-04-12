@@ -69,8 +69,8 @@ def parse(file: Gio.File) -> (RcParams, str):
                 msg = _("Ignoring parameter {param} in file {file}")
                 logging.warning(msg.format(param=key, file=filename))
             elif key in style:
-                msg = _("Duplicate key in file {param}, on line {line}")
-                logging.warning(msg.format(param=filename, line=line_number))
+                msg = _("Duplicate key in file {file}, on line {line}")
+                logging.warning(msg.format(file=filename, line=line_number))
             else:
                 if key in FONT_SIZE_KEYS \
                         and not value.replace(".", "", 1).isdigit():
