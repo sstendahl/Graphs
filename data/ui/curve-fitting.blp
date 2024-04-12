@@ -27,7 +27,7 @@ template $GraphsCurveFittingDialog : Adw.Dialog {
             title: _("Curve Fitting");
           };
           [end]
-          MenuButton menu_button {
+          MenuButton {
             icon-name: "view-more-symbolic";
             tooltip-text: _("Open Curve Fitting Menu");
             primary: true;
@@ -146,6 +146,32 @@ menu menu {
       label: C_("optimization", "Dogbox");
       action: "win.optimization";
       target: "dogbox";
+    }
+  }
+  section {
+    label: _("Confidence Bounds");
+    item {
+      label: C_("confidence", "None");
+      action: "win.confidence";
+      target: "none";
+    }
+    item {
+      /* xgettext: no-c-format */
+      label: C_("confidence", "1σ: 68% Confidence");
+      action: "win.confidence";
+      target: "1std";
+    }
+    item {
+      /* xgettext: no-c-format */
+      label: C_("confidence", "2σ: 95% Confidence");
+      action: "win.confidence";
+      target: "2std";
+    }
+    item {
+      /* xgettext: no-c-format */
+      label: C_("confidence", "3σ: 99.7% Confidence");
+      action: "win.confidence";
+      target: "3std";
     }
   }
 }
