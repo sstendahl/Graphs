@@ -9,4 +9,4 @@ while read lang; do
 done < help/LINGUAS
 
 cp help/LINGUAS public/help
-cp build-aux/help-index.html public/help/index.html
+cp build-aux/pages/help-index.html public/help/index.html

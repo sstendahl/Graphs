@@ -45,7 +45,7 @@ pages:
   script:
     - apt-get update && apt-get upgrade -y
     - apt-get install -y yelp-tools
-    - sh "build-aux/build-help-html.sh"
+    - sh "build-aux/pages/build-help-html.sh"
     - chmod -R a=rwx public
   artifacts:
     paths:

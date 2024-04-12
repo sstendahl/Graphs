@@ -22,9 +22,9 @@
         "*.a"
     ],
     "modules" : [
-        "build-aux/blueprint-compiler.json",
-        "build-aux/python-dependencies.json",
-        "build-aux/python-tests.json",
+        "build-aux/flatpak/blueprint-compiler.json",
+        "build-aux/flatpak/python-dependencies.json",
+        "build-aux/flatpak/python-tests.json",
         {
             "name" : "graphs",
             "buildsystem" : "meson",
