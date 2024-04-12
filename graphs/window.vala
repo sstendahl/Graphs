@@ -94,7 +94,10 @@ namespace Graphs {
 
         public Canvas canvas {
             get { return (Canvas) this.toast_overlay.get_child (); }
-            set { this.toast_overlay.set_child (value); }
+            set {
+                value.bind_property ("mode", this, "mode", 2);
+                this.toast_overlay.set_child (value);
+            }
         }
 
         public CssProvider headerbar_provider { get; private set; }
@@ -106,7 +109,6 @@ namespace Graphs {
                 "items_selected", this.shift_button, "sensitive", 2
             );
             data.bind_property ("empty", this.item_list, "visible", 4);
-            application.bind_property ("mode", this, "mode", 2);
 
             InlineStackSwitcher stack_switcher = new InlineStackSwitcher ();
             stack_switcher.stack = this.stack;
