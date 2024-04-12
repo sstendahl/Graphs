@@ -55,6 +55,22 @@
     </screenshot>
   </screenshots>
   <releases>
+    <release version="1.7.3" date="2024-04-20">
+      <description>
+        <p>A small update focusing on mostly background changes.</p>
+        <ul>
+          <li>Help has been ported to Yelp and can be accessed from whithin the app</li>
+          <li>Numerical entries now show the validity of user input</li>
+          <li>Improve equation handling</li>
+          <li>There is now a warning, when editing a style with poor contrast between labels and background colors</li>
+          <li>Curve fitting now supports duplicate variables, and has gotten some bug fixes with regards to equation naming</li>
+          <li>Many improvements to localization</li>
+          <li>Many updates to translations</li>
+          <li>Update to GNOME 46</li>
+          <li>Lots of background changes to improve performance</li>
+        </ul>
+      </description>
+  </release>
     <release version="1.7.2" date="2024-02-05">
       <description>
         <p>Graphs is now part of GNOME Circle, the codebase has been moved to the GNOME GitLab. This patch changes updates 

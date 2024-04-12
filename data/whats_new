@@ -1,4 +1,4 @@
-        <p>Version 1.7 marks our biggest release yet. With a migration to GNOME 45 and a new UI overhaul with a revamped style editor.
+        <p>Version 1.7 marks our biggest release yet. With a major UI overhaul and a revamped style editor.
            Other major highlights include a new curve fitting functionality, the ability to open projects directly, and support for gestures in the canvas.
         </p>
         <p>New in Graphs:</p>
@@ -24,7 +24,8 @@
           <li>Pinch and ctrl+scroll to zoom gestures are now supported on the canvas</li>
           <li>The canvas can now be panned using two fingers on a touch screen, as well as with the middle mouse button</li>
           <li>Toasts now show an "Open Location" button when saving data, bringing you to the saved file location</li>
-          <li>Translate/multiply entries now get a red CSS when input value is invalid, while the corresponding button is disabled</li>
+          <li>Entries for numerical values now get a red CSS when input value is invalid</li>
+          <li>There is now a warning, when editing a style with poor contrast between labels and background colors</li>
         </ul>
         <p>Changed behaviour:</p>
         <ul>
@@ -39,10 +40,11 @@
           <li>The shortcuts have been modified to follow the rest of the GNOME ecosystem </li>
           <li>The logic for placing the legend has been changed, so that it now properly moves away when it intersects with a curve</li>
           <li>The behaviour of the "Shift" action has been revamped to be more consistent when only part of the data span is selected </li>
+          <li>Help is now shipped with Graphs</li>
         </ul>
         <p>Bugfixes and changes under the hood:</p>
         <ul>
-          <li>Graphs has been migrated to GNOME 45, and uses the new Libadwaita 1.4 widgets </li>
+          <li>Graphs has been migrated to GNOME 46, and uses the new Libadwaita 1.5 widgets </li>
           <li>Number inputs are now handled safely without calling the Python eval function</li>
           <li>The clipboard implementation has been rewritten from scratch </li>
           <li>The scale buttons in the view menu are now properly changed when the scale has been changed from the figure settings </li>
@@ -51,6 +53,7 @@
           <li>Part of the code-base has been migrated to Vala</li>
           <li>Fixed a bug where "Skip rows" did not work properly with single-column data</li>
           <li>Fixed a bug where rows would change width when selected in case they are adjecent to other entry rows.</li>
+          <li>Curve fitting now supports duplicate variables, and has gotten some bug fixes with regards to equation naming</li>
           <li>Graphs translations are now hosted on Weblate</li>
           <li>More smaller changes and fixes throughout the code-base</li>
         </ul>
