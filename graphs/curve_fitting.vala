@@ -75,8 +75,11 @@ namespace Graphs {
             var confidence_section = new Menu ();
             string[] confidence_labels = {
                 C_("confidence", "None"),
+                /* xgettext: no-c-format */
                 C_("confidence", "1σ: 68% Confidence"),
+                /* xgettext: no-c-format */
                 C_("confidence", "2σ: 95% Confidence"),
+                /* xgettext: no-c-format */
                 C_("confidence", "3σ: 99.7% Confidence")
             };
             string[] confidence_targets = {"1std", "2std", "3std"};
