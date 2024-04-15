@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: graphs\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2024-04-09 18:59+0000\n"
-"PO-Revision-Date: 2024-04-10 00:14+0200\n"
+"POT-Creation-Date: 2024-04-12 10:49+0000\n"
+"PO-Revision-Date: 2024-04-12 22:13+0200\n"
 "Last-Translator: Julián Villodre <jvillodrede@gmail.com>\n"
 "Language-Team: Spanish - Spain <gnome-es-list@gnome.org>\n"
 "Language: es\n"
@@ -116,37 +116,37 @@ msgstr ""
 msgid "Add Equation"
 msgstr "Añadir ecuación"
 
-#: data/ui/add-equation.blp:15 data/ui/add-style.blp:15 data/ui/dialogs.blp:8
+#: data/ui/add-equation.blp:16 data/ui/add-style.blp:15 data/ui/dialogs.blp:8
 #: data/ui/dialogs.blp:19 data/ui/dialogs.blp:29 data/ui/export-figure.blp:15
-#: data/ui/import.blp:15 data/ui/transform.blp:15
+#: data/ui/import.blp:15 data/ui/transform.blp:16
 msgid "Cancel"
 msgstr "Cancelar"
 
-#: data/ui/add-equation.blp:21 data/ui/add-style.blp:21
+#: data/ui/add-equation.blp:22 data/ui/add-style.blp:21
 msgid "Add"
 msgstr "Añadir"
 
-#: data/ui/add-equation.blp:40 data/ui/transform.blp:55
+#: data/ui/add-equation.blp:41 data/ui/transform.blp:56
 msgid "Y ="
 msgstr "Y ="
 
-#: data/ui/add-equation.blp:48
+#: data/ui/add-equation.blp:49
 msgid "Enter a mathematical expression to generate data from"
 msgstr "Introduzca una expresión matemática para generar datos"
 
-#: data/ui/add-equation.blp:56
+#: data/ui/add-equation.blp:57
 msgid "Name (optional)"
 msgstr "Nombre (opcional)"
 
-#: data/ui/add-equation.blp:69
+#: data/ui/add-equation.blp:70
 msgid "X Start"
 msgstr "Inicio X"
 
-#: data/ui/add-equation.blp:76
+#: data/ui/add-equation.blp:77
 msgid "X Stop"
 msgstr "Final X"
 
-#: data/ui/add-equation.blp:83
+#: data/ui/add-equation.blp:84
 msgid "Step Size"
 msgstr "Tamaño del paso"
 
@@ -170,65 +170,87 @@ msgstr "Ajuste de curvas"
 msgid "Open Curve Fitting Menu"
 msgstr "Abrir el menú de ajuste de curvas"
 
-#: data/ui/curve-fitting.blp:49
+#: data/ui/curve-fitting.blp:50
 msgid "Equation"
 msgstr "Ecuación"
 
-#: data/ui/curve-fitting.blp:52
+#: data/ui/curve-fitting.blp:53
 msgctxt "regression-type"
 msgid "Linear"
 msgstr "Lineal"
 
-#: data/ui/curve-fitting.blp:53
+#: data/ui/curve-fitting.blp:54
 msgctxt "regression-type"
 msgid "Quadratic"
 msgstr "Cuadrática"
 
-#: data/ui/curve-fitting.blp:54
+#: data/ui/curve-fitting.blp:55
 msgctxt "regression-type"
 msgid "Exponential"
 msgstr "Exponencial"
 
-#: data/ui/curve-fitting.blp:55
+#: data/ui/curve-fitting.blp:56
 msgctxt "regression-type"
 msgid "Power Law"
 msgstr "Ley potencial"
 
-#: data/ui/curve-fitting.blp:56
+#: data/ui/curve-fitting.blp:57
 msgctxt "regression-type"
 msgid "Logarithmic"
 msgstr "Logarítmica"
 
-#: data/ui/curve-fitting.blp:57
+#: data/ui/curve-fitting.blp:58
 msgctxt "regression-type"
 msgid "Sigmoid Logistic"
 msgstr "Logística sigmoidal"
 
-#: data/ui/curve-fitting.blp:58
+#: data/ui/curve-fitting.blp:59
 msgctxt "regression-type"
 msgid "Gaussian"
 msgstr "Gaussiana"
 
-#: data/ui/curve-fitting.blp:59
+#: data/ui/curve-fitting.blp:60
 msgctxt "regression-type"
 msgid "Custom"
 msgstr "Personalizada"
 
-#: data/ui/curve-fitting.blp:65
+#: data/ui/curve-fitting.blp:66
 msgid "Y = "
 msgstr "Y = "
 
-#: data/ui/curve-fitting.blp:92
+#: data/ui/curve-fitting.blp:93
 msgid "Add Fit to Data"
 msgstr "Añadir ajuste a los datos"
 
-#: data/ui/curve-fitting.blp:108 data/ui/window.blp:600 graphs/window.vala:169
+#: data/ui/curve-fitting.blp:109 data/ui/window.blp:600 graphs/window.vala:169
 msgid "Toggle Sidebar"
 msgstr "Conmutar barra lateral"
 
-#: data/ui/curve-fitting.blp:120 data/ui/window.blp:640
+#: data/ui/curve-fitting.blp:121 data/ui/window.blp:640
 msgid "Canvas Failed to Load"
 msgstr "Error al cargar el lienzo"
+
+#: data/ui/curve-fitting.blp:131
+msgid "Optimization Method"
+msgstr "Método de optimización"
+
+#. Translators: see https://world.pages.gitlab.gnome.org/Graphs/help/C/curve_fitting.html#algorithms
+#: data/ui/curve-fitting.blp:134
+msgctxt "optimization"
+msgid "Levenberg-Marquardt"
+msgstr "Levenberg-Marquardt"
+
+#. Translators: see https://world.pages.gitlab.gnome.org/Graphs/help/C/curve_fitting.html#algorithms
+#: data/ui/curve-fitting.blp:140
+msgctxt "optimization"
+msgid "Trust Region Reflective"
+msgstr "Región de confianza reflectiva"
+
+#. Translators: see https://world.pages.gitlab.gnome.org/Graphs/help/C/curve_fitting.html#algorithms
+#: data/ui/curve-fitting.blp:146
+msgctxt "optimization"
+msgid "Dogbox"
+msgstr "Dogbox"
 
 #: data/ui/dialogs.blp:5
 msgid "Save Changes?"
@@ -345,8 +367,8 @@ msgstr "Marcadores"
 
 #: data/ui/edit-item.blp:76 data/ui/style-editor.blp:116
 msgctxt "markerstyle"
-msgid "Nothing"
-msgstr "Nada"
+msgid "None"
+msgstr "Ninguno"
 
 #: data/ui/edit-item.blp:77 data/ui/style-editor.blp:117
 msgctxt "markerstyle"
@@ -1145,11 +1167,11 @@ msgstr "Añadir color"
 msgid "Transform Data"
 msgstr "Transformar datos"
 
-#: data/ui/transform.blp:21 data/ui/window.blp:396
+#: data/ui/transform.blp:22 data/ui/window.blp:396
 msgid "Transform"
 msgstr "Transformar"
 
-#: data/ui/transform.blp:34
+#: data/ui/transform.blp:35
 msgid ""
 "Additional variables:\n"
 "x_min, y_min\n"
@@ -1167,15 +1189,15 @@ msgstr ""
 "por defecto, añada d a la función\n"
 "para usar grados, por ejemplo sind(x) o cosd(x)."
 
-#: data/ui/transform.blp:39
+#: data/ui/transform.blp:40
 msgid "More info"
 msgstr "Más información"
 
-#: data/ui/transform.blp:50
+#: data/ui/transform.blp:51
 msgid "X ="
 msgstr "X ="
 
-#: data/ui/transform.blp:60
+#: data/ui/transform.blp:61
 msgid "Discard Unselected Data"
 msgstr "Descartar datos no seleccionados"
 
@@ -1205,8 +1227,7 @@ msgstr "Modo zoom. Seleccione un área en la figura para ampliar"
 
 #: data/ui/window.blp:255
 msgid "Select Mode. Click and drag to make a selection of data"
-msgstr ""
-"Modo de resaltado. Pulse y arrastre para hacer una selección de datos"
+msgstr "Modo de resaltado. Pulse y arrastre para hacer una selección de datos"
 
 #: data/ui/window.blp:286
 msgid "Adjust"
@@ -1421,54 +1442,11 @@ msgstr "Eliminado {name}"
 msgid "Could not load {font}"
 msgstr "No se ha podido cargar {font}"
 
-#: graphs/curve_fitting.py:86
-msgid "Optimization Method"
-msgstr "Método de optimización"
-
-#: graphs/curve_fitting.py:88
-msgctxt "optimization"
-msgid "Levenberg-Marquardt"
-msgstr "Levenberg-Marquardt"
-
-#: graphs/curve_fitting.py:89
-msgctxt "optimization"
-msgid "Trust Region Reflective"
-msgstr "Región de confianza reflectiva"
-
-#: graphs/curve_fitting.py:90
-msgctxt "optimization"
-msgid "Dogbox"
-msgstr "Dogbox"
-
-#: graphs/curve_fitting.py:94
-msgid "Confidence Bounds"
-msgstr "Límites de confianza"
-
-#: graphs/curve_fitting.py:96
-msgctxt "confidence"
-msgid "None"
-msgstr "Ninguno"
-
-#: graphs/curve_fitting.py:97
-msgctxt "confidence"
-msgid "1σ: 68% Confidence"
-msgstr "1σ: 68% de confianza"
-
-#: graphs/curve_fitting.py:98
-msgctxt "confidence"
-msgid "2σ: 95% Confidence"
-msgstr "2σ: 95% de confianza"
-
-#: graphs/curve_fitting.py:99
-msgctxt "confidence"
-msgid "3σ: 99.7% Confidence"
-msgstr "3σ: 99,7% de confianza"
-
-#: graphs/curve_fitting.py:246
+#: graphs/curve_fitting.py:173
 msgid "Results:"
 msgstr "Resultados:"
 
-#: graphs/curve_fitting.py:250
+#: graphs/curve_fitting.py:177
 msgid ""
 "Please enter valid fitting \n"
 "parameters to start the fit"
@@ -1476,7 +1454,7 @@ msgstr ""
 "Por favor, introduzca parámetros \n"
 "válidos para iniciar el ajuste"
 
-#: graphs/curve_fitting.py:254
+#: graphs/curve_fitting.py:181
 msgid ""
 "Please enter a valid equation \n"
 "to start the fit"
@@ -1484,7 +1462,7 @@ msgstr ""
 "Por favor, introduzca una ecuación válida\n"
 "para iniciar el ajuste"
 
-#: graphs/curve_fitting.py:258
+#: graphs/curve_fitting.py:185
 msgid ""
 "Please enter valid fitting bounds \n"
 "to start the fit"
@@ -1492,12 +1470,39 @@ msgstr ""
 "Introduzca límites de ajuste válidos \n"
 "para iniciar el ajuste"
 
-#: graphs/curve_fitting.py:269
+#: graphs/curve_fitting.py:198
 #, python-brace-format
 msgid "Sum of R²: {R2}"
 msgstr "Suma de R²: {R2}"
 
-#: graphs/curve_fitting.vala:29
+#: graphs/curve_fitting.vala:77
+msgctxt "confidence"
+msgid "None"
+msgstr "Ninguno"
+
+#: graphs/curve_fitting.vala:78
+#, c-format
+msgctxt "confidence"
+msgid "1σ: 68% Confidence"
+msgstr "1σ: 68% Confianza"
+
+#: graphs/curve_fitting.vala:79
+#, c-format
+msgctxt "confidence"
+msgid "2σ: 95% Confidence"
+msgstr "2σ: 95% Confianza"
+
+#: graphs/curve_fitting.vala:80
+#, c-format
+msgctxt "confidence"
+msgid "3σ: 99.7% Confidence"
+msgstr "3σ: 99,7% Confianza"
+
+#: graphs/curve_fitting.vala:90
+msgid "Confidence Bounds"
+msgstr "Límites de confianza"
+
+#: graphs/curve_fitting.vala:147
 #, c-format
 msgid "Fitting Parameters for %s"
 msgstr "Parámetros de ajuste para %s"
@@ -1552,7 +1557,7 @@ msgid "Are you sure you want to reset the import settings?"
 msgstr ""
 "¿Está seguro de que quiere restablecer la configuración de importación?"
 
-#: graphs/misc.py:92
+#: graphs/misc.py:107
 msgctxt "file-filter"
 msgid "Graphs Project File"
 msgstr "Archivo de proyecto de Gráficos"
@@ -1629,8 +1634,8 @@ msgstr "Ignorando parámetro {param} en el archivo {file}"
 
 #: graphs/style_io.py:72
 #, python-brace-format
-msgid "Duplicate key in file {param}, on line {line}"
-msgstr "Clave duplicada en el archivo {param}, en la línea {line}"
+msgid "Duplicate key in file {file}, on line {line}"
+msgstr "Clave duplicada en el archivo {file}, en la línea {line}"
 
 #: graphs/style_io.py:89
 #, python-brace-format
@@ -1727,6 +1732,10 @@ msgstr "Optimizar límites"
 msgctxt "scale"
 msgid "Inverse Root"
 msgstr "Raíz inversa"
+
+#~ msgctxt "markerstyle"
+#~ msgid "Nothing"
+#~ msgstr "Nada"
 
 #~ msgid "Delimiter"
 #~ msgstr "Delimitador"
