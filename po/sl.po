@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2024-04-09 12:51+0000\n"
-"PO-Revision-Date: 2024-04-10 15:17+0200\n"
+"POT-Creation-Date: 2024-04-12 10:49+0000\n"
+"PO-Revision-Date: 2024-04-16 08:46+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian <gnome-si@googlegroups.com>\n"
 "Language: sl\n"
@@ -114,37 +114,37 @@ msgstr ""
 msgid "Add Equation"
 msgstr "Dodaj enačbo"
 
-#: data/ui/add-equation.blp:15 data/ui/add-style.blp:15 data/ui/dialogs.blp:8
+#: data/ui/add-equation.blp:16 data/ui/add-style.blp:15 data/ui/dialogs.blp:8
 #: data/ui/dialogs.blp:19 data/ui/dialogs.blp:29 data/ui/export-figure.blp:15
-#: data/ui/import.blp:15 data/ui/transform.blp:15
+#: data/ui/import.blp:15 data/ui/transform.blp:16
 msgid "Cancel"
 msgstr "Prekliči"
 
-#: data/ui/add-equation.blp:21 data/ui/add-style.blp:21
+#: data/ui/add-equation.blp:22 data/ui/add-style.blp:21
 msgid "Add"
 msgstr "Dodaj"
 
-#: data/ui/add-equation.blp:40 data/ui/transform.blp:55
+#: data/ui/add-equation.blp:41 data/ui/transform.blp:56
 msgid "Y ="
 msgstr "Y ="
 
-#: data/ui/add-equation.blp:48
+#: data/ui/add-equation.blp:49
 msgid "Enter a mathematical expression to generate data from"
 msgstr "Vnesite matematični izraz za generiranje podatkov"
 
-#: data/ui/add-equation.blp:56
+#: data/ui/add-equation.blp:57
 msgid "Name (optional)"
 msgstr "Ime (neobvezno)"
 
-#: data/ui/add-equation.blp:69
+#: data/ui/add-equation.blp:70
 msgid "X Start"
 msgstr "Začetek X"
 
-#: data/ui/add-equation.blp:76
+#: data/ui/add-equation.blp:77
 msgid "X Stop"
 msgstr "Konec X"
 
-#: data/ui/add-equation.blp:83
+#: data/ui/add-equation.blp:84
 msgid "Step Size"
 msgstr "Velikost koraka"
 
@@ -168,65 +168,87 @@ msgstr "Prileganje krivulj"
 msgid "Open Curve Fitting Menu"
 msgstr "Odprite meni za prileganje krivulje"
 
-#: data/ui/curve-fitting.blp:49
+#: data/ui/curve-fitting.blp:50
 msgid "Equation"
 msgstr "Enačba"
 
-#: data/ui/curve-fitting.blp:52
+#: data/ui/curve-fitting.blp:53
 msgctxt "regression-type"
 msgid "Linear"
 msgstr "linearna"
 
-#: data/ui/curve-fitting.blp:53
+#: data/ui/curve-fitting.blp:54
 msgctxt "regression-type"
 msgid "Quadratic"
 msgstr "kvadratna"
 
-#: data/ui/curve-fitting.blp:54
+#: data/ui/curve-fitting.blp:55
 msgctxt "regression-type"
 msgid "Exponential"
 msgstr "eksponentna"
 
-#: data/ui/curve-fitting.blp:55
+#: data/ui/curve-fitting.blp:56
 msgctxt "regression-type"
 msgid "Power Law"
 msgstr "potenčni zakon"
 
-#: data/ui/curve-fitting.blp:56
+#: data/ui/curve-fitting.blp:57
 msgctxt "regression-type"
 msgid "Logarithmic"
 msgstr "logaritemska"
 
-#: data/ui/curve-fitting.blp:57
+#: data/ui/curve-fitting.blp:58
 msgctxt "regression-type"
 msgid "Sigmoid Logistic"
 msgstr "sigmoidna logistična"
 
-#: data/ui/curve-fitting.blp:58
+#: data/ui/curve-fitting.blp:59
 msgctxt "regression-type"
 msgid "Gaussian"
 msgstr "po Gaussu"
 
-#: data/ui/curve-fitting.blp:59
+#: data/ui/curve-fitting.blp:60
 msgctxt "regression-type"
 msgid "Custom"
 msgstr "po meri"
 
-#: data/ui/curve-fitting.blp:65
+#: data/ui/curve-fitting.blp:66
 msgid "Y = "
 msgstr "Y = "
 
-#: data/ui/curve-fitting.blp:92
+#: data/ui/curve-fitting.blp:93
 msgid "Add Fit to Data"
 msgstr "Dodaj Prilagodi podatkom"
 
-#: data/ui/curve-fitting.blp:108 data/ui/window.blp:600 graphs/window.vala:169
+#: data/ui/curve-fitting.blp:109 data/ui/window.blp:600 graphs/window.vala:169
 msgid "Toggle Sidebar"
 msgstr "Preklopi stransko okno"
 
-#: data/ui/curve-fitting.blp:120 data/ui/window.blp:640
+#: data/ui/curve-fitting.blp:121 data/ui/window.blp:640
 msgid "Canvas Failed to Load"
 msgstr "Platno se ni naložilo"
+
+#: data/ui/curve-fitting.blp:131
+msgid "Optimization Method"
+msgstr "Metoda optimizacije"
+
+#. Translators: see https://world.pages.gitlab.gnome.org/Graphs/help/C/curve_fitting.html#algorithms
+#: data/ui/curve-fitting.blp:134
+msgctxt "optimization"
+msgid "Levenberg-Marquardt"
+msgstr "Levenberg-Marquardt"
+
+#. Translators: see https://world.pages.gitlab.gnome.org/Graphs/help/C/curve_fitting.html#algorithms
+#: data/ui/curve-fitting.blp:140
+msgctxt "optimization"
+msgid "Trust Region Reflective"
+msgstr "Odsevno področje zaupanja"
+
+#. Translators: see https://world.pages.gitlab.gnome.org/Graphs/help/C/curve_fitting.html#algorithms
+#: data/ui/curve-fitting.blp:146
+msgctxt "optimization"
+msgid "Dogbox"
+msgstr "Dogbox"
 
 #: data/ui/dialogs.blp:5
 msgid "Save Changes?"
@@ -343,7 +365,7 @@ msgstr "Označevalniki"
 
 #: data/ui/edit-item.blp:76 data/ui/style-editor.blp:116
 msgctxt "markerstyle"
-msgid "Nothing"
+msgid "None"
 msgstr "Brez"
 
 #: data/ui/edit-item.blp:77 data/ui/style-editor.blp:117
@@ -1144,11 +1166,11 @@ msgstr "Dodaj barvo"
 msgid "Transform Data"
 msgstr "Pretvori podatke"
 
-#: data/ui/transform.blp:21 data/ui/window.blp:396
+#: data/ui/transform.blp:22 data/ui/window.blp:396
 msgid "Transform"
 msgstr "Preoblikuj"
 
-#: data/ui/transform.blp:34
+#: data/ui/transform.blp:35
 msgid ""
 "Additional variables:\n"
 "x_min, y_min\n"
@@ -1166,15 +1188,15 @@ msgstr ""
 "privzeto radiane, funkciji privzeto dodajte d\n"
 "za uporabo stopinj, npr. sind(x) ali cosd(x)."
 
-#: data/ui/transform.blp:39
+#: data/ui/transform.blp:40
 msgid "More info"
 msgstr "Več podrobnosti"
 
-#: data/ui/transform.blp:50
+#: data/ui/transform.blp:51
 msgid "X ="
 msgstr "X ="
 
-#: data/ui/transform.blp:60
+#: data/ui/transform.blp:61
 msgid "Discard Unselected Data"
 msgstr "Zavrzi neizbrane podatke"
 
@@ -1417,54 +1439,11 @@ msgstr "Izbrisano: {name}"
 msgid "Could not load {font}"
 msgstr "Ni bilo mogoče naložiti {font}"
 
-#: graphs/curve_fitting.py:86
-msgid "Optimization Method"
-msgstr "Metoda optimizacije"
-
-#: graphs/curve_fitting.py:88
-msgctxt "optimization"
-msgid "Levenberg-Marquardt"
-msgstr "Levenberg-Marquardt"
-
-#: graphs/curve_fitting.py:89
-msgctxt "optimization"
-msgid "Trust Region Reflective"
-msgstr "Odsevno področje zaupanja"
-
-#: graphs/curve_fitting.py:90
-msgctxt "optimization"
-msgid "Dogbox"
-msgstr "Dogbox"
-
-#: graphs/curve_fitting.py:94
-msgid "Confidence Bounds"
-msgstr "Meje zaupanja"
-
-#: graphs/curve_fitting.py:96
-msgctxt "confidence"
-msgid "None"
-msgstr "brez"
-
-#: graphs/curve_fitting.py:97
-msgctxt "confidence"
-msgid "1σ: 68% Confidence"
-msgstr "1σ: 68 % zaupanje"
-
-#: graphs/curve_fitting.py:98
-msgctxt "confidence"
-msgid "2σ: 95% Confidence"
-msgstr "2σ: 95 % zaupanje"
-
-#: graphs/curve_fitting.py:99
-msgctxt "confidence"
-msgid "3σ: 99.7% Confidence"
-msgstr "3σ: 99,7 % zaupanje"
-
-#: graphs/curve_fitting.py:246
+#: graphs/curve_fitting.py:173
 msgid "Results:"
 msgstr "Rezultati:"
 
-#: graphs/curve_fitting.py:250
+#: graphs/curve_fitting.py:177
 msgid ""
 "Please enter valid fitting \n"
 "parameters to start the fit"
@@ -1472,7 +1451,7 @@ msgstr ""
 "Prosimo, vnesite veljavne \n"
 "parametre za začetek prileganja"
 
-#: graphs/curve_fitting.py:254
+#: graphs/curve_fitting.py:181
 msgid ""
 "Please enter a valid equation \n"
 "to start the fit"
@@ -1480,7 +1459,7 @@ msgstr ""
 "Vnesite veljavno enačbo \n"
 "za začetek prileganja"
 
-#: graphs/curve_fitting.py:258
+#: graphs/curve_fitting.py:185
 msgid ""
 "Please enter valid fitting bounds \n"
 "to start the fit"
@@ -1488,12 +1467,39 @@ msgstr ""
 "Prosimo, vnesite veljavne meje \n"
 "za začetek prileganja"
 
-#: graphs/curve_fitting.py:269
+#: graphs/curve_fitting.py:198
 #, python-brace-format
 msgid "Sum of R²: {R2}"
 msgstr "Vsota R²: {R2}"
 
-#: graphs/curve_fitting.vala:29
+#: graphs/curve_fitting.vala:77
+msgctxt "confidence"
+msgid "None"
+msgstr "brez"
+
+#: graphs/curve_fitting.vala:78
+#, c-format
+msgctxt "confidence"
+msgid "1σ: 68% Confidence"
+msgstr ""
+
+#: graphs/curve_fitting.vala:79
+#, c-format
+msgctxt "confidence"
+msgid "2σ: 95% Confidence"
+msgstr ""
+
+#: graphs/curve_fitting.vala:80
+#, c-format
+msgctxt "confidence"
+msgid "3σ: 99.7% Confidence"
+msgstr ""
+
+#: graphs/curve_fitting.vala:90
+msgid "Confidence Bounds"
+msgstr "Meje zaupanja"
+
+#: graphs/curve_fitting.vala:147
 #, c-format
 msgid "Fitting Parameters for %s"
 msgstr "Parametri prileganja za %s"
@@ -1547,7 +1553,7 @@ msgstr "Merilo osi Y"
 msgid "Are you sure you want to reset the import settings?"
 msgstr "Ali ste prepričani, da želite ponastaviti nastavitve uvoza?"
 
-#: graphs/misc.py:92
+#: graphs/misc.py:107
 msgctxt "file-filter"
 msgid "Graphs Project File"
 msgstr "Projektna datoteka programa Grafi"
@@ -1623,8 +1629,8 @@ msgstr "Prezrt parameter {param} v datoteki {file}"
 
 #: graphs/style_io.py:72
 #, python-brace-format
-msgid "Duplicate key in file {param}, on line {line}"
-msgstr "Podvojen ključ v datoteki {param}, v vrstici {line}"
+msgid "Duplicate key in file {file}, on line {line}"
+msgstr "Podvojen ključ v datoteki {file}, v vrstici {line}"
 
 #: graphs/style_io.py:89
 #, python-brace-format
