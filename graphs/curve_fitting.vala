@@ -20,6 +20,9 @@ namespace Graphs {
         "a*exp(-(x-mu)²/(2*s²))" // gaussian
     };
 
+    /**
+     * Curve fitting dialog.
+     */
     [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/curve-fitting.ui")]
     public class CurveFittingDialog : Adw.Dialog {
 

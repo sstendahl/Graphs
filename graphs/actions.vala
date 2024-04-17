@@ -6,6 +6,11 @@ namespace Graphs {
     private const string[] X_DIRECTIONS = {"top", "bottom"};
     private const string[] Y_DIRECTIONS = {"left", "right"};
 
+    /**
+     * Setup actions.
+     *
+     * @param application Application
+     */
     public void setup_actions (Application application) {
         foreach (string name in ACTION_NAMES) {
             var action = new SimpleAction (name, null);

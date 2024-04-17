@@ -3,6 +3,9 @@ using Adw;
 using Gtk;
 
 namespace Graphs {
+    /**
+     * Smoothen settings dialog
+     */
     [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/smoothen-settings.ui")]
     public class SmoothenDialog : Adw.Dialog {
         [GtkChild]

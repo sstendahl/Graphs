@@ -2,6 +2,9 @@
 using Adw;
 
 namespace Graphs {
+    /**
+     * Graphs application
+     */
     public class Application : Adw.Application {
         public Window window { get; set; }
         public Settings settings { get; construct set; }
@@ -20,6 +23,11 @@ namespace Graphs {
             this.version = Config.VERSION;
         }
 
+        /**
+         * Retrieve a child of the applications settings.
+         *
+         * @param path a slash-separated path
+         */
         public Settings get_settings_child (string path) {
             Settings settings = this.settings;
             foreach (string child_name in path.split ("/")) {

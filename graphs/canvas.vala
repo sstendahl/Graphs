@@ -2,6 +2,9 @@
 using Gtk;
 
 namespace Graphs {
+    /**
+     * Custom Canvas implementation.
+     */
     public class Canvas : DrawingArea {
         public bool hide_unselected { get; set; default = false; }
         public int mode { get; set; default = 0; }

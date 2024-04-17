@@ -9,7 +9,9 @@ namespace Graphs {
         return strcmp (a.name.down (), b.name.down ());
     }
 
-
+    /**
+     * Style manager
+     */
     public class StyleManager : Object {
         public Application application { get; construct set; }
         public bool use_custom_style { get; set; default = false; }
@@ -63,6 +65,11 @@ namespace Graphs {
             });
         }
 
+        /**
+         * List all stylenames
+         *
+         * The result is guaranteed to be sorted and excludes the system style.
+         */
         public string[] list_stylenames () {
             string[] stylenames = {};
             for (uint i = 1; i < this.style_model.get_n_items (); i++) {
@@ -87,6 +94,9 @@ namespace Graphs {
         }
     }
 
+    /**
+     * Style Preview widget
+     */
     [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/style-preview.ui")]
     private class StylePreview : Box {
 
@@ -137,6 +147,9 @@ namespace Graphs {
         }
     }
 
+    /**
+     * Add style dialog
+     */
     [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/add-style.ui")]
     public class AddStyleDialog : Adw.Dialog {
 

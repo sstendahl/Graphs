@@ -3,6 +3,9 @@ using Adw;
 using Gtk;
 
 namespace Graphs {
+    /**
+     * Import dialog
+     */
     [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/import.ui")]
     public class ImportDialog : Adw.Dialog {
 

@@ -3,6 +3,9 @@ using Adw;
 using Gtk;
 
 namespace Graphs {
+    /**
+     * Figure settings
+     */
     public class FigureSettings : Object {
 
         public string title { get; set; default = ""; }
@@ -80,6 +83,9 @@ namespace Graphs {
 
     private const string PAGE_RESOURCE = "/se/sjoerd/Graphs/ui/figure-settings-page.ui";
 
+    /**
+     * Figure settings dialog
+     */
     [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/figure-settings-dialog.ui")]
     public class FigureSettingsDialog : Adw.Dialog {
 

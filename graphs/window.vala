@@ -3,6 +3,9 @@ using Gtk;
 using Adw;
 
 namespace Graphs {
+    /**
+     * Main window
+     */
     [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/window.ui")]
     public class Window : Adw.ApplicationWindow {
 
@@ -137,14 +140,29 @@ namespace Graphs {
             action.activate (new Variant.string (name));
         }
 
+        /**
+         * Add a toast to the window.
+         */
         public void add_toast (Adw.Toast toast) {
             this.toast_overlay.add_toast (toast);
         }
 
+        /**
+         * Add a toast to the window.
+         *
+         * The toast is created automatically with the given title.
+         */
         public void add_toast_string (string title) {
             this.add_toast (new Adw.Toast (title));
         }
 
+        /**
+         * Add a toast to the window.
+         *
+         * The toast is created automatically with the given title.
+         * An action is automatically created, to open the containing folder
+         * of file.
+         */
         public void add_toast_string_with_file (string title, File file) {
             SimpleAction action = new SimpleAction ("open-file-location", null);
             action.activate.connect (() => {
@@ -164,6 +182,9 @@ namespace Graphs {
             );
         }
 
+        /**
+         * Repopulate the view menu
+         */
         public void update_view_menu () {
             var view_menu = new Menu ();
             var toggle_section = new Menu ();
