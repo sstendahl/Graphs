@@ -207,7 +207,9 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
         while not end_iter.ends_word() and not end_iter.ends_sentence():
             end_iter.forward_char()
         self.get_text_view().get_buffer().apply_tag(
-            bold_tag, start_iter, end_iter,
+            bold_tag,
+            start_iter,
+            end_iter,
         )
 
     def fit_curve(self, *_args) -> bool:
@@ -228,8 +230,7 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
                     pattern = r"(?<!\d)[Ee]|(?!\d)[Ee](?![-+]?\d)"
                 else:
                     pattern = (
-                        r"((?<=[\d\)])|\b)"
-                        + var
+                        r"((?<=[\d\)])|\b)" + var
                         + r"((?=[\u2070-\u209f\u00b0-\u00be])|\b)"
                     )
                 value = utilities.sig_fig_round(val, 3)

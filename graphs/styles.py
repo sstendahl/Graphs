@@ -320,10 +320,7 @@ class StyleManager(Graphs.StyleManager):
                     count += 1
 
         window = self.props.application.get_window()
-        canvas = graphs.canvas.Canvas(
-            self._selected_style_params,
-            key_controller=window.get_key_controller(),
-        )
+        canvas = graphs.canvas.Canvas(self._selected_style_params)
         figure_settings = data.get_figure_settings()
         for prop in dir(figure_settings.props):
             if prop not in ("use_custom_style", "custom_style"):
