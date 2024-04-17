@@ -84,9 +84,6 @@ namespace Graphs {
         [GtkChild]
         public unowned Adw.WindowTitle content_title { get; }
 
-        [GtkChild]
-        public unowned EventControllerKey key_controller { get; }
-
         public int mode {
             set {
                 this.pan_button.set_active (value == 0);

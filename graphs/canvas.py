@@ -16,7 +16,7 @@ from gi.repository import GObject, Gdk, Graphs, Gtk
 from graphs import artist, misc, scales, utilities
 
 from matplotlib import backend_tools as tools, pyplot
-from matplotlib.backend_bases import NavigationToolbar2
+from matplotlib.backend_bases import FigureCanvasBase, NavigationToolbar2
 from matplotlib.backends.backend_gtk4cairo import FigureCanvas
 from matplotlib.widgets import SpanSelector
 
@@ -79,7 +79,6 @@ class Canvas(Graphs.Canvas, FigureCanvas):
         self,
         style_params: dict,
         interactive: bool = True,
-        key_controller: Gtk.EventControllerKey = None,
     ):
         """
         Create the canvas.
@@ -90,8 +89,19 @@ class Canvas(Graphs.Canvas, FigureCanvas):
         """
         self._style_params = style_params
         pyplot.rcParams.update(self._style_params)  # apply style_params
-        Graphs.Canvas.__init__(self, can_focus=False, items=[])
-        FigureCanvas.__init__(self)
+        Graphs.Canvas.__init__(
+            self,
+            can_focus=True,
+            focusable=True,
+            hexpand=True,
+            vexpand=True,
+            items=[],
+        )
+        self._idle_draw_id = 0
+        self.set_draw_func(self._draw_func)
+        self.connect("resize", self.resize_event)
+        self.connect("notify::scale-factor", self._update_device_pixel_ratio)
+        FigureCanvasBase.__init__(self)
         self.figure.set_tight_layout(True)
         self._axis = self.figure.add_subplot(111)
         self._top_left_axis = self._axis.twiny()
@@ -110,57 +120,129 @@ class Canvas(Graphs.Canvas, FigureCanvas):
 
         # Handle stuff only used if the canvas is interactive
         if interactive:
-            self.mpl_connect("pick_event", self._on_pick)
-
-            def rgba_to_tuple(rgba):
-                return (rgba.red, rgba.green, rgba.blue, rgba.alpha)
-
-            rgba = self.get_style_context().lookup_color("accent_color")[1]
-            self.rubberband_edge_color = rgba_to_tuple(rgba)
-            rgba.alpha = 0.3
-            self.rubberband_fill_color = rgba_to_tuple(rgba)
-
-            self.highlight = _Highlight(self)
-            # Reference is created by the toolbar itself
-            _DummyToolbar(self)
-            self.mpl_connect("scroll_event", self._on_scroll_event)
-            self.mpl_connect("motion_notify_event", self._set_mouse_fraction)
-            self._xfrac, self._yfrac = None, None
-            zoom_gesture = Gtk.GestureZoom.new()
-            zoom_gesture.connect("scale-changed", self._on_zoom_gesture)
-            zoom_gesture.connect(
-                "end",
-                self.figure.canvas.toolbar.push_current,
-            )
-            scroll_gesture = Gtk.EventControllerScroll.new(
-                Gtk.EventControllerScrollFlags.BOTH_AXES,
-            )
-            scroll_gesture.connect("scroll", self._on_pan_gesture)
-            scroll_gesture.connect(
-                "scroll-end",
-                self.figure.canvas.toolbar.push_current,
-            )
-            self._ctrl_held = False
-            self._shift_held = False
-            self.add_controller(zoom_gesture)
-            self.add_controller(scroll_gesture)
-
-            if key_controller is not None:
-                key_controller.connect("key-pressed", self._on_key_press_event)
-                key_controller.connect(
-                    "key-released",
-                    self._on_key_release_event,
-                )
-
-            for item in ("min", "max"):
-                self.connect(
-                    f"notify::{item}-selected",
-                    lambda _a,
-                    _b: self.highlight.load(self),
-                )
+            self._setup_interactive()
 
         self.connect("notify::hide-unselected", self._redraw)
         self.connect("notify::items", self._redraw)
+        self.grab_focus()
+
+    def _setup_interactive(self):
+        self._ctrl_held, self._shift_held = False, False
+        self._xfrac, self._yfrac = None, None
+        self.mpl_connect("pick_event", self._on_pick)
+        self.mpl_connect("motion_notify_event", self._set_mouse_fraction)
+
+        # Reference is created by the toolbar itself
+        _DummyToolbar(self)
+
+        click = Gtk.GestureClick()
+        click.set_button(0)  # All buttons.
+        click.connect("pressed", self.button_press_event)
+        click.connect("released", self.button_release_event)
+        self.add_controller(click)
+
+        key = Gtk.EventControllerKey()
+        key.connect("key-pressed", self.key_press_event)
+        key.connect("key-released", self.key_release_event)
+        self.add_controller(key)
+
+        motion = Gtk.EventControllerMotion()
+        motion.connect("motion", self.motion_notify_event)
+        motion.connect("enter", self.enter_notify_event)
+        motion.connect("leave", self.leave_notify_event)
+        self.add_controller(motion)
+
+        scroll = Gtk.EventControllerScroll.new(
+            Gtk.EventControllerScrollFlags.BOTH_AXES,
+        )
+        scroll.connect("scroll", self.scroll_event)
+        scroll.connect("scroll-end", self.toolbar.push_current)
+        self.add_controller(scroll)
+
+        zoom = Gtk.GestureZoom.new()
+        zoom.connect("scale-changed", self.zoom_event)
+        zoom.connect("end", self.toolbar.push_current)
+        self.add_controller(zoom)
+
+        def rgba_to_tuple(rgba):
+            return (rgba.red, rgba.green, rgba.blue, rgba.alpha)
+
+        self._rubberband_rect = None
+        rgba = self.get_style_context().lookup_color("accent_color")[1]
+        self.rubberband_edge_color = rgba_to_tuple(rgba)
+        rgba.alpha = 0.3
+        self.rubberband_fill_color = rgba_to_tuple(rgba)
+        self.highlight = _Highlight(self)
+
+        for item in ("min", "max"):
+            self.connect(
+                f"notify::{item}-selected",
+                lambda _a,
+                _b: self.highlight.load(self),
+            )
+
+    def key_press_event(
+        self,
+        controller: Gtk.EventControllerKey,
+        keyval: int,
+        keycode: int,
+        state: Gdk.ModifierType,
+    ) -> None:
+        """Handle key press event."""
+        if keyval == 65507 or keyval == 65508:  # Control_L or Control_R
+            self._ctrl_held = True
+        elif keyval == 65505 or keyval == 65506:  # Left or right Shift
+            self._shift_held = True
+        else:  # Prevent keys from being true with key combos
+            self._ctrl_held = False
+        super().key_press_event(controller, keyval, keycode, state)
+
+    def key_release_event(
+        self,
+        controller: Gtk.EventControllerKey,
+        keyval: int,
+        keycode: int,
+        state: Gdk.ModifierType,
+    ) -> None:
+        """Handle key release event."""
+        self._ctrl_held = False
+        self._shift_held = False
+        super().key_release_event(controller, keyval, keycode, state)
+
+    def scroll_event(
+        self,
+        controller: Gtk.EventControllerScroll,
+        dx: float,
+        dy: float,
+    ) -> None:
+        """Handle scroll event."""
+        if self._ctrl_held:
+            self.zoom(1 / _SCROLL_SCALE if dy > 0 else _SCROLL_SCALE)
+        else:
+            if self._shift_held:
+                dx, dy = dy, dx
+            if controller.get_unit() == Gdk.ScrollUnit.WHEEL:
+                dx *= 10
+                dy *= 10
+            for ax in self.axes:
+                xmin, xmax, ymin, ymax = \
+                    self._calculate_pan_values(ax, dx, dy)
+                ax.set_xlim(xmin, xmax)
+                ax.set_ylim(ymin, ymax)
+            self.queue_draw()
+        super().scroll_event(controller, dx, dy)
+
+    def zoom_event(
+        self,
+        _controller: Gtk.GestureZoom,
+        scale: float,
+    ) -> None:
+        """Handle zoom event."""
+        scale = 1 + 0.02 * (scale - 1)
+        if scale > 5 or scale < 0.2:
+            # Don't scale if ridiculous values are registered
+            return
+        self.zoom(scale)
 
     def _set_mouse_fraction(self, event) -> None:
         """Set the mouse coordinate in terms of fraction of the canvas."""
@@ -181,81 +263,6 @@ class Canvas(Graphs.Canvas, FigureCanvas):
             )
         else:
             self._xfrac, self._yfrac = None, None
-
-    def _on_zoom_gesture(self, _gesture, scale: float) -> None:
-        scale = 1 + 0.02 * (scale - 1)
-        if scale > 5 or scale < 0.2:
-            # Don't scale if ridiculous values are registered
-            return
-        self.zoom(scale)
-
-    def _on_pan_gesture(self, event_controller, x: float, y: float) -> None:
-        """
-        Handle pan gesture.
-
-        Determines what to do when a panning gesture is detected, pans the
-        canvas in the gesture direction.
-        """
-        if self._ctrl_held is False:
-            if self._shift_held:
-                x, y = y, x
-            if event_controller.get_unit() == Gdk.ScrollUnit.WHEEL:
-                x *= 10
-                y *= 10
-            for ax in self.axes:
-                xmin, xmax, ymin, ymax = \
-                    self._calculate_pan_values(ax, x, y)
-                ax.set_xlim(xmin, xmax)
-                ax.set_ylim(ymin, ymax)
-            self.queue_draw()
-
-    def _on_scroll_event(self, event) -> None:
-        """
-        Handle mouse scrolling.
-
-        Determines what to do when a scroll signal is detected, scrolls the
-        canvas if ctrl is selected.
-        """
-        if self._ctrl_held is True:
-            self.zoom(
-                1 / _SCROLL_SCALE if event.button == "up" else _SCROLL_SCALE,
-            )
-
-    def _on_key_press_event(
-        self,
-        _controller,
-        keyval: int,
-        _keycode,
-        _state,
-    ) -> None:
-        """
-        Handle keyboard inputs.
-
-        Checks if control is pressed, needed to allow ctrl+scroll behaviour
-        as the key press event from matplotlib is not working properly atm.
-        """
-        if keyval == 65507 or keyval == 65508:  # Control_L or Control_R
-            self._ctrl_held = True
-        elif keyval == 65505 or keyval == 65506:  # Left or right Shift
-            self._shift_held = True
-        else:  # Prevent keys from being true with key combos
-            self._ctrl_held = False
-
-    def _on_key_release_event(
-        self,
-        _controller,
-        _keyval,
-        _keycode,
-        _state,
-    ) -> None:
-        """
-        Handle keyboard inputs.
-
-        Checks if control is released, needed to allow ctrl+scroll behaviour
-        as the key press event from matplotlib is not working properly atm.
-        """
-        self._ctrl_held = False
-        self._shift_held = False
 
     def zoom(self, scaling: float = 1.15, respect_mouse: bool = True) -> None:
         """
