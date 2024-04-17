@@ -4,6 +4,9 @@ using Gtk;
 using Gdk;
 
 namespace Graphs {
+    /**
+     * Item Box widget
+     */
     [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/item-box.ui")]
     public class ItemBox : Box {
 

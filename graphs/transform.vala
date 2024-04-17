@@ -3,6 +3,9 @@ using Adw;
 using Gtk;
 
 namespace Graphs {
+    /**
+     * Transform dialog
+     */
     [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/transform.ui")]
     public class TransformDialog : Adw.Dialog {
 

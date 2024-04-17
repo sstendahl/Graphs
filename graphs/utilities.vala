@@ -16,6 +16,9 @@ namespace Graphs {
     }
 
     namespace Tools {
+        /**
+         * Bind settings values to UI.
+         */
         public void bind_settings_to_widgets (
             GLib.Settings settings, Gtk.Widget parent
         ) {
@@ -56,18 +59,27 @@ namespace Graphs {
             }
         }
 
+        /**
+         * Reset a settings instance to default values.
+         */
         public void reset_settings (GLib.Settings settings) {
             foreach (string key in settings.settings_schema.list_keys ()) {
                 settings.reset (key);
             }
         }
 
+        /**
+         * Convert a color in hex representation to Gdk.RGBA
+         */
         public Gdk.RGBA hex_to_rgba (string hex) {
             var rgba = Gdk.RGBA ();
             rgba.parse (hex);
             return rgba;
         }
 
+        /**
+         * Convert a Gdk.RGBA to a color in hex representation
+         */
         public string rgba_to_hex (Gdk.RGBA rgba) {
             var builder = new StringBuilder ("#");
             builder.append ("%02x".printf ((uint)(rgba.red * 255)));
@@ -76,6 +88,9 @@ namespace Graphs {
             return builder.str.up ();
         }
 
+        /**
+         * Calculate luminance of a color in hex representation.
+         */
         public double get_luminance_from_hex (string hex) {
             return get_luminance_from_rgba (hex_to_rgba (hex));
         }
@@ -86,7 +101,9 @@ namespace Graphs {
             } else return Math.pow ((color + 0.055) / 1.055, 2.4);
         }
 
-
+        /**
+         * Calculate luminance of a Gdk.RGBA
+         */
         public double get_luminance_from_rgba (Gdk.RGBA rgba) {
             double r = get_srgb (rgba.red);
             double g = get_srgb (rgba.green);
@@ -95,6 +112,9 @@ namespace Graphs {
             return 0.2126 * r + 0.7152 * g + 0.0722 * b;
         }
 
+        /**
+         * Get the contrast between two colors
+         */
         public double get_contrast (Gdk.RGBA bg_color, Gdk.RGBA fg_color) {
             double bg_luminance = get_luminance_from_rgba (bg_color);
             double fg_luminance = get_luminance_from_rgba (fg_color);
@@ -103,6 +123,11 @@ namespace Graphs {
             return max_value / min_value;
         }
 
+        /**
+         * Shorten a label
+         *
+         * @param max_length Maximum length
+         */
         public string shorten_label (string label, uint max_length = 20) {
             if (label.length > max_length) {
                 return label.substring (0, max_length - 1) + "…";
@@ -127,11 +152,17 @@ namespace Graphs {
             }
         }
 
+        /**
+         * Get the platforms config directory
+         */
         public File get_config_directory () throws Error {
             var main_directory = File.new_for_path (Environment.get_user_config_dir ());
             return main_directory.get_child_for_display_name ("graphs");
         }
 
+        /**
+         * Get the filename of a file
+         */
         public string get_filename (File file) {
             try {
                 FileInfo info = file.query_info (
@@ -144,11 +175,17 @@ namespace Graphs {
             }
         }
 
+        /**
+         * Build a dialog from `dialogs.blp`
+         */
         public Object build_dialog (string name) {
             var builder = new Builder.from_resource ("/se/sjoerd/Graphs/ui/dialogs.ui");
             return builder.get_object (name);
         }
 
+        /**
+         * Open the containing folder of a file
+         */
         public void open_file_location (File file) {
             var file_launcher = new FileLauncher (file);
             file_launcher.open_containing_folder.begin (null, null);

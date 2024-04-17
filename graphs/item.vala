@@ -2,6 +2,9 @@
 using Gdk;
 
 namespace Graphs {
+    /**
+     * Base item class
+     */
     public class Item : Object {
         public string name { get; set; default = ""; }
         public string color { get; set; default = ""; }

@@ -1,5 +1,8 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 namespace Graphs {
+    /**
+     * Data class
+     */
     public class Data : Object {
         protected Settings settings { get; set; }
         public FigureSettings figure_settings { get; construct set; }
