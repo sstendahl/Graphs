@@ -25,7 +25,8 @@ def get_data(application: Graphs.Application, item: DataItem):
     new_xdata = item.props.xdata
     new_ydata = item.props.ydata
 
-    if application.get_mode() == 2:
+    canvas = application.get_window().get_canvas()
+    if canvas.get_mode() == 2:
         figure_settings = application.get_data().get_figure_settings()
         if item.get_xposition() == 0:
             xmin = figure_settings.get_min_bottom()
@@ -188,7 +189,8 @@ def _apply(application, callback, *args):
                 item, xdata, ydata, *args,
             )
             new_xdata, new_ydata = list(new_xdata), list(new_ydata)
-            if discard and application.get_mode() == 2:
+            canvas = application.get_window().get_canvas()
+            if discard and canvas.get_mode() == 2:
                 logging.debug("Discard is true")
                 application.get_window().add_toast_string(
                     _(
