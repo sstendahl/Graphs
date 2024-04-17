@@ -16,7 +16,8 @@ from gi.repository import GObject, Gdk, Graphs, Gtk
 from graphs import artist, misc, scales, utilities
 
 from matplotlib import backend_tools as tools, pyplot
-from matplotlib.backend_bases import FigureCanvasBase, NavigationToolbar2
+from matplotlib.backend_bases import (FigureCanvasBase, NavigationToolbar2,
+    MouseEvent)
 from matplotlib.backends.backend_gtk4cairo import FigureCanvas
 from matplotlib.widgets import SpanSelector
 
@@ -138,6 +139,7 @@ class Canvas(Graphs.Canvas, FigureCanvas):
         click = Gtk.GestureClick()
         click.set_button(0)  # All buttons.
         click.connect("pressed", self.button_press_event)
+        click.connect("update", self.on_click_update)
         click.connect("released", self.button_release_event)
         self.add_controller(click)
 
@@ -180,6 +182,17 @@ class Canvas(Graphs.Canvas, FigureCanvas):
                 lambda _a,
                 _b: self.highlight.load(self),
             )
+
+    def on_click_update(self, *args):
+        """
+        Handles an update event for GtkGestureClick motion, needed for touch
+        screen devices to handle gestures properly.
+        """
+        x, y = self._mpl_coords()
+        # There exists on offset in the MouseEvent, unclear why.
+        x -= 412
+        y += 100
+        MouseEvent('motion_notify_event', self, x, y)._process()
 
     def key_press_event(
         self,
