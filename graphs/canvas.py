@@ -188,11 +188,9 @@ class Canvas(Graphs.Canvas, FigureCanvas):
         Handles an update event for GtkGestureClick motion, needed for touch
         screen devices to handle gestures properly.
         """
-        x, y = self._mpl_coords()
-        # There exists on offset in the MouseEvent, unclear why.
-        x -= 412
-        y += 100
-        MouseEvent('motion_notify_event', self, x, y)._process()
+        coords = controller.get_point()
+        x, y = coords.x, coords.y
+        MouseEvent('motion_notify_event', self, *self._mpl_coords((x, y)))._process()
 
     def key_press_event(
         self,
