@@ -16,7 +16,11 @@ from gi.repository import GObject, Gdk, Graphs, Gtk
 from graphs import artist, misc, scales, utilities
 
 from matplotlib import backend_tools as tools, pyplot
-from matplotlib.backend_bases import FigureCanvasBase, NavigationToolbar2
+from matplotlib.backend_bases import (
+    FigureCanvasBase,
+    MouseEvent,
+    NavigationToolbar2,
+)
 from matplotlib.backends.backend_gtk4cairo import FigureCanvas
 from matplotlib.widgets import SpanSelector
 
@@ -137,6 +141,7 @@ class Canvas(Graphs.Canvas, FigureCanvas):
         click = Gtk.GestureClick()
         click.set_button(0)  # All buttons.
         click.connect("pressed", self.button_press_event)
+        click.connect("update", self.handle_touch_update)
         click.connect("released", self.button_release_event)
         self.add_controller(click)
 
@@ -160,7 +165,7 @@ class Canvas(Graphs.Canvas, FigureCanvas):
 
         zoom = Gtk.GestureZoom.new()
         zoom.connect("scale-changed", self.zoom_event)
-        zoom.connect("end", self.toolbar.push_current)
+        zoom.connect("end", self.end_zoom_event)
         self.add_controller(zoom)
 
         def rgba_to_tuple(rgba):
@@ -179,6 +184,21 @@ class Canvas(Graphs.Canvas, FigureCanvas):
                 lambda _a,
                 _b: self.highlight.load(self),
             )
+
+    def handle_touch_update(self, controller: Gtk.GestureClick, _data) -> None:
+        """
+        Handle an update event for GtkGestureClick motion.
+
+        This is needed for touch screen devices to handle gestures properly.
+        """
+        if not controller.get_point()[0]:  # If touch event
+            coords = controller.get_bounding_box_center()
+            x, y = coords.x, coords.y
+            MouseEvent(
+                "motion_notify_event",
+                self,
+                *self._mpl_coords((x, y)),
+            )._process()
 
     def key_press_event(
         self,
@@ -233,15 +253,41 @@ class Canvas(Graphs.Canvas, FigureCanvas):
 
     def zoom_event(
         self,
-        _controller: Gtk.GestureZoom,
+        controller: Gtk.GestureZoom,
         scale: float,
     ) -> None:
         """Handle zoom event."""
-        scale = 1 + 0.02 * (scale - 1)
+        coords = controller.get_bounding_box_center()
+        x, y = coords.x, coords.y
+        event = MouseEvent(
+            "motion_notify_event",
+            self,
+            *self._mpl_coords((x, y)),
+        )
+        self._set_mouse_fraction(event)
+
+        scale = 1 + 0.01 * (scale - 1)
         if scale > 5 or scale < 0.2:
             # Don't scale if ridiculous values are registered
             return
         self.zoom(scale)
+
+    def end_zoom_event(self, controller: Gtk.GestureZoom, _sequence) -> None:
+        """
+        End the zoom event.
+
+        Pushes the canvas to the stack, and emits a `release` signal cancel out
+        registered touches from touchscreen devices.
+        """
+        coords = controller.get_bounding_box_center()
+        x, y = coords.x, coords.y
+        MouseEvent(
+            "button_release_event",
+            self,
+            *self._mpl_coords((x, y)),
+            1,
+        )._process()
+        self.toolbar.push_current()
 
     def _set_mouse_fraction(self, event) -> None:
         """Set the mouse coordinate in terms of fraction of the canvas."""
