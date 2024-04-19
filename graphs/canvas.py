@@ -193,8 +193,11 @@ class Canvas(Graphs.Canvas, FigureCanvas):
         if not controller.get_point()[0]:  # If touch event
             coords = controller.get_bounding_box_center()
             x, y = coords.x, coords.y
-            MouseEvent("motion_notify_event", self,
-                       *self._mpl_coords((x, y)))._process()
+            MouseEvent(
+                "motion_notify_event", 
+                self,
+                *self._mpl_coords((x, y)),
+            )._process()
 
     def key_press_event(
         self,
