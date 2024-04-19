@@ -26,6 +26,8 @@
           <li>Toasts now show an "Open Location" button when saving data, bringing you to the saved file location</li>
           <li>Entries for numerical values now get a red CSS when input value is invalid</li>
           <li>There is now a warning, when editing a style with poor contrast between labels and background colors</li>
+          <li>Added some new goniometric functions such as the hyperbolic sinoids and their inverses</li>
+          <li>Graphs now fully supports touch screen devices</li>
         </ul>
         <p>Changed behaviour:</p>
         <ul>
