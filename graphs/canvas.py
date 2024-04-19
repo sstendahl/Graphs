@@ -253,7 +253,6 @@ class Canvas(Graphs.Canvas, FigureCanvas):
         scale: float,
     ) -> None:
         """Handle zoom event."""
-
         coords = controller.get_bounding_box_center()
         x, y = coords.x, coords.y
         event = MouseEvent("motion_notify_event", self,
