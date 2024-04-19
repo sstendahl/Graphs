@@ -3,18 +3,6 @@ using Gtk;
 using Gdk;
 
 namespace Graphs {
-    public double min (double a, double b) {
-        if (a >= b) {
-            return b;
-        } else return a;
-    }
-
-    public double max (double a, double b) {
-        if (a >= b) {
-            return a;
-        } else return b;
-    }
-
     namespace Tools {
         /**
          * Bind settings values to UI.
@@ -118,8 +106,8 @@ namespace Graphs {
         public double get_contrast (Gdk.RGBA bg_color, Gdk.RGBA fg_color) {
             double bg_luminance = get_luminance_from_rgba (bg_color);
             double fg_luminance = get_luminance_from_rgba (fg_color);
-            double min_value = min (bg_luminance, fg_luminance) + 0.05;
-            double max_value = max (bg_luminance, fg_luminance) + 0.05;
+            double min_value = double.min (bg_luminance, fg_luminance) + 0.05;
+            double max_value = double.max (bg_luminance, fg_luminance) + 0.05;
             return max_value / min_value;
         }
 
