@@ -196,7 +196,7 @@ class Canvas(Graphs.Canvas, FigureCanvas):
             coords = controller.get_bounding_box_center()
             x, y = coords.x, coords.y
             MouseEvent(
-                "motion_notify_event", 
+                "motion_notify_event",
                 self,
                 *self._mpl_coords((x, y)),
             )._process()
@@ -260,9 +260,9 @@ class Canvas(Graphs.Canvas, FigureCanvas):
         """Handle zoom event."""
         coords = controller.get_bounding_box_center()
         x, y = coords.x, coords.y
-        event = MouseEvent("motion_notify_event", self,
-                           *self._mpl_coords((x, y)))
-        self._set_mouse_fraction(event)
+        self._set_mouse_fraction(
+            MouseEvent("motion_notify_event", self, *self._mpl_coords((x, y))),
+        )
 
         scale = 1 + 0.01 * (scale - 1)
         if scale > 5 or scale < 0.2:
