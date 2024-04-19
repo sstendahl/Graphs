@@ -282,8 +282,8 @@ class Canvas(Graphs.Canvas, FigureCanvas):
         MouseEvent(
             "button_release_event", 
             self,
-            *self._mpl_coords((x, y)
-            1),
+            *self._mpl_coords((x, y)),
+            1,
         )._process()                   
         self.toolbar.push_current()
 
