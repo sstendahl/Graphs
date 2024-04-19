@@ -16,9 +16,11 @@ from gi.repository import GObject, Gdk, Graphs, Gtk
 from graphs import artist, misc, scales, utilities
 
 from matplotlib import backend_tools as tools, pyplot
-from matplotlib.backend_bases import (FigureCanvasBase,
-                                      MouseEvent,
-                                      NavigationToolbar2)
+from matplotlib.backend_bases import (
+    FigureCanvasBase,
+    MouseEvent,
+    NavigationToolbar2,
+)
 from matplotlib.backends.backend_gtk4cairo import FigureCanvas
 from matplotlib.widgets import SpanSelector
 
