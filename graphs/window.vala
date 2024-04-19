@@ -97,6 +97,7 @@ namespace Graphs {
             set {
                 value.bind_property ("mode", this, "mode", 2);
                 this.toast_overlay.set_child (value);
+                value.grab_focus ();
             }
         }
 

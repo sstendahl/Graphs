@@ -124,7 +124,6 @@ class Canvas(Graphs.Canvas, FigureCanvas):
 
         self.connect("notify::hide-unselected", self._redraw)
         self.connect("notify::items", self._redraw)
-        self.grab_focus()
 
     def _setup_interactive(self):
         self._ctrl_held, self._shift_held = False, False
