@@ -135,7 +135,7 @@ make sure the syntax is correct",
         dialog = Graphs.TransformDialog.new(application)
         dialog.connect("accept", on_accept)
         return
-    elif name == "cut" and application.get_mode() != 2:
+    elif name == "cut" and window.get_canvas().get_mode() != 2:
         return
     args = []
     actions_settings = application.get_settings_child("actions")
