@@ -114,7 +114,7 @@ namespace Graphs {
         public signal void load_style_request (Style style);
         public signal void save_style_request ();
 
-        protected void setup (string highlighted) {
+        protected void setup (string? highlighted) {
             FigureSettings figure_settings = this.figure_settings;
             GLib.Settings settings = this.application.get_settings_child ("figure");
             var builder = new Builder.from_resource (PAGE_RESOURCE);
@@ -186,10 +186,6 @@ namespace Graphs {
             style_manager.bind_property (
                 "selected_stylename", style_name, "label", 2
             );
-            if (highlighted != "") {
-                var widget = (Widget) builder.get_object (highlighted);
-                widget.grab_focus ();
-            }
 
             var factory = new SignalListItemFactory ();
             factory.setup.connect (on_factory_setup);
@@ -205,6 +201,12 @@ namespace Graphs {
             button.clicked.connect (() => {
                 this.set_as_default.emit ();
             });
+
+            present (this.application.window);
+            if (highlighted != null) {
+                var widget = (Widget) builder.get_object (highlighted);
+                widget.grab_focus ();
+            }
         }
 
         protected void add_toast_string () {
