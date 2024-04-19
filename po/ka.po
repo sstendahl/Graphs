@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2024-04-12 10:49+0000\n"
-"PO-Revision-Date: 2024-04-13 02:57+0200\n"
+"POT-Creation-Date: 2024-04-13 00:58+0000\n"
+"PO-Revision-Date: 2024-04-19 18:44+0200\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <ka@li.org>\n"
 "Language: ka\n"
@@ -50,6 +50,9 @@ msgid ""
 "extensive customization options for the style of the plots. You can fine-"
 "tune and personalize stylesheets to your liking."
 msgstr ""
+"უფრო მეტიც, Graphs-ს აქვს მრუდის აპროქსიმაციის მხარდაჭერა შემოტანილ "
+"მონაცემებზე და გთავაზობთ მრავალმხირივი მორგების პარამეტრებს ნახაზების "
+"სტილისთვის. შეგიძლიათ ისე მოირგოთ ისინი, როგორც გნებავთ."
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:20
 msgid ""
@@ -61,6 +64,13 @@ msgid ""
 "refinement. Graphs is written with the GNOME environment in mind, but should "
 "be suitable for any other desktop environment as well."
 msgstr ""
+"Graphs შესანიშნავი პროგრამაა გრაფიკებისა და მონაცემების მანიპულაციისთვის. "
+"Graphs-ით შექმნილი გრაფიკები შეიძლება შეინახოთ სხვადასხვა ფორმატში, რომელიც "
+"თქვენთვის გასაზიარებლად უფრო იოლი იქნება, მაგალითად სამეცნიერო "
+"პუბლიკაციებისთვის ან პრეზენტაციებისთვის. დამატებით, გაქვთ არჩევანი, რომ "
+"გრაფიკები ვექტორული გამოსახულებების სახით შეინახოთ ისეთ პროგრამებში "
+"ჩასასწორებლად, როგორიცაა Inkscape. Graphs დაწერილია GNOME-ის გარემოსთვის, "
+"მაგრამ სხვა სამუშაო მაგიდაზეც არ უნდა ჰქონდეს პრობლემები."
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:24
 msgid ""
@@ -179,7 +189,7 @@ msgstr "ექსპოტენციალური"
 #: data/ui/curve-fitting.blp:56
 msgctxt "regression-type"
 msgid "Power Law"
-msgstr ""
+msgstr "ხარისხით"
 
 #: data/ui/curve-fitting.blp:57
 msgctxt "regression-type"
@@ -207,9 +217,9 @@ msgstr "Y = "
 
 #: data/ui/curve-fitting.blp:93
 msgid "Add Fit to Data"
-msgstr ""
+msgstr "მონაცემებისთვის აპროქსიმაციის დამატება"
 
-#: data/ui/curve-fitting.blp:109 data/ui/window.blp:600 graphs/window.vala:169
+#: data/ui/curve-fitting.blp:109 data/ui/window.blp:600 graphs/window.vala:171
 msgid "Toggle Sidebar"
 msgstr "გვერდითი პანელი ჩვენების ჩართ/გამორთ"
 
@@ -238,6 +248,33 @@ msgstr "ნდობის რეგიონი ამრეკლავია"
 msgctxt "optimization"
 msgid "Dogbox"
 msgstr "Dogbox"
+
+#: data/ui/curve-fitting.blp:152
+msgid "Confidence Bounds"
+msgstr "სანდოობის საზღვრები"
+
+#: data/ui/curve-fitting.blp:154
+msgctxt "confidence"
+msgid "None"
+msgstr "არაფერი"
+
+#: data/ui/curve-fitting.blp:160
+#, no-c-format
+msgctxt "confidence"
+msgid "1σ: 68% Confidence"
+msgstr "1σ: 68% Confidence"
+
+#: data/ui/curve-fitting.blp:166
+#, no-c-format
+msgctxt "confidence"
+msgid "2σ: 95% Confidence"
+msgstr "2σ: 95% Confidence"
+
+#: data/ui/curve-fitting.blp:172
+#, no-c-format
+msgctxt "confidence"
+msgid "3σ: 99.7% Confidence"
+msgstr "3σ: 99.7% Confidence"
 
 #: data/ui/dialogs.blp:5
 msgid "Save Changes?"
@@ -595,34 +632,34 @@ msgstr "მარჯვენა Y ღერძის მაქსიმუმ�
 msgid "Scaling"
 msgstr "მასშტაბირება"
 
-#: data/ui/figure-settings-page.blp:125 graphs/window.vala:209
+#: data/ui/figure-settings-page.blp:125 graphs/window.vala:211
 msgid "Bottom X Axis Scale"
 msgstr "ქვედა X-ღერძის მასშტაბის ფაქტორი"
 
 #: data/ui/figure-settings-page.blp:128 data/ui/figure-settings-page.blp:142
 #: data/ui/figure-settings-page.blp:156 data/ui/figure-settings-page.blp:170
-#: graphs/window.vala:179
+#: graphs/window.vala:181
 msgctxt "scale"
 msgid "Linear"
 msgstr "ხაზოვანი"
 
 #: data/ui/figure-settings-page.blp:129 data/ui/figure-settings-page.blp:143
 #: data/ui/figure-settings-page.blp:157 data/ui/figure-settings-page.blp:171
-#: graphs/window.vala:180
+#: graphs/window.vala:182
 msgctxt "scale"
 msgid "Logarithmic"
 msgstr "ლოგარითმული"
 
 #: data/ui/figure-settings-page.blp:130 data/ui/figure-settings-page.blp:144
 #: data/ui/figure-settings-page.blp:158 data/ui/figure-settings-page.blp:172
-#: graphs/window.vala:181
+#: graphs/window.vala:183
 msgctxt "scale"
 msgid "Radians"
 msgstr "რადიანები"
 
 #: data/ui/figure-settings-page.blp:131 data/ui/figure-settings-page.blp:145
 #: data/ui/figure-settings-page.blp:159 data/ui/figure-settings-page.blp:173
-#: graphs/window.vala:182
+#: graphs/window.vala:184
 msgctxt "scale"
 msgid "Square Root"
 msgstr "კვადრატული ფესვი"
@@ -633,15 +670,15 @@ msgctxt "scale"
 msgid "Inverse"
 msgstr "ინვერსია"
 
-#: data/ui/figure-settings-page.blp:139 graphs/window.vala:210
+#: data/ui/figure-settings-page.blp:139 graphs/window.vala:212
 msgid "Top X Axis Scale"
 msgstr "ზედა X-ღერძის მასშტაბის ფაქტორი"
 
-#: data/ui/figure-settings-page.blp:153 graphs/window.vala:215
+#: data/ui/figure-settings-page.blp:153 graphs/window.vala:217
 msgid "Left Y Axis Scale"
 msgstr "მარცხენა Y-ღერძზე მასშტაბის ფაქტორი"
 
-#: data/ui/figure-settings-page.blp:167 graphs/window.vala:214
+#: data/ui/figure-settings-page.blp:167 graphs/window.vala:216
 msgid "Right Y Axis Scale"
 msgstr "მარჯვენა Y ღერძის მასშტაბის ფაქტორი"
 
@@ -931,6 +968,7 @@ msgstr "პროცენტული დამოკიდებულებ�
 #: data/ui/smoothen-settings.blp:33
 msgid "What percentage of the data span to use for the filter window"
 msgstr ""
+"მონაცემების სიგრძის რა პროცენტულობა იქნება გამოყენებული ფილტრის ფანჯრისთვის"
 
 #: data/ui/smoothen-settings.blp:40
 msgid "Polynomial degree"
@@ -1075,31 +1113,31 @@ msgstr "შევსება"
 
 #: data/ui/style-editor.blp:305
 msgid "Padding for different parts of the figure"
-msgstr ""
+msgstr "ინტერვალი სურათის სხვადასხვა ნაწილებს შორის"
 
 #: data/ui/style-editor.blp:308
 msgid "Value Padding"
-msgstr ""
+msgstr "მნიშვნელობის შევსება"
 
 #: data/ui/style-editor.blp:309
 msgid "Padding between axes and values"
-msgstr ""
+msgstr "ინტერვალი ღერძებსა და მნიშვნელობებს შორის"
 
 #: data/ui/style-editor.blp:322
 msgid "Label Padding"
-msgstr ""
+msgstr "ჭდის შევსება"
 
 #: data/ui/style-editor.blp:323
 msgid "Padding between axes and labels"
-msgstr ""
+msgstr "ინტერვალი ღერძებსა და ჭდეებს შორის"
 
 #: data/ui/style-editor.blp:336
 msgid "Title Padding"
-msgstr ""
+msgstr "სათაურის შევსება"
 
 #: data/ui/style-editor.blp:337
 msgid "Padding between axes and the title"
-msgstr ""
+msgstr "ინტერვალი ღერძებსა და სათაურს შორის"
 
 #: data/ui/style-editor.blp:351
 msgid "Colors"
@@ -1207,7 +1245,7 @@ msgstr "მონაცემების დამატება ფაილ�
 
 #: data/ui/window.blp:243
 msgid "Pan Mode. Click and drag to pan"
-msgstr ""
+msgstr "პანორამის რეჟიმი. დააწკაპუნეთ და გადაათრიეთ პანორამისთვის"
 
 #: data/ui/window.blp:249
 msgid "Zoom Mode. Select an area on the figure to zoom in"
@@ -1437,55 +1475,34 @@ msgid ""
 "Please enter valid fitting \n"
 "parameters to start the fit"
 msgstr ""
+"შეიყვანეთ სწორი აპროქსიმაციის\n"
+"პარამეტრები აპროქსიმაციის დასაწყებად"
 
 #: graphs/curve_fitting.py:181
 msgid ""
 "Please enter a valid equation \n"
 "to start the fit"
 msgstr ""
+"შეიყვანეთ სწორი ტოლობა\n"
+"აპროქსიმაციის დასაწყებად"
 
 #: graphs/curve_fitting.py:185
 msgid ""
 "Please enter valid fitting bounds \n"
 "to start the fit"
 msgstr ""
+"შეიყვანეთ აპროქსიმაცის საზღვრები\n"
+"აპროქსიმაციის დასაწყებად"
 
 #: graphs/curve_fitting.py:198
 #, python-brace-format
 msgid "Sum of R²: {R2}"
 msgstr "R²-ის ჯამი: {R2}"
 
-#: graphs/curve_fitting.vala:77
-msgctxt "confidence"
-msgid "None"
-msgstr "არაფერი"
-
-#: graphs/curve_fitting.vala:78
-#, c-format
-msgctxt "confidence"
-msgid "1σ: 68% Confidence"
-msgstr "1σ: 68% Confidence"
-
-#: graphs/curve_fitting.vala:79
-#, c-format
-msgctxt "confidence"
-msgid "2σ: 95% Confidence"
-msgstr "2σ: 95% Confidence"
-
-#: graphs/curve_fitting.vala:80
-#, c-format
-msgctxt "confidence"
-msgid "3σ: 99.7% Confidence"
-msgstr "3σ: 99.7% Confidence"
-
-#: graphs/curve_fitting.vala:90
-msgid "Confidence Bounds"
-msgstr "სანდოობის საზღვრები"
-
-#: graphs/curve_fitting.vala:147
+#: graphs/curve_fitting.vala:128
 #, c-format
 msgid "Fitting Parameters for %s"
-msgstr ""
+msgstr "აპროქსიმაციის პარამეტრები %s-სთვის"
 
 #: graphs/data.py:88
 msgid "Untitled Project"
@@ -1520,7 +1537,7 @@ msgstr "X ღერძის მაქსიმუმი"
 msgid "Y Axis Maximum"
 msgstr "Y ღერძის მაქსიმუმი"
 
-#: graphs/figure_settings.vala:169 graphs/window.vala:211
+#: graphs/figure_settings.vala:169 graphs/window.vala:213
 msgid "X Axis Scale"
 msgstr "X-ღერძის მასშტაბი"
 
@@ -1528,7 +1545,7 @@ msgstr "X-ღერძის მასშტაბი"
 msgid "X Axis Label"
 msgstr "X-ღერძის ჭდე"
 
-#: graphs/figure_settings.vala:173 graphs/window.vala:216
+#: graphs/figure_settings.vala:173 graphs/window.vala:218
 msgid "Y Axis Scale"
 msgstr "Y-ღერძის მასშტაბის ფაქტორი"
 
@@ -1637,25 +1654,25 @@ msgstr "Y ჭდე"
 msgid "System"
 msgstr "სისტემური"
 
-#: graphs/styles.py:386
+#: graphs/styles.py:385
 #, python-brace-format
 msgid "Could not parse {stylename}, loading system preferred style"
 msgstr ""
 "ხაზვის სტილის {stylename} დამუშავება შეუძლებელია. იტვირთება სისტემის "
 "ნაგულისხმევი სტილი"
 
-#: graphs/styles.py:394
+#: graphs/styles.py:393
 #, python-brace-format
 msgid "Plot style {stylename} does not exist loading system preferred"
 msgstr ""
 "დახაზვის სტილი {stylename} არ არსებობს. იტვირთება სისტემის ნაგულისხმევი"
 
-#: graphs/styles.py:807
+#: graphs/styles.py:806
 #, python-brace-format
 msgid "Are you sure you want to delete {stylename}?"
 msgstr "მართლა გნებავთ, წაშალოთ {stylename}?"
 
-#: graphs/styles.py:824
+#: graphs/styles.py:823
 #, python-brace-format
 msgid "Color {number}"
 msgstr "ფერი {number}"
@@ -1693,19 +1710,19 @@ msgctxt "file-filter"
 msgid "Text Files"
 msgstr "ტექსტური ფაილები"
 
-#: graphs/window.vala:125
+#: graphs/window.vala:127
 msgid "Graphs (Development)"
 msgstr "Graphs (Development)"
 
-#: graphs/window.vala:153
+#: graphs/window.vala:155
 msgid "Open Location"
 msgstr "მდებარეობის გახსნა"
 
-#: graphs/window.vala:174
+#: graphs/window.vala:176
 msgid "Optimize Limits"
 msgstr "ლიმიტების ოპტიმიზაცია"
 
-#: graphs/window.vala:183
+#: graphs/window.vala:185
 msgctxt "scale"
 msgid "Inverse Root"
 msgstr "ინვერსიული ფესვი"
