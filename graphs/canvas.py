@@ -166,7 +166,7 @@ class Canvas(Graphs.Canvas, FigureCanvas):
 
         zoom = Gtk.GestureZoom.new()
         zoom.connect("scale-changed", self.zoom_event)
-        zoom.connect("end", self.toolbar.push_current)
+        zoom.connect("end", self.end_zoom_event)
         self.add_controller(zoom)
 
         def rgba_to_tuple(rgba):
@@ -269,6 +269,23 @@ class Canvas(Graphs.Canvas, FigureCanvas):
             # Don't scale if ridiculous values are registered
             return
         self.zoom(scale)
+
+    def end_zoom_event(self, controller: Gtk.GestureZoom, _sequence) -> None:
+        """
+        End the zoom event.
+        
+        Pushes the canvas to the stack, and emits a `release` signal cancel out
+        registered touches from touchscreen devices.
+        """
+        coords = controller.get_bounding_box_center()
+        x, y = coords.x, coords.y
+        MouseEvent(
+            "button_release_event", 
+            self,
+            *self._mpl_coords((x, y)
+            1),
+        )._process()                   
+        self.toolbar.push_current()
 
     def _set_mouse_fraction(self, event) -> None:
         """Set the mouse coordinate in terms of fraction of the canvas."""
