@@ -133,7 +133,6 @@ class Canvas(Graphs.Canvas, FigureCanvas):
         self._xfrac, self._yfrac = None, None
         self.mpl_connect("pick_event", self._on_pick)
         self.mpl_connect("motion_notify_event", self._set_mouse_fraction)
-        self.mpl_connect("button_press_event", self._set_mouse_fraction)
 
         # Reference is created by the toolbar itself
         _DummyToolbar(self)
@@ -250,10 +249,17 @@ class Canvas(Graphs.Canvas, FigureCanvas):
 
     def zoom_event(
         self,
-        _controller: Gtk.GestureZoom,
+        controller: Gtk.GestureZoom,
         scale: float,
     ) -> None:
         """Handle zoom event."""
+
+        coords = controller.get_bounding_box_center()
+        x, y = coords.x, coords.y
+        event = MouseEvent("motion_notify_event", self,
+                           *self._mpl_coords((x, y)))
+        self._set_mouse_fraction(event)
+
         scale = 1 + 0.01 * (scale - 1)
         if scale > 5 or scale < 0.2:
             # Don't scale if ridiculous values are registered
