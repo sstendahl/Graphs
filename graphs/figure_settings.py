@@ -19,15 +19,12 @@ class FigureSettingsDialog(Graphs.FigureSettingsDialog):
     ):
         """Initialize the Figure Settings window and set the widget entries."""
         super().__init__(application=application)
-        if highlighted is None:
-            highlighted = ""
         self.props.style_editor = styles.StyleEditor(self)
         self.setup(highlighted)
         self.connect("copy-request", self.copy_style)
         self.connect("closed", self.on_close)
         self.connect("entry-change", self.on_entry_change)
         self.connect("set-as-default", self.on_set_as_default)
-        self.present(application.get_window())
 
     @staticmethod
     def on_entry_change(self, entry, prop) -> None:
