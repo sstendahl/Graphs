@@ -62,6 +62,8 @@
           <li>Help has been ported to Yelp and can be accessed from whithin the app</li>
           <li>Numerical entries now show the validity of user input</li>
           <li>Improve equation handling</li>
+          <li>Added some new goniometric functions such as the hyperbolic sinoids and their inverses</li>
+          <li>Graphs now fully supports touch screen devices</li>
           <li>There is now a warning, when editing a style with poor contrast between labels and background colors</li>
           <li>Curve fitting now supports duplicate variables, and has gotten some bug fixes with regards to equation naming</li>
           <li>Many improvements to localization</li>
@@ -506,6 +508,7 @@
   <recommends>
     <control>keyboard</control>
     <control>pointing</control>
+    <control>touch</control>
   </recommends>
   <requires>
     <display_length compare="ge">360</display_length>
