@@ -260,9 +260,12 @@ class Canvas(Graphs.Canvas, FigureCanvas):
         """Handle zoom event."""
         coords = controller.get_bounding_box_center()
         x, y = coords.x, coords.y
-        self._set_mouse_fraction(
-            MouseEvent("motion_notify_event", self, *self._mpl_coords((x, y))),
+        event = MouseEvent(
+            "motion_notify_event",
+            self,
+            *self._mpl_coords((x, y)),
         )
+        self._set_mouse_fraction(event)
 
         scale = 1 + 0.01 * (scale - 1)
         if scale > 5 or scale < 0.2:
@@ -273,18 +276,18 @@ class Canvas(Graphs.Canvas, FigureCanvas):
     def end_zoom_event(self, controller: Gtk.GestureZoom, _sequence) -> None:
         """
         End the zoom event.
-        
+
         Pushes the canvas to the stack, and emits a `release` signal cancel out
         registered touches from touchscreen devices.
         """
         coords = controller.get_bounding_box_center()
         x, y = coords.x, coords.y
         MouseEvent(
-            "button_release_event", 
+            "button_release_event",
             self,
             *self._mpl_coords((x, y)),
             1,
-        )._process()                   
+        )._process()
         self.toolbar.push_current()
 
     def _set_mouse_fraction(self, event) -> None:
