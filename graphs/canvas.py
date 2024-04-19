@@ -16,8 +16,9 @@ from gi.repository import GObject, Gdk, Graphs, Gtk
 from graphs import artist, misc, scales, utilities
 
 from matplotlib import backend_tools as tools, pyplot
-from matplotlib.backend_bases import (FigureCanvasBase, NavigationToolbar2,
-    MouseEvent)
+from matplotlib.backend_bases import (FigureCanvasBase,
+                                      MouseEvent,
+                                      NavigationToolbar2)
 from matplotlib.backends.backend_gtk4cairo import FigureCanvas
 from matplotlib.widgets import SpanSelector
 
@@ -132,6 +133,7 @@ class Canvas(Graphs.Canvas, FigureCanvas):
         self._xfrac, self._yfrac = None, None
         self.mpl_connect("pick_event", self._on_pick)
         self.mpl_connect("motion_notify_event", self._set_mouse_fraction)
+        self.mpl_connect("button_press_event", self._set_mouse_fraction)
 
         # Reference is created by the toolbar itself
         _DummyToolbar(self)
@@ -139,7 +141,7 @@ class Canvas(Graphs.Canvas, FigureCanvas):
         click = Gtk.GestureClick()
         click.set_button(0)  # All buttons.
         click.connect("pressed", self.button_press_event)
-        click.connect("update", self.on_click_update)
+        click.connect("update", self.handle_touch_update)
         click.connect("released", self.button_release_event)
         self.add_controller(click)
 
@@ -183,14 +185,17 @@ class Canvas(Graphs.Canvas, FigureCanvas):
                 _b: self.highlight.load(self),
             )
 
-    def on_click_update(self, *args):
+    def handle_touch_update(self, controller: Gtk.GestureClick, _data) -> None:
         """
-        Handles an update event for GtkGestureClick motion, needed for touch
-        screen devices to handle gestures properly.
+        Handle an update event for GtkGestureClick motion.
+
+        This is needed for touch screen devices to handle gestures properly.
         """
-        coords = controller.get_point()
-        x, y = coords.x, coords.y
-        MouseEvent('motion_notify_event', self, *self._mpl_coords((x, y)))._process()
+        if not controller.get_point()[0]:  # If touch event
+            coords = controller.get_bounding_box_center()
+            x, y = coords.x, coords.y
+            MouseEvent("motion_notify_event", self,
+                       *self._mpl_coords((x, y)))._process()
 
     def key_press_event(
         self,
@@ -249,7 +254,7 @@ class Canvas(Graphs.Canvas, FigureCanvas):
         scale: float,
     ) -> None:
         """Handle zoom event."""
-        scale = 1 + 0.02 * (scale - 1)
+        scale = 1 + 0.01 * (scale - 1)
         if scale > 5 or scale < 0.2:
             # Don't scale if ridiculous values are registered
             return
