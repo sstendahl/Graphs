@@ -84,12 +84,12 @@ axes.labelpad: 5
 axes.titlepad: 15
 
 # colors
-text.color: .15
-axes.labelcolor: .15
-xtick.labelcolor: .15
-ytick.labelcolor: .15
-xtick.color: .15
-ytick.color: .15
+text.color: 262626
+axes.labelcolor: 262626
+xtick.labelcolor: 262626
+ytick.labelcolor: 262626
+xtick.color: 262626
+ytick.color: 262626
 axes.edgecolor: FFFFFF
 grid.color: FFFFFF
 axes.facecolor: EAEAF2

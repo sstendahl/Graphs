@@ -108,5 +108,4 @@ legend.fancybox: True
 legend.frameon: True
 
 # custom
-figure.figsize: 10.4, 7.15
 patch.linewidth: 0.39
