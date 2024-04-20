@@ -289,6 +289,16 @@ class Canvas(Graphs.Canvas, FigureCanvas):
         )._process()
         self.toolbar.push_current()
 
+    def enter_notify_event(
+        self,
+        controller: Gtk.EventControllerMotion,
+        x: float,
+        y: float,
+    ) -> None:
+        """Process pointer entry."""
+        self.grab_focus()
+        super().enter_notify_event(controller, x, y)
+
     def _set_mouse_fraction(self, event) -> None:
         """Set the mouse coordinate in terms of fraction of the canvas."""
         if event.inaxes is not None:
