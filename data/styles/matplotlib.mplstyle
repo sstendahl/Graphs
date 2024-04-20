@@ -104,7 +104,6 @@ legend.frameon: True
 
 # custom
 patch.linewidth: 1.0
-figure.figsize: 6.4, 4.8
 image.cmap: viridis
 legend.numpoints: 1
 legend.scatterpoints: 1

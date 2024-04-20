@@ -15,13 +15,12 @@
     <file compressed="True">styles/seaborn.mplstyle</file>
     <file compressed="True">styles/seaborn-bright.mplstyle</file>
     <file compressed="True">styles/seaborn-colorblind.mplstyle</file>
-    <file compressed="True">styles/seaborn-dark.mplstyle</file>
-    <file compressed="True">styles/seaborn-darkgrid.mplstyle</file>
     <file compressed="True">styles/seaborn-dark-palette.mplstyle</file>
     <file compressed="True">styles/seaborn-deep.mplstyle</file>
     <file compressed="True">styles/seaborn-muted.mplstyle</file>
-    <file compressed="True">styles/seaborn-notebook.mplstyle</file>
     <file compressed="True">styles/seaborn-paper.mplstyle</file>
+    <file compressed="True">styles/seaborn-pastel.mplstyle</file>
+    <file compressed="True">styles/seaborn-poster.mplstyle</file>
     <file compressed="True">styles/seaborn-talk.mplstyle</file>
     <file compressed="True">styles/seaborn-ticks.mplstyle</file>
     <file compressed="True">styles/seaborn-white.mplstyle</file>

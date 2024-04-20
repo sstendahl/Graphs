@@ -177,7 +177,6 @@ legend.scatterpoints: 3
 legend.facecolor: inherit
 legend.edgecolor: inherit
 
-figure.figsize: 8, 6
 figure.dpi: 80
 figure.autolayout: False
 figure.frameon: True

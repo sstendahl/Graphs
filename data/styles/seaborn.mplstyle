@@ -68,7 +68,7 @@ xtick.top: False
 ytick.right: False
 
 # grid
-axes.grid: True
+axes.grid: False
 axes.grid.which: major
 axes.grid.axis: both
 grid.linewidth: 1.0
@@ -108,7 +108,6 @@ legend.fancybox: True
 legend.frameon: True
 
 # custom
-figure.figsize: 8.0, 5.5
 image.cmap: Greys
 legend.numpoints: 1
 legend.scatterpoints: 1
