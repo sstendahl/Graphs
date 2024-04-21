@@ -55,9 +55,9 @@
     </screenshot>
   </screenshots>
   <releases>
-    <release version="1.7.3" date="2024-04-20">
+    <release version="1.8.0" date="2024-04-21">
       <description>
-        <p>A small update focusing on mostly background changes.</p>
+        <p>A smaller release focusing on mostly background changes.</p>
         <ul>
           <li>Help has been ported to Yelp and can be accessed from whithin the app</li>
           <li>Numerical entries now show the validity of user input</li>
