@@ -5,9 +5,8 @@
   <project_license>GPL-3.0-or-later</project_license>
   <name>Graphs</name>
   <summary>Plot and manipulate data</summary>
-  <developer>
+  <developer id="se.sjoerd">
     <name>@AUTHOR@</name>
-    <id>se.sjoerd</id>
   </developer>
   <description>
     <p>
