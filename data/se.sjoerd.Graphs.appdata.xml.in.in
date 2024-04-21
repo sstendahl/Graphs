@@ -6,7 +6,7 @@
   <name>Graphs</name>
   <summary>Plot and manipulate data</summary>
   <developer>
-    <name translate="no">@AUTHOR@</name>
+    <name>@AUTHOR@</name>
     <id>se.sjoerd</id>
   </developer>
   <description>
