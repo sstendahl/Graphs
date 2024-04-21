@@ -121,6 +121,7 @@ class Canvas(Graphs.Canvas, FigureCanvas):
         self._legend = True
         self._legend_position = misc.LEGEND_POSITIONS[0]
         self._handles = []
+        self._rubberband_rect = None
 
         # Handle stuff only used if the canvas is interactive
         if interactive:
@@ -171,7 +172,6 @@ class Canvas(Graphs.Canvas, FigureCanvas):
         def rgba_to_tuple(rgba):
             return (rgba.red, rgba.green, rgba.blue, rgba.alpha)
 
-        self._rubberband_rect = None
         rgba = self.get_style_context().lookup_color("accent_color")[1]
         self.rubberband_edge_color = rgba_to_tuple(rgba)
         rgba.alpha = 0.3
