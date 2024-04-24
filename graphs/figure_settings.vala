@@ -209,8 +209,8 @@ namespace Graphs {
             }
         }
 
-        protected void add_toast_string () {
-            this.toast_overlay.add_toast (new Adw.Toast (_("Defaults Updated")));
+        protected void add_toast_string (string msg) {
+            this.toast_overlay.add_toast (new Adw.Toast (msg));
         }
 
         [GtkCallback]
