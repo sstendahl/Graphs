@@ -63,7 +63,7 @@ if compile_schemas.found()
   )
 endif
 
-blueprints_source = [
+blueprint_files = [
   'ui/add-equation.blp',
   'ui/add-style.blp',
   'ui/curve-fitting.blp',
@@ -86,25 +86,17 @@ blueprints_source = [
 ]
 
 blueprints_ui = []
-blueprints_vala = []
-foreach b : blueprints_source
+foreach b : blueprint_files
 	blueprints_ui += b.replace('.blp', '.ui')
-	blueprints_vala += b.replace('ui/', '') + '.vala'
 endforeach
 
 blueprints = custom_target('blueprints',
-    input: blueprints_source,
+    input: blueprint_files,
    output: '.',
   command: [find_program('blueprint-compiler'), 'batch-compile', '@OUTPUT@', '@CURRENT_SOURCE_DIR@', '@INPUT@'],
 )
 
-blueprints_hack = custom_target('blueprints_hack',
-    input: blueprints,
-   output: blueprints_vala,
-  command: [find_program('touch'), '@OUTPUT@'],
-)
-
-styles = [
+styles = files(
   'styles/adwaita.mplstyle',
   'styles/adwaita-dark.mplstyle',
   'styles/bmh.mplstyle',
@@ -132,41 +124,66 @@ styles = [
   'styles/thesis.mplstyle',
   'styles/yaru.mplstyle',
   'styles/yaru-dark.mplstyle',
-]
+)
 
-previews = []
-previews_vala = []
-foreach s : styles
-	previews += s.replace('styles/', '').replace('.mplstyle', '.png')
-	previews_vala += s.replace('styles/', '') + '.vala'
-endforeach
+css = files(
+  'style.css',
+  'style-hc.css',
+)
 
-built_previews = custom_target('previews',
-    input: files(styles),
-   output: previews,
+icons = files (
+  'icons/axes-one-quadrant-symbolic.svg',
+  'icons/center-symbolic.svg',
+  'icons/check-round-outline-whole-symbolic.svg',
+  'icons/color-picker-symbolic.svg',
+  'icons/derivative2-symbolic.svg',
+  'icons/fast-fourier-transform-symbolic.svg',
+  'icons/graph-symbolic.svg',
+  'icons/function-third-order-symbolic.svg',
+  'icons/history-undo-symbolic.svg',
+  'icons/horizontal-arrows-symbolic.svg',
+  'icons/info-symbolic.svg',
+  'icons/image-print-symbolic.svg',
+  'icons/integral-symbolic.svg',
+  'icons/inverse-fast-fourier-transform-symbolic.svg',
+  'icons/left-symbolic.svg',
+  'icons/list-compact-symbolic.svg',
+  'icons/loupe-symbolic.svg',
+  'icons/move-tool-symbolic.svg',
+  'icons/normalize-symbolic.svg',
+  'icons/right-symbolic.svg',
+  'icons/settings-symbolic.svg',
+  'icons/shift-symbolic.svg',
+  'icons/smoothen-symbolic.svg',
+  'icons/transform-symbolic.svg',
+  'icons/vertical-arrows-symbolic.svg',
+  'icons/up-symbolic.svg',
+  'icons/down-symbolic.svg',
+)
+
+gresource = custom_target('gresource',
+    input: [blueprints, styles, css],
+   output: application_id + '.gresource.xml',
   command: [
     python,
-    files('create_previews.py'),
-    files('../graphs/style_io.py'),
-    '@INPUT@',
+    files('generate_gresource.py'),
     '@OUTPUT@',
+    meson.current_build_dir(),
+    files('../graphs/style_io.py'),
+    files('whats_new'),
+    '--styles', styles,
+    '--ui', blueprints_ui,
+    '--css', css,
+    '--icons', icons,
   ],
 )
 
-previews_hack = custom_target('previews_hack',
-    input: built_previews,
-   output: previews_vala,
+gresource_hack = custom_target('gresource_hack',
+    input: gresource,
+   output: 'gresource_hack.vala',
   command: [find_program('touch'), '@OUTPUT@'],
 )
 
-gresource_name = application_id + '.gresource.xml'
-
-gresource = custom_target('gresource',
-    input: gresource_name,
-   output: gresource_name,
-  command: ['cp', '@INPUT@', '@OUTPUT@'],
-  depends: [built_previews, blueprints],
-)
 
 gresource_bundle = gnome.compile_resources(application_id, gresource,
       dependencies: gresource,
