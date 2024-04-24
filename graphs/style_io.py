@@ -5,8 +5,6 @@ from gettext import gettext as _
 
 from gi.repository import Gio, Graphs
 
-from graphs import file_io
-
 from matplotlib import RcParams, cbook
 from matplotlib.font_manager import font_scalings, weight_dict
 from matplotlib.style.core import STYLE_BLACKLIST
@@ -45,9 +43,12 @@ def parse(file: Gio.File) -> (RcParams, str):
     filename = Graphs.tools_get_filename(file)
     try:
         stream = Gio.DataInputStream.new(file.read(None))
-        for line_number, line in \
-                enumerate(file_io.iter_data_stream(stream), 1):
-            if line_number == 2:
+        line_number = 1
+        while True:
+            line = stream.read_line_utf8(None)[0]
+            if line is None:
+                break
+            elif line_number == 2:
                 name = line[2:]
             line = cbook._strip_comment(line)
             if not line:
@@ -90,6 +91,7 @@ def parse(file: Gio.File) -> (RcParams, str):
                     logging.exception(
                         msg.format(file=filename, line=line_number),
                     )
+            line_number += 1
     except UnicodeDecodeError:
         logging.exception(
             _("Could not parse {filename}").format(filename=filename),
@@ -112,7 +114,9 @@ WRITE_IGNORELIST = STYLE_IGNORELIST + [
 
 def write(file: Gio.File, name: str, style: RcParams) -> None:
     """Write a style to a file."""
-    stream = Gio.DataOutputStream.new(file_io.create_write_stream(file))
+    if file.query_exists(None):
+        file.delete(None)
+    stream = Gio.DataOutputStream.new(file.create(0, None))
     stream.put_string("# Generated via Graphs\n")
     stream.put_string(f"# {name}\n")
     for key, value in style.items():
