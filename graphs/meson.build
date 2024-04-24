@@ -60,7 +60,7 @@ graphs_lib = shared_library(
     'transform.vala',
     'utilities.vala',
     'window.vala',
-  ), blueprints_hack, gresource_bundle,
+  ), blueprints_hack, previews_hack, gresource_bundle,
            vala_gir: 'Graphs-1.gir',
        dependencies: dependencies + config_dep,
 include_directories: include_directories('.'),
