@@ -1,13 +1,18 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Module for parsing and writing styles."""
 import logging
+import typing
 from gettext import gettext as _
 
-from gi.repository import Gio, Graphs
+from gi.repository import Gio
 
-from matplotlib import RcParams, cbook
+from matplotlib import RcParams, cbook, rc_context
+from matplotlib.figure import Figure
 from matplotlib.font_manager import font_scalings, weight_dict
 from matplotlib.style.core import STYLE_BLACKLIST
+
+import numpy
+
 
 STYLE_IGNORELIST = [
     "savefig.dpi",
@@ -40,15 +45,16 @@ def parse(file: Gio.File) -> (RcParams, str):
     functions.
     """
     style = RcParams()
-    filename = Graphs.tools_get_filename(file)
+    filename = file.get_basename()
     try:
         stream = Gio.DataInputStream.new(file.read(None))
-        line_number = 1
+        line_number = 0
         while True:
             line = stream.read_line_utf8(None)[0]
             if line is None:
                 break
-            elif line_number == 2:
+            line_number += 1
+            if line_number == 2:
                 name = line[2:]
             line = cbook._strip_comment(line)
             if not line:
@@ -91,7 +97,6 @@ def parse(file: Gio.File) -> (RcParams, str):
                     logging.exception(
                         msg.format(file=filename, line=line_number),
                     )
-            line_number += 1
     except UnicodeDecodeError:
         logging.exception(
             _("Could not parse {filename}").format(filename=filename),
@@ -128,3 +133,29 @@ def write(file: Gio.File, name: str, style: RcParams) -> None:
                 value = value.replace('"', "").replace('"', "")
             stream.put_string(f"{key}: {value}\n")
     stream.close()
+
+
+_PREVIEW_XDATA = numpy.linspace(0, 10, 30)
+_PREVIEW_YDATA1 = numpy.sin(_PREVIEW_XDATA)
+_PREVIEW_YDATA2 = numpy.cos(_PREVIEW_XDATA)
+
+
+def create_preview(
+    file: typing.IO,
+    params: RcParams,
+    file_format: str = "svg",
+) -> None:
+    """Create preview of params and write it to file."""
+    with rc_context(params):
+        # set render size in inch
+        figure = Figure(figsize=(5, 3))
+        axis = figure.add_subplot()
+        axis.spines.bottom.set_visible(True)
+        axis.spines.left.set_visible(True)
+        if not params["axes.spines.top"]:
+            axis.tick_params(which="both", top=False, right=False)
+        axis.plot(_PREVIEW_XDATA, _PREVIEW_YDATA1)
+        axis.plot(_PREVIEW_XDATA, _PREVIEW_YDATA2)
+        axis.set_xlabel(_("X Label"))
+        axis.set_xlabel(_("Y Label"))
+        figure.savefig(file, format=file_format)

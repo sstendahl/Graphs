@@ -6,8 +6,6 @@ import os
 from gettext import gettext as _
 from pathlib import Path
 
-from PIL import Image
-
 from cycler import cycler
 
 from gi.repository import (
@@ -15,7 +13,6 @@ from gi.repository import (
     GLib,
     GObject,
     Gdk,
-    GdkPixbuf,
     Gio,
     Graphs,
     Gtk,
@@ -25,10 +22,7 @@ from gi.repository import (
 import graphs
 from graphs import item, style_io
 
-from matplotlib import RcParams, rcParams, rcParamsDefault, rc_context
-from matplotlib.figure import Figure
-
-import numpy
+from matplotlib import RcParams, rcParams, rcParamsDefault
 
 
 def _generate_filename(name: str) -> str:
@@ -40,31 +34,9 @@ def _is_style_bright(params: RcParams):
     return Graphs.tools_get_luminance_from_hex(params["axes.facecolor"]) < 0.4
 
 
-_PREVIEW_XDATA = numpy.linspace(0, 10, 30)
-_PREVIEW_YDATA1 = numpy.sin(_PREVIEW_XDATA)
-_PREVIEW_YDATA2 = numpy.cos(_PREVIEW_XDATA)
-
-
-def _create_preview(style: RcParams, file_format: str = "svg"):
-    buffer = io.BytesIO()
-    with rc_context(style):
-        # set render size in inch
-        figure = Figure(figsize=(5, 3))
-        axis = figure.add_subplot()
-        axis.spines.bottom.set_visible(True)
-        axis.spines.left.set_visible(True)
-        if not style["axes.spines.top"]:
-            axis.tick_params(which="both", top=False, right=False)
-        axis.plot(_PREVIEW_XDATA, _PREVIEW_YDATA1)
-        axis.plot(_PREVIEW_XDATA, _PREVIEW_YDATA2)
-        axis.set_xlabel(_("X Label"))
-        axis.set_xlabel(_("Y Label"))
-        figure.savefig(buffer, format=file_format)
-    return buffer
-
-
 def _generate_preview(style: RcParams) -> Gdk.Texture:
-    buffer = _create_preview(style)
+    buffer = io.BytesIO()
+    style_io.create_preview(buffer, style)
     return Gdk.Texture.new_from_bytes(GLib.Bytes.new(buffer.getvalue()))
 
 
@@ -91,55 +63,34 @@ class StyleManager(Graphs.StyleManager):
         directory = Gio.File.new_for_uri("resource:///se/sjoerd/Graphs/styles")
         enumerator = directory.enumerate_children("default::*", 0, None)
         for file in map(enumerator.get_child, enumerator):
-            style_params, name = style_io.parse(file)
-            preview = _generate_preview(style_params)
+            filename = file.get_basename()
+            stream = Gio.DataInputStream.new(file.read(None))
+            stream.read_line_utf8(None)
+            name = stream.read_line_utf8(None)[0][2:]
+            preview = Gdk.Texture.new_from_resource(
+                "/se/sjoerd/Graphs/" + filename.replace(".mplstyle", ".png"),
+            )
             self._stylenames.append(name)
             style_model.insert_sorted(
                 Graphs.Style.new(name, file, preview, False),
                 Graphs.style_cmp,
             )
         enumerator.close(None)
-        self._update_system_style()
 
-        # generate system style preview
-        def _stylename_to_array(stylename):
-            style = style_io.parse(
-                Gio.File.new_for_uri(
-                    "resource:///se/sjoerd/Graphs/styles/"
-                    + _generate_filename(stylename),
-                ),
-            )[0]
-            buffer = _create_preview(style, file_format="png")
-            return numpy.array(Image.open(buffer).convert("RGB"))
-
-        light_array = _stylename_to_array(self._system_style_name)
-        dark_array = _stylename_to_array(self._system_style_name + " Dark")
-        height, width = light_array.shape[0:2]
-        # create combined image
-        stitched_array = numpy.concatenate(
-            (light_array[:, :width // 2], dark_array[:, width // 2:]),
-            axis=1,
-        )
+        preview_name = self._system_style_name.lower() + ".png"
         style_model.insert(
             0,
             Graphs.Style.new(
                 _("System"),
                 None,
-                Gdk.Texture.new_for_pixbuf(
-                    GdkPixbuf.Pixbuf.new_from_bytes(
-                        GLib.Bytes.new(stitched_array.tobytes()),
-                        0,
-                        False,
-                        8,
-                        width,
-                        height,
-                        width * 3,
-                    ),
+                Gdk.Texture.new_from_resource(
+                    "/se/sjoerd/Graphs/system-style-" + preview_name,
                 ),
                 False,
             ),
         )
 
+        self._update_system_style()
         enumerator = self.props.style_dir.enumerate_children(
             "default::*",
             0,
