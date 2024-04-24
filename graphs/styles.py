@@ -58,38 +58,10 @@ class StyleManager(Graphs.StyleManager):
             and gtk_theme.lower().startswith("yaru") \
             else "Adwaita"
         super().__init__(application=application)
-        style_model = self.props.selection_model.get_model()
-        self._stylenames, self._selected_style_params = [], None
-        directory = Gio.File.new_for_uri("resource:///se/sjoerd/Graphs/styles")
-        enumerator = directory.enumerate_children("default::*", 0, None)
-        for file in map(enumerator.get_child, enumerator):
-            filename = file.get_basename()
-            stream = Gio.DataInputStream.new(file.read(None))
-            stream.read_line_utf8(None)
-            name = stream.read_line_utf8(None)[0][2:]
-            preview = Gdk.Texture.new_from_resource(
-                "/se/sjoerd/Graphs/" + filename.replace(".mplstyle", ".png"),
-            )
-            self._stylenames.append(name)
-            style_model.insert_sorted(
-                Graphs.Style.new(name, file, preview, False),
-                Graphs.style_cmp,
-            )
-        enumerator.close(None)
-
-        preview_name = self._system_style_name.lower() + ".png"
-        style_model.insert(
-            0,
-            Graphs.Style.new(
-                _("System"),
-                None,
-                Gdk.Texture.new_from_resource(
-                    "/se/sjoerd/Graphs/system-style-" + preview_name,
-                ),
-                False,
-            ),
+        self._selected_style_params = None
+        self._stylenames = self.load_system_styles(
+            self._system_style_name.lower(),
         )
-
         self._update_system_style()
         enumerator = self.props.style_dir.enumerate_children(
             "default::*",
