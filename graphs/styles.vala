@@ -36,6 +36,49 @@ namespace Graphs {
             }
         }
 
+        protected string[] load_system_styles (string system_style) {
+            string[] stylenames = {};
+            try {
+                var directory = File.new_for_uri ("resource:///se/sjoerd/Graphs/styles");
+                FileEnumerator enumerator = directory.enumerate_children (
+                    "standard::*",
+                    FileQueryInfoFlags.NONE
+                );
+                FileInfo info = null;
+                while ((info = enumerator.next_file ()) != null) {
+                    File file = enumerator.get_child (info);
+                    var stream = new DataInputStream (file.read ());
+                    stream.read_line_utf8 ();
+                    size_t size;
+                    string name = stream.read_line_utf8 (out size)[2: (long)size];
+                    stylenames += name;
+                    string preview_name = info.get_name ().replace (".mplstyle", ".png");
+                    var preview = Gdk.Texture.from_resource (
+                        @"/se/sjoerd/Graphs/$preview_name"
+                    );
+                    CompareDataFunc<Style> cmp = style_cmp;
+                    this.style_model.insert_sorted (
+                        new Style (name, file, preview, false),
+                        cmp
+                    );
+                }
+            } catch {
+                assert_not_reached ();
+            }
+            this.style_model.insert (
+                0,
+                new Style (
+                    _("System"),
+                    null,
+                    Gdk.Texture.from_resource (
+                        @"/se/sjoerd/Graphs/system-style-$system_style.png"
+                    ),
+                    false
+                )
+            );
+            return stylenames;
+        }
+
         protected Style get_selected_style () {
             return (Style) this.selection_model.get_selected_item ();
         }
