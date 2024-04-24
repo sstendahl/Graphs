@@ -107,9 +107,64 @@ blueprints = custom_target('blueprints',
 )
 
 blueprints_hack = custom_target('blueprints_hack',
-	input: blueprints,
-	output: blueprints_vala,
-	command: [find_program('touch'), '@OUTPUT@'],
+  input: blueprints,
+  output: blueprints_vala,
+  command: [find_program('touch'), '@OUTPUT@'],
+)
+
+styles = [
+  'styles/adwaita.mplstyle',
+  'styles/adwaita-dark.mplstyle',
+  'styles/bmh.mplstyle',
+  'styles/classic.mplstyle',
+  'styles/dark-background.mplstyle',
+  'styles/fivethirtyeight.mplstyle',
+  'styles/ggplot.mplstyle',
+  'styles/grayscale.mplstyle',
+  'styles/matplotlib.mplstyle',
+  'styles/seaborn.mplstyle',
+  'styles/seaborn-bright.mplstyle',
+  'styles/seaborn-colorblind.mplstyle',
+  'styles/seaborn-dark-palette.mplstyle',
+  'styles/seaborn-deep.mplstyle',
+  'styles/seaborn-muted.mplstyle',
+  'styles/seaborn-paper.mplstyle',
+  'styles/seaborn-pastel.mplstyle',
+  'styles/seaborn-poster.mplstyle',
+  'styles/seaborn-talk.mplstyle',
+  'styles/seaborn-ticks.mplstyle',
+  'styles/seaborn-white.mplstyle',
+  'styles/seaborn-whitegrid.mplstyle',
+  'styles/solarized-light.mplstyle',
+  'styles/tableau-colorblind10.mplstyle',
+  'styles/thesis.mplstyle',
+  'styles/yaru.mplstyle',
+  'styles/yaru-dark.mplstyle'
+]
+
+previews = []
+previews_vala = []
+foreach s : styles
+	previews += s.replace('styles/', '').replace('.mplstyle', '.png')
+	previews_vala += s.replace('styles/', '') + '.vala'
+endforeach
+
+built_previews = custom_target('previews',
+  input: files(styles),
+  output: previews,
+  command: [
+    python,
+    files('create_previews.py'),
+    files('../graphs/style_io.py'),
+    '@INPUT@',
+    '@OUTPUT@'
+  ]
+)
+
+previews_hack = custom_target('previews_hack',
+  input: built_previews,
+  output: previews_vala,
+  command: [find_program('touch'), '@OUTPUT@'],
 )
 
 gresource_name = application_id + '.gresource.xml'
@@ -119,7 +174,7 @@ gresource = custom_target('gresource',
   input: gresource_name,
   output: gresource_name,
   command: ['cp', '@INPUT@', '@OUTPUT@'],
-  depends: blueprints,
+  depends: [built_previews, blueprints],
 )
 
 gresource_bundle = gnome.compile_resources(
