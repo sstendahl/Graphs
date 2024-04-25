@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
 pytest = find_program('pytest', required: false)
 
 if pytest.found()
@@ -7,7 +8,7 @@ if pytest.found()
   )
   test('pytest', pytest,
     args: [build_tests_dir],
-    env: [
+     env: [
       'pkgdatadir=' + pkgdatadir,
       'application_id=' + application_id,
     ],

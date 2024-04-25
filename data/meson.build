@@ -1,10 +1,9 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 desktop_file_in = configure_file(
-          input: application_id + '.desktop.in.in',
+          input: application_id + '.desktop.in',
          output: application_id + '.desktop.in',
   configuration: conf,
 )
-
 desktop_file = i18n.merge_file(
         input: desktop_file_in,
        output: application_id + '.desktop',
@@ -22,11 +21,10 @@ if desktop_file_validate.found()
 endif
 
 appstream_file_in = configure_file(
-          input: application_id + '.appdata.xml.in.in',
+          input: application_id + '.appdata.xml.in',
          output: application_id + '.appdata.xml.in',
   configuration: conf,
 )
-
 appstream_file = i18n.merge_file(
         input: appstream_file_in,
        output: application_id + '.appdata.xml',
@@ -63,7 +61,7 @@ if compile_schemas.found()
   )
 endif
 
-blueprints_source = [
+blueprint_files = [
   'ui/add-equation.blp',
   'ui/add-style.blp',
   'ui/curve-fitting.blp',
@@ -86,25 +84,17 @@ blueprints_source = [
 ]
 
 blueprints_ui = []
-blueprints_vala = []
-foreach b : blueprints_source
+foreach b : blueprint_files
 	blueprints_ui += b.replace('.blp', '.ui')
-	blueprints_vala += b.replace('ui/', '') + '.vala'
 endforeach
 
 blueprints = custom_target('blueprints',
-    input: blueprints_source,
+    input: files(blueprint_files),
    output: '.',
   command: [find_program('blueprint-compiler'), 'batch-compile', '@OUTPUT@', '@CURRENT_SOURCE_DIR@', '@INPUT@'],
 )
 
-blueprints_hack = custom_target('blueprints_hack',
-    input: blueprints,
-   output: blueprints_vala,
-  command: [find_program('touch'), '@OUTPUT@'],
-)
-
-styles = [
+styles = files(
   'styles/adwaita.mplstyle',
   'styles/adwaita-dark.mplstyle',
   'styles/bmh.mplstyle',
@@ -132,40 +122,65 @@ styles = [
   'styles/thesis.mplstyle',
   'styles/yaru.mplstyle',
   'styles/yaru-dark.mplstyle',
-]
+)
 
-previews = []
-previews_vala = []
-foreach s : styles
-	previews += s.replace('styles/', '').replace('.mplstyle', '.png')
-	previews_vala += s.replace('styles/', '') + '.vala'
-endforeach
+icons = files (
+  'icons/axes-one-quadrant-symbolic.svg',
+  'icons/center-symbolic.svg',
+  'icons/check-round-outline-whole-symbolic.svg',
+  'icons/color-picker-symbolic.svg',
+  'icons/derivative2-symbolic.svg',
+  'icons/fast-fourier-transform-symbolic.svg',
+  'icons/graph-symbolic.svg',
+  'icons/function-third-order-symbolic.svg',
+  'icons/history-undo-symbolic.svg',
+  'icons/horizontal-arrows-symbolic.svg',
+  'icons/info-symbolic.svg',
+  'icons/image-print-symbolic.svg',
+  'icons/integral-symbolic.svg',
+  'icons/inverse-fast-fourier-transform-symbolic.svg',
+  'icons/left-symbolic.svg',
+  'icons/list-compact-symbolic.svg',
+  'icons/loupe-symbolic.svg',
+  'icons/move-tool-symbolic.svg',
+  'icons/normalize-symbolic.svg',
+  'icons/right-symbolic.svg',
+  'icons/settings-symbolic.svg',
+  'icons/shift-symbolic.svg',
+  'icons/smoothen-symbolic.svg',
+  'icons/transform-symbolic.svg',
+  'icons/vertical-arrows-symbolic.svg',
+  'icons/up-symbolic.svg',
+  'icons/down-symbolic.svg',
+)
 
-built_previews = custom_target('previews',
-    input: files(styles),
-   output: previews,
+other = files(
+  'style.css',
+  'style-hc.css',
+  'whats_new',
+)
+
+gresource = custom_target('gresource',
+    input: [blueprints, styles, other],
+   output: application_id + '.gresource.xml',
+  depends: blueprints,
   command: [
     python,
-    files('create_previews.py'),
-    files('../graphs/style_io.py'),
-    '@INPUT@',
+    files('generate_gresource.py'),
     '@OUTPUT@',
+    meson.current_build_dir(),
+    files('../graphs/style_io.py'),
+    '--styles', styles,
+    '--ui', blueprints_ui,
+    '--icons', icons,
+    '--other', other,
   ],
 )
 
-previews_hack = custom_target('previews_hack',
-    input: built_previews,
-   output: previews_vala,
+gresource_hack = custom_target('gresource_hack',
+    input: gresource,
+   output: 'gresource_hack.vala',
   command: [find_program('touch'), '@OUTPUT@'],
-)
-
-gresource_name = application_id + '.gresource.xml'
-
-gresource = custom_target('gresource',
-    input: gresource_name,
-   output: gresource_name,
-  command: ['cp', '@INPUT@', '@OUTPUT@'],
-  depends: [built_previews, blueprints],
 )
 
 gresource_bundle = gnome.compile_resources(application_id, gresource,
