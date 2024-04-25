@@ -11,9 +11,9 @@ from PIL import Image
 
 from gi.repository import Gio
 
-import numpy
-
 from matplotlib import font_manager
+
+import numpy
 
 parser = argparse.ArgumentParser(
     description="Generate Graphs GResource at build time.",
@@ -66,7 +66,7 @@ for font in font_list:
     try:
         font_manager.fontManager.addfont(font)
     except RuntimeError:
-        logging.warning(f"Could not load {font}")
+        logging.warning("Could not load %s", font)
 # Disable matplotlib logging
 logging.getLogger("matplotlib.font_manager").setLevel(logging.ERROR)
 
@@ -91,7 +91,8 @@ for file in args.other:
         main_gresource,
         "file",
         attrib={
-            "compressed": "True", "alias": path.name
+            "compressed": "True",
+            "alias": path.name,
         },
     )
     element.text = str(path)
