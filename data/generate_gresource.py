@@ -2,6 +2,7 @@
 """Generate Graphs GResource at build time."""
 import argparse
 import importlib.util
+import logging
 import sys
 from pathlib import Path
 from xml.etree import ElementTree
@@ -11,6 +12,8 @@ from PIL import Image
 from gi.repository import Gio
 
 import numpy
+
+from matplotlib import font_manager
 
 parser = argparse.ArgumentParser(
     description="Generate Graphs GResource at build time.",
@@ -28,10 +31,6 @@ parser.add_argument(
     help="Path to style_io.py",
 )
 parser.add_argument(
-    "whats_new",
-    help="Path to whats_new",
-)
-parser.add_argument(
     "--ui",
     required=True,
     nargs="+",
@@ -46,11 +45,11 @@ parser.add_argument(
     help="List of Styles.",
 )
 parser.add_argument(
-    "--css",
+    "--other",
     required=True,
     nargs="+",
-    dest="css",
-    help="List of CSS Files.",
+    dest="other",
+    help="List of other Files to include at toplevel.",
 )
 parser.add_argument(
     "--icons",
@@ -60,6 +59,16 @@ parser.add_argument(
     help="List of icon Files.",
 )
 args = parser.parse_args()
+
+# Check fonts
+font_list = font_manager.findSystemFonts(fontpaths=None, fontext="ttf")
+for font in font_list:
+    try:
+        font_manager.fontManager.addfont(font)
+    except RuntimeError:
+        logging.warning(f"Could not load {font}")
+# Disable matplotlib logging
+logging.getLogger("matplotlib.font_manager").setLevel(logging.ERROR)
 
 # dynamically import style_io
 spec = importlib.util.spec_from_file_location("style_io", args.style_io)
@@ -74,25 +83,19 @@ main_gresource = ElementTree.SubElement(
     "gresource",
     attrib={"prefix": "/se/sjoerd/Graphs/"},
 )
-whats_new_element = ElementTree.SubElement(
-    main_gresource,
-    "file",
-    attrib={
-        "compressed": "True",
-        "alias": Path(args.whats_new).name,
-    },
-)
-whats_new_element.text = args.whats_new
 
-# Begin Css Section
-for css_file in args.css:
-    css_element = ElementTree.SubElement(
+# Begin Other Section
+for file in args.other:
+    path = Path(file)
+    element = ElementTree.SubElement(
         main_gresource,
         "file",
-        attrib={"alias": Path(css_file).name},
+        attrib={
+            "compressed": "True", "alias": path.name
+        },
     )
-    css_element.text = css_file
-# End Css Section
+    element.text = str(path)
+# End Other Section
 
 # Begin style section
 styles = {}
@@ -140,7 +143,8 @@ for sys_style in ("Adwaita", "Yaru"):
     dark_array = _to_array(styles[sys_style + " Dark"])
     height, width = light_array.shape[0:2]
     stitched_array = numpy.concatenate(
-        (light_array[:, :width // 2], dark_array[:, width // 2:]), axis=1,
+        (light_array[:, :width // 2], dark_array[:, width // 2:]),
+        axis=1,
     )
     stitched_image = Image.fromarray(stitched_array)
     out_path = Path(args.dir + "/system-style-" + sys_style.lower() + ".png")

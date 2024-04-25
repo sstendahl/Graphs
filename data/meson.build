@@ -1,10 +1,9 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 desktop_file_in = configure_file(
-          input: application_id + '.desktop.in.in',
+          input: application_id + '.desktop.in',
          output: application_id + '.desktop.in',
   configuration: conf,
 )
-
 desktop_file = i18n.merge_file(
         input: desktop_file_in,
        output: application_id + '.desktop',
@@ -22,11 +21,10 @@ if desktop_file_validate.found()
 endif
 
 appstream_file_in = configure_file(
-          input: application_id + '.appdata.xml.in.in',
+          input: application_id + '.appdata.xml.in',
          output: application_id + '.appdata.xml.in',
   configuration: conf,
 )
-
 appstream_file = i18n.merge_file(
         input: appstream_file_in,
        output: application_id + '.appdata.xml',
@@ -91,7 +89,7 @@ foreach b : blueprint_files
 endforeach
 
 blueprints = custom_target('blueprints',
-    input: blueprint_files,
+    input: files(blueprint_files),
    output: '.',
   command: [find_program('blueprint-compiler'), 'batch-compile', '@OUTPUT@', '@CURRENT_SOURCE_DIR@', '@INPUT@'],
 )
@@ -126,11 +124,6 @@ styles = files(
   'styles/yaru-dark.mplstyle',
 )
 
-css = files(
-  'style.css',
-  'style-hc.css',
-)
-
 icons = files (
   'icons/axes-one-quadrant-symbolic.svg',
   'icons/center-symbolic.svg',
@@ -161,20 +154,26 @@ icons = files (
   'icons/down-symbolic.svg',
 )
 
+other = files(
+  'style.css',
+  'style-hc.css',
+  'whats_new',
+)
+
 gresource = custom_target('gresource',
-    input: [blueprints, styles, css],
+    input: [blueprints, styles, other],
    output: application_id + '.gresource.xml',
+  depends: blueprints,
   command: [
     python,
     files('generate_gresource.py'),
     '@OUTPUT@',
     meson.current_build_dir(),
     files('../graphs/style_io.py'),
-    files('whats_new'),
     '--styles', styles,
     '--ui', blueprints_ui,
-    '--css', css,
     '--icons', icons,
+    '--other', other,
   ],
 )
 
@@ -183,7 +182,6 @@ gresource_hack = custom_target('gresource_hack',
    output: 'gresource_hack.vala',
   command: [find_program('touch'), '@OUTPUT@'],
 )
-
 
 gresource_bundle = gnome.compile_resources(application_id, gresource,
       dependencies: gresource,
