@@ -63,7 +63,7 @@ class ItemBox(Graphs.ItemBox):
         name = self.props.item.get_name()
         self.props.application.get_data().delete_items([self.props.item])
         toast = Adw.Toast.new(_("Deleted {name}").format(name=name))
-        toast.set_button_label("Undo")
+        toast.set_button_label(_("Undo"))
         toast.set_action_name("app.undo")
         self.props.application.get_window().add_toast(toast)
 
