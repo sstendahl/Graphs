@@ -1,11 +1,11 @@
 using Gtk 4.0;
 using Adw 1;
 
-Adw.PreferencesGroup columns_group {
-  Adw.ComboRow columns_delimiter {
+template $GraphsColumnsGroup : Adw.PreferencesGroup {
+  Adw.ComboRow delimiter {
     title: _("Delimiter");
     subtitle: _("Character sequence used to split values");
-    //notify::selected => $on_delimiter_change();
+    notify::selected => $on_delimiter();
     model: StringList{
       strings [
         C_("delimiter", "Whitespace"),
@@ -18,13 +18,13 @@ Adw.PreferencesGroup columns_group {
       ]
     };
   }
-  Adw.EntryRow columns_custom_delimiter {
+  Adw.EntryRow custom_delimiter {
     visible: false;
     max-width-chars: 10;
     title: _("Custom Delimiter");
   }
 
-  Adw.ComboRow columns_separator {
+  Adw.ComboRow separator {
     title: _("Decimal Separator");
     model: StringList{
       strings [
@@ -34,7 +34,7 @@ Adw.PreferencesGroup columns_group {
     };
   }
 
-  Adw.SpinRow columns_column_x {
+  Adw.SpinRow column_x {
     title: _("Column X");
     subtitle: _("X-data column index");
     adjustment: Adjustment {
@@ -44,7 +44,7 @@ Adw.PreferencesGroup columns_group {
     };
   }
 
-  Adw.SpinRow columns_column_y {
+  Adw.SpinRow column_y {
     title: _("Column Y");
     selectable: false;
     subtitle: _("Y-data column index");
@@ -55,7 +55,7 @@ Adw.PreferencesGroup columns_group {
     };
   }
 
-  Adw.SpinRow columns_skip_rows {
+  Adw.SpinRow skip_rows {
     title: _("Skip Rows");
     subtitle: _("Ignored row indices");
     adjustment: Adjustment {

@@ -21,34 +21,9 @@ namespace Graphs {
             this.settings = application.get_settings_child ("import-params");
             this.modes = modes;
 
-            var builder = new Builder ();
-            foreach (string mode in modes) {
-                try {
-                    builder.add_from_resource (@"/se/sjoerd/Graphs/ui/import-$mode.ui");
-                } catch {
-                    assert_not_reached ();
-                }
-                var group = (PreferencesGroup) builder.get_object (mode + "_group");
-                GLib.Settings mode_settings = this.settings.get_child (mode);
-                foreach (string key in mode_settings.settings_schema.list_keys ()) {
-                    Object object = builder.get_object (mode + "_" + key.replace ("-", "_"));
-                    bind_setting (mode_settings, object, key);
-                }
-                // mode specific setups:
-                switch (mode) {
-                    case "columns": {
-                        var delimiter = (Adw.ComboRow) builder.get_object ("columns_delimiter");
-                        var custom_delimiter = (Adw.EntryRow) builder.get_object ("columns_custom_delimiter");
-                        delimiter.notify["selected"].connect (() => {
-                            custom_delimiter.set_visible (delimiter.get_selected () == 6);
-                        });
-                        break;
-                    }
-                    default: {
-                        break;
-                    }
-                }
-                this.mode_box.append (group);
+            if ("columns" in modes) {
+                var coumns_group = new ColumnsGroup (this.settings.get_child ("columns"));
+                this.mode_box.append (coumns_group);
             }
             present (application.window);
         }
@@ -72,28 +47,36 @@ namespace Graphs {
             });
             dialog.present (this);
         }
+    }
 
-        private static void bind_setting (GLib.Settings settings, Object object, string key) {
-            if (object is Adw.EntryRow) {
-                settings.bind (key, object, "text", 0);
-            }
-            else if (object is Adw.ComboRow) {
-                var comborow = (Adw.ComboRow) object;
-                comborow.set_selected (settings.get_enum (key));
-                comborow.notify["selected"].connect (() => {
-                    if (settings.get_enum (key) != comborow.get_selected ()) {
-                        settings.set_enum (
-                            key, (int) comborow.get_selected ()
-                        );
-                    }
-                });
-                settings.changed[key].connect (() => {
-                    comborow.set_selected (settings.get_enum (key));
-                });
-            }
-            else if (object is Adw.SpinRow) {
-                settings.bind (key, object, "value", 0);
-            }
+    [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/import-columns.ui")]
+    public class ColumnsGroup : Adw.PreferencesGroup {
+
+        [GtkChild]
+        public unowned Adw.ComboRow delimiter { get; }
+
+        [GtkChild]
+        public unowned Adw.EntryRow custom_delimiter { get; }
+
+        [GtkChild]
+        public unowned Adw.ComboRow separator { get; }
+
+        [GtkChild]
+        public unowned Adw.SpinRow column_x { get; }
+
+        [GtkChild]
+        public unowned Adw.SpinRow column_y { get; }
+
+        [GtkChild]
+        public unowned Adw.SpinRow skip_rows { get; }
+
+        [GtkCallback]
+        private void on_delimiter () {
+            this.custom_delimiter.set_visible (this.delimiter.get_selected () == 6);
+        }
+
+        public ColumnsGroup (GLib.Settings settings) {
+            Tools.bind_settings_to_widgets (settings, this);
         }
     }
 }
