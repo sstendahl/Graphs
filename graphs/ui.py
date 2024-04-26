@@ -1,37 +1,8 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Some UI utilities."""
-import contextlib
-from gettext import pgettext as C_
+from gi.repository import Gtk
 
-from gi.repository import GLib, Graphs, Gtk
-
-from graphs import file_import, misc, utilities
-
-
-def add_data_dialog(application: Graphs.Application) -> None:
-    """Show add data dialog."""
-
-    def on_response(dialog, response):
-        with contextlib.suppress(GLib.GError):
-            file_import.import_from_files(
-                application,
-                dialog.open_multiple_finish(response),
-            )
-
-    dialog = Gtk.FileDialog()
-    dialog.set_filters(
-        utilities.create_file_filters((
-            (
-                C_("file-filter", "Supported files"),
-                ["xy", "dat", "txt", "csv", "xrdml", "xry", "graphs"],
-            ),
-            (C_("file-filter", "ASCII files"), ["xy", "dat", "txt", "csv"]),
-            (C_("file-filter", "PANalytical XRDML"), ["xrdml"]),
-            (C_("file-filter", "Leybold xry"), ["xry"]),
-            misc.GRAPHS_PROJECT_FILE_FILTER_TEMPLATE,
-        )),
-    )
-    dialog.open_multiple(application.get_window(), None, on_response)
+from graphs import utilities
 
 
 def validate_entry(entry: Gtk.Editable) -> float:
