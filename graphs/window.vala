@@ -25,7 +25,7 @@ namespace Graphs {
         private unowned MenuButton view_menu_button { get; }
 
         [GtkChild]
-        public unowned ToggleButton pan_button { get; }
+        private unowned ToggleButton pan_button { get; }
 
         [GtkChild]
         private unowned ToggleButton zoom_button { get; }
@@ -40,7 +40,7 @@ namespace Graphs {
         private unowned Stack stack { get; }
 
         [GtkChild]
-        public unowned Button shift_button { get; }
+        private unowned Button shift_button { get; }
 
         [GtkChild]
         public unowned Button cut_button { get; }
