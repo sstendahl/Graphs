@@ -6,27 +6,6 @@ from gettext import pgettext as C_
 from gi.repository import GLib, Graphs, Gtk
 
 from graphs import file_import, misc, utilities
-from graphs.item_box import ItemBox
-
-
-def on_items_change(
-    data,
-    _ignored,
-    application: Graphs.Application,
-) -> None:
-    """Handle UI representation of items."""
-    item_list = application.get_window().get_item_list()
-    while item_list.get_last_child() is not None:
-        item_list.remove(item_list.get_last_child())
-
-    for index, item in enumerate(data):
-        itembox = ItemBox(application, item, index)
-        item_list.append(itembox)
-        row = item_list.get_row_at_index(index)
-        row.add_controller(itembox.get_drag_source())
-        row.add_controller(itembox.get_drop_target())
-        row.add_controller(itembox.get_click_gesture())
-    data.add_view_history_state()
 
 
 def add_data_dialog(application: Graphs.Application) -> None:

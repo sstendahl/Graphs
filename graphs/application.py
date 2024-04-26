@@ -15,6 +15,7 @@ from graphs import (
     ui,
 )
 from graphs.data import Data
+from graphs.item_box import ItemBox
 
 from matplotlib import font_manager
 
@@ -45,12 +46,6 @@ class PythonApplication(Graphs.Application):
         Graphs.setup_actions(self)
         self.connect("action_invoked", actions.on_action_invoked)
         self.connect("operation_invoked", operations.perform_operation)
-
-        data.connect(
-            "notify::items",
-            ui.on_items_change,
-            self,
-        )
 
     def on_project_saved(self, _application, handler=None, *args) -> None:
         """Change unsaved state."""
@@ -176,6 +171,15 @@ class PythonApplication(Graphs.Application):
                 _param: window.update_view_menu(),
             )
             window.update_view_menu()
+
+            def on_items(data, _ignored):
+                window.set_item_boxes([
+                    ItemBox(self, item, index) for index,
+                    item in enumerate(data)
+                ])
+                data.add_view_history_state()
+
+            data.connect("notify::items", on_items)
             window.present()
 
     def set_entry_css(
