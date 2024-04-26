@@ -12,6 +12,8 @@ namespace Graphs {
         public bool can_view_forward { get; protected set; default = false; }
         public File file { get; set; }
         public bool unsaved { get; set; default = false; }
+        public string project_name { get; protected set; }
+        public string project_path { get; protected set; }
 
         private bool[] _used_positions;
 

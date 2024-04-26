@@ -10,16 +10,16 @@ namespace Graphs {
     public class Window : Adw.ApplicationWindow {
 
         [GtkChild]
-        public unowned Button undo_button { get; }
+        private unowned Button undo_button { get; }
 
         [GtkChild]
-        public unowned Button redo_button { get; }
+        private unowned Button redo_button { get; }
 
         [GtkChild]
-        public unowned Button view_back_button { get; }
+        private unowned Button view_back_button { get; }
 
         [GtkChild]
-        public unowned Button view_forward_button { get; }
+        private unowned Button view_forward_button { get; }
 
         [GtkChild]
         private unowned MenuButton view_menu_button { get; }
@@ -82,7 +82,7 @@ namespace Graphs {
         private unowned Adw.HeaderBar content_headerbar { get; }
 
         [GtkChild]
-        public unowned Adw.WindowTitle content_title { get; }
+        private unowned Adw.WindowTitle content_title { get; }
 
         public int mode {
             set {
@@ -110,6 +110,12 @@ namespace Graphs {
                 "items_selected", this.shift_button, "sensitive", 2
             );
             data.bind_property ("empty", this.item_list, "visible", 4);
+            data.bind_property ("can_undo", this.undo_button, "sensitive", 2);
+            data.bind_property ("can_redo", this.redo_button, "sensitive", 2);
+            data.bind_property ("can_view_back", this.view_back_button, "sensitive", 2);
+            data.bind_property ("can_view_forward", this.view_forward_button, "sensitive", 2);
+            data.bind_property ("project_name", this.content_title, "title", 2);
+            data.bind_property ("project_path", this.content_title, "subtitle", 2);
 
             InlineStackSwitcher stack_switcher = new InlineStackSwitcher ();
             stack_switcher.stack = this.stack;
@@ -123,6 +129,7 @@ namespace Graphs {
                 headerbar_provider, STYLE_PROVIDER_PRIORITY_APPLICATION
             );
 
+            this.update_view_menu ();
             if (application.debug) {
                 this.add_css_class ("devel");
                 this.set_title (_("Graphs (Development)"));

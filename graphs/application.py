@@ -126,20 +126,6 @@ class PythonApplication(Graphs.Application):
         if not window:
             window = Graphs.Window.new(self)
             data = self.get_data()
-            binding_table = [
-                ("can_undo", window.get_undo_button(), "sensitive"),
-                ("can_redo", window.get_redo_button(), "sensitive"),
-                ("can_view_back", window.get_view_back_button(), "sensitive"),
-                (
-                    "can_view_forward",
-                    window.get_view_forward_button(),
-                    "sensitive",
-                ),
-                ("project_name", window.get_content_title(), "title"),
-                ("project_path", window.get_content_title(), "subtitle"),
-            ]
-            for prop1, obj, prop2 in binding_table:
-                data.bind_property(prop1, obj, prop2, 2)
             actions = (
                 "multiply_x",
                 "multiply_y",
@@ -165,18 +151,13 @@ class PythonApplication(Graphs.Application):
             self.set_window(window)
             window.connect("close-request", self.close_application)
             self.set_figure_style_manager(styles.StyleManager(self))
-            data.connect_after(
-                "notify::items",
-                lambda _data,
-                _param: window.update_view_menu(),
-            )
-            window.update_view_menu()
 
             def on_items(data, _ignored):
                 window.set_item_boxes([
                     ItemBox(self, item, index) for index,
                     item in enumerate(data)
                 ])
+                window.update_view_menu()
                 data.add_view_history_state()
 
             data.connect("notify::items", on_items)

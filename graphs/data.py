@@ -37,6 +37,7 @@ class Data(Graphs.Data):
             "add_history_state_request",
             lambda _s: self.add_history_state(),
         )
+        self._on_unsaved_change(None, None)
 
     def reset(self):
         """Reset data."""
@@ -76,35 +77,25 @@ class Data(Graphs.Data):
         return not self._items
 
     def _on_unsaved_change(self, _a, _b) -> None:
-        if not self.props.unsaved:
-            self.emit("saved")
-        self.notify("project-name")
-        self.notify("project-path")
-
-    @GObject.Property(type=str, default="", flags=1)
-    def project_name(self) -> str:
-        """Get project_name property."""
         if self.props.file is None:
             title = _("Untitled Project")
+            path = _("Draft")
         else:
             title = Graphs.tools_get_filename(self.props.file)
+            uri_parse = urlparse(self.props.file.get_uri())
+            filepath = os.path.dirname(
+                os.path.join(uri_parse.netloc, unquote(uri_parse.path)),
+            )
+            if filepath.startswith("/var"):
+                # Fix for rpm-ostree distros, where home is placed in /var/home
+                filepath = filepath.replace("/var", "", 1)
+            path = filepath.replace(os.path.expanduser("~"), "~")
         if self.props.unsaved:
             title = "• " + title
-        return title
-
-    @GObject.Property(type=str, default="", flags=1)
-    def project_path(self) -> str:
-        """Retrieve the path of the associated file."""
-        if self.props.file is None:
-            return _("Draft")
-        uri_parse = urlparse(self.props.file.get_uri())
-        filepath = os.path.dirname(
-            os.path.join(uri_parse.netloc, unquote(uri_parse.path)),
-        )
-        if filepath.startswith("/var"):
-            # Fix for rpm-ostree distros, where home is placed in /var/home
-            filepath = filepath.replace("/var", "", 1)
-        return filepath.replace(os.path.expanduser("~"), "~")
+        else:
+            self.emit("saved")
+        self.props.project_name = title
+        self.props.project_path = path
 
     @GObject.Property(type=bool, default=False, flags=1)
     def items_selected(self) -> bool:
