@@ -1,11 +1,11 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Some UI utilities."""
 import contextlib
-from gettext import gettext as _, pgettext as C_
+from gettext import pgettext as C_
 
 from gi.repository import GLib, Graphs, Gtk
 
-from graphs import file_import, file_io, misc, utilities
+from graphs import file_import, misc, utilities
 from graphs.item_box import ItemBox
 
 
@@ -53,46 +53,6 @@ def add_data_dialog(application: Graphs.Application) -> None:
         )),
     )
     dialog.open_multiple(application.get_window(), None, on_response)
-
-
-def export_data_dialog(application: Graphs.Application) -> None:
-    """Show export data dialog."""
-    data = application.get_data()
-    window = application.get_window()
-    if data.props.empty:
-        window.add_toast_string(_("No data to export"))
-        return
-    multiple = len(data) > 1
-
-    def on_response(dialog, response):
-        with contextlib.suppress(GLib.GError):
-            if multiple:
-                directory = dialog.select_folder_finish(response)
-                for item in data:
-                    file = directory.get_child_for_display_name(
-                        f"{item.get_name()}.txt",
-                    )
-                    file_io.save_item(file, item)
-            else:
-                file = dialog.save_finish(response)
-                file_io.save_item(file, data[0])
-            window.add_toast_string_with_file(
-                _("Exported Data"),
-                file,
-            )
-
-    dialog = Gtk.FileDialog()
-    if multiple:
-        dialog.select_folder(window, None, on_response)
-    else:
-        filename = f"{data[0].get_name()}.txt"
-        dialog.set_initial_name(filename)
-        dialog.set_filters(
-            utilities.create_file_filters(
-                ((C_("file-filter", "Text Files"), ["txt"]), ),
-            ),
-        )
-        dialog.save(window, None, on_response)
 
 
 def validate_entry(entry: Gtk.Editable) -> float:

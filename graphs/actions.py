@@ -6,7 +6,7 @@ from gettext import gettext as _
 
 from gi.repository import Adw, Gio, Graphs
 
-from graphs import file_io, project, ui, utilities
+from graphs import export_data, file_io, project, ui, utilities
 from graphs.figure_settings import FigureSettingsDialog
 from graphs.item import DataItem
 
@@ -140,7 +140,11 @@ def view_forward_action(application: Graphs.Application) -> None:
 
 def export_data_action(application: Graphs.Application) -> None:
     """Export Data."""
-    ui.export_data_dialog(application)
+    data = application.get_data()
+    if data.props.empty:
+        application.get_window().add_toast_string(_("No data to export"))
+        return
+    export_data.export_items(application, data.get_items())
 
 
 def export_figure_action(application: Graphs.Application) -> None:
