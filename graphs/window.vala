@@ -103,6 +103,8 @@ namespace Graphs {
 
         public CssProvider headerbar_provider { get; private set; }
 
+        public signal void entry_validation_request (Entry entry, Button button);
+
         public Window (Application application) {
             Object (application: application);
             Data data = application.data;
@@ -128,6 +130,26 @@ namespace Graphs {
             context.add_provider (
                 headerbar_provider, STYLE_PROVIDER_PRIORITY_APPLICATION
             );
+
+            string[] action_names = {
+                "multiply_x",
+                "multiply_y",
+                "translate_x",
+                "translate_y"
+            };
+            foreach (string action_name in action_names) {
+                Entry entry;
+                Button button;
+                this.get (action_name + "_entry", out entry);
+                this.get (action_name + "_button", out button);
+                entry.notify["text"].connect (() => {
+                    this.entry_validation_request.emit (entry, button);
+                });
+                data.notify["items-selected"].connect (() => {
+                    this.entry_validation_request.emit (entry, button);
+                });
+                this.entry_validation_request.emit (entry, button);
+            }
 
             this.update_view_menu ();
             if (application.debug) {

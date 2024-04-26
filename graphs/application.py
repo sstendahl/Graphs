@@ -3,7 +3,7 @@
 import logging
 from gettext import gettext as _
 
-from gi.repository import Adw, Gio, Graphs, Gtk
+from gi.repository import Gio, Graphs, Gtk
 
 from graphs import (
     actions,
@@ -125,32 +125,11 @@ class PythonApplication(Graphs.Application):
         window = self.props.active_window
         if not window:
             window = Graphs.Window.new(self)
-            data = self.get_data()
-            actions = (
-                "multiply_x",
-                "multiply_y",
-                "translate_x",
-                "translate_y",
-            )
-            for action in actions:
-                entry = window.get_property(action + "_entry")
-                button = window.get_property(action + "_button")
-                entry.connect(
-                    "notify::text",
-                    self.set_entry_css,
-                    entry,
-                    button,
-                )
-                data.connect(
-                    "notify::items-selected",
-                    self.set_entry_css,
-                    entry,
-                    button,
-                )
-                self.set_entry_css(None, None, entry, button)
             self.set_window(window)
+            window.connect("entry_validation_request", self.set_entry_css)
             window.connect("close-request", self.close_application)
             self.set_figure_style_manager(styles.StyleManager(self))
+            data = self.get_data()
 
             def on_items(data, _ignored):
                 window.set_item_boxes([
@@ -165,9 +144,8 @@ class PythonApplication(Graphs.Application):
 
     def set_entry_css(
         self,
-        _object,
-        _param,
-        entry: Adw.EntryRow,
+        _window,
+        entry: Gtk.Entry,
         button: Gtk.Button,
     ) -> None:
         """Validate text field input."""
