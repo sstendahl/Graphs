@@ -4,7 +4,7 @@ from gettext import gettext as _
 
 from gi.repository import Graphs
 
-from graphs import misc, styles, ui
+from graphs import misc, styles, utilities
 
 
 class FigureSettingsDialog(Graphs.FigureSettingsDialog):
@@ -29,7 +29,7 @@ class FigureSettingsDialog(Graphs.FigureSettingsDialog):
     @staticmethod
     def on_entry_change(self, entry, prop) -> None:
         """Bind the entry upon change."""
-        is_valid, value = ui.validate_entry(entry)
+        is_valid, value = utilities.validate_entry(entry)
         if is_valid:
             self.props.figure_settings.set_property(prop, value)
 

@@ -13,7 +13,6 @@ from graphs import (
     file_io,
     misc,
     project,
-    ui,
     utilities,
 )
 from graphs.figure_settings import FigureSettingsDialog
@@ -113,7 +112,7 @@ def add_equation_action(application: Graphs.Application) -> None:
             return msg
 
     def on_entry_change(entry, _param):
-        ui.validate_entry(entry)
+        utilities.validate_entry(entry)
 
     dialog = Graphs.AddEquationDialog.new(application)
     for s in ("x_start", "x_stop", "step_size"):

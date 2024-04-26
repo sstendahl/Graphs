@@ -31,7 +31,6 @@ python.install_sources(
     'scales.py',
     'style_io.py',
     'styles.py',
-    'ui.py',
     'utilities.py',
   ),
   subdir: meson.project_name(),

@@ -12,7 +12,7 @@ from graphs import (
     operations,
     project,
     styles,
-    ui,
+    utilities,
 )
 from graphs.data import Data
 from graphs.item_box import ItemBox
@@ -191,6 +191,6 @@ class PythonApplication(Graphs.Application):
     ) -> None:
         """Validate text field input."""
         button.set_sensitive(
-            ui.validate_entry(entry)[1]
+            utilities.validate_entry(entry)[1]
             and self.get_data().props.items_selected,
         )
