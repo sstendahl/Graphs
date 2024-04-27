@@ -133,17 +133,6 @@ class PythonApplication(Graphs.Application):
             window.connect("entry_validation_request", self.set_entry_css)
             window.connect("close-request", self._on_close_request)
             self.set_figure_style_manager(styles.StyleManager(self))
-            data = self.get_data()
-
-            def on_items(data, _ignored):
-                window.set_item_boxes([
-                    ItemBox(self, item, index) for index,
-                    item in enumerate(data)
-                ])
-                window.update_view_menu()
-                data.add_view_history_state()
-
-            data.connect("notify::items", on_items)
             window.present()
 
     def set_entry_css(

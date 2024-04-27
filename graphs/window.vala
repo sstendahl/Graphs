@@ -151,6 +151,25 @@ namespace Graphs {
                 this.entry_validation_request.emit (entry, button);
             }
 
+            data.notify["items"].connect (() => {
+                Widget child = null;
+                while ((child = this.item_list.get_last_child ()) != null) {
+                    this.item_list.remove (child);
+                }
+                int index = 0;
+                foreach (Item item in data) {
+                    ItemBox item_box = application.python_helper.create_item_box (item, index);
+                    this.item_list.append (item_box);
+                    Widget row = this.item_list.get_last_child ();
+                    row.add_controller (item_box.drag_source);
+                    row.add_controller (item_box.drop_target);
+                    row.add_controller (item_box.click_gesture);
+                    index++;
+                }
+                this.update_view_menu ();
+                data.add_view_history_state ();
+            });
+
             this.update_view_menu ();
             if (application.debug) {
                 this.add_css_class ("devel");
@@ -269,23 +288,6 @@ namespace Graphs {
             }
             view_menu.append_section (null, scales_section);
             this.view_menu_button.set_menu_model (view_menu);
-        }
-
-        /**
-         * Set ItemBoxes.
-         */
-        public void set_item_boxes (ItemBox[] item_boxes) {
-            Widget child = null;
-            while ((child = this.item_list.get_last_child ()) != null) {
-                this.item_list.remove (child);
-            }
-            foreach (ItemBox item_box in item_boxes) {
-                this.item_list.append (item_box);
-                Widget row = this.item_list.get_last_child ();
-                row.add_controller (item_box.drag_source);
-                row.add_controller (item_box.drop_target);
-                row.add_controller (item_box.click_gesture);
-            }
         }
     }
 }

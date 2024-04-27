@@ -8,5 +8,10 @@ namespace Graphs {
         public FigureSettingsDialog create_figure_settings_dialog () {
             return this.figure_settings_dialog_request.emit ();
         }
+
+        protected signal ItemBox item_box_request (Item item, int index);
+        public ItemBox create_item_box (Item item, int index) {
+            return this.item_box_request.emit (item, index);
+        }
     }
 }
