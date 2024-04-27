@@ -38,6 +38,10 @@ class Data(Graphs.Data):
             lambda _s: self.add_history_state(),
         )
         self._on_unsaved_change(None, None)
+        self.connect(
+            "optimize_limits_request", self._on_optimize_limits_request
+        )
+        self.connect("item_changed", self._on_item_changed)
 
     def reset(self):
         """Reset data."""
@@ -51,10 +55,8 @@ class Data(Graphs.Data):
             figure_settings.set_property(prop, new_value)
 
         # Reset items
-        self.delete_items([item for item in self])
+        super().reset()
         self._initialize()
-        self.props.file = None
-        self.props.unsaved = False
 
     def _initialize(self):
         """Initialize the data class and set default values."""
@@ -68,13 +70,7 @@ class Data(Graphs.Data):
         self._history_pos = -1
         self._view_history_states = [limits]
         self._view_history_pos = -1
-        self._items = {}
         self._set_data_copy()
-
-    @GObject.Property(type=bool, default=True, flags=1 | 1073741824)
-    def empty(self) -> bool:
-        """Whether or not the class is empty."""
-        return not self._items
 
     def _on_unsaved_change(self, _a, _b) -> None:
         if self.props.file is None:
@@ -97,11 +93,6 @@ class Data(Graphs.Data):
         self.props.project_name = title
         self.props.project_path = path
 
-    @GObject.Property(type=bool, default=False, flags=1)
-    def items_selected(self) -> bool:
-        """Whether or not at least one item is selected."""
-        return any(item_.get_selected() for item_ in self)
-
     @GObject.Property(type=object, flags=3 | 1073741824)  # explicit notify
     def items(self) -> misc.ItemList:
         """All managed items."""
@@ -112,57 +103,13 @@ class Data(Graphs.Data):
         """Set items property."""
         self.set_items(items)
 
-    def get_items(self) -> misc.ItemList:
-        """Get all managed items."""
-        return list(self._items.values())
-
-    def set_items(self, items: misc.ItemList) -> None:
-        """Set all managed items."""
-        self._items = {}
-        for item_ in items:
-            self._add_item(item_)
-        self._update_used_positions()
-        self.notify("items")
-        self.notify("empty")
-
-    def _add_item(self, item_: Graphs.Item) -> None:
-        """Append items to self."""
-        self._connect_to_item(item_)
-        self._items[item_.get_uuid()] = item_
-
-    def _delete_item(self, uuid: str) -> None:
-        """Pop and delete item."""
-        item_ = self._items[uuid]
-        self._items.pop(uuid)
-        del item_
-
-    def index(self, item_: Graphs.Item) -> int:
-        """Get the index of an item."""
-        return list(self._items.keys()).index(item_.get_uuid())
-
-    def get_names(self) -> list[str]:
-        """All items' names."""
-        return [item_.get_name() for item_ in self]
-
-    def get_n_items(self) -> int:
-        """Amount of managed items."""
-        return len(self._items)
-
-    def get_at_pos(self, position: int) -> Graphs.Item:
-        """Get item at position."""
-        return self.get_items()[position]
-
-    def get_for_uuid(self, uuid: str) -> Graphs.Item:
-        """Get item for key."""
-        return self._items[uuid]
-
     def __len__(self) -> int:
         """Magic alias for `get_n_items()`."""
         return self.get_n_items()
 
     def __iter__(self):
         """Iterate over items."""
-        return iter(self._items.values())
+        return iter(self.get_items())
 
     def __getitem__(self, getter: str | int):
         """Magic alias for retrieving items."""
@@ -298,48 +245,17 @@ class Data(Graphs.Data):
         self.add_history_state()
         self.notify("items_selected")
 
-    def _connect_to_item(self, item_: Graphs.Item):
-        item_.connect("notify::selected", self._on_item_select)
-        item_.connect("notify", self._on_item_change)
-        for prop in ("xposition", "yposition"):
-            item_.connect(f"notify::{prop}", self._on_item_position_change)
-
-    def _on_item_position_change(self, _item, _ignored) -> None:
-        self.optimize_limits()
-        self._update_used_positions()
-        self.notify("items")
-
-    def _on_item_select(self, _x, _y) -> None:
-        self.notify("items_selected")
-
-    def _on_item_change(self, item_, param) -> None:
+    @staticmethod
+    def _on_item_changed(self, item_, prop) -> None:
         self._current_batch.append((
             0,
             (
                 item_.get_uuid(),
-                param.name,
-                copy.deepcopy(self._data_copy[item_.get_uuid()][param.name]),
-                copy.deepcopy(item_.get_property(param.name)),
+                prop,
+                copy.deepcopy(self._data_copy[item_.get_uuid()][prop]),
+                copy.deepcopy(item_.get_property(prop)),
             ),
         ))
-
-    def _update_used_positions(self) -> None:
-        # bottom, top, left, right
-        figure_settings = self.get_figure_settings()
-        used_positions = [False, False, False, False]
-
-        for item_ in self.items:
-            if (
-                figure_settings.get_hide_unselected()
-                and not item_.get_selected()
-            ):
-                continue
-            used_positions[item_.get_xposition()] = True
-            used_positions[item_.get_yposition() + 2] = True
-        if not any(used_positions):
-            self.set_used_positions(True, False, True, False)
-            return
-        self.set_used_positions(*used_positions)
 
     def _on_figure_settings_change(self, figure_settings, param) -> None:
         if param.name in _FIGURE_SETTINGS_HISTORY_IGNORELIST:
@@ -506,7 +422,8 @@ class Data(Graphs.Data):
         self.props.can_view_back = True
         self.props.can_view_forward = self._view_history_pos < -1
 
-    def optimize_limits(self) -> None:
+    @staticmethod
+    def _on_optimize_limits_request(self) -> None:
         """Optimize the limits of the canvas to the data class."""
         figure_settings = self.get_figure_settings()
         axes = [[
