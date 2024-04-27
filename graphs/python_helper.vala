@@ -25,5 +25,10 @@ namespace Graphs {
         public CurveFittingDialog create_curve_fitting_dialog (Item item) {
             return this.curve_fitting_dialog_request.emit (item);
         }
+
+        protected signal bool validate_input_request (string input);
+        public bool validate_input (string input) {
+            return this.validate_input_request.emit (input);
+        }
     }
 }

@@ -46,5 +46,15 @@ namespace Graphs {
             if (error == "") close ();
             else this.toast_overlay.add_toast (new Adw.Toast (error));
         }
+
+        [GtkCallback]
+        private void on_entry_change (Object object, ParamSpec? spec) {
+            var entry = (Adw.EntryRow) object;
+            if (application.python_helper.validate_input (entry.get_text ())) {
+                entry.remove_css_class ("error");
+            } else {
+                entry.add_css_class ("error");
+            }
+        }
     }
 }

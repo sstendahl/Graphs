@@ -103,8 +103,6 @@ namespace Graphs {
 
         public CssProvider headerbar_provider { get; private set; }
 
-        public signal void entry_validation_request (Entry entry, Button button);
-
         public Window (Application application) {
             Object (application: application);
             Data data = application.data;
@@ -143,12 +141,12 @@ namespace Graphs {
                 this.get (action_name + "_entry", out entry);
                 this.get (action_name + "_button", out button);
                 entry.notify["text"].connect (() => {
-                    this.entry_validation_request.emit (entry, button);
+                    this.validate_entry (application, entry, button);
                 });
                 data.notify["items-selected"].connect (() => {
-                    this.entry_validation_request.emit (entry, button);
+                    this.validate_entry (application, entry, button);
                 });
-                this.entry_validation_request.emit (entry, button);
+                this.validate_entry (application, entry, button);
             }
 
             data.notify["items"].connect (() => {
@@ -174,6 +172,16 @@ namespace Graphs {
             if (application.debug) {
                 this.add_css_class ("devel");
                 this.set_title (_("Graphs (Development)"));
+            }
+        }
+
+        private void validate_entry (Application application, Entry entry, Button button) {
+            if (application.python_helper.validate_input (entry.get_text ())) {
+                entry.remove_css_class ("error");
+                button.set_sensitive (application.data.items_selected);
+            } else {
+                entry.add_css_class ("error");
+                button.set_sensitive (false);
             }
         }
 

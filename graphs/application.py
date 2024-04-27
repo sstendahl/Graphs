@@ -3,7 +3,7 @@
 import logging
 from gettext import gettext as _
 
-from gi.repository import Gio, Graphs, Gtk
+from gi.repository import Gio, Graphs
 
 from graphs import (
     actions,
@@ -12,7 +12,6 @@ from graphs import (
     operations,
     project,
     styles,
-    utilities,
 )
 from graphs.data import Data
 from graphs.python_helper import PythonHelper
@@ -129,19 +128,6 @@ class PythonApplication(Graphs.Application):
         if not window:
             window = Graphs.Window.new(self)
             self.set_window(window)
-            window.connect("entry_validation_request", self.set_entry_css)
             window.connect("close-request", self._on_close_request)
             self.set_figure_style_manager(styles.StyleManager(self))
             window.present()
-
-    def set_entry_css(
-        self,
-        _window,
-        entry: Gtk.Entry,
-        button: Gtk.Button,
-    ) -> None:
-        """Validate text field input."""
-        button.set_sensitive(
-            utilities.validate_entry(entry)[1]
-            and self.get_data().props.items_selected,
-        )

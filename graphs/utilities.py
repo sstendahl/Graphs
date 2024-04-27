@@ -278,14 +278,3 @@ def get_free_variables(equation_name: str) -> list:
         r"[a-zA-Z]+\b"  # Match any character sequence that is not excluded
     )
     return list(set(re.findall(pattern, equation_name)))
-
-
-def validate_entry(entry: Gtk.Editable) -> float:
-    """Validate an entry for having a parsable bool value."""
-    value = string_to_float(entry.get_text())
-    is_valid = value is not None
-    if is_valid:
-        entry.remove_css_class("error")
-    else:
-        entry.add_css_class("error")
-    return is_valid, value
