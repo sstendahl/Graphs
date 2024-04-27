@@ -33,6 +33,7 @@ namespace Graphs {
 
         public signal void saved ();
         protected signal void python_method_request (string method);
+        protected signal void position_change_request (int index1, int index2);
         protected signal void item_changed (Item item, string prop_name);
         protected signal void delete_request (Item[] items);
 
@@ -148,6 +149,10 @@ namespace Graphs {
             this.python_method_request.emit ("_optimize_limits");
         }
 
+        public void change_position (int index1, int index2) {
+            this.position_change_request.emit (index1, index2);
+        }
+
         public void add_history_state () {
             this.python_method_request.emit ("_add_history_state");
         }
@@ -160,16 +165,16 @@ namespace Graphs {
             this.python_method_request.emit ("_redo");
         }
 
+        public void add_view_history_state () {
+            this.python_method_request.emit ("_add_view_history_state");
+        }
+
         public void view_back () {
             this.python_method_request.emit ("_view_back");
         }
 
         public void view_forward () {
             this.python_method_request.emit ("_view_forward");
-        }
-
-        public void add_view_history_state () {
-            this.python_method_request.emit ("_add_view_history_state");
         }
     }
 }

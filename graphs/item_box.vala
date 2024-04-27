@@ -29,9 +29,7 @@ namespace Graphs {
         private CssProvider provider;
 
         protected signal void edit_request ();
-        protected signal void delete_request ();
         protected signal void curve_fitting_request ();
-        protected signal void position_change_request (int index);
 
         public void setup (int num_items) {
             this.provider = new CssProvider ();
@@ -60,7 +58,7 @@ namespace Graphs {
             });
             this.drop_target = new DropTarget (typeof (int), DragAction.COPY);
             this.drop_target.drop.connect ((t, val, x, y) => {
-                this.position_change_request.emit (val.get_int ());
+                this.change_position (val.get_int ());
                 return true;
             });
 
@@ -68,7 +66,8 @@ namespace Graphs {
             var delete_action = new SimpleAction ("delete", null);
             delete_action.activate.connect (() => {
                 string name = this.item.name;
-                this.delete_request.emit ();
+                Item[] list = {this.item};
+                this.application.data.delete_items (list);
                 var toast = new Adw.Toast (_("Deleted %s").printf (name));
                 toast.set_button_label (_("Undo"));
                 toast.set_action_name ("app.undo");
@@ -83,14 +82,14 @@ namespace Graphs {
             if (this.index > 0) {
                 var move_up_action = new SimpleAction ("move_up", null);
                 move_up_action.activate.connect (() => {
-                    this.position_change_request.emit (this.index - 1);
+                    this.change_position (this.index - 1);
                 });
                 action_group.add_action (move_up_action);
             }
             if (this.index + 1 < num_items) {
                 var move_down_action = new SimpleAction ("move_down", null);
                 move_down_action.activate.connect (() => {
-                    this.position_change_request.emit (this.index + 1);
+                    this.change_position (this.index + 1);
                 });
                 action_group.add_action (move_down_action);
             }
@@ -126,6 +125,13 @@ namespace Graphs {
                     } catch {}
                 }
             );
+        }
+
+        private void change_position (int source_index) {
+            Data data = this.application.data;
+            data.change_position (this.index, source_index);
+            data.add_history_state ();
+            data.add_view_history_state ();
         }
     }
 }

@@ -37,6 +37,7 @@ class Data(Graphs.Data):
         self.connect("item_changed", self._on_item_changed)
         self.connect("delete_request", self._on_delete_request)
         self.connect("python_method_request", self._on_python_method_request)
+        self.connect("position_change_request", self._change_position)
 
     @staticmethod
     def _on_python_method_request(self, method: str) -> None:
@@ -116,7 +117,8 @@ class Data(Graphs.Data):
             return self.get_for_uuid(getter)
         return self.get_at_pos(getter)
 
-    def change_position(self, index1: int, index2: int) -> None:
+    @staticmethod
+    def _change_position(self, index1: int, index2: int) -> None:
         """Change item position of index2 to that of index1."""
         items = self.get_items()
         # Check if target key is lower in the order, if so we can put the old
@@ -323,10 +325,10 @@ class Data(Graphs.Data):
             elif change_type == 2:
                 item_ = item.new_from_dict(copy.deepcopy(change[1]))
                 self._add_item(item_)
-                self.change_position(change[0], len(self) - 1)
+                self._change_position(self, change[0], len(self) - 1)
                 items_changed = True
             elif change_type == 3:
-                self.change_position(change[0], change[1])
+                self._change_position(self, change[0], change[1])
                 items_changed = True
             elif change_type == 4:
                 self.props.figure_settings.set_property(
@@ -364,7 +366,7 @@ class Data(Graphs.Data):
                 self._remove_item(self.get_for_uuid(change[1]["uuid"]))
                 items_changed = True
             elif change_type == 3:
-                self.change_position(change[1], change[0])
+                self._change_position(self, change[1], change[0])
                 items_changed = True
             elif change_type == 4:
                 self.props.figure_settings.set_property(
