@@ -92,6 +92,8 @@ class StyleManager(Graphs.StyleManager):
         self.setup_bindings(application.get_data().get_figure_settings())
         self._on_style_change()
 
+        self.connect("copy_request", self._on_copy_request)
+
     def _on_system_style_change(self, _a, _b):
         if not self.props.use_custom_style:
             self._on_style_change()
@@ -321,7 +323,8 @@ class StyleManager(Graphs.StyleManager):
         self.props.custom_style = self._system_style_name
         self.props.application.get_window().add_toast_string(message)
 
-    def copy_style(self, template: str, new_name: str) -> None:
+    @staticmethod
+    def _on_copy_request(self, template: str, new_name: str) -> None:
         """Copy a style."""
         new_name = Graphs.tools_get_duplicate_string(
             new_name,

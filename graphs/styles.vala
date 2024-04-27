@@ -22,6 +22,8 @@ namespace Graphs {
 
         private GLib.ListStore style_model;
 
+        protected signal void copy_request (string template, string name);
+
         construct {
             this.style_model = new GLib.ListStore (typeof (Style));
             this.selection_model = new SingleSelection (this.style_model);
@@ -120,6 +122,10 @@ namespace Graphs {
                 stylenames += style.name;
             }
             return stylenames;
+        }
+
+        public void copy_style (string template, string name) {
+            this.copy_request.emit (template, name);
         }
     }
 

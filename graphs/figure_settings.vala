@@ -109,8 +109,6 @@ namespace Graphs {
         }
 
         protected signal void entry_change (Adw.EntryRow entry, string prop);
-        protected signal void set_as_default ();
-        protected signal void copy_request (string template, string name);
         public signal void load_style_request (Style style);
         public signal void save_style_request ();
 
@@ -199,7 +197,8 @@ namespace Graphs {
             });
             var button = (Button) builder.get_object ("set_as_default");
             button.clicked.connect (() => {
-                this.set_as_default.emit ();
+                this.application.python_helper.run_method (this, "_set_as_default");
+                this.toast_overlay.add_toast (new Adw.Toast (_("Defaults Updated")));
             });
 
             present (this.application.window);
@@ -207,10 +206,6 @@ namespace Graphs {
                 var widget = (Widget) builder.get_object (highlighted);
                 widget.grab_focus ();
             }
-        }
-
-        protected void add_toast_string (string msg) {
-            this.toast_overlay.add_toast (new Adw.Toast (msg));
         }
 
         [GtkCallback]
@@ -223,7 +218,7 @@ namespace Graphs {
             StyleManager style_manager = this.application.figure_style_manager;
             var dialog = new AddStyleDialog (style_manager, this);
             dialog.accept.connect ((d, template, name) => {
-                this.copy_request.emit (template, name);
+                this.application.figure_style_manager.copy_style (template, name);
             });
         }
 

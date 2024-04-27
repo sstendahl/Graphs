@@ -21,9 +21,7 @@ class FigureSettingsDialog(Graphs.FigureSettingsDialog):
         super().__init__(application=application)
         self.props.style_editor = styles.StyleEditor(self)
         self.setup(highlighted)
-        self.connect("copy-request", self.copy_style)
         self.connect("entry-change", self.on_entry_change)
-        self.connect("set-as-default", self.on_set_as_default)
 
     @staticmethod
     def on_entry_change(self, entry, prop) -> None:
@@ -32,14 +30,7 @@ class FigureSettingsDialog(Graphs.FigureSettingsDialog):
         if is_valid:
             self.props.figure_settings.set_property(prop, value)
 
-    @staticmethod
-    def copy_style(self, template, name) -> None:
-        """Open the new style window."""
-        style_manager = self.props.application.get_figure_style_manager()
-        style_manager.copy_style(template, name)
-
-    @staticmethod
-    def on_set_as_default(self) -> None:
+    def _set_as_default(self) -> None:
         """Set the current figure settings as the new default."""
         figure_settings = self.props.figure_settings
         settings = self.props.application.get_settings_child("figure")
@@ -55,4 +46,3 @@ class FigureSettingsDialog(Graphs.FigureSettingsDialog):
                 settings.set_boolean(prop, value)
             elif isinstance(value, int):
                 settings.set_enum(prop, value)
-        self.add_toast_string(_("Defaults Updated"))

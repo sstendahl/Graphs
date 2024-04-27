@@ -6,6 +6,11 @@ namespace Graphs {
     public class PythonHelper : Object {
         public Application application { protected get; construct set; }
 
+        protected signal void python_method_request (Object object, string method);
+        public void run_method (Object object, string method) {
+            this.python_method_request.emit (object, method);
+        }
+
         protected signal FigureSettingsDialog figure_settings_dialog_request ();
         public FigureSettingsDialog create_figure_settings_dialog () {
             return this.figure_settings_dialog_request.emit ();

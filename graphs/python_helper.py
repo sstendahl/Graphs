@@ -5,6 +5,7 @@ from gi.repository import Graphs
 from graphs import curve_fitting, edit_item, figure_settings
 
 _REQUEST_NAMES = (
+    "python_method_request",
     "figure_settings_dialog_request",
     "edit_item_dialog_request",
     "curve_fitting_dialog_request",
@@ -22,6 +23,10 @@ class PythonHelper(Graphs.PythonHelper):
                 request_name,
                 getattr(self, "_on_" + request_name),
             )
+
+    @staticmethod
+    def _on_python_method_request(self, obj, method):
+        getattr(obj, method)()
 
     @staticmethod
     def _on_figure_settings_dialog_request(self):
