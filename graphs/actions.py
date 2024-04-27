@@ -5,7 +5,7 @@ import logging
 import sys
 from gettext import gettext as _, pgettext as C_
 
-from gi.repository import Adw, GLib, Gio, Graphs, Gtk
+from gi.repository import Adw, GLib, Graphs, Gtk
 
 from graphs import (
     export_data,
@@ -26,16 +26,6 @@ import numpy
 def on_action_invoked(application: Graphs.Application, name: str) -> None:
     """Handle action invokation."""
     getattr(sys.modules[__name__], name + "_action")(application)
-
-
-def quit_action(application: Graphs.Application) -> None:
-    """Quit the application."""
-    application.close_application()
-
-
-def about_action(application: Graphs.Application) -> None:
-    """Display about dialog."""
-    Graphs.show_about_dialog(application)
 
 
 def figure_settings_action(application: Graphs.Application) -> None:
@@ -122,51 +112,6 @@ def add_equation_action(application: Graphs.Application) -> None:
     dialog.connect("accept", on_accept)
 
 
-def select_all_action(application: Graphs.Application) -> None:
-    """Select all Items."""
-    data = application.get_data()
-    for item in data:
-        item.set_selected(True)
-    data.add_history_state()
-
-
-def select_none_action(application: Graphs.Application) -> None:
-    """Deselect all items."""
-    data = application.get_data()
-    for item in data:
-        item.set_selected(False)
-    data.add_history_state()
-
-
-def undo_action(application: Graphs.Application) -> None:
-    """Undo last action."""
-    application.get_data().undo()
-
-
-def redo_action(application: Graphs.Application) -> None:
-    """Redo last action."""
-    application.get_data().redo()
-
-
-def optimize_limits_action(application: Graphs.Application) -> None:
-    """Optimize figure limits."""
-    application.get_data().optimize_limits()
-
-
-def view_back_action(application: Graphs.Application) -> None:
-    """Restore last view."""
-    data = application.get_data()
-    if data.props.can_view_back:
-        data.view_back()
-
-
-def view_forward_action(application: Graphs.Application) -> None:
-    """Restore current view."""
-    data = application.get_data()
-    if data.props.can_view_forward:
-        data.view_forward()
-
-
 def export_data_action(application: Graphs.Application) -> None:
     """Export Data."""
     data = application.get_data()
@@ -229,11 +174,6 @@ def save_project_as_action(application: Graphs.Application) -> None:
     project.save_project(application, require_dialog=True)
 
 
-def smoothen_settings_action(application: Graphs.Application) -> None:
-    """Open settings for the smoothen action."""
-    Graphs.SmoothenDialog.new(application)
-
-
 def zoom_in_action(application: Graphs.Application) -> None:
     """Zoom into the figure."""
     canvas = application.get_window().get_canvas()
@@ -260,11 +200,3 @@ def delete_selected_action(application: Graphs.Application) -> None:
     toast.set_button_label("Undo")
     toast.set_action_name("app.undo")
     application.get_window().add_toast(toast)
-
-
-def help_action(application: Graphs.Application) -> None:
-    """Open Help page for Graphs."""
-    Gio.AppInfo.launch_default_for_uri(
-        "help:graphs",
-        application.get_window().get_display().get_app_launch_context(),
-    )

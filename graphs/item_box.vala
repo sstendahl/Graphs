@@ -67,7 +67,7 @@ namespace Graphs {
             bool new_value = this.check_button.get_active ();
             if (this.item.selected != new_value) {
                 this.item.selected = new_value;
-                this.application.data.add_history_state_request.emit ();
+                this.application.data.add_history_state ();
             }
         }
 
@@ -81,7 +81,7 @@ namespace Graphs {
                 (d, result) => {
                     try {
                         this.item.set_rgba (dialog.choose_rgba.end (result));
-                        this.application.data.add_history_state_request.emit ();
+                        this.application.data.add_history_state ();
                     } catch {}
                 }
             );

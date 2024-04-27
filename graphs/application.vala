@@ -14,6 +14,7 @@ namespace Graphs {
 
         public signal void action_invoked (string name);
         public signal void operation_invoked (string name);
+        protected signal void close_request ();
 
         construct {
             Intl.bindtextdomain (Config.GETTEXT_PACKAGE, Config.LOCALEDIR);
@@ -34,6 +35,10 @@ namespace Graphs {
                 settings = settings.get_child (child_name);
             }
             return settings;
+        }
+
+        public void close () {
+            this.close_request.emit ();
         }
     }
 }

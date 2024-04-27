@@ -39,9 +39,18 @@ class Data(Graphs.Data):
         )
         self._on_unsaved_change(None, None)
         self.connect(
-            "optimize_limits_request", self._on_optimize_limits_request,
+            "optimize_limits_request",
+            self._on_optimize_limits_request,
         )
         self.connect("item_changed", self._on_item_changed)
+        self.connect("undo_request", self._on_undo_request)
+        self.connect("redo_request", self._on_redo_request)
+        self.connect("view_back_request", self._on_view_back_request)
+        self.connect("view_forward_request", self._on_view_forward_request)
+        self.connect(
+            "add_view_history_state_request",
+            self._on_add_view_history_state_request,
+        )
 
     def reset(self):
         """Reset data."""
@@ -304,7 +313,8 @@ class Data(Graphs.Data):
         self._set_data_copy()
         self.props.unsaved = True
 
-    def undo(self) -> None:
+    @staticmethod
+    def _on_undo_request(self) -> None:
         """Undo the latest change that was added to the clipboard."""
         if not self.props.can_undo:
             return
@@ -344,7 +354,8 @@ class Data(Graphs.Data):
         self._set_data_copy()
         self.add_view_history_state()
 
-    def redo(self) -> None:
+    @staticmethod
+    def _on_redo_request(self) -> None:
         """Redo the latest change that was added to the clipboard."""
         if not self.props.can_redo:
             return
@@ -379,7 +390,8 @@ class Data(Graphs.Data):
         self._set_data_copy()
         self.add_view_history_state()
 
-    def add_view_history_state(self) -> None:
+    @staticmethod
+    def _on_add_view_history_state_request(self) -> None:
         """Add the view to the view history."""
         limits = self.get_figure_settings().get_limits()
         if all(
@@ -399,7 +411,8 @@ class Data(Graphs.Data):
         self.props.can_view_forward = False
         self.props.unsaved = True
 
-    def view_back(self) -> None:
+    @staticmethod
+    def _on_view_back_request(self) -> None:
         """Move the view to the previous value in the view history."""
         if not self.props.can_view_back:
             return
@@ -411,7 +424,8 @@ class Data(Graphs.Data):
         self.props.can_view_back = \
             abs(self._view_history_pos) < len(self._view_history_states)
 
-    def view_forward(self) -> None:
+    @staticmethod
+    def _on_view_forward_request(self) -> None:
         """Move the view to the next value in the view history."""
         if not self.props.can_view_forward:
             return

@@ -46,6 +46,7 @@ class PythonApplication(Graphs.Application):
         Graphs.setup_actions(self)
         self.connect("action_invoked", actions.on_action_invoked)
         self.connect("operation_invoked", operations.perform_operation)
+        self.connect("close_request", self._on_close_request)
 
     def on_project_saved(self, _application, handler=None, *args) -> None:
         """Change unsaved state."""
@@ -89,7 +90,7 @@ class PythonApplication(Graphs.Application):
         else:
             file_import.import_from_files(self, files)
 
-    def close_application(self, *_args) -> None:
+    def _on_close_request(self, *_args) -> None:
         """
         Intercept when closing the application.
 
@@ -127,7 +128,7 @@ class PythonApplication(Graphs.Application):
             window = Graphs.Window.new(self)
             self.set_window(window)
             window.connect("entry_validation_request", self.set_entry_css)
-            window.connect("close-request", self.close_application)
+            window.connect("close-request", self._on_close_request)
             self.set_figure_style_manager(styles.StyleManager(self))
             data = self.get_data()
 

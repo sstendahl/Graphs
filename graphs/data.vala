@@ -5,7 +5,7 @@ namespace Graphs {
     /**
      * Data class
      */
-    public class Data : Object {
+    public class Data : Object, Traversable<Item>, Iterable<Item> {
         protected Settings settings { get; set; }
         public FigureSettings figure_settings { get; construct set; }
         public bool can_undo { get; protected set; default = false; }
@@ -31,9 +31,14 @@ namespace Graphs {
         private bool[] _used_positions;
         private Gee.AbstractList<Item> _items;
 
-        public signal void add_history_state_request ();
         public signal void saved ();
         protected signal void optimize_limits_request ();
+        protected signal void add_history_state_request ();
+        protected signal void add_view_history_state_request ();
+        protected signal void undo_request ();
+        protected signal void redo_request ();
+        protected signal void view_back_request ();
+        protected signal void view_forward_request ();
         protected signal void item_changed (Item item, string prop_name);
 
         construct {
@@ -133,8 +138,40 @@ namespace Graphs {
             this._used_positions = used_positions;
         }
 
+        public Iterator<Item> iterator () {
+            return this._items.iterator ();
+        }
+
+        public bool @foreach (ForallFunc<Item> f) {
+            return this._items.foreach (f);
+        }
+
         public void optimize_limits () {
             this.optimize_limits_request.emit ();
+        }
+
+        public void add_history_state () {
+            this.add_history_state_request.emit ();
+        }
+
+        public void undo () {
+            this.undo_request.emit ();
+        }
+
+        public void redo () {
+            this.redo_request.emit ();
+        }
+
+        public void view_back () {
+            this.view_back_request.emit ();
+        }
+
+        public void view_forward () {
+            this.view_forward_request.emit ();
+        }
+
+        public void add_view_history_state () {
+            this.add_view_history_state_request.emit ();
         }
     }
 }
