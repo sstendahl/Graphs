@@ -5,7 +5,7 @@ import logging
 import sys
 from gettext import gettext as _, pgettext as C_
 
-from gi.repository import Adw, GLib, Graphs, Gtk
+from gi.repository import GLib, Graphs, Gtk
 
 from graphs import (
     export_data,
@@ -189,14 +189,3 @@ def zoom_out_action(application: Graphs.Application) -> None:
 def open_project_action(application: Graphs.Application) -> None:
     """Open a project."""
     project.open_project(application)
-
-
-def delete_selected_action(application: Graphs.Application) -> None:
-    """Delete selected items."""
-    items = [item for item in application.get_data() if item.get_selected()]
-    names = ", ".join(item.get_name() for item in items)
-    application.get_data().delete_items(items)
-    toast = Adw.Toast.new(_("Deleted {name}").format(name=names))
-    toast.set_button_label("Undo")
-    toast.set_action_name("app.undo")
-    application.get_window().add_toast(toast)

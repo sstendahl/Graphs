@@ -40,6 +40,7 @@ namespace Graphs {
         protected signal void view_back_request ();
         protected signal void view_forward_request ();
         protected signal void item_changed (Item item, string prop_name);
+        protected signal void delete_request (Item[] items);
 
         construct {
             this._items = new Gee.LinkedList<Item> ();
@@ -63,9 +64,12 @@ namespace Graphs {
             this._items.add (item);
         }
 
-        protected void _delete_item (string uuid) {
-            Item item = this.get_for_uuid (uuid);
+        protected void _remove_item (Item item) {
             this._items.remove (item);
+        }
+
+        public void delete_items (Item[] items) {
+            this.delete_request.emit (items);
         }
 
         private void _on_item_selected () {

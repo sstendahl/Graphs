@@ -165,5 +165,25 @@ namespace Graphs {
             application.data.view_forward ();
         });
         application.add_action (view_forward_action);
+
+        var delete_selected_action = new SimpleAction ("delete_selected", null);
+        delete_selected_action.activate.connect (() => {
+            Item[] items = {};
+            var name_builder = new StringBuilder ();
+            foreach (Item item in application.data) {
+                if (item.selected) {
+                    items += item;
+                    name_builder.append (item.name);
+                    name_builder.append (", ");
+                }
+            }
+            string names = name_builder.free_and_steal ()[:-2];
+            var toast = new Adw.Toast (_("Deleted %s").printf (names));
+            toast.set_button_label (_("Undo"));
+            toast.set_action_name ("app.undo");
+            application.data.delete_items (items);
+            application.window.add_toast (toast);
+        });
+        application.add_action (delete_selected_action);
     }
 }

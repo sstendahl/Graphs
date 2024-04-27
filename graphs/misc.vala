@@ -20,7 +20,6 @@ namespace Graphs {
         "save_project",
         "save_project_as",
         "open_project",
-        "delete_selected",
         "zoom_in",
         "zoom_out"
     };

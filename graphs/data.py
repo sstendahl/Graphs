@@ -51,6 +51,7 @@ class Data(Graphs.Data):
             "add_view_history_state_request",
             self._on_add_view_history_state_request,
         )
+        self.connect("delete_request", self._on_delete_request)
 
     def reset(self):
         """Reset data."""
@@ -225,7 +226,8 @@ class Data(Graphs.Data):
         self.notify("empty")
         self.notify("items_selected")
 
-    def delete_items(self, items: misc.ItemList):
+    @staticmethod
+    def _on_delete_request(self, items: misc.ItemList, _num):
         """Delete specified items."""
         settings = self.get_figure_settings()
         for item_ in items:
@@ -236,7 +238,7 @@ class Data(Graphs.Data):
             y_position = item_.get_yposition() + 2
             xlabel = item_.get_xlabel()
             ylabel = item_.get_ylabel()
-            self._delete_item(item_.get_uuid())
+            self._remove_item(item_)
         used = self.get_used_positions()
         for position in [x_position, y_position]:
             direction = misc.DIRECTIONS[position]
@@ -325,7 +327,7 @@ class Data(Graphs.Data):
             if change_type == 0:
                 self[change[0]].set_property(change[1], change[2])
             elif change_type == 1:
-                self._delete_item(change["uuid"])
+                self._remove_item(self.get_for_uuid(change["uuid"]))
                 items_changed = True
             elif change_type == 2:
                 item_ = item.new_from_dict(copy.deepcopy(change[1]))
@@ -369,7 +371,7 @@ class Data(Graphs.Data):
                 self._add_item(item.new_from_dict(copy.deepcopy(change)))
                 items_changed = True
             elif change_type == 2:
-                self._delete_item(change[1]["uuid"])
+                self._remove_item(self.get_for_uuid(change[1]["uuid"]))
                 items_changed = True
             elif change_type == 3:
                 self.change_position(change[1], change[0])
