@@ -285,6 +285,7 @@ class Data(Graphs.Data):
         })
 
     def add_history_state_with_limits(self, old_limits: misc.Limits) -> None:
+        """Add a state to the clipboard with old_limits set."""
         self._add_history_state(old_limits)
 
     def _add_history_state(self, old_limits: misc.Limits = None) -> None:

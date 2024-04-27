@@ -158,7 +158,7 @@ namespace Graphs {
                 }
                 int index = 0;
                 foreach (Item item in data) {
-                    ItemBox item_box = application.python_helper.create_item_box (item, index);
+                    var item_box = new ItemBox (application, item, index);
                     this.item_list.append (item_box);
                     Widget row = this.item_list.get_last_child ();
                     row.add_controller (item_box.drag_source);

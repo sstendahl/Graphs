@@ -22,7 +22,6 @@ python.install_sources(
     'file_import.py',
     'file_io.py',
     'item.py',
-    'item_box.py',
     'migrate.py',
     'misc.py',
     'operations.py',

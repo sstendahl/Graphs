@@ -15,7 +15,6 @@ from graphs import (
     utilities,
 )
 from graphs.data import Data
-from graphs.item_box import ItemBox
 from graphs.python_helper import PythonHelper
 
 from matplotlib import font_manager

@@ -1,5 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Python Helper - Vala Part
+using Gtk;
+
 namespace Graphs {
     public class PythonHelper : Object {
         public Application application { protected get; construct set; }
@@ -9,9 +11,14 @@ namespace Graphs {
             return this.figure_settings_dialog_request.emit ();
         }
 
-        protected signal ItemBox item_box_request (Item item, int index);
-        public ItemBox create_item_box (Item item, int index) {
-            return this.item_box_request.emit (item, index);
+        protected signal Widget edit_item_dialog_request (Item item);
+        public Widget create_edit_item_dialog (Item item) {
+            return this.edit_item_dialog_request.emit (item);
+        }
+
+        protected signal CurveFittingDialog curve_fitting_dialog_request (Item item);
+        public CurveFittingDialog create_curve_fitting_dialog (Item item) {
+            return this.curve_fitting_dialog_request.emit (item);
         }
     }
 }

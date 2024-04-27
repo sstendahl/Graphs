@@ -28,10 +28,12 @@ namespace Graphs {
 
         private CssProvider provider;
 
-        protected signal void edit_request ();
-        protected signal void curve_fitting_request ();
-
-        public void setup (int num_items) {
+        public ItemBox (Application application, Item item, int index) {
+            Object (
+                application: application,
+                item: item,
+                index: index
+            );
             this.provider = new CssProvider ();
             this.color_button.get_style_context ().add_provider (
                 this.provider, STYLE_PROVIDER_PRIORITY_APPLICATION
@@ -44,7 +46,7 @@ namespace Graphs {
 
             this.click_gesture = new GestureClick ();
             this.click_gesture.released.connect (() => {
-                this.edit_request.emit ();
+                this.application.python_helper.create_edit_item_dialog (this.item);
             });
 
             this.drag_source = new DragSource ();
@@ -76,7 +78,7 @@ namespace Graphs {
             action_group.add_action (delete_action);
             var curve_fitting_action = new SimpleAction ("curve_fitting", null);
             curve_fitting_action.activate.connect (() => {
-                this.curve_fitting_request.emit ();
+                this.application.python_helper.create_curve_fitting_dialog (this.item);
             });
             action_group.add_action (curve_fitting_action);
             if (this.index > 0) {
@@ -86,7 +88,7 @@ namespace Graphs {
                 });
                 action_group.add_action (move_up_action);
             }
-            if (this.index + 1 < num_items) {
+            if (this.index + 1 < this.application.data.get_n_items ()) {
                 var move_down_action = new SimpleAction ("move_down", null);
                 move_down_action.activate.connect (() => {
                     this.change_position (this.index + 1);
