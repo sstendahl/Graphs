@@ -1,7 +1,5 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Figure Settings Dialog."""
-from gettext import gettext as _
-
 from gi.repository import Graphs
 
 from graphs import misc, styles, utilities
