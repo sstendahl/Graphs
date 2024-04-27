@@ -28,7 +28,12 @@ namespace Graphs {
 
         private CssProvider provider;
 
-        public void setup () {
+        protected signal void edit_request ();
+        protected signal void delete_request ();
+        protected signal void curve_fitting_request ();
+        protected signal void position_change_request (int index);
+
+        public void setup (int num_items) {
             this.provider = new CssProvider ();
             this.color_button.get_style_context ().add_provider (
                 this.provider, STYLE_PROVIDER_PRIORITY_APPLICATION
@@ -41,7 +46,7 @@ namespace Graphs {
 
             this.click_gesture = new GestureClick ();
             this.click_gesture.released.connect (() => {
-                this.check_button.set_active (!this.check_button.get_active ());
+                this.edit_request.emit ();
             });
 
             this.drag_source = new DragSource ();
@@ -54,6 +59,42 @@ namespace Graphs {
                 return new ContentProvider.for_value (this.index);
             });
             this.drop_target = new DropTarget (typeof (int), DragAction.COPY);
+            this.drop_target.drop.connect ((t, val, x, y) => {
+                this.position_change_request.emit (val.get_int ());
+                return true;
+            });
+
+            var action_group = new SimpleActionGroup ();
+            var delete_action = new SimpleAction ("delete", null);
+            delete_action.activate.connect (() => {
+                string name = this.item.name;
+                this.delete_request.emit ();
+                var toast = new Adw.Toast (_("Deleted %s").printf (name));
+                toast.set_button_label (_("Undo"));
+                toast.set_action_name ("app.undo");
+                this.application.window.add_toast (toast);
+            });
+            action_group.add_action (delete_action);
+            var curve_fitting_action = new SimpleAction ("curve_fitting", null);
+            curve_fitting_action.activate.connect (() => {
+                this.curve_fitting_request.emit ();
+            });
+            action_group.add_action (curve_fitting_action);
+            if (this.index > 0) {
+                var move_up_action = new SimpleAction ("move_up", null);
+                move_up_action.activate.connect (() => {
+                    this.position_change_request.emit (this.index - 1);
+                });
+                action_group.add_action (move_up_action);
+            }
+            if (this.index + 1 < num_items) {
+                var move_down_action = new SimpleAction ("move_down", null);
+                move_down_action.activate.connect (() => {
+                    this.position_change_request.emit (this.index + 1);
+                });
+                action_group.add_action (move_down_action);
+            }
+            this.insert_action_group ("item_box", action_group);
         }
 
         private void on_color_change () {
