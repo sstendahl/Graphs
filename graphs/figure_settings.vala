@@ -227,6 +227,14 @@ namespace Graphs {
             });
         }
 
+        [GtkCallback]
+        private void on_closed () {
+            this.save_style_request.emit ();
+            Data data = this.application.data;
+            data.add_history_state ();
+            data.add_view_history_state ();
+        }
+
         private void on_factory_setup (Object object) {
             ListItem item = (ListItem) object;
             item.set_child (new StylePreview ());

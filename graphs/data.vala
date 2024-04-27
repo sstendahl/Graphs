@@ -32,13 +32,7 @@ namespace Graphs {
         private Gee.AbstractList<Item> _items;
 
         public signal void saved ();
-        protected signal void optimize_limits_request ();
-        protected signal void add_history_state_request ();
-        protected signal void add_view_history_state_request ();
-        protected signal void undo_request ();
-        protected signal void redo_request ();
-        protected signal void view_back_request ();
-        protected signal void view_forward_request ();
+        protected signal void python_method_request (string method);
         protected signal void item_changed (Item item, string prop_name);
         protected signal void delete_request (Item[] items);
 
@@ -151,31 +145,31 @@ namespace Graphs {
         }
 
         public void optimize_limits () {
-            this.optimize_limits_request.emit ();
+            this.python_method_request.emit ("_optimize_limits");
         }
 
         public void add_history_state () {
-            this.add_history_state_request.emit ();
+            this.python_method_request.emit ("_add_history_state");
         }
 
         public void undo () {
-            this.undo_request.emit ();
+            this.python_method_request.emit ("_undo");
         }
 
         public void redo () {
-            this.redo_request.emit ();
+            this.python_method_request.emit ("_redo");
         }
 
         public void view_back () {
-            this.view_back_request.emit ();
+            this.python_method_request.emit ("_view_back");
         }
 
         public void view_forward () {
-            this.view_forward_request.emit ();
+            this.python_method_request.emit ("_view_forward");
         }
 
         public void add_view_history_state () {
-            this.add_view_history_state_request.emit ();
+            this.python_method_request.emit ("_add_view_history_state");
         }
     }
 }

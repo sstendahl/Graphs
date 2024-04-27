@@ -22,7 +22,6 @@ class FigureSettingsDialog(Graphs.FigureSettingsDialog):
         self.props.style_editor = styles.StyleEditor(self)
         self.setup(highlighted)
         self.connect("copy-request", self.copy_style)
-        self.connect("closed", self.on_close)
         self.connect("entry-change", self.on_entry_change)
         self.connect("set-as-default", self.on_set_as_default)
 
@@ -38,18 +37,6 @@ class FigureSettingsDialog(Graphs.FigureSettingsDialog):
         """Open the new style window."""
         style_manager = self.props.application.get_figure_style_manager()
         style_manager.copy_style(template, name)
-
-    def on_close(self, *_args) -> None:
-        """
-        Handle closing.
-
-        Closes the figure settings, saves the current style and adds the
-        new state to the clipboard
-        """
-        self.emit("save-style-request")
-        data = self.props.application.get_data()
-        data.add_view_history_state()
-        data.add_history_state()
 
     @staticmethod
     def on_set_as_default(self) -> None:
