@@ -11,7 +11,6 @@ namespace Graphs {
     };
 
     public const string[] ACTION_NAMES = {
-        "figure_settings",
         "add_data",
         "add_equation",
         "export_data",

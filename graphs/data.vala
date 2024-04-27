@@ -129,7 +129,7 @@ namespace Graphs {
 
         protected void _update_used_positions () {
             if (this.empty) {
-                this._used_positions = {false, false, false, false};
+                this._used_positions = {true, false, true, false};
                 return;
             }
             bool[] used_positions = {false, false, false, false};

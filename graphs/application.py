@@ -16,6 +16,7 @@ from graphs import (
 )
 from graphs.data import Data
 from graphs.item_box import ItemBox
+from graphs.python_helper import PythonHelper
 
 from matplotlib import font_manager
 
@@ -36,6 +37,8 @@ class PythonApplication(Graphs.Application):
             data=data,
             **kwargs,
         )
+        self._python_helper = PythonHelper(self)
+        self.props.python_helper = self._python_helper
         font_list = font_manager.findSystemFonts(fontpaths=None, fontext="ttf")
         for font in font_list:
             try:

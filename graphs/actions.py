@@ -15,7 +15,6 @@ from graphs import (
     project,
     utilities,
 )
-from graphs.figure_settings import FigureSettingsDialog
 from graphs.item import DataItem
 
 import numexpr
@@ -26,11 +25,6 @@ import numpy
 def on_action_invoked(application: Graphs.Application, name: str) -> None:
     """Handle action invokation."""
     getattr(sys.modules[__name__], name + "_action")(application)
-
-
-def figure_settings_action(application: Graphs.Application) -> None:
-    """Open the figure settings."""
-    FigureSettingsDialog(application)
 
 
 def add_data_action(application: Graphs.Application) -> None:

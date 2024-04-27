@@ -11,6 +11,7 @@ namespace Graphs {
         public Data data { get; construct set; }
         public StyleManager figure_style_manager { get; set; }
         public bool debug { get; construct set; default = false; }
+        public PythonHelper python_helper { get; construct set; }
 
         public signal void action_invoked (string name);
         public signal void operation_invoked (string name);

@@ -185,5 +185,11 @@ namespace Graphs {
             application.window.add_toast (toast);
         });
         application.add_action (delete_selected_action);
+
+        var figure_settings_action = new SimpleAction ("figure_settings", null);
+        figure_settings_action.activate.connect (() => {
+            application.python_helper.create_figure_settings_dialog ();
+        });
+        application.add_action (figure_settings_action);
     }
 }
