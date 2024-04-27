@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2024-04-12 10:49+0000\n"
-"PO-Revision-Date: 2024-04-16 08:46+0200\n"
+"POT-Creation-Date: 2024-04-22 09:14+0000\n"
+"PO-Revision-Date: 2024-04-27 23:59+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian <gnome-si@googlegroups.com>\n"
 "Language: sl\n"
@@ -21,7 +21,7 @@ msgstr ""
 
 #: data/se.sjoerd.Graphs.appdata.xml.in.in:6
 #: data/se.sjoerd.Graphs.desktop.in.in:3 data/ui/window.blp:9
-#: graphs/about.vala:16
+#: graphs/about.vala:23
 msgid "Graphs"
 msgstr "Grafi"
 
@@ -124,7 +124,8 @@ msgstr "Prekliči"
 msgid "Add"
 msgstr "Dodaj"
 
-#: data/ui/add-equation.blp:41 data/ui/transform.blp:56
+#: data/ui/add-equation.blp:41 data/ui/curve-fitting.blp:66
+#: data/ui/transform.blp:56
 msgid "Y ="
 msgstr "Y ="
 
@@ -212,19 +213,15 @@ msgctxt "regression-type"
 msgid "Custom"
 msgstr "po meri"
 
-#: data/ui/curve-fitting.blp:66
-msgid "Y = "
-msgstr "Y = "
-
 #: data/ui/curve-fitting.blp:93
 msgid "Add Fit to Data"
 msgstr "Dodaj Prilagodi podatkom"
 
-#: data/ui/curve-fitting.blp:109 data/ui/window.blp:600 graphs/window.vala:169
+#: data/ui/curve-fitting.blp:109 data/ui/window.blp:598 graphs/window.vala:190
 msgid "Toggle Sidebar"
 msgstr "Preklopi stransko okno"
 
-#: data/ui/curve-fitting.blp:121 data/ui/window.blp:640
+#: data/ui/curve-fitting.blp:121 data/ui/window.blp:638
 msgid "Canvas Failed to Load"
 msgstr "Platno se ni naložilo"
 
@@ -249,6 +246,33 @@ msgstr "Odsevno področje zaupanja"
 msgctxt "optimization"
 msgid "Dogbox"
 msgstr "Dogbox"
+
+#: data/ui/curve-fitting.blp:152
+msgid "Confidence Bounds"
+msgstr "Meje zaupanja"
+
+#: data/ui/curve-fitting.blp:154
+msgctxt "confidence"
+msgid "None"
+msgstr "brez"
+
+#: data/ui/curve-fitting.blp:160
+#, no-c-format
+msgctxt "confidence"
+msgid "1σ: 68% Confidence"
+msgstr "1σ: zaupanje 68 %"
+
+#: data/ui/curve-fitting.blp:166
+#, no-c-format
+msgctxt "confidence"
+msgid "2σ: 95% Confidence"
+msgstr "2σ: zaupanje 95 %"
+
+#: data/ui/curve-fitting.blp:172
+#, no-c-format
+msgctxt "confidence"
+msgid "3σ: 99.7% Confidence"
+msgstr "3σ: zaupanje 99,7 %"
 
 #: data/ui/dialogs.blp:5
 msgid "Save Changes?"
@@ -483,7 +507,7 @@ msgstr "Velikost oznake"
 msgid "Export Figure"
 msgstr "Izvozi sliko"
 
-#: data/ui/export-figure.blp:21 graphs/export_figure.vala:48
+#: data/ui/export-figure.blp:21 graphs/export_figure.vala:51
 msgid "Export"
 msgstr "Izvozi"
 
@@ -538,7 +562,7 @@ msgstr "Prosojno ozadje"
 msgid "Style"
 msgstr "Slog"
 
-#: data/ui/figure-settings-page.blp:5 data/ui/window.blp:661
+#: data/ui/figure-settings-page.blp:5 data/ui/window.blp:659
 msgid "Figure Settings"
 msgstr "Nastavitve slike"
 
@@ -606,34 +630,34 @@ msgstr "Največje desne osi Y"
 msgid "Scaling"
 msgstr "Spreminjanje merila"
 
-#: data/ui/figure-settings-page.blp:125 graphs/window.vala:209
+#: data/ui/figure-settings-page.blp:125 graphs/window.vala:230
 msgid "Bottom X Axis Scale"
 msgstr "Merilo spodnje osi X"
 
 #: data/ui/figure-settings-page.blp:128 data/ui/figure-settings-page.blp:142
 #: data/ui/figure-settings-page.blp:156 data/ui/figure-settings-page.blp:170
-#: graphs/window.vala:179
+#: graphs/window.vala:200
 msgctxt "scale"
 msgid "Linear"
 msgstr "linearna"
 
 #: data/ui/figure-settings-page.blp:129 data/ui/figure-settings-page.blp:143
 #: data/ui/figure-settings-page.blp:157 data/ui/figure-settings-page.blp:171
-#: graphs/window.vala:180
+#: graphs/window.vala:201
 msgctxt "scale"
 msgid "Logarithmic"
 msgstr "logaritemska"
 
 #: data/ui/figure-settings-page.blp:130 data/ui/figure-settings-page.blp:144
 #: data/ui/figure-settings-page.blp:158 data/ui/figure-settings-page.blp:172
-#: graphs/window.vala:181
+#: graphs/window.vala:202
 msgctxt "scale"
 msgid "Radians"
 msgstr "radianska"
 
 #: data/ui/figure-settings-page.blp:131 data/ui/figure-settings-page.blp:145
 #: data/ui/figure-settings-page.blp:159 data/ui/figure-settings-page.blp:173
-#: graphs/window.vala:182
+#: graphs/window.vala:203
 msgctxt "scale"
 msgid "Square Root"
 msgstr "kvadratni koren"
@@ -644,15 +668,15 @@ msgctxt "scale"
 msgid "Inverse"
 msgstr "preobrnjena"
 
-#: data/ui/figure-settings-page.blp:139 graphs/window.vala:210
+#: data/ui/figure-settings-page.blp:139 graphs/window.vala:231
 msgid "Top X Axis Scale"
 msgstr "Merilo vrhnje osi X"
 
-#: data/ui/figure-settings-page.blp:153 graphs/window.vala:215
+#: data/ui/figure-settings-page.blp:153 graphs/window.vala:236
 msgid "Left Y Axis Scale"
 msgstr "Merilo leve osi Y"
 
-#: data/ui/figure-settings-page.blp:167 graphs/window.vala:214
+#: data/ui/figure-settings-page.blp:167 graphs/window.vala:235
 msgid "Right Y Axis Scale"
 msgstr "Merilo desne osi Y"
 
@@ -931,7 +955,7 @@ msgstr "Ponovi dejanje"
 msgid "Smoothen Settings"
 msgstr "Nastavitve glajenja"
 
-#: data/ui/smoothen-settings.blp:30 data/ui/window.blp:696
+#: data/ui/smoothen-settings.blp:30 data/ui/window.blp:694
 msgid "Savitzky–Golay Filter"
 msgstr "Filter Savitzky-Golay"
 
@@ -947,7 +971,7 @@ msgstr "Kolikšen odstotek podatkovnega razpona uporabiti za okno filtra"
 msgid "Polynomial degree"
 msgstr "Stopnja polinoma"
 
-#: data/ui/smoothen-settings.blp:48 data/ui/window.blp:701
+#: data/ui/smoothen-settings.blp:48 data/ui/window.blp:699
 msgid "Moving Average"
 msgstr "Drseče povprečje"
 
@@ -1166,7 +1190,7 @@ msgstr "Dodaj barvo"
 msgid "Transform Data"
 msgstr "Pretvori podatke"
 
-#: data/ui/transform.blp:22 data/ui/window.blp:396
+#: data/ui/transform.blp:22 data/ui/window.blp:394
 msgid "Transform"
 msgstr "Preoblikuj"
 
@@ -1200,223 +1224,223 @@ msgstr "X ="
 msgid "Discard Unselected Data"
 msgstr "Zavrzi neizbrane podatke"
 
-#: data/ui/window.blp:184
+#: data/ui/window.blp:182
 msgid "Add New Data"
 msgstr "Dodaj nove podatke"
 
-#: data/ui/window.blp:192
+#: data/ui/window.blp:190
 msgid "Open Application Menu"
 msgstr "Odpri meni programa"
 
-#: data/ui/window.blp:221
+#: data/ui/window.blp:219
 msgid "No Data"
 msgstr "Ni podatkov"
 
-#: data/ui/window.blp:222
+#: data/ui/window.blp:220
 msgid "Add data from a file or manually as an equation"
 msgstr "Dodajanje podatkov iz datoteke ali ročno kot enačbo"
 
-#: data/ui/window.blp:243
+#: data/ui/window.blp:241
 msgid "Pan Mode. Click and drag to pan"
 msgstr "Način zasuka. Kliknite in povlecite za zasuk"
 
-#: data/ui/window.blp:249
+#: data/ui/window.blp:247
 msgid "Zoom Mode. Select an area on the figure to zoom in"
 msgstr "Način povečave. Izberite območje na sliki, ki ga želite približati"
 
-#: data/ui/window.blp:255
+#: data/ui/window.blp:253
 msgid "Select Mode. Click and drag to make a selection of data"
 msgstr "Izbirni način. Kliknite in povlecite, da opravite izbor podatkov"
 
-#: data/ui/window.blp:286
+#: data/ui/window.blp:284
 msgid "Adjust"
 msgstr "Prilagodi"
 
-#: data/ui/window.blp:301
+#: data/ui/window.blp:299
 msgid "Shift"
 msgstr "Odmik"
 
-#: data/ui/window.blp:303
+#: data/ui/window.blp:301
 msgid "Shift all data vertically with respect to each other"
 msgstr "Zamaknite vse podatke navpično glede na druge"
 
-#: data/ui/window.blp:318
+#: data/ui/window.blp:316
 msgid "Normalize"
 msgstr "Normaliziraj"
 
-#: data/ui/window.blp:320
+#: data/ui/window.blp:318
 msgid "Normalize data"
 msgstr "Normaliziraj podatke"
 
-#: data/ui/window.blp:336
+#: data/ui/window.blp:334
 msgid "Smoothen"
 msgstr "Zgladi"
 
-#: data/ui/window.blp:338
+#: data/ui/window.blp:336
 msgid "Smoothen data"
 msgstr "Glajenje podatkov"
 
-#: data/ui/window.blp:353
+#: data/ui/window.blp:351
 msgid "Center"
 msgstr "Sredina"
 
-#: data/ui/window.blp:355
+#: data/ui/window.blp:353
 msgid "Center data"
 msgstr "Podatki na sredino"
 
-#: data/ui/window.blp:370
+#: data/ui/window.blp:368
 msgid "Combine"
 msgstr "Združi"
 
-#: data/ui/window.blp:372
+#: data/ui/window.blp:370
 msgid "Combine all selected data"
 msgstr "Združi vse izbrane podatke"
 
-#: data/ui/window.blp:386
+#: data/ui/window.blp:384
 msgid "Cut"
 msgstr "Izreži"
 
-#: data/ui/window.blp:388
+#: data/ui/window.blp:386
 msgid "Cut selected data"
 msgstr "Izreži izbrane podatke"
 
-#: data/ui/window.blp:412
+#: data/ui/window.blp:410
 msgid "Derivative"
 msgstr "Odvod"
 
-#: data/ui/window.blp:414
+#: data/ui/window.blp:412
 msgid "Get the derivative of the data"
 msgstr "Pridobite odvod podatkov"
 
-#: data/ui/window.blp:428
+#: data/ui/window.blp:426
 msgid "Integral"
 msgstr "Integral"
 
-#: data/ui/window.blp:430
+#: data/ui/window.blp:428
 msgid "Get the indefinite integral of the data"
 msgstr "Pridobite neskončen integral podatkov"
 
-#: data/ui/window.blp:444
+#: data/ui/window.blp:442
 msgid "FFT"
 msgstr "FFT"
 
-#: data/ui/window.blp:446
+#: data/ui/window.blp:444
 msgid "Get the Fast Fourier Transform of the data"
 msgstr "Pridobite hitro Fourierevo transformacijo podatkov"
 
-#: data/ui/window.blp:460
+#: data/ui/window.blp:458
 msgid "Inverse FFT"
 msgstr "Inverzna FFT"
 
-#: data/ui/window.blp:462
+#: data/ui/window.blp:460
 msgid "Get the Inverse Fast Fourier Transform of the data"
 msgstr "Pridobite inverzno hitro Fourierevo transformacijo podatkov"
 
-#: data/ui/window.blp:477
+#: data/ui/window.blp:475
 msgid "Custom Transformation"
 msgstr "Preoblikovanje po meri"
 
-#: data/ui/window.blp:479
+#: data/ui/window.blp:477
 msgid "Perform custom transformations on the data"
 msgstr "Izvedite pretvorbe podatkov po meri"
 
-#: data/ui/window.blp:487
+#: data/ui/window.blp:485
 msgid "Modify"
 msgstr "Spremeni"
 
-#: data/ui/window.blp:508
+#: data/ui/window.blp:506
 msgid "Translate X"
 msgstr "Translacija X"
 
-#: data/ui/window.blp:531
+#: data/ui/window.blp:529
 msgid "Translate Y"
 msgstr "Translacija Y"
 
-#: data/ui/window.blp:554
+#: data/ui/window.blp:552
 msgid "Multiply X"
 msgstr "Množenje X"
 
-#: data/ui/window.blp:577
+#: data/ui/window.blp:575
 msgid "Multiply Y"
 msgstr "Množenje Y"
 
-#: data/ui/window.blp:607
+#: data/ui/window.blp:605
 msgid "Undo"
 msgstr "Razveljavi"
 
-#: data/ui/window.blp:612
+#: data/ui/window.blp:610
 msgid "Redo"
 msgstr "Ponovno uveljavi"
 
-#: data/ui/window.blp:617
+#: data/ui/window.blp:615
 msgid "View Menu"
 msgstr "Meni Pogled"
 
-#: data/ui/window.blp:625
+#: data/ui/window.blp:623
 msgid "Next View"
 msgstr "Naslednji pogled"
 
-#: data/ui/window.blp:631
+#: data/ui/window.blp:629
 msgid "Previous View"
 msgstr "Prejšnji pogled"
 
-#: data/ui/window.blp:649
+#: data/ui/window.blp:647
 msgid "New Project"
 msgstr "Nov projekt"
 
-#: data/ui/window.blp:652
+#: data/ui/window.blp:650
 msgid "Save Project…"
 msgstr "Shrani projekt …"
 
-#: data/ui/window.blp:653
+#: data/ui/window.blp:651
 msgid "Save Project as…"
 msgstr "Shrani projekt kot …"
 
-#: data/ui/window.blp:654
+#: data/ui/window.blp:652
 msgid "Open Project…"
 msgstr "Odpri projekt …"
 
-#: data/ui/window.blp:657
+#: data/ui/window.blp:655
 msgid "Export Data…"
 msgstr "Izvozi podatke …"
 
-#: data/ui/window.blp:658
+#: data/ui/window.blp:656
 msgid "Export Figure…"
 msgstr "Izvozi sliko ..."
 
-#: data/ui/window.blp:664
+#: data/ui/window.blp:662
 msgid "Keyboard Shortcuts"
 msgstr "Tipkovne bližnjice"
 
-#: data/ui/window.blp:665
+#: data/ui/window.blp:663
 msgid "Help"
 msgstr "Pomoč"
 
-#: data/ui/window.blp:666
+#: data/ui/window.blp:664
 msgid "About Graphs"
 msgstr "O programu Grafikoni"
 
-#: data/ui/window.blp:672
+#: data/ui/window.blp:670
 msgid "Add Data from File…"
 msgstr "Dodaj podatke iz datoteke ..."
 
-#: data/ui/window.blp:673
+#: data/ui/window.blp:671
 msgid "Add Equation…"
 msgstr "Dodaj enačbo ..."
 
-#: data/ui/window.blp:682
+#: data/ui/window.blp:680
 msgid "At Maximum Y Value"
 msgstr "Pri največji vrednosti Y"
 
-#: data/ui/window.blp:687
+#: data/ui/window.blp:685
 msgid "At Middle X Value"
 msgstr "Pri srednji vrednosti X"
 
-#: data/ui/window.blp:708
+#: data/ui/window.blp:706
 msgid "Advanced Settings"
 msgstr "Napredne nastavitve"
 
-#: graphs/about.vala:33
+#: graphs/about.vala:40
 msgid "translator-credits"
 msgstr "Martin Srebotnjak <miles@filmsi.net>"
 
@@ -1472,34 +1496,7 @@ msgstr ""
 msgid "Sum of R²: {R2}"
 msgstr "Vsota R²: {R2}"
 
-#: graphs/curve_fitting.vala:77
-msgctxt "confidence"
-msgid "None"
-msgstr "brez"
-
-#: graphs/curve_fitting.vala:78
-#, c-format
-msgctxt "confidence"
-msgid "1σ: 68% Confidence"
-msgstr ""
-
-#: graphs/curve_fitting.vala:79
-#, c-format
-msgctxt "confidence"
-msgid "2σ: 95% Confidence"
-msgstr ""
-
-#: graphs/curve_fitting.vala:80
-#, c-format
-msgctxt "confidence"
-msgid "3σ: 99.7% Confidence"
-msgstr ""
-
-#: graphs/curve_fitting.vala:90
-msgid "Confidence Bounds"
-msgstr "Meje zaupanja"
-
-#: graphs/curve_fitting.vala:147
+#: graphs/curve_fitting.vala:131
 #, c-format
 msgid "Fitting Parameters for %s"
 msgstr "Parametri prileganja za %s"
@@ -1512,44 +1509,44 @@ msgstr "Neimenovan projekt"
 msgid "Draft"
 msgstr "Osnutek"
 
-#: graphs/export_figure.vala:42
+#: graphs/export_figure.vala:45
 msgctxt "filename"
 msgid "Exported Figure"
 msgstr "Izvožena slika"
 
-#: graphs/figure_settings.py:74 graphs/figure_settings.vala:205
+#: graphs/figure_settings.py:71 graphs/figure_settings.vala:213
 msgid "Defaults Updated"
 msgstr "Privzete nastavitve so posodobljene"
 
-#: graphs/figure_settings.vala:155
+#: graphs/figure_settings.vala:161
 msgid "X Axis Minimum"
 msgstr "Najmanjša vrednost na osi X"
 
-#: graphs/figure_settings.vala:156
+#: graphs/figure_settings.vala:162
 msgid "Y Axis Minimum"
 msgstr "Najmanjša vrednost na osi Y"
 
-#: graphs/figure_settings.vala:158
+#: graphs/figure_settings.vala:164
 msgid "X Axis Maximum"
 msgstr "Največja vrednost na osi X"
 
-#: graphs/figure_settings.vala:159
+#: graphs/figure_settings.vala:165
 msgid "Y Axis Maximum"
 msgstr "Največja vrednost na osi Y"
 
-#: graphs/figure_settings.vala:169 graphs/window.vala:211
+#: graphs/figure_settings.vala:175 graphs/window.vala:232
 msgid "X Axis Scale"
 msgstr "Merilo osi X"
 
-#: graphs/figure_settings.vala:170 graphs/figure_settings.vala:174
+#: graphs/figure_settings.vala:176 graphs/figure_settings.vala:180
 msgid "X Axis Label"
 msgstr "Oznaka osi X"
 
-#: graphs/figure_settings.vala:173 graphs/window.vala:216
+#: graphs/figure_settings.vala:179 graphs/window.vala:237
 msgid "Y Axis Scale"
 msgstr "Merilo osi Y"
 
-#: graphs/file_import.vala:62
+#: graphs/file_import.vala:65
 msgid "Are you sure you want to reset the import settings?"
 msgstr "Ali ste prepričani, da želite ponastaviti nastavitve uvoza?"
 
@@ -1558,25 +1555,25 @@ msgctxt "file-filter"
 msgid "Graphs Project File"
 msgstr "Projektna datoteka programa Grafi"
 
-#: graphs/operations.py:128
+#: graphs/operations.py:129
 #, python-brace-format
 msgid "{name}: Unable to do transformation, make sure the syntax is correct"
 msgstr ""
 "{name}: Pretvorbe ni mogoče izvesti, preverite, ali je skladnja pravilna"
 
-#: graphs/operations.py:132
+#: graphs/operations.py:133
 msgid "Unable to do transformation"
 msgstr "Preoblikovanje ni mogoče izvesti"
 
-#: graphs/operations.py:195
+#: graphs/operations.py:197
 msgid "Data that was outside of the highlighted area has been discarded"
 msgstr "Podatki zunaj poudarjenega območja so bili zavrženi"
 
-#: graphs/operations.py:232
+#: graphs/operations.py:234
 msgid "No data found within the highlighted area"
 msgstr "Znotraj poudarjenega območja ni najdenih podatkov"
 
-#: graphs/operations.py:477
+#: graphs/operations.py:479
 msgid "Combined Data"
 msgstr "Združeni podatki"
 
@@ -1654,23 +1651,23 @@ msgstr "Oznaka Y"
 msgid "System"
 msgstr "Sistem"
 
-#: graphs/styles.py:386
+#: graphs/styles.py:382
 #, python-brace-format
 msgid "Could not parse {stylename}, loading system preferred style"
 msgstr ""
 "Ni bilo mogoče razčleniti {stylename}; nalaga se prednostni sistemski slog"
 
-#: graphs/styles.py:394
+#: graphs/styles.py:390
 #, python-brace-format
 msgid "Plot style {stylename} does not exist loading system preferred"
 msgstr "Slog grafa {stylename} ne obstaja; nalaga se prednostni sistemski slog"
 
-#: graphs/styles.py:807
+#: graphs/styles.py:803
 #, python-brace-format
 msgid "Are you sure you want to delete {stylename}?"
 msgstr "Ali ste prepričani, da želite izbrisati {stylename}?"
 
-#: graphs/styles.py:824
+#: graphs/styles.py:820
 #, python-brace-format
 msgid "Color {number}"
 msgstr "Barva {number}"
@@ -1708,19 +1705,19 @@ msgctxt "file-filter"
 msgid "Text Files"
 msgstr "Besedilne datoteke"
 
-#: graphs/window.vala:125
+#: graphs/window.vala:128
 msgid "Graphs (Development)"
 msgstr "Grafikoni (razvojni)"
 
-#: graphs/window.vala:153
+#: graphs/window.vala:171
 msgid "Open Location"
 msgstr "Odpri mesto"
 
-#: graphs/window.vala:174
+#: graphs/window.vala:195
 msgid "Optimize Limits"
 msgstr "Optimiziraj omejitve"
 
-#: graphs/window.vala:183
+#: graphs/window.vala:204
 msgctxt "scale"
 msgid "Inverse Root"
 msgstr "Inverzni koren"
