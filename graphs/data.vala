@@ -64,7 +64,7 @@ namespace Graphs {
         }
 
         private void _on_item_selected () {
-            this.notify_property("items_selected");
+            this.notify_property ("items_selected");
         }
 
         private void _on_item_change (Object item, ParamSpec spec) {
@@ -74,7 +74,7 @@ namespace Graphs {
         private void _on_item_position_change () {
             this.optimize_limits ();
             this._update_used_positions ();
-            this.notify_property("items");
+            this.notify_property ("items");
         }
 
         public void set_items (Item[] items) {
@@ -83,8 +83,8 @@ namespace Graphs {
                 this._add_item (item);
             }
             this._update_used_positions ();
-            this.notify_property("items");
-            this.notify_property("empty");
+            this.notify_property ("items");
+            this.notify_property ("empty");
         }
 
         public string[] get_names () {

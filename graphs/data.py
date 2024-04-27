@@ -39,7 +39,7 @@ class Data(Graphs.Data):
         )
         self._on_unsaved_change(None, None)
         self.connect(
-            "optimize_limits_request", self._on_optimize_limits_request
+            "optimize_limits_request", self._on_optimize_limits_request,
         )
         self.connect("item_changed", self._on_item_changed)
 
