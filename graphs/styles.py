@@ -119,10 +119,10 @@ class StyleManager(Graphs.StyleManager):
         elif event_type == 1:
             tmp_style_params, stylename = style_io.parse(file)
             style_params = self._complete_style(tmp_style_params)
-            for obj in style_model:
-                if obj.get_name() == stylename:
-                    obj.set_preview(_generate_preview(style_params))
-                    obj.set_light(_is_style_bright(style_params))
+            for style in style_model:
+                if style.get_name() == stylename:
+                    style.set_preview(_generate_preview(style_params))
+                    style.set_light(_is_style_bright(style_params))
                     break
             possible_visual_impact = False
         if possible_visual_impact \
@@ -130,20 +130,6 @@ class StyleManager(Graphs.StyleManager):
                 and self.props.custom_style == stylename \
                 and event_type != 2:
             self._on_style_change()
-
-    def _on_style_select(self, style_model, _pos, _n_items):
-        """Set the style upon selection."""
-        selected_item = style_model.get_selected_item()
-        # Don't trigger unneccesary reloads
-        if selected_item.get_file() is None:  # System style
-            if self.props.use_custom_style:
-                self.props.use_custom_style = False
-        else:
-            stylename = selected_item.get_name()
-            if stylename != self.props.custom_style:
-                self.props.custom_style = stylename
-            if not self.props.use_custom_style:
-                self.props.use_custom_style = True
 
     @staticmethod
     def _on_use_custom_style(self, _a) -> None:
