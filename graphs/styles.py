@@ -59,7 +59,6 @@ class StyleManager(Graphs.StyleManager):
             else "Adwaita"
         super().__init__(application=application)
         self._selected_style_params = None
-        self.connect("python_method_request", self._on_python_method_request)
         self.connect("user_style_added", self._on_user_style_added)
         self.connect("file_changed", self._on_file_change)
         self.connect("copy_request", self._on_copy_request)
@@ -74,14 +73,7 @@ class StyleManager(Graphs.StyleManager):
         self.setup(self._system_style_name.lower())
 
     @staticmethod
-    def _on_python_method_request(self, method: str) -> None:
-        getattr(self, method)()
-
-    @staticmethod
-    def _on_user_style_added(
-        self,
-        file: Gio.File,
-    ) -> None:
+    def _on_user_style_added(self, file: Gio.File) -> Graphs.Style:
         tmp_style_params, name = style_io.parse(file)
         style_params = self._complete_style(tmp_style_params)
         return Graphs.Style(
@@ -101,11 +93,7 @@ class StyleManager(Graphs.StyleManager):
         return self._system_style_params
 
     @staticmethod
-    def _on_file_change(
-        self,
-        file: Gio.File,
-        event_type: int,
-    ) -> None:
+    def _on_file_change(self, file: Gio.File, event_type: int) -> None:
         if Path(file.peek_path()).stem.startswith("."):
             return
         possible_visual_impact = False

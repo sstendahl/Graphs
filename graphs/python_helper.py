@@ -2,11 +2,10 @@
 """Python Helper - Python part."""
 from gi.repository import Graphs
 
-from graphs import curve_fitting, edit_item, figure_settings, utilities
+from graphs import curve_fitting, edit_item, utilities
 
 _REQUEST_NAMES = (
     "python_method_request",
-    "figure_settings_dialog_request",
     "edit_item_dialog_request",
     "curve_fitting_dialog_request",
     "validate_input_request",
@@ -28,10 +27,6 @@ class PythonHelper(Graphs.PythonHelper):
     @staticmethod
     def _on_python_method_request(self, obj, method: str) -> None:
         getattr(obj, method)()
-
-    @staticmethod
-    def _on_figure_settings_dialog_request(self) -> None:
-        return figure_settings.FigureSettingsDialog(self.props.application)
 
     @staticmethod
     def _on_edit_item_dialog_request(self, item) -> None:

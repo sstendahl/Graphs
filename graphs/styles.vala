@@ -24,7 +24,6 @@ namespace Graphs {
         private GLib.ListStore style_model;
         protected Gee.AbstractSet<string> stylenames { get; private set; }
 
-        protected signal void python_method_request (string method);
         protected signal void copy_request (string template, string name);
         protected signal Style user_style_added (File file);
         protected signal void file_changed (File file, FileMonitorEvent event_type);
@@ -45,6 +44,7 @@ namespace Graphs {
         }
 
         protected void setup (string system_style) {
+            PythonHelper python_helper = this.application.python_helper;
             CompareDataFunc<Style> cmp = style_cmp;
             try {
                 var directory = File.new_for_uri ("resource:///se/sjoerd/Graphs/styles");
@@ -84,7 +84,7 @@ namespace Graphs {
                     false
                 )
             );
-            this.python_method_request.emit ("_update_system_style");
+            python_helper.run_method (this, "_update_system_style");
             try {
                 FileEnumerator enumerator = this.style_dir.enumerate_children (
                     "standard::*",
@@ -109,7 +109,7 @@ namespace Graphs {
             } catch { assert_not_reached (); }
             this.application.style_manager.notify.connect (() => {
                 if (!this.use_custom_style) {
-                    this.python_method_request.emit ("_on_style_change");
+                    python_helper.run_method (this, "_on_style_change");
                 }
             });
             FigureSettings figure_settings = this.application.data.figure_settings;
@@ -135,7 +135,7 @@ namespace Graphs {
                     if (!this.use_custom_style) this.use_custom_style = true;
                 }
             });
-            this.python_method_request.emit ("_on_style_change");
+            python_helper.run_method (this, "_on_style_change");
         }
 
         protected void add_user_style (File file) {

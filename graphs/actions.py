@@ -15,6 +15,7 @@ from graphs import (
     project,
     utilities,
 )
+from graphs.figure_settings import FigureSettingsDialog
 from graphs.item import DataItem
 
 import numexpr
@@ -176,3 +177,8 @@ def zoom_out_action(application: Graphs.Application) -> None:
 def open_project_action(application: Graphs.Application) -> None:
     """Open a project."""
     project.open_project(application)
+
+
+def figure_settings_action(application: Graphs.Application) -> None:
+    """Open Figure Settings Dialog."""
+    FigureSettingsDialog(application)

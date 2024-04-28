@@ -5,6 +5,19 @@ using Gee;
 namespace Graphs {
     private const string[] X_DIRECTIONS = {"top", "bottom"};
     private const string[] Y_DIRECTIONS = {"left", "right"};
+    private const string[] PYTHON_ACTIONS = {
+        "add_data",
+        "add_equation",
+        "export_data",
+        "export_figure",
+        "new_project",
+        "save_project",
+        "save_project_as",
+        "open_project",
+        "zoom_in",
+        "zoom_out",
+        "figure_settings"
+    };
 
     /**
      * Setup actions.
@@ -12,7 +25,7 @@ namespace Graphs {
      * @param application Application
      */
     public void setup_actions (Application application) {
-        foreach (string name in ACTION_NAMES) {
+        foreach (string name in PYTHON_ACTIONS) {
             var action = new SimpleAction (name, null);
             action.activate.connect (() => {
                 application.action_invoked.emit (name);
@@ -185,11 +198,5 @@ namespace Graphs {
             application.window.add_toast (toast);
         });
         application.add_action (delete_selected_action);
-
-        var figure_settings_action = new SimpleAction ("figure_settings", null);
-        figure_settings_action.activate.connect (() => {
-            application.python_helper.create_figure_settings_dialog ();
-        });
-        application.add_action (figure_settings_action);
     }
 }

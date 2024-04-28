@@ -9,17 +9,4 @@ namespace Graphs {
     public const string[] DIRECTION_NAMES = {
         "bottom", "top", "left", "right"
     };
-
-    public const string[] ACTION_NAMES = {
-        "add_data",
-        "add_equation",
-        "export_data",
-        "export_figure",
-        "new_project",
-        "save_project",
-        "save_project_as",
-        "open_project",
-        "zoom_in",
-        "zoom_out"
-    };
 }

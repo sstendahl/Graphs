@@ -11,11 +11,6 @@ namespace Graphs {
             this.python_method_request.emit (object, method);
         }
 
-        protected signal FigureSettingsDialog figure_settings_dialog_request ();
-        public FigureSettingsDialog create_figure_settings_dialog () {
-            return this.figure_settings_dialog_request.emit ();
-        }
-
         protected signal Widget edit_item_dialog_request (Item item);
         public Widget create_edit_item_dialog (Item item) {
             return this.edit_item_dialog_request.emit (item);
