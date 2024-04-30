@@ -1,7 +1,7 @@
 name: graphs
 base: core22
 adopt-info: graphs
-grade: stable 
+grade: devel 
 confinement: strict
 compression: lzo
 license: GPL-3.0
