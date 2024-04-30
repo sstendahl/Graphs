@@ -1,5 +1,5 @@
 name: graphs
-base: core22
+base: core24
 adopt-info: graphs
 grade: stable 
 confinement: strict
@@ -73,7 +73,7 @@ parts:
       - GI_TYPELIB_PATH: /snap/gnome-46-2404-sdk/current/usr/lib/$CRAFT_ARCH_TRIPLET/girepository-1.0:/snap/gnome-46-2404-sdk/current/usr/lib/girepository-1.0
     build-snaps:
       - blueprint-compiler/latest/stable
-      - gnome-46-2404
+      - gnome-46-2404-sdk/latest/edge
     override-build: |
       craftctl default
       sed -e '1c#!/usr/bin/env python3' -i ${CRAFT_PART_INSTALL}/snap/graphs/current/usr/bin/graphs
