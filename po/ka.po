@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2024-04-13 00:58+0000\n"
-"PO-Revision-Date: 2024-04-19 18:44+0200\n"
+"POT-Creation-Date: 2024-04-29 15:23+0000\n"
+"PO-Revision-Date: 2024-04-30 11:39+0200\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <ka@li.org>\n"
 "Language: ka\n"
@@ -18,17 +18,16 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 3.3.2\n"
 
-#: data/se.sjoerd.Graphs.appdata.xml.in.in:6
-#: data/se.sjoerd.Graphs.desktop.in.in:3 data/ui/window.blp:9
-#: graphs/about.vala:16
+#: data/se.sjoerd.Graphs.appdata.xml.in:6 data/se.sjoerd.Graphs.desktop.in:3
+#: data/ui/window.blp:9 graphs/about.vala:23
 msgid "Graphs"
 msgstr "Graphs"
 
-#: data/se.sjoerd.Graphs.appdata.xml.in.in:7
+#: data/se.sjoerd.Graphs.appdata.xml.in:7
 msgid "Plot and manipulate data"
 msgstr "დახატეთ და შეცვალეთ მონაცემები"
 
-#: data/se.sjoerd.Graphs.appdata.xml.in.in:13
+#: data/se.sjoerd.Graphs.appdata.xml.in:12
 msgid ""
 "Graphs is a simple, yet powerful tool that allows you to plot and manipulate "
 "your data with ease. New data can be imported from a wide variety of "
@@ -44,7 +43,7 @@ msgstr ""
 "ამოჭრა, გადატანა, გამრავლება, დაცენტრება და მოგლუვება. ასევე, ამ მონაცემებზე "
 "ნებისმიერი თქვენთვის სასურველი ტრანსფორმაცია შეგიძლიათ, შეასრულოთ."
 
-#: data/se.sjoerd.Graphs.appdata.xml.in.in:17
+#: data/se.sjoerd.Graphs.appdata.xml.in:16
 msgid ""
 "Moreover, Graphs supports curve fitting on imported data and offers "
 "extensive customization options for the style of the plots. You can fine-"
@@ -54,7 +53,7 @@ msgstr ""
 "მონაცემებზე და გთავაზობთ მრავალმხირივი მორგების პარამეტრებს ნახაზების "
 "სტილისთვის. შეგიძლიათ ისე მოირგოთ ისინი, როგორც გნებავთ."
 
-#: data/se.sjoerd.Graphs.appdata.xml.in.in:20
+#: data/se.sjoerd.Graphs.appdata.xml.in:19
 msgid ""
 "Graphs is an excellent fit for both plotting and data manipulation. The "
 "plots created with Graphs can be saved in a variety of formats suitable for "
@@ -72,7 +71,7 @@ msgstr ""
 "ჩასასწორებლად, როგორიცაა Inkscape. Graphs დაწერილია GNOME-ის გარემოსთვის, "
 "მაგრამ სხვა სამუშაო მაგიდაზეც არ უნდა ჰქონდეს პრობლემები."
 
-#: data/se.sjoerd.Graphs.appdata.xml.in.in:24
+#: data/se.sjoerd.Graphs.appdata.xml.in:23
 msgid ""
 "For any feedback, questions or general issues, please file an issue on the "
 "GitLab page."
@@ -80,27 +79,27 @@ msgstr ""
 "ნებისმიერი უკუკავშირისთვის, კითხვებისთვის თუ ზოგადი პრობლემებისთვის, "
 "გახსენით პრობლემის ბილეთი GitLab-ის გვერდზე."
 
-#: data/se.sjoerd.Graphs.appdata.xml.in.in:37
+#: data/se.sjoerd.Graphs.appdata.xml.in:36
 msgid "1 - Plot and manipulate any data of choice"
 msgstr "1 - დახატეთ და შეცვალეთ მონაცემები, რომლებიც გნებავთ"
 
-#: data/se.sjoerd.Graphs.appdata.xml.in.in:41
+#: data/se.sjoerd.Graphs.appdata.xml.in:40
 msgid "2 - Full support for light and dark mode"
 msgstr "2 - ღია და მუქი რეჟიმის სრული მხარდაჭერა"
 
-#: data/se.sjoerd.Graphs.appdata.xml.in.in:45
+#: data/se.sjoerd.Graphs.appdata.xml.in:44
 msgid "3 - Generate data from an equation"
 msgstr "3 - მონაცემების გენერაცია განტოლებიდან"
 
-#: data/se.sjoerd.Graphs.appdata.xml.in.in:49
+#: data/se.sjoerd.Graphs.appdata.xml.in:48
 msgid "4 - Edit plot stylesheets"
 msgstr "4 - ნახაზის სტილის ცხრილების ჩასწორება"
 
-#: data/se.sjoerd.Graphs.appdata.xml.in.in:53
+#: data/se.sjoerd.Graphs.appdata.xml.in:52
 msgid "5 - Manipulate imported data with ease"
 msgstr "5 - ადვილად შეცვალეთ შემოტანილ მონაცემები"
 
-#: data/se.sjoerd.Graphs.desktop.in.in:10
+#: data/se.sjoerd.Graphs.desktop.in:10
 msgid ""
 "Plotting;Graph;Graphing;Science;Mathematics;Math;Equations;Data;Plot;"
 "Visualisation;Visualization;Fitting;xrdml;"
@@ -123,7 +122,8 @@ msgstr "შეწყვეტა"
 msgid "Add"
 msgstr "დამატება"
 
-#: data/ui/add-equation.blp:41 data/ui/transform.blp:56
+#: data/ui/add-equation.blp:41 data/ui/curve-fitting.blp:66
+#: data/ui/transform.blp:56
 msgid "Y ="
 msgstr "Y ="
 
@@ -211,19 +211,15 @@ msgctxt "regression-type"
 msgid "Custom"
 msgstr "ხელით მითითებული"
 
-#: data/ui/curve-fitting.blp:66
-msgid "Y = "
-msgstr "Y = "
-
 #: data/ui/curve-fitting.blp:93
 msgid "Add Fit to Data"
 msgstr "მონაცემებისთვის აპროქსიმაციის დამატება"
 
-#: data/ui/curve-fitting.blp:109 data/ui/window.blp:600 graphs/window.vala:171
+#: data/ui/curve-fitting.blp:109 data/ui/window.blp:598 graphs/window.vala:190
 msgid "Toggle Sidebar"
 msgstr "გვერდითი პანელი ჩვენების ჩართ/გამორთ"
 
-#: data/ui/curve-fitting.blp:121 data/ui/window.blp:640
+#: data/ui/curve-fitting.blp:121 data/ui/window.blp:638
 msgid "Canvas Failed to Load"
 msgstr "ტილოს ჩატვირთვა ჩავარდა"
 
@@ -509,7 +505,7 @@ msgstr "მარკერის ზომა"
 msgid "Export Figure"
 msgstr "ფიგურის გატანა"
 
-#: data/ui/export-figure.blp:21 graphs/export_figure.vala:48
+#: data/ui/export-figure.blp:21 graphs/export_figure.vala:51
 msgid "Export"
 msgstr "გატანა"
 
@@ -519,38 +515,38 @@ msgstr "ფაილის ფორმატი"
 
 #: data/ui/export-figure.blp:38
 msgctxt "file-format"
-msgid "Encapsulated Postscript"
+msgid "Encapsulated PostScript"
 msgstr "ჩასმული PostScript"
 
 #: data/ui/export-figure.blp:39
 msgctxt "file-format"
-msgid "Joint Photographic Experts Group"
-msgstr "ფოტოგრაფების ექსპერტების გაერთიანებული ჯგუფი"
+msgid "JPEG"
+msgstr "JPEG"
 
 #: data/ui/export-figure.blp:40
 msgctxt "file-format"
-msgid "Portable Document Format"
-msgstr "გადატანადი დოკუმენტის ფორმატი"
+msgid "PDF"
+msgstr "PDF"
 
 #: data/ui/export-figure.blp:41
 msgctxt "file-format"
-msgid "Portable Network Graphics"
-msgstr "პორტატული ქსელური გრაფიკა"
+msgid "PNG"
+msgstr "PNG"
 
 #: data/ui/export-figure.blp:42
 msgctxt "file-format"
-msgid "Postscript"
+msgid "PostScript"
 msgstr "PostScript"
 
 #: data/ui/export-figure.blp:43
 msgctxt "file-format"
-msgid "Scalable Vector Graphics"
-msgstr "გადიდებადი ვექტორული გრაფიკა"
+msgid "SVG"
+msgstr "SVG"
 
 #: data/ui/export-figure.blp:44
 msgctxt "file-format"
-msgid "WebP Image Format"
-msgstr "WebP გამოსახულების ფორმატი"
+msgid "WebP"
+msgstr "WebP"
 
 #: data/ui/export-figure.blp:50
 msgid "Resolution (dpi)"
@@ -564,7 +560,7 @@ msgstr "გამჭვირვალე ფონი"
 msgid "Style"
 msgstr "სტილი"
 
-#: data/ui/figure-settings-page.blp:5 data/ui/window.blp:661
+#: data/ui/figure-settings-page.blp:5 data/ui/window.blp:659
 msgid "Figure Settings"
 msgstr "ფიგურის პარამეტრები"
 
@@ -632,34 +628,34 @@ msgstr "მარჯვენა Y ღერძის მაქსიმუმ�
 msgid "Scaling"
 msgstr "მასშტაბირება"
 
-#: data/ui/figure-settings-page.blp:125 graphs/window.vala:211
+#: data/ui/figure-settings-page.blp:125 graphs/window.vala:230
 msgid "Bottom X Axis Scale"
 msgstr "ქვედა X-ღერძის მასშტაბის ფაქტორი"
 
 #: data/ui/figure-settings-page.blp:128 data/ui/figure-settings-page.blp:142
 #: data/ui/figure-settings-page.blp:156 data/ui/figure-settings-page.blp:170
-#: graphs/window.vala:181
+#: graphs/window.vala:200
 msgctxt "scale"
 msgid "Linear"
 msgstr "ხაზოვანი"
 
 #: data/ui/figure-settings-page.blp:129 data/ui/figure-settings-page.blp:143
 #: data/ui/figure-settings-page.blp:157 data/ui/figure-settings-page.blp:171
-#: graphs/window.vala:182
+#: graphs/window.vala:201
 msgctxt "scale"
 msgid "Logarithmic"
 msgstr "ლოგარითმული"
 
 #: data/ui/figure-settings-page.blp:130 data/ui/figure-settings-page.blp:144
 #: data/ui/figure-settings-page.blp:158 data/ui/figure-settings-page.blp:172
-#: graphs/window.vala:183
+#: graphs/window.vala:202
 msgctxt "scale"
 msgid "Radians"
 msgstr "რადიანები"
 
 #: data/ui/figure-settings-page.blp:131 data/ui/figure-settings-page.blp:145
 #: data/ui/figure-settings-page.blp:159 data/ui/figure-settings-page.blp:173
-#: graphs/window.vala:184
+#: graphs/window.vala:203
 msgctxt "scale"
 msgid "Square Root"
 msgstr "კვადრატული ფესვი"
@@ -670,15 +666,15 @@ msgctxt "scale"
 msgid "Inverse"
 msgstr "ინვერსია"
 
-#: data/ui/figure-settings-page.blp:139 graphs/window.vala:212
+#: data/ui/figure-settings-page.blp:139 graphs/window.vala:231
 msgid "Top X Axis Scale"
 msgstr "ზედა X-ღერძის მასშტაბის ფაქტორი"
 
-#: data/ui/figure-settings-page.blp:153 graphs/window.vala:217
+#: data/ui/figure-settings-page.blp:153 graphs/window.vala:236
 msgid "Left Y Axis Scale"
 msgstr "მარცხენა Y-ღერძზე მასშტაბის ფაქტორი"
 
-#: data/ui/figure-settings-page.blp:167 graphs/window.vala:216
+#: data/ui/figure-settings-page.blp:167 graphs/window.vala:235
 msgid "Right Y Axis Scale"
 msgstr "მარჯვენა Y ღერძის მასშტაბის ფაქტორი"
 
@@ -781,10 +777,6 @@ msgid "Move Item "
 msgstr "ელემენტის გადატანა "
 
 #: data/ui/item-box.blp:68
-msgid "Edit Item"
-msgstr "ჩანაწერის ჩასწორება"
-
-#: data/ui/item-box.blp:72
 msgid "Remove Item"
 msgstr "ჩანაწერისწაშლა"
 
@@ -957,7 +949,7 @@ msgstr "ქმედების გამეორება"
 msgid "Smoothen Settings"
 msgstr "პარამეტრების მოგლუვება"
 
-#: data/ui/smoothen-settings.blp:30 data/ui/window.blp:696
+#: data/ui/smoothen-settings.blp:30 data/ui/window.blp:694
 msgid "Savitzky–Golay Filter"
 msgstr "სავიცკი-გოლეის ფილტრი"
 
@@ -974,7 +966,7 @@ msgstr ""
 msgid "Polynomial degree"
 msgstr "პოლინომური ხარისხი"
 
-#: data/ui/smoothen-settings.blp:48 data/ui/window.blp:701
+#: data/ui/smoothen-settings.blp:48 data/ui/window.blp:699
 msgid "Moving Average"
 msgstr "მცოცავი საშუალო"
 
@@ -1193,7 +1185,7 @@ msgstr "ფერის დამატება"
 msgid "Transform Data"
 msgstr "მონაცემების გარდაქმნა"
 
-#: data/ui/transform.blp:22 data/ui/window.blp:396
+#: data/ui/transform.blp:22 data/ui/window.blp:394
 msgid "Transform"
 msgstr "გარდაქმნა"
 
@@ -1227,223 +1219,223 @@ msgstr "X ="
 msgid "Discard Unselected Data"
 msgstr "მოუნიშნავი მონაცემების მოცილება"
 
-#: data/ui/window.blp:184
+#: data/ui/window.blp:182
 msgid "Add New Data"
 msgstr "ახალი მონაცემების დამატება"
 
-#: data/ui/window.blp:192
+#: data/ui/window.blp:190
 msgid "Open Application Menu"
 msgstr "აპლიკაციის მენიუს გახსნა"
 
-#: data/ui/window.blp:221
+#: data/ui/window.blp:219
 msgid "No Data"
 msgstr "მონაცემების გარეშე"
 
-#: data/ui/window.blp:222
+#: data/ui/window.blp:220
 msgid "Add data from a file or manually as an equation"
 msgstr "მონაცემების დამატება ფაილიდან ან ხელით, განტოლების სახით"
 
-#: data/ui/window.blp:243
+#: data/ui/window.blp:241
 msgid "Pan Mode. Click and drag to pan"
 msgstr "პანორამის რეჟიმი. დააწკაპუნეთ და გადაათრიეთ პანორამისთვის"
 
-#: data/ui/window.blp:249
+#: data/ui/window.blp:247
 msgid "Zoom Mode. Select an area on the figure to zoom in"
 msgstr "გადიდების რეჟიმი. აირჩიეთ გასადიდებელი ადგილი"
 
-#: data/ui/window.blp:255
+#: data/ui/window.blp:253
 msgid "Select Mode. Click and drag to make a selection of data"
 msgstr "გამოკვეთის რეჟიმი. დააწკაპუნეთ და გადაათრიეთ, რომ მონაცემები მონიშნოთ"
 
-#: data/ui/window.blp:286
+#: data/ui/window.blp:284
 msgid "Adjust"
 msgstr "მორგება"
 
-#: data/ui/window.blp:301
+#: data/ui/window.blp:299
 msgid "Shift"
 msgstr "Shift"
 
-#: data/ui/window.blp:303
+#: data/ui/window.blp:301
 msgid "Shift all data vertically with respect to each other"
 msgstr "მონაცემების წანაცვლება ვერტიკალურად ერთმანეთის გათვალისწინებით"
 
-#: data/ui/window.blp:318
+#: data/ui/window.blp:316
 msgid "Normalize"
 msgstr "ნორმალიზაცია"
 
-#: data/ui/window.blp:320
+#: data/ui/window.blp:318
 msgid "Normalize data"
 msgstr "მონაცემების ნორმალიზაცია"
 
-#: data/ui/window.blp:336
+#: data/ui/window.blp:334
 msgid "Smoothen"
 msgstr "მოგლუვება"
 
-#: data/ui/window.blp:338
+#: data/ui/window.blp:336
 msgid "Smoothen data"
 msgstr "მონაცემების მოგლუვება"
 
-#: data/ui/window.blp:353
+#: data/ui/window.blp:351
 msgid "Center"
 msgstr "ცენტრი"
 
-#: data/ui/window.blp:355
+#: data/ui/window.blp:353
 msgid "Center data"
 msgstr "მონაცემების დაცენტრება"
 
-#: data/ui/window.blp:370
+#: data/ui/window.blp:368
 msgid "Combine"
 msgstr "კომბინირება"
 
-#: data/ui/window.blp:372
+#: data/ui/window.blp:370
 msgid "Combine all selected data"
 msgstr "მონიშნული მონაცემების გაერთიანება"
 
-#: data/ui/window.blp:386
+#: data/ui/window.blp:384
 msgid "Cut"
 msgstr "ამოჭრა"
 
-#: data/ui/window.blp:388
+#: data/ui/window.blp:386
 msgid "Cut selected data"
 msgstr "მონიშნული მონაცემების ამოჭრა"
 
-#: data/ui/window.blp:412
+#: data/ui/window.blp:410
 msgid "Derivative"
 msgstr "წარმოებული"
 
-#: data/ui/window.blp:414
+#: data/ui/window.blp:412
 msgid "Get the derivative of the data"
 msgstr "მონაცემის წარმოებულის მიღება"
 
-#: data/ui/window.blp:428
+#: data/ui/window.blp:426
 msgid "Integral"
 msgstr "ინტეგრალი"
 
-#: data/ui/window.blp:430
+#: data/ui/window.blp:428
 msgid "Get the indefinite integral of the data"
 msgstr "მონაცემის უსასრულო ინტეგრალის მიღება"
 
-#: data/ui/window.blp:444
+#: data/ui/window.blp:442
 msgid "FFT"
 msgstr "FFT"
 
-#: data/ui/window.blp:446
+#: data/ui/window.blp:444
 msgid "Get the Fast Fourier Transform of the data"
 msgstr "მონაცემების სწრაფი ფურიეს გარდაქმნის მიღება"
 
-#: data/ui/window.blp:460
+#: data/ui/window.blp:458
 msgid "Inverse FFT"
 msgstr "ინვერსიული FFT"
 
-#: data/ui/window.blp:462
+#: data/ui/window.blp:460
 msgid "Get the Inverse Fast Fourier Transform of the data"
 msgstr "მონაცემების ინვერსიული სწრაფი ფურიეს გარდაქმნის მიღება"
 
-#: data/ui/window.blp:477
+#: data/ui/window.blp:475
 msgid "Custom Transformation"
 msgstr "მომხმარებლის გარდაქმნა"
 
-#: data/ui/window.blp:479
+#: data/ui/window.blp:477
 msgid "Perform custom transformations on the data"
 msgstr "მონაცემებზე თქვენი ტრანსფორმაციების გადატარება"
 
-#: data/ui/window.blp:487
+#: data/ui/window.blp:485
 msgid "Modify"
 msgstr "შეცვლა"
 
-#: data/ui/window.blp:508
+#: data/ui/window.blp:506
 msgid "Translate X"
 msgstr "გადატანა X-ით"
 
-#: data/ui/window.blp:531
+#: data/ui/window.blp:529
 msgid "Translate Y"
 msgstr "გადატანა Y-ით"
 
-#: data/ui/window.blp:554
+#: data/ui/window.blp:552
 msgid "Multiply X"
 msgstr "X-ის გამრავლება"
 
-#: data/ui/window.blp:577
+#: data/ui/window.blp:575
 msgid "Multiply Y"
 msgstr "Y-ის გამრავლება"
 
-#: data/ui/window.blp:607
+#: data/ui/window.blp:605 graphs/item_box.vala:73
 msgid "Undo"
 msgstr "დაბრუნება"
 
-#: data/ui/window.blp:612
+#: data/ui/window.blp:610
 msgid "Redo"
 msgstr "გამეოერბა"
 
-#: data/ui/window.blp:617
+#: data/ui/window.blp:615
 msgid "View Menu"
 msgstr "ხედის მენიუ"
 
-#: data/ui/window.blp:625
+#: data/ui/window.blp:623
 msgid "Next View"
 msgstr "შემდეგი ხედი"
 
-#: data/ui/window.blp:631
+#: data/ui/window.blp:629
 msgid "Previous View"
 msgstr "წინა ხედი"
 
-#: data/ui/window.blp:649
+#: data/ui/window.blp:647
 msgid "New Project"
 msgstr "ახალი პროექტი"
 
-#: data/ui/window.blp:652
+#: data/ui/window.blp:650
 msgid "Save Project…"
 msgstr "პროექტის შენახვა…"
 
-#: data/ui/window.blp:653
+#: data/ui/window.blp:651
 msgid "Save Project as…"
 msgstr "პროექტის შენახვა, როგორც…"
 
-#: data/ui/window.blp:654
+#: data/ui/window.blp:652
 msgid "Open Project…"
 msgstr "პროექტის გახსნა…"
 
-#: data/ui/window.blp:657
+#: data/ui/window.blp:655
 msgid "Export Data…"
 msgstr "მონაცემების გატანა…"
 
-#: data/ui/window.blp:658
+#: data/ui/window.blp:656
 msgid "Export Figure…"
 msgstr "ფიგურის გატანა…"
 
-#: data/ui/window.blp:664
+#: data/ui/window.blp:662
 msgid "Keyboard Shortcuts"
 msgstr "კლავიატურის მალსახმობები"
 
-#: data/ui/window.blp:665
+#: data/ui/window.blp:663
 msgid "Help"
 msgstr "დახმარება"
 
-#: data/ui/window.blp:666
+#: data/ui/window.blp:664
 msgid "About Graphs"
 msgstr "გრაფიკების შესახებ"
 
-#: data/ui/window.blp:672
+#: data/ui/window.blp:670
 msgid "Add Data from File…"
 msgstr "მონაცემების დამატება ფაილიდან…"
 
-#: data/ui/window.blp:673
+#: data/ui/window.blp:671
 msgid "Add Equation…"
 msgstr "განტოლების დამატება…"
 
-#: data/ui/window.blp:682
+#: data/ui/window.blp:680
 msgid "At Maximum Y Value"
 msgstr "Y-ის მაქსიმალურ მნიშვნელობასთან"
 
-#: data/ui/window.blp:687
+#: data/ui/window.blp:685
 msgid "At Middle X Value"
 msgstr "X-ის საშუალო მნიშვნელობისას"
 
-#: data/ui/window.blp:708
+#: data/ui/window.blp:706
 msgid "Advanced Settings"
 msgstr "დამატებითი პარამეტრები"
 
-#: graphs/about.vala:33
+#: graphs/about.vala:40
 msgid "translator-credits"
 msgstr "ეკატერინე პაპავა"
 
@@ -1456,7 +1448,7 @@ msgstr "{error} - განტოლებიდან მონაცემე�
 msgid "Exported Figure"
 msgstr "გატანილი ილუსტრაცია"
 
-#: graphs/actions.py:226 graphs/item_box.py:65
+#: graphs/actions.py:226
 #, python-brace-format
 msgid "Deleted {name}"
 msgstr "{name} წაიშალა"
@@ -1499,7 +1491,7 @@ msgstr ""
 msgid "Sum of R²: {R2}"
 msgstr "R²-ის ჯამი: {R2}"
 
-#: graphs/curve_fitting.vala:128
+#: graphs/curve_fitting.vala:131
 #, c-format
 msgid "Fitting Parameters for %s"
 msgstr "აპროქსიმაციის პარამეტრები %s-სთვის"
@@ -1512,71 +1504,76 @@ msgstr "უსახელო პროექტი"
 msgid "Draft"
 msgstr "მონახაზი"
 
-#: graphs/export_figure.vala:42
+#: graphs/export_figure.vala:45
 msgctxt "filename"
 msgid "Exported Figure"
 msgstr "გატანილი ილუსტრაცია"
 
-#: graphs/figure_settings.py:74 graphs/figure_settings.vala:205
+#: graphs/figure_settings.py:71
 msgid "Defaults Updated"
 msgstr "ნაგულისხმევები განახლდა"
 
-#: graphs/figure_settings.vala:155
+#: graphs/figure_settings.vala:161
 msgid "X Axis Minimum"
 msgstr "X ღერძის მინიმუმი"
 
-#: graphs/figure_settings.vala:156
+#: graphs/figure_settings.vala:162
 msgid "Y Axis Minimum"
 msgstr "Y ღერძის მინიმუმი"
 
-#: graphs/figure_settings.vala:158
+#: graphs/figure_settings.vala:164
 msgid "X Axis Maximum"
 msgstr "X ღერძის მაქსიმუმი"
 
-#: graphs/figure_settings.vala:159
+#: graphs/figure_settings.vala:165
 msgid "Y Axis Maximum"
 msgstr "Y ღერძის მაქსიმუმი"
 
-#: graphs/figure_settings.vala:169 graphs/window.vala:213
+#: graphs/figure_settings.vala:175 graphs/window.vala:232
 msgid "X Axis Scale"
 msgstr "X-ღერძის მასშტაბი"
 
-#: graphs/figure_settings.vala:170 graphs/figure_settings.vala:174
+#: graphs/figure_settings.vala:176 graphs/figure_settings.vala:180
 msgid "X Axis Label"
 msgstr "X-ღერძის ჭდე"
 
-#: graphs/figure_settings.vala:173 graphs/window.vala:218
+#: graphs/figure_settings.vala:179 graphs/window.vala:237
 msgid "Y Axis Scale"
 msgstr "Y-ღერძის მასშტაბის ფაქტორი"
 
-#: graphs/file_import.vala:62
+#: graphs/file_import.vala:40
 msgid "Are you sure you want to reset the import settings?"
 msgstr "მართლა გნებავთ შემოტანის პარამეტრების ჩამოყრა?"
+
+#: graphs/item_box.vala:72
+#, c-format
+msgid "Deleted %s"
+msgstr "წაიშალა %s"
 
 #: graphs/misc.py:107
 msgctxt "file-filter"
 msgid "Graphs Project File"
 msgstr "Graphs-ის პროექტის ფაილი"
 
-#: graphs/operations.py:128
+#: graphs/operations.py:129
 #, python-brace-format
 msgid "{name}: Unable to do transformation, make sure the syntax is correct"
 msgstr ""
 "{name}: გარდაქმნის შესრულება შეუძლებელია. დარწმუნდით, რომ სინტაქსი სწორია"
 
-#: graphs/operations.py:132
+#: graphs/operations.py:133
 msgid "Unable to do transformation"
 msgstr "გარდაქმნის შესრულება შეუძლებელია"
 
-#: graphs/operations.py:195
+#: graphs/operations.py:197
 msgid "Data that was outside of the highlighted area has been discarded"
 msgstr "მონაცემები, რომლებიც მონიშნული ადგილის გარეთ იყო, მოცილებულია"
 
-#: graphs/operations.py:232
+#: graphs/operations.py:234
 msgid "No data found within the highlighted area"
 msgstr "მონიშნულ ადგილში მონაცემები აღმოჩენილი არაა"
 
-#: graphs/operations.py:477
+#: graphs/operations.py:479
 msgid "Combined Data"
 msgstr "კომბინირებული მონაცემები"
 
@@ -1612,70 +1609,70 @@ msgstr "შენახული პროექტი"
 msgid "Project"
 msgstr "პროექტი"
 
-#: graphs/style_io.py:58
+#: graphs/style_io.py:65
 #, python-brace-format
 msgid "Missing colon in file {file}, line {line}"
 msgstr "აკლია სვეტი ფაილში {file} ხაზზე {line}"
 
-#: graphs/style_io.py:66
+#: graphs/style_io.py:73
 #, python-brace-format
 msgid "Non-style related parameter {param} in file {file}"
 msgstr "სტილთან დაუკავშირებელი პარამეტრი {param} ფაილში {file}"
 
-#: graphs/style_io.py:69
+#: graphs/style_io.py:76
 #, python-brace-format
 msgid "Ignoring parameter {param} in file {file}"
 msgstr "გამოვტოვე პარამეტრი {param} ფაილში {file}"
 
-#: graphs/style_io.py:72
+#: graphs/style_io.py:79
 #, python-brace-format
 msgid "Duplicate key in file {file}, on line {line}"
 msgstr "დუბლირებული პარამეტრი ფაილში {file}, ხაზზე {line}"
 
-#: graphs/style_io.py:89
+#: graphs/style_io.py:96
 #, python-brace-format
 msgid "Bad value in file {file} on line {line}"
 msgstr "არასწორი მნიშვნელობა ფაილში {file} ხაზზე {line}"
 
-#: graphs/style_io.py:95
+#: graphs/style_io.py:102
 #, python-brace-format
 msgid "Could not parse {filename}"
 msgstr "{filename}-ის დამუშავება შეუძლებელია"
 
-#: graphs/styles.py:60
+#: graphs/style_io.py:159
 msgid "X Label"
 msgstr "X ჭდე"
 
-#: graphs/styles.py:61
+#: graphs/style_io.py:160
 msgid "Y Label"
 msgstr "Y ჭდე"
 
-#: graphs/styles.py:126
-msgid "System"
-msgstr "სისტემური"
-
-#: graphs/styles.py:385
+#: graphs/styles.py:305
 #, python-brace-format
 msgid "Could not parse {stylename}, loading system preferred style"
 msgstr ""
 "ხაზვის სტილის {stylename} დამუშავება შეუძლებელია. იტვირთება სისტემის "
 "ნაგულისხმევი სტილი"
 
-#: graphs/styles.py:393
+#: graphs/styles.py:313
 #, python-brace-format
 msgid "Plot style {stylename} does not exist loading system preferred"
 msgstr ""
 "დახაზვის სტილი {stylename} არ არსებობს. იტვირთება სისტემის ნაგულისხმევი"
 
-#: graphs/styles.py:806
+#: graphs/styles.py:726
 #, python-brace-format
 msgid "Are you sure you want to delete {stylename}?"
 msgstr "მართლა გნებავთ, წაშალოთ {stylename}?"
 
-#: graphs/styles.py:823
+#: graphs/styles.py:743
 #, python-brace-format
 msgid "Color {number}"
 msgstr "ფერი {number}"
+
+#: graphs/styles.vala:71
+msgid "System"
+msgstr "სისტემური"
 
 #: graphs/ui.py:46
 msgctxt "file-filter"
@@ -1710,22 +1707,48 @@ msgctxt "file-filter"
 msgid "Text Files"
 msgstr "ტექსტური ფაილები"
 
-#: graphs/window.vala:127
+#: graphs/window.vala:128
 msgid "Graphs (Development)"
 msgstr "Graphs (Development)"
 
-#: graphs/window.vala:155
+#: graphs/window.vala:171
 msgid "Open Location"
 msgstr "მდებარეობის გახსნა"
 
-#: graphs/window.vala:176
+#: graphs/window.vala:195
 msgid "Optimize Limits"
 msgstr "ლიმიტების ოპტიმიზაცია"
 
-#: graphs/window.vala:185
+#: graphs/window.vala:204
 msgctxt "scale"
 msgid "Inverse Root"
 msgstr "ინვერსიული ფესვი"
+
+#~ msgid "Y = "
+#~ msgstr "Y = "
+
+#~ msgctxt "file-format"
+#~ msgid "Joint Photographic Experts Group"
+#~ msgstr "ფოტოგრაფების ექსპერტების გაერთიანებული ჯგუფი"
+
+#~ msgctxt "file-format"
+#~ msgid "Portable Document Format"
+#~ msgstr "გადატანადი დოკუმენტის ფორმატი"
+
+#~ msgctxt "file-format"
+#~ msgid "Portable Network Graphics"
+#~ msgstr "პორტატული ქსელური გრაფიკა"
+
+#~ msgctxt "file-format"
+#~ msgid "Scalable Vector Graphics"
+#~ msgstr "გადიდებადი ვექტორული გრაფიკა"
+
+#~ msgctxt "file-format"
+#~ msgid "WebP Image Format"
+#~ msgstr "WebP გამოსახულების ფორმატი"
+
+#~ msgid "Edit Item"
+#~ msgstr "ჩანაწერის ჩასწორება"
 
 #~ msgctxt "markerstyle"
 #~ msgid "Nothing"
