@@ -1,7 +1,7 @@
 name: graphs
 base: core22
 adopt-info: graphs
-grade: devel 
+grade: stable 
 confinement: strict
 compression: lzo
 license: GPL-3.0
@@ -74,7 +74,6 @@ parts:
     build-snaps:
       - blueprint-compiler/latest/stable
       - gnome-46-2404
-      - gnome-46-2404-sdk      
     override-build: |
       craftctl default
       sed -e '1c#!/usr/bin/env python3' -i ${CRAFT_PART_INSTALL}/snap/graphs/current/usr/bin/graphs
