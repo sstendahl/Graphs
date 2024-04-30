@@ -1,5 +1,5 @@
 name: graphs
-base: core24
+base: core22
 adopt-info: graphs
 grade: stable 
 confinement: strict
