@@ -224,7 +224,7 @@ def delete_selected_action(application: Graphs.Application) -> None:
     names = ", ".join(item.get_name() for item in items)
     application.get_data().delete_items(items)
     toast = Adw.Toast.new(_("Deleted {name}").format(name=names))
-    toast.set_button_label("Undo")
+    toast.set_button_label(_("Undo"))
     toast.set_action_name("app.undo")
     application.get_window().add_toast(toast)
 
