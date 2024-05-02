@@ -5,6 +5,19 @@ using Gee;
 namespace Graphs {
     private const string[] X_DIRECTIONS = {"top", "bottom"};
     private const string[] Y_DIRECTIONS = {"left", "right"};
+    private const string[] PYTHON_ACTIONS = {
+        "add_data",
+        "add_equation",
+        "export_data",
+        "export_figure",
+        "new_project",
+        "save_project",
+        "save_project_as",
+        "open_project",
+        "zoom_in",
+        "zoom_out",
+        "figure_settings"
+    };
 
     /**
      * Setup actions.
@@ -12,7 +25,7 @@ namespace Graphs {
      * @param application Application
      */
     public void setup_actions (Application application) {
-        foreach (string name in ACTION_NAMES) {
+        foreach (string name in PYTHON_ACTIONS) {
             var action = new SimpleAction (name, null);
             action.activate.connect (() => {
                 application.action_invoked.emit (name);
@@ -65,7 +78,7 @@ namespace Graphs {
                         val, int.parse (target.get_string ())
                     );
                 }
-                application.data.add_history_state_request.emit ();
+                application.data.add_history_state ();
             });
             figure_settings.notify[val].connect (() => {
                 int scale;
@@ -88,5 +101,102 @@ namespace Graphs {
             application.operation_invoked.emit (target.get_string ());
         });
         application.add_action (operation_action);
+
+        var quit_action = new SimpleAction ("quit", null);
+        quit_action.activate.connect (() => {
+            application.close ();
+        });
+        application.add_action (quit_action);
+
+        var about_action = new SimpleAction ("about", null);
+        about_action.activate.connect (() => {
+            show_about_dialog (application);
+        });
+        application.add_action (about_action);
+
+        var help_action = new SimpleAction ("help", null);
+        help_action.activate.connect (() => {
+            try {
+                AppInfo.launch_default_for_uri (
+                    "help:graphs",
+                    application.window.get_display ().get_app_launch_context ()
+                );
+            } catch { assert_not_reached (); }
+        });
+        application.add_action (help_action);
+
+        var optimize_limits_action = new SimpleAction ("optimize_limits", null);
+        optimize_limits_action.activate.connect (() => {
+            application.data.optimize_limits ();
+        });
+        application.add_action (optimize_limits_action);
+
+        var smoothen_settings_action = new SimpleAction ("smoothen_settings", null);
+        smoothen_settings_action.activate.connect (() => {
+            new SmoothenDialog (application);
+        });
+        application.add_action (smoothen_settings_action);
+
+        var select_all_action = new SimpleAction ("select_all", null);
+        select_all_action.activate.connect (() => {
+            foreach (Item item in application.data) {
+                item.selected = true;
+            }
+            application.data.add_history_state ();
+        });
+        application.add_action (select_all_action);
+
+        var select_none_action = new SimpleAction ("select_none", null);
+        select_none_action.activate.connect (() => {
+            foreach (Item item in application.data) {
+                item.selected = false;
+            }
+            application.data.add_history_state ();
+        });
+        application.add_action (select_none_action);
+
+        var undo_action = new SimpleAction ("undo", null);
+        undo_action.activate.connect (() => {
+            application.data.undo ();
+        });
+        application.add_action (undo_action);
+
+        var redo_action = new SimpleAction ("redo", null);
+        redo_action.activate.connect (() => {
+            application.data.redo ();
+        });
+        application.add_action (redo_action);
+
+        var view_back_action = new SimpleAction ("view_back", null);
+        view_back_action.activate.connect (() => {
+            application.data.view_back ();
+        });
+        application.add_action (view_back_action);
+
+        var view_forward_action = new SimpleAction ("view_forward", null);
+        view_forward_action.activate.connect (() => {
+            application.data.view_forward ();
+        });
+        application.add_action (view_forward_action);
+
+        var delete_selected_action = new SimpleAction ("delete_selected", null);
+        delete_selected_action.activate.connect (() => {
+            Item[] items = {};
+            var name_builder = new StringBuilder ();
+            foreach (Item item in application.data) {
+                if (item.selected) {
+                    items += item;
+                    name_builder.append (item.name);
+                    name_builder.append (", ");
+                }
+            }
+            string names = name_builder.free_and_steal ()[:-2];
+            var toast = new Adw.Toast (_("Deleted %s").printf (names));
+            toast.set_button_label (_("Undo"));
+            toast.set_action_name ("app.undo");
+            application.data.delete_items (items);
+            application.window.add_toast (toast);
+        });
+        application.add_action (delete_selected_action);
     }
 }

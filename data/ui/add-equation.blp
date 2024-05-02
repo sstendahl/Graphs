@@ -69,6 +69,7 @@ template $GraphsAddEquationDialog : Adw.Dialog {
                 Adw.EntryRow x_start {
                   title: _("X Start");
                   activates-default: true;
+                  notify::text => $on_entry_change();
                 }
               }
 
@@ -76,6 +77,7 @@ template $GraphsAddEquationDialog : Adw.Dialog {
                 Adw.EntryRow x_stop {
                   title: _("X Stop");
                   activates-default: true;
+                  notify::text => $on_entry_change();
                 }
               }
 
@@ -83,6 +85,7 @@ template $GraphsAddEquationDialog : Adw.Dialog {
                 Adw.EntryRow step_size {
                   title: _("Step Size");
                   activates-default: true;
+                  notify::text => $on_entry_change();
                 }
               }
             }

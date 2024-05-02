@@ -3,7 +3,7 @@
 import logging
 from gettext import gettext as _
 
-from gi.repository import Adw, Gio, Graphs, Gtk
+from gi.repository import Gio, Graphs
 
 from graphs import (
     actions,
@@ -12,9 +12,9 @@ from graphs import (
     operations,
     project,
     styles,
-    ui,
 )
 from graphs.data import Data
+from graphs.python_helper import PythonHelper
 
 from matplotlib import font_manager
 
@@ -35,6 +35,8 @@ class PythonApplication(Graphs.Application):
             data=data,
             **kwargs,
         )
+        self._python_helper = PythonHelper(self)
+        self.props.python_helper = self._python_helper
         font_list = font_manager.findSystemFonts(fontpaths=None, fontext="ttf")
         for font in font_list:
             try:
@@ -45,12 +47,7 @@ class PythonApplication(Graphs.Application):
         Graphs.setup_actions(self)
         self.connect("action_invoked", actions.on_action_invoked)
         self.connect("operation_invoked", operations.perform_operation)
-
-        data.connect(
-            "notify::items",
-            ui.on_items_change,
-            self,
-        )
+        self.connect("close_request", self._on_close_request)
 
     def on_project_saved(self, _application, handler=None, *args) -> None:
         """Change unsaved state."""
@@ -94,7 +91,7 @@ class PythonApplication(Graphs.Application):
         else:
             file_import.import_from_files(self, files)
 
-    def close_application(self, *_args) -> None:
+    def _on_close_request(self, *_args) -> None:
         """
         Intercept when closing the application.
 
@@ -130,63 +127,7 @@ class PythonApplication(Graphs.Application):
         window = self.props.active_window
         if not window:
             window = Graphs.Window.new(self)
-            data = self.get_data()
-            binding_table = [
-                ("can_undo", window.get_undo_button(), "sensitive"),
-                ("can_redo", window.get_redo_button(), "sensitive"),
-                ("can_view_back", window.get_view_back_button(), "sensitive"),
-                (
-                    "can_view_forward",
-                    window.get_view_forward_button(),
-                    "sensitive",
-                ),
-                ("project_name", window.get_content_title(), "title"),
-                ("project_path", window.get_content_title(), "subtitle"),
-            ]
-            for prop1, obj, prop2 in binding_table:
-                data.bind_property(prop1, obj, prop2, 2)
-            actions = (
-                "multiply_x",
-                "multiply_y",
-                "translate_x",
-                "translate_y",
-            )
-            for action in actions:
-                entry = window.get_property(action + "_entry")
-                button = window.get_property(action + "_button")
-                entry.connect(
-                    "notify::text",
-                    self.set_entry_css,
-                    entry,
-                    button,
-                )
-                data.connect(
-                    "notify::items-selected",
-                    self.set_entry_css,
-                    entry,
-                    button,
-                )
-                self.set_entry_css(None, None, entry, button)
             self.set_window(window)
-            window.connect("close-request", self.close_application)
+            window.connect("close-request", self._on_close_request)
             self.set_figure_style_manager(styles.StyleManager(self))
-            data.connect_after(
-                "notify::items",
-                lambda _data,
-                _param: window.update_view_menu(),
-            )
-            window.update_view_menu()
             window.present()
-
-    def set_entry_css(
-        self,
-        _object,
-        _param,
-        entry: Adw.EntryRow,
-        button: Gtk.Button,
-    ) -> None:
-        """Validate text field input."""
-        button.set_sensitive(
-            ui.validate_entry(entry)[1]
-            and self.get_data().props.items_selected,
-        )

@@ -11,9 +11,11 @@ namespace Graphs {
         public Data data { get; construct set; }
         public StyleManager figure_style_manager { get; set; }
         public bool debug { get; construct set; default = false; }
+        public PythonHelper python_helper { get; construct set; }
 
         public signal void action_invoked (string name);
         public signal void operation_invoked (string name);
+        protected signal void close_request ();
 
         construct {
             Intl.bindtextdomain (Config.GETTEXT_PACKAGE, Config.LOCALEDIR);
@@ -34,6 +36,10 @@ namespace Graphs {
                 settings = settings.get_child (child_name);
             }
             return settings;
+        }
+
+        public void close () {
+            this.close_request.emit ();
         }
     }
 }

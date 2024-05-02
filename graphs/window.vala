@@ -10,22 +10,22 @@ namespace Graphs {
     public class Window : Adw.ApplicationWindow {
 
         [GtkChild]
-        public unowned Button undo_button { get; }
+        private unowned Button undo_button { get; }
 
         [GtkChild]
-        public unowned Button redo_button { get; }
+        private unowned Button redo_button { get; }
 
         [GtkChild]
-        public unowned Button view_back_button { get; }
+        private unowned Button view_back_button { get; }
 
         [GtkChild]
-        public unowned Button view_forward_button { get; }
+        private unowned Button view_forward_button { get; }
 
         [GtkChild]
         private unowned MenuButton view_menu_button { get; }
 
         [GtkChild]
-        public unowned ToggleButton pan_button { get; }
+        private unowned ToggleButton pan_button { get; }
 
         [GtkChild]
         private unowned ToggleButton zoom_button { get; }
@@ -40,7 +40,7 @@ namespace Graphs {
         private unowned Stack stack { get; }
 
         [GtkChild]
-        public unowned Button shift_button { get; }
+        private unowned Button shift_button { get; }
 
         [GtkChild]
         public unowned Button cut_button { get; }
@@ -70,7 +70,7 @@ namespace Graphs {
         public unowned Button multiply_y_button { get; }
 
         [GtkChild]
-        public unowned ListBox item_list { get; }
+        private unowned ListBox item_list { get; }
 
         [GtkChild]
         public unowned Adw.OverlaySplitView split_view { get; }
@@ -82,7 +82,7 @@ namespace Graphs {
         private unowned Adw.HeaderBar content_headerbar { get; }
 
         [GtkChild]
-        public unowned Adw.WindowTitle content_title { get; }
+        private unowned Adw.WindowTitle content_title { get; }
 
         public int mode {
             set {
@@ -110,6 +110,12 @@ namespace Graphs {
                 "items_selected", this.shift_button, "sensitive", 2
             );
             data.bind_property ("empty", this.item_list, "visible", 4);
+            data.bind_property ("can_undo", this.undo_button, "sensitive", 2);
+            data.bind_property ("can_redo", this.redo_button, "sensitive", 2);
+            data.bind_property ("can_view_back", this.view_back_button, "sensitive", 2);
+            data.bind_property ("can_view_forward", this.view_forward_button, "sensitive", 2);
+            data.bind_property ("project_name", this.content_title, "title", 2);
+            data.bind_property ("project_path", this.content_title, "subtitle", 2);
 
             InlineStackSwitcher stack_switcher = new InlineStackSwitcher ();
             stack_switcher.stack = this.stack;
@@ -123,9 +129,59 @@ namespace Graphs {
                 headerbar_provider, STYLE_PROVIDER_PRIORITY_APPLICATION
             );
 
+            string[] action_names = {
+                "multiply_x",
+                "multiply_y",
+                "translate_x",
+                "translate_y"
+            };
+            foreach (string action_name in action_names) {
+                Entry entry;
+                Button button;
+                this.get (action_name + "_entry", out entry);
+                this.get (action_name + "_button", out button);
+                entry.notify["text"].connect (() => {
+                    this.validate_entry (application, entry, button);
+                });
+                data.notify["items-selected"].connect (() => {
+                    this.validate_entry (application, entry, button);
+                });
+                this.validate_entry (application, entry, button);
+            }
+
+            data.notify["items"].connect (() => {
+                Widget child = null;
+                while ((child = this.item_list.get_last_child ()) != null) {
+                    this.item_list.remove (child);
+                }
+                int index = 0;
+                foreach (Item item in data) {
+                    var item_box = new ItemBox (application, item, index);
+                    this.item_list.append (item_box);
+                    Widget row = this.item_list.get_last_child ();
+                    row.add_controller (item_box.drag_source);
+                    row.add_controller (item_box.drop_target);
+                    row.add_controller (item_box.click_gesture);
+                    index++;
+                }
+                this.update_view_menu ();
+                data.add_view_history_state ();
+            });
+
+            this.update_view_menu ();
             if (application.debug) {
                 this.add_css_class ("devel");
                 this.set_title (_("Graphs (Development)"));
+            }
+        }
+
+        private void validate_entry (Application application, Entry entry, Button button) {
+            if (application.python_helper.validate_input (entry.get_text ())) {
+                entry.remove_css_class ("error");
+                button.set_sensitive (application.data.items_selected);
+            } else {
+                entry.add_css_class ("error");
+                button.set_sensitive (false);
             }
         }
 

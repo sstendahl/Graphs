@@ -7,6 +7,7 @@ template $GraphsFigureSettingsDialog : Adw.Dialog {
   width-request: 400;
   height-request: 400;
   styles ["preferences"]
+  closed => $on_closed();
 
   Adw.Breakpoint {
     condition ("max-width: 600sp")

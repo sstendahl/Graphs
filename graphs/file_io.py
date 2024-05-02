@@ -6,8 +6,6 @@ from xml.dom import minidom
 
 from gi.repository import GLib, Gio
 
-from graphs import item
-
 
 class FileLikeWrapper(io.BufferedIOBase):
     """FileLike Wrapper for Gio.Files."""
@@ -121,19 +119,6 @@ def iter_data_stream(stream: Gio.DataInputStream):
     while line is not None:
         yield line
         line = stream.read_line_utf8(None)[0]
-
-
-def save_item(file: Gio.File, item_: item.DataItem) -> None:
-    """Save an Item to a txt file."""
-    delimiter = "\t"
-    fmt = delimiter.join(["%.12e"] * 2)
-    xlabel, ylabel = item_.get_xlabel(), item_.get_ylabel()
-    stream = Gio.DataOutputStream.new(create_write_stream(file))
-    if xlabel != "" and ylabel != "":
-        stream.stream(xlabel + delimiter + ylabel + "\n")
-    for values in zip(item_.xdata, item_.ydata):
-        stream.put_string(fmt % values + "\n")
-    stream.close()
 
 
 def parse_json(file: Gio.File) -> dict:

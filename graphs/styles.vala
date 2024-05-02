@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 using Gdk;
 using Gtk;
+using Gee;
 
 namespace Graphs {
     public int style_cmp (Style a, Style b) {
@@ -21,10 +22,16 @@ namespace Graphs {
         public string selected_stylename { get; protected set; }
 
         private GLib.ListStore style_model;
+        protected Gee.AbstractSet<string> stylenames { get; private set; }
+
+        protected signal void copy_request (string template, string name);
+        protected signal Style user_style_added (File file);
+        protected signal void file_changed (File file, FileMonitorEvent event_type);
 
         construct {
             this.style_model = new GLib.ListStore (typeof (Style));
             this.selection_model = new SingleSelection (this.style_model);
+            this.stylenames = new Gee.HashSet<string> ();
             try {
                 File config_dir = Tools.get_config_directory ();
                 this.style_dir = config_dir.get_child_for_display_name ("styles");
@@ -36,8 +43,9 @@ namespace Graphs {
             }
         }
 
-        protected string[] load_system_styles (string system_style) {
-            string[] stylenames = {};
+        protected void setup (string system_style) {
+            PythonHelper python_helper = this.application.python_helper;
+            CompareDataFunc<Style> cmp = style_cmp;
             try {
                 var directory = File.new_for_uri ("resource:///se/sjoerd/Graphs/styles");
                 FileEnumerator enumerator = directory.enumerate_children (
@@ -51,17 +59,17 @@ namespace Graphs {
                     stream.read_line_utf8 ();
                     size_t size;
                     string name = stream.read_line_utf8 (out size)[2: (long)size];
-                    stylenames += name;
+                    this.stylenames.add (name);
                     string preview_name = info.get_name ().replace (".mplstyle", ".png");
                     var preview = Gdk.Texture.from_resource (
                         @"/se/sjoerd/Graphs/$preview_name"
                     );
-                    CompareDataFunc<Style> cmp = style_cmp;
                     this.style_model.insert_sorted (
                         new Style (name, file, preview, false),
                         cmp
                     );
                 }
+                enumerator.close ();
             } catch {
                 assert_not_reached ();
             }
@@ -76,14 +84,35 @@ namespace Graphs {
                     false
                 )
             );
-            return stylenames;
-        }
-
-        protected Style get_selected_style () {
-            return (Style) this.selection_model.get_selected_item ();
-        }
-
-        protected void setup_bindings (FigureSettings figure_settings) {
+            python_helper.run_method (this, "_update_system_style");
+            try {
+                FileEnumerator enumerator = this.style_dir.enumerate_children (
+                    "standard::*",
+                    FileQueryInfoFlags.NONE
+                );
+                FileInfo info = null;
+                while ((info = enumerator.next_file ()) != null) {
+                    File file = enumerator.get_child (info);
+                    if (
+                        file.query_file_type (0) == 1
+                        && Tools.get_filename (file).has_suffix (".mplstyle")
+                    ) this.add_user_style (file);
+                }
+                enumerator.close ();
+                FileMonitor style_monitor = this.style_dir.monitor_directory (
+                    FileMonitorFlags.NONE
+                );
+                style_monitor.changed.connect ((m, file, o, event_type) => {
+                    this.file_changed.emit (file, event_type);
+                });
+                style_monitor.ref ();
+            } catch { assert_not_reached (); }
+            this.application.style_manager.notify.connect (() => {
+                if (!this.use_custom_style) {
+                    python_helper.run_method (this, "_on_style_change");
+                }
+            });
+            FigureSettings figure_settings = this.application.data.figure_settings;
             figure_settings.bind_property (
                 "use_custom_style",
                 this,
@@ -106,6 +135,46 @@ namespace Graphs {
                     if (!this.use_custom_style) this.use_custom_style = true;
                 }
             });
+            python_helper.run_method (this, "_on_style_change");
+        }
+
+        protected void add_user_style (File file) {
+            Style style = this.user_style_added.emit (file);
+            if (this.stylenames.contains (style.name)) {
+                style.name = Tools.get_duplicate_string (
+                    style.name, this.stylenames.to_array ()
+                );
+            }
+            CompareDataFunc<Style> cmp = style_cmp;
+            this.style_model.insert_sorted (style, cmp);
+            this.stylenames.add (style.name);
+            if (this.use_custom_style) {
+                string old_style = this.custom_style;
+                if (!this.stylenames.contains (old_style)) {
+                    this.custom_style = style.name;
+                }
+                for (uint i = 1; i < this.style_model.get_n_items (); i++) {
+                    Style i_style = (Style) this.style_model.get_item (i);
+                    if (i_style.name == this.custom_style) {
+                        this.selection_model.set_selected (i);
+                    }
+                }
+            }
+        }
+
+        protected Style get_selected_style () {
+            return (Style) this.selection_model.get_selected_item ();
+        }
+
+        protected void remove_style (File file) {
+            for (uint i = 1; i < this.style_model.get_n_items (); i++) {
+                Style style = (Style) this.style_model.get_item (i);
+                if (style.file.equal (file)) {
+                    this.stylenames.remove (style.name);
+                    this.style_model.remove (i);
+                    break;
+                }
+            }
         }
 
         /**
@@ -120,6 +189,16 @@ namespace Graphs {
                 stylenames += style.name;
             }
             return stylenames;
+        }
+
+        public void copy_style (string template, string name) {
+            string new_name = name;
+            if (this.stylenames.contains (name)) {
+                new_name = Tools.get_duplicate_string (
+                    name, this.stylenames.to_array ()
+                );
+            }
+            this.copy_request.emit (template, new_name);
         }
     }
 

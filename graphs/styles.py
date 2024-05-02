@@ -59,29 +59,10 @@ class StyleManager(Graphs.StyleManager):
             else "Adwaita"
         super().__init__(application=application)
         self._selected_style_params = None
-        self._stylenames = self.load_system_styles(
-            self._system_style_name.lower(),
-        )
-        self._update_system_style()
-        enumerator = self.props.style_dir.enumerate_children(
-            "default::*",
-            0,
-            None,
-        )
-        for file in map(enumerator.get_child, enumerator):
-            if file.query_file_type(0, None) != 1:
-                continue
-            if Path(Graphs.tools_get_filename(file)).suffix != ".mplstyle":
-                continue
-            self._add_user_style(file)
-        enumerator.close(None)
-        self._style_monitor = self.props.style_dir.monitor_directory(0, None)
-        self._style_monitor.connect("changed", self._on_file_change)
+        self.connect("user_style_added", self._on_user_style_added)
+        self.connect("file_changed", self._on_file_change)
+        self.connect("copy_request", self._on_copy_request)
 
-        application.get_style_manager().connect(
-            "notify",
-            self._on_system_style_change,
-        )
         notifiers = ("custom_style", "use_custom_style")
         for prop in notifiers:
             self.connect(
@@ -89,54 +70,19 @@ class StyleManager(Graphs.StyleManager):
                 getattr(self, "_on_" + prop),
             )
 
-        self.setup_bindings(application.get_data().get_figure_settings())
-        self._on_style_change()
+        self.setup(self._system_style_name.lower())
 
-    def _on_system_style_change(self, _a, _b):
-        if not self.props.use_custom_style:
-            self._on_style_change()
-
-    def _add_user_style(
-        self,
-        file: Gio.File,
-        style_params: RcParams = None,
-        name: str = None,
-    ) -> None:
-        if style_params is None:
-            tmp_style_params, name = style_io.parse(file)
-            style_params = self._complete_style(tmp_style_params)
-        if name in self._stylenames:
-            new_name = Graphs.tools_get_duplicate_string(
-                name,
-                self._stylenames,
-            )
-            file.delete(None)
-            file = self.props.style_dir.get_child_for_display_name(
-                _generate_filename(new_name),
-            )
-            style_io.write(style_params, new_name, file)
-        self._stylenames.append(name)
-        self.props.selection_model.get_model().insert_sorted(
-            Graphs.Style(
-                name=name,
-                file=file,
-                mutable=True,
-                preview=_generate_preview(style_params),
-                light=_is_style_bright(style_params),
-            ),
-            Graphs.style_cmp,
+    @staticmethod
+    def _on_user_style_added(self, file: Gio.File) -> Graphs.Style:
+        tmp_style_params, name = style_io.parse(file)
+        style_params = self._complete_style(tmp_style_params)
+        return Graphs.Style(
+            name=name,
+            file=file,
+            mutable=True,
+            preview=_generate_preview(style_params),
+            light=_is_style_bright(style_params),
         )
-        if not self.props.use_custom_style:
-            return
-
-        old_style = self.props.custom_style
-        if old_style not in self._stylenames:
-            self.props.custom_style = name
-
-        for index, style in enumerate(self.props.selection_model):
-            if index > 0 and style.get_name() == self.props.custom_style:
-                self.props.selection_model.set_selected(index)
-                break
 
     def get_selected_style_params(self) -> RcParams:
         """Get the selected style properties."""
@@ -146,60 +92,32 @@ class StyleManager(Graphs.StyleManager):
         """Get the system style properties."""
         return self._system_style_params
 
-    def _on_file_change(
-        self,
-        _monitor,
-        file: Gio.File,
-        _other_file,
-        event_type: int,
-    ) -> None:
+    @staticmethod
+    def _on_file_change(self, file: Gio.File, event_type: int) -> None:
         if Path(file.peek_path()).stem.startswith("."):
             return
         possible_visual_impact = False
         stylename = None
         style_model = self.props.selection_model.get_model()
-        if event_type == 2:
-            for index, style in enumerate(style_model):
-                file2 = style.get_file()
-                if file2 is not None and file.equal(file2):
-                    stylename = style.get_name()
-                    self._stylenames.remove(stylename)
-                    style_model.remove(index)
-                    break
-            if stylename is None:
-                return
+        if event_type == 3:
+            self.add_user_style(file)
+        elif event_type == 2:
+            self.remove_style(file)
             possible_visual_impact = True
-        else:
+        elif event_type == 1:
             tmp_style_params, stylename = style_io.parse(file)
             style_params = self._complete_style(tmp_style_params)
-        if event_type == 1:
-            for obj in style_model:
-                if obj.get_name() == stylename:
-                    obj.set_preview(_generate_preview(style_params))
-                    obj.set_light(_is_style_bright(style_params))
+            for style in style_model:
+                if style.get_name() == stylename:
+                    style.set_preview(_generate_preview(style_params))
+                    style.set_light(_is_style_bright(style_params))
                     break
             possible_visual_impact = False
-        elif event_type == 3:
-            self._add_user_style(file, style_params, stylename)
         if possible_visual_impact \
                 and self.props.use_custom_style \
                 and self.props.custom_style == stylename \
                 and event_type != 2:
             self._on_style_change()
-
-    def _on_style_select(self, style_model, _pos, _n_items):
-        """Set the style upon selection."""
-        selected_item = style_model.get_selected_item()
-        # Don't trigger unneccesary reloads
-        if selected_item.get_file() is None:  # System style
-            if self.props.use_custom_style:
-                self.props.use_custom_style = False
-        else:
-            stylename = selected_item.get_name()
-            if stylename != self.props.custom_style:
-                self.props.custom_style = stylename
-            if not self.props.use_custom_style:
-                self.props.use_custom_style = True
 
     @staticmethod
     def _on_use_custom_style(self, _a) -> None:
@@ -321,12 +239,9 @@ class StyleManager(Graphs.StyleManager):
         self.props.custom_style = self._system_style_name
         self.props.application.get_window().add_toast_string(message)
 
-    def copy_style(self, template: str, new_name: str) -> None:
+    @staticmethod
+    def _on_copy_request(self, template: str, new_name: str) -> None:
         """Copy a style."""
-        new_name = Graphs.tools_get_duplicate_string(
-            new_name,
-            self._stylenames,
-        )
         destination = self.props.style_dir.get_child_for_display_name(
             _generate_filename(new_name),
         )
@@ -346,16 +261,9 @@ class StyleManager(Graphs.StyleManager):
 
     def delete_style(self, file: Gio.File) -> None:
         """Delete a style."""
-        style_model = self.props.selection_model.get_model()
-        for index, style in enumerate(style_model):
-            if style is not None:
-                file2 = style.get_file()
-                if file2 is not None and file.equal(file2):
-                    stylename = style.get_name()
-                    style_model.remove(index)
-                    self._stylenames.remove(stylename)
-                    self.props.use_custom_style = False
-                    self.props.custom_style = self._system_style_name
+        self.remove_style(file)
+        self.props.use_custom_style = False
+        self.props.custom_style = self._system_style_name
 
 
 STYLE_DICT = {

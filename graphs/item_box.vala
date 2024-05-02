@@ -28,12 +28,12 @@ namespace Graphs {
 
         private CssProvider provider;
 
-        protected signal void edit_request ();
-        protected signal void delete_request ();
-        protected signal void curve_fitting_request ();
-        protected signal void position_change_request (int index);
-
-        public void setup (int num_items) {
+        public ItemBox (Application application, Item item, int index) {
+            Object (
+                application: application,
+                item: item,
+                index: index
+            );
             this.provider = new CssProvider ();
             this.color_button.get_style_context ().add_provider (
                 this.provider, STYLE_PROVIDER_PRIORITY_APPLICATION
@@ -46,7 +46,7 @@ namespace Graphs {
 
             this.click_gesture = new GestureClick ();
             this.click_gesture.released.connect (() => {
-                this.edit_request.emit ();
+                this.application.python_helper.create_edit_item_dialog (this.item);
             });
 
             this.drag_source = new DragSource ();
@@ -60,7 +60,7 @@ namespace Graphs {
             });
             this.drop_target = new DropTarget (typeof (int), DragAction.COPY);
             this.drop_target.drop.connect ((t, val, x, y) => {
-                this.position_change_request.emit (val.get_int ());
+                this.change_position (val.get_int ());
                 return true;
             });
 
@@ -68,7 +68,8 @@ namespace Graphs {
             var delete_action = new SimpleAction ("delete", null);
             delete_action.activate.connect (() => {
                 string name = this.item.name;
-                this.delete_request.emit ();
+                Item[] list = {this.item};
+                this.application.data.delete_items (list);
                 var toast = new Adw.Toast (_("Deleted %s").printf (name));
                 toast.set_button_label (_("Undo"));
                 toast.set_action_name ("app.undo");
@@ -77,20 +78,20 @@ namespace Graphs {
             action_group.add_action (delete_action);
             var curve_fitting_action = new SimpleAction ("curve_fitting", null);
             curve_fitting_action.activate.connect (() => {
-                this.curve_fitting_request.emit ();
+                this.application.python_helper.create_curve_fitting_dialog (this.item);
             });
             action_group.add_action (curve_fitting_action);
             if (this.index > 0) {
                 var move_up_action = new SimpleAction ("move_up", null);
                 move_up_action.activate.connect (() => {
-                    this.position_change_request.emit (this.index - 1);
+                    this.change_position (this.index - 1);
                 });
                 action_group.add_action (move_up_action);
             }
-            if (this.index + 1 < num_items) {
+            if (this.index + 1 < this.application.data.get_n_items ()) {
                 var move_down_action = new SimpleAction ("move_down", null);
                 move_down_action.activate.connect (() => {
-                    this.position_change_request.emit (this.index + 1);
+                    this.change_position (this.index + 1);
                 });
                 action_group.add_action (move_down_action);
             }
@@ -108,7 +109,7 @@ namespace Graphs {
             bool new_value = this.check_button.get_active ();
             if (this.item.selected != new_value) {
                 this.item.selected = new_value;
-                this.application.data.add_history_state_request.emit ();
+                this.application.data.add_history_state ();
             }
         }
 
@@ -122,10 +123,17 @@ namespace Graphs {
                 (d, result) => {
                     try {
                         this.item.set_rgba (dialog.choose_rgba.end (result));
-                        this.application.data.add_history_state_request.emit ();
+                        this.application.data.add_history_state ();
                     } catch {}
                 }
             );
+        }
+
+        private void change_position (int source_index) {
+            Data data = this.application.data;
+            data.change_position (this.index, source_index);
+            data.add_history_state ();
+            data.add_view_history_state ();
         }
     }
 }
