@@ -235,7 +235,7 @@ def _apply(application, callback, *args):
         )
         return
     data.optimize_limits()
-    data.add_history_state(old_limits)
+    data.add_history_state_with_limits(old_limits)
 
 
 _return = (list[float], list[float], bool, bool)

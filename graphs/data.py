@@ -33,10 +33,15 @@ class Data(Graphs.Data):
         figure_settings.connect("notify", self._on_figure_settings_change)
         self.connect("notify::unsaved", self._on_unsaved_change)
         self._update_used_positions()
-        self.connect(
-            "add_history_state_request",
-            lambda _s: self.add_history_state(),
-        )
+        self._on_unsaved_change(None, None)
+        self.connect("item_changed", self._on_item_changed)
+        self.connect("delete_request", self._on_delete_request)
+        self.connect("python_method_request", self._on_python_method_request)
+        self.connect("position_change_request", self._change_position)
+
+    @staticmethod
+    def _on_python_method_request(self, method: str) -> None:
+        getattr(self, method)()
 
     def reset(self):
         """Reset data."""
@@ -50,10 +55,8 @@ class Data(Graphs.Data):
             figure_settings.set_property(prop, new_value)
 
         # Reset items
-        self.delete_items([item for item in self])
+        super().reset()
         self._initialize()
-        self.props.file = None
-        self.props.unsaved = False
 
     def _initialize(self):
         """Initialize the data class and set default values."""
@@ -67,49 +70,28 @@ class Data(Graphs.Data):
         self._history_pos = -1
         self._view_history_states = [limits]
         self._view_history_pos = -1
-        self._items = {}
         self._set_data_copy()
 
-    @GObject.Property(type=bool, default=True, flags=1 | 1073741824)
-    def empty(self) -> bool:
-        """Whether or not the class is empty."""
-        return not self._items
-
     def _on_unsaved_change(self, _a, _b) -> None:
-        if not self.props.unsaved:
-            self.emit("saved")
-        self.notify("project-name")
-        self.notify("project-path")
-
-    @GObject.Property(type=str, default="", flags=1)
-    def project_name(self) -> str:
-        """Get project_name property."""
         if self.props.file is None:
             title = _("Untitled Project")
+            path = _("Draft")
         else:
             title = Graphs.tools_get_filename(self.props.file)
+            uri_parse = urlparse(self.props.file.get_uri())
+            filepath = os.path.dirname(
+                os.path.join(uri_parse.netloc, unquote(uri_parse.path)),
+            )
+            if filepath.startswith("/var"):
+                # Fix for rpm-ostree distros, where home is placed in /var/home
+                filepath = filepath.replace("/var", "", 1)
+            path = filepath.replace(os.path.expanduser("~"), "~")
         if self.props.unsaved:
             title = "• " + title
-        return title
-
-    @GObject.Property(type=str, default="", flags=1)
-    def project_path(self) -> str:
-        """Retrieve the path of the associated file."""
-        if self.props.file is None:
-            return _("Draft")
-        uri_parse = urlparse(self.props.file.get_uri())
-        filepath = os.path.dirname(
-            os.path.join(uri_parse.netloc, unquote(uri_parse.path)),
-        )
-        if filepath.startswith("/var"):
-            # Fix for rpm-ostree distros, where home is placed in /var/home
-            filepath = filepath.replace("/var", "", 1)
-        return filepath.replace(os.path.expanduser("~"), "~")
-
-    @GObject.Property(type=bool, default=False, flags=1)
-    def items_selected(self) -> bool:
-        """Whether or not at least one item is selected."""
-        return any(item_.get_selected() for item_ in self)
+        else:
+            self.emit("saved")
+        self.props.project_name = title
+        self.props.project_path = path
 
     @GObject.Property(type=object, flags=3 | 1073741824)  # explicit notify
     def items(self) -> misc.ItemList:
@@ -121,57 +103,13 @@ class Data(Graphs.Data):
         """Set items property."""
         self.set_items(items)
 
-    def get_items(self) -> misc.ItemList:
-        """Get all managed items."""
-        return list(self._items.values())
-
-    def set_items(self, items: misc.ItemList) -> None:
-        """Set all managed items."""
-        self._items = {}
-        for item_ in items:
-            self._add_item(item_)
-        self._update_used_positions()
-        self.notify("items")
-        self.notify("empty")
-
-    def _add_item(self, item_: Graphs.Item) -> None:
-        """Append items to self."""
-        self._connect_to_item(item_)
-        self._items[item_.get_uuid()] = item_
-
-    def _delete_item(self, uuid: str) -> None:
-        """Pop and delete item."""
-        item_ = self._items[uuid]
-        self._items.pop(uuid)
-        del item_
-
-    def index(self, item_: Graphs.Item) -> int:
-        """Get the index of an item."""
-        return list(self._items.keys()).index(item_.get_uuid())
-
-    def get_names(self) -> list[str]:
-        """All items' names."""
-        return [item_.get_name() for item_ in self]
-
-    def get_n_items(self) -> int:
-        """Amount of managed items."""
-        return len(self._items)
-
-    def get_at_pos(self, position: int) -> Graphs.Item:
-        """Get item at position."""
-        return self.get_items()[position]
-
-    def get_for_uuid(self, uuid: str) -> Graphs.Item:
-        """Get item for key."""
-        return self._items[uuid]
-
     def __len__(self) -> int:
         """Magic alias for `get_n_items()`."""
         return self.get_n_items()
 
     def __iter__(self):
         """Iterate over items."""
-        return iter(self._items.values())
+        return iter(self.get_items())
 
     def __getitem__(self, getter: str | int):
         """Magic alias for retrieving items."""
@@ -179,7 +117,8 @@ class Data(Graphs.Data):
             return self.get_for_uuid(getter)
         return self.get_at_pos(getter)
 
-    def change_position(self, index1: int, index2: int) -> None:
+    @staticmethod
+    def _change_position(self, index1: int, index2: int) -> None:
         """Change item position of index2 to that of index1."""
         items = self.get_items()
         # Check if target key is lower in the order, if so we can put the old
@@ -271,14 +210,15 @@ class Data(Graphs.Data):
             self._add_item(new_item)
             change = (1, copy.deepcopy(new_item.to_dict()))
             self._current_batch.append(change)
-        self.optimize_limits()
-        self.add_history_state()
+        self._optimize_limits()
+        self._add_history_state()
         self._update_used_positions()
         self.notify("items")
         self.notify("empty")
         self.notify("items_selected")
 
-    def delete_items(self, items: misc.ItemList):
+    @staticmethod
+    def _on_delete_request(self, items: misc.ItemList, _num):
         """Delete specified items."""
         settings = self.get_figure_settings()
         for item_ in items:
@@ -289,7 +229,7 @@ class Data(Graphs.Data):
             y_position = item_.get_yposition() + 2
             xlabel = item_.get_xlabel()
             ylabel = item_.get_ylabel()
-            self._delete_item(item_.get_uuid())
+            self._remove_item(item_)
         used = self.get_used_positions()
         for position in [x_position, y_position]:
             direction = misc.DIRECTIONS[position]
@@ -304,51 +244,20 @@ class Data(Graphs.Data):
         self._update_used_positions()
         self.notify("items")
         self.notify("empty")
-        self.add_history_state()
+        self._add_history_state()
         self.notify("items_selected")
 
-    def _connect_to_item(self, item_: Graphs.Item):
-        item_.connect("notify::selected", self._on_item_select)
-        item_.connect("notify", self._on_item_change)
-        for prop in ("xposition", "yposition"):
-            item_.connect(f"notify::{prop}", self._on_item_position_change)
-
-    def _on_item_position_change(self, _item, _ignored) -> None:
-        self.optimize_limits()
-        self._update_used_positions()
-        self.notify("items")
-
-    def _on_item_select(self, _x, _y) -> None:
-        self.notify("items_selected")
-
-    def _on_item_change(self, item_, param) -> None:
+    @staticmethod
+    def _on_item_changed(self, item_, prop) -> None:
         self._current_batch.append((
             0,
             (
                 item_.get_uuid(),
-                param.name,
-                copy.deepcopy(self._data_copy[item_.get_uuid()][param.name]),
-                copy.deepcopy(item_.get_property(param.name)),
+                prop,
+                copy.deepcopy(self._data_copy[item_.get_uuid()][prop]),
+                copy.deepcopy(item_.get_property(prop)),
             ),
         ))
-
-    def _update_used_positions(self) -> None:
-        # bottom, top, left, right
-        figure_settings = self.get_figure_settings()
-        used_positions = [False, False, False, False]
-
-        for item_ in self.items:
-            if (
-                figure_settings.get_hide_unselected()
-                and not item_.get_selected()
-            ):
-                continue
-            used_positions[item_.get_xposition()] = True
-            used_positions[item_.get_yposition() + 2] = True
-        if not any(used_positions):
-            self.set_used_positions(True, False, True, False)
-            return
-        self.set_used_positions(*used_positions)
 
     def _on_figure_settings_change(self, figure_settings, param) -> None:
         if param.name in _FIGURE_SETTINGS_HISTORY_IGNORELIST:
@@ -375,7 +284,11 @@ class Data(Graphs.Data):
             for prop in dir(self.props.figure_settings.props)
         })
 
-    def add_history_state(self, old_limits: misc.Limits = None) -> None:
+    def add_history_state_with_limits(self, old_limits: misc.Limits) -> None:
+        """Add a state to the clipboard with old_limits set."""
+        self._add_history_state(old_limits)
+
+    def _add_history_state(self, old_limits: misc.Limits = None) -> None:
         """Add a state to the clipboard."""
         if not self._current_batch:
             return
@@ -397,7 +310,7 @@ class Data(Graphs.Data):
         self._set_data_copy()
         self.props.unsaved = True
 
-    def undo(self) -> None:
+    def _undo(self) -> None:
         """Undo the latest change that was added to the clipboard."""
         if not self.props.can_undo:
             return
@@ -408,15 +321,15 @@ class Data(Graphs.Data):
             if change_type == 0:
                 self[change[0]].set_property(change[1], change[2])
             elif change_type == 1:
-                self._delete_item(change["uuid"])
+                self._remove_item(self.get_for_uuid(change["uuid"]))
                 items_changed = True
             elif change_type == 2:
                 item_ = item.new_from_dict(copy.deepcopy(change[1]))
                 self._add_item(item_)
-                self.change_position(change[0], len(self) - 1)
+                self._change_position(self, change[0], len(self) - 1)
                 items_changed = True
             elif change_type == 3:
-                self.change_position(change[0], change[1])
+                self._change_position(self, change[0], change[1])
                 items_changed = True
             elif change_type == 4:
                 self.props.figure_settings.set_property(
@@ -435,9 +348,9 @@ class Data(Graphs.Data):
         self.props.can_undo = \
             abs(self._history_pos) < len(self._history_states)
         self._set_data_copy()
-        self.add_view_history_state()
+        self._add_view_history_state()
 
-    def redo(self) -> None:
+    def _redo(self) -> None:
         """Redo the latest change that was added to the clipboard."""
         if not self.props.can_redo:
             return
@@ -451,10 +364,10 @@ class Data(Graphs.Data):
                 self._add_item(item.new_from_dict(copy.deepcopy(change)))
                 items_changed = True
             elif change_type == 2:
-                self._delete_item(change[1]["uuid"])
+                self._remove_item(self.get_for_uuid(change[1]["uuid"]))
                 items_changed = True
             elif change_type == 3:
-                self.change_position(change[1], change[0])
+                self._change_position(self, change[1], change[0])
                 items_changed = True
             elif change_type == 4:
                 self.props.figure_settings.set_property(
@@ -470,9 +383,9 @@ class Data(Graphs.Data):
         self.props.can_redo = self._history_pos < -1
         self.props.can_undo = True
         self._set_data_copy()
-        self.add_view_history_state()
+        self._add_view_history_state()
 
-    def add_view_history_state(self) -> None:
+    def _add_view_history_state(self) -> None:
         """Add the view to the view history."""
         limits = self.get_figure_settings().get_limits()
         if all(
@@ -492,7 +405,7 @@ class Data(Graphs.Data):
         self.props.can_view_forward = False
         self.props.unsaved = True
 
-    def view_back(self) -> None:
+    def _view_back(self) -> None:
         """Move the view to the previous value in the view history."""
         if not self.props.can_view_back:
             return
@@ -504,7 +417,7 @@ class Data(Graphs.Data):
         self.props.can_view_back = \
             abs(self._view_history_pos) < len(self._view_history_states)
 
-    def view_forward(self) -> None:
+    def _view_forward(self) -> None:
         """Move the view to the next value in the view history."""
         if not self.props.can_view_forward:
             return
@@ -515,7 +428,7 @@ class Data(Graphs.Data):
         self.props.can_view_back = True
         self.props.can_view_forward = self._view_history_pos < -1
 
-    def optimize_limits(self) -> None:
+    def _optimize_limits(self) -> None:
         """Optimize the limits of the canvas to the data class."""
         figure_settings = self.get_figure_settings()
         axes = [[
@@ -574,7 +487,7 @@ class Data(Graphs.Data):
                 max_all *= padding_factor
             figure_settings.set_property(f"min_{direction}", min_all)
             figure_settings.set_property(f"max_{direction}", max_all)
-        self.add_view_history_state()
+        self._add_view_history_state()
 
     def get_project_dict(self, version: str) -> dict:
         """Convert data to dict."""
