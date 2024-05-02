@@ -19,8 +19,8 @@ namespace Graphs {
         public Application application { get; construct set; }
         public Item item { get; construct set; }
         public int index { get; construct set; }
-        public DragSource drag_source { get; private set; }
-        public DropTarget drop_target { get; private set; }
+        public DragSource drag_source { get; construct set; }
+        public DropTarget drop_target { get; construct set; }
 
         private CssProvider provider;
 
