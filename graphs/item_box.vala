@@ -8,10 +8,7 @@ namespace Graphs {
      * Item Box widget
      */
     [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/item-box.ui")]
-    public class ItemBox : Box {
-
-        [GtkChild]
-        private unowned Label label { get; }
+    public class ItemBox : Adw.ActionRow {
 
         [GtkChild]
         public unowned CheckButton check_button { get; }
@@ -22,7 +19,6 @@ namespace Graphs {
         public Application application { get; construct set; }
         public Item item { get; construct set; }
         public int index { get; construct set; }
-        public GestureClick click_gesture { get; private set; }
         public DragSource drag_source { get; private set; }
         public DropTarget drop_target { get; private set; }
 
@@ -39,13 +35,12 @@ namespace Graphs {
                 this.provider, STYLE_PROVIDER_PRIORITY_APPLICATION
             );
 
-            this.item.bind_property ("name", this.label, "label", 2);
+            this.item.bind_property ("name", this, "title", 2);
             this.item.bind_property ("selected", this.check_button, "active", 2);
             this.item.notify["color"].connect (on_color_change);
             on_color_change ();
 
-            this.click_gesture = new GestureClick ();
-            this.click_gesture.released.connect (() => {
+            this.activated.connect (() => {
                 this.application.python_helper.create_edit_item_dialog (this.item);
             });
 

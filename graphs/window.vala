@@ -161,7 +161,6 @@ namespace Graphs {
                     Widget row = this.item_list.get_last_child ();
                     row.add_controller (item_box.drag_source);
                     row.add_controller (item_box.drop_target);
-                    row.add_controller (item_box.click_gesture);
                     index++;
                 }
                 this.update_view_menu ();
