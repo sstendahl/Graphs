@@ -44,7 +44,7 @@ class PythonApplication(Graphs.Application):
             except RuntimeError:
                 logging.warning(_("Could not load {font}").format(font=font))
 
-        Graphs.setup_actions(self)
+        self.setup_actions()
         self.connect("action_invoked", actions.on_action_invoked)
         self.connect("operation_invoked", operations.perform_operation)
         self.connect("close_request", self._on_close_request)
