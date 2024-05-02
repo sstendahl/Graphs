@@ -56,7 +56,7 @@ class PythonApplication(Graphs.Application):
             self.quit()
         data = self.get_data()
         if handler == "open_project":
-            data.props.project_file = args[0]
+            data.set_file(args[0])
             data.load()
         if handler == "reset_project":
             data.reset()
@@ -71,7 +71,8 @@ class PythonApplication(Graphs.Application):
 
                 def on_response(_dialog, response):
                     if response == "discard_close":
-                        project.load(data, project_file)
+                        data.set_file(project_file)
+                        data.load()
                     if response == "save_close":
                         self.save_handler = data.connect(
                             "saved",
@@ -87,7 +88,8 @@ class PythonApplication(Graphs.Application):
                 dialog.present()
 
             else:
-                project.load(data, project_file)
+                data.set_file(project_file)
+                data.load()
         else:
             file_import.import_from_files(self, files)
 

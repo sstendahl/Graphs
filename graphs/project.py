@@ -29,15 +29,10 @@ _GRAPHS_PROJECT_FILE_ONLY_FILE_FILTER = utilities.create_file_filters(
 
 def _save(application: Graphs.Application) -> None:
     data = application.get_data()
-    project_file = data.props.file
-    project_dict = data.get_project_dict(application.get_version())
-    save_project_dict(project_file, project_dict)
-    data.set_unsaved(False)
-    data.emit("saved")
-
+    data.save()
     application.get_window().add_toast_string_with_file(
         _("Saved Project"),
-        project_file,
+        data.get_file(),
     )
 
 
@@ -69,7 +64,9 @@ def open_project(application: Graphs.Application) -> None:
 
         def on_pick_response(dialog, response):
             with contextlib.suppress(GLib.GError):
-                load(application.get_data(), dialog.open_finish(response))
+                data = application.get_data()
+                data.set_file(dialog.open_finish(response))
+                data.load()
 
         dialog = Gtk.FileDialog()
         dialog.set_filters(_GRAPHS_PROJECT_FILE_ONLY_FILE_FILTER)
@@ -91,9 +88,3 @@ def open_project(application: Graphs.Application) -> None:
     dialog = Graphs.tools_build_dialog("save_changes")
     dialog.connect("response", on_save_response)
     dialog.present(application.get_window())
-
-
-def load(data: Graphs.Data, file: Gio.File) -> None:
-    """Load a project from file into data."""
-    data.props.file = file
-    data.load_from_project_dict(read_project_file(file))
