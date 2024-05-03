@@ -233,6 +233,11 @@ def preprocess(string: str) -> str:
 
     string = string.replace(",", ".")
     string = re.sub(r"(\w+)d\((.*?)\)", convert_degrees, string)
+    string = re.sub(
+        r"([\u2070-\u209f\u00b0-\u00be]+)",
+        convert_superscript,
+        string,
+    )
     string = re.sub(r"(\d*\.?\d+)(?![Ee]?[-+]?\d)(\w+)", add_asterix, string)
     string = re.sub(r"(\w+)(\([\w\(]+)", add_asterix, string)
     string = string.replace("pi", f"({float(numpy.pi)})")
@@ -244,11 +249,6 @@ def preprocess(string: str) -> str:
     string = re.sub(r"cot\((.*?)\)", convert_cot, string)
     string = re.sub(r"sec\((.*?)\)", convert_sec, string)
     string = re.sub(r"csc\((.*?)\)", convert_csc, string)
-    string = re.sub(
-        r"([\u2070-\u209f\u00b0-\u00be]+)",
-        convert_superscript,
-        string,
-    )
     return string.lower()
 
 
