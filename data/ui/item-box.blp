@@ -1,41 +1,36 @@
 using Gtk 4.0;
 using Adw 1;
 
-template $GraphsItemBox : Box {
-  margin-start: 6;
-  margin-end: 6;
-  margin-bottom: 9;
-  margin-top: 9;
+template $GraphsItemBox : Adw.ActionRow {
+  title-lines: 1;
+  activatable: true;
 
+  [prefix]
   CheckButton check_button {
     halign: start;
-    hexpand: false;
     styles ["selection-mode"]
     notify::active => $on_toggle();
   }
 
-  Label label {
-    margin-start: 6;
-    margin-end: 6;
-    halign: start;
-    hexpand: true;
-    ellipsize: end;
-  }
-
+  [suffix]
   Button color_button {
     tooltip-text: _("Pick Color");
     styles ["flat"]
     clicked => $choose_color();
     Image {
-      hexpand: false;
       icon-name: "color-picker-symbolic";
       pixel-size: 20;
     }
+    vexpand: false;
+    valign: center;
   }
 
+  [suffix]
   MenuButton {
     icon-name: "view-more-symbolic";
     popover: popover_menu;
+    vexpand: false;
+    valign: center;
     styles ["flat"]
   }
 }
