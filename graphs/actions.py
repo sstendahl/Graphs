@@ -176,7 +176,7 @@ def zoom_out_action(application: Graphs.Application) -> None:
 
 def open_project_action(application: Graphs.Application) -> None:
     """Open a project."""
-    project.open_project(application)
+    Graphs.project_open(application)
 
 
 def figure_settings_action(application: Graphs.Application) -> None:
