@@ -10,7 +10,6 @@ from graphs import (
     file_import,
     migrate,
     operations,
-    project,
     styles,
 )
 from graphs.data import Data

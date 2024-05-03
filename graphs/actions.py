@@ -12,7 +12,6 @@ from graphs import (
     file_import,
     file_io,
     misc,
-    project,
     utilities,
 )
 from graphs.figure_settings import FigureSettingsDialog

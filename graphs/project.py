@@ -1,11 +1,8 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Module for saving and loading projects."""
-import contextlib
-from gettext import gettext as _
+from gi.repository import Gio
 
-from gi.repository import GLib, Gio, Graphs, Gtk
-
-from graphs import file_io, migrate, misc, utilities
+from graphs import file_io, migrate
 
 
 def read_project_file(file: Gio.File) -> dict:
