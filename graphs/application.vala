@@ -11,9 +11,6 @@ namespace Graphs {
         "export_data",
         "export_figure",
         "new_project",
-        "save_project",
-        "save_project_as",
-        "open_project",
         "zoom_in",
         "zoom_out",
         "figure_settings"
@@ -236,6 +233,24 @@ namespace Graphs {
                 this.window.add_toast (toast);
             });
             this.add_action (delete_selected_action);
+
+            var save_project_action = new SimpleAction ("save_project", null);
+            save_project_action.activate.connect (() => {
+                Project.save.begin (this, false);
+            });
+            this.add_action (save_project_action);
+
+            var save_project_as_action = new SimpleAction ("save_project_as", null);
+            save_project_as_action.activate.connect (() => {
+                Project.save.begin (this, true);
+            });
+            this.add_action (save_project_as_action);
+
+            var open_project_action = new SimpleAction ("open_project", null);
+            open_project_action.activate.connect (() => {
+                Project.open (this);
+            });
+            this.add_action (open_project_action);
         }
     }
 }

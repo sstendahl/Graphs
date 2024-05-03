@@ -151,16 +151,6 @@ def new_project_action(application: Graphs.Application) -> None:
     data.reset()
 
 
-def save_project_action(application: Graphs.Application) -> None:
-    """Save the current project."""
-    Graphs.project_save(application, False)
-
-
-def save_project_as_action(application: Graphs.Application) -> None:
-    """Save the current project and ask for save location."""
-    Graphs.project_save(application, True)
-
-
 def zoom_in_action(application: Graphs.Application) -> None:
     """Zoom into the figure."""
     canvas = application.get_window().get_canvas()
@@ -171,11 +161,6 @@ def zoom_out_action(application: Graphs.Application) -> None:
     """Zoom out of the figure."""
     canvas = application.get_window().get_canvas()
     canvas.zoom(1 / 1.15, respect_mouse=False)
-
-
-def open_project_action(application: Graphs.Application) -> None:
-    """Open a project."""
-    Graphs.project_open(application)
 
 
 def figure_settings_action(application: Graphs.Application) -> None:
