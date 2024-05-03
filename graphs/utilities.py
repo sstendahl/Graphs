@@ -228,13 +228,12 @@ def preprocess(string: str) -> str:
         var, exp2 = match.group(1), match.group(2).lower()
         if var in FUNCTIONS:
             return f"{var}{exp2}"
-        if exp2 in FUNCTIONS:
+        else:
             return f"{var}*{exp2}"
-        return f"({var}*{exp2})"
 
     string = string.replace(",", ".")
     string = re.sub(r"(\w+)d\((.*?)\)", convert_degrees, string)
-    string = re.sub(r"(\d+)(?![Ee]?[-+]?\d)(\w+)", add_asterix, string)
+    string = re.sub(r"(\d*\.?\d+)(?![Ee]?[-+]?\d)(\w+)", add_asterix, string)
     string = re.sub(r"(\w+)(\([\w\(]+)", add_asterix, string)
     string = string.replace("pi", f"({float(numpy.pi)})")
     string = string.replace("^", "**")
