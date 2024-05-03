@@ -29,7 +29,6 @@ namespace Graphs {
 
         public signal void action_invoked (string name);
         public signal void operation_invoked (string name);
-        protected signal void close_request ();
 
         construct {
             Intl.bindtextdomain (Config.GETTEXT_PACKAGE, Config.LOCALEDIR);
@@ -52,8 +51,30 @@ namespace Graphs {
             return settings;
         }
 
-        public void close () {
-            this.close_request.emit ();
+        public bool close () {
+            if (this.data.unsaved) {
+                var dialog = (Adw.AlertDialog) Tools.build_dialog ("save_changes");
+                dialog.response.connect ((d, response) => {
+                    switch (response) {
+                        case "discard_close": {
+                            this.quit ();
+                            break;
+                        }
+                        case "save_close": {
+                            Project.save.begin (this, false, (o, result) => {
+                                Project.save.end (result);
+                                this.quit ();
+                            });
+                            break;
+                        }
+                    }
+                });
+                dialog.present (this.window);
+                return true;
+            } else {
+                this.quit ();
+                return false;
+            }
         }
 
         /**

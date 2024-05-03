@@ -46,7 +46,6 @@ class PythonApplication(Graphs.Application):
         self.setup_actions()
         self.connect("action_invoked", actions.on_action_invoked)
         self.connect("operation_invoked", operations.perform_operation)
-        self.connect("close_request", self._on_close_request)
 
     def on_project_saved(self, _application, handler=None, *args) -> None:
         """Change unsaved state."""
@@ -92,32 +91,6 @@ class PythonApplication(Graphs.Application):
         else:
             file_import.import_from_files(self, files)
 
-    def _on_close_request(self, *_args) -> None:
-        """
-        Intercept when closing the application.
-
-        Will ask the user to confirm
-        and save/discard open data if any unsaved changes are present.
-        """
-        if self.get_data().get_unsaved():
-
-            def on_response(_dialog, response):
-                if response == "discard_close":
-                    self.quit()
-                if response == "save_close":
-                    self.save_handler = self.get_data().connect(
-                        "saved",
-                        self.on_project_saved,
-                        "close",
-                    )
-                    Graphs.project_save(self, False)
-
-            dialog = Graphs.tools_build_dialog("save_changes")
-            dialog.connect("response", on_response)
-            dialog.present(self.get_window())
-            return True
-        self.quit()
-
     def do_activate(self) -> None:
         """
         Activate the application.
@@ -129,6 +102,5 @@ class PythonApplication(Graphs.Application):
         if not window:
             window = Graphs.Window.new(self)
             self.set_window(window)
-            window.connect("close-request", self._on_close_request)
             self.set_figure_style_manager(styles.StyleManager(self))
             window.present()
