@@ -41,10 +41,14 @@ namespace Graphs {
             this._items = new Gee.LinkedList<Item> ();
         }
 
-        protected void reset () {
+        public void reset () {
+            this.python_method_request.emit ("_reset");
             this._items.clear ();
             this.file = null;
             this.unsaved = false;
+            this.python_method_request.emit ("_initialize");
+            this.notify_property ("items");
+            this.notify_property ("empty");
         }
 
         public Item[] get_items () {

@@ -43,7 +43,7 @@ class Data(Graphs.Data):
     def _on_python_method_request(self, method: str) -> None:
         getattr(self, method)()
 
-    def reset(self):
+    def _reset(self):
         """Reset data."""
         # Reset figure settings
         default_figure_settings = Graphs.FigureSettings.new(
@@ -53,10 +53,6 @@ class Data(Graphs.Data):
         for prop in dir(default_figure_settings.props):
             new_value = default_figure_settings.get_property(prop)
             figure_settings.set_property(prop, new_value)
-
-        # Reset items
-        super().reset()
-        self._initialize()
 
     def _initialize(self):
         """Initialize the data class and set default values."""

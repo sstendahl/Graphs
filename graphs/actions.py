@@ -127,30 +127,6 @@ def export_figure_action(application: Graphs.Application) -> None:
     dialog.connect("accept", on_accept)
 
 
-def new_project_action(application: Graphs.Application) -> None:
-    """Clear the current project and reset Graphs to the initial state."""
-    data = application.get_data()
-    if data.get_unsaved():
-
-        def on_response(_dialog, response):
-            application.save_handler = data.connect(
-                "saved",
-                application.on_project_saved,
-                "reset_project",
-            )
-            if response == "discard_close":
-                data.reset()
-            if response == "save_close":
-                Graphs.project_save(application, False)
-
-        dialog = Graphs.tools_build_dialog("save_changes")
-        dialog.set_transient_for(application.get_window())
-        dialog.connect("response", on_response)
-        dialog.present()
-        return
-    data.reset()
-
-
 def zoom_in_action(application: Graphs.Application) -> None:
     """Zoom into the figure."""
     canvas = application.get_window().get_canvas()

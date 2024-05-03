@@ -10,7 +10,6 @@ namespace Graphs {
         "add_equation",
         "export_data",
         "export_figure",
-        "new_project",
         "zoom_in",
         "zoom_out",
         "figure_settings"
@@ -272,6 +271,12 @@ namespace Graphs {
                 Project.open (this);
             });
             this.add_action (open_project_action);
+
+            var new_project_action = new SimpleAction ("new_project", null);
+            new_project_action.activate.connect (() => {
+                Project.@new (this);
+            });
+            this.add_action (new_project_action);
         }
     }
 }

@@ -69,5 +69,29 @@ namespace Graphs {
             });
             dialog.present (application.window);
         }
+
+        public void @new (Application application) {
+            if (!application.data.unsaved) {
+                application.data.reset ();
+                return;
+            }
+            var dialog = (Adw.AlertDialog) Tools.build_dialog ("save_changes");
+            dialog.response.connect ((d, response) => {
+                switch (response) {
+                    case "discard_close": {
+                        application.data.reset ();
+                        break;
+                    }
+                    case "save_close": {
+                        save.begin (application, false, (o, result) => {
+                            save.end (result);
+                            application.data.reset ();
+                        });
+                        break;
+                    }
+                }
+            });
+            dialog.present (application.window);
+        }
     }
 }
