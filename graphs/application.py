@@ -80,7 +80,7 @@ class PythonApplication(Graphs.Application):
                             "open_project",
                             project_file,
                         )
-                        project.save_project(self)
+                        Graphs.project_save(self, False)
 
                 dialog = Graphs.tools_build_dialog("save_changes")
                 dialog.set_transient_for(self.get_window())
@@ -111,7 +111,7 @@ class PythonApplication(Graphs.Application):
                         self.on_project_saved,
                         "close",
                     )
-                    project.save_project(self)
+                    Graphs.project_save(self, False)
 
             dialog = Graphs.tools_build_dialog("save_changes")
             dialog.connect("response", on_response)

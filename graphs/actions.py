@@ -142,7 +142,7 @@ def new_project_action(application: Graphs.Application) -> None:
             if response == "discard_close":
                 data.reset()
             if response == "save_close":
-                project.save_project(application)
+                Graphs.project_save(application, False)
 
         dialog = Graphs.tools_build_dialog("save_changes")
         dialog.set_transient_for(application.get_window())
@@ -154,12 +154,12 @@ def new_project_action(application: Graphs.Application) -> None:
 
 def save_project_action(application: Graphs.Application) -> None:
     """Save the current project."""
-    project.save_project(application)
+    Graphs.project_save(application, False)
 
 
 def save_project_as_action(application: Graphs.Application) -> None:
     """Save the current project and ask for save location."""
-    project.save_project(application, require_dialog=True)
+    Graphs.project_save(application, True)
 
 
 def zoom_in_action(application: Graphs.Application) -> None:

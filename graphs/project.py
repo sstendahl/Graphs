@@ -27,36 +27,6 @@ _GRAPHS_PROJECT_FILE_ONLY_FILE_FILTER = utilities.create_file_filters(
 )
 
 
-def _save(application: Graphs.Application) -> None:
-    data = application.get_data()
-    data.save()
-    application.get_window().add_toast_string_with_file(
-        _("Saved Project"),
-        data.get_file(),
-    )
-
-
-def save_project(
-    application: Graphs.Application,
-    require_dialog: bool = False,
-) -> None:
-    """Save the current data to disk."""
-    data = application.get_data()
-    if data.props.file is not None and not require_dialog:
-        _save(application)
-        return
-
-    def on_response(dialog, response):
-        with contextlib.suppress(GLib.GError):
-            data.props.file = dialog.save_finish(response)
-            _save(application)
-
-    dialog = Gtk.FileDialog()
-    dialog.set_filters(_GRAPHS_PROJECT_FILE_ONLY_FILE_FILTER)
-    dialog.set_initial_name(_("Project") + ".graphs")
-    dialog.save(application.get_window(), None, on_response)
-
-
 def open_project(application: Graphs.Application) -> None:
     """Open a project."""
 
