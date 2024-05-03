@@ -84,8 +84,6 @@ class Data(Graphs.Data):
             path = filepath.replace(os.path.expanduser("~"), "~")
         if self.props.unsaved:
             title = "• " + title
-        else:
-            self.emit("saved")
         self.props.project_name = title
         self.props.project_path = path
 
@@ -530,7 +528,6 @@ class Data(Graphs.Data):
     def _save(self) -> None:
         project.save_project_dict(self.props.file, self.get_project_dict())
         self.set_unsaved(False)
-        self.emit("saved")
 
     def _load(self) -> None:
         self.load_from_project_dict(project.read_project_file(self.props.file))

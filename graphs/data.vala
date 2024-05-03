@@ -31,7 +31,6 @@ namespace Graphs {
         private bool[] _used_positions;
         private Gee.AbstractList<Item> _items;
 
-        public signal void saved ();
         protected signal void python_method_request (string method);
         protected signal void position_change_request (int index1, int index2);
         protected signal void item_changed (Item item, string prop_name);

@@ -5,13 +5,7 @@ from gettext import gettext as _
 
 from gi.repository import Gio, Graphs
 
-from graphs import (
-    actions,
-    file_import,
-    migrate,
-    operations,
-    styles,
-)
+from graphs import actions, file_import, migrate, operations, styles
 from graphs.data import Data
 from graphs.python_helper import PythonHelper
 
@@ -47,18 +41,6 @@ class PythonApplication(Graphs.Application):
         self.connect("action_invoked", actions.on_action_invoked)
         self.connect("operation_invoked", operations.perform_operation)
 
-    def on_project_saved(self, _application, handler=None, *args) -> None:
-        """Change unsaved state."""
-        self.disconnect(self.save_handler)
-        if handler == "close":
-            self.quit()
-        data = self.get_data()
-        if handler == "open_project":
-            data.set_file(args[0])
-            data.load()
-        if handler == "reset_project":
-            data.reset()
-
     def do_open(self, files: list, nfiles: int, _hint: str) -> None:
         """Open Graphs with a File as argument."""
         self.do_activate()
@@ -72,19 +54,17 @@ class PythonApplication(Graphs.Application):
                         data.set_file(project_file)
                         data.load()
                     if response == "save_close":
-                        self.save_handler = data.connect(
-                            "saved",
-                            self.on_project_saved,
-                            "open_project",
-                            project_file,
-                        )
-                        Graphs.project_save(self, False)
+
+                        def on_save(_o, response):
+                            Graphs.project_save_finish(response)
+                            data.set_file(project_file)
+                            data.load()
+
+                        Graphs.project_save(self, False, on_save)
 
                 dialog = Graphs.tools_build_dialog("save_changes")
-                dialog.set_transient_for(self.get_window())
                 dialog.connect("response", on_response)
-                dialog.present()
-
+                dialog.present(self.get_window())
             else:
                 data.set_file(project_file)
                 data.load()

@@ -7,13 +7,7 @@ from gettext import gettext as _, pgettext as C_
 
 from gi.repository import GLib, Graphs, Gtk
 
-from graphs import (
-    export_data,
-    file_import,
-    file_io,
-    misc,
-    utilities,
-)
+from graphs import export_data, file_import, file_io, misc, utilities
 from graphs.figure_settings import FigureSettingsDialog
 from graphs.item import DataItem
 
