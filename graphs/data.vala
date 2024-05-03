@@ -145,6 +145,10 @@ namespace Graphs {
             return this._items.foreach (f);
         }
 
+        protected string get_version () {
+            return Config.VERSION;
+        }
+
         public void optimize_limits () {
             this.python_method_request.emit ("_optimize_limits");
         }
@@ -175,6 +179,14 @@ namespace Graphs {
 
         public void view_forward () {
             this.python_method_request.emit ("_view_forward");
+        }
+
+        public void save () {
+            this.python_method_request.emit ("_save");
+        }
+
+        public void load () {
+            this.python_method_request.emit ("_load");
         }
     }
 }

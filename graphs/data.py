@@ -8,7 +8,7 @@ from urllib.parse import unquote, urlparse
 
 from gi.repository import GObject, Gio, Graphs
 
-from graphs import item, misc
+from graphs import item, misc, project
 
 import numpy
 
@@ -489,11 +489,11 @@ class Data(Graphs.Data):
             figure_settings.set_property(f"max_{direction}", max_all)
         self._add_view_history_state()
 
-    def get_project_dict(self, version: str) -> dict:
+    def get_project_dict(self) -> dict:
         """Convert data to dict."""
         figure_settings = self.get_figure_settings()
         return {
-            "version": version,
+            "version": self.get_version(),
             "data": [item_.to_dict() for item_ in self],
             "figure-settings": {
                 key: figure_settings.get_property(key)
@@ -512,7 +512,7 @@ class Data(Graphs.Data):
         for key, value in project_dict["figure-settings"].items():
             if figure_settings.get_property(key) != value:
                 figure_settings.set_property(key, value)
-        self.set_items(item.new_from_dict(d) for d in project_dict["data"])
+        self.set_items([item.new_from_dict(d) for d in project_dict["data"]])
         self.notify("items_selected")
 
         # Set clipboard
@@ -530,3 +530,11 @@ class Data(Graphs.Data):
         self.props.can_view_back = \
             abs(self._view_history_pos) < len(self._view_history_states)
         self.props.can_view_forward = self._view_history_pos < -1
+
+    def _save(self) -> None:
+        project.save_project_dict(self.props.file, self.get_project_dict())
+        self.set_unsaved(False)
+        self.emit("saved")
+
+    def _load(self) -> None:
+        self.load_from_project_dict(project.read_project_file(self.props.file))
