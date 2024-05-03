@@ -232,6 +232,7 @@ def preprocess(string: str) -> str:
             return f"{var}*{exp2}"
 
     string = string.replace(",", ".")
+    string = re.sub(r"(\w+)d\((.*?)\)", convert_degrees, string)
     string = re.sub(
         r"([\u2070-\u209f\u00b0-\u00be]+)",
         convert_superscript,
