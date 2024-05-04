@@ -171,7 +171,7 @@ def preprocess(string: str) -> str:
         for i, char in enumerate(remainder.lower()):
             if char == "(":
                 stack.append(char)
-            elif char == ')':
+            elif char == ")":
                 stack.pop()
                 if not stack:  # Matching parenthesis found
                     stop_index = i + 1
