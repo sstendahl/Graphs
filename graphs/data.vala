@@ -5,7 +5,7 @@ namespace Graphs {
     /**
      * Data class
      */
-    public class Data : Object, Traversable<Item>, Iterable<Item> {
+    public class Data : Object, ListModel, Traversable<Item>, Iterable<Item> {
         protected Settings settings { get; set; }
         public FigureSettings figure_settings { get; construct set; }
         public bool can_undo { get; protected set; default = false; }
@@ -39,6 +39,10 @@ namespace Graphs {
 
         construct {
             this._items = new Gee.LinkedList<Item> ();
+        }
+
+        public Type get_item_type () {
+            return typeof (Item);
         }
 
         protected void reset () {
@@ -103,12 +107,12 @@ namespace Graphs {
             return this._items.index_of (item);
         }
 
-        public int get_n_items () {
+        public uint get_n_items () {
             return this._items.size;
         }
 
-        public Item get_at_pos (int position) {
-            return this._items[position];
+        public Object? get_item (uint position) {
+            return this._items[(int) position];
         }
 
         public Item? get_for_uuid (string uuid) {
