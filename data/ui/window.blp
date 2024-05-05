@@ -591,6 +591,7 @@ template $GraphsWindow: Adw.ApplicationWindow {
       Box {
       orientation: vertical;
         Adw.HeaderBar content_headerbar {
+          name: "canvas-headerbar";
           styles ["flat"]
           title-widget: Adw.WindowTitle content_title {};
           ToggleButton show_sidebar_button {
