@@ -11,7 +11,7 @@ interactive navigation in conjunction with graphs-specific structures.
 """
 from contextlib import nullcontext
 
-from gi.repository import GObject, Gdk, Graphs, Gtk
+from gi.repository import GObject, Gdk, Gio, Graphs, Gtk
 
 from graphs import artist, misc, scales, utilities
 
@@ -77,11 +77,10 @@ class Canvas(Graphs.Canvas, FigureCanvas):
 
     __gtype_name__ = "GraphsPythonCanvas"
 
-    items = GObject.Property(type=object)
-
     def __init__(
         self,
         style_params: dict,
+        items: Gio.ListModel,
         interactive: bool = True,
     ):
         """
@@ -99,7 +98,7 @@ class Canvas(Graphs.Canvas, FigureCanvas):
             focusable=True,
             hexpand=True,
             vexpand=True,
-            items=[],
+            items=items,
         )
         self._idle_draw_id = 0
         self.set_draw_func(self._draw_func)
@@ -128,7 +127,8 @@ class Canvas(Graphs.Canvas, FigureCanvas):
             self._setup_interactive()
 
         self.connect("notify::hide-unselected", self._redraw)
-        self.connect("notify::items", self._redraw)
+        items.connect("items-changed", self._redraw)
+        self._redraw()
 
     def _setup_interactive(self):
         self._ctrl_held, self._shift_held = False, False
@@ -467,7 +467,7 @@ class Canvas(Graphs.Canvas, FigureCanvas):
                 if item.get_selected():
                     drawable_items.append(item)
         else:
-            drawable_items = self.props.items
+            drawable_items = [item for item in self.props.items]
         for item in drawable_items:
             xposition = item.get_xposition()
             yposition = item.get_yposition()
