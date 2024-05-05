@@ -7,14 +7,7 @@ from gettext import gettext as _, pgettext as C_
 
 from gi.repository import GLib, Graphs, Gtk
 
-from graphs import (
-    export_data,
-    file_import,
-    file_io,
-    misc,
-    project,
-    utilities,
-)
+from graphs import export_data, file_import, file_io, misc, utilities
 from graphs.figure_settings import FigureSettingsDialog
 from graphs.item import DataItem
 
@@ -128,40 +121,6 @@ def export_figure_action(application: Graphs.Application) -> None:
     dialog.connect("accept", on_accept)
 
 
-def new_project_action(application: Graphs.Application) -> None:
-    """Clear the current project and reset Graphs to the initial state."""
-    data = application.get_data()
-    if data.get_unsaved():
-
-        def on_response(_dialog, response):
-            application.save_handler = data.connect(
-                "saved",
-                application.on_project_saved,
-                "reset_project",
-            )
-            if response == "discard_close":
-                data.reset()
-            if response == "save_close":
-                project.save_project(application)
-
-        dialog = Graphs.tools_build_dialog("save_changes")
-        dialog.set_transient_for(application.get_window())
-        dialog.connect("response", on_response)
-        dialog.present()
-        return
-    data.reset()
-
-
-def save_project_action(application: Graphs.Application) -> None:
-    """Save the current project."""
-    project.save_project(application)
-
-
-def save_project_as_action(application: Graphs.Application) -> None:
-    """Save the current project and ask for save location."""
-    project.save_project(application, require_dialog=True)
-
-
 def zoom_in_action(application: Graphs.Application) -> None:
     """Zoom into the figure."""
     canvas = application.get_window().get_canvas()
@@ -172,11 +131,6 @@ def zoom_out_action(application: Graphs.Application) -> None:
     """Zoom out of the figure."""
     canvas = application.get_window().get_canvas()
     canvas.zoom(1 / 1.15, respect_mouse=False)
-
-
-def open_project_action(application: Graphs.Application) -> None:
-    """Open a project."""
-    project.open_project(application)
 
 
 def figure_settings_action(application: Graphs.Application) -> None:

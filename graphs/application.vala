@@ -10,10 +10,6 @@ namespace Graphs {
         "add_equation",
         "export_data",
         "export_figure",
-        "new_project",
-        "save_project",
-        "save_project_as",
-        "open_project",
         "zoom_in",
         "zoom_out",
         "figure_settings"
@@ -32,7 +28,6 @@ namespace Graphs {
 
         public signal void action_invoked (string name);
         public signal void operation_invoked (string name);
-        protected signal void close_request ();
 
         construct {
             Intl.bindtextdomain (Config.GETTEXT_PACKAGE, Config.LOCALEDIR);
@@ -55,8 +50,30 @@ namespace Graphs {
             return settings;
         }
 
-        public void close () {
-            this.close_request.emit ();
+        public bool close () {
+            if (this.data.unsaved) {
+                var dialog = (Adw.AlertDialog) Tools.build_dialog ("save_changes");
+                dialog.response.connect ((d, response) => {
+                    switch (response) {
+                        case "discard_close": {
+                            this.quit ();
+                            break;
+                        }
+                        case "save_close": {
+                            Project.save.begin (this, false, (o, result) => {
+                                Project.save.end (result);
+                                this.quit ();
+                            });
+                            break;
+                        }
+                    }
+                });
+                dialog.present (this.window);
+                return true;
+            } else {
+                this.quit ();
+                return false;
+            }
         }
 
         /**
@@ -236,6 +253,30 @@ namespace Graphs {
                 this.window.add_toast (toast);
             });
             this.add_action (delete_selected_action);
+
+            var save_project_action = new SimpleAction ("save_project", null);
+            save_project_action.activate.connect (() => {
+                Project.save.begin (this, false);
+            });
+            this.add_action (save_project_action);
+
+            var save_project_as_action = new SimpleAction ("save_project_as", null);
+            save_project_as_action.activate.connect (() => {
+                Project.save.begin (this, true);
+            });
+            this.add_action (save_project_as_action);
+
+            var open_project_action = new SimpleAction ("open_project", null);
+            open_project_action.activate.connect (() => {
+                Project.open (this);
+            });
+            this.add_action (open_project_action);
+
+            var new_project_action = new SimpleAction ("new_project", null);
+            new_project_action.activate.connect (() => {
+                Project.@new (this);
+            });
+            this.add_action (new_project_action);
         }
     }
 }

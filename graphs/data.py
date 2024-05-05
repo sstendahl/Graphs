@@ -43,7 +43,7 @@ class Data(Graphs.Data):
     def _on_python_method_request(self, method: str) -> None:
         getattr(self, method)()
 
-    def reset(self):
+    def _reset(self):
         """Reset data."""
         # Reset figure settings
         default_figure_settings = Graphs.FigureSettings.new(
@@ -53,10 +53,6 @@ class Data(Graphs.Data):
         for prop in dir(default_figure_settings.props):
             new_value = default_figure_settings.get_property(prop)
             figure_settings.set_property(prop, new_value)
-
-        # Reset items
-        super().reset()
-        self._initialize()
 
     def _initialize(self):
         """Initialize the data class and set default values."""
@@ -88,8 +84,6 @@ class Data(Graphs.Data):
             path = filepath.replace(os.path.expanduser("~"), "~")
         if self.props.unsaved:
             title = "• " + title
-        else:
-            self.emit("saved")
         self.props.project_name = title
         self.props.project_path = path
 
@@ -534,7 +528,6 @@ class Data(Graphs.Data):
     def _save(self) -> None:
         project.save_project_dict(self.props.file, self.get_project_dict())
         self.set_unsaved(False)
-        self.emit("saved")
 
     def _load(self) -> None:
         self.load_from_project_dict(project.read_project_file(self.props.file))
