@@ -109,7 +109,7 @@ class Data(Graphs.Data):
         """Magic alias for retrieving items."""
         if isinstance(getter, str):
             return self.get_for_uuid(getter)
-        return self.get_at_pos(getter)
+        return self.get_item(getter)
 
     @staticmethod
     def _change_position(self, index1: int, index2: int) -> None:
