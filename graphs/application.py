@@ -46,19 +46,21 @@ class PythonApplication(Graphs.Application):
         self.do_activate()
         data = self.get_data()
         if nfiles == 1 and files[0].get_uri().endswith(".graphs"):
-            project_file = files[0]
+
+            def load():
+                data.set_file(files[0])
+                data.load()
+
             if data.get_unsaved():
 
                 def on_response(_dialog, response):
                     if response == "discard_close":
-                        data.set_file(project_file)
-                        data.load()
+                        load()
                     if response == "save_close":
 
                         def on_save(_o, response):
                             Graphs.project_save_finish(response)
-                            data.set_file(project_file)
-                            data.load()
+                            load()
 
                         Graphs.project_save(self, False, on_save)
 
@@ -66,8 +68,7 @@ class PythonApplication(Graphs.Application):
                 dialog.connect("response", on_response)
                 dialog.present(self.get_window())
             else:
-                data.set_file(project_file)
-                data.load()
+                load()
         else:
             file_import.import_from_files(self, files)
 
