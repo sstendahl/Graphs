@@ -167,6 +167,10 @@ namespace Graphs {
                 data.add_view_history_state ();
             });
 
+            this.close_request.connect (() => {
+                return application.close ();
+            });
+
             this.update_view_menu ();
             if (application.debug) {
                 this.add_css_class ("devel");

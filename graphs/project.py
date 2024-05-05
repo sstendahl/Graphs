@@ -1,11 +1,8 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Module for saving and loading projects."""
-import contextlib
-from gettext import gettext as _
+from gi.repository import Gio
 
-from gi.repository import GLib, Gio, Graphs, Gtk
-
-from graphs import file_io, migrate, misc, utilities
+from graphs import file_io, migrate
 
 
 def read_project_file(file: Gio.File) -> dict:
@@ -20,71 +17,3 @@ def read_project_file(file: Gio.File) -> dict:
 def save_project_dict(file: Gio.File, project_dict: dict) -> None:
     """Save a project dict to a file."""
     file_io.write_json(file, project_dict)
-
-
-_GRAPHS_PROJECT_FILE_ONLY_FILE_FILTER = utilities.create_file_filters(
-    (misc.GRAPHS_PROJECT_FILE_FILTER_TEMPLATE, ),
-)
-
-
-def _save(application: Graphs.Application) -> None:
-    data = application.get_data()
-    data.save()
-    application.get_window().add_toast_string_with_file(
-        _("Saved Project"),
-        data.get_file(),
-    )
-
-
-def save_project(
-    application: Graphs.Application,
-    require_dialog: bool = False,
-) -> None:
-    """Save the current data to disk."""
-    data = application.get_data()
-    if data.props.file is not None and not require_dialog:
-        _save(application)
-        return
-
-    def on_response(dialog, response):
-        with contextlib.suppress(GLib.GError):
-            data.props.file = dialog.save_finish(response)
-            _save(application)
-
-    dialog = Gtk.FileDialog()
-    dialog.set_filters(_GRAPHS_PROJECT_FILE_ONLY_FILE_FILTER)
-    dialog.set_initial_name(_("Project") + ".graphs")
-    dialog.save(application.get_window(), None, on_response)
-
-
-def open_project(application: Graphs.Application) -> None:
-    """Open a project."""
-
-    def pick_file():
-
-        def on_pick_response(dialog, response):
-            with contextlib.suppress(GLib.GError):
-                data = application.get_data()
-                data.set_file(dialog.open_finish(response))
-                data.load()
-
-        dialog = Gtk.FileDialog()
-        dialog.set_filters(_GRAPHS_PROJECT_FILE_ONLY_FILE_FILTER)
-        dialog.open(application.get_window(), None, on_pick_response)
-
-    if not application.get_data().get_unsaved():
-        pick_file()
-        return
-
-    def on_save_response(_dialog, response):
-        if response == "discard_close":
-            pick_file()
-        if response == "save_close":
-            # Retrieving open dialog first means that save dialog will be
-            # on top. Thus user will be presented with save dialog first.
-            pick_file()
-            save_project(application)
-
-    dialog = Graphs.tools_build_dialog("save_changes")
-    dialog.connect("response", on_save_response)
-    dialog.present(application.get_window())
