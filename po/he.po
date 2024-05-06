@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2024-04-05 16:48+0000\n"
-"PO-Revision-Date: 2024-04-06 22:37+0300\n"
+"POT-Creation-Date: 2024-04-29 15:23+0000\n"
+"PO-Revision-Date: 2024-05-06 09:56+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <he@li.org>\n"
 "Language: he\n"
@@ -18,17 +18,16 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 3.4.2\n"
 
-#: data/se.sjoerd.Graphs.appdata.xml.in.in:6
-#: data/se.sjoerd.Graphs.desktop.in.in:3 data/ui/window.blp:9
-#: graphs/about.vala:16
+#: data/se.sjoerd.Graphs.appdata.xml.in:6 data/se.sjoerd.Graphs.desktop.in:3
+#: data/ui/window.blp:9 graphs/about.vala:23
 msgid "Graphs"
 msgstr "תרשימים"
 
-#: data/se.sjoerd.Graphs.appdata.xml.in.in:7
+#: data/se.sjoerd.Graphs.appdata.xml.in:7
 msgid "Plot and manipulate data"
 msgstr "שרטוט וניהול של נתונים"
 
-#: data/se.sjoerd.Graphs.appdata.xml.in.in:13
+#: data/se.sjoerd.Graphs.appdata.xml.in:12
 msgid ""
 "Graphs is a simple, yet powerful tool that allows you to plot and manipulate "
 "your data with ease. New data can be imported from a wide variety of "
@@ -38,14 +37,14 @@ msgid ""
 "transformations on the data."
 msgstr ""
 
-#: data/se.sjoerd.Graphs.appdata.xml.in.in:17
+#: data/se.sjoerd.Graphs.appdata.xml.in:16
 msgid ""
 "Moreover, Graphs supports curve fitting on imported data and offers "
 "extensive customization options for the style of the plots. You can fine-"
 "tune and personalize stylesheets to your liking."
 msgstr ""
 
-#: data/se.sjoerd.Graphs.appdata.xml.in.in:20
+#: data/se.sjoerd.Graphs.appdata.xml.in:19
 msgid ""
 "Graphs is an excellent fit for both plotting and data manipulation. The "
 "plots created with Graphs can be saved in a variety of formats suitable for "
@@ -56,154 +55,200 @@ msgid ""
 "be suitable for any other desktop environment as well."
 msgstr ""
 
-#: data/se.sjoerd.Graphs.appdata.xml.in.in:24
+#: data/se.sjoerd.Graphs.appdata.xml.in:23
 msgid ""
 "For any feedback, questions or general issues, please file an issue on the "
 "GitLab page."
 msgstr ""
 
-#: data/se.sjoerd.Graphs.appdata.xml.in.in:37
+#: data/se.sjoerd.Graphs.appdata.xml.in:36
 msgid "1 - Plot and manipulate any data of choice"
 msgstr ""
 
-#: data/se.sjoerd.Graphs.appdata.xml.in.in:41
+#: data/se.sjoerd.Graphs.appdata.xml.in:40
 msgid "2 - Full support for light and dark mode"
 msgstr ""
 
-#: data/se.sjoerd.Graphs.appdata.xml.in.in:45
+#: data/se.sjoerd.Graphs.appdata.xml.in:44
 msgid "3 - Generate data from an equation"
 msgstr ""
 
-#: data/se.sjoerd.Graphs.appdata.xml.in.in:49
+#: data/se.sjoerd.Graphs.appdata.xml.in:48
 msgid "4 - Edit plot stylesheets"
 msgstr ""
 
-#: data/se.sjoerd.Graphs.appdata.xml.in.in:53
+#: data/se.sjoerd.Graphs.appdata.xml.in:52
 msgid "5 - Manipulate imported data with ease"
 msgstr ""
 
-#: data/se.sjoerd.Graphs.desktop.in.in:10
+#: data/se.sjoerd.Graphs.desktop.in:10
 msgid ""
 "Plotting;Graph;Graphing;Science;Mathematics;Math;Equations;Data;Plot;"
 "Visualisation;Visualization;Fitting;xrdml;"
 msgstr ""
 
-#: data/ui/add_equation.blp:6
+#: data/ui/add-equation.blp:6
 msgid "Add Equation"
 msgstr "הוספת משוואה"
 
-#: data/ui/add_equation.blp:15 data/ui/add_style.blp:15 data/ui/dialogs.blp:8
-#: data/ui/dialogs.blp:19 data/ui/dialogs.blp:29 data/ui/export_figure.blp:15
-#: data/ui/import.blp:15 data/ui/transform.blp:15
+#: data/ui/add-equation.blp:16 data/ui/add-style.blp:15 data/ui/dialogs.blp:8
+#: data/ui/dialogs.blp:19 data/ui/dialogs.blp:29 data/ui/export-figure.blp:15
+#: data/ui/import.blp:15 data/ui/transform.blp:16
 msgid "Cancel"
 msgstr "ביטול"
 
-#: data/ui/add_equation.blp:21 data/ui/add_style.blp:21
+#: data/ui/add-equation.blp:22 data/ui/add-style.blp:21
 msgid "Add"
 msgstr "הוספה"
 
-#: data/ui/add_equation.blp:40 data/ui/transform.blp:55
+#: data/ui/add-equation.blp:41 data/ui/curve-fitting.blp:66
+#: data/ui/transform.blp:56
 msgid "Y ="
 msgstr "Y ="
 
-#: data/ui/add_equation.blp:48
+#: data/ui/add-equation.blp:49
 msgid "Enter a mathematical expression to generate data from"
 msgstr "נא למלא ביטוי מתמטי ליצירת נתונים"
 
-#: data/ui/add_equation.blp:56
+#: data/ui/add-equation.blp:57
 msgid "Name (optional)"
 msgstr "שם (רשות)"
 
-#: data/ui/add_equation.blp:69
+#: data/ui/add-equation.blp:70
 msgid "X Start"
 msgstr "התחלה ב־X"
 
-#: data/ui/add_equation.blp:76
+#: data/ui/add-equation.blp:77
 msgid "X Stop"
 msgstr "עצירה ב־X"
 
-#: data/ui/add_equation.blp:83
+#: data/ui/add-equation.blp:84
 msgid "Step Size"
 msgstr "גודל צעד"
 
-#: data/ui/add_style.blp:6 data/ui/figure_settings.blp:237
+#: data/ui/add-style.blp:6 data/ui/figure-settings-dialog.blp:34
 msgid "Add New Style"
 msgstr "הוספת סגנון חדש"
 
-#: data/ui/add_style.blp:33
+#: data/ui/add-style.blp:33
 msgid "Template"
 msgstr "תבנית"
 
-#: data/ui/add_style.blp:38 data/ui/edit_item.blp:21
+#: data/ui/add-style.blp:38 data/ui/edit-item.blp:21
 msgid "Name"
 msgstr "שם"
 
-#: data/ui/curve_fitting.blp:27 data/ui/item_box.blp:64
+#: data/ui/curve-fitting.blp:27 data/ui/item-box.blp:64
 msgid "Curve Fitting"
 msgstr "התאמת עיקול"
 
-#: data/ui/curve_fitting.blp:32
+#: data/ui/curve-fitting.blp:32
 msgid "Open Curve Fitting Menu"
 msgstr "פתיחת תפריט התאמת עיקול"
 
-#: data/ui/curve_fitting.blp:49
+#: data/ui/curve-fitting.blp:50
 msgid "Equation"
 msgstr "משוואה"
 
-#: data/ui/curve_fitting.blp:52
+#: data/ui/curve-fitting.blp:53
 msgctxt "regression-type"
 msgid "Linear"
 msgstr "קווית"
 
-#: data/ui/curve_fitting.blp:53
+#: data/ui/curve-fitting.blp:54
 msgctxt "regression-type"
 msgid "Quadratic"
 msgstr ""
 
-#: data/ui/curve_fitting.blp:54
+#: data/ui/curve-fitting.blp:55
 msgctxt "regression-type"
 msgid "Exponential"
 msgstr "מעריכית"
 
-#: data/ui/curve_fitting.blp:55
+#: data/ui/curve-fitting.blp:56
 msgctxt "regression-type"
 msgid "Power Law"
 msgstr "בחזקה"
 
-#: data/ui/curve_fitting.blp:56
+#: data/ui/curve-fitting.blp:57
 msgctxt "regression-type"
 msgid "Logarithmic"
 msgstr "לוגריתמית"
 
-#: data/ui/curve_fitting.blp:57
+#: data/ui/curve-fitting.blp:58
 msgctxt "regression-type"
 msgid "Sigmoid Logistic"
 msgstr ""
 
-#: data/ui/curve_fitting.blp:58
+#: data/ui/curve-fitting.blp:59
 msgctxt "regression-type"
 msgid "Gaussian"
 msgstr "גאוסית"
 
-#: data/ui/curve_fitting.blp:59
+#: data/ui/curve-fitting.blp:60
 msgctxt "regression-type"
 msgid "Custom"
 msgstr "מותאמת אישית"
 
-#: data/ui/curve_fitting.blp:65
-msgid "Y = "
-msgstr "Y = "
-
-#: data/ui/curve_fitting.blp:92
+#: data/ui/curve-fitting.blp:93
 msgid "Add Fit to Data"
 msgstr "הוספת התאמה לנתונים"
 
-#: data/ui/curve_fitting.blp:108 data/ui/window.blp:600 graphs/ui.py:42
+#: data/ui/curve-fitting.blp:109 data/ui/window.blp:598 graphs/window.vala:190
 msgid "Toggle Sidebar"
 msgstr "החלפת הצגת סרגל צד"
 
-#: data/ui/curve_fitting.blp:120 data/ui/window.blp:640
+#: data/ui/curve-fitting.blp:121 data/ui/window.blp:638
 msgid "Canvas Failed to Load"
+msgstr ""
+
+#: data/ui/curve-fitting.blp:131
+msgid "Optimization Method"
+msgstr "שיטת מיטוב"
+
+#. Translators: see https://world.pages.gitlab.gnome.org/Graphs/help/C/curve_fitting.html#algorithms
+#: data/ui/curve-fitting.blp:134
+msgctxt "optimization"
+msgid "Levenberg-Marquardt"
+msgstr "לבנברג-מרקורדט"
+
+#. Translators: see https://world.pages.gitlab.gnome.org/Graphs/help/C/curve_fitting.html#algorithms
+#: data/ui/curve-fitting.blp:140
+msgctxt "optimization"
+msgid "Trust Region Reflective"
+msgstr ""
+
+#. Translators: see https://world.pages.gitlab.gnome.org/Graphs/help/C/curve_fitting.html#algorithms
+#: data/ui/curve-fitting.blp:146
+msgctxt "optimization"
+msgid "Dogbox"
+msgstr ""
+
+#: data/ui/curve-fitting.blp:152
+msgid "Confidence Bounds"
+msgstr ""
+
+#: data/ui/curve-fitting.blp:154
+msgctxt "confidence"
+msgid "None"
+msgstr ""
+
+#: data/ui/curve-fitting.blp:160
+#, no-c-format
+msgctxt "confidence"
+msgid "1σ: 68% Confidence"
+msgstr ""
+
+#: data/ui/curve-fitting.blp:166
+#, no-c-format
+msgctxt "confidence"
+msgid "2σ: 95% Confidence"
+msgstr ""
+
+#: data/ui/curve-fitting.blp:172
+#, no-c-format
+msgctxt "confidence"
+msgid "3σ: 99.7% Confidence"
 msgstr ""
 
 #: data/ui/dialogs.blp:5
@@ -228,7 +273,7 @@ msgstr "שמירה"
 msgid "Delete Style?"
 msgstr "למחוק סגנון?"
 
-#: data/ui/dialogs.blp:20 data/ui/style_editor.blp:12
+#: data/ui/dialogs.blp:20 data/ui/style-editor.blp:12
 msgid "Delete"
 msgstr "למחוק"
 
@@ -240,558 +285,457 @@ msgstr "לאפס לברירות מחדל?"
 msgid "Reset"
 msgstr "לאפס"
 
-#: data/ui/edit_item.blp:11
+#: data/ui/edit-item.blp:11
 msgid "Selected Item"
 msgstr "הפריט הנבחר"
 
-#: data/ui/edit_item.blp:12
+#: data/ui/edit-item.blp:12
 msgid "Choose which item to edit"
 msgstr "נא לבחור איזה פריט לערוך"
 
-#: data/ui/edit_item.blp:18
+#: data/ui/edit-item.blp:18
 msgid "Data"
 msgstr "נתונים"
 
-#: data/ui/edit_item.blp:26
+#: data/ui/edit-item.blp:26
 msgid "X-Axis Position"
 msgstr "מקום ציר X"
 
-#: data/ui/edit_item.blp:28
+#: data/ui/edit-item.blp:28
 msgid "Bottom"
 msgstr "למטה"
 
-#: data/ui/edit_item.blp:28
+#: data/ui/edit-item.blp:28
 msgid "Top"
 msgstr "למעלה"
 
-#: data/ui/edit_item.blp:33
+#: data/ui/edit-item.blp:33
 msgid "Y-Axis Position"
 msgstr "מקום ציר Y"
 
-#: data/ui/edit_item.blp:35
+#: data/ui/edit-item.blp:35
 msgid "Left"
 msgstr "שמאל"
 
-#: data/ui/edit_item.blp:35
+#: data/ui/edit-item.blp:35
 msgid "Right"
 msgstr "ימין"
 
-#: data/ui/edit_item.blp:42
+#: data/ui/edit-item.blp:42
 msgid "Line Properties"
 msgstr "מאפייני קו"
 
-#: data/ui/edit_item.blp:45 data/ui/style_editor.blp:84
+#: data/ui/edit-item.blp:45 data/ui/style-editor.blp:84
 msgid "Linestyle"
 msgstr "סגנון קו"
 
-#: data/ui/edit_item.blp:48 data/ui/style_editor.blp:87
+#: data/ui/edit-item.blp:48 data/ui/style-editor.blp:87
 msgctxt "linestyle"
 msgid "None"
 msgstr "ללא"
 
-#: data/ui/edit_item.blp:49 data/ui/style_editor.blp:88
+#: data/ui/edit-item.blp:49 data/ui/style-editor.blp:88
 msgctxt "linestyle"
 msgid "Solid"
 msgstr "אחיד"
 
-#: data/ui/edit_item.blp:50 data/ui/style_editor.blp:89
+#: data/ui/edit-item.blp:50 data/ui/style-editor.blp:89
 msgctxt "linestyle"
 msgid "Dotted"
 msgstr "מנוקד"
 
-#: data/ui/edit_item.blp:51 data/ui/style_editor.blp:90
+#: data/ui/edit-item.blp:51 data/ui/style-editor.blp:90
 msgctxt "linestyle"
 msgid "Dashed"
 msgstr "מקווקוו"
 
-#: data/ui/edit_item.blp:52 data/ui/style_editor.blp:91
+#: data/ui/edit-item.blp:52 data/ui/style-editor.blp:91
 msgctxt "linestyle"
 msgid "Dashdot"
 msgstr "קו נקודה"
 
-#: data/ui/edit_item.blp:59 data/ui/style_editor.blp:98
+#: data/ui/edit-item.blp:59 data/ui/style-editor.blp:98
 msgid "Linewidth"
 msgstr "עובי קו"
 
-#: data/ui/edit_item.blp:73 data/ui/style_editor.blp:113
+#: data/ui/edit-item.blp:73 data/ui/style-editor.blp:113
 msgid "Markers"
 msgstr "סמנים"
 
-#: data/ui/edit_item.blp:76 data/ui/style_editor.blp:116
+#: data/ui/edit-item.blp:76 data/ui/style-editor.blp:116
 msgctxt "markerstyle"
-msgid "Nothing"
+msgid "None"
 msgstr "ללא"
 
-#: data/ui/edit_item.blp:77 data/ui/style_editor.blp:117
+#: data/ui/edit-item.blp:77 data/ui/style-editor.blp:117
 msgctxt "markerstyle"
 msgid "Point"
 msgstr "נקודה"
 
-#: data/ui/edit_item.blp:78 data/ui/style_editor.blp:118
+#: data/ui/edit-item.blp:78 data/ui/style-editor.blp:118
 msgctxt "markerstyle"
 msgid "Pixel"
 msgstr "פיקסל"
 
-#: data/ui/edit_item.blp:79 data/ui/style_editor.blp:119
+#: data/ui/edit-item.blp:79 data/ui/style-editor.blp:119
 msgctxt "markerstyle"
 msgid "Circle"
 msgstr "עיגול"
 
-#: data/ui/edit_item.blp:80 data/ui/style_editor.blp:120
+#: data/ui/edit-item.blp:80 data/ui/style-editor.blp:120
 msgctxt "markerstyle"
 msgid "Triangle Down"
 msgstr "משולש כלפי מטה"
 
-#: data/ui/edit_item.blp:81 data/ui/style_editor.blp:121
+#: data/ui/edit-item.blp:81 data/ui/style-editor.blp:121
 msgctxt "markerstyle"
 msgid "Triangle Up"
 msgstr "משולש כלפי מעלה"
 
-#: data/ui/edit_item.blp:82 data/ui/style_editor.blp:122
+#: data/ui/edit-item.blp:82 data/ui/style-editor.blp:122
 msgctxt "markerstyle"
 msgid "Triangle Left"
 msgstr "משולש פונה שמאלה"
 
-#: data/ui/edit_item.blp:83 data/ui/style_editor.blp:123
+#: data/ui/edit-item.blp:83 data/ui/style-editor.blp:123
 msgctxt "markerstyle"
 msgid "Triangle Right"
 msgstr "משולש פונה ימינה"
 
-#: data/ui/edit_item.blp:84 data/ui/style_editor.blp:124
+#: data/ui/edit-item.blp:84 data/ui/style-editor.blp:124
 msgctxt "markerstyle"
 msgid "Octagon"
 msgstr "מתומן"
 
-#: data/ui/edit_item.blp:85 data/ui/style_editor.blp:125
+#: data/ui/edit-item.blp:85 data/ui/style-editor.blp:125
 msgctxt "markerstyle"
 msgid "Square"
 msgstr "ריבוע"
 
-#: data/ui/edit_item.blp:86 data/ui/style_editor.blp:126
+#: data/ui/edit-item.blp:86 data/ui/style-editor.blp:126
 msgctxt "markerstyle"
 msgid "Pentagon"
 msgstr "מחומש"
 
-#: data/ui/edit_item.blp:87 data/ui/style_editor.blp:127
+#: data/ui/edit-item.blp:87 data/ui/style-editor.blp:127
 msgctxt "markerstyle"
 msgid "Star"
 msgstr "כוכב"
 
-#: data/ui/edit_item.blp:88 data/ui/style_editor.blp:128
+#: data/ui/edit-item.blp:88 data/ui/style-editor.blp:128
 msgctxt "markerstyle"
 msgid "Hexagon 1"
 msgstr "משושה 1"
 
-#: data/ui/edit_item.blp:89 data/ui/style_editor.blp:129
+#: data/ui/edit-item.blp:89 data/ui/style-editor.blp:129
 msgctxt "markerstyle"
 msgid "Hexagon 2"
 msgstr "משושה 2"
 
-#: data/ui/edit_item.blp:90 data/ui/style_editor.blp:130
+#: data/ui/edit-item.blp:90 data/ui/style-editor.blp:130
 msgctxt "markerstyle"
 msgid "Plus"
 msgstr "פלוס"
 
-#: data/ui/edit_item.blp:91 data/ui/style_editor.blp:131
+#: data/ui/edit-item.blp:91 data/ui/style-editor.blp:131
 msgctxt "markerstyle"
 msgid "X"
 msgstr "X"
 
 #. Translators: Diamond as in Cards Symbol
-#: data/ui/edit_item.blp:93 data/ui/style_editor.blp:133
+#: data/ui/edit-item.blp:93 data/ui/style-editor.blp:133
 msgctxt "markerstyle"
 msgid "Diamond"
 msgstr "יהלום"
 
 #. Translators: Diamond as in Cards Symbol
-#: data/ui/edit_item.blp:95 data/ui/style_editor.blp:135
+#: data/ui/edit-item.blp:95 data/ui/style-editor.blp:135
 msgctxt "markerstyle"
 msgid "Thin Diamond"
 msgstr "יהלום דק"
 
-#: data/ui/edit_item.blp:96 data/ui/style_editor.blp:136
+#: data/ui/edit-item.blp:96 data/ui/style-editor.blp:136
 msgctxt "markerstyle"
 msgid "Vertical Line"
 msgstr "קו אנכי"
 
-#: data/ui/edit_item.blp:97 data/ui/style_editor.blp:137
+#: data/ui/edit-item.blp:97 data/ui/style-editor.blp:137
 msgctxt "markerstyle"
 msgid "Horizontal Line"
 msgstr "קו אופקי"
 
-#: data/ui/edit_item.blp:98 data/ui/style_editor.blp:138
+#: data/ui/edit-item.blp:98 data/ui/style-editor.blp:138
 msgctxt "markerstyle"
 msgid "Filled Plus"
 msgstr "פלוס מלא"
 
-#: data/ui/edit_item.blp:99 data/ui/style_editor.blp:139
+#: data/ui/edit-item.blp:99 data/ui/style-editor.blp:139
 msgctxt "markerstyle"
 msgid "Filled X"
 msgstr "X מלא"
 
-#: data/ui/edit_item.blp:106 data/ui/style_editor.blp:146
+#: data/ui/edit-item.blp:106 data/ui/style-editor.blp:146
 msgid "Marker Size"
 msgstr "גודל סמן"
 
-#: data/ui/export_figure.blp:6
+#: data/ui/export-figure.blp:6
 msgid "Export Figure"
 msgstr ""
 
-#: data/ui/export_figure.blp:21 graphs/export_figure.py:83
+#: data/ui/export-figure.blp:21 graphs/export_figure.vala:51
 msgid "Export"
 msgstr "ייצוא"
 
-#: data/ui/export_figure.blp:35
+#: data/ui/export-figure.blp:35
 msgid "File Format"
 msgstr "סוג קובץ"
 
-#: data/ui/export_figure.blp:38
+#: data/ui/export-figure.blp:38
 msgctxt "file-format"
-msgid "Encapsulated Postscript"
+msgid "Encapsulated PostScript"
 msgstr ""
 
-#: data/ui/export_figure.blp:39
+#: data/ui/export-figure.blp:39
 msgctxt "file-format"
-msgid "Joint Photographic Experts Group"
-msgstr ""
+msgid "JPEG"
+msgstr "JPEG"
 
-#: data/ui/export_figure.blp:40
+#: data/ui/export-figure.blp:40
 msgctxt "file-format"
-msgid "Portable Document Format"
-msgstr ""
+msgid "PDF"
+msgstr "PDF"
 
-#: data/ui/export_figure.blp:41
+#: data/ui/export-figure.blp:41
 msgctxt "file-format"
-msgid "Portable Network Graphics"
-msgstr ""
+msgid "PNG"
+msgstr "PNG"
 
-#: data/ui/export_figure.blp:42
+#: data/ui/export-figure.blp:42
 msgctxt "file-format"
-msgid "Postscript"
-msgstr ""
+msgid "PostScript"
+msgstr "PostScript"
 
-#: data/ui/export_figure.blp:43
+#: data/ui/export-figure.blp:43
 msgctxt "file-format"
-msgid "Scalable Vector Graphics"
-msgstr ""
+msgid "SVG"
+msgstr "SVG"
 
-#: data/ui/export_figure.blp:44
+#: data/ui/export-figure.blp:44
 msgctxt "file-format"
-msgid "WebP Image Format"
-msgstr ""
+msgid "WebP"
+msgstr "WebP"
 
-#: data/ui/export_figure.blp:49
+#: data/ui/export-figure.blp:50
 msgid "Resolution (dpi)"
 msgstr ""
 
-#: data/ui/export_figure.blp:56
+#: data/ui/export-figure.blp:57
 msgid "Transparent Background"
 msgstr "רקע שקוף"
 
-#: data/ui/figure_settings.blp:24 data/ui/window.blp:661
+#: data/ui/figure-settings-dialog.blp:27 data/ui/figure-settings-page.blp:209
+msgid "Style"
+msgstr "סגנון"
+
+#: data/ui/figure-settings-page.blp:5 data/ui/window.blp:659
 msgid "Figure Settings"
 msgstr ""
 
-#: data/ui/figure_settings.blp:40
+#: data/ui/figure-settings-page.blp:21
 msgid "Labels"
 msgstr "תוויות"
 
-#: data/ui/figure_settings.blp:43
+#: data/ui/figure-settings-page.blp:24
 msgid "Title"
 msgstr "כותרת"
 
-#: data/ui/figure_settings.blp:60
+#: data/ui/figure-settings-page.blp:29
+msgid "Bottom X Axis Label"
+msgstr ""
+
+#: data/ui/figure-settings-page.blp:34
+msgid "Top X Axis Label"
+msgstr ""
+
+#: data/ui/figure-settings-page.blp:39
+msgid "Left Y Axis Label"
+msgstr ""
+
+#: data/ui/figure-settings-page.blp:44
+msgid "Right Y Axis Label"
+msgstr ""
+
+#: data/ui/figure-settings-page.blp:49
 msgid "Axis Limits"
 msgstr "מגבלות צירים"
 
-#: data/ui/figure_settings.blp:120
+#: data/ui/figure-settings-page.blp:60
+msgid "Bottom X Axis Minimum"
+msgstr ""
+
+#: data/ui/figure-settings-page.blp:65
+msgid "Bottom X Axis Maximum"
+msgstr ""
+
+#: data/ui/figure-settings-page.blp:76
+msgid "Top X Axis Minimum"
+msgstr ""
+
+#: data/ui/figure-settings-page.blp:81
+msgid "Top X Axis Maximum"
+msgstr ""
+
+#: data/ui/figure-settings-page.blp:92
+msgid "Left Y Axis Minimum"
+msgstr ""
+
+#: data/ui/figure-settings-page.blp:97
+msgid "Left Y Axis Maximum"
+msgstr ""
+
+#: data/ui/figure-settings-page.blp:108
+msgid "Right Y Axis Minimum"
+msgstr ""
+
+#: data/ui/figure-settings-page.blp:113
+msgid "Right Y Axis Maximum"
+msgstr ""
+
+#: data/ui/figure-settings-page.blp:121
 msgid "Scaling"
 msgstr "קנה מידה"
 
-#: data/ui/figure_settings.blp:125 data/ui/figure_settings.blp:137
-#: data/ui/figure_settings.blp:149 data/ui/figure_settings.blp:161
-#: graphs/ui.py:59
+#: data/ui/figure-settings-page.blp:125 graphs/window.vala:230
+msgid "Bottom X Axis Scale"
+msgstr ""
+
+#: data/ui/figure-settings-page.blp:128 data/ui/figure-settings-page.blp:142
+#: data/ui/figure-settings-page.blp:156 data/ui/figure-settings-page.blp:170
+#: graphs/window.vala:200
 msgctxt "scale"
 msgid "Linear"
 msgstr "קווי"
 
-#: data/ui/figure_settings.blp:126 data/ui/figure_settings.blp:138
-#: data/ui/figure_settings.blp:150 data/ui/figure_settings.blp:162
-#: graphs/ui.py:60
+#: data/ui/figure-settings-page.blp:129 data/ui/figure-settings-page.blp:143
+#: data/ui/figure-settings-page.blp:157 data/ui/figure-settings-page.blp:171
+#: graphs/window.vala:201
 msgctxt "scale"
 msgid "Logarithmic"
 msgstr "לוגריתמי"
 
-#: data/ui/figure_settings.blp:127 data/ui/figure_settings.blp:139
-#: data/ui/figure_settings.blp:151 data/ui/figure_settings.blp:163
-#: graphs/ui.py:61
+#: data/ui/figure-settings-page.blp:130 data/ui/figure-settings-page.blp:144
+#: data/ui/figure-settings-page.blp:158 data/ui/figure-settings-page.blp:172
+#: graphs/window.vala:202
 msgctxt "scale"
 msgid "Radians"
 msgstr "רדיאנים"
 
-#: data/ui/figure_settings.blp:128 data/ui/figure_settings.blp:140
-#: data/ui/figure_settings.blp:152 data/ui/figure_settings.blp:164
-#: graphs/ui.py:62
+#: data/ui/figure-settings-page.blp:131 data/ui/figure-settings-page.blp:145
+#: data/ui/figure-settings-page.blp:159 data/ui/figure-settings-page.blp:173
+#: graphs/window.vala:203
 msgctxt "scale"
 msgid "Square Root"
 msgstr "שורש ריבועי"
 
-#: data/ui/figure_settings.blp:129 data/ui/figure_settings.blp:141
-#: data/ui/figure_settings.blp:153 data/ui/figure_settings.blp:165
+#: data/ui/figure-settings-page.blp:132 data/ui/figure-settings-page.blp:146
+#: data/ui/figure-settings-page.blp:160 data/ui/figure-settings-page.blp:174
 msgctxt "scale"
 msgid "Inverse"
 msgstr "הפוך"
 
-#: data/ui/figure_settings.blp:172
+#: data/ui/figure-settings-page.blp:139 graphs/window.vala:231
+msgid "Top X Axis Scale"
+msgstr ""
+
+#: data/ui/figure-settings-page.blp:153 graphs/window.vala:236
+msgid "Left Y Axis Scale"
+msgstr ""
+
+#: data/ui/figure-settings-page.blp:167 graphs/window.vala:235
+msgid "Right Y Axis Scale"
+msgstr ""
+
+#: data/ui/figure-settings-page.blp:181
 msgid "Appearance"
 msgstr "מראה"
 
-#: data/ui/figure_settings.blp:174
+#: data/ui/figure-settings-page.blp:183
 msgid "Legend"
 msgstr "מקרא"
 
-#: data/ui/figure_settings.blp:177
+#: data/ui/figure-settings-page.blp:186
 msgid "Legend Position"
 msgstr "מקום מקרא"
 
-#: data/ui/figure_settings.blp:180
+#: data/ui/figure-settings-page.blp:189
 msgctxt "legend-position"
 msgid "Auto"
 msgstr "אוטומטי"
 
-#: data/ui/figure_settings.blp:181
+#: data/ui/figure-settings-page.blp:190
 msgctxt "legend-position"
 msgid "Upper Right"
 msgstr "למעלה מימין"
 
-#: data/ui/figure_settings.blp:182
+#: data/ui/figure-settings-page.blp:191
 msgctxt "legend-position"
 msgid "Upper Left"
 msgstr "למעלה משמאל"
 
-#: data/ui/figure_settings.blp:183
+#: data/ui/figure-settings-page.blp:192
 msgctxt "legend-position"
 msgid "Lower Left"
 msgstr "למטה משמאל"
 
-#: data/ui/figure_settings.blp:184
+#: data/ui/figure-settings-page.blp:193
 msgctxt "legend-position"
 msgid "Lower Right"
 msgstr "למטה מימין"
 
-#: data/ui/figure_settings.blp:185
+#: data/ui/figure-settings-page.blp:194
 msgctxt "legend-position"
 msgid "Center Left"
 msgstr "במרכז משמאל"
 
-#: data/ui/figure_settings.blp:186
+#: data/ui/figure-settings-page.blp:195
 msgctxt "legend-position"
 msgid "Center Right"
 msgstr "במרכז מימין"
 
-#: data/ui/figure_settings.blp:187
+#: data/ui/figure-settings-page.blp:196
 msgctxt "legend-position"
 msgid "Lower Center"
 msgstr "במרכז למטה"
 
-#: data/ui/figure_settings.blp:188
+#: data/ui/figure-settings-page.blp:197
 msgctxt "legend-position"
 msgid "Upper Center"
 msgstr "במרכז למעלה"
 
-#: data/ui/figure_settings.blp:189
+#: data/ui/figure-settings-page.blp:198
 msgctxt "legend-position"
 msgid "Center"
 msgstr "מרכז"
 
-#: data/ui/figure_settings.blp:196
+#: data/ui/figure-settings-page.blp:205
 msgid "Hide Unselected Items"
 msgstr ""
 
-#: data/ui/figure_settings.blp:200 data/ui/figure_settings.blp:230
-msgid "Style"
-msgstr "סגנון"
-
-#: data/ui/figure_settings.blp:219
+#: data/ui/figure-settings-page.blp:227
 msgid "Set as Default"
 msgstr "הגדרה כברירת מחדל"
 
-#: data/ui/fitting_parameters.blp:26
+#: data/ui/fitting-parameters.blp:26
 msgid "Initial Guess"
 msgstr "ניחוש ראשוני"
 
-#: data/ui/fitting_parameters.blp:37
+#: data/ui/fitting-parameters.blp:38
 msgid "Minimum"
 msgstr ""
 
-#: data/ui/fitting_parameters.blp:47
+#: data/ui/fitting-parameters.blp:49
 msgid "Maximum"
 msgstr ""
-
-#: data/ui/help_overlay.blp:11
-msgctxt "shortcut window"
-msgid "General"
-msgstr "כללי"
-
-#: data/ui/help_overlay.blp:14
-msgctxt "shortcut window"
-msgid "Show Shortcuts"
-msgstr ""
-
-#: data/ui/help_overlay.blp:19
-msgctxt "shortcut window"
-msgid "Open Help"
-msgstr "פתיחת עזרה"
-
-#: data/ui/help_overlay.blp:24
-msgctxt "shortcut window"
-msgid "Open Figure Settings"
-msgstr ""
-
-#: data/ui/help_overlay.blp:29
-msgctxt "shortcut window"
-msgid "Close Application"
-msgstr "סגירת היישום"
-
-#: data/ui/help_overlay.blp:33
-msgctxt "shortcut window"
-msgid "Close Application Window"
-msgstr "סגירת חלון היישום"
-
-#: data/ui/help_overlay.blp:39
-msgctxt "shortcut window"
-msgid "Mode Switching"
-msgstr "החלפת מצב"
-
-#: data/ui/help_overlay.blp:42
-msgctxt "shortcut window"
-msgid "Pan Mode"
-msgstr "מצב שיוט"
-
-#: data/ui/help_overlay.blp:47
-msgctxt "shortcut window"
-msgid "Zoom Mode"
-msgstr "מצב תקריב"
-
-#: data/ui/help_overlay.blp:52
-msgctxt "shortcut window"
-msgid "Select Mode"
-msgstr "מצב בחירה"
-
-#: data/ui/help_overlay.blp:58
-msgctxt "shortcut window"
-msgid "New Data"
-msgstr "נתונים חדשים"
-
-#: data/ui/help_overlay.blp:61
-msgctxt "shortcut window"
-msgid "Add Data from Equation"
-msgstr "הוספת נתונים ממשוואה"
-
-#: data/ui/help_overlay.blp:66
-msgctxt "shortcut window"
-msgid "Add Data from File"
-msgstr "הוספת נתונים מקובץ"
-
-#: data/ui/help_overlay.blp:71
-msgctxt "shortcut window"
-msgid "New Project"
-msgstr "מיזם חדש"
-
-#: data/ui/help_overlay.blp:76
-msgctxt "shortcut window"
-msgid "Open Project"
-msgstr "פתיחת מיזם"
-
-#: data/ui/help_overlay.blp:81
-msgctxt "shortcut window"
-msgid "Delete Selected Data"
-msgstr "מחיקת הנתונים הנבחרים"
-
-#: data/ui/help_overlay.blp:87
-msgctxt "shortcut window"
-msgid "Save and Export"
-msgstr "שמירה וייצוא"
-
-#: data/ui/help_overlay.blp:89
-msgctxt "shortcut window"
-msgid "Export Data"
-msgstr "ייצוא נתונים"
-
-#: data/ui/help_overlay.blp:93
-msgctxt "shortcut window"
-msgid "Export Figure"
-msgstr ""
-
-#: data/ui/help_overlay.blp:97
-msgctxt "shortcut window"
-msgid "Save Project"
-msgstr "שמירת המיזם"
-
-#: data/ui/help_overlay.blp:101
-msgctxt "shortcut window"
-msgid "Save Project As"
-msgstr "שמירת המיזם בשם"
-
-#: data/ui/help_overlay.blp:107
-msgctxt "shortcut window"
-msgid "View"
-msgstr "תצוגה"
-
-#: data/ui/help_overlay.blp:110
-msgctxt "shortcut window"
-msgid "Previous View"
-msgstr "תצוגה קודמת"
-
-#: data/ui/help_overlay.blp:115
-msgctxt "shortcut window"
-msgid "Next View"
-msgstr "התצוגה הבאה"
-
-#: data/ui/help_overlay.blp:120
-msgctxt "shortcut window"
-msgid "Optimize limits"
-msgstr "מיטוב גבולות"
-
-#: data/ui/help_overlay.blp:125
-msgctxt "shortcut window"
-msgid "Zoom in"
-msgstr "התקרבות"
-
-#: data/ui/help_overlay.blp:130
-msgctxt "shortcut window"
-msgid "Zoom out"
-msgstr "התרחקות"
-
-#: data/ui/help_overlay.blp:135 data/ui/help_overlay.blp:155
-msgctxt "shortcut window"
-msgid "Select None"
-msgstr "ביטול הבחירה"
-
-#: data/ui/help_overlay.blp:141
-msgctxt "shortcut window"
-msgid "Toggle Sidebar"
-msgstr "החלפת הצגת סרגל צד"
-
-#: data/ui/help_overlay.blp:147
-msgctxt "shortcut window"
-msgid "Actions"
-msgstr "פעולות"
-
-#: data/ui/help_overlay.blp:150
-msgctxt "shortcut window"
-msgid "Select All"
-msgstr "לבחור הכול"
-
-#: data/ui/help_overlay.blp:160
-msgctxt "shortcut window"
-msgid "Undo Action"
-msgstr "ביטול הפעולה"
-
-#: data/ui/help_overlay.blp:165
-msgctxt "shortcut window"
-msgid "Redo Action"
-msgstr "ביצוע הפעולה מחדש"
 
 #: data/ui/import.blp:6
 msgid "Modify Import Parameters"
@@ -801,338 +745,414 @@ msgstr "שינוי משתני הייבוא"
 msgid "Import"
 msgstr "ייבוא"
 
-#: data/ui/import.blp:46
-msgid "Delimiter"
-msgstr "מפריד"
-
-#: data/ui/import.blp:47
-msgid "Character sequence used to split values"
-msgstr "רצף תווים שמשמש לפיצול ערכים"
-
-#: data/ui/import.blp:51
-msgctxt "delimiter"
-msgid "Whitespace"
-msgstr "רווח"
-
-#: data/ui/import.blp:52
-msgctxt "delimiter"
-msgid "Tab"
-msgstr "טאב"
-
-#: data/ui/import.blp:53
-msgctxt "delimiter"
-msgid "Colon (:)"
-msgstr "נקודתיים (:)"
-
-#: data/ui/import.blp:54
-msgctxt "delimiter"
-msgid "Semicolon (;)"
-msgstr "נקודה פסיק (;)"
-
-#: data/ui/import.blp:55
-msgctxt "delimiter"
-msgid "Decimal comma (,)"
-msgstr "פסיק עשרוני (,)"
-
-#: data/ui/import.blp:56
-msgctxt "delimiter"
-msgid "Decimal point (.)"
-msgstr "נקודה עשרונית (.)"
-
-#: data/ui/import.blp:57
-msgctxt "delimiter"
-msgid "Custom"
-msgstr "התאמה אישית"
-
-#: data/ui/import.blp:64
-msgid "Custom Delimiter"
-msgstr "מפריד מותאם אישית"
-
-#: data/ui/import.blp:68
-msgid "Decimal Separator"
-msgstr "מפריד עשרוני"
-
-#: data/ui/import.blp:71
-msgctxt "separator"
-msgid "Decimal comma (,)"
-msgstr "פסיק עשרוני (,)"
-
-#: data/ui/import.blp:72
-msgctxt "separator"
-msgid "Decimal point (.)"
-msgstr "נקודה עשרונית (.)"
-
-#: data/ui/import.blp:78
-msgid "Column X"
-msgstr "עמודה X"
-
-#: data/ui/import.blp:79
-msgid "X-data column index"
-msgstr "מפתח עמודת הנתונים X"
-
-#: data/ui/import.blp:88
-msgid "Column Y"
-msgstr "עמודה Y"
-
-#: data/ui/import.blp:90
-msgid "Y-data column index"
-msgstr "מפתח עמודת הנתונים Y"
-
-#: data/ui/import.blp:99
-msgid "Skip Rows"
-msgstr "דילוג על שורות"
-
-#: data/ui/import.blp:100
-msgid "Ignored row indices"
-msgstr ""
-
-#: data/ui/item_box.blp:26
+#: data/ui/item-box.blp:26
 msgid "Pick Color"
 msgstr "בחירת צבע"
 
-#: data/ui/item_box.blp:51
+#: data/ui/item-box.blp:51
 msgid "Move Item "
 msgstr "העברת פריט "
 
-#: data/ui/item_box.blp:68
-msgid "Edit Item"
-msgstr "עריכת פריט"
-
-#: data/ui/item_box.blp:72
+#: data/ui/item-box.blp:68
 msgid "Remove Item"
 msgstr "הסרת פריט"
 
-#: data/ui/smoothen_settings.blp:7
+#: data/ui/shortcuts.blp:11
+msgctxt "shortcut window"
+msgid "General"
+msgstr "כללי"
+
+#: data/ui/shortcuts.blp:14
+msgctxt "shortcut window"
+msgid "Show Shortcuts"
+msgstr ""
+
+#: data/ui/shortcuts.blp:19
+msgctxt "shortcut window"
+msgid "Open Help"
+msgstr "פתיחת עזרה"
+
+#: data/ui/shortcuts.blp:24
+msgctxt "shortcut window"
+msgid "Open Figure Settings"
+msgstr ""
+
+#: data/ui/shortcuts.blp:29
+msgctxt "shortcut window"
+msgid "Close Application"
+msgstr "סגירת היישום"
+
+#: data/ui/shortcuts.blp:33
+msgctxt "shortcut window"
+msgid "Close Application Window"
+msgstr "סגירת חלון היישום"
+
+#: data/ui/shortcuts.blp:39
+msgctxt "shortcut window"
+msgid "Mode Switching"
+msgstr "החלפת מצב"
+
+#: data/ui/shortcuts.blp:42
+msgctxt "shortcut window"
+msgid "Pan Mode"
+msgstr "מצב שיוט"
+
+#: data/ui/shortcuts.blp:47
+msgctxt "shortcut window"
+msgid "Zoom Mode"
+msgstr "מצב תקריב"
+
+#: data/ui/shortcuts.blp:52
+msgctxt "shortcut window"
+msgid "Select Mode"
+msgstr "מצב בחירה"
+
+#: data/ui/shortcuts.blp:58
+msgctxt "shortcut window"
+msgid "New Data"
+msgstr "נתונים חדשים"
+
+#: data/ui/shortcuts.blp:61
+msgctxt "shortcut window"
+msgid "Add Data from Equation"
+msgstr "הוספת נתונים ממשוואה"
+
+#: data/ui/shortcuts.blp:66
+msgctxt "shortcut window"
+msgid "Add Data from File"
+msgstr "הוספת נתונים מקובץ"
+
+#: data/ui/shortcuts.blp:71
+msgctxt "shortcut window"
+msgid "New Project"
+msgstr "מיזם חדש"
+
+#: data/ui/shortcuts.blp:76
+msgctxt "shortcut window"
+msgid "Open Project"
+msgstr "פתיחת מיזם"
+
+#: data/ui/shortcuts.blp:81
+msgctxt "shortcut window"
+msgid "Delete Selected Data"
+msgstr "מחיקת הנתונים הנבחרים"
+
+#: data/ui/shortcuts.blp:87
+msgctxt "shortcut window"
+msgid "Save and Export"
+msgstr "שמירה וייצוא"
+
+#: data/ui/shortcuts.blp:89
+msgctxt "shortcut window"
+msgid "Export Data"
+msgstr "ייצוא נתונים"
+
+#: data/ui/shortcuts.blp:93
+msgctxt "shortcut window"
+msgid "Export Figure"
+msgstr ""
+
+#: data/ui/shortcuts.blp:97
+msgctxt "shortcut window"
+msgid "Save Project"
+msgstr "שמירת המיזם"
+
+#: data/ui/shortcuts.blp:101
+msgctxt "shortcut window"
+msgid "Save Project As"
+msgstr "שמירת המיזם בשם"
+
+#: data/ui/shortcuts.blp:107
+msgctxt "shortcut window"
+msgid "View"
+msgstr "תצוגה"
+
+#: data/ui/shortcuts.blp:110
+msgctxt "shortcut window"
+msgid "Previous View"
+msgstr "תצוגה קודמת"
+
+#: data/ui/shortcuts.blp:115
+msgctxt "shortcut window"
+msgid "Next View"
+msgstr "התצוגה הבאה"
+
+#: data/ui/shortcuts.blp:120
+msgctxt "shortcut window"
+msgid "Optimize limits"
+msgstr "מיטוב גבולות"
+
+#: data/ui/shortcuts.blp:125
+msgctxt "shortcut window"
+msgid "Zoom in"
+msgstr "התקרבות"
+
+#: data/ui/shortcuts.blp:130
+msgctxt "shortcut window"
+msgid "Zoom out"
+msgstr "התרחקות"
+
+#: data/ui/shortcuts.blp:135 data/ui/shortcuts.blp:155
+msgctxt "shortcut window"
+msgid "Select None"
+msgstr "ביטול הבחירה"
+
+#: data/ui/shortcuts.blp:141
+msgctxt "shortcut window"
+msgid "Toggle Sidebar"
+msgstr "החלפת הצגת סרגל צד"
+
+#: data/ui/shortcuts.blp:147
+msgctxt "shortcut window"
+msgid "Actions"
+msgstr "פעולות"
+
+#: data/ui/shortcuts.blp:150
+msgctxt "shortcut window"
+msgid "Select All"
+msgstr "לבחור הכול"
+
+#: data/ui/shortcuts.blp:160
+msgctxt "shortcut window"
+msgid "Undo Action"
+msgstr "ביטול הפעולה"
+
+#: data/ui/shortcuts.blp:165
+msgctxt "shortcut window"
+msgid "Redo Action"
+msgstr "ביצוע הפעולה מחדש"
+
+#: data/ui/smoothen-settings.blp:7
 msgid "Smoothen Settings"
 msgstr "הגדרות החלקה"
 
-#: data/ui/smoothen_settings.blp:30 data/ui/window.blp:696
+#: data/ui/smoothen-settings.blp:30 data/ui/window.blp:694
 msgid "Savitzky–Golay Filter"
 msgstr "מסנן סביצקי-גוליי"
 
-#: data/ui/smoothen_settings.blp:32
+#: data/ui/smoothen-settings.blp:32
 msgid "Span percentage"
 msgstr ""
 
-#: data/ui/smoothen_settings.blp:33
+#: data/ui/smoothen-settings.blp:33
 msgid "What percentage of the data span to use for the filter window"
 msgstr ""
 
-#: data/ui/smoothen_settings.blp:40
+#: data/ui/smoothen-settings.blp:40
 msgid "Polynomial degree"
 msgstr ""
 
-#: data/ui/smoothen_settings.blp:48 data/ui/window.blp:701
+#: data/ui/smoothen-settings.blp:48 data/ui/window.blp:699
 msgid "Moving Average"
 msgstr ""
 
-#: data/ui/smoothen_settings.blp:50
+#: data/ui/smoothen-settings.blp:50
 msgid "Box points"
 msgstr ""
 
-#: data/ui/smoothen_settings.blp:51
+#: data/ui/smoothen-settings.blp:51
 msgid "Amount of points to use when calculating a moving average"
 msgstr ""
 
-#: data/ui/style_color_box.blp:18 data/ui/style_preview.blp:27
+#: data/ui/style-color-box.blp:18 data/ui/style-preview.blp:27
 msgid "Edit"
 msgstr "עריכה"
 
-#: data/ui/style_color_box.blp:29
+#: data/ui/style-color-box.blp:29
 msgid "Remove"
 msgstr "הסרה"
 
-#: data/ui/style_editor.blp:5
+#: data/ui/style-editor.blp:5
 msgid "Error - No Style selected"
 msgstr "שגיאה - לא נבחר סגנון"
 
-#: data/ui/style_editor.blp:37
+#: data/ui/style-editor.blp:37
 msgid "Style Name"
 msgstr "שם הסגנון"
 
-#: data/ui/style_editor.blp:41
+#: data/ui/style-editor.blp:41
 msgid "Font"
 msgstr "גופן"
 
-#: data/ui/style_editor.blp:52
+#: data/ui/style-editor.blp:52
 msgid "Title Size"
 msgstr "גודל הכותרת"
 
-#: data/ui/style_editor.blp:53
+#: data/ui/style-editor.blp:53
 msgid "Title size in relation to text size"
 msgstr "גודל הכותרת ביחס לגודל הטקסט"
 
-#: data/ui/style_editor.blp:66
+#: data/ui/style-editor.blp:66
 msgid "Label Size"
 msgstr "גודל התווית"
 
-#: data/ui/style_editor.blp:67
+#: data/ui/style-editor.blp:67
 msgid "Label size in relation to text size"
 msgstr "גודל התווית ביחד לגודל הטקסט"
 
-#: data/ui/style_editor.blp:81
+#: data/ui/style-editor.blp:81
 msgid "Lines"
 msgstr "קווים"
 
-#: data/ui/style_editor.blp:162
+#: data/ui/style-editor.blp:162
 msgid "Axes"
 msgstr "צירים"
 
-#: data/ui/style_editor.blp:165
+#: data/ui/style-editor.blp:165
 msgid "Axis Width"
 msgstr "עובי ציר"
 
-#: data/ui/style_editor.blp:178
+#: data/ui/style-editor.blp:178
 msgid "Draw Frame"
 msgstr "ציור מסגרת"
 
-#: data/ui/style_editor.blp:183
+#: data/ui/style-editor.blp:183
 msgid "Ticks"
-msgstr ""
+msgstr "שנתות"
 
-#: data/ui/style_editor.blp:186
+#: data/ui/style-editor.blp:186
 msgid "Tick Directions"
-msgstr ""
+msgstr "כיווני שנתות"
 
-#: data/ui/style_editor.blp:188
+#: data/ui/style-editor.blp:188
 msgid "Inwards"
-msgstr ""
+msgstr "פנימה"
 
-#: data/ui/style_editor.blp:188
+#: data/ui/style-editor.blp:188
 msgid "Outwards"
-msgstr ""
+msgstr "החוצה"
 
-#: data/ui/style_editor.blp:193
+#: data/ui/style-editor.blp:193
 msgid "Minor Ticks"
-msgstr ""
+msgstr "שנתות משניות"
 
-#: data/ui/style_editor.blp:197
+#: data/ui/style-editor.blp:197
 msgid "Major Tick Width"
-msgstr ""
+msgstr "רוחב שנתות עיקריות"
 
-#: data/ui/style_editor.blp:210
+#: data/ui/style-editor.blp:210
 msgid "Minor Tick Width"
-msgstr ""
+msgstr "רוחב שנתות משניות"
 
-#: data/ui/style_editor.blp:224
+#: data/ui/style-editor.blp:224
 msgid "Major Tick Length"
-msgstr ""
+msgstr "אורך שנתות עיקריות"
 
-#: data/ui/style_editor.blp:237
+#: data/ui/style-editor.blp:237
 msgid "Minor Tick Length"
-msgstr ""
+msgstr "אורך שנתות משניות"
 
-#: data/ui/style_editor.blp:251
+#: data/ui/style-editor.blp:251
 msgid "Ticks on Bottom Axis"
-msgstr ""
+msgstr "שנתות בציר התחתון"
 
-#: data/ui/style_editor.blp:255
+#: data/ui/style-editor.blp:255
 msgid "Ticks on Left Axis"
-msgstr ""
+msgstr "שנתות בציר השמאלי"
 
-#: data/ui/style_editor.blp:259
+#: data/ui/style-editor.blp:259
 msgid "Ticks on Right Axis"
-msgstr ""
+msgstr "שנתות בציר הימני"
 
-#: data/ui/style_editor.blp:263
+#: data/ui/style-editor.blp:263
 msgid "Ticks on Top Axis"
-msgstr ""
+msgstr "שנתות בציר העליון"
 
-#: data/ui/style_editor.blp:268
+#: data/ui/style-editor.blp:268
 msgid "Grid"
 msgstr "רשת"
 
-#: data/ui/style_editor.blp:271
+#: data/ui/style-editor.blp:271
 msgid "Show Grid"
 msgstr "הצגת רשת"
 
-#: data/ui/style_editor.blp:275
+#: data/ui/style-editor.blp:275
 msgid "Grid Width"
 msgstr "עובי רשת"
 
-#: data/ui/style_editor.blp:289
+#: data/ui/style-editor.blp:289
 msgid "Grid Opacity"
 msgstr "אטימות רשת"
 
-#: data/ui/style_editor.blp:304
+#: data/ui/style-editor.blp:304
 msgid "Padding"
 msgstr "ריפוד"
 
-#: data/ui/style_editor.blp:305
+#: data/ui/style-editor.blp:305
 msgid "Padding for different parts of the figure"
 msgstr ""
 
-#: data/ui/style_editor.blp:308
+#: data/ui/style-editor.blp:308
 msgid "Value Padding"
 msgstr "ריפוד ערכים"
 
-#: data/ui/style_editor.blp:309
+#: data/ui/style-editor.blp:309
 msgid "Padding between axes and values"
 msgstr "ריפוד בין הצירים והערכים"
 
-#: data/ui/style_editor.blp:322
+#: data/ui/style-editor.blp:322
 msgid "Label Padding"
 msgstr "ריפוד תוויות"
 
-#: data/ui/style_editor.blp:323
+#: data/ui/style-editor.blp:323
 msgid "Padding between axes and labels"
 msgstr "ריפוד בין הצירים והתוויות"
 
-#: data/ui/style_editor.blp:336
+#: data/ui/style-editor.blp:336
 msgid "Title Padding"
 msgstr "ריפוד כותרת"
 
-#: data/ui/style_editor.blp:337
+#: data/ui/style-editor.blp:337
 msgid "Padding between axes and the title"
 msgstr "דיפור בין הצירים והכותרת"
 
-#: data/ui/style_editor.blp:351
+#: data/ui/style-editor.blp:351
 msgid "Colors"
 msgstr "צבעים"
 
-#: data/ui/style_editor.blp:356
+#: data/ui/style-editor.blp:356
 msgid "Label text might be hard to read"
 msgstr "הטקסט בתוויות יכול להיות בלתי קריא"
 
-#: data/ui/style_editor.blp:361
+#: data/ui/style-editor.blp:361
 msgid "Poor Contrast"
 msgstr "ניגודיות גרועה"
 
-#: data/ui/style_editor.blp:376
+#: data/ui/style-editor.blp:376
 msgid "Text Color"
 msgstr "צבע טקסט"
 
-#: data/ui/style_editor.blp:381 data/ui/style_editor.blp:403
-#: data/ui/style_editor.blp:425 data/ui/style_editor.blp:447
-#: data/ui/style_editor.blp:469 data/ui/style_editor.blp:491
+#: data/ui/style-editor.blp:381 data/ui/style-editor.blp:403
+#: data/ui/style-editor.blp:425 data/ui/style-editor.blp:447
+#: data/ui/style-editor.blp:469 data/ui/style-editor.blp:491
 msgid "Change Color"
 msgstr "החלפת צבע"
 
-#: data/ui/style_editor.blp:398
+#: data/ui/style-editor.blp:398
 msgid "Tick Color"
-msgstr ""
+msgstr "צבע שנתות"
 
-#: data/ui/style_editor.blp:420
+#: data/ui/style-editor.blp:420
 msgid "Axis Color"
 msgstr "צבע ציר"
 
-#: data/ui/style_editor.blp:442
+#: data/ui/style-editor.blp:442
 msgid "Grid Color"
 msgstr "צבע רשת"
 
-#: data/ui/style_editor.blp:464
+#: data/ui/style-editor.blp:464
 msgid "Background Color"
 msgstr "צבע רקע"
 
-#: data/ui/style_editor.blp:486
+#: data/ui/style-editor.blp:486
 msgid "Outline Color"
 msgstr "צבע מתאר"
 
-#: data/ui/style_editor.blp:505
+#: data/ui/style-editor.blp:505
 msgid "Line Colors"
 msgstr "צבעי הקווים"
 
-#: data/ui/style_editor.blp:511
+#: data/ui/style-editor.blp:511
 msgid "Add Color"
 msgstr "הוספת צבע"
 
@@ -1140,11 +1160,11 @@ msgstr "הוספת צבע"
 msgid "Transform Data"
 msgstr "התמרת נתונים"
 
-#: data/ui/transform.blp:21 data/ui/window.blp:396
+#: data/ui/transform.blp:22 data/ui/window.blp:394
 msgid "Transform"
 msgstr "התמרה"
 
-#: data/ui/transform.blp:34
+#: data/ui/transform.blp:35
 msgid ""
 "Additional variables:\n"
 "x_min, y_min\n"
@@ -1155,462 +1175,366 @@ msgid ""
 "to use degrees, e.g. sind(x) or cosd(x)."
 msgstr ""
 
-#: data/ui/transform.blp:39
+#: data/ui/transform.blp:40
 msgid "More info"
 msgstr "פרטים נוספים"
 
-#: data/ui/transform.blp:50
+#: data/ui/transform.blp:51
 msgid "X ="
 msgstr "X ="
 
-#: data/ui/transform.blp:60
+#: data/ui/transform.blp:61
 msgid "Discard Unselected Data"
 msgstr ""
 
-#: data/ui/window.blp:184
+#: data/ui/window.blp:182
 msgid "Add New Data"
 msgstr "הוספת נתונים חדשים"
 
-#: data/ui/window.blp:192
+#: data/ui/window.blp:190
 msgid "Open Application Menu"
 msgstr "פתיחת תפריט היישום"
 
-#: data/ui/window.blp:221
+#: data/ui/window.blp:219
 msgid "No Data"
 msgstr "אין נתונים"
 
-#: data/ui/window.blp:222
+#: data/ui/window.blp:220
 msgid "Add data from a file or manually as an equation"
 msgstr ""
 
-#: data/ui/window.blp:243
+#: data/ui/window.blp:241
 msgid "Pan Mode. Click and drag to pan"
 msgstr ""
 
-#: data/ui/window.blp:249
+#: data/ui/window.blp:247
 msgid "Zoom Mode. Select an area on the figure to zoom in"
 msgstr ""
 
-#: data/ui/window.blp:255
+#: data/ui/window.blp:253
 msgid "Select Mode. Click and drag to make a selection of data"
 msgstr ""
 
-#: data/ui/window.blp:286
+#: data/ui/window.blp:284
 msgid "Adjust"
 msgstr ""
 
-#: data/ui/window.blp:301
+#: data/ui/window.blp:299
 msgid "Shift"
 msgstr ""
 
-#: data/ui/window.blp:303
+#: data/ui/window.blp:301
 msgid "Shift all data vertically with respect to each other"
 msgstr ""
 
-#: data/ui/window.blp:318
+#: data/ui/window.blp:316
 msgid "Normalize"
 msgstr ""
 
-#: data/ui/window.blp:320
+#: data/ui/window.blp:318
 msgid "Normalize data"
 msgstr ""
 
-#: data/ui/window.blp:336
+#: data/ui/window.blp:334
 msgid "Smoothen"
 msgstr ""
 
-#: data/ui/window.blp:338
+#: data/ui/window.blp:336
 msgid "Smoothen data"
 msgstr ""
 
-#: data/ui/window.blp:353
+#: data/ui/window.blp:351
 msgid "Center"
 msgstr ""
 
-#: data/ui/window.blp:355
+#: data/ui/window.blp:353
 msgid "Center data"
 msgstr ""
 
-#: data/ui/window.blp:370
+#: data/ui/window.blp:368
 msgid "Combine"
-msgstr ""
+msgstr "שילוב"
 
-#: data/ui/window.blp:372
+#: data/ui/window.blp:370
 msgid "Combine all selected data"
-msgstr ""
+msgstr "שילוב כל הנתונים הנבחרים"
+
+#: data/ui/window.blp:384
+msgid "Cut"
+msgstr "גזירה"
 
 #: data/ui/window.blp:386
-msgid "Cut"
-msgstr ""
-
-#: data/ui/window.blp:388
 msgid "Cut selected data"
-msgstr ""
+msgstr "גזירת הנתונים הנבחרים"
+
+#: data/ui/window.blp:410
+msgid "Derivative"
+msgstr "נגזרת"
 
 #: data/ui/window.blp:412
-msgid "Derivative"
-msgstr ""
-
-#: data/ui/window.blp:414
 msgid "Get the derivative of the data"
-msgstr ""
+msgstr "קבלת נגזרת של הנתונים"
+
+#: data/ui/window.blp:426
+msgid "Integral"
+msgstr "אינטגרל"
 
 #: data/ui/window.blp:428
-msgid "Integral"
-msgstr ""
-
-#: data/ui/window.blp:430
 msgid "Get the indefinite integral of the data"
 msgstr ""
 
-#: data/ui/window.blp:444
+#: data/ui/window.blp:442
 msgid "FFT"
 msgstr ""
 
-#: data/ui/window.blp:446
+#: data/ui/window.blp:444
 msgid "Get the Fast Fourier Transform of the data"
 msgstr ""
 
-#: data/ui/window.blp:460
+#: data/ui/window.blp:458
 msgid "Inverse FFT"
 msgstr ""
 
-#: data/ui/window.blp:462
+#: data/ui/window.blp:460
 msgid "Get the Inverse Fast Fourier Transform of the data"
 msgstr ""
 
-#: data/ui/window.blp:477
+#: data/ui/window.blp:475
 msgid "Custom Transformation"
-msgstr ""
+msgstr "התמרה מותאמת אישית"
 
-#: data/ui/window.blp:479
+#: data/ui/window.blp:477
 msgid "Perform custom transformations on the data"
-msgstr ""
+msgstr "ביצוע התמרה מותאמת אישית על הנתונים"
 
-#: data/ui/window.blp:487
+#: data/ui/window.blp:485
 msgid "Modify"
 msgstr ""
 
-#: data/ui/window.blp:508
+#: data/ui/window.blp:506
 msgid "Translate X"
 msgstr ""
 
-#: data/ui/window.blp:531
+#: data/ui/window.blp:529
 msgid "Translate Y"
 msgstr ""
 
-#: data/ui/window.blp:554
+#: data/ui/window.blp:552
 msgid "Multiply X"
 msgstr ""
 
-#: data/ui/window.blp:577
+#: data/ui/window.blp:575
 msgid "Multiply Y"
 msgstr ""
 
-#: data/ui/window.blp:607
+#: data/ui/window.blp:605 graphs/item_box.vala:73
 msgid "Undo"
-msgstr ""
+msgstr "ביטול"
 
-#: data/ui/window.blp:612
+#: data/ui/window.blp:610
 msgid "Redo"
-msgstr ""
+msgstr "ביצוע מחדש"
 
-#: data/ui/window.blp:617
+#: data/ui/window.blp:615
 msgid "View Menu"
 msgstr "הצגת תפריט"
 
-#: data/ui/window.blp:625
+#: data/ui/window.blp:623
 msgid "Next View"
 msgstr "התצוגה הבאה"
 
-#: data/ui/window.blp:631
+#: data/ui/window.blp:629
 msgid "Previous View"
 msgstr "התצוגה הקודמת"
 
-#: data/ui/window.blp:649
+#: data/ui/window.blp:647
 msgid "New Project"
 msgstr "מיזם חדש"
 
-#: data/ui/window.blp:652
+#: data/ui/window.blp:650
 msgid "Save Project…"
 msgstr "שמירת המיזם…"
 
-#: data/ui/window.blp:653
+#: data/ui/window.blp:651
 msgid "Save Project as…"
 msgstr "שמירת המיזם בשם…"
 
-#: data/ui/window.blp:654
+#: data/ui/window.blp:652
 msgid "Open Project…"
 msgstr "פתיחת מיזם…"
 
-#: data/ui/window.blp:657
+#: data/ui/window.blp:655
 msgid "Export Data…"
 msgstr "ייצוא נתונים…"
 
-#: data/ui/window.blp:658
+#: data/ui/window.blp:656
 msgid "Export Figure…"
 msgstr ""
 
-#: data/ui/window.blp:664
+#: data/ui/window.blp:662
 msgid "Keyboard Shortcuts"
 msgstr "צירופי מקשים"
 
-#: data/ui/window.blp:665
+#: data/ui/window.blp:663
 msgid "Help"
 msgstr "עזרה"
 
-#: data/ui/window.blp:666
+#: data/ui/window.blp:664
 msgid "About Graphs"
 msgstr "על תרשימים"
 
-#: data/ui/window.blp:672
+#: data/ui/window.blp:670
 msgid "Add Data from File…"
 msgstr "הוספת נתונים מקובץ…"
 
-#: data/ui/window.blp:673
+#: data/ui/window.blp:671
 msgid "Add Equation…"
 msgstr "הוספת משוואה…"
 
-#: data/ui/window.blp:682
+#: data/ui/window.blp:680
 msgid "At Maximum Y Value"
 msgstr ""
 
-#: data/ui/window.blp:687
+#: data/ui/window.blp:685
 msgid "At Middle X Value"
 msgstr ""
 
-#: data/ui/window.blp:708
+#: data/ui/window.blp:706
 msgid "Advanced Settings"
 msgstr "הגדרות מתקדמות"
 
-#: graphs/about.vala:33
+#: graphs/about.vala:40
 msgid "translator-credits"
 msgstr "ירון שהרבני <sh.yaron@gmail.com>"
 
-#: graphs/actions.py:298 graphs/item_box.py:151
-#, python-brace-format
-msgid "Deleted {name}"
-msgstr "{name} נמחק"
-
-#: graphs/add_equation.py:77
+#: graphs/actions.py:80
 #, python-brace-format
 msgid "{error} - Unable to add data from equation"
 msgstr "{error} - לא ניתן להוסיף נתונים ממשוואה"
 
-#: graphs/application.py:69
+#: graphs/actions.py:159
+msgid "Exported Figure"
+msgstr ""
+
+#: graphs/actions.py:226
+#, python-brace-format
+msgid "Deleted {name}"
+msgstr "{name} נמחק"
+
+#: graphs/application.py:43
 #, python-brace-format
 msgid "Could not load {font}"
 msgstr "לא ניתן לטעון את {font}"
 
-#: graphs/curve_fitting.py:87
-msgid "Optimization Method"
-msgstr "שיטת מיטוב"
-
-#: graphs/curve_fitting.py:89
-msgctxt "optimization"
-msgid "Levenberg-Marquardt"
-msgstr ""
-
-#: graphs/curve_fitting.py:90
-msgctxt "optimization"
-msgid "Trust Region Reflective"
-msgstr ""
-
-#: graphs/curve_fitting.py:91
-msgctxt "optimization"
-msgid "Dogbox"
-msgstr ""
-
-#: graphs/curve_fitting.py:95
-msgid "Confidence Bounds"
-msgstr ""
-
-#: graphs/curve_fitting.py:97
-msgctxt "confidence"
-msgid "None"
-msgstr ""
-
-#: graphs/curve_fitting.py:98
-msgctxt "confidence"
-msgid "1σ: 68% Confidence"
-msgstr ""
-
-#: graphs/curve_fitting.py:99
-msgctxt "confidence"
-msgid "2σ: 95% Confidence"
-msgstr ""
-
-#: graphs/curve_fitting.py:100
-msgctxt "confidence"
-msgid "3σ: 99.7% Confidence"
-msgstr ""
-
-#: graphs/curve_fitting.py:244
+#: graphs/curve_fitting.py:173
 msgid "Results:"
-msgstr ""
+msgstr "תוצאות:"
 
-#: graphs/curve_fitting.py:248
+#: graphs/curve_fitting.py:177
 msgid ""
 "Please enter valid fitting \n"
 "parameters to start the fit"
 msgstr ""
 
-#: graphs/curve_fitting.py:252
+#: graphs/curve_fitting.py:181
 msgid ""
 "Please enter a valid equation \n"
 "to start the fit"
 msgstr ""
 
-#: graphs/curve_fitting.py:256
+#: graphs/curve_fitting.py:185
 msgid ""
 "Please enter valid fitting bounds \n"
 "to start the fit"
 msgstr ""
 
-#: graphs/curve_fitting.py:267
+#: graphs/curve_fitting.py:198
 #, python-brace-format
 msgid "Sum of R²: {R2}"
+msgstr "סכום של R²‏: {R2}"
+
+#: graphs/curve_fitting.vala:131
+#, c-format
+msgid "Fitting Parameters for %s"
 msgstr ""
 
-#: graphs/data.py:99
+#: graphs/data.py:88
 msgid "Untitled Project"
 msgstr "מיזם ללא שם"
 
-#: graphs/data.py:110
+#: graphs/data.py:99
 msgid "Draft"
 msgstr "טיוטה"
 
-#: graphs/export_figure.py:53
+#: graphs/export_figure.vala:45
 msgctxt "filename"
 msgid "Exported Figure"
 msgstr ""
 
-#: graphs/export_figure.py:75
-msgid "Exported Figure"
-msgstr ""
-
-#: graphs/export_figure.py:76 graphs/project.py:49 graphs/ui.py:145
-msgid "Open Location"
-msgstr "פתיחת מקום"
-
-#: graphs/figure_settings.py:105
-msgid "Top X Axis Minimum"
-msgstr ""
-
-#: graphs/figure_settings.py:106 graphs/figure_settings.py:120
-msgid "X Axis Minimum"
-msgstr ""
-
-#: graphs/figure_settings.py:108
-msgid "Top X Axis Maximum"
-msgstr ""
-
-#: graphs/figure_settings.py:109 graphs/figure_settings.py:123
-msgid "X Axis Maximum"
-msgstr ""
-
-#: graphs/figure_settings.py:111 graphs/ui.py:78
-msgid "Top X Axis Scale"
-msgstr ""
-
-#: graphs/figure_settings.py:112 graphs/figure_settings.py:126 graphs/ui.py:75
-msgid "X Axis Scale"
-msgstr ""
-
-#: graphs/figure_settings.py:114
-msgid "Top X Axis Label"
-msgstr ""
-
-#: graphs/figure_settings.py:115 graphs/figure_settings.py:129
-msgid "X Axis Label"
-msgstr ""
-
-#: graphs/figure_settings.py:119
-msgid "Bottom X Axis Minimum"
-msgstr ""
-
-#: graphs/figure_settings.py:122
-msgid "Bottom X Axis Maximum"
-msgstr ""
-
-#: graphs/figure_settings.py:125 graphs/ui.py:80
-msgid "Bottom X Axis Scale"
-msgstr ""
-
-#: graphs/figure_settings.py:128
-msgid "Bottom X Axis Label"
-msgstr ""
-
-#: graphs/figure_settings.py:133
-msgid "Left Y Axis Minimum"
-msgstr ""
-
-#: graphs/figure_settings.py:134 graphs/figure_settings.py:148
-msgid "Y Axis Minimum"
-msgstr ""
-
-#: graphs/figure_settings.py:136
-msgid "Left Y Axis Maximum"
-msgstr ""
-
-#: graphs/figure_settings.py:137 graphs/figure_settings.py:151
-msgid "Y Axis Maximum"
-msgstr ""
-
-#: graphs/figure_settings.py:139 graphs/ui.py:82
-msgid "Left Y Axis Scale"
-msgstr ""
-
-#: graphs/figure_settings.py:140 graphs/figure_settings.py:154 graphs/ui.py:76
-msgid "Y Axis Scale"
-msgstr ""
-
-#: graphs/figure_settings.py:142
-msgid "Left Y Axis Label"
-msgstr ""
-
-#: graphs/figure_settings.py:143 graphs/figure_settings.py:157
-msgid "Y Axis Label"
-msgstr ""
-
-#: graphs/figure_settings.py:147
-msgid "Right Y Axis Minimum"
-msgstr ""
-
-#: graphs/figure_settings.py:150
-msgid "Right Y Axis Maximum"
-msgstr ""
-
-#: graphs/figure_settings.py:153 graphs/ui.py:84
-msgid "Right Y Axis Scale"
-msgstr ""
-
-#: graphs/figure_settings.py:156
-msgid "Right Y Axis Label"
-msgstr ""
-
-#: graphs/figure_settings.py:254
+#: graphs/figure_settings.py:71
 msgid "Defaults Updated"
 msgstr ""
 
-#: graphs/file_import.py:135
-msgid "Are you sure you want to reset the import settings?"
-msgstr ""
+#: graphs/figure_settings.vala:161
+msgid "X Axis Minimum"
+msgstr "נק׳ מזערית ציר X"
 
-#: graphs/misc.py:92
+#: graphs/figure_settings.vala:162
+msgid "Y Axis Minimum"
+msgstr "נק׳ מזערית ציר Y"
+
+#: graphs/figure_settings.vala:164
+msgid "X Axis Maximum"
+msgstr "נק׳ מרבית ציר X"
+
+#: graphs/figure_settings.vala:165
+msgid "Y Axis Maximum"
+msgstr "נק׳ מרבית ציר Y"
+
+#: graphs/figure_settings.vala:175 graphs/window.vala:232
+msgid "X Axis Scale"
+msgstr "קנה מידה ציר X"
+
+#: graphs/figure_settings.vala:176 graphs/figure_settings.vala:180
+msgid "X Axis Label"
+msgstr "תווית ציר X"
+
+#: graphs/figure_settings.vala:179 graphs/window.vala:237
+msgid "Y Axis Scale"
+msgstr "קנה מידה ציר Y"
+
+#: graphs/file_import.vala:40
+msgid "Are you sure you want to reset the import settings?"
+msgstr "לאפס את הגדרות הייבוא?"
+
+#: graphs/item_box.vala:72
+#, c-format
+msgid "Deleted %s"
+msgstr "‫%s נמחק"
+
+#: graphs/misc.py:107
 msgctxt "file-filter"
 msgid "Graphs Project File"
+msgstr "קובץ מיזם של Graphs"
+
+#: graphs/operations.py:129
+#, python-brace-format
+msgid "{name}: Unable to do transformation, make sure the syntax is correct"
 msgstr ""
 
-#: graphs/operations.py:138
+#: graphs/operations.py:133
+msgid "Unable to do transformation"
+msgstr "לא ניתן לבצע את ההתמרה"
+
+#: graphs/operations.py:197
 msgid "Data that was outside of the highlighted area has been discarded"
 msgstr ""
 
-#: graphs/operations.py:175
+#: graphs/operations.py:234
 msgid "No data found within the highlighted area"
 msgstr ""
 
-#: graphs/operations.py:420
+#: graphs/operations.py:479
 msgid "Combined Data"
 msgstr "נתונים משולבים"
 
@@ -1636,143 +1560,197 @@ msgstr ""
 
 #: graphs/parse_file.py:172
 msgid "Unable to import from file"
-msgstr ""
+msgstr "לא ניתן לייבא מקובץ"
 
-#: graphs/project.py:48
+#: graphs/project.py:39
 msgid "Saved Project"
-msgstr ""
+msgstr "מיזם שמור"
 
-#: graphs/project.py:71
+#: graphs/project.py:61
 msgid "Project"
-msgstr ""
+msgstr "מיזם"
 
-#: graphs/style_io.py:58
+#: graphs/style_io.py:65
 #, python-brace-format
 msgid "Missing colon in file {file}, line {line}"
 msgstr ""
 
-#: graphs/style_io.py:66
+#: graphs/style_io.py:73
 #, python-brace-format
 msgid "Non-style related parameter {param} in file {file}"
 msgstr ""
 
-#: graphs/style_io.py:69
+#: graphs/style_io.py:76
 #, python-brace-format
 msgid "Ignoring parameter {param} in file {file}"
 msgstr ""
 
-#: graphs/style_io.py:72
+#: graphs/style_io.py:79
 #, python-brace-format
-msgid "Duplicate key in file {param}, on line {line}"
+msgid "Duplicate key in file {file}, on line {line}"
 msgstr ""
 
-#: graphs/style_io.py:89
+#: graphs/style_io.py:96
 #, python-brace-format
 msgid "Bad value in file {file} on line {line}"
-msgstr ""
+msgstr "ערך שגוי בקובץ {file} בשורה {line}"
 
-#: graphs/style_io.py:95
+#: graphs/style_io.py:102
 #, python-brace-format
 msgid "Could not parse {filename}"
-msgstr ""
+msgstr "לא ניתן לפענח את {filename}"
 
-#: graphs/styles.py:68
+#: graphs/style_io.py:159
 msgid "X Label"
-msgstr ""
+msgstr "תווית X"
 
-#: graphs/styles.py:69
+#: graphs/style_io.py:160
 msgid "Y Label"
-msgstr ""
+msgstr "תווית Y"
 
-#: graphs/styles.py:142
-msgid "System"
-msgstr ""
-
-#: graphs/styles.py:435
+#: graphs/styles.py:305
 #, python-brace-format
 msgid "Could not parse {stylename}, loading system preferred style"
 msgstr ""
 
-#: graphs/styles.py:443
+#: graphs/styles.py:313
 #, python-brace-format
 msgid "Plot style {stylename} does not exist loading system preferred"
 msgstr ""
 
-#: graphs/styles.py:879
+#: graphs/styles.py:726
 #, python-brace-format
 msgid "Are you sure you want to delete {stylename}?"
-msgstr ""
+msgstr "למחוק את {stylename}?"
 
-#: graphs/styles.py:896
+#: graphs/styles.py:743
 #, python-brace-format
 msgid "Color {number}"
-msgstr ""
+msgstr "צבע {number}"
 
-#: graphs/transform_data.py:52
-#, python-brace-format
-msgid "{name}: Unable to do transformation, make sure the syntax is correct"
-msgstr ""
-
-#: graphs/transform_data.py:56
-msgid "Unable to do transformation"
-msgstr ""
+#: graphs/styles.vala:71
+msgid "System"
+msgstr "מערכת"
 
 #: graphs/ui.py:46
-msgid "Optimize Limits"
-msgstr ""
-
-#: graphs/ui.py:63
-msgctxt "scale"
-msgid "Inverse Root"
-msgstr ""
-
-#: graphs/ui.py:105
 msgctxt "file-filter"
 msgid "Supported files"
-msgstr ""
+msgstr "קבצים נתמכים"
 
-#: graphs/ui.py:108
+#: graphs/ui.py:49
 msgctxt "file-filter"
 msgid "ASCII files"
-msgstr ""
+msgstr "קובצי ASCII"
 
-#: graphs/ui.py:109
+#: graphs/ui.py:50
 msgctxt "file-filter"
 msgid "PANalytical XRDML"
-msgstr ""
+msgstr "PANalytical XRDML"
 
-#: graphs/ui.py:110
+#: graphs/ui.py:51
 msgctxt "file-filter"
 msgid "Leybold xry"
-msgstr ""
+msgstr "Leybold xry"
 
-#: graphs/ui.py:122
+#: graphs/ui.py:63
 msgid "No data to export"
-msgstr ""
+msgstr "אין נתונים לייצוא"
 
-#: graphs/ui.py:144
+#: graphs/ui.py:80
 msgid "Exported Data"
-msgstr ""
+msgstr "נתונים מיוצאים"
 
-#: graphs/ui.py:157
+#: graphs/ui.py:92
 msgctxt "file-filter"
 msgid "Text Files"
-msgstr ""
+msgstr "קובצי טקסט"
 
-#: graphs/ui.py:188 graphs/ui.py:267 graphs/ui.py:328
-#, python-brace-format
-msgid "Unsupported Widget {widget}"
-msgstr ""
-
-#: graphs/ui.py:191 graphs/ui.py:270 graphs/ui.py:331
-#, python-brace-format
-msgid "No way to apply “{key}”"
-msgstr ""
-
-#: graphs/utilities.py:153
-msgid "No valid number specified"
-msgstr ""
-
-#: graphs/window.vala:125
+#: graphs/window.vala:128
 msgid "Graphs (Development)"
-msgstr ""
+msgstr "‫Graphs (פיתוח)"
+
+#: graphs/window.vala:171
+msgid "Open Location"
+msgstr "פתיחת מקום"
+
+#: graphs/window.vala:195
+msgid "Optimize Limits"
+msgstr "מיטוב גבולות"
+
+#: graphs/window.vala:204
+msgctxt "scale"
+msgid "Inverse Root"
+msgstr "שורש הופכי"
+
+#~ msgid "Y = "
+#~ msgstr "Y = "
+
+#~ msgctxt "markerstyle"
+#~ msgid "Nothing"
+#~ msgstr "ללא"
+
+#~ msgid "Delimiter"
+#~ msgstr "מפריד"
+
+#~ msgid "Character sequence used to split values"
+#~ msgstr "רצף תווים שמשמש לפיצול ערכים"
+
+#~ msgctxt "delimiter"
+#~ msgid "Whitespace"
+#~ msgstr "רווח"
+
+#~ msgctxt "delimiter"
+#~ msgid "Tab"
+#~ msgstr "טאב"
+
+#~ msgctxt "delimiter"
+#~ msgid "Colon (:)"
+#~ msgstr "נקודתיים (:)"
+
+#~ msgctxt "delimiter"
+#~ msgid "Semicolon (;)"
+#~ msgstr "נקודה פסיק (;)"
+
+#~ msgctxt "delimiter"
+#~ msgid "Decimal comma (,)"
+#~ msgstr "פסיק עשרוני (,)"
+
+#~ msgctxt "delimiter"
+#~ msgid "Decimal point (.)"
+#~ msgstr "נקודה עשרונית (.)"
+
+#~ msgctxt "delimiter"
+#~ msgid "Custom"
+#~ msgstr "התאמה אישית"
+
+#~ msgid "Custom Delimiter"
+#~ msgstr "מפריד מותאם אישית"
+
+#~ msgid "Decimal Separator"
+#~ msgstr "מפריד עשרוני"
+
+#~ msgctxt "separator"
+#~ msgid "Decimal comma (,)"
+#~ msgstr "פסיק עשרוני (,)"
+
+#~ msgctxt "separator"
+#~ msgid "Decimal point (.)"
+#~ msgstr "נקודה עשרונית (.)"
+
+#~ msgid "Column X"
+#~ msgstr "עמודה X"
+
+#~ msgid "X-data column index"
+#~ msgstr "מפתח עמודת הנתונים X"
+
+#~ msgid "Column Y"
+#~ msgstr "עמודה Y"
+
+#~ msgid "Y-data column index"
+#~ msgstr "מפתח עמודת הנתונים Y"
+
+#~ msgid "Skip Rows"
+#~ msgstr "דילוג על שורות"
+
+#~ msgid "Edit Item"
+#~ msgstr "עריכת פריט"
