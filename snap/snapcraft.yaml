@@ -5,7 +5,9 @@ grade: stable
 confinement: strict
 compression: lzo
 license: GPL-3.0
-
+platforms:
+  amd64:
+  arm64:
 
 slots:
   graphs:
