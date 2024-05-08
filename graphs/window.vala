@@ -149,7 +149,7 @@ namespace Graphs {
                 this.validate_entry (application, entry, button);
             }
 
-            data.notify["items"].connect (() => {
+            data.items_changed.connect (() => {
                 Widget child = null;
                 while ((child = this.item_list.get_last_child ()) != null) {
                     this.item_list.remove (child);

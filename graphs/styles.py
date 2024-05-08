@@ -161,12 +161,11 @@ class StyleManager(Graphs.StyleManager):
                     count += 1
 
         window = self.props.application.get_window()
-        canvas = graphs.canvas.Canvas(self._selected_style_params)
+        canvas = graphs.canvas.Canvas(self._selected_style_params, data)
         figure_settings = data.get_figure_settings()
         for prop in dir(figure_settings.props):
             if prop not in ("use_custom_style", "custom_style"):
                 figure_settings.bind_property(prop, canvas, prop, 1 | 2)
-        data.bind_property("items", canvas, "items", 2)
         from graphs.figure_settings import FigureSettingsDialog
 
         def on_edit_request(_canvas, label_id):

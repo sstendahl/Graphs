@@ -3,7 +3,7 @@
 import re
 from gettext import gettext as _
 
-from gi.repository import Adw, Graphs, Gtk
+from gi.repository import Adw, Gio, Graphs, Gtk
 
 from graphs import utilities
 from graphs.canvas import Canvas
@@ -57,6 +57,11 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
             alpha=0.15,
         )
 
+        self._items = Gio.ListStore.new(Graphs.Item)
+        self._items.append(self.fitted_curve)
+        self._items.append(self.data_curve)
+        self._items.append(self.fill)
+
         self.reload_canvas()
         self.setup()
         self.present(application.get_window())
@@ -67,8 +72,7 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
         figure_settings = application.get_data().get_figure_settings()
         style = \
             application.get_figure_style_manager().get_system_style_params()
-        canvas = Canvas(style, interactive=False)
-        canvas.props.items = [self.fitted_curve, self.data_curve, self.fill]
+        canvas = Canvas(style, self._items, interactive=False)
         axis = canvas.axes[0]
         axis.yscale = "linear"
         axis.xscale = "linear"

@@ -6,7 +6,7 @@ import os
 from gettext import gettext as _
 from urllib.parse import unquote, urlparse
 
-from gi.repository import GObject, Gio, Graphs
+from gi.repository import Gio, Graphs
 
 from graphs import item, misc, project
 
@@ -87,16 +87,6 @@ class Data(Graphs.Data):
         self.props.project_name = title
         self.props.project_path = path
 
-    @GObject.Property(type=object, flags=3 | 1073741824)  # explicit notify
-    def items(self) -> misc.ItemList:
-        """All managed items."""
-        return self.get_items()
-
-    @items.setter
-    def items(self, items: misc.ItemList) -> None:
-        """Set items property."""
-        self.set_items(items)
-
     def __len__(self) -> int:
         """Magic alias for `get_n_items()`."""
         return self.get_n_items()
@@ -158,6 +148,7 @@ class Data(Graphs.Data):
             if color in color_cycle:
                 _append_used_color(color)
         used_names = set(self.get_names())
+        prev_size = self.get_n_items()
         for new_item in items:
             item_name = new_item.get_name()
             if item_name in used_names:
@@ -207,7 +198,7 @@ class Data(Graphs.Data):
         self._optimize_limits()
         self._add_history_state()
         self._update_used_positions()
-        self.notify("items")
+        self.emit("items-changed", prev_size, 0, len(items))
         self.notify("empty")
         self.notify("items_selected")
 
@@ -236,7 +227,8 @@ class Data(Graphs.Data):
                 )
 
         self._update_used_positions()
-        self.notify("items")
+        # TODO: fix
+        self.emit("items-changed", 0, 0, 0)
         self.notify("empty")
         self._add_history_state()
         self.notify("items_selected")
@@ -332,7 +324,8 @@ class Data(Graphs.Data):
                 )
         if items_changed:
             self._update_used_positions()
-            self.notify("items")
+            # TODO: fix
+            self.emit("items-changed", 0, 0, 0)
             self.notify("empty")
         self.notify("items_selected")
         self.get_figure_settings().set_limits(
@@ -370,7 +363,8 @@ class Data(Graphs.Data):
                 )
         if items_changed:
             self._update_used_positions()
-            self.notify("items")
+            # TODO: fix
+            self.emit("items-changed", 0, 0, 0)
             self.notify("empty")
         self.notify("items_selected")
         self.get_figure_settings().set_limits(state[1])

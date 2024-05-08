@@ -46,11 +46,12 @@ namespace Graphs {
 
         public void reset () {
             this.python_method_request.emit ("_reset");
+            uint removed = this._items.size;
             this._items.clear ();
             this.file = null;
             this.unsaved = false;
             this.python_method_request.emit ("_initialize");
-            this.notify_property ("items");
+            this.items_changed.emit (0, removed, 0);
             this.notify_property ("empty");
         }
 
@@ -85,16 +86,17 @@ namespace Graphs {
         private void _on_item_position_change () {
             this.optimize_limits ();
             this._update_used_positions ();
-            this.notify_property ("items");
+            this.items_changed.emit (0, 0, 0);
         }
 
         public void set_items (Item[] items) {
+            uint removed = this._items.size;
             this._items.clear ();
             foreach (Item item in items) {
                 this._add_item (item);
             }
             this._update_used_positions ();
-            this.notify_property ("items");
+            this.items_changed.emit (0, removed, this._items.size);
             this.notify_property ("empty");
         }
 
