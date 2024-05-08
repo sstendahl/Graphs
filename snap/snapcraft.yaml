@@ -68,12 +68,13 @@ parts:
     meson-parameters:
       - --prefix=/snap/graphs/current/usr
       - --buildtype=release
-    build-environment:
-      - PYTHONPATH: $CRAFT_STAGE/usr/lib/python3/dist-packages:$PYTHONPATH
-      - GI_TYPELIB_PATH: /snap/gnome-46-2404-sdk/current/usr/lib/$CRAFT_ARCH_TRIPLET/girepository-1.0:/snap/gnome-46-2404-sdk/current/usr/lib/girepository-1.0
     build-snaps:
       - blueprint-compiler/latest/stable
       - gnome-46-2404-sdk/latest/edge
+      - gnome-46-2404/latest/edge      
+    build-environment:
+      - PYTHONPATH: $CRAFT_STAGE/usr/lib/python3/dist-packages:$PYTHONPATH
+      - GI_TYPELIB_PATH: /snap/gnome-46-2404-sdk/current/usr/lib/$CRAFT_ARCH_TRIPLET/girepository-1.0:/snap/gnome-46-2404-sdk/current/usr/lib/girepository-1.0
     override-build: |
       craftctl default
       sed -e '1c#!/usr/bin/env python3' -i ${CRAFT_PART_INSTALL}/snap/graphs/current/usr/bin/graphs
@@ -95,4 +96,3 @@ apps:
     environment:
       PYTHONPATH: $SNAP/usr/lib/python3/dist-packages:$PYTHONPATH
       GI_TYPELIB_PATH: $SNAP/usr/lib/$CRAFT_ARCH_TRIPLET/girepository-1.0:$GI_TYPELIB_PATH
-    extensions: [gnome]
