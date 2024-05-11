@@ -6,6 +6,7 @@ namespace Graphs {
      * Base item class
      */
     public class Item : Object {
+        public string typename { get; set; default = ""; }
         public string name { get; set; default = ""; }
         public string color { get; set; default = ""; }
         public float alpha { get; set; default = 1; }

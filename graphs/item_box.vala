@@ -35,6 +35,7 @@ namespace Graphs {
                 this.provider, STYLE_PROVIDER_PRIORITY_APPLICATION
             );
 
+            this.set_subtitle (this.item.typename);
             this.item.bind_property ("name", this, "title", 2);
             this.item.bind_property ("selected", this.check_button, "active", 2);
             this.item.notify["color"].connect (on_color_change);
