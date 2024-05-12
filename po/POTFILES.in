@@ -33,6 +33,7 @@ graphs/curve_fitting.vala
 graphs/data.py
 graphs/data.vala
 graphs/edit_item.py
+graphs/export_data.py
 graphs/export_figure.vala
 graphs/figure_settings.py
 graphs/figure_settings.vala
@@ -42,7 +43,6 @@ graphs/file_io.py
 graphs/inline-stack-switcher.vala
 graphs/item.py
 graphs/item.vala
-graphs/item_box.py
 graphs/item_box.vala
 graphs/migrate.py
 graphs/misc.py
@@ -56,7 +56,6 @@ graphs/style_io.py
 graphs/styles.py
 graphs/styles.vala
 graphs/transform.vala
-graphs/ui.py
 graphs/utilities.py
 graphs/utilities.vala
 graphs/window.vala
