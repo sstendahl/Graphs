@@ -1,5 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Module for data Items."""
+from gettext import gettext as _
+
 from gi.repository import GObject, Graphs
 
 from graphs import misc
@@ -20,7 +22,9 @@ def new_from_dict(dictionary: dict):
     return cls(**dictionary)
 
 
-class _ItemMixin():
+class _PythonItem(Graphs.Item):
+
+    __gtype_name__ = "GraphsPythonItem"
 
     def reset(self, old_style, new_style):
         """Reset all properties."""
@@ -41,12 +45,15 @@ class _ItemMixin():
 
     def to_dict(self):
         """Convert item to dict."""
-        dictionary = {key: self.get_property(key) for key in dir(self.props)}
+        dictionary = {
+            key: self.get_property(key)
+            for key in dir(self.props) if key != "typename"
+        }
         dictionary["type"] = self.__gtype_name__
         return dictionary
 
 
-class DataItem(Graphs.Item, _ItemMixin):
+class DataItem(_PythonItem):
     """DataItem."""
 
     __gtype_name__ = "GraphsDataItem"
@@ -76,13 +83,13 @@ class DataItem(Graphs.Item, _ItemMixin):
         )
 
     def __init__(self, **kwargs):
-        super().__init__(**kwargs)
+        super().__init__(typename=_("Dataset"), **kwargs)
         for prop in ("xdata", "ydata"):
             if self.get_property(prop) is None:
                 self.set_property(prop, [])
 
 
-class TextItem(Graphs.Item, _ItemMixin):
+class TextItem(_PythonItem):
     """TextItem."""
 
     __gtype_name__ = "GraphsTextItem"
@@ -109,8 +116,11 @@ class TextItem(Graphs.Item, _ItemMixin):
             **kwargs,
         )
 
+    def __init__(self, **kwargs):
+        super().__init__(typename=_("Label"), **kwargs)
 
-class FillItem(Graphs.Item, _ItemMixin):
+
+class FillItem(_PythonItem):
     """FillItem."""
 
     __gtype_name__ = "GraphsFillItem"
@@ -123,7 +133,7 @@ class FillItem(Graphs.Item, _ItemMixin):
         return cls(data=data, **kwargs)
 
     def __init__(self, **kwargs):
-        super().__init__(**kwargs)
+        super().__init__(typename=_("Fill"), **kwargs)
         if self.props.data is None:
             self.props.data = (None, None, None)
 
