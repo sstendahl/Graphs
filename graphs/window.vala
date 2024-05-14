@@ -153,7 +153,9 @@ namespace Graphs {
                 this.update_view_menu ();
                 data.add_view_history_state ();
             });
-            this.item_list.bind_model (data, create_item_box);
+            this.item_list.bind_model (data, (object) => {
+                return new ItemBox ((Application) this.application, (Item) object);
+            });
 
             this.close_request.connect (() => {
                 return application.close ();
@@ -164,10 +166,6 @@ namespace Graphs {
                 this.add_css_class ("devel");
                 this.set_title (_("Graphs (Development)"));
             }
-        }
-
-        private Widget create_item_box (Object object) {
-            return new ItemBox ((Application) this.application, (Item) object);
         }
 
         private void validate_entry (Application application, Entry entry, Button button) {
