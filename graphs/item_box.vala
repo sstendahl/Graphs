@@ -19,9 +19,9 @@ namespace Graphs {
         public Application application { get; construct set; }
         public Item item { get; construct set; }
         public int index { get; construct set; }
-        public DragSource drag_source { get; construct set; }
-        public DropTarget drop_target { get; construct set; }
 
+        private DragSource drag_source;
+        private DropTarget drop_target;
         private CssProvider provider;
 
         public ItemBox (Application application, Item item, int index) {
@@ -48,17 +48,17 @@ namespace Graphs {
             this.drag_source = new DragSource ();
             this.drag_source.set_actions (DragAction.COPY);
             this.drag_source.prepare.connect ((s, x, y) => {
-                Widget widget = this.get_parent ();
-                widget.add_css_class ("card");
-                var paintable = new WidgetPaintable (widget);
+                var paintable = new WidgetPaintable (this);
                 this.drag_source.set_icon (paintable, (int) x, (int) y);
                 return new ContentProvider.for_value (this.index);
             });
+            this.add_controller (this.drag_source);
             this.drop_target = new DropTarget (typeof (int), DragAction.COPY);
             this.drop_target.drop.connect ((t, val, x, y) => {
                 this.change_position (val.get_int ());
                 return true;
             });
+            this.add_controller (this.drop_target);
 
             var action_group = new SimpleActionGroup ();
             var delete_action = new SimpleAction ("delete", null);

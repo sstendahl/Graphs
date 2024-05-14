@@ -150,17 +150,10 @@ namespace Graphs {
 
             data.items_changed.connect (() => {
                 this.item_list.set_visible (!data.is_empty ());
-                Widget child = null;
-                while ((child = this.item_list.get_last_child ()) != null) {
-                    this.item_list.remove (child);
-                }
+                this.item_list.remove_all ();
                 int index = 0;
                 foreach (Item item in data) {
-                    var item_box = new ItemBox (application, item, index);
-                    this.item_list.append (item_box);
-                    Widget row = this.item_list.get_last_child ();
-                    row.add_controller (item_box.drag_source);
-                    row.add_controller (item_box.drop_target);
+                    this.item_list.append (new ItemBox (application, item, index));
                     index++;
                 }
                 this.update_view_menu ();
