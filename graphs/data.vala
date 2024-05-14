@@ -70,7 +70,7 @@ namespace Graphs {
             item.notify["yposition"].connect (this._on_item_position_change);
             this._items.add (item);
             if (notify) {
-                this.items_changed.emit (this._items.size, 0, 1);
+                this.items_changed.emit (this._items.size - 1, 0, 1);
             }
         }
 
@@ -166,8 +166,8 @@ namespace Graphs {
             return Config.VERSION;
         }
 
-        public void change_position (uint index1, uint index2)
-                requires (index1 != index2) {
+        public void change_position (uint index1, uint index2) {
+            if (index1 == index2) return;
             Item item = this._items[(int) index2];
             this._items.remove_at ((int) index2);
             this._items.insert ((int) index1, item);
