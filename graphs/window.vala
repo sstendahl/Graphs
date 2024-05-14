@@ -109,7 +109,6 @@ namespace Graphs {
             data.bind_property (
                 "items_selected", this.shift_button, "sensitive", 2
             );
-            data.bind_property ("empty", this.item_list, "visible", 4);
             data.bind_property ("can_undo", this.undo_button, "sensitive", 2);
             data.bind_property ("can_redo", this.redo_button, "sensitive", 2);
             data.bind_property ("can_view_back", this.view_back_button, "sensitive", 2);
@@ -150,6 +149,7 @@ namespace Graphs {
             }
 
             data.items_changed.connect (() => {
+                this.item_list.set_visible (!data.is_empty ());
                 Widget child = null;
                 while ((child = this.item_list.get_last_child ()) != null) {
                     this.item_list.remove (child);
