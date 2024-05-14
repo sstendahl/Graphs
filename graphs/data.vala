@@ -172,7 +172,7 @@ namespace Graphs {
             this._items.remove_at ((int) index2);
             this._items.insert ((int) index1, item);
             uint position = uint.min (index1, index2);
-            uint changed = uint.max (index1, index2) - position;
+            uint changed = uint.max (index1, index2) - position + 1;
             this.items_changed.emit (position, changed, changed);
             this.position_changed.emit (index1, index2);
         }
