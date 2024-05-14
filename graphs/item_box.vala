@@ -18,17 +18,17 @@ namespace Graphs {
 
         public Application application { get; construct set; }
         public Item item { get; construct set; }
-        public int index { get; construct set; }
+        public uint index { get; construct set; }
 
         private DragSource drag_source;
         private DropTarget drop_target;
         private CssProvider provider;
 
-        public ItemBox (Application application, Item item, int index) {
+        public ItemBox (Application application, Item item) {
             Object (
                 application: application,
                 item: item,
-                index: index
+                index: application.data.index (item)
             );
             this.provider = new CssProvider ();
             this.color_button.get_style_context ().add_provider (
@@ -53,9 +53,9 @@ namespace Graphs {
                 return new ContentProvider.for_value (this.index);
             });
             this.add_controller (this.drag_source);
-            this.drop_target = new DropTarget (typeof (int), DragAction.COPY);
+            this.drop_target = new DropTarget (typeof (uint), DragAction.COPY);
             this.drop_target.drop.connect ((t, val, x, y) => {
-                this.change_position (val.get_int ());
+                this.change_position (val.get_uint ());
                 return true;
             });
             this.add_controller (this.drop_target);
@@ -125,7 +125,7 @@ namespace Graphs {
             );
         }
 
-        private void change_position (int source_index) {
+        private void change_position (uint source_index) {
             Data data = this.application.data;
             data.change_position (this.index, source_index);
             data.add_history_state ();
