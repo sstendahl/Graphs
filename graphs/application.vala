@@ -1,5 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 using Adw;
+using Gdk;
+using Gtk;
 using Gee;
 
 namespace Graphs {
@@ -20,11 +22,12 @@ namespace Graphs {
      */
     public class Application : Adw.Application {
         public Window window { get; set; }
-        public Settings settings { get; construct set; }
+        public GLib.Settings settings { get; construct set; }
         public Data data { get; construct set; }
         public StyleManager figure_style_manager { get; set; }
         public bool debug { get; construct set; default = false; }
         public PythonHelper python_helper { get; construct set; }
+        public CssProvider css_provider { get; construct set; }
 
         public signal void action_invoked (string name);
         public signal void operation_invoked (string name);
@@ -35,6 +38,13 @@ namespace Graphs {
             Intl.textdomain (Config.GETTEXT_PACKAGE);
 
             this.version = Config.VERSION;
+
+            this.css_provider = new CssProvider ();
+            StyleContext.add_provider_for_display (
+                Display.get_default (),
+                css_provider,
+                STYLE_PROVIDER_PRIORITY_APPLICATION
+            );
         }
 
         /**
@@ -42,8 +52,8 @@ namespace Graphs {
          *
          * @param path a slash-separated path
          */
-        public Settings get_settings_child (string path) {
-            Settings settings = this.settings;
+        public GLib.Settings get_settings_child (string path) {
+            GLib.Settings settings = this.settings;
             foreach (string child_name in path.split ("/")) {
                 settings = settings.get_child (child_name);
             }
@@ -109,7 +119,7 @@ namespace Graphs {
                 this.add_action (action);
             }
 
-            Settings settings = this.get_settings_child ("figure");
+            GLib.Settings settings = this.get_settings_child ("figure");
             FigureSettings figure_settings = this.data.figure_settings;
             foreach (string dir in DIRECTION_NAMES) {
                 string val = @"$dir-scale";
@@ -144,7 +154,7 @@ namespace Graphs {
             }
 
             string[] settings_actions = {"center", "smoothen"};
-            Settings actions_settings = this.settings.get_child ("actions");
+            GLib.Settings actions_settings = this.settings.get_child ("actions");
             foreach (string settings_action in settings_actions) {
                 this.add_action (actions_settings.create_action (settings_action));
             }
