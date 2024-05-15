@@ -293,7 +293,7 @@ class Data(Graphs.Data):
                 self._add_item(
                     item.new_from_dict(copy.deepcopy(change[1])),
                     change[0],
-                    True
+                    True,
                 )
             elif change_type == 3:
                 self.change_position(change[0], change[1])
@@ -323,7 +323,7 @@ class Data(Graphs.Data):
                 self[change[0]].set_property(change[1], change[3])
             elif change_type == 1:
                 self._add_item(
-                    item.new_from_dict(copy.deepcopy(change)), -1, True
+                    item.new_from_dict(copy.deepcopy(change)), -1, True,
                 )
             elif change_type == 2:
                 self._remove_item(self.get_for_uuid(change[1]["uuid"]))
