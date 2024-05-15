@@ -180,9 +180,12 @@ class StyleManager(Graphs.StyleManager):
         # Set headerbar color and contrast
         bg_color = self._selected_style_params["figure.facecolor"]
         color = self._selected_style_params["text.color"]
-        css_provider = window.get_headerbar_provider()
+        css_provider = self.props.application.get_css_provider()
         css_provider.load_from_string(
-            f"headerbar {{ background-color: {bg_color}; color: {color}; }}",
+            "headerbar#canvas-headerbar { "
+            f"background-color: {bg_color}; "
+            f"color: {color}; "
+            "}",
         )
 
         window.set_canvas(canvas)

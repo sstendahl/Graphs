@@ -101,8 +101,6 @@ namespace Graphs {
             }
         }
 
-        public CssProvider headerbar_provider { get; private set; }
-
         public Window (Application application) {
             Object (application: application);
             Data data = application.data;
@@ -122,12 +120,6 @@ namespace Graphs {
             stack_switcher.add_css_class ("compact");
             stack_switcher.set_hexpand (true);
             this.stack_switcher_box.prepend (stack_switcher);
-
-            this.headerbar_provider = new CssProvider ();
-            StyleContext context = this.content_headerbar.get_style_context ();
-            context.add_provider (
-                headerbar_provider, STYLE_PROVIDER_PRIORITY_APPLICATION
-            );
 
             string[] action_names = {
                 "multiply_x",
