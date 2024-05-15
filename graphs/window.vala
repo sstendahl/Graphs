@@ -216,10 +216,20 @@ namespace Graphs {
                 Tools.open_file_location (file);
             });
             this.application.add_action (action);
-            var toast = new Adw.Toast (title);
-            toast.set_button_label (_("Open Location"));
-            toast.set_action_name ("app.open-file-location");
-            this.add_toast (toast);
+            this.add_toast (new Adw.Toast (title) {
+                button_label = _("Open Location"),
+                action_name = "app.open-file-location"
+            });
+        }
+
+        /**
+         * Add Toast with undo action.
+         */
+        public void add_undo_toast (string title) {
+            this.add_toast (new Adw.Toast (title) {
+                button_label = _("Undo"),
+                action_name = "app.undo"
+            });
         }
 
         [GtkCallback]

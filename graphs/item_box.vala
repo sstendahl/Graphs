@@ -63,10 +63,7 @@ namespace Graphs {
                 string name = this.item.name;
                 Item[] list = {this.item};
                 this.application.data.delete_items (list);
-                var toast = new Adw.Toast (_("Deleted %s").printf (name));
-                toast.set_button_label (_("Undo"));
-                toast.set_action_name ("app.undo");
-                this.application.window.add_toast (toast);
+                this.application.window.add_undo_toast (_("Deleted %s").printf (name));
             });
             action_group.add_action (delete_action);
             var curve_fitting_action = new SimpleAction ("curve_fitting", null);
