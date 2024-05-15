@@ -20,8 +20,6 @@ namespace Graphs {
         public Item item { get; construct set; }
         public uint index { get; construct set; }
 
-        private DragSource drag_source;
-        private DropTarget drop_target;
         private CssProvider provider;
 
         public ItemBox (Application application, Item item) {
@@ -39,26 +37,25 @@ namespace Graphs {
             this.item.bind_property ("name", this, "title", 2);
             this.item.bind_property ("selected", this.check_button, "active", 2);
             this.item.notify["color"].connect (on_color_change);
-            on_color_change ();
+            this.on_color_change ();
 
             this.activated.connect (() => {
                 this.application.python_helper.create_edit_item_dialog (this.item);
             });
 
-            this.drag_source = new DragSource ();
-            this.drag_source.set_actions (DragAction.COPY);
-            this.drag_source.prepare.connect ((s, x, y) => {
+            var drag_source = new DragSource () { actions = DragAction.MOVE };
+            drag_source.prepare.connect ((s, x, y) => {
                 var paintable = new WidgetPaintable (this);
-                this.drag_source.set_icon (paintable, (int) x, (int) y);
+                drag_source.set_icon (paintable, (int) x, (int) y);
                 return new ContentProvider.for_value (this.index);
             });
-            this.add_controller (this.drag_source);
-            this.drop_target = new DropTarget (typeof (uint), DragAction.COPY);
-            this.drop_target.drop.connect ((t, val, x, y) => {
+            this.add_controller (drag_source);
+            var drop_target = new DropTarget (typeof (uint), DragAction.MOVE);
+            drop_target.drop.connect ((t, val, x, y) => {
                 this.change_position (val.get_uint ());
                 return true;
             });
-            this.add_controller (this.drop_target);
+            this.add_controller (drop_target);
 
             var action_group = new SimpleActionGroup ();
             var delete_action = new SimpleAction ("delete", null);
