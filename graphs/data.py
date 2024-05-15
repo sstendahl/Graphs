@@ -182,7 +182,7 @@ class Data(Graphs.Data):
                         new_item.set_color(color)
                         break
 
-            self._add_item(new_item, False)
+            self._add_item(new_item, -1, False)
             change = (1, copy.deepcopy(new_item.to_dict()))
             self._current_batch.append(change)
         self.emit("items_changed", prev_size, 0, len(items))
@@ -290,9 +290,11 @@ class Data(Graphs.Data):
             elif change_type == 1:
                 self._remove_item(self.get_for_uuid(change["uuid"]))
             elif change_type == 2:
-                item_ = item.new_from_dict(copy.deepcopy(change[1]))
-                self._add_item(item_, True)
-                self.change_position(change[0], len(self) - 1)
+                self._add_item(
+                    item.new_from_dict(copy.deepcopy(change[1])),
+                    change[0],
+                    True
+                )
             elif change_type == 3:
                 self.change_position(change[0], change[1])
             elif change_type == 4:
@@ -320,7 +322,9 @@ class Data(Graphs.Data):
             if change_type == 0:
                 self[change[0]].set_property(change[1], change[3])
             elif change_type == 1:
-                self._add_item(item.new_from_dict(copy.deepcopy(change)), True)
+                self._add_item(
+                    item.new_from_dict(copy.deepcopy(change)), -1, True
+                )
             elif change_type == 2:
                 self._remove_item(self.get_for_uuid(change[1]["uuid"]))
             elif change_type == 3:

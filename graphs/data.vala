@@ -63,15 +63,14 @@ namespace Graphs {
             return this._items.to_array ();
         }
 
-        protected void _add_item (Item item, bool notify) {
+        protected void _add_item (Item item, int index = -1, bool notify = false) {
+            if (index < 0) index = this._items.size;
             item.notify["selected"].connect (this._on_item_selected);
             item.notify.connect (this._on_item_change);
             item.notify["xposition"].connect (this._on_item_position_change);
             item.notify["yposition"].connect (this._on_item_position_change);
-            this._items.add (item);
-            if (notify) {
-                this.items_changed.emit (this._items.size - 1, 0, 1);
-            }
+            this._items.insert (index, item);
+            if (notify) this.items_changed.emit (index, 0, 1);
         }
 
         protected void _remove_item (Item item) {
@@ -102,7 +101,7 @@ namespace Graphs {
             uint removed = this._items.size;
             this._items.clear ();
             foreach (Item item in items) {
-                this._add_item (item, false);
+                this._add_item (item);
             }
             this._update_used_positions ();
             this.items_changed.emit (0, removed, this._items.size);
