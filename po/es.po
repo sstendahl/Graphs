@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: graphs\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2024-04-29 15:23+0000\n"
-"PO-Revision-Date: 2024-04-29 19:28+0200\n"
+"POT-Creation-Date: 2024-05-22 15:51+0000\n"
+"PO-Revision-Date: 2024-05-23 14:09+0200\n"
 "Last-Translator: Julián Villodre <jvillodrede@gmail.com>\n"
 "Language-Team: Spanish - Spain <gnome-es-list@gnome.org>\n"
 "Language: es\n"
@@ -142,15 +142,15 @@ msgstr "Nombre (opcional)"
 msgid "X Start"
 msgstr "Inicio X"
 
-#: data/ui/add-equation.blp:77
+#: data/ui/add-equation.blp:78
 msgid "X Stop"
 msgstr "Final X"
 
-#: data/ui/add-equation.blp:84
+#: data/ui/add-equation.blp:86
 msgid "Step Size"
 msgstr "Tamaño del paso"
 
-#: data/ui/add-style.blp:6 data/ui/figure-settings-dialog.blp:34
+#: data/ui/add-style.blp:6 data/ui/figure-settings-dialog.blp:35
 msgid "Add New Style"
 msgstr "Añadir estilo nuevo"
 
@@ -162,7 +162,7 @@ msgstr "Plantilla"
 msgid "Name"
 msgstr "Nombre"
 
-#: data/ui/curve-fitting.blp:27 data/ui/item-box.blp:64
+#: data/ui/curve-fitting.blp:27 data/ui/item-box.blp:59
 msgid "Curve Fitting"
 msgstr "Ajuste de curvas"
 
@@ -218,11 +218,11 @@ msgstr "Personalizada"
 msgid "Add Fit to Data"
 msgstr "Añadir ajuste a los datos"
 
-#: data/ui/curve-fitting.blp:109 data/ui/window.blp:598 graphs/window.vala:190
+#: data/ui/curve-fitting.blp:109 data/ui/window.blp:599 graphs/window.vala:241
 msgid "Toggle Sidebar"
 msgstr "Conmutar barra lateral"
 
-#: data/ui/curve-fitting.blp:121 data/ui/window.blp:638
+#: data/ui/curve-fitting.blp:121 data/ui/window.blp:639
 msgid "Canvas Failed to Load"
 msgstr "Error al cargar el lienzo"
 
@@ -559,11 +559,11 @@ msgstr "Resolución (ppp)"
 msgid "Transparent Background"
 msgstr "Fondo transparente"
 
-#: data/ui/figure-settings-dialog.blp:27 data/ui/figure-settings-page.blp:209
+#: data/ui/figure-settings-dialog.blp:28 data/ui/figure-settings-page.blp:209
 msgid "Style"
 msgstr "Estilo"
 
-#: data/ui/figure-settings-page.blp:5 data/ui/window.blp:659
+#: data/ui/figure-settings-page.blp:5 data/ui/window.blp:660
 msgid "Figure Settings"
 msgstr "Configuración de la figura"
 
@@ -631,34 +631,34 @@ msgstr "Máximo del eje Y derecho"
 msgid "Scaling"
 msgstr "Escalado"
 
-#: data/ui/figure-settings-page.blp:125 graphs/window.vala:230
+#: data/ui/figure-settings-page.blp:125 graphs/window.vala:281
 msgid "Bottom X Axis Scale"
 msgstr "Escala del eje X inferior"
 
 #: data/ui/figure-settings-page.blp:128 data/ui/figure-settings-page.blp:142
 #: data/ui/figure-settings-page.blp:156 data/ui/figure-settings-page.blp:170
-#: graphs/window.vala:200
+#: graphs/window.vala:251
 msgctxt "scale"
 msgid "Linear"
 msgstr "Lineal"
 
 #: data/ui/figure-settings-page.blp:129 data/ui/figure-settings-page.blp:143
 #: data/ui/figure-settings-page.blp:157 data/ui/figure-settings-page.blp:171
-#: graphs/window.vala:201
+#: graphs/window.vala:252
 msgctxt "scale"
 msgid "Logarithmic"
 msgstr "Logarítmica"
 
 #: data/ui/figure-settings-page.blp:130 data/ui/figure-settings-page.blp:144
 #: data/ui/figure-settings-page.blp:158 data/ui/figure-settings-page.blp:172
-#: graphs/window.vala:202
+#: graphs/window.vala:253
 msgctxt "scale"
 msgid "Radians"
 msgstr "Radianes"
 
 #: data/ui/figure-settings-page.blp:131 data/ui/figure-settings-page.blp:145
 #: data/ui/figure-settings-page.blp:159 data/ui/figure-settings-page.blp:173
-#: graphs/window.vala:203
+#: graphs/window.vala:254
 msgctxt "scale"
 msgid "Square Root"
 msgstr "Raíz cuadrada"
@@ -669,15 +669,15 @@ msgctxt "scale"
 msgid "Inverse"
 msgstr "Inversa"
 
-#: data/ui/figure-settings-page.blp:139 graphs/window.vala:231
+#: data/ui/figure-settings-page.blp:139 graphs/window.vala:282
 msgid "Top X Axis Scale"
 msgstr "Escala del eje X superior"
 
-#: data/ui/figure-settings-page.blp:153 graphs/window.vala:236
+#: data/ui/figure-settings-page.blp:153 graphs/window.vala:287
 msgid "Left Y Axis Scale"
 msgstr "Escala del eje Y izquierdo"
 
-#: data/ui/figure-settings-page.blp:167 graphs/window.vala:235
+#: data/ui/figure-settings-page.blp:167 graphs/window.vala:286
 msgid "Right Y Axis Scale"
 msgstr "Escala del eje Y derecho"
 
@@ -771,15 +771,15 @@ msgstr "Modificar parámetros de importación"
 msgid "Import"
 msgstr "Importar"
 
-#: data/ui/item-box.blp:26
+#: data/ui/item-box.blp:17
 msgid "Pick Color"
 msgstr "Elija color"
 
-#: data/ui/item-box.blp:51
+#: data/ui/item-box.blp:46
 msgid "Move Item "
 msgstr "Mover elemento "
 
-#: data/ui/item-box.blp:68
+#: data/ui/item-box.blp:63
 msgid "Remove Item"
 msgstr "Eliminar elemento"
 
@@ -952,7 +952,7 @@ msgstr "Rehacer acción"
 msgid "Smoothen Settings"
 msgstr "Ajustes de suavizado"
 
-#: data/ui/smoothen-settings.blp:30 data/ui/window.blp:694
+#: data/ui/smoothen-settings.blp:30 data/ui/window.blp:695
 msgid "Savitzky–Golay Filter"
 msgstr "Filtro Savitzky–Golay"
 
@@ -968,7 +968,7 @@ msgstr "Qué porcentaje del intervalo de datos usar para la ventana de filtrado"
 msgid "Polynomial degree"
 msgstr "Grado del polinomio"
 
-#: data/ui/smoothen-settings.blp:48 data/ui/window.blp:699
+#: data/ui/smoothen-settings.blp:48 data/ui/window.blp:700
 msgid "Moving Average"
 msgstr "Media móvil"
 
@@ -1360,79 +1360,79 @@ msgstr "Multiplicar X"
 msgid "Multiply Y"
 msgstr "Multiplicar Y"
 
-#: data/ui/window.blp:605 graphs/item_box.vala:73
+#: data/ui/window.blp:606 graphs/application.vala:260 graphs/item_box.vala:70
 msgid "Undo"
 msgstr "Deshacer"
 
-#: data/ui/window.blp:610
+#: data/ui/window.blp:611
 msgid "Redo"
 msgstr "Rehacer"
 
-#: data/ui/window.blp:615
+#: data/ui/window.blp:616
 msgid "View Menu"
 msgstr "Ver menú"
 
-#: data/ui/window.blp:623
+#: data/ui/window.blp:624
 msgid "Next View"
 msgstr "Vista siguiente"
 
-#: data/ui/window.blp:629
+#: data/ui/window.blp:630
 msgid "Previous View"
 msgstr "Vista anterior"
 
-#: data/ui/window.blp:647
+#: data/ui/window.blp:648
 msgid "New Project"
 msgstr "Proyecto nuevo"
 
-#: data/ui/window.blp:650
+#: data/ui/window.blp:651
 msgid "Save Project…"
 msgstr "Guardar proyecto…"
 
-#: data/ui/window.blp:651
+#: data/ui/window.blp:652
 msgid "Save Project as…"
 msgstr "Guardar proyecto como…"
 
-#: data/ui/window.blp:652
+#: data/ui/window.blp:653
 msgid "Open Project…"
 msgstr "Abrir proyecto…"
 
-#: data/ui/window.blp:655
+#: data/ui/window.blp:656
 msgid "Export Data…"
 msgstr "Exportar datos…"
 
-#: data/ui/window.blp:656
+#: data/ui/window.blp:657
 msgid "Export Figure…"
 msgstr "Exportar figura…"
 
-#: data/ui/window.blp:662
+#: data/ui/window.blp:663
 msgid "Keyboard Shortcuts"
 msgstr "Atajos del teclado"
 
-#: data/ui/window.blp:663
+#: data/ui/window.blp:664
 msgid "Help"
 msgstr "Ayuda"
 
-#: data/ui/window.blp:664
+#: data/ui/window.blp:665
 msgid "About Graphs"
 msgstr "Acerca de Gráficos"
 
-#: data/ui/window.blp:670
+#: data/ui/window.blp:671
 msgid "Add Data from File…"
 msgstr "Añadir datos desde archivo…"
 
-#: data/ui/window.blp:671
+#: data/ui/window.blp:672
 msgid "Add Equation…"
 msgstr "Añadir ecuación…"
 
-#: data/ui/window.blp:680
+#: data/ui/window.blp:681
 msgid "At Maximum Y Value"
 msgstr "Al valor máximo Y"
 
-#: data/ui/window.blp:685
+#: data/ui/window.blp:686
 msgid "At Middle X Value"
 msgstr "Al valor medio X"
 
-#: data/ui/window.blp:706
+#: data/ui/window.blp:707
 msgid "Advanced Settings"
 msgstr "Configuración avanzada"
 
@@ -1442,30 +1442,54 @@ msgstr ""
 "Julián Villodre <jvillodrede@gmail.com> 2024\n"
 "Óscar Fernández Díaz <oscfdezdz@tuta.io>"
 
-#: graphs/actions.py:80
+#: graphs/actions.py:38
+msgctxt "file-filter"
+msgid "Supported files"
+msgstr "Archivos compatibles"
+
+#: graphs/actions.py:41
+msgctxt "file-filter"
+msgid "ASCII files"
+msgstr "Archivos ASCII"
+
+#: graphs/actions.py:42
+msgctxt "file-filter"
+msgid "PANalytical XRDML"
+msgstr "PANalytical XRDML"
+
+#: graphs/actions.py:43
+msgctxt "file-filter"
+msgid "Leybold xry"
+msgstr "Leybold xry"
+
+#: graphs/actions.py:87
 #, python-brace-format
 msgid "{error} - Unable to add data from equation"
 msgstr "{error} - No se pueden añadir datos de la ecuación"
 
-#: graphs/actions.py:159
+#: graphs/actions.py:100
+msgid "No data to export"
+msgstr "No hay datos para exportar"
+
+#: graphs/actions.py:118
 msgid "Exported Figure"
 msgstr "Figura exportada"
 
-#: graphs/actions.py:226
-#, python-brace-format
-msgid "Deleted {name}"
-msgstr "Eliminado {name}"
-
-#: graphs/application.py:43
+#: graphs/application.py:38
 #, python-brace-format
 msgid "Could not load {font}"
 msgstr "No se ha podido cargar {font}"
 
-#: graphs/curve_fitting.py:173
+#: graphs/application.vala:259 graphs/item_box.vala:69
+#, c-format
+msgid "Deleted %s"
+msgstr "Eliminado %s"
+
+#: graphs/curve_fitting.py:177
 msgid "Results:"
 msgstr "Resultados:"
 
-#: graphs/curve_fitting.py:177
+#: graphs/curve_fitting.py:181
 msgid ""
 "Please enter valid fitting \n"
 "parameters to start the fit"
@@ -1473,7 +1497,7 @@ msgstr ""
 "Por favor, introduzca parámetros \n"
 "válidos para iniciar el ajuste"
 
-#: graphs/curve_fitting.py:181
+#: graphs/curve_fitting.py:185
 msgid ""
 "Please enter a valid equation \n"
 "to start the fit"
@@ -1481,7 +1505,7 @@ msgstr ""
 "Por favor, introduzca una ecuación válida\n"
 "para iniciar el ajuste"
 
-#: graphs/curve_fitting.py:185
+#: graphs/curve_fitting.py:189
 msgid ""
 "Please enter valid fitting bounds \n"
 "to start the fit"
@@ -1489,7 +1513,7 @@ msgstr ""
 "Introduzca límites de ajuste válidos \n"
 "para iniciar el ajuste"
 
-#: graphs/curve_fitting.py:198
+#: graphs/curve_fitting.py:202
 #, python-brace-format
 msgid "Sum of R²: {R2}"
 msgstr "Suma de R²: {R2}"
@@ -1499,60 +1523,72 @@ msgstr "Suma de R²: {R2}"
 msgid "Fitting Parameters for %s"
 msgstr "Parámetros de ajuste para %s"
 
-#: graphs/data.py:88
+#: graphs/data.py:73
 msgid "Untitled Project"
 msgstr "Proyecto sin título"
 
-#: graphs/data.py:99
+#: graphs/data.py:74
 msgid "Draft"
 msgstr "Borrador"
+
+#: graphs/export_data.py:32
+msgctxt "file-filter"
+msgid "Text Files"
+msgstr "Archivos de texto"
 
 #: graphs/export_figure.vala:45
 msgctxt "filename"
 msgid "Exported Figure"
 msgstr "Figura exportada"
 
-#: graphs/figure_settings.py:71
-msgid "Defaults Updated"
-msgstr "Predeterminados actualizados"
-
-#: graphs/figure_settings.vala:161
+#: graphs/figure_settings.vala:159
 msgid "X Axis Minimum"
 msgstr "Mínimo del eje X"
 
-#: graphs/figure_settings.vala:162
+#: graphs/figure_settings.vala:160
 msgid "Y Axis Minimum"
 msgstr "Mínimo del eje Y"
 
-#: graphs/figure_settings.vala:164
+#: graphs/figure_settings.vala:162
 msgid "X Axis Maximum"
 msgstr "Máximo del eje X"
 
-#: graphs/figure_settings.vala:165
+#: graphs/figure_settings.vala:163
 msgid "Y Axis Maximum"
 msgstr "Máximo del eje Y"
 
-#: graphs/figure_settings.vala:175 graphs/window.vala:232
+#: graphs/figure_settings.vala:173 graphs/window.vala:283
 msgid "X Axis Scale"
 msgstr "Escala del eje X"
 
-#: graphs/figure_settings.vala:176 graphs/figure_settings.vala:180
+#: graphs/figure_settings.vala:174 graphs/figure_settings.vala:178
 msgid "X Axis Label"
 msgstr "Etiqueta del eje X"
 
-#: graphs/figure_settings.vala:179 graphs/window.vala:237
+#: graphs/figure_settings.vala:177 graphs/window.vala:288
 msgid "Y Axis Scale"
 msgstr "Escala del eje Y"
+
+#: graphs/figure_settings.vala:201
+msgid "Defaults Updated"
+msgstr "Predeterminados actualizados"
 
 #: graphs/file_import.vala:40
 msgid "Are you sure you want to reset the import settings?"
 msgstr ""
 "¿Está seguro de que quiere restablecer la configuración de importación?"
 
-#: graphs/item_box.vala:72
-#, c-format
-msgid "Deleted %s"
-msgstr "Eliminado %s"
+#: graphs/item.py:86
+msgid "Dataset"
+msgstr "Conjunto de datos"
+
+#: graphs/item.py:120
+msgid "Label"
+msgstr "Etiqueta"
+
+#: graphs/item.py:136
+msgid "Fill"
+msgstr "Rellenar"
 
 #: graphs/misc.py:107
 msgctxt "file-filter"
@@ -1606,14 +1642,6 @@ msgstr "Error de importación, índice de columna fuera de rango"
 msgid "Unable to import from file"
 msgstr "No se puede importar desde el archivo"
 
-#: graphs/project.py:39
-msgid "Saved Project"
-msgstr "Proyecto guardado"
-
-#: graphs/project.py:61
-msgid "Project"
-msgstr "Proyecto"
-
 #: graphs/style_io.py:65
 #, python-brace-format
 msgid "Missing colon in file {file}, line {line}"
@@ -1652,83 +1680,63 @@ msgstr "Etiqueta X"
 msgid "Y Label"
 msgstr "Etiqueta Y"
 
-#: graphs/styles.py:305
+#: graphs/styles.py:225
 #, python-brace-format
 msgid "Could not parse {stylename}, loading system preferred style"
 msgstr ""
 "No se ha podido procesar {stylename}, cargando el estilo preferido por el "
 "sistema."
 
-#: graphs/styles.py:313
+#: graphs/styles.py:233
 #, python-brace-format
 msgid "Plot style {stylename} does not exist loading system preferred"
 msgstr ""
 "El estilo de trazado {stylename} no existe, cargando el estilo preferido por "
 "el sistema"
 
-#: graphs/styles.py:726
+#: graphs/styles.py:636
 #, python-brace-format
 msgid "Are you sure you want to delete {stylename}?"
 msgstr "¿Está seguro de que desea eliminar {stylename}?"
 
-#: graphs/styles.py:743
+#: graphs/styles.py:653
 #, python-brace-format
 msgid "Color {number}"
 msgstr "Color {number}"
 
-#: graphs/styles.vala:71
+#: graphs/styles.vala:79
 msgid "System"
 msgstr "Sistema"
 
-#: graphs/ui.py:46
-msgctxt "file-filter"
-msgid "Supported files"
-msgstr "Archivos compatibles"
-
-#: graphs/ui.py:49
-msgctxt "file-filter"
-msgid "ASCII files"
-msgstr "Archivos ASCII"
-
-#: graphs/ui.py:50
-msgctxt "file-filter"
-msgid "PANalytical XRDML"
-msgstr "PANalytical XRDML"
-
-#: graphs/ui.py:51
-msgctxt "file-filter"
-msgid "Leybold xry"
-msgstr "Leybold xry"
-
-#: graphs/ui.py:63
-msgid "No data to export"
-msgstr "No hay datos para exportar"
-
-#: graphs/ui.py:80
-msgid "Exported Data"
-msgstr "Datos exportados"
-
-#: graphs/ui.py:92
-msgctxt "file-filter"
-msgid "Text Files"
-msgstr "Archivos de texto"
-
-#: graphs/window.vala:128
+#: graphs/window.vala:169
 msgid "Graphs (Development)"
 msgstr "Gráficos (desarrollo)"
 
-#: graphs/window.vala:171
+#: graphs/window.vala:222
 msgid "Open Location"
 msgstr "Abrir ubicación"
 
-#: graphs/window.vala:195
+#: graphs/window.vala:246
 msgid "Optimize Limits"
 msgstr "Optimizar límites"
 
-#: graphs/window.vala:204
+#: graphs/window.vala:255
 msgctxt "scale"
 msgid "Inverse Root"
 msgstr "Raíz inversa"
+
+#, python-brace-format
+#~ msgid "Deleted {name}"
+#~ msgstr "Eliminado {name}"
+
+#~ msgid "Saved Project"
+#~ msgstr "Proyecto guardado"
+
+#~ msgid "Project"
+#~ msgstr "Proyecto"
+
+#~ msgid "Exported Data"
+#~ msgstr "Datos exportados"
 
 #~ msgid "Y = "
 #~ msgstr "Y = "
