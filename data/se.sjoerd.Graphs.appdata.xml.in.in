@@ -55,6 +55,21 @@
     </screenshot>
   </screenshots>
   <releases>
+    <release version="1.8.1" date="2024-06-18">
+      <description>
+        <p>Minor update focusing on some bug fixes and language updates.</p>
+        <ul>
+          <li>Updates to the translations, and added support for Hungarian</li>
+          <li>The maximum height of the window has been reduced significantly</li>
+          <li>Style reviews are bundled with the build, resulting in a roughly 600% shorter start time</li>
+          <li>"Set as default" now properly shows a toast again</li>
+          <li>Fixes a bunch of issues with regard to equation generations</li>
+          <li>Custom equations in the curve fitting dialog are now stored properly</li>
+          <li>Parameters in the curve fitting dialog are now also displayed when no proper fit could be made</li>
+        </ul>
+      </description>
+  </release>  
+  <releases>
     <release version="1.8.0" date="2024-04-21">
       <description>
         <p>A smaller release focusing on mostly background changes.</p>
