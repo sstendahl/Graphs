@@ -50,7 +50,8 @@ class Data(Graphs.Data):
             figure_settings.set_property(prop, new_value)
 
         # Reset items
-        self.delete_items([item for item in self])
+        if not self.empty:
+            self.delete_items([item for item in self])
         self._initialize()
         self.props.file = None
         self.props.unsaved = False

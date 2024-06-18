@@ -179,9 +179,8 @@ def new_project_action(application: Graphs.Application) -> None:
                 project.save_project(application)
 
         dialog = Graphs.tools_build_dialog("save_changes")
-        dialog.set_transient_for(application.get_window())
         dialog.connect("response", on_response)
-        dialog.present()
+        dialog.present(application.get_window())
         return
     data.reset()
 

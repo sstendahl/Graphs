@@ -61,8 +61,6 @@ class PythonApplication(Graphs.Application):
         if handler == "open_project":
             data.props.project_file = args[0]
             data.load()
-        if handler == "reset_project":
-            data.reset()
 
     def do_open(self, files: list, nfiles: int, _hint: str) -> None:
         """Open Graphs with a File as argument."""
