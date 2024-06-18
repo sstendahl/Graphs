@@ -112,7 +112,7 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
                 entry = parameter_box.get_property(prop)
                 entry.connect("notify::text", self.on_entry_change)
             box.append(parameter_box)
-        return True if fit else False
+        return bool(fit)
 
     def on_entry_change(self, entry, _param) -> None:
         """
