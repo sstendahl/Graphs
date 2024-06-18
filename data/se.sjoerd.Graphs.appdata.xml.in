@@ -67,6 +67,7 @@
           <li>Parameters in the curve fitting dialog are now displayed, even when no proper initial fit could be made</li>
           <li>Fixed a bug where importing data was not working in case any whitespace was used with the delimiter</li>
           <li>Fixed an issue where the custom delimiter was not always in the dialog shown when importing data</li>
+          <li>Fixed a bug where the "New Project" dialog would not trigger</li>
         </ul>
       </description>
     </release>  
