@@ -127,7 +127,8 @@ def create_file_filters(filters, add_all: bool = True) -> Gio.ListStore:
 def string_to_float(string: str) -> float:
     """Evaluate a string represantation of a number."""
     try:
-        return _eval(ast.parse(preprocess(string), mode="eval").body)
+
+        return _eval(ast.parse(preprocess(string.strip()), mode="eval").body)
     except (SyntaxError, ValueError):
         return None
 

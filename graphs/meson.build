@@ -38,9 +38,11 @@ python.install_sources(
 
 configure_file (output: 'config.h', configuration: vala_conf)
 config_dep = valac.find_library ('config', dirs: meson.project_source_root () / 'graphs')
-graphs_lib = shared_library('graphs',
+graphs_lib = shared_library(
+  'graphs',
   files(
     'about.vala',
+    'actions.vala',
     'add_equation.vala',
     'application.vala',
     'canvas.vala',
@@ -66,8 +68,6 @@ graphs_lib = shared_library('graphs',
               install: true,
           install_dir: [true],
 )
-
-
 
 custom_target('graphs typelib',
        command: [find_program('g-ir-compiler'), '--shared-library', 'libgraphs.so', '--output', '@OUTPUT@', meson.current_build_dir() / 'Graphs-1.gir'],

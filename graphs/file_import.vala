@@ -39,6 +39,9 @@ namespace Graphs {
                     case "columns": {
                         var delimiter = (Adw.ComboRow) builder.get_object ("columns_delimiter");
                         var custom_delimiter = (Adw.EntryRow) builder.get_object ("columns_custom_delimiter");
+                        if (delimiter.get_selected () == 6) {
+                            custom_delimiter.set_visible (true);
+                        }
                         delimiter.notify["selected"].connect (() => {
                             custom_delimiter.set_visible (delimiter.get_selected () == 6);
                         });

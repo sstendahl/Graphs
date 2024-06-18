@@ -65,6 +65,8 @@
           <li>Fixed a bunch of issues with regard to equation generations</li>
           <li>Custom equations in the curve fitting dialog are now stored properly</li>
           <li>Parameters in the curve fitting dialog are now displayed, even when no proper initial fit could be made</li>
+          <li>Fixed a bug where importing data was not working in case any whitespace was used with the delimiter</li>
+          <li>Fixed an issue where the custom delimiter was not always in the dialog shown when importing data</li>
         </ul>
       </description>
     </release>  
