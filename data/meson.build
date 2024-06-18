@@ -1,77 +1,67 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 desktop_file_in = configure_file(
-        input: application_id + '.desktop.in.in',
-       output: application_id + '.desktop.in',
-configuration: conf
+          input: application_id + '.desktop.in',
+         output: application_id + '.desktop.in',
+  configuration: conf,
 )
-
 desktop_file = i18n.merge_file(
         input: desktop_file_in,
        output: application_id + '.desktop',
          type: 'desktop',
        po_dir: '../po',
       install: true,
-  install_dir: join_paths(datadir, 'applications')
+  install_dir: join_paths(datadir, 'applications'),
 )
 
 desktop_file_validate = find_program('desktop-file-validate', required: false)
 if desktop_file_validate.found()
-  test(
-    'Validate desktop file',
-    desktop_file_validate,
-    args: [
-      desktop_file.full_path()
-    ]
+  test('Validate desktop file', desktop_file_validate,
+    args: [desktop_file.full_path()],
   )
 endif
 
 appstream_file_in = configure_file(
-        input: application_id + '.appdata.xml.in.in',
-       output: application_id + '.appdata.xml.in',
-configuration: conf
+          input: application_id + '.appdata.xml.in',
+         output: application_id + '.appdata.xml.in',
+  configuration: conf,
 )
-
 appstream_file = i18n.merge_file(
         input: appstream_file_in,
        output: application_id + '.appdata.xml',
        po_dir: '../po',
       install: true,
-  install_dir: join_paths(datadir, 'appdata')
+  install_dir: join_paths(datadir, 'appdata'),
 )
 
 # Validate Appdata
 appstreamcli = find_program('appstreamcli', required: false)
 if (appstreamcli.found())
-  test(
-    'Validate appstream file', appstreamcli,
-    args: ['validate', '--no-net', '--explain', appstream_file.full_path()],
-    workdir: meson.current_build_dir()
+  test('Validate appstream file', appstreamcli,
+       args: ['validate', '--no-net', '--explain', appstream_file.full_path()],
+    workdir: meson.current_build_dir(),
   )
 endif
 
 install_data(application_id + '.gschema.xml',
   install_dir: join_paths(datadir, 'glib-2.0/schemas'),
- install_mode: 'rwxrwxrwx'
+ install_mode: 'rwxrwxrwx',
 )
 gnome.compile_schemas(
-  depend_files: [
-    application_id + '.gschema.xml'
-  ]
+  depend_files: [application_id + '.gschema.xml'],
 )
 
-install_data(
-    application_id + '.mime.xml',
-    install_dir: get_option('datadir') / 'mime/packages',
+install_data(application_id + '.mime.xml',
+  install_dir: get_option('datadir') / 'mime/packages',
 )
 
 compile_schemas = find_program('glib-compile-schemas', required: false)
 if compile_schemas.found()
-  test('Validate schema file',
-       compile_schemas,
-       args: ['--strict', '--dry-run', meson.current_source_dir()])
+  test('Validate schema file', compile_schemas,
+    args: ['--strict', '--dry-run', meson.current_source_dir()],
+  )
 endif
 
-blueprints_source = [
+blueprint_files = [
   'ui/add-equation.blp',
   'ui/add-style.blp',
   'ui/curve-fitting.blp',
@@ -90,29 +80,21 @@ blueprints_source = [
   'ui/style-editor.blp',
   'ui/style-preview.blp',
   'ui/transform.blp',
-  'ui/window.blp'
+  'ui/window.blp',
 ]
 
 blueprints_ui = []
-blueprints_vala = []
-foreach b : blueprints_source
+foreach b : blueprint_files
 	blueprints_ui += b.replace('.blp', '.ui')
-	blueprints_vala += b.replace('ui/', '') + '.vala'
 endforeach
 
 blueprints = custom_target('blueprints',
-  input: blueprints_source,
-  output: '.',
+    input: files(blueprint_files),
+   output: '.',
   command: [find_program('blueprint-compiler'), 'batch-compile', '@OUTPUT@', '@CURRENT_SOURCE_DIR@', '@INPUT@'],
 )
 
-blueprints_hack = custom_target('blueprints_hack',
-  input: blueprints,
-  output: blueprints_vala,
-  command: [find_program('touch'), '@OUTPUT@'],
-)
-
-styles = [
+styles = files(
   'styles/adwaita.mplstyle',
   'styles/adwaita-dark.mplstyle',
   'styles/bmh.mplstyle',
@@ -139,52 +121,75 @@ styles = [
   'styles/tableau-colorblind10.mplstyle',
   'styles/thesis.mplstyle',
   'styles/yaru.mplstyle',
-  'styles/yaru-dark.mplstyle'
-]
-
-previews = []
-previews_vala = []
-foreach s : styles
-	previews += s.replace('styles/', '').replace('.mplstyle', '.png')
-	previews_vala += s.replace('styles/', '') + '.vala'
-endforeach
-
-built_previews = custom_target('previews',
-  input: files(styles),
-  output: previews,
-  command: [
-    python,
-    files('create_previews.py'),
-    files('../graphs/style_io.py'),
-    '@INPUT@',
-    '@OUTPUT@'
-  ]
+  'styles/yaru-dark.mplstyle',
 )
 
-previews_hack = custom_target('previews_hack',
-  input: built_previews,
-  output: previews_vala,
+icons = files (
+  'icons/axes-one-quadrant-symbolic.svg',
+  'icons/center-symbolic.svg',
+  'icons/check-round-outline-whole-symbolic.svg',
+  'icons/color-picker-symbolic.svg',
+  'icons/derivative2-symbolic.svg',
+  'icons/fast-fourier-transform-symbolic.svg',
+  'icons/graph-symbolic.svg',
+  'icons/function-third-order-symbolic.svg',
+  'icons/history-undo-symbolic.svg',
+  'icons/horizontal-arrows-symbolic.svg',
+  'icons/info-symbolic.svg',
+  'icons/image-print-symbolic.svg',
+  'icons/integral-symbolic.svg',
+  'icons/inverse-fast-fourier-transform-symbolic.svg',
+  'icons/left-symbolic.svg',
+  'icons/list-compact-symbolic.svg',
+  'icons/loupe-symbolic.svg',
+  'icons/move-tool-symbolic.svg',
+  'icons/normalize-symbolic.svg',
+  'icons/right-symbolic.svg',
+  'icons/settings-symbolic.svg',
+  'icons/shift-symbolic.svg',
+  'icons/smoothen-symbolic.svg',
+  'icons/transform-symbolic.svg',
+  'icons/vertical-arrows-symbolic.svg',
+  'icons/up-symbolic.svg',
+  'icons/down-symbolic.svg',
+)
+
+other = files(
+  'style.css',
+  'style-hc.css',
+  'whats_new',
+)
+
+gresource = custom_target('gresource',
+    input: [blueprints, styles, other],
+   output: application_id + '.gresource.xml',
+  depends: blueprints,
+  command: [
+    python,
+    files('generate_gresource.py'),
+    '@OUTPUT@',
+    meson.current_build_dir(),
+    files('../graphs/style_io.py'),
+    '--styles', styles,
+    '--ui', blueprints_ui,
+    '--icons', icons,
+    '--other', other,
+  ],
+)
+
+gresource_hack = custom_target('gresource_hack',
+    input: gresource,
+   output: 'gresource_hack.vala',
   command: [find_program('touch'), '@OUTPUT@'],
 )
 
-gresource_name = application_id + '.gresource.xml'
-gresource_file = join_paths(meson.current_build_dir(), gresource_name)
-
-gresource = custom_target('gresource',
-  input: gresource_name,
-  output: gresource_name,
-  command: ['cp', '@INPUT@', '@OUTPUT@'],
-  depends: [built_previews, blueprints],
-)
-
-gresource_bundle = gnome.compile_resources(
-  application_id, gresource,
-    dependencies: gresource,
-gresource_bundle: true,
-      source_dir: meson.current_build_dir(),
-         install: true,
-     install_dir: pkgdatadir,
-          c_name: project_name,
+gresource_bundle = gnome.compile_resources(application_id, gresource,
+      dependencies: gresource,
+  gresource_bundle: true,
+        source_dir: meson.current_build_dir(),
+           install: true,
+       install_dir: pkgdatadir,
+            c_name: meson.project_name(),
 )
 
 devenv.set('GRAPHS_OVERRIDE_RESOURCES', gresource_bundle.full_path())
@@ -194,14 +199,12 @@ icon_name = ('@0@.svg').format(application_id)
 if debug
   icon_name = ('@0@.Devel.svg').format(application_id)
 endif
-install_data(
-  join_paths(scalable_dir, icon_name),
-     rename: ('@0@.svg').format(application_id),
-install_dir: join_paths(datadir, scalable_dir)
+install_data(join_paths(scalable_dir, icon_name),
+       rename: ('@0@.svg').format(application_id),
+  install_dir: join_paths(datadir, scalable_dir),
 )
 
 symbolic_dir = join_paths('icons', 'hicolor', 'symbolic', 'apps')
-install_data(
-  join_paths(symbolic_dir, ('@0@-symbolic.svg').format(application_id)),
-  install_dir: join_paths(datadir, symbolic_dir)
+install_data(join_paths(symbolic_dir, ('@0@-symbolic.svg').format(application_id)),
+  install_dir: join_paths(datadir, symbolic_dir),
 )

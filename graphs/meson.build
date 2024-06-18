@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 configure_file(
         input: 'graphs.in',
-       output: project_name,
+       output: meson.project_name(),
 configuration: conf,
       install: true,
  install_mode: 'rwxr-xr-x',
@@ -33,16 +33,14 @@ python.install_sources(
     'ui.py',
     'utilities.py',
   ),
-  subdir: project_name
+  subdir: meson.project_name()
 )
 
 configure_file (output: 'config.h', configuration: vala_conf)
 config_dep = valac.find_library ('config', dirs: meson.project_source_root () / 'graphs')
-graphs_lib = shared_library(
-  'graphs',
+graphs_lib = shared_library('graphs',
   files(
     'about.vala',
-    'actions.vala',
     'add_equation.vala',
     'application.vala',
     'canvas.vala',
@@ -60,14 +58,16 @@ graphs_lib = shared_library(
     'transform.vala',
     'utilities.vala',
     'window.vala',
-  ), blueprints_hack, previews_hack, gresource_bundle,
-           vala_gir: 'Graphs-1.gir',
-       dependencies: dependencies + config_dep,
-include_directories: include_directories('.'),
-         link_args : ['-lm',],
-            install: true,
-        install_dir: [true],
+  ), gresource_hack, gresource_bundle,
+             vala_gir: 'Graphs-1.gir',
+         dependencies: dependencies + config_dep,
+  include_directories: include_directories('.'),
+            link_args: ['-lm',],
+              install: true,
+          install_dir: [true],
 )
+
+
 
 custom_target('graphs typelib',
        command: [find_program('g-ir-compiler'), '--shared-library', 'libgraphs.so', '--output', '@OUTPUT@', meson.current_build_dir() / 'Graphs-1.gir'],
