@@ -92,6 +92,9 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
         processed_equation = utilities.preprocess(equation)
         self.set_equation_string(processed_equation)
         free_variables = utilities.get_free_variables(processed_equation)
+        if len(free_variables) == 0:
+            self.set_results(error="equation")
+            return
         self.fitting_parameters.update(free_variables)
         fit = self.fit_curve()
         if not fit:
@@ -109,7 +112,7 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
                 entry = parameter_box.get_property(prop)
                 entry.connect("notify::text", self.on_entry_change)
             box.append(parameter_box)
-        return True
+        return bool(fit)
 
     def on_entry_change(self, entry, _param) -> None:
         """

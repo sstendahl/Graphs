@@ -77,7 +77,12 @@ namespace Graphs {
             this.equation.notify["selected"].connect (set_equation);
             this.custom_equation.notify["text"].connect (() => {
                 bool success = this.equation_change.emit (this.custom_equation.get_text ());
-                if (success) this.custom_equation.remove_css_class ("error");
+                if (success) {
+                    this.custom_equation.remove_css_class ("error");
+                    if (this.equation.get_selected () == 7) {
+                        this.settings.set_string ("custom-equation", this.custom_equation.get_text ());
+                        }
+                    }
                 else this.custom_equation.add_css_class ("error");
             });
             set_equation ();
