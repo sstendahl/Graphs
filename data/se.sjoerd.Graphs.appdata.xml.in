@@ -67,8 +67,7 @@
           <li>Parameters in the curve fitting dialog are now also displayed when no proper fit could be made</li>
         </ul>
       </description>
-  </release>  
-  <releases>
+    </release>  
     <release version="1.8.0" date="2024-04-21">
       <description>
         <p>A smaller release focusing on mostly background changes.</p>
