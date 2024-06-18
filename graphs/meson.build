@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 configure_file(
         input: 'graphs.in',
-       output: project_name,
+       output: meson.project_name(),
 configuration: conf,
       install: true,
  install_mode: 'rwxr-xr-x',
