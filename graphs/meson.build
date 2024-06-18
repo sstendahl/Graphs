@@ -33,7 +33,7 @@ python.install_sources(
     'ui.py',
     'utilities.py',
   ),
-  subdir: project_name
+  subdir: meson.project_name()
 )
 
 configure_file (output: 'config.h', configuration: vala_conf)
