@@ -34,7 +34,7 @@ Since Graphs is developed using GNOME Builder, most testing will be done in a Fl
 An official build is also available on the Snap store:
 
 <p>
-<a href="https://flathub.org/apps/details/se.sjoerd.Graphs"><img height="62" alt="Download on Flathub" src="https://flathub.org/assets/badges/flathub-badge-en.svg"/></a>&nbsp;&nbsp;
+<a href="https://flathub.org/apps/details/se.sjoerd.Graphs"><img height="62" alt="Download on Flathub" src="https://flathub.org/api/badge?locale=en"/></a>&nbsp;&nbsp;
 <a href="https://snapcraft.io/graphs"><img height="60" alt="Get it from the Snap Store" src="https://snapcraft.io/static/images/badges/en/snap-store-black.svg"/></a>
 </p> 
 
