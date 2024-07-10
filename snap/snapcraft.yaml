@@ -61,9 +61,6 @@ parts:
       - PYTHONPATH: $CRAFT_STAGE/usr/lib/python3/dist-packages:$PYTHONPATH
     build-snaps:
       - blueprint-compiler/latest/edge 
-    override-build: |
-      craftctl default
-      sed -e '1c#!/usr/bin/env python3' -i ${CRAFT_PART_INSTALL}/snap/graphs/current/usr/bin/graphs
     organize:
       snap/graphs/current: .
     parse-info: [usr/share/appdata/se.sjoerd.Graphs.appdata.xml]
