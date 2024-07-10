@@ -3,6 +3,7 @@
 import argparse
 import importlib.util
 import logging
+import shutil
 import sys
 from pathlib import Path
 from xml.etree import ElementTree
@@ -86,16 +87,15 @@ main_gresource = ElementTree.SubElement(
 
 # Begin Other Section
 for file in args.other:
-    path = Path(file)
+    name = Path(shutil.copy(file, args.dir)).name
     element = ElementTree.SubElement(
         main_gresource,
         "file",
         attrib={
             "compressed": "True",
-            "alias": path.name,
         },
     )
-    element.text = str(path)
+    element.text = name
 # End Other Section
 
 # Begin style section
@@ -106,17 +106,17 @@ styles_gresource = ElementTree.SubElement(
     attrib={"prefix": "/se/sjoerd/Graphs/styles/"},
 )
 for style_path in args.styles:
-    name = Path(style_path).name
+    style_file = shutil.copy(style_path, args.dir)
+    name = Path(style_file).name
     style_element = ElementTree.SubElement(
         styles_gresource,
         "file",
         attrib={
             "compressed": "True",
-            "alias": name,
         },
     )
-    style_element.text = str(Path(style_path))
-    params_file = Gio.File.new_for_path(style_path)
+    style_element.text = name
+    params_file = Gio.File.new_for_path(style_file)
     params, stylename = style_io.parse(params_file)
     out_path = Path(args.dir, name.replace(".mplstyle", ".png"))
     styles[stylename] = out_path
@@ -127,10 +127,9 @@ for style_path in args.styles:
         "file",
         attrib={
             "compressed": "True",
-            "alias": out_path.name,
         },
     )
-    preview_element.text = str(out_path)
+    preview_element.text = out_path.name
 
 
 def _to_array(file_path):
@@ -156,10 +155,9 @@ for sys_style in ("Adwaita", "Yaru"):
         "file",
         attrib={
             "compressed": "True",
-            "alias": out_path.name,
         },
     )
-    preview_element.text = str(out_path)
+    preview_element.text = out_path.name
 # End style section
 
 # Begin ui section
@@ -182,7 +180,7 @@ for ui_file in args.ui:
             "alias": path.name,
         },
     )
-    ui_file_element.text = str(path)
+    ui_file_element.text = "ui/" + path.name
 help_overlay_element = ElementTree.SubElement(
     main_gresource,
     "file",
@@ -191,7 +189,7 @@ help_overlay_element = ElementTree.SubElement(
         "alias": "gtk/help-overlay.ui",
     },
 )
-help_overlay_element.text = str(help_overlay_path)
+help_overlay_element.text = "ui/" + help_overlay_path.name
 # End ui section
 
 # Begin icon section
@@ -201,16 +199,15 @@ icon_gresource = ElementTree.SubElement(
     attrib={"prefix": "/se/sjoerd/Graphs/icons/scalable/actions/"},
 )
 for icon_file in args.icons:
-    path = Path(icon_file)
+    path = Path(Path(shutil.copy(icon_file, args.dir)))
     icon_file_element = ElementTree.SubElement(
         icon_gresource,
         "file",
         attrib={
             "preprocess": "xml-stripblanks",
-            "alias": path.name,
         },
     )
-    icon_file_element.text = str(path)
+    icon_file_element.text = path.name
 # End icon section
 
 # Write
