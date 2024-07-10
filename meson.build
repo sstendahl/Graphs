@@ -54,7 +54,6 @@ conf.set('HELP_URL', help_url)
 conf.set('LOCALEDIR', localedir)
 conf.set('PKGDATADIR', pkgdatadir)
 conf.set('PROJECT_NAME', meson.project_name())
-conf.set('PYTHON', python.full_path())
 conf.set('HOMEPAGE_URL', homepage_url)
 conf.set('DEBUG', debug)
 
