@@ -51,7 +51,7 @@ parts:
       lib/python3.12/site-packages: usr/lib/python3/dist-packages
       
   graphs:
-    after: [ numpy ]
+    after: [ python-deps ]
     plugin: meson
     source: .
     meson-parameters:
