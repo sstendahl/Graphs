@@ -1,0 +1,68 @@
+name: graphs
+base: core24
+adopt-info: graphs
+grade: stable 
+confinement: strict
+compression: lzo
+platforms:
+  amd64:
+  arm64:
+
+slots:
+  graphs:
+    interface: dbus
+    bus: session
+    name: se.sjoerd.Graphs
+
+parts:
+  python-deps:
+    source: .
+    plugin: python
+    python-packages:
+      - matplotlib==3.8.4
+      - numexpr==2.10.0
+      - numpy==1.26.4
+      - scipy==1.13.0
+      - sympy==1.12
+    prime:
+      - -usr/bin/activate*
+      - -usr/bin/Activate.ps1
+      - -usr/bin/python*
+      - -usr/bin/pip*
+      - -pyvenv.cfg
+      - -share
+      - -include
+      - -lib
+      - -lib64
+      - -usr/lib/*/dist-packages/pip*
+      - -usr/lib/*/dist-packages/setuptools*
+      - -usr/lib/*/dist-packages/pkg_resources*
+    organize: 
+      bin: usr/bin
+      lib/python3.12/site-packages: usr/lib/python3/dist-packages
+      
+  graphs:
+    after: [ python-deps ]
+    plugin: meson
+    source: .
+    meson-parameters:
+      - --prefix=/snap/graphs/current/usr
+      - --buildtype=release
+    build-environment:
+      - PYTHONPATH: $CRAFT_STAGE/usr/lib/python3/dist-packages:$PYTHONPATH
+    build-snaps:
+      - blueprint-compiler/latest/edge 
+    organize:
+      snap/graphs/current: .
+    parse-info: [usr/share/appdata/se.sjoerd.Graphs.appdata.xml]
+    
+    
+apps:
+  graphs:
+    command: usr/bin/graphs
+    desktop: usr/share/applications/se.sjoerd.Graphs.desktop
+    common-id: se.sjoerd.Graphs
+    environment:
+      PYTHONPATH: $SNAP/usr/lib/python3/dist-packages:$PYTHONPATH
+      GI_TYPELIB_PATH: $SNAP/usr/lib/$CRAFT_ARCH_TRIPLET/girepository-1.0:$GI_TYPELIB_PATH
+    extensions: [gnome]      
