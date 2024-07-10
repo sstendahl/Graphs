@@ -4,6 +4,7 @@ import ast
 import contextlib
 import operator as op
 import re
+from gettext import gettext as _
 
 from gi.repository import Gio, Gtk
 
@@ -118,7 +119,7 @@ def create_file_filters(filters, add_all: bool = True) -> Gio.ListStore:
         list_store.append(file_filter)
     if add_all:
         file_filter = Gtk.FileFilter()
-        file_filter.set_name("All Files")
+        file_filter.set_name(_("All Files"))
         file_filter.add_pattern("*")
         list_store.append(file_filter)
     return list_store
