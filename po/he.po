@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2024-06-18 11:04+0000\n"
-"PO-Revision-Date: 2024-05-06 09:56+0300\n"
+"POT-Creation-Date: 2024-07-10 16:56+0000\n"
+"PO-Revision-Date: 2024-07-04 22:56+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <he@li.org>\n"
 "Language: he\n"
@@ -944,7 +944,7 @@ msgstr ""
 
 #: data/ui/smoothen-settings.blp:48 data/ui/window.blp:700
 msgid "Moving Average"
-msgstr ""
+msgstr "ממוצע נע"
 
 #: data/ui/smoothen-settings.blp:50
 msgid "Box points"
@@ -1185,7 +1185,7 @@ msgstr "X ="
 
 #: data/ui/transform.blp:61
 msgid "Discard Unselected Data"
-msgstr ""
+msgstr "התעלמות מנתונים שלא נבחרו"
 
 #: data/ui/window.blp:182
 msgid "Add New Data"
@@ -1309,7 +1309,7 @@ msgstr "ביצוע התמרה מותאמת אישית על הנתונים"
 
 #: data/ui/window.blp:485
 msgid "Modify"
-msgstr ""
+msgstr "שינוי"
 
 #: data/ui/window.blp:506
 msgid "Translate X"
@@ -1530,30 +1530,23 @@ msgstr "קנה מידה ציר Y"
 
 #: graphs/figure_settings.vala:201
 msgid "Defaults Updated"
-msgstr ""
+msgstr "ברירות המחדל עודכנו"
 
 #: graphs/file_import.vala:40
 msgid "Are you sure you want to reset the import settings?"
 msgstr "לאפס את הגדרות הייבוא?"
 
 #: graphs/item.py:86
-#, fuzzy
-#| msgid "Data"
 msgid "Dataset"
-msgstr "נתונים"
+msgstr "סדרת נתונים"
 
 #: graphs/item.py:120
-#, fuzzy
-#| msgid "Labels"
 msgid "Label"
-msgstr "תוויות"
+msgstr "תווית"
 
 #: graphs/item.py:136
-#, fuzzy
-#| msgctxt "markerstyle"
-#| msgid "Filled X"
 msgid "Fill"
-msgstr "X מלא"
+msgstr "מילוי"
 
 #: graphs/misc.py:107
 msgctxt "file-filter"
@@ -1587,7 +1580,7 @@ msgstr ""
 
 #: graphs/parse_file.py:68
 msgid "Invalid .xry format"
-msgstr ""
+msgstr "תבנית ‎.xry שגויה"
 
 #: graphs/parse_file.py:83
 msgid "β (°)"
@@ -1666,6 +1659,13 @@ msgstr "צבע {number}"
 #: graphs/styles.vala:79
 msgid "System"
 msgstr "מערכת"
+
+#: graphs/utilities.py:122
+#, fuzzy
+#| msgctxt "file-filter"
+#| msgid "Text Files"
+msgid "All Files"
+msgstr "קובצי טקסט"
 
 #: graphs/window.vala:169
 msgid "Graphs (Development)"
