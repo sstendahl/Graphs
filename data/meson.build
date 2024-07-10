@@ -161,7 +161,7 @@ other = files(
 )
 
 gresource = custom_target('gresource',
-    input: [blueprints, styles, other],
+    input: [blueprints, styles, icons, other],
    output: application_id + '.gresource.xml',
   depends: blueprints,
   command: [
