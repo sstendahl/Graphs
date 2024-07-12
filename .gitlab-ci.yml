@@ -32,7 +32,7 @@ snap:
   image: snapcore/snapcraft
   script:
     - snapcraft --version
-    - snapcraft
+    - snapcraft build-aux/snap/snapcraft.yaml
     - ls -la
   artifacts:
     expire_in: 1 week
