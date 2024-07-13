@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2024-05-14 13:07+0000\n"
-"PO-Revision-Date: 2024-05-14 23:13+0530\n"
+"POT-Creation-Date: 2024-07-10 16:56+0000\n"
+"PO-Revision-Date: 2024-07-13 19:19+0530\n"
 "Last-Translator: Scrambled777 <weblate.scrambled777@simplelogin.com>\n"
 "Language-Team: Hindi <indlinux-hindi@lists.sourceforge.net>\n"
 "Language: hi\n"
@@ -21,7 +21,7 @@ msgstr ""
 #: data/se.sjoerd.Graphs.appdata.xml.in:6 data/se.sjoerd.Graphs.desktop.in:3
 #: data/ui/window.blp:9 graphs/about.vala:23
 msgid "Graphs"
-msgstr "Graphs"
+msgstr "ग्राफ्स"
 
 #: data/se.sjoerd.Graphs.appdata.xml.in:7
 msgid "Plot and manipulate data"
@@ -36,12 +36,12 @@ msgid ""
 "multiply, center and smoothen data, as well as apply any custom "
 "transformations on the data."
 msgstr ""
-"Graphs एक सरल, फिर भी शक्तिशाली उपकरण है जो आपको आसानी से अपने डेटा को प्लॉट करने "
-"और हेरफेर करने की अनुमति देता है। नए डेटा को विभिन्न प्रकार की फाइल प्रकारों से आयात "
-"किया जा सकता है, या समीकरण द्वारा उत्पन्न किया जा सकता है। सभी डेटा को विभिन्न "
-"प्रकार के अभियानों का उपयोग करके हेरफेर किया जा सकता है जैसे डेटा को चुनने, काटने, अनुवाद "
-"करने, गुणा करने, केंद्र और सुचारू करने की क्षमता, साथ ही डेटा पर किसी भी तदनुकूल परिवर्तन "
-"को लागू करने की क्षमता।"
+"ग्राफ्स एक सरल, फिर भी शक्तिशाली उपकरण है जो आपको आसानी से अपने डेटा को प्लॉट करने और "
+"हेरफेर करने की अनुमति देता है। नए डेटा को विभिन्न प्रकार की फाइल प्रकारों से आयात किया "
+"जा सकता है, या समीकरण द्वारा उत्पन्न किया जा सकता है। सभी डेटा को विभिन्न प्रकार के "
+"अभियानों का उपयोग करके हेरफेर किया जा सकता है जैसे डेटा को चुनने, काटने, अनुवाद करने, गुणा "
+"करने, केंद्र और सुचारू करने की क्षमता, साथ ही डेटा पर किसी भी तदनुकूल परिवर्तन को लागू "
+"करने की क्षमता।"
 
 #: data/se.sjoerd.Graphs.appdata.xml.in:16
 msgid ""
@@ -49,7 +49,7 @@ msgid ""
 "extensive customization options for the style of the plots. You can fine-"
 "tune and personalize stylesheets to your liking."
 msgstr ""
-"इसके अलावा, Graphs आयातित डेटा पर वक्र फिटिंग का समर्थन करता है और प्लॉट की शैली के "
+"इसके अलावा, ग्राफ्स आयातित डेटा पर वक्र फिटिंग का समर्थन करता है और प्लॉट की शैली के "
 "लिए व्यापक अनुकूलन विकल्प प्रदान करता है। आप अपनी पसंद के अनुसार स्टाइलशीट को समायोजित "
 "और वैयक्तिकृत कर सकते हैं।"
 
@@ -63,20 +63,20 @@ msgid ""
 "refinement. Graphs is written with the GNOME environment in mind, but should "
 "be suitable for any other desktop environment as well."
 msgstr ""
-"Graphs प्लॉटिंग और डेटा हेरफेर दोनों के लिए बिल्कुल उपयुक्त है। Graphs के साथ बनाए गए "
-"प्लॉट को व्यापक दर्शकों के सामने साझा करने और प्रस्तुत करने के लिए उपयुक्त विभिन्न स्वरूपों में "
-"सहेजा जा सकता है, जैसे कि वैज्ञानिक प्रकाशन या प्रस्तुतियों में। इसके अतिरिक्त, प्लॉट को "
-"वेक्टर छवियों के रूप में सहेजने का विकल्प आगे के शोधन के लिए Inkscape जैसे सॉफ्टवेयर में आसान "
-"संपादन की अनुमति देता है। Graphs GNOME वातावरण को ध्यान में रखकर लिखा जाता है, लेकिन "
-"यह किसी अन्य डेस्कटॉप वातावरण के लिए भी उपयुक्त होना चाहिए।"
+"ग्राफ्स प्लॉटिंग और डेटा हेरफेर दोनों के लिए बिल्कुल उपयुक्त है। ग्राफ्स के साथ बनाए गए प्लॉट "
+"को व्यापक दर्शकों के सामने साझा करने और प्रस्तुत करने के लिए उपयुक्त विभिन्न स्वरूपों में सहेजा "
+"जा सकता है, जैसे कि वैज्ञानिक प्रकाशन या प्रस्तुतियों में। इसके अतिरिक्त, प्लॉट को वेक्टर "
+"छवियों के रूप में सहेजने का विकल्प आगे के शोधन के लिए Inkscape जैसे सॉफ्टवेयर में आसान संपादन "
+"की अनुमति देता है। ग्राफ्स GNOME वातावरण को ध्यान में रखकर लिखा जाता है, लेकिन यह किसी "
+"अन्य डेस्कटॉप वातावरण के लिए भी उपयुक्त होना चाहिए।"
 
 #: data/se.sjoerd.Graphs.appdata.xml.in:23
 msgid ""
 "For any feedback, questions or general issues, please file an issue on the "
 "GitLab page."
 msgstr ""
-"किसी भी प्रतिक्रिया, प्रश्न या सामान्य समस्या के लिए, कृपया GitLab पेज पर एक समस्या "
-"दर्ज करें।"
+"किसी भी प्रतिक्रिया, प्रश्न या सामान्य समस्या के लिए, कृपया GitLab पृष्ठ पर समस्या दर्ज "
+"करें।"
 
 #: data/se.sjoerd.Graphs.appdata.xml.in:36
 msgid "1 - Plot and manipulate any data of choice"
@@ -211,11 +211,11 @@ msgstr "तदनुकूल"
 msgid "Add Fit to Data"
 msgstr "डेटा के अनुरूप जोड़ें"
 
-#: data/ui/curve-fitting.blp:109 data/ui/window.blp:598 graphs/window.vala:249
+#: data/ui/curve-fitting.blp:109 data/ui/window.blp:599 graphs/window.vala:241
 msgid "Toggle Sidebar"
 msgstr "पार्श्वपट्टी टॉगल करें"
 
-#: data/ui/curve-fitting.blp:121 data/ui/window.blp:638
+#: data/ui/curve-fitting.blp:121 data/ui/window.blp:639
 msgid "Canvas Failed to Load"
 msgstr "कैनवास लोड होने में विफल"
 
@@ -556,7 +556,7 @@ msgstr "पारदर्शी पृष्ठभूमि"
 msgid "Style"
 msgstr "शैली"
 
-#: data/ui/figure-settings-page.blp:5 data/ui/window.blp:659
+#: data/ui/figure-settings-page.blp:5 data/ui/window.blp:660
 msgid "Figure Settings"
 msgstr "चित्र सेटिंग्स"
 
@@ -624,34 +624,34 @@ msgstr "दायां Y अक्ष अधिकतम"
 msgid "Scaling"
 msgstr "स्केलिंग"
 
-#: data/ui/figure-settings-page.blp:125 graphs/window.vala:289
+#: data/ui/figure-settings-page.blp:125 graphs/window.vala:281
 msgid "Bottom X Axis Scale"
 msgstr "निचला X अक्ष पैमाना"
 
 #: data/ui/figure-settings-page.blp:128 data/ui/figure-settings-page.blp:142
 #: data/ui/figure-settings-page.blp:156 data/ui/figure-settings-page.blp:170
-#: graphs/window.vala:259
+#: graphs/window.vala:251
 msgctxt "scale"
 msgid "Linear"
 msgstr "रेखीय"
 
 #: data/ui/figure-settings-page.blp:129 data/ui/figure-settings-page.blp:143
 #: data/ui/figure-settings-page.blp:157 data/ui/figure-settings-page.blp:171
-#: graphs/window.vala:260
+#: graphs/window.vala:252
 msgctxt "scale"
 msgid "Logarithmic"
 msgstr "लघुगणकीय"
 
 #: data/ui/figure-settings-page.blp:130 data/ui/figure-settings-page.blp:144
 #: data/ui/figure-settings-page.blp:158 data/ui/figure-settings-page.blp:172
-#: graphs/window.vala:261
+#: graphs/window.vala:253
 msgctxt "scale"
 msgid "Radians"
 msgstr "रेडियन"
 
 #: data/ui/figure-settings-page.blp:131 data/ui/figure-settings-page.blp:145
 #: data/ui/figure-settings-page.blp:159 data/ui/figure-settings-page.blp:173
-#: graphs/window.vala:262
+#: graphs/window.vala:254
 msgctxt "scale"
 msgid "Square Root"
 msgstr "वर्गमूल"
@@ -662,15 +662,15 @@ msgctxt "scale"
 msgid "Inverse"
 msgstr "व्युत्क्रम"
 
-#: data/ui/figure-settings-page.blp:139 graphs/window.vala:290
+#: data/ui/figure-settings-page.blp:139 graphs/window.vala:282
 msgid "Top X Axis Scale"
 msgstr "शीर्ष X अक्ष पैमाना"
 
-#: data/ui/figure-settings-page.blp:153 graphs/window.vala:295
+#: data/ui/figure-settings-page.blp:153 graphs/window.vala:287
 msgid "Left Y Axis Scale"
 msgstr "बायां Y अक्ष पैमाना"
 
-#: data/ui/figure-settings-page.blp:167 graphs/window.vala:294
+#: data/ui/figure-settings-page.blp:167 graphs/window.vala:286
 msgid "Right Y Axis Scale"
 msgstr "दायां Y अक्ष पैमाना"
 
@@ -945,7 +945,7 @@ msgstr "कार्रवाई पुनः करें"
 msgid "Smoothen Settings"
 msgstr "स्मूथिंग सेटिंग्स"
 
-#: data/ui/smoothen-settings.blp:30 data/ui/window.blp:694
+#: data/ui/smoothen-settings.blp:30 data/ui/window.blp:695
 msgid "Savitzky–Golay Filter"
 msgstr "सवित्ज़की-गोले फिल्टर"
 
@@ -961,7 +961,7 @@ msgstr "फिल्टर विंडो के लिए कितने प�
 msgid "Polynomial degree"
 msgstr "बहुपद घात"
 
-#: data/ui/smoothen-settings.blp:48 data/ui/window.blp:699
+#: data/ui/smoothen-settings.blp:48 data/ui/window.blp:700
 msgid "Moving Average"
 msgstr "औसत चलन"
 
@@ -1353,79 +1353,79 @@ msgstr "गुणा X"
 msgid "Multiply Y"
 msgstr "गुणा Y"
 
-#: data/ui/window.blp:605 graphs/application.vala:250 graphs/item_box.vala:70
+#: data/ui/window.blp:606 graphs/application.vala:260 graphs/item_box.vala:70
 msgid "Undo"
 msgstr "पूर्ववत करें"
 
-#: data/ui/window.blp:610
+#: data/ui/window.blp:611
 msgid "Redo"
 msgstr "पुनः करें"
 
-#: data/ui/window.blp:615
+#: data/ui/window.blp:616
 msgid "View Menu"
 msgstr "मेनू देखें"
 
-#: data/ui/window.blp:623
+#: data/ui/window.blp:624
 msgid "Next View"
 msgstr "अगला देखें"
 
-#: data/ui/window.blp:629
+#: data/ui/window.blp:630
 msgid "Previous View"
 msgstr "पिछला देखें"
 
-#: data/ui/window.blp:647
+#: data/ui/window.blp:648
 msgid "New Project"
 msgstr "नई परियोजना"
 
-#: data/ui/window.blp:650
+#: data/ui/window.blp:651
 msgid "Save Project…"
 msgstr "परियोजना सहेजें…"
 
-#: data/ui/window.blp:651
+#: data/ui/window.blp:652
 msgid "Save Project as…"
 msgstr "परियोजना ऐसे सहेजें…"
 
-#: data/ui/window.blp:652
+#: data/ui/window.blp:653
 msgid "Open Project…"
 msgstr "परियोजना खोलें…"
 
-#: data/ui/window.blp:655
+#: data/ui/window.blp:656
 msgid "Export Data…"
 msgstr "डेटा निर्यात करें…"
 
-#: data/ui/window.blp:656
+#: data/ui/window.blp:657
 msgid "Export Figure…"
 msgstr "चित्र निर्यात करें…"
 
-#: data/ui/window.blp:662
+#: data/ui/window.blp:663
 msgid "Keyboard Shortcuts"
 msgstr "कीबोर्ड शॉर्टकट"
 
-#: data/ui/window.blp:663
+#: data/ui/window.blp:664
 msgid "Help"
 msgstr "सहायता"
 
-#: data/ui/window.blp:664
+#: data/ui/window.blp:665
 msgid "About Graphs"
-msgstr "Graphs के बारे में"
+msgstr "ग्राफ्स के बारे में"
 
-#: data/ui/window.blp:670
+#: data/ui/window.blp:671
 msgid "Add Data from File…"
 msgstr "फाइल से डेटा जोड़ें…"
 
-#: data/ui/window.blp:671
+#: data/ui/window.blp:672
 msgid "Add Equation…"
 msgstr "समीकरण जोड़ें…"
 
-#: data/ui/window.blp:680
+#: data/ui/window.blp:681
 msgid "At Maximum Y Value"
 msgstr "अधिकतम Y मान पर"
 
-#: data/ui/window.blp:685
+#: data/ui/window.blp:686
 msgid "At Middle X Value"
 msgstr "मध्य X मान पर"
 
-#: data/ui/window.blp:706
+#: data/ui/window.blp:707
 msgid "Advanced Settings"
 msgstr "उन्नत सेटिंग्स"
 
@@ -1471,16 +1471,16 @@ msgstr "निर्यातित चित्र"
 msgid "Could not load {font}"
 msgstr "{font} लोड नहीं किया जा सका"
 
-#: graphs/application.vala:249 graphs/item_box.vala:69
+#: graphs/application.vala:259 graphs/item_box.vala:69
 #, c-format
 msgid "Deleted %s"
 msgstr "%s मिटाया गया"
 
-#: graphs/curve_fitting.py:177
+#: graphs/curve_fitting.py:180
 msgid "Results:"
 msgstr "परिणाम:"
 
-#: graphs/curve_fitting.py:181
+#: graphs/curve_fitting.py:184
 msgid ""
 "Please enter valid fitting \n"
 "parameters to start the fit"
@@ -1488,28 +1488,28 @@ msgstr ""
 "कृपया फिट शुरू करने के लिए \n"
 "मान्य सेटिंग मापदंड दर्ज करें"
 
-#: graphs/curve_fitting.py:185
+#: graphs/curve_fitting.py:188
 msgid ""
 "Please enter a valid equation \n"
 "to start the fit"
 msgstr ""
 "कृपया फिट शुरू करने के लिए \n"
-"एक वैध समीकरण दर्ज करें"
+"एक मान्य समीकरण दर्ज करें"
 
-#: graphs/curve_fitting.py:189
+#: graphs/curve_fitting.py:192
 msgid ""
 "Please enter valid fitting bounds \n"
 "to start the fit"
 msgstr ""
 "कृपया फिट शुरू करने के लिए \n"
-"वैध फिटिंग सीमाएं दर्ज करें"
+"मान्य फिटिंग सीमाएं दर्ज करें"
 
-#: graphs/curve_fitting.py:202
+#: graphs/curve_fitting.py:205
 #, python-brace-format
 msgid "Sum of R²: {R2}"
 msgstr "R² का योग: {R2}"
 
-#: graphs/curve_fitting.vala:131
+#: graphs/curve_fitting.vala:136
 #, c-format
 msgid "Fitting Parameters for %s"
 msgstr "%s के लिए अनुकूलन मापदंड"
@@ -1548,7 +1548,7 @@ msgstr "X अक्ष अधिकतम"
 msgid "Y Axis Maximum"
 msgstr "Y अक्ष अधिकतम"
 
-#: graphs/figure_settings.vala:173 graphs/window.vala:291
+#: graphs/figure_settings.vala:173 graphs/window.vala:283
 msgid "X Axis Scale"
 msgstr "X अक्ष पैमाना"
 
@@ -1556,7 +1556,7 @@ msgstr "X अक्ष पैमाना"
 msgid "X Axis Label"
 msgstr "X अक्ष लेबल"
 
-#: graphs/figure_settings.vala:177 graphs/window.vala:296
+#: graphs/figure_settings.vala:177 graphs/window.vala:288
 msgid "Y Axis Scale"
 msgstr "Y अक्ष पैमाना"
 
@@ -1583,7 +1583,7 @@ msgstr "भरें"
 #: graphs/misc.py:107
 msgctxt "file-filter"
 msgid "Graphs Project File"
-msgstr "Graphs परियोजना फाइल"
+msgstr "ग्राफ्स परियोजना फाइल"
 
 #: graphs/operations.py:129
 #, python-brace-format
@@ -1668,22 +1668,22 @@ msgstr "X लेबल"
 msgid "Y Label"
 msgstr "Y लेबल"
 
-#: graphs/styles.py:222
+#: graphs/styles.py:225
 #, python-brace-format
 msgid "Could not parse {stylename}, loading system preferred style"
 msgstr "{stylename} का विश्लेषण नहीं किया जा सका, सिस्टम वरीय शैली लोड हो रही है"
 
-#: graphs/styles.py:230
+#: graphs/styles.py:233
 #, python-brace-format
 msgid "Plot style {stylename} does not exist loading system preferred"
 msgstr "प्लॉट शैली {stylename} मौजूद नहीं है, सिस्टम वरीय लोड हो रहा है"
 
-#: graphs/styles.py:633
+#: graphs/styles.py:636
 #, python-brace-format
 msgid "Are you sure you want to delete {stylename}?"
 msgstr "क्या आप वाकई {stylename} को मिटाना चाहते हैं?"
 
-#: graphs/styles.py:650
+#: graphs/styles.py:653
 #, python-brace-format
 msgid "Color {number}"
 msgstr "रंग {number}"
@@ -1692,19 +1692,23 @@ msgstr "रंग {number}"
 msgid "System"
 msgstr "सिस्टम"
 
-#: graphs/window.vala:177
+#: graphs/utilities.py:122
+msgid "All Files"
+msgstr "सभी फाइलें"
+
+#: graphs/window.vala:169
 msgid "Graphs (Development)"
 msgstr "रेखांकन (विकास)"
 
-#: graphs/window.vala:230
+#: graphs/window.vala:222
 msgid "Open Location"
 msgstr "स्थान खोलें"
 
-#: graphs/window.vala:254
+#: graphs/window.vala:246
 msgid "Optimize Limits"
 msgstr "सीमाएं अनुकूलित करें"
 
-#: graphs/window.vala:263
+#: graphs/window.vala:255
 msgctxt "scale"
 msgid "Inverse Root"
 msgstr "व्युत्क्रम"
