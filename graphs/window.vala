@@ -107,7 +107,6 @@ namespace Graphs {
             data.bind_property (
                 "items_selected", this.shift_button, "sensitive", 2
             );
-            data.bind_property ("empty", this.item_list, "visible", 4);
             data.bind_property ("can_undo", this.undo_button, "sensitive", 2);
             data.bind_property ("can_redo", this.redo_button, "sensitive", 2);
             data.bind_property ("can_view_back", this.view_back_button, "sensitive", 2);
@@ -142,21 +141,12 @@ namespace Graphs {
             }
 
             data.items_changed.connect (() => {
-                Widget child = null;
-                while ((child = this.item_list.get_last_child ()) != null) {
-                    this.item_list.remove (child);
-                }
-                int index = 0;
-                foreach (Item item in data) {
-                    var item_box = new ItemBox (application, item, index);
-                    this.item_list.append (item_box);
-                    Widget row = this.item_list.get_last_child ();
-                    row.add_controller (item_box.drag_source);
-                    row.add_controller (item_box.drop_target);
-                    index++;
-                }
+                this.item_list.set_visible (!data.is_empty ());
                 this.update_view_menu ();
                 data.add_view_history_state ();
+            });
+            this.item_list.bind_model (data, (object) => {
+                return new ItemBox ((Application) this.application, (Item) object);
             });
 
             this.close_request.connect (() => {
@@ -218,10 +208,20 @@ namespace Graphs {
                 Tools.open_file_location (file);
             });
             this.application.add_action (action);
-            var toast = new Adw.Toast (title);
-            toast.set_button_label (_("Open Location"));
-            toast.set_action_name ("app.open-file-location");
-            this.add_toast (toast);
+            this.add_toast (new Adw.Toast (title) {
+                button_label = _("Open Location"),
+                action_name = "app.open-file-location"
+            });
+        }
+
+        /**
+         * Add Toast with undo action.
+         */
+        public void add_undo_toast (string title) {
+            this.add_toast (new Adw.Toast (title) {
+                button_label = _("Undo"),
+                action_name = "app.undo"
+            });
         }
 
         [GtkCallback]

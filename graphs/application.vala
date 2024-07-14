@@ -256,11 +256,7 @@ namespace Graphs {
                     }
                 }
                 string names = name_builder.free_and_steal ()[:-2];
-                var toast = new Adw.Toast (_("Deleted %s").printf (names));
-                toast.set_button_label (_("Undo"));
-                toast.set_action_name ("app.undo");
-                this.data.delete_items (items);
-                this.window.add_toast (toast);
+                this.window.add_undo_toast (_("Deleted %s").printf (names));
             });
             this.add_action (delete_selected_action);
 

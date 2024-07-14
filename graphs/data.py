@@ -37,7 +37,7 @@ class Data(Graphs.Data):
         self.connect("item_changed", self._on_item_changed)
         self.connect("delete_request", self._on_delete_request)
         self.connect("python_method_request", self._on_python_method_request)
-        self.connect("position_change_request", self._change_position)
+        self.connect("position_changed", self._on_position_changed)
 
     @staticmethod
     def _on_python_method_request(self, method: str) -> None:
@@ -56,8 +56,7 @@ class Data(Graphs.Data):
 
     def _initialize(self):
         """Initialize the data class and set default values."""
-        figure_settings = self.get_figure_settings()
-        limits = figure_settings.get_limits()
+        limits = self.get_figure_settings().get_limits()
         self.props.can_undo = False
         self.props.can_redo = False
         self.props.can_view_back = False
@@ -102,17 +101,8 @@ class Data(Graphs.Data):
         return self.get_item(getter)
 
     @staticmethod
-    def _change_position(self, index1: int, index2: int) -> None:
+    def _on_position_changed(self, index1: int, index2: int) -> None:
         """Change item position of index2 to that of index1."""
-        items = self.get_items()
-        # Check if target key is lower in the order, if so we can put the old
-        # key below the target key. Otherwise put it above.
-        if index1 < index2:
-            items[index1:index2 + 1] = [items[index2]] + items[index1:index2]
-        else:
-            items[index2:index1 + 1] = \
-                items[index2 + 1:index1 + 1] + [items[index2]]
-        self.set_items(items)
         self._current_batch.append((3, (index2, index1)))
 
     def add_items(
@@ -163,7 +153,7 @@ class Data(Graphs.Data):
             if xlabel:
                 original_position = new_item.get_xposition()
                 if original_position == 0:
-                    if _is_default("bottom-label") or self.props.empty:
+                    if _is_default("bottom-label") or self.is_empty():
                         figure_settings.set_bottom_label(xlabel)
                     elif xlabel != figure_settings.get_bottom_label():
                         new_item.set_xposition(1)
@@ -176,7 +166,7 @@ class Data(Graphs.Data):
             if ylabel:
                 original_position = new_item.get_yposition()
                 if original_position == 0:
-                    if _is_default("left-label") or self.props.empty:
+                    if _is_default("left-label") or self.is_empty():
                         figure_settings.set_left_label(ylabel)
                     elif ylabel != figure_settings.get_left_label():
                         new_item.set_yposition(1)
@@ -192,15 +182,12 @@ class Data(Graphs.Data):
                         new_item.set_color(color)
                         break
 
-            self._add_item(new_item)
+            self._add_item(new_item, -1, False)
             change = (1, copy.deepcopy(new_item.to_dict()))
             self._current_batch.append(change)
+        self.emit("items_changed", prev_size, 0, len(items))
         self._optimize_limits()
         self._add_history_state()
-        self._update_used_positions()
-        self.emit("items-changed", prev_size, 0, len(items))
-        self.notify("empty")
-        self.notify("items_selected")
 
     @staticmethod
     def _on_delete_request(self, items: misc.ItemList, _num):
@@ -226,12 +213,7 @@ class Data(Graphs.Data):
                     self.props.settings.get_string(f"{direction}-label"),
                 )
 
-        self._update_used_positions()
-        # TODO: fix
-        self.emit("items-changed", 0, 0, 0)
-        self.notify("empty")
         self._add_history_state()
-        self.notify("items_selected")
 
     @staticmethod
     def _on_item_changed(self, item_, prop) -> None:
@@ -302,31 +284,24 @@ class Data(Graphs.Data):
             return
         batch = self._history_states[self._history_pos][0]
         self._history_pos -= 1
-        items_changed = False
         for change_type, change in reversed(batch):
             if change_type == 0:
                 self[change[0]].set_property(change[1], change[2])
             elif change_type == 1:
                 self._remove_item(self.get_for_uuid(change["uuid"]))
-                items_changed = True
             elif change_type == 2:
-                item_ = item.new_from_dict(copy.deepcopy(change[1]))
-                self._add_item(item_)
-                self._change_position(self, change[0], len(self) - 1)
-                items_changed = True
+                self._add_item(
+                    item.new_from_dict(copy.deepcopy(change[1])),
+                    change[0],
+                    True,
+                )
             elif change_type == 3:
-                self._change_position(self, change[0], change[1])
-                items_changed = True
+                self.change_position(change[0], change[1])
             elif change_type == 4:
                 self.props.figure_settings.set_property(
                     change[0],
                     change[1],
                 )
-        if items_changed:
-            self._update_used_positions()
-            # TODO: fix
-            self.emit("items-changed", 0, 0, 0)
-            self.notify("empty")
         self.notify("items_selected")
         self.get_figure_settings().set_limits(
             self._history_states[self._history_pos][1],
@@ -343,29 +318,22 @@ class Data(Graphs.Data):
             return
         self._history_pos += 1
         state = self._history_states[self._history_pos]
-        items_changed = False
         for change_type, change in state[0]:
             if change_type == 0:
                 self[change[0]].set_property(change[1], change[3])
             elif change_type == 1:
-                self._add_item(item.new_from_dict(copy.deepcopy(change)))
-                items_changed = True
+                self._add_item(
+                    item.new_from_dict(copy.deepcopy(change)), -1, True,
+                )
             elif change_type == 2:
                 self._remove_item(self.get_for_uuid(change[1]["uuid"]))
-                items_changed = True
             elif change_type == 3:
-                self._change_position(self, change[1], change[0])
-                items_changed = True
+                self.change_position(change[1], change[0])
             elif change_type == 4:
                 self.props.figure_settings.set_property(
                     change[0],
                     change[2],
                 )
-        if items_changed:
-            self._update_used_positions()
-            # TODO: fix
-            self.emit("items-changed", 0, 0, 0)
-            self.notify("empty")
         self.notify("items_selected")
         self.get_figure_settings().set_limits(state[1])
         self.props.can_redo = self._history_pos < -1
@@ -501,7 +469,6 @@ class Data(Graphs.Data):
             if figure_settings.get_property(key) != value:
                 figure_settings.set_property(key, value)
         self.set_items([item.new_from_dict(d) for d in project_dict["data"]])
-        self.notify("items_selected")
 
         # Set clipboard
         self._set_data_copy()

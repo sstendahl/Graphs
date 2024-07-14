@@ -16,9 +16,6 @@ namespace Graphs {
         public bool unsaved { get; set; default = false; }
         public string project_name { get; protected set; }
         public string project_path { get; protected set; }
-        public bool empty {
-            get { return this._items.size == 0; }
-        }
         public bool items_selected {
             get {
                 foreach (Item item in this._items) {
@@ -32,12 +29,16 @@ namespace Graphs {
         private Gee.AbstractList<Item> _items;
 
         protected signal void python_method_request (string method);
-        protected signal void position_change_request (int index1, int index2);
+        protected signal void position_changed (uint index1, uint index2);
         protected signal void item_changed (Item item, string prop_name);
         protected signal void delete_request (Item[] items);
 
         construct {
             this._items = new Gee.LinkedList<Item> ();
+            this.items_changed.connect (() => {
+                this._update_used_positions ();
+                this.notify_property ("items_selected");
+            });
         }
 
         public Type get_item_type () {
@@ -52,23 +53,30 @@ namespace Graphs {
             this.unsaved = false;
             this.python_method_request.emit ("_initialize");
             this.items_changed.emit (0, removed, 0);
-            this.notify_property ("empty");
+        }
+
+        public bool is_empty () {
+            return this._items.size == 0;
         }
 
         public Item[] get_items () {
             return this._items.to_array ();
         }
 
-        protected void _add_item (Item item) {
+        protected void _add_item (Item item, int index = -1, bool notify = false) {
+            if (index < 0) index = this._items.size;
             item.notify["selected"].connect (this._on_item_selected);
             item.notify.connect (this._on_item_change);
             item.notify["xposition"].connect (this._on_item_position_change);
             item.notify["yposition"].connect (this._on_item_position_change);
-            this._items.add (item);
+            this._items.insert (index, item);
+            if (notify) this.items_changed.emit (index, 0, 1);
         }
 
         protected void _remove_item (Item item) {
-            this._items.remove (item);
+            uint index = this.index (item);
+            this._items.remove_at ((int) index);
+            this.items_changed.emit (index, 1, 0);
         }
 
         public void delete_items (Item[] items) {
@@ -97,7 +105,6 @@ namespace Graphs {
             }
             this._update_used_positions ();
             this.items_changed.emit (0, removed, this._items.size);
-            this.notify_property ("empty");
         }
 
         public string[] get_names () {
@@ -108,7 +115,7 @@ namespace Graphs {
             return names;
         }
 
-        public int index (Item item) {
+        public uint index (Item item) {
             return this._items.index_of (item);
         }
 
@@ -132,7 +139,7 @@ namespace Graphs {
         }
 
         protected void _update_used_positions () {
-            if (this.empty) {
+            if (this._items.size == 0) {
                 this._used_positions = {true, false, true, false};
                 return;
             }
@@ -158,12 +165,19 @@ namespace Graphs {
             return Config.VERSION;
         }
 
-        public void optimize_limits () {
-            this.python_method_request.emit ("_optimize_limits");
+        public void change_position (uint index1, uint index2) {
+            if (index1 == index2) return;
+            Item item = this._items[(int) index2];
+            this._items.remove_at ((int) index2);
+            this._items.insert ((int) index1, item);
+            uint position = uint.min (index1, index2);
+            uint changed = uint.max (index1, index2) - position + 1;
+            this.items_changed.emit (position, changed, changed);
+            this.position_changed.emit (index1, index2);
         }
 
-        public void change_position (int index1, int index2) {
-            this.position_change_request.emit (index1, index2);
+        public void optimize_limits () {
+            this.python_method_request.emit ("_optimize_limits");
         }
 
         public void add_history_state () {
