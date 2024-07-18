@@ -268,6 +268,7 @@ namespace Graphs {
                 drag_source.drag_begin.connect ((drag) => {
                     var drag_widget = new Gtk.ListBox ();
                     drag_widget.set_size_request (row.get_width (), row.get_height ());
+                    drag_widget.add_css_class ("boxed-list");
 
                     var drag_row = new ItemBox ((Application) this.application, (Item) row.item) {
                         title = row.get_title ()
