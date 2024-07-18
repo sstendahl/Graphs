@@ -42,7 +42,7 @@ corner, or by pressing <cmd>Ctrl+Shift+N</cmd>. Most commonly used syntax is
 accepted, with an <code>x</code> denoting the x-coordinate. A simple quadratic
 equation could for instance be created using <code>x²+5</code> as input. Be
 aware that trigonometric functions are using radians by default. If you want to
-use radians, simply add a <code>d</code> to the trigonometric function. For
+use degrees, simply add a <code>d</code> to the trigonometric function. For
 instance <code>cosd(x)</code> generates a cosine where the x coordinate is
 given in degrees while <code>cos(x)</code> generates a cosine with the
 x-coordinate in radians.
