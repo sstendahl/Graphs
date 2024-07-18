@@ -43,19 +43,6 @@ namespace Graphs {
                 this.application.python_helper.create_edit_item_dialog (this.item);
             });
 
-            var drag_source = new DragSource () { actions = DragAction.MOVE };
-            drag_source.prepare.connect ((s, x, y) => {
-                var paintable = new WidgetPaintable (this);
-                drag_source.set_icon (paintable, (int) x, (int) y);
-                return new ContentProvider.for_value (this.index);
-            });
-            this.add_controller (drag_source);
-            var drop_target = new DropTarget (typeof (uint), DragAction.MOVE);
-            drop_target.drop.connect ((t, val, x, y) => {
-                this.change_position (val.get_uint ());
-                return true;
-            });
-            this.add_controller (drop_target);
 
             var action_group = new SimpleActionGroup ();
             var delete_action = new SimpleAction ("delete", null);
@@ -119,7 +106,7 @@ namespace Graphs {
             );
         }
 
-        private void change_position (uint source_index) {
+        public void change_position (uint source_index) {
             Data data = this.application.data;
             data.change_position (this.index, source_index);
             data.add_history_state ();
