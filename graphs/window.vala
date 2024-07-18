@@ -255,7 +255,7 @@ namespace Graphs {
                 row.add_controller (drop_controller);
 
                 // Drag handling
-                drag_source.prepare.connect( (x, y) => {
+                drag_source.prepare.connect ( (x, y) => {
                     drag_x = x;
                     drag_y = y;
 
@@ -268,9 +268,8 @@ namespace Graphs {
                 drag_source.drag_begin.connect ((drag) => {
                     var drag_widget = new Gtk.ListBox ();
                     drag_widget.set_size_request (row.get_width (), row.get_height ());
-                    drag_widget.add_css_class("boxed-list");
 
-                    var drag_row = new ItemBox ((Application) this.application, (Item) row.item){
+                    var drag_row = new ItemBox ((Application) this.application, (Item) row.item) {
                         title = row.get_title ()
                     };
 
@@ -284,8 +283,8 @@ namespace Graphs {
                 });
 
                 // Update row visuals during DnD operation
-                drop_controller.enter.connect(() => this.item_list.drag_highlight_row (row));
-                drop_controller.leave.connect(() => this.item_list.drag_unhighlight_row ());
+                drop_controller.enter.connect (() => this.item_list.drag_highlight_row (row));
+                drop_controller.leave.connect (() => this.item_list.drag_unhighlight_row ());
             }
 
 
