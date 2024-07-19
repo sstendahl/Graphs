@@ -231,6 +231,9 @@ namespace Graphs {
         [GtkChild]
         public unowned Button edit_button { get; }
 
+        [GtkChild]
+        public unowned Button delete_button { get; }
+
         private Style _style;
         private CssProvider provider;
 

@@ -128,9 +128,6 @@ namespace Graphs {
                 else if (object is Adw.ComboRow) {
                     figure_settings.bind_property (key, object, "selected", 1 | 2);
                 }
-                else if (object is Adw.ExpanderRow) {
-                    figure_settings.bind_property (key, object, "enable-expansion", 1 | 2);
-                }
                 else if (object is Adw.SwitchRow) {
                     figure_settings.bind_property (key, object, "active", 1 | 2);
                 }
@@ -245,6 +242,20 @@ namespace Graphs {
                 preview.edit_button.clicked.connect (() => {
                     this.load_style_request.emit (style);
                     this.navigation_view.push (this.style_editor);
+                });
+                preview.delete_button.clicked.connect (() => {
+                    var dialog = Tools.build_dialog ("delete_style_dialog") as Adw.AlertDialog;
+                    string msg = _("Are you sure you want to delete %s?");
+                    dialog.set_body (msg.printf (style.name));
+                    dialog.response.connect ((d, response) => {
+                        if (response != "delete_style") return;
+                        try {
+                            style.file.trash ();
+                        } catch {
+                            assert_not_reached ();
+                        }
+                    });
+                    dialog.present (this);
                 });
             }
         }
