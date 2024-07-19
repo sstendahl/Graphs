@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: graphs\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2024-05-22 15:51+0000\n"
-"PO-Revision-Date: 2024-05-23 14:09+0200\n"
+"POT-Creation-Date: 2024-07-15 12:52+0000\n"
+"PO-Revision-Date: 2024-07-18 22:24+0200\n"
 "Last-Translator: Julián Villodre <jvillodrede@gmail.com>\n"
 "Language-Team: Spanish - Spain <gnome-es-list@gnome.org>\n"
 "Language: es\n"
@@ -1360,7 +1360,7 @@ msgstr "Multiplicar X"
 msgid "Multiply Y"
 msgstr "Multiplicar Y"
 
-#: data/ui/window.blp:606 graphs/application.vala:260 graphs/item_box.vala:70
+#: data/ui/window.blp:606 graphs/window.vala:222
 msgid "Undo"
 msgstr "Deshacer"
 
@@ -1480,16 +1480,16 @@ msgstr "Figura exportada"
 msgid "Could not load {font}"
 msgstr "No se ha podido cargar {font}"
 
-#: graphs/application.vala:259 graphs/item_box.vala:69
+#: graphs/application.vala:259 graphs/item_box.vala:66
 #, c-format
 msgid "Deleted %s"
 msgstr "Eliminado %s"
 
-#: graphs/curve_fitting.py:177
+#: graphs/curve_fitting.py:180
 msgid "Results:"
 msgstr "Resultados:"
 
-#: graphs/curve_fitting.py:181
+#: graphs/curve_fitting.py:184
 msgid ""
 "Please enter valid fitting \n"
 "parameters to start the fit"
@@ -1497,7 +1497,7 @@ msgstr ""
 "Por favor, introduzca parámetros \n"
 "válidos para iniciar el ajuste"
 
-#: graphs/curve_fitting.py:185
+#: graphs/curve_fitting.py:188
 msgid ""
 "Please enter a valid equation \n"
 "to start the fit"
@@ -1505,7 +1505,7 @@ msgstr ""
 "Por favor, introduzca una ecuación válida\n"
 "para iniciar el ajuste"
 
-#: graphs/curve_fitting.py:189
+#: graphs/curve_fitting.py:192
 msgid ""
 "Please enter valid fitting bounds \n"
 "to start the fit"
@@ -1513,21 +1513,21 @@ msgstr ""
 "Introduzca límites de ajuste válidos \n"
 "para iniciar el ajuste"
 
-#: graphs/curve_fitting.py:202
+#: graphs/curve_fitting.py:205
 #, python-brace-format
 msgid "Sum of R²: {R2}"
 msgstr "Suma de R²: {R2}"
 
-#: graphs/curve_fitting.vala:131
+#: graphs/curve_fitting.vala:136
 #, c-format
 msgid "Fitting Parameters for %s"
 msgstr "Parámetros de ajuste para %s"
 
-#: graphs/data.py:73
+#: graphs/data.py:72
 msgid "Untitled Project"
 msgstr "Proyecto sin título"
 
-#: graphs/data.py:74
+#: graphs/data.py:73
 msgid "Draft"
 msgstr "Borrador"
 
@@ -1708,11 +1708,15 @@ msgstr "Color {number}"
 msgid "System"
 msgstr "Sistema"
 
-#: graphs/window.vala:169
+#: graphs/utilities.py:122
+msgid "All Files"
+msgstr "Todos los archivos"
+
+#: graphs/window.vala:159
 msgid "Graphs (Development)"
 msgstr "Gráficos (desarrollo)"
 
-#: graphs/window.vala:222
+#: graphs/window.vala:212
 msgid "Open Location"
 msgstr "Abrir ubicación"
 
