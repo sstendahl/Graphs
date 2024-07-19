@@ -38,11 +38,16 @@ namespace Graphs {
             this.item.bind_property ("selected", this.check_button, "active", 2);
             this.item.notify["color"].connect (on_color_change);
             this.on_color_change ();
+        }
 
+        /**
+         * Setup the actions for the ItemBox. This is omitted for rows created
+         * for drag and drop.
+         */
+        public void setup_interactions () {
             this.activated.connect (() => {
                 this.application.python_helper.create_edit_item_dialog (this.item);
             });
-
 
             var action_group = new SimpleActionGroup ();
             var delete_action = new SimpleAction ("delete", null);
