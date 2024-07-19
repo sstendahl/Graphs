@@ -147,6 +147,7 @@ namespace Graphs {
             });
             this.item_list.bind_model (data, (object) => {
                 var row = new ItemBox ((Application) this.application, (Item) object);
+                row.setup_interactions ();
 
                 double drag_x = 0.0;
                 double drag_y = 0.0;
@@ -164,10 +165,10 @@ namespace Graphs {
                     drag_x = x;
                     drag_y = y;
 
-                    Value value = Value (typeof (Adw.ActionRow));
-                    value.set_object (row);
+                    Value val = Value (typeof (Adw.ActionRow));
+                    val.set_object (row);
 
-                    return new Gdk.ContentProvider.for_value (value);
+                    return new Gdk.ContentProvider.for_value (val);
                 });
 
                 drag_source.drag_begin.connect ((drag) => {
@@ -175,9 +176,7 @@ namespace Graphs {
                     drag_widget.set_size_request (row.get_width (), row.get_height ());
                     drag_widget.add_css_class ("boxed-list");
 
-                    var drag_row = new ItemBox ((Application) this.application, (Item) row.item) {
-                        title = row.get_title ()
-                    };
+                    var drag_row = new ItemBox ((Application) this.application, row.item);
 
                     drag_widget.append (drag_row);
                     drag_widget.drag_highlight_row (drag_row);
@@ -196,19 +195,15 @@ namespace Graphs {
             });
 
             var drop_target = new Gtk.DropTarget (typeof (Adw.ActionRow), Gdk.DragAction.MOVE);
-            drop_target.drop.connect ((drop, value, x, y) => {
-                var value_row = value.get_object () as ItemBox ? ;
-                Gtk.ListBoxRow? target_row = this.item_list.get_row_at_y ((int) y);
+            drop_target.drop.connect ((drop, val, x, y) => {
+                var value_row = val.get_object () as ItemBox?;
+                var target_row = this.item_list.get_row_at_y ((int) y) as ItemBox?;
                 // If value or the target row is null, do not accept the drop
                 if (value_row == null || target_row == null) {
                     return false;
                 }
 
-                data.change_position (
-                    target_row.get_index (), value_row.get_index ()
-                );
-                data.add_history_state ();
-                data.add_view_history_state ();
+                target_row.change_position (value_row.get_index ());
                 target_row.set_state_flags (Gtk.StateFlags.NORMAL, true);
 
                 return true;
