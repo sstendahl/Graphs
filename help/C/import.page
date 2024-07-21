@@ -37,8 +37,8 @@ the default Whitespace option.
 
 <p>
 The other way to import data is to generate data directly using an equation.
-This can be done using the "Add data by Equation" button found in the top-left
-corner, or by pressing <cmd>Ctrl+Shift+N</cmd>. Most commonly used syntax is
+This can be done using the "Add Equation" button found in the top-left
+corner, or by pressing <cmd>Ctrl+Alt+N</cmd>. Most commonly used syntax is
 accepted, with an <code>x</code> denoting the x-coordinate. A simple quadratic
 equation could for instance be created using <code>x²+5</code> as input. Be
 aware that trigonometric functions are using radians by default. If you want to
