@@ -7,7 +7,9 @@ from gettext import gettext as _, pgettext as C_
 
 from gi.repository import GLib, Graphs, Gtk
 
-from graphs import export_data, file_import, file_io, misc, utilities
+import gio_pyio
+
+from graphs import export_data, file_import, misc, utilities
 from graphs.figure_settings import FigureSettingsDialog
 from graphs.item import DataItem
 
@@ -108,7 +110,7 @@ def export_figure_action(application: Graphs.Application) -> None:
     def on_accept(_dialog, file):
         window = application.get_window()
         settings = application.get_settings_child("export-figure")
-        with file_io.open_wrapped(file, "wb") as wrapper:
+        with gio_pyio.open(file, "wb") as wrapper:
             window.get_canvas().figure.savefig(
                 wrapper,
                 format=settings.get_string("file-format"),

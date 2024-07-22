@@ -5,6 +5,8 @@ from gettext import gettext as _
 
 from gi.repository import Gio, Graphs
 
+import gio_pyio
+
 from graphs import file_io, item, misc, project, utilities
 from graphs.misc import ParseError
 
@@ -58,7 +60,7 @@ def import_from_xrdml(_params, style, file: Gio.File) -> misc.ItemList:
 
 def import_from_xry(_params, style, file: Gio.File) -> misc.ItemList:
     """Import data from .xry files used by Leybold X-ray apparatus."""
-    with file_io.open_wrapped(file, "rt", encoding="ISO-8859-1") as wrapper:
+    with gio_pyio.open(file, "rt", encoding="ISO-8859-1") as wrapper:
 
         def skip(lines: int):
             for _count in range(lines):

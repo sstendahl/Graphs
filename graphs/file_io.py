@@ -1,73 +1,11 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Module for file operations."""
-import io
 import json
 from xml.dom import minidom
 
-from gi.repository import GLib, Gio
+from gi.repository import Gio
 
-
-class FileLikeWrapper(io.BufferedIOBase):
-    """FileLike Wrapper for Gio.Files."""
-
-    def __init__(self, read_stream=None, write_stream=None):
-        self._read_stream, self._write_stream = read_stream, write_stream
-
-    @classmethod
-    def new_for_io_stream(cls, io_stream: Gio.IOStream):
-        """Create a wrapper for an IOStream."""
-        return cls(
-            read_stream=io_stream.get_input_stream(),
-            write_stream=io_stream.get_output_stream(),
-        )
-
-    @property
-    def closed(self) -> bool:
-        """Whether or not the stream is closed."""
-        return self._read_stream is None and self._write_stream is None
-
-    def close(self) -> None:
-        """Close the stream."""
-        if self._read_stream is not None:
-            self._read_stream.close()
-            self._read_stream = None
-        if self._write_stream is not None:
-            self._write_stream.close()
-            self._write_stream = None
-
-    def writable(self) -> bool:
-        """Whether or not the stream can be written to."""
-        return self._write_stream is not None
-
-    def write(self, b) -> int:
-        """Write to the stream."""
-        if self._write_stream is None:
-            raise OSError()
-        elif b is None or b == b"":
-            return 0
-        return self._write_stream.write_bytes(GLib.Bytes(b))
-
-    def readable(self) -> bool:
-        """Whether or not the stream can be read from."""
-        return self._read_stream is not None
-
-    def read(self, size=-1):
-        """Read from the stream."""
-        if self._read_stream is None:
-            raise OSError()
-        elif size == 0:
-            return b""
-        elif size > 0:
-            return self._read_stream.read_bytes(size, None).get_data()
-        buffer = io.BytesIO()
-        while True:
-            chunk = self._read_stream.read_bytes(4096, None)
-            if chunk.get_size() == 0:
-                break
-            buffer.write(chunk.get_data())
-        return buffer.getvalue()
-
-    read1 = read
+import gio_pyio
 
 
 def create_write_stream(file: Gio.File) -> Gio.OutputStream:
@@ -75,38 +13,6 @@ def create_write_stream(file: Gio.File) -> Gio.OutputStream:
     if file.query_exists(None):
         file.delete(None)
     return file.create(0, None)
-
-
-def open_wrapped(file: Gio.File, mode: str = "rt", encoding: str = "utf-8"):
-    """Open a file in a FileLike wrapper."""
-    read = "r" in mode
-    append = "a" in mode
-    replace = "w" in mode
-
-    def _io_stream():
-        return FileLikeWrapper.new_for_io_stream(file.open_readwrite(None))
-
-    if "x" in mode:
-        if file.query_exists():
-            return OSError()
-        stream = create_write_stream(file)
-        stream.close()
-    if read and append:
-        obj = _io_stream()
-    elif read and replace:
-        stream = create_write_stream(file)
-        stream.close()
-        obj = _io_stream()
-    elif read:
-        obj = FileLikeWrapper(read_stream=file.read(None))
-    elif replace:
-        obj = FileLikeWrapper(write_stream=create_write_stream(file))
-    elif append:
-        obj = FileLikeWrapper(write_stream=file.append(None))
-
-    if "b" not in mode:
-        obj = io.TextIOWrapper(obj, encoding=encoding)
-    return obj
 
 
 def iter_data_stream(stream: Gio.DataInputStream):
@@ -123,13 +29,13 @@ def iter_data_stream(stream: Gio.DataInputStream):
 
 def parse_json(file: Gio.File) -> dict:
     """Parse a json file to a python dict."""
-    with open_wrapped(file, "rb") as wrapper:
+    with gio_pyio.open(file, "rb") as wrapper:
         return json.load(wrapper)
 
 
 def write_json(file: Gio.File, json_object: dict, pretty_print=True) -> None:
     """Write a python dict to a python file."""
-    with open_wrapped(file, "wt") as wrapper:
+    with gio_pyio.open(file, "wt") as wrapper:
         json.dump(
             json_object,
             wrapper,
@@ -140,5 +46,5 @@ def write_json(file: Gio.File, json_object: dict, pretty_print=True) -> None:
 
 def parse_xml(file: Gio.File) -> dict:
     """Parse a xml file to a python dict."""
-    with open_wrapped(file, "rb") as wrapper:
+    with gio_pyio.open(file, "rb") as wrapper:
         return minidom.parse(wrapper)

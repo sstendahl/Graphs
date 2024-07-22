@@ -7,6 +7,8 @@ from pathlib import Path
 
 from gi.repository import GLib, Gio, Graphs
 
+import gio_pyio
+
 from graphs import file_io, misc, style_io
 
 _CONFIG_MIGRATION_TABLE = {
@@ -269,7 +271,7 @@ def migrate_project(file: Gio.File) -> dict:
     """Migrate pickle-based project."""
     sys.modules["graphs.misc"] = sys.modules[__name__]
     sys.modules["graphs.item"] = sys.modules[__name__]
-    with file_io.open_wrapped(file, "rb") as wrapper:
+    with gio_pyio.open(file, "rb") as wrapper:
         project = pickle.load(wrapper)
 
     figure_settings = project["plot_settings"].migrate()
