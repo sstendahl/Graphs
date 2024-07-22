@@ -124,9 +124,7 @@ WRITE_IGNORELIST = STYLE_IGNORELIST + [
 
 def write(file: Gio.File, name: str, style: RcParams) -> None:
     """Write a style to a file."""
-    if file.query_exists(None):
-        file.delete(None)
-    stream = Gio.DataOutputStream.new(file.create(0, None))
+    stream = Gio.DataOutputStream.new(file.replace(None, False, 0, None))
     stream.put_string("# Generated via Graphs\n")
     stream.put_string(f"# {name}\n")
     for key, value in style.items():

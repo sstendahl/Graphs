@@ -99,12 +99,12 @@ class StyleManager(Graphs.StyleManager):
         possible_visual_impact = False
         stylename = None
         style_model = self.props.selection_model.get_model()
-        if event_type == 3:
+        if event_type == Gio.FileMonitorEvent.CREATED:
             self.add_user_style(file)
-        elif event_type == 2:
-            self.remove_style(file)
+        elif event_type == Gio.FileMonitorEvent.DELETED:
+            stylename = self.remove_style(file)
             possible_visual_impact = True
-        elif event_type == 1:
+        elif event_type == Gio.FileMonitorEvent.CHANGES_DONE_HINT:
             tmp_style_params, stylename = style_io.parse(file)
             style_params = self._complete_style(tmp_style_params)
             for style in style_model:
@@ -112,11 +112,10 @@ class StyleManager(Graphs.StyleManager):
                     style.set_preview(_generate_preview(style_params))
                     style.set_light(_is_style_bright(style_params))
                     break
-            possible_visual_impact = False
+            possible_visual_impact = True
         if possible_visual_impact \
                 and self.props.use_custom_style \
-                and self.props.custom_style == stylename \
-                and event_type != 2:
+                and self.props.custom_style == stylename:
             self._on_style_change()
 
     @staticmethod
