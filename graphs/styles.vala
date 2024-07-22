@@ -22,7 +22,7 @@ namespace Graphs {
         public string selected_stylename { get; protected set; }
 
         private GLib.ListStore style_model;
-        protected Gee.AbstractSet<string> stylenames { get; private set; }
+        private Gee.AbstractSet<string> stylenames { get; private set; }
 
         protected signal void copy_request (string template, string name);
         protected signal Style style_request (File file);
@@ -208,7 +208,7 @@ namespace Graphs {
             }
         }
 
-        protected void add_user_style (File file) {
+        private void add_user_style (File file) {
             Style style = this.style_request.emit (file);
             if (this.stylenames.contains (style.name)) {
                 style.name = Tools.get_duplicate_string (
