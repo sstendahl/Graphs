@@ -1,5 +1,10 @@
+#!/usr/bin/python
 # SPDX-License-Identifier: GPL-3.0-or-later
-"""Generate Graphs GResource at build time."""
+"""
+Generate Graphs GResource.
+
+Used at build time by meson, but is build-system-independent.
+"""
 import argparse
 import importlib.util
 import logging
@@ -17,47 +22,47 @@ from matplotlib import font_manager
 import numpy
 
 parser = argparse.ArgumentParser(
-    description="Generate Graphs GResource at build time.",
+    description="Generate Graphs gresource.",
 )
 parser.add_argument(
     "out",
-    help="The output file",
+    help="the output file",
 )
 parser.add_argument(
     "dir",
-    help="Path to build directory",
+    help="Path to build directory. Files provided will be copied there.",
 )
 parser.add_argument(
     "style_io",
-    help="Path to style_io.py",
+    help="Path to `style_io.py`. Used to generate style previews.",
 )
 parser.add_argument(
     "--ui",
     required=True,
     nargs="+",
     dest="ui",
-    help="List of UI Files.",
+    help="List of UI files.",
 )
 parser.add_argument(
     "--styles",
     required=True,
     nargs="+",
     dest="styles",
-    help="List of Styles.",
+    help="List of style files.",
 )
 parser.add_argument(
     "--other",
     required=True,
     nargs="+",
     dest="other",
-    help="List of other Files to include at toplevel.",
+    help="List of other files to include.",
 )
 parser.add_argument(
     "--icons",
     required=True,
     nargs="+",
     dest="icons",
-    help="List of icon Files.",
+    help="List of icon files.",
 )
 args = parser.parse_args()
 
@@ -116,8 +121,7 @@ for style_path in args.styles:
         },
     )
     style_element.text = name
-    params_file = Gio.File.new_for_path(style_file)
-    params, stylename = style_io.parse(params_file)
+    params, stylename = style_io.parse(Gio.File.new_for_path(style_file))
     out_path = Path(args.dir, name.replace(".mplstyle", ".png"))
     styles[stylename] = out_path
     with open(out_path, "wb") as out_file:
@@ -164,7 +168,7 @@ for sys_style in ("Adwaita", "Yaru"):
 ui_gresource = ElementTree.SubElement(
     gresources,
     "gresource",
-    attrib={"prefix": "/se/sjoerd/Graphs/ui/"},
+    attrib={"prefix": "/se/sjoerd/Graphs/"},
 )
 help_overlay_path = None
 for ui_file in args.ui:
@@ -177,12 +181,11 @@ for ui_file in args.ui:
         "file",
         attrib={
             "preprocess": "xml-stripblanks",
-            "alias": path.name,
         },
     )
     ui_file_element.text = "ui/" + path.name
 help_overlay_element = ElementTree.SubElement(
-    main_gresource,
+    ui_gresource,
     "file",
     attrib={
         "preprocess": "xml-stripblanks",

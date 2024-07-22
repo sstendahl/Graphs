@@ -2,7 +2,7 @@
     "name": "python-dependencies",
     "buildsystem": "simple",
     "build-commands": [
-        "pip3 install --verbose --exists-action=i --no-index --find-links=\"file://${PWD}\" --prefix=${FLATPAK_DEST} \"numpy\" \"scipy\" \"matplotlib\" \"numexpr\" \"sympy\""
+        "pip3 install --verbose --exists-action=i --no-index --find-links=\"file://${PWD}\" --prefix=${FLATPAK_DEST} \"numpy\" \"scipy\" \"matplotlib\" \"numexpr\" \"sympy\" \"gio-pyio\""
     ],
     "build-options": {
         "env": {
@@ -213,6 +213,15 @@
                 "type": "pypi",
                 "name": "sympy",
                 "packagetype": "bdist_wheel"
+            }
+        },
+        {
+            "type": "file",
+            "url": "https://files.pythonhosted.org/packages/1b/b4/d534d5f7f6b9447d75623da003b0c4c6241c412321607fc92449ef35a94e/gio_pyio-0.0.1-py3-none-any.whl",
+            "sha256": "0c3a0f22324e55fb41d29def6d6d3a65bb27324853f664958eae1fa6293fa646",
+            "x-checker-data": {
+                "type": "pypi",
+                "name": "gio-pyio"
             }
         }
     ],
