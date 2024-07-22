@@ -165,10 +165,23 @@ namespace Graphs {
             bool possible_visual_impact = true;
             switch (event_type) {
                 case FileMonitorEvent.CREATED:
+                    for (uint i = 1; i < this.style_model.get_n_items (); i++) {
+                        Style style = (Style) this.style_model.get_item (i);
+                        if (style.file.equal (file)) {
+                            return;
+                        }
+                    }
                     this.add_user_style (file);
                     break;
                 case FileMonitorEvent.DELETED:
-                    stylename = this.remove_style (file);
+                    for (uint i = 1; i < this.style_model.get_n_items (); i++) {
+                        Style style = (Style) this.style_model.get_item (i);
+                        if (style.file.equal (file)) {
+                            this.stylenames.remove (style.name);
+                            this.style_model.remove (i);
+                            stylename = style.name;
+                        }
+                    }
                     possible_visual_impact = stylename != null;
                     break;
                 case FileMonitorEvent.CHANGES_DONE_HINT:
@@ -196,12 +209,6 @@ namespace Graphs {
         }
 
         protected void add_user_style (File file) {
-            for (uint i = 1; i < this.style_model.get_n_items (); i++) {
-                Style style = (Style) this.style_model.get_item (i);
-                if (style.file.equal (file)) {
-                    return;
-                }
-            }
             Style style = this.style_request.emit (file);
             if (this.stylenames.contains (style.name)) {
                 style.name = Tools.get_duplicate_string (
@@ -227,18 +234,6 @@ namespace Graphs {
 
         protected Style get_selected_style () {
             return (Style) this.selection_model.get_selected_item ();
-        }
-
-        protected string? remove_style (File file) {
-            for (uint i = 1; i < this.style_model.get_n_items (); i++) {
-                Style style = (Style) this.style_model.get_item (i);
-                if (style.file.equal (file)) {
-                    this.stylenames.remove (style.name);
-                    this.style_model.remove (i);
-                    return style.name;
-                }
-            }
-            return null;
         }
 
         /**
