@@ -26,6 +26,7 @@ namespace Graphs {
 
         protected signal void copy_request (string template, string name);
         protected signal Style style_request (File file);
+        protected signal void style_changed (bool recolor_items);
 
         construct {
             this.style_model = new GLib.ListStore (typeof (Style));
@@ -43,7 +44,9 @@ namespace Graphs {
         }
 
         protected void setup (string system_style) {
-            PythonHelper python_helper = this.application.python_helper;
+            this.notify["custom-style"].connect (on_custom_style);
+            this.notify["use-custom-style"].connect (on_use_custom_style);
+
             CompareDataFunc<Style> cmp = style_cmp;
             try {
                 var directory = File.new_for_uri ("resource:///se/sjoerd/Graphs/styles");
@@ -83,7 +86,7 @@ namespace Graphs {
                     false
                 )
             );
-            python_helper.run_method (this, "_update_system_style");
+            this.application.python_helper.run_method (this, "_update_system_style");
             try {
                 FileEnumerator enumerator = this.style_dir.enumerate_children (
                     "standard::*",
@@ -106,7 +109,7 @@ namespace Graphs {
             } catch { assert_not_reached (); }
             this.application.style_manager.notify.connect (() => {
                 if (!this.use_custom_style) {
-                    python_helper.run_method (this, "_on_style_change");
+                    this.style_changed.emit (false);
                 }
             });
             FigureSettings figure_settings = this.application.data.figure_settings;
@@ -132,7 +135,28 @@ namespace Graphs {
                     if (!this.use_custom_style) this.use_custom_style = true;
                 }
             });
-            python_helper.run_method (this, "_on_style_change");
+            this.style_changed.emit (false);
+        }
+
+        private void on_use_custom_style () {
+            if (this.use_custom_style) {
+                this.on_custom_style ();
+            } else {
+                this.selection_model.set_selected (0);
+                this.style_changed.emit (true);
+            }
+        }
+
+        private void on_custom_style () {
+            if (!this.use_custom_style) return;
+            for (uint i = 1; i < this.style_model.get_n_items (); i++) {
+                Style style = (Style) this.style_model.get_item (i);
+                if (style.name == this.custom_style) {
+                    this.selection_model.set_selected (i);
+                    break;
+                }
+            }
+            this.style_changed.emit (true);
         }
 
         private void on_file_change (File file, File? other_file, FileMonitorEvent event_type) {
@@ -167,7 +191,7 @@ namespace Graphs {
             if (possible_visual_impact
                 && this.use_custom_style
                 && this.custom_style == stylename) {
-                this.application.python_helper.run_method (this, "_on_style_change");
+                this.style_changed.emit (false);
             }
         }
 

@@ -4,7 +4,6 @@ import contextlib
 import io
 import os
 from gettext import gettext as _
-from pathlib import Path
 
 from cycler import cycler
 
@@ -61,13 +60,7 @@ class StyleManager(Graphs.StyleManager):
         self._selected_style_params = None
         self.connect("style_request", self._on_style_request)
         self.connect("copy_request", self._on_copy_request)
-
-        notifiers = ("custom_style", "use_custom_style")
-        for prop in notifiers:
-            self.connect(
-                "notify::" + prop.replace("_", "-"),
-                getattr(self, "_on_" + prop),
-            )
+        self.connect("style_changed", self._on_style_changed)
 
         self.setup(self._system_style_name.lower())
 
@@ -92,25 +85,7 @@ class StyleManager(Graphs.StyleManager):
         return self._system_style_params
 
     @staticmethod
-    def _on_use_custom_style(self, _a) -> None:
-        """Handle `use_custom_style` property change."""
-        if self.props.use_custom_style:
-            self._on_custom_style(self, None)
-        else:
-            self.props.selection_model.set_selected(0)
-        self._on_style_change(True)
-
-    @staticmethod
-    def _on_custom_style(self, _a) -> None:
-        """Handle `custom_style` property change."""
-        if self.props.use_custom_style:
-            for index, style in enumerate(self.props.selection_model):
-                if index > 0 and style.get_name() == self.props.custom_style:
-                    self.props.selection_model.set_selected(index)
-                    break
-            self._on_style_change(True)
-
-    def _on_style_change(self, override: bool = False) -> None:
+    def _on_style_changed(self, override: bool) -> None:
         rcParams.update(rcParamsDefault)
         self.props.selected_stylename = self.get_selected_style().get_name()
         old_style = self._selected_style_params
@@ -138,9 +113,9 @@ class StyleManager(Graphs.StyleManager):
         for prop in dir(figure_settings.props):
             if prop not in ("use_custom_style", "custom_style"):
                 figure_settings.bind_property(prop, canvas, prop, 1 | 2)
-        from graphs.figure_settings import FigureSettingsDialog
 
         def on_edit_request(_canvas, label_id):
+            from graphs.figure_settings import FigureSettingsDialog
             FigureSettingsDialog(self.props.application, label_id)
 
         def on_view_changed(_canvas):
