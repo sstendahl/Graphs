@@ -1,5 +1,10 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
-"""Module for parsing and writing styles."""
+"""
+Module for parsing and writing styles.
+
+This module is intended to be used at build time and thus must not depend on
+other graphs modules.
+"""
 import logging
 import typing
 from gettext import gettext as _
