@@ -524,7 +524,6 @@ class StyleEditor(Adw.NavigationPage):
                 self._style_manager.list_stylenames(),
             )
         style_io.write(self.style.get_file(), new_name, self.style_params)
-        self._style_manager._on_style_change(True)
         self.style = None
 
     def _reload_line_colors(self):

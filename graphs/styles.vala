@@ -155,9 +155,11 @@ namespace Graphs {
                             style.name = tmp_style.name;
                             style.preview = tmp_style.preview;
                             style.light = tmp_style.light;
+                            stylename = tmp_style.name;
                             break;
                         }
                     }
+                    possible_visual_impact = true;
                     break;
                 default:
                     return;
