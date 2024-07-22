@@ -18,17 +18,30 @@ template $GraphsStylePreview : Box {
           name: "indicator";
         }
         [overlay]
-        Button edit_button {
+        Box {
+          orientation: vertical;
           halign: end;
           valign: start;
-          margin-end: 6;
-          margin-top: 6;
-          visible: false;
-          tooltip-text: _("Edit");
-          styles ["flat"]
-          Image {
-            hexpand: false;
-            icon-name: "document-edit-symbolic";
+          margin-end: 4;
+          margin-top: 4;
+          spacing: 2;
+          Button edit_button {
+            visible: false;
+            tooltip-text: _("Edit");
+            styles ["flat"]
+            Image {
+              hexpand: false;
+              icon-name: "document-edit-symbolic";
+            }
+          }
+          Button delete_button {
+            visible: bind edit_button.visible;
+            tooltip-text: _("Delete");
+            styles ["flat"]
+            Image {
+              hexpand: false;
+              icon-name: "user-trash-symbolic";
+            }
           }
         }
         child: Picture picture {};

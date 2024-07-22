@@ -261,12 +261,6 @@ class StyleManager(Graphs.StyleManager):
                 params[key] = value
         return params
 
-    def delete_style(self, file: Gio.File) -> None:
-        """Delete a style."""
-        self.remove_style(file)
-        self.props.use_custom_style = False
-        self.props.custom_style = self._system_style_name
-
 
 STYLE_DICT = {
     "linestyle": ["lines.linestyle"],
@@ -617,26 +611,6 @@ class StyleEditor(Adw.NavigationPage):
         """Add a color."""
         self.line_colors.append("000000")
         self._reload_line_colors()
-
-    @Gtk.Template.Callback()
-    def on_delete(self, _button):
-        """Handle style deletion."""
-
-        def on_response(_dialog, response):
-            if response == "cancel_delete_style":
-                return
-            if response == "delete_style":
-                file = self.style.get_file()
-                self._style_manager.delete_style(file)
-                file.trash(None)
-                self.style = None
-                self.parent.get_navigation_view().pop()
-
-        dialog = Graphs.tools_build_dialog("delete_style_dialog")
-        msg = _("Are you sure you want to delete {stylename}?")
-        dialog.set_body(msg.format(stylename=self.style.get_name()))
-        dialog.connect("response", on_response)
-        dialog.present(self.parent)
 
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/style-color-box.ui")

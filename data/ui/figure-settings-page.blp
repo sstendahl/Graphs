@@ -179,26 +179,27 @@ Adw.NavigationPage settings_page {
 
           Adw.PreferencesGroup {
             title: _("Appearance");
-            Adw.ExpanderRow legend {
-              title: _("Legend");
-              show-enable-switch: true;
-              Adw.ComboRow legend_position {
-                title: _("Legend Position");
-                model: StringList{
-                  strings [
-                    C_("legend-position", "Auto"),
-                    C_("legend-position", "Upper Right"),
-                    C_("legend-position", "Upper Left"),
-                    C_("legend-position", "Lower Left"),
-                    C_("legend-position", "Lower Right"),
-                    C_("legend-position", "Center Left"),
-                    C_("legend-position", "Center Right"),
-                    C_("legend-position", "Lower Center"),
-                    C_("legend-position", "Upper Center"),
-                    C_("legend-position", "Center"),
-                  ]
-                };
-              }
+            Adw.SwitchRow legend {
+              title: _("Show Legend");
+            }
+
+            Adw.ComboRow legend_position {
+              title: _("Legend Position");
+              visible: bind legend.active;
+              model: StringList{
+                strings [
+                  C_("legend-position", "Auto"),
+                  C_("legend-position", "Upper Right"),
+                  C_("legend-position", "Upper Left"),
+                  C_("legend-position", "Lower Left"),
+                  C_("legend-position", "Lower Right"),
+                  C_("legend-position", "Center Left"),
+                  C_("legend-position", "Center Right"),
+                  C_("legend-position", "Lower Center"),
+                  C_("legend-position", "Upper Center"),
+                  C_("legend-position", "Center"),
+                ]
+              };
             }
 
             Adw.SwitchRow hide_unselected {
