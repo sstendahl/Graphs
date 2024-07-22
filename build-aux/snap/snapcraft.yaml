@@ -24,6 +24,7 @@ parts:
       - numpy==1.26.4
       - scipy==1.13.0
       - sympy==1.12
+      - gio-pyio==0.0.1
     prime:
       - -usr/bin/activate*
       - -usr/bin/Activate.ps1
