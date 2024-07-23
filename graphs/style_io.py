@@ -18,7 +18,6 @@ from matplotlib.style.core import STYLE_BLACKLIST
 
 import numpy
 
-
 STYLE_IGNORELIST = [
     "savefig.dpi",
     "savefig.facecolor",
@@ -39,9 +38,15 @@ FONT_SIZE_KEYS = [
     "figure.titlesize",
     "axes.titlesize",
 ]
+_base_style = {}
 
 
-def parse(file: Gio.File) -> (RcParams, str):
+def set_base_style(params: RcParams) -> None:
+    """Update base style."""
+    _base_style.update(params)
+
+
+def parse(file: Gio.File, validate: bool = False) -> (RcParams, str):
     """
     Parse a style to RcParams.
 
@@ -108,6 +113,10 @@ def parse(file: Gio.File) -> (RcParams, str):
         )
     finally:
         stream.close()
+    if validate:
+        for key, value in _base_style.items():
+            if key not in style:
+                style[key] = value
     return style, name
 
 

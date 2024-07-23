@@ -21,9 +21,7 @@ from matplotlib import font_manager
 
 import numpy
 
-parser = argparse.ArgumentParser(
-    description="Generate Graphs gresource.",
-)
+parser = argparse.ArgumentParser(description="Generate Graphs gresource.")
 parser.add_argument(
     "out",
     help="the output file",
