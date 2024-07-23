@@ -4,7 +4,6 @@ import contextlib
 import io
 import os
 from gettext import gettext as _
-from pathlib import Path
 
 from cycler import cycler
 
@@ -59,21 +58,14 @@ class StyleManager(Graphs.StyleManager):
             else "Adwaita"
         super().__init__(application=application)
         self._selected_style_params = None
-        self.connect("user_style_added", self._on_user_style_added)
-        self.connect("file_changed", self._on_file_change)
+        self.connect("style_request", self._on_style_request)
         self.connect("copy_request", self._on_copy_request)
-
-        notifiers = ("custom_style", "use_custom_style")
-        for prop in notifiers:
-            self.connect(
-                "notify::" + prop.replace("_", "-"),
-                getattr(self, "_on_" + prop),
-            )
+        self.connect("style_changed", self._on_style_changed)
 
         self.setup(self._system_style_name.lower())
 
     @staticmethod
-    def _on_user_style_added(self, file: Gio.File) -> Graphs.Style:
+    def _on_style_request(self, file: Gio.File) -> Graphs.Style:
         tmp_style_params, name = style_io.parse(file)
         style_params = self._complete_style(tmp_style_params)
         return Graphs.Style(
@@ -93,52 +85,7 @@ class StyleManager(Graphs.StyleManager):
         return self._system_style_params
 
     @staticmethod
-    def _on_file_change(self, file: Gio.File, event_type: int) -> None:
-        if Path(file.peek_path()).stem.startswith("."):
-            return
-        possible_visual_impact = False
-        stylename = None
-        style_model = self.props.selection_model.get_model()
-        if event_type == 3:
-            self.add_user_style(file)
-        elif event_type == 2:
-            self.remove_style(file)
-            possible_visual_impact = True
-        elif event_type == 1:
-            tmp_style_params, stylename = style_io.parse(file)
-            style_params = self._complete_style(tmp_style_params)
-            for style in style_model:
-                if style.get_name() == stylename:
-                    style.set_preview(_generate_preview(style_params))
-                    style.set_light(_is_style_bright(style_params))
-                    break
-            possible_visual_impact = False
-        if possible_visual_impact \
-                and self.props.use_custom_style \
-                and self.props.custom_style == stylename \
-                and event_type != 2:
-            self._on_style_change()
-
-    @staticmethod
-    def _on_use_custom_style(self, _a) -> None:
-        """Handle `use_custom_style` property change."""
-        if self.props.use_custom_style:
-            self._on_custom_style(self, None)
-        else:
-            self.props.selection_model.set_selected(0)
-        self._on_style_change(True)
-
-    @staticmethod
-    def _on_custom_style(self, _a) -> None:
-        """Handle `custom_style` property change."""
-        if self.props.use_custom_style:
-            for index, style in enumerate(self.props.selection_model):
-                if index > 0 and style.get_name() == self.props.custom_style:
-                    self.props.selection_model.set_selected(index)
-                    break
-            self._on_style_change(True)
-
-    def _on_style_change(self, override: bool = False) -> None:
+    def _on_style_changed(self, override: bool) -> None:
         rcParams.update(rcParamsDefault)
         self.props.selected_stylename = self.get_selected_style().get_name()
         old_style = self._selected_style_params
@@ -166,9 +113,9 @@ class StyleManager(Graphs.StyleManager):
         for prop in dir(figure_settings.props):
             if prop not in ("use_custom_style", "custom_style"):
                 figure_settings.bind_property(prop, canvas, prop, 1 | 2)
-        from graphs.figure_settings import FigureSettingsDialog
 
         def on_edit_request(_canvas, label_id):
+            from graphs.figure_settings import FigureSettingsDialog
             FigureSettingsDialog(self.props.application, label_id)
 
         def on_view_changed(_canvas):
@@ -552,7 +499,6 @@ class StyleEditor(Adw.NavigationPage):
                 self._style_manager.list_stylenames(),
             )
         style_io.write(self.style.get_file(), new_name, self.style_params)
-        self._style_manager._on_style_change(True)
         self.style = None
 
     def _reload_line_colors(self):
