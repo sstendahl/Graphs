@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: graphs\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2024-07-10 07:15+0000\n"
-"PO-Revision-Date: 2024-07-10 16:33+0200\n"
+"POT-Creation-Date: 2024-07-24 12:58+0000\n"
+"PO-Revision-Date: 2024-07-24 14:06+0200\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -238,7 +238,7 @@ msgstr "Levenberg-Marquardt"
 #: data/ui/curve-fitting.blp:140
 msgctxt "optimization"
 msgid "Trust Region Reflective"
-msgstr "Lita på reflekterande region"
+msgstr "Reflexiv förtroenderegion"
 
 #. Translators: see https://world.pages.gitlab.gnome.org/Graphs/help/C/curve_fitting.html#algorithms
 #: data/ui/curve-fitting.blp:146
@@ -769,6 +769,91 @@ msgstr "Ändra importparametrar"
 #: data/ui/import.blp:27
 msgid "Import"
 msgstr "Importera"
+
+#: data/ui/import-columns.blp:6
+msgid "Delimiter"
+msgstr "Avgränsare"
+
+#: data/ui/import-columns.blp:7
+msgid "Character sequence used to split values"
+msgstr "Tecken som används för att dela upp värden"
+
+#: data/ui/import-columns.blp:11
+msgctxt "delimiter"
+msgid "Whitespace"
+msgstr "Tomrum"
+
+#: data/ui/import-columns.blp:12
+msgctxt "delimiter"
+msgid "Tab"
+msgstr "Tabb"
+
+#: data/ui/import-columns.blp:13
+msgctxt "delimiter"
+msgid "Colon (:)"
+msgstr "Kolon (:)"
+
+#: data/ui/import-columns.blp:14
+msgctxt "delimiter"
+msgid "Semicolon (;)"
+msgstr "Semikolon (;)"
+
+#: data/ui/import-columns.blp:15
+msgctxt "delimiter"
+msgid "Decimal comma (,)"
+msgstr "Decimalkomma (,)"
+
+#: data/ui/import-columns.blp:16
+msgctxt "delimiter"
+msgid "Decimal point (.)"
+msgstr "Decimalpunkt (.)"
+
+#: data/ui/import-columns.blp:17
+msgctxt "delimiter"
+msgid "Custom"
+msgstr "Anpassad"
+
+#: data/ui/import-columns.blp:24
+msgid "Custom Delimiter"
+msgstr "Anpassad avgränsare"
+
+#: data/ui/import-columns.blp:28
+msgid "Decimal Separator"
+msgstr "Decimalavskiljare"
+
+#: data/ui/import-columns.blp:31
+msgctxt "separator"
+msgid "Decimal comma (,)"
+msgstr "Decimalkomma (,)"
+
+#: data/ui/import-columns.blp:32
+msgctxt "separator"
+msgid "Decimal point (.)"
+msgstr "Decimalpunkt (.)"
+
+#: data/ui/import-columns.blp:38
+msgid "Column X"
+msgstr "Kolumn X"
+
+#: data/ui/import-columns.blp:39
+msgid "X-data column index"
+msgstr "Index för X-datakolumnen"
+
+#: data/ui/import-columns.blp:48
+msgid "Column Y"
+msgstr "Kolumn Y"
+
+#: data/ui/import-columns.blp:50
+msgid "Y-data column index"
+msgstr "Index för Y-datakolumnen"
+
+#: data/ui/import-columns.blp:59
+msgid "Skip Rows"
+msgstr "Hoppa över rader"
+
+#: data/ui/import-columns.blp:60
+msgid "Ignored row indices"
+msgstr "Ignorerade rader"
 
 #: data/ui/item-box.blp:26
 msgid "Pick Color"
@@ -1732,72 +1817,6 @@ msgstr "Inverterad rot"
 #~ msgctxt "markerstyle"
 #~ msgid "Nothing"
 #~ msgstr "Ingenting"
-
-#~ msgid "Delimiter"
-#~ msgstr "Avgränsare"
-
-#~ msgid "Character sequence used to split values"
-#~ msgstr "Tecken som används för att dela upp värden"
-
-#~ msgctxt "delimiter"
-#~ msgid "Whitespace"
-#~ msgstr "Tomrum"
-
-#~ msgctxt "delimiter"
-#~ msgid "Tab"
-#~ msgstr "Tabb"
-
-#~ msgctxt "delimiter"
-#~ msgid "Colon (:)"
-#~ msgstr "Kolon (:)"
-
-#~ msgctxt "delimiter"
-#~ msgid "Semicolon (;)"
-#~ msgstr "Semikolon (;)"
-
-#~ msgctxt "delimiter"
-#~ msgid "Decimal comma (,)"
-#~ msgstr "Decimalkomma (,)"
-
-#~ msgctxt "delimiter"
-#~ msgid "Decimal point (.)"
-#~ msgstr "Decimalpunkt (.)"
-
-#~ msgctxt "delimiter"
-#~ msgid "Custom"
-#~ msgstr "Anpassad"
-
-#~ msgid "Custom Delimiter"
-#~ msgstr "Anpassad avgränsare"
-
-#~ msgid "Decimal Separator"
-#~ msgstr "Decimalavskiljare"
-
-#~ msgctxt "separator"
-#~ msgid "Decimal comma (,)"
-#~ msgstr "Decimalkomma (,)"
-
-#~ msgctxt "separator"
-#~ msgid "Decimal point (.)"
-#~ msgstr "Decimalpunkt (.)"
-
-#~ msgid "Column X"
-#~ msgstr "Kolumn X"
-
-#~ msgid "X-data column index"
-#~ msgstr "Index för X-datakolumnen"
-
-#~ msgid "Column Y"
-#~ msgstr "Kolumn Y"
-
-#~ msgid "Y-data column index"
-#~ msgstr "Index för Y-datakolumnen"
-
-#~ msgid "Skip Rows"
-#~ msgstr "Hoppa över rader"
-
-#~ msgid "Ignored row indices"
-#~ msgstr "Ignorerade rader"
 
 #~ msgid "Y Axis Label"
 #~ msgstr "Y-axeletikett"
