@@ -12,6 +12,7 @@ data/ui/figure-settings-dialog.blp
 data/ui/figure-settings-page.blp
 data/ui/fitting-parameters.blp
 data/ui/import.blp
+data/ui/import-columns.blp
 data/ui/item-box.blp
 data/ui/shortcuts.blp
 data/ui/smoothen-settings.blp
