@@ -29,6 +29,7 @@ python.install_sources(
     'project.py',
     'python_helper.py',
     'scales.py',
+    'style_editor.py',
     'style_io.py',
     'styles.py',
     'utilities.py',

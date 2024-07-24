@@ -2,7 +2,8 @@
 """Figure Settings Dialog."""
 from gi.repository import Graphs
 
-from graphs import misc, styles, utilities
+from graphs import misc, utilities
+from graphs.style_editor import StyleEditor
 
 
 class FigureSettingsDialog(Graphs.FigureSettingsDialog):
@@ -17,7 +18,7 @@ class FigureSettingsDialog(Graphs.FigureSettingsDialog):
     ):
         """Initialize the Figure Settings window and set the widget entries."""
         super().__init__(application=application)
-        self.props.style_editor = styles.StyleEditor(self)
+        self.props.style_editor = StyleEditor(self)
         self.setup(highlighted)
         self.connect("entry-change", self.on_entry_change)
 
