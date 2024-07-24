@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2024-07-23 04:49+0000\n"
-"PO-Revision-Date: 2024-07-23 12:20+0200\n"
+"POT-Creation-Date: 2024-07-24 12:58+0000\n"
+"PO-Revision-Date: 2024-07-24 16:27+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian <gnome-si@googlegroups.com>\n"
 "Language: sl\n"
@@ -768,6 +768,91 @@ msgstr "Spremeni parametre uvoza"
 #: data/ui/import.blp:27
 msgid "Import"
 msgstr "Uvozi"
+
+#: data/ui/import-columns.blp:6
+msgid "Delimiter"
+msgstr "Ločilo"
+
+#: data/ui/import-columns.blp:7
+msgid "Character sequence used to split values"
+msgstr "Zaporedje znakov, uporabljeno za razmejitev vrednosti"
+
+#: data/ui/import-columns.blp:11
+msgctxt "delimiter"
+msgid "Whitespace"
+msgstr "Presledek"
+
+#: data/ui/import-columns.blp:12
+msgctxt "delimiter"
+msgid "Tab"
+msgstr "Tabulator"
+
+#: data/ui/import-columns.blp:13
+msgctxt "delimiter"
+msgid "Colon (:)"
+msgstr "Dvopičje (:)"
+
+#: data/ui/import-columns.blp:14
+msgctxt "delimiter"
+msgid "Semicolon (;)"
+msgstr "Podpičje (;)"
+
+#: data/ui/import-columns.blp:15
+msgctxt "delimiter"
+msgid "Decimal comma (,)"
+msgstr "Decimalna vejica (,)"
+
+#: data/ui/import-columns.blp:16
+msgctxt "delimiter"
+msgid "Decimal point (.)"
+msgstr "Decimalna pika (.) "
+
+#: data/ui/import-columns.blp:17
+msgctxt "delimiter"
+msgid "Custom"
+msgstr "Po meri"
+
+#: data/ui/import-columns.blp:24
+msgid "Custom Delimiter"
+msgstr "Ločilo po meri"
+
+#: data/ui/import-columns.blp:28
+msgid "Decimal Separator"
+msgstr "Decimalno ločilo"
+
+#: data/ui/import-columns.blp:31
+msgctxt "separator"
+msgid "Decimal comma (,)"
+msgstr "Decimalna vejica (,)"
+
+#: data/ui/import-columns.blp:32
+msgctxt "separator"
+msgid "Decimal point (.)"
+msgstr "Decimalna pika (.) "
+
+#: data/ui/import-columns.blp:38
+msgid "Column X"
+msgstr "Stolpec X"
+
+#: data/ui/import-columns.blp:39
+msgid "X-data column index"
+msgstr "Indeks stolpcev s podatki X"
+
+#: data/ui/import-columns.blp:48
+msgid "Column Y"
+msgstr "Stolpec Y"
+
+#: data/ui/import-columns.blp:50
+msgid "Y-data column index"
+msgstr "Indeks stolpca s podatki Y"
+
+#: data/ui/import-columns.blp:59
+msgid "Skip Rows"
+msgstr "Preskoči vrstice"
+
+#: data/ui/import-columns.blp:60
+msgid "Ignored row indices"
+msgstr "Prezrti indeksi vrstic"
 
 #: data/ui/item-box.blp:17
 msgid "Pick Color"
@@ -1642,59 +1727,59 @@ msgstr "Uvoz ni uspel, indeks stolpca ni v obsegu"
 msgid "Unable to import from file"
 msgstr "Uvoz iz datoteke ni mogoč"
 
-#: graphs/style_io.py:70
+#: graphs/style_editor.py:366
+#, python-brace-format
+msgid "Color {number}"
+msgstr "Barva {number}"
+
+#: graphs/style_io.py:75
 #, python-brace-format
 msgid "Missing colon in file {file}, line {line}"
 msgstr "Manjkajoče dvopičje v datoteki {file}, vrstica {line}"
 
-#: graphs/style_io.py:78
+#: graphs/style_io.py:83
 #, python-brace-format
 msgid "Non-style related parameter {param} in file {file}"
 msgstr "Parameter, ki ni povezan s slogom {param} v datoteki {file}"
 
-#: graphs/style_io.py:81
+#: graphs/style_io.py:86
 #, python-brace-format
 msgid "Ignoring parameter {param} in file {file}"
 msgstr "Prezrt parameter {param} v datoteki {file}"
 
-#: graphs/style_io.py:84
+#: graphs/style_io.py:89
 #, python-brace-format
 msgid "Duplicate key in file {file}, on line {line}"
 msgstr "Podvojen ključ v datoteki {file}, v vrstici {line}"
 
-#: graphs/style_io.py:101
+#: graphs/style_io.py:106
 #, python-brace-format
 msgid "Bad value in file {file} on line {line}"
 msgstr "Napačna vrednost v datoteki {file} v vrstici {line}"
 
-#: graphs/style_io.py:107
+#: graphs/style_io.py:112
 #, python-brace-format
 msgid "Could not parse {filename}"
 msgstr "Ni mogoče razčleniti {filename}"
 
-#: graphs/style_io.py:162
+#: graphs/style_io.py:171
 msgid "X Label"
 msgstr "Oznaka X"
 
-#: graphs/style_io.py:163
+#: graphs/style_io.py:172
 msgid "Y Label"
 msgstr "Oznaka Y"
 
-#: graphs/styles.py:172
+#: graphs/styles.py:166
 #, python-brace-format
 msgid "Could not parse {stylename}, loading system preferred style"
 msgstr ""
 "Ni bilo mogoče razčleniti {stylename}; nalaga se prednostni sistemski slog"
 
-#: graphs/styles.py:180
+#: graphs/styles.py:174
 #, python-brace-format
 msgid "Plot style {stylename} does not exist loading system preferred"
 msgstr "Slog grafa {stylename} ne obstaja; nalaga se prednostni sistemski slog"
-
-#: graphs/styles.py:573
-#, python-brace-format
-msgid "Color {number}"
-msgstr "Barva {number}"
 
 #: graphs/styles.vala:81
 msgid "System"
