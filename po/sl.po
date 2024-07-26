@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2024-04-22 09:14+0000\n"
-"PO-Revision-Date: 2024-04-27 23:59+0200\n"
+"POT-Creation-Date: 2024-07-24 12:58+0000\n"
+"PO-Revision-Date: 2024-07-25 12:28+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian <gnome-si@googlegroups.com>\n"
 "Language: sl\n"
@@ -19,17 +19,16 @@ msgstr ""
 "%100<=4 ? 2 : 3);\n"
 "X-Generator: Poedit 2.2.1\n"
 
-#: data/se.sjoerd.Graphs.appdata.xml.in.in:6
-#: data/se.sjoerd.Graphs.desktop.in.in:3 data/ui/window.blp:9
-#: graphs/about.vala:23
+#: data/se.sjoerd.Graphs.appdata.xml.in:6 data/se.sjoerd.Graphs.desktop.in:3
+#: data/ui/window.blp:9 graphs/about.vala:23
 msgid "Graphs"
 msgstr "Grafi"
 
-#: data/se.sjoerd.Graphs.appdata.xml.in.in:7
+#: data/se.sjoerd.Graphs.appdata.xml.in:7
 msgid "Plot and manipulate data"
 msgstr "Rišite grafe in manipulirajte s podatki"
 
-#: data/se.sjoerd.Graphs.appdata.xml.in.in:13
+#: data/se.sjoerd.Graphs.appdata.xml.in:12
 msgid ""
 "Graphs is a simple, yet powerful tool that allows you to plot and manipulate "
 "your data with ease. New data can be imported from a wide variety of "
@@ -45,7 +44,7 @@ msgstr ""
 "prevajanja, množenja, sredinjenja in glajenja podatkov ter uporaba kakršnih "
 "koli preoblikovanj po meri podatkov."
 
-#: data/se.sjoerd.Graphs.appdata.xml.in.in:17
+#: data/se.sjoerd.Graphs.appdata.xml.in:16
 msgid ""
 "Moreover, Graphs supports curve fitting on imported data and offers "
 "extensive customization options for the style of the plots. You can fine-"
@@ -55,7 +54,7 @@ msgstr ""
 "ponuja obsežne možnosti prilagajanja sloga grafa. Slogovne predloge lahko "
 "natančno prilagodite po svojih željah."
 
-#: data/se.sjoerd.Graphs.appdata.xml.in.in:20
+#: data/se.sjoerd.Graphs.appdata.xml.in:19
 msgid ""
 "Graphs is an excellent fit for both plotting and data manipulation. The "
 "plots created with Graphs can be saved in a variety of formats suitable for "
@@ -74,7 +73,7 @@ msgstr ""
 "okolje GNOME, vendar bi morali biti primerni tudi za poljubno drugo namizno "
 "okolje."
 
-#: data/se.sjoerd.Graphs.appdata.xml.in.in:24
+#: data/se.sjoerd.Graphs.appdata.xml.in:23
 msgid ""
 "For any feedback, questions or general issues, please file an issue on the "
 "GitLab page."
@@ -82,27 +81,27 @@ msgstr ""
 "Za vse povratne informacije, vprašanja ali splošne težave vnesite težavo na "
 "strani GitLab."
 
-#: data/se.sjoerd.Graphs.appdata.xml.in.in:37
+#: data/se.sjoerd.Graphs.appdata.xml.in:36
 msgid "1 - Plot and manipulate any data of choice"
 msgstr "1 - Rišite grafe in ravnajte s poljubnimi podatki"
 
-#: data/se.sjoerd.Graphs.appdata.xml.in.in:41
+#: data/se.sjoerd.Graphs.appdata.xml.in:40
 msgid "2 - Full support for light and dark mode"
 msgstr "2 - Popolna podpora za svetli in temni način"
 
-#: data/se.sjoerd.Graphs.appdata.xml.in.in:45
+#: data/se.sjoerd.Graphs.appdata.xml.in:44
 msgid "3 - Generate data from an equation"
 msgstr "3 - Tvorite podatke iz enačbe"
 
-#: data/se.sjoerd.Graphs.appdata.xml.in.in:49
+#: data/se.sjoerd.Graphs.appdata.xml.in:48
 msgid "4 - Edit plot stylesheets"
 msgstr "4 - Urejajte slogovne predloge grafov"
 
-#: data/se.sjoerd.Graphs.appdata.xml.in.in:53
+#: data/se.sjoerd.Graphs.appdata.xml.in:52
 msgid "5 - Manipulate imported data with ease"
 msgstr "5 - Enostavno ravnajte z uvoženimi podatki"
 
-#: data/se.sjoerd.Graphs.desktop.in.in:10
+#: data/se.sjoerd.Graphs.desktop.in:10
 msgid ""
 "Plotting;Graph;Graphing;Science;Mathematics;Math;Equations;Data;Plot;"
 "Visualisation;Visualization;Fitting;xrdml;"
@@ -770,6 +769,91 @@ msgstr "Spremeni parametre uvoza"
 msgid "Import"
 msgstr "Uvozi"
 
+#: data/ui/import-columns.blp:6
+msgid "Delimiter"
+msgstr "Ločilo"
+
+#: data/ui/import-columns.blp:7
+msgid "Character sequence used to split values"
+msgstr "Zaporedje znakov, uporabljeno za razmejitev vrednosti"
+
+#: data/ui/import-columns.blp:11
+msgctxt "delimiter"
+msgid "Whitespace"
+msgstr "Presledek"
+
+#: data/ui/import-columns.blp:12
+msgctxt "delimiter"
+msgid "Tab"
+msgstr "Tabulator"
+
+#: data/ui/import-columns.blp:13
+msgctxt "delimiter"
+msgid "Colon (:)"
+msgstr "Dvopičje (:)"
+
+#: data/ui/import-columns.blp:14
+msgctxt "delimiter"
+msgid "Semicolon (;)"
+msgstr "Podpičje (;)"
+
+#: data/ui/import-columns.blp:15
+msgctxt "delimiter"
+msgid "Decimal comma (,)"
+msgstr "Decimalna vejica (,)"
+
+#: data/ui/import-columns.blp:16
+msgctxt "delimiter"
+msgid "Decimal point (.)"
+msgstr "Decimalna pika (.) "
+
+#: data/ui/import-columns.blp:17
+msgctxt "delimiter"
+msgid "Custom"
+msgstr "Po meri"
+
+#: data/ui/import-columns.blp:24
+msgid "Custom Delimiter"
+msgstr "Ločilo po meri"
+
+#: data/ui/import-columns.blp:28
+msgid "Decimal Separator"
+msgstr "Decimalno ločilo"
+
+#: data/ui/import-columns.blp:31
+msgctxt "separator"
+msgid "Decimal comma (,)"
+msgstr "Decimalna vejica (,)"
+
+#: data/ui/import-columns.blp:32
+msgctxt "separator"
+msgid "Decimal point (.)"
+msgstr "Decimalna pika (.) "
+
+#: data/ui/import-columns.blp:38
+msgid "Column X"
+msgstr "Stolpec X"
+
+#: data/ui/import-columns.blp:39
+msgid "X-data column index"
+msgstr "Indeks stolpcev s podatki X"
+
+#: data/ui/import-columns.blp:48
+msgid "Column Y"
+msgstr "Stolpec Y"
+
+#: data/ui/import-columns.blp:50
+msgid "Y-data column index"
+msgstr "Indeks stolpca s podatki Y"
+
+#: data/ui/import-columns.blp:59
+msgid "Skip Rows"
+msgstr "Preskoči vrstice"
+
+#: data/ui/import-columns.blp:60
+msgid "Ignored row indices"
+msgstr "Prezrti indeksi vrstic"
+
 #: data/ui/item-box.blp:26
 msgid "Pick Color"
 msgstr "Izberite barvo"
@@ -1364,7 +1448,7 @@ msgstr "Množenje X"
 msgid "Multiply Y"
 msgstr "Množenje Y"
 
-#: data/ui/window.blp:605
+#: data/ui/window.blp:605 graphs/actions.py:226 graphs/item_box.py:66
 msgid "Undo"
 msgstr "Razveljavi"
 
@@ -1453,7 +1537,7 @@ msgstr "{error} - Dodajanje podatkov iz enačbe ni mogoče"
 msgid "Exported Figure"
 msgstr "Izvožena slika"
 
-#: graphs/actions.py:226 graphs/item_box.py:65
+#: graphs/actions.py:225 graphs/item_box.py:65
 #, python-brace-format
 msgid "Deleted {name}"
 msgstr "Izbrisano: {name}"
@@ -1463,11 +1547,11 @@ msgstr "Izbrisano: {name}"
 msgid "Could not load {font}"
 msgstr "Ni bilo mogoče naložiti {font}"
 
-#: graphs/curve_fitting.py:173
+#: graphs/curve_fitting.py:176
 msgid "Results:"
 msgstr "Rezultati:"
 
-#: graphs/curve_fitting.py:177
+#: graphs/curve_fitting.py:180
 msgid ""
 "Please enter valid fitting \n"
 "parameters to start the fit"
@@ -1475,7 +1559,7 @@ msgstr ""
 "Prosimo, vnesite veljavne \n"
 "parametre za začetek prileganja"
 
-#: graphs/curve_fitting.py:181
+#: graphs/curve_fitting.py:184
 msgid ""
 "Please enter a valid equation \n"
 "to start the fit"
@@ -1483,7 +1567,7 @@ msgstr ""
 "Vnesite veljavno enačbo \n"
 "za začetek prileganja"
 
-#: graphs/curve_fitting.py:185
+#: graphs/curve_fitting.py:188
 msgid ""
 "Please enter valid fitting bounds \n"
 "to start the fit"
@@ -1491,21 +1575,21 @@ msgstr ""
 "Prosimo, vnesite veljavne meje \n"
 "za začetek prileganja"
 
-#: graphs/curve_fitting.py:198
+#: graphs/curve_fitting.py:201
 #, python-brace-format
 msgid "Sum of R²: {R2}"
 msgstr "Vsota R²: {R2}"
 
-#: graphs/curve_fitting.vala:131
+#: graphs/curve_fitting.vala:136
 #, c-format
 msgid "Fitting Parameters for %s"
 msgstr "Parametri prileganja za %s"
 
-#: graphs/data.py:88
+#: graphs/data.py:89
 msgid "Untitled Project"
 msgstr "Neimenovan projekt"
 
-#: graphs/data.py:99
+#: graphs/data.py:100
 msgid "Draft"
 msgstr "Osnutek"
 
@@ -1514,7 +1598,7 @@ msgctxt "filename"
 msgid "Exported Figure"
 msgstr "Izvožena slika"
 
-#: graphs/figure_settings.py:71 graphs/figure_settings.vala:213
+#: graphs/figure_settings.py:71
 msgid "Defaults Updated"
 msgstr "Privzete nastavitve so posodobljene"
 
@@ -1546,7 +1630,7 @@ msgstr "Oznaka osi X"
 msgid "Y Axis Scale"
 msgstr "Merilo osi Y"
 
-#: graphs/file_import.vala:65
+#: graphs/file_import.vala:68
 msgid "Are you sure you want to reset the import settings?"
 msgstr "Ali ste prepričani, da želite ponastaviti nastavitve uvoza?"
 
@@ -1609,68 +1693,68 @@ msgstr "Shranjeni projekt"
 msgid "Project"
 msgstr "Projekt"
 
-#: graphs/style_io.py:58
+#: graphs/style_io.py:65
 #, python-brace-format
 msgid "Missing colon in file {file}, line {line}"
 msgstr "Manjkajoče dvopičje v datoteki {file}, vrstica {line}"
 
-#: graphs/style_io.py:66
+#: graphs/style_io.py:73
 #, python-brace-format
 msgid "Non-style related parameter {param} in file {file}"
 msgstr "Parameter, ki ni povezan s slogom {param} v datoteki {file}"
 
-#: graphs/style_io.py:69
+#: graphs/style_io.py:76
 #, python-brace-format
 msgid "Ignoring parameter {param} in file {file}"
 msgstr "Prezrt parameter {param} v datoteki {file}"
 
-#: graphs/style_io.py:72
+#: graphs/style_io.py:79
 #, python-brace-format
 msgid "Duplicate key in file {file}, on line {line}"
 msgstr "Podvojen ključ v datoteki {file}, v vrstici {line}"
 
-#: graphs/style_io.py:89
+#: graphs/style_io.py:96
 #, python-brace-format
 msgid "Bad value in file {file} on line {line}"
 msgstr "Napačna vrednost v datoteki {file} v vrstici {line}"
 
-#: graphs/style_io.py:95
+#: graphs/style_io.py:102
 #, python-brace-format
 msgid "Could not parse {filename}"
 msgstr "Ni mogoče razčleniti {filename}"
 
-#: graphs/styles.py:60
+#: graphs/style_io.py:159
 msgid "X Label"
 msgstr "Oznaka X"
 
-#: graphs/styles.py:61
+#: graphs/style_io.py:160
 msgid "Y Label"
 msgstr "Oznaka Y"
 
-#: graphs/styles.py:126
-msgid "System"
-msgstr "Sistem"
-
-#: graphs/styles.py:382
+#: graphs/styles.py:305
 #, python-brace-format
 msgid "Could not parse {stylename}, loading system preferred style"
 msgstr ""
 "Ni bilo mogoče razčleniti {stylename}; nalaga se prednostni sistemski slog"
 
-#: graphs/styles.py:390
+#: graphs/styles.py:313
 #, python-brace-format
 msgid "Plot style {stylename} does not exist loading system preferred"
 msgstr "Slog grafa {stylename} ne obstaja; nalaga se prednostni sistemski slog"
 
-#: graphs/styles.py:803
+#: graphs/styles.py:726
 #, python-brace-format
 msgid "Are you sure you want to delete {stylename}?"
 msgstr "Ali ste prepričani, da želite izbrisati {stylename}?"
 
-#: graphs/styles.py:820
+#: graphs/styles.py:743
 #, python-brace-format
 msgid "Color {number}"
 msgstr "Barva {number}"
+
+#: graphs/styles.vala:71
+msgid "System"
+msgstr "Sistem"
 
 #: graphs/ui.py:46
 msgctxt "file-filter"
@@ -1704,6 +1788,10 @@ msgstr "Izvoženi podatki"
 msgctxt "file-filter"
 msgid "Text Files"
 msgstr "Besedilne datoteke"
+
+#: graphs/utilities.py:122
+msgid "All Files"
+msgstr "Vse datoteke"
 
 #: graphs/window.vala:128
 msgid "Graphs (Development)"
