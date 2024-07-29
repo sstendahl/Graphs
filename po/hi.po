@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2024-07-10 16:56+0000\n"
-"PO-Revision-Date: 2024-07-13 19:19+0530\n"
+"POT-Creation-Date: 2024-07-26 12:54+0000\n"
+"PO-Revision-Date: 2024-07-27 13:26+0530\n"
 "Last-Translator: Scrambled777 <weblate.scrambled777@simplelogin.com>\n"
 "Language-Team: Hindi <indlinux-hindi@lists.sourceforge.net>\n"
 "Language: hi\n"
@@ -79,24 +79,24 @@ msgstr ""
 "करें।"
 
 #: data/se.sjoerd.Graphs.appdata.xml.in:36
-msgid "1 - Plot and manipulate any data of choice"
-msgstr "1 - पसंद के किसी भी डेटा को प्लॉट और हेरफेर करें"
+msgid "Plot and manipulate any data"
+msgstr "किसी भी डेटा को प्लॉट और हेरफेर करें"
 
 #: data/se.sjoerd.Graphs.appdata.xml.in:40
-msgid "2 - Full support for light and dark mode"
-msgstr "2 - हल्के और गहरे मोड के लिए पूर्ण समर्थन"
+msgid "Full support for light and dark mode"
+msgstr "हल्के और गहरे मोड के लिए पूर्ण समर्थन"
 
 #: data/se.sjoerd.Graphs.appdata.xml.in:44
-msgid "3 - Generate data from an equation"
-msgstr "3 - एक समीकरण से डेटा उत्पन्न करें"
+msgid "Generate data from an equation"
+msgstr "एक समीकरण से डेटा उत्पन्न करें"
 
 #: data/se.sjoerd.Graphs.appdata.xml.in:48
-msgid "4 - Edit plot stylesheets"
-msgstr "4 - प्लॉट स्टाइलशीट संपादित करें"
+msgid "Manage plot stylesheets"
+msgstr "प्लॉट स्टाइलशीट प्रबंधित करें"
 
 #: data/se.sjoerd.Graphs.appdata.xml.in:52
-msgid "5 - Manipulate imported data with ease"
-msgstr "5 - आयातित डेटा में आसानी से हेरफेर करें"
+msgid "Manipulate imported data"
+msgstr "आयातित डेटा में हेरफेर करें"
 
 #: data/se.sjoerd.Graphs.desktop.in:10
 msgid ""
@@ -211,7 +211,7 @@ msgstr "तदनुकूल"
 msgid "Add Fit to Data"
 msgstr "डेटा के अनुरूप जोड़ें"
 
-#: data/ui/curve-fitting.blp:109 data/ui/window.blp:599 graphs/window.vala:241
+#: data/ui/curve-fitting.blp:109 data/ui/window.blp:599 graphs/window.vala:302
 msgid "Toggle Sidebar"
 msgstr "पार्श्वपट्टी टॉगल करें"
 
@@ -292,7 +292,7 @@ msgstr "सहेजें"
 msgid "Delete Style?"
 msgstr "शैली मिटाएं?"
 
-#: data/ui/dialogs.blp:20 data/ui/style-editor.blp:12
+#: data/ui/dialogs.blp:20 data/ui/style-preview.blp:39
 msgid "Delete"
 msgstr "मिटाएं"
 
@@ -344,156 +344,156 @@ msgstr "दायां"
 msgid "Line Properties"
 msgstr "रेखा गुण"
 
-#: data/ui/edit-item.blp:45 data/ui/style-editor.blp:84
+#: data/ui/edit-item.blp:45 data/ui/style-editor.blp:74
 msgid "Linestyle"
 msgstr "रेखाशैली"
 
-#: data/ui/edit-item.blp:48 data/ui/style-editor.blp:87
+#: data/ui/edit-item.blp:48 data/ui/style-editor.blp:77
 msgctxt "linestyle"
 msgid "None"
 msgstr "कोई नहीं"
 
-#: data/ui/edit-item.blp:49 data/ui/style-editor.blp:88
+#: data/ui/edit-item.blp:49 data/ui/style-editor.blp:78
 msgctxt "linestyle"
 msgid "Solid"
 msgstr "ठोस"
 
-#: data/ui/edit-item.blp:50 data/ui/style-editor.blp:89
+#: data/ui/edit-item.blp:50 data/ui/style-editor.blp:79
 msgctxt "linestyle"
 msgid "Dotted"
 msgstr "बिंदीदार"
 
-#: data/ui/edit-item.blp:51 data/ui/style-editor.blp:90
+#: data/ui/edit-item.blp:51 data/ui/style-editor.blp:80
 msgctxt "linestyle"
 msgid "Dashed"
 msgstr "धराशायी"
 
-#: data/ui/edit-item.blp:52 data/ui/style-editor.blp:91
+#: data/ui/edit-item.blp:52 data/ui/style-editor.blp:81
 msgctxt "linestyle"
 msgid "Dashdot"
 msgstr "रेखाबिन्दू"
 
-#: data/ui/edit-item.blp:59 data/ui/style-editor.blp:98
+#: data/ui/edit-item.blp:59 data/ui/style-editor.blp:88
 msgid "Linewidth"
 msgstr "रेखाचौड़ाई"
 
-#: data/ui/edit-item.blp:73 data/ui/style-editor.blp:113
+#: data/ui/edit-item.blp:73 data/ui/style-editor.blp:103
 msgid "Markers"
 msgstr "मार्कर"
 
-#: data/ui/edit-item.blp:76 data/ui/style-editor.blp:116
+#: data/ui/edit-item.blp:76 data/ui/style-editor.blp:106
 msgctxt "markerstyle"
 msgid "None"
 msgstr "कोई नहीं"
 
-#: data/ui/edit-item.blp:77 data/ui/style-editor.blp:117
+#: data/ui/edit-item.blp:77 data/ui/style-editor.blp:107
 msgctxt "markerstyle"
 msgid "Point"
 msgstr "बिंदु"
 
-#: data/ui/edit-item.blp:78 data/ui/style-editor.blp:118
+#: data/ui/edit-item.blp:78 data/ui/style-editor.blp:108
 msgctxt "markerstyle"
 msgid "Pixel"
 msgstr "पिक्सल"
 
-#: data/ui/edit-item.blp:79 data/ui/style-editor.blp:119
+#: data/ui/edit-item.blp:79 data/ui/style-editor.blp:109
 msgctxt "markerstyle"
 msgid "Circle"
 msgstr "वृत्त"
 
-#: data/ui/edit-item.blp:80 data/ui/style-editor.blp:120
+#: data/ui/edit-item.blp:80 data/ui/style-editor.blp:110
 msgctxt "markerstyle"
 msgid "Triangle Down"
 msgstr "त्रिभुज नीचे"
 
-#: data/ui/edit-item.blp:81 data/ui/style-editor.blp:121
+#: data/ui/edit-item.blp:81 data/ui/style-editor.blp:111
 msgctxt "markerstyle"
 msgid "Triangle Up"
 msgstr "त्रिभुज ऊपर"
 
-#: data/ui/edit-item.blp:82 data/ui/style-editor.blp:122
+#: data/ui/edit-item.blp:82 data/ui/style-editor.blp:112
 msgctxt "markerstyle"
 msgid "Triangle Left"
 msgstr "त्रिभुज बायां"
 
-#: data/ui/edit-item.blp:83 data/ui/style-editor.blp:123
+#: data/ui/edit-item.blp:83 data/ui/style-editor.blp:113
 msgctxt "markerstyle"
 msgid "Triangle Right"
 msgstr "त्रिभुज दायां"
 
-#: data/ui/edit-item.blp:84 data/ui/style-editor.blp:124
+#: data/ui/edit-item.blp:84 data/ui/style-editor.blp:114
 msgctxt "markerstyle"
 msgid "Octagon"
 msgstr "अष्टकोना"
 
-#: data/ui/edit-item.blp:85 data/ui/style-editor.blp:125
+#: data/ui/edit-item.blp:85 data/ui/style-editor.blp:115
 msgctxt "markerstyle"
 msgid "Square"
 msgstr "चौकोर"
 
-#: data/ui/edit-item.blp:86 data/ui/style-editor.blp:126
+#: data/ui/edit-item.blp:86 data/ui/style-editor.blp:116
 msgctxt "markerstyle"
 msgid "Pentagon"
 msgstr "पंचकोण"
 
-#: data/ui/edit-item.blp:87 data/ui/style-editor.blp:127
+#: data/ui/edit-item.blp:87 data/ui/style-editor.blp:117
 msgctxt "markerstyle"
 msgid "Star"
 msgstr "तारा"
 
-#: data/ui/edit-item.blp:88 data/ui/style-editor.blp:128
+#: data/ui/edit-item.blp:88 data/ui/style-editor.blp:118
 msgctxt "markerstyle"
 msgid "Hexagon 1"
 msgstr "षट्कोण 1"
 
-#: data/ui/edit-item.blp:89 data/ui/style-editor.blp:129
+#: data/ui/edit-item.blp:89 data/ui/style-editor.blp:119
 msgctxt "markerstyle"
 msgid "Hexagon 2"
 msgstr "षट्कोण 2"
 
-#: data/ui/edit-item.blp:90 data/ui/style-editor.blp:130
+#: data/ui/edit-item.blp:90 data/ui/style-editor.blp:120
 msgctxt "markerstyle"
 msgid "Plus"
 msgstr "प्लस"
 
-#: data/ui/edit-item.blp:91 data/ui/style-editor.blp:131
+#: data/ui/edit-item.blp:91 data/ui/style-editor.blp:121
 msgctxt "markerstyle"
 msgid "X"
 msgstr "X"
 
 #. Translators: Diamond as in Cards Symbol
-#: data/ui/edit-item.blp:93 data/ui/style-editor.blp:133
+#: data/ui/edit-item.blp:93 data/ui/style-editor.blp:123
 msgctxt "markerstyle"
 msgid "Diamond"
 msgstr "हीरा"
 
 #. Translators: Diamond as in Cards Symbol
-#: data/ui/edit-item.blp:95 data/ui/style-editor.blp:135
+#: data/ui/edit-item.blp:95 data/ui/style-editor.blp:125
 msgctxt "markerstyle"
 msgid "Thin Diamond"
 msgstr "पतला हीरा"
 
-#: data/ui/edit-item.blp:96 data/ui/style-editor.blp:136
+#: data/ui/edit-item.blp:96 data/ui/style-editor.blp:126
 msgctxt "markerstyle"
 msgid "Vertical Line"
 msgstr "ऊर्ध्वाधर रेखा"
 
-#: data/ui/edit-item.blp:97 data/ui/style-editor.blp:137
+#: data/ui/edit-item.blp:97 data/ui/style-editor.blp:127
 msgctxt "markerstyle"
 msgid "Horizontal Line"
 msgstr "क्षैतिज रेखा"
 
-#: data/ui/edit-item.blp:98 data/ui/style-editor.blp:138
+#: data/ui/edit-item.blp:98 data/ui/style-editor.blp:128
 msgctxt "markerstyle"
 msgid "Filled Plus"
 msgstr "भरा हुआ प्लस"
 
-#: data/ui/edit-item.blp:99 data/ui/style-editor.blp:139
+#: data/ui/edit-item.blp:99 data/ui/style-editor.blp:129
 msgctxt "markerstyle"
 msgid "Filled X"
 msgstr "भरा हुआ X"
 
-#: data/ui/edit-item.blp:106 data/ui/style-editor.blp:146
+#: data/ui/edit-item.blp:106 data/ui/style-editor.blp:136
 msgid "Marker Size"
 msgstr "मार्कर आकार"
 
@@ -552,7 +552,7 @@ msgstr "रिज़ॉल्यूशन (DPI)"
 msgid "Transparent Background"
 msgstr "पारदर्शी पृष्ठभूमि"
 
-#: data/ui/figure-settings-dialog.blp:28 data/ui/figure-settings-page.blp:209
+#: data/ui/figure-settings-dialog.blp:28 data/ui/figure-settings-page.blp:210
 msgid "Style"
 msgstr "शैली"
 
@@ -624,34 +624,34 @@ msgstr "दायां Y अक्ष अधिकतम"
 msgid "Scaling"
 msgstr "स्केलिंग"
 
-#: data/ui/figure-settings-page.blp:125 graphs/window.vala:281
+#: data/ui/figure-settings-page.blp:125 graphs/window.vala:342
 msgid "Bottom X Axis Scale"
 msgstr "निचला X अक्ष पैमाना"
 
 #: data/ui/figure-settings-page.blp:128 data/ui/figure-settings-page.blp:142
 #: data/ui/figure-settings-page.blp:156 data/ui/figure-settings-page.blp:170
-#: graphs/window.vala:251
+#: graphs/window.vala:312
 msgctxt "scale"
 msgid "Linear"
 msgstr "रेखीय"
 
 #: data/ui/figure-settings-page.blp:129 data/ui/figure-settings-page.blp:143
 #: data/ui/figure-settings-page.blp:157 data/ui/figure-settings-page.blp:171
-#: graphs/window.vala:252
+#: graphs/window.vala:313
 msgctxt "scale"
 msgid "Logarithmic"
 msgstr "लघुगणकीय"
 
 #: data/ui/figure-settings-page.blp:130 data/ui/figure-settings-page.blp:144
 #: data/ui/figure-settings-page.blp:158 data/ui/figure-settings-page.blp:172
-#: graphs/window.vala:253
+#: graphs/window.vala:314
 msgctxt "scale"
 msgid "Radians"
 msgstr "रेडियन"
 
 #: data/ui/figure-settings-page.blp:131 data/ui/figure-settings-page.blp:145
 #: data/ui/figure-settings-page.blp:159 data/ui/figure-settings-page.blp:173
-#: graphs/window.vala:254
+#: graphs/window.vala:315
 msgctxt "scale"
 msgid "Square Root"
 msgstr "वर्गमूल"
@@ -662,15 +662,15 @@ msgctxt "scale"
 msgid "Inverse"
 msgstr "व्युत्क्रम"
 
-#: data/ui/figure-settings-page.blp:139 graphs/window.vala:282
+#: data/ui/figure-settings-page.blp:139 graphs/window.vala:343
 msgid "Top X Axis Scale"
 msgstr "शीर्ष X अक्ष पैमाना"
 
-#: data/ui/figure-settings-page.blp:153 graphs/window.vala:287
+#: data/ui/figure-settings-page.blp:153 graphs/window.vala:348
 msgid "Left Y Axis Scale"
 msgstr "बायां Y अक्ष पैमाना"
 
-#: data/ui/figure-settings-page.blp:167 graphs/window.vala:286
+#: data/ui/figure-settings-page.blp:167 graphs/window.vala:347
 msgid "Right Y Axis Scale"
 msgstr "दायां Y अक्ष पैमाना"
 
@@ -679,68 +679,68 @@ msgid "Appearance"
 msgstr "दिखावट"
 
 #: data/ui/figure-settings-page.blp:183
-msgid "Legend"
-msgstr "किंवदंती"
+msgid "Show Legend"
+msgstr "किंवदंती दिखाएं"
 
-#: data/ui/figure-settings-page.blp:186
+#: data/ui/figure-settings-page.blp:187
 msgid "Legend Position"
 msgstr "किंवदंती स्थिति"
 
-#: data/ui/figure-settings-page.blp:189
+#: data/ui/figure-settings-page.blp:191
 msgctxt "legend-position"
 msgid "Auto"
 msgstr "स्वतः"
 
-#: data/ui/figure-settings-page.blp:190
+#: data/ui/figure-settings-page.blp:192
 msgctxt "legend-position"
 msgid "Upper Right"
 msgstr "निचला दायां"
 
-#: data/ui/figure-settings-page.blp:191
+#: data/ui/figure-settings-page.blp:193
 msgctxt "legend-position"
 msgid "Upper Left"
 msgstr "ऊपरी बायां"
 
-#: data/ui/figure-settings-page.blp:192
+#: data/ui/figure-settings-page.blp:194
 msgctxt "legend-position"
 msgid "Lower Left"
 msgstr "निचला बायां"
 
-#: data/ui/figure-settings-page.blp:193
+#: data/ui/figure-settings-page.blp:195
 msgctxt "legend-position"
 msgid "Lower Right"
 msgstr "निचला दायां"
 
-#: data/ui/figure-settings-page.blp:194
+#: data/ui/figure-settings-page.blp:196
 msgctxt "legend-position"
 msgid "Center Left"
 msgstr "मध्य बायां"
 
-#: data/ui/figure-settings-page.blp:195
+#: data/ui/figure-settings-page.blp:197
 msgctxt "legend-position"
 msgid "Center Right"
 msgstr "मध्य दायां"
 
-#: data/ui/figure-settings-page.blp:196
+#: data/ui/figure-settings-page.blp:198
 msgctxt "legend-position"
 msgid "Lower Center"
 msgstr "निचला मध्य"
 
-#: data/ui/figure-settings-page.blp:197
+#: data/ui/figure-settings-page.blp:199
 msgctxt "legend-position"
 msgid "Upper Center"
 msgstr "ऊपरी मध्य"
 
-#: data/ui/figure-settings-page.blp:198
+#: data/ui/figure-settings-page.blp:200
 msgctxt "legend-position"
 msgid "Center"
 msgstr "मध्य"
 
-#: data/ui/figure-settings-page.blp:205
+#: data/ui/figure-settings-page.blp:206
 msgid "Hide Unselected Items"
 msgstr "अचयनित आइटम छिपाएं"
 
-#: data/ui/figure-settings-page.blp:227
+#: data/ui/figure-settings-page.blp:228
 msgid "Set as Default"
 msgstr "तयशुदा निर्धारित करें"
 
@@ -763,6 +763,91 @@ msgstr "आयात मापदंडों को संशोधित क�
 #: data/ui/import.blp:27
 msgid "Import"
 msgstr "आयात"
+
+#: data/ui/import-columns.blp:6
+msgid "Delimiter"
+msgstr "परिसीमनक"
+
+#: data/ui/import-columns.blp:7
+msgid "Character sequence used to split values"
+msgstr "मानों को विभाजित करने के लिए प्रयुक्त वर्ण अनुक्रम"
+
+#: data/ui/import-columns.blp:11
+msgctxt "delimiter"
+msgid "Whitespace"
+msgstr "रिक्त-स्थान"
+
+#: data/ui/import-columns.blp:12
+msgctxt "delimiter"
+msgid "Tab"
+msgstr "टैब"
+
+#: data/ui/import-columns.blp:13
+msgctxt "delimiter"
+msgid "Colon (:)"
+msgstr "बृहदांत्र (:)"
+
+#: data/ui/import-columns.blp:14
+msgctxt "delimiter"
+msgid "Semicolon (;)"
+msgstr "अर्धविराम (;)"
+
+#: data/ui/import-columns.blp:15
+msgctxt "delimiter"
+msgid "Decimal comma (,)"
+msgstr "दशमलव अल्पविराम (,)"
+
+#: data/ui/import-columns.blp:16
+msgctxt "delimiter"
+msgid "Decimal point (.)"
+msgstr "दशमलव बिंदु (.)"
+
+#: data/ui/import-columns.blp:17
+msgctxt "delimiter"
+msgid "Custom"
+msgstr "तदनुकूल"
+
+#: data/ui/import-columns.blp:24
+msgid "Custom Delimiter"
+msgstr "तदनुकूल परिसीमनक"
+
+#: data/ui/import-columns.blp:28
+msgid "Decimal Separator"
+msgstr "दशमलव विभाजक"
+
+#: data/ui/import-columns.blp:31
+msgctxt "separator"
+msgid "Decimal comma (,)"
+msgstr "दशमलव अल्पविराम (,)"
+
+#: data/ui/import-columns.blp:32
+msgctxt "separator"
+msgid "Decimal point (.)"
+msgstr "दशमलव बिंदु (.)"
+
+#: data/ui/import-columns.blp:38
+msgid "Column X"
+msgstr "कॉलम X"
+
+#: data/ui/import-columns.blp:39
+msgid "X-data column index"
+msgstr "X-डेटा कॉलम सूचकांक"
+
+#: data/ui/import-columns.blp:48
+msgid "Column Y"
+msgstr "कॉलम Y"
+
+#: data/ui/import-columns.blp:50
+msgid "Y-data column index"
+msgstr "Y-डेटा कॉलम सूचकांक"
+
+#: data/ui/import-columns.blp:59
+msgid "Skip Rows"
+msgstr "पंक्तियां छोड़ें"
+
+#: data/ui/import-columns.blp:60
+msgid "Ignored row indices"
+msgstr "उपेक्षित पंक्ति सूचकांक"
 
 #: data/ui/item-box.blp:17
 msgid "Pick Color"
@@ -973,7 +1058,7 @@ msgstr "बक्सा अंक"
 msgid "Amount of points to use when calculating a moving average"
 msgstr "चलती औसत की गणना करते समय उपयोग किए जाने वाले अंकों की मात्रा"
 
-#: data/ui/style-color-box.blp:18 data/ui/style-preview.blp:27
+#: data/ui/style-color-box.blp:18 data/ui/style-preview.blp:30
 msgid "Edit"
 msgstr "संपादन"
 
@@ -985,193 +1070,193 @@ msgstr "हटाएं"
 msgid "Error - No Style selected"
 msgstr "त्रुटि - कोई शैली चयनित नहीं"
 
-#: data/ui/style-editor.blp:37
+#: data/ui/style-editor.blp:27
 msgid "Style Name"
 msgstr "शैली का नाम"
 
-#: data/ui/style-editor.blp:41
+#: data/ui/style-editor.blp:31
 msgid "Font"
 msgstr "फॉन्ट"
 
-#: data/ui/style-editor.blp:52
+#: data/ui/style-editor.blp:42
 msgid "Title Size"
 msgstr "शीर्षक आकार"
 
-#: data/ui/style-editor.blp:53
+#: data/ui/style-editor.blp:43
 msgid "Title size in relation to text size"
 msgstr "पाठ आकार के संबंध में शीर्षक आकार"
 
-#: data/ui/style-editor.blp:66
+#: data/ui/style-editor.blp:56
 msgid "Label Size"
 msgstr "लेबल आकार"
 
-#: data/ui/style-editor.blp:67
+#: data/ui/style-editor.blp:57
 msgid "Label size in relation to text size"
 msgstr "पाठ आकार के संबंध में लेबल आकार"
 
-#: data/ui/style-editor.blp:81
+#: data/ui/style-editor.blp:71
 msgid "Lines"
 msgstr "पंक्तियां"
 
-#: data/ui/style-editor.blp:162
+#: data/ui/style-editor.blp:152
 msgid "Axes"
 msgstr "अक्ष"
 
-#: data/ui/style-editor.blp:165
+#: data/ui/style-editor.blp:155
 msgid "Axis Width"
 msgstr "अक्ष चौड़ाई"
 
-#: data/ui/style-editor.blp:178
+#: data/ui/style-editor.blp:168
 msgid "Draw Frame"
 msgstr "फ्रेम बनाएं"
 
-#: data/ui/style-editor.blp:183
+#: data/ui/style-editor.blp:173
 msgid "Ticks"
 msgstr "टिक"
 
-#: data/ui/style-editor.blp:186
+#: data/ui/style-editor.blp:176
 msgid "Tick Directions"
 msgstr "टिक की दिशा"
 
-#: data/ui/style-editor.blp:188
+#: data/ui/style-editor.blp:178
 msgid "Inwards"
 msgstr "अंदर की ओर"
 
-#: data/ui/style-editor.blp:188
+#: data/ui/style-editor.blp:178
 msgid "Outwards"
 msgstr "बाहर की तरफ"
 
-#: data/ui/style-editor.blp:193
+#: data/ui/style-editor.blp:183
 msgid "Minor Ticks"
 msgstr "मामूली टिक"
 
-#: data/ui/style-editor.blp:197
+#: data/ui/style-editor.blp:187
 msgid "Major Tick Width"
 msgstr "प्रमुख टिक की चौड़ाई"
 
-#: data/ui/style-editor.blp:210
+#: data/ui/style-editor.blp:200
 msgid "Minor Tick Width"
 msgstr "मामूली टिक की चौड़ाई"
 
-#: data/ui/style-editor.blp:224
+#: data/ui/style-editor.blp:214
 msgid "Major Tick Length"
 msgstr "प्रमुख टिक की लंबाई"
 
-#: data/ui/style-editor.blp:237
+#: data/ui/style-editor.blp:227
 msgid "Minor Tick Length"
 msgstr "मामूली टिक की लंबाई"
 
-#: data/ui/style-editor.blp:251
+#: data/ui/style-editor.blp:241
 msgid "Ticks on Bottom Axis"
 msgstr "निचले अक्ष पर टिक"
 
-#: data/ui/style-editor.blp:255
+#: data/ui/style-editor.blp:245
 msgid "Ticks on Left Axis"
 msgstr "बाएं अक्ष पर टिक"
 
-#: data/ui/style-editor.blp:259
+#: data/ui/style-editor.blp:249
 msgid "Ticks on Right Axis"
 msgstr "दाएं अक्ष पर टिक"
 
-#: data/ui/style-editor.blp:263
+#: data/ui/style-editor.blp:253
 msgid "Ticks on Top Axis"
 msgstr "शीर्ष अक्ष पर टिक"
 
-#: data/ui/style-editor.blp:268
+#: data/ui/style-editor.blp:258
 msgid "Grid"
 msgstr "ग्रिड"
 
-#: data/ui/style-editor.blp:271
+#: data/ui/style-editor.blp:261
 msgid "Show Grid"
 msgstr "ग्रिड दिखाएं"
 
-#: data/ui/style-editor.blp:275
+#: data/ui/style-editor.blp:265
 msgid "Grid Width"
 msgstr "ग्रिड चौड़ाई"
 
-#: data/ui/style-editor.blp:289
+#: data/ui/style-editor.blp:279
 msgid "Grid Opacity"
 msgstr "ग्रिड अपारदर्शिता"
 
-#: data/ui/style-editor.blp:304
+#: data/ui/style-editor.blp:294
 msgid "Padding"
 msgstr "पैडिंग"
 
-#: data/ui/style-editor.blp:305
+#: data/ui/style-editor.blp:295
 msgid "Padding for different parts of the figure"
 msgstr "आकृति के विभिन्न भागों के लिए पैडिंग"
 
-#: data/ui/style-editor.blp:308
+#: data/ui/style-editor.blp:298
 msgid "Value Padding"
 msgstr "मान पैडिंग"
 
-#: data/ui/style-editor.blp:309
+#: data/ui/style-editor.blp:299
 msgid "Padding between axes and values"
 msgstr "अक्षों और मानों के बीच पैडिंग"
 
-#: data/ui/style-editor.blp:322
+#: data/ui/style-editor.blp:312
 msgid "Label Padding"
 msgstr "लेबल पैडिंग"
 
-#: data/ui/style-editor.blp:323
+#: data/ui/style-editor.blp:313
 msgid "Padding between axes and labels"
 msgstr "अक्षों और लेबलों के बीच पैडिंग"
 
-#: data/ui/style-editor.blp:336
+#: data/ui/style-editor.blp:326
 msgid "Title Padding"
 msgstr "शीर्षक पैडिंग"
 
-#: data/ui/style-editor.blp:337
+#: data/ui/style-editor.blp:327
 msgid "Padding between axes and the title"
 msgstr "अक्षों और शीर्षक के बीच पैडिंग"
 
-#: data/ui/style-editor.blp:351
+#: data/ui/style-editor.blp:341
 msgid "Colors"
 msgstr "रंग"
 
-#: data/ui/style-editor.blp:356
+#: data/ui/style-editor.blp:346
 msgid "Label text might be hard to read"
 msgstr "लेबल पाठ को पढ़ना कठिन हो सकता है"
 
-#: data/ui/style-editor.blp:361
+#: data/ui/style-editor.blp:351
 msgid "Poor Contrast"
 msgstr "खराब विषमता"
 
-#: data/ui/style-editor.blp:376
+#: data/ui/style-editor.blp:366
 msgid "Text Color"
 msgstr "पाठ का रंग"
 
-#: data/ui/style-editor.blp:381 data/ui/style-editor.blp:403
-#: data/ui/style-editor.blp:425 data/ui/style-editor.blp:447
-#: data/ui/style-editor.blp:469 data/ui/style-editor.blp:491
+#: data/ui/style-editor.blp:371 data/ui/style-editor.blp:393
+#: data/ui/style-editor.blp:415 data/ui/style-editor.blp:437
+#: data/ui/style-editor.blp:459 data/ui/style-editor.blp:481
 msgid "Change Color"
 msgstr "रंग बदलें"
 
-#: data/ui/style-editor.blp:398
+#: data/ui/style-editor.blp:388
 msgid "Tick Color"
 msgstr "टिक का रंग"
 
-#: data/ui/style-editor.blp:420
+#: data/ui/style-editor.blp:410
 msgid "Axis Color"
 msgstr "अक्ष रंग"
 
-#: data/ui/style-editor.blp:442
+#: data/ui/style-editor.blp:432
 msgid "Grid Color"
 msgstr "ग्रिड रंग"
 
-#: data/ui/style-editor.blp:464
+#: data/ui/style-editor.blp:454
 msgid "Background Color"
 msgstr "पृष्ठभूमि रंग"
 
-#: data/ui/style-editor.blp:486
+#: data/ui/style-editor.blp:476
 msgid "Outline Color"
 msgstr "रूपरेखा रंग"
 
-#: data/ui/style-editor.blp:505
+#: data/ui/style-editor.blp:495
 msgid "Line Colors"
 msgstr "रेखा रंग"
 
-#: data/ui/style-editor.blp:511
+#: data/ui/style-editor.blp:501
 msgid "Add Color"
 msgstr "रंग जोड़ें"
 
@@ -1353,7 +1438,7 @@ msgstr "गुणा X"
 msgid "Multiply Y"
 msgstr "गुणा Y"
 
-#: data/ui/window.blp:606 graphs/application.vala:260 graphs/item_box.vala:70
+#: data/ui/window.blp:606 graphs/window.vala:283
 msgid "Undo"
 msgstr "पूर्ववत करें"
 
@@ -1433,36 +1518,36 @@ msgstr "उन्नत सेटिंग्स"
 msgid "translator-credits"
 msgstr "Scrambled777 <weblate.scrambled777@simplelogin.com>, 2024"
 
-#: graphs/actions.py:38
+#: graphs/actions.py:40
 msgctxt "file-filter"
 msgid "Supported files"
 msgstr "समर्थित फाइलें"
 
-#: graphs/actions.py:41
+#: graphs/actions.py:43
 msgctxt "file-filter"
 msgid "ASCII files"
 msgstr "ASCII फाइलें"
 
-#: graphs/actions.py:42
+#: graphs/actions.py:44
 msgctxt "file-filter"
 msgid "PANalytical XRDML"
 msgstr "PANalytical XRDML"
 
-#: graphs/actions.py:43
+#: graphs/actions.py:45
 msgctxt "file-filter"
 msgid "Leybold xry"
 msgstr "Leybold xry"
 
-#: graphs/actions.py:87
+#: graphs/actions.py:89
 #, python-brace-format
 msgid "{error} - Unable to add data from equation"
 msgstr "{error} - समीकरण से डेटा जोड़ने में असमर्थ"
 
-#: graphs/actions.py:100
+#: graphs/actions.py:102
 msgid "No data to export"
 msgstr "निर्यात के लिए कोई डेटा नहीं"
 
-#: graphs/actions.py:118
+#: graphs/actions.py:120
 msgid "Exported Figure"
 msgstr "निर्यातित चित्र"
 
@@ -1471,7 +1556,7 @@ msgstr "निर्यातित चित्र"
 msgid "Could not load {font}"
 msgstr "{font} लोड नहीं किया जा सका"
 
-#: graphs/application.vala:259 graphs/item_box.vala:69
+#: graphs/application.vala:259 graphs/item_box.vala:58
 #, c-format
 msgid "Deleted %s"
 msgstr "%s मिटाया गया"
@@ -1514,11 +1599,11 @@ msgstr "R² का योग: {R2}"
 msgid "Fitting Parameters for %s"
 msgstr "%s के लिए अनुकूलन मापदंड"
 
-#: graphs/data.py:73
+#: graphs/data.py:72
 msgid "Untitled Project"
 msgstr "शीर्षकहीन परियोजना"
 
-#: graphs/data.py:74
+#: graphs/data.py:73
 msgid "Draft"
 msgstr "मसौदा"
 
@@ -1532,37 +1617,42 @@ msgctxt "filename"
 msgid "Exported Figure"
 msgstr "निर्यातित चित्र"
 
-#: graphs/figure_settings.vala:159
+#: graphs/figure_settings.vala:156
 msgid "X Axis Minimum"
 msgstr "X अक्ष न्यूनतम"
 
-#: graphs/figure_settings.vala:160
+#: graphs/figure_settings.vala:157
 msgid "Y Axis Minimum"
 msgstr "Y अक्ष न्यूनतम"
 
-#: graphs/figure_settings.vala:162
+#: graphs/figure_settings.vala:159
 msgid "X Axis Maximum"
 msgstr "X अक्ष अधिकतम"
 
-#: graphs/figure_settings.vala:163
+#: graphs/figure_settings.vala:160
 msgid "Y Axis Maximum"
 msgstr "Y अक्ष अधिकतम"
 
-#: graphs/figure_settings.vala:173 graphs/window.vala:283
+#: graphs/figure_settings.vala:170 graphs/window.vala:344
 msgid "X Axis Scale"
 msgstr "X अक्ष पैमाना"
 
-#: graphs/figure_settings.vala:174 graphs/figure_settings.vala:178
+#: graphs/figure_settings.vala:171 graphs/figure_settings.vala:175
 msgid "X Axis Label"
 msgstr "X अक्ष लेबल"
 
-#: graphs/figure_settings.vala:177 graphs/window.vala:288
+#: graphs/figure_settings.vala:174 graphs/window.vala:349
 msgid "Y Axis Scale"
 msgstr "Y अक्ष पैमाना"
 
-#: graphs/figure_settings.vala:201
+#: graphs/figure_settings.vala:198
 msgid "Defaults Updated"
 msgstr "तयशुदा अद्यतित"
+
+#: graphs/figure_settings.vala:248
+#, c-format
+msgid "Are you sure you want to delete %s?"
+msgstr "क्या आप वाकई %s को मिटाना चाहते हैं?"
 
 #: graphs/file_import.vala:40
 msgid "Are you sure you want to reset the import settings?"
@@ -1606,89 +1696,84 @@ msgstr "चिन्हांकित क्षेत्र में कोई
 msgid "Combined Data"
 msgstr "संयुक्त डेटा"
 
-#: graphs/parse_file.py:54
+#: graphs/parse_file.py:56
 msgid "Intensity (cps)"
 msgstr "तीव्रता (cps)"
 
-#: graphs/parse_file.py:68
+#: graphs/parse_file.py:70
 msgid "Invalid .xry format"
 msgstr "अमान्य .xry प्रारूप"
 
-#: graphs/parse_file.py:83
+#: graphs/parse_file.py:85
 msgid "β (°)"
 msgstr "β (°)"
 
-#: graphs/parse_file.py:84
+#: graphs/parse_file.py:86
 msgid "R (1/s)"
 msgstr "R (1/s)"
 
-#: graphs/parse_file.py:153
+#: graphs/parse_file.py:155
 msgid "Import failed, column index out of range"
 msgstr "आयात विफल, स्तंभ सूचकांक सीमा से बाहर"
 
-#: graphs/parse_file.py:172
+#: graphs/parse_file.py:174
 msgid "Unable to import from file"
 msgstr "फाइल से आयात करने में असमर्थ"
 
-#: graphs/style_io.py:65
-#, python-brace-format
-msgid "Missing colon in file {file}, line {line}"
-msgstr "फाइल {file}, लाइन {line} में अपूर्ण विराम गुम है"
-
-#: graphs/style_io.py:73
-#, python-brace-format
-msgid "Non-style related parameter {param} in file {file}"
-msgstr "फाइल {file} में गैर-शैली संबंधित मापदंड {param}"
-
-#: graphs/style_io.py:76
-#, python-brace-format
-msgid "Ignoring parameter {param} in file {file}"
-msgstr "फाइल {file} में मापदंड {param} को अनदेखा करना"
-
-#: graphs/style_io.py:79
-#, python-brace-format
-msgid "Duplicate key in file {file}, on line {line}"
-msgstr "फाइल {file} में डुप्लिकेट कुंजी, लाइन {line} पर"
-
-#: graphs/style_io.py:96
-#, python-brace-format
-msgid "Bad value in file {file} on line {line}"
-msgstr "लाइन {line} पर फाइल {file} में ख़राब मान"
-
-#: graphs/style_io.py:102
-#, python-brace-format
-msgid "Could not parse {filename}"
-msgstr "{filename} का विश्लेषण नहीं किया जा सका"
-
-#: graphs/style_io.py:159
-msgid "X Label"
-msgstr "X लेबल"
-
-#: graphs/style_io.py:160
-msgid "Y Label"
-msgstr "Y लेबल"
-
-#: graphs/styles.py:225
-#, python-brace-format
-msgid "Could not parse {stylename}, loading system preferred style"
-msgstr "{stylename} का विश्लेषण नहीं किया जा सका, सिस्टम वरीय शैली लोड हो रही है"
-
-#: graphs/styles.py:233
-#, python-brace-format
-msgid "Plot style {stylename} does not exist loading system preferred"
-msgstr "प्लॉट शैली {stylename} मौजूद नहीं है, सिस्टम वरीय लोड हो रहा है"
-
-#: graphs/styles.py:636
-#, python-brace-format
-msgid "Are you sure you want to delete {stylename}?"
-msgstr "क्या आप वाकई {stylename} को मिटाना चाहते हैं?"
-
-#: graphs/styles.py:653
+#: graphs/style_editor.py:366
 #, python-brace-format
 msgid "Color {number}"
 msgstr "रंग {number}"
 
-#: graphs/styles.vala:79
+#: graphs/style_io.py:75
+#, python-brace-format
+msgid "Missing colon in file {file}, line {line}"
+msgstr "फाइल {file}, लाइन {line} में अपूर्ण विराम गुम है"
+
+#: graphs/style_io.py:83
+#, python-brace-format
+msgid "Non-style related parameter {param} in file {file}"
+msgstr "फाइल {file} में गैर-शैली संबंधित मापदंड {param}"
+
+#: graphs/style_io.py:86
+#, python-brace-format
+msgid "Ignoring parameter {param} in file {file}"
+msgstr "फाइल {file} में मापदंड {param} को अनदेखा करना"
+
+#: graphs/style_io.py:89
+#, python-brace-format
+msgid "Duplicate key in file {file}, on line {line}"
+msgstr "फाइल {file} में डुप्लिकेट कुंजी, लाइन {line} पर"
+
+#: graphs/style_io.py:106
+#, python-brace-format
+msgid "Bad value in file {file} on line {line}"
+msgstr "लाइन {line} पर फाइल {file} में ख़राब मान"
+
+#: graphs/style_io.py:112
+#, python-brace-format
+msgid "Could not parse {filename}"
+msgstr "{filename} का विश्लेषण नहीं किया जा सका"
+
+#: graphs/style_io.py:171
+msgid "X Label"
+msgstr "X लेबल"
+
+#: graphs/style_io.py:172
+msgid "Y Label"
+msgstr "Y लेबल"
+
+#: graphs/styles.py:166
+#, python-brace-format
+msgid "Could not parse {stylename}, loading system preferred style"
+msgstr "{stylename} का विश्लेषण नहीं किया जा सका, सिस्टम वरीय शैली लोड हो रही है"
+
+#: graphs/styles.py:174
+#, python-brace-format
+msgid "Plot style {stylename} does not exist loading system preferred"
+msgstr "प्लॉट शैली {stylename} मौजूद नहीं है, सिस्टम वरीय लोड हो रहा है"
+
+#: graphs/styles.vala:81
 msgid "System"
 msgstr "सिस्टम"
 
@@ -1696,19 +1781,19 @@ msgstr "सिस्टम"
 msgid "All Files"
 msgstr "सभी फाइलें"
 
-#: graphs/window.vala:169
+#: graphs/window.vala:220
 msgid "Graphs (Development)"
 msgstr "रेखांकन (विकास)"
 
-#: graphs/window.vala:222
+#: graphs/window.vala:273
 msgid "Open Location"
 msgstr "स्थान खोलें"
 
-#: graphs/window.vala:246
+#: graphs/window.vala:307
 msgid "Optimize Limits"
 msgstr "सीमाएं अनुकूलित करें"
 
-#: graphs/window.vala:255
+#: graphs/window.vala:316
 msgctxt "scale"
 msgid "Inverse Root"
 msgstr "व्युत्क्रम"
