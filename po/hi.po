@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2024-05-03 09:19+0000\n"
-"PO-Revision-Date: 2024-05-14 23:09+0530\n"
+"POT-Creation-Date: 2024-07-24 12:58+0000\n"
+"PO-Revision-Date: 2024-07-27 13:33+0530\n"
 "Last-Translator: Scrambled777 <weblate.scrambled777@simplelogin.com>\n"
 "Language-Team: Hindi <indlinux-hindi@lists.sourceforge.net>\n"
 "Language: hi\n"
@@ -18,17 +18,16 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Gtranslator 46.1\n"
 
-#: data/se.sjoerd.Graphs.appdata.xml.in.in:6
-#: data/se.sjoerd.Graphs.desktop.in.in:3 data/ui/window.blp:9
-#: graphs/about.vala:23
+#: data/se.sjoerd.Graphs.appdata.xml.in:6 data/se.sjoerd.Graphs.desktop.in:3
+#: data/ui/window.blp:9 graphs/about.vala:23
 msgid "Graphs"
-msgstr "Graphs"
+msgstr "ग्राफ्स"
 
-#: data/se.sjoerd.Graphs.appdata.xml.in.in:7
+#: data/se.sjoerd.Graphs.appdata.xml.in:7
 msgid "Plot and manipulate data"
 msgstr "डेटा प्लॉट और हेरफेर करें"
 
-#: data/se.sjoerd.Graphs.appdata.xml.in.in:13
+#: data/se.sjoerd.Graphs.appdata.xml.in:12
 msgid ""
 "Graphs is a simple, yet powerful tool that allows you to plot and manipulate "
 "your data with ease. New data can be imported from a wide variety of "
@@ -37,24 +36,24 @@ msgid ""
 "multiply, center and smoothen data, as well as apply any custom "
 "transformations on the data."
 msgstr ""
-"Graphs एक सरल, फिर भी शक्तिशाली उपकरण है जो आपको आसानी से अपने डेटा को प्लॉट करने "
-"और हेरफेर करने की अनुमति देता है। नए डेटा को विभिन्न प्रकार की फाइल प्रकारों से आयात "
-"किया जा सकता है, या समीकरण द्वारा उत्पन्न किया जा सकता है। सभी डेटा को विभिन्न "
-"प्रकार के अभियानों का उपयोग करके हेरफेर किया जा सकता है जैसे डेटा को चुनने, काटने, अनुवाद "
-"करने, गुणा करने, केंद्र और सुचारू करने की क्षमता, साथ ही डेटा पर किसी भी तदनुकूल परिवर्तन "
-"को लागू करने की क्षमता।"
+"ग्राफ्स एक सरल, फिर भी शक्तिशाली उपकरण है जो आपको आसानी से अपने डेटा को प्लॉट करने और "
+"हेरफेर करने की अनुमति देता है। नए डेटा को विभिन्न प्रकार की फाइल प्रकारों से आयात किया "
+"जा सकता है, या समीकरण द्वारा उत्पन्न किया जा सकता है। सभी डेटा को विभिन्न प्रकार के "
+"अभियानों का उपयोग करके हेरफेर किया जा सकता है जैसे डेटा को चुनने, काटने, अनुवाद करने, गुणा "
+"करने, केंद्र और सुचारू करने की क्षमता, साथ ही डेटा पर किसी भी तदनुकूल परिवर्तन को लागू "
+"करने की क्षमता।"
 
-#: data/se.sjoerd.Graphs.appdata.xml.in.in:17
+#: data/se.sjoerd.Graphs.appdata.xml.in:16
 msgid ""
 "Moreover, Graphs supports curve fitting on imported data and offers "
 "extensive customization options for the style of the plots. You can fine-"
 "tune and personalize stylesheets to your liking."
 msgstr ""
-"इसके अलावा, Graphs आयातित डेटा पर वक्र फिटिंग का समर्थन करता है और प्लॉट की शैली के "
+"इसके अलावा, ग्राफ्स आयातित डेटा पर वक्र फिटिंग का समर्थन करता है और प्लॉट की शैली के "
 "लिए व्यापक अनुकूलन विकल्प प्रदान करता है। आप अपनी पसंद के अनुसार स्टाइलशीट को समायोजित "
 "और वैयक्तिकृत कर सकते हैं।"
 
-#: data/se.sjoerd.Graphs.appdata.xml.in.in:20
+#: data/se.sjoerd.Graphs.appdata.xml.in:19
 msgid ""
 "Graphs is an excellent fit for both plotting and data manipulation. The "
 "plots created with Graphs can be saved in a variety of formats suitable for "
@@ -64,42 +63,42 @@ msgid ""
 "refinement. Graphs is written with the GNOME environment in mind, but should "
 "be suitable for any other desktop environment as well."
 msgstr ""
-"Graphs प्लॉटिंग और डेटा हेरफेर दोनों के लिए बिल्कुल उपयुक्त है। Graphs के साथ बनाए गए "
-"प्लॉट को व्यापक दर्शकों के सामने साझा करने और प्रस्तुत करने के लिए उपयुक्त विभिन्न स्वरूपों में "
-"सहेजा जा सकता है, जैसे कि वैज्ञानिक प्रकाशन या प्रस्तुतियों में। इसके अतिरिक्त, प्लॉट को "
-"वेक्टर छवियों के रूप में सहेजने का विकल्प आगे के शोधन के लिए Inkscape जैसे सॉफ्टवेयर में आसान "
-"संपादन की अनुमति देता है। Graphs GNOME वातावरण को ध्यान में रखकर लिखा जाता है, लेकिन "
-"यह किसी अन्य डेस्कटॉप वातावरण के लिए भी उपयुक्त होना चाहिए।"
+"ग्राफ्स प्लॉटिंग और डेटा हेरफेर दोनों के लिए बिल्कुल उपयुक्त है। ग्राफ्स के साथ बनाए गए प्लॉट "
+"को व्यापक दर्शकों के सामने साझा करने और प्रस्तुत करने के लिए उपयुक्त विभिन्न स्वरूपों में सहेजा "
+"जा सकता है, जैसे कि वैज्ञानिक प्रकाशन या प्रस्तुतियों में। इसके अतिरिक्त, प्लॉट को वेक्टर "
+"छवियों के रूप में सहेजने का विकल्प आगे के शोधन के लिए Inkscape जैसे सॉफ्टवेयर में आसान संपादन "
+"की अनुमति देता है। ग्राफ्स GNOME वातावरण को ध्यान में रखकर लिखा जाता है, लेकिन यह किसी "
+"अन्य डेस्कटॉप वातावरण के लिए भी उपयुक्त होना चाहिए।"
 
-#: data/se.sjoerd.Graphs.appdata.xml.in.in:24
+#: data/se.sjoerd.Graphs.appdata.xml.in:23
 msgid ""
 "For any feedback, questions or general issues, please file an issue on the "
 "GitLab page."
 msgstr ""
-"किसी भी प्रतिक्रिया, प्रश्न या सामान्य समस्या के लिए, कृपया GitLab पेज पर एक समस्या "
-"दर्ज करें।"
+"किसी भी प्रतिक्रिया, प्रश्न या सामान्य समस्या के लिए, कृपया GitLab पृष्ठ पर समस्या दर्ज "
+"करें।"
 
-#: data/se.sjoerd.Graphs.appdata.xml.in.in:37
+#: data/se.sjoerd.Graphs.appdata.xml.in:36
 msgid "1 - Plot and manipulate any data of choice"
 msgstr "1 - पसंद के किसी भी डेटा को प्लॉट और हेरफेर करें"
 
-#: data/se.sjoerd.Graphs.appdata.xml.in.in:41
+#: data/se.sjoerd.Graphs.appdata.xml.in:40
 msgid "2 - Full support for light and dark mode"
 msgstr "2 - हल्के और गहरे मोड के लिए पूर्ण समर्थन"
 
-#: data/se.sjoerd.Graphs.appdata.xml.in.in:45
+#: data/se.sjoerd.Graphs.appdata.xml.in:44
 msgid "3 - Generate data from an equation"
 msgstr "3 - एक समीकरण से डेटा उत्पन्न करें"
 
-#: data/se.sjoerd.Graphs.appdata.xml.in.in:49
+#: data/se.sjoerd.Graphs.appdata.xml.in:48
 msgid "4 - Edit plot stylesheets"
 msgstr "4 - प्लॉट स्टाइलशीट संपादित करें"
 
-#: data/se.sjoerd.Graphs.appdata.xml.in.in:53
+#: data/se.sjoerd.Graphs.appdata.xml.in:52
 msgid "5 - Manipulate imported data with ease"
 msgstr "5 - आयातित डेटा में आसानी से हेरफेर करें"
 
-#: data/se.sjoerd.Graphs.desktop.in.in:10
+#: data/se.sjoerd.Graphs.desktop.in:10
 msgid ""
 "Plotting;Graph;Graphing;Science;Mathematics;Math;Equations;Data;Plot;"
 "Visualisation;Visualization;Fitting;xrdml;"
@@ -765,6 +764,91 @@ msgstr "आयात मापदंडों को संशोधित क�
 msgid "Import"
 msgstr "आयात"
 
+#: data/ui/import-columns.blp:6
+msgid "Delimiter"
+msgstr "परिसीमनक"
+
+#: data/ui/import-columns.blp:7
+msgid "Character sequence used to split values"
+msgstr "मानों को विभाजित करने के लिए प्रयुक्त वर्ण अनुक्रम"
+
+#: data/ui/import-columns.blp:11
+msgctxt "delimiter"
+msgid "Whitespace"
+msgstr "रिक्त-स्थान"
+
+#: data/ui/import-columns.blp:12
+msgctxt "delimiter"
+msgid "Tab"
+msgstr "टैब"
+
+#: data/ui/import-columns.blp:13
+msgctxt "delimiter"
+msgid "Colon (:)"
+msgstr "बृहदांत्र (:)"
+
+#: data/ui/import-columns.blp:14
+msgctxt "delimiter"
+msgid "Semicolon (;)"
+msgstr "अर्धविराम (;)"
+
+#: data/ui/import-columns.blp:15
+msgctxt "delimiter"
+msgid "Decimal comma (,)"
+msgstr "दशमलव अल्पविराम (,)"
+
+#: data/ui/import-columns.blp:16
+msgctxt "delimiter"
+msgid "Decimal point (.)"
+msgstr "दशमलव बिंदु (.)"
+
+#: data/ui/import-columns.blp:17
+msgctxt "delimiter"
+msgid "Custom"
+msgstr "तदनुकूल"
+
+#: data/ui/import-columns.blp:24
+msgid "Custom Delimiter"
+msgstr "तदनुकूल परिसीमनक"
+
+#: data/ui/import-columns.blp:28
+msgid "Decimal Separator"
+msgstr "दशमलव विभाजक"
+
+#: data/ui/import-columns.blp:31
+msgctxt "separator"
+msgid "Decimal comma (,)"
+msgstr "दशमलव अल्पविराम (,)"
+
+#: data/ui/import-columns.blp:32
+msgctxt "separator"
+msgid "Decimal point (.)"
+msgstr "दशमलव बिंदु (.)"
+
+#: data/ui/import-columns.blp:38
+msgid "Column X"
+msgstr "कॉलम X"
+
+#: data/ui/import-columns.blp:39
+msgid "X-data column index"
+msgstr "X-डेटा कॉलम सूचकांक"
+
+#: data/ui/import-columns.blp:48
+msgid "Column Y"
+msgstr "कॉलम Y"
+
+#: data/ui/import-columns.blp:50
+msgid "Y-data column index"
+msgstr "Y-डेटा कॉलम सूचकांक"
+
+#: data/ui/import-columns.blp:59
+msgid "Skip Rows"
+msgstr "पंक्तियां छोड़ें"
+
+#: data/ui/import-columns.blp:60
+msgid "Ignored row indices"
+msgstr "उपेक्षित पंक्ति सूचकांक"
+
 #: data/ui/item-box.blp:26
 msgid "Pick Color"
 msgstr "रंग चुनें"
@@ -1358,7 +1442,7 @@ msgstr "गुणा X"
 msgid "Multiply Y"
 msgstr "गुणा Y"
 
-#: data/ui/window.blp:605 graphs/actions.py:227 graphs/item_box.py:66
+#: data/ui/window.blp:605 graphs/actions.py:226 graphs/item_box.py:66
 msgid "Undo"
 msgstr "पूर्ववत करें"
 
@@ -1412,7 +1496,7 @@ msgstr "सहायता"
 
 #: data/ui/window.blp:664
 msgid "About Graphs"
-msgstr "Graphs के बारे में"
+msgstr "ग्राफ्स के बारे में"
 
 #: data/ui/window.blp:670
 msgid "Add Data from File…"
@@ -1447,7 +1531,7 @@ msgstr "{error} - समीकरण से डेटा जोड़ने म�
 msgid "Exported Figure"
 msgstr "निर्यातित चित्र"
 
-#: graphs/actions.py:226 graphs/item_box.py:65
+#: graphs/actions.py:225 graphs/item_box.py:65
 #, python-brace-format
 msgid "Deleted {name}"
 msgstr "{name} मिटा दिया गया"
@@ -1457,11 +1541,11 @@ msgstr "{name} मिटा दिया गया"
 msgid "Could not load {font}"
 msgstr "{font} लोड नहीं किया जा सका"
 
-#: graphs/curve_fitting.py:173
+#: graphs/curve_fitting.py:176
 msgid "Results:"
 msgstr "परिणाम:"
 
-#: graphs/curve_fitting.py:177
+#: graphs/curve_fitting.py:180
 msgid ""
 "Please enter valid fitting \n"
 "parameters to start the fit"
@@ -1469,37 +1553,37 @@ msgstr ""
 "कृपया फिट शुरू करने के लिए \n"
 "मान्य सेटिंग मापदंड दर्ज करें"
 
-#: graphs/curve_fitting.py:181
+#: graphs/curve_fitting.py:184
 msgid ""
 "Please enter a valid equation \n"
 "to start the fit"
 msgstr ""
 "कृपया फिट शुरू करने के लिए \n"
-"एक वैध समीकरण दर्ज करें"
+"एक मान्य समीकरण दर्ज करें"
 
-#: graphs/curve_fitting.py:185
+#: graphs/curve_fitting.py:188
 msgid ""
 "Please enter valid fitting bounds \n"
 "to start the fit"
 msgstr ""
 "कृपया फिट शुरू करने के लिए \n"
-"वैध फिटिंग सीमाएं दर्ज करें"
+"मान्य फिटिंग सीमाएं दर्ज करें"
 
-#: graphs/curve_fitting.py:198
+#: graphs/curve_fitting.py:201
 #, python-brace-format
 msgid "Sum of R²: {R2}"
 msgstr "R² का योग: {R2}"
 
-#: graphs/curve_fitting.vala:131
+#: graphs/curve_fitting.vala:136
 #, c-format
 msgid "Fitting Parameters for %s"
 msgstr "%s के लिए अनुकूलन मापदंड"
 
-#: graphs/data.py:88
+#: graphs/data.py:89
 msgid "Untitled Project"
 msgstr "शीर्षकहीन परियोजना"
 
-#: graphs/data.py:99
+#: graphs/data.py:100
 msgid "Draft"
 msgstr "मसौदा"
 
@@ -1540,14 +1624,14 @@ msgstr "X अक्ष लेबल"
 msgid "Y Axis Scale"
 msgstr "Y अक्ष पैमाना"
 
-#: graphs/file_import.vala:65
+#: graphs/file_import.vala:68
 msgid "Are you sure you want to reset the import settings?"
 msgstr "क्या आप वाकई आयात सेटिंग्स को रीसेट करना चाहते हैं?"
 
 #: graphs/misc.py:107
 msgctxt "file-filter"
 msgid "Graphs Project File"
-msgstr "Graphs परियोजना फाइल"
+msgstr "ग्राफ्स परियोजना फाइल"
 
 #: graphs/operations.py:129
 #, python-brace-format
@@ -1696,6 +1780,10 @@ msgstr "निर्यातित डेटा"
 msgctxt "file-filter"
 msgid "Text Files"
 msgstr "पाठ फाइलें"
+
+#: graphs/utilities.py:122
+msgid "All Files"
+msgstr "सभी फाइलें"
 
 #: graphs/window.vala:128
 msgid "Graphs (Development)"
