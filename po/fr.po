@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2024-04-19 13:03+0000\n"
-"PO-Revision-Date: 2024-04-21 00:46+0200\n"
+"POT-Creation-Date: 2024-07-24 12:58+0000\n"
+"PO-Revision-Date: 2024-07-25 13:51+0200\n"
 "Last-Translator: Vincent Chatelain <vinchatl_gnome@proton.me>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "Language: fr\n"
@@ -18,17 +18,16 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Gtranslator 45.3\n"
 
-#: data/se.sjoerd.Graphs.appdata.xml.in.in:6
-#: data/se.sjoerd.Graphs.desktop.in.in:3 data/ui/window.blp:9
-#: graphs/about.vala:23
+#: data/se.sjoerd.Graphs.appdata.xml.in:6 data/se.sjoerd.Graphs.desktop.in:3
+#: data/ui/window.blp:9 graphs/about.vala:23
 msgid "Graphs"
 msgstr "Graphes"
 
-#: data/se.sjoerd.Graphs.appdata.xml.in.in:7
+#: data/se.sjoerd.Graphs.appdata.xml.in:7
 msgid "Plot and manipulate data"
 msgstr "Tracer et manipuler des données"
 
-#: data/se.sjoerd.Graphs.appdata.xml.in.in:13
+#: data/se.sjoerd.Graphs.appdata.xml.in:12
 msgid ""
 "Graphs is a simple, yet powerful tool that allows you to plot and manipulate "
 "your data with ease. New data can be imported from a wide variety of "
@@ -44,7 +43,7 @@ msgstr ""
 "comme être sélectionnées, coupées, translatées, multipliées, lissées ou "
 "transformées de manière personnalisée."
 
-#: data/se.sjoerd.Graphs.appdata.xml.in.in:17
+#: data/se.sjoerd.Graphs.appdata.xml.in:16
 msgid ""
 "Moreover, Graphs supports curve fitting on imported data and offers "
 "extensive customization options for the style of the plots. You can fine-"
@@ -55,7 +54,7 @@ msgstr ""
 "courbes. Vous pouvez affiner et personnaliser les feuilles de style selon "
 "vos envies."
 
-#: data/se.sjoerd.Graphs.appdata.xml.in.in:20
+#: data/se.sjoerd.Graphs.appdata.xml.in:19
 msgid ""
 "Graphs is an excellent fit for both plotting and data manipulation. The "
 "plots created with Graphs can be saved in a variety of formats suitable for "
@@ -75,7 +74,7 @@ msgstr ""
 "l’environnement GNOME, mais devrait également convenir à tout autre "
 "environnement de bureau."
 
-#: data/se.sjoerd.Graphs.appdata.xml.in.in:24
+#: data/se.sjoerd.Graphs.appdata.xml.in:23
 msgid ""
 "For any feedback, questions or general issues, please file an issue on the "
 "GitLab page."
@@ -83,27 +82,27 @@ msgstr ""
 "Que ce soit pour un commentaire, des questions ou un problème en général, "
 "veuillez créer un ticket sur la page GitLab."
 
-#: data/se.sjoerd.Graphs.appdata.xml.in.in:37
+#: data/se.sjoerd.Graphs.appdata.xml.in:36
 msgid "1 - Plot and manipulate any data of choice"
 msgstr "1 - Tracer et manipuler n’importe quelles données"
 
-#: data/se.sjoerd.Graphs.appdata.xml.in.in:41
+#: data/se.sjoerd.Graphs.appdata.xml.in:40
 msgid "2 - Full support for light and dark mode"
 msgstr "2 - Prise en charge complète du mode clair et foncé"
 
-#: data/se.sjoerd.Graphs.appdata.xml.in.in:45
+#: data/se.sjoerd.Graphs.appdata.xml.in:44
 msgid "3 - Generate data from an equation"
 msgstr "3 - Générer des données depuis une équation"
 
-#: data/se.sjoerd.Graphs.appdata.xml.in.in:49
+#: data/se.sjoerd.Graphs.appdata.xml.in:48
 msgid "4 - Edit plot stylesheets"
 msgstr "4 - Modifier le style des graphiques"
 
-#: data/se.sjoerd.Graphs.appdata.xml.in.in:53
+#: data/se.sjoerd.Graphs.appdata.xml.in:52
 msgid "5 - Manipulate imported data with ease"
 msgstr "5 - Manipuler les données importées avec facilité"
 
-#: data/se.sjoerd.Graphs.desktop.in.in:10
+#: data/se.sjoerd.Graphs.desktop.in:10
 msgid ""
 "Plotting;Graph;Graphing;Science;Mathematics;Math;Equations;Data;Plot;"
 "Visualisation;Visualization;Fitting;xrdml;"
@@ -125,7 +124,8 @@ msgstr "Annuler"
 msgid "Add"
 msgstr "Ajouter"
 
-#: data/ui/add-equation.blp:41 data/ui/transform.blp:56
+#: data/ui/add-equation.blp:41 data/ui/curve-fitting.blp:66
+#: data/ui/transform.blp:56
 msgid "Y ="
 msgstr "Y ="
 
@@ -213,10 +213,6 @@ msgstr "Gaussienne"
 msgctxt "regression-type"
 msgid "Custom"
 msgstr "Personnalisée"
-
-#: data/ui/curve-fitting.blp:66
-msgid "Y = "
-msgstr "Y = "
 
 #: data/ui/curve-fitting.blp:93
 msgid "Add Fit to Data"
@@ -774,6 +770,91 @@ msgstr "Modifier les paramètres d’import"
 #: data/ui/import.blp:27
 msgid "Import"
 msgstr "Importer"
+
+#: data/ui/import-columns.blp:6
+msgid "Delimiter"
+msgstr "Délimiteur"
+
+#: data/ui/import-columns.blp:7
+msgid "Character sequence used to split values"
+msgstr "Séquence de caractères utilisée pour séparer les valeurs"
+
+#: data/ui/import-columns.blp:11
+msgctxt "delimiter"
+msgid "Whitespace"
+msgstr "Espace"
+
+#: data/ui/import-columns.blp:12
+msgctxt "delimiter"
+msgid "Tab"
+msgstr "Tabulation"
+
+#: data/ui/import-columns.blp:13
+msgctxt "delimiter"
+msgid "Colon (:)"
+msgstr "Double point (:)"
+
+#: data/ui/import-columns.blp:14
+msgctxt "delimiter"
+msgid "Semicolon (;)"
+msgstr "Point-virgule (;)"
+
+#: data/ui/import-columns.blp:15
+msgctxt "delimiter"
+msgid "Decimal comma (,)"
+msgstr "Virgule décimale (,)"
+
+#: data/ui/import-columns.blp:16
+msgctxt "delimiter"
+msgid "Decimal point (.)"
+msgstr "Point décimal (.)"
+
+#: data/ui/import-columns.blp:17
+msgctxt "delimiter"
+msgid "Custom"
+msgstr "Personnalisé"
+
+#: data/ui/import-columns.blp:24
+msgid "Custom Delimiter"
+msgstr "Délimiteur personnalisé"
+
+#: data/ui/import-columns.blp:28
+msgid "Decimal Separator"
+msgstr "Séparateur de décimale"
+
+#: data/ui/import-columns.blp:31
+msgctxt "separator"
+msgid "Decimal comma (,)"
+msgstr "Virgule décimale (,)"
+
+#: data/ui/import-columns.blp:32
+msgctxt "separator"
+msgid "Decimal point (.)"
+msgstr "Point décimal (.)"
+
+#: data/ui/import-columns.blp:38
+msgid "Column X"
+msgstr "Colonne X"
+
+#: data/ui/import-columns.blp:39
+msgid "X-data column index"
+msgstr "Indice de colonne des données X"
+
+#: data/ui/import-columns.blp:48
+msgid "Column Y"
+msgstr "Colonne Y"
+
+#: data/ui/import-columns.blp:50
+msgid "Y-data column index"
+msgstr "Indice de colonne des données Y"
+
+#: data/ui/import-columns.blp:59
+msgid "Skip Rows"
+msgstr "Sauter les lignes"
+
+#: data/ui/import-columns.blp:60
+msgid "Ignored row indices"
+msgstr "Indices des lignes ignorées"
 
 #: data/ui/item-box.blp:26
 msgid "Pick Color"
@@ -1375,7 +1456,7 @@ msgstr "Multiplier X"
 msgid "Multiply Y"
 msgstr "Multiplier Y"
 
-#: data/ui/window.blp:605
+#: data/ui/window.blp:605 graphs/actions.py:226 graphs/item_box.py:66
 msgid "Undo"
 msgstr "Annuler"
 
@@ -1464,7 +1545,7 @@ msgstr "{error} - Impossible d’ajouter des données à partir de l’équation
 msgid "Exported Figure"
 msgstr "Graphique exporté"
 
-#: graphs/actions.py:226 graphs/item_box.py:65
+#: graphs/actions.py:225 graphs/item_box.py:65
 #, python-brace-format
 msgid "Deleted {name}"
 msgstr "{name} supprimé"
@@ -1474,11 +1555,11 @@ msgstr "{name} supprimé"
 msgid "Could not load {font}"
 msgstr "Impossible de charger {font}"
 
-#: graphs/curve_fitting.py:173
+#: graphs/curve_fitting.py:176
 msgid "Results:"
 msgstr "Résultats :"
 
-#: graphs/curve_fitting.py:177
+#: graphs/curve_fitting.py:180
 msgid ""
 "Please enter valid fitting \n"
 "parameters to start the fit"
@@ -1487,7 +1568,7 @@ msgstr ""
 "d’extrapolation valides pour \n"
 "commencer l’extrapolation"
 
-#: graphs/curve_fitting.py:181
+#: graphs/curve_fitting.py:184
 msgid ""
 "Please enter a valid equation \n"
 "to start the fit"
@@ -1495,7 +1576,7 @@ msgstr ""
 "Veuillez entrer une équation\n"
 "valide pour commencer l’extrapolation"
 
-#: graphs/curve_fitting.py:185
+#: graphs/curve_fitting.py:188
 msgid ""
 "Please enter valid fitting bounds \n"
 "to start the fit"
@@ -1504,21 +1585,21 @@ msgstr ""
 "d’extrapolation valides pour \n"
 "commencer l’extrapolation"
 
-#: graphs/curve_fitting.py:198
+#: graphs/curve_fitting.py:201
 #, python-brace-format
 msgid "Sum of R²: {R2}"
 msgstr "Somme de R² : {R2}"
 
-#: graphs/curve_fitting.vala:131
+#: graphs/curve_fitting.vala:136
 #, c-format
 msgid "Fitting Parameters for %s"
 msgstr "Paramètre d’extrapolation pour %s"
 
-#: graphs/data.py:88
+#: graphs/data.py:89
 msgid "Untitled Project"
 msgstr "Projet sans nom"
 
-#: graphs/data.py:99
+#: graphs/data.py:100
 msgid "Draft"
 msgstr "Brouillon"
 
@@ -1527,7 +1608,7 @@ msgctxt "filename"
 msgid "Exported Figure"
 msgstr "Graphique exporté"
 
-#: graphs/figure_settings.py:71 graphs/figure_settings.vala:213
+#: graphs/figure_settings.py:71
 msgid "Defaults Updated"
 msgstr "Paramètres par défaut mis à jour"
 
@@ -1559,7 +1640,7 @@ msgstr "Étiquette de l’axe X"
 msgid "Y Axis Scale"
 msgstr "Échelle de l’axe Y"
 
-#: graphs/file_import.vala:65
+#: graphs/file_import.vala:68
 msgid "Are you sure you want to reset the import settings?"
 msgstr "Voulez-vous vraiment réinitialiser les paramètres d’import ?"
 
@@ -1622,70 +1703,70 @@ msgstr "Projet enregistré"
 msgid "Project"
 msgstr "Projet"
 
-#: graphs/style_io.py:58
+#: graphs/style_io.py:65
 #, python-brace-format
 msgid "Missing colon in file {file}, line {line}"
 msgstr "Virgule manquante dans le fichier {file}, à la ligne {line}"
 
-#: graphs/style_io.py:66
+#: graphs/style_io.py:73
 #, python-brace-format
 msgid "Non-style related parameter {param} in file {file}"
 msgstr "Paramètre {param} non lié au style dans le fichier {file}"
 
-#: graphs/style_io.py:69
+#: graphs/style_io.py:76
 #, python-brace-format
 msgid "Ignoring parameter {param} in file {file}"
 msgstr "Paramètre {param} ignoré dans le fichier {file}"
 
-#: graphs/style_io.py:72
+#: graphs/style_io.py:79
 #, python-brace-format
 msgid "Duplicate key in file {file}, on line {line}"
 msgstr "Clé dupliquée dans le fichier {file}, à la ligne {line}"
 
-#: graphs/style_io.py:89
+#: graphs/style_io.py:96
 #, python-brace-format
 msgid "Bad value in file {file} on line {line}"
 msgstr "Mauvaise valeur dans le fichier {file} à la ligne {line}"
 
-#: graphs/style_io.py:95
+#: graphs/style_io.py:102
 #, python-brace-format
 msgid "Could not parse {filename}"
 msgstr "Impossible d’analyser {filename}"
 
-#: graphs/styles.py:60
+#: graphs/style_io.py:159
 msgid "X Label"
 msgstr "Étiquette X"
 
-#: graphs/styles.py:61
+#: graphs/style_io.py:160
 msgid "Y Label"
 msgstr "Étiquette Y"
 
-#: graphs/styles.py:126
-msgid "System"
-msgstr "Système"
-
-#: graphs/styles.py:382
+#: graphs/styles.py:305
 #, python-brace-format
 msgid "Could not parse {stylename}, loading system preferred style"
 msgstr ""
 "Impossible d’analyser {stylename}, chargement du style par défaut à la place"
 
-#: graphs/styles.py:390
+#: graphs/styles.py:313
 #, python-brace-format
 msgid "Plot style {stylename} does not exist loading system preferred"
 msgstr ""
 "Le style de tracé {stylename} n’existe pas, chargement du style par défaut à "
 "la place"
 
-#: graphs/styles.py:803
+#: graphs/styles.py:726
 #, python-brace-format
 msgid "Are you sure you want to delete {stylename}?"
 msgstr "Êtes-vous sûr de vouloir supprimer {stylename} ?"
 
-#: graphs/styles.py:820
+#: graphs/styles.py:743
 #, python-brace-format
 msgid "Color {number}"
 msgstr "Couleur {number}"
+
+#: graphs/styles.vala:71
+msgid "System"
+msgstr "Système"
 
 #: graphs/ui.py:46
 msgctxt "file-filter"
@@ -1720,6 +1801,10 @@ msgctxt "file-filter"
 msgid "Text Files"
 msgstr "Fichiers texte"
 
+#: graphs/utilities.py:122
+msgid "All Files"
+msgstr "Tous les fichiers"
+
 #: graphs/window.vala:128
 msgid "Graphs (Development)"
 msgstr "Graphes (expérimental)"
@@ -1737,3 +1822,5 @@ msgctxt "scale"
 msgid "Inverse Root"
 msgstr "Racine inverse"
 
+#~ msgid "Y = "
+#~ msgstr "Y = "
