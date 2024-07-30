@@ -19,12 +19,12 @@ parts:
     source: .
     plugin: python
     python-packages:
-      - matplotlib==3.8.4
-      - numexpr==2.10.0
-      - numpy==1.26.4
-      - scipy==1.13.0
-      - sympy==1.12
-      - gio-pyio==0.0.1
+      - matplotlib==3.9.1
+      - numexpr==2.10.1
+      - numpy==2.0.1
+      - scipy==1.14.0
+      - sympy==1.13.1
+      - gio-pyio==0.0.3
     prime:
       - -usr/bin/activate*
       - -usr/bin/Activate.ps1
