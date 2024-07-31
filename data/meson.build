@@ -1,12 +1,25 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
-desktop_file_in = configure_file(
+graphs_desktop_file_in = configure_file(
           input: application_id + '.desktop.in',
          output: application_id + '.desktop.in',
   configuration: conf,
 )
-desktop_file = i18n.merge_file(
-        input: desktop_file_in,
+graphs_desktop_file = i18n.merge_file(
+        input: graphs_desktop_file_in,
        output: application_id + '.desktop',
+         type: 'desktop',
+       po_dir: '../po',
+      install: true,
+  install_dir: join_paths(datadir, 'applications'),
+)
+graphs_style_editor_desktop_file_in = configure_file(
+          input: application_id + 'StyleEditor.desktop.in',
+         output: application_id + 'StyleEditor.desktop.in',
+  configuration: conf,
+)
+graphs_style_editor_desktop_file = i18n.merge_file(
+        input: graphs_style_editor_desktop_file_in,
+       output: application_id + 'StyleEditor.desktop',
          type: 'desktop',
        po_dir: '../po',
       install: true,
@@ -15,8 +28,11 @@ desktop_file = i18n.merge_file(
 
 desktop_file_validate = find_program('desktop-file-validate', required: false)
 if desktop_file_validate.found()
-  test('Validate desktop file', desktop_file_validate,
-    args: [desktop_file.full_path()],
+  test('Validate graphs desktop file', desktop_file_validate,
+    args: [graphs_desktop_file.full_path()],
+  )
+  test('Validate graphs style editor desktop file', desktop_file_validate,
+    args: [graphs_style_editor_desktop_file.full_path()],
   )
 endif
 

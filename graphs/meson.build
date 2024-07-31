@@ -7,6 +7,14 @@ configure_file(
    install_mode: 'rwxr-xr-x',
     install_dir: bindir,
 )
+configure_file(
+          input: 'graphs_style_editor.in',
+         output: 'graphs_style_editor',
+  configuration: conf,
+        install: true,
+   install_mode: 'rwxr-xr-x',
+    install_dir: bindir,
+)
 
 python.install_sources(
   files(

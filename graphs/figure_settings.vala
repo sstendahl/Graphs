@@ -109,7 +109,6 @@ namespace Graphs {
         }
 
         protected signal void entry_change (Adw.EntryRow entry, string prop);
-        protected signal void style_edit_request (Style style);
 
         protected void setup (string? highlighted) {
             FigureSettings figure_settings = this.figure_settings;
@@ -233,7 +232,12 @@ namespace Graphs {
             if (style.mutable && !preview.edit_button.get_visible ()) {
                 preview.edit_button.set_visible (true);
                 preview.edit_button.clicked.connect (() => {
-                    this.style_edit_request.emit (style);
+                    try {
+                    AppInfo.launch_default_for_uri (
+                        style.file.get_uri (),
+                        this.application.window.get_display ().get_app_launch_context ()
+                    );
+                } catch { assert_not_reached (); }
                 });
                 preview.delete_button.clicked.connect (() => {
                     var dialog = Tools.build_dialog ("delete_style_dialog") as Adw.AlertDialog;
