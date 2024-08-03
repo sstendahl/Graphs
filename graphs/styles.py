@@ -6,7 +6,6 @@ from gettext import gettext as _
 
 from gi.repository import Adw, GLib, Gdk, Gio, Graphs, Gtk
 
-import graphs
 from graphs import item, style_io
 
 from matplotlib import RcParams, rcParams, rcParamsDefault
@@ -101,42 +100,7 @@ class StyleManager(Graphs.StyleManager):
                         count = 0
                     item_.set_color(color_cycle[count])
                     count += 1
-
-        window = self.props.application.get_window()
-        canvas = graphs.canvas.Canvas(self._selected_style_params, data)
-        figure_settings = data.get_figure_settings()
-        for prop in dir(figure_settings.props):
-            if prop not in ("use_custom_style", "custom_style"):
-                figure_settings.bind_property(prop, canvas, prop, 1 | 2)
-
-        def on_edit_request(_canvas, label_id):
-            from graphs.figure_settings import FigureSettingsDialog
-            FigureSettingsDialog(self.props.application, label_id)
-
-        def on_view_changed(_canvas):
-            data.add_view_history_state()
-
-        canvas.connect("edit_request", on_edit_request)
-        canvas.connect("view_changed", on_view_changed)
-
-        # Set headerbar color and contrast
-        bg_color = self._selected_style_params["figure.facecolor"]
-        color = self._selected_style_params["text.color"]
-        css_provider = self.props.application.get_css_provider()
-        css_provider.load_from_string(
-            "headerbar#canvas-headerbar { "
-            f"background-color: {bg_color}; "
-            f"color: {color}; "
-            "}",
-        )
-
-        window.set_canvas(canvas)
-        window.get_cut_button().bind_property(
-            "sensitive",
-            canvas,
-            "highlight_enabled",
-            2,
-        )
+        self.props.application.reload_canvas()
 
     def _update_system_style(self) -> None:
         system_style = self._system_style_name
