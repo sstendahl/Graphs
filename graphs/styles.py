@@ -6,9 +6,9 @@ from gettext import gettext as _
 
 from gi.repository import Adw, GLib, Gdk, Gio, Graphs, Gtk
 
-from graphs import item, style_io
+from graphs import style_io
 
-from matplotlib import RcParams, rcParams, rcParamsDefault
+from matplotlib import RcParams
 
 
 def _generate_filename(name: str) -> str:
@@ -47,7 +47,6 @@ class StyleManager(Graphs.StyleManager):
         self._selected_style_params = None
         self.connect("style_request", self._on_style_request)
         self.connect("copy_request", self._on_copy_request)
-        self.connect("style_changed", self._on_style_changed)
 
         style_io.set_base_style(
             style_io.parse(
@@ -70,6 +69,10 @@ class StyleManager(Graphs.StyleManager):
             light=_is_style_bright(style_params),
         )
 
+    def get_old_selected_style_params(self) -> RcParams:
+        """Get the old selected style properties."""
+        return self._old_style_params
+
     def get_selected_style_params(self) -> RcParams:
         """Get the selected style properties."""
         return self._selected_style_params
@@ -77,30 +80,6 @@ class StyleManager(Graphs.StyleManager):
     def get_system_style_params(self) -> RcParams:
         """Get the system style properties."""
         return self._system_style_params
-
-    @staticmethod
-    def _on_style_changed(self, override: bool) -> None:
-        rcParams.update(rcParamsDefault)
-        self.props.selected_stylename = self.get_selected_style().get_name()
-        old_style = self._selected_style_params
-        self._update_system_style()
-        self._update_selected_style()
-        data = self.props.application.get_data()
-        if old_style is not None and override:
-            old_colors = old_style["axes.prop_cycle"].by_key()["color"]
-            color_cycle = self._selected_style_params["axes.prop_cycle"
-                                                      ].by_key()["color"]
-            for item_ in data:
-                item_.reset(old_style, self._selected_style_params)
-            count = 0
-            for item_ in data:
-                if isinstance(item_, item.DataItem) \
-                        and item_.get_color() in old_colors:
-                    if count > len(color_cycle):
-                        count = 0
-                    item_.set_color(color_cycle[count])
-                    count += 1
-        self.props.application.reload_canvas()
 
     def _update_system_style(self) -> None:
         system_style = self._system_style_name
@@ -114,6 +93,7 @@ class StyleManager(Graphs.StyleManager):
         )[0]
 
     def _update_selected_style(self) -> None:
+        self._old_style_params = self._selected_style_params
         self._selected_style_params = None
         if self.props.use_custom_style:
             stylename = self.props.custom_style
@@ -121,7 +101,8 @@ class StyleManager(Graphs.StyleManager):
                 if stylename == style.get_name():
                     try:
                         self._selected_style_params = style_io.parse(
-                            style.get_file(), style.get_mutable(),
+                            style.get_file(),
+                            style.get_mutable(),
                         )[0]
                         return
                     except (ValueError, SyntaxError, AttributeError):
@@ -155,7 +136,8 @@ class StyleManager(Graphs.StyleManager):
         for style in self.props.selection_model.get_model():
             if template == style.get_name():
                 style_params = style_io.parse(
-                    style.get_file(), style.get_mutable(),
+                    style.get_file(),
+                    style.get_mutable(),
                 )[0]
                 break
         style_io.write(destination, new_name, style_params)

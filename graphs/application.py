@@ -5,7 +5,7 @@ from gettext import gettext as _
 
 from gi.repository import Gio, Graphs
 
-from graphs import actions, file_import, migrate, operations, styles
+from graphs import actions, file_import, item, migrate, operations, styles
 from graphs.canvas import Canvas
 from graphs.data import Data
 from graphs.figure_settings import FigureSettingsDialog
@@ -46,6 +46,10 @@ class PythonApplication(Graphs.Application):
         self.setup_actions()
         self.connect("action_invoked", actions.on_action_invoked)
         self.connect("operation_invoked", operations.perform_operation)
+        self.props.figure_style_manager.connect(
+            "style_changed",
+            self._on_style_changed,
+        )
 
     def do_open(self, files: list, nfiles: int, _hint: str) -> None:
         """Open Graphs with a File as argument."""
@@ -78,7 +82,27 @@ class PythonApplication(Graphs.Application):
         else:
             file_import.import_from_files(self, files)
 
-    def reload_canvas(self) -> None:
+    def _on_style_changed(self, style_manager, recolor_items) -> None:
+        """Handle style change."""
+        if recolor_items:
+            old_style = style_manager.get_old_selected_style_params()
+            new_style = style_manager.get_selected_style_params()
+            old_cycle = old_style["axes.prop_cycle"].by_key()["color"]
+            new_cycle = new_style["axes.prop_cycle"].by_key()["color"]
+            data = self.get_data()
+            for item_ in data:
+                item_.reset(old_style, new_style)
+            count = 0
+            for item_ in data:
+                if isinstance(item_, item.DataItem) \
+                        and item_.get_color() in old_cycle:
+                    if count > len(new_cycle):
+                        count = 0
+                    item_.set_color(new_cycle[count])
+                    count += 1
+        self._reload_canvas()
+
+    def _reload_canvas(self) -> None:
         """Reload the canvas."""
         window = self.get_window()
         if window is None:
