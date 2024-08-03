@@ -55,7 +55,7 @@ namespace Graphs {
             var win = this.active_window;
             if (win == null) {
                 this.window = new Window (this);
-                this.python_helper.run_method (this, "reload_canvas");
+                this.python_helper.run_method (this, "_reload_canvas");
                 this.window.present ();
             }
         }

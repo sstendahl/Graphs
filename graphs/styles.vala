@@ -19,14 +19,16 @@ namespace Graphs {
         public string custom_style { get; set; default = "Adwaita"; }
         public SingleSelection selection_model { get; set; }
         public File style_dir { get; construct set; }
-        public string selected_stylename { get; protected set; }
+        public string selected_stylename {
+            get { return this.get_selected_style ().name; }
+        }
 
         private GLib.ListStore style_model;
         private Gee.AbstractSet<string> stylenames { get; private set; }
 
+        public signal void style_changed (bool recolor_items);
         protected signal void copy_request (string template, string name);
         protected signal Style style_request (File file);
-        protected signal void style_changed (bool recolor_items);
 
         construct {
             this.style_model = new GLib.ListStore (typeof (Style));
@@ -109,7 +111,7 @@ namespace Graphs {
             } catch { assert_not_reached (); }
             this.application.style_manager.notify.connect (() => {
                 if (!this.use_custom_style) {
-                    this.style_changed.emit (false);
+                    handle_style_change ();
                 }
             });
             FigureSettings figure_settings = this.application.data.figure_settings;
@@ -135,7 +137,7 @@ namespace Graphs {
                     if (!this.use_custom_style) this.use_custom_style = true;
                 }
             });
-            this.style_changed.emit (false);
+            handle_style_change ();
         }
 
         private void on_use_custom_style () {
@@ -143,7 +145,7 @@ namespace Graphs {
                 this.on_custom_style ();
             } else {
                 this.selection_model.set_selected (0);
-                this.style_changed.emit (true);
+                handle_style_change (true);
             }
         }
 
@@ -156,7 +158,7 @@ namespace Graphs {
                     break;
                 }
             }
-            this.style_changed.emit (true);
+            handle_style_change (true);
         }
 
         private void on_file_change (File file, File? other_file, FileMonitorEvent event_type) {
@@ -204,8 +206,15 @@ namespace Graphs {
             if (possible_visual_impact
                 && this.use_custom_style
                 && this.custom_style == stylename) {
-                this.style_changed.emit (false);
+                handle_style_change ();
             }
+        }
+
+        private void handle_style_change (bool recolor_items = false) {
+            this.notify_property ("selected_stylename");
+            this.application.python_helper.run_method (this, "_update_system_style");
+            this.application.python_helper.run_method (this, "_update_selected_style");
+            this.style_changed.emit (recolor_items);
         }
 
         private void add_user_style (File file) {
