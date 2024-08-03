@@ -4,7 +4,7 @@ from gettext import gettext as _
 
 from cycler import cycler
 
-from gi.repository import Adw, GLib, GObject, Gio, Graphs, Gtk, Pango
+from gi.repository import Adw, GLib, GObject, Graphs, Gtk, Pango
 
 from graphs import style_io
 
@@ -98,7 +98,7 @@ def _title_format_function(_scale, value: float) -> str:
 
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/style-editor.ui")
-class StyleEditor(Adw.ApplicationWindow):
+class StyleEditor(Adw.Window):
     """Style editor widget."""
 
     __gtype_name__ = "GraphsStyleEditor"
@@ -394,34 +394,3 @@ class _StyleColorBox(Gtk.Box):
     def on_delete(self, _button):
         self.props.parent.line_colors.pop(self.props.index)
         self.props.parent._reload_line_colors()
-
-
-class StyleEditorApplication(Adw.Application):
-    """Style Editor application."""
-
-    __gtype_name__ = "GraphsStyleEditorApplication"
-
-    def __init__(self, application_id, **kwargs):
-        super().__init__(
-            application_id=application_id,
-            flags=Gio.ApplicationFlags.HANDLES_OPEN,
-            **kwargs,
-        )
-
-    def do_activate(self) -> None:
-        """
-        Activate the application.
-
-        We raise the application"s main window, creating it if
-        necessary.
-        """
-        window = self.props.active_window
-        if not window:
-            window = StyleEditor(self)
-            window.present()
-
-    def do_open(self, files: list, nfiles: int, _hint: str) -> None:
-        """Open Graphs with a File as argument."""
-        self.do_activate()
-        if nfiles == 1 and files[0].get_basename().endswith(".mplstyle"):
-            self.props.active_window.load_style(files[0])

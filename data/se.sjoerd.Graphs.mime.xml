@@ -6,7 +6,7 @@
         <expanded-acronym>Graphs Project File</expanded-acronym>
         <glob pattern="*.graphs"/>
     </mime-type>
-    <mime-type type="application/mplstyle">
+    <mime-type type="text/mplstyle">
         <comment>matplotlib Style File</comment>
         <acronym>mplstyle</acronym>
         <expanded-acronym>matplotlib style</expanded-acronym>
