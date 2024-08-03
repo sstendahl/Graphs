@@ -48,6 +48,19 @@ namespace Graphs {
         }
 
         /**
+         * Activate the application.
+         */
+        public override void activate () {
+            base.activate ();
+            var win = this.active_window;
+            if (win == null) {
+                this.window = new Window (this);
+                this.python_helper.run_method (this, "reload_canvas");
+                this.window.present ();
+            }
+        }
+
+        /**
          * Retrieve a child of the applications settings.
          *
          * @param path a slash-separated path
