@@ -5,6 +5,12 @@ using Gtk;
 namespace Graphs {
     namespace Project {
 
+        public FileFilter get_project_file_filter () {
+            return Tools.create_file_filter (
+                C_("file-filter", "Graphs Project File"), "graphs"
+            );
+        }
+
         private void _save (Application application) {
             application.data.save ();
             application.window.add_toast_string_with_file (
@@ -13,12 +19,7 @@ namespace Graphs {
         }
 
         private ListModel get_project_file_filters () {
-            var list_store = new GLib.ListStore (typeof (FileFilter));
-            var filter = new FileFilter ();
-            filter.set_filter_name (C_("file-filter", "Graphs Project File"));
-            filter.add_suffix ("graphs");
-            list_store.append (filter);
-            return list_store;
+            return Tools.create_file_filters (false, get_project_file_filter ());
         }
 
         public async void save (Application application, bool require_dialog) {

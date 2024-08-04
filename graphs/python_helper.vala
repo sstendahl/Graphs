@@ -25,5 +25,10 @@ namespace Graphs {
         public bool validate_input (string input) {
             return this.validate_input_request.emit (input);
         }
+
+        protected signal void import_from_files_request (ListModel files);
+        public void import_from_files (ListModel files) {
+            this.import_from_files_request.emit (files);
+        }
     }
 }

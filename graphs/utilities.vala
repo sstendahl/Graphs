@@ -178,5 +178,38 @@ namespace Graphs {
             var file_launcher = new FileLauncher (file);
             file_launcher.open_containing_folder.begin (null, null);
         }
+
+        /**
+         * Create a file filter matching the suffixes.
+         */
+        public FileFilter create_file_filter (string name, ...) {
+            var file_filter = new FileFilter () { name = name };
+            var l = va_list ();
+            while (true) {
+                string? suffix = l.arg ();
+                if (suffix == null) break;
+                file_filter.add_suffix (suffix);
+            }
+            return file_filter;
+        }
+
+        /**
+         * Create a ListStore with given FileFilters.
+         */
+        public GLib.ListStore create_file_filters (bool add_all, ...) {
+            var list_store = new GLib.ListStore (typeof (FileFilter));
+            var l = va_list ();
+            while (true) {
+                FileFilter? filter = l.arg ();
+                if (filter == null) break;
+                list_store.append (filter);
+            }
+            if (add_all) {
+                var all_filter = new FileFilter () { name = _("All Files")};
+                all_filter.add_pattern ("*");
+                list_store.append (all_filter);
+            }
+            return list_store;
+        }
     }
 }
