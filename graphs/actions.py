@@ -1,15 +1,14 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Main actions."""
-import contextlib
 import logging
 import sys
-from gettext import gettext as _, pgettext as C_
+from gettext import gettext as _
 
-from gi.repository import GLib, Graphs, Gtk
+from gi.repository import Graphs
 
 import gio_pyio
 
-from graphs import export_data, file_import, misc, utilities
+from graphs import export_data, utilities
 from graphs.figure_settings import FigureSettingsDialog
 from graphs.item import DataItem
 
@@ -21,32 +20,6 @@ import numpy
 def on_action_invoked(application: Graphs.Application, name: str) -> None:
     """Handle action invokation."""
     getattr(sys.modules[__name__], name + "_action")(application)
-
-
-def add_data_action(application: Graphs.Application) -> None:
-    """Import data."""
-
-    def on_response(dialog, response):
-        with contextlib.suppress(GLib.GError):
-            file_import.import_from_files(
-                application,
-                dialog.open_multiple_finish(response),
-            )
-
-    dialog = Gtk.FileDialog()
-    dialog.set_filters(
-        utilities.create_file_filters((
-            (
-                C_("file-filter", "Supported files"),
-                ["xy", "dat", "txt", "csv", "xrdml", "xry", "graphs"],
-            ),
-            (C_("file-filter", "ASCII files"), ["xy", "dat", "txt", "csv"]),
-            (C_("file-filter", "PANalytical XRDML"), ["xrdml"]),
-            (C_("file-filter", "Leybold xry"), ["xry"]),
-            misc.GRAPHS_PROJECT_FILE_FILTER_TEMPLATE,
-        )),
-    )
-    dialog.open_multiple(application.get_window(), None, on_response)
 
 
 def add_equation_action(application: Graphs.Application) -> None:

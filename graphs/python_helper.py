@@ -1,14 +1,15 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Python Helper - Python part."""
-from gi.repository import Graphs
+from gi.repository import Gio, Graphs
 
-from graphs import curve_fitting, edit_item, utilities
+from graphs import curve_fitting, edit_item, file_import, utilities
 
 _REQUEST_NAMES = (
     "python_method_request",
     "edit_item_dialog_request",
     "curve_fitting_dialog_request",
     "validate_input_request",
+    "import_from_files_request",
 )
 
 
@@ -39,3 +40,7 @@ class PythonHelper(Graphs.PythonHelper):
     @staticmethod
     def _on_validate_input_request(self, string: str) -> bool:
         return utilities.string_to_float(string) is not None
+
+    @staticmethod
+    def _on_import_from_files_request(self, files: Gio.ListModel) -> None:
+        return file_import.import_from_files(self.props.application, files)
