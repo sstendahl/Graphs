@@ -10,7 +10,6 @@ namespace Graphs {
     private const string[] PYTHON_ACTIONS = {
         "add_data",
         "add_equation",
-        "export_data",
         "export_figure",
         "zoom_in",
         "zoom_out",
@@ -327,6 +326,12 @@ namespace Graphs {
                 });
             });
             this.add_action (add_data_action);
+
+            var export_data_action = new SimpleAction ("export_data", null);
+            export_data_action.activate.connect (() => {
+                Export.export_items (this);
+            });
+            this.add_action (export_data_action);
         }
     }
 }

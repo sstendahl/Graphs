@@ -8,7 +8,7 @@ from gi.repository import Graphs
 
 import gio_pyio
 
-from graphs import export_data, utilities
+from graphs import utilities
 from graphs.figure_settings import FigureSettingsDialog
 from graphs.item import DataItem
 
@@ -66,15 +66,6 @@ def add_equation_action(application: Graphs.Application) -> None:
 
     dialog = Graphs.AddEquationDialog.new(application)
     dialog.connect("accept", on_accept)
-
-
-def export_data_action(application: Graphs.Application) -> None:
-    """Export Data."""
-    data = application.get_data()
-    if data.props.empty:
-        application.get_window().add_toast_string(_("No data to export"))
-        return
-    export_data.export_items(application, data.get_items())
 
 
 def export_figure_action(application: Graphs.Application) -> None:

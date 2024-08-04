@@ -2,7 +2,13 @@
 """Python Helper - Python part."""
 from gi.repository import Gio, Graphs
 
-from graphs import curve_fitting, edit_item, file_import, utilities
+from graphs import (
+    curve_fitting,
+    edit_item,
+    export_items,
+    file_import,
+    utilities,
+)
 
 _REQUEST_NAMES = (
     "python_method_request",
@@ -10,6 +16,7 @@ _REQUEST_NAMES = (
     "curve_fitting_dialog_request",
     "validate_input_request",
     "import_from_files_request",
+    "export_items_request",
 )
 
 
@@ -44,3 +51,13 @@ class PythonHelper(Graphs.PythonHelper):
     @staticmethod
     def _on_import_from_files_request(self, files: Gio.ListModel) -> None:
         return file_import.import_from_files(self.props.application, files)
+
+    @staticmethod
+    def _on_export_items_request(
+        self,
+        mode: str,
+        file: Gio.File,
+        items: list[Graphs.Item],
+        _n_items: int,
+    ) -> None:
+        return export_items.export_items(mode, file, items)
