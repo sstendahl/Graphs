@@ -34,7 +34,8 @@ graphs/curve_fitting.vala
 graphs/data.py
 graphs/data.vala
 graphs/edit_item.py
-graphs/export_data.py
+graphs/export_items.py
+graphs/export_items.vala
 graphs/export_figure.vala
 graphs/figure_settings.py
 graphs/figure_settings.vala

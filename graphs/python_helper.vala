@@ -30,5 +30,10 @@ namespace Graphs {
         public void import_from_files (ListModel files) {
             this.import_from_files_request.emit (files);
         }
+
+        protected signal void export_items_request (string mode, File file, Item[] items);
+        public void export_items (string mode, File file, Item[] items) {
+            this.export_items_request.emit (mode, file, items);
+        }
     }
 }
