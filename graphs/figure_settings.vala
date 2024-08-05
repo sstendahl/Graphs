@@ -148,7 +148,15 @@ namespace Graphs {
                         figure_settings.get (key, out val);
                         entry.set_text (val.to_string ());
                         entry.notify["text"].connect (() => {
-                            this.entry_change.emit (entry, key);
+                            double? new_val = this.application.python_helper.evaluate_string (
+                                entry.get_text ()
+                            );
+                            if (new_val == null) {
+                                entry.add_css_class ("error");
+                            } else {
+                                entry.remove_css_class ("error");
+                                figure_settings.@set (key, (double) new_val);
+                            }
                         });
                         if (s == "min") {
                             if (x && !both_x) entry.set_title (_("X Axis Minimum"));
