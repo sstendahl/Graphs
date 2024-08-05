@@ -17,5 +17,4 @@ class FigureSettingsDialog(Graphs.FigureSettingsDialog):
     ):
         """Initialize the Figure Settings window and set the widget entries."""
         super().__init__(application=application)
-        self.props.style_editor = StyleEditor(self)
         self.setup(highlighted)

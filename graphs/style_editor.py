@@ -98,7 +98,7 @@ def _title_format_function(_scale, value: float) -> str:
 
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/style-editor.ui")
-class StyleEditor(Adw.NavigationPage):
+class StyleEditor(Adw.Window):
     """Style editor widget."""
 
     __gtype_name__ = "GraphsStyleEditor"
@@ -139,10 +139,9 @@ class StyleEditor(Adw.NavigationPage):
     line_colors_box = Gtk.Template.Child()
     poor_contrast_warning = Gtk.Template.Child()
 
-    def __init__(self, parent):
+    def __init__(self, style):
         super().__init__()
         self.style = None
-        self.parent = parent
 
         self.titlesize.set_format_value_func(_title_format_function)
         self.labelsize.set_format_value_func(_title_format_function)
@@ -164,10 +163,15 @@ class StyleEditor(Adw.NavigationPage):
                 Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION,
             )
 
-        parent.connect("load-style-request", self._load_style)
-        parent.connect("save-style-request", self._save_style)
+        self._load_style(style)
+        self.present()
 
-    def _load_style(self, _parent, style):
+    @Gtk.Template.Callback()
+    def on_close_request(self, _window):
+        """Handle close request."""
+        self._save_style()
+
+    def _load_style(self, style):
         """Load a style."""
         if not style.get_mutable():
             return
@@ -228,7 +232,7 @@ class StyleEditor(Adw.NavigationPage):
             self.style_params["axes.prop_cycle"].by_key()["color"]
         self._reload_line_colors()
 
-    def _save_style(self, _parent):
+    def _save_style(self):
         """Save the style."""
         if self.style is None:
             return
@@ -321,12 +325,7 @@ class StyleEditor(Adw.NavigationPage):
 
         dialog = Gtk.ColorDialog()
         dialog.set_with_alpha(False)
-        dialog.choose_rgba(
-            self.parent.get_application().get_window(),
-            button.color,
-            None,
-            on_accept,
-        )
+        dialog.choose_rgba(self, button.color, None, on_accept)
 
     def _check_contrast(self):
         contrast = Graphs.tools_get_contrast(
@@ -389,7 +388,7 @@ class _StyleColorBox(Gtk.Box):
         dialog = Gtk.ColorDialog()
         dialog.set_with_alpha(False)
         dialog.choose_rgba(
-            self.props.parent.parent,
+            self.props.parent,
             Graphs.tools_hex_to_rgba(
                 self.props.parent.line_colors[self.props.index],
             ),
