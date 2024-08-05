@@ -37,7 +37,6 @@ graphs/edit_item.py
 graphs/export_items.py
 graphs/export_items.vala
 graphs/export_figure.vala
-graphs/figure_settings.py
 graphs/figure_settings.vala
 graphs/file_import.py
 graphs/file_import.vala

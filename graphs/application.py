@@ -8,7 +8,6 @@ from gi.repository import Gio, Graphs
 from graphs import actions, file_import, item, migrate, operations, styles
 from graphs.canvas import Canvas
 from graphs.data import Data
-from graphs.figure_settings import FigureSettingsDialog
 from graphs.python_helper import PythonHelper
 from graphs.style_editor import StyleEditor
 
@@ -124,7 +123,7 @@ class PythonApplication(Graphs.Application):
                 figure_settings.bind_property(prop, canvas, prop, 1 | 2)
 
         def on_edit_request(_canvas, label_id):
-            FigureSettingsDialog(self, label_id)
+            Graphs.FigureSettingsDialog.new(self, label_id)
 
         def on_view_changed(_canvas):
             data.add_view_history_state()

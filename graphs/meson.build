@@ -18,7 +18,6 @@ python.install_sources(
     'data.py',
     'edit_item.py',
     'export_items.py',
-    'figure_settings.py',
     'file_import.py',
     'file_io.py',
     'item.py',

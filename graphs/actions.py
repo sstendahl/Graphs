@@ -9,7 +9,6 @@ from gi.repository import Graphs
 import gio_pyio
 
 from graphs import utilities
-from graphs.figure_settings import FigureSettingsDialog
 from graphs.item import DataItem
 
 import numexpr
@@ -97,8 +96,3 @@ def zoom_out_action(application: Graphs.Application) -> None:
     """Zoom out of the figure."""
     canvas = application.get_window().get_canvas()
     canvas.zoom(1 / 1.15, respect_mouse=False)
-
-
-def figure_settings_action(application: Graphs.Application) -> None:
-    """Open Figure Settings Dialog."""
-    FigureSettingsDialog(application)
