@@ -20,5 +20,10 @@ namespace Graphs {
         public void save (File file, string format, int dpi, bool transparent) {
             this.save_request.emit (file, format, dpi, transparent);
         }
+
+        protected signal void zoom_request (double factor);
+        public void zoom (double factor) {
+            this.zoom_request.emit (factor);
+        }
     }
 }

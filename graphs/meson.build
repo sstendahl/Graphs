@@ -10,7 +10,6 @@ configure_file(
 
 python.install_sources(
   files(
-    'actions.py',
     'application.py',
     'artist.py',
     'canvas.py',

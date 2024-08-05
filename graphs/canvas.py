@@ -129,6 +129,9 @@ class Canvas(Graphs.Canvas, FigureCanvas):
             self._setup_interactive()
 
         self.connect("save_request", self._save)
+        self.connect(
+            "zoom_request", lambda _self, factor: self.zoom(factor, False),
+        )
 
         self.connect("notify::hide-unselected", self._redraw)
         items.connect("items-changed", self._redraw)
