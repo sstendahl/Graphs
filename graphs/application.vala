@@ -8,7 +8,6 @@ namespace Graphs {
     private const string[] X_DIRECTIONS = {"top", "bottom"};
     private const string[] Y_DIRECTIONS = {"left", "right"};
     private const string[] PYTHON_ACTIONS = {
-        "export_figure",
         "zoom_in",
         "zoom_out",
     };
@@ -341,6 +340,12 @@ namespace Graphs {
                 new AddEquationDialog (this);
             });
             this.add_action (add_equation_action);
+
+            var export_figure_action = new SimpleAction ("export_figure", null);
+            export_figure_action.activate.connect (() => {
+                new ExportFigureDialog (this);
+            });
+            this.add_action (export_figure_action);
         }
     }
 }

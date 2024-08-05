@@ -22,8 +22,6 @@ namespace Graphs {
 
         private Application application;
 
-        public signal void accept (File file);
-
         public ExportFigureDialog (Application application) {
             Object ();
             this.application = application;
@@ -59,7 +57,10 @@ namespace Graphs {
             dialog.save.begin (this.application.window, null, (d, r) => {
                 try {
                     File file = dialog.save.end (r);
-                    this.accept.emit (file);
+                    application.window.canvas.save (
+                        file, suffix, settings.get_int ("dpi"),
+                        settings.get_boolean ("transparent")
+                    );
                     close ();
                 } catch {}
             });

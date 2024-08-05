@@ -13,6 +13,8 @@ from contextlib import nullcontext
 
 from gi.repository import GObject, Gdk, Gio, Graphs, Gtk
 
+import gio_pyio
+
 from graphs import artist, misc, scales, utilities
 
 from matplotlib import backend_tools as tools, pyplot
@@ -125,6 +127,8 @@ class Canvas(Graphs.Canvas, FigureCanvas):
         # Handle stuff only used if the canvas is interactive
         if interactive:
             self._setup_interactive()
+
+        self.connect("save_request", self._save)
 
         self.connect("notify::hide-unselected", self._redraw)
         items.connect("items-changed", self._redraw)
@@ -591,6 +595,22 @@ class Canvas(Graphs.Canvas, FigureCanvas):
         if legend is not None:
             legend.remove()
         self.queue_draw()
+
+    @staticmethod
+    def _save(
+        self,
+        file: Gio.File,
+        fmt: str,
+        dpi: int,
+        transparent: bool,
+    ) -> None:
+        with gio_pyio.open(file, "wb") as file_like:
+            self.figure.savefig(
+                file_like,
+                format=fmt,
+                dpi=dpi,
+                transparent=transparent,
+            )
 
     @GObject.Property(type=bool, default=True)
     def legend(self) -> bool:
