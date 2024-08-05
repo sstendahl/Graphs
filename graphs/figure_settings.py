@@ -2,8 +2,6 @@
 """Figure Settings Dialog."""
 from gi.repository import Graphs
 
-from graphs.style_editor import StyleEditor
-
 
 class FigureSettingsDialog(Graphs.FigureSettingsDialog):
     """Figure Settings Dialog."""
