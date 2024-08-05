@@ -14,7 +14,7 @@ _REQUEST_NAMES = (
     "python_method_request",
     "edit_item_dialog_request",
     "curve_fitting_dialog_request",
-    "validate_input_request",
+    "evaluate_string_request",
     "import_from_files_request",
     "export_items_request",
 )
@@ -45,8 +45,12 @@ class PythonHelper(Graphs.PythonHelper):
         return curve_fitting.CurveFittingDialog(self.props.application, item)
 
     @staticmethod
-    def _on_validate_input_request(self, string: str) -> bool:
-        return utilities.string_to_float(string) is not None
+    def _on_evaluate_string_request(self, string: str) -> None:
+        value = utilities.string_to_float(string)
+        if value is None:
+            return False
+        self.set_evaluate_string_helper(value)
+        return True
 
     @staticmethod
     def _on_import_from_files_request(self, files: Gio.ListModel) -> None:

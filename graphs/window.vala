@@ -222,12 +222,13 @@ namespace Graphs {
         }
 
         private void validate_entry (Application application, Entry entry, Button button) {
-            if (application.python_helper.validate_input (entry.get_text ())) {
-                entry.remove_css_class ("error");
-                button.set_sensitive (application.data.items_selected);
-            } else {
+            double? val = application.python_helper.evaluate_string (entry.get_text ());
+            if (val == null) {
                 entry.add_css_class ("error");
                 button.set_sensitive (false);
+            } else {
+                entry.remove_css_class ("error");
+                button.set_sensitive (application.data.items_selected);
             }
         }
 

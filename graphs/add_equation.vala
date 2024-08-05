@@ -50,10 +50,11 @@ namespace Graphs {
         [GtkCallback]
         private void on_entry_change (Object object, ParamSpec? spec) {
             var entry = (Adw.EntryRow) object;
-            if (application.python_helper.validate_input (entry.get_text ())) {
-                entry.remove_css_class ("error");
-            } else {
+            double? val = application.python_helper.evaluate_string (entry.get_text ());
+            if (val == null) {
                 entry.add_css_class ("error");
+            } else {
+                entry.remove_css_class ("error");
             }
         }
     }

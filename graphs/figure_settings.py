@@ -2,7 +2,7 @@
 """Figure Settings Dialog."""
 from gi.repository import Graphs
 
-from graphs import misc, utilities
+from graphs import misc
 from graphs.style_editor import StyleEditor
 
 
@@ -20,17 +20,6 @@ class FigureSettingsDialog(Graphs.FigureSettingsDialog):
         super().__init__(application=application)
         self.props.style_editor = StyleEditor(self)
         self.setup(highlighted)
-        self.connect("entry-change", self.on_entry_change)
-
-    @staticmethod
-    def on_entry_change(self, entry, prop) -> None:
-        """Bind the entry upon change."""
-        value = utilities.string_to_float(entry.get_text())
-        if value is None:
-            entry.add_css_class("error")
-        else:
-            entry.remove_css_class("error")
-            self.props.figure_settings.set_property(prop, value)
 
     def _set_as_default(self) -> None:
         """Set the current figure settings as the new default."""
