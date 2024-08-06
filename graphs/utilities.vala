@@ -17,7 +17,7 @@ namespace Graphs {
                     settings.bind (key, widget, "text", 0);
                 }
                 else if (widget is Adw.ComboRow) {
-                    var comborow = (Adw.ComboRow) widget;
+                    var comborow = widget as Adw.ComboRow;
                     comborow.set_selected (settings.get_enum (key));
                     comborow.notify["selected"].connect (() => {
                         if (settings.get_enum (key)

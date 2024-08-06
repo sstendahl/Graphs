@@ -42,12 +42,12 @@ namespace Graphs {
         private void on_accept () {
             string error = application.python_helper.add_equation (item_name.get_text ());
             if (error == "") close ();
-            else this.toast_overlay.add_toast (new Adw.Toast (error));
+            else toast_overlay.add_toast (new Adw.Toast (error));
         }
 
         [GtkCallback]
         private void on_entry_change (Object object, ParamSpec? spec) {
-            var entry = (Adw.EntryRow) object;
+            var entry = object as Adw.EntryRow;
             double? val = application.python_helper.evaluate_string (entry.get_text ());
             if (val == null) {
                 entry.add_css_class ("error");

@@ -22,7 +22,6 @@ data/ui/style-preview.blp
 data/ui/transform.blp
 data/ui/window.blp
 graphs/about.vala
-graphs/actions.py
 graphs/add_equation.vala
 graphs/application.py
 graphs/application.vala

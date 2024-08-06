@@ -33,9 +33,7 @@ namespace Graphs {
 
         [GtkCallback]
         private void on_file_format () {
-            this.dpi.set_visible (
-                this.file_format.get_selected () in FORMATS_WITH_DPI
-            );
+            dpi.set_visible (file_format.get_selected () in FORMATS_WITH_DPI);
         }
 
         [GtkCallback]
@@ -49,12 +47,12 @@ namespace Graphs {
             dialog.set_accept_label (_("Export"));
             GLib.ListStore filter_store = new GLib.ListStore (typeof (FileFilter));
             var filter = new FileFilter ();
-            StringObject selected = (StringObject) this.file_format.get_selected_item ();
+            var selected = file_format.get_selected_item () as StringObject;
             filter.name = selected.get_string ();
             filter.add_suffix (suffix);
             filter_store.append (filter);
             dialog.set_filters (filter_store);
-            dialog.save.begin (this.application.window, null, (d, r) => {
+            dialog.save.begin (application.window, null, (d, r) => {
                 try {
                     File file = dialog.save.end (r);
                     application.window.canvas.save (

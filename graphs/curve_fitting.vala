@@ -45,8 +45,8 @@ namespace Graphs {
         protected GLib.Settings settings { get; private set; }
         protected string equation_string { get; protected set; }
         protected Canvas canvas {
-            get { return (Canvas) this.toast_overlay.get_child (); }
-            set { this.toast_overlay.set_child (value); }
+            get { return toast_overlay.get_child () as Canvas; }
+            set { toast_overlay.set_child (value); }
         }
 
         protected signal bool equation_change (string equation);
@@ -54,66 +54,65 @@ namespace Graphs {
         protected signal void add_fit_request ();
 
         protected void setup () {
-            this.settings = this.application.get_settings_child ("curve-fitting");
+            this.settings = application.get_settings_child ("curve-fitting");
 
             var action_map = new SimpleActionGroup ();
-            Action confidence_action = this.settings.create_action ("confidence");
-            Action optimization_action = this.settings.create_action ("optimization");
+            Action confidence_action = settings.create_action ("confidence");
+            Action optimization_action = settings.create_action ("optimization");
             confidence_action.notify.connect (emit_fit_curve_request);
             optimization_action.notify.connect (() => {
                 emit_fit_curve_request ();
-                bool visible = this.settings.get_string ("optimization") != "lm";
-                var entry = (FittingParameterBox) this.fitting_params_box.get_first_child ();
+                bool visible = settings.get_string ("optimization") != "lm";
+                var entry = fitting_params_box.get_first_child () as FittingParameterBox;
                 while (entry != null) {
                     entry.set_bounds_visible (visible);
-                    entry = (FittingParameterBox) entry.get_next_sibling ();
+                    entry = entry.get_next_sibling () as FittingParameterBox;
                 }
             });
             action_map.add_action (confidence_action);
             action_map.add_action (optimization_action);
-            this.insert_action_group ("win", action_map);
+            insert_action_group ("win", action_map);
 
-            this.equation.set_selected (this.settings.get_enum ("equation"));
-            this.equation.notify["selected"].connect (set_equation);
-            this.custom_equation.notify["text"].connect (() => {
-                bool success = this.equation_change.emit (this.custom_equation.get_text ());
+            equation.set_selected (settings.get_enum ("equation"));
+            equation.notify["selected"].connect (set_equation);
+            custom_equation.notify["text"].connect (() => {
+                bool success = equation_change.emit (custom_equation.get_text ());
                 if (success) {
-                    this.custom_equation.remove_css_class ("error");
-                    if (this.equation.get_selected () == 7) {
-                        this.settings.set_string ("custom-equation", this.custom_equation.get_text ());
-                        }
+                    custom_equation.remove_css_class ("error");
+                    if (equation.get_selected () == 7) {
+                        settings.set_string ("custom-equation", custom_equation.get_text ());
                     }
-                else this.custom_equation.add_css_class ("error");
+                } else custom_equation.add_css_class ("error");
             });
             set_equation ();
         }
 
         private void emit_fit_curve_request () {
-            this.fit_curve_request.emit ();
+            fit_curve_request.emit ();
         }
 
         private void set_equation () {
-            int selected = (int) this.equation.get_selected ();
-            if (this.settings.get_enum ("equation") != selected ) {
-                this.settings.set_enum ("equation", selected);
+            int selected = (int) equation.get_selected ();
+            if (settings.get_enum ("equation") != selected ) {
+                settings.set_enum ("equation", selected);
             }
             string equation;
             if (selected != 7) {
                 equation = EQUATIONS[selected];
                 this.equation.set_subtitle (@"Y=$equation");
-                this.custom_equation.set_visible (false);
+                custom_equation.set_visible (false);
             } else {
-                equation = this.settings.get_string ("custom-equation");
+                equation = settings.get_string ("custom-equation");
                 this.equation.set_subtitle ("");
-                this.settings.set_string ("custom-equation", equation);
-                this.custom_equation.set_visible (true);
+                settings.set_string ("custom-equation", equation);
+                custom_equation.set_visible (true);
             }
-            this.custom_equation.set_text (equation);
+            custom_equation.set_text (equation);
         }
 
         [GtkCallback]
         private void emit_add_fit_request () {
-            this.add_fit_request.emit ();
+            add_fit_request.emit ();
         }
     }
 
@@ -134,13 +133,13 @@ namespace Graphs {
 
         public FittingParameterBox (FittingParameter param) {
             string msg = _("Fitting Parameters for %s").printf (param.name);
-            this.label.set_markup (@"<b> $msg: </b>");
-            this.initial.set_text (param.initial.to_string ());
+            label.set_markup (@"<b> $msg: </b>");
+            initial.set_text (param.initial.to_string ());
         }
 
         public void set_bounds_visible (bool visible) {
-            this.upper_bound.set_visible (visible);
-            this.lower_bound.set_visible (visible);
+            upper_bound.set_visible (visible);
+            lower_bound.set_visible (visible);
         }
     }
 }
