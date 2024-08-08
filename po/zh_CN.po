@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2024-07-30 06:28+0000\n"
-"PO-Revision-Date: 2024-08-04 20:29+0800\n"
+"POT-Creation-Date: 2024-08-04 12:34+0000\n"
+"PO-Revision-Date: 2024-08-08 08:35+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -1045,7 +1045,7 @@ msgstr "移动平均"
 
 #: data/ui/smoothen-settings.blp:50
 msgid "Box points"
-msgstr ""
+msgstr "箱体点"
 
 #: data/ui/smoothen-settings.blp:51
 msgid "Amount of points to use when calculating a moving average"
@@ -1173,93 +1173,93 @@ msgstr "网格不透明度"
 
 #: data/ui/style-editor.blp:294
 msgid "Padding"
-msgstr ""
+msgstr "衬垫"
 
 #: data/ui/style-editor.blp:295
 msgid "Padding for different parts of the figure"
-msgstr ""
+msgstr "用于图表不同部分的衬垫"
 
 #: data/ui/style-editor.blp:298
 msgid "Value Padding"
-msgstr ""
+msgstr "数值衬垫"
 
 #: data/ui/style-editor.blp:299
 msgid "Padding between axes and values"
-msgstr ""
+msgstr "坐标轴和数值之间的衬垫"
 
 #: data/ui/style-editor.blp:312
 msgid "Label Padding"
-msgstr ""
+msgstr "标签衬垫"
 
 #: data/ui/style-editor.blp:313
 msgid "Padding between axes and labels"
-msgstr ""
+msgstr "坐标轴和标签之间的衬垫"
 
 #: data/ui/style-editor.blp:326
 msgid "Title Padding"
-msgstr ""
+msgstr "标题衬垫"
 
 #: data/ui/style-editor.blp:327
 msgid "Padding between axes and the title"
-msgstr ""
+msgstr "坐标轴和标题之间的衬垫"
 
 #: data/ui/style-editor.blp:341
 msgid "Colors"
-msgstr ""
+msgstr "颜色"
 
 #: data/ui/style-editor.blp:346
 msgid "Label text might be hard to read"
-msgstr ""
+msgstr "标签文本可能较难阅读"
 
 #: data/ui/style-editor.blp:351
 msgid "Poor Contrast"
-msgstr ""
+msgstr "对比度过低"
 
 #: data/ui/style-editor.blp:366
 msgid "Text Color"
-msgstr ""
+msgstr "文本颜色"
 
 #: data/ui/style-editor.blp:371 data/ui/style-editor.blp:393
 #: data/ui/style-editor.blp:415 data/ui/style-editor.blp:437
 #: data/ui/style-editor.blp:459 data/ui/style-editor.blp:481
 msgid "Change Color"
-msgstr ""
+msgstr "更改颜色"
 
 #: data/ui/style-editor.blp:388
 msgid "Tick Color"
-msgstr ""
+msgstr "刻度颜色"
 
 #: data/ui/style-editor.blp:410
 msgid "Axis Color"
-msgstr ""
+msgstr "坐标轴颜色"
 
 #: data/ui/style-editor.blp:432
 msgid "Grid Color"
-msgstr ""
+msgstr "网格颜色"
 
 #: data/ui/style-editor.blp:454
 msgid "Background Color"
-msgstr ""
+msgstr "背景颜色"
 
 #: data/ui/style-editor.blp:476
 msgid "Outline Color"
-msgstr ""
+msgstr "轮廓颜色"
 
 #: data/ui/style-editor.blp:495
 msgid "Line Colors"
-msgstr ""
+msgstr "线条颜色"
 
 #: data/ui/style-editor.blp:501
 msgid "Add Color"
-msgstr ""
+msgstr "添加颜色"
 
 #: data/ui/transform.blp:6
 msgid "Transform Data"
-msgstr ""
+msgstr "变换颜色"
 
 #: data/ui/transform.blp:22 data/ui/window.blp:394
 msgid "Transform"
-msgstr ""
+msgstr "变换"
 
 #: data/ui/transform.blp:35
 msgid ""
@@ -1271,54 +1271,61 @@ msgid ""
 "by default, append d to the function\n"
 "to use degrees, e.g. sind(x) or cosd(x)."
 msgstr ""
+"附加变量：\n"
+"x_min、y_min\n"
+"x_max、y_max\n"
+"\n"
+"三角函数默认使用弧度，\n"
+"对函数附加 d 来使用角度，\n"
+"比如 sind(x) 或 cosd(x)。"
 
 #: data/ui/transform.blp:40
 msgid "More info"
-msgstr ""
+msgstr "更多信息"
 
 #: data/ui/transform.blp:51
 msgid "X ="
-msgstr ""
+msgstr "X ="
 
 #: data/ui/transform.blp:61
 msgid "Discard Unselected Data"
-msgstr ""
+msgstr "丢弃未选中数据"
 
 #: data/ui/window.blp:182
 msgid "Add New Data"
-msgstr ""
+msgstr "添加新数据"
 
 #: data/ui/window.blp:190
 msgid "Open Application Menu"
-msgstr ""
+msgstr "打开应用程序菜单"
 
 #: data/ui/window.blp:219
 msgid "No Data"
-msgstr ""
+msgstr "无数据"
 
 #: data/ui/window.blp:220
 msgid "Add data from a file or manually as an equation"
-msgstr ""
+msgstr "从文件或手动输入方程式来添加数据"
 
 #: data/ui/window.blp:241
 msgid "Pan Mode. Click and drag to pan"
-msgstr ""
+msgstr "平移模式。点击并拖拽来平移"
 
 #: data/ui/window.blp:247
 msgid "Zoom Mode. Select an area on the figure to zoom in"
-msgstr ""
+msgstr "缩放模式。选择图表的一个区域来放大"
 
 #: data/ui/window.blp:253
 msgid "Select Mode. Click and drag to make a selection of data"
-msgstr ""
+msgstr "选择模式。点击并拖拽来选择数据"
 
 #: data/ui/window.blp:284
 msgid "Adjust"
-msgstr ""
+msgstr "调整"
 
 #: data/ui/window.blp:299
 msgid "Shift"
-msgstr ""
+msgstr "偏移"
 
 #: data/ui/window.blp:301
 msgid "Shift all data vertically with respect to each other"
