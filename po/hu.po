@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs v1.8.x\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2024-05-03 09:19+0000\n"
-"PO-Revision-Date: 2024-05-20 11:44+0200\n"
+"POT-Creation-Date: 2024-08-09 11:00+0000\n"
+"PO-Revision-Date: 2024-08-09 16:44+0200\n"
 "Last-Translator: Balázs Úr <ur.balazs at fsf dot hu>\n"
 "Language-Team: Hungarian <openscope at fsf dot hu>\n"
 "Language: hu\n"
@@ -18,17 +18,16 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Lokalize 23.08.4\n"
 
-#: data/se.sjoerd.Graphs.appdata.xml.in.in:6
-#: data/se.sjoerd.Graphs.desktop.in.in:3 data/ui/window.blp:9
-#: graphs/about.vala:23
+#: data/se.sjoerd.Graphs.appdata.xml.in:6 data/se.sjoerd.Graphs.desktop.in:3
+#: data/ui/window.blp:9 graphs/about.vala:23
 msgid "Graphs"
 msgstr "Grafikonok"
 
-#: data/se.sjoerd.Graphs.appdata.xml.in.in:7
+#: data/se.sjoerd.Graphs.appdata.xml.in:7
 msgid "Plot and manipulate data"
 msgstr "Adatok ábrázolása és manipulálása"
 
-#: data/se.sjoerd.Graphs.appdata.xml.in.in:13
+#: data/se.sjoerd.Graphs.appdata.xml.in:12
 msgid ""
 "Graphs is a simple, yet powerful tool that allows you to plot and manipulate "
 "your data with ease. New data can be imported from a wide variety of "
@@ -44,7 +43,7 @@ msgstr ""
 "kijelölése, kivágása, eltolása, sokszorosítása, középre igazítása és "
 "simítása, valamint az adatokon bármilyen egyéni transzformáció alkalmazása."
 
-#: data/se.sjoerd.Graphs.appdata.xml.in.in:17
+#: data/se.sjoerd.Graphs.appdata.xml.in:16
 msgid ""
 "Moreover, Graphs supports curve fitting on imported data and offers "
 "extensive customization options for the style of the plots. You can fine-"
@@ -55,7 +54,7 @@ msgstr ""
 "ábrák stílusához. A stíluslapokat finomhangolhatja és személyre szabhatja "
 "tetszése szerint."
 
-#: data/se.sjoerd.Graphs.appdata.xml.in.in:20
+#: data/se.sjoerd.Graphs.appdata.xml.in:19
 msgid ""
 "Graphs is an excellent fit for both plotting and data manipulation. The "
 "plots created with Graphs can be saved in a variety of formats suitable for "
@@ -75,7 +74,7 @@ msgstr ""
 "környezetet szem előtt tartva írták meg, de bármely más asztali környezettel "
 "is használhatónak kell lennie."
 
-#: data/se.sjoerd.Graphs.appdata.xml.in.in:24
+#: data/se.sjoerd.Graphs.appdata.xml.in:23
 msgid ""
 "For any feedback, questions or general issues, please file an issue on the "
 "GitLab page."
@@ -83,27 +82,27 @@ msgstr ""
 "Bármilyen visszajelzéssel, kérdéssel vagy általános problémával kapcsolatban "
 "küldjön hibajelentést a GitLab oldalon."
 
-#: data/se.sjoerd.Graphs.appdata.xml.in.in:37
+#: data/se.sjoerd.Graphs.appdata.xml.in:36
 msgid "1 - Plot and manipulate any data of choice"
 msgstr "1 – Tetszőleges adatok ábrázolása és manipulálása"
 
-#: data/se.sjoerd.Graphs.appdata.xml.in.in:41
+#: data/se.sjoerd.Graphs.appdata.xml.in:40
 msgid "2 - Full support for light and dark mode"
 msgstr "2 – Világos és sötét mód teljes támogatása"
 
-#: data/se.sjoerd.Graphs.appdata.xml.in.in:45
+#: data/se.sjoerd.Graphs.appdata.xml.in:44
 msgid "3 - Generate data from an equation"
 msgstr "3 – Adatok előállítása egy egyenletből"
 
-#: data/se.sjoerd.Graphs.appdata.xml.in.in:49
+#: data/se.sjoerd.Graphs.appdata.xml.in:48
 msgid "4 - Edit plot stylesheets"
 msgstr "4 – Ábrák stíluslapjainak szerkesztése"
 
-#: data/se.sjoerd.Graphs.appdata.xml.in.in:53
+#: data/se.sjoerd.Graphs.appdata.xml.in:52
 msgid "5 - Manipulate imported data with ease"
 msgstr "5 – Importált adatok egyszerű manipulálása"
 
-#: data/se.sjoerd.Graphs.desktop.in.in:10
+#: data/se.sjoerd.Graphs.desktop.in:10
 msgid ""
 "Plotting;Graph;Graphing;Science;Mathematics;Math;Equations;Data;Plot;"
 "Visualisation;Visualization;Fitting;xrdml;"
@@ -771,6 +770,93 @@ msgstr "Importálási paraméterek módosítása"
 msgid "Import"
 msgstr "Importálás"
 
+#: data/ui/import-columns.blp:6
+msgid "Delimiter"
+msgstr "Elválasztó"
+
+#: data/ui/import-columns.blp:7
+msgid "Character sequence used to split values"
+msgstr "Az értékek felosztásához használt karaktersorozat"
+
+#: data/ui/import-columns.blp:11
+msgctxt "delimiter"
+msgid "Whitespace"
+msgstr "Üres karakterek"
+
+#: data/ui/import-columns.blp:12
+msgctxt "delimiter"
+msgid "Tab"
+msgstr "Tabulátor"
+
+#: data/ui/import-columns.blp:13
+msgctxt "delimiter"
+msgid "Colon (:)"
+msgstr "Kettőspont (:)"
+
+#: data/ui/import-columns.blp:14
+msgctxt "delimiter"
+msgid "Semicolon (;)"
+msgstr "Pontosvessző (;)"
+
+#: data/ui/import-columns.blp:15
+msgctxt "delimiter"
+msgid "Decimal comma (,)"
+msgstr "Tizedesvessző (,)"
+
+#: data/ui/import-columns.blp:16
+msgctxt "delimiter"
+msgid "Decimal point (.)"
+msgstr "Tizedespont (.)"
+
+#: data/ui/import-columns.blp:17
+#| msgctxt "regression-type"
+#| msgid "Custom"
+msgctxt "delimiter"
+msgid "Custom"
+msgstr "Egyéni"
+
+#: data/ui/import-columns.blp:24
+msgid "Custom Delimiter"
+msgstr "Egyéni elválasztó"
+
+#: data/ui/import-columns.blp:28
+msgid "Decimal Separator"
+msgstr "Tizedes elválasztó"
+
+#: data/ui/import-columns.blp:31
+msgctxt "separator"
+msgid "Decimal comma (,)"
+msgstr "Tizedesvessző (,)"
+
+#: data/ui/import-columns.blp:32
+msgctxt "separator"
+msgid "Decimal point (.)"
+msgstr "Tizedespont (.)"
+
+#: data/ui/import-columns.blp:38
+msgid "Column X"
+msgstr "X-oszlop"
+
+#: data/ui/import-columns.blp:39
+msgid "X-data column index"
+msgstr "X-adatoszlop indexe"
+
+#: data/ui/import-columns.blp:48
+msgid "Column Y"
+msgstr "Y-oszlop"
+
+#: data/ui/import-columns.blp:50
+msgid "Y-data column index"
+msgstr "Y-adatoszlop indexe"
+
+#: data/ui/import-columns.blp:59
+msgid "Skip Rows"
+msgstr "Sorok kihagyása"
+
+#: data/ui/import-columns.blp:60
+msgid "Ignored row indices"
+msgstr "Sorindexek mellőzve"
+
 #: data/ui/item-box.blp:26
 msgid "Pick Color"
 msgstr "Szín kiválasztása"
@@ -1366,7 +1452,7 @@ msgstr "X-szorzás"
 msgid "Multiply Y"
 msgstr "Y-szorzás"
 
-#: data/ui/window.blp:605 graphs/actions.py:227 graphs/item_box.py:66
+#: data/ui/window.blp:605 graphs/actions.py:226 graphs/item_box.py:66
 msgid "Undo"
 msgstr "Visszavonás"
 
@@ -1455,7 +1541,7 @@ msgstr "{error} – nem lehet hozzáadni egyenletből származó adatokat"
 msgid "Exported Figure"
 msgstr "Exportált ábra"
 
-#: graphs/actions.py:226 graphs/item_box.py:65
+#: graphs/actions.py:225 graphs/item_box.py:65
 #, python-brace-format
 msgid "Deleted {name}"
 msgstr "{name} törlése"
@@ -1465,11 +1551,11 @@ msgstr "{name} törlése"
 msgid "Could not load {font}"
 msgstr "Nem sikerült betölteni a(z) {font} betűkészletet"
 
-#: graphs/curve_fitting.py:173
+#: graphs/curve_fitting.py:176
 msgid "Results:"
 msgstr "Eredmények:"
 
-#: graphs/curve_fitting.py:177
+#: graphs/curve_fitting.py:180
 msgid ""
 "Please enter valid fitting \n"
 "parameters to start the fit"
@@ -1477,7 +1563,7 @@ msgstr ""
 "Adjon meg érvényes illesztési\n"
 "paramétereket az illesztés elkezdéséhez"
 
-#: graphs/curve_fitting.py:181
+#: graphs/curve_fitting.py:184
 msgid ""
 "Please enter a valid equation \n"
 "to start the fit"
@@ -1485,7 +1571,7 @@ msgstr ""
 "Adjon meg egy érvényes egyenletet\n"
 "az illesztés elkezdéséhez"
 
-#: graphs/curve_fitting.py:185
+#: graphs/curve_fitting.py:188
 msgid ""
 "Please enter valid fitting bounds \n"
 "to start the fit"
@@ -1493,21 +1579,21 @@ msgstr ""
 "Adjon meg érvényes illesztési határokat\n"
 "az illesztés elkezdéséhez"
 
-#: graphs/curve_fitting.py:198
+#: graphs/curve_fitting.py:201
 #, python-brace-format
 msgid "Sum of R²: {R2}"
 msgstr "R² összege: {R2}"
 
-#: graphs/curve_fitting.vala:131
+#: graphs/curve_fitting.vala:136
 #, c-format
 msgid "Fitting Parameters for %s"
 msgstr "%s illesztési paraméterei"
 
-#: graphs/data.py:88
+#: graphs/data.py:89
 msgid "Untitled Project"
 msgstr "Névtelen projekt"
 
-#: graphs/data.py:99
+#: graphs/data.py:100
 msgid "Draft"
 msgstr "Piszkozat"
 
@@ -1548,7 +1634,7 @@ msgstr "X-tengely címkéje"
 msgid "Y Axis Scale"
 msgstr "Y-tengely méretezése"
 
-#: graphs/file_import.vala:65
+#: graphs/file_import.vala:68
 msgid "Are you sure you want to reset the import settings?"
 msgstr "Biztosan vissza szeretné állítani az importálási beállításokat?"
 
@@ -1710,6 +1796,12 @@ msgstr "Exportált adatok"
 msgctxt "file-filter"
 msgid "Text Files"
 msgstr "Szövegfájlok"
+
+#: graphs/utilities.py:122
+#| msgctxt "file-filter"
+#| msgid "Text Files"
+msgid "All Files"
+msgstr "Összes fájl"
 
 #: graphs/window.vala:128
 msgid "Graphs (Development)"
