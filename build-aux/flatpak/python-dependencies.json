@@ -217,8 +217,8 @@
         },
         {
             "type": "file",
-            "url": "https://files.pythonhosted.org/packages/67/f1/cc1577225e839fe2aef55568f5682c49ff8b9ad6edab886d22c0bf3db843/gio_pyio-0.0.3-py3-none-any.whl",
-            "sha256": "23f886050d40ca8a5ed4254627d7de11d2fc8fd4e7f675ffd7cd54466d2d4c9b",
+            "url": "https://files.pythonhosted.org/packages/c9/f3/ec8b7b09c3d2ceb1d58c03c3de1e721f6cfe09e8fd9291bb476f9c916549/gio_pyio-0.0.4-py3-none-any.whl",
+            "sha256": "610347010c6818fa3e242a218c22ebfcde4952a631b8a814392721fdf25ad024",
             "x-checker-data": {
                 "type": "pypi",
                 "name": "gio-pyio"
