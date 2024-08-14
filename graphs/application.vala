@@ -7,14 +7,6 @@ using Gee;
 namespace Graphs {
     private const string[] X_DIRECTIONS = {"top", "bottom"};
     private const string[] Y_DIRECTIONS = {"left", "right"};
-    private const string[] PYTHON_ACTIONS = {
-        "add_data",
-        "add_equation",
-        "export_figure",
-        "zoom_in",
-        "zoom_out",
-        "figure_settings"
-    };
 
     /**
      * Graphs application
@@ -28,7 +20,6 @@ namespace Graphs {
         public PythonHelper python_helper { get; construct set; }
         public CssProvider css_provider { get; construct set; }
 
-        public signal void action_invoked (string name);
         public signal void operation_invoked (string name);
 
         construct {
@@ -102,15 +93,6 @@ namespace Graphs {
          * Setup actions.
          */
         public void setup_actions () {
-            foreach (string name in PYTHON_ACTIONS) {
-                var action = new SimpleAction (name, null);
-                action.activate.connect (() => {
-                    this.action_invoked.emit (name);
-                });
-                this.add_action (action);
-            }
-            this.set_accels_for_action ("app.help", {"F1"});
-
             var toggle_sidebar_action = new SimpleAction.stateful (
                 "toggle_sidebar",
                 null,
@@ -201,6 +183,7 @@ namespace Graphs {
                 } catch { assert_not_reached (); }
             });
             this.add_action (help_action);
+            this.set_accels_for_action ("app.help", {"F1"});
 
             var optimize_limits_action = new SimpleAction ("optimize_limits", null);
             optimize_limits_action.activate.connect (() => {
@@ -332,6 +315,36 @@ namespace Graphs {
                 Export.export_items (this);
             });
             this.add_action (export_data_action);
+
+            var figure_settings_action = new SimpleAction ("figure_settings", null);
+            figure_settings_action.activate.connect (() => {
+                new FigureSettingsDialog (this, null);
+            });
+            this.add_action (figure_settings_action);
+
+            var add_equation_action = new SimpleAction ("add_equation", null);
+            add_equation_action.activate.connect (() => {
+                new AddEquationDialog (this);
+            });
+            this.add_action (add_equation_action);
+
+            var export_figure_action = new SimpleAction ("export_figure", null);
+            export_figure_action.activate.connect (() => {
+                new ExportFigureDialog (this);
+            });
+            this.add_action (export_figure_action);
+
+            var zoom_in_action = new SimpleAction ("zoom_in", null);
+            zoom_in_action.activate.connect (() => {
+                this.window.canvas.zoom (1.15);
+            });
+            this.add_action (zoom_in_action);
+
+            var zoom_out_action = new SimpleAction ("zoom_out", null);
+            zoom_out_action.activate.connect (() => {
+                this.window.canvas.zoom (1 / 1.15);
+            });
+            this.add_action (zoom_out_action);
         }
     }
 }

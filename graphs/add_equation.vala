@@ -29,8 +29,6 @@ namespace Graphs {
 
         private Application application;
 
-        public signal string accept (string name);
-
         public AddEquationDialog (Application application) {
             Object ();
             this.application = application;
@@ -42,7 +40,7 @@ namespace Graphs {
 
         [GtkCallback]
         private void on_accept () {
-            string error = this.accept.emit (this.item_name.get_text ());
+            string error = application.python_helper.add_equation (item_name.get_text ());
             if (error == "") close ();
             else this.toast_overlay.add_toast (new Adw.Toast (error));
         }

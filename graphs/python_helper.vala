@@ -40,5 +40,10 @@ namespace Graphs {
         public void export_items (string mode, File file, Item[] items) {
             this.export_items_request.emit (mode, file, items);
         }
+
+        protected signal string add_equation_request (string name);
+        public string add_equation (string name) {
+            return this.add_equation_request.emit (name);
+        }
     }
 }
