@@ -32,13 +32,13 @@ namespace Graphs {
 
         construct {
             this.style_model = new GLib.ListStore (typeof (Style));
-            this.selection_model = new SingleSelection (this.style_model);
+            this.selection_model = new SingleSelection (style_model);
             this.stylenames = new Gee.HashSet<string> ();
             try {
                 File config_dir = Tools.get_config_directory ();
                 this.style_dir = config_dir.get_child_for_display_name ("styles");
-                if (!this.style_dir.query_exists ()) {
-                    this.style_dir.make_directory_with_parents ();
+                if (!style_dir.query_exists ()) {
+                    style_dir.make_directory_with_parents ();
                 }
             } catch {
                 assert_not_reached ();
@@ -46,8 +46,8 @@ namespace Graphs {
         }
 
         protected void setup (string system_style) {
-            this.notify["custom-style"].connect (on_custom_style);
-            this.notify["use-custom-style"].connect (on_use_custom_style);
+            notify["custom-style"].connect (on_custom_style);
+            notify["use-custom-style"].connect (on_use_custom_style);
 
             CompareDataFunc<Style> cmp = style_cmp;
             try {
@@ -63,12 +63,12 @@ namespace Graphs {
                     stream.read_line_utf8 ();
                     size_t size;
                     string name = stream.read_line_utf8 (out size)[2: (long)size];
-                    this.stylenames.add (name);
+                    stylenames.add (name);
                     string preview_name = info.get_name ().replace (".mplstyle", ".png");
                     var preview = Gdk.Texture.from_resource (
                         @"/se/sjoerd/Graphs/$preview_name"
                     );
-                    this.style_model.insert_sorted (
+                    style_model.insert_sorted (
                         new Style (name, file, preview, false),
                         cmp
                     );
@@ -77,7 +77,7 @@ namespace Graphs {
             } catch {
                 assert_not_reached ();
             }
-            this.style_model.insert (
+            style_model.insert (
                 0,
                 new Style (
                     _("System"),
@@ -88,9 +88,9 @@ namespace Graphs {
                     false
                 )
             );
-            this.application.python_helper.run_method (this, "_update_system_style");
+            application.python_helper.run_method (this, "_update_system_style");
             try {
-                FileEnumerator enumerator = this.style_dir.enumerate_children (
+                FileEnumerator enumerator = style_dir.enumerate_children (
                     "standard::*",
                     FileQueryInfoFlags.NONE
                 );
@@ -100,21 +100,21 @@ namespace Graphs {
                     if (
                         file.query_file_type (0) == 1
                         && Tools.get_filename (file).has_suffix (".mplstyle")
-                    ) this.add_user_style (file);
+                    ) add_user_style (file);
                 }
                 enumerator.close ();
-                FileMonitor style_monitor = this.style_dir.monitor_directory (
+                FileMonitor style_monitor = style_dir.monitor_directory (
                     FileMonitorFlags.NONE
                 );
                 style_monitor.changed.connect (on_file_change);
                 style_monitor.ref ();
             } catch { assert_not_reached (); }
-            this.application.style_manager.notify.connect (() => {
-                if (!this.use_custom_style) {
+            application.style_manager.notify.connect (() => {
+                if (!use_custom_style) {
                     handle_style_change ();
                 }
             });
-            FigureSettings figure_settings = this.application.data.figure_settings;
+            FigureSettings figure_settings = application.data.figure_settings;
             figure_settings.bind_property (
                 "use_custom_style",
                 this,
@@ -127,34 +127,34 @@ namespace Graphs {
                 "custom_style",
                 1 | 2
             );
-            this.selection_model.selection_changed.connect (() => {
+            selection_model.selection_changed.connect (() => {
                 Style style = get_selected_style ();
                 // Don't trigger unnecessary reloads
                 if (style.file == null) { // System Style
-                    if (this.use_custom_style) this.use_custom_style = false;
+                    if (use_custom_style) this.use_custom_style = false;
                 } else {
-                    if (style.name != this.custom_style) this.custom_style = style.name;
-                    if (!this.use_custom_style) this.use_custom_style = true;
+                    if (style.name != custom_style) this.custom_style = style.name;
+                    if (!use_custom_style) this.use_custom_style = true;
                 }
             });
             handle_style_change ();
         }
 
         private void on_use_custom_style () {
-            if (this.use_custom_style) {
-                this.on_custom_style ();
+            if (use_custom_style) {
+                on_custom_style ();
             } else {
-                this.selection_model.set_selected (0);
+                selection_model.set_selected (0);
                 handle_style_change (true);
             }
         }
 
         private void on_custom_style () {
-            if (!this.use_custom_style) return;
-            for (uint i = 1; i < this.style_model.get_n_items (); i++) {
-                Style style = (Style) this.style_model.get_item (i);
-                if (style.name == this.custom_style) {
-                    this.selection_model.set_selected (i);
+            if (!use_custom_style) return;
+            for (uint i = 1; i < style_model.get_n_items (); i++) {
+                Style style = style_model.get_item (i) as Style;
+                if (style.name == custom_style) {
+                    selection_model.set_selected (i);
                     break;
                 }
             }
@@ -167,29 +167,29 @@ namespace Graphs {
             bool possible_visual_impact = true;
             switch (event_type) {
                 case FileMonitorEvent.CREATED:
-                    for (uint i = 1; i < this.style_model.get_n_items (); i++) {
-                        Style style = (Style) this.style_model.get_item (i);
+                    for (uint i = 1; i < style_model.get_n_items (); i++) {
+                        Style style = style_model.get_item (i) as Style;
                         if (style.file.equal (file)) {
                             return;
                         }
                     }
-                    this.add_user_style (file);
+                    add_user_style (file);
                     break;
                 case FileMonitorEvent.DELETED:
-                    for (uint i = 1; i < this.style_model.get_n_items (); i++) {
-                        Style style = (Style) this.style_model.get_item (i);
+                    for (uint i = 1; i < style_model.get_n_items (); i++) {
+                        Style style = style_model.get_item (i) as Style;
                         if (style.file.equal (file)) {
-                            this.stylenames.remove (style.name);
-                            this.style_model.remove (i);
+                            stylenames.remove (style.name);
+                            style_model.remove (i);
                             stylename = style.name;
                         }
                     }
                     possible_visual_impact = stylename != null;
                     break;
                 case FileMonitorEvent.CHANGES_DONE_HINT:
-                    Style tmp_style = this.style_request.emit (file);
-                    for (uint i = 1; i < this.style_model.get_n_items (); i++) {
-                        Style style = (Style) this.style_model.get_item (i);
+                    Style tmp_style = style_request.emit (file);
+                    for (uint i = 1; i < style_model.get_n_items (); i++) {
+                        Style style = style_model.get_item (i) as Style;
                         if (style.file.equal (file)) {
                             style.name = tmp_style.name;
                             style.preview = tmp_style.preview;
@@ -204,45 +204,45 @@ namespace Graphs {
                     return;
             }
             if (possible_visual_impact
-                && this.use_custom_style
-                && this.custom_style == stylename) {
+                && use_custom_style
+                && custom_style == stylename) {
                 handle_style_change ();
             }
         }
 
         private void handle_style_change (bool recolor_items = false) {
-            this.notify_property ("selected_stylename");
-            this.application.python_helper.run_method (this, "_update_system_style");
-            this.application.python_helper.run_method (this, "_update_selected_style");
-            this.style_changed.emit (recolor_items);
+            notify_property ("selected_stylename");
+            application.python_helper.run_method (this, "_update_system_style");
+            application.python_helper.run_method (this, "_update_selected_style");
+            style_changed.emit (recolor_items);
         }
 
         private void add_user_style (File file) {
-            Style style = this.style_request.emit (file);
-            if (this.stylenames.contains (style.name)) {
+            Style style = style_request.emit (file);
+            if (stylenames.contains (style.name)) {
                 style.name = Tools.get_duplicate_string (
-                    style.name, this.stylenames.to_array ()
+                    style.name, stylenames.to_array ()
                 );
             }
             CompareDataFunc<Style> cmp = style_cmp;
-            this.style_model.insert_sorted (style, cmp);
-            this.stylenames.add (style.name);
-            if (this.use_custom_style) {
-                string old_style = this.custom_style;
-                if (!this.stylenames.contains (old_style)) {
+            style_model.insert_sorted (style, cmp);
+            stylenames.add (style.name);
+            if (use_custom_style) {
+                string old_style = custom_style;
+                if (!stylenames.contains (old_style)) {
                     this.custom_style = style.name;
                 }
-                for (uint i = 1; i < this.style_model.get_n_items (); i++) {
-                    Style i_style = (Style) this.style_model.get_item (i);
-                    if (i_style.name == this.custom_style) {
-                        this.selection_model.set_selected (i);
+                for (uint i = 1; i < style_model.get_n_items (); i++) {
+                    Style i_style = style_model.get_item (i) as Style;
+                    if (i_style.name == custom_style) {
+                        selection_model.set_selected (i);
                     }
                 }
             }
         }
 
         protected Style get_selected_style () {
-            return (Style) this.selection_model.get_selected_item ();
+            return selection_model.get_selected_item () as Style;
         }
 
         /**
@@ -252,8 +252,8 @@ namespace Graphs {
          */
         public string[] list_stylenames () {
             string[] stylenames = {};
-            for (uint i = 1; i < this.style_model.get_n_items (); i++) {
-                Style style = (Style) this.style_model.get_item (i);
+            for (uint i = 1; i < style_model.get_n_items (); i++) {
+                Style style = style_model.get_item (i) as Style;
                 stylenames += style.name;
             }
             return stylenames;
@@ -261,12 +261,12 @@ namespace Graphs {
 
         public void copy_style (string template, string name) {
             string new_name = name;
-            if (this.stylenames.contains (name)) {
+            if (stylenames.contains (name)) {
                 new_name = Tools.get_duplicate_string (
-                    name, this.stylenames.to_array ()
+                    name, stylenames.to_array ()
                 );
             }
-            this.copy_request.emit (template, new_name);
+            copy_request.emit (template, new_name);
         }
     }
 
@@ -315,27 +315,27 @@ namespace Graphs {
         }
 
         public string stylename {
-            set { this.label.set_label (Tools.shorten_label (value)); }
+            set { label.set_label (Tools.shorten_label (value)); }
         }
 
         public Texture preview {
-            get { return (Texture)this.picture.get_paintable (); }
+            get { return picture.get_paintable () as Texture; }
             set {
-                this.picture.set_paintable (value);
-                if (this._style.mutable) {
+                picture.set_paintable (value);
+                if (_style.mutable) {
                     string color;
-                    if (this._style.light) {
+                    if (_style.light) {
                         color = "@light_1";
                     } else color = "@dark_5";
-                    this.provider.load_from_string (@"button { color: $color; }");
+                    provider.load_from_string (@"button { color: $color; }");
                 }
             }
         }
 
         construct {
             this.provider = new CssProvider ();
-            this.edit_button.get_style_context ().add_provider (
-                this.provider, STYLE_PROVIDER_PRIORITY_APPLICATION
+            edit_button.get_style_context ().add_provider (
+                provider, STYLE_PROVIDER_PRIORITY_APPLICATION
             );
         }
     }
@@ -360,12 +360,12 @@ namespace Graphs {
         public AddStyleDialog (StyleManager style_manager, Widget parent) {
             this.style_manager = style_manager;
             this.stylenames = style_manager.list_stylenames ();
-            this.style_templates.set_model (new StringList (this.stylenames));
+            style_templates.set_model (new StringList (stylenames));
             if (style_manager.use_custom_style) {
                 string template = style_manager.custom_style;
-                for (uint i = 0; i < this.stylenames.length; i++) {
-                    if (this.stylenames[i] == template) {
-                        this.style_templates.set_selected (i);
+                for (uint i = 0; i < stylenames.length; i++) {
+                    if (stylenames[i] == template) {
+                        style_templates.set_selected (i);
                         break;
                     }
                 }
@@ -374,20 +374,20 @@ namespace Graphs {
         }
 
         private string get_selected () {
-            var item = (StringObject) this.style_templates.get_selected_item ();
+            var item = style_templates.get_selected_item () as StringObject;
             return item.get_string ();
         }
 
         [GtkCallback]
         private void on_template_changed () {
-            this.new_style_name.set_text (
-                Tools.get_duplicate_string (get_selected (), this.stylenames)
+            new_style_name.set_text (
+                Tools.get_duplicate_string (get_selected (), stylenames)
             );
         }
 
         [GtkCallback]
         private void on_accept () {
-            this.accept.emit (get_selected (), this.new_style_name.get_text ());
+            accept.emit (get_selected (), new_style_name.get_text ());
             close ();
         }
     }

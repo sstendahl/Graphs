@@ -109,8 +109,8 @@ namespace Graphs {
             FigureSettings figure_settings = application.data.figure_settings;
             GLib.Settings settings = application.get_settings_child ("figure");
             var builder = new Builder.from_resource (PAGE_RESOURCE);
-            this.settings_page = (Adw.NavigationPage) builder.get_object ("settings_page");
-            this.navigation_view.push (this.settings_page);
+            this.settings_page = builder.get_object ("settings_page") as Adw.NavigationPage;
+            navigation_view.push (settings_page);
             foreach (string key in settings.settings_schema.list_keys ()) {
                 if (key[-5:] == "style") continue;
                 key = key.replace ("-", "_");
@@ -138,7 +138,7 @@ namespace Graphs {
                 if (visible) {
                     foreach (string s in min_max) {
                         string key = s + "_" + direction;
-                        var entry = (Adw.EntryRow) builder.get_object (key);
+                        var entry = builder.get_object (key) as Adw.EntryRow;
                         double val;
                         figure_settings.get (key, out val);
                         entry.set_text (val.to_string ());
@@ -161,9 +161,9 @@ namespace Graphs {
                             else if (!x && !both_y) entry.set_title (_("Y Axis Maximum"));
                         }
                     }
-                    var scale = (Adw.ComboRow) builder.get_object (direction + "_scale");
-                    var label = (Adw.EntryRow) builder.get_object (direction + "_label");
-                    var limits = (Box) builder.get_object (direction + "_limits");
+                    var scale = builder.get_object (direction + "_scale") as Adw.ComboRow;
+                    var label = builder.get_object (direction + "_label") as Adw.EntryRow;
+                    var limits = builder.get_object (direction + "_limits") as Box;
                     scale.set_visible (true);
                     label.set_visible (true);
                     limits.set_visible (true);
@@ -177,7 +177,7 @@ namespace Graphs {
                     }
                 }
             }
-            var style_name = (Label) builder.get_object ("style_name");
+            var style_name = builder.get_object ("style_name") as Label;
             StyleManager style_manager = application.figure_style_manager;
             style_manager.bind_property (
                 "selected_stylename", style_name, "label", 2
@@ -186,41 +186,40 @@ namespace Graphs {
             var factory = new SignalListItemFactory ();
             factory.setup.connect (on_factory_setup);
             factory.bind.connect (on_factory_bind);
-            this.grid_view.set_factory (factory);
-            this.grid_view.set_model (style_manager.selection_model);
+            grid_view.set_factory (factory);
+            grid_view.set_model (style_manager.selection_model);
 
-            var style_row = (Adw.ActionRow) builder.get_object ("style_row");
+            var style_row = builder.get_object ("style_row") as Adw.ActionRow;
             style_row.activated.connect (() => {
-                this.navigation_view.push (this.style_overview);
+                navigation_view.push (style_overview);
             });
-            var button = (Button) builder.get_object ("set_as_default");
+            var button = builder.get_object ("set_as_default") as Button;
             button.clicked.connect (set_as_default);
 
             present (application.window);
             if (highlighted != null) {
-                var widget = (Widget) builder.get_object (highlighted);
+                var widget = builder.get_object (highlighted) as Widget;
                 widget.grab_focus ();
             }
         }
 
         [GtkCallback]
         private void add_style () {
-            StyleManager style_manager = this.application.figure_style_manager;
+            StyleManager style_manager = application.figure_style_manager;
             var dialog = new AddStyleDialog (style_manager, this);
             dialog.accept.connect ((d, template, name) => {
-                this.application.figure_style_manager.copy_style (template, name);
+                application.figure_style_manager.copy_style (template, name);
             });
         }
 
         [GtkCallback]
         private void on_closed () {
-            Data data = this.application.data;
-            data.add_history_state ();
-            data.add_view_history_state ();
+            application.data.add_history_state ();
+            application.data.add_view_history_state ();
         }
 
         private void set_as_default () {
-            GLib.Settings settings = this.application.get_settings_child ("figure");
+            GLib.Settings settings = application.get_settings_child ("figure");
             string[] strings = {
                 "custom-style", "title",
                 "bottom-label", "left-label", "top-label", "right-label"
@@ -229,7 +228,7 @@ namespace Graphs {
             string[] enums = {
                 "legend-position", "top-scale", "bottom-scale", "left-scale", "right-scale"
             };
-            FigureSettings figure_settings = this.application.data.figure_settings;
+            FigureSettings figure_settings = application.data.figure_settings;
             foreach (string key in strings) {
                 string val;
                 figure_settings.get (key.replace ("-", "_"), out val);
@@ -245,28 +244,28 @@ namespace Graphs {
                 figure_settings.get (key.replace ("-", "_"), out val);
                 settings.set_enum (key, val);
             }
-            this.toast_overlay.add_toast (new Adw.Toast (_("Defaults Updated")));
+            toast_overlay.add_toast (new Adw.Toast (_("Defaults Updated")));
         }
 
         private void on_factory_setup (Object object) {
-            ListItem item = (ListItem) object;
+            ListItem item = object as ListItem;
             item.set_child (new StylePreview ());
         }
 
         private void on_factory_bind (Object object) {
-            ListItem item = (ListItem) object;
-            StylePreview preview = (StylePreview) item.get_child ();
-            Style style = (Style) item.get_item ();
+            ListItem item = object as ListItem;
+            StylePreview preview = item.get_child () as StylePreview;
+            Style style = item.get_item () as Style;
             preview.style = style;
             if (style.mutable && !preview.edit_button.get_visible ()) {
                 preview.edit_button.set_visible (true);
                 preview.edit_button.clicked.connect (() => {
                     try {
-                    AppInfo.launch_default_for_uri (
-                        style.file.get_uri (),
-                        this.application.window.get_display ().get_app_launch_context ()
-                    );
-                } catch { assert_not_reached (); }
+                        AppInfo.launch_default_for_uri (
+                            style.file.get_uri (),
+                            this.application.window.get_display ().get_app_launch_context ()
+                        );
+                    } catch { assert_not_reached (); }
                 });
                 preview.delete_button.clicked.connect (() => {
                     var dialog = Tools.build_dialog ("delete_style_dialog") as Adw.AlertDialog;

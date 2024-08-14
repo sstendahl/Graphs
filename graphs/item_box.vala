@@ -29,15 +29,15 @@ namespace Graphs {
                 index: application.data.index (item)
             );
             this.provider = new CssProvider ();
-            this.color_button.get_style_context ().add_provider (
-                this.provider, STYLE_PROVIDER_PRIORITY_APPLICATION
+            color_button.get_style_context ().add_provider (
+                provider, STYLE_PROVIDER_PRIORITY_APPLICATION
             );
 
-            this.set_subtitle (this.item.typename);
-            this.item.bind_property ("name", this, "title", 2);
-            this.item.bind_property ("selected", this.check_button, "active", 2);
-            this.item.notify["color"].connect (on_color_change);
-            this.on_color_change ();
+            set_subtitle (item.typename);
+            item.bind_property ("name", this, "title", 2);
+            item.bind_property ("selected", check_button, "active", 2);
+            item.notify["color"].connect (on_color_change);
+            on_color_change ();
         }
 
         /**
@@ -46,52 +46,52 @@ namespace Graphs {
          */
         public void setup_interactions () {
             this.activated.connect (() => {
-                this.application.python_helper.create_edit_item_dialog (this.item);
+                application.python_helper.create_edit_item_dialog (item);
             });
 
             var action_group = new SimpleActionGroup ();
             var delete_action = new SimpleAction ("delete", null);
             delete_action.activate.connect (() => {
-                string name = this.item.name;
-                Item[] list = {this.item};
-                this.application.data.delete_items (list);
-                this.application.window.add_undo_toast (_("Deleted %s").printf (name));
+                string name = item.name;
+                Item[] list = {item};
+                application.data.delete_items (list);
+                application.window.add_undo_toast (_("Deleted %s").printf (name));
             });
             action_group.add_action (delete_action);
             var curve_fitting_action = new SimpleAction ("curve_fitting", null);
             curve_fitting_action.activate.connect (() => {
-                this.application.python_helper.create_curve_fitting_dialog (this.item);
+                application.python_helper.create_curve_fitting_dialog (item);
             });
             action_group.add_action (curve_fitting_action);
-            if (this.index > 0) {
+            if (index > 0) {
                 var move_up_action = new SimpleAction ("move_up", null);
                 move_up_action.activate.connect (() => {
-                    this.change_position (this.index - 1);
+                    change_position (index - 1);
                 });
                 action_group.add_action (move_up_action);
             }
-            if (this.index + 1 < this.application.data.get_n_items ()) {
+            if (index + 1 < application.data.get_n_items ()) {
                 var move_down_action = new SimpleAction ("move_down", null);
                 move_down_action.activate.connect (() => {
-                    this.change_position (this.index + 1);
+                    change_position (index + 1);
                 });
                 action_group.add_action (move_down_action);
             }
-            this.insert_action_group ("item_box", action_group);
+            insert_action_group ("item_box", action_group);
         }
 
         private void on_color_change () {
-            string c = this.item.color;
-            string o = this.item.alpha.to_string ();
-            this.provider.load_from_string (@"button { color: $c; opacity: $o; }");
+            string c = item.color;
+            string o = item.alpha.to_string ();
+            provider.load_from_string (@"button { color: $c; opacity: $o; }");
         }
 
         [GtkCallback]
         private void on_toggle () {
-            bool new_value = this.check_button.get_active ();
-            if (this.item.selected != new_value) {
-                this.item.selected = new_value;
-                this.application.data.add_history_state ();
+            bool new_value = check_button.get_active ();
+            if (item.selected != new_value) {
+                item.selected = new_value;
+                application.data.add_history_state ();
             }
         }
 
@@ -99,23 +99,22 @@ namespace Graphs {
         private void choose_color () {
             var dialog = new ColorDialog ();
             dialog.choose_rgba.begin (
-                this.application.window,
-                this.item.get_rgba (),
+                application.window,
+                item.get_rgba (),
                 null,
                 (d, result) => {
                     try {
-                        this.item.set_rgba (dialog.choose_rgba.end (result));
-                        this.application.data.add_history_state ();
+                        item.set_rgba (dialog.choose_rgba.end (result));
+                        application.data.add_history_state ();
                     } catch {}
                 }
             );
         }
 
         public void change_position (uint source_index) {
-            Data data = this.application.data;
-            data.change_position (this.index, source_index);
-            data.add_history_state ();
-            data.add_view_history_state ();
+            application.data.change_position (index, source_index);
+            application.data.add_history_state ();
+            application.data.add_view_history_state ();
         }
     }
 }
