@@ -3,7 +3,6 @@
 from gi.repository import Graphs
 
 from graphs import misc, utilities
-from graphs.style_editor import StyleEditor
 
 
 class FigureSettingsDialog(Graphs.FigureSettingsDialog):
@@ -20,12 +19,6 @@ class FigureSettingsDialog(Graphs.FigureSettingsDialog):
         super().__init__(application=application)
         self.setup(highlighted)
         self.connect("entry-change", self.on_entry_change)
-        self.connect("style-edit-request", self.on_style_edit_request)
-
-    @staticmethod
-    def on_style_edit_request(self, style) -> None:
-        """Invoke Style editor for the requested style."""
-        StyleEditor(style)
 
     @staticmethod
     def on_entry_change(self, entry, prop) -> None:
