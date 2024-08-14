@@ -8,6 +8,7 @@ from gi.repository import Gio, Graphs
 from graphs import file_import, item, migrate, operations, styles
 from graphs.canvas import Canvas
 from graphs.data import Data
+from graphs.figure_settings import FigureSettingsDialog
 from graphs.python_helper import PythonHelper
 from graphs.style_editor import StyleEditor
 

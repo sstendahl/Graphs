@@ -9,6 +9,7 @@ interactive navigation in conjunction with graphs-specific structures.
     Classes:
         Canvas
 """
+import math
 from contextlib import nullcontext
 
 from gi.repository import GObject, Gdk, Gio, Graphs, Gtk
@@ -551,32 +552,39 @@ class Canvas(Graphs.Canvas, FigureCanvas):
         if self._rubberband_rect is not None:
             self._draw_rubberband(context)
 
-    def _draw_rubberband(self, context) -> None:
+    def _draw_rubberband(self, ctx) -> None:
         """
         Implement custom rubberband.
 
         Draw a rubberband matching libadwaitas style, where `_rubberband_rect`
         is set.
         """
-        line_width = 1
-        if not self._context_is_scaled:
-            x_0, y_0, width, height = (
-                dim / self.device_pixel_ratio for dim in self._rubberband_rect
-            )
-        else:
-            x_0, y_0, width, height = self._rubberband_rect
-            line_width *= self.device_pixel_ratio
+        radius = 6
+        x0, y0, width, height = (
+            dim / self.device_pixel_ratio for dim in self._rubberband_rect
+        )
+        x1 = x0 + width
+        y1 = y0 + height
 
-        context.set_antialias(1)
-        context.set_line_width(line_width)
-        context.rectangle(x_0, y_0, width, height)
-        color = self.rubberband_fill_color
-        context.set_source_rgba(color[0], color[1], color[2], color[3])
-        context.fill()
-        context.rectangle(x_0, y_0, width, height)
-        color = self.rubberband_edge_color
-        context.set_source_rgba(color[0], color[1], color[2], color[3])
-        context.stroke()
+        if x1 < x0:
+            x0, x1 = x1, x0
+        if y1 < y0:
+            y0, y1 = y1, y0
+
+        degrees = math.pi / 180
+
+        ctx.new_sub_path()
+        ctx.arc(x1 - radius, y0 + radius, radius, -90 * degrees, 0 * degrees)
+        ctx.arc(x1 - radius, y1 - radius, radius, 0 * degrees, 90 * degrees)
+        ctx.arc(x0 + radius, y1 - radius, radius, 90 * degrees, 180 * degrees)
+        ctx.arc(x0 + radius, y0 + radius, radius, 180 * degrees, 270 * degrees)
+        ctx.close_path()
+
+        ctx.set_line_width(1)
+        ctx.set_source_rgba(*self.rubberband_fill_color)
+        ctx.fill_preserve()
+        ctx.set_source_rgba(*self.rubberband_edge_color)
+        ctx.stroke()
 
     def update_legend(self) -> None:
         """Update the legend or hide if not used."""
