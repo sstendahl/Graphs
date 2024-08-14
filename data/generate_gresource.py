@@ -82,10 +82,11 @@ spec.loader.exec_module(style_io)
 
 # GResource tree creation
 gresources = ElementTree.Element("gresources")
+main_prefix = "/se/sjoerd/Graphs/"
 main_gresource = ElementTree.SubElement(
     gresources,
     "gresource",
-    attrib={"prefix": "/se/sjoerd/Graphs/"},
+    attrib={"prefix": main_prefix},
 )
 
 # Begin Other Section
@@ -103,35 +104,50 @@ for file in args.other:
 
 # Begin style section
 styles = {}
+style_prefix = main_prefix + "styles/"
 styles_gresource = ElementTree.SubElement(
     gresources,
     "gresource",
-    attrib={"prefix": "/se/sjoerd/Graphs/styles/"},
+    attrib={"prefix": style_prefix},
 )
-for style_path in args.styles:
-    style_file = shutil.copy(style_path, args.dir)
-    name = Path(style_file).name
-    style_element = ElementTree.SubElement(
-        styles_gresource,
-        "file",
-        attrib={
-            "compressed": "True",
-        },
-    )
-    style_element.text = name
-    params, stylename = style_io.parse(Gio.File.new_for_path(style_file))
-    out_path = Path(args.dir, name.replace(".mplstyle", ".png"))
-    styles[stylename] = out_path
-    with open(out_path, "wb") as out_file:
-        style_io.create_preview(out_file, params, "png")
-    preview_element = ElementTree.SubElement(
-        main_gresource,
-        "file",
-        attrib={
-            "compressed": "True",
-        },
-    )
-    preview_element.text = out_path.name
+style_list = Path(args.dir, "styles.txt")
+with open(style_list, "wt") as style_list_file:
+    for style_path in args.styles:
+        style_file = shutil.copy(style_path, args.dir)
+        name = Path(style_file).name
+        style_element = ElementTree.SubElement(
+            styles_gresource,
+            "file",
+            attrib={
+                "compressed": "True",
+            },
+        )
+        style_element.text = name
+        params, stylename = style_io.parse(Gio.File.new_for_path(style_file))
+        out_path = Path(args.dir, name.replace(".mplstyle", ".png"))
+        styles[stylename] = out_path
+        with open(out_path, "wb") as out_file:
+            style_io.create_preview(out_file, params, "png")
+        preview_element = ElementTree.SubElement(
+            main_gresource,
+            "file",
+            attrib={
+                "compressed": "True",
+            },
+        )
+        preview_element.text = out_path.name
+        line = ";".join(
+            (stylename, style_prefix + name, main_prefix + out_path.name),
+        )
+        style_list_file.write(line + "\n")
+style_list_element = ElementTree.SubElement(
+    main_gresource,
+    "file",
+    attrib={
+        "compressed": "True",
+    },
+)
+style_list_element.text = style_list.name
 
 
 def _to_array(file_path):
@@ -166,7 +182,7 @@ for sys_style in ("Adwaita", "Yaru"):
 ui_gresource = ElementTree.SubElement(
     gresources,
     "gresource",
-    attrib={"prefix": "/se/sjoerd/Graphs/"},
+    attrib={"prefix": main_prefix},
 )
 help_overlay_path = None
 for ui_file in args.ui:
@@ -197,7 +213,7 @@ help_overlay_element.text = "ui/" + help_overlay_path.name
 icon_gresource = ElementTree.SubElement(
     gresources,
     "gresource",
-    attrib={"prefix": "/se/sjoerd/Graphs/icons/scalable/actions/"},
+    attrib={"prefix": main_prefix + "icons/scalable/actions/"},
 )
 for icon_file in args.icons:
     path = Path(Path(shutil.copy(icon_file, args.dir)))
