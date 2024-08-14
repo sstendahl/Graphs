@@ -148,7 +148,15 @@ namespace Graphs {
                         figure_settings.get (key, out val);
                         entry.set_text (val.to_string ());
                         entry.notify["text"].connect (() => {
-                            this.entry_change.emit (entry, key);
+                            double? new_val = this.application.python_helper.evaluate_string (
+                                entry.get_text ()
+                            );
+                            if (new_val == null) {
+                                entry.add_css_class ("error");
+                            } else {
+                                entry.remove_css_class ("error");
+                                figure_settings.set (key, (double) new_val);
+                            }
                         });
                         if (s == "min") {
                             if (x && !both_x) entry.set_title (_("X Axis Minimum"));
@@ -191,10 +199,7 @@ namespace Graphs {
                 this.navigation_view.push (this.style_overview);
             });
             var button = (Button) builder.get_object ("set_as_default");
-            button.clicked.connect (() => {
-                this.application.python_helper.run_method (this, "_set_as_default");
-                this.toast_overlay.add_toast (new Adw.Toast (_("Defaults Updated")));
-            });
+            button.clicked.connect (set_as_default);
 
             present (this.application.window);
             if (highlighted != null) {
@@ -217,6 +222,34 @@ namespace Graphs {
             Data data = this.application.data;
             data.add_history_state ();
             data.add_view_history_state ();
+        }
+
+        private void set_as_default () {
+            GLib.Settings settings = this.application.get_settings_child ("figure");
+            string[] strings = {
+                "custom-style", "title",
+                "bottom-label", "left-label", "top-label", "right-label"
+            };
+            string[] bools = {"hide-unselected", "legend", "use-custom-style"};
+            string[] enums = {
+                "legend-position", "top-scale", "bottom-scale", "left-scale", "right-scale"
+            };
+            foreach (string key in strings) {
+                string val;
+                this.figure_settings.get (key.replace ("-", "_"), out val);
+                settings.set_string (key, val);
+            }
+            foreach (string key in bools) {
+                bool val;
+                this.figure_settings.get (key.replace ("-", "_"), out val);
+                settings.set_boolean (key, val);
+            }
+            foreach (string key in enums) {
+                int val;
+                this.figure_settings.get (key.replace ("-", "_"), out val);
+                settings.set_enum (key, val);
+            }
+            this.toast_overlay.add_toast (new Adw.Toast (_("Defaults Updated")));
         }
 
         private void on_factory_setup (Object object) {

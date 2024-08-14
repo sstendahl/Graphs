@@ -10,7 +10,6 @@ namespace Graphs {
     private const string[] PYTHON_ACTIONS = {
         "add_data",
         "add_equation",
-        "export_data",
         "export_figure",
         "zoom_in",
         "zoom_out",
@@ -45,6 +44,19 @@ namespace Graphs {
                 css_provider,
                 STYLE_PROVIDER_PRIORITY_APPLICATION
             );
+        }
+
+        /**
+         * Activate the application.
+         */
+        public override void activate () {
+            base.activate ();
+            var win = this.active_window;
+            if (win == null) {
+                this.window = new Window (this);
+                this.python_helper.run_method (this, "_reload_canvas");
+                this.window.present ();
+            }
         }
 
         /**
@@ -283,6 +295,43 @@ namespace Graphs {
                 Project.@new (this);
             });
             this.add_action (new_project_action);
+
+            var add_data_action_filters = Tools.create_file_filters (
+                true,
+                Tools.create_file_filter (
+                    C_("file-filter", "Supported files"),
+                    "xy", "dat", "txt", "csv", "xrdml", "xry", "graphs"
+                ),
+                Tools.create_file_filter (
+                    C_("file-filter", "ASCII files"),
+                    "xy", "dat", "txt", "csv"
+                ),
+                Tools.create_file_filter (
+                    C_("file-filter", "PANalytical XRDML"), "xrdml"
+                ),
+                Tools.create_file_filter (
+                    C_("file-filter", "Leybold xry"), "xry"
+                ),
+                Project.get_project_file_filter ()
+            );
+            var add_data_action = new SimpleAction ("add_data", null);
+            add_data_action.activate.connect (() => {
+                var dialog = new FileDialog ();
+                dialog.set_filters (add_data_action_filters);
+                dialog.open_multiple.begin (this.window, null, (d, response) => {
+                    try {
+                        var files = dialog.open_multiple.end (response);
+                        this.python_helper.import_from_files (files);
+                    } catch {}
+                });
+            });
+            this.add_action (add_data_action);
+
+            var export_data_action = new SimpleAction ("export_data", null);
+            export_data_action.activate.connect (() => {
+                Export.export_items (this);
+            });
+            this.add_action (export_data_action);
         }
     }
 }
