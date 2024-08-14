@@ -18,9 +18,14 @@ class FigureSettingsDialog(Graphs.FigureSettingsDialog):
     ):
         """Initialize the Figure Settings window and set the widget entries."""
         super().__init__(application=application)
-        self.props.style_editor = StyleEditor(self)
         self.setup(highlighted)
         self.connect("entry-change", self.on_entry_change)
+        self.connect("style-edit-request", self.on_style_edit_request)
+
+    @staticmethod
+    def on_style_edit_request(self, style) -> None:
+        """Invoke Style editor for the requested style."""
+        StyleEditor(style)
 
     @staticmethod
     def on_entry_change(self, entry, prop) -> None:

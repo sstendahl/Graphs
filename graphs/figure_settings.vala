@@ -109,8 +109,7 @@ namespace Graphs {
         }
 
         protected signal void entry_change (Adw.EntryRow entry, string prop);
-        public signal void load_style_request (Style style);
-        public signal void save_style_request ();
+        protected signal void style_edit_request (Style style);
 
         protected void setup (string? highlighted) {
             FigureSettings figure_settings = this.figure_settings;
@@ -206,11 +205,6 @@ namespace Graphs {
         }
 
         [GtkCallback]
-        private void on_pop (Adw.NavigationPage page) {
-            if (page == this.style_editor) this.save_style_request.emit ();
-        }
-
-        [GtkCallback]
         private void add_style () {
             StyleManager style_manager = this.application.figure_style_manager;
             var dialog = new AddStyleDialog (style_manager, this);
@@ -221,7 +215,6 @@ namespace Graphs {
 
         [GtkCallback]
         private void on_closed () {
-            this.save_style_request.emit ();
             Data data = this.application.data;
             data.add_history_state ();
             data.add_view_history_state ();
@@ -240,8 +233,7 @@ namespace Graphs {
             if (style.mutable && !preview.edit_button.get_visible ()) {
                 preview.edit_button.set_visible (true);
                 preview.edit_button.clicked.connect (() => {
-                    this.load_style_request.emit (style);
-                    this.navigation_view.push (this.style_editor);
+                    this.style_edit_request.emit (style);
                 });
                 preview.delete_button.clicked.connect (() => {
                     var dialog = Tools.build_dialog ("delete_style_dialog") as Adw.AlertDialog;
