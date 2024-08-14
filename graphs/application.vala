@@ -42,11 +42,11 @@ namespace Graphs {
          */
         public override void activate () {
             base.activate ();
-            var win = this.active_window;
+            var win = active_window;
             if (win == null) {
                 this.window = new Window (this);
-                this.python_helper.run_method (this, "_reload_canvas");
-                this.window.present ();
+                python_helper.run_method (this, "_reload_canvas");
+                window.present ();
             }
         }
 
@@ -56,35 +56,35 @@ namespace Graphs {
          * @param path a slash-separated path
          */
         public GLib.Settings get_settings_child (string path) {
-            GLib.Settings settings = this.settings;
+            GLib.Settings settings_child = settings;
             foreach (string child_name in path.split ("/")) {
-                settings = settings.get_child (child_name);
+                settings_child = settings_child.get_child (child_name);
             }
-            return settings;
+            return settings_child;
         }
 
         public bool close () {
-            if (this.data.unsaved) {
-                var dialog = (Adw.AlertDialog) Tools.build_dialog ("save_changes");
+            if (data.unsaved) {
+                var dialog = Tools.build_dialog ("save_changes") as Adw.AlertDialog;
                 dialog.response.connect ((d, response) => {
                     switch (response) {
                         case "discard_close": {
-                            this.quit ();
+                            quit ();
                             break;
                         }
                         case "save_close": {
                             Project.save.begin (this, false, (o, result) => {
                                 Project.save.end (result);
-                                this.quit ();
+                                quit ();
                             });
                             break;
                         }
                     }
                 });
-                dialog.present (this.window);
+                dialog.present (window);
                 return true;
             } else {
-                this.quit ();
+                quit ();
                 return false;
             }
         }
@@ -99,32 +99,31 @@ namespace Graphs {
                 new Variant.boolean (true)
             );
             toggle_sidebar_action.activate.connect (() => {
-                OverlaySplitView split_view = this.window.split_view;
+                OverlaySplitView split_view = window.split_view;
                 split_view.collapsed = !split_view.collapsed;
             });
-            this.add_action (toggle_sidebar_action);
+            add_action (toggle_sidebar_action);
 
             var modes = new ArrayList<string>.wrap ({"pan", "zoom", "select"});
             foreach (string mode in modes) {
                 var action = new SimpleAction (@"mode_$mode", null);
                 action.activate.connect (() => {
-                    this.window.canvas.mode = modes.index_of (mode);
+                    window.canvas.mode = modes.index_of (mode);
                 });
-                this.add_action (action);
+                add_action (action);
             }
 
-            GLib.Settings settings = this.get_settings_child ("figure");
-            FigureSettings figure_settings = this.data.figure_settings;
+            GLib.Settings figure_settings = get_settings_child ("figure");
             foreach (string dir in DIRECTION_NAMES) {
                 string val = @"$dir-scale";
                 var action = new SimpleAction.stateful (
                     @"change-$val",
                     new VariantType ("s"),
-                    new Variant.string (settings.get_enum (val).to_string ())
+                    new Variant.string (figure_settings.get_enum (val).to_string ())
                 );
                 action.activate.connect ((a, target) => {
                     string[] directions = {dir};
-                    bool[] visible_axes = this.data.get_used_positions ();
+                    bool[] visible_axes = data.get_used_positions ();
                     // Also set opposite axis if opposite axis not in use
                     if (dir in X_DIRECTIONS && visible_axes[0] ^ visible_axes[1]) {
                         directions = X_DIRECTIONS;
@@ -133,117 +132,117 @@ namespace Graphs {
                         directions = Y_DIRECTIONS;
                     }
                     foreach (string target_dir in directions) {
-                        figure_settings.set (
+                        data.figure_settings.set (
                             val, int.parse (target.get_string ())
                         );
                     }
-                    this.data.add_history_state ();
+                    data.add_history_state ();
                 });
-                figure_settings.notify[val].connect (() => {
+                data.figure_settings.notify[val].connect (() => {
                     int scale;
-                    figure_settings.get (val, out scale);
+                    data.figure_settings.get (val, out scale);
                     action.set_state (new Variant.string (scale.to_string ()));
                 });
-                this.add_action (action);
+                add_action (action);
             }
 
             string[] settings_actions = {"center", "smoothen"};
-            GLib.Settings actions_settings = this.settings.get_child ("actions");
+            GLib.Settings actions_settings = settings.get_child ("actions");
             foreach (string settings_action in settings_actions) {
-                this.add_action (actions_settings.create_action (settings_action));
+                add_action (actions_settings.create_action (settings_action));
             }
 
             var operation_action = new SimpleAction (
                 "app.perform_operation", new VariantType ("s")
             );
             operation_action.activate.connect ((a, target) => {
-                this.operation_invoked.emit (target.get_string ());
+                operation_invoked.emit (target.get_string ());
             });
-            this.add_action (operation_action);
+            add_action (operation_action);
 
             var quit_action = new SimpleAction ("quit", null);
             quit_action.activate.connect (() => {
-                this.close ();
+                close ();
             });
-            this.add_action (quit_action);
+            add_action (quit_action);
 
             var about_action = new SimpleAction ("about", null);
             about_action.activate.connect (() => {
                 show_about_dialog (this);
             });
-            this.add_action (about_action);
+            add_action (about_action);
 
             var help_action = new SimpleAction ("help", null);
             help_action.activate.connect (() => {
                 try {
                     AppInfo.launch_default_for_uri (
                         "help:graphs",
-                        this.window.get_display ().get_app_launch_context ()
+                        window.get_display ().get_app_launch_context ()
                     );
                 } catch { assert_not_reached (); }
             });
-            this.add_action (help_action);
-            this.set_accels_for_action ("app.help", {"F1"});
+            add_action (help_action);
+            set_accels_for_action ("app.help", {"F1"});
 
             var optimize_limits_action = new SimpleAction ("optimize_limits", null);
             optimize_limits_action.activate.connect (() => {
-                this.data.optimize_limits ();
+                data.optimize_limits ();
             });
-            this.add_action (optimize_limits_action);
+            add_action (optimize_limits_action);
 
             var smoothen_settings_action = new SimpleAction ("smoothen_settings", null);
             smoothen_settings_action.activate.connect (() => {
                 new SmoothenDialog (this);
             });
-            this.add_action (smoothen_settings_action);
+            add_action (smoothen_settings_action);
 
             var select_all_action = new SimpleAction ("select_all", null);
             select_all_action.activate.connect (() => {
-                foreach (Item item in this.data) {
+                foreach (Item item in data) {
                     item.selected = true;
                 }
-                this.data.add_history_state ();
+                data.add_history_state ();
             });
-            this.add_action (select_all_action);
+            add_action (select_all_action);
 
             var select_none_action = new SimpleAction ("select_none", null);
             select_none_action.activate.connect (() => {
-                foreach (Item item in this.data) {
+                foreach (Item item in data) {
                     item.selected = false;
                 }
-                this.data.add_history_state ();
+                data.add_history_state ();
             });
-            this.add_action (select_none_action);
+            add_action (select_none_action);
 
             var undo_action = new SimpleAction ("undo", null);
             undo_action.activate.connect (() => {
-                this.data.undo ();
+                data.undo ();
             });
-            this.add_action (undo_action);
+            add_action (undo_action);
 
             var redo_action = new SimpleAction ("redo", null);
             redo_action.activate.connect (() => {
-                this.data.redo ();
+                data.redo ();
             });
-            this.add_action (redo_action);
+            add_action (redo_action);
 
             var view_back_action = new SimpleAction ("view_back", null);
             view_back_action.activate.connect (() => {
-                this.data.view_back ();
+                data.view_back ();
             });
-            this.add_action (view_back_action);
+            add_action (view_back_action);
 
             var view_forward_action = new SimpleAction ("view_forward", null);
             view_forward_action.activate.connect (() => {
-                this.data.view_forward ();
+                data.view_forward ();
             });
-            this.add_action (view_forward_action);
+            add_action (view_forward_action);
 
             var delete_selected_action = new SimpleAction ("delete_selected", null);
             delete_selected_action.activate.connect (() => {
                 Item[] items = {};
                 var name_builder = new StringBuilder ();
-                foreach (Item item in this.data) {
+                foreach (Item item in data) {
                     if (item.selected) {
                         items += item;
                         name_builder.append (item.name);
@@ -251,33 +250,33 @@ namespace Graphs {
                     }
                 }
                 string names = name_builder.free_and_steal ()[:-2];
-                this.window.add_undo_toast (_("Deleted %s").printf (names));
+                window.add_undo_toast (_("Deleted %s").printf (names));
             });
-            this.add_action (delete_selected_action);
+            add_action (delete_selected_action);
 
             var save_project_action = new SimpleAction ("save_project", null);
             save_project_action.activate.connect (() => {
                 Project.save.begin (this, false);
             });
-            this.add_action (save_project_action);
+            add_action (save_project_action);
 
             var save_project_as_action = new SimpleAction ("save_project_as", null);
             save_project_as_action.activate.connect (() => {
                 Project.save.begin (this, true);
             });
-            this.add_action (save_project_as_action);
+            add_action (save_project_as_action);
 
             var open_project_action = new SimpleAction ("open_project", null);
             open_project_action.activate.connect (() => {
                 Project.open (this);
             });
-            this.add_action (open_project_action);
+            add_action (open_project_action);
 
             var new_project_action = new SimpleAction ("new_project", null);
             new_project_action.activate.connect (() => {
                 Project.@new (this);
             });
-            this.add_action (new_project_action);
+            add_action (new_project_action);
 
             var add_data_action_filters = Tools.create_file_filters (
                 true,
@@ -301,50 +300,50 @@ namespace Graphs {
             add_data_action.activate.connect (() => {
                 var dialog = new FileDialog ();
                 dialog.set_filters (add_data_action_filters);
-                dialog.open_multiple.begin (this.window, null, (d, response) => {
+                dialog.open_multiple.begin (window, null, (d, response) => {
                     try {
                         var files = dialog.open_multiple.end (response);
-                        this.python_helper.import_from_files (files);
+                        python_helper.import_from_files (files);
                     } catch {}
                 });
             });
-            this.add_action (add_data_action);
+            add_action (add_data_action);
 
             var export_data_action = new SimpleAction ("export_data", null);
             export_data_action.activate.connect (() => {
                 Export.export_items (this);
             });
-            this.add_action (export_data_action);
+            add_action (export_data_action);
 
             var figure_settings_action = new SimpleAction ("figure_settings", null);
             figure_settings_action.activate.connect (() => {
                 new FigureSettingsDialog (this, null);
             });
-            this.add_action (figure_settings_action);
+            add_action (figure_settings_action);
 
             var add_equation_action = new SimpleAction ("add_equation", null);
             add_equation_action.activate.connect (() => {
                 new AddEquationDialog (this);
             });
-            this.add_action (add_equation_action);
+            add_action (add_equation_action);
 
             var export_figure_action = new SimpleAction ("export_figure", null);
             export_figure_action.activate.connect (() => {
                 new ExportFigureDialog (this);
             });
-            this.add_action (export_figure_action);
+            add_action (export_figure_action);
 
             var zoom_in_action = new SimpleAction ("zoom_in", null);
             zoom_in_action.activate.connect (() => {
-                this.window.canvas.zoom (1.15);
+                window.canvas.zoom (1.15);
             });
-            this.add_action (zoom_in_action);
+            add_action (zoom_in_action);
 
             var zoom_out_action = new SimpleAction ("zoom_out", null);
             zoom_out_action.activate.connect (() => {
-                this.window.canvas.zoom (1 / 1.15);
+                window.canvas.zoom (1 / 1.15);
             });
-            this.add_action (zoom_out_action);
+            add_action (zoom_out_action);
         }
     }
 }

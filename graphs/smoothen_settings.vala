@@ -30,8 +30,7 @@ namespace Graphs {
 
         [GtkCallback]
         private void on_reset () {
-            GLib.Settings settings = this.application.get_settings_child ("actions/smoothen");
-            Tools.reset_settings (settings);
+            Tools.reset_settings (application.get_settings_child ("actions/smoothen"));
         }
     }
 }

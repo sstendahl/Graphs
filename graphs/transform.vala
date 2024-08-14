@@ -27,21 +27,21 @@ namespace Graphs {
         public signal void accept (string x_input, string y_input, bool discard);
 
         public TransformDialog (Application application) {
-            this.transform_x.set_text ("X");
-            this.transform_y.set_text ("Y");
-            this.discard.set_visible (application.window.canvas.mode == 2);
-            this.help_button.clicked.connect (() => {
-                this.help_popover.popup ();
+            transform_x.set_text ("X");
+            transform_y.set_text ("Y");
+            discard.set_visible (application.window.canvas.mode == 2);
+            help_button.clicked.connect (() => {
+                help_popover.popup ();
             });
             present (application.window);
         }
 
         [GtkCallback]
         private void on_accept () {
-            this.accept.emit (
-                this.transform_x.get_text (),
-                this.transform_y.get_text (),
-                this.discard.get_active ()
+            accept.emit (
+                transform_x.get_text (),
+                transform_y.get_text (),
+                discard.get_active ()
             );
             close ();
         }

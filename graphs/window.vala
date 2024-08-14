@@ -86,17 +86,17 @@ namespace Graphs {
 
         public int mode {
             set {
-                this.pan_button.set_active (value == 0);
-                this.zoom_button.set_active (value == 1);
-                this.select_button.set_active (value == 2);
+                pan_button.set_active (value == 0);
+                zoom_button.set_active (value == 1);
+                select_button.set_active (value == 2);
             }
         }
 
         public Canvas canvas {
-            get { return (Canvas) this.toast_overlay.get_child (); }
+            get { return toast_overlay.get_child () as Canvas; }
             set {
                 value.bind_property ("mode", this, "mode", 2);
-                this.toast_overlay.set_child (value);
+                toast_overlay.set_child (value);
                 value.grab_focus ();
             }
         }
@@ -104,21 +104,19 @@ namespace Graphs {
         public Window (Application application) {
             Object (application: application);
             Data data = application.data;
-            data.bind_property (
-                "items_selected", this.shift_button, "sensitive", 2
-            );
-            data.bind_property ("can_undo", this.undo_button, "sensitive", 2);
-            data.bind_property ("can_redo", this.redo_button, "sensitive", 2);
-            data.bind_property ("can_view_back", this.view_back_button, "sensitive", 2);
-            data.bind_property ("can_view_forward", this.view_forward_button, "sensitive", 2);
-            data.bind_property ("project_name", this.content_title, "title", 2);
-            data.bind_property ("project_path", this.content_title, "subtitle", 2);
+            data.bind_property ("items_selected", shift_button, "sensitive", 2);
+            data.bind_property ("can_undo", undo_button, "sensitive", 2);
+            data.bind_property ("can_redo", redo_button, "sensitive", 2);
+            data.bind_property ("can_view_back", view_back_button, "sensitive", 2);
+            data.bind_property ("can_view_forward", view_forward_button, "sensitive", 2);
+            data.bind_property ("project_name", content_title, "title", 2);
+            data.bind_property ("project_path", content_title, "subtitle", 2);
 
             InlineStackSwitcher stack_switcher = new InlineStackSwitcher ();
-            stack_switcher.stack = this.stack;
+            stack_switcher.stack = stack;
             stack_switcher.add_css_class ("compact");
             stack_switcher.set_hexpand (true);
-            this.stack_switcher_box.prepend (stack_switcher);
+            stack_switcher_box.prepend (stack_switcher);
 
             string[] action_names = {
                 "multiply_x",
@@ -129,24 +127,24 @@ namespace Graphs {
             foreach (string action_name in action_names) {
                 Entry entry;
                 Button button;
-                this.get (action_name + "_entry", out entry);
-                this.get (action_name + "_button", out button);
+                get (action_name + "_entry", out entry);
+                get (action_name + "_button", out button);
                 entry.notify["text"].connect (() => {
-                    this.validate_entry (application, entry, button);
+                    validate_entry (application, entry, button);
                 });
                 data.notify["items-selected"].connect (() => {
-                    this.validate_entry (application, entry, button);
+                    validate_entry (application, entry, button);
                 });
-                this.validate_entry (application, entry, button);
+                validate_entry (application, entry, button);
             }
 
             data.items_changed.connect (() => {
-                this.item_list.set_visible (!data.is_empty ());
-                this.update_view_menu ();
+                item_list.set_visible (!data.is_empty ());
+                update_view_menu ();
                 data.add_view_history_state ();
             });
-            this.item_list.bind_model (data, (object) => {
-                var row = new ItemBox ((Application) this.application, (Item) object);
+            item_list.bind_model (data, (object) => {
+                var row = new ItemBox ((Application) application, (Item) object);
                 row.setup_interactions ();
 
                 double drag_x = 0.0;
@@ -176,7 +174,7 @@ namespace Graphs {
                     drag_widget.set_size_request (row.get_width (), row.get_height ());
                     drag_widget.add_css_class ("boxed-list");
 
-                    var drag_row = new ItemBox ((Application) this.application, row.item);
+                    var drag_row = new ItemBox ((Application) application, row.item);
 
                     drag_widget.append (drag_row);
                     drag_widget.drag_highlight_row (drag_row);
@@ -188,8 +186,8 @@ namespace Graphs {
                 });
 
                 // Update row visuals during DnD operation
-                drop_controller.enter.connect (() => this.item_list.drag_highlight_row (row));
-                drop_controller.leave.connect (() => this.item_list.drag_unhighlight_row ());
+                drop_controller.enter.connect (() => item_list.drag_highlight_row (row));
+                drop_controller.leave.connect (() => item_list.drag_unhighlight_row ());
 
                 return row;
             });
@@ -197,7 +195,7 @@ namespace Graphs {
             var drop_target = new Gtk.DropTarget (typeof (Adw.ActionRow), Gdk.DragAction.MOVE);
             drop_target.drop.connect ((drop, val, x, y) => {
                 var value_row = val.get_object () as ItemBox?;
-                var target_row = this.item_list.get_row_at_y ((int) y) as ItemBox?;
+                var target_row = item_list.get_row_at_y ((int) y) as ItemBox?;
                 // If value or the target row is null, do not accept the drop
                 if (value_row == null || target_row == null) {
                     return false;
@@ -208,16 +206,16 @@ namespace Graphs {
 
                 return true;
             });
-            this.item_list.add_controller (drop_target);
+            item_list.add_controller (drop_target);
 
-            this.close_request.connect (() => {
+            close_request.connect (() => {
                 return application.close ();
             });
 
-            this.update_view_menu ();
+            update_view_menu ();
             if (application.debug) {
-                this.add_css_class ("devel");
-                this.set_title (_("Graphs (Development)"));
+                add_css_class ("devel");
+                set_title (_("Graphs (Development)"));
             }
         }
 
@@ -234,7 +232,7 @@ namespace Graphs {
 
         [GtkCallback]
         private void perform_operation (Button button) {
-            var action = this.application.lookup_action (
+            var action = application.lookup_action (
                 "app.perform_operation"
             );
             string name = button.get_buildable_id ()[0:-7];
@@ -245,7 +243,7 @@ namespace Graphs {
          * Add a toast to the window.
          */
         public void add_toast (Adw.Toast toast) {
-            this.toast_overlay.add_toast (toast);
+            toast_overlay.add_toast (toast);
         }
 
         /**
@@ -254,7 +252,7 @@ namespace Graphs {
          * The toast is created automatically with the given title.
          */
         public void add_toast_string (string title) {
-            this.add_toast (new Adw.Toast (title));
+            add_toast (new Adw.Toast (title));
         }
 
         /**
@@ -269,8 +267,8 @@ namespace Graphs {
             action.activate.connect (() => {
                 Tools.open_file_location (file);
             });
-            this.application.add_action (action);
-            this.add_toast (new Adw.Toast (title) {
+            application.add_action (action);
+            add_toast (new Adw.Toast (title) {
                 button_label = _("Open Location"),
                 action_name = "app.open-file-location"
             });
@@ -280,7 +278,7 @@ namespace Graphs {
          * Add Toast with undo action.
          */
         public void add_undo_toast (string title) {
-            this.add_toast (new Adw.Toast (title) {
+            add_toast (new Adw.Toast (title) {
                 button_label = _("Undo"),
                 action_name = "app.undo"
             });
@@ -288,8 +286,8 @@ namespace Graphs {
 
         [GtkCallback]
         private void on_sidebar_toggle () {
-            this.application.lookup_action ("toggle_sidebar").change_state (
-                new Variant.boolean (this.split_view.get_collapsed ())
+            application.lookup_action ("toggle_sidebar").change_state (
+                new Variant.boolean (split_view.get_collapsed ())
             );
         }
 
@@ -318,7 +316,7 @@ namespace Graphs {
             };
 
             Menu scales_section = new Menu ();
-            Application application = (Application) this.application;
+            Application application = application as Application;
             bool[] visible_axes = application.data.get_used_positions ();
             bool both_x = visible_axes[0] && visible_axes[1];
             bool both_y = visible_axes[2] && visible_axes[3];
@@ -352,7 +350,7 @@ namespace Graphs {
                 scales_section.append_submenu (label, scale_section);
             }
             view_menu.append_section (null, scales_section);
-            this.view_menu_button.set_menu_model (view_menu);
+            view_menu_button.set_menu_model (view_menu);
         }
     }
 }

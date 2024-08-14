@@ -22,26 +22,26 @@ namespace Graphs {
             this.modes = modes;
 
             if ("columns" in modes) {
-                var coumns_group = new ColumnsGroup (this.settings.get_child ("columns"));
-                this.mode_box.append (coumns_group);
+                var coumns_group = new ColumnsGroup (settings.get_child ("columns"));
+                mode_box.append (coumns_group);
             }
             present (application.window);
         }
 
         [GtkCallback]
         private void on_accept () {
-            this.accept.emit ();
+            accept.emit ();
             close ();
         }
 
         [GtkCallback]
         private void on_reset () {
-            var dialog = (Adw.AlertDialog) Tools.build_dialog ("reset_to_defaults");
+            var dialog = Tools.build_dialog ("reset_to_defaults") as Adw.AlertDialog;
             dialog.set_body (_("Are you sure you want to reset the import settings?"));
             dialog.response.connect ((d, response) => {
                 if (response == "reset") {
-                    foreach (string mode in this.modes) {
-                        Tools.reset_settings (this.settings.get_child (mode));
+                    foreach (string mode in modes) {
+                        Tools.reset_settings (settings.get_child (mode));
                     }
                 }
             });
@@ -72,7 +72,7 @@ namespace Graphs {
 
         [GtkCallback]
         private void on_delimiter () {
-            this.custom_delimiter.set_visible (this.delimiter.get_selected () == 6);
+            custom_delimiter.set_visible (delimiter.get_selected () == 6);
         }
 
         public ColumnsGroup (GLib.Settings settings) {

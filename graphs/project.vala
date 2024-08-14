@@ -52,7 +52,7 @@ namespace Graphs {
                 _pick_and_load (application);
                 return;
             }
-            var dialog = (Adw.AlertDialog) Tools.build_dialog ("save_changes");
+            var dialog = Tools.build_dialog ("save_changes") as Adw.AlertDialog;
             dialog.response.connect ((d, response) => {
                 switch (response) {
                     case "discard_close": {
@@ -76,7 +76,7 @@ namespace Graphs {
                 application.data.reset ();
                 return;
             }
-            var dialog = (Adw.AlertDialog) Tools.build_dialog ("save_changes");
+            var dialog = Tools.build_dialog ("save_changes") as Adw.AlertDialog;
             dialog.response.connect ((d, response) => {
                 switch (response) {
                     case "discard_close": {
