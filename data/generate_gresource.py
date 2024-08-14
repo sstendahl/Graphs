@@ -139,7 +139,7 @@ for style_path in args.styles:
     styles.append(
         (stylename, style_prefix + name, main_prefix + out_path.name),
     )
-styles.sort(key=lambda x: x[0])
+styles.sort(key=lambda x: x[0].casefold())
 with open(style_list, "wt") as style_list_file:
     style_list_file.writelines(";".join(x) + "\n" for x in styles)
 style_list_element = ElementTree.SubElement(
