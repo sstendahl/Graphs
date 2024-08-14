@@ -247,35 +247,6 @@ namespace Graphs {
             toast_overlay.add_toast (new Adw.Toast (_("Defaults Updated")));
         }
 
-        private void set_as_default () {
-            GLib.Settings settings = this.application.get_settings_child ("figure");
-            string[] strings = {
-                "custom-style", "title",
-                "bottom-label", "left-label", "top-label", "right-label"
-            };
-            string[] bools = {"hide-unselected", "legend", "use-custom-style"};
-            string[] enums = {
-                "legend-position", "top-scale", "bottom-scale", "left-scale", "right-scale"
-            };
-            FigureSettings figure_settings = this.application.data.figure_settings;
-            foreach (string key in strings) {
-                string val;
-                figure_settings.get (key.replace ("-", "_"), out val);
-                settings.set_string (key, val);
-            }
-            foreach (string key in bools) {
-                bool val;
-                figure_settings.get (key.replace ("-", "_"), out val);
-                settings.set_boolean (key, val);
-            }
-            foreach (string key in enums) {
-                int val;
-                figure_settings.get (key.replace ("-", "_"), out val);
-                settings.set_enum (key, val);
-            }
-            this.toast_overlay.add_toast (new Adw.Toast (_("Defaults Updated")));
-        }
-
         private void on_factory_setup (Object object) {
             ListItem item = object as ListItem;
             item.set_child (new StylePreview ());
