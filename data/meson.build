@@ -15,7 +15,7 @@ desktop_file = i18n.merge_file(
 
 desktop_file_validate = find_program('desktop-file-validate', required: false)
 if desktop_file_validate.found()
-  test('Validate desktop file', desktop_file_validate,
+  test('Validate graphs desktop file', desktop_file_validate,
     args: [desktop_file.full_path()],
   )
 endif
