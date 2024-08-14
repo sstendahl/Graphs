@@ -103,7 +103,8 @@ for file in args.other:
 # End Other Section
 
 # Begin style section
-styles = {}
+styles = []
+style_paths = {}
 style_prefix = main_prefix + "styles/"
 styles_gresource = ElementTree.SubElement(
     gresources,
@@ -111,35 +112,36 @@ styles_gresource = ElementTree.SubElement(
     attrib={"prefix": style_prefix},
 )
 style_list = Path(args.dir, "styles.txt")
+for style_path in args.styles:
+    style_file = shutil.copy(style_path, args.dir)
+    name = Path(style_file).name
+    style_element = ElementTree.SubElement(
+        styles_gresource,
+        "file",
+        attrib={
+            "compressed": "True",
+        },
+    )
+    style_element.text = name
+    params, stylename = style_io.parse(Gio.File.new_for_path(style_file))
+    out_path = Path(args.dir, name.replace(".mplstyle", ".png"))
+    style_paths[stylename] = out_path
+    with open(out_path, "wb") as out_file:
+        style_io.create_preview(out_file, params, "png")
+    preview_element = ElementTree.SubElement(
+        main_gresource,
+        "file",
+        attrib={
+            "compressed": "True",
+        },
+    )
+    preview_element.text = out_path.name
+    styles.append(
+        (stylename, style_prefix + name, main_prefix + out_path.name),
+    )
+styles.sort(key=lambda x: x[0])
 with open(style_list, "wt") as style_list_file:
-    for style_path in args.styles:
-        style_file = shutil.copy(style_path, args.dir)
-        name = Path(style_file).name
-        style_element = ElementTree.SubElement(
-            styles_gresource,
-            "file",
-            attrib={
-                "compressed": "True",
-            },
-        )
-        style_element.text = name
-        params, stylename = style_io.parse(Gio.File.new_for_path(style_file))
-        out_path = Path(args.dir, name.replace(".mplstyle", ".png"))
-        styles[stylename] = out_path
-        with open(out_path, "wb") as out_file:
-            style_io.create_preview(out_file, params, "png")
-        preview_element = ElementTree.SubElement(
-            main_gresource,
-            "file",
-            attrib={
-                "compressed": "True",
-            },
-        )
-        preview_element.text = out_path.name
-        line = ";".join(
-            (stylename, style_prefix + name, main_prefix + out_path.name),
-        )
-        style_list_file.write(line + "\n")
+    style_list_file.writelines(";".join(x) + "\n" for x in styles)
 style_list_element = ElementTree.SubElement(
     main_gresource,
     "file",
@@ -157,8 +159,8 @@ def _to_array(file_path):
 
 # Generate stitched system previews for Adwaita and Yaru
 for sys_style in ("Adwaita", "Yaru"):
-    light_array = _to_array(styles[sys_style])
-    dark_array = _to_array(styles[sys_style + " Dark"])
+    light_array = _to_array(style_paths[sys_style])
+    dark_array = _to_array(style_paths[sys_style + " Dark"])
     height, width = light_array.shape[0:2]
     stitched_array = numpy.concatenate(
         (light_array[:, :width // 2], dark_array[:, width // 2:]),

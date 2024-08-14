@@ -49,21 +49,19 @@ namespace Graphs {
             notify["custom-style"].connect (on_custom_style);
             notify["use-custom-style"].connect (on_use_custom_style);
 
-            CompareDataFunc<Style> cmp = style_cmp;
             File style_list = File.new_for_uri ("resource:///se/sjoerd/Graphs/styles.txt");
             try {
                 var stream = new DataInputStream (style_list.read ());
                 string line;
                 while ((line = stream.read_line (null)) != null) {
                     string[] strings = line.chomp ().split (";", 3);
-                    style_model.insert_sorted (
+                    style_model.append (
                         new Style (
                             strings[0],
                             File.new_for_uri ("resource://" + strings[1]),
                             Gdk.Texture.from_resource (strings[2]),
                             false
-                        ),
-                        cmp
+                        )
                     );
                 }
             } catch { assert_not_reached (); }
