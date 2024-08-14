@@ -4,9 +4,6 @@ import ast
 import contextlib
 import operator as op
 import re
-from gettext import gettext as _
-
-from gi.repository import Gio, Gtk
 
 from graphs.misc import FUNCTIONS
 
@@ -99,30 +96,6 @@ def get_fraction_at_value(
         # Calculate the scaled percentage corresponding to the data point
         scaled_data_point = 1 / value
         return (scaled_data_point - 1 / end) / scaled_range
-
-
-def create_file_filters(filters, add_all: bool = True) -> Gio.ListStore:
-    """
-    Create file filters.
-
-    filters should be in the format:
-    [
-        (name, (suffix_a, suffix_b),
-    ]
-    """
-    list_store = Gio.ListStore()
-    for name, suffix_list in filters:
-        file_filter = Gtk.FileFilter()
-        file_filter.set_name(name)
-        for suffix in suffix_list:
-            file_filter.add_suffix(suffix)
-        list_store.append(file_filter)
-    if add_all:
-        file_filter = Gtk.FileFilter()
-        file_filter.set_name(_("All Files"))
-        file_filter.add_pattern("*")
-        list_store.append(file_filter)
-    return list_store
 
 
 def string_to_float(string: str) -> float:

@@ -21,9 +21,24 @@ namespace Graphs {
             return this.curve_fitting_dialog_request.emit (item);
         }
 
-        protected signal bool validate_input_request (string input);
-        public bool validate_input (string input) {
-            return this.validate_input_request.emit (input);
+        // Returning a double/float in a signal has issues, so we work around by
+        // setting a property on the python side
+        protected double evaluate_string_helper { get; set; }
+        protected signal bool evaluate_string_request (string input);
+        public double? evaluate_string (string input) {
+            if (this.evaluate_string_request.emit (input)) {
+                return this.evaluate_string_helper;
+            } else return null;
+        }
+
+        protected signal void import_from_files_request (ListModel files);
+        public void import_from_files (ListModel files) {
+            this.import_from_files_request.emit (files);
+        }
+
+        protected signal void export_items_request (string mode, File file, Item[] items);
+        public void export_items (string mode, File file, Item[] items) {
+            this.export_items_request.emit (mode, file, items);
         }
     }
 }
