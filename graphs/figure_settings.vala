@@ -101,18 +101,13 @@ namespace Graphs {
         [GtkChild]
         private unowned Adw.ToastOverlay toast_overlay { get; }
 
-        public Application application { get; construct set; }
-        protected Adw.NavigationPage settings_page { get; private set; }
-        protected Adw.NavigationPage style_editor { get; protected set; }
-        protected FigureSettings figure_settings {
-            get { return this.application.data.figure_settings; }
-        }
+        private Application application;
+        private Adw.NavigationPage settings_page;
 
-        protected signal void entry_change (Adw.EntryRow entry, string prop);
-
-        protected void setup (string? highlighted) {
-            FigureSettings figure_settings = this.figure_settings;
-            GLib.Settings settings = this.application.get_settings_child ("figure");
+        public FigureSettingsDialog (Application application, string? highlighted = null) {
+            this.application = application;
+            FigureSettings figure_settings = application.data.figure_settings;
+            GLib.Settings settings = application.get_settings_child ("figure");
             var builder = new Builder.from_resource (PAGE_RESOURCE);
             this.settings_page = (Adw.NavigationPage) builder.get_object ("settings_page");
             this.navigation_view.push (this.settings_page);
@@ -132,7 +127,7 @@ namespace Graphs {
                 else assert_not_reached ();
             }
 
-            bool[] visible_axes = this.application.data.get_used_positions ();
+            bool[] visible_axes = application.data.get_used_positions ();
             bool both_x = visible_axes[0] && visible_axes[1];
             bool both_y = visible_axes[2] && visible_axes[3];
             string[] min_max = {"min", "max"};
@@ -148,7 +143,7 @@ namespace Graphs {
                         figure_settings.get (key, out val);
                         entry.set_text (val.to_string ());
                         entry.notify["text"].connect (() => {
-                            double? new_val = this.application.python_helper.evaluate_string (
+                            double? new_val = application.python_helper.evaluate_string (
                                 entry.get_text ()
                             );
                             if (new_val == null) {
@@ -183,7 +178,7 @@ namespace Graphs {
                 }
             }
             var style_name = (Label) builder.get_object ("style_name");
-            StyleManager style_manager = this.application.figure_style_manager;
+            StyleManager style_manager = application.figure_style_manager;
             style_manager.bind_property (
                 "selected_stylename", style_name, "label", 2
             );
@@ -201,7 +196,7 @@ namespace Graphs {
             var button = (Button) builder.get_object ("set_as_default");
             button.clicked.connect (set_as_default);
 
-            present (this.application.window);
+            present (application.window);
             if (highlighted != null) {
                 var widget = (Widget) builder.get_object (highlighted);
                 widget.grab_focus ();
@@ -234,19 +229,20 @@ namespace Graphs {
             string[] enums = {
                 "legend-position", "top-scale", "bottom-scale", "left-scale", "right-scale"
             };
+            FigureSettings figure_settings = this.application.data.figure_settings;
             foreach (string key in strings) {
                 string val;
-                this.figure_settings.get (key.replace ("-", "_"), out val);
+                figure_settings.get (key.replace ("-", "_"), out val);
                 settings.set_string (key, val);
             }
             foreach (string key in bools) {
                 bool val;
-                this.figure_settings.get (key.replace ("-", "_"), out val);
+                figure_settings.get (key.replace ("-", "_"), out val);
                 settings.set_boolean (key, val);
             }
             foreach (string key in enums) {
                 int val;
-                this.figure_settings.get (key.replace ("-", "_"), out val);
+                figure_settings.get (key.replace ("-", "_"), out val);
                 settings.set_enum (key, val);
             }
             this.toast_overlay.add_toast (new Adw.Toast (_("Defaults Updated")));

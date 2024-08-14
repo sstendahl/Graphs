@@ -15,5 +15,15 @@ namespace Graphs {
 
         public signal void edit_request (string id);
         public signal void view_changed ();
+
+        protected signal void save_request (File file, string format, int dpi, bool transparent);
+        public void save (File file, string format, int dpi, bool transparent) {
+            this.save_request.emit (file, format, dpi, transparent);
+        }
+
+        protected signal void zoom_request (double factor);
+        public void zoom (double factor) {
+            this.zoom_request.emit (factor);
+        }
     }
 }

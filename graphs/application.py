@@ -5,10 +5,9 @@ from gettext import gettext as _
 
 from gi.repository import Gio, Graphs
 
-from graphs import actions, file_import, item, migrate, operations, styles
+from graphs import file_import, item, migrate, operations, styles
 from graphs.canvas import Canvas
 from graphs.data import Data
-from graphs.figure_settings import FigureSettingsDialog
 from graphs.python_helper import PythonHelper
 from graphs.style_editor import StyleEditor
 
@@ -45,7 +44,6 @@ class PythonApplication(Graphs.Application):
                 logging.warning(_("Could not load {font}").format(font=font))
 
         self.setup_actions()
-        self.connect("action_invoked", actions.on_action_invoked)
         self.connect("operation_invoked", operations.perform_operation)
         self.props.figure_style_manager.connect(
             "style_changed",
@@ -124,7 +122,7 @@ class PythonApplication(Graphs.Application):
                 figure_settings.bind_property(prop, canvas, prop, 1 | 2)
 
         def on_edit_request(_canvas, label_id):
-            FigureSettingsDialog(self, label_id)
+            Graphs.FigureSettingsDialog.new(self, label_id)
 
         def on_view_changed(_canvas):
             data.add_view_history_state()
