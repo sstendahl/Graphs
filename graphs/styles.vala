@@ -49,34 +49,22 @@ namespace Graphs {
             notify["custom-style"].connect (on_custom_style);
             notify["use-custom-style"].connect (on_use_custom_style);
 
-            CompareDataFunc<Style> cmp = style_cmp;
+            File style_list = File.new_for_uri ("resource:///se/sjoerd/Graphs/styles.txt");
             try {
-                var directory = File.new_for_uri ("resource:///se/sjoerd/Graphs/styles");
-                FileEnumerator enumerator = directory.enumerate_children (
-                    "standard::*",
-                    FileQueryInfoFlags.NONE
-                );
-                FileInfo info = null;
-                while ((info = enumerator.next_file ()) != null) {
-                    File file = enumerator.get_child (info);
-                    var stream = new DataInputStream (file.read ());
-                    stream.read_line_utf8 ();
-                    size_t size;
-                    string name = stream.read_line_utf8 (out size)[2: (long)size];
-                    stylenames.add (name);
-                    string preview_name = info.get_name ().replace (".mplstyle", ".png");
-                    var preview = Gdk.Texture.from_resource (
-                        @"/se/sjoerd/Graphs/$preview_name"
-                    );
-                    style_model.insert_sorted (
-                        new Style (name, file, preview, false),
-                        cmp
+                var stream = new DataInputStream (style_list.read ());
+                string line;
+                while ((line = stream.read_line (null)) != null) {
+                    string[] strings = line.chomp ().split (";", 3);
+                    style_model.append (
+                        new Style (
+                            strings[0],
+                            File.new_for_uri ("resource://" + strings[1]),
+                            Gdk.Texture.from_resource (strings[2]),
+                            false
+                        )
                     );
                 }
-                enumerator.close ();
-            } catch {
-                assert_not_reached ();
-            }
+            } catch { assert_not_reached (); }
             style_model.insert (
                 0,
                 new Style (
