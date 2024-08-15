@@ -182,7 +182,7 @@ class Canvas(Graphs.Canvas, FigureCanvas):
 
         rgba = self.get_style_context().lookup_color("accent_color")[1]
         self.rubberband_edge_color = rgba_to_tuple(rgba)
-        rgba.alpha = 0.3
+        rgba.alpha = 0.2
         self.rubberband_fill_color = rgba_to_tuple(rgba)
         self.highlight = _Highlight(self)
 
