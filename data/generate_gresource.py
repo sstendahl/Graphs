@@ -82,10 +82,11 @@ spec.loader.exec_module(style_io)
 
 # GResource tree creation
 gresources = ElementTree.Element("gresources")
+main_prefix = "/se/sjoerd/Graphs/"
 main_gresource = ElementTree.SubElement(
     gresources,
     "gresource",
-    attrib={"prefix": "/se/sjoerd/Graphs/"},
+    attrib={"prefix": main_prefix},
 )
 
 # Begin Other Section
@@ -102,12 +103,15 @@ for file in args.other:
 # End Other Section
 
 # Begin style section
-styles = {}
+styles = []
+style_paths = {}
+style_prefix = main_prefix + "styles/"
 styles_gresource = ElementTree.SubElement(
     gresources,
     "gresource",
-    attrib={"prefix": "/se/sjoerd/Graphs/styles/"},
+    attrib={"prefix": style_prefix},
 )
+style_list = Path(args.dir, "styles.txt")
 for style_path in args.styles:
     style_file = shutil.copy(style_path, args.dir)
     name = Path(style_file).name
@@ -121,7 +125,7 @@ for style_path in args.styles:
     style_element.text = name
     params, stylename = style_io.parse(Gio.File.new_for_path(style_file))
     out_path = Path(args.dir, name.replace(".mplstyle", ".png"))
-    styles[stylename] = out_path
+    style_paths[stylename] = out_path
     with open(out_path, "wb") as out_file:
         style_io.create_preview(out_file, params, "png")
     preview_element = ElementTree.SubElement(
@@ -132,6 +136,20 @@ for style_path in args.styles:
         },
     )
     preview_element.text = out_path.name
+    styles.append(
+        (stylename, style_prefix + name, main_prefix + out_path.name),
+    )
+styles.sort(key=lambda x: x[0].casefold())
+with open(style_list, "wt") as style_list_file:
+    style_list_file.writelines(";".join(x) + "\n" for x in styles)
+style_list_element = ElementTree.SubElement(
+    main_gresource,
+    "file",
+    attrib={
+        "compressed": "True",
+    },
+)
+style_list_element.text = style_list.name
 
 
 def _to_array(file_path):
@@ -141,8 +159,8 @@ def _to_array(file_path):
 
 # Generate stitched system previews for Adwaita and Yaru
 for sys_style in ("Adwaita", "Yaru"):
-    light_array = _to_array(styles[sys_style])
-    dark_array = _to_array(styles[sys_style + " Dark"])
+    light_array = _to_array(style_paths[sys_style])
+    dark_array = _to_array(style_paths[sys_style + " Dark"])
     height, width = light_array.shape[0:2]
     stitched_array = numpy.concatenate(
         (light_array[:, :width // 2], dark_array[:, width // 2:]),
@@ -166,7 +184,7 @@ for sys_style in ("Adwaita", "Yaru"):
 ui_gresource = ElementTree.SubElement(
     gresources,
     "gresource",
-    attrib={"prefix": "/se/sjoerd/Graphs/"},
+    attrib={"prefix": main_prefix},
 )
 help_overlay_path = None
 for ui_file in args.ui:
@@ -197,7 +215,7 @@ help_overlay_element.text = "ui/" + help_overlay_path.name
 icon_gresource = ElementTree.SubElement(
     gresources,
     "gresource",
-    attrib={"prefix": "/se/sjoerd/Graphs/icons/scalable/actions/"},
+    attrib={"prefix": main_prefix + "icons/scalable/actions/"},
 )
 for icon_file in args.icons:
     path = Path(Path(shutil.copy(icon_file, args.dir)))
