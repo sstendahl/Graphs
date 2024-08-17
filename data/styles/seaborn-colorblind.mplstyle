@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
-# Seaborn Colorblind
+#~graphs name: Seaborn Colorblind
 
 # font
 font.family: sans-serif

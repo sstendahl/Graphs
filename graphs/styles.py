@@ -60,9 +60,9 @@ class StyleManager(Graphs.StyleManager):
 
     @staticmethod
     def _on_style_request(self, file: Gio.File) -> Graphs.Style:
-        style_params, name = style_io.parse(file, True)
+        style_params, graphs_params = style_io.parse(file, True)
         return Graphs.Style(
-            name=name,
+            name=graphs_params["name"],
             file=file,
             mutable=True,
             preview=_generate_preview(style_params),
@@ -140,4 +140,4 @@ class StyleManager(Graphs.StyleManager):
                     style.get_mutable(),
                 )[0]
                 break
-        style_io.write(destination, new_name, style_params)
+        style_io.write(destination, {"name": new_name}, style_params)
