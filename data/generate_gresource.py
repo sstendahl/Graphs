@@ -123,7 +123,8 @@ for style_path in args.styles:
         },
     )
     style_element.text = name
-    params, stylename = style_io.parse(Gio.File.new_for_path(style_file))
+    params, graphs_paramns = style_io.parse(Gio.File.new_for_path(style_file))
+    stylename = graphs_paramns["name"]
     out_path = Path(args.dir, name.replace(".mplstyle", ".png"))
     style_paths[stylename] = out_path
     with open(out_path, "wb") as out_file:
