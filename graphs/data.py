@@ -494,3 +494,4 @@ class Data(Graphs.Data):
 
     def _load(self) -> None:
         self.load_from_project_dict(project.read_project_file(self.props.file))
+        self.set_unsaved(False)
