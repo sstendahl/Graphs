@@ -45,7 +45,7 @@ parts:
     after: [ python-deps ]
     plugin: meson
     source: https://gitlab.gnome.org/World/Graphs.git
-    source-tag: 'v1.8.1'
+    source-tag: 'v1.8.2'
     source-depth: 1
     meson-parameters:
       - --prefix=/snap/graphs/current/usr
