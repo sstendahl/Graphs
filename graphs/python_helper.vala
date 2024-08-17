@@ -31,8 +31,8 @@ namespace Graphs {
             } else return null;
         }
 
-        protected signal void import_from_files_request (ListModel files);
-        public void import_from_files (ListModel files) {
+        protected signal void import_from_files_request (File[] files);
+        public void import_from_files (File[] files) {
             import_from_files_request.emit (files);
         }
 
@@ -44,6 +44,11 @@ namespace Graphs {
         protected signal string add_equation_request (string name);
         public string add_equation (string name) {
             return add_equation_request.emit (name);
+        }
+
+        protected signal void open_style_editor_request (File file);
+        public void open_style_editor (File file) {
+            open_style_editor_request.emit (file);
         }
     }
 }

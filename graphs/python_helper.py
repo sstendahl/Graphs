@@ -13,6 +13,7 @@ from graphs import (
     utilities,
 )
 from graphs.item import DataItem
+from graphs.style_editor import StyleEditor
 
 import numexpr
 
@@ -26,6 +27,7 @@ _REQUEST_NAMES = (
     "import_from_files_request",
     "export_items_request",
     "add_equation_request",
+    "open_style_editor_request",
 )
 
 
@@ -62,7 +64,11 @@ class PythonHelper(Graphs.PythonHelper):
         return True
 
     @staticmethod
-    def _on_import_from_files_request(self, files: Gio.ListModel) -> None:
+    def _on_import_from_files_request(
+        self,
+        files: list[Gio.File],
+        _n_files: int,
+    ) -> None:
         return file_import.import_from_files(self.props.application, files)
 
     @staticmethod
@@ -114,3 +120,8 @@ class PythonHelper(Graphs.PythonHelper):
             msg = message.format(error=exception.__class__.__name__)
             logging.exception(msg)
             return msg
+
+    def _on_open_style_editor_request(self, file: Gio.File) -> None:
+        window = StyleEditor(self)
+        window.load_style(file)
+        window.present()

@@ -5,11 +5,10 @@ from gettext import gettext as _
 
 from gi.repository import Gio, Graphs
 
-from graphs import file_import, item, migrate, operations, styles
+from graphs import item, migrate, operations, styles
 from graphs.canvas import Canvas
 from graphs.data import Data
 from graphs.python_helper import PythonHelper
-from graphs.style_editor import StyleEditor
 
 from matplotlib import font_manager
 
@@ -49,44 +48,6 @@ class PythonApplication(Graphs.Application):
             "style_changed",
             self._on_style_changed,
         )
-
-    def do_open(self, files: list, nfiles: int, _hint: str) -> None:
-        """Open Graphs with a File as argument."""
-        self.activate()
-        data = self.get_data()
-        if nfiles == 1:
-            uri = files[0].get_uri()
-            if uri.endswith(".graphs"):
-
-                def load():
-                    data.set_file(files[0])
-                    data.load()
-
-                if data.get_unsaved():
-
-                    def on_response(_dialog, response):
-                        if response == "discard_close":
-                            load()
-                        if response == "save_close":
-
-                            def on_save(_o, response):
-                                Graphs.project_save_finish(response)
-                                load()
-
-                            Graphs.project_save(self, False, on_save)
-
-                    dialog = Graphs.tools_build_dialog("save_changes")
-                    dialog.connect("response", on_response)
-                    dialog.present(self.get_window())
-                else:
-                    load()
-
-            elif uri.endswith(".mplstyle"):
-                window = StyleEditor(self)
-                window.load_style(files[0])
-                window.present()
-        else:
-            file_import.import_from_files(self, files)
 
     def _on_style_changed(self, style_manager, recolor_items) -> None:
         """Handle style change."""
