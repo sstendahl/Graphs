@@ -147,7 +147,7 @@ def _migrate_styles(old_styles_dir, new_config_dir):
                 new_styles_dir.get_child_for_display_name(
                     f"{stylename.lower().replace(' ', '-')}.mplstyle",
                 ),
-                stylename,
+                {"name": stylename},
                 params,
             )
         file.delete(None)

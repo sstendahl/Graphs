@@ -171,7 +171,8 @@ class StyleEditor(Adw.Window):
     def load_style(self, file):
         """Load a style."""
         self.file = file
-        self.style_params, stylename = style_io.parse(file, True)
+        self.style_params, graphs_paramns = style_io.parse(file, True)
+        stylename = graphs_paramns["name"]
         self.set_title(stylename)
         self.style_name.set_text(stylename)
         for key, value in STYLE_DICT.items():
@@ -230,6 +231,7 @@ class StyleEditor(Adw.Window):
         """Save the style."""
         if self.file is None:
             return
+        graphs_params = {}
         for key in STYLE_DICT.keys():
             widget = getattr(self, key.replace("-", "_"))
             if isinstance(widget, Adw.EntryRow):
@@ -284,12 +286,11 @@ class StyleEditor(Adw.Window):
         self.style_params["axes.prop_cycle"] = cycler(color=self.line_colors)
         self.style_params["patch.facecolor"] = self.line_colors[0]
 
-        # name & save
-        style_io.write(
-            self.file,
-            self.style_name.get_text(),
-            self.style_params,
-        )
+        # name
+        graphs_params["name"] = self.style_name.get_text()
+
+        # save
+        style_io.write(self.file, graphs_params, self.style_params)
         self.file = None
 
     def _reload_line_colors(self):

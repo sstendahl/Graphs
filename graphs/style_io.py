@@ -55,6 +55,7 @@ def parse(file: Gio.File, validate: bool = False) -> (RcParams, str):
     functions.
     """
     style = RcParams()
+    graphs_params = {"name": None}
     filename = file.get_basename()
     try:
         stream = Gio.DataInputStream.new(file.read(None))
@@ -64,8 +65,14 @@ def parse(file: Gio.File, validate: bool = False) -> (RcParams, str):
             if line is None:
                 break
             line_number += 1
-            if line_number == 2:
-                name = line[2:]
+            if line[:9] == "#~graphs ":
+                graphs_param = True
+                line = line[9:]
+            else:
+                graphs_param = False
+            # legacy support for names at second line
+            if line_number == 2 and graphs_params["name"] is None:
+                graphs_params["name"] = line[2:]
             line = cbook._strip_comment(line)
             if not line:
                 continue
@@ -85,7 +92,8 @@ def parse(file: Gio.File, validate: bool = False) -> (RcParams, str):
             elif key in STYLE_IGNORELIST:
                 msg = _("Ignoring parameter {param} in file {file}")
                 logging.warning(msg.format(param=key, file=filename))
-            elif key in style:
+            elif key != "name" and \
+                    key in (graphs_params if graphs_param else style):
                 msg = _("Duplicate key in file {file}, on line {line}")
                 logging.warning(msg.format(file=filename, line=line_number))
             else:
@@ -101,7 +109,10 @@ def parse(file: Gio.File, validate: bool = False) -> (RcParams, str):
                     except KeyError:
                         continue
                 try:
-                    style[key] = value
+                    if graphs_param:
+                        graphs_params[key] = value
+                    else:
+                        style[key] = value
                 except (KeyError, ValueError):
                     msg = _("Bad value in file {file} on line {line}")
                     logging.exception(
@@ -117,7 +128,11 @@ def parse(file: Gio.File, validate: bool = False) -> (RcParams, str):
         for key, value in _base_style.items():
             if key not in style:
                 style[key] = value
-    return style, name
+    if graphs_params["name"] is None:
+        msg = _("File {file}, does not contain name tag")
+        logging.warning(msg.format(file=filename))
+        graphs_params["name"] = filename
+    return style, graphs_params
 
 
 WRITE_IGNORELIST = STYLE_IGNORELIST + [
@@ -131,11 +146,12 @@ WRITE_IGNORELIST = STYLE_IGNORELIST + [
 ]
 
 
-def write(file: Gio.File, name: str, style: RcParams) -> None:
+def write(file: Gio.File, graphs_params: dict, style: RcParams) -> None:
     """Write a style to a file."""
     stream = Gio.DataOutputStream.new(file.replace(None, False, 0, None))
     stream.put_string("# Generated via Graphs\n")
-    stream.put_string(f"# {name}\n")
+    for key, value in graphs_params.items():
+        stream.put_string(f"#~graphs {key}: {value}\n")
     for key, value in style.items():
         if key not in STYLE_BLACKLIST and key not in WRITE_IGNORELIST:
             value = str(value).replace("#", "")
