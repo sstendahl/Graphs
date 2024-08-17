@@ -51,6 +51,43 @@ namespace Graphs {
         }
 
         /**
+         * Handle File Opening.
+         */
+        public override void open (File[] files, string hint) {
+            base.open (files, hint);
+            if (files.length == 1) {
+                File file = files[0];
+                string uri = file.get_uri ();
+
+                if (uri.has_suffix (".graphs")) {
+                    if (data.unsaved) {
+                        var dialog = Tools.build_dialog ("save_changes") as Adw.AlertDialog;
+                        dialog.response.connect ((d, response) => {
+                            if (response == "discard_close") {
+                                data.file = file;
+                                data.load ();
+                            } else if (response == "save_close") {
+                                Project.save.begin (this, false, (o, result) => {
+                                    Project.save.end (result);
+                                    data.file = file;
+                                    data.load ();
+                                });
+                            }
+                        });
+                        dialog.present (window);
+                    } else {
+                        data.file = file;
+                        data.load ();
+                    }
+                } else if (uri.has_suffix (".mplstyle")) {
+                    python_helper.open_style_editor (file);
+                }
+            } else {
+                python_helper.import_from_files (files);
+            }
+        }
+
+        /**
          * Retrieve a child of the applications settings.
          *
          * @param path a slash-separated path
@@ -302,7 +339,11 @@ namespace Graphs {
                 dialog.set_filters (add_data_action_filters);
                 dialog.open_multiple.begin (window, null, (d, response) => {
                     try {
-                        var files = dialog.open_multiple.end (response);
+                        var files_list_model = dialog.open_multiple.end (response);
+                        File[] files = {};
+                        for (uint i = 0; i < files_list_model.get_n_items (); i++) {
+                            files += files_list_model.get_item (i) as File;
+                        }
                         python_helper.import_from_files (files);
                     } catch {}
                 });
