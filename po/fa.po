@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs v1.8.x\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2024-07-30 06:28+0000\n"
-"PO-Revision-Date: 2024-08-09 14:30+0330\n"
+"POT-Creation-Date: 2024-08-14 12:45+0000\n"
+"PO-Revision-Date: 2024-08-18 12:33+0330\n"
 "Last-Translator: Danial Behzadi <dani.behzi@ubuntu.com>\n"
 "Language-Team: Persian <fa@li.org>\n"
 "Language: fa\n"
@@ -123,7 +123,7 @@ msgstr "Y ="
 
 #: data/ui/add-equation.blp:49
 msgid "Enter a mathematical expression to generate data from"
-msgstr ""
+msgstr "ورود عبارتی ریاضی برای ایجاد داده‌ها از آن"
 
 #: data/ui/add-equation.blp:57
 msgid "Name (optional)"
@@ -183,7 +183,7 @@ msgstr "نمایی"
 #: data/ui/curve-fitting.blp:56
 msgctxt "regression-type"
 msgid "Power Law"
-msgstr ""
+msgstr "توزیع توانی"
 
 #: data/ui/curve-fitting.blp:57
 msgctxt "regression-type"
@@ -193,7 +193,7 @@ msgstr "لگاریتمی"
 #: data/ui/curve-fitting.blp:58
 msgctxt "regression-type"
 msgid "Sigmoid Logistic"
-msgstr ""
+msgstr "لجستیک سیگماوار"
 
 #: data/ui/curve-fitting.blp:59
 msgctxt "regression-type"
@@ -225,19 +225,19 @@ msgstr "روش بهینه‌سازی"
 #: data/ui/curve-fitting.blp:134
 msgctxt "optimization"
 msgid "Levenberg-Marquardt"
-msgstr ""
+msgstr "لونبرگ-مارکوارت"
 
 #. Translators: see https://world.pages.gitlab.gnome.org/Graphs/help/C/curve_fitting.html#algorithms
 #: data/ui/curve-fitting.blp:140
 msgctxt "optimization"
 msgid "Trust Region Reflective"
-msgstr ""
+msgstr "بازتاب ناحیهٔ اطمینان"
 
 #. Translators: see https://world.pages.gitlab.gnome.org/Graphs/help/C/curve_fitting.html#algorithms
 #: data/ui/curve-fitting.blp:146
 msgctxt "optimization"
 msgid "Dogbox"
-msgstr ""
+msgstr "داگ‌باکس"
 
 #: data/ui/curve-fitting.blp:152
 msgid "Confidence Bounds"
@@ -275,6 +275,8 @@ msgid ""
 "Current project contains unsaved changes, changes that are not saved will be "
 "permanently lost."
 msgstr ""
+"پروژهٔ کنونی تغییرات ذخیره نشده‌ای دارد. تغییراتی که ذخیره نشده‌اند برای همیشه از "
+"دست خواهند رفت."
 
 #: data/ui/dialogs.blp:9
 msgid "Discard"
@@ -314,7 +316,7 @@ msgstr "داده"
 
 #: data/ui/edit-item.blp:26
 msgid "X-Axis Position"
-msgstr ""
+msgstr "موقعیت محور X"
 
 #: data/ui/edit-item.blp:28
 msgid "Bottom"
@@ -326,7 +328,7 @@ msgstr "بالا"
 
 #: data/ui/edit-item.blp:33
 msgid "Y-Axis Position"
-msgstr ""
+msgstr "موقعیت محور Y"
 
 #: data/ui/edit-item.blp:35
 msgid "Left"
@@ -508,12 +510,12 @@ msgstr "قالب پرونده"
 #: data/ui/export-figure.blp:38
 msgctxt "file-format"
 msgid "Encapsulated Postscript"
-msgstr ""
+msgstr "پسانوشتار کپسوله شده"
 
 #: data/ui/export-figure.blp:39
 msgctxt "file-format"
 msgid "Joint Photographic Experts Group"
-msgstr ""
+msgstr "گروه نخبگان عکّاسی پیوسته"
 
 #: data/ui/export-figure.blp:40
 msgctxt "file-format"
@@ -827,7 +829,7 @@ msgstr "ستون X"
 
 #: data/ui/import-columns.blp:39
 msgid "X-data column index"
-msgstr ""
+msgstr "شاخص ستون دادهٔ‌ X"
 
 #: data/ui/import-columns.blp:48
 msgid "Column Y"
@@ -835,7 +837,7 @@ msgstr "ستون Y"
 
 #: data/ui/import-columns.blp:50
 msgid "Y-data column index"
-msgstr ""
+msgstr "شاخص ستون دادهٔ‌ Y"
 
 #: data/ui/import-columns.blp:59
 msgid "Skip Rows"
@@ -1032,7 +1034,7 @@ msgstr "تنظیمات نرم کردن"
 
 #: data/ui/smoothen-settings.blp:30 data/ui/window.blp:694
 msgid "Savitzky–Golay Filter"
-msgstr ""
+msgstr "پالایهٔ ساویتزکی–گولِی"
 
 #: data/ui/smoothen-settings.blp:32
 msgid "Span percentage"
@@ -1044,7 +1046,7 @@ msgstr ""
 
 #: data/ui/smoothen-settings.blp:40
 msgid "Polynomial degree"
-msgstr ""
+msgstr "درجهٔ چندجمله‌ای"
 
 #: data/ui/smoothen-settings.blp:48 data/ui/window.blp:699
 msgid "Moving Average"
@@ -1112,11 +1114,11 @@ msgstr "کشیدن چارچوب"
 
 #: data/ui/style-editor.blp:183
 msgid "Ticks"
-msgstr ""
+msgstr "تیک‌ها"
 
 #: data/ui/style-editor.blp:186
 msgid "Tick Directions"
-msgstr ""
+msgstr "جهت تیک‌ها"
 
 #: data/ui/style-editor.blp:188
 msgid "Inwards"
@@ -1128,39 +1130,39 @@ msgstr "به بیرون"
 
 #: data/ui/style-editor.blp:193
 msgid "Minor Ticks"
-msgstr ""
+msgstr "تیک‌های ریز"
 
 #: data/ui/style-editor.blp:197
 msgid "Major Tick Width"
-msgstr ""
+msgstr "پهنای تیک‌های ریز"
 
 #: data/ui/style-editor.blp:210
 msgid "Minor Tick Width"
-msgstr ""
+msgstr "پهنای تیک‌های درست"
 
 #: data/ui/style-editor.blp:224
 msgid "Major Tick Length"
-msgstr ""
+msgstr "طول تیک‌های درشت"
 
 #: data/ui/style-editor.blp:237
 msgid "Minor Tick Length"
-msgstr ""
+msgstr "طول تیک‌های ریز"
 
 #: data/ui/style-editor.blp:251
 msgid "Ticks on Bottom Axis"
-msgstr ""
+msgstr "تیک‌های روی محور پایین"
 
 #: data/ui/style-editor.blp:255
 msgid "Ticks on Left Axis"
-msgstr ""
+msgstr "تیک‌های روی محور چپ"
 
 #: data/ui/style-editor.blp:259
 msgid "Ticks on Right Axis"
-msgstr ""
+msgstr "تیک‌های روی محور راست"
 
 #: data/ui/style-editor.blp:263
 msgid "Ticks on Top Axis"
-msgstr ""
+msgstr "تیک‌های روی محور بالا"
 
 #: data/ui/style-editor.blp:268
 msgid "Grid"
@@ -1216,7 +1218,7 @@ msgstr "رنگ‌ها"
 
 #: data/ui/style-editor.blp:356
 msgid "Label text might be hard to read"
-msgstr ""
+msgstr "ممکن است خواندن متن برچسب سخت باشد"
 
 #: data/ui/style-editor.blp:361
 msgid "Poor Contrast"
@@ -1234,7 +1236,7 @@ msgstr "تغییر رنگ"
 
 #: data/ui/style-editor.blp:398
 msgid "Tick Color"
-msgstr ""
+msgstr "رنگ تیک"
 
 #: data/ui/style-editor.blp:420
 msgid "Axis Color"
@@ -1329,7 +1331,7 @@ msgstr "تبدیل"
 
 #: data/ui/window.blp:301
 msgid "Shift all data vertically with respect to each other"
-msgstr ""
+msgstr "جابه‌جایی عمودی داده‌ها با احترام به یکدیگر"
 
 #: data/ui/window.blp:316
 msgid "Normalize"
@@ -1373,11 +1375,11 @@ msgstr "بریدن داده‌های کزیده"
 
 #: data/ui/window.blp:410
 msgid "Derivative"
-msgstr ""
+msgstr "مشتق"
 
 #: data/ui/window.blp:412
 msgid "Get the derivative of the data"
-msgstr ""
+msgstr "گرفتن مشتق داده‌ها"
 
 #: data/ui/window.blp:426
 msgid "Integral"
@@ -1385,7 +1387,7 @@ msgstr "انتگرال"
 
 #: data/ui/window.blp:428
 msgid "Get the indefinite integral of the data"
-msgstr ""
+msgstr "گرفتن انتگرال نامعیّن داده‌ها"
 
 #: data/ui/window.blp:442
 msgid "FFT"
@@ -1497,11 +1499,11 @@ msgstr "افزودن معادله…"
 
 #: data/ui/window.blp:680
 msgid "At Maximum Y Value"
-msgstr ""
+msgstr "در بیشینهٔ مقدار Y"
 
 #: data/ui/window.blp:685
 msgid "At Middle X Value"
-msgstr ""
+msgstr "در میانهٔ مقدار X"
 
 #: data/ui/window.blp:706
 msgid "Advanced Settings"
@@ -1528,7 +1530,7 @@ msgstr ""
 #: graphs/application.py:43
 #, python-brace-format
 msgid "Could not load {font}"
-msgstr ""
+msgstr "نتوانست {font} را بار کند"
 
 #: graphs/curve_fitting.py:176
 msgid "Results:"
@@ -1581,31 +1583,31 @@ msgstr ""
 
 #: graphs/figure_settings.vala:161
 msgid "X Axis Minimum"
-msgstr ""
+msgstr "کمینهٔ محور X"
 
 #: graphs/figure_settings.vala:162
 msgid "Y Axis Minimum"
-msgstr ""
+msgstr "کمینهٔ محور Y"
 
 #: graphs/figure_settings.vala:164
 msgid "X Axis Maximum"
-msgstr ""
+msgstr "بیشینهٔ محور X"
 
 #: graphs/figure_settings.vala:165
 msgid "Y Axis Maximum"
-msgstr ""
+msgstr "بیشینهٔ محور Y"
 
 #: graphs/figure_settings.vala:175 graphs/window.vala:232
 msgid "X Axis Scale"
-msgstr ""
+msgstr "مقیاس محور X"
 
 #: graphs/figure_settings.vala:176 graphs/figure_settings.vala:180
 msgid "X Axis Label"
-msgstr ""
+msgstr "برچسب محور X"
 
 #: graphs/figure_settings.vala:179 graphs/window.vala:237
 msgid "Y Axis Scale"
-msgstr ""
+msgstr "مقیاس محور Y"
 
 #: graphs/file_import.vala:68
 msgid "Are you sure you want to reset the import settings?"
@@ -1701,11 +1703,11 @@ msgstr ""
 
 #: graphs/style_io.py:159
 msgid "X Label"
-msgstr ""
+msgstr "برچسب X"
 
 #: graphs/style_io.py:160
 msgid "Y Label"
-msgstr ""
+msgstr "برچسب Y"
 
 #: graphs/styles.py:305
 #, python-brace-format
@@ -1725,7 +1727,7 @@ msgstr ""
 #: graphs/styles.py:743
 #, python-brace-format
 msgid "Color {number}"
-msgstr ""
+msgstr "رنگ {number}"
 
 #: graphs/styles.vala:71
 msgid "System"
@@ -1744,20 +1746,20 @@ msgstr "پرونده‌های اسکی"
 #: graphs/ui.py:50
 msgctxt "file-filter"
 msgid "PANalytical XRDML"
-msgstr ""
+msgstr "PANalytical XRDML"
 
 #: graphs/ui.py:51
 msgctxt "file-filter"
 msgid "Leybold xry"
-msgstr ""
+msgstr "Leybold xry"
 
 #: graphs/ui.py:63
 msgid "No data to export"
-msgstr ""
+msgstr "هیچ داده‌ای برای برون ریزی وجود ندارد"
 
 #: graphs/ui.py:80
 msgid "Exported Data"
-msgstr ""
+msgstr "داده‌های برون‌ریخته"
 
 #: graphs/ui.py:92
 msgctxt "file-filter"
@@ -1778,7 +1780,7 @@ msgstr "گشودن مکان"
 
 #: graphs/window.vala:195
 msgid "Optimize Limits"
-msgstr ""
+msgstr "بهینه‌سازی کران‌ها"
 
 #: graphs/window.vala:204
 msgctxt "scale"
