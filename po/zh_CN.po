@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2024-08-14 13:37+0000\n"
-"PO-Revision-Date: 2024-08-15 13:52+0800\n"
+"POT-Creation-Date: 2024-08-17 15:36+0000\n"
+"PO-Revision-Date: 2024-08-18 18:51+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -750,8 +750,8 @@ msgid "Maximum"
 msgstr "最大值"
 
 #: data/ui/import.blp:6
-msgid "Modify Import Parameters"
-msgstr "修改导入参数"
+msgid "Import Parameters"
+msgstr "导入参数"
 
 #: data/ui/import.blp:27
 msgid "Import"
@@ -847,7 +847,7 @@ msgid "Pick Color"
 msgstr "拾取颜色"
 
 #: data/ui/item-box.blp:46
-msgid "Move Item "
+msgid "Move Item"
 msgstr "移动项目"
 
 #: data/ui/item-box.blp:63
@@ -1513,32 +1513,32 @@ msgstr ""
 "lumingzh <lumingzh@qq.com>, 2024\n"
 "SuGotLand <sugotland@outlook.com>, 2024"
 
-#: graphs/application.py:44
+#: graphs/application.py:43
 #, python-brace-format
 msgid "Could not load {font}"
 msgstr "无法加载 {font}"
 
-#: graphs/application.vala:253 graphs/item_box.vala:58
+#: graphs/application.vala:290 graphs/item_box.vala:58
 #, c-format
 msgid "Deleted %s"
 msgstr "已删除 %s"
 
-#: graphs/application.vala:284
+#: graphs/application.vala:321
 msgctxt "file-filter"
 msgid "Supported files"
 msgstr "支持的文件"
 
-#: graphs/application.vala:288
+#: graphs/application.vala:325
 msgctxt "file-filter"
 msgid "ASCII files"
 msgstr "ASCII 文件"
 
-#: graphs/application.vala:292
+#: graphs/application.vala:329
 msgctxt "file-filter"
 msgid "PANalytical XRDML"
 msgstr "PANalytical XRDML"
 
-#: graphs/application.vala:295
+#: graphs/application.vala:332
 msgctxt "file-filter"
 msgid "Leybold xry"
 msgstr "Leybold xry"
@@ -1701,46 +1701,51 @@ msgstr "导入失败，列索引超出范围"
 msgid "Unable to import from file"
 msgstr "无法从文件导入"
 
-#: graphs/style_editor.py:359
+#: graphs/style_editor.py:360
 #, python-brace-format
 msgid "Color {number}"
 msgstr "颜色 {number}"
 
-#: graphs/style_io.py:75
+#: graphs/style_io.py:83
 #, python-brace-format
 msgid "Missing colon in file {file}, line {line}"
 msgstr "文件 {file} 第 {line} 行缺少冒号"
 
-#: graphs/style_io.py:83
+#: graphs/style_io.py:91
 #, python-brace-format
 msgid "Non-style related parameter {param} in file {file}"
 msgstr "文件 {file} 中与样式无关的参数 {param}"
 
-#: graphs/style_io.py:86
+#: graphs/style_io.py:94
 #, python-brace-format
 msgid "Ignoring parameter {param} in file {file}"
 msgstr "忽略文件 {file} 中的参数 {param}"
 
-#: graphs/style_io.py:89
+#: graphs/style_io.py:98
 #, python-brace-format
 msgid "Duplicate key in file {file}, on line {line}"
 msgstr "文件 {file} 中第 {line} 行的键重复"
 
-#: graphs/style_io.py:106
+#: graphs/style_io.py:118
 #, python-brace-format
 msgid "Bad value in file {file} on line {line}"
 msgstr "文件 {file} 第 {line} 行的错误值"
 
-#: graphs/style_io.py:112
+#: graphs/style_io.py:124
 #, python-brace-format
 msgid "Could not parse {filename}"
 msgstr "无法解析 {filename}"
 
-#: graphs/style_io.py:171
+#: graphs/style_io.py:133
+#, python-brace-format
+msgid "File {file}, does not contain name tag"
+msgstr "文件 {file} 不包含名称标签"
+
+#: graphs/style_io.py:188
 msgid "X Label"
 msgstr "X 标签"
 
-#: graphs/style_io.py:172
+#: graphs/style_io.py:189
 msgid "Y Label"
 msgstr "Y 标签"
 
@@ -1754,7 +1759,7 @@ msgstr "无法解析 {stylename}，加载系统首选样式"
 msgid "Plot style {stylename} does not exist loading system preferred"
 msgstr "绘图样式 {stylename} 不存在，加载系统首选样式"
 
-#: graphs/styles.vala:83
+#: graphs/styles.vala:71
 msgid "System"
 msgstr "系统"
 
