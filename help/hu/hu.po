@@ -1,0 +1,407 @@
+# Hungarian translation for Graphs.
+# Copyright (C) 2024 Free Software Foundation, Inc.
+# This file is distributed under the same license as the Graphs package.
+#
+# Balázs Úr <ur.balazs at fsf dot hu>, 2024.
+msgid ""
+msgstr ""
+"Project-Id-Version: Graphs v1.8.x\n"
+"POT-Creation-Date: 2024-08-09 14:46+0000\n"
+"PO-Revision-Date: 2024-08-10 09:15+0200\n"
+"Last-Translator: Balázs Úr <ur.balazs at fsf dot hu>\n"
+"Language-Team: Hungarian <openscope at fsf dot hu>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: hu\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Lokalize 23.08.4\n"
+
+#. Put one translator per line, in the form NAME <EMAIL>, YEAR1, YEAR2
+msgctxt "_"
+msgid "translator-credits"
+msgstr "Úr Balázs <ur dot balazs at fsf dot hu>, 2024."
+
+#. (itstool) path: page/title
+#: C/curve_fitting.page:8
+msgid "Curve Fitting"
+msgstr "Görbeillesztés"
+
+#. (itstool) path: section/title
+#: C/curve_fitting.page:10
+msgid "Fitting data"
+msgstr "Adatok kitöltése"
+
+#. (itstool) path: section/p
+#: C/curve_fitting.page:11
+msgid ""
+"Curve fitting allows for a powerful analysis method for your imported data. "
+"To start curve fitting on a data set, press the three vertical dots on the "
+"item you want to fit to, and choose \"Curve Fitting\". This brings up the "
+"Curve Fitting dialog for the selected data set. An extensive list of "
+"predefined equations can be chosen from the dropdown. The corresponding "
+"mathematical formula is shown in the same card."
+msgstr ""
+"A görbeillesztés hatékony elemzési módszert tesz lehetővé az importált "
+"adatok számára. Egy adathalmazon történő görbeillesztés elindításához nyomja "
+"meg a három függőleges pontot az illeszteni kívánt elemen, és válassza a "
+"„Görbeillesztés” lehetőséget. Ez megnyitja a kiválasztott adathalmaz "
+"görbeillesztési párbeszédablakát. Előre meghatározott egyenletek bőséges "
+"listája választható ki a legördülő listából. A megfelelő matematikai képlet "
+"ugyanezen a kártyán látható."
+
+#. (itstool) path: section/media
+#. This is a reference to an external file such as an image or video. When
+#. the file changes, the md5 hash will change to let you know you need to
+#. update your localized copy. The msgstr is not used at all. Set it to
+#. whatever you like once you have updated your copy of the file.
+#: C/curve_fitting.page:19
+msgctxt "_"
+msgid ""
+"external ref='media/curve_fitting_light.png' "
+"md5='d33b620c42f2c1cf82c94998adf4a670'"
+msgstr ""
+
+#. (itstool) path: section/title
+#: C/curve_fitting.page:23
+msgid "Bounds"
+msgstr "Határok"
+
+#. (itstool) path: section/p
+#: C/curve_fitting.page:24
+msgid ""
+"Each detected parameter in the formula will be shown in the sidebar. Here an "
+"initial guess can be set for the fit, as well as the minimum and maximum "
+"value for this parameter. Make sure that the initial guess is in between the "
+"bounds, and that the minimum bound is smaller than the maximum bound. If you "
+"don't want to use any bounds for the parameter, you can set the bounds to "
+"infinite using <code>-inf</code> and <code>inf</code> for the minimum and "
+"maximum bound respectively."
+msgstr ""
+"A képletben felismert minden egyes paraméter megjelenik az oldalsávon. Itt "
+"egy kezdeti tipp állítható be az illesztéshez, valamint az adott paraméter "
+"legkisebb és legnagyobb értéke. Győződjön meg arról, hogy a kezdeti tipp a "
+"határok között legyen, és hogy a legkisebb határ kisebb legyen a legnagyobb "
+"határnál. Ha nem szeretne semmilyen határt használni a paraméterhez, akkor "
+"beállíthatja a határokat végtelenre a <code>-inf</code> és az <code>inf</"
+"code> használatával a legkisebb és a legnagyobb határhoz."
+
+#. (itstool) path: section/title
+#: C/curve_fitting.page:36
+msgid "Results"
+msgstr "Eredmények"
+
+#. (itstool) path: section/p
+#: C/curve_fitting.page:37
+msgid ""
+"Below the fitting parameters, a box is shown with the resulting parameters "
+"of the fit. Apart of the final results, a margin is shown as well for each "
+"parameter as well as the sum of R² indicating the goodness of the fit. The "
+"margin can be set using the primary menu in the Curve Fitting dialog as a "
+"multiple of the standard deviation, corresponding to an uncertainty margin "
+"of 65, 95 or 99.7% for a standard deviation of 1σ, 2σ or 3σ respectively."
+msgstr ""
+"Az illesztési paraméterek alatt egy doboz jelenik meg az illesztés "
+"eredményeként kapott paraméterekkel. A végleges eredmények mellett minden "
+"paraméterhez egy különbözet, valamint az illeszkedés jóságát jelző R² "
+"összege is megjelenik. A különbözet a görbeillesztés párbeszédablakban lévő "
+"elsődleges menü használatával a szórás többszöröseként állítható be, ami 1σ, "
+"2σ vagy 3σ szórás esetén 65, 95 vagy 99,7%-os bizonytalansági különbözetnek "
+"felel meg."
+
+#. (itstool) path: section/p
+#: C/curve_fitting.page:45
+msgid ""
+"Please note that like all fits, that this standard deviation is mostly a "
+"measure of how well the data agrees with the corresponding model. Factors "
+"such as whether this model is actually physically correct, if there's any "
+"systemic errors in the measurements, and if the parameters are correlated to "
+"each other is not taken into account when fitting data. This is an inherent "
+"property of all curve fitting, and a common point of confusion, leading to "
+"misleading error bars on data points even in scientifically published data."
+msgstr ""
+"Ne feledje, hogy mint minden illesztés, ez a szórás is leginkább annak a "
+"mérőszáma, hogy az adatok mennyire egyeznek a megfelelő modellel. Az olyan "
+"tényezőket, mint például hogy ez a modell fizikailag valóban helyes-e, hogy "
+"a mérésekben vannak-e rendszerszintű hibák, és hogy a paraméterek "
+"korrelálnak-e egymással, az adatok illesztésekor nem veszik figyelembe. Ez "
+"minden görbeillesztés velejárója, és gyakori zavaró tényező, ami még a "
+"tudományosan közzétett adatokban is félrevezető hibasávokhoz vezet az "
+"adatpontokon."
+
+#. (itstool) path: section/title
+#: C/curve_fitting.page:57
+msgid "Fitting algorithms"
+msgstr "Illesztései algoritmusok"
+
+#. (itstool) path: section/p
+#: C/curve_fitting.page:58
+msgid ""
+"When performing a fit, there are three different fitting algorithms to "
+"choose from, these can be set from the primary menu."
+msgstr ""
+"Egy illesztés végrehajtásakor három különböző illesztési algoritmus közül "
+"választhat, ezek az elsődleges menüből állíthatók be."
+
+#. (itstool) path: item/title
+#: C/curve_fitting.page:64
+msgid "Levenberg-Marquardt"
+msgstr "Levenberg–Marquardt"
+
+#. (itstool) path: item/p
+#: C/curve_fitting.page:65
+msgid ""
+"The Levenberg-Marquardt algorithm is a traditionally relatively popular "
+"algorithm that performs very efficiently. However, it does not handle bounds "
+"for the fitting parameters."
+msgstr ""
+"A Levenberg–Marquardt algoritmus egy hagyományosan viszonylag népszerű "
+"algoritmus, amely nagyon hatékonyan teljesít. Azonban nem kezeli az "
+"illesztési paraméterek határait."
+
+#. (itstool) path: item/title
+#: C/curve_fitting.page:68
+msgid "Trust Region"
+msgstr "Megbízhatósági tartomány"
+
+#. (itstool) path: item/p
+#: C/curve_fitting.page:69
+msgid ""
+"The Trust Region Reflective algorithm is well-suited for solving large "
+"problems with bounds. This method generally performs well for most cases and "
+"should probably be used for most cases."
+msgstr ""
+"A megbízhatósági tartomány visszaverő algoritmus jól alkalmazható nagy, "
+"határokat tartalmazó problémák megoldására. Ez a módszer általában jól "
+"teljesít a legtöbb esetben, és valószínűleg a legtöbb esetben ezt kell "
+"használni."
+
+#. (itstool) path: item/title
+#: C/curve_fitting.page:72
+msgid "Dogbox"
+msgstr "Dogbox"
+
+#. (itstool) path: item/p
+#: C/curve_fitting.page:73
+msgid ""
+"The Dogbox algorithm uses rectangular trust regions and typically works well "
+"with small problems involving bounds."
+msgstr ""
+"A Dogbox algoritmus téglalap alakú megbízhatósági tartományokat használ, és "
+"jellemzően jól működik kis, határokat tartalmazó problémák esetén."
+
+#. (itstool) path: page/title
+#: C/import.page:8
+msgid "Importing Data"
+msgstr "Adatok importálása"
+
+#. (itstool) path: page/p
+#: C/import.page:9
+msgid ""
+"There are two primary ways to import new data in Graphs, importing data "
+"directly by file or generating new data using an equation."
+msgstr ""
+"Két fő módja van az új adatok importálásának a Grafikonokban: az adatok "
+"importálása közvetlenül fájlból, vagy új adatok előállítása egyenlet "
+"használatával."
+
+#. (itstool) path: page/media
+#. This is a reference to an external file such as an image or video. When
+#. the file changes, the md5 hash will change to let you know you need to
+#. update your localized copy. The msgstr is not used at all. Set it to
+#. whatever you like once you have updated your copy of the file.
+#: C/import.page:14
+msgctxt "_"
+msgid ""
+"external ref='media/add_data_light.png' "
+"md5='5246da95eb47c74c7488f9b9016dde3d'"
+msgstr ""
+
+#. (itstool) path: page/p
+#: C/import.page:16
+msgid ""
+"A wide array of filetypes are supported when importing data by file. Graphs "
+"currently supports Panalytical .xrdml files, Leybold .xry files as well as "
+"files that are saved in a column format such as most .csv files, .dat "
+"files, .xy files or plain text. Finally, data from other Graphs projects can "
+"be imported into the current project as well, simply by adding new data as "
+"usual, but by selecting a project file instead."
+msgstr ""
+"A fájltípusok széles skálája támogatott az adatok fájlból történő "
+"importálásakor. A Grafikonok jelenleg a Panalytical .xrdml fájlokat, a "
+"Leybold .xry fájlokat, valamint az oszlop formátumban mentett fájlokat, mint "
+"például a legtöbb .csv fájlt, .dat fájlokat, .xy fájlokat vagy egyszerű "
+"szöveget támogatja. Végül, más Grafikonok-projektekből származó adatok is "
+"importálhatók az aktuális projektbe, egyszerűen az új adatok szokásos módon "
+"történő hozzáadásával, de helyettük egy projektfájl kiválasztásával."
+
+#. (itstool) path: page/p
+#: C/import.page:25
+msgid ""
+"When using a custom delimiter during the import, an extra field will be "
+"visible to enter the delimiter of choice. This field recognizes regular "
+"expressions. For example, to choose a delimiter that looks for whitespace, "
+"one could enter <code>\\s+</code> as delimiter. In this example, <code>\\s</"
+"code> denotes that the delimiter is a whitespace character, and the <code>+</"
+"code> denotes that at least one or more whitespace is required. Thus this "
+"input looks for any amount of whitespaces including tabs. Note that this "
+"particular input is equivalent to the default Whitespace option."
+msgstr ""
+"Az importálás során egyéni elválasztó használatakor egy további mező lesz "
+"látható a választott elválasztó megadásához. Ez a mező felismeri a reguláris "
+"kifejezéseket. Például egy olyan elválasztó kiválasztásához, amely az üres "
+"karaktereket keresi, a <code>\\s+</code> adható meg elválasztóként. Ebben a "
+"példában a <code>\\s</code> azt jelenti, hogy az elválasztó egy üres "
+"karakter, a <code>+</code> pedig azt jelenti, hogy legalább egy vagy több "
+"üres karakter szükséges. Így ez a bemenet bármilyen mennyiségű üres "
+"karaktert keres, beleértve a tabulátorokat is. Vegye figyelembe, hogy ez a "
+"konkrét bemenet egyenértékű az alapértelmezett üres karakterek lehetőséggel."
+
+#. (itstool) path: page/media
+#. This is a reference to an external file such as an image or video. When
+#. the file changes, the md5 hash will change to let you know you need to
+#. update your localized copy. The msgstr is not used at all. Set it to
+#. whatever you like once you have updated your copy of the file.
+#: C/import.page:36
+msgctxt "_"
+msgid ""
+"external ref='media/add_equation_light.png' "
+"md5='009108d0a1fc2d95d54d8aa88f6016d5'"
+msgstr ""
+
+#. (itstool) path: page/p
+#: C/import.page:38
+msgid ""
+"The other way to import data is to generate data directly using an equation. "
+"This can be done using the \"Add Equation\" button found in the top-left "
+"corner, or by pressing <cmd>Ctrl+Alt+N</cmd>. Most commonly used syntax is "
+"accepted, with an <code>x</code> denoting the x-coordinate. A simple "
+"quadratic equation could for instance be created using <code>x²+5</code> as "
+"input. Be aware that trigonometric functions are using radians by default. "
+"If you want to use degrees, simply add a <code>d</code> to the trigonometric "
+"function. For instance <code>cosd(x)</code> generates a cosine where the x "
+"coordinate is given in degrees while <code>cos(x)</code> generates a cosine "
+"with the x-coordinate in radians."
+msgstr ""
+"Az adatok importálásának másik módja az adatok közvetlen előállítása "
+"egyenlet használatával. Ezt a bal felső sarokban lévő „Egyenlet hozzáadása” "
+"gombbal vagy a <cmd>Ctrl+Alt+N</cmd> billentyűkombináció megnyomásával lehet "
+"megtenni. A leggyakrabban használt szintaxis elfogadott, ahol az <code>x</"
+"code> az x-koordinátát jelöli. Egy egyszerű másodfokú egyenletet például "
+"létrehozható az <code>x²+5</code> bemenetként való felhasználásával. Ne "
+"feledje, hogy a trigonometrikus függvények alapértelmezetten radiánt "
+"használnak. Ha fokot szeretne használni, akkor egyszerűen adjon hozzá egy "
+"<code>d</code> betűt a trigonometrikus függvényhez. Például a <code>cosd(x)</"
+"code> olyan koszinuszt állít elő, ahol az x-koordináta fokban van megadva, "
+"míg a <code>cos(x)</code> olyan koszinuszt állít elő, ahol az x-koordináta "
+"radiánban van megadva."
+
+#. (itstool) path: page/title
+#: C/index.page:10
+msgid "<_:media-1/> Graphs"
+msgstr "<_:media-1/> Grafikonok"
+
+#. (itstool) path: section/title
+#: C/index.page:16
+msgid "How to"
+msgstr "Hogyan"
+
+#. (itstool) path: section/p
+#: C/index.page:17
+msgid ""
+"There's multiple how-to guides available for Graphs. These can be found here."
+msgstr ""
+"A Grafikonokhoz több használati útmutató is elérhető. Ezek itt találhatók."
+
+#. (itstool) path: page/title
+#: C/manipulate.page:8
+msgid "Manipulating Data"
+msgstr "Adatok manipulálása"
+
+#. (itstool) path: page/p
+#: C/manipulate.page:10
+msgid ""
+"There are many different ways to manipulate data using Graphs. All data is "
+"treated the same using Graphs, independent what file it is imported from, or "
+"if it's a generated equation. When selecting a part of the canvas using the "
+"Highlight tool, only the highlight area will be manipulated."
+msgstr ""
+"Számos különböző módja van az adatok Grafikonok használatával történő "
+"manipulálásának. Az összes adat ugyanúgy kerül kezelésre a Grafikonok "
+"használatával, függetlenül attól, hogy melyik fájlból importálták, vagy hogy "
+"az egy előállított egyenlet. A vászon egy részének a Kiemelés eszközzel "
+"történő kijelölésekor csak a kiemelt terület lesz manipulálva."
+
+#. (itstool) path: section/title
+#: C/manipulate.page:18
+msgid "Smoothening"
+msgstr "Simítás"
+
+#. (itstool) path: section/p
+#: C/manipulate.page:19
+msgid ""
+"The smoothening action has two different modes, a rolling average or the "
+"Savitzky-Galov filter. The moving average simply works iterating through the "
+"data set, and replacing each point by the average of the last few data "
+"points that were encountered, this way sharp outliers are ignored but "
+"details may be lost. Sudden actual changes in the data may also be detected "
+"later when a smoothening has been applied. Another way to smoothen the data "
+"is the Savitzky-Galov. The difference with the moving average, is that not a "
+"simple average is used for the last data points, but instead a polynomial "
+"function is fitted between the data points. This makes it possible to filter "
+"the underlaying signal still quite nicely out of very noisy data."
+msgstr ""
+"A simítási műveletnek két különböző módja van: a mozgóátlag vagy a Savitzky–"
+"Galov-szűrő. A mozgóátlag egyszerűen úgy működik, hogy végigmegy az "
+"adathalmazon, és minden egyes pontot az utoljára előforduló néhány adatpont "
+"átlagával helyettesít, így az élesen kiugró értékeket figyelmen kívül "
+"hagyja, de a részletek elveszhetnek. Az adatokban bekövetkező hirtelen "
+"tényleges változások szintén később fedezhetőek fel, ha a simítást már "
+"alkalmazták. Az adatok simításának másik módja a Savitzky–Galov-szűrő. A "
+"mozgóátlaghoz képest az a különbség, hogy nem egyszerű átlagot használnak az "
+"utolsó adatpontoknál, hanem egy polinomfüggvényt illesztenek az adatpontok "
+"közé. Ez lehetővé teszi, hogy a nagyon zajos adatokból még mindig elég "
+"szépen ki lehessen szűrni az alatta lévő jelet."
+
+#. (itstool) path: section/title
+#: C/manipulate.page:34
+msgid "Custom Transformations"
+msgstr "Egyéni transzformációk"
+
+#. (itstool) path: section/p
+#: C/manipulate.page:35
+msgid ""
+"Another way to manipulate the data is by using custom transformations. This "
+"field transforms both X and Y coordinate piece by piece according to an "
+"equation of choice. For instance, to take the square of all Y-coordinates, "
+"simply set <code>Y = Y²</code> on the y-data field, and <code>X = X</code> "
+"on the x-data field. Note that the input coordinates are not case-sensitive."
+msgstr ""
+"Az adatok manipulálásának másik módja az egyéni transzformációk használata. "
+"Ez a mező az X-koordinátát és az Y-koordinátát egyesével transzformálja egy "
+"tetszőleges egyenlet szerint. Például az összes Y-koordináta négyzetének "
+"kiszámításához egyszerűen állítsa be az <code>Y = Y²</code> értéket az Y-"
+"adatmezőn és az <code>X = X</code> értéket az X-adatmezőn. Ne feledje, hogy "
+"a bemeneti koordináták nem különböztetik meg a kis- és nagybetűket."
+
+#. (itstool) path: section/media
+#. This is a reference to an external file such as an image or video. When
+#. the file changes, the md5 hash will change to let you know you need to
+#. update your localized copy. The msgstr is not used at all. Set it to
+#. whatever you like once you have updated your copy of the file.
+#: C/manipulate.page:42
+msgctxt "_"
+msgid ""
+"external ref='media/custom_transform_light.png' "
+"md5='311f5286f3372e5fea1431dd6a63d666'"
+msgstr ""
+
+#. (itstool) path: p/link
+#: C/legal.xml:3
+msgid "Creative Commons Attribution-ShareAlike 4.0 International License"
+msgstr "Creative Commons Nevezd meg!–Így add tovább! 4.0 nemzetközi licenc"
+
+#. (itstool) path: license/p
+#: C/legal.xml:3
+msgid "This work is licensed under a <_:link-1/>."
+msgstr "Ez a mű a <_:link-1/> feltételei szerint terjeszthető."
