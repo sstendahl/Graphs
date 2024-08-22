@@ -151,41 +151,30 @@ namespace Graphs {
 
         private void on_file_change (File file, File? other_file, FileMonitorEvent event_type) {
             if (file.get_basename ()[0] == '.') return;
+            Style style = null;
             string? stylename = null;
             bool possible_visual_impact = true;
             switch (event_type) {
                 case FileMonitorEvent.CREATED:
-                    for (uint i = 1; i < style_model.get_n_items (); i++) {
-                        Style style = style_model.get_item (i) as Style;
-                        if (style.file.equal (file)) {
-                            return;
-                        }
-                    }
+                    if (find_style_for_file (file, out style) > 0) return;
                     add_user_style (file);
                     break;
                 case FileMonitorEvent.DELETED:
-                    for (uint i = 1; i < style_model.get_n_items (); i++) {
-                        Style style = style_model.get_item (i) as Style;
-                        if (style.file.equal (file)) {
-                            stylenames.remove (style.name);
-                            style_model.remove (i);
-                            stylename = style.name;
-                        }
-                    }
-                    possible_visual_impact = stylename != null;
+                    var index = find_style_for_file (file, out style);
+                    if (index == -1) return;
+                    stylenames.remove (style.name);
+                    style_model.remove (index);
+                    stylename = style.name;
+                    possible_visual_impact = true;
                     break;
                 case FileMonitorEvent.CHANGES_DONE_HINT:
                     Style tmp_style = style_request.emit (file);
-                    for (uint i = 1; i < style_model.get_n_items (); i++) {
-                        Style style = style_model.get_item (i) as Style;
-                        if (style.file.equal (file)) {
-                            style.name = tmp_style.name;
-                            style.preview = tmp_style.preview;
-                            style.light = tmp_style.light;
-                            stylename = tmp_style.name;
-                            break;
-                        }
-                    }
+                    find_style_for_file (file, out style);
+                    if (style == null) return;
+                    style.name = tmp_style.name;
+                    style.preview = tmp_style.preview;
+                    style.light = tmp_style.light;
+                    stylename = tmp_style.name;
                     possible_visual_impact = true;
                     break;
                 default:
@@ -215,18 +204,7 @@ namespace Graphs {
             CompareDataFunc<Style> cmp = style_cmp;
             style_model.insert_sorted (style, cmp);
             stylenames.add (style.name);
-            if (use_custom_style) {
-                string old_style = custom_style;
-                if (!stylenames.contains (old_style)) {
-                    this.custom_style = style.name;
-                }
-                for (uint i = 1; i < style_model.get_n_items (); i++) {
-                    Style i_style = style_model.get_item (i) as Style;
-                    if (i_style.name == custom_style) {
-                        selection_model.set_selected (i);
-                    }
-                }
-            }
+            on_custom_style ();
         }
 
         protected Style get_selected_style () {
@@ -255,6 +233,18 @@ namespace Graphs {
                 );
             }
             copy_request.emit (template, new_name);
+        }
+
+        private int find_style_for_file (File file, out Style? style) {
+            for (uint i = 1; i < style_model.get_n_items (); i++) {
+                Style i_style = style_model.get_item (i) as Style;
+                if (i_style.file.equal (file)) {
+                    style = i_style;
+                    return (int) i;
+                }
+            }
+            style = null;
+            return -1;
         }
     }
 
