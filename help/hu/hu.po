@@ -6,14 +6,14 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Graphs v1.8.x\n"
-"POT-Creation-Date: 2024-08-09 14:46+0000\n"
-"PO-Revision-Date: 2024-08-10 09:15+0200\n"
+"POT-Creation-Date: 2024-08-22 13:23+0000\n"
+"PO-Revision-Date: 2024-08-23 10:22+0200\n"
 "Last-Translator: Balázs Úr <ur.balazs at fsf dot hu>\n"
 "Language-Team: Hungarian <openscope at fsf dot hu>\n"
+"Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: hu\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Lokalize 23.08.4\n"
 
@@ -61,6 +61,8 @@ msgid ""
 "external ref='media/curve_fitting_light.png' "
 "md5='d33b620c42f2c1cf82c94998adf4a670'"
 msgstr ""
+"external ref='media/curve_fitting_light.png' "
+"md5='6248999b134cdd426b5333ef9cd651a8'"
 
 #. (itstool) path: section/title
 #: C/curve_fitting.page:23
@@ -216,6 +218,8 @@ msgid ""
 "external ref='media/add_data_light.png' "
 "md5='5246da95eb47c74c7488f9b9016dde3d'"
 msgstr ""
+"external ref='media/add_data_light.png' "
+"md5='b9c575bfff6078b4a6462459e6271e28'"
 
 #. (itstool) path: page/p
 #: C/import.page:16
@@ -268,6 +272,8 @@ msgid ""
 "external ref='media/add_equation_light.png' "
 "md5='009108d0a1fc2d95d54d8aa88f6016d5'"
 msgstr ""
+"external ref='media/add_equation_light.png' "
+"md5='336f6f827e54a1582ade8322434e9ad9'"
 
 #. (itstool) path: page/p
 #: C/import.page:38
@@ -395,6 +401,8 @@ msgid ""
 "external ref='media/custom_transform_light.png' "
 "md5='311f5286f3372e5fea1431dd6a63d666'"
 msgstr ""
+"external ref='media/custom_transform_light.png' "
+"md5='6f2c16262d34374c22aae1e7363935cf'"
 
 #. (itstool) path: p/link
 #: C/legal.xml:3
