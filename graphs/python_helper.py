@@ -121,7 +121,9 @@ class PythonHelper(Graphs.PythonHelper):
             logging.exception(msg)
             return msg
 
+    @staticmethod
     def _on_open_style_editor_request(self, file: Gio.File) -> None:
         window = StyleEditorWindow(self)
+        window = StyleEditor(self.props.application)
         window.load_style(file)
         window.present()
