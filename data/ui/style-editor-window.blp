@@ -9,8 +9,10 @@ template $GraphsStyleEditorWindow : Adw.Window {
 
   Adw.OverlaySplitView split_view {
     sidebar: Adw.ToolbarView {
+      width-request: 600;
+
       [top]
-      Adw.HeaderBar editor_headerbar {
+      Adw.HeaderBar {
         styles ["flat"]
       }
 
@@ -28,7 +30,8 @@ template $GraphsStyleEditorWindow : Adw.Window {
 
     content: Adw.ToolbarView {
       [top]
-      Adw.HeaderBar figure_headerbar {
+      Adw.HeaderBar {
+        show-title: false;
         styles ["flat"]
       }
 

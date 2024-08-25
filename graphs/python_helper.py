@@ -13,7 +13,7 @@ from graphs import (
     utilities,
 )
 from graphs.item import DataItem
-from graphs.style_editor import StyleEditor
+from graphs.style_editor import StyleEditorWindow
 
 import numexpr
 
@@ -123,7 +123,6 @@ class PythonHelper(Graphs.PythonHelper):
 
     @staticmethod
     def _on_open_style_editor_request(self, file: Gio.File) -> None:
-        window = StyleEditorWindow(self)
-        window = StyleEditor(self.props.application)
+        window = StyleEditorWindow(self.props.application)
         window.load_style(file)
         window.present()
