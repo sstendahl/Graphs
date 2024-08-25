@@ -122,6 +122,6 @@ class PythonHelper(Graphs.PythonHelper):
             return msg
 
     def _on_open_style_editor_request(self, file: Gio.File) -> None:
-        window = StyleEditor(self)
+        window = StyleEditorWindow(self)
         window.load_style(file)
         window.present()

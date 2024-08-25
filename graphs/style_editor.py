@@ -4,7 +4,7 @@ from gettext import gettext as _
 
 from cycler import cycler
 
-from gi.repository import Adw, GLib, GObject, Graphs, Gtk, Pango
+from gi.repository import Adw, GLib, GObject, Graphs, Gtk, Pango, Gio
 
 from graphs import style_io
 
@@ -395,3 +395,27 @@ class _StyleColorBox(Gtk.Box):
     def on_delete(self, _button):
         self.props.parent.line_colors.pop(self.props.index)
         self.props.parent._reload_line_colors()
+
+@Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/style-editor-window.ui")
+class StyleEditorWindow(Adw.Window):
+    __gtype_name__ = "GraphsStyleEditorWindow"
+
+    split_view = Gtk.Template.Child()
+    editor_headerbar = Gtk.Template.Child()
+    editor_clamp = Gtk.Template.Child()
+    figure_headerbar = Gtk.Template.Child()
+
+    def __init__(self, application: Graphs.Application):
+        super().__init__(application=application)
+
+    def load_style(self, file: Gio.File) -> None:
+        pass
+
+    def save_style(self) -> None:
+        pass
+
+    @staticmethod
+    @Gtk.Template.Callback()
+    def on_close_request(self):
+        """Handle close request."""
+        self.save_style()
