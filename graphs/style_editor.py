@@ -4,7 +4,7 @@ from gettext import gettext as _
 
 from cycler import cycler
 
-from gi.repository import Adw, GLib, GObject, Graphs, Gtk, Pango
+from gi.repository import Adw, GLib, GObject, Gio, Graphs, Gtk, Pango
 
 from graphs import style_io
 
@@ -98,7 +98,7 @@ def _title_format_function(_scale, value: float) -> str:
 
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/style-editor.ui")
-class StyleEditor(Adw.Window):
+class StyleEditor(Gtk.Box):
     """Style editor widget."""
 
     __gtype_name__ = "GraphsStyleEditor"
@@ -139,9 +139,8 @@ class StyleEditor(Adw.Window):
     line_colors_box = Gtk.Template.Child()
     poor_contrast_warning = Gtk.Template.Child()
 
-    def __init__(self, application):
-        super().__init__(application=application)
-        self.file = None
+    def __init__(self):
+        super().__init__()
 
         self.titlesize.set_format_value_func(_title_format_function)
         self.labelsize.set_format_value_func(_title_format_function)
@@ -163,17 +162,10 @@ class StyleEditor(Adw.Window):
                 Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION,
             )
 
-    @Gtk.Template.Callback()
-    def on_close_request(self, _window):
-        """Handle close request."""
-        self._save_style()
-
-    def load_style(self, file):
-        """Load a style."""
-        self.file = file
+    def load_style(self, file: Gio.File):
+        """Load style params from file."""
         self.style_params, graphs_paramns = style_io.parse(file, True)
         stylename = graphs_paramns["name"]
-        self.set_title(stylename)
         self.style_name.set_text(stylename)
         for key, value in STYLE_DICT.items():
             value = self.style_params[value[0]]
@@ -227,10 +219,10 @@ class StyleEditor(Adw.Window):
             self.style_params["axes.prop_cycle"].by_key()["color"]
         self._reload_line_colors()
 
-    def _save_style(self):
-        """Save the style."""
-        if self.file is None:
-            return
+        return stylename
+
+    def _save_style(self, file: Gio.File):
+        """Save style params to file."""
         graphs_params = {}
         for key in STYLE_DICT.keys():
             widget = getattr(self, key.replace("-", "_"))
@@ -290,8 +282,7 @@ class StyleEditor(Adw.Window):
         graphs_params["name"] = self.style_name.get_text()
 
         # save
-        style_io.write(self.file, graphs_params, self.style_params)
-        self.file = None
+        style_io.write(file, graphs_params, self.style_params)
 
     def _reload_line_colors(self):
         list_box = self.line_colors_box
@@ -395,3 +386,38 @@ class _StyleColorBox(Gtk.Box):
     def on_delete(self, _button):
         self.props.parent.line_colors.pop(self.props.index)
         self.props.parent._reload_line_colors()
+
+
+@Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/style-editor-window.ui")
+class StyleEditorWindow(Adw.Window):
+    """Graphs Style Editor Window."""
+
+    __gtype_name__ = "GraphsStyleEditorWindow"
+
+    split_view = Gtk.Template.Child()
+    editor_clamp = Gtk.Template.Child()
+
+    def __init__(self, application: Graphs.Application):
+        super().__init__(application=application)
+        self._style_editor = StyleEditor()
+        self.editor_clamp.set_child(self._style_editor)
+        self._file = None
+
+    def load_style(self, file: Gio.File) -> None:
+        """Load a style."""
+        self._file = file
+        name = self._style_editor.load_style(file)
+        self.set_title(name)
+
+    def save_style(self) -> None:
+        """Save current style."""
+        if self._file is None:
+            return
+        self._style_editor.save_style(self._file)
+        self._file = None
+
+    @staticmethod
+    @Gtk.Template.Callback()
+    def on_close_request(self):
+        """Handle close request."""
+        self.save_style()
