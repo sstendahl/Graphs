@@ -261,37 +261,57 @@ template $GraphsWindow: Adw.ApplicationWindow {
         Box {
           orientation: vertical;
           hexpand: false;
-          spacing: 12;
-          margin-start: 6;
-          valign: start;
-          margin-end: 6;
-          margin-top: 6;
-          margin-bottom: 6;
-          Box stack_switcher_box {
-            margin-start: 6;
-            margin-end: 6;
-            margin-top: 6;
-            margin-bottom: 6;
-          }
+          spacing: 18;
+          margin-start: 12;
+          margin-end: 12;
+          margin-top: 12;
+          margin-bottom: 12;
+          Box stack_switcher_box {}
 
           Stack stack {
-            valign: start;
-            margin-start: 6;
-            margin-end: 6;
-            margin-bottom: 6;
             transition-type: slide_left_right;
             StackPage{
               title: _("Adjust");
               child: Adw.PreferencesGroup {
                 Grid {
+                  column-homogeneous: true;
                   column-spacing: 10;
                   row-spacing: 10;
-                  margin-bottom:12;
-                  Button shift_button {
-                    hexpand: true;
+
+                  Button combine_button {
+                    sensitive: bind shift_button.sensitive;
                     layout {
                       column: 0;
                       row: 0;
+                    }
+                    Adw.ButtonContent {
+                      halign: center;
+                      icon-name: "edit-paste-symbolic";
+                      label: _("Combine");
+                    }
+                    tooltip-text: _("Combine all selected data");
+                    clicked => $perform_operation();
+                  }
+
+                  Button cut_button {
+                    sensitive: bind select_button.active;
+                    layout {
+                      column: 1;
+                      row: 0;
+                    }
+                    Adw.ButtonContent {
+                      halign: center;
+                      icon-name: "edit-cut-symbolic";
+                      label: _("Cut");
+                    }
+                    tooltip-text: _("Cut selected data");
+                    clicked => $perform_operation();
+                  }
+
+                  Button shift_button {
+                    layout {
+                      column: 0;
+                      row: 1;
                     }
                     Adw.ButtonContent {
                       halign: center;
@@ -303,12 +323,10 @@ template $GraphsWindow: Adw.ApplicationWindow {
                   }
 
                   Button normalize_button {
-                    hexpand: true;
                     sensitive: bind shift_button.sensitive;
-                    width-request: 130;
                     layout {
                       column: 1;
-                      row: 0;
+                      row: 1;
                     }
                     Adw.ButtonContent {
                       halign: center;
@@ -320,12 +338,12 @@ template $GraphsWindow: Adw.ApplicationWindow {
                   }
 
                   Adw.SplitButton smoothen_button {
-                    hexpand: false;
                     can-shrink: true;
                     sensitive: bind shift_button.sensitive;
                     layout {
                       column: 0;
-                      row: 1;
+                      row: 2;
+                      column-span: 2;
                     }
                     Adw.ButtonContent {
                       halign: center;
@@ -339,11 +357,11 @@ template $GraphsWindow: Adw.ApplicationWindow {
                   }
 
                   Adw.SplitButton center_button {
-                    hexpand: true;
                     sensitive: bind shift_button.sensitive;
                     layout {
-                      column: 1;
-                      row: 1;
+                      column: 0;
+                      row: 3;
+                      column-span: 2;
                     }
                     Adw.ButtonContent {
                       halign: center;
@@ -354,38 +372,6 @@ template $GraphsWindow: Adw.ApplicationWindow {
                     menu-model: center_menu;
                     clicked => $perform_operation();
                   }
-
-                  Button combine_button {
-                    hexpand: true;
-                    sensitive: bind shift_button.sensitive;
-                    layout {
-                      column: 0;
-                      row: 2;
-                    }
-                    Adw.ButtonContent {
-                      halign: center;
-                      icon-name: "edit-paste-symbolic";
-                      label: _("Combine");
-                    }
-                    tooltip-text: _("Combine all selected data");
-                    clicked => $perform_operation();
-                  }
-
-                  Button cut_button {
-                    hexpand: true;
-                    sensitive: bind select_button.active;
-                    layout {
-                      column: 1;
-                      row: 2;
-                    }
-                    Adw.ButtonContent {
-                      halign: center;
-                      icon-name: "edit-cut-symbolic";
-                      label: _("Cut");
-                    }
-                    tooltip-text: _("Cut selected data");
-                    clicked => $perform_operation();
-                  }
                 }
               };
             }
@@ -394,11 +380,10 @@ template $GraphsWindow: Adw.ApplicationWindow {
               title: _("Transform");
               child: Adw.PreferencesGroup {
                 Grid {
+                  column-homogeneous: true;
                   column-spacing: 12;
                   row-spacing: 12;
-                  margin-bottom:12;
                   Button derivative_button {
-                    hexpand: true;
                     sensitive: bind shift_button.sensitive;
                     layout {
                       column: 0;
@@ -414,7 +399,6 @@ template $GraphsWindow: Adw.ApplicationWindow {
                   }
 
                   Button integral_button {
-                    hexpand: true;
                     sensitive: bind shift_button.sensitive;
                     layout {
                       column: 1;
@@ -430,11 +414,11 @@ template $GraphsWindow: Adw.ApplicationWindow {
                   }
 
                   Button fft_button {
-                    hexpand: true;
                     sensitive: bind shift_button.sensitive;
                     layout {
                       column: 0;
                       row: 1;
+                      column-span: 2;
                     }
                     Adw.ButtonContent {
                       halign: center;
@@ -446,11 +430,11 @@ template $GraphsWindow: Adw.ApplicationWindow {
                   }
 
                   Button inverse_fft_button {
-                    hexpand: true;
                     sensitive: bind shift_button.sensitive;
                     layout {
-                      column: 1;
-                      row: 1;
+                      column: 0;
+                      row: 2;
+                      column-span: 2;
                     }
                     Adw.ButtonContent {
                       halign: center;
@@ -462,11 +446,10 @@ template $GraphsWindow: Adw.ApplicationWindow {
                   }
 
                   Button custom_transformation_button {
-                    hexpand: true;
                     sensitive: bind shift_button.sensitive;
                     layout {
                       column: 0;
-                      row: 2;
+                      row: 3;
                       column-span: 2;
                     }
                     Adw.ButtonContent {
@@ -487,7 +470,6 @@ template $GraphsWindow: Adw.ApplicationWindow {
                 Grid {
                   column-spacing: 10;
                   row-spacing: 10;
-                  margin-bottom:12;
                   Entry translate_x_entry {
                     max-width-chars: 6;
                     hexpand: true;
