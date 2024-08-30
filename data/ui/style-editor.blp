@@ -1,521 +1,497 @@
 using Gtk 4.0;
 using Adw 1;
 
-template $GraphsStyleEditor : Adw.Window {
-  title: _("Error - No Style selected");
-  default-width: 1200;
-  default-height: 700;
-  close-request => $on_close_request();
+template $GraphsStyleEditor : Box {
+  orientation: vertical;
+  hexpand: true;
+  spacing: 20;
 
-  Adw.ToolbarView {
-    [top]
-    Adw.HeaderBar {
-      styles ["flat"]
+  Adw.PreferencesGroup {
+    Adw.EntryRow style_name {
+      title: _("Style Name");
     }
 
-    content: ScrolledWindow {
-      hscrollbar-policy: never;
-      vexpand: true;
-      Adw.Clamp {
-        margin-bottom: 12;
-        margin-top: 12;
-        margin-start: 12;
-        margin-end: 12;
-        Box {
-          orientation: vertical;
+    Adw.ActionRow {
+      title: _("Font");
+      activatable-widget: font_chooser;
+
+      FontDialogButton font_chooser {
+        valign: center;
+        dialog: FontDialog {};
+        use-font: true;
+      }
+    }
+
+    Adw.ActionRow {
+      title: _("Title Size");
+      subtitle: _("Title size in relation to text size");
+
+      Scale titlesize {
+        draw-value: true;
+        width-request: 200;
+        adjustment: Adjustment {
+          lower: 1;
+          upper: 4;
+        };
+      }
+    }
+
+    Adw.ActionRow {
+      title: _("Label Size");
+      subtitle: _("Label size in relation to text size");
+
+      Scale labelsize {
+        draw-value: true;
+        width-request: 200;
+        adjustment: Adjustment {
+          lower: 1;
+          upper: 4;
+        };
+      }
+    }
+  }
+
+  Adw.PreferencesGroup {
+    title: _("Lines");
+
+    Adw.ComboRow linestyle {
+      title: _("Linestyle");
+      model: StringList {
+        strings [
+          C_("linestyle", "None"),
+          C_("linestyle", "Solid"),
+          C_("linestyle", "Dotted"),
+          C_("linestyle", "Dashed"),
+          C_("linestyle", "Dashdot"),
+        ]
+      };
+      notify::selected => $on_linestyle();
+    }
+
+    Adw.ActionRow {
+      title: _("Linewidth");
+      visible: bind linewidth.sensitive;
+
+      Scale linewidth {
+        draw-value: true;
+        width-request: 200;
+        adjustment: Adjustment {
+          lower: 0;
+          upper: 10;
+        };
+        sensitive: false;
+      }
+    }
+
+    Adw.ComboRow markers {
+      title: _("Markers");
+      model: StringList {
+        strings [
+          C_("markerstyle", "None"),
+          C_("markerstyle", "Point"),
+          C_("markerstyle", "Pixel"),
+          C_("markerstyle", "Circle"),
+          C_("markerstyle", "Triangle Down"),
+          C_("markerstyle", "Triangle Up"),
+          C_("markerstyle", "Triangle Left"),
+          C_("markerstyle", "Triangle Right"),
+          C_("markerstyle", "Octagon"),
+          C_("markerstyle", "Square"),
+          C_("markerstyle", "Pentagon"),
+          C_("markerstyle", "Star"),
+          C_("markerstyle", "Hexagon 1"),
+          C_("markerstyle", "Hexagon 2"),
+          C_("markerstyle", "Plus"),
+          C_("markerstyle", "X"),
+          // Translators: Diamond as in Cards Symbol
+          C_("markerstyle", "Diamond"),
+          // Translators: Diamond as in Cards Symbol
+          C_("markerstyle", "Thin Diamond"),
+          C_("markerstyle", "Vertical Line"),
+          C_("markerstyle", "Horizontal Line"),
+          C_("markerstyle", "Filled Plus"),
+          C_("markerstyle", "Filled X"),
+        ]
+      };
+      notify::selected => $on_markers();
+    }
+
+    Adw.ActionRow {
+      title: _("Marker Size");
+      visible: bind markersize.sensitive;
+
+      Scale markersize {
+        draw-value: true;
+        width-request: 200;
+        adjustment: Adjustment {
+          lower: 0;
+          upper: 10;
+        };
+        sensitive: false;
+      }
+    }
+  }
+
+  Adw.PreferencesGroup {
+    title: _("Axes");
+
+    Adw.ActionRow {
+      title: _("Axis Width");
+
+      Scale axis_width {
+        draw-value: true;
+        width-request: 200;
+        adjustment: Adjustment {
+          lower: 0;
+          upper: 4;
+        };
+      }
+    }
+
+    Adw.SwitchRow draw_frame {
+      title: _("Draw Frame");
+    }
+  }
+
+  Adw.PreferencesGroup {
+    title: _("Ticks");
+
+    Adw.ComboRow tick_direction {
+      title: _("Tick Directions");
+      model: StringList {
+        strings [_("Inwards"), _("Outwards")]
+      };
+    }
+
+    Adw.SwitchRow minor_ticks {
+      title: _("Minor Ticks");
+    }
+
+    Adw.ActionRow {
+      title: _("Major Tick Width");
+
+      Scale major_tick_width {
+        draw-value: true;
+        width-request: 200;
+        adjustment: Adjustment {
+          lower: 0;
+          upper: 4;
+        };
+      }
+    }
+
+    Adw.ActionRow {
+      title: _("Minor Tick Width");
+      visible: bind minor_ticks.active;
+
+      Scale minor_tick_width {
+        draw-value: true;
+        width-request: 200;
+        adjustment: Adjustment {
+          lower: 0;
+          upper: 4;
+        };
+      }
+    }
+
+    Adw.ActionRow {
+      title: _("Major Tick Length");
+
+      Scale major_tick_length {
+        draw-value: true;
+        width-request: 200;
+        adjustment: Adjustment {
+          lower: 0;
+          upper: 20;
+        };
+      }
+    }
+
+    Adw.ActionRow {
+      title: _("Minor Tick Length");
+      visible: bind minor_ticks.active;
+
+      Scale minor_tick_length {
+        draw-value: true;
+        width-request: 200;
+        adjustment: Adjustment {
+          lower: 0;
+          upper: 20;
+        };
+      }
+    }
+
+    Adw.SwitchRow tick_bottom {
+      title: _("Ticks on Bottom Axis");
+    }
+
+    Adw.SwitchRow tick_left {
+      title: _("Ticks on Left Axis");
+    }
+
+    Adw.SwitchRow tick_right {
+      title: _("Ticks on Right Axis");
+    }
+
+    Adw.SwitchRow tick_top {
+      title: _("Ticks on Top Axis");
+    }
+  }
+
+  Adw.PreferencesGroup {
+    title: _("Grid");
+
+    Adw.SwitchRow show_grid {
+      title: _("Show Grid");
+    }
+
+    Adw.ActionRow {
+      title: _("Grid Width");
+      visible: bind show_grid.active;
+
+      Scale grid_linewidth {
+        draw-value: true;
+        width-request: 200;
+        adjustment: Adjustment {
+          lower: 0;
+          upper: 4;
+        };
+      }
+    }
+
+    Adw.ActionRow {
+      title: _("Grid Opacity");
+      visible: bind show_grid.active;
+
+      Scale grid_opacity {
+        draw-value: true;
+        width-request: 200;
+        adjustment: Adjustment {
+          lower: 0;
+          upper: 1;
+        };
+      }
+    }
+  }
+
+  Adw.PreferencesGroup {
+    title: _("Padding");
+    description: _("Padding for different parts of the figure");
+
+    Adw.ActionRow {
+      title: _("Value Padding");
+      subtitle: _("Padding between axes and values");
+
+      Scale value_padding {
+        draw-value: true;
+        width-request: 200;
+        adjustment: Adjustment {
+          lower: 0;
+          upper: 40;
+        };
+      }
+    }
+
+    Adw.ActionRow {
+      title: _("Label Padding");
+      subtitle: _("Padding between axes and labels");
+
+      Scale label_padding {
+        draw-value: true;
+        width-request: 200;
+        adjustment: Adjustment {
+          lower: 0;
+          upper: 40;
+        };
+      }
+    }
+
+    Adw.ActionRow {
+      title: _("Title Padding");
+      subtitle: _("Padding between axes and the title");
+
+      Scale title_padding {
+        draw-value: true;
+        width-request: 200;
+        adjustment: Adjustment {
+          lower: 0;
+          upper: 40;
+        };
+      }
+    }
+  }
+
+  Adw.PreferencesGroup {
+    title: _("Colors");
+
+    header-suffix: Box poor_contrast_warning {
+      styles ["warning", "flat"]
+      spacing: 6;
+      tooltip-text: _("Label text might be hard to read");
+      Image {
+        icon-name: "dialog-warning-symbolic";
+      }
+      Label {
+        label: _("Poor Contrast");
+      }
+    };
+
+    Grid {
+      row-spacing: 20;
+      column-spacing: 20;
+
+      Adw.PreferencesGroup {
+        layout {
+          column: 0;
+          row: 0;
+        }
+
+        Adw.ActionRow {
+          title: _("Text Color");
+          activatable-widget: text_color;
           hexpand: true;
-          spacing: 20;
 
-          Adw.PreferencesGroup {
-            Adw.EntryRow style_name {
-              title: _("Style Name");
-            }
-
-            Adw.ActionRow {
-              title: _("Font");
-              activatable-widget: font_chooser;
-
-              FontDialogButton font_chooser {
-                valign: center;
-                dialog: FontDialog {};
-                use-font: true;
-              }
-            }
-
-            Adw.ActionRow {
-              title: _("Title Size");
-              subtitle: _("Title size in relation to text size");
-
-              Scale titlesize {
-                draw-value: true;
-                width-request: 200;
-                adjustment: Adjustment {
-                  lower: 1;
-                  upper: 4;
-                };
-              }
-            }
-
-            Adw.ActionRow {
-              title: _("Label Size");
-              subtitle: _("Label size in relation to text size");
-
-              Scale labelsize {
-                draw-value: true;
-                width-request: 200;
-                adjustment: Adjustment {
-                  lower: 1;
-                  upper: 4;
-                };
-              }
-            }
-          }
-
-          Adw.PreferencesGroup {
-            title: _("Lines");
-
-            Adw.ComboRow linestyle {
-              title: _("Linestyle");
-              model: StringList {
-                strings [
-                  C_("linestyle", "None"),
-                  C_("linestyle", "Solid"),
-                  C_("linestyle", "Dotted"),
-                  C_("linestyle", "Dashed"),
-                  C_("linestyle", "Dashdot"),
-                ]
-              };
-              notify::selected => $on_linestyle();
-            }
-
-            Adw.ActionRow {
-              title: _("Linewidth");
-              visible: bind linewidth.sensitive;
-
-              Scale linewidth {
-                draw-value: true;
-                width-request: 200;
-                adjustment: Adjustment {
-                  lower: 0;
-                  upper: 10;
-                };
-                sensitive: false;
-              }
-            }
-
-            Adw.ComboRow markers {
-              title: _("Markers");
-              model: StringList {
-                strings [
-                  C_("markerstyle", "None"),
-                  C_("markerstyle", "Point"),
-                  C_("markerstyle", "Pixel"),
-                  C_("markerstyle", "Circle"),
-                  C_("markerstyle", "Triangle Down"),
-                  C_("markerstyle", "Triangle Up"),
-                  C_("markerstyle", "Triangle Left"),
-                  C_("markerstyle", "Triangle Right"),
-                  C_("markerstyle", "Octagon"),
-                  C_("markerstyle", "Square"),
-                  C_("markerstyle", "Pentagon"),
-                  C_("markerstyle", "Star"),
-                  C_("markerstyle", "Hexagon 1"),
-                  C_("markerstyle", "Hexagon 2"),
-                  C_("markerstyle", "Plus"),
-                  C_("markerstyle", "X"),
-                  // Translators: Diamond as in Cards Symbol
-                  C_("markerstyle", "Diamond"),
-                  // Translators: Diamond as in Cards Symbol
-                  C_("markerstyle", "Thin Diamond"),
-                  C_("markerstyle", "Vertical Line"),
-                  C_("markerstyle", "Horizontal Line"),
-                  C_("markerstyle", "Filled Plus"),
-                  C_("markerstyle", "Filled X"),
-                ]
-              };
-              notify::selected => $on_markers();
-            }
-
-            Adw.ActionRow {
-              title: _("Marker Size");
-              visible: bind markersize.sensitive;
-
-              Scale markersize {
-                draw-value: true;
-                width-request: 200;
-                adjustment: Adjustment {
-                  lower: 0;
-                  upper: 10;
-                };
-                sensitive: false;
-              }
-            }
-          }
-
-          Adw.PreferencesGroup {
-            title: _("Axes");
-
-            Adw.ActionRow {
-              title: _("Axis Width");
-
-              Scale axis_width {
-                draw-value: true;
-                width-request: 200;
-                adjustment: Adjustment {
-                  lower: 0;
-                  upper: 4;
-                };
-              }
-            }
-
-            Adw.SwitchRow draw_frame {
-              title: _("Draw Frame");
-            }
-          }
-
-          Adw.PreferencesGroup {
-            title: _("Ticks");
-
-            Adw.ComboRow tick_direction {
-              title: _("Tick Directions");
-              model: StringList {
-                strings [_("Inwards"), _("Outwards")]
-              };
-            }
-
-            Adw.SwitchRow minor_ticks {
-              title: _("Minor Ticks");
-            }
-
-            Adw.ActionRow {
-              title: _("Major Tick Width");
-
-              Scale major_tick_width {
-                draw-value: true;
-                width-request: 200;
-                adjustment: Adjustment {
-                  lower: 0;
-                  upper: 4;
-                };
-              }
-            }
-
-            Adw.ActionRow {
-              title: _("Minor Tick Width");
-              visible: bind minor_ticks.active;
-
-              Scale minor_tick_width {
-                draw-value: true;
-                width-request: 200;
-                adjustment: Adjustment {
-                  lower: 0;
-                  upper: 4;
-                };
-              }
-            }
-
-            Adw.ActionRow {
-              title: _("Major Tick Length");
-
-              Scale major_tick_length {
-                draw-value: true;
-                width-request: 200;
-                adjustment: Adjustment {
-                  lower: 0;
-                  upper: 20;
-                };
-              }
-            }
-
-            Adw.ActionRow {
-              title: _("Minor Tick Length");
-              visible: bind minor_ticks.active;
-
-              Scale minor_tick_length {
-                draw-value: true;
-                width-request: 200;
-                adjustment: Adjustment {
-                  lower: 0;
-                  upper: 20;
-                };
-              }
-            }
-
-            Adw.SwitchRow tick_bottom {
-              title: _("Ticks on Bottom Axis");
-            }
-
-            Adw.SwitchRow tick_left {
-              title: _("Ticks on Left Axis");
-            }
-
-            Adw.SwitchRow tick_right {
-              title: _("Ticks on Right Axis");
-            }
-
-            Adw.SwitchRow tick_top {
-              title: _("Ticks on Top Axis");
-            }
-          }
-
-          Adw.PreferencesGroup {
-            title: _("Grid");
-
-            Adw.SwitchRow show_grid {
-              title: _("Show Grid");
-            }
-
-            Adw.ActionRow {
-              title: _("Grid Width");
-              visible: bind show_grid.active;
-
-              Scale grid_linewidth {
-                draw-value: true;
-                width-request: 200;
-                adjustment: Adjustment {
-                  lower: 0;
-                  upper: 4;
-                };
-              }
-            }
-
-            Adw.ActionRow {
-              title: _("Grid Opacity");
-              visible: bind show_grid.active;
-
-              Scale grid_opacity {
-                draw-value: true;
-                width-request: 200;
-                adjustment: Adjustment {
-                  lower: 0;
-                  upper: 1;
-                };
-              }
-            }
-          }
-
-          Adw.PreferencesGroup {
-            title: _("Padding");
-            description: _("Padding for different parts of the figure");
-
-            Adw.ActionRow {
-              title: _("Value Padding");
-              subtitle: _("Padding between axes and values");
-
-              Scale value_padding {
-                draw-value: true;
-                width-request: 200;
-                adjustment: Adjustment {
-                  lower: 0;
-                  upper: 40;
-                };
-              }
-            }
-
-            Adw.ActionRow {
-              title: _("Label Padding");
-              subtitle: _("Padding between axes and labels");
-
-              Scale label_padding {
-                draw-value: true;
-                width-request: 200;
-                adjustment: Adjustment {
-                  lower: 0;
-                  upper: 40;
-                };
-              }
-            }
-
-            Adw.ActionRow {
-              title: _("Title Padding");
-              subtitle: _("Padding between axes and the title");
-
-              Scale title_padding {
-                draw-value: true;
-                width-request: 200;
-                adjustment: Adjustment {
-                  lower: 0;
-                  upper: 40;
-                };
-              }
-            }
-          }
-
-          Adw.PreferencesGroup {
-            title: _("Colors");
-
-            header-suffix: Box poor_contrast_warning {
-              styles ["warning", "flat"]
-              spacing: 6;
-              tooltip-text: _("Label text might be hard to read");
-              Image {
-                icon-name: "dialog-warning-symbolic";
-              }
-              Label {
-                label: _("Poor Contrast");
-              }
-            };
-
-            Grid {
-              row-spacing: 20;
-              column-spacing: 20;
-
-              Adw.PreferencesGroup {
-                layout {
-                  column: 0;
-                  row: 0;
-                }
-
-                Adw.ActionRow {
-                  title: _("Text Color");
-                  activatable-widget: text_color;
-                  hexpand: true;
-
-                  Button text_color {
-                    tooltip-text: _("Change Color");
-                    valign: center;
-                    styles ["flat"]
-                    Image {
-                      icon-name: "color-picker-symbolic";
-                      pixel-size: 20;
-                    }
-                  }
-                }
-              }
-
-              Adw.PreferencesGroup {
-                layout {
-                  column: 1;
-                  row: 0;
-                }
-                Adw.ActionRow {
-                  title: _("Tick Color");
-                  activatable-widget: tick_color;
-                  hexpand: true;
-
-                  Button tick_color {
-                    tooltip-text: _("Change Color");
-                    valign: center;
-                    styles ["flat"]
-                    Image {
-                      icon-name: "color-picker-symbolic";
-                      pixel-size: 20;
-                    }
-                  }
-                }
-              }
-
-              Adw.PreferencesGroup {
-                layout {
-                  column: 0;
-                  row: 1;
-                }
-                Adw.ActionRow {
-                  title: _("Axis Color");
-                  activatable-widget: axis_color;
-                  hexpand: true;
-
-                  Button axis_color {
-                    tooltip-text: _("Change Color");
-                    valign: center;
-                    styles ["flat"]
-                    Image {
-                      icon-name: "color-picker-symbolic";
-                      pixel-size: 20;
-                    }
-                  }
-                }
-              }
-
-              Adw.PreferencesGroup {
-                layout {
-                  column: 1;
-                  row: 1;
-                }
-                Adw.ActionRow {
-                  title: _("Grid Color");
-                  activatable-widget: grid_color;
-                  hexpand: true;
-
-                  Button grid_color {
-                    tooltip-text: _("Change Color");
-                    valign: center;
-                    styles ["flat"]
-                    Image {
-                      icon-name: "color-picker-symbolic";
-                      pixel-size: 20;
-                    }
-                  }
-                }
-              }
-
-              Adw.PreferencesGroup {
-                layout {
-                  column: 0;
-                  row: 2;
-                }
-                Adw.ActionRow {
-                  title: _("Background Color");
-                  activatable-widget: background_color;
-                  hexpand: true;
-
-                  Button background_color {
-                    tooltip-text: _("Change Color");
-                    valign: center;
-                    styles ["flat"]
-                    Image {
-                      icon-name: "color-picker-symbolic";
-                      pixel-size: 20;
-                    }
-                  }
-                }
-              }
-
-              Adw.PreferencesGroup {
-                layout {
-                  column: 1;
-                  row: 2;
-                }
-                Adw.ActionRow {
-                  title: _("Outline Color");
-                  activatable-widget: outline_color;
-                  hexpand: true;
-
-                  Button outline_color {
-                    tooltip-text: _("Change Color");
-                    valign: center;
-                    styles ["flat"]
-                    Image {
-                      icon-name: "color-picker-symbolic";
-                      pixel-size: 20;
-                    }
-                  }
-                }
-              }
-            }
-          }
-
-          Adw.PreferencesGroup {
-            title: _("Line Colors");
-            header-suffix: Button {
-              clicked => $add_color();
-              Adw.ButtonContent {
-                halign: center;
-                icon-name: "list-add-symbolic";
-                label: _("Add Color");
-              }
-              styles ["flat"]
-            };
-            ListBox line_colors_box {
-              vexpand: false;
-              valign: start;
-              hexpand: true;
-              selection-mode: none;
-              styles ["boxed-list"]
+          Button text_color {
+            tooltip-text: _("Change Color");
+            valign: center;
+            styles ["flat"]
+            Image {
+              icon-name: "color-picker-symbolic";
+              pixel-size: 20;
             }
           }
         }
       }
+
+      Adw.PreferencesGroup {
+        layout {
+          column: 1;
+          row: 0;
+        }
+        Adw.ActionRow {
+          title: _("Tick Color");
+          activatable-widget: tick_color;
+          hexpand: true;
+
+          Button tick_color {
+            tooltip-text: _("Change Color");
+            valign: center;
+            styles ["flat"]
+            Image {
+              icon-name: "color-picker-symbolic";
+              pixel-size: 20;
+            }
+          }
+        }
+      }
+
+      Adw.PreferencesGroup {
+        layout {
+          column: 0;
+          row: 1;
+        }
+        Adw.ActionRow {
+          title: _("Axis Color");
+          activatable-widget: axis_color;
+          hexpand: true;
+
+          Button axis_color {
+            tooltip-text: _("Change Color");
+            valign: center;
+            styles ["flat"]
+            Image {
+              icon-name: "color-picker-symbolic";
+              pixel-size: 20;
+            }
+          }
+        }
+      }
+
+      Adw.PreferencesGroup {
+        layout {
+          column: 1;
+          row: 1;
+        }
+        Adw.ActionRow {
+          title: _("Grid Color");
+          activatable-widget: grid_color;
+          hexpand: true;
+
+          Button grid_color {
+            tooltip-text: _("Change Color");
+            valign: center;
+            styles ["flat"]
+            Image {
+              icon-name: "color-picker-symbolic";
+              pixel-size: 20;
+            }
+          }
+        }
+      }
+
+      Adw.PreferencesGroup {
+        layout {
+          column: 0;
+          row: 2;
+        }
+        Adw.ActionRow {
+          title: _("Background Color");
+          activatable-widget: background_color;
+          hexpand: true;
+
+          Button background_color {
+            tooltip-text: _("Change Color");
+            valign: center;
+            styles ["flat"]
+            Image {
+              icon-name: "color-picker-symbolic";
+              pixel-size: 20;
+            }
+          }
+        }
+      }
+
+      Adw.PreferencesGroup {
+        layout {
+          column: 1;
+          row: 2;
+        }
+        Adw.ActionRow {
+          title: _("Outline Color");
+          activatable-widget: outline_color;
+          hexpand: true;
+
+          Button outline_color {
+            tooltip-text: _("Change Color");
+            valign: center;
+            styles ["flat"]
+            Image {
+              icon-name: "color-picker-symbolic";
+              pixel-size: 20;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  Adw.PreferencesGroup {
+    title: _("Line Colors");
+    header-suffix: Button {
+      clicked => $add_color();
+      Adw.ButtonContent {
+        halign: center;
+        icon-name: "list-add-symbolic";
+        label: _("Add Color");
+      }
+      styles ["flat"]
     };
+    ListBox line_colors_box {
+      vexpand: false;
+      valign: start;
+      hexpand: true;
+      selection-mode: none;
+      styles ["boxed-list"]
+    }
   }
 }

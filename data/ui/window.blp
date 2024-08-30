@@ -587,61 +587,60 @@ template $GraphsWindow: Adw.ApplicationWindow {
       }
     };
 
-    content:
-      Box {
+    content: Box {
       orientation: vertical;
-        Adw.HeaderBar content_headerbar {
-          name: "canvas-headerbar";
-          styles ["flat"]
-          title-widget: Adw.WindowTitle content_title {};
-          ToggleButton show_sidebar_button {
-            icon-name: "sidebar-show-symbolic";
-            tooltip-text: _("Toggle Sidebar");
-            active: bind split_view.show-sidebar;
-            visible: bind split_view.collapsed;
-          }
-          Button undo_button {
-            action-name: "app.undo";
-            icon-name: "edit-undo-symbolic";
-            tooltip-text: _("Undo");
-          }
-          Button redo_button {
-            action-name: "app.redo";
-            icon-name: "edit-redo-symbolic";
-            tooltip-text: _("Redo");
-          }
-          [end]
-          MenuButton view_menu_button {
-            icon-name: "view-reveal-symbolic";
-            tooltip-text: _("View Menu");
-            always-show-arrow: true;
-            menu-model: view_menu;
-          }
-          [end]
-          Button view_forward_button {
-            action-name: "app.view_forward";
-            icon-name: "go-next-symbolic";
-            tooltip-text: _("Next View");
-          }
-          [end]
-          Button view_back_button {
-            action-name: "app.view_back";
-            icon-name: "go-previous-symbolic";
-            tooltip-text: _("Previous View");
-          }
+      Adw.HeaderBar content_headerbar {
+        name: "canvas-headerbar";
+        styles ["flat"]
+        title-widget: Adw.WindowTitle content_title {};
+        ToggleButton show_sidebar_button {
+          icon-name: "sidebar-show-symbolic";
+          tooltip-text: _("Toggle Sidebar");
+          active: bind split_view.show-sidebar;
+          visible: bind split_view.collapsed;
         }
-        Adw.ToastOverlay toast_overlay {
-          focusable: true;
-          height-request: 200;
-          width-request: 200;
-          child: Adw.StatusPage {
-            icon-name: "dialog-error-symbolic";
-            title: _("Canvas Failed to Load");
-          };
+        Button undo_button {
+          action-name: "app.undo";
+          icon-name: "edit-undo-symbolic";
+          tooltip-text: _("Undo");
         }
-      };
+        Button redo_button {
+          action-name: "app.redo";
+          icon-name: "edit-redo-symbolic";
+          tooltip-text: _("Redo");
+        }
+        [end]
+        MenuButton view_menu_button {
+          icon-name: "view-reveal-symbolic";
+          tooltip-text: _("View Menu");
+          always-show-arrow: true;
+          menu-model: view_menu;
+        }
+        [end]
+        Button view_forward_button {
+          action-name: "app.view_forward";
+          icon-name: "go-next-symbolic";
+          tooltip-text: _("Next View");
+        }
+        [end]
+        Button view_back_button {
+          action-name: "app.view_back";
+          icon-name: "go-previous-symbolic";
+          tooltip-text: _("Previous View");
+        }
+      }
+      Adw.ToastOverlay toast_overlay {
+        focusable: true;
+        height-request: 200;
+        width-request: 200;
+        child: Adw.StatusPage {
+          icon-name: "dialog-error-symbolic";
+          title: _("Canvas Failed to Load");
+        };
+      }
     };
-  }
+  };
+}
 
 menu primary_menu {
   section{

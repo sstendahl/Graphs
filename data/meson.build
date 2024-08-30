@@ -78,6 +78,7 @@ blueprint_files = [
   'ui/smoothen-settings.blp',
   'ui/style-color-box.blp',
   'ui/style-editor.blp',
+  'ui/style-editor-window.blp',
   'ui/style-preview.blp',
   'ui/transform.blp',
   'ui/window.blp',
