@@ -12,7 +12,7 @@ from graphs import (
     file_import,
     utilities,
 )
-from graphs.item import DataItem
+from graphs.item import EquationItem
 from graphs.style_editor import StyleEditorWindow
 
 import numexpr
@@ -83,35 +83,36 @@ class PythonHelper(Graphs.PythonHelper):
 
     @staticmethod
     def _on_add_equation_request(self, name: str) -> str:
-        settings = self.props.application.get_settings_child("add-equation")
+        application = self.props.application
+        settings = application.get_settings_child("add-equation")
+        figure_settings = application.get_data().get_figure_settings()
+        canvas = application.get_window().get_canvas()
         try:
             x_start = utilities.string_to_float(settings.get_string("x-start"))
             x_stop = utilities.string_to_float(settings.get_string("x-stop"))
+            figure_settings.set_min_bottom(x_start)
+            figure_settings.set_max_bottom(x_stop)
             step_size = utilities.string_to_float(
                 settings.get_string("step-size"),
             )
-            datapoints = int(abs(x_start - x_stop) / step_size) + 1
-            xdata = numpy.ndarray.tolist(
-                numpy.linspace(x_start, x_stop, datapoints),
-            )
             equation = utilities.preprocess(settings.get_string("equation"))
-            ydata = numpy.ndarray.tolist(
-                numexpr.evaluate(equation + " + x*0", local_dict={"x": xdata}),
-            )
             if name == "":
                 name = f"Y = {settings.get_string('equation')}"
-            style_manager = self.props.application.get_figure_style_manager()
-            self.props.application.get_data().add_items(
+            style_manager = application.get_figure_style_manager()
+            application.get_data().add_items(
                 [
-                    DataItem.new(
+                    EquationItem.new(
                         style_manager.get_selected_style_params(),
-                        xdata,
-                        ydata,
+                        equation,
+                        step_size,
+                        canvas,
                         name=name,
                     ),
                 ],
                 style_manager,
             )
+            figure_settings.set_min_bottom(x_start)
+            figure_settings.set_max_bottom(x_stop)
             return ""
         except ValueError as error:
             return str(error)

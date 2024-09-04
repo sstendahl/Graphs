@@ -405,8 +405,15 @@ class Data(Graphs.Data):
             for index in \
                     item_.get_xposition() * 2, 1 + item_.get_yposition() * 2:
                 axes[index][1] = True
+                xdata = numpy.array(copy.deepcopy(item_.xdata))
+                ydata = numpy.array(copy.deepcopy(item_.ydata))
+                if isinstance(item_, item.EquationItem):
+                    lower_bound = figure_settings.get_min_bottom()
+                    upper_bound = figure_settings.get_max_bottom()
+                    ydata = ydata[(xdata >= lower_bound) & (xdata <= upper_bound)]
+                    xdata = xdata[(xdata >= lower_bound) & (xdata <= upper_bound)]
                 xydata = numpy.asarray(
-                    item_.ydata if index % 2 else item_.xdata,
+                    ydata if index % 2 else xdata,
                 )
                 try:
                     xydata = xydata[numpy.isfinite(xydata)]
@@ -431,6 +438,8 @@ class Data(Graphs.Data):
                 span = max_all - min_all
                 # 0.05 padding on y-axis, 0.015 padding on x-axis
                 padding_factor = 0.05 if count % 2 else 0.015
+                if isinstance(item_, item.EquationItem) and not count % 2:
+                    padding_factor = 0
                 max_all += padding_factor * span
 
                 # For inverse scale, calculate padding using a factor
@@ -441,6 +450,8 @@ class Data(Graphs.Data):
             else:  # Use different scaling type for logarithmic scale
                 # Use padding factor of 2 for y-axis, 1.025 for x-axis
                 padding_factor = 2 if count % 2 else 1.025
+                if isinstance(item_, item.EquationItem) and not count % 2:
+                    padding_factor = 0
                 min_all *= 1 / padding_factor
                 max_all *= padding_factor
             figure_settings.set_property(f"min_{direction}", min_all)
@@ -494,4 +505,3 @@ class Data(Graphs.Data):
 
     def _load(self) -> None:
         self.load_from_project_dict(project.read_project_file(self.props.file))
-        self.set_unsaved(False)

@@ -4,7 +4,9 @@ from gettext import gettext as _
 
 from gi.repository import GObject, Graphs
 
-from graphs import misc
+from graphs import misc, utilities
+
+import numpy, numexpr
 
 
 def new_from_dict(dictionary: dict):
@@ -12,7 +14,9 @@ def new_from_dict(dictionary: dict):
     match dictionary["type"]:
         case "GraphsDataItem":
             cls = DataItem
-        case "GrapsTextItem":
+        case "GraphsEquationItem":
+            cls = EquationItem
+        case "GraphsTextItem":
             cls = TextItem
         case "GrapsFillItem":
             cls = FillItem
@@ -88,6 +92,59 @@ class DataItem(_PythonItem):
             if self.get_property(prop) is None:
                 self.set_property(prop, [])
 
+class EquationItem(DataItem):
+    """EquationItem."""
+
+    __gtype_name__ = "GraphsEquationItem"
+
+    canvas = GObject.Property(type=object)
+    equation = GObject.Property(type=str, default="")
+    stepsize = GObject.Property(type=float, default=0.01)
+
+    @classmethod
+    def new(cls, style, equation, stepsize, canvas, xdata=None, ydata=None, **kwargs):
+        """Create new EquationItem."""
+        xdata, ydata = cls.generate_data(canvas, equation, stepsize)
+        print("Addi g equation item")
+        return cls(
+            xdata=xdata,
+            ydata=ydata,
+            equation=equation,
+            stepsize=stepsize,
+            **cls._extract_params(cls, style),
+            **kwargs,
+        )
+
+    @property
+    def name(self):
+        return self.equation
+
+    def reset_data(self, canvas):
+        xdata, ydata = self.generate_data(canvas, self.equation, self.stepsize)
+        self.xdata = xdata
+        self.ydata = ydata
+
+    @staticmethod
+    def generate_data(canvas, equation, step_size):
+        x_range = canvas.max_bottom - canvas.min_bottom
+        x_start = canvas.min_bottom - x_range * 2
+        x_stop = canvas.max_bottom + x_range * 2
+        datapoints = min(int(abs(x_start - x_stop) / step_size) + 1, 500000)
+        xdata = numpy.ndarray.tolist(
+            numpy.linspace(x_start, x_stop, datapoints),
+        )
+        equation = utilities.preprocess(equation)
+        ydata = numpy.ndarray.tolist(
+            numexpr.evaluate(equation + " + x*0", local_dict={"x": xdata}),
+        )
+
+        return xdata, ydata
+
+    def __init__(self, **kwargs):
+        super(DataItem, self).__init__(typename=_("Equation"), **kwargs)
+        for prop in ("xdata", "ydata"):
+            if self.get_property(prop) is None:
+                self.set_property(prop, [])
 
 class TextItem(_PythonItem):
     """TextItem."""

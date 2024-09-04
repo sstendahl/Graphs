@@ -22,6 +22,8 @@ def new_for_item(canvas: Graphs.Canvas, item: Graphs.Item):
     match item.__gtype_name__:
         case "GraphsDataItem":
             cls = DataItemArtistWrapper
+        case "GraphsEquationItem":
+            cls = EquationItemArtistWrapper
         case "GraphsTextItem":
             cls = TextItemArtistWrapper
         case "GraphsFillItem":
@@ -152,6 +154,12 @@ class DataItemArtistWrapper(ItemArtistWrapper):
             self.set_property(prop, item.get_property(prop))
             self.connect(f"notify::{prop}", self._set_properties)
         self._set_properties(None, None)
+
+class EquationItemArtistWrapper(DataItemArtistWrapper):
+
+    def __init__(self, axis: pyplot.axis, item: Graphs.Item):
+            super().__init__(axis, item)
+
 
 
 class TextItemArtistWrapper(ItemArtistWrapper):

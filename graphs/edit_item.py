@@ -2,7 +2,9 @@
 """Module for Editing an Item."""
 from gi.repository import Adw, GObject, Graphs, Gtk
 
-from graphs.item import DataItem
+from graphs.item import DataItem, EquationItem
+
+import numpy
 
 _IGNORELIST = [
     "alpha",
@@ -24,9 +26,14 @@ class EditItemDialog(Adw.PreferencesDialog):
 
     __gtype_name__ = "GraphsEditItemDialog"
     item_selector = Gtk.Template.Child()
+    item_selector_group = Gtk.Template.Child()
     name = Gtk.Template.Child()
     xposition = Gtk.Template.Child()
     yposition = Gtk.Template.Child()
+
+    equation_group = Gtk.Template.Child()
+    equation = Gtk.Template.Child()
+    stepsize = Gtk.Template.Child()
 
     item_group = Gtk.Template.Child()
     linestyle = Gtk.Template.Child()
@@ -41,12 +48,15 @@ class EditItemDialog(Adw.PreferencesDialog):
 
     def __init__(self, application, item):
         data = application.get_data()
+        self.figure_settings = application.get_data().get_figure_settings()
+        self.canvas = application.get_window().get_canvas()
         super().__init__(
             data=data,
             item=item,
             bindings=[],
             model=Gtk.StringList.new(data.get_names()),
         )
+        self.item_selector_group.set_visible(len(data.get_items()) > 1)
         self.item_selector.set_model(self.props.model)
         self.item_selector.set_selected(data.get_items().index(item))
         self.present(application.get_window())
@@ -94,6 +104,24 @@ class EditItemDialog(Adw.PreferencesDialog):
                 )
         self.props.bindings = bindings
         self.item_group.set_visible(isinstance(item, DataItem))
+        self.equation_group.set_visible(isinstance(item, EquationItem))
+
+
+    @Gtk.Template.Callback()
+    def on_equation_change(self, _a) -> None:
+        """Handle dialog closing."""
+        item = self.props.data[self.item_selector.get_selected()]
+        item.reset_data(self.canvas)
+        item.set_name(f"Y = {item.equation}")
+        self.props.data.optimize_limits()
+
+    @Gtk.Template.Callback()
+    def on_stepsize_change(self, _a) -> None:
+        """Handle dialog closing."""
+        item = self.props.data[self.item_selector.get_selected()]
+        item.stepsize = float(_a.get_text())
+        item.reset_data(self.canvas)
+
 
     @Gtk.Template.Callback()
     def on_close(self, _a) -> None:

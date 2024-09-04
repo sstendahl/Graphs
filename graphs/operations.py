@@ -7,7 +7,7 @@ from gettext import gettext as _
 from gi.repository import Graphs
 
 from graphs import misc, utilities
-from graphs.item import DataItem
+from graphs.item import DataItem, EquationItem
 
 import numexpr
 
@@ -185,11 +185,27 @@ def _apply(application, callback, *args):
         xdata, ydata = get_data(application, item)
         if xdata is not None and len(xdata) != 0:
             data_selected = True
+            canvas = application.get_window().get_canvas()
+            if callback(
+                item, xdata, ydata, *args,
+            ) is None:
+                item.set_name(f"Y = {item.equation}")
+                item.reset_data(canvas)
+                continue
+            elif callback(
+                item, xdata, ydata, *args,
+            ) is False:
+                application.get_window().add_toast_string(
+                    _(
+                        f"Could not perform operation on {item.name}, " +
+                        "this operation is not supported for equations.",
+                    ),
+                )
+                continue
             new_xdata, new_ydata, sort, discard = callback(
                 item, xdata, ydata, *args,
             )
             new_xdata, new_ydata = list(new_xdata), list(new_ydata)
-            canvas = application.get_window().get_canvas()
             if discard and canvas.get_mode() == 2:
                 logging.debug("Discard is true")
                 application.get_window().add_toast_string(
@@ -249,6 +265,9 @@ def translate_x(_item, xdata: list, ydata: list, offset: float) -> _return:
     Will show a toast if a ValueError is raised, typically when a user entered
     an invalid number (e.g. comma instead of point separators)
     """
+    if isinstance(_item, EquationItem):
+        _item.equation = _item.equation.replace("x", f"(x+{offset})")
+        return
     return [value + offset for value in xdata], ydata, True, False
 
 
@@ -260,6 +279,9 @@ def translate_y(_item, xdata: list, ydata: list, offset: float) -> _return:
     Will show a toast if a ValueError is raised, typically when a user entered
     an invalid number (e.g. comma instead of point separators)
     """
+    if isinstance(_item, EquationItem):
+        _item.equation = f"({_item.equation})+{offset}"
+        return
     return xdata, [value + offset for value in ydata], False, False
 
 
@@ -271,6 +293,10 @@ def multiply_x(_item, xdata: list, ydata: list, multiplier: float) -> _return:
     Will show a toast if a ValueError is raised, typically when a user entered
     an invalid number (e.g. comma instead of point separators)
     """
+    if isinstance(_item, EquationItem):
+        _item.equation = _item.equation.replace("x", f"(x*{multiplier})")
+
+        return
     return [value * multiplier for value in xdata], ydata, True, False
 
 
@@ -282,11 +308,18 @@ def multiply_y(_item, xdata: list, ydata: list, multiplier: float) -> _return:
     Will show a toast if a ValueError is raised, typically when a user entered
     an invalid number (e.g. comma instead of point separators)
     """
+    if isinstance(_item, EquationItem):
+        _item.equation = f"({_item.equation})*{multiplier}"
+        return
     return xdata, [value * multiplier for value in ydata], False, False
 
 
 def normalize(_item, xdata: list, ydata: list) -> _return:
     """Normalize all selected data."""
+    if isinstance(_item, EquationItem):
+        max_value = max(ydata)
+        _item.equation = f"({_item.equation})/{max_value}"
+        return
     return xdata, [value / max(ydata) for value in ydata], False, False
 
 
@@ -298,6 +331,8 @@ def smoothen(
     params: dict,
 ) -> None:
     """Smoothen y-data."""
+    if isinstance(_item, EquationItem):
+        return False
     if smooth_type == 0:
         minimum = params["savgol-polynomial"] + 1
         window_percentage = params["savgol-window"] / 100
@@ -327,6 +362,9 @@ def center(_item, xdata: list, ydata: list, center_maximum: int) -> _return:
     elif center_maximum == 1:  # Center at middle
         middle_value = (min(xdata) + max(xdata)) / 2
     new_xdata = [coordinate - middle_value for coordinate in xdata]
+    if isinstance(_item, EquationItem):
+        _item.equation = _item.equation.replace("x", f"(x-{middle_value})")
+        return
     return new_xdata, ydata, True, False
 
 
@@ -386,12 +424,18 @@ def shift(
                 new_ydata = [value * 10**shift_value_log for value in ydata]
             else:
                 new_ydata = [value + shift_value_linear for value in ydata]
+            if isinstance(item, EquationItem):
+                shift_value = shift_value_log if scale == 1 else shift_value_linear
+                item.equation = f"{item.equation}+{shift_value}"
+                return
             return xdata, new_ydata, False, False
     return xdata, ydata, False, False
 
 
 def cut(_item, _xdata, _ydata) -> _return:
     """Cut selected data over the span that is selected."""
+    if isinstance(item, EquationItem):
+        return False
     return [], [], False, False
 
 
@@ -417,6 +461,8 @@ def integral(_item, xdata: list, ydata: list) -> _return:
 
 def fft(_item, xdata: list, ydata: list) -> _return:
     """Perform Fourier transformation on all selected data."""
+    if isinstance(_item, EquationItem):
+        return False
     x_values = numpy.array(xdata)
     y_values = numpy.array(ydata)
     y_fourier = numpy.fft.fft(y_values)
@@ -427,6 +473,8 @@ def fft(_item, xdata: list, ydata: list) -> _return:
 
 def inverse_fft(_item, xdata: list, ydata: list) -> _return:
     """Perform Inverse Fourier transformation on all selected data."""
+    if isinstance(_item, EquationItem):
+        return False
     x_values = numpy.array(xdata)
     y_values = numpy.array(ydata)
     y_fourier = numpy.fft.ifft(y_values)
@@ -436,7 +484,7 @@ def inverse_fft(_item, xdata: list, ydata: list) -> _return:
 
 
 def transform(
-    _item,
+    item,
     xdata: list,
     ydata: list,
     input_x: str,
@@ -444,6 +492,8 @@ def transform(
     discard: bool = False,
 ) -> _return:
     """Perform custom transformation."""
+    if isinstance(item, EquationItem):
+        return False
     local_dict = {
         "x": xdata,
         "y": ydata,
@@ -466,6 +516,8 @@ def combine(application: Graphs.Application) -> None:
     """Combine the selected data into a new data set."""
     new_xdata, new_ydata = [], []
     for item in application.get_data():
+        if isinstance(item, EquationItem):
+            return False
         if not (item.get_selected() and isinstance(item, DataItem)):
             continue
         xdata, ydata = get_data(application, item)[:2]

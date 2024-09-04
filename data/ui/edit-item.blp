@@ -6,7 +6,8 @@ template $GraphsEditItemDialog : Adw.PreferencesDialog {
   closed => $on_close();
 
   Adw.PreferencesPage {
-    Adw.PreferencesGroup {
+    Adw.PreferencesGroup item_selector_group {
+      visible: false;
       Adw.ComboRow item_selector {
         title: _("Selected Item");
         subtitle: _("Choose which item to edit");
@@ -34,6 +35,21 @@ template $GraphsEditItemDialog : Adw.PreferencesDialog {
         model: StringList {
           strings [_("Left"), _("Right")]
         };
+      }
+    }
+
+    Adw.PreferencesGroup equation_group {
+      title: _("Equation");
+      Adw.EntryRow equation {
+        max-width-chars: 25;
+        title: _("Y =");
+        show-apply-button: true;
+        apply => $on_equation_change();
+      }
+      Adw.EntryRow stepsize {
+        title: _("Step Size");
+        show-apply-button: true;
+        apply => $on_stepsize_change();
       }
     }
 
