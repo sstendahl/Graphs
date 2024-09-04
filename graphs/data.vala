@@ -148,7 +148,7 @@ namespace Graphs {
                 if (figure_settings.hide_unselected && !item.selected)
                 continue;
                 used_positions[item.xposition] = true;
-                used_positions[item.yposition] = true;
+                used_positions[item.yposition + 2] = true;
             }
             _used_positions = used_positions;
         }
