@@ -1,6 +1,5 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Main actions."""
-import logging
 import sys
 from gettext import gettext as _
 
@@ -8,13 +7,7 @@ from gi.repository import Graphs
 
 import gio_pyio
 
-from graphs import utilities
 from graphs.figure_settings import FigureSettingsDialog
-from graphs.item import DataItem
-
-import numexpr
-
-import numpy
 
 
 def on_action_invoked(application: Graphs.Application, name: str) -> None:
