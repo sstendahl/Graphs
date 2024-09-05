@@ -93,7 +93,8 @@ class Canvas(Graphs.Canvas, FigureCanvas):
         style context. Bind `items` to `data.items` and all figure settings
         attributes to their respective values.
         """
-        pyplot.rcParams.update(style_params)  # apply style_params
+        self._style_params = style_params
+        pyplot.rcParams.update(self._style_params)  # apply style_params
         Graphs.Canvas.__init__(
             self,
             can_focus=True,
@@ -494,7 +495,7 @@ class Canvas(Graphs.Canvas, FigureCanvas):
             used_axes = (True, False, False, False)  # self.axis visible
             self._legend_axis = self._axis
 
-        params = pyplot.rcParams
+        params = self._style_params
         draw_frame = params["axes.spines.bottom"]
         ticks = "both" if params["xtick.minor.visible"] else "major"
         for directions, axis, used \

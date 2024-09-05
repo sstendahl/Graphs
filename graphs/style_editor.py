@@ -490,17 +490,29 @@ class StyleEditorWindow(Adw.Window):
 
     def _on_params_changed(self, style_editor):
         if style_editor.params is None:
-            params = {}
+            style_manager = self.props.application.get_figure_style_manager()
+            params = style_manager.get_system_style_params()
         else:
             params = style_editor.params
-            for (item,
-                 color) in zip(self._test_items, style_editor.line_colors):
+            color_cycle = style_editor.line_colors
+            for (item, color) in zip(self._test_items, color_cycle):
                 item.set_color(color)
+                for (prop, value) in item._extract_params(params).items():
+                    item.set_property(prop, value)
         canvas = Canvas(params, self._test_items, False)
         canvas.props.title = _("Title")
         canvas.props.bottom_label = _("X Label")
         canvas.props.left_label = _("Y Label")
         self.content_view.set_content(canvas)
+
+        # Set headerbar color
+        css_provider = self.props.application.get_css_provider()
+        css_provider.load_from_string(
+            "headerbar#preview-headerbar { "
+            f"background-color: {params['figure.facecolor']}; "
+            f"color: {params['text.color']}; "
+            "}",
+        )
 
     def load_style(self, file: Gio.File) -> None:
         """Load a style."""
