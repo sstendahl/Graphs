@@ -4,7 +4,7 @@ from gettext import gettext as _
 
 from gi.repository import GObject, Graphs
 
-from graphs import misc
+from graphs import misc, utilities
 
 import numpy
 
@@ -101,11 +101,11 @@ class EquationItem(DataItem):
     equation = GObject.Property(type=str, default="")
 
     @classmethod
-    def new(cls, style, equation, **kwargs):
+    def new(cls, style, equation, xdata=None, ydata=None, **kwargs):
         """Create new EquationItem."""
         return cls(
-            xdata = [0,1],
-            ydata = [0,1],
+            xdata = xdata,
+            ydata = ydata,
             equation=equation,
             **cls._extract_params(cls, style),
             **kwargs,

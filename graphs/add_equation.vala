@@ -19,7 +19,7 @@ namespace Graphs {
         public unowned Adw.EntryRow x_stop { get; }
 
         [GtkChild]
-        public unowned Adw.EntryRow step_size { get; }
+        public unowned Button confirm_button { get; }
 
         [GtkChild]
         public unowned Adw.EntryRow item_name { get; }
@@ -51,8 +51,23 @@ namespace Graphs {
             double? val = application.python_helper.evaluate_string (entry.get_text ());
             if (val == null) {
                 entry.add_css_class ("error");
+                confirm_button.set_sensitive(false);
             } else {
                 entry.remove_css_class ("error");
+                confirm_button.set_sensitive(true);
+            }
+        }
+
+        [GtkCallback]
+        private void on_equation_change (Object object, ParamSpec? spec) {
+            var entry = object as Adw.EntryRow;
+            double? val = application.python_helper.validate_equation (entry.get_text ());
+            if (val == null) {
+                entry.add_css_class ("error");
+                confirm_button.set_sensitive(false);
+            } else {
+                entry.remove_css_class ("error");
+                confirm_button.set_sensitive(true);
             }
         }
     }

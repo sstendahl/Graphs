@@ -167,7 +167,6 @@ class EquationItemArtistWrapper(DataItemArtistWrapper):
 
         self.axis = axis
         self.item = item
-        self.generate_data()
         self._artist = axis.plot(
             self.item.props.xdata,
             self.item.props.ydata,
@@ -188,12 +187,10 @@ class EquationItemArtistWrapper(DataItemArtistWrapper):
         x_start, x_stop = self.axis.get_xlim()
         x_start -= (x_stop - x_start)
         x_stop += (x_stop - x_start)
-        xdata = numpy.ndarray.tolist(
-        numpy.linspace(x_start, x_stop, 5000),
-        )
-        ydata = numpy.ndarray.tolist(
-            numexpr.evaluate(equation + " + x*0", local_dict={"x": xdata}),
-        )
+        limits = (x_start, x_stop)
+        if not utilities.validate_equation(equation, limits):
+            return
+        xdata, ydata = utilities.equation_to_data(equation, limits)
         self.item.props.xdata = xdata
         self.item.props.ydata = ydata
 

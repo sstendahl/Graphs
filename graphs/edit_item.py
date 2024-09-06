@@ -3,6 +3,9 @@
 from gi.repository import Adw, GObject, Graphs, Gtk
 
 from graphs.item import DataItem, EquationItem
+from graphs import utilities
+
+import numexpr
 
 _IGNORELIST = [
     "alpha",
@@ -102,11 +105,20 @@ class EditItemDialog(Adw.PreferencesDialog):
         self.equation_group.set_visible(isinstance(item, EquationItem))
 
     @Gtk.Template.Callback()
-    def on_equation_change(self, _a) -> None:
-        """Handle dialog closing."""
-        item = self.props.data[self.item_selector.get_selected()]
-        item.set_name(f"Y = {item.equation}")
-        self.props.data.optimize_limits()
+    def on_equation_change(self, entry_row) -> None:
+        n_items = self.props.data.get_n_items()
+        i = 0 if n_items == 1 else self.item_selector.get_selected()
+        item = self.props.data[i]
+        validate = utilities.validate_equation(item.equation)
+
+        if not validate:
+            entry_row.add_css_class("error")
+            return
+        else:
+            entry_row.remove_css_class("error")
+            item.set_name(f"Y = {item.equation}")
+            return
+
 
 
     @Gtk.Template.Callback()

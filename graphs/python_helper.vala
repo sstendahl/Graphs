@@ -30,6 +30,13 @@ namespace Graphs {
                 return this.evaluate_string_helper;
             } else return null;
         }
+        protected double validate_equation_helper { get; set; }
+        protected signal bool validate_equation_request (string input);
+        public double? validate_equation (string input) {
+            if (validate_equation_request.emit (input)) {
+                return this.validate_equation_helper;
+            } else return null;
+        }
 
         protected signal void import_from_files_request (File[] files);
         public void import_from_files (File[] files) {

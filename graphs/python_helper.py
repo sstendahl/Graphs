@@ -27,6 +27,7 @@ _REQUEST_NAMES = (
     "import_from_files_request",
     "export_items_request",
     "add_equation_request",
+    "validate_equation_request",
     "open_style_editor_request",
 )
 
@@ -64,6 +65,14 @@ class PythonHelper(Graphs.PythonHelper):
         return True
 
     @staticmethod
+    def _on_validate_equation_request(self, equation: str) -> None:
+        value = utilities.validate_equation(equation)
+        if not value:
+            return False
+        self.set_validate_equation_helper(value)
+        return True
+
+    @staticmethod
     def _on_import_from_files_request(
         self,
         files: list[Gio.File],
@@ -90,13 +99,18 @@ class PythonHelper(Graphs.PythonHelper):
             x_stop = utilities.string_to_float(settings.get_string("x-stop"))
             figure_settings.set_min_bottom(x_start)
             figure_settings.set_max_bottom(x_stop)
-            equation = utilities.preprocess(settings.get_string("equation"))
+            limits = (x_start, x_stop)
+            equation = settings.get_string("equation")
             if name == "":
                 name = f"Y = {settings.get_string('equation')}"
             style_manager = self.props.application.get_figure_style_manager()
+            params = style_manager.get_selected_style_params()
+            xdata, ydata = utilities.equation_to_data(equation, limits)
             equation_item = EquationItem.new(
                                 style_manager.get_selected_style_params(),
                                 equation,
+                                xdata,
+                                ydata,
                                 name=name,
                                 )
             self.props.application.get_data().add_items(

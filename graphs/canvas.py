@@ -445,6 +445,12 @@ class Canvas(Graphs.Canvas, FigureCanvas):
             self.toolbar._wait_cursor_for_draw_cm()
             if self.toolbar else nullcontext()
         ):
+
+            if self._handles:
+                for artist_ in self._handles:
+                    if isinstance(artist_, artist.EquationItemArtistWrapper):
+                        artist_.generate_data()
+
             self._renderer.set_context(ctx)
             scale = self.device_pixel_ratio
             # Scale physical drawing to logical size.
@@ -462,10 +468,7 @@ class Canvas(Graphs.Canvas, FigureCanvas):
             self._renderer.height = allocation.height * scale
             self._renderer.dpi = self.figure.dpi
             self.figure.draw(self._renderer)
-            if self._handles:
-                for artist_ in self._handles:
-                    if isinstance(artist_, artist.EquationItemArtistWrapper):
-                        artist_.generate_data()
+
 
     def _redraw(self, *_args) -> None:
         # bottom, top, left, right

@@ -8,6 +8,7 @@ import re
 from graphs.misc import FUNCTIONS
 
 import numpy
+import numexpr
 
 import sympy
 
@@ -247,6 +248,31 @@ def preprocess(string: str) -> str:
     string = re.sub(r"csc\((.*?)\)", convert_csc, string)
     return string.lower()
 
+
+def equation_to_data(equation, limits = None, steps = 5000):
+    if limits is None:
+        limits = (0, 10)
+    equation = preprocess(equation)
+    x_start, x_stop = limits
+    x_start -= (x_stop - x_start)
+    x_stop += (x_stop - x_start)
+    xdata = numpy.ndarray.tolist(
+    numpy.linspace(x_start, x_stop, 5000),
+    )
+    try:
+        ydata = numpy.ndarray.tolist(
+            numexpr.evaluate(equation + " + x*0", local_dict={"x": xdata}),
+        )
+    except (KeyError, SyntaxError, ValueError):
+        return None, None
+    return xdata, ydata
+
+def validate_equation(equation, limits = None):
+    equation = preprocess(equation)
+    validate, _ = equation_to_data(equation, limits, steps=10)
+    if validate is None:
+        return False
+    return True
 
 def string_to_function(equation_name: str) -> sympy.FunctionClass:
     """Convert a string into a sympy function."""
