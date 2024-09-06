@@ -412,6 +412,7 @@ class Data(Graphs.Data):
                     upper_bound = figure_settings.get_max_bottom()
                     ydata = ydata[(xdata >= lower_bound) & (xdata <= upper_bound)]
                     xdata = xdata[(xdata >= lower_bound) & (xdata <= upper_bound)]
+
                 xydata = numpy.asarray(
                     ydata if index % 2 else xdata,
                 )
@@ -505,3 +506,4 @@ class Data(Graphs.Data):
 
     def _load(self) -> None:
         self.load_from_project_dict(project.read_project_file(self.props.file))
+        self.set_unsaved(False)

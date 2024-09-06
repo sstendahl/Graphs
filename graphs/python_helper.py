@@ -83,36 +83,29 @@ class PythonHelper(Graphs.PythonHelper):
 
     @staticmethod
     def _on_add_equation_request(self, name: str) -> str:
-        application = self.props.application
-        settings = application.get_settings_child("add-equation")
-        figure_settings = application.get_data().get_figure_settings()
-        canvas = application.get_window().get_canvas()
+        settings = self.props.application.get_settings_child("add-equation")
+        figure_settings = self.props.application.get_data().get_figure_settings()
         try:
             x_start = utilities.string_to_float(settings.get_string("x-start"))
             x_stop = utilities.string_to_float(settings.get_string("x-stop"))
             figure_settings.set_min_bottom(x_start)
             figure_settings.set_max_bottom(x_stop)
-            step_size = utilities.string_to_float(
-                settings.get_string("step-size"),
-            )
             equation = utilities.preprocess(settings.get_string("equation"))
             if name == "":
                 name = f"Y = {settings.get_string('equation')}"
-            style_manager = application.get_figure_style_manager()
-            application.get_data().add_items(
-                [
-                    EquationItem.new(
-                        style_manager.get_selected_style_params(),
-                        equation,
-                        step_size,
-                        canvas,
-                        name=name,
-                    ),
-                ],
+            style_manager = self.props.application.get_figure_style_manager()
+            equation_item = EquationItem.new(
+                                style_manager.get_selected_style_params(),
+                                equation,
+                                name=name,
+                                )
+            self.props.application.get_data().add_items(
+                [equation_item],
                 style_manager,
             )
-            figure_settings.set_min_bottom(x_start)
-            figure_settings.set_max_bottom(x_stop)
+            self.props.application.get_data().optimize_limits()
+
+
             return ""
         except ValueError as error:
             return str(error)

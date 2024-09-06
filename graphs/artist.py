@@ -6,11 +6,13 @@ Provides GObject based wrappers for mpl artists.
 """
 from gi.repository import GObject, Graphs
 
-from graphs import misc
+from graphs import misc, utilities
 
 from matplotlib import artist, pyplot
 from matplotlib.figure import Figure
 
+import numpy
+import numexpr
 
 def new_for_item(canvas: Graphs.Canvas, item: Graphs.Item):
     """
@@ -25,9 +27,9 @@ def new_for_item(canvas: Graphs.Canvas, item: Graphs.Item):
         case "GraphsEquationItem":
             cls = EquationItemArtistWrapper
         case "GraphsTextItem":
-            cls = TextItemArtistWrapper
-        case "GraphsFillItem":
             cls = FillItemArtistWrapper
+        case "GraphsFillItem":
+            cls = TextItemArtistWrapper
         case _:
             pass
     artist_wrapper = cls(
@@ -155,11 +157,45 @@ class DataItemArtistWrapper(ItemArtistWrapper):
             self.connect(f"notify::{prop}", self._set_properties)
         self._set_properties(None, None)
 
+
 class EquationItemArtistWrapper(DataItemArtistWrapper):
+    """Wrapper for EquationItem."""
+    __gtype_name__ = "GraphsEquationItemArtistWrapper"
 
     def __init__(self, axis: pyplot.axis, item: Graphs.Item):
-            super().__init__(axis, item)
+        super(ItemArtistWrapper, self).__init__()
 
+        self.axis = axis
+        self.item = item
+        self.generate_data()
+        self._artist = axis.plot(
+            self.item.props.xdata,
+            self.item.props.ydata,
+            label=Graphs.tools_shorten_label(item.get_name(), 40),
+            color=item.get_color(),
+            alpha=item.get_alpha(),
+            linestyle=misc.LINESTYLES[item.props.linestyle],
+            marker=misc.MARKERSTYLES[item.props.markerstyle],
+        )[0]
+        for prop in ("selected", "linewidth", "markersize"):
+            self.set_property(prop, item.get_property(prop))
+            self.connect(f"notify::{prop}", self._set_properties)
+        self._set_properties(None, None)
+
+
+    def generate_data(self):
+        equation = utilities.preprocess(self.item.props.equation)
+        x_start, x_stop = self.axis.get_xlim()
+        x_start -= (x_stop - x_start)
+        x_stop += (x_stop - x_start)
+        xdata = numpy.ndarray.tolist(
+        numpy.linspace(x_start, x_stop, 5000),
+        )
+        ydata = numpy.ndarray.tolist(
+            numexpr.evaluate(equation + " + x*0", local_dict={"x": xdata}),
+        )
+        self.item.props.xdata = xdata
+        self.item.props.ydata = ydata
 
 
 class TextItemArtistWrapper(ItemArtistWrapper):

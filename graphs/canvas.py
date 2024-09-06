@@ -9,12 +9,14 @@ interactive navigation in conjunction with graphs-specific structures.
     Classes:
         Canvas
 """
+import math
 from contextlib import nullcontext
 
 from gi.repository import GObject, Gdk, Gio, Graphs, Gtk
 
+import gio_pyio
+
 from graphs import artist, misc, scales, utilities
-from graphs.item import EquationItem
 
 from matplotlib import backend_tools as tools, pyplot
 from matplotlib.backend_bases import (
@@ -127,6 +129,12 @@ class Canvas(Graphs.Canvas, FigureCanvas):
         if interactive:
             self._setup_interactive()
 
+        self.connect("save_request", self._save)
+        self.connect(
+            "zoom_request",
+            lambda _self, factor: self.zoom(factor, False),
+        )
+
         self.connect("notify::hide-unselected", self._redraw)
         items.connect("items-changed", self._redraw)
         self._redraw()
@@ -156,7 +164,6 @@ class Canvas(Graphs.Canvas, FigureCanvas):
         motion.connect("motion", self.motion_notify_event)
         motion.connect("enter", self.enter_notify_event)
         motion.connect("leave", self.leave_notify_event)
-        motion.connect("leave", self.reset_equations)
         self.add_controller(motion)
 
         scroll = Gtk.EventControllerScroll.new(
@@ -164,13 +171,11 @@ class Canvas(Graphs.Canvas, FigureCanvas):
         )
         scroll.connect("scroll", self.scroll_event)
         scroll.connect("scroll-end", self.toolbar.push_current)
-        scroll.connect("scroll-end", self.reset_equations)
         self.add_controller(scroll)
 
         zoom = Gtk.GestureZoom.new()
         zoom.connect("scale-changed", self.zoom_event)
         zoom.connect("end", self.end_zoom_event)
-        zoom.connect("end", self.reset_equations)
         self.add_controller(zoom)
 
         def rgba_to_tuple(rgba):
@@ -178,7 +183,7 @@ class Canvas(Graphs.Canvas, FigureCanvas):
 
         rgba = self.get_style_context().lookup_color("accent_color")[1]
         self.rubberband_edge_color = rgba_to_tuple(rgba)
-        rgba.alpha = 0.3
+        rgba.alpha = 0.2
         self.rubberband_fill_color = rgba_to_tuple(rgba)
         self.highlight = _Highlight(self)
 
@@ -188,11 +193,6 @@ class Canvas(Graphs.Canvas, FigureCanvas):
                 lambda _a,
                 _b: self.highlight.load(self),
             )
-
-    def reset_equations(self, *args):
-        for item in self.get_items():
-            if isinstance(item, EquationItem):
-                item.reset_data(self)
 
     def handle_touch_update(self, controller: Gtk.GestureClick, _data) -> None:
         """
@@ -288,7 +288,6 @@ class Canvas(Graphs.Canvas, FigureCanvas):
         Pushes the canvas to the stack, and emits a `release` signal cancel out
         registered touches from touchscreen devices.
         """
-        print("Ending zoom")
         coords = controller.get_bounding_box_center()
         x, y = coords.x, coords.y
         MouseEvent(
@@ -357,7 +356,6 @@ class Canvas(Graphs.Canvas, FigureCanvas):
                 ),
             )
         self.queue_draw()
-        self.toolbar.push_current()
 
     @staticmethod
     def _calculate_pan_values(
@@ -464,6 +462,10 @@ class Canvas(Graphs.Canvas, FigureCanvas):
             self._renderer.height = allocation.height * scale
             self._renderer.dpi = self.figure.dpi
             self.figure.draw(self._renderer)
+            if self._handles:
+                for artist_ in self._handles:
+                    if isinstance(artist_, artist.EquationItemArtistWrapper):
+                        artist_.generate_data()
 
     def _redraw(self, *_args) -> None:
         # bottom, top, left, right
@@ -555,32 +557,39 @@ class Canvas(Graphs.Canvas, FigureCanvas):
         if self._rubberband_rect is not None:
             self._draw_rubberband(context)
 
-    def _draw_rubberband(self, context) -> None:
+    def _draw_rubberband(self, ctx) -> None:
         """
         Implement custom rubberband.
 
         Draw a rubberband matching libadwaitas style, where `_rubberband_rect`
         is set.
         """
-        line_width = 1
-        if not self._context_is_scaled:
-            x_0, y_0, width, height = (
-                dim / self.device_pixel_ratio for dim in self._rubberband_rect
-            )
-        else:
-            x_0, y_0, width, height = self._rubberband_rect
-            line_width *= self.device_pixel_ratio
+        radius = 6
+        x0, y0, width, height = (
+            dim / self.device_pixel_ratio for dim in self._rubberband_rect
+        )
+        x1 = x0 + width
+        y1 = y0 + height
 
-        context.set_antialias(1)
-        context.set_line_width(line_width)
-        context.rectangle(x_0, y_0, width, height)
-        color = self.rubberband_fill_color
-        context.set_source_rgba(color[0], color[1], color[2], color[3])
-        context.fill()
-        context.rectangle(x_0, y_0, width, height)
-        color = self.rubberband_edge_color
-        context.set_source_rgba(color[0], color[1], color[2], color[3])
-        context.stroke()
+        if x1 < x0:
+            x0, x1 = x1, x0
+        if y1 < y0:
+            y0, y1 = y1, y0
+
+        degrees = math.pi / 180
+
+        ctx.new_sub_path()
+        ctx.arc(x1 - radius, y0 + radius, radius, -90 * degrees, 0 * degrees)
+        ctx.arc(x1 - radius, y1 - radius, radius, 0 * degrees, 90 * degrees)
+        ctx.arc(x0 + radius, y1 - radius, radius, 90 * degrees, 180 * degrees)
+        ctx.arc(x0 + radius, y0 + radius, radius, 180 * degrees, 270 * degrees)
+        ctx.close_path()
+
+        ctx.set_line_width(1)
+        ctx.set_source_rgba(*self.rubberband_fill_color)
+        ctx.fill_preserve()
+        ctx.set_source_rgba(*self.rubberband_edge_color)
+        ctx.stroke()
 
     def update_legend(self) -> None:
         """Update the legend or hide if not used."""
@@ -602,6 +611,22 @@ class Canvas(Graphs.Canvas, FigureCanvas):
         if legend is not None:
             legend.remove()
         self.queue_draw()
+
+    @staticmethod
+    def _save(
+        self,
+        file: Gio.File,
+        fmt: str,
+        dpi: int,
+        transparent: bool,
+    ) -> None:
+        with gio_pyio.open(file, "wb") as file_like:
+            self.figure.savefig(
+                file_like,
+                format=fmt,
+                dpi=dpi,
+                transparent=transparent,
+            )
 
     @GObject.Property(type=bool, default=True)
     def legend(self) -> bool:
@@ -834,7 +859,6 @@ class _DummyToolbar(NavigationToolbar2):
     # Overwritten function - do not change name
     def _zoom_pan_handler(self, event) -> None:
         mode = self.canvas.props.mode
-
         if event.button == 2:
             event.button = 1
             mode = 0

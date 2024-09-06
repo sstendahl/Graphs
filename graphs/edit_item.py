@@ -4,8 +4,6 @@ from gi.repository import Adw, GObject, Graphs, Gtk
 
 from graphs.item import DataItem, EquationItem
 
-import numpy
-
 _IGNORELIST = [
     "alpha",
     "color",
@@ -31,15 +29,14 @@ class EditItemDialog(Adw.PreferencesDialog):
     xposition = Gtk.Template.Child()
     yposition = Gtk.Template.Child()
 
-    equation_group = Gtk.Template.Child()
-    equation = Gtk.Template.Child()
-    stepsize = Gtk.Template.Child()
-
     item_group = Gtk.Template.Child()
     linestyle = Gtk.Template.Child()
     linewidth = Gtk.Template.Child()
     markerstyle = Gtk.Template.Child()
     markersize = Gtk.Template.Child()
+    equation_group = Gtk.Template.Child()
+    equation = Gtk.Template.Child()
+
 
     data = GObject.Property(type=Graphs.Data)
     item = GObject.Property(type=Graphs.Item)
@@ -48,8 +45,6 @@ class EditItemDialog(Adw.PreferencesDialog):
 
     def __init__(self, application, item):
         data = application.get_data()
-        self.figure_settings = application.get_data().get_figure_settings()
-        self.canvas = application.get_window().get_canvas()
         super().__init__(
             data=data,
             item=item,
@@ -106,21 +101,12 @@ class EditItemDialog(Adw.PreferencesDialog):
         self.item_group.set_visible(isinstance(item, DataItem))
         self.equation_group.set_visible(isinstance(item, EquationItem))
 
-
     @Gtk.Template.Callback()
     def on_equation_change(self, _a) -> None:
         """Handle dialog closing."""
         item = self.props.data[self.item_selector.get_selected()]
-        item.reset_data(self.canvas)
         item.set_name(f"Y = {item.equation}")
         self.props.data.optimize_limits()
-
-    @Gtk.Template.Callback()
-    def on_stepsize_change(self, _a) -> None:
-        """Handle dialog closing."""
-        item = self.props.data[self.item_selector.get_selected()]
-        item.stepsize = float(_a.get_text())
-        item.reset_data(self.canvas)
 
 
     @Gtk.Template.Callback()
