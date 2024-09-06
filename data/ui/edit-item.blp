@@ -6,7 +6,8 @@ template $GraphsEditItemDialog : Adw.PreferencesDialog {
   closed => $on_close();
 
   Adw.PreferencesPage {
-    Adw.PreferencesGroup {
+    Adw.PreferencesGroup item_selector_group {
+      visible: false;
       Adw.ComboRow item_selector {
         title: _("Selected Item");
         subtitle: _("Choose which item to edit");
