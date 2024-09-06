@@ -51,7 +51,7 @@ class EditItemDialog(Adw.PreferencesDialog):
             bindings=[],
             model=Gtk.StringList.new(data.get_names()),
         )
-        self.item_selector_group.set_visible(len(data.get_items()) > 1)
+        self.item_selector_group.set_visible(data.get_n_items() > 1)
         self.item_selector.set_model(self.props.model)
         self.item_selector.set_selected(data.get_items().index(item))
         self.present(application.get_window())
