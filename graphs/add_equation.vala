@@ -51,10 +51,10 @@ namespace Graphs {
             double? val = application.python_helper.evaluate_string (entry.get_text ());
             if (val == null) {
                 entry.add_css_class ("error");
-                confirm_button.set_sensitive(false);
+                confirm_button.set_sensitive (false);
             } else {
                 entry.remove_css_class ("error");
-                confirm_button.set_sensitive(true);
+                confirm_button.set_sensitive (true);
             }
         }
 
@@ -64,10 +64,10 @@ namespace Graphs {
             double? val = application.python_helper.validate_equation (entry.get_text ());
             if (val == null) {
                 entry.add_css_class ("error");
-                confirm_button.set_sensitive(false);
+                confirm_button.set_sensitive (false);
             } else {
                 entry.remove_css_class ("error");
-                confirm_button.set_sensitive(true);
+                confirm_button.set_sensitive (true);
             }
         }
     }
