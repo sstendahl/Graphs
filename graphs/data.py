@@ -397,8 +397,7 @@ class Data(Graphs.Data):
             figure_settings.get_property(f"{direction}_scale"),
         ] for direction in ("bottom", "left", "top", "right")]
         for item_ in self:
-            data_item = isinstance(item_, item.DataItem) or \
-                isinstance(item_, item.EquationItem)
+            data_item = isinstance(item_, (item.DataItem, item.EquationItem))
             if not data_item or (
                 not item_.get_selected()
                 and figure_settings.get_hide_unselected()
@@ -412,8 +411,10 @@ class Data(Graphs.Data):
                 if isinstance(item_, item.EquationItem):
                     lower_bound = figure_settings.get_min_bottom()
                     upper_bound = figure_settings.get_max_bottom()
-                    ydata = ydata[(xdata >= lower_bound) & (xdata <= upper_bound)]
-                    xdata = xdata[(xdata >= lower_bound) & (xdata <= upper_bound)]
+                    ydata = \
+                        ydata[(xdata >= lower_bound) & (xdata <= upper_bound)]
+                    xdata = \
+                        xdata[(xdata >= lower_bound) & (xdata <= upper_bound)]
 
                 xydata = numpy.asarray(
                     ydata if index % 2 else xdata,
@@ -443,7 +444,6 @@ class Data(Graphs.Data):
                 padding_factor = 0.05 if count % 2 else 0.015
                 if isinstance(item_, item.EquationItem) and not count % 2:
                     padding_factor = 0
-                    print("Padding 0")
                 max_all += padding_factor * span
 
                 # For inverse scale, calculate padding using a factor

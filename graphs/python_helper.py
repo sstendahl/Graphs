@@ -15,10 +15,6 @@ from graphs import (
 from graphs.item import EquationItem
 from graphs.style_editor import StyleEditorWindow
 
-import numexpr
-
-import numpy
-
 _REQUEST_NAMES = (
     "python_method_request",
     "edit_item_dialog_request",
@@ -93,7 +89,8 @@ class PythonHelper(Graphs.PythonHelper):
     @staticmethod
     def _on_add_equation_request(self, name: str) -> str:
         settings = self.props.application.get_settings_child("add-equation")
-        figure_settings = self.props.application.get_data().get_figure_settings()
+        figure_settings = \
+            self.props.application.get_data().get_figure_settings()
         try:
             x_start = utilities.string_to_float(settings.get_string("x-start"))
             x_stop = utilities.string_to_float(settings.get_string("x-stop"))
@@ -104,22 +101,18 @@ class PythonHelper(Graphs.PythonHelper):
             if name == "":
                 name = f"Y = {settings.get_string('equation')}"
             style_manager = self.props.application.get_figure_style_manager()
-            params = style_manager.get_selected_style_params()
             xdata, ydata = utilities.equation_to_data(equation, limits)
             equation_item = EquationItem.new(
-                                style_manager.get_selected_style_params(),
-                                equation,
-                                xdata,
-                                ydata,
-                                name=name,
-                                )
+                style_manager.get_selected_style_params(),
+                equation,
+                xdata,
+                ydata,
+                name=name)
             self.props.application.get_data().add_items(
                 [equation_item],
                 style_manager,
             )
             self.props.application.get_data().optimize_limits()
-
-
             return ""
         except ValueError as error:
             return str(error)

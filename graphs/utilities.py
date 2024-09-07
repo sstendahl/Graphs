@@ -7,8 +7,9 @@ import re
 
 from graphs.misc import FUNCTIONS
 
-import numpy
 import numexpr
+
+import numpy
 
 import sympy
 
@@ -249,10 +250,10 @@ def preprocess(string: str) -> str:
     return string.lower()
 
 
-def equation_to_data(equation:str,
+def equation_to_data(equation: str,
                      limits: tuple = None,
                      steps: int = 5000) -> tuple:
-    """Converts an equation into data over a specified range of x-values."""
+    """Convert an equation into data over a specified range of x-values."""
     if limits is None:
         limits = (0, 10)
     equation = preprocess(equation)
@@ -260,7 +261,7 @@ def equation_to_data(equation:str,
     x_start -= (x_stop - x_start)
     x_stop += (x_stop - x_start)
     xdata = numpy.ndarray.tolist(
-    numpy.linspace(x_start, x_stop, 5000),
+        numpy.linspace(x_start, x_stop, steps),
     )
     try:
         ydata = numpy.ndarray.tolist(
@@ -270,13 +271,13 @@ def equation_to_data(equation:str,
         return None, None
     return xdata, ydata
 
+
 def validate_equation(equation: str, limits: tuple = None) -> bool:
     """Validate whether an equation can be parsed."""
     equation = preprocess(equation)
     validate, _ = equation_to_data(equation, limits, steps=10)
-    if validate is None:
-        return False
-    return True
+    return (validate is not None)
+
 
 def string_to_function(equation_name: str) -> sympy.FunctionClass:
     """Convert a string into a sympy function."""

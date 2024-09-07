@@ -11,8 +11,8 @@ from graphs import misc, utilities
 from matplotlib import artist, pyplot
 from matplotlib.figure import Figure
 
-import numpy
 import numexpr
+
 
 def new_for_item(canvas: Graphs.Canvas, item: Graphs.Item):
     """
@@ -160,10 +160,10 @@ class DataItemArtistWrapper(ItemArtistWrapper):
 
 class EquationItemArtistWrapper(ItemArtistWrapper):
     """Wrapper for EquationItem."""
+
     __gtype_name__ = "GraphsEquationItemArtistWrapper"
     selected = GObject.Property(type=bool, default=True)
     linewidth = GObject.Property(type=float, default=3)
-
 
     def __init__(self, axis: pyplot.axis, item: Graphs.Item):
         super(ItemArtistWrapper, self).__init__()
@@ -182,7 +182,6 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
             self.set_property(prop, item.get_property(prop))
             self.connect(f"notify::{prop}", self._set_properties)
         self._set_properties(None, None)
-
 
     @GObject.Property
     def xdata(self) -> list:
@@ -221,6 +220,7 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
         self._artist.set_linewidth(linewidth)
 
     def generate_data(self):
+        """Generate new data for the artist."""
         equation = utilities.preprocess(self.item.props.equation)
         x_start, x_stop = self.axis.get_xlim()
         limits = (x_start, x_stop)
@@ -323,4 +323,3 @@ class FillItemArtistWrapper(ItemArtistWrapper):
             color=item.get_color(),
             alpha=item.get_alpha(),
         )
-

@@ -469,7 +469,6 @@ class Canvas(Graphs.Canvas, FigureCanvas):
             self._renderer.dpi = self.figure.dpi
             self.figure.draw(self._renderer)
 
-
     def _redraw(self, *_args) -> None:
         # bottom, top, left, right
         used_axes = [False, False, False, False]

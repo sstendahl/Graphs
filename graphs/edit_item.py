@@ -2,10 +2,8 @@
 """Module for Editing an Item."""
 from gi.repository import Adw, GObject, Graphs, Gtk
 
-from graphs.item import DataItem, EquationItem
 from graphs import utilities
-
-import numexpr
+from graphs.item import DataItem, EquationItem
 
 _IGNORELIST = [
     "alpha",
@@ -40,7 +38,6 @@ class EditItemDialog(Adw.PreferencesDialog):
     equation_group = Gtk.Template.Child()
     equation = Gtk.Template.Child()
 
-
     data = GObject.Property(type=Graphs.Data)
     item = GObject.Property(type=Graphs.Item)
     model = GObject.Property(type=Gtk.StringList)
@@ -61,9 +58,8 @@ class EditItemDialog(Adw.PreferencesDialog):
 
     @Gtk.Template.Callback()
     def on_equation_change(self, entry_row) -> None:
-        """Handle equation change"""
-
-        item = item = self.props.item
+        """Handle equation change."""
+        item = self.props.item
         validate = utilities.validate_equation(item.equation)
 
         if not validate:
@@ -117,7 +113,7 @@ class EditItemDialog(Adw.PreferencesDialog):
                 )
         self.props.bindings = bindings
         self.markerstyle.set_visible(isinstance(item, DataItem))
-        self.item_group.set_visible(isinstance(item, DataItem) or isinstance(item, EquationItem))
+        self.item_group.set_visible(isinstance(item, (DataItem, EquationItem))
         if isinstance(item, EquationItem):
             self.equation_group.set_visible(True)
             self.markersize.set_sensitive(False)

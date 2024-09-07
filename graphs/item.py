@@ -4,9 +4,8 @@ from gettext import gettext as _
 
 from gi.repository import GObject, Graphs
 
-from graphs import misc, utilities
+from graphs import misc
 
-import numpy
 
 def new_from_dict(dictionary: dict):
     """Instanciate item from dict."""
@@ -92,7 +91,6 @@ class DataItem(_PythonItem):
                 self.set_property(prop, [])
 
 
-
 class EquationItem(_PythonItem):
     """EquationItem."""
 
@@ -109,13 +107,12 @@ class EquationItem(_PythonItem):
         "linewidth": ("lines.linewidth", None),
     }
 
-
     @classmethod
     def new(cls, style, equation, xdata=None, ydata=None, **kwargs):
         """Create new EquationItem."""
         return cls(
-            xdata = xdata,
-            ydata = ydata,
+            xdata=xdata,
+            ydata=ydata,
             equation=equation,
             **cls._extract_params(cls, style),
             **kwargs,
