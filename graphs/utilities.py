@@ -249,7 +249,10 @@ def preprocess(string: str) -> str:
     return string.lower()
 
 
-def equation_to_data(equation, limits = None, steps = 5000):
+def equation_to_data(equation:str,
+                     limits: tuple = None,
+                     steps: int = 5000) -> tuple:
+    """Converts an equation into data over a specified range of x-values."""
     if limits is None:
         limits = (0, 10)
     equation = preprocess(equation)
@@ -263,11 +266,12 @@ def equation_to_data(equation, limits = None, steps = 5000):
         ydata = numpy.ndarray.tolist(
             numexpr.evaluate(equation + " + x*0", local_dict={"x": xdata}),
         )
-    except (KeyError, SyntaxError, ValueError):
+    except (KeyError, SyntaxError, ValueError, TypeError):
         return None, None
     return xdata, ydata
 
-def validate_equation(equation, limits = None):
+def validate_equation(equation: str, limits: tuple = None) -> bool:
+    """Validate whether an equation can be parsed."""
     equation = preprocess(equation)
     validate, _ = equation_to_data(equation, limits, steps=10)
     if validate is None:

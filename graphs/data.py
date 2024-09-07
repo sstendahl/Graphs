@@ -397,7 +397,9 @@ class Data(Graphs.Data):
             figure_settings.get_property(f"{direction}_scale"),
         ] for direction in ("bottom", "left", "top", "right")]
         for item_ in self:
-            if not isinstance(item_, item.DataItem) or (
+            data_item = isinstance(item_, item.DataItem) or \
+                isinstance(item_, item.EquationItem)
+            if not data_item or (
                 not item_.get_selected()
                 and figure_settings.get_hide_unselected()
             ):
@@ -441,6 +443,7 @@ class Data(Graphs.Data):
                 padding_factor = 0.05 if count % 2 else 0.015
                 if isinstance(item_, item.EquationItem) and not count % 2:
                     padding_factor = 0
+                    print("Padding 0")
                 max_all += padding_factor * span
 
                 # For inverse scale, calculate padding using a factor

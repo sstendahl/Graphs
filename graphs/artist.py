@@ -158,9 +158,12 @@ class DataItemArtistWrapper(ItemArtistWrapper):
         self._set_properties(None, None)
 
 
-class EquationItemArtistWrapper(DataItemArtistWrapper):
+class EquationItemArtistWrapper(ItemArtistWrapper):
     """Wrapper for EquationItem."""
     __gtype_name__ = "GraphsEquationItemArtistWrapper"
+    selected = GObject.Property(type=bool, default=True)
+    linewidth = GObject.Property(type=float, default=3)
+
 
     def __init__(self, axis: pyplot.axis, item: Graphs.Item):
         super(ItemArtistWrapper, self).__init__()
@@ -174,19 +177,52 @@ class EquationItemArtistWrapper(DataItemArtistWrapper):
             color=item.get_color(),
             alpha=item.get_alpha(),
             linestyle=misc.LINESTYLES[item.props.linestyle],
-            marker=misc.MARKERSTYLES[item.props.markerstyle],
         )[0]
-        for prop in ("selected", "linewidth", "markersize"):
+        for prop in ("selected", "linewidth"):
             self.set_property(prop, item.get_property(prop))
             self.connect(f"notify::{prop}", self._set_properties)
         self._set_properties(None, None)
 
 
+    @GObject.Property
+    def xdata(self) -> list:
+        """Get xdata property."""
+        return self._artist.get_xdata()
+
+    @xdata.setter
+    def xdata(self, xdata: list) -> None:
+        """Set xdata property."""
+        self._artist.set_xdata(xdata)
+
+    @GObject.Property
+    def ydata(self) -> list:
+        """Get ydata property."""
+        return self._artist.get_ydata()
+
+    @ydata.setter
+    def ydata(self, ydata: list) -> None:
+        """Set ydata property."""
+        self._artist.set_ydata(ydata)
+
+    @GObject.Property(type=int, default=1)
+    def linestyle(self) -> int:
+        """Get linestyle property."""
+        return misc.LINESTYLES.index(self._artist.get_linestyle())
+
+    @linestyle.setter
+    def linestyle(self, linestyle: int) -> None:
+        """Set linestyle property."""
+        self._artist.set_linestyle(misc.LINESTYLES[linestyle])
+
+    def _set_properties(self, _x, _y) -> None:
+        linewidth = self.props.linewidth
+        if not self.props.selected:
+            linewidth *= 0.35
+        self._artist.set_linewidth(linewidth)
+
     def generate_data(self):
         equation = utilities.preprocess(self.item.props.equation)
         x_start, x_stop = self.axis.get_xlim()
-        x_start -= (x_stop - x_start)
-        x_stop += (x_stop - x_start)
         limits = (x_start, x_stop)
         if not utilities.validate_equation(equation, limits):
             return
@@ -287,3 +323,4 @@ class FillItemArtistWrapper(ItemArtistWrapper):
             color=item.get_color(),
             alpha=item.get_alpha(),
         )
+

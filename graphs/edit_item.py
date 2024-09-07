@@ -60,6 +60,21 @@ class EditItemDialog(Adw.PreferencesDialog):
         self.present(application.get_window())
 
     @Gtk.Template.Callback()
+    def on_equation_change(self, entry_row) -> None:
+        """Handle equation change"""
+
+        item = item = self.props.item
+        validate = utilities.validate_equation(item.equation)
+
+        if not validate:
+            entry_row.add_css_class("error")
+            return
+        else:
+            entry_row.remove_css_class("error")
+            item.set_name(f"Y = {item.equation}")
+            return
+
+    @Gtk.Template.Callback()
     def on_select(self, _action, _target) -> None:
         """Handle Item selection."""
         item = self.props.data[self.item_selector.get_selected()]
@@ -101,25 +116,11 @@ class EditItemDialog(Adw.PreferencesDialog):
                     ),
                 )
         self.props.bindings = bindings
-        self.item_group.set_visible(isinstance(item, DataItem))
-        self.equation_group.set_visible(isinstance(item, EquationItem))
-
-    @Gtk.Template.Callback()
-    def on_equation_change(self, entry_row) -> None:
-        n_items = self.props.data.get_n_items()
-        i = 0 if n_items == 1 else self.item_selector.get_selected()
-        item = self.props.data[i]
-        validate = utilities.validate_equation(item.equation)
-
-        if not validate:
-            entry_row.add_css_class("error")
-            return
-        else:
-            entry_row.remove_css_class("error")
-            item.set_name(f"Y = {item.equation}")
-            return
-
-
+        self.markerstyle.set_visible(isinstance(item, DataItem))
+        self.item_group.set_visible(isinstance(item, DataItem) or isinstance(item, EquationItem))
+        if isinstance(item, EquationItem):
+            self.equation_group.set_visible(True)
+            self.markersize.set_sensitive(False)
 
     @Gtk.Template.Callback()
     def on_close(self, _a) -> None:

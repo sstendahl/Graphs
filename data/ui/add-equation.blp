@@ -40,6 +40,7 @@ template $GraphsAddEquationDialog : Adw.Dialog {
               max-width-chars: 25;
               title: _("Y =");
               activates-default: true;
+              notify::text => $on_equation_change();
               styles ["preferencesgroup"]
             }
             Label {
@@ -76,14 +77,6 @@ template $GraphsAddEquationDialog : Adw.Dialog {
               Adw.PreferencesGroup {
                 Adw.EntryRow x_stop {
                   title: _("X Stop");
-                  activates-default: true;
-                  notify::text => $on_entry_change();
-                }
-              }
-
-              Adw.PreferencesGroup {
-                Adw.EntryRow step_size {
-                  title: _("Step Size");
                   activates-default: true;
                   notify::text => $on_entry_change();
                 }

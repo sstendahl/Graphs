@@ -13,7 +13,7 @@ def new_from_dict(dictionary: dict):
     match dictionary["type"]:
         case "GraphsDataItem":
             cls = DataItem
-        case "GraphsEquationtItem":
+        case "GraphsEquationItem":
             cls = EquationItem
         case "GraphsTextItem":
             cls = TextItem
@@ -93,12 +93,22 @@ class DataItem(_PythonItem):
 
 
 
-class EquationItem(DataItem):
+class EquationItem(_PythonItem):
     """EquationItem."""
 
     __gtype_name__ = "GraphsEquationItem"
 
+    xdata = GObject.Property(type=object)
+    ydata = GObject.Property(type=object)
+    linestyle = GObject.Property(type=int, default=1)
+    linewidth = GObject.Property(type=float, default=3)
     equation = GObject.Property(type=str, default="")
+
+    _style_properties = {
+        "linestyle": ("lines.linestyle", misc.LINESTYLES.index),
+        "linewidth": ("lines.linewidth", None),
+    }
+
 
     @classmethod
     def new(cls, style, equation, xdata=None, ydata=None, **kwargs):
@@ -112,7 +122,7 @@ class EquationItem(DataItem):
         )
 
     def __init__(self, **kwargs):
-        super(DataItem, self).__init__(typename=_("Equation"), **kwargs)
+        super().__init__(typename=_("Equation"), **kwargs)
         for prop in ("xdata", "ydata"):
             if self.get_property(prop) is None:
                 self.set_property(prop, [])

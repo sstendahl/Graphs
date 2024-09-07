@@ -43,13 +43,7 @@ template $GraphsEditItemDialog : Adw.PreferencesDialog {
       Adw.EntryRow equation {
         max-width-chars: 25;
         title: _("Y =");
-        show-apply-button: true;
-        apply => $on_equation_change();
-      }
-      Adw.EntryRow stepsize {
-        title: _("Step Size");
-        show-apply-button: true;
-        apply => $on_stepsize_change();
+        changed => $on_equation_change();
       }
     }
 
