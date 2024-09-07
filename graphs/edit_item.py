@@ -113,7 +113,7 @@ class EditItemDialog(Adw.PreferencesDialog):
                 )
         self.props.bindings = bindings
         self.markerstyle.set_visible(isinstance(item, DataItem))
-        self.item_group.set_visible(isinstance(item, (DataItem, EquationItem))
+        self.item_group.set_visible(isinstance(item, (DataItem, EquationItem)))
         if isinstance(item, EquationItem):
             self.equation_group.set_visible(True)
             self.markersize.set_sensitive(False)

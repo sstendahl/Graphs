@@ -11,8 +11,6 @@ from graphs import misc, utilities
 from matplotlib import artist, pyplot
 from matplotlib.figure import Figure
 
-import numexpr
-
 
 def new_for_item(canvas: Graphs.Canvas, item: Graphs.Item):
     """
