@@ -8,7 +8,7 @@ from urllib.parse import unquote, urlparse
 
 from gi.repository import Gio, Graphs
 
-from graphs import item, misc, project
+from graphs import item, misc, project, utilities
 
 import numpy
 
@@ -406,15 +406,20 @@ class Data(Graphs.Data):
             for index in \
                     item_.get_xposition() * 2, 1 + item_.get_yposition() * 2:
                 axes[index][1] = True
-                xdata = numpy.array(copy.deepcopy(item_.xdata))
-                ydata = numpy.array(copy.deepcopy(item_.ydata))
-                if isinstance(item_, item.EquationItem):
+                if isinstance(item_, item.DataItem):
+                    xdata = numpy.array(copy.deepcopy(item_.xdata))
+                    ydata = numpy.array(copy.deepcopy(item_.ydata))
+                elif isinstance(item_, item.EquationItem):
                     lower_bound = figure_settings.get_min_bottom()
                     upper_bound = figure_settings.get_max_bottom()
-                    ydata = \
-                        ydata[(xdata >= lower_bound) & (xdata <= upper_bound)]
-                    xdata = \
-                        xdata[(xdata >= lower_bound) & (xdata <= upper_bound)]
+                    limits = [lower_bound, upper_bound]
+
+                    xdata, ydata = utilities.equation_to_data(item_.equation,
+                                                              limits)
+                    xdata = numpy.array(xdata)
+                    ydata = numpy.array(ydata)
+                    mask = (lower_bound <= xdata) & (xdata <= upper_bound)
+                    xdata, ydata = xdata[mask], ydata[mask]
 
                 xydata = numpy.asarray(
                     ydata if index % 2 else xdata,

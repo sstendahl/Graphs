@@ -258,8 +258,6 @@ def equation_to_data(equation: str,
         limits = (0, 10)
     equation = preprocess(equation)
     x_start, x_stop = limits
-    x_start -= (x_stop - x_start)
-    x_stop += (x_stop - x_start)
     xdata = numpy.ndarray.tolist(
         numpy.linspace(x_start, x_stop, steps),
     )

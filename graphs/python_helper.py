@@ -105,8 +105,6 @@ class PythonHelper(Graphs.PythonHelper):
             equation_item = EquationItem.new(
                 style_manager.get_selected_style_params(),
                 equation,
-                xdata,
-                ydata,
                 name=name)
             self.props.application.get_data().add_items(
                 [equation_item],

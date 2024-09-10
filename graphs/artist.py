@@ -168,9 +168,11 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
 
         self.axis = axis
         self.item = item
+        self._artist = None
+        self.generate_data()
         self._artist = axis.plot(
-            self.item.props.xdata,
-            self.item.props.ydata,
+            self.xdata,
+            self.ydata,
             label=Graphs.tools_shorten_label(item.get_name(), 40),
             color=item.get_color(),
             alpha=item.get_alpha(),
@@ -180,26 +182,6 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
             self.set_property(prop, item.get_property(prop))
             self.connect(f"notify::{prop}", self._set_properties)
         self._set_properties(None, None)
-
-    @GObject.Property
-    def xdata(self) -> list:
-        """Get xdata property."""
-        return self._artist.get_xdata()
-
-    @xdata.setter
-    def xdata(self, xdata: list) -> None:
-        """Set xdata property."""
-        self._artist.set_xdata(xdata)
-
-    @GObject.Property
-    def ydata(self) -> list:
-        """Get ydata property."""
-        return self._artist.get_ydata()
-
-    @ydata.setter
-    def ydata(self, ydata: list) -> None:
-        """Set ydata property."""
-        self._artist.set_ydata(ydata)
 
     @GObject.Property(type=int, default=1)
     def linestyle(self) -> int:
@@ -221,12 +203,14 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
         """Generate new data for the artist."""
         equation = utilities.preprocess(self.item.props.equation)
         x_start, x_stop = self.axis.get_xlim()
-        limits = (x_start, x_stop)
+        x_range = x_stop - x_start
+        limits = (x_start - 0.25 * x_range, x_stop + 0.25 * x_range)
         if not utilities.validate_equation(equation, limits):
-            return
-        xdata, ydata = utilities.equation_to_data(equation, limits)
-        self.item.props.xdata = xdata
-        self.item.props.ydata = ydata
+            return None, None
+
+        self.xdata, self.ydata = utilities.equation_to_data(equation, limits)
+        if self._artist is not None:
+            self._artist.set_data(self.xdata, self.ydata)
 
 
 class TextItemArtistWrapper(ItemArtistWrapper):

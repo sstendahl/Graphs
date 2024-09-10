@@ -96,8 +96,6 @@ class EquationItem(_PythonItem):
 
     __gtype_name__ = "GraphsEquationItem"
 
-    xdata = GObject.Property(type=object)
-    ydata = GObject.Property(type=object)
     linestyle = GObject.Property(type=int, default=1)
     linewidth = GObject.Property(type=float, default=3)
     equation = GObject.Property(type=str, default="")
@@ -108,11 +106,9 @@ class EquationItem(_PythonItem):
     }
 
     @classmethod
-    def new(cls, style, equation, xdata=None, ydata=None, **kwargs):
+    def new(cls, style, equation, **kwargs):
         """Create new EquationItem."""
         return cls(
-            xdata=xdata,
-            ydata=ydata,
             equation=equation,
             **cls._extract_params(cls, style),
             **kwargs,
@@ -120,9 +116,6 @@ class EquationItem(_PythonItem):
 
     def __init__(self, **kwargs):
         super().__init__(typename=_("Equation"), **kwargs)
-        for prop in ("xdata", "ydata"):
-            if self.get_property(prop) is None:
-                self.set_property(prop, [])
 
 
 class TextItem(_PythonItem):
