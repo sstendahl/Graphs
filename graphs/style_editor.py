@@ -495,8 +495,12 @@ class StyleEditorWindow(Adw.Window):
         else:
             params = style_editor.params
             color_cycle = style_editor.line_colors
-            for (item, color) in zip(self._test_items, color_cycle):
-                item.set_color(color)
+            count = 1
+            for item in self._test_items:
+                if count > len(color_cycle):
+                    count = 1
+                item.set_color(color_cycle[count - 1])
+                count += 1
                 for (prop, value) in item._extract_params(params).items():
                     item.set_property(prop, value)
         canvas = Canvas(params, self._test_items, False)
