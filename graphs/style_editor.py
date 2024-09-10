@@ -446,9 +446,10 @@ class _StyleColorBox(Gtk.Box):
         self.props.parent.update_line_colors()
 
 
-_PREVIEW_XDATA = numpy.linspace(0, 10, 30)
-_PREVIEW_YDATA1 = numpy.sin(_PREVIEW_XDATA)
-_PREVIEW_YDATA2 = numpy.cos(_PREVIEW_XDATA)
+_PREVIEW_XDATA1 = numpy.linspace(0, 10, 10)
+_PREVIEW_YDATA1 = numpy.linspace(0, numpy.power(numpy.e, 10), 10)
+_PREVIEW_XDATA2 = numpy.linspace(0, 10, 60)
+_PREVIEW_YDATA2 = numpy.power(numpy.e, _PREVIEW_XDATA2)
 
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/style-editor-window.ui")
@@ -470,7 +471,7 @@ class StyleEditorWindow(Adw.Window):
         self._test_items.append(
             DataItem.new(
                 pyplot.rcParams,
-                xdata=_PREVIEW_XDATA,
+                xdata=_PREVIEW_XDATA1,
                 ydata=_PREVIEW_YDATA1,
                 name=_("Example Item"),
                 color="#000000",
@@ -479,7 +480,7 @@ class StyleEditorWindow(Adw.Window):
         self._test_items.append(
             DataItem.new(
                 pyplot.rcParams,
-                xdata=_PREVIEW_XDATA,
+                xdata=_PREVIEW_XDATA2,
                 ydata=_PREVIEW_YDATA2,
                 name=_("Example Item"),
                 color="#000000",
