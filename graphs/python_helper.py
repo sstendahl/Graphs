@@ -84,7 +84,10 @@ class PythonHelper(Graphs.PythonHelper):
         items: list[Graphs.Item],
         _n_items: int,
     ) -> None:
-        return export_items.export_items(mode, file, items)
+        figure_settings = \
+            self.props.application.get_data().get_figure_settings()
+        limits = figure_settings.get_limits()
+        return export_items.export_items(mode, file, items, limits)
 
     @staticmethod
     def _on_add_equation_request(self, name: str) -> str:

@@ -4,25 +4,28 @@ import sys
 
 from gi.repository import Gio, Graphs
 
-from graphs.item import DataItem
+from graphs import utilities
+from graphs.item import DataItem, EquationItem
 
 
-def export_items(mode: str, file: Gio.File, items: list[Graphs.Item]) -> None:
+def export_items(mode: str, file: Gio.File, items: list[Graphs.Item],
+                 limits: list) -> None:
     """Export items in specified format."""
-    getattr(sys.modules[__name__], "_export_" + mode)(file, items)
+    getattr(sys.modules[__name__], "_export_" + mode)(file, items, limits)
 
 
-def _export_columns(file: Gio.File, items: list[Graphs.Item]):
+def _export_columns(file: Gio.File, items: list[Graphs.Item], limits: list):
     """Save Items in columns format."""
     if len(items) > 1:
         for item in items:
             name = f"{item.get_name()}.txt"
-            _save_item(file.get_child_for_display_name(name), item)
+            _save_item(file.get_child_for_display_name(name), item, limits)
     else:
-        _save_item(file, items[0])
+        _save_item(file, items[0], limits)
 
 
-def _save_item(file: Gio.File, item: DataItem) -> None:
+def _save_item(file: Gio.File, item: DataItem | EquationItem,
+               limits: list) -> None:
     """Save Item in columns format."""
     delimiter = "\t"
     fmt = delimiter.join(["%.12e"] * 2)
@@ -32,6 +35,14 @@ def _save_item(file: Gio.File, item: DataItem) -> None:
     )
     if xlabel != "" and ylabel != "":
         stream.stream(xlabel + delimiter + ylabel + "\n")
-    for values in zip(item.xdata, item.ydata):
+    if isinstance(item, DataItem):
+        xdata, ydata = item.xdata, item.ydata
+    elif isinstance(item, EquationItem):
+        if item.get_xposition() == 0:
+            limits = [limits[0], limits[1]]
+        elif item.get_xposition() == 1:
+            limits = [limits[2], limits[3]]
+        xdata, ydata = utilities.equation_to_data(item.equation, limits)
+    for values in zip(xdata, ydata):
         stream.put_string(fmt % values + "\n")
     stream.close()
