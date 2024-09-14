@@ -59,30 +59,6 @@ template $GraphsAddEquationDialog : Adw.Dialog {
               activates-default: true;
             }
           }
-
-        Adw.PreferencesGroup {
-            Box {
-              spacing: 12;
-              orientation: horizontal;
-              homogeneous: true;
-
-              Adw.PreferencesGroup {
-                Adw.EntryRow x_start {
-                  title: _("X Start");
-                  activates-default: true;
-                  notify::text => $on_entry_change();
-                }
-              }
-
-              Adw.PreferencesGroup {
-                Adw.EntryRow x_stop {
-                  title: _("X Stop");
-                  activates-default: true;
-                  notify::text => $on_entry_change();
-                }
-              }
-            }
-          }
         }
       };
     };

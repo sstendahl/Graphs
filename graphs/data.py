@@ -421,9 +421,7 @@ class Data(Graphs.Data):
                     mask = (lower_bound <= xdata) & (xdata <= upper_bound)
                     xdata, ydata = xdata[mask], ydata[mask]
 
-                xydata = numpy.asarray(
-                    ydata if index % 2 else xdata,
-                )
+                xydata = numpy.asarray(ydata if index % 2 else xdata)
                 try:
                     xydata = xydata[numpy.isfinite(xydata)]
                 except TypeError:

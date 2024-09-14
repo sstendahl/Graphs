@@ -164,15 +164,13 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
     linewidth = GObject.Property(type=float, default=3)
 
     def __init__(self, axis: pyplot.axis, item: Graphs.Item):
-        super(ItemArtistWrapper, self).__init__()
+        super().__init__()
 
-        self.axis = axis
-        self.item = item
-        self._artist = None
-        self.generate_data()
+        self._equation = utilities.preprocess(item.props.equation)
+        axis.callbacks.connect("xlim_changed", self._generate_data)
         self._artist = axis.plot(
-            self.xdata,
-            self.ydata,
+            [],
+            [],
             label=Graphs.tools_shorten_label(item.get_name(), 40),
             color=item.get_color(),
             alpha=item.get_alpha(),
@@ -199,18 +197,13 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
             linewidth *= 0.35
         self._artist.set_linewidth(linewidth)
 
-    def generate_data(self):
+    def _generate_data(self, axis):
         """Generate new data for the artist."""
-        equation = utilities.preprocess(self.item.props.equation)
-        x_start, x_stop = self.axis.get_xlim()
+        x_start, x_stop = axis.get_xlim()
         x_range = x_stop - x_start
         limits = (x_start - 0.25 * x_range, x_stop + 0.25 * x_range)
-        if not utilities.validate_equation(equation, limits):
-            return None, None
-
-        self.xdata, self.ydata = utilities.equation_to_data(equation, limits)
-        if self._artist is not None:
-            self._artist.set_data(self.xdata, self.ydata)
+        xdata, ydata = utilities.equation_to_data(self._equation, limits)
+        self._artist.set_data(xdata, ydata)
 
 
 class TextItemArtistWrapper(ItemArtistWrapper):

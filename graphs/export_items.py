@@ -8,24 +8,38 @@ from graphs import utilities
 from graphs.item import DataItem, EquationItem
 
 
-def export_items(mode: str, file: Gio.File, items: list[Graphs.Item],
-                 limits: list) -> None:
+def export_items(
+    mode: str,
+    file: Gio.File,
+    items: list[Graphs.Item],
+    figure_settings: Graphs.FigureSettings,
+) -> None:
     """Export items in specified format."""
-    getattr(sys.modules[__name__], "_export_" + mode)(file, items, limits)
+    getattr(sys.modules[__name__],
+            "_export_" + mode)(file, items, figure_settings)
 
 
-def _export_columns(file: Gio.File, items: list[Graphs.Item], limits: list):
+def _export_columns(
+    file: Gio.File,
+    items: list[Graphs.Item],
+    figure_settings: Graphs.FigureSettings,
+) -> None:
     """Save Items in columns format."""
     if len(items) > 1:
         for item in items:
             name = f"{item.get_name()}.txt"
-            _save_item(file.get_child_for_display_name(name), item, limits)
+            _save_item(
+                file.get_child_for_display_name(name), item, figure_settings,
+            )
     else:
-        _save_item(file, items[0], limits)
+        _save_item(file, items[0], figure_settings)
 
 
-def _save_item(file: Gio.File, item: DataItem | EquationItem,
-               limits: list) -> None:
+def _save_item(
+    file: Gio.File,
+    item: DataItem | EquationItem,
+    figure_settings: Graphs.FigureSettings,
+) -> None:
     """Save Item in columns format."""
     delimiter = "\t"
     fmt = delimiter.join(["%.12e"] * 2)
@@ -38,6 +52,7 @@ def _save_item(file: Gio.File, item: DataItem | EquationItem,
     if isinstance(item, DataItem):
         xdata, ydata = item.xdata, item.ydata
     elif isinstance(item, EquationItem):
+        limits = figure_settings.get_limits()
         if item.get_xposition() == 0:
             limits = [limits[0], limits[1]]
         elif item.get_xposition() == 1:

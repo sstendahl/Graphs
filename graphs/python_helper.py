@@ -1,8 +1,5 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Python Helper - Python part."""
-import logging
-from gettext import gettext as _
-
 from gi.repository import Gio, Graphs
 
 from graphs import (
@@ -62,11 +59,7 @@ class PythonHelper(Graphs.PythonHelper):
 
     @staticmethod
     def _on_validate_equation_request(self, equation: str) -> None:
-        value = utilities.validate_equation(equation)
-        if not value:
-            return False
-        self.set_validate_equation_helper(value)
-        return True
+        return utilities.validate_equation(equation)
 
     @staticmethod
     def _on_import_from_files_request(
@@ -86,42 +79,25 @@ class PythonHelper(Graphs.PythonHelper):
     ) -> None:
         figure_settings = \
             self.props.application.get_data().get_figure_settings()
-        limits = figure_settings.get_limits()
-        return export_items.export_items(mode, file, items, limits)
+        return export_items.export_items(mode, file, items, figure_settings)
 
     @staticmethod
-    def _on_add_equation_request(self, name: str) -> str:
+    def _on_add_equation_request(self, name: str) -> None:
         settings = self.props.application.get_settings_child("add-equation")
-        figure_settings = \
-            self.props.application.get_data().get_figure_settings()
-        try:
-            x_start = utilities.string_to_float(settings.get_string("x-start"))
-            x_stop = utilities.string_to_float(settings.get_string("x-stop"))
-            figure_settings.set_min_bottom(x_start)
-            figure_settings.set_max_bottom(x_stop)
-            limits = (x_start, x_stop)
-            equation = settings.get_string("equation")
-            if name == "":
-                name = f"Y = {settings.get_string('equation')}"
-            style_manager = self.props.application.get_figure_style_manager()
-            xdata, ydata = utilities.equation_to_data(equation, limits)
-            equation_item = EquationItem.new(
-                style_manager.get_selected_style_params(),
-                equation,
-                name=name)
-            self.props.application.get_data().add_items(
-                [equation_item],
-                style_manager,
-            )
-            self.props.application.get_data().optimize_limits()
-            return ""
-        except ValueError as error:
-            return str(error)
-        except (NameError, SyntaxError, TypeError, KeyError) as exception:
-            message = _("{error} - Unable to add data from equation")
-            msg = message.format(error=exception.__class__.__name__)
-            logging.exception(msg)
-            return msg
+        equation = settings.get_string("equation")
+        if name == "":
+            name = f"Y = {settings.get_string('equation')}"
+        style_manager = self.props.application.get_figure_style_manager()
+        equation_item = EquationItem.new(
+            style_manager.get_selected_style_params(),
+            equation,
+            name=name,
+        )
+        self.props.application.get_data().add_items(
+            [equation_item],
+            style_manager,
+        )
+        self.props.application.get_data().optimize_limits()
 
     @staticmethod
     def _on_open_style_editor_request(self, file: Gio.File) -> None:

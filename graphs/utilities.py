@@ -250,17 +250,17 @@ def preprocess(string: str) -> str:
     return string.lower()
 
 
-def equation_to_data(equation: str,
-                     limits: tuple = None,
-                     steps: int = 5000) -> tuple:
+def equation_to_data(
+    equation: str,
+    limits: tuple = None,
+    steps: int = 5000,
+) -> tuple:
     """Convert an equation into data over a specified range of x-values."""
     if limits is None:
         limits = (0, 10)
     equation = preprocess(equation)
     x_start, x_stop = limits
-    xdata = numpy.ndarray.tolist(
-        numpy.linspace(x_start, x_stop, steps),
-    )
+    xdata = numpy.ndarray.tolist(numpy.linspace(x_start, x_stop, steps))
     try:
         ydata = numpy.ndarray.tolist(
             numexpr.evaluate(equation + " + x*0", local_dict={"x": xdata}),

@@ -175,12 +175,6 @@
     <key name="equation" type="s">
       <default>"X"</default>
     </key>
-    <key name="x-start" type="s">
-      <default>"0"</default>
-    </key>
-    <key name="x-stop" type="s">
-      <default>"10"</default>
-    </key>
   </schema>
 
   <schema id="se.sjoerd.Graphs.export-figure">
