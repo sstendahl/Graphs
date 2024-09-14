@@ -28,7 +28,7 @@ namespace Graphs {
             Object ();
             this.application = application;
             this.settings = application.get_settings_child ("add-equation");
-            this.equation.set_text (settings.get_string("equation"));
+            this.equation.set_text (settings.get_string ("equation"));
             present (application.window);
         }
 
