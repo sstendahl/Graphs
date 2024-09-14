@@ -99,7 +99,6 @@ class EquationItem(_PythonItem):
     linestyle = GObject.Property(type=int, default=1)
     linewidth = GObject.Property(type=float, default=3)
     equation = GObject.Property(type=str, default="")
-    limits = GObject.Property(type=object)
 
     _style_properties = {
         "linestyle": ("lines.linestyle", misc.LINESTYLES.index),

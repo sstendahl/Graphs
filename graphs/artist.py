@@ -24,9 +24,9 @@ def new_for_item(canvas: Graphs.Canvas, item: Graphs.Item):
             cls = DataItemArtistWrapper
         case "GraphsEquationItem":
             cls = EquationItemArtistWrapper
-        case "GraphsTextItem":
-            cls = FillItemArtistWrapper
         case "GraphsFillItem":
+            cls = FillItemArtistWrapper
+        case "GraphsTextItem":
             cls = TextItemArtistWrapper
         case _:
             pass
