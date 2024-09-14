@@ -18,9 +18,6 @@ namespace Graphs {
         [GtkChild]
         private unowned Adw.EntryRow item_name { get; }
 
-        [GtkChild]
-        private unowned Adw.ToastOverlay toast_overlay { get; }
-
         private Application application;
         private GLib.Settings settings;
 

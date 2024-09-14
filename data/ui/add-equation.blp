@@ -25,42 +25,40 @@ template $GraphsAddEquationDialog : Adw.Dialog {
       }
     }
 
-    content: Adw.ToastOverlay toast_overlay {
-      child: Adw.Clamp {
-        margin-start: 12;
-        margin-end: 12;
-        margin-top: 12;
-        margin-bottom: 12;
-        Box {
-          spacing: 20;
-          orientation: vertical;
+    content: Adw.Clamp {
+      margin-start: 12;
+      margin-end: 12;
+      margin-top: 12;
+      margin-bottom: 12;
+      Box {
+        spacing: 20;
+        orientation: vertical;
 
-          Adw.PreferencesGroup {
-            Adw.EntryRow equation {
-              max-width-chars: 25;
-              title: _("Y =");
-              activates-default: true;
-              notify::text => $on_equation_change();
-              styles ["preferencesgroup"]
-            }
-            Label {
-              margin-top: 6;
-              halign: start;
-              hexpand: true;
-              label: _("Enter a mathematical expression to generate data from");
-              styles ["dim-label"]
-            }
+        Adw.PreferencesGroup {
+          Adw.EntryRow equation {
+            max-width-chars: 25;
+            title: _("Y =");
+            activates-default: true;
+            notify::text => $on_equation_change();
+            styles ["preferencesgroup"]
           }
-
-          Adw.PreferencesGroup {
-            Adw.EntryRow item_name {
-              max-width-chars: 25;
-              title: _("Name (optional)");
-              activates-default: true;
-            }
+          Label {
+            margin-top: 6;
+            halign: start;
+            hexpand: true;
+            label: _("Enter a mathematical expression to generate data from");
+            styles ["dim-label"]
           }
         }
-      };
+
+        Adw.PreferencesGroup {
+          Adw.EntryRow item_name {
+            max-width-chars: 25;
+            title: _("Name (optional)");
+            activates-default: true;
+          }
+        }
+      }
     };
   };
 }
