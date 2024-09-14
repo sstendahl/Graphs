@@ -7,6 +7,12 @@ from cycler import cycler
 from gi.repository import Adw, GLib, GObject, Gio, Graphs, Gtk, Pango
 
 from graphs import style_io
+from graphs.canvas import Canvas
+from graphs.item import DataItem
+
+from matplotlib import pyplot
+
+import numpy
 
 STYLE_DICT = {
     "linestyle": ["lines.linestyle"],
@@ -146,6 +152,7 @@ class StyleEditor(Gtk.Box):
     def __init__(self, window):
         super().__init__()
         self.window = window
+        self.params, self.graphs_params = None, None
 
         self.titlesize.set_format_value_func(_title_format_function)
         self.labelsize.set_format_value_func(_title_format_function)
@@ -439,6 +446,12 @@ class _StyleColorBox(Gtk.Box):
         self.props.parent.update_line_colors()
 
 
+_PREVIEW_XDATA1 = numpy.linspace(0, 10, 10)
+_PREVIEW_YDATA1 = numpy.linspace(0, numpy.power(numpy.e, 10), 10)
+_PREVIEW_XDATA2 = numpy.linspace(0, 10, 60)
+_PREVIEW_YDATA2 = numpy.power(numpy.e, _PREVIEW_XDATA2)
+
+
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/style-editor-window.ui")
 class StyleEditorWindow(Adw.Window):
     """Graphs Style Editor Window."""
@@ -447,18 +460,71 @@ class StyleEditorWindow(Adw.Window):
 
     split_view = Gtk.Template.Child()
     editor_clamp = Gtk.Template.Child()
+    content_view = Gtk.Template.Child()
 
     def __init__(self, application: Graphs.Application):
         super().__init__(application=application)
         self._style_editor = StyleEditor(self)
         self.editor_clamp.set_child(self._style_editor)
         self._file = None
+        self._test_items = Gio.ListStore()
+        self._test_items.append(
+            DataItem.new(
+                pyplot.rcParams,
+                xdata=_PREVIEW_XDATA1,
+                ydata=_PREVIEW_YDATA1,
+                name=_("Example Item"),
+                color="#000000",
+            ),
+        )
+        self._test_items.append(
+            DataItem.new(
+                pyplot.rcParams,
+                xdata=_PREVIEW_XDATA2,
+                ydata=_PREVIEW_YDATA2,
+                name=_("Example Item"),
+                color="#000000",
+            ),
+        )
+        self._style_editor.connect("params-changed", self._on_params_changed)
+        self._on_params_changed(self._style_editor)
+
+    def _on_params_changed(self, style_editor):
+        if style_editor.params is None:
+            style_manager = self.props.application.get_figure_style_manager()
+            params = style_manager.get_system_style_params()
+        else:
+            params = style_editor.params
+            color_cycle = style_editor.line_colors
+            count = 1
+            for item in self._test_items:
+                if count > len(color_cycle):
+                    count = 1
+                item.set_color(color_cycle[count - 1])
+                count += 1
+                for (prop, value) in item._extract_params(params).items():
+                    item.set_property(prop, value)
+        canvas = Canvas(params, self._test_items, False)
+        canvas.props.title = _("Title")
+        canvas.props.bottom_label = _("X Label")
+        canvas.props.left_label = _("Y Label")
+        self.content_view.set_content(canvas)
+
+        # Set headerbar color
+        css_provider = self.props.application.get_css_provider()
+        css_provider.load_from_string(
+            "headerbar#preview-headerbar { "
+            f"background-color: {params['figure.facecolor']}; "
+            f"color: {params['text.color']}; "
+            "}",
+        )
 
     def load_style(self, file: Gio.File) -> None:
         """Load a style."""
         self._file = file
         name = self._style_editor.load_style(file)
         self.set_title(name)
+        self._on_params_changed(self._style_editor)
 
     def save_style(self) -> None:
         """Save current style."""
