@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2024-08-23 08:24+0000\n"
-"PO-Revision-Date: 2024-08-23 10:28+0200\n"
+"POT-Creation-Date: 2024-09-14 19:40+0000\n"
+"PO-Revision-Date: 2024-09-16 01:25+0200\n"
 "Last-Translator: Balázs Úr <ur.balazs at fsf dot hu>\n"
 "Language-Team: Hungarian <openscope at fsf dot hu>\n"
 "Language: hu\n"
@@ -157,7 +157,7 @@ msgstr "Új stílus hozzáadása"
 msgid "Template"
 msgstr "Sablon"
 
-#: data/ui/add-style.blp:38 data/ui/edit-item.blp:21
+#: data/ui/add-style.blp:38 data/ui/edit-item.blp:22
 msgid "Name"
 msgstr "Név"
 
@@ -217,11 +217,11 @@ msgstr "Egyéni"
 msgid "Add Fit to Data"
 msgstr "Illesztés hozzáadása az adatokhoz"
 
-#: data/ui/curve-fitting.blp:109 data/ui/window.blp:599 graphs/window.vala:301
+#: data/ui/curve-fitting.blp:109 data/ui/window.blp:580 graphs/window.vala:301
 msgid "Toggle Sidebar"
 msgstr "Oldalsáv be- vagy kikapcsolása"
 
-#: data/ui/curve-fitting.blp:121 data/ui/window.blp:639
+#: data/ui/curve-fitting.blp:121 data/ui/window.blp:620
 msgid "Canvas Failed to Load"
 msgstr "Nem sikerült betölteni a vásznat"
 
@@ -310,196 +310,196 @@ msgstr "Visszaállítja az alapértékeket?"
 msgid "Reset"
 msgstr "Visszaállítás"
 
-#: data/ui/edit-item.blp:11
+#: data/ui/edit-item.blp:12
 msgid "Selected Item"
 msgstr "Kiválasztott elem"
 
-#: data/ui/edit-item.blp:12
+#: data/ui/edit-item.blp:13
 msgid "Choose which item to edit"
 msgstr "Válassza ki, mely elemet kell szerkeszteni"
 
-#: data/ui/edit-item.blp:18
+#: data/ui/edit-item.blp:19
 msgid "Data"
 msgstr "Adatok"
 
-#: data/ui/edit-item.blp:26
+#: data/ui/edit-item.blp:27
 msgid "X-Axis Position"
 msgstr "X-tengely helyzete"
 
-#: data/ui/edit-item.blp:28
+#: data/ui/edit-item.blp:29
 msgid "Bottom"
 msgstr "Lent"
 
-#: data/ui/edit-item.blp:28
+#: data/ui/edit-item.blp:29
 msgid "Top"
 msgstr "Fent"
 
-#: data/ui/edit-item.blp:33
+#: data/ui/edit-item.blp:34
 msgid "Y-Axis Position"
 msgstr "Y-tengely helyzete"
 
-#: data/ui/edit-item.blp:35
+#: data/ui/edit-item.blp:36
 msgid "Left"
 msgstr "Balra"
 
-#: data/ui/edit-item.blp:35
+#: data/ui/edit-item.blp:36
 msgid "Right"
 msgstr "Jobbra"
 
-#: data/ui/edit-item.blp:42
+#: data/ui/edit-item.blp:43
 msgid "Line Properties"
 msgstr "Vonal tulajdonságai"
 
-#: data/ui/edit-item.blp:45 data/ui/style-editor.blp:78
+#: data/ui/edit-item.blp:46 data/ui/style-editor.blp:58
 msgid "Linestyle"
 msgstr "Vonal stílusa"
 
-#: data/ui/edit-item.blp:48 data/ui/style-editor.blp:81
+#: data/ui/edit-item.blp:49 data/ui/style-editor.blp:61
 msgctxt "linestyle"
 msgid "None"
 msgstr "Nincs"
 
-#: data/ui/edit-item.blp:49 data/ui/style-editor.blp:82
+#: data/ui/edit-item.blp:50 data/ui/style-editor.blp:62
 msgctxt "linestyle"
 msgid "Solid"
 msgstr "Tömör"
 
-#: data/ui/edit-item.blp:50 data/ui/style-editor.blp:83
+#: data/ui/edit-item.blp:51 data/ui/style-editor.blp:63
 msgctxt "linestyle"
 msgid "Dotted"
 msgstr "Pontozott"
 
-#: data/ui/edit-item.blp:51 data/ui/style-editor.blp:84
+#: data/ui/edit-item.blp:52 data/ui/style-editor.blp:64
 msgctxt "linestyle"
 msgid "Dashed"
 msgstr "Szaggatott"
 
-#: data/ui/edit-item.blp:52 data/ui/style-editor.blp:85
+#: data/ui/edit-item.blp:53 data/ui/style-editor.blp:65
 msgctxt "linestyle"
 msgid "Dashdot"
 msgstr "Pont-vonal"
 
-#: data/ui/edit-item.blp:59 data/ui/style-editor.blp:92
+#: data/ui/edit-item.blp:60 data/ui/style-editor.blp:72
 msgid "Linewidth"
 msgstr "Vonal vastagsága"
 
-#: data/ui/edit-item.blp:73 data/ui/style-editor.blp:107
+#: data/ui/edit-item.blp:74 data/ui/style-editor.blp:87
 msgid "Markers"
 msgstr "Jelölők"
 
-#: data/ui/edit-item.blp:76 data/ui/style-editor.blp:110
+#: data/ui/edit-item.blp:77 data/ui/style-editor.blp:90
 msgctxt "markerstyle"
 msgid "None"
 msgstr "Nincs"
 
-#: data/ui/edit-item.blp:77 data/ui/style-editor.blp:111
+#: data/ui/edit-item.blp:78 data/ui/style-editor.blp:91
 msgctxt "markerstyle"
 msgid "Point"
 msgstr "Pont"
 
-#: data/ui/edit-item.blp:78 data/ui/style-editor.blp:112
+#: data/ui/edit-item.blp:79 data/ui/style-editor.blp:92
 msgctxt "markerstyle"
 msgid "Pixel"
 msgstr "Képpont"
 
-#: data/ui/edit-item.blp:79 data/ui/style-editor.blp:113
+#: data/ui/edit-item.blp:80 data/ui/style-editor.blp:93
 msgctxt "markerstyle"
 msgid "Circle"
 msgstr "Kör"
 
-#: data/ui/edit-item.blp:80 data/ui/style-editor.blp:114
+#: data/ui/edit-item.blp:81 data/ui/style-editor.blp:94
 msgctxt "markerstyle"
 msgid "Triangle Down"
 msgstr "Háromszög lefelé"
 
-#: data/ui/edit-item.blp:81 data/ui/style-editor.blp:115
+#: data/ui/edit-item.blp:82 data/ui/style-editor.blp:95
 msgctxt "markerstyle"
 msgid "Triangle Up"
 msgstr "Háromszög felfelé"
 
-#: data/ui/edit-item.blp:82 data/ui/style-editor.blp:116
+#: data/ui/edit-item.blp:83 data/ui/style-editor.blp:96
 msgctxt "markerstyle"
 msgid "Triangle Left"
 msgstr "Háromszög balra"
 
-#: data/ui/edit-item.blp:83 data/ui/style-editor.blp:117
+#: data/ui/edit-item.blp:84 data/ui/style-editor.blp:97
 msgctxt "markerstyle"
 msgid "Triangle Right"
 msgstr "Háromszög jobbra"
 
-#: data/ui/edit-item.blp:84 data/ui/style-editor.blp:118
+#: data/ui/edit-item.blp:85 data/ui/style-editor.blp:98
 msgctxt "markerstyle"
 msgid "Octagon"
 msgstr "Nyolcszög"
 
-#: data/ui/edit-item.blp:85 data/ui/style-editor.blp:119
+#: data/ui/edit-item.blp:86 data/ui/style-editor.blp:99
 msgctxt "markerstyle"
 msgid "Square"
 msgstr "Négyzet"
 
-#: data/ui/edit-item.blp:86 data/ui/style-editor.blp:120
+#: data/ui/edit-item.blp:87 data/ui/style-editor.blp:100
 msgctxt "markerstyle"
 msgid "Pentagon"
 msgstr "Ötszög"
 
-#: data/ui/edit-item.blp:87 data/ui/style-editor.blp:121
+#: data/ui/edit-item.blp:88 data/ui/style-editor.blp:101
 msgctxt "markerstyle"
 msgid "Star"
 msgstr "Csillag"
 
-#: data/ui/edit-item.blp:88 data/ui/style-editor.blp:122
+#: data/ui/edit-item.blp:89 data/ui/style-editor.blp:102
 msgctxt "markerstyle"
 msgid "Hexagon 1"
 msgstr "Hatszög 1"
 
-#: data/ui/edit-item.blp:89 data/ui/style-editor.blp:123
+#: data/ui/edit-item.blp:90 data/ui/style-editor.blp:103
 msgctxt "markerstyle"
 msgid "Hexagon 2"
 msgstr "Hatszög 2"
 
-#: data/ui/edit-item.blp:90 data/ui/style-editor.blp:124
+#: data/ui/edit-item.blp:91 data/ui/style-editor.blp:104
 msgctxt "markerstyle"
 msgid "Plus"
 msgstr "Plusz"
 
-#: data/ui/edit-item.blp:91 data/ui/style-editor.blp:125
+#: data/ui/edit-item.blp:92 data/ui/style-editor.blp:105
 msgctxt "markerstyle"
 msgid "X"
 msgstr "X"
 
 #. Translators: Diamond as in Cards Symbol
-#: data/ui/edit-item.blp:93 data/ui/style-editor.blp:127
+#: data/ui/edit-item.blp:94 data/ui/style-editor.blp:107
 msgctxt "markerstyle"
 msgid "Diamond"
 msgstr "Gyémánt"
 
 #. Translators: Diamond as in Cards Symbol
-#: data/ui/edit-item.blp:95 data/ui/style-editor.blp:129
+#: data/ui/edit-item.blp:96 data/ui/style-editor.blp:109
 msgctxt "markerstyle"
 msgid "Thin Diamond"
 msgstr "Vékony gyémánt"
 
-#: data/ui/edit-item.blp:96 data/ui/style-editor.blp:130
+#: data/ui/edit-item.blp:97 data/ui/style-editor.blp:110
 msgctxt "markerstyle"
 msgid "Vertical Line"
 msgstr "Függőleges vonal"
 
-#: data/ui/edit-item.blp:97 data/ui/style-editor.blp:131
+#: data/ui/edit-item.blp:98 data/ui/style-editor.blp:111
 msgctxt "markerstyle"
 msgid "Horizontal Line"
 msgstr "Vízszintes vonal"
 
-#: data/ui/edit-item.blp:98 data/ui/style-editor.blp:132
+#: data/ui/edit-item.blp:99 data/ui/style-editor.blp:112
 msgctxt "markerstyle"
 msgid "Filled Plus"
 msgstr "Kitöltött plusz"
 
-#: data/ui/edit-item.blp:99 data/ui/style-editor.blp:133
+#: data/ui/edit-item.blp:100 data/ui/style-editor.blp:113
 msgctxt "markerstyle"
 msgid "Filled X"
 msgstr "Kitöltött X"
 
-#: data/ui/edit-item.blp:106 data/ui/style-editor.blp:140
+#: data/ui/edit-item.blp:107 data/ui/style-editor.blp:120
 msgid "Marker Size"
 msgstr "Jelölő mérete"
 
@@ -562,7 +562,7 @@ msgstr "Átlátszó háttér"
 msgid "Style"
 msgstr "Stílus"
 
-#: data/ui/figure-settings-page.blp:5 data/ui/window.blp:660
+#: data/ui/figure-settings-page.blp:5 data/ui/window.blp:641
 msgid "Figure Settings"
 msgstr "Ábra beállításai"
 
@@ -570,7 +570,7 @@ msgstr "Ábra beállításai"
 msgid "Labels"
 msgstr "Címkék"
 
-#: data/ui/figure-settings-page.blp:24
+#: data/ui/figure-settings-page.blp:24 graphs/style_editor.py:508
 msgid "Title"
 msgstr "Cím"
 
@@ -763,7 +763,6 @@ msgid "Maximum"
 msgstr "Legnagyobb"
 
 #: data/ui/import.blp:6
-#| msgid "Modify Import Parameters"
 msgid "Import Parameters"
 msgstr "Importálási paraméterek"
 
@@ -861,7 +860,6 @@ msgid "Pick Color"
 msgstr "Szín kiválasztása"
 
 #: data/ui/item-box.blp:46
-#| msgid "Move Item "
 msgid "Move Item"
 msgstr "Elem áthelyezése"
 
@@ -1038,7 +1036,7 @@ msgstr "Művelet ismétlése"
 msgid "Smoothen Settings"
 msgstr "Simítás beállításai"
 
-#: data/ui/smoothen-settings.blp:30 data/ui/window.blp:695
+#: data/ui/smoothen-settings.blp:30 data/ui/window.blp:676
 msgid "Savitzky–Golay Filter"
 msgstr "Savitzky–Golay szűrő"
 
@@ -1054,7 +1052,7 @@ msgstr "Az adatkiterjedés hány százaléka legyen felhasználva a szűrőablak
 msgid "Polynomial degree"
 msgstr "Polinomiális fok"
 
-#: data/ui/smoothen-settings.blp:48 data/ui/window.blp:700
+#: data/ui/smoothen-settings.blp:48 data/ui/window.blp:681
 msgid "Moving Average"
 msgstr "Mozgóátlag"
 
@@ -1074,197 +1072,193 @@ msgstr "Szerkesztés"
 msgid "Remove"
 msgstr "Eltávolítás"
 
-#: data/ui/style-editor.blp:5
-msgid "Error - No Style selected"
-msgstr "Hiba – nincs stílus kiválasztva"
-
-#: data/ui/style-editor.blp:31
+#: data/ui/style-editor.blp:11
 msgid "Style Name"
 msgstr "Stílus neve"
 
-#: data/ui/style-editor.blp:35
+#: data/ui/style-editor.blp:15
 msgid "Font"
 msgstr "Betűkészlet"
 
-#: data/ui/style-editor.blp:46
+#: data/ui/style-editor.blp:26
 msgid "Title Size"
 msgstr "Cím mérete"
 
-#: data/ui/style-editor.blp:47
+#: data/ui/style-editor.blp:27
 msgid "Title size in relation to text size"
 msgstr "A cím mérete a szöveg méretéhez viszonyítva"
 
-#: data/ui/style-editor.blp:60
+#: data/ui/style-editor.blp:40
 msgid "Label Size"
 msgstr "Címke mérete"
 
-#: data/ui/style-editor.blp:61
+#: data/ui/style-editor.blp:41
 msgid "Label size in relation to text size"
 msgstr "A címke mérete a szöveg méretéhez viszonyítva"
 
-#: data/ui/style-editor.blp:75
+#: data/ui/style-editor.blp:55
 msgid "Lines"
 msgstr "Vonalak"
 
-#: data/ui/style-editor.blp:156
+#: data/ui/style-editor.blp:136
 msgid "Axes"
 msgstr "Tengelyek"
 
-#: data/ui/style-editor.blp:159
+#: data/ui/style-editor.blp:139
 msgid "Axis Width"
 msgstr "Tengely vastagsága"
 
-#: data/ui/style-editor.blp:172
+#: data/ui/style-editor.blp:152
 msgid "Draw Frame"
 msgstr "Keret rajzolása"
 
-#: data/ui/style-editor.blp:177
+#: data/ui/style-editor.blp:157
 msgid "Ticks"
 msgstr "Beosztások"
 
-#: data/ui/style-editor.blp:180
+#: data/ui/style-editor.blp:160
 msgid "Tick Directions"
 msgstr "Beosztás irányai"
 
-#: data/ui/style-editor.blp:182
+#: data/ui/style-editor.blp:162
 msgid "Inwards"
 msgstr "Befelé"
 
-#: data/ui/style-editor.blp:182
+#: data/ui/style-editor.blp:162
 msgid "Outwards"
 msgstr "Kifelé"
 
-#: data/ui/style-editor.blp:187
+#: data/ui/style-editor.blp:167
 msgid "Minor Ticks"
 msgstr "Másodlagos beosztások"
 
-#: data/ui/style-editor.blp:191
+#: data/ui/style-editor.blp:171
 msgid "Major Tick Width"
 msgstr "Fő beosztás szélessége"
 
-#: data/ui/style-editor.blp:204
+#: data/ui/style-editor.blp:184
 msgid "Minor Tick Width"
 msgstr "Másodlagos beosztás szélessége"
 
-#: data/ui/style-editor.blp:218
+#: data/ui/style-editor.blp:198
 msgid "Major Tick Length"
 msgstr "Fő beosztás hossza"
 
-#: data/ui/style-editor.blp:231
+#: data/ui/style-editor.blp:211
 msgid "Minor Tick Length"
 msgstr "Másodlagos beosztás hossza"
 
-#: data/ui/style-editor.blp:245
+#: data/ui/style-editor.blp:225
 msgid "Ticks on Bottom Axis"
 msgstr "Beosztások az alsó tengelyen"
 
-#: data/ui/style-editor.blp:249
+#: data/ui/style-editor.blp:229
 msgid "Ticks on Left Axis"
 msgstr "Beosztások a bal tengelyen"
 
-#: data/ui/style-editor.blp:253
+#: data/ui/style-editor.blp:233
 msgid "Ticks on Right Axis"
 msgstr "Beosztások a jobb tengelyen"
 
-#: data/ui/style-editor.blp:257
+#: data/ui/style-editor.blp:237
 msgid "Ticks on Top Axis"
 msgstr "Beosztások a felső tengelyen"
 
-#: data/ui/style-editor.blp:262
+#: data/ui/style-editor.blp:242
 msgid "Grid"
 msgstr "Rács"
 
-#: data/ui/style-editor.blp:265
+#: data/ui/style-editor.blp:245
 msgid "Show Grid"
 msgstr "Rács megjelenítése"
 
-#: data/ui/style-editor.blp:269
+#: data/ui/style-editor.blp:249
 msgid "Grid Width"
 msgstr "Rács vastagsága"
 
-#: data/ui/style-editor.blp:283
+#: data/ui/style-editor.blp:263
 msgid "Grid Opacity"
 msgstr "Rács átlátszatlansága"
 
-#: data/ui/style-editor.blp:298
+#: data/ui/style-editor.blp:278
 msgid "Padding"
 msgstr "Térköz"
 
-#: data/ui/style-editor.blp:299
+#: data/ui/style-editor.blp:279
 msgid "Padding for different parts of the figure"
 msgstr "Térköz az ábra különböző részeihez"
 
-#: data/ui/style-editor.blp:302
+#: data/ui/style-editor.blp:282
 msgid "Value Padding"
 msgstr "Érték térköze"
 
-#: data/ui/style-editor.blp:303
+#: data/ui/style-editor.blp:283
 msgid "Padding between axes and values"
 msgstr "A tengelyek és az értékek közötti térköz"
 
-#: data/ui/style-editor.blp:316
+#: data/ui/style-editor.blp:296
 msgid "Label Padding"
 msgstr "Címke térköze"
 
-#: data/ui/style-editor.blp:317
+#: data/ui/style-editor.blp:297
 msgid "Padding between axes and labels"
 msgstr "A tengelyek és a címkék közötti térköz"
 
-#: data/ui/style-editor.blp:330
+#: data/ui/style-editor.blp:310
 msgid "Title Padding"
 msgstr "Cím térköze"
 
-#: data/ui/style-editor.blp:331
+#: data/ui/style-editor.blp:311
 msgid "Padding between axes and the title"
 msgstr "A tengelyek és a cím közötti térköz"
 
-#: data/ui/style-editor.blp:345
+#: data/ui/style-editor.blp:325
 msgid "Colors"
 msgstr "Színek"
 
-#: data/ui/style-editor.blp:350
+#: data/ui/style-editor.blp:330
 msgid "Label text might be hard to read"
 msgstr "A címke szövege nehezen olvasható lehet"
 
-#: data/ui/style-editor.blp:355
+#: data/ui/style-editor.blp:335
 msgid "Poor Contrast"
 msgstr "Gyenge kontraszt"
 
-#: data/ui/style-editor.blp:370
+#: data/ui/style-editor.blp:350
 msgid "Text Color"
 msgstr "Szöveg színe"
 
-#: data/ui/style-editor.blp:375 data/ui/style-editor.blp:397
-#: data/ui/style-editor.blp:419 data/ui/style-editor.blp:441
-#: data/ui/style-editor.blp:463 data/ui/style-editor.blp:485
+#: data/ui/style-editor.blp:355 data/ui/style-editor.blp:377
+#: data/ui/style-editor.blp:399 data/ui/style-editor.blp:421
+#: data/ui/style-editor.blp:443 data/ui/style-editor.blp:465
 msgid "Change Color"
 msgstr "Szín megváltoztatása"
 
-#: data/ui/style-editor.blp:392
+#: data/ui/style-editor.blp:372
 msgid "Tick Color"
 msgstr "Beosztás színe"
 
-#: data/ui/style-editor.blp:414
+#: data/ui/style-editor.blp:394
 msgid "Axis Color"
 msgstr "Tengely színe"
 
-#: data/ui/style-editor.blp:436
+#: data/ui/style-editor.blp:416
 msgid "Grid Color"
 msgstr "Rács színe"
 
-#: data/ui/style-editor.blp:458
+#: data/ui/style-editor.blp:438
 msgid "Background Color"
 msgstr "Háttér színe"
 
-#: data/ui/style-editor.blp:480
+#: data/ui/style-editor.blp:460
 msgid "Outline Color"
 msgstr "Körvonal színe"
 
-#: data/ui/style-editor.blp:499
+#: data/ui/style-editor.blp:479
 msgid "Line Colors"
 msgstr "Vonalak színei"
 
-#: data/ui/style-editor.blp:505
+#: data/ui/style-editor.blp:485
 msgid "Add Color"
 msgstr "Szín hozzáadása"
 
@@ -1272,7 +1266,7 @@ msgstr "Szín hozzáadása"
 msgid "Transform Data"
 msgstr "Adatok transzformálása"
 
-#: data/ui/transform.blp:22 data/ui/window.blp:394
+#: data/ui/transform.blp:22 data/ui/window.blp:380
 msgid "Transform"
 msgstr "Transzformálás"
 
@@ -1335,192 +1329,192 @@ msgstr "Nagyítási mód. Válasszon egy területet az ábrán a nagyításhoz."
 msgid "Select Mode. Click and drag to make a selection of data"
 msgstr "Kijelölési mód. Kattintson és húzzon az adatok kijelöléséhez."
 
-#: data/ui/window.blp:284
+#: data/ui/window.blp:274
 msgid "Adjust"
 msgstr "Igazítás"
 
-#: data/ui/window.blp:299
+#: data/ui/window.blp:290
+msgid "Combine"
+msgstr "Kombinálás"
+
+#: data/ui/window.blp:292
+msgid "Combine all selected data"
+msgstr "Az összes kijelölt adat kombinálása"
+
+#: data/ui/window.blp:305
+msgid "Cut"
+msgstr "Kivágás"
+
+#: data/ui/window.blp:307
+msgid "Cut selected data"
+msgstr "Kijelölt adatok kivágása"
+
+#: data/ui/window.blp:319
 msgid "Shift"
 msgstr "Eltolás"
 
-#: data/ui/window.blp:301
+#: data/ui/window.blp:321
 msgid "Shift all data vertically with respect to each other"
 msgstr ""
 "Az összes adat eltolása függőlegesen az egymáshoz képesti távolság tartásával"
 
-#: data/ui/window.blp:316
+#: data/ui/window.blp:334
 msgid "Normalize"
 msgstr "Normalizálás"
 
-#: data/ui/window.blp:318
+#: data/ui/window.blp:336
 msgid "Normalize data"
 msgstr "Adatok normalizálása"
 
-#: data/ui/window.blp:334
+#: data/ui/window.blp:352
 msgid "Smoothen"
 msgstr "Simítás"
 
-#: data/ui/window.blp:336
+#: data/ui/window.blp:354
 msgid "Smoothen data"
 msgstr "Adatok simítása"
 
-#: data/ui/window.blp:351
+#: data/ui/window.blp:369
 msgid "Center"
 msgstr "Középre igazítás"
 
-#: data/ui/window.blp:353
+#: data/ui/window.blp:371
 msgid "Center data"
 msgstr "Adatok középre igazítása"
 
-#: data/ui/window.blp:368
-msgid "Combine"
-msgstr "Kombinálás"
-
-#: data/ui/window.blp:370
-msgid "Combine all selected data"
-msgstr "Az összes kijelölt adat kombinálása"
-
-#: data/ui/window.blp:384
-msgid "Cut"
-msgstr "Kivágás"
-
-#: data/ui/window.blp:386
-msgid "Cut selected data"
-msgstr "Kijelölt adatok kivágása"
-
-#: data/ui/window.blp:410
+#: data/ui/window.blp:395
 msgid "Derivative"
 msgstr "Deriválás"
 
-#: data/ui/window.blp:412
+#: data/ui/window.blp:397
 msgid "Get the derivative of the data"
 msgstr "Az adatok deriváltjának lekérése"
 
-#: data/ui/window.blp:426
+#: data/ui/window.blp:410
 msgid "Integral"
 msgstr "Integrálás"
 
-#: data/ui/window.blp:428
+#: data/ui/window.blp:412
 msgid "Get the indefinite integral of the data"
 msgstr "Az adatok határozatlan integráltjának lekérése"
 
-#: data/ui/window.blp:442
+#: data/ui/window.blp:426
 msgid "FFT"
 msgstr "FFT"
 
-#: data/ui/window.blp:444
+#: data/ui/window.blp:428
 msgid "Get the Fast Fourier Transform of the data"
 msgstr "Az adatok gyors Fourier-transzformációjának lekérése"
 
-#: data/ui/window.blp:458
+#: data/ui/window.blp:442
 msgid "Inverse FFT"
 msgstr "Inverz FFT"
 
-#: data/ui/window.blp:460
+#: data/ui/window.blp:444
 msgid "Get the Inverse Fast Fourier Transform of the data"
 msgstr "Az adatok inverz gyors Fourier-transzformációjának lekérése"
 
-#: data/ui/window.blp:475
+#: data/ui/window.blp:458
 msgid "Custom Transformation"
 msgstr "Egyéni transzformáció"
 
-#: data/ui/window.blp:477
+#: data/ui/window.blp:460
 msgid "Perform custom transformations on the data"
 msgstr "Egyéni transzformációk végrehajtása az adatokon"
 
-#: data/ui/window.blp:485
+#: data/ui/window.blp:468
 msgid "Modify"
 msgstr "Módosítás"
 
-#: data/ui/window.blp:506
+#: data/ui/window.blp:488
 msgid "Translate X"
 msgstr "X-eltolás"
 
-#: data/ui/window.blp:529
+#: data/ui/window.blp:511
 msgid "Translate Y"
 msgstr "Y-eltolás"
 
-#: data/ui/window.blp:552
+#: data/ui/window.blp:534
 msgid "Multiply X"
 msgstr "X-szorzás"
 
-#: data/ui/window.blp:575
+#: data/ui/window.blp:557
 msgid "Multiply Y"
 msgstr "Y-szorzás"
 
-#: data/ui/window.blp:606 graphs/window.vala:282
+#: data/ui/window.blp:587 graphs/window.vala:282
 msgid "Undo"
 msgstr "Visszavonás"
 
-#: data/ui/window.blp:611
+#: data/ui/window.blp:592
 msgid "Redo"
 msgstr "Ismétlés"
 
-#: data/ui/window.blp:616
+#: data/ui/window.blp:597
 msgid "View Menu"
 msgstr "Nézet menü"
 
-#: data/ui/window.blp:624
+#: data/ui/window.blp:605
 msgid "Next View"
 msgstr "Következő nézet"
 
-#: data/ui/window.blp:630
+#: data/ui/window.blp:611
 msgid "Previous View"
 msgstr "Előző nézet"
 
-#: data/ui/window.blp:648
+#: data/ui/window.blp:629
 msgid "New Project"
 msgstr "Új projekt"
 
-#: data/ui/window.blp:651
+#: data/ui/window.blp:632
 msgid "Save Project…"
 msgstr "Projekt mentése…"
 
-#: data/ui/window.blp:652
+#: data/ui/window.blp:633
 msgid "Save Project as…"
 msgstr "Projekt mentése másként…"
 
-#: data/ui/window.blp:653
+#: data/ui/window.blp:634
 msgid "Open Project…"
 msgstr "Projekt megnyitása…"
 
-#: data/ui/window.blp:656
+#: data/ui/window.blp:637
 msgid "Export Data…"
 msgstr "Adatok exportálása…"
 
-#: data/ui/window.blp:657
+#: data/ui/window.blp:638
 msgid "Export Figure…"
 msgstr "Ábra exportálása…"
 
-#: data/ui/window.blp:663
+#: data/ui/window.blp:644
 msgid "Keyboard Shortcuts"
 msgstr "Gyorsbillentyűk"
 
-#: data/ui/window.blp:664
+#: data/ui/window.blp:645
 msgid "Help"
 msgstr "Súgó"
 
-#: data/ui/window.blp:665
+#: data/ui/window.blp:646
 msgid "About Graphs"
 msgstr "A Grafikonok névjegye"
 
-#: data/ui/window.blp:671
+#: data/ui/window.blp:652
 msgid "Add Data from File…"
 msgstr "Adatok hozzáadása fájlból…"
 
-#: data/ui/window.blp:672
+#: data/ui/window.blp:653
 msgid "Add Equation…"
 msgstr "Egyenlet hozzáadása…"
 
-#: data/ui/window.blp:681
+#: data/ui/window.blp:662
 msgid "At Maximum Y Value"
 msgstr "A legnagyobb Y-értéknél"
 
-#: data/ui/window.blp:686
+#: data/ui/window.blp:667
 msgid "At Middle X Value"
 msgstr "A középső X-értéknél"
 
-#: data/ui/window.blp:707
+#: data/ui/window.blp:688
 msgid "Advanced Settings"
 msgstr "Speciális beállítások"
 
@@ -1718,10 +1712,23 @@ msgstr "Az importálás sikertelen, az oszlop indexe kívül esik a tartományon
 msgid "Unable to import from file"
 msgstr "Nem lehet importálni a fájlból"
 
-#: graphs/style_editor.py:360
+#: graphs/style_editor.py:407
 #, python-brace-format
 msgid "Color {number}"
 msgstr "{number}. szín"
+
+#: graphs/style_editor.py:476 graphs/style_editor.py:485
+#| msgid "Remove Item"
+msgid "Example Item"
+msgstr "Példa elem"
+
+#: graphs/style_editor.py:509 graphs/style_io.py:188
+msgid "X Label"
+msgstr "X-címke"
+
+#: graphs/style_editor.py:510 graphs/style_io.py:189
+msgid "Y Label"
+msgstr "Y-címke"
 
 #: graphs/style_io.py:83
 #, python-brace-format
@@ -1757,14 +1764,6 @@ msgstr "Nem sikerült feldolgozni a(z) {filename} fájlt"
 #, python-brace-format
 msgid "File {file}, does not contain name tag"
 msgstr "A(z) {file} fájl nem tartalmaz név címkét"
-
-#: graphs/style_io.py:188
-msgid "X Label"
-msgstr "X-címke"
-
-#: graphs/style_io.py:189
-msgid "Y Label"
-msgstr "Y-címke"
 
 #: graphs/styles.py:111
 #, python-brace-format
