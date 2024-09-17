@@ -1,8 +1,5 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Python Helper - Python part."""
-import logging
-from gettext import gettext as _
-
 from gi.repository import Gio, Graphs
 
 from graphs import (
@@ -12,12 +9,8 @@ from graphs import (
     file_import,
     utilities,
 )
-from graphs.item import DataItem
+from graphs.item import EquationItem
 from graphs.style_editor import StyleEditorWindow
-
-import numexpr
-
-import numpy
 
 _REQUEST_NAMES = (
     "python_method_request",
@@ -27,6 +20,7 @@ _REQUEST_NAMES = (
     "import_from_files_request",
     "export_items_request",
     "add_equation_request",
+    "validate_equation_request",
     "open_style_editor_request",
 )
 
@@ -64,6 +58,10 @@ class PythonHelper(Graphs.PythonHelper):
         return True
 
     @staticmethod
+    def _on_validate_equation_request(self, equation: str) -> None:
+        return utilities.validate_equation(equation)
+
+    @staticmethod
     def _on_import_from_files_request(
         self,
         files: list[Gio.File],
@@ -79,47 +77,27 @@ class PythonHelper(Graphs.PythonHelper):
         items: list[Graphs.Item],
         _n_items: int,
     ) -> None:
-        return export_items.export_items(mode, file, items)
+        figure_settings = \
+            self.props.application.get_data().get_figure_settings()
+        return export_items.export_items(mode, file, items, figure_settings)
 
     @staticmethod
-    def _on_add_equation_request(self, name: str) -> str:
+    def _on_add_equation_request(self, name: str) -> None:
         settings = self.props.application.get_settings_child("add-equation")
-        try:
-            x_start = utilities.string_to_float(settings.get_string("x-start"))
-            x_stop = utilities.string_to_float(settings.get_string("x-stop"))
-            step_size = utilities.string_to_float(
-                settings.get_string("step-size"),
-            )
-            datapoints = int(abs(x_start - x_stop) / step_size) + 1
-            xdata = numpy.ndarray.tolist(
-                numpy.linspace(x_start, x_stop, datapoints),
-            )
-            equation = utilities.preprocess(settings.get_string("equation"))
-            ydata = numpy.ndarray.tolist(
-                numexpr.evaluate(equation + " + x*0", local_dict={"x": xdata}),
-            )
-            if name == "":
-                name = f"Y = {settings.get_string('equation')}"
-            style_manager = self.props.application.get_figure_style_manager()
-            self.props.application.get_data().add_items(
-                [
-                    DataItem.new(
-                        style_manager.get_selected_style_params(),
-                        xdata,
-                        ydata,
-                        name=name,
-                    ),
-                ],
-                style_manager,
-            )
-            return ""
-        except ValueError as error:
-            return str(error)
-        except (NameError, SyntaxError, TypeError, KeyError) as exception:
-            message = _("{error} - Unable to add data from equation")
-            msg = message.format(error=exception.__class__.__name__)
-            logging.exception(msg)
-            return msg
+        equation = settings.get_string("equation")
+        if name == "":
+            name = f"Y = {settings.get_string('equation')}"
+        style_manager = self.props.application.get_figure_style_manager()
+        equation_item = EquationItem.new(
+            style_manager.get_selected_style_params(),
+            equation,
+            name=name,
+        )
+        self.props.application.get_data().add_items(
+            [equation_item],
+            style_manager,
+        )
+        self.props.application.get_data().optimize_limits()
 
     @staticmethod
     def _on_open_style_editor_request(self, file: Gio.File) -> None:

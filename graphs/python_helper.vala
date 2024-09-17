@@ -31,6 +31,11 @@ namespace Graphs {
             } else return null;
         }
 
+        protected signal bool validate_equation_request (string input);
+        public bool validate_equation (string input) {
+            return validate_equation_request.emit (input);
+        }
+
         protected signal void import_from_files_request (File[] files);
         public void import_from_files (File[] files) {
             import_from_files_request.emit (files);
@@ -41,9 +46,9 @@ namespace Graphs {
             export_items_request.emit (mode, file, items);
         }
 
-        protected signal string add_equation_request (string name);
-        public string add_equation (string name) {
-            return add_equation_request.emit (name);
+        protected signal void add_equation_request (string name);
+        public void add_equation (string name) {
+            add_equation_request.emit (name);
         }
 
         protected signal void open_style_editor_request (File file);

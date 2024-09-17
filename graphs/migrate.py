@@ -15,9 +15,6 @@ _CONFIG_MIGRATION_TABLE = {
     # old-key: (category, key, old-default)
     "action_center_data": ("actions", "center", "Center at middle coordinate"),
     "addequation_equation": ("add-equation", "equation", "X"),
-    "addequation_step_size": ("add-equation", "step-size", "0.01"),
-    "addequation_x_start": ("add-equation", "x-start", "0"),
-    "addequation_x_stop": ("add-equation", "x-stop", "10"),
     "export_figure_dpi": ("export-figure", "dpi", 100),
     "export_figure_transparent": ("export-figure", "transparent", True),
     "hide_unselected": ("figure", "hide-unselected", False),

@@ -8,7 +8,7 @@ from urllib.parse import unquote, urlparse
 
 from gi.repository import Gio, Graphs
 
-from graphs import item, misc, project
+from graphs import item, misc, project, utilities
 
 import numpy
 
@@ -386,6 +386,18 @@ class Data(Graphs.Data):
         self.props.can_view_back = True
         self.props.can_view_forward = self._view_history_pos < -1
 
+    @staticmethod
+    def _get_min_max_from_array(xydata: list, scale: int) -> (float, float):
+        try:
+            xydata = xydata[numpy.isfinite(xydata)]
+        except TypeError:
+            return None
+        nonzero_data = numpy.array([value for value in xydata if value != 0])
+        min_value = nonzero_data.min() if scale in (1, 4) \
+            and len(nonzero_data) > 0 else xydata.min()
+        max_value = xydata.max()
+        return min_value, max_value
+
     def _optimize_limits(self) -> None:
         """Optimize the limits of the canvas to the data class."""
         figure_settings = self.get_figure_settings()
@@ -396,30 +408,58 @@ class Data(Graphs.Data):
             [],
             figure_settings.get_property(f"{direction}_scale"),
         ] for direction in ("bottom", "left", "top", "right")]
+        equation_items = []
         for item_ in self:
-            if not isinstance(item_, item.DataItem) or (
+            if not isinstance(item_, (item.DataItem, item.EquationItem)) or (
                 not item_.get_selected()
                 and figure_settings.get_hide_unselected()
             ):
                 continue
+            if isinstance(item_, item.EquationItem):
+                equation_items.append(item_)
+                continue
             for index in \
                     item_.get_xposition() * 2, 1 + item_.get_yposition() * 2:
-                axes[index][1] = True
-                xydata = numpy.asarray(
-                    item_.ydata if index % 2 else item_.xdata,
+                axis = axes[index]
+                axis[1] = True
+
+                xdata = copy.deepcopy(item_.xdata)
+                ydata = copy.deepcopy(item_.ydata)
+
+                min_max = self._get_min_max_from_array(
+                    numpy.asarray(ydata if index % 2 else xdata),
+                    axis[4],
                 )
-                try:
-                    xydata = xydata[numpy.isfinite(xydata)]
-                except TypeError:
+                if min_max is None:
                     return
-                nonzero_data = numpy.array([
-                    value for value in xydata if value != 0
-                ])
-                axes[index][2].append(
-                    nonzero_data.min() if axes[index][4] in (1, 4)
-                    and len(nonzero_data) > 0 else xydata.min(),
-                )
-                axes[index][3].append(xydata.max())
+                min_value, max_value = min_max
+                axis[2].append(min_value)
+                axis[3].append(max_value)
+
+        for item_ in equation_items:
+            xaxis = axes[item_.get_xposition() * 2]
+            yaxis = axes[1 + item_.get_yposition() * 2]
+            if xaxis[1]:
+                x_limits = [min(xaxis[2]), max(xaxis[3])]
+            else:
+                direction = xaxis[0]
+                x_limits = [
+                    figure_settings.get_property(f"min_{direction}"),
+                    figure_settings.get_property(f"max_{direction}"),
+                ]
+            yaxis[1] = True
+
+            ydata = utilities.equation_to_data(item_.equation, x_limits)[1]
+
+            min_max = self._get_min_max_from_array(
+                numpy.asarray(ydata),
+                yaxis[4],
+            )
+            if min_max is None:
+                return
+            min_value, max_value = min_max
+            yaxis[2].append(min_value)
+            yaxis[3].append(max_value)
 
         for count, (direction, used, min_all, max_all, scale) in \
                 enumerate(axes):
@@ -431,6 +471,8 @@ class Data(Graphs.Data):
                 span = max_all - min_all
                 # 0.05 padding on y-axis, 0.015 padding on x-axis
                 padding_factor = 0.05 if count % 2 else 0.015
+                if isinstance(item_, item.EquationItem) and not count % 2:
+                    padding_factor = 0
                 max_all += padding_factor * span
 
                 # For inverse scale, calculate padding using a factor
@@ -441,6 +483,8 @@ class Data(Graphs.Data):
             else:  # Use different scaling type for logarithmic scale
                 # Use padding factor of 2 for y-axis, 1.025 for x-axis
                 padding_factor = 2 if count % 2 else 1.025
+                if isinstance(item_, item.EquationItem) and not count % 2:
+                    padding_factor = 0
                 min_all *= 1 / padding_factor
                 max_all *= padding_factor
             figure_settings.set_property(f"min_{direction}", min_all)

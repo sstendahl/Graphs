@@ -2,7 +2,8 @@
 """Module for Editing an Item."""
 from gi.repository import Adw, GObject, Graphs, Gtk
 
-from graphs.item import DataItem
+from graphs import utilities
+from graphs.item import DataItem, EquationItem
 
 _IGNORELIST = [
     "alpha",
@@ -15,6 +16,7 @@ _IGNORELIST = [
     "xlabel",
     "ydata",
     "ylabel",
+    "equation",
 ]
 
 
@@ -34,6 +36,8 @@ class EditItemDialog(Adw.PreferencesDialog):
     linewidth = Gtk.Template.Child()
     markerstyle = Gtk.Template.Child()
     markersize = Gtk.Template.Child()
+    equation_group = Gtk.Template.Child()
+    equation = Gtk.Template.Child()
 
     data = GObject.Property(type=Graphs.Data)
     item = GObject.Property(type=Graphs.Item)
@@ -53,6 +57,19 @@ class EditItemDialog(Adw.PreferencesDialog):
         self.item_selector.set_selected(data.get_items().index(item))
         self.present(application.get_window())
 
+        if isinstance(item, EquationItem):
+            self.equation.set_text(item.props.equation)
+
+    @Gtk.Template.Callback()
+    def on_equation_change(self, entry_row) -> None:
+        """Handle equation change."""
+        equation = entry_row.get_text()
+        if utilities.validate_equation(equation):
+            entry_row.remove_css_class("error")
+            self.props.item.props.equation = equation
+        else:
+            entry_row.add_css_class("error")
+
     @Gtk.Template.Callback()
     def on_select(self, _action, _target) -> None:
         """Handle Item selection."""
@@ -64,6 +81,8 @@ class EditItemDialog(Adw.PreferencesDialog):
                 [self.props.item.get_name()],
             )
             self.props.item = item
+            if isinstance(item, EquationItem):
+                self.equation.set_text(item.props.equation)
 
     @Gtk.Template.Callback()
     def on_item_change(self, _a, _b) -> None:
@@ -95,7 +114,11 @@ class EditItemDialog(Adw.PreferencesDialog):
                     ),
                 )
         self.props.bindings = bindings
-        self.item_group.set_visible(isinstance(item, DataItem))
+        self.markerstyle.set_visible(isinstance(item, DataItem))
+        self.item_group.set_visible(isinstance(item, (DataItem, EquationItem)))
+        if isinstance(item, EquationItem):
+            self.equation_group.set_visible(True)
+            self.markersize.set_sensitive(False)
 
     @Gtk.Template.Callback()
     def on_close(self, _a) -> None:
