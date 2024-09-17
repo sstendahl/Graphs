@@ -98,7 +98,6 @@ class EquationItem(_PythonItem):
 
     linestyle = GObject.Property(type=int, default=1)
     linewidth = GObject.Property(type=float, default=3)
-    equation = GObject.Property(type=str, default="")
 
     _style_properties = {
         "linestyle": ("lines.linestyle", misc.LINESTYLES.index),
@@ -115,7 +114,24 @@ class EquationItem(_PythonItem):
         )
 
     def __init__(self, **kwargs):
+        self._equation = ""
         super().__init__(typename=_("Equation"), **kwargs)
+
+    @GObject.Property(type=str)
+    def equation(self) -> None:
+        """Equation."""
+        return self._equation
+
+    @equation.setter
+    def equation(self, equation: str) -> None:
+        old_equation = self._equation
+        if old_equation == equation:
+            return
+        self._equation = equation
+        self.notify("equation")
+
+        if "Y = " + old_equation == self.props.name:
+            self.props.name = "Y = " + equation
 
 
 class TextItem(_PythonItem):

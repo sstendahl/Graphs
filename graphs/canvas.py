@@ -446,12 +446,6 @@ class Canvas(Graphs.Canvas, FigureCanvas):
             self.toolbar._wait_cursor_for_draw_cm()
             if self.toolbar else nullcontext()
         ):
-
-            if self._handles:
-                for artist_ in self._handles:
-                    if isinstance(artist_, artist.EquationItemArtistWrapper):
-                        artist_.generate_data()
-
             self._renderer.set_context(ctx)
             scale = self.device_pixel_ratio
             # Scale physical drawing to logical size.

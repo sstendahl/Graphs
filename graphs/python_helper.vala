@@ -30,12 +30,10 @@ namespace Graphs {
                 return this.evaluate_string_helper;
             } else return null;
         }
-        protected double validate_equation_helper { get; set; }
+
         protected signal bool validate_equation_request (string input);
-        public double? validate_equation (string input) {
-            if (validate_equation_request.emit (input)) {
-                return this.validate_equation_helper;
-            } else return null;
+        public bool validate_equation (string input) {
+            return validate_equation_request.emit (input);
         }
 
         protected signal void import_from_files_request (File[] files);
@@ -48,9 +46,9 @@ namespace Graphs {
             export_items_request.emit (mode, file, items);
         }
 
-        protected signal string add_equation_request (string name);
-        public string add_equation (string name) {
-            return add_equation_request.emit (name);
+        protected signal void add_equation_request (string name);
+        public void add_equation (string name) {
+            add_equation_request.emit (name);
         }
 
         protected signal void open_style_editor_request (File file);
