@@ -439,7 +439,15 @@ class Data(Graphs.Data):
         for item_ in equation_items:
             xaxis = axes[item_.get_xposition() * 2]
             yaxis = axes[1 + item_.get_yposition() * 2]
-            x_limits = [min(xaxis[2]), max(xaxis[3])]
+            if xaxis[1]:
+                x_limits = [min(xaxis[2]), max(xaxis[3])]
+            else:
+                direction = xaxis[0]
+                x_limits = [
+                    figure_settings.get_property(f"min_{direction}"),
+                    figure_settings.get_property(f"max_{direction}")
+                ]
+            yaxis[1] = True
 
             ydata = utilities.equation_to_data(item_.equation, x_limits)[1]
 

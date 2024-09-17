@@ -167,6 +167,7 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
         super().__init__()
 
         self._equation = utilities.preprocess(item.props.equation)
+        self._axis = axis
         axis.callbacks.connect("xlim_changed", self._generate_data)
         self._artist = axis.plot(
             [],
@@ -180,6 +181,16 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
             self.set_property(prop, item.get_property(prop))
             self.connect(f"notify::{prop}", self._set_properties)
         self._set_properties(None, None)
+        self._generate_data(axis)
+
+    @GObject.Property(type=str, flags=2)
+    def equation(self) -> None:
+        """Write-only property, ignored."""
+
+    @equation.setter
+    def equation(self, equation: str) -> None:
+        self._equation = utilities.preprocess(equation)
+        self._generate_data(self._axis)
 
     @GObject.Property(type=int, default=1)
     def linestyle(self) -> int:
