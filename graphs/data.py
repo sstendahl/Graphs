@@ -445,7 +445,7 @@ class Data(Graphs.Data):
                 direction = xaxis[0]
                 x_limits = [
                     figure_settings.get_property(f"min_{direction}"),
-                    figure_settings.get_property(f"max_{direction}")
+                    figure_settings.get_property(f"max_{direction}"),
                 ]
             yaxis[1] = True
 

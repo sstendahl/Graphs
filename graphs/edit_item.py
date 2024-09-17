@@ -59,16 +59,10 @@ class EditItemDialog(Adw.PreferencesDialog):
     @Gtk.Template.Callback()
     def on_equation_change(self, entry_row) -> None:
         """Handle equation change."""
-        item = self.props.item
-        validate = utilities.validate_equation(item.equation)
-
-        if not validate:
-            entry_row.add_css_class("error")
-            return
-        else:
+        if utilities.validate_equation(self.props.item.equation):
             entry_row.remove_css_class("error")
-            item.set_name(f"Y = {item.equation}")
-            return
+        else:
+            entry_row.add_css_class("error")
 
     @Gtk.Template.Callback()
     def on_select(self, _action, _target) -> None:
