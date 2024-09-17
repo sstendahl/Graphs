@@ -246,6 +246,7 @@ class Canvas(Graphs.Canvas, FigureCanvas):
         """Handle scroll event."""
         if self._ctrl_held:
             self.zoom(1 / _SCROLL_SCALE if dy > 0 else _SCROLL_SCALE)
+            self.toolbar.push_current()            
         else:
             if self._shift_held:
                 dx, dy = dy, dx
