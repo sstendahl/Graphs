@@ -16,6 +16,7 @@ _IGNORELIST = [
     "xlabel",
     "ydata",
     "ylabel",
+    "equation",
 ]
 
 
@@ -56,11 +57,16 @@ class EditItemDialog(Adw.PreferencesDialog):
         self.item_selector.set_selected(data.get_items().index(item))
         self.present(application.get_window())
 
+        if isinstance(item, EquationItem):
+            self.equation.set_text(item.props.equation)
+
     @Gtk.Template.Callback()
     def on_equation_change(self, entry_row) -> None:
         """Handle equation change."""
-        if utilities.validate_equation(self.props.item.equation):
+        equation = entry_row.get_text()
+        if utilities.validate_equation(equation):
             entry_row.remove_css_class("error")
+            self.props.item.props.equation = equation
         else:
             entry_row.add_css_class("error")
 
@@ -75,6 +81,8 @@ class EditItemDialog(Adw.PreferencesDialog):
                 [self.props.item.get_name()],
             )
             self.props.item = item
+            if isinstance(item, EquationItem):
+                self.equation.set_text(item.props.equation)
 
     @Gtk.Template.Callback()
     def on_item_change(self, _a, _b) -> None:

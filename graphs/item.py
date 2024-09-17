@@ -125,7 +125,10 @@ class EquationItem(_PythonItem):
     @equation.setter
     def equation(self, equation: str) -> None:
         old_equation = self._equation
+        if old_equation == equation:
+            return
         self._equation = equation
+        self.notify("equation")
 
         if "Y = " + old_equation == self.props.name:
             self.props.name = "Y = " + equation
