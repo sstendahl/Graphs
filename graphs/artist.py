@@ -6,7 +6,7 @@ Provides GObject based wrappers for mpl artists.
 """
 from gi.repository import GObject, Graphs
 
-from graphs import misc
+from graphs import misc, utilities
 
 from matplotlib import artist, pyplot
 from matplotlib.figure import Figure
@@ -22,10 +22,12 @@ def new_for_item(canvas: Graphs.Canvas, item: Graphs.Item):
     match item.__gtype_name__:
         case "GraphsDataItem":
             cls = DataItemArtistWrapper
-        case "GraphsTextItem":
-            cls = TextItemArtistWrapper
+        case "GraphsEquationItem":
+            cls = EquationItemArtistWrapper
         case "GraphsFillItem":
             cls = FillItemArtistWrapper
+        case "GraphsTextItem":
+            cls = TextItemArtistWrapper
         case _:
             pass
     artist_wrapper = cls(
@@ -152,6 +154,67 @@ class DataItemArtistWrapper(ItemArtistWrapper):
             self.set_property(prop, item.get_property(prop))
             self.connect(f"notify::{prop}", self._set_properties)
         self._set_properties(None, None)
+
+
+class EquationItemArtistWrapper(ItemArtistWrapper):
+    """Wrapper for EquationItem."""
+
+    __gtype_name__ = "GraphsEquationItemArtistWrapper"
+    selected = GObject.Property(type=bool, default=True)
+    linewidth = GObject.Property(type=float, default=3)
+
+    def __init__(self, axis: pyplot.axis, item: Graphs.Item):
+        super().__init__()
+
+        self._equation = utilities.preprocess(item.props.equation)
+        self._axis = axis
+        axis.callbacks.connect("xlim_changed", self._generate_data)
+        self._artist = axis.plot(
+            [],
+            [],
+            label=Graphs.tools_shorten_label(item.get_name(), 40),
+            color=item.get_color(),
+            alpha=item.get_alpha(),
+            linestyle=misc.LINESTYLES[item.props.linestyle],
+        )[0]
+        for prop in ("selected", "linewidth"):
+            self.set_property(prop, item.get_property(prop))
+            self.connect(f"notify::{prop}", self._set_properties)
+        self._set_properties(None, None)
+        self._generate_data(axis)
+
+    @GObject.Property(type=str, flags=2)
+    def equation(self) -> None:
+        """Write-only property, ignored."""
+
+    @equation.setter
+    def equation(self, equation: str) -> None:
+        self._equation = utilities.preprocess(equation)
+        self._generate_data(self._axis)
+
+    @GObject.Property(type=int, default=1)
+    def linestyle(self) -> int:
+        """Get linestyle property."""
+        return misc.LINESTYLES.index(self._artist.get_linestyle())
+
+    @linestyle.setter
+    def linestyle(self, linestyle: int) -> None:
+        """Set linestyle property."""
+        self._artist.set_linestyle(misc.LINESTYLES[linestyle])
+
+    def _set_properties(self, _x, _y) -> None:
+        linewidth = self.props.linewidth
+        if not self.props.selected:
+            linewidth *= 0.35
+        self._artist.set_linewidth(linewidth)
+
+    def _generate_data(self, axis):
+        """Generate new data for the artist."""
+        x_start, x_stop = axis.get_xlim()
+        x_range = x_stop - x_start
+        limits = (x_start - 0.25 * x_range, x_stop + 0.25 * x_range)
+        xdata, ydata = utilities.equation_to_data(self._equation, limits)
+        self._artist.set_data(xdata, ydata)
 
 
 class TextItemArtistWrapper(ItemArtistWrapper):

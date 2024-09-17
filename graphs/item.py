@@ -12,9 +12,11 @@ def new_from_dict(dictionary: dict):
     match dictionary["type"]:
         case "GraphsDataItem":
             cls = DataItem
-        case "GrapsTextItem":
+        case "GraphsEquationItem":
+            cls = EquationItem
+        case "GraphsTextItem":
             cls = TextItem
-        case "GrapsFillItem":
+        case "GraphsFillItem":
             cls = FillItem
         case _:
             pass
@@ -87,6 +89,49 @@ class DataItem(_PythonItem):
         for prop in ("xdata", "ydata"):
             if self.get_property(prop) is None:
                 self.set_property(prop, [])
+
+
+class EquationItem(_PythonItem):
+    """EquationItem."""
+
+    __gtype_name__ = "GraphsEquationItem"
+
+    linestyle = GObject.Property(type=int, default=1)
+    linewidth = GObject.Property(type=float, default=3)
+
+    _style_properties = {
+        "linestyle": ("lines.linestyle", misc.LINESTYLES.index),
+        "linewidth": ("lines.linewidth", None),
+    }
+
+    @classmethod
+    def new(cls, style, equation, **kwargs):
+        """Create new EquationItem."""
+        return cls(
+            equation=equation,
+            **cls._extract_params(cls, style),
+            **kwargs,
+        )
+
+    def __init__(self, **kwargs):
+        self._equation = ""
+        super().__init__(typename=_("Equation"), **kwargs)
+
+    @GObject.Property(type=str)
+    def equation(self) -> None:
+        """Equation."""
+        return self._equation
+
+    @equation.setter
+    def equation(self, equation: str) -> None:
+        old_equation = self._equation
+        if old_equation == equation:
+            return
+        self._equation = equation
+        self.notify("equation")
+
+        if "Y = " + old_equation == self.props.name:
+            self.props.name = "Y = " + equation
 
 
 class TextItem(_PythonItem):
