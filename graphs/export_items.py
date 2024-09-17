@@ -15,8 +15,8 @@ def export_items(
     figure_settings: Graphs.FigureSettings,
 ) -> None:
     """Export items in specified format."""
-    getattr(sys.modules[__name__],
-            "_export_" + mode)(file, items, figure_settings)
+    callback = getattr(sys.modules[__name__], "_export_" + mode)
+    callback(file, items, figure_settings)
 
 
 def _export_columns(
