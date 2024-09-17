@@ -386,6 +386,18 @@ class Data(Graphs.Data):
         self.props.can_view_back = True
         self.props.can_view_forward = self._view_history_pos < -1
 
+    @staticmethod
+    def _get_min_max_from_array(xydata: list, scale: int) -> (float, float):
+        try:
+            xydata = xydata[numpy.isfinite(xydata)]
+        except TypeError:
+            return None
+        nonzero_data = numpy.array([value for value in xydata if value != 0])
+        min_value = nonzero_data.min() if scale in (1, 4) \
+            and len(nonzero_data) > 0 else xydata.min()
+        max_value = xydata.max()
+        return min_value, max_value
+
     def _optimize_limits(self) -> None:
         """Optimize the limits of the canvas to the data class."""
         figure_settings = self.get_figure_settings()
@@ -396,44 +408,50 @@ class Data(Graphs.Data):
             [],
             figure_settings.get_property(f"{direction}_scale"),
         ] for direction in ("bottom", "left", "top", "right")]
+        equation_items = []
         for item_ in self:
-            data_item = isinstance(item_, (item.DataItem, item.EquationItem))
-            if not data_item or (
+            if not isinstance(item_, (item.DataItem, item.EquationItem)) or (
                 not item_.get_selected()
                 and figure_settings.get_hide_unselected()
             ):
                 continue
+            if isinstance(item_, item.EquationItem):
+                equation_items.append(item_)
+                continue
             for index in \
                     item_.get_xposition() * 2, 1 + item_.get_yposition() * 2:
-                axes[index][1] = True
-                if isinstance(item_, item.DataItem):
-                    xdata = numpy.array(copy.deepcopy(item_.xdata))
-                    ydata = numpy.array(copy.deepcopy(item_.ydata))
-                elif isinstance(item_, item.EquationItem):
-                    lower_bound = figure_settings.get_min_bottom()
-                    upper_bound = figure_settings.get_max_bottom()
-                    limits = [lower_bound, upper_bound]
+                axis = axes[index]
+                axis[1] = True
 
-                    xdata, ydata = utilities.equation_to_data(item_.equation,
-                                                              limits)
-                    xdata = numpy.array(xdata)
-                    ydata = numpy.array(ydata)
-                    mask = (lower_bound <= xdata) & (xdata <= upper_bound)
-                    xdata, ydata = xdata[mask], ydata[mask]
+                xdata = copy.deepcopy(item_.xdata)
+                ydata = copy.deepcopy(item_.ydata)
 
-                xydata = numpy.asarray(ydata if index % 2 else xdata)
-                try:
-                    xydata = xydata[numpy.isfinite(xydata)]
-                except TypeError:
-                    return
-                nonzero_data = numpy.array([
-                    value for value in xydata if value != 0
-                ])
-                axes[index][2].append(
-                    nonzero_data.min() if axes[index][4] in (1, 4)
-                    and len(nonzero_data) > 0 else xydata.min(),
+                min_max = self._get_min_max_from_array(
+                    numpy.asarray(ydata if index % 2 else xdata),
+                    axis[4],
                 )
-                axes[index][3].append(xydata.max())
+                if min_max is None:
+                    return
+                min_value, max_value = min_max
+                axis[2].append(min_value)
+                axis[3].append(max_value)
+
+        for item_ in equation_items:
+            xaxis = axes[item_.get_xposition() * 2]
+            yaxis = axes[1 + item_.get_yposition() * 2]
+            x_limits = [min(xaxis[2]), max(xaxis[3])]
+
+            ydata = utilities.equation_to_data(item_.equation, x_limits)[1]
+
+            min_max = self._get_min_max_from_array(
+                numpy.asarray(ydata),
+                yaxis[4],
+            )
+            if min_max is None:
+                return
+            min_value, max_value = min_max
+            yaxis[2].append(min_value)
+            yaxis[3].append(max_value)
 
         for count, (direction, used, min_all, max_all, scale) in \
                 enumerate(axes):

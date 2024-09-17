@@ -29,7 +29,9 @@ def _export_columns(
         for item in items:
             name = f"{item.get_name()}.txt"
             _save_item(
-                file.get_child_for_display_name(name), item, figure_settings,
+                file.get_child_for_display_name(name),
+                item,
+                figure_settings,
             )
     else:
         _save_item(file, items[0], figure_settings)
