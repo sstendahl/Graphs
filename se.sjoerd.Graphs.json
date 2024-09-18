@@ -1,7 +1,7 @@
 {
     "id" : "se.sjoerd.Graphs",
     "runtime" : "org.gnome.Platform",
-    "runtime-version" : "46",
+    "runtime-version" : "47",
     "sdk" : "org.gnome.Sdk",
     "command" : "graphs",
     "finish-args" : [
@@ -9,7 +9,8 @@
         "--socket=wayland",
         "--socket=fallback-x11",
         "--device=dri",
-        "--env=NUMEXPR_MAX_THREADS=16"
+        "--env=NUMEXPR_MAX_THREADS=16",
+        "--env=GI_TYPELIB_PATH=/app/lib64/girepository-1.0"
     ],
     "cleanup" : [
         "/include",

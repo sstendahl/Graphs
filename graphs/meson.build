@@ -71,11 +71,12 @@ graphs_lib = shared_library('graphs',
   include_directories: include_directories('.'),
             link_args: ['-lm',],
               install: true,
-          install_dir: [true],
+          install_dir: [true, true, true, true],
 )
 
+g_ir_compiler = find_program('g-ir-compiler')
 custom_target('graphs typelib',
-      command: [find_program('g-ir-compiler'), '--shared-library', 'libgraphs.so', '--output', '@OUTPUT@', meson.current_build_dir() / 'Graphs-1.gir'],
+      command: [g_ir_compiler, '--output', '@OUTPUT@', meson.current_build_dir() / 'Graphs-1.gir'],
        output: 'Graphs-1.typelib',
       depends: graphs_lib,
       install: true,
