@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs v1.8.x\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2024-08-14 12:45+0000\n"
-"PO-Revision-Date: 2024-08-18 12:33+0330\n"
+"POT-Creation-Date: 2024-09-16 09:32+0000\n"
+"PO-Revision-Date: 2024-09-18 16:45+0330\n"
 "Last-Translator: Danial Behzadi <dani.behzi@ubuntu.com>\n"
 "Language-Team: Persian <fa@li.org>\n"
 "Language: fa\n"
@@ -484,12 +484,12 @@ msgstr "خط افقی"
 #: data/ui/edit-item.blp:98 data/ui/style-editor.blp:138
 msgctxt "markerstyle"
 msgid "Filled Plus"
-msgstr ""
+msgstr "به علاوهٔ توپر"
 
 #: data/ui/edit-item.blp:99 data/ui/style-editor.blp:139
 msgctxt "markerstyle"
 msgid "Filled X"
-msgstr ""
+msgstr "X توپر"
 
 #: data/ui/edit-item.blp:106 data/ui/style-editor.blp:146
 msgid "Marker Size"
@@ -793,12 +793,12 @@ msgstr "نقطه‌ویرگول (;)"
 #: data/ui/import-columns.blp:15
 msgctxt "delimiter"
 msgid "Decimal comma (,)"
-msgstr ""
+msgstr "کامای ده‌دهی (,)"
 
 #: data/ui/import-columns.blp:16
 msgctxt "delimiter"
 msgid "Decimal point (.)"
-msgstr ""
+msgstr "نقطهٔ ده‌دهی (.)"
 
 #: data/ui/import-columns.blp:17
 msgctxt "delimiter"
@@ -816,12 +816,12 @@ msgstr "جداکنندهٔ هزارگان"
 #: data/ui/import-columns.blp:31
 msgctxt "separator"
 msgid "Decimal comma (,)"
-msgstr ""
+msgstr "کامای ده‌دهی (,)"
 
 #: data/ui/import-columns.blp:32
 msgctxt "separator"
 msgid "Decimal point (.)"
-msgstr ""
+msgstr "نقطهٔ ده‌دهی (.)"
 
 #: data/ui/import-columns.blp:38
 msgid "Column X"
@@ -1038,11 +1038,11 @@ msgstr "پالایهٔ ساویتزکی–گولِی"
 
 #: data/ui/smoothen-settings.blp:32
 msgid "Span percentage"
-msgstr ""
+msgstr "درصد گستره"
 
 #: data/ui/smoothen-settings.blp:33
 msgid "What percentage of the data span to use for the filter window"
-msgstr ""
+msgstr "درصد استفاده شده از گسترهٔ داده برای پنجرهٔ پالایه"
 
 #: data/ui/smoothen-settings.blp:40
 msgid "Polynomial degree"
@@ -1054,11 +1054,11 @@ msgstr "میانگین متحرّک"
 
 #: data/ui/smoothen-settings.blp:50
 msgid "Box points"
-msgstr ""
+msgstr "نقطه‌های جعبه"
 
 #: data/ui/smoothen-settings.blp:51
 msgid "Amount of points to use when calculating a moving average"
-msgstr ""
+msgstr "مقدار نقطه‌ها برای استفاده هنگام محاسبهٔ میانگین متحرّک"
 
 #: data/ui/style-color-box.blp:18 data/ui/style-preview.blp:27
 msgid "Edit"
@@ -1186,31 +1186,31 @@ msgstr "لایه‌گذاری"
 
 #: data/ui/style-editor.blp:305
 msgid "Padding for different parts of the figure"
-msgstr ""
+msgstr "فاصله گذاری بخش های مختلف شکل"
 
 #: data/ui/style-editor.blp:308
 msgid "Value Padding"
-msgstr ""
+msgstr "فاصله گذاری مقدار"
 
 #: data/ui/style-editor.blp:309
 msgid "Padding between axes and values"
-msgstr ""
+msgstr "فاصله گذاری بین محورها و مقدارها"
 
 #: data/ui/style-editor.blp:322
 msgid "Label Padding"
-msgstr ""
+msgstr "فاصله گذاری برچسب"
 
 #: data/ui/style-editor.blp:323
 msgid "Padding between axes and labels"
-msgstr ""
+msgstr "فاصله گذاری بین محورها و برچسب‌ها"
 
 #: data/ui/style-editor.blp:336
 msgid "Title Padding"
-msgstr ""
+msgstr "فاصله گذاری عنوان"
 
 #: data/ui/style-editor.blp:337
 msgid "Padding between axes and the title"
-msgstr ""
+msgstr "فاصله گذاری بین بردارها و عنوان"
 
 #: data/ui/style-editor.blp:351
 msgid "Colors"
@@ -1280,6 +1280,12 @@ msgid ""
 "by default, append d to the function\n"
 "to use degrees, e.g. sind(x) or cosd(x)."
 msgstr ""
+"متغیّرهای اضافی:\n"
+"x_min, y_min\n"
+"x_max, y_max \n"
+"توابع مثلّثاتی به طور پیش‌گزیده از رادیان استفاده\n"
+"می‌کنند. برای استفاده از درجه، d را به تابع\n"
+"بیفزایید. برای نمونه sind(x) یا cosd(x)."
 
 #: data/ui/transform.blp:40
 msgid "More info"
@@ -1516,16 +1522,16 @@ msgstr "دانیال بهزادی <dani.behzi@ubuntu.com>"
 #: graphs/actions.py:80
 #, python-brace-format
 msgid "{error} - Unable to add data from equation"
-msgstr ""
+msgstr "{error} - ناتوان در افزودن داده از معادله"
 
 #: graphs/actions.py:159
 msgid "Exported Figure"
-msgstr ""
+msgstr "شکل برون‌ریخته"
 
 #: graphs/actions.py:225 graphs/item_box.py:65
 #, python-brace-format
 msgid "Deleted {name}"
-msgstr ""
+msgstr "{name} پاک شده"
 
 #: graphs/application.py:43
 #, python-brace-format
@@ -1541,32 +1547,38 @@ msgid ""
 "Please enter valid fitting \n"
 "parameters to start the fit"
 msgstr ""
+"ورود پارامترهای برازش\n"
+"معتبر برای آغاز برازش"
 
 #: graphs/curve_fitting.py:184
 msgid ""
 "Please enter a valid equation \n"
 "to start the fit"
 msgstr ""
+"ورود معادلهٔ معتبر\n"
+"برای آغاز برازش"
 
 #: graphs/curve_fitting.py:188
 msgid ""
 "Please enter valid fitting bounds \n"
 "to start the fit"
 msgstr ""
+"ورود کران‌های برازش\n"
+"معتبر برای آغاز برازش"
 
 #: graphs/curve_fitting.py:201
 #, python-brace-format
 msgid "Sum of R²: {R2}"
-msgstr ""
+msgstr "جمع R²: {R2}"
 
 #: graphs/curve_fitting.vala:136
 #, c-format
 msgid "Fitting Parameters for %s"
-msgstr ""
+msgstr "برازش پارامترها برای %s"
 
 #: graphs/data.py:89
 msgid "Untitled Project"
-msgstr ""
+msgstr "پروژهٔ بی‌عنوان"
 
 #: graphs/data.py:100
 msgid "Draft"
@@ -1579,7 +1591,7 @@ msgstr "شکل برون‌ریخته"
 
 #: graphs/figure_settings.py:71
 msgid "Defaults Updated"
-msgstr ""
+msgstr "پیش‌گزیده‌ّا به‌روز شدند"
 
 #: graphs/figure_settings.vala:161
 msgid "X Axis Minimum"
@@ -1611,7 +1623,7 @@ msgstr "مقیاس محور Y"
 
 #: graphs/file_import.vala:68
 msgid "Are you sure you want to reset the import settings?"
-msgstr ""
+msgstr "مطمئنید که می‌خواهید تنظیمات درون‌ریزی را حذف کنید؟"
 
 #: graphs/misc.py:107
 msgctxt "file-filter"
@@ -1621,51 +1633,51 @@ msgstr "پروندهٔ پروژهٔ نمودارها"
 #: graphs/operations.py:129
 #, python-brace-format
 msgid "{name}: Unable to do transformation, make sure the syntax is correct"
-msgstr ""
+msgstr "{name}: ناتوان در انجام تبدیل. مطمئن شوید نوشتار درست است"
 
 #: graphs/operations.py:133
 msgid "Unable to do transformation"
-msgstr ""
+msgstr "ناتوان در انجام تبدیل‌ها"
 
 #: graphs/operations.py:197
 msgid "Data that was outside of the highlighted area has been discarded"
-msgstr ""
+msgstr "داده‌هایی که خارج از ناحیهٔ برجسته بودند دور ریخته شدند"
 
 #: graphs/operations.py:234
 msgid "No data found within the highlighted area"
-msgstr ""
+msgstr "هیچ داده‌ای در ناحیهٔ برجسته پیدا نشد"
 
 #: graphs/operations.py:479
 msgid "Combined Data"
-msgstr ""
+msgstr "داده‌های ترکیب شده"
 
 #: graphs/parse_file.py:54
 msgid "Intensity (cps)"
-msgstr ""
+msgstr "چگالی (cps)"
 
 #: graphs/parse_file.py:68
 msgid "Invalid .xry format"
-msgstr ""
+msgstr "قالب ‪.xry‬ نامعتبر"
 
 #: graphs/parse_file.py:83
 msgid "β (°)"
-msgstr ""
+msgstr "β (°)"
 
 #: graphs/parse_file.py:84
 msgid "R (1/s)"
-msgstr ""
+msgstr "R (1/s)"
 
 #: graphs/parse_file.py:153
 msgid "Import failed, column index out of range"
-msgstr ""
+msgstr "درون‌ریزی شکست خورد. اندیس ستون بیرون از دامنه"
 
 #: graphs/parse_file.py:172
 msgid "Unable to import from file"
-msgstr ""
+msgstr "ناتوان در درون‌ریزی از پرونده"
 
 #: graphs/project.py:39
 msgid "Saved Project"
-msgstr ""
+msgstr "پروژه‌های ذخیره شده"
 
 #: graphs/project.py:61
 msgid "Project"
@@ -1674,32 +1686,32 @@ msgstr "پروژه"
 #: graphs/style_io.py:65
 #, python-brace-format
 msgid "Missing colon in file {file}, line {line}"
-msgstr ""
+msgstr "دو نقطه در خط {line} از {file} جا افتاده"
 
 #: graphs/style_io.py:73
 #, python-brace-format
 msgid "Non-style related parameter {param} in file {file}"
-msgstr ""
+msgstr "پارامتر نامربوط به سبک {param} در {file}"
 
 #: graphs/style_io.py:76
 #, python-brace-format
 msgid "Ignoring parameter {param} in file {file}"
-msgstr ""
+msgstr "چشم‌پوشی از پارامتر {param} در {file}"
 
 #: graphs/style_io.py:79
 #, python-brace-format
 msgid "Duplicate key in file {file}, on line {line}"
-msgstr ""
+msgstr "کلید تکراری در خط {line} از {file}"
 
 #: graphs/style_io.py:96
 #, python-brace-format
 msgid "Bad value in file {file} on line {line}"
-msgstr ""
+msgstr "مقدار بد در خط {line} از {file}"
 
 #: graphs/style_io.py:102
 #, python-brace-format
 msgid "Could not parse {filename}"
-msgstr ""
+msgstr "نتوانست {filename} را تجزیه کند"
 
 #: graphs/style_io.py:159
 msgid "X Label"
@@ -1712,17 +1724,17 @@ msgstr "برچسب Y"
 #: graphs/styles.py:305
 #, python-brace-format
 msgid "Could not parse {stylename}, loading system preferred style"
-msgstr ""
+msgstr "نتوانست {stylename} را تجزیه کند. بار کردن سبک ترجیحی سامانه"
 
 #: graphs/styles.py:313
 #, python-brace-format
 msgid "Plot style {stylename} does not exist loading system preferred"
-msgstr ""
+msgstr "سبک نمودار {stylename} وجود ندارد. بار کردن ترجیح سامانه"
 
 #: graphs/styles.py:726
 #, python-brace-format
 msgid "Are you sure you want to delete {stylename}?"
-msgstr ""
+msgstr "مطمئنید که می‌خواهید {stylename} را حذف کنید؟"
 
 #: graphs/styles.py:743
 #, python-brace-format
