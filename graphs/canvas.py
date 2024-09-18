@@ -10,7 +10,6 @@ interactive navigation in conjunction with graphs-specific structures.
         Canvas
 """
 import math
-from contextlib import nullcontext
 
 from gi.repository import GObject, Gdk, Gio, Graphs, Gtk
 
@@ -434,35 +433,6 @@ class Canvas(Graphs.Canvas, FigureCanvas):
         if scale == 4:
             value1, value2 = value2, value1
         return value1, value2
-
-    def on_draw_event(self, _widget, ctx) -> None:
-        """
-        Overwrite super function.
-
-        Fixes a UI scaling bug, see
-        https://gitlab.gnome.org/World/Graphs/-/issues/259
-        """
-        with (
-            self.toolbar._wait_cursor_for_draw_cm()
-            if self.toolbar else nullcontext()
-        ):
-            self._renderer.set_context(ctx)
-            scale = self.device_pixel_ratio
-            # Scale physical drawing to logical size.
-            ctx.scale(1 / scale, 1 / scale)
-            allocation = self.get_allocation()
-            Gtk.render_background(
-                self.get_style_context(),
-                ctx,
-                allocation.x,
-                allocation.y,
-                allocation.width,
-                allocation.height,
-            )
-            self._renderer.width = allocation.width * scale
-            self._renderer.height = allocation.height * scale
-            self._renderer.dpi = self.figure.dpi
-            self.figure.draw(self._renderer)
 
     def _redraw(self, *_args) -> None:
         # bottom, top, left, right
