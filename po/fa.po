@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2024-09-14 19:40+0000\n"
-"PO-Revision-Date: 2024-09-15 15:38+0330\n"
+"POT-Creation-Date: 2024-09-17 21:44+0000\n"
+"PO-Revision-Date: 2024-09-18 16:46+0330\n"
 "Last-Translator: Danial Behzadi <dani.behzi@ubuntu.com>\n"
 "Language-Team: Persian <fa@li.org>\n"
 "Language: fa\n"
@@ -116,8 +116,8 @@ msgstr "لغو"
 msgid "Add"
 msgstr "افزودن"
 
-#: data/ui/add-equation.blp:41 data/ui/curve-fitting.blp:66
-#: data/ui/transform.blp:56
+#: data/ui/add-equation.blp:40 data/ui/curve-fitting.blp:66
+#: data/ui/edit-item.blp:45 data/ui/transform.blp:56
 msgid "Y ="
 msgstr "Y ="
 
@@ -128,18 +128,6 @@ msgstr "ورود عبارتی ریاضی برای ایجاد داده‌ها ا�
 #: data/ui/add-equation.blp:57
 msgid "Name (optional)"
 msgstr "نام (اختیاری)"
-
-#: data/ui/add-equation.blp:70
-msgid "X Start"
-msgstr "آغاز X"
-
-#: data/ui/add-equation.blp:78
-msgid "X Stop"
-msgstr "پایان X"
-
-#: data/ui/add-equation.blp:86
-msgid "Step Size"
-msgstr "اندازهٔ گام"
 
 #: data/ui/add-style.blp:6 data/ui/figure-settings-dialog.blp:33
 msgid "Add New Style"
@@ -161,7 +149,7 @@ msgstr "برازش منحنی"
 msgid "Open Curve Fitting Menu"
 msgstr "گشودن فهرست برازش منحنی"
 
-#: data/ui/curve-fitting.blp:50
+#: data/ui/curve-fitting.blp:50 data/ui/edit-item.blp:42 graphs/item.py:118
 msgid "Equation"
 msgstr "معادله"
 
@@ -338,160 +326,160 @@ msgstr "راست"
 msgid "Right"
 msgstr "چپ"
 
-#: data/ui/edit-item.blp:43
+#: data/ui/edit-item.blp:52
 msgid "Line Properties"
 msgstr "ویژگی‌های خط"
 
-#: data/ui/edit-item.blp:46 data/ui/style-editor.blp:58
+#: data/ui/edit-item.blp:55 data/ui/style-editor.blp:58
 msgid "Linestyle"
 msgstr "سبک خط"
 
-#: data/ui/edit-item.blp:49 data/ui/style-editor.blp:61
+#: data/ui/edit-item.blp:58 data/ui/style-editor.blp:61
 msgctxt "linestyle"
 msgid "None"
 msgstr "هیچ‌کدام"
 
-#: data/ui/edit-item.blp:50 data/ui/style-editor.blp:62
+#: data/ui/edit-item.blp:59 data/ui/style-editor.blp:62
 msgctxt "linestyle"
 msgid "Solid"
 msgstr "پر"
 
-#: data/ui/edit-item.blp:51 data/ui/style-editor.blp:63
+#: data/ui/edit-item.blp:60 data/ui/style-editor.blp:63
 msgctxt "linestyle"
 msgid "Dotted"
 msgstr "نقطه‌چین"
 
-#: data/ui/edit-item.blp:52 data/ui/style-editor.blp:64
+#: data/ui/edit-item.blp:61 data/ui/style-editor.blp:64
 msgctxt "linestyle"
 msgid "Dashed"
 msgstr "خط‌چین"
 
-#: data/ui/edit-item.blp:53 data/ui/style-editor.blp:65
+#: data/ui/edit-item.blp:62 data/ui/style-editor.blp:65
 msgctxt "linestyle"
 msgid "Dashdot"
 msgstr "خط‌چین"
 
-#: data/ui/edit-item.blp:60 data/ui/style-editor.blp:72
+#: data/ui/edit-item.blp:69 data/ui/style-editor.blp:72
 msgid "Linewidth"
 msgstr "پهنای خط"
 
-#: data/ui/edit-item.blp:74 data/ui/style-editor.blp:87
+#: data/ui/edit-item.blp:83 data/ui/style-editor.blp:87
 msgid "Markers"
 msgstr "نشانه‌ها"
 
-#: data/ui/edit-item.blp:77 data/ui/style-editor.blp:90
+#: data/ui/edit-item.blp:86 data/ui/style-editor.blp:90
 msgctxt "markerstyle"
 msgid "None"
 msgstr "هیچ‌کدام"
 
-#: data/ui/edit-item.blp:78 data/ui/style-editor.blp:91
+#: data/ui/edit-item.blp:87 data/ui/style-editor.blp:91
 msgctxt "markerstyle"
 msgid "Point"
 msgstr "نقطه"
 
-#: data/ui/edit-item.blp:79 data/ui/style-editor.blp:92
+#: data/ui/edit-item.blp:88 data/ui/style-editor.blp:92
 msgctxt "markerstyle"
 msgid "Pixel"
 msgstr "پیکسل"
 
-#: data/ui/edit-item.blp:80 data/ui/style-editor.blp:93
+#: data/ui/edit-item.blp:89 data/ui/style-editor.blp:93
 msgctxt "markerstyle"
 msgid "Circle"
 msgstr "حلقه"
 
-#: data/ui/edit-item.blp:81 data/ui/style-editor.blp:94
+#: data/ui/edit-item.blp:90 data/ui/style-editor.blp:94
 msgctxt "markerstyle"
 msgid "Triangle Down"
 msgstr "سه‌گوش به پایین"
 
-#: data/ui/edit-item.blp:82 data/ui/style-editor.blp:95
+#: data/ui/edit-item.blp:91 data/ui/style-editor.blp:95
 msgctxt "markerstyle"
 msgid "Triangle Up"
 msgstr "سه‌گوش به بالا"
 
-#: data/ui/edit-item.blp:83 data/ui/style-editor.blp:96
+#: data/ui/edit-item.blp:92 data/ui/style-editor.blp:96
 msgctxt "markerstyle"
 msgid "Triangle Left"
 msgstr "سه‌گوش به چپ"
 
-#: data/ui/edit-item.blp:84 data/ui/style-editor.blp:97
+#: data/ui/edit-item.blp:93 data/ui/style-editor.blp:97
 msgctxt "markerstyle"
 msgid "Triangle Right"
 msgstr "سه‌گوش به راست"
 
-#: data/ui/edit-item.blp:85 data/ui/style-editor.blp:98
+#: data/ui/edit-item.blp:94 data/ui/style-editor.blp:98
 msgctxt "markerstyle"
 msgid "Octagon"
 msgstr "هشت‌گوش"
 
-#: data/ui/edit-item.blp:86 data/ui/style-editor.blp:99
+#: data/ui/edit-item.blp:95 data/ui/style-editor.blp:99
 msgctxt "markerstyle"
 msgid "Square"
 msgstr "مربّع"
 
-#: data/ui/edit-item.blp:87 data/ui/style-editor.blp:100
+#: data/ui/edit-item.blp:96 data/ui/style-editor.blp:100
 msgctxt "markerstyle"
 msgid "Pentagon"
 msgstr "پنج‌گوش"
 
-#: data/ui/edit-item.blp:88 data/ui/style-editor.blp:101
+#: data/ui/edit-item.blp:97 data/ui/style-editor.blp:101
 msgctxt "markerstyle"
 msgid "Star"
 msgstr "ستاره"
 
-#: data/ui/edit-item.blp:89 data/ui/style-editor.blp:102
+#: data/ui/edit-item.blp:98 data/ui/style-editor.blp:102
 msgctxt "markerstyle"
 msgid "Hexagon 1"
 msgstr "شش‌گوش ۱"
 
-#: data/ui/edit-item.blp:90 data/ui/style-editor.blp:103
+#: data/ui/edit-item.blp:99 data/ui/style-editor.blp:103
 msgctxt "markerstyle"
 msgid "Hexagon 2"
 msgstr "شش‌گوش ۲"
 
-#: data/ui/edit-item.blp:91 data/ui/style-editor.blp:104
+#: data/ui/edit-item.blp:100 data/ui/style-editor.blp:104
 msgctxt "markerstyle"
 msgid "Plus"
 msgstr "مثبت"
 
-#: data/ui/edit-item.blp:92 data/ui/style-editor.blp:105
+#: data/ui/edit-item.blp:101 data/ui/style-editor.blp:105
 msgctxt "markerstyle"
 msgid "X"
 msgstr "‏X"
 
 #. Translators: Diamond as in Cards Symbol
-#: data/ui/edit-item.blp:94 data/ui/style-editor.blp:107
+#: data/ui/edit-item.blp:103 data/ui/style-editor.blp:107
 msgctxt "markerstyle"
 msgid "Diamond"
 msgstr "لوزی"
 
 #. Translators: Diamond as in Cards Symbol
-#: data/ui/edit-item.blp:96 data/ui/style-editor.blp:109
+#: data/ui/edit-item.blp:105 data/ui/style-editor.blp:109
 msgctxt "markerstyle"
 msgid "Thin Diamond"
 msgstr "لوزی لاغر"
 
-#: data/ui/edit-item.blp:97 data/ui/style-editor.blp:110
+#: data/ui/edit-item.blp:106 data/ui/style-editor.blp:110
 msgctxt "markerstyle"
 msgid "Vertical Line"
 msgstr "خط عمودی"
 
-#: data/ui/edit-item.blp:98 data/ui/style-editor.blp:111
+#: data/ui/edit-item.blp:107 data/ui/style-editor.blp:111
 msgctxt "markerstyle"
 msgid "Horizontal Line"
 msgstr "خط افقی"
 
-#: data/ui/edit-item.blp:99 data/ui/style-editor.blp:112
+#: data/ui/edit-item.blp:108 data/ui/style-editor.blp:112
 msgctxt "markerstyle"
 msgid "Filled Plus"
 msgstr "به علاوهٔ توپر"
 
-#: data/ui/edit-item.blp:100 data/ui/style-editor.blp:113
+#: data/ui/edit-item.blp:109 data/ui/style-editor.blp:113
 msgctxt "markerstyle"
 msgid "Filled X"
 msgstr "X توپر"
 
-#: data/ui/edit-item.blp:107 data/ui/style-editor.blp:120
+#: data/ui/edit-item.blp:116 data/ui/style-editor.blp:120
 msgid "Marker Size"
 msgstr "اندازهٔ نشانگر"
 
@@ -1034,11 +1022,11 @@ msgstr "پالایهٔ ساویتزکی–گولِی"
 
 #: data/ui/smoothen-settings.blp:32
 msgid "Span percentage"
-msgstr ""
+msgstr "درصد گستره"
 
 #: data/ui/smoothen-settings.blp:33
 msgid "What percentage of the data span to use for the filter window"
-msgstr ""
+msgstr "درصد استفاده شده از گسترهٔ داده برای پنجرهٔ پالایه"
 
 #: data/ui/smoothen-settings.blp:40
 msgid "Polynomial degree"
@@ -1050,11 +1038,11 @@ msgstr "میانگین متحرّک"
 
 #: data/ui/smoothen-settings.blp:50
 msgid "Box points"
-msgstr ""
+msgstr "نقطه‌های جعبه"
 
 #: data/ui/smoothen-settings.blp:51
 msgid "Amount of points to use when calculating a moving average"
-msgstr ""
+msgstr "مقدار نقطه‌ها برای استفاده هنگام محاسبهٔ میانگین متحرّک"
 
 #: data/ui/style-color-box.blp:18 data/ui/style-preview.blp:30
 msgid "Edit"
@@ -1182,23 +1170,23 @@ msgstr "فاصله گذاری بخش های مختلف شکل"
 
 #: data/ui/style-editor.blp:282
 msgid "Value Padding"
-msgstr ""
+msgstr "فاصله گذاری مقدار"
 
 #: data/ui/style-editor.blp:283
 msgid "Padding between axes and values"
-msgstr ""
+msgstr "فاصله گذاری بین محورها و مقدارها"
 
 #: data/ui/style-editor.blp:296
 msgid "Label Padding"
-msgstr ""
+msgstr "فاصله گذاری برچسب"
 
 #: data/ui/style-editor.blp:297
 msgid "Padding between axes and labels"
-msgstr ""
+msgstr "فاصله گذاری بین محورها و برچسب‌ها"
 
 #: data/ui/style-editor.blp:310
 msgid "Title Padding"
-msgstr ""
+msgstr "فاصله گذاری عنوان"
 
 #: data/ui/style-editor.blp:311
 msgid "Padding between axes and the title"
@@ -1272,6 +1260,12 @@ msgid ""
 "by default, append d to the function\n"
 "to use degrees, e.g. sind(x) or cosd(x)."
 msgstr ""
+"متغیّرهای اضافی:\n"
+"x_min, y_min\n"
+"x_max, y_max \n"
+"توابع مثلّثاتی به طور پیش‌گزیده از رادیان استفاده\n"
+"می‌کنند. برای استفاده از درجه، d را به تابع\n"
+"بیفزایید. برای نمونه sind(x) یا cosd(x)."
 
 #: data/ui/transform.blp:40
 msgid "More info"
@@ -1636,15 +1630,15 @@ msgstr "مطمئنید که می‌خواهید %s را حذف کنید؟"
 msgid "Are you sure you want to reset the import settings?"
 msgstr "مطمئنید که می‌خواهید تنظیمات درون‌ریزی را حذف کنید؟"
 
-#: graphs/item.py:86
+#: graphs/item.py:88
 msgid "Dataset"
 msgstr "دادگان"
 
-#: graphs/item.py:120
+#: graphs/item.py:165
 msgid "Label"
 msgstr "برچسب"
 
-#: graphs/item.py:136
+#: graphs/item.py:181
 msgid "Fill"
 msgstr "پُر کردن"
 
@@ -1779,6 +1773,15 @@ msgstr "بهینه‌سازی کران‌ها"
 msgctxt "scale"
 msgid "Inverse Root"
 msgstr "ریشهٔ معکوس"
+
+#~ msgid "X Start"
+#~ msgstr "آغاز X"
+
+#~ msgid "X Stop"
+#~ msgstr "پایان X"
+
+#~ msgid "Step Size"
+#~ msgstr "اندازهٔ گام"
 
 #~ msgid "Error - No Style selected"
 #~ msgstr "خطا - هیچ سبکی گزیده نشده"
