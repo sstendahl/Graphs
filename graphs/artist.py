@@ -217,6 +217,7 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
         self._artist.set_data(xdata, ydata)
         axis.draw_artist(self._artist)
 
+
 class TextItemArtistWrapper(ItemArtistWrapper):
     """Wrapper for TextItem."""
 
