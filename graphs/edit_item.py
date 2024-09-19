@@ -67,6 +67,8 @@ class EditItemDialog(Adw.PreferencesDialog):
         if utilities.validate_equation(equation):
             entry_row.remove_css_class("error")
             self.props.item.props.equation = equation
+            # Workaround to fix artist not updating on equation change:
+            self.props.item.props.name = self.props.item.props.name
         else:
             entry_row.add_css_class("error")
 
