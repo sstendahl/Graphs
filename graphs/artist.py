@@ -4,6 +4,8 @@ Wrapper classes for mpl artists.
 
 Provides GObject based wrappers for mpl artists.
 """
+import contextlib
+
 from gi.repository import GObject, Graphs
 
 from graphs import misc, utilities
@@ -215,7 +217,8 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
         limits = (x_start - 0.25 * x_range, x_stop + 0.25 * x_range)
         xdata, ydata = utilities.equation_to_data(self._equation, limits)
         self._artist.set_data(xdata, ydata)
-        axis.draw_artist(self._artist)
+        with contextlib.suppress(AttributeError):
+            axis.draw_artist(self._artist)
 
 
 class TextItemArtistWrapper(ItemArtistWrapper):

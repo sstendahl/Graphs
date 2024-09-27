@@ -23,7 +23,7 @@ from matplotlib.backend_bases import (
     MouseEvent,
     NavigationToolbar2,
 )
-from matplotlib.backends.backend_gtk4agg import FigureCanvas
+from matplotlib.backends.backend_gtk4cairo import FigureCanvas
 from matplotlib.widgets import SpanSelector
 
 _SCROLL_SCALE = 1.06
