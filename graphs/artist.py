@@ -215,7 +215,10 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
         limits = (x_start - 0.25 * x_range, x_stop + 0.25 * x_range)
         xdata, ydata = utilities.equation_to_data(self._equation, limits)
         self._artist.set_data(xdata, ydata)
-        axis.draw_artist(self._artist)
+        try:
+            axis.draw_artist(self._artist)
+        except AttributeError:
+            pass
 
 
 class TextItemArtistWrapper(ItemArtistWrapper):
