@@ -208,7 +208,6 @@ Adw.NavigationPage settings_page {
 
             Adw.ActionRow style_row {
               title: _("Style");
-              hexpand: true;
               activatable: true;
               [suffix]
               Label style_name {}
@@ -221,11 +220,9 @@ Adw.NavigationPage settings_page {
 
           Adw.PreferencesGroup {
             margin-top: 12;
-            hexpand: false;
-            halign: center;
             margin-bottom: 12;
-            Button set_as_default {
-              label: _("Set as Default");
+            Adw.ButtonRow set_as_default {
+              title: _("Set as Default");
               styles ["pill"]
             }
           }
