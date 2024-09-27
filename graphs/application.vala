@@ -286,8 +286,8 @@ namespace Graphs {
                         name_builder.append (", ");
                     }
                 }
-                string names = name_builder.free_and_steal ()[:-2];
                 data.delete_items (items);
+                string names = name_builder.free_and_steal ()[:-2];
                 window.add_undo_toast (_("Deleted %s").printf (names));
             });
             add_action (delete_selected_action);
