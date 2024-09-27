@@ -170,7 +170,7 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
 
         self._equation = utilities.preprocess(item.props.equation)
         self._axis = axis
-        axis.callbacks.connect("xlim_changed", self._generate_data)
+        self._axis.callbacks.connect("xlim_changed", self._generate_data)
         self._artist = axis.plot(
             [],
             [],
@@ -183,7 +183,7 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
             self.set_property(prop, item.get_property(prop))
             self.connect(f"notify::{prop}", self._set_properties)
         self._set_properties(None, None)
-        self._generate_data(axis)
+        self._generate_data()
 
     @GObject.Property(type=str, flags=2)
     def equation(self) -> None:
@@ -192,7 +192,7 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
     @equation.setter
     def equation(self, equation: str) -> None:
         self._equation = utilities.preprocess(equation)
-        self._generate_data(self._axis)
+        self._generate_data()
 
     @GObject.Property(type=int, default=1)
     def linestyle(self) -> int:
@@ -210,85 +210,15 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
             linewidth *= 0.35
         self._artist.set_linewidth(linewidth)
 
-    def _generate_data(self, axis):
+    def _generate_data(self, _axis = None):
         """Generate new data for the artist."""
-        x_start, x_stop = axis.get_xlim()
+        x_start, x_stop = self._axis.get_xlim()
         x_range = x_stop - x_start
         limits = (x_start - 0.25 * x_range, x_stop + 0.25 * x_range)
         xdata, ydata = utilities.equation_to_data(self._equation, limits)
         self._artist.set_data(xdata, ydata)
-        with contextlib.suppress(AttributeError):
-            axis.draw_artist(self._artist)
-
-
-class TextItemArtistWrapper(ItemArtistWrapper):
-    """Wrapper for TextItem."""
-
-    __gtype_name__ = "GraphsTextItemArtistWrapper"
-
-    @GObject.Property(type=float, default=12)
-    def size(self) -> float:
-        """Get size property."""
-        return self._artist.get_fontsize()
-
-    @size.setter
-    def size(self, size: float) -> None:
-        """Set size property."""
-        self._artist.set_fontsize(size)
-
-    @GObject.Property(type=int, default=0, minimum=0, maximum=360)
-    def rotation(self) -> int:
-        """Get rotation property."""
-        return self._artist.get_rotation()
-
-    @rotation.setter
-    def rotation(self, rotation: int) -> None:
-        """Set rotation property."""
-        self._artist.set_rotation(rotation)
-
-    @GObject.Property(type=str, default="")
-    def text(self) -> str:
-        """Get text property."""
-        return self._artist.get_text()
-
-    @text.setter
-    def text(self, text: str) -> None:
-        """Set text property."""
-        self._artist.set_text(text)
-
-    @GObject.Property(type=float, default=0)
-    def xanchor(self) -> float:
-        """Get xanchor property."""
-        return self._artist.get_position()[0]
-
-    @xanchor.setter
-    def xanchor(self, xanchor: float) -> None:
-        """Set xanchor property."""
-        self._artist.set_position((xanchor, self.props.yanchor))
-
-    @GObject.Property(type=float, default=0)
-    def yanchor(self) -> float:
-        """Get yanchor property."""
-        return self._artist.get_position()[1]
-
-    @yanchor.setter
-    def yanchor(self, yanchor: float) -> None:
-        """Set yanchor property."""
-        self._artist.set_position((self.props.xanchor, yanchor))
-
-    def __init__(self, axis: pyplot.axis, item: Graphs.Item):
-        super().__init__()
-        self._artist = axis.text(
-            item.props.xanchor,
-            item.props.yanchor,
-            item.props.text,
-            label=Graphs.tools_shorten_label(item.get_name(), 40),
-            color=item.get_color(),
-            alpha=item.get_alpha(),
-            clip_on=True,
-            fontsize=item.props.size,
-            rotation=item.props.rotation,
-        )
+        canvas = self._axis.figure.canvas
+        canvas.queue_draw()
 
 
 class FillItemArtistWrapper(ItemArtistWrapper):
