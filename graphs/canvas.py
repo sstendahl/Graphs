@@ -11,7 +11,7 @@ interactive navigation in conjunction with graphs-specific structures.
 """
 import math
 
-from gi.repository import GObject, Gdk, Gio, Graphs, Gtk
+from gi.repository import Adw, GObject, Gdk, Gio, Graphs, Gtk
 
 import gio_pyio
 
@@ -23,7 +23,7 @@ from matplotlib.backend_bases import (
     MouseEvent,
     NavigationToolbar2,
 )
-from matplotlib.backends.backend_gtk4cairo import FigureCanvas
+from matplotlib.backends.backend_gtk4agg import FigureCanvas
 from matplotlib.widgets import SpanSelector
 
 _SCROLL_SCALE = 1.06
@@ -180,7 +180,8 @@ class Canvas(Graphs.Canvas, FigureCanvas):
         def rgba_to_tuple(rgba):
             return (rgba.red, rgba.green, rgba.blue, rgba.alpha)
 
-        rgba = self.get_style_context().lookup_color("accent_color")[1]
+        style_manager = Adw.StyleManager()
+        rgba = style_manager.get_accent_color_rgba()
         self.rubberband_edge_color = rgba_to_tuple(rgba)
         rgba.alpha = 0.2
         self.rubberband_fill_color = rgba_to_tuple(rgba)
