@@ -193,8 +193,8 @@ namespace Graphs {
             style_row.activated.connect (() => {
                 navigation_view.push (style_overview);
             });
-            var button = builder.get_object ("set_as_default") as Button;
-            button.clicked.connect (set_as_default);
+            var button = builder.get_object ("set_as_default") as Adw.ButtonRow;
+            button.activated.connect (set_as_default);
 
             present (application.window);
             if (highlighted != null) {
