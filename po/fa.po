@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2024-09-17 21:44+0000\n"
-"PO-Revision-Date: 2024-09-18 16:46+0330\n"
+"POT-Creation-Date: 2024-09-27 12:37+0000\n"
+"PO-Revision-Date: 2024-09-28 01:43+0330\n"
 "Last-Translator: Danial Behzadi <dani.behzi@ubuntu.com>\n"
 "Language-Team: Persian <fa@li.org>\n"
 "Language: fa\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.4.4\n"
+"X-Generator: Poedit 3.5\n"
 
 #: data/se.sjoerd.Graphs.appdata.xml.in:6 data/se.sjoerd.Graphs.desktop.in:3
 #: data/ui/window.blp:9 graphs/about.vala:23
@@ -34,7 +34,7 @@ msgid ""
 "operations such as the ability to select, cut, translate, multiply, center and "
 "smoothen data, as well as apply any custom transformations on the data."
 msgstr ""
-"نمودارهای ابزای ساده ولی قدرتمند است مه می‌گذارد داده‌ّایتان را به سادگی دستکاری و "
+"نمودارهای ابزای ساده ولی قدرتمند است مه می‌گذارد داده‌هایتان را به سادگی دستکاری و "
 "رسم کنید. داده‌های جدید می‌توانند از دامنهٔ وسیعی از گونه‌های پرونده وارد یا با "
 "معادله ایجاد شوند. همهٔ داده‌ها می‌توانند با دامنه‌ای از عملیان چون امکان گزینش، "
 "برش، ترجمه، ضرب، مرکز دهی و نرم کردن داده‌ها دستکاری و هر تبدیل سفارشی‌ای روی "
@@ -116,16 +116,16 @@ msgstr "لغو"
 msgid "Add"
 msgstr "افزودن"
 
-#: data/ui/add-equation.blp:40 data/ui/curve-fitting.blp:66
+#: data/ui/add-equation.blp:35
+msgid "Enter a mathematical expression"
+msgstr "ورود عبارتی ریاضی"
+
+#: data/ui/add-equation.blp:38 data/ui/curve-fitting.blp:66
 #: data/ui/edit-item.blp:45 data/ui/transform.blp:56
 msgid "Y ="
 msgstr "Y ="
 
-#: data/ui/add-equation.blp:49
-msgid "Enter a mathematical expression to generate data from"
-msgstr "ورود عبارتی ریاضی برای ایجاد داده‌ها از آن"
-
-#: data/ui/add-equation.blp:57
+#: data/ui/add-equation.blp:45
 msgid "Name (optional)"
 msgstr "نام (اختیاری)"
 
@@ -278,7 +278,7 @@ msgstr "ذخیره"
 msgid "Delete Style?"
 msgstr "حذف سبک؟"
 
-#: data/ui/dialogs.blp:20 data/ui/style-preview.blp:39
+#: data/ui/dialogs.blp:20 data/ui/style-preview.blp:38
 msgid "Delete"
 msgstr "حذف"
 
@@ -726,7 +726,7 @@ msgstr "مرکز"
 msgid "Hide Unselected Items"
 msgstr "نهفتن موارد ناگزیده"
 
-#: data/ui/figure-settings-page.blp:228
+#: data/ui/figure-settings-page.blp:225
 msgid "Set as Default"
 msgstr "تنظیم به عنوان پیش‌گزیده"
 
@@ -1044,11 +1044,11 @@ msgstr "نقطه‌های جعبه"
 msgid "Amount of points to use when calculating a moving average"
 msgstr "مقدار نقطه‌ها برای استفاده هنگام محاسبهٔ میانگین متحرّک"
 
-#: data/ui/style-color-box.blp:18 data/ui/style-preview.blp:30
+#: data/ui/style-color-box.blp:17 data/ui/style-preview.blp:29
 msgid "Edit"
 msgstr "ویرایش"
 
-#: data/ui/style-color-box.blp:29
+#: data/ui/style-color-box.blp:28
 msgid "Remove"
 msgstr "برداشتن"
 
@@ -1619,7 +1619,7 @@ msgstr "مقیاس محور Y"
 
 #: graphs/figure_settings.vala:247
 msgid "Defaults Updated"
-msgstr "پیش‌گزیده‌ّا به‌روز شدند"
+msgstr "پیش‌گزیده‌ها به‌روز شدند"
 
 #: graphs/figure_settings.vala:272
 #, c-format
