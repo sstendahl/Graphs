@@ -4,8 +4,6 @@ Wrapper classes for mpl artists.
 
 Provides GObject based wrappers for mpl artists.
 """
-import contextlib
-
 from gi.repository import GObject, Graphs
 
 from graphs import misc, utilities
@@ -210,7 +208,7 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
             linewidth *= 0.35
         self._artist.set_linewidth(linewidth)
 
-    def _generate_data(self, _axis = None):
+    def _generate_data(self, _axis=None):
         """Generate new data for the artist."""
         x_start, x_stop = self._axis.get_xlim()
         x_range = x_stop - x_start
@@ -219,6 +217,76 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
         self._artist.set_data(xdata, ydata)
         canvas = self._axis.figure.canvas
         canvas.queue_draw()
+
+
+class TextItemArtistWrapper(ItemArtistWrapper):
+    """Wrapper for TextItem."""
+
+    __gtype_name__ = "GraphsTextItemArtistWrapper"
+
+    @GObject.Property(type=float, default=12)
+    def size(self) -> float:
+        """Get size property."""
+        return self._artist.get_fontsize()
+
+    @size.setter
+    def size(self, size: float) -> None:
+        """Set size property."""
+        self._artist.set_fontsize(size)
+
+    @GObject.Property(type=int, default=0, minimum=0, maximum=360)
+    def rotation(self) -> int:
+        """Get rotation property."""
+        return self._artist.get_rotation()
+
+    @rotation.setter
+    def rotation(self, rotation: int) -> None:
+        """Set rotation property."""
+        self._artist.set_rotation(rotation)
+
+    @GObject.Property(type=str, default="")
+    def text(self) -> str:
+        """Get text property."""
+        return self._artist.get_text()
+
+    @text.setter
+    def text(self, text: str) -> None:
+        """Set text property."""
+        self._artist.set_text(text)
+
+    @GObject.Property(type=float, default=0)
+    def xanchor(self) -> float:
+        """Get xanchor property."""
+        return self._artist.get_position()[0]
+
+    @xanchor.setter
+    def xanchor(self, xanchor: float) -> None:
+        """Set xanchor property."""
+        self._artist.set_position((xanchor, self.props.yanchor))
+
+    @GObject.Property(type=float, default=0)
+    def yanchor(self) -> float:
+        """Get yanchor property."""
+        return self._artist.get_position()[1]
+
+    @yanchor.setter
+    def yanchor(self, yanchor: float) -> None:
+        """Set yanchor property."""
+        self._artist.set_position((self.props.xanchor, yanchor))
+
+    def __init__(self, axis: pyplot.axis, item: Graphs.Item):
+        super().__init__()
+        self._artist = axis.text(
+            item.props.xanchor,
+            item.props.yanchor,
+            item.props.text,
+            label=Graphs.tools_shorten_label(item.get_name(), 40),
+            color=item.get_color(),
+            alpha=item.get_alpha(),
+            clip_on=True,
+            fontsize=item.props.size,
+            rotation=item.props.rotation,
+        )
 
 
 class FillItemArtistWrapper(ItemArtistWrapper):
