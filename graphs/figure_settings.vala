@@ -288,7 +288,7 @@ namespace Graphs {
                     dialog.present (this);
                 });
                 action_group.add_action (delete_action);
-                preview.insert_action_group ("style", action_group);
+                preview.menu_button.insert_action_group ("style", action_group);
             }
         }
     }
