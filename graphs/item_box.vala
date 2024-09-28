@@ -22,11 +22,11 @@ namespace Graphs {
 
         private CssProvider provider;
 
-        public ItemBox (Application application, Item item) {
+        public ItemBox (Application application, Item item, uint index) {
             Object (
                 application: application,
                 item: item,
-                index: application.data.index (item)
+                index: index
             );
             this.provider = new CssProvider ();
             color_button.get_style_context ().add_provider (
