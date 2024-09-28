@@ -22,7 +22,6 @@ template $GraphsCurveFittingDialog : Adw.Dialog {
       sidebar: Adw.ToolbarView {
         [top]
         Adw.HeaderBar {
-          styles ["flat"]
           title-widget: Adw.WindowTitle {
             title: _("Curve Fitting");
           };
@@ -31,7 +30,7 @@ template $GraphsCurveFittingDialog : Adw.Dialog {
             icon-name: "view-more-symbolic";
             tooltip-text: _("Open Curve Fitting Menu");
             primary: true;
-            menu-model: menu;
+            menu-model: fitting_menu;
           }
         }
         ScrolledWindow {
@@ -45,6 +44,7 @@ template $GraphsCurveFittingDialog : Adw.Dialog {
             margin-end: 12;
             margin-bottom: 12;
             margin-top: 12;
+            spacing: 12;
             Adw.PreferencesGroup {
               Adw.ComboRow equation {
                 title: _("Equation");
@@ -65,44 +65,39 @@ template $GraphsCurveFittingDialog : Adw.Dialog {
                 visible: false;
                 title: _("Y =");
               }
-              Box fitting_params_box {
-                margin-top: 12;
-                margin-bottom: 12;
-                spacing: 12;
-                orientation: vertical;
+            }
+            Box fitting_params_box {
+              spacing: 12;
+              orientation: vertical;
+            }
+            ScrolledWindow {
+              vexpand: false;
+              hexpand: false;
+              hscrollbar-policy: automatic;
+              vscrollbar-policy: never;
+              TextView text_view {
+                left-margin: 12;
+                right-margin: 12;
+                top-margin: 12;
+                bottom-margin: 12;
+                halign: fill;
+                editable: false;
+                styles ["card"]
               }
-              ScrolledWindow {
-                vexpand: false;
-                hexpand: false;
-                hscrollbar-policy: automatic;
-                vscrollbar-policy: never;
-                TextView text_view {
-                  halign: fill;
-                  top-margin: 12;
-                  left-margin: 12;
-                  bottom-margin: 12;
-                  editable: false;
-                  styles ["card"]
-                }
-              }
-              Button confirm_button {
-                margin-start: 12;
-                margin-end: 12;
-                margin-bottom: 12;
-                margin-top: 12;
-                label: _("Add Fit to Data");
-                styles ["pill", "suggested-action"]
-                clicked => $emit_add_fit_request();
-              }
+            }
+            Button confirm_button {
+              margin-start: 12;
+              margin-end: 12;
+              label: _("Add Fit to Data");
+              styles ["pill", "suggested-action"]
+              clicked => $emit_add_fit_request();
             }
           }
         }
       };
-      content:
-      Box {
-      orientation: vertical;
+      content: Adw.ToolbarView {
+        [top]
         Adw.HeaderBar {
-          styles ["flat"]
           show-title: false;
           ToggleButton show_sidebar_button {
             icon-name: "sidebar-show-symbolic";
@@ -111,7 +106,7 @@ template $GraphsCurveFittingDialog : Adw.Dialog {
             visible: bind split_view.collapsed;
           }
         }
-        Adw.ToastOverlay toast_overlay {
+        content: Adw.ToastOverlay toast_overlay {
           focusable: true;
           height-request: 150;
           width-request: 300;
@@ -120,13 +115,13 @@ template $GraphsCurveFittingDialog : Adw.Dialog {
             icon-name: "dialog-error-symbolic";
             title: _("Canvas Failed to Load");
           };
-        }
+        };
       };
     };
   };
 }
 
-menu menu {
+menu fitting_menu {
   section {
     label: _("Optimization Method");
     item {

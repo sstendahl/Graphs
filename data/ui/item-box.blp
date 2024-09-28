@@ -28,20 +28,17 @@ template $GraphsItemBox : Adw.ActionRow {
   [suffix]
   MenuButton {
     icon-name: "view-more-symbolic";
-    popover: popover_menu;
+    popover: PopoverMenu {
+      has-arrow: false;
+      menu-model: item_menu;
+    };
     vexpand: false;
     valign: center;
     styles ["flat"]
   }
 }
 
-PopoverMenu popover_menu {
-  name: "popover_menu";
-  has-arrow: false;
-  menu-model: menu_app;
-}
-
-menu menu_app {
+menu item_menu {
   section {
     label: _("Move Item");
     display-hint: "inline-buttons";
