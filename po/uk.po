@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2024-09-14 19:40+0000\n"
-"PO-Revision-Date: 2024-09-15 19:32+0300\n"
+"POT-Creation-Date: 2024-09-27 12:37+0000\n"
+"PO-Revision-Date: 2024-09-28 21:04+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -126,30 +126,19 @@ msgstr "Скасувати"
 msgid "Add"
 msgstr "Додати"
 
-#: data/ui/add-equation.blp:41 data/ui/curve-fitting.blp:66
-#: data/ui/transform.blp:56
+#: data/ui/add-equation.blp:35
+#| msgid "Enter a mathematical expression to generate data from"
+msgid "Enter a mathematical expression"
+msgstr "Введіть математичний вираз"
+
+#: data/ui/add-equation.blp:38 data/ui/curve-fitting.blp:66
+#: data/ui/edit-item.blp:45 data/ui/transform.blp:56
 msgid "Y ="
 msgstr "Y ="
 
-#: data/ui/add-equation.blp:49
-msgid "Enter a mathematical expression to generate data from"
-msgstr "Введіть математичний вираз для породження даних"
-
-#: data/ui/add-equation.blp:57
+#: data/ui/add-equation.blp:45
 msgid "Name (optional)"
 msgstr "Назва (необов’язково):"
-
-#: data/ui/add-equation.blp:70
-msgid "X Start"
-msgstr "Початок за x"
-
-#: data/ui/add-equation.blp:78
-msgid "X Stop"
-msgstr "Кінець за x"
-
-#: data/ui/add-equation.blp:86
-msgid "Step Size"
-msgstr "Розмір кроку"
 
 #: data/ui/add-style.blp:6 data/ui/figure-settings-dialog.blp:33
 msgid "Add New Style"
@@ -171,7 +160,7 @@ msgstr "Апроксимація кривих"
 msgid "Open Curve Fitting Menu"
 msgstr "Відкрити меню апроксимації кривих"
 
-#: data/ui/curve-fitting.blp:50
+#: data/ui/curve-fitting.blp:50 data/ui/edit-item.blp:42 graphs/item.py:118
 msgid "Equation"
 msgstr "Рівняння"
 
@@ -300,7 +289,7 @@ msgstr "Зберегти"
 msgid "Delete Style?"
 msgstr "Вилучити стиль?"
 
-#: data/ui/dialogs.blp:20 data/ui/style-preview.blp:39
+#: data/ui/dialogs.blp:20 data/ui/style-preview.blp:38
 msgid "Delete"
 msgstr "Вилучити"
 
@@ -348,160 +337,160 @@ msgstr "Ліворуч"
 msgid "Right"
 msgstr "Праворуч"
 
-#: data/ui/edit-item.blp:43
+#: data/ui/edit-item.blp:52
 msgid "Line Properties"
 msgstr "Властивості лінії"
 
-#: data/ui/edit-item.blp:46 data/ui/style-editor.blp:58
+#: data/ui/edit-item.blp:55 data/ui/style-editor.blp:58
 msgid "Linestyle"
 msgstr "Стиль лінії"
 
-#: data/ui/edit-item.blp:49 data/ui/style-editor.blp:61
+#: data/ui/edit-item.blp:58 data/ui/style-editor.blp:61
 msgctxt "linestyle"
 msgid "None"
 msgstr "Немає"
 
-#: data/ui/edit-item.blp:50 data/ui/style-editor.blp:62
+#: data/ui/edit-item.blp:59 data/ui/style-editor.blp:62
 msgctxt "linestyle"
 msgid "Solid"
 msgstr "Суцільна"
 
-#: data/ui/edit-item.blp:51 data/ui/style-editor.blp:63
+#: data/ui/edit-item.blp:60 data/ui/style-editor.blp:63
 msgctxt "linestyle"
 msgid "Dotted"
 msgstr "Пунктирна"
 
-#: data/ui/edit-item.blp:52 data/ui/style-editor.blp:64
+#: data/ui/edit-item.blp:61 data/ui/style-editor.blp:64
 msgctxt "linestyle"
 msgid "Dashed"
 msgstr "Штрихова"
 
-#: data/ui/edit-item.blp:53 data/ui/style-editor.blp:65
+#: data/ui/edit-item.blp:62 data/ui/style-editor.blp:65
 msgctxt "linestyle"
 msgid "Dashdot"
 msgstr "Штрих-пунктирна"
 
-#: data/ui/edit-item.blp:60 data/ui/style-editor.blp:72
+#: data/ui/edit-item.blp:69 data/ui/style-editor.blp:72
 msgid "Linewidth"
 msgstr "Товщина лінії"
 
-#: data/ui/edit-item.blp:74 data/ui/style-editor.blp:87
+#: data/ui/edit-item.blp:83 data/ui/style-editor.blp:87
 msgid "Markers"
 msgstr "Позначки"
 
-#: data/ui/edit-item.blp:77 data/ui/style-editor.blp:90
+#: data/ui/edit-item.blp:86 data/ui/style-editor.blp:90
 msgctxt "markerstyle"
 msgid "None"
 msgstr "Немає"
 
-#: data/ui/edit-item.blp:78 data/ui/style-editor.blp:91
+#: data/ui/edit-item.blp:87 data/ui/style-editor.blp:91
 msgctxt "markerstyle"
 msgid "Point"
 msgstr "Крапка"
 
-#: data/ui/edit-item.blp:79 data/ui/style-editor.blp:92
+#: data/ui/edit-item.blp:88 data/ui/style-editor.blp:92
 msgctxt "markerstyle"
 msgid "Pixel"
 msgstr "Піксель"
 
-#: data/ui/edit-item.blp:80 data/ui/style-editor.blp:93
+#: data/ui/edit-item.blp:89 data/ui/style-editor.blp:93
 msgctxt "markerstyle"
 msgid "Circle"
 msgstr "Коло"
 
-#: data/ui/edit-item.blp:81 data/ui/style-editor.blp:94
+#: data/ui/edit-item.blp:90 data/ui/style-editor.blp:94
 msgctxt "markerstyle"
 msgid "Triangle Down"
 msgstr "Трикутник вниз"
 
-#: data/ui/edit-item.blp:82 data/ui/style-editor.blp:95
+#: data/ui/edit-item.blp:91 data/ui/style-editor.blp:95
 msgctxt "markerstyle"
 msgid "Triangle Up"
 msgstr "Трикутник вгору"
 
-#: data/ui/edit-item.blp:83 data/ui/style-editor.blp:96
+#: data/ui/edit-item.blp:92 data/ui/style-editor.blp:96
 msgctxt "markerstyle"
 msgid "Triangle Left"
 msgstr "Трикутник ліворуч"
 
-#: data/ui/edit-item.blp:84 data/ui/style-editor.blp:97
+#: data/ui/edit-item.blp:93 data/ui/style-editor.blp:97
 msgctxt "markerstyle"
 msgid "Triangle Right"
 msgstr "Трикутник праворуч"
 
-#: data/ui/edit-item.blp:85 data/ui/style-editor.blp:98
+#: data/ui/edit-item.blp:94 data/ui/style-editor.blp:98
 msgctxt "markerstyle"
 msgid "Octagon"
 msgstr "Восьмикутник"
 
-#: data/ui/edit-item.blp:86 data/ui/style-editor.blp:99
+#: data/ui/edit-item.blp:95 data/ui/style-editor.blp:99
 msgctxt "markerstyle"
 msgid "Square"
 msgstr "Квадрат"
 
-#: data/ui/edit-item.blp:87 data/ui/style-editor.blp:100
+#: data/ui/edit-item.blp:96 data/ui/style-editor.blp:100
 msgctxt "markerstyle"
 msgid "Pentagon"
 msgstr "П'ятикутник"
 
-#: data/ui/edit-item.blp:88 data/ui/style-editor.blp:101
+#: data/ui/edit-item.blp:97 data/ui/style-editor.blp:101
 msgctxt "markerstyle"
 msgid "Star"
 msgstr "Зірка"
 
-#: data/ui/edit-item.blp:89 data/ui/style-editor.blp:102
+#: data/ui/edit-item.blp:98 data/ui/style-editor.blp:102
 msgctxt "markerstyle"
 msgid "Hexagon 1"
 msgstr "Шестикутник 1"
 
-#: data/ui/edit-item.blp:90 data/ui/style-editor.blp:103
+#: data/ui/edit-item.blp:99 data/ui/style-editor.blp:103
 msgctxt "markerstyle"
 msgid "Hexagon 2"
 msgstr "Шестикутник 2"
 
-#: data/ui/edit-item.blp:91 data/ui/style-editor.blp:104
+#: data/ui/edit-item.blp:100 data/ui/style-editor.blp:104
 msgctxt "markerstyle"
 msgid "Plus"
 msgstr "Плюс"
 
-#: data/ui/edit-item.blp:92 data/ui/style-editor.blp:105
+#: data/ui/edit-item.blp:101 data/ui/style-editor.blp:105
 msgctxt "markerstyle"
 msgid "X"
 msgstr "X"
 
 #. Translators: Diamond as in Cards Symbol
-#: data/ui/edit-item.blp:94 data/ui/style-editor.blp:107
+#: data/ui/edit-item.blp:103 data/ui/style-editor.blp:107
 msgctxt "markerstyle"
 msgid "Diamond"
 msgstr "Ромб"
 
 #. Translators: Diamond as in Cards Symbol
-#: data/ui/edit-item.blp:96 data/ui/style-editor.blp:109
+#: data/ui/edit-item.blp:105 data/ui/style-editor.blp:109
 msgctxt "markerstyle"
 msgid "Thin Diamond"
 msgstr "Тонкий ромб"
 
-#: data/ui/edit-item.blp:97 data/ui/style-editor.blp:110
+#: data/ui/edit-item.blp:106 data/ui/style-editor.blp:110
 msgctxt "markerstyle"
 msgid "Vertical Line"
 msgstr "Вертикальна лінія"
 
-#: data/ui/edit-item.blp:98 data/ui/style-editor.blp:111
+#: data/ui/edit-item.blp:107 data/ui/style-editor.blp:111
 msgctxt "markerstyle"
 msgid "Horizontal Line"
 msgstr "Горизонтальна лінія"
 
-#: data/ui/edit-item.blp:99 data/ui/style-editor.blp:112
+#: data/ui/edit-item.blp:108 data/ui/style-editor.blp:112
 msgctxt "markerstyle"
 msgid "Filled Plus"
 msgstr "Заповнений плюс"
 
-#: data/ui/edit-item.blp:100 data/ui/style-editor.blp:113
+#: data/ui/edit-item.blp:109 data/ui/style-editor.blp:113
 msgctxt "markerstyle"
 msgid "Filled X"
 msgstr "Заповнений X"
 
-#: data/ui/edit-item.blp:107 data/ui/style-editor.blp:120
+#: data/ui/edit-item.blp:116 data/ui/style-editor.blp:120
 msgid "Marker Size"
 msgstr "Розмір позначки"
 
@@ -748,7 +737,7 @@ msgstr "За центром"
 msgid "Hide Unselected Items"
 msgstr "Приховати непозначені елементи"
 
-#: data/ui/figure-settings-page.blp:228
+#: data/ui/figure-settings-page.blp:225
 msgid "Set as Default"
 msgstr "Зробити типовим"
 
@@ -1067,11 +1056,11 @@ msgid "Amount of points to use when calculating a moving average"
 msgstr ""
 "Кількість точок, які слід використати при обчисленні рухомого середнього"
 
-#: data/ui/style-color-box.blp:18 data/ui/style-preview.blp:30
+#: data/ui/style-color-box.blp:17 data/ui/style-preview.blp:29
 msgid "Edit"
 msgstr "Змінити"
 
-#: data/ui/style-color-box.blp:29
+#: data/ui/style-color-box.blp:28
 msgid "Remove"
 msgstr "Вилучити"
 
@@ -1658,15 +1647,15 @@ msgstr "Ви справді хочете вилучити %s?"
 msgid "Are you sure you want to reset the import settings?"
 msgstr "Ви справді хочете скинути параметри імпортування?"
 
-#: graphs/item.py:86
+#: graphs/item.py:88
 msgid "Dataset"
 msgstr "Набір даних"
 
-#: graphs/item.py:120
+#: graphs/item.py:165
 msgid "Label"
 msgstr "Мітка"
 
-#: graphs/item.py:136
+#: graphs/item.py:181
 msgid "Fill"
 msgstr "Заповнення"
 
@@ -1723,7 +1712,6 @@ msgid "Color {number}"
 msgstr "Колір {number}"
 
 #: graphs/style_editor.py:476 graphs/style_editor.py:485
-#| msgid "Remove Item"
 msgid "Example Item"
 msgstr "Приклад запису"
 
@@ -1806,6 +1794,15 @@ msgstr "Оптимізувати межі"
 msgctxt "scale"
 msgid "Inverse Root"
 msgstr "Обернена коренева"
+
+#~ msgid "X Start"
+#~ msgstr "Початок за x"
+
+#~ msgid "X Stop"
+#~ msgstr "Кінець за x"
+
+#~ msgid "Step Size"
+#~ msgstr "Розмір кроку"
 
 #~ msgid "Error - No Style selected"
 #~ msgstr "Помилка — не вибрано стилю"
