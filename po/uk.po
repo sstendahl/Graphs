@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2024-09-27 12:37+0000\n"
-"PO-Revision-Date: 2024-09-28 21:04+0300\n"
+"POT-Creation-Date: 2024-09-29 09:57+0000\n"
+"PO-Revision-Date: 2024-09-29 19:44+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -127,7 +127,6 @@ msgid "Add"
 msgstr "Додати"
 
 #: data/ui/add-equation.blp:35
-#| msgid "Enter a mathematical expression to generate data from"
 msgid "Enter a mathematical expression"
 msgstr "Введіть математичний вираз"
 
@@ -152,11 +151,11 @@ msgstr "Шаблон"
 msgid "Name"
 msgstr "Назва"
 
-#: data/ui/curve-fitting.blp:27 data/ui/item-box.blp:59
+#: data/ui/curve-fitting.blp:26 data/ui/item-box.blp:56
 msgid "Curve Fitting"
 msgstr "Апроксимація кривих"
 
-#: data/ui/curve-fitting.blp:32
+#: data/ui/curve-fitting.blp:31
 msgid "Open Curve Fitting Menu"
 msgstr "Відкрити меню апроксимації кривих"
 
@@ -204,62 +203,62 @@ msgctxt "regression-type"
 msgid "Custom"
 msgstr "Нетипова"
 
-#: data/ui/curve-fitting.blp:93
+#: data/ui/curve-fitting.blp:91
 msgid "Add Fit to Data"
 msgstr "Додати апроксимацію даних"
 
-#: data/ui/curve-fitting.blp:109 data/ui/window.blp:580 graphs/window.vala:301
+#: data/ui/curve-fitting.blp:104 data/ui/window.blp:580 graphs/window.vala:301
 msgid "Toggle Sidebar"
 msgstr "Увімкнути або вимкнути бічну панель"
 
-#: data/ui/curve-fitting.blp:121 data/ui/window.blp:620
+#: data/ui/curve-fitting.blp:116 data/ui/window.blp:620
 msgid "Canvas Failed to Load"
 msgstr "Не вдалося завантажити полотно"
 
-#: data/ui/curve-fitting.blp:131
+#: data/ui/curve-fitting.blp:126
 msgid "Optimization Method"
 msgstr "Метод оптимізації"
 
 #. Translators: see https://world.pages.gitlab.gnome.org/Graphs/help/C/curve_fitting.html#algorithms
-#: data/ui/curve-fitting.blp:134
+#: data/ui/curve-fitting.blp:129
 msgctxt "optimization"
 msgid "Levenberg-Marquardt"
 msgstr "Левенберга-Марквардта"
 
 #. Translators: see https://world.pages.gitlab.gnome.org/Graphs/help/C/curve_fitting.html#algorithms
-#: data/ui/curve-fitting.blp:140
+#: data/ui/curve-fitting.blp:135
 msgctxt "optimization"
 msgid "Trust Region Reflective"
 msgstr "Відбита довірча область"
 
 #. Translators: see https://world.pages.gitlab.gnome.org/Graphs/help/C/curve_fitting.html#algorithms
-#: data/ui/curve-fitting.blp:146
+#: data/ui/curve-fitting.blp:141
 msgctxt "optimization"
 msgid "Dogbox"
 msgstr "Конура"
 
-#: data/ui/curve-fitting.blp:152
+#: data/ui/curve-fitting.blp:147
 msgid "Confidence Bounds"
 msgstr "Межі довіри"
 
-#: data/ui/curve-fitting.blp:154
+#: data/ui/curve-fitting.blp:149
 msgctxt "confidence"
 msgid "None"
 msgstr "Немає"
 
-#: data/ui/curve-fitting.blp:160
+#: data/ui/curve-fitting.blp:155
 #, no-c-format
 msgctxt "confidence"
 msgid "1σ: 68% Confidence"
 msgstr "1σ: довірчий інтервал 68%C"
 
-#: data/ui/curve-fitting.blp:166
+#: data/ui/curve-fitting.blp:161
 #, no-c-format
 msgctxt "confidence"
 msgid "2σ: 95% Confidence"
 msgstr "2σ: довірчий інтервал 95%C"
 
-#: data/ui/curve-fitting.blp:172
+#: data/ui/curve-fitting.blp:167
 #, no-c-format
 msgctxt "confidence"
 msgid "3σ: 99.7% Confidence"
@@ -289,7 +288,7 @@ msgstr "Зберегти"
 msgid "Delete Style?"
 msgstr "Вилучити стиль?"
 
-#: data/ui/dialogs.blp:20 data/ui/style-preview.blp:38
+#: data/ui/dialogs.blp:20
 msgid "Delete"
 msgstr "Вилучити"
 
@@ -757,7 +756,12 @@ msgstr "Максимум"
 msgid "Import Parameters"
 msgstr "Параметри імпортування"
 
-#: data/ui/import.blp:27
+#: data/ui/import.blp:24
+#| msgid "Reset to Defaults?"
+msgid "Reset to Defaults…"
+msgstr "Повернути типові значення…"
+
+#: data/ui/import.blp:28
 msgid "Import"
 msgstr "Імпортувати"
 
@@ -850,11 +854,11 @@ msgstr "Індекси ігнорованих рядків"
 msgid "Pick Color"
 msgstr "Виберіть колір"
 
-#: data/ui/item-box.blp:46
+#: data/ui/item-box.blp:43
 msgid "Move Item"
 msgstr "Пересунути елемент"
 
-#: data/ui/item-box.blp:63
+#: data/ui/item-box.blp:60
 msgid "Remove Item"
 msgstr "Вилучити запис"
 
@@ -1056,7 +1060,7 @@ msgid "Amount of points to use when calculating a moving average"
 msgstr ""
 "Кількість точок, які слід використати при обчисленні рухомого середнього"
 
-#: data/ui/style-color-box.blp:17 data/ui/style-preview.blp:29
+#: data/ui/style-color-box.blp:17
 msgid "Edit"
 msgstr "Змінити"
 
@@ -1253,6 +1257,22 @@ msgstr "Кольори ліній"
 #: data/ui/style-editor.blp:485
 msgid "Add Color"
 msgstr "Додати колір"
+
+#: data/ui/style-preview.blp:45
+#| msgctxt "shortcut window"
+#| msgid "Open Help"
+msgid "Open"
+msgstr "Відкрити"
+
+#: data/ui/style-preview.blp:49
+#| msgid "Open Project…"
+msgid "Open With…"
+msgstr "Відкрити за допомогою…"
+
+#: data/ui/style-preview.blp:53
+#| msgid "Delete"
+msgid "Delete…"
+msgstr "Вилучити…"
 
 #: data/ui/transform.blp:6
 msgid "Transform Data"
@@ -1521,27 +1541,27 @@ msgstr "Юрій Чорноіван <yurchor@ukr.net>, 2024"
 msgid "Could not load {font}"
 msgstr "Не вдалося завантажити {font}"
 
-#: graphs/application.vala:290 graphs/item_box.vala:58
+#: graphs/application.vala:291 graphs/item_box.vala:58
 #, c-format
 msgid "Deleted %s"
 msgstr "Вилучено %s"
 
-#: graphs/application.vala:321
+#: graphs/application.vala:322
 msgctxt "file-filter"
 msgid "Supported files"
 msgstr "підтримувані файли"
 
-#: graphs/application.vala:325
+#: graphs/application.vala:326
 msgctxt "file-filter"
 msgid "ASCII files"
 msgstr "файли ASCII"
 
-#: graphs/application.vala:329
+#: graphs/application.vala:330
 msgctxt "file-filter"
 msgid "PANalytical XRDML"
 msgstr "XRDML PANalytical"
 
-#: graphs/application.vala:332
+#: graphs/application.vala:333
 msgctxt "file-filter"
 msgid "Leybold xry"
 msgstr "xry Leybold"
@@ -1638,7 +1658,7 @@ msgstr "Шкала вісі y"
 msgid "Defaults Updated"
 msgstr "Оновлено типові значення"
 
-#: graphs/figure_settings.vala:272
+#: graphs/figure_settings.vala:278
 #, c-format
 msgid "Are you sure you want to delete %s?"
 msgstr "Ви справді хочете вилучити %s?"
