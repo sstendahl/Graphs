@@ -141,10 +141,43 @@ namespace Graphs {
             data.items_changed.connect (() => {
                 item_list.set_visible (!data.is_empty ());
                 update_view_menu ();
+                reload_item_list ();
                 data.add_view_history_state ();
             });
-            item_list.bind_model (data, (object) => {
-                var row = new ItemBox ((Application) application, (Item) object);
+
+            var drop_target = new Gtk.DropTarget (typeof (Adw.ActionRow), Gdk.DragAction.MOVE);
+            drop_target.drop.connect ((drop, val, x, y) => {
+                var value_row = val.get_object () as ItemBox?;
+                var target_row = item_list.get_row_at_y ((int) y) as ItemBox?;
+                // If value or the target row is null, do not accept the drop
+                if (value_row == null || target_row == null) {
+                    return false;
+                }
+
+                target_row.change_position (value_row.get_index ());
+                target_row.set_state_flags (Gtk.StateFlags.NORMAL, true);
+
+                return true;
+            });
+            item_list.add_controller (drop_target);
+
+            close_request.connect (() => {
+                return application.close ();
+            });
+
+            update_view_menu ();
+            if (application.debug) {
+                add_css_class ("devel");
+                set_title (_("Graphs (Development)"));
+            }
+        }
+
+        private void reload_item_list () {
+            item_list.remove_all ();
+            uint index = 0;
+            Application application = application as Application;
+            foreach (Item item in application.data) {
+                var row = new ItemBox (application, item, index);
                 row.setup_interactions ();
 
                 double drag_x = 0.0;
@@ -174,7 +207,7 @@ namespace Graphs {
                     drag_widget.set_size_request (row.get_width (), row.get_height ());
                     drag_widget.add_css_class ("boxed-list");
 
-                    var drag_row = new ItemBox ((Application) application, row.item);
+                    var drag_row = new ItemBox ((Application) application, item, index);
 
                     drag_widget.append (drag_row);
                     drag_widget.drag_highlight_row (drag_row);
@@ -189,33 +222,8 @@ namespace Graphs {
                 drop_controller.enter.connect (() => item_list.drag_highlight_row (row));
                 drop_controller.leave.connect (() => item_list.drag_unhighlight_row ());
 
-                return row;
-            });
-
-            var drop_target = new Gtk.DropTarget (typeof (Adw.ActionRow), Gdk.DragAction.MOVE);
-            drop_target.drop.connect ((drop, val, x, y) => {
-                var value_row = val.get_object () as ItemBox?;
-                var target_row = item_list.get_row_at_y ((int) y) as ItemBox?;
-                // If value or the target row is null, do not accept the drop
-                if (value_row == null || target_row == null) {
-                    return false;
-                }
-
-                target_row.change_position (value_row.get_index ());
-                target_row.set_state_flags (Gtk.StateFlags.NORMAL, true);
-
-                return true;
-            });
-            item_list.add_controller (drop_target);
-
-            close_request.connect (() => {
-                return application.close ();
-            });
-
-            update_view_menu ();
-            if (application.debug) {
-                add_css_class ("devel");
-                set_title (_("Graphs (Development)"));
+                item_list.append (row);
+                index++;
             }
         }
 
