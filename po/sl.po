@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2024-09-27 12:37+0000\n"
-"PO-Revision-Date: 2024-09-27 22:30+0200\n"
+"POT-Creation-Date: 2024-09-29 09:57+0000\n"
+"PO-Revision-Date: 2024-09-29 20:51+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian <gnome-si@googlegroups.com>\n"
 "Language: sl\n"
@@ -148,11 +148,11 @@ msgstr "Predloga"
 msgid "Name"
 msgstr "Ime"
 
-#: data/ui/curve-fitting.blp:27 data/ui/item-box.blp:59
+#: data/ui/curve-fitting.blp:26 data/ui/item-box.blp:56
 msgid "Curve Fitting"
 msgstr "Prileganje krivulj"
 
-#: data/ui/curve-fitting.blp:32
+#: data/ui/curve-fitting.blp:31
 msgid "Open Curve Fitting Menu"
 msgstr "Odprite meni za prileganje krivulje"
 
@@ -200,62 +200,62 @@ msgctxt "regression-type"
 msgid "Custom"
 msgstr "po meri"
 
-#: data/ui/curve-fitting.blp:93
+#: data/ui/curve-fitting.blp:91
 msgid "Add Fit to Data"
 msgstr "Dodaj Prilagodi podatkom"
 
-#: data/ui/curve-fitting.blp:109 data/ui/window.blp:580 graphs/window.vala:301
+#: data/ui/curve-fitting.blp:104 data/ui/window.blp:580 graphs/window.vala:301
 msgid "Toggle Sidebar"
 msgstr "Preklopi stransko okno"
 
-#: data/ui/curve-fitting.blp:121 data/ui/window.blp:620
+#: data/ui/curve-fitting.blp:116 data/ui/window.blp:620
 msgid "Canvas Failed to Load"
 msgstr "Platno se ni naložilo"
 
-#: data/ui/curve-fitting.blp:131
+#: data/ui/curve-fitting.blp:126
 msgid "Optimization Method"
 msgstr "Metoda optimizacije"
 
 #. Translators: see https://world.pages.gitlab.gnome.org/Graphs/help/C/curve_fitting.html#algorithms
-#: data/ui/curve-fitting.blp:134
+#: data/ui/curve-fitting.blp:129
 msgctxt "optimization"
 msgid "Levenberg-Marquardt"
 msgstr "Levenberg-Marquardt"
 
 #. Translators: see https://world.pages.gitlab.gnome.org/Graphs/help/C/curve_fitting.html#algorithms
-#: data/ui/curve-fitting.blp:140
+#: data/ui/curve-fitting.blp:135
 msgctxt "optimization"
 msgid "Trust Region Reflective"
 msgstr "Odsevno področje zaupanja"
 
 #. Translators: see https://world.pages.gitlab.gnome.org/Graphs/help/C/curve_fitting.html#algorithms
-#: data/ui/curve-fitting.blp:146
+#: data/ui/curve-fitting.blp:141
 msgctxt "optimization"
 msgid "Dogbox"
 msgstr "Dogbox"
 
-#: data/ui/curve-fitting.blp:152
+#: data/ui/curve-fitting.blp:147
 msgid "Confidence Bounds"
 msgstr "Meje zaupanja"
 
-#: data/ui/curve-fitting.blp:154
+#: data/ui/curve-fitting.blp:149
 msgctxt "confidence"
 msgid "None"
 msgstr "brez"
 
-#: data/ui/curve-fitting.blp:160
+#: data/ui/curve-fitting.blp:155
 #, no-c-format
 msgctxt "confidence"
 msgid "1σ: 68% Confidence"
 msgstr "1σ: zaupanje 68 %"
 
-#: data/ui/curve-fitting.blp:166
+#: data/ui/curve-fitting.blp:161
 #, no-c-format
 msgctxt "confidence"
 msgid "2σ: 95% Confidence"
 msgstr "2σ: zaupanje 95 %"
 
-#: data/ui/curve-fitting.blp:172
+#: data/ui/curve-fitting.blp:167
 #, no-c-format
 msgctxt "confidence"
 msgid "3σ: 99.7% Confidence"
@@ -285,7 +285,7 @@ msgstr "Shrani"
 msgid "Delete Style?"
 msgstr "Ali želite izbrisati slog?"
 
-#: data/ui/dialogs.blp:20 data/ui/style-preview.blp:38
+#: data/ui/dialogs.blp:20
 msgid "Delete"
 msgstr "Izbriši"
 
@@ -753,7 +753,11 @@ msgstr "Največ"
 msgid "Import Parameters"
 msgstr "Uvozi parametre"
 
-#: data/ui/import.blp:27
+#: data/ui/import.blp:24
+msgid "Reset to Defaults…"
+msgstr "Ponastaviti na privzete vrednosti …"
+
+#: data/ui/import.blp:28
 msgid "Import"
 msgstr "Uvozi"
 
@@ -846,11 +850,11 @@ msgstr "Prezrti indeksi vrstic"
 msgid "Pick Color"
 msgstr "Izberite barvo"
 
-#: data/ui/item-box.blp:46
+#: data/ui/item-box.blp:43
 msgid "Move Item"
 msgstr "Premakni element"
 
-#: data/ui/item-box.blp:63
+#: data/ui/item-box.blp:60
 msgid "Remove Item"
 msgstr "Odstrani element"
 
@@ -1052,7 +1056,7 @@ msgid "Amount of points to use when calculating a moving average"
 msgstr ""
 "Količina točk, ki jih je treba uporabiti pri izračunu drsečega povprečja"
 
-#: data/ui/style-color-box.blp:17 data/ui/style-preview.blp:29
+#: data/ui/style-color-box.blp:17
 msgid "Edit"
 msgstr "Uredi"
 
@@ -1249,6 +1253,18 @@ msgstr "Barve črt"
 #: data/ui/style-editor.blp:485
 msgid "Add Color"
 msgstr "Dodaj barvo"
+
+#: data/ui/style-preview.blp:45
+msgid "Open"
+msgstr "Odpri"
+
+#: data/ui/style-preview.blp:49
+msgid "Open With…"
+msgstr "Odpri z …"
+
+#: data/ui/style-preview.blp:53
+msgid "Delete…"
+msgstr "Izbriši …"
 
 #: data/ui/transform.blp:6
 msgid "Transform Data"
@@ -1513,27 +1529,27 @@ msgstr "Martin Srebotnjak <miles@filmsi.net>"
 msgid "Could not load {font}"
 msgstr "Ni bilo mogoče naložiti {font}"
 
-#: graphs/application.vala:290 graphs/item_box.vala:58
+#: graphs/application.vala:291 graphs/item_box.vala:58
 #, c-format
 msgid "Deleted %s"
 msgstr "Izbrisano %s"
 
-#: graphs/application.vala:321
+#: graphs/application.vala:322
 msgctxt "file-filter"
 msgid "Supported files"
 msgstr "Vse podprte datoteke"
 
-#: graphs/application.vala:325
+#: graphs/application.vala:326
 msgctxt "file-filter"
 msgid "ASCII files"
 msgstr "Datoteke ASCII"
 
-#: graphs/application.vala:329
+#: graphs/application.vala:330
 msgctxt "file-filter"
 msgid "PANalytical XRDML"
 msgstr "PANalitični XRDML"
 
-#: graphs/application.vala:332
+#: graphs/application.vala:333
 msgctxt "file-filter"
 msgid "Leybold xry"
 msgstr "Leybold xry"
@@ -1630,7 +1646,7 @@ msgstr "Merilo osi Y"
 msgid "Defaults Updated"
 msgstr "Privzete nastavitve so posodobljene"
 
-#: graphs/figure_settings.vala:272
+#: graphs/figure_settings.vala:278
 #, c-format
 msgid "Are you sure you want to delete %s?"
 msgstr "Ali ste prepričani, da želite izbrisati %s?"
