@@ -17,31 +17,18 @@ template $GraphsStylePreview : Box {
           name: "indicator";
         }
         [overlay]
-        Box {
-          orientation: vertical;
+        MenuButton menu_button {
+          visible: false;
+          icon-name: "view-more-symbolic";
           halign: end;
           valign: start;
           margin-end: 4;
           margin-top: 4;
-          spacing: 2;
-          Button edit_button {
-            visible: false;
-            tooltip-text: _("Edit");
-            styles ["flat"]
-            Image {
-              hexpand: false;
-              icon-name: "document-edit-symbolic";
-            }
-          }
-          Button delete_button {
-            visible: bind edit_button.visible;
-            tooltip-text: _("Delete");
-            styles ["flat"]
-            Image {
-              hexpand: false;
-              icon-name: "user-trash-symbolic";
-            }
-          }
+          styles ["flat"]
+          popover: PopoverMenu {
+            has-arrow: false;
+            menu-model: style_menu;
+          };
         }
         child: Picture picture {};
       }
@@ -49,5 +36,22 @@ template $GraphsStylePreview : Box {
         margin-top: 8;
       }
     };
+  }
+}
+
+menu style_menu {
+  section {
+    item {
+      label: _("Open");
+      action: "style.open";
+    }
+    item {
+      label: _("Open With…");
+      action: "style.open_with";
+    }
+    item {
+      label: _("Delete…");
+      action: "style.delete";
+    }
   }
 }

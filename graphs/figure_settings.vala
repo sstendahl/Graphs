@@ -257,17 +257,23 @@ namespace Graphs {
             StylePreview preview = item.get_child () as StylePreview;
             Style style = item.get_item () as Style;
             preview.style = style;
-            if (style.mutable && !preview.edit_button.get_visible ()) {
-                preview.edit_button.set_visible (true);
-                preview.edit_button.clicked.connect (() => {
-                    try {
-                        AppInfo.launch_default_for_uri (
-                            style.file.get_uri (),
-                            this.application.window.get_display ().get_app_launch_context ()
-                        );
-                    } catch { assert_not_reached (); }
+            if (style.mutable && !preview.menu_button.get_visible ()) {
+                preview.menu_button.set_visible (true);
+
+                var action_group = new SimpleActionGroup ();
+                var open_action = new SimpleAction ("open", null);
+                open_action.activate.connect (() => {
+                    application.python_helper.open_style_editor (style.file);
                 });
-                preview.delete_button.clicked.connect (() => {
+                action_group.add_action (open_action);
+                var open_with_action = new SimpleAction ("open_with", null);
+                open_with_action.activate.connect (() => {
+                    var launcher = new FileLauncher (style.file);
+                    launcher.launch.begin (application.window, null);
+                });
+                action_group.add_action (open_with_action);
+                var delete_action = new SimpleAction ("delete", null);
+                delete_action.activate.connect (() => {
                     var dialog = Tools.build_dialog ("delete_style_dialog") as Adw.AlertDialog;
                     string msg = _("Are you sure you want to delete %s?");
                     dialog.set_body (msg.printf (style.name));
@@ -281,6 +287,8 @@ namespace Graphs {
                     });
                     dialog.present (this);
                 });
+                action_group.add_action (delete_action);
+                preview.menu_button.insert_action_group ("style", action_group);
             }
         }
     }
