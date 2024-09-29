@@ -93,7 +93,7 @@ namespace Graphs {
         public unowned Adw.NavigationView navigation_view { get; }
 
         [GtkChild]
-        private unowned GridView grid_view { get; }
+        private unowned GridView style_grid { get; }
 
         [GtkChild]
         private unowned Adw.NavigationPage style_overview { get; }
@@ -186,8 +186,8 @@ namespace Graphs {
             var factory = new SignalListItemFactory ();
             factory.setup.connect (on_factory_setup);
             factory.bind.connect (on_factory_bind);
-            grid_view.set_factory (factory);
-            grid_view.set_model (style_manager.selection_model);
+            style_grid.set_factory (factory);
+            style_grid.set_model (style_manager.selection_model);
 
             var style_row = builder.get_object ("style_row") as Adw.ActionRow;
             style_row.activated.connect (() => {
