@@ -275,10 +275,7 @@ namespace Graphs {
         private unowned Picture picture { get; }
 
         [GtkChild]
-        public unowned Button edit_button { get; }
-
-        [GtkChild]
-        public unowned Button delete_button { get; }
+        public unowned MenuButton menu_button { get; }
 
         private Style _style;
         private CssProvider provider;
@@ -305,14 +302,14 @@ namespace Graphs {
                     if (_style.light) {
                         color = "@light_1";
                     } else color = "@dark_5";
-                    provider.load_from_string (@"button { color: $color; }");
+                    provider.load_from_string (@"menubutton { color: $color; }");
                 }
             }
         }
 
         construct {
             this.provider = new CssProvider ();
-            edit_button.get_style_context ().add_provider (
+            menu_button.get_style_context ().add_provider (
                 provider, STYLE_PROVIDER_PRIORITY_APPLICATION
             );
         }
