@@ -44,8 +44,7 @@ namespace Graphs {
          */
         public override void activate () {
             base.activate ();
-            var win = active_window;
-            if (win == null) {
+            if (window == null) {
                 this.window = new Window (this);
                 python_helper.run_method (this, "_reload_canvas");
                 window.present ();
@@ -57,6 +56,7 @@ namespace Graphs {
          */
         public override void open (File[] files, string hint) {
             base.open (files, hint);
+            activate ();
             if (files.length == 1) {
                 File file = files[0];
                 string uri = file.get_uri ();
