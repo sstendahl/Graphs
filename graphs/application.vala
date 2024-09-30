@@ -12,7 +12,7 @@ namespace Graphs {
      * Graphs application
      */
     public class Application : Adw.Application {
-        public Window window { get; set; }
+        public Window? window { get; set; }
         public GLib.Settings settings { get; construct set; }
         public Data data { get; construct set; }
         public StyleManager figure_style_manager { get; set; }
@@ -100,30 +100,9 @@ namespace Graphs {
             return settings_child;
         }
 
-        public bool close () {
-            if (data.unsaved) {
-                var dialog = Tools.build_dialog ("save_changes") as Adw.AlertDialog;
-                dialog.response.connect ((d, response) => {
-                    switch (response) {
-                        case "discard_close": {
-                            quit ();
-                            break;
-                        }
-                        case "save_close": {
-                            Project.save.begin (this, false, (o, result) => {
-                                Project.save.end (result);
-                                quit ();
-                            });
-                            break;
-                        }
-                    }
-                });
-                dialog.present (window);
-                return true;
-            } else {
-                quit ();
-                return false;
-            }
+        public void on_main_window_closed () {
+            this.window = null;
+            quit ();
         }
 
         /**
@@ -196,12 +175,6 @@ namespace Graphs {
                 operation_invoked.emit (target.get_string ());
             });
             add_action (operation_action);
-
-            var quit_action = new SimpleAction ("quit", null);
-            quit_action.activate.connect (() => {
-                close ();
-            });
-            add_action (quit_action);
 
             var about_action = new SimpleAction ("about", null);
             about_action.activate.connect (() => {

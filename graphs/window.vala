@@ -101,6 +101,8 @@ namespace Graphs {
             }
         }
 
+        private bool _force_close = false;
+
         public Window (Application application) {
             Object (application: application);
             Data data = application.data;
@@ -160,10 +162,6 @@ namespace Graphs {
                 return true;
             });
             item_list.add_controller (drop_target);
-
-            close_request.connect (() => {
-                return application.close ();
-            });
 
             update_view_menu ();
             if (application.debug) {
@@ -359,6 +357,41 @@ namespace Graphs {
             }
             view_menu.append_section (null, scales_section);
             view_menu_button.set_menu_model (view_menu);
+        }
+
+        public override bool close_request () {
+            var application = application as Application;
+
+            if (_force_close) {
+                application.on_main_window_closed ();
+                return false;
+            }
+
+            if (application.data.unsaved) {
+                var dialog = Tools.build_dialog ("save_changes") as Adw.AlertDialog;
+                dialog.response.connect ((d, response) => {
+                    switch (response) {
+                        case "discard_close": {
+                            _force_close = true;
+                            close ();
+                            break;
+                        }
+                        case "save_close": {
+                            Project.save.begin (application, false, (o, result) => {
+                                if (Project.save.end (result)) {
+                                    _force_close = true;
+                                    close ();
+                                }
+                            });
+                            break;
+                        }
+                    }
+                });
+                dialog.present (this);
+                return true;
+            }
+            application.on_main_window_closed ();
+            return false;
         }
     }
 }

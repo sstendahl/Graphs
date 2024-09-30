@@ -22,10 +22,10 @@ namespace Graphs {
             return Tools.create_file_filters (false, get_project_file_filter ());
         }
 
-        public async void save (Application application, bool require_dialog) {
+        public async bool save (Application application, bool require_dialog) {
             if (application.data.file != null && !require_dialog) {
                 _save (application);
-                return;
+                return true;
             }
             var dialog = new FileDialog ();
             dialog.set_filters (get_project_file_filters ());
@@ -33,7 +33,10 @@ namespace Graphs {
             try {
                 application.data.file = yield dialog.save (application.window, null);
                 _save (application);
-            } catch {}
+                return true;
+            } catch {
+                return false;
+            }
         }
 
         private void _pick_and_load (Application application) {
