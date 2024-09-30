@@ -22,6 +22,8 @@ namespace Graphs {
 
         public signal void operation_invoked (string name);
 
+        private uint style_editors = 0;
+
         construct {
             Intl.bindtextdomain (Config.GETTEXT_PACKAGE, Config.LOCALEDIR);
             Intl.bind_textdomain_codeset (Config.GETTEXT_PACKAGE, "UTF-8");
@@ -100,9 +102,24 @@ namespace Graphs {
             return settings_child;
         }
 
+        public void register_style_editor () {
+            style_editors++;
+        }
+
         public void on_main_window_closed () {
             this.window = null;
-            quit ();
+            try_quit ();
+        }
+
+        public void on_style_editor_closed () {
+            style_editors--;
+            try_quit ();
+        }
+
+        private void try_quit () {
+            if (window == null && style_editors == 0) {
+                quit ();
+            }
         }
 
         /**

@@ -464,6 +464,7 @@ class StyleEditorWindow(Adw.Window):
 
     def __init__(self, application: Graphs.Application):
         super().__init__(application=application)
+        application.register_style_editor()
         self._style_editor = StyleEditor(self)
         self.editor_clamp.set_child(self._style_editor)
         self._file = None
@@ -537,3 +538,4 @@ class StyleEditorWindow(Adw.Window):
     def on_close_request(self, _window):
         """Handle close request."""
         self.save_style()
+        self.props.application.on_style_editor_closed()
