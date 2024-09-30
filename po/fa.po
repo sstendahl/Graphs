@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2024-09-27 12:37+0000\n"
-"PO-Revision-Date: 2024-09-28 01:43+0330\n"
+"POT-Creation-Date: 2024-09-29 09:57+0000\n"
+"PO-Revision-Date: 2024-09-30 19:20+0330\n"
 "Last-Translator: Danial Behzadi <dani.behzi@ubuntu.com>\n"
 "Language-Team: Persian <fa@li.org>\n"
 "Language: fa\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Poedit 3.4.4\n"
 
 #: data/se.sjoerd.Graphs.appdata.xml.in:6 data/se.sjoerd.Graphs.desktop.in:3
 #: data/ui/window.blp:9 graphs/about.vala:23
@@ -141,11 +141,11 @@ msgstr "الگو"
 msgid "Name"
 msgstr "نام"
 
-#: data/ui/curve-fitting.blp:27 data/ui/item-box.blp:59
+#: data/ui/curve-fitting.blp:26 data/ui/item-box.blp:56
 msgid "Curve Fitting"
 msgstr "برازش منحنی"
 
-#: data/ui/curve-fitting.blp:32
+#: data/ui/curve-fitting.blp:31
 msgid "Open Curve Fitting Menu"
 msgstr "گشودن فهرست برازش منحنی"
 
@@ -193,62 +193,62 @@ msgctxt "regression-type"
 msgid "Custom"
 msgstr "سفارشی"
 
-#: data/ui/curve-fitting.blp:93
+#: data/ui/curve-fitting.blp:91
 msgid "Add Fit to Data"
 msgstr "افزودن برازش به داده‌ها"
 
-#: data/ui/curve-fitting.blp:109 data/ui/window.blp:580 graphs/window.vala:301
+#: data/ui/curve-fitting.blp:104 data/ui/window.blp:580 graphs/window.vala:301
 msgid "Toggle Sidebar"
 msgstr "تغییر وضعیت نوار کناری"
 
-#: data/ui/curve-fitting.blp:121 data/ui/window.blp:620
+#: data/ui/curve-fitting.blp:116 data/ui/window.blp:620
 msgid "Canvas Failed to Load"
 msgstr "شکست در بار کردن بوم"
 
-#: data/ui/curve-fitting.blp:131
+#: data/ui/curve-fitting.blp:126
 msgid "Optimization Method"
 msgstr "روش بهینه‌سازی"
 
 #. Translators: see https://world.pages.gitlab.gnome.org/Graphs/help/C/curve_fitting.html#algorithms
-#: data/ui/curve-fitting.blp:134
+#: data/ui/curve-fitting.blp:129
 msgctxt "optimization"
 msgid "Levenberg-Marquardt"
 msgstr "لونبرگ-مارکوارت"
 
 #. Translators: see https://world.pages.gitlab.gnome.org/Graphs/help/C/curve_fitting.html#algorithms
-#: data/ui/curve-fitting.blp:140
+#: data/ui/curve-fitting.blp:135
 msgctxt "optimization"
 msgid "Trust Region Reflective"
 msgstr "بازتاب ناحیهٔ اطمینان"
 
 #. Translators: see https://world.pages.gitlab.gnome.org/Graphs/help/C/curve_fitting.html#algorithms
-#: data/ui/curve-fitting.blp:146
+#: data/ui/curve-fitting.blp:141
 msgctxt "optimization"
 msgid "Dogbox"
 msgstr "داگ‌باکس"
 
-#: data/ui/curve-fitting.blp:152
+#: data/ui/curve-fitting.blp:147
 msgid "Confidence Bounds"
 msgstr "مرزهای اطمینان"
 
-#: data/ui/curve-fitting.blp:154
+#: data/ui/curve-fitting.blp:149
 msgctxt "confidence"
 msgid "None"
 msgstr "هیچ‌کدام"
 
-#: data/ui/curve-fitting.blp:160
+#: data/ui/curve-fitting.blp:155
 #, no-c-format
 msgctxt "confidence"
 msgid "1σ: 68% Confidence"
 msgstr "۱σ: ۶۸٪ اطمینان"
 
-#: data/ui/curve-fitting.blp:166
+#: data/ui/curve-fitting.blp:161
 #, no-c-format
 msgctxt "confidence"
 msgid "2σ: 95% Confidence"
 msgstr "۲σ: ۹۵٪ اطمینان"
 
-#: data/ui/curve-fitting.blp:172
+#: data/ui/curve-fitting.blp:167
 #, no-c-format
 msgctxt "confidence"
 msgid "3σ: 99.7% Confidence"
@@ -278,7 +278,7 @@ msgstr "ذخیره"
 msgid "Delete Style?"
 msgstr "حذف سبک؟"
 
-#: data/ui/dialogs.blp:20 data/ui/style-preview.blp:38
+#: data/ui/dialogs.blp:20
 msgid "Delete"
 msgstr "حذف"
 
@@ -746,7 +746,11 @@ msgstr "بیشینه"
 msgid "Import Parameters"
 msgstr "درون‌ریزی پارامترها"
 
-#: data/ui/import.blp:27
+#: data/ui/import.blp:24
+msgid "Reset to Defaults…"
+msgstr "بازنشانی به پیش‌گزیده‌ها…"
+
+#: data/ui/import.blp:28
 msgid "Import"
 msgstr "درون‌ریزی"
 
@@ -839,11 +843,11 @@ msgstr "اندیش ردیف‌های چشم‌پوشیده"
 msgid "Pick Color"
 msgstr "برداشتن رنگ"
 
-#: data/ui/item-box.blp:46
+#: data/ui/item-box.blp:43
 msgid "Move Item"
 msgstr "جابه‌جایی مورد"
 
-#: data/ui/item-box.blp:63
+#: data/ui/item-box.blp:60
 msgid "Remove Item"
 msgstr "برداشتن مورد"
 
@@ -1044,7 +1048,7 @@ msgstr "نقطه‌های جعبه"
 msgid "Amount of points to use when calculating a moving average"
 msgstr "مقدار نقطه‌ها برای استفاده هنگام محاسبهٔ میانگین متحرّک"
 
-#: data/ui/style-color-box.blp:17 data/ui/style-preview.blp:29
+#: data/ui/style-color-box.blp:17
 msgid "Edit"
 msgstr "ویرایش"
 
@@ -1241,6 +1245,18 @@ msgstr "رنگ خط‌ها"
 #: data/ui/style-editor.blp:485
 msgid "Add Color"
 msgstr "افزودن رنگ"
+
+#: data/ui/style-preview.blp:45
+msgid "Open"
+msgstr "گشودن"
+
+#: data/ui/style-preview.blp:49
+msgid "Open With…"
+msgstr "گشودن با…"
+
+#: data/ui/style-preview.blp:53
+msgid "Delete…"
+msgstr "حذف…"
 
 #: data/ui/transform.blp:6
 msgid "Transform Data"
@@ -1504,27 +1520,27 @@ msgstr "دانیال بهزادی <dani.behzi@ubuntu.com>"
 msgid "Could not load {font}"
 msgstr "نتوانست {font} را بار کند"
 
-#: graphs/application.vala:290 graphs/item_box.vala:58
+#: graphs/application.vala:291 graphs/item_box.vala:58
 #, c-format
 msgid "Deleted %s"
 msgstr "«⁨%s⁩» حذف شد"
 
-#: graphs/application.vala:321
+#: graphs/application.vala:322
 msgctxt "file-filter"
 msgid "Supported files"
 msgstr "پرونده‌های پشتیبانی شده"
 
-#: graphs/application.vala:325
+#: graphs/application.vala:326
 msgctxt "file-filter"
 msgid "ASCII files"
 msgstr "پرونده‌های اسکی"
 
-#: graphs/application.vala:329
+#: graphs/application.vala:330
 msgctxt "file-filter"
 msgid "PANalytical XRDML"
 msgstr "PANalytical XRDML"
 
-#: graphs/application.vala:332
+#: graphs/application.vala:333
 msgctxt "file-filter"
 msgid "Leybold xry"
 msgstr "Leybold xry"
@@ -1621,7 +1637,7 @@ msgstr "مقیاس محور Y"
 msgid "Defaults Updated"
 msgstr "پیش‌گزیده‌ها به‌روز شدند"
 
-#: graphs/figure_settings.vala:272
+#: graphs/figure_settings.vala:278
 #, c-format
 msgid "Are you sure you want to delete %s?"
 msgstr "مطمئنید که می‌خواهید %s را حذف کنید؟"
