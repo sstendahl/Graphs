@@ -275,7 +275,7 @@ class EquationOperations():
         x = sympy.symbols("x")
         # TODO: MAKE SURE INSTANCES WITH AN X (LIKE EXP(X)) ARE NOT REPLACED
         equation = _item.equation.replace("x", f"(x+{offset})")
-        equation = sympy.sympify(equation)
+        equation = sympy.sympify(utilities.preprocess(equation))
         _item.equation = str(sympy.simplify(equation))
         return True
 
@@ -289,7 +289,7 @@ class EquationOperations():
         an invalid number (e.g. comma instead of point separators)
         """
         equation = f"({_item.equation})+{offset}"
-        equation = sympy.sympify(equation)
+        equation = sympy.sympify(utilities.preprocess(equation))
         _item.equation = str(sympy.simplify(equation))
         return True
 
@@ -304,7 +304,7 @@ class EquationOperations():
         an invalid number (e.g. comma instead of point separators)
         """
         equation = _item.equation.replace("x", f"(x*{multiplier})")
-        equation = sympy.sympify(equation)
+        equation = sympy.sympify(utilities.preprocess(equation))
         _item.equation = str(sympy.simplify(equation))
         return True
 
@@ -318,7 +318,7 @@ class EquationOperations():
         an invalid number (e.g. comma instead of point separators)
         """
         equation = f"({_item.equation})*{multiplier}"
-        equation = sympy.sympify(equation)
+        equation = sympy.sympify(utilities.preprocess(equation))
         _item.equation = str(sympy.simplify(equation))
         return True
 
@@ -328,7 +328,7 @@ class EquationOperations():
         # TODO: FIX RANGE
         xdata, ydata = utilities.equation_to_data(item._equation, [0, 1])
         equation = f"({_item.equation})/{max(ydata)}"
-        equation = sympy.sympify(equation)
+        equation = sympy.sympify(utilities.preprocess(equation))
         _item.equation = str(sympy.simplify(equation))
         return True
 
@@ -348,7 +348,7 @@ class EquationOperations():
         the maximum value of the data
         """
         equation = _item.equation.replace("x", f"(x-{middle_value})")
-        equation = sympy.sympify(equation)
+        equation = sympy.sympify(utilities.preprocess(equation))
         _item.equation = str(sympy.simplify(equation))
         return
 
@@ -423,7 +423,8 @@ class EquationOperations():
     def derivative(_item) -> _return:
         """Calculate derivative of all selected data."""
         x = sympy.symbols("x")
-        equation = sympy.diff(_item._equation, x)
+        equation = utilities.preprocess(_item._equation)
+        equation = sympy.diff(equation, x)
         _item.equation = str(equation)
         return True
 
@@ -431,7 +432,8 @@ class EquationOperations():
     def integral(_item) -> _return:
         """Calculate indefinite integral of all selected data."""
         x = sympy.symbols("x")
-        equation = sympy.integrate(_item._equation, x)
+        equation = utilities.preprocess(_item._equation)
+        equation = sympy.integrate(equation, x)
         _item.equation = str(equation)
         return True
 
@@ -439,8 +441,9 @@ class EquationOperations():
     def fft(_item) -> _return:
         """Perform Fourier transformation on all selected data."""
         x, k = sympy.symbols("x k")
-        equation = str(sympy.fourier_transform(_item.equation, x, k))
-        equation.replace("k", "x")
+        equation = utilities.preprocess(_item._equation)
+        equation = str(sympy.fourier_transform(equation, x, k))
+        equation = equation.replace("k", "x")
         _item._equation = equation
         return True
 
@@ -448,7 +451,8 @@ class EquationOperations():
     def inverse_fft(_item) -> _return:
         """Perform Inverse Fourier transformation on all selected data."""
         x, k = sympy.symbols("x k")
-        equation = str(sympy.fourier_transform(_item.equation, x, k))
+        equation = utilities.preprocess(_item._equation)
+        equation = str(sympy.fourier_transform(equation, x, k))
         equation = equation.replace("k", "x")
         _item._equation = equation
         return True
