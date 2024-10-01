@@ -12,7 +12,7 @@ namespace Graphs {
      * Graphs application
      */
     public class Application : Adw.Application {
-        public Window window { get; set; }
+        public Window? window { get; set; }
         public GLib.Settings settings { get; construct set; }
         public Data data { get; construct set; }
         public StyleManager figure_style_manager { get; set; }
@@ -21,6 +21,8 @@ namespace Graphs {
         public CssProvider css_provider { get; construct set; }
 
         public signal void operation_invoked (string name);
+
+        private uint style_editors = 0;
 
         construct {
             Intl.bindtextdomain (Config.GETTEXT_PACKAGE, Config.LOCALEDIR);
@@ -42,8 +44,7 @@ namespace Graphs {
          */
         public override void activate () {
             base.activate ();
-            var win = active_window;
-            if (win == null) {
+            if (window == null) {
                 this.window = new Window (this);
                 python_helper.run_method (this, "_reload_canvas");
                 window.present ();
@@ -55,6 +56,7 @@ namespace Graphs {
          */
         public override void open (File[] files, string hint) {
             base.open (files, hint);
+            activate ();
             if (files.length == 1) {
                 File file = files[0];
                 string uri = file.get_uri ();
@@ -100,29 +102,23 @@ namespace Graphs {
             return settings_child;
         }
 
-        public bool close () {
-            if (data.unsaved) {
-                var dialog = Tools.build_dialog ("save_changes") as Adw.AlertDialog;
-                dialog.response.connect ((d, response) => {
-                    switch (response) {
-                        case "discard_close": {
-                            quit ();
-                            break;
-                        }
-                        case "save_close": {
-                            Project.save.begin (this, false, (o, result) => {
-                                Project.save.end (result);
-                                quit ();
-                            });
-                            break;
-                        }
-                    }
-                });
-                dialog.present (window);
-                return true;
-            } else {
+        public void register_style_editor () {
+            style_editors++;
+        }
+
+        public void on_main_window_closed () {
+            this.window = null;
+            try_quit ();
+        }
+
+        public void on_style_editor_closed () {
+            style_editors--;
+            try_quit ();
+        }
+
+        private void try_quit () {
+            if (window == null && style_editors == 0) {
                 quit ();
-                return false;
             }
         }
 
@@ -196,12 +192,6 @@ namespace Graphs {
                 operation_invoked.emit (target.get_string ());
             });
             add_action (operation_action);
-
-            var quit_action = new SimpleAction ("quit", null);
-            quit_action.activate.connect (() => {
-                close ();
-            });
-            add_action (quit_action);
 
             var about_action = new SimpleAction ("about", null);
             about_action.activate.connect (() => {
