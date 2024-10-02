@@ -42,7 +42,6 @@ class PythonApplication(Graphs.Application):
             except RuntimeError:
                 logging.warning(_("Could not load {font}").format(font=font))
 
-        self.setup_actions()
         self.connect("operation_invoked", operations.perform_operation)
         self.props.figure_style_manager.connect(
             "style_changed",

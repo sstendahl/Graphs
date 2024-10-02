@@ -105,6 +105,9 @@ namespace Graphs {
 
         public Window (Application application) {
             Object (application: application);
+
+            Actions.setup (application, this);
+
             Data data = application.data;
             data.bind_property ("items_selected", shift_button, "sensitive", 2);
             data.bind_property ("can_undo", undo_button, "sensitive", 2);
