@@ -75,12 +75,6 @@ namespace Graphs {
             });
             window.add_action (operation_action);
 
-            var about_action = new SimpleAction ("about", null);
-            about_action.activate.connect (() => {
-                show_about_dialog (application, window);
-            });
-            window.add_action (about_action);
-
             var optimize_limits_action = new SimpleAction ("optimize_limits", null);
             optimize_limits_action.activate.connect (() => {
                 data.optimize_limits ();

@@ -45,7 +45,6 @@ config_dep = valac.find_library('config',
 )
 graphs_lib = shared_library('graphs',
   files(
-    'about.vala',
     'actions.vala',
     'add_equation.vala',
     'application.vala',
