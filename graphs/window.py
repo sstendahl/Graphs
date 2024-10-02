@@ -59,8 +59,7 @@ class PythonWindow(Graphs.Window):
         canvas.connect("view_changed", on_view_changed)
 
         # Set headerbar color and contrast
-        css_provider = self.props.application.get_css_provider()
-        css_provider.load_from_string(
+        self.props.headerbar_provider.load_from_string(
             "headerbar#canvas-headerbar { "
             f"background-color: {params['figure.facecolor']}; "
             f"color: {params['text.color']}; "

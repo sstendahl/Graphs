@@ -16,7 +16,6 @@ namespace Graphs {
         public StyleManager figure_style_manager { get; set; }
         public bool debug { get; construct set; default = false; }
         public PythonHelper python_helper { get; construct set; }
-        public CssProvider css_provider { get; construct set; }
 
         public signal void operation_invoked (string name);
 
@@ -39,13 +38,6 @@ namespace Graphs {
          */
         public override void startup () {
             base.startup ();
-
-            this.css_provider = new CssProvider ();
-            StyleContext.add_provider_for_display (
-                Display.get_default (),
-                css_provider,
-                STYLE_PROVIDER_PRIORITY_APPLICATION
-            );
 
             var about_action = new SimpleAction ("about", null);
             about_action.activate.connect (() => {

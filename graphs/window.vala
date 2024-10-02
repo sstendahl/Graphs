@@ -86,6 +86,8 @@ namespace Graphs {
 
         public Data data { get; construct set; }
 
+        protected CssProvider headerbar_provider { get; private set; }
+
         public int mode {
             set {
                 pan_button.set_active (value == 0);
@@ -166,6 +168,11 @@ namespace Graphs {
                 return true;
             });
             item_list.add_controller (drop_target);
+
+            this.headerbar_provider = new CssProvider ();
+            content_headerbar.get_style_context ().add_provider (
+                headerbar_provider, STYLE_PROVIDER_PRIORITY_APPLICATION
+            );
 
             update_view_menu ();
             if (application.debug) {
