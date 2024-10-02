@@ -64,8 +64,7 @@ namespace Graphs {
         public override void activate () {
             base.activate ();
             if (window == null) {
-                this.window = new Window (this);
-                python_helper.run_method (this, "_reload_canvas");
+                this.window = python_helper.create_window ();
                 window.present ();
             }
         }

@@ -43,7 +43,7 @@ namespace Graphs {
         private unowned Button shift_button { get; }
 
         [GtkChild]
-        public unowned Button cut_button { get; }
+        protected unowned Button cut_button { get; }
 
         [GtkChild]
         public unowned Entry translate_x_entry { get; }
@@ -103,8 +103,8 @@ namespace Graphs {
 
         private bool _force_close = false;
 
-        public Window (Application application) {
-            Object (application: application);
+        protected void setup () {
+            var application = application as Application;
 
             Actions.setup (application, this);
 

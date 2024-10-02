@@ -11,6 +11,7 @@ from graphs import (
 )
 from graphs.item import EquationItem
 from graphs.style_editor import StyleEditorWindow
+from graphs.window import PythonWindow
 
 _REQUEST_NAMES = (
     "python_method_request",
@@ -22,6 +23,7 @@ _REQUEST_NAMES = (
     "add_equation_request",
     "validate_equation_request",
     "open_style_editor_request",
+    "create_window_request",
 )
 
 
@@ -104,3 +106,7 @@ class PythonHelper(Graphs.PythonHelper):
         window = StyleEditorWindow(self.props.application)
         window.load_style(file)
         window.present()
+
+    @staticmethod
+    def _on_create_window_request(self) -> Graphs.Window:
+        return PythonWindow(self.props.application)

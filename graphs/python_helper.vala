@@ -55,5 +55,10 @@ namespace Graphs {
         public void open_style_editor (File file) {
             open_style_editor_request.emit (file);
         }
+
+        protected signal Window create_window_request ();
+        public Window create_window () {
+            return create_window_request ();
+        }
     }
 }
