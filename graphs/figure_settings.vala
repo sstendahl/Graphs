@@ -178,8 +178,7 @@ namespace Graphs {
                 }
             }
             var style_name = builder.get_object ("style_name") as Label;
-            StyleManager style_manager = application.figure_style_manager;
-            style_manager.bind_property (
+            application.data.bind_property (
                 "selected_stylename", style_name, "label", 2
             );
 
@@ -187,7 +186,7 @@ namespace Graphs {
             factory.setup.connect (on_factory_setup);
             factory.bind.connect (on_factory_bind);
             style_grid.set_factory (factory);
-            style_grid.set_model (style_manager.selection_model);
+            style_grid.set_model (application.data.style_selection_model);
 
             var style_row = builder.get_object ("style_row") as Adw.ActionRow;
             style_row.activated.connect (() => {

@@ -40,8 +40,8 @@ def import_from_files(
 
     def do_import(_dialog):
         items = []
-        style_manager = application.get_figure_style_manager()
-        style = style_manager.get_selected_style_params()
+        data = application.get_data()
+        style = data.get_selected_style_params()
         for mode, files in import_dict.items():
             callback = getattr(parse_file, "import_from_" + mode)
             params = settings.get_child(mode) if mode in modes else None
@@ -51,7 +51,7 @@ def import_from_files(
                 except ParseError as error:
                     application.get_window().add_toast_string(error.message)
                     continue
-        application.get_data().add_items(items, style_manager)
+        data.add_items(items)
 
     if modes:
         dialog = Graphs.ImportDialog.new(application, modes)

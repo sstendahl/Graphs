@@ -465,7 +465,8 @@ def transform(
 def combine(application: Graphs.Application) -> None:
     """Combine the selected data into a new data set."""
     new_xdata, new_ydata = [], []
-    for item in application.get_data():
+    data = application.get_data()
+    for item in data:
         if not (item.get_selected() and isinstance(item, DataItem)):
             continue
         xdata, ydata = get_data(application, item)[:2]
@@ -474,8 +475,7 @@ def combine(application: Graphs.Application) -> None:
 
     # Create the item itself
     new_xdata, new_ydata = sort_data(new_xdata, new_ydata)
-    style = application.get_figure_style_manager().get_selected_style_params()
-    application.get_data().add_items(
-        [DataItem.new(style, new_xdata, new_ydata, name=_("Combined Data"))],
-        application.get_figure_style_manager(),
-    )
+    style = data.get_selected_style_params()
+    data.add_items([
+        DataItem.new(style, new_xdata, new_ydata, name=_("Combined Data")),
+    ])

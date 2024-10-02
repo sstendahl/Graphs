@@ -14,7 +14,7 @@ class PythonWindow(Graphs.Window):
     def __init__(self, application: Graphs.Application):
         super().__init__(application=application)
         self.setup()
-        application.get_figure_style_manager().connect(
+        application.get_data().connect(
             "style_changed",
             self._on_style_changed,
         )
@@ -43,8 +43,7 @@ class PythonWindow(Graphs.Window):
     def _reload_canvas(self) -> None:
         """Reload the canvas."""
         data = self.props.application.get_data()
-        params = self.props.application.get_figure_style_manager(
-        ).get_selected_style_params()
+        params = data.get_selected_style_params()
         canvas = Canvas(params, data)
         figure_settings = data.get_figure_settings()
         for prop in dir(figure_settings.props):

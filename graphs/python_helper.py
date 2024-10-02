@@ -89,17 +89,15 @@ class PythonHelper(Graphs.PythonHelper):
         equation = settings.get_string("equation")
         if name == "":
             name = f"Y = {settings.get_string('equation')}"
-        style_manager = self.props.application.get_figure_style_manager()
-        equation_item = EquationItem.new(
-            style_manager.get_selected_style_params(),
-            equation,
-            name=name,
-        )
-        self.props.application.get_data().add_items(
-            [equation_item],
-            style_manager,
-        )
-        self.props.application.get_data().optimize_limits()
+        data = self.props.application.get_data()
+        data.add_items([
+            EquationItem.new(
+                data.get_selected_style_params(),
+                equation,
+                name=name,
+            ),
+        ])
+        data.optimize_limits()
 
     @staticmethod
     def _on_open_style_editor_request(self, file: Gio.File) -> None:

@@ -15,24 +15,16 @@ namespace Graphs {
      */
     public class StyleManager : Object {
         public Application application { get; construct set; }
-        public bool use_custom_style { get; set; default = false; }
-        public string custom_style { get; set; default = "Adwaita"; }
-        public SingleSelection selection_model { get; set; }
+        public GLib.ListStore style_model { get; construct set; }
         public File style_dir { get; construct set; }
-        public string selected_stylename {
-            get { return this.get_selected_style ().name; }
-        }
 
-        private GLib.ListStore style_model;
         private Gee.AbstractSet<string> stylenames { get; private set; }
 
-        public signal void style_changed (bool recolor_items);
         protected signal void copy_request (string template, string name);
         protected signal Style style_request (File file);
 
         construct {
             this.style_model = new GLib.ListStore (typeof (Style));
-            this.selection_model = new SingleSelection (style_model);
             this.stylenames = new Gee.HashSet<string> ();
             try {
                 File config_dir = Tools.get_config_directory ();
@@ -43,12 +35,12 @@ namespace Graphs {
             } catch {
                 assert_not_reached ();
             }
+            application.style_manager.notify.connect (() => {
+                application.python_helper.run_method (this, "_update_system_style");
+            });
         }
 
         protected void setup (string system_style) {
-            notify["custom-style"].connect (on_custom_style);
-            notify["use-custom-style"].connect (on_use_custom_style);
-
             File style_list = File.new_for_uri ("resource:///se/sjoerd/Graphs/styles.txt");
             try {
                 var stream = new DataInputStream (style_list.read ());
@@ -97,63 +89,11 @@ namespace Graphs {
                 style_monitor.changed.connect (on_file_change);
                 style_monitor.ref ();
             } catch { assert_not_reached (); }
-            application.style_manager.notify.connect (() => {
-                if (!use_custom_style) {
-                    handle_style_change ();
-                }
-            });
-            FigureSettings figure_settings = application.data.figure_settings;
-            figure_settings.bind_property (
-                "use_custom_style",
-                this,
-                "use_custom_style",
-                1 | 2
-            );
-            figure_settings.bind_property (
-                "custom_style",
-                this,
-                "custom_style",
-                1 | 2
-            );
-            selection_model.selection_changed.connect (() => {
-                Style style = get_selected_style ();
-                // Don't trigger unnecessary reloads
-                if (style.file == null) { // System Style
-                    if (use_custom_style) this.use_custom_style = false;
-                } else {
-                    if (style.name != custom_style) this.custom_style = style.name;
-                    if (!use_custom_style) this.use_custom_style = true;
-                }
-            });
-            handle_style_change ();
-        }
-
-        private void on_use_custom_style () {
-            if (use_custom_style) {
-                on_custom_style ();
-            } else {
-                selection_model.set_selected (0);
-                handle_style_change (true);
-            }
-        }
-
-        private void on_custom_style () {
-            if (!use_custom_style) return;
-            for (uint i = 1; i < style_model.get_n_items (); i++) {
-                Style style = style_model.get_item (i) as Style;
-                if (style.name == custom_style) {
-                    selection_model.set_selected (i);
-                    break;
-                }
-            }
-            handle_style_change (true);
         }
 
         private void on_file_change (File file, File? other_file, FileMonitorEvent event_type) {
             if (file.get_basename ()[0] == '.') return;
             Style style = null;
-            string? stylename = null;
-            bool possible_visual_impact = true;
             switch (event_type) {
                 case FileMonitorEvent.CREATED:
                     if (find_style_for_file (file, out style) > 0) return;
@@ -164,8 +104,6 @@ namespace Graphs {
                     if (index == -1) return;
                     stylenames.remove (style.name);
                     style_model.remove (index);
-                    stylename = style.name;
-                    possible_visual_impact = true;
                     break;
                 case FileMonitorEvent.CHANGES_DONE_HINT:
                     Style tmp_style = style_request.emit (file);
@@ -174,24 +112,10 @@ namespace Graphs {
                     style.name = tmp_style.name;
                     style.preview = tmp_style.preview;
                     style.light = tmp_style.light;
-                    stylename = tmp_style.name;
-                    possible_visual_impact = true;
                     break;
                 default:
                     return;
             }
-            if (possible_visual_impact
-                && use_custom_style
-                && custom_style == stylename) {
-                handle_style_change ();
-            }
-        }
-
-        private void handle_style_change (bool recolor_items = false) {
-            notify_property ("selected_stylename");
-            application.python_helper.run_method (this, "_update_system_style");
-            application.python_helper.run_method (this, "_update_selected_style");
-            style_changed.emit (recolor_items);
         }
 
         private void add_user_style (File file) {
@@ -204,11 +128,6 @@ namespace Graphs {
             CompareDataFunc<Style> cmp = style_cmp;
             style_model.insert_sorted (style, cmp);
             stylenames.add (style.name);
-            on_custom_style ();
-        }
-
-        protected Style get_selected_style () {
-            return selection_model.get_selected_item () as Style;
         }
 
         /**
@@ -336,15 +255,15 @@ namespace Graphs {
             this.style_manager = style_manager;
             this.stylenames = style_manager.list_stylenames ();
             style_templates.set_model (new StringList (stylenames));
-            if (style_manager.use_custom_style) {
-                string template = style_manager.custom_style;
-                for (uint i = 0; i < stylenames.length; i++) {
-                    if (stylenames[i] == template) {
-                        style_templates.set_selected (i);
-                        break;
-                    }
-                }
-            }
+            //if (style_manager.use_custom_style) {
+            //    string template = style_manager.custom_style;
+            //    for (uint i = 0; i < stylenames.length; i++) {
+            //        if (stylenames[i] == template) {
+            //            style_templates.set_selected (i);
+            //            break;
+            //        }
+            //    }
+            //}
             present (parent);
         }
 

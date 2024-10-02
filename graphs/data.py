@@ -6,9 +6,11 @@ import os
 from gettext import gettext as _
 from urllib.parse import unquote, urlparse
 
-from gi.repository import Gio, Graphs
+from gi.repository import Graphs
 
-from graphs import item, misc, project, utilities
+from graphs import item, misc, project, style_io, utilities
+
+from matplotlib import RcParams
 
 import numpy
 
@@ -23,20 +25,20 @@ class Data(Graphs.Data):
 
     __gtype_name__ = "GraphsPythonData"
 
-    def __init__(self, settings: Gio.Settings):
-        figure_settings = Graphs.FigureSettings.new(settings)
-        super().__init__(
-            settings=settings,
-            figure_settings=figure_settings,
-        )
+    def __init__(self, application: Graphs.Application):
+        super().__init__(application=application)
+        self.connect("python_method_request", self._on_python_method_request)
+        self._selected_style_params = None
+        self.setup()
         self._initialize()
-        figure_settings.connect("notify", self._on_figure_settings_change)
+        self.props.figure_settings.connect(
+            "notify", self._on_figure_settings_change,
+        )
         self.connect("notify::unsaved", self._on_unsaved_change)
         self._update_used_positions()
         self._on_unsaved_change(None, None)
         self.connect("item_changed", self._on_item_changed)
         self.connect("delete_request", self._on_delete_request)
-        self.connect("python_method_request", self._on_python_method_request)
         self.connect("position_changed", self._on_position_changed)
 
     @staticmethod
@@ -100,16 +102,57 @@ class Data(Graphs.Data):
             return self.get_for_uuid(getter)
         return self.get_item(getter)
 
+    def get_old_selected_style_params(self) -> RcParams:
+        """Get the old selected style properties."""
+        return self._old_style_params
+
+    def get_selected_style_params(self) -> RcParams:
+        """Get the selected style properties."""
+        return self._selected_style_params
+
+    def _update_selected_style(self) -> None:
+        self._old_style_params = self._selected_style_params
+        self._selected_style_params = None
+        figure_settings = self.props.figure_settings
+        if figure_settings.get_use_custom_style():
+            stylename = figure_settings.get_custom_style()
+            for style in self.props.style_selection_model.get_model():
+                if stylename == style.get_name():
+                    try:
+                        self._selected_style_params = style_io.parse(
+                            style.get_file(),
+                            style.get_mutable(),
+                        )[0]
+                        return
+                    except (ValueError, SyntaxError, AttributeError):
+                        self._reset_selected_style(
+                            _(
+                                f"Could not parse {stylename}, loading "
+                                "system preferred style",
+                            ).format(stylename=stylename),
+                        )
+                    break
+            if self._selected_style_params is None:
+                self._reset_selected_style(
+                    _(
+                        f"Plot style {stylename} does not exist "
+                        "loading system preferred",
+                    ).format(stylename=stylename),
+                )
+        style_manager = self.props.application.get_figure_style_manager()
+        self._selected_style_params = style_manager.get_system_style_params()
+
+    def _reset_selected_style(self, message: str) -> None:
+        self.props.use_custom_style = False
+        self.props.custom_style = self._system_style_name
+        self.props.application.get_window().add_toast_string(message)
+
     @staticmethod
     def _on_position_changed(self, index1: int, index2: int) -> None:
         """Change item position of index2 to that of index1."""
         self._current_batch.append((3, (index2, index1)))
 
-    def add_items(
-        self,
-        items: misc.ItemList,
-        style_manager: Graphs.StyleManager,
-    ) -> None:
+    def add_items(self, items: misc.ItemList) -> None:
         """
         Add items to be managed.
 
@@ -119,8 +162,8 @@ class Data(Graphs.Data):
         match the items label, they get moved to another axis.
         """
         figure_settings = self.get_figure_settings()
-        selected_style = style_manager.get_selected_style_params()
-        color_cycle = selected_style["axes.prop_cycle"].by_key()["color"]
+        color_cycle = self._selected_style_params["axes.prop_cycle"].by_key(
+        )["color"]
         used_colors = []
 
         def _append_used_color(color):

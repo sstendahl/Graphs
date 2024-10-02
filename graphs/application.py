@@ -20,12 +20,10 @@ class PythonApplication(Graphs.Application):
     def __init__(self, application_id, **kwargs):
         settings = Gio.Settings(application_id)
         migrate.migrate_config(settings)
-        data = Data(settings.get_child("figure"))
         super().__init__(
             application_id=application_id,
             settings=settings,
             flags=Gio.ApplicationFlags.HANDLES_OPEN,
-            data=data,
             **kwargs,
         )
         # We need to keep references as per
@@ -34,6 +32,8 @@ class PythonApplication(Graphs.Application):
         self.props.python_helper = self._python_helper
         self._figure_style_manager = styles.StyleManager(self)
         self.props.figure_style_manager = self._figure_style_manager
+        self._data = Data(self)
+        self.props.data = self._data
         font_list = font_manager.findSystemFonts(fontpaths=None, fontext="ttf")
         for font in font_list:
             try:

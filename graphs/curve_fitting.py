@@ -342,19 +342,15 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
     @staticmethod
     def add_fit(self) -> None:
         """Add fitted data to the items in the main application."""
-        application = self.props.application
-        style_manager = application.get_figure_style_manager()
-        application.get_data().add_items(
-            [
-                DataItem.new(
-                    style_manager.get_selected_style_params(),
-                    name=self.fitted_curve.get_name(),
-                    xdata=list(self.fitted_curve.xdata),
-                    ydata=list(self.fitted_curve.ydata),
-                ),
-            ],
-            style_manager,
-        )
+        data = self.props.application.get_data()
+        data.add_items([
+            DataItem.new(
+                data.get_selected_style_params(),
+                name=self.fitted_curve.get_name(),
+                xdata=list(self.fitted_curve.xdata),
+                ydata=list(self.fitted_curve.ydata),
+            ),
+        ])
         self.close()
 
 
