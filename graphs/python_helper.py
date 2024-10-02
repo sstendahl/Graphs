@@ -44,12 +44,16 @@ class PythonHelper(Graphs.PythonHelper):
         getattr(obj, method)()
 
     @staticmethod
-    def _on_edit_item_dialog_request(self, item) -> None:
-        return edit_item.EditItemDialog(self.props.application, item)
+    def _on_edit_item_dialog_request(
+        self, window: Graphs.Window, item: Graphs.Item,
+    ) -> None:
+        return edit_item.EditItemDialog(window, item)
 
     @staticmethod
-    def _on_curve_fitting_dialog_request(self, item) -> None:
-        return curve_fitting.CurveFittingDialog(self.props.application, item)
+    def _on_curve_fitting_dialog_request(
+        self, window: Graphs.Window, item: Graphs.Item,
+    ) -> None:
+        return curve_fitting.CurveFittingDialog(window, item)
 
     @staticmethod
     def _on_evaluate_string_request(self, string: str) -> None:
@@ -66,30 +70,33 @@ class PythonHelper(Graphs.PythonHelper):
     @staticmethod
     def _on_import_from_files_request(
         self,
+        window: Graphs.Window,
         files: list[Gio.File],
         _n_files: int,
     ) -> None:
-        return file_import.import_from_files(self.props.application, files)
+        return file_import.import_from_files(window, files)
 
     @staticmethod
     def _on_export_items_request(
         self,
+        window: Graphs.Window,
         mode: str,
         file: Gio.File,
         items: list[Graphs.Item],
         _n_items: int,
     ) -> None:
-        figure_settings = \
-            self.props.application.get_data().get_figure_settings()
+        figure_settings = window.get_data().get_figure_settings()
         return export_items.export_items(mode, file, items, figure_settings)
 
     @staticmethod
-    def _on_add_equation_request(self, name: str) -> None:
+    def _on_add_equation_request(
+        self, window: Graphs.Window, name: str,
+    ) -> None:
         settings = self.props.application.get_settings_child("add-equation")
         equation = settings.get_string("equation")
         if name == "":
             name = f"Y = {settings.get_string('equation')}"
-        data = self.props.application.get_data()
+        data = window.get_data()
         data.add_items([
             EquationItem.new(
                 data.get_selected_style_params(),

@@ -6,7 +6,6 @@ from gettext import gettext as _
 from gi.repository import Gio, Graphs
 
 from graphs import migrate, operations, styles
-from graphs.data import Data
 from graphs.python_helper import PythonHelper
 
 from matplotlib import font_manager
@@ -32,8 +31,6 @@ class PythonApplication(Graphs.Application):
         self.props.python_helper = self._python_helper
         self._figure_style_manager = styles.StyleManager(self)
         self.props.figure_style_manager = self._figure_style_manager
-        self._data = Data(self)
-        self.props.data = self._data
         font_list = font_manager.findSystemFonts(fontpaths=None, fontext="ttf")
         for font in font_list:
             try:

@@ -6,7 +6,7 @@ using Gtk;
 namespace Graphs {
     namespace Actions {
         public void setup (Application application, Window window) {
-            var data = application.data;
+            var data = window.data;
 
             var toggle_sidebar_action = new SimpleAction.stateful (
                 "toggle_sidebar",
@@ -77,7 +77,7 @@ namespace Graphs {
 
             var about_action = new SimpleAction ("about", null);
             about_action.activate.connect (() => {
-                show_about_dialog (application);
+                show_about_dialog (application, window);
             });
             window.add_action (about_action);
 
@@ -89,7 +89,7 @@ namespace Graphs {
 
             var smoothen_settings_action = new SimpleAction ("smoothen_settings", null);
             smoothen_settings_action.activate.connect (() => {
-                new SmoothenDialog (application);
+                new SmoothenDialog (window);
             });
             window.add_action (smoothen_settings_action);
 
@@ -154,25 +154,25 @@ namespace Graphs {
 
             var save_project_action = new SimpleAction ("save_project", null);
             save_project_action.activate.connect (() => {
-                Project.save.begin (application, false);
+                Project.save.begin (window, false);
             });
             window.add_action (save_project_action);
 
             var save_project_as_action = new SimpleAction ("save_project_as", null);
             save_project_as_action.activate.connect (() => {
-                Project.save.begin (application, true);
+                Project.save.begin (window, true);
             });
             window.add_action (save_project_as_action);
 
             var open_project_action = new SimpleAction ("open_project", null);
             open_project_action.activate.connect (() => {
-                Project.open (application);
+                Project.open (window);
             });
             window.add_action (open_project_action);
 
             var new_project_action = new SimpleAction ("new_project", null);
             new_project_action.activate.connect (() => {
-                Project.@new (application);
+                Project.@new (window);
             });
             window.add_action (new_project_action);
 
@@ -205,7 +205,7 @@ namespace Graphs {
                         for (uint i = 0; i < files_list_model.get_n_items (); i++) {
                             files += files_list_model.get_item (i) as File;
                         }
-                        application.python_helper.import_from_files (files);
+                        application.python_helper.import_from_files (window, files);
                     } catch {}
                 });
             });
@@ -213,25 +213,25 @@ namespace Graphs {
 
             var export_data_action = new SimpleAction ("export_data", null);
             export_data_action.activate.connect (() => {
-                Export.export_items (application);
+                Export.export_items (window);
             });
             window.add_action (export_data_action);
 
             var figure_settings_action = new SimpleAction ("figure_settings", null);
             figure_settings_action.activate.connect (() => {
-                new FigureSettingsDialog (application, null);
+                new FigureSettingsDialog (window, null);
             });
             window.add_action (figure_settings_action);
 
             var add_equation_action = new SimpleAction ("add_equation", null);
             add_equation_action.activate.connect (() => {
-                new AddEquationDialog (application);
+                new AddEquationDialog (window);
             });
             window.add_action (add_equation_action);
 
             var export_figure_action = new SimpleAction ("export_figure", null);
             export_figure_action.activate.connect (() => {
-                new ExportFigureDialog (application);
+                new ExportFigureDialog (window);
             });
             window.add_action (export_figure_action);
 

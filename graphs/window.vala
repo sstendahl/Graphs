@@ -84,6 +84,8 @@ namespace Graphs {
         [GtkChild]
         private unowned Adw.WindowTitle content_title { get; }
 
+        public Data data { get; construct set; }
+
         public int mode {
             set {
                 pan_button.set_active (value == 0);
@@ -108,7 +110,6 @@ namespace Graphs {
 
             Actions.setup (application, this);
 
-            Data data = application.data;
             data.bind_property ("items_selected", shift_button, "sensitive", 2);
             data.bind_property ("can_undo", undo_button, "sensitive", 2);
             data.bind_property ("can_redo", redo_button, "sensitive", 2);
@@ -135,12 +136,12 @@ namespace Graphs {
                 get (action_name + "_entry", out entry);
                 get (action_name + "_button", out button);
                 entry.notify["text"].connect (() => {
-                    validate_entry (application, entry, button);
+                    validate_entry (entry, button);
                 });
                 data.notify["items-selected"].connect (() => {
-                    validate_entry (application, entry, button);
+                    validate_entry (entry, button);
                 });
-                validate_entry (application, entry, button);
+                validate_entry (entry, button);
             }
 
             data.items_changed.connect (() => {
@@ -176,9 +177,8 @@ namespace Graphs {
         private void reload_item_list () {
             item_list.remove_all ();
             uint index = 0;
-            Application application = application as Application;
-            foreach (Item item in application.data) {
-                var row = new ItemBox (application, item, index);
+            foreach (Item item in data) {
+                var row = new ItemBox (this, item, index);
                 row.setup_interactions ();
 
                 double drag_x = 0.0;
@@ -208,7 +208,7 @@ namespace Graphs {
                     drag_widget.set_size_request (row.get_width (), row.get_height ());
                     drag_widget.add_css_class ("boxed-list");
 
-                    var drag_row = new ItemBox ((Application) application, item, index);
+                    var drag_row = new ItemBox (this, item, index);
 
                     drag_widget.append (drag_row);
                     drag_widget.drag_highlight_row (drag_row);
@@ -228,14 +228,15 @@ namespace Graphs {
             }
         }
 
-        private void validate_entry (Application application, Entry entry, Button button) {
+        private void validate_entry (Entry entry, Button button) {
+            var application = application as Application;
             double? val = application.python_helper.evaluate_string (entry.get_text ());
             if (val == null) {
                 entry.add_css_class ("error");
                 button.set_sensitive (false);
             } else {
                 entry.remove_css_class ("error");
-                button.set_sensitive (application.data.items_selected);
+                button.set_sensitive (data.items_selected);
             }
         }
 
@@ -325,8 +326,7 @@ namespace Graphs {
             };
 
             Menu scales_section = new Menu ();
-            Application application = application as Application;
-            bool[] visible_axes = application.data.get_used_positions ();
+            bool[] visible_axes = data.get_used_positions ();
             bool both_x = visible_axes[0] && visible_axes[1];
             bool both_y = visible_axes[2] && visible_axes[3];
             for (int i = 0; i < DIRECTION_NAMES.length; i++) {
@@ -370,7 +370,7 @@ namespace Graphs {
                 return false;
             }
 
-            if (application.data.unsaved) {
+            if (data.unsaved) {
                 var dialog = Tools.build_dialog ("save_changes") as Adw.AlertDialog;
                 dialog.response.connect ((d, response) => {
                     switch (response) {
@@ -380,7 +380,7 @@ namespace Graphs {
                             break;
                         }
                         case "save_close": {
-                            Project.save.begin (application, false, (o, result) => {
+                            Project.save.begin (this, false, (o, result) => {
                                 if (Project.save.end (result)) {
                                     _force_close = true;
                                     close ();

@@ -20,15 +20,17 @@ namespace Graphs {
         [GtkChild]
         public unowned Adw.ComboRow file_format { get; }
 
+        private Window window;
         private Application application;
 
-        public ExportFigureDialog (Application application) {
+        public ExportFigureDialog (Window window) {
             Object ();
-            this.application = application;
+            this.window = window;
+            this.application = window.application as Application;
             Tools.bind_settings_to_widgets (
                 application.get_settings_child ("export-figure"), this
             );
-            present (application.window);
+            present (window);
         }
 
         [GtkCallback]
@@ -52,10 +54,10 @@ namespace Graphs {
             filter.add_suffix (suffix);
             filter_store.append (filter);
             dialog.set_filters (filter_store);
-            dialog.save.begin (application.window, null, (d, r) => {
+            dialog.save.begin (window, null, (d, r) => {
                 try {
                     File file = dialog.save.end (r);
-                    application.window.canvas.save (
+                    window.canvas.save (
                         file, suffix, settings.get_int ("dpi"),
                         settings.get_boolean ("transparent")
                     );

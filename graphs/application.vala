@@ -12,9 +12,8 @@ namespace Graphs {
      * Graphs application
      */
     public class Application : Adw.Application {
-        public Window? window { get; set; }
+        private Window? window { get; set; }
         public GLib.Settings settings { get; construct set; }
-        public Data data { get; construct set; }
         public StyleManager figure_style_manager { get; set; }
         public bool debug { get; construct set; default = false; }
         public PythonHelper python_helper { get; construct set; }
@@ -75,6 +74,7 @@ namespace Graphs {
         public override void open (File[] files, string hint) {
             base.open (files, hint);
             activate ();
+            var data = window.data;
             if (files.length == 1) {
                 File file = files[0];
                 string uri = file.get_uri ();
@@ -87,7 +87,7 @@ namespace Graphs {
                                 data.file = file;
                                 data.load ();
                             } else if (response == "save_close") {
-                                Project.save.begin (this, false, (o, result) => {
+                                Project.save.begin (window, false, (o, result) => {
                                     Project.save.end (result);
                                     data.file = file;
                                     data.load ();
@@ -103,7 +103,7 @@ namespace Graphs {
                     python_helper.open_style_editor (file);
                 }
             } else {
-                python_helper.import_from_files (files);
+                python_helper.import_from_files (window, files);
             }
         }
 

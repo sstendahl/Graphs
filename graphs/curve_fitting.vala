@@ -41,7 +41,7 @@ namespace Graphs {
         [GtkChild]
         private unowned Adw.ToastOverlay toast_overlay { get; }
 
-        public Application application { get; construct set; }
+        public Window window { get; construct set; }
         protected GLib.Settings settings { get; private set; }
         protected string equation_string { get; protected set; }
         protected Canvas canvas {
@@ -54,6 +54,7 @@ namespace Graphs {
         protected signal void add_fit_request ();
 
         protected void setup () {
+            var application = window.application as Application;
             this.settings = application.get_settings_child ("curve-fitting");
 
             var action_map = new SimpleActionGroup ();

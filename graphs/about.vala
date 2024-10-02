@@ -10,7 +10,7 @@ namespace Graphs {
      *
      * @param application Appplication
      */
-    public void show_about_dialog (Application application) {
+    public void show_about_dialog (Application application, Gtk.Window window) {
         var file = File.new_for_uri ("resource:///se/sjoerd/Graphs/whats_new");
         string release_notes;
         try {
@@ -40,6 +40,6 @@ namespace Graphs {
             translator_credits = _("translator-credits"),
             release_notes = release_notes
         };
-        dialog.present (application.window);
+        dialog.present (window);
     }
 }

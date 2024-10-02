@@ -32,7 +32,8 @@ class Data(Graphs.Data):
         self.setup()
         self._initialize()
         self.props.figure_settings.connect(
-            "notify", self._on_figure_settings_change,
+            "notify",
+            self._on_figure_settings_change,
         )
         self.connect("notify::unsaved", self._on_unsaved_change)
         self._update_used_positions()

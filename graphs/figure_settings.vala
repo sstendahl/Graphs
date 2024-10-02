@@ -102,11 +102,13 @@ namespace Graphs {
         private unowned Adw.ToastOverlay toast_overlay { get; }
 
         private Application application;
+        private Window window;
         private Adw.NavigationPage settings_page;
 
-        public FigureSettingsDialog (Application application, string? highlighted = null) {
-            this.application = application;
-            FigureSettings figure_settings = application.data.figure_settings;
+        public FigureSettingsDialog (Window window, string? highlighted = null) {
+            this.window = window;
+            this.application = window.application as Application;
+            FigureSettings figure_settings = window.data.figure_settings;
             GLib.Settings settings = application.get_settings_child ("figure");
             var builder = new Builder.from_resource (PAGE_RESOURCE);
             this.settings_page = builder.get_object ("settings_page") as Adw.NavigationPage;
@@ -127,7 +129,7 @@ namespace Graphs {
                 else assert_not_reached ();
             }
 
-            bool[] visible_axes = application.data.get_used_positions ();
+            bool[] visible_axes = window.data.get_used_positions ();
             bool both_x = visible_axes[0] && visible_axes[1];
             bool both_y = visible_axes[2] && visible_axes[3];
             string[] min_max = {"min", "max"};
@@ -178,7 +180,7 @@ namespace Graphs {
                 }
             }
             var style_name = builder.get_object ("style_name") as Label;
-            application.data.bind_property (
+            window.data.bind_property (
                 "selected_stylename", style_name, "label", 2
             );
 
@@ -186,7 +188,7 @@ namespace Graphs {
             factory.setup.connect (on_factory_setup);
             factory.bind.connect (on_factory_bind);
             style_grid.set_factory (factory);
-            style_grid.set_model (application.data.style_selection_model);
+            style_grid.set_model (window.data.style_selection_model);
 
             var style_row = builder.get_object ("style_row") as Adw.ActionRow;
             style_row.activated.connect (() => {
@@ -195,7 +197,7 @@ namespace Graphs {
             var button = builder.get_object ("set_as_default") as Adw.ButtonRow;
             button.activated.connect (set_as_default);
 
-            present (application.window);
+            present (window);
             if (highlighted != null) {
                 var widget = builder.get_object (highlighted) as Widget;
                 widget.grab_focus ();
@@ -207,14 +209,14 @@ namespace Graphs {
             StyleManager style_manager = application.figure_style_manager;
             var dialog = new AddStyleDialog (style_manager, this);
             dialog.accept.connect ((d, template, name) => {
-                application.figure_style_manager.copy_style (template, name);
+                style_manager.copy_style (template, name);
             });
         }
 
         [GtkCallback]
         private void on_closed () {
-            application.data.add_history_state ();
-            application.data.add_view_history_state ();
+            window.data.add_history_state ();
+            window.data.add_view_history_state ();
         }
 
         private void set_as_default () {
@@ -227,7 +229,7 @@ namespace Graphs {
             string[] enums = {
                 "legend-position", "top-scale", "bottom-scale", "left-scale", "right-scale"
             };
-            FigureSettings figure_settings = application.data.figure_settings;
+            FigureSettings figure_settings = window.data.figure_settings;
             foreach (string key in strings) {
                 string val;
                 figure_settings.get (key.replace ("-", "_"), out val);
@@ -268,7 +270,7 @@ namespace Graphs {
                 var open_with_action = new SimpleAction ("open_with", null);
                 open_with_action.activate.connect (() => {
                     var launcher = new FileLauncher (style.file);
-                    launcher.launch.begin (application.window, null);
+                    launcher.launch.begin (window, null);
                 });
                 action_group.add_action (open_with_action);
                 var delete_action = new SimpleAction ("delete", null);
