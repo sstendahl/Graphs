@@ -111,6 +111,7 @@ class PythonHelper(Graphs.PythonHelper):
         window = StyleEditorWindow(self.props.application)
         window.load_style(file)
         window.present()
+        return window
 
     @staticmethod
     def _on_create_window_request(self) -> Graphs.Window:

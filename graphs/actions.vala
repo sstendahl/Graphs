@@ -170,12 +170,6 @@ namespace Graphs {
             });
             window.add_action (open_project_action);
 
-            var new_project_action = new SimpleAction ("new_project", null);
-            new_project_action.activate.connect (() => {
-                Project.@new (window);
-            });
-            window.add_action (new_project_action);
-
             var add_data_action_filters = Tools.create_file_filters (
                 true,
                 Tools.create_file_filter (

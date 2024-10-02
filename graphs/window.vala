@@ -366,7 +366,7 @@ namespace Graphs {
             var application = application as Application;
 
             if (_force_close) {
-                application.on_main_window_closed ();
+                application.on_main_window_closed (this);
                 return false;
             }
 
@@ -393,7 +393,7 @@ namespace Graphs {
                 dialog.present (this);
                 return true;
             }
-            application.on_main_window_closed ();
+            application.on_main_window_closed (this);
             return false;
         }
     }

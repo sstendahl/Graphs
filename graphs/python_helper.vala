@@ -51,9 +51,9 @@ namespace Graphs {
             add_equation_request.emit (window, name);
         }
 
-        protected signal void open_style_editor_request (File file);
-        public void open_style_editor (File file) {
-            open_style_editor_request.emit (file);
+        protected signal Gtk.Window open_style_editor_request (File file);
+        public Gtk.Window open_style_editor (File file) {
+            return open_style_editor_request.emit (file);
         }
 
         protected signal Window create_window_request ();

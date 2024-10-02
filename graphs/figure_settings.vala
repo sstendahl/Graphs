@@ -264,7 +264,7 @@ namespace Graphs {
                 var action_group = new SimpleActionGroup ();
                 var open_action = new SimpleAction ("open", null);
                 open_action.activate.connect (() => {
-                    application.python_helper.open_style_editor (style.file);
+                    application.create_style_editor (style.file);
                 });
                 action_group.add_action (open_action);
                 var open_with_action = new SimpleAction ("open_with", null);

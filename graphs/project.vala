@@ -51,51 +51,13 @@ namespace Graphs {
         }
 
         public void open (Window window) {
-            if (!window.data.unsaved) {
+            if (!window.data.unsaved && window.data.file == null) {
                 _pick_and_load (window);
                 return;
             }
-            var dialog = Tools.build_dialog ("save_changes") as Adw.AlertDialog;
-            dialog.response.connect ((d, response) => {
-                switch (response) {
-                    case "discard_close": {
-                        _pick_and_load (window);
-                        break;
-                    }
-                    case "save_close": {
-                        save.begin (window, false, (o, result) => {
-                            save.end (result);
-                            _pick_and_load (window);
-                        });
-                        break;
-                    }
-                }
-            });
-            dialog.present (window);
-        }
-
-        public void @new (Window window) {
-            if (!window.data.unsaved) {
-                window.data.reset ();
-                return;
-            }
-            var dialog = Tools.build_dialog ("save_changes") as Adw.AlertDialog;
-            dialog.response.connect ((d, response) => {
-                switch (response) {
-                    case "discard_close": {
-                        window.data.reset ();
-                        break;
-                    }
-                    case "save_close": {
-                        save.begin (window, false, (o, result) => {
-                            save.end (result);
-                            window.data.reset ();
-                        });
-                        break;
-                    }
-                }
-            });
-            dialog.present (window);
+            Application application = window.application as Application;
+            var new_window = application.create_main_window ();
+            _pick_and_load (new_window);
         }
     }
 }
