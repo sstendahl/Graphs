@@ -461,10 +461,10 @@ class StyleEditorWindow(Adw.Window):
     split_view = Gtk.Template.Child()
     editor_clamp = Gtk.Template.Child()
     content_view = Gtk.Template.Child()
+    content_headerbar = Gtk.Template.Child()
 
     def __init__(self, application: Graphs.Application):
         super().__init__(application=application)
-        application.register_style_editor()
         self._style_editor = StyleEditor(self)
         self.editor_clamp.set_child(self._style_editor)
         self._file = None
@@ -487,6 +487,13 @@ class StyleEditorWindow(Adw.Window):
                 color="#000000",
             ),
         )
+
+        self._provider = Gtk.CssProvider()
+        self.content_headerbar.get_style_context().add_provider(
+            self._provider,
+            Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION,
+        )
+
         self._style_editor.connect("params-changed", self._on_params_changed)
         self._on_params_changed(self._style_editor)
 
@@ -512,8 +519,7 @@ class StyleEditorWindow(Adw.Window):
         self.content_view.set_content(canvas)
 
         # Set headerbar color
-        css_provider = self.props.application.get_css_provider()
-        css_provider.load_from_string(
+        self._provider.load_from_string(
             "headerbar#preview-headerbar { "
             f"background-color: {params['figure.facecolor']}; "
             f"color: {params['text.color']}; "
@@ -538,4 +544,4 @@ class StyleEditorWindow(Adw.Window):
     def on_close_request(self, _window):
         """Handle close request."""
         self.save_style()
-        self.props.application.on_style_editor_closed()
+        self.props.application.on_style_editor_closed(self)
