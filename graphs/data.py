@@ -115,14 +115,18 @@ class Data(Graphs.Data):
         self._old_style_params = self._selected_style_params
         self._selected_style_params = None
         figure_settings = self.props.figure_settings
+        style_manager = self.props.application.get_figure_style_manager()
         if figure_settings.get_use_custom_style():
             stylename = figure_settings.get_custom_style()
             for style in self.props.style_selection_model.get_model():
                 if stylename == style.get_name():
                     try:
+                        validate = None
+                        if style.get_mutable():
+                            validate = style_manager.get_system_style_params()
                         self._selected_style_params = style_io.parse(
                             style.get_file(),
-                            style.get_mutable(),
+                            validate,
                         )[0]
                         return
                     except (ValueError, SyntaxError, AttributeError):
@@ -140,7 +144,6 @@ class Data(Graphs.Data):
                         "loading system preferred",
                     ).format(stylename=stylename),
                 )
-        style_manager = self.props.application.get_figure_style_manager()
         self._selected_style_params = style_manager.get_system_style_params()
 
     def _reset_selected_style(self, message: str) -> None:

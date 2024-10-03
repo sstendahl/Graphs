@@ -196,7 +196,11 @@ class StyleEditor(Gtk.Box):
     def load_style(self, file: Gio.File):
         """Load style params from file."""
         self.params, self.graphs_params = None, None
-        style_params, graphs_params = style_io.parse(file, True)
+        application = self.window.get_application()
+        style_params, graphs_params = style_io.parse(
+            file,
+            application.get_figure_style_manager().get_system_style_params(),
+        )
         stylename = graphs_params["name"]
         self.style_name.set_text(stylename)
         for key, value in STYLE_DICT.items():

@@ -46,20 +46,15 @@ class StyleManager(Graphs.StyleManager):
         self.connect("style_request", self._on_style_request)
         self.connect("copy_request", self._on_copy_request)
 
-        style_io.set_base_style(
-            style_io.parse(
-                Gio.File.new_for_uri(
-                    "resource:///se/sjoerd/Graphs/styles/matplotlib.mplstyle",
-                ),
-            )[0],
-        )
-
         self.setup(self._system_style_name.lower())
         self._update_system_style()
 
     @staticmethod
     def _on_style_request(self, file: Gio.File) -> Graphs.Style:
-        style_params, graphs_params = style_io.parse(file, True)
+        style_params, graphs_params = style_io.parse(
+            file,
+            self._system_style_params,
+        )
         return Graphs.Style(
             name=graphs_params["name"],
             file=file,
@@ -93,7 +88,7 @@ class StyleManager(Graphs.StyleManager):
             if template == style.get_name():
                 style_params = style_io.parse(
                     style.get_file(),
-                    style.get_mutable(),
+                    self._system_style_params,
                 )[0]
                 break
         style_io.write(destination, {"name": new_name}, style_params)

@@ -45,13 +45,17 @@ class PythonHelper(Graphs.PythonHelper):
 
     @staticmethod
     def _on_edit_item_dialog_request(
-        self, window: Graphs.Window, item: Graphs.Item,
+        self,
+        window: Graphs.Window,
+        item: Graphs.Item,
     ) -> None:
         return edit_item.EditItemDialog(window, item)
 
     @staticmethod
     def _on_curve_fitting_dialog_request(
-        self, window: Graphs.Window, item: Graphs.Item,
+        self,
+        window: Graphs.Window,
+        item: Graphs.Item,
     ) -> None:
         return curve_fitting.CurveFittingDialog(window, item)
 
@@ -90,7 +94,9 @@ class PythonHelper(Graphs.PythonHelper):
 
     @staticmethod
     def _on_add_equation_request(
-        self, window: Graphs.Window, name: str,
+        self,
+        window: Graphs.Window,
+        name: str,
     ) -> None:
         settings = self.props.application.get_settings_child("add-equation")
         equation = settings.get_string("equation")
