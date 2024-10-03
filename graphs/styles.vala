@@ -255,19 +255,19 @@ namespace Graphs {
 
         public signal void accept (string template, string name);
 
-        public AddStyleDialog (StyleManager style_manager, Widget parent) {
+        public AddStyleDialog (StyleManager style_manager, Widget parent, FigureSettings figure_settings) {
             this.style_manager = style_manager;
             this.stylenames = style_manager.list_stylenames ();
             style_templates.set_model (new StringList (stylenames));
-            //if (style_manager.use_custom_style) {
-            //    string template = style_manager.custom_style;
-            //    for (uint i = 0; i < stylenames.length; i++) {
-            //        if (stylenames[i] == template) {
-            //            style_templates.set_selected (i);
-            //            break;
-            //        }
-            //    }
-            //}
+            if (figure_settings.use_custom_style) {
+                string template = figure_settings.custom_style;
+                for (uint i = 0; i < stylenames.length; i++) {
+                    if (stylenames[i] == template) {
+                        style_templates.set_selected (i);
+                        break;
+                    }
+                }
+            }
             present (parent);
         }
 
