@@ -116,7 +116,7 @@ namespace Graphs {
                     window.data.load ();
                     return;
                 } else if (uri.has_suffix (".mplstyle")) {
-                    var style_editor = create_style_editor (file);
+                    create_style_editor (file);
                     return;
                 }
             }

@@ -284,10 +284,10 @@ namespace Graphs {
             action.activate.connect (() => {
                 Tools.open_file_location (file);
             });
-            application.add_action (action);
+            add_action (action);
             add_toast (new Adw.Toast (title) {
                 button_label = _("Open Location"),
-                action_name = "app.open-file-location"
+                action_name = "win.open-file-location"
             });
         }
 
@@ -297,7 +297,7 @@ namespace Graphs {
         public void add_undo_toast (string title) {
             add_toast (new Adw.Toast (title) {
                 button_label = _("Undo"),
-                action_name = "app.undo"
+                action_name = "win.undo"
             });
         }
 
@@ -315,12 +315,12 @@ namespace Graphs {
             var view_menu = new Menu ();
             var toggle_section = new Menu ();
             toggle_section.append_item (
-                new MenuItem (_("Toggle Sidebar"), "app.toggle_sidebar")
+                new MenuItem (_("Toggle Sidebar"), "win.toggle_sidebar")
             );
             view_menu.append_section (null, toggle_section);
             Menu optimize_section = new Menu ();
             optimize_section.append_item (
-                new MenuItem (_("Optimize Limits"), "app.optimize_limits")
+                new MenuItem (_("Optimize Limits"), "win.optimize_limits")
             );
             view_menu.append_section (null, optimize_section);
 
@@ -343,7 +343,7 @@ namespace Graphs {
                 for (int j = 0; j < scale_names.length; j++) {
                     string scale = scale_names[j];
                     MenuItem scale_item = new MenuItem (
-                        scale, @"app.change-$direction-scale"
+                        scale, @"win.change-$direction-scale"
                     );
                     scale_item.set_attribute_value (
                         "target",
