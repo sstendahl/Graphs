@@ -84,7 +84,7 @@ class StyleManager(Graphs.StyleManager):
         destination = self.props.style_dir.get_child_for_display_name(
             _generate_filename(new_name),
         )
-        for style in self.props.selection_model.get_model():
+        for style in self.props.style_model:
             if template == style.get_name():
                 style_params = style_io.parse(
                     style.get_file(),

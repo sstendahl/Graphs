@@ -17,6 +17,7 @@ namespace Graphs {
         public Application application { get; construct set; }
         public GLib.ListStore style_model { get; construct set; }
         public File style_dir { get; construct set; }
+        public signal void style_changed (Style style);
 
         private Gee.AbstractSet<string> stylenames { get; private set; }
 
@@ -98,12 +99,14 @@ namespace Graphs {
                 case FileMonitorEvent.CREATED:
                     if (find_style_for_file (file, out style) > 0) return;
                     add_user_style (file);
+                    style_changed.emit (style);
                     break;
                 case FileMonitorEvent.DELETED:
                     var index = find_style_for_file (file, out style);
                     if (index == -1) return;
                     stylenames.remove (style.name);
                     style_model.remove (index);
+                    style_changed.emit (style);
                     break;
                 case FileMonitorEvent.CHANGES_DONE_HINT:
                     Style tmp_style = style_request.emit (file);
@@ -112,6 +115,7 @@ namespace Graphs {
                     style.name = tmp_style.name;
                     style.preview = tmp_style.preview;
                     style.light = tmp_style.light;
+                    style_changed.emit (style);
                     break;
                 default:
                     return;

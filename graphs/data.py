@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Data management module."""
 import copy
+import logging
 import math
 import os
 from gettext import gettext as _
@@ -112,10 +113,9 @@ class Data(Graphs.Data):
         return self._selected_style_params
 
     def _update_selected_style(self) -> None:
-        self._old_style_params = self._selected_style_params
-        self._selected_style_params = None
         figure_settings = self.props.figure_settings
         style_manager = self.props.application.get_figure_style_manager()
+        error_msg = None
         if figure_settings.get_use_custom_style():
             stylename = figure_settings.get_custom_style()
             for style in self.props.style_selection_model.get_model():
@@ -124,26 +124,26 @@ class Data(Graphs.Data):
                         validate = None
                         if style.get_mutable():
                             validate = style_manager.get_system_style_params()
+                        self._old_style_params = self._selected_style_params
                         self._selected_style_params = style_io.parse(
                             style.get_file(),
                             validate,
                         )[0]
                         return
                     except (ValueError, SyntaxError, AttributeError):
-                        self._reset_selected_style(
-                            _(
-                                f"Could not parse {stylename}, loading "
-                                "system preferred style",
-                            ).format(stylename=stylename),
-                        )
+                        error_msg = _(
+                            f"Could not parse {stylename}, loading "
+                            "system preferred style",
+                        ).format(stylename=stylename)
                     break
-            if self._selected_style_params is None:
-                self._reset_selected_style(
-                    _(
-                        f"Plot style {stylename} does not exist "
-                        "loading system preferred",
-                    ).format(stylename=stylename),
-                )
+            error_msg = _(
+                f"Plot style {stylename} does not exist "
+                "loading system preferred",
+            ).format(stylename=stylename)
+        if error_msg is not None:
+            figure_settings.set_use_custom_style(False)
+            logging.warning(error_msg)
+        self._old_style_params = self._selected_style_params
         self._selected_style_params = style_manager.get_system_style_params()
 
     def _reset_selected_style(self, message: str) -> None:

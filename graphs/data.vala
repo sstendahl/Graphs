@@ -52,6 +52,12 @@ namespace Graphs {
 
             var style_manager = application.figure_style_manager;
             this.style_selection_model = new SingleSelection (style_manager.style_model);
+            style_manager.style_changed.connect (style => {
+                if (!figure_settings.use_custom_style) return;
+                if (figure_settings.custom_style == style.name) {
+                    handle_style_change ();
+                }
+            });
 
             application.style_manager.notify.connect (() => {
                 if (!figure_settings.use_custom_style) {
