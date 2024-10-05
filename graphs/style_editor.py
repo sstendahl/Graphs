@@ -463,8 +463,8 @@ class PythonStyleEditor(Graphs.StyleEditor):
 
     def __init__(self, application: Graphs.Application):
         super().__init__(application=application)
-        self._style_editor = StyleEditorBox(self)
-        self.set_editor_box(self._style_editor)
+        style_editor = StyleEditorBox(self)
+        self.set_editor_box(style_editor)
         self._test_items = Gio.ListStore()
         self._test_items.append(
             DataItem.new(
@@ -485,14 +485,8 @@ class PythonStyleEditor(Graphs.StyleEditor):
             ),
         )
 
-        self._provider = Gtk.CssProvider()
-        self.get_content_headerbar().get_style_context().add_provider(
-            self._provider,
-            Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION,
-        )
-
-        self._style_editor.connect("params-changed", self._on_params_changed)
-        self._on_params_changed(self._style_editor)
+        style_editor.connect("params-changed", self._on_params_changed)
+        self._on_params_changed(style_editor)
 
         self.connect("load_request", self._on_load_request)
         self.connect("save_request", self._on_save_request)
@@ -519,7 +513,7 @@ class PythonStyleEditor(Graphs.StyleEditor):
         self.set_canvas(canvas)
 
         # Set headerbar color
-        self._provider.load_from_string(
+        self.get_headerbar_provider().load_from_string(
             "headerbar#preview-headerbar { "
             f"background-color: {params['figure.facecolor']}; "
             f"color: {params['text.color']}; "
@@ -529,11 +523,12 @@ class PythonStyleEditor(Graphs.StyleEditor):
     @staticmethod
     def _on_load_request(self, file: Gio.File) -> None:
         """Load a style."""
-        name = self._style_editor.load_style(file)
+        style_editor = self.get_editor_box()
+        name = style_editor.load_style(file)
         self.set_title(name)
-        self._on_params_changed(self._style_editor)
+        self._on_params_changed(style_editor)
 
     @staticmethod
     def _on_save_request(self, file: Gio.File) -> None:
         """Save current style."""
-        self._style_editor.save_style(file)
+        self.get_editor_box().save_style(file)

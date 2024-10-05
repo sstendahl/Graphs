@@ -19,6 +19,7 @@ namespace Graphs {
         protected unowned Adw.HeaderBar content_headerbar { get; }
 
         protected Gtk.Box editor_box {
+            get { return editor_clamp.get_child () as Gtk.Box; }
             set { editor_clamp.set_child (value); }
         }
         protected Canvas canvas {
@@ -26,10 +27,18 @@ namespace Graphs {
             set { content_view.set_content (value); }
         }
 
+        protected CssProvider headerbar_provider { get; private set; }
         private File _file;
 
         protected signal void load_request (File file);
         protected signal void save_request (File file);
+
+        construct {
+            this.headerbar_provider = new CssProvider ();
+            content_headerbar.get_style_context ().add_provider (
+                headerbar_provider, STYLE_PROVIDER_PRIORITY_APPLICATION
+            );
+        }
 
         public void load (File file) {
             this._file = file;
