@@ -676,9 +676,9 @@ class Canvas(Graphs.Canvas, FigureCanvas):
         scale = scales.to_string(scale)
         for axis in (self._axis, self._right_axis):
             if scale == "log2":
-              axis.set_xscale("log", base = 2)
+                axis.set_xscale("log", base=2)
             else:
-              axis.set_xscale(scale)
+                axis.set_xscale(scale)
             axis.set_xlim(None, None)
         self.queue_draw()
 
@@ -692,9 +692,9 @@ class Canvas(Graphs.Canvas, FigureCanvas):
         scale = scales.to_string(scale)
         for axis in (self._axis, self._top_left_axis):
             if scale == "log2":
-              axis.set_yscale("log", base = 2)
+                axis.set_yscale("log", base=2)
             else:
-              axis.set_yscale(scale)
+                axis.set_yscale(scale)
             axis.set_ylim(None, None)
         self.queue_draw()
 
@@ -708,9 +708,9 @@ class Canvas(Graphs.Canvas, FigureCanvas):
         scale = scales.to_string(scale)
         for axis in (self._top_right_axis, self._top_left_axis):
             if scale == "log2":
-              axis.set_xscale("log", base = 2)
+                axis.set_xscale("log", base=2)
             else:
-              axis.set_xscale(scale)
+                axis.set_xscale(scale)
             axis.set_xlim(None, None)
         self.queue_draw()
 
@@ -724,9 +724,9 @@ class Canvas(Graphs.Canvas, FigureCanvas):
         scale = scales.to_string(scale)
         for axis in (self._top_right_axis, self._right_axis):
             if scale == "log2":
-              axis.set_yscale("log", base = 2)
+                axis.set_yscale("log", base=2)
             else:
-              axis.set_yscale(scale)
+                axis.set_yscale(scale)
             axis.set_ylim(None, None)
         self.queue_draw()
 
