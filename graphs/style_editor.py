@@ -103,11 +103,11 @@ def _title_format_function(_scale, value: float) -> str:
     return str(value / 2 * 100).split(".")[0] + "%"
 
 
-@Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/style-editor.ui")
-class StyleEditor(Gtk.Box):
+@Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/style-editor-box.ui")
+class StyleEditorBox(Gtk.Box):
     """Style editor widget."""
 
-    __gtype_name__ = "GraphsStyleEditor"
+    __gtype_name__ = "GraphsStyleEditorBox"
 
     __gsignals__ = {
         "params-changed": (GObject.SIGNAL_RUN_FIRST, None, ()),
@@ -403,7 +403,7 @@ class _StyleColorBox(Gtk.Box):
     label = Gtk.Template.Child()
     color_button = Gtk.Template.Child()
 
-    parent = GObject.Property(type=StyleEditor)
+    parent = GObject.Property(type=StyleEditorBox)
     index = GObject.Property(type=int, default=0)
 
     def __init__(self, parent, index):
@@ -457,10 +457,10 @@ _PREVIEW_YDATA2 = numpy.power(numpy.e, _PREVIEW_XDATA2)
 
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/style-editor-window.ui")
-class StyleEditorWindow(Adw.Window):
+class StyleEditor(Adw.ApplicationWindow):
     """Graphs Style Editor Window."""
 
-    __gtype_name__ = "GraphsStyleEditorWindow"
+    __gtype_name__ = "GraphsStyleEditor"
 
     split_view = Gtk.Template.Child()
     editor_clamp = Gtk.Template.Child()
@@ -469,7 +469,7 @@ class StyleEditorWindow(Adw.Window):
 
     def __init__(self, application: Graphs.Application):
         super().__init__(application=application)
-        self._style_editor = StyleEditor(self)
+        self._style_editor = StyleEditorBox(self)
         self.editor_clamp.set_child(self._style_editor)
         self._file = None
         self._test_items = Gio.ListStore()

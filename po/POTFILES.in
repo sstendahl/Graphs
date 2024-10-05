@@ -17,7 +17,7 @@ data/ui/item-box.blp
 data/ui/shortcuts.blp
 data/ui/smoothen-settings.blp
 data/ui/style-color-box.blp
-data/ui/style-editor.blp
+data/ui/style-editor-box.blp
 data/ui/style-editor-window.blp
 data/ui/style-preview.blp
 data/ui/transform.blp
