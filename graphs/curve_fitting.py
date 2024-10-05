@@ -19,9 +19,10 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
 
     __gtype_name__ = "GraphsPythonCurveFittingDialog"
 
-    def __init__(self, application: Graphs.Application, item: Graphs.Item):
+    def __init__(self, window: Graphs.Window, item: Graphs.Item):
         """Initialize the curve fitting dialog."""
-        super().__init__(application=application)
+        super().__init__(window=window)
+        application = window.get_application()
         Adw.StyleManager.get_default().connect("notify", self.reload_canvas)
         self.connect("equation_change", self.on_equation_change)
         self.connect("fit_curve_request", self.fit_curve)
@@ -64,14 +65,14 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
 
         self.reload_canvas()
         self.setup()
-        self.present(application.get_window())
+        self.present(window)
 
     def reload_canvas(self, *_args) -> None:
         """Reinitialise the currently used canvas."""
-        application = self.props.application
-        figure_settings = application.get_data().get_figure_settings()
-        style = \
-            application.get_figure_style_manager().get_system_style_params()
+        figure_settings = self.props.window.get_data().get_figure_settings()
+        style_manager = \
+            self.props.window.get_application().get_figure_style_manager()
+        style = style_manager.get_system_style_params()
         canvas = Canvas(style, self._items, interactive=False)
         axis = canvas.axes[0]
         axis.yscale = "linear"
@@ -342,19 +343,15 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
     @staticmethod
     def add_fit(self) -> None:
         """Add fitted data to the items in the main application."""
-        application = self.props.application
-        style_manager = application.get_figure_style_manager()
-        application.get_data().add_items(
-            [
-                DataItem.new(
-                    style_manager.get_selected_style_params(),
-                    name=self.fitted_curve.get_name(),
-                    xdata=list(self.fitted_curve.xdata),
-                    ydata=list(self.fitted_curve.ydata),
-                ),
-            ],
-            style_manager,
-        )
+        data = self.props.window.get_data()
+        data.add_items([
+            DataItem.new(
+                data.get_selected_style_params(),
+                name=self.fitted_curve.get_name(),
+                xdata=list(self.fitted_curve.xdata),
+                ydata=list(self.fitted_curve.ydata),
+            ),
+        ])
         self.close()
 
 

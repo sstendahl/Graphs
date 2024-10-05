@@ -17,7 +17,8 @@ namespace Graphs {
 
         public signal void accept ();
 
-        public ImportDialog (Application application, string[] modes) {
+        public ImportDialog (Window window, string[] modes) {
+            var application = window.application as Application;
             this.settings = application.get_settings_child ("import-params");
             this.modes = modes;
 
@@ -25,7 +26,7 @@ namespace Graphs {
                 var coumns_group = new ColumnsGroup (settings.get_child ("columns"));
                 mode_box.append (coumns_group);
             }
-            present (application.window);
+            present (window);
         }
 
         [GtkCallback]

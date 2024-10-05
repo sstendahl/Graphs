@@ -19,103 +19,103 @@ template $GraphsWindow: Adw.ApplicationWindow {
     }
     Shortcut {
       trigger: "<primary>comma";
-      action: "action(app.figure_settings)";
+      action: "action(win.figure_settings)";
     }
     Shortcut {
       trigger: "<primary>N";
-      action: "action(app.add_data)";
+      action: "action(win.add_data)";
     }
     Shortcut {
       trigger: "<primary><alt>N";
-      action: "action(app.add_equation)";
+      action: "action(win.add_equation)";
     }
     Shortcut {
       trigger: "<primary>A";
-      action: "action(app.select_all)";
+      action: "action(win.select_all)";
     }
     Shortcut {
       trigger: "<primary><shift>A";
-      action: "action(app.select_none)";
+      action: "action(win.select_none)";
     }
     Shortcut {
       trigger: "<primary>Z";
-      action: "action(app.undo)";
+      action: "action(win.undo)";
     }
     Shortcut {
       trigger: "<primary><shift>Z";
-      action: "action(app.redo)";
+      action: "action(win.redo)";
     }
     Shortcut {
       trigger: "<primary>KP_0";
-      action: "action(app.optimize_limits)";
+      action: "action(win.optimize_limits)";
     }
     Shortcut {
       trigger: "<primary>0";
-      action: "action(app.optimize_limits)";
+      action: "action(win.optimize_limits)";
     }
     Shortcut {
       trigger: "<alt>Z";
-      action: "action(app.view_back)";
+      action: "action(win.view_back)";
     }
     Shortcut {
       trigger: "<alt><shift>Z";
-      action: "action(app.view_forward)";
+      action: "action(win.view_forward)";
     }
     Shortcut {
       trigger: "<primary><shift>E";
-      action: "action(app.export_data)";
+      action: "action(win.export_data)";
     }
     Shortcut {
       trigger: "<primary>E";
-      action: "action(app.export_figure)";
+      action: "action(win.export_figure)";
     }
     Shortcut {
       trigger: "<primary>period";
-      action: "action(app.styles)";
+      action: "action(win.styles)";
     }
     Shortcut {
       trigger: "<primary>S";
-      action: "action(app.save_project)";
+      action: "action(win.save_project)";
     }
     Shortcut {
       trigger: "<primary>O";
-      action: "action(app.open_project)";
+      action: "action(win.open_project)";
     }
     Shortcut {
       trigger: "Delete";
-      action: "action(app.delete_selected)";
+      action: "action(win.delete_selected)";
     }
     Shortcut {
       trigger: "<primary>plus";
-      action: "action(app.zoom_in)";
+      action: "action(win.zoom_in)";
     }
     Shortcut {
       trigger: "<primary>KP_Add";
-      action: "action(app.zoom_in)";
+      action: "action(win.zoom_in)";
     }
     Shortcut {
       trigger: "<primary>equal";
-      action: "action(app.zoom_in)";
+      action: "action(win.zoom_in)";
     }
     Shortcut {
       trigger: "ZoomIn";
-      action: "action(app.zoom_in)";
+      action: "action(win.zoom_in)";
     }
     Shortcut {
       trigger: "<primary>minus";
-      action: "action(app.zoom_out)";
+      action: "action(win.zoom_out)";
     }
     Shortcut {
       trigger: "<primary>KP_Subtract";
-      action: "action(app.zoom_out)";
+      action: "action(win.zoom_out)";
     }
     Shortcut {
       trigger: "<primary>ZoomOut";
-      action: "action(app.zoom_out)";
+      action: "action(win.zoom_out)";
     }
     Shortcut {
       trigger: "<primary><shift>S";
-      action: "action(app.save_project_as)";
+      action: "action(win.save_project_as)";
     }
     Shortcut {
       trigger: "<primary><shift>N";
@@ -123,19 +123,19 @@ template $GraphsWindow: Adw.ApplicationWindow {
     }
     Shortcut {
       trigger: "F9";
-      action: "action(app.toggle_sidebar)";
+      action: "action(win.toggle_sidebar)";
     }
     Shortcut {
       trigger: "<primary>1";
-      action: "action(app.mode_pan)";
+      action: "action(win.mode_pan)";
     }
     Shortcut {
       trigger: "<primary>2";
-      action: "action(app.mode_zoom)";
+      action: "action(win.mode_zoom)";
     }
     Shortcut {
       trigger: "<primary>3";
-      action: "action(app.mode_select)";
+      action: "action(win.mode_select)";
     }
   }
 
@@ -236,19 +236,19 @@ template $GraphsWindow: Adw.ApplicationWindow {
           margin-end: 12;
           ToggleButton pan_button {
             icon-name: "move-tool-symbolic";
-            action-name: "app.mode_pan";
+            action-name: "win.mode_pan";
             hexpand: true;
             tooltip-text: _("Pan Mode. Click and drag to pan");
           }
           ToggleButton zoom_button {
             icon-name: "loupe-symbolic";
-            action-name: "app.mode_zoom";
+            action-name: "win.mode_zoom";
             hexpand: true;
             tooltip-text: _("Zoom Mode. Select an area on the figure to zoom in");
           }
           ToggleButton select_button {
             icon-name: "edit-select-all-symbolic";
-            action-name: "app.mode_select";
+            action-name: "win.mode_select";
             hexpand: true;
             tooltip-text: _("Select Mode. Click and drag to make a selection of data");
           }
@@ -582,12 +582,12 @@ template $GraphsWindow: Adw.ApplicationWindow {
           visible: bind split_view.collapsed;
         }
         Button undo_button {
-          action-name: "app.undo";
+          action-name: "win.undo";
           icon-name: "edit-undo-symbolic";
           tooltip-text: _("Undo");
         }
         Button redo_button {
-          action-name: "app.redo";
+          action-name: "win.redo";
           icon-name: "edit-redo-symbolic";
           tooltip-text: _("Redo");
         }
@@ -600,13 +600,13 @@ template $GraphsWindow: Adw.ApplicationWindow {
         }
         [end]
         Button view_forward_button {
-          action-name: "app.view_forward";
+          action-name: "win.view_forward";
           icon-name: "go-next-symbolic";
           tooltip-text: _("Next View");
         }
         [end]
         Button view_back_button {
-          action-name: "app.view_back";
+          action-name: "win.view_back";
           icon-name: "go-previous-symbolic";
           tooltip-text: _("Previous View");
         }
@@ -629,16 +629,16 @@ menu primary_menu {
     item (_("New Project"), "app.new_project")
   }
   section{
-    item (_("Save Project…"), "app.save_project")
-    item (_("Save Project as…"), "app.save_project_as")
-    item (_("Open Project…"), "app.open_project")
+    item (_("Save Project…"), "win.save_project")
+    item (_("Save Project as…"), "win.save_project_as")
+    item (_("Open Project…"), "win.open_project")
   }
   section {
-    item (_("Export Data…"), "app.export_data")
-    item (_("Export Figure…"), "app.export_figure")
+    item (_("Export Data…"), "win.export_data")
+    item (_("Export Figure…"), "win.export_figure")
   }
   section {
-    item (_("Figure Settings"), "app.figure_settings")
+    item (_("Figure Settings"), "win.figure_settings")
   }
   section {
     item (_("Keyboard Shortcuts"), "win.show-help-overlay")
@@ -649,8 +649,8 @@ menu primary_menu {
 
 menu add_data_menu {
   section {
-    item (_("Add Data from File…"), "app.add_data")
-    item (_("Add Equation…"), "app.add_equation")
+    item (_("Add Data from File…"), "win.add_data")
+    item (_("Add Equation…"), "win.add_equation")
   }
 }
 
@@ -660,12 +660,12 @@ menu view_menu {
 menu center_menu {
   item {
     label: _("At Maximum Y Value");
-    action: "app.center";
+    action: "win.center";
     target: "max-y";
   }
   item {
     label: _("At Middle X Value");
-    action: "app.center";
+    action: "win.center";
     target: "middle-x";
   }
 }
@@ -674,19 +674,19 @@ menu smoothen_menu {
   section {
     item {
       label: _("Savitzky–Golay Filter");
-      action: "app.smoothen";
+      action: "win.smoothen";
       target: "savgol";
     }
     item {
       label: _("Moving Average");
-      action: "app.smoothen";
+      action: "win.smoothen";
       target: "moving-average";
     }
   }
   section {
     item {
       label: _("Advanced Settings");
-      action: "app.smoothen_settings";
+      action: "win.smoothen_settings";
     }
   }
 }

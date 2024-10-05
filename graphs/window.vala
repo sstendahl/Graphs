@@ -43,7 +43,7 @@ namespace Graphs {
         private unowned Button shift_button { get; }
 
         [GtkChild]
-        public unowned Button cut_button { get; }
+        protected unowned Button cut_button { get; }
 
         [GtkChild]
         public unowned Entry translate_x_entry { get; }
@@ -84,6 +84,10 @@ namespace Graphs {
         [GtkChild]
         private unowned Adw.WindowTitle content_title { get; }
 
+        public Data data { get; construct set; }
+
+        protected CssProvider headerbar_provider { get; private set; }
+
         public int mode {
             set {
                 pan_button.set_active (value == 0);
@@ -103,9 +107,11 @@ namespace Graphs {
 
         private bool _force_close = false;
 
-        public Window (Application application) {
-            Object (application: application);
-            Data data = application.data;
+        protected void setup () {
+            var application = application as Application;
+
+            Actions.setup (application, this);
+
             data.bind_property ("items_selected", shift_button, "sensitive", 2);
             data.bind_property ("can_undo", undo_button, "sensitive", 2);
             data.bind_property ("can_redo", redo_button, "sensitive", 2);
@@ -132,12 +138,12 @@ namespace Graphs {
                 get (action_name + "_entry", out entry);
                 get (action_name + "_button", out button);
                 entry.notify["text"].connect (() => {
-                    validate_entry (application, entry, button);
+                    validate_entry (entry, button);
                 });
                 data.notify["items-selected"].connect (() => {
-                    validate_entry (application, entry, button);
+                    validate_entry (entry, button);
                 });
-                validate_entry (application, entry, button);
+                validate_entry (entry, button);
             }
 
             data.items_changed.connect (() => {
@@ -163,6 +169,11 @@ namespace Graphs {
             });
             item_list.add_controller (drop_target);
 
+            this.headerbar_provider = new CssProvider ();
+            content_headerbar.get_style_context ().add_provider (
+                headerbar_provider, STYLE_PROVIDER_PRIORITY_APPLICATION
+            );
+
             update_view_menu ();
             if (application.debug) {
                 add_css_class ("devel");
@@ -173,9 +184,8 @@ namespace Graphs {
         private void reload_item_list () {
             item_list.remove_all ();
             uint index = 0;
-            Application application = application as Application;
-            foreach (Item item in application.data) {
-                var row = new ItemBox (application, item, index);
+            foreach (Item item in data) {
+                var row = new ItemBox (this, item, index);
                 row.setup_interactions ();
 
                 double drag_x = 0.0;
@@ -205,7 +215,7 @@ namespace Graphs {
                     drag_widget.set_size_request (row.get_width (), row.get_height ());
                     drag_widget.add_css_class ("boxed-list");
 
-                    var drag_row = new ItemBox ((Application) application, item, index);
+                    var drag_row = new ItemBox (this, item, index);
 
                     drag_widget.append (drag_row);
                     drag_widget.drag_highlight_row (drag_row);
@@ -225,14 +235,15 @@ namespace Graphs {
             }
         }
 
-        private void validate_entry (Application application, Entry entry, Button button) {
+        private void validate_entry (Entry entry, Button button) {
+            var application = application as Application;
             double? val = application.python_helper.evaluate_string (entry.get_text ());
             if (val == null) {
                 entry.add_css_class ("error");
                 button.set_sensitive (false);
             } else {
                 entry.remove_css_class ("error");
-                button.set_sensitive (application.data.items_selected);
+                button.set_sensitive (data.items_selected);
             }
         }
 
@@ -273,10 +284,10 @@ namespace Graphs {
             action.activate.connect (() => {
                 Tools.open_file_location (file);
             });
-            application.add_action (action);
+            add_action (action);
             add_toast (new Adw.Toast (title) {
                 button_label = _("Open Location"),
-                action_name = "app.open-file-location"
+                action_name = "win.open-file-location"
             });
         }
 
@@ -286,7 +297,7 @@ namespace Graphs {
         public void add_undo_toast (string title) {
             add_toast (new Adw.Toast (title) {
                 button_label = _("Undo"),
-                action_name = "app.undo"
+                action_name = "win.undo"
             });
         }
 
@@ -304,12 +315,12 @@ namespace Graphs {
             var view_menu = new Menu ();
             var toggle_section = new Menu ();
             toggle_section.append_item (
-                new MenuItem (_("Toggle Sidebar"), "app.toggle_sidebar")
+                new MenuItem (_("Toggle Sidebar"), "win.toggle_sidebar")
             );
             view_menu.append_section (null, toggle_section);
             Menu optimize_section = new Menu ();
             optimize_section.append_item (
-                new MenuItem (_("Optimize Limits"), "app.optimize_limits")
+                new MenuItem (_("Optimize Limits"), "win.optimize_limits")
             );
             view_menu.append_section (null, optimize_section);
 
@@ -322,8 +333,7 @@ namespace Graphs {
             };
 
             Menu scales_section = new Menu ();
-            Application application = application as Application;
-            bool[] visible_axes = application.data.get_used_positions ();
+            bool[] visible_axes = data.get_used_positions ();
             bool both_x = visible_axes[0] && visible_axes[1];
             bool both_y = visible_axes[2] && visible_axes[3];
             for (int i = 0; i < DIRECTION_NAMES.length; i++) {
@@ -333,7 +343,7 @@ namespace Graphs {
                 for (int j = 0; j < scale_names.length; j++) {
                     string scale = scale_names[j];
                     MenuItem scale_item = new MenuItem (
-                        scale, @"app.change-$direction-scale"
+                        scale, @"win.change-$direction-scale"
                     );
                     scale_item.set_attribute_value (
                         "target",
@@ -363,11 +373,11 @@ namespace Graphs {
             var application = application as Application;
 
             if (_force_close) {
-                application.on_main_window_closed ();
+                application.on_main_window_closed (this);
                 return false;
             }
 
-            if (application.data.unsaved) {
+            if (data.unsaved) {
                 var dialog = Tools.build_dialog ("save_changes") as Adw.AlertDialog;
                 dialog.response.connect ((d, response) => {
                     switch (response) {
@@ -377,7 +387,7 @@ namespace Graphs {
                             break;
                         }
                         case "save_close": {
-                            Project.save.begin (application, false, (o, result) => {
+                            Project.save.begin (this, false, (o, result) => {
                                 if (Project.save.end (result)) {
                                     _force_close = true;
                                     close ();
@@ -390,7 +400,7 @@ namespace Graphs {
                 dialog.present (this);
                 return true;
             }
-            application.on_main_window_closed ();
+            application.on_main_window_closed (this);
             return false;
         }
     }

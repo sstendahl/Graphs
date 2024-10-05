@@ -2,22 +2,22 @@
 # Copyright (C) 2024 Graphs's COPYRIGHT HOLDER
 # This file is distributed under the same license as the Graphs package.
 # Leônidas Araújo <leorusvellt@hotmail.com>, 2024.
-# Juliano de Souza Camargo <julianosc@pm.me>, 2024.
 # Rafael Fontenelle <rafaelff@gnome.org>, 2024.
+# Juliano de Souza Camargo <julianosc@pm.me>, 2024.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2024-09-18 13:17+0000\n"
-"PO-Revision-Date: 2024-09-20 23:38-0300\n"
-"Last-Translator: Rafael Fontenelle <rafaelff@gnome.org>\n"
+"POT-Creation-Date: 2024-09-29 09:57+0000\n"
+"PO-Revision-Date: 2024-10-01 10:00-0300\n"
+"Last-Translator: Juliano de Souza Camargo <julianosc@pm.me>\n"
 "Language-Team: Brazilian Portuguese <https://br.gnome.org/traducao>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1)\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Gtranslator 46.1\n"
 
 #: data/se.sjoerd.Graphs.appdata.xml.in:6 data/se.sjoerd.Graphs.desktop.in:3
@@ -126,16 +126,16 @@ msgstr "Cancelar"
 msgid "Add"
 msgstr "Adicionar"
 
-#: data/ui/add-equation.blp:40 data/ui/curve-fitting.blp:66
+#: data/ui/add-equation.blp:35
+msgid "Enter a mathematical expression"
+msgstr "Insira uma expressão matemática"
+
+#: data/ui/add-equation.blp:38 data/ui/curve-fitting.blp:66
 #: data/ui/edit-item.blp:45 data/ui/transform.blp:56
 msgid "Y ="
 msgstr "Y ="
 
-#: data/ui/add-equation.blp:49
-msgid "Enter a mathematical expression to generate data from"
-msgstr "Insira uma expressão matemática para gerar dados de"
-
-#: data/ui/add-equation.blp:57
+#: data/ui/add-equation.blp:45
 msgid "Name (optional)"
 msgstr "Nome (opcional)"
 
@@ -151,11 +151,11 @@ msgstr "Modelo"
 msgid "Name"
 msgstr "Nome"
 
-#: data/ui/curve-fitting.blp:27 data/ui/item-box.blp:59
+#: data/ui/curve-fitting.blp:26 data/ui/item-box.blp:56
 msgid "Curve Fitting"
 msgstr "Ajuste de curva"
 
-#: data/ui/curve-fitting.blp:32
+#: data/ui/curve-fitting.blp:31
 msgid "Open Curve Fitting Menu"
 msgstr "Abrir o menu de ajuste de curva"
 
@@ -203,62 +203,62 @@ msgctxt "regression-type"
 msgid "Custom"
 msgstr "Personalizado"
 
-#: data/ui/curve-fitting.blp:93
+#: data/ui/curve-fitting.blp:91
 msgid "Add Fit to Data"
 msgstr "Adicionar ajuste aos dados"
 
-#: data/ui/curve-fitting.blp:109 data/ui/window.blp:580 graphs/window.vala:301
+#: data/ui/curve-fitting.blp:104 data/ui/window.blp:580 graphs/window.vala:301
 msgid "Toggle Sidebar"
 msgstr "Alternar barra lateral"
 
-#: data/ui/curve-fitting.blp:121 data/ui/window.blp:620
+#: data/ui/curve-fitting.blp:116 data/ui/window.blp:620
 msgid "Canvas Failed to Load"
 msgstr "Falha ao carregar a tela"
 
-#: data/ui/curve-fitting.blp:131
+#: data/ui/curve-fitting.blp:126
 msgid "Optimization Method"
 msgstr "Método de otimização"
 
 #. Translators: see https://world.pages.gitlab.gnome.org/Graphs/help/C/curve_fitting.html#algorithms
-#: data/ui/curve-fitting.blp:134
+#: data/ui/curve-fitting.blp:129
 msgctxt "optimization"
 msgid "Levenberg-Marquardt"
 msgstr "Levenberg-Marquardt"
 
 #. Translators: see https://world.pages.gitlab.gnome.org/Graphs/help/C/curve_fitting.html#algorithms
-#: data/ui/curve-fitting.blp:140
+#: data/ui/curve-fitting.blp:135
 msgctxt "optimization"
 msgid "Trust Region Reflective"
 msgstr "Região de Confiança Reflexiva"
 
 #. Translators: see https://world.pages.gitlab.gnome.org/Graphs/help/C/curve_fitting.html#algorithms
-#: data/ui/curve-fitting.blp:146
+#: data/ui/curve-fitting.blp:141
 msgctxt "optimization"
 msgid "Dogbox"
 msgstr "Dogbox"
 
-#: data/ui/curve-fitting.blp:152
+#: data/ui/curve-fitting.blp:147
 msgid "Confidence Bounds"
 msgstr "Limites de confiança"
 
-#: data/ui/curve-fitting.blp:154
+#: data/ui/curve-fitting.blp:149
 msgctxt "confidence"
 msgid "None"
 msgstr "Nenhum"
 
-#: data/ui/curve-fitting.blp:160
+#: data/ui/curve-fitting.blp:155
 #, no-c-format
 msgctxt "confidence"
 msgid "1σ: 68% Confidence"
 msgstr "1σ: 68% de confiança"
 
-#: data/ui/curve-fitting.blp:166
+#: data/ui/curve-fitting.blp:161
 #, no-c-format
 msgctxt "confidence"
 msgid "2σ: 95% Confidence"
 msgstr "2σ: 95% de confiança"
 
-#: data/ui/curve-fitting.blp:172
+#: data/ui/curve-fitting.blp:167
 #, no-c-format
 msgctxt "confidence"
 msgid "3σ: 99.7% Confidence"
@@ -288,7 +288,7 @@ msgstr "Salvar"
 msgid "Delete Style?"
 msgstr "Excluir estilo?"
 
-#: data/ui/dialogs.blp:20 data/ui/style-preview.blp:39
+#: data/ui/dialogs.blp:20
 msgid "Delete"
 msgstr "Excluir"
 
@@ -736,7 +736,7 @@ msgstr "Centro"
 msgid "Hide Unselected Items"
 msgstr "Ocultar itens não selecionados"
 
-#: data/ui/figure-settings-page.blp:228
+#: data/ui/figure-settings-page.blp:225
 msgid "Set as Default"
 msgstr "Definir como padrão"
 
@@ -756,7 +756,11 @@ msgstr "Máximo"
 msgid "Import Parameters"
 msgstr "Importar parâmetros"
 
-#: data/ui/import.blp:27
+#: data/ui/import.blp:24
+msgid "Reset to Defaults…"
+msgstr "Redefinir para os padrões…"
+
+#: data/ui/import.blp:28
 msgid "Import"
 msgstr "Importar"
 
@@ -849,11 +853,11 @@ msgstr "Índices de linha ignorados"
 msgid "Pick Color"
 msgstr "Escolher a cor"
 
-#: data/ui/item-box.blp:46
+#: data/ui/item-box.blp:43
 msgid "Move Item"
 msgstr "Mover item"
 
-#: data/ui/item-box.blp:63
+#: data/ui/item-box.blp:60
 msgid "Remove Item"
 msgstr "Remover item"
 
@@ -1054,11 +1058,11 @@ msgstr "Pontos da caixa"
 msgid "Amount of points to use when calculating a moving average"
 msgstr "Quantidade de pontos a serem usados ao calcular uma média móvel"
 
-#: data/ui/style-color-box.blp:18 data/ui/style-preview.blp:30
+#: data/ui/style-color-box.blp:17
 msgid "Edit"
 msgstr "Editar"
 
-#: data/ui/style-color-box.blp:29
+#: data/ui/style-color-box.blp:28
 msgid "Remove"
 msgstr "Remover"
 
@@ -1251,6 +1255,18 @@ msgstr "Cores das linhas"
 #: data/ui/style-editor.blp:485
 msgid "Add Color"
 msgstr "Adicionar cor"
+
+#: data/ui/style-preview.blp:45
+msgid "Open"
+msgstr "Abrir"
+
+#: data/ui/style-preview.blp:49
+msgid "Open With…"
+msgstr "Abrir com…"
+
+#: data/ui/style-preview.blp:53
+msgid "Delete…"
+msgstr "Excluir…"
 
 #: data/ui/transform.blp:6
 msgid "Transform Data"
@@ -1517,27 +1533,27 @@ msgstr ""
 msgid "Could not load {font}"
 msgstr "Não foi possível carregar {font}"
 
-#: graphs/application.vala:290 graphs/item_box.vala:58
+#: graphs/application.vala:291 graphs/item_box.vala:58
 #, c-format
 msgid "Deleted %s"
 msgstr "Excluir %s"
 
-#: graphs/application.vala:321
+#: graphs/application.vala:322
 msgctxt "file-filter"
 msgid "Supported files"
 msgstr "Arquivos suportados"
 
-#: graphs/application.vala:325
+#: graphs/application.vala:326
 msgctxt "file-filter"
 msgid "ASCII files"
 msgstr "Arquivos ASCII"
 
-#: graphs/application.vala:329
+#: graphs/application.vala:330
 msgctxt "file-filter"
 msgid "PANalytical XRDML"
 msgstr "PANalytical XRDML"
 
-#: graphs/application.vala:332
+#: graphs/application.vala:333
 msgctxt "file-filter"
 msgid "Leybold xry"
 msgstr "Leybold xry"
@@ -1634,7 +1650,7 @@ msgstr "Escala do eixo Y"
 msgid "Defaults Updated"
 msgstr "Padrões atualizados"
 
-#: graphs/figure_settings.vala:272
+#: graphs/figure_settings.vala:278
 #, c-format
 msgid "Are you sure you want to delete %s?"
 msgstr "Tem certeza de que deseja excluir %s?"
