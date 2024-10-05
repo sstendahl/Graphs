@@ -26,14 +26,14 @@ namespace Graphs {
 
         public signal void accept (string x_input, string y_input, bool discard);
 
-        public TransformDialog (Application application) {
+        public TransformDialog (Window window) {
             transform_x.set_text ("X");
             transform_y.set_text ("Y");
-            discard.set_visible (application.window.canvas.mode == 2);
+            discard.set_visible (window.canvas.mode == 2);
             help_button.clicked.connect (() => {
                 help_popover.popup ();
             });
-            present (application.window);
+            present (window);
         }
 
         [GtkCallback]

@@ -11,10 +11,10 @@ namespace Graphs {
             );
         }
 
-        private void _save (Application application) {
-            application.data.save ();
-            application.window.add_toast_string_with_file (
-                _("Saved Project"), application.data.file
+        private void _save (Window window) {
+            window.data.save ();
+            window.add_toast_string_with_file (
+                _("Saved Project"), window.data.file
             );
         }
 
@@ -22,80 +22,42 @@ namespace Graphs {
             return Tools.create_file_filters (false, get_project_file_filter ());
         }
 
-        public async bool save (Application application, bool require_dialog) {
-            if (application.data.file != null && !require_dialog) {
-                _save (application);
+        public async bool save (Window window, bool require_dialog) {
+            if (window.data.file != null && !require_dialog) {
+                _save (window);
                 return true;
             }
             var dialog = new FileDialog ();
             dialog.set_filters (get_project_file_filters ());
             dialog.set_initial_name (_("Project") + ".graphs");
             try {
-                application.data.file = yield dialog.save (application.window, null);
-                _save (application);
+                window.data.file = yield dialog.save (window, null);
+                _save (window);
                 return true;
             } catch {
                 return false;
             }
         }
 
-        private void _pick_and_load (Application application) {
+        private void _pick_and_load (Window window) {
             var dialog = new FileDialog ();
             dialog.set_filters (get_project_file_filters ());
-            dialog.open.begin (application.window, null, (d, response) => {
+            dialog.open.begin (window, null, (d, response) => {
                 try {
-                    application.data.file = dialog.open.end (response);
-                    application.data.load ();
+                    window.data.file = dialog.open.end (response);
+                    window.data.load ();
                 } catch {}
             });
         }
 
-        public void open (Application application) {
-            if (!application.data.unsaved) {
-                _pick_and_load (application);
+        public void open (Window window) {
+            if (!window.data.unsaved && window.data.file == null) {
+                _pick_and_load (window);
                 return;
             }
-            var dialog = Tools.build_dialog ("save_changes") as Adw.AlertDialog;
-            dialog.response.connect ((d, response) => {
-                switch (response) {
-                    case "discard_close": {
-                        _pick_and_load (application);
-                        break;
-                    }
-                    case "save_close": {
-                        save.begin (application, false, (o, result) => {
-                            save.end (result);
-                            _pick_and_load (application);
-                        });
-                        break;
-                    }
-                }
-            });
-            dialog.present (application.window);
-        }
-
-        public void @new (Application application) {
-            if (!application.data.unsaved) {
-                application.data.reset ();
-                return;
-            }
-            var dialog = Tools.build_dialog ("save_changes") as Adw.AlertDialog;
-            dialog.response.connect ((d, response) => {
-                switch (response) {
-                    case "discard_close": {
-                        application.data.reset ();
-                        break;
-                    }
-                    case "save_close": {
-                        save.begin (application, false, (o, result) => {
-                            save.end (result);
-                            application.data.reset ();
-                        });
-                        break;
-                    }
-                }
-            });
-            dialog.present (application.window);
+            Application application = window.application as Application;
+            var new_window = application.create_main_window ();
+            _pick_and_load (new_window);
         }
     }
 }
