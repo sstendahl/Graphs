@@ -10,7 +10,7 @@ from graphs import (
     utilities,
 )
 from graphs.item import EquationItem
-from graphs.style_editor import StyleEditor
+from graphs.style_editor import PythonStyleEditor
 from graphs.window import PythonWindow
 
 _REQUEST_NAMES = (
@@ -114,7 +114,7 @@ class PythonHelper(Graphs.PythonHelper):
 
     @staticmethod
     def _on_open_style_editor_request(self, file: Gio.File) -> None:
-        window = StyleEditor(self.props.application)
+        window = PythonStyleEditor(self.props.application)
         window.load_style(file)
         window.present()
         return window

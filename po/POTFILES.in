@@ -57,6 +57,7 @@ graphs/python_helper.vala
 graphs/scales.py
 graphs/smoothen_settings.vala
 graphs/style_editor.py
+graphs/style_editor.vala
 graphs/style_io.py
 graphs/styles.py
 graphs/styles.vala

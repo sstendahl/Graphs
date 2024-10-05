@@ -456,21 +456,15 @@ _PREVIEW_XDATA2 = numpy.linspace(0, 10, 60)
 _PREVIEW_YDATA2 = numpy.power(numpy.e, _PREVIEW_XDATA2)
 
 
-@Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/style-editor-window.ui")
-class StyleEditor(Adw.ApplicationWindow):
+class PythonStyleEditor(Graphs.StyleEditor):
     """Graphs Style Editor Window."""
 
-    __gtype_name__ = "GraphsStyleEditor"
-
-    split_view = Gtk.Template.Child()
-    editor_clamp = Gtk.Template.Child()
-    content_view = Gtk.Template.Child()
-    content_headerbar = Gtk.Template.Child()
+    __gtype_name__ = "GraphsPythonStyleEditor"
 
     def __init__(self, application: Graphs.Application):
         super().__init__(application=application)
         self._style_editor = StyleEditorBox(self)
-        self.editor_clamp.set_child(self._style_editor)
+        self.get_editor_clamp().set_child(self._style_editor)
         self._file = None
         self._test_items = Gio.ListStore()
         self._test_items.append(
@@ -493,7 +487,7 @@ class StyleEditor(Adw.ApplicationWindow):
         )
 
         self._provider = Gtk.CssProvider()
-        self.content_headerbar.get_style_context().add_provider(
+        self.get_content_headerbar().get_style_context().add_provider(
             self._provider,
             Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION,
         )
@@ -520,7 +514,7 @@ class StyleEditor(Adw.ApplicationWindow):
         canvas.props.title = _("Title")
         canvas.props.bottom_label = _("X Label")
         canvas.props.left_label = _("Y Label")
-        self.content_view.set_content(canvas)
+        self.get_content_view().set_content(canvas)
 
         # Set headerbar color
         self._provider.load_from_string(
@@ -544,7 +538,7 @@ class StyleEditor(Adw.ApplicationWindow):
         self._style_editor.save_style(self._file)
         self._file = None
 
-    @Gtk.Template.Callback()
+    #@Gtk.Template.Callback()
     def on_close_request(self, _window):
         """Handle close request."""
         self.save_style()
