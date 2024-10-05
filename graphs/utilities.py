@@ -45,6 +45,12 @@ def get_value_at_fraction(
         log_range = log_end - log_start
         log_value = log_start + log_range * fraction
         return pow(10, log_value)
+    elif scale == 5:  # Logarithmic (base 2) scale
+        log_start = numpy.log2(start)
+        log_end = numpy.log2(end)
+        log_range = log_end - log_start
+        log_value = log_start + log_range * fraction
+        return pow(2, log_value)
     elif scale == 3:  # Square root scale
         # Use min limit as defined by scales.py
         start = max(0, start)
@@ -80,6 +86,12 @@ def get_fraction_at_value(
         log_start = numpy.log10(start)
         log_end = numpy.log10(end)
         log_value = numpy.log10(value)
+        log_range = log_end - log_start
+        return (log_value - log_start) / log_range
+    elif scale == 5:  # Logarithmic (base 2) scale
+        log_start = numpy.log2(start)
+        log_end = numpy.log2(end)
+        log_value = numpy.log2(value)
         log_range = log_end - log_start
         return (log_value - log_start) / log_range
     elif scale == 3:  # Square root scale

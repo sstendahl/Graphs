@@ -379,11 +379,16 @@ def shift(
         if scale == 1:  # Use log values for log scaling
             shift_value_log += \
                 numpy.log10(abs(ymax / ymin)) + 0.1 * numpy.log10(y_range)
+        elif scale == 5:  # Use log values for log (base 2) scaling
+            shift_value_log += \
+                numpy.log2(abs(ymax / ymin)) + 0.1 * numpy.log2(y_range)
         else:
             shift_value_linear += (ymax - ymin) + 0.1 * y_range
         if item.get_uuid() == item_.get_uuid():
             if scale == 1:  # Log scaling
                 new_ydata = [value * 10**shift_value_log for value in ydata]
+            elif scale == 5:  # Log (base 2) scaling
+                new_ydata = [value * 2**shift_value_log for value in ydata]
             else:
                 new_ydata = [value + shift_value_linear for value in ydata]
             return xdata, new_ydata, False, False

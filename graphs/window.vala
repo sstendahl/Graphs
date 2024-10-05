@@ -329,7 +329,8 @@ namespace Graphs {
                 C_("scale", "Logarithmic"),
                 C_("scale", "Radians"),
                 C_("scale", "Square Root"),
-                C_("scale", "Inverse Root")
+                C_("scale", "Inverse Root"),
+                C_("scale", "Logarithmic (Base 2)")
             };
 
             Menu scales_section = new Menu ();

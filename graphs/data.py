@@ -440,7 +440,7 @@ class Data(Graphs.Data):
         except TypeError:
             return None
         nonzero_data = numpy.array([value for value in xydata if value != 0])
-        min_value = nonzero_data.min() if scale in (1, 4) \
+        min_value = nonzero_data.min() if scale in (1, 4, 5) \
             and len(nonzero_data) > 0 else xydata.min()
         max_value = xydata.max()
         return min_value, max_value
@@ -514,7 +514,7 @@ class Data(Graphs.Data):
                 continue
             min_all = min(min_all)
             max_all = max(max_all)
-            if scale != 1:  # For non-logarithmic scales
+            if scale != 1 and scale != 5:  # For non-logarithmic scales
                 span = max_all - min_all
                 # 0.05 padding on y-axis, 0.015 padding on x-axis
                 padding_factor = 0.05 if count % 2 else 0.015
