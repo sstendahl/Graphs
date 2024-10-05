@@ -18,7 +18,7 @@ import scipy
 import sympy
 
 
-def get_data(application: Graphs.Application, item: DataItem):
+def get_data(window: Graphs.Window, item: DataItem):
     """
     Retrieve item from datadict with start and stop index.
 
@@ -27,9 +27,9 @@ def get_data(application: Graphs.Application, item: DataItem):
     new_xdata = item.props.xdata
     new_ydata = item.props.ydata
 
-    canvas = application.get_window().get_canvas()
+    canvas = window.get_canvas()
     if canvas.get_mode() == 2:
-        figure_settings = application.get_data().get_figure_settings()
+        figure_settings = window.get_data().get_figure_settings()
         if item.get_xposition() == 0:
             xmin = figure_settings.get_min_bottom()
             xmax = figure_settings.get_max_bottom()
@@ -115,16 +115,17 @@ def sort_data(xdata: list, ydata: list) -> (list, list):
     )
 
 
-def perform_operation(application: Graphs.Application, name: str) -> None:
+def perform_operation(
+    application: Graphs.Application, window: Graphs.Window, name: str
+) -> None:
     """Perform an operation."""
-    window = application.get_window()
     if name in ("combine", ):
-        return getattr(this, name)(application)
+        return getattr(this, name)(window)
     elif name == "custom_transformation":
 
         def on_accept(_dialog, input_x, input_y, discard):
             try:
-                _apply(application, transform, input_x, input_y, discard)
+                _apply(window, transform, input_x, input_y, discard)
             except (RuntimeError, KeyError) as exception:
                 toast = _(
                     "{name}: Unable to do transformation, \
@@ -133,7 +134,7 @@ make sure the syntax is correct",
                 window.add_toast_string(toast)
                 logging.exception(_("Unable to do transformation"))
 
-        dialog = Graphs.TransformDialog.new(application)
+        dialog = Graphs.TransformDialog.new(window)
         dialog.connect("accept", on_accept)
         return
     elif name == "cut" and window.get_canvas().get_mode() != 2:
@@ -149,7 +150,7 @@ make sure the syntax is correct",
             params[setting] = int(settings.get_int(setting))
         args += [params]
     elif name == "shift":
-        figure_settings = application.get_data().get_figure_settings()
+        figure_settings = window.get_data().get_figure_settings()
         right_range = (
             figure_settings.get_max_right() - figure_settings.get_min_right()
         )
@@ -159,7 +160,7 @@ make sure the syntax is correct",
         args += [
             figure_settings.get_left_scale(),
             figure_settings.get_right_scale(),
-            application.get_data().get_items(),
+            window.get_data().get_items(),
             [left_range, right_range],
         ]
     elif "translate" in name or "multiply" in name:
@@ -172,14 +173,15 @@ make sure the syntax is correct",
         except ValueError as error:
             window.add_toast_string(str(error))
             return
-  #  operation_class = ItemOperations
+#  operation_class = ItemOperations
     operation_class = EquationOperations
-    _apply(application, getattr(operation_class, name), *args)
-   # _apply(application, getattr(operation_class, name), *args)
+    _apply(window, getattr(operation_class, name), *args)
+
+# _apply(window, getattr(operation_class, name), *args)
 
 
-def _apply(application, callback, *args):
-    data = application.get_data()
+def _apply(window, callback, *args):
+    data = window.get_data()
     figure_settings = data.get_figure_settings()
     data_selected = False
     old_limits = figure_settings.get_limits()
@@ -190,31 +192,31 @@ def _apply(application, callback, *args):
         if isinstance(item, EquationItem):
             callback(item, *args)
             if not callback:
-                application.get_window().add_toast_string(
+                window.add_toast_string(
                     _(
-                        f"Could not perform operation on {item.name}, " +
-                        "this operation is not supported for equations.",
+                        f"Could not perform operation on {item.name}, "
+                        + "this operation is not supported for equations.",
                     ),
                 )
         elif isinstance(item, DataItem):
-            apply_data(application, item, figure_settings, data_selected)
+            _apply_data(window, item, figure_settings, data_selected)
 
     data.optimize_limits()
     data.add_history_state_with_limits(old_limits)
 
 
-def _apply_data(application, item, figure_settings, data_selected):
-    xdata, ydata = get_data(application, item)
+def _apply_data(window, item, figure_settings, data_selected):
+    xdata, ydata = get_data(window, item)
     if xdata is not None and len(xdata) != 0:
         data_selected = True
         new_xdata, new_ydata, sort, discard = callback(
             item, xdata, ydata, *args,
         )
         new_xdata, new_ydata = list(new_xdata), list(new_ydata)
-        canvas = application.get_window().get_canvas()
+        canvas = window.get_canvas()
         if discard and canvas.get_mode() == 2:
             logging.debug("Discard is true")
-            application.get_window().add_toast_string(
+            window.add_toast_string(
                 _(
                     "Data that was outside of the highlighted area has"
                     " been discarded",
@@ -252,9 +254,7 @@ def _apply_data(application, item, figure_settings, data_selected):
     item.notify("ydata")
     figure_settings.set_selection_range(0, 0)
     if not data_selected:
-        application.get_window().add_toast_string(
-            _("No data found within the highlighted area"),
-        )
+        window.add_toast_string(_("No data found within the highlighted area"))
     return
 
 
@@ -279,7 +279,6 @@ class EquationOperations():
         _item.equation = str(sympy.simplify(equation))
         return True
 
-
     def translate_y(_item, offset) -> _return:
         """
         Translate all selected data on the y-axis.
@@ -292,8 +291,6 @@ class EquationOperations():
         equation = sympy.sympify(utilities.preprocess(equation))
         _item.equation = str(sympy.simplify(equation))
         return True
-
-
 
     def multiply_x(_item, multiplier: float) -> _return:
         """
@@ -308,7 +305,6 @@ class EquationOperations():
         _item.equation = str(sympy.simplify(equation))
         return True
 
-
     def multiply_y(_item, multiplier: float) -> _return:
         """
         Multiply all selected data on the y-axis.
@@ -322,7 +318,6 @@ class EquationOperations():
         _item.equation = str(sympy.simplify(equation))
         return True
 
-
     def normalize(_item) -> _return:
         """Normalize all selected data."""
         # TODO: FIX RANGE
@@ -332,13 +327,9 @@ class EquationOperations():
         _item.equation = str(sympy.simplify(equation))
         return True
 
-
-    def smoothen(
-        _item,
-    ) -> None:
+    def smoothen(_item, ) -> None:
         """Smoothen y-data."""
-        return  False
-
+        return False
 
     def center(_item, middle_value: int) -> _return:
         """
@@ -351,7 +342,6 @@ class EquationOperations():
         equation = sympy.sympify(utilities.preprocess(equation))
         _item.equation = str(sympy.simplify(equation))
         return
-
 
     def shift(
         item,
@@ -405,7 +395,9 @@ class EquationOperations():
                 shift_value_linear += (ymax - ymin) + 0.1 * y_range
             if item.get_uuid() == item_.get_uuid():
                 if scale == 1:  # Log scaling
-                    new_ydata = [value * 10**shift_value_log for value in ydata]
+                    new_ydata = [
+                        value * 10**shift_value_log for value in ydata
+                    ]
                 else:
                     new_ydata = [value + shift_value_linear for value in ydata]
             shift_value = shift_value_log if scale == 1 else shift_value_linear
@@ -413,12 +405,9 @@ class EquationOperations():
             item.equation = f"{item.equation}+{shift_value}"
         return True
 
-
-
     def cut(_item) -> _return:
         """Cut selected data over the span that is selected."""
         return False
-
 
     def derivative(_item) -> _return:
         """Calculate derivative of all selected data."""
@@ -428,7 +417,6 @@ class EquationOperations():
         _item.equation = str(equation)
         return True
 
-
     def integral(_item) -> _return:
         """Calculate indefinite integral of all selected data."""
         x = sympy.symbols("x")
@@ -436,7 +424,6 @@ class EquationOperations():
         equation = sympy.integrate(equation, x)
         _item.equation = str(equation)
         return True
-
 
     def fft(_item) -> _return:
         """Perform Fourier transformation on all selected data."""
@@ -447,7 +434,6 @@ class EquationOperations():
         _item._equation = equation
         return True
 
-
     def inverse_fft(_item) -> _return:
         """Perform Inverse Fourier transformation on all selected data."""
         x, k = sympy.symbols("x k")
@@ -456,7 +442,6 @@ class EquationOperations():
         equation = equation.replace("k", "x")
         _item._equation = equation
         return True
-
 
     def transform(
         _item,
@@ -478,30 +463,38 @@ class EquationOperations():
         # Add array of zeros to return values, such that output remains a list
         # of the correct size, even when a float is given as input.
         return (
-            numexpr.evaluate(utilities.preprocess(input_x) + "+ 0*x", local_dict),
-            numexpr.evaluate(utilities.preprocess(input_y) + "+ 0*y", local_dict),
+            numexpr.evaluate(
+                utilities.preprocess(input_x) + "+ 0*x", local_dict
+            ),
+            numexpr.evaluate(
+                utilities.preprocess(input_y) + "+ 0*y", local_dict
+            ),
             True,
             discard,
         )
 
-
-    def combine(application: Graphs.Application) -> None:
+    def combine(window: Graphs.Window) -> None:
         """Combine the selected data into a new data set."""
         new_xdata, new_ydata = [], []
-        for item in application.get_data():
+        data = window.get_data()
+        for item in data:
             if not (item.get_selected() and isinstance(item, DataItem)):
                 continue
-            xdata, ydata = get_data(application, item)[:2]
+            xdata, ydata = get_data(window, item)[:2]
             new_xdata.extend(xdata)
             new_ydata.extend(ydata)
 
         # Create the item itself
         new_xdata, new_ydata = sort_data(new_xdata, new_ydata)
-        style = application.get_figure_style_manager().get_selected_style_params()
-        application.get_data().add_items(
-            [DataItem.new(style, new_xdata, new_ydata, name=_("Combined Data"))],
-            application.get_figure_style_manager(),
-        )
+        data.add_items([
+            DataItem.new(
+                data.get_selected_style_params(),
+                new_xdata,
+                new_ydata,
+                name=_("Combined Data"),
+            ),
+        ])
+
 
 class ItemOperations():
 
@@ -515,7 +508,6 @@ class ItemOperations():
         """
         return [value + offset for value in xdata], ydata, True, False
 
-
     def translate_y(_item, xdata: list, ydata: list, offset: float) -> _return:
         """
         Translate all selected data on the y-axis.
@@ -526,8 +518,9 @@ class ItemOperations():
         """
         return xdata, [value + offset for value in ydata], False, False
 
-
-    def multiply_x(_item, xdata: list, ydata: list, multiplier: float) -> _return:
+    def multiply_x(
+        _item, xdata: list, ydata: list, multiplier: float,
+    ) -> _return:
         """
         Multiply all selected data on the x-axis.
 
@@ -537,8 +530,9 @@ class ItemOperations():
         """
         return [value * multiplier for value in xdata], ydata, True, False
 
-
-    def multiply_y(_item, xdata: list, ydata: list, multiplier: float) -> _return:
+    def multiply_y(
+        _item, xdata: list, ydata: list, multiplier: float,
+    ) -> _return:
         """
         Multiply all selected data on the y-axis.
 
@@ -548,11 +542,9 @@ class ItemOperations():
         """
         return xdata, [value * multiplier for value in ydata], False, False
 
-
     def normalize(_item, xdata: list, ydata: list) -> _return:
         """Normalize all selected data."""
         return xdata, [value / max(ydata) for value in ydata], False, False
-
 
     def smoothen(
         _item,
@@ -577,8 +569,9 @@ class ItemOperations():
             new_ydata = numpy.convolve(ydata, box, mode="same")
         return xdata, new_ydata, False, False
 
-
-    def center(_item, xdata: list, ydata: list, center_maximum: int) -> _return:
+    def center(
+        _item, xdata: list, ydata: list, center_maximum: int,
+    ) -> _return:
         """
         Center all selected data.
 
@@ -592,7 +585,6 @@ class ItemOperations():
             middle_value = (min(xdata) + max(xdata)) / 2
         new_xdata = [coordinate - middle_value for coordinate in xdata]
         return new_xdata, ydata, True, False
-
 
     def shift(
         item,
@@ -647,17 +639,17 @@ class ItemOperations():
                 shift_value_linear += (ymax - ymin) + 0.1 * y_range
             if item.get_uuid() == item_.get_uuid():
                 if scale == 1:  # Log scaling
-                    new_ydata = [value * 10**shift_value_log for value in ydata]
+                    new_ydata = [
+                        value * 10**shift_value_log for value in ydata
+                    ]
                 else:
                     new_ydata = [value + shift_value_linear for value in ydata]
                 return xdata, new_ydata, False, False
         return xdata, ydata, False, False
 
-
     def cut(_item, _xdata, _ydata) -> _return:
         """Cut selected data over the span that is selected."""
         return [], [], False, False
-
 
     def derivative(_item, xdata: list, ydata: list) -> _return:
         """Calculate derivative of all selected data."""
@@ -665,7 +657,6 @@ class ItemOperations():
         y_values = numpy.array(ydata)
         dy_dx = numpy.gradient(y_values, x_values)
         return xdata, dy_dx.tolist(), False, True
-
 
     def integral(_item, xdata: list, ydata: list) -> _return:
         """Calculate indefinite integral of all selected data."""
@@ -678,7 +669,6 @@ class ItemOperations():
         ).tolist()
         return xdata, indefinite_integral, False, True
 
-
     def fft(_item, xdata: list, ydata: list) -> _return:
         """Perform Fourier transformation on all selected data."""
         x_values = numpy.array(xdata)
@@ -687,7 +677,6 @@ class ItemOperations():
         x_fourier = numpy.fft.fftfreq(len(x_values), x_values[1] - x_values[0])
         y_fourier = [value.real for value in y_fourier]
         return x_fourier, y_fourier, False, True
-
 
     def inverse_fft(_item, xdata: list, ydata: list) -> _return:
         """Perform Inverse Fourier transformation on all selected data."""
@@ -698,14 +687,10 @@ class ItemOperations():
         y_fourier = [value.real for value in y_fourier]
         return x_fourier, y_fourier, False, True
 
-
-    def transform(
-        _item,
-    ) -> _return:
+    def transform(_item) -> _return:
         """Perform custom transformation."""
         return False
 
-
-    def combine(application: Graphs.Application) -> None:
+    def combine(window: Graphs.Window) -> None:
         """Combine the selected data into a new data set."""
         return False

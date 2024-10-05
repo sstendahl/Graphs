@@ -17,7 +17,7 @@ namespace Graphs {
         public bool debug { get; construct set; default = false; }
         public PythonHelper python_helper { get; construct set; }
 
-        public signal void operation_invoked (string name);
+        public signal void operation_invoked (Window window, string name);
 
         private Gee.List<Window> main_windows;
         private Gee.List<Gtk.Window> style_editors;
