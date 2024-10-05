@@ -8,17 +8,23 @@ namespace Graphs {
      */
     [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/style-editor-window.ui")]
     public class StyleEditor : Adw.ApplicationWindow {
-        [GtkChild]
-        protected unowned Adw.OverlaySplitView split_view { get; }
 
         [GtkChild]
-        protected unowned Adw.Clamp editor_clamp { get; }
+        private unowned Adw.Clamp editor_clamp { get; }
 
         [GtkChild]
-        protected unowned Adw.ToolbarView content_view { get; }
+        private unowned Adw.ToolbarView content_view { get; }
 
         [GtkChild]
         protected unowned Adw.HeaderBar content_headerbar { get; }
+
+        protected Gtk.Box editor_box {
+            set { editor_clamp.set_child (value); }
+        }
+        protected Canvas canvas {
+            get { return content_view.get_content () as Canvas; }
+            set { content_view.set_content (value); }
+        }
 
         private File _file;
 

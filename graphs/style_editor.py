@@ -464,7 +464,7 @@ class PythonStyleEditor(Graphs.StyleEditor):
     def __init__(self, application: Graphs.Application):
         super().__init__(application=application)
         self._style_editor = StyleEditorBox(self)
-        self.get_editor_clamp().set_child(self._style_editor)
+        self.set_editor_box(self._style_editor)
         self._test_items = Gio.ListStore()
         self._test_items.append(
             DataItem.new(
@@ -516,7 +516,7 @@ class PythonStyleEditor(Graphs.StyleEditor):
         canvas.props.title = _("Title")
         canvas.props.bottom_label = _("X Label")
         canvas.props.left_label = _("Y Label")
-        self.get_content_view().set_content(canvas)
+        self.set_canvas(canvas)
 
         # Set headerbar color
         self._provider.load_from_string(
