@@ -22,7 +22,7 @@ _REQUEST_NAMES = (
     "export_items_request",
     "add_equation_request",
     "validate_equation_request",
-    "open_style_editor_request",
+    "create_style_editor_request",
     "create_window_request",
 )
 
@@ -113,11 +113,8 @@ class PythonHelper(Graphs.PythonHelper):
         data.optimize_limits()
 
     @staticmethod
-    def _on_open_style_editor_request(self, file: Gio.File) -> None:
-        window = PythonStyleEditor(self.props.application)
-        window.load(file)
-        window.present()
-        return window
+    def _on_create_style_editor_request(self) -> Graphs.StyleEditor:
+        return PythonStyleEditor(self.props.application)
 
     @staticmethod
     def _on_create_window_request(self) -> Graphs.Window:

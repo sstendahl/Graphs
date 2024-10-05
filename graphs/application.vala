@@ -20,7 +20,7 @@ namespace Graphs {
         public signal void operation_invoked (string name);
 
         private Gee.List<Window> main_windows;
-        private Gee.List<Gtk.Window> style_editors;
+        private Gee.List<StyleEditor> style_editors;
 
         construct {
             Intl.bindtextdomain (Config.GETTEXT_PACKAGE, Config.LOCALEDIR);
@@ -28,7 +28,7 @@ namespace Graphs {
             Intl.textdomain (Config.GETTEXT_PACKAGE);
 
             this.main_windows = new Gee.LinkedList<Window> ();
-            this.style_editors = new Gee.LinkedList<Gtk.Window> ();
+            this.style_editors = new Gee.LinkedList<StyleEditor> ();
 
             this.version = Config.VERSION;
         }
@@ -145,9 +145,11 @@ namespace Graphs {
             return window;
         }
 
-        public Gtk.Window create_style_editor (File file) {
-            var style_editor = python_helper.open_style_editor (file);
+        public StyleEditor create_style_editor (File file) {
+            var style_editor = python_helper.create_style_editor ();
+            style_editor.load (file);
             style_editors.add (style_editor);
+            style_editor.present ();
             return style_editor;
         }
 
@@ -169,7 +171,7 @@ namespace Graphs {
             try_quit ();
         }
 
-        public void on_style_editor_closed (Gtk.Window style_editor) {
+        public void on_style_editor_closed (StyleEditor style_editor) {
             style_editors.remove (style_editor);
             try_quit ();
         }
