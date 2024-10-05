@@ -115,7 +115,7 @@ class PythonHelper(Graphs.PythonHelper):
     @staticmethod
     def _on_open_style_editor_request(self, file: Gio.File) -> None:
         window = PythonStyleEditor(self.props.application)
-        window.load_style(file)
+        window.load(file)
         window.present()
         return window
 

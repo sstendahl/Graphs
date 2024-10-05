@@ -465,7 +465,6 @@ class PythonStyleEditor(Graphs.StyleEditor):
         super().__init__(application=application)
         self._style_editor = StyleEditorBox(self)
         self.get_editor_clamp().set_child(self._style_editor)
-        self._file = None
         self._test_items = Gio.ListStore()
         self._test_items.append(
             DataItem.new(
@@ -494,6 +493,9 @@ class PythonStyleEditor(Graphs.StyleEditor):
 
         self._style_editor.connect("params-changed", self._on_params_changed)
         self._on_params_changed(self._style_editor)
+
+        self.connect("load_request", self._on_load_request)
+        self.connect("save_request", self._on_save_request)
 
     def _on_params_changed(self, style_editor):
         if style_editor.params is None:
@@ -524,22 +526,14 @@ class PythonStyleEditor(Graphs.StyleEditor):
             "}",
         )
 
-    def load_style(self, file: Gio.File) -> None:
+    @staticmethod
+    def _on_load_request(self, file: Gio.File) -> None:
         """Load a style."""
-        self._file = file
         name = self._style_editor.load_style(file)
         self.set_title(name)
         self._on_params_changed(self._style_editor)
 
-    def save_style(self) -> None:
+    @staticmethod
+    def _on_save_request(self, file: Gio.File) -> None:
         """Save current style."""
-        if self._file is None:
-            return
-        self._style_editor.save_style(self._file)
-        self._file = None
-
-    #@Gtk.Template.Callback()
-    def on_close_request(self, _window):
-        """Handle close request."""
-        self.save_style()
-        self.props.application.on_style_editor_closed(self)
+        self._style_editor.save_style(file)
