@@ -38,15 +38,9 @@ FONT_SIZE_KEYS = [
     "figure.titlesize",
     "axes.titlesize",
 ]
-_base_style = {}
 
 
-def set_base_style(params: RcParams) -> None:
-    """Update base style."""
-    _base_style.update(params)
-
-
-def parse(file: Gio.File, validate: bool = False) -> (RcParams, str):
+def parse(file: Gio.File, validate: RcParams = None) -> (RcParams, str):
     """
     Parse a style to RcParams.
 
@@ -125,8 +119,8 @@ def parse(file: Gio.File, validate: bool = False) -> (RcParams, str):
         )
     finally:
         stream.close()
-    if validate:
-        for key, value in _base_style.items():
+    if validate is not None:
+        for key, value in validate.items():
             if key not in style:
                 style[key] = value
     if graphs_params["name"] is None:

@@ -22,7 +22,7 @@ _IMPORT_MODES = {
 
 
 def import_from_files(
-    application: Graphs.Application,
+    window: Graphs.Window,
     files: list[Gio.File],
 ) -> None:
     """
@@ -32,6 +32,7 @@ def import_from_files(
     present at /se/sjoerd/Graphs/import-params, a Window will be shown,
     giving the option to configure them.
     """
+    application = window.get_application()
     settings = application.get_settings_child("import-params")
     import_dict = {mode: [] for mode in _IMPORT_MODES.keys()}
     for file in files:
@@ -40,8 +41,8 @@ def import_from_files(
 
     def do_import(_dialog):
         items = []
-        style_manager = application.get_figure_style_manager()
-        style = style_manager.get_selected_style_params()
+        data = window.get_data()
+        style = data.get_selected_style_params()
         for mode, files in import_dict.items():
             callback = getattr(parse_file, "import_from_" + mode)
             params = settings.get_child(mode) if mode in modes else None
@@ -51,10 +52,10 @@ def import_from_files(
                 except ParseError as error:
                     application.get_window().add_toast_string(error.message)
                     continue
-        application.get_data().add_items(items, style_manager)
+        data.add_items(items)
 
     if modes:
-        dialog = Graphs.ImportDialog.new(application, modes)
+        dialog = Graphs.ImportDialog.new(window, modes)
         dialog.connect("accept", do_import)
     else:
         do_import(None)

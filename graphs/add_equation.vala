@@ -18,21 +18,23 @@ namespace Graphs {
         [GtkChild]
         private unowned Adw.EntryRow item_name { get; }
 
+        private Window window;
         private Application application;
         private GLib.Settings settings;
 
-        public AddEquationDialog (Application application) {
+        public AddEquationDialog (Window window) {
             Object ();
-            this.application = application;
+            this.window = window;
+            this.application = window.application as Application;
             this.settings = application.get_settings_child ("add-equation");
             this.equation.set_text (settings.get_string ("equation"));
-            present (application.window);
+            present (window);
         }
 
         [GtkCallback]
         private void on_accept () {
             this.settings.set_string ("equation", this.equation.get_text ());
-            application.python_helper.add_equation (item_name.get_text ());
+            application.python_helper.add_equation (window, item_name.get_text ());
             close ();
         }
 

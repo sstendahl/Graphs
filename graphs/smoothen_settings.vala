@@ -19,13 +19,13 @@ namespace Graphs {
 
         private Application application { get; set; }
 
-        public SmoothenDialog (Application application) {
+        public SmoothenDialog (Window window) {
             Object ();
-            this.application = application;
+            this.application = window.application as Application;
             Tools.bind_settings_to_widgets (
                 application.get_settings_child ("actions/smoothen"), this
             );
-            present (application.window);
+            present (window);
         }
 
         [GtkCallback]

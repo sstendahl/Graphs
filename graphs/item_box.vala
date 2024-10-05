@@ -16,15 +16,15 @@ namespace Graphs {
         [GtkChild]
         private unowned Button color_button { get; }
 
-        public Application application { get; construct set; }
+        public Window window { get; construct set; }
         public Item item { get; construct set; }
         public uint index { get; construct set; }
 
         private CssProvider provider;
 
-        public ItemBox (Application application, Item item, uint index) {
+        public ItemBox (Window window, Item item, uint index) {
             Object (
-                application: application,
+                window: window,
                 item: item,
                 index: index
             );
@@ -45,8 +45,9 @@ namespace Graphs {
          * for drag and drop.
          */
         public void setup_interactions () {
+            var application = window.application as Application;
             this.activated.connect (() => {
-                application.python_helper.create_edit_item_dialog (item);
+                application.python_helper.create_edit_item_dialog (window, item);
             });
 
             var action_group = new SimpleActionGroup ();
@@ -54,13 +55,13 @@ namespace Graphs {
             delete_action.activate.connect (() => {
                 string name = item.name;
                 Item[] list = {item};
-                application.data.delete_items (list);
-                application.window.add_undo_toast (_("Deleted %s").printf (name));
+                window.data.delete_items (list);
+                window.add_undo_toast (_("Deleted %s").printf (name));
             });
             action_group.add_action (delete_action);
             var curve_fitting_action = new SimpleAction ("curve_fitting", null);
             curve_fitting_action.activate.connect (() => {
-                application.python_helper.create_curve_fitting_dialog (item);
+                application.python_helper.create_curve_fitting_dialog (window, item);
             });
             action_group.add_action (curve_fitting_action);
             if (index > 0) {
@@ -70,7 +71,7 @@ namespace Graphs {
                 });
                 action_group.add_action (move_up_action);
             }
-            if (index + 1 < application.data.get_n_items ()) {
+            if (index + 1 < window.data.get_n_items ()) {
                 var move_down_action = new SimpleAction ("move_down", null);
                 move_down_action.activate.connect (() => {
                     change_position (index + 1);
@@ -91,7 +92,7 @@ namespace Graphs {
             bool new_value = check_button.get_active ();
             if (item.selected != new_value) {
                 item.selected = new_value;
-                application.data.add_history_state ();
+                window.data.add_history_state ();
             }
         }
 
@@ -99,22 +100,22 @@ namespace Graphs {
         private void choose_color () {
             var dialog = new ColorDialog ();
             dialog.choose_rgba.begin (
-                application.window,
+                window,
                 item.get_rgba (),
                 null,
                 (d, result) => {
                     try {
                         item.set_rgba (dialog.choose_rgba.end (result));
-                        application.data.add_history_state ();
+                        window.data.add_history_state ();
                     } catch {}
                 }
             );
         }
 
         public void change_position (uint source_index) {
-            application.data.change_position (index, source_index);
-            application.data.add_history_state ();
-            application.data.add_view_history_state ();
+            window.data.change_position (index, source_index);
+            window.data.add_history_state ();
+            window.data.add_view_history_state ();
         }
     }
 }

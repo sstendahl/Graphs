@@ -18,10 +18,11 @@ data/ui/shortcuts.blp
 data/ui/smoothen-settings.blp
 data/ui/style-color-box.blp
 data/ui/style-editor.blp
+data/ui/style-editor-window.blp
 data/ui/style-preview.blp
 data/ui/transform.blp
 data/ui/window.blp
-graphs/about.vala
+graphs/actions.vala
 graphs/add_equation.vala
 graphs/application.py
 graphs/application.vala
@@ -33,9 +34,9 @@ graphs/curve_fitting.vala
 graphs/data.py
 graphs/data.vala
 graphs/edit_item.py
+graphs/export_figure.vala
 graphs/export_items.py
 graphs/export_items.vala
-graphs/export_figure.vala
 graphs/figure_settings.vala
 graphs/file_import.py
 graphs/file_import.vala
@@ -50,6 +51,9 @@ graphs/misc.vala
 graphs/operations.py
 graphs/parse_file.py
 graphs/project.py
+graphs/project.vala
+graphs/python_helper.py
+graphs/python_helper.vala
 graphs/scales.py
 graphs/smoothen_settings.vala
 graphs/style_editor.py
@@ -59,4 +63,5 @@ graphs/styles.vala
 graphs/transform.vala
 graphs/utilities.py
 graphs/utilities.vala
+graphs/window.py
 graphs/window.vala
