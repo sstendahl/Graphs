@@ -28,7 +28,9 @@ namespace Graphs {
         }
 
         protected CssProvider headerbar_provider { get; private set; }
+        protected bool unsaved { get; set; default = false; }
         private File _file;
+        private bool _force_close = false;
 
         protected signal void load_request (File file);
         protected signal void save_request (File file);
@@ -50,8 +52,34 @@ namespace Graphs {
         }
 
         public override bool close_request () {
-            save_request.emit (_file);
             var application = application as Application;
+
+            if (_force_close) {
+                application.on_style_editor_closed (this);
+                return false;
+            }
+
+            if (unsaved) {
+                var dialog = Tools.build_dialog ("save_style_changes") as Adw.AlertDialog;
+                dialog.response.connect ((d, response) => {
+                    switch (response) {
+                        case "discard": {
+                            _force_close = true;
+                            close ();
+                            break;
+                        }
+                        case "save": {
+                            save_request.emit (_file);
+                            _force_close = true;
+                            close ();
+                            break;
+                        }
+                    }
+                });
+                dialog.present (this);
+                return true;
+            }
+
             application.on_style_editor_closed (this);
             return false;
         }
