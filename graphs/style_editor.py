@@ -103,11 +103,11 @@ def _title_format_function(_scale, value: float) -> str:
     return str(value / 2 * 100).split(".")[0] + "%"
 
 
-@Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/style-editor.ui")
-class StyleEditor(Gtk.Box):
+@Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/style-editor-box.ui")
+class StyleEditorBox(Gtk.Box):
     """Style editor widget."""
 
-    __gtype_name__ = "GraphsStyleEditor"
+    __gtype_name__ = "GraphsStyleEditorBox"
 
     __gsignals__ = {
         "params-changed": (GObject.SIGNAL_RUN_FIRST, None, ()),
@@ -403,7 +403,7 @@ class _StyleColorBox(Gtk.Box):
     label = Gtk.Template.Child()
     color_button = Gtk.Template.Child()
 
-    parent = GObject.Property(type=StyleEditor)
+    parent = GObject.Property(type=StyleEditorBox)
     index = GObject.Property(type=int, default=0)
 
     def __init__(self, parent, index):
@@ -456,22 +456,15 @@ _PREVIEW_XDATA2 = numpy.linspace(0, 10, 60)
 _PREVIEW_YDATA2 = numpy.power(numpy.e, _PREVIEW_XDATA2)
 
 
-@Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/style-editor-window.ui")
-class StyleEditorWindow(Adw.Window):
+class PythonStyleEditor(Graphs.StyleEditor):
     """Graphs Style Editor Window."""
 
-    __gtype_name__ = "GraphsStyleEditorWindow"
-
-    split_view = Gtk.Template.Child()
-    editor_clamp = Gtk.Template.Child()
-    content_view = Gtk.Template.Child()
-    content_headerbar = Gtk.Template.Child()
+    __gtype_name__ = "GraphsPythonStyleEditor"
 
     def __init__(self, application: Graphs.Application):
         super().__init__(application=application)
-        self._style_editor = StyleEditor(self)
-        self.editor_clamp.set_child(self._style_editor)
-        self._file = None
+        style_editor = StyleEditorBox(self)
+        self.set_editor_box(style_editor)
         self._test_items = Gio.ListStore()
         self._test_items.append(
             DataItem.new(
@@ -492,14 +485,11 @@ class StyleEditorWindow(Adw.Window):
             ),
         )
 
-        self._provider = Gtk.CssProvider()
-        self.content_headerbar.get_style_context().add_provider(
-            self._provider,
-            Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION,
-        )
+        style_editor.connect("params-changed", self._on_params_changed)
+        self._on_params_changed(style_editor)
 
-        self._style_editor.connect("params-changed", self._on_params_changed)
-        self._on_params_changed(self._style_editor)
+        self.connect("load_request", self._on_load_request)
+        self.connect("save_request", self._on_save_request)
 
     def _on_params_changed(self, style_editor):
         if style_editor.params is None:
@@ -520,32 +510,25 @@ class StyleEditorWindow(Adw.Window):
         canvas.props.title = _("Title")
         canvas.props.bottom_label = _("X Label")
         canvas.props.left_label = _("Y Label")
-        self.content_view.set_content(canvas)
+        self.set_canvas(canvas)
 
         # Set headerbar color
-        self._provider.load_from_string(
+        self.get_headerbar_provider().load_from_string(
             "headerbar#preview-headerbar { "
             f"background-color: {params['figure.facecolor']}; "
             f"color: {params['text.color']}; "
             "}",
         )
 
-    def load_style(self, file: Gio.File) -> None:
+    @staticmethod
+    def _on_load_request(self, file: Gio.File) -> None:
         """Load a style."""
-        self._file = file
-        name = self._style_editor.load_style(file)
+        style_editor = self.get_editor_box()
+        name = style_editor.load_style(file)
         self.set_title(name)
-        self._on_params_changed(self._style_editor)
+        self._on_params_changed(style_editor)
 
-    def save_style(self) -> None:
+    @staticmethod
+    def _on_save_request(self, file: Gio.File) -> None:
         """Save current style."""
-        if self._file is None:
-            return
-        self._style_editor.save_style(self._file)
-        self._file = None
-
-    @Gtk.Template.Callback()
-    def on_close_request(self, _window):
-        """Handle close request."""
-        self.save_style()
-        self.props.application.on_style_editor_closed(self)
+        self.get_editor_box().save_style(file)
