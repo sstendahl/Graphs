@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2024-09-29 09:57+0000\n"
-"PO-Revision-Date: 2024-09-30 19:20+0330\n"
+"POT-Creation-Date: 2024-10-05 07:53+0000\n"
+"PO-Revision-Date: 2024-10-06 10:27+0330\n"
 "Last-Translator: Danial Behzadi <dani.behzi@ubuntu.com>\n"
 "Language-Team: Persian <fa@li.org>\n"
 "Language: fa\n"
@@ -18,7 +18,7 @@ msgstr ""
 "X-Generator: Poedit 3.4.4\n"
 
 #: data/se.sjoerd.Graphs.appdata.xml.in:6 data/se.sjoerd.Graphs.desktop.in:3
-#: data/ui/window.blp:9 graphs/about.vala:23
+#: data/ui/window.blp:9 graphs/application.vala:55
 msgid "Graphs"
 msgstr "نمودارها"
 
@@ -197,11 +197,12 @@ msgstr "سفارشی"
 msgid "Add Fit to Data"
 msgstr "افزودن برازش به داده‌ها"
 
-#: data/ui/curve-fitting.blp:104 data/ui/window.blp:580 graphs/window.vala:301
+#: data/ui/curve-fitting.blp:104 data/ui/window.blp:580 graphs/window.vala:318
 msgid "Toggle Sidebar"
 msgstr "تغییر وضعیت نوار کناری"
 
-#: data/ui/curve-fitting.blp:116 data/ui/window.blp:620
+#: data/ui/curve-fitting.blp:116 data/ui/style-editor-window.blp:41
+#: data/ui/window.blp:620
 msgid "Canvas Failed to Load"
 msgstr "شکست در بار کردن بوم"
 
@@ -487,7 +488,7 @@ msgstr "اندازهٔ نشانگر"
 msgid "Export Figure"
 msgstr "برون‌ریزی شکل"
 
-#: data/ui/export-figure.blp:21 graphs/export_figure.vala:47
+#: data/ui/export-figure.blp:21 graphs/export_figure.vala:49
 msgid "Export"
 msgstr "برون‌ریزی"
 
@@ -550,7 +551,7 @@ msgstr "تنظیمات شکل"
 msgid "Labels"
 msgstr "برچسب‌ها"
 
-#: data/ui/figure-settings-page.blp:24 graphs/style_editor.py:508
+#: data/ui/figure-settings-page.blp:24 graphs/style_editor.py:520
 msgid "Title"
 msgstr "عنوان"
 
@@ -610,34 +611,34 @@ msgstr "بیشینهٔ محور Y راست"
 msgid "Scaling"
 msgstr "مقیاس"
 
-#: data/ui/figure-settings-page.blp:125 graphs/window.vala:341
+#: data/ui/figure-settings-page.blp:125 graphs/window.vala:357
 msgid "Bottom X Axis Scale"
 msgstr "مقیاس محور X پایین"
 
 #: data/ui/figure-settings-page.blp:128 data/ui/figure-settings-page.blp:142
 #: data/ui/figure-settings-page.blp:156 data/ui/figure-settings-page.blp:170
-#: graphs/window.vala:311
+#: graphs/window.vala:328
 msgctxt "scale"
 msgid "Linear"
 msgstr "خطی"
 
 #: data/ui/figure-settings-page.blp:129 data/ui/figure-settings-page.blp:143
 #: data/ui/figure-settings-page.blp:157 data/ui/figure-settings-page.blp:171
-#: graphs/window.vala:312
+#: graphs/window.vala:329
 msgctxt "scale"
 msgid "Logarithmic"
 msgstr "لگاریتمی"
 
 #: data/ui/figure-settings-page.blp:130 data/ui/figure-settings-page.blp:144
 #: data/ui/figure-settings-page.blp:158 data/ui/figure-settings-page.blp:172
-#: graphs/window.vala:313
+#: graphs/window.vala:330
 msgctxt "scale"
 msgid "Radians"
 msgstr "رادیان"
 
 #: data/ui/figure-settings-page.blp:131 data/ui/figure-settings-page.blp:145
 #: data/ui/figure-settings-page.blp:159 data/ui/figure-settings-page.blp:173
-#: graphs/window.vala:314
+#: graphs/window.vala:331
 msgctxt "scale"
 msgid "Square Root"
 msgstr "ریشهٔ مربّع"
@@ -648,15 +649,15 @@ msgctxt "scale"
 msgid "Inverse"
 msgstr "وارون"
 
-#: data/ui/figure-settings-page.blp:139 graphs/window.vala:342
+#: data/ui/figure-settings-page.blp:139 graphs/window.vala:358
 msgid "Top X Axis Scale"
 msgstr "مقیاس محور X بالا"
 
-#: data/ui/figure-settings-page.blp:153 graphs/window.vala:347
+#: data/ui/figure-settings-page.blp:153 graphs/window.vala:363
 msgid "Left Y Axis Scale"
 msgstr "مقیاس محور Y چپ"
 
-#: data/ui/figure-settings-page.blp:167 graphs/window.vala:346
+#: data/ui/figure-settings-page.blp:167 graphs/window.vala:362
 msgid "Right Y Axis Scale"
 msgstr "مقیاس محور Y راست"
 
@@ -1246,6 +1247,10 @@ msgstr "رنگ خط‌ها"
 msgid "Add Color"
 msgstr "افزودن رنگ"
 
+#: data/ui/style-editor-window.blp:5
+msgid "Error - No Style selected"
+msgstr "خطا - هیچ سبکی گزیده نشده"
+
 #: data/ui/style-preview.blp:45
 msgid "Open"
 msgstr "گشودن"
@@ -1435,7 +1440,7 @@ msgstr "ضرب X"
 msgid "Multiply Y"
 msgstr "ضرب Y"
 
-#: data/ui/window.blp:587 graphs/window.vala:282
+#: data/ui/window.blp:587 graphs/window.vala:299
 msgid "Undo"
 msgstr "برگردان"
 
@@ -1511,45 +1516,45 @@ msgstr "در میانهٔ مقدار X"
 msgid "Advanced Settings"
 msgstr "تنظیمات پیش‌رفته"
 
-#: graphs/about.vala:40
-msgid "translator-credits"
-msgstr "دانیال بهزادی <dani.behzi@ubuntu.com>"
+#: graphs/actions.vala:145 graphs/item_box.vala:59
+#, c-format
+msgid "Deleted %s"
+msgstr "«⁨%s⁩» حذف شد"
+
+#: graphs/actions.vala:170
+msgctxt "file-filter"
+msgid "Supported files"
+msgstr "پرونده‌های پشتیبانی شده"
+
+#: graphs/actions.vala:174
+msgctxt "file-filter"
+msgid "ASCII files"
+msgstr "پرونده‌های اسکی"
+
+#: graphs/actions.vala:178
+msgctxt "file-filter"
+msgid "PANalytical XRDML"
+msgstr "PANalytical XRDML"
+
+#: graphs/actions.vala:181
+msgctxt "file-filter"
+msgid "Leybold xry"
+msgstr "Leybold xry"
 
 #: graphs/application.py:43
 #, python-brace-format
 msgid "Could not load {font}"
 msgstr "نتوانست {font} را بار کند"
 
-#: graphs/application.vala:291 graphs/item_box.vala:58
-#, c-format
-msgid "Deleted %s"
-msgstr "«⁨%s⁩» حذف شد"
+#: graphs/application.vala:72
+msgid "translator-credits"
+msgstr "دانیال بهزادی <dani.behzi@ubuntu.com>"
 
-#: graphs/application.vala:322
-msgctxt "file-filter"
-msgid "Supported files"
-msgstr "پرونده‌های پشتیبانی شده"
-
-#: graphs/application.vala:326
-msgctxt "file-filter"
-msgid "ASCII files"
-msgstr "پرونده‌های اسکی"
-
-#: graphs/application.vala:330
-msgctxt "file-filter"
-msgid "PANalytical XRDML"
-msgstr "PANalytical XRDML"
-
-#: graphs/application.vala:333
-msgctxt "file-filter"
-msgid "Leybold xry"
-msgstr "Leybold xry"
-
-#: graphs/curve_fitting.py:180
+#: graphs/curve_fitting.py:181
 msgid "Results:"
 msgstr "نتیجه‌ها:"
 
-#: graphs/curve_fitting.py:184
+#: graphs/curve_fitting.py:185
 msgid ""
 "Please enter valid fitting \n"
 "parameters to start the fit"
@@ -1557,7 +1562,7 @@ msgstr ""
 "ورود پارامترهای برازش\n"
 "معتبر برای آغاز برازش"
 
-#: graphs/curve_fitting.py:188
+#: graphs/curve_fitting.py:189
 msgid ""
 "Please enter a valid equation \n"
 "to start the fit"
@@ -1565,7 +1570,7 @@ msgstr ""
 "ورود معادلهٔ معتبر\n"
 "برای آغاز برازش"
 
-#: graphs/curve_fitting.py:192
+#: graphs/curve_fitting.py:193
 msgid ""
 "Please enter valid fitting bounds \n"
 "to start the fit"
@@ -1573,76 +1578,86 @@ msgstr ""
 "ورود کران‌های برازش\n"
 "معتبر برای آغاز برازش"
 
-#: graphs/curve_fitting.py:205
+#: graphs/curve_fitting.py:206
 #, python-brace-format
 msgid "Sum of R²: {R2}"
 msgstr "جمع R²: {R2}"
 
-#: graphs/curve_fitting.vala:135
+#: graphs/curve_fitting.vala:136
 #, c-format
 msgid "Fitting Parameters for %s"
 msgstr "برازش پارامترها برای %s"
 
-#: graphs/data.py:72
+#: graphs/data.py:76
 msgid "Untitled Project"
 msgstr "پروژهٔ بی‌عنوان"
 
-#: graphs/data.py:73
+#: graphs/data.py:77
 msgid "Draft"
 msgstr "پیش‌نویس"
 
-#: graphs/export_items.vala:8
-msgid "No data to export"
-msgstr "هیچ داده‌ای برای برون‌ریزی نیست"
+#: graphs/data.py:135
+#, python-brace-format
+msgid "Could not parse {stylename}, loading system preferred style"
+msgstr "نتوانست {stylename} را تجزیه کند. بار کردن سبک ترجیحی سامانه"
 
-#: graphs/export_items.vala:29
-msgctxt "file-filter"
-msgid "Text Files"
-msgstr "پرونده‌های متنی"
+#: graphs/data.py:140
+#, python-brace-format
+msgid "Plot style {stylename} does not exist loading system preferred"
+msgstr "سبک نمودار {stylename} وجود ندارد. بار کردن ترجیح سامانه"
 
-#: graphs/export_figure.vala:41
+#: graphs/export_figure.vala:43
 msgctxt "filename"
 msgid "Exported Figure"
 msgstr "شکل برون‌ریخته"
 
-#: graphs/figure_settings.vala:157
+#: graphs/export_items.vala:10
+msgid "No data to export"
+msgstr "هیچ داده‌ای برای برون‌ریزی نیست"
+
+#: graphs/export_items.vala:32
+msgctxt "file-filter"
+msgid "Text Files"
+msgstr "پرونده‌های متنی"
+
+#: graphs/figure_settings.vala:159
 msgid "X Axis Minimum"
 msgstr "کمینهٔ محور X"
 
-#: graphs/figure_settings.vala:158
+#: graphs/figure_settings.vala:160
 msgid "Y Axis Minimum"
 msgstr "کمینهٔ محور Y"
 
-#: graphs/figure_settings.vala:160
+#: graphs/figure_settings.vala:162
 msgid "X Axis Maximum"
 msgstr "بیشینهٔ محور X"
 
-#: graphs/figure_settings.vala:161
+#: graphs/figure_settings.vala:163
 msgid "Y Axis Maximum"
 msgstr "بیشینهٔ محور Y"
 
-#: graphs/figure_settings.vala:171 graphs/window.vala:343
+#: graphs/figure_settings.vala:173 graphs/window.vala:359
 msgid "X Axis Scale"
 msgstr "مقیاس محور X"
 
-#: graphs/figure_settings.vala:172 graphs/figure_settings.vala:176
+#: graphs/figure_settings.vala:174 graphs/figure_settings.vala:178
 msgid "X Axis Label"
 msgstr "برچسب محور X"
 
-#: graphs/figure_settings.vala:175 graphs/window.vala:348
+#: graphs/figure_settings.vala:177 graphs/window.vala:364
 msgid "Y Axis Scale"
 msgstr "مقیاس محور Y"
 
-#: graphs/figure_settings.vala:247
+#: graphs/figure_settings.vala:252
 msgid "Defaults Updated"
 msgstr "پیش‌گزیده‌ها به‌روز شدند"
 
-#: graphs/figure_settings.vala:278
+#: graphs/figure_settings.vala:283
 #, c-format
 msgid "Are you sure you want to delete %s?"
 msgstr "مطمئنید که می‌خواهید %s را حذف کنید؟"
 
-#: graphs/file_import.vala:40
+#: graphs/file_import.vala:41
 msgid "Are you sure you want to reset the import settings?"
 msgstr "مطمئنید که می‌خواهید تنظیمات درون‌ریزی را حذف کنید؟"
 
@@ -1675,7 +1690,7 @@ msgstr "داده‌هایی که خارج از ناحیهٔ برجسته بود�
 msgid "No data found within the highlighted area"
 msgstr "هیچ داده‌ای در ناحیهٔ برجسته پیدا نشد"
 
-#: graphs/operations.py:479
+#: graphs/operations.py:480
 msgid "Combined Data"
 msgstr "داده‌های ترکیب شده"
 
@@ -1703,69 +1718,72 @@ msgstr "درون‌ریزی شکست خورد. اندیس ستون بیرون ا
 msgid "Unable to import from file"
 msgstr "ناتوان در درون‌ریزی از پرونده"
 
-#: graphs/style_editor.py:407
+#: graphs/project.vala:10
+msgctxt "file-filter"
+msgid "Graphs Project File"
+msgstr "پروندهٔ پروژهٔ نمودارها"
+
+#: graphs/project.vala:17
+msgid "Saved Project"
+msgstr "پروژه‌های ذخیره شده"
+
+#: graphs/project.vala:32
+msgid "Project"
+msgstr "پروژه"
+
+#: graphs/style_editor.py:411
 #, python-brace-format
 msgid "Color {number}"
 msgstr "رنگ {number}"
 
-#: graphs/style_editor.py:476 graphs/style_editor.py:485
+#: graphs/style_editor.py:481 graphs/style_editor.py:490
 msgid "Example Item"
 msgstr "مورد مثال"
 
-#: graphs/style_editor.py:509 graphs/style_io.py:188
+#: graphs/style_editor.py:521 graphs/style_io.py:182
 msgid "X Label"
 msgstr "برچسب X"
 
-#: graphs/style_editor.py:510 graphs/style_io.py:189
+#: graphs/style_editor.py:522 graphs/style_io.py:183
 msgid "Y Label"
 msgstr "برچسب Y"
 
-#: graphs/style_io.py:83
+#: graphs/style_io.py:77
 #, python-brace-format
 msgid "Missing colon in file {file}, line {line}"
 msgstr "دو نقطه در خط {line} از {file} جا افتاده"
 
-#: graphs/style_io.py:91
+#: graphs/style_io.py:85
 #, python-brace-format
 msgid "Non-style related parameter {param} in file {file}"
 msgstr "پارامتر نامربوط به سبک {param} در {file}"
 
-#: graphs/style_io.py:94
+#: graphs/style_io.py:88
 #, python-brace-format
 msgid "Ignoring parameter {param} in file {file}"
 msgstr "چشم‌پوشی از پارامتر {param} در {file}"
 
-#: graphs/style_io.py:98
+#: graphs/style_io.py:92
 #, python-brace-format
 msgid "Duplicate key in file {file}, on line {line}"
 msgstr "کلید تکراری در خط {line} از {file}"
 
-#: graphs/style_io.py:118
+#: graphs/style_io.py:112
 #, python-brace-format
 msgid "Bad value in file {file} on line {line}"
 msgstr "مقدار بد در خط {line} از {file}"
 
-#: graphs/style_io.py:124
+#: graphs/style_io.py:118
 #, python-brace-format
 msgid "Could not parse {filename}"
 msgstr "نتوانست {filename} را تجزیه کند"
 
-#: graphs/style_io.py:133
+#: graphs/style_io.py:127
 #, python-brace-format
 msgid "File {file}, does not contain name tag"
 msgstr "پروندهٔ {file} برچسب نام ندارد"
 
-#: graphs/styles.py:111
-#, python-brace-format
-msgid "Could not parse {stylename}, loading system preferred style"
-msgstr "نتوانست {stylename} را تجزیه کند. بار کردن سبک ترجیحی سامانه"
-
-#: graphs/styles.py:119
-#, python-brace-format
-msgid "Plot style {stylename} does not exist loading system preferred"
-msgstr "سبک نمودار {stylename} وجود ندارد. بار کردن ترجیح سامانه"
-
-#: graphs/styles.vala:71
+#: graphs/styles.vala:64
 msgid "System"
 msgstr "سامانه"
 
@@ -1773,19 +1791,19 @@ msgstr "سامانه"
 msgid "All Files"
 msgstr "همهٔ پرونده‌ها"
 
-#: graphs/window.vala:218
+#: graphs/window.vala:180
 msgid "Graphs (Development)"
 msgstr "نمودارها (توسعه)"
 
-#: graphs/window.vala:272
+#: graphs/window.vala:289
 msgid "Open Location"
 msgstr "گشودن مکان"
 
-#: graphs/window.vala:306
+#: graphs/window.vala:323
 msgid "Optimize Limits"
 msgstr "بهینه‌سازی کران‌ها"
 
-#: graphs/window.vala:315
+#: graphs/window.vala:332
 msgctxt "scale"
 msgid "Inverse Root"
 msgstr "ریشهٔ معکوس"
@@ -1799,12 +1817,5 @@ msgstr "ریشهٔ معکوس"
 #~ msgid "Step Size"
 #~ msgstr "اندازهٔ گام"
 
-#~ msgid "Error - No Style selected"
-#~ msgstr "خطا - هیچ سبکی گزیده نشده"
-
 #~ msgid "Exported Figure"
 #~ msgstr "شکل برون‌ریخته"
-
-#~ msgctxt "file-filter"
-#~ msgid "Graphs Project File"
-#~ msgstr "پروندهٔ پروژهٔ نمودارها"
