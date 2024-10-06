@@ -138,9 +138,11 @@ for style_path in args.styles:
         },
     )
     preview_element.text = str(out_path.relative_to(current_dir))
-    styles.append(
-        (stylename, style_prefix + style_file.name, main_prefix + out_path.name),
-    )
+    styles.append([
+        stylename,
+        style_prefix + style_file.name,
+        main_prefix + out_path.name,
+    ])
 styles.sort(key=lambda x: x[0].casefold())
 with open(style_list, "wt") as style_list_file:
     style_list_file.writelines(";".join(x) + "\n" for x in styles)
