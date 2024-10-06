@@ -62,10 +62,12 @@ if compile_schemas.found()
 endif
 
 blueprint_files = [
+  'ui/dialogs/delete-style.blp',
+  'ui/dialogs/reset-import-settings.blp',
+  'ui/dialogs/save-project-changes.blp',
   'ui/add-equation.blp',
   'ui/add-style.blp',
   'ui/curve-fitting.blp',
-  'ui/dialogs.blp',
   'ui/edit-item.blp',
   'ui/export-figure.blp',
   'ui/figure-settings-dialog.blp',

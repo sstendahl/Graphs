@@ -167,8 +167,9 @@ namespace Graphs {
          * Build a dialog from `dialogs.blp`
          */
         public Object build_dialog (string name) {
-            var builder = new Builder.from_resource ("/se/sjoerd/Graphs/ui/dialogs.ui");
-            return builder.get_object (name);
+            string path = "/se/sjoerd/Graphs/ui/dialogs/" + name.replace ("_", "-") + ".ui";
+            var builder = new Builder.from_resource (path);
+            return builder.get_object (name + "_dialog");
         }
 
         /**
