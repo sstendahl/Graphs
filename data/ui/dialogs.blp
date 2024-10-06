@@ -1,7 +1,7 @@
 using Gtk 4.0;
 using Adw 1;
 
-Adw.AlertDialog save_changes {
+Adw.AlertDialog save_project_changes_dialog {
   heading: _("Save Changes?");
   body: _("Current project contains unsaved changes, changes that are not saved will be permanently lost.");
   responses [
@@ -23,8 +23,9 @@ Adw.AlertDialog delete_style_dialog {
   default-response: "delete";
 }
 
-Adw.AlertDialog reset_to_defaults {
+Adw.AlertDialog reset_to_defaults_dialog {
   heading: _("Reset to Defaults?");
+  body: _("Are you sure you want to reset the import settings?");
   responses [
     cancel_reset: _("Cancel"),
     reset: _("Reset") destructive,

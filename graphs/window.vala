@@ -378,7 +378,7 @@ namespace Graphs {
             }
 
             if (data.unsaved) {
-                var dialog = Tools.build_dialog ("save_changes") as Adw.AlertDialog;
+                var dialog = Tools.build_dialog ("save_project_changes_dialog") as Adw.AlertDialog;
                 dialog.response.connect ((d, response) => {
                     switch (response) {
                         case "discard_close": {
@@ -405,3 +405,4 @@ namespace Graphs {
         }
     }
 }
+
