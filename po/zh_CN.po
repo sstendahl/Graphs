@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2024-09-29 09:57+0000\n"
-"PO-Revision-Date: 2024-09-30 19:21+0800\n"
+"POT-Creation-Date: 2024-10-05 07:53+0000\n"
+"PO-Revision-Date: 2024-10-06 08:47+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -16,10 +16,10 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Gtranslator 46.1\n"
+"X-Generator: Gtranslator 47.0\n"
 
 #: data/se.sjoerd.Graphs.appdata.xml.in:6 data/se.sjoerd.Graphs.desktop.in:3
-#: data/ui/window.blp:9 graphs/about.vala:23
+#: data/ui/window.blp:9 graphs/application.vala:55
 msgid "Graphs"
 msgstr "Graphs"
 
@@ -194,11 +194,12 @@ msgstr "自定义"
 msgid "Add Fit to Data"
 msgstr "添加拟合至数据"
 
-#: data/ui/curve-fitting.blp:104 data/ui/window.blp:580 graphs/window.vala:301
+#: data/ui/curve-fitting.blp:104 data/ui/window.blp:580 graphs/window.vala:318
 msgid "Toggle Sidebar"
 msgstr "切换侧边栏"
 
-#: data/ui/curve-fitting.blp:116 data/ui/window.blp:620
+#: data/ui/curve-fitting.blp:116 data/ui/style-editor-window.blp:41
+#: data/ui/window.blp:620
 msgid "Canvas Failed to Load"
 msgstr "画布加载失败"
 
@@ -482,7 +483,7 @@ msgstr "标记大小"
 msgid "Export Figure"
 msgstr "导出图表"
 
-#: data/ui/export-figure.blp:21 graphs/export_figure.vala:47
+#: data/ui/export-figure.blp:21 graphs/export_figure.vala:49
 msgid "Export"
 msgstr "导出"
 
@@ -545,7 +546,7 @@ msgstr "图表设置"
 msgid "Labels"
 msgstr "标签"
 
-#: data/ui/figure-settings-page.blp:24 graphs/style_editor.py:508
+#: data/ui/figure-settings-page.blp:24 graphs/style_editor.py:520
 msgid "Title"
 msgstr "标题"
 
@@ -605,34 +606,34 @@ msgstr "右侧 Y 轴最大值"
 msgid "Scaling"
 msgstr "缩放"
 
-#: data/ui/figure-settings-page.blp:125 graphs/window.vala:341
+#: data/ui/figure-settings-page.blp:125 graphs/window.vala:357
 msgid "Bottom X Axis Scale"
 msgstr "底部 X 轴缩放"
 
 #: data/ui/figure-settings-page.blp:128 data/ui/figure-settings-page.blp:142
 #: data/ui/figure-settings-page.blp:156 data/ui/figure-settings-page.blp:170
-#: graphs/window.vala:311
+#: graphs/window.vala:328
 msgctxt "scale"
 msgid "Linear"
 msgstr "线性"
 
 #: data/ui/figure-settings-page.blp:129 data/ui/figure-settings-page.blp:143
 #: data/ui/figure-settings-page.blp:157 data/ui/figure-settings-page.blp:171
-#: graphs/window.vala:312
+#: graphs/window.vala:329
 msgctxt "scale"
 msgid "Logarithmic"
 msgstr "对数"
 
 #: data/ui/figure-settings-page.blp:130 data/ui/figure-settings-page.blp:144
 #: data/ui/figure-settings-page.blp:158 data/ui/figure-settings-page.blp:172
-#: graphs/window.vala:313
+#: graphs/window.vala:330
 msgctxt "scale"
 msgid "Radians"
 msgstr "弧度"
 
 #: data/ui/figure-settings-page.blp:131 data/ui/figure-settings-page.blp:145
 #: data/ui/figure-settings-page.blp:159 data/ui/figure-settings-page.blp:173
-#: graphs/window.vala:314
+#: graphs/window.vala:331
 msgctxt "scale"
 msgid "Square Root"
 msgstr "平方根"
@@ -643,15 +644,15 @@ msgctxt "scale"
 msgid "Inverse"
 msgstr "逆缩放"
 
-#: data/ui/figure-settings-page.blp:139 graphs/window.vala:342
+#: data/ui/figure-settings-page.blp:139 graphs/window.vala:358
 msgid "Top X Axis Scale"
 msgstr "顶部 X 轴缩放"
 
-#: data/ui/figure-settings-page.blp:153 graphs/window.vala:347
+#: data/ui/figure-settings-page.blp:153 graphs/window.vala:363
 msgid "Left Y Axis Scale"
 msgstr "左侧 Y 轴缩放"
 
-#: data/ui/figure-settings-page.blp:167 graphs/window.vala:346
+#: data/ui/figure-settings-page.blp:167 graphs/window.vala:362
 msgid "Right Y Axis Scale"
 msgstr "右侧 Y 轴缩放"
 
@@ -1241,6 +1242,10 @@ msgstr "线条颜色"
 msgid "Add Color"
 msgstr "添加颜色"
 
+#: data/ui/style-editor-window.blp:5
+msgid "Error - No Style selected"
+msgstr "错误 - 未选择样式"
+
 #: data/ui/style-preview.blp:45
 msgid "Open"
 msgstr "打开"
@@ -1431,7 +1436,7 @@ msgstr "乘以 X"
 msgid "Multiply Y"
 msgstr "乘以 Y"
 
-#: data/ui/window.blp:587 graphs/window.vala:282
+#: data/ui/window.blp:587 graphs/window.vala:299
 msgid "Undo"
 msgstr "撤消"
 
@@ -1507,47 +1512,47 @@ msgstr "以 X 中间值"
 msgid "Advanced Settings"
 msgstr "高级设置"
 
-#: graphs/about.vala:40
-msgid "translator-credits"
-msgstr ""
-"lumingzh <lumingzh@qq.com>, 2024\n"
-"SuGotLand <sugotland@outlook.com>, 2024"
+#: graphs/actions.vala:145 graphs/item_box.vala:59
+#, c-format
+msgid "Deleted %s"
+msgstr "已删除 %s"
+
+#: graphs/actions.vala:170
+msgctxt "file-filter"
+msgid "Supported files"
+msgstr "支持的文件"
+
+#: graphs/actions.vala:174
+msgctxt "file-filter"
+msgid "ASCII files"
+msgstr "ASCII 文件"
+
+#: graphs/actions.vala:178
+msgctxt "file-filter"
+msgid "PANalytical XRDML"
+msgstr "PANalytical XRDML"
+
+#: graphs/actions.vala:181
+msgctxt "file-filter"
+msgid "Leybold xry"
+msgstr "Leybold xry"
 
 #: graphs/application.py:43
 #, python-brace-format
 msgid "Could not load {font}"
 msgstr "无法加载 {font}"
 
-#: graphs/application.vala:291 graphs/item_box.vala:58
-#, c-format
-msgid "Deleted %s"
-msgstr "已删除 %s"
+#: graphs/application.vala:72
+msgid "translator-credits"
+msgstr ""
+"lumingzh <lumingzh@qq.com>, 2024\n"
+"SuGotLand <sugotland@outlook.com>, 2024"
 
-#: graphs/application.vala:322
-msgctxt "file-filter"
-msgid "Supported files"
-msgstr "支持的文件"
-
-#: graphs/application.vala:326
-msgctxt "file-filter"
-msgid "ASCII files"
-msgstr "ASCII 文件"
-
-#: graphs/application.vala:330
-msgctxt "file-filter"
-msgid "PANalytical XRDML"
-msgstr "PANalytical XRDML"
-
-#: graphs/application.vala:333
-msgctxt "file-filter"
-msgid "Leybold xry"
-msgstr "Leybold xry"
-
-#: graphs/curve_fitting.py:180
+#: graphs/curve_fitting.py:181
 msgid "Results:"
 msgstr "结果："
 
-#: graphs/curve_fitting.py:184
+#: graphs/curve_fitting.py:185
 msgid ""
 "Please enter valid fitting \n"
 "parameters to start the fit"
@@ -1555,7 +1560,7 @@ msgstr ""
 "请输入有效的拟合参数\n"
 "来开始拟合"
 
-#: graphs/curve_fitting.py:188
+#: graphs/curve_fitting.py:189
 msgid ""
 "Please enter a valid equation \n"
 "to start the fit"
@@ -1563,7 +1568,7 @@ msgstr ""
 "请输入有效的方程式\n"
 "来开始拟合"
 
-#: graphs/curve_fitting.py:192
+#: graphs/curve_fitting.py:193
 msgid ""
 "Please enter valid fitting bounds \n"
 "to start the fit"
@@ -1571,76 +1576,86 @@ msgstr ""
 "请输入有效的拟合区间\n"
 "来开始拟合"
 
-#: graphs/curve_fitting.py:205
+#: graphs/curve_fitting.py:206
 #, python-brace-format
 msgid "Sum of R²: {R2}"
 msgstr "R² 的总和：{R2}"
 
-#: graphs/curve_fitting.vala:135
+#: graphs/curve_fitting.vala:136
 #, c-format
 msgid "Fitting Parameters for %s"
 msgstr "%s 的拟合参数"
 
-#: graphs/data.py:72
+#: graphs/data.py:76
 msgid "Untitled Project"
 msgstr "未命名工程"
 
-#: graphs/data.py:73
+#: graphs/data.py:77
 msgid "Draft"
 msgstr "草稿"
 
-#: graphs/export_items.vala:8
-msgid "No data to export"
-msgstr "无数据可导出"
+#: graphs/data.py:135
+#, python-brace-format
+msgid "Could not parse {stylename}, loading system preferred style"
+msgstr "无法解析 {stylename}，加载系统首选样式"
 
-#: graphs/export_items.vala:29
-msgctxt "file-filter"
-msgid "Text Files"
-msgstr "文本文件"
+#: graphs/data.py:140
+#, python-brace-format
+msgid "Plot style {stylename} does not exist loading system preferred"
+msgstr "绘图样式 {stylename} 不存在，加载系统首选样式"
 
-#: graphs/export_figure.vala:41
+#: graphs/export_figure.vala:43
 msgctxt "filename"
 msgid "Exported Figure"
 msgstr "导出的图表"
 
-#: graphs/figure_settings.vala:157
+#: graphs/export_items.vala:10
+msgid "No data to export"
+msgstr "无数据可导出"
+
+#: graphs/export_items.vala:32
+msgctxt "file-filter"
+msgid "Text Files"
+msgstr "文本文件"
+
+#: graphs/figure_settings.vala:159
 msgid "X Axis Minimum"
 msgstr "X 轴最小值"
 
-#: graphs/figure_settings.vala:158
+#: graphs/figure_settings.vala:160
 msgid "Y Axis Minimum"
 msgstr "Y 轴最小值"
 
-#: graphs/figure_settings.vala:160
+#: graphs/figure_settings.vala:162
 msgid "X Axis Maximum"
 msgstr "X 轴最大值"
 
-#: graphs/figure_settings.vala:161
+#: graphs/figure_settings.vala:163
 msgid "Y Axis Maximum"
 msgstr "Y 轴最大值"
 
-#: graphs/figure_settings.vala:171 graphs/window.vala:343
+#: graphs/figure_settings.vala:173 graphs/window.vala:359
 msgid "X Axis Scale"
 msgstr "X 轴缩放"
 
-#: graphs/figure_settings.vala:172 graphs/figure_settings.vala:176
+#: graphs/figure_settings.vala:174 graphs/figure_settings.vala:178
 msgid "X Axis Label"
 msgstr "X 轴标签"
 
-#: graphs/figure_settings.vala:175 graphs/window.vala:348
+#: graphs/figure_settings.vala:177 graphs/window.vala:364
 msgid "Y Axis Scale"
 msgstr "Y 轴缩放"
 
-#: graphs/figure_settings.vala:247
+#: graphs/figure_settings.vala:252
 msgid "Defaults Updated"
 msgstr "默认值已更新"
 
-#: graphs/figure_settings.vala:278
+#: graphs/figure_settings.vala:283
 #, c-format
 msgid "Are you sure you want to delete %s?"
 msgstr "您确定要删除 %s 吗？"
 
-#: graphs/file_import.vala:40
+#: graphs/file_import.vala:41
 msgid "Are you sure you want to reset the import settings?"
 msgstr "您确定要重置导入设置吗？"
 
@@ -1673,7 +1688,7 @@ msgstr "高亮区域之外的数据已被丢弃"
 msgid "No data found within the highlighted area"
 msgstr "高亮区域内未发现数据"
 
-#: graphs/operations.py:479
+#: graphs/operations.py:480
 msgid "Combined Data"
 msgstr "组合的数据"
 
@@ -1701,69 +1716,72 @@ msgstr "导入失败，列索引超出范围"
 msgid "Unable to import from file"
 msgstr "无法从文件导入"
 
-#: graphs/style_editor.py:407
+#: graphs/project.vala:10
+msgctxt "file-filter"
+msgid "Graphs Project File"
+msgstr "Graphs 工程文件"
+
+#: graphs/project.vala:17
+msgid "Saved Project"
+msgstr "保存的工程"
+
+#: graphs/project.vala:32
+msgid "Project"
+msgstr "工程"
+
+#: graphs/style_editor.py:411
 #, python-brace-format
 msgid "Color {number}"
 msgstr "颜色 {number}"
 
-#: graphs/style_editor.py:476 graphs/style_editor.py:485
+#: graphs/style_editor.py:481 graphs/style_editor.py:490
 msgid "Example Item"
 msgstr "示例项目"
 
-#: graphs/style_editor.py:509 graphs/style_io.py:188
+#: graphs/style_editor.py:521 graphs/style_io.py:182
 msgid "X Label"
 msgstr "X 标签"
 
-#: graphs/style_editor.py:510 graphs/style_io.py:189
+#: graphs/style_editor.py:522 graphs/style_io.py:183
 msgid "Y Label"
 msgstr "Y 标签"
 
-#: graphs/style_io.py:83
+#: graphs/style_io.py:77
 #, python-brace-format
 msgid "Missing colon in file {file}, line {line}"
 msgstr "文件 {file} 第 {line} 行缺少冒号"
 
-#: graphs/style_io.py:91
+#: graphs/style_io.py:85
 #, python-brace-format
 msgid "Non-style related parameter {param} in file {file}"
 msgstr "文件 {file} 中与样式无关的参数 {param}"
 
-#: graphs/style_io.py:94
+#: graphs/style_io.py:88
 #, python-brace-format
 msgid "Ignoring parameter {param} in file {file}"
 msgstr "忽略文件 {file} 中的参数 {param}"
 
-#: graphs/style_io.py:98
+#: graphs/style_io.py:92
 #, python-brace-format
 msgid "Duplicate key in file {file}, on line {line}"
 msgstr "文件 {file} 中第 {line} 行的键重复"
 
-#: graphs/style_io.py:118
+#: graphs/style_io.py:112
 #, python-brace-format
 msgid "Bad value in file {file} on line {line}"
 msgstr "文件 {file} 第 {line} 行的错误值"
 
-#: graphs/style_io.py:124
+#: graphs/style_io.py:118
 #, python-brace-format
 msgid "Could not parse {filename}"
 msgstr "无法解析 {filename}"
 
-#: graphs/style_io.py:133
+#: graphs/style_io.py:127
 #, python-brace-format
 msgid "File {file}, does not contain name tag"
 msgstr "文件 {file} 不包含名称标签"
 
-#: graphs/styles.py:111
-#, python-brace-format
-msgid "Could not parse {stylename}, loading system preferred style"
-msgstr "无法解析 {stylename}，加载系统首选样式"
-
-#: graphs/styles.py:119
-#, python-brace-format
-msgid "Plot style {stylename} does not exist loading system preferred"
-msgstr "绘图样式 {stylename} 不存在，加载系统首选样式"
-
-#: graphs/styles.vala:71
+#: graphs/styles.vala:64
 msgid "System"
 msgstr "系统"
 
@@ -1771,19 +1789,19 @@ msgstr "系统"
 msgid "All Files"
 msgstr "所有文件"
 
-#: graphs/window.vala:218
+#: graphs/window.vala:180
 msgid "Graphs (Development)"
 msgstr "Graphs（开发版）"
 
-#: graphs/window.vala:272
+#: graphs/window.vala:289
 msgid "Open Location"
 msgstr "打开位置"
 
-#: graphs/window.vala:306
+#: graphs/window.vala:323
 msgid "Optimize Limits"
 msgstr "优化极限"
 
-#: graphs/window.vala:315
+#: graphs/window.vala:332
 msgctxt "scale"
 msgid "Inverse Root"
 msgstr "逆平方根"
@@ -1797,16 +1815,9 @@ msgstr "逆平方根"
 #~ msgid "Step Size"
 #~ msgstr "步长"
 
-#~ msgid "Error - No Style selected"
-#~ msgstr "错误 - 未选择样式"
-
 #, python-brace-format
 #~ msgid "{error} - Unable to add data from equation"
 #~ msgstr "{error} - 无法从方程式添加数据"
 
 #~ msgid "Exported Figure"
 #~ msgstr "导出的图表"
-
-#~ msgctxt "file-filter"
-#~ msgid "Graphs Project File"
-#~ msgstr "Graphs 工程文件"
