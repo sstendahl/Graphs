@@ -2,6 +2,7 @@
 """Module for data transformations."""
 import logging
 import sys
+import re
 from gettext import gettext as _
 
 from gi.repository import Graphs
@@ -190,14 +191,22 @@ def _apply(window, callback, *args):
         if not (item.get_selected() and operation_item):
             continue
         if isinstance(item, EquationItem):
-            callback(item, *args)
-            if not callback:
+            result = callback(item, *args)
+            if result is None:
                 window.add_toast_string(
                     _(
-                        f"Could not perform operation on {item.name}, "
+                        f"Could not perform operation on {item.props.name}, "
                         + "this operation is not supported for equations.",
                     ),
                 )
+            elif result is False:
+                window.add_toast_string(
+                    _(
+                        f"Operation on {item.props.name} did not result in a  "
+                        + "plottable equation.",
+                    ),
+                )
+
         elif isinstance(item, DataItem):
             _apply_data(window, item, figure_settings, data_selected)
 
@@ -273,9 +282,12 @@ class EquationOperations():
         """
 
         x = sympy.symbols("x")
-        # TODO: MAKE SURE INSTANCES WITH AN X (LIKE EXP(X)) ARE NOT REPLACED
-        equation = _item.equation.replace("x", f"(x+{offset})")
+        equation = re.sub(r'(?<!e)x(?!p)', f"(x+{offset})", _item.equation)
+
         equation = sympy.sympify(utilities.preprocess(equation))
+        valid_equation = utilities.validate_equation(str(equation))
+        if not valid_equation:
+            return False
         _item.equation = str(sympy.simplify(equation))
         return True
 
@@ -289,6 +301,9 @@ class EquationOperations():
         """
         equation = f"({_item.equation})+{offset}"
         equation = sympy.sympify(utilities.preprocess(equation))
+        valid_equation = utilities.validate_equation(str(equation))
+        if not valid_equation:
+            return False
         _item.equation = str(sympy.simplify(equation))
         return True
 
@@ -300,8 +315,11 @@ class EquationOperations():
         Will show a toast if a ValueError is raised, typically when a user entered
         an invalid number (e.g. comma instead of point separators)
         """
-        equation = _item.equation.replace("x", f"(x*{multiplier})")
+        equation = re.sub(r'(?<!e)x(?!p)', f"(x*{multiplier})", _item.equation)
         equation = sympy.sympify(utilities.preprocess(equation))
+        valid_equation = utilities.validate_equation(str(equation))
+        if not valid_equation:
+            return False
         _item.equation = str(sympy.simplify(equation))
         return True
 
@@ -315,21 +333,27 @@ class EquationOperations():
         """
         equation = f"({_item.equation})*{multiplier}"
         equation = sympy.sympify(utilities.preprocess(equation))
+        valid_equation = utilities.validate_equation(str(equation))
+        if not valid_equation:
+            return False
         _item.equation = str(sympy.simplify(equation))
         return True
 
     def normalize(_item) -> _return:
         """Normalize all selected data."""
         # TODO: FIX RANGE
-        xdata, ydata = utilities.equation_to_data(item._equation, [0, 1])
+        xdata, ydata = utilities.equation_to_data(_item._equation, [0, 1])
         equation = f"({_item.equation})/{max(ydata)}"
         equation = sympy.sympify(utilities.preprocess(equation))
+        valid_equation = utilities.validate_equation(str(equation))
+        if not valid_equation:
+            return False
         _item.equation = str(sympy.simplify(equation))
         return True
 
     def smoothen(_item, ) -> None:
         """Smoothen y-data."""
-        return False
+        return None
 
     def center(_item, middle_value: int) -> _return:
         """
@@ -338,8 +362,12 @@ class EquationOperations():
         Depending on the key, will center either on the middle coordinate, or on
         the maximum value of the data
         """
-        equation = _item.equation.replace("x", f"(x-{middle_value})")
+        equation = \
+            re.sub(r'(?<!e)x(?!p)', f"(x-{middle_value})", _item.equation)
         equation = sympy.sympify(utilities.preprocess(equation))
+        valid_equation = utilities.validate_equation(str(equation))
+        if not valid_equation:
+            return False
         _item.equation = str(sympy.simplify(equation))
         return
 
@@ -401,99 +429,69 @@ class EquationOperations():
                 else:
                     new_ydata = [value + shift_value_linear for value in ydata]
             shift_value = shift_value_log if scale == 1 else shift_value_linear
-            print(shift_value)
+            valid_equation = utilities.validate_equation(str(equation))
+            if not valid_equation:
+                return False
             item.equation = f"{item.equation}+{shift_value}"
         return True
 
-    def cut(_item) -> _return:
+    def cut(_item) -> bool:
         """Cut selected data over the span that is selected."""
-        return False
+        return None
 
-    def derivative(_item) -> _return:
+    def derivative(_item) -> bool:
         """Calculate derivative of all selected data."""
         x = sympy.symbols("x")
         equation = utilities.preprocess(_item._equation)
         equation = sympy.diff(equation, x)
+        valid_equation = utilities.validate_equation(str(equation))
+        if not valid_equation:
+            return False
         _item.equation = str(equation)
         return True
 
-    def integral(_item) -> _return:
+    def integral(_item) -> bool:
         """Calculate indefinite integral of all selected data."""
         x = sympy.symbols("x")
         equation = utilities.preprocess(_item._equation)
         equation = sympy.integrate(equation, x)
+        valid_equation = utilities.validate_equation(str(equation))
+        if not valid_equation:
+            return False
         _item.equation = str(equation)
         return True
 
-    def fft(_item) -> _return:
+    def fft(_item) -> bool:
         """Perform Fourier transformation on all selected data."""
         x, k = sympy.symbols("x k")
         equation = utilities.preprocess(_item._equation)
         equation = str(sympy.fourier_transform(equation, x, k))
         equation = equation.replace("k", "x")
-        _item._equation = equation
+        valid_equation = utilities.validate_equation(str(equation))
+        if not valid_equation:
+            return False
+        _item.equation = str(equation)
         return True
 
-    def inverse_fft(_item) -> _return:
+    def inverse_fft(_item) -> bool:
         """Perform Inverse Fourier transformation on all selected data."""
         x, k = sympy.symbols("x k")
         equation = utilities.preprocess(_item._equation)
         equation = str(sympy.fourier_transform(equation, x, k))
         equation = equation.replace("k", "x")
-        _item._equation = equation
+        valid_equation = utilities.validate_equation(str(equation))
+        if not valid_equation:
+            return False
+        _item.equation = str(equation)
         return True
 
-    def transform(
-        _item,
-        xdata: list,
-        ydata: list,
-        input_x: str,
-        input_y: str,
-        discard: bool = False,
-    ) -> _return:
+    def transform(_item) -> None:
         """Perform custom transformation."""
-        local_dict = {
-            "x": xdata,
-            "y": ydata,
-            "x_min": min(xdata),
-            "x_max": max(xdata),
-            "y_min": min(ydata),
-            "y_max": max(ydata),
-        }
-        # Add array of zeros to return values, such that output remains a list
-        # of the correct size, even when a float is given as input.
-        return (
-            numexpr.evaluate(
-                utilities.preprocess(input_x) + "+ 0*x", local_dict
-            ),
-            numexpr.evaluate(
-                utilities.preprocess(input_y) + "+ 0*y", local_dict
-            ),
-            True,
-            discard,
-        )
+        return None
 
     def combine(window: Graphs.Window) -> None:
         """Combine the selected data into a new data set."""
-        new_xdata, new_ydata = [], []
-        data = window.get_data()
-        for item in data:
-            if not (item.get_selected() and isinstance(item, DataItem)):
-                continue
-            xdata, ydata = get_data(window, item)[:2]
-            new_xdata.extend(xdata)
-            new_ydata.extend(ydata)
-
-        # Create the item itself
-        new_xdata, new_ydata = sort_data(new_xdata, new_ydata)
-        data.add_items([
-            DataItem.new(
-                data.get_selected_style_params(),
-                new_xdata,
-                new_ydata,
-                name=_("Combined Data"),
-            ),
-        ])
+        return None
 
 
 class ItemOperations():
@@ -687,10 +685,54 @@ class ItemOperations():
         y_fourier = [value.real for value in y_fourier]
         return x_fourier, y_fourier, False, True
 
-    def transform(_item) -> _return:
+    def transform(
+        _item,
+        xdata: list,
+        ydata: list,
+        input_x: str,
+        input_y: str,
+        discard: bool = False,
+    ) -> _return:
         """Perform custom transformation."""
-        return False
+        local_dict = {
+            "x": xdata,
+            "y": ydata,
+            "x_min": min(xdata),
+            "x_max": max(xdata),
+            "y_min": min(ydata),
+            "y_max": max(ydata),
+        }
+        # Add array of zeros to return values, such that output remains a list
+        # of the correct size, even when a float is given as input.
+        return (
+            numexpr.evaluate(
+                utilities.preprocess(input_x) + "+ 0*x", local_dict
+            ),
+            numexpr.evaluate(
+                utilities.preprocess(input_y) + "+ 0*y", local_dict
+            ),
+            True,
+            discard,
+        )
 
     def combine(window: Graphs.Window) -> None:
         """Combine the selected data into a new data set."""
-        return False
+        new_xdata, new_ydata = [], []
+        data = window.get_data()
+        for item in data:
+            if not (item.get_selected() and isinstance(item, DataItem)):
+                continue
+            xdata, ydata = get_data(window, item)[:2]
+            new_xdata.extend(xdata)
+            new_ydata.extend(ydata)
+
+        # Create the item itself
+        new_xdata, new_ydata = sort_data(new_xdata, new_ydata)
+        data.add_items([
+            DataItem.new(
+                data.get_selected_style_params(),
+                new_xdata,
+                new_ydata,
+                name=_("Combined Data"),
+            ),
+        ])
