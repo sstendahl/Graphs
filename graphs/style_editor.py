@@ -486,12 +486,12 @@ class PythonStyleEditor(Graphs.StyleEditor):
         )
 
         style_editor.connect("params-changed", self._on_params_changed)
-        self._on_params_changed(style_editor)
+        self._on_params_changed(style_editor, False)
 
         self.connect("load_request", self._on_load_request)
         self.connect("save_request", self._on_save_request)
 
-    def _on_params_changed(self, style_editor):
+    def _on_params_changed(self, style_editor, changes_unsaved=True):
         if style_editor.params is None:
             style_manager = self.props.application.get_figure_style_manager()
             params = style_manager.get_system_style_params()
@@ -520,13 +520,16 @@ class PythonStyleEditor(Graphs.StyleEditor):
             "}",
         )
 
+        if changes_unsaved:
+            self.set_unsaved(True)
+
     @staticmethod
     def _on_load_request(self, file: Gio.File) -> None:
         """Load a style."""
         style_editor = self.get_editor_box()
         name = style_editor.load_style(file)
         self.set_title(name)
-        self._on_params_changed(style_editor)
+        self._on_params_changed(style_editor, False)
 
     @staticmethod
     def _on_save_request(self, file: Gio.File) -> None:
