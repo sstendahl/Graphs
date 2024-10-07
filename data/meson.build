@@ -65,6 +65,7 @@ blueprint_files = [
   'ui/dialogs/delete-style.blp',
   'ui/dialogs/reset-import-settings.blp',
   'ui/dialogs/save-project-changes.blp',
+  'ui/dialogs/save-style-changes.blp',
   'ui/add-equation.blp',
   'ui/add-style.blp',
   'ui/curve-fitting.blp',
