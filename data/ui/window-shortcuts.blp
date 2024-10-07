@@ -12,7 +12,7 @@ ShortcutsWindow help_overlay {
 
       ShortcutsShortcut {
         title: C_("shortcut window", "Show Shortcuts");
-        action-name: "win.show-help-overlay";
+        accelerator: "<primary>question";
       }
 
       ShortcutsShortcut {
@@ -27,8 +27,9 @@ ShortcutsWindow help_overlay {
 
       ShortcutsShortcut {
         title: C_("shortcut window", "Close Application");
-        accelerator: "<primary>q";
+        action-name: "app.quit";
       }
+
       ShortcutsShortcut {
         title: C_("shortcut window", "Close Application Window");
         accelerator: "<primary>w";
@@ -85,18 +86,22 @@ ShortcutsWindow help_overlay {
 
     ShortcutsGroup {
       title: C_("shortcut window", "Save and Export");
+
       ShortcutsShortcut {
         title: C_("shortcut window", "Export Data");
         accelerator: "<primary><shift>E";
       }
+
       ShortcutsShortcut {
         title: C_("shortcut window", "Export Figure");
         accelerator: "<primary>E";
       }
+
       ShortcutsShortcut {
         title: C_("shortcut window", "Save Project");
         accelerator: "<primary>S";
       }
+
       ShortcutsShortcut {
         title: C_("shortcut window", "Save Project As");
         accelerator: "<primary><shift>S";

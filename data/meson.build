@@ -77,14 +77,15 @@ blueprint_files = [
   'ui/import.blp',
   'ui/import-columns.blp',
   'ui/item-box.blp',
-  'ui/shortcuts.blp',
   'ui/smoothen-settings.blp',
   'ui/style-color-box.blp',
   'ui/style-editor-box.blp',
+  'ui/style-editor-shortcuts.blp',
   'ui/style-editor-window.blp',
   'ui/style-preview.blp',
   'ui/transform.blp',
   'ui/window.blp',
+  'ui/window-shortcuts.blp',
 ]
 
 blueprints_ui = []

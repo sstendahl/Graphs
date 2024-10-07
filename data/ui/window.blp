@@ -10,12 +10,12 @@ template $GraphsWindow: Adw.ApplicationWindow {
 
   ShortcutController {
     Shortcut {
-      trigger: "<primary>q";
+      trigger: "<primary>w";
       action: "action(window.close)";
     }
     Shortcut {
-      trigger: "<primary>w";
-      action: "action(window.close)";
+      trigger: "<primary>question";
+      action: "action(win.show-help-overlay)";
     }
     Shortcut {
       trigger: "<primary>comma";
@@ -86,31 +86,11 @@ template $GraphsWindow: Adw.ApplicationWindow {
       action: "action(win.delete_selected)";
     }
     Shortcut {
-      trigger: "<primary>plus";
+      trigger: "<primary>plus|<primary>KP_Add|<primary>equal|<primary>ZoomIn";
       action: "action(win.zoom_in)";
     }
     Shortcut {
-      trigger: "<primary>KP_Add";
-      action: "action(win.zoom_in)";
-    }
-    Shortcut {
-      trigger: "<primary>equal";
-      action: "action(win.zoom_in)";
-    }
-    Shortcut {
-      trigger: "ZoomIn";
-      action: "action(win.zoom_in)";
-    }
-    Shortcut {
-      trigger: "<primary>minus";
-      action: "action(win.zoom_out)";
-    }
-    Shortcut {
-      trigger: "<primary>KP_Subtract";
-      action: "action(win.zoom_out)";
-    }
-    Shortcut {
-      trigger: "<primary>ZoomOut";
+      trigger: "<primary>minus|<primary>KP_Subtract|<primary>ZoomOut";
       action: "action(win.zoom_out)";
     }
     Shortcut {
