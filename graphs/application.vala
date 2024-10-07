@@ -53,7 +53,7 @@ namespace Graphs {
                 }
             });
             add_action (quit_action);
-            set_accels_for_action ("app.quit", {"<primary>q"});
+            set_accels_for_action ("app.quit", {"<control>q"});
 
             var about_action = new SimpleAction ("about", null);
             about_action.activate.connect (() => {
