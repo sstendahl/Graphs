@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2024-10-05 07:53+0000\n"
-"PO-Revision-Date: 2024-10-06 10:27+0330\n"
+"POT-Creation-Date: 2024-10-07 07:32+0000\n"
+"PO-Revision-Date: 2024-10-07 20:16+0330\n"
 "Last-Translator: Danial Behzadi <dani.behzi@ubuntu.com>\n"
 "Language-Team: Persian <fa@li.org>\n"
 "Language: fa\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.4.4\n"
+"X-Generator: Poedit 3.5\n"
 
 #: data/se.sjoerd.Graphs.appdata.xml.in:6 data/se.sjoerd.Graphs.desktop.in:3
 #: data/ui/window.blp:9 graphs/application.vala:55
@@ -201,7 +201,7 @@ msgstr "افزودن برازش به داده‌ها"
 msgid "Toggle Sidebar"
 msgstr "تغییر وضعیت نوار کناری"
 
-#: data/ui/curve-fitting.blp:116 data/ui/style-editor-window.blp:41
+#: data/ui/curve-fitting.blp:116 data/ui/style-editor-window.blp:40
 #: data/ui/window.blp:620
 msgid "Canvas Failed to Load"
 msgstr "شکست در بار کردن بوم"
@@ -331,156 +331,156 @@ msgstr "چپ"
 msgid "Line Properties"
 msgstr "ویژگی‌های خط"
 
-#: data/ui/edit-item.blp:55 data/ui/style-editor.blp:58
+#: data/ui/edit-item.blp:55 data/ui/style-editor-box.blp:58
 msgid "Linestyle"
 msgstr "سبک خط"
 
-#: data/ui/edit-item.blp:58 data/ui/style-editor.blp:61
+#: data/ui/edit-item.blp:58 data/ui/style-editor-box.blp:61
 msgctxt "linestyle"
 msgid "None"
 msgstr "هیچ‌کدام"
 
-#: data/ui/edit-item.blp:59 data/ui/style-editor.blp:62
+#: data/ui/edit-item.blp:59 data/ui/style-editor-box.blp:62
 msgctxt "linestyle"
 msgid "Solid"
 msgstr "پر"
 
-#: data/ui/edit-item.blp:60 data/ui/style-editor.blp:63
+#: data/ui/edit-item.blp:60 data/ui/style-editor-box.blp:63
 msgctxt "linestyle"
 msgid "Dotted"
 msgstr "نقطه‌چین"
 
-#: data/ui/edit-item.blp:61 data/ui/style-editor.blp:64
+#: data/ui/edit-item.blp:61 data/ui/style-editor-box.blp:64
 msgctxt "linestyle"
 msgid "Dashed"
 msgstr "خط‌چین"
 
-#: data/ui/edit-item.blp:62 data/ui/style-editor.blp:65
+#: data/ui/edit-item.blp:62 data/ui/style-editor-box.blp:65
 msgctxt "linestyle"
 msgid "Dashdot"
 msgstr "خط‌چین"
 
-#: data/ui/edit-item.blp:69 data/ui/style-editor.blp:72
+#: data/ui/edit-item.blp:69 data/ui/style-editor-box.blp:72
 msgid "Linewidth"
 msgstr "پهنای خط"
 
-#: data/ui/edit-item.blp:83 data/ui/style-editor.blp:87
+#: data/ui/edit-item.blp:83 data/ui/style-editor-box.blp:87
 msgid "Markers"
 msgstr "نشانه‌ها"
 
-#: data/ui/edit-item.blp:86 data/ui/style-editor.blp:90
+#: data/ui/edit-item.blp:86 data/ui/style-editor-box.blp:90
 msgctxt "markerstyle"
 msgid "None"
 msgstr "هیچ‌کدام"
 
-#: data/ui/edit-item.blp:87 data/ui/style-editor.blp:91
+#: data/ui/edit-item.blp:87 data/ui/style-editor-box.blp:91
 msgctxt "markerstyle"
 msgid "Point"
 msgstr "نقطه"
 
-#: data/ui/edit-item.blp:88 data/ui/style-editor.blp:92
+#: data/ui/edit-item.blp:88 data/ui/style-editor-box.blp:92
 msgctxt "markerstyle"
 msgid "Pixel"
 msgstr "پیکسل"
 
-#: data/ui/edit-item.blp:89 data/ui/style-editor.blp:93
+#: data/ui/edit-item.blp:89 data/ui/style-editor-box.blp:93
 msgctxt "markerstyle"
 msgid "Circle"
 msgstr "حلقه"
 
-#: data/ui/edit-item.blp:90 data/ui/style-editor.blp:94
+#: data/ui/edit-item.blp:90 data/ui/style-editor-box.blp:94
 msgctxt "markerstyle"
 msgid "Triangle Down"
 msgstr "سه‌گوش به پایین"
 
-#: data/ui/edit-item.blp:91 data/ui/style-editor.blp:95
+#: data/ui/edit-item.blp:91 data/ui/style-editor-box.blp:95
 msgctxt "markerstyle"
 msgid "Triangle Up"
 msgstr "سه‌گوش به بالا"
 
-#: data/ui/edit-item.blp:92 data/ui/style-editor.blp:96
+#: data/ui/edit-item.blp:92 data/ui/style-editor-box.blp:96
 msgctxt "markerstyle"
 msgid "Triangle Left"
 msgstr "سه‌گوش به چپ"
 
-#: data/ui/edit-item.blp:93 data/ui/style-editor.blp:97
+#: data/ui/edit-item.blp:93 data/ui/style-editor-box.blp:97
 msgctxt "markerstyle"
 msgid "Triangle Right"
 msgstr "سه‌گوش به راست"
 
-#: data/ui/edit-item.blp:94 data/ui/style-editor.blp:98
+#: data/ui/edit-item.blp:94 data/ui/style-editor-box.blp:98
 msgctxt "markerstyle"
 msgid "Octagon"
 msgstr "هشت‌گوش"
 
-#: data/ui/edit-item.blp:95 data/ui/style-editor.blp:99
+#: data/ui/edit-item.blp:95 data/ui/style-editor-box.blp:99
 msgctxt "markerstyle"
 msgid "Square"
 msgstr "مربّع"
 
-#: data/ui/edit-item.blp:96 data/ui/style-editor.blp:100
+#: data/ui/edit-item.blp:96 data/ui/style-editor-box.blp:100
 msgctxt "markerstyle"
 msgid "Pentagon"
 msgstr "پنج‌گوش"
 
-#: data/ui/edit-item.blp:97 data/ui/style-editor.blp:101
+#: data/ui/edit-item.blp:97 data/ui/style-editor-box.blp:101
 msgctxt "markerstyle"
 msgid "Star"
 msgstr "ستاره"
 
-#: data/ui/edit-item.blp:98 data/ui/style-editor.blp:102
+#: data/ui/edit-item.blp:98 data/ui/style-editor-box.blp:102
 msgctxt "markerstyle"
 msgid "Hexagon 1"
 msgstr "شش‌گوش ۱"
 
-#: data/ui/edit-item.blp:99 data/ui/style-editor.blp:103
+#: data/ui/edit-item.blp:99 data/ui/style-editor-box.blp:103
 msgctxt "markerstyle"
 msgid "Hexagon 2"
 msgstr "شش‌گوش ۲"
 
-#: data/ui/edit-item.blp:100 data/ui/style-editor.blp:104
+#: data/ui/edit-item.blp:100 data/ui/style-editor-box.blp:104
 msgctxt "markerstyle"
 msgid "Plus"
 msgstr "مثبت"
 
-#: data/ui/edit-item.blp:101 data/ui/style-editor.blp:105
+#: data/ui/edit-item.blp:101 data/ui/style-editor-box.blp:105
 msgctxt "markerstyle"
 msgid "X"
 msgstr "‏X"
 
 #. Translators: Diamond as in Cards Symbol
-#: data/ui/edit-item.blp:103 data/ui/style-editor.blp:107
+#: data/ui/edit-item.blp:103 data/ui/style-editor-box.blp:107
 msgctxt "markerstyle"
 msgid "Diamond"
 msgstr "لوزی"
 
 #. Translators: Diamond as in Cards Symbol
-#: data/ui/edit-item.blp:105 data/ui/style-editor.blp:109
+#: data/ui/edit-item.blp:105 data/ui/style-editor-box.blp:109
 msgctxt "markerstyle"
 msgid "Thin Diamond"
 msgstr "لوزی لاغر"
 
-#: data/ui/edit-item.blp:106 data/ui/style-editor.blp:110
+#: data/ui/edit-item.blp:106 data/ui/style-editor-box.blp:110
 msgctxt "markerstyle"
 msgid "Vertical Line"
 msgstr "خط عمودی"
 
-#: data/ui/edit-item.blp:107 data/ui/style-editor.blp:111
+#: data/ui/edit-item.blp:107 data/ui/style-editor-box.blp:111
 msgctxt "markerstyle"
 msgid "Horizontal Line"
 msgstr "خط افقی"
 
-#: data/ui/edit-item.blp:108 data/ui/style-editor.blp:112
+#: data/ui/edit-item.blp:108 data/ui/style-editor-box.blp:112
 msgctxt "markerstyle"
 msgid "Filled Plus"
 msgstr "به علاوهٔ توپر"
 
-#: data/ui/edit-item.blp:109 data/ui/style-editor.blp:113
+#: data/ui/edit-item.blp:109 data/ui/style-editor-box.blp:113
 msgctxt "markerstyle"
 msgid "Filled X"
 msgstr "X توپر"
 
-#: data/ui/edit-item.blp:116 data/ui/style-editor.blp:120
+#: data/ui/edit-item.blp:116 data/ui/style-editor-box.blp:120
 msgid "Marker Size"
 msgstr "اندازهٔ نشانگر"
 
@@ -551,7 +551,7 @@ msgstr "تنظیمات شکل"
 msgid "Labels"
 msgstr "برچسب‌ها"
 
-#: data/ui/figure-settings-page.blp:24 graphs/style_editor.py:520
+#: data/ui/figure-settings-page.blp:24 graphs/style_editor.py:510
 msgid "Title"
 msgstr "عنوان"
 
@@ -1057,193 +1057,193 @@ msgstr "ویرایش"
 msgid "Remove"
 msgstr "برداشتن"
 
-#: data/ui/style-editor.blp:11
+#: data/ui/style-editor-box.blp:11
 msgid "Style Name"
 msgstr "نام سبک"
 
-#: data/ui/style-editor.blp:15
+#: data/ui/style-editor-box.blp:15
 msgid "Font"
 msgstr "قلم"
 
-#: data/ui/style-editor.blp:26
+#: data/ui/style-editor-box.blp:26
 msgid "Title Size"
 msgstr "اندازهٔ عنوان"
 
-#: data/ui/style-editor.blp:27
+#: data/ui/style-editor-box.blp:27
 msgid "Title size in relation to text size"
 msgstr "اندازهٔ عنوان به نسبت اندازهٔ متن"
 
-#: data/ui/style-editor.blp:40
+#: data/ui/style-editor-box.blp:40
 msgid "Label Size"
 msgstr "اندازهٔ برچسب"
 
-#: data/ui/style-editor.blp:41
+#: data/ui/style-editor-box.blp:41
 msgid "Label size in relation to text size"
 msgstr "اندازهٔ برچسب به نسبت اندازهٔ متن"
 
-#: data/ui/style-editor.blp:55
+#: data/ui/style-editor-box.blp:55
 msgid "Lines"
 msgstr "خط"
 
-#: data/ui/style-editor.blp:136
+#: data/ui/style-editor-box.blp:136
 msgid "Axes"
 msgstr "اهرم‌ها"
 
-#: data/ui/style-editor.blp:139
+#: data/ui/style-editor-box.blp:139
 msgid "Axis Width"
 msgstr "پهنای محور"
 
-#: data/ui/style-editor.blp:152
+#: data/ui/style-editor-box.blp:152
 msgid "Draw Frame"
 msgstr "کشیدن چارچوب"
 
-#: data/ui/style-editor.blp:157
+#: data/ui/style-editor-box.blp:157
 msgid "Ticks"
 msgstr "تیک‌ها"
 
-#: data/ui/style-editor.blp:160
+#: data/ui/style-editor-box.blp:160
 msgid "Tick Directions"
 msgstr "جهت تیک‌ها"
 
-#: data/ui/style-editor.blp:162
+#: data/ui/style-editor-box.blp:162
 msgid "Inwards"
 msgstr "به درون"
 
-#: data/ui/style-editor.blp:162
+#: data/ui/style-editor-box.blp:162
 msgid "Outwards"
 msgstr "به بیرون"
 
-#: data/ui/style-editor.blp:167
+#: data/ui/style-editor-box.blp:167
 msgid "Minor Ticks"
 msgstr "تیک‌های ریز"
 
-#: data/ui/style-editor.blp:171
+#: data/ui/style-editor-box.blp:171
 msgid "Major Tick Width"
 msgstr "پهنای تیک‌های ریز"
 
-#: data/ui/style-editor.blp:184
+#: data/ui/style-editor-box.blp:184
 msgid "Minor Tick Width"
 msgstr "پهنای تیک‌های درست"
 
-#: data/ui/style-editor.blp:198
+#: data/ui/style-editor-box.blp:198
 msgid "Major Tick Length"
 msgstr "طول تیک‌های درشت"
 
-#: data/ui/style-editor.blp:211
+#: data/ui/style-editor-box.blp:211
 msgid "Minor Tick Length"
 msgstr "طول تیک‌های ریز"
 
-#: data/ui/style-editor.blp:225
+#: data/ui/style-editor-box.blp:225
 msgid "Ticks on Bottom Axis"
 msgstr "تیک‌های روی محور پایین"
 
-#: data/ui/style-editor.blp:229
+#: data/ui/style-editor-box.blp:229
 msgid "Ticks on Left Axis"
 msgstr "تیک‌های روی محور چپ"
 
-#: data/ui/style-editor.blp:233
+#: data/ui/style-editor-box.blp:233
 msgid "Ticks on Right Axis"
 msgstr "تیک‌های روی محور راست"
 
-#: data/ui/style-editor.blp:237
+#: data/ui/style-editor-box.blp:237
 msgid "Ticks on Top Axis"
 msgstr "تیک‌های روی محور بالا"
 
-#: data/ui/style-editor.blp:242
+#: data/ui/style-editor-box.blp:242
 msgid "Grid"
 msgstr "توری"
 
-#: data/ui/style-editor.blp:245
+#: data/ui/style-editor-box.blp:245
 msgid "Show Grid"
 msgstr "نمایش شبکه"
 
-#: data/ui/style-editor.blp:249
+#: data/ui/style-editor-box.blp:249
 msgid "Grid Width"
 msgstr "پهنای شبکه"
 
-#: data/ui/style-editor.blp:263
+#: data/ui/style-editor-box.blp:263
 msgid "Grid Opacity"
 msgstr "شفّافیت شبکه"
 
-#: data/ui/style-editor.blp:278
+#: data/ui/style-editor-box.blp:278
 msgid "Padding"
 msgstr "لایه‌گذاری"
 
-#: data/ui/style-editor.blp:279
+#: data/ui/style-editor-box.blp:279
 msgid "Padding for different parts of the figure"
 msgstr "فاصله گذاری بخش های مختلف شکل"
 
-#: data/ui/style-editor.blp:282
+#: data/ui/style-editor-box.blp:282
 msgid "Value Padding"
 msgstr "فاصله گذاری مقدار"
 
-#: data/ui/style-editor.blp:283
+#: data/ui/style-editor-box.blp:283
 msgid "Padding between axes and values"
 msgstr "فاصله گذاری بین محورها و مقدارها"
 
-#: data/ui/style-editor.blp:296
+#: data/ui/style-editor-box.blp:296
 msgid "Label Padding"
 msgstr "فاصله گذاری برچسب"
 
-#: data/ui/style-editor.blp:297
+#: data/ui/style-editor-box.blp:297
 msgid "Padding between axes and labels"
 msgstr "فاصله گذاری بین محورها و برچسب‌ها"
 
-#: data/ui/style-editor.blp:310
+#: data/ui/style-editor-box.blp:310
 msgid "Title Padding"
 msgstr "فاصله گذاری عنوان"
 
-#: data/ui/style-editor.blp:311
+#: data/ui/style-editor-box.blp:311
 msgid "Padding between axes and the title"
 msgstr "فاصله گذاری بین بردارها و عنوان"
 
-#: data/ui/style-editor.blp:325
+#: data/ui/style-editor-box.blp:325
 msgid "Colors"
 msgstr "رنگ‌ها"
 
-#: data/ui/style-editor.blp:330
+#: data/ui/style-editor-box.blp:330
 msgid "Label text might be hard to read"
 msgstr "ممکن است خواندن متن برچسب سخت باشد"
 
-#: data/ui/style-editor.blp:335
+#: data/ui/style-editor-box.blp:335
 msgid "Poor Contrast"
 msgstr "سایه‌روشن ضعیف"
 
-#: data/ui/style-editor.blp:350
+#: data/ui/style-editor-box.blp:350
 msgid "Text Color"
 msgstr "رنگ متن"
 
-#: data/ui/style-editor.blp:355 data/ui/style-editor.blp:377
-#: data/ui/style-editor.blp:399 data/ui/style-editor.blp:421
-#: data/ui/style-editor.blp:443 data/ui/style-editor.blp:465
+#: data/ui/style-editor-box.blp:355 data/ui/style-editor-box.blp:377
+#: data/ui/style-editor-box.blp:399 data/ui/style-editor-box.blp:421
+#: data/ui/style-editor-box.blp:443 data/ui/style-editor-box.blp:465
 msgid "Change Color"
 msgstr "تغییر رنگ"
 
-#: data/ui/style-editor.blp:372
+#: data/ui/style-editor-box.blp:372
 msgid "Tick Color"
 msgstr "رنگ تیک"
 
-#: data/ui/style-editor.blp:394
+#: data/ui/style-editor-box.blp:394
 msgid "Axis Color"
 msgstr "رنگ محور"
 
-#: data/ui/style-editor.blp:416
+#: data/ui/style-editor-box.blp:416
 msgid "Grid Color"
 msgstr "رنگ شبکه"
 
-#: data/ui/style-editor.blp:438
+#: data/ui/style-editor-box.blp:438
 msgid "Background Color"
 msgstr "رنگ پس‌زمینه"
 
-#: data/ui/style-editor.blp:460
+#: data/ui/style-editor-box.blp:460
 msgid "Outline Color"
 msgstr "رنگ دور"
 
-#: data/ui/style-editor.blp:479
+#: data/ui/style-editor-box.blp:479
 msgid "Line Colors"
 msgstr "رنگ خط‌ها"
 
-#: data/ui/style-editor.blp:485
+#: data/ui/style-editor-box.blp:485
 msgid "Add Color"
 msgstr "افزودن رنگ"
 
@@ -1596,12 +1596,16 @@ msgstr "پروژهٔ بی‌عنوان"
 msgid "Draft"
 msgstr "پیش‌نویس"
 
-#: graphs/data.py:135
+#: graphs/data.py:89
+msgid "Document Portal"
+msgstr "درگاه سند"
+
+#: graphs/data.py:137
 #, python-brace-format
 msgid "Could not parse {stylename}, loading system preferred style"
 msgstr "نتوانست {stylename} را تجزیه کند. بار کردن سبک ترجیحی سامانه"
 
-#: graphs/data.py:140
+#: graphs/data.py:142
 #, python-brace-format
 msgid "Plot style {stylename} does not exist loading system preferred"
 msgstr "سبک نمودار {stylename} وجود ندارد. بار کردن ترجیح سامانه"
@@ -1710,11 +1714,11 @@ msgstr "β (°)"
 msgid "R (1/s)"
 msgstr "R (1/s)"
 
-#: graphs/parse_file.py:155
+#: graphs/parse_file.py:154
 msgid "Import failed, column index out of range"
 msgstr "درون‌ریزی شکست خورد. اندیس ستون بیرون از دامنه"
 
-#: graphs/parse_file.py:174
+#: graphs/parse_file.py:173
 msgid "Unable to import from file"
 msgstr "ناتوان در درون‌ریزی از پرونده"
 
@@ -1736,49 +1740,49 @@ msgstr "پروژه"
 msgid "Color {number}"
 msgstr "رنگ {number}"
 
-#: graphs/style_editor.py:481 graphs/style_editor.py:490
+#: graphs/style_editor.py:474 graphs/style_editor.py:483
 msgid "Example Item"
 msgstr "مورد مثال"
 
-#: graphs/style_editor.py:521 graphs/style_io.py:182
+#: graphs/style_editor.py:511 graphs/style_io.py:177
 msgid "X Label"
 msgstr "برچسب X"
 
-#: graphs/style_editor.py:522 graphs/style_io.py:183
+#: graphs/style_editor.py:512 graphs/style_io.py:178
 msgid "Y Label"
 msgstr "برچسب Y"
 
-#: graphs/style_io.py:77
+#: graphs/style_io.py:72
 #, python-brace-format
 msgid "Missing colon in file {file}, line {line}"
 msgstr "دو نقطه در خط {line} از {file} جا افتاده"
 
-#: graphs/style_io.py:85
+#: graphs/style_io.py:80
 #, python-brace-format
 msgid "Non-style related parameter {param} in file {file}"
 msgstr "پارامتر نامربوط به سبک {param} در {file}"
 
-#: graphs/style_io.py:88
+#: graphs/style_io.py:83
 #, python-brace-format
 msgid "Ignoring parameter {param} in file {file}"
 msgstr "چشم‌پوشی از پارامتر {param} در {file}"
 
-#: graphs/style_io.py:92
+#: graphs/style_io.py:87
 #, python-brace-format
 msgid "Duplicate key in file {file}, on line {line}"
 msgstr "کلید تکراری در خط {line} از {file}"
 
-#: graphs/style_io.py:112
+#: graphs/style_io.py:107
 #, python-brace-format
 msgid "Bad value in file {file} on line {line}"
 msgstr "مقدار بد در خط {line} از {file}"
 
-#: graphs/style_io.py:118
+#: graphs/style_io.py:113
 #, python-brace-format
 msgid "Could not parse {filename}"
 msgstr "نتوانست {filename} را تجزیه کند"
 
-#: graphs/style_io.py:127
+#: graphs/style_io.py:122
 #, python-brace-format
 msgid "File {file}, does not contain name tag"
 msgstr "پروندهٔ {file} برچسب نام ندارد"
