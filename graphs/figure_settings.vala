@@ -279,11 +279,11 @@ namespace Graphs {
                 action_group.add_action (open_with_action);
                 var delete_action = new SimpleAction ("delete", null);
                 delete_action.activate.connect (() => {
-                    var dialog = Tools.build_dialog ("delete_style_dialog") as Adw.AlertDialog;
+                    var dialog = Tools.build_dialog ("delete_style") as Adw.AlertDialog;
                     string msg = _("Are you sure you want to delete %s?");
                     dialog.set_body (msg.printf (style.name));
                     dialog.response.connect ((d, response) => {
-                        if (response != "delete_style") return;
+                        if (response != "delete") return;
                         try {
                             style.file.trash ();
                         } catch {
