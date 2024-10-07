@@ -378,15 +378,15 @@ namespace Graphs {
             }
 
             if (data.unsaved) {
-                var dialog = Tools.build_dialog ("save_changes") as Adw.AlertDialog;
+                var dialog = Tools.build_dialog ("save_project_changes") as Adw.AlertDialog;
                 dialog.response.connect ((d, response) => {
                     switch (response) {
-                        case "discard_close": {
+                        case "discard": {
                             _force_close = true;
                             close ();
                             break;
                         }
-                        case "save_close": {
+                        case "save": {
                             Project.save.begin (this, false, (o, result) => {
                                 if (Project.save.end (result)) {
                                     _force_close = true;

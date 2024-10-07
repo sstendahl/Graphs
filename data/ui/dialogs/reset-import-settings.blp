@@ -1,0 +1,13 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.AlertDialog reset_to_defaults_dialog {
+  heading: _("Reset to Defaults?");
+  body: _("Are you sure you want to reset the import settings?");
+  responses [
+    cancel: _("Cancel"),
+    reset: _("Reset") destructive,
+  ]
+  close-response: "cancel";
+  default-response: "reset";
+}
