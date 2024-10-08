@@ -106,6 +106,7 @@ namespace Graphs {
         }
 
         private bool _force_close = false;
+        private uint _inhibit_cookie = 0;
 
         protected void setup () {
             var application = application as Application;
@@ -151,6 +152,18 @@ namespace Graphs {
                 update_view_menu ();
                 reload_item_list ();
                 data.add_view_history_state ();
+            });
+            // Inhibit session end when there is unsaved data present
+            data.notify["unsaved"].connect (() => {
+                if (data.unsaved) {
+                    application.inhibit (
+                        this,
+                        ApplicationInhibitFlags.LOGOUT,
+                        data.project_name
+                    );
+                } else if (_inhibit_cookie > 0) {
+                    application.uninhibit (_inhibit_cookie);
+                }
             });
 
             var drop_target = new Gtk.DropTarget (typeof (Adw.ActionRow), Gdk.DragAction.MOVE);
