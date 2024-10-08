@@ -31,6 +31,7 @@ namespace Graphs {
         protected bool unsaved { get; set; default = false; }
         private File _file;
         private bool _force_close = false;
+        private uint _inhibit_cookie = 0;
 
         protected signal void load_request (File file);
         protected signal void save_request (File file);
@@ -63,6 +64,19 @@ namespace Graphs {
                 });
             });
             add_action (save_as_action);
+
+            // Inhibit session end when there is unsaved data present
+            notify["unsaved"].connect (() => {
+                if (unsaved) {
+                    application.inhibit (
+                        this,
+                        ApplicationInhibitFlags.LOGOUT,
+                        title
+                    );
+                } else if (_inhibit_cookie > 0) {
+                    application.uninhibit (_inhibit_cookie);
+                }
+            });
 
             string path = "/se/sjoerd/Graphs/ui/style-editor-shortcuts.ui";
             var builder = new Builder.from_resource (path);

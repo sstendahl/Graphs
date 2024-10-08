@@ -106,6 +106,7 @@ namespace Graphs {
         }
 
         private bool _force_close = false;
+        private uint _inhibit_cookie = 0;
 
         construct {
             InlineStackSwitcher stack_switcher = new InlineStackSwitcher ();
@@ -178,6 +179,18 @@ namespace Graphs {
                 update_view_menu ();
                 reload_item_list ();
                 data.add_view_history_state ();
+            });
+            // Inhibit session end when there is unsaved data present
+            data.notify["unsaved"].connect (() => {
+                if (data.unsaved) {
+                    application.inhibit (
+                        this,
+                        ApplicationInhibitFlags.LOGOUT,
+                        data.project_name
+                    );
+                } else if (_inhibit_cookie > 0) {
+                    application.uninhibit (_inhibit_cookie);
+                }
             });
 
             update_view_menu ();
