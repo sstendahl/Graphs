@@ -8,12 +8,20 @@ template $GraphsStyleEditor : Adw.ApplicationWindow {
 
   ShortcutController {
      Shortcut {
-      trigger: "<primary>q";
+      trigger: "<control>w";
       action: "action(window.close)";
     }
     Shortcut {
-      trigger: "<primary>w";
-      action: "action(window.close)";
+      trigger: "<control>question";
+      action: "action(win.show-help-overlay)";
+    }
+    Shortcut {
+      trigger: "<control>S";
+      action: "action(win.save_style)";
+    }
+    Shortcut {
+      trigger: "<control><shift>S";
+      action: "action(win.save_style_as)";
     }
   }
 
@@ -67,6 +75,7 @@ menu primary_menu {
     item (_("Save Style as…"), "win.save_style_as")
   }
   section {
+    item (_("Keyboard Shortcuts"), "win.show-help-overlay")
     item (_("Help"), "app.help")
     item (_("About Graphs"), "app.about")
   }

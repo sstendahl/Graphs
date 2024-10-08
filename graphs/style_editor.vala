@@ -63,6 +63,10 @@ namespace Graphs {
                 });
             });
             add_action (save_as_action);
+
+            string path = "/se/sjoerd/Graphs/ui/style-editor-shortcuts.ui";
+            var builder = new Builder.from_resource (path);
+            set_help_overlay (builder.get_object ("help_overlay") as ShortcutsWindow);
         }
 
         public void load (File file) {
