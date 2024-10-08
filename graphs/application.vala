@@ -41,6 +41,20 @@ namespace Graphs {
 
             python_helper.run_method (this, "_setup");
 
+            var quit_action = new SimpleAction ("quit", null);
+            quit_action.activate.connect (() => {
+                // We need to cast to array here as the list size might change
+                // during iteration
+                foreach (Window window in main_windows.to_array ()) {
+                    window.close ();
+                }
+                foreach (StyleEditor style_editor in style_editors.to_array ()) {
+                    style_editor.close ();
+                }
+            });
+            add_action (quit_action);
+            set_accels_for_action ("app.quit", {"<control>q"});
+
             var about_action = new SimpleAction ("about", null);
             about_action.activate.connect (() => {
                 var file = File.new_for_uri ("resource:///se/sjoerd/Graphs/whats_new");

@@ -10,47 +10,47 @@ template $GraphsWindow: Adw.ApplicationWindow {
 
   ShortcutController {
     Shortcut {
-      trigger: "<primary>q";
+      trigger: "<control>w";
       action: "action(window.close)";
     }
     Shortcut {
-      trigger: "<primary>w";
-      action: "action(window.close)";
+      trigger: "<control>question";
+      action: "action(win.show-help-overlay)";
     }
     Shortcut {
-      trigger: "<primary>comma";
+      trigger: "<control>comma";
       action: "action(win.figure_settings)";
     }
     Shortcut {
-      trigger: "<primary>N";
+      trigger: "<control>N";
       action: "action(win.add_data)";
     }
     Shortcut {
-      trigger: "<primary><alt>N";
+      trigger: "<control><alt>N";
       action: "action(win.add_equation)";
     }
     Shortcut {
-      trigger: "<primary>A";
+      trigger: "<control>A";
       action: "action(win.select_all)";
     }
     Shortcut {
-      trigger: "<primary><shift>A";
+      trigger: "<control><shift>A";
       action: "action(win.select_none)";
     }
     Shortcut {
-      trigger: "<primary>Z";
+      trigger: "<control>Z";
       action: "action(win.undo)";
     }
     Shortcut {
-      trigger: "<primary><shift>Z";
+      trigger: "<control><shift>Z";
       action: "action(win.redo)";
     }
     Shortcut {
-      trigger: "<primary>KP_0";
+      trigger: "<control>KP_0";
       action: "action(win.optimize_limits)";
     }
     Shortcut {
-      trigger: "<primary>0";
+      trigger: "<control>0";
       action: "action(win.optimize_limits)";
     }
     Shortcut {
@@ -62,23 +62,23 @@ template $GraphsWindow: Adw.ApplicationWindow {
       action: "action(win.view_forward)";
     }
     Shortcut {
-      trigger: "<primary><shift>E";
+      trigger: "<control><shift>E";
       action: "action(win.export_data)";
     }
     Shortcut {
-      trigger: "<primary>E";
+      trigger: "<control>E";
       action: "action(win.export_figure)";
     }
     Shortcut {
-      trigger: "<primary>period";
+      trigger: "<control>period";
       action: "action(win.styles)";
     }
     Shortcut {
-      trigger: "<primary>S";
+      trigger: "<control>S";
       action: "action(win.save_project)";
     }
     Shortcut {
-      trigger: "<primary>O";
+      trigger: "<control>O";
       action: "action(win.open_project)";
     }
     Shortcut {
@@ -86,39 +86,19 @@ template $GraphsWindow: Adw.ApplicationWindow {
       action: "action(win.delete_selected)";
     }
     Shortcut {
-      trigger: "<primary>plus";
+      trigger: "<control>plus|<control>KP_Add|<control>equal|<control>ZoomIn";
       action: "action(win.zoom_in)";
     }
     Shortcut {
-      trigger: "<primary>KP_Add";
-      action: "action(win.zoom_in)";
-    }
-    Shortcut {
-      trigger: "<primary>equal";
-      action: "action(win.zoom_in)";
-    }
-    Shortcut {
-      trigger: "ZoomIn";
-      action: "action(win.zoom_in)";
-    }
-    Shortcut {
-      trigger: "<primary>minus";
+      trigger: "<control>minus|<control>KP_Subtract|<control>ZoomOut";
       action: "action(win.zoom_out)";
     }
     Shortcut {
-      trigger: "<primary>KP_Subtract";
-      action: "action(win.zoom_out)";
-    }
-    Shortcut {
-      trigger: "<primary>ZoomOut";
-      action: "action(win.zoom_out)";
-    }
-    Shortcut {
-      trigger: "<primary><shift>S";
+      trigger: "<control><shift>S";
       action: "action(win.save_project_as)";
     }
     Shortcut {
-      trigger: "<primary><shift>N";
+      trigger: "<control><shift>N";
       action: "action(app.new_project)";
     }
     Shortcut {
@@ -126,15 +106,15 @@ template $GraphsWindow: Adw.ApplicationWindow {
       action: "action(win.toggle_sidebar)";
     }
     Shortcut {
-      trigger: "<primary>1";
+      trigger: "<control>1";
       action: "action(win.mode_pan)";
     }
     Shortcut {
-      trigger: "<primary>2";
+      trigger: "<control>2";
       action: "action(win.mode_zoom)";
     }
     Shortcut {
-      trigger: "<primary>3";
+      trigger: "<control>3";
       action: "action(win.mode_select)";
     }
   }

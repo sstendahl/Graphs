@@ -190,12 +190,8 @@ ui_gresource = ElementTree.SubElement(
     "gresource",
     attrib={"prefix": main_prefix},
 )
-help_overlay_path = None
 for ui_file in args.ui:
     path = Path(current_dir, ui_file)
-    if path.name == "shortcuts.ui":
-        help_overlay_path = path
-        continue
     ui_file_element = ElementTree.SubElement(
         ui_gresource,
         "file",
@@ -204,15 +200,6 @@ for ui_file in args.ui:
         },
     )
     ui_file_element.text = str(path.relative_to(current_dir))
-help_overlay_element = ElementTree.SubElement(
-    ui_gresource,
-    "file",
-    attrib={
-        "preprocess": "xml-stripblanks",
-        "alias": "gtk/help-overlay.ui",
-    },
-)
-help_overlay_element.text = str(help_overlay_path.relative_to(current_dir))
 # End ui section
 
 # Begin icon section
