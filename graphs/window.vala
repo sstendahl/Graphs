@@ -108,6 +108,39 @@ namespace Graphs {
         private bool _force_close = false;
         private uint _inhibit_cookie = 0;
 
+        construct {
+            InlineStackSwitcher stack_switcher = new InlineStackSwitcher ();
+            stack_switcher.stack = stack;
+            stack_switcher.add_css_class ("compact");
+            stack_switcher.set_hexpand (true);
+            stack_switcher_box.prepend (stack_switcher);
+
+            this.headerbar_provider = new CssProvider ();
+            content_headerbar.get_style_context ().add_provider (
+                headerbar_provider, STYLE_PROVIDER_PRIORITY_APPLICATION
+            );
+
+            var drop_target = new Gtk.DropTarget (typeof (Adw.ActionRow), Gdk.DragAction.MOVE);
+            drop_target.drop.connect ((drop, val, x, y) => {
+                var value_row = val.get_object () as ItemBox?;
+                var target_row = item_list.get_row_at_y ((int) y) as ItemBox?;
+                // If value or the target row is null, do not accept the drop
+                if (value_row == null || target_row == null) {
+                    return false;
+                }
+
+                target_row.change_position (value_row.get_index ());
+                target_row.set_state_flags (Gtk.StateFlags.NORMAL, true);
+
+                return true;
+            });
+            item_list.add_controller (drop_target);
+
+            string path = "/se/sjoerd/Graphs/ui/window-shortcuts.ui";
+            var builder = new Builder.from_resource (path);
+            set_help_overlay (builder.get_object ("help_overlay") as ShortcutsWindow);
+        }
+
         protected void setup () {
             var application = application as Application;
 
@@ -120,12 +153,6 @@ namespace Graphs {
             data.bind_property ("can_view_forward", view_forward_button, "sensitive", 2);
             data.bind_property ("project_name", content_title, "title", 2);
             data.bind_property ("project_path", content_title, "subtitle", 2);
-
-            InlineStackSwitcher stack_switcher = new InlineStackSwitcher ();
-            stack_switcher.stack = stack;
-            stack_switcher.add_css_class ("compact");
-            stack_switcher.set_hexpand (true);
-            stack_switcher_box.prepend (stack_switcher);
 
             string[] action_names = {
                 "multiply_x",
@@ -165,27 +192,6 @@ namespace Graphs {
                     application.uninhibit (_inhibit_cookie);
                 }
             });
-
-            var drop_target = new Gtk.DropTarget (typeof (Adw.ActionRow), Gdk.DragAction.MOVE);
-            drop_target.drop.connect ((drop, val, x, y) => {
-                var value_row = val.get_object () as ItemBox?;
-                var target_row = item_list.get_row_at_y ((int) y) as ItemBox?;
-                // If value or the target row is null, do not accept the drop
-                if (value_row == null || target_row == null) {
-                    return false;
-                }
-
-                target_row.change_position (value_row.get_index ());
-                target_row.set_state_flags (Gtk.StateFlags.NORMAL, true);
-
-                return true;
-            });
-            item_list.add_controller (drop_target);
-
-            this.headerbar_provider = new CssProvider ();
-            content_headerbar.get_style_context ().add_provider (
-                headerbar_provider, STYLE_PROVIDER_PRIORITY_APPLICATION
-            );
 
             update_view_menu ();
             if (application.debug) {
