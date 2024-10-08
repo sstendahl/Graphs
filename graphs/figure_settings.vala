@@ -197,17 +197,49 @@ namespace Graphs {
             var button = builder.get_object ("set_as_default") as Adw.ButtonRow;
             button.activated.connect (set_as_default);
 
+            var action_group = new SimpleActionGroup ();
+            var import_action = new SimpleAction ("import_style", null);
+            import_action.activate.connect (() => {
+                var dialog = new FileDialog ();
+                dialog.set_filters (get_mplstyle_file_filters ());
+                dialog.open.begin (window, null, (d, response) => {
+                try {
+                    var file = dialog.open.end (response);
+                    var style_dir = application.figure_style_manager.style_dir;
+                    string filename = Tools.get_filename (file);
+                    if (!filename.has_suffix (".mplstyle")) return;
+                    var destination = style_dir.get_child_for_display_name (filename);
+                    uint i = 1;
+                    while (destination.query_exists ()) {
+                        var new_filename = new StringBuilder ();
+                        new_filename
+                            .append (filename[:-9])
+                            .append ("-")
+                            .append (i.to_string ())
+                            .append (".mplstyle");
+                        destination = style_dir.get_child_for_display_name (new_filename.free_and_steal ());
+                    }
+                    file.copy_async.begin (destination, FileCopyFlags.NONE);
+                } catch {}
+            });
+            });
+            action_group.add_action (import_action);
+            var create_action = new SimpleAction ("create_style", null);
+            create_action.activate.connect (() => {
+                new AddStyleDialog (
+                    application.figure_style_manager,
+                    this,
+                    window.data.figure_settings
+                );
+            });
+            action_group.add_action (create_action);
+            insert_action_group ("figure_settings", action_group);
+
             present (window);
             if (highlighted != null) {
                 var widget = builder.get_object (highlighted) as Widget;
                 widget.grab_focus ();
             }
-        }
-
-        [GtkCallback]
-        private void add_style () {
-            StyleManager style_manager = application.figure_style_manager;
-            new AddStyleDialog (style_manager, this, window.data.figure_settings);
         }
 
         [GtkCallback]
