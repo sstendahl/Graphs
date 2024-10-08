@@ -181,12 +181,6 @@ gresource = custom_target('gresource',
   ],
 )
 
-gresource_hack = custom_target('gresource_hack',
-    input: gresource,
-   output: 'gresource_hack.vala',
-  command: [find_program('touch'), '@OUTPUT@'],
-)
-
 gresource_bundle = gnome.compile_resources(application_id, gresource,
       dependencies: gresource,
   gresource_bundle: true,
