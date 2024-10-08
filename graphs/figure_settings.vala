@@ -207,14 +207,7 @@ namespace Graphs {
         [GtkCallback]
         private void add_style () {
             StyleManager style_manager = application.figure_style_manager;
-            var dialog = new AddStyleDialog (
-                style_manager,
-                this,
-                window.data.figure_settings
-            );
-            dialog.accept.connect ((d, template, name) => {
-                style_manager.copy_style (template, name);
-            });
+            new AddStyleDialog (style_manager, this, window.data.figure_settings);
         }
 
         [GtkCallback]
