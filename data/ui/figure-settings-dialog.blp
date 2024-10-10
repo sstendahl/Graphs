@@ -28,10 +28,13 @@ Adw.NavigationPage style_overview {
     [top]
     Adw.HeaderBar {
       [end]
-      Button {
+      MenuButton {
         icon-name: "list-add-symbolic";
         tooltip-text: _("Add New Style");
-        clicked => $add_style();
+        always-show-arrow: true;
+        popover: PopoverMenu {
+          menu-model: add_style_menu;
+        };
       }
     }
     content: ScrolledWindow {
@@ -48,5 +51,18 @@ Adw.NavigationPage style_overview {
         }
       }
     };
+  }
+}
+
+menu add_style_menu {
+  section {
+    item {
+      label: _("Import Style…");
+      action: "figure_settings.import_style";
+    }
+    item {
+      label: _("Create Style…");
+      action: "figure_settings.create_style";
+    }
   }
 }
