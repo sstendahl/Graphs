@@ -260,7 +260,7 @@ class StyleEditorBox(Gtk.Box):
 
     def save_style(self, file: Gio.File):
         """Save style params to file."""
-        style_io.write(file, self.graphs_params, self.params)
+        style_io.write(file, self.params, self.graphs_params)
 
     def reload_line_colors(self):
         """Reload UI representation of line colors."""

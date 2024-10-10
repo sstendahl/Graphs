@@ -51,10 +51,7 @@ namespace Graphs {
             var save_as_action = new SimpleAction ("save_style_as", null);
             save_as_action.activate.connect (() => {
                 var dialog = new FileDialog ();
-                var filter = Tools.create_file_filter (
-                    C_("file-filter", "Matplotlib Style File"), ".mplstyle"
-                );
-                dialog.set_filters (Tools.create_file_filters (false, filter));
+                dialog.set_filters (get_mplstyle_file_filters ());
                 dialog.set_initial_name (_("Style") + ".mplstyle");
                 dialog.save.begin (this, null, (d, response) => {
                     try {
