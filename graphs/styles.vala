@@ -21,7 +21,7 @@ namespace Graphs {
 
         private Gee.AbstractSet<string> stylenames { get; private set; }
 
-        protected signal void copy_request (string template, string name);
+        protected signal void create_style_request (Style template, string name);
         protected signal Style style_request (File file);
 
         construct {
@@ -148,14 +148,15 @@ namespace Graphs {
             return stylenames;
         }
 
-        public void copy_style (string template, string name) {
+        public void create_style (uint template, string name) {
             string new_name = name;
             if (stylenames.contains (name)) {
                 new_name = Tools.get_duplicate_string (
                     name, stylenames.to_array ()
                 );
             }
-            copy_request.emit (template, new_name);
+            var style = style_model.get_item (template) as Style;
+            create_style_request.emit (style, new_name);
         }
 
         private int find_style_for_file (File file, out Style? style) {
@@ -253,8 +254,6 @@ namespace Graphs {
         private StyleManager style_manager;
         private string[] stylenames;
 
-        public signal void accept (string template, string name);
-
         public AddStyleDialog (StyleManager style_manager, Widget parent, FigureSettings figure_settings) {
             this.style_manager = style_manager;
             this.stylenames = style_manager.list_stylenames ();
@@ -285,7 +284,8 @@ namespace Graphs {
 
         [GtkCallback]
         private void on_accept () {
-            accept.emit (get_selected (), new_style_name.get_text ());
+            uint template = style_templates.get_selected () + 1;
+            style_manager.create_style (template, new_style_name.get_text ());
             close ();
         }
     }
