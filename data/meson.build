@@ -30,7 +30,7 @@ appstream_file = i18n.merge_file(
        output: application_id + '.appdata.xml',
        po_dir: '../po',
       install: true,
-  install_dir: join_paths(datadir, 'appdata'),
+  install_dir: join_paths(datadir, 'metainfo'),
 )
 
 # Validate Appdata
