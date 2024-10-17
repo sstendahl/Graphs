@@ -11,11 +11,8 @@ from graphs import misc, utilities
 from graphs.item import DataItem, EquationItem
 
 import numexpr
-
 import numpy
-
 import scipy
-
 import sympy
 
 
@@ -116,17 +113,17 @@ def sort_data(xdata: list, ydata: list) -> (list, list):
     )
 
 
-def perform_operation(
-    application: Graphs.Application, window: Graphs.Window, name: str
-) -> None:
+def perform_operation(application: Graphs.Application, name: str) -> None:
     """Perform an operation."""
+    this = sys.modules[__name__]
+    window = application.get_active_window()
     if name in ("combine", ):
-        return getattr(this, name)(window)
+        return getattr(this, name)(application)
     elif name == "custom_transformation":
 
         def on_accept(_dialog, input_x, input_y, discard):
             try:
-                _apply(window, transform, input_x, input_y, discard)
+                _apply(application, transform, input_x, input_y, discard)
             except (RuntimeError, KeyError) as exception:
                 toast = _(
                     "{name}: Unable to do transformation, \
@@ -135,7 +132,7 @@ make sure the syntax is correct",
                 window.add_toast_string(toast)
                 logging.exception(_("Unable to do transformation"))
 
-        dialog = Graphs.TransformDialog.new(window)
+        dialog = Graphs.TransformDialog.new(application)
         dialog.connect("accept", on_accept)
         return
     elif name == "cut" and window.get_canvas().get_mode() != 2:
@@ -174,23 +171,20 @@ make sure the syntax is correct",
         except ValueError as error:
             window.add_toast_string(str(error))
             return
-#  operation_class = ItemOperations
     operation_class = EquationOperations
-    _apply(window, getattr(operation_class, name), *args)
-
-# _apply(window, getattr(operation_class, name), *args)
+    _apply(window, name, *args)
 
 
-def _apply(window, callback, *args):
+def _apply(window, name, *args):
     data = window.get_data()
     figure_settings = data.get_figure_settings()
     data_selected = False
     old_limits = figure_settings.get_limits()
     for item in data:
-        operation_item = isinstance(item, (DataItem, EquationItem))
-        if not (item.get_selected() and operation_item):
+        if not item.get_selected():
             continue
         if isinstance(item, EquationItem):
+            callback = getattr(EquationOperations, name)
             result = callback(item, *args)
             if result is None:
                 window.add_toast_string(
@@ -206,16 +200,20 @@ def _apply(window, callback, *args):
                         + "plottable equation.",
                     ),
                 )
-
         elif isinstance(item, DataItem):
-            _apply_data(window, item, figure_settings, data_selected)
+            _apply_data(window, item, data, name, *args)
+        else:
+            continue
+
 
     data.optimize_limits()
     data.add_history_state_with_limits(old_limits)
 
 
-def _apply_data(window, item, figure_settings, data_selected):
+def _apply_data(window, item, data, name, *args):
     xdata, ydata = get_data(window, item)
+    figure_settings = data.get_figure_settings()
+    callback = getattr(ItemOperations, name)
     if xdata is not None and len(xdata) != 0:
         data_selected = True
         new_xdata, new_ydata, sort, discard = callback(
@@ -736,3 +734,4 @@ class ItemOperations():
                 name=_("Combined Data"),
             ),
         ])
+

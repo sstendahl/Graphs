@@ -85,6 +85,8 @@ class Data(Graphs.Data):
                 # Fix for rpm-ostree distros, where home is placed in /var/home
                 filepath = filepath.replace("/var", "", 1)
             path = filepath.replace(os.path.expanduser("~"), "~")
+            if path.startswith(f"/run/user/{os.getuid()}/doc/"):
+                path = _("Document Portal")
         if self.props.unsaved:
             title = "• " + title
         self.props.project_name = title

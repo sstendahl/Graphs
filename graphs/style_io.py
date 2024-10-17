@@ -53,12 +53,7 @@ def parse(file: Gio.File, validate: RcParams = None) -> (RcParams, str):
     filename = file.get_basename()
     try:
         stream = Gio.DataInputStream.new(file.read(None))
-        line_number = 0
-        while True:
-            line = stream.read_line_utf8(None)[0]
-            if line is None:
-                break
-            line_number += 1
+        for line_number, line in enumerate(stream, 1):
             if line[:9] == "#~graphs ":
                 graphs_param = True
                 line = line[9:]
@@ -141,7 +136,7 @@ WRITE_IGNORELIST = STYLE_IGNORELIST + [
 ]
 
 
-def write(file: Gio.File, graphs_params: dict, style: RcParams) -> None:
+def write(file: Gio.File, style: RcParams, graphs_params: dict) -> None:
     """Write a style to a file."""
     stream = Gio.DataOutputStream.new(file.replace(None, False, 0, None))
     stream.put_string("# Generated via Graphs\n")

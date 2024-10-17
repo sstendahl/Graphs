@@ -8,25 +8,6 @@ from gi.repository import Gio
 import gio_pyio
 
 
-def create_write_stream(file: Gio.File) -> Gio.OutputStream:
-    """Create a write stream for a given file."""
-    if file.query_exists(None):
-        file.delete(None)
-    return file.create(0, None)
-
-
-def iter_data_stream(stream: Gio.DataInputStream):
-    """
-    Iterate over a data stream.
-
-    Note: This can be removed in the next release of pygobject.
-    """
-    line = stream.read_line_utf8(None)[0]
-    while line is not None:
-        yield line
-        line = stream.read_line_utf8(None)[0]
-
-
 def parse_json(file: Gio.File) -> dict:
     """Parse a json file to a python dict."""
     with gio_pyio.open(file, "rb") as wrapper:

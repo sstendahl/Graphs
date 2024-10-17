@@ -123,8 +123,7 @@ def import_from_columns(params, style, file: Gio.File) -> misc.ItemList:
         delimiter = params.get_string("custom-delimiter")
     stream = Gio.DataInputStream.new(file.read(None))
     start_values = False
-    for index, line in \
-            enumerate(file_io.iter_data_stream(stream), -skip_rows):
+    for index, line in enumerate(stream, -skip_rows):
         if index < 0:
             continue
         values = re.split(delimiter, line)
