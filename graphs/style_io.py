@@ -41,7 +41,7 @@ FONT_SIZE_KEYS = [
 
 
 class StyleParseError(Exception):
-    pass
+    """Custom Error for when a style cannot be parsed."""
 
 
 def parse(file: Gio.File, validate: RcParams = None) -> (RcParams, str):
