@@ -44,7 +44,6 @@ endif
 
 install_data(application_id + '.gschema.xml',
   install_dir: join_paths(datadir, 'glib-2.0/schemas'),
- install_mode: 'rwxrwxrwx',
 )
 gnome.compile_schemas(
   depend_files: [application_id + '.gschema.xml'],
