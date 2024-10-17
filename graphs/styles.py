@@ -51,16 +51,24 @@ class StyleManager(Graphs.StyleManager):
 
     @staticmethod
     def _on_style_request(self, file: Gio.File) -> Graphs.Style:
-        style_params, graphs_params = style_io.parse(
-            file,
-            self._system_style_params,
-        )
+        try:
+            style_params, graphs_params = style_io.parse(
+                file,
+                self._system_style_params,
+            )
+            name = graphs_params["name"]
+            preview = _generate_preview(style_params)
+            light = _is_style_bright(style_params)
+        except style_io.StyleParseError:
+            name = ""
+            preview = None
+            light = False
         return Graphs.Style(
-            name=graphs_params["name"],
+            name=name,
             file=file,
             mutable=True,
-            preview=_generate_preview(style_params),
-            light=_is_style_bright(style_params),
+            preview=preview,
+            light=light,
         )
 
     def get_system_style_params(self) -> RcParams:

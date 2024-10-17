@@ -40,6 +40,10 @@ FONT_SIZE_KEYS = [
 ]
 
 
+class StyleParseError(Exception):
+    pass
+
+
 def parse(file: Gio.File, validate: RcParams = None) -> (RcParams, str):
     """
     Parse a style to RcParams.
@@ -108,10 +112,9 @@ def parse(file: Gio.File, validate: RcParams = None) -> (RcParams, str):
                     logging.warning(
                         msg.format(file=filename, line=line_number),
                     )
-    except UnicodeDecodeError:
-        logging.warning(
-            _("Could not parse {filename}").format(filename=filename),
-        )
+    except UnicodeDecodeError as error:
+        msg = _("Could not parse {filename}").format(filename=filename)
+        raise StyleParseError(msg) from error
     finally:
         stream.close()
     if validate is not None:
