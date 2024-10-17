@@ -59,10 +59,10 @@ def parse(file: Gio.File, validate: RcParams = None) -> (RcParams, str):
                 line = line[9:]
             else:
                 graphs_param = False
-            if line_number == 2:
-                # legacy support for names at second line
-                if graphs_params["name"] is None and line[:2] == "# ":
-                    graphs_params["name"] = line[2:]
+            # legacy support for names at second line
+            if line_number == 2 and graphs_params["name"] is None \
+                    and line[:2] == "# ":
+                graphs_params["name"] = line[2:]
             line = cbook._strip_comment(line)
             if not line:
                 continue
