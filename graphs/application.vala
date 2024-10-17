@@ -41,6 +41,8 @@ namespace Graphs {
 
             python_helper.run_method (this, "_setup");
 
+            Gtk.Window.set_default_icon_name (application_id);
+
             var quit_action = new SimpleAction ("quit", null);
             quit_action.activate.connect (() => {
                 // We need to cast to array here as the list size might change
