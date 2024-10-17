@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 using Gdk;
 using Gtk;
-using Gee;
 
 namespace Graphs {
     public int style_cmp (Style a, Style b) {
@@ -20,14 +19,11 @@ namespace Graphs {
         public signal void style_changed (string stylename);
         public signal void style_deleted (string stylename);
 
-        private Gee.AbstractSet<string> stylenames { get; private set; }
-
         protected signal void create_style_request (Style template, string name);
         protected signal Style style_request (File file);
 
         construct {
             this.style_model = new GLib.ListStore (typeof (Style));
-            this.stylenames = new Gee.HashSet<string> ();
             try {
                 File config_dir = Tools.get_config_directory ();
                 this.style_dir = config_dir.get_child_for_display_name ("styles");
@@ -104,7 +100,6 @@ namespace Graphs {
                 case FileMonitorEvent.DELETED:
                     var index = find_style_for_file (file, out style);
                     if (index == -1) return;
-                    stylenames.remove (style.name);
                     style_model.remove (index);
                     style_deleted.emit (style.name);
                     break;
@@ -124,14 +119,13 @@ namespace Graphs {
 
         private void add_user_style (File file) {
             Style style = style_request.emit (file);
-            if (stylenames.contains (style.name)) {
+            if (is_stylename_present (style.name)) {
                 style.name = Tools.get_duplicate_string (
-                    style.name, stylenames.to_array ()
+                    style.name, list_stylenames ()
                 );
             }
             CompareDataFunc<Style> cmp = style_cmp;
             style_model.insert_sorted (style, cmp);
-            stylenames.add (style.name);
         }
 
         /**
@@ -150,13 +144,23 @@ namespace Graphs {
 
         public void create_style (uint template, string name) {
             string new_name = name;
-            if (stylenames.contains (name)) {
+            if (is_stylename_present (name)) {
                 new_name = Tools.get_duplicate_string (
-                    name, stylenames.to_array ()
+                    name, list_stylenames ()
                 );
             }
             var style = style_model.get_item (template) as Style;
             create_style_request.emit (style, new_name);
+        }
+
+        private bool is_stylename_present (string stylename) {
+            for (uint i = 1; i < style_model.get_n_items (); i++) {
+                Style i_style = style_model.get_item (i) as Style;
+                if (i_style.name == stylename) {
+                    return true;
+                }
+            }
+            return false;
         }
 
         private int find_style_for_file (File file, out Style? style) {
