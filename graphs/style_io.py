@@ -59,10 +59,10 @@ def parse(file: Gio.File, validate: RcParams = None) -> (RcParams, str):
                 line = line[9:]
             else:
                 graphs_param = False
-            # legacy support for names at second line
-            if line_number == 2 and graphs_params["name"] is None \
-                    and line[2:] == "# ":
-                graphs_params["name"] = line[2:]
+            if line_number == 2:
+                # legacy support for names at second line
+                if graphs_params["name"] is None and line[:2] == "# ":
+                    graphs_params["name"] = line[2:]
             line = cbook._strip_comment(line)
             if not line:
                 continue
@@ -105,11 +105,11 @@ def parse(file: Gio.File, validate: RcParams = None) -> (RcParams, str):
                         style[key] = value
                 except (KeyError, ValueError):
                     msg = _("Bad value in file {file} on line {line}")
-                    logging.exception(
+                    logging.warning(
                         msg.format(file=filename, line=line_number),
                     )
     except UnicodeDecodeError:
-        logging.exception(
+        logging.warning(
             _("Could not parse {filename}").format(filename=filename),
         )
     finally:
