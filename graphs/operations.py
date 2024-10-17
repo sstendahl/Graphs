@@ -273,10 +273,6 @@ class EquationOperations():
     def translate_x(_item, offset) -> _return:
         """
         Translate all selected data on the x-axis.
-
-        Amount to be shifted is equal to the value in the translate_x entry widget
-        Will show a toast if a ValueError is raised, typically when a user entered
-        an invalid number (e.g. comma instead of point separators)
         """
 
         x = sympy.symbols("x")
@@ -292,10 +288,6 @@ class EquationOperations():
     def translate_y(_item, offset) -> _return:
         """
         Translate all selected data on the y-axis.
-
-        Amount to be shifted is equal to the value in the translate_y entry widget
-        Will show a toast if a ValueError is raised, typically when a user entered
-        an invalid number (e.g. comma instead of point separators)
         """
         equation = f"({_item.equation})+{offset}"
         equation = sympy.sympify(utilities.preprocess(equation))
@@ -308,10 +300,6 @@ class EquationOperations():
     def multiply_x(_item, multiplier: float) -> _return:
         """
         Multiply all selected data on the x-axis.
-
-        Amount to be shifted is equal to the value in the multiply_x entry widget
-        Will show a toast if a ValueError is raised, typically when a user entered
-        an invalid number (e.g. comma instead of point separators)
         """
         equation = re.sub(r'(?<!e)x(?!p)', f"(x*{multiplier})", _item.equation)
         equation = sympy.sympify(utilities.preprocess(equation))
@@ -324,10 +312,6 @@ class EquationOperations():
     def multiply_y(_item, multiplier: float) -> _return:
         """
         Multiply all selected data on the y-axis.
-
-        Amount to be shifted is equal to the value in the multiply_y entry widget
-        Will show a toast if a ValueError is raised, typically when a user entered
-        an invalid number (e.g. comma instead of point separators)
         """
         equation = f"({_item.equation})*{multiplier}"
         equation = sympy.sympify(utilities.preprocess(equation))
@@ -399,7 +383,7 @@ class EquationOperations():
             previous_item = data_list[index - 1]
             prev_xdata, prev_ydata = \
                 utilities.equation_to_data(previous_item._equation, [0, 1])
-            # Only use selected span when obtaining values to determine shift value
+            # Only use selected span when obtaining values to determine shift
             new_xdata, new_ydata = xdata, ydata
             if (
                 min(xdata) >= min(prev_xdata)
@@ -498,9 +482,10 @@ class ItemOperations():
         """
         Translate all selected data on the x-axis.
 
-        Amount to be shifted is equal to the value in the translate_x entry widget
-        Will show a toast if a ValueError is raised, typically when a user entered
-        an invalid number (e.g. comma instead of point separators)
+        Amount to be shifted is equal to the value in the translate_x entry
+        widget.
+        Will show a toast if a ValueError is raised, typically when a user
+        entered an invalid number (e.g. comma instead of point separators)
         """
         return [value + offset for value in xdata], ydata, True, False
 
@@ -508,9 +493,10 @@ class ItemOperations():
         """
         Translate all selected data on the y-axis.
 
-        Amount to be shifted is equal to the value in the translate_y entry widget
-        Will show a toast if a ValueError is raised, typically when a user entered
-        an invalid number (e.g. comma instead of point separators)
+        Amount to be shifted is equal to the value in the translate_y entry
+        widget.
+        Will show a toast if a ValueError is raised, typically when a user
+        entered an invalid number (e.g. comma instead of point separators)
         """
         return xdata, [value + offset for value in ydata], False, False
 
@@ -520,9 +506,10 @@ class ItemOperations():
         """
         Multiply all selected data on the x-axis.
 
-        Amount to be shifted is equal to the value in the multiply_x entry widget
-        Will show a toast if a ValueError is raised, typically when a user entered
-        an invalid number (e.g. comma instead of point separators)
+        Amount to be multiplied is equal to the value in the multiply_x entry
+        widget
+        Will show a toast if a ValueError is raised, typically when a user
+        entered an invalid number (e.g. comma instead of point separators)
         """
         return [value * multiplier for value in xdata], ydata, True, False
 
@@ -532,9 +519,10 @@ class ItemOperations():
         """
         Multiply all selected data on the y-axis.
 
-        Amount to be shifted is equal to the value in the multiply_y entry widget
-        Will show a toast if a ValueError is raised, typically when a user entered
-        an invalid number (e.g. comma instead of point separators)
+        Amount to be multiplied is equal to the value in the multiply_y entry
+        widget
+        Will show a toast if a ValueError is raised, typically when a user
+        entered an invalid number (e.g. comma instead of point separators)
         """
         return xdata, [value * multiplier for value in ydata], False, False
 
@@ -613,7 +601,7 @@ class ItemOperations():
 
             previous_item = data_list[index - 1]
 
-            # Only use selected span when obtaining values to determine shift value
+            # Only use selected span when obtaining values to determine shift
             new_xdata, new_ydata = xdata, ydata
             if (
                 min(xdata) >= min(previous_item.xdata)
@@ -734,4 +722,3 @@ class ItemOperations():
                 name=_("Combined Data"),
             ),
         ])
-
