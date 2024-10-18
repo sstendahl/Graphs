@@ -123,7 +123,7 @@ def perform_operation(application: Graphs.Application, name: str) -> None:
 
         def on_accept(_dialog, input_x, input_y, discard):
             try:
-                _apply(application, transform, input_x, input_y, discard)
+                _apply(application, "transform", input_x, input_y, discard)
             except (RuntimeError, KeyError) as exception:
                 toast = _(
                     "{name}: Unable to do transformation, \
@@ -185,7 +185,15 @@ def _apply(window, name, *args):
             continue
         if isinstance(item, EquationItem):
             callback = getattr(EquationOperations, name)
-            result = callback(item, *args)
+
+            if name in ("normalize", "center"):
+                limits = [
+                    old_limits[item.get_xposition()],
+                    old_limits[item.get_yposition()+1]
+                ]
+                result = callback(item, limits, *args)
+            else:
+                result = callback(item, *args)
             if result is None:
                 window.add_toast_string(
                     _(
@@ -204,7 +212,6 @@ def _apply(window, name, *args):
             _apply_data(window, item, data, name, *args)
         else:
             continue
-
 
     data.optimize_limits()
     data.add_history_state_with_limits(old_limits)
@@ -270,6 +277,7 @@ _return = (list[float], list[float], bool, bool)
 
 class EquationOperations():
 
+    @staticmethod
     def translate_x(_item, offset) -> _return:
         """
         Translate all selected data on the x-axis.
@@ -285,6 +293,7 @@ class EquationOperations():
         _item.equation = str(sympy.simplify(equation))
         return True
 
+    @staticmethod
     def translate_y(_item, offset) -> _return:
         """
         Translate all selected data on the y-axis.
@@ -297,6 +306,7 @@ class EquationOperations():
         _item.equation = str(sympy.simplify(equation))
         return True
 
+    @staticmethod
     def multiply_x(_item, multiplier: float) -> _return:
         """
         Multiply all selected data on the x-axis.
@@ -309,6 +319,7 @@ class EquationOperations():
         _item.equation = str(sympy.simplify(equation))
         return True
 
+    @staticmethod
     def multiply_y(_item, multiplier: float) -> _return:
         """
         Multiply all selected data on the y-axis.
@@ -321,10 +332,10 @@ class EquationOperations():
         _item.equation = str(sympy.simplify(equation))
         return True
 
-    def normalize(_item) -> _return:
+    @staticmethod
+    def normalize(_item, limits) -> _return:
         """Normalize all selected data."""
-        # TODO: FIX RANGE
-        xdata, ydata = utilities.equation_to_data(_item._equation, [0, 1])
+        xdata, ydata = utilities.equation_to_data(_item._equation, limits)
         equation = f"({_item.equation})/{max(ydata)}"
         equation = sympy.sympify(utilities.preprocess(equation))
         valid_equation = utilities.validate_equation(str(equation))
@@ -333,26 +344,39 @@ class EquationOperations():
         _item.equation = str(sympy.simplify(equation))
         return True
 
-    def smoothen(_item, ) -> None:
+    @staticmethod
+    def smoothen(_item, *args) -> None:
         """Smoothen y-data."""
         return None
 
-    def center(_item, middle_value: int) -> _return:
+    @staticmethod
+    def center(_item, limits, center_maximum: int) -> _return:
         """
         Center all selected data.
 
         Depending on the key, will center either on the middle coordinate, or on
         the maximum value of the data
         """
+        # TODO: CHECK IF WE CAN GET MAXIMUM ANALYTICALLY USING DERIVATIVES
+        # ALSO BEHAVIOUR FOR CENTER AT MIDDLE FEELS UNINTUITIVE, RETHINK HOW
+        # THAT SHOULD BEHAVE FOR EQUATIONS...
+
+        xdata, ydata = utilities.equation_to_data(_item._equation, limits)
+        if center_maximum == 0:  # Center at maximum Y
+            middle_index = ydata.index(max(ydata))
+            middle_value = xdata[middle_index]
+        elif center_maximum == 1:  # Center at middle
+            middle_value = -(min(xdata) + max(xdata)) / 2
         equation = \
-            re.sub(r'(?<!e)x(?!p)', f"(x-{middle_value})", _item.equation)
+            re.sub(r'(?<!e)x(?!p)', f"(x+{middle_value})", _item.equation)
         equation = sympy.sympify(utilities.preprocess(equation))
         valid_equation = utilities.validate_equation(str(equation))
         if not valid_equation:
             return False
         _item.equation = str(sympy.simplify(equation))
-        return
+        return True
 
+    @staticmethod
     def shift(
         item,
         left_scale: int,
@@ -411,16 +435,18 @@ class EquationOperations():
                 else:
                     new_ydata = [value + shift_value_linear for value in ydata]
             shift_value = shift_value_log if scale == 1 else shift_value_linear
-            valid_equation = utilities.validate_equation(str(equation))
+            valid_equation = utilities.validate_equation(str(item_.equation))
             if not valid_equation:
                 return False
             item.equation = f"{item.equation}+{shift_value}"
         return True
 
+    @staticmethod
     def cut(_item) -> bool:
         """Cut selected data over the span that is selected."""
         return None
 
+    @staticmethod
     def derivative(_item) -> bool:
         """Calculate derivative of all selected data."""
         x = sympy.symbols("x")
@@ -432,6 +458,7 @@ class EquationOperations():
         _item.equation = str(equation)
         return True
 
+    @staticmethod
     def integral(_item) -> bool:
         """Calculate indefinite integral of all selected data."""
         x = sympy.symbols("x")
@@ -443,6 +470,7 @@ class EquationOperations():
         _item.equation = str(equation)
         return True
 
+    @staticmethod
     def fft(_item) -> bool:
         """Perform Fourier transformation on all selected data."""
         x, k = sympy.symbols("x k")
@@ -455,6 +483,7 @@ class EquationOperations():
         _item.equation = str(equation)
         return True
 
+    @staticmethod
     def inverse_fft(_item) -> bool:
         """Perform Inverse Fourier transformation on all selected data."""
         x, k = sympy.symbols("x k")
@@ -467,10 +496,12 @@ class EquationOperations():
         _item.equation = str(equation)
         return True
 
+    @staticmethod
     def transform(_item) -> None:
         """Perform custom transformation."""
         return None
 
+    @staticmethod
     def combine(window: Graphs.Window) -> None:
         """Combine the selected data into a new data set."""
         return None
@@ -478,6 +509,7 @@ class EquationOperations():
 
 class ItemOperations():
 
+    @staticmethod
     def translate_x(_item, xdata: list, ydata: list, offset: float) -> _return:
         """
         Translate all selected data on the x-axis.
@@ -489,6 +521,7 @@ class ItemOperations():
         """
         return [value + offset for value in xdata], ydata, True, False
 
+    @staticmethod
     def translate_y(_item, xdata: list, ydata: list, offset: float) -> _return:
         """
         Translate all selected data on the y-axis.
@@ -500,6 +533,7 @@ class ItemOperations():
         """
         return xdata, [value + offset for value in ydata], False, False
 
+    @staticmethod
     def multiply_x(
         _item, xdata: list, ydata: list, multiplier: float,
     ) -> _return:
@@ -513,6 +547,7 @@ class ItemOperations():
         """
         return [value * multiplier for value in xdata], ydata, True, False
 
+    @staticmethod
     def multiply_y(
         _item, xdata: list, ydata: list, multiplier: float,
     ) -> _return:
@@ -526,10 +561,12 @@ class ItemOperations():
         """
         return xdata, [value * multiplier for value in ydata], False, False
 
+    @staticmethod
     def normalize(_item, xdata: list, ydata: list) -> _return:
         """Normalize all selected data."""
         return xdata, [value / max(ydata) for value in ydata], False, False
 
+    @staticmethod
     def smoothen(
         _item,
         xdata: list,
@@ -553,6 +590,7 @@ class ItemOperations():
             new_ydata = numpy.convolve(ydata, box, mode="same")
         return xdata, new_ydata, False, False
 
+    @staticmethod
     def center(
         _item, xdata: list, ydata: list, center_maximum: int,
     ) -> _return:
@@ -570,6 +608,7 @@ class ItemOperations():
         new_xdata = [coordinate - middle_value for coordinate in xdata]
         return new_xdata, ydata, True, False
 
+    @staticmethod
     def shift(
         item,
         xdata: list,
@@ -631,10 +670,12 @@ class ItemOperations():
                 return xdata, new_ydata, False, False
         return xdata, ydata, False, False
 
+    @staticmethod
     def cut(_item, _xdata, _ydata) -> _return:
         """Cut selected data over the span that is selected."""
         return [], [], False, False
 
+    @staticmethod
     def derivative(_item, xdata: list, ydata: list) -> _return:
         """Calculate derivative of all selected data."""
         x_values = numpy.array(xdata)
@@ -642,6 +683,7 @@ class ItemOperations():
         dy_dx = numpy.gradient(y_values, x_values)
         return xdata, dy_dx.tolist(), False, True
 
+    @staticmethod
     def integral(_item, xdata: list, ydata: list) -> _return:
         """Calculate indefinite integral of all selected data."""
         x_values = numpy.array(xdata)
@@ -653,6 +695,7 @@ class ItemOperations():
         ).tolist()
         return xdata, indefinite_integral, False, True
 
+    @staticmethod
     def fft(_item, xdata: list, ydata: list) -> _return:
         """Perform Fourier transformation on all selected data."""
         x_values = numpy.array(xdata)
@@ -662,6 +705,7 @@ class ItemOperations():
         y_fourier = [value.real for value in y_fourier]
         return x_fourier, y_fourier, False, True
 
+    @staticmethod
     def inverse_fft(_item, xdata: list, ydata: list) -> _return:
         """Perform Inverse Fourier transformation on all selected data."""
         x_values = numpy.array(xdata)
@@ -671,6 +715,7 @@ class ItemOperations():
         y_fourier = [value.real for value in y_fourier]
         return x_fourier, y_fourier, False, True
 
+    @staticmethod
     def transform(
         _item,
         xdata: list,
@@ -701,6 +746,7 @@ class ItemOperations():
             discard,
         )
 
+    @staticmethod
     def combine(window: Graphs.Window) -> None:
         """Combine the selected data into a new data set."""
         new_xdata, new_ydata = [], []
