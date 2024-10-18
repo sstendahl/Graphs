@@ -123,7 +123,7 @@ def perform_operation(application: Graphs.Application, name: str) -> None:
 
         def on_accept(_dialog, input_x, input_y, discard):
             try:
-                _apply(application, "transform", input_x, input_y, discard)
+                _apply(window, "transform", input_x, input_y, discard)
             except (RuntimeError, KeyError) as exception:
                 toast = _(
                     "{name}: Unable to do transformation, \
@@ -132,7 +132,7 @@ make sure the syntax is correct",
                 window.add_toast_string(toast)
                 logging.exception(_("Unable to do transformation"))
 
-        dialog = Graphs.TransformDialog.new(application)
+        dialog = Graphs.TransformDialog.new(window)
         dialog.connect("accept", on_accept)
         return
     elif name == "cut" and window.get_canvas().get_mode() != 2:
