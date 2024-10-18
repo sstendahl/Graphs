@@ -44,8 +44,8 @@ class EditItemDialog(Adw.PreferencesDialog):
     model = GObject.Property(type=Gtk.StringList)
     bindings = GObject.Property(type=object)
 
-    def __init__(self, application, item):
-        data = application.get_data()
+    def __init__(self, window, item):
+        data = window.get_data()
         super().__init__(
             data=data,
             item=item,
@@ -55,7 +55,7 @@ class EditItemDialog(Adw.PreferencesDialog):
         self.item_selector_group.set_visible(data.get_n_items() > 1)
         self.item_selector.set_model(self.props.model)
         self.item_selector.set_selected(data.get_items().index(item))
-        self.present(application.get_window())
+        self.present(window)
 
         if isinstance(item, EquationItem):
             self.equation.set_text(item.props.equation)

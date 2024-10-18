@@ -136,16 +136,13 @@ def _migrate_styles(old_styles_dir, new_config_dir):
     for file in map(enumerator.get_child, enumerator):
         stylename = Path(Graphs.tools_get_filename(file)).stem
         if stylename not in SYSTEM_STYLES:
-            params = style_io.parse(file)[0]
-            for key, value in adwaita.items():
-                if key not in params:
-                    params[key] = value
+            params = style_io.parse(file, adwaita)[0]
             style_io.write(
                 new_styles_dir.get_child_for_display_name(
                     f"{stylename.lower().replace(' ', '-')}.mplstyle",
                 ),
-                {"name": stylename},
                 params,
+                {"name": stylename},
             )
         file.delete(None)
     enumerator.close(None)

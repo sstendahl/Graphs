@@ -162,6 +162,7 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
     __gtype_name__ = "GraphsEquationItemArtistWrapper"
     selected = GObject.Property(type=bool, default=True)
     linewidth = GObject.Property(type=float, default=3)
+    legend = True
 
     def __init__(self, axis: pyplot.axis, item: Graphs.Item):
         super().__init__()

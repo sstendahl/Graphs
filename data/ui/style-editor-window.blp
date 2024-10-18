@@ -1,11 +1,29 @@
 using Gtk 4.0;
 using Adw 1;
 
-template $GraphsStyleEditorWindow : Adw.Window {
+template $GraphsStyleEditor : Adw.ApplicationWindow {
   title: _("Error - No Style selected");
   default-width: 1200;
   default-height: 700;
-  close-request => $on_close_request();
+
+  ShortcutController {
+     Shortcut {
+      trigger: "<control>w";
+      action: "action(window.close)";
+    }
+    Shortcut {
+      trigger: "<control>question";
+      action: "action(win.show-help-overlay)";
+    }
+    Shortcut {
+      trigger: "<control>S";
+      action: "action(win.save_style)";
+    }
+    Shortcut {
+      trigger: "<control><shift>S";
+      action: "action(win.save_style_as)";
+    }
+  }
 
   Adw.OverlaySplitView split_view {
     sidebar: Adw.ToolbarView {
@@ -14,6 +32,13 @@ template $GraphsStyleEditorWindow : Adw.Window {
       [top]
       Adw.HeaderBar {
         styles ["flat"]
+        [end]
+        MenuButton {
+          icon-name: "open-menu-symbolic";
+          menu-model: primary_menu;
+          tooltip-text: _("Open Application Menu");
+          primary: true;
+        }
       }
 
       content: ScrolledWindow {
@@ -30,7 +55,7 @@ template $GraphsStyleEditorWindow : Adw.Window {
 
     content: Adw.ToolbarView content_view {
       [top]
-      Adw.HeaderBar {
+      Adw.HeaderBar content_headerbar {
         name: "preview-headerbar";
         show-title: false;
         styles ["flat"]
@@ -41,5 +66,17 @@ template $GraphsStyleEditorWindow : Adw.Window {
           title: _("Canvas Failed to Load");
         };
     };
+  }
+}
+
+menu primary_menu {
+  section{
+    item (_("Save Style…"), "win.save_style")
+    item (_("Save Style as…"), "win.save_style_as")
+  }
+  section {
+    item (_("Keyboard Shortcuts"), "win.show-help-overlay")
+    item (_("Help"), "app.help")
+    item (_("About Graphs"), "app.about")
   }
 }
