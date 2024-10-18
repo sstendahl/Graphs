@@ -40,6 +40,10 @@ FONT_SIZE_KEYS = [
 ]
 
 
+class StyleParseError(Exception):
+    """Custom Error for when a style cannot be parsed."""
+
+
 def parse(file: Gio.File, validate: RcParams = None) -> (RcParams, str):
     """
     Parse a style to RcParams.
@@ -61,7 +65,7 @@ def parse(file: Gio.File, validate: RcParams = None) -> (RcParams, str):
                 graphs_param = False
             # legacy support for names at second line
             if line_number == 2 and graphs_params["name"] is None \
-                    and line[2:] == "# ":
+                    and line[:2] == "# ":
                 graphs_params["name"] = line[2:]
             line = cbook._strip_comment(line)
             if not line:
@@ -105,13 +109,12 @@ def parse(file: Gio.File, validate: RcParams = None) -> (RcParams, str):
                         style[key] = value
                 except (KeyError, ValueError):
                     msg = _("Bad value in file {file} on line {line}")
-                    logging.exception(
+                    logging.warning(
                         msg.format(file=filename, line=line_number),
                     )
-    except UnicodeDecodeError:
-        logging.exception(
-            _("Could not parse {filename}").format(filename=filename),
-        )
+    except UnicodeDecodeError as error:
+        msg = _("Could not parse {filename}").format(filename=filename)
+        raise StyleParseError(msg) from error
     finally:
         stream.close()
     if validate is not None:
