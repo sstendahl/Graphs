@@ -181,7 +181,7 @@ class Data(Graphs.Data):
 
         def _is_default(prop):
             return figure_settings.get_property(prop) == \
-               settings.get_string(prop)
+                settings.get_string(prop)
 
         for item_ in self:
             color = item_.get_color()
