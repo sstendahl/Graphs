@@ -1,7 +1,7 @@
 """Tests for operations."""
 from graphs import operations
-from graphs.operations import DataOperations
 from graphs.item import DataItem
+from graphs.operations import DataOperations
 
 import numpy as np
 
