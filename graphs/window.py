@@ -21,18 +21,18 @@ class PythonWindow(Graphs.Window):
         )
         self._reload_canvas()
 
-    def _on_style_changed(self, style_manager, recolor_items) -> None:
+    def _on_style_changed(self, data, recolor_items) -> None:
         """Handle style change."""
         if recolor_items:
-            old_style = style_manager.get_old_selected_style_params()
-            new_style = style_manager.get_selected_style_params()
+            old_style = data.get_old_selected_style_params()
+            new_style = data.get_selected_style_params()
             old_cycle = old_style["axes.prop_cycle"].by_key()["color"]
             new_cycle = new_style["axes.prop_cycle"].by_key()["color"]
-            for item_ in self.props.data:
+            for item_ in data:
                 item_.reset(old_style, new_style)
             count = 0
-            for item_ in self.props.data:
-                if isinstance(item_, item.DataItem) \
+            for item_ in data:
+                if isinstance(item_, (item.DataItem, item.EquationItem)) \
                         and item_.get_color() in old_cycle:
                     if count > len(new_cycle):
                         count = 0
