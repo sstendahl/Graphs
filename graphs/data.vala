@@ -113,16 +113,6 @@ namespace Graphs {
 
         // Section management
 
-        public void reset () {
-            python_method_request.emit ("_reset");
-            uint removed = _items.size;
-            _items.clear ();
-            this.file = null;
-            this.unsaved = false;
-            python_method_request.emit ("_initialize");
-            items_changed.emit (0, removed, 0);
-        }
-
         protected void _update_used_positions () {
             if (_items.size == 0) {
                 _used_positions = {true, false, true, false};

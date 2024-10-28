@@ -268,8 +268,8 @@ namespace Graphs {
 
         [GtkCallback]
         private void perform_operation (Button button) {
-            var action = this.lookup_action (
-                "perform_operation"
+            var action = application.lookup_action (
+                "app.perform_operation"
             );
             string name = button.get_buildable_id ()[0:-7];
             action.activate (new Variant.string (name));

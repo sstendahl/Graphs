@@ -31,7 +31,12 @@ class Data(Graphs.Data):
         self.connect("python_method_request", self._on_python_method_request)
         self._selected_style_params = None
         self.setup()
-        self._initialize()
+        limits = self.props.figure_settings.get_limits()
+        self._history_states = [([], limits)]
+        self._history_pos = -1
+        self._view_history_states = [limits]
+        self._view_history_pos = -1
+        self._set_data_copy()
         self.props.figure_settings.connect(
             "notify",
             self._on_figure_settings_change,
@@ -46,30 +51,6 @@ class Data(Graphs.Data):
     @staticmethod
     def _on_python_method_request(self, method: str) -> None:
         getattr(self, method)()
-
-    def _reset(self):
-        """Reset data."""
-        # Reset figure settings
-        default_figure_settings = Graphs.FigureSettings.new(
-            self.props.settings,
-        )
-        figure_settings = self.get_figure_settings()
-        for prop in dir(default_figure_settings.props):
-            new_value = default_figure_settings.get_property(prop)
-            figure_settings.set_property(prop, new_value)
-
-    def _initialize(self):
-        """Initialize the data class and set default values."""
-        limits = self.get_figure_settings().get_limits()
-        self.props.can_undo = False
-        self.props.can_redo = False
-        self.props.can_view_back = False
-        self.props.can_view_forward = False
-        self._history_states = [([], limits)]
-        self._history_pos = -1
-        self._view_history_states = [limits]
-        self._view_history_pos = -1
-        self._set_data_copy()
 
     def _on_unsaved_change(self, _a, _b) -> None:
         if self.props.file is None:
@@ -148,11 +129,6 @@ class Data(Graphs.Data):
         self._old_style_params = self._selected_style_params
         self._selected_style_params = style_manager.get_system_style_params()
 
-    def _reset_selected_style(self, message: str) -> None:
-        self.props.use_custom_style = False
-        self.props.custom_style = self._system_style_name
-        self.props.application.get_window().add_toast_string(message)
-
     @staticmethod
     def _on_position_changed(self, index1: int, index2: int) -> None:
         """Change item position of index2 to that of index1."""
@@ -168,6 +144,7 @@ class Data(Graphs.Data):
         match the items label, they get moved to another axis.
         """
         figure_settings = self.get_figure_settings()
+        settings = self.get_application().get_settings_child("figure")
         color_cycle = self._selected_style_params["axes.prop_cycle"].by_key(
         )["color"]
         used_colors = []
@@ -180,7 +157,7 @@ class Data(Graphs.Data):
 
         def _is_default(prop):
             return figure_settings.get_property(prop) == \
-                self.props.settings.get_string(prop)
+                settings.get_string(prop)
 
         for item_ in self:
             color = item_.get_color()
@@ -252,15 +229,14 @@ class Data(Graphs.Data):
             ylabel = item_.get_ylabel()
             self._remove_item(item_)
         used = self.get_used_positions()
+        settings = self.get_application().get_settings_child("figure")
         for position in [x_position, y_position]:
             direction = misc.DIRECTIONS[position]
             item_label = xlabel if position < 2 else ylabel
             axis_label = getattr(settings, f"get_{direction}_label")()
             if not used[position] and item_label == axis_label:
                 set_label = getattr(settings, f"set_{direction}_label")
-                set_label(
-                    self.props.settings.get_string(f"{direction}-label"),
-                )
+                set_label(settings.get_string(f"{direction}-label"))
 
         self._add_history_state()
 
