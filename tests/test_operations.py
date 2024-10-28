@@ -24,48 +24,48 @@ def test_sort_data():
 
 def test_normalize():
     """Test if normalize function scales ydata to maximum value of 1."""
-    xdata, ydata, _sort, _discard = DataOperations.normalize(None, XDATA,
-        YDATA)
+    xdata, ydata, _sort, _discard = \
+        DataOperations.normalize(None, XDATA, YDATA)
     assert max(ydata) == 1
 
 
 def test_translate_x():
     """Test if translate_x function correctly shifts xdata."""
-    xdata, ydata, _sort, _discard = DataOperations.translate_x(None, XDATA, 
-        YDATA, 15)
+    xdata, ydata, _sort, _discard = \
+        DataOperations.translate_x(None, XDATA, YDATA, 15)
     assert all(x_new == (x_old + 15) for x_old, x_new in zip(XDATA, xdata))
 
 
 def test_translate_y():
     """Test if translate_y function correctly shifts ydata."""
-    xdata, ydata, _sort, _discard = DataOperations.translate_y(None, XDATA,
-        YDATA, 15)
+    xdata, ydata, _sort, _discard = \
+        DataOperations.translate_y(None, XDATA, YDATA, 15)
     assert all(y_new == (y_old + 15) for y_old, y_new in zip(YDATA, ydata))
 
 
 def test_multiply_x():
     """Test if multiply_x function correctly scales xdata."""
-    xdata, ydata, _sort, _discard = DataOperations.multiply_x(None, XDATA,
-        YDATA, 15)
+    xdata, ydata, _sort, _discard = \
+        DataOperations.multiply_x(None, XDATA, YDATA, 15)
     assert all(x_new == (x_old * 15) for x_old, x_new in zip(XDATA, xdata))
 
 
 def test_multiply_y():
     """Test if multiply_y function correctly scales ydata."""
-    xdata, ydata, _sort, _discard = DataOperations.multiply_y(None, XDATA,
-        YDATA, 15)
+    xdata, ydata, _sort, _discard = \
+        DataOperations.multiply_y(None, XDATA, YDATA, 15)
     assert all(y_new == (y_old * 15) for y_old, y_new in zip(YDATA, ydata))
 
 
 def test_center():
     """Test if center function centers ydata correctly."""
-    xdata, ydata, _sort, _discard = DataOperations.center(None, XDATA, YDATA,
-        0)
+    xdata, ydata, _sort, _discard = \
+        DataOperations.center(None, XDATA, YDATA, 0)
     y_max_index = YDATA.index(max(YDATA))
     assert xdata[y_max_index] == 0
 
-    xdata, ydata, _sort, _discard = DataOperations.center(None, XDATA, YDATA,
-        1)
+    xdata, ydata, _sort, _discard = \
+        DataOperations.center(None, XDATA, YDATA, 1)
     middle_value = (min(XDATA) + max(XDATA)) / 2
     assert all(x_new == (x_old - middle_value) for x_old, x_new in zip(XDATA,
                                                                        xdata))
@@ -84,10 +84,12 @@ def test_shift(yscale):
     items = [item1, item2]
     new_xdata1, new_ydata1, _sort, _discard = \
         DataOperations.shift(item1, xdata, ydata1, left_scale=yscale,
-                         right_scale=yscale, items=items, ranges=[2.2, 2.2])
+                             right_scale=yscale, items=items,
+                             ranges=[2.2, 2.2])
     new_xdata2, new_ydata2, _sort, _discard = \
         DataOperations.shift(item2, xdata, ydata2, left_scale=yscale,
-                         right_scale=yscale, items=items, ranges=[2.2, 2.2])
+                             right_scale=yscale, items=items,
+                             ranges=[2.2, 2.2])
     np.testing.assert_array_equal(new_xdata1, xdata)
     np.testing.assert_array_equal(new_xdata2, xdata)
 
