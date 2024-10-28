@@ -1,8 +1,9 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Module for data transformations."""
 import logging
-import sys
 import re
+import sys
+import types
 from gettext import gettext as _
 
 from gi.repository import Graphs
@@ -11,8 +12,11 @@ from graphs import misc, utilities
 from graphs.item import DataItem, EquationItem
 
 import numexpr
+
 import numpy
+
 import scipy
+
 import sympy
 
 
@@ -127,7 +131,7 @@ def perform_operation(application: Graphs.Application, name: str) -> None:
             except (RuntimeError, KeyError) as exception:
                 toast = _(
                     "{name}: Unable to do transformation, \
-make sure the syntax is correct",
+                        make sure the syntax is correct",
                 ).format(name=exception.__class__.__name__)
                 window.add_toast_string(toast)
                 logging.exception(_("Unable to do transformation"))
@@ -171,14 +175,12 @@ make sure the syntax is correct",
         except ValueError as error:
             window.add_toast_string(str(error))
             return
-    operation_class = EquationOperations
     _apply(window, name, *args)
 
 
 def _apply(window, name, *args):
     data = window.get_data()
     figure_settings = data.get_figure_settings()
-    data_selected = False
     old_limits = figure_settings.get_limits()
     for item in data:
         if not item.get_selected():
@@ -189,7 +191,8 @@ def _apply(window, name, *args):
             if name in ("normalize", "center"):
                 limits = [
                     old_limits[item.get_xposition()],
-                    old_limits[item.get_yposition()+1]
+                    old_limits[item.get_yposition() + 1,
+                    ]
                 ]
                 result = callback(item, limits, *args)
             else:
@@ -220,7 +223,7 @@ def _apply(window, name, *args):
 def _apply_data(window, item, data, name, *args):
     xdata, ydata = get_data(window, item)
     figure_settings = data.get_figure_settings()
-    callback = getattr(ItemOperations, name)
+    callback = getattr(DataOperations, name)
     if xdata is not None and len(xdata) != 0:
         data_selected = True
         new_xdata, new_ydata, sort, discard = callback(
@@ -275,21 +278,20 @@ def _apply_data(window, item, data, name, *args):
 _return = (list[float], list[float], bool, bool)
 
 def staticclass(cls):
+    """Make all methods in class static"""
     for name, value in vars(cls).items():
         if isinstance(value, types.FunctionType):
             setattr(cls, name, staticmethod(value))
     return cls
 
+
 @staticclass
 class EquationOperations():
+    """Operations to be performed on equation items"""
 
     def translate_x(_item, offset) -> _return:
-        """
-        Translate all selected data on the x-axis.
-        """
-
-        x = sympy.symbols("x")
-        equation = re.sub(r'(?<!e)x(?!p)', f"(x+{offset})", _item.equation)
+        """Translate all selected data on the x-axis."""
+        equation = re.sub(r"(?<!e)x(?!p)", f"(x+{offset})", _item.equation)
 
         equation = sympy.sympify(utilities.preprocess(equation))
         valid_equation = utilities.validate_equation(str(equation))
@@ -299,9 +301,7 @@ class EquationOperations():
         return True
 
     def translate_y(_item, offset) -> _return:
-        """
-        Translate all selected data on the y-axis.
-        """
+        """Translate all selected data on the y-axis."""
         equation = f"({_item.equation})+{offset}"
         equation = sympy.sympify(utilities.preprocess(equation))
         valid_equation = utilities.validate_equation(str(equation))
@@ -311,9 +311,7 @@ class EquationOperations():
         return True
 
     def multiply_x(_item, multiplier: float) -> _return:
-        """
-        Multiply all selected data on the x-axis.
-        """
+        """Multiply all selected data on the x-axis."""
         equation = re.sub(r'(?<!e)x(?!p)', f"(x*{multiplier})", _item.equation)
         equation = sympy.sympify(utilities.preprocess(equation))
         valid_equation = utilities.validate_equation(str(equation))
@@ -323,9 +321,7 @@ class EquationOperations():
         return True
 
     def multiply_y(_item, multiplier: float) -> _return:
-        """
-        Multiply all selected data on the y-axis.
-        """
+        """Multiply all selected data on the y-axis."""
         equation = f"({_item.equation})*{multiplier}"
         equation = sympy.sympify(utilities.preprocess(equation))
         valid_equation = utilities.validate_equation(str(equation))
@@ -345,7 +341,7 @@ class EquationOperations():
         _item.equation = str(sympy.simplify(equation))
         return True
 
-    def smoothen(_item, *args) -> None:
+    def smoothen(_item, *_args) -> None:
         """Smoothen y-data."""
         return None
 
@@ -493,13 +489,14 @@ class EquationOperations():
         """Perform custom transformation."""
         return None
 
-    def combine(window: Graphs.Window) -> None:
+    def combine(_window: Graphs.Window) -> None:
         """Combine the selected data into a new data set."""
         return None
 
 
 @staticclass
-class ItemOperations():
+class DataOperations():
+    """Operations to be performed on data items"""
 
     def translate_x(_item, xdata: list, ydata: list, offset: float) -> _return:
         """
@@ -582,8 +579,8 @@ class ItemOperations():
         """
         Center all selected data.
 
-        Depending on the key, will center either on the middle coordinate, or on
-        the maximum value of the data
+        Depending on the key, will center either on the middle coordinate, or
+        on the maximum value of the data
         """
         if center_maximum == 0:  # Center at maximum Y
             middle_index = ydata.index(max(ydata))
@@ -715,10 +712,10 @@ class ItemOperations():
         # of the correct size, even when a float is given as input.
         return (
             numexpr.evaluate(
-                utilities.preprocess(input_x) + "+ 0*x", local_dict
+                utilities.preprocess(input_x) + "+ 0*x", local_dict,
             ),
             numexpr.evaluate(
-                utilities.preprocess(input_y) + "+ 0*y", local_dict
+                utilities.preprocess(input_y) + "+ 0*y", local_dict,
             ),
             True,
             discard,
