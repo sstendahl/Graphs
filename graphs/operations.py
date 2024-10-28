@@ -191,8 +191,7 @@ def _apply(window, name, *args):
             if name in ("normalize", "center"):
                 limits = [
                     old_limits[item.get_xposition()],
-                    old_limits[item.get_yposition() + 1,
-                    ]
+                    old_limits[item.get_yposition() + 1],
                 ]
                 result = callback(item, limits, *args)
             else:
@@ -277,8 +276,9 @@ def _apply_data(window, item, data, name, *args):
 
 _return = (list[float], list[float], bool, bool)
 
+
 def staticclass(cls):
-    """Make all methods in class static"""
+    """Make all methods in class static."""
     for name, value in vars(cls).items():
         if isinstance(value, types.FunctionType):
             setattr(cls, name, staticmethod(value))
@@ -287,7 +287,7 @@ def staticclass(cls):
 
 @staticclass
 class EquationOperations():
-    """Operations to be performed on equation items"""
+    """Operations to be performed on equation items."""
 
     def translate_x(_item, offset) -> _return:
         """Translate all selected data on the x-axis."""
@@ -312,7 +312,7 @@ class EquationOperations():
 
     def multiply_x(_item, multiplier: float) -> _return:
         """Multiply all selected data on the x-axis."""
-        equation = re.sub(r'(?<!e)x(?!p)', f"(x*{multiplier})", _item.equation)
+        equation = re.sub(r"(?<!e)x(?!p)", f"(x*{multiplier})", _item.equation)
         equation = sympy.sympify(utilities.preprocess(equation))
         valid_equation = utilities.validate_equation(str(equation))
         if not valid_equation:
@@ -349,8 +349,8 @@ class EquationOperations():
         """
         Center all selected data.
 
-        Depending on the key, will center either on the middle coordinate, or on
-        the maximum value of the data
+        Depending on the key, will center either on the middle coordinate, or
+        on the maximum value of the data
         """
         # TODO: CHECK IF WE CAN GET MAXIMUM ANALYTICALLY USING DERIVATIVES
         # ALSO BEHAVIOUR FOR CENTER AT MIDDLE FEELS UNINTUITIVE, RETHINK HOW
@@ -363,7 +363,7 @@ class EquationOperations():
         elif center_maximum == 1:  # Center at middle
             middle_value = -(min(xdata) + max(xdata)) / 2
         equation = \
-            re.sub(r'(?<!e)x(?!p)', f"(x+{middle_value})", _item.equation)
+            re.sub(r"(?<!e)x(?!p)", f"(x+{middle_value})", _item.equation)
         equation = sympy.sympify(utilities.preprocess(equation))
         valid_equation = utilities.validate_equation(str(equation))
         if not valid_equation:
@@ -496,7 +496,7 @@ class EquationOperations():
 
 @staticclass
 class DataOperations():
-    """Operations to be performed on data items"""
+    """Operations to be performed on data items."""
 
     def translate_x(_item, xdata: list, ydata: list, offset: float) -> _return:
         """
