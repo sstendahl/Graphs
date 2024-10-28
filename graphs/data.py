@@ -51,7 +51,7 @@ class Data(Graphs.Data):
         """Reset data."""
         # Reset figure settings
         default_figure_settings = Graphs.FigureSettings.new(
-            self.props.settings,
+            self.get_application().get_settings_child("figure"),
         )
         figure_settings = self.get_figure_settings()
         for prop in dir(default_figure_settings.props):
@@ -168,6 +168,7 @@ class Data(Graphs.Data):
         match the items label, they get moved to another axis.
         """
         figure_settings = self.get_figure_settings()
+        settings = self.get_application().get_settings_child("figure")
         color_cycle = self._selected_style_params["axes.prop_cycle"].by_key(
         )["color"]
         used_colors = []
@@ -180,7 +181,7 @@ class Data(Graphs.Data):
 
         def _is_default(prop):
             return figure_settings.get_property(prop) == \
-                self.props.settings.get_string(prop)
+                settings.get_string(prop)
 
         for item_ in self:
             color = item_.get_color()
@@ -252,15 +253,14 @@ class Data(Graphs.Data):
             ylabel = item_.get_ylabel()
             self._remove_item(item_)
         used = self.get_used_positions()
+        settings = self.get_application().get_settings_child("figure")
         for position in [x_position, y_position]:
             direction = misc.DIRECTIONS[position]
             item_label = xlabel if position < 2 else ylabel
             axis_label = getattr(settings, f"get_{direction}_label")()
             if not used[position] and item_label == axis_label:
                 set_label = getattr(settings, f"set_{direction}_label")
-                set_label(
-                    self.props.settings.get_string(f"{direction}-label"),
-                )
+                set_label(settings.get_string(f"{direction}-label"))
 
         self._add_history_state()
 
