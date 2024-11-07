@@ -2,7 +2,6 @@
 """Module for data transformations."""
 import logging
 import re
-import sys
 import types
 from gettext import gettext as _
 
@@ -119,10 +118,9 @@ def sort_data(xdata: list, ydata: list) -> (list, list):
 
 def perform_operation(application: Graphs.Application, name: str) -> None:
     """Perform an operation."""
-    this = sys.modules[__name__]
     window = application.get_active_window()
     if name in ("combine", ):
-        return getattr(this, name)(application)
+        return getattr(DataOperations, name)(window)
     elif name == "custom_transformation":
 
         def on_accept(_dialog, input_x, input_y, discard):
@@ -159,11 +157,19 @@ def perform_operation(application: Graphs.Application, name: str) -> None:
         left_range = (
             figure_settings.get_max_left() - figure_settings.get_min_left()
         )
+
+        min_bottom = figure_settings.get_min_bottom()
+        max_bottom = figure_settings.get_max_bottom()
+        min_top = figure_settings.get_min_top()
+        max_top = figure_settings.get_max_top()
+        limits = [(min_bottom, max_bottom),
+                  (min_top, max_top)]
         args += [
             figure_settings.get_left_scale(),
             figure_settings.get_right_scale(),
             window.get_data().get_items(),
             [left_range, right_range],
+            limits,
         ]
     elif "translate" in name or "multiply" in name:
         try:
@@ -352,16 +358,34 @@ class EquationOperations():
         Depending on the key, will center either on the middle coordinate, or
         on the maximum value of the data
         """
-        # TODO: CHECK IF WE CAN GET MAXIMUM ANALYTICALLY USING DERIVATIVES
-        # ALSO BEHAVIOUR FOR CENTER AT MIDDLE FEELS UNINTUITIVE, RETHINK HOW
-        # THAT SHOULD BEHAVE FOR EQUATIONS...
-
         xdata, ydata = utilities.equation_to_data(_item._equation, limits)
         if center_maximum == 0:  # Center at maximum Y
-            middle_index = ydata.index(max(ydata))
-            middle_value = xdata[middle_index]
+            x = sympy.symbols("x")
+            equation = sympy.sympify(utilities.preprocess(_item._equation))
+            derivative = sympy.diff(equation, x)
+            critical_points = sympy.solveset(
+                derivative, x, domain=sympy.Interval(limits[0], limits[1]))
+            endpoints = \
+                [equation.subs(x, limits[0]), equation.subs(x, limits[1])]
+
+            try:
+                critical_values = \
+                    [equation.subs(x, cp) for cp in critical_points]
+                if critical_values:
+                    max_index = critical_values.index(max(critical_values))
+                    middle_value = list(critical_points)[max_index]
+                else:
+                    max_index = endpoints.index(max(endpoints))
+                    middle_value = [limits[0], limits[1]][max_index]
+
+            # If we don't manage to solve this analytically, just find
+            # the maximum by calculating
+            except TypeError:
+                middle_index = ydata.index(max(ydata))
+                middle_value = xdata[middle_index]
+
         elif center_maximum == 1:  # Center at middle
-            middle_value = -(min(xdata) + max(xdata)) / 2
+            middle_value = (min(xdata) + max(xdata)) / 2
         equation = \
             re.sub(r"(?<!e)x(?!p)", f"(x+{middle_value})", _item.equation)
         equation = sympy.sympify(utilities.preprocess(equation))
@@ -377,6 +401,7 @@ class EquationOperations():
         right_scale: int,
         items: misc.ItemList,
         ranges: tuple[float, float],
+        limits: list,
     ) -> _return:
         """
         Shifts data vertically with respect to each other.
@@ -384,23 +409,20 @@ class EquationOperations():
         By default it scales linear data by 1.2 times the total span of the
         ydata, and log data 10 to the power of the yspan.
         """
-        # TODO: THIS DOESN OT WORK AT ALL YET
-        data_list = [item for item in items]
-
+        data_list = [item for item in items if isinstance(item, EquationItem)]
         y_range = ranges[1] if item.get_yposition() else ranges[0]
+        limits = limits[1] if item.get_yposition() else limits[0]
 
-        shift_value_log = 0
+        shift_value_log = 1
         shift_value_linear = 0
-
-        # TODO: FIX LIMITS HERE
-        xdata, ydata = utilities.equation_to_data(item._equation, [0, 1])
+        xdata, ydata = utilities.equation_to_data(item._equation, limits)
         for index, item_ in enumerate(data_list):
             # Compare first element with itself, not "previous" item
             index = 1 if index == 0 and len(data_list) > 1 else index
 
             previous_item = data_list[index - 1]
             prev_xdata, prev_ydata = \
-                utilities.equation_to_data(previous_item._equation, [0, 1])
+                utilities.equation_to_data(previous_item._equation, limits)
             # Only use selected span when obtaining values to determine shift
             new_xdata, new_ydata = xdata, ydata
             if (
@@ -422,17 +444,17 @@ class EquationOperations():
             else:
                 shift_value_linear += (ymax - ymin) + 0.1 * y_range
             if item.get_uuid() == item_.get_uuid():
+                shift_value = \
+                    shift_value_log if scale == 1 else shift_value_linear
                 if scale == 1:  # Log scaling
-                    new_ydata = [
-                        value * 10**shift_value_log for value in ydata
-                    ]
+                    equation = f"({item.equation})*10**{shift_value}"
                 else:
-                    new_ydata = [value + shift_value_linear for value in ydata]
-            shift_value = shift_value_log if scale == 1 else shift_value_linear
-            valid_equation = utilities.validate_equation(str(item_.equation))
-            if not valid_equation:
-                return False
-            item.equation = f"{item.equation}+{shift_value}"
+                    equation = f"{item.equation}+{shift_value}"
+                equation = sympy.sympify(utilities.preprocess(equation))
+                valid_equation = utilities.validate_equation(str(equation))
+                if not valid_equation:
+                    continue
+                item_.equation = str(sympy.simplify(equation))
         return True
 
     def cut(_item) -> bool:
@@ -487,10 +509,6 @@ class EquationOperations():
 
     def transform(_item) -> None:
         """Perform custom transformation."""
-        return None
-
-    def combine(_window: Graphs.Window) -> None:
-        """Combine the selected data into a new data set."""
         return None
 
 
@@ -725,13 +743,19 @@ class DataOperations():
         """Combine the selected data into a new data set."""
         new_xdata, new_ydata = [], []
         data = window.get_data()
+        data_items = False
         for item in data:
             if not (item.get_selected() and isinstance(item, DataItem)):
                 continue
+            data_items = True
             xdata, ydata = get_data(window, item)[:2]
             new_xdata.extend(xdata)
             new_ydata.extend(ydata)
-
+        if not data_items:
+            window.add_toast_string(
+                _("Combining data is not supported for equations"),
+            )
+            return None
         # Create the item itself
         new_xdata, new_ydata = sort_data(new_xdata, new_ydata)
         data.add_items([
