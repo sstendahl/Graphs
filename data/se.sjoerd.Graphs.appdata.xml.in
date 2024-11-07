@@ -54,6 +54,11 @@
     </screenshot>
   </screenshots>
   <releases>
+    <release version="1.8.3" date="2024-11-07">
+      <description>
+        <p>Minor update, offering some language updates.</p>
+      </description>
+    </release>    
     <release version="1.8.2" date="2024-08-14">
       <description>
         <p>Minor update, offering some language updates.</p>
