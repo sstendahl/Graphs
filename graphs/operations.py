@@ -539,6 +539,7 @@ class EquationOperations():
         item.equation = str(sympy.simplify(equation))
         return True
 
+
 @staticclass
 class DataOperations():
     """Operations to be performed on data items."""
