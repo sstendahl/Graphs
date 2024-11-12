@@ -228,8 +228,9 @@ def _apply_data(window, item, data, name, *args):
     xdata, ydata = get_data(window, item)
     figure_settings = data.get_figure_settings()
     callback = getattr(DataOperations, name)
-    if xdata is not None and len(xdata) != 0:
-        data_selected = True
+    if not (xdata is not None and len(xdata) != 0):
+        window.add_toast_string(_("No data found within the highlighted area"))
+    else:
         new_xdata, new_ydata, sort, discard = callback(
             item, xdata, ydata, *args,
         )
@@ -271,11 +272,8 @@ def _apply_data(window, item, data, name, *args):
         if sort:
             logging.debug("Sorting data")
             item.xdata, item.ydata = sort_data(item.xdata, item.ydata)
-    item.notify("xdata")
-    item.notify("ydata")
-    figure_settings.set_selection_range(0, 0)
-    if not data_selected:
-        window.add_toast_string(_("No data found within the highlighted area"))
+        item.notify("xdata")
+        item.notify("ydata")
     return
 
 
