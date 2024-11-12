@@ -193,8 +193,7 @@ def _apply(window, name, *args):
             continue
         if isinstance(item, EquationItem):
             callback = getattr(EquationOperations, name)
-
-            if name in ("normalize", "center"):
+            if name in ("normalize", "center", "transform"):
                 limits = [
                     old_limits[item.get_xposition()],
                     old_limits[item.get_yposition() + 1],
@@ -295,73 +294,73 @@ def staticclass(cls):
 class EquationOperations():
     """Operations to be performed on equation items."""
 
-    def translate_x(_item, offset) -> _return:
+    def translate_x(item, offset) -> _return:
         """Translate all selected data on the x-axis."""
-        equation = re.sub(r"(?<!e)x(?!p)", f"(x+{offset})", _item.equation)
+        equation = re.sub(r"(?<!e)x(?!p)", f"(x+{offset})", item.equation)
 
         equation = sympy.sympify(utilities.preprocess(equation))
         valid_equation = utilities.validate_equation(str(equation))
         if not valid_equation:
             return False
-        _item.equation = str(sympy.simplify(equation))
+        item.equation = str(sympy.simplify(equation))
         return True
 
-    def translate_y(_item, offset) -> _return:
+    def translate_y(item, offset) -> _return:
         """Translate all selected data on the y-axis."""
-        equation = f"({_item.equation})+{offset}"
+        equation = f"({item.equation})+{offset}"
         equation = sympy.sympify(utilities.preprocess(equation))
         valid_equation = utilities.validate_equation(str(equation))
         if not valid_equation:
             return False
-        _item.equation = str(sympy.simplify(equation))
+        item.equation = str(sympy.simplify(equation))
         return True
 
-    def multiply_x(_item, multiplier: float) -> _return:
+    def multiply_x(item, multiplier: float) -> _return:
         """Multiply all selected data on the x-axis."""
-        equation = re.sub(r"(?<!e)x(?!p)", f"(x*{multiplier})", _item.equation)
+        equation = re.sub(r"(?<!e)x(?!p)", f"(x*{multiplier})", item.equation)
         equation = sympy.sympify(utilities.preprocess(equation))
         valid_equation = utilities.validate_equation(str(equation))
         if not valid_equation:
             return False
-        _item.equation = str(sympy.simplify(equation))
+        item.equation = str(sympy.simplify(equation))
         return True
 
-    def multiply_y(_item, multiplier: float) -> _return:
+    def multiply_y(item, multiplier: float) -> _return:
         """Multiply all selected data on the y-axis."""
-        equation = f"({_item.equation})*{multiplier}"
+        equation = f"({item.equation})*{multiplier}"
         equation = sympy.sympify(utilities.preprocess(equation))
         valid_equation = utilities.validate_equation(str(equation))
         if not valid_equation:
             return False
-        _item.equation = str(sympy.simplify(equation))
+        item.equation = str(sympy.simplify(equation))
         return True
 
-    def normalize(_item, limits) -> _return:
+    def normalize(item, limits) -> _return:
         """Normalize all selected data."""
-        xdata, ydata = utilities.equation_to_data(_item._equation, limits)
-        equation = f"({_item.equation})/{max(ydata)}"
+        xdata, ydata = utilities.equation_to_data(item._equation, limits)
+        equation = f"({item.equation})/{max(ydata)}"
         equation = sympy.sympify(utilities.preprocess(equation))
         valid_equation = utilities.validate_equation(str(equation))
         if not valid_equation:
             return False
-        _item.equation = str(sympy.simplify(equation))
+        item.equation = str(sympy.simplify(equation))
         return True
 
     def smoothen(_item, *_args) -> None:
         """Smoothen y-data."""
         return None
 
-    def center(_item, limits, center_maximum: int) -> _return:
+    def center(item, limits, center_maximum: int) -> _return:
         """
         Center all selected data.
 
         Depending on the key, will center either on the middle coordinate, or
         on the maximum value of the data
         """
-        xdata, ydata = utilities.equation_to_data(_item._equation, limits)
+        xdata, ydata = utilities.equation_to_data(item._equation, limits)
         if center_maximum == 0:  # Center at maximum Y
             x = sympy.symbols("x")
-            equation = sympy.sympify(utilities.preprocess(_item._equation))
+            equation = sympy.sympify(utilities.preprocess(item._equation))
             derivative = sympy.diff(equation, x)
             critical_points = sympy.solveset(
                 derivative, x, domain=sympy.Interval(limits[0], limits[1]))
@@ -387,12 +386,12 @@ class EquationOperations():
         elif center_maximum == 1:  # Center at middle
             middle_value = (min(xdata) + max(xdata)) / 2
         equation = \
-            re.sub(r"(?<!e)x(?!p)", f"(x+{middle_value})", _item.equation)
+            re.sub(r"(?<!e)x(?!p)", f"(x+{middle_value})", item.equation)
         equation = sympy.sympify(utilities.preprocess(equation))
         valid_equation = utilities.validate_equation(str(equation))
         if not valid_equation:
             return False
-        _item.equation = str(sympy.simplify(equation))
+        item.equation = str(sympy.simplify(equation))
         return True
 
     def shift(
@@ -461,56 +460,84 @@ class EquationOperations():
         """Cut selected data over the span that is selected."""
         return None
 
-    def derivative(_item) -> bool:
+    def derivative(item) -> bool:
         """Calculate derivative of all selected data."""
         x = sympy.symbols("x")
-        equation = utilities.preprocess(_item._equation)
+        equation = utilities.preprocess(item._equation)
         equation = sympy.diff(equation, x)
         valid_equation = utilities.validate_equation(str(equation))
         if not valid_equation:
             return False
-        _item.equation = str(equation)
+        item.equation = str(equation)
         return True
 
-    def integral(_item) -> bool:
+    def integral(item) -> bool:
         """Calculate indefinite integral of all selected data."""
         x = sympy.symbols("x")
-        equation = utilities.preprocess(_item._equation)
+        equation = utilities.preprocess(item._equation)
         equation = sympy.integrate(equation, x)
         valid_equation = utilities.validate_equation(str(equation))
         if not valid_equation:
             return False
-        _item.equation = str(equation)
+        item.equation = str(equation)
         return True
 
-    def fft(_item) -> bool:
+    def fft(item) -> bool:
         """Perform Fourier transformation on all selected data."""
         x, k = sympy.symbols("x k")
-        equation = utilities.preprocess(_item._equation)
+        equation = utilities.preprocess(item._equation)
         equation = str(sympy.fourier_transform(equation, x, k))
         equation = equation.replace("k", "x")
         valid_equation = utilities.validate_equation(str(equation))
         if not valid_equation:
             return False
-        _item.equation = str(equation)
+        item.equation = str(equation)
         return True
 
-    def inverse_fft(_item) -> bool:
+    def inverse_fft(item) -> bool:
         """Perform Inverse Fourier transformation on all selected data."""
         x, k = sympy.symbols("x k")
-        equation = utilities.preprocess(_item._equation)
+        equation = utilities.preprocess(item._equation)
         equation = str(sympy.fourier_transform(equation, x, k))
         equation = equation.replace("k", "x")
         valid_equation = utilities.validate_equation(str(equation))
         if not valid_equation:
             return False
-        _item.equation = str(equation)
+        item.equation = str(equation)
         return True
 
-    def transform(_item) -> None:
+    def transform(
+        item,
+        limits: list,
+        input_x: str,
+        input_y: str,
+        _discard: bool,
+    ) -> _return:
         """Perform custom transformation."""
-        return None
+        xdata, ydata = utilities.equation_to_data(item._equation, limits)
+        local_dict = {
+            "x": xdata,
+            "y": ydata,
+            "x_min": min(xdata),
+            "x_max": max(xdata),
+            "y_min": min(ydata),
+            "y_max": max(ydata),
+        }
 
+        for key, value in local_dict.items():
+            if key not in ("x", "y"):
+                input_x = input_x.lower().replace(key, str(value))
+                input_y = input_y.lower().replace(key, str(value))
+
+        equation = \
+            re.sub(r"(?<!e)x(?!p)", input_x, item.equation)
+        equation = input_y.lower().replace("y", equation)
+        equation = sympy.sympify(utilities.preprocess(equation))
+        valid_equation = utilities.validate_equation(str(equation))
+        if not valid_equation:
+            return False
+        item.equation = str(sympy.simplify(equation))
+        return True
 
 @staticclass
 class DataOperations():
