@@ -55,7 +55,7 @@ parts:
     build-snaps:
       - blueprint-compiler/latest/edge 
     organize:
-      snap/graphs/current: .
+      snap/graphs/current/usr: usr
     parse-info: [usr/share/appdata/se.sjoerd.Graphs.appdata.xml]
     
     
