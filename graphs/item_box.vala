@@ -65,7 +65,7 @@ namespace Graphs {
                     application.python_helper.create_curve_fitting_dialog (window, item);
                 });
                 action_group.add_action (curve_fitting_action);
-                }
+            }
             if (index > 0) {
                 var move_up_action = new SimpleAction ("move_up", null);
                 move_up_action.activate.connect (() => {
