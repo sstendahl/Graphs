@@ -216,7 +216,7 @@ def _apply(window, name, *args):
                     ),
                 )
         elif isinstance(item, DataItem):
-            _apply_data(window, item, data, name, *args)
+            _apply_data(window, item, name, *args)
         else:
             continue
 
@@ -224,7 +224,7 @@ def _apply(window, name, *args):
     data.add_history_state_with_limits(old_limits)
 
 
-def _apply_data(window, item, data, name, *args):
+def _apply_data(window, item, name, *args):
     xdata, ydata = get_data(window, item)
     callback = getattr(DataOperations, name)
     if not (xdata is not None and len(xdata) != 0):
@@ -641,7 +641,7 @@ class DataOperations():
         right_scale: int,
         items: misc.ItemList,
         ranges: tuple[float, float],
-        _limits = list,
+        _limits: list,
     ) -> _return:
         """
         Shifts data vertically with respect to each other.
