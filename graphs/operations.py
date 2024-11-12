@@ -226,7 +226,6 @@ def _apply(window, name, *args):
 
 def _apply_data(window, item, data, name, *args):
     xdata, ydata = get_data(window, item)
-    figure_settings = data.get_figure_settings()
     callback = getattr(DataOperations, name)
     if not (xdata is not None and len(xdata) != 0):
         window.add_toast_string(_("No data found within the highlighted area"))
@@ -642,6 +641,7 @@ class DataOperations():
         right_scale: int,
         items: misc.ItemList,
         ranges: tuple[float, float],
+        _limits = list,
     ) -> _return:
         """
         Shifts data vertically with respect to each other.
