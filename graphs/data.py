@@ -229,7 +229,6 @@ class Data(Graphs.Data):
             ylabel = item_.get_ylabel()
             self._remove_item(item_)
         used = self.get_used_positions()
-        settings = self.get_application().get_settings_child("figure")
         for position in [x_position, y_position]:
             direction = misc.DIRECTIONS[position]
             item_label = xlabel if position < 2 else ylabel

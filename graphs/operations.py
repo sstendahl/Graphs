@@ -119,8 +119,16 @@ def sort_data(xdata: list, ydata: list) -> (list, list):
 def perform_operation(application: Graphs.Application, name: str) -> None:
     """Perform an operation."""
     window = application.get_active_window()
+    figure_settings = window.get_data().get_figure_settings()
+    min_bottom = figure_settings.get_min_bottom()
+    max_bottom = figure_settings.get_max_bottom()
+    min_top = figure_settings.get_min_top()
+    max_top = figure_settings.get_max_top()
+    limits = [(min_bottom, max_bottom),
+              (min_top, max_top)]
+
     if name in ("combine", ):
-        return getattr(DataOperations, name)(window)
+        return getattr(DataOperations, name)(window, limits)
     elif name == "custom_transformation":
 
         def on_accept(_dialog, input_x, input_y, discard):
@@ -150,20 +158,12 @@ def perform_operation(application: Graphs.Application, name: str) -> None:
             params[setting] = int(settings.get_int(setting))
         args += [params]
     elif name == "shift":
-        figure_settings = window.get_data().get_figure_settings()
         right_range = (
             figure_settings.get_max_right() - figure_settings.get_min_right()
         )
         left_range = (
             figure_settings.get_max_left() - figure_settings.get_min_left()
         )
-
-        min_bottom = figure_settings.get_min_bottom()
-        max_bottom = figure_settings.get_max_bottom()
-        min_top = figure_settings.get_min_top()
-        max_top = figure_settings.get_max_top()
-        limits = [(min_bottom, max_bottom),
-                  (min_top, max_top)]
         args += [
             figure_settings.get_left_scale(),
             figure_settings.get_right_scale(),
@@ -765,23 +765,22 @@ class DataOperations():
             discard,
         )
 
-    def combine(window: Graphs.Window) -> None:
+    def combine(window: Graphs.Window, ax_limits: list) -> None:
         """Combine the selected data into a new data set."""
-        new_xdata, new_ydata = [], []
         data = window.get_data()
-        data_items = False
+        new_xdata, new_ydata = [], []
+
         for item in data:
-            if not (item.get_selected() and isinstance(item, DataItem)):
+            if not item.get_selected():
                 continue
-            data_items = True
-            xdata, ydata = get_data(window, item)[:2]
+            if isinstance(item, DataItem):
+                xdata, ydata = get_data(window, item)[:2]
+            elif isinstance(item, EquationItem):
+                limits = ax_limits[1] if item.get_yposition() else ax_limits[0]
+                xdata, ydata = \
+                    utilities.equation_to_data(item._equation, limits)
             new_xdata.extend(xdata)
             new_ydata.extend(ydata)
-        if not data_items:
-            window.add_toast_string(
-                _("Combining data is not supported for equations"),
-            )
-            return None
         # Create the item itself
         new_xdata, new_ydata = sort_data(new_xdata, new_ydata)
         data.add_items([
