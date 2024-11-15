@@ -773,12 +773,16 @@ class DataOperations():
         for item in data:
             if not item.get_selected():
                 continue
-            if isinstance(item, DataItem):
-                xdata, ydata = get_data(window, item)[:2]
-            elif isinstance(item, EquationItem):
+            if isinstance(item, EquationItem):
                 limits = ax_limits[1] if item.get_yposition() else ax_limits[0]
                 xdata, ydata = \
                     utilities.equation_to_data(item._equation, limits)
+                item = DataItem.new(
+                    data.get_selected_style_params(),
+                    xdata,
+                    ydata,
+                )
+            xdata, ydata = get_data(window, item)[:2]
             new_xdata.extend(xdata)
             new_ydata.extend(ydata)
         # Create the item itself
