@@ -345,7 +345,7 @@ class EquationOperations():
 
     def smoothen(_item, *_args) -> None:
         """Smoothen y-data."""
-        return None
+        return
 
     def center(item, limits, center_maximum: int) -> _return:
         """
@@ -455,7 +455,7 @@ class EquationOperations():
 
     def cut(_item) -> bool:
         """Cut selected data over the span that is selected."""
-        return None
+        return
 
     def derivative(item) -> bool:
         """Calculate derivative of all selected data."""
