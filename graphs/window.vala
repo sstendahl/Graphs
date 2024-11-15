@@ -43,6 +43,9 @@ namespace Graphs {
         private unowned Button shift_button { get; }
 
         [GtkChild]
+        private unowned Adw.SplitButton smoothen_button { get; }
+
+        [GtkChild]
         protected unowned Button cut_button { get; }
 
         [GtkChild]
@@ -147,6 +150,7 @@ namespace Graphs {
             Actions.setup (application, this);
 
             data.bind_property ("items_selected", shift_button, "sensitive", 2);
+            data.bind_property ("data_items_selected", smoothen_button, "sensitive", 2);
             data.bind_property ("can_undo", undo_button, "sensitive", 2);
             data.bind_property ("can_redo", redo_button, "sensitive", 2);
             data.bind_property ("can_view_back", view_back_button, "sensitive", 2);
