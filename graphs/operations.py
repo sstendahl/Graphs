@@ -206,10 +206,11 @@ def _apply(window, name, *args):
                         + "cutting in the data is not supported for equations.",
                     ),
                 )
+                continue
             else:
                 result = callback(item, *args)
 
-            elif result is False:
+            if result is False:
                 window.add_toast_string(
                     _(
                         f"Operation on {item.props.name} did not result in a  "
@@ -453,6 +454,10 @@ class EquationOperations():
                     continue
                 item_.equation = str(sympy.simplify(equation))
         return True
+
+    def cut(_item, _xdata, _ydata) -> _return:
+        """Cut selected data over the span that is selected."""
+        return
 
     def derivative(item) -> bool:
         """Calculate derivative of all selected data."""
