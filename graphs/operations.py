@@ -199,15 +199,16 @@ def _apply(window, name, *args):
                     old_limits[item.get_yposition() + 1],
                 ]
                 result = callback(item, limits, *args)
-            else:
-                result = callback(item, *args)
-            if result is None:
+            elif name in ("cut"):
                 window.add_toast_string(
                     _(
-                        f"Could not perform operation on {item.props.name}, "
-                        + "this operation is not supported for equations.",
+                        f"Could not cut {item.props.name}, "
+                        + "cutting in the data is not supported for equations.",
                     ),
                 )
+            else:
+                result = callback(item, *args)
+
             elif result is False:
                 window.add_toast_string(
                     _(
@@ -452,10 +453,6 @@ class EquationOperations():
                     continue
                 item_.equation = str(sympy.simplify(equation))
         return True
-
-    def cut(_item) -> bool:
-        """Cut selected data over the span that is selected."""
-        return
 
     def derivative(item) -> bool:
         """Calculate derivative of all selected data."""
