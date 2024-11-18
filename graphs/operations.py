@@ -203,7 +203,7 @@ def _apply(window, name, *args):
                 window.add_toast_string(
                     _(
                         f"Could not cut {item.props.name}, "
-                        + "cutting in the data is not supported for equations.",
+                        + "cutting data is not supported for equations.",
                     ),
                 )
                 continue
