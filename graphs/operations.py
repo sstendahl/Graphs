@@ -290,7 +290,43 @@ def staticclass(cls):
 
 
 @staticclass
-class EquationOperations():
+class CommonOperations():
+    """Operations to be performed on all kind of items."""
+
+    def combine(window: Graphs.Window, ax_limits: list) -> None:
+        """Combine the selected data into a new data set."""
+        data = window.get_data()
+        new_xdata, new_ydata = [], []
+
+        for item in data:
+            if not item.get_selected():
+                continue
+            if isinstance(item, EquationItem):
+                limits = ax_limits[1] if item.get_yposition() else ax_limits[0]
+                print(limits)
+                xdata, ydata = \
+                    utilities.equation_to_data(item._equation, limits)
+                item = DataItem.new(
+                    data.get_selected_style_params(),
+                    xdata,
+                    ydata,
+                )
+            xdata, ydata = get_data(window, item)[:2]
+            new_xdata.extend(xdata)
+            new_ydata.extend(ydata)
+        # Create the item itself
+        new_xdata, new_ydata = sort_data(new_xdata, new_ydata)
+        data.add_items([
+            DataItem.new(
+                data.get_selected_style_params(),
+                new_xdata,
+                new_ydata,
+                name=_("Combined Data"),
+            ),
+        ])
+
+@staticclass
+class EquationOperations(CommonOperations):
     """Operations to be performed on equation items."""
 
     def translate_x(item, offset) -> _return:
@@ -452,7 +488,7 @@ class EquationOperations():
                 valid_equation = utilities.validate_equation(str(equation))
                 if not valid_equation:
                     continue
-                item_.equation = str(sympy.simplify(equation))
+                item.equation = str(sympy.simplify(equation))
         return True
 
     def cut(_item, _xdata, _ydata) -> _return:
@@ -540,7 +576,7 @@ class EquationOperations():
 
 
 @staticclass
-class DataOperations():
+class DataOperations(CommonOperations):
     """Operations to be performed on data items."""
 
     def translate_x(_item, xdata: list, ydata: list, offset: float) -> _return:
@@ -767,33 +803,3 @@ class DataOperations():
             discard,
         )
 
-    def combine(window: Graphs.Window, ax_limits: list) -> None:
-        """Combine the selected data into a new data set."""
-        data = window.get_data()
-        new_xdata, new_ydata = [], []
-
-        for item in data:
-            if not item.get_selected():
-                continue
-            if isinstance(item, EquationItem):
-                limits = ax_limits[1] if item.get_yposition() else ax_limits[0]
-                xdata, ydata = \
-                    utilities.equation_to_data(item._equation, limits)
-                item = DataItem.new(
-                    data.get_selected_style_params(),
-                    xdata,
-                    ydata,
-                )
-            xdata, ydata = get_data(window, item)[:2]
-            new_xdata.extend(xdata)
-            new_ydata.extend(ydata)
-        # Create the item itself
-        new_xdata, new_ydata = sort_data(new_xdata, new_ydata)
-        data.add_items([
-            DataItem.new(
-                data.get_selected_style_params(),
-                new_xdata,
-                new_ydata,
-                name=_("Combined Data"),
-            ),
-        ])

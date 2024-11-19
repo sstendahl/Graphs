@@ -29,7 +29,7 @@ namespace Graphs {
         public bool data_items_selected {
             get {
                 foreach (Item item in _items) {
-                    if (item.typename == "Dataset" && item.selected) return true;
+                    if (item.get_type ().name() == "GraphsDataItem" && item.selected) return true;
                 }
                 return false;
             }
