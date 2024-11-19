@@ -303,7 +303,6 @@ class CommonOperations():
                 continue
             if isinstance(item, EquationItem):
                 limits = ax_limits[1] if item.get_yposition() else ax_limits[0]
-                print(limits)
                 xdata, ydata = \
                     utilities.equation_to_data(item._equation, limits)
                 item = DataItem.new(
@@ -324,6 +323,7 @@ class CommonOperations():
                 name=_("Combined Data"),
             ),
         ])
+
 
 @staticclass
 class EquationOperations(CommonOperations):
