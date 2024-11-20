@@ -45,6 +45,9 @@ template $GraphsEditItemDialog : Adw.PreferencesDialog {
         title: _("Y =");
         changed => $on_equation_change();
       }
+      Adw.ButtonRow simplify {
+        title: _("Simplify");
+      }
     }
 
     Adw.PreferencesGroup item_group {

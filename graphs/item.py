@@ -4,7 +4,9 @@ from gettext import gettext as _
 
 from gi.repository import GObject, Graphs
 
-from graphs import misc
+from graphs import misc, utilities
+
+import sympy
 
 
 def new_from_dict(dictionary: dict):
@@ -125,13 +127,22 @@ class EquationItem(_PythonItem):
     @equation.setter
     def equation(self, equation: str) -> None:
         old_equation = self._equation
-        if old_equation == equation:
+        valid_equation = utilities.validate_equation(str(equation))
+        if old_equation == equation or not valid_equation:
             return
         self._equation = equation
         self.notify("equation")
 
         if "Y = " + old_equation == self.props.name:
             self.props.name = "Y = " + equation
+
+    def simplify_equation(self) -> None:
+        """
+        Simplifies the item equation
+        """
+        equation = utilities.preprocess(self.equation)
+        equation = str(sympy.simplify(equation))
+        self.equation = equation
 
 
 class TextItem(_PythonItem):

@@ -83,7 +83,6 @@ def filter_data(
         ">=": numpy.greater_equal,
         "==": numpy.equal,
     }
-
     mask = conditions[condition](xdata, value)
 
     xdata_filtered = xdata[mask]
@@ -128,7 +127,7 @@ def perform_operation(application: Graphs.Application, name: str) -> None:
               (min_top, max_top)]
 
     if name in ("combine", ):
-        return getattr(DataOperations, name)(window, limits)
+        return getattr(CommonOperations, name)(window, limits)
     elif name == "custom_transformation":
 
         def on_accept(_dialog, input_x, input_y, discard):
@@ -198,7 +197,15 @@ def _apply(window, name, *args):
                     old_limits[item.get_xposition()],
                     old_limits[item.get_yposition() + 1],
                 ]
-                result = callback(item, limits, *args)
+                callback(item, limits, *args)
+            elif name == "shift":
+                limits = [
+                    old_limits[item.get_xposition()],
+                    old_limits[item.get_yposition() + 1],
+                ]
+                xdata, ydata = \
+                    utilities.equation_to_data(item._equation, limits)
+                callback(item, xdata, ydata, *args)
             elif name in ("cut"):
                 window.add_toast_string(
                     _(
@@ -208,15 +215,8 @@ def _apply(window, name, *args):
                 )
                 continue
             else:
-                result = callback(item, *args)
+                callback(item, *args)
 
-            if result is False:
-                window.add_toast_string(
-                    _(
-                        f"Operation on {item.props.name} did not result in a  "
-                        + "plottable equation.",
-                    ),
-                )
         elif isinstance(item, DataItem):
             _apply_data(window, item, name, *args)
         else:
@@ -275,7 +275,6 @@ def _apply_data(window, item, name, *args):
             item.xdata, item.ydata = sort_data(item.xdata, item.ydata)
         item.notify("xdata")
         item.notify("ydata")
-    return
 
 
 _return = (list[float], list[float], bool, bool)
@@ -324,6 +323,83 @@ class CommonOperations():
             ),
         ])
 
+    def shift(
+        item,
+        xdata: list,
+        ydata: list,
+        left_scale: int,
+        right_scale: int,
+        items: misc.ItemList,
+        ranges: tuple[float, float],
+        limits: list,
+    ) -> _return:
+        """
+        Shifts data vertically with respect to each other.
+
+        By default it scales linear data by 1.2 times the total span of the
+        ydata, and log data 10 to the power of the yspan.
+        """
+        def _filter_range(xdata, ydata, prev_xdata, prev_ydata):
+            if min(xdata) >= min(prev_xdata) and max(xdata) <= max(prev_ydata):
+                new_xdata, new_ydata = \
+                    filter_data(prev_xdata, prev_ydata, ">=", min(xdata))
+                new_xdata, new_ydata = \
+                    filter_data(new_xdata, new_ydata, "<=", max(xdata))
+                return new_xdata, new_ydata
+            return xdata, ydata
+
+        data_list = ([item for item in items if item.get_selected()
+                     and isinstance(item, (EquationItem, DataItem))])
+
+        y_range = ranges[1] if item.get_yposition() else ranges[0]
+        limits = limits[1] if item.get_yposition() else limits[0]
+        shift_value_log = 0
+        shift_value_linear = 0
+
+        for index, item_ in enumerate(data_list):
+            index = 1 if index == 0 and len(data_list) > 1 else index
+            previous_item = data_list[index - 1]
+
+            if isinstance(previous_item, EquationItem):
+                prev_xdata, prev_ydata = \
+                    utilities.equation_to_data(previous_item._equation, limits)
+            else:
+                prev_xdata, prev_ydata = \
+                    previous_item.xdata, previous_item.ydata
+
+            new_xdata, new_ydata = \
+                _filter_range(xdata, ydata, prev_xdata, prev_ydata)
+            ymin = min(x for x in new_ydata if x != 0)
+            ymax = max(x for x in new_ydata if x != 0)
+            scale = right_scale if item.get_yposition() else left_scale
+
+            if scale == 1:  # Use log values for log scaling
+                shift_value_log += \
+                    numpy.log10(abs(ymax / ymin)) + 0.1 * numpy.log10(y_range)
+            else:
+                shift_value_linear += (ymax - ymin) + 0.1 * y_range
+
+            shift_value = \
+                shift_value_log if scale == 1 else shift_value_linear
+
+            is_input_item = item.get_uuid() == item_.get_uuid()
+            if isinstance(item_, EquationItem) and is_input_item:
+                if scale == 1:  # Log scaling
+                    equation = f"({item.equation})*10**{shift_value}"
+                else:
+                    equation = f"{item.equation}+{shift_value}"
+                item.equation = equation
+                item.simplify_equation()
+                return
+
+            elif isinstance(item_, DataItem) and is_input_item:
+                if scale == 1:  # Apply log scaling
+                    new_ydata = \
+                        [value * 10**shift_value_log for value in ydata]
+                else:  # Apply linear scaling
+                    new_ydata = [value + shift_value_linear for value in ydata]
+                return xdata, new_ydata, False, False
+
 
 @staticclass
 class EquationOperations(CommonOperations):
@@ -332,58 +408,38 @@ class EquationOperations(CommonOperations):
     def translate_x(item, offset) -> _return:
         """Translate all selected data on the x-axis."""
         equation = re.sub(r"(?<!e)x(?!p)", f"(x+{offset})", item.equation)
-
-        equation = sympy.sympify(utilities.preprocess(equation))
-        valid_equation = utilities.validate_equation(str(equation))
-        if not valid_equation:
-            return False
-        item.equation = str(sympy.simplify(equation))
-        return True
+        item.equation = equation
+        item.simplify_equation()
+        item.simplify_equation()
 
     def translate_y(item, offset) -> _return:
         """Translate all selected data on the y-axis."""
         equation = f"({item.equation})+{offset}"
-        equation = sympy.sympify(utilities.preprocess(equation))
-        valid_equation = utilities.validate_equation(str(equation))
-        if not valid_equation:
-            return False
-        item.equation = str(sympy.simplify(equation))
-        return True
+        item.equation = equation
+        item.simplify_equation()
 
     def multiply_x(item, multiplier: float) -> _return:
         """Multiply all selected data on the x-axis."""
         equation = re.sub(r"(?<!e)x(?!p)", f"(x*{multiplier})", item.equation)
-        equation = sympy.sympify(utilities.preprocess(equation))
-        valid_equation = utilities.validate_equation(str(equation))
-        if not valid_equation:
-            return False
-        item.equation = str(sympy.simplify(equation))
-        return True
+        item.equation = equation
+        item.simplify_equation()
 
     def multiply_y(item, multiplier: float) -> _return:
         """Multiply all selected data on the y-axis."""
         equation = f"({item.equation})*{multiplier}"
-        equation = sympy.sympify(utilities.preprocess(equation))
-        valid_equation = utilities.validate_equation(str(equation))
-        if not valid_equation:
-            return False
-        item.equation = str(sympy.simplify(equation))
-        return True
+        item.equation = equation
+        item.simplify_equation()
 
     def normalize(item, limits) -> _return:
         """Normalize all selected data."""
         xdata, ydata = utilities.equation_to_data(item._equation, limits)
         equation = f"({item.equation})/{max(ydata)}"
-        equation = sympy.sympify(utilities.preprocess(equation))
-        valid_equation = utilities.validate_equation(str(equation))
-        if not valid_equation:
-            return False
-        item.equation = str(sympy.simplify(equation))
-        return True
+        item.equation = equation
+        item.simplify_equation()
 
     def smoothen(_item, *_args) -> None:
         """Smoothen y-data."""
-        return
+        raise NotImplementedError
 
     def center(item, limits, center_maximum: int) -> _return:
         """
@@ -422,100 +478,28 @@ class EquationOperations(CommonOperations):
             middle_value = (min(xdata) + max(xdata)) / 2
         equation = \
             re.sub(r"(?<!e)x(?!p)", f"(x+{middle_value})", item.equation)
-        equation = sympy.sympify(utilities.preprocess(equation))
-        valid_equation = utilities.validate_equation(str(equation))
-        if not valid_equation:
-            return False
-        item.equation = str(sympy.simplify(equation))
-        return True
-
-    def shift(
-        item,
-        left_scale: int,
-        right_scale: int,
-        items: misc.ItemList,
-        ranges: tuple[float, float],
-        limits: list,
-    ) -> _return:
-        """
-        Shifts data vertically with respect to each other.
-
-        By default it scales linear data by 1.2 times the total span of the
-        ydata, and log data 10 to the power of the yspan.
-        """
-        data_list = [item for item in items if isinstance(item, EquationItem)]
-        y_range = ranges[1] if item.get_yposition() else ranges[0]
-        limits = limits[1] if item.get_yposition() else limits[0]
-
-        shift_value_log = 1
-        shift_value_linear = 0
-        xdata, ydata = utilities.equation_to_data(item._equation, limits)
-        for index, item_ in enumerate(data_list):
-            # Compare first element with itself, not "previous" item
-            index = 1 if index == 0 and len(data_list) > 1 else index
-
-            previous_item = data_list[index - 1]
-            prev_xdata, prev_ydata = \
-                utilities.equation_to_data(previous_item._equation, limits)
-            # Only use selected span when obtaining values to determine shift
-            new_xdata, new_ydata = xdata, ydata
-            if (
-                min(xdata) >= min(prev_xdata)
-                and max(xdata) <= max(prev_ydata)
-            ):
-                new_xdata, new_ydata = filter_data(
-                    prev_xdata, prev_ydata, ">=", min(xdata))
-                new_xdata, new_ydata = filter_data(
-                    new_xdata, new_ydata, "<=", max(xdata))
-
-            ymin = min(x for x in new_ydata if x != 0)
-            ymax = max(x for x in new_ydata if x != 0)
-
-            scale = right_scale if item.get_yposition() else left_scale
-            if scale == 1:  # Use log values for log scaling
-                shift_value_log += \
-                    numpy.log10(abs(ymax / ymin)) + 0.1 * numpy.log10(y_range)
-            else:
-                shift_value_linear += (ymax - ymin) + 0.1 * y_range
-            if item.get_uuid() == item_.get_uuid():
-                shift_value = \
-                    shift_value_log if scale == 1 else shift_value_linear
-                if scale == 1:  # Log scaling
-                    equation = f"({item.equation})*10**{shift_value}"
-                else:
-                    equation = f"{item.equation}+{shift_value}"
-                equation = sympy.sympify(utilities.preprocess(equation))
-                valid_equation = utilities.validate_equation(str(equation))
-                if not valid_equation:
-                    continue
-                item.equation = str(sympy.simplify(equation))
-        return True
+        item.equation = equation
+        item.simplify_equation()
 
     def cut(_item, _xdata, _ydata) -> _return:
         """Cut selected data over the span that is selected."""
-        return
+        raise NotImplementedError
 
     def derivative(item) -> bool:
         """Calculate derivative of all selected data."""
         x = sympy.symbols("x")
         equation = utilities.preprocess(item._equation)
         equation = sympy.diff(equation, x)
-        valid_equation = utilities.validate_equation(str(equation))
-        if not valid_equation:
-            return False
-        item.equation = str(equation)
-        return True
+        item.equation = equation
+        item.simplify_equation()
 
     def integral(item) -> bool:
         """Calculate indefinite integral of all selected data."""
         x = sympy.symbols("x")
         equation = utilities.preprocess(item._equation)
         equation = sympy.integrate(equation, x)
-        valid_equation = utilities.validate_equation(str(equation))
-        if not valid_equation:
-            return False
-        item.equation = str(equation)
-        return True
+        item.equation = equation
+        item.simplify_equation()
 
     def fft(item) -> bool:
         """Perform Fourier transformation on all selected data."""
@@ -523,11 +507,8 @@ class EquationOperations(CommonOperations):
         equation = utilities.preprocess(item._equation)
         equation = str(sympy.fourier_transform(equation, x, k))
         equation = equation.replace("k", "x")
-        valid_equation = utilities.validate_equation(str(equation))
-        if not valid_equation:
-            return False
-        item.equation = str(equation)
-        return True
+        item.equation = equation
+        item.simplify_equation()
 
     def inverse_fft(item) -> bool:
         """Perform Inverse Fourier transformation on all selected data."""
@@ -535,11 +516,8 @@ class EquationOperations(CommonOperations):
         equation = utilities.preprocess(item._equation)
         equation = str(sympy.fourier_transform(equation, x, k))
         equation = equation.replace("k", "x")
-        valid_equation = utilities.validate_equation(str(equation))
-        if not valid_equation:
-            return False
-        item.equation = str(equation)
-        return True
+        item.equation = equation
+        item.simplify_equation()
 
     def transform(
         item,
@@ -567,12 +545,8 @@ class EquationOperations(CommonOperations):
         equation = \
             re.sub(r"(?<!e)x(?!p)", input_x, item.equation)
         equation = input_y.lower().replace("y", equation)
-        equation = sympy.sympify(utilities.preprocess(equation))
-        valid_equation = utilities.validate_equation(str(equation))
-        if not valid_equation:
-            return False
-        item.equation = str(sympy.simplify(equation))
-        return True
+        item.equation = equation
+        item.simplify_equation()
 
 
 @staticclass
@@ -631,29 +605,6 @@ class DataOperations(CommonOperations):
         """Normalize all selected data."""
         return xdata, [value / max(ydata) for value in ydata], False, False
 
-    def smoothen(
-        _item,
-        xdata: list,
-        ydata: list,
-        smooth_type: int,
-        params: dict,
-    ) -> None:
-        """Smoothen y-data."""
-        if smooth_type == 0:
-            minimum = params["savgol-polynomial"] + 1
-            window_percentage = params["savgol-window"] / 100
-            window = max(minimum, int(len(xdata) * window_percentage))
-            new_ydata = scipy.signal.savgol_filter(
-                ydata,
-                window,
-                params["savgol-polynomial"],
-            )
-        elif smooth_type == 1:
-            box_points = params["moving-average-box"]
-            box = numpy.ones(box_points) / box_points
-            new_ydata = numpy.convolve(ydata, box, mode="same")
-        return xdata, new_ydata, False, False
-
     def center(
         _item, xdata: list, ydata: list, center_maximum: int,
     ) -> _return:
@@ -670,68 +621,6 @@ class DataOperations(CommonOperations):
             middle_value = (min(xdata) + max(xdata)) / 2
         new_xdata = [coordinate - middle_value for coordinate in xdata]
         return new_xdata, ydata, True, False
-
-    def shift(
-        item,
-        xdata: list,
-        ydata: list,
-        left_scale: int,
-        right_scale: int,
-        items: misc.ItemList,
-        ranges: tuple[float, float],
-        _limits: list,
-    ) -> _return:
-        """
-        Shifts data vertically with respect to each other.
-
-        By default it scales linear data by 1.2 times the total span of the
-        ydata, and log data 10 to the power of the yspan.
-        """
-        data_list = [
-            item for item in items
-            if item.get_selected() and isinstance(item, DataItem)
-        ]
-
-        y_range = ranges[1] if item.get_yposition() else ranges[0]
-
-        shift_value_log = 0
-        shift_value_linear = 0
-
-        for index, item_ in enumerate(data_list):
-            # Compare first element with itself, not "previous" item
-            index = 1 if index == 0 and len(data_list) > 1 else index
-
-            previous_item = data_list[index - 1]
-
-            # Only use selected span when obtaining values to determine shift
-            new_xdata, new_ydata = xdata, ydata
-            if (
-                min(xdata) >= min(previous_item.xdata)
-                and max(xdata) <= max(previous_item.xdata)
-            ):
-                new_xdata, new_ydata = filter_data(
-                    previous_item.xdata, previous_item.ydata, ">=", min(xdata))
-                new_xdata, new_ydata = filter_data(
-                    new_xdata, new_ydata, "<=", max(xdata))
-
-            ymin = min(x for x in new_ydata if x != 0)
-            ymax = max(x for x in new_ydata if x != 0)
-
-            scale = right_scale if item.get_yposition() else left_scale
-            if scale == 1:  # Use log values for log scaling
-                shift_value_log += \
-                    numpy.log10(abs(ymax / ymin)) + 0.1 * numpy.log10(y_range)
-            else:
-                shift_value_linear += (ymax - ymin) + 0.1 * y_range
-            if item.get_uuid() == item_.get_uuid():
-                if scale == 1:  # Log scaling
-                    new_ydata = [
-                        value * 10**shift_value_log for value in ydata
-                    ]
-                else:
-                    new_ydata = [value + shift_value_linear for value in ydata]
-                return xdata, new_ydata, False, False
-        return xdata, ydata, False, False
 
     def cut(_item, _xdata, _ydata) -> _return:
         """Cut selected data over the span that is selected."""
@@ -802,4 +691,3 @@ class DataOperations(CommonOperations):
             True,
             discard,
         )
-
