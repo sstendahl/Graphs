@@ -137,9 +137,7 @@ class EquationItem(_PythonItem):
             self.props.name = "Y = " + equation
 
     def simplify_equation(self) -> None:
-        """
-        Simplifies the item equation
-        """
+        """Simplify the item equation."""
         equation = utilities.preprocess(self.equation)
         equation = str(sympy.simplify(equation))
         self.equation = equation
