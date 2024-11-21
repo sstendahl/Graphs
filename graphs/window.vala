@@ -82,7 +82,7 @@ namespace Graphs {
         private unowned Adw.HeaderBar content_headerbar { get; }
 
         [GtkChild]
-        private unowned Adw.WindowTitle content_title { get; }
+        protected unowned Adw.WindowTitle content_title { get; }
 
         public Data data { get; construct set; }
 
@@ -151,8 +151,6 @@ namespace Graphs {
             data.bind_property ("can_redo", redo_button, "sensitive", 2);
             data.bind_property ("can_view_back", view_back_button, "sensitive", 2);
             data.bind_property ("can_view_forward", view_forward_button, "sensitive", 2);
-            data.bind_property ("project_name", content_title, "title", 2);
-            data.bind_property ("project_path", content_title, "subtitle", 2);
 
             string[] action_names = {
                 "multiply_x",
@@ -186,7 +184,7 @@ namespace Graphs {
                     application.inhibit (
                         this,
                         ApplicationInhibitFlags.LOGOUT,
-                        data.project_name
+                        content_title.get_title ()
                     );
                 } else if (_inhibit_cookie > 0) {
                     application.uninhibit (_inhibit_cookie);
