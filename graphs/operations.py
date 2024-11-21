@@ -49,36 +49,32 @@ def get_data(window: Graphs.Window, item: DataItem):
 
 
 def get_selected_limits(window, item):
+    """Get the min and max value of the item within the selected range."""
     canvas = window.get_canvas()
     figure_settings = window.get_data().get_figure_settings()
-    if not canvas.get_mode() == 2:
-        if item.get_xposition() == 0:
-            min_x = figure_settings.get_min_bottom()
-            max_x = figure_settings.get_max_bottom()
-        else:
-            min_x = figure_settings.get_min_top()
-            max_x = figure_settings.get_max_top()
-    else:
-        if item.get_xposition() == 0:
-            xmin = figure_settings.get_min_bottom()
-            xmax = figure_settings.get_max_bottom()
+
+    if item.get_xposition() == 0:
+        min_x = figure_settings.get_min_bottom()
+        max_x = figure_settings.get_max_bottom()
+        if canvas.get_mode() == 2:
             scale = figure_settings.get_bottom_scale()
-        else:
-            xmin = figure_settings.get_min_top()
-            xmax = figure_settings.get_max_top()
+            min_x = utilities.get_value_at_fraction(
+                figure_settings.get_min_selected(), min_x, max_x, scale
+            )
+            max_x = utilities.get_value_at_fraction(
+                figure_settings.get_max_selected(), min_x, max_x, scale
+            )
+    else:
+        min_x = figure_settings.get_min_top()
+        max_x = figure_settings.get_max_top()
+        if canvas.get_mode() == 2:
             scale = figure_settings.get_top_scale()
-        min_x = utilities.get_value_at_fraction(
-            figure_settings.get_min_selected(),
-            xmin,
-            xmax,
-            scale,
-        )
-        max_x = utilities.get_value_at_fraction(
-            figure_settings.get_max_selected(),
-            xmin,
-            xmax,
-            scale,
-        )
+            min_x = utilities.get_value_at_fraction(
+                figure_settings.get_min_selected(), min_x, max_x, scale
+            )
+            max_x = utilities.get_value_at_fraction(
+                figure_settings.get_max_selected(), min_x, max_x, scale
+            )
     return min_x, max_x
 
 
@@ -380,13 +376,13 @@ class CommonOperations():
         data_list = ([item for item in items if item.get_selected()
                      and isinstance(item, (EquationItem, DataItem))])
 
-        y_range = ranges[1] if item.get_yposition() else ranges[0]
         shift_value_log = 0
         shift_value_linear = 0
 
         for index, item_ in enumerate(data_list):
             index = 1 if index == 0 and len(data_list) > 1 else index
             previous_item = data_list[index - 1]
+            y_range = ranges[1] if item_.get_yposition() else ranges[0]
 
             if isinstance(previous_item, EquationItem):
                 prev_xdata, prev_ydata = \
