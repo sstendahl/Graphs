@@ -83,13 +83,13 @@ def test_shift(yscale):
 
     items = [item1, item2]
     new_xdata1, new_ydata1, _sort, _discard = \
-        DataOperations.shift(item1, xdata, ydata1, left_scale=yscale,
-                             right_scale=yscale, items=items,
-                             ranges=[2.2, 2.2], limits=[0, 1, 0, 1])
+        DataOperations.shift(item1, xdata, ydata1, limits=[0, 1, 0, 1],
+                             left_scale=yscale, right_scale=yscale,
+                             items=items, ranges=[2.2, 2.2])
     new_xdata2, new_ydata2, _sort, _discard = \
-        DataOperations.shift(item2, xdata, ydata2, left_scale=yscale,
-                             right_scale=yscale, items=items,
-                             ranges=[2.2, 2.2], limits=[0, 1, 0, 1])
+        DataOperations.shift(item2, xdata, ydata2, limits=[0, 1, 0, 1],
+                             left_scale=yscale, right_scale=yscale,
+                             items=items, ranges=[2.2, 2.2])
     np.testing.assert_array_equal(new_xdata1, xdata)
     np.testing.assert_array_equal(new_xdata2, xdata)
 

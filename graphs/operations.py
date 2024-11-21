@@ -30,27 +30,7 @@ def get_data(window: Graphs.Window, item: DataItem):
 
     canvas = window.get_canvas()
     if canvas.get_mode() == 2:
-        figure_settings = window.get_data().get_figure_settings()
-        if item.get_xposition() == 0:
-            xmin = figure_settings.get_min_bottom()
-            xmax = figure_settings.get_max_bottom()
-            scale = figure_settings.get_bottom_scale()
-        else:
-            xmin = figure_settings.get_min_top()
-            xmax = figure_settings.get_max_top()
-            scale = figure_settings.get_top_scale()
-        startx = utilities.get_value_at_fraction(
-            figure_settings.get_min_selected(),
-            xmin,
-            xmax,
-            scale,
-        )
-        stopx = utilities.get_value_at_fraction(
-            figure_settings.get_max_selected(),
-            xmin,
-            xmax,
-            scale,
-        )
+        startx, stopx = get_selected_limits(window, item)
         # If startx and stopx are not out of range, that is,
         # if the item data is within the highlight
         new_min = min(new_xdata)
@@ -66,6 +46,40 @@ def get_data(window: Graphs.Window, item: DataItem):
             new_xdata = None
             new_ydata = None
     return new_xdata, new_ydata
+
+
+def get_selected_limits(window, item):
+    canvas = window.get_canvas()
+    figure_settings = window.get_data().get_figure_settings()
+    if not canvas.get_mode() == 2:
+        if item.get_xposition() == 0:
+            min_x = figure_settings.get_min_bottom()
+            max_x = figure_settings.get_max_bottom()
+        else:
+            min_x = figure_settings.get_min_top()
+            max_x = figure_settings.get_max_top()
+    else:
+        if item.get_xposition() == 0:
+            xmin = figure_settings.get_min_bottom()
+            xmax = figure_settings.get_max_bottom()
+            scale = figure_settings.get_bottom_scale()
+        else:
+            xmin = figure_settings.get_min_top()
+            xmax = figure_settings.get_max_top()
+            scale = figure_settings.get_top_scale()
+        min_x = utilities.get_value_at_fraction(
+            figure_settings.get_min_selected(),
+            xmin,
+            xmax,
+            scale,
+        )
+        max_x = utilities.get_value_at_fraction(
+            figure_settings.get_max_selected(),
+            xmin,
+            xmax,
+            scale,
+        )
+    return min_x, max_x
 
 
 def filter_data(
@@ -119,15 +133,8 @@ def perform_operation(application: Graphs.Application, name: str) -> None:
     """Perform an operation."""
     window = application.get_active_window()
     figure_settings = window.get_data().get_figure_settings()
-    min_bottom = figure_settings.get_min_bottom()
-    max_bottom = figure_settings.get_max_bottom()
-    min_top = figure_settings.get_min_top()
-    max_top = figure_settings.get_max_top()
-    limits = [(min_bottom, max_bottom),
-              (min_top, max_top)]
-
     if name in ("combine", ):
-        return getattr(CommonOperations, name)(window, limits)
+        return getattr(CommonOperations, name)(window)
     elif name == "custom_transformation":
 
         def on_accept(_dialog, input_x, input_y, discard):
@@ -168,7 +175,6 @@ def perform_operation(application: Graphs.Application, name: str) -> None:
             figure_settings.get_right_scale(),
             window.get_data().get_items(),
             [left_range, right_range],
-            limits,
         ]
     elif "translate" in name or "multiply" in name:
         try:
@@ -200,13 +206,11 @@ def _apply(window, name, *args):
                     ]
                     callback(item, limits, *args)
                 elif name == "shift":
-                    limits = [
-                        old_limits[item.get_xposition()],
-                        old_limits[item.get_yposition() + 1],
-                    ]
+                    min_x, max_x = get_selected_limits(window, item)
+                    limits = [min_x, max_x]
                     xdata, ydata = \
                         utilities.equation_to_data(item._equation, limits)
-                    callback(item, xdata, ydata, *args)
+                    callback(item, xdata, ydata, limits, *args)
                 elif name in ("cut"):
                     window.add_toast_string(
                         _(
@@ -235,9 +239,16 @@ def _apply_data(window, item, name, *args):
     if not (xdata is not None and len(xdata) != 0):
         window.add_toast_string(_("No data found within the highlighted area"))
     else:
-        new_xdata, new_ydata, sort, discard = callback(
-            item, xdata, ydata, *args,
-        )
+        if name == "shift":
+            min_x, max_x = get_selected_limits(window, item)
+            limits = [min_x, max_x]
+            new_xdata, new_ydata, sort, discard = callback(
+                item, xdata, ydata, limits, *args,
+            )
+        else:
+            new_xdata, new_ydata, sort, discard = callback(
+                item, xdata, ydata, *args,
+            )
         new_xdata, new_ydata = list(new_xdata), list(new_ydata)
         canvas = window.get_canvas()
         if discard and canvas.get_mode() == 2:
@@ -311,24 +322,25 @@ def staticclass(cls):
 class CommonOperations():
     """Operations to be performed on all kind of items."""
 
-    def combine(window: Graphs.Window, ax_limits: list) -> None:
+    def combine(window: Graphs.Window) -> None:
         """Combine the selected data into a new data set."""
         data = window.get_data()
         new_xdata, new_ydata = [], []
         for item in data:
+            xdata, ydata = [], []
             if not item.get_selected():
                 continue
             if isinstance(item, EquationItem):
-                figure_settings = window.get_data().get_figure_settings()
-                min_limit = figure_settings.get_min_selected()
-                max_limit = figure_settings.get_max_selected()
-                limits = [min_limit, max_limit]
+                min_x, max_x = get_selected_limits(window, item)
+                limits = [min_x, max_x]
                 xdata, ydata = \
                     utilities.equation_to_data(item._equation, limits)
             elif isinstance(item, DataItem):
                 xdata, ydata = get_data(window, item)[:2]
-            new_xdata.extend(xdata)
-            new_ydata.extend(ydata)
+            if xdata is not None and ydata is not None:
+                new_xdata.extend(xdata)
+                new_ydata.extend(ydata)
+
         # Create the item itself
         new_xdata, new_ydata = sort_data(new_xdata, new_ydata)
         data.add_items([
@@ -344,11 +356,11 @@ class CommonOperations():
         item,
         xdata: list,
         ydata: list,
+        limits: list,
         left_scale: int,
         right_scale: int,
         items: misc.ItemList,
         ranges: tuple[float, float],
-        limits: list,
     ) -> _return:
         """
         Shifts data vertically with respect to each other.
@@ -369,7 +381,6 @@ class CommonOperations():
                      and isinstance(item, (EquationItem, DataItem))])
 
         y_range = ranges[1] if item.get_yposition() else ranges[0]
-        limits = limits[1] if item.get_yposition() else limits[0]
         shift_value_log = 0
         shift_value_linear = 0
 
