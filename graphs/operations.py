@@ -191,31 +191,34 @@ def _apply(window, name, *args):
         if not item.get_selected():
             continue
         if isinstance(item, EquationItem):
-            callback = getattr(EquationOperations, name)
-            if name in ("normalize", "center", "transform"):
-                limits = [
-                    old_limits[item.get_xposition()],
-                    old_limits[item.get_yposition() + 1],
-                ]
-                callback(item, limits, *args)
-            elif name == "shift":
-                limits = [
-                    old_limits[item.get_xposition()],
-                    old_limits[item.get_yposition() + 1],
-                ]
-                xdata, ydata = \
-                    utilities.equation_to_data(item._equation, limits)
-                callback(item, xdata, ydata, *args)
-            elif name in ("cut"):
-                window.add_toast_string(
-                    _(
-                        f"Could not cut {item.props.name}, "
-                        + "cutting data is not supported for equations.",
-                    ),
-                )
-                continue
-            else:
-                callback(item, *args)
+            try:
+                callback = getattr(EquationOperations, name)
+                if name in ("normalize", "center", "transform"):
+                    limits = [
+                        old_limits[item.get_xposition()],
+                        old_limits[item.get_yposition() + 1],
+                    ]
+                    callback(item, limits, *args)
+                elif name == "shift":
+                    limits = [
+                        old_limits[item.get_xposition()],
+                        old_limits[item.get_yposition() + 1],
+                    ]
+                    xdata, ydata = \
+                        utilities.equation_to_data(item._equation, limits)
+                    callback(item, xdata, ydata, *args)
+                elif name in ("cut"):
+                    window.add_toast_string(
+                        _(
+                            f"Could not cut {item.props.name}, "
+                            + "cutting data is not supported for equations.",
+                        ),
+                    )
+                    continue
+                else:
+                    callback(item, *args)
+            except misc.InvalidEquationError as error:
+                window.add_toast_string(error.message)
 
         elif isinstance(item, DataItem):
             _apply_data(window, item, name, *args)
@@ -278,6 +281,22 @@ def _apply_data(window, item, name, *args):
 
 
 _return = (list[float], list[float], bool, bool)
+
+
+def validate_and_set(item: EquationItem, equation: str):
+    """
+    Validate and set an equation.
+
+    Once the equation has been set, its gets simplified. Invalid equations
+    raise an InvalidEquationError.
+    """
+    valid_equation = utilities.validate_equation(str(equation))
+    if not valid_equation:
+        raise misc.InvalidEquationError(_(f"The operation on {item.props.name}"
+                                          " did not result in a plottable"
+                                          " equation"))
+    item.equation = equation
+    item.simplify_equation()
 
 
 def staticclass(cls):
@@ -408,34 +427,28 @@ class EquationOperations(CommonOperations):
     def translate_x(item, offset) -> _return:
         """Translate all selected data on the x-axis."""
         equation = re.sub(r"(?<!e)x(?!p)", f"(x+{offset})", item.equation)
-        item.equation = equation
-        item.simplify_equation()
-        item.simplify_equation()
+        validate_and_set(item, equation)
 
     def translate_y(item, offset) -> _return:
         """Translate all selected data on the y-axis."""
         equation = f"({item.equation})+{offset}"
-        item.equation = equation
-        item.simplify_equation()
+        validate_and_set(item, equation)
 
     def multiply_x(item, multiplier: float) -> _return:
         """Multiply all selected data on the x-axis."""
         equation = re.sub(r"(?<!e)x(?!p)", f"(x*{multiplier})", item.equation)
-        item.equation = equation
-        item.simplify_equation()
+        validate_and_set(item, equation)
 
     def multiply_y(item, multiplier: float) -> _return:
         """Multiply all selected data on the y-axis."""
         equation = f"({item.equation})*{multiplier}"
-        item.equation = equation
-        item.simplify_equation()
+        validate_and_set(item, equation)
 
     def normalize(item, limits) -> _return:
         """Normalize all selected data."""
         xdata, ydata = utilities.equation_to_data(item._equation, limits)
         equation = f"({item.equation})/{max(ydata)}"
-        item.equation = equation
-        item.simplify_equation()
+        validate_and_set(item, equation)
 
     def smoothen(_item, *_args) -> None:
         """Smoothen y-data."""
@@ -478,8 +491,7 @@ class EquationOperations(CommonOperations):
             middle_value = (min(xdata) + max(xdata)) / 2
         equation = \
             re.sub(r"(?<!e)x(?!p)", f"(x+{middle_value})", item.equation)
-        item.equation = equation
-        item.simplify_equation()
+        validate_and_set(item, equation)
 
     def cut(_item, _xdata, _ydata) -> _return:
         """Cut selected data over the span that is selected."""
@@ -490,16 +502,14 @@ class EquationOperations(CommonOperations):
         x = sympy.symbols("x")
         equation = utilities.preprocess(item._equation)
         equation = sympy.diff(equation, x)
-        item.equation = equation
-        item.simplify_equation()
+        validate_and_set(item, equation)
 
     def integral(item) -> bool:
         """Calculate indefinite integral of all selected data."""
         x = sympy.symbols("x")
         equation = utilities.preprocess(item._equation)
         equation = sympy.integrate(equation, x)
-        item.equation = equation
-        item.simplify_equation()
+        validate_and_set(item, equation)
 
     def fft(item) -> bool:
         """Perform Fourier transformation on all selected data."""
@@ -507,8 +517,7 @@ class EquationOperations(CommonOperations):
         equation = utilities.preprocess(item._equation)
         equation = str(sympy.fourier_transform(equation, x, k))
         equation = equation.replace("k", "x")
-        item.equation = equation
-        item.simplify_equation()
+        validate_and_set(item, equation)
 
     def inverse_fft(item) -> bool:
         """Perform Inverse Fourier transformation on all selected data."""
@@ -516,8 +525,7 @@ class EquationOperations(CommonOperations):
         equation = utilities.preprocess(item._equation)
         equation = str(sympy.fourier_transform(equation, x, k))
         equation = equation.replace("k", "x")
-        item.equation = equation
-        item.simplify_equation()
+        validate_and_set(item, equation)
 
     def transform(
         item,
@@ -545,8 +553,7 @@ class EquationOperations(CommonOperations):
         equation = \
             re.sub(r"(?<!e)x(?!p)", input_x, item.equation)
         equation = input_y.lower().replace("y", equation)
-        item.equation = equation
-        item.simplify_equation()
+        validate_and_set(item, equation)
 
 
 @staticclass
