@@ -315,20 +315,18 @@ class CommonOperations():
         """Combine the selected data into a new data set."""
         data = window.get_data()
         new_xdata, new_ydata = [], []
-
         for item in data:
             if not item.get_selected():
                 continue
             if isinstance(item, EquationItem):
-                limits = ax_limits[1] if item.get_yposition() else ax_limits[0]
+                figure_settings = window.get_data().get_figure_settings()
+                min_limit = figure_settings.get_min_selected()
+                max_limit = figure_settings.get_max_selected()
+                limits = [min_limit, max_limit]
                 xdata, ydata = \
                     utilities.equation_to_data(item._equation, limits)
-                item = DataItem.new(
-                    data.get_selected_style_params(),
-                    xdata,
-                    ydata,
-                )
-            xdata, ydata = get_data(window, item)[:2]
+            elif isinstance(item, DataItem):
+                xdata, ydata = get_data(window, item)[:2]
             new_xdata.extend(xdata)
             new_ydata.extend(ydata)
         # Create the item itself
