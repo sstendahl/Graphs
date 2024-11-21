@@ -194,4 +194,3 @@ class FillItem(_PythonItem):
     def reset(self):
         """Not yet implemented."""
         raise NotImplementedError
-

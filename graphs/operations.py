@@ -59,10 +59,10 @@ def get_selected_limits(window, item):
         if canvas.get_mode() == 2:
             scale = figure_settings.get_bottom_scale()
             min_x = utilities.get_value_at_fraction(
-                figure_settings.get_min_selected(), min_x, max_x, scale
+                figure_settings.get_min_selected(), min_x, max_x, scale,
             )
             max_x = utilities.get_value_at_fraction(
-                figure_settings.get_max_selected(), min_x, max_x, scale
+                figure_settings.get_max_selected(), min_x, max_x, scale,
             )
     else:
         min_x = figure_settings.get_min_top()
@@ -70,10 +70,10 @@ def get_selected_limits(window, item):
         if canvas.get_mode() == 2:
             scale = figure_settings.get_top_scale()
             min_x = utilities.get_value_at_fraction(
-                figure_settings.get_min_selected(), min_x, max_x, scale
+                figure_settings.get_min_selected(), min_x, max_x, scale,
             )
             max_x = utilities.get_value_at_fraction(
-                figure_settings.get_max_selected(), min_x, max_x, scale
+                figure_settings.get_max_selected(), min_x, max_x, scale,
             )
     return min_x, max_x
 
