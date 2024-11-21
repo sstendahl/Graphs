@@ -14,8 +14,6 @@ namespace Graphs {
         public bool can_view_forward { get; protected set; default = false; }
         public File file { get; set; }
         public bool unsaved { get; set; default = false; }
-        public string project_name { get; protected set; }
-        public string project_path { get; protected set; }
         public SingleSelection style_selection_model { get; private set; }
         public bool items_selected {
             get {
