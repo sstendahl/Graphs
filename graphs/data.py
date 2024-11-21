@@ -3,9 +3,7 @@
 import copy
 import logging
 import math
-import os
 from gettext import gettext as _
-from urllib.parse import unquote, urlparse
 
 from gi.repository import Graphs
 
@@ -41,9 +39,7 @@ class Data(Graphs.Data):
             "notify",
             self._on_figure_settings_change,
         )
-        self.connect("notify::unsaved", self._on_unsaved_change)
         self._update_used_positions()
-        self._on_unsaved_change(None, None)
         self.connect("item_changed", self._on_item_changed)
         self.connect("delete_request", self._on_delete_request)
         self.connect("position_changed", self._on_position_changed)
@@ -51,27 +47,6 @@ class Data(Graphs.Data):
     @staticmethod
     def _on_python_method_request(self, method: str) -> None:
         getattr(self, method)()
-
-    def _on_unsaved_change(self, _a, _b) -> None:
-        if self.props.file is None:
-            title = _("Untitled Project")
-            path = _("Draft")
-        else:
-            title = Graphs.tools_get_filename(self.props.file)
-            uri_parse = urlparse(self.props.file.get_uri())
-            filepath = os.path.dirname(
-                os.path.join(uri_parse.netloc, unquote(uri_parse.path)),
-            )
-            if filepath.startswith("/var"):
-                # Fix for rpm-ostree distros, where home is placed in /var/home
-                filepath = filepath.replace("/var", "", 1)
-            path = filepath.replace(os.path.expanduser("~"), "~")
-            if path.startswith(f"/run/user/{os.getuid()}/doc/"):
-                path = _("Document Portal")
-        if self.props.unsaved:
-            title = "• " + title
-        self.props.project_name = title
-        self.props.project_path = path
 
     def __len__(self) -> int:
         """Magic alias for `get_n_items()`."""
