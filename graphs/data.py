@@ -5,7 +5,7 @@ import logging
 import math
 from gettext import gettext as _
 
-from gi.repository import Graphs
+from gi.repository import Gio, Graphs
 
 from graphs import item, misc, project, style_io, utilities
 
@@ -43,6 +43,7 @@ class Data(Graphs.Data):
         self.connect("item_changed", self._on_item_changed)
         self.connect("delete_request", self._on_delete_request)
         self.connect("position_changed", self._on_position_changed)
+        self.connect("load_request", self._on_load_request)
 
     @staticmethod
     def _on_python_method_request(self, method: str) -> None:
@@ -534,8 +535,14 @@ class Data(Graphs.Data):
 
     def _save(self) -> None:
         project.save_project_dict(self.props.file, self.get_project_dict())
-        self.set_unsaved(False)
 
-    def _load(self) -> None:
-        self.load_from_project_dict(project.read_project_file(self.props.file))
-        self.set_unsaved(False)
+    @staticmethod
+    def _on_load_request(self, file: Gio.File) -> str:
+        current_data = self.get_project_dict()
+        try:
+            project_dict = project.read_project_file(file)
+            self.load_from_project_dict(project_dict)
+        except:
+            self.load_from_project_dict(current_data)
+            return "Failed to load project"  # TODO: replace with proper error
+        return ""
