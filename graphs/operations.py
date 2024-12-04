@@ -132,20 +132,7 @@ def perform_operation(application: Graphs.Application, name: str) -> None:
     if name in ("combine", ):
         return getattr(CommonOperations, name)(window)
     elif name == "custom_transformation":
-
-        def on_accept(_dialog, input_x, input_y, discard):
-            try:
-                _apply(window, "transform", input_x, input_y, discard)
-            except (RuntimeError, KeyError) as exception:
-                toast = _(
-                    "{name}: Unable to do transformation, \
-                        make sure the syntax is correct",
-                ).format(name=exception.__class__.__name__)
-                window.add_toast_string(toast)
-                logging.exception(_("Unable to do transformation"))
-
-        dialog = Graphs.TransformDialog.new(window)
-        dialog.connect("accept", on_accept)
+        CommonOperations.custom_transformation(window)
         return
     elif name == "cut" and window.get_canvas().get_mode() != 2:
         return
@@ -170,7 +157,7 @@ def perform_operation(application: Graphs.Application, name: str) -> None:
             figure_settings.get_left_scale(),
             figure_settings.get_right_scale(),
             window.get_data().get_items(),
-            [left_range, right_range],
+            [left_range, right_range],c
         ]
     elif "translate" in name or "multiply" in name:
         try:
@@ -193,99 +180,13 @@ def _apply(window, name, *args):
         if not item.get_selected():
             continue
         if isinstance(item, EquationItem):
-            try:
-                callback = getattr(EquationOperations, name)
-                if name in ("normalize", "center", "transform"):
-                    limits = [
-                        old_limits[item.get_xposition()],
-                        old_limits[item.get_yposition() + 1],
-                    ]
-                    callback(item, limits, *args)
-                elif name == "shift":
-                    min_x, max_x = get_selected_limits(window, item)
-                    limits = [min_x, max_x]
-                    xdata, ydata = \
-                        utilities.equation_to_data(item._equation, limits)
-                    callback(item, xdata, ydata, limits, *args)
-                elif name in ("cut"):
-                    window.add_toast_string(
-                        _(
-                            f"Could not cut {item.props.name}, "
-                            + "cutting data is not supported for equations.",
-                        ),
-                    )
-                    continue
-                else:
-                    callback(item, *args)
-            except misc.InvalidEquationError as error:
-                window.add_toast_string(error.message)
+            EquationOperations.execute(item, window, name, *args)
 
         elif isinstance(item, DataItem):
-            _apply_data(window, item, name, *args)
-        else:
-            continue
+            EquationOperations.execute(item, window, name, *args)
 
     data.optimize_limits()
     data.add_history_state_with_limits(old_limits)
-
-
-def _apply_data(window, item, name, *args):
-    xdata, ydata = get_data(window, item)
-    callback = getattr(DataOperations, name)
-    if not (xdata is not None and len(xdata) != 0):
-        window.add_toast_string(_("No data found within the highlighted area"))
-    else:
-        if name == "shift":
-            min_x, max_x = get_selected_limits(window, item)
-            limits = [min_x, max_x]
-            new_xdata, new_ydata, sort, discard = callback(
-                item, xdata, ydata, limits, *args,
-            )
-        else:
-            new_xdata, new_ydata, sort, discard = callback(
-                item, xdata, ydata, *args,
-            )
-        new_xdata, new_ydata = list(new_xdata), list(new_ydata)
-        canvas = window.get_canvas()
-        if discard and canvas.get_mode() == 2:
-            logging.debug("Discard is true")
-            window.add_toast_string(
-                _(
-                    "Data that was outside of the highlighted area has"
-                    " been discarded",
-                ),
-            )
-            item.props.xdata = new_xdata
-            item.props.ydata = new_ydata
-        else:
-            logging.debug("Discard is false")
-            mask = create_data_mask(
-                item.props.xdata,
-                item.props.ydata,
-                xdata,
-                ydata,
-            )
-
-            if new_xdata == []:  # If cut action was performed
-                remove_list = \
-                    [index for index, masked in enumerate(mask) if masked]
-                for index in sorted(remove_list, reverse=True):
-                    item.props.xdata.pop(index)
-                    item.props.ydata.pop(index)
-            else:
-                i = 0
-                for index, masked in enumerate(mask):
-                    # Change coordinates that were within span
-                    if masked:
-                        item.props.xdata[index] = new_xdata[i]
-                        item.props.ydata[index] = new_ydata[i]
-                        i += 1
-        if sort:
-            logging.debug("Sorting data")
-            item.xdata, item.ydata = sort_data(item.xdata, item.ydata)
-        item.notify("xdata")
-        item.notify("ydata")
-
 
 _return = (list[float], list[float], bool, bool)
 
@@ -317,6 +218,21 @@ def staticclass(cls):
 @staticclass
 class CommonOperations():
     """Operations to be performed on all kind of items."""
+
+    def custom_transformation(window: Graphs.Window) -> None:
+        def on_accept(_dialog, input_x, input_y, discard):
+            try:
+                _apply(window, "transform", input_x, input_y, discard)
+            except (RuntimeError, KeyError) as exception:
+                toast = _(
+                    "{name}: Unable to do transformation, \
+                        make sure the syntax is correct",
+                ).format(name=exception.__class__.__name__)
+                window.add_toast_string(toast)
+                logging.exception(_("Unable to do transformation"))
+
+        dialog = Graphs.TransformDialog.new(window)
+        dialog.connect("accept", on_accept)
 
     def combine(window: Graphs.Window) -> None:
         """Combine the selected data into a new data set."""
@@ -428,6 +344,33 @@ class CommonOperations():
 @staticclass
 class EquationOperations(CommonOperations):
     """Operations to be performed on equation items."""
+
+    def execute(item, window, name, *args):
+        try:
+            callback = getattr(EquationOperations, name)
+            if name in ("normalize", "center", "transform"):
+                limits = [
+                    old_limits[item.get_xposition()],
+                    old_limits[item.get_yposition() + 1],
+                ]
+                callback(item, limits, *args)
+            elif name == "shift":
+                min_x, max_x = get_selected_limits(window, item)
+                limits = [min_x, max_x]
+                xdata, ydata = \
+                    utilities.equation_to_data(item._equation, limits)
+                callback(item, xdata, ydata, limits, *args)
+            elif name in ("cut"):
+                window.add_toast_string(
+                    _(
+                        f"Could not cut {item.props.name}, "
+                        + "cutting data is not supported for equations.",
+                    ),
+                )
+            else:
+                callback(item, *args)
+        except misc.InvalidEquationError as error:
+            window.add_toast_string(error.message)
 
     def translate_x(item, offset) -> _return:
         """Translate all selected data on the x-axis."""
@@ -564,6 +507,65 @@ class EquationOperations(CommonOperations):
 @staticclass
 class DataOperations(CommonOperations):
     """Operations to be performed on data items."""
+
+    def execute(window, item, name, *args):
+        xdata, ydata = get_data(window, item)
+        callback = getattr(DataOperations, name)
+        if not (xdata is not None and len(xdata) != 0):
+            window.add_toast_string(_("No data found within the highlighted"
+                                      "area"))
+        else:
+            if name == "shift":
+                min_x, max_x = get_selected_limits(window, item)
+                limits = [min_x, max_x]
+                new_xdata, new_ydata, sort, discard = callback(
+                    item, xdata, ydata, limits, *args,
+                )
+            else:
+                new_xdata, new_ydata, sort, discard = callback(
+                    item, xdata, ydata, *args,
+                )
+            new_xdata, new_ydata = list(new_xdata), list(new_ydata)
+            canvas = window.get_canvas()
+            if discard and canvas.get_mode() == 2:
+                logging.debug("Discard is true")
+                window.add_toast_string(
+                    _(
+                        "Data that was outside of the highlighted area has"
+                        " been discarded",
+                    ),
+                )
+                item.props.xdata = new_xdata
+                item.props.ydata = new_ydata
+            else:
+                logging.debug("Discard is false")
+                mask = create_data_mask(
+                    item.props.xdata,
+                    item.props.ydata,
+                    xdata,
+                    ydata,
+                )
+
+                if new_xdata == []:  # If cut action was performed
+                    remove_list = \
+                        [index for index, masked in enumerate(mask) if masked]
+                    for index in sorted(remove_list, reverse=True):
+                        item.props.xdata.pop(index)
+                        item.props.ydata.pop(index)
+                else:
+                    i = 0
+                    for index, masked in enumerate(mask):
+                        # Change coordinates that were within span
+                        if masked:
+                            item.props.xdata[index] = new_xdata[i]
+                            item.props.ydata[index] = new_ydata[i]
+                            i += 1
+            if sort:
+                logging.debug("Sorting data")
+                item.xdata, item.ydata = sort_data(item.xdata, item.ydata)
+            item.notify("xdata")
+            item.notify("ydata")
+
 
     def translate_x(_item, xdata: list, ydata: list, offset: float) -> _return:
         """
