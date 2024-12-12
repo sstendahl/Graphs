@@ -538,11 +538,14 @@ class Data(Graphs.Data):
 
     @staticmethod
     def _on_load_request(self, file: Gio.File) -> str:
-        current_data = self.get_project_dict()
         try:
             project_dict = project.read_project_file(file)
+        except Exception:
+            return "Failed to parse project file"
+        current_data = self.get_project_dict()
+        try:
             self.load_from_project_dict(project_dict)
-        except:
+        except Exception:
             self.load_from_project_dict(current_data)
-            return "Failed to load project"  # TODO: replace with proper error
+            return "Failed to load project"
         return ""
