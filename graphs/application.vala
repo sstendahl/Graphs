@@ -130,8 +130,11 @@ namespace Graphs {
 
                 if (uri.has_suffix (".graphs")) {
                     var window = create_main_window ();
-                    window.data.file = file;
-                    window.data.load ();
+                    try {
+                        window.data.load (file);
+                    } catch (ProjectParseError e) {
+                        window.add_toast_string (e.message);
+                    }
                     return;
                 } else if (uri.has_suffix (".mplstyle")) {
                     create_style_editor (file);
