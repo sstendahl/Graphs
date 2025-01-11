@@ -1,14 +1,14 @@
 # Georgian translation for Graphs.
-# Copyright (C) 2024 Graphs's COPYRIGHT HOLDER
+# Copyright (C) 2025 Graphs's COPYRIGHT HOLDER
 # This file is distributed under the same license as the Graphs package.
-# Ekaterine Papava <papava.e@gtu.ge>, 2024.
+# Ekaterine Papava <papava.e@gtu.ge>, 2024-2025.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2024-11-21 12:36+0000\n"
-"PO-Revision-Date: 2024-11-21 16:20+0100\n"
+"POT-Creation-Date: 2025-01-11 09:45+0000\n"
+"PO-Revision-Date: 2025-01-11 14:34+0100\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <ka@li.org>\n"
 "Language: ka\n"
@@ -257,7 +257,7 @@ msgstr "ხელით მითითებული"
 msgid "Add Fit to Data"
 msgstr "მონაცემებისთვის აპროქსიმაციის დამატება"
 
-#: data/ui/curve-fitting.blp:104 data/ui/window.blp:560 graphs/window.vala:337
+#: data/ui/curve-fitting.blp:104 data/ui/window.blp:560 graphs/window.vala:335
 msgid "Toggle Sidebar"
 msgstr "გვერდითი პანელი ჩვენების ჩართ/გამორთ"
 
@@ -573,7 +573,6 @@ msgid "Import Style…"
 msgstr "სტილის შემოტანა…"
 
 #: data/ui/figure-settings-dialog.blp:64
-#| msgid "Delete Style?"
 msgid "Create Style…"
 msgstr "სტილის შექმნა…"
 
@@ -645,34 +644,34 @@ msgstr "მარჯვენა Y ღერძის მაქსიმუმ�
 msgid "Scaling"
 msgstr "მასშტაბირება"
 
-#: data/ui/figure-settings-page.blp:125 graphs/window.vala:376
+#: data/ui/figure-settings-page.blp:125 graphs/window.vala:374
 msgid "Bottom X Axis Scale"
 msgstr "ქვედა X-ღერძის მასშტაბის ფაქტორი"
 
 #: data/ui/figure-settings-page.blp:128 data/ui/figure-settings-page.blp:142
 #: data/ui/figure-settings-page.blp:156 data/ui/figure-settings-page.blp:170
-#: graphs/window.vala:347
+#: graphs/window.vala:345
 msgctxt "scale"
 msgid "Linear"
 msgstr "ხაზოვანი"
 
 #: data/ui/figure-settings-page.blp:129 data/ui/figure-settings-page.blp:143
 #: data/ui/figure-settings-page.blp:157 data/ui/figure-settings-page.blp:171
-#: graphs/window.vala:348
+#: graphs/window.vala:346
 msgctxt "scale"
 msgid "Logarithmic"
 msgstr "ლოგარითმული"
 
 #: data/ui/figure-settings-page.blp:130 data/ui/figure-settings-page.blp:144
 #: data/ui/figure-settings-page.blp:158 data/ui/figure-settings-page.blp:172
-#: graphs/window.vala:349
+#: graphs/window.vala:347
 msgctxt "scale"
 msgid "Radians"
 msgstr "რადიანები"
 
 #: data/ui/figure-settings-page.blp:131 data/ui/figure-settings-page.blp:145
 #: data/ui/figure-settings-page.blp:159 data/ui/figure-settings-page.blp:173
-#: graphs/window.vala:350
+#: graphs/window.vala:348
 msgctxt "scale"
 msgid "Square Root"
 msgstr "კვადრატული ფესვი"
@@ -683,15 +682,15 @@ msgctxt "scale"
 msgid "Inverse"
 msgstr "ინვერსია"
 
-#: data/ui/figure-settings-page.blp:139 graphs/window.vala:377
+#: data/ui/figure-settings-page.blp:139 graphs/window.vala:375
 msgid "Top X Axis Scale"
 msgstr "ზედა X-ღერძის მასშტაბის ფაქტორი"
 
-#: data/ui/figure-settings-page.blp:153 graphs/window.vala:382
+#: data/ui/figure-settings-page.blp:153 graphs/window.vala:380
 msgid "Left Y Axis Scale"
 msgstr "მარცხენა Y-ღერძზე მასშტაბის ფაქტორი"
 
-#: data/ui/figure-settings-page.blp:167 graphs/window.vala:381
+#: data/ui/figure-settings-page.blp:167 graphs/window.vala:379
 msgid "Right Y Axis Scale"
 msgstr "მარჯვენა Y ღერძის მასშტაბის ფაქტორი"
 
@@ -1372,7 +1371,7 @@ msgstr "X-ის გამრავლება"
 msgid "Multiply Y"
 msgstr "Y-ის გამრავლება"
 
-#: data/ui/window.blp:567 graphs/window.vala:318
+#: data/ui/window.blp:567 graphs/window.vala:316
 msgid "Undo"
 msgstr "დაბრუნება"
 
@@ -1638,30 +1637,26 @@ msgstr "R²-ის ჯამი: {R2}"
 msgid "Fitting Parameters for %s"
 msgstr "აპროქსიმაციის პარამეტრები %s-სთვის"
 
-#: graphs/data.py:57
-msgid "Untitled Project"
-msgstr "უსახელო პროექტი"
-
-#: graphs/data.py:58
-msgid "Draft"
-msgstr "მონახაზი"
-
-#: graphs/data.py:70
-msgid "Document Portal"
-msgstr "დოკუმენტის პორტალი"
-
-#: graphs/data.py:118
+#: graphs/data.py:94
 #, python-brace-format
 msgid "Could not parse {stylename}, loading system preferred style"
 msgstr ""
 "ხაზვის სტილის {stylename} დამუშავება შეუძლებელია. იტვირთება სისტემის "
 "ნაგულისხმევი სტილი"
 
-#: graphs/data.py:123
+#: graphs/data.py:99
 #, python-brace-format
 msgid "Plot style {stylename} does not exist loading system preferred"
 msgstr ""
 "დახაზვის სტილი {stylename} არ არსებობს. იტვირთება სისტემის ნაგულისხმევი"
+
+#: graphs/data.py:546
+msgid "Failed to parse project file"
+msgstr "პროექტის ფაილის დამუშავება ჩავარდა"
+
+#: graphs/data.py:552
+msgid "Failed to load project"
+msgstr "პროექტის ჩატვირთვა ჩავარდა"
 
 #: graphs/export_figure.vala:43
 msgctxt "filename"
@@ -1693,7 +1688,7 @@ msgstr "X ღერძის მაქსიმუმი"
 msgid "Y Axis Maximum"
 msgstr "Y ღერძის მაქსიმუმი"
 
-#: graphs/figure_settings.vala:173 graphs/window.vala:378
+#: graphs/figure_settings.vala:173 graphs/window.vala:376
 msgid "X Axis Scale"
 msgstr "X-ღერძის მასშტაბი"
 
@@ -1701,7 +1696,7 @@ msgstr "X-ღერძის მასშტაბი"
 msgid "X Axis Label"
 msgstr "X-ღერძის ჭდე"
 
-#: graphs/figure_settings.vala:177 graphs/window.vala:383
+#: graphs/figure_settings.vala:177 graphs/window.vala:381
 msgid "Y Axis Scale"
 msgstr "Y-ღერძის მასშტაბის ფაქტორი"
 
@@ -1777,16 +1772,24 @@ msgstr "შემოტანა ჩავარდა. სვეტის ი�
 msgid "Unable to import from file"
 msgstr "ფაილიდან შემოტანა შეუძლებელია"
 
-#: graphs/project.vala:10
+#: graphs/project.py:46
+msgid "Project file is missing data"
+msgstr "პროექტის ფაილს მონაცემები აკლია"
+
+#: graphs/project.py:59
+msgid "Project is from a newer incompatible version of Graphs"
+msgstr "პროექტი უფრო Graphs-ის უფრო ახალი, არათავსებადი ვერსიისაა"
+
+#: graphs/project.vala:15
 msgctxt "file-filter"
 msgid "Graphs Project File"
 msgstr "Graphs-ის პროექტის ფაილი"
 
-#: graphs/project.vala:17
+#: graphs/project.vala:22
 msgid "Saved Project"
 msgstr "შენახული პროექტი"
 
-#: graphs/project.vala:32
+#: graphs/project.vala:37
 msgid "Project"
 msgstr "პროექტი"
 
@@ -1850,19 +1853,31 @@ msgstr "სისტემური"
 msgid "All Files"
 msgstr "ყველა ფაილი"
 
-#: graphs/window.vala:199
+#: graphs/window.py:36
+msgid "Untitled Project"
+msgstr "უსახელო პროექტი"
+
+#: graphs/window.py:37
+msgid "Draft"
+msgstr "მონახაზი"
+
+#: graphs/window.py:49
+msgid "Document Portal"
+msgstr "დოკუმენტის პორტალი"
+
+#: graphs/window.vala:197
 msgid "Graphs (Development)"
 msgstr "Graphs (Development)"
 
-#: graphs/window.vala:308
+#: graphs/window.vala:306
 msgid "Open Location"
 msgstr "მდებარეობის გახსნა"
 
-#: graphs/window.vala:342
+#: graphs/window.vala:340
 msgid "Optimize Limits"
 msgstr "ლიმიტების ოპტიმიზაცია"
 
-#: graphs/window.vala:351
+#: graphs/window.vala:349
 msgctxt "scale"
 msgid "Inverse Root"
 msgstr "ინვერსიული ფესვი"
