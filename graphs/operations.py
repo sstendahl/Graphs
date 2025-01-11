@@ -67,7 +67,7 @@ def perform_operation(application: Graphs.Application, name: str) -> None:
 
 
 def _apply(window, name, *args):
-    """Apply the given operation on the selected items"""
+    """Apply the given operation on the selected items."""
     data = window.get_data()
     figure_settings = data.get_figure_settings()
     old_limits = figure_settings.get_limits()
@@ -85,9 +85,7 @@ def _apply(window, name, *args):
 
 
 class DataHelper():
-    """
-    Helper methods that assist with data-handling when performing operations.
-    """
+    """Helper methods that assist with the handling of the data."""
 
     def get_data(self, window: Graphs.Window, item: DataItem):
         """
@@ -231,7 +229,7 @@ class CommonOperations(DataHelper):
 
     @staticmethod
     def custom_transformation(window: Graphs.Window) -> None:
-        """Perform a custom operation on the dataset"""
+        """Perform a custom operation on the dataset."""
         def on_accept(_dialog, input_x, input_y, discard):
             try:
                 _apply(window, "transform", input_x, input_y, discard)
