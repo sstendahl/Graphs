@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2024-11-21 12:36+0000\n"
-"PO-Revision-Date: 2024-11-23 14:16+0330\n"
+"POT-Creation-Date: 2025-01-11 09:45+0000\n"
+"PO-Revision-Date: 2025-01-11 13:49+0330\n"
 "Last-Translator: Danial Behzadi <dani.behzi@ubuntu.com>\n"
 "Language-Team: Persian <fa@li.org>\n"
 "Language: fa\n"
@@ -94,13 +94,8 @@ msgid "Manipulate imported data"
 msgstr "دستکاری داده‌های وارده"
 
 #: data/se.sjoerd.Graphs.desktop.in:10
-msgid ""
-"Plotting;Graph;Graphing;Science;Mathematics;Math;Equations;Data;Plot;"
-"Visualisation;Visualization;Fitting;xrdml;"
-msgstr ""
-"Plotting;Graph;Graphing;Science;Mathematics;Math;Equations;Data;Plot;"
-"Visualisation;Visualization;Fitting;xrdml;نمودار;رسم;گراف;علم;ریاضیات;معادله;"
-"معادلات;داده‌ها;بصری;برازش;"
+msgid "Plotting;Graph;Graphing;Science;Mathematics;Math;Equations;Data;Plot;Visualisation;Visualization;Fitting;xrdml;"
+msgstr "Plotting;Graph;Graphing;Science;Mathematics;Math;Equations;Data;Plot;Visualisation;Visualization;Fitting;xrdml;نمودار;رسم;گراف;علم;ریاضیات;معادله;معادلات;داده‌ها;بصری;برازش;"
 
 #: data/ui/dialogs/delete-style.blp:5
 msgid "Delete Style?"
@@ -250,7 +245,7 @@ msgstr "سفارشی"
 msgid "Add Fit to Data"
 msgstr "افزودن برازش به داده‌ها"
 
-#: data/ui/curve-fitting.blp:104 data/ui/window.blp:560 graphs/window.vala:337
+#: data/ui/curve-fitting.blp:104 data/ui/window.blp:560 graphs/window.vala:335
 msgid "Toggle Sidebar"
 msgstr "تغییر وضعیت نوار کناری"
 
@@ -637,34 +632,34 @@ msgstr "بیشینهٔ محور Y راست"
 msgid "Scaling"
 msgstr "مقیاس"
 
-#: data/ui/figure-settings-page.blp:125 graphs/window.vala:376
+#: data/ui/figure-settings-page.blp:125 graphs/window.vala:374
 msgid "Bottom X Axis Scale"
 msgstr "مقیاس محور X پایین"
 
 #: data/ui/figure-settings-page.blp:128 data/ui/figure-settings-page.blp:142
 #: data/ui/figure-settings-page.blp:156 data/ui/figure-settings-page.blp:170
-#: graphs/window.vala:347
+#: graphs/window.vala:345
 msgctxt "scale"
 msgid "Linear"
 msgstr "خطی"
 
 #: data/ui/figure-settings-page.blp:129 data/ui/figure-settings-page.blp:143
 #: data/ui/figure-settings-page.blp:157 data/ui/figure-settings-page.blp:171
-#: graphs/window.vala:348
+#: graphs/window.vala:346
 msgctxt "scale"
 msgid "Logarithmic"
 msgstr "لگاریتمی"
 
 #: data/ui/figure-settings-page.blp:130 data/ui/figure-settings-page.blp:144
 #: data/ui/figure-settings-page.blp:158 data/ui/figure-settings-page.blp:172
-#: graphs/window.vala:349
+#: graphs/window.vala:347
 msgctxt "scale"
 msgid "Radians"
 msgstr "رادیان"
 
 #: data/ui/figure-settings-page.blp:131 data/ui/figure-settings-page.blp:145
 #: data/ui/figure-settings-page.blp:159 data/ui/figure-settings-page.blp:173
-#: graphs/window.vala:350
+#: graphs/window.vala:348
 msgctxt "scale"
 msgid "Square Root"
 msgstr "ریشهٔ مربّع"
@@ -675,15 +670,15 @@ msgctxt "scale"
 msgid "Inverse"
 msgstr "وارون"
 
-#: data/ui/figure-settings-page.blp:139 graphs/window.vala:377
+#: data/ui/figure-settings-page.blp:139 graphs/window.vala:375
 msgid "Top X Axis Scale"
 msgstr "مقیاس محور X بالا"
 
-#: data/ui/figure-settings-page.blp:153 graphs/window.vala:382
+#: data/ui/figure-settings-page.blp:153 graphs/window.vala:380
 msgid "Left Y Axis Scale"
 msgstr "مقیاس محور Y چپ"
 
-#: data/ui/figure-settings-page.blp:167 graphs/window.vala:381
+#: data/ui/figure-settings-page.blp:167 graphs/window.vala:379
 msgid "Right Y Axis Scale"
 msgstr "مقیاس محور Y راست"
 
@@ -1361,7 +1356,7 @@ msgstr "ضرب X"
 msgid "Multiply Y"
 msgstr "ضرب Y"
 
-#: data/ui/window.blp:567 graphs/window.vala:318
+#: data/ui/window.blp:567 graphs/window.vala:316
 msgid "Undo"
 msgstr "برگردان"
 
@@ -1627,27 +1622,23 @@ msgstr "جمع R²: {R2}"
 msgid "Fitting Parameters for %s"
 msgstr "برازش پارامترها برای %s"
 
-#: graphs/data.py:57
-msgid "Untitled Project"
-msgstr "پروژهٔ بی‌عنوان"
-
-#: graphs/data.py:58
-msgid "Draft"
-msgstr "پیش‌نویس"
-
-#: graphs/data.py:70
-msgid "Document Portal"
-msgstr "درگاه سند"
-
-#: graphs/data.py:118
+#: graphs/data.py:94
 #, python-brace-format
 msgid "Could not parse {stylename}, loading system preferred style"
 msgstr "نتوانست {stylename} را تجزیه کند. بار کردن سبک ترجیحی سامانه"
 
-#: graphs/data.py:123
+#: graphs/data.py:99
 #, python-brace-format
 msgid "Plot style {stylename} does not exist loading system preferred"
 msgstr "سبک نمودار {stylename} وجود ندارد. بار کردن ترجیح سامانه"
+
+#: graphs/data.py:546
+msgid "Failed to parse project file"
+msgstr "شکست در تجزیهٔ پروندهٔ پروژه"
+
+#: graphs/data.py:552
+msgid "Failed to load project"
+msgstr "شکست در بار کردن پروژه"
 
 #: graphs/export_figure.vala:43
 msgctxt "filename"
@@ -1679,7 +1670,7 @@ msgstr "بیشینهٔ محور X"
 msgid "Y Axis Maximum"
 msgstr "بیشینهٔ محور Y"
 
-#: graphs/figure_settings.vala:173 graphs/window.vala:378
+#: graphs/figure_settings.vala:173 graphs/window.vala:376
 msgid "X Axis Scale"
 msgstr "مقیاس محور X"
 
@@ -1687,7 +1678,7 @@ msgstr "مقیاس محور X"
 msgid "X Axis Label"
 msgstr "برچسب محور X"
 
-#: graphs/figure_settings.vala:177 graphs/window.vala:383
+#: graphs/figure_settings.vala:177 graphs/window.vala:381
 msgid "Y Axis Scale"
 msgstr "مقیاس محور Y"
 
@@ -1762,16 +1753,24 @@ msgstr "درون‌ریزی شکست خورد. اندیس ستون بیرون ا
 msgid "Unable to import from file"
 msgstr "ناتوان در درون‌ریزی از پرونده"
 
-#: graphs/project.vala:10
+#: graphs/project.py:46
+msgid "Project file is missing data"
+msgstr "پروندهٔ پروژه داده‌ای ندارد"
+
+#: graphs/project.py:59
+msgid "Project is from a newer incompatible version of Graphs"
+msgstr "پروژه از نگارشی جدیدتر و ناسازگار آمده"
+
+#: graphs/project.vala:15
 msgctxt "file-filter"
 msgid "Graphs Project File"
 msgstr "پروندهٔ پروژهٔ نمودارها"
 
-#: graphs/project.vala:17
+#: graphs/project.vala:22
 msgid "Saved Project"
 msgstr "پروژه‌های ذخیره شده"
 
-#: graphs/project.vala:32
+#: graphs/project.vala:37
 msgid "Project"
 msgstr "پروژه"
 
@@ -1835,19 +1834,31 @@ msgstr "سامانه"
 msgid "All Files"
 msgstr "همهٔ پرونده‌ها"
 
-#: graphs/window.vala:199
+#: graphs/window.py:36
+msgid "Untitled Project"
+msgstr "پروژهٔ بی‌عنوان"
+
+#: graphs/window.py:37
+msgid "Draft"
+msgstr "پیش‌نویس"
+
+#: graphs/window.py:49
+msgid "Document Portal"
+msgstr "درگاه سند"
+
+#: graphs/window.vala:197
 msgid "Graphs (Development)"
 msgstr "نمودارها (توسعه)"
 
-#: graphs/window.vala:308
+#: graphs/window.vala:306
 msgid "Open Location"
 msgstr "گشودن مکان"
 
-#: graphs/window.vala:342
+#: graphs/window.vala:340
 msgid "Optimize Limits"
 msgstr "بهینه‌سازی کران‌ها"
 
-#: graphs/window.vala:351
+#: graphs/window.vala:349
 msgctxt "scale"
 msgid "Inverse Root"
 msgstr "ریشهٔ معکوس"
