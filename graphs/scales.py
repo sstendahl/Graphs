@@ -9,6 +9,8 @@ custom Scale classes.
         to_string
         to_int
 """
+import enum
+
 from matplotlib import scale, ticker, transforms
 
 import numpy
@@ -16,14 +18,24 @@ import numpy
 _SCALES = ["linear", "log", "log2", "radians", "squareroot", "inverse"]
 
 
-def to_string(scale: int) -> str:
-    """Convert an int to a string."""
-    return _SCALES[scale]
+class Scale(enum.Enum):
+    """Utility class for easier handling of scales."""
 
+    LINEAR = 0
+    LOG = 1
+    LOG2 = 2
+    RADIANS = 3
+    SQUAREROOT = 4
+    INVERSE = 5
 
-def to_int(scale: str) -> int:
-    """Convert a string to an int."""
-    return _SCALES.index(scale)
+    @classmethod
+    def from_string(cls, string: str):
+        """Instanciate from name."""
+        return cls(_SCALES.index(string))
+
+    def to_string(self) -> str:
+        """Get name."""
+        return _SCALES[self.value]
 
 
 class Log2Scale(scale.LogScale):
