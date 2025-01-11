@@ -326,11 +326,11 @@ namespace Graphs {
 
             string[] scale_names = {
                 C_("scale", "Linear"),
-                C_("scale", "Logarithmic"),
+                C_("scale", "Logarithmic (Base 10)"),
+                C_("scale", "Logarithmic (Base 2)"),
                 C_("scale", "Radians"),
                 C_("scale", "Square Root"),
-                C_("scale", "Inverse Root"),
-                C_("scale", "Logarithmic (Base 2)")
+                C_("scale", "Inverse Root")
             };
 
             Menu scales_section = new Menu ();
@@ -406,3 +406,4 @@ namespace Graphs {
         }
     }
 }
+

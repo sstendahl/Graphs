@@ -13,7 +13,7 @@ from matplotlib import scale, ticker, transforms
 
 import numpy
 
-_SCALES = ["linear", "log", "radians", "squareroot", "inverse", "log2"]
+_SCALES = ["linear", "log", "log2", "radians", "squareroot", "inverse"]
 
 
 def to_string(scale: int) -> str:
