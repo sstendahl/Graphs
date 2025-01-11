@@ -523,9 +523,6 @@
     <control>pointing</control>
     <control>touch</control>
   </recommends>
-  <requires>
-    <display_length compare="ge">360</display_length>
-  </requires>
   <branding>
     <color type="primary" scheme_preference="light">#99c1f1</color>
     <color type="primary" scheme_preference="dark">#09356d</color>
