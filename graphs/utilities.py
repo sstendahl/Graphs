@@ -5,6 +5,7 @@ import contextlib
 import operator as op
 import re
 
+from graphs import scales
 from graphs.misc import FUNCTIONS
 
 import numexpr
@@ -37,21 +38,22 @@ def get_value_at_fraction(
     fraction) of the length this axis is selected given the start and end range
     of this axis.
     """
-    if scale == 0 or scale == 2:  # Linear or radian scale
+    scale = scales.Scale(scale)
+    if scale == scales.Scale.LINEAR or scale == scales.Scale.RADIANS:
         return start + fraction * (end - start)
-    elif scale == 1:  # Logarithmic scale
+    elif scale == scales.Scale.LOG:
         log_start = numpy.log10(start)
         log_end = numpy.log10(end)
         log_range = log_end - log_start
         log_value = log_start + log_range * fraction
         return pow(10, log_value)
-    elif scale == 2:  # Logarithmic (base 2) scale
+    elif scale == scales.Scale.LOG2:
         log_start = numpy.log2(start)
         log_end = numpy.log2(end)
         log_range = log_end - log_start
         log_value = log_start + log_range * fraction
         return pow(2, log_value)
-    elif scale == 4:  # Square root scale
+    elif scale == scales.Scale.SQUAREROOT:
         # Use min limit as defined by scales.py
         start = max(0, start)
         sqrt_start = numpy.sqrt(start)
@@ -59,7 +61,7 @@ def get_value_at_fraction(
         sqrt_range = sqrt_end - sqrt_start
         sqrt_value = sqrt_start + sqrt_range * fraction
         return sqrt_value * sqrt_value
-    elif scale == 5:  # Inverted scale (1/X)'
+    elif scale == scales.Scale.INVERSE:
         # Use min limit as defined by scales.py if min equals zero
         start = end / 10 if end > 0 and start <= 0 else start
         scaled_range = 1 / start - 1 / end
@@ -80,21 +82,22 @@ def get_fraction_at_value(
     Obtain the fraction of the total length of the selected axis a specific
     value corresponds to given the start and end range of the axis.
     """
-    if scale == 0 or scale == 2:  # Linear or radian scale
+    scale = scales.Scale(scale)
+    if scale == scales.Scale.LINEAR or scale == scales.Scale.RADIANS:
         return (value - start) / (end - start)
-    elif scale == 1:  # Logarithmic scale
+    elif scale == scales.Scale.LOG:
         log_start = numpy.log10(start)
         log_end = numpy.log10(end)
         log_value = numpy.log10(value)
         log_range = log_end - log_start
         return (log_value - log_start) / log_range
-    elif scale == 2:  # Logarithmic (base 2) scale
+    elif scale == scales.Scale.LOG2:
         log_start = numpy.log2(start)
         log_end = numpy.log2(end)
         log_value = numpy.log2(value)
         log_range = log_end - log_start
         return (log_value - log_start) / log_range
-    elif scale == 4:  # Square root scale
+    elif scale == scales.Scale.SQUAREROOT:
         # Use min limit as defined by scales.py
         start = max(0, start)
         sqrt_start = numpy.sqrt(start)
@@ -102,7 +105,7 @@ def get_fraction_at_value(
         sqrt_value = numpy.sqrt(value)
         sqrt_range = sqrt_end - sqrt_start
         return (sqrt_value - sqrt_start) / sqrt_range
-    elif scale == 5:  # Inverted scale (1/X)
+    elif scale == scales.Scale.INVERSE:
         # Use min limit as defined by scales.py if min equals zero
         start = end / 10 if end > 0 and start <= 0 else start
         scaled_range = 1 / start - 1 / end
