@@ -60,9 +60,10 @@
   <enum id="se.sjoerd.Graphs.figure.scales">
     <value nick="Linear" value="0"/>
     <value nick="Logarithmic" value="1"/>
-    <value nick="Radians" value="2"/>
-    <value nick="Square Root" value="3"/>
-    <value nick="Inverse" value="4"/>
+    <value nick="Logarithmic (Base 2)" value="2"/>
+    <value nick="Radians" value="3"/>
+    <value nick="Square Root" value="4"/>
+    <value nick="Inverse" value="5"/>
   </enum>
 
   <enum id="se.sjoerd.Graphs.import-params.colums.separators">
