@@ -6,7 +6,7 @@ from gettext import gettext as _
 
 from gi.repository import Graphs
 
-from graphs import misc, utilities
+from graphs import misc, scales, utilities
 from graphs.item import DataItem, EquationItem
 
 import numexpr
@@ -324,22 +324,24 @@ class CommonOperations(DataHelper):
             ymax = max(x for x in new_ydata if x != 0)
             scale = right_scale if item.get_yposition() else left_scale
 
-            if scale == 1:  # Use log values for log scaling
+            if scale == scales.Scale.LOG:
                 shift_value_log += \
                     numpy.log10(abs(ymax / ymin)) + 0.1 * numpy.log10(y_range)
-            elif scale == 2:  # Use log values for log (base 2) scaling
+            elif scale == scales.Scale.LOG2:
                 shift_value_log += \
                     numpy.log2(abs(ymax / ymin)) + 0.1 * numpy.log2(y_range)
 
             else:
                 shift_value_linear += (ymax - ymin) + 0.1 * y_range
 
-            shift_value = \
-                shift_value_log if scale == 1 else shift_value_linear
+            if (scale == scales.Scale.LOG or scale == scales.Scale.LOG2):
+                shift_value = shift_value_log
+            else:
+                shift_value = shift_value_linear
 
             is_input_item = item.get_uuid() == item_.get_uuid()
             if isinstance(item_, EquationItem) and is_input_item:
-                if scale == 1:  # Log scaling
+                if scale == scales.Scale.LOG:
                     equation = f"({item.equation})*10**{shift_value}"
                 else:
                     equation = f"{item.equation}+{shift_value}"
@@ -348,10 +350,10 @@ class CommonOperations(DataHelper):
                 return
 
             elif isinstance(item_, DataItem) and is_input_item:
-                if scale == 1:  # Apply log scaling
+                if scale == scales.Scale.LOG:
                     new_ydata = \
                         [value * 10**shift_value_log for value in ydata]
-                elif scale == 2:  # Apply log (base 2) scaling
+                elif scale == scales.Scale.LOG2:
                     new_ydata = [value * 2**shift_value_log for value in ydata]
                 else:  # Apply linear scaling
                     new_ydata = [value + shift_value_linear for value in ydata]
