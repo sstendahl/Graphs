@@ -327,6 +327,10 @@ class CommonOperations(DataHelper):
             if scale == 1:  # Use log values for log scaling
                 shift_value_log += \
                     numpy.log10(abs(ymax / ymin)) + 0.1 * numpy.log10(y_range)
+            elif scale == 2:  # Use log values for log (base 2) scaling
+                shift_value_log += \
+                    numpy.log2(abs(ymax / ymin)) + 0.1 * numpy.log2(y_range)
+
             else:
                 shift_value_linear += (ymax - ymin) + 0.1 * y_range
 
@@ -347,6 +351,8 @@ class CommonOperations(DataHelper):
                 if scale == 1:  # Apply log scaling
                     new_ydata = \
                         [value * 10**shift_value_log for value in ydata]
+                elif scale == 2:  # Apply log (base 2) scaling
+                    new_ydata = [value * 2**shift_value_log for value in ydata]
                 else:  # Apply linear scaling
                     new_ydata = [value + shift_value_linear for value in ydata]
                 return xdata, new_ydata, False, False
