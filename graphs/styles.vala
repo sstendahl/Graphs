@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 using Gdk;
 using Gtk;
-using Gee;
 
 namespace Graphs {
     public int style_cmp (Style a, Style b) {
@@ -17,16 +16,14 @@ namespace Graphs {
         public Application application { get; construct set; }
         public GLib.ListStore style_model { get; construct set; }
         public File style_dir { get; construct set; }
-        public signal void style_changed (Style style);
+        public signal void style_changed (string stylename);
+        public signal void style_deleted (string stylename);
 
-        private Gee.AbstractSet<string> stylenames { get; private set; }
-
-        protected signal void copy_request (string template, string name);
+        protected signal void create_style_request (Style template, string name);
         protected signal Style style_request (File file);
 
         construct {
             this.style_model = new GLib.ListStore (typeof (Style));
-            this.stylenames = new Gee.HashSet<string> ();
             try {
                 File config_dir = Tools.get_config_directory ();
                 this.style_dir = config_dir.get_child_for_display_name ("styles");
@@ -99,14 +96,12 @@ namespace Graphs {
                 case FileMonitorEvent.CREATED:
                     if (find_style_for_file (file, out style) > 0) return;
                     add_user_style (file);
-                    style_changed.emit (style);
                     break;
                 case FileMonitorEvent.DELETED:
                     var index = find_style_for_file (file, out style);
                     if (index == -1) return;
-                    stylenames.remove (style.name);
                     style_model.remove (index);
-                    style_changed.emit (style);
+                    style_deleted.emit (style.name);
                     break;
                 case FileMonitorEvent.CHANGES_DONE_HINT:
                     Style tmp_style = style_request.emit (file);
@@ -115,7 +110,7 @@ namespace Graphs {
                     style.name = tmp_style.name;
                     style.preview = tmp_style.preview;
                     style.light = tmp_style.light;
-                    style_changed.emit (style);
+                    style_changed.emit (style.name);
                     break;
                 default:
                     return;
@@ -124,14 +119,13 @@ namespace Graphs {
 
         private void add_user_style (File file) {
             Style style = style_request.emit (file);
-            if (stylenames.contains (style.name)) {
+            if (is_stylename_present (style.name)) {
                 style.name = Tools.get_duplicate_string (
-                    style.name, stylenames.to_array ()
+                    style.name, list_stylenames ()
                 );
             }
             CompareDataFunc<Style> cmp = style_cmp;
             style_model.insert_sorted (style, cmp);
-            stylenames.add (style.name);
         }
 
         /**
@@ -148,14 +142,25 @@ namespace Graphs {
             return stylenames;
         }
 
-        public void copy_style (string template, string name) {
+        public void create_style (uint template, string name) {
             string new_name = name;
-            if (stylenames.contains (name)) {
+            if (is_stylename_present (name)) {
                 new_name = Tools.get_duplicate_string (
-                    name, stylenames.to_array ()
+                    name, list_stylenames ()
                 );
             }
-            copy_request.emit (template, new_name);
+            var style = style_model.get_item (template) as Style;
+            create_style_request.emit (style, new_name);
+        }
+
+        private bool is_stylename_present (string stylename) {
+            for (uint i = 1; i < style_model.get_n_items (); i++) {
+                Style i_style = style_model.get_item (i) as Style;
+                if (i_style.name == stylename) {
+                    return true;
+                }
+            }
+            return false;
         }
 
         private int find_style_for_file (File file, out Style? style) {
@@ -253,8 +258,6 @@ namespace Graphs {
         private StyleManager style_manager;
         private string[] stylenames;
 
-        public signal void accept (string template, string name);
-
         public AddStyleDialog (StyleManager style_manager, Widget parent, FigureSettings figure_settings) {
             this.style_manager = style_manager;
             this.stylenames = style_manager.list_stylenames ();
@@ -285,7 +288,8 @@ namespace Graphs {
 
         [GtkCallback]
         private void on_accept () {
-            accept.emit (get_selected (), new_style_name.get_text ());
+            uint template = style_templates.get_selected () + 1;
+            style_manager.create_style (template, new_style_name.get_text ());
             close ();
         }
     }

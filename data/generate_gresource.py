@@ -88,10 +88,11 @@ main_gresource = ElementTree.SubElement(
     "gresource",
     attrib={"prefix": main_prefix},
 )
+current_dir = Path(args.dir)
 
 # Begin Other Section
 for file in args.other:
-    name = Path(shutil.copy(file, args.dir)).name
+    path = Path(shutil.copy(file, current_dir))
     element = ElementTree.SubElement(
         main_gresource,
         "file",
@@ -99,7 +100,7 @@ for file in args.other:
             "compressed": "True",
         },
     )
-    element.text = name
+    element.text = str(path.relative_to(current_dir))
 # End Other Section
 
 # Begin style section
@@ -111,10 +112,9 @@ styles_gresource = ElementTree.SubElement(
     "gresource",
     attrib={"prefix": style_prefix},
 )
-style_list = Path(args.dir, "styles.txt")
+style_list = Path(current_dir, "styles.txt")
 for style_path in args.styles:
-    style_file = shutil.copy(style_path, args.dir)
-    name = Path(style_file).name
+    style_file = Path(shutil.copy(style_path, current_dir))
     style_element = ElementTree.SubElement(
         styles_gresource,
         "file",
@@ -122,10 +122,11 @@ for style_path in args.styles:
             "compressed": "True",
         },
     )
-    style_element.text = name
-    params, graphs_paramns = style_io.parse(Gio.File.new_for_path(style_file))
+    style_element.text = str(style_file.relative_to(current_dir))
+    g_file = Gio.File.new_for_path(str(style_file))
+    params, graphs_paramns = style_io.parse(g_file)
     stylename = graphs_paramns["name"]
-    out_path = Path(args.dir, name.replace(".mplstyle", ".png"))
+    out_path = Path(current_dir, style_file.name.replace(".mplstyle", ".png"))
     style_paths[stylename] = out_path
     with open(out_path, "wb") as out_file:
         style_io.create_preview(out_file, params, "png")
@@ -136,10 +137,12 @@ for style_path in args.styles:
             "compressed": "True",
         },
     )
-    preview_element.text = out_path.name
-    styles.append(
-        (stylename, style_prefix + name, main_prefix + out_path.name),
-    )
+    preview_element.text = str(out_path.relative_to(current_dir))
+    styles.append([
+        stylename,
+        style_prefix + style_file.name,
+        main_prefix + out_path.name,
+    ])
 styles.sort(key=lambda x: x[0].casefold())
 with open(style_list, "wt") as style_list_file:
     style_list_file.writelines(";".join(x) + "\n" for x in styles)
@@ -150,7 +153,7 @@ style_list_element = ElementTree.SubElement(
         "compressed": "True",
     },
 )
-style_list_element.text = style_list.name
+style_list_element.text = str(style_list.relative_to(current_dir))
 
 
 def _to_array(file_path):
@@ -168,7 +171,7 @@ for sys_style in ("Adwaita", "Yaru"):
         axis=1,
     )
     stitched_image = Image.fromarray(stitched_array)
-    out_path = Path(args.dir + "/system-style-" + sys_style.lower() + ".png")
+    out_path = Path(current_dir, "system-style-" + sys_style.lower() + ".png")
     with open(out_path, "wb") as file:
         stitched_image.save(file, "PNG")
     preview_element = ElementTree.SubElement(
@@ -178,7 +181,7 @@ for sys_style in ("Adwaita", "Yaru"):
             "compressed": "True",
         },
     )
-    preview_element.text = out_path.name
+    preview_element.text = str(out_path.relative_to(current_dir))
 # End style section
 
 # Begin ui section
@@ -187,12 +190,8 @@ ui_gresource = ElementTree.SubElement(
     "gresource",
     attrib={"prefix": main_prefix},
 )
-help_overlay_path = None
 for ui_file in args.ui:
-    path = Path(ui_file)
-    if path.name == "shortcuts.ui":
-        help_overlay_path = path
-        continue
+    path = Path(current_dir, ui_file)
     ui_file_element = ElementTree.SubElement(
         ui_gresource,
         "file",
@@ -200,16 +199,7 @@ for ui_file in args.ui:
             "preprocess": "xml-stripblanks",
         },
     )
-    ui_file_element.text = "ui/" + path.name
-help_overlay_element = ElementTree.SubElement(
-    ui_gresource,
-    "file",
-    attrib={
-        "preprocess": "xml-stripblanks",
-        "alias": "gtk/help-overlay.ui",
-    },
-)
-help_overlay_element.text = "ui/" + help_overlay_path.name
+    ui_file_element.text = str(path.relative_to(current_dir))
 # End ui section
 
 # Begin icon section
@@ -219,7 +209,7 @@ icon_gresource = ElementTree.SubElement(
     attrib={"prefix": main_prefix + "icons/scalable/actions/"},
 )
 for icon_file in args.icons:
-    path = Path(Path(shutil.copy(icon_file, args.dir)))
+    path = Path(shutil.copy(icon_file, current_dir))
     icon_file_element = ElementTree.SubElement(
         icon_gresource,
         "file",
@@ -227,7 +217,7 @@ for icon_file in args.icons:
             "preprocess": "xml-stripblanks",
         },
     )
-    icon_file_element.text = path.name
+    icon_file_element.text = str(path.relative_to(current_dir))
 # End icon section
 
 # Write

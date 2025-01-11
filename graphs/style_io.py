@@ -40,6 +40,10 @@ FONT_SIZE_KEYS = [
 ]
 
 
+class StyleParseError(Exception):
+    """Custom Error for when a style cannot be parsed."""
+
+
 def parse(file: Gio.File, validate: RcParams = None) -> (RcParams, str):
     """
     Parse a style to RcParams.
@@ -53,12 +57,7 @@ def parse(file: Gio.File, validate: RcParams = None) -> (RcParams, str):
     filename = file.get_basename()
     try:
         stream = Gio.DataInputStream.new(file.read(None))
-        line_number = 0
-        while True:
-            line = stream.read_line_utf8(None)[0]
-            if line is None:
-                break
-            line_number += 1
+        for line_number, line in enumerate(stream, 1):
             if line[:9] == "#~graphs ":
                 graphs_param = True
                 line = line[9:]
@@ -66,7 +65,7 @@ def parse(file: Gio.File, validate: RcParams = None) -> (RcParams, str):
                 graphs_param = False
             # legacy support for names at second line
             if line_number == 2 and graphs_params["name"] is None \
-                    and line[2:] == "# ":
+                    and line[:2] == "# ":
                 graphs_params["name"] = line[2:]
             line = cbook._strip_comment(line)
             if not line:
@@ -110,13 +109,12 @@ def parse(file: Gio.File, validate: RcParams = None) -> (RcParams, str):
                         style[key] = value
                 except (KeyError, ValueError):
                     msg = _("Bad value in file {file} on line {line}")
-                    logging.exception(
+                    logging.warning(
                         msg.format(file=filename, line=line_number),
                     )
-    except UnicodeDecodeError:
-        logging.exception(
-            _("Could not parse {filename}").format(filename=filename),
-        )
+    except UnicodeDecodeError as error:
+        msg = _("Could not parse {filename}").format(filename=filename)
+        raise StyleParseError(msg) from error
     finally:
         stream.close()
     if validate is not None:
@@ -141,7 +139,7 @@ WRITE_IGNORELIST = STYLE_IGNORELIST + [
 ]
 
 
-def write(file: Gio.File, graphs_params: dict, style: RcParams) -> None:
+def write(file: Gio.File, style: RcParams, graphs_params: dict) -> None:
     """Write a style to a file."""
     stream = Gio.DataOutputStream.new(file.replace(None, False, 0, None))
     stream.put_string("# Generated via Graphs\n")

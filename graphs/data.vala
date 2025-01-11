@@ -15,8 +15,6 @@ namespace Graphs {
         public bool can_view_forward { get; protected set; default = false; }
         public File file { get; set; }
         public bool unsaved { get; set; default = false; }
-        public string project_name { get; protected set; }
-        public string project_path { get; protected set; }
         public SingleSelection style_selection_model { get; private set; }
         public bool items_selected {
             get {
@@ -38,6 +36,7 @@ namespace Graphs {
         protected signal void position_changed (uint index1, uint index2);
         protected signal void item_changed (Item item, string prop_name);
         protected signal void delete_request (Item[] items);
+        protected signal string load_request (File file);
 
         construct {
             this._items = new Gee.LinkedList<Item> ();
@@ -52,10 +51,16 @@ namespace Graphs {
 
             var style_manager = application.figure_style_manager;
             this.style_selection_model = new SingleSelection (style_manager.style_model);
-            style_manager.style_changed.connect (style => {
+            style_manager.style_changed.connect (stylename => {
                 if (!figure_settings.use_custom_style) return;
-                if (figure_settings.custom_style == style.name) {
+                if (figure_settings.custom_style == stylename) {
                     handle_style_change ();
+                }
+            });
+            style_manager.style_deleted.connect (stylename => {
+                if (!figure_settings.use_custom_style) return;
+                if (figure_settings.custom_style == stylename) {
+                    figure_settings.use_custom_style = false;
                 }
             });
 
@@ -106,16 +111,6 @@ namespace Graphs {
         // End section ListModel
 
         // Section management
-
-        public void reset () {
-            python_method_request.emit ("_reset");
-            uint removed = _items.size;
-            _items.clear ();
-            this.file = null;
-            this.unsaved = false;
-            python_method_request.emit ("_initialize");
-            items_changed.emit (0, removed, 0);
-        }
 
         protected void _update_used_positions () {
             if (_items.size == 0) {
@@ -276,10 +271,17 @@ namespace Graphs {
 
         public void save () {
             python_method_request.emit ("_save");
+            this.unsaved = false;
         }
 
-        public void load () {
-            python_method_request.emit ("_load");
+        public void load (File file) throws ProjectParseError {
+            string error = load_request.emit (file);
+            if (error == "") {
+                this.file = file;
+                this.unsaved = false;
+            } else {
+                throw new ProjectParseError.INVALID_PROJECT (error);
+            }
         }
 
         // End section save & load

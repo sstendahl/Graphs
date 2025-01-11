@@ -1,5 +1,9 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Main window."""
+import os
+from gettext import gettext as _
+from urllib.parse import unquote, urlparse
+
 from gi.repository import Graphs
 
 from graphs import item
@@ -19,20 +23,47 @@ class PythonWindow(Graphs.Window):
             "style_changed",
             self._on_style_changed,
         )
+        self.props.data.connect(
+            "notify::unsaved",
+            self._on_unsaved_changed,
+        )
         self._reload_canvas()
+        self._on_unsaved_changed(self.props.data, None)
 
-    def _on_style_changed(self, style_manager, recolor_items) -> None:
+    def _on_unsaved_changed(self, data, _a) -> None:
+        file = data.get_file()
+        if file is None:
+            title = _("Untitled Project")
+            path = _("Draft")
+        else:
+            title = Graphs.tools_get_filename(file)
+            uri_parse = urlparse(file.get_uri())
+            filepath = os.path.dirname(
+                os.path.join(uri_parse.netloc, unquote(uri_parse.path)),
+            )
+            if filepath.startswith("/var"):
+                # Fix for rpm-ostree distros, where home is placed in /var/home
+                filepath = filepath.replace("/var", "", 1)
+            path = filepath.replace(os.path.expanduser("~"), "~")
+            if path.startswith(f"/run/user/{os.getuid()}/doc/"):
+                path = _("Document Portal")
+        if data.get_unsaved():
+            title = "• " + title
+        self.props.content_title.set_title(title)
+        self.props.content_title.set_subtitle(path)
+
+    def _on_style_changed(self, data, recolor_items) -> None:
         """Handle style change."""
         if recolor_items:
-            old_style = style_manager.get_old_selected_style_params()
-            new_style = style_manager.get_selected_style_params()
+            old_style = data.get_old_selected_style_params()
+            new_style = data.get_selected_style_params()
             old_cycle = old_style["axes.prop_cycle"].by_key()["color"]
             new_cycle = new_style["axes.prop_cycle"].by_key()["color"]
-            for item_ in self.props.data:
+            for item_ in data:
                 item_.reset(old_style, new_style)
             count = 0
-            for item_ in self.props.data:
-                if isinstance(item_, item.DataItem) \
+            for item_ in data:
+                if isinstance(item_, (item.DataItem, item.EquationItem)) \
                         and item_.get_color() in old_cycle:
                     if count > len(new_cycle):
                         count = 0

@@ -44,23 +44,31 @@ class StyleManager(Graphs.StyleManager):
             else "Adwaita"
         super().__init__(application=application)
         self.connect("style_request", self._on_style_request)
-        self.connect("copy_request", self._on_copy_request)
+        self.connect("create_style_request", self._on_create_style_request)
 
         self.setup(self._system_style_name.lower())
         self._update_system_style()
 
     @staticmethod
     def _on_style_request(self, file: Gio.File) -> Graphs.Style:
-        style_params, graphs_params = style_io.parse(
-            file,
-            self._system_style_params,
-        )
+        try:
+            style_params, graphs_params = style_io.parse(
+                file,
+                self._system_style_params,
+            )
+            name = graphs_params["name"]
+            preview = _generate_preview(style_params)
+            light = _is_style_bright(style_params)
+        except style_io.StyleParseError:
+            name = ""
+            preview = None
+            light = False
         return Graphs.Style(
-            name=graphs_params["name"],
+            name=name,
             file=file,
             mutable=True,
-            preview=_generate_preview(style_params),
-            light=_is_style_bright(style_params),
+            preview=preview,
+            light=light,
         )
 
     def get_system_style_params(self) -> RcParams:
@@ -79,16 +87,16 @@ class StyleManager(Graphs.StyleManager):
         )[0]
 
     @staticmethod
-    def _on_copy_request(self, template: str, new_name: str) -> None:
+    def _on_create_style_request(
+        self, template: Graphs.Style, new_name: str,
+    ) -> None:
         """Copy a style."""
         destination = self.props.style_dir.get_child_for_display_name(
             _generate_filename(new_name),
         )
-        for style in self.props.style_model:
-            if template == style.get_name():
-                style_params = style_io.parse(
-                    style.get_file(),
-                    self._system_style_params,
-                )[0]
-                break
-        style_io.write(destination, {"name": new_name}, style_params)
+        style_params, graphs_params = style_io.parse(
+            template.get_file(),
+            self._system_style_params,
+        )
+        graphs_params["name"] = new_name
+        style_io.write(destination, style_params, graphs_params)
