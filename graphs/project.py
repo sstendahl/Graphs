@@ -69,7 +69,29 @@ class ProjectMigrator:
 
     def _migrate_v2(self):
         # Migrate v1 to v2
-        pass
+        self._migrate_inserted_scale(2)  # log2 scale added
+
+    def _migrate_inserted_scale(self, scale_index):
+        """Handle a new scale being inserted at scale_index."""
+        figure_settings = self._project_dict["figure-settings"]
+        for prefix in ("left", "right", "top", "bottom"):
+            axis = prefix + "_scale"
+            if figure_settings[axis] >= scale_index:
+                figure_settings[axis] = figure_settings[axis] + 1
+
+        for state_index, history_state in enumerate(
+            self._project_dict["history-states"],
+        ):
+            for change_index, changeset in enumerate(history_state[0]):
+                change_type, change = changeset
+                if change_type != 4:
+                    continue
+                if change[0][-6:] != "-scale":
+                    continue
+                for i, val in enumerate(change[1:], 1):
+                    if val >= scale_index:
+                        self._project_dict["history-states"][state_index][0][
+                            change_index][1][i] = val + 1
 
 
 def read_project_file(file: Gio.File) -> dict:

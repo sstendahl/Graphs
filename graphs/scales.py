@@ -13,7 +13,7 @@ from matplotlib import scale, ticker, transforms
 
 import numpy
 
-_SCALES = ["linear", "log", "radians", "squareroot", "inverse"]
+_SCALES = ["linear", "log", "log2", "radians", "squareroot", "inverse"]
 
 
 def to_string(scale: int) -> str:
@@ -24,6 +24,21 @@ def to_string(scale: int) -> str:
 def to_int(scale: str) -> int:
     """Convert a string to an int."""
     return _SCALES.index(scale)
+
+
+class Log2Scale(scale.LogScale):
+    """
+    Logarithmic Base 2 Scale.
+
+    Small utility for implementing logarithmic base 2 scaling easily using
+    the scale name system.
+    """
+
+    name = "log2"
+
+    def __init__(self, axis, *args, **kwargs):
+        kwargs["base"] = 2
+        super().__init__(axis, *args, **kwargs)
 
 
 class RadiansScale(scale.LinearScale):
@@ -239,6 +254,7 @@ class RadianLocator(ticker.MultipleLocator):
         return distance
 
 
+scale.register_scale(Log2Scale)
 scale.register_scale(RadiansScale)
 scale.register_scale(SquareRootScale)
 scale.register_scale(InverseScale)
