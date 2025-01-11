@@ -1,6 +1,6 @@
 """Tests for operations."""
-from graphs import operations
 from graphs.item import DataItem
+from graphs.operations import CommonOperations
 from graphs.operations import DataOperations
 
 import numpy as np
@@ -18,7 +18,7 @@ def is_sorted(lst):
 
 def test_sort_data():
     """Test if sort_data function sorts x and y data."""
-    sorted_x, sorted_y = operations.sort_data(XDATA, YDATA)
+    sorted_x, sorted_y = DataOperations.sort_data(XDATA, YDATA)
     assert is_sorted(sorted_x)
 
 
@@ -83,11 +83,13 @@ def test_shift(yscale):
 
     items = [item1, item2]
     new_xdata1, new_ydata1, _sort, _discard = \
-        DataOperations.shift(item1, xdata, ydata1, limits=[0, 1, 0, 1],
+        DataOperations.shift(CommonOperations(),
+                             item1, xdata, ydata1, limits=[0, 1, 0, 1],
                              left_scale=yscale, right_scale=yscale,
                              items=items, ranges=[2.2, 2.2])
     new_xdata2, new_ydata2, _sort, _discard = \
-        DataOperations.shift(item2, xdata, ydata2, limits=[0, 1, 0, 1],
+        DataOperations.shift(CommonOperations(),
+                             item2, xdata, ydata2, limits=[0, 1, 0, 1],
                              left_scale=yscale, right_scale=yscale,
                              items=items, ranges=[2.2, 2.2])
     np.testing.assert_array_equal(new_xdata1, xdata)
