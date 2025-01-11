@@ -2,7 +2,6 @@
 """Module for data transformations."""
 import logging
 import re
-import types
 from gettext import gettext as _
 
 from gi.repository import Graphs
@@ -19,120 +18,14 @@ import scipy
 import sympy
 
 
-def get_data(window: Graphs.Window, item: DataItem):
-    """
-    Retrieve item from datadict with start and stop index.
-
-    If interaction_mode is set to "SELECT"
-    """
-    new_xdata = item.props.xdata
-    new_ydata = item.props.ydata
-
-    canvas = window.get_canvas()
-    if canvas.get_mode() == 2:
-        startx, stopx = get_selected_limits(window, item)
-        # If startx and stopx are not out of range, that is,
-        # if the item data is within the highlight
-        new_min = min(new_xdata)
-        a = startx < new_min and stopx < new_min
-        if not (a or (startx > max(new_xdata))):
-            new_xdata, new_ydata = filter_data(
-                new_xdata, new_ydata, ">=", startx,
-            )
-            new_xdata, new_ydata = filter_data(
-                new_xdata, new_ydata, "<=", stopx,
-            )
-        else:
-            new_xdata = None
-            new_ydata = None
-    return new_xdata, new_ydata
-
-
-def get_selected_limits(window, item):
-    """Get the min and max value of the item within the selected range."""
-    canvas = window.get_canvas()
-    figure_settings = window.get_data().get_figure_settings()
-
-    if item.get_xposition() == 0:
-        min_x = figure_settings.get_min_bottom()
-        max_x = figure_settings.get_max_bottom()
-        if canvas.get_mode() == 2:
-            scale = figure_settings.get_bottom_scale()
-            min_x = utilities.get_value_at_fraction(
-                figure_settings.get_min_selected(), min_x, max_x, scale,
-            )
-            max_x = utilities.get_value_at_fraction(
-                figure_settings.get_max_selected(), min_x, max_x, scale,
-            )
-    else:
-        min_x = figure_settings.get_min_top()
-        max_x = figure_settings.get_max_top()
-        if canvas.get_mode() == 2:
-            scale = figure_settings.get_top_scale()
-            min_x = utilities.get_value_at_fraction(
-                figure_settings.get_min_selected(), min_x, max_x, scale,
-            )
-            max_x = utilities.get_value_at_fraction(
-                figure_settings.get_max_selected(), min_x, max_x, scale,
-            )
-    return min_x, max_x
-
-
-def filter_data(
-    xdata: list,
-    ydata: list,
-    condition: str,
-    value: float,
-) -> list:
-    """Filter coordinates based on the given condition."""
-    xdata = numpy.array(xdata)
-    ydata = numpy.array(ydata)
-
-    conditions = {
-        "<=": numpy.less_equal,
-        ">=": numpy.greater_equal,
-        "==": numpy.equal,
-    }
-    mask = conditions[condition](xdata, value)
-
-    xdata_filtered = xdata[mask]
-    ydata_filtered = ydata[mask]
-
-    return list(xdata_filtered), list(ydata_filtered)
-
-
-def create_data_mask(xdata1: list, ydata1: list, xdata2: list, ydata2: list):
-    """
-    Create a mask for matching pairs of coordinates.
-
-    Returns:
-    - Boolean mask indicating where pairs of coordinates match.
-    """
-    xdata1, ydata1, xdata2, ydata2 = \
-        map(numpy.array, [xdata1, ydata1, xdata2, ydata2])
-    return numpy.any((xdata1[:, None] == xdata2) & (ydata1[:, None] == ydata2),
-                     axis=1)
-
-
-def sort_data(xdata: list, ydata: list) -> (list, list):
-    """Sort data."""
-    return map(
-        list,
-        zip(*sorted(
-            zip(xdata, ydata),
-            key=lambda x_values: x_values[0],
-        )),
-    )
-
-
 def perform_operation(application: Graphs.Application, name: str) -> None:
     """Perform an operation."""
     window = application.get_active_window()
     figure_settings = window.get_data().get_figure_settings()
     if name in ("combine", ):
-        return getattr(CommonOperations, name)(window)
+        return getattr(CommonOperations, name)(CommonOperations(), window)
     elif name == "custom_transformation":
-        CommonOperations.custom_transformation(window)
+        CommonOperations().custom_transformation(window)
         return
     elif name == "cut" and window.get_canvas().get_mode() != 2:
         return
@@ -157,7 +50,7 @@ def perform_operation(application: Graphs.Application, name: str) -> None:
             figure_settings.get_left_scale(),
             figure_settings.get_right_scale(),
             window.get_data().get_items(),
-            [left_range, right_range],c
+            [left_range, right_range],
         ]
     elif "translate" in name or "multiply" in name:
         try:
@@ -169,10 +62,12 @@ def perform_operation(application: Graphs.Application, name: str) -> None:
         except ValueError as error:
             window.add_toast_string(str(error))
             return
+
     _apply(window, name, *args)
 
 
 def _apply(window, name, *args):
+    """Apply the given operation on the selected items"""
     data = window.get_data()
     figure_settings = data.get_figure_settings()
     old_limits = figure_settings.get_limits()
@@ -180,46 +75,159 @@ def _apply(window, name, *args):
         if not item.get_selected():
             continue
         if isinstance(item, EquationItem):
-            EquationOperations.execute(item, window, name, *args)
+            EquationOperations().execute(item, window, name, *args)
 
         elif isinstance(item, DataItem):
-            EquationOperations.execute(item, window, name, *args)
+            DataOperations().execute(item, window, name, *args)
 
     data.optimize_limits()
     data.add_history_state_with_limits(old_limits)
 
+
+class DataHelper():
+    """
+    Helper methods that assist with data-handling when performing operations.
+    """
+
+    def get_data(self, window: Graphs.Window, item: DataItem):
+        """
+        Retrieve item from datadict with start and stop index.
+
+        If interaction_mode is set to "SELECT"
+        """
+        new_xdata = item.props.xdata
+        new_ydata = item.props.ydata
+
+        canvas = window.get_canvas()
+        if canvas.get_mode() == 2:
+            startx, stopx = self.get_selected_limits(window, item)
+            # If startx and stopx are not out of range, that is,
+            # if the item data is within the highlight
+            new_min = min(new_xdata)
+            a = startx < new_min and stopx < new_min
+            if not (a or (startx > max(new_xdata))):
+                new_xdata, new_ydata = self.filter_data(
+                    new_xdata, new_ydata, ">=", startx,
+                )
+                new_xdata, new_ydata = self.filter_data(
+                    new_xdata, new_ydata, "<=", stopx,
+                )
+            else:
+                new_xdata = None
+                new_ydata = None
+        return new_xdata, new_ydata
+
+    @staticmethod
+    def get_selected_limits(window, item):
+        """Get the min and max value of the item within the selected range."""
+        canvas = window.get_canvas()
+        figure_settings = window.get_data().get_figure_settings()
+
+        if item.get_xposition() == 0:
+            min_bottom = figure_settings.get_min_bottom()
+            max_bottom = figure_settings.get_max_bottom()
+            if canvas.get_mode() == 2:
+                scale = figure_settings.get_bottom_scale()
+                min_x = utilities.get_value_at_fraction(
+                    figure_settings.get_min_selected(), min_bottom, max_bottom,
+                    scale,
+                )
+                max_x = utilities.get_value_at_fraction(
+                    figure_settings.get_max_selected(), min_bottom, max_bottom,
+                    scale,
+                )
+        else:
+            min_top = figure_settings.get_min_top()
+            max_top = figure_settings.get_max_top()
+            if canvas.get_mode() == 2:
+                scale = figure_settings.get_top_scale()
+                min_x = utilities.get_value_at_fraction(
+                    figure_settings.get_min_selected(), min_top, max_top,
+                    scale,
+                )
+                max_x = utilities.get_value_at_fraction(
+                    figure_settings.get_max_selected(), min_top, max_top,
+                    scale,
+                )
+        return min_x, max_x
+
+    @staticmethod
+    def filter_data(
+        xdata: list,
+        ydata: list,
+        condition: str,
+        value: float,
+    ) -> list:
+        """Filter coordinates based on the given condition."""
+        xdata = numpy.array(xdata)
+        ydata = numpy.array(ydata)
+
+        conditions = {
+            "<=": numpy.less_equal,
+            ">=": numpy.greater_equal,
+            "==": numpy.equal,
+        }
+        mask = conditions[condition](xdata, value)
+
+        xdata_filtered = xdata[mask]
+        ydata_filtered = ydata[mask]
+
+        return list(xdata_filtered), list(ydata_filtered)
+
+    @staticmethod
+    def validate_and_set(item: EquationItem, equation: str):
+        """
+        Validate and set an equation.
+
+        Once the equation has been set, its gets simplified. Invalid equations
+        raise an InvalidEquationError.
+        """
+        valid_equation = utilities.validate_equation(str(equation))
+        if not valid_equation:
+            raise misc.InvalidEquationError(_("The operation on "
+                                              f"{item.props.name}"
+                                              " did not result in a plottable"
+                                              " equation"))
+        item.equation = equation
+        item.simplify_equation()
+
+    @staticmethod
+    def create_data_mask(xdata1: list,
+                         ydata1: list,
+                         xdata2: list,
+                         ydata2: list):
+        """
+        Create a mask for matching pairs of coordinates.
+
+        Returns:
+        - Boolean mask indicating where pairs of coordinates match.
+        """
+        xdata1, ydata1, xdata2, ydata2 = \
+            map(numpy.array, [xdata1, ydata1, xdata2, ydata2])
+        return numpy.any(
+            (xdata1[:, None] == xdata2) & (ydata1[:, None] == ydata2), axis=1)
+
+    @staticmethod
+    def sort_data(xdata: list, ydata: list) -> (list, list):
+        """Sort data."""
+        return map(
+            list,
+            zip(*sorted(
+                zip(xdata, ydata),
+                key=lambda x_values: x_values[0],
+            )),
+        )
+
+
 _return = (list[float], list[float], bool, bool)
 
 
-def validate_and_set(item: EquationItem, equation: str):
-    """
-    Validate and set an equation.
-
-    Once the equation has been set, its gets simplified. Invalid equations
-    raise an InvalidEquationError.
-    """
-    valid_equation = utilities.validate_equation(str(equation))
-    if not valid_equation:
-        raise misc.InvalidEquationError(_(f"The operation on {item.props.name}"
-                                          " did not result in a plottable"
-                                          " equation"))
-    item.equation = equation
-    item.simplify_equation()
-
-
-def staticclass(cls):
-    """Make all methods in class static."""
-    for name, value in vars(cls).items():
-        if isinstance(value, types.FunctionType):
-            setattr(cls, name, staticmethod(value))
-    return cls
-
-
-@staticclass
-class CommonOperations():
+class CommonOperations(DataHelper):
     """Operations to be performed on all kind of items."""
 
+    @staticmethod
     def custom_transformation(window: Graphs.Window) -> None:
+        """Perform a custom operation on the dataset"""
         def on_accept(_dialog, input_x, input_y, discard):
             try:
                 _apply(window, "transform", input_x, input_y, discard)
@@ -234,7 +242,7 @@ class CommonOperations():
         dialog = Graphs.TransformDialog.new(window)
         dialog.connect("accept", on_accept)
 
-    def combine(window: Graphs.Window) -> None:
+    def combine(self, window: Graphs.Window) -> None:
         """Combine the selected data into a new data set."""
         data = window.get_data()
         new_xdata, new_ydata = [], []
@@ -243,18 +251,18 @@ class CommonOperations():
             if not item.get_selected():
                 continue
             if isinstance(item, EquationItem):
-                min_x, max_x = get_selected_limits(window, item)
+                min_x, max_x = self.get_selected_limits(window, item)
                 limits = [min_x, max_x]
                 xdata, ydata = \
                     utilities.equation_to_data(item._equation, limits)
             elif isinstance(item, DataItem):
-                xdata, ydata = get_data(window, item)[:2]
+                xdata, ydata = DataHelper().get_data(window, item)[:2]
             if xdata is not None and ydata is not None:
                 new_xdata.extend(xdata)
                 new_ydata.extend(ydata)
 
         # Create the item itself
-        new_xdata, new_ydata = sort_data(new_xdata, new_ydata)
+        new_xdata, new_ydata = self.sort_data(new_xdata, new_ydata)
         data.add_items([
             DataItem.new(
                 data.get_selected_style_params(),
@@ -265,6 +273,7 @@ class CommonOperations():
         ])
 
     def shift(
+        self,
         item,
         xdata: list,
         ydata: list,
@@ -283,9 +292,9 @@ class CommonOperations():
         def _filter_range(xdata, ydata, prev_xdata, prev_ydata):
             if min(xdata) >= min(prev_xdata) and max(xdata) <= max(prev_ydata):
                 new_xdata, new_ydata = \
-                    filter_data(prev_xdata, prev_ydata, ">=", min(xdata))
+                    self.filter_data(prev_xdata, prev_ydata, ">=", min(xdata))
                 new_xdata, new_ydata = \
-                    filter_data(new_xdata, new_ydata, "<=", max(xdata))
+                    self.filter_data(new_xdata, new_ydata, "<=", max(xdata))
                 return new_xdata, new_ydata
             return xdata, ydata
 
@@ -341,11 +350,14 @@ class CommonOperations():
                 return xdata, new_ydata, False, False
 
 
-@staticclass
 class EquationOperations(CommonOperations):
     """Operations to be performed on equation items."""
 
-    def execute(item, window, name, *args):
+    def execute(self, item, window, name, *args):
+        """Execute the operation on the given item."""
+        data = window.get_data()
+        figure_settings = data.get_figure_settings()
+        old_limits = figure_settings.get_limits()
         try:
             callback = getattr(EquationOperations, name)
             if name in ("normalize", "center", "transform"):
@@ -353,13 +365,13 @@ class EquationOperations(CommonOperations):
                     old_limits[item.get_xposition()],
                     old_limits[item.get_yposition() + 1],
                 ]
-                callback(item, limits, *args)
+                item, equation = callback(item, limits, *args)
             elif name == "shift":
-                min_x, max_x = get_selected_limits(window, item)
+                min_x, max_x = self.get_selected_limits(window, item)
                 limits = [min_x, max_x]
                 xdata, ydata = \
                     utilities.equation_to_data(item._equation, limits)
-                callback(item, xdata, ydata, limits, *args)
+                callback(CommonOperations(), item, xdata, ydata, limits, *args)
             elif name in ("cut"):
                 window.add_toast_string(
                     _(
@@ -367,41 +379,51 @@ class EquationOperations(CommonOperations):
                         + "cutting data is not supported for equations.",
                     ),
                 )
+                return
             else:
-                callback(item, *args)
+                item, equation = callback(item, *args)
+            if name not in ("shift"):
+                self.validate_and_set(item, equation)
         except misc.InvalidEquationError as error:
             window.add_toast_string(error.message)
 
+    @staticmethod
     def translate_x(item, offset) -> _return:
         """Translate all selected data on the x-axis."""
         equation = re.sub(r"(?<!e)x(?!p)", f"(x+{offset})", item.equation)
-        validate_and_set(item, equation)
+        return item, equation
 
+    @staticmethod
     def translate_y(item, offset) -> _return:
         """Translate all selected data on the y-axis."""
         equation = f"({item.equation})+{offset}"
-        validate_and_set(item, equation)
+        return item, equation
 
+    @staticmethod
     def multiply_x(item, multiplier: float) -> _return:
         """Multiply all selected data on the x-axis."""
         equation = re.sub(r"(?<!e)x(?!p)", f"(x*{multiplier})", item.equation)
-        validate_and_set(item, equation)
+        return item, equation
 
+    @staticmethod
     def multiply_y(item, multiplier: float) -> _return:
         """Multiply all selected data on the y-axis."""
         equation = f"({item.equation})*{multiplier}"
-        validate_and_set(item, equation)
+        return item, equation
 
+    @staticmethod
     def normalize(item, limits) -> _return:
         """Normalize all selected data."""
         xdata, ydata = utilities.equation_to_data(item._equation, limits)
         equation = f"({item.equation})/{max(ydata)}"
-        validate_and_set(item, equation)
+        return item, equation
 
+    @staticmethod
     def smoothen(_item, *_args) -> None:
         """Smoothen y-data."""
         raise NotImplementedError
 
+    @staticmethod
     def center(item, limits, center_maximum: int) -> _return:
         """
         Center all selected data.
@@ -439,42 +461,48 @@ class EquationOperations(CommonOperations):
             middle_value = (min(xdata) + max(xdata)) / 2
         equation = \
             re.sub(r"(?<!e)x(?!p)", f"(x+{middle_value})", item.equation)
-        validate_and_set(item, equation)
+        return item, equation
 
+    @staticmethod
     def cut(_item, _xdata, _ydata) -> _return:
         """Cut selected data over the span that is selected."""
         raise NotImplementedError
 
+    @staticmethod
     def derivative(item) -> bool:
         """Calculate derivative of all selected data."""
         x = sympy.symbols("x")
         equation = utilities.preprocess(item._equation)
         equation = sympy.diff(equation, x)
-        validate_and_set(item, equation)
+        return item, equation
 
+    @staticmethod
     def integral(item) -> bool:
         """Calculate indefinite integral of all selected data."""
         x = sympy.symbols("x")
         equation = utilities.preprocess(item._equation)
         equation = sympy.integrate(equation, x)
-        validate_and_set(item, equation)
+        return item, equation
 
+    @staticmethod
     def fft(item) -> bool:
         """Perform Fourier transformation on all selected data."""
         x, k = sympy.symbols("x k")
         equation = utilities.preprocess(item._equation)
         equation = str(sympy.fourier_transform(equation, x, k))
         equation = equation.replace("k", "x")
-        validate_and_set(item, equation)
+        return item, equation
 
+    @staticmethod
     def inverse_fft(item) -> bool:
         """Perform Inverse Fourier transformation on all selected data."""
         x, k = sympy.symbols("x k")
         equation = utilities.preprocess(item._equation)
         equation = str(sympy.fourier_transform(equation, x, k))
         equation = equation.replace("k", "x")
-        validate_and_set(item, equation)
+        return item, equation
 
+    @staticmethod
     def transform(
         item,
         limits: list,
@@ -501,24 +529,25 @@ class EquationOperations(CommonOperations):
         equation = \
             re.sub(r"(?<!e)x(?!p)", input_x, item.equation)
         equation = input_y.lower().replace("y", equation)
-        validate_and_set(item, equation)
+        return item, equation
 
 
-@staticclass
 class DataOperations(CommonOperations):
     """Operations to be performed on data items."""
 
-    def execute(window, item, name, *args):
-        xdata, ydata = get_data(window, item)
+    def execute(self, item, window, name, *args) -> None:
+        """Execute the operation on the given item."""
+        xdata, ydata = DataHelper().get_data(window, item)
         callback = getattr(DataOperations, name)
         if not (xdata is not None and len(xdata) != 0):
             window.add_toast_string(_("No data found within the highlighted"
                                       "area"))
         else:
             if name == "shift":
-                min_x, max_x = get_selected_limits(window, item)
+                min_x, max_x = self.get_selected_limits(window, item)
                 limits = [min_x, max_x]
                 new_xdata, new_ydata, sort, discard = callback(
+                    CommonOperations(),
                     item, xdata, ydata, limits, *args,
                 )
             else:
@@ -539,7 +568,7 @@ class DataOperations(CommonOperations):
                 item.props.ydata = new_ydata
             else:
                 logging.debug("Discard is false")
-                mask = create_data_mask(
+                mask = self.create_data_mask(
                     item.props.xdata,
                     item.props.ydata,
                     xdata,
@@ -562,11 +591,11 @@ class DataOperations(CommonOperations):
                             i += 1
             if sort:
                 logging.debug("Sorting data")
-                item.xdata, item.ydata = sort_data(item.xdata, item.ydata)
+                item.xdata, item.ydata = self.sort_data(item.xdata, item.ydata)
             item.notify("xdata")
             item.notify("ydata")
 
-
+    @staticmethod
     def translate_x(_item, xdata: list, ydata: list, offset: float) -> _return:
         """
         Translate all selected data on the x-axis.
@@ -578,6 +607,7 @@ class DataOperations(CommonOperations):
         """
         return [value + offset for value in xdata], ydata, True, False
 
+    @staticmethod
     def translate_y(_item, xdata: list, ydata: list, offset: float) -> _return:
         """
         Translate all selected data on the y-axis.
@@ -589,6 +619,7 @@ class DataOperations(CommonOperations):
         """
         return xdata, [value + offset for value in ydata], False, False
 
+    @staticmethod
     def multiply_x(
         _item, xdata: list, ydata: list, multiplier: float,
     ) -> _return:
@@ -602,6 +633,7 @@ class DataOperations(CommonOperations):
         """
         return [value * multiplier for value in xdata], ydata, True, False
 
+    @staticmethod
     def multiply_y(
         _item, xdata: list, ydata: list, multiplier: float,
     ) -> _return:
@@ -615,10 +647,12 @@ class DataOperations(CommonOperations):
         """
         return xdata, [value * multiplier for value in ydata], False, False
 
+    @staticmethod
     def normalize(_item, xdata: list, ydata: list) -> _return:
         """Normalize all selected data."""
         return xdata, [value / max(ydata) for value in ydata], False, False
 
+    @staticmethod
     def center(
         _item, xdata: list, ydata: list, center_maximum: int,
     ) -> _return:
@@ -636,10 +670,12 @@ class DataOperations(CommonOperations):
         new_xdata = [coordinate - middle_value for coordinate in xdata]
         return new_xdata, ydata, True, False
 
+    @staticmethod
     def cut(_item, _xdata, _ydata) -> _return:
         """Cut selected data over the span that is selected."""
         return [], [], False, False
 
+    @staticmethod
     def derivative(_item, xdata: list, ydata: list) -> _return:
         """Calculate derivative of all selected data."""
         x_values = numpy.array(xdata)
@@ -647,6 +683,7 @@ class DataOperations(CommonOperations):
         dy_dx = numpy.gradient(y_values, x_values)
         return xdata, dy_dx.tolist(), False, True
 
+    @staticmethod
     def integral(_item, xdata: list, ydata: list) -> _return:
         """Calculate indefinite integral of all selected data."""
         x_values = numpy.array(xdata)
@@ -658,6 +695,7 @@ class DataOperations(CommonOperations):
         ).tolist()
         return xdata, indefinite_integral, False, True
 
+    @staticmethod
     def fft(_item, xdata: list, ydata: list) -> _return:
         """Perform Fourier transformation on all selected data."""
         x_values = numpy.array(xdata)
@@ -667,6 +705,7 @@ class DataOperations(CommonOperations):
         y_fourier = [value.real for value in y_fourier]
         return x_fourier, y_fourier, False, True
 
+    @staticmethod
     def inverse_fft(_item, xdata: list, ydata: list) -> _return:
         """Perform Inverse Fourier transformation on all selected data."""
         x_values = numpy.array(xdata)
@@ -676,6 +715,7 @@ class DataOperations(CommonOperations):
         y_fourier = [value.real for value in y_fourier]
         return x_fourier, y_fourier, False, True
 
+    @staticmethod
     def transform(
         _item,
         xdata: list,
