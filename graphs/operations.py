@@ -136,6 +136,8 @@ class DataHelper():
                     figure_settings.get_max_selected(), min_bottom, max_bottom,
                     scale,
                 )
+            else:
+                min_x, max_x = min_bottom, max_bottom
         else:
             min_top = figure_settings.get_min_top()
             max_top = figure_settings.get_max_top()
@@ -149,6 +151,8 @@ class DataHelper():
                     figure_settings.get_max_selected(), min_top, max_top,
                     scale,
                 )
+            else:
+                min_x, max_x = min_top, max_top
         return min_x, max_x
 
     @staticmethod
