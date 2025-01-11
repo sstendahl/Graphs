@@ -39,9 +39,9 @@
 
   <maintainer>
     <foaf:Person>
-      <foaf:name>Christoph Kohnen</foaf:name>
+      <foaf:name>Christoph Matthias Kohnen</foaf:name>
       <gnome:userid>cmkohnen</gnome:userid>
-      <foaf:mbox rdf:resource="mailto:christoph.kohnen@disroot.org" />
+      <foaf:mbox rdf:resource="mailto:mail@cmkohnen.de" />
       <foaf:account>
         <foaf:OnlineAccount>
           <foaf:accountServiceHomepage rdf:resource="https://github.com"/>

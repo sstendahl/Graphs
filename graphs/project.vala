@@ -3,6 +3,11 @@ using Adw;
 using Gtk;
 
 namespace Graphs {
+
+    public errordomain ProjectParseError {
+        INVALID_PROJECT
+    }
+
     namespace Project {
 
         public FileFilter get_project_file_filter () {
@@ -44,8 +49,10 @@ namespace Graphs {
             dialog.set_filters (get_project_file_filters ());
             dialog.open.begin (window, null, (d, response) => {
                 try {
-                    window.data.file = dialog.open.end (response);
-                    window.data.load ();
+                    var file = dialog.open.end (response);
+                    window.data.load (file);
+                } catch (ProjectParseError e) {
+                    window.add_toast_string (e.message);
                 } catch {}
             });
         }

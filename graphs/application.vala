@@ -76,11 +76,11 @@ namespace Graphs {
                     version = version,
                     developers = {
                         "Sjoerd Stendahl <contact@sjoerd.se>",
-                        "Christoph Kohnen <christoph.kohnen@disroot.org>"
+                        "Christoph Matthias Kohnen <mail@cmkohnen.de>"
                     },
                     designers = {
                         "Sjoerd Stendahl <contact@sjoerd.se>",
-                        "Christoph Kohnen <christoph.kohnen@disroot.org>",
+                        "Christoph Matthias Kohnen <mail@cmkohnen.de>",
                         "Tobias Bernard <tbernard@gnome.org>"
                     },
                     copyright = "© 2022 – 2024",
@@ -130,8 +130,11 @@ namespace Graphs {
 
                 if (uri.has_suffix (".graphs")) {
                     var window = create_main_window ();
-                    window.data.file = file;
-                    window.data.load ();
+                    try {
+                        window.data.load (file);
+                    } catch (ProjectParseError e) {
+                        window.add_toast_string (e.message);
+                    }
                     return;
                 } else if (uri.has_suffix (".mplstyle")) {
                     create_style_editor (file);
