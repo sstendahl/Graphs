@@ -76,11 +76,11 @@ namespace Graphs {
                     version = version,
                     developers = {
                         "Sjoerd Stendahl <contact@sjoerd.se>",
-                        "Christoph Kohnen <christoph.kohnen@disroot.org>"
+                        "Christoph Matthias Kohnen <mail@cmkohnen.de>"
                     },
                     designers = {
                         "Sjoerd Stendahl <contact@sjoerd.se>",
-                        "Christoph Kohnen <christoph.kohnen@disroot.org>",
+                        "Christoph Matthias Kohnen <mail@cmkohnen.de>",
                         "Tobias Bernard <tbernard@gnome.org>"
                     },
                     copyright = "© 2022 – 2024",
