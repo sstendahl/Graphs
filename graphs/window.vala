@@ -97,6 +97,12 @@ namespace Graphs {
                 zoom_button.set_active (value == 1);
                 select_button.set_active (value == 2);
             }
+            get {
+                if (pan_button.get_active ()) return 0;
+                if (zoom_button.get_active ()) return 1;
+                if (select_button.get_active ()) return 2;
+                return -1;
+            }
         }
 
         public Canvas canvas {

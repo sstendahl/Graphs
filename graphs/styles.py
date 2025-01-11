@@ -88,7 +88,9 @@ class StyleManager(Graphs.StyleManager):
 
     @staticmethod
     def _on_create_style_request(
-        self, template: Graphs.Style, new_name: str,
+        self,
+        template: Graphs.Style,
+        new_name: str,
     ) -> None:
         """Copy a style."""
         destination = self.props.style_dir.get_child_for_display_name(

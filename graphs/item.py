@@ -6,8 +6,6 @@ from gi.repository import GObject, Graphs
 
 from graphs import misc, utilities
 
-import sympy
-
 
 def new_from_dict(dictionary: dict):
     """Instanciate item from dict."""
@@ -135,12 +133,6 @@ class EquationItem(_PythonItem):
 
         if "Y = " + old_equation == self.props.name:
             self.props.name = "Y = " + equation
-
-    def simplify_equation(self) -> None:
-        """Simplify the item equation."""
-        equation = utilities.preprocess(self.equation)
-        equation = str(sympy.simplify(equation))
-        self.equation = equation
 
 
 class TextItem(_PythonItem):
