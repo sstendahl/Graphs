@@ -26,6 +26,21 @@ def to_int(scale: str) -> int:
     return _SCALES.index(scale)
 
 
+class Log2Scale(scale.LogScale):
+    """
+    Logarithmic Base 2 Scale.
+
+    Small utility for implementing logarithmic base 2 scaling easily using
+    the scale name system.
+    """
+
+    name = "log2"
+
+    def __init__(self, axis, *args, **kwargs):
+        kwargs["base"] = 2
+        super().__init__(axis, *args, **kwargs)
+
+
 class RadiansScale(scale.LinearScale):
     """Radians Scale."""
 
@@ -239,6 +254,7 @@ class RadianLocator(ticker.MultipleLocator):
         return distance
 
 
+scale.register_scale(Log2Scale)
 scale.register_scale(RadiansScale)
 scale.register_scale(SquareRootScale)
 scale.register_scale(InverseScale)
