@@ -48,6 +48,7 @@ template $GraphsEditItemDialog : Adw.PreferencesDialog {
       }
       Adw.ButtonRow simplify {
         title: _("Simplify");
+        activated => $on_simplify();
       }
     }
 
