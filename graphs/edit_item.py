@@ -121,6 +121,12 @@ class EditItemDialog(Adw.PreferencesDialog):
             self.markersize.set_sensitive(False)
 
     @Gtk.Template.Callback()
+    def on_simplify(self, _buttonrow) -> None:
+        """Simplify the equation."""
+        self.props.item.simplify_equation()
+        self.equation.set_text(self.props.item.equation)
+
+    @Gtk.Template.Callback()
     def on_close(self, _a) -> None:
         """Handle dialog closing."""
         self.props.data.add_history_state()
