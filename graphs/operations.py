@@ -391,14 +391,10 @@ class CommonOperations():
                     new_ydata = [value * 2**shift_value for value in ydata]
                 else:  # Apply linear scaling
                     new_ydata = [value + shift_value for value in ydata]
-                mask = DataHelper.create_data_mask(
-                    item.props.xdata,
-                    item.props.ydata,
-                    xdata,
-                    new_ydata,
-                )
                 i = 0
-                for index, masked in enumerate(mask):
+                for index, masked in enumerate(DataHelper.create_data_mask(
+                    item.props.xdata, item.props.ydata, xdata, ydata,
+                )):
                     # Change coordinates that were within span
                     if masked:
                         item.props.xdata[index] = xdata[i]
@@ -532,7 +528,7 @@ class EquationOperations():
         """Calculate derivative of all selected data."""
         x = sympy.symbols("x")
         equation = utilities.preprocess(item._equation)
-        return sympy.diff(equation, x)
+        return str(sympy.diff(equation, x))
 
     @staticmethod
     def integral(item) -> str:
@@ -600,7 +596,6 @@ class DataOperations():
         *args,
     ) -> str:
         """Execute the operation on the given item."""
-        message = ""
         selected_limits = DataHelper.get_selected_limits(
             figure_settings,
             interaction_mode,
@@ -612,49 +607,48 @@ class DataOperations():
         callback = getattr(DataOperations, name)
         if not (xdata is not None and len(xdata) != 0):
             return _("No data found within the highlighted area")
-        else:
-            new_xdata, new_ydata, sort, discard = callback(
-                item, xdata, ydata, *args,
+        message = ""
+        new_xdata, new_ydata, sort, discard = callback(
+            item, xdata, ydata, *args,
+        )
+        new_xdata, new_ydata = list(new_xdata), list(new_ydata)
+        if discard and interaction_mode == 2:
+            logging.debug("Discard is true")
+            message = _(
+                "Data that was outside of the highlighted area has"
+                " been discarded",
             )
-            new_xdata, new_ydata = list(new_xdata), list(new_ydata)
-            if discard and interaction_mode == 2:
-                logging.debug("Discard is true")
-                message = _(
-                    "Data that was outside of the highlighted area has"
-                    " been discarded",
-                )
-                item.props.xdata = new_xdata
-                item.props.ydata = new_ydata
+            item.props.xdata = new_xdata
+            item.props.ydata = new_ydata
+        else:
+            logging.debug("Discard is false")
+            mask = DataHelper.create_data_mask(
+                item.props.xdata,
+                item.props.ydata,
+                xdata,
+                ydata,
+            )
+            if new_xdata == []:  # If cut action was performed
+                remove_list = \
+                    [index for index, masked in enumerate(mask) if masked]
+                for index in sorted(remove_list, reverse=True):
+                    item.props.xdata.pop(index)
+                    item.props.ydata.pop(index)
             else:
-                logging.debug("Discard is false")
-                mask = DataHelper.create_data_mask(
-                    item.props.xdata,
-                    item.props.ydata,
-                    xdata,
-                    ydata,
-                )
-
-                if new_xdata == []:  # If cut action was performed
-                    remove_list = \
-                        [index for index, masked in enumerate(mask) if masked]
-                    for index in sorted(remove_list, reverse=True):
-                        item.props.xdata.pop(index)
-                        item.props.ydata.pop(index)
-                else:
-                    i = 0
-                    for index, masked in enumerate(mask):
-                        # Change coordinates that were within span
-                        if masked:
-                            item.props.xdata[index] = new_xdata[i]
-                            item.props.ydata[index] = new_ydata[i]
-                            i += 1
-            if sort:
-                logging.debug("Sorting data")
-                item.xdata, item.ydata = DataHelper.sort_data(
-                    item.props.xdata, item.props.ydata,
-                )
-            item.notify("xdata")
-            item.notify("ydata")
+                i = 0
+                for index, masked in enumerate(mask):
+                    # Change coordinates that were within span
+                    if masked:
+                        item.props.xdata[index] = new_xdata[i]
+                        item.props.ydata[index] = new_ydata[i]
+                        i += 1
+        if sort:
+            logging.debug("Sorting data")
+            item.props.xdata, item.props.ydata = DataHelper.sort_data(
+                item.props.ydata, item.props.ydata,
+            )
+        item.notify("xdata")
+        item.notify("ydata")
         return message
 
     @staticmethod
