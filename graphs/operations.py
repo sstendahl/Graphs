@@ -325,7 +325,7 @@ class CommonOperations():
             and isinstance(item, (EquationItem, DataItem))
         ])
         if len(data_list) < 2:
-            return
+            return False
         ranges = [
             figure_settings.get_max_right() - figure_settings.get_min_right(),
             figure_settings.get_max_left() - figure_settings.get_min_left(),
