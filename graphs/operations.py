@@ -381,6 +381,7 @@ class CommonOperations():
                     equation = f"({item.props.equation})*2**{shift_value}"
                 else:
                     equation = f"{item.equation}+{shift_value}"
+                equation = utilities.preprocess(equation)
                 item.props.equation = str(sympy.simplify(equation))
                 continue
             elif isinstance(item, DataItem):

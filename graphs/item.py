@@ -118,7 +118,7 @@ class EquationItem(_PythonItem):
         super().__init__(typename=_("Equation"), **kwargs)
 
     @GObject.Property(type=str)
-    def equation(self) -> None:
+    def equation(self) -> str:
         """Equation."""
         return self._equation
 

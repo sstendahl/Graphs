@@ -5,6 +5,8 @@ from gi.repository import Adw, GObject, Graphs, Gtk
 from graphs import utilities
 from graphs.item import DataItem, EquationItem
 
+import sympy
+
 _IGNORELIST = [
     "alpha",
     "color",
@@ -123,8 +125,10 @@ class EditItemDialog(Adw.PreferencesDialog):
     @Gtk.Template.Callback()
     def on_simplify(self, _buttonrow) -> None:
         """Simplify the equation."""
-        self.props.item.simplify_equation()
-        self.equation.set_text(self.props.item.equation)
+        equation = self.props.item.props.equation
+        equation = str(sympy.simplify(utilities.preprocess(equation)))
+        self.props.item.props.equation = equation
+        self.equation.set_text(equation)
 
     @Gtk.Template.Callback()
     def on_close(self, _a) -> None:
