@@ -59,6 +59,8 @@ def perform_operation(application: Graphs.Application, name: str) -> None:
                 operations_class = EquationOperations()
             elif isinstance(item, DataItem):
                 operations_class = DataOperations()
+            else:
+                continue
             message = operations_class.execute(
                 item,
                 name,
@@ -284,6 +286,8 @@ class CommonOperations():
                 xdata, ydata = DataHelper().get_xydata(
                     interaction_mode, selected_limits, item,
                 )
+            else:
+                continue
             if xdata is not None and ydata is not None:
                 new_xdata.extend(xdata)
                 new_ydata.extend(ydata)
@@ -305,111 +309,103 @@ class CommonOperations():
         interaction_mode = window.get_mode()
         data = window.get_data()
         figure_settings = data.get_figure_settings()
-        ranges = [
-            figure_settings.get_max_right() - figure_settings.get_min_right(),
-            figure_settings.get_max_left() - figure_settings.get_min_left(),
-        ]
         data_list = ([
             item for item in data if item.get_selected()
             and isinstance(item, (EquationItem, DataItem))
         ])
+        if len(data_list) < 2:
+            return
+        ranges = [
+            figure_settings.get_max_right() - figure_settings.get_min_right(),
+            figure_settings.get_max_left() - figure_settings.get_min_left(),
+        ]
         left_scale = scales.Scale(figure_settings.get_left_scale())
         right_scale = scales.Scale(figure_settings.get_right_scale())
-        for item in data_list:
+        for index, item in enumerate(data_list):
             selected_limits = DataHelper.get_selected_limits(
                 figure_settings,
                 interaction_mode,
                 item,
             )
+            scale = right_scale if item.get_yposition() else left_scale
             if isinstance(item, EquationItem):
-                xdata, ydata = \
-                    utilities.equation_to_data(item._equation, selected_limits)
+                xdata, ydata = utilities.equation_to_data(
+                    item.props.equation, selected_limits,
+                )
             elif isinstance(item, DataItem):
                 xdata, ydata = DataHelper().get_xydata(
                     interaction_mode, selected_limits, item,
                 )
-            CommonOperations._shift(
-                item,
-                xdata,
-                ydata,
-                selected_limits,
-                left_scale,
-                right_scale,
-                window.get_data().get_items(),
-                ranges,
-            )
 
-    @staticmethod
-    def _shift(
-        item: Graphs.Item,
-        xdata: list,
-        ydata: list,
-        limits: list,
-        left_scale: int,
-        right_scale: int,
-        data_list: misc.ItemList,
-        ranges: tuple[float, float],
-    ):
-        """
-        Shifts data vertically with respect to each other.
+            shift_value = 0
 
-        By default it scales linear data by 1.2 times the total span of the
-        ydata, and log data 10 to the power of the yspan.
-        """
-        shift_value_log = 0
-        shift_value_linear = 0
+            item_ = data_list[0]
+            for i in range(index):
+                previous_item = item_
+                item_ = data_list[i + 1]
+                y_range = ranges[item_.get_yposition()]
 
-        for index, item_ in enumerate(data_list):
-            index = 1 if index == 0 and len(data_list) > 1 else index
-            previous_item = data_list[index - 1]
-            y_range = ranges[1] if item_.get_yposition() else ranges[0]
+                if isinstance(previous_item, EquationItem):
+                    prev_xdata, prev_ydata = utilities.equation_to_data(
+                        previous_item.props.equation, selected_limits,
+                    )
+                else:
+                    prev_xdata, prev_ydata = \
+                        previous_item.props.xdata, previous_item.props.ydata
 
-            if isinstance(previous_item, EquationItem):
-                prev_xdata, prev_ydata = \
-                    utilities.equation_to_data(previous_item._equation, limits)
-            else:
-                prev_xdata, prev_ydata = \
-                    previous_item.xdata, previous_item.ydata
+                new_ydata = DataHelper.filter_range(
+                    xdata,
+                    ydata,
+                    prev_xdata,
+                    prev_ydata,
+                )[1]
+                ymin = min(x for x in new_ydata if x != 0)
+                ymax = max(x for x in new_ydata if x != 0)
 
-            new_xdata, new_ydata = \
-                DataHelper.filter_range(xdata, ydata, prev_xdata, prev_ydata)
-            ymin = min(x for x in new_ydata if x != 0)
-            ymax = max(x for x in new_ydata if x != 0)
-            scale = right_scale if item.get_yposition() else left_scale
-
-            if scale == scales.Scale.LOG:
-                shift_value_log += \
-                    numpy.log10(abs(ymax / ymin)) + 0.1 * numpy.log10(y_range)
-            elif scale == scales.Scale.LOG2:
-                shift_value_log += \
-                    numpy.log2(abs(ymax / ymin)) + 0.1 * numpy.log2(y_range)
-
-            else:
-                shift_value_linear += (ymax - ymin) + 0.1 * y_range
-
-            if (scale == scales.Scale.LOG or scale == scales.Scale.LOG2):
-                shift_value = shift_value_log
-            else:
-                shift_value = shift_value_linear
-
-            is_input_item = item.get_uuid() == item_.get_uuid()
-            if isinstance(item_, EquationItem) and is_input_item:
                 if scale == scales.Scale.LOG:
-                    equation = f"({item.equation})*10**{shift_value}"
+                    shift_value += \
+                        numpy.log10(abs(ymax / ymin)) \
+                        + 0.1 * numpy.log10(y_range)
+                elif scale == scales.Scale.LOG2:
+                    shift_value += \
+                        numpy.log2(abs(ymax / ymin)) \
+                        + 0.1 * numpy.log2(y_range)
+                else:
+                    shift_value += (ymax - ymin) + 0.1 * y_range
+            if shift_value == 0:
+                continue
+            if isinstance(item, EquationItem):
+                if scale == scales.Scale.LOG:
+                    equation = f"({item.props.equation})*10**{shift_value}"
+                elif scale == scales.Scale.LOG2:
+                    equation = f"({item.props.equation})*2**{shift_value}"
                 else:
                     equation = f"{item.equation}+{shift_value}"
                 item.props.equation = str(sympy.simplify(equation))
-                return
-
-            elif isinstance(item_, DataItem) and is_input_item:
+                continue
+            elif isinstance(item, DataItem):
                 if scale == scales.Scale.LOG:
-                    new_ydata = \
-                        [value * 10**shift_value_log for value in ydata]
+                    new_ydata = [value * 10**shift_value for value in ydata]
                 elif scale == scales.Scale.LOG2:
-                    new_ydata = [value * 2**shift_value_log for value in ydata]
+                    new_ydata = [value * 2**shift_value for value in ydata]
                 else:  # Apply linear scaling
-                    new_ydata = [value + shift_value_linear for value in ydata]
-                return xdata, new_ydata, False, False
+                    new_ydata = [value + shift_value for value in ydata]
+                mask = DataHelper.create_data_mask(
+                    item.props.xdata,
+                    item.props.ydata,
+                    xdata,
+                    new_ydata,
+                )
+                i = 0
+                for index, masked in enumerate(mask):
+                    # Change coordinates that were within span
+                    if masked:
+                        item.props.xdata[index] = xdata[i]
+                        item.props.ydata[index] = new_ydata[i]
+                        i += 1
+                item.notify("xdata")
+                item.notify("ydata")
+                continue
 
 
 class EquationOperations():
