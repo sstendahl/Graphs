@@ -56,9 +56,9 @@ def perform_operation(application: Graphs.Application, name: str) -> None:
             if not item.get_selected():
                 continue
             if isinstance(item, EquationItem):
-                operations_class = EquationOperations()
+                operations_class = EquationOperations
             elif isinstance(item, DataItem):
-                operations_class = DataOperations()
+                operations_class = DataOperations
             else:
                 continue
             message = operations_class.execute(
@@ -237,9 +237,9 @@ class CommonOperations():
                     if not item.get_selected():
                         continue
                     if isinstance(item, EquationItem):
-                        operations_class = EquationOperations()
+                        operations_class = EquationOperations
                     elif isinstance(item, DataItem):
-                        operations_class = DataOperations()
+                        operations_class = DataOperations
                     message = operations_class.execute(
                         item,
                         "transform",
@@ -408,8 +408,8 @@ class CommonOperations():
 class EquationOperations():
     """Operations to be performed on equation items."""
 
+    @staticmethod
     def execute(
-        self,
         item: EquationItem,
         name: str,
         figure_settings: Graphs.FigureSettings,
@@ -587,8 +587,8 @@ _return = (list[float], list[float], bool, bool)
 class DataOperations():
     """Operations to be performed on data items."""
 
+    @staticmethod
     def execute(
-        self,
         item: EquationItem,
         name: str,
         figure_settings: Graphs.FigureSettings,
