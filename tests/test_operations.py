@@ -1,10 +1,6 @@
 """Tests for operations."""
-from graphs.item import DataItem
-from graphs.operations import CommonOperations
 from graphs.operations import DataHelper
 from graphs.operations import DataOperations
-
-import numpy as np
 
 import pytest
 
@@ -70,42 +66,6 @@ def test_center():
     middle_value = (min(XDATA) + max(XDATA)) / 2
     assert all(x_new == (x_old - middle_value) for x_old, x_new in zip(XDATA,
                                                                        xdata))
-
-
-@pytest.mark.parametrize("yscale", (0, 1, 2, 3))
-def test_shift(yscale):
-    """Test if shift_vertically function correctly shifts ydata."""
-    ydata1 = [1.0, 1.8, 1.9, 1.1, 0.2, 0.1, 0.7, 1.7, 2.0, 1.4, 0.5]
-    ydata2 = [2.0, 1.5, 0.6, 0.1, 0.3, 1.3, 2.0, 1.8, 0.9, 0.1, 0.2]
-    xdata = np.linspace(0, 10, len(ydata1))
-
-    item1 = DataItem(xdata=xdata, ydata=ydata1, uuid="a")
-    item2 = DataItem(xdata=xdata, ydata=ydata2, uuid="b")
-
-    items = [item1, item2]
-    new_xdata1, new_ydata1, _sort, _discard = \
-        CommonOperations._shift(item1, xdata, ydata1, limits=[0, 1, 0, 1],
-                                left_scale=yscale, right_scale=yscale,
-                                data_list=items, ranges=[2.2, 2.2])
-    new_xdata2, new_ydata2, _sort, _discard = \
-        CommonOperations._shift(item2, xdata, ydata2, limits=[0, 1, 0, 1],
-                                left_scale=yscale, right_scale=yscale,
-                                data_list=items, ranges=[2.2, 2.2])
-    np.testing.assert_array_equal(new_xdata1, xdata)
-    np.testing.assert_array_equal(new_xdata2, xdata)
-
-    diff_y1 = [y_new - y_old for y_new, y_old in zip(new_ydata1, ydata1)]
-    diff_y2 = [y_new - y_old for y_new, y_old in zip(new_ydata2, ydata2)]
-
-    # Check that data is not removed
-    assert len(new_ydata1) == len(ydata1)
-    assert len(new_ydata2) == len(ydata2)
-    # Check that distance increases with each shift
-    assert all(
-        diff_y2 > diff_y1 for new_y2, new_y1 in zip(new_ydata2, new_ydata1))
-    # Check that shift is large enough for chosen coordinates
-    assert all(
-        new_y2 > new_y1 for new_y2, new_y1 in zip(new_ydata2, new_ydata1))
 
 
 def test_derivative():

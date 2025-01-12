@@ -50,8 +50,10 @@ def perform_operation(application: Graphs.Application, name: str) -> None:
     old_limits = figure_settings.get_limits()
 
     if hasattr(CommonOperations, name):
-        getattr(CommonOperations, name)(window)
+        if not getattr(CommonOperations, name)(window):
+            return
     else:
+        all_success = False
         for item in data:
             if not item.get_selected():
                 continue
@@ -61,7 +63,7 @@ def perform_operation(application: Graphs.Application, name: str) -> None:
                 operations_class = DataOperations
             else:
                 continue
-            message = operations_class.execute(
+            success, message = operations_class.execute(
                 item,
                 name,
                 figure_settings,
@@ -70,9 +72,10 @@ def perform_operation(application: Graphs.Application, name: str) -> None:
             )
             if message:
                 window.add_toast_string(message)
-
-    data.optimize_limits()
-    data.add_history_state_with_limits(old_limits)
+            all_success = success or all_success
+    if all_success:
+        data.optimize_limits()
+        data.add_history_state_with_limits(old_limits)
 
 
 class DataHelper():
@@ -224,7 +227,7 @@ class CommonOperations():
     """Operations to be performed on all kind of items."""
 
     @staticmethod
-    def custom_transformation(window: Graphs.Window) -> None:
+    def custom_transformation(window: Graphs.Window) -> bool:
         """Perform a custom operation on the dataset."""
 
         def on_accept(_dialog, input_x, input_y, discard):
@@ -263,9 +266,10 @@ class CommonOperations():
 
         dialog = Graphs.TransformDialog.new(window)
         dialog.connect("accept", on_accept)
+        return False
 
     @staticmethod
-    def combine(window: Graphs.Window) -> None:
+    def combine(window: Graphs.Window) -> bool:
         """Combine the selected data into a new data set."""
         data = window.get_data()
         new_xdata, new_ydata = [], []
@@ -292,6 +296,12 @@ class CommonOperations():
                 new_xdata.extend(xdata)
                 new_ydata.extend(ydata)
 
+        if (not new_xdata) or (not new_ydata):
+            window.add_toast_string(
+                _("No data found within the highlighted area"),
+            )
+            return False
+
         # Create the item itself
         new_xdata, new_ydata = DataHelper.sort_data(new_xdata, new_ydata)
         data.add_items([
@@ -302,6 +312,7 @@ class CommonOperations():
                 name=_("Combined Data"),
             ),
         ])
+        return True
 
     @staticmethod
     def shift(window: Graphs.Window) -> None:
@@ -336,6 +347,8 @@ class CommonOperations():
                 xdata, ydata = DataHelper().get_xydata(
                     interaction_mode, selected_limits, item,
                 )
+            if (not xdata) or (not ydata):
+                continue
 
             shift_value = 0
 
@@ -403,6 +416,7 @@ class CommonOperations():
                 item.notify("xdata")
                 item.notify("ydata")
                 continue
+        return True
 
 
 class EquationOperations():
@@ -415,7 +429,7 @@ class EquationOperations():
         figure_settings: Graphs.FigureSettings,
         _interaction_mode: int,
         *args,
-    ) -> str:
+    ) -> tuple[bool, str]:
         """Execute the operation on the given item."""
         old_limits = figure_settings.get_limits()
         try:
@@ -426,11 +440,11 @@ class EquationOperations():
                     old_limits[item.get_yposition() + 1],
                 )] + list(args)
             elif name in ("cut"):
-                return _(
+                return False, _(
                     f"Could not cut {item.props.name}, "
                     + "cutting data is not supported for equations.",
                 )
-            equation = utilities.preprocess(callback(item, *args))
+            equation = utilities.preprocess(str(callback(item, *args)))
             valid_equation = utilities.validate_equation(equation)
             if not valid_equation:
                 raise misc.InvalidEquationError(
@@ -443,8 +457,8 @@ class EquationOperations():
                 )
             item.props.equation = str(sympy.simplify(equation))
         except misc.InvalidEquationError as error:
-            return error.message
-        return ""
+            return False, error.message
+        return True, ""
 
     @staticmethod
     def translate_x(item, offset) -> str:
@@ -535,7 +549,7 @@ class EquationOperations():
         """Calculate indefinite integral of all selected data."""
         x = sympy.symbols("x")
         equation = utilities.preprocess(item._equation)
-        return sympy.integrate(equation, x)
+        return str(sympy.integrate(equation, x))
 
     @staticmethod
     def fft(item) -> str:
@@ -594,7 +608,7 @@ class DataOperations():
         figure_settings: Graphs.FigureSettings,
         interaction_mode: int,
         *args,
-    ) -> str:
+    ) -> tuple[bool, str]:
         """Execute the operation on the given item."""
         selected_limits = DataHelper.get_selected_limits(
             figure_settings,
@@ -606,7 +620,7 @@ class DataOperations():
         )
         callback = getattr(DataOperations, name)
         if not (xdata is not None and len(xdata) != 0):
-            return _("No data found within the highlighted area")
+            return False, _("No data found within the highlighted area")
         message = ""
         new_xdata, new_ydata, sort, discard = callback(
             item, xdata, ydata, *args,
@@ -649,7 +663,7 @@ class DataOperations():
             )
         item.notify("xdata")
         item.notify("ydata")
-        return message
+        return True, message
 
     @staticmethod
     def translate_x(_item, xdata: list, ydata: list, offset: float) -> _return:
