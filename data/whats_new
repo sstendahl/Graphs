@@ -1,61 +1,17 @@
-        <p>Version 1.7 marks our biggest release yet. With a major UI overhaul and a revamped style editor.
-           Other major highlights include a new curve fitting functionality, the ability to open projects directly, and support for gestures in the canvas.
-        </p>
-        <p>New in Graphs:</p>
+        <p>Version 1.9 of Graphs introduces several new features such as proper equation support and a completely redesigned style editor.</p>
+        <p>New in Graphs</p>
         <ul>
-          <li>The style editor has been revamped completely and now shows previews for each style</li>
-          <li>Curve fitting functionality has been added to Graphs</li>
-          <li>Graphs can now open data as well as Graphs project files directly from the file manager</li>
-          <li>When closing the application while unsaved changes are present, a dialog is now shown allowing you to save the data</li>
-          <li>The active project and its directory are now shown in the headerbar, including an indicator for unsaved changes</li>
-          <li>Graphs now includes forwards/backwards buttons to quickly navigate to the next and previous view</li>
-          <li>The smoothening action can now be configured with a choice of two different filters, a rolling average and a LOESS Savitzky-Gotsky filter</li>
-          <li>A new Yaru style has been added, which is set as the default system style for the Snap package when Yaru is used in the system, offering a more consistent experience</li>
-          <li>The default matplotlib style has been added to Graphs</li>
-          <li>The title font size can now be changed with respect to the overall font size</li>
-          <li>New scaling options are available for the axes, allowing for radian, square root and inverse scaling</li>
-          <li>Transparent colours for the curves are now supported</li>
-          <li>Superscript characters are now supported when entering equations</li>
-          <li>Support has been added for cotangents, secants and cosecants for equations and transformations</li>
-          <li>Headers are now written to exported files if present in the originally imported data</li>
-          <li>Style sheets now allow you to choose whether a frame should be drawn around the axes</li>
-          <li>The size of the title and labels can now be set seperately in the style editor</li>
-          <li>Importing column data is now more robust, supporting expressions as data points</li>
-          <li>Pinch and ctrl+scroll to zoom gestures are now supported on the canvas</li>
-          <li>The canvas can now be panned using two fingers on a touch screen, as well as with the middle mouse button</li>
-          <li>Toasts now show an "Open Location" button when saving data, bringing you to the saved file location</li>
-          <li>Entries for numerical values now get a red CSS when input value is invalid</li>
-          <li>There is now a warning, when editing a style with poor contrast between labels and background colors</li>
-          <li>Added some new goniometric functions such as the hyperbolic sinoids and their inverses</li>
-          <li>Graphs now fully supports touch screen devices</li>
-        </ul>
-        <p>Changed behaviour:</p>
-        <ul>
-          <li>Several linguistic changes were made, to get a clearer and more consistent description</li>
-          <li>The syntax for equations has been simplified </li>
-          <li>Delimiters can now be specified from a dropdown menu instead of having to rely on regex</li>
-          <li>The used axes limits are now saved when saving/loading a project</li>
-          <li>Settings related to specific axes are now only displayed when the axis is in use</li>
-          <li>The preferences have been redesigned and simplified, leaving only a single dialog for the figure settings</li>
-          <li>The drag and drop animation when moving items has been improved</li>
-          <li>The headerbar now follows the color of the used stylesheet, giving a more unified look</li>
-          <li>The shortcuts have been modified to follow the rest of the GNOME ecosystem </li>
-          <li>The logic for placing the legend has been changed, so that it now properly moves away when it intersects with a curve</li>
-          <li>The behaviour of the "Shift" action has been revamped to be more consistent when only part of the data span is selected </li>
-          <li>Help is now shipped with Graphs</li>
-        </ul>
-        <p>Bugfixes and changes under the hood:</p>
-        <ul>
-          <li>Graphs has been migrated to GNOME 46, and uses the new Libadwaita 1.5 widgets </li>
-          <li>Number inputs are now handled safely without calling the Python eval function</li>
-          <li>The clipboard implementation has been rewritten from scratch </li>
-          <li>The scale buttons in the view menu are now properly changed when the scale has been changed from the figure settings </li>
-          <li>Automatic scaling is now handled properly even when the dataset contains infinite values </li>
-          <li>Graphs now uses unit tests, reducing the risk of regression bugs </li>
-          <li>Part of the code-base has been migrated to Vala</li>
-          <li>Fixed a bug where "Skip rows" did not work properly with single-column data</li>
-          <li>Fixed a bug where rows would change width when selected in case they are adjecent to other entry rows.</li>
-          <li>Curve fitting now supports duplicate variables, and has gotten some bug fixes with regards to equation naming</li>
-          <li>Graphs translations are now hosted on Weblate</li>
-          <li>More smaller changes and fixes throughout the code-base</li>
+          <li>Graphs now differentiates between imported data and equations.</li>
+          <li>Equations now span an infinite range</li>
+          <li>Equations can now be edited afterwards, as well as simplified using the item editor</li>
+          <li>Operations on equations are now performed analytically, meaning the name of the equation will change accordingly</li>
+          <li>Graphs has a redesigned style editor with a live preview of the edited styles</li>
+          <li>It is now possible to have multiple instances of Graphs open at the same time</li>
+          <li>Styles can now be exported, and new styles can be imported from matplotlib style files</li>
+          <li>Graphs now inhibits the session when unsaved data is still open</li>
+          <li>Added support for base 2 logarithmic scaling</li>
+          <li>Updated to GNOME 47 runtime, adding support for accent colours</li>
+          <li>Graphical fixes during drag and drop</li>
+          <li>Overall tweaks and refactors under the hood</li>
+          <li>Translation updates</li>
         </ul>
