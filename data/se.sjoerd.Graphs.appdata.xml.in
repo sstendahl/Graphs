@@ -62,7 +62,7 @@
           <li>Graphs now differentiates between imported data and equations.</li>
           <li>Equations now span an infinite range</li>
           <li>Equations can now be edited afterwards, as well as simplified using the item editor</li>
-          <li>Operations on equations are now performed analytically, meaning the name of the equation will change accordingly</li>
+          <li>Operations on equations are now performed analytically, meaning the name of the equation will also change accordingly when performing operationsy</li>
           <li>Graphs has a redesigned style editor with a live preview of the edited styles</li>
           <li>It is now possible to have multiple instances of Graphs open at the same time</li>
           <li>Styles can now be exported, and new styles can be imported from matplotlib style files</li>
