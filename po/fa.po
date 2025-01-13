@@ -1,14 +1,14 @@
 # Persian translation for Graphs.
 # Copyright (C) 2024 Graphs's COPYRIGHT HOLDER
 # This file is distributed under the same license as the Graphs package.
-# Danial Behzadi <dani.behzi@ubuntu.com>,  2024.
+# Danial Behzadi <dani.behzi@ubuntu.com>,  2024-2025.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2025-01-11 09:45+0000\n"
-"PO-Revision-Date: 2025-01-11 13:49+0330\n"
+"POT-Creation-Date: 2025-01-11 18:23+0000\n"
+"PO-Revision-Date: 2025-01-12 11:48+0330\n"
 "Last-Translator: Danial Behzadi <dani.behzi@ubuntu.com>\n"
 "Language-Team: Persian <fa@li.org>\n"
 "Language: fa\n"
@@ -551,7 +551,7 @@ msgstr "تفکیک (dpi)"
 msgid "Transparent Background"
 msgstr "پس‌زمینهٔ شفاف"
 
-#: data/ui/figure-settings-dialog.blp:26 data/ui/figure-settings-page.blp:210
+#: data/ui/figure-settings-dialog.blp:26 data/ui/figure-settings-page.blp:214
 #: graphs/style_editor.vala:55
 msgid "Style"
 msgstr "سبک"
@@ -632,123 +632,130 @@ msgstr "بیشینهٔ محور Y راست"
 msgid "Scaling"
 msgstr "مقیاس"
 
-#: data/ui/figure-settings-page.blp:125 graphs/window.vala:374
+#: data/ui/figure-settings-page.blp:125 graphs/window.vala:375
 msgid "Bottom X Axis Scale"
 msgstr "مقیاس محور X پایین"
 
-#: data/ui/figure-settings-page.blp:128 data/ui/figure-settings-page.blp:142
-#: data/ui/figure-settings-page.blp:156 data/ui/figure-settings-page.blp:170
+#: data/ui/figure-settings-page.blp:128 data/ui/figure-settings-page.blp:143
+#: data/ui/figure-settings-page.blp:158 data/ui/figure-settings-page.blp:173
 #: graphs/window.vala:345
 msgctxt "scale"
 msgid "Linear"
 msgstr "خطی"
 
-#: data/ui/figure-settings-page.blp:129 data/ui/figure-settings-page.blp:143
-#: data/ui/figure-settings-page.blp:157 data/ui/figure-settings-page.blp:171
+#: data/ui/figure-settings-page.blp:129 data/ui/figure-settings-page.blp:144
+#: data/ui/figure-settings-page.blp:159 data/ui/figure-settings-page.blp:174
 #: graphs/window.vala:346
 msgctxt "scale"
-msgid "Logarithmic"
-msgstr "لگاریتمی"
+msgid "Logarithmic (Base 10)"
+msgstr "لگاریتمی (پایه ۱۰)"
 
-#: data/ui/figure-settings-page.blp:130 data/ui/figure-settings-page.blp:144
-#: data/ui/figure-settings-page.blp:158 data/ui/figure-settings-page.blp:172
+#: data/ui/figure-settings-page.blp:130 data/ui/figure-settings-page.blp:145
+#: data/ui/figure-settings-page.blp:160 data/ui/figure-settings-page.blp:175
 #: graphs/window.vala:347
+msgctxt "scale"
+msgid "Logarithmic (Base 2)"
+msgstr "لگاریتمی (پایه ۲)"
+
+#: data/ui/figure-settings-page.blp:131 data/ui/figure-settings-page.blp:146
+#: data/ui/figure-settings-page.blp:161 data/ui/figure-settings-page.blp:176
+#: graphs/window.vala:348
 msgctxt "scale"
 msgid "Radians"
 msgstr "رادیان"
 
-#: data/ui/figure-settings-page.blp:131 data/ui/figure-settings-page.blp:145
-#: data/ui/figure-settings-page.blp:159 data/ui/figure-settings-page.blp:173
-#: graphs/window.vala:348
+#: data/ui/figure-settings-page.blp:132 data/ui/figure-settings-page.blp:147
+#: data/ui/figure-settings-page.blp:162 data/ui/figure-settings-page.blp:177
+#: graphs/window.vala:349
 msgctxt "scale"
 msgid "Square Root"
 msgstr "ریشهٔ مربّع"
 
-#: data/ui/figure-settings-page.blp:132 data/ui/figure-settings-page.blp:146
-#: data/ui/figure-settings-page.blp:160 data/ui/figure-settings-page.blp:174
+#: data/ui/figure-settings-page.blp:133 data/ui/figure-settings-page.blp:148
+#: data/ui/figure-settings-page.blp:163 data/ui/figure-settings-page.blp:178
 msgctxt "scale"
 msgid "Inverse"
 msgstr "وارون"
 
-#: data/ui/figure-settings-page.blp:139 graphs/window.vala:375
+#: data/ui/figure-settings-page.blp:140 graphs/window.vala:376
 msgid "Top X Axis Scale"
 msgstr "مقیاس محور X بالا"
 
-#: data/ui/figure-settings-page.blp:153 graphs/window.vala:380
+#: data/ui/figure-settings-page.blp:155 graphs/window.vala:381
 msgid "Left Y Axis Scale"
 msgstr "مقیاس محور Y چپ"
 
-#: data/ui/figure-settings-page.blp:167 graphs/window.vala:379
+#: data/ui/figure-settings-page.blp:170 graphs/window.vala:380
 msgid "Right Y Axis Scale"
 msgstr "مقیاس محور Y راست"
 
-#: data/ui/figure-settings-page.blp:181
+#: data/ui/figure-settings-page.blp:185
 msgid "Appearance"
 msgstr "ظاهر"
 
-#: data/ui/figure-settings-page.blp:183
+#: data/ui/figure-settings-page.blp:187
 msgid "Show Legend"
 msgstr "نمایش راهنما"
 
-#: data/ui/figure-settings-page.blp:187
+#: data/ui/figure-settings-page.blp:191
 msgid "Legend Position"
 msgstr "مکان راهنما"
 
-#: data/ui/figure-settings-page.blp:191
+#: data/ui/figure-settings-page.blp:195
 msgctxt "legend-position"
 msgid "Auto"
 msgstr "خودکار"
 
-#: data/ui/figure-settings-page.blp:192
+#: data/ui/figure-settings-page.blp:196
 msgctxt "legend-position"
 msgid "Upper Right"
 msgstr "بالا راست"
 
-#: data/ui/figure-settings-page.blp:193
+#: data/ui/figure-settings-page.blp:197
 msgctxt "legend-position"
 msgid "Upper Left"
 msgstr "بالا چپ"
 
-#: data/ui/figure-settings-page.blp:194
+#: data/ui/figure-settings-page.blp:198
 msgctxt "legend-position"
 msgid "Lower Left"
 msgstr "پایین سمت راست"
 
-#: data/ui/figure-settings-page.blp:195
+#: data/ui/figure-settings-page.blp:199
 msgctxt "legend-position"
 msgid "Lower Right"
 msgstr "پایین سمت چپ"
 
-#: data/ui/figure-settings-page.blp:196
+#: data/ui/figure-settings-page.blp:200
 msgctxt "legend-position"
 msgid "Center Left"
 msgstr "وسط چپ"
 
-#: data/ui/figure-settings-page.blp:197
+#: data/ui/figure-settings-page.blp:201
 msgctxt "legend-position"
 msgid "Center Right"
 msgstr "وسط راست"
 
-#: data/ui/figure-settings-page.blp:198
+#: data/ui/figure-settings-page.blp:202
 msgctxt "legend-position"
 msgid "Lower Center"
 msgstr "پایین وسط"
 
-#: data/ui/figure-settings-page.blp:199
+#: data/ui/figure-settings-page.blp:203
 msgctxt "legend-position"
 msgid "Upper Center"
 msgstr "بالا وسط"
 
-#: data/ui/figure-settings-page.blp:200
+#: data/ui/figure-settings-page.blp:204
 msgctxt "legend-position"
 msgid "Center"
 msgstr "مرکز"
 
-#: data/ui/figure-settings-page.blp:206
+#: data/ui/figure-settings-page.blp:210
 msgid "Hide Unselected Items"
 msgstr "نهفتن موارد ناگزیده"
 
-#: data/ui/figure-settings-page.blp:225
+#: data/ui/figure-settings-page.blp:229
 msgid "Set as Default"
 msgstr "تنظیم به عنوان پیش‌گزیده"
 
@@ -1670,7 +1677,7 @@ msgstr "بیشینهٔ محور X"
 msgid "Y Axis Maximum"
 msgstr "بیشینهٔ محور Y"
 
-#: graphs/figure_settings.vala:173 graphs/window.vala:376
+#: graphs/figure_settings.vala:173 graphs/window.vala:377
 msgid "X Axis Scale"
 msgstr "مقیاس محور X"
 
@@ -1678,7 +1685,7 @@ msgstr "مقیاس محور X"
 msgid "X Axis Label"
 msgstr "برچسب محور X"
 
-#: graphs/figure_settings.vala:177 graphs/window.vala:381
+#: graphs/figure_settings.vala:177 graphs/window.vala:382
 msgid "Y Axis Scale"
 msgstr "مقیاس محور Y"
 
@@ -1725,7 +1732,7 @@ msgstr "داده‌هایی که خارج از ناحیهٔ برجسته بود�
 msgid "No data found within the highlighted area"
 msgstr "هیچ داده‌ای در ناحیهٔ برجسته پیدا نشد"
 
-#: graphs/operations.py:480
+#: graphs/operations.py:485
 msgid "Combined Data"
 msgstr "داده‌های ترکیب شده"
 
@@ -1858,7 +1865,7 @@ msgstr "گشودن مکان"
 msgid "Optimize Limits"
 msgstr "بهینه‌سازی کران‌ها"
 
-#: graphs/window.vala:349
+#: graphs/window.vala:350
 msgctxt "scale"
 msgid "Inverse Root"
 msgstr "ریشهٔ معکوس"

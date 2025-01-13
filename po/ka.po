@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2025-01-11 09:45+0000\n"
-"PO-Revision-Date: 2025-01-11 14:34+0100\n"
+"POT-Creation-Date: 2025-01-11 18:23+0000\n"
+"PO-Revision-Date: 2025-01-12 20:35+0100\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <ka@li.org>\n"
 "Language: ka\n"
@@ -563,7 +563,7 @@ msgstr "გარჩევადობა (DPI)"
 msgid "Transparent Background"
 msgstr "გამჭვირვალე ფონი"
 
-#: data/ui/figure-settings-dialog.blp:26 data/ui/figure-settings-page.blp:210
+#: data/ui/figure-settings-dialog.blp:26 data/ui/figure-settings-page.blp:214
 #: graphs/style_editor.vala:55
 msgid "Style"
 msgstr "სტილი"
@@ -644,123 +644,130 @@ msgstr "მარჯვენა Y ღერძის მაქსიმუმ�
 msgid "Scaling"
 msgstr "მასშტაბირება"
 
-#: data/ui/figure-settings-page.blp:125 graphs/window.vala:374
+#: data/ui/figure-settings-page.blp:125 graphs/window.vala:375
 msgid "Bottom X Axis Scale"
 msgstr "ქვედა X-ღერძის მასშტაბის ფაქტორი"
 
-#: data/ui/figure-settings-page.blp:128 data/ui/figure-settings-page.blp:142
-#: data/ui/figure-settings-page.blp:156 data/ui/figure-settings-page.blp:170
+#: data/ui/figure-settings-page.blp:128 data/ui/figure-settings-page.blp:143
+#: data/ui/figure-settings-page.blp:158 data/ui/figure-settings-page.blp:173
 #: graphs/window.vala:345
 msgctxt "scale"
 msgid "Linear"
 msgstr "ხაზოვანი"
 
-#: data/ui/figure-settings-page.blp:129 data/ui/figure-settings-page.blp:143
-#: data/ui/figure-settings-page.blp:157 data/ui/figure-settings-page.blp:171
+#: data/ui/figure-settings-page.blp:129 data/ui/figure-settings-page.blp:144
+#: data/ui/figure-settings-page.blp:159 data/ui/figure-settings-page.blp:174
 #: graphs/window.vala:346
 msgctxt "scale"
-msgid "Logarithmic"
-msgstr "ლოგარითმული"
+msgid "Logarithmic (Base 10)"
+msgstr "ლოგარითმული (ფუძით 10)"
 
-#: data/ui/figure-settings-page.blp:130 data/ui/figure-settings-page.blp:144
-#: data/ui/figure-settings-page.blp:158 data/ui/figure-settings-page.blp:172
+#: data/ui/figure-settings-page.blp:130 data/ui/figure-settings-page.blp:145
+#: data/ui/figure-settings-page.blp:160 data/ui/figure-settings-page.blp:175
 #: graphs/window.vala:347
+msgctxt "scale"
+msgid "Logarithmic (Base 2)"
+msgstr "ლოგარითმული (ფუძით 2)"
+
+#: data/ui/figure-settings-page.blp:131 data/ui/figure-settings-page.blp:146
+#: data/ui/figure-settings-page.blp:161 data/ui/figure-settings-page.blp:176
+#: graphs/window.vala:348
 msgctxt "scale"
 msgid "Radians"
 msgstr "რადიანები"
 
-#: data/ui/figure-settings-page.blp:131 data/ui/figure-settings-page.blp:145
-#: data/ui/figure-settings-page.blp:159 data/ui/figure-settings-page.blp:173
-#: graphs/window.vala:348
+#: data/ui/figure-settings-page.blp:132 data/ui/figure-settings-page.blp:147
+#: data/ui/figure-settings-page.blp:162 data/ui/figure-settings-page.blp:177
+#: graphs/window.vala:349
 msgctxt "scale"
 msgid "Square Root"
 msgstr "კვადრატული ფესვი"
 
-#: data/ui/figure-settings-page.blp:132 data/ui/figure-settings-page.blp:146
-#: data/ui/figure-settings-page.blp:160 data/ui/figure-settings-page.blp:174
+#: data/ui/figure-settings-page.blp:133 data/ui/figure-settings-page.blp:148
+#: data/ui/figure-settings-page.blp:163 data/ui/figure-settings-page.blp:178
 msgctxt "scale"
 msgid "Inverse"
 msgstr "ინვერსია"
 
-#: data/ui/figure-settings-page.blp:139 graphs/window.vala:375
+#: data/ui/figure-settings-page.blp:140 graphs/window.vala:376
 msgid "Top X Axis Scale"
 msgstr "ზედა X-ღერძის მასშტაბის ფაქტორი"
 
-#: data/ui/figure-settings-page.blp:153 graphs/window.vala:380
+#: data/ui/figure-settings-page.blp:155 graphs/window.vala:381
 msgid "Left Y Axis Scale"
 msgstr "მარცხენა Y-ღერძზე მასშტაბის ფაქტორი"
 
-#: data/ui/figure-settings-page.blp:167 graphs/window.vala:379
+#: data/ui/figure-settings-page.blp:170 graphs/window.vala:380
 msgid "Right Y Axis Scale"
 msgstr "მარჯვენა Y ღერძის მასშტაბის ფაქტორი"
 
-#: data/ui/figure-settings-page.blp:181
+#: data/ui/figure-settings-page.blp:185
 msgid "Appearance"
 msgstr "გარეგნობა"
 
-#: data/ui/figure-settings-page.blp:183
+#: data/ui/figure-settings-page.blp:187
 msgid "Show Legend"
 msgstr "ახსნის ჩვენება"
 
-#: data/ui/figure-settings-page.blp:187
+#: data/ui/figure-settings-page.blp:191
 msgid "Legend Position"
 msgstr "ლეგენდის მდებარეობა"
 
-#: data/ui/figure-settings-page.blp:191
+#: data/ui/figure-settings-page.blp:195
 msgctxt "legend-position"
 msgid "Auto"
 msgstr "ავტო"
 
-#: data/ui/figure-settings-page.blp:192
+#: data/ui/figure-settings-page.blp:196
 msgctxt "legend-position"
 msgid "Upper Right"
 msgstr "ზედა მარჯვენა"
 
-#: data/ui/figure-settings-page.blp:193
+#: data/ui/figure-settings-page.blp:197
 msgctxt "legend-position"
 msgid "Upper Left"
 msgstr "ზედა მარცხენა"
 
-#: data/ui/figure-settings-page.blp:194
+#: data/ui/figure-settings-page.blp:198
 msgctxt "legend-position"
 msgid "Lower Left"
 msgstr "ქვედა მარცხენა"
 
-#: data/ui/figure-settings-page.blp:195
+#: data/ui/figure-settings-page.blp:199
 msgctxt "legend-position"
 msgid "Lower Right"
 msgstr "ქვედა მარჯვენა"
 
-#: data/ui/figure-settings-page.blp:196
+#: data/ui/figure-settings-page.blp:200
 msgctxt "legend-position"
 msgid "Center Left"
 msgstr "მარცხენა ცენტრი"
 
-#: data/ui/figure-settings-page.blp:197
+#: data/ui/figure-settings-page.blp:201
 msgctxt "legend-position"
 msgid "Center Right"
 msgstr "მარჯვენა ცენტრი"
 
-#: data/ui/figure-settings-page.blp:198
+#: data/ui/figure-settings-page.blp:202
 msgctxt "legend-position"
 msgid "Lower Center"
 msgstr "ქვედა ცენტრი"
 
-#: data/ui/figure-settings-page.blp:199
+#: data/ui/figure-settings-page.blp:203
 msgctxt "legend-position"
 msgid "Upper Center"
 msgstr "ზედა ცენტრი"
 
-#: data/ui/figure-settings-page.blp:200
+#: data/ui/figure-settings-page.blp:204
 msgctxt "legend-position"
 msgid "Center"
 msgstr "ცენტრი"
 
-#: data/ui/figure-settings-page.blp:206
+#: data/ui/figure-settings-page.blp:210
 msgid "Hide Unselected Items"
 msgstr "მოუნიშნავი ელემენტების დამალვა"
 
-#: data/ui/figure-settings-page.blp:225
+#: data/ui/figure-settings-page.blp:229
 msgid "Set as Default"
 msgstr "ნაგულისხმევად დაყენება"
 
@@ -1688,7 +1695,7 @@ msgstr "X ღერძის მაქსიმუმი"
 msgid "Y Axis Maximum"
 msgstr "Y ღერძის მაქსიმუმი"
 
-#: graphs/figure_settings.vala:173 graphs/window.vala:376
+#: graphs/figure_settings.vala:173 graphs/window.vala:377
 msgid "X Axis Scale"
 msgstr "X-ღერძის მასშტაბი"
 
@@ -1696,7 +1703,7 @@ msgstr "X-ღერძის მასშტაბი"
 msgid "X Axis Label"
 msgstr "X-ღერძის ჭდე"
 
-#: graphs/figure_settings.vala:177 graphs/window.vala:381
+#: graphs/figure_settings.vala:177 graphs/window.vala:382
 msgid "Y Axis Scale"
 msgstr "Y-ღერძის მასშტაბის ფაქტორი"
 
@@ -1744,7 +1751,7 @@ msgstr "მონაცემები, რომლებიც მონიშ
 msgid "No data found within the highlighted area"
 msgstr "მონიშნულ ადგილში მონაცემები აღმოჩენილი არაა"
 
-#: graphs/operations.py:480
+#: graphs/operations.py:485
 msgid "Combined Data"
 msgstr "კომბინირებული მონაცემები"
 
@@ -1877,7 +1884,7 @@ msgstr "მდებარეობის გახსნა"
 msgid "Optimize Limits"
 msgstr "ლიმიტების ოპტიმიზაცია"
 
-#: graphs/window.vala:349
+#: graphs/window.vala:350
 msgctxt "scale"
 msgid "Inverse Root"
 msgstr "ინვერსიული ფესვი"
