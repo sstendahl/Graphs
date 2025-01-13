@@ -718,7 +718,7 @@ class DataOperations():
         ydata: list,
         smooth_type: int,
         settings: Gio.Settings,
-    ) -> None:
+    ) -> _return:
         """Smoothen y-data."""
         if smooth_type == 0:
             minimum = settings.get_int("savgol-polynomial") + 1
