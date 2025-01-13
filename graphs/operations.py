@@ -4,7 +4,7 @@ import logging
 import re
 from gettext import gettext as _
 
-from gi.repository import Graphs
+from gi.repository import Gio, Graphs
 
 from graphs import misc, scales, utilities
 from graphs.item import DataItem, EquationItem
@@ -28,12 +28,8 @@ def perform_operation(application: Graphs.Application, name: str) -> None:
     actions_settings = application.get_settings_child("actions")
     if name in ("center", "smoothen"):
         args = [actions_settings.get_enum(name)]
-    elif name == "smoothen":
-        params = {}
-        settings = actions_settings.get_child("smoothen")
-        for setting in settings:
-            params[setting] = int(settings.get_int(setting))
-        args += [params]
+    if name == "smoothen":
+        args.append(actions_settings.get_child(name))
     elif "translate" in name or "multiply" in name:
         try:
             args += [
@@ -714,6 +710,30 @@ class DataOperations():
     def normalize(_item, xdata: list, ydata: list) -> _return:
         """Normalize all selected data."""
         return xdata, [value / max(ydata) for value in ydata], False, False
+
+    @staticmethod
+    def smoothen(
+        _item,
+        xdata: list,
+        ydata: list,
+        smooth_type: int,
+        settings: Gio.Settings,
+    ) -> None:
+        """Smoothen y-data."""
+        if smooth_type == 0:
+            minimum = settings.get_int("savgol-polynomial") + 1
+            window_percentage = settings.get_int("savgol-window") / 100
+            window = max(minimum, int(len(xdata) * window_percentage))
+            new_ydata = scipy.signal.savgol_filter(
+                ydata,
+                window,
+                settings.get_int("savgol-polynomial"),
+            )
+        elif smooth_type == 1:
+            box_points = settings.get_int("moving-average-box")
+            box = numpy.ones(box_points) / box_points
+            new_ydata = numpy.convolve(ydata, box, mode="same")
+        return xdata, new_ydata, False, False
 
     @staticmethod
     def center(
