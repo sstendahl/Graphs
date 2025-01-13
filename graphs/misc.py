@@ -15,6 +15,14 @@ class ParseError(Exception):
         super().__init__(self.message)
 
 
+class InvalidEquationError(Exception):
+    """Custom Error for invalid equation."""
+
+    def __init__(self, message):
+        self.message = message
+        super().__init__(self.message)
+
+
 LEGEND_POSITIONS = [
     "best",
     "upper right",

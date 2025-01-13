@@ -43,6 +43,9 @@ namespace Graphs {
         private unowned Button shift_button { get; }
 
         [GtkChild]
+        private unowned Adw.SplitButton smoothen_button { get; }
+
+        [GtkChild]
         protected unowned Button cut_button { get; }
 
         [GtkChild]
@@ -93,6 +96,12 @@ namespace Graphs {
                 pan_button.set_active (value == 0);
                 zoom_button.set_active (value == 1);
                 select_button.set_active (value == 2);
+            }
+            get {
+                if (pan_button.get_active ()) return 0;
+                if (zoom_button.get_active ()) return 1;
+                if (select_button.get_active ()) return 2;
+                return -1;
             }
         }
 
@@ -147,6 +156,7 @@ namespace Graphs {
             Actions.setup (application, this);
 
             data.bind_property ("items_selected", shift_button, "sensitive", 2);
+            data.bind_property ("data_items_selected", smoothen_button, "sensitive", 2);
             data.bind_property ("can_undo", undo_button, "sensitive", 2);
             data.bind_property ("can_redo", redo_button, "sensitive", 2);
             data.bind_property ("can_view_back", view_back_button, "sensitive", 2);
@@ -266,8 +276,8 @@ namespace Graphs {
 
         [GtkCallback]
         private void perform_operation (Button button) {
-            var action = application.lookup_action (
-                "app.perform_operation"
+            var action = this.lookup_action (
+                "perform_operation"
             );
             string name = button.get_buildable_id ()[0:-7];
             action.activate (new Variant.string (name));
