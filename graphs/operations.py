@@ -323,8 +323,6 @@ class CommonOperations():
             item for item in data if item.get_selected()
             and isinstance(item, (EquationItem, DataItem))
         ])
-        if len(data_list) < 2:
-            return False
         ranges = [
             figure_settings.get_max_right() - figure_settings.get_min_right(),
             figure_settings.get_max_left() - figure_settings.get_min_left(),
@@ -352,9 +350,9 @@ class CommonOperations():
             shift_value = 0
 
             item_ = data_list[0]
-            for i in range(index):
+            for i in range(index + 1):
                 previous_item = item_
-                item_ = data_list[i + 1]
+                item_ = data_list[i]
                 y_range = ranges[item_.get_yposition()]
 
                 if isinstance(previous_item, EquationItem):
