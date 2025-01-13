@@ -21,37 +21,19 @@ import sympy
 def perform_operation(application: Graphs.Application, name: str) -> None:
     """Perform an operation."""
     window = application.get_active_window()
-    figure_settings = window.get_data().get_figure_settings()
-    if name in ("combine", ):
-        return getattr(CommonOperations, name)(CommonOperations(), window)
-    elif name == "custom_transformation":
-        CommonOperations().custom_transformation(window)
-        return
-    elif name == "cut" and window.get_canvas().get_mode() != 2:
+    interaction_mode = window.get_mode()
+    if name == "cut" and interaction_mode != 2:
         return
     args = []
     actions_settings = application.get_settings_child("actions")
     if name in ("center", "smoothen"):
         args = [actions_settings.get_enum(name)]
-    if name == "smoothen":
+    elif name == "smoothen":
         params = {}
         settings = actions_settings.get_child("smoothen")
         for setting in settings:
             params[setting] = int(settings.get_int(setting))
         args += [params]
-    elif name == "shift":
-        right_range = (
-            figure_settings.get_max_right() - figure_settings.get_min_right()
-        )
-        left_range = (
-            figure_settings.get_max_left() - figure_settings.get_min_left()
-        )
-        args += [
-            figure_settings.get_left_scale(),
-            figure_settings.get_right_scale(),
-            window.get_data().get_items(),
-            [left_range, right_range],
-        ]
     elif "translate" in name or "multiply" in name:
         try:
             args += [
@@ -63,75 +45,89 @@ def perform_operation(application: Graphs.Application, name: str) -> None:
             window.add_toast_string(str(error))
             return
 
-    _apply(window, name, *args)
-
-
-def _apply(window, name, *args):
-    """Apply the given operation on the selected items."""
     data = window.get_data()
     figure_settings = data.get_figure_settings()
     old_limits = figure_settings.get_limits()
-    for item in data:
-        if not item.get_selected():
-            continue
-        if isinstance(item, EquationItem):
-            EquationOperations().execute(item, window, name, *args)
 
-        elif isinstance(item, DataItem):
-            DataOperations().execute(item, window, name, *args)
-
-    data.optimize_limits()
-    data.add_history_state_with_limits(old_limits)
+    if hasattr(CommonOperations, name):
+        all_success = getattr(CommonOperations, name)(window)
+    else:
+        all_success = False
+        for item in data:
+            if not item.get_selected():
+                continue
+            if isinstance(item, EquationItem):
+                operations_class = EquationOperations
+            elif isinstance(item, DataItem):
+                operations_class = DataOperations
+            else:
+                continue
+            success, message = operations_class.execute(
+                item,
+                name,
+                figure_settings,
+                interaction_mode,
+                *args,
+            )
+            if message:
+                window.add_toast_string(message)
+            all_success = success or all_success
+    if all_success:
+        data.optimize_limits()
+        data.add_history_state_with_limits(old_limits)
 
 
 class DataHelper():
     """Helper methods that assist with the handling of the data."""
 
-    def get_data(self, window: Graphs.Window, item: DataItem):
-        """
-        Retrieve item from datadict with start and stop index.
-
-        If interaction_mode is set to "SELECT"
-        """
-        new_xdata = item.props.xdata
-        new_ydata = item.props.ydata
-
-        canvas = window.get_canvas()
-        if canvas.get_mode() == 2:
-            startx, stopx = self.get_selected_limits(window, item)
+    @staticmethod
+    def get_xydata(
+        interaction_mode: int,
+        selected_limits: tuple[float, float],
+        item: DataItem,
+    ) -> tuple[list[float], list[float]]:
+        """Get the X and Y data of a DataItem."""
+        xdata = item.props.xdata
+        ydata = item.props.ydata
+        if interaction_mode == 2:
+            startx, stopx = selected_limits
             # If startx and stopx are not out of range, that is,
             # if the item data is within the highlight
-            new_min = min(new_xdata)
-            a = startx < new_min and stopx < new_min
-            if not (a or (startx > max(new_xdata))):
-                new_xdata, new_ydata = self.filter_data(
-                    new_xdata, new_ydata, ">=", startx,
+            xmin = min(xdata)
+            if not (startx < xmin and stopx < xmin or (startx > max(xdata))):
+                xdata, ydata = DataHelper.filter_data(
+                    xdata, ydata, ">=", startx,
                 )
-                new_xdata, new_ydata = self.filter_data(
-                    new_xdata, new_ydata, "<=", stopx,
+                xdata, ydata = DataHelper.filter_data(
+                    xdata, ydata, "<=", stopx,
                 )
             else:
-                new_xdata = None
-                new_ydata = None
-        return new_xdata, new_ydata
+                xdata = None
+                ydata = None
+        return xdata, ydata
 
     @staticmethod
-    def get_selected_limits(window, item):
+    def get_selected_limits(
+        figure_settings: Graphs.FigureSettings,
+        interaction_mode: int,
+        item: DataItem,
+    ) -> tuple[float, float]:
         """Get the min and max value of the item within the selected range."""
-        canvas = window.get_canvas()
-        figure_settings = window.get_data().get_figure_settings()
-
         if item.get_xposition() == 0:
             min_bottom = figure_settings.get_min_bottom()
             max_bottom = figure_settings.get_max_bottom()
-            if canvas.get_mode() == 2:
+            if interaction_mode == 2:
                 scale = figure_settings.get_bottom_scale()
                 min_x = utilities.get_value_at_fraction(
-                    figure_settings.get_min_selected(), min_bottom, max_bottom,
+                    figure_settings.get_min_selected(),
+                    min_bottom,
+                    max_bottom,
                     scale,
                 )
                 max_x = utilities.get_value_at_fraction(
-                    figure_settings.get_max_selected(), min_bottom, max_bottom,
+                    figure_settings.get_max_selected(),
+                    min_bottom,
+                    max_bottom,
                     scale,
                 )
             else:
@@ -139,14 +135,18 @@ class DataHelper():
         else:
             min_top = figure_settings.get_min_top()
             max_top = figure_settings.get_max_top()
-            if canvas.get_mode() == 2:
+            if interaction_mode == 2:
                 scale = figure_settings.get_top_scale()
                 min_x = utilities.get_value_at_fraction(
-                    figure_settings.get_min_selected(), min_top, max_top,
+                    figure_settings.get_min_selected(),
+                    min_top,
+                    max_top,
                     scale,
                 )
                 max_x = utilities.get_value_at_fraction(
-                    figure_settings.get_max_selected(), min_top, max_top,
+                    figure_settings.get_max_selected(),
+                    min_top,
+                    max_top,
                     scale,
                 )
             else:
@@ -177,27 +177,12 @@ class DataHelper():
         return list(xdata_filtered), list(ydata_filtered)
 
     @staticmethod
-    def validate_and_set(item: EquationItem, equation: str):
-        """
-        Validate and set an equation.
-
-        Once the equation has been set, its gets simplified. Invalid equations
-        raise an InvalidEquationError.
-        """
-        valid_equation = utilities.validate_equation(str(equation))
-        if not valid_equation:
-            raise misc.InvalidEquationError(_("The operation on "
-                                              f"{item.props.name}"
-                                              " did not result in a plottable"
-                                              " equation"))
-        item.equation = equation
-        item.simplify_equation()
-
-    @staticmethod
-    def create_data_mask(xdata1: list,
-                         ydata1: list,
-                         xdata2: list,
-                         ydata2: list):
+    def create_data_mask(
+        xdata1: list,
+        ydata1: list,
+        xdata2: list,
+        ydata2: list,
+    ) -> bool:
         """
         Create a mask for matching pairs of coordinates.
 
@@ -206,33 +191,70 @@ class DataHelper():
         """
         xdata1, ydata1, xdata2, ydata2 = \
             map(numpy.array, [xdata1, ydata1, xdata2, ydata2])
-        return numpy.any(
-            (xdata1[:, None] == xdata2) & (ydata1[:, None] == ydata2), axis=1)
+        return numpy.any((xdata1[:, None] == xdata2)
+                         & (ydata1[:, None] == ydata2),
+                         axis=1)
 
     @staticmethod
     def sort_data(xdata: list, ydata: list) -> (list, list):
         """Sort data."""
         return map(
             list,
-            zip(*sorted(
-                zip(xdata, ydata),
-                key=lambda x_values: x_values[0],
-            )),
+            zip(
+                *sorted(
+                    zip(xdata, ydata),
+                    key=lambda x_values: x_values[0],
+                ),
+            ),
         )
 
+    @staticmethod
+    def filter_range(xdata, ydata, prev_xdata, prev_ydata):
+        """Filter range."""
+        if min(xdata) >= min(prev_xdata) and max(xdata) <= max(prev_ydata):
+            new_xdata, new_ydata = DataHelper.filter_data(
+                prev_xdata, prev_ydata, ">=", min(xdata),
+            )
+            new_xdata, new_ydata = DataHelper.filter_data(
+                new_xdata, new_ydata, "<=", max(xdata),
+            )
+            return new_xdata, new_ydata
+        return xdata, ydata
 
-_return = (list[float], list[float], bool, bool)
 
-
-class CommonOperations(DataHelper):
+class CommonOperations():
     """Operations to be performed on all kind of items."""
 
     @staticmethod
-    def custom_transformation(window: Graphs.Window) -> None:
+    def custom_transformation(window: Graphs.Window) -> bool:
         """Perform a custom operation on the dataset."""
+
         def on_accept(_dialog, input_x, input_y, discard):
+            data = window.get_data()
+            figure_settings = data.get_figure_settings()
+            interaction_mode = window.get_canvas().get_mode()
+            old_limits = figure_settings.get_limits()
             try:
-                _apply(window, "transform", input_x, input_y, discard)
+                for item in data:
+                    if not item.get_selected():
+                        continue
+                    if isinstance(item, EquationItem):
+                        operations_class = EquationOperations
+                    elif isinstance(item, DataItem):
+                        operations_class = DataOperations
+                    message = operations_class.execute(
+                        item,
+                        "transform",
+                        figure_settings,
+                        interaction_mode,
+                        input_x,
+                        input_y,
+                        discard,
+                    )
+                    if message:
+                        window.add_toast_string(message)
+                data.optimize_limits()
+                data.add_history_state_with_limits(old_limits)
             except (RuntimeError, KeyError) as exception:
                 toast = _(
                     "{name}: Unable to do transformation, \
@@ -243,28 +265,44 @@ class CommonOperations(DataHelper):
 
         dialog = Graphs.TransformDialog.new(window)
         dialog.connect("accept", on_accept)
+        return False
 
-    def combine(self, window: Graphs.Window) -> None:
+    @staticmethod
+    def combine(window: Graphs.Window) -> bool:
         """Combine the selected data into a new data set."""
         data = window.get_data()
         new_xdata, new_ydata = [], []
+        interaction_mode = window.get_mode()
         for item in data:
-            xdata, ydata = [], []
             if not item.get_selected():
                 continue
+            xdata, ydata = [], []
+            selected_limits = DataHelper.get_selected_limits(
+                data.get_figure_settings(),
+                interaction_mode,
+                item,
+            )
             if isinstance(item, EquationItem):
-                min_x, max_x = self.get_selected_limits(window, item)
-                limits = [min_x, max_x]
                 xdata, ydata = \
-                    utilities.equation_to_data(item._equation, limits)
+                    utilities.equation_to_data(item._equation, selected_limits)
             elif isinstance(item, DataItem):
-                xdata, ydata = DataHelper().get_data(window, item)[:2]
+                xdata, ydata = DataHelper().get_xydata(
+                    interaction_mode, selected_limits, item,
+                )
+            else:
+                continue
             if xdata is not None and ydata is not None:
                 new_xdata.extend(xdata)
                 new_ydata.extend(ydata)
 
+        if (not new_xdata) or (not new_ydata):
+            window.add_toast_string(
+                _("No data found within the highlighted area"),
+            )
+            return False
+
         # Create the item itself
-        new_xdata, new_ydata = self.sort_data(new_xdata, new_ydata)
+        new_xdata, new_ydata = DataHelper.sort_data(new_xdata, new_ydata)
         data.add_items([
             DataItem.new(
                 data.get_selected_style_params(),
@@ -273,160 +311,177 @@ class CommonOperations(DataHelper):
                 name=_("Combined Data"),
             ),
         ])
+        return True
 
-    def shift(
-        self,
-        item,
-        xdata: list,
-        ydata: list,
-        limits: list,
-        left_scale: int,
-        right_scale: int,
-        items: misc.ItemList,
-        ranges: tuple[float, float],
-    ) -> _return:
-        """
-        Shifts data vertically with respect to each other.
-
-        By default it scales linear data by 1.2 times the total span of the
-        ydata, and log data 10 to the power of the yspan.
-        """
-        def _filter_range(xdata, ydata, prev_xdata, prev_ydata):
-            if min(xdata) >= min(prev_xdata) and max(xdata) <= max(prev_ydata):
-                new_xdata, new_ydata = \
-                    self.filter_data(prev_xdata, prev_ydata, ">=", min(xdata))
-                new_xdata, new_ydata = \
-                    self.filter_data(new_xdata, new_ydata, "<=", max(xdata))
-                return new_xdata, new_ydata
-            return xdata, ydata
-
-        data_list = ([item for item in items if item.get_selected()
-                     and isinstance(item, (EquationItem, DataItem))])
-
-        shift_value_log = 0
-        shift_value_linear = 0
-
-        for index, item_ in enumerate(data_list):
-            index = 1 if index == 0 and len(data_list) > 1 else index
-            previous_item = data_list[index - 1]
-            y_range = ranges[1] if item_.get_yposition() else ranges[0]
-
-            if isinstance(previous_item, EquationItem):
-                prev_xdata, prev_ydata = \
-                    utilities.equation_to_data(previous_item._equation, limits)
-            else:
-                prev_xdata, prev_ydata = \
-                    previous_item.xdata, previous_item.ydata
-
-            new_xdata, new_ydata = \
-                _filter_range(xdata, ydata, prev_xdata, prev_ydata)
-            ymin = min(x for x in new_ydata if x != 0)
-            ymax = max(x for x in new_ydata if x != 0)
-            scale = right_scale if item.get_yposition() else left_scale
-
-            if scale == scales.Scale.LOG:
-                shift_value_log += \
-                    numpy.log10(abs(ymax / ymin)) + 0.1 * numpy.log10(y_range)
-            elif scale == scales.Scale.LOG2:
-                shift_value_log += \
-                    numpy.log2(abs(ymax / ymin)) + 0.1 * numpy.log2(y_range)
-
-            else:
-                shift_value_linear += (ymax - ymin) + 0.1 * y_range
-
-            if (scale == scales.Scale.LOG or scale == scales.Scale.LOG2):
-                shift_value = shift_value_log
-            else:
-                shift_value = shift_value_linear
-
-            is_input_item = item.get_uuid() == item_.get_uuid()
-            if isinstance(item_, EquationItem) and is_input_item:
-                if scale == scales.Scale.LOG:
-                    equation = f"({item.equation})*10**{shift_value}"
-                else:
-                    equation = f"{item.equation}+{shift_value}"
-                item.equation = equation
-                item.simplify_equation()
-                return
-
-            elif isinstance(item_, DataItem) and is_input_item:
-                if scale == scales.Scale.LOG:
-                    new_ydata = \
-                        [value * 10**shift_value_log for value in ydata]
-                elif scale == scales.Scale.LOG2:
-                    new_ydata = [value * 2**shift_value_log for value in ydata]
-                else:  # Apply linear scaling
-                    new_ydata = [value + shift_value_linear for value in ydata]
-                return xdata, new_ydata, False, False
-
-
-class EquationOperations(CommonOperations):
-    """Operations to be performed on equation items."""
-
-    def execute(self, item, window, name, *args):
-        """Execute the operation on the given item."""
+    @staticmethod
+    def shift(window: Graphs.Window) -> None:
+        """Shift data."""
+        interaction_mode = window.get_mode()
         data = window.get_data()
         figure_settings = data.get_figure_settings()
+        data_list = ([
+            item for item in data if item.get_selected()
+            and isinstance(item, (EquationItem, DataItem))
+        ])
+        ranges = [
+            figure_settings.get_max_right() - figure_settings.get_min_right(),
+            figure_settings.get_max_left() - figure_settings.get_min_left(),
+        ]
+        left_scale = scales.Scale(figure_settings.get_left_scale())
+        right_scale = scales.Scale(figure_settings.get_right_scale())
+        for index, item in enumerate(data_list):
+            selected_limits = DataHelper.get_selected_limits(
+                figure_settings,
+                interaction_mode,
+                item,
+            )
+            scale = right_scale if item.get_yposition() else left_scale
+            if isinstance(item, EquationItem):
+                xdata, ydata = utilities.equation_to_data(
+                    item.props.equation, selected_limits,
+                )
+            elif isinstance(item, DataItem):
+                xdata, ydata = DataHelper().get_xydata(
+                    interaction_mode, selected_limits, item,
+                )
+            if (not xdata) or (not ydata):
+                continue
+
+            shift_value = 0
+
+            item_ = data_list[0]
+            for i in range(index + 1):
+                previous_item = item_
+                item_ = data_list[i]
+                y_range = ranges[item_.get_yposition()]
+
+                if isinstance(previous_item, EquationItem):
+                    prev_xdata, prev_ydata = utilities.equation_to_data(
+                        previous_item.props.equation, selected_limits,
+                    )
+                else:
+                    prev_xdata, prev_ydata = \
+                        previous_item.props.xdata, previous_item.props.ydata
+
+                new_ydata = DataHelper.filter_range(
+                    xdata,
+                    ydata,
+                    prev_xdata,
+                    prev_ydata,
+                )[1]
+                ymin = min(x for x in new_ydata if x != 0)
+                ymax = max(x for x in new_ydata if x != 0)
+
+                if scale == scales.Scale.LOG:
+                    shift_value += \
+                        numpy.log10(abs(ymax / ymin)) \
+                        + 0.1 * numpy.log10(y_range)
+                elif scale == scales.Scale.LOG2:
+                    shift_value += \
+                        numpy.log2(abs(ymax / ymin)) \
+                        + 0.1 * numpy.log2(y_range)
+                else:
+                    shift_value += (ymax - ymin) + 0.1 * y_range
+            if shift_value == 0:
+                continue
+            if isinstance(item, EquationItem):
+                if scale == scales.Scale.LOG:
+                    equation = f"({item.props.equation})*10**{shift_value}"
+                elif scale == scales.Scale.LOG2:
+                    equation = f"({item.props.equation})*2**{shift_value}"
+                else:
+                    equation = f"{item.equation}+{shift_value}"
+                equation = utilities.preprocess(equation)
+                item.props.equation = str(sympy.simplify(equation))
+                continue
+            elif isinstance(item, DataItem):
+                if scale == scales.Scale.LOG:
+                    new_ydata = [value * 10**shift_value for value in ydata]
+                elif scale == scales.Scale.LOG2:
+                    new_ydata = [value * 2**shift_value for value in ydata]
+                else:  # Apply linear scaling
+                    new_ydata = [value + shift_value for value in ydata]
+                i = 0
+                for index, masked in enumerate(DataHelper.create_data_mask(
+                    item.props.xdata, item.props.ydata, xdata, ydata,
+                )):
+                    # Change coordinates that were within span
+                    if masked:
+                        item.props.xdata[index] = xdata[i]
+                        item.props.ydata[index] = new_ydata[i]
+                        i += 1
+                item.notify("xdata")
+                item.notify("ydata")
+                continue
+        return True
+
+
+class EquationOperations():
+    """Operations to be performed on equation items."""
+
+    @staticmethod
+    def execute(
+        item: EquationItem,
+        name: str,
+        figure_settings: Graphs.FigureSettings,
+        _interaction_mode: int,
+        *args,
+    ) -> tuple[bool, str]:
+        """Execute the operation on the given item."""
         old_limits = figure_settings.get_limits()
         try:
             callback = getattr(EquationOperations, name)
             if name in ("normalize", "center", "transform"):
-                limits = [
+                args = [(
                     old_limits[item.get_xposition()],
                     old_limits[item.get_yposition() + 1],
-                ]
-                item, equation = callback(item, limits, *args)
-            elif name == "shift":
-                min_x, max_x = self.get_selected_limits(window, item)
-                limits = [min_x, max_x]
-                xdata, ydata = \
-                    utilities.equation_to_data(item._equation, limits)
-                callback(CommonOperations(), item, xdata, ydata, limits, *args)
+                )] + list(args)
             elif name in ("cut"):
-                window.add_toast_string(
+                return False, _(
+                    f"Could not cut {item.props.name}, "
+                    + "cutting data is not supported for equations.",
+                )
+            equation = utilities.preprocess(str(callback(item, *args)))
+            valid_equation = utilities.validate_equation(equation)
+            if not valid_equation:
+                raise misc.InvalidEquationError(
                     _(
-                        f"Could not cut {item.props.name}, "
-                        + "cutting data is not supported for equations.",
+                        "The operation on "
+                        f"{item.props.name}"
+                        " did not result in a plottable"
+                        " equation",
                     ),
                 )
-                return
-            else:
-                item, equation = callback(item, *args)
-            if name not in ("shift"):
-                self.validate_and_set(item, equation)
+            item.props.equation = str(sympy.simplify(equation))
         except misc.InvalidEquationError as error:
-            window.add_toast_string(error.message)
+            return False, error.message
+        return True, ""
 
     @staticmethod
-    def translate_x(item, offset) -> _return:
+    def translate_x(item, offset) -> str:
         """Translate all selected data on the x-axis."""
-        equation = re.sub(r"(?<!e)x(?!p)", f"(x+{offset})", item.equation)
-        return item, equation
+        return re.sub(r"(?<!e)x(?!p)", f"(x+{offset})", item.equation)
 
     @staticmethod
-    def translate_y(item, offset) -> _return:
+    def translate_y(item, offset) -> str:
         """Translate all selected data on the y-axis."""
-        equation = f"({item.equation})+{offset}"
-        return item, equation
+        return f"({item.equation})+{offset}"
 
     @staticmethod
-    def multiply_x(item, multiplier: float) -> _return:
+    def multiply_x(item, multiplier: float) -> str:
         """Multiply all selected data on the x-axis."""
-        equation = re.sub(r"(?<!e)x(?!p)", f"(x*{multiplier})", item.equation)
-        return item, equation
+        return re.sub(r"(?<!e)x(?!p)", f"(x*{multiplier})", item.equation)
 
     @staticmethod
-    def multiply_y(item, multiplier: float) -> _return:
+    def multiply_y(item, multiplier: float) -> str:
         """Multiply all selected data on the y-axis."""
-        equation = f"({item.equation})*{multiplier}"
-        return item, equation
+        return f"({item.equation})*{multiplier}"
 
     @staticmethod
-    def normalize(item, limits) -> _return:
+    def normalize(item, limits) -> str:
         """Normalize all selected data."""
         xdata, ydata = utilities.equation_to_data(item._equation, limits)
-        equation = f"({item.equation})/{max(ydata)}"
-        return item, equation
+        return f"({item.equation})/{max(ydata)}"
 
     @staticmethod
     def smoothen(_item, *_args) -> None:
@@ -434,7 +489,7 @@ class EquationOperations(CommonOperations):
         raise NotImplementedError
 
     @staticmethod
-    def center(item, limits, center_maximum: int) -> _return:
+    def center(item, limits, center_maximum: int) -> str:
         """
         Center all selected data.
 
@@ -447,7 +502,10 @@ class EquationOperations(CommonOperations):
             equation = sympy.sympify(utilities.preprocess(item._equation))
             derivative = sympy.diff(equation, x)
             critical_points = sympy.solveset(
-                derivative, x, domain=sympy.Interval(limits[0], limits[1]))
+                derivative,
+                x,
+                domain=sympy.Interval(limits[0], limits[1]),
+            )
             endpoints = \
                 [equation.subs(x, limits[0]), equation.subs(x, limits[1])]
 
@@ -469,48 +527,42 @@ class EquationOperations(CommonOperations):
 
         elif center_maximum == 1:  # Center at middle
             middle_value = (min(xdata) + max(xdata)) / 2
-        equation = \
-            re.sub(r"(?<!e)x(?!p)", f"(x+{middle_value})", item.equation)
-        return item, equation
+        return re.sub(r"(?<!e)x(?!p)", f"(x+{middle_value})", item.equation)
 
     @staticmethod
-    def cut(_item, _xdata, _ydata) -> _return:
+    def cut(_item, _xdata, _ydata) -> str:
         """Cut selected data over the span that is selected."""
         raise NotImplementedError
 
     @staticmethod
-    def derivative(item) -> bool:
+    def derivative(item) -> str:
         """Calculate derivative of all selected data."""
         x = sympy.symbols("x")
         equation = utilities.preprocess(item._equation)
-        equation = sympy.diff(equation, x)
-        return item, equation
+        return str(sympy.diff(equation, x))
 
     @staticmethod
-    def integral(item) -> bool:
+    def integral(item) -> str:
         """Calculate indefinite integral of all selected data."""
         x = sympy.symbols("x")
         equation = utilities.preprocess(item._equation)
-        equation = sympy.integrate(equation, x)
-        return item, equation
+        return str(sympy.integrate(equation, x))
 
     @staticmethod
-    def fft(item) -> bool:
+    def fft(item) -> str:
         """Perform Fourier transformation on all selected data."""
         x, k = sympy.symbols("x k")
         equation = utilities.preprocess(item._equation)
         equation = str(sympy.fourier_transform(equation, x, k))
-        equation = equation.replace("k", "x")
-        return item, equation
+        return equation.replace("k", "x")
 
     @staticmethod
-    def inverse_fft(item) -> bool:
+    def inverse_fft(item) -> str:
         """Perform Inverse Fourier transformation on all selected data."""
         x, k = sympy.symbols("x k")
         equation = utilities.preprocess(item._equation)
         equation = str(sympy.fourier_transform(equation, x, k))
-        equation = equation.replace("k", "x")
-        return item, equation
+        return equation.replace("k", "x")
 
     @staticmethod
     def transform(
@@ -519,7 +571,7 @@ class EquationOperations(CommonOperations):
         input_x: str,
         input_y: str,
         _discard: bool,
-    ) -> _return:
+    ) -> str:
         """Perform custom transformation."""
         xdata, ydata = utilities.equation_to_data(item._equation, limits)
         local_dict = {
@@ -536,74 +588,79 @@ class EquationOperations(CommonOperations):
                 input_x = input_x.lower().replace(key, str(value))
                 input_y = input_y.lower().replace(key, str(value))
 
-        equation = \
-            re.sub(r"(?<!e)x(?!p)", input_x, item.equation)
-        equation = input_y.lower().replace("y", equation)
-        return item, equation
+        equation = re.sub(r"(?<!e)x(?!p)", input_x, item.equation)
+        return input_y.lower().replace("y", equation)
 
 
-class DataOperations(CommonOperations):
+_return = (list[float], list[float], bool, bool)
+
+
+class DataOperations():
     """Operations to be performed on data items."""
 
-    def execute(self, item, window, name, *args) -> None:
+    @staticmethod
+    def execute(
+        item: EquationItem,
+        name: str,
+        figure_settings: Graphs.FigureSettings,
+        interaction_mode: int,
+        *args,
+    ) -> tuple[bool, str]:
         """Execute the operation on the given item."""
-        xdata, ydata = DataHelper().get_data(window, item)
+        selected_limits = DataHelper.get_selected_limits(
+            figure_settings,
+            interaction_mode,
+            item,
+        )
+        xdata, ydata = DataHelper.get_xydata(
+            interaction_mode, selected_limits, item,
+        )
         callback = getattr(DataOperations, name)
         if not (xdata is not None and len(xdata) != 0):
-            window.add_toast_string(_("No data found within the highlighted"
-                                      "area"))
+            return False, _("No data found within the highlighted area")
+        message = ""
+        new_xdata, new_ydata, sort, discard = callback(
+            item, xdata, ydata, *args,
+        )
+        new_xdata, new_ydata = list(new_xdata), list(new_ydata)
+        if discard and interaction_mode == 2:
+            logging.debug("Discard is true")
+            message = _(
+                "Data that was outside of the highlighted area has"
+                " been discarded",
+            )
+            item.props.xdata = new_xdata
+            item.props.ydata = new_ydata
         else:
-            if name == "shift":
-                min_x, max_x = self.get_selected_limits(window, item)
-                limits = [min_x, max_x]
-                new_xdata, new_ydata, sort, discard = callback(
-                    CommonOperations(),
-                    item, xdata, ydata, limits, *args,
-                )
+            logging.debug("Discard is false")
+            mask = DataHelper.create_data_mask(
+                item.props.xdata,
+                item.props.ydata,
+                xdata,
+                ydata,
+            )
+            if new_xdata == []:  # If cut action was performed
+                remove_list = \
+                    [index for index, masked in enumerate(mask) if masked]
+                for index in sorted(remove_list, reverse=True):
+                    item.props.xdata.pop(index)
+                    item.props.ydata.pop(index)
             else:
-                new_xdata, new_ydata, sort, discard = callback(
-                    item, xdata, ydata, *args,
-                )
-            new_xdata, new_ydata = list(new_xdata), list(new_ydata)
-            canvas = window.get_canvas()
-            if discard and canvas.get_mode() == 2:
-                logging.debug("Discard is true")
-                window.add_toast_string(
-                    _(
-                        "Data that was outside of the highlighted area has"
-                        " been discarded",
-                    ),
-                )
-                item.props.xdata = new_xdata
-                item.props.ydata = new_ydata
-            else:
-                logging.debug("Discard is false")
-                mask = self.create_data_mask(
-                    item.props.xdata,
-                    item.props.ydata,
-                    xdata,
-                    ydata,
-                )
-
-                if new_xdata == []:  # If cut action was performed
-                    remove_list = \
-                        [index for index, masked in enumerate(mask) if masked]
-                    for index in sorted(remove_list, reverse=True):
-                        item.props.xdata.pop(index)
-                        item.props.ydata.pop(index)
-                else:
-                    i = 0
-                    for index, masked in enumerate(mask):
-                        # Change coordinates that were within span
-                        if masked:
-                            item.props.xdata[index] = new_xdata[i]
-                            item.props.ydata[index] = new_ydata[i]
-                            i += 1
-            if sort:
-                logging.debug("Sorting data")
-                item.xdata, item.ydata = self.sort_data(item.xdata, item.ydata)
-            item.notify("xdata")
-            item.notify("ydata")
+                i = 0
+                for index, masked in enumerate(mask):
+                    # Change coordinates that were within span
+                    if masked:
+                        item.props.xdata[index] = new_xdata[i]
+                        item.props.ydata[index] = new_ydata[i]
+                        i += 1
+        if sort:
+            logging.debug("Sorting data")
+            item.props.xdata, item.props.ydata = DataHelper.sort_data(
+                item.props.ydata, item.props.ydata,
+            )
+        item.notify("xdata")
+        item.notify("ydata")
+        return True, message
 
     @staticmethod
     def translate_x(_item, xdata: list, ydata: list, offset: float) -> _return:
@@ -631,7 +688,10 @@ class DataOperations(CommonOperations):
 
     @staticmethod
     def multiply_x(
-        _item, xdata: list, ydata: list, multiplier: float,
+        _item,
+        xdata: list,
+        ydata: list,
+        multiplier: float,
     ) -> _return:
         """
         Multiply all selected data on the x-axis.
@@ -645,7 +705,10 @@ class DataOperations(CommonOperations):
 
     @staticmethod
     def multiply_y(
-        _item, xdata: list, ydata: list, multiplier: float,
+        _item,
+        xdata: list,
+        ydata: list,
+        multiplier: float,
     ) -> _return:
         """
         Multiply all selected data on the y-axis.
@@ -664,7 +727,10 @@ class DataOperations(CommonOperations):
 
     @staticmethod
     def center(
-        _item, xdata: list, ydata: list, center_maximum: int,
+        _item,
+        xdata: list,
+        ydata: list,
+        center_maximum: int,
     ) -> _return:
         """
         Center all selected data.
@@ -747,10 +813,12 @@ class DataOperations(CommonOperations):
         # of the correct size, even when a float is given as input.
         return (
             numexpr.evaluate(
-                utilities.preprocess(input_x) + "+ 0*x", local_dict,
+                utilities.preprocess(input_x) + "+ 0*x",
+                local_dict,
             ),
             numexpr.evaluate(
-                utilities.preprocess(input_y) + "+ 0*y", local_dict,
+                utilities.preprocess(input_y) + "+ 0*y",
+                local_dict,
             ),
             True,
             discard,
