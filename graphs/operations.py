@@ -50,8 +50,7 @@ def perform_operation(application: Graphs.Application, name: str) -> None:
     old_limits = figure_settings.get_limits()
 
     if hasattr(CommonOperations, name):
-        if not getattr(CommonOperations, name)(window):
-            return
+        all_success = getattr(CommonOperations, name)(window)
     else:
         all_success = False
         for item in data:
