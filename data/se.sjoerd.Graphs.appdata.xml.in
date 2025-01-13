@@ -67,9 +67,9 @@
           <li>It is now possible to have multiple instances of Graphs open at the same time</li>
           <li>Styles can now be exported, and new styles can be imported from matplotlib style files</li>
           <li>Graphs now inhibits the session when unsaved data is still open</li>
-          <li>Added support for base 2 logarithmic scaling</li>
+          <li>Added support for base-2 logarithmic scaling</li>
           <li>Updated to GNOME 47 runtime, adding support for accent colours</li>
-          <li>Graphical fixes during drag and drop</li>
+          <li>Graphical fixes for the drag-drop animations</li>
           <li>Overall tweaks and refactors under the hood</li>
           <li>Translation updates</li>
         </ul>
