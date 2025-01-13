@@ -194,7 +194,6 @@ class Data(Graphs.Data):
     @staticmethod
     def _on_delete_request(self, items: misc.ItemList, _num):
         """Delete specified items."""
-        settings = self.get_figure_settings()
         for item_ in items:
             self._current_batch.append(
                 (2, (self.index(item_), item_.to_dict())),
@@ -205,12 +204,14 @@ class Data(Graphs.Data):
             ylabel = item_.get_ylabel()
             self._remove_item(item_)
         used = self.get_used_positions()
+        settings = self.get_application().get_settings_child("figure")
+        figure_settings = self.get_figure_settings()
         for position in [x_position, y_position]:
             direction = misc.DIRECTIONS[position]
             item_label = xlabel if position < 2 else ylabel
-            axis_label = getattr(settings, f"get_{direction}_label")()
+            axis_label = getattr(figure_settings, f"get_{direction}_label")()
             if not used[position] and item_label == axis_label:
-                set_label = getattr(settings, f"set_{direction}_label")
+                set_label = getattr(figure_settings, f"set_{direction}_label")
                 set_label(settings.get_string(f"{direction}-label"))
 
         self._add_history_state()
