@@ -40,10 +40,15 @@ template $GraphsEditItemDialog : Adw.PreferencesDialog {
 
     Adw.PreferencesGroup equation_group {
       title: _("Equation");
+      visible: false;
       Adw.EntryRow equation {
         max-width-chars: 25;
         title: _("Y =");
         changed => $on_equation_change();
+      }
+      Adw.ButtonRow simplify {
+        title: _("Simplify");
+        activated => $on_simplify();
       }
     }
 

@@ -4,7 +4,7 @@ from gettext import gettext as _
 
 from gi.repository import GObject, Graphs
 
-from graphs import misc
+from graphs import misc, utilities
 
 
 def new_from_dict(dictionary: dict):
@@ -118,14 +118,15 @@ class EquationItem(_PythonItem):
         super().__init__(typename=_("Equation"), **kwargs)
 
     @GObject.Property(type=str)
-    def equation(self) -> None:
+    def equation(self) -> str:
         """Equation."""
         return self._equation
 
     @equation.setter
     def equation(self, equation: str) -> None:
         old_equation = self._equation
-        if old_equation == equation:
+        valid_equation = utilities.validate_equation(str(equation))
+        if old_equation == equation or not valid_equation:
             return
         self._equation = equation
         self.notify("equation")

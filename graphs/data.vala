@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 using Gee;
 using Gtk;
-
 namespace Graphs {
     /**
      * Data class
@@ -18,12 +17,22 @@ namespace Graphs {
         public SingleSelection style_selection_model { get; private set; }
         public bool items_selected {
             get {
+                notify_property ("data_items_selected");
                 foreach (Item item in _items) {
                     if (item.selected) return true;
                 }
                 return false;
             }
         }
+        public bool data_items_selected {
+            get {
+                foreach (Item item in _items) {
+                    if (item.get_type ().name () == "GraphsDataItem" && item.selected) return true;
+                }
+                return false;
+            }
+        }
+
         public string selected_stylename {
             get { return this.get_selected_style ().name; }
         }
@@ -290,6 +299,7 @@ namespace Graphs {
 
         private void _on_item_selected () {
             notify_property ("items_selected");
+            notify_property ("data_items_selected");
         }
 
         private void _on_item_change (Object item, ParamSpec spec) {
