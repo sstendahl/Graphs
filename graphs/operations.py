@@ -436,11 +436,6 @@ class EquationOperations():
                     old_limits[item.get_xposition()],
                     old_limits[item.get_yposition() + 1],
                 )] + list(args)
-            elif name in ("cut"):
-                return False, _(
-                    f"Could not cut {item.props.name}, "
-                    + "cutting data is not supported for equations.",
-                )
             equation = utilities.preprocess(str(callback(item, *args)))
             valid_equation = utilities.validate_equation(equation)
             if not valid_equation:
@@ -455,6 +450,8 @@ class EquationOperations():
             item.props.equation = str(sympy.simplify(equation))
         except misc.InvalidEquationError as error:
             return False, error.message
+        except (NotImplementedError, AttributeError):
+            return False, _("Operation not supported for equations.")
         return True, ""
 
     @staticmethod
@@ -482,11 +479,6 @@ class EquationOperations():
         """Normalize all selected data."""
         xdata, ydata = utilities.equation_to_data(item._equation, limits)
         return f"({item.equation})/{max(ydata)}"
-
-    @staticmethod
-    def smoothen(_item, *_args) -> None:
-        """Smoothen y-data."""
-        raise NotImplementedError
 
     @staticmethod
     def center(item, limits, center_maximum: int) -> str:
@@ -528,11 +520,6 @@ class EquationOperations():
         elif center_maximum == 1:  # Center at middle
             middle_value = (min(xdata) + max(xdata)) / 2
         return re.sub(r"(?<!e)x(?!p)", f"(x+{middle_value})", item.equation)
-
-    @staticmethod
-    def cut(_item, _xdata, _ydata) -> str:
-        """Cut selected data over the span that is selected."""
-        raise NotImplementedError
 
     @staticmethod
     def derivative(item) -> str:
@@ -615,13 +602,16 @@ class DataOperations():
         xdata, ydata = DataHelper.get_xydata(
             interaction_mode, selected_limits, item,
         )
-        callback = getattr(DataOperations, name)
-        if not (xdata is not None and len(xdata) != 0):
-            return False, _("No data found within the highlighted area")
-        message = ""
-        new_xdata, new_ydata, sort, discard = callback(
-            item, xdata, ydata, *args,
-        )
+        try:
+            callback = getattr(DataOperations, name)
+            if not (xdata is not None and len(xdata) != 0):
+                return False, _("No data found within the highlighted area")
+            message = ""
+            new_xdata, new_ydata, sort, discard = callback(
+                item, xdata, ydata, *args,
+            )
+        except (NotImplementedError, AttributeError):
+            return False, _("Operation not supported for data items.")
         new_xdata, new_ydata = list(new_xdata), list(new_ydata)
         if discard and interaction_mode == 2:
             logging.debug("Discard is true")
