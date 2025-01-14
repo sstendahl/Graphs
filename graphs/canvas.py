@@ -259,6 +259,7 @@ class Canvas(Graphs.Canvas, FigureCanvas):
                 ax.set_xlim(xmin, xmax)
                 ax.set_ylim(ymin, ymax)
             self.queue_draw()
+            self.emit("view_changed")
         super().scroll_event(controller, dx, dy)
 
     def zoom_event(

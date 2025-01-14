@@ -105,12 +105,27 @@ namespace Graphs {
         private Window window;
         private Adw.NavigationPage settings_page;
 
+        private Adw.EntryRow min_bottom;
+        private Adw.EntryRow max_bottom;
+        private Adw.EntryRow min_top;
+        private Adw.EntryRow max_top;
+
         public FigureSettingsDialog (Window window, string? highlighted = null) {
             this.window = window;
             this.application = window.application as Application;
             FigureSettings figure_settings = window.data.figure_settings;
             GLib.Settings settings = application.get_settings_child ("figure");
+
             var builder = new Builder.from_resource (PAGE_RESOURCE);
+            this.min_bottom = builder.get_object ("min_bottom") as Adw.EntryRow;
+            this.max_bottom = builder.get_object ("max_bottom") as Adw.EntryRow;
+            this.min_top = builder.get_object ("min_top") as Adw.EntryRow;
+            this.max_top = builder.get_object ("max_top") as Adw.EntryRow;
+            Adw.EntryRow[] entry_rows = { min_bottom, max_bottom, min_top, max_top };
+            foreach (var entry_row in entry_rows) {
+                entry_row.changed.connect ( () => window.canvas.view_changed () );
+            }
+
             this.settings_page = builder.get_object ("settings_page") as Adw.NavigationPage;
             navigation_view.push (settings_page);
             foreach (string key in settings.settings_schema.list_keys ()) {
