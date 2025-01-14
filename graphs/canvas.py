@@ -258,8 +258,7 @@ class Canvas(Graphs.Canvas, FigureCanvas):
                     self._calculate_pan_values(ax, dx, dy)
                 ax.set_xlim(xmin, xmax)
                 ax.set_ylim(ymin, ymax)
-            self.queue_draw()
-            self.emit("view_changed")
+            self.toolbar.push_current()
         super().scroll_event(controller, dx, dy)
 
     def zoom_event(

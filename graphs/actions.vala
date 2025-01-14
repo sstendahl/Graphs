@@ -121,11 +121,17 @@ namespace Graphs {
             view_back_action.activate.connect (() => {
                 data.view_back ();
             });
+            view_back_action.activate.connect (() => {
+                window.canvas.view_action ();
+            });
             window.add_action (view_back_action);
 
             var view_forward_action = new SimpleAction ("view_forward", null);
             view_forward_action.activate.connect (() => {
                 data.view_forward ();
+            });
+            view_forward_action.activate.connect (() => {
+                window.canvas.view_action ();
             });
             window.add_action (view_forward_action);
 
