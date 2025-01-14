@@ -349,7 +349,7 @@ class CommonOperations():
             for i in range(index + 1):
                 previous_item = item_
                 item_ = data_list[i]
-                y_range = ranges[item_.get_yposition()]
+                y_range = ranges[item_.get_yposition() - 1]
 
                 if isinstance(previous_item, EquationItem):
                     prev_xdata, prev_ydata = utilities.equation_to_data(
