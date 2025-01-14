@@ -358,6 +358,8 @@ class Data(Graphs.Data):
         if self._view_history_pos != -1:
             self._view_history_states = \
                 self._view_history_states[:self._view_history_pos + 1]
+        if len(self._view_history_states) > 101:
+            self._view_history_states = self._view_history_states[1::]
         self._view_history_pos = -1
         self._view_history_states.append(limits)
         self.props.can_view_back = True
