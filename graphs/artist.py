@@ -169,7 +169,7 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
 
         self._equation = utilities.preprocess(item.props.equation)
         self._axis = axis
-        self._axis.callbacks.connect("xlim_changed", self._generate_data)
+        self._axis.figure.canvas.connect("view_changed", self._generate_data)
         self._artist = axis.plot(
             [],
             [],
@@ -213,7 +213,7 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
         """Generate new data for the artist."""
         x_start, x_stop = self._axis.get_xlim()
         x_range = x_stop - x_start
-        limits = (x_start - 0.25 * x_range, x_stop + 0.25 * x_range)
+        limits = (x_start - x_range, x_stop + x_range)
         xdata, ydata = utilities.equation_to_data(self._equation, limits)
         self._artist.set_data(xdata, ydata)
         canvas = self._axis.figure.canvas
