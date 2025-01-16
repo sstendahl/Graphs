@@ -230,34 +230,32 @@ class CommonOperations():
             figure_settings = data.get_figure_settings()
             interaction_mode = window.get_canvas().get_mode()
             old_limits = figure_settings.get_limits()
-            try:
-                for item in data:
-                    if not item.get_selected():
-                        continue
-                    if isinstance(item, EquationItem):
-                        operations_class = EquationOperations
-                    elif isinstance(item, DataItem):
-                        operations_class = DataOperations
-                    message = operations_class.execute(
-                        item,
-                        "transform",
-                        figure_settings,
-                        interaction_mode,
-                        input_x,
-                        input_y,
-                        discard,
-                    )
-                    if message:
-                        window.add_toast_string(message)
+
+            for item in data:
+                if not item.get_selected():
+                    continue
+                if isinstance(item, EquationItem):
+                    operations_class = EquationOperations
+                elif isinstance(item, DataItem):
+                    operations_class = DataOperations
+                success, message = operations_class.execute(
+                    item,
+                    "transform",
+                    figure_settings,
+                    interaction_mode,
+                    input_x,
+                    input_y,
+                    discard,
+                )
+                if message:
+                    fail_message = _(
+                        "Unable to perform transformation,"
+                        "make sure the syntax is correct")
+                    toast = message if success else fail_message
+                    window.add_toast_string(toast)
+
                 data.optimize_limits()
                 data.add_history_state_with_limits(old_limits)
-            except (RuntimeError, KeyError) as exception:
-                toast = _(
-                    "{name}: Unable to do transformation, \
-                        make sure the syntax is correct",
-                ).format(name=exception.__class__.__name__)
-                window.add_toast_string(toast)
-                logging.exception(_("Unable to do transformation"))
 
         dialog = Graphs.TransformDialog.new(window)
         dialog.connect("accept", on_accept)
@@ -349,7 +347,7 @@ class CommonOperations():
             for i in range(index + 1):
                 previous_item = item_
                 item_ = data_list[i]
-                y_range = ranges[item_.get_yposition() - 1]
+                y_range = ranges[item_.get_yposition()]
 
                 if isinstance(previous_item, EquationItem):
                     prev_xdata, prev_ydata = utilities.equation_to_data(
@@ -437,16 +435,14 @@ class EquationOperations():
             if not valid_equation:
                 raise misc.InvalidEquationError(
                     _(
-                        "The operation on "
-                        f"{item.props.name}"
-                        " did not result in a plottable"
-                        " equation",
+                        f"The operation on {item.props.name}"
+                        " did not result in a plottable equation",
                     ),
                 )
             item.props.equation = str(sympy.simplify(equation))
         except misc.InvalidEquationError as error:
             return False, error.message
-        except (NotImplementedError, AttributeError):
+        except (NotImplementedError, AttributeError, KeyError):
             return False, _("Operation not supported for equations.")
         return True, ""
 
@@ -606,8 +602,14 @@ class DataOperations():
             new_xdata, new_ydata, sort, discard = callback(
                 item, xdata, ydata, *args,
             )
-        except (NotImplementedError, AttributeError):
-            return False, _("Operation not supported for data items.")
+        except (NotImplementedError):
+            return False, _("Operation not supported for data items")
+        # May run into this exception for custom transformations:
+        except (RuntimeError, ValueError, KeyError, SyntaxError) as exception:
+            message = _(
+                "{name}: Error performing the operation",
+            ).format(name=exception.__class__.__name__)
+            return False, message
         new_xdata, new_ydata = list(new_xdata), list(new_ydata)
         if discard and interaction_mode == 2:
             logging.debug("Discard is true")
