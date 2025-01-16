@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2025-01-13 14:23+0000\n"
-"PO-Revision-Date: 2025-01-14 21:19+0200\n"
+"POT-Creation-Date: 2025-01-16 17:22+0000\n"
+"PO-Revision-Date: 2025-01-16 23:02+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -1667,11 +1667,11 @@ msgid "Plot style {stylename} does not exist loading system preferred"
 msgstr ""
 "Стилю креслення {stylename} не існує. Завантажуємо пріоритетний системний"
 
-#: graphs/data.py:545
+#: graphs/data.py:546
 msgid "Failed to parse project file"
 msgstr "Не вдалося обробити файл проєкту"
 
-#: graphs/data.py:551
+#: graphs/data.py:552
 msgid "Failed to load project"
 msgstr "Не вдалося завантажити проєкт"
 
@@ -1743,41 +1743,46 @@ msgctxt "file-filter"
 msgid "Matplotlib Style File"
 msgstr "файл стилю Matplotlib"
 
-#: graphs/operations.py:256
-#, python-brace-format
-#| msgid "{name}: Unable to do transformation, make sure the syntax is correct"
-msgid ""
-"{name}: Unable to do transformation,                         make sure the "
-"syntax is correct"
+#: graphs/operations.py:252
+#| msgid ""
+#| "{name}: Unable to do transformation,                         make sure "
+#| "the syntax is correct"
+msgid "Unable to perform transformation, make sure the syntax is correct"
 msgstr ""
-"{name}: не вдалося виконати перетворення. Переконайтеся, що правильно "
-"вказано синтаксичну конструкцію"
+"Не вдалося виконати перетворення. Переконайтеся, що правильно вказано"
+" синтаксичну конструкцію"
 
-#: graphs/operations.py:260
-msgid "Unable to do transformation"
-msgstr "Не вдалося виконати перетворення"
-
-#: graphs/operations.py:296 graphs/operations.py:604
+#: graphs/operations.py:294 graphs/operations.py:600
 msgid "No data found within the highlighted area"
 msgstr "У підсвіченій області даних не знайдено"
 
-#: graphs/operations.py:307
+#: graphs/operations.py:305
 msgid "Combined Data"
 msgstr "Поєднані дані"
 
-#: graphs/operations.py:440
-msgid "The operation on "
-msgstr "Дія над "
+#: graphs/operations.py:438
+#, python-brace-format
+msgid ""
+"The operation on {item.props.name} did not result in a plottable equation"
+msgstr ""
+"Дія над {item.props.name} не призвела до створення придатного до побудови"
+" рівняння"
 
-#: graphs/operations.py:450
+#: graphs/operations.py:446
 msgid "Operation not supported for equations."
 msgstr "Підтримки дії у рівняннях не передбачено."
 
-#: graphs/operations.py:610
-msgid "Operation not supported for data items."
-msgstr "Підтримки дії над записами даних не передбачено."
+#: graphs/operations.py:606
+#| msgid "Operation not supported for data items."
+msgid "Operation not supported for data items"
+msgstr "Підтримки дії над записами даних не передбачено"
 
-#: graphs/operations.py:615
+#: graphs/operations.py:610
+#, python-brace-format
+msgid "{name}: Error performing the operation"
+msgstr "{name}: помилка під час виконання дії"
+
+#: graphs/operations.py:617
 msgid "Data that was outside of the highlighted area has been discarded"
 msgstr "Дані поза підсвіченою областю було відкинуто"
 
@@ -1914,6 +1919,12 @@ msgstr "Оптимізувати межі"
 msgctxt "scale"
 msgid "Inverse Root"
 msgstr "Обернена коренева"
+
+#~ msgid "Unable to do transformation"
+#~ msgstr "Не вдалося виконати перетворення"
+
+#~ msgid "The operation on "
+#~ msgstr "Дія над "
 
 #~ msgid "X Start"
 #~ msgstr "Початок за x"
