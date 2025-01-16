@@ -249,7 +249,7 @@ class CommonOperations():
                 )
                 if message:
                     fail_message = _(
-                        "Unable to perform transformation,"
+                        "Unable to perform transformation, "
                         "make sure the syntax is correct")
                     toast = message if success else fail_message
                     window.add_toast_string(toast)
