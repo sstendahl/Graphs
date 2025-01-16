@@ -607,7 +607,7 @@ class DataOperations():
         # May run into this exception for custom transformations:
         except (RuntimeError, ValueError, KeyError, SyntaxError) as exception:
             message = _(
-                "{name}: Error performing the operation"
+                "{name}: Error performing the operation",
             ).format(name=exception.__class__.__name__)
             return False, message
         new_xdata, new_ydata = list(new_xdata), list(new_ydata)
