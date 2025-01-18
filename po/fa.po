@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2025-01-13 14:23+0000\n"
-"PO-Revision-Date: 2025-01-15 00:59+0330\n"
+"POT-Creation-Date: 2025-01-16 17:22+0000\n"
+"PO-Revision-Date: 2025-01-18 23:10+0330\n"
 "Last-Translator: Danial Behzadi <dani.behzi@ubuntu.com>\n"
 "Language-Team: Persian <fa@li.org>\n"
 "Language: fa\n"
@@ -36,7 +36,7 @@ msgid ""
 msgstr ""
 "نمودارهای ابزای ساده ولی قدرتمند است مه می‌گذارد داده‌هایتان را به سادگی دستکاری و "
 "رسم کنید. داده‌های جدید می‌توانند از دامنهٔ وسیعی از گونه‌های پرونده وارد یا با "
-"معادله ایجاد شوند. همهٔ داده‌ها می‌توانند با دامنه‌ای از عملیان چون امکان گزینش، "
+"معادله ایجاد شوند. همهٔ داده‌ها می‌توانند با دامنه‌ای از عملیات چون امکان گزینش، "
 "برش، ترجمه، ضرب، مرکز دهی و نرم کردن داده‌ها دستکاری و هر تبدیل سفارشی‌ای روی "
 "داده‌ها اعمال شود."
 
@@ -1643,11 +1643,11 @@ msgstr "نتوانست {stylename} را تجزیه کند. بار کردن سب�
 msgid "Plot style {stylename} does not exist loading system preferred"
 msgstr "سبک نمودار {stylename} وجود ندارد. بار کردن ترجیح سامانه"
 
-#: graphs/data.py:545
+#: graphs/data.py:546
 msgid "Failed to parse project file"
 msgstr "شکست در تجزیهٔ پروندهٔ پروژه"
 
-#: graphs/data.py:551
+#: graphs/data.py:552
 msgid "Failed to load project"
 msgstr "شکست در بار کردن پروژه"
 
@@ -1719,39 +1719,37 @@ msgctxt "file-filter"
 msgid "Matplotlib Style File"
 msgstr "پروندهٔ سبک matplotlib"
 
-#: graphs/operations.py:256
-#, python-brace-format
-msgid ""
-"{name}: Unable to do transformation,                         make sure the "
-"syntax is correct"
-msgstr ""
-"{name}: ناتوان در انجام تبدیل.                         مطمئن شوید نوشتار درست است"
+#: graphs/operations.py:252
+msgid "Unable to perform transformation, make sure the syntax is correct"
+msgstr "ناتوان در انجام تبدیل. مطمئن شوید نوشتار درست است"
 
-#: graphs/operations.py:260
-msgid "Unable to do transformation"
-msgstr "ناتوان در انجام تبدیل‌ها"
-
-#: graphs/operations.py:296 graphs/operations.py:604
+#: graphs/operations.py:294 graphs/operations.py:600
 msgid "No data found within the highlighted area"
 msgstr "هیچ داده‌ای در ناحیهٔ برجسته پیدا نشد"
 
-#: graphs/operations.py:307
+#: graphs/operations.py:305
 msgid "Combined Data"
 msgstr "داده‌های ترکیب شده"
 
-#: graphs/operations.py:440
-msgid "The operation on "
-msgstr "عملیات روی"
+#: graphs/operations.py:438
+#, python-brace-format
+msgid "The operation on {item.props.name} did not result in a plottable equation"
+msgstr "عملیات روی {item.props.name} منجر به معادله‌ای قابل رسم نشد"
 
-#: graphs/operations.py:450
+#: graphs/operations.py:446
 msgid "Operation not supported for equations."
-msgstr "عملیان برای معادله‌ها پشتیبانی نمی‌شود."
+msgstr "عملیات برای معادله‌ها پشتیبانی نمی‌شود."
+
+#: graphs/operations.py:606
+msgid "Operation not supported for data items"
+msgstr "عملیات برای موارد داده پشتیبانی نمی‌شود"
 
 #: graphs/operations.py:610
-msgid "Operation not supported for data items."
-msgstr "عملیان برای موارد داده پشتیبانی نمی‌شود."
+#, python-brace-format
+msgid "{name}: Error performing the operation"
+msgstr "{name}: خطا در انجام عملیات"
 
-#: graphs/operations.py:615
+#: graphs/operations.py:617
 msgid "Data that was outside of the highlighted area has been discarded"
 msgstr "داده‌هایی که خارج از ناحیهٔ برجسته بودند دور ریخته شدند"
 
@@ -1888,6 +1886,12 @@ msgstr "بهینه‌سازی کران‌ها"
 msgctxt "scale"
 msgid "Inverse Root"
 msgstr "ریشهٔ معکوس"
+
+#~ msgid "Unable to do transformation"
+#~ msgstr "ناتوان در انجام تبدیل‌ها"
+
+#~ msgid "The operation on "
+#~ msgstr "عملیات روی"
 
 #~ msgid "X Start"
 #~ msgstr "آغاز X"
