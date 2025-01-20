@@ -56,7 +56,7 @@ class EditItemDialog(Adw.PreferencesDialog):
         )
         self.item_selector_group.set_visible(data.get_n_items() > 1)
         self.item_selector.set_model(self.props.model)
-        self.item_selector.set_selected(data.get_items().index(item))
+        self.item_selector.set_selected(data.index(item))
         self.present(window)
 
         if isinstance(item, EquationItem):
@@ -78,7 +78,7 @@ class EditItemDialog(Adw.PreferencesDialog):
         item = self.props.data[self.item_selector.get_selected()]
         if item != self.item:
             self.props.model.splice(
-                self.props.data.get_items().index(self.item),
+                self.props.data.index(self.item),
                 1,
                 [self.props.item.get_name()],
             )
