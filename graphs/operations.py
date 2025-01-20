@@ -318,8 +318,8 @@ class CommonOperations():
             and isinstance(item, (EquationItem, DataItem))
         ])
         ranges = [
-            figure_settings.get_max_right() - figure_settings.get_min_right(),
             figure_settings.get_max_left() - figure_settings.get_min_left(),
+            figure_settings.get_max_right() - figure_settings.get_min_right(),
         ]
         left_scale = scales.Scale(figure_settings.get_left_scale())
         right_scale = scales.Scale(figure_settings.get_right_scale())
@@ -347,7 +347,7 @@ class CommonOperations():
             for i in range(index + 1):
                 previous_item = item_
                 item_ = data_list[i]
-                y_range = ranges[item_.get_yposition() - 1]
+                y_range = ranges[item_.get_yposition()]
 
                 if isinstance(previous_item, EquationItem):
                     prev_xdata, prev_ydata = utilities.equation_to_data(
