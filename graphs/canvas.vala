@@ -15,6 +15,7 @@ namespace Graphs {
 
         public signal void edit_request (string id);
         public signal void view_changed ();
+        public signal void view_action ();
 
         protected signal void save_request (File file, string format, int dpi, bool transparent);
         public void save (File file, string format, int dpi, bool transparent) {

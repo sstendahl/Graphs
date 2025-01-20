@@ -246,7 +246,6 @@ class Canvas(Graphs.Canvas, FigureCanvas):
         """Handle scroll event."""
         if self._ctrl_held:
             self.zoom(1 / _SCROLL_SCALE if dy > 0 else _SCROLL_SCALE)
-            self.toolbar.push_current()
         else:
             if self._shift_held:
                 dx, dy = dy, dx
@@ -258,7 +257,7 @@ class Canvas(Graphs.Canvas, FigureCanvas):
                     self._calculate_pan_values(ax, dx, dy)
                 ax.set_xlim(xmin, xmax)
                 ax.set_ylim(ymin, ymax)
-            self.queue_draw()
+        self.toolbar.push_current()
         super().scroll_event(controller, dx, dy)
 
     def zoom_event(
