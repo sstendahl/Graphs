@@ -1,5 +1,5 @@
 # Georgian translation for Graphs.
-# Copyright (C) 2025 Graphs's COPYRIGHT HOLDER
+# Copyright (C) 2025 Graphs's authors
 # This file is distributed under the same license as the Graphs package.
 # Ekaterine Papava <papava.e@gtu.ge>, 2024-2025.
 #
@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2025-01-13 14:23+0000\n"
-"PO-Revision-Date: 2025-01-14 14:37+0100\n"
+"POT-Creation-Date: 2025-01-16 17:22+0000\n"
+"PO-Revision-Date: 2025-01-21 04:50+0100\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <ka@li.org>\n"
 "Language: ka\n"
@@ -1661,11 +1661,11 @@ msgid "Plot style {stylename} does not exist loading system preferred"
 msgstr ""
 "დახაზვის სტილი {stylename} არ არსებობს. იტვირთება სისტემის ნაგულისხმევი"
 
-#: graphs/data.py:545
+#: graphs/data.py:546
 msgid "Failed to parse project file"
 msgstr "პროექტის ფაილის დამუშავება ჩავარდა"
 
-#: graphs/data.py:551
+#: graphs/data.py:552
 msgid "Failed to load project"
 msgstr "პროექტის ჩატვირთვა ჩავარდა"
 
@@ -1737,40 +1737,39 @@ msgctxt "file-filter"
 msgid "Matplotlib Style File"
 msgstr "Matplotlib სტილის ფაილი"
 
-#: graphs/operations.py:256
-#, python-brace-format
-msgid ""
-"{name}: Unable to do transformation,                         make sure the "
-"syntax is correct"
+#: graphs/operations.py:252
+msgid "Unable to perform transformation, make sure the syntax is correct"
 msgstr ""
-"{name}: გარდაქმნის შესრულება შეუძლებელია.                    დარწმუნდით, რომ "
-"სინტაქსი სწორია"
+"{name}: გარდაქმნის შესრულება შეუძლებელია. დარწმუნდით, რომ სინტაქსი სწორია"
 
-#: graphs/operations.py:260
-msgid "Unable to do transformation"
-msgstr "გარდაქმნის შესრულება შეუძლებელია"
-
-#: graphs/operations.py:296 graphs/operations.py:604
+#: graphs/operations.py:294 graphs/operations.py:600
 msgid "No data found within the highlighted area"
 msgstr "მონიშნულ ადგილში მონაცემები აღმოჩენილი არაა"
 
-#: graphs/operations.py:307
+#: graphs/operations.py:305
 msgid "Combined Data"
 msgstr "კომბინირებული მონაცემები"
 
-#: graphs/operations.py:440
-msgid "The operation on "
-msgstr "ოპერაცია "
+#: graphs/operations.py:438
+#, python-brace-format
+msgid ""
+"The operation on {item.props.name} did not result in a plottable equation"
+msgstr "ოპერაციამ {item.props.name} -ზე დახატვადი ტოლობა არ გამოიწვია"
 
-#: graphs/operations.py:450
+#: graphs/operations.py:446
 msgid "Operation not supported for equations."
 msgstr "ოპერაცია განტოლებებისთვის მხარდაჭერილი არაა."
 
-#: graphs/operations.py:610
-msgid "Operation not supported for data items."
-msgstr "ოპერაცია მონაცემების ელემენტებისთვის მხარდაჭერილი არაა."
+#: graphs/operations.py:606
+msgid "Operation not supported for data items"
+msgstr "ოპერაცია მონაცემის ელემენტებისთვის მხარდაჭერილი არაა"
 
-#: graphs/operations.py:615
+#: graphs/operations.py:610
+#, python-brace-format
+msgid "{name}: Error performing the operation"
+msgstr "{name}: ოპერაციის ჩატარების შეცდომა"
+
+#: graphs/operations.py:617
 msgid "Data that was outside of the highlighted area has been discarded"
 msgstr "მონაცემები, რომლებიც მონიშნული ადგილის გარეთ იყო, მოცილებულია"
 
@@ -1907,6 +1906,12 @@ msgstr "ლიმიტების ოპტიმიზაცია"
 msgctxt "scale"
 msgid "Inverse Root"
 msgstr "ინვერსიული ფესვი"
+
+#~ msgid "Unable to do transformation"
+#~ msgstr "გარდაქმნის შესრულება შეუძლებელია"
+
+#~ msgid "The operation on "
+#~ msgstr "ოპერაცია "
 
 #~ msgid "X Start"
 #~ msgstr "X-დასაწყისი"
