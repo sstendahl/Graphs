@@ -10,6 +10,8 @@ from graphs import item
 from graphs.canvas import Canvas
 from graphs.data import Data
 
+from matplotlib import rcParams, rcParamsDefault
+
 
 class PythonWindow(Graphs.Window):
     """The main window class."""
@@ -70,9 +72,11 @@ class PythonWindow(Graphs.Window):
                     item_.set_color(new_cycle[count])
                     count += 1
         self._reload_canvas()
+        self.get_canvas().emit("view_action")
 
     def _reload_canvas(self) -> None:
         """Reload the canvas."""
+        rcParams.update(rcParamsDefault)
         params = self.props.data.get_selected_style_params()
         canvas = Canvas(params, self.props.data)
         figure_settings = self.props.data.get_figure_settings()
