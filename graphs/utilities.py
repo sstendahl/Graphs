@@ -244,6 +244,7 @@ def preprocess(string: str) -> str:
         else:
             return f"{var}*{exp2}"
 
+    string = string.lower()
     string = string.replace(",", ".")
     string = convert_degrees_recursive(string)
     string = re.sub(
@@ -261,8 +262,7 @@ def preprocess(string: str) -> str:
     string = re.sub(r"arccsc\((.*?)\)", convert_arccsc, string)
     string = re.sub(r"cot\((.*?)\)", convert_cot, string)
     string = re.sub(r"sec\((.*?)\)", convert_sec, string)
-    string = re.sub(r"csc\((.*?)\)", convert_csc, string)
-    return string.lower()
+    return re.sub(r"csc\((.*?)\)", convert_csc, string)
 
 
 def equation_to_data(
