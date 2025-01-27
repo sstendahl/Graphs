@@ -51,6 +51,11 @@ namespace Graphs {
             add_equation_request.emit (window, name);
         }
 
+        protected signal void generate_data_request (Window window, string name);
+        public void generate_data (Window window, string name) {
+            generate_data_request.emit (window, name);
+        }
+
         protected signal StyleEditor create_style_editor_request ();
         public StyleEditor create_style_editor () {
             return create_style_editor_request.emit ();

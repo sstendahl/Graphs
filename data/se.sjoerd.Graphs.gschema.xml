@@ -84,6 +84,7 @@
   <schema id="se.sjoerd.Graphs" path="/se/sjoerd/Graphs/">
     <child name="actions" schema="se.sjoerd.Graphs.actions"/>
     <child name="add-equation" schema="se.sjoerd.Graphs.add-equation"/>
+    <child name="generate-data" schema="se.sjoerd.Graphs.generate-data"/>
     <child name="curve-fitting" schema="se.sjoerd.Graphs.curve-fitting"/>
     <child name="export-figure" schema="se.sjoerd.Graphs.export-figure"/>
     <child name="figure" schema="se.sjoerd.Graphs.figure"/>
@@ -175,6 +176,21 @@
   <schema id="se.sjoerd.Graphs.add-equation">
     <key name="equation" type="s">
       <default>"X"</default>
+    </key>
+  </schema>
+
+  <schema id="se.sjoerd.Graphs.generate-data">
+    <key name="equation" type="s">
+      <default>"X"</default>
+    </key>
+    <key name="xstart" type="s">
+      <default>"0"</default>
+    </key>
+    <key name="xstop" type="s">
+      <default>"10"</default>
+    </key>
+    <key name="steps" type="i">
+      <default>100</default>
     </key>
   </schema>
 
