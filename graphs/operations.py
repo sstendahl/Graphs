@@ -250,7 +250,7 @@ class CommonOperations():
                 if message:
                     fail_message = _(
                         "Unable to perform transformation, "
-                        "make sure the syntax is correct"
+                        "make sure the syntax is correct",
                     )
                     toast = message if success else fail_message
                     window.add_toast_string(toast)
@@ -607,8 +607,8 @@ class DataOperations():
             return False, _("Operation not supported for data items")
         # May run into this exception for custom transformations:
         except (RuntimeError, ValueError, KeyError, SyntaxError) as exception:
-            message = _("{name}: Error performing the operation", ).format(
-                name=exception.__class__.__name__
+            message = _("{name}: Error performing the operation").format(
+                name=exception.__class__.__name__,
             )
             return False, message
         new_xdata, new_ydata = list(new_xdata), list(new_ydata)
