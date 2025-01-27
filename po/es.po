@@ -2,14 +2,14 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the graphs package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-# Julián Villodre <jvillodrede@gmail.com>, 2024.
+# Julián Villodre <jvillodrede@gmail.com>, 2024-2025.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: graphs\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2024-12-10 08:58+0000\n"
-"PO-Revision-Date: 2024-12-15 23:44+0100\n"
+"POT-Creation-Date: 2025-01-16 17:22+0000\n"
+"PO-Revision-Date: 2025-01-25 23:42+0100\n"
 "Last-Translator: Julián Villodre <jvillodrede@gmail.com>\n"
 "Language-Team: es_ES\n"
 "Language: es_ES\n"
@@ -185,7 +185,7 @@ msgid "Enter a mathematical expression"
 msgstr "Introduzca una expresión matemática"
 
 #: data/ui/add-equation.blp:38 data/ui/curve-fitting.blp:66
-#: data/ui/edit-item.blp:45 data/ui/transform.blp:56
+#: data/ui/edit-item.blp:46 data/ui/transform.blp:56
 msgid "Y ="
 msgstr "Y ="
 
@@ -261,12 +261,12 @@ msgstr "Personalizada"
 msgid "Add Fit to Data"
 msgstr "Añadir ajuste a los datos"
 
-#: data/ui/curve-fitting.blp:104 data/ui/window.blp:560 graphs/window.vala:335
+#: data/ui/curve-fitting.blp:104 data/ui/window.blp:559 graphs/window.vala:345
 msgid "Toggle Sidebar"
 msgstr "Conmutar barra lateral"
 
 #: data/ui/curve-fitting.blp:116 data/ui/style-editor-window.blp:66
-#: data/ui/window.blp:600
+#: data/ui/window.blp:599
 msgid "Canvas Failed to Load"
 msgstr "Error al cargar el lienzo"
 
@@ -355,160 +355,164 @@ msgstr "Izquierda"
 msgid "Right"
 msgstr "Derecha"
 
-#: data/ui/edit-item.blp:52
+#: data/ui/edit-item.blp:50
+msgid "Simplify"
+msgstr "Simplificar"
+
+#: data/ui/edit-item.blp:57
 msgid "Line Properties"
 msgstr "Propiedades de la línea"
 
-#: data/ui/edit-item.blp:55 data/ui/style-editor-box.blp:58
+#: data/ui/edit-item.blp:60 data/ui/style-editor-box.blp:58
 msgid "Linestyle"
 msgstr "Estilo de la línea"
 
-#: data/ui/edit-item.blp:58 data/ui/style-editor-box.blp:61
+#: data/ui/edit-item.blp:63 data/ui/style-editor-box.blp:61
 msgctxt "linestyle"
 msgid "None"
 msgstr "Ninguno"
 
-#: data/ui/edit-item.blp:59 data/ui/style-editor-box.blp:62
+#: data/ui/edit-item.blp:64 data/ui/style-editor-box.blp:62
 msgctxt "linestyle"
 msgid "Solid"
 msgstr "Sólida"
 
-#: data/ui/edit-item.blp:60 data/ui/style-editor-box.blp:63
+#: data/ui/edit-item.blp:65 data/ui/style-editor-box.blp:63
 msgctxt "linestyle"
 msgid "Dotted"
 msgstr "Punteado"
 
-#: data/ui/edit-item.blp:61 data/ui/style-editor-box.blp:64
+#: data/ui/edit-item.blp:66 data/ui/style-editor-box.blp:64
 msgctxt "linestyle"
 msgid "Dashed"
 msgstr "Discontinua"
 
-#: data/ui/edit-item.blp:62 data/ui/style-editor-box.blp:65
+#: data/ui/edit-item.blp:67 data/ui/style-editor-box.blp:65
 msgctxt "linestyle"
 msgid "Dashdot"
 msgstr "Punto y guión"
 
-#: data/ui/edit-item.blp:69 data/ui/style-editor-box.blp:72
+#: data/ui/edit-item.blp:74 data/ui/style-editor-box.blp:72
 msgid "Linewidth"
 msgstr "Anchura de la línea"
 
-#: data/ui/edit-item.blp:83 data/ui/style-editor-box.blp:87
+#: data/ui/edit-item.blp:88 data/ui/style-editor-box.blp:87
 msgid "Markers"
 msgstr "Marcadores"
 
-#: data/ui/edit-item.blp:86 data/ui/style-editor-box.blp:90
+#: data/ui/edit-item.blp:91 data/ui/style-editor-box.blp:90
 msgctxt "markerstyle"
 msgid "None"
 msgstr "Ninguno"
 
-#: data/ui/edit-item.blp:87 data/ui/style-editor-box.blp:91
+#: data/ui/edit-item.blp:92 data/ui/style-editor-box.blp:91
 msgctxt "markerstyle"
 msgid "Point"
 msgstr "Punto"
 
-#: data/ui/edit-item.blp:88 data/ui/style-editor-box.blp:92
+#: data/ui/edit-item.blp:93 data/ui/style-editor-box.blp:92
 msgctxt "markerstyle"
 msgid "Pixel"
 msgstr "Pixel"
 
-#: data/ui/edit-item.blp:89 data/ui/style-editor-box.blp:93
+#: data/ui/edit-item.blp:94 data/ui/style-editor-box.blp:93
 msgctxt "markerstyle"
 msgid "Circle"
 msgstr "Círculo"
 
-#: data/ui/edit-item.blp:90 data/ui/style-editor-box.blp:94
+#: data/ui/edit-item.blp:95 data/ui/style-editor-box.blp:94
 msgctxt "markerstyle"
 msgid "Triangle Down"
 msgstr "Triángulo hacia abajo"
 
-#: data/ui/edit-item.blp:91 data/ui/style-editor-box.blp:95
+#: data/ui/edit-item.blp:96 data/ui/style-editor-box.blp:95
 msgctxt "markerstyle"
 msgid "Triangle Up"
 msgstr "Triángulo hacia arriba"
 
-#: data/ui/edit-item.blp:92 data/ui/style-editor-box.blp:96
+#: data/ui/edit-item.blp:97 data/ui/style-editor-box.blp:96
 msgctxt "markerstyle"
 msgid "Triangle Left"
 msgstr "Triángulo a la izquierda"
 
-#: data/ui/edit-item.blp:93 data/ui/style-editor-box.blp:97
+#: data/ui/edit-item.blp:98 data/ui/style-editor-box.blp:97
 msgctxt "markerstyle"
 msgid "Triangle Right"
 msgstr "Triángulo a la derecha"
 
-#: data/ui/edit-item.blp:94 data/ui/style-editor-box.blp:98
+#: data/ui/edit-item.blp:99 data/ui/style-editor-box.blp:98
 msgctxt "markerstyle"
 msgid "Octagon"
 msgstr "Octógono"
 
-#: data/ui/edit-item.blp:95 data/ui/style-editor-box.blp:99
+#: data/ui/edit-item.blp:100 data/ui/style-editor-box.blp:99
 msgctxt "markerstyle"
 msgid "Square"
 msgstr "Cuadrado"
 
-#: data/ui/edit-item.blp:96 data/ui/style-editor-box.blp:100
+#: data/ui/edit-item.blp:101 data/ui/style-editor-box.blp:100
 msgctxt "markerstyle"
 msgid "Pentagon"
 msgstr "Pentágono"
 
-#: data/ui/edit-item.blp:97 data/ui/style-editor-box.blp:101
+#: data/ui/edit-item.blp:102 data/ui/style-editor-box.blp:101
 msgctxt "markerstyle"
 msgid "Star"
 msgstr "Estrella"
 
-#: data/ui/edit-item.blp:98 data/ui/style-editor-box.blp:102
+#: data/ui/edit-item.blp:103 data/ui/style-editor-box.blp:102
 msgctxt "markerstyle"
 msgid "Hexagon 1"
 msgstr "Hexágono 1"
 
-#: data/ui/edit-item.blp:99 data/ui/style-editor-box.blp:103
+#: data/ui/edit-item.blp:104 data/ui/style-editor-box.blp:103
 msgctxt "markerstyle"
 msgid "Hexagon 2"
 msgstr "Hexágono 2"
 
-#: data/ui/edit-item.blp:100 data/ui/style-editor-box.blp:104
+#: data/ui/edit-item.blp:105 data/ui/style-editor-box.blp:104
 msgctxt "markerstyle"
 msgid "Plus"
 msgstr "Más"
 
-#: data/ui/edit-item.blp:101 data/ui/style-editor-box.blp:105
+#: data/ui/edit-item.blp:106 data/ui/style-editor-box.blp:105
 msgctxt "markerstyle"
 msgid "X"
 msgstr "X"
 
 #. Translators: Diamond as in Cards Symbol
-#: data/ui/edit-item.blp:103 data/ui/style-editor-box.blp:107
+#: data/ui/edit-item.blp:108 data/ui/style-editor-box.blp:107
 msgctxt "markerstyle"
 msgid "Diamond"
 msgstr "Diamante"
 
 #. Translators: Diamond as in Cards Symbol
-#: data/ui/edit-item.blp:105 data/ui/style-editor-box.blp:109
+#: data/ui/edit-item.blp:110 data/ui/style-editor-box.blp:109
 msgctxt "markerstyle"
 msgid "Thin Diamond"
 msgstr "Diamante fino"
 
-#: data/ui/edit-item.blp:106 data/ui/style-editor-box.blp:110
+#: data/ui/edit-item.blp:111 data/ui/style-editor-box.blp:110
 msgctxt "markerstyle"
 msgid "Vertical Line"
 msgstr "Linea vertical"
 
-#: data/ui/edit-item.blp:107 data/ui/style-editor-box.blp:111
+#: data/ui/edit-item.blp:112 data/ui/style-editor-box.blp:111
 msgctxt "markerstyle"
 msgid "Horizontal Line"
 msgstr "Línea horizontal"
 
-#: data/ui/edit-item.blp:108 data/ui/style-editor-box.blp:112
+#: data/ui/edit-item.blp:113 data/ui/style-editor-box.blp:112
 msgctxt "markerstyle"
 msgid "Filled Plus"
 msgstr "Más relleno"
 
-#: data/ui/edit-item.blp:109 data/ui/style-editor-box.blp:113
+#: data/ui/edit-item.blp:114 data/ui/style-editor-box.blp:113
 msgctxt "markerstyle"
 msgid "Filled X"
 msgstr "X relleno"
 
-#: data/ui/edit-item.blp:116 data/ui/style-editor-box.blp:120
+#: data/ui/edit-item.blp:121 data/ui/style-editor-box.blp:120
 msgid "Marker Size"
 msgstr "Tamaño del marcador"
 
@@ -567,7 +571,7 @@ msgstr "Resolución (ppp)"
 msgid "Transparent Background"
 msgstr "Fondo transparente"
 
-#: data/ui/figure-settings-dialog.blp:26 data/ui/figure-settings-page.blp:210
+#: data/ui/figure-settings-dialog.blp:26 data/ui/figure-settings-page.blp:214
 #: graphs/style_editor.vala:55
 msgid "Style"
 msgstr "Estilo"
@@ -580,7 +584,7 @@ msgstr "Importar estilo…"
 msgid "Create Style…"
 msgstr "Crear estilo…"
 
-#: data/ui/figure-settings-page.blp:5 data/ui/window.blp:621
+#: data/ui/figure-settings-page.blp:5 data/ui/window.blp:620
 msgid "Figure Settings"
 msgstr "Configuración de la figura"
 
@@ -648,123 +652,130 @@ msgstr "Máximo del eje Y derecho"
 msgid "Scaling"
 msgstr "Escalado"
 
-#: data/ui/figure-settings-page.blp:125 graphs/window.vala:374
+#: data/ui/figure-settings-page.blp:125 graphs/window.vala:385
 msgid "Bottom X Axis Scale"
 msgstr "Escala del eje X inferior"
 
-#: data/ui/figure-settings-page.blp:128 data/ui/figure-settings-page.blp:142
-#: data/ui/figure-settings-page.blp:156 data/ui/figure-settings-page.blp:170
-#: graphs/window.vala:345
+#: data/ui/figure-settings-page.blp:128 data/ui/figure-settings-page.blp:143
+#: data/ui/figure-settings-page.blp:158 data/ui/figure-settings-page.blp:173
+#: graphs/window.vala:355
 msgctxt "scale"
 msgid "Linear"
 msgstr "Lineal"
 
-#: data/ui/figure-settings-page.blp:129 data/ui/figure-settings-page.blp:143
-#: data/ui/figure-settings-page.blp:157 data/ui/figure-settings-page.blp:171
-#: graphs/window.vala:346
+#: data/ui/figure-settings-page.blp:129 data/ui/figure-settings-page.blp:144
+#: data/ui/figure-settings-page.blp:159 data/ui/figure-settings-page.blp:174
+#: graphs/window.vala:356
 msgctxt "scale"
-msgid "Logarithmic"
-msgstr "Logarítmica"
+msgid "Logarithmic (Base 10)"
+msgstr "Logarítmica (base 10)"
 
-#: data/ui/figure-settings-page.blp:130 data/ui/figure-settings-page.blp:144
-#: data/ui/figure-settings-page.blp:158 data/ui/figure-settings-page.blp:172
-#: graphs/window.vala:347
+#: data/ui/figure-settings-page.blp:130 data/ui/figure-settings-page.blp:145
+#: data/ui/figure-settings-page.blp:160 data/ui/figure-settings-page.blp:175
+#: graphs/window.vala:357
+msgctxt "scale"
+msgid "Logarithmic (Base 2)"
+msgstr "Logarítmica (base 2)"
+
+#: data/ui/figure-settings-page.blp:131 data/ui/figure-settings-page.blp:146
+#: data/ui/figure-settings-page.blp:161 data/ui/figure-settings-page.blp:176
+#: graphs/window.vala:358
 msgctxt "scale"
 msgid "Radians"
 msgstr "Radianes"
 
-#: data/ui/figure-settings-page.blp:131 data/ui/figure-settings-page.blp:145
-#: data/ui/figure-settings-page.blp:159 data/ui/figure-settings-page.blp:173
-#: graphs/window.vala:348
+#: data/ui/figure-settings-page.blp:132 data/ui/figure-settings-page.blp:147
+#: data/ui/figure-settings-page.blp:162 data/ui/figure-settings-page.blp:177
+#: graphs/window.vala:359
 msgctxt "scale"
 msgid "Square Root"
 msgstr "Raíz cuadrada"
 
-#: data/ui/figure-settings-page.blp:132 data/ui/figure-settings-page.blp:146
-#: data/ui/figure-settings-page.blp:160 data/ui/figure-settings-page.blp:174
+#: data/ui/figure-settings-page.blp:133 data/ui/figure-settings-page.blp:148
+#: data/ui/figure-settings-page.blp:163 data/ui/figure-settings-page.blp:178
 msgctxt "scale"
 msgid "Inverse"
 msgstr "Inversa"
 
-#: data/ui/figure-settings-page.blp:139 graphs/window.vala:375
+#: data/ui/figure-settings-page.blp:140 graphs/window.vala:386
 msgid "Top X Axis Scale"
 msgstr "Escala del eje X superior"
 
-#: data/ui/figure-settings-page.blp:153 graphs/window.vala:380
+#: data/ui/figure-settings-page.blp:155 graphs/window.vala:391
 msgid "Left Y Axis Scale"
 msgstr "Escala del eje Y izquierdo"
 
-#: data/ui/figure-settings-page.blp:167 graphs/window.vala:379
+#: data/ui/figure-settings-page.blp:170 graphs/window.vala:390
 msgid "Right Y Axis Scale"
 msgstr "Escala del eje Y derecho"
 
-#: data/ui/figure-settings-page.blp:181
+#: data/ui/figure-settings-page.blp:185
 msgid "Appearance"
 msgstr "Apariencia"
 
-#: data/ui/figure-settings-page.blp:183
+#: data/ui/figure-settings-page.blp:187
 msgid "Show Legend"
 msgstr "Mostrar leyenda"
 
-#: data/ui/figure-settings-page.blp:187
+#: data/ui/figure-settings-page.blp:191
 msgid "Legend Position"
 msgstr "Posición de la leyenda"
 
-#: data/ui/figure-settings-page.blp:191
+#: data/ui/figure-settings-page.blp:195
 msgctxt "legend-position"
 msgid "Auto"
 msgstr "Auto"
 
-#: data/ui/figure-settings-page.blp:192
+#: data/ui/figure-settings-page.blp:196
 msgctxt "legend-position"
 msgid "Upper Right"
 msgstr "Superior derecha"
 
-#: data/ui/figure-settings-page.blp:193
+#: data/ui/figure-settings-page.blp:197
 msgctxt "legend-position"
 msgid "Upper Left"
 msgstr "Superior izquierda"
 
-#: data/ui/figure-settings-page.blp:194
+#: data/ui/figure-settings-page.blp:198
 msgctxt "legend-position"
 msgid "Lower Left"
 msgstr "Inferior izquierda"
 
-#: data/ui/figure-settings-page.blp:195
+#: data/ui/figure-settings-page.blp:199
 msgctxt "legend-position"
 msgid "Lower Right"
 msgstr "Inferior derecha"
 
-#: data/ui/figure-settings-page.blp:196
+#: data/ui/figure-settings-page.blp:200
 msgctxt "legend-position"
 msgid "Center Left"
 msgstr "Centro izquierdo"
 
-#: data/ui/figure-settings-page.blp:197
+#: data/ui/figure-settings-page.blp:201
 msgctxt "legend-position"
 msgid "Center Right"
 msgstr "Centro derecho"
 
-#: data/ui/figure-settings-page.blp:198
+#: data/ui/figure-settings-page.blp:202
 msgctxt "legend-position"
 msgid "Lower Center"
 msgstr "Centro inferior"
 
-#: data/ui/figure-settings-page.blp:199
+#: data/ui/figure-settings-page.blp:203
 msgctxt "legend-position"
 msgid "Upper Center"
 msgstr "Centro superior"
 
-#: data/ui/figure-settings-page.blp:200
+#: data/ui/figure-settings-page.blp:204
 msgctxt "legend-position"
 msgid "Center"
 msgstr "Centro"
 
-#: data/ui/figure-settings-page.blp:206
+#: data/ui/figure-settings-page.blp:210
 msgid "Hide Unselected Items"
 msgstr "Ocultar elementos no seleccionados"
 
-#: data/ui/figure-settings-page.blp:225
+#: data/ui/figure-settings-page.blp:229
 msgid "Set as Default"
 msgstr "Establecer como predeterminado"
 
@@ -893,7 +904,7 @@ msgstr "Eliminar elemento"
 msgid "Smoothen Settings"
 msgstr "Ajustes de suavizado"
 
-#: data/ui/smoothen-settings.blp:30 data/ui/window.blp:656
+#: data/ui/smoothen-settings.blp:30 data/ui/window.blp:655
 msgid "Savitzky–Golay Filter"
 msgstr "Filtro Savitzky–Golay"
 
@@ -909,7 +920,7 @@ msgstr "Qué porcentaje del intervalo de datos usar para la ventana de filtrado"
 msgid "Polynomial degree"
 msgstr "Grado del polinomio"
 
-#: data/ui/smoothen-settings.blp:48 data/ui/window.blp:661
+#: data/ui/smoothen-settings.blp:48 data/ui/window.blp:660
 msgid "Moving Average"
 msgstr "Media móvil"
 
@@ -1175,15 +1186,15 @@ msgstr "Guardar estilo…"
 msgid "Save Style as…"
 msgstr "Guardar estilo como…"
 
-#: data/ui/style-editor-window.blp:78 data/ui/window.blp:624
+#: data/ui/style-editor-window.blp:78 data/ui/window.blp:623
 msgid "Keyboard Shortcuts"
 msgstr "Atajos del teclado"
 
-#: data/ui/style-editor-window.blp:79 data/ui/window.blp:625
+#: data/ui/style-editor-window.blp:79 data/ui/window.blp:624
 msgid "Help"
 msgstr "Ayuda"
 
-#: data/ui/style-editor-window.blp:80 data/ui/window.blp:626
+#: data/ui/style-editor-window.blp:80 data/ui/window.blp:625
 msgid "About Graphs"
 msgstr "Acerca de Gráficos"
 
@@ -1203,7 +1214,7 @@ msgstr "Eliminar…"
 msgid "Transform Data"
 msgstr "Transformar datos"
 
-#: data/ui/transform.blp:22 data/ui/window.blp:360
+#: data/ui/transform.blp:22 data/ui/window.blp:359
 msgid "Transform"
 msgstr "Transformar"
 
@@ -1297,143 +1308,143 @@ msgstr "Normalizar"
 msgid "Normalize data"
 msgstr "Normalizar datos"
 
-#: data/ui/window.blp:332
+#: data/ui/window.blp:331
 msgid "Smoothen"
 msgstr "Suavizado"
 
-#: data/ui/window.blp:334
+#: data/ui/window.blp:333
 msgid "Smoothen data"
 msgstr "Suavizar datos"
 
-#: data/ui/window.blp:349
+#: data/ui/window.blp:348
 msgid "Center"
 msgstr "Centro"
 
-#: data/ui/window.blp:351
+#: data/ui/window.blp:350
 msgid "Center data"
 msgstr "Datos del centro"
 
-#: data/ui/window.blp:375
+#: data/ui/window.blp:374
 msgid "Derivative"
 msgstr "Derivado"
 
-#: data/ui/window.blp:377
+#: data/ui/window.blp:376
 msgid "Get the derivative of the data"
 msgstr "Obtener la derivada de los datos"
 
-#: data/ui/window.blp:390
+#: data/ui/window.blp:389
 msgid "Integral"
 msgstr "Integral"
 
-#: data/ui/window.blp:392
+#: data/ui/window.blp:391
 msgid "Get the indefinite integral of the data"
 msgstr "Obtener la integral indefinida de los datos"
 
-#: data/ui/window.blp:406
+#: data/ui/window.blp:405
 msgid "FFT"
 msgstr "FFT"
 
-#: data/ui/window.blp:408
+#: data/ui/window.blp:407
 msgid "Get the Fast Fourier Transform of the data"
 msgstr "Obtener la transformada rápida de Fourier de los datos"
 
-#: data/ui/window.blp:422
+#: data/ui/window.blp:421
 msgid "Inverse FFT"
 msgstr "FFT inversa"
 
-#: data/ui/window.blp:424
+#: data/ui/window.blp:423
 msgid "Get the Inverse Fast Fourier Transform of the data"
 msgstr "Obtener la inversa de la transformada rápida de Fourier de los datos"
 
-#: data/ui/window.blp:438
+#: data/ui/window.blp:437
 msgid "Custom Transformation"
 msgstr "Transformación personalizada"
 
-#: data/ui/window.blp:440
+#: data/ui/window.blp:439
 msgid "Perform custom transformations on the data"
 msgstr "Realizar transformaciones personalizadas en los datos"
 
-#: data/ui/window.blp:448
+#: data/ui/window.blp:447
 msgid "Modify"
 msgstr "Modificar"
 
-#: data/ui/window.blp:468
+#: data/ui/window.blp:467
 msgid "Translate X"
 msgstr "Traducir X"
 
-#: data/ui/window.blp:491
+#: data/ui/window.blp:490
 msgid "Translate Y"
 msgstr "Traducir Y"
 
-#: data/ui/window.blp:514
+#: data/ui/window.blp:513
 msgid "Multiply X"
 msgstr "Multiplicar X"
 
-#: data/ui/window.blp:537
+#: data/ui/window.blp:536
 msgid "Multiply Y"
 msgstr "Multiplicar Y"
 
-#: data/ui/window.blp:567 graphs/window.vala:316
+#: data/ui/window.blp:566 graphs/window.vala:326
 msgid "Undo"
 msgstr "Deshacer"
 
-#: data/ui/window.blp:572
+#: data/ui/window.blp:571
 msgid "Redo"
 msgstr "Rehacer"
 
-#: data/ui/window.blp:577
+#: data/ui/window.blp:576
 msgid "View Menu"
 msgstr "Ver menú"
 
-#: data/ui/window.blp:585
+#: data/ui/window.blp:584
 msgid "Next View"
 msgstr "Vista siguiente"
 
-#: data/ui/window.blp:591
+#: data/ui/window.blp:590
 msgid "Previous View"
 msgstr "Vista anterior"
 
-#: data/ui/window.blp:609
+#: data/ui/window.blp:608
 msgid "New Project"
 msgstr "Proyecto nuevo"
 
-#: data/ui/window.blp:612
+#: data/ui/window.blp:611
 msgid "Save Project…"
 msgstr "Guardar proyecto…"
 
-#: data/ui/window.blp:613
+#: data/ui/window.blp:612
 msgid "Save Project as…"
 msgstr "Guardar proyecto como…"
 
-#: data/ui/window.blp:614
+#: data/ui/window.blp:613
 msgid "Open Project…"
 msgstr "Abrir proyecto…"
 
-#: data/ui/window.blp:617
+#: data/ui/window.blp:616
 msgid "Export Data…"
 msgstr "Exportar datos…"
 
-#: data/ui/window.blp:618
+#: data/ui/window.blp:617
 msgid "Export Figure…"
 msgstr "Exportar figura…"
 
-#: data/ui/window.blp:632
+#: data/ui/window.blp:631
 msgid "Add Data from File…"
 msgstr "Añadir datos desde archivo…"
 
-#: data/ui/window.blp:633
+#: data/ui/window.blp:632
 msgid "Add Equation…"
 msgstr "Añadir ecuación…"
 
-#: data/ui/window.blp:642
+#: data/ui/window.blp:641
 msgid "At Maximum Y Value"
 msgstr "Al valor máximo Y"
 
-#: data/ui/window.blp:647
+#: data/ui/window.blp:646
 msgid "At Middle X Value"
 msgstr "Al valor medio X"
 
-#: data/ui/window.blp:668
+#: data/ui/window.blp:667
 msgid "Advanced Settings"
 msgstr "Configuración avanzada"
 
@@ -1641,19 +1652,27 @@ msgstr "Suma de R²: {R2}"
 msgid "Fitting Parameters for %s"
 msgstr "Parámetros de ajuste para %s"
 
-#: graphs/data.py:93
+#: graphs/data.py:94
 #, python-brace-format
 msgid "Could not parse {stylename}, loading system preferred style"
 msgstr ""
 "No se ha podido procesar {stylename}, cargando el estilo preferido por el "
 "sistema."
 
-#: graphs/data.py:98
+#: graphs/data.py:99
 #, python-brace-format
 msgid "Plot style {stylename} does not exist loading system preferred"
 msgstr ""
 "El estilo de trazado {stylename} no existe, cargando el estilo preferido por "
 "el sistema"
+
+#: graphs/data.py:546
+msgid "Failed to parse project file"
+msgstr "Falló al analizar el archivo de proyecto"
+
+#: graphs/data.py:552
+msgid "Failed to load project"
+msgstr "Falló al cargar el proyecto"
 
 #: graphs/export_figure.vala:43
 msgctxt "filename"
@@ -1685,7 +1704,7 @@ msgstr "Máximo del eje X"
 msgid "Y Axis Maximum"
 msgstr "Máximo del eje Y"
 
-#: graphs/figure_settings.vala:173 graphs/window.vala:376
+#: graphs/figure_settings.vala:173 graphs/window.vala:387
 msgid "X Axis Scale"
 msgstr "Escala del eje X"
 
@@ -1693,7 +1712,7 @@ msgstr "Escala del eje X"
 msgid "X Axis Label"
 msgstr "Etiqueta del eje X"
 
-#: graphs/figure_settings.vala:177 graphs/window.vala:381
+#: graphs/figure_settings.vala:177 graphs/window.vala:392
 msgid "Y Axis Scale"
 msgstr "Escala del eje Y"
 
@@ -1710,11 +1729,11 @@ msgstr "¿Está seguro de que desea eliminar %s?"
 msgid "Dataset"
 msgstr "Conjunto de datos"
 
-#: graphs/item.py:165
+#: graphs/item.py:166
 msgid "Label"
 msgstr "Etiqueta"
 
-#: graphs/item.py:181
+#: graphs/item.py:182
 msgid "Fill"
 msgstr "Rellenar"
 
@@ -1723,28 +1742,42 @@ msgctxt "file-filter"
 msgid "Matplotlib Style File"
 msgstr "Archivo de estilo Matplotlib"
 
-#: graphs/operations.py:129
-#, python-brace-format
-msgid "{name}: Unable to do transformation, make sure the syntax is correct"
+#: graphs/operations.py:252
+msgid "Unable to perform transformation, make sure the syntax is correct"
 msgstr ""
-"{name}: No se puede hacer la transformación, asegúrese de que la sintaxis es "
-"correcta"
+"No se puede hacer la transformación, asegúrese de que la sintaxis es correcta"
 
-#: graphs/operations.py:133
-msgid "Unable to do transformation"
-msgstr "No se puede hacer la transformación"
-
-#: graphs/operations.py:197
-msgid "Data that was outside of the highlighted area has been discarded"
-msgstr "Se han descartado los datos que estaban fuera de la zona resaltada"
-
-#: graphs/operations.py:234
+#: graphs/operations.py:294 graphs/operations.py:600
 msgid "No data found within the highlighted area"
 msgstr "No se han encontrado datos en la zona resaltada"
 
-#: graphs/operations.py:480
+#: graphs/operations.py:305
 msgid "Combined Data"
 msgstr "Datos combinados"
+
+#: graphs/operations.py:438
+#, python-brace-format
+msgid ""
+"The operation on {item.props.name} did not result in a plottable equation"
+msgstr ""
+"La operación en {item.props.name} no dio como resultado una ecuación trazable"
+
+#: graphs/operations.py:446
+msgid "Operation not supported for equations."
+msgstr "Operación incompatible con ecuaciones."
+
+#: graphs/operations.py:606
+msgid "Operation not supported for data items"
+msgstr "Operación incompatible con elementos de datos"
+
+#: graphs/operations.py:610
+#, python-brace-format
+msgid "{name}: Error performing the operation"
+msgstr "{name}: Falló al realizar la operación"
+
+#: graphs/operations.py:617
+msgid "Data that was outside of the highlighted area has been discarded"
+msgstr "Se han descartado los datos que estaban fuera de la zona resaltada"
 
 #: graphs/parse_file.py:56
 msgid "Intensity (cps)"
@@ -1770,16 +1803,25 @@ msgstr "Error de importación, índice de columna fuera de rango"
 msgid "Unable to import from file"
 msgstr "No se puede importar desde el archivo"
 
-#: graphs/project.vala:10
+#: graphs/project.py:46
+msgid "Project file is missing data"
+msgstr "Faltan datos en el archivo del proyecto"
+
+#: graphs/project.py:59
+msgid "Project is from a newer incompatible version of Graphs"
+msgstr ""
+"El proyecto pertenece a una versión de Gráficos más nueva e incompatible"
+
+#: graphs/project.vala:15
 msgctxt "file-filter"
 msgid "Graphs Project File"
 msgstr "Archivo de proyecto de Gráficos"
 
-#: graphs/project.vala:17
+#: graphs/project.vala:22
 msgid "Saved Project"
 msgstr "Proyecto guardado"
 
-#: graphs/project.vala:32
+#: graphs/project.vala:37
 msgid "Project"
 msgstr "Proyecto"
 
@@ -1855,22 +1897,25 @@ msgstr "Borrador"
 msgid "Document Portal"
 msgstr "Portal de documentos"
 
-#: graphs/window.vala:197
+#: graphs/window.vala:207
 msgid "Graphs (Development)"
 msgstr "Gráficos (desarrollo)"
 
-#: graphs/window.vala:306
+#: graphs/window.vala:316
 msgid "Open Location"
 msgstr "Abrir ubicación"
 
-#: graphs/window.vala:340
+#: graphs/window.vala:350
 msgid "Optimize Limits"
 msgstr "Optimizar límites"
 
-#: graphs/window.vala:349
+#: graphs/window.vala:360
 msgctxt "scale"
 msgid "Inverse Root"
 msgstr "Raíz inversa"
+
+#~ msgid "Unable to do transformation"
+#~ msgstr "No se puede hacer la transformación"
 
 #~ msgid "X Start"
 #~ msgstr "Inicio X"
