@@ -275,6 +275,7 @@ def preprocess(string: str) -> str:
     string = re.sub(r"sec\((.*?)\)", convert_sec, string)
     return re.sub(r"csc\((.*?)\)", convert_csc, string)
 
+
 def string_to_function(equation_name: str) -> sympy.FunctionClass:
     """Convert a string into a sympy function."""
     variables = ["x"] + get_free_variables(equation_name)
