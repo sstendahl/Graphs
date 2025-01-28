@@ -54,6 +54,17 @@
     </screenshot>
   </screenshots>
   <releases>
+    <release version="1.8.4" date="2025-01-28">
+      <description>
+        <p>Minor update with the new GNOME 47 runtime.</p>
+        <ul>
+          <li>Update to the GNOME 47 runtime with support for accent colours</li>
+          <li>Update runtime dependencies to the latest versions</li>
+          <li>Improve the canvas rubberband drawing</li>
+          <li>Translation updates</li>
+        </ul>
+      </description>
+    </release>
     <release version="1.8.3" date="2024-11-07">
       <description>
         <p>Minor update, offering some language updates.</p>
