@@ -171,6 +171,14 @@ namespace Graphs {
             if (_used_colors.length == _color_cycle.length) _used_colors = {};
         }
 
+        /**
+         * Add items to be managed.
+         *
+         * Respects settings in regards to handling duplicate names.
+         * New Items with a x- or y-label change the figures current labels if
+         * they are still the default. If they are already modified and do not
+         * match the items label, they get moved to another axis.
+         */
         public void add_items (Item[] items) {
             _used_colors = {};
             foreach (Item item in _items) {
