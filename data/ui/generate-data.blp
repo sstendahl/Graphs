@@ -30,36 +30,55 @@ template $GraphsGenerateDataDialog : Adw.Dialog {
       margin-end: 12;
       margin-top: 12;
       margin-bottom: 12;
-      Adw.PreferencesGroup {
-        separate-rows: true;
-        description: _("Enter a mathematical expression");
-        Adw.EntryRow equation {
-          max-width-chars: 25;
-          title: _("Y =");
-          activates-default: true;
-          notify::text => $on_equation_change();
+      Box {
+        spacing: 20;
+        orientation: vertical;
+
+        Adw.PreferencesGroup {
+          separate-rows: true;
+          description: _("Enter a mathematical expression");
+          Adw.EntryRow equation {
+            max-width-chars: 25;
+            title: _("Y =");
+            activates-default: true;
+            notify::text => $on_equation_change();
+          }
+          Adw.EntryRow item_name {
+            max-width-chars: 25;
+            title: _("Name (optional)");
+            activates-default: true;
+          }
         }
-        Adw.EntryRow xstart {
-          title: _("X Start");
-          notify::text => $on_entry_change();
+        Adw.PreferencesGroup {
+          Box {
+            spacing: 12;
+            orientation: horizontal;
+            homogeneous: true;
+
+            Adw.PreferencesGroup {
+              Adw.EntryRow xstart {
+                title: _("X Start");
+                notify::text => $on_entry_change();
+              }
+            }
+            Adw.PreferencesGroup {
+              Adw.EntryRow xstop {
+                title: _("X Stop");
+                notify::text => $on_entry_change();
+              }
+            }
+          }
         }
-        Adw.EntryRow xstop {
-          title: _("X Start");
-          notify::text => $on_entry_change();
-        }
-        Adw.SpinRow steps {
-           title: _("Steps");
-           adjustment: Adjustment {
-              step-increment: 1;
-              page-increment: 100;
-              lower: 2;
-              upper: 1000000000;
-          };
-        }
-        Adw.EntryRow item_name {
-          max-width-chars: 25;
-          title: _("Name (optional)");
-          activates-default: true;
+        Adw.PreferencesGroup {
+          Adw.SpinRow steps {
+             title: _("Steps");
+             adjustment: Adjustment {
+                step-increment: 1;
+                page-increment: 100;
+                lower: 2;
+                upper: 1000000000;
+            };
+          }
         }
       }
     };
