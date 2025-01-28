@@ -3,6 +3,7 @@
 import copy
 import logging
 import math
+from collections.abc import Iterator
 from gettext import gettext as _
 
 from gi.repository import Gio, Graphs
@@ -53,9 +54,14 @@ class Data(Graphs.Data):
         """Magic alias for `get_n_items()`."""
         return self.get_n_items()
 
-    def __iter__(self):
+    def __iter__(self) -> Iterator[Graphs.Item]:
         """Iterate over items."""
-        return iter(self.get_items())
+        iterator = self.iterator_wrapper()
+        while True:
+            item = iterator.next()
+            if item is None:
+                return
+            yield item
 
     def __getitem__(self, getter: str | int):
         """Magic alias for retrieving items."""

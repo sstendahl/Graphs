@@ -196,6 +196,28 @@ namespace Graphs {
             return Config.VERSION;
         }
 
+        protected IteratorWrapper iterator_wrapper () {
+            return new IteratorWrapper (_items.iterator ());
+        }
+
+        /**
+         * There exists an issue with using the Gee.Iterator in python leading
+         * to garbage data. Wrap the iterator in a class to circumvent this.
+         */
+        public class IteratorWrapper : Object {
+            private Iterator<Item> iterator;
+
+            public IteratorWrapper (Iterator<Item> iterator) {
+                this.iterator = iterator;
+            }
+
+            public Item? next () {
+                if (!iterator.has_next ()) return null;
+                iterator.next ();
+                return iterator.get ();
+            }
+        }
+
         // End section Vala iterator
 
         // Section misc
