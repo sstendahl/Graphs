@@ -61,7 +61,7 @@
           <li>Update to the GNOME 47 runtime with support for accent colours</li>
           <li>Update runtime dependencies to the latest versions</li>
           <li>Improve the canvas rubberband drawing</li>
-          <li>Translation updates</li>
+          <li>Improved equation parsing</li>
         </ul>
       </description>
     </release>

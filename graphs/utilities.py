@@ -161,11 +161,33 @@ def preprocess(string: str) -> str:
 
     def convert_degrees(match):
         """Convert degree expressions to radian expressions."""
-        function = match.group(1)
-        if function in FUNCTIONS:
-            expression = match.group(2)  # Get the content inside the brackets
-            return f"{function}({expression}*{float(numpy.pi)}/180)"
-        return f"{function}{expression}"
+        function, remainder = match.group(1), match.group(2)
+        if function not in FUNCTIONS:
+            return f"{function}{remainder}"
+        expression, rest = _extract_expression(remainder)
+        return f"{function}({expression}*{numpy.pi}/180){rest}"
+
+    def _extract_expression(remainder):
+        """Isolate the expression within the first pair of parentheses."""
+        stack = []
+        for i, char in enumerate(remainder.lower()):
+            if char == "(":
+                stack.append(char)
+            elif char == ")":
+                stack.pop()
+                if not stack:  # Matching parenthesis found
+                    stop_index = i + 1
+                    break
+        expression = remainder[:stop_index]
+        rest = remainder[stop_index:]
+        return expression, rest
+
+    def convert_degrees_recursive(old_string):
+        """Recursively convert degrees to match all parenthesis properly."""
+        new_string = re.sub(r"(\w+)d(\(.*\))", convert_degrees, old_string)
+        if new_string != old_string:
+            return convert_degrees_recursive(new_string)
+        return new_string
 
     def convert_cot(match):
         """Convert cotangent expressions to reciprocal tangent expressions."""
@@ -233,8 +255,9 @@ def preprocess(string: str) -> str:
         else:
             return f"{var}*{exp2}"
 
+    string = string.lower()
     string = string.replace(",", ".")
-    string = re.sub(r"(\w+)d\((.*?)\)", convert_degrees, string)
+    string = convert_degrees_recursive(string)
     string = re.sub(
         r"([\u2070-\u209f\u00b0-\u00be]+)",
         convert_superscript,
@@ -250,9 +273,7 @@ def preprocess(string: str) -> str:
     string = re.sub(r"arccsc\((.*?)\)", convert_arccsc, string)
     string = re.sub(r"cot\((.*?)\)", convert_cot, string)
     string = re.sub(r"sec\((.*?)\)", convert_sec, string)
-    string = re.sub(r"csc\((.*?)\)", convert_csc, string)
-    return string.lower()
-
+    return re.sub(r"csc\((.*?)\)", convert_csc, string)
 
 def string_to_function(equation_name: str) -> sympy.FunctionClass:
     """Convert a string into a sympy function."""
