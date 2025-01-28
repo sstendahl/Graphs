@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2025-01-16 17:22+0000\n"
-"PO-Revision-Date: 2025-01-17 10:29+0100\n"
+"POT-Creation-Date: 2025-01-28 14:32+0000\n"
+"PO-Revision-Date: 2025-01-28 18:04+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian <gnome-si@googlegroups.com>\n"
 "Language: sl\n"
@@ -117,8 +117,8 @@ msgstr "Ali želite izbrisati slog?"
 #: data/ui/dialogs/reset-import-settings.blp:8
 #: data/ui/dialogs/save-project-changes.blp:8
 #: data/ui/dialogs/save-style-changes.blp:8 data/ui/add-equation.blp:16
-#: data/ui/add-style.blp:15 data/ui/export-figure.blp:15 data/ui/import.blp:15
-#: data/ui/transform.blp:16
+#: data/ui/add-style.blp:15 data/ui/export-figure.blp:15
+#: data/ui/generate-data.blp:16 data/ui/import.blp:15 data/ui/transform.blp:16
 msgid "Cancel"
 msgstr "Prekliči"
 
@@ -177,16 +177,17 @@ msgstr "Dodaj enačbo"
 msgid "Add"
 msgstr "Dodaj"
 
-#: data/ui/add-equation.blp:35
+#: data/ui/add-equation.blp:35 data/ui/generate-data.blp:39
 msgid "Enter a mathematical expression"
 msgstr "Vnesite matematični izraz"
 
 #: data/ui/add-equation.blp:38 data/ui/curve-fitting.blp:66
-#: data/ui/edit-item.blp:46 data/ui/transform.blp:56
+#: data/ui/edit-item.blp:46 data/ui/generate-data.blp:42
+#: data/ui/transform.blp:56
 msgid "Y ="
 msgstr "Y ="
 
-#: data/ui/add-equation.blp:45
+#: data/ui/add-equation.blp:45 data/ui/generate-data.blp:48
 msgid "Name (optional)"
 msgstr "Ime (neobvezno)"
 
@@ -210,7 +211,7 @@ msgstr "Prileganje krivulj"
 msgid "Open Curve Fitting Menu"
 msgstr "Odprite meni za prileganje krivulje"
 
-#: data/ui/curve-fitting.blp:50 data/ui/edit-item.blp:42 graphs/item.py:118
+#: data/ui/curve-fitting.blp:50 data/ui/edit-item.blp:42 graphs/item.py:164
 msgid "Equation"
 msgstr "Enačba"
 
@@ -258,12 +259,12 @@ msgstr "po meri"
 msgid "Add Fit to Data"
 msgstr "Dodaj Prilagodi podatkom"
 
-#: data/ui/curve-fitting.blp:104 data/ui/window.blp:559 graphs/window.vala:345
+#: data/ui/curve-fitting.blp:104 data/ui/window.blp:563 graphs/window.vala:345
 msgid "Toggle Sidebar"
 msgstr "Preklopi stransko okno"
 
 #: data/ui/curve-fitting.blp:116 data/ui/style-editor-window.blp:66
-#: data/ui/window.blp:599
+#: data/ui/window.blp:603
 msgid "Canvas Failed to Load"
 msgstr "Platno se ni naložilo"
 
@@ -581,7 +582,7 @@ msgstr "Uvozi slog ..."
 msgid "Create Style…"
 msgstr "Ustvari slog ..."
 
-#: data/ui/figure-settings-page.blp:5 data/ui/window.blp:620
+#: data/ui/figure-settings-page.blp:5 data/ui/window.blp:624
 msgid "Figure Settings"
 msgstr "Nastavitve slike"
 
@@ -788,6 +789,26 @@ msgstr "Najmanj"
 msgid "Maximum"
 msgstr "Največ"
 
+#: data/ui/generate-data.blp:6
+msgid "Generate Data"
+msgstr "Tvori podatke"
+
+#: data/ui/generate-data.blp:22
+msgid "Generate"
+msgstr "Tvori"
+
+#: data/ui/generate-data.blp:60
+msgid "X Start"
+msgstr "X-začetek"
+
+#: data/ui/generate-data.blp:66
+msgid "X Stop"
+msgstr "X-konec"
+
+#: data/ui/generate-data.blp:74
+msgid "Steps"
+msgstr "Koraki"
+
 #: data/ui/import.blp:6
 msgid "Import Parameters"
 msgstr "Uvozi parametre"
@@ -901,7 +922,7 @@ msgstr "Odstrani element"
 msgid "Smoothen Settings"
 msgstr "Nastavitve glajenja"
 
-#: data/ui/smoothen-settings.blp:30 data/ui/window.blp:655
+#: data/ui/smoothen-settings.blp:30 data/ui/window.blp:660
 msgid "Savitzky–Golay Filter"
 msgstr "Filter Savitzky-Golay"
 
@@ -917,7 +938,7 @@ msgstr "Kolikšen odstotek podatkovnega razpona uporabiti za okno filtra"
 msgid "Polynomial degree"
 msgstr "Stopnja polinoma"
 
-#: data/ui/smoothen-settings.blp:48 data/ui/window.blp:660
+#: data/ui/smoothen-settings.blp:48 data/ui/window.blp:665
 msgid "Moving Average"
 msgstr "Drseče povprečje"
 
@@ -1158,12 +1179,12 @@ msgctxt "shortcut window"
 msgid "Save"
 msgstr "Shrani"
 
-#: data/ui/style-editor-shortcuts.blp:38 data/ui/window-shortcuts.blp:101
+#: data/ui/style-editor-shortcuts.blp:38 data/ui/window-shortcuts.blp:106
 msgctxt "shortcut window"
 msgid "Save Project"
 msgstr "Shrani projekt"
 
-#: data/ui/style-editor-shortcuts.blp:43 data/ui/window-shortcuts.blp:106
+#: data/ui/style-editor-shortcuts.blp:43 data/ui/window-shortcuts.blp:111
 msgctxt "shortcut window"
 msgid "Save Project As"
 msgstr "Shrani projekt kot"
@@ -1172,7 +1193,7 @@ msgstr "Shrani projekt kot"
 msgid "Error - No Style selected"
 msgstr "Napaka – slog ni izbran"
 
-#: data/ui/style-editor-window.blp:39 data/ui/window.blp:170
+#: data/ui/style-editor-window.blp:39 data/ui/window.blp:174
 msgid "Open Application Menu"
 msgstr "Odpri meni programa"
 
@@ -1184,15 +1205,15 @@ msgstr "Shrani slog ..."
 msgid "Save Style as…"
 msgstr "Shrani slog kot..."
 
-#: data/ui/style-editor-window.blp:78 data/ui/window.blp:623
+#: data/ui/style-editor-window.blp:78 data/ui/window.blp:627
 msgid "Keyboard Shortcuts"
 msgstr "Tipkovne bližnjice"
 
-#: data/ui/style-editor-window.blp:79 data/ui/window.blp:624
+#: data/ui/style-editor-window.blp:79 data/ui/window.blp:628
 msgid "Help"
 msgstr "Pomoč"
 
-#: data/ui/style-editor-window.blp:80 data/ui/window.blp:625
+#: data/ui/style-editor-window.blp:80 data/ui/window.blp:629
 msgid "About Graphs"
 msgstr "O programu Grafikoni"
 
@@ -1212,7 +1233,7 @@ msgstr "Izbriši …"
 msgid "Transform Data"
 msgstr "Pretvori podatke"
 
-#: data/ui/transform.blp:22 data/ui/window.blp:359
+#: data/ui/transform.blp:22 data/ui/window.blp:363
 msgid "Transform"
 msgstr "Preoblikuj"
 
@@ -1246,203 +1267,207 @@ msgstr "X ="
 msgid "Discard Unselected Data"
 msgstr "Zavrzi neizbrane podatke"
 
-#: data/ui/window.blp:162
+#: data/ui/window.blp:166
 msgid "Add New Data"
 msgstr "Dodaj nove podatke"
 
-#: data/ui/window.blp:199
+#: data/ui/window.blp:203
 msgid "No Data"
 msgstr "Ni podatkov"
 
-#: data/ui/window.blp:200
+#: data/ui/window.blp:204
 msgid "Add data from a file or manually as an equation"
 msgstr "Dodajanje podatkov iz datoteke ali ročno kot enačbo"
 
-#: data/ui/window.blp:221
+#: data/ui/window.blp:225
 msgid "Pan Mode. Click and drag to pan"
 msgstr "Način zasuka. Kliknite in povlecite za zasuk"
 
-#: data/ui/window.blp:227
+#: data/ui/window.blp:231
 msgid "Zoom Mode. Select an area on the figure to zoom in"
 msgstr "Način povečave. Izberite območje na sliki, ki ga želite približati"
 
-#: data/ui/window.blp:233
+#: data/ui/window.blp:237
 msgid "Select Mode. Click and drag to make a selection of data"
 msgstr "Izbirni način. Kliknite in povlecite, da opravite izbor podatkov"
 
-#: data/ui/window.blp:254
+#: data/ui/window.blp:258
 msgid "Adjust"
 msgstr "Prilagodi"
 
-#: data/ui/window.blp:270
+#: data/ui/window.blp:274
 msgid "Combine"
 msgstr "Združi"
 
-#: data/ui/window.blp:272
+#: data/ui/window.blp:276
 msgid "Combine all selected data"
 msgstr "Združi vse izbrane podatke"
 
-#: data/ui/window.blp:285
+#: data/ui/window.blp:289
 msgid "Cut"
 msgstr "Izreži"
 
-#: data/ui/window.blp:287
+#: data/ui/window.blp:291
 msgid "Cut selected data"
 msgstr "Izreži izbrane podatke"
 
-#: data/ui/window.blp:299
+#: data/ui/window.blp:303
 msgid "Shift"
 msgstr "Odmik"
 
-#: data/ui/window.blp:301
+#: data/ui/window.blp:305
 msgid "Shift all data vertically with respect to each other"
 msgstr "Zamaknite vse podatke navpično glede na druge"
 
-#: data/ui/window.blp:314
+#: data/ui/window.blp:318
 msgid "Normalize"
 msgstr "Normaliziraj"
 
-#: data/ui/window.blp:316
+#: data/ui/window.blp:320
 msgid "Normalize data"
 msgstr "Normaliziraj podatke"
 
-#: data/ui/window.blp:331
+#: data/ui/window.blp:335
 msgid "Smoothen"
 msgstr "Zgladi"
 
-#: data/ui/window.blp:333
+#: data/ui/window.blp:337
 msgid "Smoothen data"
 msgstr "Glajenje podatkov"
 
-#: data/ui/window.blp:348
+#: data/ui/window.blp:352
 msgid "Center"
 msgstr "Sredina"
 
-#: data/ui/window.blp:350
+#: data/ui/window.blp:354
 msgid "Center data"
 msgstr "Podatki na sredino"
 
-#: data/ui/window.blp:374
+#: data/ui/window.blp:378
 msgid "Derivative"
 msgstr "Odvod"
 
-#: data/ui/window.blp:376
+#: data/ui/window.blp:380
 msgid "Get the derivative of the data"
 msgstr "Pridobite odvod podatkov"
 
-#: data/ui/window.blp:389
+#: data/ui/window.blp:393
 msgid "Integral"
 msgstr "Integral"
 
-#: data/ui/window.blp:391
+#: data/ui/window.blp:395
 msgid "Get the indefinite integral of the data"
 msgstr "Pridobite neskončen integral podatkov"
 
-#: data/ui/window.blp:405
+#: data/ui/window.blp:409
 msgid "FFT"
 msgstr "FFT"
 
-#: data/ui/window.blp:407
+#: data/ui/window.blp:411
 msgid "Get the Fast Fourier Transform of the data"
 msgstr "Pridobite hitro Fourierevo transformacijo podatkov"
 
-#: data/ui/window.blp:421
+#: data/ui/window.blp:425
 msgid "Inverse FFT"
 msgstr "Inverzna FFT"
 
-#: data/ui/window.blp:423
+#: data/ui/window.blp:427
 msgid "Get the Inverse Fast Fourier Transform of the data"
 msgstr "Pridobite inverzno hitro Fourierevo transformacijo podatkov"
 
-#: data/ui/window.blp:437
+#: data/ui/window.blp:441
 msgid "Custom Transformation"
 msgstr "Preoblikovanje po meri"
 
-#: data/ui/window.blp:439
+#: data/ui/window.blp:443
 msgid "Perform custom transformations on the data"
 msgstr "Izvedite pretvorbe podatkov po meri"
 
-#: data/ui/window.blp:447
+#: data/ui/window.blp:451
 msgid "Modify"
 msgstr "Spremeni"
 
-#: data/ui/window.blp:467
+#: data/ui/window.blp:471
 msgid "Translate X"
 msgstr "Translacija X"
 
-#: data/ui/window.blp:490
+#: data/ui/window.blp:494
 msgid "Translate Y"
 msgstr "Translacija Y"
 
-#: data/ui/window.blp:513
+#: data/ui/window.blp:517
 msgid "Multiply X"
 msgstr "Množenje X"
 
-#: data/ui/window.blp:536
+#: data/ui/window.blp:540
 msgid "Multiply Y"
 msgstr "Množenje Y"
 
-#: data/ui/window.blp:566 graphs/window.vala:326
+#: data/ui/window.blp:570 graphs/window.vala:326
 msgid "Undo"
 msgstr "Razveljavi"
 
-#: data/ui/window.blp:571
+#: data/ui/window.blp:575
 msgid "Redo"
 msgstr "Ponovno uveljavi"
 
-#: data/ui/window.blp:576
+#: data/ui/window.blp:580
 msgid "View Menu"
 msgstr "Meni Pogled"
 
-#: data/ui/window.blp:584
+#: data/ui/window.blp:588
 msgid "Next View"
 msgstr "Naslednji pogled"
 
-#: data/ui/window.blp:590
+#: data/ui/window.blp:594
 msgid "Previous View"
 msgstr "Prejšnji pogled"
 
-#: data/ui/window.blp:608
+#: data/ui/window.blp:612
 msgid "New Project"
 msgstr "Nov projekt"
 
-#: data/ui/window.blp:611
+#: data/ui/window.blp:615
 msgid "Save Project…"
 msgstr "Shrani projekt …"
 
-#: data/ui/window.blp:612
+#: data/ui/window.blp:616
 msgid "Save Project as…"
 msgstr "Shrani projekt kot …"
 
-#: data/ui/window.blp:613
+#: data/ui/window.blp:617
 msgid "Open Project…"
 msgstr "Odpri projekt …"
 
-#: data/ui/window.blp:616
+#: data/ui/window.blp:620
 msgid "Export Data…"
 msgstr "Izvozi podatke …"
 
-#: data/ui/window.blp:617
+#: data/ui/window.blp:621
 msgid "Export Figure…"
 msgstr "Izvozi sliko ..."
 
-#: data/ui/window.blp:631
+#: data/ui/window.blp:635
 msgid "Add Data from File…"
 msgstr "Dodaj podatke iz datoteke ..."
 
-#: data/ui/window.blp:632
+#: data/ui/window.blp:636
 msgid "Add Equation…"
 msgstr "Dodaj enačbo ..."
 
-#: data/ui/window.blp:641
+#: data/ui/window.blp:637
+msgid "Generate Data…"
+msgstr "Tvori podatke …"
+
+#: data/ui/window.blp:646
 msgid "At Maximum Y Value"
 msgstr "Pri največji vrednosti Y"
 
-#: data/ui/window.blp:646
+#: data/ui/window.blp:651
 msgid "At Middle X Value"
 msgstr "Pri srednji vrednosti X"
 
-#: data/ui/window.blp:667
+#: data/ui/window.blp:672
 msgid "Advanced Settings"
 msgstr "Napredne nastavitve"
 
@@ -1478,125 +1503,130 @@ msgstr "Novi podatki"
 
 #: data/ui/window-shortcuts.blp:62
 msgctxt "shortcut window"
-msgid "Add Data from Equation"
-msgstr "Dodaj podatke iz enačbe"
-
-#: data/ui/window-shortcuts.blp:67
-msgctxt "shortcut window"
 msgid "Add Data from File"
 msgstr "Dodaj podatke iz datoteke"
 
+#: data/ui/window-shortcuts.blp:67
+msgctxt "shortcut window"
+msgid "Add Data from Equation"
+msgstr "Dodaj podatke iz enačbe"
+
 #: data/ui/window-shortcuts.blp:72
+msgctxt "shortcut window"
+msgid "Generate Data"
+msgstr "Tvori podatke"
+
+#: data/ui/window-shortcuts.blp:77
 msgctxt "shortcut window"
 msgid "New Project"
 msgstr "Nov projekt"
 
-#: data/ui/window-shortcuts.blp:77
+#: data/ui/window-shortcuts.blp:82
 msgctxt "shortcut window"
 msgid "Open Project"
 msgstr "Odpri projekt"
 
-#: data/ui/window-shortcuts.blp:82
+#: data/ui/window-shortcuts.blp:87
 msgctxt "shortcut window"
 msgid "Delete Selected Data"
 msgstr "Izbriši izbrane podatke"
 
-#: data/ui/window-shortcuts.blp:88
+#: data/ui/window-shortcuts.blp:93
 msgctxt "shortcut window"
 msgid "Save and Export"
 msgstr "Shrani in izvozi"
 
-#: data/ui/window-shortcuts.blp:91
+#: data/ui/window-shortcuts.blp:96
 msgctxt "shortcut window"
 msgid "Export Data"
 msgstr "Izvozi podatke"
 
-#: data/ui/window-shortcuts.blp:96
+#: data/ui/window-shortcuts.blp:101
 msgctxt "shortcut window"
 msgid "Export Figure"
 msgstr "Izvozi sliko"
 
-#: data/ui/window-shortcuts.blp:112
+#: data/ui/window-shortcuts.blp:117
 msgctxt "shortcut window"
 msgid "View"
 msgstr "Pogled"
 
-#: data/ui/window-shortcuts.blp:115
+#: data/ui/window-shortcuts.blp:120
 msgctxt "shortcut window"
 msgid "Previous View"
 msgstr "Prejšnji pogled"
 
-#: data/ui/window-shortcuts.blp:120
+#: data/ui/window-shortcuts.blp:125
 msgctxt "shortcut window"
 msgid "Next View"
 msgstr "Naslednji pogled"
 
-#: data/ui/window-shortcuts.blp:125
+#: data/ui/window-shortcuts.blp:130
 msgctxt "shortcut window"
 msgid "Optimize limits"
 msgstr "Optimizira omejitve"
 
-#: data/ui/window-shortcuts.blp:130
+#: data/ui/window-shortcuts.blp:135
 msgctxt "shortcut window"
 msgid "Zoom in"
 msgstr "Povečaj"
 
-#: data/ui/window-shortcuts.blp:135
+#: data/ui/window-shortcuts.blp:140
 msgctxt "shortcut window"
 msgid "Zoom out"
 msgstr "Oddalji"
 
-#: data/ui/window-shortcuts.blp:140 data/ui/window-shortcuts.blp:160
+#: data/ui/window-shortcuts.blp:145 data/ui/window-shortcuts.blp:165
 msgctxt "shortcut window"
 msgid "Select None"
 msgstr "Ne izberi ničesar"
 
-#: data/ui/window-shortcuts.blp:146
+#: data/ui/window-shortcuts.blp:151
 msgctxt "shortcut window"
 msgid "Toggle Sidebar"
 msgstr "Preklopi stransko okno"
 
-#: data/ui/window-shortcuts.blp:152
+#: data/ui/window-shortcuts.blp:157
 msgctxt "shortcut window"
 msgid "Actions"
 msgstr "Dejanja"
 
-#: data/ui/window-shortcuts.blp:155
+#: data/ui/window-shortcuts.blp:160
 msgctxt "shortcut window"
 msgid "Select All"
 msgstr "Izbere vse"
 
-#: data/ui/window-shortcuts.blp:165
+#: data/ui/window-shortcuts.blp:170
 msgctxt "shortcut window"
 msgid "Undo Action"
 msgstr "Razveljavi dejanje"
 
-#: data/ui/window-shortcuts.blp:170
+#: data/ui/window-shortcuts.blp:175
 msgctxt "shortcut window"
 msgid "Redo Action"
 msgstr "Ponovi dejanje"
 
-#: graphs/actions.vala:145 graphs/item_box.vala:59
+#: graphs/actions.vala:147 graphs/item_box.vala:59
 #, c-format
 msgid "Deleted %s"
 msgstr "Izbrisano %s"
 
-#: graphs/actions.vala:170
+#: graphs/actions.vala:172
 msgctxt "file-filter"
 msgid "Supported files"
 msgstr "Vse podprte datoteke"
 
-#: graphs/actions.vala:174
+#: graphs/actions.vala:176
 msgctxt "file-filter"
 msgid "ASCII files"
 msgstr "Datoteke ASCII"
 
-#: graphs/actions.vala:178
+#: graphs/actions.vala:180
 msgctxt "file-filter"
 msgid "PANalytical XRDML"
 msgstr "PANalitični XRDML"
 
-#: graphs/actions.vala:181
+#: graphs/actions.vala:183
 msgctxt "file-filter"
 msgid "Leybold xry"
 msgstr "Leybold xry"
@@ -1648,22 +1678,22 @@ msgstr "Vsota R²: {R2}"
 msgid "Fitting Parameters for %s"
 msgstr "Parametri prileganja za %s"
 
-#: graphs/data.py:94
+#: graphs/data.py:100
 #, python-brace-format
 msgid "Could not parse {stylename}, loading system preferred style"
 msgstr ""
 "Ni bilo mogoče razčleniti {stylename}; nalaga se prednostni sistemski slog"
 
-#: graphs/data.py:99
+#: graphs/data.py:105
 #, python-brace-format
 msgid "Plot style {stylename} does not exist loading system preferred"
 msgstr "Slog grafa {stylename} ne obstaja; nalaga se prednostni sistemski slog"
 
-#: graphs/data.py:546
+#: graphs/data.py:554
 msgid "Failed to parse project file"
 msgstr "Razčlenjevanje projektne datoteke ni uspelo"
 
-#: graphs/data.py:552
+#: graphs/data.py:560
 msgid "Failed to load project"
 msgstr "Nalaganje projekta ni uspelo"
 
@@ -1681,52 +1711,56 @@ msgctxt "file-filter"
 msgid "Text Files"
 msgstr "Besedilne datoteke"
 
-#: graphs/figure_settings.vala:159
+#: graphs/figure_settings.vala:166
 msgid "X Axis Minimum"
 msgstr "Najmanjša vrednost na osi X"
 
-#: graphs/figure_settings.vala:160
+#: graphs/figure_settings.vala:167
 msgid "Y Axis Minimum"
 msgstr "Najmanjša vrednost na osi Y"
 
-#: graphs/figure_settings.vala:162
+#: graphs/figure_settings.vala:169
 msgid "X Axis Maximum"
 msgstr "Največja vrednost na osi X"
 
-#: graphs/figure_settings.vala:163
+#: graphs/figure_settings.vala:170
 msgid "Y Axis Maximum"
 msgstr "Največja vrednost na osi Y"
 
-#: graphs/figure_settings.vala:173 graphs/window.vala:387
+#: graphs/figure_settings.vala:180 graphs/window.vala:387
 msgid "X Axis Scale"
 msgstr "Merilo osi X"
 
-#: graphs/figure_settings.vala:174 graphs/figure_settings.vala:178
+#: graphs/figure_settings.vala:181 graphs/figure_settings.vala:185
 msgid "X Axis Label"
 msgstr "Oznaka osi X"
 
-#: graphs/figure_settings.vala:177 graphs/window.vala:392
+#: graphs/figure_settings.vala:184 graphs/window.vala:392
 msgid "Y Axis Scale"
 msgstr "Merilo osi Y"
 
-#: graphs/figure_settings.vala:277
+#: graphs/figure_settings.vala:284
 msgid "Defaults Updated"
 msgstr "Privzete nastavitve so posodobljene"
 
-#: graphs/figure_settings.vala:308
+#: graphs/figure_settings.vala:315
 #, c-format
 msgid "Are you sure you want to delete %s?"
 msgstr "Ali ste prepričani, da želite izbrisati %s?"
 
-#: graphs/item.py:88
+#: graphs/item.py:69
 msgid "Dataset"
 msgstr "Nabor podatkov"
 
-#: graphs/item.py:166
+#: graphs/item.py:106
+msgid "Generated Dataset"
+msgstr "Ustvarjen nabor podatkov"
+
+#: graphs/item.py:209
 msgid "Label"
 msgstr "Oznaka"
 
-#: graphs/item.py:182
+#: graphs/item.py:238
 msgid "Fill"
 msgstr "Polnilo"
 
@@ -1739,15 +1773,15 @@ msgstr "Datoteka sloga Matplotlib"
 msgid "Unable to perform transformation, make sure the syntax is correct"
 msgstr "Pretvorbe ni mogoče izvesti, preverite, ali je skladnja pravilna"
 
-#: graphs/operations.py:294 graphs/operations.py:600
+#: graphs/operations.py:295 graphs/operations.py:601
 msgid "No data found within the highlighted area"
 msgstr "Znotraj poudarjenega območja ni najdenih podatkov"
 
-#: graphs/operations.py:305
+#: graphs/operations.py:306
 msgid "Combined Data"
 msgstr "Združeni podatki"
 
-#: graphs/operations.py:438
+#: graphs/operations.py:439
 #, python-brace-format
 msgid ""
 "The operation on {item.props.name} did not result in a plottable equation"
@@ -1755,11 +1789,11 @@ msgstr ""
 "Operacija na {item.props.name} ni privedla do enačbe, ki bi jo bilo možno "
 "izrisati"
 
-#: graphs/operations.py:446
+#: graphs/operations.py:447
 msgid "Operation not supported for equations."
 msgstr "Operacija ni podprta za enačbe."
 
-#: graphs/operations.py:606
+#: graphs/operations.py:607
 msgid "Operation not supported for data items"
 msgstr "Operacija ni podprta za podatkovne elemente"
 
@@ -1768,7 +1802,7 @@ msgstr "Operacija ni podprta za podatkovne elemente"
 msgid "{name}: Error performing the operation"
 msgstr "{name}: Napaka pri izvajanju operacije"
 
-#: graphs/operations.py:617
+#: graphs/operations.py:618
 msgid "Data that was outside of the highlighted area has been discarded"
 msgstr "Podatki zunaj poudarjenega območja so bili zavrženi"
 
@@ -1877,15 +1911,15 @@ msgstr "Sistem"
 msgid "All Files"
 msgstr "Vse datoteke"
 
-#: graphs/window.py:36
+#: graphs/window.py:38
 msgid "Untitled Project"
 msgstr "Neimenovan projekt"
 
-#: graphs/window.py:37
+#: graphs/window.py:39
 msgid "Draft"
 msgstr "Osnutek"
 
-#: graphs/window.py:49
+#: graphs/window.py:51
 msgid "Document Portal"
 msgstr "Portal dokumentov"
 
