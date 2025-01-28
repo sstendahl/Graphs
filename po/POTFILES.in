@@ -14,6 +14,7 @@ data/ui/export-figure.blp
 data/ui/figure-settings-dialog.blp
 data/ui/figure-settings-page.blp
 data/ui/fitting-parameters.blp
+data/ui/generate-data.blp
 data/ui/import.blp
 data/ui/import-columns.blp
 data/ui/item-box.blp
@@ -45,6 +46,7 @@ graphs/figure_settings.vala
 graphs/file_import.py
 graphs/file_import.vala
 graphs/file_io.py
+graphs/generate_data.vala
 graphs/inline-stack-switcher.vala
 graphs/item.py
 graphs/item.vala
