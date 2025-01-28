@@ -9,7 +9,7 @@ from graphs import (
     file_import,
     utilities,
 )
-from graphs.item import EquationItem
+from graphs.item import EquationItem, GeneratedDataItem
 from graphs.style_editor import PythonStyleEditor
 from graphs.window import PythonWindow
 
@@ -21,6 +21,7 @@ _REQUEST_NAMES = (
     "import_from_files_request",
     "export_items_request",
     "add_equation_request",
+    "generate_data_request",
     "validate_equation_request",
     "create_style_editor_request",
     "create_window_request",
@@ -107,6 +108,32 @@ class PythonHelper(Graphs.PythonHelper):
             EquationItem.new(
                 data.get_selected_style_params(),
                 equation,
+                name=name,
+            ),
+        ])
+        data.optimize_limits()
+
+    @staticmethod
+    def _on_generate_data_request(
+        self,
+        window: Graphs.Window,
+        name: str,
+    ) -> None:
+        settings = self.props.application.get_settings_child("generate-data")
+        equation = settings.get_string("equation")
+        xstart = utilities.string_to_float(settings.get_string("xstart"))
+        xstop = utilities.string_to_float(settings.get_string("xstop"))
+        steps = settings.get_int("steps")
+        if name == "":
+            name = f"Y = {settings.get_string('equation')}"
+        data = window.get_data()
+        data.add_items([
+            GeneratedDataItem.new(
+                data.get_selected_style_params(),
+                equation,
+                xstart,
+                xstop,
+                steps,
                 name=name,
             ),
         ])

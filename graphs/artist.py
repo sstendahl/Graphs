@@ -22,6 +22,8 @@ def new_for_item(canvas: Graphs.Canvas, item: Graphs.Item):
     match item.__gtype_name__:
         case "GraphsDataItem":
             cls = DataItemArtistWrapper
+        case "GraphsGeneratedDataItem":
+            cls = DataItemArtistWrapper
         case "GraphsEquationItem":
             cls = EquationItemArtistWrapper
         case "GraphsFillItem":

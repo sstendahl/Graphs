@@ -30,6 +30,10 @@ template $GraphsWindow: Adw.ApplicationWindow {
       action: "action(win.add_equation)";
     }
     Shortcut {
+      trigger: "<control><shift>N";
+      action: "action(win.generate_data)";
+    }
+    Shortcut {
       trigger: "<control>A";
       action: "action(win.select_all)";
     }
@@ -630,6 +634,7 @@ menu add_data_menu {
   section {
     item (_("Add Data from File…"), "win.add_data")
     item (_("Add Equation…"), "win.add_equation")
+    item (_("Generate Data…"), "win.generate_data")
   }
 }
 

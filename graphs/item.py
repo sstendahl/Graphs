@@ -6,12 +6,16 @@ from gi.repository import GObject, Graphs
 
 from graphs import misc, utilities
 
+from matplotlib import rcParams
+
 
 def new_from_dict(dictionary: dict):
     """Instanciate item from dict."""
     match dictionary["type"]:
         case "GraphsDataItem":
             cls = DataItem
+        case "GraphsGeneratedDataItem":
+            cls = GeneratedDataItem
         case "GraphsEquationItem":
             cls = EquationItem
         case "GraphsTextItem":
@@ -19,7 +23,7 @@ def new_from_dict(dictionary: dict):
         case "GraphsFillItem":
             cls = FillItem
         case _:
-            pass
+            raise ValueError(f"could not find type {dictionary['type']}")
     dictionary.pop("type")
     return cls(**dictionary)
 
@@ -27,6 +31,9 @@ def new_from_dict(dictionary: dict):
 class _PythonItem(Graphs.Item):
 
     __gtype_name__ = "GraphsPythonItem"
+
+    def __init__(self, **kwargs):
+        super().__init__(typename=self._typename, **kwargs)
 
     def reset(self, old_style, new_style):
         """Reset all properties."""
@@ -59,6 +66,7 @@ class DataItem(_PythonItem):
     """DataItem."""
 
     __gtype_name__ = "GraphsDataItem"
+    _typename = _("Dataset")
 
     xdata = GObject.Property(type=object)
     ydata = GObject.Property(type=object)
@@ -85,16 +93,75 @@ class DataItem(_PythonItem):
         )
 
     def __init__(self, **kwargs):
-        super().__init__(typename=_("Dataset"), **kwargs)
+        super().__init__(**kwargs)
         for prop in ("xdata", "ydata"):
             if self.get_property(prop) is None:
                 self.set_property(prop, [])
+
+
+class GeneratedDataItem(DataItem):
+    """Generated Dataitem."""
+
+    __gtype_name__ = "GraphsGeneratedDataItem"
+    _typename = _("Generated Dataset")
+
+    xstart = GObject.Property(type=float, default=0)
+    xstop = GObject.Property(type=float, default=10)
+    steps = GObject.Property(type=int, default=100)
+
+    @classmethod
+    def new(
+        cls,
+        style: rcParams,
+        equation: str,
+        xstart: float,
+        xstop: float,
+        steps: int,
+        **kwargs,
+    ):
+        """Create new GeneratedDataItem."""
+        return cls(
+            equation=equation,
+            xstart=xstart,
+            xstop=xstop,
+            steps=steps,
+            **cls._extract_params(cls, style),
+            **kwargs,
+        )
+
+    def __init__(self, **kwargs):
+        self._equation = ""
+        super().__init__(**kwargs)
+        self.regenerate()
+
+    @GObject.Property(type=str)
+    def equation(self) -> str:
+        """Equation."""
+        return self._equation
+
+    @equation.setter
+    def equation(self, equation: str) -> None:
+        old_equation = self._equation
+        valid_equation = utilities.validate_equation(str(equation))
+        if old_equation == equation or not valid_equation:
+            return
+        self._equation = equation
+        self.notify("equation")
+
+    def regenerate(self) -> None:
+        """Regenerate Data."""
+        self.props.xdata, self.props.ydata = utilities.equation_to_data(
+            self._equation,
+            [self.props.xstart, self.props.xstop],
+            self.props.steps,
+        )
 
 
 class EquationItem(_PythonItem):
     """EquationItem."""
 
     __gtype_name__ = "GraphsEquationItem"
+    _typename = _("Equation")
 
     linestyle = GObject.Property(type=int, default=1)
     linewidth = GObject.Property(type=float, default=3)
@@ -115,7 +182,7 @@ class EquationItem(_PythonItem):
 
     def __init__(self, **kwargs):
         self._equation = ""
-        super().__init__(typename=_("Equation"), **kwargs)
+        super().__init__(**kwargs)
 
     @GObject.Property(type=str)
     def equation(self) -> str:
@@ -139,6 +206,7 @@ class TextItem(_PythonItem):
     """TextItem."""
 
     __gtype_name__ = "GraphsTextItem"
+    _typename = _("Label")
 
     xanchor = GObject.Property(type=float, default=0)
     yanchor = GObject.Property(type=float, default=0)
@@ -162,14 +230,12 @@ class TextItem(_PythonItem):
             **kwargs,
         )
 
-    def __init__(self, **kwargs):
-        super().__init__(typename=_("Label"), **kwargs)
-
 
 class FillItem(_PythonItem):
     """FillItem."""
 
     __gtype_name__ = "GraphsFillItem"
+    _typename = _("Fill")
 
     data = GObject.Property(type=object)
 
@@ -179,7 +245,7 @@ class FillItem(_PythonItem):
         return cls(data=data, **kwargs)
 
     def __init__(self, **kwargs):
-        super().__init__(typename=_("Fill"), **kwargs)
+        super().__init__(**kwargs)
         if self.props.data is None:
             self.props.data = (None, None, None)
 

@@ -73,6 +73,7 @@ blueprint_files = [
   'ui/figure-settings-dialog.blp',
   'ui/figure-settings-page.blp',
   'ui/fitting-parameters.blp',
+  'ui/generate-data.blp',
   'ui/import.blp',
   'ui/import-columns.blp',
   'ui/item-box.blp',

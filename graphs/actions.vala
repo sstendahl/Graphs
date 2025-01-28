@@ -219,6 +219,12 @@ namespace Graphs {
             });
             window.add_action (add_equation_action);
 
+            var generate_data_action = new SimpleAction ("generate_data", null);
+            generate_data_action.activate.connect (() => {
+                new GenerateDataDialog (window);
+            });
+            window.add_action (generate_data_action);
+
             var export_figure_action = new SimpleAction ("export_figure", null);
             export_figure_action.activate.connect (() => {
                 new ExportFigureDialog (window);
