@@ -1,14 +1,15 @@
 {
     "id" : "se.sjoerd.Graphs",
     "runtime" : "org.gnome.Platform",
-    "runtime-version" : "46",
+    "runtime-version" : "47",
     "sdk" : "org.gnome.Sdk",
     "command" : "graphs",
     "finish-args" : [
         "--share=ipc",
         "--socket=wayland",
         "--socket=fallback-x11",
-        "--device=dri"
+        "--device=dri",
+        "--env=NUMEXPR_MAX_THREADS=16"
     ],
     "cleanup" : [
         "/include",

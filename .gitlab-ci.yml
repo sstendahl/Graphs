@@ -3,7 +3,7 @@ include:
     file: "flatpak/flatpak_ci_initiative.yml"
 
 .vars:
-  image: quay.io/gnome_infrastructure/gnome-runtime-images:gnome-46
+  image: quay.io/gnome_infrastructure/gnome-runtime-images:gnome-47
   variables:
     MANIFEST_PATH: se.sjoerd.Graphs.json
     FLATPAK_MODULE: graphs
@@ -28,7 +28,7 @@ flatpak@aarch64:
     - .vars
 
 python-lint:
-  image: python:3.11.1
+  image: python:3.12.6
   stage: .pre
   script:
     - pip install flake8 flake8-docstrings flake8-simplify flake8-unused-arguments flake8-quotes flake8-bugbear flake8-pie flake8-print flake8-warnings flake8-commas flake8-builtins flake8-import-order pep8-naming
