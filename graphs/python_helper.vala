@@ -46,14 +46,14 @@ namespace Graphs {
             export_items_request.emit (window, mode, file, items);
         }
 
-        protected signal void add_equation_request (Window window, string name);
-        public void add_equation (Window window, string name) {
-            add_equation_request.emit (window, name);
+        protected signal Item add_equation_request (Window window, string name);
+        public Item add_equation (Window window, string name) {
+            return add_equation_request.emit (window, name);
         }
 
-        protected signal void generate_data_request (Window window, string name);
-        public void generate_data (Window window, string name) {
-            generate_data_request.emit (window, name);
+        protected signal Item generate_data_request (Window window, string name);
+        public Item generate_data (Window window, string name) {
+            return generate_data_request.emit (window, name);
         }
 
         protected signal StyleEditor create_style_editor_request ();

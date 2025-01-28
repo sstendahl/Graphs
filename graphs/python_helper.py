@@ -98,27 +98,23 @@ class PythonHelper(Graphs.PythonHelper):
         self,
         window: Graphs.Window,
         name: str,
-    ) -> None:
+    ) -> EquationItem:
         settings = self.props.application.get_settings_child("add-equation")
         equation = settings.get_string("equation")
         if name == "":
             name = f"Y = {settings.get_string('equation')}"
-        data = window.get_data()
-        data.add_items([
-            EquationItem.new(
-                data.get_selected_style_params(),
-                equation,
-                name=name,
-            ),
-        ])
-        data.optimize_limits()
+        return EquationItem.new(
+            window.get_data().get_selected_style_params(),
+            equation,
+            name=name,
+        )
 
     @staticmethod
     def _on_generate_data_request(
         self,
         window: Graphs.Window,
         name: str,
-    ) -> None:
+    ) -> GeneratedDataItem:
         settings = self.props.application.get_settings_child("generate-data")
         equation = settings.get_string("equation")
         xstart = utilities.string_to_float(settings.get_string("xstart"))
@@ -126,18 +122,14 @@ class PythonHelper(Graphs.PythonHelper):
         steps = settings.get_int("steps")
         if name == "":
             name = f"Y = {settings.get_string('equation')}"
-        data = window.get_data()
-        data.add_items([
-            GeneratedDataItem.new(
-                data.get_selected_style_params(),
-                equation,
-                xstart,
-                xstop,
-                steps,
-                name=name,
-            ),
-        ])
-        data.optimize_limits()
+        return GeneratedDataItem.new(
+            window.get_data().get_selected_style_params(),
+            equation,
+            xstart,
+            xstop,
+            steps,
+            name=name,
+        )
 
     @staticmethod
     def _on_create_style_editor_request(self) -> Graphs.StyleEditor:
