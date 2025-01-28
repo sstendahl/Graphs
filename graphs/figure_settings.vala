@@ -112,11 +112,6 @@ namespace Graphs {
             GLib.Settings settings = application.get_settings_child ("figure");
 
             var builder = new Builder.from_resource (PAGE_RESOURCE);
-            string[] entry_rows = { "min_bottom", "max_bottom", "min_top", "max_top" };
-            foreach (var row_name in entry_rows) {
-                var entry_row = builder.get_object (row_name) as Adw.EntryRow;
-                entry_row.changed.connect ( () => window.canvas.view_changed () );
-            }
 
             this.settings_page = builder.get_object ("settings_page") as Adw.NavigationPage;
             navigation_view.push (settings_page);
@@ -160,6 +155,7 @@ namespace Graphs {
                             } else {
                                 entry.remove_css_class ("error");
                                 figure_settings.set (key, (double) new_val);
+                                window.canvas.view_changed ();
                             }
                         });
                         if (s == "min") {
