@@ -1,13 +1,14 @@
 using Gtk 4.0;
 using Adw 1;
 
-template $GraphsEditItemDialog : Adw.PreferencesDialog {
+template $GraphsEditItemDialog: Adw.PreferencesDialog {
   notify::item => $on_item_change();
   closed => $on_close();
 
   Adw.PreferencesPage {
     Adw.PreferencesGroup item_selector_group {
       visible: false;
+
       Adw.ComboRow item_selector {
         title: _("Selected Item");
         subtitle: _("Choose which item to edit");
@@ -25,15 +26,23 @@ template $GraphsEditItemDialog : Adw.PreferencesDialog {
 
       Adw.ComboRow xposition {
         title: _("X-Axis Position");
+
         model: StringList {
-          strings [_("Bottom"), _("Top")]
+          strings [
+            _("Bottom"),
+            _("Top"),
+          ]
         };
       }
 
       Adw.ComboRow yposition {
         title: _("Y-Axis Position");
+
         model: StringList {
-          strings [_("Left"), _("Right")]
+          strings [
+            _("Left"),
+            _("Right"),
+          ]
         };
       }
     }
@@ -41,11 +50,13 @@ template $GraphsEditItemDialog : Adw.PreferencesDialog {
     Adw.PreferencesGroup equation_group {
       title: _("Equation");
       visible: false;
+
       Adw.EntryRow equation {
         max-width-chars: 25;
         title: _("Y =");
         changed => $on_equation_change();
       }
+
       Adw.ButtonRow simplify {
         title: _("Simplify");
         activated => $on_simplify();
@@ -58,6 +69,8 @@ template $GraphsEditItemDialog : Adw.PreferencesDialog {
 
       Adw.ComboRow linestyle {
         title: _("Linestyle");
+        notify::selected => $on_linestyle();
+
         model: StringList {
           strings [
             C_("linestyle", "None"),
@@ -67,25 +80,28 @@ template $GraphsEditItemDialog : Adw.PreferencesDialog {
             C_("linestyle", "Dashdot"),
           ]
         };
-        notify::selected => $on_linestyle();
       }
 
       Adw.ActionRow {
         title: _("Linewidth");
         visible: bind linewidth.sensitive;
+        sensitive: false;
+
         Scale linewidth {
           draw-value: true;
           width-request: 200;
+
           adjustment: Adjustment {
             lower: 0;
             upper: 10;
           };
-        sensitive: false;
         }
       }
 
       Adw.ComboRow markerstyle {
         title: _("Markers");
+        notify::selected => $on_markers();
+
         model: StringList {
           strings [
             C_("markerstyle", "None"),
@@ -114,20 +130,21 @@ template $GraphsEditItemDialog : Adw.PreferencesDialog {
             C_("markerstyle", "Filled X"),
           ]
         };
-        notify::selected => $on_markers();
       }
 
       Adw.ActionRow {
         title: _("Marker Size");
         visible: bind markersize.sensitive;
+        sensitive: false;
+
         Scale markersize {
           draw-value: true;
           width-request: 200;
+
           adjustment: Adjustment {
             lower: 0;
             upper: 10;
           };
-        sensitive: false;
         }
       }
     }

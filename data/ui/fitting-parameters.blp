@@ -1,54 +1,65 @@
 using Gtk 4.0;
 using Adw 1;
 
-template $GraphsFittingParameterBox : Box {
+template $GraphsFittingParameterBox: Box {
   orientation: vertical;
+
   Grid {
     column-homogeneous: true;
     margin-bottom: 3;
     margin-top: 3;
     column-spacing: 4;
     row-spacing: 4;
+
     Label label {
       justify: left;
       use-markup: true;
       margin-bottom: 4;
       hexpand: false;
       halign: start;
+
       layout {
         column: 0;
         row: 0;
         column-span: 2;
       }
     }
+
     Adw.PreferencesGroup {
       Adw.EntryRow initial {
         title: _("Initial Guess");
         text: "1";
       }
+
       layout {
         column: 0;
         row: 1;
         column-span: 2;
       }
     }
+
     Adw.PreferencesGroup {
       visible: bind lower_bound.visible;
+
       Adw.EntryRow lower_bound {
         title: _("Minimum");
         text: "-inf";
       }
+
       layout {
         column: 0;
         row: 2;
       }
     }
+
     Adw.PreferencesGroup {
       visible: bind upper_bound.visible;
+
       Adw.EntryRow upper_bound {
         title: _("Maximum");
         text: "inf";
       }
+
       layout {
         column: 1;
         row: 2;

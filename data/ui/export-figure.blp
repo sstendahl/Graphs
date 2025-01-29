@@ -1,7 +1,7 @@
 using Gtk 4.0;
 using Adw 1;
 
-template $GraphsExportFigureDialog : Adw.Dialog {
+template $GraphsExportFigureDialog: Adw.Dialog {
   content-width: 450;
   title: _("Export Figure");
   focus-widget: confirm_button;
@@ -10,6 +10,7 @@ template $GraphsExportFigureDialog : Adw.Dialog {
     [top]
     Adw.HeaderBar {
       show-end-title-buttons: false;
+
       [start]
       Button {
         label: _("Cancel");
@@ -19,8 +20,11 @@ template $GraphsExportFigureDialog : Adw.Dialog {
       [end]
       Button confirm_button {
         label: _("Export");
-        styles ["suggested-action"]
         clicked => $on_accept();
+
+        styles [
+          "suggested-action"
+        ]
       }
     }
 
@@ -29,10 +33,14 @@ template $GraphsExportFigureDialog : Adw.Dialog {
       margin-end: 12;
       margin-top: 12;
       margin-bottom: 12;
+
       Adw.PreferencesGroup {
         focus-on-click: false;
+
         Adw.ComboRow file_format {
           title: _("File Format");
+          notify::selected => $on_file_format();
+
           model: StringList {
             strings [
               C_("file-format", "Encapsulated PostScript"),
@@ -44,15 +52,17 @@ template $GraphsExportFigureDialog : Adw.Dialog {
               C_("file-format", "WebP"),
             ]
           };
-          notify::selected => $on_file_format();
         }
+
         Adw.SpinRow dpi {
           title: _("Resolution (dpi)");
+
           adjustment: Adjustment {
-              step-increment: 1;
-              upper: 999;
+            step-increment: 1;
+            upper: 999;
           };
         }
+
         Adw.SwitchRow transparent {
           title: _("Transparent Background");
         }

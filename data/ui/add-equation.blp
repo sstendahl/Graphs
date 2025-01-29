@@ -1,7 +1,7 @@
 using Gtk 4.0;
 using Adw 1;
 
-template $GraphsAddEquationDialog : Adw.Dialog {
+template $GraphsAddEquationDialog: Adw.Dialog {
   content-width: 450;
   title: _("Add Equation");
   default-widget: confirm_button;
@@ -11,6 +11,7 @@ template $GraphsAddEquationDialog : Adw.Dialog {
     [top]
     Adw.HeaderBar {
       show-end-title-buttons: false;
+
       [start]
       Button {
         label: _("Cancel");
@@ -20,8 +21,11 @@ template $GraphsAddEquationDialog : Adw.Dialog {
       [end]
       Button confirm_button {
         label: _("Add");
-        styles ["suggested-action"]
         clicked => $on_accept();
+
+        styles [
+          "suggested-action",
+        ]
       }
     }
 
@@ -30,16 +34,22 @@ template $GraphsAddEquationDialog : Adw.Dialog {
       margin-end: 12;
       margin-top: 12;
       margin-bottom: 12;
+
       Adw.PreferencesGroup {
         separate-rows: true;
         description: _("Enter a mathematical expression");
+
         Adw.EntryRow equation {
           max-width-chars: 25;
           title: _("Y =");
           activates-default: true;
           notify::text => $on_equation_change();
-          styles ["preferencesgroup"]
+
+          styles [
+            "preferencesgroup",
+          ]
         }
+
         Adw.EntryRow item_name {
           max-width-chars: 25;
           title: _("Name (optional)");

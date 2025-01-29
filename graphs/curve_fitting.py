@@ -83,7 +83,7 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
         self.set_canvas(canvas)
 
     @staticmethod
-    def on_equation_change(self, equation: str) -> None:
+    def on_equation_change(self, equation: str) -> bool:
         """
         Logic to execute whenever the equation is changed.
 
@@ -95,7 +95,7 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
         free_variables = utilities.get_free_variables(processed_equation)
         if len(free_variables) == 0:
             self.set_results(error="equation")
-            return
+            return False
         self.fitting_parameters.update(free_variables)
         fit = self.fit_curve()
         if not fit:
@@ -163,7 +163,7 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
                     entries.get_initial().add_css_class("error")
                     self.set_results(error="bounds")
                     error = True
-                if not lower_bound < upper_bound:
+                if lower_bound >= upper_bound:
                     entries.get_lower_bound().add_css_class("error")
                     entries.get_upper_bound().add_css_class("error")
                     error = True
@@ -248,7 +248,7 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
 
         function = utilities.string_to_function(self.get_equation_string())
         if function is None:
-            return
+            return False
         try:
             self.param, self.param_cov = curve_fit(
                 function,
@@ -261,7 +261,7 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
         except (ValueError, TypeError, _minpack.error, RuntimeError):
             # Cancel fit if not successful
             self.set_results(error="equation")
-            return
+            return False
         xdata = numpy.linspace(
             min(self.data_curve.xdata),
             max(self.data_curve.xdata),

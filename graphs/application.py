@@ -10,7 +10,7 @@ class PythonApplication(Graphs.Application):
 
     __gtype_name__ = "GraphsPythonApplication"
 
-    def __init__(self, application_id, **kwargs):
+    def __init__(self, application_id: str, **kwargs):
         super().__init__(
             application_id=application_id,
             flags=Gio.ApplicationFlags.HANDLES_OPEN,

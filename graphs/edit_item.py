@@ -46,7 +46,7 @@ class EditItemDialog(Adw.PreferencesDialog):
     model = GObject.Property(type=Gtk.StringList)
     bindings = GObject.Property(type=object)
 
-    def __init__(self, window, item):
+    def __init__(self, window: Graphs.Window, item: Graphs.Item):
         data = window.get_data()
         super().__init__(
             data=data,
@@ -63,7 +63,7 @@ class EditItemDialog(Adw.PreferencesDialog):
             self.equation.set_text(item.props.equation)
 
     @Gtk.Template.Callback()
-    def on_equation_change(self, entry_row) -> None:
+    def on_equation_change(self, entry_row: Adw.EntryRow) -> None:
         """Handle equation change."""
         equation = entry_row.get_text()
         if utilities.validate_equation(equation):
@@ -136,11 +136,11 @@ class EditItemDialog(Adw.PreferencesDialog):
         self.props.data.add_history_state()
 
     @Gtk.Template.Callback()
-    def on_linestyle(self, comborow, _b) -> None:
+    def on_linestyle(self, comborow: Adw.ComboRow, _b) -> None:
         """Handle linestyle selection."""
         self.linewidth.set_sensitive(comborow.get_selected() != 0)
 
     @Gtk.Template.Callback()
-    def on_markers(self, comborow, _b) -> None:
+    def on_markers(self, comborow: Adw.ComboRow, _b) -> None:
         """Handle marker selection."""
         self.markersize.set_sensitive(comborow.get_selected() != 0)

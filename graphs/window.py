@@ -32,7 +32,7 @@ class PythonWindow(Graphs.Window):
         self._reload_canvas()
         self._on_unsaved_changed(self.props.data, None)
 
-    def _on_unsaved_changed(self, data, _a) -> None:
+    def _on_unsaved_changed(self, data: Graphs.Data, _a) -> None:
         file = data.get_file()
         if file is None:
             title = _("Untitled Project")
@@ -54,7 +54,11 @@ class PythonWindow(Graphs.Window):
         self.props.content_title.set_title(title)
         self.props.content_title.set_subtitle(path)
 
-    def _on_style_changed(self, data, recolor_items) -> None:
+    def _on_style_changed(
+        self,
+        data: Graphs.Data,
+        recolor_items: bool,
+    ) -> None:
         """Handle style change."""
         if recolor_items:
             old_style = data.get_old_selected_style_params()
