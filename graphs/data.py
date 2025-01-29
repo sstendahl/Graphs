@@ -45,6 +45,7 @@ class Data(Graphs.Data):
         self.connect("delete_request", self._on_delete_request)
         self.connect("position_changed", self._on_position_changed)
         self.connect("load_request", self._on_load_request)
+        self.connect("item_added", self._on_item_added)
 
     @staticmethod
     def _on_python_method_request(self, method: str) -> None:
@@ -90,10 +91,14 @@ class Data(Graphs.Data):
                         if style.get_mutable():
                             validate = style_manager.get_system_style_params()
                         self._old_style_params = self._selected_style_params
-                        self._selected_style_params = style_io.parse(
+                        style_params = style_io.parse(
                             style.get_file(),
                             validate,
                         )[0]
+                        self._selected_style_params = style_params
+                        self.set_color_cycle(
+                            style_params["axes.prop_cycle"].by_key()["color"],
+                        )
                         return
                     except (ValueError, SyntaxError, AttributeError):
                         error_msg = _(
@@ -110,92 +115,18 @@ class Data(Graphs.Data):
             logging.warning(error_msg)
         self._old_style_params = self._selected_style_params
         self._selected_style_params = style_manager.get_system_style_params()
+        self.set_color_cycle(
+            self._selected_style_params["axes.prop_cycle"].by_key()["color"],
+        )
 
     @staticmethod
     def _on_position_changed(self, index1: int, index2: int) -> None:
         """Change item position of index2 to that of index1."""
         self._current_batch.append((3, (index2, index1)))
 
-    def add_items(self, items: misc.ItemList) -> None:
-        """
-        Add items to be managed.
-
-        Respects settings in regards to handling duplicate names.
-        New Items with a x- or y-label change the figures current labels if
-        they are still the default. If they are already modified and do not
-        match the items label, they get moved to another axis.
-        """
-        figure_settings = self.get_figure_settings()
-        settings = self.get_application().get_settings_child("figure")
-        color_cycle = self._selected_style_params["axes.prop_cycle"].by_key(
-        )["color"]
-        used_colors = []
-
-        def _append_used_color(color):
-            used_colors.append(color)
-            if len(set(used_colors)) == len(color_cycle):
-                for color in color_cycle:
-                    used_colors.remove(color)
-
-        def _is_default(prop):
-            return figure_settings.get_property(prop) == \
-                settings.get_string(prop)
-
-        for item_ in self:
-            color = item_.get_color()
-            if color in color_cycle:
-                _append_used_color(color)
-        used_names = set(self.get_names())
-        prev_size = self.get_n_items()
-        for new_item in items:
-            item_name = new_item.get_name()
-            if item_name in used_names:
-                new_item.set_name(
-                    Graphs.tools_get_duplicate_string(
-                        item_name,
-                        list(used_names),
-                    ),
-                )
-            used_names.add(new_item.get_name())
-            xlabel = new_item.get_xlabel()
-            if xlabel:
-                original_position = new_item.get_xposition()
-                if original_position == 0:
-                    if _is_default("bottom-label") or self.is_empty():
-                        figure_settings.set_bottom_label(xlabel)
-                    elif xlabel != figure_settings.get_bottom_label():
-                        new_item.set_xposition(1)
-                if new_item.get_xposition() == 1:
-                    if _is_default("top-label"):
-                        figure_settings.set_top_label(xlabel)
-                    elif xlabel != figure_settings.get_top_label():
-                        new_item.set_xposition(original_position)
-            ylabel = new_item.get_ylabel()
-            if ylabel:
-                original_position = new_item.get_yposition()
-                if original_position == 0:
-                    if _is_default("left-label") or self.is_empty():
-                        figure_settings.set_left_label(ylabel)
-                    elif ylabel != figure_settings.get_left_label():
-                        new_item.set_yposition(1)
-                if new_item.get_yposition() == 1:
-                    if _is_default("right-label"):
-                        figure_settings.set_right_label(ylabel)
-                    elif ylabel != figure_settings.get_right_label():
-                        new_item.set_yposition(original_position)
-            if new_item.get_color() == "":
-                for color in color_cycle:
-                    if color not in used_colors:
-                        _append_used_color(color)
-                        new_item.set_color(color)
-                        break
-
-            self._add_item(new_item, -1, False)
-            change = (1, copy.deepcopy(new_item.to_dict()))
-            self._current_batch.append(change)
-        self.emit("items_changed", prev_size, 0, len(items))
-        self._optimize_limits()
-        self._add_history_state()
+    @staticmethod
+    def _on_item_added(self, item: Graphs.Item) -> None:
+        self._current_batch.append((1, copy.deepcopy(item.to_dict())))
 
     @staticmethod
     def _on_delete_request(self, items: misc.ItemList, _num):
