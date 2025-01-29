@@ -184,7 +184,7 @@ template $GraphsWindow: Adw.ApplicationWindow {
 
   content: Overlay drag_overlay {
     styles [
-      "drag-overlay"
+      "drag-overlay",
     ]
 
     [overlay]
@@ -197,7 +197,7 @@ template $GraphsWindow: Adw.ApplicationWindow {
         icon-name: "list-add-symbolic";
 
         styles [
-          "drag-overlay-status-page"
+          "drag-overlay-status-page",
         ]
       }
     }
@@ -212,7 +212,7 @@ template $GraphsWindow: Adw.ApplicationWindow {
         [top]
         Adw.HeaderBar sidebar_headerbar {
           styles [
-            "flat"
+            "flat",
           ]
 
           [start]
@@ -253,7 +253,7 @@ template $GraphsWindow: Adw.ApplicationWindow {
                   selection-mode: none;
 
                   styles [
-                    "boxed-list"
+                    "boxed-list",
                   ]
                 }
 
@@ -267,7 +267,7 @@ template $GraphsWindow: Adw.ApplicationWindow {
                   description: _("Add data from a file or manually as an equation");
 
                   styles [
-                    "compact"
+                    "compact",
                   ]
                 }
               }
@@ -336,6 +336,8 @@ template $GraphsWindow: Adw.ApplicationWindow {
 
                     Button combine_button {
                       sensitive: bind shift_button.sensitive;
+                      tooltip-text: _("Combine all selected data");
+                      clicked => $perform_operation();
 
                       layout {
                         column: 0;
@@ -347,13 +349,12 @@ template $GraphsWindow: Adw.ApplicationWindow {
                         icon-name: "edit-paste-symbolic";
                         label: _("Combine");
                       }
-
-                      tooltip-text: _("Combine all selected data");
-                      clicked => $perform_operation();
                     }
 
                     Button cut_button {
                       sensitive: bind select_button.active;
+                      tooltip-text: _("Cut selected data");
+                      clicked => $perform_operation();
 
                       layout {
                         column: 1;
@@ -365,12 +366,12 @@ template $GraphsWindow: Adw.ApplicationWindow {
                         icon-name: "edit-cut-symbolic";
                         label: _("Cut");
                       }
-
-                      tooltip-text: _("Cut selected data");
-                      clicked => $perform_operation();
                     }
 
                     Button shift_button {
+                      tooltip-text: _("Shift all data vertically with respect to each other");
+                      clicked => $perform_operation();
+
                       layout {
                         column: 0;
                         row: 1;
@@ -381,13 +382,12 @@ template $GraphsWindow: Adw.ApplicationWindow {
                         icon-name: "shift-symbolic";
                         label: _("Shift");
                       }
-
-                      tooltip-text: _("Shift all data vertically with respect to each other");
-                      clicked => $perform_operation();
                     }
 
                     Button normalize_button {
                       sensitive: bind shift_button.sensitive;
+                      tooltip-text: _("Normalize data");
+                      clicked => $perform_operation();
 
                       layout {
                         column: 1;
@@ -399,13 +399,13 @@ template $GraphsWindow: Adw.ApplicationWindow {
                         icon-name: "normalize-symbolic";
                         label: _("Normalize");
                       }
-
-                      tooltip-text: _("Normalize data");
-                      clicked => $perform_operation();
                     }
 
                     Adw.SplitButton smoothen_button {
                       can-shrink: true;
+                      tooltip-text: _("Smoothen data");
+                      menu-model: smoothen_menu;
+                      clicked => $perform_operation();
 
                       layout {
                         column: 0;
@@ -419,14 +419,13 @@ template $GraphsWindow: Adw.ApplicationWindow {
                         icon-name: "smoothen-symbolic";
                         label: _("Smoothen");
                       }
-
-                      tooltip-text: _("Smoothen data");
-                      menu-model: smoothen_menu;
-                      clicked => $perform_operation();
                     }
 
                     Adw.SplitButton center_button {
                       sensitive: bind shift_button.sensitive;
+                      tooltip-text: _("Center data");
+                      menu-model: center_menu;
+                      clicked => $perform_operation();
 
                       layout {
                         column: 0;
@@ -439,10 +438,6 @@ template $GraphsWindow: Adw.ApplicationWindow {
                         icon-name: "center-symbolic";
                         label: _("Center");
                       }
-
-                      tooltip-text: _("Center data");
-                      menu-model: center_menu;
-                      clicked => $perform_operation();
                     }
                   }
                 };
@@ -459,6 +454,8 @@ template $GraphsWindow: Adw.ApplicationWindow {
 
                     Button derivative_button {
                       sensitive: bind shift_button.sensitive;
+                      tooltip-text: _("Get the derivative of the data");
+                      clicked => $perform_operation();
 
                       layout {
                         column: 0;
@@ -470,13 +467,12 @@ template $GraphsWindow: Adw.ApplicationWindow {
                         icon-name: "derivative2-symbolic";
                         label: _("Derivative");
                       }
-
-                      tooltip-text: _("Get the derivative of the data");
-                      clicked => $perform_operation();
                     }
 
                     Button integral_button {
                       sensitive: bind shift_button.sensitive;
+                      tooltip-text: _("Get the indefinite integral of the data");
+                      clicked => $perform_operation();
 
                       layout {
                         column: 1;
@@ -488,13 +484,12 @@ template $GraphsWindow: Adw.ApplicationWindow {
                         icon-name: "integral-symbolic";
                         label: _("Integral");
                       }
-
-                      tooltip-text: _("Get the indefinite integral of the data");
-                      clicked => $perform_operation();
                     }
 
                     Button fft_button {
                       sensitive: bind shift_button.sensitive;
+                      tooltip-text: _("Get the Fast Fourier Transform of the data");
+                      clicked => $perform_operation();
 
                       layout {
                         column: 0;
@@ -507,13 +502,12 @@ template $GraphsWindow: Adw.ApplicationWindow {
                         icon-name: "fast-fourier-transform-symbolic";
                         label: _("FFT");
                       }
-
-                      tooltip-text: _("Get the Fast Fourier Transform of the data");
-                      clicked => $perform_operation();
                     }
 
                     Button inverse_fft_button {
                       sensitive: bind shift_button.sensitive;
+                      tooltip-text: _("Get the Inverse Fast Fourier Transform of the data");
+                      clicked => $perform_operation();
 
                       layout {
                         column: 0;
@@ -526,13 +520,12 @@ template $GraphsWindow: Adw.ApplicationWindow {
                         icon-name: "inverse-fast-fourier-transform-symbolic";
                         label: _("Inverse FFT");
                       }
-
-                      tooltip-text: _("Get the Inverse Fast Fourier Transform of the data");
-                      clicked => $perform_operation();
                     }
 
                     Button custom_transformation_button {
                       sensitive: bind shift_button.sensitive;
+                      tooltip-text: _("Perform custom transformations on the data");
+                      clicked => $perform_operation();
 
                       layout {
                         column: 0;
@@ -545,9 +538,6 @@ template $GraphsWindow: Adw.ApplicationWindow {
                         icon-name: "transform-symbolic";
                         label: _("Custom Transformation");
                       }
-
-                      tooltip-text: _("Perform custom transformations on the data");
-                      clicked => $perform_operation();
                     }
                   }
                 };
@@ -577,14 +567,14 @@ template $GraphsWindow: Adw.ApplicationWindow {
                       clicked => $perform_operation();
                       width-request: 120;
 
-                      Adw.ButtonContent {
-                        icon-name: "horizontal-arrows-symbolic";
-                        label: _("Translate X");
-                      }
-
                       layout {
                         column: 1;
                         row: 0;
+                      }
+
+                      Adw.ButtonContent {
+                        icon-name: "horizontal-arrows-symbolic";
+                        label: _("Translate X");
                       }
                     }
 
@@ -604,14 +594,14 @@ template $GraphsWindow: Adw.ApplicationWindow {
                       clicked => $perform_operation();
                       width-request: 120;
 
-                      Adw.ButtonContent {
-                        icon-name: "vertical-arrows-symbolic";
-                        label: _("Translate Y");
-                      }
-
                       layout {
                         column: 1;
                         row: 1;
+                      }
+
+                      Adw.ButtonContent {
+                        icon-name: "vertical-arrows-symbolic";
+                        label: _("Translate Y");
                       }
                     }
 
@@ -631,14 +621,14 @@ template $GraphsWindow: Adw.ApplicationWindow {
                       clicked => $perform_operation();
                       width-request: 120;
 
-                      Adw.ButtonContent {
-                        icon-name: "horizontal-arrows-symbolic";
-                        label: _("Multiply X");
-                      }
-
                       layout {
                         column: 1;
                         row: 2;
+                      }
+
+                      Adw.ButtonContent {
+                        icon-name: "horizontal-arrows-symbolic";
+                        label: _("Multiply X");
                       }
                     }
 
@@ -658,14 +648,14 @@ template $GraphsWindow: Adw.ApplicationWindow {
                       clicked => $perform_operation();
                       width-request: 120;
 
-                      Adw.ButtonContent {
-                        icon-name: "vertical-arrows-symbolic";
-                        label: _("Multiply Y");
-                      }
-
                       layout {
                         column: 1;
                         row: 3;
+                      }
+
+                      Adw.ButtonContent {
+                        icon-name: "vertical-arrows-symbolic";
+                        label: _("Multiply Y");
                       }
                     }
                   }
@@ -683,7 +673,7 @@ template $GraphsWindow: Adw.ApplicationWindow {
           name: "canvas-headerbar";
 
           styles [
-            "flat"
+            "flat",
           ]
 
           title-widget: Adw.WindowTitle content_title {};
