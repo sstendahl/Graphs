@@ -11,7 +11,7 @@ template $GraphsItemBox: Adw.ActionRow {
     notify::active => $on_toggle();
 
     styles [
-      "selection-mode"
+      "selection-mode",
     ]
   }
 
@@ -23,7 +23,7 @@ template $GraphsItemBox: Adw.ActionRow {
     clicked => $choose_color();
 
     styles [
-      "flat"
+      "flat",
     ]
 
     Image {
@@ -39,7 +39,7 @@ template $GraphsItemBox: Adw.ActionRow {
     valign: center;
 
     styles [
-      "flat"
+      "flat",
     ]
 
     popover: PopoverMenu {
