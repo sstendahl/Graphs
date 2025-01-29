@@ -6,7 +6,7 @@ import math
 from collections.abc import Iterator
 from gettext import gettext as _
 
-from gi.repository import Gio, Graphs
+from gi.repository import GLib, Gio, Graphs
 
 from graphs import item, misc, project, style_io, utilities
 
@@ -132,7 +132,7 @@ class Data(Graphs.Data):
         self._current_batch.append((2, (self.index(item_), item_.to_dict())))
 
     @staticmethod
-    def _on_item_changed(self, item_, prop) -> None:
+    def _on_item_changed(self, item_: Graphs.Item, prop: str) -> None:
         self._current_batch.append((
             0,
             (
@@ -143,7 +143,11 @@ class Data(Graphs.Data):
             ),
         ))
 
-    def _on_figure_settings_change(self, figure_settings, param) -> None:
+    def _on_figure_settings_change(
+        self,
+        figure_settings: Graphs.FigureSettings,
+        param: GLib.ParamSpec,
+    ) -> None:
         if param.name in _FIGURE_SETTINGS_HISTORY_IGNORELIST:
             return
         self._current_batch.append((
