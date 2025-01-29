@@ -607,10 +607,8 @@ class DataOperations():
             return False, _("Operation not supported for data items")
         # May run into this exception for custom transformations:
         except (RuntimeError, ValueError, KeyError, SyntaxError) as exception:
-            message = _("{name}: Error performing the operation").format(
-                name=exception.__class__.__name__,
-            )
-            return False, message
+            message = _("{name}: Error performing the operation")
+            return False, message.format(name=exception.__class__.__name__)
         new_xdata, new_ydata = list(new_xdata), list(new_ydata)
         if discard and interaction_mode == 2:
             logging.debug("Discard is true")
