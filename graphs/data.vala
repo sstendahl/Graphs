@@ -45,11 +45,13 @@ namespace Graphs {
 
         public signal void style_changed (bool recolor_items);
         protected signal void python_method_request (string method);
+        protected signal string load_request (File file);
+
+        // Clipboard signals
         protected signal void position_changed (uint index1, uint index2);
         protected signal void item_changed (Item item, string prop_name);
-        protected signal void delete_request (Item[] items);
-        protected signal string load_request (File file);
         protected signal void item_added (Item item);
+        protected signal void item_deleted (Item item);
 
         construct {
             this._items = new Gee.LinkedList<Item> ();
@@ -106,6 +108,7 @@ namespace Graphs {
             figure_settings.notify["use-custom-style"].connect (_on_use_custom_style);
 
             handle_style_change ();
+            _update_used_positions ();
         }
 
         // Section ListModel
@@ -254,7 +257,22 @@ namespace Graphs {
         }
 
         public void delete_items (Item[] items) {
-            delete_request.emit (items);
+            foreach (Item item in items) {
+                item_deleted.emit (item);
+                _remove_item (item);
+                int[] positions = { item.xposition, item.yposition + 2 };
+                foreach (int position in positions) {
+                    string direction = DIRECTION_NAMES[position];
+                    string item_label = position < 2 ? item.xlabel : item.ylabel;
+                    string axis_label;
+                    figure_settings.get (direction + "_label", out axis_label);
+                    if (_used_positions[position] && item_label == axis_label) {
+                        string settings_value = _settings.get_string (direction + "-label");
+                        figure_settings.set (direction + "_label", settings_value);
+                    }
+                }
+            }
+            python_method_request.emit ("_add_history_state");
         }
 
         // End section management

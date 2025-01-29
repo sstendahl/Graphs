@@ -40,12 +40,11 @@ class Data(Graphs.Data):
             "notify",
             self._on_figure_settings_change,
         )
-        self._update_used_positions()
-        self.connect("item_changed", self._on_item_changed)
-        self.connect("delete_request", self._on_delete_request)
-        self.connect("position_changed", self._on_position_changed)
         self.connect("load_request", self._on_load_request)
+        self.connect("position_changed", self._on_position_changed)
+        self.connect("item_changed", self._on_item_changed)
         self.connect("item_added", self._on_item_added)
+        self.connect("item_deleted", self._on_item_deleted)
 
     @staticmethod
     def _on_python_method_request(self, method: str) -> None:
@@ -125,33 +124,12 @@ class Data(Graphs.Data):
         self._current_batch.append((3, (index2, index1)))
 
     @staticmethod
-    def _on_item_added(self, item: Graphs.Item) -> None:
-        self._current_batch.append((1, copy.deepcopy(item.to_dict())))
+    def _on_item_added(self, item_: Graphs.Item) -> None:
+        self._current_batch.append((1, copy.deepcopy(item_.to_dict())))
 
     @staticmethod
-    def _on_delete_request(self, items: misc.ItemList, _num):
-        """Delete specified items."""
-        for item_ in items:
-            self._current_batch.append(
-                (2, (self.index(item_), item_.to_dict())),
-            )
-            x_position = item_.get_xposition()
-            y_position = item_.get_yposition() + 2
-            xlabel = item_.get_xlabel()
-            ylabel = item_.get_ylabel()
-            self._remove_item(item_)
-        used = self.get_used_positions()
-        settings = self.get_application().get_settings_child("figure")
-        figure_settings = self.get_figure_settings()
-        for position in [x_position, y_position]:
-            direction = misc.DIRECTIONS[position]
-            item_label = xlabel if position < 2 else ylabel
-            axis_label = getattr(figure_settings, f"get_{direction}_label")()
-            if not used[position] and item_label == axis_label:
-                set_label = getattr(figure_settings, f"set_{direction}_label")
-                set_label(settings.get_string(f"{direction}-label"))
-
-        self._add_history_state()
+    def _on_item_deleted(self, item_: Graphs.Item) -> None:
+        self._current_batch.append((2, (self.index(item_), item_.to_dict())))
 
     @staticmethod
     def _on_item_changed(self, item_, prop) -> None:
