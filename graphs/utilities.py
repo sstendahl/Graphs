@@ -39,9 +39,9 @@ def get_value_at_fraction(
     of this axis.
     """
     scale = scales.Scale(scale)
-    if scale == scales.Scale.LINEAR or scale == scales.Scale.RADIANS:
+    if scale in (scales.Scale.LINEAR, scales.Scale.RADIANS):
         return start + fraction * (end - start)
-    elif scale == scales.Scale.LOG:
+    if scale == scales.Scale.LOG:
         log_start = numpy.log10(start)
         log_end = numpy.log10(end)
         log_range = log_end - log_start
@@ -63,7 +63,7 @@ def get_value_at_fraction(
         return sqrt_value * sqrt_value
     elif scale == scales.Scale.INVERSE:
         # Use min limit as defined by scales.py if min equals zero
-        start = end / 10 if end > 0 and start <= 0 else start
+        start = end / 10 if start <= 0 < end else start
         scaled_range = 1 / start - 1 / end
 
         # Calculate the inverse-scaled value at the given percentage
@@ -83,9 +83,9 @@ def get_fraction_at_value(
     value corresponds to given the start and end range of the axis.
     """
     scale = scales.Scale(scale)
-    if scale == scales.Scale.LINEAR or scale == scales.Scale.RADIANS:
+    if scale in (scales.Scale.LINEAR, scales.Scale.RADIANS):
         return (value - start) / (end - start)
-    elif scale == scales.Scale.LOG:
+    if scale == scales.Scale.LOG:
         log_start = numpy.log10(start)
         log_end = numpy.log10(end)
         log_value = numpy.log10(value)
@@ -107,7 +107,7 @@ def get_fraction_at_value(
         return (sqrt_value - sqrt_start) / sqrt_range
     elif scale == scales.Scale.INVERSE:
         # Use min limit as defined by scales.py if min equals zero
-        start = end / 10 if end > 0 and start <= 0 else start
+        start = end / 10 if start <= 0 < end else start
         scaled_range = 1 / start - 1 / end
 
         # Calculate the scaled percentage corresponding to the data point
@@ -137,12 +137,11 @@ OPERATORS = {
 def _eval(node):
     if isinstance(node, ast.Num):  # <number>
         return node.n
-    elif isinstance(node, ast.BinOp):  # <left> <operator> <right>
+    if isinstance(node, ast.BinOp):  # <left> <operator> <right>
         return OPERATORS[type(node.op)](_eval(node.left), _eval(node.right))
-    elif isinstance(node, ast.UnaryOp):  # <operator> <operand> e.g., -1
+    if isinstance(node, ast.UnaryOp):  # <operator> <operand> e.g., -1
         return OPERATORS[type(node.op)](_eval(node.operand))
-    else:
-        raise ValueError
+    raise ValueError
 
 
 def preprocess(string: str) -> str:

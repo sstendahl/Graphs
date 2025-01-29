@@ -58,10 +58,10 @@ class Data(Graphs.Data):
         """Iterate over items."""
         iterator = self.iterator_wrapper()
         while True:
-            item = iterator.next()
-            if item is None:
+            item_ = iterator.next()
+            if item_ is None:
                 return
-            yield item
+            yield item_
 
     def __getitem__(self, getter: str | int):
         """Magic alias for retrieving items."""

@@ -34,7 +34,7 @@ def import_from_files(
     """
     application = window.get_application()
     settings = application.get_settings_child("import-params")
-    import_dict = {mode: [] for mode in _IMPORT_MODES.keys()}
+    import_dict = {mode: [] for mode, _value in _IMPORT_MODES.items()}
     for file in files:
         import_dict[_guess_import_mode(file)].append(file)
     modes = [mode for mode in settings.list_children() if import_dict[mode]]

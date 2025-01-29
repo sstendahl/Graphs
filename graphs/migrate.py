@@ -345,11 +345,11 @@ def _get_limits(items):
             index = item[f"{x_or_y}position"] * 2 + 4 * count
             data = item[f"{x_or_y}data"]
             try:
-                limits[index] = min(limits[index], min(data))
+                limits[index] = min(limits[index], data)
             except TypeError:
                 limits[index] = min(data)
             try:
-                limits[index + 1] = max(limits[index + 1], max(data))
+                limits[index + 1] = max(limits[index + 1], data)
             except TypeError:
                 limits[index + 1] = max(data)
     for count in range(8):

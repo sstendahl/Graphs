@@ -389,7 +389,7 @@ class CommonOperations():
                 equation = utilities.preprocess(equation)
                 item.props.equation = str(sympy.simplify(equation))
                 continue
-            elif isinstance(item, DataItem):
+            if isinstance(item, DataItem):
                 if scale == scales.Scale.LOG:
                     new_ydata = [value * 10**shift_value for value in ydata]
                 elif scale == scales.Scale.LOG2:
@@ -470,7 +470,7 @@ class EquationOperations():
     @staticmethod
     def normalize(item, limits) -> str:
         """Normalize all selected data."""
-        xdata, ydata = utilities.equation_to_data(item._equation, limits)
+        ydata = utilities.equation_to_data(item._equation, limits)[1]
         return f"({item.equation})/{max(ydata)}"
 
     @staticmethod
@@ -603,7 +603,7 @@ class DataOperations():
             new_xdata, new_ydata, sort, discard = callback(
                 item, xdata, ydata, *args,
             )
-        except (NotImplementedError):
+        except NotImplementedError:
             return False, _("Operation not supported for data items")
         # May run into this exception for custom transformations:
         except (RuntimeError, ValueError, KeyError, SyntaxError) as exception:
