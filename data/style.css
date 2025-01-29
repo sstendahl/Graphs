@@ -79,3 +79,17 @@ gridview#style-grid child:selected image#indicator {
   color: @theme_selected_bg_color;
   opacity: 1;
 }
+
+.drag-overlay-status-page {
+  background-color: color-mix(in srgb, var(--accent-bg-color), transparent);
+  color: var(--accent-fg-color);
+  padding: 32px;
+}
+
+.blurred {
+  filter: blur(6px);
+}
+
+.drag-overlay {
+  box-shadow: none;
+}

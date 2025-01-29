@@ -87,6 +87,12 @@ namespace Graphs {
         [GtkChild]
         protected unowned Adw.WindowTitle content_title { get; }
 
+        [GtkChild]
+        private unowned Overlay drag_overlay { get; }
+
+        [GtkChild]
+        private unowned Revealer drag_revealer { get; }
+
         public Data data { get; construct set; }
 
         protected CssProvider headerbar_provider { get; private set; }
@@ -129,8 +135,8 @@ namespace Graphs {
                 headerbar_provider, STYLE_PROVIDER_PRIORITY_APPLICATION
             );
 
-            var drop_target = new Gtk.DropTarget (typeof (Adw.ActionRow), Gdk.DragAction.MOVE);
-            drop_target.drop.connect ((drop, val, x, y) => {
+            var item_drop_target = new Gtk.DropTarget (typeof (Adw.ActionRow), Gdk.DragAction.MOVE);
+            item_drop_target.drop.connect ((drop, val, x, y) => {
                 var value_row = val.get_object () as ItemBox?;
                 var target_row = item_list.get_row_at_y ((int) y) as ItemBox?;
                 // If value or the target row is null, do not accept the drop
@@ -143,7 +149,28 @@ namespace Graphs {
 
                 return true;
             });
-            item_list.add_controller (drop_target);
+            item_list.add_controller (item_drop_target);
+
+            var file_drop_target = new Gtk.DropTarget (typeof (Gdk.FileList), Gdk.DragAction.COPY);
+            file_drop_target.notify["current-drop"].connect (() => {
+                bool reveal = file_drop_target.current_drop != null;
+                drag_revealer.reveal_child = reveal;
+                if (reveal) {
+                    drag_overlay.child.add_css_class ("blurred");
+                } else {
+                    drag_overlay.child.remove_css_class ("blurred");
+                }
+            });
+            file_drop_target.drop.connect ((drop, val, x, y) => {
+                var application = application as Application;
+                var file_list = ((Gdk.FileList) val).get_files ();
+                File[] files = {};
+                for (uint i = 0; i < file_list.length (); i++) {
+                    files += file_list.nth_data (i);
+                }
+                application.python_helper.import_from_files (this, files);
+            });
+            drag_overlay.add_controller (file_drop_target);
 
             string path = "/se/sjoerd/Graphs/ui/window-shortcuts.ui";
             var builder = new Builder.from_resource (path);
