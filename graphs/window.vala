@@ -152,7 +152,7 @@ namespace Graphs {
             item_list.add_controller (item_drop_target);
 
             var file_drop_target = new Gtk.DropTarget (typeof (Gdk.FileList), Gdk.DragAction.COPY);
-            file_drop_target.notify["current-drop"].connect(() => {
+            file_drop_target.notify["current-drop"].connect (() => {
                 bool reveal = file_drop_target.current_drop != null;
                 drag_revealer.reveal_child = reveal;
                 if (reveal) {
@@ -161,7 +161,7 @@ namespace Graphs {
                     drag_overlay.child.remove_css_class ("blurred");
                 }
             });
-            file_drop_target.drop.connect((drop, val, x, y) => {
+            file_drop_target.drop.connect ((drop, val, x, y) => {
                 var application = application as Application;
                 var file_list = ((Gdk.FileList) val).get_files ();
                 File[] files = {};
