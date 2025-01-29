@@ -1,7 +1,7 @@
 using Gtk 4.0;
 using Adw 1;
 
-template $GraphsTransformDialog : Adw.Dialog {
+template $GraphsTransformDialog: Adw.Dialog {
   content-width: 450;
   title: _("Transform Data");
   default-widget: confirm_button;
@@ -11,6 +11,7 @@ template $GraphsTransformDialog : Adw.Dialog {
     [top]
     Adw.HeaderBar {
       show-end-title-buttons: false;
+
       [start]
       Button {
         label: _("Cancel");
@@ -20,32 +21,43 @@ template $GraphsTransformDialog : Adw.Dialog {
       [end]
       Button confirm_button {
         label: _("Transform");
-        styles ["suggested-action"]
         clicked => $on_accept();
+
+        styles [
+          "suggested-action"
+        ]
       }
 
       [end]
       Button help_button {
+        halign: end;
+        tooltip-text: _("More info");
+
+        styles [
+          "flat"
+        ]
+
         Adw.ButtonContent {
           halign: center;
           icon-name: "info-symbolic";
+
           Popover help_popover {
             position: bottom;
+
             Label help_info {
               label: _("Additional variables:\nx_min, y_min\nx_max, y_max \n\nTrigonometric functions use radians\nby default, append d to the function\nto use degrees, e.g. sind(x) or cosd(x).");
-          	}
+            }
           }
         }
-        halign: end;
-        tooltip-text: _("More info");
-        styles ["flat"]
       }
     }
+
     content: Adw.Clamp {
       margin-start: 12;
       margin-end: 12;
       margin-top: 12;
       margin-bottom: 12;
+
       Adw.PreferencesGroup {
         Adw.EntryRow transform_x {
           title: _("X =");

@@ -1,7 +1,7 @@
 using Gtk 4.0;
 using Adw 1;
 
-template $GraphsAddStyleDialog : Adw.Dialog {
+template $GraphsAddStyleDialog: Adw.Dialog {
   content-width: 450;
   title: _("Add New Style");
   focus-widget: confirm_button;
@@ -10,6 +10,7 @@ template $GraphsAddStyleDialog : Adw.Dialog {
     [top]
     Adw.HeaderBar {
       show-end-title-buttons: false;
+
       [start]
       Button {
         label: _("Cancel");
@@ -19,15 +20,20 @@ template $GraphsAddStyleDialog : Adw.Dialog {
       [end]
       Button confirm_button {
         label: _("Add");
-        styles ["suggested-action"]
         clicked => $on_accept();
+
+        styles [
+          "suggested-action"
+        ]
       }
     }
+
     content: Adw.Clamp {
       margin-start: 12;
       margin-end: 12;
       margin-top: 12;
       margin-bottom: 12;
+
       Adw.PreferencesGroup {
         Adw.ComboRow style_templates {
           title: _("Template");

@@ -1,7 +1,7 @@
 using Gtk 4.0;
 using Adw 1;
 
-template $GraphsStyleEditorBox : Box {
+template $GraphsStyleEditorBox: Box {
   orientation: vertical;
   hexpand: true;
   spacing: 20;
@@ -17,8 +17,9 @@ template $GraphsStyleEditorBox : Box {
 
       FontDialogButton font_chooser {
         valign: center;
-        dialog: FontDialog {};
         use-font: true;
+
+        dialog: FontDialog {};
       }
     }
 
@@ -29,6 +30,7 @@ template $GraphsStyleEditorBox : Box {
       Scale titlesize {
         draw-value: true;
         width-request: 200;
+
         adjustment: Adjustment {
           lower: 1;
           upper: 4;
@@ -43,6 +45,7 @@ template $GraphsStyleEditorBox : Box {
       Scale labelsize {
         draw-value: true;
         width-request: 200;
+
         adjustment: Adjustment {
           lower: 1;
           upper: 4;
@@ -56,6 +59,8 @@ template $GraphsStyleEditorBox : Box {
 
     Adw.ComboRow linestyle {
       title: _("Linestyle");
+      notify::selected => $on_linestyle();
+
       model: StringList {
         strings [
           C_("linestyle", "None"),
@@ -65,26 +70,28 @@ template $GraphsStyleEditorBox : Box {
           C_("linestyle", "Dashdot"),
         ]
       };
-      notify::selected => $on_linestyle();
     }
 
     Adw.ActionRow {
       title: _("Linewidth");
       visible: bind linewidth.sensitive;
+      sensitive: false;
 
       Scale linewidth {
         draw-value: true;
         width-request: 200;
+
         adjustment: Adjustment {
           lower: 0;
           upper: 10;
         };
-        sensitive: false;
       }
     }
 
     Adw.ComboRow markers {
       title: _("Markers");
+      notify::selected => $on_markers();
+
       model: StringList {
         strings [
           C_("markerstyle", "None"),
@@ -113,21 +120,21 @@ template $GraphsStyleEditorBox : Box {
           C_("markerstyle", "Filled X"),
         ]
       };
-      notify::selected => $on_markers();
     }
 
     Adw.ActionRow {
       title: _("Marker Size");
       visible: bind markersize.sensitive;
+      sensitive: false;
 
       Scale markersize {
         draw-value: true;
         width-request: 200;
+
         adjustment: Adjustment {
           lower: 0;
           upper: 10;
         };
-        sensitive: false;
       }
     }
   }
@@ -141,6 +148,7 @@ template $GraphsStyleEditorBox : Box {
       Scale axis_width {
         draw-value: true;
         width-request: 200;
+
         adjustment: Adjustment {
           lower: 0;
           upper: 4;
@@ -158,8 +166,12 @@ template $GraphsStyleEditorBox : Box {
 
     Adw.ComboRow tick_direction {
       title: _("Tick Directions");
+
       model: StringList {
-        strings [_("Inwards"), _("Outwards")]
+        strings [
+          _("Inwards"),
+          _("Outwards")
+        ]
       };
     }
 
@@ -173,6 +185,7 @@ template $GraphsStyleEditorBox : Box {
       Scale major_tick_width {
         draw-value: true;
         width-request: 200;
+
         adjustment: Adjustment {
           lower: 0;
           upper: 4;
@@ -187,6 +200,7 @@ template $GraphsStyleEditorBox : Box {
       Scale minor_tick_width {
         draw-value: true;
         width-request: 200;
+
         adjustment: Adjustment {
           lower: 0;
           upper: 4;
@@ -200,6 +214,7 @@ template $GraphsStyleEditorBox : Box {
       Scale major_tick_length {
         draw-value: true;
         width-request: 200;
+
         adjustment: Adjustment {
           lower: 0;
           upper: 20;
@@ -214,6 +229,7 @@ template $GraphsStyleEditorBox : Box {
       Scale minor_tick_length {
         draw-value: true;
         width-request: 200;
+
         adjustment: Adjustment {
           lower: 0;
           upper: 20;
@@ -252,6 +268,7 @@ template $GraphsStyleEditorBox : Box {
       Scale grid_linewidth {
         draw-value: true;
         width-request: 200;
+
         adjustment: Adjustment {
           lower: 0;
           upper: 4;
@@ -266,6 +283,7 @@ template $GraphsStyleEditorBox : Box {
       Scale grid_opacity {
         draw-value: true;
         width-request: 200;
+
         adjustment: Adjustment {
           lower: 0;
           upper: 1;
@@ -285,6 +303,7 @@ template $GraphsStyleEditorBox : Box {
       Scale value_padding {
         draw-value: true;
         width-request: 200;
+
         adjustment: Adjustment {
           lower: 0;
           upper: 40;
@@ -299,6 +318,7 @@ template $GraphsStyleEditorBox : Box {
       Scale label_padding {
         draw-value: true;
         width-request: 200;
+
         adjustment: Adjustment {
           lower: 0;
           upper: 40;
@@ -313,6 +333,7 @@ template $GraphsStyleEditorBox : Box {
       Scale title_padding {
         draw-value: true;
         width-request: 200;
+
         adjustment: Adjustment {
           lower: 0;
           upper: 40;
@@ -325,12 +346,18 @@ template $GraphsStyleEditorBox : Box {
     title: _("Colors");
 
     header-suffix: Box poor_contrast_warning {
-      styles ["warning", "flat"]
       spacing: 6;
       tooltip-text: _("Label text might be hard to read");
+
+      styles [
+        "warning",
+        "flat"
+      ]
+
       Image {
         icon-name: "dialog-warning-symbolic";
       }
+
       Label {
         label: _("Poor Contrast");
       }
@@ -354,7 +381,11 @@ template $GraphsStyleEditorBox : Box {
           Button text_color {
             tooltip-text: _("Change Color");
             valign: center;
-            styles ["flat"]
+
+            styles [
+              "flat"
+            ]
+
             Image {
               icon-name: "color-picker-symbolic";
               pixel-size: 20;
@@ -368,6 +399,7 @@ template $GraphsStyleEditorBox : Box {
           column: 1;
           row: 0;
         }
+
         Adw.ActionRow {
           title: _("Tick Color");
           activatable-widget: tick_color;
@@ -376,7 +408,11 @@ template $GraphsStyleEditorBox : Box {
           Button tick_color {
             tooltip-text: _("Change Color");
             valign: center;
-            styles ["flat"]
+
+            styles [
+              "flat"
+            ]
+
             Image {
               icon-name: "color-picker-symbolic";
               pixel-size: 20;
@@ -390,6 +426,7 @@ template $GraphsStyleEditorBox : Box {
           column: 0;
           row: 1;
         }
+
         Adw.ActionRow {
           title: _("Axis Color");
           activatable-widget: axis_color;
@@ -398,7 +435,11 @@ template $GraphsStyleEditorBox : Box {
           Button axis_color {
             tooltip-text: _("Change Color");
             valign: center;
-            styles ["flat"]
+
+            styles [
+              "flat"
+            ]
+
             Image {
               icon-name: "color-picker-symbolic";
               pixel-size: 20;
@@ -412,6 +453,7 @@ template $GraphsStyleEditorBox : Box {
           column: 1;
           row: 1;
         }
+
         Adw.ActionRow {
           title: _("Grid Color");
           activatable-widget: grid_color;
@@ -420,7 +462,11 @@ template $GraphsStyleEditorBox : Box {
           Button grid_color {
             tooltip-text: _("Change Color");
             valign: center;
-            styles ["flat"]
+
+            styles [
+              "flat"
+            ]
+
             Image {
               icon-name: "color-picker-symbolic";
               pixel-size: 20;
@@ -434,6 +480,7 @@ template $GraphsStyleEditorBox : Box {
           column: 0;
           row: 2;
         }
+
         Adw.ActionRow {
           title: _("Background Color");
           activatable-widget: background_color;
@@ -442,7 +489,11 @@ template $GraphsStyleEditorBox : Box {
           Button background_color {
             tooltip-text: _("Change Color");
             valign: center;
-            styles ["flat"]
+
+            styles [
+              "flat"
+            ]
+
             Image {
               icon-name: "color-picker-symbolic";
               pixel-size: 20;
@@ -456,6 +507,7 @@ template $GraphsStyleEditorBox : Box {
           column: 1;
           row: 2;
         }
+
         Adw.ActionRow {
           title: _("Outline Color");
           activatable-widget: outline_color;
@@ -464,7 +516,11 @@ template $GraphsStyleEditorBox : Box {
           Button outline_color {
             tooltip-text: _("Change Color");
             valign: center;
-            styles ["flat"]
+
+            styles [
+              "flat"
+            ]
+
             Image {
               icon-name: "color-picker-symbolic";
               pixel-size: 20;
@@ -477,21 +533,30 @@ template $GraphsStyleEditorBox : Box {
 
   Adw.PreferencesGroup {
     title: _("Line Colors");
+
     header-suffix: Button {
       clicked => $add_color();
+
+      styles [
+        "flat"
+      ]
+
       Adw.ButtonContent {
         halign: center;
         icon-name: "list-add-symbolic";
         label: _("Add Color");
       }
-      styles ["flat"]
     };
+
     ListBox line_colors_box {
       vexpand: false;
       valign: start;
       hexpand: true;
       selection-mode: none;
-      styles ["boxed-list"]
+
+      styles [
+        "boxed-list"
+      ]
     }
   }
 }

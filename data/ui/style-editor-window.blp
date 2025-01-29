@@ -1,24 +1,27 @@
 using Gtk 4.0;
 using Adw 1;
 
-template $GraphsStyleEditor : Adw.ApplicationWindow {
+template $GraphsStyleEditor: Adw.ApplicationWindow {
   title: _("Error - No Style selected");
   default-width: 1200;
   default-height: 700;
 
   ShortcutController {
-     Shortcut {
+    Shortcut {
       trigger: "<control>w";
       action: "action(window.close)";
     }
+
     Shortcut {
       trigger: "<control>question";
       action: "action(win.show-help-overlay)";
     }
+
     Shortcut {
       trigger: "<control>S";
       action: "action(win.save_style)";
     }
+
     Shortcut {
       trigger: "<control><shift>S";
       action: "action(win.save_style_as)";
@@ -31,7 +34,10 @@ template $GraphsStyleEditor : Adw.ApplicationWindow {
 
       [top]
       Adw.HeaderBar {
-        styles ["flat"]
+        styles [
+          "flat"
+        ]
+
         [end]
         MenuButton {
           icon-name: "open-menu-symbolic";
@@ -44,6 +50,7 @@ template $GraphsStyleEditor : Adw.ApplicationWindow {
       content: ScrolledWindow {
         hscrollbar-policy: never;
         vexpand: true;
+
         Adw.Clamp editor_clamp {
           margin-bottom: 12;
           margin-top: 12;
@@ -58,22 +65,26 @@ template $GraphsStyleEditor : Adw.ApplicationWindow {
       Adw.HeaderBar content_headerbar {
         name: "preview-headerbar";
         show-title: false;
-        styles ["flat"]
+
+        styles [
+          "flat"
+        ]
       }
 
       content: Adw.StatusPage {
-          icon-name: "dialog-error-symbolic";
-          title: _("Canvas Failed to Load");
-        };
+        icon-name: "dialog-error-symbolic";
+        title: _("Canvas Failed to Load");
+      };
     };
   }
 }
 
 menu primary_menu {
-  section{
+  section {
     item (_("Save Style…"), "win.save_style")
     item (_("Save Style as…"), "win.save_style_as")
   }
+
   section {
     item (_("Keyboard Shortcuts"), "win.show-help-overlay")
     item (_("Help"), "app.help")

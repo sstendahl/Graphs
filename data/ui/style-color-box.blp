@@ -1,11 +1,14 @@
 using Gtk 4.0;
 
-template $GraphsStyleColorBox : Box {
+template $GraphsStyleColorBox: Box {
   margin-start: 6;
   margin-end: 6;
   margin-bottom: 9;
   margin-top: 9;
-  styles ["boxed-list"]
+
+  styles [
+    "boxed-list"
+  ]
 
   Label label {
     margin-end: 6;
@@ -16,7 +19,11 @@ template $GraphsStyleColorBox : Box {
   Button color_button {
     tooltip-text: _("Edit");
     clicked => $on_color_choose();
-    styles ["flat"]
+
+    styles [
+      "flat"
+    ]
+
     Image {
       hexpand: false;
       icon-name: "color-picker-symbolic";
@@ -27,7 +34,11 @@ template $GraphsStyleColorBox : Box {
   Button {
     tooltip-text: _("Remove");
     clicked => $on_delete();
-    styles ["flat"]
+
+    styles [
+      "flat"
+    ]
+
     Image {
       hexpand: false;
       icon-name: "edit-delete-symbolic";
