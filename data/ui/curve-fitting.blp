@@ -1,7 +1,7 @@
 using Gtk 4.0;
 using Adw 1;
 
-template $GraphsCurveFittingDialog : Adw.Dialog {
+template $GraphsCurveFittingDialog: Adw.Dialog {
   content-width: 1000;
   content-height: 600;
   width-request: 400;
@@ -10,6 +10,7 @@ template $GraphsCurveFittingDialog : Adw.Dialog {
 
   Adw.Breakpoint {
     condition ("max-width: 725sp")
+
     setters {
       split_view.collapsed: true;
     }
@@ -17,14 +18,17 @@ template $GraphsCurveFittingDialog : Adw.Dialog {
 
   child: Adw.ToolbarView {
     top-bar-style: flat;
+
     content: Adw.OverlaySplitView split_view {
       show-sidebar: bind show_sidebar_button.active;
+
       sidebar: Adw.ToolbarView {
         [top]
         Adw.HeaderBar {
           title-widget: Adw.WindowTitle {
             title: _("Curve Fitting");
           };
+
           [end]
           MenuButton {
             icon-name: "view-more-symbolic";
@@ -33,10 +37,12 @@ template $GraphsCurveFittingDialog : Adw.Dialog {
             menu-model: fitting_menu;
           }
         }
+
         ScrolledWindow {
           vexpand: true;
           width-request: 280;
           hscrollbar-policy: never;
+
           Box {
             vexpand: true;
             orientation: vertical;
@@ -45,10 +51,12 @@ template $GraphsCurveFittingDialog : Adw.Dialog {
             margin-bottom: 12;
             margin-top: 12;
             spacing: 12;
+
             Adw.PreferencesGroup {
               Adw.ComboRow equation {
                 title: _("Equation");
-                model: StringList{
+
+                model: StringList {
                   strings [
                     C_("regression-type", "Linear"),
                     C_("regression-type", "Quadratic"),
@@ -61,20 +69,24 @@ template $GraphsCurveFittingDialog : Adw.Dialog {
                   ]
                 };
               }
+
               Adw.EntryRow custom_equation {
                 visible: false;
                 title: _("Y =");
               }
             }
+
             Box fitting_params_box {
               spacing: 12;
               orientation: vertical;
             }
+
             ScrolledWindow {
               vexpand: false;
               hexpand: false;
               hscrollbar-policy: automatic;
               vscrollbar-policy: never;
+
               TextView text_view {
                 left-margin: 12;
                 right-margin: 12;
@@ -82,23 +94,33 @@ template $GraphsCurveFittingDialog : Adw.Dialog {
                 bottom-margin: 12;
                 halign: fill;
                 editable: false;
-                styles ["card"]
+
+                styles [
+                  "card",
+                ]
               }
             }
+
             Button confirm_button {
               margin-start: 12;
               margin-end: 12;
               label: _("Add Fit to Data");
-              styles ["pill", "suggested-action"]
               clicked => $emit_add_fit_request();
+
+              styles [
+                "pill",
+                "suggested-action",
+              ]
             }
           }
         }
       };
+
       content: Adw.ToolbarView {
         [top]
         Adw.HeaderBar {
           show-title: false;
+
           ToggleButton show_sidebar_button {
             icon-name: "sidebar-show-symbolic";
             tooltip-text: _("Toggle Sidebar");
@@ -106,11 +128,13 @@ template $GraphsCurveFittingDialog : Adw.Dialog {
             visible: bind split_view.collapsed;
           }
         }
+
         content: Adw.ToastOverlay toast_overlay {
           focusable: true;
           height-request: 150;
           width-request: 300;
           hexpand: true;
+
           child: Adw.StatusPage {
             icon-name: "dialog-error-symbolic";
             title: _("Canvas Failed to Load");
@@ -124,18 +148,21 @@ template $GraphsCurveFittingDialog : Adw.Dialog {
 menu fitting_menu {
   section {
     label: _("Optimization Method");
+
     item {
       // Translators: see https://world.pages.gitlab.gnome.org/Graphs/help/C/curve_fitting.html#algorithms
       label: C_("optimization", "Levenberg-Marquardt");
       action: "win.optimization";
       target: "lm";
     }
+
     item {
       // Translators: see https://world.pages.gitlab.gnome.org/Graphs/help/C/curve_fitting.html#algorithms
       label: C_("optimization", "Trust Region Reflective");
       action: "win.optimization";
       target: "trf";
     }
+
     item {
       // Translators: see https://world.pages.gitlab.gnome.org/Graphs/help/C/curve_fitting.html#algorithms
       label: C_("optimization", "Dogbox");
@@ -143,25 +170,30 @@ menu fitting_menu {
       target: "dogbox";
     }
   }
+
   section {
     label: _("Confidence Bounds");
+
     item {
       label: C_("confidence", "None");
       action: "win.confidence";
       target: "none";
     }
+
     item {
       /* xgettext: no-c-format */
       label: C_("confidence", "1σ: 68% Confidence");
       action: "win.confidence";
       target: "1std";
     }
+
     item {
       /* xgettext: no-c-format */
       label: C_("confidence", "2σ: 95% Confidence");
       action: "win.confidence";
       target: "2std";
     }
+
     item {
       /* xgettext: no-c-format */
       label: C_("confidence", "3σ: 99.7% Confidence");

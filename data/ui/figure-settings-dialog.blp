@@ -1,16 +1,20 @@
 using Gtk 4.0;
 using Adw 1;
 
-template $GraphsFigureSettingsDialog : Adw.Dialog {
+template $GraphsFigureSettingsDialog: Adw.Dialog {
   content-width: 640;
   content-height: 576;
   width-request: 400;
   height-request: 400;
-  styles ["preferences"]
   closed => $on_closed();
+
+  styles [
+    "preferences",
+  ]
 
   Adw.Breakpoint {
     condition ("max-width: 600sp")
+
     setters {
       style_grid.max-columns: 2;
       style_grid.min-columns: 2;
@@ -24,6 +28,7 @@ template $GraphsFigureSettingsDialog : Adw.Dialog {
 
 Adw.NavigationPage style_overview {
   title: _("Style");
+
   Adw.ToolbarView {
     [top]
     Adw.HeaderBar {
@@ -32,18 +37,22 @@ Adw.NavigationPage style_overview {
         icon-name: "list-add-symbolic";
         tooltip-text: _("Add New Style");
         always-show-arrow: true;
+
         popover: PopoverMenu {
           menu-model: add_style_menu;
         };
       }
     }
+
     content: ScrolledWindow {
       hscrollbar-policy: never;
+
       Adw.Clamp {
         margin-bottom: 6;
         margin-top: 6;
         margin-start: 6;
         margin-end: 6;
+
         GridView style_grid {
           name: "style-grid";
           max-columns: 3;
@@ -60,6 +69,7 @@ menu add_style_menu {
       label: _("Import Style…");
       action: "figure_settings.import_style";
     }
+
     item {
       label: _("Create Style…");
       action: "figure_settings.create_style";

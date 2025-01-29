@@ -100,7 +100,7 @@ FONT_VARIANT_DICT = {
 
 def _title_format_function(_scale, value: float) -> str:
     """Format a float value as percentage string."""
-    return str(value / 2 * 100).split(".")[0] + "%"
+    return str(value / 2 * 100).split(".", maxsplit=1)[0] + "%"
 
 
 @Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/style-editor-box.ui")
@@ -167,7 +167,7 @@ class StyleEditorBox(Gtk.Box):
         ]
 
         # Setup Widgets
-        for key in STYLE_DICT.keys():
+        for key, _value in STYLE_DICT.items():
             widget = getattr(self, key.replace("-", "_"))
             if isinstance(widget, Adw.EntryRow):
                 widget.connect("changed", self._on_entry_change, key)
@@ -422,6 +422,7 @@ class _StyleColorBox(Gtk.Box):
 
     @Gtk.Template.Callback()
     def on_color_choose(self, _button):
+        """Handle a clicked color button."""
 
         def on_accept(dialog, result):
             with contextlib.suppress(GLib.GError):
@@ -445,6 +446,7 @@ class _StyleColorBox(Gtk.Box):
 
     @Gtk.Template.Callback()
     def on_delete(self, _button):
+        """Handle deletion."""
         self.props.parent.line_colors.pop(self.props.index)
         self.props.parent.reload_line_colors()
         self.props.parent.update_line_colors()

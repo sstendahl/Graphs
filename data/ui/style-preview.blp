@@ -1,12 +1,14 @@
 using Gtk 4.0;
 
-template $GraphsStylePreview : Box {
+template $GraphsStylePreview: Box {
   AspectFrame {
     child: Box {
       orientation: vertical;
+
       Overlay {
         height-request: 96;
         width-request: 160;
+
         [overlay]
         Image {
           halign: end;
@@ -16,6 +18,7 @@ template $GraphsStylePreview : Box {
           icon-name: "check-round-outline-whole-symbolic";
           name: "indicator";
         }
+
         [overlay]
         MenuButton menu_button {
           visible: false;
@@ -24,14 +27,20 @@ template $GraphsStylePreview : Box {
           valign: start;
           margin-end: 4;
           margin-top: 4;
-          styles ["flat"]
+
+          styles [
+            "flat",
+          ]
+
           popover: PopoverMenu {
             has-arrow: false;
             menu-model: style_menu;
           };
         }
+
         child: Picture picture {};
       }
+
       Label label {
         margin-top: 8;
       }
@@ -45,10 +54,12 @@ menu style_menu {
       label: _("Open");
       action: "style.open";
     }
+
     item {
       label: _("Open With…");
       action: "style.open_with";
     }
+
     item {
       label: _("Delete…");
       action: "style.delete";

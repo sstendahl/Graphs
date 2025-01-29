@@ -1,7 +1,7 @@
 using Gtk 4.0;
 using Adw 1;
 
-template $GraphsImportDialog : Adw.Dialog {
+template $GraphsImportDialog: Adw.Dialog {
   content-width: 450;
   title: _("Import Parameters");
   focus-widget: confirm_button;
@@ -10,24 +10,31 @@ template $GraphsImportDialog : Adw.Dialog {
     [top]
     Adw.HeaderBar {
       show-end-title-buttons: false;
+
       [start]
       Button {
         label: _("Cancel");
         action-name: "window.close";
       }
+
       [end]
       Box {
         orientation: horizontal;
         spacing: 10;
+
         Button {
           icon-name: "history-undo-symbolic";
           tooltip-text: _("Reset to Defaults…");
           clicked => $on_reset();
         }
+
         Button confirm_button {
           label: _("Import");
-          styles ["suggested-action"]
           clicked => $on_accept();
+
+          styles [
+            "suggested-action",
+          ]
         }
       }
     }

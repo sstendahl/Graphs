@@ -251,15 +251,15 @@ class RadianLocator(ticker.MultipleLocator):
         # Desired amount of ticks, should be between 3 and 8
         numticks_goal = max(1, self.axis.get_tick_space() - 4)
         numticks_goal = numpy.clip(numticks_goal, 3, 7)
-        ratio = (num_ticks / numticks_goal)
+        ratio = num_ticks / numticks_goal
         if num_ticks > 8:
             if ratio < 2:  # Use a distance of 2pi if reasonable
                 return distance * 2
             # Make sure ratio is never rounded to 0:
             ratio = 5 if round(ratio / 5) == 0 else ratio
             return distance * round(ratio / 5) * 5
-        elif num_ticks < 4:
-            ratio = (num_ticks / numticks_goal)
+        if num_ticks < 4:
+            ratio = num_ticks / numticks_goal
             exponent = int(numpy.log2(abs(ratio)))
             result = 2**exponent  # Return distance as a power of 2
             return distance * result

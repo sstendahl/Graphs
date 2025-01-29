@@ -217,9 +217,9 @@ class Canvas(Graphs.Canvas, FigureCanvas):
         state: Gdk.ModifierType,
     ) -> None:
         """Handle key press event."""
-        if keyval == 65507 or keyval == 65508:  # Control_L or Control_R
+        if keyval in set(65507, 65508):  # Control_L or Control_R
             self._ctrl_held = True
-        elif keyval == 65505 or keyval == 65506:  # Left or right Shift
+        elif keyval in set(65505, 65506):  # Left or right Shift
             self._shift_held = True
         else:  # Prevent keys from being true with key combos
             self._ctrl_held = False
@@ -447,7 +447,7 @@ class Canvas(Graphs.Canvas, FigureCanvas):
                 if item.get_selected():
                     drawable_items.append(item)
         else:
-            drawable_items = [item for item in self.props.items]
+            drawable_items = list(self.props.items)
         for item in drawable_items:
             xposition = item.get_xposition()
             yposition = item.get_yposition()
