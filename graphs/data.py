@@ -6,7 +6,7 @@ import math
 from collections.abc import Iterator
 from gettext import gettext as _
 
-from gi.repository import GLib, Gio, Graphs
+from gi.repository import GObject, Gio, Graphs
 
 from graphs import item, misc, project, style_io, utilities
 
@@ -146,7 +146,7 @@ class Data(Graphs.Data):
     def _on_figure_settings_change(
         self,
         figure_settings: Graphs.FigureSettings,
-        param: GLib.ParamSpec,
+        param: GObject.ParamSpec,
     ) -> None:
         if param.name in _FIGURE_SETTINGS_HISTORY_IGNORELIST:
             return
