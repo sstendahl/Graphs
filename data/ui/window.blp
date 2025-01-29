@@ -13,110 +13,137 @@ template $GraphsWindow: Adw.ApplicationWindow {
       trigger: "<control>w";
       action: "action(window.close)";
     }
+
     Shortcut {
       trigger: "<control>question";
       action: "action(win.show-help-overlay)";
     }
+
     Shortcut {
       trigger: "<control>comma";
       action: "action(win.figure_settings)";
     }
+
     Shortcut {
       trigger: "<control>N";
       action: "action(win.add_data)";
     }
+
     Shortcut {
       trigger: "<control><alt>N";
       action: "action(win.add_equation)";
     }
+
     Shortcut {
       trigger: "<control><shift>N";
       action: "action(win.generate_data)";
     }
+
     Shortcut {
       trigger: "<control>A";
       action: "action(win.select_all)";
     }
+
     Shortcut {
       trigger: "<control><shift>A";
       action: "action(win.select_none)";
     }
+
     Shortcut {
       trigger: "<control>Z";
       action: "action(win.undo)";
     }
+
     Shortcut {
       trigger: "<control><shift>Z";
       action: "action(win.redo)";
     }
+
     Shortcut {
       trigger: "<control>KP_0";
       action: "action(win.optimize_limits)";
     }
+
     Shortcut {
       trigger: "<control>0";
       action: "action(win.optimize_limits)";
     }
+
     Shortcut {
       trigger: "<alt>Z";
       action: "action(win.view_back)";
     }
+
     Shortcut {
       trigger: "<alt><shift>Z";
       action: "action(win.view_forward)";
     }
+
     Shortcut {
       trigger: "<control><shift>E";
       action: "action(win.export_data)";
     }
+
     Shortcut {
       trigger: "<control>E";
       action: "action(win.export_figure)";
     }
+
     Shortcut {
       trigger: "<control>period";
       action: "action(win.styles)";
     }
+
     Shortcut {
       trigger: "<control>S";
       action: "action(win.save_project)";
     }
+
     Shortcut {
       trigger: "<control>O";
       action: "action(win.open_project)";
     }
+
     Shortcut {
       trigger: "Delete";
       action: "action(win.delete_selected)";
     }
+
     Shortcut {
       trigger: "<control>plus|<control>KP_Add|<control>equal|<control>ZoomIn";
       action: "action(win.zoom_in)";
     }
+
     Shortcut {
       trigger: "<control>minus|<control>KP_Subtract|<control>ZoomOut";
       action: "action(win.zoom_out)";
     }
+
     Shortcut {
       trigger: "<control><shift>S";
       action: "action(win.save_project_as)";
     }
+
     Shortcut {
       trigger: "<control><shift>N";
       action: "action(app.new_project)";
     }
+
     Shortcut {
       trigger: "F9";
       action: "action(win.toggle_sidebar)";
     }
+
     Shortcut {
       trigger: "<control>1";
       action: "action(win.mode_pan)";
     }
+
     Shortcut {
       trigger: "<control>2";
       action: "action(win.mode_zoom)";
     }
+
     Shortcut {
       trigger: "<control>3";
       action: "action(win.mode_select)";
@@ -126,6 +153,7 @@ template $GraphsWindow: Adw.ApplicationWindow {
   // If both width and height are limited
   Adw.Breakpoint {
     condition ("max-width: 725sp and max-height: 640sp")
+
     setters {
       scrollwindow_itemlist.height-request: 60;
       scrollwindow_itemlist.vexpand: true;
@@ -136,6 +164,7 @@ template $GraphsWindow: Adw.ApplicationWindow {
   // If only height is limited
   Adw.Breakpoint {
     condition ("min-width: 725sp and max-height: 640sp")
+
     setters {
       scrollwindow_itemlist.height-request: 60;
       scrollwindow_itemlist.vexpand: true;
@@ -145,6 +174,7 @@ template $GraphsWindow: Adw.ApplicationWindow {
   // If only width is limited
   Adw.Breakpoint {
     condition ("max-width: 725sp and min-height: 640sp")
+
     setters {
       scrollwindow_itemlist.height-request: 250;
       scrollwindow_itemlist.vexpand: false;
@@ -152,477 +182,589 @@ template $GraphsWindow: Adw.ApplicationWindow {
     }
   }
 
-  content: Adw.OverlaySplitView split_view {
-    show-sidebar: bind show_sidebar_button.active;
-    notify => $on_sidebar_toggle();
-    sidebar: Adw.ToolbarView {
-      width-request: 350;
-      [top]
-      Adw.HeaderBar sidebar_headerbar {
-        styles ["flat"]
-        [start]
-        MenuButton add_button {
-          icon-name: "list-add-symbolic";
-          tooltip-text: _("Add New Data");
-          always-show-arrow: true;
-          menu-model: add_data_menu;
-        }
-        [end]
-        MenuButton {
-          icon-name: "open-menu-symbolic";
-          menu-model: primary_menu;
-          tooltip-text: _("Open Application Menu");
-          primary: true;
-        }
+  content: Overlay drag_overlay {
+    styles [
+      "drag-overlay"
+    ]
+
+    [overlay]
+    Revealer drag_revealer {
+      can-target: false;
+      transition-type: crossfade;
+
+      Adw.StatusPage {
+        title: _("Drop Here to Import");
+        icon-name: "list-add-symbolic";
+
+        styles [
+          "drag-overlay-status-page"
+        ]
       }
-      Box {
-        orientation: vertical;
-        ScrolledWindow  scrollwindow_itemlist {
-          vexpand: true;
-          hscrollbar-policy: never;
-          Viewport {
-            Box {
-              ListBox item_list {
-                margin-bottom: 12;
-                margin-top: 6;
-                margin-start: 12;
-                margin-end: 12;
-                vexpand: false;
-                valign: start;
-                hexpand: true;
-                visible: false;
-                selection-mode: none;
-                styles ["boxed-list"]
-              }
-              Adw.StatusPage {
-                icon-name: "list-compact";
-                hexpand: true;
-                width-request: 240;
-                halign: center;
-                visible: bind item_list.visible inverted;
-                title: _("No Data");
-                description: _("Add data from a file or manually as an equation");
-                styles ["compact"]
-              }
-            }
-          }
-        }
+    }
 
-        Separator {
-          orientation: horizontal;
-        }
+    child: Adw.OverlaySplitView split_view {
+      show-sidebar: bind show_sidebar_button.active;
+      notify => $on_sidebar_toggle();
 
-        Box {
-          spacing: 10;
-          margin-top: 12;
-          margin-bottom: 12;
-          margin-start: 12;
-          margin-end: 12;
-          ToggleButton pan_button {
-            icon-name: "move-tool-symbolic";
-            action-name: "win.mode_pan";
-            hexpand: true;
-            tooltip-text: _("Pan Mode. Click and drag to pan");
-          }
-          ToggleButton zoom_button {
-            icon-name: "loupe-symbolic";
-            action-name: "win.mode_zoom";
-            hexpand: true;
-            tooltip-text: _("Zoom Mode. Select an area on the figure to zoom in");
-          }
-          ToggleButton select_button {
-            icon-name: "edit-select-all-symbolic";
-            action-name: "win.mode_select";
-            hexpand: true;
-            tooltip-text: _("Select Mode. Click and drag to make a selection of data");
-          }
-        }
+      sidebar: Adw.ToolbarView {
+        width-request: 350;
 
-        Separator {
-          orientation: horizontal;
+        [top]
+        Adw.HeaderBar sidebar_headerbar {
+          styles [
+            "flat"
+          ]
+
+          [start]
+          MenuButton add_button {
+            icon-name: "list-add-symbolic";
+            tooltip-text: _("Add New Data");
+            always-show-arrow: true;
+            menu-model: add_data_menu;
+          }
+
+          [end]
+          MenuButton {
+            icon-name: "open-menu-symbolic";
+            menu-model: primary_menu;
+            tooltip-text: _("Open Application Menu");
+            primary: true;
+          }
         }
 
         Box {
           orientation: vertical;
-          hexpand: false;
-          spacing: 18;
-          margin-start: 12;
-          margin-end: 12;
-          margin-top: 12;
-          margin-bottom: 12;
-          Box stack_switcher_box {}
 
-          Stack stack {
-            transition-type: slide_left_right;
-            StackPage{
-              title: _("Adjust");
-              child: Adw.PreferencesGroup {
-                Grid {
-                  column-homogeneous: true;
-                  column-spacing: 10;
-                  row-spacing: 10;
+          ScrolledWindow scrollwindow_itemlist {
+            vexpand: true;
+            hscrollbar-policy: never;
 
-                  Button combine_button {
-                    sensitive: bind shift_button.sensitive;
-                    layout {
-                      column: 0;
-                      row: 0;
-                    }
-                    Adw.ButtonContent {
-                      halign: center;
-                      icon-name: "edit-paste-symbolic";
-                      label: _("Combine");
-                    }
-                    tooltip-text: _("Combine all selected data");
-                    clicked => $perform_operation();
-                  }
+            Viewport {
+              Box {
+                ListBox item_list {
+                  margin-bottom: 12;
+                  margin-top: 6;
+                  margin-start: 12;
+                  margin-end: 12;
+                  vexpand: false;
+                  valign: start;
+                  hexpand: true;
+                  visible: false;
+                  selection-mode: none;
 
-                  Button cut_button {
-                    sensitive: bind select_button.active;
-                    layout {
-                      column: 1;
-                      row: 0;
-                    }
-                    Adw.ButtonContent {
-                      halign: center;
-                      icon-name: "edit-cut-symbolic";
-                      label: _("Cut");
-                    }
-                    tooltip-text: _("Cut selected data");
-                    clicked => $perform_operation();
-                  }
+                  styles [
+                    "boxed-list"
+                  ]
+                }
 
-                  Button shift_button {
-                    layout {
-                      column: 0;
-                      row: 1;
-                    }
-                    Adw.ButtonContent {
-                      halign: center;
-                      icon-name: "shift-symbolic";
-                      label: _("Shift");
-                    }
-                    tooltip-text: _("Shift all data vertically with respect to each other");
-                    clicked => $perform_operation();
-                  }
+                Adw.StatusPage {
+                  icon-name: "list-compact";
+                  hexpand: true;
+                  width-request: 240;
+                  halign: center;
+                  visible: bind item_list.visible inverted;
+                  title: _("No Data");
+                  description: _("Add data from a file or manually as an equation");
 
-                  Button normalize_button {
-                    sensitive: bind shift_button.sensitive;
-                    layout {
-                      column: 1;
-                      row: 1;
-                    }
-                    Adw.ButtonContent {
-                      halign: center;
-                      icon-name: "normalize-symbolic";
-                      label: _("Normalize");
-                    }
-                    tooltip-text: _("Normalize data");
-                    clicked => $perform_operation();
-                  }
+                  styles [
+                    "compact"
+                  ]
+                }
+              }
+            }
+          }
 
-                  Adw.SplitButton smoothen_button {
-                    can-shrink: true;
-                    layout {
-                      column: 0;
-                      row: 2;
-                      column-span: 2;
+          Separator {
+            orientation: horizontal;
+          }
+
+          Box {
+            spacing: 10;
+            margin-top: 12;
+            margin-bottom: 12;
+            margin-start: 12;
+            margin-end: 12;
+
+            ToggleButton pan_button {
+              icon-name: "move-tool-symbolic";
+              action-name: "win.mode_pan";
+              hexpand: true;
+              tooltip-text: _("Pan Mode. Click and drag to pan");
+            }
+
+            ToggleButton zoom_button {
+              icon-name: "loupe-symbolic";
+              action-name: "win.mode_zoom";
+              hexpand: true;
+              tooltip-text: _("Zoom Mode. Select an area on the figure to zoom in");
+            }
+
+            ToggleButton select_button {
+              icon-name: "edit-select-all-symbolic";
+              action-name: "win.mode_select";
+              hexpand: true;
+              tooltip-text: _("Select Mode. Click and drag to make a selection of data");
+            }
+          }
+
+          Separator {
+            orientation: horizontal;
+          }
+
+          Box {
+            orientation: vertical;
+            hexpand: false;
+            spacing: 18;
+            margin-start: 12;
+            margin-end: 12;
+            margin-top: 12;
+            margin-bottom: 12;
+
+            Box stack_switcher_box {}
+
+            Stack stack {
+              transition-type: slide_left_right;
+
+              StackPage {
+                title: _("Adjust");
+
+                child: Adw.PreferencesGroup {
+                  Grid {
+                    column-homogeneous: true;
+                    column-spacing: 10;
+                    row-spacing: 10;
+
+                    Button combine_button {
+                      sensitive: bind shift_button.sensitive;
+
+                      layout {
+                        column: 0;
+                        row: 0;
+                      }
+
+                      Adw.ButtonContent {
+                        halign: center;
+                        icon-name: "edit-paste-symbolic";
+                        label: _("Combine");
+                      }
+
+                      tooltip-text: _("Combine all selected data");
+                      clicked => $perform_operation();
                     }
-                    Adw.ButtonContent {
-                      halign: center;
+
+                    Button cut_button {
+                      sensitive: bind select_button.active;
+
+                      layout {
+                        column: 1;
+                        row: 0;
+                      }
+
+                      Adw.ButtonContent {
+                        halign: center;
+                        icon-name: "edit-cut-symbolic";
+                        label: _("Cut");
+                      }
+
+                      tooltip-text: _("Cut selected data");
+                      clicked => $perform_operation();
+                    }
+
+                    Button shift_button {
+                      layout {
+                        column: 0;
+                        row: 1;
+                      }
+
+                      Adw.ButtonContent {
+                        halign: center;
+                        icon-name: "shift-symbolic";
+                        label: _("Shift");
+                      }
+
+                      tooltip-text: _("Shift all data vertically with respect to each other");
+                      clicked => $perform_operation();
+                    }
+
+                    Button normalize_button {
+                      sensitive: bind shift_button.sensitive;
+
+                      layout {
+                        column: 1;
+                        row: 1;
+                      }
+
+                      Adw.ButtonContent {
+                        halign: center;
+                        icon-name: "normalize-symbolic";
+                        label: _("Normalize");
+                      }
+
+                      tooltip-text: _("Normalize data");
+                      clicked => $perform_operation();
+                    }
+
+                    Adw.SplitButton smoothen_button {
                       can-shrink: true;
-                      icon-name: "smoothen-symbolic";
-                      label: _("Smoothen");
-                    }
-                    tooltip-text: _("Smoothen data");
-                    menu-model: smoothen_menu;
-                    clicked => $perform_operation();
-                  }
 
-                  Adw.SplitButton center_button {
-                    sensitive: bind shift_button.sensitive;
-                    layout {
-                      column: 0;
-                      row: 3;
-                      column-span: 2;
-                    }
-                    Adw.ButtonContent {
-                      halign: center;
-                      icon-name: "center-symbolic";
-                      label: _("Center");
-                    }
-                    tooltip-text: _("Center data");
-                    menu-model: center_menu;
-                    clicked => $perform_operation();
-                  }
-                }
-              };
-            }
+                      layout {
+                        column: 0;
+                        row: 2;
+                        column-span: 2;
+                      }
 
-            StackPage{
-              title: _("Transform");
-              child: Adw.PreferencesGroup {
-                Grid {
-                  column-homogeneous: true;
-                  column-spacing: 12;
-                  row-spacing: 12;
-                  Button derivative_button {
-                    sensitive: bind shift_button.sensitive;
-                    layout {
-                      column: 0;
-                      row: 0;
-                    }
-                    Adw.ButtonContent {
-                      halign: center;
-                      icon-name: "derivative2-symbolic";
-                      label: _("Derivative");
-                    }
-                    tooltip-text: _("Get the derivative of the data");
-                    clicked => $perform_operation();
-                  }
+                      Adw.ButtonContent {
+                        halign: center;
+                        can-shrink: true;
+                        icon-name: "smoothen-symbolic";
+                        label: _("Smoothen");
+                      }
 
-                  Button integral_button {
-                    sensitive: bind shift_button.sensitive;
-                    layout {
-                      column: 1;
-                      row: 0;
+                      tooltip-text: _("Smoothen data");
+                      menu-model: smoothen_menu;
+                      clicked => $perform_operation();
                     }
-                    Adw.ButtonContent {
-                      halign: center;
-                      icon-name: "integral-symbolic";
-                      label: _("Integral");
-                    }
-                    tooltip-text: _("Get the indefinite integral of the data");
-                    clicked => $perform_operation();
-                  }
 
-                  Button fft_button {
-                    sensitive: bind shift_button.sensitive;
-                    layout {
-                      column: 0;
-                      row: 1;
-                      column-span: 2;
-                    }
-                    Adw.ButtonContent {
-                      halign: center;
-                      icon-name: "fast-fourier-transform-symbolic";
-                      label: _("FFT");
-                    }
-                    tooltip-text: _("Get the Fast Fourier Transform of the data");
-                    clicked => $perform_operation();
-                  }
+                    Adw.SplitButton center_button {
+                      sensitive: bind shift_button.sensitive;
 
-                  Button inverse_fft_button {
-                    sensitive: bind shift_button.sensitive;
-                    layout {
-                      column: 0;
-                      row: 2;
-                      column-span: 2;
-                    }
-                    Adw.ButtonContent {
-                      halign: center;
-                      icon-name: "inverse-fast-fourier-transform-symbolic";
-                      label: _("Inverse FFT");
-                    }
-                    tooltip-text: _("Get the Inverse Fast Fourier Transform of the data");
-                    clicked => $perform_operation();
-                  }
+                      layout {
+                        column: 0;
+                        row: 3;
+                        column-span: 2;
+                      }
 
-                  Button custom_transformation_button {
-                    sensitive: bind shift_button.sensitive;
-                    layout {
-                      column: 0;
-                      row: 3;
-                      column-span: 2;
-                    }
-                    Adw.ButtonContent {
-                      halign: center;
-                      icon-name: "transform-symbolic";
-                      label: _("Custom Transformation");
-                    }
-                    tooltip-text: _("Perform custom transformations on the data");
-                    clicked => $perform_operation();
-                  }
-                }
-              };
-            }
+                      Adw.ButtonContent {
+                        halign: center;
+                        icon-name: "center-symbolic";
+                        label: _("Center");
+                      }
 
-            StackPage{
-              title: _("Modify");
-              child: Adw.PreferencesGroup {
-                Grid {
-                  column-spacing: 10;
-                  row-spacing: 10;
-                  Entry translate_x_entry {
-                    max-width-chars: 6;
-                    hexpand: true;
-                    text: "10";
-                    layout {
-                      column: 0;
-                      row: 0;
+                      tooltip-text: _("Center data");
+                      menu-model: center_menu;
+                      clicked => $perform_operation();
                     }
                   }
-                  Button translate_x_button {
-                    valign: center;
-                    clicked => $perform_operation();
-                    width-request: 120;
-                    Adw.ButtonContent {
-                      icon-name: "horizontal-arrows-symbolic";
-                      label: _("Translate X");
-                    }
-                    layout {
-                      column: 1;
-                      row: 0;
-                    }
-                  }
+                };
+              }
 
-                  Entry translate_y_entry {
-                    max-width-chars: 6;
-                    hexpand: true;
-                    text: "10";
-                    layout {
-                      column: 0;
-                      row: 1;
-                    }
-                  }
-                  Button translate_y_button {
-                    valign: center;
-                    clicked => $perform_operation();
-                    width-request: 120;
-                    Adw.ButtonContent {
-                      icon-name: "vertical-arrows-symbolic";
-                      label: _("Translate Y");
-                    }
-                    layout {
-                      column: 1;
-                      row: 1;
-                    }
-                  }
+              StackPage {
+                title: _("Transform");
 
-                  Entry multiply_x_entry {
-                    max-width-chars: 6;
-                    hexpand: true;
-                    text: "10";
-                    layout {
-                      column: 0;
-                      row: 2;
-                    }
-                  }
-                  Button multiply_x_button {
-                    valign: center;
-                    clicked => $perform_operation();
-                    width-request: 120;
-                    Adw.ButtonContent {
-                      icon-name: "horizontal-arrows-symbolic";
-                      label: _("Multiply X");
-                    }
-                    layout {
-                      column: 1;
-                      row: 2;
-                    }
-                  }
+                child: Adw.PreferencesGroup {
+                  Grid {
+                    column-homogeneous: true;
+                    column-spacing: 12;
+                    row-spacing: 12;
 
-                  Entry multiply_y_entry {
-                    max-width-chars: 6;
-                    hexpand: true;
-                    text: "10";
-                    layout {
-                      column: 0;
-                      row: 3;
+                    Button derivative_button {
+                      sensitive: bind shift_button.sensitive;
+
+                      layout {
+                        column: 0;
+                        row: 0;
+                      }
+
+                      Adw.ButtonContent {
+                        halign: center;
+                        icon-name: "derivative2-symbolic";
+                        label: _("Derivative");
+                      }
+
+                      tooltip-text: _("Get the derivative of the data");
+                      clicked => $perform_operation();
+                    }
+
+                    Button integral_button {
+                      sensitive: bind shift_button.sensitive;
+
+                      layout {
+                        column: 1;
+                        row: 0;
+                      }
+
+                      Adw.ButtonContent {
+                        halign: center;
+                        icon-name: "integral-symbolic";
+                        label: _("Integral");
+                      }
+
+                      tooltip-text: _("Get the indefinite integral of the data");
+                      clicked => $perform_operation();
+                    }
+
+                    Button fft_button {
+                      sensitive: bind shift_button.sensitive;
+
+                      layout {
+                        column: 0;
+                        row: 1;
+                        column-span: 2;
+                      }
+
+                      Adw.ButtonContent {
+                        halign: center;
+                        icon-name: "fast-fourier-transform-symbolic";
+                        label: _("FFT");
+                      }
+
+                      tooltip-text: _("Get the Fast Fourier Transform of the data");
+                      clicked => $perform_operation();
+                    }
+
+                    Button inverse_fft_button {
+                      sensitive: bind shift_button.sensitive;
+
+                      layout {
+                        column: 0;
+                        row: 2;
+                        column-span: 2;
+                      }
+
+                      Adw.ButtonContent {
+                        halign: center;
+                        icon-name: "inverse-fast-fourier-transform-symbolic";
+                        label: _("Inverse FFT");
+                      }
+
+                      tooltip-text: _("Get the Inverse Fast Fourier Transform of the data");
+                      clicked => $perform_operation();
+                    }
+
+                    Button custom_transformation_button {
+                      sensitive: bind shift_button.sensitive;
+
+                      layout {
+                        column: 0;
+                        row: 3;
+                        column-span: 2;
+                      }
+
+                      Adw.ButtonContent {
+                        halign: center;
+                        icon-name: "transform-symbolic";
+                        label: _("Custom Transformation");
+                      }
+
+                      tooltip-text: _("Perform custom transformations on the data");
+                      clicked => $perform_operation();
                     }
                   }
-                  Button multiply_y_button {
-                    valign: center;
-                    clicked => $perform_operation();
-                    width-request: 120;
-                    Adw.ButtonContent {
-                      icon-name: "vertical-arrows-symbolic";
-                      label: _("Multiply Y");
+                };
+              }
+
+              StackPage {
+                title: _("Modify");
+
+                child: Adw.PreferencesGroup {
+                  Grid {
+                    column-spacing: 10;
+                    row-spacing: 10;
+
+                    Entry translate_x_entry {
+                      max-width-chars: 6;
+                      hexpand: true;
+                      text: "10";
+
+                      layout {
+                        column: 0;
+                        row: 0;
+                      }
                     }
-                    layout {
-                      column: 1;
-                      row: 3;
+
+                    Button translate_x_button {
+                      valign: center;
+                      clicked => $perform_operation();
+                      width-request: 120;
+
+                      Adw.ButtonContent {
+                        icon-name: "horizontal-arrows-symbolic";
+                        label: _("Translate X");
+                      }
+
+                      layout {
+                        column: 1;
+                        row: 0;
+                      }
+                    }
+
+                    Entry translate_y_entry {
+                      max-width-chars: 6;
+                      hexpand: true;
+                      text: "10";
+
+                      layout {
+                        column: 0;
+                        row: 1;
+                      }
+                    }
+
+                    Button translate_y_button {
+                      valign: center;
+                      clicked => $perform_operation();
+                      width-request: 120;
+
+                      Adw.ButtonContent {
+                        icon-name: "vertical-arrows-symbolic";
+                        label: _("Translate Y");
+                      }
+
+                      layout {
+                        column: 1;
+                        row: 1;
+                      }
+                    }
+
+                    Entry multiply_x_entry {
+                      max-width-chars: 6;
+                      hexpand: true;
+                      text: "10";
+
+                      layout {
+                        column: 0;
+                        row: 2;
+                      }
+                    }
+
+                    Button multiply_x_button {
+                      valign: center;
+                      clicked => $perform_operation();
+                      width-request: 120;
+
+                      Adw.ButtonContent {
+                        icon-name: "horizontal-arrows-symbolic";
+                        label: _("Multiply X");
+                      }
+
+                      layout {
+                        column: 1;
+                        row: 2;
+                      }
+                    }
+
+                    Entry multiply_y_entry {
+                      max-width-chars: 6;
+                      hexpand: true;
+                      text: "10";
+
+                      layout {
+                        column: 0;
+                        row: 3;
+                      }
+                    }
+
+                    Button multiply_y_button {
+                      valign: center;
+                      clicked => $perform_operation();
+                      width-request: 120;
+
+                      Adw.ButtonContent {
+                        icon-name: "vertical-arrows-symbolic";
+                        label: _("Multiply Y");
+                      }
+
+                      layout {
+                        column: 1;
+                        row: 3;
+                      }
                     }
                   }
-                }
-              };
+                };
+              }
             }
           }
         }
-      }
-    };
+      };
 
-    content: Box {
-      orientation: vertical;
-      Adw.HeaderBar content_headerbar {
-        name: "canvas-headerbar";
-        styles ["flat"]
-        title-widget: Adw.WindowTitle content_title {};
-        ToggleButton show_sidebar_button {
-          icon-name: "sidebar-show-symbolic";
-          tooltip-text: _("Toggle Sidebar");
-          active: bind split_view.show-sidebar;
-          visible: bind split_view.collapsed;
+      content: Box {
+        orientation: vertical;
+
+        Adw.HeaderBar content_headerbar {
+          name: "canvas-headerbar";
+
+          styles [
+            "flat"
+          ]
+
+          title-widget: Adw.WindowTitle content_title {};
+
+          ToggleButton show_sidebar_button {
+            icon-name: "sidebar-show-symbolic";
+            tooltip-text: _("Toggle Sidebar");
+            active: bind split_view.show-sidebar;
+            visible: bind split_view.collapsed;
+          }
+
+          Button undo_button {
+            action-name: "win.undo";
+            icon-name: "edit-undo-symbolic";
+            tooltip-text: _("Undo");
+          }
+
+          Button redo_button {
+            action-name: "win.redo";
+            icon-name: "edit-redo-symbolic";
+            tooltip-text: _("Redo");
+          }
+
+          [end]
+          MenuButton view_menu_button {
+            icon-name: "view-reveal-symbolic";
+            tooltip-text: _("View Menu");
+            always-show-arrow: true;
+            menu-model: view_menu;
+          }
+
+          [end]
+          Button view_forward_button {
+            action-name: "win.view_forward";
+            icon-name: "go-next-symbolic";
+            tooltip-text: _("Next View");
+          }
+
+          [end]
+          Button view_back_button {
+            action-name: "win.view_back";
+            icon-name: "go-previous-symbolic";
+            tooltip-text: _("Previous View");
+          }
         }
-        Button undo_button {
-          action-name: "win.undo";
-          icon-name: "edit-undo-symbolic";
-          tooltip-text: _("Undo");
+
+        Adw.ToastOverlay toast_overlay {
+          focusable: true;
+          height-request: 200;
+          width-request: 200;
+
+          child: Adw.StatusPage {
+            icon-name: "dialog-error-symbolic";
+            title: _("Canvas Failed to Load");
+          };
         }
-        Button redo_button {
-          action-name: "win.redo";
-          icon-name: "edit-redo-symbolic";
-          tooltip-text: _("Redo");
-        }
-        [end]
-        MenuButton view_menu_button {
-          icon-name: "view-reveal-symbolic";
-          tooltip-text: _("View Menu");
-          always-show-arrow: true;
-          menu-model: view_menu;
-        }
-        [end]
-        Button view_forward_button {
-          action-name: "win.view_forward";
-          icon-name: "go-next-symbolic";
-          tooltip-text: _("Next View");
-        }
-        [end]
-        Button view_back_button {
-          action-name: "win.view_back";
-          icon-name: "go-previous-symbolic";
-          tooltip-text: _("Previous View");
-        }
-      }
-      Adw.ToastOverlay toast_overlay {
-        focusable: true;
-        height-request: 200;
-        width-request: 200;
-        child: Adw.StatusPage {
-          icon-name: "dialog-error-symbolic";
-          title: _("Canvas Failed to Load");
-        };
-      }
+      };
     };
   };
 }
 
 menu primary_menu {
-  section{
+  section {
     item (_("New Project"), "app.new_project")
   }
-  section{
+
+  section {
     item (_("Save Project…"), "win.save_project")
     item (_("Save Project as…"), "win.save_project_as")
     item (_("Open Project…"), "win.open_project")
   }
+
   section {
     item (_("Export Data…"), "win.export_data")
     item (_("Export Figure…"), "win.export_figure")
   }
+
   section {
     item (_("Figure Settings"), "win.figure_settings")
   }
+
   section {
     item (_("Keyboard Shortcuts"), "win.show-help-overlay")
     item (_("Help"), "app.help")
@@ -638,8 +780,7 @@ menu add_data_menu {
   }
 }
 
-menu view_menu {
-}
+menu view_menu {}
 
 menu center_menu {
   item {
@@ -647,6 +788,7 @@ menu center_menu {
     action: "win.center";
     target: "max-y";
   }
+
   item {
     label: _("At Middle X Value");
     action: "win.center";
@@ -661,12 +803,14 @@ menu smoothen_menu {
       action: "win.smoothen";
       target: "savgol";
     }
+
     item {
       label: _("Moving Average");
       action: "win.smoothen";
       target: "moving-average";
     }
   }
+
   section {
     item {
       label: _("Advanced Settings");
