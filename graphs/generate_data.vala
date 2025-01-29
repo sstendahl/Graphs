@@ -58,7 +58,10 @@ namespace Graphs {
             this.settings.set_string ("xstart", xstart.get_text ());
             this.settings.set_string ("xstop", xstop.get_text ());
             this.settings.set_int ("steps", (int) this.steps.get_value ());
-            application.python_helper.generate_data (window, item_name.get_text ());
+            Item item = application.python_helper.generate_data (window, item_name.get_text ());
+            Item[] items = {item};
+            window.data.add_items (items);
+            window.data.optimize_limits ();
             close ();
         }
 

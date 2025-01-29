@@ -39,6 +39,9 @@ namespace Graphs {
 
         private bool[] _used_positions;
         private Gee.AbstractList<Item> _items;
+        private string[] _color_cycle;
+        private string[] _used_colors;
+        private GLib.Settings _settings;
 
         public signal void style_changed (bool recolor_items);
         protected signal void python_method_request (string method);
@@ -46,9 +49,11 @@ namespace Graphs {
         protected signal void item_changed (Item item, string prop_name);
         protected signal void delete_request (Item[] items);
         protected signal string load_request (File file);
+        protected signal void item_added (Item item);
 
         construct {
             this._items = new Gee.LinkedList<Item> ();
+            this._color_cycle = {};
             items_changed.connect (() => {
                 _update_used_positions ();
                 notify_property ("items_selected");
@@ -56,7 +61,8 @@ namespace Graphs {
         }
 
         protected void setup () {
-            this.figure_settings = new FigureSettings (application.get_settings_child ("figure"));
+            this._settings = application.get_settings_child ("figure");
+            this.figure_settings = new FigureSettings (_settings);
 
             var style_manager = application.figure_style_manager;
             this.style_selection_model = new SingleSelection (style_manager.style_model);
@@ -152,6 +158,91 @@ namespace Graphs {
             items_changed.emit (index, 1, 0);
         }
 
+        private bool is_default (string prop) {
+            string figure_settings_value;
+            figure_settings.get (prop, out figure_settings_value);
+            return (figure_settings_value == _settings.get_string (prop));
+        }
+
+        private void append_used_color (string color) {
+            if (color in _used_colors) return;
+            if (!(color in _color_cycle)) return;
+            _used_colors += color;
+            if (_used_colors.length == _color_cycle.length) _used_colors = {};
+        }
+
+        /**
+         * Add items to be managed.
+         *
+         * Respects settings in regards to handling duplicate names.
+         * New Items with a x- or y-label change the figures current labels if
+         * they are still the default. If they are already modified and do not
+         * match the items label, they get moved to another axis.
+         */
+        public void add_items (Item[] items) {
+            _used_colors = {};
+            foreach (Item item in _items) {
+                if (item.color in _color_cycle) append_used_color (item.color);
+            }
+            string[] used_names = get_names ();
+            uint prev_size = get_n_items ();
+            int original_position;
+            foreach (Item item in items) {
+                if (item.name in used_names) {
+                    item.name = Tools.get_duplicate_string (item.name, used_names);
+                }
+                used_names += item.name;
+                if (item.color == "") {
+                    foreach (string color in _color_cycle) {
+                        if (!(color in _used_colors)) {
+                            append_used_color (color);
+                            item.color = color;
+                            break;
+                        }
+                    }
+                }
+                if (item.xlabel != "") {
+                    original_position = item.xposition;
+                    if (original_position == 0) {
+                        if (is_default ("bottom-label") | is_empty ()) {
+                            figure_settings.bottom_label = item.xlabel;
+                        } else if (item.xlabel != figure_settings.bottom_label) {
+                            item.xposition = 1;
+                        }
+                    }
+                    if (item.xposition == 1) {
+                        if (is_default ("top-label")) {
+                            figure_settings.top_label = item.xlabel;
+                        } else if (item.xlabel != figure_settings.top_label) {
+                            item.xposition = original_position;
+                        }
+                    }
+                }
+                if (item.ylabel != "") {
+                    original_position = item.yposition;
+                    if (original_position == 0) {
+                        if (is_default ("left-label") | is_empty ()) {
+                            figure_settings.left_label = item.ylabel;
+                        } else if (item.ylabel != figure_settings.left_label) {
+                            item.yposition = 1;
+                        }
+                    }
+                    if (item.yposition == 1) {
+                        if (is_default ("right-label")) {
+                            figure_settings.right_label = item.ylabel;
+                        } else if (item.ylabel != figure_settings.right_label) {
+                            item.yposition = original_position;
+                        }
+                    }
+                }
+                _add_item (item, -1, false);
+                item_added.emit (item);
+            }
+            items_changed.emit (prev_size, 0, items.length);
+            python_method_request.emit ("_optimize_limits");
+            python_method_request.emit ("_add_history_state");
+        }
+
         public void set_items (Item[] items) {
             uint removed = _items.size;
             _items.clear ();
@@ -178,6 +269,10 @@ namespace Graphs {
 
         protected Style get_selected_style () {
             return style_selection_model.get_selected_item () as Style;
+        }
+
+        protected void set_color_cycle (string[] color_cycle) {
+            this._color_cycle = color_cycle;
         }
 
         // End section style
