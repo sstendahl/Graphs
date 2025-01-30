@@ -465,33 +465,33 @@ class PythonStyleEditor(Graphs.StyleEditor):
 
     def __init__(self, application: Graphs.Application):
         super().__init__(application=application)
+
+        self._test_items = Gio.ListStore()
+        self._initialize_test_items()
+
         style_editor = StyleEditorBox(self)
         self.set_editor_box(style_editor)
-        self._test_items = Gio.ListStore()
-        self._test_items.append(
-            DataItem.new(
-                pyplot.rcParams,
-                xdata=_PREVIEW_XDATA1,
-                ydata=_PREVIEW_YDATA1,
-                name=_("Example Item"),
-                color="#000000",
-            ),
-        )
-        self._test_items.append(
-            DataItem.new(
-                pyplot.rcParams,
-                xdata=_PREVIEW_XDATA2,
-                ydata=_PREVIEW_YDATA2,
-                name=_("Example Item"),
-                color="#000000",
-            ),
-        )
-
         style_editor.connect("params-changed", self._on_params_changed)
-        self._on_params_changed(style_editor, False)
 
+        self._on_params_changed(style_editor, False)
         self.connect("load_request", self._on_load_request)
         self.connect("save_request", self._on_save_request)
+
+    def _initialize_test_items(self):
+        """Initialize example test items with predefined preview data."""
+        preview_data = [(_PREVIEW_XDATA1, _PREVIEW_YDATA1),
+                        (_PREVIEW_XDATA2, _PREVIEW_YDATA2)]
+
+        for xdata, ydata in preview_data:
+            self._test_items.append(
+                DataItem.new(
+                    pyplot.rcParams,
+                    xdata=xdata,
+                    ydata=ydata,
+                    name=_("Example Item"),
+                    color="#000000",
+                ),
+            )
 
     def _on_params_changed(self, style_editor, changes_unsaved=True):
         if style_editor.params is None:
@@ -500,14 +500,12 @@ class PythonStyleEditor(Graphs.StyleEditor):
         else:
             params = style_editor.params
             color_cycle = style_editor.line_colors
-            count = 1
-            for item in self._test_items:
-                if count > len(color_cycle):
-                    count = 1
-                item.set_color(color_cycle[count - 1])
-                count += 1
-                for (prop, value) in item._extract_params(params).items():
+            for index, item in enumerate(self._test_items):
+                # Wrap around the color_cycle using the % operator
+                item.set_color(color_cycle[index % len(color_cycle)])
+                for prop, value in item._extract_params(params).items():
                     item.set_property(prop, value)
+
         canvas = Canvas(params, self._test_items, False)
         canvas.props.title = _("Title")
         canvas.props.bottom_label = _("X Label")
