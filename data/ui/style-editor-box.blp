@@ -75,9 +75,9 @@ template $GraphsStyleEditorBox: Box {
     Adw.ActionRow {
       title: _("Linewidth");
       visible: bind linewidth.sensitive;
-      sensitive: false;
 
       Scale linewidth {
+        sensitive: false;
         draw-value: true;
         width-request: 200;
 
@@ -125,9 +125,9 @@ template $GraphsStyleEditorBox: Box {
     Adw.ActionRow {
       title: _("Marker Size");
       visible: bind markersize.sensitive;
-      sensitive: false;
 
       Scale markersize {
+        sensitive: false;
         draw-value: true;
         width-request: 200;
 

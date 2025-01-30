@@ -1,5 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Module for data Items."""
+import inspect
+
 from gettext import gettext as _
 
 from gi.repository import GObject, Graphs
@@ -48,7 +50,8 @@ class _PythonItem(Graphs.Item):
 
     def _extract_params(self, style):
         return {
-            prop: style[key] if function is None else function(style[key])
+            prop: style[key] if not inspect.isbuiltin(function) else
+            function(style[key])
             for prop, (key, function) in self._style_properties.items()
         }
 
