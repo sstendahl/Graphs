@@ -39,16 +39,22 @@ template $GraphsImportDialog: Adw.Dialog {
       }
     }
 
-    content: Adw.Clamp {
-      margin-start: 12;
-      margin-end: 12;
-      margin-top: 12;
-      margin-bottom: 12;
+    content: ScrolledWindow {
+      propagate-natural-height: true;
 
-      Box mode_box {
-        orientation: vertical;
-        spacing: 10;
-      }
+      child: Viewport {
+        child: Adw.Clamp {
+          margin-start: 12;
+          margin-end: 12;
+          margin-top: 12;
+          margin-bottom: 12;
+
+          Box mode_box {
+            orientation: vertical;
+            spacing: 10;
+          }
+        };
+      };
     };
   };
 }

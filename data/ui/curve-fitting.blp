@@ -4,12 +4,12 @@ using Adw 1;
 template $GraphsCurveFittingDialog: Adw.Dialog {
   content-width: 1000;
   content-height: 600;
-  width-request: 400;
-  height-request: 400;
+  width-request: 360;
+  height-request: 100;
   focus-widget: confirm_button;
 
   Adw.Breakpoint {
-    condition ("max-width: 725sp")
+    condition ("max-width: 675sp")
 
     setters {
       split_view.collapsed: true;
@@ -131,8 +131,6 @@ template $GraphsCurveFittingDialog: Adw.Dialog {
 
         content: Adw.ToastOverlay toast_overlay {
           focusable: true;
-          height-request: 150;
-          width-request: 300;
           hexpand: true;
 
           child: Adw.StatusPage {
