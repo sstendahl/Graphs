@@ -217,9 +217,9 @@ class Canvas(Graphs.Canvas, FigureCanvas):
         state: Gdk.ModifierType,
     ) -> None:
         """Handle key press event."""
-        if keyval in set(65507, 65508):  # Control_L or Control_R
+        if keyval in {65507, 65508}:  # Control_L or Control_R
             self._ctrl_held = True
-        elif keyval in set(65505, 65506):  # Left or right Shift
+        elif keyval in {65505, 65506}:  # Left or right Shift
             self._shift_held = True
         else:  # Prevent keys from being true with key combos
             self._ctrl_held = False
