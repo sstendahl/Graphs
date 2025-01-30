@@ -6,24 +6,15 @@ template $GraphsEditItemGeneratedDataItemBox: Box {
   spacing: 12;
 
   Adw.PreferencesGroup {
+    title: _("Equation");
+
     Adw.EntryRow equation {
       max-width-chars: 25;
-      title: _("Equation: Y =");
+      title: _("Y =");
     }
 
     Adw.ButtonRow simplify {
       title: _("Simplify");
-    }
-
-    Adw.SpinRow steps {
-      title: _("Steps");
-
-      adjustment: Adjustment {
-        step-increment: 1;
-        page-increment: 100;
-        lower: 2;
-        upper: 1000000000;
-      };
     }
   }
 
@@ -44,6 +35,19 @@ template $GraphsEditItemGeneratedDataItemBox: Box {
           title: _("X Stop");
         }
       }
+    }
+  }
+
+  Adw.PreferencesGroup {
+    Adw.SpinRow steps {
+      title: _("Steps");
+
+      adjustment: Adjustment {
+        step-increment: 1;
+        page-increment: 100;
+        lower: 2;
+        upper: 1000000000;
+      };
     }
   }
 }

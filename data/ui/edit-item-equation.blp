@@ -6,6 +6,8 @@ template $GraphsEditItemEquationItemBox: Box {
   spacing: 20;
 
   Adw.PreferencesGroup {
+    title: _("Equation");
+
     Adw.EntryRow equation {
       max-width-chars: 25;
       title: _("Equation: Y =");
@@ -17,6 +19,8 @@ template $GraphsEditItemEquationItemBox: Box {
   }
 
   Adw.PreferencesGroup {
+    title: _("Line");
+
     Adw.ComboRow linestyle {
       title: _("Linestyle");
       notify::selected => $on_linestyle();

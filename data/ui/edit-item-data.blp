@@ -5,6 +5,8 @@ template $GraphsEditItemDataItemBox: Box {
   orientation: vertical;
 
   Adw.PreferencesGroup {
+    title: _("Line and Markers");
+
     Adw.ComboRow linestyle {
       title: _("Linestyle");
       notify::selected => $on_linestyle();
