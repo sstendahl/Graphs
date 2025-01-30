@@ -1,152 +1,57 @@
 using Gtk 4.0;
 using Adw 1;
 
-template $GraphsEditItemDialog: Adw.PreferencesDialog {
-  notify::item => $on_item_change();
+template $GraphsEditItemDialog: Adw.Dialog {
+  content-width: 640;
   closed => $on_close();
 
-  Adw.PreferencesPage {
-    Adw.PreferencesGroup item_selector_group {
-      visible: false;
+  child: Adw.ToolbarView {
+    [top]
+    Adw.HeaderBar {}
 
-      Adw.ComboRow item_selector {
-        title: _("Selected Item");
-        subtitle: _("Choose which item to edit");
-        notify::selected => $on_select();
-      }
-    }
+    content: ScrolledWindow {
+      propagate-natural-height: true;
 
-    Adw.PreferencesGroup {
-      title: _("Data");
+      child: Adw.Clamp {
+        margin-start: 12;
+        margin-end: 12;
+        margin-top: 12;
+        margin-bottom: 12;
 
-      Adw.EntryRow name {
-        title: _("Name");
-        max-width-chars: 25;
-      }
+        Box item_box {
+          orientation: vertical;
+          spacing: 20;
 
-      Adw.ComboRow xposition {
-        title: _("X-Axis Position");
+          Adw.PreferencesGroup {
+            Adw.EntryRow name {
+              title: _("Name");
+              max-width-chars: 25;
+            }
 
-        model: StringList {
-          strings [
-            _("Bottom"),
-            _("Top"),
-          ]
-        };
-      }
+            Adw.ComboRow xposition {
+              title: _("X-Axis Position");
 
-      Adw.ComboRow yposition {
-        title: _("Y-Axis Position");
+              model: StringList {
+                strings [
+                  _("Bottom"),
+                  _("Top"),
+                ]
+              };
+            }
 
-        model: StringList {
-          strings [
-            _("Left"),
-            _("Right"),
-          ]
-        };
-      }
-    }
+            Adw.ComboRow yposition {
+              title: _("Y-Axis Position");
 
-    Adw.PreferencesGroup equation_group {
-      title: _("Equation");
-      visible: false;
-
-      Adw.EntryRow equation {
-        max-width-chars: 25;
-        title: _("Y =");
-        changed => $on_equation_change();
-      }
-
-      Adw.ButtonRow simplify {
-        title: _("Simplify");
-        activated => $on_simplify();
-      }
-    }
-
-    Adw.PreferencesGroup item_group {
-      visible: false;
-      title: _("Line Properties");
-
-      Adw.ComboRow linestyle {
-        title: _("Linestyle");
-        notify::selected => $on_linestyle();
-
-        model: StringList {
-          strings [
-            C_("linestyle", "None"),
-            C_("linestyle", "Solid"),
-            C_("linestyle", "Dotted"),
-            C_("linestyle", "Dashed"),
-            C_("linestyle", "Dashdot"),
-          ]
-        };
-      }
-
-      Adw.ActionRow {
-        title: _("Linewidth");
-        visible: bind linewidth.sensitive;
-        sensitive: false;
-
-        Scale linewidth {
-          draw-value: true;
-          width-request: 200;
-
-          adjustment: Adjustment {
-            lower: 0;
-            upper: 10;
-          };
+              model: StringList {
+                strings [
+                  _("Left"),
+                  _("Right"),
+                ]
+              };
+            }
+          }
         }
-      }
-
-      Adw.ComboRow markerstyle {
-        title: _("Markers");
-        notify::selected => $on_markers();
-
-        model: StringList {
-          strings [
-            C_("markerstyle", "None"),
-            C_("markerstyle", "Point"),
-            C_("markerstyle", "Pixel"),
-            C_("markerstyle", "Circle"),
-            C_("markerstyle", "Triangle Down"),
-            C_("markerstyle", "Triangle Up"),
-            C_("markerstyle", "Triangle Left"),
-            C_("markerstyle", "Triangle Right"),
-            C_("markerstyle", "Octagon"),
-            C_("markerstyle", "Square"),
-            C_("markerstyle", "Pentagon"),
-            C_("markerstyle", "Star"),
-            C_("markerstyle", "Hexagon 1"),
-            C_("markerstyle", "Hexagon 2"),
-            C_("markerstyle", "Plus"),
-            C_("markerstyle", "X"),
-            // Translators: Diamond as in Cards Symbol
-            C_("markerstyle", "Diamond"),
-            // Translators: Diamond as in Cards Symbol
-            C_("markerstyle", "Thin Diamond"),
-            C_("markerstyle", "Vertical Line"),
-            C_("markerstyle", "Horizontal Line"),
-            C_("markerstyle", "Filled Plus"),
-            C_("markerstyle", "Filled X"),
-          ]
-        };
-      }
-
-      Adw.ActionRow {
-        title: _("Marker Size");
-        visible: bind markersize.sensitive;
-        sensitive: false;
-
-        Scale markersize {
-          draw-value: true;
-          width-request: 200;
-
-          adjustment: Adjustment {
-            lower: 0;
-            upper: 10;
-          };
-        }
-      }
-    }
-  }
+      };
+    };
+  };
 }
