@@ -12,6 +12,7 @@ data/ui/curve-fitting.blp
 data/ui/edit-item.blp
 data/ui/edit-item-data.blp
 data/ui/edit-item-equation.blp
+data/ui/edit-item-generated-data.blp
 data/ui/export-figure.blp
 data/ui/figure-settings-dialog.blp
 data/ui/figure-settings-page.blp

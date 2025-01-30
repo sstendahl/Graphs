@@ -49,4 +49,26 @@ namespace Graphs {
             linewidth.set_sensitive (linestyle.get_selected () != 0);
         }
     }
+
+    [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/edit-item-generated-data.ui")]
+    public class EditItemGeneratedDataItemBox : Box {
+
+        [GtkChild]
+        public unowned Adw.EntryRow equation { get; }
+
+        [GtkChild]
+        public unowned Adw.ButtonRow simplify { get; }
+
+        [GtkChild]
+        public unowned Adw.EntryRow xstart { get; }
+
+        [GtkChild]
+        public unowned Adw.EntryRow xstop { get; }
+
+        [GtkChild]
+        public unowned Adw.SpinRow steps { get; }
+
+        [GtkChild]
+        public unowned Adw.ButtonRow regenerate { get; }
+    }
 }

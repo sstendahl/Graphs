@@ -71,6 +71,7 @@ blueprint_files = [
   'ui/edit-item.blp',
   'ui/edit-item-data.blp',
   'ui/edit-item-equation.blp',
+  'ui/edit-item-generated-data.blp',
   'ui/export-figure.blp',
   'ui/figure-settings-dialog.blp',
   'ui/figure-settings-page.blp',

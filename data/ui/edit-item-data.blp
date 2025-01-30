@@ -2,6 +2,8 @@ using Gtk 4.0;
 using Adw 1;
 
 template $GraphsEditItemDataItemBox: Box {
+  orientation: vertical;
+
   Adw.PreferencesGroup {
     Adw.ComboRow linestyle {
       title: _("Linestyle");
@@ -20,7 +22,6 @@ template $GraphsEditItemDataItemBox: Box {
 
     Adw.ActionRow {
       title: _("Linewidth");
-      visible: bind linewidth.sensitive;
 
       Scale linewidth {
         sensitive: false;
@@ -70,7 +71,6 @@ template $GraphsEditItemDataItemBox: Box {
 
     Adw.ActionRow {
       title: _("Marker Size");
-      visible: bind markersize.sensitive;
 
       Scale markersize {
         draw-value: true;
