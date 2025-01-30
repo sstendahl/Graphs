@@ -221,6 +221,7 @@ namespace Graphs {
                             .append (i.to_string ())
                             .append (".mplstyle");
                         destination = style_dir.get_child_for_display_name (new_filename.free_and_steal ());
+                        i++;
                     }
                     file.copy_async.begin (destination, FileCopyFlags.NONE);
                 } catch {}
