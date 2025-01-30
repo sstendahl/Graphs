@@ -29,33 +29,39 @@ template $GraphsAddEquationDialog: Adw.Dialog {
       }
     }
 
-    content: Adw.Clamp {
-      margin-start: 12;
-      margin-end: 12;
-      margin-top: 12;
-      margin-bottom: 12;
+    content: ScrolledWindow {
+      propagate-natural-height: true;
 
-      Adw.PreferencesGroup {
-        separate-rows: true;
-        description: _("Enter a mathematical expression");
+      child: Viewport {
+        child: Adw.Clamp {
+          margin-start: 12;
+          margin-end: 12;
+          margin-top: 12;
+          margin-bottom: 12;
 
-        Adw.EntryRow equation {
-          max-width-chars: 25;
-          title: _("Y =");
-          activates-default: true;
-          notify::text => $on_equation_change();
+          Adw.PreferencesGroup {
+            separate-rows: true;
+            description: _("Enter a mathematical expression");
 
-          styles [
-            "preferencesgroup",
-          ]
-        }
+            Adw.EntryRow equation {
+              max-width-chars: 25;
+              title: _("Y =");
+              activates-default: true;
+              notify::text => $on_equation_change();
 
-        Adw.EntryRow item_name {
-          max-width-chars: 25;
-          title: _("Name (optional)");
-          activates-default: true;
-        }
-      }
+              styles [
+                "preferencesgroup",
+              ]
+            }
+
+            Adw.EntryRow item_name {
+              max-width-chars: 25;
+              title: _("Name (optional)");
+              activates-default: true;
+            }
+          }
+        };
+      };
     };
   };
 }

@@ -4,8 +4,8 @@ using Adw 1;
 template $GraphsFigureSettingsDialog: Adw.Dialog {
   content-width: 640;
   content-height: 576;
-  width-request: 400;
-  height-request: 400;
+  width-request: 360;
+  height-request: 100;
   closed => $on_closed();
 
   styles [
@@ -47,18 +47,22 @@ Adw.NavigationPage style_overview {
     content: ScrolledWindow {
       hscrollbar-policy: never;
 
-      Adw.Clamp {
-        margin-bottom: 6;
-        margin-top: 6;
-        margin-start: 6;
-        margin-end: 6;
+      child: Viewport {
+        child: Adw.Clamp {
+          margin-bottom: 6;
+          margin-top: 6;
+          margin-start: 6;
+          margin-end: 6;
+          halign: center;
+          hexpand: true;
 
-        GridView style_grid {
-          name: "style-grid";
-          max-columns: 3;
-          min-columns: 3;
-        }
-      }
+          GridView style_grid {
+            name: "style-grid";
+            max-columns: 3;
+            min-columns: 3;
+          }
+        };
+      };
     };
   }
 }
