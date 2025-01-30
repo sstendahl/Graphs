@@ -67,8 +67,5 @@ namespace Graphs {
 
         [GtkChild]
         public unowned Adw.SpinRow steps { get; }
-
-        [GtkChild]
-        public unowned Adw.ButtonRow regenerate { get; }
     }
 }

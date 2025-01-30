@@ -3,7 +3,7 @@ using Adw 1;
 
 template $GraphsEditItemGeneratedDataItemBox: Box {
   orientation: vertical;
-  spacing: 20;
+  spacing: 12;
 
   Adw.PreferencesGroup {
     Adw.EntryRow equation {
@@ -13,6 +13,17 @@ template $GraphsEditItemGeneratedDataItemBox: Box {
 
     Adw.ButtonRow simplify {
       title: _("Simplify");
+    }
+
+    Adw.SpinRow steps {
+      title: _("Steps");
+
+      adjustment: Adjustment {
+        step-increment: 1;
+        page-increment: 100;
+        lower: 2;
+        upper: 1000000000;
+      };
     }
   }
 
@@ -33,25 +44,6 @@ template $GraphsEditItemGeneratedDataItemBox: Box {
           title: _("X Stop");
         }
       }
-    }
-  }
-
-  Adw.PreferencesGroup {
-    Adw.SpinRow steps {
-      title: _("Steps");
-
-      adjustment: Adjustment {
-        step-increment: 1;
-        page-increment: 100;
-        lower: 2;
-        upper: 1000000000;
-      };
-    }
-  }
-
-  Adw.PreferencesGroup {
-    Adw.ButtonRow regenerate {
-      title: _("Regenerate");
     }
   }
 }

@@ -132,7 +132,9 @@ class GeneratedDataItem(DataItem):
     def __init__(self, **kwargs):
         self._equation = ""
         super().__init__(**kwargs)
-        self.regenerate()
+        self._regenerate()
+        for prop in ("equation", "xstart", "xstop", "steps"):
+            self.connect("notify::" + prop, self._regenerate)
 
     @GObject.Property(type=str)
     def equation(self) -> str:
@@ -148,7 +150,10 @@ class GeneratedDataItem(DataItem):
         self._equation = equation
         self.notify("equation")
 
-    def regenerate(self) -> None:
+        if "Y = " + old_equation == self.props.name:
+            self.props.name = "Y = " + equation
+
+    def _regenerate(self, *_args) -> None:
         """Regenerate Data."""
         self.props.xdata, self.props.ydata = utilities.equation_to_data(
             self._equation,

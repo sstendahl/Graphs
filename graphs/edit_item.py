@@ -35,7 +35,6 @@ class EditItemDialog(Adw.Dialog):
             self._equation_entry.set_text(item.props.equation)
             self._equation_entry.connect("changed", self.on_equation_change)
             box.get_simplify().connect("activated", self.on_simplify)
-            box.get_regenerate().connect("activated", self.on_regenerate)
             for prop in ("xstart", "xstop"):
                 entry = box.get_property(prop)
                 entry.set_text(item.get_property(prop))
@@ -101,10 +100,6 @@ class EditItemDialog(Adw.Dialog):
         else:
             entry_row.remove_css_class("error")
             self.props.item.set_property(prop, value)
-
-    def on_regenerate(self, _buttonrow) -> None:
-        """Regenerate data for a GeneratedDataItem."""
-        self.props.item.regenerate()
 
     @Gtk.Template.Callback()
     def on_close(self, _a) -> None:

@@ -12,45 +12,47 @@ template $GraphsEditItemDialog: Adw.Dialog {
     content: ScrolledWindow {
       propagate-natural-height: true;
 
-      child: Adw.Clamp {
-        margin-start: 12;
-        margin-end: 12;
-        margin-top: 12;
-        margin-bottom: 12;
+      child: Viewport {
+        child: Adw.Clamp {
+          margin-start: 12;
+          margin-end: 12;
+          margin-top: 12;
+          margin-bottom: 12;
 
-        Box item_box {
-          orientation: vertical;
-          spacing: 20;
+          Box item_box {
+            orientation: vertical;
+            spacing: 20;
 
-          Adw.PreferencesGroup {
-            Adw.EntryRow name {
-              title: _("Name");
-              max-width-chars: 25;
-            }
+            Adw.PreferencesGroup {
+              Adw.EntryRow name {
+                title: _("Name");
+                max-width-chars: 25;
+              }
 
-            Adw.ComboRow xposition {
-              title: _("X-Axis Position");
+              Adw.ComboRow xposition {
+                title: _("X-Axis Position");
 
-              model: StringList {
-                strings [
-                  _("Bottom"),
-                  _("Top"),
-                ]
-              };
-            }
+                model: StringList {
+                  strings [
+                    _("Bottom"),
+                    _("Top"),
+                  ]
+                };
+              }
 
-            Adw.ComboRow yposition {
-              title: _("Y-Axis Position");
+              Adw.ComboRow yposition {
+                title: _("Y-Axis Position");
 
-              model: StringList {
-                strings [
-                  _("Left"),
-                  _("Right"),
-                ]
-              };
+                model: StringList {
+                  strings [
+                    _("Left"),
+                    _("Right"),
+                  ]
+                };
+              }
             }
           }
-        }
+        };
       };
     };
   };
