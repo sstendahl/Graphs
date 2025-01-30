@@ -54,7 +54,7 @@
     </screenshot>
   </screenshots>
   <releases>
-    <release version="1.9.0" date="2025-01-13">
+    <release version="1.9.0" date="2025-01-30">
       <description>
         <p>Version 1.9 of Graphs introduces several new features such as proper equation support and a completely redesigned style editor.</p>
         <p>New in Graphs</p>
@@ -62,16 +62,31 @@
           <li>Graphs now differentiates between imported data and equations.</li>
           <li>Equations now span an infinite range</li>
           <li>Equations can now be edited afterwards, as well as simplified using the item editor</li>
+          <li>Generated data can now be changed afterwards with regard to step size and rendered span</li>
+          <li>Data can now be imported by drag-and-drop into Graphs</li>
           <li>Operations on equations are now performed analytically, meaning the name of the equation will also change accordingly when performing operationsy</li>
           <li>Graphs has a redesigned style editor with a live preview of the edited styles</li>
           <li>It is now possible to have multiple instances of Graphs open at the same time</li>
           <li>Styles can now be exported, and new styles can be imported from matplotlib style files</li>
           <li>Graphs now inhibits the session when unsaved data is still open</li>
           <li>Added support for base-2 logarithmic scaling</li>
-          <li>Updated to GNOME 47 runtime, adding support for accent colours</li>
+          <li>Translation updates</li>
+        </ul>
+        <p>Bug fixes:</p>
+        <ul>
           <li>Graphical fixes for the drag-drop animations</li>
           <li>Overall tweaks and refactors under the hood</li>
-          <li>Translation updates</li>
+        </ul>
+      </description>
+    </release>
+    <release version="1.8.4" date="2025-01-28">
+      <description>
+        <p>Minor update with the new GNOME 47 runtime.</p>
+        <ul>
+          <li>Update to the GNOME 47 runtime with support for accent colours</li>
+          <li>Update runtime dependencies to the latest versions</li>
+          <li>Improve the canvas rubberband drawing</li>
+          <li>Improved equation parsing</li>
         </ul>
       </description>
     </release>    
