@@ -1,16 +1,16 @@
 # Turkish translation for se.sjoerd.Graphs
-# Copyright (C) 2023-2024 se.sjoerd.Graphs' COPYRIGHT HOLDER
+# Copyright (C) 2023-2025 se.sjoerd.Graphs' COPYRIGHT HOLDER
 # This file is distributed under the same license as the se.sjoerd.Graphs package.
 #
-# Sabri Ünal <yakushabb@gmail.com>, 2023-2024.
-# Emin Tufan Çetin <etcetin@gmail.com>, 2024.
+# Sabri Ünal <yakushabb@gmail.com>, 2023-2025.
+# Emin Tufan Çetin <etcetin@gmail.com>, 2024, 2025.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: se.sjoerd.Graphs\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2024-09-18 13:17+0000\n"
-"PO-Revision-Date: 2024-09-20 08:00+0300\n"
+"POT-Creation-Date: 2025-01-30 17:07+0000\n"
+"PO-Revision-Date: 2025-01-30 08:00+0300\n"
 "Last-Translator: Emin Tufan Çetin <etcetin@gmail.com>\n"
 "Language-Team: Turkish <takim@gnome.org.tr>\n"
 "Language: tr\n"
@@ -18,11 +18,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.4.3\n"
+"X-Generator: Poedit 3.5\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
 #: data/se.sjoerd.Graphs.appdata.xml.in:6 data/se.sjoerd.Graphs.desktop.in:3
-#: data/ui/window.blp:9 graphs/about.vala:23
+#: data/ui/window.blp:9 graphs/application.vala:71
 msgid "Graphs"
 msgstr "Graphs"
 
@@ -111,163 +111,41 @@ msgstr ""
 "Visualisation;Visualization;Fitting;xrdml;Çizim;Grafik;Grafikleme;Bilim;"
 "Matematik;Mat;Denklemler;Veri;Görselleştirme;Uyum;Sığdırma;"
 
-#: data/ui/add-equation.blp:6
-msgid "Add Equation"
-msgstr "Denklem Ekle"
+#: data/ui/dialogs/delete-style.blp:5
+msgid "Delete Style?"
+msgstr "Biçem Silinsin Mi?"
 
-#: data/ui/add-equation.blp:16 data/ui/add-style.blp:15 data/ui/dialogs.blp:8
-#: data/ui/dialogs.blp:19 data/ui/dialogs.blp:29 data/ui/export-figure.blp:15
-#: data/ui/import.blp:15 data/ui/transform.blp:16
+#: data/ui/dialogs/delete-style.blp:7
+#: data/ui/dialogs/reset-import-settings.blp:8
+#: data/ui/dialogs/save-project-changes.blp:8
+#: data/ui/dialogs/save-style-changes.blp:8 data/ui/add-equation.blp:17
+#: data/ui/add-style.blp:16 data/ui/export-figure.blp:16
+#: data/ui/generate-data.blp:17 data/ui/import.blp:16 data/ui/transform.blp:17
 msgid "Cancel"
 msgstr "İptal"
 
-#: data/ui/add-equation.blp:22 data/ui/add-style.blp:21
-msgid "Add"
-msgstr "Ekle"
+#: data/ui/dialogs/delete-style.blp:8
+msgid "Delete"
+msgstr "Sil"
 
-#: data/ui/add-equation.blp:40 data/ui/curve-fitting.blp:66
-#: data/ui/edit-item.blp:45 data/ui/transform.blp:56
-msgid "Y ="
-msgstr "Y ="
+#: data/ui/dialogs/reset-import-settings.blp:5
+msgid "Reset to Defaults?"
+msgstr "Öntanımlılara Sıfırlansın Mı?"
 
-#: data/ui/add-equation.blp:49
-msgid "Enter a mathematical expression to generate data from"
-msgstr "Veri oluşturmak için matematiksel bir ifade girin"
+#: data/ui/dialogs/reset-import-settings.blp:6
+msgid "Are you sure you want to reset the import settings?"
+msgstr "İçe aktarma ayarlarını sıfırlamak istediğinize emin misiniz?"
 
-#: data/ui/add-equation.blp:57
-msgid "Name (optional)"
-msgstr "Ad (isteğe bağlı)"
+#: data/ui/dialogs/reset-import-settings.blp:9
+msgid "Reset"
+msgstr "Sıfırla"
 
-#: data/ui/add-style.blp:6 data/ui/figure-settings-dialog.blp:33
-msgid "Add New Style"
-msgstr "Yeni Biçem Ekle"
-
-#: data/ui/add-style.blp:33
-msgid "Template"
-msgstr "Şablon"
-
-#: data/ui/add-style.blp:38 data/ui/edit-item.blp:22
-msgid "Name"
-msgstr "Ad"
-
-#: data/ui/curve-fitting.blp:27 data/ui/item-box.blp:59
-msgid "Curve Fitting"
-msgstr "Eğri Sığdırma"
-
-#: data/ui/curve-fitting.blp:32
-msgid "Open Curve Fitting Menu"
-msgstr "Eğri Sığdırma Menüsünü Aç"
-
-#: data/ui/curve-fitting.blp:50 data/ui/edit-item.blp:42 graphs/item.py:118
-msgid "Equation"
-msgstr "Denklem"
-
-#: data/ui/curve-fitting.blp:53
-msgctxt "regression-type"
-msgid "Linear"
-msgstr "Doğrusal"
-
-#: data/ui/curve-fitting.blp:54
-msgctxt "regression-type"
-msgid "Quadratic"
-msgstr "Karesel"
-
-#: data/ui/curve-fitting.blp:55
-msgctxt "regression-type"
-msgid "Exponential"
-msgstr "Üstsel"
-
-#: data/ui/curve-fitting.blp:56
-msgctxt "regression-type"
-msgid "Power Law"
-msgstr "Güç Yasası"
-
-#: data/ui/curve-fitting.blp:57
-msgctxt "regression-type"
-msgid "Logarithmic"
-msgstr "Logaritmik"
-
-#: data/ui/curve-fitting.blp:58
-msgctxt "regression-type"
-msgid "Sigmoid Logistic"
-msgstr "Sigmoid Fonksiyonu"
-
-#: data/ui/curve-fitting.blp:59
-msgctxt "regression-type"
-msgid "Gaussian"
-msgstr "Gaussian"
-
-#: data/ui/curve-fitting.blp:60
-msgctxt "regression-type"
-msgid "Custom"
-msgstr "Özel"
-
-#: data/ui/curve-fitting.blp:93
-msgid "Add Fit to Data"
-msgstr "Verilere Uy Ekle"
-
-#: data/ui/curve-fitting.blp:109 data/ui/window.blp:580 graphs/window.vala:301
-msgid "Toggle Sidebar"
-msgstr "Kenar Çubuğunu Aç/Kapa"
-
-#: data/ui/curve-fitting.blp:121 data/ui/window.blp:620
-msgid "Canvas Failed to Load"
-msgstr "Tuval Yüklenemedi"
-
-#: data/ui/curve-fitting.blp:131
-msgid "Optimization Method"
-msgstr "Optimizasyon Yöntemi"
-
-#. Translators: see https://world.pages.gitlab.gnome.org/Graphs/help/C/curve_fitting.html#algorithms
-#: data/ui/curve-fitting.blp:134
-msgctxt "optimization"
-msgid "Levenberg-Marquardt"
-msgstr "Levenberg-Marquardt"
-
-#. Translators: see https://world.pages.gitlab.gnome.org/Graphs/help/C/curve_fitting.html#algorithms
-#: data/ui/curve-fitting.blp:140
-msgctxt "optimization"
-msgid "Trust Region Reflective"
-msgstr "Güven Bölgesi Yansıtıcı"
-
-#. Translators: see https://world.pages.gitlab.gnome.org/Graphs/help/C/curve_fitting.html#algorithms
-#: data/ui/curve-fitting.blp:146
-msgctxt "optimization"
-msgid "Dogbox"
-msgstr "Dogbox"
-
-#: data/ui/curve-fitting.blp:152
-msgid "Confidence Bounds"
-msgstr "Güven Sınırları"
-
-#: data/ui/curve-fitting.blp:154
-msgctxt "confidence"
-msgid "None"
-msgstr "Hiçbiri"
-
-#: data/ui/curve-fitting.blp:160
-#, no-c-format
-msgctxt "confidence"
-msgid "1σ: 68% Confidence"
-msgstr "1σ: %68 Güven"
-
-#: data/ui/curve-fitting.blp:166
-#, no-c-format
-msgctxt "confidence"
-msgid "2σ: 95% Confidence"
-msgstr "2σ: %95 Güven"
-
-#: data/ui/curve-fitting.blp:172
-#, no-c-format
-msgctxt "confidence"
-msgid "3σ: 99.7% Confidence"
-msgstr "3σ: %99.7 Güven"
-
-#: data/ui/dialogs.blp:5
+#: data/ui/dialogs/save-project-changes.blp:5
+#: data/ui/dialogs/save-style-changes.blp:5
 msgid "Save Changes?"
 msgstr "Değişiklikler Kaydedilsin Mi?"
 
-#: data/ui/dialogs.blp:6
+#: data/ui/dialogs/save-project-changes.blp:6
 msgid ""
 "Current project contains unsaved changes, changes that are not saved will be "
 "permanently lost."
@@ -275,220 +153,366 @@ msgstr ""
 "Geçerli projede kaydedilmemiş değişiklikler var. Kaydedilmeyen değişiklikler "
 "kalıcı olarak yitecek."
 
-#: data/ui/dialogs.blp:9
+#: data/ui/dialogs/save-project-changes.blp:9
+#: data/ui/dialogs/save-style-changes.blp:9
 msgid "Discard"
 msgstr "Gözden Çıkar"
 
-#: data/ui/dialogs.blp:10
+#: data/ui/dialogs/save-project-changes.blp:10
+#: data/ui/dialogs/save-style-changes.blp:10
 msgid "Save"
 msgstr "Kaydet"
 
-#: data/ui/dialogs.blp:17
-msgid "Delete Style?"
-msgstr "Biçem Silinsin Mi?"
+#: data/ui/dialogs/save-style-changes.blp:6
+msgid ""
+"Current style contains unsaved changes, changes that are not saved will be "
+"permanently lost."
+msgstr ""
+"Geçerli biçemde kaydedilmemiş değişiklikler var. Kaydedilmeyen değişiklikler "
+"kalıcı olarak yitecek."
 
-#: data/ui/dialogs.blp:20 data/ui/style-preview.blp:39
-msgid "Delete"
-msgstr "Sil"
+#: data/ui/add-equation.blp:6
+msgid "Add Equation"
+msgstr "Denklem Ekle"
 
-#: data/ui/dialogs.blp:27
-msgid "Reset to Defaults?"
-msgstr "Öntanımlılara Sıfırlansın Mı?"
+#: data/ui/add-equation.blp:23 data/ui/add-style.blp:22
+msgid "Add"
+msgstr "Ekle"
 
-#: data/ui/dialogs.blp:30
-msgid "Reset"
-msgstr "Sıfırla"
+#: data/ui/add-equation.blp:44 data/ui/generate-data.blp:48
+msgid "Enter a mathematical expression"
+msgstr "Matematiksel ifade girin"
 
-#: data/ui/edit-item.blp:12
+#: data/ui/add-equation.blp:48 data/ui/curve-fitting.blp:75
+#: data/ui/edit-item.blp:56 data/ui/generate-data.blp:52
+#: data/ui/transform.blp:68
+msgid "Y ="
+msgstr "Y ="
+
+#: data/ui/add-equation.blp:59 data/ui/generate-data.blp:59
+msgid "Name (optional)"
+msgstr "Ad (isteğe bağlı)"
+
+#: data/ui/add-style.blp:6 data/ui/figure-settings-dialog.blp:38
+msgid "Add New Style"
+msgstr "Yeni Biçem Ekle"
+
+#: data/ui/add-style.blp:39
+msgid "Template"
+msgstr "Şablon"
+
+#: data/ui/add-style.blp:44 data/ui/edit-item.blp:23
+msgid "Name"
+msgstr "Ad"
+
+#: data/ui/curve-fitting.blp:29 data/ui/item-box.blp:70
+msgid "Curve Fitting"
+msgstr "Eğri Sığdırma"
+
+#: data/ui/curve-fitting.blp:35
+msgid "Open Curve Fitting Menu"
+msgstr "Eğri Sığdırma Menüsünü Aç"
+
+#: data/ui/curve-fitting.blp:57 data/ui/edit-item.blp:51 graphs/item.py:164
+msgid "Equation"
+msgstr "Denklem"
+
+#: data/ui/curve-fitting.blp:61
+msgctxt "regression-type"
+msgid "Linear"
+msgstr "Doğrusal"
+
+#: data/ui/curve-fitting.blp:62
+msgctxt "regression-type"
+msgid "Quadratic"
+msgstr "Karesel"
+
+#: data/ui/curve-fitting.blp:63
+msgctxt "regression-type"
+msgid "Exponential"
+msgstr "Üstsel"
+
+#: data/ui/curve-fitting.blp:64
+msgctxt "regression-type"
+msgid "Power Law"
+msgstr "Güç Yasası"
+
+#: data/ui/curve-fitting.blp:65
+msgctxt "regression-type"
+msgid "Logarithmic"
+msgstr "Logaritmik"
+
+#: data/ui/curve-fitting.blp:66
+msgctxt "regression-type"
+msgid "Sigmoid Logistic"
+msgstr "Sigmoid Fonksiyonu"
+
+#: data/ui/curve-fitting.blp:67
+msgctxt "regression-type"
+msgid "Gaussian"
+msgstr "Gaussian"
+
+#: data/ui/curve-fitting.blp:68
+msgctxt "regression-type"
+msgid "Custom"
+msgstr "Özel"
+
+#: data/ui/curve-fitting.blp:107
+msgid "Add Fit to Data"
+msgstr "Verilere Uy Ekle"
+
+#: data/ui/curve-fitting.blp:126 data/ui/window.blp:742 graphs/window.vala:372
+msgid "Toggle Sidebar"
+msgstr "Kenar Çubuğunu Aç/Kapa"
+
+#: data/ui/curve-fitting.blp:138 data/ui/style-editor-window.blp:76
+#: data/ui/window.blp:791
+msgid "Canvas Failed to Load"
+msgstr "Tuval Yüklenemedi"
+
+#: data/ui/curve-fitting.blp:148
+msgid "Optimization Method"
+msgstr "Optimizasyon Yöntemi"
+
+#. Translators: see https://world.pages.gitlab.gnome.org/Graphs/help/C/curve_fitting.html#algorithms
+#: data/ui/curve-fitting.blp:152
+msgctxt "optimization"
+msgid "Levenberg-Marquardt"
+msgstr "Levenberg-Marquardt"
+
+#. Translators: see https://world.pages.gitlab.gnome.org/Graphs/help/C/curve_fitting.html#algorithms
+#: data/ui/curve-fitting.blp:159
+msgctxt "optimization"
+msgid "Trust Region Reflective"
+msgstr "Güven Bölgesi Yansıtıcı"
+
+#. Translators: see https://world.pages.gitlab.gnome.org/Graphs/help/C/curve_fitting.html#algorithms
+#: data/ui/curve-fitting.blp:166
+msgctxt "optimization"
+msgid "Dogbox"
+msgstr "Dogbox"
+
+#: data/ui/curve-fitting.blp:173
+msgid "Confidence Bounds"
+msgstr "Güven Sınırları"
+
+#: data/ui/curve-fitting.blp:176
+msgctxt "confidence"
+msgid "None"
+msgstr "Hiçbiri"
+
+#: data/ui/curve-fitting.blp:183
+#, no-c-format
+msgctxt "confidence"
+msgid "1σ: 68% Confidence"
+msgstr "1σ: %68 Güven"
+
+#: data/ui/curve-fitting.blp:190
+#, no-c-format
+msgctxt "confidence"
+msgid "2σ: 95% Confidence"
+msgstr "2σ: %95 Güven"
+
+#: data/ui/curve-fitting.blp:197
+#, no-c-format
+msgctxt "confidence"
+msgid "3σ: 99.7% Confidence"
+msgstr "3σ: %99.7 Güven"
+
+#: data/ui/edit-item.blp:13
 msgid "Selected Item"
 msgstr "Seçili Öge"
 
-#: data/ui/edit-item.blp:13
+#: data/ui/edit-item.blp:14
 msgid "Choose which item to edit"
 msgstr "Hangi ögenin düzenleneceğini seçin"
 
-#: data/ui/edit-item.blp:19
+#: data/ui/edit-item.blp:20
 msgid "Data"
 msgstr "Veri"
 
-#: data/ui/edit-item.blp:27
+#: data/ui/edit-item.blp:28
 msgid "X-Axis Position"
 msgstr "X Ekseni Konumu"
 
-#: data/ui/edit-item.blp:29
+#: data/ui/edit-item.blp:32
 msgid "Bottom"
 msgstr "Alt"
 
-#: data/ui/edit-item.blp:29
+#: data/ui/edit-item.blp:33
 msgid "Top"
 msgstr "Üst"
 
-#: data/ui/edit-item.blp:34
+#: data/ui/edit-item.blp:39
 msgid "Y-Axis Position"
 msgstr "Y Ekseni Konumu"
 
-#: data/ui/edit-item.blp:36
+#: data/ui/edit-item.blp:43
 msgid "Left"
 msgstr "Sol"
 
-#: data/ui/edit-item.blp:36
+#: data/ui/edit-item.blp:44
 msgid "Right"
 msgstr "Sağ"
 
-#: data/ui/edit-item.blp:52
+#: data/ui/edit-item.blp:61
+msgid "Simplify"
+msgstr "Sadeleştir"
+
+#: data/ui/edit-item.blp:68
 msgid "Line Properties"
 msgstr "Çizgi Özellikleri"
 
-#: data/ui/edit-item.blp:55 data/ui/style-editor.blp:58
+#: data/ui/edit-item.blp:71 data/ui/style-editor-box.blp:61
 msgid "Linestyle"
 msgstr "Çizgi Biçemi"
 
-#: data/ui/edit-item.blp:58 data/ui/style-editor.blp:61
+#: data/ui/edit-item.blp:76 data/ui/style-editor-box.blp:66
 msgctxt "linestyle"
 msgid "None"
 msgstr "Hiçbiri"
 
-#: data/ui/edit-item.blp:59 data/ui/style-editor.blp:62
+#: data/ui/edit-item.blp:77 data/ui/style-editor-box.blp:67
 msgctxt "linestyle"
 msgid "Solid"
 msgstr "Kesiksiz"
 
-#: data/ui/edit-item.blp:60 data/ui/style-editor.blp:63
+#: data/ui/edit-item.blp:78 data/ui/style-editor-box.blp:68
 msgctxt "linestyle"
 msgid "Dotted"
 msgstr "Noktalı"
 
-#: data/ui/edit-item.blp:61 data/ui/style-editor.blp:64
+#: data/ui/edit-item.blp:79 data/ui/style-editor-box.blp:69
 msgctxt "linestyle"
 msgid "Dashed"
 msgstr "Kesikli"
 
-#: data/ui/edit-item.blp:62 data/ui/style-editor.blp:65
+#: data/ui/edit-item.blp:80 data/ui/style-editor-box.blp:70
 msgctxt "linestyle"
 msgid "Dashdot"
 msgstr "Kesik-nokta"
 
-#: data/ui/edit-item.blp:69 data/ui/style-editor.blp:72
+#: data/ui/edit-item.blp:86 data/ui/style-editor-box.blp:76
 msgid "Linewidth"
 msgstr "Çizgi Genişliği"
 
-#: data/ui/edit-item.blp:83 data/ui/style-editor.blp:87
+#: data/ui/edit-item.blp:102 data/ui/style-editor-box.blp:92
 msgid "Markers"
 msgstr "İmleyiciler"
 
-#: data/ui/edit-item.blp:86 data/ui/style-editor.blp:90
+#: data/ui/edit-item.blp:107 data/ui/style-editor-box.blp:97
 msgctxt "markerstyle"
 msgid "None"
 msgstr "Hiçbiri"
 
-#: data/ui/edit-item.blp:87 data/ui/style-editor.blp:91
+#: data/ui/edit-item.blp:108 data/ui/style-editor-box.blp:98
 msgctxt "markerstyle"
 msgid "Point"
 msgstr "Nokta"
 
-#: data/ui/edit-item.blp:88 data/ui/style-editor.blp:92
+#: data/ui/edit-item.blp:109 data/ui/style-editor-box.blp:99
 msgctxt "markerstyle"
 msgid "Pixel"
 msgstr "Piksel"
 
-#: data/ui/edit-item.blp:89 data/ui/style-editor.blp:93
+#: data/ui/edit-item.blp:110 data/ui/style-editor-box.blp:100
 msgctxt "markerstyle"
 msgid "Circle"
 msgstr "Daire"
 
-#: data/ui/edit-item.blp:90 data/ui/style-editor.blp:94
+#: data/ui/edit-item.blp:111 data/ui/style-editor-box.blp:101
 msgctxt "markerstyle"
 msgid "Triangle Down"
 msgstr "Üçgen Aşağı"
 
-#: data/ui/edit-item.blp:91 data/ui/style-editor.blp:95
+#: data/ui/edit-item.blp:112 data/ui/style-editor-box.blp:102
 msgctxt "markerstyle"
 msgid "Triangle Up"
 msgstr "Üçgen Yukarı"
 
-#: data/ui/edit-item.blp:92 data/ui/style-editor.blp:96
+#: data/ui/edit-item.blp:113 data/ui/style-editor-box.blp:103
 msgctxt "markerstyle"
 msgid "Triangle Left"
 msgstr "Üçgen Sol"
 
-#: data/ui/edit-item.blp:93 data/ui/style-editor.blp:97
+#: data/ui/edit-item.blp:114 data/ui/style-editor-box.blp:104
 msgctxt "markerstyle"
 msgid "Triangle Right"
 msgstr "Üçgen Sağ"
 
-#: data/ui/edit-item.blp:94 data/ui/style-editor.blp:98
+#: data/ui/edit-item.blp:115 data/ui/style-editor-box.blp:105
 msgctxt "markerstyle"
 msgid "Octagon"
 msgstr "Sekizgen"
 
-#: data/ui/edit-item.blp:95 data/ui/style-editor.blp:99
+#: data/ui/edit-item.blp:116 data/ui/style-editor-box.blp:106
 msgctxt "markerstyle"
 msgid "Square"
 msgstr "Kare"
 
-#: data/ui/edit-item.blp:96 data/ui/style-editor.blp:100
+#: data/ui/edit-item.blp:117 data/ui/style-editor-box.blp:107
 msgctxt "markerstyle"
 msgid "Pentagon"
 msgstr "Beşgen"
 
-#: data/ui/edit-item.blp:97 data/ui/style-editor.blp:101
+#: data/ui/edit-item.blp:118 data/ui/style-editor-box.blp:108
 msgctxt "markerstyle"
 msgid "Star"
 msgstr "Yıldız"
 
-#: data/ui/edit-item.blp:98 data/ui/style-editor.blp:102
+#: data/ui/edit-item.blp:119 data/ui/style-editor-box.blp:109
 msgctxt "markerstyle"
 msgid "Hexagon 1"
 msgstr "Altıgen 1"
 
-#: data/ui/edit-item.blp:99 data/ui/style-editor.blp:103
+#: data/ui/edit-item.blp:120 data/ui/style-editor-box.blp:110
 msgctxt "markerstyle"
 msgid "Hexagon 2"
 msgstr "Altıgen 2"
 
-#: data/ui/edit-item.blp:100 data/ui/style-editor.blp:104
+#: data/ui/edit-item.blp:121 data/ui/style-editor-box.blp:111
 msgctxt "markerstyle"
 msgid "Plus"
 msgstr "Artı"
 
-#: data/ui/edit-item.blp:101 data/ui/style-editor.blp:105
+#: data/ui/edit-item.blp:122 data/ui/style-editor-box.blp:112
 msgctxt "markerstyle"
 msgid "X"
 msgstr "X"
 
 #. Translators: Diamond as in Cards Symbol
-#: data/ui/edit-item.blp:103 data/ui/style-editor.blp:107
+#: data/ui/edit-item.blp:124 data/ui/style-editor-box.blp:114
 msgctxt "markerstyle"
 msgid "Diamond"
 msgstr "Karo"
 
 #. Translators: Diamond as in Cards Symbol
-#: data/ui/edit-item.blp:105 data/ui/style-editor.blp:109
+#: data/ui/edit-item.blp:126 data/ui/style-editor-box.blp:116
 msgctxt "markerstyle"
 msgid "Thin Diamond"
 msgstr "İnce Karo"
 
-#: data/ui/edit-item.blp:106 data/ui/style-editor.blp:110
+#: data/ui/edit-item.blp:127 data/ui/style-editor-box.blp:117
 msgctxt "markerstyle"
 msgid "Vertical Line"
 msgstr "Dikey Çizgi"
 
-#: data/ui/edit-item.blp:107 data/ui/style-editor.blp:111
+#: data/ui/edit-item.blp:128 data/ui/style-editor-box.blp:118
 msgctxt "markerstyle"
 msgid "Horizontal Line"
 msgstr "Yatay Çizgi"
 
-#: data/ui/edit-item.blp:108 data/ui/style-editor.blp:112
+#: data/ui/edit-item.blp:129 data/ui/style-editor-box.blp:119
 msgctxt "markerstyle"
 msgid "Filled Plus"
 msgstr "Doldurulmuş Artı"
 
-#: data/ui/edit-item.blp:109 data/ui/style-editor.blp:113
+#: data/ui/edit-item.blp:130 data/ui/style-editor-box.blp:120
 msgctxt "markerstyle"
 msgid "Filled X"
 msgstr "Doldurulmuş X"
 
-#: data/ui/edit-item.blp:116 data/ui/style-editor.blp:120
+#: data/ui/edit-item.blp:136 data/ui/style-editor-box.blp:126
 msgid "Marker Size"
 msgstr "İmleyici Boyutu"
 
@@ -496,266 +520,306 @@ msgstr "İmleyici Boyutu"
 msgid "Export Figure"
 msgstr "Şekli Dışa Aktar"
 
-#: data/ui/export-figure.blp:21 graphs/export_figure.vala:47
+#: data/ui/export-figure.blp:22 graphs/export_figure.vala:49
 msgid "Export"
 msgstr "Dışa Aktar"
 
-#: data/ui/export-figure.blp:35
+#: data/ui/export-figure.blp:41
 msgid "File Format"
 msgstr "Dosya Biçimi"
 
-#: data/ui/export-figure.blp:38
+#: data/ui/export-figure.blp:46
 msgctxt "file-format"
 msgid "Encapsulated PostScript"
 msgstr "Kapsüllenmiş PostScript"
 
-#: data/ui/export-figure.blp:39
+#: data/ui/export-figure.blp:47
 msgctxt "file-format"
 msgid "JPEG"
 msgstr "JPEG"
 
-#: data/ui/export-figure.blp:40
+#: data/ui/export-figure.blp:48
 msgctxt "file-format"
 msgid "PDF"
 msgstr "PDF"
 
-#: data/ui/export-figure.blp:41
+#: data/ui/export-figure.blp:49
 msgctxt "file-format"
 msgid "PNG"
 msgstr "PNG"
 
-#: data/ui/export-figure.blp:42
+#: data/ui/export-figure.blp:50
 msgctxt "file-format"
 msgid "PostScript"
 msgstr "Postscript"
 
-#: data/ui/export-figure.blp:43
+#: data/ui/export-figure.blp:51
 msgctxt "file-format"
 msgid "SVG"
 msgstr "SVG"
 
-#: data/ui/export-figure.blp:44
+#: data/ui/export-figure.blp:52
 msgctxt "file-format"
 msgid "WebP"
 msgstr "WebP"
 
-#: data/ui/export-figure.blp:50
+#: data/ui/export-figure.blp:58
 msgid "Resolution (dpi)"
 msgstr "Çözünürlük (dpi)"
 
-#: data/ui/export-figure.blp:57
+#: data/ui/export-figure.blp:67
 msgid "Transparent Background"
 msgstr "Saydam Arka Plan"
 
-#: data/ui/figure-settings-dialog.blp:26 data/ui/figure-settings-page.blp:210
+#: data/ui/figure-settings-dialog.blp:30 data/ui/figure-settings-page.blp:238
+#: graphs/style_editor.vala:55
 msgid "Style"
 msgstr "Biçem"
 
-#: data/ui/figure-settings-page.blp:5 data/ui/window.blp:641
+#: data/ui/figure-settings-dialog.blp:73
+msgid "Import Style…"
+msgstr "Biçemi İçe Aktar…"
+
+#: data/ui/figure-settings-dialog.blp:78
+msgid "Create Style…"
+msgstr "Biçem Oluştur…"
+
+#: data/ui/figure-settings-page.blp:5 data/ui/window.blp:816
 msgid "Figure Settings"
 msgstr "Şekil Ayarları"
 
-#: data/ui/figure-settings-page.blp:21
+#: data/ui/figure-settings-page.blp:26
 msgid "Labels"
 msgstr "Etiketler"
 
-#: data/ui/figure-settings-page.blp:24 graphs/style_editor.py:508
+#: data/ui/figure-settings-page.blp:29 graphs/style_editor.py:510
 msgid "Title"
 msgstr "Başlık"
 
-#: data/ui/figure-settings-page.blp:29
+#: data/ui/figure-settings-page.blp:34
 msgid "Bottom X Axis Label"
 msgstr "Alt X Ekseni Etiketi"
 
-#: data/ui/figure-settings-page.blp:34
+#: data/ui/figure-settings-page.blp:39
 msgid "Top X Axis Label"
 msgstr "Üst X Ekseni Etiketi"
 
-#: data/ui/figure-settings-page.blp:39
+#: data/ui/figure-settings-page.blp:44
 msgid "Left Y Axis Label"
 msgstr "Sol Y Ekseni Etiketi"
 
-#: data/ui/figure-settings-page.blp:44
+#: data/ui/figure-settings-page.blp:49
 msgid "Right Y Axis Label"
 msgstr "Sağ Y Ekseni Etiketi"
 
-#: data/ui/figure-settings-page.blp:49
+#: data/ui/figure-settings-page.blp:54
 msgid "Axis Limits"
 msgstr "Eksen Sınırları"
 
-#: data/ui/figure-settings-page.blp:60
+#: data/ui/figure-settings-page.blp:68
 msgid "Bottom X Axis Minimum"
 msgstr "Alt X Ekseni Asgari"
 
-#: data/ui/figure-settings-page.blp:65
+#: data/ui/figure-settings-page.blp:74
 msgid "Bottom X Axis Maximum"
 msgstr "Alt X Ekseni Azami"
 
-#: data/ui/figure-settings-page.blp:76
+#: data/ui/figure-settings-page.blp:87
 msgid "Top X Axis Minimum"
 msgstr "Üst X Ekseni Asgari"
 
-#: data/ui/figure-settings-page.blp:81
+#: data/ui/figure-settings-page.blp:93
 msgid "Top X Axis Maximum"
 msgstr "Üst X Ekseni Azami"
 
-#: data/ui/figure-settings-page.blp:92
+#: data/ui/figure-settings-page.blp:106
 msgid "Left Y Axis Minimum"
 msgstr "Sol Y Ekseni Asgari"
 
-#: data/ui/figure-settings-page.blp:97
+#: data/ui/figure-settings-page.blp:112
 msgid "Left Y Axis Maximum"
 msgstr "Sol X Ekseni Azami"
 
-#: data/ui/figure-settings-page.blp:108
+#: data/ui/figure-settings-page.blp:125
 msgid "Right Y Axis Minimum"
 msgstr "Sağ Y Ekseni Etiketi"
 
-#: data/ui/figure-settings-page.blp:113
+#: data/ui/figure-settings-page.blp:131
 msgid "Right Y Axis Maximum"
 msgstr "Sağ Y Ekseni Azami"
 
-#: data/ui/figure-settings-page.blp:121
+#: data/ui/figure-settings-page.blp:139
 msgid "Scaling"
 msgstr "Ölçekleme"
 
-#: data/ui/figure-settings-page.blp:125 graphs/window.vala:341
+#: data/ui/figure-settings-page.blp:143 graphs/window.vala:412
 msgid "Bottom X Axis Scale"
 msgstr "Alt X Ekseni Ölçeği"
 
-#: data/ui/figure-settings-page.blp:128 data/ui/figure-settings-page.blp:142
-#: data/ui/figure-settings-page.blp:156 data/ui/figure-settings-page.blp:170
-#: graphs/window.vala:311
+#: data/ui/figure-settings-page.blp:147 data/ui/figure-settings-page.blp:163
+#: data/ui/figure-settings-page.blp:179 data/ui/figure-settings-page.blp:195
+#: graphs/window.vala:382
 msgctxt "scale"
 msgid "Linear"
 msgstr "Doğrusal"
 
-#: data/ui/figure-settings-page.blp:129 data/ui/figure-settings-page.blp:143
-#: data/ui/figure-settings-page.blp:157 data/ui/figure-settings-page.blp:171
-#: graphs/window.vala:312
+#: data/ui/figure-settings-page.blp:148 data/ui/figure-settings-page.blp:164
+#: data/ui/figure-settings-page.blp:180 data/ui/figure-settings-page.blp:196
+#: graphs/window.vala:383
 msgctxt "scale"
-msgid "Logarithmic"
-msgstr "Logaritmik"
+msgid "Logarithmic (Base 10)"
+msgstr "Logaritmik (10 Tabanı)"
 
-#: data/ui/figure-settings-page.blp:130 data/ui/figure-settings-page.blp:144
-#: data/ui/figure-settings-page.blp:158 data/ui/figure-settings-page.blp:172
-#: graphs/window.vala:313
+#: data/ui/figure-settings-page.blp:149 data/ui/figure-settings-page.blp:165
+#: data/ui/figure-settings-page.blp:181 data/ui/figure-settings-page.blp:197
+#: graphs/window.vala:384
+msgctxt "scale"
+msgid "Logarithmic (Base 2)"
+msgstr "Logaritmik (Taban 2)"
+
+#: data/ui/figure-settings-page.blp:150 data/ui/figure-settings-page.blp:166
+#: data/ui/figure-settings-page.blp:182 data/ui/figure-settings-page.blp:198
+#: graphs/window.vala:385
 msgctxt "scale"
 msgid "Radians"
 msgstr "Radyan"
 
-#: data/ui/figure-settings-page.blp:131 data/ui/figure-settings-page.blp:145
-#: data/ui/figure-settings-page.blp:159 data/ui/figure-settings-page.blp:173
-#: graphs/window.vala:314
+#: data/ui/figure-settings-page.blp:151 data/ui/figure-settings-page.blp:167
+#: data/ui/figure-settings-page.blp:183 data/ui/figure-settings-page.blp:199
+#: graphs/window.vala:386
 msgctxt "scale"
 msgid "Square Root"
 msgstr "Kare Kök"
 
-#: data/ui/figure-settings-page.blp:132 data/ui/figure-settings-page.blp:146
-#: data/ui/figure-settings-page.blp:160 data/ui/figure-settings-page.blp:174
+#: data/ui/figure-settings-page.blp:152 data/ui/figure-settings-page.blp:168
+#: data/ui/figure-settings-page.blp:184 data/ui/figure-settings-page.blp:200
 msgctxt "scale"
 msgid "Inverse"
 msgstr "Ters"
 
-#: data/ui/figure-settings-page.blp:139 graphs/window.vala:342
+#: data/ui/figure-settings-page.blp:159 graphs/window.vala:413
 msgid "Top X Axis Scale"
 msgstr "Üst X Ekseni Ölçeği"
 
-#: data/ui/figure-settings-page.blp:153 graphs/window.vala:347
+#: data/ui/figure-settings-page.blp:175 graphs/window.vala:418
 msgid "Left Y Axis Scale"
 msgstr "Sol Y Ekseni Ölçeği"
 
-#: data/ui/figure-settings-page.blp:167 graphs/window.vala:346
+#: data/ui/figure-settings-page.blp:191 graphs/window.vala:417
 msgid "Right Y Axis Scale"
 msgstr "Sağ Y Ekseni Ölçeği"
 
-#: data/ui/figure-settings-page.blp:181
+#: data/ui/figure-settings-page.blp:207
 msgid "Appearance"
 msgstr "Görünüm"
 
-#: data/ui/figure-settings-page.blp:183
+#: data/ui/figure-settings-page.blp:210
 msgid "Show Legend"
 msgstr "Açıklamaları Göster"
 
-#: data/ui/figure-settings-page.blp:187
+#: data/ui/figure-settings-page.blp:214
 msgid "Legend Position"
 msgstr "Gösterge Konumu"
 
-#: data/ui/figure-settings-page.blp:191
+#: data/ui/figure-settings-page.blp:219
 msgctxt "legend-position"
 msgid "Auto"
 msgstr "Kendiliğinden"
 
-#: data/ui/figure-settings-page.blp:192
+#: data/ui/figure-settings-page.blp:220
 msgctxt "legend-position"
 msgid "Upper Right"
 msgstr "Üst Sağ"
 
-#: data/ui/figure-settings-page.blp:193
+#: data/ui/figure-settings-page.blp:221
 msgctxt "legend-position"
 msgid "Upper Left"
 msgstr "Üst Sol"
 
-#: data/ui/figure-settings-page.blp:194
+#: data/ui/figure-settings-page.blp:222
 msgctxt "legend-position"
 msgid "Lower Left"
 msgstr "Alt Sol"
 
-#: data/ui/figure-settings-page.blp:195
+#: data/ui/figure-settings-page.blp:223
 msgctxt "legend-position"
 msgid "Lower Right"
 msgstr "Alt Sağ"
 
-#: data/ui/figure-settings-page.blp:196
+#: data/ui/figure-settings-page.blp:224
 msgctxt "legend-position"
 msgid "Center Left"
 msgstr "Orta Sol"
 
-#: data/ui/figure-settings-page.blp:197
+#: data/ui/figure-settings-page.blp:225
 msgctxt "legend-position"
 msgid "Center Right"
 msgstr "Orta Sağ"
 
-#: data/ui/figure-settings-page.blp:198
+#: data/ui/figure-settings-page.blp:226
 msgctxt "legend-position"
 msgid "Lower Center"
 msgstr "Alt Orta"
 
-#: data/ui/figure-settings-page.blp:199
+#: data/ui/figure-settings-page.blp:227
 msgctxt "legend-position"
 msgid "Upper Center"
 msgstr "Üst Orta"
 
-#: data/ui/figure-settings-page.blp:200
+#: data/ui/figure-settings-page.blp:228
 msgctxt "legend-position"
 msgid "Center"
 msgstr "Orta"
 
-#: data/ui/figure-settings-page.blp:206
+#: data/ui/figure-settings-page.blp:234
 msgid "Hide Unselected Items"
 msgstr "Seçilmemiş Ögeleri Gizle"
 
-#: data/ui/figure-settings-page.blp:228
+#: data/ui/figure-settings-page.blp:256
 msgid "Set as Default"
 msgstr "Öntanımlı Olarak Ayarla"
 
-#: data/ui/fitting-parameters.blp:26
+#: data/ui/fitting-parameters.blp:30
 msgid "Initial Guess"
 msgstr "İlk Tahmin"
 
-#: data/ui/fitting-parameters.blp:38
+#: data/ui/fitting-parameters.blp:45
 msgid "Minimum"
 msgstr "Asgari"
 
-#: data/ui/fitting-parameters.blp:49
+#: data/ui/fitting-parameters.blp:59
 msgid "Maximum"
 msgstr "Azami"
+
+#: data/ui/generate-data.blp:6
+msgid "Generate Data"
+msgstr "Veri Oluştur"
+
+#: data/ui/generate-data.blp:23
+msgid "Generate"
+msgstr "Oluştur"
+
+#: data/ui/generate-data.blp:72
+msgid "X Start"
+msgstr "X Başlangıç"
+
+#: data/ui/generate-data.blp:79
+msgid "X Stop"
+msgstr "X Bitiş"
+
+#: data/ui/generate-data.blp:88
+msgid "Steps"
+msgstr "Adımlar"
 
 #: data/ui/import.blp:6
 msgid "Import Parameters"
 msgstr "İçe Aktarma Parametreleri"
 
 #: data/ui/import.blp:27
+msgid "Reset to Defaults…"
+msgstr "Öntanımlıya _Sıfırla"
+
+#: data/ui/import.blp:32
 msgid "Import"
 msgstr "İçe Aktar"
 
@@ -767,499 +831,418 @@ msgstr "Ayraç"
 msgid "Character sequence used to split values"
 msgstr "Değerleri bölmek için kullanılan karakter dizisi"
 
-#: data/ui/import-columns.blp:11
+#: data/ui/import-columns.blp:12
 msgctxt "delimiter"
 msgid "Whitespace"
 msgstr "Beyaz boşluk"
 
-#: data/ui/import-columns.blp:12
+#: data/ui/import-columns.blp:13
 msgctxt "delimiter"
 msgid "Tab"
 msgstr "Sekme"
 
-#: data/ui/import-columns.blp:13
+#: data/ui/import-columns.blp:14
 msgctxt "delimiter"
 msgid "Colon (:)"
 msgstr "İki nokta üst üste (:)"
 
-#: data/ui/import-columns.blp:14
+#: data/ui/import-columns.blp:15
 msgctxt "delimiter"
 msgid "Semicolon (;)"
 msgstr "Noktalı virgül (;)"
 
-#: data/ui/import-columns.blp:15
+#: data/ui/import-columns.blp:16
 msgctxt "delimiter"
 msgid "Decimal comma (,)"
 msgstr "Ondalık virgülü (,)"
 
-#: data/ui/import-columns.blp:16
+#: data/ui/import-columns.blp:17
 msgctxt "delimiter"
 msgid "Decimal point (.)"
 msgstr "Ondalık nokta (.)"
 
-#: data/ui/import-columns.blp:17
+#: data/ui/import-columns.blp:18
 msgctxt "delimiter"
 msgid "Custom"
 msgstr "Özel"
 
-#: data/ui/import-columns.blp:24
+#: data/ui/import-columns.blp:26
 msgid "Custom Delimiter"
 msgstr "Özel Ayraç"
 
-#: data/ui/import-columns.blp:28
+#: data/ui/import-columns.blp:30
 msgid "Decimal Separator"
 msgstr "Ondalık Ayraç"
 
-#: data/ui/import-columns.blp:31
+#: data/ui/import-columns.blp:34
 msgctxt "separator"
 msgid "Decimal comma (,)"
 msgstr "Ondalık virgülü (,)"
 
-#: data/ui/import-columns.blp:32
+#: data/ui/import-columns.blp:35
 msgctxt "separator"
 msgid "Decimal point (.)"
 msgstr "Ondalık nokta (.)"
 
-#: data/ui/import-columns.blp:38
+#: data/ui/import-columns.blp:41
 msgid "Column X"
 msgstr "Sütun X"
 
-#: data/ui/import-columns.blp:39
+#: data/ui/import-columns.blp:42
 msgid "X-data column index"
 msgstr "X-veri sütun dizini"
 
-#: data/ui/import-columns.blp:48
+#: data/ui/import-columns.blp:52
 msgid "Column Y"
 msgstr "Sütun Y"
 
-#: data/ui/import-columns.blp:50
+#: data/ui/import-columns.blp:54
 msgid "Y-data column index"
 msgstr "Y-veri sütun dizini"
 
-#: data/ui/import-columns.blp:59
+#: data/ui/import-columns.blp:63
 msgid "Skip Rows"
 msgstr "Satır Atla"
 
-#: data/ui/import-columns.blp:60
+#: data/ui/import-columns.blp:64
 msgid "Ignored row indices"
 msgstr "Yok sayılan satır indisleri"
 
-#: data/ui/item-box.blp:17
+#: data/ui/item-box.blp:20
 msgid "Pick Color"
 msgstr "Renk Seç"
 
-#: data/ui/item-box.blp:46
+#: data/ui/item-box.blp:54
 msgid "Move Item"
 msgstr "Ögeyi Taşı"
 
-#: data/ui/item-box.blp:63
+#: data/ui/item-box.blp:75
 msgid "Remove Item"
 msgstr "Ögeyi Kaldır"
-
-#: data/ui/shortcuts.blp:11
-msgctxt "shortcut window"
-msgid "General"
-msgstr "Genel"
-
-#: data/ui/shortcuts.blp:14
-msgctxt "shortcut window"
-msgid "Show Shortcuts"
-msgstr "Kısayolları Göster"
-
-#: data/ui/shortcuts.blp:19
-msgctxt "shortcut window"
-msgid "Open Help"
-msgstr "Yardımı Aç"
-
-#: data/ui/shortcuts.blp:24
-msgctxt "shortcut window"
-msgid "Open Figure Settings"
-msgstr "Şekil Ayarlarını Aç"
-
-#: data/ui/shortcuts.blp:29
-msgctxt "shortcut window"
-msgid "Close Application"
-msgstr "Uygulamayı Kapat"
-
-#: data/ui/shortcuts.blp:33
-msgctxt "shortcut window"
-msgid "Close Application Window"
-msgstr "Uygulama Menüsünü Kapat"
-
-#: data/ui/shortcuts.blp:39
-msgctxt "shortcut window"
-msgid "Mode Switching"
-msgstr "Kip Değiştirme"
-
-#: data/ui/shortcuts.blp:42
-msgctxt "shortcut window"
-msgid "Pan Mode"
-msgstr "Kaydırma Kipi"
-
-#: data/ui/shortcuts.blp:47
-msgctxt "shortcut window"
-msgid "Zoom Mode"
-msgstr "Yakınlaştırma Kipi"
-
-#: data/ui/shortcuts.blp:52
-msgctxt "shortcut window"
-msgid "Select Mode"
-msgstr "Seçim Kipi"
-
-#: data/ui/shortcuts.blp:58
-msgctxt "shortcut window"
-msgid "New Data"
-msgstr "Yeni Veri"
-
-#: data/ui/shortcuts.blp:61
-msgctxt "shortcut window"
-msgid "Add Data from Equation"
-msgstr "Denklemden Veri Ekle"
-
-#: data/ui/shortcuts.blp:66
-msgctxt "shortcut window"
-msgid "Add Data from File"
-msgstr "Dosyadan Veri Ekle"
-
-#: data/ui/shortcuts.blp:71
-msgctxt "shortcut window"
-msgid "New Project"
-msgstr "Yeni Proje"
-
-#: data/ui/shortcuts.blp:76
-msgctxt "shortcut window"
-msgid "Open Project"
-msgstr "Proje Aç"
-
-#: data/ui/shortcuts.blp:81
-msgctxt "shortcut window"
-msgid "Delete Selected Data"
-msgstr "Seçilen Veriyi Sil"
-
-#: data/ui/shortcuts.blp:87
-msgctxt "shortcut window"
-msgid "Save and Export"
-msgstr "Kaydet ve Dışa Aktar"
-
-#: data/ui/shortcuts.blp:89
-msgctxt "shortcut window"
-msgid "Export Data"
-msgstr "Verileri Dışa Aktar"
-
-#: data/ui/shortcuts.blp:93
-msgctxt "shortcut window"
-msgid "Export Figure"
-msgstr "Şekli Dışa Aktar"
-
-#: data/ui/shortcuts.blp:97
-msgctxt "shortcut window"
-msgid "Save Project"
-msgstr "Projeyi Kaydet"
-
-#: data/ui/shortcuts.blp:101
-msgctxt "shortcut window"
-msgid "Save Project As"
-msgstr "Projeyi Farklı Kaydet"
-
-#: data/ui/shortcuts.blp:107
-msgctxt "shortcut window"
-msgid "View"
-msgstr "Görünüm"
-
-#: data/ui/shortcuts.blp:110
-msgctxt "shortcut window"
-msgid "Previous View"
-msgstr "Önceki Görünüm"
-
-#: data/ui/shortcuts.blp:115
-msgctxt "shortcut window"
-msgid "Next View"
-msgstr "Sonraki Görünüm"
-
-#: data/ui/shortcuts.blp:120
-msgctxt "shortcut window"
-msgid "Optimize limits"
-msgstr "Sınırları eniyile"
-
-#: data/ui/shortcuts.blp:125
-msgctxt "shortcut window"
-msgid "Zoom in"
-msgstr "Yakınlaştır"
-
-#: data/ui/shortcuts.blp:130
-msgctxt "shortcut window"
-msgid "Zoom out"
-msgstr "Uzaklaştır"
-
-#: data/ui/shortcuts.blp:135 data/ui/shortcuts.blp:155
-msgctxt "shortcut window"
-msgid "Select None"
-msgstr "Hiçbirini Seçme"
-
-#: data/ui/shortcuts.blp:141
-msgctxt "shortcut window"
-msgid "Toggle Sidebar"
-msgstr "Kenar Çubuğunu Aç/Kapa"
-
-#: data/ui/shortcuts.blp:147
-msgctxt "shortcut window"
-msgid "Actions"
-msgstr "İşlemler"
-
-#: data/ui/shortcuts.blp:150
-msgctxt "shortcut window"
-msgid "Select All"
-msgstr "Tümünü Seç"
-
-#: data/ui/shortcuts.blp:160
-msgctxt "shortcut window"
-msgid "Undo Action"
-msgstr "Son İşlemi Geri Al"
-
-#: data/ui/shortcuts.blp:165
-msgctxt "shortcut window"
-msgid "Redo Action"
-msgstr "Son İşlemi Yinele"
 
 #: data/ui/smoothen-settings.blp:7
 msgid "Smoothen Settings"
 msgstr "Yumuşatma Ayarları"
 
-#: data/ui/smoothen-settings.blp:30 data/ui/window.blp:676
+#: data/ui/smoothen-settings.blp:35 data/ui/window.blp:853
 msgid "Savitzky–Golay Filter"
 msgstr "Savitzky-Golay Süzgeci"
 
-#: data/ui/smoothen-settings.blp:32
+#: data/ui/smoothen-settings.blp:38
 msgid "Span percentage"
 msgstr "Açıklık yüzdesi"
 
-#: data/ui/smoothen-settings.blp:33
+#: data/ui/smoothen-settings.blp:39
 msgid "What percentage of the data span to use for the filter window"
 msgstr "Süzgeç penceresi için veri aralığının yüzde kaçının kullanılacağı"
 
-#: data/ui/smoothen-settings.blp:40
+#: data/ui/smoothen-settings.blp:48
 msgid "Polynomial degree"
 msgstr "Polinom derecesi"
 
-#: data/ui/smoothen-settings.blp:48 data/ui/window.blp:681
+#: data/ui/smoothen-settings.blp:58 data/ui/window.blp:859
 msgid "Moving Average"
 msgstr "Hareketli Ortalama"
 
-#: data/ui/smoothen-settings.blp:50
+#: data/ui/smoothen-settings.blp:61
 msgid "Box points"
 msgstr "Kutu puanları"
 
-#: data/ui/smoothen-settings.blp:51
+#: data/ui/smoothen-settings.blp:62
 msgid "Amount of points to use when calculating a moving average"
 msgstr "Hareketli ortalama hesaplanırken kullanılacak nokta miktarı"
 
-#: data/ui/style-color-box.blp:18 data/ui/style-preview.blp:30
+#: data/ui/style-color-box.blp:20
 msgid "Edit"
 msgstr "Düzenle"
 
-#: data/ui/style-color-box.blp:29
+#: data/ui/style-color-box.blp:35
 msgid "Remove"
 msgstr "Kaldır"
 
-#: data/ui/style-editor.blp:11
+#: data/ui/style-editor-box.blp:11
 msgid "Style Name"
 msgstr "Biçem Adı"
 
-#: data/ui/style-editor.blp:15
+#: data/ui/style-editor-box.blp:15
 msgid "Font"
 msgstr "Yazı tipi"
 
-#: data/ui/style-editor.blp:26
+#: data/ui/style-editor-box.blp:27
 msgid "Title Size"
 msgstr "Başlık Boyutu"
 
-#: data/ui/style-editor.blp:27
+#: data/ui/style-editor-box.blp:28
 msgid "Title size in relation to text size"
 msgstr "Metin boyutuna göre başlık boyutu"
 
-#: data/ui/style-editor.blp:40
+#: data/ui/style-editor-box.blp:42
 msgid "Label Size"
 msgstr "Etiket Boyutu"
 
-#: data/ui/style-editor.blp:41
+#: data/ui/style-editor-box.blp:43
 msgid "Label size in relation to text size"
 msgstr "Metin boyutuna göre etiket boyutu"
 
-#: data/ui/style-editor.blp:55
+#: data/ui/style-editor-box.blp:58
 msgid "Lines"
 msgstr "Çizgiler"
 
-#: data/ui/style-editor.blp:136
+#: data/ui/style-editor-box.blp:143
 msgid "Axes"
 msgstr "Eksenler"
 
-#: data/ui/style-editor.blp:139
+#: data/ui/style-editor-box.blp:146
 msgid "Axis Width"
 msgstr "Eksen Genişliği"
 
-#: data/ui/style-editor.blp:152
+#: data/ui/style-editor-box.blp:160
 msgid "Draw Frame"
 msgstr "Çerçeve Çiz"
 
-#: data/ui/style-editor.blp:157
+#: data/ui/style-editor-box.blp:165
 msgid "Ticks"
 msgstr "Onay işaretleri"
 
-#: data/ui/style-editor.blp:160
+#: data/ui/style-editor-box.blp:168
 msgid "Tick Directions"
 msgstr "Onay İşareti Yönleri"
 
-#: data/ui/style-editor.blp:162
+#: data/ui/style-editor-box.blp:172
 msgid "Inwards"
 msgstr "İçe Doğru"
 
-#: data/ui/style-editor.blp:162
+#: data/ui/style-editor-box.blp:173
 msgid "Outwards"
 msgstr "Dışa Doğru"
 
-#: data/ui/style-editor.blp:167
+#: data/ui/style-editor-box.blp:179
 msgid "Minor Ticks"
 msgstr "Küçük Onay İşaretleri"
 
-#: data/ui/style-editor.blp:171
+#: data/ui/style-editor-box.blp:183
 msgid "Major Tick Width"
 msgstr "Büyük Onay İşareti Genişliği"
 
-#: data/ui/style-editor.blp:184
+#: data/ui/style-editor-box.blp:197
 msgid "Minor Tick Width"
 msgstr "Küçük Onay İşareti Genişliği"
 
-#: data/ui/style-editor.blp:198
+#: data/ui/style-editor-box.blp:212
 msgid "Major Tick Length"
 msgstr "Büyük Onay İşareti Uzunluğu"
 
-#: data/ui/style-editor.blp:211
+#: data/ui/style-editor-box.blp:226
 msgid "Minor Tick Length"
 msgstr "Küçük Onay İşareti Uzunluğu"
 
-#: data/ui/style-editor.blp:225
+#: data/ui/style-editor-box.blp:241
 msgid "Ticks on Bottom Axis"
 msgstr "Alt Eksende Onay İşaretleri"
 
-#: data/ui/style-editor.blp:229
+#: data/ui/style-editor-box.blp:245
 msgid "Ticks on Left Axis"
 msgstr "Sol Eksende Onay İşaretleri"
 
-#: data/ui/style-editor.blp:233
+#: data/ui/style-editor-box.blp:249
 msgid "Ticks on Right Axis"
 msgstr "Sağ Eksende Onay İşaretleri"
 
-#: data/ui/style-editor.blp:237
+#: data/ui/style-editor-box.blp:253
 msgid "Ticks on Top Axis"
 msgstr "Üst Eksende Onay İşaretleri"
 
-#: data/ui/style-editor.blp:242
+#: data/ui/style-editor-box.blp:258
 msgid "Grid"
 msgstr "Izgara"
 
-#: data/ui/style-editor.blp:245
+#: data/ui/style-editor-box.blp:261
 msgid "Show Grid"
 msgstr "Izgarayı Göster"
 
-#: data/ui/style-editor.blp:249
+#: data/ui/style-editor-box.blp:265
 msgid "Grid Width"
 msgstr "Izgara Genişliği"
 
-#: data/ui/style-editor.blp:263
+#: data/ui/style-editor-box.blp:280
 msgid "Grid Opacity"
 msgstr "Izgara Matlığı"
 
-#: data/ui/style-editor.blp:278
+#: data/ui/style-editor-box.blp:296
 msgid "Padding"
 msgstr "Dolgu"
 
-#: data/ui/style-editor.blp:279
+#: data/ui/style-editor-box.blp:297
 msgid "Padding for different parts of the figure"
 msgstr "Şeklin farklı bölümleri için dolgu"
 
-#: data/ui/style-editor.blp:282
+#: data/ui/style-editor-box.blp:300
 msgid "Value Padding"
 msgstr "Değer Dolgusu"
 
-#: data/ui/style-editor.blp:283
+#: data/ui/style-editor-box.blp:301
 msgid "Padding between axes and values"
 msgstr "Eksenler ve değerler arasındaki doldu"
 
-#: data/ui/style-editor.blp:296
+#: data/ui/style-editor-box.blp:315
 msgid "Label Padding"
 msgstr "Etiket Dolgusu"
 
-#: data/ui/style-editor.blp:297
+#: data/ui/style-editor-box.blp:316
 msgid "Padding between axes and labels"
 msgstr "Eksenler ve etiketler arasındaki doldu"
 
-#: data/ui/style-editor.blp:310
+#: data/ui/style-editor-box.blp:330
 msgid "Title Padding"
 msgstr "Başlık Dolgusu"
 
-#: data/ui/style-editor.blp:311
+#: data/ui/style-editor-box.blp:331
 msgid "Padding between axes and the title"
 msgstr "Eksenler ve başlıklar arasındaki doldu"
 
-#: data/ui/style-editor.blp:325
+#: data/ui/style-editor-box.blp:346
 msgid "Colors"
 msgstr "Renkler"
 
-#: data/ui/style-editor.blp:330
+#: data/ui/style-editor-box.blp:350
 msgid "Label text might be hard to read"
 msgstr "Etiket metninin okunması zor olabilir"
 
-#: data/ui/style-editor.blp:335
+#: data/ui/style-editor-box.blp:362
 msgid "Poor Contrast"
 msgstr "Karşıtlık Zayıf"
 
-#: data/ui/style-editor.blp:350
+#: data/ui/style-editor-box.blp:377
 msgid "Text Color"
 msgstr "Metin Rengi"
 
-#: data/ui/style-editor.blp:355 data/ui/style-editor.blp:377
-#: data/ui/style-editor.blp:399 data/ui/style-editor.blp:421
-#: data/ui/style-editor.blp:443 data/ui/style-editor.blp:465
+#: data/ui/style-editor-box.blp:382 data/ui/style-editor-box.blp:409
+#: data/ui/style-editor-box.blp:436 data/ui/style-editor-box.blp:463
+#: data/ui/style-editor-box.blp:490 data/ui/style-editor-box.blp:517
 msgid "Change Color"
 msgstr "Renk Değiştir"
 
-#: data/ui/style-editor.blp:372
+#: data/ui/style-editor-box.blp:404
 msgid "Tick Color"
 msgstr "Onay İşareti Rengi"
 
-#: data/ui/style-editor.blp:394
+#: data/ui/style-editor-box.blp:431
 msgid "Axis Color"
 msgstr "Eksen Renkleri"
 
-#: data/ui/style-editor.blp:416
+#: data/ui/style-editor-box.blp:458
 msgid "Grid Color"
 msgstr "Izgara Rengi"
 
-#: data/ui/style-editor.blp:438
+#: data/ui/style-editor-box.blp:485
 msgid "Background Color"
 msgstr "Arka Plan Rengi"
 
-#: data/ui/style-editor.blp:460
+#: data/ui/style-editor-box.blp:512
 msgid "Outline Color"
 msgstr "Anahat Rengi"
 
-#: data/ui/style-editor.blp:479
+#: data/ui/style-editor-box.blp:535
 msgid "Line Colors"
 msgstr "Çizgi Renkleri"
 
-#: data/ui/style-editor.blp:485
+#: data/ui/style-editor-box.blp:547
 msgid "Add Color"
 msgstr "Renk Ekle"
+
+#: data/ui/style-editor-shortcuts.blp:11 data/ui/window-shortcuts.blp:11
+msgctxt "shortcut window"
+msgid "General"
+msgstr "Genel"
+
+#: data/ui/style-editor-shortcuts.blp:14 data/ui/window-shortcuts.blp:14
+msgctxt "shortcut window"
+msgid "Show Shortcuts"
+msgstr "Kısayolları Göster"
+
+#: data/ui/style-editor-shortcuts.blp:19 data/ui/window-shortcuts.blp:19
+msgctxt "shortcut window"
+msgid "Open Help"
+msgstr "Yardımı Aç"
+
+#: data/ui/style-editor-shortcuts.blp:24 data/ui/window-shortcuts.blp:29
+msgctxt "shortcut window"
+msgid "Close Application"
+msgstr "Uygulamayı Kapat"
+
+#: data/ui/style-editor-shortcuts.blp:29 data/ui/window-shortcuts.blp:34
+msgctxt "shortcut window"
+msgid "Close Application Window"
+msgstr "Uygulama Menüsünü Kapat"
+
+#: data/ui/style-editor-shortcuts.blp:35
+msgctxt "shortcut window"
+msgid "Save"
+msgstr "Kaydet"
+
+#: data/ui/style-editor-shortcuts.blp:38 data/ui/window-shortcuts.blp:106
+msgctxt "shortcut window"
+msgid "Save Project"
+msgstr "Projeyi Kaydet"
+
+#: data/ui/style-editor-shortcuts.blp:43 data/ui/window-shortcuts.blp:111
+msgctxt "shortcut window"
+msgid "Save Project As"
+msgstr "Projeyi Farklı Kaydet"
+
+#: data/ui/style-editor-window.blp:5
+msgid "Error - No Style selected"
+msgstr "Hata - Biçem seçilmedi"
+
+#: data/ui/style-editor-window.blp:45 data/ui/window.blp:230
+msgid "Open Application Menu"
+msgstr "Uygulama Menüsünü Aç"
+
+#: data/ui/style-editor-window.blp:84
+msgid "Save Style…"
+msgstr "Biçemi Kaydet…"
+
+#: data/ui/style-editor-window.blp:85
+msgid "Save Style as…"
+msgstr "Biçemi Farklı Kaydet…"
+
+#: data/ui/style-editor-window.blp:89 data/ui/window.blp:820
+msgid "Keyboard Shortcuts"
+msgstr "Klavye Kısayolları"
+
+#: data/ui/style-editor-window.blp:90 data/ui/window.blp:821
+msgid "Help"
+msgstr "Yardım"
+
+#: data/ui/style-editor-window.blp:91 data/ui/window.blp:822
+msgid "About Graphs"
+msgstr "Graphs Hakkında"
+
+#: data/ui/style-preview.blp:54
+msgid "Open"
+msgstr "Aç"
+
+#: data/ui/style-preview.blp:59
+msgid "Open With…"
+msgstr "Birlikte Aç…"
+
+#: data/ui/style-preview.blp:64
+msgid "Delete…"
+msgstr "Sil…"
 
 #: data/ui/transform.blp:6
 msgid "Transform Data"
 msgstr "Veri Dönüştür"
 
-#: data/ui/transform.blp:22 data/ui/window.blp:380
+#: data/ui/transform.blp:23 data/ui/window.blp:504
 msgid "Transform"
 msgstr "Dönüştür"
 
-#: data/ui/transform.blp:35
+#: data/ui/transform.blp:34
+msgid "More info"
+msgstr "Daha fazla bilgi"
+
+#: data/ui/transform.blp:48
 msgid ""
 "Additional variables:\n"
 "x_min, y_min\n"
@@ -1277,276 +1260,399 @@ msgstr ""
 "derece kullanmak için fonksiyona d ekleyin,\n"
 "örneğin sind(x) veya cosd(x)."
 
-#: data/ui/transform.blp:40
-msgid "More info"
-msgstr "Daha fazla bilgi"
-
-#: data/ui/transform.blp:51
+#: data/ui/transform.blp:63
 msgid "X ="
 msgstr "X ="
 
-#: data/ui/transform.blp:61
+#: data/ui/transform.blp:73
 msgid "Discard Unselected Data"
 msgstr "Seçilmemiş Veriyi Gözden Çıkar"
 
-#: data/ui/window.blp:182
+#: data/ui/window.blp:196
+msgid "Drop Here to Import"
+msgstr "Buraya Bırakarak İçe Aktar"
+
+#: data/ui/window.blp:221
 msgid "Add New Data"
 msgstr "Yeni Veri Ekle"
 
-#: data/ui/window.blp:190
-msgid "Open Application Menu"
-msgstr "Uygulama Menüsünü Aç"
-
-#: data/ui/window.blp:219
-msgid "No Data"
-msgstr "Veri Yok"
-
-#: data/ui/window.blp:220
-msgid "Add data from a file or manually as an equation"
-msgstr "Bir dosyadan veya elle denklem olarak veri ekleyin"
-
-#: data/ui/window.blp:241
-msgid "Pan Mode. Click and drag to pan"
-msgstr "Kaydırma kipi. Kaydırmak için tıklayın ve sürükleyin"
-
-#: data/ui/window.blp:247
-msgid "Zoom Mode. Select an area on the figure to zoom in"
-msgstr "Yakınlaştırma kipi. Yakınlaştırmak için şekilde bir alan seçin"
-
-#: data/ui/window.blp:253
-msgid "Select Mode. Click and drag to make a selection of data"
-msgstr "Seçim Kipi. Veri seçimi yapmak için tıklayın ve sürükleyin"
-
-#: data/ui/window.blp:274
-msgid "Adjust"
-msgstr "Ayarla"
-
-#: data/ui/window.blp:290
-msgid "Combine"
-msgstr "Birleştir"
-
-#: data/ui/window.blp:292
-msgid "Combine all selected data"
-msgstr "Tüm seçili verileri birleştir"
-
-#: data/ui/window.blp:305
-msgid "Cut"
-msgstr "Kes"
-
-#: data/ui/window.blp:307
-msgid "Cut selected data"
-msgstr "Seçilen veriyi kes"
-
-#: data/ui/window.blp:319
-msgid "Shift"
-msgstr "Kaydır"
-
-#: data/ui/window.blp:321
-msgid "Shift all data vertically with respect to each other"
-msgstr "Tüm verileri birbirine göre dikey olarak kaydır"
-
-#: data/ui/window.blp:334
-msgid "Normalize"
-msgstr "Normalleştir"
-
-#: data/ui/window.blp:336
-msgid "Normalize data"
-msgstr "Verileri normalleştir"
-
-#: data/ui/window.blp:352
-msgid "Smoothen"
-msgstr "Düzleştir"
-
-#: data/ui/window.blp:354
-msgid "Smoothen data"
-msgstr "Verileri düzleştir"
-
-#: data/ui/window.blp:369
-msgid "Center"
-msgstr "Ortala"
-
-#: data/ui/window.blp:371
-msgid "Center data"
-msgstr "Verileri ortala"
-
-#: data/ui/window.blp:395
-msgid "Derivative"
-msgstr "Türev"
-
-#: data/ui/window.blp:397
-msgid "Get the derivative of the data"
-msgstr "Verinin türevini getir"
-
-#: data/ui/window.blp:410
-msgid "Integral"
-msgstr "İntegral"
-
-#: data/ui/window.blp:412
-msgid "Get the indefinite integral of the data"
-msgstr "Verilerin belirsiz integralini alın"
-
-#: data/ui/window.blp:426
-msgid "FFT"
-msgstr "FFT"
-
-#: data/ui/window.blp:428
-msgid "Get the Fast Fourier Transform of the data"
-msgstr "Verilerin Hızlı Fourier Dönüşümünü Alın"
-
-#: data/ui/window.blp:442
-msgid "Inverse FFT"
-msgstr "Ters FFT"
-
-#: data/ui/window.blp:444
-msgid "Get the Inverse Fast Fourier Transform of the data"
-msgstr "Verilerin Ters Hızlı Fourier Dönüşümünü Alın"
-
-#: data/ui/window.blp:458
-msgid "Custom Transformation"
-msgstr "Özel Dönüşüm"
-
-#: data/ui/window.blp:460
-msgid "Perform custom transformations on the data"
-msgstr "Veriler üzerinde özel dönüşümler gerçekleştir"
-
-#: data/ui/window.blp:468
-msgid "Modify"
-msgstr "Değiştir"
-
-#: data/ui/window.blp:488
-msgid "Translate X"
-msgstr "X Çevir"
-
-#: data/ui/window.blp:511
-msgid "Translate Y"
-msgstr "Y Çevir"
-
-#: data/ui/window.blp:534
-msgid "Multiply X"
-msgstr "X Çoğalt"
-
-#: data/ui/window.blp:557
-msgid "Multiply Y"
-msgstr "Y Çoğalt"
-
-#: data/ui/window.blp:587 graphs/window.vala:282
+#: data/ui/window.blp:248 data/ui/window.blp:750 graphs/window.vala:353
 msgid "Undo"
 msgstr "Geri Al"
 
-#: data/ui/window.blp:592
+#: data/ui/window.blp:255 data/ui/window.blp:756
 msgid "Redo"
 msgstr "Yinele"
 
 # Uygulamanın sağında göz simgesi gibi görünen menü için araç ipucu. Menüyü Görüntüle diye çevirmeyin.
-#: data/ui/window.blp:597
+#: data/ui/window.blp:262 data/ui/window.blp:763
 msgid "View Menu"
 msgstr "Görünüm Menüsü"
 
-#: data/ui/window.blp:605
+#: data/ui/window.blp:271 data/ui/window.blp:773
 msgid "Next View"
 msgstr "Sonraki Görünüm"
 
-#: data/ui/window.blp:611
+#: data/ui/window.blp:279 data/ui/window.blp:781
 msgid "Previous View"
 msgstr "Önceki Görünüm"
 
-#: data/ui/window.blp:629
+#: data/ui/window.blp:322
+msgid "No Data"
+msgstr "Veri Yok"
+
+#: data/ui/window.blp:323
+msgid "Add data from a file or manually as an equation"
+msgstr "Denklem olarak dosyadan ya da elle veri ekle"
+
+#: data/ui/window.blp:349
+msgid "Pan Mode. Click and drag to pan"
+msgstr "Kaydırma kipi. Kaydırmak için tıkla ve sürükle"
+
+#: data/ui/window.blp:356
+msgid "Zoom Mode. Select an area on the figure to zoom in"
+msgstr "Yakınlaştırma kipi. Yakınlaştırmak için şekilde alan seç"
+
+#: data/ui/window.blp:363
+msgid "Select Mode. Click and drag to make a selection of data"
+msgstr "Seçim Kipi. Veri seçimi yapmak için tıkla ve sürükle"
+
+#: data/ui/window.blp:386
+msgid "Adjust"
+msgstr "Ayarla"
+
+#: data/ui/window.blp:396
+msgid "Combine all selected data"
+msgstr "Tüm seçili verileri birleştir"
+
+#: data/ui/window.blp:407
+msgid "Combine"
+msgstr "Birleştir"
+
+#: data/ui/window.blp:413
+msgid "Cut selected data"
+msgstr "Seçilen veriyi kes"
+
+#: data/ui/window.blp:424
+msgid "Cut"
+msgstr "Kes"
+
+#: data/ui/window.blp:429
+msgid "Shift all data vertically with respect to each other"
+msgstr "Tüm verileri birbirine göre dikey olarak kaydır"
+
+#: data/ui/window.blp:440
+msgid "Shift"
+msgstr "Kaydır"
+
+#: data/ui/window.blp:446
+msgid "Normalize data"
+msgstr "Verileri normalleştir"
+
+#: data/ui/window.blp:457
+msgid "Normalize"
+msgstr "Normalleştir"
+
+#: data/ui/window.blp:463
+msgid "Smoothen data"
+msgstr "Verileri düzleştir"
+
+#: data/ui/window.blp:477
+msgid "Smoothen"
+msgstr "Düzleştir"
+
+#: data/ui/window.blp:483
+msgid "Center data"
+msgstr "Verileri ortala"
+
+#: data/ui/window.blp:496
+msgid "Center"
+msgstr "Ortala"
+
+#: data/ui/window.blp:514
+msgid "Get the derivative of the data"
+msgstr "Verinin türevini getir"
+
+#: data/ui/window.blp:525
+msgid "Derivative"
+msgstr "Türev"
+
+#: data/ui/window.blp:531
+msgid "Get the indefinite integral of the data"
+msgstr "Verilerin belirsiz integralini alın"
+
+#: data/ui/window.blp:542
+msgid "Integral"
+msgstr "İntegral"
+
+#: data/ui/window.blp:548
+msgid "Get the Fast Fourier Transform of the data"
+msgstr "Verilerin Hızlı Fourier Dönüşümünü Alın"
+
+#: data/ui/window.blp:560
+msgid "FFT"
+msgstr "FFT"
+
+#: data/ui/window.blp:566
+msgid "Get the Inverse Fast Fourier Transform of the data"
+msgstr "Verilerin Ters Hızlı Fourier Dönüşümünü Alın"
+
+#: data/ui/window.blp:578
+msgid "Inverse FFT"
+msgstr "Ters FFT"
+
+#: data/ui/window.blp:584
+msgid "Perform custom transformations on the data"
+msgstr "Veriler üzerinde özel dönüşümler gerçekleştir"
+
+#: data/ui/window.blp:596
+msgid "Custom Transformation"
+msgstr "Özel Dönüşüm"
+
+#: data/ui/window.blp:604
+msgid "Modify"
+msgstr "Değiştir"
+
+#: data/ui/window.blp:634
+msgid "Translate X"
+msgstr "X Çevir"
+
+#: data/ui/window.blp:661
+msgid "Translate Y"
+msgstr "Y Çevir"
+
+#: data/ui/window.blp:688
+msgid "Multiply X"
+msgstr "X Çoğalt"
+
+#: data/ui/window.blp:715
+msgid "Multiply Y"
+msgstr "Y Çoğalt"
+
+#: data/ui/window.blp:801
 msgid "New Project"
 msgstr "Yeni Proje"
 
-#: data/ui/window.blp:632
+#: data/ui/window.blp:805
 msgid "Save Project…"
 msgstr "Projeyi Kaydet…"
 
-#: data/ui/window.blp:633
+#: data/ui/window.blp:806
 msgid "Save Project as…"
 msgstr "Projeyi Farklı Kaydet…"
 
-#: data/ui/window.blp:634
+#: data/ui/window.blp:807
 msgid "Open Project…"
 msgstr "Proje Aç…"
 
-#: data/ui/window.blp:637
+#: data/ui/window.blp:811
 msgid "Export Data…"
 msgstr "Verileri Dışa Aktar…"
 
-#: data/ui/window.blp:638
+#: data/ui/window.blp:812
 msgid "Export Figure…"
 msgstr "Şekli Dışa Aktar…"
 
-#: data/ui/window.blp:644
-msgid "Keyboard Shortcuts"
-msgstr "Klavye Kısayolları"
-
-#: data/ui/window.blp:645
-msgid "Help"
-msgstr "Yardım"
-
-#: data/ui/window.blp:646
-msgid "About Graphs"
-msgstr "Graphs Hakkında"
-
-#: data/ui/window.blp:652
+#: data/ui/window.blp:828
 msgid "Add Data from File…"
 msgstr "Dosyadan Veri Ekle…"
 
-#: data/ui/window.blp:653
+#: data/ui/window.blp:829
 msgid "Add Equation…"
 msgstr "Denklem Ekle…"
 
-#: data/ui/window.blp:662
+#: data/ui/window.blp:830
+msgid "Generate Data…"
+msgstr "Verileri Oluştur…"
+
+#: data/ui/window.blp:838
 msgid "At Maximum Y Value"
 msgstr "Azami Y Değerinde"
 
-#: data/ui/window.blp:667
+#: data/ui/window.blp:844
 msgid "At Middle X Value"
 msgstr "Orta X Değerinde"
 
-#: data/ui/window.blp:688
+#: data/ui/window.blp:867
 msgid "Advanced Settings"
 msgstr "Gelişmiş Ayarlar"
 
-#: graphs/about.vala:40
-msgid "translator-credits"
-msgstr ""
-"Sabri Ünal <yakushabb@gmail.com>\n"
-"Emin Tufan Çetin <etcetin@gmail.com>"
+#: data/ui/window-shortcuts.blp:24
+msgctxt "shortcut window"
+msgid "Open Figure Settings"
+msgstr "Şekil Ayarlarını Aç"
+
+#: data/ui/window-shortcuts.blp:40
+msgctxt "shortcut window"
+msgid "Mode Switching"
+msgstr "Kip Değiştirme"
+
+#: data/ui/window-shortcuts.blp:43
+msgctxt "shortcut window"
+msgid "Pan Mode"
+msgstr "Kaydırma Kipi"
+
+#: data/ui/window-shortcuts.blp:48
+msgctxt "shortcut window"
+msgid "Zoom Mode"
+msgstr "Yakınlaştırma Kipi"
+
+#: data/ui/window-shortcuts.blp:53
+msgctxt "shortcut window"
+msgid "Select Mode"
+msgstr "Seçim Kipi"
+
+#: data/ui/window-shortcuts.blp:59
+msgctxt "shortcut window"
+msgid "New Data"
+msgstr "Yeni Veri"
+
+#: data/ui/window-shortcuts.blp:62
+msgctxt "shortcut window"
+msgid "Add Data from File"
+msgstr "Dosyadan Veri Ekle"
+
+#: data/ui/window-shortcuts.blp:67
+msgctxt "shortcut window"
+msgid "Add Data from Equation"
+msgstr "Denklemden Veri Ekle"
+
+#: data/ui/window-shortcuts.blp:72
+msgctxt "shortcut window"
+msgid "Generate Data"
+msgstr "Veri Oluştur"
+
+#: data/ui/window-shortcuts.blp:77
+msgctxt "shortcut window"
+msgid "New Project"
+msgstr "Yeni Proje"
+
+#: data/ui/window-shortcuts.blp:82
+msgctxt "shortcut window"
+msgid "Open Project"
+msgstr "Proje Aç"
+
+#: data/ui/window-shortcuts.blp:87
+msgctxt "shortcut window"
+msgid "Delete Selected Data"
+msgstr "Seçilen Veriyi Sil"
+
+#: data/ui/window-shortcuts.blp:93
+msgctxt "shortcut window"
+msgid "Save and Export"
+msgstr "Kaydet ve Dışa Aktar"
+
+#: data/ui/window-shortcuts.blp:96
+msgctxt "shortcut window"
+msgid "Export Data"
+msgstr "Verileri Dışa Aktar"
+
+#: data/ui/window-shortcuts.blp:101
+msgctxt "shortcut window"
+msgid "Export Figure"
+msgstr "Şekli Dışa Aktar"
+
+#: data/ui/window-shortcuts.blp:117
+msgctxt "shortcut window"
+msgid "View"
+msgstr "Görünüm"
+
+#: data/ui/window-shortcuts.blp:120
+msgctxt "shortcut window"
+msgid "Previous View"
+msgstr "Önceki Görünüm"
+
+#: data/ui/window-shortcuts.blp:125
+msgctxt "shortcut window"
+msgid "Next View"
+msgstr "Sonraki Görünüm"
+
+#: data/ui/window-shortcuts.blp:130
+msgctxt "shortcut window"
+msgid "Optimize limits"
+msgstr "Sınırları eniyile"
+
+#: data/ui/window-shortcuts.blp:135
+msgctxt "shortcut window"
+msgid "Zoom in"
+msgstr "Yakınlaştır"
+
+#: data/ui/window-shortcuts.blp:140
+msgctxt "shortcut window"
+msgid "Zoom out"
+msgstr "Uzaklaştır"
+
+#: data/ui/window-shortcuts.blp:145 data/ui/window-shortcuts.blp:164
+msgctxt "shortcut window"
+msgid "Select None"
+msgstr "Hiçbirini Seçme"
+
+#: data/ui/window-shortcuts.blp:150
+msgctxt "shortcut window"
+msgid "Toggle Sidebar"
+msgstr "Kenar Çubuğunu Aç/Kapa"
+
+#: data/ui/window-shortcuts.blp:156
+msgctxt "shortcut window"
+msgid "Actions"
+msgstr "İşlemler"
+
+#: data/ui/window-shortcuts.blp:159
+msgctxt "shortcut window"
+msgid "Select All"
+msgstr "Tümünü Seç"
+
+#: data/ui/window-shortcuts.blp:169
+msgctxt "shortcut window"
+msgid "Undo Action"
+msgstr "Son İşlemi Geri Al"
+
+#: data/ui/window-shortcuts.blp:174
+msgctxt "shortcut window"
+msgid "Redo Action"
+msgstr "Son İşlemi Yinele"
+
+#: graphs/actions.vala:147 graphs/item_box.vala:59
+#, c-format
+msgid "Deleted %s"
+msgstr "%s silindi"
+
+#: graphs/actions.vala:172
+msgctxt "file-filter"
+msgid "Supported files"
+msgstr "Desteklenen dosyalar"
+
+#: graphs/actions.vala:176
+msgctxt "file-filter"
+msgid "ASCII files"
+msgstr "ASCII dosyalar"
+
+#: graphs/actions.vala:180
+msgctxt "file-filter"
+msgid "PANalytical XRDML"
+msgstr "PANalytical XRDML"
+
+#: graphs/actions.vala:183
+msgctxt "file-filter"
+msgid "Leybold xry"
+msgstr "Leybold xry"
 
 #: graphs/application.py:43
 #, python-brace-format
 msgid "Could not load {font}"
 msgstr "{font} yüklenemedi"
 
-#: graphs/application.vala:290 graphs/item_box.vala:58
-#, c-format
-msgid "Deleted %s"
-msgstr "%s silindi"
+#: graphs/application.vala:88
+msgid "translator-credits"
+msgstr ""
+"Sabri Ünal <yakushabb@gmail.com>\n"
+"Emin Tufan Çetin <etcetin@gmail.com>"
 
-#: graphs/application.vala:321
-msgctxt "file-filter"
-msgid "Supported files"
-msgstr "Desteklenen dosyalar"
-
-#: graphs/application.vala:325
-msgctxt "file-filter"
-msgid "ASCII files"
-msgstr "ASCII dosyalar"
-
-#: graphs/application.vala:329
-msgctxt "file-filter"
-msgid "PANalytical XRDML"
-msgstr "PANalytical XRDML"
-
-#: graphs/application.vala:332
-msgctxt "file-filter"
-msgid "Leybold xry"
-msgstr "Leybold xry"
-
-#: graphs/curve_fitting.py:180
+#: graphs/curve_fitting.py:181
 msgid "Results:"
 msgstr "Sonuçlar:"
 
-#: graphs/curve_fitting.py:184
+#: graphs/curve_fitting.py:185
 msgid ""
 "Please enter valid fitting \n"
 "parameters to start the fit"
@@ -1554,7 +1660,7 @@ msgstr ""
 "Sığdırmayı başlatmak için \n"
 "geçerli sığdırma parametrelerini girin"
 
-#: graphs/curve_fitting.py:188
+#: graphs/curve_fitting.py:189
 msgid ""
 "Please enter a valid equation \n"
 "to start the fit"
@@ -1562,7 +1668,7 @@ msgstr ""
 "Sığdırmayı başlatmak için \n"
 "geçerli bir denklem girin"
 
-#: graphs/curve_fitting.py:192
+#: graphs/curve_fitting.py:193
 msgid ""
 "Please enter valid fitting bounds \n"
 "to start the fit"
@@ -1570,111 +1676,141 @@ msgstr ""
 "Sığdırmayı başlatmak için \n"
 "geçerli sığdırma sınırlarını girin"
 
-#: graphs/curve_fitting.py:205
+#: graphs/curve_fitting.py:206
 #, python-brace-format
 msgid "Sum of R²: {R2}"
 msgstr "R² toplamı: {R2}"
 
-#: graphs/curve_fitting.vala:135
+#: graphs/curve_fitting.vala:136
 #, c-format
 msgid "Fitting Parameters for %s"
 msgstr "%s için Uyum Parametreleri"
 
-#: graphs/data.py:72
-msgid "Untitled Project"
-msgstr "Adsız Proje"
+#: graphs/data.py:104
+#, python-brace-format
+msgid "Could not parse {stylename}, loading system preferred style"
+msgstr "{stylename} ayrıştırılamadı, yükleme yeğlediği biçem yükleniyor"
 
-#: graphs/data.py:73
-msgid "Draft"
-msgstr "Taslak"
+#: graphs/data.py:109
+#, python-brace-format
+msgid "Plot style {stylename} does not exist loading system preferred"
+msgstr "Çizim biçemi {stylename} yok, yükleme sistemi tercih edildi"
 
-#: graphs/export_items.vala:8
-msgid "No data to export"
-msgstr "Dışa aktarılacak veri yok"
+#: graphs/data.py:467
+msgid "Failed to parse project file"
+msgstr "Proje dosyası ayrıştırılamadı"
 
-#: graphs/export_items.vala:29
-msgctxt "file-filter"
-msgid "Text Files"
-msgstr "Metin Dosyaları"
+#: graphs/data.py:473
+msgid "Failed to load project"
+msgstr "Proje yüklenemedi"
 
-#: graphs/export_figure.vala:41
+#: graphs/export_figure.vala:43
 msgctxt "filename"
 msgid "Exported Figure"
 msgstr "Dışa Aktarılan Şekil"
 
-#: graphs/figure_settings.vala:157
+#: graphs/export_items.vala:10
+msgid "No data to export"
+msgstr "Dışa aktarılacak veri yok"
+
+#: graphs/export_items.vala:32
+msgctxt "file-filter"
+msgid "Text Files"
+msgstr "Metin Dosyaları"
+
+#: graphs/figure_settings.vala:162
 msgid "X Axis Minimum"
 msgstr "X Ekseni Asgari"
 
-#: graphs/figure_settings.vala:158
+#: graphs/figure_settings.vala:163
 msgid "Y Axis Minimum"
 msgstr "Y Ekseni Asgari"
 
-#: graphs/figure_settings.vala:160
+#: graphs/figure_settings.vala:165
 msgid "X Axis Maximum"
 msgstr "X Ekseni Azami"
 
-#: graphs/figure_settings.vala:161
+#: graphs/figure_settings.vala:166
 msgid "Y Axis Maximum"
 msgstr "Y Ekseni Azami"
 
-#: graphs/figure_settings.vala:171 graphs/window.vala:343
+#: graphs/figure_settings.vala:176 graphs/window.vala:414
 msgid "X Axis Scale"
 msgstr "X Ekseni Ölçeği"
 
-#: graphs/figure_settings.vala:172 graphs/figure_settings.vala:176
+#: graphs/figure_settings.vala:177 graphs/figure_settings.vala:181
 msgid "X Axis Label"
 msgstr "X Ekseni Etiketi"
 
-#: graphs/figure_settings.vala:175 graphs/window.vala:348
+#: graphs/figure_settings.vala:180 graphs/window.vala:419
 msgid "Y Axis Scale"
 msgstr "Y Ekseni Ölçeği"
 
-#: graphs/figure_settings.vala:247
+#: graphs/figure_settings.vala:280
 msgid "Defaults Updated"
 msgstr "Öntanımlılar Güncellendi"
 
-#: graphs/figure_settings.vala:272
+#: graphs/figure_settings.vala:311
 #, c-format
 msgid "Are you sure you want to delete %s?"
 msgstr "%s silmek istediğinize emin misiniz?"
 
-#: graphs/file_import.vala:40
-msgid "Are you sure you want to reset the import settings?"
-msgstr "İçe aktarma ayarlarını sıfırlamak istediğinize emin misiniz?"
-
-#: graphs/item.py:88
+#: graphs/item.py:69
 msgid "Dataset"
 msgstr "Veri kümesi"
 
-#: graphs/item.py:165
+#: graphs/item.py:106
+msgid "Generated Dataset"
+msgstr "Oluşturulan Veri Takımı"
+
+#: graphs/item.py:209
 msgid "Label"
 msgstr "Etiket"
 
-#: graphs/item.py:181
+#: graphs/item.py:238
 msgid "Fill"
 msgstr "Dolgu"
 
-#: graphs/operations.py:129
-#, python-brace-format
-msgid "{name}: Unable to do transformation, make sure the syntax is correct"
-msgstr "{name}: Dönüşüm yapılamadı, sözdiziminin doğru olduğundan emin olun"
+#: graphs/misc.vala:16
+msgctxt "file-filter"
+msgid "Matplotlib Style File"
+msgstr "Matplotlib Biçem Dosyası"
 
-#: graphs/operations.py:133
-msgid "Unable to do transformation"
-msgstr "Dönüşüm gerçekleştirilemedi"
+#: graphs/operations.py:252
+msgid "Unable to perform transformation, make sure the syntax is correct"
+msgstr "Dönüşüm yapılamadı, söz diziminin doğru olduğundan emin olun"
 
-#: graphs/operations.py:197
-msgid "Data that was outside of the highlighted area has been discarded"
-msgstr "Vurgulanan alanın dışındaki veriler gözden çıkarıldı"
-
-#: graphs/operations.py:234
+#: graphs/operations.py:295 graphs/operations.py:601
 msgid "No data found within the highlighted area"
 msgstr "Vurgulanan alanda veri bulunamadı"
 
-#: graphs/operations.py:479
+#: graphs/operations.py:306
 msgid "Combined Data"
 msgstr "Birleştirilmiş Veri"
+
+#: graphs/operations.py:439
+#, python-brace-format
+msgid ""
+"The operation on {item.props.name} did not result in a plottable equation"
+msgstr ""
+"{item.props.name} üzerindeki işlem çizilebilir bir denklemle sonuçlanmadı"
+
+#: graphs/operations.py:447
+msgid "Operation not supported for equations."
+msgstr "Denklemler için işlem desteklenmiyor."
+
+#: graphs/operations.py:607
+msgid "Operation not supported for data items"
+msgstr "Veri ögeleri için işlem desteklenmiyor"
+
+#: graphs/operations.py:610
+#, python-brace-format
+msgid "{name}: Error performing the operation"
+msgstr "{name}: İşlem gerçekleştirilirken hata oluştu"
+
+#: graphs/operations.py:616
+msgid "Data that was outside of the highlighted area has been discarded"
+msgstr "Vurgulanan alanın dışındaki veriler gözden çıkarıldı"
 
 #: graphs/parse_file.py:56
 msgid "Intensity (cps)"
@@ -1692,109 +1828,120 @@ msgstr "β (°)"
 msgid "R (1/s)"
 msgstr "R (1/s)"
 
-#: graphs/parse_file.py:155
+#: graphs/parse_file.py:153
 msgid "Import failed, column index out of range"
 msgstr "İçe aktarılamadı, sütun indeksi erim dışı"
 
-#: graphs/parse_file.py:174
+#: graphs/parse_file.py:172
 msgid "Unable to import from file"
 msgstr "Dosyadan içe aktarılamadı"
 
-#: graphs/style_editor.py:407
+#: graphs/project.py:46
+msgid "Project file is missing data"
+msgstr "Proje dosyasında veri eksik"
+
+#: graphs/project.py:59
+msgid "Project is from a newer incompatible version of Graphs"
+msgstr "Proje, Graphsʼın daha yeni ve uyumsuz sürümüne ait"
+
+#: graphs/project.vala:15
+msgctxt "file-filter"
+msgid "Graphs Project File"
+msgstr "Graphs Proje Dosyası"
+
+#: graphs/project.vala:22
+msgid "Saved Project"
+msgstr "Kayıtlı Proje"
+
+#: graphs/project.vala:37
+msgid "Project"
+msgstr "Proje"
+
+#: graphs/style_editor.py:411
 #, python-brace-format
 msgid "Color {number}"
 msgstr "Renk {number}"
 
-#: graphs/style_editor.py:476 graphs/style_editor.py:485
+#: graphs/style_editor.py:491
 msgid "Example Item"
 msgstr "Örnek Öge"
 
-#: graphs/style_editor.py:509 graphs/style_io.py:188
+#: graphs/style_editor.py:511 graphs/style_io.py:180
 msgid "X Label"
 msgstr "X Etiketi"
 
-#: graphs/style_editor.py:510 graphs/style_io.py:189
+#: graphs/style_editor.py:512 graphs/style_io.py:181
 msgid "Y Label"
 msgstr "Y Etiketi"
 
-#: graphs/style_io.py:83
+#: graphs/style_io.py:76
 #, python-brace-format
 msgid "Missing colon in file {file}, line {line}"
 msgstr "{file} dosyasının {line}. satırında eksik sütun"
 
-#: graphs/style_io.py:91
+#: graphs/style_io.py:84
 #, python-brace-format
 msgid "Non-style related parameter {param} in file {file}"
 msgstr "{file} dosyasında biçemle alakasız parametre {param}"
 
-#: graphs/style_io.py:94
+#: graphs/style_io.py:87
 #, python-brace-format
 msgid "Ignoring parameter {param} in file {file}"
 msgstr "{param} dosyasındaki {file} parametresi yok sayılıyor"
 
-#: graphs/style_io.py:98
+#: graphs/style_io.py:91
 #, python-brace-format
 msgid "Duplicate key in file {file}, on line {line}"
 msgstr "{file} dosyasının {line}. satırında ikiz anahtar"
 
-#: graphs/style_io.py:118
+#: graphs/style_io.py:111
 #, python-brace-format
 msgid "Bad value in file {file} on line {line}"
 msgstr "{file} dosyasının {line}. satırında kötü değer"
 
-#: graphs/style_io.py:124
+#: graphs/style_io.py:116
 #, python-brace-format
 msgid "Could not parse {filename}"
 msgstr "{filename} ayrıştırılamadı"
 
-#: graphs/style_io.py:133
+#: graphs/style_io.py:125
 #, python-brace-format
 msgid "File {file}, does not contain name tag"
 msgstr "{file} dosyası ad etiketi içermiyor"
 
-#: graphs/styles.py:111
-#, python-brace-format
-msgid "Could not parse {stylename}, loading system preferred style"
-msgstr "{stylename} ayrıştırılamadı, yükleme yeğlediği biçem yükleniyor"
-
-#: graphs/styles.py:119
-#, python-brace-format
-msgid "Plot style {stylename} does not exist loading system preferred"
-msgstr "Çizim biçemi {stylename} yok, yükleme sistemi tercih edildi"
-
-#: graphs/styles.vala:71
+#: graphs/styles.vala:61
 msgid "System"
 msgstr "Sistem"
 
-#: graphs/utilities.vala:208
+#: graphs/utilities.vala:209
 msgid "All Files"
 msgstr "Tüm Dosyalar"
 
-#: graphs/window.vala:218
+#: graphs/window.py:38
+msgid "Untitled Project"
+msgstr "Adsız Proje"
+
+#: graphs/window.py:39
+msgid "Draft"
+msgstr "Taslak"
+
+#: graphs/window.py:51
+msgid "Document Portal"
+msgstr "Belge Kapısı"
+
+#: graphs/window.vala:234
 msgid "Graphs (Development)"
 msgstr "Graphs (Geliştirme)"
 
-#: graphs/window.vala:272
+#: graphs/window.vala:343
 msgid "Open Location"
 msgstr "Konumu Aç"
 
-#: graphs/window.vala:306
+#: graphs/window.vala:377
 msgid "Optimize Limits"
 msgstr "Sınırları Eniyile"
 
-#: graphs/window.vala:315
+#: graphs/window.vala:387
 msgctxt "scale"
 msgid "Inverse Root"
 msgstr "Ters Kök"
-
-#~ msgid "X Start"
-#~ msgstr "X Başlangıç"
-
-#~ msgid "X Stop"
-#~ msgstr "X Bitiş"
-
-#~ msgid "Step Size"
-#~ msgstr "Adım Sayısı"
-
-#~ msgid "Error - No Style selected"
-#~ msgstr "Hata - Biçem seçilmedi"
