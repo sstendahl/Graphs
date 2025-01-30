@@ -490,7 +490,7 @@ class PythonStyleEditor(Graphs.StyleEditor):
                     ydata=ydata,
                     name=_("Example Item"),
                     color="#000000",
-                )
+                ),
             )
 
     def _on_params_changed(self, style_editor, changes_unsaved=True):
