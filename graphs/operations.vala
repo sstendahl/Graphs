@@ -56,7 +56,7 @@ namespace Graphs {
             stack_switcher_bin.set_child (stack_switcher);
         }
 
-        public Operations(Window window) {
+        public Operations (Window window) {
             this._window = window;
 
             string[] action_names = {
