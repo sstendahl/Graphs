@@ -77,6 +77,7 @@ blueprint_files = [
   'ui/import.blp',
   'ui/import-columns.blp',
   'ui/item-box.blp',
+  'ui/operations.blp',
   'ui/smoothen-settings.blp',
   'ui/style-color-box.blp',
   'ui/style-editor-box.blp',

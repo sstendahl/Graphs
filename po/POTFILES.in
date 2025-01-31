@@ -18,6 +18,7 @@ data/ui/generate-data.blp
 data/ui/import.blp
 data/ui/import-columns.blp
 data/ui/item-box.blp
+data/ui/operations.blp
 data/ui/smoothen-settings.blp
 data/ui/style-color-box.blp
 data/ui/style-editor-box.blp
@@ -55,6 +56,7 @@ graphs/migrate.py
 graphs/misc.py
 graphs/misc.vala
 graphs/operations.py
+graphs/operations.vala
 graphs/parse_file.py
 graphs/project.py
 graphs/project.vala
