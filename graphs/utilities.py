@@ -264,6 +264,7 @@ def preprocess(string: str) -> str:
     string = re.sub(r"sec\((.*?)\)", convert_sec, string)
     return re.sub(r"csc\((.*?)\)", convert_csc, string)
 
+
 def prettify_equation(equation: str) -> str:
     """Return an equation in a prettier, more humanly readable, format."""
 
@@ -284,6 +285,7 @@ def prettify_equation(equation: str) -> str:
     equation = re.sub(r"(\d+\.\d+)", reformat_pi, equation)
     equation = equation.replace("**", "^")
     return equation.replace(")*(", ")(")
+
 
 def equation_to_data(
     equation: str,
