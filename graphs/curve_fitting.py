@@ -268,7 +268,7 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
             self.param,
         )
         self.fitted_curve.equation = equation
-        self.fitted_curve.set_name(self.fitted_curve.equation)
+        self.fitted_curve.set_name(f"Y = {self.fitted_curve.equation}")
         self.get_confidence(function)
         self.set_results()
         return True
