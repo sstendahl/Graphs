@@ -7,7 +7,7 @@ from gi.repository import Adw, Gio, Graphs, Gtk
 
 from graphs import utilities
 from graphs.canvas import Canvas
-from graphs.item import DataItem, FillItem
+from graphs.item import DataItem, EquationItem, FillItem
 
 import numpy
 
@@ -46,13 +46,13 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
         self.data_curve.linestyle = 0
         self.data_curve.markerstyle = 1
         self.data_curve.markersize = 13
-        self.fitted_curve = DataItem.new(style, color="#A51D2D")
+        self.fitted_curve = EquationItem.new(style, "x", color="#A51D2D")
         self.fill = FillItem.new(
             style,
             (
-                self.fitted_curve.xdata,
-                self.fitted_curve.ydata,
-                self.fitted_curve.ydata,
+                self.data_curve.xdata,
+                self.data_curve.ydata,
+                self.data_curve.ydata,
             ),
             color="#1A5FB4",
             alpha=0.15,
@@ -262,19 +262,13 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
             # Cancel fit if not successful
             self.set_results(error="equation")
             return False
-        xdata = numpy.linspace(
-            min(self.data_curve.xdata),
-            max(self.data_curve.xdata),
-            5000,
-        )
-        ydata = [function(x, *self.param) for x in xdata]
 
-        name = _get_equation_name(
+        equation = _get_equation_name(
             str(self.get_custom_equation().get_text()).lower(),
             self.param,
         )
-        self.fitted_curve.set_name(f"Y = {name}")
-        self.fitted_curve.ydata, self.fitted_curve.xdata = (ydata, xdata)
+        self.fitted_curve.equation = equation
+        self.fitted_curve.set_name(self.fitted_curve.equation)
         self.get_confidence(function)
         self.set_results()
         return True
@@ -304,14 +298,17 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
         )
         ss_sum = numpy.sum((self.data_curve.ydata - numpy.mean(fitted_y))**2)
         self.r2 = utilities.sig_fig_round(1 - (ss_res / ss_sum), 3)
-
+        limits = self.get_canvas()._axis.get_xlim()
+        xdata, ydata = utilities.equation_to_data(self.fitted_curve.equation,
+                                                  limits)
+        xdata, ydata = numpy.asarray(xdata), numpy.asarray(ydata)
         # Get confidence band
         upper_bound = function(
-            self.fitted_curve.xdata,
+            xdata,
             *(self.param + self.sigma),
         )
         lower_bound = function(
-            self.fitted_curve.xdata,
+            xdata,
             *(self.param - self.sigma),
         )
 
@@ -323,9 +320,8 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
         if len(upper_bound) == 0 or len(lower_bound) == 0:
             return
 
-        span = max(self.fitted_curve.ydata) - min(self.fitted_curve.ydata)
-        middle = \
-            (max(self.fitted_curve.ydata) - min(self.fitted_curve.ydata)) / 2
+        span = max(ydata) - min(ydata)
+        middle = (max(ydata) - min(ydata)) / 2
 
         # Don't try to draw complicated and resource-hogging bounds when
         # far out of range, instead set them to be single-values far away
@@ -333,9 +329,8 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
             upper_bound = [middle + 1e5 * span]
         if min(lower_bound) < middle - 1e5 * span:
             lower_bound = [middle - 1e5 * span]
-
         self.fill.props.data = (
-            self.fitted_curve.props.xdata,
+            xdata,
             lower_bound,
             upper_bound,
         )
@@ -344,14 +339,7 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
     def add_fit(self) -> None:
         """Add fitted data to the items in the main application."""
         data = self.props.window.get_data()
-        data.add_items([
-            DataItem.new(
-                data.get_selected_style_params(),
-                name=self.fitted_curve.get_name(),
-                xdata=list(self.fitted_curve.xdata),
-                ydata=list(self.fitted_curve.ydata),
-            ),
-        ])
+        data.add_items([self.fitted_curve])
         self.close()
 
 
