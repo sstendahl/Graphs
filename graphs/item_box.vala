@@ -59,7 +59,7 @@ namespace Graphs {
                 window.add_undo_toast (_("Deleted %s").printf (name));
             });
             action_group.add_action (delete_action);
-            if (item.get_type ().name () == "GraphsDataItem") {
+            if (item.get_type ().name () == "GraphsDataItem" || item.get_type ().name () == "GraphsGeneratedDataItem") {
                 var curve_fitting_action = new SimpleAction ("curve_fitting", null);
                 curve_fitting_action.activate.connect (() => {
                     application.python_helper.create_curve_fitting_dialog (window, item);
