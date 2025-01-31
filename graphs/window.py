@@ -106,7 +106,7 @@ class PythonWindow(Graphs.Window):
         )
 
         self.set_canvas(canvas)
-        self.get_cut_button().bind_property(
+        self.get_operations().get_cut_button().bind_property(
             "sensitive",
             canvas,
             "highlight_enabled",

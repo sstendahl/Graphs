@@ -34,45 +34,6 @@ namespace Graphs {
         private unowned ToggleButton select_button { get; }
 
         [GtkChild]
-        private unowned Box stack_switcher_box { get; }
-
-        [GtkChild]
-        private unowned Stack stack { get; }
-
-        [GtkChild]
-        private unowned Button shift_button { get; }
-
-        [GtkChild]
-        private unowned Adw.SplitButton smoothen_button { get; }
-
-        [GtkChild]
-        protected unowned Button cut_button { get; }
-
-        [GtkChild]
-        public unowned Entry translate_x_entry { get; }
-
-        [GtkChild]
-        public unowned Entry translate_y_entry { get; }
-
-        [GtkChild]
-        public unowned Entry multiply_x_entry { get; }
-
-        [GtkChild]
-        public unowned Entry multiply_y_entry { get; }
-
-        [GtkChild]
-        public unowned Button translate_x_button { get; }
-
-        [GtkChild]
-        public unowned Button translate_y_button { get; }
-
-        [GtkChild]
-        public unowned Button multiply_x_button { get; }
-
-        [GtkChild]
-        public unowned Button multiply_y_button { get; }
-
-        [GtkChild]
         private unowned ListBox item_list { get; }
 
         [GtkChild]
@@ -92,6 +53,9 @@ namespace Graphs {
 
         [GtkChild]
         private unowned Revealer drag_revealer { get; }
+
+        [GtkChild]
+        private unowned Box sidebar_box { get; }
 
         public Data data { get; construct set; }
 
@@ -120,16 +84,15 @@ namespace Graphs {
             }
         }
 
+        protected Operations operations {
+            get { return _operations; }
+        }
+
         private bool _force_close = false;
         private uint _inhibit_cookie = 0;
+        private Operations _operations;
 
         construct {
-            InlineStackSwitcher stack_switcher = new InlineStackSwitcher ();
-            stack_switcher.stack = stack;
-            stack_switcher.add_css_class ("compact");
-            stack_switcher.set_hexpand (true);
-            stack_switcher_box.prepend (stack_switcher);
-
             this.headerbar_provider = new CssProvider ();
             content_headerbar.get_style_context ().add_provider (
                 headerbar_provider, STYLE_PROVIDER_PRIORITY_APPLICATION
@@ -182,32 +145,16 @@ namespace Graphs {
 
             Actions.setup (application, this);
 
-            data.bind_property ("items_selected", shift_button, "sensitive", 2);
-            data.bind_property ("data_items_selected", smoothen_button, "sensitive", 2);
+            this._operations = new Operations (this);
+            sidebar_box.append (_operations);
+
+            data.bind_property ("items_selected", _operations.shift_button, "sensitive", 2);
+            data.bind_property ("data_items_selected", _operations.smoothen_button, "sensitive", 2);
             data.bind_property ("can_undo", undo_button, "sensitive", 2);
             data.bind_property ("can_redo", redo_button, "sensitive", 2);
             data.bind_property ("can_view_back", view_back_button, "sensitive", 2);
             data.bind_property ("can_view_forward", view_forward_button, "sensitive", 2);
 
-            string[] action_names = {
-                "multiply_x",
-                "multiply_y",
-                "translate_x",
-                "translate_y"
-            };
-            foreach (string action_name in action_names) {
-                Entry entry;
-                Button button;
-                get (action_name + "_entry", out entry);
-                get (action_name + "_button", out button);
-                entry.notify["text"].connect (() => {
-                    validate_entry (entry, button);
-                });
-                data.notify["items-selected"].connect (() => {
-                    validate_entry (entry, button);
-                });
-                validate_entry (entry, button);
-            }
 
             data.items_changed.connect (() => {
                 item_list.set_visible (!data.is_empty ());
@@ -287,27 +234,6 @@ namespace Graphs {
                 item_list.append (row);
                 index++;
             }
-        }
-
-        private void validate_entry (Entry entry, Button button) {
-            var application = application as Application;
-            double? val = application.python_helper.evaluate_string (entry.get_text ());
-            if (val == null) {
-                entry.add_css_class ("error");
-                button.set_sensitive (false);
-            } else {
-                entry.remove_css_class ("error");
-                button.set_sensitive (data.items_selected);
-            }
-        }
-
-        [GtkCallback]
-        private void perform_operation (Button button) {
-            var action = this.lookup_action (
-                "perform_operation"
-            );
-            string name = button.get_buildable_id ()[0:-7];
-            action.activate (new Variant.string (name));
         }
 
         /**
