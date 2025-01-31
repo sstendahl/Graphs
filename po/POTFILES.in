@@ -10,6 +10,9 @@ data/ui/add-equation.blp
 data/ui/add-style.blp
 data/ui/curve-fitting.blp
 data/ui/edit-item.blp
+data/ui/edit-item-data.blp
+data/ui/edit-item-equation.blp
+data/ui/edit-item-generated-data.blp
 data/ui/export-figure.blp
 data/ui/figure-settings-dialog.blp
 data/ui/figure-settings-page.blp
@@ -39,6 +42,7 @@ graphs/curve_fitting.vala
 graphs/data.py
 graphs/data.vala
 graphs/edit_item.py
+graphs/edit_item.vala
 graphs/export_figure.vala
 graphs/export_items.py
 graphs/export_items.vala

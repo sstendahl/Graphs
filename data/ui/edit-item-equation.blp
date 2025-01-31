@@ -1,0 +1,54 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $GraphsEditItemEquationItemBox: Box {
+  orientation: vertical;
+  spacing: 20;
+
+  Adw.PreferencesGroup {
+    title: _("Equation");
+
+    Adw.EntryRow equation {
+      max-width-chars: 25;
+      title: _("Equation: Y =");
+    }
+
+    Adw.ButtonRow simplify {
+      title: _("Simplify");
+    }
+  }
+
+  Adw.PreferencesGroup {
+    title: _("Line");
+
+    Adw.ComboRow linestyle {
+      title: _("Linestyle");
+      notify::selected => $on_linestyle();
+
+      model: StringList {
+        strings [
+          C_("linestyle", "None"),
+          C_("linestyle", "Solid"),
+          C_("linestyle", "Dotted"),
+          C_("linestyle", "Dashed"),
+          C_("linestyle", "Dashdot"),
+        ]
+      };
+    }
+
+    Adw.ActionRow {
+      title: _("Linewidth");
+
+      Scale linewidth {
+        sensitive: false;
+        draw-value: true;
+        width-request: 200;
+
+        adjustment: Adjustment {
+          lower: 0;
+          upper: 10;
+        };
+      }
+    }
+  }
+}

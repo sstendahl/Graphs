@@ -1,0 +1,89 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $GraphsEditItemDataItemBox: Box {
+  orientation: vertical;
+
+  Adw.PreferencesGroup {
+    title: _("Line and Markers");
+
+    Adw.ComboRow linestyle {
+      title: _("Linestyle");
+      notify::selected => $on_linestyle();
+
+      model: StringList {
+        strings [
+          C_("linestyle", "None"),
+          C_("linestyle", "Solid"),
+          C_("linestyle", "Dotted"),
+          C_("linestyle", "Dashed"),
+          C_("linestyle", "Dashdot"),
+        ]
+      };
+    }
+
+    Adw.ActionRow {
+      title: _("Linewidth");
+
+      Scale linewidth {
+        sensitive: false;
+        draw-value: true;
+        width-request: 200;
+
+        adjustment: Adjustment {
+          lower: 0;
+          upper: 10;
+        };
+      }
+    }
+
+    Adw.ComboRow markerstyle {
+      title: _("Markers");
+      notify::selected => $on_markers();
+
+      model: StringList {
+        strings [
+          C_("markerstyle", "None"),
+          C_("markerstyle", "Point"),
+          C_("markerstyle", "Pixel"),
+          C_("markerstyle", "Circle"),
+          C_("markerstyle", "Triangle Down"),
+          C_("markerstyle", "Triangle Up"),
+          C_("markerstyle", "Triangle Left"),
+          C_("markerstyle", "Triangle Right"),
+          C_("markerstyle", "Octagon"),
+          C_("markerstyle", "Square"),
+          C_("markerstyle", "Pentagon"),
+          C_("markerstyle", "Star"),
+          C_("markerstyle", "Hexagon 1"),
+          C_("markerstyle", "Hexagon 2"),
+          C_("markerstyle", "Plus"),
+          C_("markerstyle", "X"),
+          // Translators: Diamond as in Cards Symbol
+          C_("markerstyle", "Diamond"),
+          // Translators: Diamond as in Cards Symbol
+          C_("markerstyle", "Thin Diamond"),
+          C_("markerstyle", "Vertical Line"),
+          C_("markerstyle", "Horizontal Line"),
+          C_("markerstyle", "Filled Plus"),
+          C_("markerstyle", "Filled X"),
+        ]
+      };
+    }
+
+    Adw.ActionRow {
+      title: _("Marker Size");
+
+      Scale markersize {
+        draw-value: true;
+        width-request: 200;
+        sensitive: false;
+
+        adjustment: Adjustment {
+          lower: 0;
+          upper: 10;
+        };
+      }
+    }
+  }
+}

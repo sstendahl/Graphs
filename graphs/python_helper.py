@@ -117,17 +117,14 @@ class PythonHelper(Graphs.PythonHelper):
     ) -> GeneratedDataItem:
         settings = self.props.application.get_settings_child("generate-data")
         equation = settings.get_string("equation")
-        xstart = utilities.string_to_float(settings.get_string("xstart"))
-        xstop = utilities.string_to_float(settings.get_string("xstop"))
-        steps = settings.get_int("steps")
         if name == "":
             name = f"Y = {settings.get_string('equation')}"
         return GeneratedDataItem.new(
             window.get_data().get_selected_style_params(),
             equation,
-            xstart,
-            xstop,
-            steps,
+            settings.get_string("xstart"),
+            settings.get_string("xstop"),
+            settings.get_int("steps"),
             name=name,
         )
 
