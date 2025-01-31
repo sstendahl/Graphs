@@ -105,8 +105,8 @@ class GeneratedDataItem(DataItem):
     __gtype_name__ = "GraphsGeneratedDataItem"
     _typename = _("Generated Dataset")
 
-    xstart = GObject.Property(type=float, default=0)
-    xstop = GObject.Property(type=float, default=10)
+    xstart = GObject.Property(type=str, default="0")
+    xstop = GObject.Property(type=str, default="10")
     steps = GObject.Property(type=int, default=100)
 
     @classmethod
@@ -114,8 +114,8 @@ class GeneratedDataItem(DataItem):
         cls,
         style: rcParams,
         equation: str,
-        xstart: float,
-        xstop: float,
+        xstart: str,
+        xstop: str,
         steps: int,
         **kwargs,
     ):
@@ -132,7 +132,9 @@ class GeneratedDataItem(DataItem):
     def __init__(self, **kwargs):
         self._equation = ""
         super().__init__(**kwargs)
-        self.regenerate()
+        self._regenerate()
+        for prop in ("equation", "xstart", "xstop", "steps"):
+            self.connect("notify::" + prop, self._regenerate)
 
     @GObject.Property(type=str)
     def equation(self) -> str:
@@ -148,11 +150,17 @@ class GeneratedDataItem(DataItem):
         self._equation = equation
         self.notify("equation")
 
-    def regenerate(self) -> None:
+        if "Y = " + old_equation == self.props.name:
+            self.props.name = "Y = " + equation
+
+    def _regenerate(self, *_args) -> None:
         """Regenerate Data."""
         self.props.xdata, self.props.ydata = utilities.equation_to_data(
             self._equation,
-            [self.props.xstart, self.props.xstop],
+            [
+                utilities.string_to_float(self.props.xstart),
+                utilities.string_to_float(self.props.xstop),
+            ],
             self.props.steps,
         )
 
