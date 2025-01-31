@@ -90,7 +90,7 @@ class EditItemDialog(Adw.Dialog):
         equation = self.props.item.props.equation
         equation = str(sympy.simplify(utilities.preprocess(equation)))
         self.props.item.props.equation = equation
-        self._equation_entry.set_text(equation)
+        self._equation_entry.set_text(self.props.item.props.equation)
 
     def on_entry_change(self, entry_row: Adw.EntryRow, prop: str) -> None:
         """Handly xstart and xstop entry change."""
