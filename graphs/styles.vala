@@ -107,7 +107,15 @@ namespace Graphs {
                     Style tmp_style = style_request.emit (file);
                     find_style_for_file (file, out style);
                     if (style == null) return;
-                    style.name = tmp_style.name;
+                    if (is_stylename_present (tmp_style.name)) {
+                        style.name = Tools.get_duplicate_string (
+                            tmp_style.name, list_stylenames ()
+                        );
+                        CompareDataFunc<Style> cmp = style_cmp;
+                        style_model.sort (cmp);
+                    } else {
+                        style.name = tmp_style.name;
+                    }
                     style.preview = tmp_style.preview;
                     style.light = tmp_style.light;
                     style_changed.emit (style.name);
