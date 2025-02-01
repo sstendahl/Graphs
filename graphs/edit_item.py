@@ -89,6 +89,7 @@ class EditItemDialog(Adw.Dialog):
         """Simplify the equation."""
         equation = self.props.item.props.equation
         equation = str(sympy.simplify(utilities.preprocess(equation)))
+        equation = utilities.prettify_equation(equation)
         self.props.item.props.equation = equation
         self._equation_entry.set_text(equation)
 
