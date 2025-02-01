@@ -8,15 +8,17 @@ namespace Graphs {
         public void setup (Application application, Window window) {
             var data = window.data;
 
-            var toggle_sidebar_action = new SimpleAction.stateful (
-                "toggle_sidebar",
-                null,
-                new Variant.boolean (true)
-            );
+            var toggle_sidebar_action = new SimpleAction ("toggle_sidebar", null);
             toggle_sidebar_action.activate.connect (() => {
-                OverlaySplitView split_view = window.split_view;
-                split_view.collapsed = !split_view.collapsed;
+                OverlaySplitView split_view = window.overlay_split_view;
+                split_view.show_sidebar = !split_view.show_sidebar;
             });
+            window.overlay_split_view.bind_property (
+                "collapsed",
+                toggle_sidebar_action,
+                "enabled",
+                BindingFlags.SYNC_CREATE
+            );
             window.add_action (toggle_sidebar_action);
 
             var modes = new ArrayList<string>.wrap ({"pan", "zoom", "select"});
