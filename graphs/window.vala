@@ -46,6 +46,9 @@ namespace Graphs {
         private unowned Adw.HeaderBar content_headerbar { get; }
 
         [GtkChild]
+        private unowned Adw.HeaderBar content_footerbar { get; }
+
+        [GtkChild]
         protected unowned Adw.WindowTitle content_title { get; }
 
         [GtkChild]
@@ -95,6 +98,9 @@ namespace Graphs {
         construct {
             this.headerbar_provider = new CssProvider ();
             content_headerbar.get_style_context ().add_provider (
+                headerbar_provider, STYLE_PROVIDER_PRIORITY_APPLICATION
+            );
+            content_footerbar.get_style_context ().add_provider (
                 headerbar_provider, STYLE_PROVIDER_PRIORITY_APPLICATION
             );
 

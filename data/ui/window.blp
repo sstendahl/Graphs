@@ -157,7 +157,7 @@ template $GraphsWindow: Adw.ApplicationWindow {
     setters {
       overlay_split_view.collapsed: true;
       undo_button.visible: false;
-      secondary_sidebar_headerbar.visible: true;
+      content_footerbar.visible: true;
       scrollwindow_itemlist.vscrollbar-policy: never;
     }
   }
@@ -178,7 +178,7 @@ template $GraphsWindow: Adw.ApplicationWindow {
     setters {
       overlay_split_view.collapsed: true;
       undo_button.visible: false;
-      secondary_sidebar_headerbar.visible: true;
+      content_footerbar.visible: true;
     }
   }
 
@@ -211,10 +211,6 @@ template $GraphsWindow: Adw.ApplicationWindow {
 
         [top]
         Adw.HeaderBar sidebar_headerbar {
-          styles [
-            "flat",
-          ]
-
           [start]
           MenuButton add_button {
             icon-name: "list-add-symbolic";
@@ -229,55 +225,6 @@ template $GraphsWindow: Adw.ApplicationWindow {
             menu-model: primary_menu;
             tooltip-text: _("Open Application Menu");
             primary: true;
-          }
-        }
-
-        [top]
-        Adw.HeaderBar secondary_sidebar_headerbar {
-          show-title: false;
-          visible: false;
-
-          styles [
-            "flat",
-          ]
-
-          [start]
-          Button sidebar_undo_button {
-            action-name: "win.undo";
-            icon-name: "edit-undo-symbolic";
-            tooltip-text: _("Undo");
-            sensitive: bind undo_button.sensitive;
-          }
-
-          Button sidebar_redo_button {
-            action-name: "win.redo";
-            icon-name: "edit-redo-symbolic";
-            tooltip-text: _("Redo");
-            sensitive: bind redo_button.sensitive;
-          }
-
-          [end]
-          MenuButton sidebar_view_menu_button {
-            icon-name: "view-reveal-symbolic";
-            tooltip-text: _("View Menu");
-            always-show-arrow: true;
-            menu-model: bind view_menu_button.menu-model;
-          }
-
-          [end]
-          Button sidebar_view_forward_button {
-            action-name: "win.view_forward";
-            icon-name: "go-next-symbolic";
-            tooltip-text: _("Next View");
-            sensitive: bind view_forward_button.sensitive;
-          }
-
-          [end]
-          Button sidebar_view_back_button {
-            action-name: "win.view_back";
-            icon-name: "go-previous-symbolic";
-            tooltip-text: _("Previous View");
-            sensitive: bind view_back_button.sensitive;
           }
         }
 
@@ -372,15 +319,10 @@ template $GraphsWindow: Adw.ApplicationWindow {
         }
       };
 
-      content: Box {
-        orientation: vertical;
-
+      content: Adw.ToolbarView {
+        [top]
         Adw.HeaderBar content_headerbar {
           name: "canvas-headerbar";
-
-          styles [
-            "flat",
-          ]
 
           title-widget: Adw.WindowTitle content_title {};
 
@@ -430,14 +372,60 @@ template $GraphsWindow: Adw.ApplicationWindow {
           }
         }
 
-        Adw.ToastOverlay toast_overlay {
+        [bottom]
+        Adw.HeaderBar content_footerbar {
+          show-title: false;
+          show-end-title-buttons: false;
+          visible: false;
+
+          [start]
+          Button sidebar_undo_button {
+            action-name: "win.undo";
+            icon-name: "edit-undo-symbolic";
+            tooltip-text: _("Undo");
+            sensitive: bind undo_button.sensitive;
+          }
+
+          Button sidebar_redo_button {
+            action-name: "win.redo";
+            icon-name: "edit-redo-symbolic";
+            tooltip-text: _("Redo");
+            sensitive: bind redo_button.sensitive;
+          }
+
+          [end]
+          MenuButton sidebar_view_menu_button {
+            icon-name: "view-reveal-symbolic";
+            tooltip-text: _("View Menu");
+            always-show-arrow: true;
+            menu-model: bind view_menu_button.menu-model;
+          }
+
+          [end]
+          Button sidebar_view_forward_button {
+            action-name: "win.view_forward";
+            icon-name: "go-next-symbolic";
+            tooltip-text: _("Next View");
+            sensitive: bind view_forward_button.sensitive;
+          }
+
+          [end]
+          Button sidebar_view_back_button {
+            action-name: "win.view_back";
+            icon-name: "go-previous-symbolic";
+            tooltip-text: _("Previous View");
+            sensitive: bind view_back_button.sensitive;
+          }
+        }
+
+        content: Adw.ToastOverlay toast_overlay {
           focusable: true;
 
           child: Adw.StatusPage {
             icon-name: "dialog-error-symbolic";
             title: _("Canvas Failed to Load");
           };
-        }
+        };
       };
     };
   };
