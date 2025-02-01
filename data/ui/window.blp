@@ -203,6 +203,8 @@ template $GraphsWindow: Adw.ApplicationWindow {
     }
 
     child: Adw.OverlaySplitView overlay_split_view {
+      enable-show-gesture: bind overlay_split_view.collapsed;
+      enable-hide-gesture: bind overlay_split_view.collapsed;
 
       sidebar: Adw.ToolbarView {
         width-request: 350;
@@ -365,8 +367,6 @@ template $GraphsWindow: Adw.ApplicationWindow {
               Separator {
                 orientation: horizontal;
               }
-
-
             };
           };
         }
