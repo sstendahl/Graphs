@@ -60,6 +60,9 @@ namespace Graphs {
         [GtkChild]
         private unowned Adw.Bin operations_bin { get; }
 
+        [GtkChild]
+        private unowned Stack itemlist_stack { get; }
+
         public Data data { get; construct set; }
 
         protected CssProvider headerbar_provider { get; private set; }
@@ -162,7 +165,9 @@ namespace Graphs {
 
 
             data.items_changed.connect (() => {
-                item_list.set_visible (!data.is_empty ());
+                itemlist_stack.get_pages ().select_item (
+                    data.is_empty () ? 0 : 1, true
+                );
                 update_view_menu ();
                 reload_item_list ();
                 data.add_view_history_state ();
