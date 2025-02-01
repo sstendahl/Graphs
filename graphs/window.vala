@@ -31,7 +31,7 @@ namespace Graphs {
         private unowned ToggleButton zoom_button { get; }
 
         [GtkChild]
-        private unowned ToggleButton select_button { get; }
+        public unowned ToggleButton select_button { get; }
 
         [GtkChild]
         private unowned ListBox item_list { get; }
