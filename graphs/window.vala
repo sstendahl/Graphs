@@ -58,7 +58,7 @@ namespace Graphs {
         private unowned Revealer drag_revealer { get; }
 
         [GtkChild]
-        private unowned Box sidebar_box { get; }
+        private unowned Adw.Bin operations_bin { get; }
 
         public Data data { get; construct set; }
 
@@ -88,12 +88,12 @@ namespace Graphs {
         }
 
         protected Operations operations {
-            get { return _operations; }
+            get { return operations_bin.get_child () as Operations; }
+            private set { operations_bin.set_child (value); }
         }
 
         private bool _force_close = false;
         private uint _inhibit_cookie = 0;
-        private Operations _operations;
 
         construct {
             this.headerbar_provider = new CssProvider ();
@@ -151,11 +151,10 @@ namespace Graphs {
 
             Actions.setup (application, this);
 
-            this._operations = new Operations (this);
-            sidebar_box.append (_operations);
+            this.operations = new Operations (this);
 
-            data.bind_property ("items_selected", _operations.shift_button, "sensitive", 2);
-            data.bind_property ("data_items_selected", _operations.smoothen_button, "sensitive", 2);
+            data.bind_property ("items_selected", operations.shift_button, "sensitive", 2);
+            data.bind_property ("data_items_selected", operations.smoothen_button, "sensitive", 2);
             data.bind_property ("can_undo", undo_button, "sensitive", 2);
             data.bind_property ("can_redo", redo_button, "sensitive", 2);
             data.bind_property ("can_view_back", view_back_button, "sensitive", 2);
