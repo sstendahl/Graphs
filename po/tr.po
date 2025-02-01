@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: se.sjoerd.Graphs\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2025-01-30 17:07+0000\n"
-"PO-Revision-Date: 2025-01-30 08:00+0300\n"
+"POT-Creation-Date: 2025-01-31 13:02+0000\n"
+"PO-Revision-Date: 2025-02-01 08:00+0300\n"
 "Last-Translator: Emin Tufan Çetin <etcetin@gmail.com>\n"
 "Language-Team: Turkish <takim@gnome.org.tr>\n"
 "Language: tr\n"
@@ -184,7 +184,7 @@ msgid "Enter a mathematical expression"
 msgstr "Matematiksel ifade girin"
 
 #: data/ui/add-equation.blp:48 data/ui/curve-fitting.blp:75
-#: data/ui/edit-item.blp:56 data/ui/generate-data.blp:52
+#: data/ui/edit-item-generated-data.blp:13 data/ui/generate-data.blp:52
 #: data/ui/transform.blp:68
 msgid "Y ="
 msgstr "Y ="
@@ -201,7 +201,7 @@ msgstr "Yeni Biçem Ekle"
 msgid "Template"
 msgstr "Şablon"
 
-#: data/ui/add-style.blp:44 data/ui/edit-item.blp:23
+#: data/ui/add-style.blp:44 data/ui/edit-item.blp:30
 msgid "Name"
 msgstr "Ad"
 
@@ -213,7 +213,8 @@ msgstr "Eğri Sığdırma"
 msgid "Open Curve Fitting Menu"
 msgstr "Eğri Sığdırma Menüsünü Aç"
 
-#: data/ui/curve-fitting.blp:57 data/ui/edit-item.blp:51 graphs/item.py:164
+#: data/ui/curve-fitting.blp:57 data/ui/edit-item-equation.blp:9
+#: data/ui/edit-item-generated-data.blp:9 graphs/item.py:172
 msgid "Equation"
 msgstr "Denklem"
 
@@ -319,202 +320,221 @@ msgctxt "confidence"
 msgid "3σ: 99.7% Confidence"
 msgstr "3σ: %99.7 Güven"
 
-#: data/ui/edit-item.blp:13
-msgid "Selected Item"
-msgstr "Seçili Öge"
+#: data/ui/edit-item.blp:27
+msgid "Name and Position"
+msgstr "Ad ve Konum"
 
-#: data/ui/edit-item.blp:14
-msgid "Choose which item to edit"
-msgstr "Hangi ögenin düzenleneceğini seçin"
-
-#: data/ui/edit-item.blp:20
-msgid "Data"
-msgstr "Veri"
-
-#: data/ui/edit-item.blp:28
+#: data/ui/edit-item.blp:35
 msgid "X-Axis Position"
 msgstr "X Ekseni Konumu"
 
-#: data/ui/edit-item.blp:32
+#: data/ui/edit-item.blp:39
 msgid "Bottom"
 msgstr "Alt"
 
-#: data/ui/edit-item.blp:33
+#: data/ui/edit-item.blp:40
 msgid "Top"
 msgstr "Üst"
 
-#: data/ui/edit-item.blp:39
+#: data/ui/edit-item.blp:46
 msgid "Y-Axis Position"
 msgstr "Y Ekseni Konumu"
 
-#: data/ui/edit-item.blp:43
+#: data/ui/edit-item.blp:50
 msgid "Left"
 msgstr "Sol"
 
-#: data/ui/edit-item.blp:44
+#: data/ui/edit-item.blp:51
 msgid "Right"
 msgstr "Sağ"
 
-#: data/ui/edit-item.blp:61
-msgid "Simplify"
-msgstr "Sadeleştir"
+#: data/ui/edit-item-data.blp:8
+msgid "Line and Markers"
+msgstr "Çizgi ve İmleyiciler"
 
-#: data/ui/edit-item.blp:68
-msgid "Line Properties"
-msgstr "Çizgi Özellikleri"
-
-#: data/ui/edit-item.blp:71 data/ui/style-editor-box.blp:61
+#: data/ui/edit-item-data.blp:11 data/ui/edit-item-equation.blp:25
+#: data/ui/style-editor-box.blp:61
 msgid "Linestyle"
 msgstr "Çizgi Biçemi"
 
-#: data/ui/edit-item.blp:76 data/ui/style-editor-box.blp:66
+#: data/ui/edit-item-data.blp:16 data/ui/edit-item-equation.blp:30
+#: data/ui/style-editor-box.blp:66
 msgctxt "linestyle"
 msgid "None"
 msgstr "Hiçbiri"
 
-#: data/ui/edit-item.blp:77 data/ui/style-editor-box.blp:67
+#: data/ui/edit-item-data.blp:17 data/ui/edit-item-equation.blp:31
+#: data/ui/style-editor-box.blp:67
 msgctxt "linestyle"
 msgid "Solid"
 msgstr "Kesiksiz"
 
-#: data/ui/edit-item.blp:78 data/ui/style-editor-box.blp:68
+#: data/ui/edit-item-data.blp:18 data/ui/edit-item-equation.blp:32
+#: data/ui/style-editor-box.blp:68
 msgctxt "linestyle"
 msgid "Dotted"
 msgstr "Noktalı"
 
-#: data/ui/edit-item.blp:79 data/ui/style-editor-box.blp:69
+#: data/ui/edit-item-data.blp:19 data/ui/edit-item-equation.blp:33
+#: data/ui/style-editor-box.blp:69
 msgctxt "linestyle"
 msgid "Dashed"
 msgstr "Kesikli"
 
-#: data/ui/edit-item.blp:80 data/ui/style-editor-box.blp:70
+#: data/ui/edit-item-data.blp:20 data/ui/edit-item-equation.blp:34
+#: data/ui/style-editor-box.blp:70
 msgctxt "linestyle"
 msgid "Dashdot"
 msgstr "Kesik-nokta"
 
-#: data/ui/edit-item.blp:86 data/ui/style-editor-box.blp:76
+#: data/ui/edit-item-data.blp:26 data/ui/edit-item-equation.blp:40
+#: data/ui/style-editor-box.blp:76
 msgid "Linewidth"
 msgstr "Çizgi Genişliği"
 
-#: data/ui/edit-item.blp:102 data/ui/style-editor-box.blp:92
+#: data/ui/edit-item-data.blp:41 data/ui/style-editor-box.blp:92
 msgid "Markers"
 msgstr "İmleyiciler"
 
-#: data/ui/edit-item.blp:107 data/ui/style-editor-box.blp:97
+#: data/ui/edit-item-data.blp:46 data/ui/style-editor-box.blp:97
 msgctxt "markerstyle"
 msgid "None"
 msgstr "Hiçbiri"
 
-#: data/ui/edit-item.blp:108 data/ui/style-editor-box.blp:98
+#: data/ui/edit-item-data.blp:47 data/ui/style-editor-box.blp:98
 msgctxt "markerstyle"
 msgid "Point"
 msgstr "Nokta"
 
-#: data/ui/edit-item.blp:109 data/ui/style-editor-box.blp:99
+#: data/ui/edit-item-data.blp:48 data/ui/style-editor-box.blp:99
 msgctxt "markerstyle"
 msgid "Pixel"
 msgstr "Piksel"
 
-#: data/ui/edit-item.blp:110 data/ui/style-editor-box.blp:100
+#: data/ui/edit-item-data.blp:49 data/ui/style-editor-box.blp:100
 msgctxt "markerstyle"
 msgid "Circle"
 msgstr "Daire"
 
-#: data/ui/edit-item.blp:111 data/ui/style-editor-box.blp:101
+#: data/ui/edit-item-data.blp:50 data/ui/style-editor-box.blp:101
 msgctxt "markerstyle"
 msgid "Triangle Down"
 msgstr "Üçgen Aşağı"
 
-#: data/ui/edit-item.blp:112 data/ui/style-editor-box.blp:102
+#: data/ui/edit-item-data.blp:51 data/ui/style-editor-box.blp:102
 msgctxt "markerstyle"
 msgid "Triangle Up"
 msgstr "Üçgen Yukarı"
 
-#: data/ui/edit-item.blp:113 data/ui/style-editor-box.blp:103
+#: data/ui/edit-item-data.blp:52 data/ui/style-editor-box.blp:103
 msgctxt "markerstyle"
 msgid "Triangle Left"
 msgstr "Üçgen Sol"
 
-#: data/ui/edit-item.blp:114 data/ui/style-editor-box.blp:104
+#: data/ui/edit-item-data.blp:53 data/ui/style-editor-box.blp:104
 msgctxt "markerstyle"
 msgid "Triangle Right"
 msgstr "Üçgen Sağ"
 
-#: data/ui/edit-item.blp:115 data/ui/style-editor-box.blp:105
+#: data/ui/edit-item-data.blp:54 data/ui/style-editor-box.blp:105
 msgctxt "markerstyle"
 msgid "Octagon"
 msgstr "Sekizgen"
 
-#: data/ui/edit-item.blp:116 data/ui/style-editor-box.blp:106
+#: data/ui/edit-item-data.blp:55 data/ui/style-editor-box.blp:106
 msgctxt "markerstyle"
 msgid "Square"
 msgstr "Kare"
 
-#: data/ui/edit-item.blp:117 data/ui/style-editor-box.blp:107
+#: data/ui/edit-item-data.blp:56 data/ui/style-editor-box.blp:107
 msgctxt "markerstyle"
 msgid "Pentagon"
 msgstr "Beşgen"
 
-#: data/ui/edit-item.blp:118 data/ui/style-editor-box.blp:108
+#: data/ui/edit-item-data.blp:57 data/ui/style-editor-box.blp:108
 msgctxt "markerstyle"
 msgid "Star"
 msgstr "Yıldız"
 
-#: data/ui/edit-item.blp:119 data/ui/style-editor-box.blp:109
+#: data/ui/edit-item-data.blp:58 data/ui/style-editor-box.blp:109
 msgctxt "markerstyle"
 msgid "Hexagon 1"
 msgstr "Altıgen 1"
 
-#: data/ui/edit-item.blp:120 data/ui/style-editor-box.blp:110
+#: data/ui/edit-item-data.blp:59 data/ui/style-editor-box.blp:110
 msgctxt "markerstyle"
 msgid "Hexagon 2"
 msgstr "Altıgen 2"
 
-#: data/ui/edit-item.blp:121 data/ui/style-editor-box.blp:111
+#: data/ui/edit-item-data.blp:60 data/ui/style-editor-box.blp:111
 msgctxt "markerstyle"
 msgid "Plus"
 msgstr "Artı"
 
-#: data/ui/edit-item.blp:122 data/ui/style-editor-box.blp:112
+#: data/ui/edit-item-data.blp:61 data/ui/style-editor-box.blp:112
 msgctxt "markerstyle"
 msgid "X"
 msgstr "X"
 
 #. Translators: Diamond as in Cards Symbol
-#: data/ui/edit-item.blp:124 data/ui/style-editor-box.blp:114
+#: data/ui/edit-item-data.blp:63 data/ui/style-editor-box.blp:114
 msgctxt "markerstyle"
 msgid "Diamond"
 msgstr "Karo"
 
 #. Translators: Diamond as in Cards Symbol
-#: data/ui/edit-item.blp:126 data/ui/style-editor-box.blp:116
+#: data/ui/edit-item-data.blp:65 data/ui/style-editor-box.blp:116
 msgctxt "markerstyle"
 msgid "Thin Diamond"
 msgstr "İnce Karo"
 
-#: data/ui/edit-item.blp:127 data/ui/style-editor-box.blp:117
+#: data/ui/edit-item-data.blp:66 data/ui/style-editor-box.blp:117
 msgctxt "markerstyle"
 msgid "Vertical Line"
 msgstr "Dikey Çizgi"
 
-#: data/ui/edit-item.blp:128 data/ui/style-editor-box.blp:118
+#: data/ui/edit-item-data.blp:67 data/ui/style-editor-box.blp:118
 msgctxt "markerstyle"
 msgid "Horizontal Line"
 msgstr "Yatay Çizgi"
 
-#: data/ui/edit-item.blp:129 data/ui/style-editor-box.blp:119
+#: data/ui/edit-item-data.blp:68 data/ui/style-editor-box.blp:119
 msgctxt "markerstyle"
 msgid "Filled Plus"
 msgstr "Doldurulmuş Artı"
 
-#: data/ui/edit-item.blp:130 data/ui/style-editor-box.blp:120
+#: data/ui/edit-item-data.blp:69 data/ui/style-editor-box.blp:120
 msgctxt "markerstyle"
 msgid "Filled X"
 msgstr "Doldurulmuş X"
 
-#: data/ui/edit-item.blp:136 data/ui/style-editor-box.blp:126
+#: data/ui/edit-item-data.blp:75 data/ui/style-editor-box.blp:126
 msgid "Marker Size"
 msgstr "İmleyici Boyutu"
+
+#: data/ui/edit-item-equation.blp:13
+msgid "Equation: Y ="
+msgstr "Denklem: Y ="
+
+#: data/ui/edit-item-equation.blp:17 data/ui/edit-item-generated-data.blp:17
+msgid "Simplify"
+msgstr "Sadeleştir"
+
+#: data/ui/edit-item-equation.blp:22
+msgid "Line"
+msgstr "Çizgi"
+
+#: data/ui/edit-item-generated-data.blp:29 data/ui/generate-data.blp:72
+msgid "X Start"
+msgstr "X Başlangıç"
+
+#: data/ui/edit-item-generated-data.blp:35 data/ui/generate-data.blp:79
+msgid "X Stop"
+msgstr "X Bitiş"
+
+#: data/ui/edit-item-generated-data.blp:43 data/ui/generate-data.blp:88
+msgid "Steps"
+msgstr "Adımlar"
 
 #: data/ui/export-figure.blp:6
 msgid "Export Figure"
@@ -798,18 +818,6 @@ msgstr "Veri Oluştur"
 #: data/ui/generate-data.blp:23
 msgid "Generate"
 msgstr "Oluştur"
-
-#: data/ui/generate-data.blp:72
-msgid "X Start"
-msgstr "X Başlangıç"
-
-#: data/ui/generate-data.blp:79
-msgid "X Stop"
-msgstr "X Bitiş"
-
-#: data/ui/generate-data.blp:88
-msgid "Steps"
-msgstr "Adımlar"
 
 #: data/ui/import.blp:6
 msgid "Import Parameters"
@@ -1746,11 +1754,11 @@ msgstr "X Ekseni Etiketi"
 msgid "Y Axis Scale"
 msgstr "Y Ekseni Ölçeği"
 
-#: graphs/figure_settings.vala:280
+#: graphs/figure_settings.vala:281
 msgid "Defaults Updated"
 msgstr "Öntanımlılar Güncellendi"
 
-#: graphs/figure_settings.vala:311
+#: graphs/figure_settings.vala:312
 #, c-format
 msgid "Are you sure you want to delete %s?"
 msgstr "%s silmek istediğinize emin misiniz?"
@@ -1763,11 +1771,11 @@ msgstr "Veri kümesi"
 msgid "Generated Dataset"
 msgstr "Oluşturulan Veri Takımı"
 
-#: graphs/item.py:209
+#: graphs/item.py:217
 msgid "Label"
 msgstr "Etiket"
 
-#: graphs/item.py:238
+#: graphs/item.py:246
 msgid "Fill"
 msgstr "Dolgu"
 
@@ -1945,3 +1953,15 @@ msgstr "Sınırları Eniyile"
 msgctxt "scale"
 msgid "Inverse Root"
 msgstr "Ters Kök"
+
+#~ msgid "Selected Item"
+#~ msgstr "Seçili Öge"
+
+#~ msgid "Choose which item to edit"
+#~ msgstr "Hangi ögenin düzenleneceğini seçin"
+
+#~ msgid "Data"
+#~ msgstr "Veri"
+
+#~ msgid "Line Properties"
+#~ msgstr "Çizgi Özellikleri"
