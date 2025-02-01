@@ -1,7 +1,8 @@
 using Gtk 4.0;
+using Adw 1;
 
-template $GraphsStylePreview: Box {
-  AspectFrame {
+template $GraphsStylePreview: Adw.Bin {
+  child: AspectFrame {
     child: Box {
       orientation: vertical;
 
@@ -45,7 +46,7 @@ template $GraphsStylePreview: Box {
         margin-top: 8;
       }
     };
-  }
+  };
 }
 
 menu style_menu {

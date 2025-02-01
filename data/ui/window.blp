@@ -230,7 +230,7 @@ template $GraphsWindow: Adw.ApplicationWindow {
 
         ScrolledWindow {
           child: Viewport {
-            child: Box sidebar_box {
+            child: Box {
               orientation: vertical;
 
               ScrolledWindow scrollwindow_itemlist {
@@ -314,6 +314,8 @@ template $GraphsWindow: Adw.ApplicationWindow {
               Separator {
                 orientation: horizontal;
               }
+
+              Adw.Bin operations_bin {}
             };
           };
         }
