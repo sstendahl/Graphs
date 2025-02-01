@@ -152,10 +152,10 @@ template $GraphsWindow: Adw.ApplicationWindow {
 
   // If both width and height are limited
   Adw.Breakpoint {
-    condition ("max-width: 675sp and max-height: 410sp")
+    condition ("max-width: 700sp and max-height: 410sp")
 
     setters {
-      split_view.collapsed: true;
+      overlay_split_view.collapsed: true;
       undo_button.visible: false;
       secondary_sidebar_headerbar.visible: true;
       scrollwindow_itemlist.vscrollbar-policy: never;
@@ -164,7 +164,7 @@ template $GraphsWindow: Adw.ApplicationWindow {
 
   // If only height is limited
   Adw.Breakpoint {
-    condition ("min-width: 675sp and max-height: 410sp")
+    condition ("min-width: 700sp and max-height: 410sp")
 
     setters {
       scrollwindow_itemlist.vscrollbar-policy: never;
@@ -173,10 +173,10 @@ template $GraphsWindow: Adw.ApplicationWindow {
 
   // If only width is limited
   Adw.Breakpoint {
-    condition ("max-width: 675sp and min-height: 410sp")
+    condition ("max-width: 700sp and min-height: 410sp")
 
     setters {
-      split_view.collapsed: true;
+      overlay_split_view.collapsed: true;
       undo_button.visible: false;
       secondary_sidebar_headerbar.visible: true;
     }
@@ -202,9 +202,9 @@ template $GraphsWindow: Adw.ApplicationWindow {
       }
     }
 
-    child: Adw.OverlaySplitView split_view {
-      show-sidebar: bind show_sidebar_button.active;
-      notify => $on_sidebar_toggle();
+    child: Adw.OverlaySplitView overlay_split_view {
+      enable-show-gesture: bind overlay_split_view.collapsed;
+      enable-hide-gesture: bind overlay_split_view.collapsed;
 
       sidebar: Adw.ToolbarView {
         width-request: 350;
@@ -367,8 +367,6 @@ template $GraphsWindow: Adw.ApplicationWindow {
               Separator {
                 orientation: horizontal;
               }
-
-
             };
           };
         }
@@ -386,11 +384,11 @@ template $GraphsWindow: Adw.ApplicationWindow {
 
           title-widget: Adw.WindowTitle content_title {};
 
-          ToggleButton show_sidebar_button {
+          ToggleButton {
             icon-name: "sidebar-show-symbolic";
-            tooltip-text: _("Toggle Sidebar");
-            active: bind split_view.show-sidebar;
-            visible: bind split_view.collapsed;
+            tooltip-text: _("Show Sidebar");
+            active: bind overlay_split_view.show-sidebar bidirectional;
+            visible: bind overlay_split_view.collapsed;
           }
 
           Button undo_button {

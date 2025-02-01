@@ -37,7 +37,7 @@ namespace Graphs {
         private unowned ListBox item_list { get; }
 
         [GtkChild]
-        public unowned Adw.OverlaySplitView split_view { get; }
+        public unowned Adw.OverlaySplitView overlay_split_view { get; }
 
         [GtkChild]
         private unowned Adw.ToastOverlay toast_overlay { get; }
@@ -279,13 +279,6 @@ namespace Graphs {
                 button_label = _("Undo"),
                 action_name = "win.undo"
             });
-        }
-
-        [GtkCallback]
-        private void on_sidebar_toggle () {
-            application.lookup_action ("toggle_sidebar").change_state (
-                new Variant.boolean (split_view.get_collapsed ())
-            );
         }
 
         /**
