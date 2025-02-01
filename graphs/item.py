@@ -203,7 +203,6 @@ class EquationItem(_PythonItem):
         valid_equation = utilities.validate_equation(str(equation))
         if old_equation == equation or not valid_equation:
             return
-        equation = utilities.prettify_equation(equation)
         self._equation = equation
         self.notify("equation")
 

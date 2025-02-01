@@ -387,7 +387,8 @@ class CommonOperations():
                 else:
                     equation = f"{item.equation}+{shift_value}"
                 equation = utilities.preprocess(equation)
-                item.props.equation = str(sympy.simplify(equation))
+                equation = str(sympy.simplify(equation))
+                item.props.equation = utilities.prettify_equation(equation)
                 continue
             if isinstance(item, DataItem):
                 if scale == scales.Scale.LOG:
@@ -440,7 +441,8 @@ class EquationOperations():
                         " did not result in a plottable equation",
                     ),
                 )
-            item.props.equation = str(sympy.simplify(equation))
+            equation = str(sympy.simplify(equation))
+            item.props.equation = utilities.prettify_equation(equation)
         except misc.InvalidEquationError as error:
             return False, error.message
         except (NotImplementedError, AttributeError, KeyError):
