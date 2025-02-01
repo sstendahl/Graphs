@@ -193,7 +193,7 @@ namespace Graphs {
      * Style Preview widget
      */
     [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/style-preview.ui")]
-    private class StylePreview : Box {
+    private class StylePreview : Adw.Bin {
 
         [GtkChild]
         private unowned Label label { get; }
