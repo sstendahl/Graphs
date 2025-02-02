@@ -1,13 +1,13 @@
 # Basque translation for Graphs.
 # Copyright (C) 2024 Graphs's COPYRIGHT HOLDER
 # This file is distributed under the same license as the Graphs package.
-# Asier Sarasua Garmendia <asiersarasua@ni.eus>, 2024.
+# Asier Sarasua Garmendia <asiersarasua@ni.eus>, 2024, 2025.
 #
 msgid ""
 msgstr "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2024-08-30 06:36+0000\n"
-"PO-Revision-Date: 2024-09-14 10:00+0000\n"
+"POT-Creation-Date: 2025-01-16 17:22+0000\n"
+"PO-Revision-Date: 2025-03-02 10:00+0000\n"
 "Last-Translator: Asier Sarasua Garmendia <asiersarasua@ni.eus>\n"
 "Language-Team: Basque <eu@li.org>\n"
 "Language: eu\n"
@@ -16,7 +16,7 @@ msgstr "Project-Id-Version: Graphs main\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 #: data/se.sjoerd.Graphs.appdata.xml.in:6 data/se.sjoerd.Graphs.desktop.in:3
-#: data/ui/window.blp:9 graphs/about.vala:23
+#: data/ui/window.blp:9 graphs/application.vala:71
 msgid "Graphs"
 msgstr "Grafikoak"
 
@@ -84,44 +84,82 @@ msgid ""
 "Visualisation;Visualization;Fitting;xrdml;"
 msgstr "Marraztea;Grafikoa;Grafikoak;Zientzia;Matematikak;Mateak;Ekuazioak;Datuak;Diagrama;Bisualizazioa;Bistaratzea;Doitzea;xrdml;"
 
+#: data/ui/dialogs/delete-style.blp:5
+msgid "Delete Style?"
+msgstr "Ezabatu estiloa?"
+
+#: data/ui/dialogs/delete-style.blp:7
+#: data/ui/dialogs/reset-import-settings.blp:8
+#: data/ui/dialogs/save-project-changes.blp:8
+#: data/ui/dialogs/save-style-changes.blp:8 data/ui/add-equation.blp:16
+#: data/ui/add-style.blp:15 data/ui/export-figure.blp:15 data/ui/import.blp:15
+#: data/ui/transform.blp:16
+msgid "Cancel"
+msgstr "Utzi"
+
+#: data/ui/dialogs/delete-style.blp:8
+msgid "Delete"
+msgstr "Ezabatu"
+
+#: data/ui/dialogs/reset-import-settings.blp:5
+msgid "Reset to Defaults?"
+msgstr "Berrezarri lehenespenetara?"
+
+#: data/ui/dialogs/reset-import-settings.blp:6
+msgid "Are you sure you want to reset the import settings?"
+msgstr "Ziur zaude inportazio-ezarpenak berrezarri nahi dituzula?"
+
+#: data/ui/dialogs/reset-import-settings.blp:9
+msgid "Reset"
+msgstr "Berrezarri"
+
+#: data/ui/dialogs/save-project-changes.blp:5
+#: data/ui/dialogs/save-style-changes.blp:5
+msgid "Save Changes?"
+msgstr "Gorde aldaketak?"
+
+#: data/ui/dialogs/save-project-changes.blp:6
+msgid ""
+"Current project contains unsaved changes, changes that are not saved will be "
+"permanently lost."
+msgstr "Uneko proiektuak gorde gabeko aldaketak ditu, gorde ez diren aldaketa horiek betiko galduko dira."
+
+#: data/ui/dialogs/save-project-changes.blp:9
+#: data/ui/dialogs/save-style-changes.blp:9
+msgid "Discard"
+msgstr "Baztertu"
+
+#: data/ui/dialogs/save-project-changes.blp:10
+#: data/ui/dialogs/save-style-changes.blp:10
+msgid "Save"
+msgstr "Gorde"
+
+#: data/ui/dialogs/save-style-changes.blp:6
+msgid ""
+"Current style contains unsaved changes, changes that are not saved will be "
+"permanently lost."
+msgstr "Uneko estiloak gorde gabeko aldaketak ditu, gorde ez diren aldaketa horiek betiko galduko dira."
+
 #: data/ui/add-equation.blp:6
 msgid "Add Equation"
 msgstr "Gehitu ekuazioa"
-
-#: data/ui/add-equation.blp:16 data/ui/add-style.blp:15 data/ui/dialogs.blp:8
-#: data/ui/dialogs.blp:19 data/ui/dialogs.blp:29 data/ui/export-figure.blp:15
-#: data/ui/import.blp:15 data/ui/transform.blp:16
-msgid "Cancel"
-msgstr "Utzi"
 
 #: data/ui/add-equation.blp:22 data/ui/add-style.blp:21
 msgid "Add"
 msgstr "Gehitu"
 
-#: data/ui/add-equation.blp:41 data/ui/curve-fitting.blp:66
-#: data/ui/transform.blp:56
+#: data/ui/add-equation.blp:35
+msgid "Enter a mathematical expression"
+msgstr "Sartu adierazpen matematiko bat"
+
+#: data/ui/add-equation.blp:38 data/ui/curve-fitting.blp:66
+#: data/ui/edit-item.blp:46 data/ui/transform.blp:56
 msgid "Y ="
 msgstr "Y ="
 
-#: data/ui/add-equation.blp:49
-msgid "Enter a mathematical expression to generate data from"
-msgstr "Sartu datuak sortzeko erabiliko den adierazpen matematikoa"
-
-#: data/ui/add-equation.blp:57
+#: data/ui/add-equation.blp:45
 msgid "Name (optional)"
 msgstr "Izena (aukerakoa)"
-
-#: data/ui/add-equation.blp:70
-msgid "X Start"
-msgstr "X hasiera"
-
-#: data/ui/add-equation.blp:78
-msgid "X Stop"
-msgstr "X amaiera"
-
-#: data/ui/add-equation.blp:86
-msgid "Step Size"
-msgstr "Urratsaren tamaina"
 
 #: data/ui/add-style.blp:6 data/ui/figure-settings-dialog.blp:33
 msgid "Add New Style"
@@ -131,19 +169,19 @@ msgstr "Gehitu estilo berria"
 msgid "Template"
 msgstr "Txantiloia"
 
-#: data/ui/add-style.blp:38 data/ui/edit-item.blp:21
+#: data/ui/add-style.blp:38 data/ui/edit-item.blp:22
 msgid "Name"
 msgstr "Izena"
 
-#: data/ui/curve-fitting.blp:27 data/ui/item-box.blp:59
+#: data/ui/curve-fitting.blp:26 data/ui/item-box.blp:56
 msgid "Curve Fitting"
 msgstr "Kurba doitzea"
 
-#: data/ui/curve-fitting.blp:32
+#: data/ui/curve-fitting.blp:31
 msgid "Open Curve Fitting Menu"
 msgstr "Ireki kurba doitzeko menua"
 
-#: data/ui/curve-fitting.blp:50
+#: data/ui/curve-fitting.blp:50 data/ui/edit-item.blp:42 graphs/item.py:118
 msgid "Equation"
 msgstr "Ekuazioa"
 
@@ -187,291 +225,262 @@ msgctxt "regression-type"
 msgid "Custom"
 msgstr "Pertsonalizatua"
 
-#: data/ui/curve-fitting.blp:93
+#: data/ui/curve-fitting.blp:91
 msgid "Add Fit to Data"
 msgstr "Gehitu doitzea datuei"
 
-#: data/ui/curve-fitting.blp:109 data/ui/window.blp:598 graphs/window.vala:301
+#: data/ui/curve-fitting.blp:104 data/ui/window.blp:559 graphs/window.vala:345
 msgid "Toggle Sidebar"
 msgstr "Txandakatu alboko barra"
 
-#: data/ui/curve-fitting.blp:121 data/ui/window.blp:638
+#: data/ui/curve-fitting.blp:116 data/ui/style-editor-window.blp:66
+#: data/ui/window.blp:599
 msgid "Canvas Failed to Load"
 msgstr "Oihalaren kargak huts egin du"
 
-#: data/ui/curve-fitting.blp:131
+#: data/ui/curve-fitting.blp:126
 msgid "Optimization Method"
 msgstr "Optimizazio-metodoa"
 
 #. Translators: see https://world.pages.gitlab.gnome.org/Graphs/help/C/curve_fitting.html#algorithms
-#: data/ui/curve-fitting.blp:134
+#: data/ui/curve-fitting.blp:129
 msgctxt "optimization"
 msgid "Levenberg-Marquardt"
 msgstr "Levenberg-Marquardt"
 
 #. Translators: see https://world.pages.gitlab.gnome.org/Graphs/help/C/curve_fitting.html#algorithms
-#: data/ui/curve-fitting.blp:140
+#: data/ui/curve-fitting.blp:135
 msgctxt "optimization"
 msgid "Trust Region Reflective"
 msgstr "Kofiantza-eskualde islatzailea"
 
 #. Translators: see https://world.pages.gitlab.gnome.org/Graphs/help/C/curve_fitting.html#algorithms
-#: data/ui/curve-fitting.blp:146
+#: data/ui/curve-fitting.blp:141
 msgctxt "optimization"
 msgid "Dogbox"
 msgstr "Txakur-kutxa"
 
-#: data/ui/curve-fitting.blp:152
+#: data/ui/curve-fitting.blp:147
 msgid "Confidence Bounds"
 msgstr "Konfiantza-mugak"
 
-#: data/ui/curve-fitting.blp:154
+#: data/ui/curve-fitting.blp:149
 msgctxt "confidence"
 msgid "None"
 msgstr "Bat ere ez"
 
-#: data/ui/curve-fitting.blp:160
+#: data/ui/curve-fitting.blp:155
 #, no-c-format
 msgctxt "confidence"
 msgid "1σ: 68% Confidence"
 msgstr "1σ: %68ko konfiantza"
 
-#: data/ui/curve-fitting.blp:166
+#: data/ui/curve-fitting.blp:161
 #, no-c-format
 msgctxt "confidence"
 msgid "2σ: 95% Confidence"
 msgstr "2σ: %95eko konfiantza"
 
-#: data/ui/curve-fitting.blp:172
+#: data/ui/curve-fitting.blp:167
 #, no-c-format
 msgctxt "confidence"
 msgid "3σ: 99.7% Confidence"
 msgstr "3σ: %99,7ko konfiantza"
 
-#: data/ui/dialogs.blp:5
-msgid "Save Changes?"
-msgstr "Gorde aldaketak?"
-
-#: data/ui/dialogs.blp:6
-msgid ""
-"Current project contains unsaved changes, changes that are not saved will be "
-"permanently lost."
-msgstr "Uneko proiektuak gorde gabeko aldaketak ditu, gorde ez diren aldaketa horiek betiko galduko dira."
-
-#: data/ui/dialogs.blp:9
-msgid "Discard"
-msgstr "Baztertu"
-
-#: data/ui/dialogs.blp:10
-msgid "Save"
-msgstr "Gorde"
-
-#: data/ui/dialogs.blp:17
-msgid "Delete Style?"
-msgstr "Ezabatu estiloa?"
-
-#: data/ui/dialogs.blp:20 data/ui/style-preview.blp:39
-msgid "Delete"
-msgstr "Ezabatu"
-
-#: data/ui/dialogs.blp:27
-msgid "Reset to Defaults?"
-msgstr "Berrezarri lehenespenetara?"
-
-#: data/ui/dialogs.blp:30
-msgid "Reset"
-msgstr "Berrezarri"
-
-#: data/ui/edit-item.blp:11
+#: data/ui/edit-item.blp:12
 msgid "Selected Item"
 msgstr "Hautatutako elementua"
 
-#: data/ui/edit-item.blp:12
+#: data/ui/edit-item.blp:13
 msgid "Choose which item to edit"
 msgstr "Hautatu zein elementu editatuko den"
 
-#: data/ui/edit-item.blp:18
+#: data/ui/edit-item.blp:19
 msgid "Data"
 msgstr "Datuak"
 
-#: data/ui/edit-item.blp:26
+#: data/ui/edit-item.blp:27
 msgid "X-Axis Position"
 msgstr "X ardatzaren posizioa"
 
-#: data/ui/edit-item.blp:28
+#: data/ui/edit-item.blp:29
 msgid "Bottom"
 msgstr "Behean"
 
-#: data/ui/edit-item.blp:28
+#: data/ui/edit-item.blp:29
 msgid "Top"
 msgstr "Goian"
 
-#: data/ui/edit-item.blp:33
+#: data/ui/edit-item.blp:34
 msgid "Y-Axis Position"
 msgstr "Y ardatzaren posizioa"
 
-#: data/ui/edit-item.blp:35
+#: data/ui/edit-item.blp:36
 msgid "Left"
 msgstr "Ezkerrera"
 
-#: data/ui/edit-item.blp:35
+#: data/ui/edit-item.blp:36
 msgid "Right"
 msgstr "Eskuinera"
 
-#: data/ui/edit-item.blp:42
+#: data/ui/edit-item.blp:50
+msgid "Simplify"
+msgstr "Sinplifikatu"
+
+#: data/ui/edit-item.blp:57
 msgid "Line Properties"
 msgstr "Marraren propietateak"
 
-#: data/ui/edit-item.blp:45 data/ui/style-editor.blp:58
+#: data/ui/edit-item.blp:60 data/ui/style-editor-box.blp:58
 msgid "Linestyle"
 msgstr "Marra-estiloa"
 
-#: data/ui/edit-item.blp:48 data/ui/style-editor.blp:61
+#: data/ui/edit-item.blp:63 data/ui/style-editor-box.blp:61
 msgctxt "linestyle"
 msgid "None"
 msgstr "Bat ere ez"
 
-#: data/ui/edit-item.blp:49 data/ui/style-editor.blp:62
+#: data/ui/edit-item.blp:64 data/ui/style-editor-box.blp:62
 msgctxt "linestyle"
 msgid "Solid"
 msgstr "Solidoa"
 
-#: data/ui/edit-item.blp:50 data/ui/style-editor.blp:63
+#: data/ui/edit-item.blp:65 data/ui/style-editor-box.blp:63
 msgctxt "linestyle"
 msgid "Dotted"
 msgstr "Puntuak"
 
-#: data/ui/edit-item.blp:51 data/ui/style-editor.blp:64
+#: data/ui/edit-item.blp:66 data/ui/style-editor-box.blp:64
 msgctxt "linestyle"
 msgid "Dashed"
 msgstr "Marratxoduna"
 
-#: data/ui/edit-item.blp:52 data/ui/style-editor.blp:65
+#: data/ui/edit-item.blp:67 data/ui/style-editor-box.blp:65
 msgctxt "linestyle"
 msgid "Dashdot"
 msgstr "Marratxoak eta puntuak"
 
-#: data/ui/edit-item.blp:59 data/ui/style-editor.blp:72
+#: data/ui/edit-item.blp:74 data/ui/style-editor-box.blp:72
 msgid "Linewidth"
 msgstr "Marra-zabalera"
 
-#: data/ui/edit-item.blp:73 data/ui/style-editor.blp:87
+#: data/ui/edit-item.blp:88 data/ui/style-editor-box.blp:87
 msgid "Markers"
 msgstr "Markatzaileak"
 
-#: data/ui/edit-item.blp:76 data/ui/style-editor.blp:90
+#: data/ui/edit-item.blp:91 data/ui/style-editor-box.blp:90
 msgctxt "markerstyle"
 msgid "None"
 msgstr "Bat ere ez"
 
-#: data/ui/edit-item.blp:77 data/ui/style-editor.blp:91
+#: data/ui/edit-item.blp:92 data/ui/style-editor-box.blp:91
 msgctxt "markerstyle"
 msgid "Point"
 msgstr "Puntua"
 
-#: data/ui/edit-item.blp:78 data/ui/style-editor.blp:92
+#: data/ui/edit-item.blp:93 data/ui/style-editor-box.blp:92
 msgctxt "markerstyle"
 msgid "Pixel"
 msgstr "Pixel"
 
-#: data/ui/edit-item.blp:79 data/ui/style-editor.blp:93
+#: data/ui/edit-item.blp:94 data/ui/style-editor-box.blp:93
 msgctxt "markerstyle"
 msgid "Circle"
 msgstr "Zirkulua"
 
-#: data/ui/edit-item.blp:80 data/ui/style-editor.blp:94
+#: data/ui/edit-item.blp:95 data/ui/style-editor-box.blp:94
 msgctxt "markerstyle"
 msgid "Triangle Down"
 msgstr "Beheranzko triangelua"
 
-#: data/ui/edit-item.blp:81 data/ui/style-editor.blp:95
+#: data/ui/edit-item.blp:96 data/ui/style-editor-box.blp:95
 msgctxt "markerstyle"
 msgid "Triangle Up"
 msgstr "Goranzko triangelua"
 
-#: data/ui/edit-item.blp:82 data/ui/style-editor.blp:96
+#: data/ui/edit-item.blp:97 data/ui/style-editor-box.blp:96
 msgctxt "markerstyle"
 msgid "Triangle Left"
 msgstr "Ezkerreranzko triangelua"
 
-#: data/ui/edit-item.blp:83 data/ui/style-editor.blp:97
+#: data/ui/edit-item.blp:98 data/ui/style-editor-box.blp:97
 msgctxt "markerstyle"
 msgid "Triangle Right"
 msgstr "Eskuineranzko triangelua"
 
-#: data/ui/edit-item.blp:84 data/ui/style-editor.blp:98
+#: data/ui/edit-item.blp:99 data/ui/style-editor-box.blp:98
 msgctxt "markerstyle"
 msgid "Octagon"
 msgstr "Oktogonoa"
 
-#: data/ui/edit-item.blp:85 data/ui/style-editor.blp:99
+#: data/ui/edit-item.blp:100 data/ui/style-editor-box.blp:99
 msgctxt "markerstyle"
 msgid "Square"
 msgstr "Karratua"
 
-#: data/ui/edit-item.blp:86 data/ui/style-editor.blp:100
+#: data/ui/edit-item.blp:101 data/ui/style-editor-box.blp:100
 msgctxt "markerstyle"
 msgid "Pentagon"
 msgstr "Pentagonoa"
 
-#: data/ui/edit-item.blp:87 data/ui/style-editor.blp:101
+#: data/ui/edit-item.blp:102 data/ui/style-editor-box.blp:101
 msgctxt "markerstyle"
 msgid "Star"
 msgstr "Eman izarra"
 
-#: data/ui/edit-item.blp:88 data/ui/style-editor.blp:102
+#: data/ui/edit-item.blp:103 data/ui/style-editor-box.blp:102
 msgctxt "markerstyle"
 msgid "Hexagon 1"
 msgstr "Hexagonoa 1"
 
-#: data/ui/edit-item.blp:89 data/ui/style-editor.blp:103
+#: data/ui/edit-item.blp:104 data/ui/style-editor-box.blp:103
 msgctxt "markerstyle"
 msgid "Hexagon 2"
 msgstr "Hexagonoa 2"
 
-#: data/ui/edit-item.blp:90 data/ui/style-editor.blp:104
+#: data/ui/edit-item.blp:105 data/ui/style-editor-box.blp:104
 msgctxt "markerstyle"
 msgid "Plus"
 msgstr "Plus"
 
-#: data/ui/edit-item.blp:91 data/ui/style-editor.blp:105
+#: data/ui/edit-item.blp:106 data/ui/style-editor-box.blp:105
 msgctxt "markerstyle"
 msgid "X"
 msgstr "X"
 
 #. Translators: Diamond as in Cards Symbol
-#: data/ui/edit-item.blp:93 data/ui/style-editor.blp:107
+#: data/ui/edit-item.blp:108 data/ui/style-editor-box.blp:107
 msgctxt "markerstyle"
 msgid "Diamond"
 msgstr "Diamantea"
 
 #. Translators: Diamond as in Cards Symbol
-#: data/ui/edit-item.blp:95 data/ui/style-editor.blp:109
+#: data/ui/edit-item.blp:110 data/ui/style-editor-box.blp:109
 msgctxt "markerstyle"
 msgid "Thin Diamond"
 msgstr "Diamante mehea"
 
-#: data/ui/edit-item.blp:96 data/ui/style-editor.blp:110
+#: data/ui/edit-item.blp:111 data/ui/style-editor-box.blp:110
 msgctxt "markerstyle"
 msgid "Vertical Line"
 msgstr "Marra bertikala"
 
-#: data/ui/edit-item.blp:97 data/ui/style-editor.blp:111
+#: data/ui/edit-item.blp:112 data/ui/style-editor-box.blp:111
 msgctxt "markerstyle"
 msgid "Horizontal Line"
 msgstr "Marra horizontala"
 
-#: data/ui/edit-item.blp:98 data/ui/style-editor.blp:112
+#: data/ui/edit-item.blp:113 data/ui/style-editor-box.blp:112
 msgctxt "markerstyle"
 msgid "Filled Plus"
 msgstr "Plus betea"
 
-#: data/ui/edit-item.blp:99 data/ui/style-editor.blp:113
+#: data/ui/edit-item.blp:114 data/ui/style-editor-box.blp:113
 msgctxt "markerstyle"
 msgid "Filled X"
 msgstr "X betea"
 
-#: data/ui/edit-item.blp:106 data/ui/style-editor.blp:120
+#: data/ui/edit-item.blp:121 data/ui/style-editor-box.blp:120
 msgid "Marker Size"
 msgstr "Markatzaile-tamaina"
 
@@ -479,7 +488,7 @@ msgstr "Markatzaile-tamaina"
 msgid "Export Figure"
 msgstr "Esportatu irudia"
 
-#: data/ui/export-figure.blp:21 graphs/export_figure.vala:47
+#: data/ui/export-figure.blp:21 graphs/export_figure.vala:49
 msgid "Export"
 msgstr "Esportatu"
 
@@ -530,11 +539,20 @@ msgstr "Bereizmena (dpi)"
 msgid "Transparent Background"
 msgstr "Atzeko plano gardena"
 
-#: data/ui/figure-settings-dialog.blp:26 data/ui/figure-settings-page.blp:210
+#: data/ui/figure-settings-dialog.blp:26 data/ui/figure-settings-page.blp:214
+#: graphs/style_editor.vala:55
 msgid "Style"
 msgstr "Estiloa"
 
-#: data/ui/figure-settings-page.blp:5 data/ui/window.blp:659
+#: data/ui/figure-settings-dialog.blp:60
+msgid "Import Style…"
+msgstr "Inportatu estiloa…"
+
+#: data/ui/figure-settings-dialog.blp:64
+msgid "Create Style…"
+msgstr "Sortu estiloa…"
+
+#: data/ui/figure-settings-page.blp:5 data/ui/window.blp:620
 msgid "Figure Settings"
 msgstr "Irudi-ezarpenak"
 
@@ -542,7 +560,7 @@ msgstr "Irudi-ezarpenak"
 msgid "Labels"
 msgstr "Etiketak"
 
-#: data/ui/figure-settings-page.blp:24
+#: data/ui/figure-settings-page.blp:24 graphs/style_editor.py:510
 msgid "Title"
 msgstr "Titulua"
 
@@ -602,123 +620,130 @@ msgstr "Eskuineko Y ardatzaren gehienekoa"
 msgid "Scaling"
 msgstr "Eskalatzen"
 
-#: data/ui/figure-settings-page.blp:125 graphs/window.vala:341
+#: data/ui/figure-settings-page.blp:125 graphs/window.vala:385
 msgid "Bottom X Axis Scale"
 msgstr "Beheko X ardatzaren eskala"
 
-#: data/ui/figure-settings-page.blp:128 data/ui/figure-settings-page.blp:142
-#: data/ui/figure-settings-page.blp:156 data/ui/figure-settings-page.blp:170
-#: graphs/window.vala:311
+#: data/ui/figure-settings-page.blp:128 data/ui/figure-settings-page.blp:143
+#: data/ui/figure-settings-page.blp:158 data/ui/figure-settings-page.blp:173
+#: graphs/window.vala:355
 msgctxt "scale"
 msgid "Linear"
 msgstr "Lineala"
 
-#: data/ui/figure-settings-page.blp:129 data/ui/figure-settings-page.blp:143
-#: data/ui/figure-settings-page.blp:157 data/ui/figure-settings-page.blp:171
-#: graphs/window.vala:312
+#: data/ui/figure-settings-page.blp:129 data/ui/figure-settings-page.blp:144
+#: data/ui/figure-settings-page.blp:159 data/ui/figure-settings-page.blp:174
+#: graphs/window.vala:356
 msgctxt "scale"
-msgid "Logarithmic"
-msgstr "Logaritmikoa"
+msgid "Logarithmic (Base 10)"
+msgstr "Logaritmikoa (10 oinarria)"
 
-#: data/ui/figure-settings-page.blp:130 data/ui/figure-settings-page.blp:144
-#: data/ui/figure-settings-page.blp:158 data/ui/figure-settings-page.blp:172
-#: graphs/window.vala:313
+#: data/ui/figure-settings-page.blp:130 data/ui/figure-settings-page.blp:145
+#: data/ui/figure-settings-page.blp:160 data/ui/figure-settings-page.blp:175
+#: graphs/window.vala:357
+msgctxt "scale"
+msgid "Logarithmic (Base 2)"
+msgstr "Logaritmikoa (2 oinarria)"
+
+#: data/ui/figure-settings-page.blp:131 data/ui/figure-settings-page.blp:146
+#: data/ui/figure-settings-page.blp:161 data/ui/figure-settings-page.blp:176
+#: graphs/window.vala:358
 msgctxt "scale"
 msgid "Radians"
 msgstr "Radianak"
 
-#: data/ui/figure-settings-page.blp:131 data/ui/figure-settings-page.blp:145
-#: data/ui/figure-settings-page.blp:159 data/ui/figure-settings-page.blp:173
-#: graphs/window.vala:314
+#: data/ui/figure-settings-page.blp:132 data/ui/figure-settings-page.blp:147
+#: data/ui/figure-settings-page.blp:162 data/ui/figure-settings-page.blp:177
+#: graphs/window.vala:359
 msgctxt "scale"
 msgid "Square Root"
 msgstr "Erro karratua"
 
-#: data/ui/figure-settings-page.blp:132 data/ui/figure-settings-page.blp:146
-#: data/ui/figure-settings-page.blp:160 data/ui/figure-settings-page.blp:174
+#: data/ui/figure-settings-page.blp:133 data/ui/figure-settings-page.blp:148
+#: data/ui/figure-settings-page.blp:163 data/ui/figure-settings-page.blp:178
 msgctxt "scale"
 msgid "Inverse"
 msgstr "Alderantzikatu"
 
-#: data/ui/figure-settings-page.blp:139 graphs/window.vala:342
+#: data/ui/figure-settings-page.blp:140 graphs/window.vala:386
 msgid "Top X Axis Scale"
 msgstr "Goiko X ardatzaren eskala"
 
-#: data/ui/figure-settings-page.blp:153 graphs/window.vala:347
+#: data/ui/figure-settings-page.blp:155 graphs/window.vala:391
 msgid "Left Y Axis Scale"
 msgstr "Ezkerreko Y ardatzaren eskala"
 
-#: data/ui/figure-settings-page.blp:167 graphs/window.vala:346
+#: data/ui/figure-settings-page.blp:170 graphs/window.vala:390
 msgid "Right Y Axis Scale"
 msgstr "Eskuineko Y ardatzaren eskala"
 
-#: data/ui/figure-settings-page.blp:181
+#: data/ui/figure-settings-page.blp:185
 msgid "Appearance"
 msgstr "Itxura"
 
-#: data/ui/figure-settings-page.blp:183
+#: data/ui/figure-settings-page.blp:187
 msgid "Show Legend"
 msgstr "Erakutsi legenda"
 
-#: data/ui/figure-settings-page.blp:187
+#: data/ui/figure-settings-page.blp:191
 msgid "Legend Position"
 msgstr "Legendaren posizioa"
 
-#: data/ui/figure-settings-page.blp:191
+#: data/ui/figure-settings-page.blp:195
 msgctxt "legend-position"
 msgid "Auto"
 msgstr "Auto"
 
-#: data/ui/figure-settings-page.blp:192
+#: data/ui/figure-settings-page.blp:196
 msgctxt "legend-position"
 msgid "Upper Right"
 msgstr "Goian eskuinean"
 
-#: data/ui/figure-settings-page.blp:193
+#: data/ui/figure-settings-page.blp:197
 msgctxt "legend-position"
 msgid "Upper Left"
 msgstr "Goian ezkerrean"
 
-#: data/ui/figure-settings-page.blp:194
+#: data/ui/figure-settings-page.blp:198
 msgctxt "legend-position"
 msgid "Lower Left"
 msgstr "Behean ezkerrean"
 
-#: data/ui/figure-settings-page.blp:195
+#: data/ui/figure-settings-page.blp:199
 msgctxt "legend-position"
 msgid "Lower Right"
 msgstr "Behean eskuinean"
 
-#: data/ui/figure-settings-page.blp:196
+#: data/ui/figure-settings-page.blp:200
 msgctxt "legend-position"
 msgid "Center Left"
 msgstr "Erdian ezkerrean"
 
-#: data/ui/figure-settings-page.blp:197
+#: data/ui/figure-settings-page.blp:201
 msgctxt "legend-position"
 msgid "Center Right"
 msgstr "Erdian eskuinean"
 
-#: data/ui/figure-settings-page.blp:198
+#: data/ui/figure-settings-page.blp:202
 msgctxt "legend-position"
 msgid "Lower Center"
 msgstr "Behean erdian"
 
-#: data/ui/figure-settings-page.blp:199
+#: data/ui/figure-settings-page.blp:203
 msgctxt "legend-position"
 msgid "Upper Center"
 msgstr "Goian erdian"
 
-#: data/ui/figure-settings-page.blp:200
+#: data/ui/figure-settings-page.blp:204
 msgctxt "legend-position"
 msgid "Center"
 msgstr "Erdian"
 
-#: data/ui/figure-settings-page.blp:206
+#: data/ui/figure-settings-page.blp:210
 msgid "Hide Unselected Items"
 msgstr "Ezkutatu hautatu gabeko elementuak"
 
-#: data/ui/figure-settings-page.blp:228
+#: data/ui/figure-settings-page.blp:229
 msgid "Set as Default"
 msgstr "Ezarri lehenetsi gisa"
 
@@ -738,7 +763,11 @@ msgstr "Gehienekoa"
 msgid "Import Parameters"
 msgstr "Inportatu parametroak"
 
-#: data/ui/import.blp:27
+#: data/ui/import.blp:24
+msgid "Reset to Defaults…"
+msgstr "Berrezarri lehenespenetara…"
+
+#: data/ui/import.blp:28
 msgid "Import"
 msgstr "Inportatu"
 
@@ -831,184 +860,19 @@ msgstr "Ez ikusitako errenkada-indizeak"
 msgid "Pick Color"
 msgstr "Aukeratu kolorea"
 
-#: data/ui/item-box.blp:46
+#: data/ui/item-box.blp:43
 msgid "Move Item"
 msgstr "Aldatu lekuz elementua"
 
-#: data/ui/item-box.blp:63
+#: data/ui/item-box.blp:60
 msgid "Remove Item"
 msgstr "Kendu elementua"
-
-#: data/ui/shortcuts.blp:11
-msgctxt "shortcut window"
-msgid "General"
-msgstr "Orokorra"
-
-#: data/ui/shortcuts.blp:14
-msgctxt "shortcut window"
-msgid "Show Shortcuts"
-msgstr "Erakutsi lasterbideak"
-
-#: data/ui/shortcuts.blp:19
-msgctxt "shortcut window"
-msgid "Open Help"
-msgstr "Ireki laguntza"
-
-#: data/ui/shortcuts.blp:24
-msgctxt "shortcut window"
-msgid "Open Figure Settings"
-msgstr "Ireki irudiaren ezarpenak"
-
-#: data/ui/shortcuts.blp:29
-msgctxt "shortcut window"
-msgid "Close Application"
-msgstr "Itxi aplikazioa"
-
-#: data/ui/shortcuts.blp:33
-msgctxt "shortcut window"
-msgid "Close Application Window"
-msgstr "Itxi aplikazioaren leihoa"
-
-#: data/ui/shortcuts.blp:39
-msgctxt "shortcut window"
-msgid "Mode Switching"
-msgstr "Modu-aldaketa"
-
-#: data/ui/shortcuts.blp:42
-msgctxt "shortcut window"
-msgid "Pan Mode"
-msgstr "Desplazamendu-modua"
-
-#: data/ui/shortcuts.blp:47
-msgctxt "shortcut window"
-msgid "Zoom Mode"
-msgstr "Zoom-modua"
-
-#: data/ui/shortcuts.blp:52
-msgctxt "shortcut window"
-msgid "Select Mode"
-msgstr "Hautapen-modua"
-
-#: data/ui/shortcuts.blp:58
-msgctxt "shortcut window"
-msgid "New Data"
-msgstr "Datu berriak"
-
-#: data/ui/shortcuts.blp:61
-msgctxt "shortcut window"
-msgid "Add Data from Equation"
-msgstr "Gehitu datuak ekuaziotik"
-
-#: data/ui/shortcuts.blp:66
-msgctxt "shortcut window"
-msgid "Add Data from File"
-msgstr "Gehitu datuak fitxategitik"
-
-#: data/ui/shortcuts.blp:71
-msgctxt "shortcut window"
-msgid "New Project"
-msgstr "Proiektu berria"
-
-#: data/ui/shortcuts.blp:76
-msgctxt "shortcut window"
-msgid "Open Project"
-msgstr "Ireki proiektua"
-
-#: data/ui/shortcuts.blp:81
-msgctxt "shortcut window"
-msgid "Delete Selected Data"
-msgstr "Ezabatu hautatutako datuak"
-
-#: data/ui/shortcuts.blp:87
-msgctxt "shortcut window"
-msgid "Save and Export"
-msgstr "Gorde eta esportatu"
-
-#: data/ui/shortcuts.blp:89
-msgctxt "shortcut window"
-msgid "Export Data"
-msgstr "Esportatu datuak"
-
-#: data/ui/shortcuts.blp:93
-msgctxt "shortcut window"
-msgid "Export Figure"
-msgstr "Esportatu irudia"
-
-#: data/ui/shortcuts.blp:97
-msgctxt "shortcut window"
-msgid "Save Project"
-msgstr "Gorde proiektua"
-
-#: data/ui/shortcuts.blp:101
-msgctxt "shortcut window"
-msgid "Save Project As"
-msgstr "Gorde proiektua honela"
-
-#: data/ui/shortcuts.blp:107
-msgctxt "shortcut window"
-msgid "View"
-msgstr "Ikusi"
-
-#: data/ui/shortcuts.blp:110
-msgctxt "shortcut window"
-msgid "Previous View"
-msgstr "Aurreko ikuspegia"
-
-#: data/ui/shortcuts.blp:115
-msgctxt "shortcut window"
-msgid "Next View"
-msgstr "Hurrengo ikuspegia"
-
-#: data/ui/shortcuts.blp:120
-msgctxt "shortcut window"
-msgid "Optimize limits"
-msgstr "Optimizatu mugak"
-
-#: data/ui/shortcuts.blp:125
-msgctxt "shortcut window"
-msgid "Zoom in"
-msgstr "Handiagotu"
-
-#: data/ui/shortcuts.blp:130
-msgctxt "shortcut window"
-msgid "Zoom out"
-msgstr "Txikiagotu"
-
-#: data/ui/shortcuts.blp:135 data/ui/shortcuts.blp:155
-msgctxt "shortcut window"
-msgid "Select None"
-msgstr "Ez hautatu ezer"
-
-#: data/ui/shortcuts.blp:141
-msgctxt "shortcut window"
-msgid "Toggle Sidebar"
-msgstr "Txandakatu alboko barra"
-
-#: data/ui/shortcuts.blp:147
-msgctxt "shortcut window"
-msgid "Actions"
-msgstr "Ekintzak"
-
-#: data/ui/shortcuts.blp:150
-msgctxt "shortcut window"
-msgid "Select All"
-msgstr "Hautatu dena"
-
-#: data/ui/shortcuts.blp:160
-msgctxt "shortcut window"
-msgid "Undo Action"
-msgstr "Desegin ekintza"
-
-#: data/ui/shortcuts.blp:165
-msgctxt "shortcut window"
-msgid "Redo Action"
-msgstr "Berregin ekintza"
 
 #: data/ui/smoothen-settings.blp:7
 msgid "Smoothen Settings"
 msgstr "Leuntze-ezarpenak"
 
-#: data/ui/smoothen-settings.blp:30 data/ui/window.blp:694
+#: data/ui/smoothen-settings.blp:30 data/ui/window.blp:655
 msgid "Savitzky–Golay Filter"
 msgstr "Savitzky–Golay iragazkia"
 
@@ -1024,7 +888,7 @@ msgstr "Datuen zein ehunekotan hedatuko den iragazkiaren leihoa"
 msgid "Polynomial degree"
 msgstr "Gradu polinomiala"
 
-#: data/ui/smoothen-settings.blp:48 data/ui/window.blp:699
+#: data/ui/smoothen-settings.blp:48 data/ui/window.blp:660
 msgid "Moving Average"
 msgstr "Batezbesteko mugikorra"
 
@@ -1036,209 +900,289 @@ msgstr "Koadro-puntuak"
 msgid "Amount of points to use when calculating a moving average"
 msgstr "Batezbesteko mugikorra kalkulatzeko erabiliko den puntu kopurua"
 
-#: data/ui/style-color-box.blp:18 data/ui/style-preview.blp:30
+#: data/ui/style-color-box.blp:17
 msgid "Edit"
 msgstr "Editatu"
 
-#: data/ui/style-color-box.blp:29
+#: data/ui/style-color-box.blp:28
 msgid "Remove"
 msgstr "Kendu"
 
-#: data/ui/style-editor.blp:11
+#: data/ui/style-editor-box.blp:11
 msgid "Style Name"
 msgstr "Estilo-izena"
 
-#: data/ui/style-editor.blp:15
+#: data/ui/style-editor-box.blp:15
 msgid "Font"
 msgstr "Letra-tipoa"
 
-#: data/ui/style-editor.blp:26
+#: data/ui/style-editor-box.blp:26
 msgid "Title Size"
 msgstr "Titulu-tamaina"
 
-#: data/ui/style-editor.blp:27
+#: data/ui/style-editor-box.blp:27
 msgid "Title size in relation to text size"
 msgstr "Titulu-tamaina testu-tamainarekiko"
 
-#: data/ui/style-editor.blp:40
+#: data/ui/style-editor-box.blp:40
 msgid "Label Size"
 msgstr "Etiketa-tamaina"
 
-#: data/ui/style-editor.blp:41
+#: data/ui/style-editor-box.blp:41
 msgid "Label size in relation to text size"
 msgstr "Etiketa-tamaina testu-tamainarekiko"
 
-#: data/ui/style-editor.blp:55
+#: data/ui/style-editor-box.blp:55
 msgid "Lines"
 msgstr "Lerroak"
 
-#: data/ui/style-editor.blp:136
+#: data/ui/style-editor-box.blp:136
 msgid "Axes"
 msgstr "Ardatzak"
 
-#: data/ui/style-editor.blp:139
+#: data/ui/style-editor-box.blp:139
 msgid "Axis Width"
 msgstr "Ardatz-zabalera"
 
-#: data/ui/style-editor.blp:152
+#: data/ui/style-editor-box.blp:152
 msgid "Draw Frame"
 msgstr "Marraztu markoa"
 
-#: data/ui/style-editor.blp:157
+#: data/ui/style-editor-box.blp:157
 msgid "Ticks"
 msgstr "Markak"
 
-#: data/ui/style-editor.blp:160
+#: data/ui/style-editor-box.blp:160
 msgid "Tick Directions"
 msgstr "Marken norabidea"
 
-#: data/ui/style-editor.blp:162
+#: data/ui/style-editor-box.blp:162
 msgid "Inwards"
 msgstr "Barrurantz"
 
-#: data/ui/style-editor.blp:162
+#: data/ui/style-editor-box.blp:162
 msgid "Outwards"
 msgstr "Kanporantz"
 
-#: data/ui/style-editor.blp:167
+#: data/ui/style-editor-box.blp:167
 msgid "Minor Ticks"
 msgstr "Bigarren mailako markak"
 
-#: data/ui/style-editor.blp:171
+#: data/ui/style-editor-box.blp:171
 msgid "Major Tick Width"
 msgstr "Marka nagusien zabalera"
 
-#: data/ui/style-editor.blp:184
+#: data/ui/style-editor-box.blp:184
 msgid "Minor Tick Width"
 msgstr "Bigarren mailako marken zabalera"
 
-#: data/ui/style-editor.blp:198
+#: data/ui/style-editor-box.blp:198
 msgid "Major Tick Length"
 msgstr "Marka nagusien luzera"
 
-#: data/ui/style-editor.blp:211
+#: data/ui/style-editor-box.blp:211
 msgid "Minor Tick Length"
 msgstr "Bigarren mailako marken luzera"
 
-#: data/ui/style-editor.blp:225
+#: data/ui/style-editor-box.blp:225
 msgid "Ticks on Bottom Axis"
 msgstr "Markak beheko ardatzean"
 
-#: data/ui/style-editor.blp:229
+#: data/ui/style-editor-box.blp:229
 msgid "Ticks on Left Axis"
 msgstr "Markak ezkerreko ardatzean"
 
-#: data/ui/style-editor.blp:233
+#: data/ui/style-editor-box.blp:233
 msgid "Ticks on Right Axis"
 msgstr "Markak eskuineko ardatzean"
 
-#: data/ui/style-editor.blp:237
+#: data/ui/style-editor-box.blp:237
 msgid "Ticks on Top Axis"
 msgstr "Markak goiko ardatzean"
 
-#: data/ui/style-editor.blp:242
+#: data/ui/style-editor-box.blp:242
 msgid "Grid"
 msgstr "Sareta"
 
-#: data/ui/style-editor.blp:245
+#: data/ui/style-editor-box.blp:245
 msgid "Show Grid"
 msgstr "Erakutsi sareta"
 
-#: data/ui/style-editor.blp:249
+#: data/ui/style-editor-box.blp:249
 msgid "Grid Width"
 msgstr "Saretaren zabalera"
 
-#: data/ui/style-editor.blp:263
+#: data/ui/style-editor-box.blp:263
 msgid "Grid Opacity"
 msgstr "Saretaren opakutasuna"
 
-#: data/ui/style-editor.blp:278
+#: data/ui/style-editor-box.blp:278
 msgid "Padding"
 msgstr "Tarte betegarria"
 
-#: data/ui/style-editor.blp:279
+#: data/ui/style-editor-box.blp:279
 msgid "Padding for different parts of the figure"
 msgstr "Irudiaren atal bakoitzaren betegarriak"
 
-#: data/ui/style-editor.blp:282
+#: data/ui/style-editor-box.blp:282
 msgid "Value Padding"
 msgstr "Balioen betegarria"
 
-#: data/ui/style-editor.blp:283
+#: data/ui/style-editor-box.blp:283
 msgid "Padding between axes and values"
 msgstr "Ardatzen eta balioen arteko betegarria"
 
-#: data/ui/style-editor.blp:296
+#: data/ui/style-editor-box.blp:296
 msgid "Label Padding"
 msgstr "Etiketen betegarria"
 
-#: data/ui/style-editor.blp:297
+#: data/ui/style-editor-box.blp:297
 msgid "Padding between axes and labels"
 msgstr "Ardatzen eta etiketen arteko betegarria"
 
-#: data/ui/style-editor.blp:310
+#: data/ui/style-editor-box.blp:310
 msgid "Title Padding"
 msgstr "Tituluaren betegarria"
 
-#: data/ui/style-editor.blp:311
+#: data/ui/style-editor-box.blp:311
 msgid "Padding between axes and the title"
 msgstr "Ardatzen eta tituluaren arteko betegarria"
 
-#: data/ui/style-editor.blp:325
+#: data/ui/style-editor-box.blp:325
 msgid "Colors"
 msgstr "Koloreak"
 
-#: data/ui/style-editor.blp:330
+#: data/ui/style-editor-box.blp:330
 msgid "Label text might be hard to read"
 msgstr "Etiketaren testua irakurtzeko zaila izan daiteke"
 
-#: data/ui/style-editor.blp:335
+#: data/ui/style-editor-box.blp:335
 msgid "Poor Contrast"
 msgstr "Kontraste gutxi"
 
-#: data/ui/style-editor.blp:350
+#: data/ui/style-editor-box.blp:350
 msgid "Text Color"
 msgstr "Testuaren kolorea"
 
-#: data/ui/style-editor.blp:355 data/ui/style-editor.blp:377
-#: data/ui/style-editor.blp:399 data/ui/style-editor.blp:421
-#: data/ui/style-editor.blp:443 data/ui/style-editor.blp:465
+#: data/ui/style-editor-box.blp:355 data/ui/style-editor-box.blp:377
+#: data/ui/style-editor-box.blp:399 data/ui/style-editor-box.blp:421
+#: data/ui/style-editor-box.blp:443 data/ui/style-editor-box.blp:465
 msgid "Change Color"
 msgstr "Aldatu kolorea"
 
-#: data/ui/style-editor.blp:372
+#: data/ui/style-editor-box.blp:372
 msgid "Tick Color"
 msgstr "Marken kolorea"
 
-#: data/ui/style-editor.blp:394
+#: data/ui/style-editor-box.blp:394
 msgid "Axis Color"
 msgstr "Ardatzen kolorea"
 
-#: data/ui/style-editor.blp:416
+#: data/ui/style-editor-box.blp:416
 msgid "Grid Color"
 msgstr "Saretaren kolorea"
 
-#: data/ui/style-editor.blp:438
+#: data/ui/style-editor-box.blp:438
 msgid "Background Color"
 msgstr "Atzeko planoaren kolorea"
 
-#: data/ui/style-editor.blp:460
+#: data/ui/style-editor-box.blp:460
 msgid "Outline Color"
 msgstr "Ingeradaren kolorea"
 
-#: data/ui/style-editor.blp:479
+#: data/ui/style-editor-box.blp:479
 msgid "Line Colors"
 msgstr "Marren kolorea"
 
-#: data/ui/style-editor.blp:485
+#: data/ui/style-editor-box.blp:485
 msgid "Add Color"
 msgstr "Gehitu kolorea"
+
+#: data/ui/style-editor-shortcuts.blp:11 data/ui/window-shortcuts.blp:11
+msgctxt "shortcut window"
+msgid "General"
+msgstr "Orokorra"
+
+#: data/ui/style-editor-shortcuts.blp:14 data/ui/window-shortcuts.blp:14
+msgctxt "shortcut window"
+msgid "Show Shortcuts"
+msgstr "Erakutsi lasterbideak"
+
+#: data/ui/style-editor-shortcuts.blp:19 data/ui/window-shortcuts.blp:19
+msgctxt "shortcut window"
+msgid "Open Help"
+msgstr "Ireki laguntza"
+
+#: data/ui/style-editor-shortcuts.blp:24 data/ui/window-shortcuts.blp:29
+msgctxt "shortcut window"
+msgid "Close Application"
+msgstr "Itxi aplikazioa"
+
+#: data/ui/style-editor-shortcuts.blp:29 data/ui/window-shortcuts.blp:34
+msgctxt "shortcut window"
+msgid "Close Application Window"
+msgstr "Itxi aplikazioaren leihoa"
+
+#: data/ui/style-editor-shortcuts.blp:35
+msgctxt "shortcut window"
+msgid "Save"
+msgstr "Gorde"
+
+#: data/ui/style-editor-shortcuts.blp:38 data/ui/window-shortcuts.blp:101
+msgctxt "shortcut window"
+msgid "Save Project"
+msgstr "Gorde proiektua"
+
+#: data/ui/style-editor-shortcuts.blp:43 data/ui/window-shortcuts.blp:106
+msgctxt "shortcut window"
+msgid "Save Project As"
+msgstr "Gorde proiektua honela"
+
+#: data/ui/style-editor-window.blp:5
+msgid "Error - No Style selected"
+msgstr "Errorea - Ez da estilorik detektatu"
+
+#: data/ui/style-editor-window.blp:39 data/ui/window.blp:170
+msgid "Open Application Menu"
+msgstr "Ireki aplikazioaren menua"
+
+#: data/ui/style-editor-window.blp:74
+msgid "Save Style…"
+msgstr "Gorde estiloa…"
+
+#: data/ui/style-editor-window.blp:75
+msgid "Save Style as…"
+msgstr "Gorde estiloa honela…"
+
+#: data/ui/style-editor-window.blp:78 data/ui/window.blp:623
+msgid "Keyboard Shortcuts"
+msgstr "Laster-teklak"
+
+#: data/ui/style-editor-window.blp:79 data/ui/window.blp:624
+msgid "Help"
+msgstr "Laguntza"
+
+#: data/ui/style-editor-window.blp:80 data/ui/window.blp:625
+msgid "About Graphs"
+msgstr "Grafikoak aplikazioari buruz"
+
+#: data/ui/style-preview.blp:45
+msgid "Open"
+msgstr "Ireki"
+
+#: data/ui/style-preview.blp:49
+msgid "Open With…"
+msgstr "Ireki honekin…"
+
+#: data/ui/style-preview.blp:53
+msgid "Delete…"
+msgstr "Ezabatu…"
 
 #: data/ui/transform.blp:6
 msgid "Transform Data"
 msgstr "Transformatu datuak"
 
-#: data/ui/transform.blp:22 data/ui/window.blp:394
+#: data/ui/transform.blp:22 data/ui/window.blp:359
 msgid "Transform"
 msgstr "Eraldatu"
 
@@ -1272,37 +1216,49 @@ msgstr "X ="
 msgid "Discard Unselected Data"
 msgstr "Baztertu hautatu gabeko datuak"
 
-#: data/ui/window.blp:182
+#: data/ui/window.blp:162
 msgid "Add New Data"
 msgstr "Gehitu datu berriak"
 
-#: data/ui/window.blp:190
-msgid "Open Application Menu"
-msgstr "Ireki aplikazioaren menua"
-
-#: data/ui/window.blp:219
+#: data/ui/window.blp:199
 msgid "No Data"
 msgstr "Daturik ez"
 
-#: data/ui/window.blp:220
+#: data/ui/window.blp:200
 msgid "Add data from a file or manually as an equation"
 msgstr "Gehitu datuak fitxategi batetik edo eskuz ekuazio gisa"
 
-#: data/ui/window.blp:241
+#: data/ui/window.blp:221
 msgid "Pan Mode. Click and drag to pan"
 msgstr "Desplazamendu-modua. Klik eta arrastatu mugitzeko"
 
-#: data/ui/window.blp:247
+#: data/ui/window.blp:227
 msgid "Zoom Mode. Select an area on the figure to zoom in"
 msgstr "Zoom-modua. Hautatu irudiko area bat zoom egiteko"
 
-#: data/ui/window.blp:253
+#: data/ui/window.blp:233
 msgid "Select Mode. Click and drag to make a selection of data"
 msgstr "Hautatze-modua. Klik eta arrastatu datuen hautapen bat egiteko"
 
-#: data/ui/window.blp:284
+#: data/ui/window.blp:254
 msgid "Adjust"
 msgstr "Doitu"
+
+#: data/ui/window.blp:270
+msgid "Combine"
+msgstr "Konbinatu"
+
+#: data/ui/window.blp:272
+msgid "Combine all selected data"
+msgstr "Konbinatu hautatutako datu guztiak"
+
+#: data/ui/window.blp:285
+msgid "Cut"
+msgstr "Ebaki"
+
+#: data/ui/window.blp:287
+msgid "Cut selected data"
+msgstr "Ebaki hautatutako datuak"
 
 #: data/ui/window.blp:299
 msgid "Shift"
@@ -1312,346 +1268,473 @@ msgstr "Shift"
 msgid "Shift all data vertically with respect to each other"
 msgstr "Desplazatu datu guztiak bertikalean elkarrekiko"
 
-#: data/ui/window.blp:316
+#: data/ui/window.blp:314
 msgid "Normalize"
 msgstr "Normalizatu"
 
-#: data/ui/window.blp:318
+#: data/ui/window.blp:316
 msgid "Normalize data"
 msgstr "Normalizatu datuak"
 
-#: data/ui/window.blp:334
+#: data/ui/window.blp:331
 msgid "Smoothen"
 msgstr "Leundu"
 
-#: data/ui/window.blp:336
+#: data/ui/window.blp:333
 msgid "Smoothen data"
 msgstr "Leundu datuak"
 
-#: data/ui/window.blp:351
+#: data/ui/window.blp:348
 msgid "Center"
 msgstr "Erdian"
 
-#: data/ui/window.blp:353
+#: data/ui/window.blp:350
 msgid "Center data"
 msgstr "Zentratu datuak"
 
-#: data/ui/window.blp:368
-msgid "Combine"
-msgstr "Konbinatu"
-
-#: data/ui/window.blp:370
-msgid "Combine all selected data"
-msgstr "Konbinatu hautatutako datu guztiak"
-
-#: data/ui/window.blp:384
-msgid "Cut"
-msgstr "Ebaki"
-
-#: data/ui/window.blp:386
-msgid "Cut selected data"
-msgstr "Ebaki hautatutako datuak"
-
-#: data/ui/window.blp:410
+#: data/ui/window.blp:374
 msgid "Derivative"
 msgstr "Deribatua"
 
-#: data/ui/window.blp:412
+#: data/ui/window.blp:376
 msgid "Get the derivative of the data"
 msgstr "Eskuratu datuen deribatua"
 
-#: data/ui/window.blp:426
+#: data/ui/window.blp:389
 msgid "Integral"
 msgstr "Integrala"
 
-#: data/ui/window.blp:428
+#: data/ui/window.blp:391
 msgid "Get the indefinite integral of the data"
 msgstr "Ezkuratu datuen integral mugagabea"
 
-#: data/ui/window.blp:442
+#: data/ui/window.blp:405
 msgid "FFT"
 msgstr "FTA"
 
-#: data/ui/window.blp:444
+#: data/ui/window.blp:407
 msgid "Get the Fast Fourier Transform of the data"
 msgstr "Eskuratu datuen Fourierren Transformatu Azkarra"
 
-#: data/ui/window.blp:458
+#: data/ui/window.blp:421
 msgid "Inverse FFT"
 msgstr "Alderantzizko FTA"
 
-#: data/ui/window.blp:460
+#: data/ui/window.blp:423
 msgid "Get the Inverse Fast Fourier Transform of the data"
 msgstr "Eskuratu datuen Fourierren Transformatu Azkarraren alderantzizkoa"
 
-#: data/ui/window.blp:475
+#: data/ui/window.blp:437
 msgid "Custom Transformation"
 msgstr "Transformazio pertsonalizatua"
 
-#: data/ui/window.blp:477
+#: data/ui/window.blp:439
 msgid "Perform custom transformations on the data"
 msgstr "Egin datuen transformatu pertsonalizatua"
 
-#: data/ui/window.blp:485
+#: data/ui/window.blp:447
 msgid "Modify"
 msgstr "Aldatu"
 
-#: data/ui/window.blp:506
+#: data/ui/window.blp:467
 msgid "Translate X"
 msgstr "Desplazatu X"
 
-#: data/ui/window.blp:529
+#: data/ui/window.blp:490
 msgid "Translate Y"
 msgstr "Desplazatu Y"
 
-#: data/ui/window.blp:552
+#: data/ui/window.blp:513
 msgid "Multiply X"
 msgstr "Biderkatu X"
 
-#: data/ui/window.blp:575
+#: data/ui/window.blp:536
 msgid "Multiply Y"
 msgstr "Biderkatu Y"
 
-#: data/ui/window.blp:605 graphs/window.vala:282
+#: data/ui/window.blp:566 graphs/window.vala:326
 msgid "Undo"
 msgstr "Desegin"
 
-#: data/ui/window.blp:610
+#: data/ui/window.blp:571
 msgid "Redo"
 msgstr "Berregin"
 
-#: data/ui/window.blp:615
+#: data/ui/window.blp:576
 msgid "View Menu"
 msgstr "Ikuspegien menua"
 
-#: data/ui/window.blp:623
+#: data/ui/window.blp:584
 msgid "Next View"
 msgstr "Hurrengo ikuspegia"
 
-#: data/ui/window.blp:629
+#: data/ui/window.blp:590
 msgid "Previous View"
 msgstr "Aurreko ikuspegia"
 
-#: data/ui/window.blp:647
+#: data/ui/window.blp:608
 msgid "New Project"
 msgstr "Proiektu berria"
 
-#: data/ui/window.blp:650
+#: data/ui/window.blp:611
 msgid "Save Project…"
 msgstr "Gorde proiektua…"
 
-#: data/ui/window.blp:651
+#: data/ui/window.blp:612
 msgid "Save Project as…"
 msgstr "Gorde proiektua honela…"
 
-#: data/ui/window.blp:652
+#: data/ui/window.blp:613
 msgid "Open Project…"
 msgstr "Ireki proiektua…"
 
-#: data/ui/window.blp:655
+#: data/ui/window.blp:616
 msgid "Export Data…"
 msgstr "Esportatu datuak…"
 
-#: data/ui/window.blp:656
+#: data/ui/window.blp:617
 msgid "Export Figure…"
 msgstr "Esportatu irudia…"
 
-#: data/ui/window.blp:662
-msgid "Keyboard Shortcuts"
-msgstr "Laster-teklak"
-
-#: data/ui/window.blp:663
-msgid "Help"
-msgstr "Laguntza"
-
-#: data/ui/window.blp:664
-msgid "About Graphs"
-msgstr "Grafikoak aplikazioari buruz"
-
-#: data/ui/window.blp:670
+#: data/ui/window.blp:631
 msgid "Add Data from File…"
 msgstr "Gehitu datuak fitxategitik…"
 
-#: data/ui/window.blp:671
+#: data/ui/window.blp:632
 msgid "Add Equation…"
 msgstr "Gehitu ekuazioa…"
 
-#: data/ui/window.blp:680
+#: data/ui/window.blp:641
 msgid "At Maximum Y Value"
 msgstr "Gehieneko Y balioan"
 
-#: data/ui/window.blp:685
+#: data/ui/window.blp:646
 msgid "At Middle X Value"
 msgstr "Erdiko X balioan"
 
-#: data/ui/window.blp:706
+#: data/ui/window.blp:667
 msgid "Advanced Settings"
 msgstr "Ezarpen aurreratuak"
 
-#: graphs/about.vala:40
-msgid "translator-credits"
-msgstr "Asier Sarasua Garmendia <asiersarasua@ni.eus>"
+#: data/ui/window-shortcuts.blp:24
+msgctxt "shortcut window"
+msgid "Open Figure Settings"
+msgstr "Ireki irudiaren ezarpenak"
+
+#: data/ui/window-shortcuts.blp:40
+msgctxt "shortcut window"
+msgid "Mode Switching"
+msgstr "Modu-aldaketa"
+
+#: data/ui/window-shortcuts.blp:43
+msgctxt "shortcut window"
+msgid "Pan Mode"
+msgstr "Desplazamendu-modua"
+
+#: data/ui/window-shortcuts.blp:48
+msgctxt "shortcut window"
+msgid "Zoom Mode"
+msgstr "Zoom-modua"
+
+#: data/ui/window-shortcuts.blp:53
+msgctxt "shortcut window"
+msgid "Select Mode"
+msgstr "Hautapen-modua"
+
+#: data/ui/window-shortcuts.blp:59
+msgctxt "shortcut window"
+msgid "New Data"
+msgstr "Datu berriak"
+
+#: data/ui/window-shortcuts.blp:62
+msgctxt "shortcut window"
+msgid "Add Data from Equation"
+msgstr "Gehitu datuak ekuaziotik"
+
+#: data/ui/window-shortcuts.blp:67
+msgctxt "shortcut window"
+msgid "Add Data from File"
+msgstr "Gehitu datuak fitxategitik"
+
+#: data/ui/window-shortcuts.blp:72
+msgctxt "shortcut window"
+msgid "New Project"
+msgstr "Proiektu berria"
+
+#: data/ui/window-shortcuts.blp:77
+msgctxt "shortcut window"
+msgid "Open Project"
+msgstr "Ireki proiektua"
+
+#: data/ui/window-shortcuts.blp:82
+msgctxt "shortcut window"
+msgid "Delete Selected Data"
+msgstr "Ezabatu hautatutako datuak"
+
+#: data/ui/window-shortcuts.blp:88
+msgctxt "shortcut window"
+msgid "Save and Export"
+msgstr "Gorde eta esportatu"
+
+#: data/ui/window-shortcuts.blp:91
+msgctxt "shortcut window"
+msgid "Export Data"
+msgstr "Esportatu datuak"
+
+#: data/ui/window-shortcuts.blp:96
+msgctxt "shortcut window"
+msgid "Export Figure"
+msgstr "Esportatu irudia"
+
+#: data/ui/window-shortcuts.blp:112
+msgctxt "shortcut window"
+msgid "View"
+msgstr "Ikusi"
+
+#: data/ui/window-shortcuts.blp:115
+msgctxt "shortcut window"
+msgid "Previous View"
+msgstr "Aurreko ikuspegia"
+
+#: data/ui/window-shortcuts.blp:120
+msgctxt "shortcut window"
+msgid "Next View"
+msgstr "Hurrengo ikuspegia"
+
+#: data/ui/window-shortcuts.blp:125
+msgctxt "shortcut window"
+msgid "Optimize limits"
+msgstr "Optimizatu mugak"
+
+#: data/ui/window-shortcuts.blp:130
+msgctxt "shortcut window"
+msgid "Zoom in"
+msgstr "Handiagotu"
+
+#: data/ui/window-shortcuts.blp:135
+msgctxt "shortcut window"
+msgid "Zoom out"
+msgstr "Txikiagotu"
+
+#: data/ui/window-shortcuts.blp:140 data/ui/window-shortcuts.blp:160
+msgctxt "shortcut window"
+msgid "Select None"
+msgstr "Ez hautatu ezer"
+
+#: data/ui/window-shortcuts.blp:146
+msgctxt "shortcut window"
+msgid "Toggle Sidebar"
+msgstr "Txandakatu alboko barra"
+
+#: data/ui/window-shortcuts.blp:152
+msgctxt "shortcut window"
+msgid "Actions"
+msgstr "Ekintzak"
+
+#: data/ui/window-shortcuts.blp:155
+msgctxt "shortcut window"
+msgid "Select All"
+msgstr "Hautatu dena"
+
+#: data/ui/window-shortcuts.blp:165
+msgctxt "shortcut window"
+msgid "Undo Action"
+msgstr "Desegin ekintza"
+
+#: data/ui/window-shortcuts.blp:170
+msgctxt "shortcut window"
+msgid "Redo Action"
+msgstr "Berregin ekintza"
+
+#: graphs/actions.vala:145 graphs/item_box.vala:59
+#, c-format
+msgid "Deleted %s"
+msgstr "%s ezabatu da"
+
+#: graphs/actions.vala:170
+msgctxt "file-filter"
+msgid "Supported files"
+msgstr "Onartutako fitxategiak"
+
+#: graphs/actions.vala:174
+msgctxt "file-filter"
+msgid "ASCII files"
+msgstr "ASCII fitxategiak"
+
+#: graphs/actions.vala:178
+msgctxt "file-filter"
+msgid "PANalytical XRDML"
+msgstr "PANalytical XRDML"
+
+#: graphs/actions.vala:181
+msgctxt "file-filter"
+msgid "Leybold xry"
+msgstr "Leybold xry"
 
 #: graphs/application.py:43
 #, python-brace-format
 msgid "Could not load {font}"
 msgstr "Ezin da {font} kargatu"
 
-#: graphs/application.vala:290 graphs/item_box.vala:58
-#, c-format
-msgid "Deleted %s"
-msgstr "%s ezabatu da"
+#: graphs/application.vala:88
+msgid "translator-credits"
+msgstr "Asier Sarasua Garmendia <asiersarasua@ni.eus>"
 
-#: graphs/application.vala:321
-msgctxt "file-filter"
-msgid "Supported files"
-msgstr "Onartutako fitxategiak"
-
-#: graphs/application.vala:325
-msgctxt "file-filter"
-msgid "ASCII files"
-msgstr "ASCII fitxategiak"
-
-#: graphs/application.vala:329
-msgctxt "file-filter"
-msgid "PANalytical XRDML"
-msgstr "PANalytical XRDML"
-
-#: graphs/application.vala:332
-msgctxt "file-filter"
-msgid "Leybold xry"
-msgstr "Leybold xry"
-
-#: graphs/curve_fitting.py:180
+#: graphs/curve_fitting.py:181
 msgid "Results:"
 msgstr "Emaitzak:"
 
-#: graphs/curve_fitting.py:184
+#: graphs/curve_fitting.py:185
 msgid ""
 "Please enter valid fitting \n"
 "parameters to start the fit"
 msgstr "Sartu baliozko doitze-parametroak\n"
 "doitzeari ekiteko"
 
-#: graphs/curve_fitting.py:188
+#: graphs/curve_fitting.py:189
 msgid ""
 "Please enter a valid equation \n"
 "to start the fit"
 msgstr "Sartu baliozko ekuazioa\n"
 "doitzeari ekiteko"
 
-#: graphs/curve_fitting.py:192
+#: graphs/curve_fitting.py:193
 msgid ""
 "Please enter valid fitting bounds \n"
 "to start the fit"
 msgstr "Sartu baliozko doitze-mugak\n"
 "doitzeari ekiteko"
 
-#: graphs/curve_fitting.py:205
+#: graphs/curve_fitting.py:206
 #, python-brace-format
 msgid "Sum of R²: {R2}"
 msgstr "R² batuketa: {R2}"
 
-#: graphs/curve_fitting.vala:135
+#: graphs/curve_fitting.vala:136
 #, c-format
 msgid "Fitting Parameters for %s"
 msgstr "Doitze-parametroak %s(e)rako"
 
-#: graphs/data.py:72
-msgid "Untitled Project"
-msgstr "Izenik gabeko proiektua"
+#: graphs/data.py:94
+#, python-brace-format
+msgid "Could not parse {stylename}, loading system preferred style"
+msgstr "Ezin da {stylename} analizatu, sistemaren estilo lehenetsia kargatuko da"
 
-#: graphs/data.py:73
-msgid "Draft"
-msgstr "Zirriborroa"
+#: graphs/data.py:99
+#, python-brace-format
+msgid "Plot style {stylename} does not exist loading system preferred"
+msgstr "{stylename} diagrama-estiloa ez da existitzen, sistemaren lehenetsia kargatuko da"
 
-#: graphs/export_items.vala:8
-msgid "No data to export"
-msgstr "Ez dago daturik esportatzeko"
+#: graphs/data.py:546
+msgid "Failed to parse project file"
+msgstr "Huts egin du proiektu-fitxategiaren analisiak"
 
-#: graphs/export_items.vala:29
-msgctxt "file-filter"
-msgid "Text Files"
-msgstr "Testu-fitxategiak"
+#: graphs/data.py:552
+msgid "Failed to load project"
+msgstr "Huts egin du proiektua kargatzeak"
 
-#: graphs/export_figure.vala:41
+#: graphs/export_figure.vala:43
 msgctxt "filename"
 msgid "Exported Figure"
 msgstr "Esportatutako irudia"
 
-#: graphs/figure_settings.vala:157
+#: graphs/export_items.vala:10
+msgid "No data to export"
+msgstr "Ez dago daturik esportatzeko"
+
+#: graphs/export_items.vala:32
+msgctxt "file-filter"
+msgid "Text Files"
+msgstr "Testu-fitxategiak"
+
+#: graphs/figure_settings.vala:159
 msgid "X Axis Minimum"
 msgstr "X ardatzaren gutxienekoa"
 
-#: graphs/figure_settings.vala:158
+#: graphs/figure_settings.vala:160
 msgid "Y Axis Minimum"
 msgstr "Y ardatzaren gutxienekoa"
 
-#: graphs/figure_settings.vala:160
+#: graphs/figure_settings.vala:162
 msgid "X Axis Maximum"
 msgstr "X ardatzaren gehienekoa"
 
-#: graphs/figure_settings.vala:161
+#: graphs/figure_settings.vala:163
 msgid "Y Axis Maximum"
 msgstr "Y ardatzaren gehienekoa"
 
-#: graphs/figure_settings.vala:171 graphs/window.vala:343
+#: graphs/figure_settings.vala:173 graphs/window.vala:387
 msgid "X Axis Scale"
 msgstr "X ardatzaren eskala"
 
-#: graphs/figure_settings.vala:172 graphs/figure_settings.vala:176
+#: graphs/figure_settings.vala:174 graphs/figure_settings.vala:178
 msgid "X Axis Label"
 msgstr "X ardatzaren etiketa"
 
-#: graphs/figure_settings.vala:175 graphs/window.vala:348
+#: graphs/figure_settings.vala:177 graphs/window.vala:392
 msgid "Y Axis Scale"
 msgstr "Y ardatzaren eskala"
 
-#: graphs/figure_settings.vala:247
+#: graphs/figure_settings.vala:277
 msgid "Defaults Updated"
 msgstr "Lehenespenak eguneratu dira"
 
-#: graphs/figure_settings.vala:272
+#: graphs/figure_settings.vala:308
 #, c-format
 msgid "Are you sure you want to delete %s?"
 msgstr "Ziur zaude %s ezabatu nahi duzula?"
 
-#: graphs/file_import.vala:40
-msgid "Are you sure you want to reset the import settings?"
-msgstr "Ziur zaude inportazio-ezarpenak berrezarri nahi dituzula?"
-
-#: graphs/item.py:86
+#: graphs/item.py:88
 msgid "Dataset"
 msgstr "Datu multzoa"
 
-#: graphs/item.py:120
+#: graphs/item.py:166
 msgid "Label"
 msgstr "Etiketa"
 
-#: graphs/item.py:136
+#: graphs/item.py:182
 msgid "Fill"
 msgstr "Bete"
 
-#: graphs/operations.py:129
-#, python-brace-format
-msgid "{name}: Unable to do transformation, make sure the syntax is correct"
-msgstr "{name}: Ezin da transformatu, ziurtatu sintaxia zuzena dela"
+#: graphs/misc.vala:16
+msgctxt "file-filter"
+msgid "Matplotlib Style File"
+msgstr "Matplotlib estilo-fitxategia"
 
-#: graphs/operations.py:133
-msgid "Unable to do transformation"
-msgstr "Ezin da transformatu"
+#: graphs/operations.py:252
+msgid "Unable to perform transformation, make sure the syntax is correct"
+msgstr "Ezin da transformazioa gauzatu, ziurtatu sintaxia zuzena dela"
 
-#: graphs/operations.py:197
-msgid "Data that was outside of the highlighted area has been discarded"
-msgstr "Nabarmendutako areatik kanpo dauden datuak baztertu dira"
-
-#: graphs/operations.py:234
+#: graphs/operations.py:294 graphs/operations.py:600
 msgid "No data found within the highlighted area"
 msgstr "Ez da daturik aurkitu nabarmendutako arean"
 
-#: graphs/operations.py:479
+#: graphs/operations.py:305
 msgid "Combined Data"
 msgstr "Konbinatutako datuak"
+
+#: graphs/operations.py:438
+#, python-brace-format
+msgid ""
+"The operation on {item.props.name} did not result in a plottable equation"
+msgstr "{item.props.name} elementuaren eragiketak ez du eman marraztu daitekeen ekuaziorik"
+
+#: graphs/operations.py:446
+msgid "Operation not supported for equations."
+msgstr "Eragiketa ez da onartzen ekuazioetarako."
+
+#: graphs/operations.py:606
+msgid "Operation not supported for data items"
+msgstr "Eragiketa ez da onartzen datu-elementuetarako"
+
+#: graphs/operations.py:610
+#, python-brace-format
+msgid "{name}: Error performing the operation"
+msgstr "{name}: Errorea eragiketa gauzatzean"
+
+#: graphs/operations.py:617
+msgid "Data that was outside of the highlighted area has been discarded"
+msgstr "Nabarmendutako areatik kanpo dauden datuak baztertu dira"
 
 #: graphs/parse_file.py:56
 msgid "Intensity (cps)"
@@ -1669,96 +1752,135 @@ msgstr "β (°)"
 msgid "R (1/s)"
 msgstr "R (1/s)"
 
-#: graphs/parse_file.py:155
+#: graphs/parse_file.py:154
 msgid "Import failed, column index out of range"
 msgstr "Inportazioak huts egin du, zutabe-indizea barrutitik kanpo dago"
 
-#: graphs/parse_file.py:174
+#: graphs/parse_file.py:173
 msgid "Unable to import from file"
 msgstr "Ezin da fitxategitik inportatu"
 
-#: graphs/style_editor.py:351
+#: graphs/project.py:46
+msgid "Project file is missing data"
+msgstr "Proiektu-fitxategiari datuak falta zaizkio"
+
+#: graphs/project.py:59
+msgid "Project is from a newer incompatible version of Graphs"
+msgstr "Proiektua Grafikoak aplikazioaren bertsio bateraezin berriago batena da"
+
+#: graphs/project.vala:15
+msgctxt "file-filter"
+msgid "Graphs Project File"
+msgstr "Grafikoen proiektu-fitxategia"
+
+#: graphs/project.vala:22
+msgid "Saved Project"
+msgstr "Gordetako proiektua"
+
+#: graphs/project.vala:37
+msgid "Project"
+msgstr "Proiektua"
+
+#: graphs/style_editor.py:411
 #, python-brace-format
 msgid "Color {number}"
 msgstr "Kolorea: {number}"
 
-#: graphs/style_io.py:83
+#: graphs/style_editor.py:474 graphs/style_editor.py:483
+msgid "Example Item"
+msgstr "Adibideko elementua"
+
+#: graphs/style_editor.py:511 graphs/style_io.py:180
+msgid "X Label"
+msgstr "X etiketa"
+
+#: graphs/style_editor.py:512 graphs/style_io.py:181
+msgid "Y Label"
+msgstr "Y etiketa"
+
+#: graphs/style_io.py:76
 #, python-brace-format
 msgid "Missing colon in file {file}, line {line}"
 msgstr "Bi puntu falta dira {file} fitxategiko {line} lerroan"
 
-#: graphs/style_io.py:91
+#: graphs/style_io.py:84
 #, python-brace-format
 msgid "Non-style related parameter {param} in file {file}"
 msgstr "{file} fitxategiko {param} parametroak ez du zerikusirik estiloarekin"
 
-#: graphs/style_io.py:94
+#: graphs/style_io.py:87
 #, python-brace-format
 msgid "Ignoring parameter {param} in file {file}"
 msgstr "{file} fitxategiko {param} parametroari ez ikusiarena egingo zaio"
 
-#: graphs/style_io.py:98
+#: graphs/style_io.py:91
 #, python-brace-format
 msgid "Duplicate key in file {file}, on line {line}"
 msgstr "Gako bikoiztua {file} fitxategiko {line} lerroan"
 
-#: graphs/style_io.py:118
+#: graphs/style_io.py:111
 #, python-brace-format
 msgid "Bad value in file {file} on line {line}"
 msgstr "Balio okerra {file} fitxategiko {line} lerroan"
 
-#: graphs/style_io.py:124
+#: graphs/style_io.py:116
 #, python-brace-format
 msgid "Could not parse {filename}"
 msgstr "Ezin da {filename} analizatu"
 
-#: graphs/style_io.py:133
+#: graphs/style_io.py:125
 #, python-brace-format
 msgid "File {file}, does not contain name tag"
 msgstr "{file} fitxategiak ez du izen-etiketarik"
 
-#: graphs/style_io.py:188
-msgid "X Label"
-msgstr "X etiketa"
-
-#: graphs/style_io.py:189
-msgid "Y Label"
-msgstr "Y etiketa"
-
-#: graphs/styles.py:111
-#, python-brace-format
-msgid "Could not parse {stylename}, loading system preferred style"
-msgstr "Ezin da {stylename} analizatu, sistemaren estilo lehenetsia kargatuko da"
-
-#: graphs/styles.py:119
-#, python-brace-format
-msgid "Plot style {stylename} does not exist loading system preferred"
-msgstr "{stylename} diagrama-estiloa ez da existitzen, sistemaren lehenetsia kargatuko da"
-
-#: graphs/styles.vala:71
+#: graphs/styles.vala:61
 msgid "System"
 msgstr "Sistema"
 
-#: graphs/utilities.vala:208
+#: graphs/utilities.vala:209
 msgid "All Files"
 msgstr "Fitxategi guztiak"
 
-#: graphs/window.vala:218
+#: graphs/window.py:36
+msgid "Untitled Project"
+msgstr "Izenik gabeko proiektua"
+
+#: graphs/window.py:37
+msgid "Draft"
+msgstr "Zirriborroa"
+
+#: graphs/window.py:49
+msgid "Document Portal"
+msgstr "Dokumentu-ataria"
+
+#: graphs/window.vala:207
 msgid "Graphs (Development)"
 msgstr "Grafikoak (garapena)"
 
-#: graphs/window.vala:272
+#: graphs/window.vala:316
 msgid "Open Location"
 msgstr "Ireki kokalekua"
 
-#: graphs/window.vala:306
+#: graphs/window.vala:350
 msgid "Optimize Limits"
 msgstr "Optimizatu mugak"
 
-#: graphs/window.vala:315
+#: graphs/window.vala:360
 msgctxt "scale"
 msgid "Inverse Root"
 msgstr "Alderantzizko erroa"
+
+#~ msgid "X Start"
+#~ msgstr "X hasiera"
+
+#~ msgid "X Stop"
+#~ msgstr "X amaiera"
+
+#~ msgid "Step Size"
+#~ msgstr "Urratsaren tamaina"
+
+#~ msgid "Unable to do transformation"
+#~ msgstr "Ezin da transformatu"
 
 #~ msgid "1 - Plot and manipulate any data of choice"
 #~ msgstr "1 - Marraztu eta manipulatu edozein datu"
@@ -1775,10 +1897,6 @@ msgstr "Alderantzizko erroa"
 #~ msgstr "Joint Photographic Experts Group"
 
 #~ msgctxt "file-format"
-#~ msgid "Portable Document Format"
-#~ msgstr "Portable Document Format"
-
-#~ msgctxt "file-format"
 #~ msgid "Portable Network Graphics"
 #~ msgstr "Portable Network Graphics"
 
@@ -1793,9 +1911,6 @@ msgstr "Alderantzizko erroa"
 #~ msgid "Edit Item"
 #~ msgstr "Editatu elementua"
 
-#~ msgid "Error - No Style selected"
-#~ msgstr "Errorea - Ez da estilorik detektatu"
-
 #, python-brace-format
 #~ msgid "Deleted {name}"
 #~ msgstr "{name} ezabatu da"
@@ -1809,16 +1924,6 @@ msgstr "Alderantzizko erroa"
 
 #~ msgid "Y Axis Label"
 #~ msgstr "Y ardatzaren etiketa"
-
-#~ msgctxt "file-filter"
-#~ msgid "Graphs Project File"
-#~ msgstr "Grafikoen proiektu-fitxategia"
-
-#~ msgid "Saved Project"
-#~ msgstr "Gordetako proiektua"
-
-#~ msgid "Project"
-#~ msgstr "Proiektua"
 
 #~ msgid "Exported Data"
 #~ msgstr "Esportatutako datuak"
