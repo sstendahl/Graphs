@@ -21,6 +21,7 @@ import sympy
 def perform_operation(application: Graphs.Application, name: str) -> None:
     """Perform an operation."""
     window = application.get_active_window()
+    operations = window.get_operations()
     interaction_mode = window.get_mode()
     if name == "cut" and interaction_mode != 2:
         return
@@ -34,7 +35,7 @@ def perform_operation(application: Graphs.Application, name: str) -> None:
         try:
             args += [
                 utilities.string_to_float(
-                    window.get_property(name + "_entry").get_text(),
+                    operations.get_property(name + "_entry").get_text(),
                 ),
             ]
         except ValueError as error:
