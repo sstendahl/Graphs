@@ -205,7 +205,7 @@ namespace Graphs {
                 item_list.append (create_box_for_item (item, index, data_item));
 
                 items_selected = items_selected || item.selected;
-                data_items_selected = data_items_selected || data_item;
+                data_items_selected = data_items_selected || (item.selected && data_item);
                 index++;
             }
             operations.shift_button.set_sensitive (items_selected);
@@ -229,7 +229,7 @@ namespace Graphs {
                 bool data_item = typename == "GraphsDataItem" || typename == "GraphsGeneratedDataItem";
 
                 items_selected = items_selected || item.selected;
-                data_items_selected = data_items_selected || data_item;
+                data_items_selected = data_items_selected || (item.selected && data_item);
                 if (items_selected && data_items_selected) break;
             }
             operations.shift_button.set_sensitive (items_selected);
