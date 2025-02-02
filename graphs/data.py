@@ -472,4 +472,3 @@ class Data(Graphs.Data):
             self.load_from_project_dict(current_data)
             return _("Failed to load project")
         return ""
-
