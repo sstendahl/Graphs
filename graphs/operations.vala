@@ -20,7 +20,7 @@ namespace Graphs {
         public unowned Adw.SplitButton smoothen_button { get; }
 
         [GtkChild]
-        public unowned Button cut_button { get; }
+        private unowned Button cut_button { get; }
 
         [GtkChild]
         public unowned Entry translate_x_entry { get; }
@@ -47,6 +47,8 @@ namespace Graphs {
         public unowned Button multiply_y_button { get; }
 
         private Window _window;
+        private bool entries_sensitive = false;
+        private bool cut_sensitive = false;
 
         construct {
             InlineStackSwitcher stack_switcher = new InlineStackSwitcher ();
@@ -58,6 +60,8 @@ namespace Graphs {
 
         public Operations (Window window) {
             this._window = window;
+
+            window.notify["mode"].connect (on_mode_change);
 
             string[] action_names = {
                 "multiply_x",
@@ -89,6 +93,23 @@ namespace Graphs {
             action.activate (new Variant.string (name));
         }
 
+        public void set_entry_sensitivity (bool entries_sensitive) {
+            this.entries_sensitive = entries_sensitive;
+            validate_entry (translate_x_entry, translate_x_button);
+            validate_entry (translate_y_entry, translate_y_button);
+            validate_entry (multiply_x_entry, multiply_x_button);
+            validate_entry (multiply_y_entry, multiply_y_button);
+        }
+
+        public void set_cut_sensitivity (bool sensitive) {
+            this.cut_sensitive = sensitive;
+            on_mode_change ();
+        }
+
+        private void on_mode_change () {
+            cut_button.set_sensitive (cut_sensitive && _window.mode == 2);
+        }
+
         private void validate_entry (Entry entry, Button button) {
             var application = _window.application as Application;
             double? val = application.python_helper.evaluate_string (entry.get_text ());
@@ -97,7 +118,7 @@ namespace Graphs {
                 button.set_sensitive (false);
             } else {
                 entry.remove_css_class ("error");
-                button.set_sensitive (_window.data.items_selected);
+                button.set_sensitive (entries_sensitive);
             }
         }
     }
