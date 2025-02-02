@@ -233,48 +233,42 @@ template $GraphsWindow: Adw.ApplicationWindow {
             child: Box {
               orientation: vertical;
 
-              ScrolledWindow scrollwindow_itemlist {
-                vexpand: true;
-                hexpand: true;
-                hscrollbar-policy: never;
+              Stack itemlist_stack {
+                StackPage {
+                  child: Adw.StatusPage {
+                    icon-name: "list-compact";
+                    title: _("No Data");
+                    description: _("Add data from a file or manually as an equation");
 
-                Viewport {
-                  Box {
-                    ListBox item_list {
-                      margin-bottom: 12;
-                      margin-top: 6;
-                      margin-start: 12;
-                      margin-end: 12;
-                      vexpand: false;
-                      hexpand: true;
-                      valign: start;
-                      visible: false;
-                      selection-mode: none;
+                    styles [
+                      "compact",
+                    ]
+                  };
+                }
 
-                      styles [
-                        "boxed-list",
-                      ]
-                    }
+                StackPage {
+                  child: ScrolledWindow scrollwindow_itemlist {
+                    vexpand: true;
+                    hexpand: true;
+                    hscrollbar-policy: never;
 
-                    Box {
-                      Adw.StatusPage {
+                    Viewport {
+                      ListBox item_list {
                         margin-bottom: 12;
                         margin-top: 6;
                         margin-start: 12;
                         margin-end: 12;
-                        visible: bind item_list.visible inverted;
-                        icon-name: "list-compact";
-                        halign: center;
+                        vexpand: false;
                         hexpand: true;
-                        title: _("No Data");
-                        description: _("Add data from a file or manually as an equation");
+                        valign: start;
+                        selection-mode: none;
 
                         styles [
-                          "compact",
+                          "boxed-list",
                         ]
                       }
                     }
-                  }
+                  };
                 }
               }
 
