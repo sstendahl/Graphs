@@ -222,7 +222,7 @@ class Data(Graphs.Data):
                     change[0],
                     change[1],
                 )
-        self.notify("items_selected")
+        self.emit("selection-changed")
         self.get_figure_settings().set_limits(
             self._history_states[self._history_pos][1],
         )
@@ -256,7 +256,7 @@ class Data(Graphs.Data):
                     change[0],
                     change[2],
                 )
-        self.notify("items_selected")
+        self.emit("selection-changed")
         self.get_figure_settings().set_limits(state[1])
         self.props.can_redo = self._history_pos < -1
         self.props.can_undo = True
@@ -472,3 +472,4 @@ class Data(Graphs.Data):
             self.load_from_project_dict(current_data)
             return _("Failed to load project")
         return ""
+

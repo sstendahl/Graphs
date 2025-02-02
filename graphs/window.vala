@@ -31,7 +31,7 @@ namespace Graphs {
         private unowned ToggleButton zoom_button { get; }
 
         [GtkChild]
-        public unowned ToggleButton select_button { get; }
+        private unowned ToggleButton select_button { get; }
 
         [GtkChild]
         private unowned ListBox item_list { get; }
@@ -156,14 +156,14 @@ namespace Graphs {
 
             this.operations = new Operations (this);
 
-            data.bind_property ("items_selected", operations.shift_button, "sensitive", 2);
-            data.bind_property ("data_items_selected", operations.smoothen_button, "sensitive", 2);
             data.bind_property ("can_undo", undo_button, "sensitive", 2);
             data.bind_property ("can_redo", redo_button, "sensitive", 2);
             data.bind_property ("can_view_back", view_back_button, "sensitive", 2);
             data.bind_property ("can_view_forward", view_forward_button, "sensitive", 2);
 
             data.items_changed.connect (on_items_changed);
+            data.selection_changed.connect (on_selection_changed);
+
             // Inhibit session end when there is unsaved data present
             data.notify["unsaved"].connect (() => {
                 if (data.unsaved) {
@@ -177,7 +177,7 @@ namespace Graphs {
                 }
             });
 
-            update_view_menu ();
+            on_items_changed ();
             if (application.debug) {
                 add_css_class ("devel");
                 set_title (_("Graphs (Development)"));
@@ -189,19 +189,58 @@ namespace Graphs {
             item_list.remove_all ();
             if (data.is_empty ()) {
                 itemlist_stack.get_pages ().select_item (0, true);
+                operations.shift_button.set_sensitive (false);
+                operations.smoothen_button.set_sensitive (false);
+                operations.set_cut_sensitivity (false);
+                operations.set_entry_sensitivity (false);
                 return;
             }
             itemlist_stack.get_pages ().select_item (1, true);
+            bool items_selected = false;
+            bool data_items_selected = false;
             uint index = 0;
             foreach (Item item in data) {
-                item_list.append (create_box_for_item (item, index));
+                string typename = item.get_type ().name ();
+                bool data_item = typename == "GraphsDataItem" || typename == "GraphsGeneratedDataItem";
+                item_list.append (create_box_for_item (item, index, data_item));
+
+                items_selected = items_selected || item.selected;
+                data_items_selected = data_items_selected || data_item;
                 index++;
             }
+            operations.shift_button.set_sensitive (items_selected);
+            operations.smoothen_button.set_sensitive (data_items_selected);
+            operations.set_cut_sensitivity (data_items_selected && select_button.get_active ());
+            operations.set_entry_sensitivity (items_selected);
         }
 
-        private ItemBox create_box_for_item (Item item, uint index) {
+        private void on_selection_changed () {
+            if (data.is_empty ()) {
+                operations.shift_button.set_sensitive (false);
+                operations.smoothen_button.set_sensitive (false);
+                operations.set_cut_sensitivity (false);
+                operations.set_entry_sensitivity (false);
+                return;
+            }
+            bool items_selected = false;
+            bool data_items_selected = false;
+            foreach (Item item in data) {
+                string typename = item.get_type ().name ();
+                bool data_item = typename == "GraphsDataItem" || typename == "GraphsGeneratedDataItem";
+
+                items_selected = items_selected || item.selected;
+                data_items_selected = data_items_selected || data_item;
+                if (items_selected && data_items_selected) break;
+            }
+            operations.shift_button.set_sensitive (items_selected);
+            operations.smoothen_button.set_sensitive (data_items_selected);
+            operations.set_cut_sensitivity (data_items_selected && select_button.get_active ());
+            operations.set_entry_sensitivity (items_selected);
+        }
+
+        private ItemBox create_box_for_item (Item item, uint index, bool is_data_item) {
             var row = new ItemBox (this, item, index);
-            row.setup_interactions ();
+            row.setup_interactions (is_data_item);
 
             double drag_x = 0.0;
             double drag_y = 0.0;

@@ -186,6 +186,8 @@ class Canvas(Graphs.Canvas, FigureCanvas):
         rgba.alpha = 0.2
         self.rubberband_fill_color = rgba_to_tuple(rgba)
         self.highlight = _Highlight(self)
+        self.connect("notify::mode", self._on_mode_change)
+        self._on_mode_change()
 
         for item in ("min", "max"):
             self.connect(
@@ -595,6 +597,12 @@ class Canvas(Graphs.Canvas, FigureCanvas):
                 transparent=transparent,
             )
 
+    def _on_mode_change(self, *_args) -> None:
+        highlight_enabled = self.props.mode == 2
+        self.highlight.set_active(highlight_enabled)
+        self.highlight.set_visible(highlight_enabled)
+        self.queue_draw()
+
     @GObject.Property(type=bool, default=True)
     def legend(self) -> bool:
         """Whether or not, the legend is visible."""
@@ -806,18 +814,6 @@ class Canvas(Graphs.Canvas, FigureCanvas):
         for axis in (self._right_axis, self._top_right_axis):
             axis.set_ylim(None, value)
         self.queue_draw()
-
-    @GObject.Property(type=bool, default=False)
-    def highlight_enabled(self) -> bool:
-        """Whether or not the highlight is enabled."""
-        return hasattr(self, "highlight") and self.highlight.get_active()
-
-    @highlight_enabled.setter
-    def highlight_enabled(self, enabled: bool) -> None:
-        if hasattr(self, "highlight"):
-            self.highlight.set_active(enabled)
-            self.highlight.set_visible(enabled)
-            self.queue_draw()
 
 
 class _DummyToolbar(NavigationToolbar2):

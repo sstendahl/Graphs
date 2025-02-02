@@ -15,23 +15,6 @@ namespace Graphs {
         public File file { get; set; }
         public bool unsaved { get; set; default = false; }
         public SingleSelection style_selection_model { get; private set; }
-        public bool items_selected {
-            get {
-                notify_property ("data_items_selected");
-                foreach (Item item in _items) {
-                    if (item.selected) return true;
-                }
-                return false;
-            }
-        }
-        public bool data_items_selected {
-            get {
-                foreach (Item item in _items) {
-                    if (item.get_type ().name () == "GraphsDataItem" && item.selected) return true;
-                }
-                return false;
-            }
-        }
 
         public string selected_stylename {
             get { return this.get_selected_style ().name; }
@@ -44,6 +27,7 @@ namespace Graphs {
         private GLib.Settings _settings;
 
         public signal void style_changed (bool recolor_items);
+        public signal void selection_changed ();
         protected signal void python_method_request (string method);
         protected signal string load_request (File file);
 
@@ -58,7 +42,7 @@ namespace Graphs {
             this._color_cycle = {};
             items_changed.connect (() => {
                 _update_used_positions ();
-                notify_property ("items_selected");
+                selection_changed.emit ();
             });
         }
 
@@ -433,8 +417,7 @@ namespace Graphs {
         // Section listeners
 
         private void _on_item_selected () {
-            notify_property ("items_selected");
-            notify_property ("data_items_selected");
+            selection_changed.emit ();
         }
 
         private void _on_item_change (Object item, ParamSpec spec) {
