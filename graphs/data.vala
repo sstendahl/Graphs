@@ -5,7 +5,7 @@ namespace Graphs {
     /**
      * Data class
      */
-    public class Data : Object, ListModel, Traversable<Item>, Iterable<Item> {
+    public class Data : Object, ListModel, SelectionModel, Traversable<Item>, Iterable<Item> {
         public Application application { get; construct set; }
         public FigureSettings figure_settings { get; private set; }
         public bool can_undo { get; protected set; default = false; }
@@ -25,9 +25,9 @@ namespace Graphs {
         private string[] _color_cycle;
         private string[] _used_colors;
         private GLib.Settings _settings;
+        private bool _notify_selection_changed = true;
 
         public signal void style_changed (bool recolor_items);
-        public signal void selection_changed ();
         protected signal void python_method_request (string method);
         protected signal string load_request (File file);
 
@@ -109,6 +109,110 @@ namespace Graphs {
 
         // End section ListModel
 
+        // Section SelectionModel
+        // All required methods to implement the SelectionModel interface
+
+        private void clear_selection () {
+            foreach (Item item in _items) {
+                item.selected = false;
+            }
+        }
+
+        public Bitset get_selection_in_range (uint position, uint n_items) {
+            var bitset = new Bitset.empty ();
+            var range = _items[(int) position:(int) (position + n_items)];
+            uint index = position;
+            foreach (Item item in range) {
+                if (item.selected) bitset.add (position);
+                index++;
+            }
+            return bitset;
+        }
+
+        public bool is_selected (uint position) {
+            return _items[(int) position].selected;
+        }
+
+        public bool select_all () {
+            _notify_selection_changed = false;
+            foreach (Item item in _items) {
+                item.selected = true;
+            }
+            _notify_selection_changed = true;
+            selection_changed.emit (0, _items.size);
+            return true;
+        }
+
+        public bool select_item (uint position, bool unselect_rest) {
+            if (unselect_rest) {
+                _notify_selection_changed = false;
+                clear_selection ();
+                _items[(int) position].selected = true;
+                _notify_selection_changed = true;
+                selection_changed.emit (0, _items.size);
+            } else {
+                _items[(int) position].selected = true;
+            }
+            return true;
+        }
+
+        public bool select_range (uint position, uint n_items, bool unselect_rest) {
+            var range = _items[(int) position:(int) (position + n_items)];
+            _notify_selection_changed = false;
+            if (unselect_rest) {
+                clear_selection ();
+                foreach (Item item in range) {
+                    item.selected = true;
+                }
+                selection_changed.emit (0, _items.size);
+            } else {
+                foreach (Item item in range) {
+                    item.selected = true;
+                }
+                selection_changed.emit (position, n_items);
+            }
+            _notify_selection_changed = true;
+            return true;
+        }
+
+        public bool set_selection (Bitset selection, Bitset mask) {
+            _notify_selection_changed = false;
+            uint index = 0;
+            foreach (Item item in _items) {
+                if (!mask.contains (index)) continue;
+                item.selected = selection.contains (index);
+                index++;
+            }
+            _notify_selection_changed = true;
+            selection_changed.emit (0, _items.size);
+            return true;
+        }
+
+        public bool unselect_all () {
+            _notify_selection_changed = false;
+            clear_selection ();
+            _notify_selection_changed = true;
+            selection_changed.emit (0, _items.size);
+            return true;
+        }
+
+        public bool unselect_item (uint position) {
+            _items[(int) position].selected = false;
+            return true;
+        }
+
+        public bool unselect_range (uint position, uint n_items) {
+            _notify_selection_changed = false;
+            foreach (Item item in _items[(int) position:(int) (position + n_items)]) {
+                item.selected = false;
+            }
+            _notify_selection_changed = true;
+            selection_changed.emit (position, n_items);
+            return true;
+        }
+
+        // End section SelectionModel
+
         // Section management
 
         protected void _update_used_positions () {
@@ -128,7 +232,9 @@ namespace Graphs {
 
         protected void _add_item (Item item, int index = -1, bool notify = false) {
             if (index < 0) index = _items.size;
-            item.notify["selected"].connect (_on_item_selected);
+            item.notify["selected"].connect (() => {
+                if (_notify_selection_changed) selection_changed.emit (index, 1);
+            });
             item.notify.connect (_on_item_change);
             item.notify["xposition"].connect (_on_item_position_change);
             item.notify["yposition"].connect (_on_item_position_change);
@@ -412,10 +518,6 @@ namespace Graphs {
         // End section save & load
 
         // Section listeners
-
-        private void _on_item_selected () {
-            selection_changed.emit ();
-        }
 
         private void _on_item_change (Object item, ParamSpec spec) {
             item_changed.emit ((Item) item, spec.name);

@@ -222,7 +222,6 @@ class Data(Graphs.Data):
                     change[0],
                     change[1],
                 )
-        self.emit("selection-changed")
         self.get_figure_settings().set_limits(
             self._history_states[self._history_pos][1],
         )
@@ -256,7 +255,6 @@ class Data(Graphs.Data):
                     change[0],
                     change[2],
                 )
-        self.emit("selection-changed")
         self.get_figure_settings().set_limits(state[1])
         self.props.can_redo = self._history_pos < -1
         self.props.can_undo = True
