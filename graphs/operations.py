@@ -21,7 +21,6 @@ import sympy
 def perform_operation(application: Graphs.Application, name: str) -> None:
     """Perform an operation."""
     window = application.get_active_window()
-    operations = window.get_operations()
     interaction_mode = window.get_mode()
     if name == "cut" and interaction_mode != 2:
         return
@@ -32,6 +31,7 @@ def perform_operation(application: Graphs.Application, name: str) -> None:
     if name == "smoothen":
         args.append(actions_settings.get_child(name))
     elif "translate" in name or "multiply" in name:
+        operations = window.get_operations()
         try:
             args += [
                 utilities.string_to_float(
