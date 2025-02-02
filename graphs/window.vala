@@ -160,13 +160,6 @@ namespace Graphs {
             data.bind_property ("can_view_back", view_back_button, "sensitive", 2);
             data.bind_property ("can_view_forward", view_forward_button, "sensitive", 2);
 
-
-            data.items_changed.connect (() => {
-                item_list.set_visible (!data.is_empty ());
-                update_view_menu ();
-                reload_item_list ();
-                data.add_view_history_state ();
-            });
             // Inhibit session end when there is unsaved data present
             data.notify["unsaved"].connect (() => {
                 if (data.unsaved) {
@@ -188,7 +181,13 @@ namespace Graphs {
         }
 
         private void on_items_changed () {
+            update_view_menu ();
             item_list.remove_all ();
+            if (data.is_empty ()) {
+                item_list.set_visible (false);
+                return;
+            }
+            item_list.set_visible (true);
             uint index = 0;
             foreach (Item item in data) {
                 item_list.append (create_box_for_item (item, index));
