@@ -60,6 +60,9 @@ namespace Graphs {
         [GtkChild]
         private unowned Adw.Bin operations_bin { get; }
 
+        [GtkChild]
+        private unowned Stack itemlist_stack { get; }
+
         public Data data { get; construct set; }
 
         protected CssProvider headerbar_provider { get; private set; }
@@ -160,6 +163,7 @@ namespace Graphs {
             data.bind_property ("can_view_back", view_back_button, "sensitive", 2);
             data.bind_property ("can_view_forward", view_forward_button, "sensitive", 2);
 
+            data.items_changed.connect (on_items_changed);
             // Inhibit session end when there is unsaved data present
             data.notify["unsaved"].connect (() => {
                 if (data.unsaved) {
@@ -184,10 +188,10 @@ namespace Graphs {
             update_view_menu ();
             item_list.remove_all ();
             if (data.is_empty ()) {
-                item_list.set_visible (false);
+                itemlist_stack.get_pages ().select_item (0, true);
                 return;
             }
-            item_list.set_visible (true);
+            itemlist_stack.get_pages ().select_item (1, true);
             uint index = 0;
             foreach (Item item in data) {
                 item_list.append (create_box_for_item (item, index));
