@@ -44,7 +44,7 @@ namespace Graphs {
          * Setup the actions for the ItemBox. This is omitted for rows created
          * for drag and drop.
          */
-        public void setup_interactions () {
+        public void setup_interactions (bool is_data_item) {
             var application = window.application as Application;
             this.activated.connect (() => {
                 application.python_helper.create_edit_item_dialog (window, item);
@@ -59,7 +59,7 @@ namespace Graphs {
                 window.add_undo_toast (_("Deleted %s").printf (name));
             });
             action_group.add_action (delete_action);
-            if (item.get_type ().name () == "GraphsDataItem" || item.get_type ().name () == "GraphsGeneratedDataItem") {
+            if (is_data_item) {
                 var curve_fitting_action = new SimpleAction ("curve_fitting", null);
                 curve_fitting_action.activate.connect (() => {
                     application.python_helper.create_curve_fitting_dialog (window, item);

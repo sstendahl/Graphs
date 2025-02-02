@@ -106,15 +106,3 @@ class PythonWindow(Graphs.Window):
         )
 
         self.set_canvas(canvas)
-        self.get_select_button().bind_property(
-            "active",
-            self.get_operations().get_cut_button(),
-            "sensitive",
-            2,
-        )
-        self.get_operations().get_cut_button().bind_property(
-            "sensitive",
-            canvas,
-            "highlight_enabled",
-            2,
-        )
