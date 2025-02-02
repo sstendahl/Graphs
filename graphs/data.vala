@@ -40,10 +40,7 @@ namespace Graphs {
         construct {
             this._items = new Gee.LinkedList<Item> ();
             this._color_cycle = {};
-            items_changed.connect (() => {
-                _update_used_positions ();
-                selection_changed.emit ();
-            });
+            items_changed.connect (_update_used_positions);
         }
 
         protected void setup () {
