@@ -120,7 +120,7 @@ namespace Graphs {
 
         public Bitset get_selection_in_range (uint position, uint n_items) {
             var bitset = new Bitset.empty ();
-            var range = _items[(int) position:(int) (position + n_items)];
+            var range = _items[(int) position : (int) (position + n_items)];
             uint index = position;
             foreach (Item item in range) {
                 if (item.selected) bitset.add (position);
@@ -157,7 +157,7 @@ namespace Graphs {
         }
 
         public bool select_range (uint position, uint n_items, bool unselect_rest) {
-            var range = _items[(int) position:(int) (position + n_items)];
+            var range = _items[(int) position : (int) (position + n_items)];
             _notify_selection_changed = false;
             if (unselect_rest) {
                 clear_selection ();
@@ -203,7 +203,7 @@ namespace Graphs {
 
         public bool unselect_range (uint position, uint n_items) {
             _notify_selection_changed = false;
-            foreach (Item item in _items[(int) position:(int) (position + n_items)]) {
+            foreach (Item item in _items[(int) position : (int) (position + n_items)]) {
                 item.selected = false;
             }
             _notify_selection_changed = true;
