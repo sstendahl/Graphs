@@ -31,10 +31,11 @@ def perform_operation(application: Graphs.Application, name: str) -> None:
     if name == "smoothen":
         args.append(actions_settings.get_child(name))
     elif "translate" in name or "multiply" in name:
+        operations = window.get_operations()
         try:
             args += [
                 utilities.string_to_float(
-                    window.get_property(name + "_entry").get_text(),
+                    operations.get_property(name + "_entry").get_text(),
                 ),
             ]
         except ValueError as error:
