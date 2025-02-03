@@ -180,6 +180,7 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
             color=item.get_color(),
             alpha=item.get_alpha(),
             linestyle=misc.LINESTYLES[item.props.linestyle],
+            marker="none",
         )[0]
         for prop in ("selected", "linewidth"):
             self.set_property(prop, item.get_property(prop))
