@@ -91,18 +91,14 @@ namespace Graphs {
 
             var select_all_action = new SimpleAction ("select_all", null);
             select_all_action.activate.connect (() => {
-                foreach (Item item in data) {
-                    item.selected = true;
-                }
+                data.select_all ();
                 data.add_history_state ();
             });
             window.add_action (select_all_action);
 
             var select_none_action = new SimpleAction ("select_none", null);
             select_none_action.activate.connect (() => {
-                foreach (Item item in data) {
-                    item.selected = false;
-                }
+                data.unselect_all ();
                 data.add_history_state ();
             });
             window.add_action (select_none_action);
