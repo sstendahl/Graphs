@@ -8,6 +8,13 @@ template $GraphsCurveFittingDialog: Adw.Dialog {
   height-request: 100;
   focus-widget: confirm_button;
 
+  ShortcutController {
+    Shortcut {
+      trigger: "F9";
+      action: "action(win.toggle_sidebar)";
+    }
+  }
+
   Adw.Breakpoint {
     condition ("max-width: 675sp")
 
@@ -20,7 +27,8 @@ template $GraphsCurveFittingDialog: Adw.Dialog {
     top-bar-style: flat;
 
     content: Adw.OverlaySplitView split_view {
-      show-sidebar: bind show_sidebar_button.active;
+      enable-show-gesture: bind split_view.collapsed;
+      enable-hide-gesture: bind split_view.collapsed;
 
       sidebar: Adw.ToolbarView {
         [top]
@@ -124,7 +132,7 @@ template $GraphsCurveFittingDialog: Adw.Dialog {
           ToggleButton show_sidebar_button {
             icon-name: "sidebar-show-symbolic";
             tooltip-text: _("Toggle Sidebar");
-            active: bind split_view.show-sidebar;
+            active: bind split_view.show-sidebar bidirectional;
             visible: bind split_view.collapsed;
           }
         }
