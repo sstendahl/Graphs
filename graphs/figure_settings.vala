@@ -304,7 +304,7 @@ namespace Graphs {
                 open_with_action.activate.connect (() => {
                     var launcher = new FileLauncher (style.file);
                     launcher.launch.begin (window, null);
-                    launcher.set_always_ask (true);                    
+                    launcher.set_always_ask (true);
                 });
                 action_group.add_action (open_with_action);
                 var delete_action = new SimpleAction ("delete", null);
