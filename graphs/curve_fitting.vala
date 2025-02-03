@@ -41,6 +41,9 @@ namespace Graphs {
         [GtkChild]
         private unowned Adw.ToastOverlay toast_overlay { get; }
 
+        [GtkChild]
+        private unowned Adw.OverlaySplitView split_view { get; }
+
         public Window window { get; construct set; }
         protected GLib.Settings settings { get; private set; }
         protected string equation_string { get; protected set; }
@@ -59,8 +62,9 @@ namespace Graphs {
 
             var action_map = new SimpleActionGroup ();
             Action confidence_action = settings.create_action ("confidence");
-            Action optimization_action = settings.create_action ("optimization");
             confidence_action.notify.connect (emit_fit_curve_request);
+            action_map.add_action (confidence_action);
+            Action optimization_action = settings.create_action ("optimization");
             optimization_action.notify.connect (() => {
                 emit_fit_curve_request ();
                 bool visible = settings.get_string ("optimization") != "lm";
@@ -70,8 +74,18 @@ namespace Graphs {
                     entry = entry.get_next_sibling () as FittingParameterBox;
                 }
             });
-            action_map.add_action (confidence_action);
             action_map.add_action (optimization_action);
+            var toggle_sidebar_action = new SimpleAction ("toggle_sidebar", null);
+            toggle_sidebar_action.activate.connect (() => {
+                split_view.show_sidebar = !split_view.show_sidebar;
+            });
+            split_view.bind_property (
+                "collapsed",
+                toggle_sidebar_action,
+                "enabled",
+                BindingFlags.SYNC_CREATE
+            );
+            action_map.add_action (toggle_sidebar_action);
             insert_action_group ("win", action_map);
 
             equation.set_selected (settings.get_enum ("equation"));
