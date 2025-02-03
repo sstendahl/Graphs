@@ -56,18 +56,16 @@ def get_value_at_fraction(
         return pow(2, log_value)
     elif scale == scales.Scale.SQUAREROOT:
         # Use min limit as defined by scales.py
-        start = max(0, start)
-        sqrt_start = numpy.sqrt(start)
+        sqrt_start = max(0, numpy.sqrt(start))
         sqrt_end = numpy.sqrt(end)
         sqrt_range = sqrt_end - sqrt_start
-        sqrt_value = sqrt_start + sqrt_range * fraction
+        # Square root value does not really work for negative fractions
+        sqrt_value = sqrt_start + sqrt_range * max(0, fraction)
         return sqrt_value * sqrt_value
     elif scale == scales.Scale.INVERSE:
         # Use min limit as defined by scales.py if min equals zero
         start = end / 10 if start <= 0 < end else start
         scaled_range = 1 / start - 1 / end
-
-        # Calculate the inverse-scaled value at the given percentage
         return 1 / (1 / end + fraction * scaled_range)
 
 
@@ -291,13 +289,34 @@ def equation_to_data(
     equation: str,
     limits: tuple = None,
     steps: int = 5000,
+    scale=scales.Scale.LINEAR,
 ) -> tuple:
     """Convert an equation into data over a specified range of x-values."""
     if limits is None:
         limits = (0, 10)
     equation = preprocess(equation)
     x_start, x_stop = limits
-    xdata = numpy.ndarray.tolist(numpy.linspace(x_start, x_stop, steps))
+    match scale:
+        case scales.Scale.LINEAR | scales.Scale.RADIANS:
+            xdata = numpy.linspace(x_start, x_stop, steps).tolist()
+        case scales.Scale.LOG:
+            x_start = max(x_start, 1e-300)
+            x_stop = x_stop if numpy.isfinite(x_stop) else 1e300
+            xdata = (10 ** numpy.linspace(numpy.log10(x_start),
+                     numpy.log10(x_stop), steps)).tolist()
+        case scales.Scale.LOG2:
+            x_start = max(x_start, 1e-300)
+            x_stop = x_stop if numpy.isfinite(x_stop) else 1e300
+            xdata = (2 ** numpy.linspace(numpy.log2(x_start),
+                     numpy.log2(x_stop), steps)).tolist()
+        case scales.Scale.SQUAREROOT:
+            x_start = max(x_start, 1e-300)
+            xdata = (numpy.linspace(numpy.sqrt(x_start),
+                     numpy.sqrt(x_stop), steps) ** 2).tolist()
+        case scales.Scale.INVERSE:
+            xdata = \
+                (1 / numpy.linspace(1 / x_start, 1 / x_stop, steps)).tolist()
+
     try:
         ydata = numpy.ndarray.tolist(
             numexpr.evaluate(equation + " + x*0", local_dict={"x": xdata}),
