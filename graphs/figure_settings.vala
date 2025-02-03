@@ -303,8 +303,8 @@ namespace Graphs {
                 var open_with_action = new SimpleAction ("open_with", null);
                 open_with_action.activate.connect (() => {
                     var launcher = new FileLauncher (style.file);
-                    launcher.launch.begin (window, null);
                     launcher.set_always_ask (true);
+                    launcher.launch.begin (window, null);
                 });
                 action_group.add_action (open_with_action);
                 var delete_action = new SimpleAction ("delete", null);
