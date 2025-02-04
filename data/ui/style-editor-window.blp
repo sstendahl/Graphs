@@ -5,6 +5,8 @@ template $GraphsStyleEditor: Adw.ApplicationWindow {
   title: _("Error - No Style selected");
   default-width: 1200;
   default-height: 700;
+  width-request: 360;
+  height-request: 200;
 
   ShortcutController {
     Shortcut {
@@ -28,55 +30,80 @@ template $GraphsStyleEditor: Adw.ApplicationWindow {
     }
   }
 
-  Box {
-    orientation: horizontal;
-    homogeneous: true;
+  Adw.MultiLayoutView multi_layout_view {
+    Adw.Layout {
+      name: "side-by-side";
 
-    Box {
-      orientation: horizontal;
+      content: Box {
+        orientation: horizontal;
+        homogeneous: true;
 
-      Adw.ToolbarView {
-        [top]
-        Adw.HeaderBar {
-          show-end-title-buttons: false;
+        Box {
+          orientation: horizontal;
 
-          [end]
-          MenuButton {
-            icon-name: "open-menu-symbolic";
-            menu-model: primary_menu;
-            tooltip-text: _("Open Application Menu");
-            primary: true;
+          Adw.ToolbarView {
+            [top]
+            Adw.HeaderBar {
+              show-end-title-buttons: false;
+
+              [end]
+              Adw.LayoutSlot {
+                id: "menu-button";
+              }
+            }
+
+            content: ScrolledWindow {
+              hscrollbar-policy: never;
+
+              child: Viewport {
+                child: Adw.Clamp {
+                  margin-bottom: 12;
+                  margin-top: 12;
+                  margin-start: 12;
+                  margin-end: 12;
+
+                  child: Adw.LayoutSlot {
+                    id: "editor";
+                  };
+                };
+              };
+            };
           }
+
+          Separator {}
         }
 
-        content: ScrolledWindow {
-          hscrollbar-policy: never;
+        Adw.ToolbarView {
+          [top]
+          Adw.HeaderBar content_headerbar {
+            name: "preview-headerbar";
+            show-title: false;
+          }
 
-          child: Viewport {
-            child: Adw.Clamp editor_clamp {
-              margin-bottom: 12;
-              margin-top: 12;
-              margin-start: 12;
-              margin-end: 12;
-            };
+          content: Adw.LayoutSlot {
+            id: "canvas";
           };
-        };
-      }
-
-      Separator {}
+        }
+      };
     }
 
-    Adw.ToolbarView content_view {
-      [top]
-      Adw.HeaderBar content_headerbar {
-        name: "preview-headerbar";
-        show-title: false;
-      }
+    [editor]
+    Adw.Bin editor_bin {}
 
-      content: Adw.StatusPage {
+    [canvas]
+    Adw.Bin canvas_bin {
+      child: Adw.StatusPage {
         icon-name: "dialog-error-symbolic";
         title: _("Canvas Failed to Load");
       };
+    }
+
+    [menu-button]
+    MenuButton {
+      icon-name: "open-menu-symbolic";
+      menu-model: primary_menu;
+      tooltip-text: _("Open Application Menu");
+      primary: true;
     }
   }
 }
