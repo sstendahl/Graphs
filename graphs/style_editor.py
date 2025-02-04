@@ -466,14 +466,12 @@ class PythonStyleEditor(Graphs.StyleEditor):
     def __init__(self, application: Graphs.Application):
         super().__init__(application=application)
 
-        self._test_items = Gio.ListStore()
-        self._initialize_test_items()
-
         style_editor = StyleEditorBox(self)
-        self.set_editor_box(style_editor)
         style_editor.connect("params-changed", self._on_params_changed)
-
+        self.set_editor_box(style_editor)
+        self._test_items = Gio.ListStore()
         self._on_params_changed(style_editor, False)
+        self._initialize_test_items()
         self.connect("load_request", self._on_load_request)
         self.connect("save_request", self._on_save_request)
 
