@@ -49,7 +49,7 @@ template $GraphsStyleEditor: Adw.ApplicationWindow {
     }
   }
 
-  Adw.MultiLayoutView multi_layout_view {
+  content: Adw.MultiLayoutView multi_layout_view {
     Adw.Layout side_by_side_layout {
       name: "side-by-side";
 
@@ -155,7 +155,7 @@ template $GraphsStyleEditor: Adw.ApplicationWindow {
         title: _("Canvas Failed to Load");
       };
     }
-  }
+  };
 }
 
 menu primary_menu {
