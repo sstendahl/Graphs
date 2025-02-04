@@ -567,8 +567,14 @@
   <recommends>
     <control>keyboard</control>
     <control>pointing</control>
-    <control>touch</control>
   </recommends>
+  <supports>
+    <control>touch</control>
+    <control>tablet</control>
+  </supports>
+  <requires>
+    <display_length>360</display_length>
+  </requires>
   <branding>
     <color type="primary" scheme_preference="light">#99c1f1</color>
     <color type="primary" scheme_preference="dark">#09356d</color>
