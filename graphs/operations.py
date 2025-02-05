@@ -583,7 +583,7 @@ class DataOperations():
 
     @staticmethod
     def execute(
-        item: EquationItem,
+        item: DataItem,
         name: str,
         figure_settings: Graphs.FigureSettings,
         interaction_mode: int,
@@ -646,7 +646,7 @@ class DataOperations():
         if sort:
             logging.debug("Sorting data")
             item.props.xdata, item.props.ydata = DataHelper.sort_data(
-                item.props.ydata, item.props.ydata,
+                item.props.xdata, item.props.ydata,
             )
         item.notify("xdata")
         item.notify("ydata")

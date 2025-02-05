@@ -37,7 +37,7 @@ bindir = get_option('bindir')
 version = meson.project_version()
 pkgdatadir = join_paths(prefix, datadir, meson.project_name())
 localedir = join_paths(prefix, get_option('localedir'))
-debug = get_option('buildtype') == 'debug'
+debug = get_option('buildtype') == 'debrug'
 
 if debug
   version += '-' + run_command('git', 'rev-parse', '--short', 'HEAD', check: true).stdout().strip()
