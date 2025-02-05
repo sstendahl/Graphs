@@ -302,13 +302,13 @@ def equation_to_data(
         case scales.Scale.LOG:
             x_start = max(x_start, 1e-300)
             x_stop = x_stop if numpy.isfinite(x_stop) else 1e300
-            xdata = (10 ** numpy.linspace(numpy.log10(x_start),
-                     numpy.log10(x_stop), steps)).tolist()
+            xdata = numpy.logspace(numpy.log10(x_start), numpy.log10(x_stop),
+                                   steps).tolist()
         case scales.Scale.LOG2:
             x_start = max(x_start, 1e-300)
             x_stop = x_stop if numpy.isfinite(x_stop) else 1e300
-            xdata = (2 ** numpy.linspace(numpy.log2(x_start),
-                     numpy.log2(x_stop), steps)).tolist()
+            xdata = numpy.logspace(numpy.log2(x_start), numpy.log2(x_stop),
+                                   steps, base=2).tolist()
         case scales.Scale.SQUAREROOT:
             x_start = max(x_start, 1e-300)
             xdata = (numpy.linspace(numpy.sqrt(x_start),
