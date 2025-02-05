@@ -289,13 +289,14 @@ def equation_to_data(
     equation: str,
     limits: tuple = None,
     steps: int = 5000,
-    scale=scales.Scale.LINEAR,
+    scale: int = 1,
 ) -> tuple:
     """Convert an equation into data over a specified range of x-values."""
     if limits is None:
         limits = (0, 10)
     equation = preprocess(equation)
     x_start, x_stop = limits
+    scale = scales.Scale(scale)
     match scale:
         case scales.Scale.LINEAR | scales.Scale.RADIANS:
             xdata = numpy.linspace(x_start, x_stop, steps).tolist()
