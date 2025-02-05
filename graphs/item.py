@@ -175,7 +175,10 @@ class EquationItem(_PythonItem):
     linewidth = GObject.Property(type=float, default=3)
 
     _style_properties = {
-        "linestyle": ("lines.linestyle", misc.LINESTYLES.index),
+        "linestyle": (
+            "lines.linestyle",
+            lambda x: max(misc.LINESTYLES.index(x) - 1, 0),
+        ),
         "linewidth": ("lines.linewidth", None),
     }
 
