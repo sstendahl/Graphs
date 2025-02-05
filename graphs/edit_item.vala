@@ -43,11 +43,6 @@ namespace Graphs {
 
         [GtkChild]
         public unowned Scale linewidth { get; }
-
-        [GtkCallback]
-        private void on_linestyle () {
-            linewidth.set_sensitive (linestyle.get_selected () != 0);
-        }
     }
 
     [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/edit-item-generated-data.ui")]
