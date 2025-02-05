@@ -21,13 +21,13 @@ if desktop_file_validate.found()
 endif
 
 appstream_file_in = configure_file(
-          input: application_id + '.appdata.xml.in',
-         output: application_id + '.appdata.xml.in',
+          input: application_id + '.metainfo.xml.in',
+         output: application_id + '.metainfo.xml.in',
   configuration: conf,
 )
 appstream_file = i18n.merge_file(
         input: appstream_file_in,
-       output: application_id + '.appdata.xml',
+       output: application_id + '.metainfo.xml',
        po_dir: '../po',
       install: true,
   install_dir: join_paths(datadir, 'metainfo'),
