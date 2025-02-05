@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
-data/se.sjoerd.Graphs.appdata.xml.in
+data/se.sjoerd.Graphs.metainfo.xml.in
 data/se.sjoerd.Graphs.desktop.in
 data/se.sjoerd.Graphs.gschema.xml
 data/ui/dialogs/delete-style.blp
