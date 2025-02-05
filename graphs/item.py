@@ -177,7 +177,7 @@ class EquationItem(_PythonItem):
     _style_properties = {
         "linestyle": (
             "lines.linestyle",
-            lambda x: misc.LINESTYLES.index(x) - 1,
+            lambda x: max(misc.LINESTYLES.index(x) - 1, 0),
         ),
         "linewidth": ("lines.linewidth", None),
     }
