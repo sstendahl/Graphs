@@ -136,6 +136,8 @@ class Canvas(Graphs.Canvas, FigureCanvas):
 
         self.connect("notify::hide-unselected", self._redraw)
         items.connect("items-changed", self._redraw)
+        if isinstance(items, Gtk.SelectionModel):
+            items.connect("selection-changed", self._redraw)
         self._redraw()
 
     def _setup_interactive(self):
@@ -440,16 +442,8 @@ class Canvas(Graphs.Canvas, FigureCanvas):
         # bottom, top, left, right
         used_axes = [False, False, False, False]
         visible_axes = [False, False, False, False]
-        if self.props.hide_unselected:
-            drawable_items = []
-            for item in self.props.items:
-                if hasattr(item, "handler"):
-                    item.disconnect(item.handler)
-                item.handler = item.connect("notify::selected", self._redraw)
-                if item.get_selected():
-                    drawable_items.append(item)
-        else:
-            drawable_items = list(self.props.items)
+        drawable_items = [x for x in self.props.items if x.get_selected()] \
+            if self.props.hide_unselected else list(self.props.items)
         for item in drawable_items:
             xposition = item.get_xposition()
             yposition = item.get_yposition()

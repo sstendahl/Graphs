@@ -51,7 +51,8 @@ def import_from_files(
                     items.extend(callback(params, style, file))
                 except ParseError as error:
                     application.get_active_window().add_toast_string(
-                        error.message)
+                        error.message
+                    )
                     continue
         data.add_items(items)
 
