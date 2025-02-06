@@ -29,9 +29,7 @@ class PythonApplication(Graphs.Application):
 
         from matplotlib import font_manager
 
-        settings = Gio.Settings(self.props.application_id)
-        migrate.migrate_config(settings)
-        self.props.settings = settings
+        self.props.settings = Gio.Settings(self.props.application_id)
 
         self._figure_style_manager = styles.StyleManager(self)
         self.props.figure_style_manager = self._figure_style_manager
