@@ -29,8 +29,6 @@ class PythonApplication(Graphs.Application):
 
         from matplotlib import font_manager
 
-        self.props.settings = Gio.Settings(self.props.application_id)
-
         self._figure_style_manager = styles.StyleManager(self)
         self.props.figure_style_manager = self._figure_style_manager
         font_list = font_manager.findSystemFonts(fontpaths=None, fontext="ttf")

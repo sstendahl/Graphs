@@ -12,7 +12,7 @@ namespace Graphs {
      * Graphs application
      */
     public class Application : Adw.Application {
-        public GLib.Settings settings { get; protected set; }
+        public GLib.Settings settings { get; private set; }
         public StyleManager figure_style_manager { get; protected set; }
         public bool debug { get; construct set; default = false; }
         public PythonHelper python_helper { get; construct set; }
@@ -38,6 +38,8 @@ namespace Graphs {
          */
         public override void startup () {
             base.startup ();
+
+            this.settings = new GLib.Settings (application_id);
 
             python_helper.run_method (this, "_setup");
 
