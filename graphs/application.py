@@ -1,19 +1,12 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Main application."""
-from gi.repository import Gio, Graphs
+from gi.repository import Graphs
 
 
 class PythonApplication(Graphs.Application):
     """The main application singleton class."""
 
     __gtype_name__ = "GraphsPythonApplication"
-
-    def __init__(self, application_id: str, **kwargs):
-        super().__init__(
-            application_id=application_id,
-            flags=Gio.ApplicationFlags.HANDLES_OPEN,
-            **kwargs,
-        )
 
     def do_startup(self):
         """Handle Application setup."""
