@@ -45,17 +45,19 @@ if __name__ == "__main__":
     sys.path.insert(1, graph_path_dir)
     signal.signal(signal.SIGINT, signal.SIG_DFL)
     localedir = "@LOCALEDIR@"
-    if os.environ.get('GRAPHS_OVERRIDE_LOCALEDIR'):
-        localedir = os.environ.get('GRAPHS_OVERRIDE_LOCALEDIR')
+    if os.environ.get("GRAPHS_OVERRIDE_LOCALEDIR"):
+        localedir = os.environ.get("GRAPHS_OVERRIDE_LOCALEDIR")
     locale.bindtextdomain("@GETTEXT_PACKAGE@", localedir)
     locale.textdomain("@GETTEXT_PACKAGE@")
     gettext.bindtextdomain("@GETTEXT_PACKAGE@", localedir)
     gettext.textdomain("@GETTEXT_PACKAGE@")
 
     from gi.repository import Gio
-    gresource_location = os.path.join("@PKGDATADIR@", "@APPLICATION_ID@.gresource")
+    gresource_location = os.path.join(
+        "@PKGDATADIR@", "@APPLICATION_ID@.gresource",
+    )
     if os.environ.get("GRAPHS_OVERRIDE_RESOURCES"):
-        gresource_location = os.environ.get('GRAPHS_OVERRIDE_RESOURCES')
+        gresource_location = os.environ.get("GRAPHS_OVERRIDE_RESOURCES")
     resource = Gio.Resource.load(gresource_location)
     resource._register()
 
@@ -66,4 +68,9 @@ if __name__ == "__main__":
     logging.getLogger("matplotlib.font_manager").disabled = True
 
     from graphs.application import PythonApplication
-    sys.exit(PythonApplication("@APPLICATION_ID@", debug=debug).run(sys.argv))
+    application = PythonApplication(
+        application_id="@APPLICATION_ID@",
+        flags=Gio.ApplicationFlags.HANDLES_OPEN,
+        debug=debug,
+    )
+    sys.exit(application.run(sys.argv))
