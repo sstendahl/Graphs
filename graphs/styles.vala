@@ -73,13 +73,24 @@ namespace Graphs {
                     "standard::*",
                     FileQueryInfoFlags.NONE
                 );
+                string[] stylenames = list_stylenames ();
+                CompareDataFunc<Style> cmp = style_cmp;
                 FileInfo info = null;
                 while ((info = enumerator.next_file ()) != null) {
                     File file = enumerator.get_child (info);
                     if (
                         file.query_file_type (0) == 1
                         && Tools.get_filename (file).has_suffix (".mplstyle")
-                    ) add_user_style (file);
+                    ) {
+                        Style style = style_request.emit (file);
+                        if (is_stylename_present (style.name)) {
+                            style.name = Tools.get_duplicate_string (
+                                style.name, stylenames
+                            );
+                        }
+                        style_model.insert_sorted (style, cmp);
+                        stylenames += style.name;
+                    };
                 }
                 enumerator.close ();
                 FileMonitor style_monitor = style_dir.monitor_directory (
@@ -103,7 +114,14 @@ namespace Graphs {
                 case FileMonitorEvent.CHANGES_DONE_HINT:
                     find_style_for_file (file, out style);
                     if (style == null) {
-                        add_user_style (file);
+                        style = style_request.emit (file);
+                        if (is_stylename_present (style.name)) {
+                            style.name = Tools.get_duplicate_string (
+                                style.name, list_stylenames ()
+                            );
+                        }
+                        CompareDataFunc<Style> cmp = style_cmp;
+                        style_model.insert_sorted (style, cmp);
                         return;
                     }
                     Style tmp_style = style_request.emit (file);
@@ -136,17 +154,6 @@ namespace Graphs {
                 default:
                     return;
             }
-        }
-
-        private void add_user_style (File file) {
-            Style style = style_request.emit (file);
-            if (is_stylename_present (style.name)) {
-                style.name = Tools.get_duplicate_string (
-                    style.name, list_stylenames ()
-                );
-            }
-            CompareDataFunc<Style> cmp = style_cmp;
-            style_model.insert_sorted (style, cmp);
         }
 
         /**
