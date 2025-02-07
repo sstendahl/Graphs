@@ -61,6 +61,11 @@ namespace Graphs {
                     figure_settings.use_custom_style = false;
                 }
             });
+            style_manager.style_renamed.connect ((old_name, new_name) => {
+                if (figure_settings.custom_style == old_name) {
+                    figure_settings.custom_style = new_name;
+                }
+            });
 
             application.style_manager.notify.connect (() => {
                 if (!figure_settings.use_custom_style) {

@@ -18,6 +18,7 @@ namespace Graphs {
         public File style_dir { get; construct set; }
         public signal void style_changed (string stylename);
         public signal void style_deleted (string stylename);
+        public signal void style_renamed (string old_name, string new_name);
 
         protected signal void create_style_request (Style template, string name);
         protected signal Style style_request (File file);
@@ -93,24 +94,45 @@ namespace Graphs {
             if (file.get_basename ()[0] == '.') return;
             Style style = null;
             switch (event_type) {
-                case FileMonitorEvent.CREATED:
-                    if (find_style_for_file (file, out style) > 0) return;
-                    add_user_style (file);
-                    break;
                 case FileMonitorEvent.DELETED:
                     var index = find_style_for_file (file, out style);
                     if (index == -1) return;
                     style_model.remove (index);
                     style_deleted.emit (style.name);
-                    break;
+                    return;
                 case FileMonitorEvent.CHANGES_DONE_HINT:
-                    Style tmp_style = style_request.emit (file);
                     find_style_for_file (file, out style);
-                    if (style == null) return;
+                    if (style == null) {
+                        add_user_style (file);
+                        return;
+                    }
+                    Style tmp_style = style_request.emit (file);
                     style.preview = tmp_style.preview;
                     style.light = tmp_style.light;
-                    style_changed.emit (tmp_style.name);
-                    break;
+                    if (style.name == tmp_style.name) {
+                        style_changed.emit (style.name);
+                        return;
+                    }
+                    bool present = false;
+                    string[] stylenames = {};
+                    for (uint i = 1; i < style_model.get_n_items (); i++) {
+                        Style i_style = style_model.get_item (i) as Style;
+                        if (i_style.file.equal (style.file)) continue;
+                        if (i_style.name == tmp_style.name) {
+                            present = true;
+                        }
+                        stylenames += i_style.name;
+                    }
+                    string old_name = style.name;
+                    if (!present) {
+                        style.name = tmp_style.name;
+                    } else {
+                        style.name = Tools.get_duplicate_string (
+                            tmp_style.name, stylenames
+                        );
+                    }
+                    style_renamed.emit (old_name, style.name);
+                    return;
                 default:
                     return;
             }
