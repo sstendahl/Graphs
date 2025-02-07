@@ -337,11 +337,6 @@ namespace Graphs {
          */
         public void update_view_menu () {
             var view_menu = new Menu ();
-            var toggle_section = new Menu ();
-            toggle_section.append_item (
-                new MenuItem (_("Toggle Sidebar"), "win.toggle_sidebar")
-            );
-            view_menu.append_section (null, toggle_section);
             Menu optimize_section = new Menu ();
             optimize_section.append_item (
                 new MenuItem (_("Optimize Limits"), "win.optimize_limits")
