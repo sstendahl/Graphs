@@ -40,14 +40,20 @@ class EditItemDialog(Adw.Dialog):
                 entry.set_text(item.get_property(prop))
                 entry.connect("changed", self.on_entry_change, prop)
             item.bind_property(
-                "steps", box.get_steps(), "value", 1 | 2,
+                "steps",
+                box.get_steps(),
+                "value",
+                1 | 2,
             )
             self.item_box.append(box)
         if isinstance(item, DataItem):
             box = Graphs.EditItemDataItemBox.new()
             for prop in ("linestyle", "markerstyle"):
                 item.bind_property(
-                    prop, box.get_property(prop), "selected", 1 | 2,
+                    prop,
+                    box.get_property(prop),
+                    "selected",
+                    1 | 2,
                 )
             for prop in ("linewidth", "markersize"):
                 item.bind_property(
@@ -64,7 +70,10 @@ class EditItemDialog(Adw.Dialog):
             self._equation_entry.connect("changed", self.on_equation_change)
             box.get_simplify().connect("activated", self.on_simplify)
             item.bind_property(
-                "linestyle", box.get_linestyle(), "selected", 1 | 2,
+                "linestyle",
+                box.get_linestyle(),
+                "selected",
+                1 | 2,
             )
             item.bind_property(
                 "linewidth",
