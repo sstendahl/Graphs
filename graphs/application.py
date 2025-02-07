@@ -14,11 +14,13 @@ class PythonApplication(Graphs.Application):
             flags=Gio.ApplicationFlags.HANDLES_OPEN,
             **kwargs,
         )
-        self.connect("setup-request", self._setup)
 
-    @staticmethod
-    def _setup(self):
+    def do_startup(self):
+        """Handle Application setup."""
         import logging
+
+        logging.debug("Begin Application startup")
+
         from gettext import gettext as _
 
         from graphs import operations, styles
@@ -41,3 +43,4 @@ class PythonApplication(Graphs.Application):
         self.props.figure_style_manager = self._figure_style_manager
 
         self.connect("operation_invoked", operations.perform_operation)
+        Graphs.Application.do_startup(self)

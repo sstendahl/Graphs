@@ -32,6 +32,7 @@ namespace Graphs {
             this.style_editors = new Gee.LinkedList<StyleEditor> ();
 
             this.version = Config.VERSION;
+            this.settings = new GLib.Settings (application_id);
         }
 
         /**
@@ -39,10 +40,6 @@ namespace Graphs {
          */
         public override void startup () {
             base.startup ();
-
-            this.settings = new GLib.Settings (application_id);
-
-            setup_request.emit ();
 
             Gtk.Window.set_default_icon_name (application_id);
 
