@@ -1,8 +1,6 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Main application."""
-from gi.repository import Gio, Graphs
-
-from graphs.python_helper import PythonHelper
+from gi.repository import Graphs
 
 
 class PythonApplication(Graphs.Application):
@@ -10,31 +8,19 @@ class PythonApplication(Graphs.Application):
 
     __gtype_name__ = "GraphsPythonApplication"
 
-    def __init__(self, application_id: str, **kwargs):
-        super().__init__(
-            application_id=application_id,
-            flags=Gio.ApplicationFlags.HANDLES_OPEN,
-            **kwargs,
-        )
-        # We need to keep references as per
-        # https://bugzilla.gnome.org/show_bug.cgi?id=687522
-        self._python_helper = PythonHelper(self)
-        self.props.python_helper = self._python_helper
-
-    def _setup(self):
+    def do_startup(self):
+        """Handle Application setup."""
         import logging
+
+        logging.debug("Begin Application startup")
+
         from gettext import gettext as _
 
-        from graphs import migrate, operations, styles
+        from graphs import operations, styles
+        from graphs.python_helper import PythonHelper
 
         from matplotlib import font_manager
 
-        settings = Gio.Settings(self.props.application_id)
-        migrate.migrate_config(settings)
-        self.props.settings = settings
-
-        self._figure_style_manager = styles.StyleManager(self)
-        self.props.figure_style_manager = self._figure_style_manager
         font_list = font_manager.findSystemFonts(fontpaths=None, fontext="ttf")
         for font in font_list:
             try:
@@ -42,4 +28,12 @@ class PythonApplication(Graphs.Application):
             except RuntimeError:
                 logging.warning(_("Could not load {font}").format(font=font))
 
+        # We need to keep references as per
+        # https://bugzilla.gnome.org/show_bug.cgi?id=687522
+        self._python_helper = PythonHelper(self)
+        self.props.python_helper = self._python_helper
+        self._figure_style_manager = styles.StyleManager(self)
+        self.props.figure_style_manager = self._figure_style_manager
+
         self.connect("operation_invoked", operations.perform_operation)
+        Graphs.Application.do_startup(self)

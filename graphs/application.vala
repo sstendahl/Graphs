@@ -12,12 +12,13 @@ namespace Graphs {
      * Graphs application
      */
     public class Application : Adw.Application {
-        public GLib.Settings settings { get; protected set; }
+        public GLib.Settings settings { get; private set; }
         public StyleManager figure_style_manager { get; protected set; }
         public bool debug { get; construct set; default = false; }
-        public PythonHelper python_helper { get; construct set; }
+        public PythonHelper python_helper { get; protected set; }
 
         public signal void operation_invoked (string name);
+        protected signal void setup_request ();
 
         private Gee.List<Window> main_windows;
         private Gee.List<StyleEditor> style_editors;
@@ -31,6 +32,7 @@ namespace Graphs {
             this.style_editors = new Gee.LinkedList<StyleEditor> ();
 
             this.version = Config.VERSION;
+            this.settings = new GLib.Settings (application_id);
         }
 
         /**
@@ -38,8 +40,6 @@ namespace Graphs {
          */
         public override void startup () {
             base.startup ();
-
-            python_helper.run_method (this, "_setup");
 
             Gtk.Window.set_default_icon_name (application_id);
 
