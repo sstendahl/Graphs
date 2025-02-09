@@ -129,7 +129,7 @@ namespace Graphs {
                     }
                     string old_name = style.name;
                     style.name = Tools.get_duplicate_string (
-                        tmp_style.name,  list_stylenames ()
+                        tmp_style.name, list_stylenames ()
                     );
                     style_renamed.emit (old_name, style.name);
                     return;
