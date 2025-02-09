@@ -83,11 +83,9 @@ namespace Graphs {
                         && Tools.get_filename (file).has_suffix (".mplstyle")
                     ) {
                         Style style = style_request.emit (file);
-                        if (style.name in stylenames) {
-                            style.name = Tools.get_duplicate_string (
-                                style.name, stylenames
-                            );
-                        }
+                        style.name = Tools.get_duplicate_string (
+                            style.name, stylenames
+                        );
                         style_model.insert_sorted (style, cmp);
                         stylenames += style.name;
                     };
@@ -115,12 +113,9 @@ namespace Graphs {
                     find_style_for_file (file, out style);
                     if (style == null) {
                         style = style_request.emit (file);
-                        string[] stylenames = list_stylenames ();
-                        if (style.name in stylenames) {
-                            style.name = Tools.get_duplicate_string (
-                                style.name, stylenames
-                            );
-                        }
+                        style.name = Tools.get_duplicate_string (
+                            style.name, list_stylenames ()
+                        );
                         CompareDataFunc<Style> cmp = style_cmp;
                         style_model.insert_sorted (style, cmp);
                         return;
@@ -133,14 +128,9 @@ namespace Graphs {
                         return;
                     }
                     string old_name = style.name;
-                    string[] stylenames = list_stylenames ();
-                    if (style.name in stylenames) {
-                        style.name = Tools.get_duplicate_string (
-                            tmp_style.name, stylenames
-                        );
-                    } else {
-                        style.name = tmp_style.name;
-                    }
+                    style.name = Tools.get_duplicate_string (
+                        tmp_style.name,  list_stylenames ()
+                    );
                     style_renamed.emit (old_name, style.name);
                     return;
                 default:
@@ -163,13 +153,9 @@ namespace Graphs {
         }
 
         public void create_style (uint template, string name) {
-            string new_name = name;
-            string[] stylenames = list_stylenames ();
-            if (name in stylenames) {
-                new_name = Tools.get_duplicate_string (
-                    name, stylenames
-                );
-            }
+            string new_name = Tools.get_duplicate_string (
+                name, list_stylenames ()
+            );
             var style = style_model.get_item (template) as Style;
             create_style_request.emit (style, new_name);
         }
