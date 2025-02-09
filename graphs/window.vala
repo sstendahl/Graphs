@@ -187,12 +187,16 @@ namespace Graphs {
         private void on_items_changed () {
             update_view_menu ();
             item_list.remove_all ();
+            var export_data_action = lookup_action ("export_data") as SimpleAction;
+            var optimize_limits_action = lookup_action ("optimize_limits") as SimpleAction;
             if (data.is_empty ()) {
                 itemlist_stack.get_pages ().select_item (0, true);
                 operations.shift_button.set_sensitive (false);
                 operations.smoothen_button.set_sensitive (false);
                 operations.set_cut_sensitivity (false);
                 operations.set_entry_sensitivity (false);
+                export_data_action.set_enabled (false);
+                optimize_limits_action.set_enabled (false);
                 return;
             }
             itemlist_stack.get_pages ().select_item (1, true);
@@ -212,14 +216,18 @@ namespace Graphs {
             operations.smoothen_button.set_sensitive (data_items_selected);
             operations.set_cut_sensitivity (data_items_selected && select_button.get_active ());
             operations.set_entry_sensitivity (items_selected);
+            export_data_action.set_enabled (items_selected);
+            optimize_limits_action.set_enabled (true);
         }
 
         private void on_selection_changed () {
+            var export_data_action = lookup_action ("export_data") as SimpleAction;
             if (data.is_empty ()) {
                 operations.shift_button.set_sensitive (false);
                 operations.smoothen_button.set_sensitive (false);
                 operations.set_cut_sensitivity (false);
                 operations.set_entry_sensitivity (false);
+                export_data_action.set_enabled (false);
                 return;
             }
             bool items_selected = false;
@@ -236,6 +244,7 @@ namespace Graphs {
             operations.smoothen_button.set_sensitive (data_items_selected);
             operations.set_cut_sensitivity (data_items_selected && select_button.get_active ());
             operations.set_entry_sensitivity (items_selected);
+            export_data_action.set_enabled (items_selected);
         }
 
         private ItemBox create_box_for_item (Item item, uint index, bool is_data_item) {
