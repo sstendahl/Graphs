@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2025-02-01 18:00+0000\n"
-"PO-Revision-Date: 2025-02-04 09:50+0800\n"
+"POT-Creation-Date: 2025-02-04 15:55+0000\n"
+"PO-Revision-Date: 2025-02-10 18:22+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -167,7 +167,7 @@ msgstr "添加"
 msgid "Enter a mathematical expression"
 msgstr "输入数学表达式"
 
-#: data/ui/add-equation.blp:48 data/ui/curve-fitting.blp:75
+#: data/ui/add-equation.blp:48 data/ui/curve-fitting.blp:83
 #: data/ui/edit-item-equation.blp:13 data/ui/edit-item-generated-data.blp:13
 #: data/ui/generate-data.blp:52 data/ui/transform.blp:68
 msgid "Y ="
@@ -189,116 +189,116 @@ msgstr "模板"
 msgid "Name"
 msgstr "名称"
 
-#: data/ui/curve-fitting.blp:29 data/ui/item-box.blp:70
+#: data/ui/curve-fitting.blp:37 data/ui/item-box.blp:70
 msgid "Curve Fitting"
 msgstr "曲线拟合"
 
-#: data/ui/curve-fitting.blp:35
+#: data/ui/curve-fitting.blp:43
 msgid "Open Curve Fitting Menu"
 msgstr "打开曲线拟合菜单"
 
-#: data/ui/curve-fitting.blp:57 data/ui/edit-item-equation.blp:9
+#: data/ui/curve-fitting.blp:65 data/ui/edit-item-equation.blp:9
 #: data/ui/edit-item-generated-data.blp:9 graphs/item.py:172
 msgid "Equation"
 msgstr "方程式"
 
-#: data/ui/curve-fitting.blp:61
+#: data/ui/curve-fitting.blp:69
 msgctxt "regression-type"
 msgid "Linear"
 msgstr "线性"
 
-#: data/ui/curve-fitting.blp:62
+#: data/ui/curve-fitting.blp:70
 msgctxt "regression-type"
 msgid "Quadratic"
 msgstr "平方"
 
-#: data/ui/curve-fitting.blp:63
+#: data/ui/curve-fitting.blp:71
 msgctxt "regression-type"
 msgid "Exponential"
 msgstr "指数"
 
-#: data/ui/curve-fitting.blp:64
+#: data/ui/curve-fitting.blp:72
 msgctxt "regression-type"
 msgid "Power Law"
 msgstr "幂律"
 
-#: data/ui/curve-fitting.blp:65
+#: data/ui/curve-fitting.blp:73
 msgctxt "regression-type"
 msgid "Logarithmic"
 msgstr "对数"
 
-#: data/ui/curve-fitting.blp:66
+#: data/ui/curve-fitting.blp:74
 msgctxt "regression-type"
 msgid "Sigmoid Logistic"
 msgstr "Sigmoid 函数"
 
-#: data/ui/curve-fitting.blp:67
+#: data/ui/curve-fitting.blp:75
 msgctxt "regression-type"
 msgid "Gaussian"
 msgstr "高斯"
 
-#: data/ui/curve-fitting.blp:68
+#: data/ui/curve-fitting.blp:76
 msgctxt "regression-type"
 msgid "Custom"
 msgstr "自定义"
 
-#: data/ui/curve-fitting.blp:107
+#: data/ui/curve-fitting.blp:115
 msgid "Add Fit to Data"
 msgstr "添加拟合至数据"
 
-#: data/ui/curve-fitting.blp:126 graphs/window.vala:296
+#: data/ui/curve-fitting.blp:134 graphs/window.vala:342
 msgid "Toggle Sidebar"
 msgstr "切换侧边栏"
 
-#: data/ui/curve-fitting.blp:138 data/ui/style-editor-window.blp:76
-#: data/ui/window.blp:428
+#: data/ui/curve-fitting.blp:146 data/ui/style-editor-window.blp:155
+#: data/ui/window.blp:422
 msgid "Canvas Failed to Load"
 msgstr "画布加载失败"
 
-#: data/ui/curve-fitting.blp:148
+#: data/ui/curve-fitting.blp:156
 msgid "Optimization Method"
 msgstr "优化方法"
 
 #. Translators: see https://world.pages.gitlab.gnome.org/Graphs/help/C/curve_fitting.html#algorithms
-#: data/ui/curve-fitting.blp:152
+#: data/ui/curve-fitting.blp:160
 msgctxt "optimization"
 msgid "Levenberg-Marquardt"
 msgstr "L-M 方法"
 
 #. Translators: see https://world.pages.gitlab.gnome.org/Graphs/help/C/curve_fitting.html#algorithms
-#: data/ui/curve-fitting.blp:159
+#: data/ui/curve-fitting.blp:167
 msgctxt "optimization"
 msgid "Trust Region Reflective"
 msgstr "信赖域反射"
 
 #. Translators: see https://world.pages.gitlab.gnome.org/Graphs/help/C/curve_fitting.html#algorithms
-#: data/ui/curve-fitting.blp:166
+#: data/ui/curve-fitting.blp:174
 msgctxt "optimization"
 msgid "Dogbox"
 msgstr "Dogbox"
 
-#: data/ui/curve-fitting.blp:173
+#: data/ui/curve-fitting.blp:181
 msgid "Confidence Bounds"
 msgstr "置信界限"
 
-#: data/ui/curve-fitting.blp:176
+#: data/ui/curve-fitting.blp:184
 msgctxt "confidence"
 msgid "None"
 msgstr "无"
 
-#: data/ui/curve-fitting.blp:183
+#: data/ui/curve-fitting.blp:191
 #, no-c-format
 msgctxt "confidence"
 msgid "1σ: 68% Confidence"
 msgstr "1σ：68% 置信区间"
 
-#: data/ui/curve-fitting.blp:190
+#: data/ui/curve-fitting.blp:198
 #, no-c-format
 msgctxt "confidence"
 msgid "2σ: 95% Confidence"
 msgstr "2σ：95% 置信区间"
 
-#: data/ui/curve-fitting.blp:197
+#: data/ui/curve-fitting.blp:205
 #, no-c-format
 msgctxt "confidence"
 msgid "3σ: 99.7% Confidence"
@@ -337,162 +337,162 @@ msgid "Line and Markers"
 msgstr "线条和标记"
 
 #: data/ui/edit-item-data.blp:11 data/ui/edit-item-equation.blp:25
-#: data/ui/style-editor-box.blp:61
+#: data/ui/style-editor-box.blp:62
 msgid "Linestyle"
 msgstr "线条样式"
 
 #: data/ui/edit-item-data.blp:16 data/ui/edit-item-equation.blp:30
-#: data/ui/style-editor-box.blp:66
+#: data/ui/style-editor-box.blp:67
 msgctxt "linestyle"
 msgid "None"
 msgstr "无"
 
 #: data/ui/edit-item-data.blp:17 data/ui/edit-item-equation.blp:31
-#: data/ui/style-editor-box.blp:67
+#: data/ui/style-editor-box.blp:68
 msgctxt "linestyle"
 msgid "Solid"
 msgstr "实线"
 
 #: data/ui/edit-item-data.blp:18 data/ui/edit-item-equation.blp:32
-#: data/ui/style-editor-box.blp:68
+#: data/ui/style-editor-box.blp:69
 msgctxt "linestyle"
 msgid "Dotted"
 msgstr "点线"
 
 #: data/ui/edit-item-data.blp:19 data/ui/edit-item-equation.blp:33
-#: data/ui/style-editor-box.blp:69
+#: data/ui/style-editor-box.blp:70
 msgctxt "linestyle"
 msgid "Dashed"
 msgstr "虚线"
 
 #: data/ui/edit-item-data.blp:20 data/ui/edit-item-equation.blp:34
-#: data/ui/style-editor-box.blp:70
+#: data/ui/style-editor-box.blp:71
 msgctxt "linestyle"
 msgid "Dashdot"
 msgstr "点划线"
 
 #: data/ui/edit-item-data.blp:26 data/ui/edit-item-equation.blp:40
-#: data/ui/style-editor-box.blp:76
+#: data/ui/style-editor-box.blp:77
 msgid "Linewidth"
 msgstr "线宽"
 
-#: data/ui/edit-item-data.blp:41 data/ui/style-editor-box.blp:92
+#: data/ui/edit-item-data.blp:41 data/ui/style-editor-box.blp:94
 msgid "Markers"
 msgstr "标记"
 
-#: data/ui/edit-item-data.blp:46 data/ui/style-editor-box.blp:97
+#: data/ui/edit-item-data.blp:46 data/ui/style-editor-box.blp:99
 msgctxt "markerstyle"
 msgid "None"
 msgstr "无"
 
-#: data/ui/edit-item-data.blp:47 data/ui/style-editor-box.blp:98
+#: data/ui/edit-item-data.blp:47 data/ui/style-editor-box.blp:100
 msgctxt "markerstyle"
 msgid "Point"
 msgstr "点"
 
-#: data/ui/edit-item-data.blp:48 data/ui/style-editor-box.blp:99
+#: data/ui/edit-item-data.blp:48 data/ui/style-editor-box.blp:101
 msgctxt "markerstyle"
 msgid "Pixel"
 msgstr "像素"
 
-#: data/ui/edit-item-data.blp:49 data/ui/style-editor-box.blp:100
+#: data/ui/edit-item-data.blp:49 data/ui/style-editor-box.blp:102
 msgctxt "markerstyle"
 msgid "Circle"
 msgstr "圆圈"
 
-#: data/ui/edit-item-data.blp:50 data/ui/style-editor-box.blp:101
+#: data/ui/edit-item-data.blp:50 data/ui/style-editor-box.blp:103
 msgctxt "markerstyle"
 msgid "Triangle Down"
 msgstr "向下三角"
 
-#: data/ui/edit-item-data.blp:51 data/ui/style-editor-box.blp:102
+#: data/ui/edit-item-data.blp:51 data/ui/style-editor-box.blp:104
 msgctxt "markerstyle"
 msgid "Triangle Up"
 msgstr "向上三角"
 
-#: data/ui/edit-item-data.blp:52 data/ui/style-editor-box.blp:103
+#: data/ui/edit-item-data.blp:52 data/ui/style-editor-box.blp:105
 msgctxt "markerstyle"
 msgid "Triangle Left"
 msgstr "向左三角"
 
-#: data/ui/edit-item-data.blp:53 data/ui/style-editor-box.blp:104
+#: data/ui/edit-item-data.blp:53 data/ui/style-editor-box.blp:106
 msgctxt "markerstyle"
 msgid "Triangle Right"
 msgstr "向右三角"
 
-#: data/ui/edit-item-data.blp:54 data/ui/style-editor-box.blp:105
+#: data/ui/edit-item-data.blp:54 data/ui/style-editor-box.blp:107
 msgctxt "markerstyle"
 msgid "Octagon"
 msgstr "八边形"
 
-#: data/ui/edit-item-data.blp:55 data/ui/style-editor-box.blp:106
+#: data/ui/edit-item-data.blp:55 data/ui/style-editor-box.blp:108
 msgctxt "markerstyle"
 msgid "Square"
 msgstr "方形"
 
-#: data/ui/edit-item-data.blp:56 data/ui/style-editor-box.blp:107
+#: data/ui/edit-item-data.blp:56 data/ui/style-editor-box.blp:109
 msgctxt "markerstyle"
 msgid "Pentagon"
 msgstr "五边形"
 
-#: data/ui/edit-item-data.blp:57 data/ui/style-editor-box.blp:108
+#: data/ui/edit-item-data.blp:57 data/ui/style-editor-box.blp:110
 msgctxt "markerstyle"
 msgid "Star"
 msgstr "星形"
 
-#: data/ui/edit-item-data.blp:58 data/ui/style-editor-box.blp:109
+#: data/ui/edit-item-data.blp:58 data/ui/style-editor-box.blp:111
 msgctxt "markerstyle"
 msgid "Hexagon 1"
 msgstr "六边形 1"
 
-#: data/ui/edit-item-data.blp:59 data/ui/style-editor-box.blp:110
+#: data/ui/edit-item-data.blp:59 data/ui/style-editor-box.blp:112
 msgctxt "markerstyle"
 msgid "Hexagon 2"
 msgstr "六边形 2"
 
-#: data/ui/edit-item-data.blp:60 data/ui/style-editor-box.blp:111
+#: data/ui/edit-item-data.blp:60 data/ui/style-editor-box.blp:113
 msgctxt "markerstyle"
 msgid "Plus"
 msgstr "加号"
 
-#: data/ui/edit-item-data.blp:61 data/ui/style-editor-box.blp:112
+#: data/ui/edit-item-data.blp:61 data/ui/style-editor-box.blp:114
 msgctxt "markerstyle"
 msgid "X"
 msgstr "X"
 
 #. Translators: Diamond as in Cards Symbol
-#: data/ui/edit-item-data.blp:63 data/ui/style-editor-box.blp:114
+#: data/ui/edit-item-data.blp:63 data/ui/style-editor-box.blp:116
 msgctxt "markerstyle"
 msgid "Diamond"
 msgstr "菱形"
 
 #. Translators: Diamond as in Cards Symbol
-#: data/ui/edit-item-data.blp:65 data/ui/style-editor-box.blp:116
+#: data/ui/edit-item-data.blp:65 data/ui/style-editor-box.blp:118
 msgctxt "markerstyle"
 msgid "Thin Diamond"
 msgstr "窄菱形"
 
-#: data/ui/edit-item-data.blp:66 data/ui/style-editor-box.blp:117
+#: data/ui/edit-item-data.blp:66 data/ui/style-editor-box.blp:119
 msgctxt "markerstyle"
 msgid "Vertical Line"
 msgstr "竖线"
 
-#: data/ui/edit-item-data.blp:67 data/ui/style-editor-box.blp:118
+#: data/ui/edit-item-data.blp:67 data/ui/style-editor-box.blp:120
 msgctxt "markerstyle"
 msgid "Horizontal Line"
 msgstr "横线"
 
-#: data/ui/edit-item-data.blp:68 data/ui/style-editor-box.blp:119
+#: data/ui/edit-item-data.blp:68 data/ui/style-editor-box.blp:121
 msgctxt "markerstyle"
 msgid "Filled Plus"
 msgstr "实心加号"
 
-#: data/ui/edit-item-data.blp:69 data/ui/style-editor-box.blp:120
+#: data/ui/edit-item-data.blp:69 data/ui/style-editor-box.blp:122
 msgctxt "markerstyle"
 msgid "Filled X"
 msgstr "实心 X"
 
-#: data/ui/edit-item-data.blp:75 data/ui/style-editor-box.blp:126
+#: data/ui/edit-item-data.blp:75 data/ui/style-editor-box.blp:128
 msgid "Marker Size"
 msgstr "标记大小"
 
@@ -584,7 +584,7 @@ msgstr "导入样式…"
 msgid "Create Style…"
 msgstr "创建样式…"
 
-#: data/ui/figure-settings-page.blp:5 data/ui/window.blp:453
+#: data/ui/figure-settings-page.blp:5 data/ui/window.blp:447
 msgid "Figure Settings"
 msgstr "图表设置"
 
@@ -592,7 +592,7 @@ msgstr "图表设置"
 msgid "Labels"
 msgstr "标签"
 
-#: data/ui/figure-settings-page.blp:29 graphs/style_editor.py:510
+#: data/ui/figure-settings-page.blp:29 graphs/style_editor.py:508
 msgid "Title"
 msgstr "标题"
 
@@ -652,41 +652,41 @@ msgstr "右侧 Y 轴最大值"
 msgid "Scaling"
 msgstr "缩放"
 
-#: data/ui/figure-settings-page.blp:143 graphs/window.vala:336
+#: data/ui/figure-settings-page.blp:143 graphs/window.vala:382
 msgid "Bottom X Axis Scale"
 msgstr "底部 X 轴缩放"
 
 #: data/ui/figure-settings-page.blp:147 data/ui/figure-settings-page.blp:163
 #: data/ui/figure-settings-page.blp:179 data/ui/figure-settings-page.blp:195
-#: graphs/window.vala:306
+#: graphs/window.vala:352
 msgctxt "scale"
 msgid "Linear"
 msgstr "线性"
 
 #: data/ui/figure-settings-page.blp:148 data/ui/figure-settings-page.blp:164
 #: data/ui/figure-settings-page.blp:180 data/ui/figure-settings-page.blp:196
-#: graphs/window.vala:307
+#: graphs/window.vala:353
 msgctxt "scale"
 msgid "Logarithmic (Base 10)"
 msgstr "对数（底数 10）"
 
 #: data/ui/figure-settings-page.blp:149 data/ui/figure-settings-page.blp:165
 #: data/ui/figure-settings-page.blp:181 data/ui/figure-settings-page.blp:197
-#: graphs/window.vala:308
+#: graphs/window.vala:354
 msgctxt "scale"
 msgid "Logarithmic (Base 2)"
 msgstr "对数（底数 2）"
 
 #: data/ui/figure-settings-page.blp:150 data/ui/figure-settings-page.blp:166
 #: data/ui/figure-settings-page.blp:182 data/ui/figure-settings-page.blp:198
-#: graphs/window.vala:309
+#: graphs/window.vala:355
 msgctxt "scale"
 msgid "Radians"
 msgstr "弧度"
 
 #: data/ui/figure-settings-page.blp:151 data/ui/figure-settings-page.blp:167
 #: data/ui/figure-settings-page.blp:183 data/ui/figure-settings-page.blp:199
-#: graphs/window.vala:310
+#: graphs/window.vala:356
 msgctxt "scale"
 msgid "Square Root"
 msgstr "平方根"
@@ -697,15 +697,15 @@ msgctxt "scale"
 msgid "Inverse"
 msgstr "逆缩放"
 
-#: data/ui/figure-settings-page.blp:159 graphs/window.vala:337
+#: data/ui/figure-settings-page.blp:159 graphs/window.vala:383
 msgid "Top X Axis Scale"
 msgstr "顶部 X 轴缩放"
 
-#: data/ui/figure-settings-page.blp:175 graphs/window.vala:342
+#: data/ui/figure-settings-page.blp:175 graphs/window.vala:388
 msgid "Left Y Axis Scale"
 msgstr "左侧 Y 轴缩放"
 
-#: data/ui/figure-settings-page.blp:191 graphs/window.vala:341
+#: data/ui/figure-settings-page.blp:191 graphs/window.vala:387
 msgid "Right Y Axis Scale"
 msgstr "右侧 Y 轴缩放"
 
@@ -1076,19 +1076,19 @@ msgstr "编辑"
 msgid "Remove"
 msgstr "移除"
 
-#: data/ui/style-editor-box.blp:11
+#: data/ui/style-editor-box.blp:10
 msgid "Style Name"
 msgstr "样式名称"
 
-#: data/ui/style-editor-box.blp:15
+#: data/ui/style-editor-box.blp:14
 msgid "Font"
 msgstr "字体"
 
-#: data/ui/style-editor-box.blp:27
+#: data/ui/style-editor-box.blp:26
 msgid "Title Size"
 msgstr "标题大小"
 
-#: data/ui/style-editor-box.blp:28
+#: data/ui/style-editor-box.blp:27
 msgid "Title size in relation to text size"
 msgstr "与文字大小相关的标题大小"
 
@@ -1100,169 +1100,169 @@ msgstr "标签大小"
 msgid "Label size in relation to text size"
 msgstr "与文字大小相关的标签大小"
 
-#: data/ui/style-editor-box.blp:58
+#: data/ui/style-editor-box.blp:59
 msgid "Lines"
 msgstr "线条"
 
-#: data/ui/style-editor-box.blp:143
+#: data/ui/style-editor-box.blp:146
 msgid "Axes"
 msgstr "坐标轴"
 
-#: data/ui/style-editor-box.blp:146
+#: data/ui/style-editor-box.blp:149
 msgid "Axis Width"
 msgstr "坐标轴宽度"
 
-#: data/ui/style-editor-box.blp:160
+#: data/ui/style-editor-box.blp:163
 msgid "Draw Frame"
 msgstr "绘制框架"
 
-#: data/ui/style-editor-box.blp:165
+#: data/ui/style-editor-box.blp:168
 msgid "Ticks"
 msgstr "刻度"
 
-#: data/ui/style-editor-box.blp:168
+#: data/ui/style-editor-box.blp:171
 msgid "Tick Directions"
 msgstr "刻度方向"
 
-#: data/ui/style-editor-box.blp:172
+#: data/ui/style-editor-box.blp:175
 msgid "Inwards"
 msgstr "内部"
 
-#: data/ui/style-editor-box.blp:173
+#: data/ui/style-editor-box.blp:176
 msgid "Outwards"
 msgstr "外部"
 
-#: data/ui/style-editor-box.blp:179
+#: data/ui/style-editor-box.blp:182
 msgid "Minor Ticks"
 msgstr "次级刻度"
 
-#: data/ui/style-editor-box.blp:183
+#: data/ui/style-editor-box.blp:186
 msgid "Major Tick Width"
 msgstr "主要刻度宽度"
 
-#: data/ui/style-editor-box.blp:197
+#: data/ui/style-editor-box.blp:201
 msgid "Minor Tick Width"
 msgstr "次级刻度宽度"
 
-#: data/ui/style-editor-box.blp:212
+#: data/ui/style-editor-box.blp:217
 msgid "Major Tick Length"
 msgstr "主要刻度长度"
 
-#: data/ui/style-editor-box.blp:226
+#: data/ui/style-editor-box.blp:232
 msgid "Minor Tick Length"
 msgstr "次级刻度长度"
 
-#: data/ui/style-editor-box.blp:241
+#: data/ui/style-editor-box.blp:248
 msgid "Ticks on Bottom Axis"
 msgstr "底部坐标轴刻度"
 
-#: data/ui/style-editor-box.blp:245
+#: data/ui/style-editor-box.blp:252
 msgid "Ticks on Left Axis"
 msgstr "左侧坐标轴刻度"
 
-#: data/ui/style-editor-box.blp:249
+#: data/ui/style-editor-box.blp:256
 msgid "Ticks on Right Axis"
 msgstr "右侧坐标轴刻度"
 
-#: data/ui/style-editor-box.blp:253
+#: data/ui/style-editor-box.blp:260
 msgid "Ticks on Top Axis"
 msgstr "顶部坐标轴刻度"
 
-#: data/ui/style-editor-box.blp:258
+#: data/ui/style-editor-box.blp:265
 msgid "Grid"
 msgstr "网格"
 
-#: data/ui/style-editor-box.blp:261
+#: data/ui/style-editor-box.blp:268
 msgid "Show Grid"
 msgstr "显示网格"
 
-#: data/ui/style-editor-box.blp:265
+#: data/ui/style-editor-box.blp:272
 msgid "Grid Width"
 msgstr "网格宽度"
 
-#: data/ui/style-editor-box.blp:280
+#: data/ui/style-editor-box.blp:288
 msgid "Grid Opacity"
 msgstr "网格不透明度"
 
-#: data/ui/style-editor-box.blp:296
+#: data/ui/style-editor-box.blp:305
 msgid "Padding"
 msgstr "衬垫"
 
-#: data/ui/style-editor-box.blp:297
+#: data/ui/style-editor-box.blp:306
 msgid "Padding for different parts of the figure"
 msgstr "用于图表不同部分的衬垫"
 
-#: data/ui/style-editor-box.blp:300
+#: data/ui/style-editor-box.blp:309
 msgid "Value Padding"
 msgstr "数值衬垫"
 
-#: data/ui/style-editor-box.blp:301
+#: data/ui/style-editor-box.blp:310
 msgid "Padding between axes and values"
 msgstr "坐标轴和数值之间的衬垫"
 
-#: data/ui/style-editor-box.blp:315
+#: data/ui/style-editor-box.blp:325
 msgid "Label Padding"
 msgstr "标签衬垫"
 
-#: data/ui/style-editor-box.blp:316
+#: data/ui/style-editor-box.blp:326
 msgid "Padding between axes and labels"
 msgstr "坐标轴和标签之间的衬垫"
 
-#: data/ui/style-editor-box.blp:330
+#: data/ui/style-editor-box.blp:341
 msgid "Title Padding"
 msgstr "标题衬垫"
 
-#: data/ui/style-editor-box.blp:331
+#: data/ui/style-editor-box.blp:342
 msgid "Padding between axes and the title"
 msgstr "坐标轴和标题之间的衬垫"
 
-#: data/ui/style-editor-box.blp:346
+#: data/ui/style-editor-box.blp:358
 msgid "Colors"
 msgstr "颜色"
 
-#: data/ui/style-editor-box.blp:350
+#: data/ui/style-editor-box.blp:362
 msgid "Label text might be hard to read"
 msgstr "标签文本可能较难阅读"
 
-#: data/ui/style-editor-box.blp:362
+#: data/ui/style-editor-box.blp:374
 msgid "Poor Contrast"
 msgstr "对比度过低"
 
-#: data/ui/style-editor-box.blp:377
+#: data/ui/style-editor-box.blp:389
 msgid "Text Color"
 msgstr "文本颜色"
 
-#: data/ui/style-editor-box.blp:382 data/ui/style-editor-box.blp:409
-#: data/ui/style-editor-box.blp:436 data/ui/style-editor-box.blp:463
-#: data/ui/style-editor-box.blp:490 data/ui/style-editor-box.blp:517
+#: data/ui/style-editor-box.blp:394 data/ui/style-editor-box.blp:421
+#: data/ui/style-editor-box.blp:448 data/ui/style-editor-box.blp:475
+#: data/ui/style-editor-box.blp:502 data/ui/style-editor-box.blp:529
 msgid "Change Color"
 msgstr "更改颜色"
 
-#: data/ui/style-editor-box.blp:404
+#: data/ui/style-editor-box.blp:416
 msgid "Tick Color"
 msgstr "刻度颜色"
 
-#: data/ui/style-editor-box.blp:431
+#: data/ui/style-editor-box.blp:443
 msgid "Axis Color"
 msgstr "坐标轴颜色"
 
-#: data/ui/style-editor-box.blp:458
+#: data/ui/style-editor-box.blp:470
 msgid "Grid Color"
 msgstr "网格颜色"
 
-#: data/ui/style-editor-box.blp:485
+#: data/ui/style-editor-box.blp:497
 msgid "Background Color"
 msgstr "背景颜色"
 
-#: data/ui/style-editor-box.blp:512
+#: data/ui/style-editor-box.blp:524
 msgid "Outline Color"
 msgstr "轮廓颜色"
 
-#: data/ui/style-editor-box.blp:535
+#: data/ui/style-editor-box.blp:547
 msgid "Line Colors"
 msgstr "线条颜色"
 
-#: data/ui/style-editor-box.blp:547
+#: data/ui/style-editor-box.blp:559
 msgid "Add Color"
 msgstr "添加颜色"
 
@@ -1310,27 +1310,31 @@ msgstr "另存工程为"
 msgid "Error - No Style selected"
 msgstr "错误 - 未选择样式"
 
-#: data/ui/style-editor-window.blp:45 data/ui/window.blp:226
+#: data/ui/style-editor-window.blp:100
+msgid "Open Preview"
+msgstr "打开预览"
+
+#: data/ui/style-editor-window.blp:130 data/ui/window.blp:226
 msgid "Open Application Menu"
 msgstr "打开应用程序菜单"
 
-#: data/ui/style-editor-window.blp:84
+#: data/ui/style-editor-window.blp:163
 msgid "Save Style…"
 msgstr "保存样式…"
 
-#: data/ui/style-editor-window.blp:85
+#: data/ui/style-editor-window.blp:164
 msgid "Save Style as…"
 msgstr "另存样式为…"
 
-#: data/ui/style-editor-window.blp:89 data/ui/window.blp:457
+#: data/ui/style-editor-window.blp:168 data/ui/window.blp:451
 msgid "Keyboard Shortcuts"
 msgstr "键盘快捷键"
 
-#: data/ui/style-editor-window.blp:90 data/ui/window.blp:458
+#: data/ui/style-editor-window.blp:169 data/ui/window.blp:452
 msgid "Help"
 msgstr "帮助"
 
-#: data/ui/style-editor-window.blp:91 data/ui/window.blp:459
+#: data/ui/style-editor-window.blp:170 data/ui/window.blp:453
 msgid "About Graphs"
 msgstr "关于 Graphs"
 
@@ -1388,83 +1392,83 @@ msgstr "拖放到这里来导入"
 msgid "Add New Data"
 msgstr "添加新数据"
 
-#: data/ui/window.blp:269
+#: data/ui/window.blp:240
 msgid "No Data"
 msgstr "无数据"
 
-#: data/ui/window.blp:270
+#: data/ui/window.blp:241
 msgid "Add data from a file or manually as an equation"
 msgstr "从文件或手动输入方程式来添加数据"
 
-#: data/ui/window.blp:296
+#: data/ui/window.blp:290
 msgid "Pan Mode. Click and drag to pan"
 msgstr "平移模式。点击并拖拽来平移"
 
-#: data/ui/window.blp:303
+#: data/ui/window.blp:297
 msgid "Zoom Mode. Select an area on the figure to zoom in"
 msgstr "缩放模式。选择图表的一个区域来放大"
 
-#: data/ui/window.blp:310
+#: data/ui/window.blp:304
 msgid "Select Mode. Click and drag to make a selection of data"
 msgstr "选择模式。点击并拖拽来选择数据"
 
-#: data/ui/window.blp:333
+#: data/ui/window.blp:327
 msgid "Show Sidebar"
 msgstr "显示侧边栏"
 
-#: data/ui/window.blp:341 data/ui/window.blp:387 graphs/window.vala:284
+#: data/ui/window.blp:335 data/ui/window.blp:381 graphs/window.vala:330
 msgid "Undo"
 msgstr "撤消"
 
-#: data/ui/window.blp:347 data/ui/window.blp:394
+#: data/ui/window.blp:341 data/ui/window.blp:388
 msgid "Redo"
 msgstr "重做"
 
-#: data/ui/window.blp:354 data/ui/window.blp:401
+#: data/ui/window.blp:348 data/ui/window.blp:395
 msgid "View Menu"
 msgstr "视图菜单"
 
-#: data/ui/window.blp:364 data/ui/window.blp:410
+#: data/ui/window.blp:358 data/ui/window.blp:404
 msgid "Next View"
 msgstr "下一视图"
 
-#: data/ui/window.blp:372 data/ui/window.blp:418
+#: data/ui/window.blp:366 data/ui/window.blp:412
 msgid "Previous View"
 msgstr "上一视图"
 
-#: data/ui/window.blp:438
+#: data/ui/window.blp:432
 msgid "New Project"
 msgstr "新建工程"
 
-#: data/ui/window.blp:442
+#: data/ui/window.blp:436
 msgid "Save Project…"
 msgstr "保存工程…"
 
-#: data/ui/window.blp:443
+#: data/ui/window.blp:437
 msgid "Save Project as…"
 msgstr "另存工程为…"
 
-#: data/ui/window.blp:444
+#: data/ui/window.blp:438
 msgid "Open Project…"
 msgstr "打开工程…"
 
-#: data/ui/window.blp:448
+#: data/ui/window.blp:442
 msgid "Export Data…"
 msgstr "导出数据…"
 
-#: data/ui/window.blp:449
+#: data/ui/window.blp:443
 msgid "Export Figure…"
 msgstr "导出图表…"
 
-#: data/ui/window.blp:465
+#: data/ui/window.blp:459
 msgid "Add Data from File…"
 msgstr "从文件添加数据…"
 
-#: data/ui/window.blp:466
+#: data/ui/window.blp:460
 msgid "Add Equation…"
 msgstr "添加方程式…"
 
-#: data/ui/window.blp:467
+#: data/ui/window.blp:461
 msgid "Generate Data…"
 msgstr "生成数据…"
 
@@ -1603,27 +1607,27 @@ msgctxt "shortcut window"
 msgid "Redo Action"
 msgstr "重做动作"
 
-#: graphs/actions.vala:149 graphs/item_box.vala:59
+#: graphs/actions.vala:145 graphs/item_box.vala:59
 #, c-format
 msgid "Deleted %s"
 msgstr "已删除 %s"
 
-#: graphs/actions.vala:174
+#: graphs/actions.vala:170
 msgctxt "file-filter"
 msgid "Supported files"
 msgstr "支持的文件"
 
-#: graphs/actions.vala:178
+#: graphs/actions.vala:174
 msgctxt "file-filter"
 msgid "ASCII files"
 msgstr "ASCII 文件"
 
-#: graphs/actions.vala:182
+#: graphs/actions.vala:178
 msgctxt "file-filter"
 msgid "PANalytical XRDML"
 msgstr "PANalytical XRDML"
 
-#: graphs/actions.vala:185
+#: graphs/actions.vala:181
 msgctxt "file-filter"
 msgid "Leybold xry"
 msgstr "Leybold xry"
@@ -1672,7 +1676,7 @@ msgstr ""
 msgid "Sum of R²: {R2}"
 msgstr "R² 的总和：{R2}"
 
-#: graphs/curve_fitting.vala:136
+#: graphs/curve_fitting.vala:150
 #, c-format
 msgid "Fitting Parameters for %s"
 msgstr "%s 的拟合参数"
@@ -1687,11 +1691,11 @@ msgstr "无法解析 {stylename}，加载系统首选样式"
 msgid "Plot style {stylename} does not exist loading system preferred"
 msgstr "绘图样式 {stylename} 不存在，加载系统首选样式"
 
-#: graphs/data.py:467
+#: graphs/data.py:465
 msgid "Failed to parse project file"
 msgstr "解析工程文件失败"
 
-#: graphs/data.py:473
+#: graphs/data.py:471
 msgid "Failed to load project"
 msgstr "加载工程失败"
 
@@ -1725,7 +1729,7 @@ msgstr "X 轴最大值"
 msgid "Y Axis Maximum"
 msgstr "Y 轴最大值"
 
-#: graphs/figure_settings.vala:176 graphs/window.vala:338
+#: graphs/figure_settings.vala:176 graphs/window.vala:384
 msgid "X Axis Scale"
 msgstr "X 轴缩放"
 
@@ -1733,7 +1737,7 @@ msgstr "X 轴缩放"
 msgid "X Axis Label"
 msgstr "X 轴标签"
 
-#: graphs/figure_settings.vala:180 graphs/window.vala:343
+#: graphs/figure_settings.vala:180 graphs/window.vala:389
 msgid "Y Axis Scale"
 msgstr "Y 轴缩放"
 
@@ -1741,7 +1745,7 @@ msgstr "Y 轴缩放"
 msgid "Defaults Updated"
 msgstr "默认值已更新"
 
-#: graphs/figure_settings.vala:312
+#: graphs/figure_settings.vala:313
 #, c-format
 msgid "Are you sure you want to delete %s?"
 msgstr "您确定要删除 %s 吗？"
@@ -1767,38 +1771,38 @@ msgctxt "file-filter"
 msgid "Matplotlib Style File"
 msgstr "Matplotlib 样式文件"
 
-#: graphs/operations.py:252
+#: graphs/operations.py:253
 msgid "Unable to perform transformation, make sure the syntax is correct"
 msgstr "无法执行变换，请确保语法正确"
 
-#: graphs/operations.py:295 graphs/operations.py:603
+#: graphs/operations.py:296 graphs/operations.py:604
 msgid "No data found within the highlighted area"
 msgstr "高亮区域内未发现数据"
 
-#: graphs/operations.py:306
+#: graphs/operations.py:307
 msgid "Combined Data"
 msgstr "组合的数据"
 
-#: graphs/operations.py:440
+#: graphs/operations.py:441
 #, python-brace-format
 msgid ""
 "The operation on {item.props.name} did not result in a plottable equation"
 msgstr "在 {item.props.name} 上的操作未产生可绘图方程式的结果"
 
-#: graphs/operations.py:449
+#: graphs/operations.py:450
 msgid "Operation not supported for equations."
 msgstr "方程式不支持该操作。"
 
-#: graphs/operations.py:609
+#: graphs/operations.py:610
 msgid "Operation not supported for data items"
 msgstr "数据项目不支持该操作"
 
-#: graphs/operations.py:612
+#: graphs/operations.py:613
 #, python-brace-format
 msgid "{name}: Error performing the operation"
 msgstr "{name}：执行该操作时出错"
 
-#: graphs/operations.py:618
+#: graphs/operations.py:619
 msgid "Data that was outside of the highlighted area has been discarded"
 msgstr "高亮区域之外的数据已被丢弃"
 
@@ -1852,15 +1856,15 @@ msgstr "工程"
 msgid "Color {number}"
 msgstr "颜色 {number}"
 
-#: graphs/style_editor.py:491
+#: graphs/style_editor.py:489
 msgid "Example Item"
 msgstr "示例项目"
 
-#: graphs/style_editor.py:511 graphs/style_io.py:180
+#: graphs/style_editor.py:509 graphs/style_io.py:180
 msgid "X Label"
 msgstr "X 标签"
 
-#: graphs/style_editor.py:512 graphs/style_io.py:181
+#: graphs/style_editor.py:510 graphs/style_io.py:181
 msgid "Y Label"
 msgstr "Y 标签"
 
@@ -1919,19 +1923,19 @@ msgstr "草稿"
 msgid "Document Portal"
 msgstr "文档门户"
 
-#: graphs/window.vala:186
+#: graphs/window.vala:183
 msgid "Graphs (Development)"
 msgstr "Graphs（开发版）"
 
-#: graphs/window.vala:274
+#: graphs/window.vala:320
 msgid "Open Location"
 msgstr "打开位置"
 
-#: graphs/window.vala:301
+#: graphs/window.vala:347
 msgid "Optimize Limits"
 msgstr "优化极限"
 
-#: graphs/window.vala:311
+#: graphs/window.vala:357
 msgctxt "scale"
 msgid "Inverse Root"
 msgstr "逆平方根"
