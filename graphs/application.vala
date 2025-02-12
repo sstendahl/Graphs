@@ -23,6 +23,12 @@ namespace Graphs {
         private Gee.List<Window> main_windows;
         private Gee.List<StyleEditor> style_editors;
 
+        private const OptionEntry[] option_entries = {
+            { "version", 0, 0, OptionArg.NONE, null, "Display version number", null },
+            { "new-window", 'n', 0, OptionArg.NONE, null, "New window", null },
+            { null },
+        };
+
         construct {
             Intl.bindtextdomain (Config.GETTEXT_PACKAGE, Config.LOCALEDIR);
             Intl.bind_textdomain_codeset (Config.GETTEXT_PACKAGE, "UTF-8");
@@ -33,6 +39,8 @@ namespace Graphs {
 
             this.version = Config.VERSION;
             this.settings = new GLib.Settings (application_id);
+
+            add_main_option_entries (option_entries);
         }
 
         /**
@@ -116,7 +124,11 @@ namespace Graphs {
          */
         public override void activate () {
             base.activate ();
-            create_main_window ();
+            if (main_windows.is_empty) {
+                create_main_window ();
+            } else {
+                main_windows[0].present ();
+            }
         }
 
         /**
@@ -155,6 +167,39 @@ namespace Graphs {
                 window = create_main_window ();
             }
             python_helper.import_from_files (window, files);
+        }
+
+        /*
+         * Handle command line
+         */
+        public override int command_line (ApplicationCommandLine command_line) {
+            string[] args = command_line.get_arguments ();
+            VariantDict options = command_line.get_options_dict ();
+            File[] files = {};
+
+            for (int i = 1; i < args.length; i++) {
+                string filename = args[i];
+                files += command_line.create_file_for_arg (filename);
+            }
+
+            bool version;
+            options.lookup ("version", "b", out version);
+            if (version) {
+                command_line.print ("Graphs Version %s\n", Config.VERSION);
+                return 0;
+            }
+
+            bool new_window;
+            options.lookup ("new-window", "b", out new_window);
+
+            if (files.length > 0) {
+                open (files, "");
+            } else if (new_window) {
+                create_main_window ();
+            } else {
+                activate ();
+            }
+            return 0;
         }
 
         public Window create_main_window () {

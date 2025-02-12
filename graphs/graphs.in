@@ -70,7 +70,7 @@ if __name__ == "__main__":
     from graphs.application import PythonApplication
     application = PythonApplication(
         application_id="@APPLICATION_ID@",
-        flags=Gio.ApplicationFlags.HANDLES_OPEN,
+        flags=Gio.ApplicationFlags.HANDLES_COMMAND_LINE | Gio.ApplicationFlags.HANDLES_OPEN,
         debug=debug,
     )
     sys.exit(application.run(sys.argv))
