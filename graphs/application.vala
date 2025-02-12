@@ -177,16 +177,16 @@ namespace Graphs {
             VariantDict options = command_line.get_options_dict ();
             File[] files = {};
 
-            for (int i = 1; i < args.length; i++) {
-                string filename = args[i];
-                files += command_line.create_file_for_arg (filename);
-            }
-
             bool version;
             options.lookup ("version", "b", out version);
             if (version) {
                 command_line.print ("Graphs Version %s\n", Config.VERSION);
                 return 0;
+            }
+
+            for (int i = 1; i < args.length; i++) {
+                string filename = args[i];
+                files += command_line.create_file_for_arg (filename);
             }
 
             bool new_window;
