@@ -23,7 +23,7 @@ namespace Graphs {
         private Gee.List<Window> main_windows;
         private Gee.List<StyleEditor> style_editors;
 
-        private const OptionEntry[] option_entries = {
+        private const OptionEntry[] OPTION_ENTRIES = {
             { "version", 0, 0, OptionArg.NONE, null, "Display version number", null },
             { "new-window", 'n', 0, OptionArg.NONE, null, "New window", null },
             { null },
@@ -40,7 +40,7 @@ namespace Graphs {
             this.version = Config.VERSION;
             this.settings = new GLib.Settings (application_id);
 
-            add_main_option_entries (option_entries);
+            add_main_option_entries (OPTION_ENTRIES);
         }
 
         /**
