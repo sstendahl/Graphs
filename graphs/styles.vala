@@ -18,6 +18,7 @@ namespace Graphs {
         public File style_dir { get; construct set; }
         public signal void style_changed (string stylename);
         public signal void style_deleted (string stylename);
+        public signal void style_renamed (string old_name, string new_name);
 
         protected signal void create_style_request (Style template, string name);
         protected signal Style style_request (File file);
@@ -72,13 +73,22 @@ namespace Graphs {
                     "standard::*",
                     FileQueryInfoFlags.NONE
                 );
+                string[] stylenames = list_stylenames ();
+                CompareDataFunc<Style> cmp = style_cmp;
                 FileInfo info = null;
                 while ((info = enumerator.next_file ()) != null) {
                     File file = enumerator.get_child (info);
                     if (
                         file.query_file_type (0) == 1
                         && Tools.get_filename (file).has_suffix (".mplstyle")
-                    ) add_user_style (file);
+                    ) {
+                        Style style = style_request.emit (file);
+                        style.name = Tools.get_duplicate_string (
+                            style.name, stylenames
+                        );
+                        style_model.insert_sorted (style, cmp);
+                        stylenames += style.name;
+                    };
                 }
                 enumerator.close ();
                 FileMonitor style_monitor = style_dir.monitor_directory (
@@ -91,40 +101,41 @@ namespace Graphs {
 
         private void on_file_change (File file, File? other_file, FileMonitorEvent event_type) {
             if (file.get_basename ()[0] == '.') return;
-            Style style = null;
+            Style? style = null;
             switch (event_type) {
-                case FileMonitorEvent.CREATED:
-                    if (find_style_for_file (file, out style) > 0) return;
-                    add_user_style (file);
-                    break;
                 case FileMonitorEvent.DELETED:
                     var index = find_style_for_file (file, out style);
                     if (index == -1) return;
                     style_model.remove (index);
                     style_deleted.emit (style.name);
-                    break;
+                    return;
                 case FileMonitorEvent.CHANGES_DONE_HINT:
-                    Style tmp_style = style_request.emit (file);
                     find_style_for_file (file, out style);
-                    if (style == null) return;
+                    if (style == null) {
+                        style = style_request.emit (file);
+                        style.name = Tools.get_duplicate_string (
+                            style.name, list_stylenames ()
+                        );
+                        CompareDataFunc<Style> cmp = style_cmp;
+                        style_model.insert_sorted (style, cmp);
+                        return;
+                    }
+                    Style tmp_style = style_request.emit (file);
                     style.preview = tmp_style.preview;
                     style.light = tmp_style.light;
-                    style_changed.emit (tmp_style.name);
-                    break;
+                    if (style.name == tmp_style.name) {
+                        style_changed.emit (style.name);
+                        return;
+                    }
+                    string old_name = style.name;
+                    style.name = Tools.get_duplicate_string (
+                        tmp_style.name, list_stylenames ()
+                    );
+                    style_renamed.emit (old_name, style.name);
+                    return;
                 default:
                     return;
             }
-        }
-
-        private void add_user_style (File file) {
-            Style style = style_request.emit (file);
-            if (is_stylename_present (style.name)) {
-                style.name = Tools.get_duplicate_string (
-                    style.name, list_stylenames ()
-                );
-            }
-            CompareDataFunc<Style> cmp = style_cmp;
-            style_model.insert_sorted (style, cmp);
         }
 
         /**
@@ -142,24 +153,11 @@ namespace Graphs {
         }
 
         public void create_style (uint template, string name) {
-            string new_name = name;
-            if (is_stylename_present (name)) {
-                new_name = Tools.get_duplicate_string (
-                    name, list_stylenames ()
-                );
-            }
+            string new_name = Tools.get_duplicate_string (
+                name, list_stylenames ()
+            );
             var style = style_model.get_item (template) as Style;
             create_style_request.emit (style, new_name);
-        }
-
-        private bool is_stylename_present (string stylename) {
-            for (uint i = 1; i < style_model.get_n_items (); i++) {
-                Style i_style = style_model.get_item (i) as Style;
-                if (i_style.name == stylename) {
-                    return true;
-                }
-            }
-            return false;
         }
 
         private int find_style_for_file (File file, out Style? style) {

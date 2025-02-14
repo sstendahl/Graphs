@@ -61,6 +61,11 @@ namespace Graphs {
                     figure_settings.use_custom_style = false;
                 }
             });
+            style_manager.style_renamed.connect ((old_name, new_name) => {
+                if (figure_settings.custom_style == old_name) {
+                    figure_settings.custom_style = new_name;
+                }
+            });
 
             application.style_manager.notify.connect (() => {
                 if (!figure_settings.use_custom_style) {
@@ -278,9 +283,7 @@ namespace Graphs {
             uint prev_size = get_n_items ();
             int original_position;
             foreach (Item item in items) {
-                if (item.name in used_names) {
-                    item.name = Tools.get_duplicate_string (item.name, used_names);
-                }
+                item.name = Tools.get_duplicate_string (item.name, used_names);
                 used_names += item.name;
                 if (item.color == "") {
                     foreach (string color in _color_cycle) {
