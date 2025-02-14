@@ -83,7 +83,7 @@ namespace Graphs {
                         "Christoph Matthias Kohnen <mail@cmkohnen.de>",
                         "Tobias Bernard <tbernard@gnome.org>"
                     },
-                    copyright = "© 2022 – 2024",
+                    copyright = "© " + Config.COPYRIGHT,
                     license_type = License.GPL_3_0,
                     translator_credits = _("translator-credits"),
                     release_notes = release_notes

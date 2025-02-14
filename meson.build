@@ -20,7 +20,7 @@ devenv = environment()
 devenv.set('GRAPHS_DEVEL_PATH', meson.current_source_dir())
 
 application_id = 'se.sjoerd.Graphs'
-copyright = '2022 - 2024'
+copyright = '2022 - 2025'
 homepage_url = 'https://apps.gnome.org/Graphs/'
 vcs_url = 'https://gitlab.gnome.org/World/Graphs'
 issue_url = vcs_url + '/issues'
@@ -64,6 +64,7 @@ vala_conf.set_quoted('VERSION', version)
 vala_conf.set_quoted('AUTHOR', author)
 vala_conf.set_quoted('HOMEPAGE_URL', homepage_url)
 vala_conf.set_quoted('ISSUE_URL', issue_url)
+vala_conf.set_quoted('COPYRIGHT', copyright)
 
 add_project_arguments (
   '-DGETTEXT_PACKAGE="' + meson.project_name() + '"',
