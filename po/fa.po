@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2025-02-04 15:55+0000\n"
-"PO-Revision-Date: 2025-02-04 20:49+0330\n"
+"POT-Creation-Date: 2025-02-14 15:20+0000\n"
+"PO-Revision-Date: 2025-02-15 11:35+0330\n"
 "Last-Translator: Danial Behzadi <dani.behzi@ubuntu.com>\n"
 "Language-Team: Persian <fa@li.org>\n"
 "Language: fa\n"
@@ -17,16 +17,16 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 3.5\n"
 
-#: data/se.sjoerd.Graphs.appdata.xml.in:6 data/se.sjoerd.Graphs.desktop.in:3
-#: data/ui/window.blp:9 graphs/application.vala:71
+#: data/se.sjoerd.Graphs.metainfo.xml.in:6 data/se.sjoerd.Graphs.desktop.in:3
+#: data/ui/window.blp:9 graphs/application.vala:79
 msgid "Graphs"
 msgstr "نمودارها"
 
-#: data/se.sjoerd.Graphs.appdata.xml.in:7
+#: data/se.sjoerd.Graphs.metainfo.xml.in:7
 msgid "Plot and manipulate data"
 msgstr "رسم و دستکاری داده‌ها"
 
-#: data/se.sjoerd.Graphs.appdata.xml.in:12
+#: data/se.sjoerd.Graphs.metainfo.xml.in:12
 msgid ""
 "Graphs is a simple, yet powerful tool that allows you to plot and manipulate "
 "your data with ease. New data can be imported from a wide variety of filetypes, "
@@ -40,7 +40,7 @@ msgstr ""
 "برش، ترجمه، ضرب، مرکز دهی و نرم کردن داده‌ها دستکاری و هر تبدیل سفارشی‌ای روی "
 "داده‌ها اعمال شود."
 
-#: data/se.sjoerd.Graphs.appdata.xml.in:16
+#: data/se.sjoerd.Graphs.metainfo.xml.in:16
 msgid ""
 "Moreover, Graphs supports curve fitting on imported data and offers extensive "
 "customization options for the style of the plots. You can fine-tune and "
@@ -50,7 +50,7 @@ msgstr ""
 "سفارشی سازی زیادی برای سبک نمودارها ارائه می‌دهد. می‌توانید سبک‌برگ‌ها را به دلخواه "
 "خود تنظیم و سفارشی کنید."
 
-#: data/se.sjoerd.Graphs.appdata.xml.in:19
+#: data/se.sjoerd.Graphs.metainfo.xml.in:19
 msgid ""
 "Graphs is an excellent fit for both plotting and data manipulation. The plots "
 "created with Graphs can be saved in a variety of formats suitable for sharing "
@@ -67,35 +67,39 @@ msgstr ""
 "بعدی را می‌دهد. نمودارها با تصوّر محیط گنوم نوشته شده، ولی باید در هر محیط میزکار "
 "دیگری نیز مناسب باشد."
 
-#: data/se.sjoerd.Graphs.appdata.xml.in:23
+#: data/se.sjoerd.Graphs.metainfo.xml.in:23
 msgid ""
 "For any feedback, questions or general issues, please file an issue on the "
 "GitLab page."
 msgstr "برای هر بارخوردی، پریش را مشکل عمومی، لطفاً مسئله‌ای در صفحهٔ گیت‌لب بگذارید."
 
-#: data/se.sjoerd.Graphs.appdata.xml.in:36
+#: data/se.sjoerd.Graphs.metainfo.xml.in:36
 msgid "Plot and manipulate any data"
 msgstr "رسم و دستکاری هر داده‌ای"
 
-#: data/se.sjoerd.Graphs.appdata.xml.in:40
+#: data/se.sjoerd.Graphs.metainfo.xml.in:40
 msgid "Full support for light and dark mode"
 msgstr "پشتیبانی کامل از حالت روشن و تیره"
 
-#: data/se.sjoerd.Graphs.appdata.xml.in:44
+#: data/se.sjoerd.Graphs.metainfo.xml.in:44
 msgid "Generate data from an equation"
 msgstr "تولید داده از معادله"
 
-#: data/se.sjoerd.Graphs.appdata.xml.in:48
+#: data/se.sjoerd.Graphs.metainfo.xml.in:48
 msgid "Manage plot stylesheets"
 msgstr "مدیریت سبک‌برگ‌های نمودارها"
 
-#: data/se.sjoerd.Graphs.appdata.xml.in:52
+#: data/se.sjoerd.Graphs.metainfo.xml.in:52
 msgid "Manipulate imported data"
 msgstr "دستکاری داده‌های وارده"
 
-#: data/se.sjoerd.Graphs.desktop.in:10
+#: data/se.sjoerd.Graphs.desktop.in:11
 msgid "Plotting;Graph;Graphing;Science;Mathematics;Math;Equations;Data;Plot;Visualisation;Visualization;Fitting;xrdml;"
 msgstr "Plotting;Graph;Graphing;Science;Mathematics;Math;Equations;Data;Plot;Visualisation;Visualization;Fitting;xrdml;نمودار;رسم;گراف;علم;ریاضیات;معادله;معادلات;داده‌ها;بصری;برازش;"
+
+#: data/se.sjoerd.Graphs.desktop.in:16
+msgid "New Window"
+msgstr "پنجرهٔ جدید"
 
 #: data/ui/dialogs/delete-style.blp:5
 msgid "Delete Style?"
@@ -247,7 +251,7 @@ msgstr "سفارشی"
 msgid "Add Fit to Data"
 msgstr "افزودن برازش به داده‌ها"
 
-#: data/ui/curve-fitting.blp:134 graphs/window.vala:342
+#: data/ui/curve-fitting.blp:134
 msgid "Toggle Sidebar"
 msgstr "تغییر وضعیت نوار کناری"
 
@@ -342,37 +346,36 @@ msgstr "خط و نشانه‌ها"
 msgid "Linestyle"
 msgstr "سبک خط"
 
-#: data/ui/edit-item-data.blp:16 data/ui/edit-item-equation.blp:30
-#: data/ui/style-editor-box.blp:67
+#: data/ui/edit-item-data.blp:16 data/ui/style-editor-box.blp:67
 msgctxt "linestyle"
 msgid "None"
 msgstr "هیچ‌کدام"
 
-#: data/ui/edit-item-data.blp:17 data/ui/edit-item-equation.blp:31
+#: data/ui/edit-item-data.blp:17 data/ui/edit-item-equation.blp:29
 #: data/ui/style-editor-box.blp:68
 msgctxt "linestyle"
 msgid "Solid"
 msgstr "پر"
 
-#: data/ui/edit-item-data.blp:18 data/ui/edit-item-equation.blp:32
+#: data/ui/edit-item-data.blp:18 data/ui/edit-item-equation.blp:30
 #: data/ui/style-editor-box.blp:69
 msgctxt "linestyle"
 msgid "Dotted"
 msgstr "نقطه‌چین"
 
-#: data/ui/edit-item-data.blp:19 data/ui/edit-item-equation.blp:33
+#: data/ui/edit-item-data.blp:19 data/ui/edit-item-equation.blp:31
 #: data/ui/style-editor-box.blp:70
 msgctxt "linestyle"
 msgid "Dashed"
 msgstr "خط‌چین"
 
-#: data/ui/edit-item-data.blp:20 data/ui/edit-item-equation.blp:34
+#: data/ui/edit-item-data.blp:20 data/ui/edit-item-equation.blp:32
 #: data/ui/style-editor-box.blp:71
 msgctxt "linestyle"
 msgid "Dashdot"
 msgstr "خط‌چین"
 
-#: data/ui/edit-item-data.blp:26 data/ui/edit-item-equation.blp:40
+#: data/ui/edit-item-data.blp:26 data/ui/edit-item-equation.blp:38
 #: data/ui/style-editor-box.blp:77
 msgid "Linewidth"
 msgstr "پهنای خط"
@@ -653,41 +656,41 @@ msgstr "بیشینهٔ محور Y راست"
 msgid "Scaling"
 msgstr "مقیاس"
 
-#: data/ui/figure-settings-page.blp:143 graphs/window.vala:382
+#: data/ui/figure-settings-page.blp:143 graphs/window.vala:386
 msgid "Bottom X Axis Scale"
 msgstr "مقیاس محور X پایین"
 
 #: data/ui/figure-settings-page.blp:147 data/ui/figure-settings-page.blp:163
 #: data/ui/figure-settings-page.blp:179 data/ui/figure-settings-page.blp:195
-#: graphs/window.vala:352
+#: graphs/window.vala:356
 msgctxt "scale"
 msgid "Linear"
 msgstr "خطی"
 
 #: data/ui/figure-settings-page.blp:148 data/ui/figure-settings-page.blp:164
 #: data/ui/figure-settings-page.blp:180 data/ui/figure-settings-page.blp:196
-#: graphs/window.vala:353
+#: graphs/window.vala:357
 msgctxt "scale"
 msgid "Logarithmic (Base 10)"
 msgstr "لگاریتمی (پایه ۱۰)"
 
 #: data/ui/figure-settings-page.blp:149 data/ui/figure-settings-page.blp:165
 #: data/ui/figure-settings-page.blp:181 data/ui/figure-settings-page.blp:197
-#: graphs/window.vala:354
+#: graphs/window.vala:358
 msgctxt "scale"
 msgid "Logarithmic (Base 2)"
 msgstr "لگاریتمی (پایه ۲)"
 
 #: data/ui/figure-settings-page.blp:150 data/ui/figure-settings-page.blp:166
 #: data/ui/figure-settings-page.blp:182 data/ui/figure-settings-page.blp:198
-#: graphs/window.vala:355
+#: graphs/window.vala:359
 msgctxt "scale"
 msgid "Radians"
 msgstr "رادیان"
 
 #: data/ui/figure-settings-page.blp:151 data/ui/figure-settings-page.blp:167
 #: data/ui/figure-settings-page.blp:183 data/ui/figure-settings-page.blp:199
-#: graphs/window.vala:356
+#: graphs/window.vala:360
 msgctxt "scale"
 msgid "Square Root"
 msgstr "ریشهٔ مربّع"
@@ -698,15 +701,15 @@ msgctxt "scale"
 msgid "Inverse"
 msgstr "وارون"
 
-#: data/ui/figure-settings-page.blp:159 graphs/window.vala:383
+#: data/ui/figure-settings-page.blp:159 graphs/window.vala:387
 msgid "Top X Axis Scale"
 msgstr "مقیاس محور X بالا"
 
-#: data/ui/figure-settings-page.blp:175 graphs/window.vala:388
+#: data/ui/figure-settings-page.blp:175 graphs/window.vala:392
 msgid "Left Y Axis Scale"
 msgstr "مقیاس محور Y چپ"
 
-#: data/ui/figure-settings-page.blp:191 graphs/window.vala:387
+#: data/ui/figure-settings-page.blp:191 graphs/window.vala:391
 msgid "Right Y Axis Scale"
 msgstr "مقیاس محور Y راست"
 
@@ -1416,7 +1419,7 @@ msgstr "حالت گزینش. کلیک کردن و کشیدن برای گزیدن
 msgid "Show Sidebar"
 msgstr "نمایش نوار کناری"
 
-#: data/ui/window.blp:335 data/ui/window.blp:381 graphs/window.vala:330
+#: data/ui/window.blp:335 data/ui/window.blp:381 graphs/window.vala:339
 msgid "Undo"
 msgstr "برگردان"
 
@@ -1632,12 +1635,12 @@ msgctxt "file-filter"
 msgid "Leybold xry"
 msgstr "Leybold xry"
 
-#: graphs/application.py:43
+#: graphs/application.py:29
 #, python-brace-format
 msgid "Could not load {font}"
 msgstr "نتوانست {font} را بار کند"
 
-#: graphs/application.vala:88
+#: graphs/application.vala:96
 msgid "translator-credits"
 msgstr "دانیال بهزادی <dani.behzi@ubuntu.com>"
 
@@ -1727,7 +1730,7 @@ msgstr "بیشینهٔ محور X"
 msgid "Y Axis Maximum"
 msgstr "بیشینهٔ محور Y"
 
-#: graphs/figure_settings.vala:176 graphs/window.vala:384
+#: graphs/figure_settings.vala:176 graphs/window.vala:388
 msgid "X Axis Scale"
 msgstr "مقیاس محور X"
 
@@ -1735,7 +1738,7 @@ msgstr "مقیاس محور X"
 msgid "X Axis Label"
 msgstr "برچسب محور X"
 
-#: graphs/figure_settings.vala:180 graphs/window.vala:389
+#: graphs/figure_settings.vala:180 graphs/window.vala:393
 msgid "Y Axis Scale"
 msgstr "مقیاس محور Y"
 
@@ -1756,11 +1759,11 @@ msgstr "دادگان"
 msgid "Generated Dataset"
 msgstr "دادگان ایجاد شده"
 
-#: graphs/item.py:217
+#: graphs/item.py:220
 msgid "Label"
 msgstr "برچسب"
 
-#: graphs/item.py:246
+#: graphs/item.py:249
 msgid "Fill"
 msgstr "پُر کردن"
 
@@ -1900,7 +1903,7 @@ msgstr "نتوانست {filename} را تجزیه کند"
 msgid "File {file}, does not contain name tag"
 msgstr "پروندهٔ {file} برچسب نام ندارد"
 
-#: graphs/styles.vala:61
+#: graphs/styles.vala:62
 msgid "System"
 msgstr "سامانه"
 
@@ -1924,15 +1927,15 @@ msgstr "درگاه سند"
 msgid "Graphs (Development)"
 msgstr "نمودارها (توسعه)"
 
-#: graphs/window.vala:320
+#: graphs/window.vala:329
 msgid "Open Location"
 msgstr "گشودن مکان"
 
-#: graphs/window.vala:347
+#: graphs/window.vala:351
 msgid "Optimize Limits"
 msgstr "بهینه‌سازی کران‌ها"
 
-#: graphs/window.vala:357
+#: graphs/window.vala:361
 msgctxt "scale"
 msgid "Inverse Root"
 msgstr "ریشهٔ معکوس"
