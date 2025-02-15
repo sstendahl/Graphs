@@ -8,28 +8,28 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2025-02-04 15:55+0000\n"
-"PO-Revision-Date: 2025-02-05 19:25+0100\n"
+"POT-Creation-Date: 2025-02-14 15:20+0000\n"
+"PO-Revision-Date: 2025-02-15 02:46+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian <gnome-si@googlegroups.com>\n"
 "Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100>=3 && "
-"n%100<=4 ? 2 : 3);\n"
-"X-Generator: Poedit 3.4.2\n"
+"Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100>=3 && n"
+"%100<=4 ? 2 : 3);\n"
+"X-Generator: Poedit 2.2.1\n"
 
-#: data/se.sjoerd.Graphs.appdata.xml.in:6 data/se.sjoerd.Graphs.desktop.in:3
-#: data/ui/window.blp:9 graphs/application.vala:71
+#: data/se.sjoerd.Graphs.metainfo.xml.in:6 data/se.sjoerd.Graphs.desktop.in:3
+#: data/ui/window.blp:9 graphs/application.vala:79
 msgid "Graphs"
 msgstr "Grafi"
 
-#: data/se.sjoerd.Graphs.appdata.xml.in:7
+#: data/se.sjoerd.Graphs.metainfo.xml.in:7
 msgid "Plot and manipulate data"
 msgstr "Rišite grafe in manipulirajte s podatki"
 
-#: data/se.sjoerd.Graphs.appdata.xml.in:12
+#: data/se.sjoerd.Graphs.metainfo.xml.in:12
 msgid ""
 "Graphs is a simple, yet powerful tool that allows you to plot and manipulate "
 "your data with ease. New data can be imported from a wide variety of "
@@ -45,7 +45,7 @@ msgstr ""
 "prevajanja, množenja, sredinjenja in glajenja podatkov ter uporaba kakršnih "
 "koli preoblikovanj po meri podatkov."
 
-#: data/se.sjoerd.Graphs.appdata.xml.in:16
+#: data/se.sjoerd.Graphs.metainfo.xml.in:16
 msgid ""
 "Moreover, Graphs supports curve fitting on imported data and offers "
 "extensive customization options for the style of the plots. You can fine-"
@@ -55,7 +55,7 @@ msgstr ""
 "ponuja obsežne možnosti prilagajanja sloga grafa. Slogovne predloge lahko "
 "natančno prilagodite po svojih željah."
 
-#: data/se.sjoerd.Graphs.appdata.xml.in:19
+#: data/se.sjoerd.Graphs.metainfo.xml.in:19
 msgid ""
 "Graphs is an excellent fit for both plotting and data manipulation. The "
 "plots created with Graphs can be saved in a variety of formats suitable for "
@@ -74,7 +74,7 @@ msgstr ""
 "okolje GNOME, vendar bi morali biti primerni tudi za poljubno drugo namizno "
 "okolje."
 
-#: data/se.sjoerd.Graphs.appdata.xml.in:23
+#: data/se.sjoerd.Graphs.metainfo.xml.in:23
 msgid ""
 "For any feedback, questions or general issues, please file an issue on the "
 "GitLab page."
@@ -82,33 +82,37 @@ msgstr ""
 "Za vse povratne informacije, vprašanja ali splošne težave vnesite težavo na "
 "strani GitLab."
 
-#: data/se.sjoerd.Graphs.appdata.xml.in:36
+#: data/se.sjoerd.Graphs.metainfo.xml.in:36
 msgid "Plot and manipulate any data"
 msgstr "Rišite grafe in ravnajte s podatki"
 
-#: data/se.sjoerd.Graphs.appdata.xml.in:40
+#: data/se.sjoerd.Graphs.metainfo.xml.in:40
 msgid "Full support for light and dark mode"
 msgstr "Popolna podpora za svetli in temni način"
 
-#: data/se.sjoerd.Graphs.appdata.xml.in:44
+#: data/se.sjoerd.Graphs.metainfo.xml.in:44
 msgid "Generate data from an equation"
 msgstr "Tvorite podatke iz enačbe"
 
-#: data/se.sjoerd.Graphs.appdata.xml.in:48
+#: data/se.sjoerd.Graphs.metainfo.xml.in:48
 msgid "Manage plot stylesheets"
 msgstr "Urejajte slogovne predloge grafov"
 
-#: data/se.sjoerd.Graphs.appdata.xml.in:52
+#: data/se.sjoerd.Graphs.metainfo.xml.in:52
 msgid "Manipulate imported data"
 msgstr "Enostavno ravnajte z uvoženimi podatki"
 
-#: data/se.sjoerd.Graphs.desktop.in:10
+#: data/se.sjoerd.Graphs.desktop.in:11
 msgid ""
 "Plotting;Graph;Graphing;Science;Mathematics;Math;Equations;Data;Plot;"
 "Visualisation;Visualization;Fitting;xrdml;"
 msgstr ""
 "risanje;graf;grafi;znanost;matematika;matematike;enačbe;podatki;grafikon;"
 "vizualizacija;vizualizacijo;prileganje;xrdml;"
+
+#: data/se.sjoerd.Graphs.desktop.in:16
+msgid "New Window"
+msgstr "Novo okno"
 
 #: data/ui/dialogs/delete-style.blp:5
 msgid "Delete Style?"
@@ -261,7 +265,7 @@ msgstr "po meri"
 msgid "Add Fit to Data"
 msgstr "Dodaj Prilagodi podatkom"
 
-#: data/ui/curve-fitting.blp:134 graphs/window.vala:342
+#: data/ui/curve-fitting.blp:134
 msgid "Toggle Sidebar"
 msgstr "Preklopi stransko okno"
 
@@ -356,37 +360,36 @@ msgstr "Črta in oznake"
 msgid "Linestyle"
 msgstr "Slog črte"
 
-#: data/ui/edit-item-data.blp:16 data/ui/edit-item-equation.blp:30
-#: data/ui/style-editor-box.blp:67
+#: data/ui/edit-item-data.blp:16 data/ui/style-editor-box.blp:67
 msgctxt "linestyle"
 msgid "None"
 msgstr "Brez"
 
-#: data/ui/edit-item-data.blp:17 data/ui/edit-item-equation.blp:31
+#: data/ui/edit-item-data.blp:17 data/ui/edit-item-equation.blp:29
 #: data/ui/style-editor-box.blp:68
 msgctxt "linestyle"
 msgid "Solid"
 msgstr "Enakomerno"
 
-#: data/ui/edit-item-data.blp:18 data/ui/edit-item-equation.blp:32
+#: data/ui/edit-item-data.blp:18 data/ui/edit-item-equation.blp:30
 #: data/ui/style-editor-box.blp:69
 msgctxt "linestyle"
 msgid "Dotted"
 msgstr "pikasto"
 
-#: data/ui/edit-item-data.blp:19 data/ui/edit-item-equation.blp:33
+#: data/ui/edit-item-data.blp:19 data/ui/edit-item-equation.blp:31
 #: data/ui/style-editor-box.blp:70
 msgctxt "linestyle"
 msgid "Dashed"
 msgstr "Črtkano"
 
-#: data/ui/edit-item-data.blp:20 data/ui/edit-item-equation.blp:34
+#: data/ui/edit-item-data.blp:20 data/ui/edit-item-equation.blp:32
 #: data/ui/style-editor-box.blp:71
 msgctxt "linestyle"
 msgid "Dashdot"
 msgstr "črtica pika"
 
-#: data/ui/edit-item-data.blp:26 data/ui/edit-item-equation.blp:40
+#: data/ui/edit-item-data.blp:26 data/ui/edit-item-equation.blp:38
 #: data/ui/style-editor-box.blp:77
 msgid "Linewidth"
 msgstr "Širina črte"
@@ -667,41 +670,41 @@ msgstr "Največje desne osi Y"
 msgid "Scaling"
 msgstr "Spreminjanje merila"
 
-#: data/ui/figure-settings-page.blp:143 graphs/window.vala:382
+#: data/ui/figure-settings-page.blp:143 graphs/window.vala:386
 msgid "Bottom X Axis Scale"
 msgstr "Merilo spodnje osi X"
 
 #: data/ui/figure-settings-page.blp:147 data/ui/figure-settings-page.blp:163
 #: data/ui/figure-settings-page.blp:179 data/ui/figure-settings-page.blp:195
-#: graphs/window.vala:352
+#: graphs/window.vala:356
 msgctxt "scale"
 msgid "Linear"
 msgstr "linearna"
 
 #: data/ui/figure-settings-page.blp:148 data/ui/figure-settings-page.blp:164
 #: data/ui/figure-settings-page.blp:180 data/ui/figure-settings-page.blp:196
-#: graphs/window.vala:353
+#: graphs/window.vala:357
 msgctxt "scale"
 msgid "Logarithmic (Base 10)"
 msgstr "logaritemska (osnova 10)"
 
 #: data/ui/figure-settings-page.blp:149 data/ui/figure-settings-page.blp:165
 #: data/ui/figure-settings-page.blp:181 data/ui/figure-settings-page.blp:197
-#: graphs/window.vala:354
+#: graphs/window.vala:358
 msgctxt "scale"
 msgid "Logarithmic (Base 2)"
 msgstr "logaritemska (osnova 2)"
 
 #: data/ui/figure-settings-page.blp:150 data/ui/figure-settings-page.blp:166
 #: data/ui/figure-settings-page.blp:182 data/ui/figure-settings-page.blp:198
-#: graphs/window.vala:355
+#: graphs/window.vala:359
 msgctxt "scale"
 msgid "Radians"
 msgstr "radianska"
 
 #: data/ui/figure-settings-page.blp:151 data/ui/figure-settings-page.blp:167
 #: data/ui/figure-settings-page.blp:183 data/ui/figure-settings-page.blp:199
-#: graphs/window.vala:356
+#: graphs/window.vala:360
 msgctxt "scale"
 msgid "Square Root"
 msgstr "kvadratni koren"
@@ -712,15 +715,15 @@ msgctxt "scale"
 msgid "Inverse"
 msgstr "preobrnjena"
 
-#: data/ui/figure-settings-page.blp:159 graphs/window.vala:383
+#: data/ui/figure-settings-page.blp:159 graphs/window.vala:387
 msgid "Top X Axis Scale"
 msgstr "Merilo vrhnje osi X"
 
-#: data/ui/figure-settings-page.blp:175 graphs/window.vala:388
+#: data/ui/figure-settings-page.blp:175 graphs/window.vala:392
 msgid "Left Y Axis Scale"
 msgstr "Merilo leve osi Y"
 
-#: data/ui/figure-settings-page.blp:191 graphs/window.vala:387
+#: data/ui/figure-settings-page.blp:191 graphs/window.vala:391
 msgid "Right Y Axis Scale"
 msgstr "Merilo desne osi Y"
 
@@ -1432,7 +1435,7 @@ msgstr "Izbirni način. Kliknite in povlecite, da opravite izbor podatkov"
 msgid "Show Sidebar"
 msgstr "Pokaži stransko vrstico"
 
-#: data/ui/window.blp:335 data/ui/window.blp:381 graphs/window.vala:330
+#: data/ui/window.blp:335 data/ui/window.blp:381 graphs/window.vala:339
 msgid "Undo"
 msgstr "Razveljavi"
 
@@ -1648,12 +1651,12 @@ msgctxt "file-filter"
 msgid "Leybold xry"
 msgstr "Leybold xry"
 
-#: graphs/application.py:43
+#: graphs/application.py:29
 #, python-brace-format
 msgid "Could not load {font}"
 msgstr "Ni bilo mogoče naložiti {font}"
 
-#: graphs/application.vala:88
+#: graphs/application.vala:96
 msgid "translator-credits"
 msgstr "Martin Srebotnjak <miles@filmsi.net>"
 
@@ -1744,7 +1747,7 @@ msgstr "Največja vrednost na osi X"
 msgid "Y Axis Maximum"
 msgstr "Največja vrednost na osi Y"
 
-#: graphs/figure_settings.vala:176 graphs/window.vala:384
+#: graphs/figure_settings.vala:176 graphs/window.vala:388
 msgid "X Axis Scale"
 msgstr "Merilo osi X"
 
@@ -1752,7 +1755,7 @@ msgstr "Merilo osi X"
 msgid "X Axis Label"
 msgstr "Oznaka osi X"
 
-#: graphs/figure_settings.vala:180 graphs/window.vala:389
+#: graphs/figure_settings.vala:180 graphs/window.vala:393
 msgid "Y Axis Scale"
 msgstr "Merilo osi Y"
 
@@ -1773,11 +1776,11 @@ msgstr "Nabor podatkov"
 msgid "Generated Dataset"
 msgstr "Ustvarjen nabor podatkov"
 
-#: graphs/item.py:217
+#: graphs/item.py:220
 msgid "Label"
 msgstr "Oznaka"
 
-#: graphs/item.py:246
+#: graphs/item.py:249
 msgid "Fill"
 msgstr "Polnilo"
 
@@ -1920,7 +1923,7 @@ msgstr "Ni mogoče razčleniti {filename}"
 msgid "File {file}, does not contain name tag"
 msgstr "Datoteka {file} ne vsebuje oznake z imenom"
 
-#: graphs/styles.vala:61
+#: graphs/styles.vala:62
 msgid "System"
 msgstr "Sistem"
 
@@ -1944,15 +1947,15 @@ msgstr "Portal dokumentov"
 msgid "Graphs (Development)"
 msgstr "Grafikoni (razvojni)"
 
-#: graphs/window.vala:320
+#: graphs/window.vala:329
 msgid "Open Location"
 msgstr "Odpri mesto"
 
-#: graphs/window.vala:347
+#: graphs/window.vala:351
 msgid "Optimize Limits"
 msgstr "Optimiziraj omejitve"
 
-#: graphs/window.vala:357
+#: graphs/window.vala:361
 msgctxt "scale"
 msgid "Inverse Root"
 msgstr "Inverzni koren"
