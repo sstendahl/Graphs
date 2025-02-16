@@ -9,9 +9,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: se.sjoerd.Graphs\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2025-02-04 15:55+0000\n"
-"PO-Revision-Date: 2025-02-02 00:10+0300\n"
-"Last-Translator: Sabri Ünal <yakushabb@gmail.com>\n"
+"POT-Creation-Date: 2025-02-14 15:20+0000\n"
+"PO-Revision-Date: 2025-02-16 08:00+0300\n"
+"Last-Translator: Emin Tufan Çetin <etcetin@gmail.com>\n"
 "Language-Team: Turkish <takim@gnome.org.tr>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
@@ -21,16 +21,16 @@ msgstr ""
 "X-Generator: Poedit 3.5\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
-#: data/se.sjoerd.Graphs.appdata.xml.in:6 data/se.sjoerd.Graphs.desktop.in:3
-#: data/ui/window.blp:9 graphs/application.vala:71
+#: data/se.sjoerd.Graphs.metainfo.xml.in:6 data/se.sjoerd.Graphs.desktop.in:3
+#: data/ui/window.blp:9 graphs/application.vala:79
 msgid "Graphs"
 msgstr "Graphs"
 
-#: data/se.sjoerd.Graphs.appdata.xml.in:7
+#: data/se.sjoerd.Graphs.metainfo.xml.in:7
 msgid "Plot and manipulate data"
 msgstr "Verileri çizin ve değiştirin"
 
-#: data/se.sjoerd.Graphs.appdata.xml.in:12
+#: data/se.sjoerd.Graphs.metainfo.xml.in:12
 msgid ""
 "Graphs is a simple, yet powerful tool that allows you to plot and manipulate "
 "your data with ease. New data can be imported from a wide variety of "
@@ -46,7 +46,7 @@ msgstr ""
 "kullanılarak düzenlenebilir; ayrıca veriler üzerinde herhangi bir özel "
 "dönüşüm uygulanabilir."
 
-#: data/se.sjoerd.Graphs.appdata.xml.in:16
+#: data/se.sjoerd.Graphs.metainfo.xml.in:16
 msgid ""
 "Moreover, Graphs supports curve fitting on imported data and offers "
 "extensive customization options for the style of the plots. You can fine-"
@@ -56,7 +56,7 @@ msgstr ""
 "grafiklerin biçemi için kapsamlı özelleştirme seçenekleri sunar. Biçem "
 "sayfalarını beğeninize göre ayarlayabilir ve kişiselleştirebilirsiniz."
 
-#: data/se.sjoerd.Graphs.appdata.xml.in:19
+#: data/se.sjoerd.Graphs.metainfo.xml.in:19
 msgid ""
 "Graphs is an excellent fit for both plotting and data manipulation. The "
 "plots created with Graphs can be saved in a variety of formats suitable for "
@@ -74,7 +74,7 @@ msgstr ""
 "sağlar Graphs, GNOME ortamı düşünülerek yazılmıştır, ancak diğer masaüstü "
 "ortamları için de uygundur."
 
-#: data/se.sjoerd.Graphs.appdata.xml.in:23
+#: data/se.sjoerd.Graphs.metainfo.xml.in:23
 msgid ""
 "For any feedback, questions or general issues, please file an issue on the "
 "GitLab page."
@@ -82,27 +82,27 @@ msgstr ""
 "Herhangi bir geri bildirim, soru ya da genel sorun için lütfen GitLab "
 "sayfasından hata bildiriminde bulunun."
 
-#: data/se.sjoerd.Graphs.appdata.xml.in:36
+#: data/se.sjoerd.Graphs.metainfo.xml.in:36
 msgid "Plot and manipulate any data"
 msgstr "Verileri çizin ve değiştirin"
 
-#: data/se.sjoerd.Graphs.appdata.xml.in:40
+#: data/se.sjoerd.Graphs.metainfo.xml.in:40
 msgid "Full support for light and dark mode"
 msgstr "Açık ve koyu kip için tam destek"
 
-#: data/se.sjoerd.Graphs.appdata.xml.in:44
+#: data/se.sjoerd.Graphs.metainfo.xml.in:44
 msgid "Generate data from an equation"
 msgstr "Denklemden veri oluşturun"
 
-#: data/se.sjoerd.Graphs.appdata.xml.in:48
+#: data/se.sjoerd.Graphs.metainfo.xml.in:48
 msgid "Manage plot stylesheets"
 msgstr "Çizim stil sayfalarını düzenleyin"
 
-#: data/se.sjoerd.Graphs.appdata.xml.in:52
+#: data/se.sjoerd.Graphs.metainfo.xml.in:52
 msgid "Manipulate imported data"
 msgstr "İçe aktarılan verileri kolaylıkla değiştirin"
 
-#: data/se.sjoerd.Graphs.desktop.in:10
+#: data/se.sjoerd.Graphs.desktop.in:11
 msgid ""
 "Plotting;Graph;Graphing;Science;Mathematics;Math;Equations;Data;Plot;"
 "Visualisation;Visualization;Fitting;xrdml;"
@@ -110,6 +110,10 @@ msgstr ""
 "Plotting;Graph;Graphing;Science;Mathematics;Math;Equations;Data;Plot;"
 "Visualisation;Visualization;Fitting;xrdml;Çizim;Grafik;Grafikleme;Bilim;"
 "Matematik;Mat;Denklemler;Veri;Görselleştirme;Uyum;Sığdırma;"
+
+#: data/se.sjoerd.Graphs.desktop.in:16
+msgid "New Window"
+msgstr "Yeni Pencere"
 
 #: data/ui/dialogs/delete-style.blp:5
 msgid "Delete Style?"
@@ -262,7 +266,7 @@ msgstr "Özel"
 msgid "Add Fit to Data"
 msgstr "Verilere Uy Ekle"
 
-#: data/ui/curve-fitting.blp:134 graphs/window.vala:342
+#: data/ui/curve-fitting.blp:134
 msgid "Toggle Sidebar"
 msgstr "Kenar Çubuğunu Aç/Kapa"
 
@@ -357,37 +361,36 @@ msgstr "Çizgi ve İmleyiciler"
 msgid "Linestyle"
 msgstr "Çizgi Biçemi"
 
-#: data/ui/edit-item-data.blp:16 data/ui/edit-item-equation.blp:30
-#: data/ui/style-editor-box.blp:67
+#: data/ui/edit-item-data.blp:16 data/ui/style-editor-box.blp:67
 msgctxt "linestyle"
 msgid "None"
 msgstr "Hiçbiri"
 
-#: data/ui/edit-item-data.blp:17 data/ui/edit-item-equation.blp:31
+#: data/ui/edit-item-data.blp:17 data/ui/edit-item-equation.blp:29
 #: data/ui/style-editor-box.blp:68
 msgctxt "linestyle"
 msgid "Solid"
 msgstr "Kesiksiz"
 
-#: data/ui/edit-item-data.blp:18 data/ui/edit-item-equation.blp:32
+#: data/ui/edit-item-data.blp:18 data/ui/edit-item-equation.blp:30
 #: data/ui/style-editor-box.blp:69
 msgctxt "linestyle"
 msgid "Dotted"
 msgstr "Noktalı"
 
-#: data/ui/edit-item-data.blp:19 data/ui/edit-item-equation.blp:33
+#: data/ui/edit-item-data.blp:19 data/ui/edit-item-equation.blp:31
 #: data/ui/style-editor-box.blp:70
 msgctxt "linestyle"
 msgid "Dashed"
 msgstr "Kesikli"
 
-#: data/ui/edit-item-data.blp:20 data/ui/edit-item-equation.blp:34
+#: data/ui/edit-item-data.blp:20 data/ui/edit-item-equation.blp:32
 #: data/ui/style-editor-box.blp:71
 msgctxt "linestyle"
 msgid "Dashdot"
 msgstr "Kesik-nokta"
 
-#: data/ui/edit-item-data.blp:26 data/ui/edit-item-equation.blp:40
+#: data/ui/edit-item-data.blp:26 data/ui/edit-item-equation.blp:38
 #: data/ui/style-editor-box.blp:77
 msgid "Linewidth"
 msgstr "Çizgi Genişliği"
@@ -668,41 +671,41 @@ msgstr "Sağ Y Ekseni Azami"
 msgid "Scaling"
 msgstr "Ölçekleme"
 
-#: data/ui/figure-settings-page.blp:143 graphs/window.vala:382
+#: data/ui/figure-settings-page.blp:143 graphs/window.vala:386
 msgid "Bottom X Axis Scale"
 msgstr "Alt X Ekseni Ölçeği"
 
 #: data/ui/figure-settings-page.blp:147 data/ui/figure-settings-page.blp:163
 #: data/ui/figure-settings-page.blp:179 data/ui/figure-settings-page.blp:195
-#: graphs/window.vala:352
+#: graphs/window.vala:356
 msgctxt "scale"
 msgid "Linear"
 msgstr "Doğrusal"
 
 #: data/ui/figure-settings-page.blp:148 data/ui/figure-settings-page.blp:164
 #: data/ui/figure-settings-page.blp:180 data/ui/figure-settings-page.blp:196
-#: graphs/window.vala:353
+#: graphs/window.vala:357
 msgctxt "scale"
 msgid "Logarithmic (Base 10)"
 msgstr "Logaritmik (10 Tabanı)"
 
 #: data/ui/figure-settings-page.blp:149 data/ui/figure-settings-page.blp:165
 #: data/ui/figure-settings-page.blp:181 data/ui/figure-settings-page.blp:197
-#: graphs/window.vala:354
+#: graphs/window.vala:358
 msgctxt "scale"
 msgid "Logarithmic (Base 2)"
 msgstr "Logaritmik (Taban 2)"
 
 #: data/ui/figure-settings-page.blp:150 data/ui/figure-settings-page.blp:166
 #: data/ui/figure-settings-page.blp:182 data/ui/figure-settings-page.blp:198
-#: graphs/window.vala:355
+#: graphs/window.vala:359
 msgctxt "scale"
 msgid "Radians"
 msgstr "Radyan"
 
 #: data/ui/figure-settings-page.blp:151 data/ui/figure-settings-page.blp:167
 #: data/ui/figure-settings-page.blp:183 data/ui/figure-settings-page.blp:199
-#: graphs/window.vala:356
+#: graphs/window.vala:360
 msgctxt "scale"
 msgid "Square Root"
 msgstr "Kare Kök"
@@ -713,15 +716,15 @@ msgctxt "scale"
 msgid "Inverse"
 msgstr "Ters"
 
-#: data/ui/figure-settings-page.blp:159 graphs/window.vala:383
+#: data/ui/figure-settings-page.blp:159 graphs/window.vala:387
 msgid "Top X Axis Scale"
 msgstr "Üst X Ekseni Ölçeği"
 
-#: data/ui/figure-settings-page.blp:175 graphs/window.vala:388
+#: data/ui/figure-settings-page.blp:175 graphs/window.vala:392
 msgid "Left Y Axis Scale"
 msgstr "Sol Y Ekseni Ölçeği"
 
-#: data/ui/figure-settings-page.blp:191 graphs/window.vala:387
+#: data/ui/figure-settings-page.blp:191 graphs/window.vala:391
 msgid "Right Y Axis Scale"
 msgstr "Sağ Y Ekseni Ölçeği"
 
@@ -1432,7 +1435,7 @@ msgstr "Seçim Kipi. Veri seçimi yapmak için tıkla ve sürükle"
 msgid "Show Sidebar"
 msgstr "Kenar Çubuğunu Göster"
 
-#: data/ui/window.blp:335 data/ui/window.blp:381 graphs/window.vala:330
+#: data/ui/window.blp:335 data/ui/window.blp:381 graphs/window.vala:339
 msgid "Undo"
 msgstr "Geri Al"
 
@@ -1649,12 +1652,12 @@ msgctxt "file-filter"
 msgid "Leybold xry"
 msgstr "Leybold xry"
 
-#: graphs/application.py:43
+#: graphs/application.py:29
 #, python-brace-format
 msgid "Could not load {font}"
 msgstr "{font} yüklenemedi"
 
-#: graphs/application.vala:88
+#: graphs/application.vala:96
 msgid "translator-credits"
 msgstr ""
 "Sabri Ünal <yakushabb@gmail.com>\n"
@@ -1746,7 +1749,7 @@ msgstr "X Ekseni Azami"
 msgid "Y Axis Maximum"
 msgstr "Y Ekseni Azami"
 
-#: graphs/figure_settings.vala:176 graphs/window.vala:384
+#: graphs/figure_settings.vala:176 graphs/window.vala:388
 msgid "X Axis Scale"
 msgstr "X Ekseni Ölçeği"
 
@@ -1754,7 +1757,7 @@ msgstr "X Ekseni Ölçeği"
 msgid "X Axis Label"
 msgstr "X Ekseni Etiketi"
 
-#: graphs/figure_settings.vala:180 graphs/window.vala:389
+#: graphs/figure_settings.vala:180 graphs/window.vala:393
 msgid "Y Axis Scale"
 msgstr "Y Ekseni Ölçeği"
 
@@ -1775,11 +1778,11 @@ msgstr "Veri kümesi"
 msgid "Generated Dataset"
 msgstr "Oluşturulan Veri Takımı"
 
-#: graphs/item.py:217
+#: graphs/item.py:220
 msgid "Label"
 msgstr "Etiket"
 
-#: graphs/item.py:246
+#: graphs/item.py:249
 msgid "Fill"
 msgstr "Dolgu"
 
@@ -1921,7 +1924,7 @@ msgstr "{filename} ayrıştırılamadı"
 msgid "File {file}, does not contain name tag"
 msgstr "{file} dosyası ad etiketi içermiyor"
 
-#: graphs/styles.vala:61
+#: graphs/styles.vala:62
 msgid "System"
 msgstr "Sistem"
 
@@ -1945,15 +1948,15 @@ msgstr "Belge Kapısı"
 msgid "Graphs (Development)"
 msgstr "Graphs (Geliştirme)"
 
-#: graphs/window.vala:320
+#: graphs/window.vala:329
 msgid "Open Location"
 msgstr "Konumu Aç"
 
-#: graphs/window.vala:347
+#: graphs/window.vala:351
 msgid "Optimize Limits"
 msgstr "Sınırları Eniyile"
 
-#: graphs/window.vala:357
+#: graphs/window.vala:361
 msgctxt "scale"
 msgid "Inverse Root"
 msgstr "Ters Kök"
