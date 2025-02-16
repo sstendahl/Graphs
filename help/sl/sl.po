@@ -1,0 +1,433 @@
+# Slovenian translation for Graphs.
+# Copyright (C) 2025 Graphs's COPYRIGHT HOLDER
+# This file is distributed under the same license as the Graphs package.
+# Martin <miles@filmsi.net>,  2025.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Graphs main\n"
+"POT-Creation-Date: 2025-02-16 16:20+0000\n"
+"PO-Revision-Date: 2025-02-16 18:09+0100\n"
+"Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
+"Language-Team: Slovenian <Slovenian>\n"
+"Language: sl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
+"n%100==4 ? 2 : 3);\n"
+"X-Generator: Poedit 3.4.2\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+
+#. Put one translator per line, in the form NAME <EMAIL>, YEAR1, YEAR2
+msgctxt "_"
+msgid "translator-credits"
+msgstr "Martin Srebotnjak <miles@filmsi.net>"
+
+#. (itstool) path: page/title
+#: C/curve_fitting.page:8
+msgid "Curve Fitting"
+msgstr "Prileganje krivulje"
+
+#. (itstool) path: section/title
+#: C/curve_fitting.page:10
+#, fuzzy
+msgid "Fitting data"
+msgstr "Podatki o prileganju"
+
+#. (itstool) path: section/p
+#: C/curve_fitting.page:11
+#, fuzzy
+msgid ""
+"Curve fitting allows for a powerful analysis method for your imported data. "
+"To start curve fitting on a data set, press the three vertical dots on the "
+"item you want to fit to, and choose \"Curve Fitting\". This brings up the "
+"Curve Fitting dialog for the selected data set. An extensive list of "
+"predefined equations can be chosen from the dropdown. The corresponding "
+"mathematical formula is shown in the same card."
+msgstr ""
+"Prilagajanje krivulje omogoča zmogljivo metodo analize uvoženih podatkov. Če "
+"želite začeti prileganje krivulje v naboru podatkov, pritisnite tri navpične "
+"pike na elementu, ki ga želite prilagoditi, in izberite »Prilagajanje "
+"krivulje«. Prikaže se pogovorno okno »Prilagajanje krivulje« za izbrani "
+"nabor podatkov. V spustnem meniju lahko izberete obsežen seznam vnaprej "
+"določenih enačb. Ustrezna matematična formula je prikazana na isti kartici."
+
+#. (itstool) path: section/media
+#. This is a reference to an external file such as an image or video. When
+#. the file changes, the md5 hash will change to let you know you need to
+#. update your localized copy. The msgstr is not used at all. Set it to
+#. whatever you like once you have updated your copy of the file.
+#: C/curve_fitting.page:19
+#, fuzzy
+msgctxt "_"
+msgid ""
+"external ref='media/curve_fitting_light.png' "
+"md5='d33b620c42f2c1cf82c94998adf4a670'"
+msgstr ""
+"zunanji ref='mediji/curve_fitting_light.png' "
+"md5='d33b620c42f2c1cf82c94998adf4a670'"
+
+#. (itstool) path: section/title
+#: C/curve_fitting.page:23
+msgid "Bounds"
+msgstr "Meje"
+
+#. (itstool) path: section/p
+#: C/curve_fitting.page:24
+#, fuzzy
+msgid ""
+"Each detected parameter in the formula will be shown in the sidebar. Here an "
+"initial guess can be set for the fit, as well as the minimum and maximum "
+"value for this parameter. Make sure that the initial guess is in between the "
+"bounds, and that the minimum bound is smaller than the maximum bound. If you "
+"don't want to use any bounds for the parameter, you can set the bounds to "
+"infinite using <code>-inf</code> and <code>inf</code> for the minimum and "
+"maximum bound respectively."
+msgstr ""
+"Vsak zaznani parameter v formuli bo prikazan v stranski vrstici. Tukaj lahko "
+"nastavite začetno ugibanje za prileganje, kot tudi najmanjšo in največjo "
+"vrednost za ta parameter. Prepričajte se, da je začetno ugibanje med mejami "
+"in da je najmanjša meja manjša od največje meje. Če za parameter ne želite "
+"uporabiti nobenih meja, lahko meje nastavite na neskončno z uporabo <code>-"
+"inf</code> in <code>inf</code> za najmanjšo in največjo mejo."
+
+#. (itstool) path: section/title
+#: C/curve_fitting.page:36
+msgid "Results"
+msgstr "Rezultati"
+
+#. (itstool) path: section/p
+#: C/curve_fitting.page:37
+#, fuzzy
+msgid ""
+"Below the fitting parameters, a box is shown with the resulting parameters "
+"of the fit. Apart of the final results, a margin is shown as well for each "
+"parameter as well as the sum of R² indicating the goodness of the fit. The "
+"margin can be set using the primary menu in the Curve Fitting dialog as a "
+"multiple of the standard deviation, corresponding to an uncertainty margin "
+"of 65, 95 or 99.7% for a standard deviation of 1σ, 2σ or 3σ respectively."
+msgstr ""
+"Pod parametri vgradnje je prikazano polje z nastalimi parametri prileganja. "
+"Poleg končnih rezultatov je prikazana tudi rezerva za vsak parameter in "
+"vsota R², ki kaže na dobro prileganje. Rob lahko nastavite s primarnim "
+"menijem v pogovornem oknu Prilagajanje krivulje kot večkratnik standardnega "
+"odklona, ki ustreza meji negotovosti 65, 95 ali 99,7% fali standardnemu "
+"odklonu 1σ, 2σ ali 3σ."
+
+#. (itstool) path: section/p
+#: C/curve_fitting.page:45
+#, fuzzy
+msgid ""
+"Please note that like all fits, that this standard deviation is mostly a "
+"measure of how well the data agrees with the corresponding model. Factors "
+"such as whether this model is actually physically correct, if there's any "
+"systemic errors in the measurements, and if the parameters are correlated to "
+"each other is not taken into account when fitting data. This is an inherent "
+"property of all curve fitting, and a common point of confusion, leading to "
+"misleading error bars on data points even in scientifically published data."
+msgstr ""
+"Upoštevajte, da je ta standardni odklon, tako kot vsi primeri, večinoma "
+"merilo, kako dobro se podatki ujemajo z ustreznim modelom. Dejavniki, kot "
+"so, ali je ta model dejansko fizično pravilen, ali obstajajo sistemske "
+"napake v meritvah in ali so parametri med seboj povezani, se ne upoštevajo "
+"pri prilagajanju podatkov. To je neločljiva lastnost vseh prileganja krivulj "
+"in skupna točka zmede, ki vodi do zavajajočih stolpcev napak na podatkovnih "
+"točkah tudi v znanstveno objavljenih podatkih."
+
+#. (itstool) path: section/title
+#: C/curve_fitting.page:57
+#, fuzzy
+msgid "Fitting algorithms"
+msgstr "Algoritmi za prileganje"
+
+#. (itstool) path: section/p
+#: C/curve_fitting.page:58
+#, fuzzy
+msgid ""
+"When performing a fit, there are three different fitting algorithms to "
+"choose from, these can be set from the primary menu."
+msgstr ""
+"Pri izvedbi prileganja lahko izbirate med tremi različnimi algoritmi "
+"prileganja, ki jih lahko nastavite v primarnem meniju."
+
+#. (itstool) path: item/title
+#: C/curve_fitting.page:64
+msgid "Levenberg-Marquardt"
+msgstr "Levenberg-Marquardt"
+
+#. (itstool) path: item/p
+#: C/curve_fitting.page:65
+#, fuzzy
+msgid ""
+"The Levenberg-Marquardt algorithm is a traditionally relatively popular "
+"algorithm that performs very efficiently. However, it does not handle bounds "
+"for the fitting parameters."
+msgstr ""
+"Levenberg-Marquardtov algoritem je tradicionalno relativno priljubljen "
+"algoritem, ki deluje zelo učinkovito. Vendar pa ne obravnava meja za "
+"parametre vgradnje."
+
+#. (itstool) path: item/title
+#: C/curve_fitting.page:68
+#, fuzzy
+msgid "Trust Region"
+msgstr "Regija zaupanja"
+
+#. (itstool) path: item/p
+#: C/curve_fitting.page:69
+#, fuzzy
+msgid ""
+"The Trust Region Reflective algorithm is well-suited for solving large "
+"problems with bounds. This method generally performs well for most cases and "
+"should probably be used for most cases."
+msgstr ""
+"Algoritem Trust Region Reflective je zelo primeren za reševanje velikih "
+"problemov z mejami. Ta metoda na splošno dobro deluje v večini primerov in "
+"jo je verjetno treba uporabiti v večini primerov."
+
+#. (itstool) path: item/title
+#: C/curve_fitting.page:72
+#, fuzzy
+msgid "Dogbox"
+msgstr "Škatla za pse"
+
+#. (itstool) path: item/p
+#: C/curve_fitting.page:73
+#, fuzzy
+msgid ""
+"The Dogbox algorithm uses rectangular trust regions and typically works well "
+"with small problems involving bounds."
+msgstr ""
+"Algoritem Dogbox uporablja pravokotna območja zaupanja in običajno dobro "
+"deluje z majhnimi težavami, ki vključujejo meje."
+
+#. (itstool) path: page/title
+#: C/import.page:8
+msgid "Importing Data"
+msgstr "Uvažanje podatkov"
+
+#. (itstool) path: page/p
+#: C/import.page:9
+#, fuzzy
+msgid ""
+"There are two primary ways to import new data in Graphs, importing data "
+"directly by file or generating new data using an equation."
+msgstr ""
+"Obstajata dva glavna načina za uvoz novih podatkov v grafih, uvoz podatkov "
+"neposredno po datoteki ali ustvarjanje novih podatkov z enačbo."
+
+#. (itstool) path: page/media
+#. This is a reference to an external file such as an image or video. When
+#. the file changes, the md5 hash will change to let you know you need to
+#. update your localized copy. The msgstr is not used at all. Set it to
+#. whatever you like once you have updated your copy of the file.
+#: C/import.page:14
+#, fuzzy
+msgctxt "_"
+msgid ""
+"external ref='media/add_data_light.png' "
+"md5='5246da95eb47c74c7488f9b9016dde3d'"
+msgstr ""
+"zunanji ref='mediji/add_data_light.png' "
+"md5='5246da95eb47c74c7488f9b9016dde3d'"
+
+#. (itstool) path: page/p
+#: C/import.page:16
+#, fuzzy
+msgid ""
+"A wide array of filetypes are supported when importing data by file. Graphs "
+"currently supports Panalytical .xrdml files, Leybold .xry files as well as "
+"files that are saved in a column format such as most .csv files, .dat "
+"files, .xy files or plain text. Finally, data from other Graphs projects can "
+"be imported into the current project as well, simply by adding new data as "
+"usual, but by selecting a project file instead."
+msgstr ""
+"Pri uvažanju podatkov po datotekah je podprt širok nabor vrst datotek. "
+"Graphs trenutno podpira datoteke Panalytical .xrdml, datoteke Leybold .xry "
+"in datoteke, ki so shranjene v obliki stolpca, kot je večina datotek .csv, ."
+"dat datoteke, datoteke .xy ali navadno besedilo. Nazadnje, podatke iz drugih "
+"projektov Graphs lahko uvozite tudi v trenutni projekt, preprosto z "
+"dodajanjem novih podatkov kot običajno, vendar tako, da namesto tega "
+"izberete datoteko projekta."
+
+#. (itstool) path: page/p
+#: C/import.page:25
+#, fuzzy
+msgid ""
+"When using a custom delimiter during the import, an extra field will be "
+"visible to enter the delimiter of choice. This field recognizes regular "
+"expressions. For example, to choose a delimiter that looks for whitespace, "
+"one could enter <code>\\s+</code> as delimiter. In this example, <code>\\s</"
+"code> denotes that the delimiter is a whitespace character, and the <code>+</"
+"code> denotes that at least one or more whitespace is required. Thus this "
+"input looks for any amount of whitespaces including tabs. Note that this "
+"particular input is equivalent to the default Whitespace option."
+msgstr ""
+"Če med uvozom uporabljate ločilo po meri, bo vidno dodatno polje za vnos "
+"izbranega ločila. To polje prepozna regularne izraze. Če želite na primer "
+"izbrati ločilo, ki išče presledek, lahko vnesete <code>\\s+</code> kot "
+"ločilo. V tem primeru označuje, <code>\\s</code> da je ločilo znak "
+"presledka, in označuje <code>+</code> , da je potreben vsaj en ali več "
+"presledkov. Tako ta vnos išče poljubno količino presledkov, vključno s "
+"tabulatorji. Upoštevajte, da je ta vnos enakovreden privzeti možnosti "
+"presledkov."
+
+#. (itstool) path: page/media
+#. This is a reference to an external file such as an image or video. When
+#. the file changes, the md5 hash will change to let you know you need to
+#. update your localized copy. The msgstr is not used at all. Set it to
+#. whatever you like once you have updated your copy of the file.
+#: C/import.page:36
+#, fuzzy
+msgctxt "_"
+msgid ""
+"external ref='media/add_equation_light.png' "
+"md5='009108d0a1fc2d95d54d8aa88f6016d5'"
+msgstr ""
+"zunanji ref='mediji/add_equation_light.png' "
+"md5='009108d0a1fc2d95d54d8aa88f6016d5'"
+
+#. (itstool) path: page/p
+#: C/import.page:38
+#, fuzzy
+msgid ""
+"The other way to import data is to generate data directly using an equation. "
+"This can be done using the \"Add Equation\" button found in the top-left "
+"corner, or by pressing <cmd>Ctrl+Alt+N</cmd>. Most commonly used syntax is "
+"accepted, with an <code>x</code> denoting the x-coordinate. A simple "
+"quadratic equation could for instance be created using <code>x²+5</code> as "
+"input. Be aware that trigonometric functions are using radians by default. "
+"If you want to use degrees, simply add a <code>d</code> to the trigonometric "
+"function. For instance <code>cosd(x)</code> generates a cosine where the x "
+"coordinate is given in degrees while <code>cos(x)</code> generates a cosine "
+"with the x-coordinate in radians."
+msgstr ""
+"Drugi način uvoza podatkov je ustvarjanje podatkov neposredno z enačbo. To "
+"lahko storite z gumbom »Dodaj enačbo«, ki ga najdete v zgornjem levem kotu, "
+"ali s pritiskom <cmd>na Ctrl+Alt+N</cmd>. Najpogosteje uporabljena sintaksa "
+"je sprejeta, pri čemer označuje <code>x</code> koordinato x. Preprosto "
+"kvadratno enačbo bi lahko na primer ustvarili z uporabo <code>x²+5</code> "
+"kot vhoda. Zavedajte se, da trigonometrične funkcije privzeto uporabljajo "
+"radiane. Če želite uporabiti stopnje, preprosto dodajte a <code>d</code> v "
+"trigonometrično funkcijo. Na primer <code>cosd(x)</code> , ustvari kosinus, "
+"kjer je koordinata x podana v stopinjah, medtem ko <code>cos(x)</code> "
+"ustvari kosinus z x-koordinato v radianih."
+
+#. (itstool) path: page/title
+#: C/index.page:10
+msgid "<_:media-1/> Graphs"
+msgstr "<_:media-1/> Grafi"
+
+#. (itstool) path: section/title
+#: C/index.page:16
+#, fuzzy
+msgid "How to"
+msgstr "Kako vzpostaviti povezavo"
+
+#. (itstool) path: section/p
+#: C/index.page:17
+#, fuzzy
+msgid ""
+"There's multiple how-to guides available for Graphs. These can be found here."
+msgstr "Za grafe je na voljo več navodil. Te lahko najdete tukaj."
+
+#. (itstool) path: page/title
+#: C/manipulate.page:8
+#, fuzzy
+msgid "Manipulating Data"
+msgstr "Manipulacija podatkov"
+
+#. (itstool) path: page/p
+#: C/manipulate.page:10
+#, fuzzy
+msgid ""
+"There are many different ways to manipulate data using Graphs. All data is "
+"treated the same using Graphs, independent what file it is imported from, or "
+"if it's a generated equation. When selecting a part of the canvas using the "
+"Highlight tool, only the highlight area will be manipulated."
+msgstr ""
+"Obstaja veliko različnih načinov za manipulacijo podatkov z grafi. Vsi "
+"podatki so obravnavani enako z grafi, ne glede na to, iz katere datoteke so "
+"uvoženi ali če gre za ustvarjeno enačbo. Ko izberete del platna z orodjem za "
+"označevanje, se bo manipuliralo samo z območjem označevanja."
+
+#. (itstool) path: section/title
+#: C/manipulate.page:18
+msgid "Smoothening"
+msgstr "Glajenje"
+
+#. (itstool) path: section/p
+#: C/manipulate.page:19
+#, fuzzy
+msgid ""
+"The smoothening action has two different modes, a rolling average or the "
+"Savitzky-Galov filter. The moving average simply works iterating through the "
+"data set, and replacing each point by the average of the last few data "
+"points that were encountered, this way sharp outliers are ignored but "
+"details may be lost. Sudden actual changes in the data may also be detected "
+"later when a smoothening has been applied. Another way to smoothen the data "
+"is the Savitzky-Galov. The difference with the moving average, is that not a "
+"simple average is used for the last data points, but instead a polynomial "
+"function is fitted between the data points. This makes it possible to filter "
+"the underlaying signal still quite nicely out of very noisy data."
+msgstr ""
+"Glajenje ima dva različna načina, tekoče povprečje ali Savitzky-Galov "
+"filter. Drseče povprečje preprosto deluje skozi nabor podatkov in nadomešča "
+"vsako točko s povprečjem zadnjih nekaj podatkovnih točk, na katere smo "
+"naleteli, na ta način se ostri osamelci prezrejo, vendar se podrobnosti "
+"lahko izgubijo. Nenadne dejanske spremembe v podatkih se lahko zaznajo tudi "
+"pozneje, ko je bilo uporabljeno glajenje. Drug način za glajenje podatkov je "
+"Savitzky-Galov. Razlika z drsečim povprečjem je v tem, da se za zadnje "
+"podatkovne točke ne uporablja preprosto povprečje, temveč je med "
+"podatkovnimi točkami nameščena polinomska funkcija. To omogoča filtriranje "
+"signala podlage še vedno precej lepo iz zelo hrupnih podatkov."
+
+#. (itstool) path: section/title
+#: C/manipulate.page:34
+#, fuzzy
+msgid "Custom Transformations"
+msgstr "Preoblikovanja po meri"
+
+#. (itstool) path: section/p
+#: C/manipulate.page:35
+#, fuzzy
+msgid ""
+"Another way to manipulate the data is by using custom transformations. This "
+"field transforms both X and Y coordinate piece by piece according to an "
+"equation of choice. For instance, to take the square of all Y-coordinates, "
+"simply set <code>Y = Y²</code> on the y-data field, and <code>X = X</code> "
+"on the x-data field. Note that the input coordinates are not case-sensitive."
+msgstr ""
+"Drug način za manipulacijo podatkov je uporaba transformacij po meri. To "
+"polje preoblikuje koordinato X in Y kos za kosom v skladu z izbrano enačbo. "
+"Na primer, če želite vzeti kvadrat vseh Y-koordinat, preprosto nastavite "
+"<code>Y = Y²</code> na y-podatkovno polje in <code>X = X</code> na x-"
+"podatkovno polje. Upoštevajte, da vhodne koordinate ne razlikujejo med "
+"velikimi in malimi črkami."
+
+#. (itstool) path: section/media
+#. This is a reference to an external file such as an image or video. When
+#. the file changes, the md5 hash will change to let you know you need to
+#. update your localized copy. The msgstr is not used at all. Set it to
+#. whatever you like once you have updated your copy of the file.
+#: C/manipulate.page:42
+msgctxt "_"
+msgid ""
+"external ref='media/custom_transform_light.png' "
+"md5='311f5286f3372e5fea1431dd6a63d666'"
+msgstr ""
+"zunanji ref='media/custom_transform_light.png' "
+"md5='311f5286f3372e5fea1431dd6a63d666'"
+
+#. (itstool) path: p/link
+#: C/legal.xml:3
+msgid "Creative Commons Attribution-ShareAlike 4.0 International License"
+msgstr ""
+"Creative Commons Priznanje avtorstva - Deljenje pod enakimi pogoji 4.0 "
+"Mednarodna licenca"
+
+#. (itstool) path: license/p
+#: C/legal.xml:3
+msgid "This work is licensed under a <_:link-1/>."
+msgstr "To delo je licencirano pod dovoljenjem/licenco <_:link-1/>."
