@@ -5,6 +5,8 @@ template $GraphsStyleEditor: Adw.ApplicationWindow {
   title: _("Error - No Style selected");
   default-width: 1200;
   default-height: 700;
+  width-request: 360;
+  height-request: 200;
 
   ShortcutController {
     Shortcut {
@@ -28,15 +30,98 @@ template $GraphsStyleEditor: Adw.ApplicationWindow {
     }
   }
 
-  Adw.OverlaySplitView split_view {
-    sidebar: Adw.ToolbarView {
-      width-request: 600;
+  Adw.Breakpoint {
+    condition ("max-width: 720sp and min-height: 530sp")
 
+    setters {
+      multi_layout_view.layout: bottom_sheet_layout;
+      editor_headerbar.show-end-title-buttons: true;
+    }
+  }
+
+  Adw.Breakpoint {
+    condition ("max-width: 720sp and max-height: 530sp")
+
+    setters {
+      multi_layout_view.layout: bottom_sheet_layout;
+      editor_headerbar.show-end-title-buttons: true;
+      sheet_box.height-request: 200;
+    }
+  }
+
+  content: Adw.MultiLayoutView multi_layout_view {
+    Adw.Layout side_by_side_layout {
+      name: "side-by-side";
+
+      content: Box {
+        orientation: horizontal;
+        homogeneous: true;
+
+        Box {
+          orientation: horizontal;
+
+          Adw.LayoutSlot {
+            id: "editor";
+          }
+
+          Separator {}
+        }
+
+        Adw.ToolbarView {
+          [top]
+          Adw.HeaderBar content_headerbar {
+            name: "preview-headerbar";
+            show-title: false;
+          }
+
+          content: Adw.LayoutSlot {
+            id: "canvas";
+          };
+        }
+      };
+    }
+
+    Adw.Layout bottom_sheet_layout {
+      name: "bottom-sheet";
+
+      content: Adw.BottomSheet bottom_sheet {
+        content: Adw.Bin {
+          margin-bottom: bind bottom_sheet.bottom-bar-height;
+
+          child: Adw.LayoutSlot {
+            id: "editor";
+          };
+        };
+
+        bottom-bar: CenterBox {
+          height-request: 46;
+
+          center-widget: Label {
+            label: _("Open Preview");
+          };
+        };
+
+        sheet: Box sheet_box {
+          orientation: vertical;
+          height-request: 500;
+
+          Separator {
+            margin-top: 36;
+            orientation: horizontal;
+          }
+
+          Adw.LayoutSlot {
+            id: "canvas";
+          }
+        };
+      };
+    }
+
+    [editor]
+    Adw.ToolbarView {
       [top]
-      Adw.HeaderBar {
-        styles [
-          "flat",
-        ]
+      Adw.HeaderBar editor_headerbar {
+        show-end-title-buttons: false;
 
         [end]
         MenuButton {
@@ -49,34 +134,28 @@ template $GraphsStyleEditor: Adw.ApplicationWindow {
 
       content: ScrolledWindow {
         hscrollbar-policy: never;
-        vexpand: true;
 
-        Adw.Clamp editor_clamp {
-          margin-bottom: 12;
-          margin-top: 12;
-          margin-start: 12;
-          margin-end: 12;
-        }
+        child: Viewport {
+          child: Adw.Clamp {
+            margin-bottom: 12;
+            margin-top: 12;
+            margin-start: 12;
+            margin-end: 12;
+
+            child: Adw.Bin editor_bin {};
+          };
+        };
       };
-    };
+    }
 
-    content: Adw.ToolbarView content_view {
-      [top]
-      Adw.HeaderBar content_headerbar {
-        name: "preview-headerbar";
-        show-title: false;
-
-        styles [
-          "flat",
-        ]
-      }
-
-      content: Adw.StatusPage {
+    [canvas]
+    Adw.Bin canvas_bin {
+      child: Adw.StatusPage {
         icon-name: "dialog-error-symbolic";
         title: _("Canvas Failed to Load");
       };
-    };
-  }
+    }
+  };
 }
 
 menu primary_menu {

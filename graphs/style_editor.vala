@@ -10,21 +10,21 @@ namespace Graphs {
     public class StyleEditor : Adw.ApplicationWindow {
 
         [GtkChild]
-        private unowned Adw.Clamp editor_clamp { get; }
+        private unowned Adw.Bin editor_bin { get; }
 
         [GtkChild]
-        private unowned Adw.ToolbarView content_view { get; }
+        private unowned Adw.Bin canvas_bin { get; }
 
         [GtkChild]
         protected unowned Adw.HeaderBar content_headerbar { get; }
 
         protected Gtk.Box editor_box {
-            get { return editor_clamp.get_child () as Gtk.Box; }
-            set { editor_clamp.set_child (value); }
+            get { return editor_bin.get_child () as Gtk.Box; }
+            set { editor_bin.set_child (value); }
         }
         protected Canvas canvas {
-            get { return content_view.get_content () as Canvas; }
-            set { content_view.set_content (value); }
+            get { return canvas_bin.get_child () as Canvas; }
+            set { canvas_bin.set_child (value); }
         }
 
         protected CssProvider headerbar_provider { get; private set; }

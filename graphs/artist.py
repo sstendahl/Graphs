@@ -179,7 +179,7 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
             label=Graphs.tools_shorten_label(item.get_name(), 40),
             color=item.get_color(),
             alpha=item.get_alpha(),
-            linestyle=misc.LINESTYLES[item.props.linestyle],
+            linestyle=misc.LINESTYLES[item.props.linestyle + 1],
             marker="none",
         )[0]
         for prop in ("selected", "linewidth"):
@@ -200,12 +200,12 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
     @GObject.Property(type=int, default=1)
     def linestyle(self) -> int:
         """Get linestyle property."""
-        return misc.LINESTYLES.index(self._artist.get_linestyle())
+        return misc.LINESTYLES.index(self._artist.get_linestyle()) - 1
 
     @linestyle.setter
     def linestyle(self, linestyle: int) -> None:
         """Set linestyle property."""
-        self._artist.set_linestyle(misc.LINESTYLES[linestyle])
+        self._artist.set_linestyle(misc.LINESTYLES[linestyle + 1])
 
     def _set_properties(self, _x, _y) -> None:
         linewidth = self.props.linewidth
