@@ -284,6 +284,7 @@ def prettify_equation(equation: str) -> str:
     equation = equation.replace("**", "^")
     return equation.replace(")*(", ")(")
 
+
 def create_equidistant_xdata(limits: tuple, scale: int = 1,
                              steps: int = 5000) -> numpy.ndarray:
     """Generate evenly-spaced x-values on the given scale."""
