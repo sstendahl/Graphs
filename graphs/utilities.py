@@ -284,17 +284,9 @@ def prettify_equation(equation: str) -> str:
     equation = equation.replace("**", "^")
     return equation.replace(")*(", ")(")
 
-
-def equation_to_data(
-    equation: str,
-    limits: tuple = None,
-    steps: int = 5000,
-    scale: int = 1,
-) -> tuple:
-    """Convert an equation into data over a specified range of x-values."""
-    if limits is None:
-        limits = (0, 10)
-    equation = preprocess(equation)
+def create_equidistant_xdata(limits: tuple, scale: int = 1,
+                             steps: int = 5000) -> numpy.ndarray:
+    """Generate evenly-spaced x-values on the given scale."""
     x_start, x_stop = limits
     scale = scales.Scale(scale)
     match scale:
@@ -317,7 +309,20 @@ def equation_to_data(
         case scales.Scale.INVERSE:
             xdata = \
                 (1 / numpy.linspace(1 / x_start, 1 / x_stop, steps)).tolist()
+    return xdata
 
+
+def equation_to_data(
+    equation: str,
+    limits: tuple = None,
+    steps: int = 5000,
+    scale: int = 1,
+) -> tuple:
+    """Convert an equation into data over a specified range of x-values."""
+    if limits is None:
+        limits = (0, 10)
+    equation = preprocess(equation)
+    xdata = create_equidistant_xdata(limits, scale, steps)
     try:
         ydata = numpy.ndarray.tolist(
             numexpr.evaluate(equation + " + x*0", local_dict={"x": xdata}),
