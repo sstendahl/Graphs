@@ -317,7 +317,7 @@ def equation_to_data(
     equation: str,
     limits: tuple = None,
     steps: int = 5000,
-    scale: int = 1,
+    scale: int = 0,
 ) -> tuple:
     """Convert an equation into data over a specified range of x-values."""
     if limits is None:
