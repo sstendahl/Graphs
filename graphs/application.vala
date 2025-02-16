@@ -164,9 +164,11 @@ namespace Graphs {
                 }
             }
             if (window == null) {
-                window = create_main_window ();
+                python_helper.import_from_files (create_main_window (), files);
+            } else {
+                python_helper.import_from_files (window, files);
+                window.present ();
             }
-            python_helper.import_from_files (window, files);
         }
 
         /*
