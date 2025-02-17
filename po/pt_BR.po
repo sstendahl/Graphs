@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2025-02-04 15:55+0000\n"
-"PO-Revision-Date: 2025-02-09 01:58-0300\n"
+"POT-Creation-Date: 2025-02-16 18:29+0000\n"
+"PO-Revision-Date: 2025-02-17 12:54-0300\n"
 "Last-Translator: Rafael Fontenelle <rafaelff@gnome.org>\n"
 "Language-Team: Brazilian Portuguese <https://br.gnome.org/traducao>\n"
 "Language: pt_BR\n"
@@ -20,16 +20,16 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1)\n"
 "X-Generator: Gtranslator 47.1\n"
 
-#: data/se.sjoerd.Graphs.appdata.xml.in:6 data/se.sjoerd.Graphs.desktop.in:3
-#: data/ui/window.blp:9 graphs/application.vala:71
+#: data/se.sjoerd.Graphs.metainfo.xml.in:6 data/se.sjoerd.Graphs.desktop.in:3
+#: data/ui/window.blp:9 graphs/application.vala:79
 msgid "Graphs"
 msgstr "Gráficos"
 
-#: data/se.sjoerd.Graphs.appdata.xml.in:7
+#: data/se.sjoerd.Graphs.metainfo.xml.in:7
 msgid "Plot and manipulate data"
 msgstr "Plote e manipule dados"
 
-#: data/se.sjoerd.Graphs.appdata.xml.in:12
+#: data/se.sjoerd.Graphs.metainfo.xml.in:12
 msgid ""
 "Graphs is a simple, yet powerful tool that allows you to plot and manipulate "
 "your data with ease. New data can be imported from a wide variety of "
@@ -45,7 +45,7 @@ msgstr ""
 "de selecionar, recortar, traduzir, multiplicar, centralizar e suavizar "
 "dados, bem como aplicar quaisquer transformações personalizadas neles."
 
-#: data/se.sjoerd.Graphs.appdata.xml.in:16
+#: data/se.sjoerd.Graphs.metainfo.xml.in:16
 msgid ""
 "Moreover, Graphs supports curve fitting on imported data and offers "
 "extensive customization options for the style of the plots. You can fine-"
@@ -56,7 +56,7 @@ msgstr ""
 "gráficos. Você pode ajustar e personalizar as folhas de estilo de acordo com "
 "sua preferência."
 
-#: data/se.sjoerd.Graphs.appdata.xml.in:19
+#: data/se.sjoerd.Graphs.metainfo.xml.in:19
 msgid ""
 "Graphs is an excellent fit for both plotting and data manipulation. The "
 "plots created with Graphs can be saved in a variety of formats suitable for "
@@ -75,7 +75,7 @@ msgstr ""
 "GNOME, mas também deve ser adequado para qualquer outro ambiente de área de "
 "trabalho."
 
-#: data/se.sjoerd.Graphs.appdata.xml.in:23
+#: data/se.sjoerd.Graphs.metainfo.xml.in:23
 msgid ""
 "For any feedback, questions or general issues, please file an issue on the "
 "GitLab page."
@@ -83,29 +83,33 @@ msgstr ""
 "Para qualquer feedback, perguntas ou problemas gerais, registre um problema "
 "na página do GitLab."
 
-#: data/se.sjoerd.Graphs.appdata.xml.in:36
+#: data/se.sjoerd.Graphs.metainfo.xml.in:36
 msgid "Plot and manipulate any data"
 msgstr "Plote e manipule dados"
 
-#: data/se.sjoerd.Graphs.appdata.xml.in:40
+#: data/se.sjoerd.Graphs.metainfo.xml.in:40
 msgid "Full support for light and dark mode"
 msgstr "Suporte total para modo claro e escuro"
 
-#: data/se.sjoerd.Graphs.appdata.xml.in:44
+#: data/se.sjoerd.Graphs.metainfo.xml.in:44
 msgid "Generate data from an equation"
 msgstr "Gere dados a partir de uma equação"
 
-#: data/se.sjoerd.Graphs.appdata.xml.in:48
+#: data/se.sjoerd.Graphs.metainfo.xml.in:48
 msgid "Manage plot stylesheets"
 msgstr "Edite folhas de estilo de plotagem"
 
-#: data/se.sjoerd.Graphs.appdata.xml.in:52
+#: data/se.sjoerd.Graphs.metainfo.xml.in:52
 msgid "Manipulate imported data"
 msgstr "Manipule dados importados com facilidade"
 
-#: data/se.sjoerd.Graphs.desktop.in:10
+#: data/se.sjoerd.Graphs.desktop.in:11
 msgid "Plotting;Graph;Graphing;Science;Mathematics;Math;Equations;Data;Plot;Visualisation;Visualization;Fitting;xrdml;"
 msgstr "Plotting;Graph;Graphing;Science;Mathematics;Math;Equations;Data;Plot;Visualisation;Visualization;Fitting;xrdml;Plotagem;Gráfico;Ciência;Matemática;Equações;Dados;Visualização;xrdml;"
+
+#: data/se.sjoerd.Graphs.desktop.in:16
+msgid "New Window"
+msgstr "Nova janela"
 
 #: data/ui/dialogs/delete-style.blp:5
 msgid "Delete Style?"
@@ -258,7 +262,7 @@ msgstr "Personalizado"
 msgid "Add Fit to Data"
 msgstr "Adicionar ajuste aos dados"
 
-#: data/ui/curve-fitting.blp:134 graphs/window.vala:342
+#: data/ui/curve-fitting.blp:134
 msgid "Toggle Sidebar"
 msgstr "Alternar barra lateral"
 
@@ -353,37 +357,36 @@ msgstr "Linha e marcadores"
 msgid "Linestyle"
 msgstr "Estilo da linha"
 
-#: data/ui/edit-item-data.blp:16 data/ui/edit-item-equation.blp:30
-#: data/ui/style-editor-box.blp:67
+#: data/ui/edit-item-data.blp:16 data/ui/style-editor-box.blp:67
 msgctxt "linestyle"
 msgid "None"
 msgstr "Nenhum"
 
-#: data/ui/edit-item-data.blp:17 data/ui/edit-item-equation.blp:31
+#: data/ui/edit-item-data.blp:17 data/ui/edit-item-equation.blp:29
 #: data/ui/style-editor-box.blp:68
 msgctxt "linestyle"
 msgid "Solid"
 msgstr "Sólida"
 
-#: data/ui/edit-item-data.blp:18 data/ui/edit-item-equation.blp:32
+#: data/ui/edit-item-data.blp:18 data/ui/edit-item-equation.blp:30
 #: data/ui/style-editor-box.blp:69
 msgctxt "linestyle"
 msgid "Dotted"
 msgstr "Pontilhada"
 
-#: data/ui/edit-item-data.blp:19 data/ui/edit-item-equation.blp:33
+#: data/ui/edit-item-data.blp:19 data/ui/edit-item-equation.blp:31
 #: data/ui/style-editor-box.blp:70
 msgctxt "linestyle"
 msgid "Dashed"
 msgstr "Tracejada"
 
-#: data/ui/edit-item-data.blp:20 data/ui/edit-item-equation.blp:34
+#: data/ui/edit-item-data.blp:20 data/ui/edit-item-equation.blp:32
 #: data/ui/style-editor-box.blp:71
 msgctxt "linestyle"
 msgid "Dashdot"
 msgstr "Traço e ponto"
 
-#: data/ui/edit-item-data.blp:26 data/ui/edit-item-equation.blp:40
+#: data/ui/edit-item-data.blp:26 data/ui/edit-item-equation.blp:38
 #: data/ui/style-editor-box.blp:77
 msgid "Linewidth"
 msgstr "Espessura"
@@ -664,41 +667,41 @@ msgstr "Máximo do eixo Y direito"
 msgid "Scaling"
 msgstr "Dimensionamento"
 
-#: data/ui/figure-settings-page.blp:143 graphs/window.vala:382
+#: data/ui/figure-settings-page.blp:143 graphs/window.vala:386
 msgid "Bottom X Axis Scale"
 msgstr "Escala do eixo X inferior"
 
 #: data/ui/figure-settings-page.blp:147 data/ui/figure-settings-page.blp:163
 #: data/ui/figure-settings-page.blp:179 data/ui/figure-settings-page.blp:195
-#: graphs/window.vala:352
+#: graphs/window.vala:356
 msgctxt "scale"
 msgid "Linear"
 msgstr "Linear"
 
 #: data/ui/figure-settings-page.blp:148 data/ui/figure-settings-page.blp:164
 #: data/ui/figure-settings-page.blp:180 data/ui/figure-settings-page.blp:196
-#: graphs/window.vala:353
+#: graphs/window.vala:357
 msgctxt "scale"
 msgid "Logarithmic (Base 10)"
 msgstr "Logarítmico (Base 10)"
 
 #: data/ui/figure-settings-page.blp:149 data/ui/figure-settings-page.blp:165
 #: data/ui/figure-settings-page.blp:181 data/ui/figure-settings-page.blp:197
-#: graphs/window.vala:354
+#: graphs/window.vala:358
 msgctxt "scale"
 msgid "Logarithmic (Base 2)"
 msgstr "Logarítmico (Base 2)"
 
 #: data/ui/figure-settings-page.blp:150 data/ui/figure-settings-page.blp:166
 #: data/ui/figure-settings-page.blp:182 data/ui/figure-settings-page.blp:198
-#: graphs/window.vala:355
+#: graphs/window.vala:359
 msgctxt "scale"
 msgid "Radians"
 msgstr "Radianos"
 
 #: data/ui/figure-settings-page.blp:151 data/ui/figure-settings-page.blp:167
 #: data/ui/figure-settings-page.blp:183 data/ui/figure-settings-page.blp:199
-#: graphs/window.vala:356
+#: graphs/window.vala:360
 msgctxt "scale"
 msgid "Square Root"
 msgstr "Raiz quadrada"
@@ -709,15 +712,15 @@ msgctxt "scale"
 msgid "Inverse"
 msgstr "Inverso"
 
-#: data/ui/figure-settings-page.blp:159 graphs/window.vala:383
+#: data/ui/figure-settings-page.blp:159 graphs/window.vala:387
 msgid "Top X Axis Scale"
 msgstr "Escala do eixo X superior"
 
-#: data/ui/figure-settings-page.blp:175 graphs/window.vala:388
+#: data/ui/figure-settings-page.blp:175 graphs/window.vala:392
 msgid "Left Y Axis Scale"
 msgstr "Escala do eixo Y esquerda"
 
-#: data/ui/figure-settings-page.blp:191 graphs/window.vala:387
+#: data/ui/figure-settings-page.blp:191 graphs/window.vala:391
 msgid "Right Y Axis Scale"
 msgstr "Escala do eixo Y direito"
 
@@ -1428,7 +1431,7 @@ msgstr "Modo de seleção. Clique e arraste para fazer uma seleção de dados"
 msgid "Show Sidebar"
 msgstr "Mostrar barra lateral"
 
-#: data/ui/window.blp:335 data/ui/window.blp:381 graphs/window.vala:330
+#: data/ui/window.blp:335 data/ui/window.blp:381 graphs/window.vala:339
 msgid "Undo"
 msgstr "Desfazer"
 
@@ -1644,12 +1647,12 @@ msgctxt "file-filter"
 msgid "Leybold xry"
 msgstr "Leybold xry"
 
-#: graphs/application.py:43
+#: graphs/application.py:29
 #, python-brace-format
 msgid "Could not load {font}"
 msgstr "Não foi possível carregar {font}"
 
-#: graphs/application.vala:88
+#: graphs/application.vala:96
 msgid "translator-credits"
 msgstr ""
 "Leônidas Araújo <leorusvellt@hotmail.com>\n"
@@ -1747,7 +1750,7 @@ msgstr "Máximo do eixo X"
 msgid "Y Axis Maximum"
 msgstr "Máximo do eixo Y"
 
-#: graphs/figure_settings.vala:176 graphs/window.vala:384
+#: graphs/figure_settings.vala:176 graphs/window.vala:388
 msgid "X Axis Scale"
 msgstr "Escala do eixo X"
 
@@ -1755,7 +1758,7 @@ msgstr "Escala do eixo X"
 msgid "X Axis Label"
 msgstr "Rótulo do eixo X"
 
-#: graphs/figure_settings.vala:180 graphs/window.vala:389
+#: graphs/figure_settings.vala:180 graphs/window.vala:393
 msgid "Y Axis Scale"
 msgstr "Escala do eixo Y"
 
@@ -1776,11 +1779,11 @@ msgstr "Conjunto de dados"
 msgid "Generated Dataset"
 msgstr "Conjunto de dados gerados"
 
-#: graphs/item.py:217
+#: graphs/item.py:220
 msgid "Label"
 msgstr "Camada"
 
-#: graphs/item.py:246
+#: graphs/item.py:249
 msgid "Fill"
 msgstr "Preencher"
 
@@ -1923,7 +1926,7 @@ msgstr "Não foi possível analisar {filename}"
 msgid "File {file}, does not contain name tag"
 msgstr "Arquivo {file}, não contém uma etiqueta de nome"
 
-#: graphs/styles.vala:61
+#: graphs/styles.vala:62
 msgid "System"
 msgstr "Sistema"
 
@@ -1947,15 +1950,15 @@ msgstr "Portal de documentos"
 msgid "Graphs (Development)"
 msgstr "Gráficos (Desenvolvimento)"
 
-#: graphs/window.vala:320
+#: graphs/window.vala:329
 msgid "Open Location"
 msgstr "Abrir local"
 
-#: graphs/window.vala:347
+#: graphs/window.vala:351
 msgid "Optimize Limits"
 msgstr "Otimizar limites"
 
-#: graphs/window.vala:357
+#: graphs/window.vala:361
 msgctxt "scale"
 msgid "Inverse Root"
 msgstr "Raiz inversa"
