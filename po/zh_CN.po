@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2025-02-04 15:55+0000\n"
-"PO-Revision-Date: 2025-02-10 18:22+0800\n"
+"POT-Creation-Date: 2025-02-16 18:29+0000\n"
+"PO-Revision-Date: 2025-02-17 19:00+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -18,16 +18,16 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Gtranslator 47.1\n"
 
-#: data/se.sjoerd.Graphs.appdata.xml.in:6 data/se.sjoerd.Graphs.desktop.in:3
-#: data/ui/window.blp:9 graphs/application.vala:71
+#: data/se.sjoerd.Graphs.metainfo.xml.in:6 data/se.sjoerd.Graphs.desktop.in:3
+#: data/ui/window.blp:9 graphs/application.vala:79
 msgid "Graphs"
 msgstr "Graphs"
 
-#: data/se.sjoerd.Graphs.appdata.xml.in:7
+#: data/se.sjoerd.Graphs.metainfo.xml.in:7
 msgid "Plot and manipulate data"
 msgstr "绘制和处理数据"
 
-#: data/se.sjoerd.Graphs.appdata.xml.in:12
+#: data/se.sjoerd.Graphs.metainfo.xml.in:12
 msgid ""
 "Graphs is a simple, yet powerful tool that allows you to plot and manipulate "
 "your data with ease. New data can be imported from a wide variety of "
@@ -40,7 +40,7 @@ msgstr ""
 "类型中导入，或通过方程式生成。所有数据都可使用多种操作进行处理，如选择、剪"
 "切、平移、相乘、置中和平滑数据，或者对数据应用任意自定义转换。"
 
-#: data/se.sjoerd.Graphs.appdata.xml.in:16
+#: data/se.sjoerd.Graphs.metainfo.xml.in:16
 msgid ""
 "Moreover, Graphs supports curve fitting on imported data and offers "
 "extensive customization options for the style of the plots. You can fine-"
@@ -49,7 +49,7 @@ msgstr ""
 "此外，Graphs 还支持在导入的数据上进行曲线拟合且为绘制样式提供了扩展的自定义选"
 "项。您可以随自己喜好来调整和个性化样式表。"
 
-#: data/se.sjoerd.Graphs.appdata.xml.in:19
+#: data/se.sjoerd.Graphs.metainfo.xml.in:19
 msgid ""
 "Graphs is an excellent fit for both plotting and data manipulation. The "
 "plots created with Graphs can be saved in a variety of formats suitable for "
@@ -64,33 +64,33 @@ msgstr ""
 "选项可使其在像 Inkscape 的软件中做进一步调整。图表是以 GNOME 环境为标准编写"
 "的，但应同样适用于其它任何桌面环境。"
 
-#: data/se.sjoerd.Graphs.appdata.xml.in:23
+#: data/se.sjoerd.Graphs.metainfo.xml.in:23
 msgid ""
 "For any feedback, questions or general issues, please file an issue on the "
 "GitLab page."
 msgstr "若有任何反馈、问题或常规议题，请在 GitLab 页面上提交议案。"
 
-#: data/se.sjoerd.Graphs.appdata.xml.in:36
+#: data/se.sjoerd.Graphs.metainfo.xml.in:36
 msgid "Plot and manipulate any data"
 msgstr "绘制和处理任意数据"
 
-#: data/se.sjoerd.Graphs.appdata.xml.in:40
+#: data/se.sjoerd.Graphs.metainfo.xml.in:40
 msgid "Full support for light and dark mode"
 msgstr "完全支持亮色和暗色模式"
 
-#: data/se.sjoerd.Graphs.appdata.xml.in:44
+#: data/se.sjoerd.Graphs.metainfo.xml.in:44
 msgid "Generate data from an equation"
 msgstr "从方程式生成数据"
 
-#: data/se.sjoerd.Graphs.appdata.xml.in:48
+#: data/se.sjoerd.Graphs.metainfo.xml.in:48
 msgid "Manage plot stylesheets"
 msgstr "管理绘制样式表"
 
-#: data/se.sjoerd.Graphs.appdata.xml.in:52
+#: data/se.sjoerd.Graphs.metainfo.xml.in:52
 msgid "Manipulate imported data"
 msgstr "处理导入的数据"
 
-#: data/se.sjoerd.Graphs.desktop.in:10
+#: data/se.sjoerd.Graphs.desktop.in:11
 msgid ""
 "Plotting;Graph;Graphing;Science;Mathematics;Math;Equations;Data;Plot;"
 "Visualisation;Visualization;Fitting;xrdml;"
@@ -98,6 +98,10 @@ msgstr ""
 "Plotting;Graph;Graphing;Science;Mathematics;Math;Equations;Data;Plot;"
 "Visualisation;Visualization;Fitting;xrdml;绘制;图表;科学;数学;方程式;等式;公"
 "式;数据;可视化;拟合;"
+
+#: data/se.sjoerd.Graphs.desktop.in:16
+msgid "New Window"
+msgstr "新建窗口"
 
 #: data/ui/dialogs/delete-style.blp:5
 msgid "Delete Style?"
@@ -246,7 +250,7 @@ msgstr "自定义"
 msgid "Add Fit to Data"
 msgstr "添加拟合至数据"
 
-#: data/ui/curve-fitting.blp:134 graphs/window.vala:342
+#: data/ui/curve-fitting.blp:134
 msgid "Toggle Sidebar"
 msgstr "切换侧边栏"
 
@@ -341,37 +345,36 @@ msgstr "线条和标记"
 msgid "Linestyle"
 msgstr "线条样式"
 
-#: data/ui/edit-item-data.blp:16 data/ui/edit-item-equation.blp:30
-#: data/ui/style-editor-box.blp:67
+#: data/ui/edit-item-data.blp:16 data/ui/style-editor-box.blp:67
 msgctxt "linestyle"
 msgid "None"
 msgstr "无"
 
-#: data/ui/edit-item-data.blp:17 data/ui/edit-item-equation.blp:31
+#: data/ui/edit-item-data.blp:17 data/ui/edit-item-equation.blp:29
 #: data/ui/style-editor-box.blp:68
 msgctxt "linestyle"
 msgid "Solid"
 msgstr "实线"
 
-#: data/ui/edit-item-data.blp:18 data/ui/edit-item-equation.blp:32
+#: data/ui/edit-item-data.blp:18 data/ui/edit-item-equation.blp:30
 #: data/ui/style-editor-box.blp:69
 msgctxt "linestyle"
 msgid "Dotted"
 msgstr "点线"
 
-#: data/ui/edit-item-data.blp:19 data/ui/edit-item-equation.blp:33
+#: data/ui/edit-item-data.blp:19 data/ui/edit-item-equation.blp:31
 #: data/ui/style-editor-box.blp:70
 msgctxt "linestyle"
 msgid "Dashed"
 msgstr "虚线"
 
-#: data/ui/edit-item-data.blp:20 data/ui/edit-item-equation.blp:34
+#: data/ui/edit-item-data.blp:20 data/ui/edit-item-equation.blp:32
 #: data/ui/style-editor-box.blp:71
 msgctxt "linestyle"
 msgid "Dashdot"
 msgstr "点划线"
 
-#: data/ui/edit-item-data.blp:26 data/ui/edit-item-equation.blp:40
+#: data/ui/edit-item-data.blp:26 data/ui/edit-item-equation.blp:38
 #: data/ui/style-editor-box.blp:77
 msgid "Linewidth"
 msgstr "线宽"
@@ -652,41 +655,41 @@ msgstr "右侧 Y 轴最大值"
 msgid "Scaling"
 msgstr "缩放"
 
-#: data/ui/figure-settings-page.blp:143 graphs/window.vala:382
+#: data/ui/figure-settings-page.blp:143 graphs/window.vala:386
 msgid "Bottom X Axis Scale"
 msgstr "底部 X 轴缩放"
 
 #: data/ui/figure-settings-page.blp:147 data/ui/figure-settings-page.blp:163
 #: data/ui/figure-settings-page.blp:179 data/ui/figure-settings-page.blp:195
-#: graphs/window.vala:352
+#: graphs/window.vala:356
 msgctxt "scale"
 msgid "Linear"
 msgstr "线性"
 
 #: data/ui/figure-settings-page.blp:148 data/ui/figure-settings-page.blp:164
 #: data/ui/figure-settings-page.blp:180 data/ui/figure-settings-page.blp:196
-#: graphs/window.vala:353
+#: graphs/window.vala:357
 msgctxt "scale"
 msgid "Logarithmic (Base 10)"
 msgstr "对数（底数 10）"
 
 #: data/ui/figure-settings-page.blp:149 data/ui/figure-settings-page.blp:165
 #: data/ui/figure-settings-page.blp:181 data/ui/figure-settings-page.blp:197
-#: graphs/window.vala:354
+#: graphs/window.vala:358
 msgctxt "scale"
 msgid "Logarithmic (Base 2)"
 msgstr "对数（底数 2）"
 
 #: data/ui/figure-settings-page.blp:150 data/ui/figure-settings-page.blp:166
 #: data/ui/figure-settings-page.blp:182 data/ui/figure-settings-page.blp:198
-#: graphs/window.vala:355
+#: graphs/window.vala:359
 msgctxt "scale"
 msgid "Radians"
 msgstr "弧度"
 
 #: data/ui/figure-settings-page.blp:151 data/ui/figure-settings-page.blp:167
 #: data/ui/figure-settings-page.blp:183 data/ui/figure-settings-page.blp:199
-#: graphs/window.vala:356
+#: graphs/window.vala:360
 msgctxt "scale"
 msgid "Square Root"
 msgstr "平方根"
@@ -697,15 +700,15 @@ msgctxt "scale"
 msgid "Inverse"
 msgstr "逆缩放"
 
-#: data/ui/figure-settings-page.blp:159 graphs/window.vala:383
+#: data/ui/figure-settings-page.blp:159 graphs/window.vala:387
 msgid "Top X Axis Scale"
 msgstr "顶部 X 轴缩放"
 
-#: data/ui/figure-settings-page.blp:175 graphs/window.vala:388
+#: data/ui/figure-settings-page.blp:175 graphs/window.vala:392
 msgid "Left Y Axis Scale"
 msgstr "左侧 Y 轴缩放"
 
-#: data/ui/figure-settings-page.blp:191 graphs/window.vala:387
+#: data/ui/figure-settings-page.blp:191 graphs/window.vala:391
 msgid "Right Y Axis Scale"
 msgstr "右侧 Y 轴缩放"
 
@@ -1416,7 +1419,7 @@ msgstr "选择模式。点击并拖拽来选择数据"
 msgid "Show Sidebar"
 msgstr "显示侧边栏"
 
-#: data/ui/window.blp:335 data/ui/window.blp:381 graphs/window.vala:330
+#: data/ui/window.blp:335 data/ui/window.blp:381 graphs/window.vala:339
 msgid "Undo"
 msgstr "撤消"
 
@@ -1632,12 +1635,12 @@ msgctxt "file-filter"
 msgid "Leybold xry"
 msgstr "Leybold xry"
 
-#: graphs/application.py:43
+#: graphs/application.py:29
 #, python-brace-format
 msgid "Could not load {font}"
 msgstr "无法加载 {font}"
 
-#: graphs/application.vala:88
+#: graphs/application.vala:96
 msgid "translator-credits"
 msgstr ""
 "lumingzh <lumingzh@qq.com>, 2024-2025\n"
@@ -1729,7 +1732,7 @@ msgstr "X 轴最大值"
 msgid "Y Axis Maximum"
 msgstr "Y 轴最大值"
 
-#: graphs/figure_settings.vala:176 graphs/window.vala:384
+#: graphs/figure_settings.vala:176 graphs/window.vala:388
 msgid "X Axis Scale"
 msgstr "X 轴缩放"
 
@@ -1737,7 +1740,7 @@ msgstr "X 轴缩放"
 msgid "X Axis Label"
 msgstr "X 轴标签"
 
-#: graphs/figure_settings.vala:180 graphs/window.vala:389
+#: graphs/figure_settings.vala:180 graphs/window.vala:393
 msgid "Y Axis Scale"
 msgstr "Y 轴缩放"
 
@@ -1758,11 +1761,11 @@ msgstr "数据集"
 msgid "Generated Dataset"
 msgstr "生成的数据集"
 
-#: graphs/item.py:217
+#: graphs/item.py:220
 msgid "Label"
 msgstr "标签"
 
-#: graphs/item.py:246
+#: graphs/item.py:249
 msgid "Fill"
 msgstr "填充"
 
@@ -1903,7 +1906,7 @@ msgstr "无法解析 {filename}"
 msgid "File {file}, does not contain name tag"
 msgstr "文件 {file} 不包含名称标签"
 
-#: graphs/styles.vala:61
+#: graphs/styles.vala:62
 msgid "System"
 msgstr "系统"
 
@@ -1927,15 +1930,15 @@ msgstr "文档门户"
 msgid "Graphs (Development)"
 msgstr "Graphs（开发版）"
 
-#: graphs/window.vala:320
+#: graphs/window.vala:329
 msgid "Open Location"
 msgstr "打开位置"
 
-#: graphs/window.vala:347
+#: graphs/window.vala:351
 msgid "Optimize Limits"
 msgstr "优化极限"
 
-#: graphs/window.vala:357
+#: graphs/window.vala:361
 msgctxt "scale"
 msgid "Inverse Root"
 msgstr "逆平方根"
