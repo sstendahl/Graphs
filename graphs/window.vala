@@ -97,6 +97,7 @@ namespace Graphs {
 
         private bool _force_close = false;
         private uint _inhibit_cookie = 0;
+        private Menu _scales_section = new Menu ();
 
         construct {
             this.headerbar_provider = new CssProvider ();
@@ -147,6 +148,9 @@ namespace Graphs {
             string path = "/se/sjoerd/Graphs/ui/window-shortcuts.ui";
             var builder = new Builder.from_resource (path);
             set_help_overlay (builder.get_object ("help_overlay") as ShortcutsWindow);
+
+            var view_menu = view_menu_button.get_menu_model () as Menu;
+            view_menu.append_section (null, _scales_section);
         }
 
         protected void setup () {
@@ -185,7 +189,7 @@ namespace Graphs {
         }
 
         private void on_items_changed () {
-            update_view_menu ();
+            update_scales_section ();
             item_list.remove_all ();
             var export_data_action = lookup_action ("export_data") as SimpleAction;
             var optimize_limits_action = lookup_action ("optimize_limits") as SimpleAction;
@@ -342,16 +346,9 @@ namespace Graphs {
         }
 
         /**
-         * Repopulate the view menu
+         * Repopulate the scales section
          */
-        public void update_view_menu () {
-            var view_menu = new Menu ();
-            Menu optimize_section = new Menu ();
-            optimize_section.append_item (
-                new MenuItem (_("Optimize Limits"), "win.optimize_limits")
-            );
-            view_menu.append_section (null, optimize_section);
-
+        public void update_scales_section () {
             string[] scale_names = {
                 C_("scale", "Linear"),
                 C_("scale", "Logarithmic (Base 10)"),
@@ -361,7 +358,7 @@ namespace Graphs {
                 C_("scale", "Inverse Root")
             };
 
-            Menu scales_section = new Menu ();
+            _scales_section.remove_all ();
             bool[] visible_axes = data.get_used_positions ();
             bool both_x = visible_axes[0] && visible_axes[1];
             bool both_y = visible_axes[2] && visible_axes[3];
@@ -392,10 +389,8 @@ namespace Graphs {
                         else label = _("Left Y Axis Scale");
                     } else label = _("Y Axis Scale");
                 }
-                scales_section.append_submenu (label, scale_section);
+                _scales_section.append_submenu (label, scale_section);
             }
-            view_menu.append_section (null, scales_section);
-            view_menu_button.set_menu_model (view_menu);
         }
 
         public override bool close_request () {
