@@ -285,8 +285,11 @@ def prettify_equation(equation: str) -> str:
     return equation.replace(")*(", ")(")
 
 
-def create_equidistant_xdata(limits: tuple, scale: int = 1,
-                             steps: int = 5000) -> numpy.ndarray:
+def create_equidistant_xdata(
+    limits: tuple,
+    scale: int = 1,
+    steps: int = 5000,
+) -> list:
     """Generate evenly-spaced x-values on the given scale."""
     x_start, x_stop = limits
     scale = scales.Scale(scale)
@@ -296,17 +299,28 @@ def create_equidistant_xdata(limits: tuple, scale: int = 1,
         case scales.Scale.LOG:
             x_start = max(x_start, 1e-300)
             x_stop = x_stop if numpy.isfinite(x_stop) else 1e300
-            xdata = numpy.logspace(numpy.log10(x_start), numpy.log10(x_stop),
-                                   steps).tolist()
+            xdata = numpy.logspace(
+                numpy.log10(x_start),
+                numpy.log10(x_stop),
+                steps,
+            ).tolist()
         case scales.Scale.LOG2:
             x_start = max(x_start, 1e-300)
             x_stop = x_stop if numpy.isfinite(x_stop) else 1e300
-            xdata = numpy.logspace(numpy.log2(x_start), numpy.log2(x_stop),
-                                   steps, base=2).tolist()
+            xdata = numpy.logspace(
+                numpy.log2(x_start),
+                numpy.log2(x_stop),
+                steps,
+                base=2,
+            ).tolist()
         case scales.Scale.SQUAREROOT:
             x_start = max(x_start, 1e-300)
-            xdata = (numpy.linspace(numpy.sqrt(x_start),
-                     numpy.sqrt(x_stop), steps) ** 2).tolist()
+            xdata = numpy.linspace(
+                numpy.sqrt(x_start),
+                numpy.sqrt(x_stop),
+                steps,
+            )
+            xdata = (xdata**2).tolist()
         case scales.Scale.INVERSE:
             xdata = \
                 (1 / numpy.linspace(1 / x_start, 1 / x_stop, steps)).tolist()
