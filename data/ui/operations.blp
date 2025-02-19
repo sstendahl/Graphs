@@ -10,12 +10,13 @@ template $GraphsOperations: Box {
   margin-top: 12;
   margin-bottom: 12;
 
-  Adw.Bin stack_switcher_bin {}
+  Adw.InlineViewSwitcher {
+    stack: stack;
+    homogeneous: true;
+  }
 
-  Stack stack {
-    transition-type: slide_left_right;
-
-    StackPage {
+  Adw.ViewStack stack {
+    Adw.ViewStackPage {
       title: _("Adjust");
 
       child: Adw.PreferencesGroup {
@@ -132,7 +133,7 @@ template $GraphsOperations: Box {
       };
     }
 
-    StackPage {
+    Adw.ViewStackPage {
       title: _("Transform");
 
       child: Adw.PreferencesGroup {
@@ -232,7 +233,7 @@ template $GraphsOperations: Box {
       };
     }
 
-    StackPage {
+    Adw.ViewStackPage {
       title: _("Modify");
 
       child: Adw.PreferencesGroup {
