@@ -125,6 +125,7 @@ class PythonHelper(Graphs.PythonHelper):
             settings.get_string("xstart"),
             settings.get_string("xstop"),
             settings.get_int("steps"),
+            settings.get_int("scale"),
             name=name,
         )
 

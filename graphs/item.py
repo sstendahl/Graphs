@@ -108,6 +108,7 @@ class GeneratedDataItem(DataItem):
     xstart = GObject.Property(type=str, default="0")
     xstop = GObject.Property(type=str, default="10")
     steps = GObject.Property(type=int, default=100)
+    scale = GObject.Property(type=int, default=0)
 
     @classmethod
     def new(
@@ -117,6 +118,7 @@ class GeneratedDataItem(DataItem):
         xstart: str,
         xstop: str,
         steps: int,
+        scale: int,
         **kwargs,
     ):
         """Create new GeneratedDataItem."""
@@ -125,6 +127,7 @@ class GeneratedDataItem(DataItem):
             xstart=xstart,
             xstop=xstop,
             steps=steps,
+            scale=scale,
             **cls._extract_params(cls, style),
             **kwargs,
         )
@@ -133,7 +136,7 @@ class GeneratedDataItem(DataItem):
         self._equation = ""
         super().__init__(**kwargs)
         self._regenerate()
-        for prop in ("equation", "xstart", "xstop", "steps"):
+        for prop in ("equation", "xstart", "xstop", "steps", "scale"):
             self.connect("notify::" + prop, self._regenerate)
 
     @GObject.Property(type=str)
@@ -162,6 +165,7 @@ class GeneratedDataItem(DataItem):
                 utilities.string_to_float(self.props.xstop),
             ],
             self.props.steps,
+            self.props.scale,
         )
 
 
