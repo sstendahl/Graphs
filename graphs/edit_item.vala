@@ -62,5 +62,8 @@ namespace Graphs {
 
         [GtkChild]
         public unowned Adw.SpinRow steps { get; }
+
+        [GtkChild]
+        public unowned Adw.ComboRow scale { get; }
     }
 }

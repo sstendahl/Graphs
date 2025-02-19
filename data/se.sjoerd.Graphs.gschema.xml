@@ -192,6 +192,9 @@
     <key name="steps" type="i">
       <default>100</default>
     </key>
+    <key name="scale" type="i">
+      <default>0</default>
+    </key>
   </schema>
 
   <schema id="se.sjoerd.Graphs.export-figure">

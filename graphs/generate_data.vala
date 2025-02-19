@@ -22,6 +22,9 @@ namespace Graphs {
         private unowned Adw.SpinRow steps { get; }
 
         [GtkChild]
+        private unowned Adw.ComboRow scale { get; }
+
+        [GtkChild]
         private unowned Button confirm_button { get; }
 
         [GtkChild]
@@ -40,6 +43,7 @@ namespace Graphs {
             this.xstart.set_text (settings.get_string ("xstart"));
             this.xstop.set_text (settings.get_string ("xstop"));
             this.steps.set_value (settings.get_int ("steps"));
+            this.scale.set_selected (settings.get_int ("scale"));
             present (window);
         }
 
@@ -58,6 +62,7 @@ namespace Graphs {
             this.settings.set_string ("xstart", xstart.get_text ());
             this.settings.set_string ("xstop", xstop.get_text ());
             this.settings.set_int ("steps", (int) this.steps.get_value ());
+            this.settings.set_int ("scale", (int) this.scale.get_selected ());
             Item item = application.python_helper.generate_data (window, item_name.get_text ());
             Item[] items = {item};
             window.data.add_items (items);

@@ -45,6 +45,12 @@ class EditItemDialog(Adw.Dialog):
                 "value",
                 1 | 2,
             )
+            item.bind_property(
+                "scale",
+                box.get_scale(),
+                "selected",
+                1 | 2,
+            )
             self.item_box.append(box)
         if isinstance(item, DataItem):
             box = Graphs.EditItemDataItemBox.new()
