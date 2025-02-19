@@ -64,6 +64,7 @@ namespace Graphs {
             }
             Application application = window.application as Application;
             var new_window = application.create_main_window ();
+            new_window.present ();
             _pick_and_load (new_window);
         }
     }

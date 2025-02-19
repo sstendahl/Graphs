@@ -297,7 +297,9 @@ namespace Graphs {
                 var action_group = new SimpleActionGroup ();
                 var open_action = new SimpleAction ("open", null);
                 open_action.activate.connect (() => {
-                    application.create_style_editor (style.file);
+                    var style_editor = application.create_style_editor ();
+                    style_editor.load (style.file);
+                    style_editor.present ();
                 });
                 action_group.add_action (open_action);
                 var open_with_action = new SimpleAction ("open_with", null);

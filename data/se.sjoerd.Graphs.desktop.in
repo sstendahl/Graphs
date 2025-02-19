@@ -9,8 +9,12 @@ StartupNotify=true
 MimeType=application/graphs;text/mplstyle;text/plain;text/xy;text/dat;text/csv;text/xrdml;text/xry;text/txt
 Keywords=Plotting;Graph;Graphing;Science;Mathematics;Math;Equations;Data;Plot;Visualisation;Visualization;Fitting;xrdml;
 X-Purism-FormFactor=Workstation;Mobile;
-Actions=new-window;
+Actions=new-window;style-editor;
 
 [Desktop Action new-window]
 Name=New Window
 Exec=@PROJECT_NAME@ --new-window %U
+
+[Desktop Action style-editor]
+Name=Style Editor
+Exec=@PROJECT_NAME@ --style-editor %U
