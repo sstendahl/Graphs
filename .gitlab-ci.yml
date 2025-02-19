@@ -3,7 +3,7 @@ include:
     file: "flatpak/flatpak_ci_initiative.yml"
 
 .vars:
-  image: quay.io/gnome_infrastructure/gnome-runtime-images:gnome-47
+  image: quay.io/gnome_infrastructure/gnome-runtime-images:gnome-48
   variables:
     MANIFEST_PATH: se.sjoerd.Graphs.json
     FLATPAK_MODULE: graphs
