@@ -8,12 +8,6 @@ namespace Graphs {
     public class Operations : Box {
 
         [GtkChild]
-        private unowned Adw.Bin stack_switcher_bin { get; }
-
-        [GtkChild]
-        private unowned Stack stack { get; }
-
-        [GtkChild]
         public unowned Button shift_button { get; }
 
         [GtkChild]
@@ -49,14 +43,6 @@ namespace Graphs {
         private Window _window;
         private bool entries_sensitive = false;
         private bool cut_sensitive = false;
-
-        construct {
-            InlineStackSwitcher stack_switcher = new InlineStackSwitcher ();
-            stack_switcher.stack = stack;
-            stack_switcher.add_css_class ("compact");
-            stack_switcher.set_hexpand (true);
-            stack_switcher_bin.set_child (stack_switcher);
-        }
 
         public Operations (Window window) {
             this._window = window;
