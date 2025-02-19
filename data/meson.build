@@ -155,7 +155,6 @@ icons = files (
 
 other = files(
   'style.css',
-  'style-hc.css',
   'whats_new',
 )
 
