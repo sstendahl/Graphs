@@ -33,10 +33,6 @@ template $GraphsTransformDialog: Adw.Dialog {
         halign: end;
         tooltip-text: _("More info");
 
-        styles [
-          "flat",
-        ]
-
         Adw.ButtonContent {
           halign: center;
           icon-name: "info-symbolic";
@@ -52,27 +48,33 @@ template $GraphsTransformDialog: Adw.Dialog {
       }
     }
 
-    content: Adw.Clamp {
-      margin-start: 12;
-      margin-end: 12;
-      margin-top: 12;
-      margin-bottom: 12;
+    content: ScrolledWindow {
+      propagate-natural-height: true;
 
-      Adw.PreferencesGroup {
-        Adw.EntryRow transform_x {
-          title: _("X =");
-          activates-default: true;
-        }
+      child: Viewport {
+        child: Adw.Clamp {
+          margin-start: 12;
+          margin-end: 12;
+          margin-top: 12;
+          margin-bottom: 12;
 
-        Adw.EntryRow transform_y {
-          title: _("Y =");
-          activates-default: true;
-        }
+          Adw.PreferencesGroup {
+            Adw.EntryRow transform_x {
+              title: _("X =");
+              activates-default: true;
+            }
 
-        Adw.SwitchRow discard {
-          title: _("Discard Unselected Data");
-        }
-      }
+            Adw.EntryRow transform_y {
+              title: _("Y =");
+              activates-default: true;
+            }
+
+            Adw.SwitchRow discard {
+              title: _("Discard Unselected Data");
+            }
+          }
+        };
+      };
     };
   };
 }
