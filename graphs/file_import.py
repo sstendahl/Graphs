@@ -4,6 +4,7 @@ Module for importing data from files.
 
     Functions:
         import_from_files
+        import_from_sql
 """
 from pathlib import Path
 
@@ -15,9 +16,11 @@ from graphs.misc import ParseError
 _IMPORT_MODES = {
     # name: suffix
     "project": ".graphs",
+    "sql": ".db",
     "xrdml": ".xrdml",
     "xry": ".xry",
     "columns": None,
+    "sql": ".db",
 }
 
 
@@ -48,6 +51,7 @@ def import_from_files(
             params = settings.get_child(mode) if mode in modes else None
             for file in files:
                 try:
+                    return
                     items.extend(callback(params, style, file))
                 except ParseError as error:
                     application.get_active_window().add_toast_string(
@@ -55,7 +59,6 @@ def import_from_files(
                     )
                     continue
         data.add_items(items)
-
     if modes:
         dialog = Graphs.ImportDialog.new(window, modes)
         dialog.connect("accept", do_import)

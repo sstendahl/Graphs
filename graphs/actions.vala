@@ -168,7 +168,11 @@ namespace Graphs {
                 true,
                 Tools.create_file_filter (
                     C_("file-filter", "Supported files"),
-                    "xy", "dat", "txt", "csv", "xrdml", "xry", "graphs"
+                    "xy", "db", "dat", "txt", "csv", "xrdml", "xry", "graphs"
+                ),
+                Tools.create_file_filter (
+                    C_("file-filter", "SQL Database"),
+                    "db"
                 ),
                 Tools.create_file_filter (
                     C_("file-filter", "ASCII files"),

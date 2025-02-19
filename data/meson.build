@@ -79,6 +79,7 @@ blueprint_files = [
   'ui/generate-data.blp',
   'ui/import.blp',
   'ui/import-columns.blp',
+  'ui/import-sql.blp',
   'ui/item-box.blp',
   'ui/operations.blp',
   'ui/smoothen-settings.blp',

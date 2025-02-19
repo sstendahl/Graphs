@@ -36,12 +36,8 @@
                 }
             ],
             "config-opts" : [
-                "--buildtype=debug",
-                "--libdir=lib"
+                "--buildtype=debug"
             ]
         }
-    ],
-    "build-options" : {
-        "env" : {        }
-    }
+    ]
 }

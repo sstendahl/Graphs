@@ -1,0 +1,64 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $GraphsSqlGroup: Adw.PreferencesGroup {
+  Adw.ComboRow delimiter {
+    title: _("Table");
+    subtitle: _("Choose which table to import from the database");
+
+    model: StringList {
+      strings [
+        C_("delimiter", "Whitespace"),
+        C_("delimiter", "Tab"),
+        C_("delimiter", "Colon (:)"),
+        C_("delimiter", "Semicolon (;)"),
+        C_("delimiter", "Decimal comma (,)"),
+        C_("delimiter", "Decimal point (.)"),
+        C_("delimiter", "Custom"),
+      ]
+    };
+  }
+
+  Adw.ComboRow column_x {
+    title: _("Column X");
+
+    model: StringList {
+      strings [
+        C_("delimiter", "Whitespace"),
+        C_("delimiter", "Tab"),
+        C_("delimiter", "Colon (:)"),
+        C_("delimiter", "Semicolon (;)"),
+        C_("delimiter", "Decimal comma (,)"),
+        C_("delimiter", "Decimal point (.)"),
+        C_("delimiter", "Custom"),
+      ]
+    };
+  }
+
+  Adw.ComboRow column_y {
+    title: _("Column Y");
+    selectable: false;
+
+    model: StringList {
+      strings [
+        C_("delimiter", "Whitespace"),
+        C_("delimiter", "Tab"),
+        C_("delimiter", "Colon (:)"),
+        C_("delimiter", "Semicolon (;)"),
+        C_("delimiter", "Decimal comma (,)"),
+        C_("delimiter", "Decimal point (.)"),
+        C_("delimiter", "Custom"),
+      ]
+    };
+  }
+
+  Adw.SpinRow skip_rows {
+    title: _("Skip Rows");
+    subtitle: _("Ignored row indices");
+
+    adjustment: Adjustment {
+      step-increment: 1;
+      upper: 9999;
+    };
+  }
+}

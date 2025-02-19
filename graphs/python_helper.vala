@@ -41,6 +41,11 @@ namespace Graphs {
             import_from_files_request.emit (window, files);
         }
 
+        protected signal void import_from_sql_request (Window window, File[] files);
+        public void import_from_sql (Window window, File[] files) {
+            import_from_sql_request.emit (window, files);
+        }
+
         protected signal void export_items_request (Window window, string mode, File file, Item[] items);
         public void export_items (Window window, string mode, File file, Item[] items) {
             export_items_request.emit (window, mode, file, items);
