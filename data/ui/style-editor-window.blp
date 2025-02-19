@@ -2,7 +2,7 @@ using Gtk 4.0;
 using Adw 1;
 
 template $GraphsStyleEditor: Adw.ApplicationWindow {
-  title: _("Error - No Style selected");
+  title: _("Graphs Style Editor");
   default-width: 1200;
   default-height: 700;
   width-request: 360;
@@ -28,6 +28,11 @@ template $GraphsStyleEditor: Adw.ApplicationWindow {
       trigger: "<control><shift>S";
       action: "action(win.save_style_as)";
     }
+
+    Shortcut {
+      trigger: "<control>O";
+      action: "action(win.open_style)";
+    }
   }
 
   Adw.Breakpoint {
@@ -49,110 +54,141 @@ template $GraphsStyleEditor: Adw.ApplicationWindow {
     }
   }
 
-  content: Adw.MultiLayoutView multi_layout_view {
-    Adw.Layout side_by_side_layout {
-      name: "side-by-side";
-
-      content: Box {
-        orientation: horizontal;
-        homogeneous: true;
-
-        Box {
-          orientation: horizontal;
-
-          Adw.LayoutSlot {
-            id: "editor";
+  content: Stack stack {
+    StackPage {
+      child: Adw.ToolbarView {
+        [top]
+        Adw.HeaderBar {
+          MenuButton {
+            icon-name: "open-menu-symbolic";
+            menu-model: empty_menu;
+            tooltip-text: _("Open Application Menu");
+            primary: true;
           }
-
-          Separator {}
         }
 
+        content: Adw.StatusPage {
+          title: _("Open a Style");
+          Button {
+            label: _("Open…");
+            halign: center;
+            action-name: "win.open_style";
+
+            styles [
+              "pill",
+              "suggested-action",
+            ]
+          }
+        };
+      };
+    }
+    StackPage {
+      child: Adw.MultiLayoutView multi_layout_view {
+        Adw.Layout side_by_side_layout {
+          name: "side-by-side";
+
+          content: Box {
+            orientation: horizontal;
+            homogeneous: true;
+
+            Box {
+              orientation: horizontal;
+
+              Adw.LayoutSlot {
+                id: "editor";
+              }
+
+              Separator {}
+            }
+
+            Adw.ToolbarView {
+              [top]
+              Adw.HeaderBar content_headerbar {
+                name: "preview-headerbar";
+                show-title: false;
+              }
+
+              content: Adw.LayoutSlot {
+                id: "canvas";
+              };
+            }
+          };
+        }
+
+        Adw.Layout bottom_sheet_layout {
+          name: "bottom-sheet";
+
+          content: Adw.BottomSheet bottom_sheet {
+            content: Adw.Bin {
+              margin-bottom: bind bottom_sheet.bottom-bar-height;
+
+              child: Adw.LayoutSlot {
+                id: "editor";
+              };
+            };
+
+            bottom-bar: CenterBox {
+              height-request: 46;
+
+              center-widget: Label {
+                label: _("Open Preview");
+              };
+            };
+
+            sheet: Box sheet_box {
+              orientation: vertical;
+              height-request: 500;
+
+              Separator {
+                margin-top: 36;
+                orientation: horizontal;
+              }
+
+              Adw.LayoutSlot {
+                id: "canvas";
+              }
+            };
+          };
+        }
+
+        [editor]
         Adw.ToolbarView {
           [top]
-          Adw.HeaderBar content_headerbar {
-            name: "preview-headerbar";
-            show-title: false;
+          Adw.HeaderBar editor_headerbar {
+            show-end-title-buttons: false;
+
+            [end]
+            MenuButton {
+              icon-name: "open-menu-symbolic";
+              menu-model: primary_menu;
+              tooltip-text: _("Open Application Menu");
+              primary: true;
+            }
           }
 
-          content: Adw.LayoutSlot {
-            id: "canvas";
+          content: ScrolledWindow {
+            hscrollbar-policy: never;
+
+            child: Viewport {
+              child: Adw.Clamp {
+                margin-bottom: 12;
+                margin-top: 12;
+                margin-start: 12;
+                margin-end: 12;
+
+                child: Adw.Bin editor_bin {};
+              };
+            };
           };
         }
-      };
-    }
 
-    Adw.Layout bottom_sheet_layout {
-      name: "bottom-sheet";
-
-      content: Adw.BottomSheet bottom_sheet {
-        content: Adw.Bin {
-          margin-bottom: bind bottom_sheet.bottom-bar-height;
-
-          child: Adw.LayoutSlot {
-            id: "editor";
+        [canvas]
+        Adw.Bin canvas_bin {
+          child: Adw.StatusPage {
+            icon-name: "dialog-error-symbolic";
+            title: _("Canvas Failed to Load");
           };
-        };
-
-        bottom-bar: CenterBox {
-          height-request: 46;
-
-          center-widget: Label {
-            label: _("Open Preview");
-          };
-        };
-
-        sheet: Box sheet_box {
-          orientation: vertical;
-          height-request: 500;
-
-          Separator {
-            margin-top: 36;
-            orientation: horizontal;
-          }
-
-          Adw.LayoutSlot {
-            id: "canvas";
-          }
-        };
-      };
-    }
-
-    [editor]
-    Adw.ToolbarView {
-      [top]
-      Adw.HeaderBar editor_headerbar {
-        show-end-title-buttons: false;
-
-        [end]
-        MenuButton {
-          icon-name: "open-menu-symbolic";
-          menu-model: primary_menu;
-          tooltip-text: _("Open Application Menu");
-          primary: true;
         }
-      }
-
-      content: ScrolledWindow {
-        hscrollbar-policy: never;
-
-        child: Viewport {
-          child: Adw.Clamp {
-            margin-bottom: 12;
-            margin-top: 12;
-            margin-start: 12;
-            margin-end: 12;
-
-            child: Adw.Bin editor_bin {};
-          };
-        };
-      };
-    }
-
-    [canvas]
-    Adw.Bin canvas_bin {
-      child: Adw.StatusPage {
-        icon-name: "dialog-error-symbolic";
-        title: _("Canvas Failed to Load");
       };
     }
   };
@@ -162,6 +198,18 @@ menu primary_menu {
   section {
     item (_("Save Style…"), "win.save_style")
     item (_("Save Style as…"), "win.save_style_as")
+  }
+
+  section {
+    item (_("Keyboard Shortcuts"), "win.show-help-overlay")
+    item (_("Help"), "app.help")
+    item (_("About Graphs"), "app.about")
+  }
+}
+
+menu empty_menu {
+  section {
+    item (_("Open Style…"), "win.open_style")
   }
 
   section {

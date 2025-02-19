@@ -16,6 +16,9 @@ namespace Graphs {
         private unowned Adw.Bin canvas_bin { get; }
 
         [GtkChild]
+        private unowned Stack stack { get; }
+
+        [GtkChild]
         protected unowned Adw.HeaderBar content_headerbar { get; }
 
         protected Gtk.Box editor_box {
@@ -44,12 +47,14 @@ namespace Graphs {
 
             var save_action = new SimpleAction ("save_style", null);
             save_action.activate.connect (() => {
+                if (_file == null) return;
                 save ();
             });
             add_action (save_action);
 
             var save_as_action = new SimpleAction ("save_style_as", null);
             save_as_action.activate.connect (() => {
+                if (_file == null) return;
                 var dialog = new FileDialog ();
                 dialog.set_filters (get_mplstyle_file_filters ());
                 dialog.set_initial_name (_("Style") + ".mplstyle");
@@ -61,6 +66,19 @@ namespace Graphs {
                 });
             });
             add_action (save_as_action);
+
+            var open_action = new SimpleAction ("open_style", null);
+            open_action.activate.connect (() => {
+                if (_file != null) return;
+                var dialog = new FileDialog ();
+                dialog.set_filters (get_mplstyle_file_filters ());
+                dialog.open.begin (this, null, (d, response) => {
+                    try {
+                        load (dialog.open.end (response));
+                    } catch {}
+                });
+            });
+            add_action (open_action);
 
             // Inhibit session end when there is unsaved data present
             notify["unsaved"].connect (() => {
@@ -83,6 +101,7 @@ namespace Graphs {
         public void load (File file) {
             this._file = file;
             load_request.emit (file);
+            stack.get_pages ().select_item (1, true);
         }
 
         public void save () {

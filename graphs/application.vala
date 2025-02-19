@@ -26,6 +26,7 @@ namespace Graphs {
         private const OptionEntry[] OPTION_ENTRIES = {
             { "version", 0, 0, OptionArg.NONE, null, "Display version number", null },
             { "new-window", 'n', 0, OptionArg.NONE, null, "New window", null },
+            { "style-editor", 's', 0, OptionArg.NONE, null, "Style Editor", null },
             { null },
         };
 
@@ -114,9 +115,17 @@ namespace Graphs {
 
             var new_project_action = new SimpleAction ("new_project", null);
             new_project_action.activate.connect (() => {
-                create_main_window ();
+                var window = create_main_window ();
+                window.present ();
             });
             add_action (new_project_action);
+
+            var style_editor_action = new SimpleAction ("style_editor", null);
+            style_editor_action.activate.connect (() => {
+                var style_editor = create_style_editor ();
+                style_editor.present ();
+            });
+            add_action (style_editor_action);
         }
 
         /**
@@ -124,11 +133,8 @@ namespace Graphs {
          */
         public override void activate () {
             base.activate ();
-            if (main_windows.is_empty) {
-                create_main_window ();
-            } else {
-                main_windows[0].present ();
-            }
+            var window = main_windows.is_empty ? create_main_window () : main_windows[0];
+            window.present ();
         }
 
         /**
@@ -144,12 +150,16 @@ namespace Graphs {
                     var window = create_main_window ();
                     try {
                         window.data.load (file);
+                        window.present ();
                     } catch (ProjectParseError e) {
+                        window.present ();
                         window.add_toast_string (e.message);
                     }
                     return;
                 } else if (uri.has_suffix (".mplstyle")) {
-                    create_style_editor (file);
+                    var style_editor = create_style_editor ();
+                    style_editor.load (file);
+                    style_editor.present ();
                     return;
                 }
             }
@@ -164,11 +174,10 @@ namespace Graphs {
                 }
             }
             if (window == null) {
-                python_helper.import_from_files (create_main_window (), files);
-            } else {
-                python_helper.import_from_files (window, files);
-                window.present ();
+                window = create_main_window ();
             }
+            python_helper.import_from_files (window, files);
+            window.present ();
         }
 
         /*
@@ -193,11 +202,17 @@ namespace Graphs {
 
             bool new_window;
             options.lookup ("new-window", "b", out new_window);
+            bool new_style_editor;
+            options.lookup ("style-editor", "b", out new_style_editor);
 
             if (files.length > 0) {
                 open (files, "");
             } else if (new_window) {
-                create_main_window ();
+                var window = create_main_window ();
+                window.present ();
+            } else if (new_style_editor) {
+                var style_editor = create_style_editor ();
+                style_editor.present ();
             } else {
                 activate ();
             }
@@ -207,15 +222,12 @@ namespace Graphs {
         public Window create_main_window () {
             Window window = python_helper.create_window ();
             main_windows.add (window);
-            window.present ();
             return window;
         }
 
-        public StyleEditor create_style_editor (File file) {
+        public StyleEditor create_style_editor () {
             var style_editor = python_helper.create_style_editor ();
-            style_editor.load (file);
             style_editors.add (style_editor);
-            style_editor.present ();
             return style_editor;
         }
 
