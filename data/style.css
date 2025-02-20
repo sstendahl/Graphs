@@ -1,33 +1,33 @@
-gridview#style-grid {
+.style-grid {
   background: @window_bg_color;
 }
 
-gridview#style-grid child {
+.style-grid child {
   margin: 6px 6px 6px 6px;
 }
 
-gridview#style-grid child:selected {
+.style-grid child:selected {
   background: @window_bg_color;
 }
 
-gridview#style-grid child:hover {
+.style-grid child:hover {
   background: @window_bg_color;
 }
 
-gridview#style-grid child picture {
+.style-grid child picture {
   border-radius: 12px;
   box-shadow: 0 0 0 1px @borders;
 }
 
-gridview#style-grid child:selected picture {
+.style-grid child:selected picture {
   box-shadow: 0 0 0 3px @theme_selected_bg_color;
 }
 
-gridview#style-grid child:focus {
+.style-grid child:focus {
   outline-style: none;
 }
 
-gridview#style-grid child:focus picture {
+.style-grid child:focus picture {
   outline: 0 solid transparent;
   outline-color: alpha(@theme_selected_bg_color, .5);
   outline-width: 2px;
@@ -37,11 +37,11 @@ gridview#style-grid child:focus picture {
               outline-offset 200ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-gridview#style-grid child image#indicator {
+.style-grid child image#indicator {
   opacity: 0;
 }
 
-gridview#style-grid child:selected image#indicator {
+.style-grid child:selected image#indicator {
   color: @theme_selected_bg_color;
   opacity: 1;
 }
