@@ -21,32 +21,32 @@ template $GraphsWindow: Adw.ApplicationWindow {
 
     Shortcut {
       trigger: "<control>comma";
-      action: "action(win.figure_settings)";
+      action: "action(win.figure-settings)";
     }
 
     Shortcut {
       trigger: "<control>N";
-      action: "action(win.add_data)";
+      action: "action(win.add-data)";
     }
 
     Shortcut {
       trigger: "<control><alt>N";
-      action: "action(win.add_equation)";
+      action: "action(win.add-equation)";
     }
 
     Shortcut {
       trigger: "<control><shift>N";
-      action: "action(win.generate_data)";
+      action: "action(win.generate-data)";
     }
 
     Shortcut {
       trigger: "<control>A";
-      action: "action(win.select_all)";
+      action: "action(win.select-all)";
     }
 
     Shortcut {
       trigger: "<control><shift>A";
-      action: "action(win.select_none)";
+      action: "action(win.select-none)";
     }
 
     Shortcut {
@@ -61,32 +61,32 @@ template $GraphsWindow: Adw.ApplicationWindow {
 
     Shortcut {
       trigger: "<control>KP_0";
-      action: "action(win.optimize_limits)";
+      action: "action(win.optimize-limits)";
     }
 
     Shortcut {
       trigger: "<control>0";
-      action: "action(win.optimize_limits)";
+      action: "action(win.optimize-limits)";
     }
 
     Shortcut {
       trigger: "<alt>Z";
-      action: "action(win.view_back)";
+      action: "action(win.view-back)";
     }
 
     Shortcut {
       trigger: "<alt><shift>Z";
-      action: "action(win.view_forward)";
+      action: "action(win.view-forward)";
     }
 
     Shortcut {
       trigger: "<control><shift>E";
-      action: "action(win.export_data)";
+      action: "action(win.export-data)";
     }
 
     Shortcut {
       trigger: "<control>E";
-      action: "action(win.export_figure)";
+      action: "action(win.export-figure)";
     }
 
     Shortcut {
@@ -96,57 +96,57 @@ template $GraphsWindow: Adw.ApplicationWindow {
 
     Shortcut {
       trigger: "<control>S";
-      action: "action(win.save_project)";
+      action: "action(win.save-project)";
     }
 
     Shortcut {
       trigger: "<control>O";
-      action: "action(win.open_project)";
+      action: "action(win.open-project)";
     }
 
     Shortcut {
       trigger: "Delete";
-      action: "action(win.delete_selected)";
+      action: "action(win.delete-selected)";
     }
 
     Shortcut {
       trigger: "<control>plus|<control>KP_Add|<control>equal|<control>ZoomIn";
-      action: "action(win.zoom_in)";
+      action: "action(win.zoom-in)";
     }
 
     Shortcut {
       trigger: "<control>minus|<control>KP_Subtract|<control>ZoomOut";
-      action: "action(win.zoom_out)";
+      action: "action(win.zoom-out)";
     }
 
     Shortcut {
       trigger: "<control><shift>S";
-      action: "action(win.save_project_as)";
+      action: "action(win.save-project-as)";
     }
 
     Shortcut {
       trigger: "<control><shift>N";
-      action: "action(app.new_project)";
+      action: "action(app.new-project)";
     }
 
     Shortcut {
       trigger: "F9";
-      action: "action(win.toggle_sidebar)";
+      action: "action(win.toggle-sidebar)";
     }
 
     Shortcut {
       trigger: "<control>1";
-      action: "action(win.mode_pan)";
+      action: "action(win.mode-pan)";
     }
 
     Shortcut {
       trigger: "<control>2";
-      action: "action(win.mode_zoom)";
+      action: "action(win.mode-zoom)";
     }
 
     Shortcut {
       trigger: "<control>3";
-      action: "action(win.mode_select)";
+      action: "action(win.mode-select)";
     }
   }
 
@@ -285,21 +285,21 @@ template $GraphsWindow: Adw.ApplicationWindow {
 
                 ToggleButton pan_button {
                   icon-name: "move-tool-symbolic";
-                  action-name: "win.mode_pan";
+                  action-name: "win.mode-pan";
                   hexpand: true;
                   tooltip-text: _("Pan Mode. Click and drag to pan");
                 }
 
                 ToggleButton zoom_button {
                   icon-name: "loupe-symbolic";
-                  action-name: "win.mode_zoom";
+                  action-name: "win.mode-zoom";
                   hexpand: true;
                   tooltip-text: _("Zoom Mode. Select an area on the figure to zoom in");
                 }
 
                 ToggleButton select_button {
                   icon-name: "edit-select-all-symbolic";
-                  action-name: "win.mode_select";
+                  action-name: "win.mode-select";
                   hexpand: true;
                   tooltip-text: _("Select Mode. Click and drag to make a selection of data");
                 }
@@ -399,7 +399,7 @@ template $GraphsWindow: Adw.ApplicationWindow {
 
           [end]
           Button sidebar_view_forward_button {
-            action-name: "win.view_forward";
+            action-name: "win.view-forward";
             icon-name: "go-next-symbolic";
             tooltip-text: _("Next View");
             sensitive: bind view_forward_button.sensitive;
@@ -407,7 +407,7 @@ template $GraphsWindow: Adw.ApplicationWindow {
 
           [end]
           Button sidebar_view_back_button {
-            action-name: "win.view_back";
+            action-name: "win.view-back";
             icon-name: "go-previous-symbolic";
             tooltip-text: _("Previous View");
             sensitive: bind view_back_button.sensitive;
@@ -429,26 +429,26 @@ template $GraphsWindow: Adw.ApplicationWindow {
 
 menu primary_menu {
   section {
-    item (_("New Project"), "app.new_project")
+    item (_("New Project"), "app.new-project")
   }
 
   section {
-    item (_("Save Project…"), "win.save_project")
-    item (_("Save Project as…"), "win.save_project_as")
-    item (_("Open Project…"), "win.open_project")
+    item (_("Save Project…"), "win.save-project")
+    item (_("Save Project as…"), "win.save-project-as")
+    item (_("Open Project…"), "win.open-project")
   }
 
   section {
-    item (_("Export Data…"), "win.export_data")
-    item (_("Export Figure…"), "win.export_figure")
+    item (_("Export Data…"), "win.export-data")
+    item (_("Export Figure…"), "win.export-figure")
   }
 
   section {
-    item (_("Figure Settings"), "win.figure_settings")
+    item (_("Figure Settings"), "win.figure-settings")
   }
 
   section {
-    item (_("Style Editor"), "app.style_editor")
+    item (_("Style Editor"), "app.style-editor")
   }
 
   section {
@@ -460,14 +460,14 @@ menu primary_menu {
 
 menu add_data_menu {
   section {
-    item (_("Add Data from File…"), "win.add_data")
-    item (_("Add Equation…"), "win.add_equation")
-    item (_("Generate Data…"), "win.generate_data")
+    item (_("Add Data from File…"), "win.add-data")
+    item (_("Add Equation…"), "win.add-equation")
+    item (_("Generate Data…"), "win.generate-data")
   }
 }
 
 menu view_menu {
   section {
-    item (_("Optimize Limits"), "win.optimize_limits")
+    item (_("Optimize Limits"), "win.optimize-limits")
   }
 }

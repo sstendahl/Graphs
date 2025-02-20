@@ -21,17 +21,17 @@ template $GraphsStyleEditor: Adw.ApplicationWindow {
 
     Shortcut {
       trigger: "<control>S";
-      action: "action(win.save_style)";
+      action: "action(win.save-style)";
     }
 
     Shortcut {
       trigger: "<control><shift>S";
-      action: "action(win.save_style_as)";
+      action: "action(win.save-style-as)";
     }
 
     Shortcut {
       trigger: "<control>O";
-      action: "action(win.open_style)";
+      action: "action(win.open-style)";
     }
   }
 
@@ -72,7 +72,7 @@ template $GraphsStyleEditor: Adw.ApplicationWindow {
           Button {
             label: _("Open…");
             halign: center;
-            action-name: "win.open_style";
+            action-name: "win.open-style";
 
             styles [
               "pill",
@@ -196,8 +196,8 @@ template $GraphsStyleEditor: Adw.ApplicationWindow {
 
 menu primary_menu {
   section {
-    item (_("Save Style…"), "win.save_style")
-    item (_("Save Style as…"), "win.save_style_as")
+    item (_("Save Style…"), "win.save-style")
+    item (_("Save Style as…"), "win.save-style-as")
   }
 
   section {
@@ -209,7 +209,7 @@ menu primary_menu {
 
 menu empty_menu {
   section {
-    item (_("Open Style…"), "win.open_style")
+    item (_("Open Style…"), "win.open-style")
   }
 
   section {
