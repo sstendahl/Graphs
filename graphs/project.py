@@ -71,7 +71,41 @@ class ProjectMigrator:
         # Migrate v1 to v2
         self._migrate_inserted_scale(2)  # log2 scale added
 
-    def _migrate_inserted_scale(self, scale_index):
+        # Handle items no longer making use of uuid
+        def _item_dict_without_uuid(item):
+            return {key: value for key, value in item.items() if key != "uuid"}
+
+        item_positions = []
+        data = []
+        for item in self._project_dict["data"]:
+            item_positions.append(item["uuid"])
+            data.append(_item_dict_without_uuid(item))
+        self._project_dict["data"] = data
+        history_states = self._project_dict["history-states"]
+        n_states = len(history_states)
+        for state_index, state in enumerate(reversed(history_states)):
+            state_index = n_states - state_index - 1
+            n_changes = len(state[0])
+            for change_index, changeset in enumerate(reversed(state[0])):
+                change_index = n_changes - change_index - 1
+                change_type, change = changeset
+                if change_type == 1:
+                    item_positions.remove(change["uuid"])
+                    history_states[state_index][0][change_index][1] = \
+                        _item_dict_without_uuid(change)
+                elif change_type == 2:
+                    r_index = change[0]
+                    item_positions = item_positions[:r_index] \
+                        + [change[1]["uuid"]] \
+                        + item_positions[r_index:]
+                    history_states[state_index][0][change_index][1] = \
+                        (change[0], _item_dict_without_uuid(change[1]))
+                elif change_type == 0:
+                    change[0] = item_positions.index(change[0])
+                    history_states[state_index][0][change_index][1] = change
+        self._project_dict["history-states"] = history_states
+
+    def _migrate_inserted_scale(self, scale_index: int) -> None:
         """Handle a new scale being inserted at scale_index."""
         figure_settings = self._project_dict["figure-settings"]
         for prefix in ("left", "right", "top", "bottom"):
