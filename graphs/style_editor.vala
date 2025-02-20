@@ -45,14 +45,14 @@ namespace Graphs {
                 headerbar_provider, STYLE_PROVIDER_PRIORITY_APPLICATION
             );
 
-            var save_action = new SimpleAction ("save_style", null);
+            var save_action = new SimpleAction ("save-style", null);
             save_action.activate.connect (() => {
                 if (_file == null) return;
                 save ();
             });
             add_action (save_action);
 
-            var save_as_action = new SimpleAction ("save_style_as", null);
+            var save_as_action = new SimpleAction ("save-style-as", null);
             save_as_action.activate.connect (() => {
                 if (_file == null) return;
                 var dialog = new FileDialog ();
@@ -67,7 +67,7 @@ namespace Graphs {
             });
             add_action (save_as_action);
 
-            var open_action = new SimpleAction ("open_style", null);
+            var open_action = new SimpleAction ("open-style", null);
             open_action.activate.connect (() => {
                 if (_file != null) return;
                 var dialog = new FileDialog ();

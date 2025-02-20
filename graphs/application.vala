@@ -113,14 +113,14 @@ namespace Graphs {
             add_action (help_action);
             set_accels_for_action ("app.help", {"F1"});
 
-            var new_project_action = new SimpleAction ("new_project", null);
+            var new_project_action = new SimpleAction ("new-project", null);
             new_project_action.activate.connect (() => {
                 var window = create_main_window ();
                 window.present ();
             });
             add_action (new_project_action);
 
-            var style_editor_action = new SimpleAction ("style_editor", null);
+            var style_editor_action = new SimpleAction ("style-editor", null);
             style_editor_action.activate.connect (() => {
                 var style_editor = create_style_editor ();
                 style_editor.present ();

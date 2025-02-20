@@ -191,8 +191,8 @@ namespace Graphs {
         private void on_items_changed () {
             update_scales_section ();
             item_list.remove_all ();
-            var export_data_action = lookup_action ("export_data") as SimpleAction;
-            var optimize_limits_action = lookup_action ("optimize_limits") as SimpleAction;
+            var export_data_action = lookup_action ("export-data") as SimpleAction;
+            var optimize_limits_action = lookup_action ("optimize-limits") as SimpleAction;
             if (data.is_empty ()) {
                 itemlist_stack.get_pages ().select_item (0, true);
                 operations.shift_button.set_sensitive (false);
@@ -225,7 +225,7 @@ namespace Graphs {
         }
 
         private void on_selection_changed () {
-            var export_data_action = lookup_action ("export_data") as SimpleAction;
+            var export_data_action = lookup_action ("export-data") as SimpleAction;
             if (data.is_empty ()) {
                 operations.shift_button.set_sensitive (false);
                 operations.smoothen_button.set_sensitive (false);
