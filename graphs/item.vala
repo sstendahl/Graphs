@@ -16,8 +16,6 @@ namespace Graphs {
         public int xposition { get; set; default = 0; }
         public int yposition { get; set; default = 0; }
 
-        public string uuid { get; set; default = Uuid.string_random (); }
-
         public Gdk.RGBA get_rgba () {
             Gdk.RGBA rgba = Tools.hex_to_rgba (color);
             rgba.alpha = alpha;

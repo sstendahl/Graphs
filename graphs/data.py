@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Data management module."""
 import copy
+import enum
 import logging
 import math
 from collections.abc import Iterator
@@ -18,6 +19,16 @@ _FIGURE_SETTINGS_HISTORY_IGNORELIST = misc.LIMITS + [
     "min_selected",
     "max_selected",
 ]
+
+
+class ChangeType(enum.Enum):
+    """Enum for handling changetypes."""
+
+    ITEM_PROPERTY_CHANGED = 0
+    ITEM_ADDED = 1
+    ITEM_REMOVED = 2
+    ITEMS_SWAPPED = 3
+    FIGURE_SETTINGS_CHANGED = 4
 
 
 class Data(Graphs.Data):
@@ -63,11 +74,9 @@ class Data(Graphs.Data):
                 return
             yield item_
 
-    def __getitem__(self, getter: str | int):
+    def __getitem__(self, pos: int):
         """Magic alias for retrieving items."""
-        if isinstance(getter, str):
-            return self.get_for_uuid(getter)
-        return self.get_item(getter)
+        return self.get_item(pos)
 
     def get_old_selected_style_params(self) -> RcParams:
         """Get the old selected style properties."""
@@ -121,24 +130,34 @@ class Data(Graphs.Data):
     @staticmethod
     def _on_position_changed(self, index1: int, index2: int) -> None:
         """Change item position of index2 to that of index1."""
-        self._current_batch.append((3, (index2, index1)))
+        self._current_batch.append((
+            ChangeType.ITEMS_SWAPPED.value,
+            (index2, index1),
+        ))
 
     @staticmethod
     def _on_item_added(self, item_: Graphs.Item) -> None:
-        self._current_batch.append((1, copy.deepcopy(item_.to_dict())))
+        self._current_batch.append((
+            ChangeType.ITEM_ADDED.value,
+            copy.deepcopy(item_.to_dict()),
+        ))
 
     @staticmethod
     def _on_item_deleted(self, item_: Graphs.Item) -> None:
-        self._current_batch.append((2, (self.index(item_), item_.to_dict())))
+        self._current_batch.append((
+            ChangeType.ITEM_REMOVED.value,
+            (self.index(item_), item_.to_dict()),
+        ))
 
     @staticmethod
     def _on_item_changed(self, item_: Graphs.Item, prop: str) -> None:
+        index = self.index(item_)
         self._current_batch.append((
-            0,
+            ChangeType.ITEM_PROPERTY_CHANGED.value,
             (
-                item_.get_uuid(),
+                index,
                 prop,
-                copy.deepcopy(self._data_copy[item_.get_uuid()][prop]),
+                copy.deepcopy(self._data_copy[index][prop]),
                 copy.deepcopy(item_.get_property(prop)),
             ),
         ))
@@ -151,7 +170,7 @@ class Data(Graphs.Data):
         if param.name in _FIGURE_SETTINGS_HISTORY_IGNORELIST:
             return
         self._current_batch.append((
-            4,
+            ChangeType.FIGURE_SETTINGS_CHANGED.value,
             (
                 param.name,
                 copy.deepcopy(self._figure_settings_copy[param.name]),
@@ -162,10 +181,7 @@ class Data(Graphs.Data):
     def _set_data_copy(self) -> None:
         """Set a deep copy for the data."""
         self._current_batch: list = []
-        self._data_copy = copy.deepcopy({
-            item_.get_uuid(): item_.to_dict()
-            for item_ in self
-        })
+        self._data_copy = copy.deepcopy([item_.to_dict() for item_ in self])
         self._figure_settings_copy = copy.deepcopy({
             prop.replace("_", "-"):
             self.props.figure_settings.get_property(prop)
@@ -205,23 +221,24 @@ class Data(Graphs.Data):
         batch = self._history_states[self._history_pos][0]
         self._history_pos -= 1
         for change_type, change in reversed(batch):
-            if change_type == 0:
-                self[change[0]].set_property(change[1], change[2])
-            elif change_type == 1:
-                self._remove_item(self.get_for_uuid(change["uuid"]))
-            elif change_type == 2:
-                self._add_item(
-                    item.new_from_dict(copy.deepcopy(change[1])),
-                    change[0],
-                    True,
-                )
-            elif change_type == 3:
-                self.change_position(change[0], change[1])
-            elif change_type == 4:
-                self.props.figure_settings.set_property(
-                    change[0],
-                    change[1],
-                )
+            match ChangeType(change_type):
+                case ChangeType.ITEM_PROPERTY_CHANGED:
+                    self[change[0]].set_property(change[1], change[2])
+                case ChangeType.ITEM_ADDED:
+                    self._remove_item(self.last())
+                case ChangeType.ITEM_REMOVED:
+                    self._add_item(
+                        item.new_from_dict(copy.deepcopy(change[1])),
+                        change[0],
+                        True,
+                    )
+                case ChangeType.ITEMS_SWAPPED:
+                    self.change_position(change[0], change[1])
+                case ChangeType.FIGURE_SETTINGS_CHANGED:
+                    self.props.figure_settings.set_property(
+                        change[0],
+                        change[1],
+                    )
         self.get_figure_settings().set_limits(
             self._history_states[self._history_pos][1],
         )
@@ -238,23 +255,24 @@ class Data(Graphs.Data):
         self._history_pos += 1
         state = self._history_states[self._history_pos]
         for change_type, change in state[0]:
-            if change_type == 0:
-                self[change[0]].set_property(change[1], change[3])
-            elif change_type == 1:
-                self._add_item(
-                    item.new_from_dict(copy.deepcopy(change)),
-                    -1,
-                    True,
-                )
-            elif change_type == 2:
-                self._remove_item(self.get_for_uuid(change[1]["uuid"]))
-            elif change_type == 3:
-                self.change_position(change[1], change[0])
-            elif change_type == 4:
-                self.props.figure_settings.set_property(
-                    change[0],
-                    change[2],
-                )
+            match ChangeType(change_type):
+                case ChangeType.ITEM_PROPERTY_CHANGED:
+                    self[change[0]].set_property(change[1], change[3])
+                case ChangeType.ITEM_ADDED:
+                    self._add_item(
+                        item.new_from_dict(copy.deepcopy(change)),
+                        -1,
+                        True,
+                    )
+                case ChangeType.ITEM_REMOVED:
+                    self._remove_item(self.get_item(change[0]))
+                case ChangeType.ITEMS_SWAPPED:
+                    self.change_position(change[1], change[0])
+                case ChangeType.FIGURE_SETTINGS_CHANGED:
+                    self.props.figure_settings.set_property(
+                        change[0],
+                        change[2],
+                    )
         self.get_figure_settings().set_limits(state[1])
         self.props.can_redo = self._history_pos < -1
         self.props.can_undo = True
@@ -462,11 +480,15 @@ class Data(Graphs.Data):
         except project.ProjectParseError as error:
             return error.message
         except Exception:
-            return _("Failed to parse project file")
+            msg = _("Failed to parse project file")
+            logging.exception(msg)
+            return msg
         current_data = self.get_project_dict()
         try:
             self.load_from_project_dict(project_dict)
         except Exception:
             self.load_from_project_dict(current_data)
-            return _("Failed to load project")
+            msg = _("Failed to load project")
+            logging.exception(msg)
+            return msg
         return ""

@@ -112,6 +112,10 @@ namespace Graphs {
             return _items.size;
         }
 
+        public Item last () {
+            return _items.last ();
+        }
+
         // End section ListModel
 
         // Section SelectionModel
@@ -443,13 +447,6 @@ namespace Graphs {
 
         public uint index (Item item) {
             return _items.index_of (item);
-        }
-
-        public Item? get_for_uuid (string uuid) {
-            foreach (Item item in _items) {
-                if (item.uuid == uuid) return item;
-            }
-            return null;
         }
 
         public bool[] get_used_positions () {
