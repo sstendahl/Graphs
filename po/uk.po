@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2025-02-14 15:20+0000\n"
-"PO-Revision-Date: 2025-02-16 18:19+0200\n"
+"POT-Creation-Date: 2025-02-19 15:57+0000\n"
+"PO-Revision-Date: 2025-02-21 20:51+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -20,7 +20,7 @@ msgstr ""
 "X-Generator: Lokalize 23.04.3\n"
 
 #: data/se.sjoerd.Graphs.metainfo.xml.in:6 data/se.sjoerd.Graphs.desktop.in:3
-#: data/ui/window.blp:9 graphs/application.vala:79
+#: data/ui/window.blp:9 graphs/application.vala:80
 msgid "Graphs"
 msgstr "Графіки"
 
@@ -115,6 +115,10 @@ msgstr ""
 #: data/se.sjoerd.Graphs.desktop.in:16
 msgid "New Window"
 msgstr "Нове вікно"
+
+#: data/se.sjoerd.Graphs.desktop.in:20 data/ui/window.blp:451
+msgid "Style Editor"
+msgstr "Редактор стилю"
 
 #: data/ui/dialogs/delete-style.blp:5
 msgid "Delete Style?"
@@ -219,7 +223,7 @@ msgid "Open Curve Fitting Menu"
 msgstr "Відкрити меню апроксимації кривих"
 
 #: data/ui/curve-fitting.blp:65 data/ui/edit-item-equation.blp:9
-#: data/ui/edit-item-generated-data.blp:9 graphs/item.py:172
+#: data/ui/edit-item-generated-data.blp:9 graphs/item.py:176
 msgid "Equation"
 msgstr "Рівняння"
 
@@ -271,7 +275,7 @@ msgstr "Додати апроксимацію даних"
 msgid "Toggle Sidebar"
 msgstr "Увімкнути або вимкнути бічну панель"
 
-#: data/ui/curve-fitting.blp:146 data/ui/style-editor-window.blp:155
+#: data/ui/curve-fitting.blp:146 data/ui/style-editor-window.blp:189
 #: data/ui/window.blp:422
 msgid "Canvas Failed to Load"
 msgstr "Не вдалося завантажити полотно"
@@ -536,6 +540,62 @@ msgstr "Кінець за x"
 msgid "Steps"
 msgstr "Кроки"
 
+#: data/ui/edit-item-generated-data.blp:53 data/ui/generate-data.blp:98
+#| msgid "Scaling"
+msgid "Scale"
+msgstr "Масштаб"
+
+#: data/ui/edit-item-generated-data.blp:54 data/ui/generate-data.blp:99
+msgid "Determines the spacing between data points"
+msgstr "Визначає інтервали між точками даних"
+
+#: data/ui/edit-item-generated-data.blp:58 data/ui/figure-settings-page.blp:147
+#: data/ui/figure-settings-page.blp:163 data/ui/figure-settings-page.blp:179
+#: data/ui/figure-settings-page.blp:195 data/ui/generate-data.blp:103
+#: graphs/window.vala:353
+msgctxt "scale"
+msgid "Linear"
+msgstr "Лінійна"
+
+#: data/ui/edit-item-generated-data.blp:59 data/ui/figure-settings-page.blp:148
+#: data/ui/figure-settings-page.blp:164 data/ui/figure-settings-page.blp:180
+#: data/ui/figure-settings-page.blp:196 data/ui/generate-data.blp:104
+#: graphs/window.vala:354
+msgctxt "scale"
+msgid "Logarithmic (Base 10)"
+msgstr "Логарифмічна (з основою 10)"
+
+#: data/ui/edit-item-generated-data.blp:60 data/ui/figure-settings-page.blp:149
+#: data/ui/figure-settings-page.blp:165 data/ui/figure-settings-page.blp:181
+#: data/ui/figure-settings-page.blp:197 data/ui/generate-data.blp:105
+#: graphs/window.vala:355
+msgctxt "scale"
+msgid "Logarithmic (Base 2)"
+msgstr "Логарифмічна (з основою 2)"
+
+#: data/ui/edit-item-generated-data.blp:61 data/ui/figure-settings-page.blp:150
+#: data/ui/figure-settings-page.blp:166 data/ui/figure-settings-page.blp:182
+#: data/ui/figure-settings-page.blp:198 data/ui/generate-data.blp:106
+#: graphs/window.vala:356
+msgctxt "scale"
+msgid "Radians"
+msgstr "Радіани"
+
+#: data/ui/edit-item-generated-data.blp:62 data/ui/figure-settings-page.blp:151
+#: data/ui/figure-settings-page.blp:167 data/ui/figure-settings-page.blp:183
+#: data/ui/figure-settings-page.blp:199 data/ui/generate-data.blp:107
+#: graphs/window.vala:357
+msgctxt "scale"
+msgid "Square Root"
+msgstr "Квадратний корінь"
+
+#: data/ui/edit-item-generated-data.blp:63 data/ui/figure-settings-page.blp:152
+#: data/ui/figure-settings-page.blp:168 data/ui/figure-settings-page.blp:184
+#: data/ui/figure-settings-page.blp:200 data/ui/generate-data.blp:108
+msgctxt "scale"
+msgid "Inverse"
+msgstr "Обернена"
+
 #: data/ui/export-figure.blp:6
 msgid "Export Figure"
 msgstr "Експортувати рисунок"
@@ -592,7 +652,7 @@ msgid "Transparent Background"
 msgstr "Прозоре тло"
 
 #: data/ui/figure-settings-dialog.blp:30 data/ui/figure-settings-page.blp:238
-#: graphs/style_editor.vala:55
+#: graphs/style_editor.vala:60
 msgid "Style"
 msgstr "Стиль"
 
@@ -672,60 +732,19 @@ msgstr "Максимум на правій вісі y"
 msgid "Scaling"
 msgstr "Масштабування"
 
-#: data/ui/figure-settings-page.blp:143 graphs/window.vala:386
+#: data/ui/figure-settings-page.blp:143 graphs/window.vala:383
 msgid "Bottom X Axis Scale"
 msgstr "Шкала нижньої вісі X"
 
-#: data/ui/figure-settings-page.blp:147 data/ui/figure-settings-page.blp:163
-#: data/ui/figure-settings-page.blp:179 data/ui/figure-settings-page.blp:195
-#: graphs/window.vala:356
-msgctxt "scale"
-msgid "Linear"
-msgstr "Лінійна"
-
-#: data/ui/figure-settings-page.blp:148 data/ui/figure-settings-page.blp:164
-#: data/ui/figure-settings-page.blp:180 data/ui/figure-settings-page.blp:196
-#: graphs/window.vala:357
-msgctxt "scale"
-msgid "Logarithmic (Base 10)"
-msgstr "Логарифмічна (з основою 10)"
-
-#: data/ui/figure-settings-page.blp:149 data/ui/figure-settings-page.blp:165
-#: data/ui/figure-settings-page.blp:181 data/ui/figure-settings-page.blp:197
-#: graphs/window.vala:358
-msgctxt "scale"
-msgid "Logarithmic (Base 2)"
-msgstr "Логарифмічна (з основою 2)"
-
-#: data/ui/figure-settings-page.blp:150 data/ui/figure-settings-page.blp:166
-#: data/ui/figure-settings-page.blp:182 data/ui/figure-settings-page.blp:198
-#: graphs/window.vala:359
-msgctxt "scale"
-msgid "Radians"
-msgstr "Радіани"
-
-#: data/ui/figure-settings-page.blp:151 data/ui/figure-settings-page.blp:167
-#: data/ui/figure-settings-page.blp:183 data/ui/figure-settings-page.blp:199
-#: graphs/window.vala:360
-msgctxt "scale"
-msgid "Square Root"
-msgstr "Квадратний корінь"
-
-#: data/ui/figure-settings-page.blp:152 data/ui/figure-settings-page.blp:168
-#: data/ui/figure-settings-page.blp:184 data/ui/figure-settings-page.blp:200
-msgctxt "scale"
-msgid "Inverse"
-msgstr "Обернена"
-
-#: data/ui/figure-settings-page.blp:159 graphs/window.vala:387
+#: data/ui/figure-settings-page.blp:159 graphs/window.vala:384
 msgid "Top X Axis Scale"
 msgstr "Шкала верхньої вісі x"
 
-#: data/ui/figure-settings-page.blp:175 graphs/window.vala:392
+#: data/ui/figure-settings-page.blp:175 graphs/window.vala:389
 msgid "Left Y Axis Scale"
 msgstr "Шкала лівої вісі y"
 
-#: data/ui/figure-settings-page.blp:191 graphs/window.vala:391
+#: data/ui/figure-settings-page.blp:191 graphs/window.vala:388
 msgid "Right Y Axis Scale"
 msgstr "Шкала правої вісі y"
 
@@ -1317,47 +1336,73 @@ msgctxt "shortcut window"
 msgid "Save"
 msgstr "Зберегти"
 
-#: data/ui/style-editor-shortcuts.blp:38 data/ui/window-shortcuts.blp:106
+#: data/ui/style-editor-shortcuts.blp:38
+#| msgid "Save Style…"
 msgctxt "shortcut window"
-msgid "Save Project"
-msgstr "Зберегти проєкт"
+msgid "Save Style"
+msgstr "Зберегти стиль"
 
-#: data/ui/style-editor-shortcuts.blp:43 data/ui/window-shortcuts.blp:111
+#: data/ui/style-editor-shortcuts.blp:43
+#| msgid "Save Style as…"
 msgctxt "shortcut window"
-msgid "Save Project As"
-msgstr "Збереження проєкту із новою назвою"
+msgid "Save Style As"
+msgstr "Зберегти стиль як"
+
+#: data/ui/style-editor-shortcuts.blp:48
+#| msgid "Style"
+msgctxt "shortcut window"
+msgid "Open Style"
+msgstr "Відкрити стиль"
 
 #: data/ui/style-editor-window.blp:5
-msgid "Error - No Style selected"
-msgstr "Помилка — не вибрано стилю"
+msgid "Graphs Style Editor"
+msgstr "Редактор стилю графіка"
 
-#: data/ui/style-editor-window.blp:100
-msgid "Open Preview"
-msgstr "Попередньо переглянути"
-
-#: data/ui/style-editor-window.blp:130 data/ui/window.blp:226
+#: data/ui/style-editor-window.blp:65 data/ui/style-editor-window.blp:164
+#: data/ui/window.blp:226
 msgid "Open Application Menu"
 msgstr "Відкрити меню програми"
 
-#: data/ui/style-editor-window.blp:163
+#: data/ui/style-editor-window.blp:71
+msgid "Open a Style"
+msgstr "Відкрити стиль"
+
+#: data/ui/style-editor-window.blp:73
+#| msgid "Open With…"
+msgid "Open…"
+msgstr "Відкрити…"
+
+#: data/ui/style-editor-window.blp:134
+msgid "Open Preview"
+msgstr "Попередньо переглянути"
+
+#: data/ui/style-editor-window.blp:199
 msgid "Save Style…"
 msgstr "Зберегти стиль…"
 
-#: data/ui/style-editor-window.blp:164
+#: data/ui/style-editor-window.blp:200
 msgid "Save Style as…"
 msgstr "Зберегти стиль як…"
 
-#: data/ui/style-editor-window.blp:168 data/ui/window.blp:451
+#: data/ui/style-editor-window.blp:204 data/ui/style-editor-window.blp:216
+#: data/ui/window.blp:455
 msgid "Keyboard Shortcuts"
 msgstr "Клавіатурні скорочення"
 
-#: data/ui/style-editor-window.blp:169 data/ui/window.blp:452
+#: data/ui/style-editor-window.blp:205 data/ui/style-editor-window.blp:217
+#: data/ui/window.blp:456
 msgid "Help"
 msgstr "Довідка"
 
-#: data/ui/style-editor-window.blp:170 data/ui/window.blp:453
+#: data/ui/style-editor-window.blp:206 data/ui/style-editor-window.blp:218
+#: data/ui/window.blp:457
 msgid "About Graphs"
 msgstr "Про «Графіки»"
+
+#: data/ui/style-editor-window.blp:212
+#| msgid "Save Style…"
+msgid "Open Style…"
+msgstr "Відкрити стиль…"
 
 #: data/ui/style-preview.blp:55
 msgid "Open"
@@ -1379,7 +1424,7 @@ msgstr "Перетворити дані"
 msgid "More info"
 msgstr "Докладніше"
 
-#: data/ui/transform.blp:48
+#: data/ui/transform.blp:44
 msgid ""
 "Additional variables:\n"
 "x_min, y_min\n"
@@ -1441,7 +1486,7 @@ msgstr ""
 msgid "Show Sidebar"
 msgstr "Показати бічну панель"
 
-#: data/ui/window.blp:335 data/ui/window.blp:381 graphs/window.vala:339
+#: data/ui/window.blp:335 data/ui/window.blp:381 graphs/window.vala:343
 msgid "Undo"
 msgstr "Скасувати"
 
@@ -1485,17 +1530,21 @@ msgstr "Експортувати дані…"
 msgid "Export Figure…"
 msgstr "Експортувати рисунок…"
 
-#: data/ui/window.blp:459
+#: data/ui/window.blp:463
 msgid "Add Data from File…"
 msgstr "Додати дані з файла…"
 
-#: data/ui/window.blp:460
+#: data/ui/window.blp:464
 msgid "Add Equation…"
 msgstr "Додати рівняння…"
 
-#: data/ui/window.blp:461
+#: data/ui/window.blp:465
 msgid "Generate Data…"
 msgstr "Створення даних…"
+
+#: data/ui/window.blp:471
+msgid "Optimize Limits"
+msgstr "Оптимізувати межі"
 
 #: data/ui/window-shortcuts.blp:24
 msgctxt "shortcut window"
@@ -1571,6 +1620,16 @@ msgstr "Експортувати дані"
 msgctxt "shortcut window"
 msgid "Export Figure"
 msgstr "Експортувати рисунок"
+
+#: data/ui/window-shortcuts.blp:106
+msgctxt "shortcut window"
+msgid "Save Project"
+msgstr "Зберегти проєкт"
+
+#: data/ui/window-shortcuts.blp:111
+msgctxt "shortcut window"
+msgid "Save Project As"
+msgstr "Збереження проєкту із новою назвою"
 
 #: data/ui/window-shortcuts.blp:117
 msgctxt "shortcut window"
@@ -1662,7 +1721,7 @@ msgstr "xry Leybold"
 msgid "Could not load {font}"
 msgstr "Не вдалося завантажити {font}"
 
-#: graphs/application.vala:96
+#: graphs/application.vala:97
 msgid "translator-credits"
 msgstr "Юрій Чорноіван <yurchor@ukr.net>, 2024"
 
@@ -1754,7 +1813,7 @@ msgstr "Максимум на вісі x"
 msgid "Y Axis Maximum"
 msgstr "Максимум на вісі y"
 
-#: graphs/figure_settings.vala:176 graphs/window.vala:388
+#: graphs/figure_settings.vala:176 graphs/window.vala:385
 msgid "X Axis Scale"
 msgstr "Шкала вісі X"
 
@@ -1762,7 +1821,7 @@ msgstr "Шкала вісі X"
 msgid "X Axis Label"
 msgstr "Мітка вісі x"
 
-#: graphs/figure_settings.vala:180 graphs/window.vala:393
+#: graphs/figure_settings.vala:180 graphs/window.vala:390
 msgid "Y Axis Scale"
 msgstr "Шкала вісі y"
 
@@ -1770,7 +1829,7 @@ msgstr "Шкала вісі y"
 msgid "Defaults Updated"
 msgstr "Оновлено типові значення"
 
-#: graphs/figure_settings.vala:313
+#: graphs/figure_settings.vala:315
 #, c-format
 msgid "Are you sure you want to delete %s?"
 msgstr "Ви справді хочете вилучити %s?"
@@ -1783,11 +1842,11 @@ msgstr "Набір даних"
 msgid "Generated Dataset"
 msgstr "Створений набір даних"
 
-#: graphs/item.py:220
+#: graphs/item.py:224
 msgid "Label"
 msgstr "Мітка"
 
-#: graphs/item.py:249
+#: graphs/item.py:253
 msgid "Fill"
 msgstr "Заповнення"
 
@@ -1952,22 +2011,21 @@ msgstr "Чернетка"
 msgid "Document Portal"
 msgstr "Портал документів"
 
-#: graphs/window.vala:183
+#: graphs/window.vala:187
 msgid "Graphs (Development)"
 msgstr "Графіки (Розробка)"
 
-#: graphs/window.vala:329
+#: graphs/window.vala:333
 msgid "Open Location"
 msgstr "Відкрити адресу"
 
-#: graphs/window.vala:351
-msgid "Optimize Limits"
-msgstr "Оптимізувати межі"
-
-#: graphs/window.vala:361
+#: graphs/window.vala:358
 msgctxt "scale"
 msgid "Inverse Root"
 msgstr "Обернена коренева"
+
+#~ msgid "Error - No Style selected"
+#~ msgstr "Помилка — не вибрано стилю"
 
 #~| msgid "Equation"
 #~ msgid "Equation: Y ="
