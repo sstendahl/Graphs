@@ -57,9 +57,12 @@ Adw.NavigationPage style_overview {
           hexpand: true;
 
           GridView style_grid {
-            name: "style-grid";
             max-columns: 3;
             min-columns: 3;
+
+            styles [
+              "style-grid",
+            ]
           }
         };
       };
