@@ -21,7 +21,7 @@ def _is_style_bright(params: RcParams):
 
 def _generate_preview(style: RcParams) -> Gdk.Texture:
     buffer = io.BytesIO()
-    style_io.create_preview(buffer, style)
+    style_io.create_preview(buffer, style, "png", 31)
     return Gdk.Texture.new_from_bytes(GLib.Bytes.new(buffer.getvalue()))
 
 
