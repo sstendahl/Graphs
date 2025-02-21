@@ -129,7 +129,7 @@ for style_path in args.styles:
     out_path = Path(current_dir, style_file.name.replace(".mplstyle", ".png"))
     style_paths[stylename] = out_path
     with open(out_path, "wb") as out_file:
-        style_io.create_preview(out_file, params, "png")
+        style_io.create_preview(out_file, params, "png", 31)
     preview_element = ElementTree.SubElement(
         main_gresource,
         "file",
