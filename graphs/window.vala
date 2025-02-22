@@ -194,7 +194,7 @@ namespace Graphs {
                 title = _("Untitled Project");
                 path = _("Draft");
             } else {
-                title = Tools.get_filename(data.file);
+                title = Tools.get_filename (data.file);
                 path = application.python_helper.get_friendly_path (data.file);
             }
             // Translators: Window title that will be formatted with the project name.
