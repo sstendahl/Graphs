@@ -34,7 +34,6 @@ We provide official support for the following Flatpak and Snap packages:
 </p> 
 
 ### Beta
-> [!WARNING]  
 > The beta branch is used for testing purposes and projects may not be compatible with the stable branch.
 > Here be bugs, there be dragons.
 
@@ -58,8 +57,8 @@ Note that the `sudo` is neccesary here, as it sets the current branch on the sys
 To switch back to the stable version simply run the above command replacing `beta` with `stable`. A beta version is also available in the beta channel of the Snap Store.
 We are always looking for feedback, so feel free to report any issues or suggestions on the GitLab [issue tracker](https://gitlab.gnome.org/World/Graphs/-/issues).
 
-## How to contribute
-Checkout [the contributor help](https://welcome.gnome.org/app/Graphs/) to start contributing translations, code or ideas.
+## Contributing
+Checkout [the contributing guide](https://welcome.gnome.org/app/Graphs/) to start contributing translations, code or ideas.
 
 ## Code of Conduct
 This project follows the [GNOME Code of Conduct](https://conduct.gnome.org/committee/).
