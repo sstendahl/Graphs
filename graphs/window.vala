@@ -170,14 +170,20 @@ namespace Graphs {
 
             // Inhibit session end when there is unsaved data present
             data.notify["unsaved"].connect (() => {
+                var save_action = lookup_action ("save-project") as SimpleAction;
+                var save_as_action = lookup_action ("save-project-as") as SimpleAction;
                 if (data.unsaved) {
-                    application.inhibit (
+                    this._inhibit_cookie = application.inhibit (
                         this,
                         ApplicationInhibitFlags.LOGOUT,
                         content_title.get_title ()
                     );
-                } else if (_inhibit_cookie > 0) {
-                    application.uninhibit (_inhibit_cookie);
+                    save_action.set_enabled (true);
+                    save_as_action.set_enabled (true);
+                } else {
+                    if (_inhibit_cookie > 0) application.uninhibit (_inhibit_cookie);
+                    save_action.set_enabled (false);
+                    save_as_action.set_enabled (false);
                 }
             });
 
