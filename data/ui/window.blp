@@ -6,7 +6,6 @@ template $GraphsWindow: Adw.ApplicationWindow {
   default-height: 700;
   width-request: 360;
   height-request: 200;
-  title: _("Graphs");
 
   ShortcutController {
     Shortcut {
@@ -211,6 +210,10 @@ template $GraphsWindow: Adw.ApplicationWindow {
 
         [top]
         Adw.HeaderBar sidebar_headerbar {
+          title-widget: Adw.WindowTitle sidebar_title {
+            title: _("Graphs");
+          };
+
           [start]
           MenuButton add_button {
             icon-name: "list-add-symbolic";

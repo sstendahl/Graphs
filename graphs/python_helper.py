@@ -25,6 +25,7 @@ _REQUEST_NAMES = (
     "validate_equation_request",
     "create_style_editor_request",
     "create_window_request",
+    "get_friendly_path_request",
 )
 
 
@@ -136,3 +137,7 @@ class PythonHelper(Graphs.PythonHelper):
     @staticmethod
     def _on_create_window_request(self) -> Graphs.Window:
         return PythonWindow(self.props.application)
+
+    @staticmethod
+    def _on_get_friendly_path_request(self, file: Gio.File) -> str:
+        return utilities.get_friendly_path(file)
