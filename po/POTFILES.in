@@ -52,7 +52,6 @@ graphs/file_import.py
 graphs/file_import.vala
 graphs/file_io.py
 graphs/generate_data.vala
-graphs/inline-stack-switcher.vala
 graphs/item.py
 graphs/item.vala
 graphs/item_box.vala
