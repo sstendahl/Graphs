@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2025-02-16 18:29+0000\n"
-"PO-Revision-Date: 2025-02-17 19:00+0800\n"
+"POT-Creation-Date: 2025-02-19 15:57+0000\n"
+"PO-Revision-Date: 2025-02-22 08:01+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -19,7 +19,7 @@ msgstr ""
 "X-Generator: Gtranslator 47.1\n"
 
 #: data/se.sjoerd.Graphs.metainfo.xml.in:6 data/se.sjoerd.Graphs.desktop.in:3
-#: data/ui/window.blp:9 graphs/application.vala:79
+#: data/ui/window.blp:9 graphs/application.vala:80
 msgid "Graphs"
 msgstr "Graphs"
 
@@ -102,6 +102,10 @@ msgstr ""
 #: data/se.sjoerd.Graphs.desktop.in:16
 msgid "New Window"
 msgstr "新建窗口"
+
+#: data/se.sjoerd.Graphs.desktop.in:20 data/ui/window.blp:451
+msgid "Style Editor"
+msgstr "样式编辑器"
 
 #: data/ui/dialogs/delete-style.blp:5
 msgid "Delete Style?"
@@ -202,7 +206,7 @@ msgid "Open Curve Fitting Menu"
 msgstr "打开曲线拟合菜单"
 
 #: data/ui/curve-fitting.blp:65 data/ui/edit-item-equation.blp:9
-#: data/ui/edit-item-generated-data.blp:9 graphs/item.py:172
+#: data/ui/edit-item-generated-data.blp:9 graphs/item.py:176
 msgid "Equation"
 msgstr "方程式"
 
@@ -254,7 +258,7 @@ msgstr "添加拟合至数据"
 msgid "Toggle Sidebar"
 msgstr "切换侧边栏"
 
-#: data/ui/curve-fitting.blp:146 data/ui/style-editor-window.blp:155
+#: data/ui/curve-fitting.blp:146 data/ui/style-editor-window.blp:189
 #: data/ui/window.blp:422
 msgid "Canvas Failed to Load"
 msgstr "画布加载失败"
@@ -519,6 +523,61 @@ msgstr "X 终止"
 msgid "Steps"
 msgstr "步数"
 
+#: data/ui/edit-item-generated-data.blp:53 data/ui/generate-data.blp:98
+msgid "Scale"
+msgstr "缩放"
+
+#: data/ui/edit-item-generated-data.blp:54 data/ui/generate-data.blp:99
+msgid "Determines the spacing between data points"
+msgstr "决定数据点之间的距离"
+
+#: data/ui/edit-item-generated-data.blp:58 data/ui/figure-settings-page.blp:147
+#: data/ui/figure-settings-page.blp:163 data/ui/figure-settings-page.blp:179
+#: data/ui/figure-settings-page.blp:195 data/ui/generate-data.blp:103
+#: graphs/window.vala:353
+msgctxt "scale"
+msgid "Linear"
+msgstr "线性"
+
+#: data/ui/edit-item-generated-data.blp:59 data/ui/figure-settings-page.blp:148
+#: data/ui/figure-settings-page.blp:164 data/ui/figure-settings-page.blp:180
+#: data/ui/figure-settings-page.blp:196 data/ui/generate-data.blp:104
+#: graphs/window.vala:354
+msgctxt "scale"
+msgid "Logarithmic (Base 10)"
+msgstr "对数（底数 10）"
+
+#: data/ui/edit-item-generated-data.blp:60 data/ui/figure-settings-page.blp:149
+#: data/ui/figure-settings-page.blp:165 data/ui/figure-settings-page.blp:181
+#: data/ui/figure-settings-page.blp:197 data/ui/generate-data.blp:105
+#: graphs/window.vala:355
+msgctxt "scale"
+msgid "Logarithmic (Base 2)"
+msgstr "对数（底数 2）"
+
+#: data/ui/edit-item-generated-data.blp:61 data/ui/figure-settings-page.blp:150
+#: data/ui/figure-settings-page.blp:166 data/ui/figure-settings-page.blp:182
+#: data/ui/figure-settings-page.blp:198 data/ui/generate-data.blp:106
+#: graphs/window.vala:356
+msgctxt "scale"
+msgid "Radians"
+msgstr "弧度"
+
+#: data/ui/edit-item-generated-data.blp:62 data/ui/figure-settings-page.blp:151
+#: data/ui/figure-settings-page.blp:167 data/ui/figure-settings-page.blp:183
+#: data/ui/figure-settings-page.blp:199 data/ui/generate-data.blp:107
+#: graphs/window.vala:357
+msgctxt "scale"
+msgid "Square Root"
+msgstr "平方根"
+
+#: data/ui/edit-item-generated-data.blp:63 data/ui/figure-settings-page.blp:152
+#: data/ui/figure-settings-page.blp:168 data/ui/figure-settings-page.blp:184
+#: data/ui/figure-settings-page.blp:200 data/ui/generate-data.blp:108
+msgctxt "scale"
+msgid "Inverse"
+msgstr "逆缩放"
+
 #: data/ui/export-figure.blp:6
 msgid "Export Figure"
 msgstr "导出图表"
@@ -575,7 +634,7 @@ msgid "Transparent Background"
 msgstr "透明背景"
 
 #: data/ui/figure-settings-dialog.blp:30 data/ui/figure-settings-page.blp:238
-#: graphs/style_editor.vala:55
+#: graphs/style_editor.vala:60
 msgid "Style"
 msgstr "样式"
 
@@ -655,60 +714,19 @@ msgstr "右侧 Y 轴最大值"
 msgid "Scaling"
 msgstr "缩放"
 
-#: data/ui/figure-settings-page.blp:143 graphs/window.vala:386
+#: data/ui/figure-settings-page.blp:143 graphs/window.vala:383
 msgid "Bottom X Axis Scale"
 msgstr "底部 X 轴缩放"
 
-#: data/ui/figure-settings-page.blp:147 data/ui/figure-settings-page.blp:163
-#: data/ui/figure-settings-page.blp:179 data/ui/figure-settings-page.blp:195
-#: graphs/window.vala:356
-msgctxt "scale"
-msgid "Linear"
-msgstr "线性"
-
-#: data/ui/figure-settings-page.blp:148 data/ui/figure-settings-page.blp:164
-#: data/ui/figure-settings-page.blp:180 data/ui/figure-settings-page.blp:196
-#: graphs/window.vala:357
-msgctxt "scale"
-msgid "Logarithmic (Base 10)"
-msgstr "对数（底数 10）"
-
-#: data/ui/figure-settings-page.blp:149 data/ui/figure-settings-page.blp:165
-#: data/ui/figure-settings-page.blp:181 data/ui/figure-settings-page.blp:197
-#: graphs/window.vala:358
-msgctxt "scale"
-msgid "Logarithmic (Base 2)"
-msgstr "对数（底数 2）"
-
-#: data/ui/figure-settings-page.blp:150 data/ui/figure-settings-page.blp:166
-#: data/ui/figure-settings-page.blp:182 data/ui/figure-settings-page.blp:198
-#: graphs/window.vala:359
-msgctxt "scale"
-msgid "Radians"
-msgstr "弧度"
-
-#: data/ui/figure-settings-page.blp:151 data/ui/figure-settings-page.blp:167
-#: data/ui/figure-settings-page.blp:183 data/ui/figure-settings-page.blp:199
-#: graphs/window.vala:360
-msgctxt "scale"
-msgid "Square Root"
-msgstr "平方根"
-
-#: data/ui/figure-settings-page.blp:152 data/ui/figure-settings-page.blp:168
-#: data/ui/figure-settings-page.blp:184 data/ui/figure-settings-page.blp:200
-msgctxt "scale"
-msgid "Inverse"
-msgstr "逆缩放"
-
-#: data/ui/figure-settings-page.blp:159 graphs/window.vala:387
+#: data/ui/figure-settings-page.blp:159 graphs/window.vala:384
 msgid "Top X Axis Scale"
 msgstr "顶部 X 轴缩放"
 
-#: data/ui/figure-settings-page.blp:175 graphs/window.vala:392
+#: data/ui/figure-settings-page.blp:175 graphs/window.vala:389
 msgid "Left Y Axis Scale"
 msgstr "左侧 Y 轴缩放"
 
-#: data/ui/figure-settings-page.blp:191 graphs/window.vala:391
+#: data/ui/figure-settings-page.blp:191 graphs/window.vala:388
 msgid "Right Y Axis Scale"
 msgstr "右侧 Y 轴缩放"
 
@@ -1299,47 +1317,68 @@ msgctxt "shortcut window"
 msgid "Save"
 msgstr "保存"
 
-#: data/ui/style-editor-shortcuts.blp:38 data/ui/window-shortcuts.blp:106
+#: data/ui/style-editor-shortcuts.blp:38
 msgctxt "shortcut window"
-msgid "Save Project"
-msgstr "保存工程"
+msgid "Save Style"
+msgstr "保存样式"
 
-#: data/ui/style-editor-shortcuts.blp:43 data/ui/window-shortcuts.blp:111
+#: data/ui/style-editor-shortcuts.blp:43
 msgctxt "shortcut window"
-msgid "Save Project As"
-msgstr "另存工程为"
+msgid "Save Style As"
+msgstr "另存样式为"
+
+#: data/ui/style-editor-shortcuts.blp:48
+msgctxt "shortcut window"
+msgid "Open Style"
+msgstr "打开样式"
 
 #: data/ui/style-editor-window.blp:5
-msgid "Error - No Style selected"
-msgstr "错误 - 未选择样式"
+msgid "Graphs Style Editor"
+msgstr "Graphs 样式编辑器"
 
-#: data/ui/style-editor-window.blp:100
-msgid "Open Preview"
-msgstr "打开预览"
-
-#: data/ui/style-editor-window.blp:130 data/ui/window.blp:226
+#: data/ui/style-editor-window.blp:65 data/ui/style-editor-window.blp:164
+#: data/ui/window.blp:226
 msgid "Open Application Menu"
 msgstr "打开应用程序菜单"
 
-#: data/ui/style-editor-window.blp:163
+#: data/ui/style-editor-window.blp:71
+msgid "Open a Style"
+msgstr "打开样式"
+
+#: data/ui/style-editor-window.blp:73
+msgid "Open…"
+msgstr "打开…"
+
+#: data/ui/style-editor-window.blp:134
+msgid "Open Preview"
+msgstr "打开预览"
+
+#: data/ui/style-editor-window.blp:199
 msgid "Save Style…"
 msgstr "保存样式…"
 
-#: data/ui/style-editor-window.blp:164
+#: data/ui/style-editor-window.blp:200
 msgid "Save Style as…"
 msgstr "另存样式为…"
 
-#: data/ui/style-editor-window.blp:168 data/ui/window.blp:451
+#: data/ui/style-editor-window.blp:204 data/ui/style-editor-window.blp:216
+#: data/ui/window.blp:455
 msgid "Keyboard Shortcuts"
 msgstr "键盘快捷键"
 
-#: data/ui/style-editor-window.blp:169 data/ui/window.blp:452
+#: data/ui/style-editor-window.blp:205 data/ui/style-editor-window.blp:217
+#: data/ui/window.blp:456
 msgid "Help"
 msgstr "帮助"
 
-#: data/ui/style-editor-window.blp:170 data/ui/window.blp:453
+#: data/ui/style-editor-window.blp:206 data/ui/style-editor-window.blp:218
+#: data/ui/window.blp:457
 msgid "About Graphs"
 msgstr "关于 Graphs"
+
+#: data/ui/style-editor-window.blp:212
+msgid "Open Style…"
+msgstr "打开样式…"
 
 #: data/ui/style-preview.blp:55
 msgid "Open"
@@ -1361,7 +1400,7 @@ msgstr "变换颜色"
 msgid "More info"
 msgstr "更多信息"
 
-#: data/ui/transform.blp:48
+#: data/ui/transform.blp:44
 msgid ""
 "Additional variables:\n"
 "x_min, y_min\n"
@@ -1419,7 +1458,7 @@ msgstr "选择模式。点击并拖拽来选择数据"
 msgid "Show Sidebar"
 msgstr "显示侧边栏"
 
-#: data/ui/window.blp:335 data/ui/window.blp:381 graphs/window.vala:339
+#: data/ui/window.blp:335 data/ui/window.blp:381 graphs/window.vala:343
 msgid "Undo"
 msgstr "撤消"
 
@@ -1463,17 +1502,21 @@ msgstr "导出数据…"
 msgid "Export Figure…"
 msgstr "导出图表…"
 
-#: data/ui/window.blp:459
+#: data/ui/window.blp:463
 msgid "Add Data from File…"
 msgstr "从文件添加数据…"
 
-#: data/ui/window.blp:460
+#: data/ui/window.blp:464
 msgid "Add Equation…"
 msgstr "添加方程式…"
 
-#: data/ui/window.blp:461
+#: data/ui/window.blp:465
 msgid "Generate Data…"
 msgstr "生成数据…"
+
+#: data/ui/window.blp:471
+msgid "Optimize Limits"
+msgstr "优化极限"
 
 #: data/ui/window-shortcuts.blp:24
 msgctxt "shortcut window"
@@ -1549,6 +1592,16 @@ msgstr "导出数据"
 msgctxt "shortcut window"
 msgid "Export Figure"
 msgstr "导出图表"
+
+#: data/ui/window-shortcuts.blp:106
+msgctxt "shortcut window"
+msgid "Save Project"
+msgstr "保存工程"
+
+#: data/ui/window-shortcuts.blp:111
+msgctxt "shortcut window"
+msgid "Save Project As"
+msgstr "另存工程为"
 
 #: data/ui/window-shortcuts.blp:117
 msgctxt "shortcut window"
@@ -1640,7 +1693,7 @@ msgstr "Leybold xry"
 msgid "Could not load {font}"
 msgstr "无法加载 {font}"
 
-#: graphs/application.vala:96
+#: graphs/application.vala:97
 msgid "translator-credits"
 msgstr ""
 "lumingzh <lumingzh@qq.com>, 2024-2025\n"
@@ -1732,7 +1785,7 @@ msgstr "X 轴最大值"
 msgid "Y Axis Maximum"
 msgstr "Y 轴最大值"
 
-#: graphs/figure_settings.vala:176 graphs/window.vala:388
+#: graphs/figure_settings.vala:176 graphs/window.vala:385
 msgid "X Axis Scale"
 msgstr "X 轴缩放"
 
@@ -1740,7 +1793,7 @@ msgstr "X 轴缩放"
 msgid "X Axis Label"
 msgstr "X 轴标签"
 
-#: graphs/figure_settings.vala:180 graphs/window.vala:393
+#: graphs/figure_settings.vala:180 graphs/window.vala:390
 msgid "Y Axis Scale"
 msgstr "Y 轴缩放"
 
@@ -1748,7 +1801,7 @@ msgstr "Y 轴缩放"
 msgid "Defaults Updated"
 msgstr "默认值已更新"
 
-#: graphs/figure_settings.vala:313
+#: graphs/figure_settings.vala:315
 #, c-format
 msgid "Are you sure you want to delete %s?"
 msgstr "您确定要删除 %s 吗？"
@@ -1761,11 +1814,11 @@ msgstr "数据集"
 msgid "Generated Dataset"
 msgstr "生成的数据集"
 
-#: graphs/item.py:220
+#: graphs/item.py:224
 msgid "Label"
 msgstr "标签"
 
-#: graphs/item.py:249
+#: graphs/item.py:253
 msgid "Fill"
 msgstr "填充"
 
@@ -1926,22 +1979,21 @@ msgstr "草稿"
 msgid "Document Portal"
 msgstr "文档门户"
 
-#: graphs/window.vala:183
+#: graphs/window.vala:187
 msgid "Graphs (Development)"
 msgstr "Graphs（开发版）"
 
-#: graphs/window.vala:329
+#: graphs/window.vala:333
 msgid "Open Location"
 msgstr "打开位置"
 
-#: graphs/window.vala:351
-msgid "Optimize Limits"
-msgstr "优化极限"
-
-#: graphs/window.vala:361
+#: graphs/window.vala:358
 msgctxt "scale"
 msgid "Inverse Root"
 msgstr "逆平方根"
+
+#~ msgid "Error - No Style selected"
+#~ msgstr "错误 - 未选择样式"
 
 #~ msgid "Selected Item"
 #~ msgstr "选中项目"
