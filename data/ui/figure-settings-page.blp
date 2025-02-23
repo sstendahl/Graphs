@@ -212,7 +212,7 @@ Adw.NavigationPage settings_page {
 
             Adw.ComboRow legend_position {
               title: _("Legend Position");
-              visible: bind legend.active;
+              sensitive: bind legend.active;
 
               model: StringList {
                 strings [
