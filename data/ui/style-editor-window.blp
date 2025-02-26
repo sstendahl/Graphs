@@ -157,6 +157,10 @@ template $GraphsStyleEditor: Adw.ApplicationWindow {
           Adw.HeaderBar editor_headerbar {
             show-end-title-buttons: false;
 
+            title-widget: Adw.WindowTitle {
+              title: _("Graphs Style Editor");
+            };
+
             [end]
             MenuButton {
               icon-name: "open-menu-symbolic";
@@ -196,6 +200,7 @@ template $GraphsStyleEditor: Adw.ApplicationWindow {
 
 menu primary_menu {
   section {
+    item (_("Open Style…"), "win.open-style")
     item (_("Save Style…"), "win.save-style")
     item (_("Save Style as…"), "win.save-style-as")
   }
