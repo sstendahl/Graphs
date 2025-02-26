@@ -150,12 +150,14 @@ namespace Graphs {
             save_project_action.activate.connect (() => {
                 Project.save.begin (window, false);
             });
+            save_project_action.set_enabled (false);
             window.add_action (save_project_action);
 
             var save_project_as_action = new SimpleAction ("save-project-as", null);
             save_project_as_action.activate.connect (() => {
                 Project.save.begin (window, true);
             });
+            save_project_as_action.set_enabled (false);
             window.add_action (save_project_as_action);
 
             var open_project_action = new SimpleAction ("open-project", null);

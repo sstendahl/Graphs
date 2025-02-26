@@ -65,5 +65,10 @@ namespace Graphs {
         public Window create_window () {
             return create_window_request ();
         }
+
+        protected signal string get_friendly_path_request (File file);
+        public string get_friendly_path (File file) {
+            return get_friendly_path_request (file);
+        }
     }
 }
