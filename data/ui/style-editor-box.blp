@@ -75,7 +75,7 @@ template $GraphsStyleEditorBox: Box {
 
     Adw.ActionRow {
       title: _("Linewidth");
-      visible: bind linewidth.sensitive;
+      sensitive: bind linewidth.sensitive;
 
       Scale linewidth {
         sensitive: false;
@@ -126,7 +126,7 @@ template $GraphsStyleEditorBox: Box {
 
     Adw.ActionRow {
       title: _("Marker Size");
-      visible: bind markersize.sensitive;
+      sensitive: bind markersize.sensitive;
 
       Scale markersize {
         sensitive: false;
@@ -199,7 +199,7 @@ template $GraphsStyleEditorBox: Box {
 
     Adw.ActionRow {
       title: _("Minor Tick Width");
-      visible: bind minor_ticks.active;
+      sensitive: bind minor_ticks.active;
 
       Scale minor_tick_width {
         draw-value: true;
@@ -230,7 +230,7 @@ template $GraphsStyleEditorBox: Box {
 
     Adw.ActionRow {
       title: _("Minor Tick Length");
-      visible: bind minor_ticks.active;
+      sensitive: bind minor_ticks.active;
 
       Scale minor_tick_length {
         draw-value: true;
@@ -270,7 +270,7 @@ template $GraphsStyleEditorBox: Box {
 
     Adw.ActionRow {
       title: _("Grid Width");
-      visible: bind show_grid.active;
+      sensitive: bind show_grid.active;
 
       Scale grid_linewidth {
         draw-value: true;
@@ -286,7 +286,7 @@ template $GraphsStyleEditorBox: Box {
 
     Adw.ActionRow {
       title: _("Grid Opacity");
-      visible: bind show_grid.active;
+      sensitive: bind show_grid.active;
 
       Scale grid_opacity {
         draw-value: true;
